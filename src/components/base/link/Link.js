@@ -32,6 +32,23 @@ function onClickWrapper(onClick, href, e) {
 /**
  * The Component function
  *
+ * @param {object|array|string} children
+ * @param {boolean} a
+ * @param linkRef
+ * @param {string|object} href
+ * @param {string} target
+ * @param {object} border
+ * @param {function} onClick
+ * @param {function} onKeyDown
+ * @param {function} onFocus
+ * @param {string} dataCy
+ * @param {string} className
+ * @param {string|number} tabIndex
+ * @param {string} tag
+ * @param {boolean} disabled
+ * @param {string} ariaLabel
+ * @param {boolean} scroll
+ * @param {boolean} data_use_new_underline
  * @param {obj} props
  * See propTypes for specific props and types
  *
@@ -142,16 +159,21 @@ Link.propTypes = {
     PropTypes.object,
     PropTypes.array,
   ]),
-  target: PropTypes.oneOf(["_blank", "_self", "_parent", "_top"]),
   a: PropTypes.bool,
-  dataCy: PropTypes.string,
-  border: PropType_Link_border,
-  className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   href: PropType_Link_href,
+  target: PropTypes.oneOf(["_blank", "_self", "_parent", "_top"]),
+  border: PropType_Link_border,
+  onClick: PropTypes.func,
+  onKeyDown: PropTypes.func,
+  onFocus: PropTypes.func,
+  dataCy: PropTypes.string,
+  className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   tabIndex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   tag: PropTypes.string, // support any tag
   disabled: PropTypes.bool,
   ariaLabel: PropTypes.string,
+  scroll: PropTypes.bool,
+  data_use_new_underline: PropTypes.bool,
 };
 
 /**
