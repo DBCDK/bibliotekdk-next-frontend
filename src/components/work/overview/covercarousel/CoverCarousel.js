@@ -24,6 +24,7 @@ import { scrollToElement } from "@/components/base/scrollsnapslider/utils";
 import range from "lodash/range";
 import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
 import Custom404 from "@/pages/404";
+import Translate from "@/components/base/translate";
 import cx from "classnames";
 
 const CoverElement = forwardRef(function CoverElement(
