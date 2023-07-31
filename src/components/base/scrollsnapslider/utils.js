@@ -12,7 +12,8 @@ export function scrollToElement(sliderElementId) {
 export function scrollToElementWithOffset(
   sliderElementId,
   orientation = "y",
-  offset = -64 // --pt8 fra spacing.css
+  offset = -64, // --pt8 fra spacing.css
+  focusElement = true
 ) {
   const element = getElementById(sliderElementId);
 
@@ -26,6 +27,8 @@ export function scrollToElementWithOffset(
     top: elementPosition + offset,
     behavior: "smooth",
   });
+
+  focusElement && element.focus({ preventScroll: true });
 }
 
 export function scrollDistance(sliderId, slideTranslation) {
