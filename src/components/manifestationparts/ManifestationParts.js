@@ -31,6 +31,7 @@ export function ManifestationParts({
   modalOpen,
   showMoreButton = true,
   numberToShow,
+  breakOnCreator = false,
 }) {
   if (isEmpty(parts)) {
     return null;
@@ -68,17 +69,36 @@ export function ManifestationParts({
   const displayarray = partsToShow.map(
     (part, index) =>
       part?.title && (
-        <li key={`manifestationlist-${index}`}>
-          <Text type="text3" lines={1}>
+        <li
+          key={`manifestationlist-${index}`}
+          className={styles.manifestionlistItem}
+        >
+          <Text type="text3" lines={1} className={styles.title}>
             {part.title}
             {creatorsAndContributorsDisplay(part) &&
               creatorsAndContributorsDisplay(part)}
           </Text>
-          <Text type="text3" lines={1}>
-            {!titlesOnly && creatorsDisplay(part) && creatorsDisplay(part)}
-          </Text>
-          {!titlesOnly && (
-            <Text type="text3" lines={1}>
+
+          {!titlesOnly && creatorsDisplay(part) && (
+            <Text
+              type="text3"
+              lines={1}
+              className={cx(styles.creator, {
+                [styles.breakOrder_creator]: breakOnCreator,
+              })}
+            >
+              {creatorsDisplay(part)}
+            </Text>
+          )}
+
+          {!titlesOnly && part?.playingTime && (
+            <Text
+              type="text3"
+              lines={1}
+              className={cx(styles.playingTime, {
+                [styles.breakOrder_playingTime]: breakOnCreator,
+              })}
+            >
               {part?.playingTime || ""}
             </Text>
           )}
@@ -126,6 +146,7 @@ export default function Wrap({
   label,
   showMoreButton = true,
   parts = [],
+  breakOnCreator = false,
 }) {
   const { data, isLoading, error } = useData(
     pid && manifestationFragments.manifestationParts({ pid: pid })
@@ -164,6 +185,7 @@ export default function Wrap({
       modalOpen={modalOpen}
       showMoreButton={showMoreButton}
       numberToShow={numberToShow}
+      breakOnCreator={breakOnCreator}
     />
   );
 }

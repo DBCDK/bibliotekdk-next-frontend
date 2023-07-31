@@ -19,7 +19,7 @@ import { useData } from "@/lib/api/api";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 import useUser from "@/components/hooks/useUser";
 import * as userFragments from "@/lib/api/user.fragments";
-import TjoolTjip from "@/components/base/tjooltjip";
+import Tooltip from "@/components/base/tooltip";
 import { manifestationsForAccessFactory } from "@/lib/api/manifestation.fragments";
 import { inferAccessTypes } from "@/components/_modal/pages/edition/utils";
 
@@ -330,7 +330,7 @@ export function LoanerForm({
           </Text>
           {mode === LOGIN_MODE.DIGITAL_COPY && (
             <span>
-              <TjoolTjip labelToTranslate="tooltip_digtital_copy" />
+              <Tooltip labelToTranslate="tooltip_digtital_copy" />
               {/* we also need description for physical ordering here
               @TODO - is this text ALWAYS shown now ?? - refactor if so */}
               <Text type="text2">

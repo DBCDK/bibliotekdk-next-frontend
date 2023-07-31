@@ -1,6 +1,6 @@
 import { StoryTitle } from "@/storybook";
 
-import Popover from "./Tjooltjip";
+import Popover from "./Tooltip";
 
 const exportedObject = {
   title: "base/Tooltips",

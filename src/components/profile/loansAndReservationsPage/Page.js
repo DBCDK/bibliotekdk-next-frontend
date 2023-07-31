@@ -19,74 +19,46 @@ export const dataReducer = (dataType, data) => {
     case "DEBT": {
       return {
         type: "DEBT",
-        amount: data.amount,
-        title: data.title,
-        currency: data.currency,
+        amount: data?.amount,
+        title: data?.title,
+        currency: data?.currency,
       };
     }
     case "LOAN": {
-      if (!data.manifestation) {
-        // No manifestation - we show what we can
-        return {
-          type: "LOAN",
-          image: null,
-          title: null,
-          creator: null,
-          materialType: null,
-          creationYear: null,
-          dueDateString: data.dueDate,
-          id: data.loanId,
-          workId: "work-of:" + null,
-        };
-      }
+      //some loans dont have manifestation
       return {
         type: "LOAN",
-        image: data.manifestation.cover.thumbnail,
-        title: data.manifestation.titles.main[0],
+        image: data?.manifestation?.cover?.thumbnail,
+        title: data?.manifestation?.titles?.main?.[0],
         creator: extractCreatorsPrioritiseCorporation(
-          data.manifestation.creators
+          data?.manifestation?.creators
         )?.[0]?.display,
-        materialType: data.manifestation.materialTypes[0].specific,
-        creationYear: data.manifestation.recordCreationDate.substring(0, 4),
-        dueDateString: data.dueDate,
-        id: data.loanId,
-        workId: "work-of:" + data.manifestation.pid,
+        materialType: data?.manifestation?.materialTypes?.[0]?.specific,
+        creationYear: data?.manifestation?.recordCreationDate?.substring(0, 4),
+        dueDateString: data?.dueDate,
+        id: data?.loanId,
+        workId: "work-of:" + data?.manifestation?.pid,
       };
     }
     case "ORDER": {
-      if (!data.manifestation) {
-        // No manifestation - we show what we can
-        return {
-          type: "ORDER",
-          image: null,
-          title: data.title,
-          creator: data.creator,
-          creators: null,
-          materialType: null,
-          creationYear: null,
-          library: data.pickUpBranch.agencyName,
-          holdQueuePosition: data.holdQueuePosition,
-          pickUpExpiryDate: data.pickUpExpiryDate,
-          id: data.orderId,
-          workId: "work-of:" + null,
-        };
-      }
+      //some orders dont have manifestation
       return {
         type: "ORDER",
-        image: data.manifestation.cover.thumbnail,
-        title: data.manifestation.titles.main[0],
-        creator: extractCreatorsPrioritiseCorporation(
-          data.manifestation.creators
-        )?.[0]?.display,
-        materialType: data.manifestation.materialTypes[0].specific,
-        creationYear: data.manifestation.recordCreationDate.substring(0, 4),
-        library: data.pickUpBranch.agencyName,
-        agencyId: data.libraryId,
-        holdQueuePosition: data.holdQueuePosition,
-        pickUpExpiryDate: data.pickUpExpiryDate,
-        id: data.orderId,
-        workId: "work-of:" + data.manifestation.pid,
-        orderMutation: data.orderMutation,
+        image: data?.manifestation?.cover?.thumbnail,
+        title: data?.manifestation?.titles?.main?.[0] || data?.title,
+        creator:
+          extractCreatorsPrioritiseCorporation(
+            data?.manifestation?.creators
+          )?.[0]?.display || data?.creator,
+        materialType: data?.manifestation?.materialTypes?.[0].specific,
+        creationYear: data?.manifestation?.recordCreationDate?.substring(0, 4),
+        library: data?.pickUpBranch?.agencyName,
+        agencyId: data?.libraryId,
+        holdQueuePosition: data?.holdQueuePosition,
+        pickUpExpiryDate: data?.pickUpExpiryDate,
+        id: data?.orderId,
+        workId: "work-of:" + data?.manifestation?.pid,
+        orderMutation: data?.orderMutation,
       };
     }
   }
@@ -110,7 +82,6 @@ const LoansAndReservations = () => {
       <Text type="text3" className={styles.subHeading}>
         {Translate({ context: "profile", label: "loans-subtext" })}{" "}
         <Link
-          className={styles.yourLibraries}
           href="/profil/mine-biblioteker"
           border={{
             top: false,
@@ -220,6 +191,7 @@ const LoansAndReservations = () => {
               {...dataReducer("LOAN", loan)}
               key={`loan-${loan.loanId}-#${i}`}
               library={libraryString}
+              agencyId={libraryId}
               dataCy={`loan-${i}`}
             />
           ))

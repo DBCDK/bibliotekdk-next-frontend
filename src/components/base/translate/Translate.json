@@ -104,6 +104,10 @@
       "tooltip_lix": {
         "da": "Lix står for læsbarhedsindeks. Lix-tal er opdelt efter klassetrin:\\n0.-1. klasse: lix 2-10\\n2. klasse: lix 11-15\\n3. klasse: lix 16-19\\n4. klasse: lix 20+\\n \\n Let-tal står for læseegnethedstal. \\n Begynderlæsningsbøgerne er inddelt i 16 niveauer, hvor det laveste er 5, og det højeste er 20. ",
         "en": "You can only order a digital copy, if your library subscribes to the service Digital Artikelservice at the Royal Danish Library."
+      },
+      "renew-loan-tooltip": {
+        "da": "Det er dit udlånsbibliotek, der sætter reglerne for om materialet kan fornyes. Tjek gerne deres retningslinjer for mere information.",
+        "en": "Your library defines the rules for renewing loans. Please check their guidelines for more information."
       }
     },
     "general": {
@@ -3063,9 +3067,13 @@
         "da": "Slet reservering",
         "en": "Delete reservation"
       },
+      "delete-order-questionmark": {
+        "da": "Slet reservering?",
+        "en": "Delete reservation?"
+      },
       "delete-order-confirmation": {
-        "da": "Er du sikker på, at du vil slette reserveringen?",
-        "en": "Are you sure you want to delete the reservation?"
+        "da": "Du er ved at slette din reservering:",
+        "en": "You are about to delete your reservation:"
       },
       "miss-spot-in-queue": {
         "da": "Du mister din plads i køen.",
@@ -3090,6 +3098,10 @@
       "date-overdue": {
         "da": "Frist overskredet!",
         "en": "Return deadline overdue!"
+      },
+      "last-day": {
+        "da": "I dag",
+        "en": "Today"
       },
       "loans-subtext": {
         "da": "Du ser lån og reserveringer for",
@@ -3154,6 +3166,26 @@
       "error-deleting-order": {
         "da": "Noget gik galt, da reserveringen skulle slettes. Prøv igen.",
         "en": "An error occurred while the reservation was being deleted. Try again."
+      },
+      "error-renew-loan": {
+        "da": "Kan ikke fornyes",
+        "en": "Cannot be renewed"
+      },
+      "renewed": {
+        "da": "Fornyet",
+        "en": "Renewed"
+      },
+      "signed-in-as-name": {
+        "da": "Du er logget ind som",
+        "en": "You are signed in as"
+      },
+      "login-to-see-profile": {
+        "da": "Log venligst ind for at se din profil, lån og reserveringer.",
+        "en": "Sign in to see your profile, loans and reservations."
+      },
+      "login-welcome": {
+        "da": "Åbn døren til uendelige verdener - hvor fakta og fantasi danser hånd i hånd.",
+        "en": "Open the door to infinite worlds - where fact and fantasy dance hand in hand."
       }
     }
   }

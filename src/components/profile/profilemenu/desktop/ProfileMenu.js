@@ -51,14 +51,7 @@ function MenuLink({ label, href }) {
   );
 }
 
-function SubCategory({
-  item,
-  index,
-  router,
-  baseUrl,
-  activeIndex,
-  setActiveIndex,
-}) {
+function SubCategory({ item, index, router, baseUrl }) {
   const title = Translate({
     context: CONTEXT,
     label: `${item.title}`,
@@ -79,9 +72,6 @@ function SubCategory({
     if (el) {
       scrollTo({ top: el.offsetTop, behavior: "smooth" });
     }
-    if (router.asPath.includes(`#${urlEnding}`)) {
-      setActiveIndex(index);
-    }
   }, [router.asPath]);
 
   async function replaceHash(newEnding) {
@@ -98,9 +88,7 @@ function SubCategory({
   return (
     <li className={styles.menuLink} key={`div-menulink-${index}`}>
       <Link
-        className={cx(styles.subLink, {
-          [styles.groupActive]: index === activeIndex,
-        })}
+        className={styles.subLink}
         dataCy={`menu-subcategory-${index}`}
         onClick={() => {
           replaceHash(urlEnding);
@@ -132,7 +120,6 @@ function SubCategory({
  * @return {JSX.Element}
  */
 function MenuGroup({ menus, categoryUrl, name, className }) {
-  const [activeIndex, setActiveIndex] = useState();
   const router = useRouter();
   const [isActive, setIsActive] = useState(router.asPath.includes(name));
 
@@ -168,8 +155,6 @@ function MenuGroup({ menus, categoryUrl, name, className }) {
             index={index}
             router={router}
             baseUrl={categoryUrl}
-            activeIndex={activeIndex}
-            setActiveIndex={setActiveIndex}
           />
         ))}
       </ul>
