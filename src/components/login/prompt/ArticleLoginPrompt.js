@@ -27,7 +27,7 @@ export default function ArticleLoginPrompt({ articleId }) {
   );
   const agencyName = branchRes?.data?.branches?.result?.[0]?.agencyName || "";
 
-  function signIn() {
+  function openLoginModal() {
     modal.push("login", {
       title: Translate({
         context: "header",
@@ -46,7 +46,7 @@ export default function ArticleLoginPrompt({ articleId }) {
           context: "articles",
           label: "accessWarning",
         })}
-        signIn={() => signIn()}
+        signIn={() => openLoginModal()}
       />
     );
   }
@@ -68,7 +68,7 @@ export default function ArticleLoginPrompt({ articleId }) {
           context: "order",
           label: "change-pickup-digital-copy-link",
         })}
-        signIn={() => signIn()}
+        signIn={() => openLoginModal()}
       />
     );
   }

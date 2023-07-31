@@ -109,7 +109,7 @@ export default function LoginNotSupported({ context, modal }) {
         className={styles.backButton}
         onClick={() => modal.prev()}
         onKeyDown={(e) => {
-          if (e.key === "Enter" || e.keyCode === 13) {
+          if (e.key === "Enter") {
             modal.prev();
           }
         }}
