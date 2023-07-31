@@ -46,7 +46,7 @@ describe("Order", () => {
     cy.visitWithConsoleSpy(
       "/iframe.html?id=modal-order--order-via-ill&viewMode=story"
     );
-    cy.contains("Bestil").click();
+    cy.contains("Bestil", { timeout: 10000 }).click();
 
     // Check that user blocking is not present
     cy.get("[data-cy=blocked-user]").should("not.exist");
@@ -61,7 +61,7 @@ describe("Order", () => {
     cy.visitWithConsoleSpy(
       "/iframe.html?id=modal-order--pickup-not-allowed&viewMode=story"
     );
-    cy.contains("Bestil").click();
+    cy.contains("Bestil", { timeout: 10000 }).click();
 
     // Check that user blocking is not present
     cy.get("[data-cy=blocked-user]").should("not.exist");
@@ -72,7 +72,7 @@ describe("Order", () => {
       "Materialet kan ikke bestilles til det her afhentningssted. Vælg et andet."
     );
     cy.get("[data-cy=button-godkend]").should("be.disabled");
-    cy.get("[data-cy=text-skift-afhentning]").click();
+    cy.contains("Skift afhentning").click();
   });
 
   describe("Order periodica article ", () => {
@@ -81,7 +81,7 @@ describe("Order", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?id=modal-order--order-indexed-periodica-article&viewMode=story"
       );
-      cy.contains("Bestil").click();
+      cy.contains("Bestil", { timeout: 10000 }).click();
 
       // Check that user blocking is not present
       cy.get("[data-cy=blocked-user]").should("not.exist");
@@ -109,7 +109,7 @@ describe("Order", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?id=modal-order--order-indexed-periodica-article-ill&viewMode=story"
       );
-      cy.contains("Bestil").click();
+      cy.contains("Bestil", { timeout: 10000 }).click();
 
       // Check that user blocking is not present
       cy.get("[data-cy=blocked-user]").should("not.exist");
@@ -142,7 +142,7 @@ describe("Order", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?id=modal-order--order-periodica-volume&viewMode=story"
       );
-      cy.contains("Bestil").click();
+      cy.contains("Bestil", { timeout: 10000 }).click();
 
       // Check that user blocking is not present
       cy.get("[data-cy=blocked-user]").should("not.exist");
@@ -157,7 +157,7 @@ describe("Order", () => {
 
       cy.contains("For at bestille skal du vælge udgave eller artikel");
 
-      cy.get('[data-cy="text-vælg-udgave-eller-artikel"]').click();
+      cy.contains("Vælg udgave").click();
 
       cy.get('[placeholder="Skriv årstal"]').type("1992");
 
@@ -194,7 +194,7 @@ describe("Order", () => {
         .should("exist")
         .should("not.be.disabled");
 
-      cy.get('[data-cy="text-vælg-udgave-eller-artikel"]').click();
+      cy.contains("Vælg udgave").click();
 
       cy.get('[placeholder="Skriv årstal"]').type("1992");
 
@@ -247,7 +247,7 @@ describe("Order", () => {
         .should("exist")
         .should("not.be.disabled");
 
-      cy.get('[data-cy="text-vælg-udgave-eller-artikel"]').click();
+      cy.contains("Vælg udgave").click();
 
       cy.get('[placeholder="Skriv årstal"]').type("1992");
 

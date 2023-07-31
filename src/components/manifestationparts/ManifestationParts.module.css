@@ -47,15 +47,7 @@
   margin-left: var(--pt1);
 }
 
-.arrowAndTxtContainer {
-  width: 100%;
-  display: flex;
-  justify-content: left;
-}
-
 .arrowchanges {
-  display: flex;
-  align-items: center;
   padding-left: var(--pt2);
 }
 
