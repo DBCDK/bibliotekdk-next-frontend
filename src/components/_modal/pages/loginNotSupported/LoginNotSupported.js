@@ -76,6 +76,7 @@ export default function LoginNotSupported({ context, modal }) {
         </p>
       </Collapse>
       <button
+        data-cy="why-not-supported-button"
         aria-controls="why-not-supported-text"
         aria-expanded={expanded}
         className={`${styles.expandButton} ${animations["on-hover"]} ${animations["on-focus"]}`}
