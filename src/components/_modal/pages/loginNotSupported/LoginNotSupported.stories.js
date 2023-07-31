@@ -1,6 +1,5 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
 import LoginNotSupported from "./LoginNotSupported";
-import Translate from "@/components/base/translate";
 
 const exportedObject = {
   title: "modal/LoginNotSupported",
@@ -9,6 +8,9 @@ const exportedObject = {
 export default exportedObject;
 
 export function NotSupported() {
+  const context = {
+    libraryName: "CBS Bibliotek",
+  };
   return (
     <div style={{ height: "100vh" }}>
       <StoryTitle>Login Modal</StoryTitle>
@@ -16,7 +18,7 @@ export function NotSupported() {
         Shows the login modal coming from login button in header
       </StoryDescription>
 
-      <LoginNotSupported libraryName="CBS Bibliotek" />
+      <LoginNotSupported context={context} />
     </div>
   );
 }

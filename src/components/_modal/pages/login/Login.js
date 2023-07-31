@@ -132,21 +132,21 @@ export function LoginPickup({
 
     /**
      * If we order a physical copy or a digital copy, we always show the loanerform
-     * If the mode neither of the two modes above, we check if the library supports borrowCheck
+     * If the mode neither of the two modes above, we check if the library supports borrowerCheck
      * If not, we show the loginNotSupported modal, we can order stuff for these libraries, but we cannot login/validate via them
      * @param {string} mode
-     * @param {boolean} borrowCheck
+     * @param {boolean} borrowerCheck
      * @returns {boolean}
      */
-    const showLoanerForm = ({ mode, borrowCheck }) => {
+    const showLoanerForm = ({ mode, borrowerCheck }) => {
       return (
         mode === LOGIN_MODE.ORDER_PHYSICAL ||
         mode === LOGIN_MODE.DIGITAL_COPY ||
-        borrowCheck === true
+        borrowerCheck === true
       );
     };
 
-    if (showLoanerForm({ mode, borrowCheck: branch?.borrowerCheck })) {
+    if (showLoanerForm({ mode, borrowerCheck: branch?.borrowerCheck })) {
       modal.push("loanerform", {
         branchId: branch.branchId,
         doPolicyCheck: false,
