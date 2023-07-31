@@ -19,6 +19,16 @@ function parseBorders(border) {
       : []),
   ];
 }
+
+function onClickWrapper(onClick, href, e) {
+  if (onClick) {
+    if (!href) {
+      e.preventDefault();
+    }
+    onClick(e);
+  }
+}
+
 /**
  * The Component function
  *
@@ -59,15 +69,14 @@ function Link({
         ref={linkRef}
         data-cy={dataCy}
         target={target}
-        onClick={(e) => {
-          if (onClick) {
-            if (!href) {
-              e.preventDefault();
-            }
-            onClick(e);
-          }
+        onClick={(e) => onClickWrapper(onClick, href, e)}
+        onKeyDown={(e) => {
+          onKeyDown
+            ? onKeyDown(e)
+            : e?.key === "Enter" || e?.key === " "
+            ? onClickWrapper(onClick, href, e)
+            : (() => {})();
         }}
-        onKeyDown={onKeyDown}
         onFocus={onFocus}
         className={
           data_use_new_underline

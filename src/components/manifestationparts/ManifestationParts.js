@@ -19,8 +19,10 @@ import Text from "@/components/base/text/Text";
 import React from "react";
 import isEmpty from "lodash/isEmpty";
 import { useModal } from "@/components/_modal";
-import { LinkArrow } from "@/components/_modal/pages/order/linkarrow/LinkArrow";
+// import { LinkArrow } from "@/components/_modal/pages/order/linkarrow/LinkArrow";
+import { IconLink as LinkArrow } from "@/components/base/iconlink/IconLink";
 import Translate from "@/components/base/translate";
+import cx from "classnames";
 
 export function ManifestationParts({
   parts,
@@ -97,21 +99,21 @@ export function ManifestationParts({
       </ul>
 
       {showMore && (
-        <>
-          <span className={`${styles.arrowAndTxtContainer} ${className}`}>
-            <div>
-              <LinkArrow className={styles.arrowchanges}>
-                <Text type="text3" lines={1} onClick={modalOpen}>
-                  {Translate({
-                    context: "manifestation_content",
-                    label: "see_all",
-                  })}{" "}
-                  ({parts.length})
-                </Text>
-              </LinkArrow>
-            </div>
-          </span>
-        </>
+        <LinkArrow
+          iconPlacement="right"
+          iconOrientation={180}
+          border={{ bottom: { keepVisible: true }, top: false }}
+          className={cx(styles.arrowchanges, className)}
+          onClick={modalOpen}
+        >
+          <Text type="text3" lines={1} tag="span">
+            {Translate({
+              context: "manifestation_content",
+              label: "see_all",
+            })}{" "}
+            ({parts.length})
+          </Text>
+        </LinkArrow>
       )}
     </div>
   );
