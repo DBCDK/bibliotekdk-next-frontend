@@ -704,7 +704,9 @@ export function fieldsForRows(manifestation, work, context) {
           value:
             manifestation?.physicalDescriptions?.[0]?.numberOfUnits ||
             manifestation?.physicalDescriptions?.[0]?.size
-              ? `${manifestation?.physicalDescriptions?.[0]?.numberOfUnits}  ${manifestation?.physicalDescriptions?.[0]?.size}`
+              ? `${
+                  manifestation?.physicalDescriptions?.[0]?.numberOfUnits || ""
+                }  ${manifestation?.physicalDescriptions?.[0]?.size || ""}`
               : null,
         },
       },
