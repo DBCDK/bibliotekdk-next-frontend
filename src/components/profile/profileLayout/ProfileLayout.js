@@ -34,12 +34,11 @@ export default function ProfileLayout({ title, children }) {
   const user = useUser();
   const modal = useModal();
 
-  function openModal() {
+  function openModal({
+    title = Translate({ context: "header", label: "login" }),
+  }) {
     modal.push("login", {
-      title: Translate({
-        context: "header",
-        label: "login",
-      }),
+      title: title,
     });
   }
 
@@ -98,10 +97,8 @@ export default function ProfileLayout({ title, children }) {
                 className={styles.loginButton}
                 size="large"
                 type="primary"
-                onClick={() => {
-                  openModal();
-                }}
-                onKeyPress={(e) => {
+                onClick={openModal}
+                onKeyDown={(e) => {
                   if (e.key === "Enter" || e.keyCode === 13) openModal();
                 }}
               >

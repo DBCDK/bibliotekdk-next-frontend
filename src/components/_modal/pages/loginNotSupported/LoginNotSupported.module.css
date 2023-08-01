@@ -29,10 +29,15 @@
 
 .expandButton {
   background-color: var(--white);
+  padding: 0 !important; /* overwrite default button padding*/
+  outline: none;
+  color: var(--black);
 }
 
-.expandButton:hover {
+.expandButton:hover,
+.expandButton:focus {
   cursor: pointer;
+  outline: none;
 }
 
 .expandButton .expandWrap p {
@@ -46,8 +51,10 @@
 .chevron {
   position: absolute;
   left: 318px;
-
   margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .chevron img {
@@ -58,7 +65,7 @@
   font-size: 17px;
   font-style: normal;
   font-weight: 400;
-  line-height: 26px; /* 152.941% */
+  line-height: 26px;
   letter-spacing: 0.2px;
   padding-bottom: var(--pt1);
 }

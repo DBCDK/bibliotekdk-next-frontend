@@ -8,6 +8,7 @@ import Button from "@/components/base/button";
 import Translate from "@/components/base/translate";
 import styles from "./LoginNotSupported.module.css";
 import animations from "css/animations";
+import cx from "classnames";
 
 export default function LoginNotSupported({ context, modal }) {
   const { libraryName } = { ...context };
@@ -76,11 +77,16 @@ export default function LoginNotSupported({ context, modal }) {
           })}
         </p>
       </Collapse>
-      <button
-        data-cy="why-not-supported-button"
-        aria-controls="why-not-supported-text"
-        aria-expanded={expanded}
-        className={`${styles.expandButton} ${animations["on-hover"]} ${animations["on-focus"]}`}
+      <Button
+        dataCy="why-not-supported-button"
+        ariaControls="why-not-supported-text"
+        ariaExpanded={expanded}
+        type="secondary"
+        className={cx(
+          styles.expandButton,
+          animations["on-hover"],
+          animations["on-focus"]
+        )}
         border={false}
         onClick={toggleCollapse}
       >
@@ -98,7 +104,7 @@ export default function LoginNotSupported({ context, modal }) {
             alt=""
           />
         </span>
-      </button>
+      </Button>
 
       <Button
         type="secondary"
