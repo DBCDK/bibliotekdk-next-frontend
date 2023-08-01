@@ -43,6 +43,10 @@ export default function ArticleLoginPrompt({ articleId }) {
 
   // Logged in, library does not have access
   if (!isLoading && !data?.infomedia?.article) {
+    const linkHref = {
+      href: "https://slks.dk/soeg?q=danske+biblioteker",
+      text: "Læs evt. mere om danske biblioteker på Slots og kulturstyrelsens hjemmeside.",
+    };
     return (
       <LoginPrompt
         title={Translate({
@@ -58,6 +62,7 @@ export default function ArticleLoginPrompt({ articleId }) {
           context: "order",
           label: "change-pickup-digital-copy-link",
         })}
+        linkHref={linkHref}
         signIn={() => modal.push("login", { mode: LOGIN_MODE.INFOMEDIA })}
       />
     );
@@ -67,5 +72,5 @@ export default function ArticleLoginPrompt({ articleId }) {
   return null;
 }
 ArticleLoginPrompt.propTypes = {
-  articleId: PropTypes.articleId,
+  articleId: PropTypes.string,
 };
