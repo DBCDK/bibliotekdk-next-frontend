@@ -30,11 +30,10 @@ const ERRORS = {
 export const LOGIN_MODE = {
   ORDER_PHYSICAL: "orderPhysical",
   SUBSCRIPTION: "subscription",
-  DIGITAL_COPY: "digitalCopy",
+  DIGITAL_COPY: "digitalCopy", //subcategory of subscription
   PLAIN_LOGIN: "plainLogin",
   INFOMEDIA: "infomedia",
   DDA: "demand_driven_acquisition",
-  // @TODO .. another mode? INFOMEDIA ?
 };
 
 export function UserParamsForm({ branch, initial, onSubmit, mode, originUrl }) {

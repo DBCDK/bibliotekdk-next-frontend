@@ -141,7 +141,7 @@ export function LoginPickup({
     const showLoanerForm = ({ mode, borrowerCheck }) => {
       return (
         mode === LOGIN_MODE.ORDER_PHYSICAL ||
-        mode === LOGIN_MODE.DIGITAL_COPY ||
+        mode === LOGIN_MODE.SUBSCRIPTION ||
         borrowerCheck === true
       );
     };
