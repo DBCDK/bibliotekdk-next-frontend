@@ -29,7 +29,7 @@
 
 .expandButton {
   background-color: var(--white);
-  padding: 0 !important; /* overwrite default button padding*/
+  padding: var(--pt1) 0 0 !important; /* overwrite default button padding*/
   outline: none;
   color: var(--black);
 }
@@ -59,13 +59,4 @@
 
 .chevron img {
   transition: transform 0.2s linear;
-}
-
-.notSupportedReason {
-  font-size: 17px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 26px;
-  letter-spacing: 0.2px;
-  padding-bottom: var(--pt1);
 }

@@ -67,16 +67,17 @@ export default function LoginNotSupported({ context, modal }) {
           vars: [libraryName],
         })}
       </Text>
-
-      <Collapse in={expanded}>
-        {/* use p instead of text component, because collaps doesnt work with text component */}
-        <p className={styles.notSupportedReason} id="why-not-supported-text">
-          {Translate({
-            context: "login",
-            label: "not-supported-reason",
-          })}
-        </p>
-      </Collapse>
+      {/* wrap collaps in text, to give styling to collapse, because collaps doesnt work with text component */}
+      <Text type="text2" tag="div">
+        <Collapse in={expanded}>
+          <p id="why-not-supported-text">
+            {Translate({
+              context: "login",
+              label: "not-supported-reason",
+            })}
+          </p>
+        </Collapse>
+      </Text>
       <Button
         dataCy="why-not-supported-button"
         ariaControls="why-not-supported-text"
