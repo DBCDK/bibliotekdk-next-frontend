@@ -45,8 +45,9 @@ export default function ArticleLoginPrompt({ articleId }) {
   if (!isLoading && !data?.infomedia?.article) {
     const linkHref = {
       href: "https://slks.dk/soeg?q=danske+biblioteker",
-      text: "Læs evt. mere om danske biblioteker på Slots og kulturstyrelsens hjemmeside.",
+      text: Translate({ context: "articles", label: "libraryAccessReadMore" }),
     };
+
     return (
       <LoginPrompt
         title={Translate({

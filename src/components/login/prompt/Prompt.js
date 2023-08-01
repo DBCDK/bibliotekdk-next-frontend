@@ -48,7 +48,6 @@ export default function LoginPrompt({
             {title}
           </Title>
 
-          <Text type="text3">{description}</Text>
           {user.isAuthenticated && (
             <div>
               <IconButton
@@ -64,13 +63,17 @@ export default function LoginPrompt({
             </div>
           )}
           {linkHref && showMore && (
-            <Link
-              href={linkHref.href}
-              target="_blank"
-              data_use_new_underline={false}
-            >
-              <Text type="text3">{linkHref.text}</Text>
-            </Link>
+            <>
+              <Text type="text3">{description}</Text>
+              <Link
+                href={linkHref.href}
+                target="_blank"
+                border={{ top: false, bottom: true }}
+                data_use_new_underline={false}
+              >
+                <Text type="text3">{linkHref.text}</Text>
+              </Link>
+            </>
           )}
           <Button type="primary" size="large" onClick={signIn}>
             {buttonText}
