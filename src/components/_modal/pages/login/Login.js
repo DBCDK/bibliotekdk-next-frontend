@@ -35,7 +35,7 @@ function Row({ branch, onSelect, isLoading, disabled, includeArrows, _ref }) {
   disabled = false;
 
   return (
-    <List.Select
+    <List.FormLink
       onSelect={() => onSelect(branch)}
       label={branch.name}
       disabled={disabled}
@@ -70,7 +70,7 @@ function Row({ branch, onSelect, isLoading, disabled, includeArrows, _ref }) {
           </Text>
         )}
       </>
-    </List.Select>
+    </List.FormLink>
   );
 }
 
@@ -150,7 +150,11 @@ export function LoginPickup({
         />
       </div>
       {allBranches?.length > 0 && (
-        <List.Group enabled={!isLoading && isVisible} data-cy="list-branches">
+        <List.Group
+          enabled={!isLoading && isVisible}
+          data-cy="list-branches"
+          disableGroupOutline
+        >
           {allBranches.map((branch, idx) => {
             return (
               <Row
