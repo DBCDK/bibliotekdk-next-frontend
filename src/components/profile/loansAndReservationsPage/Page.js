@@ -136,7 +136,7 @@ const LoansAndReservations = () => {
             column3={Translate({ context: "profile", label: "loaner-library" })}
           />
 
-          {debt?.map((claim, i) => (
+          {debt.map((claim, i) => (
             <MaterialRow
               {...dataReducer("DEBT", claim)}
               key={`debt-${claim.title}-#${i}`}
@@ -192,7 +192,7 @@ const LoansAndReservations = () => {
             <MaterialRow skeleton key={`loan-#${i}`} />
           ))
         ) : loans && loans.length !== 0 ? (
-          loans?.map((loan, i) => (
+          loans.map((loan, i) => (
             <MaterialRow
               {...dataReducer("LOAN", loan)}
               key={`loan-${loan.loanId}-#${i}`}
@@ -255,7 +255,7 @@ const LoansAndReservations = () => {
             <MaterialRow skeleton key={`loan-#${i}`} />
           ))
         ) : orders && orders.length !== 0 ? (
-          orders?.map((order, i) => (
+          orders.map((order, i) => (
             <MaterialRow
               {...dataReducer("ORDER", {
                 ...order,
