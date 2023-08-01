@@ -8,11 +8,25 @@ const exportedObject = {
 
 export default exportedObject;
 
-export function SimpleTooltip() {
+export function SimpleTooltipWithChild() {
   return (
-    <div>
-      <StoryTitle>simple tooltip</StoryTitle>
-      <Popover placement="right" labelToTranslate="tooltip_change_email" />
+    <div style={{ height: "200px", width: "300px" }}>
+      <StoryTitle>Simple tooltip width child</StoryTitle>
+      <Popover placement="right" labelToTranslate="tooltip_change_email">
+        <p style={{ cursor: "pointer" }}>CLICK ME</p>
+      </Popover>
+    </div>
+  );
+}
+
+export function SimpleTooltipDefaultContent() {
+  return (
+    <div style={{ height: "200px", width: "300px" }}>
+      <StoryTitle>Shows default icon</StoryTitle>
+      <Popover
+        placement="right"
+        labelToTranslate="tooltip_change_email"
+      ></Popover>
     </div>
   );
 }

@@ -21,7 +21,7 @@ export function months({ label }) {
     return `[! unknown label: ${label} in units]`;
   }
 
-  if (label === "shortenedMonths") {
+  if (label === "monthsInFourCharacters") {
     // convert to array of short months
     const months = contexts.units[label][lang];
     return months && months.split(",");

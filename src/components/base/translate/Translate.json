@@ -393,6 +393,10 @@
         "da": "OBS: Ikke alle biblioteker giver adgang til artikler fra Infomedia",
         "en": "NOTE: Not all libraries provide access to Infomedia articles"
       },
+      "libraryAccessReadMore": {
+        "da": "Læs evt. mere om danske biblioteker på Slots og kulturstyrelsens hjemmeside.",
+        "en": "Read more about danish libraries"
+      },
       "libraryNoAccess": {
         "da": "%s giver ikke adgang til at læse artiklen",
         "en": "%s does not provide access to read the article"
@@ -3035,6 +3039,10 @@
       "shortenedMonths": {
         "da": "jan, feb, mar, apr, maj, jun, jul, aug, sep, okt, nov, dec",
         "en": "jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec"
+      },
+      "monthsInFourCharacters": {
+        "da": "jan., feb., mar., apr., maj, juni, juli, aug., sep., okt., nov., dec.",
+        "en": "Jan., Feb., Mar., Apr., May, June, July, Aug., Sep., Oct., Nov., Dec."
       }
     },
     "profile": {
