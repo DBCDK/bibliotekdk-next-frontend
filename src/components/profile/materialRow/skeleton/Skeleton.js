@@ -1,3 +1,4 @@
+/* eslint-disable css-modules/no-unused-class */
 import styles from "../MaterialRow.module.css";
 import Cover from "@/components/base/cover";
 import Button from "@/components/base/button";
