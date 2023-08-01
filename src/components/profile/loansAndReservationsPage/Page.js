@@ -14,6 +14,8 @@ import { arangeLoanerInfo } from "@/lib/userdataFactoryUtils";
 import Link from "@/components/base/link";
 import { useState } from "react";
 
+const SKELETON_ROW_AMOUNT = 2;
+
 export const dataReducer = (dataType, data) => {
   switch (dataType) {
     case "DEBT": {
@@ -68,7 +70,7 @@ const LoansAndReservations = () => {
   const breakpoint = useBreakpoint();
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
-  const { loanerInfo } = useUser();
+  const { loanerInfo, isLoading } = useUser();
   const { debt, agency, orders, loans } = arangeLoanerInfo(loanerInfo);
   const [removedOrderId, setRemovedOrderId] = useState("");
   const libraryString =
@@ -134,7 +136,7 @@ const LoansAndReservations = () => {
             column3={Translate({ context: "profile", label: "loaner-library" })}
           />
 
-          {debt?.map((claim, i) => (
+          {debt.map((claim, i) => (
             <MaterialRow
               {...dataReducer("DEBT", claim)}
               key={`debt-${claim.title}-#${i}`}
@@ -185,8 +187,12 @@ const LoansAndReservations = () => {
           column2={Translate({ context: "profile", label: "return-deadline" })}
           column3={Translate({ context: "profile", label: "loaner-library" })}
         />
-        {loans && loans.length !== 0 ? (
-          loans?.map((loan, i) => (
+        {isLoading ? (
+          [...Array(SKELETON_ROW_AMOUNT).keys()].map((_, i) => (
+            <MaterialRow skeleton key={`loan-#${i}`} />
+          ))
+        ) : loans && loans.length !== 0 ? (
+          loans.map((loan, i) => (
             <MaterialRow
               {...dataReducer("LOAN", loan)}
               key={`loan-${loan.loanId}-#${i}`}
@@ -244,8 +250,12 @@ const LoansAndReservations = () => {
           column2={Translate({ context: "profile", label: "status" })}
           column3={Translate({ context: "profile", label: "pickup-at" })}
         />
-        {orders && orders.length !== 0 ? (
-          orders?.map((order, i) => (
+        {isLoading ? (
+          [...Array(SKELETON_ROW_AMOUNT).keys()].map((_, i) => (
+            <MaterialRow skeleton key={`loan-#${i}`} />
+          ))
+        ) : orders && orders.length !== 0 ? (
+          orders.map((order, i) => (
             <MaterialRow
               {...dataReducer("ORDER", {
                 ...order,
