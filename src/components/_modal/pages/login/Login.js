@@ -45,7 +45,7 @@ function Select({
   disabled = false;
 
   return (
-    <List.Select
+    <List.FormLink
       onSelect={() => onSelect(branch)}
       label={branch.name}
       disabled={disabled}
@@ -80,7 +80,7 @@ function Select({
           </Text>
         )}
       </>
-    </List.Select>
+    </List.FormLink>
   );
 }
 
@@ -191,7 +191,7 @@ export function LoginPickup({
         <List.Group
           enabled={!isLoading && isVisible}
           data-cy="list-branches"
-          className={styles.libraryGroup}
+          disableGroupOutline
         >
           {allBranches.map((branch, idx) => {
             return (
