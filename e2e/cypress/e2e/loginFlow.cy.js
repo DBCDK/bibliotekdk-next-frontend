@@ -1,6 +1,7 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
+const fbiApiPath = Cypress.env("fbiApiPath");
 
-describe(`Different ways to open login modal with library with borrowerCheck `, () => {
+describe(`Different ways to open login modal with library that has borrowerCheck `, () => {
   it("Plain login from login button in header", () => {
     cy.visit(nextjsBaseUrl);
     cy.consentAllowAll(); //allow cookies
@@ -13,24 +14,23 @@ describe(`Different ways to open login modal with library with borrowerCheck `, 
   it("Plain login from login button on profile page", () => {
     cy.visit(nextjsBaseUrl + "/profil");
     cy.consentAllowAll();
-    cy.get('[class^="ProfileLayout_loginButton__sdKEd"]') //we can have two login buttons on the page, take the one where classname starts with this
-      .should("be.visible")
-      .click();
+    cy.get("[data-cy=profile-layout-button-login]").click();
     cy.get("[data-cy=text-log-ind]").should("be.visible");
   });
 
   it("Infomedia shows correct login modal", () => {
+    cy.fixture("articlepublicdata.json").then((fixture) => {
+      cy.intercept("POST", `${fbiApiPath}`, (req) => {
+        if (req?.body?.variables?.workId === "work-of:870971-tsart:39160846") {
+          req.reply(fixture);
+        }
+      });
+    });
     cy.visit(
-      nextjsBaseUrl +
-        "/infomedia/politiken/work-of:870971-avis:87043134/Y4074532" //TODO could this article disappear? should i mock this here?
+      `${nextjsBaseUrl}/infomedia/en-artikel/work-of:870971-tsart:39160846/e842b5ee`
     );
     cy.consentAllowAll();
-    cy.get("[data-cy=button-log-ind]")
-      .filter((index, element) => {
-        const classes = element.className.split(" ");
-        return classes.some((cls) => cls.includes("primary")); //we can have two login buttons on the page, where class contains "primary"
-      })
-      .first()
+    cy.get("[data-cy=article-prompt-button-log-ind]")
       .should("be.visible")
       .click();
     cy.get("[data-cy=text-log-ind]").should("be.visible");
@@ -41,9 +41,15 @@ describe(`Different ways to open login modal with library with borrowerCheck `, 
 
   //TODO bestil should open login modal directly
   // it("Plain login from book reservation", () => {
+  //  cy.fixture("articlepublicdata.json").then((fixture) => {
+  //   cy.intercept("POST", `${fbiApiPath}`, (req) => {
+  //     if (req?.body?.variables?.workId === "work-of:870971-tsart:39160846") {
+  //       req.reply(fixture);
+  //     }
+  //   });
+  // });
   // cy.visit(
-  //   nextjsBaseUrl +
-  //     "/materiale/harry-potter-og-de-vises-sten_joanne-k-rowling/work-of%3A870970-basis%3A22629344?type=bog" //TODO should i mock this here?
+  //   `${nextjsBaseUrl}/infomedia/en-artikel/work-of:870971-tsart:39160846/e842b5ee`
   // );
   // cy.consentAllowAll();
   // cy.get("[data-cy=button-order-overview-enabled]")
@@ -56,7 +62,7 @@ describe(`Different ways to open login modal with library with borrowerCheck `, 
   //DDA
 });
 
-describe(`Different ways to open login modal with (FFU) library WITHOUT borrowerCheck`, () => {
+describe(`Different ways to open login modal with a (FFU) library that does NOT have borrowerCheck`, () => {
   it("Plain login from login button in header not supported & back button leads back to pick up branch search", () => {
     cy.visit(nextjsBaseUrl);
     cy.consentAllowAll();
@@ -75,14 +81,7 @@ describe(`Different ways to open login modal with (FFU) library WITHOUT borrower
   it("Plain login from login button on profile page not supported & back button leads back to pick up branch search", () => {
     cy.visit(nextjsBaseUrl + "/profil");
     cy.consentAllowAll();
-    cy.get("[data-cy=button-log-ind]")
-      .filter((index, element) => {
-        const classes = element.className.split(" ");
-        return classes.some((cls) => cls.includes("primary")); //we can have two login buttons on the page, take one with classname contains "primary"
-      })
-      .first()
-      .should("be.visible")
-      .click();
+    cy.get("[data-cy=profile-layout-button-login]").click();
     cy.get("[data-cy=pickup-search-input]")
       .should("be.visible")
       .type("CBS Bibliotek");
@@ -95,17 +94,18 @@ describe(`Different ways to open login modal with (FFU) library WITHOUT borrower
   });
 
   it("Infomedia login not supported & back button leads back to pick up branch search", () => {
+    cy.fixture("articlepublicdata.json").then((fixture) => {
+      cy.intercept("POST", `${fbiApiPath}`, (req) => {
+        if (req?.body?.variables?.workId === "work-of:870971-tsart:39160846") {
+          req.reply(fixture);
+        }
+      });
+    });
     cy.visit(
-      nextjsBaseUrl +
-        "/infomedia/politiken/work-of:870971-avis:87043134/Y4074532" //TODO could this article disappear? should i mock this here?
+      `${nextjsBaseUrl}/infomedia/en-artikel/work-of:870971-tsart:39160846/e842b5ee`
     );
     cy.consentAllowAll();
-    cy.get("[data-cy=button-log-ind]")
-      .filter((index, element) => {
-        const classes = element.className.split(" ");
-        return classes.some((cls) => cls.includes("primary")); //we can have two login buttons on the page, take one that contains "primary"
-      })
-      .first()
+    cy.get("[data-cy=article-prompt-button-log-ind]")
       .should("be.visible")
       .click();
     cy.get("[data-cy=text-log-ind]").should("be.visible");

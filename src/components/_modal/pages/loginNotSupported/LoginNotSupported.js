@@ -14,11 +14,11 @@ export default function LoginNotSupported({ context, modal }) {
   const [expanded, setExpanded] = useState(false);
 
   const toggleCollapse = () => {
-    setExpanded(!expanded);
+    setExpanded((current) => !current);
   };
 
   return (
-    <div className={styles.container}>
+    <article className={styles.container}>
       <Top />
       <Title type="title4" tag="h2" className={styles.header}>
         {Translate({
@@ -68,6 +68,7 @@ export default function LoginNotSupported({ context, modal }) {
       </Text>
 
       <Collapse in={expanded}>
+        {/* use p instead of text component, because collaps doesnt work with text component */}
         <p className={styles.notSupportedReason} id="why-not-supported-text">
           {Translate({
             context: "login",
@@ -82,11 +83,6 @@ export default function LoginNotSupported({ context, modal }) {
         className={`${styles.expandButton} ${animations["on-hover"]} ${animations["on-focus"]}`}
         border={false}
         onClick={toggleCollapse}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            toggleCollapse();
-          }
-        }}
       >
         <span className={styles.expandWrap}>
           <Text
@@ -116,6 +112,6 @@ export default function LoginNotSupported({ context, modal }) {
       >
         {Translate({ context: "general", label: "back" })}
       </Button>
-    </div>
+    </article>
   );
 }

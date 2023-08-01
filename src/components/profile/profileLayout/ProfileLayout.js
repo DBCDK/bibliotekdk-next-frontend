@@ -94,6 +94,7 @@ export default function ProfileLayout({ title, children }) {
               </Text>
 
               <Button
+                dataCy="profile-layout-button-login"
                 className={styles.loginButton}
                 size="large"
                 type="primary"

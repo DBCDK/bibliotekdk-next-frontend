@@ -13,7 +13,7 @@ import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
 import useUser from "@/components/hooks/useUser";
 import Top from "@/components/_modal/pages/base/top";
-import { LOGIN_MODE as LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
+import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
 
 import animations from "css/animations";
 import { useData } from "@/lib/api/api";
@@ -111,7 +111,7 @@ export function LoginPickup({
   const allBranches = data?.result;
   const { mode = LOGIN_MODE.PLAIN_LOGIN, originUrl = null } = context || {};
   const APP_URL =
-    getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000"; //TODO NEXT_PUBLIC_APP_URL instead of getConfig()
+    getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
 
   // remove all modal params from callbackurl - this is login context
   const regexp = /&modal=+[0-9]*/g;
@@ -212,6 +212,7 @@ export function LoginPickup({
             {Translate({ context: "login", label: "or-mit-id" })}
           </Text>
           <Button
+            data-cy="mitid-button"
             disabled={true} //TODO: remove when MitID is implemented
             type="secondary"
             size="large"

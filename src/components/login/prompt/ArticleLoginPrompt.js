@@ -46,7 +46,7 @@ export default function ArticleLoginPrompt({ articleId }) {
           context: "articles",
           label: "accessWarning",
         })}
-        signIn={() => openLoginModal()}
+        signIn={openLoginModal}
       />
     );
   }
@@ -68,7 +68,7 @@ export default function ArticleLoginPrompt({ articleId }) {
           context: "order",
           label: "change-pickup-digital-copy-link",
         })}
-        signIn={() => openLoginModal()}
+        signIn={openLoginModal}
       />
     );
   }

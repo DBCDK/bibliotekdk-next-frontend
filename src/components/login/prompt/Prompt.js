@@ -40,7 +40,12 @@ export default function LoginPrompt({
             {title}
           </Title>
           <Text type="text3">{description}</Text>
-          <Button type="primary" size="large" onClick={signIn}>
+          <Button
+            type="primary"
+            size="large"
+            onClick={signIn}
+            dataCy="article-prompt-button-log-ind"
+          >
             {buttonText}
           </Button>
           <Divider />

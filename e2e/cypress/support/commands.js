@@ -84,13 +84,13 @@ Cypress.Commands.add("login", () => {
 });
 
 Cypress.Commands.add("consentAllowAll", () => {
-  cy.get("#CybotCookiebotDialog")
+  cy.get("#CybotCookiebotDialog", { timeout: 10000 })
     .should("be.visible")
     .then(($box) => {
       if ($box.is(":visible")) {
-        cy.get(
-          "#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll"
-        ).click();
+        cy.get("#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll", {
+          timeout: 10000,
+        }).click();
       }
     });
 });
