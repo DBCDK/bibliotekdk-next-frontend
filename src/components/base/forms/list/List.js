@@ -175,7 +175,7 @@ function FormLink({
   return (
     <Link
       data-cy={props["data-cy"]}
-      ref={_ref}
+      linkRef={_ref}
       aria-labelledby={labelledBy}
       aria-disabled={!!disabled}
       disabled={!!disabled}

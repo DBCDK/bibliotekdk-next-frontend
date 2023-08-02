@@ -189,7 +189,13 @@ const LoansAndReservations = () => {
         />
         {isLoading ? (
           [...Array(SKELETON_ROW_AMOUNT).keys()].map((_, i) => (
-            <MaterialRow skeleton key={`loan-#${i}`} />
+            <MaterialRow
+              skeleton
+              key={`loan-#${i}`}
+              id={`loan-#${i}`}
+              title=""
+              library=""
+            />
           ))
         ) : loans && loans.length !== 0 ? (
           loans.map((loan, i) => (
@@ -252,7 +258,13 @@ const LoansAndReservations = () => {
         />
         {isLoading ? (
           [...Array(SKELETON_ROW_AMOUNT).keys()].map((_, i) => (
-            <MaterialRow skeleton key={`loan-#${i}`} />
+            <MaterialRow
+              skeleton
+              key={`loan-#${i}`}
+              id={`loan-#${i}`}
+              title=""
+              library=""
+            />
           ))
         ) : orders && orders.length !== 0 ? (
           orders.map((order, i) => (
