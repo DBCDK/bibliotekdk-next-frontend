@@ -55,7 +55,7 @@ function Details({ className = "", manifestation = {}, work = {} }) {
   return (
     <Section
       title={Translate({ ...context, label: "title" })}
-      space={{ top: "var(--pt8)", bottom: "var(--pt4)" }}
+      space={{ top: false, bottom: "var(--pt4)" }}
       className={`${className}`}
       subtitle={subtitle}
     >

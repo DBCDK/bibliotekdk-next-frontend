@@ -1,11 +1,9 @@
 import PropTypes from "prop-types";
 import { default as NextLink } from "next/link";
-
-import AnimationLine from "@/components/base/animation/line";
-
 import styles from "./Link.module.css";
 import animations from "css/animations";
 import cx from "classnames";
+import React, { useEffect, useState } from "react";
 
 function parseBorders(border) {
   return [
@@ -29,15 +27,91 @@ function onClickWrapper(onClick, href, e) {
   }
 }
 
+function getDisplayType(window, element) {
+  return (
+    typeof window !== "undefined" &&
+    window?.getComputedStyle(element).getPropertyValue("display")
+  );
+}
+
+const UnderlineTypeEnum = Object.freeze({
+  BLOCK: "BLOCK",
+  MULTILINE: "MULTILINE",
+  INFER: "INFER",
+});
+
+/**
+ * Recurse through children when the
+ * @param {object|array|string|JSX.Element} children
+ * @param {function} cloneFunction
+ * @returns {Array<Exclude<unknown, boolean | null | undefined>>}
+ */
+function recursiveMap(children, cloneFunction) {
+  return React.Children.map(children, (child) => {
+    if (!React.isValidElement(child)) {
+      return child;
+    }
+
+    if (child.props.children) {
+      child = React.cloneElement(child, {
+        children: recursiveMap(child.props.children, cloneFunction),
+      });
+    }
+
+    return cloneFunction(child);
+  });
+}
+
+function inferDisplayTypeOfLink(
+  forceUnderlineType,
+  linkDisplay,
+  childrenDisplay
+) {
+  const summatedChildrenDisplay =
+    childrenDisplay?.length > 1
+      ? childrenDisplay
+          .slice(1)
+          .reduce(
+            (prev, curr) => (curr !== "inline" ? curr : prev),
+            childrenDisplay[0]
+          )
+      : childrenDisplay?.[0];
+
+  if (forceUnderlineType === UnderlineTypeEnum.BLOCK) {
+    return {
+      linkDisplay:
+        !linkDisplay || ["inline", "contents"].includes(linkDisplay)
+          ? summatedChildrenDisplay &&
+            !["inline", "contents"].includes(summatedChildrenDisplay)
+            ? summatedChildrenDisplay
+            : "block"
+          : linkDisplay,
+      childrenDisplay: null,
+    };
+  } else if (forceUnderlineType === UnderlineTypeEnum.MULTILINE) {
+    return {
+      linkDisplay: "inline",
+      childrenDisplay: summatedChildrenDisplay !== "inline" ? "inline" : null,
+    };
+  } else if (forceUnderlineType === UnderlineTypeEnum.INFER) {
+    return {
+      linkDisplay:
+        linkDisplay !== "inline" ? linkDisplay : summatedChildrenDisplay,
+      childrenDisplay: null,
+    };
+  }
+}
+
+let inferredDisplay;
+
 /**
  * The Component function
  *
- * @param {object|array|string} children
+ * @param {object|array|string|JSX.Element} children
  * @param {boolean} a
  * @param linkRef
  * @param {string|object} href
  * @param {string} target
- * @param {object} border
  * @param {function} onClick
  * @param {function} onKeyDown
  * @param {function} onFocus
@@ -48,11 +122,11 @@ function onClickWrapper(onClick, href, e) {
  * @param {boolean} disabled
  * @param {string} ariaLabel
  * @param {boolean} scroll
- * @param {boolean} data_use_new_underline
- * @param {obj} props
+ * @param {("INFER"|"BLOCK"|"MULTILINE")} forceUnderlineType
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 function Link({
   children = "Im a hyperlink now!",
@@ -60,7 +134,6 @@ function Link({
   linkRef = null,
   href,
   target = "_self",
-  border = { top: false, bottom: true },
   onClick = null,
   onKeyDown = null,
   onFocus = null,
@@ -71,16 +144,34 @@ function Link({
   disabled = false,
   ariaLabel = "",
   scroll = true,
-  data_use_new_underline = false,
+  forceUnderlineType = "INFER",
   ...props
 }) {
   const Tag = tag;
+
+  const [linkDisplay, setLinkDisplay] = useState(null);
+  const [childrenDisplay, setChildrenDisplay] = useState(null);
+
+  useEffect(() => {
+    if (linkRef && linkRef?.current) {
+      setLinkDisplay(getDisplayType(window, linkRef?.current));
+      let tempChildrenDisplay = [];
+      linkRef.current.childNodes?.forEach((node) => {
+        tempChildrenDisplay.push(getDisplayType(window, node));
+        // setChildrenDisplay(getDisplayType(window, node));
+      });
+      setChildrenDisplay(tempChildrenDisplay);
+    }
+  }, [linkRef, linkRef?.current]);
+
+  inferredDisplay = inferDisplayTypeOfLink(
+    forceUnderlineType,
+    linkDisplay,
+    childrenDisplay
+  );
+
   // Maybe wrap with an a-tag
   if (a) {
-    const animationClass = !!border ? styles.border : "";
-
-    const disabledClass = disabled ? styles.disabled : "";
-
     children = (
       <Tag
         ref={linkRef}
@@ -95,20 +186,24 @@ function Link({
             : (() => {})();
         }}
         onFocus={onFocus}
-        className={
-          data_use_new_underline
-            ? className
-            : `${styles.link} ${animationClass} ${disabledClass} ${className}`
-        }
+        className={className}
         tabIndex={disabled ? "-1" : tabIndex}
         aria-label={ariaLabel}
         {...props}
+        style={{
+          ...props.style,
+          ...(inferredDisplay.linkDisplay && {
+            display: inferredDisplay.linkDisplay,
+          }),
+        }}
       >
-        {border.top && <AnimationLine keepVisible={!!border.top.keepVisible} />}
-        {children}
-        {border.bottom && (
-          <AnimationLine keepVisible={!!border.bottom.keepVisible} />
-        )}
+        {forceUnderlineType === "MULTILINE"
+          ? recursiveMap(children, (child) =>
+              React.cloneElement(child, {
+                className: cx(child.props.className, styles.force_inline),
+              })
+            )
+          : children}
       </Tag>
     );
   }
@@ -122,6 +217,54 @@ function Link({
     <NextLink href={href} shallow={true} scroll={scroll}>
       {children}
     </NextLink>
+  );
+}
+
+/**
+ * @typedef {(boolean|{keepVisible:boolean}|undefined)} BorderLike
+ */
+
+/**
+ * Wrapper for using new underline that allows line wrap
+ *   HOW TO USE {@link forceUnderlineType}:
+ *   - "INFER": Default. Uses multiline if link and children is inline, otherwise block underline
+ *   - - To "INFER" MULTILINE: The link element (default display is inline) and their children must be inline-elements
+ *   - "BLOCK": The link and/or children is a not display inline :-)
+ *
+ * @param {string} className
+ * @param {boolean} disabled
+ * @param {{ top: BorderLike, bottom: BorderLike }} border
+ * @param {boolean} data_use_new_underline
+ * @param {("INFER"|"BLOCK"|"MULTILINE")} forceUnderlineType
+ * @param {boolean} data_underline_animation_disabled
+ * @param props
+ * @returns {JSX.Element}
+ */
+export default function Wrap({
+  className = "",
+  disabled = false,
+  border = { top: false, bottom: true },
+  forceUnderlineType = "INFER",
+  data_underline_animation_disabled = false,
+  ...props
+}) {
+  return (
+    <Link
+      className={cx(
+        animations.underlineContainer,
+        parseBorders(border),
+        {
+          [animations.link_disabled]: disabled,
+          [animations.animation_disabled]: data_underline_animation_disabled,
+        },
+        className
+      )}
+      disabled={disabled}
+      forceUnderlineType={forceUnderlineType}
+      {...props}
+    >
+      {props.children}
+    </Link>
   );
 }
 
@@ -153,11 +296,12 @@ export const PropType_Link_href = PropTypes.oneOfType([
 ]);
 
 // PropTypes for component
-Link.propTypes = {
+Wrap.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object,
     PropTypes.array,
+    PropTypes.element,
   ]),
   a: PropTypes.bool,
   href: PropType_Link_href,
@@ -174,63 +318,8 @@ Link.propTypes = {
   ariaLabel: PropTypes.string,
   scroll: PropTypes.bool,
   data_use_new_underline: PropTypes.bool,
+  forceUnderlineType: PropTypes.oneOf(["INFER", "MULTILINE", "BLOCK"]),
 };
-
-/**
- * Wrapper for using new underline that allows line wrap
- *   HOW TO USE:
- *   - MULTILINE: The link element (default display is inline) and their children must be inline-elements
- *   - BLOCK ELEMENT: The link and/or children is a block (or even inline-block) :-)
- * @param className
- * @param disabled
- * @param border
- * @param data_use_new_underline
- * @param data_underline_animation_disabled
- * @param props
- * @return {JSX.Element}
- * @constructor
- */
-export default function Wrap({
-  className = "",
-  disabled = false,
-  border = { top: false, bottom: true },
-  data_use_new_underline = true,
-  data_underline_animation_disabled = false,
-  ...props
-}) {
-  let newBorder = border;
-  let newClassName = className;
-
-  const underline_data_exception_classes = [
-    ...parseBorders(border),
-    ...(disabled ? [animations.link_disabled] : []),
-    ...(data_underline_animation_disabled
-      ? [animations.animation_disabled]
-      : []),
-  ].join(" ");
-
-  if (data_use_new_underline === true) {
-    newBorder = { top: false, bottom: false };
-
-    newClassName = [
-      animations.underlineContainer,
-      underline_data_exception_classes,
-      className,
-    ].join(" ");
-  }
-
-  return (
-    <Link
-      border={newBorder}
-      className={newClassName}
-      disabled={disabled}
-      data_use_new_underline={data_use_new_underline}
-      {...props}
-    >
-      {props.children}
-    </Link>
-  );
-}
 
 export function LinkOnlyInternalAnimations({
   dataCy,
