@@ -142,7 +142,7 @@ describe("ArticlePage", () => {
       //cy.contains("Titel på Infomedia-artikel");
       cy.contains("Få adgang til hele artiklen");
 
-      cy.get("[data-cy=button-log-ind]").should("be.visible");
+      cy.get("[data-cy=article-prompt-button-log-ind]").should("be.visible");
     });
 
     it.skip("Shows login prompt when logged in user is not granted access", () => {
