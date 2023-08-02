@@ -74,12 +74,12 @@ export function getActiveElement(items, scrollY, menuT, height) {
 }
 
 /**
- * Get id of the active section (visible in users viewport)
+ * Handle scrolling and activate callback when scroll is finished
  *
  * @param {Object} container
  * @param {Object} section
  * @param {int} offset
- * @param callback
+ * @param {function} callback
  */
 export function handleScroll(container, section, offset = 0, callback = null) {
   // Scroll to element position

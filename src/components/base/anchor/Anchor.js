@@ -117,7 +117,7 @@ function Menu({
     handleScroll(
       window,
       section.element,
-      section.offset + PRETTY_OFFSET, // var(--pt05) + var(--pt025)
+      section.offset + PRETTY_OFFSET, // var(--pt1)
       // callback
       () => {
         setTimeout(() => {
