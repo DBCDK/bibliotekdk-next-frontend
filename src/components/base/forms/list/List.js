@@ -179,6 +179,7 @@ function FormLink({
       aria-labelledby={labelledBy}
       aria-disabled={!!disabled}
       disabled={!!disabled}
+      data-list-type="link"
       onClick={(e) => {
         e.preventDefault();
         if (!disabled) {
@@ -235,6 +236,10 @@ function Group({
     // either the checked or the first button
     let index = 0;
     childrenRef.current.forEach((el, idx) => {
+      if (el.getAttribute("data-list-type") === "link") {
+        return;
+      }
+
       if (el) {
         el.tabIndex = "-1";
         if (
@@ -264,7 +269,10 @@ function Group({
           (el) => el === document.activeElement
         );
 
-        if (!childrenRef.current[index]) {
+        if (
+          !childrenRef.current[index] ||
+          childrenRef.current[index].getAttribute("data-list-type") === "link"
+        ) {
           /**
            * We are not in a form group, break.
            * Happens for FormLink
