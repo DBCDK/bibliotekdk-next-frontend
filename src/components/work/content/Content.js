@@ -66,7 +66,7 @@ export function Content({
       divider={{ content: false }}
     >
       <Row className={`${styles.content} ${className}`}>
-        {skeleton && <Text skeleton={skeleton} lines={3}/>}
+        {skeleton && <Text skeleton={skeleton} lines={3} />}
         <Col xs={12} md={8}>
           {!isEmpty(moreContent?.listOfContent) ? (
             <ManifestationParts
