@@ -167,13 +167,13 @@ function Menu({
                       key={`link-${id}`}
                       className={cx("anchor-menu-item", styles.item, {
                         [styles.activeClass]:
-                          (distanceToBottom <= 1 &&
+                          (distanceToBottom <= 0 &&
                             array.length - 1 === index) ||
                           (isClicked !== false && isClicked === id) ||
-                          (distanceToBottom > 1 && activeItemId === id),
+                          (distanceToBottom > 0 && activeItemId === id),
                       })}
                       border={{ bottom: { keepVisible: true } }}
-                      dataCy="anchor-menu-item"
+                      dataCy={"anchor-menu-item-" + index}
                       onClick={(e) => handleClick(e, id, section)}
                     >
                       <Text type={"text2"}>{titles[id]}</Text>

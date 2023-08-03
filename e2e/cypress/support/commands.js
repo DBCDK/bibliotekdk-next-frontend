@@ -92,3 +92,12 @@ Cypress.Commands.add("consentAllowAll", () => {
   });
   cy.wait(1000);
 });
+
+Cypress.Commands.add("cssVar", (cssVarName) => {
+  return cy.document().then((doc) => {
+    return window
+      .getComputedStyle(doc.body)
+      .getPropertyValue(cssVarName)
+      .trim();
+  });
+});
