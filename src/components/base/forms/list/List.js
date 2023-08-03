@@ -236,11 +236,12 @@ function Group({
     // either the checked or the first button
     let index = 0;
     childrenRef.current.forEach((el, idx) => {
-      if (el.getAttribute("data-list-type") === "link") {
-        return;
-      }
-
       if (el) {
+        if (el.getAttribute("data-list-type") === "link") {
+          // Return if FormLink
+          return;
+        }
+
         el.tabIndex = "-1";
         if (
           el.getAttribute("aria-checked") === "true" ||
