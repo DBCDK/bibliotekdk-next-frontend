@@ -585,6 +585,28 @@ function RenderLitteratureAudience({ values }) {
 export function fieldsForRows(manifestation, work, context) {
   const materialType = work?.workTypes?.[0] || null;
 
+  const audienceageValue = !isEmpty(manifestation?.audience?.ages)
+    ? manifestation?.audience?.ages?.map((age, index) => (
+        <Text type="text4" lines={1} key={index}>
+          {Translate({
+            ...context,
+            label: "audice-age",
+            vars: [age.display],
+          })}
+        </Text>
+      ))
+    : !isEmpty(manifestation?.audience?.generalAudience)
+    ? manifestation?.audience?.generalAudience.join(", ")
+    : !isEmpty(manifestation?.audience?.libraryRecommendation)
+    ? manifestation?.audience?.libraryRecommendation
+        .map((child) => child.display)
+        .join(", ")
+    : !isEmpty(manifestation?.audience?.primaryTarget)
+    ? manifestation?.audience?.primaryTarget
+        .map((child) => child.display)
+        .join(", ")
+    : null;
+
   const fieldsMap = {
     DEFAULT: [
       {
@@ -658,27 +680,7 @@ export function fieldsForRows(manifestation, work, context) {
       {
         audienceage: {
           label: Translate({ ...context, label: "audience" }),
-          value: !isEmpty(manifestation?.audience?.ages)
-            ? manifestation?.audience?.ages?.map((age, index) => (
-                <Text type="text4" lines={1} key={index}>
-                  {Translate({
-                    ...context,
-                    label: "audice-age",
-                    vars: [age.display],
-                  })}
-                </Text>
-              ))
-            : !isEmpty(manifestation?.audience?.generalAudience)
-            ? manifestation?.audience?.generalAudience.join(", ")
-            : !isEmpty(manifestation?.audience?.libraryRecommendation)
-            ? manifestation?.audience?.libraryRecommendation
-                .map((child) => child.display)
-                .join(", ")
-            : !isEmpty(manifestation?.audience?.primaryTarget)
-            ? manifestation?.audience?.primaryTarget
-                .map((child) => child.display)
-                .join(", ")
-            : null,
+          value: audienceageValue,
         },
       },
       {
@@ -752,27 +754,7 @@ export function fieldsForRows(manifestation, work, context) {
       {
         audienceage: {
           label: Translate({ ...context, label: "audience" }),
-          value: !isEmpty(manifestation?.audience?.ages)
-            ? manifestation?.audience?.ages?.map((age, index) => (
-                <Text type="text4" lines={1} key={index}>
-                  {Translate({
-                    ...context,
-                    label: "audience-age",
-                    vars: [age.display],
-                  })}
-                </Text>
-              ))
-            : !isEmpty(manifestation?.audience?.generalAudience)
-            ? manifestation?.audience?.generalAudience.join(", ")
-            : !isEmpty(manifestation?.audience?.libraryRecommendation)
-            ? manifestation?.audience?.libraryRecommendation
-                .map((child) => child.display)
-                .join(", ")
-            : !isEmpty(manifestation?.audience?.primaryTarget)
-            ? manifestation?.audience?.primaryTarget
-                .map((child) => child.display)
-                .join(", ")
-            : null,
+          value: audienceageValue,
         },
       },
     ],
@@ -802,27 +784,7 @@ export function fieldsForRows(manifestation, work, context) {
       {
         audienceage: {
           label: Translate({ ...context, label: "audience" }),
-          value: !isEmpty(manifestation?.audience?.ages)
-            ? manifestation?.audience?.ages?.map((age, index) => (
-                <Text type="text4" lines={1} key={index}>
-                  {Translate({
-                    ...context,
-                    label: "audience-age",
-                    vars: [age.display],
-                  })}
-                </Text>
-              ))
-            : !isEmpty(manifestation?.audience?.generalAudience)
-            ? manifestation?.audience?.generalAudience.join(", ")
-            : !isEmpty(manifestation?.audience?.libraryRecommendation)
-            ? manifestation?.audience?.libraryRecommendation
-                .map((child) => child.display)
-                .join(", ")
-            : !isEmpty(manifestation?.audience?.primaryTarget)
-            ? manifestation?.audience?.primaryTarget
-                .map((child) => child.display)
-                .join(", ")
-            : null,
+          value: audienceageValue,
         },
       },
       {
@@ -936,27 +898,7 @@ export function fieldsForRows(manifestation, work, context) {
       {
         audienceage: {
           label: Translate({ ...context, label: "audience" }),
-          value: !isEmpty(manifestation?.audience?.ages)
-            ? manifestation?.audience?.ages?.map((age, index) => (
-                <Text type="text4" lines={1} key={index}>
-                  {Translate({
-                    ...context,
-                    label: "audience-age",
-                    vars: [age.display],
-                  })}
-                </Text>
-              ))
-            : !isEmpty(manifestation?.audience?.generalAudience)
-            ? manifestation?.audience?.generalAudience.join(", ")
-            : !isEmpty(manifestation?.audience?.libraryRecommendation)
-            ? manifestation?.audience?.libraryRecommendation
-                .map((child) => child.display)
-                .join(", ")
-            : !isEmpty(manifestation?.audience?.primaryTarget)
-            ? manifestation?.audience?.primaryTarget
-                .map((child) => child.display)
-                .join(", ")
-            : null,
+          value: audienceageValue,
         },
       },
       {
