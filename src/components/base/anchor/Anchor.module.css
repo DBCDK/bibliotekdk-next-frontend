@@ -40,6 +40,7 @@
   display: inline-block;
   margin-right: var(--pt3);
   padding-bottom: var(--pt2);
+  --underline-height: 2px;
   --underline-font-hover-color: var(--mine-shaft);
   --underline-bottom-color: var(--transparent);
 }
