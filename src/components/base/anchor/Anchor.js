@@ -161,16 +161,17 @@ function Menu({
                   // Set item ref
                   const itemRef = itemRefs.current[id];
 
+                  const active =
+                    (distanceToBottom <= 0 && array.length - 1 === index) ||
+                    (isClicked !== false && isClicked === id) ||
+                    (distanceToBottom > 0 && activeItemId === id);
+
                   return (
                     <Link
                       linkRef={itemRef}
                       key={`link-${id}`}
                       className={cx("anchor-menu-item", styles.item, {
-                        [styles.activeClass]:
-                          (distanceToBottom <= 0 &&
-                            array.length - 1 === index) ||
-                          (isClicked !== false && isClicked === id) ||
-                          (distanceToBottom > 0 && activeItemId === id),
+                        [styles.activeClass]: active,
                       })}
                       border={{ bottom: { keepVisible: true } }}
                       dataCy={"anchor-menu-item-" + index}
