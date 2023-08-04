@@ -33,19 +33,23 @@ export function Default() {
       <Anchor.Wrap>
         <Anchor.Menu />
         <section anchor-label="Section1" style={styles}>
-          <span>Section 1</span>
+          <div>Section 1</div>
         </section>
         <section anchor-label="Section2" style={styles}>
-          <span>Section 2</span>
+          <div>Section 2</div>
         </section>
         <section anchor-label="Section3" style={styles}>
-          <span>Section 3</span>
+          <div>Section 3</div>
         </section>
-        <section anchor-label="Section4" style={styles}>
-          <span>Section 4</span>
+        <section
+          anchor-label="Section4"
+          style={styles}
+          data-cy={"Section4-section"}
+        >
+          <div>Section 4</div>
         </section>
         <section anchor-label="Section5" style={styles}>
-          <span>Section 5</span>
+          <div>Section 5</div>
         </section>
       </Anchor.Wrap>
     </div>
