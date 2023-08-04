@@ -175,10 +175,11 @@ function FormLink({
   return (
     <Link
       data-cy={props["data-cy"]}
-      ref={_ref}
+      linkRef={_ref}
       aria-labelledby={labelledBy}
       aria-disabled={!!disabled}
       disabled={!!disabled}
+      data-list-type="link"
       onClick={(e) => {
         e.preventDefault();
         if (!disabled) {
@@ -236,6 +237,11 @@ function Group({
     let index = 0;
     childrenRef.current.forEach((el, idx) => {
       if (el) {
+        if (el.getAttribute("data-list-type") === "link") {
+          // Return if FormLink
+          return;
+        }
+
         el.tabIndex = "-1";
         if (
           el.getAttribute("aria-checked") === "true" ||
@@ -264,7 +270,10 @@ function Group({
           (el) => el === document.activeElement
         );
 
-        if (!childrenRef.current[index]) {
+        if (
+          !childrenRef.current[index] ||
+          childrenRef.current[index].getAttribute("data-list-type") === "link"
+        ) {
           /**
            * We are not in a form group, break.
            * Happens for FormLink

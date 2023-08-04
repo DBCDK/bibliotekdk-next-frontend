@@ -51,7 +51,7 @@
 }
 
 .textbox span:first-of-type {
-  font-weight: var(--body-font-semibold);
+  font-family: var(--body-font-semibold);
   display: block;
 }
 

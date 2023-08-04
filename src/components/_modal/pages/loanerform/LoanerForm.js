@@ -234,7 +234,7 @@ export function LoanerForm({
   doPolicyCheck,
   // modal props
   context,
-  digitalCopyAccess,
+  digitalCopyAccess, //TODO can be hentet fra branch
 }) {
   let { mode = LOGIN_MODE.PLAIN_LOGIN, originUrl = null } = context || {};
   if (mode === LOGIN_MODE.SUBSCRIPTION) {
@@ -268,7 +268,7 @@ export function LoanerForm({
 
   // Order possible for branch
   let orderPossible =
-    doPolicyCheck !== false ? branch.orderPolicy?.orderPossible : true;
+    doPolicyCheck !== false ? branch.orderPolicy?.orderPossible : true; //cant we always get info from branch?
 
   // QUICKFIX - .. to avoid api check ..  all public libraries have access to dda - no other
   if (mode === LOGIN_MODE.DDA) {
@@ -495,7 +495,7 @@ export default function Wrap(props) {
         }}
         onSubmit={onSubmit}
         skeleton={skeleton}
-        doPolicyCheck={doPolicyCheck}
+        doPolicyCheck={doPolicyCheck} //TODO can we check this in the form?
         digitalCopyAccess={
           isDigitalCopy && !isPeriodicaLike && branch?.digitalCopyAccess
         }
