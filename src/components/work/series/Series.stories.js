@@ -31,7 +31,7 @@ WrappedSeriesSlider.story = {
               : [],
         },
         Manifestations: {
-          all: () => [...new Array(1).fill({})],
+          mostRelevant: () => [...new Array(1).fill({})],
         },
         Cover: {
           detail: (args) =>

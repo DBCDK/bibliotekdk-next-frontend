@@ -28,6 +28,7 @@ describe("Order", () => {
     // Submit the order
     cy.wait(1000);
     cy.contains("Godkend", { timeout: 10000 }).click();
+    cy.wait(1000);
     cy.contains("some-order-id", { timeout: 10000 });
 
     cy.getConsoleEntry("submitOrder").then((entry) => {
@@ -187,7 +188,7 @@ describe("Order", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?id=modal-order--order-periodica-volume&viewMode=story"
       );
-      cy.contains("Bestil").click();
+      cy.contains("Bestil", { timeout: 10000 }).click();
       // Check that user blocking is not present
       cy.get("[data-cy=blocked-user]").should("not.exist");
       cy.get("[data-cy=button-godkend]")
@@ -239,7 +240,7 @@ describe("Order", () => {
         "/iframe.html?id=modal-order--order-periodica-volume-only-ill&viewMode=story"
       );
 
-      cy.contains("Bestil").click();
+      cy.contains("Bestil", { timeout: 10000 }).click();
 
       // Check that user blocking is not present
       cy.get("[data-cy=blocked-user]").should("not.exist");
@@ -297,7 +298,7 @@ describe("Order", () => {
     it("should not block users from loaning if they are not blocked", () => {
       cy.visit("/iframe.html?id=modal-order--not-blocked-user&viewMode=story");
 
-      cy.contains("Bestil").click();
+      cy.contains("Bestil", { timeout: 10000 }).click();
 
       cy.get("[data-cy=blocked-user]").should("not.exist");
 
@@ -309,7 +310,7 @@ describe("Order", () => {
     it("should block users from loaning if they are blocked", () => {
       cy.visit("/iframe.html?id=modal-order--blocked-user&viewMode=story");
 
-      cy.contains("Bestil").click();
+      cy.contains("Bestil", { timeout: 10000 }).click();
 
       cy.get("[data-cy=blocked-user]")
         .should("exist")

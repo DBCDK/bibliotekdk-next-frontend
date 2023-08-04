@@ -33,7 +33,7 @@ export function Default() {
     {
       workId: "some-id-1",
       manifestations: {
-        all: [
+        mostRelevant: [
           {
             cover: {
               detail:
@@ -81,7 +81,7 @@ export function Default() {
     {
       workId: "some-id-2",
       manifestations: {
-        all: [
+        mostRelevant: [
           {
             cover: {
               detail:
@@ -129,7 +129,7 @@ export function Default() {
     {
       workId: "some-id-3",
       manifestations: {
-        all: [
+        mostRelevant: [
           {
             cover: {
               detail:

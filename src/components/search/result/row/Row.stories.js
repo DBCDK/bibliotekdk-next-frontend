@@ -102,7 +102,7 @@ export function WithoutTitles() {
 
 export function WithoutManifestations() {
   const rowProps = {
-    work: omit(work, ["manifestations.all"]),
+    work: omit(work, ["manifestations.mostRelevant"]),
     className: "",
     onClick: () => {},
   };
@@ -225,19 +225,6 @@ const work = {
   workId: "some-id-1",
   manifestations: {
     mostRelevant: [
-      {
-        cover: {
-          detail:
-            "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=22629344&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=0136749c6e9729d895ed",
-        },
-        materialTypes: [
-          {
-            specific: "bog",
-          },
-        ],
-      },
-    ],
-    all: [
       {
         cover: {
           detail:
@@ -386,7 +373,7 @@ const work_2_other_languages = {
 const noMaterialTypesWork = {
   workId: "some-id-2",
   manifestations: {
-    all: [
+    mostRelevant: [
       {
         cover: {
           detail:
@@ -411,7 +398,7 @@ const noMaterialTypesWork = {
 const work_2_person_creators = {
   workId: "some-id-2",
   manifestations: {
-    all: [
+    mostRelevant: [
       {
         cover: {
           detail:
@@ -439,7 +426,7 @@ const work_2_person_creators = {
 const work_1_corp_creators = {
   workId: "some-id-2",
   manifestations: {
-    all: [
+    mostRelevant: [
       {
         cover: {
           detail:
@@ -472,7 +459,7 @@ const work_1_corp_creators = {
 const work_2_corp_creators = {
   workId: "some-id-2",
   manifestations: {
-    all: [
+    mostRelevant: [
       {
         cover: {
           detail:

@@ -225,8 +225,8 @@ function getMovie({
  */
 export function getCoverImage(work) {
   return (
-    work?.manifestations?.all?.find((entry) => entry?.cover?.detail)?.cover
-      .detail || null
+    work?.manifestations?.mostRelevant?.find((entry) => entry?.cover?.detail)
+      ?.cover.detail || null
   );
 }
 
@@ -265,7 +265,7 @@ export function getJSONLD(work) {
     creators: work?.creators?.map((creator) => ({
       name: creator?.display,
     })),
-    manifestations: work?.manifestations?.all,
+    manifestations: work?.manifestations?.mostRelevant,
     url: url,
     coverUrl: coverUrl,
   };

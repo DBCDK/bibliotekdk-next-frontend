@@ -6,8 +6,8 @@ import { uniqueEntries } from "@/lib/utils";
 import at from "lodash/at";
 
 function filteredWork(work, selectedPids) {
-  const manifestations = work?.manifestations?.all?.filter((manifestation) =>
-    selectedPids?.includes(manifestation.pid)
+  const manifestations = work?.manifestations?.mostRelevant?.filter(
+    (manifestation) => selectedPids?.includes(manifestation.pid)
   );
 
   const materialTypes = uniqueEntries(
@@ -20,7 +20,7 @@ function filteredWork(work, selectedPids) {
 
   return {
     ...work,
-    manifestations: { all: manifestations },
+    manifestations: { mostRelevant: manifestations },
     materialTypes: materialTypes?.map((materialType) => {
       return { specific: materialType };
     }),
