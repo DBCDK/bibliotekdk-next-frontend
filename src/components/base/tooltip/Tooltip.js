@@ -23,9 +23,12 @@ export default function Tooltip({
         delayHide={150}
         placement={placement}
         overlay={
-          <Popover id={`tooltip-${labelToTranslate}`}>
+          <Popover
+            id={`tooltip-${labelToTranslate}`}
+            className={styles.popover}
+          >
             <div
-              className={styles.tooltipcontainer}
+              className={styles.tooltipContainer}
               data-cy="popover-container"
             >
               <Text type="text3" lines={2}>
@@ -38,7 +41,7 @@ export default function Tooltip({
         <span
           ref={spanRef}
           tabIndex="0"
-          className={styles.tooltipwrap}
+          className={styles.tooltipWrap}
           onKeyUp={(e) => {
             if (e.code === "Escape") {
               spanRef?.current?.blur?.();
@@ -53,7 +56,7 @@ export default function Tooltip({
               alt="info"
               data-cy="tooltip-icon"
               size={3}
-              className={styles.tooltipcursor}
+              className={styles.tooltipCursor}
             ></Icon>
           )}
         </span>
@@ -66,4 +69,7 @@ export default function Tooltip({
 Tooltip.propTypes = {
   placement: PropTypes.string,
   labelToTranslate: PropTypes.string,
+  customClass: PropTypes.string,
+  trigger: PropTypes.array,
+  children: PropTypes.node,
 };

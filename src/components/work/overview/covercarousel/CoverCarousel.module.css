@@ -32,7 +32,7 @@
   grid-area: 🎱️;
 }
 
-.full_cover_carousel:focus-within button.arrow_styling {
+.full_cover_carousel:has(:focus-visible) button.arrow_styling {
   opacity: 0;
   visibility: hidden;
 }

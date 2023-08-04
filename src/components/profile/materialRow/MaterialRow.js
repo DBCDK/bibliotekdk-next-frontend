@@ -30,6 +30,7 @@ import { useRouter } from "next/router";
 import { onClickDelete } from "@/components/_modal/pages/deleteOrder/utils";
 import { handleRenewLoan } from "../utils";
 import MaterialRowTooltip from "./materialRowTooltip/MaterialRowTooltip";
+import SkeletonMaterialRow from "./skeleton/Skeleton";
 
 // Set to when warning should be shown
 export const DAYS_TO_COUNTDOWN_RED = 5;
@@ -365,6 +366,7 @@ const MaterialRow = (props) => {
     dataCy,
     removedOrderId,
     setRemovedOrderId,
+    skeleton,
   } = props;
   const [isChecked, setIsChecked] = useState(false);
   const breakpoint = useBreakpoint();
@@ -496,6 +498,12 @@ const MaterialRow = (props) => {
         return null;
     }
   };
+
+  if (skeleton) {
+    return (
+      <SkeletonMaterialRow version={isMobileSize ? "mobile" : "desktop"} />
+    );
+  }
 
   if (isMobileSize) {
     return (
@@ -668,6 +676,7 @@ MaterialRow.propTypes = {
   agencyId: PropTypes.string,
   removedOrderId: PropTypes.string,
   setRemovedOrderId: PropTypes.func,
+  skeleton: PropTypes.bool,
 };
 
 export default MaterialRow;
