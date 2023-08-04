@@ -801,7 +801,6 @@
         "da": "Undervisning",
         "en": "Education"
       },
-
       "physicalDescription": {
         "da": "Længde",
         "en": "Length"
@@ -825,6 +824,10 @@
       "audience": {
         "da": "Målgruppe",
         "en": "Audience"
+      },
+      "audience-age": {
+        "da": "For %s-årige",
+        "en": "For ages %s"
       },
       "adaption": {
         "da": "Filmatisering af",

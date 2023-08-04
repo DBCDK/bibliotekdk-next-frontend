@@ -656,6 +656,32 @@ export function fieldsForRows(manifestation, work, context) {
         },
       },
       {
+        audienceage: {
+          label: Translate({ ...context, label: "audience" }),
+          value: !isEmpty(manifestation?.audience?.ages)
+            ? manifestation?.audience?.ages?.map((age, index) => (
+                <Text type="text4" lines={1} key={index}>
+                  {Translate({
+                    ...context,
+                    label: "audice-age",
+                    vars: [age.display],
+                  })}
+                </Text>
+              ))
+            : !isEmpty(manifestation?.audience?.generalAudience)
+            ? manifestation?.audience?.generalAudience.join(", ")
+            : !isEmpty(manifestation?.audience?.libraryRecommendation)
+            ? manifestation?.audience?.libraryRecommendation
+                .map((child) => child.display)
+                .join(", ")
+            : !isEmpty(manifestation?.audience?.primaryTarget)
+            ? manifestation?.audience?.primaryTarget
+                .map((child) => child.display)
+                .join(", ")
+            : null,
+        },
+      },
+      {
         requirements: {
           label: Translate({ ...context, label: "game-requirements" }),
           value: getRequirementsFromPhysicalDesc(manifestation) || "",
@@ -723,6 +749,32 @@ export function fieldsForRows(manifestation, work, context) {
             "",
         },
       },
+      {
+        audienceage: {
+          label: Translate({ ...context, label: "audience" }),
+          value: !isEmpty(manifestation?.audience?.ages)
+            ? manifestation?.audience?.ages?.map((age, index) => (
+                <Text type="text4" lines={1} key={index}>
+                  {Translate({
+                    ...context,
+                    label: "audience-age",
+                    vars: [age.display],
+                  })}
+                </Text>
+              ))
+            : !isEmpty(manifestation?.audience?.generalAudience)
+            ? manifestation?.audience?.generalAudience.join(", ")
+            : !isEmpty(manifestation?.audience?.libraryRecommendation)
+            ? manifestation?.audience?.libraryRecommendation
+                .map((child) => child.display)
+                .join(", ")
+            : !isEmpty(manifestation?.audience?.primaryTarget)
+            ? manifestation?.audience?.primaryTarget
+                .map((child) => child.display)
+                .join(", ")
+            : null,
+        },
+      },
     ],
     LITERATURE: [
       {
@@ -753,7 +805,11 @@ export function fieldsForRows(manifestation, work, context) {
           value: !isEmpty(manifestation?.audience?.ages)
             ? manifestation?.audience?.ages?.map((age, index) => (
                 <Text type="text4" lines={1} key={index}>
-                  For {age.display} årige
+                  {Translate({
+                    ...context,
+                    label: "audience-age",
+                    vars: [age.display],
+                  })}
                 </Text>
               ))
             : !isEmpty(manifestation?.audience?.generalAudience)
@@ -880,10 +936,27 @@ export function fieldsForRows(manifestation, work, context) {
       {
         audienceage: {
           label: Translate({ ...context, label: "audience" }),
-          value:
-            manifestation?.audience?.ages
-              .map((val) => val.display)
-              .join(", ") || null,
+          value: !isEmpty(manifestation?.audience?.ages)
+            ? manifestation?.audience?.ages?.map((age, index) => (
+                <Text type="text4" lines={1} key={index}>
+                  {Translate({
+                    ...context,
+                    label: "audience-age",
+                    vars: [age.display],
+                  })}
+                </Text>
+              ))
+            : !isEmpty(manifestation?.audience?.generalAudience)
+            ? manifestation?.audience?.generalAudience.join(", ")
+            : !isEmpty(manifestation?.audience?.libraryRecommendation)
+            ? manifestation?.audience?.libraryRecommendation
+                .map((child) => child.display)
+                .join(", ")
+            : !isEmpty(manifestation?.audience?.primaryTarget)
+            ? manifestation?.audience?.primaryTarget
+                .map((child) => child.display)
+                .join(", ")
+            : null,
         },
       },
       {
