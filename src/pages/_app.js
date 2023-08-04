@@ -160,6 +160,15 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
                 id="manifestationContent"
                 component={Pages.ManifestationContent}
               />
+              <Modal.Page
+                id="agencyLocalizations"
+                component={Pages.AgencyLocalizations}
+              />
+              <Modal.Page
+                id="branchLocalizations"
+                component={Pages.BranchLocalizations}
+              />
+              <Modal.Page id="branchDetails" component={Pages.BranchDetails} />
             </Modal.Container>
             <Head />
             <Matomo />

@@ -1,0 +1,44 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--pt3);
+}
+
+/* .top is passed as className prop to Top component */
+.top {
+  padding-top: var(--pt3);
+  padding-bottom: 0;
+}
+
+@media (min-width: 576px) {
+  .top {
+    padding-top: var(--pt5);
+    padding-bottom: 0;
+  }
+}
+
+.padding_inline {
+  padding-inline: var(--pt2);
+}
+
+@media (min-width: 576px) {
+  .padding_inline {
+    padding-inline: var(--pt6);
+  }
+}
+
+.agency_list {
+  display: flex;
+  flex-direction: column;
+}
+
+.opening_hours {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pt4);
+}
+
+.opening_hours path {
+  /*fill: var(--blue);*/
+  stroke: var(--blue);
+}

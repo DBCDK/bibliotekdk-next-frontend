@@ -117,6 +117,7 @@ export function OrderButton({
     handleGoToLogin(access, user, modal, onOnlineAccess),
   buttonType = "primary",
   size = "large",
+  overrideButtonText = null,
 }) {
   const physicalCopy = checkPhysicalCopy([access?.[0]])?.[0];
   const digitalCopy = checkDigitalCopy([access?.[0]])?.[0];
@@ -193,7 +194,9 @@ export function OrderButton({
   return (
     <>
       <TextAboveButton access={access} user={user} />
-      <Button {...buttonProps}>{buttonTxtMap[index]()}</Button>
+      <Button {...buttonProps}>
+        {overrideButtonText || buttonTxtMap[index]()}
+      </Button>
     </>
   );
 }
@@ -204,6 +207,7 @@ function ReservationButton({
   singleManifestation = false,
   buttonType = "primary",
   size = "large",
+  overrideButtonText = null,
   className,
 }) {
   const user = useUser();
@@ -270,6 +274,7 @@ function ReservationButton({
       buttonType={buttonType}
       size={size}
       hasDigitalAccess={hasDigitalAccess}
+      overrideButtonText={overrideButtonText}
     />
   );
 }

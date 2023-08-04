@@ -206,3 +206,20 @@ export function translateAndEncode(context, label, requestedLang = undefined) {
     })
   );
 }
+
+/**
+ *
+ * @param {*} agencyID
+ * @returns returns true if public library (Folkebibliotek)
+ */
+export const isPublicLibrary = (agencyID) => {
+  const faroeIslandsLibraries = ["900455", "911116", "911130"];
+  const parsedID = agencyID + "";
+  return (
+    parsedID?.charAt(0) === "7" || faroeIslandsLibraries.includes(parsedID)
+  );
+};
+
+export function upperCaseFirstChar(word) {
+  return word?.slice(0, 1).toUpperCase() + word?.slice(1);
+}

@@ -12,6 +12,9 @@ import References from "./references";
 import ManifestationContent from "./manifestationContent";
 import Material from "./material";
 import DeleteOrder from "./deleteOrder";
+import AgencyLocalizations from "./agencyLocalizations";
+import BranchLocalizations from "./branchLocalizations";
+import BranchDetails from "./branchDetails";
 
 const _modal = {
   Menu,
@@ -28,6 +31,9 @@ const _modal = {
   ManifestationContent,
   Material,
   DeleteOrder,
+  AgencyLocalizations,
+  BranchLocalizations,
+  BranchDetails,
 };
 
 export default _modal;

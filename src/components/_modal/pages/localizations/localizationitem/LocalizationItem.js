@@ -7,11 +7,14 @@ import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
 import cx from "classnames";
+import {
+  dummyData_localizationsItems_branches,
+  dummyData_localizationsItems_holdings,
+} from "@/components/_modal/pages/localizations/dummyData.localizations.fixture";
 
 /**
  * Loading component
  * @return {JSX.Element}
- * @constructor
  */
 function ItemSkeleton({ index }) {
   const skeletonKey = cyKey({
@@ -59,7 +62,6 @@ function parseBranchLookupUrl(branch, holdings, localIds) {
  * @param {boolean} isLoading
  * @param {number} index
  * @return {JSX.Element}
- * @constructor
  */
 export function LocalizationItem({ branch, holdings, isLoading, index }) {
   // here we need a branch + holdingsdata for the branch
@@ -114,11 +116,46 @@ export function LocalizationItem({ branch, holdings, isLoading, index }) {
 
   const blinkingcolors = ["red", "green", "yellow", "none"];
 
+  function highlightMarkedWords(highlight) {
+    const regexed = highlight?.split(/(<mark>(?:.*?)<\/mark>)/g).map((el) => {
+      if (el.startsWith("<mark>") && el.endsWith("</mark>")) {
+        return (
+          <span key={JSON.stringify(el)} style={{ fontWeight: "bolder" }}>
+            {el.replace("<mark>", "").replace("</mark>", "")}
+          </span>
+        );
+      } else {
+        return <>{el}</>;
+      }
+    });
+
+    return <>{regexed}</>;
+  }
+
   return (
     <div className={styles.itemwrap} data-cy={`holdings-item-${index.idx}`}>
       <div>
-        <Text type="text2">{branch.name}</Text>
-        <Text type="text3">{branch.agencyName}</Text>
+        <Text type="text2">
+          {highlightMarkedWords(
+            branch?.highlights?.find((hl) => hl.key === "name")?.value ||
+              branch.name
+          )}
+        </Text>
+        <Text type="text3">
+          {highlightMarkedWords(
+            branch?.highlights?.find((hl) => hl.key === "agencyName")?.value ||
+              branch?.agencyName
+          )}
+        </Text>
+        <>
+          {branch?.highlights
+            ?.filter((hl) => hl.key !== "agencyName" && hl.key !== "name")
+            ?.map((res) => (
+              <Text type="text3" key={res.key + "+" + res.value}>
+                {res.key}: {highlightMarkedWords(res.value)}
+              </Text>
+            ))}
+        </>
       </div>
       <div className={styles.item}>
         {isLoading && <ItemSkeleton index={index} />}
@@ -132,7 +169,7 @@ export function LocalizationItem({ branch, holdings, isLoading, index }) {
                   [styles.yellow]: color === "yellow",
                   [styles.none]: color === "none",
                 })}
-              ></div>
+              />
             )}
             <span aria-live="polite" aria-busy="false">
               <Text
@@ -170,137 +207,6 @@ export function LocalizationItem({ branch, holdings, isLoading, index }) {
 export default function Wrap({ props }) {
   const { branch, pids, index, testing, branchId } = { ...props };
 
-  const dummyData = {
-    branches: {
-      agencyUrl: "http://bibliotek.kk.dk/",
-      result: [
-        {
-          agencyUrl: "no Url",
-          name: "Silkeborg Bibliotek",
-          branchId: "774000",
-          agencyId: "774000",
-          holdingStatus: {
-            branchId: "774000",
-            willLend: "true",
-            expectedDelivery: "2021-11-18",
-            localHoldingsId: "29317038",
-            circulationRule: "Udlån 28 dage",
-            issueId: "",
-            department: "Børn",
-            issueText: "",
-            location: "Skønlitteratur",
-            note: "",
-            readyForLoan: "0",
-            status: "OnLoan",
-            subLocation: "Fantasy",
-          },
-        },
-      ],
-    },
-  };
-
-  const dummyHoldings = {
-    717500: {
-      branches: {
-        agencyUrl: "http://www.rdb.dk",
-        result: [
-          {
-            name: "Rødovre Bibliotek",
-            agencyId: "717500",
-            branchWebsiteUrl: "http://www.rdb.dk",
-            holdingStatus: {
-              count: 1,
-              lamp: {
-                color: "green",
-                message: "at_home",
-              },
-              holdingItems: [
-                {
-                  branch: "Rødovre hovedbibliotek",
-                  branchId: "717500",
-                  willLend: "true",
-                  expectedDelivery: "2021-12-03",
-                  localHoldingsId: "22137298",
-                  circulationRule: "Månedslån vok A",
-                  issueId: "",
-                  department: "VOKSNE",
-                  issueText: "",
-                  location: "KÆLDER",
-                  note: "",
-                  readyForLoan: "1",
-                  status: "OnShelf",
-                  subLocation: "",
-                },
-              ],
-            },
-          },
-        ],
-      },
-      monitor: "OK",
-    },
-    717501: {
-      branches: {
-        agencyUrl:
-          "https://www.genvej.gentofte.bibnet.dk/sites/RKB/pub/patronstatus.html",
-        result: [
-          {
-            name: "Islev Bibliotek: Trekanten",
-            agencyId: "717500",
-            branchWebsiteUrl: "http://www.rdb.dk",
-            holdingStatus: {
-              count: 0,
-              lamp: {
-                color: "white",
-                message: "no_holdings",
-              },
-              holdingItems: [],
-            },
-          },
-        ],
-      },
-      monitor: "OK",
-    },
-    710111: {
-      branches: {
-        agencyUrl: "http://bibliotek.kk.dk/",
-        result: [
-          {
-            name: "Nørrebro Bibliotek",
-            agencyId: "710100",
-            branchId: "710111",
-            branchWebsiteUrl: "http://bibliotek.kk.dk/biblioteker/norrebro",
-            holdingStatus: {
-              count: 1,
-              lamp: {
-                color: "yellow",
-                message: "2021-12-03",
-              },
-              holdingItems: [
-                {
-                  branch: "Nørrebro",
-                  branchId: "710111",
-                  willLend: "true",
-                  expectedDelivery: "2021-12-03",
-                  localHoldingsId: "22137298",
-                  circulationRule: "Standard",
-                  issueId: "",
-                  department: "Voksen",
-                  issueText: "",
-                  location: "",
-                  note: "",
-                  readyForLoan: "0",
-                  status: "OnLoan",
-                  subLocation: "Skønlitteratur",
-                },
-              ],
-            },
-          },
-        ],
-      },
-      monitor: "OK",
-    },
-  };
-
   // @TODO .. what do we need here
   // .. we need detailed holdings to show expected delivery
 
@@ -312,12 +218,16 @@ export default function Wrap({ props }) {
       })
   );
 
-  const holdingsData = isLoading ? dummyData : data;
+  const holdingsData = isLoading ? dummyData_localizationsItems_branches : data;
   return (
     <LocalizationItem
       pids={pids}
       branch={branch}
-      holdings={!testing ? holdingsData : dummyHoldings[branchId]}
+      holdings={
+        !testing
+          ? holdingsData
+          : dummyData_localizationsItems_holdings[branchId]
+      }
       isLoading={!testing ? isLoading : false}
       index={index}
     />

@@ -1,0 +1,28 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--pt3);
+}
+
+/* .top is passed as className prop to Top component */
+.top {
+  padding-top: var(--pt3);
+  padding-bottom: 0;
+}
+
+@media (min-width: 576px) {
+  .top {
+    padding-top: var(--pt5);
+    padding-bottom: 0;
+  }
+}
+
+.padding_inline {
+  padding-inline: var(--pt2);
+}
+
+@media (min-width: 576px) {
+  .padding_inline {
+    padding-inline: var(--pt6);
+  }
+}

@@ -582,6 +582,52 @@
         "en": "Copy link"
       }
     },
+    "localizations": {
+      "reminder_can_be_ordered_from_anywhere": {
+        "da": "Husk at du kan bestille materialet uanset hvilket bibliotek der har det.",
+        "en": "Remember that materials can be ordered regardless in which library it is."
+      },
+      "editions_on_shelf": {
+        "da": "Udgaver på hylden",
+        "en": "Editions on the shelf"
+      },
+      "by_ved": {
+        "da": "ved",
+        "en": "by"
+      },
+      "on_shelf": {
+        "da": "På hylden",
+        "en": "On shelf"
+      },
+      "AvailabilityEnum_AVAILABLE_NOW": {
+        "da": "Materialet er tilgængeligt nu",
+        "en": "Material is available now"
+      },
+      "AvailabilityEnum_AVAILABLE_LATER": {
+        "da": "Materialet er tilgængeligt senere",
+        "en": "Material is available later"
+      },
+      "AvailabilityEnum_UNKNOWN_AVAILABILITY": {
+        "da": "Materialets tilgængelighed kendes ikke",
+        "en": "Avaiability of material is unknown"
+      },
+      "branchDetails_AVAILABLE_NOW": {
+        "da": "%s på hylden",
+        "en": "%s on shelf"
+      },
+      "branchDetails_AVAILABLE_LATER": {
+        "da": "%s tilgængelig senere",
+        "en": "%s available later"
+      },
+      "branchDetails_UNKNOWN_AVAILABILITY": {
+        "da": "%s ukendt status",
+        "en": "%s unknown availability"
+      },
+      "order_to_here": {
+        "da": "Bestil til afhentning her",
+        "en": "Order to pickup here"
+      }
+    },
     "manifestation_content": {
       "contents": {
         "da": "Indhold",
@@ -750,6 +796,10 @@
       "all-options-link": {
         "da": "Alle bestillingsmuligheder (%s)",
         "en": "All order options (%s)"
+      },
+      "all-editions": {
+        "da": "alle udgaver",
+        "en": "all editions"
       }
     },
     "details": {
@@ -1681,6 +1731,10 @@
       "title-search": {
         "da": "Flere søgemuligheder",
         "en": "Label: mangler oversættelse"
+      },
+      "title-agencylocalizations": {
+        "da": "Se hvor materialet er på hylden",
+        "en": "See where the material is on shelf"
       }
     },
     "options": {

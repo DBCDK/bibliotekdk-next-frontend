@@ -26,6 +26,7 @@ import {
  * @param iconOrientation
  * @param iconPlacement
  * @param iconStyle
+ * @param target
  * @return {JSX.Element}
  */
 export function IconLink({
@@ -42,6 +43,7 @@ export function IconLink({
   iconOrientation = 0,
   iconPlacement = "left",
   iconStyle = {},
+  target = "_self",
 }) {
   const IconChild = iconSrc === null ? ChevronSvg : iconSrc;
 
@@ -73,6 +75,7 @@ export function IconLink({
       {...(onClick !== null && { onClick: onClick })}
       tag={tag}
       disabled={disabled}
+      target={target}
     >
       {iconPlacement === "left" && <IconComponent />}
       <div>

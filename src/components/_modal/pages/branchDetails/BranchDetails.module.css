@@ -1,0 +1,8 @@
+.fit_content {
+  width: fit-content;
+}
+
+.reservationButton_container {
+  display: grid;
+  grid-template-columns: 64%;
+}

@@ -10,6 +10,8 @@ import LocalizationItem from "./localizationitem/LocalizationItem";
 
 import Text from "@/components/base/text/Text";
 import Title from "@/components/base/title";
+import { dummyData_localizations } from "@/components/_modal/pages/localizations/dummyData.localizations.fixture";
+import useAgencyAccessFactory from "@/components/hooks/useAgencyAccessFactory";
 
 export function Localizations({
   context,
@@ -92,29 +94,19 @@ export default function Wrap({ context, modal }) {
     libraryFragments.search({ q: query || "" })
   );
 
-  const dummyData = {
-    hitcount: 10,
-    result: [
-      { name: "This is some branch name" },
-      { name: "This is some other branch name" },
-      { name: "This is also a branch name" },
-      { name: "A branch name" },
-      { name: "Also a bracndh name" },
-      { name: "This is some branch name" },
-      { name: "This is some other branch name" },
-      { name: "This is also a branch name" },
-      { name: "A branch name" },
-      { name: "Also a bracndh name" },
-    ],
-  };
+  useAgencyAccessFactory({ pids });
 
   const branches = !query ? agency : data?.branches;
+
+  // console.log("agency: ", agency);
+  // console.log("branches: ", branches);
+  // console.log("data?.branches: ", data?.branches);
 
   const props = { ...context, ...data, pids };
   return (
     <Localizations
       context={props}
-      branchData={isLoading ? dummyData : branches}
+      branchData={isLoading ? dummyData_localizations : branches}
       isLoading={isLoading}
       onChange={(q) => setQuery(q)}
     />
