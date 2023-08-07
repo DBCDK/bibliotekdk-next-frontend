@@ -457,6 +457,10 @@
       }
     },
     "bibliographic-data": {
+      "requirements": {
+        "da": "Nødvendigt udstyr",
+        "en": "Required gear"
+      },
       "physicalDescriptionArticles": {
         "da": "Sidetal",
         "en": "Pagenumber"

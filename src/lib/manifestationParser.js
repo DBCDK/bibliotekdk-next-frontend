@@ -241,6 +241,14 @@ const fields = () => [
     }),
     valueParser: (value) => value.edition || "",
   },
+  {
+    dataField: "physicalDescriptions",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "requirements",
+    }),
+    valueParser: (value) => value?.[0]?.requirements || "",
+  },
   /*{
     dataField: "manifestationParts",
     label: Translate({
