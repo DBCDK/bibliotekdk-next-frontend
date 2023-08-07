@@ -14,6 +14,7 @@ import * as branchesFragments from "@/lib/api/branches.fragments";
  *
  */
 export default function ArticleLoginPrompt({ articleId }) {
+  console.log("article login prompt");
   const user = useUser();
   const modal = useModal();
   const { data, isLoading } = useData(
@@ -28,6 +29,7 @@ export default function ArticleLoginPrompt({ articleId }) {
   const agencyName = branchRes?.data?.branches?.result?.[0]?.agencyName || "";
 
   function openLoginModal() {
+    console.log("article login prompt", "infomedia");
     modal.push("login", {
       title: Translate({
         context: "header",

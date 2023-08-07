@@ -168,11 +168,18 @@ export function Pickup({
       return;
     }
     // open loanerform
-    modal.push("loanerform", {
+    // modal.push("loanerform", {
+    //   //TODO open login instead?
+    //   branchId: branch.branchId,
+    //   pid,
+    //   mode,
+    // });
+    modal.push("openAdgangsplatform", {
       branchId: branch.branchId,
       pid,
       mode,
     });
+    //TODO check if order possible!!!!
   }
 
   const loadedOrderPolicies = useRef({});
