@@ -3,6 +3,8 @@
 }
 .section {
   margin-top: calc(var(--pt16) * -1);
+  padding-top: var(--pt8);
+  background: var(--jagged-ice);
 }
 
 .skip {

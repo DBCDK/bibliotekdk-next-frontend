@@ -361,6 +361,7 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
   physicalDescriptions {
     summary
     extent
+    requirements
   }
   classifications {
     system

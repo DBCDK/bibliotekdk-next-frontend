@@ -15,9 +15,11 @@ import {
   getActiveElement,
   handleScroll,
   alignMenuItem,
+  PRETTY_OFFSET,
 } from "./utils";
 
 import styles from "./Anchor.module.css";
+import cx from "classnames";
 
 /**
  * Menu function - to generate the menu
@@ -25,7 +27,7 @@ import styles from "./Anchor.module.css";
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 
 function Menu({
@@ -37,8 +39,6 @@ function Menu({
 }) {
   // currently active section (window position)
   const [activeItemId, setActiveItemId] = useState(null);
-  // Menu isScrolling
-  const [isScrolling, setIsScrolling] = useState(false);
   // item clicked
   const [isClicked, setIsClicked] = useState(false);
   // mount
@@ -87,6 +87,9 @@ function Menu({
   // window Height
   const windowH = window.innerHeight;
 
+  const distanceToBottom =
+    document?.body?.offsetHeight - (window?.innerHeight + window?.pageYOffset);
+
   // Calc height for placeholder (used by the wrap while menu is fixed)
   const height =
     (menuWrap.current && menuWrap.current.children[0]?.clientHeight) || 56;
@@ -108,27 +111,23 @@ function Menu({
     ? `sticky-bottom ${styles.stickyBottom}`
     : "";
 
-  // Menu is moving
-  const isScrollingClass =
-    isSticky && isScrolling ? `scrolling ${styles.isScrolling}` : "";
-
   const handleClick = (e, id, section) => {
     e.preventDefault();
-    setIsScrolling(true);
     setIsClicked(id);
     handleScroll(
       window,
       section.element,
-      section.offset,
+      section.offset + PRETTY_OFFSET, // var(--pt1)
       // callback
       () => {
         setTimeout(() => {
-          setIsScrolling(false);
           setIsClicked(false);
         }, 100);
         alignMenuItem(itemsWrap, itemRefs.current[id], 16);
       }
     );
+
+    section?.element?.focus({ preventScroll: true });
   };
 
   return (
@@ -139,53 +138,50 @@ function Menu({
       data-cy="anchor-menu-wrap"
     >
       <div
-        className={`${styles.menu} ${isScrollingClass} ${stickyBottomClass} ${stickyTopClass} ${stickyClass}`}
+        className={`${styles.menu} ${stickyBottomClass} ${stickyTopClass} ${stickyClass}`}
         ref={itemsWrap}
         data-cy="anchor-menu-items"
       >
         <Container fluid>
           <Row>
             <Col xs={12} lg={{ offset: 3, span: true }}>
-              {Object.keys(items).map((id) => {
-                // target section
-                const section = getSectionById(id, items, menuT, height);
+              <>
+                {Object.keys(items).map((id, index, array) => {
+                  // target section
+                  const section = getSectionById(id, items, menuT, height);
 
-                // Remove sections which has returned null Or has no height
-                if (!section || section.clientHeight === 0) {
-                  return null;
-                }
+                  // Remove sections which has returned null Or has no height
+                  if (!section || section.clientHeight === 0) {
+                    return null;
+                  }
 
-                // check if element is active
-                const active = activeItemId === id;
-                const activeClass = active ? `active ${styles.active}` : "";
+                  // Create menu item ref if not already exist
+                  itemRefs.current[id] = itemRefs.current[id] ?? createRef();
 
-                // Create menu item ref if not already exist
-                itemRefs.current[id] = itemRefs.current[id] ?? createRef();
+                  // Set item ref
+                  const itemRef = itemRefs.current[id];
 
-                // Set item ref
-                const itemRef = itemRefs.current[id];
+                  const active =
+                    (distanceToBottom <= 0 && array.length - 1 === index) ||
+                    (isClicked !== false && isClicked === id) ||
+                    (distanceToBottom > 0 && activeItemId === id);
 
-                const isClickedClass =
-                  isClicked === id ? `clicked ${styles.isClicked}` : "";
-
-                return (
-                  <Link
-                    key={`link-${id}`}
-                    linkRef={itemRef}
-                    className={`anchor-menu-item ${styles.item} ${activeClass} ${isClickedClass}`}
-                    dataCy="anchor-menu-item"
-                    onClick={(e) => handleClick(e, id, section)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        handleClick(e, id, section);
-                        section?.element?.focus();
-                      }
-                    }}
-                  >
-                    <Text type={"text2"}>{titles[id]}</Text>
-                  </Link>
-                );
-              })}
+                  return (
+                    <Link
+                      linkRef={itemRef}
+                      key={`link-${id}`}
+                      className={cx("anchor-menu-item", styles.item, {
+                        [styles.activeClass]: active,
+                      })}
+                      border={{ bottom: { keepVisible: true } }}
+                      dataCy={"anchor-menu-item-" + index}
+                      onClick={(e) => handleClick(e, id, section)}
+                    >
+                      <Text type={"text2"}>{titles[id]}</Text>
+                    </Link>
+                  );
+                })}
+              </>
             </Col>
           </Row>
         </Container>
@@ -208,7 +204,7 @@ Menu.propTypes = {
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 
 function Element({ id, children, sectionRef, onChange }) {
@@ -262,11 +258,11 @@ export function getIndexForAnchor(anchorLabel, anchorChildren = theChildren) {
  * @param {obj} props.children
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 function Wrap({ children }) {
   // Object to collect all section refs by id
-  const menu = useRef();
+  const menu = useRef(null);
   const refs = useRef({});
   const [sections] = useState(refs);
   const titles = {};
