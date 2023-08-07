@@ -757,6 +757,12 @@ export function fieldsForRows(manifestation, work, context) {
           value: audienceageValue,
         },
       },
+      {
+        requirements: {
+          label: Translate({ ...context, label: "game-requirements" }),
+          value: getRequirementsFromPhysicalDesc(manifestation) || "",
+        },
+      },
     ],
     LITERATURE: [
       {
