@@ -2,24 +2,40 @@ import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 import Top from "@/components/_modal/pages/base/top";
 import Translate from "@/components/base/translate";
-import Tooltip from "@/components/base/tooltip/Tooltip";
 import styles from "./OpenAdgangsplatform.module.css";
 import Button from "@/components/base/button";
-import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
+import { signIn } from "next-auth/react";
 
+export const getCallbackUrl = (pickupBranchId) => {
+  let callback = window.location.href;
+  return pickupBranchId
+    ? callback +
+        (callback.includes("?") ? "&" : "?") +
+        "setPickupAgency=" +
+        pickupBranchId
+    : callback;
+};
+
+/**
+ * Modal page for that contains a button to Adgangsplatform login
+ * @param {context} context
+ * @returns
+ */
 export default function OpenAdgangsplatform({ context }) {
-  const { agencyName, mode } = context;
+  const { agencyName, agencyId, callbackUrl } = context;
   const onLogin = () => {
-    console.log("onLogin");
+    signIn(
+      "adgangsplatformen",
+      { callbackUrl: callbackUrl },
+      { agency: agencyId, force_login: 1 }
+    );
   };
 
   const submitting = false;
   const title = Translate({
     context: "login",
-    label: `${mode}-title`,
+    label: "plainLogin-title",
   });
-
-  console.log("OpenAdgangsplatform", mode);
 
   return (
     <div className={styles.login}>
@@ -31,25 +47,10 @@ export default function OpenAdgangsplatform({ context }) {
         <Text type="text2" tag="span" className={styles.inline}>
           {Translate({
             context: "login",
-            label: `${mode}-description`,
+            label: "plainLogin-description",
             vars: [agencyName],
           })}
         </Text>
-        {mode === LOGIN_MODE.DIGITAL_COPY && (
-          <span>
-            <Tooltip labelToTranslate="tooltip_digtital_copy" />
-            {/* we also need description for physical ordering here
-              @TODO - is this text ALWAYS shown now ?? - remove if? seems as if always shown */}
-            <Text type="text2">
-              {Translate({
-                context: "login",
-                label: "orderPhysical-description",
-                vars: [agencyName],
-              })}
-            </Text>
-          </span>
-        )}
-
         <Button
           onClick={onLogin}
           className={styles.loginbutton}

@@ -1,5 +1,13 @@
-import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
 import Translate from "@/components/base/translate";
+
+export const LOGIN_MODE = {
+  ORDER_PHYSICAL: "orderPhysical",
+  SUBSCRIPTION: "subscription",
+  DIGITAL_COPY: "digitalCopy", //subcategory of subscription
+  PLAIN_LOGIN: "plainLogin",
+  INFOMEDIA: "infomedia",
+  DDA: "demand_driven_acquisition",
+};
 
 /**
  * If we order a physical copy or a digital copy, we always show the loanerform
@@ -9,7 +17,7 @@ import Translate from "@/components/base/translate";
  * @returns {boolean}
  */
 export const showLogin = (mode) => {
-  return mode === LOGIN_MODE.ORDER_PHYSICAL && mode === LOGIN_MODE.SUBSCRIPTION;
+  return mode === LOGIN_MODE.ORDER_PHYSICAL || mode === LOGIN_MODE.SUBSCRIPTION;
 };
 
 export const isOrderPossible = ({ mode, branch }) => {
@@ -32,13 +40,12 @@ export const isOrderPossible = ({ mode, branch }) => {
  */
 export function openLoginModal({
   modal,
+  mode = LOGIN_MODE.PLAIN_LOGIN,
   title = Translate({
     context: "header",
     label: "login",
   }),
-  mode = LOGIN_MODE.PLAIN_LOGIN,
 }) {
-  console.log("utils", mode);
   modal.push("login", {
     title: title,
     mode: mode,

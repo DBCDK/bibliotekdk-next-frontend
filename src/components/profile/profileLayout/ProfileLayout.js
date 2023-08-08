@@ -34,14 +34,6 @@ export default function ProfileLayout({ title, children }) {
   const user = useUser();
   const modal = useModal();
 
-  function openModal({
-    title = Translate({ context: "header", label: "login" }),
-  }) {
-    modal.push("login", {
-      title: title,
-    });
-  }
-
   return (
     <Container fluid className={styles.container}>
       {(isMobile || isTablet) && (
@@ -97,9 +89,9 @@ export default function ProfileLayout({ title, children }) {
                 className={styles.loginButton}
                 size="large"
                 type="primary"
-                onClick={openModal}
+                onClick={() => openLoginModal({ modal })}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.keyCode === 13) openModal();
+                  if (e.key === "Enter" || e.keyCode === 13) openLoginModal();
                 }}
               >
                 {Translate({

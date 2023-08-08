@@ -13,7 +13,7 @@ import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
 import useUser from "@/components/hooks/useUser";
 import Top from "@/components/_modal/pages/base/top";
-import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
+import { LOGIN_MODE } from "@/components/_modal/pages/login/utils";
 
 import animations from "css/animations";
 import { useData } from "@/lib/api/api";
@@ -24,7 +24,7 @@ import styles from "./Login.module.css";
 import { signIn } from "next-auth/react";
 import getConfig from "next/config";
 import Router from "next/router";
-import { openLoginModal, showLogin } from "./utils";
+import { showLogin } from "./utils";
 
 function Select({
   branch,
@@ -134,37 +134,25 @@ export function LoginPickup({
       return;
     }
 
-    //   const { isDigitalCopy, isPeriodicaLike } = inferAccessTypes(
-    //   null,
-    //   branch?.agencyId,
-    //   manifestationData?.manifestations
-    // );
-
-    //TODO can i set if its digitalCopyAccess already here?
-    //   const digitalCopyAccess={
-    //         isDigitalCopy && !isPeriodicaLike && branch?.digitalCopyAccess
-    //       }
-
     if (branch?.borrowerCheck) {
-      //show NEW login modal with login button to adgangsplatformen
       modal.push("openAdgangsplatform", {
-        mode: mode,
+        callbackUrl: callbackurl, //TODO find correct callbackUrl for header and from order button (add bestil modal)
+        agencyId: branch.agencyId,
         agencyName: originUrl ? originUrl : branch.agencyName, //TODO do we have originUrl and how does it look like?
       });
       return;
     }
-
     if (showLogin(mode)) {
-      console.log("FORM");
       modal.push("loanerform", {
         branchId: branch.branchId,
         doPolicyCheck: false,
-        callbackUrl: callbackurl,
+        callbackUrl: callbackurl, //TODO remove
         mode,
         originUrl,
         clear: true,
       });
     } else {
+      console.log("LOGIN not suppo");
       modal.push("loginNotSupported", {
         libraryName: branch.agencyName,
       });
@@ -176,7 +164,7 @@ export function LoginPickup({
       <Top />
       <div>
         <Title type="title4" className={styles.title} tag="h2">
-          NEW {title} NEW
+          {title}
         </Title>
         <section className={styles.libraryLoginSection}>
           <Text type="text2">

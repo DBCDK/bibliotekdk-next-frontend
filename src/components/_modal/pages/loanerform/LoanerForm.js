@@ -19,7 +19,6 @@ import { useData } from "@/lib/api/api";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 import useUser from "@/components/hooks/useUser";
 import * as userFragments from "@/lib/api/user.fragments";
-import Tooltip from "@/components/base/tooltip";
 import { manifestationsForAccessFactory } from "@/lib/api/manifestation.fragments";
 import { inferAccessTypes } from "@/components/_modal/pages/edition/utils";
 
@@ -27,16 +26,7 @@ const ERRORS = {
   MISSING_INPUT: "error-missing-input",
 };
 
-export const LOGIN_MODE = {
-  ORDER_PHYSICAL: "orderPhysical",
-  SUBSCRIPTION: "subscription",
-  DIGITAL_COPY: "digitalCopy", //subcategory of subscription
-  PLAIN_LOGIN: "plainLogin",
-  INFOMEDIA: "infomedia",
-  DDA: "demand_driven_acquisition",
-};
-
-export function UserParamsForm({ branch, initial, onSubmit, mode, originUrl }) {
+export function UserParamsForm({ branch, initial, onSubmit, originUrl }) {
   function validateState() {
     for (let i = 0; i < requiredParameters.length; i++) {
       const { userParameterType } = requiredParameters[i];
@@ -75,7 +65,7 @@ export function UserParamsForm({ branch, initial, onSubmit, mode, originUrl }) {
       <Text type="text2">
         {Translate({
           context: "login",
-          label: `${mode}-description`,
+          label: `plainLogin-description`,
           vars: originUrl || [branch?.agencyName || branch?.name],
         })}
       </Text>
@@ -215,33 +205,24 @@ function originUrlToUrlName(originUrl) {
 }
 
 /**
- * Will show either a signin button if the provided branch supports
- * borrowerCheck (supports login.bib.dk), and otherwise a loaner formular.
- *
- * @param {obj} props
- * See propTypes for specific props and types
- *
- * @returns {component}
+ *  Shows login formular for FFU libraries without adgangsplatform login.
+ * @param {obj} branch
+ * @param {func} onSubmit
+ * @param {obj} skeleton
+ * @param {obj} initial
+ * @param {obj} context
+ * @param {obj} digitalCopyAccess
+ * @returns JSX element
  */
 export function LoanerForm({
   branch,
   onSubmit,
-  onLogin,
-  submitting,
   skeleton,
   initial,
-  onClose,
-  doPolicyCheck,
   // modal props
   context,
-  digitalCopyAccess, //TODO can be hentet fra branch
 }) {
-  let { mode = LOGIN_MODE.PLAIN_LOGIN, originUrl = null } = context || {};
-  if (mode === LOGIN_MODE.SUBSCRIPTION) {
-    mode = digitalCopyAccess
-      ? LOGIN_MODE.DIGITAL_COPY
-      : LOGIN_MODE.ORDER_PHYSICAL;
-  }
+  let { originUrl = null } = context || {};
 
   if (skeleton) {
     return (
@@ -249,8 +230,8 @@ export function LoanerForm({
         <Top />
         <Title type="title4" tag="h3" skeleton={true}>
           {Translate({
-            context: "order",
-            label: "order-to",
+            context: "login",
+            label: "plainLogin-title",
             vars: [branch?.name || "-"],
           })}
         </Title>
@@ -266,106 +247,24 @@ export function LoanerForm({
     return null;
   }
 
-  // Order possible for branch
-  let orderPossible =
-    doPolicyCheck !== false ? branch.orderPolicy?.orderPossible : true; //cant we always get info from branch?
-
-  // QUICKFIX - .. to avoid api check ..  all public libraries have access to dda - no other
-  if (mode === LOGIN_MODE.DDA) {
-    orderPossible = branch?.agencyId?.startsWith("7") || false;
-  }
-
-  const origin = originUrlToUrlName(originUrl, mode);
+  const origin = originUrlToUrlName(originUrl);
   return (
     <div className={styles.loanerform}>
       <Top />
       <Title type="title4" tag="h3">
         {Translate({
           context: "login",
-          label: `${mode}-title`,
+          label: `plainLogin-title`,
           vars: origin ? [origin] : [branch.name],
         })}
       </Title>
 
-      {!orderPossible && (
-        <>
-          {mode === LOGIN_MODE.DDA ? (
-            <Text type="text2">
-              {Translate({
-                context: "order",
-                label: "library-no-dda",
-                vars: [branch?.agencyName],
-              })}
-            </Text>
-          ) : (
-            <Text type="text2">
-              {Translate({
-                context: "order",
-                label: "order-not-possible",
-              })}
-            </Text>
-          )}
-          <Button
-            onClick={onClose}
-            className={styles.loginbutton}
-            disabled={!!submitting}
-          >
-            {Translate({
-              context: "general",
-              label: "select-another-library",
-            })}
-          </Button>
-        </>
-      )}
-
-      {orderPossible && branch.borrowerCheck && (
-        <>
-          <Text type="text2" tag="span" className={styles.inline}>
-            {Translate({
-              context: "login",
-              label: `${mode}-description`,
-              vars: [branch.agencyName],
-            })}
-          </Text>
-          {mode === LOGIN_MODE.DIGITAL_COPY && (
-            <span>
-              <Tooltip labelToTranslate="tooltip_digtital_copy" />
-              {/* we also need description for physical ordering here
-              @TODO - is this text ALWAYS shown now ?? - refactor if so */}
-              <Text type="text2">
-                {Translate({
-                  context: "login",
-                  label: "orderPhysical-description",
-                  vars: [branch.agencyName],
-                })}
-                baba
-              </Text>
-            </span>
-          )}
-
-          <Button
-            onClick={onLogin}
-            className={styles.loginbutton}
-            disabled={!!submitting}
-            tabIndex="0"
-          >
-            {Translate({
-              context: "header",
-              label: "login",
-            })}
-          </Button>
-        </>
-      )}
-
-      {orderPossible && !branch.borrowerCheck && (
-        <UserParamsForm
-          branch={branch}
-          initial={initial}
-          onSubmit={onSubmit}
-          mode={mode}
-          originUrl={originUrl}
-        />
-      )}
+      <UserParamsForm
+        branch={branch}
+        initial={initial}
+        onSubmit={onSubmit}
+        originUrl={originUrl}
+      />
     </div>
   );
 }

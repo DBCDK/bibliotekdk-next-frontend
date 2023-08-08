@@ -15,7 +15,7 @@ import useUser from "@/components/hooks/useUser";
 import { useData } from "@/lib/api/api";
 import * as libraryFragments from "@/lib/api/library.fragments";
 import * as branchesFragments from "@/lib/api/branches.fragments";
-import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
+import { LOGIN_MODE } from "@/components/_modal/pages/login/utils";
 
 /**
  * Special component responsible for loading order policy
@@ -167,19 +167,11 @@ export function Pickup({
       modal.prev();
       return;
     }
-    // open loanerform
-    // modal.push("loanerform", {
-    //   //TODO open login instead?
-    //   branchId: branch.branchId,
-    //   pid,
-    //   mode,
-    // });
     modal.push("openAdgangsplatform", {
       branchId: branch.branchId,
       pid,
-      mode,
+      agencyName: branch.agencyName,
     });
-    //TODO check if order possible!!!!
   }
 
   const loadedOrderPolicies = useRef({});

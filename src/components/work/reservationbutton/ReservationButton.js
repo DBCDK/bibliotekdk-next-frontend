@@ -4,11 +4,11 @@ import Translate, { hasTranslation } from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
 import styles from "./ReservationButton.module.css";
 import { useModal } from "@/components/_modal";
-import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
+import { LOGIN_MODE } from "@/components/_modal/pages/login/utils";
 import { context } from "@/components/work/reservationbutton/utils";
 import { useMemo } from "react";
 import {
-  onOnlineAccess,
+  onOnlineAccess as goToRedirectUrl,
   openOrderModal,
   useBranchUserAndHasDigitalAccess,
 } from "@/components/work/utils";
@@ -21,6 +21,7 @@ import {
 } from "@/lib/accessFactoryUtils";
 import isEmpty from "lodash/isEmpty";
 import uniq from "lodash/uniq";
+import { openLoginModal } from "@/components/_modal/pages/login/utils";
 
 function TextAboveButton({ access, user }) {
   return (
@@ -70,136 +71,22 @@ export function workTypeTranslator(workTypes) {
       });
 }
 
-function handleGoToLogin(access, user, modal, onOnlineAccess) {
+function handleGoToLogin(access, user, modal) {
   // if this is an infomedia article it should open in same window
   const urlTarget = access[0]?.id ? "_self" : "_blank";
 
   // check if we should open login modal on click
   const goToLogin =
+    user &&
     !user.isAuthenticated &&
-    access[0]?.url &&
+    access[0]?.url && //TODO do we have to have url to ope login modal?
     access[0]?.loginRequired &&
     (access[0]?.url?.indexOf("ebookcentral") !== -1 ||
       access[0]?.url?.indexOf("ebscohost") !== -1);
 
   return goToLogin
-    ? modal?.push("login", {
-        title: Translate({
-          context: "header",
-          label: "login",
-        }),
-        mode: LOGIN_MODE.DDA,
-        originUrl: access[0]?.origin,
-      })
-    : onOnlineAccess(access[0]?.url, urlTarget);
-}
-
-/**
- * Seperat function for orderbutton
- * Check what kind of material (eg. online, not avialable etc)
- * and present appropriate button
- *
- * @param {string} workId given workId for querying
- * @param {function} onOnlineAccess
- *  callback onclick handler for online access
- * @param {function} openOrderModal
- *  onclick handler for reservation
- * @param {string} buttonType of button for base button component
- * @param {string} size of button for base button component
- *
- * @return {JSX.Element}
- * @constructor
- */
-export function OrderButton({
-  user,
-  modal,
-  access,
-  singleManifestation = false,
-  onOnlineAccess,
-  openOrderModal,
-  onHandleGoToLogin = () =>
-    handleGoToLogin(access, user, modal, onOnlineAccess),
-  buttonType = "primary",
-  size = "large",
-}) {
-  const physicalCopy = checkPhysicalCopy([access?.[0]])?.[0];
-  const digitalCopy = checkDigitalCopy([access?.[0]])?.[0];
-
-  const isOnlineTranslated = singleManifestation
-    ? isOnlineTranslator(access?.[0]?.materialTypesArray, singleManifestation)
-    : "";
-  const workTypeTranslated = workTypeTranslator(access?.[0]?.workTypes);
-
-  /** order button acts on following scenarios: */
-  const caseScenarioMap = [
-    /** (0) selectedManifestations does not exist for some reason */
-    Boolean(isEmpty(access)),
-    /** (1) material is accessible online (no user login or will prompt at destination) -> go to online url
-     * --- a. ACCESS_URL
-     * --- b. INFOMEDIA
-     * --- c. EREOL
-     * */
-    Boolean(access?.length > 0 && !digitalCopy && !physicalCopy),
-    /** (2) material is available as loan either:
-     * --- d. DIGITAL_ARTICLE_SERVICE
-     * --- e. INTER_LIBRARY_LOAN
-     * */
-    true,
-  ];
-
-  const buttonPropsMap = [
-    /* (0) */
-    {
-      dataCy: "button-order-overview-disabled",
-      disabled: true,
-    },
-    /* (1) */
-    {
-      dataCy: "button-order-overview",
-      onClick: () => onHandleGoToLogin(access),
-    },
-    /* (2) */
-    {
-      dataCy: `button-order-overview-enabled`,
-      onClick: openOrderModal,
-    },
-  ];
-
-  const buttonTxtMap = [
-    /* (0) */
-    () =>
-      Translate({
-        context: "overview",
-        label: !physicalCopy ? "Order-online-disabled" : "Order-disabled",
-      }),
-    /* (1) */
-    () =>
-      [
-        Translate({
-          context: "overview",
-          label: "goto",
-        }),
-        isOnlineTranslated || workTypeTranslated,
-      ].join(" "),
-    /* (2) */
-    () => Translate({ context: "general", label: "bestil" }),
-  ];
-
-  // Set the index, buttonProps, and buttonTxt
-  const index = caseScenarioMap.findIndex((caseCheck) => caseCheck);
-  const buttonProps = {
-    skeleton: buttonPropsMap[index].disabled ? null : !access,
-    type: buttonType,
-    size: size,
-    ...buttonPropsMap[index],
-  };
-
-  return (
-    <>
-      <TextAboveButton access={access} user={user} />
-      <Button {...buttonProps}>{buttonTxtMap[index]()}</Button>
-    </>
-  );
+    ? openLoginModal(modal, access[0]?.url)
+    : goToRedirectUrl(access[0]?.url, urlTarget);
 }
 
 function ReservationButton({
@@ -255,26 +142,94 @@ function ReservationButton({
     );
   }
 
+  const physicalCopy = checkPhysicalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
+  const digitalCopy = checkDigitalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
+
+  const isOnlineTranslated = singleManifestation
+    ? isOnlineTranslator(access?.[0]?.materialTypesArray, singleManifestation)
+    : "";
+  const workTypeTranslated = workTypeTranslator(access?.[0]?.workTypes);
+
+  /** order button acts on following scenarios: */
+  const caseScenarioMap = [
+    /** (0) selectedManifestations does not exist for some reason */
+    Boolean(isEmpty(access)),
+    /** (1) material is accessible online (no user login or login will prompt at destination) -> go to online url
+     * --- a. ACCESS_URL
+     * --- b. INFOMEDIA
+     * --- c. EREOL
+     * */
+    Boolean(access?.length > 0 && !digitalCopy && !physicalCopy),
+    /** (2) material is available as loan either:
+     * --- d. DIGITAL_ARTICLE_SERVICE
+     * --- e. INTER_LIBRARY_LOAN
+     * */
+    true,
+  ];
+
+  const buttonPropsMap = [
+    /* (0) */
+    {
+      dataCy: "button-order-overview-disabled",
+      disabled: true,
+    },
+    /* (1) */
+    {
+      dataCy: "button-order-overview",
+      onClick: () => handleGoToLogin(access),
+    },
+    /* (2) */
+    {
+      dataCy: `button-order-overview-enabled`,
+      onClick: () => {
+        user?.isLoggedIn
+          ? openOrderModal({
+              modal: modal,
+              pids: pids,
+              selectedAccesses: allEnrichedAccesses,
+              workId: workId,
+              singleManifestation: singleManifestation,
+            })
+          : openLoginModal({ modal, mode: LOGIN_MODE.ORDER_PHYSICAL });
+      },
+    },
+  ];
+
+  const buttonTxtMap = [
+    /* (0) */
+    () =>
+      Translate({
+        context: "overview",
+        label: !physicalCopy ? "Order-online-disabled" : "Order-disabled",
+      }),
+    /* (1) */
+    () =>
+      [
+        Translate({
+          context: "overview",
+          label: "goto",
+        }),
+        isOnlineTranslated || workTypeTranslated,
+      ].join(" "),
+    /* (2) */
+    () => Translate({ context: "general", label: "bestil" }),
+  ];
+
+  // Set the index, buttonProps, and buttonTxt
+  const index = caseScenarioMap.findIndex((caseCheck) => caseCheck);
+  console.log("index", index);
+  const buttonProps = {
+    skeleton: buttonPropsMap[index].disabled ? null : !access,
+    type: buttonType,
+    size: size,
+    ...buttonPropsMap[index],
+  };
+
   return (
-    <OrderButton
-      user={user}
-      modal={modal}
-      access={access}
-      singleManifestation={singleManifestation}
-      onOnlineAccess={onOnlineAccess}
-      openOrderModal={() =>
-        openOrderModal({
-          modal: modal,
-          pids: pids,
-          selectedAccesses: allEnrichedAccesses,
-          workId: workId,
-          singleManifestation: singleManifestation,
-        })
-      }
-      buttonType={buttonType}
-      size={size}
-      hasDigitalAccess={hasDigitalAccess}
-    />
+    <>
+      <TextAboveButton access={access} user={user} />
+      <Button {...buttonProps}>{buttonTxtMap[index]()}</Button>
+    </>
   );
 }
 

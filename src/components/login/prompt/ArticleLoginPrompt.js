@@ -2,10 +2,11 @@ import PropTypes from "prop-types";
 import Translate from "@/components/base/translate";
 import useUser from "@/components/hooks/useUser";
 import { useModal } from "@/components/_modal";
-import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
+import { LOGIN_MODE } from "@/components/_modal/pages/login/utils";
 import { useData } from "@/lib/api/api";
 import { infomediaArticle } from "@/lib/api/infomedia.fragments";
 import LoginPrompt from "./Prompt";
+import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 
 /**
@@ -28,17 +29,6 @@ export default function ArticleLoginPrompt({ articleId }) {
   );
   const agencyName = branchRes?.data?.branches?.result?.[0]?.agencyName || "";
 
-  function openLoginModal() {
-    console.log("article login prompt", "infomedia");
-    modal.push("login", {
-      title: Translate({
-        context: "header",
-        label: "login",
-      }),
-      mode: LOGIN_MODE.INFOMEDIA,
-    });
-  }
-
   // Not logged in, no access
   if (!user?.isLoggedIn) {
     return (
@@ -48,7 +38,7 @@ export default function ArticleLoginPrompt({ articleId }) {
           context: "articles",
           label: "accessWarning",
         })}
-        signIn={openLoginModal}
+        signIn={() => openLoginModal({ modal, mode: LOGIN_MODE.INFOMEDIA })}
       />
     );
   }
