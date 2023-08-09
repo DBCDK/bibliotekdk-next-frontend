@@ -119,7 +119,13 @@ function useUserImpl() {
         ...sessionData,
       });
     }
-  }, [JSON.stringify(userData), isAuthenticated, userIsLoading, isValidating]);
+  }, [
+    JSON.stringify(userData),
+    JSON.stringify(sessionData),
+    isAuthenticated,
+    userIsLoading,
+    isValidating,
+  ]);
 
   const isGuestUser =
     !isAuthenticated && Object.keys(loanerInfo?.userParameters).length > 0;
