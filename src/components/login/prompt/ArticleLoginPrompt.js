@@ -15,7 +15,6 @@ import * as branchesFragments from "@/lib/api/branches.fragments";
  *
  */
 export default function ArticleLoginPrompt({ articleId }) {
-  console.log("article login prompt");
   const user = useUser();
   const modal = useModal();
   const { data, isLoading } = useData(

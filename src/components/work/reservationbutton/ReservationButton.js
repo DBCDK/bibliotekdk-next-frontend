@@ -5,7 +5,10 @@ import Text from "@/components/base/text/Text";
 import styles from "./ReservationButton.module.css";
 import { useModal } from "@/components/_modal";
 import { LOGIN_MODE } from "@/components/_modal/pages/login/utils";
-import { context } from "@/components/work/reservationbutton/utils";
+import {
+  context,
+  isEbookCentralOrEbscohost,
+} from "@/components/work/reservationbutton/utils";
 import { useMemo } from "react";
 import {
   goToRedirectUrl,
@@ -71,21 +74,20 @@ export function workTypeTranslator(workTypes) {
       });
 }
 
-function handleGoToLogin(access, user, modal) {
+function handleGoToLogin(modal, access, user) {
   // if this is an infomedia article it should open in same window
   const urlTarget = access[0]?.id ? "_self" : "_blank";
 
   // check if we should open login modal on click
   const goToLogin =
-    user &&
-    !user.isAuthenticated &&
-    access[0]?.url &&
+    !user?.isAuthenticated &&
     access[0]?.loginRequired &&
-    (access[0]?.url?.indexOf("ebookcentral") !== -1 ||
-      access[0]?.url?.indexOf("ebscohost") !== -1);
+    isEbookCentralOrEbscohost(access?.[0]?.url);
+
+  console.log("gotologin", goToLogin, access[0]?.url);
 
   return goToLogin
-    ? openLoginModal(modal, { originUrl: access[0]?.url })
+    ? openLoginModal({ modal }) //should we give url as param to redirect to ebookcentral or ebscohost?
     : goToRedirectUrl(access[0]?.url, urlTarget);
 }
 
@@ -167,7 +169,7 @@ function ReservationButton({
   const accessibleOnlineAndNoLoginProps = {
     skeleton: !access,
     dataCy: "button-order-overview",
-    onClick: () => handleGoToLogin(access),
+    onClick: () => handleGoToLogin(modal, access, user),
   };
   const accessibleOnlineAndNoLoginText =
     Translate({

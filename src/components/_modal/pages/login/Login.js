@@ -113,7 +113,7 @@ export function LoginPickup({
     title,
     mode = LOGIN_MODE.PLAIN_LOGIN,
     originUrl = null,
-  } = { ...context } || {};
+  } = context || {};
   const APP_URL =
     getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
 
@@ -262,7 +262,6 @@ LoginPickup.propTypes = {
  */
 export default function Wrap(props) {
   const { agency, originUrl = null } = props;
-  console.log("originUrl", originUrl);
 
   const [query, setQuery] = useState("");
 

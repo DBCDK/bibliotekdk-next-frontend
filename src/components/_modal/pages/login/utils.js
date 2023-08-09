@@ -46,12 +46,9 @@ export function openLoginModal({
     context: "header",
     label: "login",
   }),
-  originUrl = undefined,
 }) {
-  console.log("originUrl", originUrl);
   modal.push("login", {
     title: title,
     mode: mode,
-    url: originUrl,
   });
 }
