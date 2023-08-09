@@ -44,7 +44,7 @@ export function openReferencesModal(modal, pids, workId, work, manifestation) {
   });
 }
 
-export function onOnlineAccess(url, target = "_blank") {
+export function goToRedirectUrl(url, target = "_blank") {
   try {
     const parsedUrl = new URL(url);
     window.open(parsedUrl.href, target);
