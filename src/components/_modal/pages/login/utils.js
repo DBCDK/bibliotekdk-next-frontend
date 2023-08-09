@@ -20,6 +20,7 @@ export const showLogin = (mode) => {
   return mode === LOGIN_MODE.ORDER_PHYSICAL || mode === LOGIN_MODE.SUBSCRIPTION;
 };
 
+//TODO: do we still need this?
 export const isOrderPossible = ({ mode, branch }) => {
   if (!branch) return false;
   // QUICKFIX - .. to avoid api check ..  all public libraries have access to dda - no other
@@ -45,9 +46,12 @@ export function openLoginModal({
     context: "header",
     label: "login",
   }),
+  originUrl = undefined,
 }) {
+  console.log("originUrl", originUrl);
   modal.push("login", {
     title: title,
     mode: mode,
+    url: originUrl,
   });
 }

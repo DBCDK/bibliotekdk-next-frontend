@@ -262,6 +262,7 @@ LoginPickup.propTypes = {
  */
 export default function Wrap(props) {
   const { agency, originUrl = null } = props;
+  console.log("originUrl", originUrl);
 
   const [query, setQuery] = useState("");
 

@@ -85,7 +85,7 @@ function handleGoToLogin(access, user, modal) {
       access[0]?.url?.indexOf("ebscohost") !== -1);
 
   return goToLogin
-    ? openLoginModal(modal, access[0]?.url)
+    ? openLoginModal(modal, { originUrl: access[0]?.url })
     : goToRedirectUrl(access[0]?.url, urlTarget);
 }
 
