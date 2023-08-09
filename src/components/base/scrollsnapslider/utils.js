@@ -1,6 +1,8 @@
 import range from "lodash/range";
 import { getElementById } from "@/lib/utils";
 
+const ALIGNING_OFFSET = 2; // var(--pt2)
+
 export function scrollToElement(sliderElementId) {
   document.querySelector(`#${CSS.escape(sliderElementId)}`).scrollIntoView({
     behavior: "smooth",
@@ -24,7 +26,7 @@ export function scrollToElementWithOffset(
     orientation === "x" ? element.offsetLeft : element.offsetTop;
 
   window.scrollTo({
-    top: elementPosition + offset,
+    top: elementPosition + offset - ALIGNING_OFFSET,
     behavior: "smooth",
   });
 
