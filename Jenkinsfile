@@ -6,6 +6,9 @@ pipeline {
     agent {
         label 'devel11'
     }
+    triggers {
+        githubPush()
+    }
     environment {
         IMAGE_NAME = "bibliotekdk-next-frontend-${env.BRANCH_NAME.toLowerCase()}:${BUILD_NUMBER}"
         DOCKER_COMPOSE_NAME = "compose-${IMAGE_NAME}-${BRANCH_NAME.toLowerCase()}"
