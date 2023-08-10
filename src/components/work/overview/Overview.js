@@ -8,7 +8,7 @@ import LocalizationsLink from "./localizationslink";
 import WorkGroupingsOverview from "./workgroupingsoverview";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
-import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
+import ReservationButtonWrapper from "@/components/work/reservationbutton/ReservationButton";
 import useUser from "@/components/hooks/useUser";
 import styles from "./Overview.module.css";
 import OrderButtonTextBelow from "@/components/work/reservationbutton/orderbuttontextbelow/OrderButtonTextBelow";
@@ -151,7 +151,7 @@ export function Overview({
                 />
               </Col>
               <Col xs={12} sm={9} xl={7} className={styles.basket}>
-                <ReservationButton
+                <ReservationButtonWrapper
                   workId={workId}
                   selectedPids={selectedPids}
                 />
