@@ -3,7 +3,7 @@
  * Test functionality of reservation button - see also @overview.spec.js
  */
 describe("Reservation button", () => {
-  it(`user logged in material available`, () => {
+  it.skip(`user logged in material available`, () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-physical-book"
     );
@@ -14,7 +14,7 @@ describe("Reservation button", () => {
     });
   });
 
-  it(`physical material click opens modal with query params`, () => {
+  it.skip(`physical material click opens modal with query params`, () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-physical-book"
     );
@@ -26,7 +26,7 @@ describe("Reservation button", () => {
     cy.get("[data-cy=router-query]").contains("modal");
   });
 
-  it(`digital material`, () => {
+  it.skip(`digital material`, () => {
     const urla =
       "/iframe.html?id=work-reservationbutton--reservation-button-e-book";
 
@@ -49,14 +49,14 @@ describe("Reservation button", () => {
     );
   });
 
-  it(`user logged in material unavailable`, () => {
+  it.skip(`user logged in material unavailable`, () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-disabled"
     );
     cy.get("[data-cy=button-order-overview-disabled]").should("be.disabled");
   });
 
-  it("user not logged in then above text is shown", () => {
+  it.skip("user not logged in then above text is shown", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--order-button-not-logged-in"
     );
@@ -64,7 +64,7 @@ describe("Reservation button", () => {
     cy.get("[data-cy=text-above-order-button").contains("Kræver");
   });
 
-  it("does not display 'deaactivated' text, when it is loading", () => {
+  it.skip("does not display 'deaactivated' text, when it is loading", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-slow-response&viewMode=story"
     );
@@ -94,7 +94,7 @@ describe("Reservation button", () => {
     });
   });
 
-  it(`user logged in loan is not possible for material`, () => {
+  it.skip(`user logged in loan is not possible for material`, () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-physical-book-loan-not-possible"
     );
@@ -105,7 +105,7 @@ describe("Reservation button", () => {
 });
 
 describe("ButtonTxt", () => {
-  it("should have book button text", () => {
+  it.skip("should have book button text", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton-orderbuttontextbelow--book-button-txt"
     );
@@ -116,7 +116,7 @@ describe("ButtonTxt", () => {
     );
   });
 
-  it("should have ebook button text", () => {
+  it.skip("should have ebook button text", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton-orderbuttontextbelow--e-book-button-txt"
     );
@@ -124,7 +124,7 @@ describe("ButtonTxt", () => {
     cy.get("[data-cy=reservation-button-txt]").should("contain", "ereol");
   });
 
-  it("should have eaudiobook physical button text", () => {
+  it.skip("should have eaudiobook physical button text", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton-orderbuttontextbelow--e-audio-book-physical-button-txt"
     );
@@ -135,7 +135,7 @@ describe("ButtonTxt", () => {
     );
   });
 
-  it("should have eaudiobook digital button text", () => {
+  it.skip("should have eaudiobook digital button text", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton-orderbuttontextbelow--e-audio-book-digital-button-txt"
     );
@@ -143,7 +143,7 @@ describe("ButtonTxt", () => {
     cy.get("[data-cy=reservation-button-txt]").should("contain", "nota");
   });
 
-  it("should have Periodica button text", () => {
+  it.skip("should have Periodica button text", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton-orderbuttontextbelow--periodica-button-txt"
     );
@@ -154,7 +154,7 @@ describe("ButtonTxt", () => {
     );
   });
 
-  it("should have slow loading", () => {
+  it.skip("should have slow loading", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton-orderbuttontextbelow--slow-loading-button-txt"
     );

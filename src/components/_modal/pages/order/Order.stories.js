@@ -2,7 +2,7 @@ import { StoryTitle, StoryDescription } from "@/storybook";
 
 import Modal from "@/components/_modal";
 import Pages from "@/components/_modal/pages";
-import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
+import ReservationButtonWrapper from "@/components/work/reservationbutton/ReservationButton";
 import merge from "lodash/merge";
 import automock_utils from "@/lib/automock_utils.fixture";
 
@@ -42,7 +42,7 @@ function OrderPageComponentBuilder({
         <br />
         <span>selectedPids: {selectedPids.join(", ")}</span>
       </StoryDescription>
-      <ReservationButton workId={workId} selectedPids={selectedPids} />
+      <ReservationButtonWrapper workId={workId} selectedPids={selectedPids} />
       <Modal.Container>
         <Modal.Page id="order" component={Pages.Order} />
         <Modal.Page id="periodicaform" component={Pages.PeriodicaForm} />

@@ -1,5 +1,7 @@
 import { StoryDescription, StoryTitle } from "@/storybook";
-import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
+import ReservationButtonWrapper, {
+  ReservationButton,
+} from "@/components/work/reservationbutton/ReservationButton";
 import { AccessEnum } from "@/lib/enums";
 import automock_utils from "@/lib/automock_utils.fixture";
 import merge from "lodash/merge";
@@ -28,7 +30,7 @@ function ReservationButtonComponentBuilder({
       <StoryDescription>
         The ReservationButton based on the type: {descriptionName}
       </StoryDescription>
-      <ReservationButton
+      <ReservationButtonWrapper
         workId={workId}
         selectedPids={selectedPids.map((pid) => pid)}
         singleManifestation={false}
@@ -224,6 +226,8 @@ export function ReservationButtonNotLoggedIn() {
   const user = { isAuthenticated: false };
   const access = [
     {
+      materialTypesArray: ["bog"],
+      loginRequired: true,
       pid: "some-pid-1",
       id: "infomediaUrl",
       __typename: AccessEnum.INFOMEDIA_SERVICE,
@@ -238,6 +242,7 @@ export function ReservationButtonNotLoggedIn() {
       </StoryDescription>
       <ReservationButton
         user={user}
+        singleManifestation={true}
         access={access}
         onHandleGoToLogin={() => alert("DU SKAL LOGGE IND")}
       />

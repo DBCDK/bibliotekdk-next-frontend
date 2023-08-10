@@ -1,21 +1,21 @@
 import useUser from "@/components/hooks/useUser";
 import Button from "@/components/base/button/Button";
-import Translate, { hasTranslation } from "@/components/base/translate";
+import Translate from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
 import styles from "./ReservationButton.module.css";
 import { useModal } from "@/components/_modal";
 import { LOGIN_MODE } from "@/components/_modal/pages/login/utils";
 import {
   context,
-  isEbookCentralOrEbscohost,
+  handleGoToLogin,
+  isOnlineTranslator,
+  workTypeTranslator,
 } from "@/components/work/reservationbutton/utils";
 import { useMemo } from "react";
 import {
-  goToRedirectUrl,
   openOrderModal,
   useBranchUserAndHasDigitalAccess,
 } from "@/components/work/utils";
-import { MaterialTypeEnum } from "@/lib/enums_MaterialTypes";
 import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAndSelectedPids";
 import {
   accessFactory,
@@ -42,54 +42,7 @@ function TextAboveButton({ access, user }) {
   );
 }
 
-function isOnlineTranslator(materialTypeArray) {
-  const overrideWithIsOnline =
-    materialTypeArray?.filter((specificMaterialType) =>
-      [MaterialTypeEnum.EBOG, MaterialTypeEnum["LYDBOG (NET)"]].includes(
-        specificMaterialType
-      )
-    ).length > 0;
-
-  return overrideWithIsOnline
-    ? Translate({
-        context: "workTypeDistinctForm",
-        label: "isOnline",
-      })
-    : "";
-}
-
-export function workTypeTranslator(workTypes) {
-  const workType = workTypes?.[0] || "fallback";
-  return hasTranslation({
-    context: "workTypeDistinctForm",
-    label: workType.toLowerCase(),
-  })
-    ? Translate({
-        context: "workTypeDistinctForm",
-        label: workType.toLowerCase(),
-      })
-    : Translate({
-        context: "workTypeDistinctForm",
-        label: "fallback",
-      });
-}
-
-function handleGoToLogin(modal, access, user) {
-  // if this is an infomedia article it should open in same window
-  const urlTarget = access[0]?.id ? "_self" : "_blank";
-
-  // check if we should open login modal on click
-  const goToLogin =
-    !user?.isAuthenticated &&
-    access[0]?.loginRequired &&
-    isEbookCentralOrEbscohost(access?.[0]?.url);
-
-  return goToLogin
-    ? openLoginModal({ modal }) //should we give url as param to redirect to ebookcentral or ebscohost?
-    : goToRedirectUrl(access[0]?.url, urlTarget);
-}
-
-function ReservationButton({
+function ReservationButtonWrapper({
   workId,
   selectedPids,
   singleManifestation = false,
@@ -98,7 +51,6 @@ function ReservationButton({
   className,
 }) {
   const user = useUser();
-  const modal = useModal();
 
   const { workResponse, manifestations, manifestationsResponse } =
     useGetManifestationsForOrderButton(workId, selectedPids);
@@ -142,12 +94,52 @@ function ReservationButton({
     );
   }
 
+  return (
+    <ReservationButton
+      access={access}
+      user={user}
+      type={buttonType}
+      size={size}
+      pids={pids}
+      singleManifestation={singleManifestation}
+    />
+  );
+}
+
+export default ReservationButtonWrapper;
+
+/**
+ * For testing purpose we separate the rendered button from the skeleton
+ * to be able to give mocked access obj to button
+ * @param {obj} access
+ * @param {obj} user
+ * @param {string} buttonType
+ * @param {string} size
+ * @param {[string]} pids
+ * @returns {JSX.Element}
+ */
+export const ReservationButton = ({
+  access,
+  user,
+  buttonType,
+  size,
+  pids,
+  singleManifestation,
+}) => {
+  const modal = useModal();
+
   const physicalCopy = checkPhysicalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
   const digitalCopy = checkDigitalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
 
   const isOnlineTranslated = singleManifestation
-    ? isOnlineTranslator(access?.[0]?.materialTypesArray, singleManifestation)
+    ? isOnlineTranslator(access?.[0]?.materialTypesArray)
     : "";
+  console.log(
+    "singlemanifestation",
+    singleManifestation,
+    access?.[0],
+    isOnlineTranslated
+  );
   const workTypeTranslated = workTypeTranslator(access?.[0]?.workTypes);
 
   const noSelectedManifestations = Boolean(isEmpty(access));
@@ -177,6 +169,7 @@ function ReservationButton({
       " " +
       isOnlineTranslated || workTypeTranslated;
 
+  console.log("HERE", isOnlineTranslated, workTypeTranslated);
   const loginRequiredProps = {
     skeleton: !access,
     dataCy: `button-order-overview-enabled`,
@@ -192,10 +185,14 @@ function ReservationButton({
         : openLoginModal({ modal, mode: LOGIN_MODE.ORDER_PHYSICAL });
     },
   };
-  const loginRequiredText = Translate({ context: "general", label: "bestil" });
+
+  const loginRequiredText = Translate({
+    context: "general",
+    label: "bestil",
+  });
 
   /**
-   * get the props for the button based on the case scenario
+   * Get props for the button based on the case scenario
    * @returns {object} props and text for button
    */
   const getProps = () => {
@@ -222,6 +219,7 @@ function ReservationButton({
   };
 
   const { props, text } = getProps();
+
   return (
     <>
       <TextAboveButton access={access} user={user} />
@@ -230,6 +228,4 @@ function ReservationButton({
       </Button>
     </>
   );
-}
-
-export default ReservationButton;
+};
