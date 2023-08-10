@@ -1,7 +1,5 @@
 import { StoryDescription, StoryTitle } from "@/storybook";
-import ReservationButton, {
-  OrderButton,
-} from "@/components/work/reservationbutton/ReservationButton";
+import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
 import { AccessEnum } from "@/lib/enums";
 import automock_utils from "@/lib/automock_utils.fixture";
 import merge from "lodash/merge";
@@ -26,9 +24,9 @@ function ReservationButtonComponentBuilder({
   const descriptionName = storyNameOverride ? storyNameOverride : type;
   return (
     <div>
-      <StoryTitle>OrderButton - {descriptionName}</StoryTitle>
+      <StoryTitle>ReservationButton - {descriptionName}</StoryTitle>
       <StoryDescription>
-        The OrderButton based on the type: {descriptionName}
+        The ReservationButton based on the type: {descriptionName}
       </StoryDescription>
       <ReservationButton
         workId={workId}
@@ -221,7 +219,7 @@ ReservationButtonDisabled.story = {
   }),
 };
 
-export function OrderButtonNotLoggedIn() {
+export function ReservationButtonNotLoggedIn() {
   const descriptionName = "Not logged in";
   const user = { isAuthenticated: false };
   const access = [
@@ -234,11 +232,11 @@ export function OrderButtonNotLoggedIn() {
 
   return (
     <div>
-      <StoryTitle>OrderButton - {descriptionName}</StoryTitle>
+      <StoryTitle>ReservationButton - {descriptionName}</StoryTitle>
       <StoryDescription>
-        The OrderButton based on the type: {descriptionName}
+        The ReservationButton based on the type: {descriptionName}
       </StoryDescription>
-      <OrderButton
+      <ReservationButton
         user={user}
         access={access}
         onHandleGoToLogin={() => alert("DU SKAL LOGGE IND")}
