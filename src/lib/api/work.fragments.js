@@ -587,6 +587,7 @@ export function listOfAllManifestations({ workId }) {
             edition {
               publicationYear {
                 display
+                year
               }
               edition
             }

@@ -132,7 +132,7 @@ export function BibliographicData({ manifestations, workId }) {
 
           return (
             <Item
-              title={manifestation?.edition?.publicationYear?.display || "-"}
+              title={manifestation?.edition?.publicationYear?.year || "-"}
               additionalTxt={additinalText}
               key={`${manifestation?.titles?.main?.[0]}_${index}`}
               eventKey={index.toString()}
