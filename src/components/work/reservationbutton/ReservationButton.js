@@ -84,8 +84,6 @@ function handleGoToLogin(modal, access, user) {
     access[0]?.loginRequired &&
     isEbookCentralOrEbscohost(access?.[0]?.url);
 
-  console.log("gotologin", goToLogin, access[0]?.url);
-
   return goToLogin
     ? openLoginModal({ modal }) //should we give url as param to redirect to ebookcentral or ebscohost?
     : goToRedirectUrl(access[0]?.url, urlTarget);

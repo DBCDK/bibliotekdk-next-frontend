@@ -152,7 +152,6 @@ export function LoginPickup({
         clear: true,
       });
     } else {
-      console.log("LOGIN not suppo");
       modal.push("loginNotSupported", {
         libraryName: branch.agencyName,
       });
