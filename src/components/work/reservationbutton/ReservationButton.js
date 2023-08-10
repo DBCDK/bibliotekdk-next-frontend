@@ -102,6 +102,8 @@ function ReservationButtonWrapper({
       size={size}
       pids={pids}
       singleManifestation={singleManifestation}
+      allEnrichedAccesses={allEnrichedAccesses}
+      workId={workId}
     />
   );
 }
@@ -125,6 +127,8 @@ export const ReservationButton = ({
   size,
   pids,
   singleManifestation,
+  allEnrichedAccesses,
+  workId,
 }) => {
   const modal = useModal();
 
@@ -134,12 +138,6 @@ export const ReservationButton = ({
   const isOnlineTranslated = singleManifestation
     ? isOnlineTranslator(access?.[0]?.materialTypesArray)
     : "";
-  console.log(
-    "singlemanifestation",
-    singleManifestation,
-    access?.[0],
-    isOnlineTranslated
-  );
   const workTypeTranslated = workTypeTranslator(access?.[0]?.workTypes);
 
   const noSelectedManifestations = Boolean(isEmpty(access));
