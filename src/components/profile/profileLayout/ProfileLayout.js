@@ -15,6 +15,7 @@ import { signOut } from "@dbcdk/login-nextjs/client";
 import Button from "@/components/base/button";
 import { useModal } from "@/components/_modal";
 import Router from "next/router";
+import { openLoginModal } from "@/components/_modal/pages/login/utils";
 
 const CONTEXT = "profile";
 const MENUITEMS = ["loansAndReservations", "myLibraries"];
@@ -33,14 +34,6 @@ export default function ProfileLayout({ title, children }) {
   const isDesktop = !isMobile && !isTablet;
   const user = useUser();
   const modal = useModal();
-
-  function openModal({
-    title = Translate({ context: "header", label: "login" }),
-  }) {
-    modal.push("login", {
-      title: title,
-    });
-  }
 
   return (
     <Container fluid className={styles.container}>
@@ -97,9 +90,10 @@ export default function ProfileLayout({ title, children }) {
                 className={styles.loginButton}
                 size="large"
                 type="primary"
-                onClick={openModal}
+                onClick={() => openLoginModal({ modal })}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.keyCode === 13) openModal();
+                  if (e.key === "Enter" || e.keyCode === 13)
+                    openLoginModal({ modal });
                 }}
               >
                 {Translate({

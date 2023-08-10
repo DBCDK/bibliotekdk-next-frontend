@@ -13,7 +13,7 @@ import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
 import useUser from "@/components/hooks/useUser";
 import Top from "@/components/_modal/pages/base/top";
-import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
+import { LOGIN_MODE } from "@/components/_modal/pages/login/utils";
 
 import animations from "css/animations";
 import { useData } from "@/lib/api/api";
@@ -24,6 +24,7 @@ import styles from "./Login.module.css";
 import { signIn } from "next-auth/react";
 import getConfig from "next/config";
 import Router from "next/router";
+import { showLogin } from "./utils";
 
 function Select({
   branch,
@@ -107,9 +108,12 @@ export function LoginPickup({
   modal,
   context,
 }) {
-  const { title } = { ...context };
   const allBranches = data?.result;
-  const { mode = LOGIN_MODE.PLAIN_LOGIN, originUrl = null } = context || {};
+  const {
+    title,
+    mode = LOGIN_MODE.PLAIN_LOGIN,
+    originUrl = null,
+  } = context || {};
   const APP_URL =
     getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
 
@@ -118,8 +122,8 @@ export function LoginPickup({
   const callbackurl = `${APP_URL}${Router.asPath}`.replace(regexp, "");
   const showResultsList = hasQuery && allBranches?.length > 0;
   const showMitIDLogin = !hasQuery || !allBranches || allBranches.length < 1;
-
   const user = useUser();
+
   const onSelect = (branch) => {
     // edge case: - user is already logged in .. and tries to login in again with same library ..
     // @TODO .. we need a better way (than alert) to pass a message to the user - maybe we should use bootstraps toast ??
@@ -130,27 +134,19 @@ export function LoginPickup({
       return;
     }
 
-    /**
-     * If we order a physical copy or a digital copy, we always show the loanerform
-     * If the mode neither of the two modes above, we check if the library supports borrowerCheck
-     * If not, we show the loginNotSupported modal, we can order stuff for these libraries, but we cannot login/validate via them
-     * @param {string} mode
-     * @param {boolean} borrowerCheck
-     * @returns {boolean}
-     */
-    const showLoanerForm = ({ mode, borrowerCheck }) => {
-      return (
-        mode === LOGIN_MODE.ORDER_PHYSICAL ||
-        mode === LOGIN_MODE.SUBSCRIPTION ||
-        borrowerCheck === true
-      );
-    };
-
-    if (showLoanerForm({ mode, borrowerCheck: branch?.borrowerCheck })) {
+    if (branch?.borrowerCheck) {
+      modal.push("openAdgangsplatform", {
+        callbackUrl: callbackurl, //TODO find correct callbackUrl for header and from order button (add bestil modal)
+        agencyId: branch.agencyId,
+        agencyName: originUrl ? originUrl : branch.agencyName, //TODO do we have originUrl and how does it look like?
+      });
+      return;
+    }
+    if (showLogin(mode)) {
       modal.push("loanerform", {
         branchId: branch.branchId,
         doPolicyCheck: false,
-        callbackUrl: callbackurl,
+        callbackUrl: callbackurl, //TODO remove
         mode,
         originUrl,
         clear: true,

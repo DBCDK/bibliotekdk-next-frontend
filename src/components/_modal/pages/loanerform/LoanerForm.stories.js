@@ -1,5 +1,5 @@
 import { LoanerForm } from "./LoanerForm";
-import { LOGIN_MODE } from "./LoanerForm";
+import { LOGIN_MODE } from "@/components/_modal/pages/login/utils";
 
 const exportedObject = {
   title: "modal/Order/LoanerForm",

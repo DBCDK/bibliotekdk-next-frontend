@@ -10,6 +10,12 @@
 .loanerform input {
   margin-top: var(--pt1);
 }
+
+.loanerform .fields {
+  padding-bottom: var(--pt4);
+  position: relative;
+}
+
 .loanerform button {
   margin-top: var(--pt3);
 }
@@ -23,25 +29,19 @@
 .loanerform h4 {
   margin-top: var(--pt5);
 }
-.loanerform .fields {
-  padding-bottom: var(--pt4);
-  position: relative;
-}
+
 .loanerform p.explain {
   margin-top: var(--pt1);
 }
+
 .loanerform .error {
   position: absolute;
   bottom: 0px;
   color: var(--error);
 }
+
 .guestlogin {
   color: var(--blue);
-}
-.inline {
-  display: inline-block;
-  margin-right: var(--pt2);
-  margin-top: var(--pt2);
 }
 
 @media (min-width: 576px) {

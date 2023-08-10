@@ -20,3 +20,12 @@ export function getBaseUrl(url) {
   }
   return url;
 }
+
+/**
+ * check if url is ebookcentral or ebscohost
+ * @param {string} url
+ * @returns
+ */
+export function isEbookCentralOrEbscohost(url) {
+  return url && (url.includes("ebookcentral") || url.includes("ebscohost"));
+}

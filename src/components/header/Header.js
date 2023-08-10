@@ -41,6 +41,7 @@ import { SuggestTypeEnum } from "@/lib/enums";
 import isEqual from "lodash/isEqual";
 import isEmpty from "lodash/isEmpty";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import { openLoginModal } from "../_modal/pages/login/utils";
 
 // material Pages
 export const MATERIAL_PAGES = [
@@ -123,13 +124,7 @@ export function Header({
             await user.guestLogout();
           }
         : // open login modal
-          () =>
-            modal.push("login", {
-              title: Translate({
-                context: "header",
-                label: "login",
-              }),
-            }),
+          () => openLoginModal({ modal }),
     },
 
     /*{
