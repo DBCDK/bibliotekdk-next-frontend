@@ -226,8 +226,6 @@ export function ReservationButtonNotLoggedIn() {
   const user = { isAuthenticated: false };
   const access = [
     {
-      materialTypesArray: ["bog"],
-      loginRequired: true,
       pid: "some-pid-1",
       id: "infomediaUrl",
       __typename: AccessEnum.INFOMEDIA_SERVICE,

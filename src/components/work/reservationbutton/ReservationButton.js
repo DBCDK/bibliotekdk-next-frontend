@@ -166,10 +166,9 @@ export const ReservationButton = ({
       context: "overview",
       label: "goto",
     }) +
-      " " +
-      isOnlineTranslated || workTypeTranslated;
+    " " +
+    (isOnlineTranslated || workTypeTranslated);
 
-  console.log("HERE", isOnlineTranslated, workTypeTranslated);
   const loginRequiredProps = {
     skeleton: !access,
     dataCy: `button-order-overview-enabled`,
