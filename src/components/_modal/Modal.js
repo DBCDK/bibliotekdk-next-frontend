@@ -26,7 +26,7 @@ const URL_PAGE_UID_KEY = "modal";
  * @param router
  */
 function pushPageUID(uid, router) {
-  console.log("pushing to router");
+  //console.log("pushing to router");
   router.push({
     pathname: router.pathname,
     query: {
@@ -131,7 +131,7 @@ function Container({ children, className = {}, mock = {} }) {
 
   // On mount, we try to load stack from local storage
   useEffect(() => {
-    console.log("MOUNTING");
+    //console.log("MOUNTING");
     try {
       // Load stack as string from local storage
       const stackStr = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -366,7 +366,7 @@ function Page(props) {
   const [status, setStatus] = useState("page-after");
 
   // props used on page
-  const { index, active, modal, className, dataCy, mock, hide } = props;
+  const { index, active, modal, className, dataCy, mock } = props;
   // props we will pass to the component living on the page
   const passedProps = {
     active,
@@ -451,11 +451,11 @@ export function useModal() {
    * Push
    */
   function _push(id, context = {}, show = true) {
-    console.log("addToUrlHistory", id, context, show);
+    //console.log("addToUrlHistory", id, context, show);
     if (id) {
       let copy = [..._stack];
       // Skip "reset" on empty stack
-      console.log("add to url history", false);
+      //console.log("SHOW", show);
       if (_stack.length > 0) {
         const activeIndex = _index();
         copy = copy.slice(0, activeIndex + 1);
@@ -472,7 +472,7 @@ export function useModal() {
 
       if (!show) entry.isVisible = false;
 
-      console.log("entry", JSON.stringify(entry));
+      //console.log("entry", JSON.stringify(entry));
 
       // Push to stack
       copy.push(entry);
