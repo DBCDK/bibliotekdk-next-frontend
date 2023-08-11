@@ -131,6 +131,7 @@ function Container({ children, className = {}, mock = {} }) {
 
   // On mount, we try to load stack from local storage
   useEffect(() => {
+    console.log("MOUNTING");
     try {
       // Load stack as string from local storage
       const stackStr = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -366,7 +367,6 @@ function Page(props) {
 
   // props used on page
   const { index, active, modal, className, dataCy, mock } = props;
-  console.log("Page -> props", props);
   // props we will pass to the component living on the page
   const passedProps = {
     active,
@@ -470,6 +470,8 @@ export function useModal() {
         active: addToUrlHistory,
         uid: createPageUID(),
       };
+
+      console.log("entry", entry);
 
       // Push to stack
       copy.push(entry);

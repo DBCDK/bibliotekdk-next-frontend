@@ -24,7 +24,7 @@ export const getCallbackUrl = (pickupBranchId) => {
 export default function OpenAdgangsplatform({ context, modal }) {
   const { agencyName, agencyId, callbackUrl } = context;
   const onLogin = () => {
-    modal.push("loginNotSupported", {}, false);
+    modal.push("order", {}, false);
     console.log("onLogin", JSON.stringify(modal.stack));
     signIn(
       "adgangsplatformen",
