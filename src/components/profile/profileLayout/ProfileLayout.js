@@ -17,7 +17,7 @@ import { useModal } from "@/components/_modal";
 import Router from "next/router";
 
 const CONTEXT = "profile";
-const MENUITEMS = ["loansAndReservations", "myLibraries"];
+const MENUITEMS = ["loansAndReservations", "myLibraries", "orderHistory"];
 
 /**
  * ProfileLayout to use in /profil subpages
@@ -52,7 +52,7 @@ export default function ProfileLayout({ title, children }) {
         </Col>
         <Col lg={9}>
           {/**page content here */}
-          {user?.isAuthenticated ? (
+          {!user?.isAuthenticated ? (
             <>
               <Title
                 className={styles.title}
