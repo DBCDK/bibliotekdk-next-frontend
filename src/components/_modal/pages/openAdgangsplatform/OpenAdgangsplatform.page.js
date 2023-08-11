@@ -24,11 +24,14 @@ export const getCallbackUrl = (pickupBranchId) => {
 export default function OpenAdgangsplatform({ context, modal }) {
   const { agencyName, agencyId, callbackUrl } = context;
   const onLogin = () => {
+    modal.active = false;
     modal.push("order", {}, false);
-    console.log("onLogin", JSON.stringify(modal.stack));
+    console.log("added modal", JSON.stringify(modal.stack));
+    const uid = modal.stack[modal.stack.length - 1].uid;
+    console.log("uid", uid);
     signIn(
       "adgangsplatformen",
-      { callbackUrl: callbackUrl },
+      { callbackUrl: `${callbackUrl}/modal=${uid}` },
       { agency: agencyId, force_login: 1 }
     );
   };

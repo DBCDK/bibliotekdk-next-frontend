@@ -366,7 +366,7 @@ function Page(props) {
   const [status, setStatus] = useState("page-after");
 
   // props used on page
-  const { index, active, modal, className, dataCy, mock } = props;
+  const { index, active, modal, className, dataCy, mock, hide } = props;
   // props we will pass to the component living on the page
   const passedProps = {
     active,
@@ -395,7 +395,6 @@ function Page(props) {
     else if (index < modal.index()) {
       setStatus("page-before");
     }
-
     // Pages will mount right, and on onmount be repositioned right
     return () => setStatus("page-after");
   }, [modal.stack]);
@@ -451,8 +450,8 @@ export function useModal() {
   /**
    * Push
    */
-  function _push(id, context = {}, addToUrlHistory = true) {
-    console.log("addToUrlHistory", id, context, addToUrlHistory);
+  function _push(id, context = {}, show = true) {
+    console.log("addToUrlHistory", id, context, show);
     if (id) {
       let copy = [..._stack];
       // Skip "reset" on empty stack
@@ -467,11 +466,13 @@ export function useModal() {
       const entry = {
         id,
         context,
-        active: addToUrlHistory,
+        active: show,
         uid: createPageUID(),
       };
 
-      console.log("entry", entry);
+      if (!show) entry.isVisible = false;
+
+      console.log("entry", JSON.stringify(entry));
 
       // Push to stack
       copy.push(entry);
