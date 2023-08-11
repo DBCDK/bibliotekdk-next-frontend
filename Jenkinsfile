@@ -81,6 +81,7 @@ pipeline {
                 anyOf {
                     branch 'main';
                     branch 'alfa-0'
+                    branch 'prod'
                 }
             }
             steps {
@@ -95,6 +96,12 @@ pipeline {
                             sh '''
                                 #!/usr/bin/env bash                        
                                 set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b alfa-0
+                            '''
+                        }
+                        else if (env.BRANCH_NAME == 'prod') {
+                            sh '''
+                                #!/usr/bin/env bash
+                                set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b prod
                             '''
                         }
                     }
