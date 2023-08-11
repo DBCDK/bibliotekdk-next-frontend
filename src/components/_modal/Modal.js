@@ -26,6 +26,7 @@ const URL_PAGE_UID_KEY = "modal";
  * @param router
  */
 function pushPageUID(uid, router) {
+  console.log("pushing to router");
   router.push({
     pathname: router.pathname,
     query: {
@@ -365,6 +366,7 @@ function Page(props) {
 
   // props used on page
   const { index, active, modal, className, dataCy, mock } = props;
+  console.log("Page -> props", props);
   // props we will pass to the component living on the page
   const passedProps = {
     active,
@@ -449,18 +451,25 @@ export function useModal() {
   /**
    * Push
    */
-  function _push(id, context = {}) {
+  function _push(id, context = {}, addToUrlHistory = true) {
+    console.log("addToUrlHistory", id, context, addToUrlHistory);
     if (id) {
       let copy = [..._stack];
       // Skip "reset" on empty stack
+      console.log("add to url history", false);
       if (_stack.length > 0) {
-        const active = _index();
+        const active = addToUrlHistory ? _index() : false;
         copy = copy.slice(0, active + 1);
         copy = copy.map((obj) => ({ ...obj, active: false }));
       }
 
       // Create entry
-      const entry = { id, context, active: true, uid: createPageUID() };
+      const entry = {
+        id,
+        context,
+        active: addToUrlHistory,
+        uid: createPageUID(),
+      };
 
       // Push to stack
       copy.push(entry);
@@ -518,13 +527,10 @@ export function useModal() {
   }
 
   /**
-   * index
-   *
    * Returns the index for the active element
-   * To search for an index, an id can passed to the function.
+   * To search for an index, an id can be passed to the function.
    *
    * OBS!!! If an ID is given, function will return the index of the first found element (from position 0) with the given id
-   *
    * @returns {int}
    */
   function _index(id = null) {

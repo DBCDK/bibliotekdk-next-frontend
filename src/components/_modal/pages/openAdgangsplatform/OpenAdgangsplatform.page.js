@@ -21,9 +21,11 @@ export const getCallbackUrl = (pickupBranchId) => {
  * @param {context} context
  * @returns
  */
-export default function OpenAdgangsplatform({ context }) {
+export default function OpenAdgangsplatform({ context, modal }) {
   const { agencyName, agencyId, callbackUrl } = context;
   const onLogin = () => {
+    modal.push("loginNotSupported", {}, false);
+    console.log("onLogin", JSON.stringify(modal.stack));
     signIn(
       "adgangsplatformen",
       { callbackUrl: callbackUrl },
