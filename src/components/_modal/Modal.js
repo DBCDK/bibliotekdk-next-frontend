@@ -458,8 +458,8 @@ export function useModal() {
       // Skip "reset" on empty stack
       console.log("add to url history", false);
       if (_stack.length > 0) {
-        const active = addToUrlHistory ? _index() : false;
-        copy = copy.slice(0, active + 1);
+        const activeIndex = _index();
+        copy = copy.slice(0, activeIndex + 1);
         copy = copy.map((obj) => ({ ...obj, active: false }));
       }
 
