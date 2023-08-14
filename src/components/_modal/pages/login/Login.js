@@ -113,6 +113,10 @@ export function LoginPickup({
     title,
     mode = LOGIN_MODE.PLAIN_LOGIN,
     originUrl = null,
+    pids = [],
+    selectedAccesses = [],
+    workId = null,
+    singleManifestation = null,
   } = context || {};
   const APP_URL =
     getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
@@ -145,11 +149,10 @@ export function LoginPickup({
     if (showLogin(mode)) {
       modal.push("loanerform", {
         branchId: branch.branchId,
-        doPolicyCheck: false,
-        callbackUrl: callbackurl, //TODO remove
-        mode,
-        originUrl,
-        clear: true,
+        pids: pids,
+        selectedAccesses: selectedAccesses,
+        workId: workId,
+        singleManifestation: singleManifestation,
       });
     } else {
       modal.push("loginNotSupported", {

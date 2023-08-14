@@ -179,7 +179,14 @@ export const ReservationButton = ({
             workId: workId,
             singleManifestation: singleManifestation,
           })
-        : openLoginModal({ modal, mode: LOGIN_MODE.ORDER_PHYSICAL });
+        : openLoginModal({
+            modal,
+            mode: LOGIN_MODE.ORDER_PHYSICAL,
+            pids: pids,
+            selectedAccesses: allEnrichedAccesses,
+            workId: workId,
+            singleManifestation: singleManifestation,
+          });
     },
   };
 

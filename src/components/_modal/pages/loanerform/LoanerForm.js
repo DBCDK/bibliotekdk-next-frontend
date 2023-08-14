@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-
-import merge from "lodash/merge";
-
 import { signIn } from "next-auth/react";
 
 import Title from "@/components/base/title";
@@ -16,11 +13,10 @@ import Top from "../base/top";
 
 import styles from "./LoanerForm.module.css";
 import { useData } from "@/lib/api/api";
-import * as branchesFragments from "@/lib/api/branches.fragments";
 import useUser from "@/components/hooks/useUser";
-import * as userFragments from "@/lib/api/user.fragments";
-import { manifestationsForAccessFactory } from "@/lib/api/manifestation.fragments";
-import { inferAccessTypes } from "@/components/_modal/pages/edition/utils";
+import * as branchesFragments from "@/lib/api/branches.fragments";
+import { useModal } from "@/components/_modal";
+import { openOrderModal } from "@/components/work/utils";
 
 const ERRORS = {
   MISSING_INPUT: "error-missing-input",
@@ -180,6 +176,7 @@ export function UserParamsForm({ branch, initial, onSubmit, originUrl }) {
  * @returns {string|*}
  */
 
+//TODO check how ebscohost og ebbookcentral is shown in UI
 function originUrlToUrlName(originUrl) {
   return originUrl;
   // these are for dda (demand drive acquisition)
@@ -205,7 +202,6 @@ function originUrlToUrlName(originUrl) {
  * @param {obj} skeleton
  * @param {obj} initial
  * @param {obj} context
- * @param {obj} digitalCopyAccess
  * @returns JSX element
  */
 export function LoanerForm({
@@ -319,55 +315,30 @@ LoanerForm.propTypes = {
  * @returns {component}
  */
 export default function Wrap(props) {
-  const { branchId, pid, doPolicyCheck, clear } = props.context;
-
-  // Branch userparams fetch (Fast)
+  const modal = useModal();
+  const { branchId, pids, selectedAccesses, workId, singleManifestation } =
+    props.context;
   const { data, isLoading: branchIsLoading } = useData(
     branchId && branchesFragments.branchUserParameters({ branchId })
   );
 
-  // PolicyCheck in own request (sometimes slow)
-  const { data: policyData } = useData(
-    pid && branchId && branchesFragments.branchOrderPolicy({ branchId, pid })
-  );
-  const mergedData = merge({}, data, policyData);
-
-  const { isAuthenticated } = useUser();
+  const branch = data?.branches?.result?.[0];
 
   const { loanerInfo, updateLoanerInfo } = useUser();
-
-  // User branches fetch
-  const { data: userData, isLoading: userIsLoading } = useData(
-    isAuthenticated && userFragments.branchesForUser()
-  );
-
-  const loggedInAgencyId = userData?.user?.agency?.result?.[0]?.agencyId;
-  const branch = mergedData?.branches?.result?.[0];
-  const skeleton =
-    (branchId && (userIsLoading || branchIsLoading)) ||
-    loggedInAgencyId === branch?.agencyId;
 
   async function onSubmit(info) {
     await updateLoanerInfo({
       userParameters: info,
-      pickupBranch: branch.branchId,
+      pickupBranch: branchId,
     });
-    if (clear) {
-      props.modal.clear();
-    } else {
-      // Back to order
-      props.modal.prev("order");
-    }
+    openOrderModal({
+      modal,
+      pids,
+      selectedAccesses,
+      workId,
+      singleManifestation,
+    });
   }
-
-  const { data: manifestationData } = useData(
-    pid && manifestationsForAccessFactory({ pid })
-  );
-  const { isDigitalCopy, isPeriodicaLike } = inferAccessTypes(
-    null,
-    branch?.agencyId,
-    manifestationData?.manifestations
-  );
 
   if (!branchId) {
     return null;
@@ -388,11 +359,7 @@ export default function Wrap(props) {
           );
         }}
         onSubmit={onSubmit}
-        skeleton={skeleton}
-        doPolicyCheck={doPolicyCheck} //TODO can we check this in the form?
-        digitalCopyAccess={
-          isDigitalCopy && !isPeriodicaLike && branch?.digitalCopyAccess
-        }
+        skeleton={branchIsLoading}
         onClose={() => props.modal.prev()}
       />
     </>

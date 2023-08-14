@@ -38,6 +38,11 @@ export const isOrderPossible = ({ mode, branch }) => {
  * @param {obj} modal
  * @param {string} title
  * @param {string} mode
+ * @param {string} originUrl
+ * @param {array} pids
+ * @param {array} selectedAccesses
+ * @param {string} workId
+ * @param {string} singleManifestation
  */
 export function openLoginModal({
   modal,
@@ -46,9 +51,19 @@ export function openLoginModal({
     context: "header",
     label: "login",
   }),
+  originUrl = undefined,
+  pids = undefined,
+  selectedAccesses = undefined,
+  workId = undefined,
+  singleManifestation = undefined,
 }) {
   modal.push("login", {
     title: title,
     mode: mode,
+    originUrl: originUrl,
+    pids: pids,
+    selectedAccesses: selectedAccesses,
+    workId: workId,
+    singleManifestation: singleManifestation,
   });
 }
