@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 import merge from "lodash/merge";
@@ -11,6 +11,7 @@ import Email from "@/components/base/forms/email";
 import Input from "@/components/base/forms/input";
 import Button from "@/components/base/button";
 import Translate, { hasTranslation } from "@/components/base/translate";
+import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
 
 import Top from "../base/top";
 
@@ -21,12 +22,19 @@ import useUser from "@/components/hooks/useUser";
 import * as userFragments from "@/lib/api/user.fragments";
 import { manifestationsForAccessFactory } from "@/lib/api/manifestation.fragments";
 import { inferAccessTypes } from "@/components/_modal/pages/edition/utils";
+import Tooltip from "@/components/base/tooltip/Tooltip";
 
 const ERRORS = {
   MISSING_INPUT: "error-missing-input",
 };
 
-export function UserParamsForm({ branch, initial, onSubmit, originUrl }) {
+export function UserParamsForm({
+  branch,
+  initial,
+  onSubmit,
+  originUrl,
+  skeleton,
+}) {
   function validateState() {
     for (let i = 0; i < requiredParameters.length; i++) {
       const { userParameterType } = requiredParameters[i];
@@ -40,6 +48,7 @@ export function UserParamsForm({ branch, initial, onSubmit, originUrl }) {
     }
   }
 
+  const [checked, setChecked] = useState(false);
   const [errorCode, setErrorCode] = useState();
   const [state, setState] = useState(initial || {});
   const [emailMessage, setEmailMessage] = useState();
@@ -58,7 +67,7 @@ export function UserParamsForm({ branch, initial, onSubmit, originUrl }) {
 
         setErrorCode(error);
         if (!error) {
-          onSubmit(state);
+          onSubmit(state, checked);
         }
       }}
     >
@@ -158,14 +167,24 @@ export function UserParamsForm({ branch, initial, onSubmit, originUrl }) {
           </Text>
         )}
       </div>
-
-      <Text type="text3" className={styles.guestlogin}>
-        {Translate({
-          context: "order",
-          label: "order-guest-login-description",
-          vars: [branch.agencyName],
-        })}
-      </Text>
+      <span className={styles.checkBoxSpan}>
+        <Checkbox
+          onChange={(val) => setChecked(val)} //TODO set userparams in browser if checked
+          id="loanerform-checkbox"
+          aria-labelledby="loanerform-checkbox"
+        />
+        <Text
+          id="loanerform-checkbox"
+          lines={1}
+          skeleton={skeleton}
+          type="text3"
+          dataCy="loanerinfo-checkbox-label"
+        >
+          {Translate({ context: "order", label: "save-info-in-browser" })}
+        </Text>
+        <Tooltip labelToTranslate="save-info-in-browser" />
+      </span>
+      {/* onclick triggers submit form */}
       <Button onClick={() => {}} tabIndex="0">
         {Translate({
           context: "header",
@@ -264,6 +283,7 @@ export function LoanerForm({
         initial={initial}
         onSubmit={onSubmit}
         originUrl={originUrl}
+        skeleton={skeleton}
       />
     </div>
   );
@@ -325,7 +345,7 @@ LoanerForm.propTypes = {
  * @returns {component}
  */
 export default function Wrap(props) {
-  const { branchId, pid, doPolicyCheck, clear } = props.context;
+  const { branchId, pid, clear } = props.context;
 
   // Branch userparams fetch (Fast)
   const { data, isLoading: branchIsLoading } = useData(
@@ -353,11 +373,17 @@ export default function Wrap(props) {
     (branchId && (userIsLoading || branchIsLoading)) ||
     loggedInAgencyId === branch?.agencyId;
 
-  async function onSubmit(info) {
-    await updateLoanerInfo({
-      userParameters: info,
-      pickupBranch: branch.branchId,
-    });
+  async function onSubmit(info, checked) {
+    console.log("info", info);
+    if (checked) {
+      localStorage.setItem(
+        "loanerInfo",
+        JSON.stringify({
+          userParameters: info,
+          pickupBranch: branch.branchId,
+        })
+      );
+    }
     if (clear) {
       props.modal.clear();
     } else {
@@ -395,7 +421,6 @@ export default function Wrap(props) {
         }}
         onSubmit={onSubmit}
         skeleton={skeleton}
-        doPolicyCheck={doPolicyCheck} //TODO can we check this in the form?
         digitalCopyAccess={
           isDigitalCopy && !isPeriodicaLike && branch?.digitalCopyAccess
         }

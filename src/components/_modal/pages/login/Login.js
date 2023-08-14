@@ -145,7 +145,6 @@ export function LoginPickup({
     if (showLogin(mode)) {
       modal.push("loanerform", {
         branchId: branch.branchId,
-        doPolicyCheck: false,
         callbackUrl: callbackurl, //TODO remove
         mode,
         originUrl,

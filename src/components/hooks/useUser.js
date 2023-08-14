@@ -87,6 +87,7 @@ function useUserImpl() {
         }
       });
     }
+    console.log("sessionCopy", sessionCopy);
     return {
       ...data?.session,
       userParameters: { ...loggedInUser, ...sessionCopy?.userParameters },

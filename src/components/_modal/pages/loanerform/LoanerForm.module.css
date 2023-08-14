@@ -49,3 +49,18 @@
     padding: var(--pt2) var(--pt6) var(--pt4) var(--pt6);
   }
 }
+
+.checkBoxSpan {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: var(--pt2);
+  margin-bottom: var(--pt6);
+}
+
+.checkBoxSpan > label,
+.checkBoxSpan > p {
+  margin-top: 0;
+  margin-right: var(--pt1);
+  letter-spacing: 0.5px;
+}

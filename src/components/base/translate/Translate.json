@@ -108,6 +108,10 @@
       "renew-loan-tooltip": {
         "da": "Det er dit udlånsbibliotek, der sætter reglerne for om materialet kan fornyes. Tjek gerne deres retningslinjer for mere information.",
         "en": "Your library defines the rules for renewing loans. Please check their guidelines for more information."
+      },
+      "save-info-in-browser": {
+        "da": "Gemmer information i din browser",
+        "en": "Saving information in your browser"
       }
     },
     "general": {
@@ -2125,10 +2129,6 @@
         "da": "For at bestille dertil skal du logge ind via %s",
         "en": "To order there, you must log in via %s"
       },
-      "order-guest-login-description": {
-        "da": "%s understøtter pt. kun gæstelogin, hvilket betyder at dine oplysninger gemmes i sessionen indtil du trykker log ud eller lukker browseren",
-        "en": "%s LABEL: mangler oversættelse"
-      },
       "order-to-loaner-info": {
         "da": "Udfyld lånerinfo",
         "en": "Fill in the loaner info"
@@ -2184,6 +2184,10 @@
       "volume": {
         "da": "Udgave",
         "en": "Volume"
+      },
+      "save-info-in-browser": {
+        "da": "Gem informationer i browseren (til næste bestilling)",
+        "en": "Save information in browser (for next order)"
       }
     },
     "login": {
