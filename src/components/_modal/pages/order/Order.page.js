@@ -141,9 +141,6 @@ function Order({
         context={context}
         validated={validated}
         failedSubmission={failedSubmission}
-        onSetMailDirectly={(e, valid) =>
-          setMail({ value: e?.target?.value, valid })
-        }
         onMailChange={(e, valid) =>
           onMailChange(e?.target?.value, valid, updateLoanerInfo, setMail)
         }
