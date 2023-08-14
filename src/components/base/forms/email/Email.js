@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Input from "@/components/base/forms/input";
 import { validateEmail } from "@/utils/validateEmail";
 import styles from "./Email.module.css";
@@ -23,11 +23,10 @@ function Email(props) {
     onBlur,
     required = false,
     value,
-    onMount,
   } = props;
 
   // validation state
-  const [valid, setValid] = useState(null);
+  const [valid, setValid] = useState(true);
 
   // Error messages for translate
   const emptyField = {
@@ -38,22 +37,6 @@ function Email(props) {
     context: "form",
     label: "wrong-email-field",
   };
-
-  // Validation onMount
-  useEffect(
-    () => {
-      const allowEmpty = value === "" && !required;
-      const valid = validateEmail(value) || allowEmpty;
-      setValid(valid);
-
-      onMount &&
-        onMount(value, {
-          status: valid,
-          message: getLabel(value, valid),
-        });
-    }, // Updates if value changes (initial value)
-    [value]
-  );
 
   function getLabel(value, valid) {
     const label = (value === "" && emptyField) || invalidEmail;

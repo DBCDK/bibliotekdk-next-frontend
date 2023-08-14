@@ -58,7 +58,7 @@ describe("Reservation button", () => {
 
   it("user not logged in then above text is shown", () => {
     cy.visit(
-      "/iframe.html?id=work-reservationbutton--order-button-not-logged-in"
+      "/iframe.html?id=work-reservationbutton--reservation-button-not-logged-in"
     );
     cy.get("[data-cy=button-order-overview]").contains("Gå til");
     cy.get("[data-cy=text-above-order-button").contains("Kræver");
@@ -81,7 +81,7 @@ describe("Reservation button", () => {
 
   it(`user not logged in material available`, () => {
     cy.visit(
-      "/iframe.html?id=work-reservationbutton--order-button-not-logged-in"
+      "/iframe.html?id=work-reservationbutton--reservation-button-not-logged-in"
     );
     cy.get("[data-cy=button-order-overview]")
       .focus()

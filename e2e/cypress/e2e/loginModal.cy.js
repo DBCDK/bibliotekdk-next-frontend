@@ -9,7 +9,7 @@ describe(`Login modal`, () => {
     );
   });
   it("Plain login modal enders properly", () => {
-    cy.visit("iframe.html?args=&id=modal-login--login-login");
+    cy.visit("iframe.html?args=&id=modal-login--login-header");
     cy.get("h2").should("have.text", "Log ind");
   });
 });
