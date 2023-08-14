@@ -12,8 +12,13 @@
 }
 
 .loanerform .fields {
+  padding-top: var(--pt1);
   padding-bottom: var(--pt4);
   position: relative;
+}
+
+.loanerform .field {
+  padding-top: var(--pt3);
 }
 
 .loanerform button {

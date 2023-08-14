@@ -64,17 +64,11 @@ export function UserParamsForm({ branch, initial, onSubmit, originUrl }) {
     >
       <Text type="text2">
         {Translate({
-          context: "login",
-          label: `plainLogin-description`,
+          context: "order",
+          label: "fillout-loaner-info",
           vars: originUrl || [branch?.agencyName || branch?.name],
         })}
       </Text>
-      <Title type="title4" tag="h4">
-        {Translate({
-          context: "order",
-          label: "order-to-loaner-info",
-        })}
-      </Title>
       <div className={styles.fields}>
         {requiredParameters?.map(({ userParameterType, description }, idx) => {
           const labelKey = `${userParameterType}-label`;
@@ -92,8 +86,8 @@ export function UserParamsForm({ branch, initial, onSubmit, originUrl }) {
           };
 
           return (
-            <div key={idx}>
-              <Text type="text1" tag="label" id={labelKey}>
+            <div key={idx} className={styles.field}>
+              <Text type="text2" tag="label" id={labelKey}>
                 {description ||
                   (hasTranslation(labelTranslation)
                     ? Translate(labelTranslation)
@@ -168,8 +162,8 @@ export function UserParamsForm({ branch, initial, onSubmit, originUrl }) {
       </Text>
       <Button onClick={() => {}} tabIndex="0">
         {Translate({
-          context: "header",
-          label: "login",
+          context: "order",
+          label: "go-to-order",
         })}
       </Button>
     </form>
@@ -230,8 +224,8 @@ export function LoanerForm({
         <Top />
         <Title type="title4" tag="h3" skeleton={true}>
           {Translate({
-            context: "login",
-            label: "plainLogin-title",
+            context: "order",
+            label: "order-to",
             vars: [branch?.name || "-"],
           })}
         </Title>
@@ -253,8 +247,8 @@ export function LoanerForm({
       <Top />
       <Title type="title4" tag="h3">
         {Translate({
-          context: "login",
-          label: `plainLogin-title`,
+          context: "order",
+          label: "order-to",
           vars: origin ? [origin] : [branch.name],
         })}
       </Title>
