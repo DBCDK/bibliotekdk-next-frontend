@@ -22,6 +22,9 @@ import * as userFragments from "@/lib/api/user.fragments";
 import Tooltip from "@/components/base/tooltip";
 import { manifestationsForAccessFactory } from "@/lib/api/manifestation.fragments";
 import { inferAccessTypes } from "@/components/_modal/pages/edition/utils";
+import { validateEmail } from "@/utils/validateEmail";
+import { getLabel } from "@/components/base/forms/email/Email";
+import { set } from "lodash";
 
 const ERRORS = {
   MISSING_INPUT: "error-missing-input",
@@ -38,26 +41,27 @@ export const LOGIN_MODE = {
 };
 
 export function UserParamsForm({ branch, initial, onSubmit, mode, originUrl }) {
-  function validateState() {
-    for (let i = 0; i < requiredParameters.length; i++) {
-      const { userParameterType } = requiredParameters[i];
-
-      if (!state[userParameterType]) {
-        return ERRORS.MISSING_INPUT;
-      }
-      if (emailMessage) {
-        return emailMessage.label;
-      }
-    }
-  }
-
   const [errorCode, setErrorCode] = useState();
   const [state, setState] = useState(initial || {});
-  const [emailMessage, setEmailMessage] = useState();
+  const [validMail, setValidMail] = useState(true);
 
   const requiredParameters = branch?.userParameters?.filter(
     ({ parameterRequired }) => parameterRequired
   );
+  function validateState() {
+    for (let i = 0; i < requiredParameters.length; i++) {
+      const { userParameterType } = requiredParameters[i];
+      if (!state[userParameterType]) {
+        return ERRORS.MISSING_INPUT;
+      }
+    }
+    const validMail = validateEmail(state.userMail);
+    setValidMail(validMail);
+    const emailError = getLabel(state.userMail, validMail);
+    if (emailError) {
+      return emailError.label;
+    }
+  }
 
   return (
     <form
@@ -66,7 +70,6 @@ export function UserParamsForm({ branch, initial, onSubmit, mode, originUrl }) {
         e.preventDefault();
         e.stopPropagation();
         const error = validateState();
-
         setErrorCode(error);
         if (!error) {
           onSubmit(state);
@@ -112,21 +115,21 @@ export function UserParamsForm({ branch, initial, onSubmit, mode, originUrl }) {
               </Text>
               {userParameterType === "userMail" ? (
                 <Email
+                  valid={validMail}
                   value={state.userMail || ""}
-                  onChange={(e, { message }) => {
+                  onChange={(e) =>
                     setState({
                       ...state,
                       [userParameterType]: e?.target?.value,
-                    });
-                    setEmailMessage(message);
-                  }}
+                    })
+                  }
                   dataCy={`input-${userParameterType}`}
                   placeholder={
                     hasTranslation(placeholderTranslation)
                       ? Translate(placeholderTranslation)
                       : ""
                   }
-                  required
+                  required={true}
                   aria-labelledby={labelKey}
                 />
               ) : (
