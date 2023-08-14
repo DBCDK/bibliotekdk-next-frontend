@@ -117,7 +117,7 @@ export function enrichSingleAccess(singleAccess) {
  * @type {{urls: string[], origins: string[]}}
  */
 const specialAccessTypes = {
-  origins: ["www.dfi.dk"],
+  origins: ["www.dfi.dk", "nota.dk"],
   urls: ["www.filmstriben.dk/bibliotek/"],
 };
 
