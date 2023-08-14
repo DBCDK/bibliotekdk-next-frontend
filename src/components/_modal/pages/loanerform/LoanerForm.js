@@ -167,35 +167,6 @@ export function UserParamsForm({ branch, initial, onSubmit, originUrl }) {
 }
 
 /**
- * Change originUrl to something readable (eg ebscohost.search.com -> Ebsco)
- *
- * 0931 - PJO - we keep this method for now - but return the origin .. wait
- * for design to make up their mind
- *
- * @param originUrl
- * @returns {string|*}
- */
-
-//TODO check how ebscohost og ebbookcentral is shown in UI
-function originUrlToUrlName(originUrl) {
-  return originUrl;
-  // these are for dda (demand drive acquisition)
-  // translate urls to something readable
-
-  // TODO: Figure out why this code is here
-  //  Ebook central Ebsco
-  // if (originUrl && mode === LOGIN_MODE.DDA) {
-  //   if (originUrl.indexOf("ebookcentral") !== -1) {
-  //     return "Ebook central";
-  //   }
-  //   if (originUrl.indexOf("ebscohost") !== -1) {
-  //     return "Ebsco";
-  //   }
-  //   return originUrl;
-  // }
-}
-
-/**
  *  Shows login formular for FFU libraries without adgangsplatform login.
  * @param {obj} branch
  * @param {func} onSubmit
@@ -237,7 +208,6 @@ export function LoanerForm({
     return null;
   }
 
-  const origin = originUrlToUrlName(originUrl);
   return (
     <div className={styles.loanerform}>
       <Top />
@@ -245,7 +215,7 @@ export function LoanerForm({
         {Translate({
           context: "order",
           label: "order-to",
-          vars: origin ? [origin] : [branch.name],
+          vars: [branch.name],
         })}
       </Title>
 
@@ -265,7 +235,7 @@ export function LoanerForm({
  * Remove modals except for the third one.
  *     scenarios:
  *     a. user logins from a page eg. infomedia
- *     b. user logins from a modal eg. order
+ *     b. user logins from a modal eg. pickup
  *       if user logins in from a modal the top stack will be the original modal.
  *       two last elements in stack are "login" and "loanerform" - login ALWAYS
  *       happens via - login->loanerform -- so if user comes from another modal

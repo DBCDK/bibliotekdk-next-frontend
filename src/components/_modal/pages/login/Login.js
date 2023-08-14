@@ -111,6 +111,7 @@ export function LoginPickup({
   const allBranches = data?.result;
   const {
     title,
+    openOrderModal = false,
     mode = LOGIN_MODE.PLAIN_LOGIN,
     originUrl = null,
     pids = [],
@@ -140,6 +141,7 @@ export function LoginPickup({
 
     if (branch?.borrowerCheck) {
       modal.push("openAdgangsplatform", {
+        openOrderModal: openOrderModal,
         callbackUrl: callbackurl, //TODO find correct callbackUrl for header and from order button (add bestil modal)
         agencyId: branch.agencyId,
         agencyName: originUrl ? originUrl : branch.agencyName, //TODO do we have originUrl and how does it look like?

@@ -181,6 +181,7 @@ export const ReservationButton = ({
           })
         : openLoginModal({
             modal,
+            openOrderModal: true,
             mode: LOGIN_MODE.ORDER_PHYSICAL,
             pids: pids,
             selectedAccesses: allEnrichedAccesses,
