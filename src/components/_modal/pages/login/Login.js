@@ -221,6 +221,11 @@ export function LoginPickup({
             size="large"
             className={styles.mitIDButton}
             onClick={onLogin}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                onLogin();
+              }
+            }}
           >
             <Icon
               src="MitID.svg"
