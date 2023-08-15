@@ -91,7 +91,7 @@ const emptyField = {
   context: "form",
   label: "empty-email-field",
 };
-const invalidEmail = {
+export const invalidEmail = {
   context: "form",
   label: "wrong-email-field",
 };

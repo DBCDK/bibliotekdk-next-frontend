@@ -61,7 +61,7 @@ export function OrdererInformation({
               disabled={isLoading || (mail && hasBorchk)}
               value={email || ""}
               id="order-user-email"
-              onChange={debounce(onMailChange, 200)}
+              onBlur={onMailChange}
               readOnly={isLoading || (mail && hasBorchk)}
               skeleton={isLoadingBranches && !email}
             />
