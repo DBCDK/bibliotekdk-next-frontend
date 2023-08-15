@@ -158,6 +158,14 @@ export function LoginPickup({
     }
   };
 
+  const onLogin = () => {
+    signIn(
+      "adgangsplatformen",
+      { callbackUrl: callbackurl },
+      { force_login: 1, idp: "nemlogin" }
+    );
+  };
+
   return (
     <div className={styles.login}>
       <Top />
@@ -209,16 +217,10 @@ export function LoginPickup({
           </Text>
           <Button
             data-cy="mitid-button"
-            disabled={true} //TODO: remove when MitID is implemented
             type="secondary"
             size="large"
             className={styles.mitIDButton}
-            onClick={() => alert("Implement MitID")}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                alert("Implement MitID");
-              }
-            }}
+            onClick={onLogin}
           >
             <Icon
               src="MitID.svg"
