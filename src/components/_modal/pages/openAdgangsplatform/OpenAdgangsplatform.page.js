@@ -26,7 +26,7 @@ export default function OpenAdgangsplatform({ context, modal }) {
   let url = callbackUrl;
   const onLogin = () => {
     if (openOrderModal) {
-      modal.push("order", {}, false);
+      modal.push("order", {});
       const uid = modal.stack[modal.stack.length - 1].uid;
       url = `${callbackUrl}/modal=${uid}`;
     }

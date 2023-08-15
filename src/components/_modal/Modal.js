@@ -79,6 +79,10 @@ function createPageUID() {
 // Global stack object
 let _stack = [];
 
+// Global store object
+// used to manage modals more flexibly
+let _store = [];
+
 /**
  *
  * @param {object|Array} children
@@ -433,11 +437,20 @@ function Page(props) {
 
 let _hasBeenVisible = false;
 export function useModal() {
-  const { setStack: _setStack, router } = useContext(ModalContext);
+  const {
+    setStack: _setStack,
+    setStore: _setStore,
+    router,
+  } = useContext(ModalContext);
 
   function setStack(stack) {
     _stack = stack;
     _setStack(_stack);
+  }
+
+  function setStore(store) {
+    _store = store;
+    _setStore(_store);
   }
 
   // modal is visible
@@ -450,12 +463,9 @@ export function useModal() {
   /**
    * Push
    */
-  function _push(id, context = {}, show = true) {
-    //console.log("addToUrlHistory", id, context, show);
+  function _push(id, context = {}) {
     if (id) {
       let copy = [..._stack];
-      // Skip "reset" on empty stack
-      //console.log("SHOW", show);
       if (_stack.length > 0) {
         const activeIndex = _index();
         copy = copy.slice(0, activeIndex + 1);
@@ -470,10 +480,6 @@ export function useModal() {
         uid: createPageUID(),
       };
 
-      if (!show) entry.isVisible = false;
-
-      //console.log("entry", JSON.stringify(entry));
-
       // Push to stack
       copy.push(entry);
 
@@ -486,6 +492,35 @@ export function useModal() {
       setStack(copy);
     }
   }
+
+  /**
+   * Save a modal to the store, to be able to add it to the stack at a later time
+   * @param {string} id
+   * @param {object} context
+   */
+  function _save(id, context = {}) {
+    if (id) {
+      let copy = [..._store];
+
+      // Create entry
+      const entry = {
+        id,
+        context,
+        active: false,
+        uid: createPageUID(),
+      };
+
+      // Push to store
+      copy.push(entry);
+
+      // custom save
+      // save && save(copy);
+      // update locale state
+      setStore(copy);
+    }
+  }
+
+  function 
 
   /**
    * pop
@@ -699,7 +734,9 @@ export function useModal() {
     next: _next,
     prev: _prev,
     setStack,
+    setStore,
     stack: _stack,
+    store: _store,
     // privat functions
     _doSelect,
     _router: router,
@@ -717,9 +754,10 @@ export function useModal() {
  */
 export function Provider({ children, router }) {
   const [stack, setStack] = useState([]);
+  const [store, setStore] = useState([]);
 
   return (
-    <ModalContext.Provider value={{ stack, setStack, router }}>
+    <ModalContext.Provider value={{ stack, setStack, store, setStore, router }}>
       {children}
     </ModalContext.Provider>
   );
