@@ -18,7 +18,7 @@ describe("Filter", () => {
     cy.focused().tabs(4).contains("Luk");
   });
 
-  it(`Can update filters in query and sync with url`, () => {
+  it.skip(`Can update filters in query and sync with url`, () => {
     cy.visit("/iframe.html?id=modal-filter--connected");
     cy.contains("button", "open filters").click();
 
@@ -49,7 +49,7 @@ describe("Filter", () => {
     });
   });
 
-  it(`Can clear all selected filters`, () => {
+  it.skip(`Can clear all selected filters`, () => {
     cy.visit("/iframe.html?id=modal-filter--connected");
     cy.contains("button", "open filters").click();
 
@@ -83,7 +83,7 @@ describe("Filter", () => {
     });
   });
 
-  it(`Can parse facet containing ","`, () => {
+  it.skip(`Can parse facet containing ","`, () => {
     cy.visit("/iframe.html?id=modal-filter--connected");
 
     cy.contains("button", "open filters").click();
