@@ -5,10 +5,10 @@ import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import Tooltip from "@/components/base/tooltip";
 import Email from "@/components/base/forms/email";
-import debounce from "lodash/debounce";
 import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
 import { extractClassNameAndMessage } from "@/components/_modal/pages/order/utils/order.utils";
+import debounce from "lodash/debounce";
 
 export function OrdererInformation({
   isLoadingBranches,

@@ -15,7 +15,7 @@ describe("Filter", () => {
     cy.contains("button", "open filters").click();
     cy.wait(1000);
     cy.focused().tab().contains("Luk");
-    cy.focused().tabs(4).contains("Luk");
+    cy.focused().tabs(5).contains("Luk");
   });
 
   it(`Can update filters in query and sync with url`, () => {
