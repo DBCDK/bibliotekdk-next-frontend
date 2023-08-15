@@ -33,7 +33,6 @@ function getProfileUrl(wordToTranslate) {
 function MenuLink({ label, href }) {
   const router = useRouter();
   const [isActive, setIsActive] = useState(router.asPath.includes(href));
-  console.log(" label, href ", label, href);
   useEffect(() => {
     setIsActive(router.asPath.includes(href));
   }, [router.asPath]);

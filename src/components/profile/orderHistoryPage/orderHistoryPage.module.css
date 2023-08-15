@@ -12,12 +12,18 @@
   border-bottom: 1px solid var(--iron);
 }
 
-@media (max-width: 550px) {
+@media (max-width: 575px) {
   .tableItem {
     display: block;
   }
   .headerItem {
     display: none;
+  }
+  .orderWorkInfo{
+    margin-bottom: var(--pt1);
+  }
+  .orderNumberText{
+    display: block;
   }
 }
 
@@ -33,4 +39,14 @@
 }
 .headerItem {
   grid-gap: var(--pt3);
+}
+.mobileDate{
+  margin-bottom: var(--pt1);
+}
+.orderNumber{
+  display: flex;
+}
+.orderNumberText{
+  display: none;
+  margin-right: var(--pt05);
 }

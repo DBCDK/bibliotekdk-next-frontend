@@ -166,3 +166,51 @@ export function orderPolicy({ pid }) {
     slowThreshold: 3000,
   };
 }
+
+
+export function orderHistory() {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 1000, // for debugging
+    query: `query {
+      user {
+        bibliotekDkOrders {
+          
+          orderId
+        }
+      }
+    }`,
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * 
+ * @param {String []} orderIds 
+ * @returns Query for fethcing order data for the given order ids
+ */
+export function orderStatus({ orderIds }) {
+  console.log('in order status, orderids: ',orderIds)
+  //todoRemove
+  let orderIdsToSend = process.env.NODE_ENV=="development" ? ["1047049637"] : orderIds;
+
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 1000, // for debugging
+    query: `query getOrderStatus($orderIds: [String!]!) {
+      orderStatus(orderIds: $orderIds) {
+        autoForwardResult
+        placeOnHold
+        orderId
+        pickupAgencyId
+        pid
+        closed
+        creationDate
+        author
+        title
+      }
+    }`,
+    variables: { orderIds:orderIdsToSend },
+    slowThreshold: 3000,
+  };
+}

@@ -3217,6 +3217,18 @@
       "canWeSaveYourOrders": {
         "da": "Må vi gemme dine bestillinger i længere tid?",
         "en": "Can we store your orders for a longer period of time?"
+      },
+      "youHaveOrdered": {
+        "da":"Du har bestilt",
+        "en": "You have ordered"
+      },
+      "orderNumber":{
+        "da":"Bestillingsnummer:",
+        "en":"Order number:"
+      },
+      "orderRegistered": {
+        "da": "Bestilling registreret",
+        "en":"Order registered"
       }
     }
   }

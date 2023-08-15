@@ -52,7 +52,7 @@ export default function ProfileLayout({ title, children }) {
         </Col>
         <Col lg={9}>
           {/**page content here */}
-          {!user?.isAuthenticated ? (
+          {user?.isAuthenticated ? (
             <>
               <Title
                 className={styles.title}

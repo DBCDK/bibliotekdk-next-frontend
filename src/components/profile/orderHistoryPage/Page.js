@@ -1,18 +1,14 @@
 import Translate from "@/components/base/translate/Translate";
 import Layout from "../profileLayout";
-import LibrariesTable from "../librariesTable/LibrariesTable";
 import styles from "./orderHistoryPage.module.css";
 import { useData } from "@/lib/api/api";
-import * as userFragments from "@/lib/api/user.fragments";
+import { orderHistory, orderStatus } from "@/lib/api/user.fragments";
 import useUser from "@/components/hooks/useUser";
 import Text from "@/components/base/text";
-import IconButton from "@/components/base/iconButton/IconButton";
-import { useState } from "react";
+
 import Link from "@/components/base/link";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
-import Title from "@/components/base/title";
 import { getWorkUrl } from "@/lib/utils";
-import MaterialRow, { MaterialHeaderRow } from "../materialRow/MaterialRow";
 
 /**
  * Shows the orders made by the user from bibliotekdk.
@@ -21,7 +17,17 @@ import MaterialRow, { MaterialHeaderRow } from "../materialRow/MaterialRow";
  *
  */
 
-export default function MyLibrariesPage() {
+export default function OrderHistoryPage() {
+  const { isAuthenticated } = useUser();
+
+  const { data, isLoading } = useData(isAuthenticated && orderHistory());
+  const bibliotekDkOrders = data?.user?.bibliotekDkOrders?.map(order=>order.orderId)
+  
+  const orderData = useData(bibliotekDkOrders?.length>0 && orderStatus({orderIds: bibliotekDkOrders}))
+console.log('bibliotekDkOrders',bibliotekDkOrders)
+console.log('orderData',orderData)
+
+
   return (
     <Layout title={Translate({ context: "profile", label: "orderHistory" })}>
       <Text className={styles.orderHistoryInfo}>
@@ -60,23 +66,33 @@ export default function MyLibrariesPage() {
  */
 function TableItem({ order }) {
   const breakpoint = useBreakpoint();
-  const isMobile = breakpoint === "xs" || breakpoint === "sm";
+  const isMobile = breakpoint === "xs";
+
   const { author, title, pid, orderId, creationDate } = order;
   const { date, time } = parseDate(creationDate);
   return (
     <div className={styles.tableItem}>
+      {!isMobile && (
+        <div>
+          <Text type="text3"> {date}</Text>
+          <Text type="text3"> {time}</Text>
+        </div>
+      )}
       <div>
-        <Text type="text3"> {date}</Text>
-        <Text type="text3"> {time}</Text>
-      </div>
-      <div>
-        <Text type="text1"> Bestilling registreret</Text>
-        <Text type="text2" className={styles.subHeading}>
-          {"Du har bestilt "}
+        <Text type="text1">{Translate({context: "profile", label:"orderRegistered"})}</Text>
+        {isMobile && (
+          <Text className={styles.mobileDate} type="text3">
+            {" "}
+            {date}
+          </Text>
+        )}
+        <Text type="text2" className={styles.orderWorkInfo}>
+          {Translate({ context: "profile", label: "youHaveOrdered" }) + " "}
           <Link
             href={getWorkUrl(
               title,
-              [{ nameSort: author || "", display: author || "" }],
+              [],
+              //   [{ nameSort: author || "", display: author || "" }],
               "work-of:" + pid
             )}
             border={{
@@ -88,23 +104,30 @@ function TableItem({ order }) {
           >
             {title}
           </Link>
-          {author && ` af ${author}`}
+          {author &&
+            ` ${Translate({ context: "general", label: "by" })} ${author}`}
         </Text>
       </div>
-
-      <Text type="text3"> {orderId}</Text>
+      <div className={styles.orderNumber}>
+        {breakpoint === "xs" && (
+          <Text className={styles.orderNumberText} type="text4">
+            {Translate({ context: "profile", label: "orderNumber" })}
+          </Text>
+        )}
+        <Text type="text3">{orderId} </Text>
+      </div>
     </div>
   );
 }
 
+/**
+ * Parses an iso 8601 date string into human readable date an time strings.
+ * @param {*} isoDateString
+ * @returns an object containing date and time fields. Eks {date: "D. 24. juni", time:"Kl. 11:07"}
+ */
 const parseDate = (isoDateString) => {
-  // ISO 8601 date-time string
-  //const isoDateString = "2023-08-08T13:41:59.000+00:00";
-
-  // Convert it to a Date object
   const dateObj = new Date(isoDateString);
 
-  // Custom format the date part
   const day = dateObj.getUTCDate();
   const monthNames = [
     "jan.",
@@ -127,8 +150,7 @@ const parseDate = (isoDateString) => {
   const hours = String(dateObj.getUTCHours()).padStart(2, "0");
   const minutes = String(dateObj.getUTCMinutes()).padStart(2, "0");
   const time = `Kl. ${hours}.${minutes}`;
-  console.log(date); // "D. 8 aug."
-  console.log(time); // "Kl. 13.41"
+
   return { date, time };
 };
 const mockedOverview = [
