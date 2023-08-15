@@ -24,7 +24,6 @@ import { manifestationsForAccessFactory } from "@/lib/api/manifestation.fragment
 import { inferAccessTypes } from "@/components/_modal/pages/edition/utils";
 import { validateEmail } from "@/utils/validateEmail";
 import { getLabel } from "@/components/base/forms/email/Email";
-import { set } from "lodash";
 
 const ERRORS = {
   MISSING_INPUT: "error-missing-input",
@@ -129,7 +128,6 @@ export function UserParamsForm({ branch, initial, onSubmit, mode, originUrl }) {
                       ? Translate(placeholderTranslation)
                       : ""
                   }
-                  required={true}
                   aria-labelledby={labelKey}
                 />
               ) : (

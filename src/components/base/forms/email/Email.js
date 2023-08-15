@@ -18,7 +18,8 @@ function Email(props) {
     invalidClass = styles.invalid,
     validClass = styles.valid,
     onChange,
-    required = false,
+    onBlur,
+    required = true,
     value,
     valid = true,
   } = props;
@@ -37,6 +38,14 @@ function Email(props) {
         if (onChange) {
           const value = e?.target?.value;
           onChange(e, {
+            message: getLabel(value),
+          });
+        }
+      }}
+      onBlur={(e) => {
+        if (onBlur) {
+          const value = e?.target?.value;
+          onBlur(e, {
             message: getLabel(value),
           });
         }
