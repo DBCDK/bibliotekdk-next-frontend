@@ -15,10 +15,10 @@ describe("Filter", () => {
     cy.contains("button", "open filters").click();
     cy.wait(1000);
     cy.focused().tab().contains("Luk");
-    cy.focused().tabs(4).contains("Luk");
+    cy.focused().tabs(5).contains("Luk");
   });
 
-  it.skip(`Can update filters in query and sync with url`, () => {
+  it(`Can update filters in query and sync with url`, () => {
     cy.visit("/iframe.html?id=modal-filter--connected");
     cy.contains("button", "open filters").click();
 
@@ -49,7 +49,7 @@ describe("Filter", () => {
     });
   });
 
-  it.skip(`Can clear all selected filters`, () => {
+  it(`Can clear all selected filters`, () => {
     cy.visit("/iframe.html?id=modal-filter--connected");
     cy.contains("button", "open filters").click();
 
@@ -83,7 +83,7 @@ describe("Filter", () => {
     });
   });
 
-  it.skip(`Can parse facet containing ","`, () => {
+  it(`Can parse facet containing ","`, () => {
     cy.visit("/iframe.html?id=modal-filter--connected");
 
     cy.contains("button", "open filters").click();
