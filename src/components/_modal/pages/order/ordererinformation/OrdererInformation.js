@@ -58,7 +58,6 @@ export function OrdererInformation({
                 label: "email-placeholder",
               })}
               invalidClass={invalidClass}
-              required={true}
               disabled={isLoading || (mail && hasBorchk)}
               value={email || ""}
               id="order-user-email"
