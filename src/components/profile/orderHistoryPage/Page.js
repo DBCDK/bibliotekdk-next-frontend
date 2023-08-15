@@ -2,7 +2,7 @@ import Translate from "@/components/base/translate/Translate";
 import Layout from "../profileLayout";
 import styles from "./orderHistoryPage.module.css";
 import { useData } from "@/lib/api/api";
-import { orderHistory, orderStatus } from "@/lib/api/user.fragments";
+import { orderHistory } from "@/lib/api/user.fragments";
 import useUser from "@/components/hooks/useUser";
 import Text from "@/components/base/text";
 
@@ -10,6 +10,7 @@ import Link from "@/components/base/link";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { getWorkUrl } from "@/lib/utils";
 import { useModal } from "@/components/_modal";
+import { orderStatus } from "@/lib/api/order.fragments";
 
 /**
  * Shows the orders made by the user from bibliotekdk.
@@ -81,6 +82,7 @@ function TableItem({ order }) {
 
   const { author, title, pid, orderId, creationDate } = order;
   const { date, time } = parseDate(creationDate);
+  console.log("author", author);
   return (
     <div className={styles.tableItem}>
       {!isMobile && (
@@ -103,8 +105,8 @@ function TableItem({ order }) {
           <Link
             href={getWorkUrl(
               title,
-              [],
-              //   [{ nameSort: author || "", display: author || "" }],
+              // [],
+              [{ nameSort: author || "", display: author || "" }],
               "work-of:" + pid
             )}
             border={{
@@ -139,7 +141,6 @@ function TableItem({ order }) {
  */
 const parseDate = (isoDateString) => {
   const dateObj = new Date(isoDateString);
-  console.log("isoDateString", isoDateString);
   const day = dateObj.getUTCDate();
   const monthNames = [
     "jan.",

@@ -59,4 +59,4 @@ https://is.dbc.dk/view/frontend/job/bibliotekdk-next/job/bibliotekdk-next-backen
 ## Use local Translate.json
 
 To use the local Translate.json file set this env variable in your .env file
-`DISABLE_DRUPAL_TRANSLATE=1`
+`DISABLE_DRUPAL_TRANSLATE=true`

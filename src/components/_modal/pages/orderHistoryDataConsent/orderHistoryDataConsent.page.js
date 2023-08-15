@@ -33,7 +33,15 @@ export function OrderHistoryDataConsent({ modal, context, active }) {
         <Button className={styles.consentButton} size="large" type="primary">
           Giv tilladelse
         </Button>
-        <Button className={styles.goBackButton} size="large" type="secondary">
+        <Button
+          className={styles.goBackButton}
+          onClick={() => {
+            console.log("hej", modal);
+            modal.clear();
+          }}
+          size="large"
+          type="secondary"
+        >
           Tilbage
         </Button>
       </div>

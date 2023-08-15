@@ -11,6 +11,10 @@
   padding: var(--pt3) var(--pt1);
   border-bottom: 1px solid var(--iron);
 }
+.orderNumberText {
+  display: none;
+  margin-right: var(--pt05);
+}
 
 @media (max-width: 575px) {
   .tableItem {
@@ -23,7 +27,7 @@
     margin-bottom: var(--pt1);
   }
   .orderNumberText {
-    display: block;
+    display: initial;
   }
 }
 
@@ -45,8 +49,4 @@
 }
 .orderNumber {
   display: flex;
-}
-.orderNumberText {
-  display: none;
-  margin-right: var(--pt05);
 }
