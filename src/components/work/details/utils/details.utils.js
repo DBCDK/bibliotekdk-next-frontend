@@ -584,13 +584,12 @@ function RenderLitteratureAudience({ values }) {
  */
 export function fieldsForRows(manifestation, work, context) {
   const materialType = work?.workTypes?.[0] || null;
-
   const audienceageValue = !isEmpty(manifestation?.audience?.ages)
     ? manifestation?.audience?.ages?.map((age, index) => (
         <Text type="text4" lines={1} key={index}>
           {Translate({
             ...context,
-            label: "audice-age",
+            label: "audience-age",
             vars: [age.display],
           })}
         </Text>

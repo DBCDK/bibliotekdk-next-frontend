@@ -6,6 +6,9 @@ pipeline {
     agent {
         label 'devel11'
     }
+    triggers {
+        githubPush()
+    }
     environment {
         IMAGE_NAME = "bibliotekdk-next-frontend-${env.BRANCH_NAME.toLowerCase()}:${BUILD_NUMBER}"
         DOCKER_COMPOSE_NAME = "compose-${IMAGE_NAME}-${BRANCH_NAME.toLowerCase()}"
@@ -78,6 +81,7 @@ pipeline {
                 anyOf {
                     branch 'main';
                     branch 'alfa-0'
+                    branch 'prod'
                 }
             }
             steps {
@@ -92,6 +96,12 @@ pipeline {
                             sh '''
                                 #!/usr/bin/env bash                        
                                 set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b alfa-0
+                            '''
+                        }
+                        else if (env.BRANCH_NAME == 'prod') {
+                            sh '''
+                                #!/usr/bin/env bash
+                                set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b prod
                             '''
                         }
                     }
