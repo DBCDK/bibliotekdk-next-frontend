@@ -3219,16 +3219,16 @@
         "en": "Can we store your orders for a longer period of time?"
       },
       "youHaveOrdered": {
-        "da":"Du har bestilt",
+        "da": "Du har bestilt",
         "en": "You have ordered"
       },
-      "orderNumber":{
-        "da":"Bestillingsnummer:",
-        "en":"Order number:"
+      "orderNumber": {
+        "da": "Bestillingsnummer:",
+        "en": "Order number:"
       },
       "orderRegistered": {
         "da": "Bestilling registreret",
-        "en":"Order registered"
+        "en": "Order registered"
       }
     }
   }

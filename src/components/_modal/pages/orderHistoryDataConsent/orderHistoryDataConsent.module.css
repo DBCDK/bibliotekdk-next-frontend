@@ -1,0 +1,28 @@
+.contentContainer {
+  /* padding: var(--pt7) var(--pt6); */
+}
+
+.consentButton {
+  margin-top: var(--pt5);
+}
+.goBackButton {
+  margin-top: var(--pt2);
+  width: 100%;
+}
+.modalTitle {
+  margin-bottom: var(--pt3);
+}
+
+.contentContainer > p:not(:last-child) {
+  margin-bottom: var(--pt2);
+}
+
+.modalContainer {
+  padding: 0 var(--pt2) var(--pt2) var(--pt2);
+}
+
+@media (min-width: 576px) {
+  .modalContainer {
+    padding: 0 var(--pt6) var(--pt3) var(--pt6);
+  }
+}

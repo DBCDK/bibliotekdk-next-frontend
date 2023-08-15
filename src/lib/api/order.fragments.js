@@ -14,7 +14,7 @@ export function orderStatus({ orderIds }) {
           title
         }
       }`,
-    variables: {orderIds },
+    variables: { orderIds },
     slowThreshold: 3000,
   };
 }

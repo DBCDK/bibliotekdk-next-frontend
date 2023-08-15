@@ -167,7 +167,6 @@ export function orderPolicy({ pid }) {
   };
 }
 
-
 export function orderHistory() {
   return {
     apiUrl: ApiEnums.FBI_API,
@@ -185,14 +184,13 @@ export function orderHistory() {
 }
 
 /**
- * 
- * @param {String []} orderIds 
+ *
+ * @param {String []} orderIds
  * @returns Query for fethcing order data for the given order ids
  */
 export function orderStatus({ orderIds }) {
-  console.log('in order status, orderids: ',orderIds)
+  console.log("in order status, orderids: ", orderIds);
   //todoRemove
-  let orderIdsToSend = process.env.NODE_ENV=="development" ? ["1047049637"] : orderIds;
 
   return {
     apiUrl: ApiEnums.FBI_API,
@@ -210,7 +208,7 @@ export function orderStatus({ orderIds }) {
         title
       }
     }`,
-    variables: { orderIds:orderIdsToSend },
+    variables: { orderIds: orderIds },
     slowThreshold: 3000,
   };
 }

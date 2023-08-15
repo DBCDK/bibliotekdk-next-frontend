@@ -19,10 +19,10 @@
   .headerItem {
     display: none;
   }
-  .orderWorkInfo{
+  .orderWorkInfo {
     margin-bottom: var(--pt1);
   }
-  .orderNumberText{
+  .orderNumberText {
     display: block;
   }
 }
@@ -40,13 +40,13 @@
 .headerItem {
   grid-gap: var(--pt3);
 }
-.mobileDate{
+.mobileDate {
   margin-bottom: var(--pt1);
 }
-.orderNumber{
+.orderNumber {
   display: flex;
 }
-.orderNumberText{
+.orderNumberText {
   display: none;
   margin-right: var(--pt05);
 }

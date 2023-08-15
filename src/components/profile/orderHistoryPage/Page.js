@@ -9,6 +9,7 @@ import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { getWorkUrl } from "@/lib/utils";
+import { useModal } from "@/components/_modal";
 
 /**
  * Shows the orders made by the user from bibliotekdk.
@@ -21,12 +22,20 @@ export default function OrderHistoryPage() {
   const { isAuthenticated } = useUser();
 
   const { data, isLoading } = useData(isAuthenticated && orderHistory());
-  const bibliotekDkOrders = data?.user?.bibliotekDkOrders?.map(order=>order.orderId)
-  
-  const orderData = useData(bibliotekDkOrders?.length>0 && orderStatus({orderIds: bibliotekDkOrders}))
-console.log('bibliotekDkOrders',bibliotekDkOrders)
-console.log('orderData',orderData)
+  const bibliotekDkOrders = data?.user?.bibliotekDkOrders?.map(
+    (order) => order.orderId
+  );
 
+  const orderData = useData(
+    bibliotekDkOrders?.length > 0 &&
+      orderStatus({ orderIds: bibliotekDkOrders })
+  );
+  console.log("bibliotekDkOrders", bibliotekDkOrders);
+  console.log("orderData", orderData);
+  const orders = orderData?.data?.orderStatus;
+  console.log("1orders", orders);
+
+  const modal = useModal();
 
   return (
     <Layout title={Translate({ context: "profile", label: "orderHistory" })}>
@@ -35,7 +44,9 @@ console.log('orderData',orderData)
       </Text>
 
       <Link
-        href="/"
+        onClick={() => {
+          modal.push("orderHistoryDataConsent");
+        }}
         border={{
           top: false,
           bottom: {
@@ -53,7 +64,7 @@ console.log('orderData',orderData)
         <Text className={styles.headerItem}>Aktivitet </Text>
         <Text className={styles.headerItem}>Bestillingsnummer </Text>
       </div>
-      {mockedOverview.map((order) => {
+      {orders?.map((order) => {
         return <TableItem order={order} />;
       })}
     </Layout>
@@ -79,10 +90,11 @@ function TableItem({ order }) {
         </div>
       )}
       <div>
-        <Text type="text1">{Translate({context: "profile", label:"orderRegistered"})}</Text>
+        <Text type="text1">
+          {Translate({ context: "profile", label: "orderRegistered" })}
+        </Text>
         {isMobile && (
           <Text className={styles.mobileDate} type="text3">
-            {" "}
             {date}
           </Text>
         )}
@@ -127,7 +139,7 @@ function TableItem({ order }) {
  */
 const parseDate = (isoDateString) => {
   const dateObj = new Date(isoDateString);
-
+  console.log("isoDateString", isoDateString);
   const day = dateObj.getUTCDate();
   const monthNames = [
     "jan.",
