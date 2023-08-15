@@ -54,7 +54,6 @@ function Order({
   useEffect(() => {
     const userMail = user?.userParameters?.userMail;
     if (userMail) {
-      const message = null;
       const status = validateEmail(userMail);
       setMail({
         value: userMail,
