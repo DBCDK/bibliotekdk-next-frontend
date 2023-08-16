@@ -167,14 +167,16 @@ export const ReservationButton = ({
     " " +
     (isOnlineTranslated || workTypeTranslated);
 
-  async function handleOpenLoginAndOrderModal() {
+  function handleOpenLoginAndOrderModal() {
     //add order modal to store, to be able to access when coming back from adgangsplatform/mitid?
+    //TODO dont add if user already logged ind!
     const uid = modal.saveToStore("order", {
       pids: pids,
       selectedAccesses: allEnrichedAccesses,
       workId: workId,
       singleManifestation: singleManifestation,
     });
+    console.log("Reservation button added uid: ", uid);
     //open actual loginmodal
     openLoginModal({
       modal,

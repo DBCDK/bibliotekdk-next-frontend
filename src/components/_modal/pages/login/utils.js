@@ -51,7 +51,6 @@ export function openLoginModal({
     context: "header",
     label: "login",
   }),
-  openOrderModal = false,
   originUrl = undefined,
   pids = undefined,
   selectedAccesses = undefined,
@@ -62,8 +61,7 @@ export function openLoginModal({
   modal.push("login", {
     title: title,
     mode: mode,
-    openOrderModal: openOrderModal,
-    originUrl: originUrl,
+    originUrl,
     pids: pids,
     selectedAccesses: selectedAccesses,
     workId: workId,

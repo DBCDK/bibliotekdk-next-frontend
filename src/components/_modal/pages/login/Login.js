@@ -122,9 +122,11 @@ export function LoginPickup({
   const APP_URL =
     getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
 
-  // remove all modal params from callbackurl - this is login context
-  const regexp = /&modal=+[0-9]*/g;
+  // remove all modal params from callbackurl - to avoid redirect to modal after coming back from login
+  const regexp = /(\?|&)modal=\d+$/g;
+
   const callbackurl = `${APP_URL}${Router.asPath}`.replace(regexp, "");
+
   const showResultsList = hasQuery && allBranches?.length > 0;
   const showMitIDLogin = !hasQuery || !allBranches || allBranches.length < 1;
   const user = useUser();
@@ -139,9 +141,14 @@ export function LoginPickup({
       return;
     }
 
+    //if we have callbackUID, we want to redirect to order modal and therefor, we append it to url
+    let newUrl = callbackUID
+      ? callbackurl + `&modal=${callbackUID}`
+      : callbackurl;
+
     if (branch?.borrowerCheck) {
       modal.push("openAdgangsplatform", {
-        callbackUrl: callbackurl + (callbackUID ? `&modal=${callbackUID}` : ""),
+        callbackUrl: newUrl,
         agencyId: branch.agencyId,
         agencyName: originUrl ? originUrl : branch.agencyName, //TODO do we have originUrl and how does it look like?
       });

@@ -150,10 +150,13 @@ function Container({ children, className = {}, mock = {} }) {
   useEffect(() => {
     try {
       const uid = currentPageUid;
+      if (!uid) {
+        console.log("no uid, we return");
+        return;
+      }
 
       // Load stack as string from local storage
       const stackStr = localStorage.getItem(LOCAL_STORAGE_KEY);
-      console.log("uid", uid);
       // Parse stack
       const stack = JSON.parse(stackStr);
       let activeModalInStack = false;
@@ -547,7 +550,6 @@ export function useModal() {
    */
   function _saveToStore(id, context = {}) {
     if (id) {
-      console.log("ID", id, context);
       let copy = [..._store];
 
       // Create entry
