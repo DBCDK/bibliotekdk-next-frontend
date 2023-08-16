@@ -28,7 +28,7 @@ const ERRORS = {
   MISSING_INPUT: "error-missing-input",
 };
 
-export function UserParamsForm({ branch, initial, onSubmit, mode, originUrl }) {
+export function UserParamsForm({ branch, initial, onSubmit, originUrl }) {
   const [errorCode, setErrorCode] = useState();
   const [state, setState] = useState(initial || {});
   const [validMail, setValidMail] = useState(true);
