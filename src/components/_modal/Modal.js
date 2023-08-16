@@ -173,6 +173,7 @@ function Container({ children, className = {}, mock = {} }) {
         const storeStr = localStorage.getItem(LOCAL_STORAGE_STORE_KEY);
         const store = JSON.parse(storeStr);
         const activeModal = store.find((entry) => entry.uid === uid);
+        if (!activeModal) return;
         activeModal.active = true;
         activeModal.loaded = true;
         stack.push(activeModal);
