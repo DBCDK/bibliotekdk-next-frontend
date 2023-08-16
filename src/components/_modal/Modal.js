@@ -28,17 +28,14 @@ const URL_PAGE_UID_KEY = "modal";
  * @param router
  */
 function pushPageUID(uid, router) {
-  console.log("pushPageUID");
-  setTimeout(() => {
-    router.push({
-      pathname: router.pathname,
-      query: {
-        ...router.query,
-        [URL_PAGE_UID_KEY]: uid,
-      },
-    });
-    console.log("pushPageUID timeout");
-  }, 2000);
+  console.log("pushPageUID ", uid);
+  router.push({
+    pathname: router.pathname,
+    query: {
+      ...router.query,
+      [URL_PAGE_UID_KEY]: uid,
+    },
+  });
 }
 
 /**
@@ -485,6 +482,7 @@ export function useModal() {
   } = useContext(ModalContext);
 
   function setStack(stack) {
+    console.log("setting stack ", stack);
     _stack = stack;
     _setStack(_stack);
   }
@@ -514,7 +512,7 @@ export function useModal() {
   /**
    * Push
    */
-  function _push(id, context = {}) {
+  async function _push(id, context = {}) {
     if (id) {
       let copy = [..._stack];
       if (_stack.length > 0) {
@@ -535,12 +533,14 @@ export function useModal() {
       copy.push(entry);
 
       // Push to history (URL)
+      console.log("uid ", entry.uid);
       pushPageUID(entry.uid, router);
 
       // custom save
       // save && save(copy);
       // update locale state
-      setStack(copy);
+      console.log("pushin ");
+      await setStack(copy);
     }
   }
 
@@ -686,6 +686,7 @@ export function useModal() {
     // save && save(copy);
     // update locale stack state
 
+    console.log("selecting ");
     setStack(copy);
   }
 
@@ -774,6 +775,7 @@ export function useModal() {
     });
     // save && save(copy);
     // update locale stack state
+    console.log("update");
     setStack(copy);
   }
 
