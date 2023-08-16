@@ -50,3 +50,7 @@
 .orderNumber {
   display: flex;
 }
+
+.pagination {
+  margin-top: var(--pt8);
+}

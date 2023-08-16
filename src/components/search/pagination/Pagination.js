@@ -56,6 +56,7 @@ export default function Pagination({
   numPages = 4,
   isLoading,
   MAX_VISIBLE_PAGES = 9,
+  className,
 }) {
   const {
     showPreviousPageArrow,
@@ -98,7 +99,7 @@ export default function Pagination({
           </Button>
         </div>
       )}
-      <div className={`${styles.pagination} ${styles.desktop}`}>
+      <div className={`${styles.pagination} ${styles.desktop} ${className}`}>
         <Arrow
           clickCallback={() => onChangeChecked(currentPage - 1)}
           arrowClass={`${styles.arrow_styling} ${

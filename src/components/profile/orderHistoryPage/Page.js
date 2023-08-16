@@ -5,12 +5,14 @@ import { useData } from "@/lib/api/api";
 import { orderHistory } from "@/lib/api/user.fragments";
 import useUser from "@/components/hooks/useUser";
 import Text from "@/components/base/text";
+import Pagination from "@/components/search/pagination/Pagination";
 
 import Link from "@/components/base/link";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { getWorkUrl } from "@/lib/utils";
 import { useModal } from "@/components/_modal";
 import { orderStatus } from "@/lib/api/order.fragments";
+import { useState } from "react";
 
 /**
  * Shows the orders made by the user from bibliotekdk.
@@ -21,23 +23,38 @@ import { orderStatus } from "@/lib/api/order.fragments";
 
 export default function OrderHistoryPage() {
   const { isAuthenticated } = useUser();
+  const breakpoint = useBreakpoint();
+  const isMobile = breakpoint === "xs" || breakpoint === "sm";
 
   const { data, isLoading } = useData(isAuthenticated && orderHistory());
   const bibliotekDkOrders = data?.user?.bibliotekDkOrders?.map(
     (order) => order.orderId
   );
-
-  const orderData = useData(
-    bibliotekDkOrders?.length > 0 &&
-      orderStatus({ orderIds: bibliotekDkOrders })
+  const itemsPerPage = 4;
+  const totalPages = Math.ceil(bibliotekDkOrders?.length / itemsPerPage);
+  const [pageIndex, setPageIndex] = useState(0);
+  const currentPageIds = bibliotekDkOrders?.slice(
+    pageIndex * itemsPerPage,
+    (pageIndex + 1) * itemsPerPage
   );
   console.log("bibliotekDkOrders", bibliotekDkOrders);
-  console.log("orderData", orderData);
+
+  const orderData = useData(
+    currentPageIds?.length > 0 && orderStatus({ orderIds: currentPageIds })
+  );
   const orders = orderData?.data?.orderStatus;
+
+  console.log("pageIndex", pageIndex);
+  console.log("currentPageIds", currentPageIds);
+  console.log("pageIndex", pageIndex);
+
   console.log("1orders", orders);
 
   const modal = useModal();
 
+  const updatePageIndex = (newIndex) => {
+    setPageIndex(newIndex - 1);
+  };
   return (
     <Layout title={Translate({ context: "profile", label: "orderHistory" })}>
       <Text className={styles.orderHistoryInfo}>
@@ -68,6 +85,15 @@ export default function OrderHistoryPage() {
       {orders?.map((order) => {
         return <TableItem order={order} />;
       })}
+
+      {!isMobile && (
+        <Pagination
+          className={styles.pagination}
+          numPages={totalPages}
+          currentPage={pageIndex + 1}
+          onChange={updatePageIndex}
+        />
+      )}
     </Layout>
   );
 }
