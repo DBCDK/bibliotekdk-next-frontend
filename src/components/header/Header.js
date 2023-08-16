@@ -126,7 +126,7 @@ export function Header({
       },
     },
     {
-      label: user.isAuthenticated || user.isGuestUser ? "logout" : "login", //TODO guestuser from login
+      label: user.isAuthenticated || user.isGuestUser ? "logout" : "login", //TODO remove guestuser from login
       icon: LoginIcon,
       onClick: handleOnClick,
     },
