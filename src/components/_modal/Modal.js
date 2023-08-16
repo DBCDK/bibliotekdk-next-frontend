@@ -151,7 +151,6 @@ function Container({ children, className = {}, mock = {} }) {
     try {
       const uid = currentPageUid;
       if (!uid) {
-        console.log("no uid, we return");
         return;
       }
 
