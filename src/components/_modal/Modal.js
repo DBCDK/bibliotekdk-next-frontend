@@ -238,14 +238,14 @@ function Container({ children, className = {}, mock = {} }) {
   }, [modal.stack]);
 
   //TODO better change directly in save/delete
-  useEffect(() => {
-    if (didLoad.current) {
-      localStorage.setItem(
-        LOCAL_STORAGE_STORE_KEY,
-        JSON.stringify(modal.store)
-      );
-    }
-  }, [modal.store]);
+  // useEffect(() => {
+  //   if (didLoad.current) {
+  //     localStorage.setItem(
+  //       LOCAL_STORAGE_STORE_KEY,
+  //       JSON.stringify(modal.store)
+  //     );
+  //   }
+  // }, [modal.store]);
 
   // Listen for history popstate events
   useEffect(() => {
@@ -484,6 +484,7 @@ export function useModal() {
   function setStore(store) {
     _store = store;
     _setStore(_store);
+    localStorage.setItem(LOCAL_STORAGE_STORE_KEY, JSON.stringify(store));
   }
 
   // modal is visible
