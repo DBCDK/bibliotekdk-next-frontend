@@ -158,7 +158,7 @@ export function LoginPickup({
     }
   };
 
-  const onLogin = () => {
+  const onMitIdLogin = () => {
     signIn(
       "adgangsplatformen",
       { callbackUrl: callbackurl },
@@ -220,10 +220,10 @@ export function LoginPickup({
             type="secondary"
             size="large"
             className={styles.mitIDButton}
-            onClick={onLogin}
+            onClick={onMitIdLogin}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                onLogin();
+                onMitIdLogin();
               }
             }}
           >
