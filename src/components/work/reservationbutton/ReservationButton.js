@@ -169,7 +169,7 @@ export const ReservationButton = ({
 
   async function handleOpenLoginAndOrderModal() {
     //add order modal to store, to be able to access when coming back from adgangsplatform/mitid?
-    const uid = modal.save("order", {
+    const uid = modal.saveToStore("order", {
       pids: pids,
       selectedAccesses: allEnrichedAccesses,
       workId: workId,

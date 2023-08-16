@@ -162,7 +162,9 @@ function Container({ children, className = {}, mock = {} }) {
         // One page may be active
         const isActivePage = entry.uid === uid;
         entry.active = isActivePage;
-        if (isActivePage) activeModalInStack = true;
+        if (isActivePage) {
+          activeModalInStack = true;
+        }
         // Specify that the page has been loaded from local storage
         // This is used for determining how to navigate the URL history (go or replace)
         entry.loaded = true;
@@ -170,6 +172,7 @@ function Container({ children, className = {}, mock = {} }) {
 
       if (!activeModalInStack) {
         //stack did not contain the modal form URL
+        //const store = modal.getStore(); //TODO
         const storeStr = localStorage.getItem(LOCAL_STORAGE_STORE_KEY);
         const store = JSON.parse(storeStr);
         const activeModal = store.find((entry) => entry.uid === uid);
@@ -488,6 +491,16 @@ export function useModal() {
     localStorage.setItem(LOCAL_STORAGE_STORE_KEY, JSON.stringify(store));
   }
 
+  /**
+   * Returns the current store object
+   * @returns current store object from browser
+   */
+  async function _getStore() {
+    console.log("getting from store");
+    const storeStr = localStorage.getItem(LOCAL_STORAGE_STORE_KEY);
+    return await JSON.parse(storeStr);
+  }
+
   // modal is visible
   const _isVisible = _stack.length > 0 && _index() > -1;
 
@@ -532,7 +545,7 @@ export function useModal() {
    * @param {string} id
    * @param {object} context
    */
-  function _save(id, context = {}) {
+  function _saveToStore(id, context = {}) {
     if (id) {
       console.log("ID", id, context);
       let copy = [..._store];
@@ -768,7 +781,8 @@ export function useModal() {
     select: _select,
     next: _next,
     prev: _prev,
-    save: _save,
+    saveToStore: _saveToStore,
+    getStore: _getStore,
     setStack,
     setStore,
     stack: _stack,
