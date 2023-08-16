@@ -147,7 +147,7 @@ function Container({ children, className = {}, mock = {} }) {
   }
 
   // On mount, we try to load stack from local storage
-  useEffect(() => {
+  useEffect(async () => {
     try {
       const uid = currentPageUid;
       if (!uid) {
@@ -174,10 +174,7 @@ function Container({ children, className = {}, mock = {} }) {
       });
 
       if (!activeModalInStack) {
-        //stack did not contain the modal form URL
-        //const store = modal.getStore(); //TODO
-        const storeStr = localStorage.getItem(LOCAL_STORAGE_STORE_KEY);
-        const store = JSON.parse(storeStr);
+        const store = await modal.getStore();
         const activeModal = store.find((entry) => entry.uid === uid);
         if (!activeModal) return;
         activeModal.active = true;
@@ -499,7 +496,6 @@ export function useModal() {
    * @returns current store object from browser
    */
   async function _getStore() {
-    console.log("getting from store");
     const storeStr = localStorage.getItem(LOCAL_STORAGE_STORE_KEY);
     return await JSON.parse(storeStr);
   }
