@@ -17,6 +17,7 @@ import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
 import { onMailChange } from "@/components/_modal/pages/order/utils/order.utils";
 import { useRelevantAccessesForOrderPage } from "@/components/work/utils";
+import { validateEmail } from "@/utils/validateEmail";
 
 /**
  *  Order component function
@@ -53,10 +54,18 @@ function Order({
   useEffect(() => {
     const userMail = user?.userParameters?.userMail;
     if (userMail) {
-      const message = null;
+      const status = validateEmail(userMail);
       setMail({
         value: userMail,
-        valid: { status: true, message },
+        valid: {
+          status: status,
+          message: status
+            ? null
+            : {
+                context: "form",
+                label: "wrong-email-field",
+              },
+        },
       });
     }
   }, [user?.userParameters]);
@@ -141,12 +150,9 @@ function Order({
         context={context}
         validated={validated}
         failedSubmission={failedSubmission}
-        onSetMailDirectly={(e, valid) =>
-          setMail({ value: e?.target?.value, valid })
-        }
-        onMailChange={(e, valid) =>
-          onMailChange(e?.target?.value, valid, updateLoanerInfo, setMail)
-        }
+        onMailChange={(e, valid) => {
+          onMailChange(e?.target?.value, valid, updateLoanerInfo, setMail);
+        }}
       />
       <OrderConfirmationButton
         context={context}

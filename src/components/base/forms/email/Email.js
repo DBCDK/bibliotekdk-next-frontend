@@ -1,7 +1,5 @@
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
 import Input from "@/components/base/forms/input";
-import { validateEmail } from "@/utils/validateEmail";
 import styles from "./Email.module.css";
 
 /**
@@ -21,75 +19,34 @@ function Email(props) {
     validClass = styles.valid,
     onChange,
     onBlur,
-    required = false,
+    required = true,
     value,
-    onMount,
+    valid = true,
   } = props;
 
-  // validation state
-  const [valid, setValid] = useState(null);
+  const showError = !valid && required;
 
-  // Error messages for translate
-  const emptyField = {
-    context: "form",
-    label: "empty-email-field",
-  };
-  const invalidEmail = {
-    context: "form",
-    label: "wrong-email-field",
-  };
-
-  // Validation onMount
-  useEffect(
-    () => {
-      const allowEmpty = value === "" && !required;
-      const valid = validateEmail(value) || allowEmpty;
-      setValid(valid);
-
-      onMount &&
-        onMount(value, {
-          status: valid,
-          message: getLabel(value, valid),
-        });
-    }, // Updates if value changes (initial value)
-    [value]
-  );
-
-  function getLabel(value, valid) {
-    const label = (value === "" && emptyField) || invalidEmail;
-    return (!valid && label) || null;
-  }
-
-  // email valid / invalid status class
-  const statusClass = valid ? validClass : invalidClass;
+  // email valid / invalid status styling on email field
+  const statusClass = showError ? invalidClass : validClass;
 
   return !props.disabled ? (
     <Input
       {...props}
       type="email"
       className={`${className} ${styles.email} ${statusClass}`}
-      onBlur={(e) => {
-        if (onBlur) {
-          const value = e?.target?.value;
-          const allowEmpty = value === "" && !required;
-          const valid = validateEmail(value) || allowEmpty;
-          setValid(valid);
-          onBlur(e, {
-            status: valid,
-            message: getLabel(value, valid),
-          });
-        }
-      }}
       onChange={(e) => {
         if (onChange) {
           const value = e?.target?.value;
-          const allowEmpty = value === "" && !required;
-          const valid = validateEmail(value) || allowEmpty;
-          setValid(valid);
-
           onChange(e, {
-            status: valid,
-            message: getLabel(value, valid),
+            message: getLabel(value),
+          });
+        }
+      }}
+      onBlur={(e) => {
+        if (onBlur) {
+          const value = e?.target?.value;
+          onBlur(e, {
+            message: getLabel(value),
           });
         }
       }}
@@ -128,3 +85,17 @@ Email.propTypes = {
 };
 
 export default Email;
+
+// Error messages for translate
+const emptyField = {
+  context: "form",
+  label: "empty-email-field",
+};
+const invalidEmail = {
+  context: "form",
+  label: "wrong-email-field",
+};
+export function getLabel(value, valid) {
+  const label = (value === "" && emptyField) || invalidEmail;
+  return (!valid && label) || null;
+}
