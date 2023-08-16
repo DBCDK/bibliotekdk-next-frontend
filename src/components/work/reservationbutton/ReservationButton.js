@@ -169,21 +169,20 @@ export const ReservationButton = ({
 
   function handleOpenLoginAndOrderModal() {
     //add order modal to store, to be able to access when coming back from adgangsplatform/mitid?
-    const uid = modal.saveToStore("order", {
+    const orderModalProps = {
       pids: pids,
       selectedAccesses: allEnrichedAccesses,
       workId: workId,
       singleManifestation: singleManifestation,
-    });
-    console.log("Reservation button added uid: ", uid);
+    };
+    const uid = modal.saveToStore("order", { ...orderModalProps });
     //open actual loginmodal
     openLoginModal({
       modal,
       mode: LOGIN_MODE.ORDER_PHYSICAL,
-      pids: pids,
-      selectedAccesses: allEnrichedAccesses,
-      workId: workId,
-      singleManifestation: singleManifestation,
+      //data used for FFU without adgangsplatform to open order modal directly
+      ...orderModalProps,
+      //callback used for adgangsplatform/mitid login to open order modal on redirect
       callbackUID: uid,
     });
   }
