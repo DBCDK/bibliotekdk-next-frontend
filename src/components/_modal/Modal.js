@@ -28,13 +28,17 @@ const URL_PAGE_UID_KEY = "modal";
  * @param router
  */
 function pushPageUID(uid, router) {
-  router.push({
-    pathname: router.pathname,
-    query: {
-      ...router.query,
-      [URL_PAGE_UID_KEY]: uid,
-    },
-  });
+  console.log("pushPageUID");
+  setTimeout(() => {
+    router.push({
+      pathname: router.pathname,
+      query: {
+        ...router.query,
+        [URL_PAGE_UID_KEY]: uid,
+      },
+    });
+    console.log("pushPageUID timeout");
+  }, 2000);
 }
 
 /**
@@ -165,6 +169,7 @@ function Container({ children, className = {}, mock = {} }) {
         const isActivePage = entry.uid === uid;
         entry.active = isActivePage;
         if (isActivePage) {
+          console.log("suender");
           activeModalInStack = true;
         }
         // Specify that the page has been loaded from local storage
@@ -519,6 +524,7 @@ export function useModal() {
       }
 
       // Create entry
+
       const entry = {
         id,
         context,
