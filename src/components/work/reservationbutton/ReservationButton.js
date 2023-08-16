@@ -98,7 +98,7 @@ function ReservationButtonWrapper({
     <ReservationButton
       access={access}
       user={user}
-      type={buttonType}
+      buttonType={buttonType}
       size={size}
       pids={pids}
       singleManifestation={singleManifestation}
