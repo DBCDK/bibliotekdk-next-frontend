@@ -24,7 +24,7 @@ import styles from "./Login.module.css";
 import { signIn } from "next-auth/react";
 import getConfig from "next/config";
 import Router from "next/router";
-import { showLogin } from "./utils";
+import { showLoanerForm } from "./utils";
 
 function Select({
   branch,
@@ -111,13 +111,13 @@ export function LoginPickup({
   const allBranches = data?.result;
   const {
     title,
-    openOrderModal = false,
     mode = LOGIN_MODE.PLAIN_LOGIN,
     originUrl = null,
     pids = [],
     selectedAccesses = [],
     workId = null,
     singleManifestation = null,
+    callbackUID = null,
   } = context || {};
   const APP_URL =
     getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
@@ -141,14 +141,13 @@ export function LoginPickup({
 
     if (branch?.borrowerCheck) {
       modal.push("openAdgangsplatform", {
-        openOrderModal: openOrderModal,
-        callbackUrl: callbackurl, //TODO find correct callbackUrl for header and from order button (add bestil modal)
+        callbackUrl: callbackurl + (callbackUID ? `&modal=${callbackUID}` : ""),
         agencyId: branch.agencyId,
         agencyName: originUrl ? originUrl : branch.agencyName, //TODO do we have originUrl and how does it look like?
       });
       return;
     }
-    if (showLogin(mode)) {
+    if (showLoanerForm(mode)) {
       modal.push("loanerform", {
         branchId: branch.branchId,
         pids: pids,

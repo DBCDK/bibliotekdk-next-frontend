@@ -21,18 +21,12 @@ export const getCallbackUrl = (pickupBranchId) => {
  * @param {context} context
  * @returns
  */
-export default function OpenAdgangsplatform({ context, modal }) {
-  const { openOrderModal = false, agencyName, agencyId, callbackUrl } = context;
-  let url = callbackUrl;
+export default function OpenAdgangsplatform({ context }) {
+  const { agencyName, agencyId, callbackUrl } = context;
   const onLogin = () => {
-    if (openOrderModal) {
-      modal.push("order", {});
-      const uid = modal.stack[modal.stack.length - 1].uid;
-      url = `${callbackUrl}/modal=${uid}`;
-    }
     signIn(
       "adgangsplatformen",
-      { callbackUrl: url },
+      { callbackUrl: callbackUrl },
       { agency: agencyId, force_login: 1 }
     );
   };

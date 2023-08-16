@@ -107,7 +107,7 @@ export function Header({
     }
     //TODO remove guestlogout
     if (user.isGuestUser) {
-      await guestLogout();
+      await user.guestLogout();
       return;
     }
     openLoginModal({ modal });
@@ -131,13 +131,6 @@ export function Header({
       onClick: handleOnClick,
     },
 
-    /*{
-      label: "basket",
-      icon: BasketIcon,
-      onClick: () => {},
-      items: "4",
-    },
-     */
     {
       label: "menu",
       icon: BurgerIcon,

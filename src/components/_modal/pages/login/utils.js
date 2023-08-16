@@ -16,7 +16,7 @@ export const LOGIN_MODE = {
  * @param {string} mode
  * @returns {boolean}
  */
-export const showLogin = (mode) => {
+export const showLoanerForm = (mode) => {
   return mode === LOGIN_MODE.ORDER_PHYSICAL || mode === LOGIN_MODE.SUBSCRIPTION;
 };
 
@@ -57,6 +57,7 @@ export function openLoginModal({
   selectedAccesses = undefined,
   workId = undefined,
   singleManifestation = undefined,
+  callbackUID = undefined,
 }) {
   modal.push("login", {
     title: title,
@@ -67,5 +68,6 @@ export function openLoginModal({
     selectedAccesses: selectedAccesses,
     workId: workId,
     singleManifestation: singleManifestation,
+    callbackUID: callbackUID,
   });
 }

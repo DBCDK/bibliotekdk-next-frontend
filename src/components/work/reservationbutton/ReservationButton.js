@@ -167,6 +167,26 @@ export const ReservationButton = ({
     " " +
     (isOnlineTranslated || workTypeTranslated);
 
+  async function handleOpenLoginAndOrderModal() {
+    //add order modal to store, to be able to access when coming back from adgangsplatform/mitid?
+    const uid = modal.save("order", {
+      pids: pids,
+      selectedAccesses: allEnrichedAccesses,
+      workId: workId,
+      singleManifestation: singleManifestation,
+    });
+    //open actual loginmodal
+    openLoginModal({
+      modal,
+      mode: LOGIN_MODE.ORDER_PHYSICAL,
+      pids: pids,
+      selectedAccesses: allEnrichedAccesses,
+      workId: workId,
+      singleManifestation: singleManifestation,
+      callbackUID: uid,
+    });
+  }
+
   const loginRequiredProps = {
     skeleton: !access,
     dataCy: `button-order-overview-enabled`,
@@ -179,15 +199,7 @@ export const ReservationButton = ({
             workId: workId,
             singleManifestation: singleManifestation,
           })
-        : openLoginModal({
-            modal,
-            openOrderModal: true,
-            mode: LOGIN_MODE.ORDER_PHYSICAL,
-            pids: pids,
-            selectedAccesses: allEnrichedAccesses,
-            workId: workId,
-            singleManifestation: singleManifestation,
-          });
+        : handleOpenLoginAndOrderModal();
     },
   };
 

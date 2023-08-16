@@ -17,6 +17,8 @@ import useKeyPress from "@/components/hooks/useKeypress";
 export const ModalContext = createContext(null);
 
 const LOCAL_STORAGE_KEY = "modal-v2";
+const LOCAL_STORAGE_STORE_KEY = "modal-v2-store";
+
 const URL_PAGE_UID_KEY = "modal";
 
 /**
@@ -26,7 +28,6 @@ const URL_PAGE_UID_KEY = "modal";
  * @param router
  */
 function pushPageUID(uid, router) {
-  //console.log("pushing to router");
   router.push({
     pathname: router.pathname,
     query: {
@@ -133,28 +134,50 @@ function Container({ children, className = {}, mock = {} }) {
   // Listen on escape keypress - will close the modal (accessibility)
   const escapeEvent = useKeyPress(isVisible && "Escape");
 
+  /**
+   * Remove an item from the store
+   * @param {*} uid
+   */
+  function removeFromStore(uid, store) {
+    const index = store.findIndex((obj) => obj.uid === uid);
+    if (index > -1) {
+      store.splice(index, 1);
+      modal.setStore(store);
+    }
+  }
+
   // On mount, we try to load stack from local storage
   useEffect(() => {
-    //console.log("MOUNTING");
     try {
-      // Load stack as string from local storage
-      const stackStr = localStorage.getItem(LOCAL_STORAGE_KEY);
-
-      // Parse stack
-      const stack = JSON.parse(stackStr);
-
-      // Get page uid
       const uid = currentPageUid;
 
+      // Load stack as string from local storage
+      const stackStr = localStorage.getItem(LOCAL_STORAGE_KEY);
+      console.log("uid", uid);
+      // Parse stack
+      const stack = JSON.parse(stackStr);
+      let activeModalInStack = false;
       // Traverse the loadedstack
       stack.forEach((entry) => {
         // One page may be active
-        entry.active = entry.uid === uid;
-
+        const isActivePage = entry.uid === uid;
+        entry.active = isActivePage;
+        if (isActivePage) activeModalInStack = true;
         // Specify that the page has been loaded from local storage
         // This is used for determining how to navigate the URL history (go or replace)
         entry.loaded = true;
       });
+
+      if (!activeModalInStack) {
+        //stack did not contain the modal form URL
+        const storeStr = localStorage.getItem(LOCAL_STORAGE_STORE_KEY);
+        const store = JSON.parse(storeStr);
+        const activeModal = store.find((entry) => entry.uid === uid);
+        activeModal.active = true;
+        activeModal.loaded = true;
+        stack.push(activeModal);
+        removeFromStore(uid, store);
+      }
 
       // And lets trigger a render of the loaded stack
       _stack = stack;
@@ -213,6 +236,16 @@ function Container({ children, className = {}, mock = {} }) {
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(modal.stack));
     }
   }, [modal.stack]);
+
+  //TODO better change directly in save/delete
+  useEffect(() => {
+    if (didLoad.current) {
+      localStorage.setItem(
+        LOCAL_STORAGE_STORE_KEY,
+        JSON.stringify(modal.store)
+      );
+    }
+  }, [modal.store]);
 
   // Listen for history popstate events
   useEffect(() => {
@@ -476,7 +509,6 @@ export function useModal() {
       const entry = {
         id,
         context,
-        active: show,
         uid: createPageUID(),
       };
 
@@ -500,6 +532,7 @@ export function useModal() {
    */
   function _save(id, context = {}) {
     if (id) {
+      console.log("ID", id, context);
       let copy = [..._store];
 
       // Create entry
@@ -517,10 +550,10 @@ export function useModal() {
       // save && save(copy);
       // update locale state
       setStore(copy);
+      return entry.uid;
     }
+    return -1;
   }
-
-  function 
 
   /**
    * pop
@@ -733,6 +766,7 @@ export function useModal() {
     select: _select,
     next: _next,
     prev: _prev,
+    save: _save,
     setStack,
     setStore,
     stack: _stack,
