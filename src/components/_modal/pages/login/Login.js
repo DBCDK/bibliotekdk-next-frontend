@@ -169,9 +169,18 @@ export function LoginPickup({
     }
   };
 
+  /**
+   * If we close the login modal without loggin in,
+   * we need to remove f. ex. order modal from store,
+   * which we would have opened after login
+   */
+  function removeModalsFromStore() {
+    modal.setStore([]);
+  }
+
   return (
     <div className={styles.login}>
-      <Top />
+      <Top onClose={removeModalsFromStore} />
       <div>
         <Title type="title4" className={styles.title} tag="h2">
           {title}

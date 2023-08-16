@@ -552,6 +552,13 @@ export function useModal() {
     if (id) {
       let copy = [..._store];
 
+      const idExists = copy.find((obj) => obj.id === id);
+
+      if (idExists) {
+        // Remove old entry with same id- it contains most likely outdated data
+        copy = copy.filter((obj) => obj.id !== id);
+      }
+
       // Create entry
       const entry = {
         id,
@@ -569,7 +576,7 @@ export function useModal() {
       setStore(copy);
       return entry.uid;
     }
-    return -1;
+    return undefined;
   }
 
   /**
