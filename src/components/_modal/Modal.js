@@ -28,7 +28,6 @@ const URL_PAGE_UID_KEY = "modal";
  * @param router
  */
 function pushPageUID(uid, router) {
-  console.log("pushPageUID ", uid);
   router.push({
     pathname: router.pathname,
     query: {
@@ -152,6 +151,7 @@ function Container({ children, className = {}, mock = {} }) {
     try {
       const uid = currentPageUid;
       if (!uid) {
+        console.log("no uid");
         return;
       }
 
@@ -165,8 +165,8 @@ function Container({ children, className = {}, mock = {} }) {
         // One page may be active
         const isActivePage = entry.uid === uid;
         entry.active = isActivePage;
+        console.log("entry", entry.active, entry.uid);
         if (isActivePage) {
-          console.log("suender");
           activeModalInStack = true;
         }
         // Specify that the page has been loaded from local storage
@@ -241,16 +241,6 @@ function Container({ children, className = {}, mock = {} }) {
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(modal.stack));
     }
   }, [modal.stack]);
-
-  //TODO better change directly in save/delete
-  // useEffect(() => {
-  //   if (didLoad.current) {
-  //     localStorage.setItem(
-  //       LOCAL_STORAGE_STORE_KEY,
-  //       JSON.stringify(modal.store)
-  //     );
-  //   }
-  // }, [modal.store]);
 
   // Listen for history popstate events
   useEffect(() => {
@@ -482,7 +472,6 @@ export function useModal() {
   } = useContext(ModalContext);
 
   function setStack(stack) {
-    console.log("setting stack ", stack);
     _stack = stack;
     _setStack(_stack);
   }
@@ -526,6 +515,7 @@ export function useModal() {
       const entry = {
         id,
         context,
+        active: true, //if true, render is smooth, but doesnt open order modal after login
         uid: createPageUID(),
       };
 
@@ -533,13 +523,11 @@ export function useModal() {
       copy.push(entry);
 
       // Push to history (URL)
-      console.log("uid ", entry.uid);
       pushPageUID(entry.uid, router);
 
       // custom save
       // save && save(copy);
       // update locale state
-      console.log("pushin ");
       await setStack(copy);
     }
   }
@@ -686,7 +674,6 @@ export function useModal() {
     // save && save(copy);
     // update locale stack state
 
-    console.log("selecting ");
     setStack(copy);
   }
 
@@ -775,7 +762,6 @@ export function useModal() {
     });
     // save && save(copy);
     // update locale stack state
-    console.log("update");
     setStack(copy);
   }
 
