@@ -119,6 +119,14 @@ export function branchesForUser() {
             name
           }
         }
+        agencies{
+          result
+          {
+            agencyName
+            agencyId
+            name
+          }
+        }
       }
       monitor(name: "bibdknext_user_branches")
      }`,
