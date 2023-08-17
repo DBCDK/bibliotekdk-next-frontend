@@ -31,6 +31,7 @@ function Button({
   dataCy = null,
   ariaExpanded = null,
   ariaControls = null,
+  ariaLabel = null,
 }) {
   const key = dataCy || cyKey({ name: children, prefix: "button" });
 
@@ -52,6 +53,7 @@ function Button({
       tabIndex={tabIndex}
       aria-expanded={ariaExpanded}
       aria-controls={ariaControls}
+      aria-label={ariaLabel}
     >
       {children}
     </button>
