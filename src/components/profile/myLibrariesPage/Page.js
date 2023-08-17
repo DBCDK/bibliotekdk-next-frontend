@@ -24,13 +24,11 @@ export default function MyLibrariesPage() {
   );
   //An array of user agencies.
   const agencies = userData?.user?.agencies
-    ?.map((agency) => {
-      return {
-        agencyId: agency?.result[0]?.agencyId,
-        agencyName: agency?.result[0]?.agencyName,
-      };
-    })
-    .filter((agency) => !!agency.agencyName || !!agency.agencyId);
+    ?.map((agency) => ({
+      agencyId: agency?.result[0]?.agencyId,
+      agencyName: agency?.result[0]?.agencyName,
+    }))
+    .filter((agency) => !!agency.agencyName && !!agency.agencyId);
 
   return (
     <Layout title={Translate({ context: "profile", label: "myLibraries" })}>
