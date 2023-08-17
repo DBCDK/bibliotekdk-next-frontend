@@ -3,6 +3,7 @@ export const context = { context: "overview" };
 import { MaterialTypeEnum } from "@/lib/enums_MaterialTypes";
 import { goToRedirectUrl } from "@/components/work/utils";
 import Translate, { hasTranslation } from "@/components/base/translate";
+import { openLoginModal } from "@/components/_modal/pages/login/utils";
 
 /**
  * Example:

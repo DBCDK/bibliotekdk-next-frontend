@@ -100,6 +100,19 @@ export function Header({
   // specific material workType selected
   const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
 
+  async function handleOnClick() {
+    if (user.isAuthenticated) {
+      signOut();
+      return;
+    }
+    //TODO remove guestlogout
+    if (user.isGuestUser) {
+      await user.guestLogout();
+      return;
+    }
+    openLoginModal({ modal });
+  }
+
   const menu = [
     {
       label: "search",
@@ -113,27 +126,11 @@ export function Header({
       },
     },
     {
-      label: user.isAuthenticated || user.isGuestUser ? "logout" : "login",
+      label: user.isAuthenticated || user.isGuestUser ? "logout" : "login", //TODO remove guestuser from login
       icon: LoginIcon,
-      //onClick: user.isAuthenticated ? signOut : signIn,
-      onClick: user.isAuthenticated
-        ? // sign user out - either guest- or hejmdal-user
-          signOut
-        : user.isGuestUser
-        ? async () => {
-            await user.guestLogout();
-          }
-        : // open login modal
-          () => openLoginModal({ modal }),
+      onClick: handleOnClick,
     },
 
-    /*{
-      label: "basket",
-      icon: BasketIcon,
-      onClick: () => {},
-      items: "4",
-    },
-     */
     {
       label: "menu",
       icon: BurgerIcon,
