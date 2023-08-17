@@ -135,39 +135,6 @@ export function branchesForUser() {
   };
 }
 
-/**
- * get branches for logged in user
- *
- */
-export function agenciesForUser() {
-  return {
-    apiUrl: ApiEnums.FBI_API,
-    // delay: 1000, // for debugging
-    query: `
-    query ($language: LanguageCode! ) {
-      user {
-        agency (language: $language){
-          result {
-            agencyId
-            agencyName
-            name
-          }
-        }
-        agencies{
-          result
-          {
-            agencyName
-            agencyId
-            name
-          }
-        }
-      }
-      monitor(name: "bibdknext_user_branches")
-     }`,
-    variables: { language: lang },
-    slowThreshold: 3000,
-  };
-}
 export function orderPolicy({ pid }) {
   return {
     apiUrl: ApiEnums.FBI_API,
