@@ -22,16 +22,22 @@ export default function MyLibrariesPage() {
   const { data: userData } = useData(
     isAuthenticated && userFragments.branchesForUser()
   );
+  //An array of user agencies.
+  const agencies = userData?.user?.agencies
+    ?.map((agency) => {
+      const agencyId = agency?.result[0]?.agencyId;
+      const agencyName = agency?.result[0]?.agencyName;
+      if (agencyId && agencyName) {
+        return {
+          agencyId,
+          agencyName,
+        };
+      }
+      return;
+    })
+    .filter((agency) => !!agency);
 
-  //An array of user agencies
-  const agencies = userData?.user?.agencies?.map((agency) => {
-    return {
-      agencyId: agency?.result[0]?.agencyId,
-      agencyName: agency?.result[0]?.agencyName,
-    };
-  });
-
-  return (
+    return (
     <Layout title={Translate({ context: "profile", label: "myLibraries" })}>
       <div className={styles.pageDescriptionContainer}>
         <Text className={styles.pageDescription}>
