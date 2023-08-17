@@ -151,7 +151,6 @@ function Container({ children, className = {}, mock = {} }) {
     try {
       const uid = currentPageUid;
       if (!uid) {
-        console.log("no uid");
         return;
       }
 
@@ -165,7 +164,6 @@ function Container({ children, className = {}, mock = {} }) {
         // One page may be active
         const isActivePage = entry.uid === uid;
         entry.active = isActivePage;
-        console.log("entry", entry.active, entry.uid);
         if (isActivePage) {
           activeModalInStack = true;
         }
