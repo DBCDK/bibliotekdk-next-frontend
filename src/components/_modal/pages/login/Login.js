@@ -178,6 +178,14 @@ export function LoginPickup({
     modal.setStore([]);
   }
 
+  const onMitIdLogin = () => {
+    signIn(
+      "adgangsplatformen",
+      { callbackUrl: callbackurl },
+      { force_login: 1, idp: "nemlogin" }
+    );
+  };
+
   return (
     <div className={styles.login}>
       <Top onClose={removeModalsFromStore} />
@@ -229,14 +237,13 @@ export function LoginPickup({
           </Text>
           <Button
             data-cy="mitid-button"
-            disabled={true} //TODO: remove when MitID is implemented
             type="secondary"
             size="large"
             className={styles.mitIDButton}
-            onClick={() => alert("Implement MitID")}
+            onClick={onMitIdLogin}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                alert("Implement MitID");
+                onMitIdLogin();
               }
             }}
           >
