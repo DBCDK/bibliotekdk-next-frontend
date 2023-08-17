@@ -22,21 +22,14 @@ export default function MyLibrariesPage() {
   const { data: userData } = useData(
     isAuthenticated && userFragments.branchesForUser()
   );
-  const result = userData?.user?.agency?.result;
 
-  //Find a list of user agencies
-  const agencies = [];
-  const addedAgencyIds = [];
-
-  result?.forEach((branch) => {
-    const { agencyId, agencyName } = branch;
-    if (agencyId && agencyName && !addedAgencyIds.includes(agencyId)) {
-      addedAgencyIds.push(agencyId);
-      agencies.push({
-        agencyId,
-        agencyName,
-      });
-    }
+  const result = userData?.user?.agencies;
+  //A list of user agencies
+  const agencies = result?.map((agency) => {
+    return {
+      agencyId: agency?.result[0]?.agencyId,
+      agencyName: agency?.result[0]?.agencyName,
+    };
   });
 
   return (
