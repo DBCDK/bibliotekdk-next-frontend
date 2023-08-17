@@ -236,6 +236,7 @@ export function LoginPickup({
             {Translate({ context: "login", label: "or-mit-id" })}
           </Text>
           <Button
+            ariaLabel={Translate({ context: "login", label: "mit-id" })}
             data-cy="mitid-button"
             type="secondary"
             size="large"
