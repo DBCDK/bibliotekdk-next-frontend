@@ -14,26 +14,7 @@ import { useModal } from "@/components/_modal";
 import { orderStatus } from "@/lib/api/order.fragments";
 import { useEffect, useState } from "react";
 const itemsPerPage = 4;
-// const mockData = [
-//   "1047046103",
-//   "1047046123",
-//   "1047046135",
-//   "1047078144",
-//   "1047078483",
-//   "1047079877",
-//   "1047079898",
-//   "1047079962",
-//   "1047080161",
-//   "1047080198",
-//   "1047080202",
-//   "1047080229",
-//   "1047081995",
-//   "1047082727",
-//   "1047088911",
-//   "1047089858",
-//   "1047104029",
-//   "1047104063",
-// ];
+
 /**
  * Shows the orders made by the user from bibliotekdk.
  *
