@@ -3223,12 +3223,36 @@
         "en": "You have ordered"
       },
       "orderNumber": {
-        "da": "Bestillingsnummer:",
-        "en": "Order number:"
+        "da": "Bestillingsnummer",
+        "en": "Order number"
       },
       "orderRegistered": {
         "da": "Bestilling registreret",
         "en": "Order registered"
+      },
+      "date": {
+        "da": "Dato",
+        "en": "Date"
+      },
+      "activity": {
+        "da": "Aktivitet",
+        "en": "Activity"
+      },
+      "dataCollectionTitle": {
+        "da": "Opsamling af data",
+        "en": "Data Collection"
+      },
+      "permissionText": {
+        "da": "Vil du give tilladelse til at bibliotek.dk må indsamle data om dine bestillinger, lån og adfærd på hjemmesiden?\n\nDen opsamlede data vil blive benyttet til at lave bestillingshistorik og personlige anbefalinger til dig.\n\nBestillingshistorikken viser kun bestillinger fra den dato, funktionen bliver aktiveret.\n\nDine data bliver opbevaret af bibliotekerne og bliver kun benyttet af bibliotekerne. Det vil sige, at de udleveres aldrig til tredjepart.",
+        "en": "Would you like to give permission for bibliotek.dk to collect data about your orders, loans, and behavior on the website?\n\nThe collected data will be used to create an order history and personal recommendations for you.\n\nThe order history will only show orders from the date the function is activated.\n\nYour data is stored by the libraries and is only used by the libraries. This means they are never disclosed to third parties."
+      },
+      "consentButton": {
+        "da": "Giv tilladelse",
+        "en": "Give Permission"
+      },
+      "goBackButton": {
+        "da": "Tilbage",
+        "en": "Go Back"
       }
     }
   }

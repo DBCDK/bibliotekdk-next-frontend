@@ -83,7 +83,7 @@ export default function Pagination({
   return (
     <React.Fragment>
       {numPages > 1 && numPages > currentPage && (
-        <div className={`${styles.mobile}`}>
+        <div className={`${styles.mobile} ${className}`}>
           <Button
             type="secondary"
             size="medium"

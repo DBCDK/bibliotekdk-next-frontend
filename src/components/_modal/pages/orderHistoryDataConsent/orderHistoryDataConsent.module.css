@@ -26,3 +26,6 @@
     padding: 0 var(--pt6) var(--pt3) var(--pt6);
   }
 }
+.permissionText {
+  white-space: pre-wrap;
+}

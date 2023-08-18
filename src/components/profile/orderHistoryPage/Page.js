@@ -12,8 +12,28 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { getWorkUrl } from "@/lib/utils";
 import { useModal } from "@/components/_modal";
 import { orderStatus } from "@/lib/api/order.fragments";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+const itemsPerPage = 4;
+// const mockData = [
+//   "1047046103",
+//   "1047046123",
+//   "1047046135",
+//   "1047078144",
+//   "1047078483",
+//   "1047079877",
+//   "1047079898",
+//   "1047079962",
+//   "1047080161",
+//   "1047080198",
+//   "1047080202",
+//   "1047080229",
+//   "1047081995",
+//   "1047082727",
+//   "1047088911",
+//   "1047089858",
+//   "1047104029",
+//   "1047104063",
+// ];
 /**
  * Shows the orders made by the user from bibliotekdk.
  *
@@ -25,36 +45,67 @@ export default function OrderHistoryPage() {
   const { isAuthenticated } = useUser();
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs" || breakpoint === "sm";
+  const [orderDataPages, setOrderDataPages] = useState([]);
+  const [bibliotekDkOrderIds, setBibliotekDkOrderIds] = useState();
+  const [currentPageIndex, setCurrentPageIndex] = useState(0);
+  const [currentPageIds, setCurrentPageIds] = useState([]);
 
-  const { data, isLoading } = useData(isAuthenticated && orderHistory());
-  const bibliotekDkOrders = data?.user?.bibliotekDkOrders?.map(
-    (order) => order.orderId
-  );
-  const itemsPerPage = 4;
-  const totalPages = Math.ceil(bibliotekDkOrders?.length / itemsPerPage);
-  const [pageIndex, setPageIndex] = useState(0);
-  const currentPageIds = bibliotekDkOrders?.slice(
-    pageIndex * itemsPerPage,
-    (pageIndex + 1) * itemsPerPage
-  );
-  console.log("bibliotekDkOrders", bibliotekDkOrders);
-
-  const orderData = useData(
+  //todo use loading
+  const { data: orderData } = useData(
     currentPageIds?.length > 0 && orderStatus({ orderIds: currentPageIds })
   );
-  const orders = orderData?.data?.orderStatus;
+  const { data: userData, isLoading } = useData(
+    isAuthenticated && orderHistory()
+  );
 
-  console.log("pageIndex", pageIndex);
-  console.log("currentPageIds", currentPageIds);
-  console.log("pageIndex", pageIndex);
+  const fetchedOrders = orderData?.orderStatus;
 
-  console.log("1orders", orders);
+  const totalPages = Math.ceil(bibliotekDkOrderIds?.length / itemsPerPage);
+  useEffect(() => {
+    if (userData) {
+      const bibDkorderIds = userData.user?.bibliotekDkOrders?.map(
+        (order) => order.orderId
+      );
+      console.log(JSON.stringify(bibDkorderIds));
+      setBibliotekDkOrderIds(bibDkorderIds);
+    }
+    //todo remove
+    //  setBibliotekDkOrderIds(mockData);
+  }, [userData]);
+
+  useEffect(() => {
+    //when a page is updated we fetch the next
+    const nextPageIndex = currentPageIndex + 1;
+    const toPages =
+      nextPageIndex == totalPages
+        ? bibliotekDkOrderIds.length - 1
+        : nextPageIndex;
+    const currentPageOrderIds = bibliotekDkOrderIds?.slice(
+      currentPageIndex * itemsPerPage,
+      toPages * itemsPerPage
+    );
+    setCurrentPageIds(currentPageOrderIds);
+  }, [currentPageIndex, bibliotekDkOrderIds]);
+
+  useEffect(() => {
+    if (fetchedOrders && !isLoading) {
+      let updatedOrderDataPages = orderDataPages;
+      updatedOrderDataPages[currentPageIndex] = fetchedOrders;
+      setOrderDataPages(updatedOrderDataPages);
+    }
+  }, [orderData, fetchedOrders, currentPageIds, currentPageIndex]);
 
   const modal = useModal();
 
   const updatePageIndex = (newIndex) => {
-    setPageIndex(newIndex - 1);
+    setCurrentPageIndex(newIndex - 1);
   };
+
+  //there is no pagination in mobile view. We show all orders
+  const currentPage = isMobile
+    ? orderDataPages.flat(1)
+    : orderDataPages[currentPageIndex];
+
   return (
     <Layout title={Translate({ context: "profile", label: "orderHistory" })}>
       <Text className={styles.orderHistoryInfo}>
@@ -78,22 +129,26 @@ export default function OrderHistoryPage() {
       </Link>
 
       <div className={styles.headerRow}>
-        <Text className={styles.headerItem}>Dato </Text>
-        <Text className={styles.headerItem}>Aktivitet </Text>
-        <Text className={styles.headerItem}>Bestillingsnummer </Text>
+        <Text className={styles.headerItem}>
+          {Translate({ context: "profile", label: "date" })}
+        </Text>
+        <Text className={styles.headerItem}>
+          {Translate({ context: "profile", label: "activity" })}{" "}
+        </Text>
+        <Text className={styles.headerItem}>
+          {Translate({ context: "profile", label: "orderNumber" })}
+        </Text>
       </div>
-      {orders?.map((order) => {
-        return <TableItem order={order} />;
-      })}
 
-      {!isMobile && (
-        <Pagination
-          className={styles.pagination}
-          numPages={totalPages}
-          currentPage={pageIndex + 1}
-          onChange={updatePageIndex}
-        />
-      )}
+      {currentPage?.map((order, index) => {
+        return <TableItem order={order} index={index} key={order?.orderId} />;
+      })}
+      <Pagination
+        className={styles.pagination}
+        numPages={totalPages}
+        currentPage={currentPageIndex + 1}
+        onChange={updatePageIndex}
+      />
     </Layout>
   );
 }
@@ -102,15 +157,17 @@ export default function OrderHistoryPage() {
  * @param {obj} props
  * @returns {component}
  */
-function TableItem({ order }) {
+function TableItem({ order, key, index }) {
   const breakpoint = useBreakpoint();
-  const isMobile = breakpoint === "xs";
 
+  if (!order) {
+    return null;
+  }
+  const isMobile = breakpoint === "xs";
   const { author, title, pid, orderId, creationDate } = order;
   const { date, time } = parseDate(creationDate);
-  console.log("author", author);
   return (
-    <div className={styles.tableItem}>
+    <div className={styles.tableItem} key={key}>
       {!isMobile && (
         <div>
           <Text type="text3"> {date}</Text>
@@ -123,7 +180,7 @@ function TableItem({ order }) {
         </Text>
         {isMobile && (
           <Text className={styles.mobileDate} type="text3">
-            {date}
+            {index + "  - " + date}
           </Text>
         )}
         <Text type="text2" className={styles.orderWorkInfo}>
@@ -151,7 +208,7 @@ function TableItem({ order }) {
       <div className={styles.orderNumber}>
         {breakpoint === "xs" && (
           <Text className={styles.orderNumberText} type="text4">
-            {Translate({ context: "profile", label: "orderNumber" })}
+            {`${Translate({ context: "profile", label: "orderNumber" })}:`}
           </Text>
         )}
         <Text type="text3">{orderId} </Text>
@@ -161,7 +218,7 @@ function TableItem({ order }) {
 }
 
 /**
- * Parses an iso 8601 date string into human readable date an time strings.
+ * Parses an iso-8601 date string into human readable date an time strings.
  * @param {*} isoDateString
  * @returns an object containing date and time fields. Eks {date: "D. 24. juni", time:"Kl. 11:07"}
  */
@@ -182,45 +239,12 @@ const parseDate = (isoDateString) => {
     "nov.",
     "dec.",
   ];
-  const monthName = monthNames[dateObj.getUTCMonth()]; // month is 0-indexed
+  const monthName = monthNames[dateObj.getUTCMonth()];
   const date = `D. ${day} ${monthName}`;
 
-  // Custom format the time part
   const hours = String(dateObj.getUTCHours()).padStart(2, "0");
   const minutes = String(dateObj.getUTCMinutes()).padStart(2, "0");
   const time = `Kl. ${hours}.${minutes}`;
 
   return { date, time };
 };
-const mockedOverview = [
-  {
-    orderId: "1046602794",
-    creationDate: "2023-09-13T11:01:42.000+00:00",
-    author: "Rathje, Jonas Kuld",
-    title: "Teorien om alt",
-    closed: false,
-    pid: "870970-basis:47210577",
-  },
-  {
-    autoForwardResult: null,
-    placeOnHold: "yes",
-    orderId: "1046912235",
-    pickupAgencyId: "748000",
-    pid: "870970-basis:134559373",
-    closed: false,
-    creationDate: "2023-07-28T08:14:40.072+00:00",
-    author: null,
-    title: "Alt om Bluey",
-  },
-  {
-    autoForwardResult: "automated",
-    placeOnHold: "yes",
-    orderId: "1047031461",
-    pickupAgencyId: "710100",
-    pid: "800010-katalog:99122372377605763",
-    closed: false,
-    creationDate: "2023-08-11T11:10:46.000+00:00",
-    author: "Jensen, Jette, f. 1943",
-    title: "Ungdomsturister i København 1971",
-  },
-];

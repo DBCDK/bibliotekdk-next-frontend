@@ -1,1 +1,1 @@
-export { default } from "./orderHistoryDataConsent.page";
+export { default } from "./OrderHistoryDataConsent.page";
