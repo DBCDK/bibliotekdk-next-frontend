@@ -1,4 +1,6 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
+import { validateEmail } from "@/utils/validateEmail";
+import { useState } from "react";
 
 import Email from "./";
 
@@ -26,17 +28,20 @@ export function Default() {
  *
  */
 export function ValidationOnChange() {
+  const [valid, setValid] = useState(false);
   return (
     <div>
-      <StoryTitle>Email validation</StoryTitle>
+      <StoryTitle>Email validation failed</StoryTitle>
       <StoryDescription>
         Validating input onChange (console.logs response)
       </StoryDescription>
       <Email
         value="invalid@mail."
-        onChange={(value, valid) => {
+        valid={valid}
+        onChange={(value) => {
+          setValid(validateEmail(value.target.value));
           return console.log(
-            `email input: ${value.target.value} is valid: ${valid.status}`
+            `email input: ${value.target.value} is valid: ${valid}`
           );
         }}
       />
@@ -49,6 +54,7 @@ export function ValidationOnChange() {
  *
  */
 export function ValidationOnBlur() {
+  const [valid, setValid] = useState(true);
   return (
     <div>
       <StoryTitle>Email validation</StoryTitle>
@@ -56,9 +62,13 @@ export function ValidationOnBlur() {
         Validating input onBlur (console.logs response)
       </StoryDescription>
       <Email
-        onBlur={(value, valid) => {
+        valid={valid}
+        onBlur={(value, message) => {
+          setValid(validateEmail(value.target.value));
           return console.log(
-            `email input: ${value.target.value} is valid: ${valid.status}`
+            `email input: ${
+              value.target.value
+            } is valid: ${valid} message ${JSON.stringify(message.label)}}`
           );
         }}
       />

@@ -6,8 +6,11 @@ pipeline {
     agent {
         label 'devel11'
     }
+    triggers {
+        githubPush()
+    }
     environment {
-        IMAGE_NAME = "bibliotekdk-next-frontend${env.BRANCH_NAME != 'master' ? "-${env.BRANCH_NAME.toLowerCase()}" : ''}:${BUILD_NUMBER}"
+        IMAGE_NAME = "bibliotekdk-next-frontend-${env.BRANCH_NAME.toLowerCase()}:${BUILD_NUMBER}"
         DOCKER_COMPOSE_NAME = "compose-${IMAGE_NAME}-${BRANCH_NAME.toLowerCase()}"
         GITLAB_PRIVATE_TOKEN = credentials("metascrum-gitlab-api-token")
         GITLAB_ID = "704"
@@ -50,6 +53,7 @@ pipeline {
                 anyOf {
                     branch 'main';
                     branch 'alfa-0'
+                    branch 'prod'
                     expression{env.BRANCH_NAME.startsWith('feature')}
                 }
             }
@@ -77,6 +81,7 @@ pipeline {
                 anyOf {
                     branch 'main';
                     branch 'alfa-0'
+                    branch 'prod'
                 }
             }
             steps {
@@ -91,6 +96,12 @@ pipeline {
                             sh '''
                                 #!/usr/bin/env bash                        
                                 set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b alfa-0
+                            '''
+                        }
+                        else if (env.BRANCH_NAME == 'prod') {
+                            sh '''
+                                #!/usr/bin/env bash
+                                set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b prod
                             '''
                         }
                     }

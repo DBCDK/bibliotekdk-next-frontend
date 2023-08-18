@@ -98,7 +98,7 @@ function ReservationButtonWrapper({
     <ReservationButton
       access={access}
       user={user}
-      type={buttonType}
+      buttonType={buttonType}
       size={size}
       pids={pids}
       singleManifestation={singleManifestation}
@@ -167,6 +167,26 @@ export const ReservationButton = ({
     " " +
     (isOnlineTranslated || workTypeTranslated);
 
+  async function handleOpenLoginAndOrderModal() {
+    //add order modal to store, to be able to access when coming back from adgangsplatform/mitid?
+    const orderModalProps = {
+      pids: pids,
+      selectedAccesses: allEnrichedAccesses,
+      workId: workId,
+      singleManifestation: singleManifestation,
+    };
+    const uid = await modal.saveToStore("order", { ...orderModalProps });
+    //open actual loginmodal
+    openLoginModal({
+      modal,
+      mode: LOGIN_MODE.ORDER_PHYSICAL,
+      //data used for FFU without adgangsplatform to open order modal directly
+      ...orderModalProps,
+      //callback used for adgangsplatform/mitid login to open order modal on redirect
+      callbackUID: uid,
+    });
+  }
+
   const loginRequiredProps = {
     skeleton: !access,
     dataCy: `button-order-overview-enabled`,
@@ -179,7 +199,7 @@ export const ReservationButton = ({
             workId: workId,
             singleManifestation: singleManifestation,
           })
-        : openLoginModal({ modal, mode: LOGIN_MODE.ORDER_PHYSICAL });
+        : handleOpenLoginAndOrderModal();
     },
   };
 

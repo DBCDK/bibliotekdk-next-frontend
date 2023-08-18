@@ -2185,6 +2185,14 @@
         "da": "Udgave",
         "en": "Volume"
       },
+      "fillout-loaner-info": {
+        "da": "For at gennemføre bestillingen skal du udfylde dine låneroplysninger ved %s",
+        "en": "To complete the order, you need to fill out your loaner information at %s"
+      },
+      "go-to-order": {
+        "da": "Gå til bestilling",
+        "en": "Go to order"
+      },
       "save-info-in-browser": {
         "da": "Gem informationer i browseren (til næste bestilling)",
         "en": "Save information in browser (for next order)"

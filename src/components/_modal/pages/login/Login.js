@@ -24,7 +24,7 @@ import styles from "./Login.module.css";
 import { signIn } from "next-auth/react";
 import getConfig from "next/config";
 import Router from "next/router";
-import { showLogin } from "./utils";
+import { showLoanerForm } from "./utils";
 
 function Select({
   branch,
@@ -113,13 +113,20 @@ export function LoginPickup({
     title,
     mode = LOGIN_MODE.PLAIN_LOGIN,
     originUrl = null,
+    pids = [],
+    selectedAccesses = [],
+    workId = null,
+    singleManifestation = null,
+    callbackUID = null,
   } = context || {};
   const APP_URL =
     getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
 
-  // remove all modal params from callbackurl - this is login context
-  const regexp = /&modal=+[0-9]*/g;
+  // remove all modal params from callbackurl - to avoid redirect to modal after coming back from login
+  const regexp = /(\?|&)modal=\d+$/g;
+
   const callbackurl = `${APP_URL}${Router.asPath}`.replace(regexp, "");
+
   const showResultsList = hasQuery && allBranches?.length > 0;
   const showMitIDLogin = !hasQuery || !allBranches || allBranches.length < 1;
   const user = useUser();
@@ -134,21 +141,26 @@ export function LoginPickup({
       return;
     }
 
+    //if we have callbackUID, we want to redirect to order modal and therefor, we append it to url
+    let newUrl = callbackUID
+      ? callbackurl + `&modal=${callbackUID}`
+      : callbackurl;
+
     if (branch?.borrowerCheck) {
       modal.push("openAdgangsplatform", {
-        callbackUrl: callbackurl, //TODO find correct callbackUrl for header and from order button (add bestil modal)
+        callbackUrl: newUrl,
         agencyId: branch.agencyId,
         agencyName: originUrl ? originUrl : branch.agencyName, //TODO do we have originUrl and how does it look like?
       });
       return;
     }
-    if (showLogin(mode)) {
+    if (showLoanerForm(mode)) {
       modal.push("loanerform", {
         branchId: branch.branchId,
-        callbackUrl: callbackurl, //TODO remove
-        mode,
-        originUrl,
-        clear: true,
+        pids: pids,
+        selectedAccesses: selectedAccesses,
+        workId: workId,
+        singleManifestation: singleManifestation,
       });
     } else {
       modal.push("loginNotSupported", {
@@ -157,9 +169,26 @@ export function LoginPickup({
     }
   };
 
+  /**
+   * If we close the login modal without loggin in,
+   * we need to remove f. ex. order modal from store,
+   * which we would have opened after login
+   */
+  function removeModalsFromStore() {
+    modal.setStore([]);
+  }
+
+  const onMitIdLogin = () => {
+    signIn(
+      "adgangsplatformen",
+      { callbackUrl: callbackurl },
+      { force_login: 1, idp: "nemlogin" }
+    );
+  };
+
   return (
     <div className={styles.login}>
-      <Top />
+      <Top onClose={removeModalsFromStore} />
       <div>
         <Title type="title4" className={styles.title} tag="h2">
           {title}
@@ -207,15 +236,15 @@ export function LoginPickup({
             {Translate({ context: "login", label: "or-mit-id" })}
           </Text>
           <Button
-            data-cy="mitid-button"
-            disabled={true} //TODO: remove when MitID is implemented
+            ariaLabel={Translate({ context: "login", label: "mit-id" })}
+            dataCy="mitid-button"
             type="secondary"
             size="large"
             className={styles.mitIDButton}
-            onClick={() => alert("Implement MitID")}
+            onClick={onMitIdLogin}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                alert("Implement MitID");
+                onMitIdLogin();
               }
             }}
           >
