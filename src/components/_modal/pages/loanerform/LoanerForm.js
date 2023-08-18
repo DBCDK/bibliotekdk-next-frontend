@@ -26,10 +26,17 @@ const ERRORS = {
   MISSING_INPUT: "error-missing-input",
 };
 
-export function UserParamsForm({ branch, initial, onSubmit, originUrl }) {
+export function UserParamsForm({
+  branch,
+  initial,
+  onSubmit,
+  originUrl,
+  skeleton,
+}) {
   const [errorCode, setErrorCode] = useState();
   const [state, setState] = useState(initial || {});
   const [validMail, setValidMail] = useState(true);
+  const [checked, setChecked] = useState(false);
 
   const requiredParameters = branch?.userParameters?.filter(
     ({ parameterRequired }) => parameterRequired
@@ -48,15 +55,6 @@ export function UserParamsForm({ branch, initial, onSubmit, originUrl }) {
       return emailError.label;
     }
   }
-
-  const [checked, setChecked] = useState(false);
-  const [errorCode, setErrorCode] = useState();
-  const [state, setState] = useState(initial || {});
-  const [emailMessage, setEmailMessage] = useState();
-
-  const requiredParameters = branch?.userParameters?.filter(
-    ({ parameterRequired }) => parameterRequired
-  );
 
   return (
     <form
