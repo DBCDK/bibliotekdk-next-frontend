@@ -22,15 +22,24 @@ export function ShowModal() {
       <StoryTitle>Modal</StoryTitle>
       <StoryDescription>Full Modal component</StoryDescription>
       <Modal.Container>
-        <Modal.Page id="openAdgangsplatform" component={Pages.Menu} />
+        <Modal.Page
+          id="openAdgangsplatform"
+          component={Pages.OpenAdgangsplatform}
+        />
       </Modal.Container>
 
       <Button
         type="secondary"
         size="small"
-        onClick={() => modal.push("menu", { label: "title-menu" })}
+        onClick={() =>
+          modal.push("openAdgangsplatform", {
+            callbackUrl: "comeback.dk",
+            agencyId: "790900",
+            agencyName: "test branch",
+          })
+        }
       >
-        {"Toggle menu"}
+        {"Toggle open adgangsplatform"}
       </Button>
     </div>
   );

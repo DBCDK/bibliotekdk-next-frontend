@@ -50,6 +50,7 @@ function ReservationButtonWrapper({
   size = "large",
   className,
 }) {
+  console.log("WERE HERE");
   const user = useUser();
 
   const { workResponse, manifestations, manifestationsResponse } =
@@ -130,6 +131,17 @@ export const ReservationButton = ({
   allEnrichedAccesses,
   workId,
 }) => {
+  console.log(
+    "BUTTON",
+    access,
+    user,
+    buttonType,
+    size,
+    pids,
+    singleManifestation,
+    allEnrichedAccesses,
+    workId
+  );
   const modal = useModal();
 
   const physicalCopy = checkPhysicalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
@@ -168,6 +180,7 @@ export const ReservationButton = ({
     (isOnlineTranslated || workTypeTranslated);
 
   async function handleOpenLoginAndOrderModal() {
+    console.log("handle handle");
     //add order modal to store, to be able to access when coming back from adgangsplatform/mitid?
     const orderModalProps = {
       pids: pids,
@@ -191,6 +204,7 @@ export const ReservationButton = ({
     skeleton: !access,
     dataCy: `button-order-overview-enabled`,
     onClick: () => {
+      console.log("clicking ", user);
       user?.isLoggedIn
         ? openOrderModal({
             modal: modal,
@@ -214,6 +228,7 @@ export const ReservationButton = ({
    */
   const getProps = () => {
     if (noSelectedManifestations) {
+      console.log("1");
       return {
         props: noSelectedManifestationsProps,
         text: noSelectedManifestationsTxt,
@@ -222,11 +237,15 @@ export const ReservationButton = ({
 
     //ACCESS_URL,INFOMEDIA,EREOL
     if (onlineMaterialWithoutLoginOrLoginAtUrl) {
+      console.log("2");
+
       return {
         props: accessibleOnlineAndNoLoginProps,
         text: accessibleOnlineAndNoLoginText,
       };
     }
+
+    console.log("3");
 
     //DIGITAL_ARTICLE_SERVICE, INTER_LIBRARY_LOAN
     return {
@@ -237,6 +256,7 @@ export const ReservationButton = ({
 
   const { props, text } = getProps();
 
+  console.log("fernder");
   return (
     <>
       <TextAboveButton access={access} user={user} />

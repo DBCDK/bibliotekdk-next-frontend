@@ -58,6 +58,50 @@ function ReservationButtonStoryBuilder(storyname, resolvers = {}, query = {}) {
   };
 }
 
+const access = [
+  {
+    loanIsPossible: true,
+    materialTypesArray: ["bog"],
+    pid: "870970-basis:62724102",
+    titles: ["Hex"],
+    workTypes: ["LITERATURE"],
+    __typename: "InterLibraryLoan",
+  },
+];
+const user = {
+  authUser: {},
+  error: undefined,
+  guestLogout: () => console.log("BLA"),
+  isAuthenticated: false,
+  isGuestUser: false,
+  isLoading: false,
+  isLoggedIn: false,
+  loanerInfo: {
+    debt: [],
+    loans: [],
+    orders: [],
+    agency: {},
+    userParameters: {},
+  },
+  updateLoanerInfo: () => console.log("BLA"),
+};
+const buttonType = null;
+const size = null;
+const pids = null;
+const singleManifestation = null;
+const allEnrichedAccesses = null;
+const workId = "870970-basis:62724102";
+
+export function ReservationButtonLoginFlow() {
+  return (
+    <ReservationButtonComponentBuilder
+      type={"bog"}
+      workId={"work-of:870970-basis:62724102"}
+      selectedPids={["870970-basis:62724102"]}
+    />
+  );
+}
+
 export function ReservationButtonPhysicalBook() {
   return (
     <ReservationButtonComponentBuilder
