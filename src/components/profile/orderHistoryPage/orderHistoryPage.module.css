@@ -4,7 +4,6 @@
 .tableItem {
   display: grid;
   grid-template-columns: 2fr 6fr 2fr;
-  /* padding: var(--pt3) 0; */
   grid-gap: var(--pt3);
   align-items: center;
 

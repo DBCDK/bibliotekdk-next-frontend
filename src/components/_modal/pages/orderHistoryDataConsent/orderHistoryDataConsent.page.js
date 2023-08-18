@@ -10,7 +10,7 @@ export function OrderHistoryDataConsent({ modal }) {
     <div className={styles.modalContainer}>
       <Top />
 
-      <div className={styles.contentContainer}>
+      <div>
         <Title className={styles.modalTitle} type="title4">
           {Translate({ context: "profile", label: "dataCollectionTitle" })}
         </Title>
@@ -24,10 +24,7 @@ export function OrderHistoryDataConsent({ modal }) {
         </Button>
         <Button
           className={styles.goBackButton}
-          onClick={() => {
-            console.log("hej", modal);
-            modal.clear();
-          }}
+          onClick={() => modal.clear()}
           size="large"
           type="secondary"
         >

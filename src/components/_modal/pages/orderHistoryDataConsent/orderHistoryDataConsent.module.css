@@ -1,7 +1,3 @@
-.contentContainer {
-  /* padding: var(--pt7) var(--pt6); */
-}
-
 .consentButton {
   margin-top: var(--pt5);
 }
@@ -11,10 +7,6 @@
 }
 .modalTitle {
   margin-bottom: var(--pt3);
-}
-
-.contentContainer > p:not(:last-child) {
-  margin-bottom: var(--pt2);
 }
 
 .modalContainer {

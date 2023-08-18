@@ -1,6 +1,6 @@
 import Translate from "@/components/base/translate/Translate";
 import Layout from "../profileLayout";
-import styles from "./orderHistoryPage.module.css";
+import styles from "./OrderHistoryPage.module.css";
 import { useData } from "@/lib/api/api";
 import { orderHistory } from "@/lib/api/user.fragments";
 import useUser from "@/components/hooks/useUser";
@@ -25,13 +25,14 @@ const itemsPerPage = 4;
 export default function OrderHistoryPage() {
   const { isAuthenticated } = useUser();
   const breakpoint = useBreakpoint();
+  const modal = useModal();
+
   const isMobile = breakpoint === "xs" || breakpoint === "sm";
   const [orderDataPages, setOrderDataPages] = useState([]);
   const [bibliotekDkOrderIds, setBibliotekDkOrderIds] = useState();
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
   const [currentPageIds, setCurrentPageIds] = useState([]);
 
-  //todo use loading
   const { data: orderData } = useData(
     currentPageIds?.length > 0 && orderStatus({ orderIds: currentPageIds })
   );
@@ -76,12 +77,6 @@ export default function OrderHistoryPage() {
     }
   }, [orderData, fetchedOrders, currentPageIds, currentPageIndex]);
 
-  const modal = useModal();
-
-  const updatePageIndex = (newIndex) => {
-    setCurrentPageIndex(newIndex - 1);
-  };
-
   //there is no pagination in mobile view. We show all orders
   const currentPage = isMobile
     ? orderDataPages.flat(1)
@@ -114,7 +109,7 @@ export default function OrderHistoryPage() {
           {Translate({ context: "profile", label: "date" })}
         </Text>
         <Text className={styles.headerItem}>
-          {Translate({ context: "profile", label: "activity" })}{" "}
+          {Translate({ context: "profile", label: "activity" })}
         </Text>
         <Text className={styles.headerItem}>
           {Translate({ context: "profile", label: "orderNumber" })}
@@ -128,13 +123,12 @@ export default function OrderHistoryPage() {
         className={styles.pagination}
         numPages={totalPages}
         currentPage={currentPageIndex + 1}
-        onChange={updatePageIndex}
+        onChange={(newIndex) => setCurrentPageIndex(newIndex - 1)}
       />
     </Layout>
   );
 }
 /**
- * Tablerow to be used in LibrariesTable component.
  * @param {obj} props
  * @returns {component}
  */
@@ -169,7 +163,6 @@ function TableItem({ order, key, index }) {
           <Link
             href={getWorkUrl(
               title,
-              // [],
               [{ nameSort: author || "", display: author || "" }],
               "work-of:" + pid
             )}

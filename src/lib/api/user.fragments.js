@@ -178,11 +178,9 @@ export function orderPolicy({ pid }) {
 export function orderHistory() {
   return {
     apiUrl: ApiEnums.FBI_API,
-    // delay: 1000, // for debugging
     query: `query {
       user {
         bibliotekDkOrders {
-          
           orderId
         }
       }
