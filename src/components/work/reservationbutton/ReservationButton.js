@@ -121,13 +121,13 @@ export default ReservationButtonWrapper;
  * @returns {JSX.Element}
  */
 export const ReservationButton = ({
-  access,
+  access, //TODO same as allEnrichedAccesses?
   user,
   buttonType,
   size,
   pids,
   singleManifestation,
-  allEnrichedAccesses,
+  allEnrichedAccesses, //TODO same as access?
   workId,
 }) => {
   const modal = useModal();

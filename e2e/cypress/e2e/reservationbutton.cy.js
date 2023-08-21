@@ -3,7 +3,7 @@
  * Test functionality of reservation button - see also @overview.spec.js
  */
 describe("Reservation button", () => {
-  it(`user logged in material available`, () => {
+  it("user logged in material available", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-physical-book"
     );
@@ -14,7 +14,7 @@ describe("Reservation button", () => {
     });
   });
 
-  it(`physical material click opens modal with query params`, () => {
+  it("physical material click opens modal with query params", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-physical-book"
     );
@@ -26,7 +26,7 @@ describe("Reservation button", () => {
     cy.get("[data-cy=router-query]").contains("modal");
   });
 
-  it(`digital material`, () => {
+  it("digital material", () => {
     const urla =
       "/iframe.html?id=work-reservationbutton--reservation-button-e-book";
 
@@ -49,7 +49,7 @@ describe("Reservation button", () => {
     );
   });
 
-  it(`user logged in material unavailable`, () => {
+  it("user logged in material unavailable", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-disabled"
     );
@@ -79,7 +79,7 @@ describe("Reservation button", () => {
     );
   });
 
-  it(`user not logged in material available`, () => {
+  it("user not logged in material available", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-not-logged-in"
     );
@@ -94,11 +94,41 @@ describe("Reservation button", () => {
     });
   });
 
-  it(`user logged in loan is not possible for material`, () => {
+  it("user logged in loan is not possible for material", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-physical-book-loan-not-possible"
     );
     cy.get("[data-cy=button-order-overview-disabled]").should("be.disabled");
+  });
+
+  it("onclick should add order-modal to store, if user not logged ind", () => {
+    cy.visit(
+      "/iframe.html?id=work-reservationbutton--reservation-button-login-flow"
+    );
+    cy.get("[data-cy=button-order-overview-enabled]").should("exist").click();
+    //add order modal to the store
+    cy.window().then((win) => {
+      const addedItem = win.localStorage.getItem("modal-v2-store");
+      const modal = JSON.parse(addedItem);
+      const uid = modal[0].id;
+      expect(uid).to.be.equal("order");
+    });
+    //open login modal - we cannot check that it actually is the login modal that is opened
+    cy.get("[data-cy=router-query]").contains("modal");
+  });
+
+  it("onclick should open order-modal, if user logged ind", () => {
+    cy.visit(
+      "/iframe.html?id=work-reservationbutton--reservation-button-not-logged-in-flow"
+    );
+    cy.get("[data-cy=button-order-overview-enabled]").should("exist").click();
+    //dont add order modal to the store
+    cy.window().then((win) => {
+      const addedItem = win.localStorage.getItem("modal-v2-store");
+      expect(addedItem).to.be.equal(null);
+    });
+    //open some modal directly - we cannot check if it actually is the order modal that is opened
+    cy.get("[data-cy=router-query]").contains("modal");
   });
 
   // @TODO more testing - request_button:false eg.

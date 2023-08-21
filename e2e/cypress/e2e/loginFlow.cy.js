@@ -38,27 +38,8 @@ describe(`Different ways to open login modal with library that has borrowerCheck
     cy.contains("Valby Bibliotek").click();
   });
 
-  //TODO bestil should open login modal directly
-  // it("Plain login from book reservation", () => {
-  //  cy.fixture("articlepublicdata.json").then((fixture) => {
-  //   cy.intercept("POST", `${fbiApiPath}`, (req) => {
-  //     if (req?.body?.variables?.workId === "work-of:870971-tsart:39160846") {
-  //       req.reply(fixture);
-  //     }
-  //   });
-  // });
-  // cy.visit(
-  //   `${nextjsBaseUrl}/infomedia/en-artikel/work-of:870971-tsart:39160846/e842b5ee`
-  // );
-  // cy.consentAllowAll();
-  // cy.get("[data-cy=button-order-overview-enabled]")
-  //   .should("be.visible")
-  //   .click();
-  // });
-
-  //SUBSCRIPTION
-
-  //DDA
+  //TODO bestil should open login modal directly --> test in reservation button
+  // come back to order modal from adgangsplatform
 });
 
 describe(`Different ways to open login modal with a (FFU) library that does NOT have borrowerCheck`, () => {
