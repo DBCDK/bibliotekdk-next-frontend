@@ -122,26 +122,15 @@ export default ReservationButtonWrapper;
  * @returns {JSX.Element}
  */
 export const ReservationButton = ({
-  access,
+  access, //TODO same as allEnrichedAccesses?
   user,
   buttonType,
   size,
   pids,
   singleManifestation,
-  allEnrichedAccesses,
+  allEnrichedAccesses, //TODO same as access?
   workId,
 }) => {
-  console.log(
-    "BUTTON",
-    access,
-    user,
-    buttonType,
-    size,
-    pids,
-    singleManifestation,
-    allEnrichedAccesses,
-    workId
-  );
   const modal = useModal();
 
   const physicalCopy = checkPhysicalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
@@ -245,8 +234,6 @@ export const ReservationButton = ({
       };
     }
 
-    console.log("3");
-
     //DIGITAL_ARTICLE_SERVICE, INTER_LIBRARY_LOAN
     return {
       props: loginRequiredProps,
@@ -256,7 +243,6 @@ export const ReservationButton = ({
 
   const { props, text } = getProps();
 
-  console.log("fernder");
   return (
     <>
       <TextAboveButton access={access} user={user} />

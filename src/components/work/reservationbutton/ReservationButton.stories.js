@@ -58,50 +58,6 @@ function ReservationButtonStoryBuilder(storyname, resolvers = {}, query = {}) {
   };
 }
 
-const access = [
-  {
-    loanIsPossible: true,
-    materialTypesArray: ["bog"],
-    pid: "870970-basis:62724102",
-    titles: ["Hex"],
-    workTypes: ["LITERATURE"],
-    __typename: "InterLibraryLoan",
-  },
-];
-const user = {
-  authUser: {},
-  error: undefined,
-  guestLogout: () => console.log("BLA"),
-  isAuthenticated: false,
-  isGuestUser: false,
-  isLoading: false,
-  isLoggedIn: false,
-  loanerInfo: {
-    debt: [],
-    loans: [],
-    orders: [],
-    agency: {},
-    userParameters: {},
-  },
-  updateLoanerInfo: () => console.log("BLA"),
-};
-const buttonType = null;
-const size = null;
-const pids = null;
-const singleManifestation = null;
-const allEnrichedAccesses = null;
-const workId = "870970-basis:62724102";
-
-export function ReservationButtonLoginFlow() {
-  return (
-    <ReservationButtonComponentBuilder
-      type={"bog"}
-      workId={"work-of:870970-basis:62724102"}
-      selectedPids={["870970-basis:62724102"]}
-    />
-  );
-}
-
 export function ReservationButtonPhysicalBook() {
   return (
     <ReservationButtonComponentBuilder
@@ -267,14 +223,47 @@ ReservationButtonDisabled.story = {
 
 export function ReservationButtonNotLoggedIn() {
   const descriptionName = "Not logged in";
-  const user = { isAuthenticated: false };
+  const user = {
+    authUser: {},
+    isAuthenticated: false,
+    isGuestUser: false,
+    isLoading: false,
+    isLoggedIn: false,
+    loanerInfo: {
+      debt: [],
+      loans: [],
+      orders: [],
+      agency: {},
+      userParameters: {},
+    },
+    updateLoanerInfo: () => console.log("updateLoanerInfo"),
+    updateUserStatusInfo: () => console.log("updateUserStatusInfo"),
+  };
   const access = [
     {
-      pid: "some-pid-1",
+      pid: "870970-basis:62831731",
+      titles: ["Fiskehuset"],
+      workTypes: ["LITERATURE"],
       id: "infomediaUrl",
-      __typename: AccessEnum.INFOMEDIA_SERVICE,
+      __typename: "InterLibraryLoan",
+      loanIsPossible: true,
+      materialTypesArray: ["bog"],
     },
   ];
+
+  const allEnrichedAccesses = {
+    pid: "870970-basis:62831731",
+    titles: ["Fiskehuset"],
+    workTypes: ["LITERATURE"],
+    id: "infomediaUrl",
+    __typename: "InterLibraryLoan",
+    loanIsPossible: true,
+    materialTypesArray: ["bog"],
+  };
+  const buttonType = "primary";
+  const size = "large";
+  const pids = ["870970-basis:62831731"];
+  const workId = "870970-basis:62724102";
 
   return (
     <div>
@@ -283,10 +272,15 @@ export function ReservationButtonNotLoggedIn() {
         The ReservationButton based on the type: {descriptionName}
       </StoryDescription>
       <ReservationButton
-        user={user}
-        singleManifestation={true}
         access={access}
+        user={user}
+        pids={pids}
+        workId={workId}
+        singleManifestation={true}
         onHandleGoToLogin={() => alert("DU SKAL LOGGE IND")}
+        allEnrichedAccesses={allEnrichedAccesses}
+        buttonType={buttonType}
+        size={size}
       />
     </div>
   );
@@ -370,3 +364,116 @@ ReservationButtonSlowResponse.story = {
     },
   }),
 };
+
+const descriptionName = "Not logged in";
+const user = {
+  authUser: {},
+  isAuthenticated: false,
+  isGuestUser: false,
+  isLoading: false,
+  isLoggedIn: false,
+  loanerInfo: {
+    debt: [],
+    loans: [],
+    orders: [],
+    agency: {},
+    userParameters: {},
+  },
+  updateLoanerInfo: () => console.log("updateLoanerInfo"),
+  updateUserStatusInfo: () => console.log("updateUserStatusInfo"),
+};
+const access = [
+  {
+    pid: "870970-basis:62831731",
+    titles: ["Fiskehuset"],
+    workTypes: ["LITERATURE"],
+    id: "infomediaUrl",
+    __typename: "InterLibraryLoan",
+    loanIsPossible: true,
+    materialTypesArray: ["bog"],
+  },
+];
+
+const allEnrichedAccesses = {
+  pid: "870970-basis:62831731",
+  titles: ["Fiskehuset"],
+  workTypes: ["LITERATURE"],
+  id: "infomediaUrl",
+  __typename: "InterLibraryLoan",
+  loanIsPossible: true,
+  materialTypesArray: ["bog"],
+};
+const buttonType = "primary";
+const size = "large";
+const pids = ["870970-basis:62831731"];
+const workId = "870970-basis:62724102";
+
+export function ReservationButtonLoginFlow() {
+  return (
+    <div>
+      <StoryTitle>ReservationButton - {descriptionName}</StoryTitle>
+      <StoryDescription>
+        The ReservationButton based on the type: {descriptionName}
+      </StoryDescription>
+      <ReservationButton
+        access={access}
+        user={user}
+        pids={pids}
+        workId={workId}
+        singleManifestation={true}
+        onHandleGoToLogin={() => alert("DU SKAL LOGGE IND")}
+        allEnrichedAccesses={allEnrichedAccesses}
+        buttonType={buttonType}
+        size={size}
+      />
+    </div>
+  );
+}
+
+ReservationButtonLoginFlow.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {},
+    },
+    nextRouter: {
+      showInfo: true,
+      query: {},
+    },
+  },
+});
+
+export function ReservationButtonNotLoginFlow() {
+  user.isAuthenticated = true;
+  user.isLoggedIn = true;
+  return (
+    <div>
+      <StoryTitle>ReservationButton - {descriptionName}</StoryTitle>
+      <StoryDescription>
+        The ReservationButton based on the type: {descriptionName}
+      </StoryDescription>
+      <ReservationButton
+        access={access}
+        user={user}
+        pids={pids}
+        workId={workId}
+        singleManifestation={true}
+        onHandleGoToLogin={() => alert("DU SKAL LOGGE IND")}
+        allEnrichedAccesses={allEnrichedAccesses}
+        buttonType={buttonType}
+        size={size}
+      />
+    </div>
+  );
+}
+
+ReservationButtonNotLoginFlow.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {},
+    },
+    nextRouter: {
+      showInfo: true,
+      query: {},
+    },
+  },
+});
