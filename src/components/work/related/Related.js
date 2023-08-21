@@ -91,7 +91,7 @@ export default function Wrap({ workId }) {
 
   // filter on danish keywords && flatten subjects to array of strings
   const keywords = workData?.work?.subjects?.selectedSubjects
-    ?.filter((sub) => {
+    .filter((sub) => {
       return sub?.language?.isoCode === "dan";
     })
     ?.map((s) => s.display);

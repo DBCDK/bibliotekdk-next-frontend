@@ -50,7 +50,6 @@ function ReservationButtonWrapper({
   size = "large",
   className,
 }) {
-  console.log("WERE HERE");
   const user = useUser();
 
   const { workResponse, manifestations, manifestationsResponse } =
@@ -193,7 +192,6 @@ export const ReservationButton = ({
     skeleton: !access,
     dataCy: `button-order-overview-enabled`,
     onClick: () => {
-      console.log("clicking ", user);
       user?.isLoggedIn
         ? openOrderModal({
             modal: modal,
@@ -217,7 +215,6 @@ export const ReservationButton = ({
    */
   const getProps = () => {
     if (noSelectedManifestations) {
-      console.log("1");
       return {
         props: noSelectedManifestationsProps,
         text: noSelectedManifestationsTxt,
@@ -226,8 +223,6 @@ export const ReservationButton = ({
 
     //ACCESS_URL,INFOMEDIA,EREOL
     if (onlineMaterialWithoutLoginOrLoginAtUrl) {
-      console.log("2");
-
       return {
         props: accessibleOnlineAndNoLoginProps,
         text: accessibleOnlineAndNoLoginText,

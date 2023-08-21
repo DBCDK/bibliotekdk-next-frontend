@@ -223,47 +223,14 @@ ReservationButtonDisabled.story = {
 
 export function ReservationButtonNotLoggedIn() {
   const descriptionName = "Not logged in";
-  const user = {
-    authUser: {},
-    isAuthenticated: false,
-    isGuestUser: false,
-    isLoading: false,
-    isLoggedIn: false,
-    loanerInfo: {
-      debt: [],
-      loans: [],
-      orders: [],
-      agency: {},
-      userParameters: {},
-    },
-    updateLoanerInfo: () => console.log("updateLoanerInfo"),
-    updateUserStatusInfo: () => console.log("updateUserStatusInfo"),
-  };
+  const user = { isAuthenticated: false };
   const access = [
     {
-      pid: "870970-basis:62831731",
-      titles: ["Fiskehuset"],
-      workTypes: ["LITERATURE"],
+      pid: "some-pid-1",
       id: "infomediaUrl",
-      __typename: "InterLibraryLoan",
-      loanIsPossible: true,
-      materialTypesArray: ["bog"],
+      __typename: AccessEnum.INFOMEDIA_SERVICE,
     },
   ];
-
-  const allEnrichedAccesses = {
-    pid: "870970-basis:62831731",
-    titles: ["Fiskehuset"],
-    workTypes: ["LITERATURE"],
-    id: "infomediaUrl",
-    __typename: "InterLibraryLoan",
-    loanIsPossible: true,
-    materialTypesArray: ["bog"],
-  };
-  const buttonType = "primary";
-  const size = "large";
-  const pids = ["870970-basis:62831731"];
-  const workId = "870970-basis:62724102";
 
   return (
     <div>
@@ -272,15 +239,10 @@ export function ReservationButtonNotLoggedIn() {
         The ReservationButton based on the type: {descriptionName}
       </StoryDescription>
       <ReservationButton
-        access={access}
         user={user}
-        pids={pids}
-        workId={workId}
         singleManifestation={true}
+        access={access}
         onHandleGoToLogin={() => alert("DU SKAL LOGGE IND")}
-        allEnrichedAccesses={allEnrichedAccesses}
-        buttonType={buttonType}
-        size={size}
       />
     </div>
   );
@@ -365,7 +327,7 @@ ReservationButtonSlowResponse.story = {
   }),
 };
 
-const descriptionName = "Not logged in";
+const descriptionName = "Not logged in flow";
 const user = {
   authUser: {},
   isAuthenticated: false,
@@ -442,7 +404,7 @@ ReservationButtonLoginFlow.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   },
 });
 
-export function ReservationButtonNotLoginFlow() {
+export function ReservationButtonNotLoggedInFlow() {
   user.isAuthenticated = true;
   user.isLoggedIn = true;
   return (
@@ -466,7 +428,7 @@ export function ReservationButtonNotLoginFlow() {
   );
 }
 
-ReservationButtonNotLoginFlow.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+ReservationButtonNotLoggedInFlow.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {},

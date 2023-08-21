@@ -119,7 +119,7 @@ describe("Reservation button", () => {
 
   it("onclick should open order-modal, if user logged ind", () => {
     cy.visit(
-      "/iframe.html?id=work-reservationbutton--reservation-button-not-login-flow"
+      "/iframe.html?id=work-reservationbutton--reservation-button-not-logged-in-flow"
     );
     cy.get("[data-cy=button-order-overview-enabled]").should("exist").click();
     //dont add order modal to the store
