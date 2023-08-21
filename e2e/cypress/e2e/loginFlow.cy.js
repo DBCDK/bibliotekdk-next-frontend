@@ -42,8 +42,6 @@ describe(`Different ways to open login modal with library that has borrowerCheck
   // come back to order modal from adgangsplatform
 });
 
-// https://fbi-api-staging.k8s.dbc.dk/SimpleSearch/graphql --> fails
-// https://fbi-api-staging.k8s.dbc.dk/SimpleSearch/graphql --> works
 describe(`Different ways to open login modal with a (FFU) library that does NOT have borrowerCheck`, () => {
   it("Plain login from login button in header not supported & back button leads back to pick up branch search", () => {
     cy.visit(nextjsBaseUrl);
