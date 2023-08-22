@@ -168,7 +168,6 @@ export const ReservationButton = ({
     (isOnlineTranslated || workTypeTranslated);
 
   async function handleOpenLoginAndOrderModal() {
-    console.log("INSIDE handleOpenLoginAndOrderModal");
     //add order modal to store, to be able to access when coming back from adgangsplatform/mitid?
     const orderModalProps = {
       pids: pids,
