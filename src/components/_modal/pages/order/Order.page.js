@@ -51,8 +51,6 @@ function Order({
   const [failedSubmission, setFailedSubmission] = useState(false);
   const { deleteSessionData } = useUser();
   const storeLoanerInfo = context?.storeLoanerInfo;
-  console.log("ORDERMODAL ", storeLoanerInfo);
-
   const [mail, setMail] = useState(null);
   // Update email from user account
   useEffect(() => {
@@ -135,7 +133,6 @@ function Order({
   const contextWithOrderPids = { ...context, orderPids };
 
   function onSubmitOrder() {
-    console.log("ONSUBMIT ORDER store session ", storeLoanerInfo);
     if (validated.status) {
       modal.push("receipt", {
         pid,
@@ -157,13 +154,11 @@ function Order({
         onSubmit && onSubmit(orderPids, pickupBranch, context?.periodicaForm);
       }
       if (!storeLoanerInfo) {
-        console.log("ONSUBMITORDER");
         deleteSessionData(); //TODO delete in more places
       }
     } else {
       setFailedSubmission(true);
       if (!storeLoanerInfo) {
-        console.log("FAILED RESERVATION BUT updateLoanerInfo");
         deleteSessionData();
       }
     }
@@ -298,10 +293,6 @@ export default function Wrap(props) {
     context.orderType && context.orderType === "singleManifestation";
 
   const { loanerInfo, updateLoanerInfo } = userInfo;
-
-  useEffect(() => {
-    console.log("ORDER PAGE", loanerInfo);
-  }, [loanerInfo.pickupBranch, loanerInfo.userParameters]);
 
   const {
     data: manifestationData,

@@ -24,7 +24,6 @@ export function openOrderModal({
   singleManifestation,
   storeLoanerInfo = false,
 }) {
-  console.log("openordermodal ", storeLoanerInfo);
   modal.push("order", {
     title: Translate({ context: "modal", label: "title-order" }),
     pids: pids,

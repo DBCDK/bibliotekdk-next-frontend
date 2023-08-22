@@ -87,7 +87,6 @@ function useUserImpl() {
         }
       });
     }
-    // console.log("USEUSER sessionCopy", sessionCopy);
     return {
       ...data?.session,
       userParameters: { ...loggedInUser, ...sessionCopy?.userParameters },
@@ -138,7 +137,7 @@ function useUserImpl() {
     error: userDataError,
     isAuthenticated,
     loanerInfo,
-    isGuestUser,
+    isGuestUser: isGuestUser,
     isLoggedIn: isAuthenticated || isGuestUser,
     updateLoanerInfo: async (obj) => {
       const newSession = (newSession = merge({}, sessionData, obj));

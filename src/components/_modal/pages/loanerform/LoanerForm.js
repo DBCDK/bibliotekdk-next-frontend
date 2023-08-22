@@ -324,16 +324,11 @@ export default function Wrap(props) {
 
   const { loanerInfo, updateLoanerInfo } = useUser();
 
-  useEffect(() => {
-    console.log("CHANGING PARAMS ", loanerInfo);
-  }, [loanerInfo.pickupBranch, loanerInfo.userParameters]);
-
   async function onSubmit(info) {
     await updateLoanerInfo({
       userParameters: info,
       pickupBranch: branchId,
     });
-    console.log("LOANER FORM ON SUBMIT ", storeLoanerInfo);
     openOrderModal({
       modal,
       pids,
