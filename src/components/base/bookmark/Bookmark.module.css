@@ -1,6 +1,5 @@
 .bookmark {
-  background-color: transparent;
-  border-radius: 50%;
+  padding-left: var(--pt4);
 }
 
 .bookmark i {
@@ -26,7 +25,6 @@
   outline: none;
 
   box-sizing: content-box;
-  border: 2px solid var(--blue);
 }
 
 .bookmark:hover i {
@@ -53,7 +51,6 @@
 */
 .bookmark:focus {
   box-sizing: content-box;
-  border: 2px solid var(--blue);
 }
 
 .bookmark:focus i {
