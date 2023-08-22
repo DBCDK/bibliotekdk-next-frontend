@@ -32,11 +32,12 @@ export function UserParamsForm({
   onSubmit,
   originUrl,
   skeleton,
+  storeLoanerInfo,
+  setStoreLoanerInfo,
 }) {
   const [errorCode, setErrorCode] = useState();
   const [state, setState] = useState(initial || {});
   const [validMail, setValidMail] = useState(true);
-  const [checked, setChecked] = useState(false);
 
   const requiredParameters = branch?.userParameters?.filter(
     ({ parameterRequired }) => parameterRequired
@@ -65,7 +66,7 @@ export function UserParamsForm({
         const error = validateState();
         setErrorCode(error);
         if (!error) {
-          onSubmit(state, checked);
+          onSubmit(state, storeLoanerInfo);
         }
       }}
     >
@@ -160,7 +161,8 @@ export function UserParamsForm({
       </div>
       <span className={styles.checkBoxSpan}>
         <Checkbox
-          onChange={(val) => setChecked(val)} //TODO set userparams in browser if checked
+          checked={storeLoanerInfo}
+          onChange={(checked) => setStoreLoanerInfo(checked)}
           id="loanerform-checkbox"
           aria-labelledby="loanerform-checkbox"
         />
@@ -202,8 +204,11 @@ export function LoanerForm({
   initial,
   // modal props
   context,
+  storeLoanerInfo,
+  setStoreLoanerInfo,
 }) {
   let { originUrl = null } = context || {};
+  console.log("INITIAL USERPARAMS ", initial);
 
   if (skeleton) {
     return (
@@ -245,6 +250,8 @@ export function LoanerForm({
         onSubmit={onSubmit}
         originUrl={originUrl}
         skeleton={skeleton}
+        storeLoanerInfo={storeLoanerInfo}
+        setStoreLoanerInfo={setStoreLoanerInfo}
       />
     </div>
   );
@@ -312,10 +319,15 @@ export default function Wrap(props) {
   const { data, isLoading: branchIsLoading } = useData(
     branchId && branchesFragments.branchUserParameters({ branchId })
   );
+  const [storeLoanerInfo, setStoreLoanerInfo] = useState(false);
 
   const branch = data?.branches?.result?.[0];
 
   const { loanerInfo, updateLoanerInfo } = useUser();
+
+  useEffect(() => {
+    console.log("CHANGING PARAMS ", loanerInfo);
+  }, [loanerInfo.pickupBranch, loanerInfo.userParameters]);
 
   async function onSubmit(info) {
     await updateLoanerInfo({
@@ -328,6 +340,7 @@ export default function Wrap(props) {
       selectedAccesses,
       workId,
       singleManifestation,
+      storeLoanerInfo: storeLoanerInfo,
     });
   }
 
@@ -352,6 +365,8 @@ export default function Wrap(props) {
         onSubmit={onSubmit}
         skeleton={branchIsLoading}
         onClose={() => props.modal.prev()}
+        storeLoanerInfo={storeLoanerInfo}
+        setStoreLoanerInfo={setStoreLoanerInfo}
       />
     </>
   );

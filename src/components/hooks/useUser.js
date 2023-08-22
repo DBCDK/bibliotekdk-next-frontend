@@ -87,7 +87,7 @@ function useUserImpl() {
         }
       });
     }
-    console.log("sessionCopy", sessionCopy);
+    // console.log("USEUSER sessionCopy", sessionCopy);
     return {
       ...data?.session,
       userParameters: { ...loggedInUser, ...sessionCopy?.userParameters },
@@ -138,9 +138,17 @@ function useUserImpl() {
     isAuthenticated,
     loanerInfo,
     isGuestUser,
-    isLoggedIn: isAuthenticated || isGuestUser,
+    isLoggedIn: isAuthenticated,
     updateLoanerInfo: async (obj) => {
-      const newSession = merge({}, sessionData, obj);
+      let newSession = { userParameters: {}, pickupBranch: {} };
+      console.log("OJBkeys ", Object.keys(obj).length);
+      if (Object.keys(obj).length > 0)
+        newSession = newSession = merge({}, sessionData, obj);
+      console.log("OLD SESSION ", sessionData);
+
+      //if (Object.keys(obj).length > 0) newSession = merge({}, sessionData, obj);
+      console.log("newSession ", newSession);
+
       // Update global loaner info object
       await sessionMutate.post(sessionFragments.submitSession(newSession));
       // Broadcast update
@@ -161,7 +169,7 @@ function useUserImpl() {
       }
       if (updatedData) await userMutate(updatedData);
     },
-    guestLogout: async () => {
+    deleteSessionData: async () => {
       // Delete global loaner info object
       await sessionMutate.post(sessionFragments.deleteSession());
       // Broadcast update

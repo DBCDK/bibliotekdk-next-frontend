@@ -18,6 +18,7 @@ import useOrderPageInformation from "@/components/hooks/useOrderPageInformations
 import { onMailChange } from "@/components/_modal/pages/order/utils/order.utils";
 import { useRelevantAccessesForOrderPage } from "@/components/work/utils";
 import { validateEmail } from "@/utils/validateEmail";
+import useUser from "@/components/hooks/useUser";
 
 /**
  *  Order component function
@@ -39,6 +40,7 @@ function Order({
   context,
   modal,
   singleManifestation = false,
+  storeLoanerInfo = false,
 }) {
   const {
     pickupBranchUser: user,
@@ -48,6 +50,7 @@ function Order({
 
   // Sets if user has unsuccessfully tried to submit the order
   const [failedSubmission, setFailedSubmission] = useState(false);
+  const { deleteSessionData } = useUser();
 
   const [mail, setMail] = useState(null);
   // Update email from user account
@@ -130,6 +133,41 @@ function Order({
 
   const contextWithOrderPids = { ...context, orderPids };
 
+  function onSubmitOrder() {
+    console.log("onSubmitOrder storeLoanerInfo", storeLoanerInfo);
+    if (validated.status) {
+      modal.push("receipt", {
+        pid,
+        order: {
+          data: orderMutation.data,
+          error: orderMutation.error,
+          isLoading: orderMutation.isLoading,
+        },
+        articleOrder: {
+          data: articleOrderMutation?.data,
+          error: articleOrderMutation?.error,
+          isLoading: articleOrderMutation?.isLoading,
+        },
+        pickupBranch,
+      });
+      if (availableAsDigitalCopy) {
+        onArticleSubmit(pid, context?.periodicaForm);
+      } else {
+        onSubmit && onSubmit(orderPids, pickupBranch, context?.periodicaForm);
+      }
+      if (!storeLoanerInfo) {
+        console.log("ONSUBMITORDER");
+        deleteSessionData(); //TODO delete in more places
+      }
+    } else {
+      setFailedSubmission(true);
+      if (!storeLoanerInfo) {
+        console.log("FAILED RESERVATION BUT updateLoanerInfo");
+        deleteSessionData();
+      }
+    }
+  }
+
   return (
     <div
       className={`${styles.order} ${isLoadingBranches ? styles.skeleton : ""}`}
@@ -158,32 +196,7 @@ function Order({
         context={context}
         validated={validated}
         failedSubmission={failedSubmission}
-        onClick={() => {
-          if (validated.status) {
-            modal.push("receipt", {
-              pid,
-              order: {
-                data: orderMutation.data,
-                error: orderMutation.error,
-                isLoading: orderMutation.isLoading,
-              },
-              articleOrder: {
-                data: articleOrderMutation?.data,
-                error: articleOrderMutation?.error,
-                isLoading: articleOrderMutation?.isLoading,
-              },
-              pickupBranch,
-            });
-            if (availableAsDigitalCopy) {
-              onArticleSubmit(pid, context?.periodicaForm);
-            } else {
-              onSubmit &&
-                onSubmit(orderPids, pickupBranch, context?.periodicaForm);
-            }
-          } else {
-            setFailedSubmission(true);
-          }
-        }}
+        onClick={onSubmitOrder}
       />
     </div>
   );
@@ -284,6 +297,10 @@ export default function Wrap(props) {
     context.orderType && context.orderType === "singleManifestation";
 
   const { loanerInfo, updateLoanerInfo } = userInfo;
+
+  useEffect(() => {
+    console.log("ORDER PAGE", loanerInfo);
+  }, [loanerInfo.pickupBranch, loanerInfo.userParameters]);
 
   const {
     data: manifestationData,

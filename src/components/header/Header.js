@@ -105,11 +105,6 @@ export function Header({
       signOut();
       return;
     }
-    //TODO remove guestlogout
-    if (user.isGuestUser) {
-      await user.guestLogout();
-      return;
-    }
     openLoginModal({ modal });
   }
 
@@ -126,7 +121,7 @@ export function Header({
       },
     },
     {
-      label: user.isAuthenticated || user.isGuestUser ? "logout" : "login", //TODO remove guestuser from login
+      label: user.isAuthenticated ? "logout" : "login",
       icon: LoginIcon,
       onClick: handleOnClick,
     },

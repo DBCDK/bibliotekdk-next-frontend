@@ -126,9 +126,6 @@ const LogoutButton = () => {
         onClick={() => {
           if (user.isAuthenticated) {
             signOut(null, "/");
-          } else if (user.isGuestUser) {
-            user.guestLogout();
-            Router.push("/");
           }
         }}
         className={styles.logoutBtn}

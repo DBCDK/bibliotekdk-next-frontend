@@ -174,7 +174,10 @@ export const ReservationButton = ({
       selectedAccesses: allEnrichedAccesses,
       workId: workId,
       singleManifestation: singleManifestation,
+      storeLoanerInfo: false, //TODO, should we give parameter here? glabue ja
     };
+    console.log("HANDLE open login");
+
     const uid = await modal.saveToStore("order", { ...orderModalProps });
     //open actual loginmodal
     openLoginModal({
@@ -191,6 +194,7 @@ export const ReservationButton = ({
     skeleton: !access,
     dataCy: `button-order-overview-enabled`,
     onClick: () => {
+      console.log("RES BUTTON is user logged in  ", user?.isLoggedIn);
       user?.isLoggedIn
         ? openOrderModal({
             modal: modal,
@@ -198,6 +202,7 @@ export const ReservationButton = ({
             selectedAccesses: allEnrichedAccesses,
             workId: workId,
             singleManifestation: singleManifestation,
+            storeLoanerInfo: true, // TODO user is already logged ind ?
           })
         : handleOpenLoginAndOrderModal();
     },

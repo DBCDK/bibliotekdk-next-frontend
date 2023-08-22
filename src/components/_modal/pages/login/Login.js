@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import debounce from "lodash/debounce";
 import find from "lodash/find";
 
@@ -130,13 +130,18 @@ export function LoginPickup({
   const showResultsList = hasQuery && allBranches?.length > 0;
   const showMitIDLogin = !hasQuery || !allBranches || allBranches.length < 1;
   const user = useUser();
+  useEffect(() => {
+    console.log("LOGIN USER ", user);
+  }, [user?.loanerInfo?.pickupBranch, user?.loanerInfo?.userParameters]);
 
   const onSelect = (branch) => {
     // edge case: - user is already logged in .. and tries to login in again with same library ..
     // @TODO .. we need a better way (than alert) to pass a message to the user - maybe we should use bootstraps toast ??
     const sameOrigin = branch?.agencyId === user?.loanerInfo?.pickupBranch;
     if (sameOrigin) {
-      alert("vælg et andet bibliotek");
+      alert(
+        "Denne biblioteksoplysninger er allerede gemt som afhentningssted i sessionen. Luk browser vinduet og prøv igen."
+      );
       modal.prev();
       return;
     }
