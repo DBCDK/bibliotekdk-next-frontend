@@ -109,9 +109,9 @@
         "da": "Det er dit udlånsbibliotek, der sætter reglerne for om materialet kan fornyes. Tjek gerne deres retningslinjer for mere information.",
         "en": "Your library defines the rules for renewing loans. Please check their guidelines for more information."
       },
-      "save-info-in-browser": {
-        "da": "Gemmer information i din browser",
-        "en": "Saving information in your browser"
+      "close-window": {
+        "da": "Informationerne er gemt indtil du lukker browseren. Sidder du ved en offentlig computer, anbefaler vi stærkt, at du lukker din browser efter brug for at beskytte dine personlige oplysninger.",
+        "en": "The information is saved until you close your browser. If you are using a public computer, we strongly recommend that you close your browser after use to protect your personal information."
       }
     },
     "general": {
@@ -2194,8 +2194,8 @@
         "en": "Go to order"
       },
       "save-info-in-browser": {
-        "da": "Gem informationer i browseren (til næste bestilling)",
-        "en": "Save information in browser (for next order)"
+        "da": "Gem informationer til næste bestilling",
+        "en": "Save information for next order"
       }
     },
     "login": {
