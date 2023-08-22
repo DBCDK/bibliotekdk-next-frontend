@@ -40,7 +40,6 @@ function Order({
   context,
   modal,
   singleManifestation = false,
-  storeLoanerInfo = false,
 }) {
   const {
     pickupBranchUser: user,
@@ -51,6 +50,8 @@ function Order({
   // Sets if user has unsuccessfully tried to submit the order
   const [failedSubmission, setFailedSubmission] = useState(false);
   const { deleteSessionData } = useUser();
+  const storeLoanerInfo = context?.storeLoanerInfo;
+  console.log("ORDERMODAL ", storeLoanerInfo);
 
   const [mail, setMail] = useState(null);
   // Update email from user account
@@ -134,7 +135,7 @@ function Order({
   const contextWithOrderPids = { ...context, orderPids };
 
   function onSubmitOrder() {
-    console.log("onSubmitOrder storeLoanerInfo", storeLoanerInfo);
+    console.log("ONSUBMIT ORDER store session ", storeLoanerInfo);
     if (validated.status) {
       modal.push("receipt", {
         pid,

@@ -128,6 +128,7 @@ function useUserImpl() {
     isValidating,
   ]);
 
+  //TODO give diffferent name
   const isGuestUser =
     !isAuthenticated && Object.keys(loanerInfo?.userParameters).length > 0;
 
@@ -138,17 +139,9 @@ function useUserImpl() {
     isAuthenticated,
     loanerInfo,
     isGuestUser,
-    isLoggedIn: isAuthenticated,
+    isLoggedIn: isAuthenticated || isGuestUser,
     updateLoanerInfo: async (obj) => {
-      let newSession = { userParameters: {}, pickupBranch: {} };
-      console.log("OJBkeys ", Object.keys(obj).length);
-      if (Object.keys(obj).length > 0)
-        newSession = newSession = merge({}, sessionData, obj);
-      console.log("OLD SESSION ", sessionData);
-
-      //if (Object.keys(obj).length > 0) newSession = merge({}, sessionData, obj);
-      console.log("newSession ", newSession);
-
+      const newSession = (newSession = merge({}, sessionData, obj));
       // Update global loaner info object
       await sessionMutate.post(sessionFragments.submitSession(newSession));
       // Broadcast update

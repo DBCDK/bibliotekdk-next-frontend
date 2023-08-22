@@ -208,7 +208,6 @@ export function LoanerForm({
   setStoreLoanerInfo,
 }) {
   let { originUrl = null } = context || {};
-  console.log("INITIAL USERPARAMS ", initial);
 
   if (skeleton) {
     return (
@@ -334,6 +333,7 @@ export default function Wrap(props) {
       userParameters: info,
       pickupBranch: branchId,
     });
+    console.log("LOANER FORM ON SUBMIT ", storeLoanerInfo);
     openOrderModal({
       modal,
       pids,
