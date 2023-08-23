@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import debounce from "lodash/debounce";
 import find from "lodash/find";
 
@@ -11,7 +11,6 @@ import Search from "@/components/base/forms/search";
 import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
-import useUser from "@/components/hooks/useUser";
 import Top from "@/components/_modal/pages/base/top";
 import { LOGIN_MODE } from "@/components/_modal/pages/login/utils";
 
@@ -129,7 +128,6 @@ export function LoginPickup({
 
   const showResultsList = hasQuery && allBranches?.length > 0;
   const showMitIDLogin = !hasQuery || !allBranches || allBranches.length < 1;
-  const user = useUser();
 
   const onSelect = (branch) => {
     //if we have callbackUID, we want to redirect to order modal after login and therefor, we append it to url

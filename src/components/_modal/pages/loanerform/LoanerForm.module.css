@@ -45,10 +45,6 @@
   color: var(--error);
 }
 
-.guestlogin {
-  color: var(--blue);
-}
-
 @media (min-width: 576px) {
   .loanerform {
     padding: var(--pt2) var(--pt6) var(--pt4) var(--pt6);
