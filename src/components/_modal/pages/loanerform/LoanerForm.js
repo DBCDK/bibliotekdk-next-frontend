@@ -164,10 +164,11 @@ export function UserParamsForm({
           checked={storeLoanerInfo}
           onChange={(checked) => setStoreLoanerInfo(checked)}
           id="loanerform-checkbox"
-          aria-labelledby="loanerform-checkbox"
+          ariaLabelledBy="loanerform-checkbox-label"
         />
         <Text
-          id="loanerform-checkbox"
+          tag="label"
+          id="loanerform-checkbox-label"
           lines={1}
           skeleton={skeleton}
           type="text3"

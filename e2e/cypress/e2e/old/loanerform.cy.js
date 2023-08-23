@@ -5,7 +5,7 @@
 describe("LoanerForm", () => {
   it("All elements are shown", () => {
     //check if form contains test "balbla"
-    cy.visit("/iframe.html?id=modal-loanerform--show-loaner-form");
+    cy.visit("/iframe.html?id=modal-loanerform--show-loaner-form-all-fields");
 
     cy.contains("h3", "Bestil til DBCTestBibliotek").should("exist");
 
@@ -28,7 +28,7 @@ describe("LoanerForm", () => {
   });
 
   it("Validation works", () => {
-    cy.visit("/iframe.html?id=modal-loanerform--show-loaner-form-2");
+    cy.visit("/iframe.html?id=modal-loanerform--show-loaner-form-short");
 
     //error if not all fields have been filled out
     cy.get("[data-cy=input-userMail]").should("be.visible").type("Bernd");

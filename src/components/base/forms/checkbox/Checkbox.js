@@ -23,6 +23,7 @@ export function Checkbox({
   disabled = false,
   onChange,
   dataCy = "checkbox",
+  ariaLabelledBy,
   ariaLabel = "Some explaining label",
   readOnly = false,
   required,
@@ -48,6 +49,7 @@ export function Checkbox({
     >
       <input
         id={id}
+        aria-labelledby={ariaLabelledBy}
         className={styles.input}
         checked={status}
         type="checkbox"
