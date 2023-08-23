@@ -5,6 +5,7 @@ import Translate from "@/components/base/translate";
 import styles from "./OpenAdgangsplatform.module.css";
 import Button from "@/components/base/button";
 import { signIn } from "next-auth/react";
+import Icon from "@/components/base/icon";
 
 export const getCallbackUrl = (pickupBranchId) => {
   let callback = window.location.href;
@@ -58,9 +59,15 @@ export default function OpenAdgangsplatform({ context }) {
           tabIndex="0"
         >
           {Translate({
-            context: "header",
-            label: "login",
+            context: "login",
+            label: "go-to-library-login",
           })}
+          <Icon
+            src="adgangsplatform.svg"
+            alt="bibliotekslogin"
+            size={{ h: "2", w: "auto" }}
+            className={styles.icon}
+          />
         </Button>
       </div>
     </div>

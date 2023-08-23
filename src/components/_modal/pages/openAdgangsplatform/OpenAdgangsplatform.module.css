@@ -10,6 +10,10 @@
 .login .loginbutton {
   margin-top: var(--pt5);
 }
+
+.login .icon {
+  padding-left: var(--pt1);
+}
 .login p {
   margin-top: var(--pt3);
 }
