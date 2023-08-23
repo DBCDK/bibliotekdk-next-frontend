@@ -24,7 +24,7 @@ export function Checkbox({
   onChange,
   dataCy = "checkbox",
   ariaLabelledBy,
-  ariaLabel = "Some explaining label",
+  ariaLabel = "",
   readOnly = false,
   required,
 }) {
