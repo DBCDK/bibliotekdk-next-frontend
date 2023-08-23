@@ -202,7 +202,7 @@ export const ReservationButton = ({
             selectedAccesses: allEnrichedAccesses,
             workId: workId,
             singleManifestation: singleManifestation,
-            storeLoanerInfo: true, // user is already logged ind, we want to keep that
+            storeLoanerInfo: true, // user is already logged in, we want to keep that
           })
         : handleOpenLoginAndOrderModal();
     },

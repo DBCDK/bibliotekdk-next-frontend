@@ -154,7 +154,7 @@ function Order({
         onSubmit && onSubmit(orderPids, pickupBranch, context?.periodicaForm);
       }
       if (!storeLoanerInfo) {
-        deleteSessionData(); //TODO delete in more places
+        deleteSessionData();
       }
     } else {
       setFailedSubmission(true);
