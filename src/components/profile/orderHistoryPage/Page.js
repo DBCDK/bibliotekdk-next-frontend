@@ -33,7 +33,7 @@ export default function OrderHistoryPage() {
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
   const [currentPageIds, setCurrentPageIds] = useState([]);
 
-  const { data: orderData } = useData(
+  const { data: orderData, isLoading: orderDataIsLoading } = useData(
     currentPageIds?.length > 0 && orderStatus({ orderIds: currentPageIds })
   );
   const { data: userData, isLoading } = useData(
@@ -48,11 +48,8 @@ export default function OrderHistoryPage() {
       const bibDkorderIds = userData.user?.bibliotekDkOrders?.map(
         (order) => order.orderId
       );
-      console.log(JSON.stringify(bibDkorderIds));
       setBibliotekDkOrderIds(bibDkorderIds);
     }
-    //todo remove
-    //  setBibliotekDkOrderIds(mockData);
   }, [userData]);
 
   useEffect(() => {
@@ -67,7 +64,7 @@ export default function OrderHistoryPage() {
       toPages * itemsPerPage
     );
     setCurrentPageIds(currentPageOrderIds);
-  }, [currentPageIndex, bibliotekDkOrderIds]);
+  }, [currentPageIndex, bibliotekDkOrderIds, orderDataIsLoading]);
 
   useEffect(() => {
     if (fetchedOrders && !isLoading) {
