@@ -57,6 +57,7 @@
 .basket {
   padding-top: var(--pt3);
   display: flex;
+  align-items: center;
 }
 
 .info {

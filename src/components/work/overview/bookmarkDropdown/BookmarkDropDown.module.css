@@ -8,6 +8,22 @@
   }
 }
 
+.bookmark {
+  padding-left: var(--pt4);
+  position: relative;
+  top: var(--pt05);
+}
+
+.bookmark i svg path {
+  fill: var(--white) !important;
+  stroke: var(--blue) !important;
+}
+
+.bookmark.active i svg path {
+  fill: var(--blue) !important;
+  stroke: var(--white) !important;
+}
+
 .dropdownitem {
   display: block;
   border-bottom: 1px solid var(--mine-shaft);
@@ -16,6 +32,7 @@
   color: var(--mine-shaft);
   text-align: inherit;
   white-space: nowrap;
+  cursor: pointer;
 }
 
 .dropdownitem a {
