@@ -2298,6 +2298,10 @@
       "not-supported-reason": {
         "da": "Nogle få forsknings- og uddannelsesbibliotekers systemer er ikke integereret med Bibliotek.dk, og vi vil derfor ikke kunne garantere en tværgående brugeroplevelse.",
         "en": "A few research and educational libraries are not integrated with Bibliotek.dk, and we will therefore not be able to guarantee a cross-cutting user experience."
+      },
+      "go-to-library-login": {
+        "da": "Gå til bibliotekslogin",
+        "en": "Go to librarylogin"
       }
     },
     "form": {
