@@ -152,7 +152,7 @@ function TableItem({ order, key, index }) {
         </Text>
         {isMobile && (
           <Text className={styles.mobileDate} type="text3">
-            {index + "  - " + date}
+            {date}
           </Text>
         )}
         <Text type="text2" className={styles.orderWorkInfo}>
