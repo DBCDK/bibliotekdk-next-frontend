@@ -8,7 +8,7 @@ describe(`Different ways to open login modal with library that has borrowerCheck
     cy.get("[data-cy=header-link-login]").should("be.visible").click();
     cy.get("[data-cy=pickup-search-input]").should("be.visible").type("Val");
     cy.contains("Valby Bibliotek").click();
-    cy.get("[data-cy=button-log-ind]").should("be.visible");
+    cy.get("[data-cy=go-to-library-login]").should("be.visible");
   });
 
   it("Plain login from login button on profile page", () => {

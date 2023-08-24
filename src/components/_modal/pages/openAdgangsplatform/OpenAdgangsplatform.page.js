@@ -53,7 +53,11 @@ export default function OpenAdgangsplatform({ context }) {
           })}
         </Text>
         <Button
+          dataCy="go-to-library-login"
           onClick={onLogin}
+          onBlur={(e) => {
+            if (e.key === "Enter") onLogin();
+          }}
           className={styles.loginbutton}
           disabled={!!submitting}
           tabIndex="0"

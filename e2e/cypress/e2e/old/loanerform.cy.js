@@ -3,7 +3,7 @@
  * Test functionality of loanerform
  */
 describe("LoanerForm", () => {
-  it.skip("All elements are shown", () => {
+  it("All elements are shown", () => {
     //check if form contains test "balbla"
     cy.visit("/iframe.html?id=modal-loanerform--show-loaner-form-all-fields");
 
@@ -27,7 +27,7 @@ describe("LoanerForm", () => {
     );
   });
 
-  it.skip("Validation works", () => {
+  it("Validation works", () => {
     cy.visit("/iframe.html?id=modal-loanerform--show-loaner-form-short");
 
     //error if not all fields have been filled out
