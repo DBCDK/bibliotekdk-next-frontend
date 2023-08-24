@@ -1,4 +1,5 @@
 import { LoanerForm } from "./LoanerForm";
+import { useState } from "react";
 
 const exportedObject = {
   title: "modal/LoanerForm",
@@ -10,10 +11,13 @@ export default exportedObject;
  * Returns Loaner Form
  *
  */
-export function ShowLoanerForm() {
+export function ShowLoanerFormAllFields() {
+  const [storeLoanerInfo, setStoreLoanerInfo] = useState(false);
   return (
     <div style={{ maxWidth: 450 }}>
       <LoanerForm
+        storeLoanerInfo={storeLoanerInfo}
+        setStoreLoanerInfo={setStoreLoanerInfo}
         branch={{
           borrowerCheck: false,
           name: "DBCTestBibliotek",
@@ -81,10 +85,14 @@ export function ShowLoanerForm() {
 /**
  * Returns Loaner Form
  */
-export function ShowLoanerForm2() {
+export function ShowLoanerFormShort() {
+  const [storeLoanerInfo, setStoreLoanerInfo] = useState(false);
+
   return (
     <div style={{ maxWidth: 450 }}>
       <LoanerForm
+        storeLoanerInfo={storeLoanerInfo}
+        setStoreLoanerInfo={setStoreLoanerInfo}
         branch={{
           borrowerCheck: true,
           name: "DBCTestBibliotek",

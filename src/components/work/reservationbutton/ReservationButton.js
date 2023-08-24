@@ -175,7 +175,11 @@ export const ReservationButton = ({
       workId: workId,
       singleManifestation: singleManifestation,
     };
-    const uid = await modal.saveToStore("order", { ...orderModalProps });
+
+    const uid = await modal.saveToStore("order", {
+      ...orderModalProps,
+      storeLoanerInfo: true,
+    });
     //open actual loginmodal
     openLoginModal({
       modal,
@@ -198,6 +202,7 @@ export const ReservationButton = ({
             selectedAccesses: allEnrichedAccesses,
             workId: workId,
             singleManifestation: singleManifestation,
+            storeLoanerInfo: true, // user is already logged in, we want to keep that
           })
         : handleOpenLoginAndOrderModal();
     },

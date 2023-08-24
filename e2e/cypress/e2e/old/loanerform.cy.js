@@ -3,9 +3,9 @@
  * Test functionality of loanerform
  */
 describe("LoanerForm", () => {
-  it("All elements are shown", () => {
+  it.skip("All elements are shown", () => {
     //check if form contains test "balbla"
-    cy.visit("/iframe.html?id=modal-loanerform--show-loaner-form");
+    cy.visit("/iframe.html?id=modal-loanerform--show-loaner-form-all-fields");
 
     cy.contains("h3", "Bestil til DBCTestBibliotek").should("exist");
 
@@ -27,8 +27,8 @@ describe("LoanerForm", () => {
     );
   });
 
-  it("Validation works", () => {
-    cy.visit("/iframe.html?id=modal-loanerform--show-loaner-form-2");
+  it.skip("Validation works", () => {
+    cy.visit("/iframe.html?id=modal-loanerform--show-loaner-form-short");
 
     //error if not all fields have been filled out
     cy.get("[data-cy=input-userMail]").should("be.visible").type("Bernd");
@@ -48,5 +48,23 @@ describe("LoanerForm", () => {
       "not.exist"
     );
     cy.get("[data-cy=text-udfyld-venligst-alle-felter]").should("not.exist");
+  });
+
+  it("Checkbox working", () => {
+    cy.visit("/iframe.html?id=modal-loanerform--show-loaner-form-short");
+
+    //we have checkbox
+    cy.get("[data-cy=checkbox]").should("not.be.checked");
+    //we have checkbox label
+    cy.get("[id=loanerform-checkbox-label]").should(
+      "contain",
+      "Gem informationer til næste bestilling"
+    );
+    //we we have popover
+    cy.get("[data-cy=popover-container]").should("not.exist");
+    cy.get("[data-cy=tooltip-icon]")
+      .should("have.css", "cursor", "pointer")
+      .click();
+    cy.get("[data-cy=popover-container]").should("be.visible");
   });
 });

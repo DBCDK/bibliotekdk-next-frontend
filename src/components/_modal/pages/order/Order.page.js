@@ -18,6 +18,7 @@ import useOrderPageInformation from "@/components/hooks/useOrderPageInformations
 import { onMailChange } from "@/components/_modal/pages/order/utils/order.utils";
 import { useRelevantAccessesForOrderPage } from "@/components/work/utils";
 import { validateEmail } from "@/utils/validateEmail";
+import useUser from "@/components/hooks/useUser";
 
 /**
  *  Order component function
@@ -48,7 +49,8 @@ function Order({
 
   // Sets if user has unsuccessfully tried to submit the order
   const [failedSubmission, setFailedSubmission] = useState(false);
-
+  const { deleteSessionData } = useUser();
+  const storeLoanerInfo = context?.storeLoanerInfo;
   const [mail, setMail] = useState(null);
   // Update email from user account
   useEffect(() => {
@@ -130,6 +132,38 @@ function Order({
 
   const contextWithOrderPids = { ...context, orderPids };
 
+  function onSubmitOrder() {
+    if (validated.status) {
+      modal.push("receipt", {
+        pid,
+        order: {
+          data: orderMutation.data,
+          error: orderMutation.error,
+          isLoading: orderMutation.isLoading,
+        },
+        articleOrder: {
+          data: articleOrderMutation?.data,
+          error: articleOrderMutation?.error,
+          isLoading: articleOrderMutation?.isLoading,
+        },
+        pickupBranch,
+      });
+      if (availableAsDigitalCopy) {
+        onArticleSubmit(pid, context?.periodicaForm);
+      } else {
+        onSubmit && onSubmit(orderPids, pickupBranch, context?.periodicaForm);
+      }
+      if (!storeLoanerInfo) {
+        deleteSessionData();
+      }
+    } else {
+      setFailedSubmission(true);
+      if (!storeLoanerInfo) {
+        deleteSessionData();
+      }
+    }
+  }
+
   return (
     <div
       className={`${styles.order} ${isLoadingBranches ? styles.skeleton : ""}`}
@@ -158,32 +192,7 @@ function Order({
         context={context}
         validated={validated}
         failedSubmission={failedSubmission}
-        onClick={() => {
-          if (validated.status) {
-            modal.push("receipt", {
-              pid,
-              order: {
-                data: orderMutation.data,
-                error: orderMutation.error,
-                isLoading: orderMutation.isLoading,
-              },
-              articleOrder: {
-                data: articleOrderMutation?.data,
-                error: articleOrderMutation?.error,
-                isLoading: articleOrderMutation?.isLoading,
-              },
-              pickupBranch,
-            });
-            if (availableAsDigitalCopy) {
-              onArticleSubmit(pid, context?.periodicaForm);
-            } else {
-              onSubmit &&
-                onSubmit(orderPids, pickupBranch, context?.periodicaForm);
-            }
-          } else {
-            setFailedSubmission(true);
-          }
-        }}
+        onClick={onSubmitOrder}
       />
     </div>
   );

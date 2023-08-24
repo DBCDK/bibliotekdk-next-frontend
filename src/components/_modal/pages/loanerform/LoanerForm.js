@@ -8,6 +8,7 @@ import Email from "@/components/base/forms/email";
 import Input from "@/components/base/forms/input";
 import Button from "@/components/base/button";
 import Translate, { hasTranslation } from "@/components/base/translate";
+import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
 
 import Top from "../base/top";
 
@@ -19,12 +20,21 @@ import { useModal } from "@/components/_modal";
 import { openOrderModal } from "@/components/work/utils";
 import { validateEmail } from "@/utils/validateEmail";
 import { getLabel } from "@/components/base/forms/email/Email";
+import Tooltip from "@/components/base/tooltip/Tooltip";
 
 const ERRORS = {
   MISSING_INPUT: "error-missing-input",
 };
 
-export function UserParamsForm({ branch, initial, onSubmit, originUrl }) {
+export function UserParamsForm({
+  branch,
+  initial,
+  onSubmit,
+  originUrl,
+  skeleton,
+  storeLoanerInfo,
+  setStoreLoanerInfo,
+}) {
   const [errorCode, setErrorCode] = useState();
   const [state, setState] = useState(initial || {});
   const [validMail, setValidMail] = useState(true);
@@ -56,7 +66,7 @@ export function UserParamsForm({ branch, initial, onSubmit, originUrl }) {
         const error = validateState();
         setErrorCode(error);
         if (!error) {
-          onSubmit(state);
+          onSubmit(state, storeLoanerInfo);
         }
       }}
     >
@@ -149,14 +159,26 @@ export function UserParamsForm({ branch, initial, onSubmit, originUrl }) {
           </Text>
         )}
       </div>
-
-      <Text type="text3" className={styles.guestlogin}>
-        {Translate({
-          context: "order",
-          label: "order-guest-login-description",
-          vars: [branch.agencyName],
-        })}
-      </Text>
+      <span className={styles.checkBoxSpan}>
+        <Checkbox
+          checked={storeLoanerInfo}
+          onChange={(checked) => setStoreLoanerInfo(checked)}
+          id="loanerform-checkbox"
+          ariaLabelledBy="loanerform-checkbox-label"
+        />
+        <Text
+          tag="label"
+          id="loanerform-checkbox-label"
+          lines={1}
+          skeleton={skeleton}
+          type="text3"
+          dataCy="loanerinfo-checkbox-label"
+        >
+          {Translate({ context: "order", label: "save-info-in-browser" })}
+        </Text>
+        <Tooltip labelToTranslate="close-window" />
+      </span>
+      {/* onclick triggers submit form */}
       <Button onClick={() => {}} tabIndex="0">
         {Translate({
           context: "order",
@@ -183,6 +205,8 @@ export function LoanerForm({
   initial,
   // modal props
   context,
+  storeLoanerInfo,
+  setStoreLoanerInfo,
 }) {
   let { originUrl = null } = context || {};
 
@@ -225,6 +249,9 @@ export function LoanerForm({
         initial={initial}
         onSubmit={onSubmit}
         originUrl={originUrl}
+        skeleton={skeleton}
+        storeLoanerInfo={storeLoanerInfo}
+        setStoreLoanerInfo={setStoreLoanerInfo}
       />
     </div>
   );
@@ -292,6 +319,7 @@ export default function Wrap(props) {
   const { data, isLoading: branchIsLoading } = useData(
     branchId && branchesFragments.branchUserParameters({ branchId })
   );
+  const [storeLoanerInfo, setStoreLoanerInfo] = useState(false);
 
   const branch = data?.branches?.result?.[0];
 
@@ -308,6 +336,7 @@ export default function Wrap(props) {
       selectedAccesses,
       workId,
       singleManifestation,
+      storeLoanerInfo: storeLoanerInfo,
     });
   }
 
@@ -332,6 +361,8 @@ export default function Wrap(props) {
         onSubmit={onSubmit}
         skeleton={branchIsLoading}
         onClose={() => props.modal.prev()}
+        storeLoanerInfo={storeLoanerInfo}
+        setStoreLoanerInfo={setStoreLoanerInfo}
       />
     </>
   );
