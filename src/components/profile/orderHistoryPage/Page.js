@@ -2,7 +2,6 @@ import Translate from "@/components/base/translate/Translate";
 import Layout from "../profileLayout";
 import styles from "./OrderHistoryPage.module.css";
 import { useData } from "@/lib/api/api";
-import { orderHistory } from "@/lib/api/user.fragments";
 import useUser from "@/components/hooks/useUser";
 import Text from "@/components/base/text";
 import Pagination from "@/components/search/pagination/Pagination";
@@ -11,12 +10,12 @@ import Link from "@/components/base/link";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { getWorkUrl } from "@/lib/utils";
 import { useModal } from "@/components/_modal";
-import { orderStatus } from "@/lib/api/order.fragments";
+import { orderHistory } from "@/lib/api/order.fragments";
 import { useEffect, useState } from "react";
 const itemsPerPage = 4;
 
 /**
- * Shows the orders made by the user from bibliotekdk.
+ * Shows the previous orders made by the user from bibliotekdk.
  *
  * @returns {component}
  *
@@ -24,60 +23,38 @@ const itemsPerPage = 4;
 
 export default function OrderHistoryPage() {
   const { isAuthenticated } = useUser();
-  const breakpoint = useBreakpoint();
+  //const breakpoint = useBreakpoint();
   const modal = useModal();
 
-  const isMobile = breakpoint === "xs" || breakpoint === "sm";
-  const [orderDataPages, setOrderDataPages] = useState([]);
-  const [bibliotekDkOrderIds, setBibliotekDkOrderIds] = useState();
-  const [currentPageIndex, setCurrentPageIndex] = useState(0);
-  const [currentPageIds, setCurrentPageIds] = useState([]);
+  //  const isMobile = breakpoint === "xs" || breakpoint === "sm";
+  const [totalPages, setTotalPages] = useState(0); //todo change to null
+  const [currentPage, setCurrentPage] = useState(1); //todo change to null
+  const [orderHistoryData, setOrderHistoryData] = useState([]);
 
-  const { data: orderData, isLoading: orderDataIsLoading } = useData(
-    currentPageIds?.length > 0 && orderStatus({ orderIds: currentPageIds })
+  const { data: userData, error } = useData(
+    isAuthenticated &&
+      orderHistory({
+        limit: itemsPerPage,
+        offset: (currentPage - 1) * itemsPerPage,
+      })
   );
-  const { data: userData, isLoading } = useData(
-    isAuthenticated && orderHistory()
-  );
+  console.log("userData", userData);
+  console.log("error", error);
+  console.log("currentPage", currentPage);
+  console.log("  currentPage* itemsPerPage  ", currentPage * itemsPerPage);
+  console.log("totalPages", totalPages);
+  console.log("itemsPerPage", itemsPerPage);
 
-  const fetchedOrders = orderData?.orderStatus;
-
-  const totalPages = Math.ceil(bibliotekDkOrderIds?.length / itemsPerPage);
   useEffect(() => {
     if (userData) {
-      const bibDkorderIds = userData.user?.bibliotekDkOrders?.map(
-        (order) => order.orderId
+      const fetchedData = userData?.user?.bibliotekDkOrders?.result;
+      const pages = Math.ceil(
+        userData?.user?.bibliotekDkOrders?.hitcount / itemsPerPage
       );
-      setBibliotekDkOrderIds(bibDkorderIds);
+      setTotalPages(pages);
+      setOrderHistoryData(fetchedData);
     }
   }, [userData]);
-
-  useEffect(() => {
-    //when a page is updated we fetch the next
-    const nextPageIndex = currentPageIndex + 1;
-    const toPages =
-      nextPageIndex == totalPages
-        ? bibliotekDkOrderIds.length - 1
-        : nextPageIndex;
-    const currentPageOrderIds = bibliotekDkOrderIds?.slice(
-      currentPageIndex * itemsPerPage,
-      toPages * itemsPerPage
-    );
-    setCurrentPageIds(currentPageOrderIds);
-  }, [currentPageIndex, bibliotekDkOrderIds, orderDataIsLoading]);
-
-  useEffect(() => {
-    if (fetchedOrders && !isLoading) {
-      let updatedOrderDataPages = orderDataPages;
-      updatedOrderDataPages[currentPageIndex] = fetchedOrders;
-      setOrderDataPages(updatedOrderDataPages);
-    }
-  }, [orderData, fetchedOrders, currentPageIds, currentPageIndex]);
-
-  //there is no pagination in mobile view. We show all orders
-  const currentPage = isMobile
-    ? orderDataPages.flat(1)
-    : orderDataPages[currentPageIndex];
 
   return (
     <Layout title={Translate({ context: "profile", label: "orderHistory" })}>
@@ -113,14 +90,14 @@ export default function OrderHistoryPage() {
         </Text>
       </div>
 
-      {currentPage?.map((order, index) => {
-        return <TableItem order={order} index={index} key={order?.orderId} />;
+      {orderHistoryData?.map((order) => {
+        return <TableItem order={order} key={order?.orderId} />;
       })}
       <Pagination
         className={styles.pagination}
         numPages={totalPages}
-        currentPage={currentPageIndex + 1}
-        onChange={(newIndex) => setCurrentPageIndex(newIndex - 1)}
+        currentPage={currentPage}
+        onChange={setCurrentPage}
       />
     </Layout>
   );
@@ -129,14 +106,14 @@ export default function OrderHistoryPage() {
  * @param {obj} props
  * @returns {component}
  */
-function TableItem({ order, key, index }) {
+function TableItem({ order, key }) {
   const breakpoint = useBreakpoint();
 
   if (!order) {
     return null;
   }
   const isMobile = breakpoint === "xs";
-  const { author, title, pid, orderId, creationDate } = order;
+  const { author, title, pidOfPrimaryObject, orderId, creationDate } = order;
   const { date, time } = parseDate(creationDate);
   return (
     <div className={styles.tableItem} key={key}>
@@ -161,7 +138,7 @@ function TableItem({ order, key, index }) {
             href={getWorkUrl(
               title,
               [{ nameSort: author || "", display: author || "" }],
-              "work-of:" + pid
+              "work-of:" + pidOfPrimaryObject
             )}
             border={{
               top: false,

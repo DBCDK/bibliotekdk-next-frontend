@@ -25,6 +25,11 @@ export function OrderHistoryDataConsent({ modal }) {
         <Button
           className={styles.goBackButton}
           onClick={() => modal.clear()}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.keyCode === 13) {
+              modal.clear();
+            }
+          }}
           size="large"
           type="secondary"
         >

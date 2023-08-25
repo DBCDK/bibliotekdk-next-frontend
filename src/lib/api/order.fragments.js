@@ -1,27 +1,27 @@
 import { ApiEnums } from "@/lib/api/api";
 
 /**
- *
- * @param {String []} orderIds
- * @returns Query for fethcing order data for the given order ids
+ * Fetches previous orders made through bibliotek.dk
  */
-export function orderStatus({ orderIds }) {
+export function orderHistory({ offset, limit }) {
   return {
     apiUrl: ApiEnums.FBI_API,
-    query: `query getOrderStatus($orderIds: [String!]!) {
-        orderStatus(orderIds: $orderIds) {
-          autoForwardResult
-          placeOnHold
-          orderId
-          pickupAgencyId
-          pid
-          closed
-          creationDate
-          author
-          title
+    query: `query orderPolicy ($offset: Int!, $limit: PaginationLimit! ) { 
+        user {
+          bibliotekDkOrders(offset: $offset, limit: $limit, ) {
+            result {
+              orderId
+              title
+              author
+              pidOfPrimaryObject
+              creationDate
+            }
+            hitcount
+          }
         }
-      }`,
-    variables: { orderIds: orderIds },
+      
+    }`,
+    variables: { offset, limit },
     slowThreshold: 3000,
   };
 }

@@ -174,17 +174,3 @@ export function orderPolicy({ pid }) {
     slowThreshold: 3000,
   };
 }
-
-export function orderHistory() {
-  return {
-    apiUrl: ApiEnums.FBI_API,
-    query: `query {
-      user {
-        bibliotekDkOrders {
-          orderId
-        }
-      }
-    }`,
-    slowThreshold: 3000,
-  };
-}
