@@ -2314,6 +2314,10 @@
       "login-type": {
         "da": "Hvordan vil du gerne logge ind?",
         "en": "How would you like to log in?"
+      },
+      "search-for-library": {
+        "da": "Søg efter bibliotek",
+        "en": "Search for library"
       }
     },
     "form": {
