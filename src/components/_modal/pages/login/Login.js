@@ -1,88 +1,23 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
-import debounce from "lodash/debounce";
-import find from "lodash/find";
 
-import Button from "@/components/base/button";
-import List from "@/components/base/forms/list";
-import Link from "@/components/base/link";
-import Icon from "@/components/base/icon";
-import Search from "@/components/base/forms/search";
-import Text from "@/components/base/text";
 import Title from "@/components/base/title";
-import Translate from "@/components/base/translate";
+
 import Top from "@/components/_modal/pages/base/top";
 import { LOGIN_MODE } from "@/components/_modal/pages/login/utils";
 
-import animations from "css/animations";
 import { useData } from "@/lib/api/api";
 import * as libraryFragments from "@/lib/api/library.fragments";
-
-import styles from "./Login.module.css";
 
 import { signIn } from "next-auth/react";
 import getConfig from "next/config";
 import Router from "next/router";
 import { showLoanerForm } from "./utils";
+import MitIDButton from "./mitIDButton/MitIDButton";
+import LibrarySearch from "./librarySearch/LibrarySearch";
 
-function Select({
-  branch,
-  onSelect,
-  isLoading,
-  disabled,
-  includeArrows,
-  _ref,
-}) {
-  // Check for a highlight key matching on "name" prop
-  const matchName = find(branch.highlights, {
-    key: "name",
-  });
-  // If found, use matchned name (wraps match in <mark>...</mark>)
-  const title = matchName?.value || branch.name;
-
-  // If none found use a alternative match if any found
-  const matchOthers = !matchName ? branch.highlights?.[0]?.value : null;
-  disabled = false;
-
-  return (
-    <List.FormLink
-      onSelect={() => onSelect(branch)}
-      label={branch.name}
-      disabled={disabled}
-      className={[animations["on-hover"]].join(" ")}
-      includeArrows={includeArrows}
-      _ref={_ref}
-    >
-      <>
-        <Text
-          lines={1}
-          skeleton={isLoading}
-          type="text2"
-          dataCy={`text-${branch.name}`}
-          className={[
-            animations["h-border-bottom"],
-            animations["h-color-blue"],
-          ].join(" ")}
-        >
-          <span
-            dangerouslySetInnerHTML={{
-              __html: title,
-            }}
-          />
-        </Text>
-        {matchOthers && (
-          <Text type="text3">
-            <span
-              dangerouslySetInnerHTML={{
-                __html: matchOthers,
-              }}
-            />
-          </Text>
-        )}
-      </>
-    </List.FormLink>
-  );
-}
+import styles from "./Login.module.css";
+import SearchResultList from "./searchResultList/SearchResultList";
 
 /**
  * @param {obj}
@@ -126,6 +61,7 @@ export function LoginPickup({
 
   const callbackurl = `${APP_URL}${Router.asPath}`.replace(regexp, "");
 
+  //TODO also check on if large screen
   const showResultsList = hasQuery && allBranches?.length > 0;
   const showMitIDLogin = !hasQuery || !allBranches || allBranches.length < 1;
 
@@ -167,14 +103,6 @@ export function LoginPickup({
     modal.setStore([]);
   }
 
-  const onMitIdLogin = () => {
-    signIn(
-      "adgangsplatformen",
-      { callbackUrl: callbackurl },
-      { force_login: 1, idp: "nemlogin" }
-    );
-  };
-
   return (
     <div className={styles.login}>
       <Top onClose={removeModalsFromStore} />
@@ -182,79 +110,18 @@ export function LoginPickup({
         <Title type="title4" className={styles.title} tag="h2">
           {title}
         </Title>
-        <section className={styles.libraryLoginSection}>
-          <Text type="text2">
-            {Translate({ context: "login", label: "login-via-library" })}
-          </Text>
-          <Search
-            dataCy="pickup-search-input"
-            placeholder={Translate({
-              context: "order",
-              label: "pickup-input-placeholder",
-            })}
-            className={styles.search}
-            onChange={debounce((value) => onChange(value), 100)}
-          />
-          <Text type="text3">
-            {Translate({ context: "login", label: "use-loan-info" })}
-          </Text>
-        </section>
       </div>
+      <LibrarySearch onChange={onChange} />
       {showResultsList && (
-        <List.Group
-          enabled={!isLoading && isVisible}
-          data-cy="list-branches"
-          disableGroupOutline
-        >
-          {allBranches.map((branch, idx) => {
-            return (
-              <Select
-                key={`${branch.branchId}-${idx}`}
-                branch={branch}
-                onSelect={onSelect}
-                isLoading={isLoading}
-                includeArrows={includeArrows}
-              />
-            );
-          })}
-        </List.Group>
+        <SearchResultList
+          allBranches={allBranches}
+          isLoading={isLoading}
+          onSelect={onSelect}
+          isVisible={isVisible}
+          includeArrows={includeArrows}
+        />
       )}
-      {showMitIDLogin && (
-        <section className={styles.mitIDSection}>
-          <Text type="text2">
-            {Translate({ context: "login", label: "or-mit-id" })}
-          </Text>
-          <Button
-            ariaLabel={Translate({ context: "login", label: "mit-id" })}
-            dataCy="mitid-button"
-            type="secondary"
-            size="large"
-            className={styles.mitIDButton}
-            onClick={onMitIdLogin}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                onMitIdLogin();
-              }
-            }}
-          >
-            <Icon
-              src="MitID.svg"
-              alt="mitID"
-              size={{ h: "2" }}
-              className={styles.mitIDIcon}
-            />
-          </Button>
-          <Link
-            href="/hjaelp/ny-bruger/45"
-            className={styles.createLibraryUserLink}
-            border={{ bottom: { keepVisible: true } }}
-          >
-            <Text type="text3" tag="span">
-              {Translate({ context: "login", label: "create-library-user" })}
-            </Text>
-          </Link>
-        </section>
-      )}
+      {showMitIDLogin && <MitIDButton callbackUrl={callbackurl} />}
     </div>
   );
 }
