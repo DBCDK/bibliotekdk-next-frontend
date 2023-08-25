@@ -32,7 +32,7 @@ import SearchResultList from "./searchResultList/SearchResultList";
  * @param {obj} context
  * @param {string} title
  */
-export function LoginPickup({
+export function Login({
   data,
   isVisible,
   onChange,
@@ -126,7 +126,7 @@ export function LoginPickup({
   );
 }
 
-LoginPickup.propTypes = {
+Login.propTypes = {
   data: PropTypes.object,
   className: PropTypes.string,
   onClose: PropTypes.func,
@@ -171,7 +171,7 @@ export default function Wrap(props) {
   const branches = !query ? agency : data?.branches;
   const includeArrows = !!query;
   return (
-    <LoginPickup
+    <Login
       {...props}
       isLoading={isLoading}
       data={isLoading ? dummyData : branches}
