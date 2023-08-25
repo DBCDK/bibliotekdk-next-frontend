@@ -6,12 +6,12 @@ import styles from "./LibrarySearch.module.css";
 import cx from "classnames";
 
 export default function LibrarySearch(props) {
-  const { onChange, smallScreen = false } = props;
+  const { onChange, hideOnSmallScreen } = props;
   return (
     <section
       className={cx({
         [styles.librarySearchSection]: true,
-        [styles.hideOnSmallScreen]: smallScreen,
+        [styles.hideOnSmallScreen]: hideOnSmallScreen,
       })}
     >
       <Text type="text2" className={styles.hideOnSmallScreen}>
@@ -28,6 +28,7 @@ export default function LibrarySearch(props) {
         })}
         className={styles.search}
         onChange={debounce((value) => onChange(value), 100)}
+        onBlur={() => console.log("blur")}
       />
       <Text type="text3" className={styles.hideOnSmallScreen}>
         {Translate({ context: "login", label: "use-loan-info" })}

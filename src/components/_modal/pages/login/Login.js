@@ -113,7 +113,7 @@ export function Login({
         </Title>
       </div>
       {/* shown above 414px /> */}
-      <LibrarySearch onChange={onChange} smallScreen={true} />
+      <LibrarySearch onChange={onChange} hideOnSmallScreen={true} />
       {/* only shown up to 414px /> */}
       <MobileLoginButton
         title={title}
