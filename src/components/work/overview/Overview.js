@@ -24,8 +24,6 @@ import {
 import Title from "@/components/base/title/Title";
 import { useRouter } from "next/router";
 import Breadcrumbs from "@/components/work/overview/breadcrumbs/Breadcrumbs";
-import Bookmark from "@/components/base/bookmark/Bookmark";
-import BookmarkDropdown from "@/components/work/overview/bookmarkDropdown/BookmarkDropdown";
 
 function useInitMaterialType(
   uniqueMaterialTypes,
