@@ -25,4 +25,10 @@
   .createLibraryUserLink {
     display: none;
   }
+  .hideOnSmallScreen {
+    display: none;
+  }
+  .mitIDButton {
+    margin-top: var(--pt1);
+  }
 }

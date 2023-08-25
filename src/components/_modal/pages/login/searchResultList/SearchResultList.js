@@ -3,6 +3,7 @@ import Select from "../Select";
 
 export default function SearchResultList(props) {
   const { allBranches, isLoading, onSelect, isVisible, includeArrows } = props;
+  if (!allBranches) return;
   return (
     <List.Group
       enabled={!isLoading && isVisible}

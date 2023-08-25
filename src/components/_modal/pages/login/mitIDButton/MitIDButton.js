@@ -22,7 +22,7 @@ export default function MitIDButton({ callbackUrl }) {
 
   return (
     <section className={styles.mitIDSection}>
-      <Text type="text2">
+      <Text type="text2" className={styles.hideOnSmallScreen}>
         {Translate({ context: "login", label: "or-mit-id" })}
       </Text>
       <Button

@@ -1,4 +1,5 @@
 import Button from "@/components/base/button";
+import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import { useModal } from "@/components/_modal/Modal";
 import styles from "./MobileLoginButton.module.css";
@@ -9,32 +10,37 @@ import styles from "./MobileLoginButton.module.css";
  */
 export default function MobileLoginButton(props) {
   const {
-    context,
     onChange,
+    removeModalsFromStore,
     allBranches,
-    onSelect,
     isLoading,
+    onSelect,
     isVisible,
     includeArrows,
   } = props;
   const modal = useModal();
   return (
-    <Button
-      type="secondary"
-      className={styles.withLoanerInfoButton}
-      onClick={() => {
-        modal.push("mobileLogin", {
-          ...context,
-          onChange,
-          allBranches: allBranches, //TODO why undefined?
-          onSelect,
-          isLoading,
-          isVisible,
-          includeArrows,
-        });
-      }}
-    >
-      {Translate({ context: "login", label: "with-loaner-information" })}
-    </Button>
+    <>
+      <Text type="text3" className={styles.chooseLoginType}>
+        {Translate({ context: "login", label: "login-type" })}{" "}
+      </Text>
+      <Button
+        type="secondary"
+        className={styles.withLoanerInfoButton}
+        onClick={() => {
+          modal.push("mobileLogin", {
+            onChange,
+            allBranches,
+            onSelect,
+            isLoading,
+            isVisible,
+            includeArrows,
+            removeModalsFromStore,
+          });
+        }}
+      >
+        {Translate({ context: "login", label: "with-loaner-information" })}
+      </Button>
+    </>
   );
 }

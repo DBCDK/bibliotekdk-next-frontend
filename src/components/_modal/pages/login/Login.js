@@ -116,11 +116,12 @@ export function Login({
       <LibrarySearch onChange={onChange} smallScreen={true} />
       {/* only shown up to 414px /> */}
       <MobileLoginButton
-        context={context}
+        title={title}
         onChange={onChange}
+        removeModalsFromStore={removeModalsFromStore}
         allBranches={allBranches}
-        onSelect={onSelect}
         isLoading={isLoading}
+        onSelect={onSelect}
         isVisible={isVisible}
         includeArrows={includeArrows}
       />
