@@ -2306,6 +2306,14 @@
       "go-to-library-login": {
         "da": "Gå til bibliotekslogin",
         "en": "Go to librarylogin"
+      },
+      "with-loaner-information": {
+        "da": "Med låneroplysninger",
+        "en": "With loaner information"
+      },
+      "login-type": {
+        "da": "Hvordan vil du gerne logge ind?",
+        "en": "How would you like to log in?"
       }
     },
     "form": {

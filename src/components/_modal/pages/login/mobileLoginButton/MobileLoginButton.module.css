@@ -1,0 +1,14 @@
+.withLoanerInfoButton {
+  width: 100%;
+}
+
+.withLoanerInfoButton > button {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+@media (min-width: 414px) {
+  .withLoanerInfoButton {
+    display: none;
+  }
+}

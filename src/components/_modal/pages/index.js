@@ -12,6 +12,7 @@ import ManifestationContent from "./manifestationContent";
 import Material from "./material";
 import DeleteOrder from "./deleteOrder";
 import Login from "./login";
+import MobileLogin from "./mobileLogin";
 import OpenAdgangsplatform from "./openAdgangsplatform";
 import LoginNotSupported from "./loginNotSupported";
 
@@ -30,6 +31,7 @@ const _modal = {
   Material,
   DeleteOrder,
   Login,
+  MobileLogin,
   LoginNotSupported,
   OpenAdgangsplatform,
 };

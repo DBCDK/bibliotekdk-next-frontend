@@ -18,6 +18,7 @@ import LibrarySearch from "./librarySearch/LibrarySearch";
 
 import styles from "./Login.module.css";
 import SearchResultList from "./searchResultList/SearchResultList";
+import MobileLoginButton from "./mobileLoginButton/MobileLoginButton";
 
 /**
  * @param {obj}
@@ -111,7 +112,18 @@ export function Login({
           {title}
         </Title>
       </div>
-      <LibrarySearch onChange={onChange} />
+      {/* shown above 414px /> */}
+      <LibrarySearch onChange={onChange} smallScreen={true} />
+      {/* only shown up to 414px /> */}
+      <MobileLoginButton
+        context={context}
+        onChange={onChange}
+        allBranches={allBranches}
+        onSelect={onSelect}
+        isLoading={isLoading}
+        isVisible={isVisible}
+        includeArrows={includeArrows}
+      />
       {showResultsList && (
         <SearchResultList
           allBranches={allBranches}

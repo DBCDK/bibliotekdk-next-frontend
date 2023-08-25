@@ -3,11 +3,17 @@ import Search from "@/components/base/forms/search";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import styles from "./LibrarySearch.module.css";
+import cx from "classnames";
 
 export default function LibrarySearch(props) {
-  const { onChange } = props;
+  const { onChange, smallScreen } = props;
   return (
-    <section className={styles.librarySearchSection}>
+    <section
+      className={cx({
+        [styles.librarySearchSection]: true,
+        [styles.hideOnSmallScreen]: smallScreen,
+      })}
+    >
       <Text type="text2" className={styles.hideOnSmallScreen}>
         {Translate({ context: "login", label: "login-via-library" })}
       </Text>
