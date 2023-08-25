@@ -57,7 +57,6 @@
 .basket {
   padding-top: var(--pt3);
   display: flex;
-  width: 75%;
   justify-content: space-between;
 }
 

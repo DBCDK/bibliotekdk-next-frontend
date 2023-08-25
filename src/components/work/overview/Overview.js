@@ -157,10 +157,6 @@ export function Overview({
                   workId={workId}
                   selectedPids={selectedPids}
                 />
-                <BookmarkDropdown
-                  materialTypes={uniqueMaterialTypes}
-                  workId={workId}
-                />
               </Col>
               <OrderButtonTextBelow
                 workId={workId}
