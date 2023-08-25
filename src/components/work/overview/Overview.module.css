@@ -57,7 +57,8 @@
 .basket {
   padding-top: var(--pt3);
   display: flex;
-  align-items: center;
+  width: 75%;
+  justify-content: space-between;
 }
 
 .info {

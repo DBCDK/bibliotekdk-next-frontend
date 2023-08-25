@@ -55,7 +55,7 @@ function Bookmark({
       <Icon
         skeleton={skeleton}
         disabled={disabled}
-        size={{ w: 7, h: 7 }}
+        size={{ w: 5, h: 5 }}
         alt="bookmark"
       >
         <BookmarkSvg />

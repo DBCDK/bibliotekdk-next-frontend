@@ -2,27 +2,11 @@
 }
 
 /** hide tablet and down **/
-@media (max-width: 992px) {
+/*@media (max-width: 992px) {
   .dropdownwrap {
     display: none;
   }
-}
-
-.bookmark {
-  padding-left: var(--pt4);
-  position: relative;
-  top: var(--pt05);
-}
-
-.bookmark i svg path {
-  fill: var(--white) !important;
-  stroke: var(--blue) !important;
-}
-
-.bookmark.active i svg path {
-  fill: var(--blue) !important;
-  stroke: var(--white) !important;
-}
+}*/
 
 .dropdownitem {
   display: block;
@@ -33,6 +17,16 @@
   text-align: inherit;
   white-space: nowrap;
   cursor: pointer;
+}
+
+.active {
+  color: white;
+  background-color: green;
+}
+
+.dropdownitem.selected {
+  background-color: var(--blue);
+  color: white;
 }
 
 .dropdownitem a {
