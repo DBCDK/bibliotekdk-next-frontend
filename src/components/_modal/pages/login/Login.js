@@ -34,6 +34,7 @@ import MobileLoginButton from "./mobileLoginButton/MobileLoginButton";
  * @param {string} title
  */
 export function Login({
+  agency,
   data,
   isVisible,
   onChange,
@@ -114,13 +115,13 @@ export function Login({
       </div>
       {/* shown above 414px /> */}
       <LibrarySearch onChange={onChange} hideOnSmallScreen={true} />
-      {/* only shown up to 414px /> */}
+      {/* shown up to 414px /> */}
       <MobileLoginButton
         title={title}
         onChange={onChange}
         removeModalsFromStore={removeModalsFromStore}
-        allBranches={allBranches}
         isLoading={isLoading}
+        agency={agency}
         onSelect={onSelect}
         isVisible={isVisible}
         includeArrows={includeArrows}
@@ -183,6 +184,7 @@ export default function Wrap(props) {
 
   const branches = !query ? agency : data?.branches;
   const includeArrows = !!query;
+
   return (
     <Login
       {...props}
@@ -193,6 +195,7 @@ export default function Wrap(props) {
       includeArrows={includeArrows}
       onLogin={signIn}
       origin={originUrl}
+      agency={agency}
     />
   );
 }

@@ -9,33 +9,19 @@ import styles from "./MobileLoginButton.module.css";
  * @returns {JSX.Element}
  */
 export default function MobileLoginButton(props) {
-  const {
-    onChange,
-    removeModalsFromStore,
-    allBranches,
-    isLoading,
-    onSelect,
-    isVisible,
-    includeArrows,
-  } = props;
   const modal = useModal();
+
   return (
     <>
       <Text type="text3" className={styles.chooseLoginType}>
-        {Translate({ context: "login", label: "login-type" })}{" "}
+        {Translate({ context: "login", label: "login-type" })}
       </Text>
       <Button
         type="secondary"
         className={styles.withLoanerInfoButton}
         onClick={() => {
           modal.push("mobileLogin", {
-            onChange,
-            allBranches,
-            onSelect,
-            isLoading,
-            isVisible,
-            includeArrows,
-            removeModalsFromStore,
+            ...props,
           });
         }}
       >

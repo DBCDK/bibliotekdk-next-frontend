@@ -64,7 +64,6 @@ function Input({
 
   return (
     <input
-      autoFocus
       {...props}
       id={id}
       className={`${styles.input} ${readOnlyClass} ${invalidClass} ${className}`}
