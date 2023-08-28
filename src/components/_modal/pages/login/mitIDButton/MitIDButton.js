@@ -52,7 +52,7 @@ export default function MitIDButton({ callbackUrl }) {
       </Button>
       {/**dont show on mobile */}
       <Link
-        href="/hjaelp/ny-bruger/45"
+        href="/artikel/bliv-laaner/43"
         className={styles.createLibraryUserLink}
         border={{ bottom: { keepVisible: true } }}
       >
