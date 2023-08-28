@@ -1,10 +1,16 @@
+/**
+ * @file - Select.js
+ * Branch name with highlights that triggers onSelect when clicked
+ */
+
 import animations from "css/animations";
 import find from "lodash/find";
 import List from "@/components/base/forms/list";
 import Text from "@/components/base/text";
 
 /**
- * Select branch name
+ * Shows a single branch with name and highlights the parts of the name match the search term
+ * used in a list of branches in the search result list
  * @param {obj} branch
  * @param {func} onSelect
  * @param {boolean} isLoading

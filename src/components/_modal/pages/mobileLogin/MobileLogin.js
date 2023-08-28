@@ -1,3 +1,8 @@
+/**
+ * @file MobileLogin.js
+ * Login modal for mobiles wiht search field and pickup locations selection
+ */
+
 import Top from "@/components/_modal/pages/base/top";
 import styles from "./MobileLogin.module.css";
 import SearchResultList from "../login/searchResultList/SearchResultList";
@@ -6,6 +11,11 @@ import { useData } from "@/lib/api/api";
 import * as libraryFragments from "@/lib/api/library.fragments";
 import { useState } from "react";
 
+/**
+ * Login modal for mobiles with search field and pickup locations selection for mobile phones
+ * @param {obj} context
+ * @returns {JSX.Element}
+ */
 export default function MobileLogin({ context }) {
   const { removeModalsFromStore, isVisible, onSelect, agency } = context;
 
@@ -21,7 +31,7 @@ export default function MobileLogin({ context }) {
   return (
     <div className={styles.login}>
       <Top onClose={removeModalsFromStore} />
-      <LibrarySearch onChange={(q) => setQuery(q)} hideOnSmallScreen={false} />
+      <LibrarySearch onChange={(q) => setQuery(q)} desktop={false} />
       <SearchResultList
         allBranches={allBranches}
         isLoading={isLoading}
@@ -32,3 +42,10 @@ export default function MobileLogin({ context }) {
     </div>
   );
 }
+
+MobileLogin.propTypes = {
+  removeModalsFromStore: PropTypes.func,
+  isVisible: PropTypes.bool,
+  onSelect: PropTypes.func,
+  agency: PropTypes.object,
+};

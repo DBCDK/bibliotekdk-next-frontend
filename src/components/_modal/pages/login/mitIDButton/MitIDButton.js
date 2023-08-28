@@ -1,3 +1,8 @@
+/**
+ * @file - MitIDButton.js
+ * MitID login button that opens MitID login
+ */
+
 import Link from "@/components/base/link";
 import Icon from "@/components/base/icon";
 import Button from "@/components/base/button";
@@ -7,7 +12,7 @@ import Translate from "@/components/base/translate";
 import { signIn } from "next-auth/react";
 
 /**
- * Shows MitID login button and opens to mitID login
+ * Shows MitID login button and opens MitID login
  * @param {string} callbackUrl
  * @returns
  */
@@ -45,7 +50,7 @@ export default function MitIDButton({ callbackUrl }) {
           className={styles.mitIDIcon}
         />
       </Button>
-      {/**dont show for mobile */}
+      {/**dont show on mobile */}
       <Link
         href="/hjaelp/ny-bruger/45"
         className={styles.createLibraryUserLink}

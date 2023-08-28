@@ -1,3 +1,8 @@
+/**
+ * @file - Login.js
+ * contains the login page for login modal
+ */
+
 import PropTypes from "prop-types";
 import { useState } from "react";
 
@@ -22,6 +27,9 @@ import MobileLoginButton from "./mobileLoginButton/MobileLoginButton";
 import useWindowSize from "@/components/hooks/useWindowSize";
 
 /**
+ * contains the login page for login modal - both for desktop and mobile
+ * for mobile, the page shows a button, which opens a new modal with pickup locations selection and MitID login button
+ * for desktop, the page shows a search field, which filters the pickup locations and MitID login button
  * @param {obj}
  * @param {boolean}data
  * @param className
@@ -117,7 +125,7 @@ export function Login({
         </Title>
       </div>
       {/* shown above 414px /> */}
-      <LibrarySearch onChange={onChange} hideOnSmallScreen={true} />
+      <LibrarySearch onChange={onChange} desktop={true} />
       {/* shown up to 414px /> */}
       <MobileLoginButton
         title={title}
