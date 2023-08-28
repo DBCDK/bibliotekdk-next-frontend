@@ -58,7 +58,11 @@ export default function ArticleLoginPrompt({ articleId }) {
         })}
         description={Translate({
           context: "articles",
-          label: "accessOpportunity2",
+          label: "accessOpportunity",
+        })}
+        description2={Translate({
+          context: "articles",
+          label: "accessOpportunity3",
         })}
         buttonText={Translate({
           context: "order",

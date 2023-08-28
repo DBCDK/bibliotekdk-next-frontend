@@ -32,6 +32,7 @@ import useUser from "@/components/hooks/useUser";
 export default function LoginPrompt({
   title,
   description,
+  description2,
   buttonText = Translate({ context: "header", label: "login" }),
   linkHref = null,
   signIn,
@@ -48,6 +49,26 @@ export default function LoginPrompt({
             {title}
           </Title>
 
+          {linkHref && showMore && (
+            <div>
+              <Text type="text3">{description}</Text>
+              <Text className={styles.inline} type="text3">
+                {description2}{" "}
+              </Text>
+
+              <Link
+                className={styles.inline}
+                href={linkHref.href}
+                target="_blank"
+                border={{ top: false, bottom: true }}
+                data_use_new_underline={false}
+              >
+                <Text className={styles.inline} type="text3">
+                  {linkHref.text}
+                </Text>
+              </Link>
+            </div>
+          )}
           {user.isAuthenticated && (
             <div>
               <IconButton
@@ -56,24 +77,11 @@ export default function LoginPrompt({
                 keepUnderline={true}
               >
                 {Translate({
-                  context: "profile",
-                  label: showMore ? "showLess" : "showMore",
+                  context: "articles",
+                  label: "how-to-get-access",
                 })}
               </IconButton>
             </div>
-          )}
-          {linkHref && showMore && (
-            <>
-              <Text type="text3">{description}</Text>
-              <Link
-                href={linkHref.href}
-                target="_blank"
-                border={{ top: false, bottom: true }}
-                data_use_new_underline={false}
-              >
-                <Text type="text3">{linkHref.text}</Text>
-              </Link>
-            </>
           )}
           <Button
             type="primary"

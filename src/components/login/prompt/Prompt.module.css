@@ -9,3 +9,7 @@
 .prompt {
   margin-top: var(--pt13);
 }
+
+.inline {
+  display: inline;
+}
