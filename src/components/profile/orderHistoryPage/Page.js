@@ -155,9 +155,9 @@ export default function OrderHistoryPage() {
 }
 
 /**
- * 
+ *
  * Used in TableItem. Shows infor like title, author, link to work etc. for a given order
- * @returns 
+ * @returns
  */
 function WorkInfo({ title, author, pidOfPrimaryObject }) {
   const breakpoint = useBreakpoint();
