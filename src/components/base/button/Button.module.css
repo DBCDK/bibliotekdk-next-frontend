@@ -127,3 +127,9 @@
 .skeleton {
   position: relative;
 }
+
+@media (max-width: 414px) {
+  .secondary.large {
+    padding: var(--pt2) var(--pt1);
+  }
+}

@@ -1,0 +1,34 @@
+.mitIDSection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.mitIDButton {
+  width: 100%;
+  padding-top: var(--pt2);
+  padding-bottom: var(--pt2);
+  margin-top: var(--pt05);
+  margin-bottom: var(--pt7);
+}
+
+.mitIDIcon {
+  height: fit-content;
+  max-height: fit-content;
+}
+
+.createLibraryUserLink {
+  width: fit-content;
+}
+
+@media (max-width: 414px) {
+  .createLibraryUserLink {
+    display: none;
+  }
+  .hideOnSmallScreen {
+    display: none;
+  }
+  .mitIDButton {
+    margin-top: var(--pt1);
+  }
+}
