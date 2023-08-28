@@ -9,6 +9,7 @@ import SearchResultList from "../login/searchResultList/SearchResultList";
 import LibrarySearch from "../login/librarySearch/LibrarySearch";
 import { useData } from "@/lib/api/api";
 import * as libraryFragments from "@/lib/api/library.fragments";
+import PropTypes from "prop-types";
 import { useState } from "react";
 
 /**

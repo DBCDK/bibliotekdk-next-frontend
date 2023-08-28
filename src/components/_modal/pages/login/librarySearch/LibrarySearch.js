@@ -8,6 +8,7 @@ import Search from "@/components/base/forms/search";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import styles from "./LibrarySearch.module.css";
+import PropTypes from "prop-types";
 import cx from "classnames";
 
 /**

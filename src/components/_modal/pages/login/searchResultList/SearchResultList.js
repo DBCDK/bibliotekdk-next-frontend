@@ -4,6 +4,7 @@
  */
 
 import List from "@/components/base/forms/list";
+import PropTypes from "prop-types";
 import Select from "../Select";
 
 /**
