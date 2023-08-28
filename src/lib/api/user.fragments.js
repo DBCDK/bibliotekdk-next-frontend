@@ -112,6 +112,7 @@ export function branchesForUser() {
     query: `
     query ($language: LanguageCode! ) {
       user {
+        municipalityAgencyId
         agency (language: $language){
           result {
             agencyId

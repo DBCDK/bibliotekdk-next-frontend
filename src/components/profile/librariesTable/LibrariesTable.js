@@ -10,11 +10,11 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
  * @param {obj} props
  * @returns {component}
  */
-function TableItem({ agencyName, agencyId }) {
+function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs" || breakpoint === "sm";
 
-  const isHomeLibrary = false; // Cannot be implemented yet
+  const isHomeLibrary = municipalityAgencyId === agencyId;
   //const lastUsed = false; // Cannot be implemented yet
   const isPublic = isPublicLibrary(agencyId);
 
@@ -30,7 +30,7 @@ function TableItem({ agencyName, agencyId }) {
             {agencyName || "-"}
           </Title>
           {isHomeLibrary && (
-            <Text type="text3" className={styles.textLabel}>
+            <Text type="text3">
               {Translate({
                 context: "profile",
                 label: "municipalityOfResidence",
@@ -70,7 +70,7 @@ function TableItem({ agencyName, agencyId }) {
  * @param {obj} props
  * @returns {component}
  */
-export default function LibrariesTable({ data }) {
+export default function LibrariesTable({ data, municipalityAgencyId }) {
   return (
     <>
       <div className={styles.headerRow}>
@@ -83,7 +83,11 @@ export default function LibrariesTable({ data }) {
       </div>
       <div>
         {data?.map((item) => (
-          <TableItem key={item.agencyName} {...item} />
+          <TableItem
+            key={item.agencyName}
+            municipalityAgencyId={municipalityAgencyId}
+            {...item}
+          />
         ))}
       </div>
     </>

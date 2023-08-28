@@ -29,7 +29,9 @@ export default function MyLibrariesPage() {
       agencyName: agency?.result[0]?.agencyName,
     }))
     .filter((agency) => !!agency.agencyName && !!agency.agencyId);
+  console.log("userData", userData);
 
+  const municipalityAgencyId = userData?.user?.municipalityAgencyId;
   return (
     <Layout title={Translate({ context: "profile", label: "myLibraries" })}>
       <div className={styles.pageDescriptionContainer}>
@@ -53,7 +55,10 @@ export default function MyLibrariesPage() {
         </IconButton>
       </div>
 
-      <LibrariesTable data={agencies} />
+      <LibrariesTable
+        data={agencies}
+        municipalityAgencyId={municipalityAgencyId}
+      />
       <IconButton icon="chevron" className={styles.addLibrary} textType="text2">
         {Translate({ context: "profile", label: "addLibrary" })}
       </IconButton>
