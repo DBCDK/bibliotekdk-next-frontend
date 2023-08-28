@@ -66,7 +66,6 @@ export function Login({
   const windowWidth = useWindowSize().width;
   const isMobile = windowWidth <= 414;
 
-  //TODO
   const showResultsList = hasQuery && allBranches?.length > 0 && !isMobile;
   const showMitIDLogin =
     !hasQuery || !allBranches || allBranches.length < 1 || isMobile;
