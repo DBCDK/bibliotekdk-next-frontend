@@ -1,6 +1,6 @@
 /**
  * @file MobileLogin.js
- * Login modal for mobiles wiht search field and pickup locations selection
+ * Login modal for mobiles with search field and pickup locations selection
  */
 
 import Top from "@/components/_modal/pages/base/top";
