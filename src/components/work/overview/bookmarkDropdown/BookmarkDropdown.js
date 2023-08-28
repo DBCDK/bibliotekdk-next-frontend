@@ -6,6 +6,8 @@ import Text from "@/components/base/text/Text";
 import React, { useEffect, useState } from "react";
 import { cyKey } from "@/utils/trim";
 import useBookmarks from "@/components/hooks/useBookmarks";
+import Icon from "@/components/base/icon/Icon";
+import BookmarkMedium from "@/public/icons/bookmark_medium.svg";
 
 export function BookMarkMaterialSelector({ materialTypes, workId }) {
   const bookmarkClick = () => {};
@@ -47,6 +49,9 @@ export function BookMarkMaterialSelector({ materialTypes, workId }) {
         })}
       >
         {options.map((material, index) => {
+          const activeItem =
+            bookmark?.findIndex((book) => book.key === workId + material) !==
+            -1;
           return (
             <Dropdown.Item
               as="div"
@@ -54,11 +59,7 @@ export function BookMarkMaterialSelector({ materialTypes, workId }) {
               data-cy={`bookmark-${material}-${index}`}
               key={`bookmark-${index}`}
               className={`${styles.dropdownitem} ${
-                bookmark?.findIndex(
-                  (book) => book.key === workId + material
-                ) !== -1
-                  ? styles.active
-                  : ""
+                activeItem ? styles.active : ""
               }`}
               onClick={() => {
                 onSelect(material, workId);
@@ -69,7 +70,14 @@ export function BookMarkMaterialSelector({ materialTypes, workId }) {
                 }
               }}
             >
-              <Text type="text3">{material}</Text>
+              <div className={styles.itemContainer}>
+                <Text type="text3">{material}</Text>
+                {activeItem && (
+                  <Icon size={{ w: 3, h: 3 }}>
+                    <BookmarkMedium />
+                  </Icon>
+                )}
+              </div>
             </Dropdown.Item>
           );
         })}

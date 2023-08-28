@@ -17,6 +17,12 @@
   background-color: green;
 }
 
+.itemContainer {
+  display: flex;
+  border: 1px solid red;
+  justify-content: space-between;
+}
+
 .dropdownitem a {
   text-decoration: none;
 }
