@@ -1,6 +1,6 @@
 import Translate from "@/components/base/translate/Translate";
 import Layout from "../profileLayout";
-import styles from "./OrderHistoryPage.module.css";
+import styles from "./orderHistoryPage.module.css";
 import { useData } from "@/lib/api/api";
 import useUser from "@/components/hooks/useUser";
 import Text from "@/components/base/text";
@@ -240,7 +240,7 @@ function TableItem({ order, key }) {
     );
   }
   return (
-    <tr className={styles.tableItem}>
+    <tr className={styles.tableItem} key={key}>
       <td className={styles.date}>
         {!isMobile && (
           <>
