@@ -17,7 +17,6 @@ export function BookMarkMaterialSelector({ materialTypes, workId }) {
     await setBookmark(item);
   };
 
-  console.log(bookmark, "BOOKMARK");
   const [active, setActive] = useState(false);
 
   useEffect(() => {
