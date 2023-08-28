@@ -231,7 +231,7 @@ function TableItem({ order, key }) {
 }
 
 /**
- * Used in TableItem. Shows infor like title, author, link to work etc. for a given order
+ * Used in TableItem. Shows info (like title, author, link to work) for a given order
  * @returns
  */
 function WorkInfo({ title, author, pidOfPrimaryObject }) {
