@@ -6,10 +6,10 @@
   grid-template-columns: 2fr 6fr 2fr;
   grid-gap: var(--pt3);
   align-items: center;
-
   padding: var(--pt3) var(--pt1);
   border-bottom: 1px solid var(--iron);
 }
+
 .orderNumberText {
   display: none;
   margin-right: var(--pt05);
@@ -19,6 +19,12 @@
   .tableItem {
     display: block;
   }
+
+  .activity,
+  .date {
+    display: block;
+  }
+
   .headerItem {
     display: none;
   }
@@ -39,9 +45,13 @@
 
   grid-column-gap: var(--pt3);
   padding: var(--pt05) var(--pt1);
+  font-weight: normal;
+  font-family: var(--body-font-semibold);
+  font-size: 14px;
 }
 .headerItem {
   grid-gap: var(--pt3);
+  text-align: initial;
 }
 .mobileDate {
   margin-bottom: var(--pt1);

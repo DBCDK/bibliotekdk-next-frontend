@@ -104,21 +104,26 @@ export default function OrderHistoryPage() {
         </Text>
       </Link>
 
-      <div className={styles.headerRow}>
-        <Text className={styles.headerItem}>
-          {Translate({ context: "profile", label: "date" })}
-        </Text>
-        <Text className={styles.headerItem}>
-          {Translate({ context: "profile", label: "activity" })}
-        </Text>
-        <Text className={styles.headerItem}>
-          {Translate({ context: "profile", label: "orderNumber" })}
-        </Text>
-      </div>
-
-      {orderHistoryData?.map((order) => {
-        return <TableItem order={order} key={order?.orderId} />;
-      })}
+      <table>
+        <thead>
+          <tr className={styles.headerRow}>
+            <th className={styles.headerItem}>
+              {Translate({ context: "profile", label: "date" })}
+            </th>
+            <th className={styles.headerItem}>
+              {Translate({ context: "profile", label: "activity" })}
+            </th>
+            <th className={styles.headerItem}>
+              {Translate({ context: "profile", label: "orderNumber" })}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {orderHistoryData?.map((order) => (
+            <TableItem order={order} key={order?.orderId} />
+          ))}
+        </tbody>
+      </table>
       <Pagination
         className={styles.pagination}
         numPages={totalPages}
@@ -142,22 +147,24 @@ function TableItem({ order, key }) {
   const { author, title, pidOfPrimaryObject, orderId, creationDate } = order;
   const { date, time } = parseDate(creationDate);
   return (
-    <div className={styles.tableItem} key={key}>
-      {!isMobile && (
-        <div>
-          <Text type="text3"> {date}</Text>
-          <Text type="text3"> {time}</Text>
-        </div>
-      )}
-      <div>
-        <Text type="text1">
-          {Translate({ context: "profile", label: "orderRegistered" })}
-        </Text>
+    <tr className={styles.tableItem}>
+      <td className={styles.date}>
+        {!isMobile && (
+          <>
+            <Text type="text3">{date}</Text>
+            <Text type="text3">{time}</Text>
+          </>
+        )}
         {isMobile && (
           <Text className={styles.mobileDate} type="text3">
             {date}
           </Text>
         )}
+      </td>
+      <td className={styles.activity}>
+        <Text type="text1">
+          {Translate({ context: "profile", label: "orderRegistered" })}
+        </Text>
         <Text type="text2" className={styles.orderWorkInfo}>
           {Translate({ context: "profile", label: "youHaveOrdered" }) + " "}
           <Link
@@ -178,16 +185,16 @@ function TableItem({ order, key }) {
           {author &&
             ` ${Translate({ context: "general", label: "by" })} ${author}`}
         </Text>
-      </div>
-      <div className={styles.orderNumber}>
+      </td>
+      <td className={styles.orderNumber}>
         {breakpoint === "xs" && (
           <Text className={styles.orderNumberText} type="text4">
             {`${Translate({ context: "profile", label: "orderNumber" })}:`}
           </Text>
         )}
-        <Text type="text3">{orderId} </Text>
-      </div>
-    </div>
+        <Text type="text3">{orderId}</Text>
+      </td>
+    </tr>
   );
 }
 
