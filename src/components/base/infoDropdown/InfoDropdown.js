@@ -8,9 +8,7 @@ import animations from "css/animations";
 import cx from "classnames";
 
 export default function InfoDropdown(props) {
-  const { children, label, buttonText } = props;
-  //label = "why-not-supported"
-  //buttonText = {Translate({ context: "login", label: "why-login-not-suported" })}
+  const { children, label, buttonText, chevronOffset } = props;
   const [expanded, setExpanded] = useState(false);
 
   function toggleCollapse() {
@@ -48,7 +46,9 @@ export default function InfoDropdown(props) {
           <Icon
             size={{ w: "2", h: "auto" }}
             src="arrowDown.svg"
-            className={styles.chevron}
+            className={cx(styles.chevron, {
+              [chevronOffset]: chevronOffset ? true : false,
+            })}
             alt=""
           />
         </span>
