@@ -29,7 +29,6 @@ export default function MyLibrariesPage() {
       agencyName: agency?.result[0]?.agencyName,
     }))
     .filter((agency) => !!agency.agencyName && !!agency.agencyId);
-  console.log("userData", userData);
 
   const municipalityAgencyId = userData?.user?.municipalityAgencyId;
   return (
