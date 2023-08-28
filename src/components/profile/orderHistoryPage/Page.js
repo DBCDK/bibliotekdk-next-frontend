@@ -12,6 +12,7 @@ import { getWorkUrl } from "@/lib/utils";
 import { useModal } from "@/components/_modal";
 import { orderHistory } from "@/lib/api/order.fragments";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 const itemsPerPage = 4;
 
 /**
@@ -23,38 +24,63 @@ const itemsPerPage = 4;
 
 export default function OrderHistoryPage() {
   const { isAuthenticated } = useUser();
-  //const breakpoint = useBreakpoint();
+  const breakpoint = useBreakpoint();
   const modal = useModal();
-
-  //  const isMobile = breakpoint === "xs" || breakpoint === "sm";
-  const [totalPages, setTotalPages] = useState(0); //todo change to null
-  const [currentPage, setCurrentPage] = useState(1); //todo change to null
+  const router = useRouter();
+  const { page } = router.query;
+  const isMobile = breakpoint === "xs" || breakpoint === "sm";
+  const [totalPages, setTotalPages] = useState(0);
+  //check if url parameter "page" is a valid number. If so set it as current page otherwise set page to default value 1
+  const parsedPage = parseInt(page, 10);
+  const isValidPage = !isNaN(parsedPage) && parsedPage > 0;
+  const [currentPage, setCurrentPage] = useState(isValidPage ? parsedPage : 1);
   const [orderHistoryData, setOrderHistoryData] = useState([]);
-
-  const { data: userData, error } = useData(
+  //fetch paginated orderhistorydaya
+  const { data, isLoading } = useData(
     isAuthenticated &&
       orderHistory({
         limit: itemsPerPage,
         offset: (currentPage - 1) * itemsPerPage,
       })
   );
-  console.log("userData", userData);
-  console.log("error", error);
-  console.log("currentPage", currentPage);
-  console.log("  currentPage* itemsPerPage  ", currentPage * itemsPerPage);
-  console.log("totalPages", totalPages);
-  console.log("itemsPerPage", itemsPerPage);
+
+  /**
+   * Updates url query params with page
+   */
+  async function updateQueryParams(params) {
+    const query = { ...router.query, ...params };
+    await router.push(
+      { pathname: router.pathname, query },
+      {
+        pathname: router.asPath.replace(/\?.*/, ""),
+        query,
+      },
+      { shallow: true, scroll: false }
+    );
+  }
+  const onPageChange = async (newPage) => {
+    if (newPage > totalPages) {
+      newPage = totalPages;
+    }
+    await updateQueryParams({ page: newPage });
+    setCurrentPage(newPage);
+  };
 
   useEffect(() => {
-    if (userData) {
-      const fetchedData = userData?.user?.bibliotekDkOrders?.result;
+    if (data) {
+      const fetchedData = data?.user?.bibliotekDkOrders?.result;
       const pages = Math.ceil(
-        userData?.user?.bibliotekDkOrders?.hitcount / itemsPerPage
+        data?.user?.bibliotekDkOrders?.hitcount / itemsPerPage
       );
       setTotalPages(pages);
-      setOrderHistoryData(fetchedData);
+      if (fetchedData) {
+        //om mobile, merge the previous data with the new fetched data. On desktop show only one page at a time
+        setOrderHistoryData((prevData) =>
+          isMobile ? [...prevData, ...fetchedData] : fetchedData
+        );
+      }
     }
-  }, [userData]);
+  }, [data, isLoading]);
 
   return (
     <Layout title={Translate({ context: "profile", label: "orderHistory" })}>
@@ -96,8 +122,8 @@ export default function OrderHistoryPage() {
       <Pagination
         className={styles.pagination}
         numPages={totalPages}
-        currentPage={currentPage}
-        onChange={setCurrentPage}
+        currentPage={parseInt(page, 10)}
+        onChange={onPageChange}
       />
     </Layout>
   );
