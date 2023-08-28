@@ -41,7 +41,7 @@ function MenuLink({ label, href }) {
 
   return (
     <li className={cx(styles.link, { [styles.simpleLink]: isActive })}>
-      <Link href={href} dataCy="menu-fixed-links">
+      <Link href={href} dataCy={`menu-fixed-links-${label}`}>
         <Title type={type} tag="h5">
           {Translate({ context: CONTEXT, label })}
         </Title>
