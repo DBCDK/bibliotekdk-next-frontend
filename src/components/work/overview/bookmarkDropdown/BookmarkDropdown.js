@@ -30,6 +30,17 @@ export function BookMarkMaterialSelector({ materialTypes, workId }) {
 
   const options = materialTypes.map((mat) => mat);
 
+  if (options.length === 1) {
+    return (
+      <Bookmark
+        selected={active}
+        onClick={() => {
+          onSelect(options[0], workId);
+        }}
+      />
+    );
+  }
+
   return (
     <Dropdown className={`${styles.dropdownwrap} `} align="end">
       <Dropdown.Toggle
