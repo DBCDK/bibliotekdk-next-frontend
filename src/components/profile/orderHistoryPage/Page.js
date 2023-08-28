@@ -155,16 +155,17 @@ function TableItem({ order, key }) {
             <Text type="text3">{time}</Text>
           </>
         )}
-        {isMobile && (
-          <Text className={styles.mobileDate} type="text3">
-            {date}
-          </Text>
-        )}
+
       </td>
       <td className={styles.activity}>
         <Text type="text1">
           {Translate({ context: "profile", label: "orderRegistered" })}
         </Text>
+        {isMobile && (
+          <Text className={styles.mobileDate} type="text3">
+            {date}
+          </Text>
+        )}
         <Text type="text2" className={styles.orderWorkInfo}>
           {Translate({ context: "profile", label: "youHaveOrdered" }) + " "}
           <Link
