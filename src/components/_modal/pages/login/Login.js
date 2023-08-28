@@ -19,6 +19,7 @@ import LibrarySearch from "./librarySearch/LibrarySearch";
 import styles from "./Login.module.css";
 import SearchResultList from "./searchResultList/SearchResultList";
 import MobileLoginButton from "./mobileLoginButton/MobileLoginButton";
+import useWindowSize from "@/components/hooks/useWindowSize";
 
 /**
  * @param {obj}
@@ -62,10 +63,13 @@ export function Login({
   const regexp = /(\?|&)modal=\d+$/g;
 
   const callbackurl = `${APP_URL}${Router.asPath}`.replace(regexp, "");
+  const windowWidth = useWindowSize().width;
+  const isMobile = windowWidth <= 414;
 
-  //TODO also check on if large screen
-  const showResultsList = hasQuery && allBranches?.length > 0;
-  const showMitIDLogin = !hasQuery || !allBranches || allBranches.length < 1;
+  //TODO
+  const showResultsList = hasQuery && allBranches?.length > 0 && !isMobile;
+  const showMitIDLogin =
+    !hasQuery || !allBranches || allBranches.length < 1 || isMobile;
 
   const onSelect = (branch) => {
     //if we have callbackUID, we want to redirect to order modal after login and therefor, we append it to url
