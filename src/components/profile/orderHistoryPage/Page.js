@@ -104,26 +104,46 @@ export default function OrderHistoryPage() {
         </Text>
       </Link>
 
-      <table>
-        <thead>
-          <tr className={styles.headerRow}>
-            <th className={styles.headerItem}>
+      {isMobile ? (
+        <>
+          <div className={styles.headerRow}>
+            <Text className={styles.headerItem}>
               {Translate({ context: "profile", label: "date" })}
-            </th>
-            <th className={styles.headerItem}>
+            </Text>
+            <Text className={styles.headerItem}>
               {Translate({ context: "profile", label: "activity" })}
-            </th>
-            <th className={styles.headerItem}>
+            </Text>
+            <Text className={styles.headerItem}>
               {Translate({ context: "profile", label: "orderNumber" })}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {orderHistoryData?.map((order) => (
-            <TableItem order={order} key={order?.orderId} />
-          ))}
-        </tbody>
-      </table>
+            </Text>
+          </div>
+
+          {orderHistoryData?.map((order) => {
+            return <TableItem order={order} key={order?.orderId} />;
+          })}
+        </>
+      ) : (
+        <table>
+          <thead>
+            <tr className={styles.headerRow}>
+              <th className={styles.headerItem}>
+                {Translate({ context: "profile", label: "date" })}
+              </th>
+              <th className={styles.headerItem}>
+                {Translate({ context: "profile", label: "activity" })}
+              </th>
+              <th className={styles.headerItem}>
+                {Translate({ context: "profile", label: "orderNumber" })}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {orderHistoryData?.map((order) => (
+              <TableItem order={order} key={order?.orderId} />
+            ))}
+          </tbody>
+        </table>
+      )}
       <Pagination
         className={styles.pagination}
         numPages={totalPages}
@@ -131,6 +151,46 @@ export default function OrderHistoryPage() {
         onChange={onPageChange}
       />
     </Layout>
+  );
+}
+
+/**
+ * 
+ * Used in TableItem. Shows infor like title, author, link to work etc. for a given order
+ * @returns 
+ */
+function WorkInfo({ title, author, pidOfPrimaryObject }) {
+  const breakpoint = useBreakpoint();
+  const isMobile = breakpoint === "xs";
+
+  return (
+    <>
+      {!isMobile && (
+        <Text type="text1">
+          {Translate({ context: "profile", label: "orderRegistered" })}
+        </Text>
+      )}
+      <Text type="text2" className={styles.orderWorkInfo}>
+        {Translate({ context: "profile", label: "youHaveOrdered" }) + " "}
+        <Link
+          href={getWorkUrl(
+            title,
+            [{ nameSort: author || "", display: author || "" }],
+            "work-of:" + pidOfPrimaryObject
+          )}
+          border={{
+            top: false,
+            bottom: {
+              keepVisible: true,
+            },
+          }}
+        >
+          {title}
+        </Link>
+        {author &&
+          ` ${Translate({ context: "general", label: "by" })} ${author}`}
+      </Text>
+    </>
   );
 }
 /**
@@ -146,47 +206,56 @@ function TableItem({ order, key }) {
   }
   const isMobile = breakpoint === "xs";
   const { author, title, pidOfPrimaryObject, orderId, creationDate } = order;
-  const { date, time } = parseDate(creationDate);
+  const { date, time, isToday } = parseDate(creationDate);
+  const dateString = isToday
+    ? Translate({ context: "profile", label: "last-day" })
+    : date;
+
+  if (isMobile) {
+    return (
+      <div className={styles.tableItem} key={key}>
+        <div>
+          <Text type="text1">
+            {Translate({ context: "profile", label: "orderRegistered" })}
+          </Text>
+          <Text className={styles.mobileDate} type="text3">
+            {dateString}
+          </Text>
+          <WorkInfo
+            title={title}
+            author={author}
+            pidOfPrimaryObject={pidOfPrimaryObject}
+            date={dateString}
+          />
+        </div>
+        <div className={styles.orderNumber}>
+          {breakpoint === "xs" && (
+            <Text className={styles.orderNumberText} type="text4">
+              {`${Translate({ context: "profile", label: "orderNumber" })}:`}
+            </Text>
+          )}
+          <Text type="text3">{orderId} </Text>
+        </div>
+      </div>
+    );
+  }
   return (
     <tr className={styles.tableItem}>
       <td className={styles.date}>
         {!isMobile && (
           <>
-            <Text type="text3">{date}</Text>
+            <Text type="text3">{dateString}</Text>
             <Text type="text3">{time}</Text>
           </>
         )}
-
       </td>
       <td className={styles.activity}>
-        <Text type="text1">
-          {Translate({ context: "profile", label: "orderRegistered" })}
-        </Text>
-        {isMobile && (
-          <Text className={styles.mobileDate} type="text3">
-            {date}
-          </Text>
-        )}
-        <Text type="text2" className={styles.orderWorkInfo}>
-          {Translate({ context: "profile", label: "youHaveOrdered" }) + " "}
-          <Link
-            href={getWorkUrl(
-              title,
-              [{ nameSort: author || "", display: author || "" }],
-              "work-of:" + pidOfPrimaryObject
-            )}
-            border={{
-              top: false,
-              bottom: {
-                keepVisible: true,
-              },
-            }}
-          >
-            {title}
-          </Link>
-          {author &&
-            ` ${Translate({ context: "general", label: "by" })} ${author}`}
-        </Text>
+        <WorkInfo
+          title={title}
+          author={author}
+          pidOfPrimaryObject={pidOfPrimaryObject}
+          date={dateString}
+        />
       </td>
       <td className={styles.orderNumber}>
         {breakpoint === "xs" && (
@@ -229,5 +298,13 @@ const parseDate = (isoDateString) => {
   const minutes = String(dateObj.getUTCMinutes()).padStart(2, "0");
   const time = `Kl. ${hours}.${minutes}`;
 
-  return { date, time };
+  //check if the date is today:
+  const today = new Date();
+
+  const isToday =
+    dateObj.getUTCDate() === today.getUTCDate() &&
+    dateObj.getUTCMonth() === today.getUTCMonth() &&
+    dateObj.getUTCFullYear() === today.getUTCFullYear();
+
+  return { date, time, isToday };
 };
