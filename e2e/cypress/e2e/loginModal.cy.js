@@ -5,7 +5,7 @@ describe(`Login modal`, () => {
     cy.get("[data-cy=link]").should(
       "have.attr",
       "href",
-      "/hjaelp/ny-bruger/45"
+      "/artikel/bliv-laaner/43"
     );
   });
   it("Plain login modal enders properly", () => {
