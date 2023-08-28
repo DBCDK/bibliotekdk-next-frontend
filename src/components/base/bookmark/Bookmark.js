@@ -24,6 +24,7 @@ function handleOnBookmarkClick() {
  * @returns {component}
  */
 function Bookmark({
+  size = { w: 5, h: 5 },
   className = "",
   selected = false,
   onClick = null,
@@ -52,12 +53,7 @@ function Bookmark({
       className={`${className} ${styles.bookmark} ${selectedClass}`}
       onClick={() => (onClick ? onClick() : handleOnBookmarkClick())}
     >
-      <Icon
-        skeleton={skeleton}
-        disabled={disabled}
-        size={{ w: 5, h: 5 }}
-        alt="bookmark"
-      >
+      <Icon skeleton={skeleton} disabled={disabled} size={size} alt="bookmark">
         <BookmarkSvg />
       </Icon>
     </button>

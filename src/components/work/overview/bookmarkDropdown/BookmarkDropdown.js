@@ -14,9 +14,9 @@ export function BookMarkMaterialSelector({ materialTypes, workId }) {
 
   const { bookmark, setBookmark, isLoading } = useBookmarks();
 
-  const onSelect = async (material, workId) => {
+  const onSelect = (material, workId) => {
     const item = { key: workId + material, id: workId, materialType: material };
-    await setBookmark(item);
+    setBookmark(item);
   };
 
   const [active, setActive] = useState(false);
@@ -33,6 +33,8 @@ export function BookMarkMaterialSelector({ materialTypes, workId }) {
   if (options.length === 1) {
     return (
       <Bookmark
+        size={{ w: 7, h: 7 }}
+        className={styles.bookmark}
         selected={active}
         onClick={() => {
           onSelect(options[0], workId);
@@ -49,7 +51,12 @@ export function BookMarkMaterialSelector({ materialTypes, workId }) {
         variant="success"
         id="dropdown-basic"
       >
-        <Bookmark onClick={bookmarkClick} selected={active} />
+        <Bookmark
+          size={{ w: 7, h: 7 }}
+          onClick={bookmarkClick}
+          selected={active}
+          className={styles.bookmark}
+        />
       </Dropdown.Toggle>
       <Dropdown.Menu
         className={styles.dropdownmenu}
@@ -65,8 +72,6 @@ export function BookMarkMaterialSelector({ materialTypes, workId }) {
             -1;
           return (
             <Dropdown.Item
-              as="div"
-              tabIndex="-1"
               data-cy={`bookmark-${material}-${index}`}
               key={`bookmark-${index}`}
               className={`${styles.dropdownitem} ${

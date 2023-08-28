@@ -12,6 +12,10 @@
   cursor: pointer;
 }
 
+.bookmark {
+  margin-left: var(--pt4);
+}
+
 .active {
   color: white;
   background-color: green;
