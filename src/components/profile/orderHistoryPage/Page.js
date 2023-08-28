@@ -127,7 +127,7 @@ export default function OrderHistoryPage() {
       <Pagination
         className={styles.pagination}
         numPages={totalPages}
-        currentPage={parseInt(page, 10)}
+        currentPage={parseInt(currentPage, 10)}
         onChange={onPageChange}
       />
     </Layout>
