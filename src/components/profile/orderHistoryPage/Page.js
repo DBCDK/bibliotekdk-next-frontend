@@ -155,45 +155,6 @@ export default function OrderHistoryPage() {
 }
 
 /**
- *
- * Used in TableItem. Shows infor like title, author, link to work etc. for a given order
- * @returns
- */
-function WorkInfo({ title, author, pidOfPrimaryObject }) {
-  const breakpoint = useBreakpoint();
-  const isMobile = breakpoint === "xs";
-
-  return (
-    <>
-      {!isMobile && (
-        <Text type="text1">
-          {Translate({ context: "profile", label: "orderRegistered" })}
-        </Text>
-      )}
-      <Text type="text2" className={styles.orderWorkInfo}>
-        {Translate({ context: "profile", label: "youHaveOrdered" }) + " "}
-        <Link
-          href={getWorkUrl(
-            title,
-            [{ nameSort: author || "", display: author || "" }],
-            "work-of:" + pidOfPrimaryObject
-          )}
-          border={{
-            top: false,
-            bottom: {
-              keepVisible: true,
-            },
-          }}
-        >
-          {title}
-        </Link>
-        {author &&
-          ` ${Translate({ context: "general", label: "by" })} ${author}`}
-      </Text>
-    </>
-  );
-}
-/**
  * TableItem shows info for a single order.
  * @param {obj} props
  * @returns {component}
@@ -266,6 +227,45 @@ function TableItem({ order, key }) {
         <Text type="text3">{orderId}</Text>
       </td>
     </tr>
+  );
+}
+
+/**
+ * Used in TableItem. Shows infor like title, author, link to work etc. for a given order
+ * @returns
+ */
+function WorkInfo({ title, author, pidOfPrimaryObject }) {
+  const breakpoint = useBreakpoint();
+  const isMobile = breakpoint === "xs";
+
+  return (
+    <>
+      {!isMobile && (
+        <Text type="text1">
+          {Translate({ context: "profile", label: "orderRegistered" })}
+        </Text>
+      )}
+      <Text type="text2" className={styles.orderWorkInfo}>
+        {Translate({ context: "profile", label: "youHaveOrdered" }) + " "}
+        <Link
+          href={getWorkUrl(
+            title,
+            [{ nameSort: author || "", display: author || "" }],
+            "work-of:" + pidOfPrimaryObject
+          )}
+          border={{
+            top: false,
+            bottom: {
+              keepVisible: true,
+            },
+          }}
+        >
+          {title}
+        </Link>
+        {author &&
+          ` ${Translate({ context: "general", label: "by" })} ${author}`}
+      </Text>
+    </>
   );
 }
 
