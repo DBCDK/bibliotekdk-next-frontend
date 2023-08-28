@@ -1,3 +1,6 @@
+/**
+ * @file OrderHistoryDataConsent is shown on orerhistory page in /profile
+ */
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import styles from "./OrderHistoryDataConsent.module.css";
@@ -5,6 +8,10 @@ import Button from "@/components/base/button";
 import Top from "@/components/_modal/pages/base/top";
 import Translate from "@/components/base/translate/Translate";
 
+/**
+ * This modal is used to change the users consent on storing orderhistory data for more than 30 days.
+ * @returns {component}
+ */
 export function OrderHistoryDataConsent({ modal }) {
   return (
     <div className={styles.modalContainer}>

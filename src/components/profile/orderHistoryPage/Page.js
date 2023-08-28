@@ -35,7 +35,7 @@ export default function OrderHistoryPage() {
   const isValidPage = !isNaN(parsedPage) && parsedPage > 0;
   const [currentPage, setCurrentPage] = useState(isValidPage ? parsedPage : 1);
   const [orderHistoryData, setOrderHistoryData] = useState([]);
-  //fetch paginated orderhistorydaya
+  //fetch paginated orderhistorydata
   const { data, isLoading } = useData(
     isAuthenticated &&
       orderHistory({
@@ -74,7 +74,7 @@ export default function OrderHistoryPage() {
       );
       setTotalPages(pages);
       if (fetchedData) {
-        //om mobile, merge the previous data with the new fetched data. On desktop show only one page at a time
+        //on mobile, merge the previous data with the new fetched data. On desktop show only one page at a time
         setOrderHistoryData((prevData) =>
           isMobile ? [...prevData, ...fetchedData] : fetchedData
         );
@@ -134,6 +134,7 @@ export default function OrderHistoryPage() {
   );
 }
 /**
+ * TableItem shows info for a single order.
  * @param {obj} props
  * @returns {component}
  */
