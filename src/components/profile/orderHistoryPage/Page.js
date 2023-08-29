@@ -296,7 +296,6 @@ const parseDate = (isoDateString) => {
 
   const hours = String(dateObj.getHours()).padStart(2, "0");
   const minutes = String(dateObj.getMinutes()).padStart(2, "0");
-
   const time = `Kl. ${hours}.${minutes}`;
   //check if the date is today:
   const today = new Date();
