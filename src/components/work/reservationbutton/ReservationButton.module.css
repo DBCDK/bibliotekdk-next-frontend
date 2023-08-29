@@ -1,3 +1,7 @@
 .textAboveButton {
   padding-bottom: var(--pt1);
 }
+
+.wrapper {
+  width: 100%;
+}
