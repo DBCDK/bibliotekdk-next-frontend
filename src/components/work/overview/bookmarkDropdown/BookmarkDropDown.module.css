@@ -63,14 +63,6 @@
   stroke: var(--blue);
 }
 
-/*.dropdownitem:focus {
-  background: linear-gradient(to right, var(--blue) 10px, var(--concrete) 10px);
-}
-
-.dropdownitem:hover {
-  background: linear-gradient(to right, var(--blue) 10px, var(--concrete) 10px);
-}*/
-
 .dropdownwrap :global(.dropdown-toggle::after) {
   display: none;
 }
