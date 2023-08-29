@@ -11,6 +11,7 @@ import Icon from "@/components/base/icon";
 import styles from "./InfoDropdown.module.css";
 import animations from "css/animations";
 import cx from "classnames";
+import PropTypes from "prop-types";
 
 /**
  * InfoDropdown component that shows a button and a text that can be toggled by button click
