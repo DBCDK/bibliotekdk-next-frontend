@@ -1,3 +1,7 @@
+.orderHistoryTable{
+  width: 100%;
+  }
+  
 .orderHistoryInfo {
   margin-bottom: var(--pt2);
 }
