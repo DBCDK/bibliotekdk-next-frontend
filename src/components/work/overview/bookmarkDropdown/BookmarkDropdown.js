@@ -9,31 +9,47 @@ import useBookmarks from "@/components/hooks/useBookmarks";
 import Icon from "@/components/base/icon/Icon";
 import BookmarkMedium from "@/public/icons/bookmark_small.svg";
 
-export function BookMarkMaterialSelector({ materialTypes, workId }) {
+export function BookMarkMaterialSelector({
+  materialTypes,
+  workId,
+  size = { w: 6, h: 6 },
+}) {
   const bookmarkClick = () => {};
 
   const { bookmark, setBookmark, isLoading } = useBookmarks();
 
   const onSelect = (material, workId) => {
-    const item = { key: workId + material, id: workId, materialType: material };
+    const item = {
+      key: workId + material,
+      id: workId,
+      materialType: material[0],
+    };
     setBookmark(item);
   };
 
   const [active, setActive] = useState(false);
+  const options = materialTypes.map((mat) => mat);
 
   useEffect(() => {
     if (!isLoading) {
-      const bookmarkIndex = bookmark?.findIndex((bookm) => bookm.id === workId);
+      let bookmarkIndex = -1;
+      // this one is used to set the overall button to active or not (if one of the materialtypes is selected)
+      if (options.length > 1) {
+        bookmarkIndex = bookmark?.findIndex((bookm) => bookm.id === workId);
+      } else if (options.length === 1) {
+        // if we have one material only we look for a specific key
+        bookmarkIndex = bookmark?.findIndex(
+          (bookm) => bookm.key === workId + options[0]
+        );
+      }
       setActive(bookmarkIndex !== -1);
     }
   }, [bookmark]);
 
-  const options = materialTypes.map((mat) => mat);
-
   if (options.length === 1) {
     return (
       <Bookmark
-        size={{ w: 6, h: 6 }}
+        size={size}
         className={styles.bookmark}
         selected={active}
         onClick={() => {
@@ -68,7 +84,7 @@ export function BookMarkMaterialSelector({ materialTypes, workId }) {
       >
         {options.map((material, index) => {
           const activeItem =
-            bookmark?.findIndex((book) => book.key === workId + material) !==
+            bookmark?.findIndex((book) => book.key === workId + material[0]) !==
             -1;
           return (
             <Dropdown.Item
@@ -96,8 +112,12 @@ export function BookMarkMaterialSelector({ materialTypes, workId }) {
   );
 }
 
-export default function wrapper({ materialTypes, workId }) {
+export default function wrapper({ materialTypes, workId, size }) {
   return (
-    <BookMarkMaterialSelector materialTypes={materialTypes} workId={workId} />
+    <BookMarkMaterialSelector
+      materialTypes={materialTypes}
+      workId={workId}
+      size={size}
+    />
   );
 }
