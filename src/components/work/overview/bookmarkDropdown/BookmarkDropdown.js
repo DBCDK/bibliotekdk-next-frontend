@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import { cyKey } from "@/utils/trim";
 import useBookmarks from "@/components/hooks/useBookmarks";
 import Icon from "@/components/base/icon/Icon";
-import BookmarkMedium from "@/public/icons/bookmark_medium.svg";
+import BookmarkMedium from "@/public/icons/bookmark_small.svg";
 
 export function BookMarkMaterialSelector({ materialTypes, workId }) {
   const bookmarkClick = () => {};
@@ -33,7 +33,7 @@ export function BookMarkMaterialSelector({ materialTypes, workId }) {
   if (options.length === 1) {
     return (
       <Bookmark
-        size={{ w: 7, h: 7 }}
+        size={{ w: 6, h: 6 }}
         className={styles.bookmark}
         selected={active}
         onClick={() => {
@@ -80,19 +80,13 @@ export function BookMarkMaterialSelector({ materialTypes, workId }) {
               onClick={() => {
                 onSelect(material, workId);
               }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  onSelect(material, workId);
-                }
-              }}
             >
               <div className={styles.itemContainer}>
                 <Text type="text3">{material}</Text>
-                {activeItem && (
-                  <Icon size={{ w: 3, h: 3 }}>
-                    <BookmarkMedium />
-                  </Icon>
-                )}
+
+                <Icon size={{ w: 3, h: 3 }}>
+                  <BookmarkMedium />
+                </Icon>
               </div>
             </Dropdown.Item>
           );
