@@ -398,20 +398,28 @@
         "en": "NOTE: Not all libraries provide access to Infomedia articles"
       },
       "libraryAccessReadMore": {
-        "da": "Læs evt. mere om danske biblioteker på Slots og kulturstyrelsens hjemmeside.",
-        "en": "Read more about danish libraries"
+        "da": "Slots og kulturstyrelsens hjemmeside.",
+        "en": "the website of the Danish Agency for Culture and Palaces."
       },
       "libraryNoAccess": {
-        "da": "%s giver ikke adgang til at læse artiklen",
-        "en": "%s does not provide access to read the article"
+        "da": "Vi kan ikke se du er registreret på et adgangsgivende bibliotek",
+        "en": "We could not see that you are registered at a library that provides access"
       },
       "accessOpportunity": {
-        "da": "De fleste folkebiblioteker giver adgang til artikler fra Infomedia",
-        "en": "Most public libraries provide access to articles from Infomedia"
+        "da": "For at du kan få adgang til at læse artiklen skal dit bibliotek abonnere på Infomedia. De fleste folkebiblioteker giver adgang til artikler fra Infomedia. Som borger kan du oprette dig på et folkebibliotek via deres hjemmeside.",
+        "en": "In order to gain acces to the article, your library must subscribe to Infomedia. Most public libraries provide access to Infomedia articles. As a citizen, you can register at a public library via their website."
       },
       "accessOpportunity2": {
         "da": "Er du bruger ved et andet bibliotek? Så log ind der og se om de har abonnement. ",
         "en": "LABEL: mangler oversættelse"
+      },
+      "accessOpportunity3": {
+        "da": "Bibliotek.dk er en overbygning, der samler alle danske biblioteker i en løsning. Derfor afhænger dine muligheder i bibliotek.dk af, hvilke biblioteker du er registeret på. Læs evt. mere om danske biblioteker på",
+        "en": "Bibliotek.dk is a solution that collects all Danish libraries in one place. Therefore, your options in bibliotek.dk depend on which libraries you are registered at. Read more about Danish libraries at"
+      },
+      "how-to-get-access": {
+        "da": "Hvordan får jeg adgang til at læse artiklen?",
+        "en": "How to get access to read the article?"
       }
     },
     "footer": {
