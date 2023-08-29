@@ -12,8 +12,7 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
  */
 function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
   const breakpoint = useBreakpoint();
-  const isMobile = breakpoint === "xs" || breakpoint === "sm";
-
+  const isMobile = breakpoint === "xs";
   const isHomeLibrary = municipalityAgencyId === agencyId;
   //const lastUsed = false; // Cannot be implemented yet
   const isPublic = isPublicLibrary(agencyId);
@@ -22,24 +21,26 @@ function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
     context: "profile",
     label: isPublic ? "publicLibrary" : "academicLibrary",
   });
-  return (
-    <div className={styles.tableItem}>
-      <div className={styles.libraryInfo}>
-        <div>
-          <Title type={isMobile ? "title6" : "title5"}>
-            {agencyName || "-"}
-          </Title>
-          {isHomeLibrary && (
-            <Text type="text3">
-              {Translate({
-                context: "profile",
-                label: "municipalityOfResidence",
-              })}
-            </Text>
-          )}
-        </div>
 
-        {/*TODO: use when bopælskommune is implemented
+  if (isMobile) {
+    return (
+      <div className={styles.tableItem}>
+        <div className={styles.libraryInfo}>
+          <div>
+            <Title type="title6">{agencyName || "-"}</Title>
+            <Text type="text2">{type}</Text>
+
+            {isHomeLibrary && (
+              <Text type="text3" className={styles.municipalityOfResidence}>
+                {Translate({
+                  context: "profile",
+                  label: "municipalityOfResidence",
+                })}
+              </Text>
+            )}
+          </div>
+
+          {/*TODO: use when lastUsed is implemented
         <div>
           <Title type="title5"> {agencyName || "-"}</Title>
           {lastUsed && (
@@ -49,19 +50,48 @@ function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
           )}
         </div>
       */}
+        </div>
 
-        <Text type="text2">{type}</Text>
+        {!isPublic && (
+          <IconButton
+            icon="close"
+            alt={Translate({ context: "profile", label: "remove" })}
+          >
+            {Translate({ context: "profile", label: "remove" })}
+          </IconButton>
+        )}
       </div>
-
+    );
+  }
+  return (
+    <tr className={styles.tableItem}>
+      <div className={styles.libraryInfo}>
+        <td>
+          <Title type="title5">{agencyName || "-"}</Title>
+          {isHomeLibrary && (
+            <Text type="text3">
+              {Translate({
+                context: "profile",
+                label: "municipalityOfResidence",
+              })}
+            </Text>
+          )}
+        </td>
+        <td>
+          <Text type="text2">{type}</Text>
+        </td>
+      </div>
       {!isPublic && (
-        <IconButton
-          icon="close"
-          alt={Translate({ context: "profile", label: "remove" })}
-        >
-          {Translate({ context: "profile", label: "remove" })}
-        </IconButton>
+        <td>
+          <IconButton
+            icon="close"
+            alt={Translate({ context: "profile", label: "remove" })}
+          >
+            {Translate({ context: "profile", label: "remove" })}
+          </IconButton>
+        </td>
       )}
-    </div>
+    </tr>
   );
 }
 
@@ -71,17 +101,47 @@ function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
  * @returns {component}
  */
 export default function LibrariesTable({ data, municipalityAgencyId }) {
+  const breakpoint = useBreakpoint();
+  const isMobile = breakpoint === "xs";
+
+  if (isMobile) {
+    return (
+      <>
+        <div className={styles.headerRow}>
+          <Text className={styles.headerItem}>
+            {Translate({ context: "profile", label: "libraries" })}
+          </Text>
+          <Text className={styles.headerItem}>
+            {Translate({ context: "profile", label: "libraryType" })}
+          </Text>
+        </div>
+        <div>
+          {data?.map((item) => (
+            <TableItem
+              key={item.agencyName}
+              municipalityAgencyId={municipalityAgencyId}
+              {...item}
+            />
+          ))}
+        </div>
+      </>
+    );
+  }
   return (
-    <>
-      <div className={styles.headerRow}>
-        <Text className={styles.headerItem}>
-          {Translate({ context: "profile", label: "libraries" })}
-        </Text>
-        <Text className={styles.headerItem}>
-          {Translate({ context: "profile", label: "libraryType" })}
-        </Text>
-      </div>
-      <div>
+    <table className={styles.librariesTable}>
+      <thead>
+        <tr className={styles.headerRow}>
+          <th className={styles.headerItem}>
+            <Text>{Translate({ context: "profile", label: "libraries" })}</Text>
+          </th>
+          <th className={styles.headerItem}>
+            <Text>
+              {Translate({ context: "profile", label: "libraryType" })}
+            </Text>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
         {data?.map((item) => (
           <TableItem
             key={item.agencyName}
@@ -89,8 +149,8 @@ export default function LibrariesTable({ data, municipalityAgencyId }) {
             {...item}
           />
         ))}
-      </div>
-    </>
+      </tbody>
+    </table>
   );
 }
 
