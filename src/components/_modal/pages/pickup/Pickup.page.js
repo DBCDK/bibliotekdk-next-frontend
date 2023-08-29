@@ -167,11 +167,19 @@ export function Pickup({
       modal.prev();
       return;
     }
-    modal.push("openAdgangsplatform", {
-      branchId: branch.branchId,
-      pid,
-      agencyName: branch.agencyName,
-    });
+    if (branch?.borrowerCheck) {
+      modal.push("openAdgangsplatform", {
+        callbackUrl: newUrl,
+        agencyId: branch.agencyId,
+        agencyName: originUrl ? originUrl : branch.agencyName,
+      });
+      return;
+    } else {
+      modal.push("loanerform", {
+        branchId: branch.branchId,
+        changePickupBranch: true,
+      });
+    }
   }
 
   const loadedOrderPolicies = useRef({});

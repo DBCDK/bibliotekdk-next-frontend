@@ -44,6 +44,7 @@ function LocalizationInformation({
             tag={"button"}
             iconSrc={ChevronRight}
             iconPlacement={"right"}
+            className={styles.iconLink}
           >
             <Text tag="span" type="text3" className={styles.fullLink}>
               {Translate({
