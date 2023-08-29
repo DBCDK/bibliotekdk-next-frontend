@@ -22,6 +22,7 @@
 @media (max-width: 575px) {
   .tableItem {
     display: block;
+    padding: var(--pt3) 0;
   }
 
   .activity,
