@@ -123,7 +123,7 @@ export default function OrderHistoryPage() {
           })}
         </>
       ) : (
-        <table>
+        <table className={styles.orderHistoryTable}>
           <thead>
             <tr className={styles.headerRow}>
               <th className={styles.headerItem}>
