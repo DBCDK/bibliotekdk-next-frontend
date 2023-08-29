@@ -1,3 +1,8 @@
+/**
+ * @file - InfoDropdown.js
+ * InfoDropdown component that shows a button and a text that can be toggled by button click
+ */
+
 import { useState } from "react";
 import Collapse from "react-bootstrap/Collapse";
 import Text from "@/components/base/text";
@@ -7,6 +12,12 @@ import styles from "./InfoDropdown.module.css";
 import animations from "css/animations";
 import cx from "classnames";
 
+/**
+ * InfoDropdown component that shows a button and a text that can be toggled by button click
+ * Chevron has absolute position. Give chevronOffset to move chevron to your needs.
+ * @param {*} props
+ * @returns {JSX.Element}
+ */
 export default function InfoDropdown(props) {
   const { children, label, buttonText, chevronOffset } = props;
   const [expanded, setExpanded] = useState(false);
@@ -56,3 +67,10 @@ export default function InfoDropdown(props) {
     </>
   );
 }
+
+InfoDropdown.propTypes = {
+  children: PropTypes.node,
+  label: PropTypes.string,
+  buttonText: PropTypes.string,
+  chevronOffset: PropTypes.string,
+};
