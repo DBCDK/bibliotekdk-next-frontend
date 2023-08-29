@@ -10,7 +10,7 @@ export default function useBookmarks() {
   /**
    * Set a value in bookmark list
    */
-  const setBookmark = async (value) => {
+  const setBookmark = (value) => {
     // Find existing
     const existingIndex = bookmark?.findIndex((obj) => obj.key === value.key);
     // push if not there

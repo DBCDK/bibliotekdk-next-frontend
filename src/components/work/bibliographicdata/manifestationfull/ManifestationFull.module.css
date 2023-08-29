@@ -7,7 +7,6 @@
 }
 
 .fullmanifestation .button {
-  margin-bottom: var(--pt2);
   font-family: var(--body-font-semibold);
   transition: color 0.5s;
   color: var(--blue);
@@ -58,7 +57,11 @@
 }
 
 /** end manifestation parts list **/
-
+.reservationwrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--pt2);
+}
 .container {
   column-count: 1;
   -webkit-column-count: 1;
