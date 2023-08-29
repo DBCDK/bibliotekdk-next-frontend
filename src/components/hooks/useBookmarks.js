@@ -5,7 +5,7 @@ export default function useBookmarks() {
     data: bookmark,
     mutate: mutateBookmark,
     error,
-  } = useSWR(KEY_NAME, (key) => JSON.parse(localStorage.getItem(key) || "[]"));
+  } = useSWR(KEY_NAME, (key) => JSON.parse(localStorage.getItem(key)) || []);
 
   /**
    * Set a value in bookmark list
