@@ -105,9 +105,23 @@ export default function OrderHistoryPage() {
       </Link>
 
       {isMobile ? (
-        orderHistoryData?.map((order) => {
-          return <TableItem order={order} key={order?.orderId} />;
-        })
+        <>
+          <div className={styles.headerRow}>
+            <Text className={styles.headerItem}>
+              {Translate({ context: "profile", label: "date" })}
+            </Text>
+            <Text className={styles.headerItem}>
+              {Translate({ context: "profile", label: "activity" })}
+            </Text>
+            <Text className={styles.headerItem}>
+              {Translate({ context: "profile", label: "orderNumber" })}
+            </Text>
+          </div>
+
+          {orderHistoryData?.map((order) => {
+            return <TableItem order={order} key={order?.orderId} />;
+          })}
+        </>
       ) : (
         <table className={styles.orderHistoryTable}>
           <thead>
