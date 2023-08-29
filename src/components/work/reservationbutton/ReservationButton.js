@@ -243,11 +243,11 @@ export const ReservationButton = ({
   const { props, text } = getProps();
 
   return (
-    <>
+    <div>
       <TextAboveButton access={access} user={user} />
       <Button type={buttonType} size={size} {...props}>
         {text}
       </Button>
-    </>
+    </div>
   );
 };
