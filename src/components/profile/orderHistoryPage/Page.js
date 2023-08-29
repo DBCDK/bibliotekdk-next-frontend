@@ -105,23 +105,9 @@ export default function OrderHistoryPage() {
       </Link>
 
       {isMobile ? (
-        <>
-          <div className={styles.headerRow}>
-            <Text className={styles.headerItem}>
-              {Translate({ context: "profile", label: "date" })}
-            </Text>
-            <Text className={styles.headerItem}>
-              {Translate({ context: "profile", label: "activity" })}
-            </Text>
-            <Text className={styles.headerItem}>
-              {Translate({ context: "profile", label: "orderNumber" })}
-            </Text>
-          </div>
-
-          {orderHistoryData?.map((order) => {
-            return <TableItem order={order} key={order?.orderId} />;
-          })}
-        </>
+        orderHistoryData?.map((order) => {
+          return <TableItem order={order} key={order?.orderId} />;
+        })
       ) : (
         <table className={styles.orderHistoryTable}>
           <thead>
@@ -294,10 +280,10 @@ const parseDate = (isoDateString) => {
   const monthName = monthNames[dateObj.getUTCMonth()];
   const date = `D. ${day} ${monthName}`;
 
-  const hours = String(dateObj.getUTCHours()).padStart(2, "0");
-  const minutes = String(dateObj.getUTCMinutes()).padStart(2, "0");
-  const time = `Kl. ${hours}.${minutes}`;
+  const hours = String(dateObj.getHours()).padStart(2, "0");
+  const minutes = String(dateObj.getMinutes()).padStart(2, "0");
 
+  const time = `Kl. ${hours}.${minutes}`;
   //check if the date is today:
   const today = new Date();
 
