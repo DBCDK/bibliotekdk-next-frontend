@@ -13,7 +13,7 @@ import useUser from "@/components/hooks/useUser";
  * This component shows a profile menu for logged in users.
  * It is used on the left handside of the profile page when window wider than 992px.
  * It contains two types of links:
- * simple links such as "Mine bilioteker"
+ * simple links such as "Mine biblioteker"
  * and links with subcategories such as "Lån og reserveringer" with subcateogries "Lån", "Reserveringer", "Mellemværende".
  * @returns {JSX.Element}
  */
@@ -33,7 +33,6 @@ function getProfileUrl(wordToTranslate) {
 function MenuLink({ label, href }) {
   const router = useRouter();
   const [isActive, setIsActive] = useState(router.asPath.includes(href));
-
   useEffect(() => {
     setIsActive(router.asPath.includes(href));
   }, [router.asPath]);
@@ -42,7 +41,7 @@ function MenuLink({ label, href }) {
 
   return (
     <li className={cx(styles.link, { [styles.simpleLink]: isActive })}>
-      <Link href={href} dataCy="menu-fixed-links">
+      <Link href={href} dataCy={`menu-fixed-links-${label}`}>
         <Title type={type} tag="h5">
           {Translate({ context: CONTEXT, label })}
         </Title>
@@ -165,7 +164,7 @@ function MenuGroup({ menus, categoryUrl, name, className }) {
 /**
  * Profile menu main items
  */
-const menuItems = ["loansAndReservations", "myLibraries"];
+const menuItems = ["loansAndReservations", "orderHistory", "myLibraries"];
 
 const initialLoansAndReservations = {
   loansAndReservations: [
@@ -215,6 +214,7 @@ export default function ProfileMenu() {
           />
           {/* more MenuLinks are coming soon */}
           <MenuLink label={menuItems[1]} href={getProfileUrl(menuItems[1])} />
+          <MenuLink label={menuItems[2]} href={getProfileUrl(menuItems[2])} />
         </ul>
       </nav>
     </>

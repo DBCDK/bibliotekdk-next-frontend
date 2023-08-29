@@ -11,6 +11,7 @@ import References from "./references";
 import ManifestationContent from "./manifestationContent";
 import Material from "./material";
 import DeleteOrder from "./deleteOrder";
+import OrderHistoryDataConsent from "./orderHistoryDataConsent";
 import Login from "./login";
 import MobileLogin from "./mobileLogin";
 import OpenAdgangsplatform from "./openAdgangsplatform";
@@ -30,6 +31,7 @@ const _modal = {
   ManifestationContent,
   Material,
   DeleteOrder,
+  OrderHistoryDataConsent,
   Login,
   MobileLogin,
   LoginNotSupported,
