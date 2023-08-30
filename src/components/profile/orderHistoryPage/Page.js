@@ -294,10 +294,9 @@ const parseDate = (isoDateString) => {
   const monthName = monthNames[dateObj.getUTCMonth()];
   const date = `D. ${day} ${monthName}`;
 
-  const hours = String(dateObj.getUTCHours()).padStart(2, "0");
-  const minutes = String(dateObj.getUTCMinutes()).padStart(2, "0");
+  const hours = String(dateObj.getHours()).padStart(2, "0");
+  const minutes = String(dateObj.getMinutes()).padStart(2, "0");
   const time = `Kl. ${hours}.${minutes}`;
-
   //check if the date is today:
   const today = new Date();
 
