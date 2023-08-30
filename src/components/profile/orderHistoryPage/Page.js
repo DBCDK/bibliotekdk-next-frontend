@@ -13,6 +13,8 @@ import { useModal } from "@/components/_modal";
 import { orderHistory } from "@/lib/api/order.fragments";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import * as userFragments from "@/lib/api/user.fragments";
+
 const itemsPerPage = 4;
 
 /**
@@ -43,6 +45,10 @@ export default function OrderHistoryPage() {
         offset: (currentPage - 1) * itemsPerPage,
       })
   );
+  const { data: userData, mutate } = useData(
+    isAuthenticated && userFragments.extendedData()
+  );
+  const persistUserData = !!userData?.user?.persistUserData;
 
   /**
    * Updates url query params with page
@@ -82,27 +88,55 @@ export default function OrderHistoryPage() {
     }
   }, [data, isLoading]);
 
+  useEffect(() => {
+    if (!modal.isVisible) {
+      mutate();
+    }
+  }, [modal.isVisible]);
   return (
     <Layout title={Translate({ context: "profile", label: "orderHistory" })}>
-      <Text className={styles.orderHistoryInfo}>
-        {Translate({ context: "profile", label: "orderHistoryInfo" })}
-      </Text>
-
-      <Link
-        onClick={() => {
-          modal.push("orderHistoryDataConsent");
-        }}
-        border={{
-          top: false,
-          bottom: {
-            keepVisible: true,
-          },
-        }}
-      >
-        <Text type="text3" tag="span">
-          {Translate({ context: "profile", label: "canWeSaveYourOrders" })}
+      {persistUserData ? (
+        <Text type="text3">
+          {Translate({ context: "profile", label: "consentInfoTextpart1" })}
+          <Link
+            className={styles.consentLink}
+            onClick={() => {
+              modal.push("orderHistoryDataConsent");
+            }}
+            border={{
+              top: false,
+              bottom: {
+                keepVisible: true,
+              },
+            }}
+          >
+            {Translate({ context: "profile", label: "consent" })}
+          </Link>
+          {Translate({ context: "profile", label: "consentInfoTextpart2" })}
         </Text>
-      </Link>
+      ) : (
+        <>
+          <Text className={styles.orderHistoryInfo}>
+            {Translate({ context: "profile", label: "orderHistoryInfo" })}
+          </Text>
+
+          <Link
+            onClick={() => {
+              modal.push("orderHistoryDataConsent");
+            }}
+            border={{
+              top: false,
+              bottom: {
+                keepVisible: true,
+              },
+            }}
+          >
+            <Text type="text3" tag="span">
+              {Translate({ context: "profile", label: "canWeSaveYourOrders" })}
+            </Text>
+          </Link>
+        </>
+      )}
 
       {isMobile ? (
         <>

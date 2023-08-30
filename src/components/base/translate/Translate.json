@@ -3274,17 +3274,41 @@
         "da": "Opsamling af data",
         "en": "Data Collection"
       },
+      "updateDataCollectionConsent": {
+        "da": "Ændring af samtykke",
+        "en": "Update consent of data collection"
+      },
       "permissionText": {
         "da": "Vil du give tilladelse til at bibliotek.dk må indsamle data om dine bestillinger, lån og adfærd på hjemmesiden?\n\nDen opsamlede data vil blive benyttet til at lave bestillingshistorik og personlige anbefalinger til dig.\n\nBestillingshistorikken viser kun bestillinger fra den dato, funktionen bliver aktiveret.\n\nDine data bliver opbevaret af bibliotekerne og bliver kun benyttet af bibliotekerne. Det vil sige, at de udleveres aldrig til tredjepart.",
         "en": "Would you like to give permission for bibliotek.dk to collect data about your orders, loans, and behavior on the website?\n\nThe collected data will be used to create an order history and personal recommendations for you.\n\nThe order history will only show orders from the date the function is activated.\n\nYour data is stored by the libraries and is only used by the libraries. This means they are never disclosed to third parties."
+      },
+      "revokeConsentText": {
+        "da": "Vil du ændre dit samtykke, så dine bestillinger ikke længere bliver gemt i historikken?\n\nFremfor vil der så kun blive vist bestillinger for de seneste 30 dage",
+        "en": "Do you want to change your consent so that your orders are no longer saved in the history?\n\nInstead, only orders for the past 30 days will be displayed"
       },
       "consentButton": {
         "da": "Giv tilladelse",
         "en": "Give Permission"
       },
+      "revokeConsent": {
+        "da": "Tilbagekald samtykke",
+        "en": "Revoke consent"
+      },
       "goBackButton": {
         "da": "Tilbage",
         "en": "Go Back"
+      },
+      "consentInfoTextpart1": {
+        "da": "Her kan du se en oversigt over dine bestillinger. Du har givet",
+        "en": "Here you can see an overview of your orders. You have given consent"
+      },
+      "consentInfoTextpart2": {
+        "da": "til, at dine bestillinger gemmes for at du kan se dem.",
+        "en": "for your orders to be saved for you to view."
+      },
+      "consent": {
+        "da": "samtykke",
+        "en": "consent"
       }
     }
   }

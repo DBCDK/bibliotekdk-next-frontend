@@ -175,3 +175,22 @@ export function orderPolicy({ pid }) {
     slowThreshold: 3000,
   };
 }
+
+/**
+ * get extended user data
+ *
+ */
+export function extendedData() {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 1000, // for debugging
+    query: `
+    query  {
+      user {
+        persistUserData
+        favoritePickUpBranch
+      }
+     }`,
+    slowThreshold: 3000,
+  };
+}
