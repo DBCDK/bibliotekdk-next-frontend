@@ -68,3 +68,6 @@
 .pagination {
   margin-top: var(--pt8);
 }
+.consentLink {
+  margin: 0 var(--pt05);
+}
