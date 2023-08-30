@@ -158,9 +158,6 @@ function Order({
       }
     } else {
       setFailedSubmission(true);
-      if (!storeLoanerInfo) {
-        deleteSessionData();
-      }
     }
   }
 

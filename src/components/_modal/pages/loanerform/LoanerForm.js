@@ -42,6 +42,11 @@ export function UserParamsForm({
   const requiredParameters = branch?.userParameters?.filter(
     ({ parameterRequired }) => parameterRequired
   );
+
+  const emailRequired =
+    requiredParameters.filter((p) => p.userParameterType === "userMail")
+      .length > 0;
+
   function validateState() {
     for (let i = 0; i < requiredParameters.length; i++) {
       const { userParameterType } = requiredParameters[i];
@@ -49,11 +54,13 @@ export function UserParamsForm({
         return ERRORS.MISSING_INPUT;
       }
     }
-    const validMail = validateEmail(state.userMail);
-    setValidMail(validMail);
-    const emailError = getLabel(state.userMail, validMail);
-    if (emailError) {
-      return emailError.label;
+    if (emailRequired) {
+      const validMail = validateEmail(state.userMail);
+      setValidMail(validMail);
+      const emailError = getLabel(state.userMail, validMail);
+      if (emailError) {
+        return emailError.label;
+      }
     }
   }
 
