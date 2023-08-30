@@ -129,6 +129,51 @@ export function ShowLoanerFormShort() {
 
 /**
  * Returns Loaner Form
+ */
+export function ShowLoanerFormShortNoMail() {
+  const [storeLoanerInfo, setStoreLoanerInfo] = useState(false);
+
+  return (
+    <div style={{ maxWidth: 450 }}>
+      <LoanerForm
+        storeLoanerInfo={storeLoanerInfo}
+        setStoreLoanerInfo={setStoreLoanerInfo}
+        branch={{
+          borrowerCheck: true,
+          name: "DBCTestBibliotek",
+          agencyName: "DBC-Testbiblioteksvæsen",
+          agencyId: "790900",
+          userParameters: [],
+          pickupAllowed: true,
+          orderPolicy: {
+            orderPossible: true,
+          },
+          userParameters: [
+            {
+              userParameterType: "userId",
+              parameterRequired: true,
+            },
+            {
+              userParameterType: "userName",
+              parameterRequired: true,
+            },
+            {
+              userParameterType: "userAddress",
+              parameterRequired: true,
+            },
+          ],
+        }}
+        initial={{}}
+        onSubmit={(data) => {
+          console.log(data);
+        }}
+      />
+    </div>
+  );
+}
+
+/**
+ * Returns Loaner Form
  *
  */
 export function ShowLoanerFormSkeleton() {

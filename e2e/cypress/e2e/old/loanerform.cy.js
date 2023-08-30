@@ -27,7 +27,7 @@ describe("LoanerForm", () => {
     );
   });
 
-  it("Validation works", () => {
+  it("Validation works in form with email required", () => {
     cy.visit("/iframe.html?id=modal-loanerform--show-loaner-form-short");
 
     //error if not all fields have been filled out
@@ -48,6 +48,28 @@ describe("LoanerForm", () => {
       "not.exist"
     );
     cy.get("[data-cy=text-udfyld-venligst-alle-felter]").should("not.exist");
+  });
+
+  it("Validation works in form without email field", () => {
+    cy.visit(
+      "/iframe.html?id=modal-loanerform--show-loaner-form-short-no-mail"
+    );
+
+    //error if not all fields have been filled out
+    cy.get("[data-cy=input-userAddress]")
+      .should("be.visible")
+      .type("Tempovej 7 - 10");
+    cy.get("[data-cy=button-gå-til-bestilling]").should("be.visible").click();
+    cy.get("[data-cy=text-udfyld-venligst-alle-felter]").should("be.visible");
+    //no error if all fields have been filled out
+    cy.get("[data-cy=input-userId]").should("be.visible").type("123");
+    cy.get("[data-cy=input-userName]").should("be.visible").type("Bernd");
+    cy.get("[data-cy=button-gå-til-bestilling]").should("be.visible").click();
+    cy.get("[data-cy=text-udfyld-venligst-alle-felter]").should("not.exist");
+    //no error about missing mail
+    cy.get("[data-cy=text-angiv-venligst-en-korrekt-email-adresse]").should(
+      "not.exist"
+    );
   });
 
   it("Checkbox working", () => {
