@@ -12,7 +12,7 @@ import { useMutate } from "@/lib/api/api";
 import { useData } from "@/lib/api/api";
 import * as userFragments from "@/lib/api/user.fragments";
 import useUser from "@/components/hooks/useUser";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 /**
  * This modal is used to change the users consent on storing orderhistory data for more than 30 days.
@@ -25,7 +25,7 @@ export function OrderHistoryDataConsent({ modal }) {
     isAuthenticated && userFragments.extendedData()
   );
 
-const persistUserData= !!userData?.user?.persistUserData
+  const persistUserData = !!userData?.user?.persistUserData;
 
   useEffect(() => {
     if (modal.isVisible) {
@@ -38,18 +38,19 @@ const persistUserData= !!userData?.user?.persistUserData
 
       <div>
         <Title className={styles.modalTitle} type="title4">
-          {persistUserData
-            ? Translate({
-                context: "profile",
-                label: "updateDataCollectionConsent",
-              })
-            : Translate({ context: "profile", label: "dataCollectionTitle" })}
+          {Translate({
+            context: "profile",
+            label: persistUserData
+              ? "updateDataCollectionConsent"
+              : "dataCollectionTitle",
+          })}
         </Title>
 
         <Text className={styles.permissionText}>
-          {persistUserData
-            ? Translate({ context: "profile", label: "revokeConsentText" })
-            : Translate({ context: "profile", label: "permissionText" })}
+          {Translate({
+            context: "profile",
+            label: persistUserData ? "revokeConsentText" : "permissionText",
+          })}
         </Text>
 
         <Button
@@ -64,9 +65,10 @@ const persistUserData= !!userData?.user?.persistUserData
             modal.clear();
           }}
         >
-          {persistUserData
-            ? Translate({ context: "profile", label: "revokeConsent" })
-            : Translate({ context: "profile", label: "consentButton" })}
+          {Translate({
+            context: "profile",
+            label: persistUserData ? "revokeConsent" : "consentButton",
+          })}
         </Button>
         <Button
           className={styles.goBackButton}

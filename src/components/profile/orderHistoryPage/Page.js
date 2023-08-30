@@ -99,7 +99,7 @@ export default function OrderHistoryPage() {
         <Text type="text3">
           {Translate({ context: "profile", label: "consentInfoTextpart1" })}
           <Link
-          className={styles.consentLink}
+            className={styles.consentLink}
             onClick={() => {
               modal.push("orderHistoryDataConsent");
             }}
