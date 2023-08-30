@@ -15,6 +15,7 @@ import DeleteOrder from "./deleteOrder";
 import AgencyLocalizations from "./agencyLocalizations";
 import BranchLocalizations from "./branchLocalizations";
 import BranchDetails from "./branchDetails";
+import OrderHistoryDataConsent from "./orderHistoryDataConsent";
 
 const _modal = {
   Menu,
@@ -34,6 +35,7 @@ const _modal = {
   AgencyLocalizations,
   BranchLocalizations,
   BranchDetails,
+  OrderHistoryDataConsent,
 };
 
 export default _modal;

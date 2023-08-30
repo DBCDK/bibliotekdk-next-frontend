@@ -1,12 +1,18 @@
 .deleteOrder {
-  padding: var(--pt7) var(--pt6);
+  padding: 0 var(--pt2);
 }
 
-.container {
-  margin-top: var(--pt2);
+@media (min-width: 992px) {
+  .deleteOrder {
+    padding: 0 var(--pt5);
+  }
 }
 
-.text {
+.confirmationText {
+  margin-bottom: var(--pt2);
+}
+
+.bottomConfirmationText {
   margin-bottom: var(--pt5);
 }
 
@@ -15,5 +21,7 @@
 }
 
 .cancelButton {
-  width: 100%;
+  /*remove outline from width to have same width as (delete-) .button*/
+  width: calc(100% - var(--pt05));
+  margin-left: 2px;
 }

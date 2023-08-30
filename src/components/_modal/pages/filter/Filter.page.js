@@ -144,6 +144,13 @@ function SelectedFilter({
                 sortOrder === "numerical" ? "alphabetically" : "numerical"
               );
             }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                setSortOrder(
+                  sortOrder === "numerical" ? "alphabetically" : "numerical"
+                );
+              }
+            }}
           >
             <Text type="text3" tag="span">
               {Translate({
@@ -292,6 +299,7 @@ export function Filter(props) {
               context: "facets",
               label: "facets-group-label",
             })}
+            disableGroupOutline
           >
             {facets
               .map((facet, idx) => {
@@ -316,9 +324,8 @@ export function Filter(props) {
                 });
 
                 return (
-                  <List.Select
+                  <List.FormLink
                     key={`${facet.name}-${idx}`}
-                    selected={false}
                     onSelect={() => modal.push("filter", { facet })}
                     label={facet.name}
                     className={`${styles.item} ${animations["on-hover"]}`}
@@ -345,7 +352,7 @@ export function Filter(props) {
                         </Text>
                       )}
                     </span>
-                  </List.Select>
+                  </List.FormLink>
                 );
               })
               .filter((c) => c)}

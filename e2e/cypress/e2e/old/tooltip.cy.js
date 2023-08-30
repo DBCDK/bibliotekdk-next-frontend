@@ -4,7 +4,7 @@
  */
 describe("feedback", () => {
   before(function () {
-    cy.visit("/iframe.html?id=base-tooltips--simple-tooltip");
+    cy.visit("/iframe.html?id=base-tooltips--simple-tooltip-default-content");
   });
 
   it(`Tooltip present on click`, () => {

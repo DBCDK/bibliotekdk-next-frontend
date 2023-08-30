@@ -24,16 +24,16 @@ describe("Profilemenu on desktop", () => {
       .click()
       .children()
       .first()
-      .should("have.css", "font-family", "ibm_plex_sanssemibold");
+      .should("have.css", "font-family", "ibm_plex_sansregular");
   });
 
   it(`Simple link has href and is bold after on click`, () => {
     cy.visit("/iframe.html?id=profile-profilemenu--profile-menu-story");
-    cy.get('[data-cy="menu-fixed-links"]')
+    cy.get('[data-cy="menu-fixed-links-myLibraries"]')
       .should("be.visible")
       .should("have.attr", "href")
       .and("include", "/profil/mine-biblioteker");
-    cy.get('[data-cy="menu-fixed-links"]')
+    cy.get('[data-cy="menu-fixed-links-myLibraries"]')
       .click()
       .children()
       .first()

@@ -6,6 +6,8 @@ import translation from "./Translate.json";
 export let lang = "da";
 export let contexts = {};
 
+export const monthLabel = "monthsInFourCharacters";
+
 /**
  * units
  *
@@ -21,7 +23,7 @@ export function months({ label }) {
     return `[! unknown label: ${label} in units]`;
   }
 
-  if (label === "shortenedMonths") {
+  if (label === monthLabel) {
     // convert to array of short months
     const months = contexts.units[label][lang];
     return months && months.split(",");

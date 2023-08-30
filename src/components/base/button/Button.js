@@ -30,25 +30,20 @@ function Button({
   tabIndex = "0",
   dataCy = null,
 }) {
-  const disabledStyle = disabled ? styles.disabled : "";
   const key = dataCy || cyKey({ name: children, prefix: "button" });
 
   return (
     <button
       id={id}
       data-cy={key}
-      className={cx(
-        className,
-        styles.button,
-        {
-          [styles.large]: size === "large",
-          [styles.medium]: size === "medium",
-          [styles.small]: size === "small",
-          [styles.primary]: type === "primary",
-          [styles.secondary]: type === "secondary",
-        },
-        disabledStyle
-      )}
+      className={cx(className, styles.button, {
+        [styles.large]: size === "large",
+        [styles.medium]: size === "medium",
+        [styles.small]: size === "small",
+        [styles.primary]: type === "primary",
+        [styles.secondary]: type === "secondary",
+        [styles.disabled]: disabled,
+      })}
       onClick={(e) => (onClick ? onClick(e) : handleOnButtonClick(e))}
       aria-disabled={disabled}
       disabled={disabled}

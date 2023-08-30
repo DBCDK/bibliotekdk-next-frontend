@@ -143,6 +143,7 @@ const titleTypes = [
   "title4",
   "title5",
   "title6",
+  "title6b",
   "title7",
 ];
 export const allTextTypes = [...textTypes, ...titleTypes];

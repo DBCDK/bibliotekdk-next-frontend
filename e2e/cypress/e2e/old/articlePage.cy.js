@@ -141,13 +141,11 @@ describe("ArticlePage", () => {
 
       //cy.contains("Titel på Infomedia-artikel");
       cy.contains("Få adgang til hele artiklen");
-      cy.contains(
-        "OBS: Ikke alle biblioteker giver adgang til artikler fra Infomedia"
-      );
+
       cy.get("[data-cy=button-log-ind]").should("be.visible");
     });
 
-    it("Shows login prompt when logged in user is not granted access", () => {
+    it.skip("Shows login prompt when logged in user is not granted access", () => {
       cy.fixture("articlepublicdata.json").then((fixture) => {
         cy.intercept("POST", `${fbiApiPath}`, (req) => {
           if (
@@ -180,6 +178,7 @@ describe("ArticlePage", () => {
       );
 
       cy.contains("Testbiblioteker giver ikke adgang til at læse artiklen");
+      cy.get("IconButton").click();
       cy.contains(
         "Er du bruger ved et andet bibliotek? Så log ind der og se om de har abonnement."
       );

@@ -14,79 +14,53 @@ import { arangeLoanerInfo } from "@/lib/userdataFactoryUtils";
 import Link from "@/components/base/link";
 import { useState } from "react";
 
+const SKELETON_ROW_AMOUNT = 2;
+
 export const dataReducer = (dataType, data) => {
   switch (dataType) {
     case "DEBT": {
       return {
         type: "DEBT",
-        amount: data.amount,
-        title: data.title,
-        currency: data.currency,
+        amount: data?.amount,
+        title: data?.title,
+        currency: data?.currency,
       };
     }
     case "LOAN": {
-      if (!data.manifestation) {
-        // No manifestation - we show what we can
-        return {
-          type: "LOAN",
-          image: null,
-          title: null,
-          creator: null,
-          materialType: null,
-          creationYear: null,
-          dueDateString: data.dueDate,
-          id: data.loanId,
-          workId: "work-of:" + null,
-        };
-      }
+      //some loans dont have manifestation
       return {
         type: "LOAN",
-        image: data.manifestation.cover.thumbnail,
-        title: data.manifestation.titles.main[0],
+        image: data?.manifestation?.cover?.thumbnail,
+        title: data?.manifestation?.titles?.main?.[0],
         creator: extractCreatorsPrioritiseCorporation(
-          data.manifestation.creators
+          data?.manifestation?.creators
         )?.[0]?.display,
-        materialType: data.manifestation.materialTypes[0].specific,
-        creationYear: data.manifestation.recordCreationDate.substring(0, 4),
-        dueDateString: data.dueDate,
-        id: data.loanId,
-        workId: "work-of:" + data.manifestation.pid,
+        materialType: data?.manifestation?.materialTypes?.[0]?.specific,
+        creationYear: data?.manifestation?.recordCreationDate?.substring(0, 4),
+        dueDateString: data?.dueDate,
+        id: data?.loanId,
+        workId: "work-of:" + data?.manifestation?.pid,
       };
     }
     case "ORDER": {
-      if (!data.manifestation) {
-        // No manifestation - we show what we can
-        return {
-          type: "ORDER",
-          image: null,
-          title: data.title,
-          creator: data.creator,
-          creators: null,
-          materialType: null,
-          creationYear: null,
-          library: data.pickUpBranch.agencyName,
-          holdQueuePosition: data.holdQueuePosition,
-          pickUpExpiryDate: data.pickUpExpiryDate,
-          id: data.orderId,
-          workId: "work-of:" + null,
-        };
-      }
+      //some orders dont have manifestation
       return {
         type: "ORDER",
-        image: data.manifestation.cover.thumbnail,
-        title: data.manifestation.titles.main[0],
-        creator: extractCreatorsPrioritiseCorporation(
-          data.manifestation.creators
-        )?.[0]?.display,
-        materialType: data.manifestation.materialTypes[0].specific,
-        creationYear: data.manifestation.recordCreationDate.substring(0, 4),
-        library: data.pickUpBranch.agencyName,
-        agencyId: data.libraryId,
-        holdQueuePosition: data.holdQueuePosition,
-        pickUpExpiryDate: data.pickUpExpiryDate,
-        id: data.orderId,
-        workId: "work-of:" + data.manifestation.pid,
-        orderMutation: data.orderMutation,
+        image: data?.manifestation?.cover?.thumbnail,
+        title: data?.manifestation?.titles?.main?.[0] || data?.title,
+        creator:
+          extractCreatorsPrioritiseCorporation(
+            data?.manifestation?.creators
+          )?.[0]?.display || data?.creator,
+        materialType: data?.manifestation?.materialTypes?.[0].specific,
+        creationYear: data?.manifestation?.recordCreationDate?.substring(0, 4),
+        library: data?.pickUpBranch?.agencyName,
+        agencyId: data?.libraryId,
+        holdQueuePosition: data?.holdQueuePosition,
+        pickUpExpiryDate: data?.pickUpExpiryDate,
+        id: data?.orderId,
+        workId: "work-of:" + data?.manifestation?.pid,
+        orderMutation: data?.orderMutation,
       };
     }
   }
@@ -96,7 +70,7 @@ const LoansAndReservations = () => {
   const breakpoint = useBreakpoint();
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
-  const { loanerInfo } = useUser();
+  const { loanerInfo, isLoading } = useUser();
   const { debt, agency, orders, loans } = arangeLoanerInfo(loanerInfo);
   const [removedOrderId, setRemovedOrderId] = useState("");
   const libraryString =
@@ -110,7 +84,6 @@ const LoansAndReservations = () => {
       <Text type="text3" className={styles.subHeading}>
         {Translate({ context: "profile", label: "loans-subtext" })}{" "}
         <Link
-          className={styles.yourLibraries}
           href="/profil/mine-biblioteker"
           border={{
             top: false,
@@ -163,7 +136,7 @@ const LoansAndReservations = () => {
             column3={Translate({ context: "profile", label: "loaner-library" })}
           />
 
-          {debt?.map((claim, i) => (
+          {debt.map((claim, i) => (
             <MaterialRow
               {...dataReducer("DEBT", claim)}
               key={`debt-${claim.title}-#${i}`}
@@ -214,12 +187,23 @@ const LoansAndReservations = () => {
           column2={Translate({ context: "profile", label: "return-deadline" })}
           column3={Translate({ context: "profile", label: "loaner-library" })}
         />
-        {loans && loans.length !== 0 ? (
-          loans?.map((loan, i) => (
+        {isLoading ? (
+          [...Array(SKELETON_ROW_AMOUNT).keys()].map((_, i) => (
+            <MaterialRow
+              skeleton
+              key={`loan-#${i}`}
+              id={`loan-#${i}`}
+              title=""
+              library=""
+            />
+          ))
+        ) : loans && loans.length !== 0 ? (
+          loans.map((loan, i) => (
             <MaterialRow
               {...dataReducer("LOAN", loan)}
               key={`loan-${loan.loanId}-#${i}`}
               library={libraryString}
+              agencyId={libraryId}
               dataCy={`loan-${i}`}
             />
           ))
@@ -272,8 +256,18 @@ const LoansAndReservations = () => {
           column2={Translate({ context: "profile", label: "status" })}
           column3={Translate({ context: "profile", label: "pickup-at" })}
         />
-        {orders && orders.length !== 0 ? (
-          orders?.map((order, i) => (
+        {isLoading ? (
+          [...Array(SKELETON_ROW_AMOUNT).keys()].map((_, i) => (
+            <MaterialRow
+              skeleton
+              key={`loan-#${i}`}
+              id={`loan-#${i}`}
+              title=""
+              library=""
+            />
+          ))
+        ) : orders && orders.length !== 0 ? (
+          orders.map((order, i) => (
             <MaterialRow
               {...dataReducer("ORDER", {
                 ...order,

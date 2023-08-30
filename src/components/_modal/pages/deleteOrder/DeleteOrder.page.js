@@ -13,7 +13,7 @@ function DeleteOrder({ context, modal }) {
     orderId,
     agencyId,
     orderMutation,
-    onClose,
+    title,
   } = context;
 
   function closeModal() {
@@ -22,26 +22,38 @@ function DeleteOrder({ context, modal }) {
 
   function onDeleteOrder() {
     handleDeleteOrder(orderId, agencyId, orderMutation);
-    if (!orderMutation.error) {
-      onClose({ success: true });
-    } else {
-      onClose({ success: false });
-    }
     modal.clear();
   }
 
   return (
     <article className={styles.deleteOrder}>
       <Top title={label} titleTag="h4" dataCy="modal-header" />
-      <hr />
-      <div className={styles.container}>
-        <Text type="text2" tag="p">
+      <>
+        <Text
+          type="text2"
+          tag="p"
+          className={styles.confirmationText}
+          dataCy="delete-order-confirmation-1"
+        >
           {Translate({
             context: "profile",
             label: "delete-order-confirmation",
           })}
         </Text>
-        <Text type="text2" tag="p" className={styles.text}>
+        <Text
+          type="text1"
+          tag="p"
+          className={styles.confirmationText}
+          dataCy="material-title"
+        >
+          &quot;{title}&quot;
+        </Text>
+        <Text
+          type="text2"
+          tag="p"
+          className={styles.bottomConfirmationText}
+          dataCy="delete-order-confirmation-2"
+        >
           {Translate({
             context: "profile",
             label: isReadyToPickup
@@ -53,7 +65,7 @@ function DeleteOrder({ context, modal }) {
         <Button
           className={styles.button}
           type="primary"
-          size="medium"
+          size="large"
           onClick={onDeleteOrder}
           onKeyPress={(e) => {
             e.key === "Enter" && onDeleteOrder();
@@ -67,7 +79,7 @@ function DeleteOrder({ context, modal }) {
         <Button
           className={styles.cancelButton}
           type="secondary"
-          size="medium"
+          size="large"
           onClick={closeModal}
           onKeyPress={(e) => {
             e.key === "Enter" && closeModal();
@@ -78,7 +90,7 @@ function DeleteOrder({ context, modal }) {
             label: "cancel",
           })}
         </Button>
-      </div>
+      </>
     </article>
   );
 }

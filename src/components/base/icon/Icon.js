@@ -148,6 +148,6 @@ Container.propTypes = {
   onClick: PropTypes.func,
   onKeyDown: PropTypes.func,
   "data-cy": PropTypes.string,
-  tabIndex: PropTypes.string,
+  tabIndex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   tag: PropTypes.oneOf(["i", "button"]),
 };

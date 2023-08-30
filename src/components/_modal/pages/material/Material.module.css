@@ -24,7 +24,7 @@
 }
 
 .button {
-  width: 66.67%; /* 2 grid columns */
+  width: 48%; /* ca 2 grid columns */
   margin-bottom: var(--pt4);
 }
 
@@ -57,4 +57,22 @@
 
 .topTitle {
   padding-top: var(--pt4);
+}
+
+.buttonRowWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.renewError {
+  justify-content: center;
+  margin-bottom: var(--pt4);
+  width: 50%;
+}
+
+/* Specificity to override */
+.button button.buttonDelete {
+  white-space: nowrap;
 }

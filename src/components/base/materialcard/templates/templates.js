@@ -84,7 +84,7 @@ export function templateForHeaderWorkCard(material) {
   return {
     link_href: getWorkUrl(fullTitle, creators, material?.ownerWork?.workId),
     fullTitle: fullTitle,
-    image_src: material.cover.detail,
+    image_src: material?.cover?.detail,
     workId: material?.ownerWork?.workId,
     children: (
       <>

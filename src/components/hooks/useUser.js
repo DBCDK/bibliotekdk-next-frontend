@@ -119,7 +119,13 @@ function useUserImpl() {
         ...sessionData,
       });
     }
-  }, [JSON.stringify(userData), isAuthenticated, userIsLoading, isValidating]);
+  }, [
+    JSON.stringify(userData),
+    JSON.stringify(sessionData),
+    isAuthenticated,
+    userIsLoading,
+    isValidating,
+  ]);
 
   const isGuestUser =
     !isAuthenticated && Object.keys(loanerInfo?.userParameters).length > 0;
@@ -139,9 +145,20 @@ function useUserImpl() {
       // Broadcast update
       await mutate();
     },
-    updateOrderInfo: async () => {
-      // Broadcast update
-      await userMutate({ orders: userData?.user?.orders }); //extend once we can renew loans
+    updateUserStatusInfo: async (type) => {
+      // Broadcast update about either loans or orders
+      let updatedData;
+      switch (type) {
+        case "LOAN":
+          updatedData = { loans: userData?.user?.loans };
+          break;
+        case "ORDER":
+          updatedData = { orders: userData?.user?.orders };
+          break;
+        default:
+          break;
+      }
+      if (updatedData) await userMutate(updatedData);
     },
     guestLogout: async () => {
       // Delete global loaner info object

@@ -1,29 +1,34 @@
 import Popover from "react-bootstrap/Popover";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Icon from "@/components/base/icon";
-import styles from "./TjoolTjip.module.css";
+import styles from "./Tooltip.module.css";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import PropTypes from "prop-types";
 import { useRef } from "react";
 
-export default function TjoolTjip({
+export default function Tooltip({
   placement = "bottom",
   labelToTranslate,
   customClass,
+  trigger = ["focus"],
+  children,
 }) {
   const spanRef = useRef();
   return (
     <span className={`${customClass ? customClass : ""}`}>
       <OverlayTrigger
-        trigger={["focus"]}
+        trigger={trigger}
         delayShow={300}
         delayHide={150}
         placement={placement}
         overlay={
-          <Popover id={`tooltip-${labelToTranslate}`}>
+          <Popover
+            id={`tooltip-${labelToTranslate}`}
+            className={styles.popover}
+          >
             <div
-              className={styles.tooltipcontainer}
+              className={styles.tooltipContainer}
               data-cy="popover-container"
             >
               <Text type="text3" lines={2}>
@@ -36,20 +41,24 @@ export default function TjoolTjip({
         <span
           ref={spanRef}
           tabIndex="0"
-          className={styles.tooltipwrap}
+          className={styles.tooltipWrap}
           onKeyUp={(e) => {
             if (e.code === "Escape") {
               spanRef?.current?.blur?.();
             }
           }}
         >
-          <Icon
-            src="questionmark.svg"
-            alt="info"
-            data-cy="tooltip-icon"
-            size={3}
-            className={styles.tooltipcursor}
-          ></Icon>
+          {children ? (
+            children
+          ) : (
+            <Icon
+              src="questionmark.svg"
+              alt="info"
+              data-cy="tooltip-icon"
+              size={3}
+              className={styles.tooltipCursor}
+            ></Icon>
+          )}
         </span>
       </OverlayTrigger>
     </span>
@@ -57,7 +66,10 @@ export default function TjoolTjip({
 }
 
 // PropTypes for component
-TjoolTjip.propTypes = {
+Tooltip.propTypes = {
   placement: PropTypes.string,
   labelToTranslate: PropTypes.string,
+  customClass: PropTypes.string,
+  trigger: PropTypes.array,
+  children: PropTypes.node,
 };

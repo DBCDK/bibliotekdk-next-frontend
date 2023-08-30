@@ -1,0 +1,43 @@
+.dropdownwrap {
+}
+
+.dropdownitem {
+  display: block;
+  border-bottom: 1px solid var(--mine-shaft);
+  padding: var(--pt1) var(--pt2) var(--pt1) var(--pt2);
+  text-decoration: none;
+  color: var(--mine-shaft);
+  text-align: inherit;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.active {
+  color: white;
+  background-color: green;
+}
+
+.dropdownitem a {
+  text-decoration: none;
+}
+
+.dropdownitem:focus {
+  background: linear-gradient(to right, var(--blue) 10px, var(--concrete) 10px);
+}
+
+.dropdownitem:hover {
+  background: linear-gradient(to right, var(--blue) 10px, var(--concrete) 10px);
+}
+
+.dropdownwrap :global(.dropdown-toggle::after) {
+  display: none;
+}
+
+.dropdownmenu {
+  border: 1px solid var(--blue);
+  background-color: var(--white);
+  z-index: 1;
+  /* bootstrap default styles override */
+  border-radius: 0;
+  padding: 0;
+}

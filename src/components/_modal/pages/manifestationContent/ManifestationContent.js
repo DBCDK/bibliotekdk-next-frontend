@@ -35,6 +35,7 @@ export default function ManifestationContent(props) {
         titlesOnly={false}
         parts={parts}
         className={styles.contentlist}
+        breakOnCreator={true}
       />
     </div>
   );

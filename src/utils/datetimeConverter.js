@@ -1,35 +1,36 @@
 import { months } from "@/components/base/translate";
+import { monthLabel } from "@/components/base/translate/Translate";
 
 /**
  * epoch timestamp to human date
  *
- * @param {int} timestamp
+ * @param {int|Date} timestamp
  *
  * @returns {string}
  */
 
 export function timestampToShortDate(timestamp) {
   if (!timestamp) {
-    return;
+    return "";
   }
 
-  const shortMonths = months({ label: "shortenedMonths" });
+  const shortMonths = months({ label: monthLabel });
 
   const a = new Date(timestamp);
   if (isNaN(a)) {
-    return timestamp;
+    return timestamp.toString();
   }
 
   const year = a.getFullYear();
   const month = (shortMonths && shortMonths[a.getMonth()]) || a.getMonth() + 1;
   const date = a.getDate();
 
-  return date + " " + month + ". " + year;
+  return date + ". " + month + " " + year;
 }
 
 /**
  * date
- * @param date yyyymmdd
+ * @param {string} numeric yyyymmdd
  * @returns {string} format: yyyy-mm-dd
  */
 export function numericToISO(numeric) {
@@ -52,7 +53,7 @@ export function dateToShortDate(date, prefix = "") {
   // example: "Årg. 68, nr. 7 (2015)"
 
   try {
-    const shortMonths = months({ label: "shortenedMonths" });
+    const shortMonths = months({ label: monthLabel });
 
     const array = date.split("-");
 
@@ -62,7 +63,7 @@ export function dateToShortDate(date, prefix = "") {
     const d = array[2].replace(/^0+/, "");
 
     // month array starts at position 0, so we substracts m with 1
-    return `${prefix}${d}. ${shortMonths[m - 1]}. ${y}`;
+    return `${prefix}${d}. ${shortMonths[m - 1]} ${y}`;
   } catch {
     return date;
   }
@@ -74,7 +75,7 @@ export function dateToShortDate(date, prefix = "") {
  */
 export const dateToDayInMonth = (date) => {
   // get short month and remove leading spaces
-  const shortMonths = months({ label: "shortenedMonths" });
+  const shortMonths = months({ label: monthLabel });
   return `${date.getDate()}. ${shortMonths[date.getMonth()].replace(
     /\s/g,
     ""

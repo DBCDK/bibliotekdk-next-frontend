@@ -69,6 +69,8 @@
 .item {
   padding-bottom: var(--pt3);
   padding-right: var(--pt5);
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
 }
 
 @media (min-width: 768px) {

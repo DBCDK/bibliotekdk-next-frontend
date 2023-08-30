@@ -104,6 +104,10 @@
       "tooltip_lix": {
         "da": "Lix står for læsbarhedsindeks. Lix-tal er opdelt efter klassetrin:\\n0.-1. klasse: lix 2-10\\n2. klasse: lix 11-15\\n3. klasse: lix 16-19\\n4. klasse: lix 20+\\n \\n Let-tal står for læseegnethedstal. \\n Begynderlæsningsbøgerne er inddelt i 16 niveauer, hvor det laveste er 5, og det højeste er 20. ",
         "en": "You can only order a digital copy, if your library subscribes to the service Digital Artikelservice at the Royal Danish Library."
+      },
+      "renew-loan-tooltip": {
+        "da": "Det er dit udlånsbibliotek, der sætter reglerne for om materialet kan fornyes. Tjek gerne deres retningslinjer for mere information.",
+        "en": "Your library defines the rules for renewing loans. Please check their guidelines for more information."
       }
     },
     "general": {
@@ -178,6 +182,10 @@
       "image": {
         "da": "Billede:",
         "en": "Image:"
+      },
+      "cover-slider-label": {
+        "da": "Billede karousel. Brug piletaster til at navigere",
+        "en": "Image carousel. Use arrow keys to navigate"
       },
       "description": {
         "da": "Beskrivelse:",
@@ -385,6 +393,10 @@
         "da": "OBS: Ikke alle biblioteker giver adgang til artikler fra Infomedia",
         "en": "NOTE: Not all libraries provide access to Infomedia articles"
       },
+      "libraryAccessReadMore": {
+        "da": "Læs evt. mere om danske biblioteker på Slots og kulturstyrelsens hjemmeside.",
+        "en": "Read more about danish libraries"
+      },
       "libraryNoAccess": {
         "da": "%s giver ikke adgang til at læse artiklen",
         "en": "%s does not provide access to read the article"
@@ -445,6 +457,10 @@
       }
     },
     "bibliographic-data": {
+      "requirements": {
+        "da": "Nødvendigt udstyr",
+        "en": "Required gear"
+      },
       "physicalDescriptionArticles": {
         "da": "Sidetal",
         "en": "Pagenumber"
@@ -839,7 +855,6 @@
         "da": "Undervisning",
         "en": "Education"
       },
-
       "physicalDescription": {
         "da": "Længde",
         "en": "Length"
@@ -863,6 +878,10 @@
       "audience": {
         "da": "Målgruppe",
         "en": "Audience"
+      },
+      "audience-age": {
+        "da": "For %s-årige",
+        "en": "For ages %s"
       },
       "adaption": {
         "da": "Filmatisering af",
@@ -3029,12 +3048,20 @@
       "shortenedMonths": {
         "da": "jan, feb, mar, apr, maj, jun, jul, aug, sep, okt, nov, dec",
         "en": "jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec"
+      },
+      "monthsInFourCharacters": {
+        "da": "jan., feb., mar., apr., maj, juni, juli, aug., sep., okt., nov., dec.",
+        "en": "Jan., Feb., Mar., Apr., May, June, July, Aug., Sep., Oct., Nov., Dec."
       }
     },
     "profile": {
       "myLibraries": {
         "da": "Mine biblioteker",
         "en": "My libraries"
+      },
+      "orderHistory": {
+        "da": "Bestilingshistorik",
+        "en": "Order history"
       },
       "profileMenu": {
         "da": "Profilmenu",
@@ -3086,7 +3113,7 @@
         "en": "Last used"
       },
       "municipalityOfResidence": {
-        "da": "Bopælskommune",
+        "da": "Din bopælskommune",
         "en": "Municipality of residence"
       },
       "debt": {
@@ -3117,9 +3144,13 @@
         "da": "Slet reservering",
         "en": "Delete reservation"
       },
+      "delete-order-questionmark": {
+        "da": "Slet reservering?",
+        "en": "Delete reservation?"
+      },
       "delete-order-confirmation": {
-        "da": "Er du sikker på, at du vil slette reserveringen?",
-        "en": "Are you sure you want to delete the reservation?"
+        "da": "Du er ved at slette din reservering:",
+        "en": "You are about to delete your reservation:"
       },
       "miss-spot-in-queue": {
         "da": "Du mister din plads i køen.",
@@ -3144,6 +3175,10 @@
       "date-overdue": {
         "da": "Frist overskredet!",
         "en": "Return deadline overdue!"
+      },
+      "last-day": {
+        "da": "I dag",
+        "en": "Today"
       },
       "loans-subtext": {
         "da": "Du ser lån og reserveringer for",
@@ -3208,6 +3243,94 @@
       "error-deleting-order": {
         "da": "Noget gik galt, da reserveringen skulle slettes. Prøv igen.",
         "en": "An error occurred while the reservation was being deleted. Try again."
+      },
+      "error-renew-loan": {
+        "da": "Kan ikke fornyes",
+        "en": "Cannot be renewed"
+      },
+      "renewed": {
+        "da": "Fornyet",
+        "en": "Renewed"
+      },
+      "signed-in-as-name": {
+        "da": "Du er logget ind som",
+        "en": "You are signed in as"
+      },
+      "login-to-see-profile": {
+        "da": "Log venligst ind for at se din profil, lån og reserveringer.",
+        "en": "Sign in to see your profile, loans and reservations."
+      },
+      "login-welcome": {
+        "da": "Åbn døren til uendelige verdener - hvor fakta og fantasi danser hånd i hånd.",
+        "en": "Open the door to infinite worlds - where fact and fantasy dance hand in hand."
+      },
+      "orderHistoryInfo": {
+        "da": "Her kan du se en oversigt over dine bestillinger de sidste 30 dage.",
+        "en": "Here you can see an overview of your orders for the last 30 days."
+      },
+      "canWeSaveYourOrders": {
+        "da": "Må vi gemme dine bestillinger i længere tid?",
+        "en": "Can we store your orders for a longer period of time?"
+      },
+      "youHaveOrdered": {
+        "da": "Du har bestilt",
+        "en": "You have ordered"
+      },
+      "orderNumber": {
+        "da": "Bestillingsnummer",
+        "en": "Order number"
+      },
+      "orderRegistered": {
+        "da": "Bestilling registreret",
+        "en": "Order registered"
+      },
+      "date": {
+        "da": "Dato",
+        "en": "Date"
+      },
+      "activity": {
+        "da": "Aktivitet",
+        "en": "Activity"
+      },
+      "dataCollectionTitle": {
+        "da": "Opsamling af data",
+        "en": "Data Collection"
+      },
+      "updateDataCollectionConsent": {
+        "da": "Ændring af samtykke",
+        "en": "Update consent of data collection"
+      },
+      "permissionText": {
+        "da": "Vil du give tilladelse til at bibliotek.dk må indsamle data om dine bestillinger, lån og adfærd på hjemmesiden?\n\nDen opsamlede data vil blive benyttet til at lave bestillingshistorik og personlige anbefalinger til dig.\n\nBestillingshistorikken viser kun bestillinger fra den dato, funktionen bliver aktiveret.\n\nDine data bliver opbevaret af bibliotekerne og bliver kun benyttet af bibliotekerne. Det vil sige, at de udleveres aldrig til tredjepart.",
+        "en": "Would you like to give permission for bibliotek.dk to collect data about your orders, loans, and behavior on the website?\n\nThe collected data will be used to create an order history and personal recommendations for you.\n\nThe order history will only show orders from the date the function is activated.\n\nYour data is stored by the libraries and is only used by the libraries. This means they are never disclosed to third parties."
+      },
+      "revokeConsentText": {
+        "da": "Vil du ændre dit samtykke, så dine bestillinger ikke længere bliver gemt i historikken?\n\nFremfor vil der så kun blive vist bestillinger for de seneste 30 dage",
+        "en": "Do you want to change your consent so that your orders are no longer saved in the history?\n\nInstead, only orders for the past 30 days will be displayed"
+      },
+      "consentButton": {
+        "da": "Giv tilladelse",
+        "en": "Give Permission"
+      },
+      "revokeConsent": {
+        "da": "Tilbagekald samtykke",
+        "en": "Revoke consent"
+      },
+      "goBackButton": {
+        "da": "Tilbage",
+        "en": "Go Back"
+      },
+      "consentInfoTextpart1": {
+        "da": "Her kan du se en oversigt over dine bestillinger. Du har givet",
+        "en": "Here you can see an overview of your orders. You have given consent"
+      },
+      "consentInfoTextpart2": {
+        "da": "til, at dine bestillinger gemmes for at du kan se dem.",
+        "en": "for your orders to be saved for you to view."
+      },
+      "consent": {
+        "da": "samtykke",
+        "en": "consent"
       }
     }
   }

@@ -61,7 +61,7 @@ export function Related({ data, isLoading }) {
         </Title>
       }
       className={styles.section}
-      backgroundColor="var(--jagged-ice)"
+      divider={false}
       sectionTag="div" // Section sat in parent
     >
       <div>

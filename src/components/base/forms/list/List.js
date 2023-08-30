@@ -8,9 +8,9 @@ import PropTypes from "prop-types";
 import React, { useEffect, useRef } from "react";
 
 import Arrow from "@/components/base/animation/arrow";
-
+import Link from "@/components/base/link";
 import styles from "./List.module.css";
-
+import cx from "classnames";
 import animations from "css/animations";
 
 /**
@@ -54,11 +54,10 @@ function Radio({
           onSelect(e);
         }
       }}
-      className={`${styles.row} ${animations["on-focus"]} ${
-        animations["f-outline"]
-      } ${selected ? styles.selected : ""} ${className || ""} ${
-        disabled ? styles.disabledrow : ""
-      }`}
+      className={cx(styles.row, className, animations["on-focus"], {
+        [styles.selected]: selected,
+        [styles.disabledrow]: disabled,
+      })}
     >
       <div
         className={[styles.content, animations["f-translate-right"]].join(" ")}
@@ -129,11 +128,10 @@ function Select({
           onSelect(e);
         }
       }}
-      className={`${styles.row} ${animations["on-focus"]} ${
-        animations["f-outline"]
-      } ${selected ? styles.selected : ""} ${className || ""} ${
-        disabled ? styles.disabledrow : ""
-      }`}
+      className={cx(styles.row, className, animations["on-focus"], {
+        [styles.selected]: selected,
+        [styles.disabledrow]: disabled,
+      })}
     >
       <div
         className={[styles.content, animations["f-translate-right"]].join(" ")}
@@ -162,10 +160,73 @@ Select.propTypes = {
   _ref: PropTypes.func,
 };
 
+function FormLink({
+  children,
+  disabled,
+  onDisabled,
+  label,
+  labelledBy,
+  onSelect,
+  _ref,
+  className,
+  includeArrows,
+  ...props
+}) {
+  return (
+    <Link
+      data-cy={props["data-cy"]}
+      linkRef={_ref}
+      aria-labelledby={labelledBy}
+      aria-disabled={!!disabled}
+      disabled={!!disabled}
+      data-list-type="link"
+      onClick={(e) => {
+        e.preventDefault();
+        if (!disabled) {
+          onSelect();
+        }
+      }}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" && onSelect && !disabled) {
+          onSelect(e);
+        }
+      }}
+      className={cx(styles.row, className, animations["on-focus"], {
+        [styles.disabledrow]: disabled,
+      })}
+      border={false}
+    >
+      <div
+        className={[styles.content, animations["f-translate-right"]].join(" ")}
+      >
+        {children}
+      </div>
+      {!disabled ? (
+        includeArrows ? (
+          <Arrow
+            className={`${animations["h-bounce-left"]} ${animations["f-bounce-left"]}`}
+          />
+        ) : null
+      ) : (
+        onDisabled
+      )}
+      <div className={styles.label}>{label}</div>
+    </Link>
+  );
+}
+FormLink.propTypes = {
+  disabled: PropTypes.bool,
+  className: PropTypes.string,
+  label: PropTypes.string,
+  onSelect: PropTypes.func,
+  _ref: PropTypes.func,
+};
+
 function Group({
   children,
   enabled = true,
   label = "Select list group",
+  disableGroupOutline = false, // Use for group of FormLinks
   ...props
 }) {
   const childrenRef = useRef([]);
@@ -176,6 +237,11 @@ function Group({
     let index = 0;
     childrenRef.current.forEach((el, idx) => {
       if (el) {
+        if (el.getAttribute("data-list-type") === "link") {
+          // Return if FormLink
+          return;
+        }
+
         el.tabIndex = "-1";
         if (
           el.getAttribute("aria-checked") === "true" ||
@@ -195,13 +261,26 @@ function Group({
       data-cy={props["data-cy"]}
       role="group"
       aria-label={label}
-      className={`${styles.group} ${enabled ? "" : styles.disabled} ${
-        props.className
-      }`}
+      className={cx(styles.group, props.className, {
+        [styles.disabled]: !enabled,
+        [styles.boxOutline]: !disableGroupOutline,
+      })}
       onKeyDown={(e) => {
         const index = childrenRef.current.findIndex(
           (el) => el === document.activeElement
         );
+
+        if (
+          !childrenRef.current[index] ||
+          childrenRef.current[index].getAttribute("data-list-type") === "link"
+        ) {
+          /**
+           * We are not in a form group, break.
+           * Happens for FormLink
+           */
+          return;
+        }
+
         if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
           e.preventDefault();
           const prevIndex =
@@ -238,6 +317,6 @@ function Group({
   );
 }
 
-const ExportedList = { Group, Radio, Select };
+const ExportedList = { Group, Radio, Select, FormLink };
 
 export default ExportedList;

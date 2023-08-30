@@ -83,7 +83,6 @@ function getSeriesMap(series, seriesMembers) {
       description: `Del ${numberInSeries + " "} af `,
       title: series?.title,
       anchorId: getAnchor(AnchorsEnum.SERIES),
-      scrollOffset: -64,
     }
   );
 }
@@ -95,7 +94,6 @@ function getContinuationMap(groupedByRelationWorkTypes) {
       description: `Del af `,
       title: "artikelserie",
       anchorId: getAnchor(AnchorsEnum.RELATED_WORKS),
-      scrollOffset: 0,
     }
   );
 }

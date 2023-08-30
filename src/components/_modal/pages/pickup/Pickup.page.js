@@ -75,7 +75,7 @@ function Row({
   const disabledClass = disabled ? styles.disabled : "";
 
   return (
-    <List.Select
+    <List.FormLink
       selected={selected?.branchId === branch.branchId}
       onSelect={() => onSelect(branch)}
       label={branch.name}
@@ -115,7 +115,7 @@ function Row({
           </Text>
         )}
       </>
-    </List.Select>
+    </List.FormLink>
   );
 }
 
@@ -263,6 +263,7 @@ export function Pickup({
           enabled={!isLoading && isVisible}
           data-cy="list-branches"
           className={styles.orderPossibleGroup}
+          disableGroupOutline
         >
           {orderPossibleBranches.map((branch, idx) => {
             return (

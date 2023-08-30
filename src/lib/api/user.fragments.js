@@ -112,10 +112,19 @@ export function branchesForUser() {
     query: `
     query ($language: LanguageCode! ) {
       user {
+        municipalityAgencyId
         agency (language: $language){
           result {
             agencyId
             agencyName
+            name
+          }
+        }
+        agencies{
+          result
+          {
+            agencyName
+            agencyId
             name
           }
         }
@@ -163,6 +172,25 @@ export function orderPolicy({ pid }) {
       monitor(name: "bibdknext_orderpolicy")
      }`,
     variables: { language: lang, pid },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * get extended user data
+ *
+ */
+export function extendedData() {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 1000, // for debugging
+    query: `
+    query  {
+      user {
+        persistUserData
+        favoritePickUpBranch
+      }
+     }`,
     slowThreshold: 3000,
   };
 }

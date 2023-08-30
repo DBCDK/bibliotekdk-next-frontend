@@ -1,5 +1,7 @@
 import debounce from "lodash/debounce";
 
+export const PRETTY_OFFSET = 8; // var(--pt1)
+
 /**
  * Get section by id
  *
@@ -39,11 +41,11 @@ export function getSectionById(id, items, menuT, height) {
  * Get id of the active section (visible in users viewport)
  *
  * @param {object} items
- * @param {string} scrollY
+ * @param {number} scrollY
  * @param {int} menuT
  * @param {int} height
  *
- * @returns {string}
+ * @returns {string|null}
  */
 export function getActiveElement(items, scrollY, menuT, height) {
   if (!items) {
@@ -60,7 +62,7 @@ export function getActiveElement(items, scrollY, menuT, height) {
 
     // Active section calculation
     const active =
-      scrollY + section.offset >= section.offsetTop &&
+      scrollY + section.offset >= section.offsetTop - PRETTY_OFFSET &&
       scrollY + section.offset < section.offsetTop + section.clientHeight;
 
     if (active) {
@@ -72,28 +74,30 @@ export function getActiveElement(items, scrollY, menuT, height) {
 }
 
 /**
- * Get id of the active section (visible in users viewport)
+ * Handle scrolling and activate callback when scroll is finished
  *
- * @param {component} container
- * @param {component} section
+ * @param {Object} container
+ * @param {Object} section
  * @param {int} offset
- *
+ * @param {function} callback
  */
 export function handleScroll(container, section, offset = 0, callback = null) {
   // Scroll to element position
   const distance = section.offsetTop - offset;
 
   // Callback trigger on scroll finish
+  let isScrolling;
+
   const onScroll = function () {
-    if (container.scrollY === distance) {
+    window.clearTimeout(isScrolling);
+
+    isScrolling = setTimeout(function () {
       container.removeEventListener("scroll", onScroll);
       callback && callback();
-    }
+    }, 66);
   };
 
-  container.addEventListener("scroll", onScroll);
-  onScroll();
-  //  ---
+  container.addEventListener("scroll", onScroll, false);
 
   container.scrollTo({
     top: distance,
@@ -105,11 +109,12 @@ export function handleScroll(container, section, offset = 0, callback = null) {
 /**
  * Align active menu item to the left on active change
  *
- * @param {component} container
- * @param {component} item
+ * @param {Object} container
+ * @param {Object} item
  *
  * @param {int} offset
- *
+ * @param {function|null=} callback
+ * @returns {MutableRefObject<null>}
  */
 function debouncedAlignMenuItem(container, item, offset = 0, callback = null) {
   // Check that menu wrap exist
@@ -151,6 +156,9 @@ function debouncedAlignMenuItem(container, item, offset = 0, callback = null) {
 }
 
 // debounce wrapped
+/**
+ * @type {DebouncedFuncLeading<(function(MutableRefObject<null>, component, number=, null=): React.MutableRefObject<null>)|*> | DebouncedFunc<(function(component, component, int=, null=): React.MutableRefObject<null>)|*>}
+ */
 export const alignMenuItem = debounce(debouncedAlignMenuItem, 100, {
   leading: true,
   trailing: true,

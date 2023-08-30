@@ -1,3 +1,7 @@
+.top {
+  padding: var(--pt3) var(--pt2) var(--pt2);
+}
+
 .options {
   padding: 0 var(--pt2) var(--pt2) var(--pt2);
   height: 100%;
@@ -17,6 +21,9 @@
 
 @media (min-width: 576px) {
   .options {
-    padding: 0 var(--pt6) var(--pt6) var(--pt6);
+    padding: 0 var(--pt5) var(--pt3) var(--pt6);
+  }
+  .top {
+    padding: var(--pt5) var(--pt6) var(--pt3);
   }
 }

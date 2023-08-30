@@ -22,24 +22,15 @@ export default function MyLibrariesPage() {
   const { data: userData } = useData(
     isAuthenticated && userFragments.branchesForUser()
   );
+  //An array of user agencies.
+  const agencies = userData?.user?.agencies
+    ?.map((agency) => ({
+      agencyId: agency?.result[0]?.agencyId,
+      agencyName: agency?.result[0]?.agencyName,
+    }))
+    .filter((agency) => !!agency.agencyName && !!agency.agencyId);
 
-  const result = userData?.user?.agency?.result;
-
-  //Find a list of user agencies
-  const agencies = [];
-  const addedAgencyIds = [];
-
-  result?.forEach((branch) => {
-    const { agencyId, agencyName } = branch;
-    if (agencyId && agencyName && !addedAgencyIds.includes(agencyId)) {
-      addedAgencyIds.push(agencyId);
-      agencies.push({
-        agencyId,
-        agencyName,
-      });
-    }
-  });
-
+  const municipalityAgencyId = userData?.user?.municipalityAgencyId;
   return (
     <Layout title={Translate({ context: "profile", label: "myLibraries" })}>
       <div className={styles.pageDescriptionContainer}>
@@ -63,7 +54,10 @@ export default function MyLibrariesPage() {
         </IconButton>
       </div>
 
-      <LibrariesTable data={agencies} />
+      <LibrariesTable
+        data={agencies}
+        municipalityAgencyId={municipalityAgencyId}
+      />
       <IconButton icon="chevron" className={styles.addLibrary} textType="text2">
         {Translate({ context: "profile", label: "addLibrary" })}
       </IconButton>

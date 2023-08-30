@@ -7,7 +7,7 @@ import Checkbox from "@/components/base/forms/checkbox";
 import ConditionalWrapper from "@/components/base/conditionalwrapper";
 import Link from "@/components/base/link";
 import cx from "classnames";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutate } from "@/lib/api/api";
 import PropTypes from "prop-types";
 import Icon from "@/components/base/icon";
@@ -22,8 +22,15 @@ import {
   dateToDayInMonth,
   timestampToShortDate,
 } from "@/utils/datetimeConverter";
+import {
+  handleLoanMutationUpdates,
+  handleOrderMutationUpdates,
+} from "./../utils";
 import { useRouter } from "next/router";
 import { onClickDelete } from "@/components/_modal/pages/deleteOrder/utils";
+import { handleRenewLoan } from "../utils";
+import MaterialRowTooltip from "./materialRowTooltip/MaterialRowTooltip";
+import SkeletonMaterialRow from "./skeleton/Skeleton";
 
 // Set to when warning should be shown
 export const DAYS_TO_COUNTDOWN_RED = 5;
@@ -35,22 +42,28 @@ export const useLoanDateAnalysis = (dueDateString) => {
 
   const dueDate = new Date(dueDateString);
   const today = new Date();
-  const futureDate = new Date();
-  futureDate.setDate(today.getDate() + DAYS_TO_COUNTDOWN_RED);
+  /**
+   * Add 1, since we get dueDate at midnight, they have the whole day to turn in the material
+   * On the due date, we want daysToDueDate to be 0, 1 the day before and so on.
+   */
   const daysToDueDate =
-    Math.floor((dueDate - today) / (1000 * 60 * 60 * 24)) + 1; // Add 1 so due date today is "in 1 day"
+    Math.floor((dueDate - today) / (1000 * 60 * 60 * 24)) + 1;
+  const daysToDueDateString =
+    daysToDueDate === 0
+      ? Translate({ context: "profile", label: "last-day" })
+      : `${daysToDueDate} ${
+          daysToDueDate === 1
+            ? Translate({ context: "units", label: "day" })
+            : Translate({ context: "units", label: "days" })
+        }`;
 
   return {
     dayToText: timeFormatter.format(daysToDueDate, "day"),
-    isCountdown: dueDate >= today && dueDate <= futureDate,
-    isOverdue: dueDate < today,
+    isCountdown: daysToDueDate <= DAYS_TO_COUNTDOWN_RED,
+    isOverdue: daysToDueDate < 0,
     dateString: timestampToShortDate(dueDate),
-    daysToDueDate: Math.floor((dueDate - today) / (1000 * 60 * 60 * 24)) + 1, // Add 1 so due date today is "in 1 day"
-    daysToDueDateString: `${daysToDueDate} ${
-      daysToDueDate === 1
-        ? Translate({ context: "units", label: "day" })
-        : Translate({ context: "units", label: "days" })
-    }`,
+    daysToDueDate: daysToDueDate,
+    daysToDueDateString: daysToDueDateString,
   };
 };
 
@@ -281,16 +294,9 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
         </article>
       )}
     >
-      <div className={styles.imageContainer_mobile}>
-        {!!image && <Cover src={image} size="fill-width" />}
-      </div>
-      <div>
-        <Title
-          type="text1"
-          tag="h3"
-          className={styles.materialTitle}
-          id={`material-title-${materialId}`}
-        >
+      <div>{!!image && <Cover src={image} size="fill-width" />}</div>
+      <div className={styles.textContainer}>
+        <Title type="text1" tag="h3" id={`material-title-${materialId}`}>
           {title}
         </Title>
         {creator && <Text type="text2">{creator}</Text>}
@@ -311,6 +317,30 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
         />
       </div>
     </ConditionalWrapper>
+  );
+};
+
+/**
+ * shows a span with text and a checkmark icon
+ * @param {string} textType
+ * @returns
+ */
+export const RenewedSpan = ({ textType = "text2" }) => {
+  return (
+    <span className={styles.renewedWrapper}>
+      <Text type={textType}>
+        {Translate({
+          context: "profile",
+          label: "renewed",
+        })}
+      </Text>
+      <Icon
+        size={{ w: 3, h: "auto" }}
+        src={"checkmark_blue.svg"}
+        alt=""
+        className={styles.renewedIcon}
+      />
+    </span>
   );
 };
 
@@ -336,16 +366,39 @@ const MaterialRow = (props) => {
     dataCy,
     removedOrderId,
     setRemovedOrderId,
+    skeleton,
   } = props;
   const [isChecked, setIsChecked] = useState(false);
   const breakpoint = useBreakpoint();
-  const { updateOrderInfo } = useUser();
+  const { updateUserStatusInfo } = useUser();
   const modal = useModal();
-  const [hasError, setHasError] = useState(false);
-  const orderMutation = useMutate(); //keep here to avoid entire page updte on orderMutation update
+  const [hasDeleteError, setHasDeleteError] = useState(false);
+  const [hasRenewError, setHasRenewError] = useState(false);
+  const [renewed, setRenewed] = useState(false);
+  const [renewedDueDateString, setRenewedDueDateString] = useState(null);
+  const orderMutation = useMutate();
+  const loanMutation = useMutate();
 
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
+
+  useEffect(() => {
+    handleLoanMutationUpdates(
+      loanMutation,
+      setHasRenewError,
+      setRenewed,
+      setRenewedDueDateString
+    );
+  }, [loanMutation.error, loanMutation.data]);
+
+  useEffect(() => {
+    handleOrderMutationUpdates(
+      orderMutation,
+      setHasDeleteError,
+      () => setRemovedOrderId(materialId),
+      updateUserStatusInfo
+    );
+  }, [orderMutation.error, orderMutation.data]);
 
   const getStatus = () => {
     switch (type) {
@@ -371,7 +424,13 @@ const MaterialRow = (props) => {
       case "DEBT":
         return <DynamicColumnDebt amount={amount} currency={currency} />;
       case "LOAN":
-        return <DynamicColumnLoan dueDateString={dueDateString} />;
+        return (
+          <DynamicColumnLoan
+            dueDateString={
+              renewedDueDateString ? renewedDueDateString : dueDateString
+            }
+          />
+        );
       case "ORDER":
         return (
           <DynamicColumnOrder
@@ -384,14 +443,12 @@ const MaterialRow = (props) => {
     }
   };
 
-  async function onCloseModal({ success }) {
-    if (success) {
-      setRemovedOrderId(materialId);
-      updateOrderInfo();
-      setHasError(false);
-    } else {
-      setHasError(true);
-    }
+  function onClickRenew({ loanId, agencyId, loanMutation }) {
+    handleRenewLoan({
+      loanId,
+      agencyId,
+      loanMutation,
+    });
   }
 
   const renderDynamicButton = () => {
@@ -399,8 +456,19 @@ const MaterialRow = (props) => {
       case "DEBT":
         return null;
       case "LOAN":
-        return (
-          <MaterialRowButton dataCy="loan-button">
+        return hasRenewError ? (
+          <MaterialRowTooltip labelToTranslate="renew-loan-tooltip" />
+        ) : (
+          <MaterialRowButton
+            dataCy="loan-button"
+            onClick={() =>
+              onClickRenew({
+                loanId: materialId,
+                agencyId,
+                loanMutation,
+              })
+            }
+          >
             {Translate({ context: "profile", label: "renew" })}
           </MaterialRowButton>
         );
@@ -415,7 +483,7 @@ const MaterialRow = (props) => {
                 materialId,
                 agencyId,
                 orderMutation,
-                onCloseModal,
+                title,
               })
             }
             dataCy="order-button"
@@ -431,10 +499,16 @@ const MaterialRow = (props) => {
     }
   };
 
+  if (skeleton) {
+    return (
+      <SkeletonMaterialRow version={isMobileSize ? "mobile" : "desktop"} />
+    );
+  }
+
   if (isMobileSize) {
     return (
       <>
-        {hasError && (
+        {hasDeleteError && type === "ORDER" && (
           <ErrorRow
             text={Translate({
               context: "profile",
@@ -446,8 +520,7 @@ const MaterialRow = (props) => {
           key={"article" + materialId}
           renderDynamicColumn={renderDynamicColumn}
           status={status}
-          onCloseModal={onCloseModal}
-          removedOrderId={removedOrderId}
+          setHasDeleteError={setHasDeleteError}
           {...props}
         />
       </>
@@ -456,7 +529,7 @@ const MaterialRow = (props) => {
 
   return (
     <>
-      {hasError && (
+      {hasDeleteError && type === "ORDER" && (
         <ErrorRow
           text={Translate({
             context: "profile",
@@ -522,7 +595,7 @@ const MaterialRow = (props) => {
                 <Cover src={image} size="fill-width" />
               </div>
             )}
-            <div>
+            <div className={styles.textContainer}>
               <ConditionalWrapper
                 condition={!!title && !!creator && !!materialId}
                 wrapper={(children) => (
@@ -543,7 +616,6 @@ const MaterialRow = (props) => {
                 <Title
                   type="text1"
                   tag="h3"
-                  className={styles.materialTitle}
                   id={`material-title-${materialId}`}
                 >
                   {title}
@@ -573,7 +645,11 @@ const MaterialRow = (props) => {
             <Text type="text2">{library}</Text>
           </div>
 
-          <div>{renderDynamicButton(materialId, agencyId)}</div>
+          {renewed ? (
+            <RenewedSpan textType="text3" />
+          ) : (
+            <div>{renderDynamicButton(materialId, agencyId)}</div>
+          )}
         </>
       </ConditionalWrapper>
     </>
@@ -597,6 +673,10 @@ MaterialRow.propTypes = {
   dueDate: PropTypes.string,
   amount: PropTypes.string,
   currency: PropTypes.string,
+  agencyId: PropTypes.string,
+  removedOrderId: PropTypes.string,
+  setRemovedOrderId: PropTypes.func,
+  skeleton: PropTypes.bool,
 };
 
 export default MaterialRow;

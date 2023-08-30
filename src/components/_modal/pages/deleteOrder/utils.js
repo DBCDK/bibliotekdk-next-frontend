@@ -12,13 +12,13 @@ export function handleDeleteOrder(orderId, agencyId, orderMutation) {
 
 /**
  * Opens delete order modal
- * @param {*} param0.modal
- * @param {boolean} param0.mobile
- * @param {Date} param0.pickUpExpiryDate
- * @param {string} param0.materialId
- * @param {string} param0.agencyId
- * @param {string} param0.orderMutation
- * @returns success status, error message
+ * @param {obj} modal
+ * @param {boolean} mobile
+ * @param {Date} pickUpExpiryDate
+ * @param {string} materialId
+ * @param {string} agencyId
+ * @param {string} title
+ * @param {obj} orderMutation
  */
 export function onClickDelete({
   modal,
@@ -27,15 +27,18 @@ export function onClickDelete({
   materialId,
   agencyId,
   orderMutation,
-  onCloseModal,
+  title,
 }) {
   modal.push("deleteOrder", {
-    label: Translate({ context: "profile", label: "delete-order" }),
+    label: Translate({
+      context: "profile",
+      label: "delete-order-questionmark",
+    }),
     mobile: mobile,
     isReadyToPickup: !!pickUpExpiryDate,
     orderId: materialId,
     agencyId: agencyId,
-    orderMutation: orderMutation,
-    onClose: onCloseModal,
+    orderMutation,
+    title,
   });
 }

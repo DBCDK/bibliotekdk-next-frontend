@@ -157,6 +157,11 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
               <Modal.Page id="material" component={Pages.Material} />
               <Modal.Page id="deleteOrder" component={Pages.DeleteOrder} />
               <Modal.Page
+                id="orderHistoryDataConsent"
+                component={Pages.OrderHistoryDataConsent}
+              />
+
+              <Modal.Page
                 id="manifestationContent"
                 component={Pages.ManifestationContent}
               />

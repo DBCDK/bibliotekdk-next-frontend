@@ -1,6 +1,6 @@
 .nav {
   position: sticky;
-  top: 0;
+  top: var(--pt4);
 }
 
 .menu {
@@ -62,10 +62,6 @@
 
 .group:focus {
   text-decoration: underline;
-}
-
-.groupActive p {
-  font-family: var(--body-font-semibold);
 }
 
 .itemLength {

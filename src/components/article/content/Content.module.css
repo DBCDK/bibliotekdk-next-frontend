@@ -13,6 +13,9 @@
   min-height: 300px;
   background-color: var(--parchment);
 }
+.backImageleft {
+  padding-top: var(--pt2);
+}
 
 .right {
   padding: var(--pt2);
