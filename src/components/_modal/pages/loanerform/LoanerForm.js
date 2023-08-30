@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { signIn } from "next-auth/react";
-
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import Email from "@/components/base/forms/email";
@@ -327,15 +325,6 @@ export default function Wrap(props) {
         {...props}
         branch={branch}
         initial={loanerInfo.userParameters}
-        // onLogin={() => {
-        //   const callback = getCallbackUrl(props.modal, branch?.branchId);
-        //   signIn(
-        //     //TODO why this here? - it should be in the login component
-        //     "adgangsplatformen",
-        //     { callbackUrl: callback },
-        //     { agency: branch?.agencyId, force_login: 1 }
-        //   );
-        // }}
         onSubmit={onSubmit}
         skeleton={branchIsLoading}
         onClose={() => props.modal.prev()}

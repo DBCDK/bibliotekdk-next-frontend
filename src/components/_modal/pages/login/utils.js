@@ -71,7 +71,7 @@ export function openLoginModal({
 }
 
 /**
- * Get a callback url for sign in.
+ * Get a callback url for sign in. Also responsible for setting pickup branch.
  *
  * Remove modals except for the third one.
  *     scenarios:
@@ -86,22 +86,19 @@ export function openLoginModal({
  * @param pickupBranch
  * @returns {string}
  */
-export function getCallbackUrl(modal, pickupBranch) {
-  console.log("setting callbackURL ", pickupBranch);
-  const stack = modal.stack;
+export function getCallbackUrl(pickupBranch, callbackUID) {
   let callback = window.location.href;
   // remove modal from callback - if any
   const regex = /[&|?]modal=[0-9]*/;
   callback = callback.replace(regex, "");
-  if (stack.length > 2) {
-    // pick top element in stack
-    callback =
-      callback + (callback.includes("?") ? "&" : "?") + "modal=" + stack[0].uid;
-  }
+
+  //if we have callbackUID, we want to redirect to order modal after login and therefor, we append it to url
+  let newCallBack = callbackUID ? callback + `&modal=${callbackUID}` : callback;
+
   return pickupBranch
-    ? callback +
-        (callback.includes("?") ? "&" : "?") +
+    ? newCallBack +
+        (newCallBack.includes("?") ? "&" : "?") +
         "setPickupAgency=" +
         pickupBranch
-    : callback;
+    : newCallBack;
 }

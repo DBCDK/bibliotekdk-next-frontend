@@ -33,10 +33,9 @@ export function ShowModal() {
         size="small"
         onClick={() =>
           modal.push("openAdgangsplatform", {
-            callbackUrl: "comeback.dk",
             branchId: "790900",
             agencyName: "test branch",
-            modal: modal,
+            callbackUID: "callbackUID", //TODO add some callbackUID into store to open order modal after login
           })
         }
       >

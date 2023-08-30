@@ -16,7 +16,6 @@ import { useData } from "@/lib/api/api";
 import * as libraryFragments from "@/lib/api/library.fragments";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 import { LOGIN_MODE } from "@/components/_modal/pages/login/utils";
-import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
 
 /**
  * Special component responsible for loading order policy
@@ -168,12 +167,13 @@ export function Pickup({
       modal.prev();
       return;
     }
+    const callbackUID = modal?.stack?.find((m) => m.id === "order").uid;
     if (branch?.borrowerCheck) {
-      const callbackUrl = getCallbackUrl(modal, branch.branchId);
       modal.push("openAdgangsplatform", {
-        callbackUrl: newUrl,
         branchId: branch.branchId,
-        agencyName: originUrl ? originUrl : branch.agencyName,
+        agencyName: branch.agencyName,
+        //if order modal doesnt open when we change pickup branch, add push order modal to store as we do in login, but we should always have callbackUID here
+        callbackUID: callbackUID ? callbackUID : undefined,
       });
       return;
     } else {
