@@ -23,13 +23,11 @@ export default function BoomarkIcon(props) {
       {...props}
       className={`${className} ${styles.trigger}`}
       animation={true}
-    >
-      <Icon 
-        size={{ w: 2, h: 2 }}
-        src={"bookmark_full.svg"}
-        alt={Translate({context: "header",
+      icon="bookmark_full.svg"
+      alt={Translate({context: "header",
           label: "bookmark",
-  })} />
+  })}
+    >
     </Action>
   );
 }
