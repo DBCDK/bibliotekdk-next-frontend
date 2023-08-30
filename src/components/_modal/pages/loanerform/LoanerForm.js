@@ -314,8 +314,16 @@ LoanerForm.propTypes = {
  */
 export default function Wrap(props) {
   const modal = useModal();
-  const { branchId, pids, selectedAccesses, workId, singleManifestation } =
-    props.context;
+  const {
+    branchId,
+    //order modal props
+    pids,
+    selectedAccesses,
+    workId,
+    singleManifestation,
+    //check if we open order new modal or we we go back to order modal
+    changePickupBranch = false,
+  } = props.context;
   const { data, isLoading: branchIsLoading } = useData(
     branchId && branchesFragments.branchUserParameters({ branchId })
   );
@@ -330,14 +338,18 @@ export default function Wrap(props) {
       userParameters: info,
       pickupBranch: branchId,
     });
-    openOrderModal({
-      modal,
-      pids,
-      selectedAccesses,
-      workId,
-      singleManifestation,
-      storeLoanerInfo: storeLoanerInfo,
-    });
+    if (changePickupBranch) {
+      props.modal.prev("order");
+    } else {
+      openOrderModal({
+        modal,
+        pids,
+        selectedAccesses,
+        workId,
+        singleManifestation,
+        storeLoanerInfo: storeLoanerInfo,
+      });
+    }
   }
 
   if (!branchId) {
