@@ -3266,19 +3266,18 @@
         "da": "Tilbage",
         "en": "Go Back"
       },
-      "consentInfoTextpart1":{
-        "da":"Her kan du se en oversigt over dine bestillinger. Du har givet",
-        "en" :"Here you can see an overview of your orders. You have given consent"
+      "consentInfoTextpart1": {
+        "da": "Her kan du se en oversigt over dine bestillinger. Du har givet",
+        "en": "Here you can see an overview of your orders. You have given consent"
       },
-      "consentInfoTextpart2":{
-        "da":"til, at dine bestillinger gemmes for at du kan se dem.",
-        "en" :"for your orders to be saved for you to view."
+      "consentInfoTextpart2": {
+        "da": "til, at dine bestillinger gemmes for at du kan se dem.",
+        "en": "for your orders to be saved for you to view."
       },
-      "consent":{
-        "da":"samtykke",
-        "en":"consent"
+      "consent": {
+        "da": "samtykke",
+        "en": "consent"
       }
-
     }
   }
 }

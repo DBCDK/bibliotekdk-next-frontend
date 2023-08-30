@@ -21,7 +21,7 @@ import { useEffect, useState } from "react";
 export function OrderHistoryDataConsent({ modal }) {
   const userDataMutation = useMutate();
   const { isAuthenticated } = useUser();
-  const { data: userData } = useData(
+  const { data: userData, mutate } = useData(
     isAuthenticated && userFragments.extendedData()
   );
   const [persistUserData, setPersistUserData] = useState(
@@ -31,7 +31,11 @@ export function OrderHistoryDataConsent({ modal }) {
   useEffect(() => {
     setPersistUserData(!!userData?.user?.persistUserData);
   }, [userData?.user?.persistUserData]);
-
+  useEffect(() => {
+    if (modal.isVisible) {
+      mutate();
+    }
+  }, [modal.isVisible]);
   return (
     <div className={styles.modalContainer}>
       <Top />
