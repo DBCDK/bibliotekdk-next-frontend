@@ -1,3 +1,7 @@
+.orderHistoryTable {
+  width: 100%;
+}
+
 .orderHistoryInfo {
   margin-bottom: var(--pt2);
 }
@@ -18,6 +22,7 @@
 @media (max-width: 575px) {
   .tableItem {
     display: block;
+    padding: var(--pt3) 0;
   }
 
   .activity,
