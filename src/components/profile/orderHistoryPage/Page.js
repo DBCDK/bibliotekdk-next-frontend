@@ -37,7 +37,6 @@ export default function OrderHistoryPage() {
   const isValidPage = !isNaN(parsedPage) && parsedPage > 0;
   const [currentPage, setCurrentPage] = useState(isValidPage ? parsedPage : 1);
   const [orderHistoryData, setOrderHistoryData] = useState([]);
-  const [persistUserData, setPersistUserData] = useState(false);
   //fetch paginated orderhistorydata
   const { data, isLoading } = useData(
     isAuthenticated &&
@@ -49,10 +48,7 @@ export default function OrderHistoryPage() {
   const { data: userData, mutate } = useData(
     isAuthenticated && userFragments.extendedData()
   );
-
-  useEffect(() => {
-    setPersistUserData(!!userData?.user?.persistUserData);
-  }, [userData, userData?.user?.persistUserData]);
+  const persistUserData = !!userData?.user?.persistUserData;
 
   /**
    * Updates url query params with page
@@ -93,7 +89,6 @@ export default function OrderHistoryPage() {
   }, [data, isLoading]);
 
   useEffect(() => {
-    console.log("MUTATE!", modal);
     if (!modal.isVisible) {
       mutate();
     }
@@ -102,12 +97,12 @@ export default function OrderHistoryPage() {
     <Layout title={Translate({ context: "profile", label: "orderHistory" })}>
       {persistUserData ? (
         <Text type="text3">
-          {Translate({ context: "profile", label: "consentInfoTextpart1" })}{" "}
+          {Translate({ context: "profile", label: "consentInfoTextpart1" })}
           <Link
+          className={styles.consentLink}
             onClick={() => {
               modal.push("orderHistoryDataConsent");
             }}
-            // href="/profil/mine-biblioteker"
             border={{
               top: false,
               bottom: {
@@ -115,7 +110,7 @@ export default function OrderHistoryPage() {
               },
             }}
           >
-            {Translate({ context: "profile", label: "consent" })}{" "}
+            {Translate({ context: "profile", label: "consent" })}
           </Link>
           {Translate({ context: "profile", label: "consentInfoTextpart2" })}
         </Text>

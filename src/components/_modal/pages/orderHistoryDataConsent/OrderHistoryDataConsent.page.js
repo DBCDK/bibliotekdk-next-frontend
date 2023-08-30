@@ -24,13 +24,9 @@ export function OrderHistoryDataConsent({ modal }) {
   const { data: userData, mutate } = useData(
     isAuthenticated && userFragments.extendedData()
   );
-  const [persistUserData, setPersistUserData] = useState(
-    !!userData?.user?.persistUserData
-  );
 
-  useEffect(() => {
-    setPersistUserData(!!userData?.user?.persistUserData);
-  }, [userData?.user?.persistUserData]);
+const persistUserData= !!userData?.user?.persistUserData
+
   useEffect(() => {
     if (modal.isVisible) {
       mutate();
