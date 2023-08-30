@@ -34,8 +34,9 @@ export function ShowModal() {
         onClick={() =>
           modal.push("openAdgangsplatform", {
             callbackUrl: "comeback.dk",
-            agencyId: "790900",
+            branchId: "790900",
             agencyName: "test branch",
+            modal: modal,
           })
         }
       >

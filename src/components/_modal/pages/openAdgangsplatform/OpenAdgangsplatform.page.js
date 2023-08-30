@@ -6,16 +6,17 @@ import styles from "./OpenAdgangsplatform.module.css";
 import Button from "@/components/base/button";
 import { signIn } from "next-auth/react";
 import Icon from "@/components/base/icon";
+import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
 
-export const getCallbackUrl = (pickupBranchId) => {
-  let callback = window.location.href;
-  return pickupBranchId
-    ? callback +
-        (callback.includes("?") ? "&" : "?") +
-        "setPickupAgency=" +
-        pickupBranchId
-    : callback;
-};
+// export const getCallbackUrl = (pickupBranchId) => {
+//   let callback = window.location.href;
+//   return pickupBranchId
+//     ? callback +
+//         (callback.includes("?") ? "&" : "?") +
+//         "setPickupAgency=" +
+//         pickupBranchId
+//     : callback;
+// };
 
 /**
  * Modal page for that contains a button to Adgangsplatform login
@@ -23,12 +24,13 @@ export const getCallbackUrl = (pickupBranchId) => {
  * @returns
  */
 export default function OpenAdgangsplatform({ context }) {
-  const { agencyName, agencyId, callbackUrl } = context;
+  const { agencyName, branchId, callbackUrl, modal } = context;
+  const callBackUrl = getCallbackUrl(modal, branchId);
   const onLogin = () => {
     signIn(
       "adgangsplatformen",
-      { callbackUrl: callbackUrl },
-      { agency: agencyId, force_login: 1 }
+      { callbackUrl: callBackUrl }, //TODO how to append order modal?
+      { agency: branchId, force_login: 1 }
     );
   };
 

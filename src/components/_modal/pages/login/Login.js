@@ -25,6 +25,7 @@ import styles from "./Login.module.css";
 import SearchResultList from "./searchResultList/SearchResultList";
 import MobileLoginButton from "./mobileLoginButton/MobileLoginButton";
 import useWindowSize from "@/components/hooks/useWindowSize";
+import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
 
 /**
  * contains the login page for login modal - both for desktop and mobile
@@ -85,10 +86,13 @@ export function Login({
       : callbackurl;
 
     if (branch?.borrowerCheck) {
+      const callbackUrl = getCallbackUrl(modal, branch.branchId);
+      console.log("branch", branch);
       modal.push("openAdgangsplatform", {
-        callbackUrl: newUrl,
-        agencyId: branch.agencyId,
+        callbackUrl: callbackUrl, //TODO how to add ordermodal?
+        branchId: branch.branchId,
         agencyName: originUrl ? originUrl : branch.agencyName, //TODO do we have originUrl and how does it look like?
+        modal: modal,
       });
       return;
     }
@@ -146,7 +150,7 @@ export function Login({
           includeArrows={includeArrows}
         />
       )}
-      {showMitIDLogin && <MitIDButton callbackUrl={callbackurl} />}
+      {showMitIDLogin && <MitIDButton callbackUrl />}
     </div>
   );
 }

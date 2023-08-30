@@ -16,6 +16,7 @@ import { useData } from "@/lib/api/api";
 import * as libraryFragments from "@/lib/api/library.fragments";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 import { LOGIN_MODE } from "@/components/_modal/pages/login/utils";
+import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
 
 /**
  * Special component responsible for loading order policy
@@ -168,9 +169,10 @@ export function Pickup({
       return;
     }
     if (branch?.borrowerCheck) {
+      const callbackUrl = getCallbackUrl(modal, branch.branchId);
       modal.push("openAdgangsplatform", {
         callbackUrl: newUrl,
-        agencyId: branch.agencyId,
+        branchId: branch.branchId,
         agencyName: originUrl ? originUrl : branch.agencyName,
       });
       return;

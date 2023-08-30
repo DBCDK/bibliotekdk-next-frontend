@@ -257,41 +257,6 @@ export function LoanerForm({
   );
 }
 
-/**
- * Get a callback url for sign in.
- *
- * Remove modals except for the third one.
- *     scenarios:
- *     a. user logins from a page eg. infomedia
- *     b. user logins from a modal eg. pickup
- *       if user logins in from a modal the top stack will be the original modal.
- *       two last elements in stack are "login" and "loanerform" - login ALWAYS
- *       happens via - login->loanerform -- so if user comes from another modal
- *       it will be on top - redirect to that
- *
- * @param modal
- * @param pickupBranch
- * @returns {string}
- */
-function getCallbackUrl(modal, pickupBranch) {
-  const stack = modal.stack;
-  let callback = window.location.href;
-  // remove modal from callback - if any
-  const regex = /[&|?]modal=[0-9]*/;
-  callback = callback.replace(regex, "");
-  if (stack.length > 2) {
-    // pick top element in stack
-    callback =
-      callback + (callback.includes("?") ? "&" : "?") + "modal=" + stack[0].uid;
-  }
-  return pickupBranch
-    ? callback +
-        (callback.includes("?") ? "&" : "?") +
-        "setPickupAgency=" +
-        pickupBranch
-    : callback;
-}
-
 LoanerForm.propTypes = {
   branch: PropTypes.object,
   onSubmit: PropTypes.func,
@@ -362,14 +327,15 @@ export default function Wrap(props) {
         {...props}
         branch={branch}
         initial={loanerInfo.userParameters}
-        onLogin={() => {
-          const callback = getCallbackUrl(props.modal, branch?.branchId);
-          signIn(
-            "adgangsplatformen",
-            { callbackUrl: callback },
-            { agency: branch?.agencyId, force_login: 1 }
-          );
-        }}
+        // onLogin={() => {
+        //   const callback = getCallbackUrl(props.modal, branch?.branchId);
+        //   signIn(
+        //     //TODO why this here? - it should be in the login component
+        //     "adgangsplatformen",
+        //     { callbackUrl: callback },
+        //     { agency: branch?.agencyId, force_login: 1 }
+        //   );
+        // }}
         onSubmit={onSubmit}
         skeleton={branchIsLoading}
         onClose={() => props.modal.prev()}
