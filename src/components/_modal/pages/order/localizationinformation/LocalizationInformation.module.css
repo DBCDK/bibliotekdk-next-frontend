@@ -26,6 +26,10 @@
   margin: var(--pt05) 0 0 0;
 }
 
+.iconLink {
+  cursor: pointer;
+}
+
 /* action */
 .shortLink {
   display: inline;
