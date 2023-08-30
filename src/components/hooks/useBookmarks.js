@@ -1,11 +1,11 @@
 import useSWR from "swr";
 const KEY_NAME = "bookmarks";
 export default function useBookmarks() {
-  const {
+  let {
     data: bookmark,
     mutate: mutateBookmark,
     error,
-  } = useSWR(KEY_NAME, (key) => JSON.parse(localStorage.getItem(key) || []));
+  } = useSWR(KEY_NAME, (key) => JSON.parse(localStorage.getItem(key)) || []);
 
   /**
    * Set a value in bookmark list
@@ -21,12 +21,13 @@ export default function useBookmarks() {
     else {
       bookmark?.splice(existingIndex, 1);
     }
+
     // store
     const stringified = JSON.stringify(bookmark);
     localStorage.setItem(KEY_NAME, stringified);
 
     // mutate
-    mutateBookmark(JSON.parse(stringified));
+    mutateBookmark(bookmark);
   };
 
   function clearBookmarks() {
@@ -35,7 +36,7 @@ export default function useBookmarks() {
     const stringified = JSON.stringify(fisk);
     localStorage.setItem(KEY_NAME, stringified);
     //mutate
-    mutateBookmark(JSON.parse(stringified));
+    mutateBookmark(fisk);
   }
 
   return {

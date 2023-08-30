@@ -1,3 +1,6 @@
+.librariesTable {
+  width: 100%;
+}
 .tableItem {
   display: grid;
   grid-template-columns: 6fr 2fr;
@@ -11,7 +14,13 @@
   align-items: center;
   grid-gap: var(--pt2);
 }
-@media (max-width: 550px) {
+.libraryInfo p {
+  text-align: initial;
+}
+.headerItem {
+  text-align: initial;
+}
+@media (max-width: 575px) {
   .libraryInfo {
     display: block;
   }
@@ -23,6 +32,9 @@
   .tableItem {
     grid-template-columns: 6fr 1fr;
   }
+  .municipalityOfResidence {
+    font-size: 17px;
+  }
 }
 .headerRow {
   display: grid;
@@ -31,7 +43,6 @@
   border-bottom: 1px solid var(--iron);
   width: 100%;
 }
-
-.textLabel {
-  color: var(--blue);
+.tableItem {
+  width: 100%;
 }
