@@ -34,6 +34,7 @@ export function ShowModal() {
         onClick={() =>
           modal.push("openAdgangsplatform", {
             branchId: "790900",
+            agencyId: "790900",
             agencyName: "test branch",
             callbackUID: "callbackUID", //TODO add some callbackUID into store to open order modal after login
           })

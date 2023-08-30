@@ -170,6 +170,7 @@ export function Pickup({
     const callbackUID = modal?.stack?.find((m) => m.id === "order").uid;
     if (branch?.borrowerCheck) {
       modal.push("openAdgangsplatform", {
+        agencyId: branch.agencyId,
         branchId: branch.branchId,
         agencyName: branch.agencyName,
         //if order modal doesnt open when we change pickup branch, add push order modal to store as we do in login, but we should always have callbackUID here

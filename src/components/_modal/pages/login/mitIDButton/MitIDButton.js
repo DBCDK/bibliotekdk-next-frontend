@@ -18,10 +18,9 @@ import { signIn } from "next-auth/react";
  */
 export default function MitIDButton({ callbackUrl }) {
   const onMitIdLogin = () => {
-    //const callbackUrl = getCallbackUrl(modal, branchId); //WE dont have login branch here! what do we do?
     signIn(
       "adgangsplatformen",
-      { callbackUrl: callbackUrl }, //TODO how to handle openining order modal?
+      { callbackUrl: callbackUrl },
       { force_login: 1, idp: "nemlogin" }
     );
   };

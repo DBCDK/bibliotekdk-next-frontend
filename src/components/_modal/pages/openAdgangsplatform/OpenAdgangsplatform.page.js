@@ -14,13 +14,13 @@ import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
  * @returns
  */
 export default function OpenAdgangsplatform({ context }) {
-  const { agencyName, branchId, callbackUID } = context;
+  const { agencyName, agencyId, branchId, callbackUID } = context;
   const callBackUrl = getCallbackUrl(branchId, callbackUID);
   const onLogin = () => {
     signIn(
       "adgangsplatformen",
       { callbackUrl: callBackUrl },
-      { agency: branchId, force_login: 1 }
+      { agency: agencyId, force_login: 1 }
     );
   };
 

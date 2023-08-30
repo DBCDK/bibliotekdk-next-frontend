@@ -72,6 +72,7 @@ export function Login({
   const onSelect = (branch) => {
     if (branch?.borrowerCheck) {
       modal.push("openAdgangsplatform", {
+        agencyId: branch.agencyId,
         branchId: branch.branchId,
         agencyName: originUrl ? originUrl : branch.agencyName, //TODO do we have originUrl and how does it look like?
         callbackUID: callbackUID,
