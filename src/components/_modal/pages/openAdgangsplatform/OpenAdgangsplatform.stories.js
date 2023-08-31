@@ -35,8 +35,7 @@ export function ShowModal() {
           modal.push("openAdgangsplatform", {
             branchId: "790900",
             agencyId: "790900",
-            agencyName: "test branch",
-            callbackUID: "callbackUID", //TODO add some callbackUID into store to open order modal after login
+            agencyName: "Test Agency",
           })
         }
       >
