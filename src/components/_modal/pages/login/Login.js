@@ -15,8 +15,6 @@ import { useData } from "@/lib/api/api";
 import * as libraryFragments from "@/lib/api/library.fragments";
 
 import { signIn } from "next-auth/react";
-import getConfig from "next/config";
-import Router from "next/router";
 import { showLoanerForm } from "./utils";
 import MitIDButton from "./mitIDButton/MitIDButton";
 import LibrarySearch from "./librarySearch/LibrarySearch";
@@ -64,13 +62,6 @@ export function Login({
     singleManifestation = null,
     callbackUID = null,
   } = context || {};
-  const APP_URL =
-    getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
-
-  // remove all modal params from callbackurl - to avoid redirect to modal after coming back from login
-  const regexp = /(\?|&)modal=\d+$/g;
-
-  const callbackurl = `${APP_URL}${Router.asPath}`.replace(regexp, "");
   const windowWidth = useWindowSize().width;
   const isMobile = windowWidth <= 414;
 
@@ -79,16 +70,12 @@ export function Login({
     !hasQuery || !allBranches || allBranches.length < 1 || isMobile;
 
   const onSelect = (branch) => {
-    //if we have callbackUID, we want to redirect to order modal after login and therefor, we append it to url
-    let newUrl = callbackUID
-      ? callbackurl + `&modal=${callbackUID}`
-      : callbackurl;
-
     if (branch?.borrowerCheck) {
       modal.push("openAdgangsplatform", {
-        callbackUrl: newUrl,
         agencyId: branch.agencyId,
+        branchId: branch.branchId,
         agencyName: originUrl ? originUrl : branch.agencyName, //TODO do we have originUrl and how does it look like?
+        callbackUID: callbackUID,
       });
       return;
     }
@@ -146,7 +133,7 @@ export function Login({
           includeArrows={includeArrows}
         />
       )}
-      {showMitIDLogin && <MitIDButton callbackUrl={callbackurl} />}
+      {showMitIDLogin && <MitIDButton callbackUrl />}
     </div>
   );
 }

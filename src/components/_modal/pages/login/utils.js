@@ -69,3 +69,36 @@ export function openLoginModal({
     callbackUID: callbackUID,
   });
 }
+
+/**
+ * Get a callback url to return to after sign in.
+ *
+ * OBS: this code is also responsible for setting **pickup branch** after login.
+ *
+ * Remove modals except for the third one.
+ *     scenarios:
+ *     a. user logins from a page eg. infomedia
+ *     b. user logins from a modal eg. pickup
+ *       remove modal from callbackurl - if any
+ *       if user is coming from order button, we have callbackUID from oder modal in store and attach it to url to open order modal after login
+ *
+ * @param modal
+ * @param pickupBranch
+ * @returns {string}
+ */
+export function getCallbackUrl(pickupBranch, callbackUID) {
+  let callback = window.location.href;
+  // remove modal from callback - if any
+  const regex = /[&|?]modal=[0-9]*/;
+  callback = callback.replace(regex, "");
+
+  //if we have callbackUID, we want to redirect to order modal after login and therefor, we append it to url
+  let newCallBack = callbackUID ? callback + `&modal=${callbackUID}` : callback;
+
+  return pickupBranch
+    ? newCallBack +
+        (newCallBack.includes("?") ? "&" : "?") +
+        "setPickupAgency=" +
+        pickupBranch
+    : newCallBack;
+}

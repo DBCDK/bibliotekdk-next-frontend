@@ -167,11 +167,13 @@ export function Pickup({
       modal.prev();
       return;
     }
+    const callbackUID = modal?.stack?.find((m) => m.id === "order").uid;
     if (branch?.borrowerCheck) {
       modal.push("openAdgangsplatform", {
-        callbackUrl: newUrl,
         agencyId: branch.agencyId,
-        agencyName: originUrl ? originUrl : branch.agencyName,
+        branchId: branch.branchId,
+        agencyName: branch.agencyName,
+        callbackUID: callbackUID, //we should always have callbackUID, but if we dont, order modal is not opened after login.
       });
       return;
     } else {

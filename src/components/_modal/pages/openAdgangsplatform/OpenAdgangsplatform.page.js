@@ -6,16 +6,7 @@ import styles from "./OpenAdgangsplatform.module.css";
 import Button from "@/components/base/button";
 import { signIn } from "next-auth/react";
 import Icon from "@/components/base/icon";
-
-export const getCallbackUrl = (pickupBranchId) => {
-  let callback = window.location.href;
-  return pickupBranchId
-    ? callback +
-        (callback.includes("?") ? "&" : "?") +
-        "setPickupAgency=" +
-        pickupBranchId
-    : callback;
-};
+import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
 
 /**
  * Modal page for that contains a button to Adgangsplatform login
@@ -23,11 +14,12 @@ export const getCallbackUrl = (pickupBranchId) => {
  * @returns
  */
 export default function OpenAdgangsplatform({ context }) {
-  const { agencyName, agencyId, callbackUrl } = context;
+  const { agencyName, agencyId, branchId, callbackUID } = context;
+  const callBackUrl = getCallbackUrl(branchId, callbackUID);
   const onLogin = () => {
     signIn(
       "adgangsplatformen",
-      { callbackUrl: callbackUrl },
+      { callbackUrl: callBackUrl },
       { agency: agencyId, force_login: 1 }
     );
   };
