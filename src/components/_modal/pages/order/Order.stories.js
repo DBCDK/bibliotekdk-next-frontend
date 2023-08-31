@@ -215,10 +215,10 @@ export function NotBlockedUser() {
   useMockLoanerInfo({});
   return (
     <OrderPageComponentBuilder
-      title="User is blocked from loaning"
-      description={`User is blocked from loaning, 
-        the red user is blocked information box should be present 
-        and OrderConfirmationButton should be disabled.`}
+      title="User is NOT blocked from loaning"
+      description={`User is NOT blocked from loaning, 
+        the red user is blocked information box should NOT be present 
+        and OrderConfirmationButton should NOT be disabled.`}
       workId={"some-work-id-1"}
       selectedPids={["some-pid-1"]}
     />

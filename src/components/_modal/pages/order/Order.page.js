@@ -55,21 +55,19 @@ function Order({
   // Update email from user account
   useEffect(() => {
     const userMail = user?.userParameters?.userMail;
-    if (userMail) {
-      const status = validateEmail(userMail);
-      setMail({
-        value: userMail,
-        valid: {
-          status: status,
-          message: status
-            ? null
-            : {
-                context: "form",
-                label: "wrong-email-field",
-              },
-        },
-      });
-    }
+    const status = validateEmail(userMail);
+    setMail({
+      value: userMail,
+      valid: {
+        status: status,
+        message: status
+          ? null
+          : {
+              context: "form",
+              label: "wrong-email-field",
+            },
+      },
+    });
   }, [user?.userParameters]);
 
   function updateModal() {
@@ -158,9 +156,6 @@ function Order({
       }
     } else {
       setFailedSubmission(true);
-      if (!storeLoanerInfo) {
-        deleteSessionData();
-      }
     }
   }
 
