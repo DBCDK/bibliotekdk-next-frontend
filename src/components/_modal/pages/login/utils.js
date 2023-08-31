@@ -71,16 +71,16 @@ export function openLoginModal({
 }
 
 /**
- * Get a callback url for sign in. Also responsible for setting pickup branch.
+ * Get a callback url to return to after sign in.
+ *
+ * OBS: this code is also responsible for setting **pickup branch** after login.
  *
  * Remove modals except for the third one.
  *     scenarios:
  *     a. user logins from a page eg. infomedia
  *     b. user logins from a modal eg. pickup
- *       if user logins in from a modal the top stack will be the original modal.
- *       two last elements in stack are "login" and "loanerform" - login ALWAYS
- *       happens via - login->loanerform -- so if user comes from another modal
- *       it will be on top - redirect to that
+ *       remove modal from callbackurl - if any
+ *       if user is coming from order button, we have callbackUID from oder modal in store and attach it to url to open order modal after login
  *
  * @param modal
  * @param pickupBranch
