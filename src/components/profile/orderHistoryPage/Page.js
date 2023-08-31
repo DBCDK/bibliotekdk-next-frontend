@@ -90,7 +90,8 @@ export default function OrderHistoryPage() {
 
   useEffect(() => {
     if (!modal.isVisible) {
-      mutate();
+      //hacked solution. Calling mutate() directley does not refetch user consent data.
+      setTimeout(mutate, 200);
     }
   }, [modal.isVisible]);
   return (
