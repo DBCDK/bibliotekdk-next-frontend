@@ -173,8 +173,7 @@ export function Pickup({
         agencyId: branch.agencyId,
         branchId: branch.branchId,
         agencyName: branch.agencyName,
-        //if order modal doesnt open when we change pickup branch, add push order modal to store as we do in login, but we should always have callbackUID here
-        callbackUID: callbackUID ? callbackUID : undefined,
+        callbackUID: callbackUID, //we should always have callbackUID, but if we dont, order modal is not opened after login.
       });
       return;
     } else {
