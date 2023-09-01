@@ -13,9 +13,9 @@
 }
 
 .tooltipWrap {
-  position: relative;
-  top: 3px;
-  display: inline;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .tooltipWrap:focus {
