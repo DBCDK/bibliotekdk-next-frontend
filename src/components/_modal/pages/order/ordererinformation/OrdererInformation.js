@@ -96,7 +96,6 @@ export function OrdererInformation({
 OrdererInformation.propTypes = {
   isLoadingBranches: PropTypes.any,
   name: PropTypes.any,
-  mailAuthenUser: PropTypes.any,
   lockedMessage: PropTypes.shape({
     context: PropTypes.string,
     label: PropTypes.string,
@@ -105,11 +104,12 @@ OrdererInformation.propTypes = {
   pickupBranch: PropTypes.any,
   invalidClass: PropTypes.any,
   isLoading: PropTypes.any,
-  hasBorchk: PropTypes.any,
   email: PropTypes.any,
+  hasAuthMail: PropTypes.bool,
   onMailChange: PropTypes.func,
   message: PropTypes.any,
   validClass: PropTypes.any,
+  showMailMessage: PropTypes.bool,
 };
 
 export default function Wrap({
@@ -175,7 +175,7 @@ export default function Wrap({
     <OrdererInformation
       isLoadingBranches={isLoadingBranches}
       name={actualUserName}
-      hasAuthMail={!!authUser?.mail} //TODO fix that we have auth mail and email
+      hasAuthMail={!!authUser?.mail}
       email={email}
       lockedMessage={lockedMessage}
       pickupBranch={pickupBranch}
