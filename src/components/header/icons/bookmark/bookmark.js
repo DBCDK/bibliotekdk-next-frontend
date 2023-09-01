@@ -16,7 +16,7 @@ import Translate from "@/components/base/translate";
  * @returns {component}
  */
 export default function BoomarkIcon(props) {
-  const { className } = props; 
+  const { className } = props;
 
   return (
     <Action
@@ -24,11 +24,8 @@ export default function BoomarkIcon(props) {
       className={`${className} ${styles.trigger}`}
       animation={true}
       icon="bookmark_full.svg"
-      alt={Translate({context: "header",
-          label: "bookmark",
-  })}
-    >
-    </Action>
+      alt={Translate({ context: "header", label: "bookmark" })}
+    ></Action>
   );
 }
 

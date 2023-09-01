@@ -657,14 +657,14 @@ const MaterialRow = (props) => {
 };
 
 MaterialRow.propTypes = {
-  image: PropTypes.string,
+  id: PropTypes.string.isRequired, //materialId
   title: PropTypes.string.isRequired,
+  image: PropTypes.string,
   creator: PropTypes.string,
   materialType: PropTypes.string,
   creationYear: PropTypes.string,
-  library: PropTypes.string.isRequired,
+  library: PropTypes.string,
   hasCheckbox: PropTypes.bool,
-  id: PropTypes.string.isRequired, //materialId
   status: PropTypes.oneOf(["NONE", "GREEN", "RED"]),
   workId: PropTypes.string,
   type: PropTypes.oneOf(["DEBT", "LOAN", "ORDER"]),

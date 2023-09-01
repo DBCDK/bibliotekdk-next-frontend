@@ -1,0 +1,30 @@
+.cleanContainer {
+  padding-top: var(--pt8);
+  min-height: calc(80vh);
+}
+
+.title {
+  margin-bottom: var(--pt1);
+}
+
+.smallLabel {
+  margin-bottom: var(--pt4);
+}
+
+.buttonControls {
+  display: flex;
+  align-content: center;
+}
+
+.selectAllButton {
+  margin-right: var(--pt3);
+}
+
+.orderButton {
+  width: 100px;
+  margin-right: var(--pt2);
+}
+
+.referenceButton {
+  margin-right: var(--pt3);
+}
