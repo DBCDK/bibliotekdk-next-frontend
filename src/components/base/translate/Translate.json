@@ -311,6 +311,10 @@
         "da": "Email",
         "en": "Email"
       },
+      "name": {
+        "da": "Navn",
+        "en": "Name"
+      },
       "accept": {
         "da": "Godkend",
         "en": "Accept"
@@ -2150,8 +2154,8 @@
         "en": "%S grants no access to the book"
       },
       "info-email-message": {
-        "da": "Du kan %s",
-        "en": "You can"
+        "da": "Din mail er hentent fra %s",
+        "en": "Your email has been retrieved from %s"
       },
       "change-email-link": {
         "da": "ændre din email her",
