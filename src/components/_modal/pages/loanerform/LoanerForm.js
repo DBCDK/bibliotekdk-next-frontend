@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
@@ -201,6 +201,8 @@ export function UserParamsForm({
  * @param {obj} skeleton
  * @param {obj} initial
  * @param {obj} context
+ * @param {bool} storeLoanerInfo
+ * @param {func} setStoreLoanerInfo
  * @returns JSX element
  */
 export function LoanerForm({
@@ -301,7 +303,23 @@ export default function Wrap(props) {
 
   const branch = data?.branches?.result?.[0];
 
-  const { loanerInfo, updateLoanerInfo } = useUser();
+  const { loanerInfo, updateLoanerInfo, deleteSessionData } = useUser();
+
+  //remove session data if modal is closed and user doesnt want to store data
+  //if order modal has been open, order modal handles deletion
+  useEffect(() => {
+    if (
+      modal?.isVisible === false &&
+      !storeLoanerInfo &&
+      !orderModalHasBeenOpen()
+    ) {
+      deleteSessionData();
+    }
+  }, [modal?.isVisible]);
+
+  function orderModalHasBeenOpen() {
+    return modal?.stack?.filter((e) => e.id === "order")?.length > 0;
+  }
 
   async function onSubmit(info) {
     await updateLoanerInfo({
