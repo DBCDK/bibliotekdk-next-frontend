@@ -13,7 +13,7 @@ import IconButton from "@/components/base/iconButton";
 
 const BookmarkPage = () => {
   const { bookmarks } = useBookmarks();
-  const data = populateBookmarks(bookmarks);
+  const { data } = populateBookmarks(bookmarks);
 
   console.log(data);
   return (
@@ -45,13 +45,21 @@ const BookmarkPage = () => {
               Fjern
             </IconButton>
           </div>
-          {bookmarks.map((bookmark) => (
+          {data?.works?.map((bookmark) => (
             <MaterialRow
               hasCheckbox
-              title={bookmark.id}
-              creator="Tom Bellend"
-              //agencyId={bookmark.id}
-              id={bookmark.id}
+              title={bookmark?.titles?.main[0] || ""}
+              creator={bookmark?.creators[0]?.display}
+              materialType={
+                bookmark?.manifestations?.bestRepresentation?.materialTypes[0]
+                  ?.specific
+              }
+              image={
+                bookmark?.manifestations?.bestRepresentation?.cover?.thumbnail
+              }
+              id={bookmark?.workId}
+              creationYear="2000"
+              type="BOOKMARK"
             />
           ))}
         </Col>

@@ -438,6 +438,19 @@ const MaterialRow = (props) => {
             pickUpExpiryDate={pickUpExpiryDate}
           />
         );
+      case "BOOKMARK":
+        return (
+          <div className={styles.dynamicColumnHorizontal}>
+            <Button
+              type="primary"
+              size="small"
+              className={styles.bookmarkActionButton}
+            >
+              Bestil
+            </Button>
+            <IconButton>Fjern</IconButton>
+          </div>
+        );
       default:
         return null;
     }
@@ -553,6 +566,8 @@ const MaterialRow = (props) => {
               styles.materialRow_withCheckbox,
               styles.materialRow_wrapper,
               {
+                [styles.materialRow_withGridCheckbox]: type !== "BOOKMARK",
+                [styles.materialRow_withFlexCheckbox]: type === "BOOKMARK",
                 [styles.materialRow_green]: status === "GREEN",
                 [styles.materialRow_red]: status === "RED",
                 [styles.materialRow_animated]: materialId === removedOrderId,
@@ -579,7 +594,7 @@ const MaterialRow = (props) => {
       >
         <>
           {hasCheckbox && (
-            <div>
+            <div className={styles.checkboxContainer}>
               <Checkbox
                 checked={isChecked}
                 id={`material-row-${materialId}`}
@@ -641,14 +656,18 @@ const MaterialRow = (props) => {
 
           <div>{renderDynamicColumn()}</div>
 
-          <div>
-            <Text type="text2">{library}</Text>
-          </div>
+          {type !== "BOOKMARK" && (
+            <>
+              <div>
+                <Text type="text2">{library}</Text>
+              </div>
 
-          {renewed ? (
-            <RenewedSpan textType="text3" />
-          ) : (
-            <div>{renderDynamicButton(materialId, agencyId)}</div>
+              {renewed ? (
+                <RenewedSpan textType="text3" />
+              ) : (
+                <div>{renderDynamicButton(materialId, agencyId)}</div>
+              )}
+            </>
           )}
         </>
       </ConditionalWrapper>

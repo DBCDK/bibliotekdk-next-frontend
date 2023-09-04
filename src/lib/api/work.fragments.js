@@ -566,20 +566,32 @@ export function editionWork({ workId }) {
 
 export function pidsToWorks({ pids }) {
   if (!pids) return;
-  console.log(pids);
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
-    query pidsToWorks($pid: [String!]!) {
-      works(pid: $pid) {
+    query pidsToWorks($pids: [String!]!) {
+      works(pid: $pids) {
         workId
         titles {
           main
         }
+        creators {
+          display
+        }
+        manifestations {
+          bestRepresentation {
+            cover {
+              thumbnail
+            }
+            materialTypes {
+              specific
+            }
+          }
+        }
       }
     }
     `,
-    variables: { pid: pids },
+    variables: { pids },
     slowThreshold: 3000,
   };
 }

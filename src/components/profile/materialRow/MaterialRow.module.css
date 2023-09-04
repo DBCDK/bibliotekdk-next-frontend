@@ -15,14 +15,30 @@
   transition: max-height 0.5s, padding 0.5s;
 }
 
-.materialRow_withCheckbox {
+.materialRow_withGridCheckbox {
   grid-template-columns: 1fr 3fr 2fr 2fr 1fr;
   cursor: pointer;
 }
 
-.materialRow_withCheckbox:focus-visible,
-.materialRow_withCheckbox:hover {
+.materialRow_withFlexCheckbox {
+  display: flex;
+  cursor: pointer;
+  grid-column-gap: unset;
+}
+
+.materialRow_withGridCheckbox:focus-visible,
+.materialRow_withGridCheckbox:hover,
+.materialRow_withFlexCheckbox:focus-visible,
+.materialRow_withFlexCheckbox:hover {
   outline: 1px solid var(--blue);
+}
+
+.materialRow_withFlexCheckbox .checkboxContainer {
+  margin-right: var(--pt2);
+}
+.materialRow_withFlexCheckbox .materialInfo {
+  margin-right: var(--pt9);
+  flex: 1;
 }
 
 .materialRow_wrapper {
@@ -89,11 +105,6 @@
   justify-self: flex-end;
 }
 
-/* TODO */
-/*.dynamicColumn_mobile {*/
-/*  margin-top: var(--pt1);*/
-/*}*/
-
 .blackUnderline * {
   display: inline;
 }
@@ -137,6 +148,10 @@
   flex-direction: column;
 }
 
+.dynamicColumnHorizontal {
+  display: flex;
+}
+
 .dynamicContent {
   margin-top: var(--pt1);
 }
@@ -165,6 +180,11 @@
 
 .textContainer {
   flex: 1;
+}
+
+.bookmarkActionButton {
+  margin-right: var(--pt3);
+  width: 100px;
 }
 
 @media (hover: hover) {
