@@ -55,8 +55,10 @@ export default function LoginPrompt({
               })}
               chevronOffset={styles.chevron}
             >
-              <div>
-                <Text type="text3">{description}</Text>
+              <>
+                <Text type="text3" className={styles.description}>
+                  {description}
+                </Text>
                 <Text className={styles.inline} type="text3">
                   {description2}{" "}
                 </Text>
@@ -72,7 +74,7 @@ export default function LoginPrompt({
                     {linkHref.text}
                   </Text>
                 </Link>
-              </div>
+              </>
             </InfoDropdown>
           )}
           {!(user.isAuthenticated && linkHref) && (

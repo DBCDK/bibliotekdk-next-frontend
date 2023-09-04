@@ -410,8 +410,8 @@
         "en": "We could not see that you are registered at a library that provides access"
       },
       "accessOpportunity": {
-        "da": "For at du kan få adgang til at læse artiklen skal dit bibliotek abonnere på Infomedia. De fleste folkebiblioteker giver adgang til artikler fra Infomedia. Som borger kan du oprette dig på et folkebibliotek via deres hjemmeside.",
-        "en": "In order to gain acces to the article, your library must subscribe to Infomedia. Most public libraries provide access to Infomedia articles. As a citizen, you can register at a public library via their website."
+        "da": "For at du kan få adgang til at læse artiklen skal dit bibliotek abonnere på Infomedia. De fleste folkebiblioteker abonnerer på Infomedia. Som borger kan du oprette dig på et folkebibliotek via deres hjemmeside.",
+        "en": "In order to gain acces to the article, your library must subscribe to Infomedia. Most public libraries subscribe to Infomedia articles. As a citizen, you can register at a public library via their website."
       },
       "accessOpportunity2": {
         "da": "Er du bruger ved et andet bibliotek? Så log ind der og se om de har abonnement. ",
