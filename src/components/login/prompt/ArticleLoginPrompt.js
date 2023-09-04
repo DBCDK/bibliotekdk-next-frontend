@@ -45,7 +45,7 @@ export default function ArticleLoginPrompt({ articleId }) {
   // Logged in, library does not have access
   if (!isLoading && !data?.infomedia?.article) {
     const linkHref = {
-      href: "https://slks.dk/soeg?q=danske+biblioteker",
+      href: "https://slks.dk/omraader/kulturinstitutioner/biblioteker",
       text: Translate({ context: "articles", label: "libraryAccessReadMore" }),
     };
 
