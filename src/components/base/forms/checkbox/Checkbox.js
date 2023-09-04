@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 
 import Skeleton from "@/components/base/skeleton";
-
+import cx from "classnames";
 import styles from "./Checkbox.module.css";
 
 /**
@@ -38,13 +38,13 @@ export function Checkbox({
     setStatus(checked);
   }, [checked]);
 
-  const disabledClass = disabled ? styles.disabled : "";
-  const readOnlyClass = readOnly ? styles.readOnly : "";
-
   return (
     <label
       htmlFor={id}
-      className={`${styles.wrap} ${disabledClass} ${readOnlyClass} ${className}`}
+      className={cx(styles.wrap, className, {
+        [styles.readOnly]: readOnly,
+        [styles.disabled]: disabled,
+      })}
     >
       <input
         id={id}
@@ -56,10 +56,14 @@ export function Checkbox({
         readOnly={readOnly}
         data-cy={dataCy}
         tabIndex={disabled ? "-1" : tabIndex}
-        onChange={(e) => !readOnly && setStatus(e.target.checked)}
+        onChange={(e) => {
+          if (readOnly) return;
+          setStatus(e.target.checked);
+        }}
         onKeyDown={(e) => {
-          if (e.key === "Enter" || e.keyCode === 13) {
-            !readOnly && setStatus(!status);
+          if (readOnly) return;
+          if (e.key === "Enter") {
+            setStatus(!status);
           }
         }}
       />
@@ -85,6 +89,7 @@ Checkbox.propTypes = {
   onChange: PropTypes.func,
   skeleton: PropTypes.bool,
   dataCy: PropTypes.string,
+  overrideUsage: PropTypes.bool,
 };
 
 /**

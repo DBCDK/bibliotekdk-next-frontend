@@ -10,12 +10,34 @@ import MaterialRow from "../materialRow/MaterialRow";
 import { useWorkFromSelectedPids } from "@/components/hooks/useWorkAndSelectedPids";
 import { pidsToWorks } from "@/lib/api/work.fragments";
 import IconButton from "@/components/base/iconButton";
+import { useEffect, useRef, useState } from "react";
+import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
 
 const BookmarkPage = () => {
-  const { bookmarks } = useBookmarks();
-  const { data } = populateBookmarks(bookmarks);
+  const { bookmarks: bookmarkCookies } = useBookmarks();
+  const { data } = populateBookmarks(bookmarkCookies);
+  const bookmarks = data?.works.filter((n) => n); // Fix so long we recieve null from populate
+  const [checkboxList, setCheckboxList] = useState();
+  // bookmarks?.map((bookmark) => ({ id: bookmark.workId, isSelected: false }))
 
-  console.log(data);
+  useEffect(() => {
+    const bookmarks = data?.works.filter((n) => n);
+    setCheckboxList(
+      bookmarks?.map((bookmark) => ({ id: bookmark.workId, isSelected: false }))
+    );
+  }, [data]);
+
+  const onSelectAll = () => {
+    console.log(checkboxList.filter((e) => e.isSelected === false).length > 0);
+    const hasUnselectedElements =
+      checkboxList.filter((e) => e.isSelected === false).length > 0;
+    if (hasUnselectedElements)
+      setCheckboxList(checkboxList.map((el) => ({ ...el, isSelected: true })));
+    else
+      setCheckboxList(checkboxList.map((el) => ({ ...el, isSelected: false })));
+  };
+
+  console.log(bookmarks, checkboxList);
   return (
     <Container className={styles.cleanContainer}>
       <Row>
@@ -27,8 +49,22 @@ const BookmarkPage = () => {
             {bookmarks?.length} materialer
           </Text>
           <div className={styles.buttonControls}>
-            <div role="checkbox" className={styles.selectAllButton}>
-              Vælg alle
+            <div
+              role="checkbox"
+              className={styles.selectAllButton}
+              onClick={onSelectAll}
+            >
+              <Checkbox
+                checked={
+                  checkboxList?.filter((e) => e.isSelected === false).length ===
+                  0
+                }
+                id="bookmarkpage-select-all"
+                aria-labelledby="bookmarkpage-select-all-label"
+                tabIndex="-1"
+                readOnly
+              />
+              <label id="bookmarkpage-select-all-label">Vælg alle</label>
             </div>
             <Button size="small" disabled className={styles.orderButton}>
               Bestil
@@ -45,23 +81,41 @@ const BookmarkPage = () => {
               Fjern
             </IconButton>
           </div>
-          {data?.works?.map((bookmark) => (
-            <MaterialRow
-              hasCheckbox
-              title={bookmark?.titles?.main[0] || ""}
-              creator={bookmark?.creators[0]?.display}
-              materialType={
-                bookmark?.manifestations?.bestRepresentation?.materialTypes[0]
-                  ?.specific
-              }
-              image={
-                bookmark?.manifestations?.bestRepresentation?.cover?.thumbnail
-              }
-              id={bookmark?.workId}
-              creationYear="2000"
-              type="BOOKMARK"
-            />
-          ))}
+          <div>
+            {checkboxList &&
+              bookmarks?.map((bookmark, idx) => (
+                <MaterialRow
+                  key={`bookmark-list-${idx}`}
+                  hasCheckbox
+                  title={bookmark?.titles?.main[0] || ""}
+                  creator={bookmark?.creators[0]?.display}
+                  materialType={
+                    bookmark?.manifestations?.bestRepresentation
+                      ?.materialTypes[0]?.specific
+                  }
+                  image={
+                    bookmark?.manifestations?.bestRepresentation?.cover
+                      ?.thumbnail
+                  }
+                  id={bookmark?.workId}
+                  creationYear="2000"
+                  type="BOOKMARK"
+                  isSelected={checkboxList[idx]?.isSelected}
+                  onSelect={() =>
+                    setCheckboxList(
+                      [...checkboxList].map((el, i) => {
+                        if (i !== idx) return el;
+                        else
+                          return {
+                            id: el.id,
+                            isSelected: !el.isSelected,
+                          };
+                      })
+                    )
+                  }
+                />
+              ))}
+          </div>
         </Col>
       </Row>
     </Container>

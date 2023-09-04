@@ -354,7 +354,6 @@ const MaterialRow = (props) => {
     creationYear,
     library,
     agencyId,
-    hasCheckbox = false,
     id: materialId,
     workId,
     type,
@@ -367,8 +366,11 @@ const MaterialRow = (props) => {
     removedOrderId,
     setRemovedOrderId,
     skeleton,
+    //  For checkbox use
+    hasCheckbox = false,
+    isSelected,
+    onSelect,
   } = props;
-  const [isChecked, setIsChecked] = useState(false);
   const breakpoint = useBreakpoint();
   const { updateUserStatusInfo } = useUser();
   const modal = useModal();
@@ -512,6 +514,16 @@ const MaterialRow = (props) => {
     }
   };
 
+  const onCheckboxClick = (e) => {
+    if (e.target instanceof HTMLHeadingElement) {
+      /* Element clicked is a link, return */
+      return;
+    }
+    if (onSelect) {
+      onSelect();
+    }
+  };
+
   if (skeleton) {
     return (
       <SkeletonMaterialRow version={isMobileSize ? "mobile" : "desktop"} />
@@ -556,11 +568,11 @@ const MaterialRow = (props) => {
           <article
             key={"article" + materialId}
             role="checkbox"
-            aria-checked={isChecked}
+            aria-checked={isSelected}
             tabIndex="0"
             aria-labelledby="chk1-label"
             data-id={materialId}
-            onClick={() => setIsChecked(!isChecked)}
+            onClick={onCheckboxClick}
             className={cx(
               styles.materialRow,
               styles.materialRow_withCheckbox,
@@ -596,10 +608,11 @@ const MaterialRow = (props) => {
           {hasCheckbox && (
             <div className={styles.checkboxContainer}>
               <Checkbox
-                checked={isChecked}
+                checked={isSelected}
                 id={`material-row-${materialId}`}
                 aria-labelledby={`material-title-${materialId}`}
                 tabIndex="-1"
+                readOnly
               />
             </div>
           )}
@@ -686,7 +699,7 @@ MaterialRow.propTypes = {
   hasCheckbox: PropTypes.bool,
   status: PropTypes.oneOf(["NONE", "GREEN", "RED"]),
   workId: PropTypes.string,
-  type: PropTypes.oneOf(["DEBT", "LOAN", "ORDER"]),
+  type: PropTypes.oneOf(["DEBT", "LOAN", "ORDER", "BOOKMARK"]),
   holdQueuePosition: PropTypes.string,
   pickUpExpiryDate: PropTypes.string,
   dueDate: PropTypes.string,
@@ -695,6 +708,8 @@ MaterialRow.propTypes = {
   agencyId: PropTypes.string,
   removedOrderId: PropTypes.string,
   setRemovedOrderId: PropTypes.func,
+  isSelected: PropTypes.bool,
+  onSelect: PropTypes.func,
   skeleton: PropTypes.bool,
 };
 
