@@ -18,7 +18,6 @@ import useOrderPageInformation from "@/components/hooks/useOrderPageInformations
 import { onMailChange } from "@/components/_modal/pages/order/utils/order.utils";
 import { useRelevantAccessesForOrderPage } from "@/components/work/utils";
 import { validateEmail } from "@/utils/validateEmail";
-import useUser from "@/components/hooks/useUser";
 
 /**
  *  Order component function
@@ -49,8 +48,6 @@ function Order({
 
   // Sets if user has unsuccessfully tried to submit the order
   const [failedSubmission, setFailedSubmission] = useState(false);
-  const { deleteSessionData } = useUser();
-  const storeLoanerInfo = context?.storeLoanerInfo;
   const [mail, setMail] = useState(null);
   // Update email from user account
   useEffect(() => {
