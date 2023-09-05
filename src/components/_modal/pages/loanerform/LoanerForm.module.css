@@ -1,6 +1,6 @@
 .loanerform {
   max-width: 600px;
-  padding: var(--pt2);
+  padding: 0 var(--pt2);
 
   height: 100%;
 
@@ -47,7 +47,7 @@
 
 @media (min-width: 576px) {
   .loanerform {
-    padding: var(--pt2) var(--pt6) var(--pt4) var(--pt6);
+    padding: var(--pt2) var(--pt6) var(--pt4);
   }
 }
 

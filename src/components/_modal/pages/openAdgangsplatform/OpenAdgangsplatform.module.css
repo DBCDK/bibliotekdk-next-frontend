@@ -1,6 +1,6 @@
 .login {
   max-width: 600px;
-  padding: var(--pt2);
+  padding: 0 var(--pt2);
   height: 100%;
 }
 
