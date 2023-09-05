@@ -1,8 +1,12 @@
 import useSWR from "swr";
+import * as workFragments from "@/lib/api/work.fragments";
+import { useData } from "@/lib/api/api";
+
 const KEY_NAME = "bookmarks";
+
 export default function useBookmarks() {
   let {
-    data: bookmark,
+    data: bookmarks,
     mutate: mutateBookmark,
     error,
   } = useSWR(KEY_NAME, (key) => JSON.parse(localStorage.getItem(key)) || []);
@@ -12,22 +16,22 @@ export default function useBookmarks() {
    */
   const setBookmark = (value) => {
     // Find existing
-    const existingIndex = bookmark?.findIndex((obj) => obj.key === value.key);
+    const existingIndex = bookmarks?.findIndex((obj) => obj.key === value.key);
     // push if not there
     if (existingIndex === -1) {
-      bookmark?.push(value);
+      bookmarks?.push(value);
     }
     // remove if already there
     else {
-      bookmark?.splice(existingIndex, 1);
+      bookmarks?.splice(existingIndex, 1);
     }
 
     // store
-    const stringified = JSON.stringify(bookmark);
+    const stringified = JSON.stringify(bookmarks);
     localStorage.setItem(KEY_NAME, stringified);
 
     // mutate
-    mutateBookmark(bookmark);
+    mutateBookmark(bookmarks);
   };
 
   function clearBookmarks() {
@@ -42,7 +46,18 @@ export default function useBookmarks() {
   return {
     setBookmark,
     clearBookmarks,
-    bookmark,
-    isLoading: typeof bookmark === "undefined" && !error,
+    bookmarks: bookmarks,
+    isLoading: typeof bookmarks === "undefined" && !error,
   };
 }
+
+export const usePopulateBookmarks = (bookmarks) => {
+  const pids = bookmarks?.map((bookmark) => {
+    // TODO
+    if (bookmark.id.includes("work-of:"))
+      return bookmark.id.replace("work-of:", "");
+    return bookmark.id;
+  });
+  const { data } = useData(workFragments.pidsToWorks({ pids: pids }));
+  return { data };
+};
