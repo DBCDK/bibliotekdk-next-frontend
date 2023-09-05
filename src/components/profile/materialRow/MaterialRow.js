@@ -434,13 +434,7 @@ const MaterialRow = (props) => {
   const renderDynamicColumn = () => {
     switch (type) {
       case "DEBT":
-        return (
-          <DynamicColumnDebt
-            amount={amount}
-            currency={currency}
-            library={library}
-          />
-        );
+        return <DynamicColumnDebt amount={amount} currency={currency} />;
       case "LOAN":
         return (
           <DynamicColumnLoan
