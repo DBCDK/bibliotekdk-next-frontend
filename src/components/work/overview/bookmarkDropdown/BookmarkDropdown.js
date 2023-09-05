@@ -60,7 +60,11 @@ export function BookMarkMaterialSelector({
   }
 
   return (
-    <Dropdown className={`${styles.dropdownwrap} `} align="end">
+    <Dropdown
+      className={`${styles.dropdownwrap} `}
+      align="end"
+      autoClose="outside"
+    >
       <Dropdown.Toggle
         as="div"
         data-cy={cyKey({ name: "material-selector", prefix: "bookmark" })}
