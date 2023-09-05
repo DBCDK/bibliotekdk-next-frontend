@@ -25,6 +25,10 @@
   background-color: var(--blue);
 }
 
+.active:hover {
+  background-color: black;
+}
+
 .dropdownitem.active i svg {
   display: block;
 }
@@ -47,11 +51,15 @@
   font-weight: var(--body-font-semibold);
 }
 
+.dropdownitem.active:hover {
+  color: var(--white);
+}
+
 .dropdownitem:hover i svg {
   display: block;
 }
 
-.dropdownitem:hover i svg path {
+.dropdownitem:not(.active):hover i svg path {
   stroke: var(--blue);
 }
 

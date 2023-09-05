@@ -37,6 +37,14 @@
 * Selected
 *
 */
+.bookmark.selected {
+  border-color: var(--blue);
+}
+
+.bookmark.selected:hover {
+  background-color: green;
+}
+
 .bookmark.selected i {
   /* Use of important to override dynamic inline style */
   background-color: var(--blue) !important;

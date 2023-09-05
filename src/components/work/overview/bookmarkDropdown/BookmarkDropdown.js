@@ -12,7 +12,7 @@ import BookmarkMedium from "@/public/icons/bookmark_small.svg";
 export function BookMarkMaterialSelector({
   materialTypes,
   workId,
-  size = { w: 6, h: 6 },
+  size = { w: 7, h: 7 },
 }) {
   const bookmarkClick = () => {};
 
@@ -68,7 +68,7 @@ export function BookMarkMaterialSelector({
         id="dropdown-basic"
       >
         <Bookmark
-          size={{ w: 7, h: 7 }}
+          size={size}
           onClick={bookmarkClick}
           selected={active}
           className={styles.bookmark}
