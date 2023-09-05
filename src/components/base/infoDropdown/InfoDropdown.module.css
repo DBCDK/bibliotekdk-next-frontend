@@ -25,15 +25,6 @@
   transform: rotate(180deg);
 }
 
-.chevron {
-  position: absolute;
-  left: 318px;
-  margin: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .chevron img {
   transition: transform 0.2s linear;
 }

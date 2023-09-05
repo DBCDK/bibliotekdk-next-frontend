@@ -19,8 +19,8 @@ export function Localizations({
   onChange,
   testing = false,
 }) {
-  const isMobile = useWindowSize().width < 576;
-  console.log("IS MOBIE ", isMobile);
+  const isMobile = useWindowSize()?.[0] < 576;
+
   const allBranches = branchData?.result;
   return (
     <div data-cy="localizations-modal" className={styles.wrapper}>

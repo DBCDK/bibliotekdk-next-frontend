@@ -147,11 +147,7 @@ export function Pickup({
 }) {
   // Get pid from modal context
   const { pid, requireDigitalAccess, mode = LOGIN_MODE.PLAIN_LOGIN } = context;
-  const windowSize = useWindowSize().width;
-  const isMobile = windowSize < 576;
-
-  console.log("IS MOBIE ", isMobile, windowSize);
-
+  const isMobile = useWindowSize()?.[0] < 576;
   /**
    *
    * @param {obj} branch
