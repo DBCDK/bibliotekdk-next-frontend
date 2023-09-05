@@ -48,7 +48,8 @@ export function Receipt({
   const isOrdered =
     !!orderData?.submitOrder?.orderId ||
     articleOrderData?.elba?.placeCopyRequest?.status === "OK";
-  const isFailed =
+  let isFailed =
+    (orderData?.submitOrder && !orderData?.submitOrder?.ok) ||
     !!orderError ||
     !!articleOrderError ||
     (articleOrderData?.elba?.placeCopyRequest &&
@@ -89,48 +90,52 @@ export function Receipt({
         </div>
 
         <div className={`${styles.wrap} ${styles.result}`}>
-          <div className={styles.success}>
-            <div className={styles.check}>
-              <Icon size={3} src="check.svg" />
-            </div>
+          {!isFailed && (
+            <div className={styles.success}>
+              <div className={styles.check}>
+                <Icon size={3} src="check.svg" />
+              </div>
 
-            <Title className={styles.title} type="title4" tag="h2">
-              {Translate({ context: "order", label: "order-success" })}
-            </Title>
+              <>
+                <Title className={styles.title} type="title4" tag="h2">
+                  {Translate({ context: "order", label: "order-success" })}
+                </Title>
 
-            <Icon
-              className={styles.ornament}
-              size={{ w: 6, h: "auto" }}
-              src={"ornament1.svg"}
-            />
+                <Icon
+                  className={styles.ornament}
+                  size={{ w: 6, h: "auto" }}
+                  src={"ornament1.svg"}
+                />
+              </>
 
-            <Text type="text2" className={styles.message}>
-              {articleOrderData
-                ? Translate({
-                    context: "order",
-                    label: "order-success-message-digital-copy",
-                  })
-                : Translate({
-                    context: "order",
-                    label: "order-success-message",
-                    vars: [branchName],
-                  })}
-            </Text>
-
-            {orderId && (
-              <Text type="text2" className={styles.orderNumber}>
-                {Translate({
-                  context: "order",
-                  label: "order-success-id",
-                  vars: [orderId],
-                })}
+              <Text type="text2" className={styles.message}>
+                {articleOrderData
+                  ? Translate({
+                      context: "order",
+                      label: "order-success-message-digital-copy",
+                    })
+                  : Translate({
+                      context: "order",
+                      label: "order-success-message",
+                      vars: [branchName],
+                    })}
               </Text>
-            )}
 
-            <Button className={styles.close} onClick={() => modal.clear()}>
-              {Translate({ context: "general", label: "close" })}
-            </Button>
-          </div>
+              {orderId && (
+                <Text type="text2" className={styles.orderNumber}>
+                  {Translate({
+                    context: "order",
+                    label: "order-success-id",
+                    vars: [orderId],
+                  })}
+                </Text>
+              )}
+
+              <Button className={styles.close} onClick={() => modal.clear()}>
+                {Translate({ context: "general", label: "close" })}
+              </Button>
+            </div>
+          )}
           <div className={styles.error}>
             An error occured :(
             <div>{isFailed && failedMessage ? failedMessage : ""}</div>
