@@ -303,9 +303,9 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
         <Title type="text1" tag="h3" id={`material-title-${materialId}`}>
           {title}
         </Title>
-        <div>
+{    isDebtRow&&    <div>
           <Text type="text2">{library}</Text>
-        </div>
+        </div>}
         {creator && <Text type="text2">{creator}</Text>}
         {materialType && creationYear && (
           <Text type="text2" className={styles.uppercase}>
