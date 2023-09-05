@@ -8,6 +8,7 @@ import { useModal } from "@/components/_modal";
 import { LOGIN_MODE } from "@/components/_modal/pages/login/utils";
 import { IconLink } from "@/components/base/iconlink/IconLink";
 import ChevronRight from "@/public/icons/chevron_right.svg";
+import cx from "classnames";
 
 function LocalizationInformation({
   availableAsDigitalCopy,
@@ -44,7 +45,9 @@ function LocalizationInformation({
             tag={"button"}
             iconSrc={ChevronRight}
             iconPlacement={"right"}
-            className={styles.iconLink}
+            className={cx(styles.iconLink, {
+              [styles.disabled]: isLoadingBranches,
+            })}
           >
             <Text tag="span" type="text3" className={styles.fullLink}>
               {Translate({

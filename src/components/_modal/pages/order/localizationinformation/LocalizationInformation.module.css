@@ -30,6 +30,10 @@
   cursor: pointer;
 }
 
+.disabled {
+  cursor: default;
+}
+
 /* action */
 .shortLink {
   display: inline;
