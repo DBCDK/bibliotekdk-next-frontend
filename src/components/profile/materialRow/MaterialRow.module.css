@@ -178,6 +178,9 @@
   .materialHeaderRow {
     display: none;
   }
+  .materialRow_debt{
+    display: flex;
+  }
 }
 
 @media (min-width: 993px) {
