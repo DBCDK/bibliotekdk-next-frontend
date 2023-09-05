@@ -61,7 +61,6 @@ export default function OpenAdgangsplatform({ context }) {
             src="adgangsplatform.svg"
             alt="bibliotekslogin"
             size={{ h: "4", w: "auto" }}
-            className={styles.icon}
           />
         </Button>
       </div>
