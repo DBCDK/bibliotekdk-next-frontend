@@ -23,6 +23,7 @@ export function submitOrder({
       submitOrder(input: $input){
         status
         orderId
+        ok
       }
     }
     `,
