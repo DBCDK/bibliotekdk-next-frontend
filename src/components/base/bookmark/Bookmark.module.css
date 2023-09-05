@@ -10,7 +10,7 @@
 
 .bookmark i svg path {
   stroke: var(--gray);
-  fill: var(--white);
+  /*fill: var(--white);*/
 }
 
 /* 
@@ -45,14 +45,18 @@
   background-color: green;
 }
 
-.bookmark.selected i {
+.bookmark.selected {
   /* Use of important to override dynamic inline style */
-  background-color: var(--blue) !important;
+  background-color: var(--blue);
+}
+
+.bookmark.selected:hover {
+  background-color: black;
 }
 
 .bookmark.selected i svg path {
   stroke: var(--white);
-  fill: var(--blue);
+  /*fill: var(--blue);*/
 }
 
 .bookmark:focus {
