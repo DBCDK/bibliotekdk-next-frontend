@@ -22,6 +22,7 @@
 @media (max-width: 575px) {
   .tableItem {
     display: block;
+    padding: var(--pt3) 0;
   }
 
   .activity,
@@ -66,4 +67,7 @@
 
 .pagination {
   margin-top: var(--pt8);
+}
+.consentLink {
+  margin: 0 var(--pt05);
 }
