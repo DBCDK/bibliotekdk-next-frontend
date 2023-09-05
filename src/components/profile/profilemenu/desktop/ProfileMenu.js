@@ -218,7 +218,7 @@ export default function ProfileMenu() {
             categoryUrl={getProfileUrl(menuItems[0])}
           />
           {menuItems.slice(1).map((item) => (
-            <MenuLink label={item} href={getProfileUrl(item)} />
+            <MenuLink key={item} label={item} href={getProfileUrl(item)} />
           ))}
         </ul>
       </nav>

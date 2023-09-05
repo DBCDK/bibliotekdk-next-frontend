@@ -448,9 +448,17 @@ const MaterialRow = (props) => {
               size="small"
               className={styles.bookmarkActionButton}
             >
-              Bestil
+              {Translate({
+                context: "bookmark",
+                label: "order",
+              })}
             </Button>
-            <IconButton>Fjern</IconButton>
+            <IconButton>
+              {Translate({
+                context: "bookmark",
+                label: "remove",
+              })}
+            </IconButton>
           </div>
         );
       default:
@@ -578,18 +586,13 @@ const MaterialRow = (props) => {
             aria-labelledby="chk1-label"
             data-id={materialId}
             onClick={onCheckboxClick}
-            className={cx(
-              styles.materialRow,
-              styles.materialRow_withCheckbox,
-              styles.materialRow_wrapper,
-              {
-                [styles.materialRow_withGridCheckbox]: type !== "BOOKMARK",
-                [styles.materialRow_withFlexCheckbox]: type === "BOOKMARK",
-                [styles.materialRow_green]: status === "GREEN",
-                [styles.materialRow_red]: status === "RED",
-                [styles.materialRow_animated]: materialId === removedOrderId,
-              }
-            )}
+            className={cx(styles.materialRow, styles.materialRow_wrapper, {
+              [styles.materialRow_withGridCheckbox]: type !== "BOOKMARK",
+              [styles.materialRow_withFlexCheckbox]: type === "BOOKMARK",
+              [styles.materialRow_green]: status === "GREEN",
+              [styles.materialRow_red]: status === "RED",
+              [styles.materialRow_animated]: materialId === removedOrderId,
+            })}
             data-cy={dataCy}
           >
             {children}

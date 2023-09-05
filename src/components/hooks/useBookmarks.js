@@ -51,7 +51,7 @@ export default function useBookmarks() {
   };
 }
 
-export const populateBookmarks = (bookmarks) => {
+export const usePopulateBookmarks = (bookmarks) => {
   const pids = bookmarks?.map((bookmark) => {
     // TODO
     if (bookmark.id.includes("work-of:"))

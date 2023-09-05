@@ -3,8 +3,7 @@
  */
 import PropTypes from "prop-types";
 import Action from "@/components/base/action";
-import styles from "./bookmark.module.css";
-import Icon from "@/components/base/icon";
+// import styles from "./bookmark.module.css";
 import Translate from "@/components/base/translate";
 
 /**
@@ -21,7 +20,7 @@ export default function BoomarkIcon(props) {
   return (
     <Action
       {...props}
-      className={`${className} ${styles.trigger}`}
+      className={className}
       animation={true}
       icon="bookmark_full.svg"
       alt={Translate({ context: "header", label: "bookmark" })}

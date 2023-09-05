@@ -1,8 +1,4 @@
-.title {
-  margin-bottom: var(--pt1);
-}
-
-.sortingControls {
+.sortingRow {
   display: flex;
   justify-content: space-between;
 }

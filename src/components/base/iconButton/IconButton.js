@@ -60,7 +60,7 @@ function IconButton({
       </Link>
       <Icon
         size={{ w: 2, h: "auto" }}
-        className={`${styles.icon} ${animations["h-elastic"]} ${animations["f-elastic"]}`}
+        className={`${animations["h-elastic"]} ${animations["f-elastic"]}`}
         alt={alt}
         src={iconSrc}
       />

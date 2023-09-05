@@ -1,5 +1,5 @@
 import useBookmarks, {
-  populateBookmarks,
+  usePopulateBookmarks,
 } from "@/components/hooks/useBookmarks";
 import styles from "./Bookmark.module.css";
 import Text from "@/components/base/text";
@@ -9,10 +9,13 @@ import IconButton from "@/components/base/iconButton";
 import { useEffect, useState } from "react";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
 import ProfileLayout from "../profileLayout/ProfileLayout";
+import Translate from "@/components/base/translate";
+
+const CONTEXT = "bookmark";
 
 const BookmarkPage = () => {
   const { bookmarks: bookmarkCookies } = useBookmarks();
-  const { data } = populateBookmarks(bookmarkCookies);
+  const { data } = usePopulateBookmarks(bookmarkCookies);
   const bookmarks = data?.works.filter((n) => n);
   const [checkboxList, setCheckboxList] = useState();
 
@@ -38,10 +41,19 @@ const BookmarkPage = () => {
     checkboxList?.filter((e) => e.isSelected === true).length === 0;
 
   return (
-    <ProfileLayout title="Huskeliste">
-      <div className={styles.sortControls}>
+    <ProfileLayout
+      title={Translate({
+        context: CONTEXT,
+        label: "page-title",
+      })}
+    >
+      <div className={styles.sortingRow}>
         <Text tag="small" type="small" className={styles.smallLabel}>
-          {bookmarks?.length} materialer
+          {bookmarks?.length}{" "}
+          {Translate({
+            context: CONTEXT,
+            label: "result-amount",
+          })}
         </Text>
         <div>{/* Sorting options here */}</div>
       </div>
@@ -63,7 +75,10 @@ const BookmarkPage = () => {
             className={styles.selectAll}
           />
           <Text type="text3" tag="label" id="bookmarkpage-select-all-label">
-            Vælg alle
+            {Translate({
+              context: CONTEXT,
+              label: "select-all",
+            })}
           </Text>
         </div>
         <Button
@@ -71,7 +86,10 @@ const BookmarkPage = () => {
           disabled={isNothingSelected}
           className={styles.orderButton}
         >
-          Bestil
+          {Translate({
+            context: CONTEXT,
+            label: "order",
+          })}
         </Button>
         <Button
           size="small"
@@ -79,13 +97,16 @@ const BookmarkPage = () => {
           disabled={isNothingSelected}
           className={styles.referenceButton}
         >
-          Referencer
+          {Translate({
+            context: CONTEXT,
+            label: "select-action",
+          })}
         </Button>
-        <IconButton
-          disabled={isNothingSelected}
-          className={styles.removeButton}
-        >
-          Fjern
+        <IconButton disabled={isNothingSelected}>
+          {Translate({
+            context: CONTEXT,
+            label: "remove",
+          })}
         </IconButton>
       </div>
       <div className={styles.listContainer}>
@@ -104,7 +125,6 @@ const BookmarkPage = () => {
                 bookmark?.manifestations?.bestRepresentation?.cover?.thumbnail
               }
               id={bookmark?.workId}
-              // creationYear="2000"
               type="BOOKMARK"
               isSelected={checkboxList[idx]?.isSelected}
               onSelect={() =>
