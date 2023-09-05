@@ -521,7 +521,7 @@ const MaterialRow = (props) => {
       e.target instanceof HTMLButtonElement ||
       e.target.getAttribute("data-cy") === "text-fjern"
     ) {
-      /* Element clicked is a link, return */
+      /* Element clicked is an actionable element, return */
       return;
     }
     if (onSelect) {
@@ -660,13 +660,13 @@ const MaterialRow = (props) => {
                   {creator}
                 </Text>
               )}
-              {materialType && creationYear && (
+              {materialType && (
                 <Text
                   type="text2"
                   className={styles.uppercase}
                   dataCy="materialtype-and-creationyear"
                 >
-                  {materialType}, {creationYear}
+                  {materialType} {creationYear && <>, {creationYear}</>}
                 </Text>
               )}
             </div>

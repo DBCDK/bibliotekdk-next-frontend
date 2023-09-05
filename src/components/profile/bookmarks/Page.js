@@ -32,14 +32,20 @@ const BookmarkPage = () => {
       setCheckboxList(checkboxList.map((el) => ({ ...el, isSelected: false })));
   };
 
-  const isAllSelected = checkboxList?.filter((e) => e.isSelected === false).length === 0;
-  const isNothingSelected = checkboxList?.filter((e) => e.isSelected === true).length === 0;
+  const isAllSelected =
+    checkboxList?.filter((e) => e.isSelected === false).length === 0;
+  const isNothingSelected =
+    checkboxList?.filter((e) => e.isSelected === true).length === 0;
 
   return (
     <ProfileLayout title="Huskeliste">
-      <Text tag="small" type="small" className={styles.smallLabel}>
-        {bookmarks?.length} materialer
-      </Text>
+      <div className={styles.sortControls}>
+        <Text tag="small" type="small" className={styles.smallLabel}>
+          {bookmarks?.length} materialer
+        </Text>
+        <div>{/* Sorting options here */}</div>
+      </div>
+
       <div className={styles.buttonControls}>
         <div
           role="checkbox"
@@ -49,9 +55,7 @@ const BookmarkPage = () => {
           onClick={onSelectAll}
         >
           <Checkbox
-            checked={
-              isAllSelected
-            }
+            checked={isAllSelected}
             id="bookmarkpage-select-all"
             aria-labelledby="bookmarkpage-select-all-label"
             tabIndex="-1"
@@ -64,9 +68,7 @@ const BookmarkPage = () => {
         </div>
         <Button
           size="small"
-          disabled={
-            isNothingSelected
-          }
+          disabled={isNothingSelected}
           className={styles.orderButton}
         >
           Bestil
@@ -74,17 +76,13 @@ const BookmarkPage = () => {
         <Button
           size="small"
           type="secondary"
-          disabled={
-            isNothingSelected
-          }
+          disabled={isNothingSelected}
           className={styles.referenceButton}
         >
           Referencer
         </Button>
         <IconButton
-          disabled={
-            isNothingSelected
-          }
+          disabled={isNothingSelected}
           className={styles.removeButton}
         >
           Fjern
@@ -106,7 +104,7 @@ const BookmarkPage = () => {
                 bookmark?.manifestations?.bestRepresentation?.cover?.thumbnail
               }
               id={bookmark?.workId}
-              creationYear="2000"
+              // creationYear="2000"
               type="BOOKMARK"
               isSelected={checkboxList[idx]?.isSelected}
               onSelect={() =>

@@ -1,10 +1,10 @@
-.cleanContainer {
-  padding-top: var(--pt8);
-  min-height: calc(80vh);
-}
-
 .title {
   margin-bottom: var(--pt1);
+}
+
+.sortingControls {
+  display: flex;
+  justify-content: space-between;
 }
 
 .smallLabel {
