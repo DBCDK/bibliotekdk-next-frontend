@@ -16,19 +16,17 @@ import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
 const BookmarkPage = () => {
   const { bookmarks: bookmarkCookies } = useBookmarks();
   const { data } = populateBookmarks(bookmarkCookies);
-  const bookmarks = data?.works.filter((n) => n); // Fix so long we recieve null from populate
+  const bookmarks = data?.works.filter((n) => n);
   const [checkboxList, setCheckboxList] = useState();
-  // bookmarks?.map((bookmark) => ({ id: bookmark.workId, isSelected: false }))
 
   useEffect(() => {
-    const bookmarks = data?.works.filter((n) => n);
+    const bookmarks = data?.works.filter((n) => n); // Fix so long we can recieve null from populate
     setCheckboxList(
       bookmarks?.map((bookmark) => ({ id: bookmark.workId, isSelected: false }))
     );
   }, [data]);
 
   const onSelectAll = () => {
-    console.log(checkboxList.filter((e) => e.isSelected === false).length > 0);
     const hasUnselectedElements =
       checkboxList.filter((e) => e.isSelected === false).length > 0;
     if (hasUnselectedElements)
@@ -37,7 +35,8 @@ const BookmarkPage = () => {
       setCheckboxList(checkboxList.map((el) => ({ ...el, isSelected: false })));
   };
 
-  console.log(bookmarks, checkboxList);
+  console.log(checkboxList?.filter((e) => e.isSelected === true).length === 0);
+
   return (
     <Container className={styles.cleanContainer}>
       <Row>
@@ -63,21 +62,35 @@ const BookmarkPage = () => {
                 aria-labelledby="bookmarkpage-select-all-label"
                 tabIndex="-1"
                 readOnly
+                className={styles.selectAll}
               />
               <label id="bookmarkpage-select-all-label">Vælg alle</label>
             </div>
-            <Button size="small" disabled className={styles.orderButton}>
+            <Button
+              size="small"
+              disabled={
+                checkboxList?.filter((e) => e.isSelected === true).length === 0
+              }
+              className={styles.orderButton}
+            >
               Bestil
             </Button>
             <Button
               size="small"
               type="secondary"
-              disabled
+              disabled={
+                checkboxList?.filter((e) => e.isSelected === true).length === 0
+              }
               className={styles.referenceButton}
             >
               Referencer
             </Button>
-            <IconButton disabled className={styles.removeButton}>
+            <IconButton
+              disabled={
+                checkboxList?.filter((e) => e.isSelected === true).length === 0
+              }
+              className={styles.removeButton}
+            >
               Fjern
             </IconButton>
           </div>

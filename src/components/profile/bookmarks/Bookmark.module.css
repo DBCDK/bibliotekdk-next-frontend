@@ -8,6 +8,7 @@
 }
 
 .smallLabel {
+  display: block;
   margin-bottom: var(--pt4);
 }
 
@@ -18,6 +19,10 @@
 
 .selectAllButton {
   margin-right: var(--pt3);
+}
+
+.selectAll {
+  margin-right: var(--pt1);
 }
 
 .orderButton {

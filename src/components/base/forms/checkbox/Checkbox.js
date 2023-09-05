@@ -89,7 +89,6 @@ Checkbox.propTypes = {
   onChange: PropTypes.func,
   skeleton: PropTypes.bool,
   dataCy: PropTypes.string,
-  overrideUsage: PropTypes.bool,
 };
 
 /**
