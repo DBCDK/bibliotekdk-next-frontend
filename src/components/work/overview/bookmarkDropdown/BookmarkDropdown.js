@@ -12,11 +12,11 @@ import BookmarkMedium from "@/public/icons/bookmark_small.svg";
 export function BookMarkMaterialSelector({
   materialTypes,
   workId,
-  size = { w: 6, h: 6 },
+  size = { w: 7, h: 7 },
 }) {
   const bookmarkClick = () => {};
 
-  const { bookmark, setBookmark, isLoading } = useBookmarks();
+  const { bookmarks, setBookmark, isLoading } = useBookmarks();
 
   const onSelect = (material, workId) => {
     const item = {
@@ -35,16 +35,16 @@ export function BookMarkMaterialSelector({
       let bookmarkIndex = -1;
       // this one is used to set the overall button to active or not (if one of the materialtypes is selected)
       if (options.length > 1) {
-        bookmarkIndex = bookmark?.findIndex((bookm) => bookm.id === workId);
+        bookmarkIndex = bookmarks?.findIndex((bookm) => bookm.id === workId);
       } else if (options.length === 1) {
         // if we have one material only we look for a specific key
-        bookmarkIndex = bookmark?.findIndex(
+        bookmarkIndex = bookmarks?.findIndex(
           (bookm) => bookm.key === workId + options[0]
         );
       }
       setActive(bookmarkIndex !== -1);
     }
-  }, [bookmark]);
+  }, [bookmarks]);
 
   if (options.length === 1) {
     return (
@@ -68,7 +68,7 @@ export function BookMarkMaterialSelector({
         id="dropdown-basic"
       >
         <Bookmark
-          size={{ w: 7, h: 7 }}
+          size={size}
           onClick={bookmarkClick}
           selected={active}
           className={styles.bookmark}
@@ -84,8 +84,9 @@ export function BookMarkMaterialSelector({
       >
         {options.map((material, index) => {
           const activeItem =
-            bookmark?.findIndex((book) => book.key === workId + material[0]) !==
-            -1;
+            bookmarks?.findIndex(
+              (book) => book.key === workId + material[0]
+            ) !== -1;
           return (
             <Dropdown.Item
               data-cy={`bookmark-${material}-${index}`}

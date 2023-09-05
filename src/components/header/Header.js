@@ -23,6 +23,7 @@ import { useModal } from "@/components/_modal";
 import LoginIcon from "./icons/login";
 import BurgerIcon from "./icons/burger";
 import SearchIcon from "./icons/search";
+import BookmarkIcon from "./icons/bookmark";
 import ExpandedSearch from "./expandedsearch/ExpandedSearch";
 import useUser from "../hooks/useUser";
 
@@ -114,7 +115,6 @@ export function Header({
     {
       label: user.isAuthenticated || user.isGuestUser ? "logout" : "login",
       icon: LoginIcon,
-      //onClick: user.isAuthenticated ? signOut : signIn,
       onClick: user.isAuthenticated
         ? // sign user out - either guest- or hejmdal-user
           signOut
@@ -125,13 +125,11 @@ export function Header({
         : // open login modal
           () => modal.push("login"),
     },
-    /*{
-      label: "basket",
-      icon: BasketIcon,
-      onClick: () => {},
-      items: "4",
+    {
+      label: "bookmark",
+      icon: BookmarkIcon,
+      onClick: () => router.push("/profil/huskeliste"),
     },
-     */
     {
       label: "menu",
       icon: BurgerIcon,

@@ -28,8 +28,11 @@ function IconButton({
   textType = "text3",
   keepUnderline,
   dataCy,
+  disabled,
   ...props
 }) {
+  const iconSrc = !disabled ? `${icon}.svg` : `${icon}_grey.svg`;
+
   return (
     <button
       className={cx(
@@ -41,23 +44,25 @@ function IconButton({
       )}
       onClick={() => onClick && onClick()}
       data-cy={dataCy}
+      disabled={disabled}
       {...props}
     >
       <Link
         className={styles.textWrapper}
         onClick={(e) => e.preventDefault()}
-        border={{ bottom: { keepVisible: keepUnderline } }}
+        border={{ bottom: !disabled ? { keepVisible: keepUnderline } : false }}
         tag="div"
         tabIndex={-1}
       >
-        <Text type={textType}>{children}</Text>
+        <Text type={textType} tag="span">
+          {children}
+        </Text>
       </Link>
       <Icon
         size={{ w: 2, h: "auto" }}
-        className={`${styles.icon} ${animations["h-elastic"]} ${animations["f-elastic"]}`}
+        className={`${animations["h-elastic"]} ${animations["f-elastic"]}`}
         alt={alt}
-        title={alt}
-        src={`${icon}.svg`}
+        src={iconSrc}
       />
     </button>
   );
