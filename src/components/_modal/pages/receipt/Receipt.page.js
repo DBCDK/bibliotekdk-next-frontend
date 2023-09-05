@@ -48,8 +48,8 @@ export function Receipt({
   const isOrdered =
     !!orderData?.submitOrder?.orderId ||
     articleOrderData?.elba?.placeCopyRequest?.status === "OK";
-  const isFailed =
-    !orderData?.submitOrder?.ok ||
+  let isFailed =
+    (orderData?.submitOrder && !orderData?.submitOrder?.ok) ||
     !!orderError ||
     !!articleOrderError ||
     (articleOrderData?.elba?.placeCopyRequest &&
