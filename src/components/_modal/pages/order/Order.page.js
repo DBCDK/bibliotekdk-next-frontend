@@ -70,13 +70,6 @@ function Order({
     });
   }, [user?.userParameters]);
 
-  //remove session data if modal is closed and user doesnt want to store data
-  useEffect(() => {
-    if (modal?.isVisible === false && !storeLoanerInfo) {
-      deleteSessionData();
-    }
-  }, [modal?.isVisible]);
-
   function updateModal() {
     if (modal && modal.isVisible) {
       // call update if data or isLoading is changed

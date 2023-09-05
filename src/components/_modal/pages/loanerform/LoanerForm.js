@@ -306,20 +306,11 @@ export default function Wrap(props) {
   const { loanerInfo, updateLoanerInfo, deleteSessionData } = useUser();
 
   //remove session data if modal is closed and user doesnt want to store data
-  //if order modal has been open, order modal handles deletion
   useEffect(() => {
-    if (
-      modal?.isVisible === false &&
-      !storeLoanerInfo &&
-      !orderModalHasBeenOpen()
-    ) {
+    if (modal?.isVisible === false && !storeLoanerInfo) {
       deleteSessionData();
     }
   }, [modal?.isVisible]);
-
-  function orderModalHasBeenOpen() {
-    return modal?.stack?.filter((e) => e.id === "order")?.length > 0;
-  }
 
   async function onSubmit(info) {
     await updateLoanerInfo({

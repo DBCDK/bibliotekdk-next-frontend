@@ -48,7 +48,7 @@ export function Receipt({
   const isOrdered =
     !!orderData?.submitOrder?.orderId ||
     articleOrderData?.elba?.placeCopyRequest?.status === "OK";
-  const isFailed =
+  const hasFailed =
     !orderData?.submitOrder?.ok ||
     !!orderError ||
     !!articleOrderError ||
@@ -56,7 +56,7 @@ export function Receipt({
       articleOrderData?.elba?.placeCopyRequest?.status !== "OK");
 
   let failedMessage = null;
-  if (isFailed) {
+  if (hasFailed) {
     failedMessage = !!articleOrder
       ? "ORDER FAILED"
       : articleOrderData?.elba?.placeCopyRequest?.status;
@@ -64,7 +64,7 @@ export function Receipt({
 
   // Define order status' class'
   const orderedClass = isOrdered && !delay ? styles.ordered : "";
-  const failedClass = isFailed && !delay ? styles.failed : "";
+  const failedClass = hasFailed && !delay ? styles.failed : "";
 
   // Branch name
   const branchName = pickupBranch?.name;
@@ -90,7 +90,7 @@ export function Receipt({
         </div>
 
         <div className={`${styles.wrap} ${styles.result}`}>
-          {!isFailed && (
+          {!hasFailed && (
             <div className={styles.success}>
               <div className={styles.check}>
                 <Icon size={3} src="check.svg" />
@@ -138,7 +138,7 @@ export function Receipt({
           )}
           <div className={styles.error}>
             An error occured :(
-            <div>{isFailed && failedMessage ? failedMessage : ""}</div>
+            <div>{hasFailed && failedMessage ? failedMessage : ""}</div>
           </div>
         </div>
       </div>
