@@ -11,8 +11,8 @@
   justify-content: center;
 }
 
-.login .icon {
-  padding-left: var(--pt1);
+.login img {
+  margin-left: var(--pt1);
 }
 .login p {
   margin-top: var(--pt3);
