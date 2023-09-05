@@ -113,3 +113,51 @@ export function Default() {
     </Modal.Container>
   );
 }
+
+export function LibraryWithoutBorrowerCheck() {
+  const { index, update, setStack } = useModal();
+  const [order, setOrder] = useState({ isLoading: true });
+  let contextNoBorrowerCheck = {
+    ...context,
+    pickupBranch: { ...context.pickupBranch, borrowerCheck: false },
+  };
+
+  // simulate order submit and callback
+  useEffect(() => {
+    setStack([
+      {
+        id: "receipt",
+        context: contextNoBorrowerCheck,
+        active: true,
+      },
+    ]);
+
+    if (order.isLoading) {
+      setTimeout(() => {
+        setOrder({
+          isLoading: false,
+          data: {
+            submitOrder: {
+              status: "not_owned_ILL_loc",
+              orderId: "1041538443",
+              ok: true,
+            },
+          },
+        });
+      }, 2000);
+    }
+  }, []);
+
+  //   update context
+  useEffect(() => {
+    if (!order.isLoading && order.data) {
+      update(index(), { order });
+    }
+  }, [order]);
+
+  return (
+    <Modal.Container>
+      <Modal.Page id="receipt" component={Receipt} />
+    </Modal.Container>
+  );
+}
