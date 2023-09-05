@@ -1,6 +1,15 @@
 .dropdownwrap {
 }
 
+.bookmark {
+  margin-left: var(--pt2);
+}
+
+.itemContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
 .dropdownitem {
   display: block;
   border-bottom: 1px solid var(--gray);
@@ -12,12 +21,8 @@
   cursor: pointer;
 }
 
-.dropdownitem i svg {
-  display: none;
-}
-
-.bookmark {
-  margin-left: var(--pt2);
+.dropdownitem.active i svg {
+  display: block;
 }
 
 .active {
@@ -25,21 +30,26 @@
   background-color: var(--blue);
 }
 
-.active:hover {
-  background-color: black;
-}
-
-.dropdownitem.active i svg {
-  display: block;
-}
-
 .active i svg path {
   stroke: var(--white);
 }
 
-.itemContainer {
-  display: flex;
-  justify-content: space-between;
+.dropdownitem.active:hover {
+  background-color: black;
+  color: var(--white);
+}
+
+.dropdownitem.active:focus {
+  background-color: black;
+  color: var(--white);
+}
+
+.dropdownitem.active:focus i svg path {
+  stroke: var(--white);
+}
+
+.dropdownitem i svg {
+  display: none;
 }
 
 .dropdownitem a {
@@ -51,20 +61,13 @@
   font-weight: var(--body-font-semibold);
 }
 
-.dropdownitem.active:hover {
-  color: var(--white);
-}
-
-.dropdownitem:hover i svg {
+.dropdownitem:hover i svg,
+.dropdownitem:focus i svg {
   display: block;
 }
 
 .dropdownitem:not(.active):hover i svg path {
   stroke: var(--blue);
-}
-
-.dropdownitem:focus i svg {
-  display: block;
 }
 
 .dropdownitem:focus i svg path {
