@@ -15,10 +15,13 @@
 .buttonControls {
   display: flex;
   align-content: center;
+  margin-bottom: var(--pt4);
 }
 
 .selectAllButton {
-  margin-right: var(--pt3);
+  margin-right: var(--pt4);
+  display: flex;
+  align-items: center;
 }
 
 .selectAll {
@@ -32,4 +35,8 @@
 
 .referenceButton {
   margin-right: var(--pt3);
+}
+
+.listContainer {
+  border-top: 1px solid var(--iron);
 }

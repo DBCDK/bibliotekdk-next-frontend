@@ -2,16 +2,13 @@ import useBookmarks, {
   populateBookmarks,
 } from "@/components/hooks/useBookmarks";
 import styles from "./Bookmark.module.css";
-import { Col, Container, Row } from "react-bootstrap";
-import Title from "@/components/base/title";
-import Text from "@/components/base/title";
+import Text from "@/components/base/text";
 import Button from "@/components/base/button";
 import MaterialRow from "../materialRow/MaterialRow";
-import { useWorkFromSelectedPids } from "@/components/hooks/useWorkAndSelectedPids";
-import { pidsToWorks } from "@/lib/api/work.fragments";
 import IconButton from "@/components/base/iconButton";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
+import ProfileLayout from "../profileLayout/ProfileLayout";
 
 const BookmarkPage = () => {
   const { bookmarks: bookmarkCookies } = useBookmarks();
@@ -35,103 +32,99 @@ const BookmarkPage = () => {
       setCheckboxList(checkboxList.map((el) => ({ ...el, isSelected: false })));
   };
 
-  console.log(checkboxList?.filter((e) => e.isSelected === true).length === 0);
+  const isAllSelected = checkboxList?.filter((e) => e.isSelected === false).length === 0;
+  const isNothingSelected = checkboxList?.filter((e) => e.isSelected === true).length === 0;
 
   return (
-    <Container className={styles.cleanContainer}>
-      <Row>
-        <Col xs={12}>
-          <Title tag="h1" type="title3" className={styles.title}>
-            Huskeliste
-          </Title>
-          <Text tag="small" type="small" className={styles.smallLabel}>
-            {bookmarks?.length} materialer
+    <ProfileLayout title="Huskeliste">
+      <Text tag="small" type="small" className={styles.smallLabel}>
+        {bookmarks?.length} materialer
+      </Text>
+      <div className={styles.buttonControls}>
+        <div
+          role="checkbox"
+          tabIndex={0}
+          aria-checked={isAllSelected}
+          className={styles.selectAllButton}
+          onClick={onSelectAll}
+        >
+          <Checkbox
+            checked={
+              isAllSelected
+            }
+            id="bookmarkpage-select-all"
+            aria-labelledby="bookmarkpage-select-all-label"
+            tabIndex="-1"
+            readOnly
+            className={styles.selectAll}
+          />
+          <Text type="text3" tag="label" id="bookmarkpage-select-all-label">
+            Vælg alle
           </Text>
-          <div className={styles.buttonControls}>
-            <div
-              role="checkbox"
-              className={styles.selectAllButton}
-              onClick={onSelectAll}
-            >
-              <Checkbox
-                checked={
-                  checkboxList?.filter((e) => e.isSelected === false).length ===
-                  0
-                }
-                id="bookmarkpage-select-all"
-                aria-labelledby="bookmarkpage-select-all-label"
-                tabIndex="-1"
-                readOnly
-                className={styles.selectAll}
-              />
-              <label id="bookmarkpage-select-all-label">Vælg alle</label>
-            </div>
-            <Button
-              size="small"
-              disabled={
-                checkboxList?.filter((e) => e.isSelected === true).length === 0
+        </div>
+        <Button
+          size="small"
+          disabled={
+            isNothingSelected
+          }
+          className={styles.orderButton}
+        >
+          Bestil
+        </Button>
+        <Button
+          size="small"
+          type="secondary"
+          disabled={
+            isNothingSelected
+          }
+          className={styles.referenceButton}
+        >
+          Referencer
+        </Button>
+        <IconButton
+          disabled={
+            isNothingSelected
+          }
+          className={styles.removeButton}
+        >
+          Fjern
+        </IconButton>
+      </div>
+      <div className={styles.listContainer}>
+        {checkboxList &&
+          bookmarks?.map((bookmark, idx) => (
+            <MaterialRow
+              key={`bookmark-list-${idx}`}
+              hasCheckbox
+              title={bookmark?.titles?.main[0] || ""}
+              creator={bookmark?.creators[0]?.display}
+              materialType={
+                bookmark?.manifestations?.bestRepresentation?.materialTypes[0]
+                  ?.specific
               }
-              className={styles.orderButton}
-            >
-              Bestil
-            </Button>
-            <Button
-              size="small"
-              type="secondary"
-              disabled={
-                checkboxList?.filter((e) => e.isSelected === true).length === 0
+              image={
+                bookmark?.manifestations?.bestRepresentation?.cover?.thumbnail
               }
-              className={styles.referenceButton}
-            >
-              Referencer
-            </Button>
-            <IconButton
-              disabled={
-                checkboxList?.filter((e) => e.isSelected === true).length === 0
+              id={bookmark?.workId}
+              creationYear="2000"
+              type="BOOKMARK"
+              isSelected={checkboxList[idx]?.isSelected}
+              onSelect={() =>
+                setCheckboxList(
+                  [...checkboxList].map((el, i) => {
+                    if (i !== idx) return el;
+                    else
+                      return {
+                        id: el.id,
+                        isSelected: !el.isSelected,
+                      };
+                  })
+                )
               }
-              className={styles.removeButton}
-            >
-              Fjern
-            </IconButton>
-          </div>
-          <div>
-            {checkboxList &&
-              bookmarks?.map((bookmark, idx) => (
-                <MaterialRow
-                  key={`bookmark-list-${idx}`}
-                  hasCheckbox
-                  title={bookmark?.titles?.main[0] || ""}
-                  creator={bookmark?.creators[0]?.display}
-                  materialType={
-                    bookmark?.manifestations?.bestRepresentation
-                      ?.materialTypes[0]?.specific
-                  }
-                  image={
-                    bookmark?.manifestations?.bestRepresentation?.cover
-                      ?.thumbnail
-                  }
-                  id={bookmark?.workId}
-                  creationYear="2000"
-                  type="BOOKMARK"
-                  isSelected={checkboxList[idx]?.isSelected}
-                  onSelect={() =>
-                    setCheckboxList(
-                      [...checkboxList].map((el, i) => {
-                        if (i !== idx) return el;
-                        else
-                          return {
-                            id: el.id,
-                            isSelected: !el.isSelected,
-                          };
-                      })
-                    )
-                  }
-                />
-              ))}
-          </div>
-        </Col>
-      </Row>
-    </Container>
+            />
+          ))}
+      </div>
+    </ProfileLayout>
   );
 };
 

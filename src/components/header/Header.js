@@ -128,7 +128,7 @@ export function Header({
     {
       label: "bookmark",
       icon: BookmarkIcon,
-      onClick: () => router.push("/profil/husk"),
+      onClick: () => router.push("/profil/huskeliste"),
     },
     {
       label: "menu",

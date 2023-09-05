@@ -515,7 +515,12 @@ const MaterialRow = (props) => {
   };
 
   const onCheckboxClick = (e) => {
-    if (e.target instanceof HTMLHeadingElement) {
+    console.log(e.target);
+    if (
+      e.target instanceof HTMLHeadingElement ||
+      e.target instanceof HTMLButtonElement ||
+      e.target.getAttribute("data-cy") === "text-fjern"
+    ) {
       /* Element clicked is a link, return */
       return;
     }

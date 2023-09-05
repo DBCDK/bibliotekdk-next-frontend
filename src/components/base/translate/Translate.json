@@ -3009,6 +3009,10 @@
         "da": "Mine biblioteker",
         "en": "My libraries"
       },
+      "bookmarks": {
+        "da": "Huskeliste",
+        "en": "Bookmarks"
+      },
       "orderHistory": {
         "da": "Bestilingshistorik",
         "en": "Order history"

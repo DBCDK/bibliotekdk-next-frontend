@@ -5,6 +5,7 @@
   display: flex;
   align-items: center;
 }
+
 .textWrapper {
   margin: 0 var(--pt1) 0 0;
 }

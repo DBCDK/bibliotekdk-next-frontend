@@ -14,10 +14,18 @@ import Translate from "@/components/base/translate/Translate";
 import { signOut } from "@dbcdk/login-nextjs/client";
 import Button from "@/components/base/button";
 import { useModal } from "@/components/_modal";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 
 const CONTEXT = "profile";
-const MENUITEMS = ["loansAndReservations", "myLibraries", "orderHistory"];
+const MENUITEMS = [
+  "loansAndReservations",
+  "bookmarks",
+  "myLibraries",
+  "orderHistory",
+];
+
+/* Whitelist menuitems accessable without login */
+const WHITELIST = ["/profil/huskeliste"];
 
 /**
  * ProfileLayout to use in /profil subpages
@@ -33,6 +41,7 @@ export default function ProfileLayout({ title, children }) {
   const isDesktop = !isMobile && !isTablet;
   const user = useUser();
   const modal = useModal();
+  const router = useRouter();
 
   return (
     <Container fluid className={styles.container}>
@@ -52,7 +61,7 @@ export default function ProfileLayout({ title, children }) {
         </Col>
         <Col lg={9}>
           {/**page content here */}
-          {user?.isAuthenticated ? (
+          {user?.isAuthenticated || WHITELIST.includes(router.pathname) ? (
             <>
               <Title
                 className={styles.title}

@@ -52,8 +52,12 @@ export default function useBookmarks() {
 }
 
 export const populateBookmarks = (bookmarks) => {
-  const pids = bookmarks?.map((mark) => mark.id);
-  console.log(pids);
+  const pids = bookmarks?.map((bookmark) => {
+    // TODO
+    if (bookmark.id.includes("work-of:"))
+      return bookmark.id.replace("work-of:", "");
+    return bookmark.id;
+  });
   const { data } = useData(workFragments.pidsToWorks({ pids: pids }));
   return { data };
 };
