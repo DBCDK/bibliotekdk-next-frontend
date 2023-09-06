@@ -16,7 +16,7 @@ import { useData } from "@/lib/api/api";
 import * as libraryFragments from "@/lib/api/library.fragments";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 import { LOGIN_MODE } from "@/components/_modal/pages/login/utils";
-import useWindowSize from "@/lib/useWindowSize";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 /**
  * Special component responsible for loading order policy
@@ -147,7 +147,8 @@ export function Pickup({
 }) {
   // Get pid from modal context
   const { pid, requireDigitalAccess, mode = LOGIN_MODE.PLAIN_LOGIN } = context;
-  const isMobile = useWindowSize()?.[0] < 576;
+  const isMobile = useBreakpoint() === "xs";
+
   /**
    *
    * @param {obj} branch

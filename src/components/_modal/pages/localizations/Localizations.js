@@ -10,7 +10,7 @@ import LocalizationItem from "./localizationitem/LocalizationItem";
 
 import Text from "@/components/base/text/Text";
 import Title from "@/components/base/title";
-import useWindowSize from "@/lib/useWindowSize";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 export function Localizations({
   context,
@@ -19,7 +19,7 @@ export function Localizations({
   onChange,
   testing = false,
 }) {
-  const isMobile = useWindowSize()?.[0] < 576;
+  const isMobile = useBreakpoint() === "xs";
 
   const allBranches = branchData?.result;
   return (
