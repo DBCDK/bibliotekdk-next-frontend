@@ -61,7 +61,7 @@ function Tag({
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {Object} props
+ * @param {Object}props
  *  See propTypes for specific props and types
  *
  * @returns {JSX.Element}

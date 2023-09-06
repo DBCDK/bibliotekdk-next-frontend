@@ -23,7 +23,7 @@ import { getLanguage } from "@/components/base/translate/Translate";
  * The Sections page React component
  *
  * @param {Object} props
- * @param {Object} props.className
+ * @param {Object}ect} props.className
  * @param {Object} props.data
  * @param {Object} props.skeleton
  * See propTypes for specific props and types

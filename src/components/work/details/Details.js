@@ -142,7 +142,7 @@ export function DetailsSkeleton() {
 /**
  * Default export function of the Component
  *
- * @param {Object} props
+ * @param {Object}ect} props
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}
