@@ -50,7 +50,6 @@ export default function OpenAdgangsplatform({ context }) {
           onBlur={(e) => {
             if (e.key === "Enter") onLogin();
           }}
-          className={styles.loginbutton}
           disabled={!!submitting}
           tabIndex="0"
         >
@@ -61,8 +60,7 @@ export default function OpenAdgangsplatform({ context }) {
           <Icon
             src="adgangsplatform.svg"
             alt="bibliotekslogin"
-            size={{ h: "2", w: "auto" }}
-            className={styles.icon}
+            size={{ h: "4", w: "auto" }}
           />
         </Button>
       </div>

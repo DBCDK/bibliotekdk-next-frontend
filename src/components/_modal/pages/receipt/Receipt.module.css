@@ -111,8 +111,13 @@
   text-align: center;
 }
 
+.redirect {
+  margin-top: var(--pt12);
+  width: 99%;
+}
+
 .close {
-  margin-top: var(--pt4);
+  margin-top: var(--pt2);
 }
 
 /* error */

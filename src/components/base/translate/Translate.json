@@ -3370,6 +3370,12 @@
         "da": "samtykke",
         "en": "consent"
       }
+    },
+    "receipt": {
+      "seeLoansAndReservations": {
+        "da": "Se dine lån og reserveringer",
+        "en": "See your loans and reservations"
+      }
     }
   }
 }

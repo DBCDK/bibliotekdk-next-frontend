@@ -5,14 +5,14 @@
 }
 
 .login button {
-  margin-top: var(--pt3);
-}
-.login .loginbutton {
   margin-top: var(--pt5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.login .icon {
-  padding-left: var(--pt1);
+.login img {
+  margin-left: var(--pt1);
 }
 .login p {
   margin-top: var(--pt3);

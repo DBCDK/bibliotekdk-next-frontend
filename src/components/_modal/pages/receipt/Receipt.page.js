@@ -15,6 +15,7 @@ import { useData } from "@/lib/api/api";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 
 import styles from "./Receipt.module.css";
+import { useRouter } from "next/router";
 import cx from "classnames";
 
 /**
@@ -27,6 +28,7 @@ export function Receipt({
 }) {
   // get props from context
   const { pickupBranch, order = {}, articleOrder = {} } = context;
+  const router = useRouter();
 
   // Always show a 1s loader animation before receipt is visible.
   const [delay, setDelay] = useState(true);
@@ -133,6 +135,18 @@ export function Receipt({
                 </Text>
               )}
 
+              {pickupBranch?.borrowerCheck && (
+                <Button
+                  className={styles.redirect}
+                  onClick={() => router.push("/profil/laan-og-reserveringer")}
+                  type="secondary"
+                >
+                  {Translate({
+                    context: "receipt",
+                    label: "seeLoansAndReservations",
+                  })}
+                </Button>
+              )}
               <Button className={styles.close} onClick={() => modal.clear()}>
                 {Translate({ context: "general", label: "close" })}
               </Button>
