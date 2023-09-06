@@ -284,7 +284,7 @@ const SYMBOL_PROCESSED = Symbol("processed");
  * Inspired by https://github.com/kiwicom/graphql-resolve-wrapper
  *
  * @param {*} schema
- * @param {func} wrapper
+ * @param {function} wrapper
  */
 function wrapResolvers(schema, wrapper) {
   const types = schema.getTypeMap();

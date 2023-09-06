@@ -69,9 +69,9 @@ export function workTypeTranslator(workTypes) {
 /**
  * Open login modal if user is not authenticated and material is neither ebescost or ebookcentral and material requires login
  * otherwise open redirect url in new tab
- * @param {obj} modal
- * @param {obj} access
- * @param {obj} user
+ * @param  {Object} modal
+ * @param  {Object} access
+ * @param  {Object} user
  * @returns
  */
 export function handleGoToLogin(modal, access, user) {

@@ -25,7 +25,7 @@ import InfoDropdown from "@/components/base/infoDropdown/InfoDropdown";
  * @param {string} title
  * @param {string} description
  * @param {string} buttonText
- * @param {func} signIn
+ * @param {function} signIn
  * @returns {component}
  */
 export default function LoginPrompt({

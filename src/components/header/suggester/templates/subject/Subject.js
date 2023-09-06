@@ -8,7 +8,7 @@ import styles from "./Subject.module.css";
  *
  *
  * @param {string} className
- * @param {bool} skeleton
+ * @param  {boolean} skeleton
  * @param {object} data
  *
  * See propTypes for specific props and types
@@ -55,7 +55,7 @@ export function Subject({ className = "", data = {}, skeleton = false }) {
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {obj} props
+ * @param  {Object} props
  *  See propTypes for specific props and types
  *
  * @returns {JSX.Element}
@@ -67,7 +67,7 @@ export function SubjectSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
+ * @param  {Object} props
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}

@@ -11,7 +11,7 @@ import cx from "classnames";
 /**
  * The Component function
  *
- * @param {obj} props
+ * @param  {Object} props
  * See propTypes for specific props and types
  *
  * @returns {component}
@@ -88,7 +88,7 @@ function Text({
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {obj} props
+ * @param  {Object} props
  *  See propTypes for specific props and types
  *
  * @returns {component}
@@ -122,7 +122,7 @@ export function TextSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
+ * @param  {Object} props
  * See propTypes for specific props and types
  *
  * @returns {component}

@@ -12,7 +12,7 @@ import cx from "classnames";
 /**
  * The Component function
  *
- * @param {obj} props
+ * @param  {Object} props
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}
@@ -61,7 +61,7 @@ function Tag({
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {obj} props
+ * @param  {Object} props
  *  See propTypes for specific props and types
  *
  * @returns {JSX.Element}
@@ -84,7 +84,7 @@ function TagSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
+ * @param  {Object} props
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}

@@ -66,7 +66,7 @@ function parseForOccasion(manifestations) {
 /**
  * The Component function
  *
- * @param {obj} props
+ * @param  {Object} props
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}
@@ -136,7 +136,7 @@ export function Description({ className = "", data = "", skeleton = false }) {
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {obj} props
+ * @param  {Object} props
  *  See propTypes for specific props and types
  *
  * @returns {JSX.Element}
@@ -155,7 +155,7 @@ export function DescriptionSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
+ * @param  {Object} props
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}

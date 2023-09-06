@@ -21,7 +21,7 @@ import { getCoverImage } from "@/components/utils/getCoverImage";
 /**
  * The work page React component
  *
- * @param {obj} props
+ * @param  {Object} props
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}

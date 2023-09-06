@@ -35,8 +35,8 @@ export function tabVisibility(container, isVisible) {
 /**
  * Function to trap Tab inside modal
  *
- * @param {obj} event current target element (focused element)
- * @param {obj} container container to trap Tab in (modal)
+ * @param  {Object} event current target element (focused element)
+ * @param  {Object} container container to trap Tab in (modal)
  *
  * https://medium.com/@islam.sayed8/trap-focus-inside-a-modal-aa5230326c1b
  * https://medium.com/@seif_ghezala/how-to-create-an-accessible-react-modal-5b87e6a27503
@@ -149,7 +149,7 @@ function getScrollYPos() {
 /**
  * Function to handle scrollLock on body
  *
- * @param {bool} shouldLockScroll
+ * @param  {boolean} shouldLockScroll
  *
  */
 let scrollY = 0;

@@ -30,7 +30,7 @@ function DefaultDetailValues({ values }) {
 /**
  * The Component function
  *
- * @param {obj} props
+ * @param  {Object} props
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}
@@ -142,7 +142,7 @@ export function DetailsSkeleton() {
 /**
  * Default export function of the Component
  *
- * @param {obj} props
+ * @param  {Object}ect} props
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}

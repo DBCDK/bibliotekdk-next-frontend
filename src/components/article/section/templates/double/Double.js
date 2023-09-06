@@ -14,7 +14,7 @@ import styles from "./Double.module.css";
 /**
  * A section displaying three articles
  *
- * @param {obj} props
+ * @param  {Object} props
  * @param {array} props.articles
  * @param {boolean} props.skeleton
  *

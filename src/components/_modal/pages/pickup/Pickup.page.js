@@ -149,8 +149,8 @@ export function Pickup({
 
   /**
    *
-   * @param {obj} branch
-   * @param {obj} modal
+   * @param  {Object} branch
+   * @param  {Object} modal
    */
   function handleOnSelect(branch, modal) {
     // Selected branch and (loggedIn) user branches has same agency
@@ -331,7 +331,7 @@ Pickup.propTypes = {
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
+ * @param  {Object} props
  * See propTypes for specific props and types
  *
  * @returns {component}

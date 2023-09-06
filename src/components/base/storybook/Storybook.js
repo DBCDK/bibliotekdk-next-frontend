@@ -38,8 +38,8 @@ function CopyButton({ el, txt = "Copy" }) {
  * (FOR INTERNAL/STORYBOOK USE ONLY!)
  * Function to return storybook titles
  *
- * @param {obj} children
- * @param {bool} copy // adds a copy button
+ * @param  {Object} children
+ * @param  {boolean} copy // adds a copy button
  *
  * @returns {component}
  */
@@ -59,8 +59,8 @@ export function StoryTitle({ children, copy = false }) {
  * (FOR INTERNAL/STORYBOOK USE ONLY!)
  * Function to return storybook descriptions
  *
- * @param {obj} children
- * @param {bool} copy // adds a copy button
+ * @param  {Object} children
+ * @param  {boolean} copy // adds a copy button
  *
  * @returns {component}
  */
@@ -83,8 +83,8 @@ export function StoryDescription({ children, copy }) {
  *
  * @param {string} space
  * @param {string} direction
- * @param {bool} demo // makes spaces visible
- * @param {bool} copy // adds a copy button
+ * @param  {boolean} demo // makes spaces visible
+ * @param  {boolean} copy // adds a copy button
  *
  * @returns {JSX.Element}
  */
@@ -130,8 +130,8 @@ export function StorySpace({
  * (FOR INTERNAL/STORYBOOK USE ONLY!)
  * Function to return storybook label
  *
- * @param {obj} children
- * @param {bool} copy // adds a copy button
+ * @param  {Object} children
+ * @param  {boolean} copy // adds a copy button
  *
  * @returns {component}
  */
@@ -151,8 +151,8 @@ export function StoryLabel({ children, copy }) {
  * (FOR INTERNAL/STORYBOOK USE ONLY!)
  * Function to return storybook label
  *
- * @param {obj} children
- * @param {bool} copy // adds a copy button
+ * @param  {Object} children
+ * @param  {boolean} copy // adds a copy button
  *
  * @returns {component}
  */

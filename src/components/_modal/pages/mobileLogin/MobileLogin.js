@@ -14,7 +14,7 @@ import { useState } from "react";
 
 /**
  * Login modal for mobiles with search field and pickup locations selection for mobile phones
- * @param {obj} context
+ * @param  {Object} context
  * @returns {JSX.Element}
  */
 export default function MobileLogin({ context }) {

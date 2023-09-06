@@ -24,7 +24,7 @@ import cx from "classnames";
 /**
  * Menu function - to generate the menu
  *
- * @param {obj} props
+ * @param  {Object} props
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}
@@ -201,7 +201,7 @@ Menu.propTypes = {
 /**
  * Element function - wraps all children in a div container (ref)
  *
- * @param {obj} props
+ * @param  {Object} props
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}
@@ -254,8 +254,8 @@ export function getIndexForAnchor(anchorLabel, anchorChildren = theChildren) {
  *
  * [!] 'anchor-label' prop is required on all children to generate the menu
  *
- * @param {obj} props
- * @param {obj} props.children
+ * @param  {Object} props
+ * @param  {Object} props.children
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}

@@ -101,8 +101,8 @@ export function Back({ className, onBack }) {
  * @param {boolean} back
  * @param {boolean} sticky
  * @param titleTag
- * @param {func} onClose
- * @param {func} onBack
+ * @param {function} onClose
+ * @param {function} onBack
  * @returns {JSX.Element}
  */
 export default function Top({

@@ -7,7 +7,7 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 /**
  * Tablerow to be used in LibrariesTable component.
- * @param {obj} props
+ * @param  {Object} props
  * @returns {component}
  */
 function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
@@ -97,7 +97,7 @@ function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
 
 /**
  * Returns a table of users libraries
- * @param {obj} props
+ * @param  {Object} props
  * @returns {component}
  */
 export default function LibrariesTable({ data, municipalityAgencyId }) {

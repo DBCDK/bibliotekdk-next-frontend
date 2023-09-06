@@ -21,7 +21,7 @@ import capitalize from "lodash/capitalize";
 /**
  * Export function of the Component
  *
- * @param {obj} manifestation
+ * @param  {Object} manifestation
  * @param {string} workId
  * See propTypes for specific props and types
  *

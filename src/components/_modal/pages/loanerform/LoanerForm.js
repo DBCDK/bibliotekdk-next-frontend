@@ -196,13 +196,13 @@ export function UserParamsForm({
 
 /**
  *  Shows login formular for FFU libraries without adgangsplatform login.
- * @param {obj} branch
- * @param {func} onSubmit
- * @param {obj} skeleton
- * @param {obj} initial
- * @param {obj} context
- * @param {bool} storeLoanerInfo
- * @param {func} setStoreLoanerInfo
+ * @param  {Object} branch
+ * @param {function} onSubmit
+ * @param  {Object} skeleton
+ * @param  {Object} initial
+ * @param  {Object} context
+ * @param  {boolean} storeLoanerInfo
+ * @param {function} setStoreLoanerInfo
  * @returns JSX element
  */
 export function LoanerForm({
@@ -314,11 +314,12 @@ export default function Wrap(props) {
 
   //remove userdata when window is closed - if user doesnt want to store data
   useEffect(() => {
+    console.log("running");
     window.addEventListener("beforeunload", deleteUserDataFromSession);
     return () => {
       window.removeEventListener("beforeunload", deleteUserDataFromSession);
     };
-  });
+  }, [JSON.stringify(loanerInfo)]);
 
   /**
    * We remove session data for libraries without loanercheck
