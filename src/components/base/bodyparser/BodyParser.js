@@ -29,7 +29,7 @@ function underlineOnAnchorElements(htmlString) {
 /**
  * BodyParser
  *
- * @param {Object} props
+ * @param  {Object} props
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}

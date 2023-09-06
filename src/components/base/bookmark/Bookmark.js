@@ -18,7 +18,7 @@ function handleOnBookmarkClick() {
 /**
  * The Component function
  *
- * @param {Object} props
+ * @param  {Object} props
  * See propTypes for specific props and types
  *
  * @returns {component}
@@ -67,7 +67,7 @@ function Bookmark({
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {Object} props
+ * @param  {Object} props
  *  See propTypes for specific props and types
  *
  * @returns {component}
@@ -88,7 +88,7 @@ function BookmarkSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param {Object} props
+ * @param  {Object} props
  * See propTypes for specific props and types
  *
  * @returns {component}

@@ -181,7 +181,7 @@ export function setTranslations(translations) {
  /**
  * The Component function
  *
- * @param {Object} props
+ * @param  {Object} props
  * @param {string} props.context
  * @param {string} props.label
  * @param {array} props.vars

@@ -102,9 +102,9 @@ function ArticleHeader({ article, skeleton }) {
 /**
  * Orientation function
  *
- * @param {Object} props
- * @param {Object} props.width
- * @param {Object} props.height
+ * @param  {Object} props
+ * @param  {Object} props.width
+ * @param  {Object} props.height
  *
  * @returns {component}
  */
@@ -137,7 +137,7 @@ function calcReadTime(htmlString) {
 /**
  * The Component function
  *
- * @param {Object} props
+ * @param  {Object} props
  * See propTypes for specific props and types
  *
  * @returns {component}
@@ -311,7 +311,7 @@ export function Content({
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {Object} props
+ * @param  {Object} props
  *  See propTypes for specific props and types
  *
  * @returns {component}
@@ -338,7 +338,7 @@ export function ContentSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param {Object} props
+ * @param  {Object} props
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}

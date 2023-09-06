@@ -38,7 +38,7 @@ function CopyButton({ el, txt = "Copy" }) {
  * (FOR INTERNAL/STORYBOOK USE ONLY!)
  * Function to return storybook titles
  *
- * @param {Object} children
+ * @param  {Object} children
  * @param  {boolean} copy // adds a copy button
  *
  * @returns {component}
@@ -59,7 +59,7 @@ export function StoryTitle({ children, copy = false }) {
  * (FOR INTERNAL/STORYBOOK USE ONLY!)
  * Function to return storybook descriptions
  *
- * @param {Object} children
+ * @param  {Object} children
  * @param  {boolean} copy // adds a copy button
  *
  * @returns {component}
@@ -130,7 +130,7 @@ export function StorySpace({
  * (FOR INTERNAL/STORYBOOK USE ONLY!)
  * Function to return storybook label
  *
- * @param {Object} children
+ * @param  {Object} children
  * @param  {boolean} copy // adds a copy button
  *
  * @returns {component}
@@ -151,7 +151,7 @@ export function StoryLabel({ children, copy }) {
  * (FOR INTERNAL/STORYBOOK USE ONLY!)
  * Function to return storybook label
  *
- * @param {Object} children
+ * @param  {Object} children
  * @param  {boolean} copy // adds a copy button
  *
  * @returns {component}

@@ -60,7 +60,7 @@ export default function WorkPage() {
    * Updates the query params in the url
    * (f.x. query.type which changes the type of material selected: Book, Ebook, ...)
    *
-   * @param {Object} queryInput
+   * @param  {Object} queryInput
    */
   function handleOnTypeChange(queryInput) {
     setQuery({

@@ -35,7 +35,7 @@ export default function ArticlePage() {
    * Updates the query params in the url
    * (f.x. query.type which changes the type of material selected: Book, Ebook, ...)
    *
-   * @param {Object} query
+   * @param  {Object} query
    */
 
   return (

@@ -13,7 +13,7 @@ import styles from "./Label.module.css";
  * @param className
  * @param htmlFor
  * @param dataCy
- * @param {Object} props
+ * @param  {Object} props
  * See propTypes for specific props and types
  *
  * @returns {component}
@@ -44,7 +44,7 @@ function Label({
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {Object} props
+ * @param  {Object} props
  *  See propTypes for specific props and types
  *
  * @returns {component}
@@ -62,7 +62,7 @@ function LabelSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param {Object} props
+ * @param  {Object} props
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}

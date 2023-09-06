@@ -49,7 +49,7 @@ function useInitMaterialType(
 /**
  * The Component function
  *
- * @param {Object} props
+ * @param  {Object} props
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}
