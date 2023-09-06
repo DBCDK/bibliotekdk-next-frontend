@@ -5,9 +5,7 @@ import { cyKey } from "@/utils/trim";
 import Skeleton from "@/components/base/skeleton";
 import Icon from "@/components/base/icon";
 import translate from "@/components/base/translate";
-
 import BookmarkSvg from "@/public/icons/bookmark_medium.svg";
-// import BookmarkSvg from "@/public/icons/bookmark.svg";
 
 import styles from "./Bookmark.module.css";
 

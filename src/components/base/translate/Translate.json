@@ -932,6 +932,30 @@
       "title": {
         "da": "Bogmærk %s",
         "en": "Bookmark %s"
+      },
+      "page-title": {
+        "da": "Huskeliste",
+        "en": "Bookmarks"
+      },
+      "result-amount": {
+        "da": "materialer",
+        "en": "materials"
+      },
+      "select-all": {
+        "da": "Vælg alle",
+        "en": "Select All"
+      },
+      "order": {
+        "da": "Bestil",
+        "en": "Order"
+      },
+      "select-action": {
+        "da": "Referencer",
+        "en": "References"
+      },
+      "remove": {
+        "da": "Fjern",
+        "en": "Remove"
       }
     },
     "reviews": {
@@ -1032,6 +1056,10 @@
       "basket": {
         "da": "Kurv",
         "en": "Basket"
+      },
+      "bookmark": {
+        "da": "Husk",
+        "en": "Bookmarks"
       },
       "menu": {
         "da": "Menu",
@@ -3004,6 +3032,10 @@
       "myLibraries": {
         "da": "Mine biblioteker",
         "en": "My libraries"
+      },
+      "bookmarks": {
+        "da": "Huskeliste",
+        "en": "Bookmarks"
       },
       "orderHistory": {
         "da": "Bestilingshistorik",

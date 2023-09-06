@@ -31,6 +31,7 @@
 .primary.disabled {
   background-color: var(--concrete);
   outline: 2px solid var(--iron);
+  color: var(--dove);
 }
 
 /* Secondary */
@@ -48,6 +49,7 @@
 
 .secondary.disabled {
   outline: 2px solid var(--concrete);
+  color: var(--dove);
 }
 
 /* 
@@ -106,7 +108,6 @@
 
 /* 
 * Disabled 
-*
 */
 
 .button.disabled {
@@ -114,14 +115,8 @@
   cursor: default;
 }
 
-.disabled,
-.disabled:hover {
-  color: var(--mine-shaft);
-}
-
 /* 
 * Skeleton
-*
 */
 
 .skeleton {
