@@ -15,6 +15,7 @@ import { useData } from "@/lib/api/api";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 
 import styles from "./Receipt.module.css";
+import cx from "classnames";
 
 /**
  * Order Button
@@ -62,10 +63,6 @@ export function Receipt({
       : articleOrderData?.elba?.placeCopyRequest?.status;
   }
 
-  // Define order status' class'
-  const orderedClass = isOrdered && !delay ? styles.ordered : "";
-  const failedClass = hasFailed && !delay ? styles.failed : "";
-
   // Branch name
   const branchName = pickupBranch?.name;
 
@@ -76,7 +73,12 @@ export function Receipt({
   const duration = articleOrderIsLoading ? 10 : 1;
 
   return (
-    <div className={`${styles.receipt} ${orderedClass} ${failedClass}`}>
+    <div
+      className={cx(styles.receipt, {
+        [styles.failed]: isOrdered && !delay,
+        [styles.ordered]: hasFailed && !delay,
+      })}
+    >
       <div className={styles.container}>
         <Top className={{ top: styles.top }} back={false} />
         <div className={`${styles.wrap} ${styles.progress}`}>
