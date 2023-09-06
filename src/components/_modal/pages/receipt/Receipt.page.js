@@ -51,6 +51,7 @@ export function Receipt({
   const isOrdered =
     !!orderData?.submitOrder?.orderId ||
     articleOrderData?.elba?.placeCopyRequest?.status === "OK";
+
   let hasFailed =
     (orderData?.submitOrder && !orderData?.submitOrder?.ok) ||
     !!orderError ||
@@ -77,8 +78,8 @@ export function Receipt({
   return (
     <div
       className={cx(styles.receipt, {
-        [styles.failed]: isOrdered && !delay,
-        [styles.ordered]: hasFailed && !delay,
+        [styles.ordered]: isOrdered && !delay,
+        [styles.failed]: hasFailed && !delay,
       })}
     >
       <div className={styles.container}>
