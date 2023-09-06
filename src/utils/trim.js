@@ -5,7 +5,7 @@
  * @param {string} name
  * @param {string} prefix
  * @param {string} seperator
- * @param  {boolean} lowerCase
+ * @param {boolean} lowerCase
  *
  * @returns {string}
  */

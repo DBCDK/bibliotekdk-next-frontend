@@ -22,7 +22,7 @@ function getScrollYPos() {
 /**
  * Function to handle scrollLock on body
  *
- * @param  {boolean} shouldLockScroll
+ * @param {boolean} shouldLockScroll
  *
  */
 let scrollY = 0;

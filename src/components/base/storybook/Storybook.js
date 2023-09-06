@@ -39,7 +39,7 @@ function CopyButton({ el, txt = "Copy" }) {
  * Function to return storybook titles
  *
  * @param {Object} children
- * @param  {boolean} copy // adds a copy button
+ * @param {boolean} copy // adds a copy button
  *
  * @returns {component}
  */
@@ -60,7 +60,7 @@ export function StoryTitle({ children, copy = false }) {
  * Function to return storybook descriptions
  *
  * @param {Object} children
- * @param  {boolean} copy // adds a copy button
+ * @param {boolean} copy // adds a copy button
  *
  * @returns {component}
  */
@@ -83,8 +83,8 @@ export function StoryDescription({ children, copy }) {
  *
  * @param {string} space
  * @param {string} direction
- * @param  {boolean} demo // makes spaces visible
- * @param  {boolean} copy // adds a copy button
+ * @param {boolean} demo // makes spaces visible
+ * @param {boolean} copy // adds a copy button
  *
  * @returns {JSX.Element}
  */
@@ -131,7 +131,7 @@ export function StorySpace({
  * Function to return storybook label
  *
  * @param {Object} children
- * @param  {boolean} copy // adds a copy button
+ * @param {boolean} copy // adds a copy button
  *
  * @returns {component}
  */
@@ -152,7 +152,7 @@ export function StoryLabel({ children, copy }) {
  * Function to return storybook label
  *
  * @param {Object} children
- * @param  {boolean} copy // adds a copy button
+ * @param {boolean} copy // adds a copy button
  *
  * @returns {component}
  */
