@@ -12,13 +12,13 @@ export function handleDeleteOrder(orderId, agencyId, orderMutation) {
 
 /**
  * Opens delete order modal
- * @param  {Object} modal
+ * @param {obj} modal
  * @param {boolean} mobile
  * @param {Date} pickUpExpiryDate
  * @param {string} materialId
  * @param {string} agencyId
  * @param {string} title
- * @param  {Object} orderMutation
+ * @param {obj} orderMutation
  */
 export function onClickDelete({
   modal,

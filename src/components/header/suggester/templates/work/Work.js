@@ -11,7 +11,7 @@ import styles from "./Work.module.css";
  *
  *
  * @param {string} className
- * @param  {boolean} skeleton
+ * @param {bool} skeleton
  * @param {object} data
  * See propTypes for specific props and types
  *
@@ -57,7 +57,7 @@ export function Work({ className = "", data = {}, skeleton = false }) {
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param  {Object} props
+ * @param {obj} props
  *  See propTypes for specific props and types
  *
  * @returns {JSX.Element}
@@ -69,7 +69,7 @@ export function WorkSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param  {Object} props
+ * @param {obj} props
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}

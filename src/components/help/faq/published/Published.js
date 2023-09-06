@@ -14,9 +14,9 @@ import Skeleton from "@/components/base/skeleton";
 /**
  * The FAQ Published React component
  *
- * @param  {Object} props
- * @param  {Object} props.className
- * @param  {Object} props.data
+ * @param {obj} props
+ * @param {obj} props.className
+ * @param {obj} props.data
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}
@@ -51,9 +51,9 @@ Published.propTypes = {
 /**
  * The Default export with data fetch
  *
- * @param  {Object} props
- * @param  {Object} props.className
- * @param  {Object} props.data
+ * @param {obj} props
+ * @param {obj} props.className
+ * @param {obj} props.data
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}

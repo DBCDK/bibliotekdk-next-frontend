@@ -87,7 +87,7 @@ let _store = [];
 /**
  *
  * @param {object|Array} children
- * @param  {Object} className
+ * @param {obj} className
  * @param mock
  * @param {string} className.dimmer
  * @param {string} className.modal
@@ -380,7 +380,7 @@ function Container({ children, className = {}, mock = {} }) {
 /**
  * blah blah
  *
- * @param  {Object} props
+ * @param {obj} props
  * @param {string} props.index
  * @param {string} props.active
  * @param {string} props.modal

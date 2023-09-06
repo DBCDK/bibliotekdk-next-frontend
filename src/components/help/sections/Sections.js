@@ -22,10 +22,10 @@ import { getLanguage } from "@/components/base/translate/Translate";
 /**
  * The Sections page React component
  *
- * @param  {Object} props
- * @param  {Object}ect} props.className
- * @param  {Object} props.data
- * @param  {Object} props.skeleton
+ * @param {obj} props
+ * @param {obj} props.className
+ * @param {obj} props.data
+ * @param {obj} props.skeleton
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}
@@ -105,7 +105,7 @@ Sections.propTypes = {
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param  {Object} props
+ * @param {obj} props
  *  See propTypes for specific props and types
  *
  * @returns {JSX.Element}
@@ -147,7 +147,7 @@ export function SectionsSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param  {Object} props
+ * @param {obj} props
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}

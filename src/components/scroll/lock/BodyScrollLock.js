@@ -22,7 +22,7 @@ function getScrollYPos() {
 /**
  * Function to handle scrollLock on body
  *
- * @param  {boolean} shouldLockScroll
+ * @param {bool} shouldLockScroll
  *
  */
 let scrollY = 0;
@@ -56,7 +56,7 @@ function scrollLock(shouldLockScroll) {
 /**
  * The Component function
  *
- * @param  {Object} props
+ * @param {obj} props
  * See propTypes for specific props and types
  *
  * @returns {component}

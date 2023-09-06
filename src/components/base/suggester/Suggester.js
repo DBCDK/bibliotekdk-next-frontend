@@ -157,7 +157,7 @@ function renderInputComponent({ inputComponent = {}, inputProps, onClear }) {
 /**
  * The Component function
  *
- * @param  {Object} props
+ * @param {obj} props
  * See propTypes for specific props and types
  *
  * @returns {component}
@@ -291,7 +291,7 @@ function Suggester({
 /**
  *  Default export function of the Component
  *
- * @param  {Object} props
+ * @param {obj} props
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}

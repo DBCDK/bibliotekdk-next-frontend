@@ -5,7 +5,7 @@ import Content from "../content";
 /**
  * The Article page React component
  *
- * @param  {Object} props
+ * @param {obj} props
  * See propTypes for specific props and types
  *
  * @returns {component}

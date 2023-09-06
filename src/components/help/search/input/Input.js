@@ -18,7 +18,7 @@ export function focusInput() {
  * Search component
  * Makes it possible to search for help texts.
  *
- * @param  {Object} props
+ * @param {obj} props
  * See propTypes for specific props and types
  *
  * @returns {component}

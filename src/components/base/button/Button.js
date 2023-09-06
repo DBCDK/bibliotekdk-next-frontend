@@ -14,7 +14,7 @@ function handleOnButtonClick() {
 /**
  * The Component function
  *
- * @param  {Object} props
+ * @param {obj} props
  * See propTypes for specific props and types
  *
  * @returns {component}
@@ -63,7 +63,7 @@ function Button({
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param  {Object} props
+ * @param {obj} props
  *  See propTypes for specific props and types
  *
  * @returns {component}
@@ -85,7 +85,7 @@ function ButtonSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param  {Object} props
+ * @param {obj} props
  * See propTypes for specific props and types
  *
  * @returns {component}

@@ -5,7 +5,7 @@ import styles from "./Contact.module.css";
 /**
  * The Sections page React component
  *
- * @param  {Object} props
+ * @param {obj} props
  * See propTypes for specific props and types
  *
  * @returns {component}

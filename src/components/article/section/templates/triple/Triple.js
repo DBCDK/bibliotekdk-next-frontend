@@ -12,7 +12,7 @@ import styles from "./Triple.module.css";
 /**
  * A section displaying three articles
  *
- * @param  {Object} articles
+ * @param {obj} articles
  * @param {boolean} skeleton
  *
  */

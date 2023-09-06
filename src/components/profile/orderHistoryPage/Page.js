@@ -191,7 +191,7 @@ export default function OrderHistoryPage() {
 
 /**
  * TableItem shows info for a single order.
- * @param  {Object} props
+ * @param {obj} props
  * @returns {component}
  */
 function TableItem({ order, key }) {

@@ -65,7 +65,7 @@ const actions = [
 /**
  * The Component function
  *
- * @param  {Object} props
+ * @param {obj} props
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}
@@ -385,7 +385,7 @@ export function StaticHeader({ router = null, context }) {
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param  {Object} props
+ * @param {obj} props
  *  See propTypes for specific props and types
  *
  * @returns {JSX.Element}
@@ -397,7 +397,7 @@ function HeaderSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param  {Object} props
+ * @param {obj} props
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}

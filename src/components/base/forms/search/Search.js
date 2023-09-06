@@ -9,7 +9,7 @@ import styles from "./Search.module.css";
 /**
  * The Component function
  *
- * @param  {Object} props
+ * @param {obj} props
  * See propTypes for specific props and types
  *
  * Get you value like <Search onChange={(value) => console.log(value)} ... />

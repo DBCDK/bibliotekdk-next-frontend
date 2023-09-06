@@ -5,7 +5,7 @@ import styles from "./Email.module.css";
 /**
  * The Component function
  *
- * @param  {Object} props
+ * @param {obj} props
  * See propTypes for specific props and types
  *
  * Get you value like <Email onChange={(value, valid) => console.log(value, valid)} ... />

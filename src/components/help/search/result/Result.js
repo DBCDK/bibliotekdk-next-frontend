@@ -11,7 +11,7 @@ import Translate from "@/components/base/translate";
 /**
  * Shows help text search result
  *
- * @param  {Object} props
+ * @param {obj} props
  * See propTypes for specific props and types
  *
  * @returns {component}

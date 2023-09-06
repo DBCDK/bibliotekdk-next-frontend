@@ -21,7 +21,7 @@ import Translate from "@/components/base/translate";
 /**
  * The article page Header React component
  *
- * @param  {Object} props
+ * @param {obj} props
  * See propTypes for specific props and types
  *
  * @returns {component}

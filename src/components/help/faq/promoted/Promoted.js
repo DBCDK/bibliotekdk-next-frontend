@@ -20,7 +20,7 @@ import styles from "./Promoted.module.css";
 /**
  * The Promoted FAQs React component
  *
- * @param  {Object} props
+ * @param {obj} props
  * @param {string} props.className
  * @param {array} props.data
  * @param {boolean} props.isLoading
@@ -64,9 +64,9 @@ Promoted.propTypes = {
 /**
  * The Default export with data fetch
  *
- * @param  {Object} props
- * @param  {Object} props.className
- * @param  {Object} props.data
+ * @param {obj} props
+ * @param {obj} props.className
+ * @param {obj} props.data
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}

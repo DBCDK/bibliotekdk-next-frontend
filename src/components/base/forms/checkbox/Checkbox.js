@@ -8,7 +8,7 @@ import styles from "./Checkbox.module.css";
 /**
  * The Component function
  *
- * @param  {Object} props
+ * @param {obj} props
  * See propTypes for specific props and types
  *
  * Get you value like <Input onChange={(value) => console.log(value)} ... />

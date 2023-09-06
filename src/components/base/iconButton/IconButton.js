@@ -8,11 +8,11 @@ import cx from "classnames";
 
 /**
  * An animated button that contains a text and an Icon. Pass Icon name that matches an svg file inside public/icons
- * @param  {Object} props
+ * @param {obj} props
  * @param {string} props.className
  * @param {function} props.onClick
  * @param {string} props.alt
- * @param  {Object} props.children
+ * @param {obj} props.children
  * @param {string} props.icon
  * @param {string} props.textType
  * @param {boolean} props.keepUnderline

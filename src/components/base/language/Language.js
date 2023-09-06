@@ -5,8 +5,8 @@ import Router from "next/router";
 /**
  * Language change wrap
  *
- * @param  {Object} props
- * @param  {Object} props.children button to change language
+ * @param {obj} props
+ * @param {obj} props.children button to change language
  *
  * @returns {component}
  */

@@ -57,7 +57,7 @@ export function Creator({ className = "", data = {}, skeleton = false }) {
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param  {Object} props
+ * @param {obj} props
  *  See propTypes for specific props and types
  *
  * @returns {JSX.Element}
@@ -69,7 +69,7 @@ export function CreatorSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param  {Object} props
+ * @param {obj} props
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}

@@ -10,7 +10,7 @@ import styles from "./Page.module.css";
 /**
  * HelpText page React component
  *
- * @param  {Object} props
+ * @param {obj} props
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}

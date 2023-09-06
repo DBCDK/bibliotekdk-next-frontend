@@ -28,7 +28,7 @@ import useWindowSize from "@/components/hooks/useWindowSize";
  * contains the login page for login modal - both for desktop and mobile
  * for mobile, the page shows a button, which opens a new modal with pickup locations selection and MitID login button
  * for desktop, the page shows a search field, which filters the pickup locations and MitID login button
- * @param  {Object}
+ * @param {obj}
  * @param {boolean}data
  * @param className
  * @param {boolean} isVisible
@@ -36,8 +36,8 @@ import useWindowSize from "@/components/hooks/useWindowSize";
  * @param {boolean} hasQuery dont show loading skeleton if there is no query / before user has typed anything
  * @param {boolean} isLoading
  * @param includeArrows
- * @param  {Object} modal
- * @param  {Object} context
+ * @param {obj} modal
+ * @param {obj} context
  * @param {string} title
  */
 export function Login({
@@ -150,7 +150,7 @@ Login.propTypes = {
 /**
  *  Default export function of the Component
  *
- * @param  {Object} props
+ * @param {obj} props
  * See propTypes for specific props and types
  *
  * @returns {component}

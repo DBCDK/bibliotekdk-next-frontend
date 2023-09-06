@@ -20,7 +20,7 @@ import styles from "./Icon.module.css";
  * @param dataCy
  * @param ariaHidden
  * @param tag
- * @param  {Object} props
+ * @param {obj} props
  * See propTypes for specific props and types
  *
  * @returns {component}
@@ -91,7 +91,7 @@ function Icon({
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param  {Object} props
+ * @param {obj} props
  *  See propTypes for specific props and types
  *
  * @returns {component}
@@ -113,7 +113,7 @@ function IconSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param  {Object} props
+ * @param {obj} props
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}

@@ -14,7 +14,7 @@ import styles from "./History.module.css";
  *
  *
  * @param {string} className
- * @param  {boolean} skeleton
+ * @param {bool} skeleton
  * @param {object} data
  * See propTypes for specific props and types
  *
@@ -62,7 +62,7 @@ export function History({ className = "", data = {}, skeleton = false }) {
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param  {Object} props
+ * @param {obj} props
  *  See propTypes for specific props and types
  *
  * @returns {JSX.Element}
@@ -74,7 +74,7 @@ export function HistorySkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param  {Object} props
+ * @param {obj} props
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}
