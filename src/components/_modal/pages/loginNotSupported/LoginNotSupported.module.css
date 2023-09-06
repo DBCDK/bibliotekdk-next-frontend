@@ -1,5 +1,5 @@
 .container {
-  padding: var(--pt2) var(--pt6) 0;
+  padding: 0 var(--pt2);
 }
 
 .header {
@@ -19,4 +19,10 @@
 .list {
   margin-left: var(--pt3);
   padding-bottom: var(--pt2);
+}
+
+@media (min-width: 576px) {
+  .container {
+    padding: var(--pt2) var(--pt6) var(--pt4);
+  }
 }

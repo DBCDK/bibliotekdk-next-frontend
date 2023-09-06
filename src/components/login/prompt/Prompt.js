@@ -53,7 +53,6 @@ export default function LoginPrompt({
                 context: "articles",
                 label: "how-to-get-access",
               })}
-              chevronOffset={styles.chevron}
             >
               <>
                 <Text type="text3" className={styles.description}>

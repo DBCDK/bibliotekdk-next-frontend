@@ -15,12 +15,11 @@ import PropTypes from "prop-types";
 
 /**
  * InfoDropdown component that shows a button and a text that can be toggled by button click
- * Chevron has absolute position. Give chevronOffset to move chevron to your needs.
  * @param {*} props
  * @returns {JSX.Element}
  */
 export default function InfoDropdown(props) {
-  const { children, label, buttonText, chevronOffset } = props;
+  const { children, label, buttonText } = props;
   const [expanded, setExpanded] = useState(false);
 
   function toggleCollapse() {
@@ -58,9 +57,7 @@ export default function InfoDropdown(props) {
           <Icon
             size={{ w: "2", h: "auto" }}
             src="arrowDown.svg"
-            className={cx(styles.chevron, {
-              [chevronOffset]: chevronOffset ? true : false,
-            })}
+            className={styles.chevron}
             alt=""
           />
         </span>
@@ -73,5 +70,4 @@ InfoDropdown.propTypes = {
   children: PropTypes.node,
   label: PropTypes.string,
   buttonText: PropTypes.string,
-  chevronOffset: PropTypes.string,
 };

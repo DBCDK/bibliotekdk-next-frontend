@@ -2089,6 +2089,10 @@
         "da": "Søg på bibliotekets navn, adresse, postnr",
         "en": "Search for pickup location"
       },
+      "pickup-input-placeholder-mobil": {
+        "da": "Søg på bibliotekets navn, adresse, postnr",
+        "en": "Search for pickup location"
+      },
       "pickup-not-allowed": {
         "da": "Afhentning ikke muligt på",
         "en": "Pickup not allowed at"

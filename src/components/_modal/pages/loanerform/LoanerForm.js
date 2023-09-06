@@ -181,7 +181,7 @@ export function UserParamsForm({
         >
           {Translate({ context: "order", label: "save-info-in-browser" })}
         </Text>
-        <Tooltip labelToTranslate="close-window" />
+        <Tooltip labelToTranslate="close-window" placement="top" />
       </span>
       {/* onclick triggers submit form */}
       <Button onClick={() => {}} tabIndex="0">

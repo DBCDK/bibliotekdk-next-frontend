@@ -16,6 +16,7 @@ import { useData } from "@/lib/api/api";
 import * as libraryFragments from "@/lib/api/library.fragments";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 import { LOGIN_MODE } from "@/components/_modal/pages/login/utils";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 /**
  * Special component responsible for loading order policy
@@ -146,6 +147,7 @@ export function Pickup({
 }) {
   // Get pid from modal context
   const { pid, requireDigitalAccess, mode = LOGIN_MODE.PLAIN_LOGIN } = context;
+  const isMobile = useBreakpoint() === "xs";
 
   /**
    *
@@ -259,8 +261,8 @@ export function Pickup({
         <Search
           dataCy="pickup-search-input"
           placeholder={Translate({
-            context: "order",
-            label: "pickup-input-placeholder",
+            context: isMobile ? "login" : "order",
+            label: isMobile ? "search-for-library" : "pickup-input-placeholder",
           })}
           className={styles.input}
           onChange={debounce((value) => onChange(value), 100)}
