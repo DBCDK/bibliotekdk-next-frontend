@@ -24,7 +24,7 @@ import styles from "./Input.module.css";
  * @param required
  * @param ariaLabelledby
  * @param ariaLabel
- * @param  {Object} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
  * Get you value like <Input onChange={(value) => console.log(value)} ... />

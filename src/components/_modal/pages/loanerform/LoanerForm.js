@@ -196,11 +196,11 @@ export function UserParamsForm({
 
 /**
  *  Shows login formular for FFU libraries without adgangsplatform login.
- * @param  {Object} branch
+ * @param {Object} branch
  * @param {function} onSubmit
- * @param  {Object} skeleton
- * @param  {Object} initial
- * @param  {Object} context
+ * @param {Object} skeleton
+ * @param {Object} initial
+ * @param {Object} context
  * @param  {boolean} storeLoanerInfo
  * @param {function} setStoreLoanerInfo
  * @returns JSX element

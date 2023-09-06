@@ -12,7 +12,7 @@ import styles from "./Action.module.css";
  * Function to create a action menu item
  *
  *
- * @param  {Object} props
+ * @param {Object}props
  * See propTypes for specific props and types
  *
  * @returns {component}

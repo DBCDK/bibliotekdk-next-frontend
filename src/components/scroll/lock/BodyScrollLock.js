@@ -56,7 +56,7 @@ function scrollLock(shouldLockScroll) {
 /**
  * The Component function
  *
- * @param  {Object} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
  * @returns {component}

@@ -27,8 +27,8 @@ let firstAccordionRender = true;
 /**
  * The Component function
  *
- * @param  {Object} props
- * @param  {Object} props.title
+ * @param {Object} props
+ * @param {Object} props.title
  * @param {ReactElement|function|string} props.children
  * @param {string} props.eventKey (required!)
  * See propTypes for specific props and types
@@ -210,8 +210,8 @@ export function AccordionSkeleton({ className }) {
 /**
  * The Component function
  *
- * @param  {Object} props
- * @param  {Object} props.data
+ * @param {Object} props
+ * @param {Object} props.data
  * @param {string} props.className
  * @param {string|string[]} props.defaultActiveKey mount section as open on the current index/key
  * See propTypes for specific props and types
