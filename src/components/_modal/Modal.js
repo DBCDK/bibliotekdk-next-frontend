@@ -513,7 +513,7 @@ export function useModal() {
       const entry = {
         id,
         context,
-        active: true, //if true, render is smooth, but doesnt open order modal after login
+        active: true,
         uid: createPageUID(),
       };
 
