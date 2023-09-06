@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
@@ -196,11 +196,13 @@ export function UserParamsForm({
 
 /**
  *  Shows login formular for FFU libraries without adgangsplatform login.
- * @param {obj} branch
- * @param {func} onSubmit
- * @param {obj} skeleton
- * @param {obj} initial
- * @param {obj} context
+ * @param {Object} branch
+ * @param {function} onSubmit
+ * @param {Object} skeleton
+ * @param {Object} initial
+ * @param {Object} context
+ * @param {boolean} storeLoanerInfo
+ * @param {function} setStoreLoanerInfo
  * @returns JSX element
  */
 export function LoanerForm({
@@ -301,7 +303,35 @@ export default function Wrap(props) {
 
   const branch = data?.branches?.result?.[0];
 
-  const { loanerInfo, updateLoanerInfo } = useUser();
+  const { loanerInfo, updateLoanerInfo, deleteSessionData } = useUser();
+
+  //remove userdata when modal is closed - if user doesnt want to store data
+  useEffect(() => {
+    if (modal?.isVisible === false) {
+      deleteUserDataFromSession();
+    }
+  }, [modal?.isVisible]);
+
+  //remove userdata when window is closed - if user doesnt want to store data
+  useEffect(() => {
+    window.addEventListener("beforeunload", deleteUserDataFromSession);
+    return () => {
+      window.removeEventListener("beforeunload", deleteUserDataFromSession);
+    };
+  }, [JSON.stringify(loanerInfo)]);
+
+  /**
+   * We remove session data for libraries without loanercheck
+   * if user doesnt want to store data for next order.
+   * This can be relevant on public computers, when user forgets to close the browser window
+   * we dont do this for authenticated users,
+   * because we they have a logout button to remove session data.
+   */
+  function deleteUserDataFromSession() {
+    if (!storeLoanerInfo) {
+      deleteSessionData();
+    }
+  }
 
   async function onSubmit(info) {
     await updateLoanerInfo({
