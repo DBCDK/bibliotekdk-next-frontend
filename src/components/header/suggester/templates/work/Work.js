@@ -11,7 +11,7 @@ import styles from "./Work.module.css";
  *
  *
  * @param {string} className
- * @param {boolean} skeleton
+ * @param  {boolean} skeleton
  * @param {object} data
  * See propTypes for specific props and types
  *

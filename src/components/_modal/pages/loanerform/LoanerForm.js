@@ -201,7 +201,7 @@ export function UserParamsForm({
  * @param {Object} skeleton
  * @param {Object} initial
  * @param {Object} context
- * @param {boolean} storeLoanerInfo
+ * @param  {boolean} storeLoanerInfo
  * @param {function} setStoreLoanerInfo
  * @returns JSX element
  */

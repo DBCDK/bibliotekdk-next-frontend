@@ -150,7 +150,7 @@ export function setTranslations(translations) {
  *  [5] => "In cart: %s" = "In cart: 5"
  *  [3, books] => "Order %s %s" = "Order 3 books"
  *
- * @param {boolean} props.renderAsHtml
+ * @param  {boolean} props.renderAsHtml
  * The translated json text can be rendered as html.
  * Html tags can be set in the json translations,
  * but also passed as variabels.
@@ -185,7 +185,7 @@ export function setTranslations(translations) {
  * @param {string} props.context
  * @param {string} props.label
  * @param {array} props.vars
- * @param {boolean} props.renderAsHtml
+ * @param  {boolean} props.renderAsHtml
  * See propTypes for specific props and types
  *
  * @returns {string}

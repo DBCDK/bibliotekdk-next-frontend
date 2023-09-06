@@ -21,7 +21,7 @@ import styles from "./AnimationLine.module.css";
  *  }
  *
  * @param {string} className
- * @param {boolean} keepVisible
+ * @param  {boolean} keepVisible
  * See propTypes for specific props and types
  *
  * @returns {component}
