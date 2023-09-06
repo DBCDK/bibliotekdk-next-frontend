@@ -36,7 +36,7 @@ import useWindowSize from "@/components/hooks/useWindowSize";
  * @param {boolean} hasQuery dont show loading skeleton if there is no query / before user has typed anything
  * @param {boolean} isLoading
  * @param includeArrows
- * @param {Object}modal
+ * @param {Object} modal
  * @param {Object} context
  * @param {string} title
  */
