@@ -179,12 +179,14 @@ export default function OrderHistoryPage() {
           </tbody>
         </table>
       )}
-      <Pagination
-        className={styles.pagination}
-        numPages={totalPages}
-        currentPage={parseInt(currentPage, 10)}
-        onChange={onPageChange}
-      />
+      {totalPages > 0 && (
+        <Pagination
+          className={styles.pagination}
+          numPages={totalPages}
+          currentPage={parseInt(currentPage, 10)}
+          onChange={onPageChange}
+        />
+      )}
     </Layout>
   );
 }
