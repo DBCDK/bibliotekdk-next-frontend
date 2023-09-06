@@ -26,6 +26,7 @@ import {
   handleOrderMutationUpdates,
 } from "@/components/profile/utils";
 import useUser from "@/components/hooks/useUser";
+import Spinner from "react-bootstrap/Spinner";
 
 const DynamicContentLoan = ({ dueDateString, dataCyPrefix }) => {
   const { isCountdown, isOverdue, dateString, daysToDueDateString } =
@@ -173,6 +174,7 @@ const Material = ({ context }) => {
   const loanMutation = useMutate();
   const [renewed, setRenewed] = useState(false);
   const [hasRenewError, setHasRenewError] = useState(false);
+  const [isRenewing, setIsRenewing] = useState(false); // For spinner usage
 
   const [renewedDueDateString, setRenewedDueDateString] = useState(null);
   const { updateUserStatusInfo } = useUser();
@@ -232,11 +234,13 @@ const Material = ({ context }) => {
   };
 
   async function handleClickRenew() {
-    handleRenewLoan({
+    setIsRenewing(true);
+    await handleRenewLoan({
       loanId: materialId,
       agencyId,
       loanMutation,
     });
+    setIsRenewing(false);
   }
 
   /**
@@ -263,7 +267,18 @@ const Material = ({ context }) => {
                 e.key === "Enter" && handleClickRenew();
               }}
             >
-              {Translate({ context: "profile", label: "renew" })}
+              {isRenewing ? (
+                <Spinner
+                  animation="border"
+                  role="status"
+                  variant="light"
+                  className={styles.spinner}
+                >
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              ) : (
+                Translate({ context: "profile", label: "renew" })
+              )}
             </MaterialRowButton>
             <AfterRenewMessage
               hasRenewError={hasRenewError}
