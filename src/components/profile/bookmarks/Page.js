@@ -10,12 +10,16 @@ import { useEffect, useState } from "react";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
 import ProfileLayout from "../profileLayout/ProfileLayout";
 import Translate from "@/components/base/translate";
+import NavigationDropdown from "@/components/base/dropdown/menu";
+import MenuDropdown from "@/components/base/dropdown/menuDropdown/MenuDropdown";
 
 const CONTEXT = "bookmark";
+const MENUITEMS = ["Hent referencer", "Bestil flere", "Fjern flere"];
 
 const BookmarkPage = () => {
   const { bookmarks: bookmarkCookies } = useBookmarks();
   const { data } = usePopulateBookmarks(bookmarkCookies);
+  const [activeStickyButton, setActiveStickyButton] = useState(null);
   const bookmarks = data?.works.filter((n) => n);
   const [checkboxList, setCheckboxList] = useState();
 
@@ -35,6 +39,21 @@ const BookmarkPage = () => {
       setCheckboxList(checkboxList.map((el) => ({ ...el, isSelected: false })));
   };
 
+  const onDropdownClick = (idx) => {
+    setActiveStickyButton(idx);
+  };
+
+  const getStickyButtonText = () => {
+    switch (activeStickyButton) {
+      case 0:
+        return "Bestil";
+      case 1:
+        return "Hent referencer";
+      case 2:
+        return "Fjern";
+    }
+  };
+
   const isAllSelected =
     checkboxList?.filter((e) => e.isSelected === false).length === 0;
   const isNothingSelected =
@@ -47,6 +66,18 @@ const BookmarkPage = () => {
         label: "page-title",
       })}
     >
+      <div className={styles.dropdownWrapper}>
+        <MenuDropdown options={MENUITEMS} onItemClick={onDropdownClick} />
+      </div>
+
+      {activeStickyButton && (
+        <div className={styles.stickyButtonContainer}>
+          <Button type="primary" className={styles.stickyButton}>
+            {getStickyButtonText()}
+          </Button>
+        </div>
+      )}
+
       <div className={styles.sortingRow}>
         <Text tag="small" type="small" className={styles.smallLabel}>
           {bookmarks?.length}{" "}

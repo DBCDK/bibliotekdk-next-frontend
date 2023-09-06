@@ -1,0 +1,33 @@
+.container {
+  position: relative;
+}
+
+.menu {
+  position: absolute;
+  top: var(--pt5);
+  background-color: white;
+  z-index: 5;
+  border: 1px solid var(--dove);
+  border-bottom: 0;
+  right: 0;
+}
+
+.menu:not(.menu_open) {
+  display: none;
+}
+
+.menu:last-child() {
+  border-bottom: 0;
+}
+
+.menuitem {
+  width: 200px;
+  padding: var(--pt1) var(--pt2);
+  border-bottom: 1px solid var(--dove);
+}
+
+.menuitem:focus-visible,
+.menuitem:hover {
+  outline: 1px solid var(--blue);
+  background-color: var(--concrete);
+}
