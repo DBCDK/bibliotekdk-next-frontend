@@ -22,8 +22,8 @@ const ALBERT_GLASSES_HAPPY =
 const ALBERT_SUNGLASSES =
   "https://media2.giphy.com/media/iZkua1UPocHgQ/giphy.gif?cid=ecf05e47ieljpdcxou6moh7win2cmyreti0ixwdmzz6awg8a&ep=v1_gifs_search&rid=giphy.gif&ct=g";
 
-const ALBERT_READING =
-  "https://media2.giphy.com/media/n3HzrBo2TxjkQ/giphy.gif?cid=ecf05e472bf2jxquwygbr36wr49pd0ed72jgglh1sdb67pt1&ep=v1_gifs_related&rid=giphy.gif&ct=g";
+// const ALBERT_READING =
+//   "https://media2.giphy.com/media/n3HzrBo2TxjkQ/giphy.gif?cid=ecf05e472bf2jxquwygbr36wr49pd0ed72jgglh1sdb67pt1&ep=v1_gifs_related&rid=giphy.gif&ct=g";
 
 const ALBERT_LOADING_MESSAGES = [
   "Analyzing... my dear interlocutor, much like the universe, your query presents itself as a delightful enigma awaiting unraveling.",
