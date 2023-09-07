@@ -1,9 +1,11 @@
 import OpenAI from "openai";
+import { HttpsProxyAgent } from "https-proxy-agent";
 import getConfig from "next/config";
 const config = getConfig();
 
 const openai = new OpenAI({
   apiKey: config.serverRuntimeConfig.openAIKey,
+  httpAgent: new HttpsProxyAgent("http://dmzproxy.dbc.dk:3128"),
 });
 
 const PROMPT_INTENT = `As a seasoned expert in deciphering user search queries on a website, your task is to discern and elucidate the core objective behind the user's search query, offering a comprehensive and succinct understanding.
