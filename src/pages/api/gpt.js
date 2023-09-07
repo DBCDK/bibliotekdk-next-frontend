@@ -127,6 +127,10 @@ export default async function handler(req, res) {
           ${str}`,
       });
       totalTokens += evaluation.usage.total_tokens;
+      const check = intent.response.join("\n").toLowerCase();
+      evaluation.response = evaluation.response.filter((row) =>
+        check.includes(row.aspect.toLowerCase())
+      );
       return {
         item: str,
         evaluation,

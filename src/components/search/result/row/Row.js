@@ -137,9 +137,13 @@ export default function ResultRow({
           top: 24,
         }}
       >
-        <p style={{ fontSize: 14, paddingBottom: 8 }}>{gpt?.item}</p>
+        {/* <p style={{ fontSize: 14, paddingBottom: 8 }}>{gpt?.item}</p> */}
         {gpt?.evaluation?.response?.map((r) => {
-          return <p key={r.aspect}>{r.reason}</p>;
+          return (
+            <p key={r.aspect}>
+              {r.aspect} {r.reason} {r.score}
+            </p>
+          );
         })}
       </div>
       <Link
