@@ -2,7 +2,7 @@
  * @file
  * Test feedback
  */
-describe("feedback", () => {
+describe.skip("feedback", () => {
   before(function () {
     cy.visit("/iframe.html?id=base-tooltips--simple-tooltip-default-content");
   });

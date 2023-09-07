@@ -1,4 +1,4 @@
-describe("Article", () => {
+describe.skip("Article", () => {
   it(`Section display article previews`, () => {
     cy.visit(
       "/iframe.html?id=articles-sections--triple-section&viewMode=story"

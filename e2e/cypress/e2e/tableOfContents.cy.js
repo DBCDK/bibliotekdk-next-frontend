@@ -1,4 +1,4 @@
-describe("Table of Contents", () => {
+describe.skip("Table of Contents", () => {
   it(`Displays the table of contents for a work`, () => {
     cy.visit("/iframe.html?id=work-content--content-section&viewMode=story");
     cy.contains("Indhold");

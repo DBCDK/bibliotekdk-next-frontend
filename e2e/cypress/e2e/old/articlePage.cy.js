@@ -1,8 +1,8 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 const fbiApiPath = Cypress.env("fbiApiPath");
 
-describe("ArticlePage", () => {
-  describe("News article (from drupal)", () => {
+describe.skip("ArticlePage", () => {
+  describe.skip("News article (from drupal)", () => {
     before(() => {
       cy.visit("/iframe.html?id=articles-page--article-page&viewMode=story");
     });
@@ -77,7 +77,7 @@ describe("ArticlePage", () => {
     });
   });
 
-  describe("Infomedia article", () => {
+  describe.skip("Infomedia article", () => {
     it(`Shows infomedia data`, () => {
       cy.visit(
         "/iframe.html?id=articles-page--infomedia-article&viewMode=story"

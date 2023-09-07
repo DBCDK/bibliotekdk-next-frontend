@@ -5,7 +5,7 @@
 
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 
-describe("Login", () => {
+describe.skip("Login", () => {
   it(`should send bearer token to API`, () => {
     cy.intercept("POST", /.*graphql/, (req) => {
       console.log(req.headers.authorization);

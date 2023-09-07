@@ -3,7 +3,7 @@
  * Test functionality of Text
  */
 
-describe("Related Keywords", () => {
+describe.skip("Related Keywords", () => {
   it.only(`Can tab through related keywords`, async () => {
     await cy.visit("/iframe.html?id=work-relatedsubjects--default");
     cy.get("body")

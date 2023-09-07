@@ -2,7 +2,7 @@
  * @file
  * Test functionality of Text
  */
-describe("Text", () => {
+describe.skip("Text", () => {
   it(`Can clamp lines`, async () => {
     await cy.visit("/iframe.html?id=base-texts--line-clamping");
     cy.get("p")

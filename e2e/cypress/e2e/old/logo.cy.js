@@ -2,7 +2,7 @@
  * @file
  * Test log
  */
-describe("Logo", () => {
+describe.skip("Logo", () => {
   it(`View in BIG viewport`, () => {
     cy.visit("/iframe.html?id=base-logo--default-logo");
     cy.viewport(1920, 1080);

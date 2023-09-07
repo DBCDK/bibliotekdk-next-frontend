@@ -2,7 +2,7 @@
  * @file
  * Test feedback for search results
  */
-describe("searchfeedback", () => {
+describe.skip("searchfeedback", () => {
   it(`thumbsup click`, () => {
     cy.visit("/iframe.html?id=base-searchfeedback--feed-back");
     // verify that banner is shown

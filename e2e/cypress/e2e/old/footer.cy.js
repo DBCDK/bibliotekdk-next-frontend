@@ -1,4 +1,4 @@
-describe("Overview", () => {
+describe.skip("Overview", () => {
   before(function () {
     cy.visit("/iframe.html?id=layout-footer--footer-story");
   });

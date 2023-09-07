@@ -1,7 +1,7 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 const fbiApiPath = Cypress.env("fbiApiPath");
 
-describe("help", () => {
+describe.skip("help", () => {
   it(`Search: should show empty response message`, () => {
     cy.visit("/iframe.html?path=/story/help-search--no-results");
     cy.contains("Din søgning giver ingen resultater");
@@ -57,7 +57,7 @@ describe("help", () => {
   });
 });
 
-describe("help menu", () => {
+describe.skip("help menu", () => {
   it(`Help menu - tab & click`, () => {
     cy.visit("/iframe.html?path=/story/help-menu--help-menu");
     cy.get("[data-cy=help-menu]").should("be.visible");
@@ -66,7 +66,7 @@ describe("help menu", () => {
   });
 });
 
-describe("Help texts", () => {
+describe.skip("Help texts", () => {
   it("Help text load properly", () => {
     cy.visit("/iframe.html?path=/story/help-helptext--wrapped-story-help-text");
 

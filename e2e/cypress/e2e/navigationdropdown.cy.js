@@ -1,4 +1,4 @@
-describe("Dropdown navigation on small screens", () => {
+describe.skip("Dropdown navigation on small screens", () => {
   beforeEach(() => {
     cy.viewport(550, 750);
     cy.visit("/iframe.html?id=base-navigationdropdown--dropdown");

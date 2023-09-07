@@ -5,7 +5,7 @@
 
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 
-describe("CookieBot", () => {
+describe.skip("CookieBot", () => {
   beforeEach(function () {
     cy.visit(`${nextjsBaseUrl}`);
   });

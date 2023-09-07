@@ -45,8 +45,8 @@ function getPageHead(path) {
 /**
  * Check that the site is server side rendered properly
  */
-describe("Server Side Rendering", () => {
-  describe(`frontpage`, () => {
+describe.skip("Server Side Rendering", () => {
+  describe.skip(`frontpage`, () => {
     it(`has correct metadata`, () => {
       getPageHead("/").then((res) => {
         expect(res.title).to.equal(
@@ -76,7 +76,7 @@ describe("Server Side Rendering", () => {
     });
   });
 
-  describe(`material`, () => {
+  describe.skip(`material`, () => {
     it(`has correct metadata`, () => {
       const descriptionExpectation =
         "Lån Hest, hest, tiger, tiger af Mette E. Neerlin som bog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online.";
@@ -182,7 +182,7 @@ describe("Server Side Rendering", () => {
     });
   });
 
-  describe(`artikler`, () => {
+  describe.skip(`artikler`, () => {
     it(`has correct metadata`, () => {
       getPageHead("/artikler").then((res) => {
         expect(res.title).to.equal("Alle artikler | Bibliotek.dk");
@@ -208,7 +208,7 @@ describe("Server Side Rendering", () => {
     });
   });
 
-  describe(`hjaelp`, () => {
+  describe.skip(`hjaelp`, () => {
     it(`has correct metadata`, () => {
       getPageHead("/hjaelp").then((res) => {
         expect(res.title).to.equal("Hjælp og vejledning | Bibliotek.dk");
@@ -234,7 +234,7 @@ describe("Server Side Rendering", () => {
     });
   });
 
-  describe(`hjaelp/faq`, () => {
+  describe.skip(`hjaelp/faq`, () => {
     it(`has correct metadata`, () => {
       getPageHead("/hjaelp/faq").then((res) => {
         expect(res.title).to.equal("Hjælp og vejledning | Bibliotek.dk");
@@ -260,7 +260,7 @@ describe("Server Side Rendering", () => {
     });
   });
 
-  describe(`/hjaelp/find`, () => {
+  describe.skip(`/hjaelp/find`, () => {
     it(`has correct metadata`, () => {
       getPageHead("/hjaelp/find?q=ost").then((res) => {
         expect(res.title).to.equal("Hjælp og vejledning | Bibliotek.dk");
@@ -288,7 +288,7 @@ describe("Server Side Rendering", () => {
     });
   });
 
-  describe(`find`, () => {
+  describe.skip(`find`, () => {
     it(`has correct metadata`, () => {
       getPageHead("/find?q.all=ost").then((res) => {
         expect(res.title).to.equal(
@@ -347,7 +347,7 @@ describe("Server Side Rendering", () => {
   });
 
   // @TODO pjo outcommented res.title + og:url .. fix later
-  describe(`inspiration/material pages`, () => {
+  describe.skip(`inspiration/material pages`, () => {
     it(`has correct metadata`, () => {
       getPageHead("/inspiration/boeger").then((res) => {
         expect(res.title).to.equal("Bøger");

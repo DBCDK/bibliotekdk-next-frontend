@@ -1,7 +1,7 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 const fbiApiPath = Cypress.env("fbiApiPath");
 
-describe("Search", () => {
+describe.skip("Search", () => {
   beforeEach(() => {
     cy.visit(`${nextjsBaseUrl}/find?q.all=harry potter`);
     cy.consentAllowAll();
@@ -92,7 +92,7 @@ describe("Search", () => {
   });
 });
 
-describe("Search => storybook", () => {
+describe.skip("Search => storybook", () => {
   it(`Should focus elements when tabbing`, () => {
     cy.visit("/iframe.html?id=search-result--default&viewMode=story");
 

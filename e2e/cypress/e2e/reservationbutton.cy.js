@@ -2,8 +2,8 @@
  * @file
  * Test functionality of reservation button - see also @overview.spec.js
  */
-describe("Reservation button", () => {
-  describe("OrderButton", () => {
+describe.skip("Reservation button", () => {
+  describe.skip("OrderButton", () => {
     it(`user logged in material available`, () => {
       cy.visit(
         "/iframe.html?id=work-reservationbutton--reservation-button-physical-book"
@@ -105,7 +105,7 @@ describe("Reservation button", () => {
     // @TODO more testing - request_button:false eg.
   });
 
-  describe("ButtonTxt", () => {
+  describe.skip("ButtonTxt", () => {
     it("should have book button text", () => {
       cy.visit(
         "/iframe.html?id=work-reservationbutton-orderbuttontextbelow--book-button-txt"

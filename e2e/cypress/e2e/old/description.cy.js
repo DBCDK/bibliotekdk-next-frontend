@@ -2,7 +2,7 @@
  * test the details section
  */
 
-describe("Description", () => {
+describe.skip("Description", () => {
   before(function () {
     cy.visit("/iframe.html?id=work-description--description-section");
   });

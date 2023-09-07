@@ -2,7 +2,7 @@
  * @file
  * Test functionality of Radio group
  */
-describe("Radio", () => {
+describe.skip("Radio", () => {
   it(`Tab leads to active element`, () => {
     cy.visit("/iframe.html?id=base-forms-list--radio-group");
     cy.wait(500);

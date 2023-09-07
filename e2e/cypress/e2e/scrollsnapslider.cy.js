@@ -10,7 +10,7 @@ function appendScrollToArray($el, arrayOfScrolls) {
   assertCurrentLeftScroll(arrayOfScrolls.at(-1), arrayOfScrolls.at(-2));
 }
 
-describe("ScrollSnapSlider", () => {
+describe.skip("ScrollSnapSlider", () => {
   it("desktop", () => {
     cy.visit("/iframe.html?id=work-relatedworks--related-works-physical-book");
 

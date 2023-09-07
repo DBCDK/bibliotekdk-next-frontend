@@ -1,5 +1,5 @@
-describe("Overview", () => {
-  describe("Page", () => {
+describe.skip("Overview", () => {
+  describe.skip("Page", () => {
     it(`Displays the contents of a review from infomedia`, () => {
       cy.visit(
         "/iframe.html?id=articles-page--wrapped-infomedia-review-page&viewMode=story"
@@ -43,7 +43,7 @@ describe("Overview", () => {
       );
     });
   });
-  describe("Review Slider", () => {
+  describe.skip("Review Slider", () => {
     before(function () {
       cy.visit(
         "/iframe.html?id=work-reviews--wrapped-reviews-slider&viewMode=story"

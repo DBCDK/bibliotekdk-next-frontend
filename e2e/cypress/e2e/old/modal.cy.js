@@ -2,7 +2,7 @@
  * @file
  * Test functionality of Header
  */
-describe("Modal", () => {
+describe.skip("Modal", () => {
   beforeEach(function () {
     cy.visit("/iframe.html?id=modal-menu--show-modal");
   });

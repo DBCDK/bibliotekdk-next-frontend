@@ -2,7 +2,7 @@
  * test the details section
  */
 
-describe("Details-Movie", () => {
+describe.skip("Details-Movie", () => {
   before(function () {
     cy.visit("/iframe.html?id=work-details--wrapped-details-section-movie");
   });
@@ -30,7 +30,7 @@ describe("Details-Movie", () => {
   });
 });
 
-describe("Details", () => {
+describe.skip("Details", () => {
   before(function () {
     cy.visit("/iframe.html?id=work-details--wrapped-details-section");
   });

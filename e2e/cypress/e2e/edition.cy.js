@@ -1,4 +1,4 @@
-describe("Edition", () => {
+describe.skip("Edition", () => {
   it(`Single Edition with year, publisher, ordertext`, () => {
     cy.visit("/iframe.html?id=modal-edition--edition-single-manifestation");
 

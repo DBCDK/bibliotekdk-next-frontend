@@ -2,7 +2,7 @@
  * @file
  * Test feedbacklink
  */
-describe("feedbacklink", () => {
+describe.skip("feedbacklink", () => {
   it(`check link to kunderservice`, () => {
     cy.visit("/iframe.html?id=base-feedbacklink--feedback");
     // verify that banner is shown

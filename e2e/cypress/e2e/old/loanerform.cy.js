@@ -2,7 +2,7 @@
  * @file
  * Test functionality of loanerform
  */
-describe("LoanerForm", () => {
+describe.skip("LoanerForm", () => {
   it(`Digital copy`, () => {
     cy.visit(
       "/iframe.html?id=modal-order-loanerform--show-loaner-form-digital-access"

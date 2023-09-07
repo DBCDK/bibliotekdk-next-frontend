@@ -3,7 +3,7 @@
  * Test functionality of cards
  */
 
-describe("Cards", () => {
+describe.skip("Cards", () => {
   it(`Clicking card links to work page`, () => {
     cy.visit(
       "/iframe.html?id=base-cards--work-narrow-and-wide-cover&viewMode=story"

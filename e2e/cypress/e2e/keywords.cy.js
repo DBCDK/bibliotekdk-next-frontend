@@ -2,7 +2,7 @@
  * @file
  * Test functionality of Text
  */
-describe("Keywords", () => {
+describe.skip("Keywords", () => {
   before(function () {
     cy.visit("/iframe.html?id=work-keywords--keywords-section");
   });

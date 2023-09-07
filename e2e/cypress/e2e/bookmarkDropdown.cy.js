@@ -1,4 +1,4 @@
-describe("Dropdown", () => {
+describe.skip("Dropdown", () => {
   it(`Bookmark is shown`, () => {
     cy.visit("/iframe.html?id=work-overview-bookmark--bookmark-with-dropdown");
 

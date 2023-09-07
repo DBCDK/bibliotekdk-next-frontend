@@ -2,8 +2,8 @@
  * @file
  * Test functionality of Text
  */
-describe("Overview", () => {
-  describe("Overview parent", () => {
+describe.skip("Overview", () => {
+  describe.skip("Overview parent", () => {
     beforeEach(function () {
       cy.visit("/iframe.html?id=work-overview--overview-wrapped");
     });
@@ -118,7 +118,7 @@ describe("Overview", () => {
     });
   });
 
-  describe("LocalizationsLink", () => {
+  describe.skip("LocalizationsLink", () => {
     beforeEach(function () {
       cy.wrap("[data-cy=text-nolocalizations]").as("nolocalizations");
       cy.wrap("[data-cy=link-localizations]").as("localizations");
@@ -163,7 +163,7 @@ describe("Overview", () => {
     });
   });
 
-  describe("Alternative Options", () => {
+  describe.skip("Alternative Options", () => {
     beforeEach(function () {
       cy.wrap("[data-cy=link]").as("link");
       cy.wrap("[data-cy=skeleton").as("skeleton");

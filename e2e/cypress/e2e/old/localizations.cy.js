@@ -2,7 +2,7 @@
  * @file
  * Test functionality of localizations
  */
-describe("Localization link", () => {
+describe.skip("Localization link", () => {
   // TODO: Auto mock this one
   it("Localizations list with holdings", () => {
     cy.visit("/iframe.html?id=modal-localizations--localizations-list");

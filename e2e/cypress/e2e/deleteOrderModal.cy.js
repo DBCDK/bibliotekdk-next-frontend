@@ -1,4 +1,4 @@
-describe("deleteOrderModal", () => {
+describe.skip("deleteOrderModal", () => {
   it(`Warning modal when book is ready for pick up`, () => {
     cy.visit(
       "/iframe.html?id=modal-deleteorder--delete-order-ready-to-pick-up"

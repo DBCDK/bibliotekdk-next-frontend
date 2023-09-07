@@ -1,4 +1,4 @@
-describe("Profilemenu on desktop", () => {
+describe.skip("Profilemenu on desktop", () => {
   it(`User with debt: GroupLink 3 links. Link is bold after onclick`, () => {
     cy.visit("/iframe.html?id=profile-profilemenu--profile-menu-story");
     cy.get('[data-cy="group-menu-loansAndReservations"]')

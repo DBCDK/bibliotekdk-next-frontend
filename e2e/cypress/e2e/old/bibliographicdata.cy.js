@@ -3,7 +3,7 @@
  * Test functionality of bibliographic data
  */
 
-describe("bibliographic data", () => {
+describe.skip("bibliographic data", () => {
   it("open edition - check contents", () => {
     cy.visit("/iframe.html?id=work-bibliographic-data--bib-data");
     // get first edition

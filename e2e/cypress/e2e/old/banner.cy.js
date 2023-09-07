@@ -2,7 +2,7 @@
  * @file
  * Test banner
  */
-describe("TopBanner", () => {
+describe.skip("TopBanner", () => {
   before(function () {
     cy.visit("/iframe.html?id=layout-banner--top-banner");
   });

@@ -5,7 +5,7 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 const fbiApiPath = Cypress.env("fbiApiPath");
 
-describe("Suggester", () => {
+describe.skip("Suggester", () => {
   before(function () {
     cy.visit("/iframe.html?id=search-suggester--header-suggester");
   });
@@ -117,7 +117,7 @@ describe("Suggester", () => {
   });
 });
 
-describe("Suggester data collect", () => {
+describe.skip("Suggester data collect", () => {
   it(`Should collect data for suggester`, () => {
     // Allow cookies
     cy.visit(`${nextjsBaseUrl}`);

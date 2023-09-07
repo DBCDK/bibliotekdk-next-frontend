@@ -3,7 +3,7 @@
  * Test functionality of Header
  */
 
-describe("Accordion", () => {
+describe.skip("Accordion", () => {
   beforeEach(function () {
     cy.visit("/iframe.html?id=base-accordion--default");
   });

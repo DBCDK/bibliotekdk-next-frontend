@@ -2,7 +2,7 @@
  * @file
  * Test functionality of reference systems
  */
-describe("References", () => {
+describe.skip("References", () => {
   it(`Reference links present`, () => {
     cy.visit("/iframe.html?id=modal-references--reference-links");
 

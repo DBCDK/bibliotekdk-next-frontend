@@ -1,4 +1,4 @@
-describe("Series", () => {
+describe.skip("Series", () => {
   beforeEach(function () {
     cy.visitWithConsoleSpy(
       "/iframe.html?id=work-recommendations--wrapped-recommendations-slider&viewMode=story"

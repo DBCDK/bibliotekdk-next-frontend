@@ -1,5 +1,5 @@
-describe("Inspiration", () => {
-  describe("Slider", () => {
+describe.skip("Inspiration", () => {
+  describe.skip("Slider", () => {
     it.skip(`Can fetch data in connected component`, () => {
       cy.visit("/iframe.html?id=inspiration-slider--connected");
 

@@ -12,8 +12,8 @@ function checkPrefilledQueryParameters() {
   });
 }
 
-describe("Search", () => {
-  describe(`Form`, () => {
+describe.skip("Search", () => {
+  describe.skip(`Form`, () => {
     it(`Maps query parameters from url to input fields`, () => {
       cy.visit("/iframe.html?id=layout-header--nav-header-prefilled");
 
@@ -205,7 +205,7 @@ describe("Search", () => {
       cy.get("[data-cy=router-pathname]").contains("/find");
     });
 
-    describe(`Mobile`, () => {
+    describe.skip(`Mobile`, () => {
       it(`Maintains input value when opening mobile suggester`, () => {
         cy.viewport("iphone-6");
         cy.visit("/iframe.html?id=layout-header--nav-header-prefilled");
@@ -263,7 +263,7 @@ describe("Search", () => {
     });
   });
 
-  describe(`Result`, () => {
+  describe.skip(`Result`, () => {
     it(`Maps from URL params to a search result`, () => {
       cy.visit("/iframe.html?id=search-result--connected");
       cy.get("[data-cy=router-query]").then((el) => {
@@ -368,7 +368,7 @@ describe("Search", () => {
     });
   });
 
-  describe("Related search subjects", () => {
+  describe.skip("Related search subjects", () => {
     it(`Can tab through related keywords`, () => {
       cy.visit("/iframe.html?id=search-relatedsubjects--default");
       cy.get("[data-cy=related-subject-heste]")

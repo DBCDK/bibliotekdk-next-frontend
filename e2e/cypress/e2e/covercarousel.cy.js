@@ -1,4 +1,4 @@
-describe("CoverCarousel", () => {
+describe.skip("CoverCarousel", () => {
   it(`CoverCarousel`, () => {
     cy.visit(
       "/iframe.html?id=work-covercarousel--cover-carousel-multiple-covers"

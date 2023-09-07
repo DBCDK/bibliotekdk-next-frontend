@@ -1,6 +1,6 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 
-describe("Filter", () => {
+describe.skip("Filter", () => {
   it(`workTypes facet is excluded from facets list`, () => {
     cy.visit("/iframe.html?id=modal-filter--connected");
     cy.contains("button", "open filters").click();

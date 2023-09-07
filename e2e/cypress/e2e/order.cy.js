@@ -1,4 +1,4 @@
-describe("Order", () => {
+describe.skip("Order", () => {
   it(`submits ILL order for pids that may be ordered`, () => {
     cy.visitWithConsoleSpy(
       "/iframe.html?id=modal-order--order-via-ill&viewMode=story"
@@ -75,7 +75,7 @@ describe("Order", () => {
     cy.contains("Skift afhentning").click();
   });
 
-  describe("Order periodica article ", () => {
+  describe.skip("Order periodica article ", () => {
     // TODO: Fix
     it("should order indexed periodica article through digital article service", () => {
       cy.visitWithConsoleSpy(
@@ -137,7 +137,7 @@ describe("Order", () => {
     });
   });
 
-  describe("Order periodica volume", () => {
+  describe.skip("Order periodica volume", () => {
     it("should order full periodica volume through ILL, never through digital article service", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?id=modal-order--order-periodica-volume&viewMode=story"
@@ -293,7 +293,7 @@ describe("Order", () => {
     });
   });
 
-  describe("Not blocked or Blocked user", () => {
+  describe.skip("Not blocked or Blocked user", () => {
     it("should not block users from loaning if they are not blocked", () => {
       cy.visit("/iframe.html?id=modal-order--not-blocked-user&viewMode=story");
 

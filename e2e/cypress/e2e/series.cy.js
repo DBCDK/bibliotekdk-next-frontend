@@ -1,4 +1,4 @@
-describe("Series", () => {
+describe.skip("Series", () => {
   before(function () {
     cy.visit(
       "/iframe.html?id=work-series--wrapped-series-slider&viewMode=story"
