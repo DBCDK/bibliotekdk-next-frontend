@@ -106,6 +106,7 @@ module.exports = {
     jwtSecret: process.env.NEXTAUTH_SECRET,
     disableDrupalTranslate: process.env.DISABLE_DRUPAL_TRANSLATE || false,
     maxError500Count: process.env.MAX_ERROR_COUNT || 2,
+    openAIKey: process.env.OPENAI_KEY_KFU,
   },
   publicRuntimeConfig: {
     cookiebot: {

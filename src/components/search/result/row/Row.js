@@ -104,7 +104,9 @@ export default function ResultRow({
   className = "",
   onClick,
   isLoading,
+  gpt,
 }) {
+  console.log(gpt);
   const creatorsNames = extractCreatorsPrioritiseCorporation(
     work?.creators
   )?.map((creator) => creator.display);
@@ -125,7 +127,21 @@ export default function ResultRow({
   uniqueMaterialTypes.sort(sortMaterialTypesByFilter(materialTypes));
 
   return (
-    <article className={styles.search}>
+    <article className={styles.search} style={{ position: "relative" }}>
+      <div
+        style={{
+          position: "absolute",
+          left: "-400px",
+          fontSize: 14,
+          width: 380,
+          top: 24,
+        }}
+      >
+        <p style={{ fontSize: 14, paddingBottom: 8 }}>{gpt?.item}</p>
+        {gpt?.evaluation?.response?.map((r) => {
+          return <p key={r.aspect}>{r.reason}</p>;
+        })}
+      </div>
       <Link
         a={true}
         border={{ top: { keepVisible: true }, bottom: { keepVisible: true } }}

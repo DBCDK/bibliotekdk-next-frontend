@@ -29,7 +29,7 @@ $container-padding-x: $grid-gutter-width;
 @import "~bootstrap/scss/_containers";
 @import "~bootstrap/scss/_grid";
 // @import "~bootstrap/scss/_tables";
-// @import "~bootstrap/scss/_forms";
+@import "~bootstrap/scss/_forms";
 // @import "~bootstrap/scss/_buttons";
 @import "~bootstrap/scss/_transitions";
 @import "~bootstrap/scss/_dropdown";
@@ -50,7 +50,7 @@ $container-padding-x: $grid-gutter-width;
 @import "~bootstrap/scss/_tooltip";
 @import "~bootstrap/scss/_popover";
 // @import "~bootstrap/scss/_carousel";
-// @import "~bootstrap/scss/_spinners";
+@import "~bootstrap/scss/_spinners";
 // @import "~bootstrap/scss/_offcanvas";
 // @import "~bootstrap/scss/_placeholders";
 
