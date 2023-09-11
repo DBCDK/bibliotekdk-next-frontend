@@ -25,6 +25,18 @@
   display: block;
 }
 
+.dropdownitem:focus {
+  background-color: transparent;
+}
+
+.dropdownitemText {
+  text-transform: capitalize;
+}
+
+.dropdownitemText:hover {
+  font-weight: bold;
+}
+
 .active {
   color: white;
   background-color: var(--blue);
@@ -58,7 +70,8 @@
 
 .dropdownitem:hover {
   color: var(--blue);
-  font-weight: var(--body-font-semibold);
+  font-weight: var(--body-font-medium);
+  background-color: transparent;
 }
 
 .dropdownitem:hover i svg,

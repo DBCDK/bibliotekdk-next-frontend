@@ -103,7 +103,9 @@ export function BookMarkMaterialSelector({
               }}
             >
               <div className={styles.itemContainer}>
-                <Text type="text3">{material}</Text>
+                <Text type="text3" className={styles.dropdownitemText}>
+                  {material}
+                </Text>
 
                 <Icon size={{ w: 3, h: 3 }}>
                   <BookmarkMedium />

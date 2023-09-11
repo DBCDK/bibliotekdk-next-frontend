@@ -42,7 +42,7 @@
 }
 
 .bookmark.selected:hover {
-  background-color: green;
+  border-color: black;
 }
 
 .bookmark.selected {
