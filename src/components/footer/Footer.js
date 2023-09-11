@@ -85,7 +85,7 @@ const ContactLinks = () => {
     // press: { pathname: "/", query: {} },
     contact: { pathname: "/hjaelp/kontakt-os/25", query: {} },
     privacy: {
-      pathname: "/artikel/privatlivspolitik/11",
+      pathname: "/hjaelp/privatlivspolitik-saadan-haandterer-vi-dine-data-/26",
       query: {},
     },
     suppliers: {

@@ -83,6 +83,18 @@
   max-width: 104px;
 }
 
+@media (max-width: 380px) {
+  .col_wrapper {
+    max-width: 120px;
+  }
+}
+
+@media (max-width: 430px) {
+  .col_wrapper {
+    max-width: 200px;
+  }
+}
+
 @media (min-width: 992px) {
   .wrapper:first-child {
     margin-top: 0;

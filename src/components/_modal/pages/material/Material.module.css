@@ -23,11 +23,6 @@
   margin-right: var(--pt1);
 }
 
-.button {
-  width: 48%; /* ca 2 grid columns */
-  margin-bottom: var(--pt4);
-}
-
 .link {
   display: inline-block;
   margin-bottom: var(--pt2);
@@ -59,17 +54,28 @@
   padding-top: var(--pt4);
 }
 
+.button {
+  width: 100%;
+  height: 40px;
+}
+
 .buttonRowWrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 8px;
+  margin-bottom: var(--pt4);
 }
 
 .renewError {
   justify-content: center;
-  margin-bottom: var(--pt4);
-  width: 50%;
+  width: 100%;
+  height: 40px;
+}
+
+.spinner {
+  /* button height minus the paddings */
+  height: var(--pt3);
+  width: var(--pt3);
 }
 
 /* Specificity to override */

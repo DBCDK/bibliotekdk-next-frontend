@@ -1,7 +1,7 @@
 import * as loanMutations from "@/lib/api/loans.mutations";
 
-export function handleRenewLoan({ loanId, agencyId, loanMutation }) {
-  loanMutation.post(
+export async function handleRenewLoan({ loanId, agencyId, loanMutation }) {
+  await loanMutation.post(
     loanMutations.renewLoan({
       loanId,
       agencyId,
