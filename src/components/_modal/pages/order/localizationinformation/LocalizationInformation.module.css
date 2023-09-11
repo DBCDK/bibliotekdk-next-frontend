@@ -55,4 +55,10 @@
   .shortLink {
     display: none;
   }
+
+  .iconLink {
+    width: 40%;
+    justify-content: flex-end;
+    height: var(--pt3); /*one line*/
+  }
 }

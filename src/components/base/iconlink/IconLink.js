@@ -58,7 +58,7 @@ export function IconLink({
         <IconChild
           style={{
             transform: `rotate(${iconOrientation}deg)`,
-            marginTop: "var(--pt025)",
+            display: "flex",
             ...iconStyle,
           }}
         />
