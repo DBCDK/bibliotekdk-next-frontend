@@ -509,7 +509,11 @@ const DEFAULT_STORY_PARAMETERS = {
           submitOrder: (args) => {
             // Used for cypress testing
             console.debug("submitOrder", args?.variables?.input);
-            return { orderId: "some-order-id", status: "OK", ok: true };
+            return {
+              orderId: "some-order-id",
+              status: "OWNED_ACCEPTED",
+              ok: true,
+            };
           },
           submitPeriodicaArticleOrder: (args) => {
             // Used for cypress testing
