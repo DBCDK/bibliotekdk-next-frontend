@@ -34,13 +34,13 @@ function Bookmark({
 
   const selectedClass = selected ? styles.selected : "";
 
-  const context = { context: "bookmark" };
+  const context = { context: "bibliographic-data" };
 
   // Set hover title
   const params =
     title && !skeleton
       ? { label: "title", vars: [title] }
-      : { label: "defaultTitle" };
+      : { label: "bookmark" };
 
   title = translate({ ...context, ...params });
 
