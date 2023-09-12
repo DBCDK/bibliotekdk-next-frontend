@@ -17,12 +17,10 @@ import * as branchesFragments from "@/lib/api/branches.fragments";
  */
 function handleOnSelect(branch, modal, context, updateLoanerInfo) {
   // Selected branch belongs to one of the user's agencies where the user is logged in
-  console.log("AGENCIES ", context.initial?.agencies);
   const alreadyLoggedin = context.initial?.agencies?.find(
     (agency) => agency.result?.[0].agencyId === branch.agencyId
   );
 
-  console.log("SAME ORIGIN ", alreadyLoggedin);
   // New selected branch has borrowercheck
   const hasBorchk = branch.borrowerCheck;
   // if selected branch has same origin as user agency
@@ -208,59 +206,61 @@ export default function PickupSelection(props) {
 
   return (
     <>
-      {/* This only load order policies, does not render anything */}
-      {data?.result
-        ?.filter((branch) => branch.branchId)
-        .map((branch) => {
-          const key = `${branch.branchId}_${pid}`;
-          return (
-            <PolicyLoader
-              key={key}
-              branch={branch}
-              onLoad={(policy) => {
-                loadedOrderPolicies.current[key] = policy;
-                render({});
-              }}
-              pid={pid}
-              requireDigitalAccess={requireDigitalAccess}
-            />
-          );
-        })}
-
-      {orderPossibleBranches.length > 0 && (
-        <List.Group
-          enabled={!isLoading && isVisible}
-          data-cy="list-branches"
-          className={styles.orderPossibleGroup}
-          disableGroupOutline
-        >
-          {orderPossibleBranches.map((branch, idx) => {
+      <>
+        {/* This only load order policies, does not render anything */}
+        {data?.result
+          ?.filter((branch) => branch.branchId)
+          .map((branch) => {
+            const key = `${branch.branchId}_${pid}`;
             return (
-              <Row
-                key={`${branch.branchId}-${idx}`}
+              <PolicyLoader
+                key={key}
                 branch={branch}
-                selected={selected}
-                onSelect={(branch) =>
-                  handleOnSelect(branch, modal, context, updateLoanerInfo)
-                }
-                modal={modal}
-                isLoading={isLoading}
-                includeArrows={includeArrows}
+                onLoad={(policy) => {
+                  loadedOrderPolicies.current[key] = policy;
+                  render({});
+                }}
+                pid={pid}
+                requireDigitalAccess={requireDigitalAccess}
               />
             );
           })}
-        </List.Group>
-      )}
-      {!allPoliciesLoaded && (
-        <Text type="text2" className={styles.loadingText}>
-          {Translate({ context: "order", label: "check-policy-loading" })}
-        </Text>
-      )}
-      {hasMoreMessage && (
-        <Text type="text2" className={styles.loadingText}>
-          {hasMoreMessage}
-        </Text>
-      )}
+
+        {orderPossibleBranches.length > 0 && (
+          <List.Group
+            enabled={!isLoading && isVisible}
+            data-cy="list-branches"
+            className={styles.orderPossibleGroup}
+            disableGroupOutline
+          >
+            {orderPossibleBranches.map((branch, idx) => {
+              return (
+                <Row
+                  key={`${branch.branchId}-${idx}`}
+                  branch={branch}
+                  selected={selected}
+                  onSelect={(branch) =>
+                    handleOnSelect(branch, modal, context, updateLoanerInfo)
+                  }
+                  modal={modal}
+                  isLoading={isLoading}
+                  includeArrows={includeArrows}
+                />
+              );
+            })}
+          </List.Group>
+        )}
+        {!allPoliciesLoaded && (
+          <Text type="text2" className={styles.loadingText}>
+            {Translate({ context: "order", label: "check-policy-loading" })}
+          </Text>
+        )}
+        {hasMoreMessage && (
+          <Text type="text2" className={styles.loadingText}>
+            {hasMoreMessage}
+          </Text>
+        )}
+      </>
       {orderNotPossibleBranches.length > 0 && (
         <>
           <Text type="text1" className={styles.pickupNotAllowedTitle}>
