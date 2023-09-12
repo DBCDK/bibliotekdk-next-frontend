@@ -34,9 +34,6 @@ export function Pickup(props) {
   const { branchesFromLogin, branchesFromSearch, nonEmptyQuery } = { ...props };
   const [expandedAgency, setExpandedAgency] = useState(-1);
 
-  //devide in order possible && not possible
-  //find login bibliotek
-
   return branchesFromSearch ? (
     <PickupSelection {...props} includeArrows={nonEmptyQuery} />
   ) : (

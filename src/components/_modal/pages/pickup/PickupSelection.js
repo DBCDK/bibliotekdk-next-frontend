@@ -203,7 +203,7 @@ export default function PickupSelection(props) {
 
   return (
     <>
-      {/* This only load order policies, does not render anything */}
+      {/* This only loads order policies, does not render anything */}
       {data?.result
         ?.filter((branch) => branch.branchId)
         .map((branch) => {
