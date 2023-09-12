@@ -17,7 +17,7 @@ import { useModal } from "@/components/_modal";
 import Router from "next/router";
 
 const CONTEXT = "profile";
-const MENUITEMS = ["loansAndReservations", "myLibraries", "orderHistory"];
+const MENUITEMS = ["loansAndReservations", "orderHistory", "myLibraries"];
 
 /**
  * ProfileLayout to use in /profil subpages
