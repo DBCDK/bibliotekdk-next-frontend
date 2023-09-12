@@ -54,12 +54,11 @@ export default function Section({
   subtitle = "",
   headerTag = "h2",
   sectionTag = "section",
-  xs = 12,
-  offset,
+  lg,
   id,
 }) {
   const breakpoint = useBreakpoint();
-  const isDesktop =  breakpoint === "lg" || breakpoint === "xl";//!isMobile && !isTablet;
+  const isDesktop = breakpoint === "lg" || breakpoint === "xl"; //!isMobile && !isTablet;
   const backgroundClass = backgroundColor ? styles.background : "";
 
   // default space setting
@@ -104,7 +103,7 @@ export default function Section({
         title
       );
   }
-//Only show the title on the right side if desktop
+  //Only show the title on the right side if desktop
   rightSideTitle = rightSideTitle && isDesktop;
 
   return (
@@ -132,8 +131,8 @@ export default function Section({
           )}
 
           <Col
-            xs={xs}
-            lg={{ offset: offset >= 0 ? offset : title ? 1 : 0, span: true }}
+            xs={12}
+            lg={lg || { offset: title ? 1 : 0, span: true }}
             data-cy={cyKey({ name: "content", prefix: "section" })}
             className={`section-content ${styles.content} ${contentDividerClass}`}
           >

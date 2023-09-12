@@ -13,7 +13,7 @@ export function BookMarkMaterialSelector({
   materialTypes,
   workId,
   size = { w: 7, h: 7 },
-  className
+  className,
 }) {
   const bookmarkClick = () => {};
 

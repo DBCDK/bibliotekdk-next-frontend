@@ -145,6 +145,12 @@ export default function ResultRow({
         onClick={onClick}
       >
         <div className={styles.row_wrapper}>
+          <Cover
+            className={styles.cover}
+            src={coverDetail}
+            skeleton={!coverDetail && !work?.manifestations}
+            size="fill-width"
+          />
           <div className={styles.col_wrapper}>
             <TitlesForSearch work={work} isLoading={isLoading} />
             <Text
@@ -201,12 +207,6 @@ export default function ResultRow({
                 })}
             </div>
           </div>
-          <Cover
-            className={styles.cover}
-            src={coverDetail}
-            skeleton={!coverDetail && !work?.manifestations}
-            size="fill-width"
-          />
         </div>
       </Link>
       <BookMarkDropDown

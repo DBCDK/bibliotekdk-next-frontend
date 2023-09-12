@@ -56,8 +56,7 @@ export function Result({
           )
         }
         rightSideTitle={true}
-        xs={10}
-        offset={3}
+        lg={{ offset: 3, span: true }}
         id="search-result-section"
       >
         {Array(isMobile ? page : 1)
