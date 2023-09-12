@@ -150,19 +150,22 @@ export function Pickup({
   const isMobile = useBreakpoint() === "xs";
 
   /**
-   *
+   * Select pick up branch and handle login
+   * just update pick up branch if user is logged in
+   * if not, either show log in modal or loaner form
    * @param {obj} branch
    * @param {obj} modal
    */
   function handleOnSelect(branch, modal) {
-    // Selected branch and (loggedIn) user branches has same agency
-    const sameOrigin =
-      branch.agencyId === context.initial?.agency?.result?.[0].agencyId;
+    //selected branch belongs to one of the user's agencies, where user is logged in
+    const loggedIn = context.initial?.agencies?.find(
+      (agency) => agency.result?.[0].agencyId === branch.agencyId
+    );
 
     // New selected branch has borrowercheck
     const hasBorchk = branch.borrowerCheck;
     // if selected branch has same origin as user agency
-    if (sameOrigin && hasBorchk) {
+    if (loggedIn && hasBorchk) {
       // Set new branch without new log-in
       updateLoanerInfo({ pickupBranch: branch.branchId });
       // update context at previous modal
