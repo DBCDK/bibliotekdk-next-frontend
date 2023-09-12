@@ -147,7 +147,10 @@ export default function Wrap({ context }) {
         !isLoadingBranches &&
           modal.push("pickup", {
             pid,
-            initial: { agency: pickupBranchUser?.agency },
+            initial: {
+              agency: pickupBranchUser?.agency,
+              agencies: pickupBranchUser?.agencies,
+            },
             requireDigitalAccess,
             mode: isDigitalCopy
               ? LOGIN_MODE.SUBSCRIPTION

@@ -24,6 +24,16 @@ export function basic() {
         address
         postalCode
         agency {
+          hitcount
+          result {
+            branchId
+            agencyId
+            agencyName
+            name
+          }
+        }
+        agencies {
+          hitcount
           result {
             branchId
             agencyId
