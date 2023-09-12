@@ -9,6 +9,8 @@ import styles from "./Select.module.css";
 import React from "react";
 import useQ from "@/components/hooks/useQ";
 import { useRouter } from "next/router";
+import FilterButton from "../filterButton";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 export function Desktop({ options = [], onSelect, selected, className }) {
   return (
@@ -71,20 +73,29 @@ export function Desktop({ options = [], onSelect, selected, className }) {
  * @constructor
  */
 export function Mobile({ options = [], onSelect, selected, className }) {
+  const breakpoint = useBreakpoint();
+  const isTablet = breakpoint === "md";
+
   return (
     <div className={`${styles.materials} ${className}`}>
-      {options.map((elem) => {
-        const isSelected = selected === elem;
-
-        return (
-          <Tag key={elem} selected={isSelected} onClick={() => onSelect(elem)}>
-            {Translate({
-              context: "facets",
-              label: `label-${elem}`,
-            })}
-          </Tag>
-        );
-      })}
+      <div>
+        {options.map((elem) => {
+          const isSelected = selected === elem;
+          return (
+            <Tag
+              key={elem}
+              selected={isSelected}
+              onClick={() => onSelect(elem)}
+            >
+              {Translate({
+                context: "facets",
+                label: `label-${elem}`,
+              })}
+            </Tag>
+          );
+        })}
+      </div>
+      {isTablet && <FilterButton className={styles.filterButton} />}{" "}
     </div>
   );
 }

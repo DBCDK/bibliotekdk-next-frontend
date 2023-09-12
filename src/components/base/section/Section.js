@@ -10,6 +10,7 @@ import { cyKey } from "@/utils/trim";
 
 import styles from "./Section.module.css";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import cx from "classnames";
 
 /**
  * Divider function
@@ -54,11 +55,11 @@ export default function Section({
   subtitle = "",
   headerTag = "h2",
   sectionTag = "section",
-  lg,
   id,
+  colSize={}
 }) {
   const breakpoint = useBreakpoint();
-  const isDesktop = breakpoint === "lg" || breakpoint === "xl"; //!isMobile && !isTablet;
+  const isDesktop = breakpoint === "lg" || breakpoint === "xl";
   const backgroundClass = backgroundColor ? styles.background : "";
 
   // default space setting
@@ -132,7 +133,7 @@ export default function Section({
 
           <Col
             xs={12}
-            lg={lg || { offset: title ? 1 : 0, span: true }}
+            lg={colSize.lg || { offset: title ? 1 : 0, span: true }}
             data-cy={cyKey({ name: "content", prefix: "section" })}
             className={`section-content ${styles.content} ${contentDividerClass}`}
           >
@@ -144,7 +145,7 @@ export default function Section({
               xs={12}
               lg={2}
               data-cy={cyKey({ name: "title", prefix: "section" })}
-              className={`section-title ${styles.title} ${titleDividerClass} ${styles.rightSideTitle}`}
+              className={cx('section-title', styles.title, titleDividerClass, styles.rightSideTitle)}
             >
               {divider?.title}
               {title}
