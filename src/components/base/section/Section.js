@@ -59,9 +59,7 @@ export default function Section({
   id,
 }) {
   const breakpoint = useBreakpoint();
-  const isMobile = breakpoint === "xs" || breakpoint === "sm";
-  const isTablet = breakpoint === "md";
-  const isDesktop = !isMobile && !isTablet;
+  const isDesktop =  breakpoint === "lg" || breakpoint === "xl";//!isMobile && !isTablet;
   const backgroundClass = backgroundColor ? styles.background : "";
 
   // default space setting
