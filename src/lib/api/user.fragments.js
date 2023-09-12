@@ -24,6 +24,16 @@ export function basic() {
         address
         postalCode
         agency {
+          hitcount
+          result {
+            branchId
+            agencyId
+            agencyName
+            name
+          }
+        }
+        agencies {
+          hitcount
           result {
             branchId
             agencyId
@@ -167,6 +177,32 @@ export function orderPolicy({ pid }) {
             userStatusUrl
             digitalCopyAccess
           }
+        }
+        agencies (language: $language){
+        agencyUrl
+        result {
+          agencyName
+          agencyId
+          name
+          city
+          postalAddress
+          postalCode
+          branchId
+          openingHours
+          borrowerCheck
+          orderPolicy(pid: $pid) {
+            orderPossible
+            orderPossibleReason
+            lookUpUrl
+          }
+          userParameters {
+            userParameterType
+            parameterRequired
+          }
+          pickupAllowed
+          userStatusUrl
+          digitalCopyAccess
+        }
         }
       }
       monitor(name: "bibdknext_orderpolicy")
