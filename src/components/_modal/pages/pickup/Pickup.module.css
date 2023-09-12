@@ -53,6 +53,17 @@
   padding-bottom: var(--pt1);
 }
 
+.pickupSelectionWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding-bottom: var(--pt1);
+}
+
+.collapseWrapper {
+  width: 100%;
+}
+
 @media (min-width: 576px) {
   .pickup {
     padding: 0 var(--pt6) var(--pt3) var(--pt6);

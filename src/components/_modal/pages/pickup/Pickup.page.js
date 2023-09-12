@@ -14,7 +14,8 @@ import * as libraryFragments from "@/lib/api/library.fragments";
 import { LOGIN_MODE } from "@/components/_modal/pages/login/utils";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import PickupSelection from "./PickupSelection";
-import Button from "@/components/base/button/Button";
+import Link from "@/components/base/link";
+import Collapse from "react-bootstrap/Collapse";
 
 /**
  * Make pickup branches selectable with Radio buttons
@@ -24,44 +25,62 @@ import Button from "@/components/base/button/Button";
  * @param {boolean} isVisible
  * @param {function} onChange
  * @param {boolean} isLoading
- * @param {JSX} includeArrows
+ * @param {JSX} nonEmptyQuery
  * @param updateLoanerInfo
  * @param context
  * @param modal
  */
 export function Pickup(props) {
-  const { branchesFromLogin, branchesFromSearch } = { ...props };
-  const [showMoreLibraries, setShowMoreLibraries] = useState(false);
+  const { branchesFromLogin, branchesFromSearch, nonEmptyQuery } = { ...props };
+  const [expandedAgency, setExpandedAgency] = useState(-1);
 
   //devide in order possible && not possible
   //find login bibliotek
 
   return branchesFromSearch ? (
-    <PickupSelection {...props} includeArrows={true} />
+    <PickupSelection {...props} includeArrows={nonEmptyQuery} />
   ) : (
     <>
-      <PickupSelection {...props} data={branchesFromLogin?.[0]} />
-      {showMoreLibraries &&
-        branchesFromLogin.map((agency, idx) => (
-          <div key={agency.agencyId}>
-            <div>{agency.result[0].name}</div>
-            <PickupSelection key={agency.id} {...props} data={agency} />
-          </div>
-        ))}
-      {branchesFromLogin?.length > 1 && (
-        <Button
-          type="secondary"
-          size={"large"}
-          dataCy={"button-order-overview-loading"}
-          onClick={() => {
-            setShowMoreLibraries((val) => !val);
-          }}
-        >
-          {Translate({
-            context: "profile",
-            label: showMoreLibraries ? "showLess" : "showMore",
-          })}
-        </Button>
+      {branchesFromLogin?.length > 0 && !nonEmptyQuery && (
+        <div>
+          {branchesFromLogin.map((agency, idx) => (
+            <div
+              key={agency.result[0].agencyId}
+              className={styles.pickupSelectionWrapper}
+            >
+              {branchesFromLogin?.length > 1 && (
+                <Link
+                  onClick={() => {
+                    expandedAgency === idx
+                      ? setExpandedAgency(-1)
+                      : setExpandedAgency(idx);
+                  }}
+                  border={{ top: false, bottom: { keepVisible: true } }}
+                  dataCy={"show-branches-for-" + agency.result[0].agencyId}
+                  ariaLabel="open localizations"
+                >
+                  <Text tag={"span"} type="text3">
+                    {Translate({
+                      context: "order",
+                      label: "show-pickup-branch",
+                      vars: [agency.result[0].agencyName],
+                    })}
+                  </Text>
+                </Link>
+              )}
+              <Collapse in={expandedAgency === idx}>
+                <div className={styles.collapseWrapper}>
+                  <PickupSelection
+                    key={agency.id}
+                    {...props}
+                    data={agency}
+                    includeArrows={true}
+                  />
+                </div>
+              </Collapse>
+            </div>
+          ))}
+        </div>
       )}
     </>
   );
@@ -113,7 +132,6 @@ export default function Wrap(props) {
   };
 
   const nonEmptyQuery = !!query;
-
   const branchesFromLogin = initial?.agencies;
   const branchesFromSearch = nonEmptyQuery ? data?.branches : undefined;
 
@@ -155,7 +173,7 @@ export default function Wrap(props) {
         data={isLoading ? dummyData : data?.branches}
         branchesFromLogin={branchesFromLogin}
         branchesFromSearch={branchesFromSearch}
-        includeArrows={nonEmptyQuery}
+        nonEmptyQuery={nonEmptyQuery}
       />
     </div>
   );

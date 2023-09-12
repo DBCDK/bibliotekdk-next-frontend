@@ -144,7 +144,6 @@ export default function Wrap({ context }) {
       isAuthenticated={isAuthenticated}
       isLoadingBranches={isLoadingBranches}
       onClick={() => {
-        console.log("pid ", pid);
         !isLoadingBranches &&
           modal.push("pickup", {
             pid,
