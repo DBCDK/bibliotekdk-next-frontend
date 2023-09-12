@@ -15,7 +15,6 @@ import { LOGIN_MODE } from "@/components/_modal/pages/login/utils";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import PickupSelection from "./PickupSelection";
 import Button from "@/components/base/button/Button";
-import Collapse from "react-bootstrap/Collapse";
 
 /**
  * Make pickup branches selectable with Radio buttons
@@ -41,7 +40,7 @@ export function Pickup(props) {
     <PickupSelection {...props} includeArrows={true} />
   ) : (
     <>
-      <PickupSelection {...props} data={branchesFromLogin[0]} />
+      <PickupSelection {...props} data={branchesFromLogin?.[0]} />
       {showMoreLibraries &&
         branchesFromLogin.map((agency, idx) => (
           <div key={agency.agencyId}>
@@ -49,7 +48,7 @@ export function Pickup(props) {
             <PickupSelection key={agency.id} {...props} data={agency} />
           </div>
         ))}
-      {branchesFromLogin.length > 1 && (
+      {branchesFromLogin?.length > 1 && (
         <Button
           type="secondary"
           size={"large"}
@@ -72,7 +71,6 @@ Pickup.propTypes = {
   data: PropTypes.object,
   className: PropTypes.string,
   onClose: PropTypes.func,
-  onSelect: PropTypes.func,
   selected: PropTypes.object,
   onChange: PropTypes.func,
 };
@@ -91,7 +89,6 @@ export default function Wrap(props) {
   const isMobile = useBreakpoint() === "xs";
 
   const [query, setQuery] = useState("");
-  console.log("QUERY ", query);
 
   const { updateLoanerInfo } = useUser();
 

@@ -9,6 +9,46 @@ import { useData } from "@/lib/api/api";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 
 /**
+ *
+ * @param {obj} branch
+ * @param {obj} modal
+ */
+function handleOnSelect(branch, modal, context, updateLoanerInfo) {
+  // Selected branch and (loggedIn) user branches has same agency
+  console.log("AGENCIES ", context.initial?.agencies);
+  const sameOrigin = context.initial?.agencies?.find(
+    (agency) => agency.result?.[0].agencyId === branch.agencyId
+  );
+
+  console.log("SAME ORIGIN ", sameOrigin);
+  // New selected branch has borrowercheck
+  const hasBorchk = branch.borrowerCheck;
+  // if selected branch has same origin as user agency
+  if (sameOrigin && hasBorchk) {
+    // Set new branch without new log-in
+    updateLoanerInfo({ pickupBranch: branch.branchId });
+    // update context at previous modal
+    modal.prev();
+    return;
+  }
+  const callbackUID = modal?.stack?.find((m) => m.id === "order").uid;
+  if (branch?.borrowerCheck) {
+    modal.push("openAdgangsplatform", {
+      agencyId: branch.agencyId,
+      branchId: branch.branchId,
+      agencyName: branch.agencyName,
+      callbackUID: callbackUID, //we should always have callbackUID, but if we dont, order modal is not opened after login.
+    });
+    return;
+  } else {
+    modal.push("loanerform", {
+      branchId: branch.branchId,
+      changePickupBranch: true,
+    });
+  }
+}
+
+/**
  * Special component responsible for loading order policy
  * Will not render anything, but needs to be mounted
  */
@@ -149,8 +189,6 @@ export default function PickupSelection(props) {
         ?.orderPossible;
     }) || [];
 
-  console.log("orderPossibleBranches", orderPossibleBranches);
-
   const orderNotPossibleBranches =
     (allPoliciesLoaded &&
       data?.result?.filter(
@@ -200,7 +238,9 @@ export default function PickupSelection(props) {
                 key={`${branch.branchId}-${idx}`}
                 branch={branch}
                 selected={selected}
-                onSelect={(branch) => handleOnSelect(branch, modal)}
+                onSelect={(branch) =>
+                  handleOnSelect(branch, modal, context, updateLoanerInfo)
+                }
                 modal={modal}
                 isLoading={isLoading}
                 includeArrows={includeArrows}

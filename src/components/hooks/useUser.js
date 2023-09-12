@@ -98,6 +98,7 @@ function useUserImpl() {
     loans: [],
     orders: [],
     agency: {},
+    agencies: [],
     ...sessionData,
   });
 
@@ -108,6 +109,7 @@ function useUserImpl() {
         loans: [],
         orders: [],
         agency: {},
+        agencies: [],
         ...sessionData,
       });
     } else if (userData && !userIsLoading) {
@@ -116,6 +118,7 @@ function useUserImpl() {
         loans: userData?.user?.loans,
         orders: userData?.user?.orders,
         agency: userData?.user?.agency,
+        agencies: userData?.user?.agencies,
         ...sessionData,
       });
     }
