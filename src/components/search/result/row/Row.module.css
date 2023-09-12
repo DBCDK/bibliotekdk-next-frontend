@@ -1,6 +1,7 @@
 .search {
   display: flex;
   height: fit-content;
+  position: relative;
 }
 
 .wrapper:focus,
@@ -24,7 +25,7 @@
 .row_wrapper {
   width: auto;
   display: grid;
-  --grid_template_columns: 3fr 1fr;
+  --grid_template_columns: 1fr 3fr;
   grid-template-columns: var(--grid_template_columns);
   justify-content: space-between;
   margin-top: var(--pt2);
@@ -35,6 +36,7 @@
 .col_wrapper {
   display: flex;
   flex-direction: column;
+  padding-right: 50px;
 }
 
 .display_inline {
@@ -81,6 +83,7 @@
   min-height: 160px;
   min-width: 104px;
   max-width: 104px;
+  order: -1;
 }
 
 @media (min-width: 992px) {
@@ -91,4 +94,17 @@
   .row_wrapper {
     --grid_template_columns: 2fr 1fr;
   }
+  .cover {
+    order: 1;
+  }
+  .col_wrapper {
+    padding-right: 0;
+  }
+}
+
+.bookMarkDropDown {
+  position: absolute;
+  right: 10px;
+  top: 20px;
+  z-index: 2;
 }

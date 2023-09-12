@@ -55,6 +55,9 @@ export function Result({
             <span />
           )
         }
+        rightSideTitle={true}
+        xs={10}
+        offset={3}
         id="search-result-section"
       >
         {Array(isMobile ? page : 1)

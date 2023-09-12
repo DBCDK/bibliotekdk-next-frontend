@@ -9,6 +9,7 @@ import Text from "@/components/base/text";
 import { cyKey } from "@/utils/trim";
 
 import styles from "./Section.module.css";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 /**
  * Divider function
@@ -40,6 +41,8 @@ function handleBooleans(obj, def) {
  */
 export default function Section({
   title = "Some section",
+  //if true the title will be shown on the right side instead of the left side
+  rightSideTitle = false,
   children = "",
   className = "",
   dataCy = "section",
@@ -51,8 +54,14 @@ export default function Section({
   subtitle = "",
   headerTag = "h2",
   sectionTag = "section",
+  xs = 12,
+  offset,
   id,
 }) {
+  const breakpoint = useBreakpoint();
+  const isMobile = breakpoint === "xs" || breakpoint === "sm";
+  const isTablet = breakpoint === "md";
+  const isDesktop = !isMobile && !isTablet;
   const backgroundClass = backgroundColor ? styles.background : "";
 
   // default space setting
@@ -97,6 +106,8 @@ export default function Section({
         title
       );
   }
+//Only show the title on the right side if desktop
+  rightSideTitle = rightSideTitle && isDesktop;
 
   return (
     <div
@@ -109,7 +120,7 @@ export default function Section({
     >
       <Container fluid>
         <Row as={sectionTag}>
-          {title && (
+          {title && !rightSideTitle && (
             <Col
               xs={12}
               lg={2}
@@ -123,14 +134,26 @@ export default function Section({
           )}
 
           <Col
-            xs={12}
-            lg={{ offset: title ? 1 : 0, span: true }}
+            xs={xs}
+            lg={{ offset: offset >= 0 ? offset : title ? 1 : 0, span: true }}
             data-cy={cyKey({ name: "content", prefix: "section" })}
             className={`section-content ${styles.content} ${contentDividerClass}`}
           >
             {divider?.content}
             {children}
           </Col>
+          {title && rightSideTitle && (
+            <Col
+              xs={12}
+              lg={2}
+              data-cy={cyKey({ name: "title", prefix: "section" })}
+              className={`section-title ${styles.title} ${titleDividerClass} ${styles.rightSideTitle}`}
+            >
+              {divider?.title}
+              {title}
+              {subtitle && <Text type="text2">{subtitle}</Text>}
+            </Col>
+          )}
         </Row>
       </Container>
     </div>

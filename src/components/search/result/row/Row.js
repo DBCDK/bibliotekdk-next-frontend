@@ -5,6 +5,7 @@ import Translate from "@/components/base/translate";
 
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
+import BookMarkDropDown from "@/components/work/overview/bookmarkDropdown/BookmarkDropdown";
 
 import Cover from "@/components/base/cover";
 import {
@@ -208,6 +209,12 @@ export default function ResultRow({
           />
         </div>
       </Link>
+      <BookMarkDropDown
+        className={styles.bookMarkDropDown}
+        workId={work?.workId}
+        materialTypes={uniqueMaterialTypes}
+        size={{ w: 4, h: 4 }}
+      />
     </article>
   );
 }
