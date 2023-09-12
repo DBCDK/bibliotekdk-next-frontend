@@ -9,22 +9,24 @@ import { useData } from "@/lib/api/api";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 
 /**
- *
+ * Select a branch and handle login
+ * either the user is already logged in for that agency
+ * or the user needs to log in for that agency, so prompt login or open loanerform
  * @param {obj} branch
  * @param {obj} modal
  */
 function handleOnSelect(branch, modal, context, updateLoanerInfo) {
-  // Selected branch and (loggedIn) user branches has same agency
+  // Selected branch belongs to one of the user's agencies where the user is logged in
   console.log("AGENCIES ", context.initial?.agencies);
-  const sameOrigin = context.initial?.agencies?.find(
+  const alreadyLoggedin = context.initial?.agencies?.find(
     (agency) => agency.result?.[0].agencyId === branch.agencyId
   );
 
-  console.log("SAME ORIGIN ", sameOrigin);
+  console.log("SAME ORIGIN ", alreadyLoggedin);
   // New selected branch has borrowercheck
   const hasBorchk = branch.borrowerCheck;
   // if selected branch has same origin as user agency
-  if (sameOrigin && hasBorchk) {
+  if (alreadyLoggedin && hasBorchk) {
     // Set new branch without new log-in
     updateLoanerInfo({ pickupBranch: branch.branchId });
     // update context at previous modal
