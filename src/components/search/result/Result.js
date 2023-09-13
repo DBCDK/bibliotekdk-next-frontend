@@ -57,7 +57,7 @@ export function Result({
           )
         }
         rightSideTitle={true}
-        colSize={ {lg:{ offset: 3, span: true }}}
+        colSize={{ lg: { offset: 3, span: true } }}
         id="search-result-section"
       >
         {Array(isMobile ? page : 1)

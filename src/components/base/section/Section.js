@@ -56,7 +56,7 @@ export default function Section({
   headerTag = "h2",
   sectionTag = "section",
   id,
-  colSize={}
+  colSize = {},
 }) {
   const breakpoint = useBreakpoint();
   const isDesktop = breakpoint === "lg" || breakpoint === "xl";
@@ -145,7 +145,12 @@ export default function Section({
               xs={12}
               lg={2}
               data-cy={cyKey({ name: "title", prefix: "section" })}
-              className={cx('section-title', styles.title, titleDividerClass, styles.rightSideTitle)}
+              className={cx(
+                "section-title",
+                styles.title,
+                titleDividerClass,
+                styles.rightSideTitle
+              )}
             >
               {divider?.title}
               {title}
