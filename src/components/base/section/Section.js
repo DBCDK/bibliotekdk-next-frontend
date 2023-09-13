@@ -9,7 +9,6 @@ import Text from "@/components/base/text";
 import { cyKey } from "@/utils/trim";
 
 import styles from "./Section.module.css";
-import useBreakpoint from "@/components/hooks/useBreakpoint";
 import cx from "classnames";
 
 /**
@@ -58,8 +57,6 @@ export default function Section({
   id,
   colSize = {},
 }) {
-  const breakpoint = useBreakpoint();
-  const isDesktop = breakpoint === "lg" || breakpoint === "xl";
   const backgroundClass = backgroundColor ? styles.background : "";
 
   // default space setting
@@ -105,7 +102,6 @@ export default function Section({
       );
   }
   //Only show the title on the right side if desktop
-  rightSideTitle = rightSideTitle && isDesktop;
 
   return (
     <div

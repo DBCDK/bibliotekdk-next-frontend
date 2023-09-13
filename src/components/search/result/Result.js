@@ -35,6 +35,8 @@ export function Result({
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs" || breakpoint === "sm" || false;
   const isTablet = breakpoint === "md";
+  const isDesktop = breakpoint === "lg" || breakpoint === "xl";
+
   const numPages = Math.ceil(hitcount / 10);
 
   const visibleClass = noRelatedSubjects ? styles.visible : "";
@@ -56,7 +58,7 @@ export function Result({
             <span />
           )
         }
-        rightSideTitle={true}
+        rightSideTitle={isDesktop}
         colSize={{ lg: { offset: 3, span: true } }}
         id="search-result-section"
       >
