@@ -50,7 +50,9 @@ describe(`Different ways to open login modal with a (FFU) library that does NOT 
     cy.get("[data-cy=pickup-search-input]")
       .should("be.visible")
       .type("CBS Bibliotek");
-    cy.contains("CBS Bibliotek - Solbjerg Plads").click();
+    cy.get('[data-cy="text-CBS Bibliotek - Solbjerg Plads"]')
+      .should("be.visible")
+      .click();
     cy.get("[data-cy=text-log-ind-via-cbs-bibliotek-understøttes-ikke]").should(
       "be.visible"
     );
@@ -65,7 +67,9 @@ describe(`Different ways to open login modal with a (FFU) library that does NOT 
     cy.get("[data-cy=pickup-search-input]")
       .should("be.visible")
       .type("CBS Bibliotek");
-    cy.contains("CBS Bibliotek - Solbjerg Plads").click();
+    cy.get('[data-cy="text-CBS Bibliotek - Solbjerg Plads"]')
+      .should("be.visible")
+      .click();
     cy.get("[data-cy=text-log-ind-via-cbs-bibliotek-understøttes-ikke]").should(
       "be.visible"
     );
@@ -92,17 +96,13 @@ describe(`Different ways to open login modal with a (FFU) library that does NOT 
     cy.get("[data-cy=pickup-search-input]")
       .should("be.visible")
       .type("CBS Bibliotek");
-    cy.contains("CBS Bibliotek - Solbjerg Plads").click();
+    cy.get('[data-cy="text-CBS Bibliotek - Solbjerg Plads"]')
+      .should("be.visible")
+      .click();
     cy.get("[data-cy=text-log-ind-via-cbs-bibliotek-understøttes-ikke]").should(
       "be.visible"
     );
     cy.get("[data-cy=button-tilbage]").should("be.visible").click();
     cy.get("[data-cy=pickup-search-input]").should("be.visible");
   });
-
-  //TODO add bestil flow ORDER_PHYSICAL & DIGITAL_COPY -->  opens loaner form
-
-  //SUBSCRIPTION
-
-  //DDA
 });
