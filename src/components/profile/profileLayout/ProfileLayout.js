@@ -17,7 +17,7 @@ import { useModal } from "@/components/_modal";
 import Router from "next/router";
 
 const CONTEXT = "profile";
-const MENUITEMS = ["loansAndReservations", "myLibraries"];
+const MENUITEMS = ["loansAndReservations", "orderHistory", "myLibraries"];
 
 /**
  * ProfileLayout to use in /profil subpages
@@ -114,7 +114,11 @@ const LogoutButton = () => {
   const userName = user?.loanerInfo?.userParameters?.userName;
   return (
     <div className={styles.logoutContainer}>
-      <Text className={styles.logoutBtnText}>{`${Translate({
+      <Text
+        className={styles.logoutBtnText}
+        skeleton={!userName}
+        lines={1}
+      >{`${Translate({
         context: "profile",
         label: "signed-in-as-name",
       })} ${userName}`}</Text>

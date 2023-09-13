@@ -52,12 +52,18 @@
 }
 
 .materials {
-  display: inline;
+  display: flex;
+  flex-wrap: wrap;
   margin-top: var(--pt2);
   column-gap: var(--pt2);
+  row-gap: var(--pt05);
 
   --underline-bottom-color: var(--blue);
   --underline-middle-hover-color: var(--transparent);
+}
+
+.material {
+  display: inline;
 }
 
 .materials > * {
@@ -81,6 +87,18 @@
   min-height: 160px;
   min-width: 104px;
   max-width: 104px;
+}
+
+@media (max-width: 380px) {
+  .col_wrapper {
+    max-width: 120px;
+  }
+}
+
+@media (max-width: 430px) {
+  .col_wrapper {
+    max-width: 200px;
+  }
 }
 
 @media (min-width: 992px) {

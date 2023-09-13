@@ -1,0 +1,78 @@
+.orderHistoryTable {
+  width: 100%;
+}
+
+.orderHistoryInfo {
+  margin-bottom: var(--pt2);
+}
+.tableItem {
+  display: grid;
+  grid-template-columns: 2fr 6fr 2fr;
+  grid-gap: var(--pt3);
+  align-items: center;
+  padding: var(--pt3) var(--pt1);
+  border-bottom: 1px solid var(--iron);
+}
+
+.orderNumberText {
+  display: none;
+  margin-right: var(--pt05);
+}
+
+@media (max-width: 575px) {
+  .tableItem {
+    display: block;
+    padding: var(--pt3) 0;
+  }
+
+  .activity,
+  .date {
+    display: block;
+  }
+
+  .headerItem {
+    display: none;
+  }
+  .orderWorkInfo {
+    margin-bottom: var(--pt1);
+  }
+  .orderNumberText {
+    display: initial;
+  }
+}
+
+.headerRow {
+  display: grid;
+  grid-template-columns: 2fr 6fr 2fr;
+  margin-top: var(--pt7);
+  border-bottom: 1px solid var(--iron);
+  width: 100%;
+
+  grid-column-gap: var(--pt3);
+  padding: var(--pt05) var(--pt1);
+  font-weight: normal;
+  font-family: var(--body-font-semibold);
+  font-size: 14px;
+}
+.headerItem {
+  grid-gap: var(--pt3);
+  text-align: initial;
+}
+.mobileDate {
+  margin-bottom: var(--pt1);
+}
+.orderNumber {
+  display: flex;
+}
+
+.pagination {
+  margin-top: var(--pt8);
+}
+.consentLink {
+  margin: 0 var(--pt05);
+}
+
+.emptyListText {
+  font-size: 17px;
+  margin-top: var(--pt4);
+}

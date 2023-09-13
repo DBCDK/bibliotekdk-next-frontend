@@ -25,6 +25,7 @@ export function RenewError({ isColumn, customClass }) {
         })}
       </Text>
       <Text
+        tag="div"
         type={isColumn ? "text3" : "text2"}
         className={styles.exclamationMark}
       >

@@ -41,7 +41,8 @@ To get the translations run:
 
 Again you need to pass Translate.json file
 
-**ALTER EXISTING TRANSLATIONS**
+## ALTER EXISTING TRANSLATIONS
+
 To alter an existing translation on staging or prod, you can do this directly in the drupal application for the respective environment:
 
 prod: http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk/admin/config/regional/translate
@@ -49,7 +50,13 @@ staging: http://bibdk-backend-www-master.febib-staging.svc.cloud.dbc.dk/admin/co
 
 Ask a fellow developer for the username and password.
 
-**OVERWRITE STG WITH PROD**
+## OVERWRITE STG WITH PROD
+
 To overwrite translations in the staging database with translations from the prod database, run
 
 https://is.dbc.dk/view/frontend/job/bibliotekdk-next/job/bibliotekdk-next-backend-build/job/master/
+
+## Use local Translate.json
+
+To use the local Translate.json file set this env variable in your .env file
+`DISABLE_DRUPAL_TRANSLATE=true`
