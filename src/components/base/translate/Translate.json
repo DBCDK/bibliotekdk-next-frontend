@@ -2212,6 +2212,10 @@
       "save-info-in-browser": {
         "da": "Gem informationer til næste bestilling",
         "en": "Save information for next order"
+      },
+      "show-pickup-branch": {
+        "da": "Vis afhentningssted for %s",
+        "en": "Show pickup location for %s"
       }
     },
     "login": {
