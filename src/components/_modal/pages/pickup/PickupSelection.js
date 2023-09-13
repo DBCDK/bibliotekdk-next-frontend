@@ -7,6 +7,8 @@ import styles from "./Pickup.module.css";
 import animations from "css/animations";
 import { useData } from "@/lib/api/api";
 import * as branchesFragments from "@/lib/api/branches.fragments";
+import find from "lodash/find";
+import cx from "classnames";
 
 /**
  * Select a branch and handle login
@@ -81,15 +83,17 @@ function PolicyLoader({ branch, onLoad, pid, requireDigitalAccess }) {
   return null;
 }
 
-function Row({
-  branch,
-  selected,
-  onSelect,
-  isLoading,
-  disabled,
-  includeArrows,
-  _ref,
-}) {
+/**
+ * Row that desplays a branch
+ * @param {object} branch
+ * @param {boolean} selected
+ * @param {function} onSelect
+ * @param {boolean} isLoading
+ * @param {boolean} includeArrows
+ * @param {object} _ref
+ * @returns {JSX.Element}
+ */
+function Row({ branch, selected, onSelect, isLoading, includeArrows, _ref }) {
   // Check for a highlight key matching on "name" prop
   const matchName = find(branch.highlights, {
     key: "name",
@@ -100,10 +104,7 @@ function Row({
   // If none found use a alternative match if any found
   const matchOthers = !matchName ? branch.highlights?.[0]?.value : null;
 
-  disabled = disabled || !branch.pickupAllowed;
-
-  const alternativeMatchClass = matchOthers ? styles.squeeze : "";
-  const disabledClass = disabled ? styles.disabled : "";
+  const disabled = !branch.pickupAllowed; //TODO wouldnt these branches be shown in ordernotpossible list/should we sort them out earlier?
 
   return (
     <List.FormLink
@@ -111,11 +112,10 @@ function Row({
       onSelect={() => onSelect(branch)}
       label={branch.name}
       disabled={disabled}
-      className={[
-        alternativeMatchClass,
-        disabledClass,
-        animations["on-hover"],
-      ].join(" ")}
+      className={cx(animations["on-hover"], {
+        [styles.squeeze]: matchOthers,
+        [styles.disabled]: disabled,
+      })}
       includeArrows={includeArrows}
       _ref={_ref}
     >

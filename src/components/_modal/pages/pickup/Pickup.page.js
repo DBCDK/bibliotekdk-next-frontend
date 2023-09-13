@@ -26,7 +26,7 @@ import Icon from "@/components/base/icon";
  * @param {boolean} isVisible
  * @param {function} onChange
  * @param {boolean} isLoading
- * @param {JSX} nonEmptyQuery
+ * @param {boolean} nonEmptyQuery
  * @param updateLoanerInfo
  * @param context
  * @param modal
