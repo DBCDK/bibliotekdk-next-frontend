@@ -194,3 +194,15 @@
     flex-direction: column-reverse;
   }
 }
+
+.debtDynamicColumn {
+  grid-column: 1; 
+}
+
+.debtLibrary {
+  grid-column: 2;
+}
+.debtMaterial {
+  grid-column: 3; 
+}
+

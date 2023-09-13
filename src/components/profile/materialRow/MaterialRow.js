@@ -539,7 +539,7 @@ const MaterialRow = (props) => {
       </>
     );
   }
-
+const isDebtRow  = type === "DEBT";
   return (
     <>
       {hasDeleteError && type === "ORDER" && (
@@ -602,7 +602,7 @@ const MaterialRow = (props) => {
             </div>
           )}
 
-          <div className={styles.materialInfo}>
+          <div className={cx(styles.materialInfo,{[styles.debtMaterial]:isDebtRow})}>
             {!!image && (
               <div className={styles.imageContainer}>
                 <Cover src={image} size="fill-width" />
@@ -652,9 +652,9 @@ const MaterialRow = (props) => {
             </div>
           </div>
 
-          <div>{renderDynamicColumn()}</div>
+          <div className={cx({[styles.debtDynamicColumn]:isDebtRow})}>{renderDynamicColumn()}</div>
 
-          <div>
+          <div className={cx({[styles.debtLibrary]:isDebtRow})}>
             <Text type="text2">{library}</Text>
           </div>
 
