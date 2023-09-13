@@ -16,6 +16,7 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
 import PickupSelection from "./PickupSelection";
 import Link from "@/components/base/link";
 import Collapse from "react-bootstrap/Collapse";
+import Icon from "@/components/base/icon";
 
 /**
  * Make pickup branches selectable with Radio buttons
@@ -45,27 +46,49 @@ export function Pickup(props) {
               key={agency.result[0].agencyId}
               className={styles.pickupSelectionWrapper}
             >
-              {branchesFromLogin?.length > 1 && (
-                <Link
-                  onClick={() => {
-                    expandedAgency === idx
-                      ? setExpandedAgency(-1)
-                      : setExpandedAgency(idx);
-                  }}
-                  border={{ top: false, bottom: { keepVisible: true } }}
-                  dataCy={"show-branches-for-" + agency.result[0].agencyId}
-                  ariaLabel="open localizations"
-                >
-                  <Text tag={"span"} type="text3">
-                    {Translate({
-                      context: "order",
-                      label: "show-pickup-branch",
-                      vars: [agency.result[0].agencyName],
-                    })}
-                  </Text>
-                </Link>
-              )}
-              <Collapse in={expandedAgency === idx}>
+              {branchesFromLogin?.length > 1 ? (
+                <>
+                  <Link
+                    aria-controls={`agency-${agency.id}`}
+                    aria-expanded={expandedAgency === idx}
+                    className={styles.agencySelectionLink}
+                    onClick={() => {
+                      expandedAgency === idx
+                        ? setExpandedAgency(-1)
+                        : setExpandedAgency(idx);
+                    }}
+                    border={{ top: false, bottom: { keepVisible: true } }}
+                    dataCy={"show-branches-for-" + agency.result[0].agencyId}
+                    ariaLabel="open agency localizations"
+                  >
+                    <Text tag={"span"} type="text3">
+                      {Translate({
+                        context: "order",
+                        label: "show-pickup-branch",
+                        vars: [agency.result[0].agencyName],
+                      })}
+                    </Text>
+                    <Icon
+                      size={{ w: "2", h: "auto" }}
+                      src="arrowDown.svg"
+                      className={styles.chevron}
+                      alt=""
+                    />
+                  </Link>
+
+                  <Collapse in={expandedAgency === idx}>
+                    <div className={styles.collapseWrapper}>
+                      <PickupSelection
+                        id={`agency-${agency.id}`}
+                        key={agency.id}
+                        {...props}
+                        data={agency}
+                        includeArrows={true}
+                      />
+                    </div>
+                  </Collapse>
+                </>
+              ) : (
                 <div className={styles.collapseWrapper}>
                   <PickupSelection
                     key={agency.id}
@@ -74,7 +97,7 @@ export function Pickup(props) {
                     includeArrows={true}
                   />
                 </div>
-              </Collapse>
+              )}
             </div>
           ))}
         </div>
