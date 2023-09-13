@@ -37,6 +37,11 @@
   flex-direction: column;
 }
 
+.col_wrapper > div,
+.col_wrapper > p {
+  word-break: break-word;
+}
+
 .display_inline {
   display: inline;
 }
