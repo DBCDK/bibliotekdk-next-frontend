@@ -52,12 +52,18 @@
 }
 
 .materials {
-  display: inline;
+  display: flex;
+  flex-wrap: wrap;
   margin-top: var(--pt2);
   column-gap: var(--pt2);
+  row-gap: var(--pt05);
 
   --underline-bottom-color: var(--blue);
   --underline-middle-hover-color: var(--transparent);
+}
+
+.material {
+  display: inline;
 }
 
 .materials > * {
