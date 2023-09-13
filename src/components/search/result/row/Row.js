@@ -176,33 +176,38 @@ export default function ResultRow({
               {uniqueMaterialTypes?.length > 0 &&
                 uniqueMaterialTypes?.map((materialTypeArray) => {
                   return (
-                    <Link
-                      border={{ top: false, bottom: { keepVisible: true } }}
-                      href={{
-                        pathname: "/materiale/[title_author]/[workId]",
-                        query: {
-                          title_author: encodeTitleCreator(
-                            work?.titles?.main?.[0],
-                            work?.creators
-                          ),
-                          type: formatMaterialTypesToUrl(materialTypeArray),
-                          workId: work?.workId,
-                        },
-                      }}
-                      key={materialTypeArray}
-                      tabIndex="-1"
+                    <span
+                      key={`material-${work?.workId}`}
+                      className={styles.material}
                     >
-                      <Text
-                        type={"text4"}
-                        tag={"span"}
-                        dataCy={
-                          "text-" +
-                          formatMaterialTypesToCypress(materialTypeArray)
-                        }
+                      <Link
+                        border={{ top: false, bottom: { keepVisible: true } }}
+                        href={{
+                          pathname: "/materiale/[title_author]/[workId]",
+                          query: {
+                            title_author: encodeTitleCreator(
+                              work?.titles?.main?.[0],
+                              work?.creators
+                            ),
+                            type: formatMaterialTypesToUrl(materialTypeArray),
+                            workId: work?.workId,
+                          },
+                        }}
+                        key={materialTypeArray}
+                        tabIndex="-1"
                       >
-                        {formatMaterialTypesToPresentation(materialTypeArray)}
-                      </Text>
-                    </Link>
+                        <Text
+                          type={"text4"}
+                          tag={"span"}
+                          dataCy={
+                            "text-" +
+                            formatMaterialTypesToCypress(materialTypeArray)
+                          }
+                        >
+                          {formatMaterialTypesToPresentation(materialTypeArray)}
+                        </Text>
+                      </Link>
+                    </span>
                   );
                 })}
             </div>
