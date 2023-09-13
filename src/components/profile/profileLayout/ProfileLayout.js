@@ -17,7 +17,7 @@ import { useModal } from "@/components/_modal";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 
 const CONTEXT = "profile";
-const MENUITEMS = ["loansAndReservations", "myLibraries", "orderHistory"];
+const MENUITEMS = ["loansAndReservations", "orderHistory", "myLibraries"];
 
 /**
  * ProfileLayout to use in /profil subpages
