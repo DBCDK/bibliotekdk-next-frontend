@@ -191,7 +191,7 @@ export default function OrderHistoryPage() {
           )}
         </table>
       )}
-      {totalPages > 0 && (
+      {totalPages > 0 &&currentPage!= totalPages&&(
         <Pagination
           className={styles.pagination}
           numPages={totalPages}
