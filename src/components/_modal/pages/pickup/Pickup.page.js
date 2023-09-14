@@ -34,6 +34,7 @@ import Icon from "@/components/base/icon";
 export function Pickup(props) {
   const { branchesFromLogin, branchesFromSearch, nonEmptyQuery } = { ...props };
   const [expandedAgency, setExpandedAgency] = useState(-1);
+  const userHasMultipleAgencies = branchesFromLogin?.length > 1;
 
   return branchesFromSearch ? (
     <PickupSelection {...props} includeArrows={nonEmptyQuery} />
@@ -41,12 +42,21 @@ export function Pickup(props) {
     <>
       {branchesFromLogin?.length > 0 && !nonEmptyQuery && (
         <div>
+          {userHasMultipleAgencies && (
+            <Title type="text3" className={styles.showPickupTitle}>
+              {Translate({
+                context: "order",
+                label: "show-pickup-branch",
+              })}
+            </Title>
+          )}
+
           {branchesFromLogin.map((agency, idx) => (
             <div
               key={agency.result[0].agencyId}
               className={styles.pickupSelectionWrapper}
             >
-              {branchesFromLogin?.length > 1 ? (
+              {userHasMultipleAgencies ? (
                 <>
                   <Link
                     aria-controls={`agency-${agency.id}`}
@@ -62,11 +72,7 @@ export function Pickup(props) {
                     ariaLabel="open agency localizations"
                   >
                     <Text tag={"span"} type="text3">
-                      {Translate({
-                        context: "order",
-                        label: "show-pickup-branch",
-                        vars: [agency.result[0].agencyName],
-                      })}
+                      {[agency.result?.[0]?.agencyName]}
                     </Text>
                     <Icon
                       size={{ w: "2", h: "auto" }}

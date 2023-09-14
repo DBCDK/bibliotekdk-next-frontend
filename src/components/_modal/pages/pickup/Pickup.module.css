@@ -64,6 +64,10 @@
   width: 100%;
 }
 
+.showPickupTitle {
+  padding-bottom: var(--pt2);
+}
+
 .agencySelectionLink {
   display: flex;
   flex-direction: row;
