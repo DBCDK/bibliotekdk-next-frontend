@@ -3309,6 +3309,10 @@
       "consent": {
         "da": "samtykke",
         "en": "consent"
+      },
+      "emptyOrderList": {
+        "da": "Bestillingshistorikken er tom",
+        "en": "Your order history list is empty"
       }
     }
   }

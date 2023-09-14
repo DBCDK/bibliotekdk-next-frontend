@@ -17,15 +17,7 @@ import { useModal } from "@/components/_modal";
 import Router, { useRouter } from "next/router";
 
 const CONTEXT = "profile";
-const MENUITEMS = [
-  "loansAndReservations",
-  "bookmarks",
-  "myLibraries",
-  "orderHistory",
-];
-
-/* Whitelist menuitems accessable without login */
-const WHITELIST = ["/profil/huskeliste"];
+const MENUITEMS = ["loansAndReservations", "orderHistory", "myLibraries"];
 
 /**
  * ProfileLayout to use in /profil subpages

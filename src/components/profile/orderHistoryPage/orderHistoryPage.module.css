@@ -71,3 +71,8 @@
 .consentLink {
   margin: 0 var(--pt05);
 }
+
+.emptyListText {
+  font-size: 17px;
+  margin-top: var(--pt4);
+}
