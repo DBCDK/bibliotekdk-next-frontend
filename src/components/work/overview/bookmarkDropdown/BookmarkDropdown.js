@@ -13,6 +13,7 @@ export function BookMarkMaterialSelector({
   materialTypes,
   workId,
   size = { w: 7, h: 7 },
+  className,
 }) {
   const bookmarkClick = () => {};
 
@@ -50,7 +51,7 @@ export function BookMarkMaterialSelector({
     return (
       <Bookmark
         size={size}
-        className={styles.bookmark}
+        className={`${styles.bookmark} ${className}`}
         selected={active}
         onClick={() => {
           onSelect(options[0], workId);
@@ -61,7 +62,7 @@ export function BookMarkMaterialSelector({
 
   return (
     <Dropdown
-      className={`${styles.dropdownwrap} `}
+      className={`${styles.dropdownwrap} ${className}`}
       align="end"
       autoClose="outside"
     >
@@ -119,12 +120,13 @@ export function BookMarkMaterialSelector({
   );
 }
 
-export default function wrapper({ materialTypes, workId, size }) {
+export default function wrapper({ materialTypes, workId, size, className }) {
   return (
     <BookMarkMaterialSelector
       materialTypes={materialTypes}
       workId={workId}
       size={size}
+      className={className}
     />
   );
 }
