@@ -4,7 +4,6 @@ import Header from "@/components/header/Header";
 import { useData } from "@/lib/api/api";
 import { fetchAll } from "@/lib/api/apiServerOnly";
 import { infomediaArticle } from "@/lib/api/infomedia.fragments";
-import useUser from "@/components/hooks/useUser";
 
 import { dateToShortDate, numericToISO } from "@/utils/datetimeConverter";
 
@@ -19,6 +18,7 @@ import ArticleLoginPrompt from "@/components/login/prompt/ArticleLoginPrompt";
 import Custom404 from "@/pages/404";
 import { manifestationForLectorReview } from "@/lib/api/manifestation.fragments";
 import LectorReviewPage from "@/components/article/lectorreview/LectorReviewPage";
+import { useAuthentication } from "@/components/hooks/user/useAuthentication";
 
 export function ReviewPage(props) {
   const { article, notFound, isLoading, articleId, material } = props;
@@ -97,7 +97,7 @@ function parseInfomediaArticle(publicReviewData, work, infomediaArticle) {
 export default function Wrap() {
   const router = useRouter();
   const { workId, articleId } = router.query;
-  const user = useUser();
+  const { isAuthenticated } = useAuthentication();
   const { data, isLoading: isLoadingWork } = useData(
     workFragments.reviews({ workId })
   );
@@ -115,7 +115,7 @@ export default function Wrap() {
     isLoading: isLoadingInfomedia,
     error: infomediaError,
   } = useData(
-    user.isAuthenticated && articleId && infomediaArticle({ id: articleId })
+    isAuthenticated && articleId && infomediaArticle({ id: articleId })
   );
 
   const article = parseInfomediaArticle(

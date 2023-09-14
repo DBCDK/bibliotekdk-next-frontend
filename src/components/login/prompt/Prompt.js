@@ -15,7 +15,6 @@ import Link from "@/components/base/link";
 import styles from "./Prompt.module.css";
 import { useState } from "react";
 import IconButton from "@/components/base/iconButton";
-import useUser from "@/components/hooks/useUser";
 
 /**
  * Show a login prompt with a title and description
@@ -37,7 +36,7 @@ export default function LoginPrompt({
   signIn,
 }) {
   const [showMore, setShowMore] = useState(false);
-  const user = useUser();
+  const { isAuthenticated } = useAuthentication();
 
   return (
     <Container className={styles.prompt} fluid>
@@ -48,7 +47,7 @@ export default function LoginPrompt({
             {title}
           </Title>
 
-          {user.isAuthenticated && (
+          {isAuthenticated && (
             <div>
               <IconButton
                 icon={showMore ? "arrowUp" : "arrowDown"}

@@ -146,6 +146,7 @@ function useUserImpl() {
       await mutate();
     },
     updateUserStatusInfo: async (type) => {
+      // TODO - what is this
       // Broadcast update about either loans or orders
       let updatedData;
       switch (type) {

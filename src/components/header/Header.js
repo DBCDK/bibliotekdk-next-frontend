@@ -6,7 +6,7 @@ import React, { useState } from "react";
 
 import { signOut } from "@dbcdk/login-nextjs/client";
 
-import useHistory from "@/components/hooks/useHistory";
+import useHistory from "@/components/hooks/user/useHistory";
 import useFilters from "@/components/hooks/useFilters";
 import useQ from "@/components/hooks/useQ";
 
@@ -24,7 +24,6 @@ import LoginIcon from "./icons/login";
 import BurgerIcon from "./icons/burger";
 import SearchIcon from "./icons/search";
 import ExpandedSearch from "./expandedsearch/ExpandedSearch";
-import useUser from "../hooks/useUser";
 
 import Logo from "@/components/base/logo/Logo";
 
@@ -41,6 +40,7 @@ import { SuggestTypeEnum } from "@/lib/enums";
 import isEqual from "lodash/isEqual";
 import isEmpty from "lodash/isEmpty";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import { useAuthentication } from "../hooks/user/useAuthentication";
 
 // material Pages
 export const MATERIAL_PAGES = [
@@ -410,7 +410,7 @@ function HeaderSkeleton(props) {
  */
 export default function Wrap(props) {
   const router = useRouter();
-  const user = useUser();
+  const user = useAuthentication();
   const modal = useModal();
   const filters = useFilters();
 

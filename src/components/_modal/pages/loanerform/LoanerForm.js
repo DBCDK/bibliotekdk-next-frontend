@@ -17,13 +17,14 @@ import Top from "../base/top";
 import styles from "./LoanerForm.module.css";
 import { useData } from "@/lib/api/api";
 import * as branchesFragments from "@/lib/api/branches.fragments";
-import useUser from "@/components/hooks/useUser";
 import * as userFragments from "@/lib/api/user.fragments";
 import Tooltip from "@/components/base/tooltip";
 import { manifestationsForAccessFactory } from "@/lib/api/manifestation.fragments";
 import { inferAccessTypes } from "@/components/_modal/pages/edition/utils";
 import { validateEmail } from "@/utils/validateEmail";
 import { getLabel } from "@/components/base/forms/email/Email";
+import { useAuthentication } from "@/components/hooks/user/useAuthentication";
+import { useLoanerInfo } from "@/components/hooks/user/useLoanerInfo";
 
 const ERRORS = {
   MISSING_INPUT: "error-missing-input",
@@ -440,9 +441,8 @@ export default function Wrap(props) {
   );
   const mergedData = merge({}, data, policyData);
 
-  const { isAuthenticated } = useUser();
-
-  const { loanerInfo, updateLoanerInfo } = useUser();
+  const { isAuthenticated } = useAuthentication();
+  const { loanerInfo, updateLoanerInfo } = useLoanerInfo();
 
   // User branches fetch
   const { data: userData, isLoading: userIsLoading } = useData(

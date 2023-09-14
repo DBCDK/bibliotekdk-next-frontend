@@ -1,12 +1,12 @@
 import React, { memo } from "react";
 import styles from "./BlockedUserInformation.module.css";
 import * as branchesFragments from "@/lib/api/branches.fragments";
-import useUser from "@/components/hooks/useUser";
 import { useData } from "@/lib/api/api";
 import Skeleton from "@/components/base/skeleton";
 import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
+import { useLoanerInfo } from "@/components/hooks/user/useLoanerInfo";
 
 export const BlockedUserInformation = memo(function BlockedUserInformation({
   agencyName,
@@ -54,8 +54,7 @@ export const BlockedUserInformation = memo(function BlockedUserInformation({
 });
 
 export default function Wrap() {
-  const { authUser, loanerInfo, isAuthenticated, isGuestUser, isLoggedIn } =
-    useUser();
+  const { loanerInfo } = useLoanerInfo();
 
   const blockedUserResponse = useData(
     loanerInfo?.pickupBranch &&
@@ -71,15 +70,10 @@ export default function Wrap() {
   const blockedUser =
     branches?.result
       ?.map((res) => res.userIsBlocked)
-      .filter((singleUserIsBlocked) => singleUserIsBlocked === true).length > 0;
+      .filter((singleUserIsBlocked) => singleUserIsBlocked === true).length >
+      0 || false;
 
-  if (
-    !blockedUser ||
-    !authUser ||
-    isGuestUser ||
-    !isAuthenticated ||
-    !isLoggedIn
-  ) {
+  if (!blockedUser) {
     return null;
   }
 

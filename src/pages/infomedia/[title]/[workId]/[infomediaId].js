@@ -5,7 +5,6 @@ import { useData } from "@/lib/api/api";
 import { fetchAll } from "@/lib/api/apiServerOnly";
 import * as workFragments from "@/lib/api/work.fragments";
 import * as infomediaFragments from "@/lib/api/infomedia.fragments";
-import useUser from "@/components/hooks/useUser";
 
 import {
   Content,
@@ -15,6 +14,7 @@ import {
 import ArticleLoginPrompt from "@/components/login/prompt/ArticleLoginPrompt";
 import { timestampToShortDate } from "@/utils/datetimeConverter";
 import Error from "next/error";
+import { useAuthentication } from "@/components/hooks/user/useAuthentication";
 
 export function InfomediaArticle(props) {
   const { articleId, article, notFound, isLoading } = props;
@@ -80,13 +80,13 @@ export default function Wrap() {
   const router = useRouter();
   const { workId, infomediaId } = router.query;
 
-  const user = useUser();
+  const { isAuthenticated } = useAuthentication();
 
   const { data: infomediaPublicData, isLoading: isLoadingInfomediaPublic } =
     useData(workId && workFragments.infomediaArticlePublicInfo({ workId }));
 
   const { data: infomediaArticleData, isLoading: isLoadingInfomedia } = useData(
-    user.isAuthenticated &&
+    isAuthenticated &&
       infomediaId &&
       infomediaFragments.infomediaArticle({ id: infomediaId })
   );

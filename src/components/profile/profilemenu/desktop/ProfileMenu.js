@@ -7,7 +7,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import cx from "classnames";
 import { getElementById, encodeString, translateAndEncode } from "@/lib/utils";
-import useUser from "@/components/hooks/useUser";
+import useUser from "@/components/hooks/user/useUser";
+import { useLoanerInfo } from "@/components/hooks/user/useLoanerInfo";
 
 /**
  * This component shows a profile menu for logged in users.
@@ -180,18 +181,17 @@ const initialLoansAndReservations = {
  * @returns {JSX.Element}
  */
 export default function ProfileMenu() {
-  const user = useUser();
+  const { loanerInfo } = useLoanerInfo();
 
   const menus = {
     ...initialLoansAndReservations,
     loansAndReservations: initialLoansAndReservations.loansAndReservations
       .filter(
-        (item) =>
-          item.title !== "debt" || user?.loanerInfo[item.title]?.length > 0
+        (item) => item.title !== "debt" || loanerInfo?.[item.title]?.length > 0
       )
       .map((item) => ({
         ...item,
-        itemLength: user?.loanerInfo[item.title]?.length || 0,
+        itemLength: loanerInfo?.[item.title]?.length || 0,
       })),
   };
 

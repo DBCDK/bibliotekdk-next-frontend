@@ -1,4 +1,3 @@
-import useUser from "@/components/hooks/useUser";
 import Button from "@/components/base/button/Button";
 import Translate, { hasTranslation } from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
@@ -21,12 +20,13 @@ import {
 } from "@/lib/accessFactoryUtils";
 import isEmpty from "lodash/isEmpty";
 import uniq from "lodash/uniq";
+import { useAuthentication } from "@/components/hooks/user/useAuthentication";
 
-function TextAboveButton({ access, user }) {
+function TextAboveButton({ access, isAuthenticated }) {
   return (
     (access?.[0]?.loginRequired ||
       access?.[0]?.__typename === "InfomediaService") &&
-    !user.isAuthenticated && (
+    !isAuthenticated && (
       <Text
         type="text3"
         className={styles.textAboveButton}
@@ -70,13 +70,13 @@ export function workTypeTranslator(workTypes) {
       });
 }
 
-function handleGoToLogin(access, user, modal, onOnlineAccess) {
+function handleGoToLogin(access, isAuthenticated, modal, onOnlineAccess) {
   // if this is an infomedia article it should open in same window
   const urlTarget = access[0]?.id ? "_self" : "_blank";
 
   // check if we should open login modal on click
   const goToLogin =
-    !user.isAuthenticated &&
+    !isAuthenticated &&
     access[0]?.url &&
     access[0]?.loginRequired &&
     (access[0]?.url?.indexOf("ebookcentral") !== -1 ||
@@ -108,13 +108,14 @@ function handleGoToLogin(access, user, modal, onOnlineAccess) {
  */
 export function OrderButton({
   user,
+  isAuthenticated,
   modal,
   access,
   singleManifestation = false,
   onOnlineAccess,
   openOrderModal,
   onHandleGoToLogin = () =>
-    handleGoToLogin(access, user, modal, onOnlineAccess),
+    handleGoToLogin(access, isAuthenticated, modal, onOnlineAccess),
   buttonType = "primary",
   size = "large",
 }) {
@@ -192,7 +193,7 @@ export function OrderButton({
 
   return (
     <>
-      <TextAboveButton access={access} user={user} />
+      <TextAboveButton access={access} isAuthenticated={isAuthenticated} />
       <Button {...buttonProps}>{buttonTxtMap[index]()}</Button>
     </>
   );
@@ -206,7 +207,8 @@ function ReservationButton({
   size = "large",
   className,
 }) {
-  const user = useUser();
+  const { isAuthenticated } = useAuthentication();
+
   const modal = useModal();
 
   const { workResponse, manifestations, manifestationsResponse } =
@@ -253,7 +255,7 @@ function ReservationButton({
 
   return (
     <OrderButton
-      user={user}
+      isAuthenticated={isAuthenticated}
       modal={modal}
       access={access}
       singleManifestation={singleManifestation}

@@ -11,8 +11,8 @@ import { setPersistUserDataValue } from "@/lib/api/userData.mutations";
 import { useMutate } from "@/lib/api/api";
 import { useData } from "@/lib/api/api";
 import * as userFragments from "@/lib/api/user.fragments";
-import useUser from "@/components/hooks/useUser";
 import { useEffect } from "react";
+import { useAuthentication } from "@/components/hooks/user/useAuthentication";
 
 /**
  * This modal is used to change the users consent on storing orderhistory data for more than 30 days.
@@ -20,7 +20,7 @@ import { useEffect } from "react";
  */
 export function OrderHistoryDataConsent({ modal }) {
   const userDataMutation = useMutate();
-  const { isAuthenticated } = useUser();
+  const { isAuthenticated } = useAuthentication();
   const { data: userData, mutate } = useData(
     isAuthenticated && userFragments.extendedData()
   );

@@ -11,11 +11,11 @@ import Translate from "@/components/base/translate";
 import Top from "../base/top";
 import styles from "./Pickup.module.css";
 import animations from "css/animations";
-import useUser from "@/components/hooks/useUser";
 import { useData } from "@/lib/api/api";
 import * as libraryFragments from "@/lib/api/library.fragments";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
+import { useLoanerInfo } from "@/components/hooks/user/useLoanerInfo";
 
 /**
  * Special component responsible for loading order policy
@@ -332,7 +332,7 @@ export default function Wrap(props) {
 
   const [query, setQuery] = useState("");
 
-  const { updateLoanerInfo } = useUser();
+  const { updateLoanerInfo } = useLoanerInfo();
 
   const { data, isLoading } = useData(
     libraryFragments.search({ q: query || "" })

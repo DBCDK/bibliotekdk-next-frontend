@@ -4,10 +4,10 @@ import LibrariesTable from "../librariesTable/LibrariesTable";
 import styles from "./myLibrariesPage.module.css";
 import { useData } from "@/lib/api/api";
 import * as userFragments from "@/lib/api/user.fragments";
-import useUser from "@/components/hooks/useUser";
 import Text from "@/components/base/text";
 import IconButton from "@/components/base/iconButton/IconButton";
 import { useState } from "react";
+import { useAuthentication } from "@/components/hooks/user/useAuthentication";
 
 /**
  * Shows the users libraries and makes it possible to add a new library
@@ -17,7 +17,7 @@ import { useState } from "react";
  */
 
 export default function MyLibrariesPage() {
-  const { isAuthenticated } = useUser();
+  const { isAuthenticated } = useAuthentication();
   const [showMore, setShowMore] = useState(false);
   const { data: userData } = useData(
     isAuthenticated && userFragments.branchesForUser()

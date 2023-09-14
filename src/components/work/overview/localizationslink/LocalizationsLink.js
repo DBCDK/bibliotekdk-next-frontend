@@ -63,7 +63,6 @@ export function LocalizationsLink({
 
 export default function Wrap({ selectedPids }) {
   // @TODO if user is logged in - do a holdingsitems request on user agency
-  // const user = useUser();
   const modal = useModal();
 
   const manifestationResponse = useData(

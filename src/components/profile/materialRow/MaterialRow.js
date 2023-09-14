@@ -16,7 +16,7 @@ import { getWorkUrl } from "@/lib/utils";
 import ErrorRow from "../errorRow/ErrorRow";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { useModal } from "@/components/_modal";
-import useUser from "@/components/hooks/useUser";
+import useUser from "@/components/hooks/user/useUser";
 import Translate from "@/components/base/translate";
 import {
   dateToDayInMonth,

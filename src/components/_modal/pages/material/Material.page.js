@@ -25,7 +25,7 @@ import {
   handleLoanMutationUpdates,
   handleOrderMutationUpdates,
 } from "@/components/profile/utils";
-import useUser from "@/components/hooks/useUser";
+import useUser from "@/components/hooks/user/useUser";
 import Spinner from "react-bootstrap/Spinner";
 
 const DynamicContentLoan = ({ dueDateString, dataCyPrefix }) => {

@@ -18,10 +18,15 @@ import { InspirationSlider } from "@/components/inspiration";
 
 import { useData } from "@/lib/api/api";
 import { parseHero } from "@/components/hero/Hero";
+import { useAuthentication } from "@/components/hooks/user/useAuthentication";
+import { useLoanerInfo } from "@/components/hooks/user/useLoanerInfo";
 
 const Index = () => {
   const { data } = useData(frontpageHero());
   const ogImage = parseHero(data);
+  const res = useAuthentication();
+  const loanerInfo = useLoanerInfo();
+  console.log({ loanerInfo });
 
   return (
     <>

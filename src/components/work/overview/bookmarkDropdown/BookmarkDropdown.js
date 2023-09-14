@@ -5,7 +5,7 @@ import Text from "@/components/base/text/Text";
 
 import React, { useEffect, useState } from "react";
 import { cyKey } from "@/utils/trim";
-import useBookmarks from "@/components/hooks/useBookmarks";
+import useBookmarks from "@/components/hooks/user/useBookmarks";
 
 export function BookMarkMaterialSelector({ materialTypes, workId }) {
   const bookmarkClick = () => {};

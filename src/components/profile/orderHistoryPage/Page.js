@@ -2,7 +2,6 @@ import Translate from "@/components/base/translate/Translate";
 import Layout from "../profileLayout";
 import styles from "./orderHistoryPage.module.css";
 import { useData } from "@/lib/api/api";
-import useUser from "@/components/hooks/useUser";
 import Text from "@/components/base/text";
 import Pagination from "@/components/search/pagination/Pagination";
 
@@ -14,6 +13,7 @@ import { orderHistory } from "@/lib/api/order.fragments";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import * as userFragments from "@/lib/api/user.fragments";
+import { useAuthentication } from "@/components/hooks/user/useAuthentication";
 
 const itemsPerPage = 4;
 
@@ -25,7 +25,7 @@ const itemsPerPage = 4;
  */
 
 export default function OrderHistoryPage() {
-  const { isAuthenticated } = useUser();
+  const { isAuthenticated } = useAuthentication();
   const breakpoint = useBreakpoint();
   const modal = useModal();
   const router = useRouter();

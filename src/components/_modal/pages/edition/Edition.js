@@ -8,7 +8,7 @@ import Cover from "@/components/base/cover";
 import { useModal } from "@/components/_modal";
 import { useData } from "@/lib/api/api";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
-import usePickupBranch from "@/components/hooks/usePickupBranch";
+import usePickupBranch from "@/components/hooks/user/usePickupBranch";
 import { inferAccessTypes } from "@/components/_modal/pages/edition/utils";
 import { useMemo } from "react";
 import { getCoverImage } from "@/components/utils/getCoverImage";

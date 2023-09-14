@@ -7,7 +7,6 @@ import ProfileMenu from "../profilemenu/desktop/ProfileMenu";
 import Breadcrumb from "../breadcrumb/Breadcrumb";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import NavigationDropdown from "@/components/base/dropdown/NavigationDropdown";
-import useUser from "@/components/hooks/useUser";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import Translate from "@/components/base/translate/Translate";
@@ -15,6 +14,8 @@ import { signOut } from "@dbcdk/login-nextjs/client";
 import Button from "@/components/base/button";
 import { useModal } from "@/components/_modal";
 import Router from "next/router";
+import { useAuthentication } from "@/components/hooks/user/useAuthentication";
+import { useLoanerInfo } from "@/components/hooks/user/useLoanerInfo";
 
 const CONTEXT = "profile";
 const MENUITEMS = ["loansAndReservations", "orderHistory", "myLibraries"];
@@ -31,7 +32,7 @@ export default function ProfileLayout({ title, children }) {
   const isMobile = breakpoint === "xs" || breakpoint === "sm";
   const isTablet = breakpoint === "md";
   const isDesktop = !isMobile && !isTablet;
-  const user = useUser();
+  const { isAuthenticated } = useAuthentication();
   const modal = useModal();
 
   return (
@@ -52,7 +53,7 @@ export default function ProfileLayout({ title, children }) {
         </Col>
         <Col lg={9}>
           {/**page content here */}
-          {user?.isAuthenticated ? (
+          {isAuthenticated ? (
             <>
               <Title
                 className={styles.title}
@@ -106,12 +107,13 @@ export default function ProfileLayout({ title, children }) {
 }
 
 const LogoutButton = () => {
-  const user = useUser();
+  const { isAuthenticated, isGuestUser, guestLogout } = useAuthentication();
+  const { loanerInfo } = useLoanerInfo();
 
-  if (!user.isAuthenticated) {
+  if (isAuthenticated) {
     return;
   }
-  const userName = user?.loanerInfo?.userParameters?.userName;
+  const userName = loanerInfo?.userParameters?.userName;
   return (
     <div className={styles.logoutContainer}>
       <Text
@@ -124,10 +126,10 @@ const LogoutButton = () => {
       })} ${userName}`}</Text>
       <Link
         onClick={() => {
-          if (user.isAuthenticated) {
+          if (isAuthenticated) {
             signOut(null, "/");
-          } else if (user.isGuestUser) {
-            user.guestLogout();
+          } else if (isGuestUser) {
+            guestLogout();
             Router.push("/");
           }
         }}

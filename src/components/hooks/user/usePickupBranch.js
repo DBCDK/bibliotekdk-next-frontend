@@ -1,24 +1,20 @@
-import useUser from "@/components/hooks/useUser";
 import { useData } from "@/lib/api/api";
 import * as userFragments from "@/lib/api/user.fragments";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 import merge from "lodash/merge";
+import { useAuthentication } from "./useAuthentication";
+import { useLoanerInfo } from "./useLoanerInfo";
 
 export default function usePickupBranch(pid) {
-  const {
-    authUser,
-    loanerInfo,
-    updateLoanerInfo,
-    isAuthenticated,
-    isGuestUser,
-  } = useUser();
+  const { isAuthenticated, isGuestUser } = useAuthentication();
+  const { loanerInfo, updateLoanerInfo } = useLoanerInfo();
 
   /**
    * Branches, details, policies, and userParams
    */
   // Fetch branches and order policies for (loggedIn) user
   const { data: orderPolicy, isLoading: policyIsLoading } = useData(
-    pid && authUser.name && userFragments.orderPolicy({ pid })
+    pid && isAuthenticated && userFragments.orderPolicy({ pid })
   );
   // scope
   const defaultUserPickupBranch = orderPolicy?.user?.agency?.result[0];
@@ -73,7 +69,7 @@ export default function usePickupBranch(pid) {
   const isAuthenticatedForPickupBranch = isAuthenticated || isGuestUser;
 
   return {
-    authUser,
+    authUser: isAuthenticated ? loanerInfo : {}, // TODO do we need authUser?
     loanerInfo,
     updateLoanerInfo,
     pickupBranch: initialPickupBranch.pickupBranch,

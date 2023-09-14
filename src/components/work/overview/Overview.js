@@ -9,7 +9,6 @@ import WorkGroupingsOverview from "./workgroupingsoverview";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
-import useUser from "@/components/hooks/useUser";
 import styles from "./Overview.module.css";
 import OrderButtonTextBelow from "@/components/work/reservationbutton/orderbuttontextbelow/OrderButtonTextBelow";
 import { useEffect, useMemo } from "react";
@@ -232,7 +231,6 @@ export function OverviewError() {
  * @returns {JSX.Element}
  */
 export default function Wrap({ workId, type, onTypeChange, login }) {
-  const user = useUser();
   const fbiWork = useData(workFragments.overviewWork({ workId }));
 
   if (fbiWork.isLoading) {
@@ -250,7 +248,6 @@ export default function Wrap({ workId, type, onTypeChange, login }) {
       type={type}
       onTypeChange={onTypeChange}
       login={login}
-      user={user}
     />
   );
 }
@@ -259,6 +256,5 @@ export default function Wrap({ workId, type, onTypeChange, login }) {
 Wrap.propTypes = {
   workId: PropTypes.string,
   type: PropTypes.arrayOf(PropTypes.string),
-  user: PropTypes.object,
   login: PropTypes.func,
 };

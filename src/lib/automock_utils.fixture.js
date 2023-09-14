@@ -1,7 +1,7 @@
 // A manifestation that may be ordered via ILL
-import useUser from "@/components/hooks/useUser";
 import { useId, useMemo } from "react";
 import { AccessEnum } from "@/lib/enums";
+import { useLoanerInfo } from "@/components/hooks/user/useLoanerInfo";
 
 const MANIFESTATION_BASE = {
   titles: {
@@ -807,7 +807,7 @@ function useMockLoanerInfo({
   debt = USER_DEBT,
   agency = USER_AGENCY,
 }) {
-  const { updateLoanerInfo } = useUser();
+  const { updateLoanerInfo } = useLoanerInfo();
   const id = useId();
   useMemo(() => {
     updateLoanerInfo({

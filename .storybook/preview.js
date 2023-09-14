@@ -6,7 +6,7 @@ import "lazysizes";
 import "lazysizes/plugins/attrchange/ls.attrchange";
 import "../src/scss/custom-bootstrap.scss";
 import "../src/css/styles.css";
-import { AnonymousSessionContext } from "@/components/hooks/useUser";
+import { AnonymousSessionContext } from "@/components/hooks/user/useUser";
 import { RouterContext } from "next/dist/shared/lib/router-context"; // next 12
 
 import { Provider as ModalContextProvider } from "../src/components/_modal/Modal.js";

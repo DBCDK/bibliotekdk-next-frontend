@@ -1,13 +1,13 @@
 import Translate from "@/components/base/translate";
 import Router from "next/router";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
-import useUser from "@/components/hooks/useUser";
 import { useData } from "@/lib/api/api";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 import { useMemo } from "react";
 import { accessFactory } from "@/lib/accessFactoryUtils";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import { extractCreatorsPrioritiseCorporation } from "@/lib/utils";
+import { useLoanerInfo } from "../hooks/user/useLoanerInfo";
 
 export function openLocalizationsModal(modal, pids) {
   modal.push("localizations", {
@@ -115,7 +115,7 @@ export function getSeo(work) {
 }
 
 export function useBranchUserAndHasDigitalAccess(selectedPids) {
-  const { loanerInfo } = useUser();
+  const { loanerInfo } = useLoanerInfo();
 
   const {
     data: branchUserData,
