@@ -153,9 +153,15 @@ export default function OrderHistoryPage() {
             </Text>
           </div>
 
-          {orderHistoryData?.map((order) => {
-            return <TableItem order={order} key={order?.orderId} />;
-          })}
+          {totalPages == 0 ? (
+            <Text className={styles.emptyListText}>
+              {Translate({ context: "profile", label: "emptyOrderList" })}
+            </Text>
+          ) : (
+            orderHistoryData?.map((order) => {
+              return <TableItem order={order} key={order?.orderId} />;
+            })
+          )}
         </>
       ) : (
         <table className={styles.orderHistoryTable}>
@@ -172,11 +178,17 @@ export default function OrderHistoryPage() {
               </th>
             </tr>
           </thead>
-          <tbody>
-            {orderHistoryData?.map((order) => (
-              <TableItem order={order} key={order?.orderId} />
-            ))}
-          </tbody>
+          {totalPages == 0 ? (
+            <Text className={styles.emptyListText}>
+              {Translate({ context: "profile", label: "emptyOrderList" })}
+            </Text>
+          ) : (
+            <tbody>
+              {orderHistoryData?.map((order) => (
+                <TableItem order={order} key={order?.orderId} />
+              ))}
+            </tbody>
+          )}
         </table>
       )}
       {totalPages > 0 && (
