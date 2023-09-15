@@ -48,6 +48,7 @@ function LocalizationInformation({
             className={cx(styles.iconLink, {
               [styles.disabled]: isLoadingBranches,
             })}
+            skeleton={isLoadingBranches}
           >
             <Text tag="span" type="text3" className={styles.fullLink}>
               {Translate({
