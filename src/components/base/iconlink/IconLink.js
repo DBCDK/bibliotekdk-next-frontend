@@ -77,7 +77,11 @@ export function IconLink({
     >
       {iconPlacement === "left" && <IconComponent />}
       <div>
-        <Link border={disabled ? {} : border} tag={"span"} disabled={true}>
+        <Link
+          border={disabled ? false : border}
+          tag={"span"}
+          disabled={disabled}
+        >
           {typeof children === "string" ? (
             <Text type={textType} tag="span">
               {children}
