@@ -81,10 +81,14 @@
   width: 100%;
   height: 80px;
   position: unset;
-}
-.skeletonItem {
   padding-right: 0px;
   margin: 20px 0;
+}
+.skeletonText {
+  width: 100%;
+  height: 50px;
+  position: unset;
+  margin-bottom: 40px;
 }
 .skeletonContainer {
   padding-top: 10px;

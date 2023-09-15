@@ -75,25 +75,17 @@ export default function OrderHistoryPage() {
     }
   }, [modal.isVisible]);
 
-  const SkeletonItem = ({ ...props }) => {
-    return (
-      <div className={styles.skeletonItem}>
-        <Skeleton className={styles.skeleton} {...props} />
-      </div>
-    );
-  };
-
   if (isLoading) {
     return (
       <Layout title={Translate({ context: "profile", label: "orderHistory" })}>
-        <SkeletonItem lines={2} />
+        <Skeleton lines={2} className={styles.skeletonText} />
 
         <>
           <div className={styles.skeletonContainer}>
-            <SkeletonItem />
-            <SkeletonItem />
-            <SkeletonItem />
-            <SkeletonItem />
+            <Skeleton className={styles.skeleton} />
+            <Skeleton className={styles.skeleton} />
+            <Skeleton className={styles.skeleton} />
+            <Skeleton className={styles.skeleton} />
           </div>
         </>
       </Layout>
