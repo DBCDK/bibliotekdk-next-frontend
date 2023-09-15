@@ -2,7 +2,10 @@ import cx from "classnames";
 import styles from "./BranchLocalizationItem.module.css";
 import Text from "@/components/base/text/Text";
 import LocalizationItemBase from "@/components/_modal/pages/base/localizationsBase/localizationItemBase/LocalizationItemBase";
-import { AvailabilityEnum } from "@/components/hooks/useAgencyAccessFactory";
+import {
+  AvailabilityEnum,
+  useSingleBranch,
+} from "@/components/hooks/useHandleAgencyAccessData";
 
 const textProps = {
   className: cx(styles.text),
@@ -12,18 +15,27 @@ const textProps = {
 
 export default function BranchLocalizationItem({
   context,
-  branch,
-  query,
   modal,
+  branchId,
+  pids,
 }) {
+  const { agenciesFlatSorted, agenciesIsLoading } = useSingleBranch({
+    pids: pids,
+    branchId: branchId,
+  });
+
+  const branch = agenciesFlatSorted?.[0]?.branches?.[0];
+
   return (
     <LocalizationItemBase
       library={branch}
+      itemLoading={agenciesIsLoading}
       modalPush={() =>
         modal.push("branchDetails", {
           ...context,
           title: branch?.branchName,
-          libraries: branch,
+          pids: pids,
+          branchId: branchId,
         })
       }
     >

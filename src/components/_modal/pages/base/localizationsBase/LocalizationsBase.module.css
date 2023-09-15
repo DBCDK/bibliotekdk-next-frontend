@@ -1,19 +1,19 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  row-gap: var(--pt3);
+  /*row-gap: var(--pt1);*/
 }
 
 /* .top is passed as className prop to Top component */
 .top {
   padding-top: var(--pt3);
-  padding-bottom: 0;
+  padding-bottom: var(--pt3);
 }
 
 @media (min-width: 576px) {
   .top {
     padding-top: var(--pt5);
-    padding-bottom: 0;
+    padding-bottom: var(--pt3);
   }
 }
 
@@ -27,18 +27,21 @@
   }
 }
 
+.subheader_text {
+  padding-top: var(--pt1);
+  padding-bottom: var(--pt5);
+}
+
+.search_bar {
+  padding-bottom: var(--pt2);
+}
+
 .agency_list {
   display: flex;
   flex-direction: column;
 }
 
-.opening_hours {
+.branch_details {
   display: flex;
   flex-direction: column;
-  gap: var(--pt4);
-}
-
-.opening_hours path {
-  /*fill: var(--blue);*/
-  stroke: var(--blue);
 }

@@ -210,7 +210,7 @@ export function translateAndEncode(context, label, requestedLang = undefined) {
 /**
  *
  * @param {*} agencyID
- * @returns returns true if public library (Folkebibliotek)
+ * @returns boolean true if public library (Folkebibliotek)
  */
 export const isPublicLibrary = (agencyID) => {
   const faroeIslandsLibraries = ["900455", "911116", "911130"];
@@ -219,6 +219,34 @@ export const isPublicLibrary = (agencyID) => {
     parsedID?.charAt(0) === "7" || faroeIslandsLibraries.includes(parsedID)
   );
 };
+
+export const LibraryType = Object.freeze({
+  DANISH_PUBLIC_LIBRARY: "DANISH_PUBLIC_LIBRARY",
+  FAROESE_LIBRARY: "FAROESE_LIBRARY",
+  OTHER_LIBRARY: "OTHER_LIBRARY",
+  GREENLAND_LIBRARY: "GREENLAND_LIBRARY",
+});
+
+/**
+ * Gets the library type
+ * @param {*} agencyID
+ * @returns string true if public library (Folkebibliotek)
+ */
+export function getLibraryType(agencyID) {
+  const faroeIslandsLibraries = ["900455", "911116", "911130"];
+  const greenlandLibraries = ["900500", "911130", "945800"];
+  const parsedID = agencyID + "";
+
+  if (faroeIslandsLibraries.includes(parsedID)) {
+    return LibraryType.FAROESE_LIBRARY;
+  } else if (greenlandLibraries.includes(parsedID)) {
+    return LibraryType.GREENLAND_LIBRARY;
+  } else if (parsedID?.charAt(0) === "7") {
+    return LibraryType.DANISH_PUBLIC_LIBRARY;
+  } else {
+    return LibraryType.OTHER_LIBRARY;
+  }
+}
 
 export function upperCaseFirstChar(word) {
   return word?.slice(0, 1).toUpperCase() + word?.slice(1);

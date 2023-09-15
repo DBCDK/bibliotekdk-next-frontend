@@ -63,6 +63,7 @@ export function branchHoldings({ branchId, pids }) {
           branchWebsiteUrl
           branchCatalogueUrl
           lookupUrl
+          pickupAllowed
           holdingStatus(pids:$pids) {
             count
             lamp{color message}
@@ -165,6 +166,118 @@ export function branchDigitalCopyAccess({ branchId }) {
       monitor(name: "bibdknext_branch_digital_copy_access")
      }`,
     variables: { branchId, language: lang },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * Branches in agencies
+ */
+export function branchesActiveInAgency({ agencyId, pids, q = "" }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query branchesActiveInAgency($agencyId: String!, $q: String, $pids: [String!]!, $language: LanguageCode!) {
+      branches(agencyid: $agencyId, q: $q, bibdkExcludeBranches: true, status: AKTIVE, language: $language) {
+        hitcount
+        agencyUrl
+        result {
+          agencyId
+          agencyName
+          branchId
+          name
+          postalAddress
+          postalCode
+          city
+          pickupAllowed
+          highlights {
+            key
+            value
+          }
+          branchWebsiteUrl
+          branchCatalogueUrl
+          lookupUrl
+          holdingStatus(pids: $pids) {
+            count
+            branchId
+            expectedDelivery
+            agencyHoldings {
+              agencyId
+              localisationPid
+              localIdentifier
+            }
+            holdingItems {
+              branch
+              branchId
+              willLend
+              expectedDelivery
+              localHoldingsId
+            }
+            lamp {
+              color
+              message
+            }
+          }
+        }
+      }
+    }`,
+    variables: { agencyId, q, pids, language: lang },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * Branches in agencies
+ */
+export function branchesByQuery({ q, pids }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query branchesActiveInAgency($q: String!, $pids: [String!]!, $language: LanguageCode!) {
+      branches(q: $q, bibdkExcludeBranches: true, status: AKTIVE, language: $language) {
+        hitcount
+        agencyUrl
+        result {
+          agencyId
+          agencyName
+          branchId
+          name
+          postalAddress
+          postalCode
+          city
+          pickupAllowed
+          highlights {
+            key
+            value
+          }
+          branchWebsiteUrl
+          branchCatalogueUrl
+          lookupUrl
+          holdingStatus(pids: $pids) {
+            count
+            branchId
+            expectedDelivery
+            agencyHoldings {
+              agencyId
+              localisationPid
+              localIdentifier
+            }
+            holdingItems {
+              branch
+              branchId
+              willLend
+              expectedDelivery
+              localHoldingsId
+            }
+            lamp {
+              color
+              message
+            }
+          }
+        }
+      }
+    }`,
+    variables: { q, pids, language: lang },
     slowThreshold: 3000,
   };
 }

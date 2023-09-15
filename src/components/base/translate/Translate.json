@@ -600,8 +600,8 @@
     },
     "localizations": {
       "reminder_can_be_ordered_from_anywhere": {
-        "da": "Husk at du kan bestille materialet uanset hvilket bibliotek der har det.",
-        "en": "Remember that materials can be ordered regardless in which library it is."
+        "da": "Husk at du kan bestille online og hente på dit foretrukne bibliotek, uanset hvor materialet befinder sig.",
+        "en": "Remember that you can order online and pickup in your preferred library, regardless of where the material is located."
       },
       "editions_on_shelf": {
         "da": "Udgaver på hylden",
@@ -640,8 +640,44 @@
         "en": "%s unknown availability"
       },
       "order_to_here": {
-        "da": "Bestil til afhentning her",
-        "en": "Order to pickup here"
+        "da": "Bestil til afhentning på denne afdeling",
+        "en": "Order to pickup on this branch"
+      },
+      "about_the_branch": {
+        "da": "Om afdelingen",
+        "en": "About the branch"
+      },
+      "additional_branches_available": {
+        "da": "+ %s afdelinger mere",
+        "en": "+ %s additional branches"
+      },
+      "home_at_1_branch": {
+        "da": "Hjemme på én",
+        "en": "Available at one"
+      },
+      "home_at_branches": {
+        "da": "Hjemme på %s",
+        "en": "Available at %s"
+      },
+      "branch": {
+        "da": "afdeling",
+        "en": "branch"
+      },
+      "branches": {
+        "da": "afdelinger",
+        "en": "branches"
+      },
+      "or_more_branches": {
+        "da": "eller flere afdelinger",
+        "en": "or more branches"
+      },
+      "one": {
+        "da": "én",
+        "en": "one"
+      },
+      "x_or_more": {
+        "da": "",
+        "en": "one"
       }
     },
     "manifestation_content": {

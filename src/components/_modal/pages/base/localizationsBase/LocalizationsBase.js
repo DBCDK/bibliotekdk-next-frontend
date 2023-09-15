@@ -10,39 +10,48 @@ import Translate from "@/components/base/translate";
 import debounce from "lodash/debounce";
 import isEmpty from "lodash/isEmpty";
 import { useEffect } from "react";
+import { useData } from "@/lib/api/api";
+import * as manifestationFragments from "@/lib/api/manifestation.fragments";
+import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 
 /**
  * Localizations Base is used in AgencyLocalizations and BranchLocalizations
  * @param children
  * @param {object} modal
  * @param {object} context
- * @param {string} subtitle
- * @param {Array.<object>} manifestations
+ * @param {string|null} subtitle
+ * @param {Array.<object>} manifestationsFromProps
  * @param {function} materialCardTemplate
- * @param {string} subheader
- * @param {string} query
+ * @param {string|null} subheader
+ * @param {string|null} query
  * @param {function} setQuery
- * @param {Array.<object>} defaultLibraries
- * @param {Array.<object>} librariesBeforeCheck
  * @returns {JSX.Element}
  */
 function LocalizationsBase({
   children,
   context,
   subtitle = null,
-  manifestations = [],
-  materialCardTemplate = templateForLocalizations,
+  pids = [],
+  manifestations: manifestationsFromProps = null,
+  materialCardTemplate = (material) =>
+    templateForLocalizations(material, pids.length === 1),
   subheader = null,
   query = null,
   setQuery = null,
-  defaultLibraries = null,
-  libraries: librariesBeforeCheck,
 }) {
-  // Find ud af hvordan defaultLibraries kan inkorporeres.
-  //  Skal nok gøres inde i hook
-  const libraries = !query ? librariesBeforeCheck : librariesBeforeCheck;
-
   const { modal } = context;
+
+  const { data: manifestationsData } = useData(
+    pids &&
+      pids.length > 0 &&
+      manifestationFragments.editionManifestations({
+        pid: pids?.[0],
+      })
+  );
+  const { flattenedGroupedSortedManifestations: manifestationsFromPids } =
+    manifestationMaterialTypeFactory(manifestationsData?.manifestations);
+
+  const manifestations = manifestationsFromProps ?? manifestationsFromPids;
 
   useEffect(() => {
     if (modal?.isVisible) {
@@ -81,11 +90,13 @@ function LocalizationsBase({
       </div>
 
       {subheader && (
-        <Text className={cx(styles.padding_inline)}>{subheader}</Text>
+        <Text className={cx(styles.padding_inline, styles.subheader_text)}>
+          {subheader}
+        </Text>
       )}
 
       {query !== null && setQuery && (
-        <div className={styles.padding_inline}>
+        <div className={cx(styles.padding_inline, styles.search_bar)}>
           <Search
             dataCy="pickup-search-input"
             placeholder={Translate({
@@ -106,10 +117,7 @@ function LocalizationsBase({
 export function List({ children }) {
   return (
     <ul
-      style={{
-        listStyleType: "none",
-        // margin: "24px",
-      }}
+      style={{ listStyleType: "none" }}
       className={cx(styles.padding_inline, styles.agency_list)}
     >
       {children}
@@ -119,7 +127,7 @@ export function List({ children }) {
 
 export function Information({ children }) {
   return (
-    <div className={cx(styles.padding_inline, styles.opening_hours)}>
+    <div className={cx(styles.padding_inline, styles.branch_details)}>
       {children}
     </div>
   );

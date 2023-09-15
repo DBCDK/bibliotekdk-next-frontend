@@ -1,54 +1,62 @@
 import Translate from "@/components/base/translate";
-import useAgencyAccessFactory from "@/components/hooks/useAgencyAccessFactory";
+import { useAgenciesConformingToQuery } from "@/components/hooks/useHandleAgencyAccessData";
 import { useData } from "@/lib/api/api";
-import * as manifestationFragments from "@/lib/api/manifestation.fragments";
-import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
+import * as localizationsFragments from "@/lib/api/localizations.fragments";
 import LocalizationsBase from "@/components/_modal/pages/base/localizationsBase/LocalizationsBase";
 import AgencyLocalizationItem from "./agencyLocalizationItem/AgencyLocalizationItem";
-import Top from "@/components/_modal/pages/base/top";
+import { useState } from "react";
+import isEmpty from "lodash/isEmpty";
 
 export default function Wrap({ context, modal }) {
-  const { agency: agencyOfUser, pids } = context;
+  const { pids } = context;
+  const [query, setQuery] = useState("");
 
-  console.log("context: ", context);
+  const { agenciesFlatSorted, agenciesIsLoading } =
+    useAgenciesConformingToQuery({
+      pids: pids,
+      q: query,
+    });
 
-  const { data: manifestationsData, isLoading: isManifestationsLoading } =
-    useData(
-      pids &&
-        pids.length > 0 &&
-        manifestationFragments.editionManifestations({
-          pid: pids,
-        })
-    );
-  const { flattenedGroupedSortedManifestations: manifestations } =
-    manifestationMaterialTypeFactory(manifestationsData?.manifestations);
+  const {
+    data: agenciesWithHoldings,
+    isLoading: agenciesWithHoldingsIsLoading,
+  } = useData(
+    pids && localizationsFragments.localizationsWithHoldings({ pids: pids })
+  );
 
-  const { agenciesFlatSorted, setQuery, query } = useAgencyAccessFactory({
-    pids,
-  });
+  const agencyIds =
+    query && !isEmpty(query)
+      ? agenciesFlatSorted.map((singleAgency) => singleAgency.agencyId)
+      : agenciesWithHoldings?.localizationsWithHoldings?.agencies?.map(
+          (agency) => agency.agencyId
+        );
+
+  // const agencyIds = null;
 
   return (
     <LocalizationsBase
       modal={modal}
       context={context}
-      manifestations={[manifestations?.[0]]}
+      pids={pids}
       subheader={Translate({
         context: "localizations",
         label: "reminder_can_be_ordered_from_anywhere",
       })}
       query={query}
       setQuery={setQuery}
-      defaultLibraries={agencyOfUser}
-      libraries={agenciesFlatSorted}
     >
       <LocalizationsBase.List>
-        {agenciesFlatSorted.map((agency) => (
-          <li key={JSON.stringify(agency)}>
+        {(agencyIds ?? Array(10).fill(""))?.map((agencyId, index) => (
+          <li key={JSON.stringify(agencyId + "-" + index)}>
             <AgencyLocalizationItem
               context={context}
-              agency={agency}
-              query={query}
+              localizationsIsLoading={
+                agenciesWithHoldingsIsLoading || agenciesIsLoading
+              }
               modal={modal}
+              agencyId={agencyId}
+              pids={pids}
+              query={query}
             />
           </li>
         ))}

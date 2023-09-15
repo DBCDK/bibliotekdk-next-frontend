@@ -11,6 +11,7 @@ import {
   dummyData_localizationsItems_branches,
   dummyData_localizationsItems_holdings,
 } from "@/components/_modal/pages/localizations/dummyData.localizations.fixture";
+import { highlightMarkedWords } from "@/components/_modal/utils";
 
 /**
  * Loading component
@@ -115,22 +116,6 @@ export function LocalizationItem({ branch, holdings, isLoading, index }) {
   };
 
   const blinkingcolors = ["red", "green", "yellow", "none"];
-
-  function highlightMarkedWords(highlight) {
-    const regexed = highlight?.split(/(<mark>(?:.*?)<\/mark>)/g).map((el) => {
-      if (el.startsWith("<mark>") && el.endsWith("</mark>")) {
-        return (
-          <span key={JSON.stringify(el)} style={{ fontWeight: "bolder" }}>
-            {el.replace("<mark>", "").replace("</mark>", "")}
-          </span>
-        );
-      } else {
-        return <>{el}</>;
-      }
-    });
-
-    return <>{regexed}</>;
-  }
 
   return (
     <div className={styles.itemwrap} data-cy={`holdings-item-${index.idx}`}>

@@ -11,7 +11,6 @@ import LocalizationItem from "./localizationitem/LocalizationItem";
 import Text from "@/components/base/text/Text";
 import Title from "@/components/base/title";
 import { dummyData_localizations } from "@/components/_modal/pages/localizations/dummyData.localizations.fixture";
-import useAgencyAccessFactory from "@/components/hooks/useAgencyAccessFactory";
 
 export function Localizations({
   context,
@@ -93,8 +92,6 @@ export default function Wrap({ context, modal }) {
   const { data, isLoading } = useData(
     libraryFragments.search({ q: query || "" })
   );
-
-  useAgencyAccessFactory({ pids });
 
   const branches = !query ? agency : data?.branches;
 

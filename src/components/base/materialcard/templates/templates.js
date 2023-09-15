@@ -14,8 +14,9 @@ import styles from "./templates.module.css";
 import { getCoverImage } from "@/components/utils/getCoverImage";
 import cx from "classnames";
 import Translate from "@/components/base/translate";
-import { AvailabilityEnum } from "@/components/hooks/useAgencyAccessFactory";
-import { AvailabilityLight } from "@/components/_modal/pages/base/localizationsBase/localizationItemBase/LocalizationItemBase";
+import { AvailabilityEnum } from "@/components/hooks/useHandleAgencyAccessData";
+
+import { AvailabilityLight } from "@/components/_modal/pages/base/localizationsBase/localizationItemBase/AvailabilityLight";
 
 function propFunc(textType, lines) {
   return {
@@ -145,7 +146,10 @@ export function templateForRelatedWorks(material) {
   };
 }
 
-export function templateForLocalizations(material) {
+export function templateForLocalizations(
+  material,
+  singleManifestation = false
+) {
   const fullTitle = material?.titles?.full?.join(": ");
   const creators = material?.creators;
   const firstCreator =
@@ -154,8 +158,17 @@ export function templateForLocalizations(material) {
     material?.materialTypesArray
   );
 
+  const edition = [
+    material?.edition?.publicationYear?.display,
+    material?.publisher,
+    material?.edition?.edition,
+  ]
+    ?.flat()
+    .filter((pre) => !isEmpty(pre))
+    ?.join(", ");
+
   return {
-    link_href: getWorkUrl(fullTitle, creators, material?.workId),
+    link_href: null,
     fullTitle: fullTitle,
     image_src: material?.cover?.detail,
     workId: material?.workId,
@@ -171,7 +184,9 @@ export function templateForLocalizations(material) {
         )}
         <Text {...propFunc("text3", 1)} title={formattedMaterialTypes}>
           {formattedMaterialTypes},{" "}
-          {Translate({ context: "overview", label: "all-editions" })}
+          {!singleManifestation &&
+            Translate({ context: "overview", label: "all-editions" })}
+          {singleManifestation && edition}
         </Text>
       </>
     ),
@@ -250,8 +265,6 @@ export function templateForBranchDetails(material) {
     [availability?.[AvailabilityEnum.LATER] > 0, AvailabilityEnum.LATER],
     [availability?.[AvailabilityEnum.UNKNOWN] > 0, AvailabilityEnum.UNKNOWN],
   ]);
-
-  console.log("material: ", material);
 
   return {
     link_href: getWorkUrl(fullTitle, creators, material?.workId),
