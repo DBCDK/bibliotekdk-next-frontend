@@ -5,7 +5,6 @@ import LocalizationItemBase from "@/components/_modal/pages/base/localizationsBa
 import {
   useSingleAgency,
   AvailabilityEnum,
-  useAgencyHoldingStatus,
 } from "@/components/hooks/useHandleAgencyAccessData";
 import isEmpty from "lodash/isEmpty";
 import { highlightMarkedWords } from "@/components/_modal/utils";
