@@ -246,6 +246,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
     status,
     dataCy,
     removedOrderId,
+    library,
   } = props;
 
   const modal = useModal();
@@ -259,7 +260,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
       ...props,
     });
   };
-
+  const isDebtRow = type === "DEBT";
   return (
     <ConditionalWrapper
       condition={type === "DEBT"}
@@ -269,6 +270,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
           className={cx(styles.materialRow_mobile, {
             [styles.materialRow_green]: status === "GREEN",
             [styles.materialRow_red]: status === "RED",
+            [styles.materialRow_debt]: isDebtRow,
           })}
           data-cy={dataCy}
         >
@@ -294,11 +296,18 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
         </article>
       )}
     >
-      <div>{!!image && <Cover src={image} size="fill-width" />}</div>
+      {!isDebtRow && (
+        <div>{!!image && <Cover src={image} size="fill-width" />}</div>
+      )}
       <div className={styles.textContainer}>
         <Title type="text1" tag="h3" id={`material-title-${materialId}`}>
           {title}
         </Title>
+        {isDebtRow && (
+          <div>
+            <Text type="text2">{library}</Text>
+          </div>
+        )}
         {creator && <Text type="text2">{creator}</Text>}
         {materialType && creationYear && (
           <Text type="text2" className={styles.uppercase}>
@@ -308,14 +317,17 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
 
         <div className={styles.dynamicContent}>{renderDynamicColumn()}</div>
       </div>
-      <div className={styles.arrowright_container}>
-        <Icon
-          alt=""
-          size={{ w: "auto", h: 2 }}
-          src="arrowrightblue.svg"
-          className={styles.arrowright}
-        />
-      </div>
+
+      {!isDebtRow && (
+        <div className={styles.arrowright_container}>
+          <Icon
+            alt=""
+            size={{ w: "auto", h: 2 }}
+            src="arrowrightblue.svg"
+            className={styles.arrowright}
+          />
+        </div>
+      )}
     </ConditionalWrapper>
   );
 };
@@ -521,6 +533,7 @@ const MaterialRow = (props) => {
           renderDynamicColumn={renderDynamicColumn}
           status={status}
           setHasDeleteError={setHasDeleteError}
+          library={library}
           {...props}
         />
       </>

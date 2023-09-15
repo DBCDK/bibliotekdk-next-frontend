@@ -1142,8 +1142,8 @@
         "en": "LABEL: mangler oversættelse"
       },
       "showAllFilters": {
-        "da": "Filtrer",
-        "en": "LABEL: mangler oversættelse"
+        "da": "Vis alle filtre",
+        "en": "Refine your search"
       },
       "showAllFiltersCount": {
         "da": "Filtrer (%s)",
@@ -3367,6 +3367,10 @@
       "consent": {
         "da": "samtykke",
         "en": "consent"
+      },
+      "emptyOrderList": {
+        "da": "Bestillingshistorikken er tom",
+        "en": "Your order history list is empty"
       }
     }
   }
