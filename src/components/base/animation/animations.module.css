@@ -301,7 +301,6 @@
 /* Turn off link */
 .underlineContainer.link_disabled {
   pointer-events: none;
-  background-size: 0 0, 0 0, 0 0;
 }
 
 /* Turn off animation */
