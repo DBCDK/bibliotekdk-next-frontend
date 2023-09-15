@@ -199,6 +199,7 @@ function Link({
           ...(inferredLinkDisplay && {
             display: inferredLinkDisplay,
           }),
+          textDecoration: "none",
         }}
       >
         {forceUnderlineType === "MULTILINE"
