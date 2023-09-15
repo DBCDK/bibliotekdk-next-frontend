@@ -5,12 +5,13 @@ import uniqWith from "lodash/uniqWith";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 
 import { useData } from "@/lib/api/api";
+import isEmpty from "lodash/isEmpty";
 
 export const AvailabilityEnum = Object.freeze({
   NOW: "AVAILABLE_NOW",
   LATER: "AVAILABLE_LATER",
   NEVER: "AVAILABLE_NEVER",
-  UNKNOWN: "UNKNOWN_AVAILABILITY",
+  UNKNOWN: "AVAILABILITY_UNKNOWN",
 });
 
 function isToday(date) {
@@ -117,6 +118,23 @@ function compareDate(a, b) {
   ]);
 }
 
+export function useAgencyHoldingStatus({ agencyId, pids }) {
+  const { data: agencyHoldingStatusData } = useData(
+    agencyId &&
+      branchesFragments.agencyHoldingStatus({ agencyId: agencyId, pids: pids })
+  );
+
+  const holdingStatuses = agencyHoldingStatusData?.branches?.result
+    .filter((branch) => branch.agencyId === agencyId)
+    .map((branch) => branch.holdingStatus);
+
+  const accumulatedAvailability = getAvailabilityAccumulated(holdingStatuses);
+
+  return {
+    accumulatedAvailability: accumulatedAvailability,
+  };
+}
+
 export function useAgenciesConformingToQuery({ pids, q }) {
   const agency1 = useData(
     q &&
@@ -200,12 +218,18 @@ export function handleAgencyAccessData(agencies) {
       (branch) => branch.holdingsItems
     );
 
+    const expectedDeliveryOnHoldingsOrAgency = !isEmpty(holdingsItems)
+      ? allHoldingsAcrossBranchesInAgency
+      : entry?.map((e) => {
+          return { expectedDelivery: e.expectedDelivery };
+        });
+
     return {
       agencyId: entry?.map((e) => e.agencyId)?.[0],
       agencyName: entry?.map((e) => e.agencyName)?.[0],
-      availability: getAvailability(allHoldingsAcrossBranchesInAgency),
+      availability: getAvailability(expectedDeliveryOnHoldingsOrAgency),
       availabilityAccumulated: getAvailabilityAccumulated(
-        allHoldingsAcrossBranchesInAgency
+        expectedDeliveryOnHoldingsOrAgency
       ),
       branches: branches,
       branchesNames: entry.map((e) => e.name),

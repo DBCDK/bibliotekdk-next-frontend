@@ -173,12 +173,12 @@ export function branchDigitalCopyAccess({ branchId }) {
 /**
  * Branches in agencies
  */
-export function branchesActiveInAgency({ agencyId, pids, q = "" }) {
+export function branchesActiveInAgency({ agencyId, pids, limit = 20, q = "" }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
-    query branchesActiveInAgency($agencyId: String!, $q: String, $pids: [String!]!, $language: LanguageCode!) {
-      branches(agencyid: $agencyId, q: $q, bibdkExcludeBranches: true, status: AKTIVE, language: $language) {
+    query branchesActiveInAgency($agencyId: String!, $q: String, $pids: [String!]!, $limit: PaginationLimit!, $language: LanguageCode!) {
+      branches(agencyid: $agencyId, q: $q, bibdkExcludeBranches: true, limit: $limit, status: AKTIVE, language: $language) {
         hitcount
         agencyUrl
         result {
@@ -221,7 +221,7 @@ export function branchesActiveInAgency({ agencyId, pids, q = "" }) {
         }
       }
     }`,
-    variables: { agencyId, q, pids, language: lang },
+    variables: { agencyId, q, pids, limit, language: lang },
     slowThreshold: 3000,
   };
 }
@@ -278,6 +278,31 @@ export function branchesByQuery({ q, pids }) {
       }
     }`,
     variables: { q, pids, language: lang },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * Get a single branch to determine which parameters a user is required
+ * to submit when ordering stuff
+ */
+export function agencyHoldingStatus({ agencyId, pids }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 1000, // for debugging
+    query: `
+    query agencyHoldingStatus($agencyId: String!, $pids: [String!]!, $language: LanguageCode!) {
+      branches(agencyid: $agencyId, bibdkExcludeBranches: true, status: AKTIVE, language: $language) {
+        result {
+          agencyId
+          holdingStatus(pids: $pids) {
+            expectedDelivery
+          }
+        }
+      }
+      monitor(name: "bibdknext_branch_digital_copy_access")
+     }`,
+    variables: { agencyId, pids, language: lang },
     slowThreshold: 3000,
   };
 }
