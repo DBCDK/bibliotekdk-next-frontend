@@ -33,6 +33,7 @@ export function useAuthentication() {
   // re-renders throughout the application
   return useMemo(() => {
     return {
+      accessToken: authenticatedSession?.accessToken,
       isAuthenticated,
       isGuestUser,
       isLoggedIn: isAuthenticated || isGuestUser,
