@@ -35,3 +35,13 @@
   outline: 1px solid var(--blue);
   background-color: var(--concrete);
 }
+
+.arrowIcon {
+  margin-left: var(--pt1);
+  display: flex;
+  transition: transform 0.3s ease;
+}
+
+.arrowIcon_open {
+  transform: rotate(180deg);
+}

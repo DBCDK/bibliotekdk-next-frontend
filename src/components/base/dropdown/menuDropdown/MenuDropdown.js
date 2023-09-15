@@ -2,6 +2,12 @@ import Button from "@/components/base/button";
 import { createRef, useEffect, useRef, useState } from "react";
 import cx from "classnames";
 import styles from "./MenuDropdown.module.css";
+import Icon from "../../icon";
+
+/**
+ * Menu dropdown. Use this menu for a menu with actions - not redirects
+ * Utility component to handle accessability stuff
+ */
 
 const MenuDropdown = ({
   options,
@@ -118,6 +124,14 @@ const MenuDropdown = ({
         aria-expanded={isOpen}
       >
         Administrer
+        <Icon
+          className={cx(styles.arrowIcon, {
+            [styles.arrowIcon_open]: isOpen,
+          })}
+          size={{ w: 2, h: "auto" }}
+          alt=""
+          src={"arrowUp.svg"}
+        />
       </Button>
 
       <ul
