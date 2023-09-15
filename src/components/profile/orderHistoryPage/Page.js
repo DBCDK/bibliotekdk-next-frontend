@@ -73,7 +73,7 @@ export default function OrderHistoryPage() {
       setTimeout(mutate, 200);
     }
   }, [modal.isVisible]);
-  console.log("mobile");
+
   if (isLoading) {
     return <h1>Loading..</h1>;
   }
