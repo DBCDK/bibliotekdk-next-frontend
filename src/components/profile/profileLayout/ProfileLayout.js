@@ -6,7 +6,7 @@ import styles from "./ProfileLayout.module.css";
 import ProfileMenu from "../profilemenu/desktop/ProfileMenu";
 import Breadcrumb from "../breadcrumb/Breadcrumb";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
-import NavigationDropdown from "@/components/base/dropdown/NavigationDropdown";
+import NavigationDropdown from "@/components/base/dropdown/navigationDropdown/NavigationDropdown";
 import useUser from "@/components/hooks/useUser";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
@@ -51,13 +51,16 @@ export default function ProfileLayout({ title, children }) {
           <LogoutButton />
         </div>
       )}
-      <NavigationDropdown context={CONTEXT} menuItems={MENUITEMS} />
+
+      {user?.isAuthenticated && (
+        <NavigationDropdown context={CONTEXT} menuItems={MENUITEMS} />
+      )}
 
       <Row>
         {isDesktop && <LogoutButton />}
         <Col lg={3} className={styles.navColumn}>
           {isDesktop && <Breadcrumb textType="text2" />}
-          <ProfileMenu />
+          {user?.isAuthenticated && <ProfileMenu />}
         </Col>
         <Col lg={9}>
           {/**page content here */}

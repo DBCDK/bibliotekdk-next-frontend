@@ -535,7 +535,6 @@ const MaterialRow = (props) => {
   };
 
   const onCheckboxClick = (e) => {
-    console.log(e.target);
     if (
       e.target instanceof HTMLHeadingElement ||
       e.target instanceof HTMLButtonElement ||
@@ -555,7 +554,7 @@ const MaterialRow = (props) => {
     );
   }
 
-  if (isMobileSize) {
+  if (isMobileSize && type !== "BOOKMARK") {
     return (
       <>
         {hasDeleteError && type === "ORDER" && (
