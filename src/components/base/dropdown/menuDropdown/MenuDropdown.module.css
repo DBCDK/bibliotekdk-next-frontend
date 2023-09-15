@@ -16,6 +16,10 @@
   display: none;
 }
 
+.menu_open {
+  display: block;
+}
+
 .menu:last-child() {
   border-bottom: 0;
 }

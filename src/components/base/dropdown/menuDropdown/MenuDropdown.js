@@ -130,6 +130,7 @@ const MenuDropdown = ({
       >
         {options.map((option, i) => (
           <div
+            key={`option-${option}`}
             role="menuitem"
             tabIndex={0}
             onClick={() => onItemClick(i)}

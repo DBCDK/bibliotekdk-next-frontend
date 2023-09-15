@@ -10,17 +10,19 @@ import { useEffect, useState } from "react";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
 import ProfileLayout from "../profileLayout/ProfileLayout";
 import Translate from "@/components/base/translate";
-import NavigationDropdown from "@/components/base/dropdown/menu";
 import MenuDropdown from "@/components/base/dropdown/menuDropdown/MenuDropdown";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 const CONTEXT = "bookmark";
-const MENUITEMS = ["Hent referencer", "Bestil flere", "Fjern flere"];
+const MENUITEMS = ["Bestil flere", "Hent referencer", "Fjern flere"];
 
 const BookmarkPage = () => {
   const { bookmarks: bookmarkCookies } = useBookmarks();
   const { data } = usePopulateBookmarks(bookmarkCookies);
   const [activeStickyButton, setActiveStickyButton] = useState(null);
   const bookmarks = data?.works.filter((n) => n);
+  const breakpoint = useBreakpoint();
+  const isMobile = breakpoint === "sm" || breakpoint === "xs";
   const [checkboxList, setCheckboxList] = useState();
 
   useEffect(() => {
@@ -40,21 +42,22 @@ const BookmarkPage = () => {
   };
 
   const onDropdownClick = (idx) => {
-    setActiveStickyButton(idx);
+    setActiveStickyButton(idx + ""); // Stringify, to prevent 0 == null behaviour
   };
 
   const getStickyButtonText = () => {
     switch (activeStickyButton) {
-      case 0:
+      case "0":
         return "Bestil";
-      case 1:
+      case "1":
         return "Hent referencer";
-      case 2:
+      case "2":
         return "Fjern";
     }
   };
 
   const isAllSelected =
+    checkboxList?.length > 0 &&
     checkboxList?.filter((e) => e.isSelected === false).length === 0;
   const isNothingSelected =
     checkboxList?.filter((e) => e.isSelected === true).length === 0;
@@ -67,6 +70,7 @@ const BookmarkPage = () => {
       })}
     >
       <div className={styles.dropdownWrapper}>
+        {/* TODO - make modal? not sure */}
         <MenuDropdown options={MENUITEMS} onItemClick={onDropdownClick} />
       </div>
 
@@ -99,6 +103,7 @@ const BookmarkPage = () => {
         >
           <Checkbox
             checked={isAllSelected}
+            disabled={checkboxList?.length === 0}
             id="bookmarkpage-select-all"
             aria-labelledby="bookmarkpage-select-all-label"
             tabIndex="-1"
@@ -145,7 +150,7 @@ const BookmarkPage = () => {
           bookmarks?.map((bookmark, idx) => (
             <MaterialRow
               key={`bookmark-list-${idx}`}
-              hasCheckbox
+              hasCheckbox={!isMobile || activeStickyButton !== null}
               title={bookmark?.titles?.main[0] || ""}
               creator={bookmark?.creators[0]?.display}
               materialType={

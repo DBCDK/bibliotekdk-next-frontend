@@ -51,13 +51,16 @@ export default function ProfileLayout({ title, children }) {
           <LogoutButton />
         </div>
       )}
-      <NavigationDropdown context={CONTEXT} menuItems={MENUITEMS} />
+
+      {user?.isAuthenticated && (
+        <NavigationDropdown context={CONTEXT} menuItems={MENUITEMS} />
+      )}
 
       <Row>
         {isDesktop && <LogoutButton />}
         <Col lg={3} className={styles.navColumn}>
           {isDesktop && <Breadcrumb textType="text2" />}
-          <ProfileMenu />
+          {user?.isAuthenticated && <ProfileMenu />}
         </Col>
         <Col lg={9}>
           {/**page content here */}
