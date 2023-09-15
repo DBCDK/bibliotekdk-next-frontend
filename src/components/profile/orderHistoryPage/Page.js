@@ -13,6 +13,7 @@ import { useModal } from "@/components/_modal";
 import { orderHistory } from "@/lib/api/order.fragments";
 import { useEffect, useState } from "react";
 import * as userFragments from "@/lib/api/user.fragments";
+import Skeleton from "@/components/base/skeleton/Skeleton";
 
 const itemsPerPage = 4;
 
@@ -74,8 +75,25 @@ export default function OrderHistoryPage() {
     }
   }, [modal.isVisible]);
 
+  const SkeletonItem = ({ ...props }) => {
+    return (
+      <div className={styles.skeletonItem}>
+        <Skeleton className={styles.skeleton} {...props} />
+      </div>
+    );
+  };
+
   if (isLoading) {
-    return <h1>Loading..</h1>;
+    return (
+      <Layout title={Translate({ context: "profile", label: "orderHistory" })}>
+        <div className={styles.skeletonContainer}>
+          <SkeletonItem />
+          <SkeletonItem />
+          <SkeletonItem />
+          <SkeletonItem />
+        </div>
+      </Layout>
+    );
   }
   return (
     <Layout title={Translate({ context: "profile", label: "orderHistory" })}>
