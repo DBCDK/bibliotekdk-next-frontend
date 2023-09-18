@@ -25,11 +25,11 @@
   stroke: blue;
 }
 
-.bookmark:focus {
-  border-color: var(--blue);
+.bookmark:focus-visible {
+  border-color: black;
 }
 
-.bookmark:focus i svg path {
+.bookmark:focus-visible i svg path {
   stroke: blue;
 }
 
