@@ -3389,19 +3389,18 @@
         "en": "See your loans and reservations"
       }
     },
-
-    "noagencies":{
-      "title" : {
-        "da" : "Vi kan se at du ikke er registreret på et bibliotek?",
-        "en" : "We notice that you are not registred on a library?"
+    "noagencies": {
+      "title": {
+        "da": "Vi kan se at du ikke er registreret på et bibliotek?",
+        "en": "We notice that you are not registred on a library?"
       },
-      "rubrik" : {
-        "da" : "For at bestille og reservere materialer skal du være registreret på et bibliotek.",
-        "en" : "To order materials you must be registred at a library."
+      "rubrik": {
+        "da": "For at bestille og reservere materialer skal du være registreret på et bibliotek.",
+        "en": "To order materials you must be registred at a library."
       },
       "maintitle": {
-        "da" : "Hvor vil du gerne hente din bestilling?",
-        "en" : "Where would you like to pickup your order?"
+        "da": "Hvor vil du gerne hente din bestilling?",
+        "en": "Where would you like to pickup your order?"
       },
       "maintxt": {
         "da": "Du registrerer dig på et bibliotek via det lokale bibliotek. For folkebiblioteker foregår det ved at du opretter en bruger via deres lokale hjemmeside. Herefter knyttes folkebiblioteket automatisk til din profil på bibliotek.dk. \\n Er du registreret på et uddannelsesbibliotek, kan du muligvis selv knytte biblioteket til din profil under \"Mine biblioteker\".",
