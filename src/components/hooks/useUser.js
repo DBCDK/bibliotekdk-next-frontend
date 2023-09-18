@@ -25,8 +25,12 @@ function useAccessTokenMock() {
  */
 function useUserMock() {
   const useUserMockKey = "useUserMock";
-  const authUser = { name: "Some Name", mail: "some@mail.dk" };
-  const loggedInUser = { userName: authUser.name, userMail: authUser.mail };
+  const authUser = { name: "Some Name", mail: "some@mail.dk", agencies: [] };
+  const loggedInUser = {
+    userName: authUser.name,
+    userMail: authUser.mail,
+    pickupBranch: "790900",
+  };
   const { data, mutate } = useSWR(useUserMockKey, () => loanerInfoMock, {
     initialData: loanerInfoMock,
   });
