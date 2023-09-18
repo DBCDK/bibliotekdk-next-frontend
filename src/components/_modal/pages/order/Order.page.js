@@ -72,9 +72,17 @@ function Order({
   function updateModal() {
     if (modal && modal.isVisible) {
       // call update if data or isLoading is changed
-      if (articleOrderMutation?.isLoading || articleOrderMutation?.data) {
+      if (
+        articleOrderMutation?.isLoading ||
+        articleOrderMutation?.data ||
+        articleOrderMutation?.error
+      ) {
         modal.update(modal.index(), { articleOrder: articleOrderMutation });
-      } else if (orderMutation.isLoading || orderMutation.data) {
+      } else if (
+        orderMutation?.isLoading ||
+        orderMutation?.data ||
+        orderMutation?.error
+      ) {
         modal.update(modal.index(), { order: orderMutation });
       }
     }
