@@ -6,6 +6,7 @@ import {
   AvailabilityEnum,
   useSingleBranch,
 } from "@/components/hooks/useHandleAgencyAccessData";
+import BranchLocalizationItemStatus from "@/components/_modal/pages/branchLocalizations/branchLocalizationItem/branchLocalizationItemStatus/BranchLocalizationItemStatus";
 
 const textProps = {
   className: cx(styles.text),
@@ -42,15 +43,9 @@ export default function BranchLocalizationItem({
       <Text {...textProps} type="text2">
         {branch?.branchName}
       </Text>
-      <Text {...textProps}>
-        Hjemme på {branch?.availability[AvailabilityEnum.NOW]}
-      </Text>
-      <Text {...textProps}>
-        Væk på {branch?.availability[AvailabilityEnum.LATER]}
-      </Text>
-      <Text {...textProps}>
-        Mærkelig på {branch?.availability[AvailabilityEnum.UNKNOWN]}
-      </Text>
+      <div>{branch?.holdingStatus.lamp.color}</div>
+      <div>{branch?.holdingStatus.lamp.message}</div>
+      <BranchLocalizationItemStatus library={branch} />
     </LocalizationItemBase>
   );
 }

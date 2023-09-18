@@ -66,6 +66,7 @@ export function branchHoldings({ branchId, pids }) {
           pickupAllowed
           holdingStatus(pids:$pids) {
             count
+            expectedDelivery
             lamp{color message}
             agencyHoldings {
               localisationPid
@@ -182,45 +183,15 @@ export function branchesActiveInAgency({ agencyId, pids, limit = 20, q = "" }) {
         hitcount
         agencyUrl
         result {
-          agencyId
-          agencyName
-          branchId
-          name
-          postalAddress
-          postalCode
-          city
-          pickupAllowed
-          highlights {
-            key
-            value
-          }
-          branchWebsiteUrl
-          branchCatalogueUrl
-          lookupUrl
+          ...branchFastFragment
           holdingStatus(pids: $pids) {
-            count
-            branchId
-            expectedDelivery
-            agencyHoldings {
-              agencyId
-              localisationPid
-              localIdentifier
-            }
-            holdingItems {
-              branch
-              branchId
-              willLend
-              expectedDelivery
-              localHoldingsId
-            }
-            lamp {
-              color
-              message
-            }
+            ...holdingStatusFragment
           }
         }
       }
-    }`,
+    }
+    ${branchFastFragment}
+    ${holdingStatusFragment}`,
     variables: { agencyId, q, pids, limit, language: lang },
     slowThreshold: 3000,
   };
@@ -229,58 +200,104 @@ export function branchesActiveInAgency({ agencyId, pids, limit = 20, q = "" }) {
 /**
  * Branches in agencies
  */
-export function branchesByQuery({ q, pids }) {
+export function branchByBranchId({ branchId, pids, limit = 20, q = "" }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
-    query branchesActiveInAgency($q: String!, $pids: [String!]!, $language: LanguageCode!) {
-      branches(q: $q, bibdkExcludeBranches: true, status: AKTIVE, language: $language) {
+    query branchByBranchId($branchId: String!, $q: String, $pids: [String!]!, $limit: PaginationLimit!, $language: LanguageCode!) {
+      branches(branchId: $branchId, q: $q, bibdkExcludeBranches: true, limit: $limit, status: AKTIVE, language: $language) {
         hitcount
         agencyUrl
         result {
-          agencyId
-          agencyName
-          branchId
-          name
-          postalAddress
-          postalCode
-          city
-          pickupAllowed
-          highlights {
-            key
-            value
-          }
-          branchWebsiteUrl
-          branchCatalogueUrl
-          lookupUrl
+          ...branchFastFragment
           holdingStatus(pids: $pids) {
-            count
-            branchId
-            expectedDelivery
-            agencyHoldings {
-              agencyId
-              localisationPid
-              localIdentifier
-            }
-            holdingItems {
-              branch
-              branchId
-              willLend
-              expectedDelivery
-              localHoldingsId
-            }
-            lamp {
-              color
-              message
-            }
+            ...holdingStatusFragment
           }
         }
       }
-    }`,
-    variables: { q, pids, language: lang },
+    }
+    ${branchFastFragment}
+    ${holdingStatusFragment}`,
+    variables: { branchId, q, pids, limit, language: lang },
     slowThreshold: 3000,
   };
 }
+
+/**
+ * Branches in agencies
+ */
+export function branchesByQuery({ q, pids, limit = 20 }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query branchesActiveInAgency($q: String!, $pids: [String!]!, $limit: PaginationLimit!, $language: LanguageCode!) {
+      branches(q: $q, bibdkExcludeBranches: true,  limit: $limit, status: AKTIVE, language: $language) {
+        hitcount
+        agencyUrl
+        result {
+          ...branchFastFragment
+          holdingStatus(pids: $pids) {
+            ...holdingStatusFragment
+          }
+        }
+      }
+    }
+    ${branchFastFragment}
+    ${holdingStatusFragment}`,
+    variables: { q, pids, limit, language: lang },
+    slowThreshold: 3000,
+  };
+}
+
+const branchFastFragment = `fragment branchFastFragment on Branch {
+  agencyId
+  agencyName
+  branchId
+  name
+  openingHours
+  postalAddress
+  postalCode
+  city
+  pickupAllowed
+  highlights {
+    key
+    value
+  }
+  branchWebsiteUrl
+  branchCatalogueUrl
+  lookupUrl
+}`;
+
+const holdingStatusFragment = `fragment holdingStatusFragment on DetailedHoldings {
+    count
+    branchId
+    expectedDelivery
+    agencyHoldings {
+      agencyId
+      localisationPid
+      localIdentifier
+    }
+    holdingItems {
+      branch
+      branchId
+      willLend 
+      expectedDelivery 
+      localHoldingsId 
+      circulationRule
+      issueId
+      department
+      issueText
+      location
+      note
+      readyForLoan
+      status
+      subLocation
+    }
+    lamp {
+      color
+      message
+    }
+}`;
 
 /**
  * Get a single branch to determine which parameters a user is required

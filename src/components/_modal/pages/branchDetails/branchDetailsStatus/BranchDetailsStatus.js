@@ -1,6 +1,6 @@
 import { AvailabilityEnum } from "@/components/hooks/useHandleAgencyAccessData";
 import cx from "classnames";
-import styles from "./BranchStatus.module.css";
+import styles from "./BranchDetailsStatus.module.css";
 import Text from "@/components/base/text";
 import uniq from "lodash/uniq";
 import { AvailabilityLight } from "@/components/_modal/pages/base/localizationsBase/localizationItemBase/AvailabilityLight";
@@ -49,7 +49,7 @@ function messageWhenMaterialsAvailableNever(library) {
   );
 }
 
-function getLocalizations(library, manifestations) {
+function getBranchStatusMessage(library, manifestations) {
   if (library?.availability[AvailabilityEnum.NOW] > 0) {
     return messageWhenMaterialsAvailableNow(library, manifestations);
   } else if (library?.availability[AvailabilityEnum.LATER] > 0) {
@@ -61,7 +61,7 @@ function getLocalizations(library, manifestations) {
   }
 }
 
-export default function BranchStatus({
+export default function BranchDetailsStatus({
   library,
   manifestations,
   possibleAvailabilities = [
@@ -76,10 +76,13 @@ export default function BranchStatus({
   return (
     <div className={cx(styles.row_wrapper)}>
       {possibleAvailabilities.includes(accumulatedAvailability) && (
-        <AvailabilityLight accumulatedAvailability={accumulatedAvailability} />
+        <AvailabilityLight
+          accumulatedAvailability={accumulatedAvailability}
+          pickupAllowed={library?.pickupAllowed}
+        />
       )}
       <div className={styles.result}>
-        {getLocalizations(library, manifestations)}
+        {getBranchStatusMessage(library, manifestations)}
       </div>
     </div>
   );

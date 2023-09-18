@@ -38,6 +38,7 @@ export default function LocalizationItemBase({
             {possibleAvailabilities.includes(accumulatedAvailability) && (
               <AvailabilityLight
                 accumulatedAvailability={accumulatedAvailability}
+                pickupAllowed={library?.pickupAllowed}
                 style={{ marginTop: "var(--pt025)" }}
               />
             )}

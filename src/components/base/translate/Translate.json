@@ -659,6 +659,14 @@
         "da": "Hjemme på %s",
         "en": "Available at %s"
       },
+      "no_pickup": {
+        "da": "Ingen afhentning på afdelingen",
+        "en": "No pickup allowed on the branch"
+      },
+      "no_information_about_opening_hours": {
+        "da": "Information om afdelings åbningstider mangler",
+        "en": "Information about the opening hours of the branch is missing"
+      },
       "branch": {
         "da": "afdeling",
         "en": "branch"

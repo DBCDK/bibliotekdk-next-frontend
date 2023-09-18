@@ -95,10 +95,6 @@ export default function Wrap({ context, modal }) {
 
   const branches = !query ? agency : data?.branches;
 
-  // console.log("agency: ", agency);
-  // console.log("branches: ", branches);
-  // console.log("data?.branches: ", data?.branches);
-
   const props = { ...context, ...data, pids };
   return (
     <Localizations

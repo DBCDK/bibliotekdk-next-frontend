@@ -14,11 +14,19 @@ import * as PropTypes from "prop-types";
  * @param style
  * @returns {JSX.Element}
  */
-export function AvailabilityLight({ accumulatedAvailability, style }) {
+export function AvailabilityLight({
+  accumulatedAvailability,
+  pickupAllowed,
+  style,
+}) {
   const IconInstance = getFirstMatch(true, StatusNoHoldings, [
+    [
+      typeof pickupAllowed !== "undefined" && pickupAllowed === false,
+      StatusNotForLoan,
+    ],
+    [accumulatedAvailability === AvailabilityEnum.NEVER, StatusNotForLoan],
     [accumulatedAvailability === AvailabilityEnum.NOW, StatusOnShelf],
     [accumulatedAvailability === AvailabilityEnum.LATER, StatusOnLoan],
-    [accumulatedAvailability === AvailabilityEnum.NEVER, StatusNotForLoan],
     [accumulatedAvailability === AvailabilityEnum.UNKNOWN, StatusNoHoldings],
   ]);
 

@@ -137,7 +137,6 @@ export default function AgencyLocalizationItem({
         })
       }
     >
-      AgencyId: {agencyId}
       {agencyHighlight ? (
         <Text className={styles.text} type={"text2"}>
           {highlightMarkedWords(agencyHighlight)}

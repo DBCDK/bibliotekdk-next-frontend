@@ -1,5 +1,4 @@
 import groupBy from "lodash/groupBy";
-import sum from "lodash/sum";
 import { getFirstMatch } from "@/lib/utils";
 import uniqWith from "lodash/uniqWith";
 import * as branchesFragments from "@/lib/api/branches.fragments";
@@ -45,20 +44,28 @@ function checkUnknownAvailability(expectedDelivery) {
 }
 
 function getAvailability(items) {
-  return {
-    [AvailabilityEnum.NOW]: sum(
-      items?.map((e) => (isToday(e.expectedDelivery) ? 1 : 0))
-    ),
-    [AvailabilityEnum.LATER]: sum(
-      items?.map((e) => (checkAvailableLater(e?.expectedDelivery) ? 1 : 0))
-    ),
-    [AvailabilityEnum.NEVER]: sum(
-      items?.map((e) => (checkAvailableNever(e?.expectedDelivery) ? 1 : 0))
-    ),
-    [AvailabilityEnum.UNKNOWN]: sum(
-      items?.map((e) => (checkUnknownAvailability(e?.expectedDelivery) ? 1 : 0))
-    ),
+  const availabilityAccumulated = {
+    [AvailabilityEnum.NOW]: 0,
+    [AvailabilityEnum.LATER]: 0,
+    [AvailabilityEnum.NEVER]: 0,
+    [AvailabilityEnum.UNKNOWN]: 0,
   };
+
+  for (const item of items) {
+    const key = getFirstMatch(true, AvailabilityEnum.UNKNOWN, [
+      [isToday(item?.expectedDelivery), AvailabilityEnum.NOW],
+      [checkAvailableLater(item?.expectedDelivery), AvailabilityEnum.LATER],
+      [checkAvailableNever(item?.expectedDelivery), AvailabilityEnum.NEVER],
+      [
+        checkUnknownAvailability(item?.expectedDelivery),
+        AvailabilityEnum.UNKNOWN,
+      ],
+    ]);
+
+    availabilityAccumulated[key] += 1;
+  }
+
+  return availabilityAccumulated;
 }
 
 function getAvailabilityById(items) {
@@ -85,8 +92,8 @@ function getAvailabilityById(items) {
   });
 }
 
-function getAvailabilityAccumulated(holdingsItems) {
-  const availability = getAvailability(holdingsItems);
+function getAvailabilityAccumulated(holdingItems) {
+  const availability = getAvailability(holdingItems);
 
   return availability[AvailabilityEnum.NOW] > 0
     ? AvailabilityEnum.NOW
@@ -101,10 +108,14 @@ function getAvailabilityAccumulated(holdingsItems) {
 
 function sortByAvailability(a, b) {
   return getFirstMatch(true, 0, [
+    [b?.pickupAllowed === false, -1],
+    [a?.pickupAllowed === false, 1],
     [a?.availabilityAccumulated === "AVAILABLE_NOW", -1],
     [b?.availabilityAccumulated === "AVAILABLE_NOW", 1],
     [a?.availabilityAccumulated === "AVAILABLE_LATER", -1],
     [b?.availabilityAccumulated === "AVAILABLE_LATER", 1],
+    [a?.availabilityAccumulated === "AVAILABLE_NEVER", -1],
+    [b?.availabilityAccumulated === "AVAILABLE_NEVER", 1],
   ]);
 }
 
@@ -167,13 +178,19 @@ export function useSingleBranch({ pids, branchId }) {
   const branch = useData(
     branchId &&
       pids &&
-      branchesFragments.branchHoldings({
+      branchesFragments.branchByBranchId({
         branchId: branchId,
         pids: pids,
       })
   );
 
   return handleAgencyAccessData(branch);
+}
+
+function getExpectedDeliveryAccumulatedFromHoldings(holdingItems) {
+  return holdingItems
+    .map((item) => item.expectedDelivery)
+    .sort(compareDate)?.[0];
 }
 
 export function handleAgencyAccessData(agencies) {
@@ -183,7 +200,7 @@ export function handleAgencyAccessData(agencies) {
     agencies?.data?.branches?.result.map((res) => {
       return {
         ...res,
-        holdingsItems: res.holdingStatus.holdingItems,
+        holdingItems: res.holdingStatus.holdingItems,
         expectedDelivery: res.holdingStatus.expectedDelivery,
       };
     }),
@@ -195,8 +212,8 @@ export function handleAgencyAccessData(agencies) {
       ?.map((e) => e.expectedDelivery)
       ?.sort(compareDate)?.[0];
 
-    const holdingsItems = entry.flatMap((e) =>
-      e.holdingsItems.map((item) => item)
+    const holdingItems = entry.flatMap((e) =>
+      e.holdingItems.map((item) => item)
     );
 
     const branches = entry
@@ -205,23 +222,31 @@ export function handleAgencyAccessData(agencies) {
           ...branch,
           agencyName: branch.agencyName,
           branchName: branch.name,
-          availability: getAvailability(branch?.holdingsItems),
-          availabilityById: getAvailabilityById(branch?.holdingsItems),
+          availability: getAvailability(branch?.holdingItems),
+          availabilityById: getAvailabilityById(branch?.holdingItems),
           availabilityAccumulated: getAvailabilityAccumulated(
-            branch?.holdingsItems
+            !isEmpty(branch?.holdingItems)
+              ? branch?.holdingItems
+              : [{ expectedDelivery: branch?.holdingStatus?.expectedDelivery }]
           ),
+          expectedDelivery: branch?.holdingStatus?.expectedDelivery,
+          expectedDeliveryAccumulatedFromHoldings:
+            getExpectedDeliveryAccumulatedFromHoldings(branch?.holdingItems),
         };
       })
       .sort(sortByAvailability);
 
     const allHoldingsAcrossBranchesInAgency = branches.flatMap(
-      (branch) => branch.holdingsItems
+      (branch) => branch.holdingItems
     );
 
-    const expectedDeliveryOnHoldingsOrAgency = !isEmpty(holdingsItems)
+    const expectedDeliveryOnHoldingsOrAgency = !isEmpty(holdingItems)
       ? allHoldingsAcrossBranchesInAgency
       : entry?.map((e) => {
-          return { expectedDelivery: e.expectedDelivery };
+          return {
+            expectedDelivery: e.expectedDelivery,
+            pickupAllowed: e.pickupAllowed,
+          };
         });
 
     return {
@@ -234,10 +259,10 @@ export function handleAgencyAccessData(agencies) {
       branches: branches,
       branchesNames: entry.map((e) => e.name),
       expectedDelivery: expectedDelivery,
-      expectedDeliveryAccumulatedFromHoldings: holdingsItems
+      expectedDeliveryAccumulatedFromHoldings: holdingItems
         .map((item) => item.expectedDelivery)
         .sort(compareDate)?.[0],
-      holdingsItems: holdingsItems,
+      holdingItems: holdingItems,
     };
   });
 

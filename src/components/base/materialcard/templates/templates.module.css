@@ -67,10 +67,3 @@
 .cover__localizations_version {
   width: var(--pt8);
 }
-
-.branch_status {
-  display: flex;
-  flex-direction: row;
-  gap: var(--pt1);
-  align-items: center;
-}
