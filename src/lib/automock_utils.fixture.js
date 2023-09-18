@@ -379,6 +379,8 @@ const BRANCH_4 = {
 
 // A user with some agencies
 const USER_1 = {
+  name: "Some Name",
+  mail: "some@mail.dk",
   agency: {
     result: [BRANCH_1, BRANCH_2],
   },
@@ -497,6 +499,7 @@ const DEFAULT_STORY_PARAMETERS = {
           branches: () => {
             return { result: [BRANCH_1, BRANCH_2, BRANCH_3] };
           },
+          session: () => null,
         },
         ElbaServices: {
           placeCopyRequest: (args) => {
