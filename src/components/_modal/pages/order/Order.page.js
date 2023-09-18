@@ -305,6 +305,7 @@ export default function Wrap(props) {
   }
 
   if (!userInfo?.loanerInfo?.pickupBranch && !userInfo?.authUser?.agencies) {
+    console.log("userinfo", userInfo);
     return <NoAgenciesError />;
   }
 

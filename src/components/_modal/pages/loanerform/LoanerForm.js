@@ -337,6 +337,7 @@ export default function Wrap(props) {
     await updateLoanerInfo({
       userParameters: info,
       pickupBranch: branchId,
+      storeSession: storeLoanerInfo,
     });
     if (changePickupBranch) {
       props.modal.prev("order");
@@ -356,6 +357,14 @@ export default function Wrap(props) {
     return null;
   }
 
+  console.log("loanerInfo?.storeSession", loanerInfo?.storeSession);
+
+  console.log(
+    " loanerInfo?.pickupBranch === branchId",
+    loanerInfo?.pickupBranch === branchId
+  );
+
+  console.log(" loanerInfo", loanerInfo);
   return (
     <>
       <LoanerForm
@@ -365,7 +374,10 @@ export default function Wrap(props) {
         onSubmit={onSubmit}
         skeleton={branchIsLoading}
         onClose={() => props.modal.prev()}
-        storeLoanerInfo={storeLoanerInfo}
+        storeLoanerInfo={
+          storeLoanerInfo ||
+          (loanerInfo?.storeSession && loanerInfo?.pickupBranch === branchId)
+        }
         setStoreLoanerInfo={setStoreLoanerInfo}
       />
     </>
