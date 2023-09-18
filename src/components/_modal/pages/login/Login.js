@@ -133,7 +133,7 @@ export function Login({
           includeArrows={includeArrows}
         />
       )}
-      {showMitIDLogin && <MitIDButton callbackUrl />}
+      {showMitIDLogin && <MitIDButton callBackUUID={callbackUID} />}
     </div>
   );
 }

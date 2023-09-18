@@ -19,6 +19,8 @@ import { onMailChange } from "@/components/_modal/pages/order/utils/order.utils"
 import { useRelevantAccessesForOrderPage } from "@/components/work/utils";
 import { validateEmail } from "@/utils/validateEmail";
 
+import NoAgenciesError from "./noAgencies/NoAgenciesError";
+
 /**
  *  Order component function
  *
@@ -292,6 +294,10 @@ export default function Wrap(props) {
 
   if (isManifestationsLoading) {
     return <OrderSkeleton isSlow={isManifestationsSlow} />;
+  }
+
+  if (!userInfo?.authUser?.agencies) {
+    return <NoAgenciesError />;
   }
 
   if (manifestationError || !manifestationData?.manifestations) {
