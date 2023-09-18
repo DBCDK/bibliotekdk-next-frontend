@@ -10,17 +10,20 @@ import Text from "@/components/base/text";
 import styles from "./MitIDButton.module.css";
 import Translate from "@/components/base/translate";
 import { signIn } from "next-auth/react";
+import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
 
 /**
  * Shows MitID login button and opens MitID login
  * @param {string} callbackUrl
  * @returns
  */
-export default function MitIDButton({ callbackUrl }) {
+export default function MitIDButton({ callBackUUID }) {
+  const callBackUrl = getCallbackUrl(null, callBackUUID);
   const onMitIdLogin = () => {
+    alert(callBackUrl);
     signIn(
       "adgangsplatformen",
-      { callbackUrl: callbackUrl },
+      { callbackUrl: callBackUrl },
       { force_login: 1, idp: "nemlogin" }
     );
   };
