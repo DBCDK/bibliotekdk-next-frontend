@@ -20,7 +20,6 @@ import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
 export default function MitIDButton({ callBackUUID }) {
   const callBackUrl = getCallbackUrl(null, callBackUUID);
   const onMitIdLogin = () => {
-    alert(callBackUrl);
     signIn(
       "adgangsplatformen",
       { callbackUrl: callBackUrl },
