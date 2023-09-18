@@ -304,7 +304,7 @@ export default function Wrap(props) {
     return <OrderSkeleton isSlow={isManifestationsSlow} />;
   }
 
-  if (!userInfo?.authUser?.agencies) {
+  if (!userInfo?.loanerInfo?.pickupBranch && !userInfo?.authUser?.agencies) {
     return <NoAgenciesError />;
   }
 
