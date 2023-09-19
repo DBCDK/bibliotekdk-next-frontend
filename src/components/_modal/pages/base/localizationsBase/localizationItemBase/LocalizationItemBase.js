@@ -19,9 +19,8 @@ export default function LocalizationItemBase({
     AvailabilityEnum.UNKNOWN,
   ],
   itemLoading,
+  accumulatedAvailability,
 }) {
-  const accumulatedAvailability = library?.availabilityAccumulated;
-
   return (
     <div className={cx(styles.container)}>
       <Link

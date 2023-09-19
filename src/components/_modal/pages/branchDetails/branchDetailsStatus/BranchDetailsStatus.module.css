@@ -11,3 +11,9 @@
   width: 100%;
   overflow: hidden;
 }
+
+.fit_content {
+  display: inline;
+  width: fit-content;
+  padding-top: var(--pt2);
+}

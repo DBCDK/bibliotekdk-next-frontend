@@ -651,6 +651,10 @@
         "da": "+ %s afdelinger mere",
         "en": "+ %s additional branches"
       },
+      "no_pickup": {
+        "da": "Ingen afhentning på afdelingen",
+        "en": "No pickup allowed on the branch"
+      },
       "home_at_1_branch": {
         "da": "Hjemme på én",
         "en": "Available at one"
@@ -659,9 +663,25 @@
         "da": "Hjemme på %s",
         "en": "Available at %s"
       },
-      "no_pickup": {
-        "da": "Ingen afhentning på afdelingen",
-        "en": "No pickup allowed on the branch"
+      "order_now_pickup_at_date": {
+        "da": "Bestil nu og afhent fra d. %s",
+        "en": "Order now and pickup from the %s"
+      },
+      "order_now_pickup_at_some_point": {
+        "da": "Bestil nu og afhent senere",
+        "en": "Order now and pickup later"
+      },
+      "not_for_loan": {
+        "da": "Udlånes ikke",
+        "en": "Not for loan"
+      },
+      "status_is_unknown": {
+        "da": "Status kendes ikke",
+        "en": "Status is unknown"
+      },
+      "see_detailed_status": {
+        "da": "Se detailjeret status hos %s",
+        "en": "See detailed status at %s"
       },
       "no_information_about_opening_hours": {
         "da": "Information om afdelings åbningstider mangler",

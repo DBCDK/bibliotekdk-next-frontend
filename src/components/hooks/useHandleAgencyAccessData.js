@@ -13,34 +13,57 @@ export const AvailabilityEnum = Object.freeze({
   UNKNOWN: "AVAILABILITY_UNKNOWN",
 });
 
-function isToday(date) {
+export const HoldingStatusEnum = Object.freeze({
+  ON_SHELF: "OnShelf",
+  ON_LOAN: "OnLoan",
+  NOT_FOR_LOAN: "NotForLoan",
+});
+
+export function dateIsToday(date) {
   return new Date(date).toDateString() === new Date().toDateString();
 }
 
-function checkAvailableLater(expectedDelivery) {
+function checkAvailableNow(expectedDelivery, status) {
+  return dateIsToday(expectedDelivery) && status === HoldingStatusEnum.ON_SHELF;
+}
+
+export function dateIsLater(date) {
   return (
-    expectedDelivery &&
-    typeof expectedDelivery === "string" &&
-    !isNaN(Date.parse(expectedDelivery)) &&
-    !isToday(expectedDelivery)
+    date &&
+    typeof date === "string" &&
+    !isNaN(Date.parse(date)) &&
+    !dateIsToday(date)
   );
 }
 
-function checkAvailableNever(expectedDelivery) {
+function checkAvailableLater(expectedDelivery, status) {
   return (
-    expectedDelivery &&
-    typeof expectedDelivery === "string" &&
-    !isNaN(Date.parse(expectedDelivery)) &&
-    expectedDelivery === "never"
+    (dateIsLater(expectedDelivery) || dateIsToday(expectedDelivery)) &&
+    [HoldingStatusEnum.ON_SHELF, HoldingStatusEnum.ON_LOAN].includes(status)
   );
+}
+
+export function dateIsNever(date) {
+  return (
+    date &&
+    typeof date === "string" &&
+    isNaN(Date.parse(date)) &&
+    date === "never"
+  );
+}
+
+function checkAvailableNever(expectedDelivery, status) {
+  return (
+    dateIsNever(expectedDelivery) || status === HoldingStatusEnum.NOT_FOR_LOAN
+  );
+}
+
+function dateIsUnknown(date) {
+  return !date || typeof date !== "string" || isNaN(Date.parse(date));
 }
 
 function checkUnknownAvailability(expectedDelivery) {
-  return (
-    !expectedDelivery ||
-    typeof expectedDelivery !== "string" ||
-    isNaN(Date.parse(expectedDelivery))
-  );
+  return dateIsUnknown(expectedDelivery);
 }
 
 function getAvailability(items) {
@@ -52,10 +75,20 @@ function getAvailability(items) {
   };
 
   for (const item of items) {
+    console.log("item.branchName: ", item.branch);
     const key = getFirstMatch(true, AvailabilityEnum.UNKNOWN, [
-      [isToday(item?.expectedDelivery), AvailabilityEnum.NOW],
-      [checkAvailableLater(item?.expectedDelivery), AvailabilityEnum.LATER],
-      [checkAvailableNever(item?.expectedDelivery), AvailabilityEnum.NEVER],
+      [
+        checkAvailableNow(item?.expectedDelivery, item?.status),
+        AvailabilityEnum.NOW,
+      ],
+      [
+        checkAvailableLater(item?.expectedDelivery, item?.status),
+        AvailabilityEnum.LATER,
+      ],
+      [
+        checkAvailableNever(item?.expectedDelivery, item?.status),
+        AvailabilityEnum.NEVER,
+      ],
       [
         checkUnknownAvailability(item?.expectedDelivery),
         AvailabilityEnum.UNKNOWN,
@@ -259,10 +292,10 @@ export function handleAgencyAccessData(agencies) {
       branches: branches,
       branchesNames: entry.map((e) => e.name),
       expectedDelivery: expectedDelivery,
-      expectedDeliveryAccumulatedFromHoldings: holdingItems
+      expectedDeliveryAccumulatedFromHoldings: allHoldingsAcrossBranchesInAgency
         .map((item) => item.expectedDelivery)
         .sort(compareDate)?.[0],
-      holdingItems: holdingItems,
+      holdingItems: allHoldingsAcrossBranchesInAgency,
     };
   });
 

@@ -11,6 +11,7 @@ import * as PropTypes from "prop-types";
 /**
  * Availability light has the color of the status of the manifestation on the library (agency or branch)
  * @param accumulatedAvailability
+ * @param pickupAllowed
  * @param style
  * @returns {JSX.Element}
  */
@@ -24,9 +25,9 @@ export function AvailabilityLight({
       typeof pickupAllowed !== "undefined" && pickupAllowed === false,
       StatusNotForLoan,
     ],
-    [accumulatedAvailability === AvailabilityEnum.NEVER, StatusNotForLoan],
     [accumulatedAvailability === AvailabilityEnum.NOW, StatusOnShelf],
     [accumulatedAvailability === AvailabilityEnum.LATER, StatusOnLoan],
+    [accumulatedAvailability === AvailabilityEnum.NEVER, StatusNotForLoan],
     [accumulatedAvailability === AvailabilityEnum.UNKNOWN, StatusNoHoldings],
   ]);
 

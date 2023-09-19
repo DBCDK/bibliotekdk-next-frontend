@@ -123,6 +123,8 @@ export default function AgencyLocalizationItem({
 
   const isLoading = localizationsIsLoading || singleAgencyIsLoading;
 
+  const accumulatedAvailability = agency?.availabilityAccumulated;
+
   return (
     <LocalizationItemBase
       library={agency}
@@ -136,6 +138,7 @@ export default function AgencyLocalizationItem({
           agencyId: agencyId,
         })
       }
+      accumulatedAvailability={accumulatedAvailability}
     >
       {agencyHighlight ? (
         <Text className={styles.text} type={"text2"}>

@@ -2,10 +2,7 @@ import cx from "classnames";
 import styles from "./BranchLocalizationItem.module.css";
 import Text from "@/components/base/text/Text";
 import LocalizationItemBase from "@/components/_modal/pages/base/localizationsBase/localizationItemBase/LocalizationItemBase";
-import {
-  AvailabilityEnum,
-  useSingleBranch,
-} from "@/components/hooks/useHandleAgencyAccessData";
+import { useSingleBranch } from "@/components/hooks/useHandleAgencyAccessData";
 import BranchLocalizationItemStatus from "@/components/_modal/pages/branchLocalizations/branchLocalizationItem/branchLocalizationItemStatus/BranchLocalizationItemStatus";
 
 const textProps = {
@@ -27,6 +24,10 @@ export default function BranchLocalizationItem({
 
   const branch = agenciesFlatSorted?.[0]?.branches?.[0];
 
+  const accumulatedAvailability = branch?.availabilityAccumulated;
+
+  console.log("branch: ", branch);
+
   return (
     <LocalizationItemBase
       library={branch}
@@ -39,12 +40,11 @@ export default function BranchLocalizationItem({
           branchId: branchId,
         })
       }
+      accumulatedAvailability={accumulatedAvailability}
     >
       <Text {...textProps} type="text2">
         {branch?.branchName}
       </Text>
-      <div>{branch?.holdingStatus.lamp.color}</div>
-      <div>{branch?.holdingStatus.lamp.message}</div>
       <BranchLocalizationItemStatus library={branch} />
     </LocalizationItemBase>
   );

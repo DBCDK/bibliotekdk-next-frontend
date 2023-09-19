@@ -136,6 +136,7 @@ function BranchDetails({ context }) {
       return manifestation.ownerWork?.workId;
     })
   );
+  const workId = workIds?.[0];
 
   if (workIds.length !== 1) {
     return (
@@ -144,8 +145,6 @@ function BranchDetails({ context }) {
       </div>
     );
   }
-
-  const workId = workIds?.[0];
 
   return (
     <LocalizationsBase
