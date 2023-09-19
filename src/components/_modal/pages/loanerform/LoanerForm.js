@@ -307,7 +307,6 @@ export default function Wrap(props) {
   //remove userdata when modal is closed - if user doesnt want to store data
   useEffect(() => {
     if (modal?.isVisible === false) {
-      console.log("modal closed - deleting data");
       deleteUserDataFromSession();
     }
   }, [modal?.isVisible]);
@@ -329,7 +328,6 @@ export default function Wrap(props) {
    */
   function deleteUserDataFromSession() {
     if (!loanerInfo?.storeSession) {
-      console.log("deleting session data");
       deleteSessionData();
     }
   }
@@ -341,7 +339,6 @@ export default function Wrap(props) {
   }
 
   async function onSubmit(info) {
-    console.log("submitting ", info);
     await updateLoanerInfo({
       userParameters: info,
       pickupBranch: branchId,

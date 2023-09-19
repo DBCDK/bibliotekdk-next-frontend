@@ -144,8 +144,6 @@ function useUserImpl() {
     isLoggedIn: isAuthenticated || isGuestUser,
     updateLoanerInfo: async (obj) => {
       const newSession = (newSession = merge({}, sessionData, obj));
-      console.log("________updateing loanerinfo ", newSession);
-
       // Update global loaner info object
       await sessionMutate.post(sessionFragments.submitSession(newSession));
       // Broadcast update
@@ -167,7 +165,6 @@ function useUserImpl() {
       if (updatedData) await userMutate(updatedData);
     },
     deleteSessionData: async () => {
-      console.log("_________deleting session ");
       // Delete global loaner info object
       await sessionMutate.post(sessionFragments.deleteSession());
       // Broadcast update
