@@ -146,8 +146,18 @@ function Container({ children, className = {}, mock = {} }) {
     }
   }
 
+  async function moveModalFromStoreToStack(uid, stack) {
+    const store = await modal.getStore();
+    const activeModal = store.find((entry) => entry.uid === uid);
+    if (!activeModal) return;
+    activeModal.active = true;
+    activeModal.loaded = true;
+    stack.push(activeModal);
+    removeFromStore(uid, store);
+  }
+
   // On mount, we try to load stack from local storage
-  useEffect(async () => {
+  useEffect(() => {
     try {
       const uid = currentPageUid;
       if (!uid) {
@@ -173,13 +183,7 @@ function Container({ children, className = {}, mock = {} }) {
       });
 
       if (!activeModalInStack) {
-        const store = await modal.getStore();
-        const activeModal = store.find((entry) => entry.uid === uid);
-        if (!activeModal) return;
-        activeModal.active = true;
-        activeModal.loaded = true;
-        stack.push(activeModal);
-        removeFromStore(uid, store);
+        moveModalFromStoreToStack(uid, stack);
       }
 
       // And lets trigger a render of the loaded stack
