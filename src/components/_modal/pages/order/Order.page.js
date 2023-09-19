@@ -18,7 +18,6 @@ import useOrderPageInformation from "@/components/hooks/useOrderPageInformations
 import { onMailChange } from "@/components/_modal/pages/order/utils/order.utils";
 import { useRelevantAccessesForOrderPage } from "@/components/work/utils";
 import { validateEmail } from "@/utils/validateEmail";
-
 import NoAgenciesError from "./noAgencies/NoAgenciesError";
 
 /**

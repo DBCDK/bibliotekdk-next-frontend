@@ -299,7 +299,6 @@ export default function Wrap(props) {
   const { data, isLoading: branchIsLoading } = useData(
     branchId && branchesFragments.branchUserParameters({ branchId })
   );
-  const [storeLoanerInfo, setStoreLoanerInfo] = useState(false);
 
   const branch = data?.branches?.result?.[0];
 
@@ -325,12 +324,18 @@ export default function Wrap(props) {
    * if user doesnt want to store data for next order.
    * This can be relevant on public computers, when user forgets to close the browser window
    * we dont do this for authenticated users,
-   * because we they have a logout button to remove session data.
+   * because authenticated users have a logout button to remove session data.
    */
   function deleteUserDataFromSession() {
-    if (!storeLoanerInfo) {
+    if (!loanerInfo?.allowSessionStorage) {
       deleteSessionData();
     }
+  }
+
+  async function updateAllowSessionStorage(value) {
+    await updateLoanerInfo({
+      allowSessionStorage: value,
+    });
   }
 
   async function onSubmit(info) {
@@ -338,6 +343,7 @@ export default function Wrap(props) {
       userParameters: info,
       pickupBranch: branchId,
     });
+
     if (changePickupBranch) {
       props.modal.prev("order");
     } else {
@@ -347,7 +353,6 @@ export default function Wrap(props) {
         selectedAccesses,
         workId,
         singleManifestation,
-        storeLoanerInfo: storeLoanerInfo,
       });
     }
   }
@@ -365,8 +370,8 @@ export default function Wrap(props) {
         onSubmit={onSubmit}
         skeleton={branchIsLoading}
         onClose={() => props.modal.prev()}
-        storeLoanerInfo={storeLoanerInfo}
-        setStoreLoanerInfo={setStoreLoanerInfo}
+        storeLoanerInfo={loanerInfo?.allowSessionStorage}
+        setStoreLoanerInfo={updateAllowSessionStorage}
       />
     </>
   );
