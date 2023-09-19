@@ -302,7 +302,7 @@ export default function Wrap(props) {
   if (isManifestationsLoading) {
     return <OrderSkeleton isSlow={isManifestationsSlow} />;
   }
-
+  // check if user logged in via mitId - and has no connection to any libraries
   if (!userInfo?.loanerInfo?.pickupBranch && !userInfo?.authUser?.agencies) {
     return <NoAgenciesError />;
   }

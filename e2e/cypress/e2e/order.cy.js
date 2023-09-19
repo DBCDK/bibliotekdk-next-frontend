@@ -17,8 +17,8 @@ describe("Order", () => {
 
     // Info about pickupbranch
     cy.contains("Test Bib");
-    cy.contains("user.agency.result[0].postalAddress");
-    cy.contains("user.agency.result[0].postalCode user.agency.result[0].city");
+    cy.contains("branches.result[0].postalAddress");
+    cy.contains("branches.result[0].postalCode branches.result[0].city");
 
     // Info about the logged in user
     cy.contains("Bestilles af");
@@ -33,7 +33,7 @@ describe("Order", () => {
     cy.getConsoleEntry("submitOrder").then((entry) => {
       expect(entry[1]).to.deep.equal({
         pids: ["some-pid-1", "some-pid-2"],
-        pickUpBranch: "user.agency.result[0].branchId",
+        pickUpBranch: "branches.result[0].branchId",
         userParameters: {
           userName: "Some Name",
           userMail: "some@mail.dk",

@@ -350,12 +350,12 @@ describe("Server Side Rendering", () => {
   describe(`inspiration/material pages`, () => {
     it(`has correct metadata`, () => {
       getPageHead("/inspiration/boeger").then((res) => {
-        expect(res.title).to.equal("Bøger");
+        expect(res.title).to.equal("Skønlitteratur");
         expect(res.description).to.exist;
         expect(res["og:url"]).to.equal(
           "http://localhost:3000/inspiration/boeger"
         );
-        expect(res["og:title"]).to.equal("Bøger");
+        expect(res["og:title"]).to.equal("Skønlitteratur");
         expect(res["og:description"]).to.exist;
         expect(res["og:image"]).to.exist;
       });

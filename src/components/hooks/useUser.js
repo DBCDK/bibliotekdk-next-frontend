@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 export const AnonymousSessionContext = createContext();
 
 // in memory object for storing loaner info for current user
-let loanerInfoMock = {};
+let loanerInfoMock = { pickupBranch: "790900" };
 
 /**
  * Mock used in storybook
@@ -25,8 +25,14 @@ function useAccessTokenMock() {
  */
 function useUserMock() {
   const useUserMockKey = "useUserMock";
-  const authUser = { name: "Some Name", mail: "some@mail.dk" };
-  const loggedInUser = { userName: authUser.name, userMail: authUser.mail };
+  const authUser = {
+    name: "Some Name",
+    mail: "some@mail.dk",
+  };
+  const loggedInUser = {
+    userName: authUser.name,
+    userMail: authUser.mail,
+  };
   const { data, mutate } = useSWR(useUserMockKey, () => loanerInfoMock, {
     initialData: loanerInfoMock,
   });
