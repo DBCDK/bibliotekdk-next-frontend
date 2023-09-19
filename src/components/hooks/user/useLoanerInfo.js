@@ -8,7 +8,6 @@ import merge from "lodash/merge";
 /**
  * Custom hook for retrieving loaner info from FBI-API.
  * Combines user and session data into a single result object.
- * Returns null if the user is not authenticated and not a guest user.
  */
 export function useLoanerInfo() {
   const { isAuthenticated } = useAuthentication();
