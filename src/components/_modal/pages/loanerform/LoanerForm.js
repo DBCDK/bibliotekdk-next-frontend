@@ -353,7 +353,6 @@ export default function Wrap(props) {
         selectedAccesses,
         workId,
         singleManifestation,
-        storeLoanerInfo: loanerInfo?.storeSession,
       });
     }
   }
