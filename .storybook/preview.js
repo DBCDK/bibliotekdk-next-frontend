@@ -21,7 +21,7 @@ export const decorators = [
     return (
       <SessionProvider
         session={{
-          accessToken: "mocked-accessToken",
+          accessToken: "dummy-token",
           user: { uniqueId: "mocked-uniqueId" },
         }}
       >
