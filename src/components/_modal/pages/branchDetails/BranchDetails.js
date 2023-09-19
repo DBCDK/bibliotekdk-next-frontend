@@ -21,7 +21,7 @@ import * as PropTypes from "prop-types";
 
 function OpeningHours({ singleBranch }) {
   return (
-    <div className={cx(styles.fit_content)}>
+    <div className={cx(styles.fit_content, styles.path_blue)}>
       <Text type="text1">Åbningstider</Text>
       {!isEmpty(singleBranch?.branchWebsiteUrl) ? (
         <IconLink
@@ -52,7 +52,7 @@ OpeningHours.propTypes = { singleBranch: PropTypes.any };
 
 function Address({ singleBranch }) {
   return (
-    <div className={cx(styles.fit_content)}>
+    <div className={cx(styles.fit_content, styles.path_blue)}>
       <Text type="text1">Adresse</Text>
       <Text type="text2">{singleBranch?.postalAddress}</Text>
       <Text type="text2">
@@ -76,7 +76,7 @@ Address.propTypes = { singleBranch: PropTypes.any };
 
 function ContactInformation({}) {
   return (
-    <div className={cx(styles.fit_content)}>
+    <div className={cx(styles.fit_content, styles.path_blue)}>
       <Text type="text1">Kontakt</Text>
       <Text type="text2">
         {"VipCore /1.0/api/findlibrary/{agencyId}/ -- branchPhone"}
@@ -156,10 +156,12 @@ function BranchDetails({ context }) {
         <Title type={"title6"} className={cx(styles.branch_status)}>
           Status
         </Title>
+        <div aria-hidden={true} className={styles.padding_element_pt_two} />
         <BranchDetailsStatus
           library={singleBranch}
           pickupAllowed={singleBranch?.pickupAllowed}
           manifestations={manifestations}
+          pids={pids}
         />
         {!singleBranch?.pickupAllowed ? (
           <div>NEJ IKKE ALLOWED</div>

@@ -9,7 +9,7 @@ import {
 import isEmpty from "lodash/isEmpty";
 import { highlightMarkedWords } from "@/components/_modal/utils";
 import Translate from "@/components/base/translate";
-import { getLibraryType, LibraryType } from "@/lib/utils";
+import { getLibraryType, LibraryTypeEnum } from "@/lib/utils";
 
 const textProps = {
   className: cx(styles.text),
@@ -39,7 +39,7 @@ function DefaultShowingOfAgencies({ agency }) {
           Translate({
             context: "localizations",
             label:
-              LibraryType.DANISH_PUBLIC_LIBRARY !== publicLibrary
+              LibraryTypeEnum.DANISH_PUBLIC_LIBRARY !== publicLibrary
                 ? "or_more_branches"
                 : numberOfBranchesWithAvailable > 1
                 ? "branches"

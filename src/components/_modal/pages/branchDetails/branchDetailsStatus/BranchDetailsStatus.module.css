@@ -9,11 +9,13 @@
   flex-direction: column;
   flex-wrap: wrap;
   width: 100%;
-  overflow: hidden;
 }
 
-.fit_content {
-  display: inline;
-  width: fit-content;
-  padding-top: var(--pt2);
+.link_for_branch {
+  padding-top: var(--pt1);
+}
+
+.path_blue,
+.path_blue * {
+  stroke: var(--blue);
 }

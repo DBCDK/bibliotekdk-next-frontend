@@ -13,30 +13,42 @@ import { dateToShortDate } from "@/utils/datetimeConverter";
 import { IconLink } from "@/components/base/iconlink/IconLink";
 import ExternalSvg from "@/public/icons/external_small.svg";
 import animations from "css/animations";
+import isEmpty from "lodash/isEmpty";
+import { getLibraryType, LibraryTypeEnum } from "@/lib/utils";
 
 function escapeColons(phrase) {
   return phrase.replace(":", "%3A");
 }
 
-function LinkForTheBranch({ library, manifestations }) {
+function LinkForTheBranch({ library, manifestations, pids }) {
+  const cqlPids = pids?.map((pid) => escapeColons(pid)).join(" OR ");
+
+  const websiteWithSearch =
+    getLibraryType(library?.agencyId) ===
+      LibraryTypeEnum.DANISH_PUBLIC_LIBRARY &&
+    library?.lookupUrl &&
+    library?.branchWebsiteUrl &&
+    !isEmpty(cqlPids) &&
+    `${library?.branchWebsiteUrl}/search/ting/${cqlPids}`;
+
   const website = library?.branchWebsiteUrl || library?.branchCatalogueUrl;
 
   return website ? (
     <IconLink
+      className={styles.path_blue}
       iconPlacement="right"
       iconSrc={ExternalSvg}
       iconAnimation={[animations["h-elastic"], animations["f-elastic"]]}
       textType="type2"
-      href={"www.bibliotek.kk.dk"}
+      href={websiteWithSearch || website}
       target="_blank"
     >
-      miav
-      {/*{Translate({*/}
-      {/*  context: "localizations",*/}
-      {/*  label: "see_detailed_status",*/}
-      {/*  vars: [library?.agencyName],*/}
-      {/*  renderAsHtml: false,*/}
-      {/*})}*/}
+      {Translate({
+        context: "localizations",
+        label: "see_detailed_status",
+        vars: [library?.agencyName],
+        renderAsHtml: false,
+      })}
     </IconLink>
   ) : (
     <div></div>
@@ -131,6 +143,7 @@ function BranchStatusMessage({ library, manifestations }) {
 export default function BranchDetailsStatus({
   library,
   manifestations,
+  pids,
   possibleAvailabilities = [
     AvailabilityEnum.NOW,
     AvailabilityEnum.LATER,
@@ -154,8 +167,12 @@ export default function BranchDetailsStatus({
           library={library}
           manifestations={manifestations}
         />
-        <div className={styles.fit_content}>
-          <LinkForTheBranch library={library} manifestations={manifestations} />
+        <div className={styles.link_for_branch}>
+          <LinkForTheBranch
+            library={library}
+            pids={pids}
+            manifestations={manifestations}
+          />
         </div>
       </div>
     </div>

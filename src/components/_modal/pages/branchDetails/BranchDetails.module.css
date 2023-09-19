@@ -2,6 +2,11 @@
   padding-top: var(--pt3);
 }
 
+.padding_element_pt_two {
+  padding-top: var(--pt2);
+  visibility: hidden;
+}
+
 .reservationButton_container {
   display: grid;
   grid-template-columns: 73.35%;
@@ -19,4 +24,9 @@
 
 .fit_content ~ .fit_content {
   padding-top: var(--pt4);
+}
+
+.path_blue,
+.path_blue * {
+  stroke: var(--blue);
 }

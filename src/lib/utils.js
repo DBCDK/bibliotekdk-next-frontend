@@ -220,7 +220,7 @@ export const isPublicLibrary = (agencyID) => {
   );
 };
 
-export const LibraryType = Object.freeze({
+export const LibraryTypeEnum = Object.freeze({
   DANISH_PUBLIC_LIBRARY: "DANISH_PUBLIC_LIBRARY",
   FAROESE_LIBRARY: "FAROESE_LIBRARY",
   OTHER_LIBRARY: "OTHER_LIBRARY",
@@ -238,13 +238,13 @@ export function getLibraryType(agencyID) {
   const parsedID = agencyID + "";
 
   if (faroeIslandsLibraries.includes(parsedID)) {
-    return LibraryType.FAROESE_LIBRARY;
+    return LibraryTypeEnum.FAROESE_LIBRARY;
   } else if (greenlandLibraries.includes(parsedID)) {
-    return LibraryType.GREENLAND_LIBRARY;
+    return LibraryTypeEnum.GREENLAND_LIBRARY;
   } else if (parsedID?.charAt(0) === "7") {
-    return LibraryType.DANISH_PUBLIC_LIBRARY;
+    return LibraryTypeEnum.DANISH_PUBLIC_LIBRARY;
   } else {
-    return LibraryType.OTHER_LIBRARY;
+    return LibraryTypeEnum.OTHER_LIBRARY;
   }
 }
 
