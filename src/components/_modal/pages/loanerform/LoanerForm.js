@@ -324,7 +324,7 @@ export default function Wrap(props) {
    * if user doesnt want to store data for next order.
    * This can be relevant on public computers, when user forgets to close the browser window
    * we dont do this for authenticated users,
-   * because we they have a logout button to remove session data.
+   * because authenticated users have a logout button to remove session data.
    */
   function deleteUserDataFromSession() {
     if (!loanerInfo?.storeSession) {
