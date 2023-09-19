@@ -1,9 +1,3 @@
-.flex_box {
-  /*display: flex;*/
-  /*align-items: center;*/
-  /*gap: var(--pt1);*/
-}
-
 .padding_element {
   padding-left: var(--pt1);
   visibility: hidden;

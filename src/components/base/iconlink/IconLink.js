@@ -69,7 +69,7 @@ export function IconLink({
   return (
     <LinkOnlyInternalAnimations
       dataCy="icon-link-children"
-      className={cx(styles.flex_box, className)}
+      className={cx(className)}
       {...(href !== null && { href: href })}
       {...(onClick !== null && { onClick: onClick })}
       tag={tag}
