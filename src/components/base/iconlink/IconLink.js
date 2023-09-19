@@ -90,8 +90,13 @@ export function IconLink({
             children
           )}
         </Link>
+        {iconPlacement === "right" && (
+          <>
+            <span aria-hidden={true} className={styles.padding_element} />
+            <IconComponent />
+          </>
+        )}
       </div>
-      {iconPlacement === "right" && <IconComponent />}
     </LinkOnlyInternalAnimations>
   );
 }
