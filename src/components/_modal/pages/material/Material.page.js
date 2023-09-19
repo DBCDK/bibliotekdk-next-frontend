@@ -25,7 +25,7 @@ import {
   handleLoanMutationUpdates,
   handleOrderMutationUpdates,
 } from "@/components/profile/utils";
-import useUser from "@/components/hooks/user/useUser";
+import useUserStatusInfo from "@/components/hooks/user/useUserStatusInfo";
 import Spinner from "react-bootstrap/Spinner";
 
 const DynamicContentLoan = ({ dueDateString, dataCyPrefix }) => {
@@ -177,7 +177,7 @@ const Material = ({ context }) => {
   const [isRenewing, setIsRenewing] = useState(false); // For spinner usage
 
   const [renewedDueDateString, setRenewedDueDateString] = useState(null);
-  const { updateUserStatusInfo } = useUser();
+  const { updateUserStatusInfo } = useUserStatusInfo();
 
   useEffect(() => {
     //RENEW LOAN: when we open modal for a new book,

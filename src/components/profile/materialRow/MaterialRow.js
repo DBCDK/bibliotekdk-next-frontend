@@ -16,7 +16,7 @@ import { getWorkUrl } from "@/lib/utils";
 import ErrorRow from "../errorRow/ErrorRow";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { useModal } from "@/components/_modal";
-import useUser from "@/components/hooks/user/useUser";
+import useUserStatusInfo from "@/components/hooks/user/useUserStatusInfo";
 import Translate from "@/components/base/translate";
 import {
   dateToDayInMonth,
@@ -382,7 +382,7 @@ const MaterialRow = (props) => {
   } = props;
   const [isChecked, setIsChecked] = useState(false);
   const breakpoint = useBreakpoint();
-  const { updateUserStatusInfo } = useUser();
+  const { updateUserStatusInfo } = useUserStatusInfo();
   const modal = useModal();
   const [hasDeleteError, setHasDeleteError] = useState(false);
   const [hasRenewError, setHasRenewError] = useState(false);
