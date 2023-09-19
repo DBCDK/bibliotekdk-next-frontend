@@ -107,7 +107,6 @@ function handleGoToLogin(access, isAuthenticated, modal, onOnlineAccess) {
  * @constructor
  */
 export function OrderButton({
-  user,
   isAuthenticated,
   modal,
   access,

@@ -24,9 +24,7 @@ import { useLoanerInfo } from "@/components/hooks/user/useLoanerInfo";
 const Index = () => {
   const { data } = useData(frontpageHero());
   const ogImage = parseHero(data);
-  const res = useAuthentication();
   const loanerInfo = useLoanerInfo();
-  console.log({ loanerInfo });
 
   return (
     <>

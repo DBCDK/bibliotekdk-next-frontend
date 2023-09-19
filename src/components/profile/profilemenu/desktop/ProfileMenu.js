@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import cx from "classnames";
 import { getElementById, encodeString, translateAndEncode } from "@/lib/utils";
-import useUser from "@/components/hooks/user/useUser";
 import { useLoanerInfo } from "@/components/hooks/user/useLoanerInfo";
 
 /**

@@ -509,7 +509,7 @@ const DEFAULT_STORY_PARAMETERS = {
           },
         },
         Session: {
-          pickupBranch: (args) => currentSession?.pickupBranch || null,
+          pickupBranch: () => currentSession?.pickupBranch || null,
           userParameters: () => currentSession?.userParameters || null,
         },
         ElbaServices: {
@@ -822,10 +822,11 @@ const USER_AGENCY = {
 
 function useMockLoanerInfo({
   pickUpBranch = "790900",
-  loans = USER_LOANS,
-  orders = USER_ORDERS,
-  debt = USER_DEBT,
-  agency = USER_AGENCY,
+  // TODO move to DEFAULT_STORY_PARAMETERS
+  // loans = USER_LOANS,
+  // orders = USER_ORDERS,
+  // debt = USER_DEBT,
+  // agency = USER_AGENCY,
 }) {
   const { updateLoanerInfo } = useLoanerInfo();
   const id = useId();
@@ -833,10 +834,6 @@ function useMockLoanerInfo({
   useMemo(() => {
     updateLoanerInfo({
       pickupBranch: pickUpBranch,
-      // loans,
-      // orders,
-      // debt,
-      // agency,
     });
   }, [id]);
 }
