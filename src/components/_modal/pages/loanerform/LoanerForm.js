@@ -327,14 +327,14 @@ export default function Wrap(props) {
    * because authenticated users have a logout button to remove session data.
    */
   function deleteUserDataFromSession() {
-    if (!loanerInfo?.storeSession) {
+    if (!loanerInfo?.allowSessionStorage) {
       deleteSessionData();
     }
   }
 
-  async function storeSession(value) {
+  async function updateAllowSessionStorage(value) {
     await updateLoanerInfo({
-      storeSession: value,
+      allowSessionStorage: value,
     });
   }
 
@@ -370,8 +370,8 @@ export default function Wrap(props) {
         onSubmit={onSubmit}
         skeleton={branchIsLoading}
         onClose={() => props.modal.prev()}
-        storeLoanerInfo={loanerInfo?.storeSession}
-        setStoreLoanerInfo={storeSession}
+        storeLoanerInfo={loanerInfo?.allowSessionStorage}
+        setStoreLoanerInfo={updateAllowSessionStorage}
       />
     </>
   );
