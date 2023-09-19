@@ -16,6 +16,7 @@ export default function BranchLocalizationItem({
   modal,
   branchId,
   pids,
+  primitiveDisplay = false,
 }) {
   const { agenciesFlatSorted, agenciesIsLoading } = useSingleBranch({
     pids: pids,
@@ -25,8 +26,6 @@ export default function BranchLocalizationItem({
   const branch = agenciesFlatSorted?.[0]?.branches?.[0];
 
   const accumulatedAvailability = branch?.availabilityAccumulated;
-
-  console.log("branch: ", branch);
 
   return (
     <LocalizationItemBase
@@ -40,12 +39,14 @@ export default function BranchLocalizationItem({
           branchId: branchId,
         })
       }
-      accumulatedAvailability={accumulatedAvailability}
+      accumulatedAvailability={
+        !primitiveDisplay ? accumulatedAvailability : null
+      }
     >
       <Text {...textProps} type="text2">
         {branch?.branchName}
       </Text>
-      <BranchLocalizationItemStatus library={branch} />
+      {!primitiveDisplay && <BranchLocalizationItemStatus library={branch} />}
     </LocalizationItemBase>
   );
 }

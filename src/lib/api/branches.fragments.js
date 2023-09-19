@@ -312,8 +312,12 @@ export function agencyHoldingStatus({ agencyId, pids }) {
       branches(agencyid: $agencyId, bibdkExcludeBranches: true, status: AKTIVE, language: $language) {
         result {
           agencyId
+          pickupAllowed
           holdingStatus(pids: $pids) {
             expectedDelivery
+            holdingItems {
+              expectedDelivery
+            }
           }
         }
       }

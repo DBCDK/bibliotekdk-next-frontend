@@ -20,10 +20,10 @@ function escapeColons(phrase) {
   return phrase.replace(":", "%3A");
 }
 
-function LinkForTheBranch({ library, manifestations, pids }) {
+export function LinkForTheBranch({ library, pids }) {
   const cqlPids = pids?.map((pid) => escapeColons(pid)).join(" OR ");
 
-  const websiteWithSearch =
+  const publicLibraryWithWebsiteAndSearch =
     getLibraryType(library?.agencyId) ===
       LibraryTypeEnum.DANISH_PUBLIC_LIBRARY &&
     library?.lookupUrl &&
@@ -33,14 +33,14 @@ function LinkForTheBranch({ library, manifestations, pids }) {
 
   const website = library?.branchWebsiteUrl || library?.branchCatalogueUrl;
 
-  return website ? (
+  return publicLibraryWithWebsiteAndSearch || website ? (
     <IconLink
       className={styles.path_blue}
       iconPlacement="right"
       iconSrc={ExternalSvg}
       iconAnimation={[animations["h-elastic"], animations["f-elastic"]]}
       textType="type2"
-      href={websiteWithSearch || website}
+      href={publicLibraryWithWebsiteAndSearch || website}
       target="_blank"
     >
       {Translate({
@@ -101,7 +101,7 @@ function messageWhenMaterialsAvailableLater(library) {
     </Text>
   );
 }
-function messageWhenMaterialsAvailableNever(library) {
+function messageWhenMaterialsAvailableNever() {
   return (
     <>
       <Text>
@@ -111,7 +111,7 @@ function messageWhenMaterialsAvailableNever(library) {
   );
 }
 
-function messageWhenMaterialsAvailableUnknown(library) {
+function messageWhenMaterialsAvailableUnknown() {
   return (
     <>
       <Text>
@@ -132,11 +132,11 @@ function BranchStatusMessage({ library, manifestations }) {
   } else if (library?.availabilityAccumulated === AvailabilityEnum.LATER) {
     return messageWhenMaterialsAvailableLater(library);
   } else if (library?.availabilityAccumulated === AvailabilityEnum.NEVER) {
-    return messageWhenMaterialsAvailableNever(library);
+    return messageWhenMaterialsAvailableNever();
   } else if (library?.availabilityAccumulated === AvailabilityEnum.UNKNOWN) {
-    return messageWhenMaterialsAvailableUnknown(library);
+    return messageWhenMaterialsAvailableUnknown();
   } else {
-    return messageWhenMaterialsAvailableUnknown(library);
+    return messageWhenMaterialsAvailableUnknown();
   }
 }
 
@@ -168,11 +168,7 @@ export default function BranchDetailsStatus({
           manifestations={manifestations}
         />
         <div className={styles.link_for_branch}>
-          <LinkForTheBranch
-            library={library}
-            pids={pids}
-            manifestations={manifestations}
-          />
+          <LinkForTheBranch library={library} pids={pids} />
         </div>
       </div>
     </div>

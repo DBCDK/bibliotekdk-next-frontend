@@ -679,8 +679,20 @@
         "da": "Status kendes ikke",
         "en": "Status is unknown"
       },
+      "agency_status_only_home_at_one_or_more": {
+        "da": "Er hjemme på en eller flere afdelinger, men vi har ikke detaljer om hvilke afdelinger",
+        "en": "Is on the shelf at one or more branches, but we are missing the details on branches"
+      },
+      "agency_status_only_loan_later_possible": {
+        "da": "Er udlånt på en eller flere afdelinger, men vi har ikke detaljer om hvilke afdelinger",
+        "en": "Is on loan at one or more branches, but we are missing the details on branches"
+      },
+      "no_status_about_the_following": {
+        "da": "Vi har ikke status for disse afdelinger",
+        "en": "We have no status on these branches"
+      },
       "see_detailed_status": {
-        "da": "Se detailjeret status hos %s",
+        "da": "Se detaljeret status hos %s",
         "en": "See detailed status at %s"
       },
       "no_information_about_opening_hours": {

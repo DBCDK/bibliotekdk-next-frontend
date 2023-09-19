@@ -1,10 +1,11 @@
 import groupBy from "lodash/groupBy";
-import { getFirstMatch } from "@/lib/utils";
+import { getFirstMatch, getLibraryType, LibraryTypeEnum } from "@/lib/utils";
 import uniqWith from "lodash/uniqWith";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 
 import { useData } from "@/lib/api/api";
 import isEmpty from "lodash/isEmpty";
+import uniq from "lodash/uniq";
 
 export const AvailabilityEnum = Object.freeze({
   NOW: "AVAILABLE_NOW",
@@ -23,7 +24,9 @@ export function dateIsToday(date) {
   return new Date(date).toDateString() === new Date().toDateString();
 }
 
-function checkAvailableNow(expectedDelivery, status) {
+function checkAvailableNow(item) {
+  const expectedDelivery = item?.expectedDelivery;
+  const status = item?.status;
   return dateIsToday(expectedDelivery) && status === HoldingStatusEnum.ON_SHELF;
 }
 
@@ -36,10 +39,13 @@ export function dateIsLater(date) {
   );
 }
 
-function checkAvailableLater(expectedDelivery, status) {
+function checkAvailableLater(item) {
+  const expectedDelivery = item?.expectedDelivery;
+  const status = item?.status;
   return (
     (dateIsLater(expectedDelivery) || dateIsToday(expectedDelivery)) &&
-    [HoldingStatusEnum.ON_SHELF, HoldingStatusEnum.ON_LOAN].includes(status)
+    (![HoldingStatusEnum.NOT_FOR_LOAN].includes(status) ||
+      [HoldingStatusEnum.ON_LOAN, HoldingStatusEnum.ON_SHELF].includes(status))
   );
 }
 
@@ -52,7 +58,9 @@ export function dateIsNever(date) {
   );
 }
 
-function checkAvailableNever(expectedDelivery, status) {
+function checkAvailableNever(item) {
+  const expectedDelivery = item?.expectedDelivery;
+  const status = item?.status;
   return (
     dateIsNever(expectedDelivery) || status === HoldingStatusEnum.NOT_FOR_LOAN
   );
@@ -62,7 +70,8 @@ function dateIsUnknown(date) {
   return !date || typeof date !== "string" || isNaN(Date.parse(date));
 }
 
-function checkUnknownAvailability(expectedDelivery) {
+function checkUnknownAvailability(item) {
+  const expectedDelivery = item?.expectedDelivery;
   return dateIsUnknown(expectedDelivery);
 }
 
@@ -75,24 +84,12 @@ function getAvailability(items) {
   };
 
   for (const item of items) {
-    console.log("item.branchName: ", item.branch);
+    console.log("item.agencyId: ", item?.pickupAllowed);
     const key = getFirstMatch(true, AvailabilityEnum.UNKNOWN, [
-      [
-        checkAvailableNow(item?.expectedDelivery, item?.status),
-        AvailabilityEnum.NOW,
-      ],
-      [
-        checkAvailableLater(item?.expectedDelivery, item?.status),
-        AvailabilityEnum.LATER,
-      ],
-      [
-        checkAvailableNever(item?.expectedDelivery, item?.status),
-        AvailabilityEnum.NEVER,
-      ],
-      [
-        checkUnknownAvailability(item?.expectedDelivery),
-        AvailabilityEnum.UNKNOWN,
-      ],
+      [checkAvailableNow(item), AvailabilityEnum.NOW],
+      [checkAvailableLater(item), AvailabilityEnum.LATER],
+      [checkAvailableNever(item), AvailabilityEnum.NEVER],
+      [checkUnknownAvailability(item), AvailabilityEnum.UNKNOWN],
     ]);
 
     availabilityAccumulated[key] += 1;
@@ -125,9 +122,7 @@ function getAvailabilityById(items) {
   });
 }
 
-function getAvailabilityAccumulated(holdingItems) {
-  const availability = getAvailability(holdingItems);
-
+function getAvailabilityAccumulated(availability) {
   return availability[AvailabilityEnum.NOW] > 0
     ? AvailabilityEnum.NOW
     : availability[AvailabilityEnum.LATER] > 0
@@ -162,20 +157,57 @@ function compareDate(a, b) {
   ]);
 }
 
+function getExpectedDeliveryAccumulatedFromHoldings(holdingItems) {
+  return holdingItems
+    .map((item) => item.expectedDelivery)
+    .sort(compareDate)?.[0];
+}
+
+function getHoldingsWithInfoOnPickupAllowed(branch) {
+  return branch?.holdingItems.map((item) => {
+    return {
+      ...item,
+      pickupAllowed: branch?.pickupAllowed,
+      agencyId: branch?.agencyId,
+    };
+  });
+}
+
+/**
+ *
+ * @param {string} agencyId
+ * @param {Array.<string>} pids
+ * @returns {{expectedDelivery: (*|boolean|null), agencyHoldingsIsRelevant: boolean}}
+ */
 export function useAgencyHoldingStatus({ agencyId, pids }) {
   const { data: agencyHoldingStatusData } = useData(
     agencyId &&
       branchesFragments.agencyHoldingStatus({ agencyId: agencyId, pids: pids })
   );
 
-  const holdingStatuses = agencyHoldingStatusData?.branches?.result
-    .filter((branch) => branch.agencyId === agencyId)
-    .map((branch) => branch.holdingStatus);
+  const branches = agencyHoldingStatusData?.branches?.result;
 
-  const accumulatedAvailability = getAvailabilityAccumulated(holdingStatuses);
+  const holdings = branches?.flatMap((branch) =>
+    branch?.holdingStatus?.holdingItems?.map((item) => item?.expectedDelivery)
+  ).length;
+
+  const expectedDelivery = branches
+    ?.flatMap((branch) => branch?.holdingStatus?.expectedDelivery)
+    ?.sort(compareDate)?.[0];
+
+  const pickupAllowedOnAny = branches
+    ?.flatMap((branch) => branch?.pickupAllowed)
+    .find((singlePickupAllowed) => singlePickupAllowed === true);
+
+  const agencyHoldings =
+    (dateIsToday(expectedDelivery) || dateIsLater(expectedDelivery)) &&
+    pickupAllowedOnAny &&
+    isEmpty(holdings) &&
+    getLibraryType(agencyId) !== LibraryTypeEnum.DANISH_PUBLIC_LIBRARY;
 
   return {
-    accumulatedAvailability: accumulatedAvailability,
+    agencyExpectedDelivery: expectedDelivery,
+    agencyHoldingsIsRelevant: Boolean(agencyHoldings),
   };
 }
 
@@ -220,12 +252,6 @@ export function useSingleBranch({ pids, branchId }) {
   return handleAgencyAccessData(branch);
 }
 
-function getExpectedDeliveryAccumulatedFromHoldings(holdingItems) {
-  return holdingItems
-    .map((item) => item.expectedDelivery)
-    .sort(compareDate)?.[0];
-}
-
 export function handleAgencyAccessData(agencies) {
   const isLoading = agencies.isLoading;
 
@@ -251,16 +277,28 @@ export function handleAgencyAccessData(agencies) {
 
     const branches = entry
       ?.flatMap((branch) => {
+        const branchHoldingsWithInfoOnPickupAllowed =
+          getHoldingsWithInfoOnPickupAllowed(branch);
+
         return {
           ...branch,
+          holdingItems: branchHoldingsWithInfoOnPickupAllowed,
           agencyName: branch.agencyName,
           branchName: branch.name,
-          availability: getAvailability(branch?.holdingItems),
-          availabilityById: getAvailabilityById(branch?.holdingItems),
+          availability: getAvailability(branchHoldingsWithInfoOnPickupAllowed),
+          availabilityById: getAvailabilityById(
+            branchHoldingsWithInfoOnPickupAllowed
+          ),
           availabilityAccumulated: getAvailabilityAccumulated(
-            !isEmpty(branch?.holdingItems)
-              ? branch?.holdingItems
-              : [{ expectedDelivery: branch?.holdingStatus?.expectedDelivery }]
+            getAvailability(
+              !isEmpty(branchHoldingsWithInfoOnPickupAllowed)
+                ? branchHoldingsWithInfoOnPickupAllowed
+                : [
+                    {
+                      expectedDelivery: branch?.holdingStatus?.expectedDelivery,
+                    },
+                  ]
+            )
           ),
           expectedDelivery: branch?.holdingStatus?.expectedDelivery,
           expectedDeliveryAccumulatedFromHoldings:
@@ -270,7 +308,7 @@ export function handleAgencyAccessData(agencies) {
       .sort(sortByAvailability);
 
     const allHoldingsAcrossBranchesInAgency = branches.flatMap(
-      (branch) => branch.holdingItems
+      getHoldingsWithInfoOnPickupAllowed
     );
 
     const expectedDeliveryOnHoldingsOrAgency = !isEmpty(holdingItems)
@@ -285,9 +323,9 @@ export function handleAgencyAccessData(agencies) {
     return {
       agencyId: entry?.map((e) => e.agencyId)?.[0],
       agencyName: entry?.map((e) => e.agencyName)?.[0],
-      availability: getAvailability(expectedDeliveryOnHoldingsOrAgency),
+      availability: getAvailability(expectedDeliveryOnHoldingsOrAgency, entry),
       availabilityAccumulated: getAvailabilityAccumulated(
-        expectedDeliveryOnHoldingsOrAgency
+        getAvailability(expectedDeliveryOnHoldingsOrAgency, entry)
       ),
       branches: branches,
       branchesNames: entry.map((e) => e.name),

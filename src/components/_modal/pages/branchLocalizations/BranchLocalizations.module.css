@@ -1,28 +1,26 @@
-.wrapper {
+.branch_status {
+  /*padding-top: var(--pt0);*/
+}
+
+.no_status {
+  padding-bottom: var(--pt2);
+}
+
+.agency_holdings_row_wrapper {
   display: flex;
-  flex-direction: column;
-  row-gap: var(--pt3);
-}
-
-/* .top is passed as className prop to Top component */
-.top {
+  flex-direction: row;
   padding-top: var(--pt3);
-  padding-bottom: 0;
+  padding-bottom: var(--pt10);
 }
 
-@media (min-width: 576px) {
-  .top {
-    padding-top: var(--pt5);
-    padding-bottom: 0;
-  }
+.agency_holdings_result {
+  margin-left: var(--pt1);
+  display: inline-flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
-.padding_inline {
-  padding-inline: var(--pt2);
-}
-
-@media (min-width: 576px) {
-  .padding_inline {
-    padding-inline: var(--pt6);
-  }
+.link_for_branch {
+  padding-top: var(--pt1);
 }
