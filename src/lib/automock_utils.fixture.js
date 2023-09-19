@@ -387,18 +387,24 @@ const USER_1 = {
 };
 
 const USER_2 = {
+  name: "Some Name",
+  mail: "some@mail.dk",
   agency: {
     result: [BRANCH_2],
   },
 };
 
 const USER_3 = {
+  name: "Some Name",
+  mail: "some@mail.dk",
   agency: {
     result: [BRANCH_3],
   },
 };
 
 const USER_4 = {
+  name: "Some Name",
+  mail: "some@mail.dk",
   agency: {
     result: [BRANCH_4],
   },
@@ -474,6 +480,8 @@ const REVIEW_1 = {
   ],
 };
 
+// Holding the current mocked session
+let currentSession = null;
 const DEFAULT_STORY_PARAMETERS = {
   parameters: {
     graphql: {
@@ -499,7 +507,10 @@ const DEFAULT_STORY_PARAMETERS = {
           branches: () => {
             return { result: [BRANCH_1, BRANCH_2, BRANCH_3] };
           },
-          session: () => null,
+        },
+        Session: {
+          pickupBranch: (args) => currentSession?.pickupBranch || null,
+          userParameters: () => currentSession?.userParameters || null,
         },
         ElbaServices: {
           placeCopyRequest: (args) => {
@@ -509,6 +520,12 @@ const DEFAULT_STORY_PARAMETERS = {
           },
         },
         Mutation: {
+          submitSession: (args) => {
+            // Used for cypress testing
+            console.debug("submitSession", args?.variables?.input);
+            currentSession = args?.variables?.input;
+            return "OK";
+          },
           submitOrder: (args) => {
             // Used for cypress testing
             console.debug("submitOrder", args?.variables?.input);
@@ -812,13 +829,14 @@ function useMockLoanerInfo({
 }) {
   const { updateLoanerInfo } = useLoanerInfo();
   const id = useId();
+
   useMemo(() => {
     updateLoanerInfo({
       pickupBranch: pickUpBranch,
-      loans,
-      orders,
-      debt,
-      agency,
+      // loans,
+      // orders,
+      // debt,
+      // agency,
     });
   }, [id]);
 }
