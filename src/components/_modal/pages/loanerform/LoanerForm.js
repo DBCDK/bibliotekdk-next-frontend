@@ -299,7 +299,6 @@ export default function Wrap(props) {
   const { data, isLoading: branchIsLoading } = useData(
     branchId && branchesFragments.branchUserParameters({ branchId })
   );
-  const [storeLoanerInfo, setStoreLoanerInfo] = useState(false);
 
   const branch = data?.branches?.result?.[0];
 
@@ -308,6 +307,7 @@ export default function Wrap(props) {
   //remove userdata when modal is closed - if user doesnt want to store data
   useEffect(() => {
     if (modal?.isVisible === false) {
+      console.log("modal closed - deleting data");
       deleteUserDataFromSession();
     }
   }, [modal?.isVisible]);
@@ -328,16 +328,25 @@ export default function Wrap(props) {
    * because we they have a logout button to remove session data.
    */
   function deleteUserDataFromSession() {
-    if (!storeLoanerInfo) {
+    if (!loanerInfo?.storeSession) {
+      console.log("deleting session data");
       deleteSessionData();
     }
   }
 
+  async function storeSession(value) {
+    await updateLoanerInfo({
+      storeSession: value,
+    });
+  }
+
   async function onSubmit(info) {
+    console.log("submitting ", info);
     await updateLoanerInfo({
       userParameters: info,
       pickupBranch: branchId,
     });
+
     if (changePickupBranch) {
       props.modal.prev("order");
     } else {
@@ -347,7 +356,7 @@ export default function Wrap(props) {
         selectedAccesses,
         workId,
         singleManifestation,
-        storeLoanerInfo: storeLoanerInfo,
+        storeLoanerInfo: loanerInfo?.storeSession,
       });
     }
   }
@@ -365,8 +374,8 @@ export default function Wrap(props) {
         onSubmit={onSubmit}
         skeleton={branchIsLoading}
         onClose={() => props.modal.prev()}
-        storeLoanerInfo={storeLoanerInfo}
-        setStoreLoanerInfo={setStoreLoanerInfo}
+        storeLoanerInfo={loanerInfo?.storeSession}
+        setStoreLoanerInfo={storeSession}
       />
     </>
   );
