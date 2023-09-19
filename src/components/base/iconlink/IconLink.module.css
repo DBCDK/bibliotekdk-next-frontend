@@ -1,7 +1,7 @@
 .flex_box {
-  display: flex;
-  align-items: center;
-  gap: var(--pt1);
+  /*display: flex;*/
+  /*align-items: center;*/
+  /*gap: var(--pt1);*/
 }
 
 .padding_element {

@@ -75,28 +75,27 @@ export function IconLink({
       tag={tag}
       disabled={disabled}
     >
-      {iconPlacement === "left" && <IconComponent />}
-      <div>
-        <Link
-          border={disabled ? false : border}
-          tag={"span"}
-          disabled={disabled}
-        >
-          {typeof children === "string" ? (
-            <Text type={textType} tag="span">
-              {children}
-            </Text>
-          ) : (
-            children
-          )}
-        </Link>
-        {iconPlacement === "right" && (
-          <>
-            <span aria-hidden={true} className={styles.padding_element} />
-            <IconComponent />
-          </>
+      {iconPlacement === "left" && (
+        <>
+          <IconComponent />
+          <span aria-hidden={true} className={styles.padding_element} />
+        </>
+      )}
+      <Link border={disabled ? false : border} tag={"span"} disabled={disabled}>
+        {typeof children === "string" ? (
+          <Text type={textType} tag="span">
+            {children}
+          </Text>
+        ) : (
+          children
         )}
-      </div>
+      </Link>
+      {iconPlacement === "right" && (
+        <>
+          <span aria-hidden={true} className={styles.padding_element} />
+          <IconComponent />
+        </>
+      )}
     </LinkOnlyInternalAnimations>
   );
 }
