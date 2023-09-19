@@ -15,6 +15,7 @@ import Link from "@/components/base/link";
 import styles from "./Prompt.module.css";
 import { useState } from "react";
 import IconButton from "@/components/base/iconButton";
+import { useAuthentication } from "@/components/hooks/user/useAuthentication";
 
 /**
  * Show a login prompt with a title and description
