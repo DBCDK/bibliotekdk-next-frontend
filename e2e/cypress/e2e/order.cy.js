@@ -330,4 +330,12 @@ describe("Order", () => {
         .should("not.have.attr", "url");
     });
   });
+  describe("User has no agencies", () => {
+    it("should show an errormessage when user has no agencies", () => {
+      cy.visit("/iframe.html?id=modal-order--no-user-agencies");
+      cy.contains("Bestil").click();
+
+      cy.contains("Vi kan se at du ikke er registreret på et bibliotek?");
+    });
+  });
 });

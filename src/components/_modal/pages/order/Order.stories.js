@@ -75,6 +75,36 @@ OrderViaILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   },
 });
 
+export function NoUserAgencies() {
+  useMockLoanerInfo({
+    pickUpBranch: "",
+    loans: [],
+    debt: [],
+    agency: [],
+    orders: [],
+  });
+  return (
+    <OrderPageComponentBuilder
+      title="User has no agencies"
+      description="If user logs in with mitid - and has no libraries"
+      workId={"some-work-id-1"}
+      selectedPids={["some-pid-1", "some-pid-2", "some-pid-3"]}
+    />
+  );
+}
+
+NoUserAgencies.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {
+        Query: {
+          branches: () => ({ result: [] }),
+        },
+      },
+    },
+  },
+});
+
 export function PickupNotAllowed() {
   return (
     <OrderPageComponentBuilder
