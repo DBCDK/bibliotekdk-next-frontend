@@ -80,13 +80,13 @@ export function NoUserAgencies() {
     pickUpBranch: "",
     loans: [],
     debt: [],
-    agency: [],
+    agencies: [],
     orders: [],
   });
   return (
     <OrderPageComponentBuilder
       title="User has no agencies"
-      description="If user logs in with mitid - and has no libraries"
+      description="If user logs in with MitID - and has no libraries associated with user account"
       workId={"some-work-id-1"}
       selectedPids={["some-pid-1", "some-pid-2", "some-pid-3"]}
     />

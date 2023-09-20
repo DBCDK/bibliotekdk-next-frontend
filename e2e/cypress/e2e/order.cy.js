@@ -330,12 +330,14 @@ describe("Order", () => {
         .should("not.have.attr", "url");
     });
   });
-  describe("User has no agencies", () => {
+  describe("If user logs in with MitID - and has no libraries associated with user account", () => {
     it("should show an errormessage when user has no agencies", () => {
       cy.visit("/iframe.html?id=modal-order--no-user-agencies");
-      cy.contains("Bestil").click();
+      cy.contains("Bestil").should("be.visible").click();
 
-      cy.contains("Vi kan se at du ikke er registreret på et bibliotek?");
+      cy.contains(
+        "Vi kan se at du ikke er registreret på et bibliotek?"
+      ).should("be.visible");
     });
   });
 });
