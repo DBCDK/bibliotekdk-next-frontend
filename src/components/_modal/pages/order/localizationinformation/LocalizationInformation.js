@@ -149,7 +149,6 @@ export default function Wrap({ context }) {
           modal.push("pickup", {
             pid,
             initial: {
-              agency: pickupBranchUser?.agency,
               agencies: pickupBranchUser?.agencies,
             },
             requireDigitalAccess,

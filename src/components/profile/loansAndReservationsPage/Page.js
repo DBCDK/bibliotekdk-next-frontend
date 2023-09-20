@@ -55,7 +55,7 @@ export const dataReducer = (dataType, data) => {
         materialType: data?.manifestation?.materialTypes?.[0].specific,
         creationYear: data?.manifestation?.recordCreationDate?.substring(0, 4),
         library: data?.pickUpBranch?.agencyName,
-        agencyId: data?.libraryId,
+        agencyId: data?.agencyId,
         holdQueuePosition: data?.holdQueuePosition,
         pickUpExpiryDate: data?.pickUpExpiryDate,
         id: data?.orderId,
@@ -71,11 +71,16 @@ const LoansAndReservations = () => {
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
   const { loanerInfo, isLoading } = useUser();
-  const { debt, agency, orders, loans } = arangeLoanerInfo(loanerInfo);
+  const { debt, agencies, orders, loans } = arangeLoanerInfo(loanerInfo);
   const [removedOrderId, setRemovedOrderId] = useState("");
-  const libraryString =
-    agency && agency.result ? agency.result[0].agencyName : "";
-  const libraryId = agency?.result?.[0]?.agencyId;
+
+  function getAgencyString(agencyId) {
+    if (!agencies) return "";
+    return agencies.map((agency) => {
+      if (agency.result[0].agencyId === agencyId)
+        return agency.result[0].agencyName;
+    });
+  }
 
   return (
     <ProfileLayout
@@ -140,7 +145,7 @@ const LoansAndReservations = () => {
             <MaterialRow
               {...dataReducer("DEBT", claim)}
               key={`debt-${claim.title}-#${i}`}
-              library={libraryString}
+              library={getAgencyString(claim.agencyId)}
               id={`debt-${i}`}
               dataCy={`debt-${i}`}
             />
@@ -202,8 +207,8 @@ const LoansAndReservations = () => {
             <MaterialRow
               {...dataReducer("LOAN", loan)}
               key={`loan-${loan.loanId}-#${i}`}
-              library={libraryString}
-              agencyId={libraryId}
+              library={getAgencyString(loan.agencyId)}
+              agencyId={loan.agencyId}
               dataCy={`loan-${i}`}
             />
           ))
@@ -271,7 +276,7 @@ const LoansAndReservations = () => {
             <MaterialRow
               {...dataReducer("ORDER", {
                 ...order,
-                libraryId,
+                agencyId: order.pickUpBranch.agencyId,
               })}
               removedOrderId={removedOrderId}
               setRemovedOrderId={setRemovedOrderId}

@@ -103,7 +103,6 @@ function useUserImpl() {
     debt: [],
     loans: [],
     orders: [],
-    agency: {},
     agencies: [],
     ...sessionData,
   });
@@ -114,7 +113,6 @@ function useUserImpl() {
         debt: [],
         loans: [],
         orders: [],
-        agency: {},
         agencies: [],
         ...sessionData,
       });
@@ -123,7 +121,6 @@ function useUserImpl() {
         debt: userData?.user?.debt,
         loans: userData?.user?.loans,
         orders: userData?.user?.orders,
-        agency: userData?.user?.agency,
         agencies: userData?.user?.agencies,
         ...sessionData,
       });

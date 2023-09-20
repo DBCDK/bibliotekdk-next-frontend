@@ -41,7 +41,6 @@ import useWindowSize from "@/components/hooks/useWindowSize";
  * @param {string} title
  */
 export function Login({
-  agency,
   data,
   isVisible,
   onChange,
@@ -119,7 +118,6 @@ export function Login({
         onChange={onChange}
         removeModalsFromStore={removeModalsFromStore}
         isLoading={isLoading}
-        agency={agency}
         onSelect={onSelect}
         isVisible={isVisible}
         includeArrows={includeArrows}
@@ -156,7 +154,7 @@ Login.propTypes = {
  * @returns {component}
  */
 export default function Wrap(props) {
-  const { agency, originUrl = null } = props;
+  const { originUrl = null } = props;
 
   const [query, setQuery] = useState("");
 
@@ -180,20 +178,18 @@ export default function Wrap(props) {
     ],
   };
 
-  const branches = !query ? agency : data?.branches;
   const includeArrows = !!query;
 
   return (
     <Login
       {...props}
       isLoading={isLoading}
-      data={isLoading ? dummyData : branches}
+      data={isLoading ? dummyData : data?.branches}
       onChange={(q) => setQuery(q)}
       hasQuery={!!query}
       includeArrows={includeArrows}
       onLogin={signIn}
       origin={originUrl}
-      agency={agency}
     />
   );
 }
