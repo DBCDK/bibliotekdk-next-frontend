@@ -23,15 +23,6 @@ export function basic() {
         mail
         address
         postalCode
-        agency {
-          hitcount
-          result {
-            branchId
-            agencyId
-            agencyName
-            name
-          }
-        }
         agencies {
           hitcount
           result {
@@ -47,8 +38,10 @@ export function basic() {
             creator
             date
             currency
+            agencyId
         }
         loans {
+          agencyId
           loanId
           dueDate
           manifestation {
@@ -76,6 +69,7 @@ export function basic() {
           status
           pickUpBranch {
             agencyName
+            agencyId
           }
           pickUpExpiryDate
           holdQueuePosition

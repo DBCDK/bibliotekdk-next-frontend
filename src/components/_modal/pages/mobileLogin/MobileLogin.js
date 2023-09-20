@@ -18,7 +18,7 @@ import { useState } from "react";
  * @returns {JSX.Element}
  */
 export default function MobileLogin({ context }) {
-  const { removeModalsFromStore, isVisible, onSelect, agency } = context;
+  const { removeModalsFromStore, isVisible, onSelect } = context;
 
   const [query, setQuery] = useState("");
 
@@ -26,7 +26,6 @@ export default function MobileLogin({ context }) {
     libraryFragments.search({ q: query || "" })
   );
 
-  const allBranches = !query ? agency : data?.branches?.result;
   const includeArrows = !!query;
 
   return (
@@ -34,7 +33,7 @@ export default function MobileLogin({ context }) {
       <Top onClose={removeModalsFromStore} />
       <LibrarySearch onChange={(q) => setQuery(q)} desktop={false} />
       <SearchResultList
-        allBranches={allBranches}
+        allBranches={data?.branches?.result}
         isLoading={isLoading}
         onSelect={onSelect}
         isVisible={isVisible}
@@ -48,5 +47,4 @@ MobileLogin.propTypes = {
   removeModalsFromStore: PropTypes.func,
   isVisible: PropTypes.bool,
   onSelect: PropTypes.func,
-  agency: PropTypes.object,
 };
