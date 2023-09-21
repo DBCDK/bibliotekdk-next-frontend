@@ -97,7 +97,7 @@ const MAP = {
         "science fiction",
         "samfundskritik",
         "eksperimenterende litteratur",
-        "politiromaner",
+        //"politiromaner", //TODO comment in after fbi-api or cat-inspire is fixed
       ],
     },
   ],
@@ -139,7 +139,7 @@ const MAP = {
         "singer/songwriter",
         "Cd (musik)",
         "Grammofonplade",
-        "Dvd",
+        // "Dvd",  //TODO comment in after fbi-api or cat-inspire is fixed
       ],
     },
   ],
