@@ -79,14 +79,12 @@ export default function OrderHistoryPage() {
     return (
       <Layout title={Translate({ context: "profile", label: "orderHistory" })}>
         <Skeleton lines={2} className={styles.skeletonText} />
-        <>
-          <div className={styles.skeletonContainer}>
-            <Skeleton className={styles.skeleton} />
-            <Skeleton className={styles.skeleton} />
-            <Skeleton className={styles.skeleton} />
-            <Skeleton className={styles.skeleton} />
-          </div>
-        </>
+        <div className={styles.skeletonContainer}>
+          <Skeleton className={styles.skeleton} />
+          <Skeleton className={styles.skeleton} />
+          <Skeleton className={styles.skeleton} />
+          <Skeleton className={styles.skeleton} />
+        </div>
       </Layout>
     );
   }
