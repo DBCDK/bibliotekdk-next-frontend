@@ -114,16 +114,9 @@ export function branchesForUser() {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `
-    query ($language: LanguageCode! ) {
+    query  {
       user {
         municipalityAgencyId
-        agency (language: $language){
-          result {
-            agencyId
-            agencyName
-            name
-          }
-        }
         agencies{
           result
           {
