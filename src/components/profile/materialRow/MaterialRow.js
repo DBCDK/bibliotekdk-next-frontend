@@ -632,13 +632,19 @@ const MaterialRow = (props) => {
                   </Link>
                 )}
               >
-                <Title
-                  type="text1"
-                  tag="h3"
-                  id={`material-title-${materialId}`}
-                >
-                  {title}
-                </Title>
+                {title ? (
+                  <Title
+                    type="text1"
+                    tag="h3"
+                    id={`material-title-${materialId}`}
+                  >
+                    {title}
+                  </Title>
+                ) : (
+                  <Text type="text2">
+                    {Translate({ context: "profile", label: "unknowMaterial" })}
+                  </Text>
+                )}
               </ConditionalWrapper>
 
               {creator && (

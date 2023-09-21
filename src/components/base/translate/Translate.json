@@ -3281,6 +3281,10 @@
       "emptyOrderList": {
         "da": "Bestillingshistorikken er tom",
         "en": "Your order history list is empty"
+      },
+      "unknowMaterial": {
+        "da": "Kendes ikke. Spørg biblioteket.",
+        "en": "Unkonwn. Ask at the library."
       }
     }
   }
