@@ -23,7 +23,8 @@ export function basic() {
         mail
         address
         postalCode
-        agency {
+        agencies {
+          hitcount
           result {
             branchId
             agencyId
@@ -37,8 +38,10 @@ export function basic() {
             creator
             date
             currency
+            agencyId
         }
         loans {
+          agencyId
           loanId
           dueDate
           manifestation {
@@ -66,6 +69,7 @@ export function basic() {
           status
           pickUpBranch {
             agencyName
+            agencyId
           }
           pickUpExpiryDate
           holdQueuePosition
@@ -167,6 +171,32 @@ export function orderPolicy({ pid }) {
             userStatusUrl
             digitalCopyAccess
           }
+        }
+        agencies (language: $language){
+        agencyUrl
+        result {
+          agencyName
+          agencyId
+          name
+          city
+          postalAddress
+          postalCode
+          branchId
+          openingHours
+          borrowerCheck
+          orderPolicy(pid: $pid) {
+            orderPossible
+            orderPossibleReason
+            lookUpUrl
+          }
+          userParameters {
+            userParameterType
+            parameterRequired
+          }
+          pickupAllowed
+          userStatusUrl
+          digitalCopyAccess
+        }
         }
       }
       monitor(name: "bibdknext_orderpolicy")

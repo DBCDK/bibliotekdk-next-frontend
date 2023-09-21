@@ -14,7 +14,7 @@ import Translate from "@/components/base/translate/Translate";
 import { signOut } from "@dbcdk/login-nextjs/client";
 import Button from "@/components/base/button";
 import { useModal } from "@/components/_modal";
-import Router from "next/router";
+import { openLoginModal } from "@/components/_modal/pages/login/utils";
 
 const CONTEXT = "profile";
 const MENUITEMS = ["loansAndReservations", "orderHistory", "myLibraries"];
@@ -85,11 +85,14 @@ export default function ProfileLayout({ title, children }) {
               </Text>
 
               <Button
+                dataCy="profile-layout-button-login"
                 className={styles.loginButton}
                 size="large"
                 type="primary"
-                onClick={() => {
-                  modal.push("login");
+                onClick={() => openLoginModal({ modal })}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.keyCode === 13)
+                    openLoginModal({ modal });
                 }}
               >
                 {Translate({
@@ -126,9 +129,6 @@ const LogoutButton = () => {
         onClick={() => {
           if (user.isAuthenticated) {
             signOut(null, "/");
-          } else if (user.isGuestUser) {
-            user.guestLogout();
-            Router.push("/");
           }
         }}
         className={styles.logoutBtn}

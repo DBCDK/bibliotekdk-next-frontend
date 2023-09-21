@@ -1,12 +1,8 @@
 .login {
-  padding: 0 var(--pt2) var(--pt2) var(--pt2);
+  padding: 0 var(--pt2) var(--pt2);
 }
 
-.search .input {
-  margin: var(--pt2) 0;
-}
-
-.search .title {
+.login .title {
   padding: var(--pt1) 0;
 }
 

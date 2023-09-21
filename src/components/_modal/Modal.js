@@ -17,6 +17,8 @@ import useKeyPress from "@/components/hooks/useKeypress";
 export const ModalContext = createContext(null);
 
 const LOCAL_STORAGE_KEY = "modal-v2";
+const LOCAL_STORAGE_STORE_KEY = "modal-v2-store";
+
 const URL_PAGE_UID_KEY = "modal";
 
 /**
@@ -78,6 +80,10 @@ function createPageUID() {
 // Global stack object
 let _stack = [];
 
+// Global store object
+// used to manage modals more flexibly
+let _store = [];
+
 /**
  *
  * @param {object|Array} children
@@ -128,27 +134,57 @@ function Container({ children, className = {}, mock = {} }) {
   // Listen on escape keypress - will close the modal (accessibility)
   const escapeEvent = useKeyPress(isVisible && "Escape");
 
+  /**
+   * Remove an item from the store
+   * @param {*} uid
+   */
+  function removeFromStore(uid, store) {
+    const index = store.findIndex((obj) => obj.uid === uid);
+    if (index > -1) {
+      store.splice(index, 1);
+      modal.setStore(store);
+    }
+  }
+
+  async function moveModalFromStoreToStack(uid, stack) {
+    const store = await modal.getStore();
+    const activeModal = store.find((entry) => entry.uid === uid);
+    if (!activeModal) return;
+    activeModal.active = true;
+    activeModal.loaded = true;
+    stack.push(activeModal);
+    removeFromStore(uid, store);
+  }
+
   // On mount, we try to load stack from local storage
   useEffect(() => {
     try {
+      const uid = currentPageUid;
+      if (!uid) {
+        return;
+      }
+
       // Load stack as string from local storage
       const stackStr = localStorage.getItem(LOCAL_STORAGE_KEY);
-
       // Parse stack
       const stack = JSON.parse(stackStr);
-
-      // Get page uid
-      const uid = currentPageUid;
-
+      let activeModalInStack = false;
       // Traverse the loadedstack
       stack.forEach((entry) => {
         // One page may be active
-        entry.active = entry.uid === uid;
-
+        const isActivePage = entry.uid === uid;
+        entry.active = isActivePage;
+        if (isActivePage) {
+          activeModalInStack = true;
+        }
         // Specify that the page has been loaded from local storage
         // This is used for determining how to navigate the URL history (go or replace)
         entry.loaded = true;
       });
+
+      if (!activeModalInStack) {
+        moveModalFromStoreToStack(uid, stack);
+      }
 
       // And lets trigger a render of the loaded stack
       _stack = stack;
@@ -393,7 +429,6 @@ function Page(props) {
     else if (index < modal.index()) {
       setStatus("page-before");
     }
-
     // Pages will mount right, and on onmount be repositioned right
     return () => setStatus("page-after");
   }, [modal.stack]);
@@ -432,11 +467,30 @@ function Page(props) {
 
 let _hasBeenVisible = false;
 export function useModal() {
-  const { setStack: _setStack, router } = useContext(ModalContext);
+  const {
+    setStack: _setStack,
+    setStore: _setStore,
+    router,
+  } = useContext(ModalContext);
 
   function setStack(stack) {
     _stack = stack;
     _setStack(_stack);
+  }
+
+  function setStore(store) {
+    _store = store;
+    _setStore(_store);
+    localStorage.setItem(LOCAL_STORAGE_STORE_KEY, JSON.stringify(store));
+  }
+
+  /**
+   * Returns the current store object
+   * @returns current store object from browser
+   */
+  async function _getStore() {
+    const storeStr = localStorage.getItem(LOCAL_STORAGE_STORE_KEY);
+    return await JSON.parse(storeStr);
   }
 
   // modal is visible
@@ -449,18 +503,23 @@ export function useModal() {
   /**
    * Push
    */
-  function _push(id, context = {}) {
+  async function _push(id, context = {}) {
     if (id) {
       let copy = [..._stack];
-      // Skip "reset" on empty stack
       if (_stack.length > 0) {
-        const active = _index();
-        copy = copy.slice(0, active + 1);
+        const activeIndex = _index();
+        copy = copy.slice(0, activeIndex + 1);
         copy = copy.map((obj) => ({ ...obj, active: false }));
       }
 
       // Create entry
-      const entry = { id, context, active: true, uid: createPageUID() };
+
+      const entry = {
+        id,
+        context,
+        active: true,
+        uid: createPageUID(),
+      };
 
       // Push to stack
       copy.push(entry);
@@ -471,8 +530,44 @@ export function useModal() {
       // custom save
       // save && save(copy);
       // update locale state
-      setStack(copy);
+      await setStack(copy);
     }
+  }
+
+  /**
+   * Save a modal to the store, to be able to add it to the stack at a later time
+   * @param {string} id
+   * @param {object} context
+   */
+  function _saveToStore(id, context = {}) {
+    if (id) {
+      let copy = [..._store];
+
+      const idExists = copy.find((obj) => obj.id === id);
+
+      if (idExists) {
+        // Remove old entry with same id- it contains most likely outdated data
+        copy = copy.filter((obj) => obj.id !== id);
+      }
+
+      // Create entry
+      const entry = {
+        id,
+        context,
+        active: false,
+        uid: createPageUID(),
+      };
+
+      // Push to store
+      copy.push(entry);
+
+      // custom save
+      // save && save(copy);
+      // update locale state
+      setStore(copy);
+      return entry.uid;
+    }
+    return undefined;
   }
 
   /**
@@ -518,13 +613,10 @@ export function useModal() {
   }
 
   /**
-   * index
-   *
    * Returns the index for the active element
-   * To search for an index, an id can passed to the function.
+   * To search for an index, an id can be passed to the function.
    *
    * OBS!!! If an ID is given, function will return the index of the first found element (from position 0) with the given id
-   *
    * @returns {int}
    */
   function _index(id = null) {
@@ -689,8 +781,12 @@ export function useModal() {
     select: _select,
     next: _next,
     prev: _prev,
+    saveToStore: _saveToStore,
+    getStore: _getStore,
     setStack,
+    setStore,
     stack: _stack,
+    store: _store,
     // privat functions
     _doSelect,
     _router: router,
@@ -708,9 +804,10 @@ export function useModal() {
  */
 export function Provider({ children, router }) {
   const [stack, setStack] = useState([]);
+  const [store, setStore] = useState([]);
 
   return (
-    <ModalContext.Provider value={{ stack, setStack, router }}>
+    <ModalContext.Provider value={{ stack, setStack, store, setStore, router }}>
       {children}
     </ModalContext.Provider>
   );

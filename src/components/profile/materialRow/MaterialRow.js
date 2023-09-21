@@ -598,7 +598,7 @@ const MaterialRow = (props) => {
               <Checkbox
                 checked={isChecked}
                 id={`material-row-${materialId}`}
-                aria-labelledby={`material-title-${materialId}`}
+                ariaLabelledBy={`material-title-${materialId}`}
                 tabIndex="-1"
               />
             </div>
