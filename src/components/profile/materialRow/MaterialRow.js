@@ -205,9 +205,9 @@ const DynamicColumn = ({ className, ...props }) => (
 );
 
 /* Use as section header to describe the content of the columns */
-export const MaterialHeaderRow = ({ column1, column2, column3 }) => {
+export const MaterialHeaderRow = ({ column1, column2, column3, className }) => {
   return (
-    <div className={styles.materialHeaderRow}>
+    <div className={`${styles.materialHeaderRow} ${className}`}>
       <div>
         <Text type="text3">{column1}</Text>
       </div>
@@ -248,7 +248,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
     removedOrderId,
     library,
   } = props;
-
+console.log('status',status)
   const modal = useModal();
 
   const onClick = () => {
@@ -303,11 +303,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
         <Title type="text1" tag="h3" id={`material-title-${materialId}`}>
           {title}
         </Title>
-        {isDebtRow && (
-          <div>
-            <Text type="text2">{library}</Text>
-          </div>
-        )}
+
         {creator && <Text type="text2">{creator}</Text>}
         {materialType && creationYear && (
           <Text type="text2" className={styles.uppercase}>
@@ -316,6 +312,11 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
         )}
 
         <div className={styles.dynamicContent}>{renderDynamicColumn()}</div>
+        {isDebtRow && (
+          <div>
+            <Text type="text2">{library}</Text>
+          </div>
+        )}
       </div>
 
       {!isDebtRow && (
@@ -415,7 +416,7 @@ const MaterialRow = (props) => {
   const getStatus = () => {
     switch (type) {
       case "DEBT":
-        return "RED";
+        return null;
       case "LOAN": {
         const dueDate = new Date(dueDateString);
         const today = new Date();
@@ -583,6 +584,7 @@ const isDebtRow  = type === "DEBT";
               [styles.materialRow_green]: status === "GREEN",
               [styles.materialRow_red]: status === "RED",
               [styles.materialRow_animated]: materialId === removedOrderId,
+              [styles.debtRow]: isDebtRow
             })}
             data-cy={dataCy}
           >

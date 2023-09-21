@@ -131,10 +131,11 @@ const LoansAndReservations = () => {
             )}
           </div>
           <MaterialHeaderRow
+            className={styles.debtHeader}
             column1={Translate({ context: "profile", label: "price" })}
             column2={Translate({ context: "profile", label: "loaner-library" })}
             column3={Translate({ context: "profile", label: "material" })}
-
+                    
           />
 
           {debt.map((claim, i) => (
