@@ -248,7 +248,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
     removedOrderId,
     library,
   } = props;
-  console.log("status", status);
+
   const modal = useModal();
 
   const onClick = () => {
