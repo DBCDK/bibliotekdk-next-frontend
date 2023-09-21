@@ -3106,7 +3106,7 @@
         "en": "My libraries"
       },
       "orderHistory": {
-        "da": "Bestilingshistorik",
+        "da": "Bestillingshistorik",
         "en": "Order history"
       },
       "profileMenu": {
@@ -3351,7 +3351,7 @@
         "en": "Would you like to give permission for bibliotek.dk to collect data about your orders, loans, and behavior on the website?\n\nThe collected data will be used to create an order history and personal recommendations for you.\n\nThe order history will only show orders from the date the function is activated.\n\nYour data is stored by the libraries and is only used by the libraries. This means they are never disclosed to third parties."
       },
       "revokeConsentText": {
-        "da": "Vil du ændre dit samtykke, så dine bestillinger ikke længere bliver gemt i historikken?\n\nFremfor vil der så kun blive vist bestillinger for de seneste 30 dage",
+        "da": "Vil du ændre dit samtykke, så dine bestillinger ikke længere bliver gemt i historikken?\n\nFremfor vil der så kun blive vist bestillinger for de seneste 30 dage\n\nOBS: bestillinger før de seneste 30 dage bliver først slettet i nat.",
         "en": "Do you want to change your consent so that your orders are no longer saved in the history?\n\nInstead, only orders for the past 30 days will be displayed"
       },
       "consentButton": {
