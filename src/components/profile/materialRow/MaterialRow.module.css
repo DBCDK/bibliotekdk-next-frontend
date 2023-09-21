@@ -184,7 +184,7 @@
   }
   .materialRow_debt:not(:first-of-type) {
     border-top: unset;
-  } 
+  }
 }
 
 @media (min-width: 993px) {
@@ -199,21 +199,17 @@
 }
 
 .debtDynamicColumn {
-  grid-column: 1; 
+  grid-column: 1;
 }
 
 .debtLibrary {
   grid-column: 2;
 }
 .debtMaterial {
-  grid-column: 3; 
+  grid-column: 3;
 }
 
-.debtHeader{
-
-}
-.debtRow{
-  grid-template-columns: 2fr 4fr 2fr 1fr;
+.debtRow {
+  grid-template-columns: 1fr 4fr 4fr 1fr;
   border-bottom: unset;
-
 }

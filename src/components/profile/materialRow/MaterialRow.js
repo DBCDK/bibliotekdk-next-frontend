@@ -248,7 +248,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
     removedOrderId,
     library,
   } = props;
-console.log('status',status)
+  console.log("status", status);
   const modal = useModal();
 
   const onClick = () => {
@@ -540,7 +540,7 @@ const MaterialRow = (props) => {
       </>
     );
   }
-const isDebtRow  = type === "DEBT";
+  const isDebtRow = type === "DEBT";
   return (
     <>
       {hasDeleteError && type === "ORDER" && (
@@ -584,7 +584,7 @@ const isDebtRow  = type === "DEBT";
               [styles.materialRow_green]: status === "GREEN",
               [styles.materialRow_red]: status === "RED",
               [styles.materialRow_animated]: materialId === removedOrderId,
-              [styles.debtRow]: isDebtRow
+              [styles.debtRow]: isDebtRow,
             })}
             data-cy={dataCy}
           >
@@ -604,7 +604,11 @@ const isDebtRow  = type === "DEBT";
             </div>
           )}
 
-          <div className={cx(styles.materialInfo,{[styles.debtMaterial]:isDebtRow})}>
+          <div
+            className={cx(styles.materialInfo, {
+              [styles.debtMaterial]: isDebtRow,
+            })}
+          >
             {!!image && (
               <div className={styles.imageContainer}>
                 <Cover src={image} size="fill-width" />
@@ -654,9 +658,11 @@ const isDebtRow  = type === "DEBT";
             </div>
           </div>
 
-          <div className={cx({[styles.debtDynamicColumn]:isDebtRow})}>{renderDynamicColumn()}</div>
+          <div className={cx({ [styles.debtDynamicColumn]: isDebtRow })}>
+            {renderDynamicColumn()}
+          </div>
 
-          <div className={cx({[styles.debtLibrary]:isDebtRow})}>
+          <div className={cx({ [styles.debtLibrary]: isDebtRow })}>
             <Text type="text2">{library}</Text>
           </div>
 
