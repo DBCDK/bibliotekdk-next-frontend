@@ -114,7 +114,7 @@ const LogoutButton = () => {
   const userName = user?.loanerInfo?.userParameters?.userName;
   return (
     <div className={styles.logoutContainer}>
-      {user?.name && (
+      {userName && (
         <Text
           className={styles.logoutBtnText}
           skeleton={user?.isLoading}
