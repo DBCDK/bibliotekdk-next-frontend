@@ -1,45 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-
-import merge from "lodash/merge";
-
-import { signIn } from "next-auth/react";
-
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import Email from "@/components/base/forms/email";
 import Input from "@/components/base/forms/input";
 import Button from "@/components/base/button";
 import Translate, { hasTranslation } from "@/components/base/translate";
+import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
 
 import Top from "../base/top";
 
 import styles from "./LoanerForm.module.css";
 import { useData } from "@/lib/api/api";
-import * as branchesFragments from "@/lib/api/branches.fragments";
 import useUser from "@/components/hooks/useUser";
-import * as userFragments from "@/lib/api/user.fragments";
-import Tooltip from "@/components/base/tooltip";
-import { manifestationsForAccessFactory } from "@/lib/api/manifestation.fragments";
-import { inferAccessTypes } from "@/components/_modal/pages/edition/utils";
+import * as branchesFragments from "@/lib/api/branches.fragments";
+import { useModal } from "@/components/_modal";
+import { openOrderModal } from "@/components/work/utils";
 import { validateEmail } from "@/utils/validateEmail";
 import { getLabel } from "@/components/base/forms/email/Email";
+import Tooltip from "@/components/base/tooltip/Tooltip";
 
 const ERRORS = {
   MISSING_INPUT: "error-missing-input",
 };
 
-export const LOGIN_MODE = {
-  ORDER_PHYSICAL: "orderPhysical",
-  SUBSCRIPTION: "subscription",
-  DIGITAL_COPY: "digitalCopy",
-  PLAIN_LOGIN: "plainLogin",
-  INFOMEDIA: "infomedia",
-  DDA: "demand_driven_acquisition",
-  // @TODO .. another mode? INFOMEDIA ?
-};
-
-export function UserParamsForm({ branch, initial, onSubmit, mode, originUrl }) {
+export function UserParamsForm({
+  branch,
+  initial,
+  onSubmit,
+  originUrl,
+  skeleton,
+  storeLoanerInfo,
+  setStoreLoanerInfo,
+}) {
   const [errorCode, setErrorCode] = useState();
   const [state, setState] = useState(initial || {});
   const [validMail, setValidMail] = useState(true);
@@ -47,6 +40,11 @@ export function UserParamsForm({ branch, initial, onSubmit, mode, originUrl }) {
   const requiredParameters = branch?.userParameters?.filter(
     ({ parameterRequired }) => parameterRequired
   );
+
+  const emailRequired =
+    requiredParameters.filter((p) => p.userParameterType === "userMail")
+      .length > 0;
+
   function validateState() {
     for (let i = 0; i < requiredParameters.length; i++) {
       const { userParameterType } = requiredParameters[i];
@@ -54,11 +52,13 @@ export function UserParamsForm({ branch, initial, onSubmit, mode, originUrl }) {
         return ERRORS.MISSING_INPUT;
       }
     }
-    const validMail = validateEmail(state.userMail);
-    setValidMail(validMail);
-    const emailError = getLabel(state.userMail, validMail);
-    if (emailError) {
-      return emailError.label;
+    if (emailRequired) {
+      const validMail = validateEmail(state.userMail);
+      setValidMail(validMail);
+      const emailError = getLabel(state.userMail, validMail);
+      if (emailError) {
+        return emailError.label;
+      }
     }
   }
 
@@ -71,23 +71,17 @@ export function UserParamsForm({ branch, initial, onSubmit, mode, originUrl }) {
         const error = validateState();
         setErrorCode(error);
         if (!error) {
-          onSubmit(state);
+          onSubmit(state, storeLoanerInfo);
         }
       }}
     >
       <Text type="text2">
         {Translate({
-          context: "login",
-          label: `${mode}-description`,
+          context: "order",
+          label: "fillout-loaner-info",
           vars: originUrl || [branch?.agencyName || branch?.name],
         })}
       </Text>
-      <Title type="title4" tag="h4">
-        {Translate({
-          context: "order",
-          label: "order-to-loaner-info",
-        })}
-      </Title>
       <div className={styles.fields}>
         {requiredParameters?.map(({ userParameterType, description }, idx) => {
           const labelKey = `${userParameterType}-label`;
@@ -105,8 +99,8 @@ export function UserParamsForm({ branch, initial, onSubmit, mode, originUrl }) {
           };
 
           return (
-            <div key={idx}>
-              <Text type="text1" tag="label" id={labelKey}>
+            <div key={idx} className={styles.field}>
+              <Text type="text2" tag="label" id={labelKey}>
                 {description ||
                   (hasTranslation(labelTranslation)
                     ? Translate(labelTranslation)
@@ -170,18 +164,30 @@ export function UserParamsForm({ branch, initial, onSubmit, mode, originUrl }) {
           </Text>
         )}
       </div>
-
-      <Text type="text3" className={styles.guestlogin}>
-        {Translate({
-          context: "order",
-          label: "order-guest-login-description",
-          vars: [branch.agencyName],
-        })}
-      </Text>
+      <span className={styles.checkBoxSpan}>
+        <Checkbox
+          checked={storeLoanerInfo}
+          onChange={(checked) => setStoreLoanerInfo(checked)}
+          id="loanerform-checkbox"
+          ariaLabelledBy="loanerform-checkbox-label"
+        />
+        <Text
+          tag="label"
+          id="loanerform-checkbox-label"
+          lines={1}
+          skeleton={skeleton}
+          type="text3"
+          dataCy="loanerinfo-checkbox-label"
+        >
+          {Translate({ context: "order", label: "save-info-in-browser" })}
+        </Text>
+        <Tooltip labelToTranslate="close-window" placement="top" />
+      </span>
+      {/* onclick triggers submit form */}
       <Button onClick={() => {}} tabIndex="0">
         {Translate({
-          context: "header",
-          label: "login",
+          context: "order",
+          label: "go-to-order",
         })}
       </Button>
     </form>
@@ -189,61 +195,27 @@ export function UserParamsForm({ branch, initial, onSubmit, mode, originUrl }) {
 }
 
 /**
- * Change originUrl to something readable (eg ebscohost.search.com -> Ebsco)
- *
- * 0931 - PJO - we keep this method for now - but return the origin .. wait
- * for design to make up their mind
- *
- * @param originUrl
- * @returns {string|*}
- */
-
-function originUrlToUrlName(originUrl) {
-  return originUrl;
-  // these are for dda (demand drive acquisition)
-  // translate urls to something readable
-
-  // TODO: Figure out why this code is here
-  //  Ebook central Ebsco
-  // if (originUrl && mode === LOGIN_MODE.DDA) {
-  //   if (originUrl.indexOf("ebookcentral") !== -1) {
-  //     return "Ebook central";
-  //   }
-  //   if (originUrl.indexOf("ebscohost") !== -1) {
-  //     return "Ebsco";
-  //   }
-  //   return originUrl;
-  // }
-}
-
-/**
- * Will show either a signin button if the provided branch supports
- * borrowerCheck (supports login.bib.dk), and otherwise a loaner formular.
- *
- * @param {obj} props
- * See propTypes for specific props and types
- *
- * @returns {component}
+ *  Shows login formular for FFU libraries without adgangsplatform login.
+ * @param {Object} branch
+ * @param {function} onSubmit
+ * @param {Object} skeleton
+ * @param {Object} initial
+ * @param {Object} context
+ * @param {boolean} storeLoanerInfo
+ * @param {function} setStoreLoanerInfo
+ * @returns JSX element
  */
 export function LoanerForm({
   branch,
   onSubmit,
-  onLogin,
-  submitting,
   skeleton,
   initial,
-  onClose,
-  doPolicyCheck,
   // modal props
   context,
-  digitalCopyAccess,
+  storeLoanerInfo,
+  setStoreLoanerInfo,
 }) {
-  let { mode = LOGIN_MODE.PLAIN_LOGIN, originUrl = null } = context || {};
-  if (mode === LOGIN_MODE.SUBSCRIPTION) {
-    mode = digitalCopyAccess
-      ? LOGIN_MODE.DIGITAL_COPY
-      : LOGIN_MODE.ORDER_PHYSICAL;
-  }
+  let { originUrl = null } = context || {};
 
   if (skeleton) {
     return (
@@ -268,142 +240,28 @@ export function LoanerForm({
     return null;
   }
 
-  // Order possible for branch
-  let orderPossible =
-    doPolicyCheck !== false ? branch.orderPolicy?.orderPossible : true;
-
-  // QUICKFIX - .. to avoid api check ..  all public libraries has access to dda - no other
-  if (mode === LOGIN_MODE.DDA) {
-    orderPossible = branch?.agencyId?.startsWith("7") || false;
-  }
-
-  const origin = originUrlToUrlName(originUrl, mode);
   return (
     <div className={styles.loanerform}>
       <Top />
       <Title type="title4" tag="h3">
         {Translate({
-          context: "login",
-          label: `${mode}-title`,
-          vars: origin ? [origin] : [branch.name],
+          context: "order",
+          label: "order-to",
+          vars: [branch.name],
         })}
       </Title>
 
-      {!orderPossible && (
-        <>
-          {mode === LOGIN_MODE.DDA ? (
-            <Text type="text2">
-              {Translate({
-                context: "order",
-                label: "library-no-dda",
-                vars: [branch?.agencyName],
-              })}
-            </Text>
-          ) : (
-            <Text type="text2">
-              {Translate({
-                context: "order",
-                label: "order-not-possible",
-              })}
-            </Text>
-          )}
-          <Button
-            onClick={onClose}
-            className={styles.loginbutton}
-            disabled={!!submitting}
-          >
-            {Translate({
-              context: "general",
-              label: "select-another-library",
-            })}
-          </Button>
-        </>
-      )}
-
-      {orderPossible && branch.borrowerCheck && (
-        <>
-          <Text type="text2" tag="span" className={styles.inline}>
-            {Translate({
-              context: "login",
-              label: `${mode}-description`,
-              vars: [branch.agencyName],
-            })}
-          </Text>
-          {mode === LOGIN_MODE.DIGITAL_COPY && (
-            <span>
-              <Tooltip labelToTranslate="tooltip_digtital_copy" />
-              {/* we also need description for physical ordering here
-              @TODO - is this text ALWAYS shown now ?? - refactor if so */}
-              <Text type="text2">
-                {Translate({
-                  context: "login",
-                  label: "orderPhysical-description",
-                  vars: [branch.agencyName],
-                })}
-              </Text>
-            </span>
-          )}
-
-          <Button
-            onClick={onLogin}
-            className={styles.loginbutton}
-            disabled={!!submitting}
-            tabIndex="0"
-          >
-            {Translate({
-              context: "header",
-              label: "login",
-            })}
-          </Button>
-        </>
-      )}
-
-      {orderPossible && !branch.borrowerCheck && (
-        <UserParamsForm
-          branch={branch}
-          initial={initial}
-          onSubmit={onSubmit}
-          mode={mode}
-          originUrl={originUrl}
-        />
-      )}
+      <UserParamsForm
+        branch={branch}
+        initial={initial}
+        onSubmit={onSubmit}
+        originUrl={originUrl}
+        skeleton={skeleton}
+        storeLoanerInfo={storeLoanerInfo}
+        setStoreLoanerInfo={setStoreLoanerInfo}
+      />
     </div>
   );
-}
-
-/**
- * Get a callback url for sign in.
- *
- * Remove modals except for the third one.
- *     scenarios:
- *     a. user logins from a page eg. infomedia
- *     b. user logins from a modal eg. order
- *       if user logins in from a modal the top stack will be the original modal.
- *       two last elements in stack are "login" and "loanerform" - login ALWAYS
- *       happens via - login->loanerform -- so if user comes from another modal
- *       it will be on top - redirect to that
- *
- * @param modal
- * @param pickupBranch
- * @returns {string}
- */
-function getCallbackUrl(modal, pickupBranch) {
-  const stack = modal.stack;
-  let callback = window.location.href;
-  // remove modal from callback - if any
-  const regex = /[&|?]modal=[0-9]*/;
-  callback = callback.replace(regex, "");
-  if (stack.length > 2) {
-    // pick top element in stack
-    callback =
-      callback + (callback.includes("?") ? "&" : "?") + "modal=" + stack[0].uid;
-  }
-  return pickupBranch
-    ? callback +
-        (callback.includes("?") ? "&" : "?") +
-        "setPickupAgency=" +
-        pickupBranch
-    : callback;
 }
 
 LoanerForm.propTypes = {
@@ -427,55 +285,77 @@ LoanerForm.propTypes = {
  * @returns {component}
  */
 export default function Wrap(props) {
-  const { branchId, pid, doPolicyCheck, clear } = props.context;
-
-  // Branch userparams fetch (Fast)
+  const modal = useModal();
+  const {
+    branchId,
+    //order modal props
+    pids,
+    selectedAccesses,
+    workId,
+    singleManifestation,
+    //check if we open order new modal or we we go back to order modal
+    changePickupBranch = false,
+  } = props.context;
   const { data, isLoading: branchIsLoading } = useData(
     branchId && branchesFragments.branchUserParameters({ branchId })
   );
 
-  // PolicyCheck in own request (sometimes slow)
-  const { data: policyData } = useData(
-    pid && branchId && branchesFragments.branchOrderPolicy({ branchId, pid })
-  );
-  const mergedData = merge({}, data, policyData);
+  const branch = data?.branches?.result?.[0];
 
-  const { isAuthenticated } = useUser();
+  const { loanerInfo, updateLoanerInfo, deleteSessionData } = useUser();
 
-  const { loanerInfo, updateLoanerInfo } = useUser();
+  //remove userdata when modal is closed - if user doesnt want to store data
+  useEffect(() => {
+    if (modal?.isVisible === false) {
+      deleteUserDataFromSession();
+    }
+  }, [modal?.isVisible]);
 
-  // User branches fetch
-  const { data: userData, isLoading: userIsLoading } = useData(
-    isAuthenticated && userFragments.branchesForUser()
-  );
+  //remove userdata when window is closed - if user doesnt want to store data
+  useEffect(() => {
+    window.addEventListener("beforeunload", deleteUserDataFromSession);
+    return () => {
+      window.removeEventListener("beforeunload", deleteUserDataFromSession);
+    };
+  }, [JSON.stringify(loanerInfo)]);
 
-  const loggedInAgencyId = userData?.user?.agency?.result?.[0]?.agencyId;
-  const branch = mergedData?.branches?.result?.[0];
-  const skeleton =
-    (branchId && (userIsLoading || branchIsLoading)) ||
-    loggedInAgencyId === branch?.agencyId;
+  /**
+   * We remove session data for libraries without loanercheck
+   * if user doesnt want to store data for next order.
+   * This can be relevant on public computers, when user forgets to close the browser window
+   * we dont do this for authenticated users,
+   * because authenticated users have a logout button to remove session data.
+   */
+  function deleteUserDataFromSession() {
+    if (!loanerInfo?.allowSessionStorage) {
+      deleteSessionData();
+    }
+  }
+
+  async function updateAllowSessionStorage(value) {
+    await updateLoanerInfo({
+      allowSessionStorage: value,
+    });
+  }
 
   async function onSubmit(info) {
     await updateLoanerInfo({
       userParameters: info,
-      pickupBranch: branch.branchId,
+      pickupBranch: branchId,
     });
-    if (clear) {
-      props.modal.clear();
-    } else {
-      // Back to order
+
+    if (changePickupBranch) {
       props.modal.prev("order");
+    } else {
+      openOrderModal({
+        modal,
+        pids,
+        selectedAccesses,
+        workId,
+        singleManifestation,
+      });
     }
   }
-
-  const { data: manifestationData } = useData(
-    pid && manifestationsForAccessFactory({ pid })
-  );
-  const { isDigitalCopy, isPeriodicaLike } = inferAccessTypes(
-    null,
-    branch?.agencyId,
-    manifestationData?.manifestations
-  );
 
   if (!branchId) {
     return null;
@@ -487,21 +367,11 @@ export default function Wrap(props) {
         {...props}
         branch={branch}
         initial={loanerInfo.userParameters}
-        onLogin={() => {
-          const callback = getCallbackUrl(props.modal, branch?.branchId);
-          signIn(
-            "adgangsplatformen",
-            { callbackUrl: callback },
-            { agency: branch?.agencyId, force_login: 1 }
-          );
-        }}
         onSubmit={onSubmit}
-        skeleton={skeleton}
-        doPolicyCheck={doPolicyCheck}
-        digitalCopyAccess={
-          isDigitalCopy && !isPeriodicaLike && branch?.digitalCopyAccess
-        }
+        skeleton={branchIsLoading}
         onClose={() => props.modal.prev()}
+        storeLoanerInfo={loanerInfo?.allowSessionStorage}
+        setStoreLoanerInfo={updateAllowSessionStorage}
       />
     </>
   );

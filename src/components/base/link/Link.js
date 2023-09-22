@@ -4,6 +4,7 @@ import styles from "./Link.module.css";
 import animations from "css/animations";
 import cx from "classnames";
 import React, { useEffect, useState } from "react";
+import Skeleton from "@/components/base/skeleton";
 
 /**
  * Used when the link is given both an onClick and href.
@@ -342,16 +343,25 @@ export function LinkOnlyInternalAnimations({
   border = { top: false, bottom: false },
   children,
   disabled = false,
+  skeleton = false,
+  lines = 1,
 }) {
   border = disabled ? { top: false, bottom: false } : border;
+
+  if (skeleton) {
+    return (
+      <LinkSkeleton dataCy={dataCy} className={className} lines={lines}>
+        {children}
+      </LinkSkeleton>
+    );
+  }
 
   return (
     <Link
       dataCy={dataCy}
-      className={cx(
-        animations.underlineContainer__only_internal_animations,
-        className
-      )}
+      className={cx(className, {
+        [animations.underlineContainer__only_internal_animations]: !disabled,
+      })}
       href={href}
       onClick={onClick}
       target={target}
@@ -359,6 +369,24 @@ export function LinkOnlyInternalAnimations({
       disabled={disabled}
     >
       {children}
+    </Link>
+  );
+}
+
+/**
+ * Function to return skeleton (Loading) version of the Component
+ *
+ * @param {obj} props
+ *  See propTypes for specific props and types
+ *
+ * @returns {JSX.Element}
+ */
+function LinkSkeleton(props) {
+  return (
+    <Link {...props} href={null} target={null} onClick={null} disabled={true}>
+      <Skeleton className={styles.skeleton} lines={props.lines}>
+        {props.children}
+      </Skeleton>
     </Link>
   );
 }

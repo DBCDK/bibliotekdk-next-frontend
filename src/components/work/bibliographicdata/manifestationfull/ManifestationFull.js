@@ -17,7 +17,7 @@ import { parseManifestation } from "@/lib/manifestationParser";
 import { cyKey } from "@/utils/trim";
 import LocalizationsLink from "@/components/work/overview/localizationslink/LocalizationsLink";
 import { useModal } from "@/components/_modal";
-import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
+import ReservationButtonWrapper from "@/components/work/reservationbutton/ReservationButton";
 import { openReferencesModal } from "@/components/work/utils";
 import { useData } from "@/lib/api/api";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
@@ -87,7 +87,7 @@ function ColumnOne({ workId, manifestation }) {
 
       <div className={styles.reservationwrapper}>
         <div className={styles.button}>
-          <ReservationButton
+          <ReservationButtonWrapper
             workId={workId}
             selectedPids={[manifestation?.pid]}
             singleManifestation={true}

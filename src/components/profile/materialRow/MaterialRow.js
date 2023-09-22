@@ -205,9 +205,9 @@ const DynamicColumn = ({ className, ...props }) => (
 );
 
 /* Use as section header to describe the content of the columns */
-export const MaterialHeaderRow = ({ column1, column2, column3 }) => {
+export const MaterialHeaderRow = ({ column1, column2, column3, className }) => {
   return (
-    <div className={styles.materialHeaderRow}>
+    <div className={`${styles.materialHeaderRow} ${className}`}>
       <div>
         <Text type="text3">{column1}</Text>
       </div>
@@ -303,11 +303,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
         <Title type="text1" tag="h3" id={`material-title-${materialId}`}>
           {title}
         </Title>
-        {isDebtRow && (
-          <div>
-            <Text type="text2">{library}</Text>
-          </div>
-        )}
+
         {creator && <Text type="text2">{creator}</Text>}
         {materialType && creationYear && (
           <Text type="text2" className={styles.uppercase}>
@@ -316,6 +312,11 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
         )}
 
         <div className={styles.dynamicContent}>{renderDynamicColumn()}</div>
+        {isDebtRow && (
+          <div>
+            <Text type="text2">{library}</Text>
+          </div>
+        )}
       </div>
 
       {!isDebtRow && (
@@ -417,7 +418,7 @@ const MaterialRow = (props) => {
   const getStatus = () => {
     switch (type) {
       case "DEBT":
-        return "RED";
+        return null;
       case "LOAN": {
         const dueDate = new Date(dueDateString);
         const today = new Date();
@@ -576,7 +577,7 @@ const MaterialRow = (props) => {
       </>
     );
   }
-
+  const isDebtRow = type === "DEBT";
   return (
     <>
       {hasDeleteError && type === "ORDER" && (
@@ -617,6 +618,7 @@ const MaterialRow = (props) => {
               [styles.materialRow_green]: status === "GREEN",
               [styles.materialRow_red]: status === "RED",
               [styles.materialRow_animated]: materialId === removedOrderId,
+              [styles.debtRow]: isDebtRow,
             })}
             data-cy={dataCy}
           >
@@ -630,14 +632,18 @@ const MaterialRow = (props) => {
               <Checkbox
                 checked={isSelected}
                 id={`material-row-${materialId}`}
-                aria-labelledby={`material-title-${materialId}`}
+                ariaLabelledBy={`material-title-${materialId}`}
                 tabIndex="-1"
                 readOnly
               />
             </div>
           )}
 
-          <div className={styles.materialInfo}>
+          <div
+            className={cx(styles.materialInfo, {
+              [styles.debtMaterial]: isDebtRow,
+            })}
+          >
             {!!image && (
               <div className={styles.imageContainer}>
                 <Cover src={image} size="fill-width" />
@@ -661,13 +667,19 @@ const MaterialRow = (props) => {
                   </Link>
                 )}
               >
-                <Title
-                  type="text1"
-                  tag="h3"
-                  id={`material-title-${materialId}`}
-                >
-                  {title}
-                </Title>
+                {title ? (
+                  <Title
+                    type="text1"
+                    tag="h3"
+                    id={`material-title-${materialId}`}
+                  >
+                    {title}
+                  </Title>
+                ) : (
+                  <Text type="text2">
+                    {Translate({ context: "profile", label: "unknowMaterial" })}
+                  </Text>
+                )}
               </ConditionalWrapper>
 
               {creator && (
@@ -687,11 +699,13 @@ const MaterialRow = (props) => {
             </div>
           </div>
 
-          <div>{renderDynamicColumn()}</div>
+          <div className={cx({ [styles.debtDynamicColumn]: isDebtRow })}>
+            {renderDynamicColumn()}
+          </div>
 
           {type !== "BOOKMARK" && (
             <>
-              <div>
+              <div className={cx({ [styles.debtLibrary]: isDebtRow })}>
                 <Text type="text2">{library}</Text>
               </div>
 

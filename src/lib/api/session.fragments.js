@@ -53,6 +53,7 @@ export function session() {
           userMail
           userTelephone
         }
+        allowSessionStorage
         pickupBranch
       }
       monitor(name: "bibdknext_session")

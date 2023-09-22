@@ -28,3 +28,6 @@ p.subHeading {
     padding-left: var(--pt2);
   }
 }
+.debtHeader {
+  grid-template-columns: 1.5fr 3fr 4fr 1fr;
+}

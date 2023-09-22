@@ -12,8 +12,8 @@ import { getWorkUrl } from "@/lib/utils";
 import { useModal } from "@/components/_modal";
 import { orderHistory } from "@/lib/api/order.fragments";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import * as userFragments from "@/lib/api/user.fragments";
+import Skeleton from "@/components/base/skeleton/Skeleton";
 
 const itemsPerPage = 4;
 
@@ -28,14 +28,9 @@ export default function OrderHistoryPage() {
   const { isAuthenticated } = useUser();
   const breakpoint = useBreakpoint();
   const modal = useModal();
-  const router = useRouter();
-  const { page } = router.query;
   const isMobile = breakpoint === "xs" || breakpoint === "sm";
   const [totalPages, setTotalPages] = useState(0);
-  //check if url parameter "page" is a valid number. If so set it as current page otherwise set page to default value 1
-  const parsedPage = parseInt(page, 10);
-  const isValidPage = !isNaN(parsedPage) && parsedPage > 0;
-  const [currentPage, setCurrentPage] = useState(isValidPage ? parsedPage : 1);
+  const [currentPage, setCurrentPage] = useState(1);
   const [orderHistoryData, setOrderHistoryData] = useState([]);
   //fetch paginated orderhistorydata
   const { data, isLoading } = useData(
@@ -50,25 +45,10 @@ export default function OrderHistoryPage() {
   );
   const persistUserData = !!userData?.user?.persistUserData;
 
-  /**
-   * Updates url query params with page
-   */
-  async function updateQueryParams(params) {
-    const query = { ...router.query, ...params };
-    await router.push(
-      { pathname: router.pathname, query },
-      {
-        pathname: router.asPath.replace(/\?.*/, ""),
-        query,
-      },
-      { shallow: true, scroll: false }
-    );
-  }
   const onPageChange = async (newPage) => {
     if (newPage > totalPages) {
       newPage = totalPages;
     }
-    await updateQueryParams({ page: newPage });
     setCurrentPage(newPage);
   };
 
@@ -94,6 +74,20 @@ export default function OrderHistoryPage() {
       setTimeout(mutate, 200);
     }
   }, [modal.isVisible]);
+
+  if (isLoading) {
+    return (
+      <Layout title={Translate({ context: "profile", label: "orderHistory" })}>
+        <Skeleton lines={2} className={styles.skeletonText} />
+        <div className={styles.skeletonContainer}>
+          <Skeleton className={styles.skeleton} />
+          <Skeleton className={styles.skeleton} />
+          <Skeleton className={styles.skeleton} />
+          <Skeleton className={styles.skeleton} />
+        </div>
+      </Layout>
+    );
+  }
   return (
     <Layout title={Translate({ context: "profile", label: "orderHistory" })}>
       {persistUserData ? (
@@ -191,7 +185,7 @@ export default function OrderHistoryPage() {
           )}
         </table>
       )}
-      {totalPages > 0 && (
+      {totalPages > 1 && (
         <Pagination
           className={styles.pagination}
           numPages={totalPages}

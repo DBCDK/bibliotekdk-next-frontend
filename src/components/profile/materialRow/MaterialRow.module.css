@@ -189,6 +189,23 @@
   width: 100px;
 }
 
+.debtDynamicColumn {
+  grid-column: 1;
+}
+
+.debtLibrary {
+  grid-column: 2;
+}
+.debtMaterial {
+  grid-column: 3;
+}
+
+.debtRow {
+  grid-auto-flow: column;
+  grid-template-columns: 1.5fr 3fr 4fr 1fr;
+  border-bottom: unset;
+}
+
 @media (hover: hover) {
   .materialRow_mobile:focus-visible,
   .materialRow_mobile:hover {
@@ -203,6 +220,9 @@
 
   .materialRow_debt {
     display: flex;
+  }
+  .materialRow_debt:not(:first-of-type) {
+    border-top: unset;
   }
 }
 

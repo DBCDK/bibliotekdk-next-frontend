@@ -42,6 +42,7 @@ import { SuggestTypeEnum } from "@/lib/enums";
 import isEqual from "lodash/isEqual";
 import isEmpty from "lodash/isEmpty";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import { openLoginModal } from "../_modal/pages/login/utils";
 
 // material Pages
 export const MATERIAL_PAGES = [
@@ -100,6 +101,14 @@ export function Header({
   // specific material workType selected
   const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
 
+  async function handleOnClick() {
+    if (user.isAuthenticated) {
+      signOut();
+      return;
+    }
+    openLoginModal({ modal });
+  }
+
   const menu = [
     {
       label: "search",
@@ -113,23 +122,16 @@ export function Header({
       },
     },
     {
-      label: user.isAuthenticated || user.isGuestUser ? "logout" : "login",
+      label: user.isAuthenticated ? "logout" : "login",
       icon: LoginIcon,
-      onClick: user.isAuthenticated
-        ? // sign user out - either guest- or hejmdal-user
-          signOut
-        : user.isGuestUser
-        ? async () => {
-            await user.guestLogout();
-          }
-        : // open login modal
-          () => modal.push("login"),
+      onClick: handleOnClick,
     },
     {
       label: "bookmark",
       icon: BookmarkIcon,
       onClick: () => router.push("/profil/huskeliste"),
     },
+
     {
       label: "menu",
       icon: BurgerIcon,

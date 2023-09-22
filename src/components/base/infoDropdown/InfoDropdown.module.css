@@ -1,0 +1,30 @@
+/* expand more information */
+.expandWrap {
+  display: flex;
+  align-items: center;
+}
+
+.expandButton {
+  background-color: var(--white);
+  padding: var(--pt1) 0 0 !important; /* overwrite default button padding*/
+  outline: none;
+  color: var(--black);
+}
+
+.expandButton:hover,
+.expandButton:focus {
+  cursor: pointer;
+  outline: none;
+}
+
+.expandButton .expandWrap p {
+  margin: 0 var(--pt1) 0 0;
+}
+
+.expandButton[aria-expanded="true"] .chevron img {
+  transform: rotate(180deg);
+}
+
+.chevron img {
+  transition: transform 0.2s linear;
+}
