@@ -22,7 +22,7 @@ export function BookMarkMaterialSelector({
   const onSelect = (material, workId) => {
     const item = {
       key: workId + material,
-      id: workId,
+      materialId: workId,
       materialType: material[0],
     };
     setBookmark(item);
@@ -36,7 +36,9 @@ export function BookMarkMaterialSelector({
       let bookmarkIndex = -1;
       // this one is used to set the overall button to active or not (if one of the materialtypes is selected)
       if (options.length > 1) {
-        bookmarkIndex = bookmarks?.findIndex((bookm) => bookm.id === workId);
+        bookmarkIndex = bookmarks?.findIndex(
+          (bookm) => bookm.materialId === workId
+        );
       } else if (options.length === 1) {
         // if we have one material only we look for a specific key
         bookmarkIndex = bookmarks?.findIndex(

@@ -9,7 +9,7 @@
  * via getServerSideProps is used when the React app
  * is rendered.
  */
-import React from "react";
+import React, { useEffect } from "react";
 
 import { SessionProvider } from "next-auth/react";
 import smoothscroll from "smoothscroll-polyfill";
@@ -48,6 +48,7 @@ import SetPickupBranch from "@/components/utils/SetPickupBranch";
 import { enableDebug } from "@/lib/api/api";
 
 import ErrorPage from "./500";
+import { BookmarkSyncProvider } from "@/components/hooks/useBookmarks";
 
 // kick off the polyfill!
 if (typeof window !== "undefined") {
@@ -182,6 +183,7 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
 
           {/* SetPickupBranch listens for users just logged in via adgangsplatformen */}
           <SetPickupBranch router={router} />
+          <BookmarkSyncProvider />
         </SessionProvider>
       </SWRConfig>
     </ErrorBoundary>

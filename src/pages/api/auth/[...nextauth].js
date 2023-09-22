@@ -1,3 +1,4 @@
+import { syncCookieBookmarks } from "@/components/hooks/useBookmarks";
 import { adgangsplatformen, callbacks } from "@dbcdk/login-nextjs";
 import { NextAuth } from "@dbcdk/login-nextjs";
 import { log } from "dbc-node-logger";

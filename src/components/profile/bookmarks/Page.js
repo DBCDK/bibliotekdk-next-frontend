@@ -17,8 +17,8 @@ const CONTEXT = "bookmark";
 const MENUITEMS = ["Bestil flere", "Hent referencer", "Fjern flere"];
 
 const BookmarkPage = () => {
-  const { bookmarks: bookmarkCookies } = useBookmarks();
-  const { data } = usePopulateBookmarks(bookmarkCookies);
+  const { bookmarks: bookmarksData } = useBookmarks();
+  const { data } = usePopulateBookmarks(bookmarksData);
   const [activeStickyButton, setActiveStickyButton] = useState(null);
   const bookmarks = data?.works.filter((n) => n);
   const breakpoint = useBreakpoint();
