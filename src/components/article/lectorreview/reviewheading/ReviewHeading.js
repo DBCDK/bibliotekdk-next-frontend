@@ -2,7 +2,7 @@
  * @file ReviewHeading handles the heading for LectorReviewPage
  */
 
-import { workTypeTranslator } from "@/components/work/reservationbutton/ReservationButton";
+import { workTypeTranslator } from "@/components/work/reservationbutton/utils";
 import Section from "@/components/base/section";
 import styles from "./ReviewHeading.module.css";
 import Col from "react-bootstrap/Col";

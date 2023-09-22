@@ -10,6 +10,7 @@ import LocalizationItem from "./localizationitem/LocalizationItem";
 
 import Text from "@/components/base/text/Text";
 import Title from "@/components/base/title";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 export function Localizations({
   context,
@@ -18,6 +19,8 @@ export function Localizations({
   onChange,
   testing = false,
 }) {
+  const isMobile = useBreakpoint() === "xs";
+
   const allBranches = branchData?.result;
   return (
     <div data-cy="localizations-modal" className={styles.wrapper}>
@@ -42,8 +45,8 @@ export function Localizations({
       <Search
         dataCy="pickup-search-input"
         placeholder={Translate({
-          context: "order",
-          label: "pickup-input-placeholder",
+          context: isMobile ? "login" : "order",
+          label: isMobile ? "search-for-library" : "pickup-input-placeholder",
         })}
         onChange={debounce((value) => onChange(value), 100)}
         id="localizations_search"

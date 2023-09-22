@@ -15,6 +15,7 @@ import { signOut } from "@dbcdk/login-nextjs/client";
 import Button from "@/components/base/button";
 import { useModal } from "@/components/_modal";
 import Router, { useRouter } from "next/router";
+import { openLoginModal } from "@/components/_modal/pages/login/utils";
 
 const CONTEXT = "profile";
 const MENUITEMS = [
@@ -97,11 +98,14 @@ export default function ProfileLayout({ title, children }) {
               </Text>
 
               <Button
+                dataCy="profile-layout-button-login"
                 className={styles.loginButton}
                 size="large"
                 type="primary"
-                onClick={() => {
-                  modal.push("login");
+                onClick={() => openLoginModal({ modal })}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.keyCode === 13)
+                    openLoginModal({ modal });
                 }}
               >
                 {Translate({
@@ -126,21 +130,20 @@ const LogoutButton = () => {
   const userName = user?.loanerInfo?.userParameters?.userName;
   return (
     <div className={styles.logoutContainer}>
-      <Text
-        className={styles.logoutBtnText}
-        skeleton={!userName}
-        lines={1}
-      >{`${Translate({
-        context: "profile",
-        label: "signed-in-as-name",
-      })} ${userName}`}</Text>
+      {userName && (
+        <Text
+          className={styles.logoutBtnText}
+          skeleton={user?.isLoading}
+          lines={1}
+        >{`${Translate({
+          context: "profile",
+          label: "signed-in-as-name",
+        })} ${userName}`}</Text>
+      )}
       <Link
         onClick={() => {
           if (user.isAuthenticated) {
             signOut(null, "/");
-          } else if (user.isGuestUser) {
-            user.guestLogout();
-            Router.push("/");
           }
         }}
         className={styles.logoutBtn}
