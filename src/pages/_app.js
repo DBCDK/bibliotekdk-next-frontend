@@ -9,7 +9,7 @@
  * via getServerSideProps is used when the React app
  * is rendered.
  */
-import React, { useEffect } from "react";
+import React from "react";
 
 import { SessionProvider } from "next-auth/react";
 import smoothscroll from "smoothscroll-polyfill";

@@ -2,7 +2,6 @@ import useSWR from "swr";
 import * as workFragments from "@/lib/api/work.fragments";
 import { useData, useMutate } from "@/lib/api/api";
 import { useEffect } from "react";
-import useUser from "./useUser";
 import * as bookmarkMutations from "@/lib/api/bookmarks.mutations";
 import * as bookmarkFragments from "@/lib/api/bookmarks.fragments";
 import { useSession } from "next-auth/react";
@@ -39,7 +38,6 @@ export default function useBookmarks() {
     mutate: mutateGlobalBookmarks,
   } = useData(isAuthenticated && bookmarkFragments.fetchAll());
   const bookmarkMutation = useMutate();
-  const { isLoggedIn } = useUser();
   const globalBookmarks =
     globalBookmarksUserObject?.user?.bookmarks?.result?.map((bookmark) => ({
       ...bookmark,
@@ -73,7 +71,7 @@ export default function useBookmarks() {
    * Set a value in bookmark list
    */
   const setBookmark = async (value) => {
-    if (isLoggedIn) {
+    if (isAuthenticated) {
       /**
        * API solution
        */
