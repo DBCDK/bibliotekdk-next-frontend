@@ -11,7 +11,7 @@ import LocalizationItem from "./localizationitem/LocalizationItem";
 import Text from "@/components/base/text/Text";
 import Title from "@/components/base/title";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
-import { NoAgenciesSearch } from "@/components/_modal/pages/localizations/noAgenciesSearch";
+import { NoAgenciesSearch } from "@/components/_modal/pages/localizations/NoAgenciesSearch";
 
 export function Localizations({
   context,
