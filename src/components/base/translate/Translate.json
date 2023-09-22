@@ -689,6 +689,10 @@
       }
     },
     "holdings": {
+      "text_no_localizations": {
+        "da" : "Ingen biblioteker matcher din søgning. \\n Se status for dit foretrukne bibliotek ved at søge på navn, postnr. eller by.",
+        "en" : "No library match for your search. \\n See status for your preferred library by searcing on name, postal cade or city."
+      },
       "label_localizaion_no_holdings": {
         "da": "Ikke på hylden. Er hjemme på en anden afdeling af %s",
         "en": "Ikke be on shelf. At home at another branch of %s"

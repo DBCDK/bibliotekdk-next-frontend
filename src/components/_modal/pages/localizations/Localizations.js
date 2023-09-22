@@ -11,6 +11,7 @@ import LocalizationItem from "./localizationitem/LocalizationItem";
 import Text from "@/components/base/text/Text";
 import Title from "@/components/base/title";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import { NoAgenciesSearch } from "@/components/_modal/pages/localizations/noAgenciesSearch";
 
 export function Localizations({
   context,
@@ -52,9 +53,9 @@ export function Localizations({
         id="localizations_search"
       />
 
-      {!isLoading && (
+      {allBranches && !isLoading && (
         <div>
-          {allBranches?.length > 0 && (
+          {allBranches?.length > 0 ? (
             <div>
               {allBranches.map((branch, idx) => {
                 return (
@@ -71,6 +72,8 @@ export function Localizations({
                 );
               })}
             </div>
+          ) : (
+            <NoAgenciesSearch className={styles.topmargin} />
           )}
         </div>
       )}
