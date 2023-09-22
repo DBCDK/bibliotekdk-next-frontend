@@ -139,7 +139,7 @@ export function orderPolicy({ pid }) {
     // delay: 1000, // for debugging
     query: `query orderPolicy ($language: LanguageCode!, $pid: String! ) {
       user {
-        agency (language: $language){
+        agencies (language: $language){
           agencyUrl
           result {
             agencyName
