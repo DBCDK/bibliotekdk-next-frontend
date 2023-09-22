@@ -3,6 +3,8 @@
   align-items: center;
   padding: var(--pt1) var(--pt3) !important;
   white-space: nowrap;
+  width: 100%;
+  justify-content: center;
 }
 
 .filterButton i {

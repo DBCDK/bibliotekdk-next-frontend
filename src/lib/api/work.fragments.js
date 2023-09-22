@@ -564,6 +564,38 @@ export function editionWork({ workId }) {
   };
 }
 
+export function pidsToWorks({ pids }) {
+  if (!pids) return;
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query pidsToWorks($pids: [String!]!) {
+      works(pid: $pids) {
+        workId
+        titles {
+          main
+        }
+        creators {
+          display
+        }
+        manifestations {
+          bestRepresentation {
+            cover {
+              thumbnail
+            }
+            materialTypes {
+              specific
+            }
+          }
+        }
+      }
+    }
+    `,
+    variables: { pids },
+    slowThreshold: 3000,
+  };
+}
+
 export function listOfAllManifestations({ workId }) {
   return {
     apiUrl: ApiEnums.FBI_API,
