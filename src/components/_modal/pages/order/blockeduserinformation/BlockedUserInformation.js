@@ -57,12 +57,17 @@ export default function Wrap() {
   const { authUser, loanerInfo, isAuthenticated, isGuestUser, isLoggedIn } =
     useUser();
 
+  // HERE CALL borchKFragment.checkOrderAllowed
   const blockedUserResponse = useData(
     loanerInfo?.pickupBranch &&
       branchesFragments.checkBlockedUser({ branchId: loanerInfo.pickupBranch })
   );
 
+  //console.log("______________blockedUserResponse", blockedUserResponse);
+
   const branches = blockedUserResponse?.data?.branches;
+
+  //console.log("branches", branches);
 
   if (blockedUserResponse?.isLoading) {
     return <Skeleton lines={2} isSlow={blockedUserResponse?.isSlow} />;
