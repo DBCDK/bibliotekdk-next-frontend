@@ -125,15 +125,6 @@ export function Header({
       label: user.isAuthenticated ? "logout" : "login",
       icon: LoginIcon,
       onClick: handleOnClick,
-      onClick: user.isAuthenticated
-        ? // sign user out - either guest- or hejmdal-user
-          signOut
-        : user.isGuestUser
-        ? async () => {
-            await user.guestLogout();
-          }
-        : // open login modal
-          () => modal.push("login"),
     },
     {
       label: "bookmark",
