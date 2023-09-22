@@ -2466,6 +2466,16 @@
         "en": "is required"
       }
     },
+    "addLibrary": {
+      "title": {
+        "da": "Tilføj et uddannelsesbibliotek til din profil", 
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "librarySearchLabel": {
+        "da": "Find bibliotek", 
+        "en": "LABEL: Mangler oversættelse!"
+      }
+    },
     "metadata": {
       "frontpage-title": {
         "da": "Bibliotek.dk | Lån fra alle Danmarks biblioteker",
