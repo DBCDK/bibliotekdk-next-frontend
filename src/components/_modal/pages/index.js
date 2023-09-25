@@ -7,7 +7,6 @@ import Loanerform from "./loanerform";
 import Receipt from "./receipt";
 import Login from "./login";
 import Filter from "./filter";
-import Localizations from "./localizations";
 import References from "./references";
 import ManifestationContent from "./manifestationContent";
 import Material from "./material";
@@ -27,7 +26,6 @@ const _modal = {
   Receipt,
   Login,
   Filter,
-  Localizations,
   References,
   ManifestationContent,
   Material,
