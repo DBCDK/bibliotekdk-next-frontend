@@ -83,7 +83,6 @@ function Address({ singleBranch }) {
               context: "localizations",
               label: "see_in_google_maps",
             })}
-            Se i Google Maps
           </IconLink>
         </>
       )}

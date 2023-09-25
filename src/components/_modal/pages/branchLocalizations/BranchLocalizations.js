@@ -27,6 +27,8 @@ function OnlyInformationOnAgencyHoldings({ pids, agency }) {
             label:
               agency?.pickupAllowed === false
                 ? "agency_status_pickup_not_allowed"
+                : agency.availabilityAccumulated === AvailabilityEnum.NOW
+                ? "agency_status_only_home_at_one_or_more"
                 : agency.availabilityAccumulated === AvailabilityEnum.LATER
                 ? "agency_status_only_loan_later_possible"
                 : agency.availabilityAccumulated === AvailabilityEnum.NEVER

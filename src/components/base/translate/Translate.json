@@ -603,14 +603,6 @@
         "da": "Husk at du kan bestille online og hente på dit foretrukne bibliotek, uanset hvor materialet befinder sig.",
         "en": "Remember that you can order online and pickup in your preferred library, regardless of where the material is located."
       },
-      "editions_on_shelf": {
-        "da": "Udgaver på hylden",
-        "en": "Editions on the shelf"
-      },
-      "by_ved": {
-        "da": "ved",
-        "en": "by"
-      },
       "on_shelf": {
         "da": "På hylden",
         "en": "On shelf"
@@ -622,30 +614,6 @@
       "no_match_for_library_search_2": {
         "da": "Se status for dit foretrukne bibliotek ved at søge på navn, postnr. eller by.",
         "en": "To see the status of your preferred library search by branch name, postal code, or city."
-      },
-      "AvailabilityEnum_AVAILABLE_NOW": {
-        "da": "Materialet er tilgængeligt nu",
-        "en": "Material is available now"
-      },
-      "AvailabilityEnum_AVAILABLE_LATER": {
-        "da": "Materialet er tilgængeligt senere",
-        "en": "Material is available later"
-      },
-      "AvailabilityEnum_UNKNOWN_AVAILABILITY": {
-        "da": "Materialets tilgængelighed kendes ikke",
-        "en": "Avaiability of material is unknown"
-      },
-      "branchDetails_AVAILABLE_NOW": {
-        "da": "%s på hylden",
-        "en": "%s on shelf"
-      },
-      "branchDetails_AVAILABLE_LATER": {
-        "da": "%s tilgængelig senere",
-        "en": "%s available later"
-      },
-      "branchDetails_UNKNOWN_AVAILABILITY": {
-        "da": "%s ukendt status",
-        "en": "%s unknown availability"
       },
       "order_to_here": {
         "da": "Bestil til afhentning på denne afdeling",
@@ -754,14 +722,6 @@
       "or_more_branches": {
         "da": "eller flere afdelinger",
         "en": "or more branches"
-      },
-      "one": {
-        "da": "én",
-        "en": "one"
-      },
-      "x_or_more": {
-        "da": "",
-        "en": "one"
       }
     },
     "manifestation_content": {
