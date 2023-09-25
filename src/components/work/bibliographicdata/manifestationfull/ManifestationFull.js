@@ -105,9 +105,6 @@ function ColumnOne({ workId, manifestation }) {
       </div>
 
       <div className={styles.localizations_link}>
-        <LocalizationsLink selectedPids={[manifestation?.pid]} />
-        <div>SelectedPids: {JSON.stringify([manifestation?.pid])}</div>
-        AgencyLocalizations:{" "}
         <LocalizationsLink
           selectedPids={[manifestation?.pid]}
           modalOpener={(modal, agency) =>

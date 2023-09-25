@@ -164,9 +164,6 @@ export function Overview({
               />
               <AlternativeOptions workId={workId} selectedPids={selectedPids} />
               <Col xs={12} className={styles.info}>
-                <LocalizationsLink selectedPids={selectedPids} />
-                <div>SelectedPids: {JSON.stringify(selectedPids)}</div>
-                AgencyLocalizations:{" "}
                 <LocalizationsLink
                   selectedPids={selectedPids}
                   modalOpener={(modal, agency) =>
