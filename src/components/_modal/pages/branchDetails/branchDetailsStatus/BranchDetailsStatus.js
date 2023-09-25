@@ -9,51 +9,7 @@ import uniq from "lodash/uniq";
 import { AvailabilityLight } from "@/components/_modal/pages/base/localizationsBase/localizationItemBase/AvailabilityLight";
 import Translate from "@/components/base/translate";
 import { dateToShortDate } from "@/utils/datetimeConverter";
-
-import { IconLink } from "@/components/base/iconlink/IconLink";
-import ExternalSvg from "@/public/icons/external_small.svg";
-import animations from "css/animations";
-import isEmpty from "lodash/isEmpty";
-import { getLibraryType, LibraryTypeEnum } from "@/lib/utils";
-
-function escapeColons(phrase) {
-  return phrase.replace(":", "%3A");
-}
-
-export function LinkForTheBranch({ library, pids, textType = "text2" }) {
-  const cqlPids = pids?.map((pid) => escapeColons(pid)).join(" OR ");
-
-  const publicLibraryWithWebsiteAndSearch =
-    getLibraryType(library?.agencyId) ===
-      LibraryTypeEnum.DANISH_PUBLIC_LIBRARY &&
-    library?.lookupUrl &&
-    library?.branchWebsiteUrl &&
-    !isEmpty(cqlPids) &&
-    `${library?.branchWebsiteUrl}/search/ting/${cqlPids}`;
-
-  const website = library?.branchWebsiteUrl || library?.branchCatalogueUrl;
-
-  return publicLibraryWithWebsiteAndSearch || website ? (
-    <IconLink
-      className={styles.path_blue}
-      iconPlacement="right"
-      iconSrc={ExternalSvg}
-      iconAnimation={[animations["h-elastic"], animations["f-elastic"]]}
-      textType={textType}
-      href={publicLibraryWithWebsiteAndSearch || website}
-      target="_blank"
-    >
-      {Translate({
-        context: "localizations",
-        label: "see_detailed_status",
-        vars: [library?.agencyName],
-        renderAsHtml: false,
-      })}
-    </IconLink>
-  ) : (
-    <div></div>
-  );
-}
+import { LinkForBranch } from "@/components/_modal/pages/base/localizationsBase/linkForBranch/LinkForBranch";
 
 function MessageWhenPickupNotAllowed() {
   return (
@@ -187,7 +143,7 @@ export default function BranchDetailsStatus({
           manifestations={manifestations}
         />
         <div className={styles.link_for_branch}>
-          <LinkForTheBranch library={library} pids={pids} />
+          <LinkForBranch library={library} pids={pids} />
         </div>
       </div>
     </div>

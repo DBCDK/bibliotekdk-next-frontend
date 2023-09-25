@@ -227,3 +227,7 @@ export function highlightMarkedWords(highlight) {
 
   return <span>{regexed}</span>;
 }
+
+export function escapeColons(phrase) {
+  return phrase.replace(":", "%3A");
+}

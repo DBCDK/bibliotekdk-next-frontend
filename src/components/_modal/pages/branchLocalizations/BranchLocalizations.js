@@ -9,9 +9,9 @@ import styles from "./BranchLocalizations.module.css";
 import Text from "@/components/base/text";
 import Title from "@/components/base/title/Title";
 import { AvailabilityLight } from "@/components/_modal/pages/base/localizationsBase/localizationItemBase/AvailabilityLight";
-import { LinkForTheBranch } from "@/components/_modal/pages/branchDetails/branchDetailsStatus/BranchDetailsStatus";
 import cx from "classnames";
 import isEmpty from "lodash/isEmpty";
+import { LinkForBranch } from "@/components/_modal/pages/base/localizationsBase/linkForBranch/LinkForBranch";
 
 function OnlyInformationOnAgencyHoldings({ pids, agency }) {
   return (
@@ -35,7 +35,7 @@ function OnlyInformationOnAgencyHoldings({ pids, agency }) {
           })}
         </Text>
         <div className={cx(styles.link_for_branch)}>
-          <LinkForTheBranch library={agency?.branches?.[0]} pids={pids} />
+          <LinkForBranch library={agency?.branches?.[0]} pids={pids} />
         </div>
       </div>
     </div>
@@ -114,7 +114,7 @@ export default function BranchLocalizations({ context, modal }) {
             {!isEmpty(branchesKnownStatus) &&
               !isEmpty(branchesUnknownStatus) && (
                 <div className={cx(styles.link_for_branch)}>
-                  <LinkForTheBranch
+                  <LinkForBranch
                     library={agency?.branches?.[0]}
                     pids={pids}
                     textType="text3"
