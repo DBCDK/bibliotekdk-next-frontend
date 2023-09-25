@@ -12,10 +12,14 @@ export const BookmarkSyncProvider = () => {
   const { syncCookieBookmarks } = useBookmarks();
   const { data: session } = useSession();
 
-  useEffect(async () => {
+  useEffect(() => {
+    const sync = async () => {
+      await syncCookieBookmarks();
+    };
+
     const isAuthenticated = !!session?.user?.uniqueId;
     if (isAuthenticated) {
-      await syncCookieBookmarks();
+      sync();
     }
   }, [session]);
 
