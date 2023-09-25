@@ -23,8 +23,10 @@ export const BookmarkSyncProvider = () => {
 };
 
 export default function useBookmarks() {
-  const { data: session } = useSession();
-  const isAuthenticated = !!session?.user?.uniqueId;
+  const { data: session } = !process.env.STORYBOOK_ACTIVE && useSession();
+  const isAuthenticated = process.env.STORYBOOK_ACTIVE
+    ? false
+    : !!session?.user?.uniqueId;
 
   let {
     data: localBookmarks,
