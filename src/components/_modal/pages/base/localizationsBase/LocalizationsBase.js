@@ -20,7 +20,6 @@ import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtil
  * @param {object} modal
  * @param {object} context
  * @param {string|null} subtitle
- * @param {Array.<object>} manifestationsFromProps
  * @param {function} materialCardTemplate
  * @param {string|null} subheader
  * @param {string|null} query
