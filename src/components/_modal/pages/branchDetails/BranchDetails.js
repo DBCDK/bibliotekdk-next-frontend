@@ -126,7 +126,7 @@ function ContactInformation({ singleBranch }) {
   );
 }
 
-function BranchDetails({ context }) {
+export default function BranchDetails({ context }) {
   const { pids: pids, branchId } = context;
 
   const { agenciesFlatSorted, agenciesIsLoading } = useSingleBranch({
@@ -240,5 +240,3 @@ function BranchDetails({ context }) {
     </LocalizationsBase>
   );
 }
-
-export default BranchDetails;

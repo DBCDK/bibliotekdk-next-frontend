@@ -182,44 +182,6 @@ function getHoldingsWithInfoOnPickupAllowed(branch) {
   });
 }
 
-/**
- *
- * @param {string} agencyId
- * @param {Array.<string>} pids
- * @returns {{expectedDelivery: (*|boolean|null), agencyHoldingsIsRelevant: boolean}}
- */
-export function useAgencyHoldingStatus({ agencyId, pids }) {
-  const { data: agencyHoldingStatusData } = useData(
-    agencyId &&
-      branchesFragments.agencyHoldingStatus({ agencyId: agencyId, pids: pids })
-  );
-
-  const branches = agencyHoldingStatusData?.branches?.result;
-
-  const holdings = branches?.flatMap((branch) =>
-    branch?.holdingStatus?.holdingItems?.map((item) => item?.expectedDelivery)
-  ).length;
-
-  const expectedDelivery = branches
-    ?.flatMap((branch) => branch?.holdingStatus?.expectedDelivery)
-    ?.sort(compareDate)?.[0];
-
-  const pickupAllowedOnAny = branches
-    ?.flatMap((branch) => branch?.pickupAllowed)
-    .find((singlePickupAllowed) => singlePickupAllowed === true);
-
-  const agencyHoldings =
-    (dateIsToday(expectedDelivery) || dateIsLater(expectedDelivery)) &&
-    pickupAllowedOnAny &&
-    isEmpty(holdings) &&
-    getLibraryType(agencyId) !== LibraryTypeEnum.DANISH_PUBLIC_LIBRARY;
-
-  return {
-    agencyExpectedDelivery: expectedDelivery,
-    agencyHoldingsIsRelevant: Boolean(agencyHoldings),
-  };
-}
-
 export function useAgenciesConformingToQuery({ pids, q }) {
   const agency1 = useData(
     q &&

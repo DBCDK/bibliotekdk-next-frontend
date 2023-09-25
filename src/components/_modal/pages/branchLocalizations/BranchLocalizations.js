@@ -3,9 +3,6 @@ import BranchLocalizationItem from "./branchLocalizationItem/BranchLocalizationI
 import Translate from "@/components/base/translate";
 import {
   AvailabilityEnum,
-  dateIsLater,
-  dateIsToday,
-  useAgencyHoldingStatus,
   useSingleAgency,
 } from "@/components/hooks/useHandleAgencyAccessData";
 import styles from "./BranchLocalizations.module.css";
@@ -16,21 +13,11 @@ import { LinkForTheBranch } from "@/components/_modal/pages/branchDetails/branch
 import cx from "classnames";
 import isEmpty from "lodash/isEmpty";
 
-function OnlyInformationOnAgencyHoldings({
-  agencyExpectedDelivery,
-  pids,
-  agency,
-}) {
-  const availabilityAccumulated = dateIsToday(agencyExpectedDelivery)
-    ? AvailabilityEnum.NOW
-    : dateIsLater(agencyExpectedDelivery)
-    ? AvailabilityEnum.LATER
-    : AvailabilityEnum.UNKNOWN;
-
+function OnlyInformationOnAgencyHoldings({ pids, agency }) {
   return (
     <div className={styles.agency_holdings_row_wrapper}>
       <AvailabilityLight
-        availabilityAccumulated={availabilityAccumulated}
+        availabilityAccumulated={agency.availabilityAccumulated}
         pickupAllowed={agency?.pickupAllowed}
       />
       <div className={styles.agency_holdings_result}>
@@ -40,9 +27,9 @@ function OnlyInformationOnAgencyHoldings({
             label:
               agency?.pickupAllowed === false
                 ? "agency_status_pickup_not_allowed"
-                : availabilityAccumulated === AvailabilityEnum.LATER
+                : agency.availabilityAccumulated === AvailabilityEnum.LATER
                 ? "agency_status_only_loan_later_possible"
-                : availabilityAccumulated === AvailabilityEnum.NEVER
+                : agency.availabilityAccumulated === AvailabilityEnum.NEVER
                 ? "agency_status_pickup_not_allowed"
                 : "no_status_about_the_following",
           })}
@@ -64,12 +51,6 @@ export default function BranchLocalizations({ context, modal }) {
   });
 
   const agency = agenciesFlatSorted?.[0];
-
-  const { agencyHoldingsIsRelevant, agencyExpectedDelivery } =
-    useAgencyHoldingStatus({
-      agencyId,
-      pids,
-    });
 
   const branchesKnownStatus = agency?.branches?.filter((branch) =>
     [
@@ -118,15 +99,9 @@ export default function BranchLocalizations({ context, modal }) {
         ))}
       </LocalizationsBase.List>
 
-      {/*{agencyHoldingsIsRelevant && !isEmpty(branchesUnknownStatus) && (*/}
       {isEmpty(branchesKnownStatus) && !isEmpty(branchesUnknownStatus) && (
         <LocalizationsBase.Information>
-          <OnlyInformationOnAgencyHoldings
-            agencyHoldingsIsRelevant={agencyHoldingsIsRelevant}
-            agencyExpectedDelivery={agencyExpectedDelivery}
-            pids={pids}
-            agency={agency}
-          />
+          <OnlyInformationOnAgencyHoldings pids={pids} agency={agency} />
         </LocalizationsBase.Information>
       )}
       {!isEmpty(branchesUnknownStatus) && (
