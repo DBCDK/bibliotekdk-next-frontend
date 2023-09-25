@@ -83,9 +83,5 @@ function getBranchStatusMessage(library) {
 }
 
 export default function BranchLocalizationItemStatus({ library }) {
-  return (
-    <>
-      <div>{getBranchStatusMessage(library)}</div>
-    </>
-  );
+  return <div>{getBranchStatusMessage(library)}</div>;
 }
