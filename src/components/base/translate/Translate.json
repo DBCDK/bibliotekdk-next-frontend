@@ -719,6 +719,14 @@
         "da": "Information om afdelings åbningstider mangler",
         "en": "Information about the opening hours of the branch is missing"
       },
+      "no_address_information": {
+        "da": "Information om afdelings adresse mangler",
+        "en": "Information about the branch address is missing"
+      },
+      "no_contact_information": {
+        "da": "Kontaktinformation for afdeling mangler",
+        "en": "Contact information of the branch is missing"
+      },
       "branch": {
         "da": "afdeling",
         "en": "branch"

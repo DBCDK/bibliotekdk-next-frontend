@@ -53,37 +53,61 @@ function Address({ singleBranch }) {
   return (
     <div className={cx(styles.fit_content, styles.path_blue)}>
       <Text type="text1">Adresse</Text>
-      <Text type="text2">{singleBranch?.postalAddress}</Text>
-      <Text type="text2">
-        {singleBranch?.postalCode} {singleBranch?.city}
-      </Text>
-      <IconLink
-        iconPlacement="right"
-        iconSrc={ExternalSvg}
-        iconAnimation={[animations["h-elastic"], animations["f-elastic"]]}
-        textType="type2"
-        href={`https://www.google.com/maps/place/${singleBranch?.postalAddress}+${singleBranch?.postalCode}+${singleBranch?.city}`}
-        target="_blank"
-      >
-        Se i Google Maps
-      </IconLink>
+      {!singleBranch?.postalAddress &&
+      !singleBranch?.postalCode &&
+      !singleBranch?.city ? (
+        <Text type="text2">
+          {Translate({
+            context: "localizations",
+            label: "no_address_information",
+          })}
+        </Text>
+      ) : (
+        <>
+          <Text type="text2">{singleBranch?.postalAddress}</Text>
+          <Text type="text2">
+            {singleBranch?.postalCode} {singleBranch?.city}
+          </Text>
+          <IconLink
+            iconPlacement="right"
+            iconSrc={ExternalSvg}
+            iconAnimation={[animations["h-elastic"], animations["f-elastic"]]}
+            textType="type2"
+            href={`https://www.google.com/maps/place/${singleBranch?.postalAddress}+${singleBranch?.postalCode}+${singleBranch?.city}`}
+            target="_blank"
+          >
+            Se i Google Maps
+          </IconLink>
+        </>
+      )}
     </div>
   );
 }
 
 Address.propTypes = { singleBranch: PropTypes.any };
 
-function ContactInformation({}) {
+function ContactInformation({ singleBranch }) {
   return (
     <div className={cx(styles.fit_content, styles.path_blue)}>
       <Text type="text1">Kontakt</Text>
-      <Text type="text2">
-        {"VipCore /1.0/api/findlibrary/{agencyId}/ -- branchPhone"}
-      </Text>
-      <Text type="text2">
-        {"VipCore /1.0/api/findlibrary/{agencyId}/ -- branchEmail"}
-      </Text>
-      <Text type="text2">Svar på danbib-bestillinger hvor?????</Text>
+      {!singleBranch?.branchPhone && !singleBranch?.branchEmail ? (
+        <Text type="text2">
+          {Translate({
+            context: "localizations",
+            label: "no_contact_information",
+          })}
+        </Text>
+      ) : (
+        <>
+          <Text type="text2">
+            {"VipCore /1.0/api/findlibrary/{agencyId}/ -- branchPhone"}
+          </Text>
+          <Text type="text2">
+            {"VipCore /1.0/api/findlibrary/{agencyId}/ -- branchEmail"}
+          </Text>
+          <Text type="text2">Svar på danbib-bestillinger hvor?????</Text>
+        </>
+      )}
     </div>
   );
 }
@@ -194,7 +218,7 @@ function BranchDetails({ context }) {
         </Title>
         <OpeningHours singleBranch={singleBranch} />
         <Address singleBranch={singleBranch} />
-        <ContactInformation />
+        <ContactInformation singleBranch={singleBranch} />
       </LocalizationsBase.Information>
     </LocalizationsBase>
   );
