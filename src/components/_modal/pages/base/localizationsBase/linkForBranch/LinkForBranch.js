@@ -6,6 +6,27 @@ import styles from "./LinkForBranch.module.css";
 import ExternalSvg from "@/public/icons/external_small.svg";
 import animations from "css/animations";
 import Translate from "@/components/base/translate";
+import uniq from "lodash/uniq";
+
+function parseBranchLookupUrlForNonPublicLibrary(library) {
+  const agencyHoldings = library?.holdingStatus?.agencyHoldings;
+  const lookupUrl = library?.lookupUrl || null;
+  const localIdentifiers = uniq(
+    agencyHoldings?.map((agencyHolding) =>
+      escapeColons(agencyHolding.localIdentifier)
+    )
+  ).join(" OR ");
+  const itemLink =
+    lookupUrl &&
+    lookupUrl.indexOf("_IDNR_") !== -1 &&
+    lookupUrl.replace("_IDNR_", localIdentifiers);
+
+  if (!itemLink) {
+    return lookupUrl + localIdentifiers;
+  } else {
+    return itemLink;
+  }
+}
 
 export function LinkForBranch({ library, pids, textType = "text2" }) {
   const cqlPids = pids?.map((pid) => escapeColons(pid)).join(" OR ");
@@ -18,16 +39,31 @@ export function LinkForBranch({ library, pids, textType = "text2" }) {
     !isEmpty(cqlPids) &&
     `${library?.branchWebsiteUrl}/search/ting/${cqlPids}`;
 
+  const nonPublicLibraryWithWebsiteAndSearch =
+    !(
+      getLibraryType(library?.agencyId) ===
+      LibraryTypeEnum.DANISH_PUBLIC_LIBRARY
+    ) &&
+    library?.lookupUrl &&
+    !isEmpty(library?.holdingStatus?.agencyHoldings) &&
+    parseBranchLookupUrlForNonPublicLibrary(library);
+
   const website = library?.branchWebsiteUrl || library?.branchCatalogueUrl;
 
-  return publicLibraryWithWebsiteAndSearch || website ? (
+  return publicLibraryWithWebsiteAndSearch ||
+    nonPublicLibraryWithWebsiteAndSearch ||
+    website ? (
     <IconLink
       className={styles.path_blue}
       iconPlacement="right"
       iconSrc={ExternalSvg}
       iconAnimation={[animations["h-elastic"], animations["f-elastic"]]}
       textType={textType}
-      href={publicLibraryWithWebsiteAndSearch || website}
+      href={
+        publicLibraryWithWebsiteAndSearch ||
+        nonPublicLibraryWithWebsiteAndSearch ||
+        website
+      }
       target="_blank"
     >
       {Translate({
