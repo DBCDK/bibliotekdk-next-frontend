@@ -298,32 +298,3 @@ const holdingStatusFragment = `fragment holdingStatusFragment on DetailedHolding
       message
     }
 }`;
-
-/**
- * Get a single branch to determine which parameters a user is required
- * to submit when ordering stuff
- */
-export function agencyHoldingStatus({ agencyId, pids }) {
-  return {
-    apiUrl: ApiEnums.FBI_API,
-    // delay: 1000, // for debugging
-    query: `
-    query agencyHoldingStatus($agencyId: String!, $pids: [String!]!, $language: LanguageCode!) {
-      branches(agencyid: $agencyId, bibdkExcludeBranches: true, status: AKTIVE, language: $language) {
-        result {
-          agencyId
-          pickupAllowed
-          holdingStatus(pids: $pids) {
-            expectedDelivery
-            holdingItems {
-              expectedDelivery
-            }
-          }
-        }
-      }
-      monitor(name: "bibdknext_branch_digital_copy_access")
-     }`,
-    variables: { agencyId, pids, language: lang },
-    slowThreshold: 3000,
-  };
-}
