@@ -81,9 +81,7 @@ export default function BranchLocalizations({ context, modal }) {
       })}
     >
       <LocalizationsBase.Information>
-        <Title type={"title6"} className={cx(styles.branch_status)}>
-          Status
-        </Title>
+        <Title type={"title6"}>Status</Title>
       </LocalizationsBase.Information>
       <LocalizationsBase.List>
         {branchesKnownStatus?.map((branch, index) => (
