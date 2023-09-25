@@ -38,7 +38,6 @@ export default function LocalizationItemBase({
               <AvailabilityLight
                 availabilityAccumulated={availabilityAccumulated}
                 pickupAllowed={library?.pickupAllowed}
-                style={{ marginTop: "var(--pt025)" }}
               />
             )}
             <div className={styles.result}>{children}</div>

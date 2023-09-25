@@ -32,7 +32,6 @@ function OnlyInformationOnAgencyHoldings({
       <AvailabilityLight
         availabilityAccumulated={availabilityAccumulated}
         pickupAllowed={agency?.pickupAllowed}
-        style={{ marginTop: "var(--pt025)" }}
       />
       <div className={styles.agency_holdings_result}>
         <Text type="text2">

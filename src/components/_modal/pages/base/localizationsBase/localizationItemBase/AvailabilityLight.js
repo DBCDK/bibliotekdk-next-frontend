@@ -18,7 +18,7 @@ import * as PropTypes from "prop-types";
 export function AvailabilityLight({
   availabilityAccumulated,
   pickupAllowed,
-  style,
+  style = { paddingTop: "var(--pt075)" },
 }) {
   const IconInstance = getFirstMatch(true, StatusNoHoldings, [
     [
@@ -32,18 +32,17 @@ export function AvailabilityLight({
   ]);
 
   return (
-    <div style={style}>
-      <Icon
-        size={{ w: "auto", h: 2 }}
-        alt=""
-        title={Translate({
-          context: "localizations",
-          label: `AvailabilityEnum_${availabilityAccumulated}`,
-        })}
-      >
-        <IconInstance />
-      </Icon>
-    </div>
+    <Icon
+      size={{ w: 2, h: 2 }}
+      alt=""
+      title={Translate({
+        context: "localizations",
+        label: `AvailabilityEnum_${availabilityAccumulated}`,
+      })}
+      style={style}
+    >
+      <IconInstance />
+    </Icon>
   );
 }
 

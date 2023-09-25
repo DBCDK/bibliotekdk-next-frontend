@@ -174,7 +174,6 @@ export default function BranchDetailsStatus({
         <AvailabilityLight
           availabilityAccumulated={availabilityAccumulated}
           pickupAllowed={library?.pickupAllowed}
-          style={{ paddingTop: "1px" }}
         />
       )}
       <div className={styles.result}>
