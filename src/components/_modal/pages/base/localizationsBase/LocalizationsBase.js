@@ -32,7 +32,6 @@ function LocalizationsBase({
   context,
   subtitle = null,
   pids = [],
-  manifestations: manifestationsFromProps = null,
   materialCardTemplate = (material) =>
     templateForLocalizations(material, pids.length === 1),
   subheader = null,
@@ -48,10 +47,8 @@ function LocalizationsBase({
         pid: pids?.[0],
       })
   );
-  const { flattenedGroupedSortedManifestations: manifestationsFromPids } =
+  const { flattenedGroupedSortedManifestations: manifestations } =
     manifestationMaterialTypeFactory(manifestationsData?.manifestations);
-
-  const manifestations = manifestationsFromProps ?? manifestationsFromPids;
 
   useEffect(() => {
     if (modal?.isVisible) {
