@@ -247,7 +247,3 @@ export function getLibraryType(agencyID) {
     return LibraryTypeEnum.OTHER_LIBRARY;
   }
 }
-
-export function upperCaseFirstChar(word) {
-  return word?.slice(0, 1).toUpperCase() + word?.slice(1);
-}
