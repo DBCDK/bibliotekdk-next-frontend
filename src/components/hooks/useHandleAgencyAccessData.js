@@ -85,28 +85,6 @@ function checkUnknownAvailability(item) {
   return dateIsUnknown(expectedDelivery);
 }
 
-function getAvailability(items) {
-  const availabilityObject = {
-    [AvailabilityEnum.NOW]: 0,
-    [AvailabilityEnum.LATER]: 0,
-    [AvailabilityEnum.NEVER]: 0,
-    [AvailabilityEnum.UNKNOWN]: 0,
-  };
-
-  for (const item of items) {
-    const key = getFirstMatch(true, AvailabilityEnum.UNKNOWN, [
-      [checkAvailableNow(item), AvailabilityEnum.NOW],
-      [checkAvailableLater(item), AvailabilityEnum.LATER],
-      [checkAvailableNever(item), AvailabilityEnum.NEVER],
-      [checkUnknownAvailability(item), AvailabilityEnum.UNKNOWN],
-    ]);
-
-    availabilityObject[key] += 1;
-  }
-
-  return availabilityObject;
-}
-
 function getAvailabilityById(items) {
   const uniqueIdPairs = uniqWith(
     items.map((item) => {
@@ -143,27 +121,26 @@ function getAvailabilityAccumulated(availability) {
     : AvailabilityEnum.UNKNOWN;
 }
 
-function sortByAvailability(a, b) {
-  return getFirstMatch(true, 0, [
-    [b?.pickupAllowed === false, -1],
-    [a?.pickupAllowed === false, 1],
-    [a?.availabilityAccumulated === AvailabilityEnum.NOW, -1],
-    [b?.availabilityAccumulated === AvailabilityEnum.NOW, 1],
-    [a?.availabilityAccumulated === AvailabilityEnum.LATER, -1],
-    [b?.availabilityAccumulated === AvailabilityEnum.LATER, 1],
-    [a?.availabilityAccumulated === AvailabilityEnum.NEVER, -1],
-    [b?.availabilityAccumulated === AvailabilityEnum.NEVER, 1],
-  ]);
-}
+function getAvailability(items) {
+  const availabilityObject = {
+    [AvailabilityEnum.NOW]: 0,
+    [AvailabilityEnum.LATER]: 0,
+    [AvailabilityEnum.NEVER]: 0,
+    [AvailabilityEnum.UNKNOWN]: 0,
+  };
 
-function compareDate(a, b) {
-  return getFirstMatch(true, 0, [
-    [!a && !b, 0],
-    [a && !b, -1],
-    [b && !a, 1],
-    [a > b, 1],
-    [a <= b, -1],
-  ]);
+  for (const item of items) {
+    const key = getFirstMatch(true, AvailabilityEnum.UNKNOWN, [
+      [checkAvailableNow(item), AvailabilityEnum.NOW],
+      [checkAvailableLater(item), AvailabilityEnum.LATER],
+      [checkAvailableNever(item), AvailabilityEnum.NEVER],
+      [checkUnknownAvailability(item), AvailabilityEnum.UNKNOWN],
+    ]);
+
+    availabilityObject[key] += 1;
+  }
+
+  return availabilityObject;
 }
 
 function getExpectedDeliveryAccumulatedFromHoldings(holdingItems) {
@@ -182,45 +159,17 @@ function getHoldingsWithInfoOnPickupAllowed(branch) {
   });
 }
 
-export function useAgenciesConformingToQuery({ pids, q }) {
-  const agency1 = useData(
-    q &&
-      q !== "" &&
-      pids &&
-      branchesFragments.branchesByQuery({
-        q: q,
-        pids: pids,
-      })
-  );
-
-  return handleAgencyAccessData(agency1);
-}
-
-export function useSingleAgency({ pids, agencyId, query = "" }) {
-  const agency = useData(
-    agencyId &&
-      pids &&
-      branchesFragments.branchesActiveInAgency({
-        agencyId: agencyId,
-        pids: pids,
-        q: query,
-      })
-  );
-
-  return handleAgencyAccessData(agency);
-}
-
-export function useSingleBranch({ pids, branchId }) {
-  const branch = useData(
-    branchId &&
-      pids &&
-      branchesFragments.branchByBranchId({
-        branchId: branchId,
-        pids: pids,
-      })
-  );
-
-  return handleAgencyAccessData(branch);
+function sortByAvailability(a, b) {
+  return getFirstMatch(true, 0, [
+    [b?.pickupAllowed === false, -1],
+    [a?.pickupAllowed === false, 1],
+    [a?.availabilityAccumulated === AvailabilityEnum.NOW, -1],
+    [b?.availabilityAccumulated === AvailabilityEnum.NOW, 1],
+    [a?.availabilityAccumulated === AvailabilityEnum.LATER, -1],
+    [b?.availabilityAccumulated === AvailabilityEnum.LATER, 1],
+    [a?.availabilityAccumulated === AvailabilityEnum.NEVER, -1],
+    [b?.availabilityAccumulated === AvailabilityEnum.NEVER, 1],
+  ]);
 }
 
 function enrichBranches(branch) {
@@ -255,6 +204,16 @@ function enrichBranches(branch) {
     expectedDeliveryAccumulatedFromHoldings:
       getExpectedDeliveryAccumulatedFromHoldings(branch?.holdingItems),
   };
+}
+
+function compareDate(a, b) {
+  return getFirstMatch(true, 0, [
+    [!a && !b, 0],
+    [a && !b, -1],
+    [b && !a, 1],
+    [a > b, 1],
+    [a <= b, -1],
+  ]);
 }
 
 export function handleAgencyAccessData(agencies) {
@@ -323,4 +282,45 @@ export function handleAgencyAccessData(agencies) {
     agenciesFlatSorted: agenciesFlatSorted,
     agenciesIsLoading: isLoading,
   };
+}
+
+export function useAgenciesConformingToQuery({ pids, q }) {
+  const agency = useData(
+    q &&
+      q !== "" &&
+      pids &&
+      branchesFragments.branchesByQuery({
+        q: q,
+        pids: pids,
+      })
+  );
+
+  return handleAgencyAccessData(agency);
+}
+
+export function useSingleAgency({ pids, agencyId, query = "" }) {
+  const agency = useData(
+    agencyId &&
+      pids &&
+      branchesFragments.branchesActiveInAgency({
+        agencyId: agencyId,
+        pids: pids,
+        q: query,
+      })
+  );
+
+  return handleAgencyAccessData(agency);
+}
+
+export function useSingleBranch({ pids, branchId }) {
+  const branch = useData(
+    branchId &&
+      pids &&
+      branchesFragments.branchByBranchId({
+        branchId: branchId,
+        pids: pids,
+      })
+  );
+
+  return handleAgencyAccessData(branch);
 }
