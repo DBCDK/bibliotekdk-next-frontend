@@ -1,7 +1,6 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  /*row-gap: var(--pt1);*/
 }
 
 /* .top is passed as className prop to Top component */
@@ -44,4 +43,12 @@
 .branch_details {
   display: flex;
   flex-direction: column;
+}
+
+.highlighted_area {
+  margin-top: var(--pt5);
+}
+
+.padding_block {
+  padding-block: var(--pt3);
 }

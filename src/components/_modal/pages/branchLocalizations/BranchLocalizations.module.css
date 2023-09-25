@@ -3,14 +3,17 @@
 }
 
 .no_status {
-  padding-bottom: var(--pt2);
+  padding-top: var(--pt8);
+}
+
+.list {
+  padding-top: var(--pt2);
 }
 
 .agency_holdings_row_wrapper {
   display: flex;
   flex-direction: row;
   padding-top: var(--pt3);
-  padding-bottom: var(--pt10);
 }
 
 .agency_holdings_result {

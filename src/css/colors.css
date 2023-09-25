@@ -51,6 +51,8 @@
   --transparent: #ff000000;
   --link-background: rgba(0, 0, 0, 0.1);
 
+  --feedback-yellow-warning-background: #fbeaad;
+
   /* skeleton */
   --skeleton-bg-color: var(--concrete);
   --skeleton-gradient-color: #e8e8e8;

@@ -1,0 +1,7 @@
+.no_match_for_library_search {
+  padding-top: calc(var(--pt2) + var(--pt1_5));
+}
+
+.hint_for_no_search_results {
+  padding-top: var(--pt1);
+}

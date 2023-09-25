@@ -20,7 +20,7 @@ function escapeColons(phrase) {
   return phrase.replace(":", "%3A");
 }
 
-export function LinkForTheBranch({ library, pids }) {
+export function LinkForTheBranch({ library, pids, textType = "text2" }) {
   const cqlPids = pids?.map((pid) => escapeColons(pid)).join(" OR ");
 
   const publicLibraryWithWebsiteAndSearch =
@@ -39,7 +39,7 @@ export function LinkForTheBranch({ library, pids }) {
       iconPlacement="right"
       iconSrc={ExternalSvg}
       iconAnimation={[animations["h-elastic"], animations["f-elastic"]]}
-      textType="type2"
+      textType={textType}
       href={publicLibraryWithWebsiteAndSearch || website}
       target="_blank"
     >
@@ -57,7 +57,12 @@ export function LinkForTheBranch({ library, pids }) {
 
 function messageWhenPickupNotAllowed() {
   return (
-    <Text>{Translate({ context: "localizations", label: "no_pickup" })}</Text>
+    <Text type="text2">
+      {Translate({
+        context: "localizations",
+        label: "no_pickup_allowed_on_branch",
+      })}
+    </Text>
   );
 }
 
@@ -68,15 +73,25 @@ function messageWhenMaterialsAvailableNow(library, manifestations) {
 
   return (
     <>
-      <Text>
-        {Translate({
-          context: "localizations",
-          label: "branchDetails_AVAILABLE_NOW",
-          vars: [library?.availability[AvailabilityEnum.NOW]],
-        })}
-      </Text>
+      {library?.availability[AvailabilityEnum.NOW] === 0 ? (
+        <Text type="text2">
+          {Translate({ context: "localizations", label: "on_shelf" })}
+        </Text>
+      ) : (
+        <Text type="text2">
+          {library?.availability[AvailabilityEnum.NOW]}{" "}
+          {Translate({
+            context: "localizations",
+            label: "on_shelf",
+          }).toLowerCase()}
+        </Text>
+      )}
       {locationsInBranch?.map((location) => {
-        return <Text key={JSON.stringify(location)}>{location}</Text>;
+        return (
+          <Text type="text2" key={JSON.stringify(location)}>
+            {location}
+          </Text>
+        );
       })}
     </>
   );
@@ -88,7 +103,7 @@ function messageWhenMaterialsAvailableLater(library) {
     library?.expectedDeliveryAccumulatedFromHoldings;
 
   return (
-    <Text>
+    <Text type="text2">
       {Translate({
         context: "localizations",
         label: dateIsLater(expectedDelivery)
@@ -104,7 +119,7 @@ function messageWhenMaterialsAvailableLater(library) {
 function messageWhenMaterialsAvailableNever() {
   return (
     <>
-      <Text>
+      <Text type="text2">
         {Translate({ context: "localizations", label: "not_for_loan" })}
       </Text>
     </>
@@ -114,7 +129,7 @@ function messageWhenMaterialsAvailableNever() {
 function messageWhenMaterialsAvailableUnknown() {
   return (
     <>
-      <Text>
+      <Text type="text2">
         {Translate({ context: "localizations", label: "status_is_unknown" })}
       </Text>
     </>
@@ -151,13 +166,13 @@ export default function BranchDetailsStatus({
     AvailabilityEnum.UNKNOWN,
   ],
 }) {
-  const accumulatedAvailability = library?.availabilityAccumulated;
+  const availabilityAccumulated = library?.availabilityAccumulated;
 
   return (
     <div className={cx(styles.row_wrapper)}>
-      {possibleAvailabilities.includes(accumulatedAvailability) && (
+      {possibleAvailabilities.includes(availabilityAccumulated) && (
         <AvailabilityLight
-          accumulatedAvailability={accumulatedAvailability}
+          availabilityAccumulated={availabilityAccumulated}
           pickupAllowed={library?.pickupAllowed}
           style={{ paddingTop: "1px" }}
         />

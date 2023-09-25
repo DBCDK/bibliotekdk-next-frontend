@@ -14,7 +14,6 @@ import styles from "./BranchDetails.module.css";
 import cx from "classnames";
 import ReservationButton from "@/components/work/reservationbutton";
 import BranchDetailsStatus from "@/components/_modal/pages/branchDetails/branchDetailsStatus/BranchDetailsStatus";
-
 import { useSingleBranch } from "@/components/hooks/useHandleAgencyAccessData";
 import isEmpty from "lodash/isEmpty";
 import * as PropTypes from "prop-types";
@@ -163,22 +162,33 @@ function BranchDetails({ context }) {
           manifestations={manifestations}
           pids={pids}
         />
-        {!singleBranch?.pickupAllowed ? (
-          <div>NEJ IKKE ALLOWED</div>
-        ) : (
-          <div className={cx(styles.reservationButton_container)}>
-            <ReservationButton
-              workId={workId}
-              selectedPids={pids}
-              singleManifestation={false}
-              size={"medium"}
-              overrideButtonText={Translate({
-                context: "localizations",
-                label: "order_to_here",
-              })}
-            />
-          </div>
-        )}
+      </LocalizationsBase.Information>
+      {!singleBranch?.pickupAllowed ? (
+        <LocalizationsBase.HighlightedArea>
+          <Text type={"text2"}>
+            {Translate({
+              context: "localizations",
+              label: "obs_not_orders_to_here",
+            })}
+          </Text>
+        </LocalizationsBase.HighlightedArea>
+      ) : (
+        <LocalizationsBase.Information
+          className={cx(styles.reservationButton_container)}
+        >
+          <ReservationButton
+            workId={workId}
+            selectedPids={pids}
+            singleManifestation={false}
+            size={"medium"}
+            overrideButtonText={Translate({
+              context: "localizations",
+              label: "order_to_here",
+            })}
+          />
+        </LocalizationsBase.Information>
+      )}
+      <LocalizationsBase.Information>
         <Title type={"title6"} className={cx(styles.about_the_branch)}>
           {Translate({ context: "localizations", label: "about_the_branch" })}
         </Title>

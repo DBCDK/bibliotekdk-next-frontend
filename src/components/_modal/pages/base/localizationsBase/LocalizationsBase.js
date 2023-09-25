@@ -114,26 +114,47 @@ function LocalizationsBase({
   );
 }
 
-export function List({ children }) {
+export function List({ children, className }) {
   return (
     <ul
       style={{ listStyleType: "none" }}
-      className={cx(styles.padding_inline, styles.agency_list)}
+      className={cx(styles.padding_inline, styles.agency_list, className)}
     >
       {children}
     </ul>
   );
 }
 
-export function Information({ children }) {
+export function Information({ children, className }) {
   return (
-    <div className={cx(styles.padding_inline, styles.branch_details)}>
+    <div
+      className={cx(styles.padding_inline, styles.branch_details, className)}
+    >
       {children}
+    </div>
+  );
+}
+
+export function HighlightedArea({
+  children,
+  style = {
+    backgroundColor: "var(--feedback-yellow-warning-background)",
+  },
+  className,
+}) {
+  return (
+    <div className={cx(styles.highlighted_area)} style={style}>
+      <div
+        className={cx(styles.padding_inline, styles.padding_block, className)}
+      >
+        {children}
+      </div>
     </div>
   );
 }
 
 LocalizationsBase.List = List;
 LocalizationsBase.Information = Information;
+LocalizationsBase.HighlightedArea = HighlightedArea;
 
 export default LocalizationsBase;

@@ -6,6 +6,8 @@ import LocalizationsBase from "@/components/_modal/pages/base/localizationsBase/
 import AgencyLocalizationItem from "./agencyLocalizationItem/AgencyLocalizationItem";
 import { useState } from "react";
 import isEmpty from "lodash/isEmpty";
+import styles from "./AgencyLocalizations.module.css";
+import Text from "@/components/base/text/Text";
 
 export default function Wrap({ context, modal }) {
   const { pids } = context;
@@ -31,7 +33,8 @@ export default function Wrap({ context, modal }) {
           (agency) => agency.agencyId
         );
 
-  // const agencyIds = null;
+  const localizationsIsLoading =
+    agenciesWithHoldingsIsLoading || agenciesIsLoading;
 
   return (
     <LocalizationsBase
@@ -45,22 +48,39 @@ export default function Wrap({ context, modal }) {
       query={query}
       setQuery={setQuery}
     >
-      <LocalizationsBase.List>
-        {(agencyIds ?? Array(10).fill(""))?.map((agencyId, index) => (
-          <li key={JSON.stringify(agencyId + "-" + index)}>
-            <AgencyLocalizationItem
-              context={context}
-              localizationsIsLoading={
-                agenciesWithHoldingsIsLoading || agenciesIsLoading
-              }
-              modal={modal}
-              agencyId={agencyId}
-              pids={pids}
-              query={query}
-            />
-          </li>
-        ))}
-      </LocalizationsBase.List>
+      {isEmpty(agencyIds) && !localizationsIsLoading ? (
+        <LocalizationsBase.Information
+          className={styles.no_match_for_library_search}
+        >
+          <Text type="text2">
+            {Translate({
+              context: "localizations",
+              label: "no_match_for_library_search_1",
+            })}
+          </Text>
+          <Text type="text2" className={styles.hint_for_no_search_results}>
+            {Translate({
+              context: "localizations",
+              label: "no_match_for_library_search_2",
+            })}
+          </Text>
+        </LocalizationsBase.Information>
+      ) : (
+        <LocalizationsBase.List>
+          {(agencyIds ?? Array(10).fill(""))?.map((agencyId, index) => (
+            <li key={JSON.stringify(agencyId + "-" + index)}>
+              <AgencyLocalizationItem
+                context={context}
+                localizationsIsLoading={localizationsIsLoading}
+                modal={modal}
+                agencyId={agencyId}
+                pids={pids}
+                query={query}
+              />
+            </li>
+          ))}
+        </LocalizationsBase.List>
+      )}
     </LocalizationsBase>
   );
 }

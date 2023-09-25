@@ -19,7 +19,7 @@ export default function LocalizationItemBase({
     AvailabilityEnum.UNKNOWN,
   ],
   itemLoading,
-  accumulatedAvailability,
+  availabilityAccumulated,
 }) {
   return (
     <div className={cx(styles.container)}>
@@ -34,9 +34,9 @@ export default function LocalizationItemBase({
           <Text skeleton={true} clamp={true} lines={2} />
         ) : (
           <div className={cx(styles.row_wrapper)}>
-            {possibleAvailabilities.includes(accumulatedAvailability) && (
+            {possibleAvailabilities.includes(availabilityAccumulated) && (
               <AvailabilityLight
-                accumulatedAvailability={accumulatedAvailability}
+                availabilityAccumulated={availabilityAccumulated}
                 pickupAllowed={library?.pickupAllowed}
                 style={{ marginTop: "var(--pt025)" }}
               />

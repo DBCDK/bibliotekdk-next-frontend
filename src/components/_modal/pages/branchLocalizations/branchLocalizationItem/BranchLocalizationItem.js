@@ -25,7 +25,7 @@ export default function BranchLocalizationItem({
 
   const branch = agenciesFlatSorted?.[0]?.branches?.[0];
 
-  const accumulatedAvailability = branch?.availabilityAccumulated;
+  const availabilityAccumulated = branch?.availabilityAccumulated;
 
   return (
     <LocalizationItemBase
@@ -39,8 +39,8 @@ export default function BranchLocalizationItem({
           branchId: branchId,
         })
       }
-      accumulatedAvailability={
-        !primitiveDisplay ? accumulatedAvailability : null
+      availabilityAccumulated={
+        !primitiveDisplay ? availabilityAccumulated : null
       }
     >
       <Text {...textProps} type="text2">

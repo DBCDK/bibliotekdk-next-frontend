@@ -8,7 +8,12 @@ import { dateToShortDate } from "@/utils/datetimeConverter";
 
 function messageWhenPickupNotAllowed() {
   return (
-    <Text>{Translate({ context: "localizations", label: "no_pickup" })}</Text>
+    <Text>
+      {Translate({
+        context: "localizations",
+        label: "no_pickup_allowed_on_branch",
+      })}
+    </Text>
   );
 }
 function messageWhenMaterialsAvailableNow(library) {

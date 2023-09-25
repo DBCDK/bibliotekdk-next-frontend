@@ -615,6 +615,14 @@
         "da": "På hylden",
         "en": "On shelf"
       },
+      "no_match_for_library_search_1": {
+        "da": "Ingen biblioteker matcher din søgning.",
+        "en": "No libraries match your search query."
+      },
+      "no_match_for_library_search_2": {
+        "da": "Se status for dit foretrukne bibliotek ved at søge på navn, postnr. eller by.",
+        "en": "To see the status of your preferred library search by branch name, postal code, or city."
+      },
       "AvailabilityEnum_AVAILABLE_NOW": {
         "da": "Materialet er tilgængeligt nu",
         "en": "Material is available now"
@@ -643,17 +651,21 @@
         "da": "Bestil til afhentning på denne afdeling",
         "en": "Order to pickup on this branch"
       },
-      "about_the_branch": {
-        "da": "Om afdelingen",
-        "en": "About the branch"
+      "obs_not_orders_to_here": {
+        "da": "OBS: Biblioteket modtager ikke bestillinger fra bibliotek.dk.",
+        "en": "Note that the library does not accept orders from bibliotek.dk "
       },
       "additional_branches_available": {
         "da": "+ %s afdelinger mere",
         "en": "+ %s additional branches"
       },
-      "no_pickup": {
+      "no_pickup_allowed_on_branch": {
         "da": "Ingen afhentning på afdelingen",
         "en": "No pickup allowed on the branch"
+      },
+      "no_pickup_allowed_on_any_branch_in_agency": {
+        "da": "Ingen afhentning på afdelingerne",
+        "en": "No pickup allowed on any branch"
       },
       "home_at_1_branch": {
         "da": "Hjemme på én",
@@ -687,6 +699,10 @@
         "da": "Er udlånt på en eller flere afdelinger, men vi har ikke detaljer om hvilke afdelinger",
         "en": "Is on loan at one or more branches, but we are missing the details on branches"
       },
+      "agency_status_pickup_not_allowed": {
+        "da": "Udlånes ikke fra afdelingerne. Men måske man kan bruge materialet på lokationen",
+        "en": "Not for loan on any of the branches. However, the material might be available on site"
+      },
       "no_status_about_the_following": {
         "da": "Vi har ikke status for disse afdelinger",
         "en": "We have no status on these branches"
@@ -694,6 +710,10 @@
       "see_detailed_status": {
         "da": "Se detaljeret status hos %s",
         "en": "See detailed status at %s"
+      },
+      "about_the_branch": {
+        "da": "Om afdelingen",
+        "en": "About the branch"
       },
       "no_information_about_opening_hours": {
         "da": "Information om afdelings åbningstider mangler",

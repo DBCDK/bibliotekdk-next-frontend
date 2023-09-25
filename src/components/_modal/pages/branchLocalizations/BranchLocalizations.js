@@ -9,19 +9,19 @@ import {
   useSingleAgency,
 } from "@/components/hooks/useHandleAgencyAccessData";
 import styles from "./BranchLocalizations.module.css";
-
 import Text from "@/components/base/text";
 import Title from "@/components/base/title/Title";
 import { AvailabilityLight } from "@/components/_modal/pages/base/localizationsBase/localizationItemBase/AvailabilityLight";
 import { LinkForTheBranch } from "@/components/_modal/pages/branchDetails/branchDetailsStatus/BranchDetailsStatus";
 import cx from "classnames";
 import isEmpty from "lodash/isEmpty";
+
 function OnlyInformationOnAgencyHoldings({
   agencyExpectedDelivery,
   pids,
   agency,
 }) {
-  const accumulatedAvailability = dateIsToday(agencyExpectedDelivery)
+  const availabilityAccumulated = dateIsToday(agencyExpectedDelivery)
     ? AvailabilityEnum.NOW
     : dateIsLater(agencyExpectedDelivery)
     ? AvailabilityEnum.LATER
@@ -30,16 +30,22 @@ function OnlyInformationOnAgencyHoldings({
   return (
     <div className={styles.agency_holdings_row_wrapper}>
       <AvailabilityLight
-        accumulatedAvailability={accumulatedAvailability}
+        availabilityAccumulated={availabilityAccumulated}
+        pickupAllowed={agency?.pickupAllowed}
         style={{ marginTop: "var(--pt025)" }}
       />
       <div className={styles.agency_holdings_result}>
         <Text type="text2">
           {Translate({
             context: "localizations",
-            label: dateIsToday(agencyExpectedDelivery)
-              ? "agency_status_only_home_at_one_or_more"
-              : "agency_status_only_loan_later_possible",
+            label:
+              agency?.pickupAllowed === false
+                ? "agency_status_pickup_not_allowed"
+                : availabilityAccumulated === AvailabilityEnum.LATER
+                ? "agency_status_only_loan_later_possible"
+                : availabilityAccumulated === AvailabilityEnum.NEVER
+                ? "agency_status_pickup_not_allowed"
+                : "no_status_about_the_following",
           })}
         </Text>
         <div className={cx(styles.link_for_branch)}>
@@ -71,15 +77,16 @@ export default function BranchLocalizations({ context, modal }) {
       AvailabilityEnum.NOW,
       AvailabilityEnum.LATER,
       AvailabilityEnum.NEVER,
-    ].includes(branch.accumulatedAvailability)
+    ].includes(branch.availabilityAccumulated)
   );
+
   const branchesUnknownStatus = agency?.branches?.filter(
     (branch) =>
       ![
         AvailabilityEnum.NOW,
         AvailabilityEnum.LATER,
         AvailabilityEnum.NEVER,
-      ].includes(branch.accumulatedAvailability)
+      ].includes(branch.availabilityAccumulated)
   );
 
   return (
@@ -113,16 +120,18 @@ export default function BranchLocalizations({ context, modal }) {
       </LocalizationsBase.List>
 
       {/*{agencyHoldingsIsRelevant && !isEmpty(branchesUnknownStatus) && (*/}
+      {isEmpty(branchesKnownStatus) && !isEmpty(branchesUnknownStatus) && (
+        <LocalizationsBase.Information>
+          <OnlyInformationOnAgencyHoldings
+            agencyHoldingsIsRelevant={agencyHoldingsIsRelevant}
+            agencyExpectedDelivery={agencyExpectedDelivery}
+            pids={pids}
+            agency={agency}
+          />
+        </LocalizationsBase.Information>
+      )}
       {!isEmpty(branchesUnknownStatus) && (
         <>
-          <LocalizationsBase.Information>
-            <OnlyInformationOnAgencyHoldings
-              agencyHoldingsIsRelevant={agencyHoldingsIsRelevant}
-              agencyExpectedDelivery={agencyExpectedDelivery}
-              pids={pids}
-              agency={agency}
-            />
-          </LocalizationsBase.Information>
           <LocalizationsBase.Information>
             <Title type="title6" className={styles.no_status}>
               {Translate({
@@ -130,8 +139,18 @@ export default function BranchLocalizations({ context, modal }) {
                 label: "no_status_about_the_following",
               })}
             </Title>
+            {!isEmpty(branchesKnownStatus) &&
+              !isEmpty(branchesUnknownStatus) && (
+                <div className={cx(styles.link_for_branch)}>
+                  <LinkForTheBranch
+                    library={agency?.branches?.[0]}
+                    pids={pids}
+                    textType="text3"
+                  />
+                </div>
+              )}
           </LocalizationsBase.Information>
-          <LocalizationsBase.List>
+          <LocalizationsBase.List className={cx(styles.list)}>
             {branchesUnknownStatus?.map((branch, index) => (
               <li key={JSON.stringify(branch.branchId + "-" + index)}>
                 <BranchLocalizationItem

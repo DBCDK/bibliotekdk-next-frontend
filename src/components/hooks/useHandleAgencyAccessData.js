@@ -5,7 +5,6 @@ import * as branchesFragments from "@/lib/api/branches.fragments";
 
 import { useData } from "@/lib/api/api";
 import isEmpty from "lodash/isEmpty";
-import uniq from "lodash/uniq";
 
 export const AvailabilityEnum = Object.freeze({
   NOW: "AVAILABLE_NOW",
@@ -27,7 +26,13 @@ export function dateIsToday(date) {
 function checkAvailableNow(item) {
   const expectedDelivery = item?.expectedDelivery;
   const status = item?.status;
-  return dateIsToday(expectedDelivery) && status === HoldingStatusEnum.ON_SHELF;
+  const isDanishPublicLibrary =
+    getLibraryType(item?.agencyId) === LibraryTypeEnum.DANISH_PUBLIC_LIBRARY;
+
+  return (
+    dateIsToday(expectedDelivery) &&
+    (!isDanishPublicLibrary || status === HoldingStatusEnum.ON_SHELF)
+  );
 }
 
 export function dateIsLater(date) {
@@ -42,9 +47,13 @@ export function dateIsLater(date) {
 function checkAvailableLater(item) {
   const expectedDelivery = item?.expectedDelivery;
   const status = item?.status;
+  const isDanishPublicLibrary =
+    getLibraryType(item?.agencyId) === LibraryTypeEnum.DANISH_PUBLIC_LIBRARY;
+
   return (
     (dateIsLater(expectedDelivery) || dateIsToday(expectedDelivery)) &&
-    (![HoldingStatusEnum.NOT_FOR_LOAN].includes(status) ||
+    (!isDanishPublicLibrary ||
+      ![HoldingStatusEnum.NOT_FOR_LOAN].includes(status) ||
       [HoldingStatusEnum.ON_LOAN, HoldingStatusEnum.ON_SHELF].includes(status))
   );
 }
@@ -61,6 +70,7 @@ export function dateIsNever(date) {
 function checkAvailableNever(item) {
   const expectedDelivery = item?.expectedDelivery;
   const status = item?.status;
+
   return (
     dateIsNever(expectedDelivery) || status === HoldingStatusEnum.NOT_FOR_LOAN
   );
@@ -76,7 +86,7 @@ function checkUnknownAvailability(item) {
 }
 
 function getAvailability(items) {
-  const availabilityAccumulated = {
+  const availabilityObject = {
     [AvailabilityEnum.NOW]: 0,
     [AvailabilityEnum.LATER]: 0,
     [AvailabilityEnum.NEVER]: 0,
@@ -84,7 +94,6 @@ function getAvailability(items) {
   };
 
   for (const item of items) {
-    console.log("item.agencyId: ", item?.pickupAllowed);
     const key = getFirstMatch(true, AvailabilityEnum.UNKNOWN, [
       [checkAvailableNow(item), AvailabilityEnum.NOW],
       [checkAvailableLater(item), AvailabilityEnum.LATER],
@@ -92,10 +101,10 @@ function getAvailability(items) {
       [checkUnknownAvailability(item), AvailabilityEnum.UNKNOWN],
     ]);
 
-    availabilityAccumulated[key] += 1;
+    availabilityObject[key] += 1;
   }
 
-  return availabilityAccumulated;
+  return availabilityObject;
 }
 
 function getAvailabilityById(items) {
@@ -138,12 +147,12 @@ function sortByAvailability(a, b) {
   return getFirstMatch(true, 0, [
     [b?.pickupAllowed === false, -1],
     [a?.pickupAllowed === false, 1],
-    [a?.availabilityAccumulated === "AVAILABLE_NOW", -1],
-    [b?.availabilityAccumulated === "AVAILABLE_NOW", 1],
-    [a?.availabilityAccumulated === "AVAILABLE_LATER", -1],
-    [b?.availabilityAccumulated === "AVAILABLE_LATER", 1],
-    [a?.availabilityAccumulated === "AVAILABLE_NEVER", -1],
-    [b?.availabilityAccumulated === "AVAILABLE_NEVER", 1],
+    [a?.availabilityAccumulated === AvailabilityEnum.NOW, -1],
+    [b?.availabilityAccumulated === AvailabilityEnum.NOW, 1],
+    [a?.availabilityAccumulated === AvailabilityEnum.LATER, -1],
+    [b?.availabilityAccumulated === AvailabilityEnum.LATER, 1],
+    [a?.availabilityAccumulated === AvailabilityEnum.NEVER, -1],
+    [b?.availabilityAccumulated === AvailabilityEnum.NEVER, 1],
   ]);
 }
 
@@ -252,6 +261,40 @@ export function useSingleBranch({ pids, branchId }) {
   return handleAgencyAccessData(branch);
 }
 
+function enrichBranches(branch) {
+  const branchHoldingsWithInfoOnPickupAllowed =
+    getHoldingsWithInfoOnPickupAllowed(branch);
+
+  const availabilityAccumulated = getAvailabilityAccumulated(
+    getAvailability(
+      !isEmpty(branchHoldingsWithInfoOnPickupAllowed)
+        ? branchHoldingsWithInfoOnPickupAllowed
+        : [
+            {
+              expectedDelivery: branch?.holdingStatus?.expectedDelivery,
+              agencyId: branch?.agencyId,
+              pickupAllowed: branch?.pickupAllowed,
+            },
+          ]
+    )
+  );
+
+  return {
+    ...branch,
+    holdingItems: branchHoldingsWithInfoOnPickupAllowed,
+    agencyName: branch.agencyName,
+    branchName: branch.name,
+    availability: getAvailability(branchHoldingsWithInfoOnPickupAllowed),
+    availabilityById: getAvailabilityById(
+      branchHoldingsWithInfoOnPickupAllowed
+    ),
+    availabilityAccumulated: availabilityAccumulated,
+    expectedDelivery: branch?.holdingStatus?.expectedDelivery,
+    expectedDeliveryAccumulatedFromHoldings:
+      getExpectedDeliveryAccumulatedFromHoldings(branch?.holdingItems),
+  };
+}
+
 export function handleAgencyAccessData(agencies) {
   const isLoading = agencies.isLoading;
 
@@ -275,37 +318,7 @@ export function handleAgencyAccessData(agencies) {
       e.holdingItems.map((item) => item)
     );
 
-    const branches = entry
-      ?.flatMap((branch) => {
-        const branchHoldingsWithInfoOnPickupAllowed =
-          getHoldingsWithInfoOnPickupAllowed(branch);
-
-        return {
-          ...branch,
-          holdingItems: branchHoldingsWithInfoOnPickupAllowed,
-          agencyName: branch.agencyName,
-          branchName: branch.name,
-          availability: getAvailability(branchHoldingsWithInfoOnPickupAllowed),
-          availabilityById: getAvailabilityById(
-            branchHoldingsWithInfoOnPickupAllowed
-          ),
-          availabilityAccumulated: getAvailabilityAccumulated(
-            getAvailability(
-              !isEmpty(branchHoldingsWithInfoOnPickupAllowed)
-                ? branchHoldingsWithInfoOnPickupAllowed
-                : [
-                    {
-                      expectedDelivery: branch?.holdingStatus?.expectedDelivery,
-                    },
-                  ]
-            )
-          ),
-          expectedDelivery: branch?.holdingStatus?.expectedDelivery,
-          expectedDeliveryAccumulatedFromHoldings:
-            getExpectedDeliveryAccumulatedFromHoldings(branch?.holdingItems),
-        };
-      })
-      .sort(sortByAvailability);
+    const branches = entry?.flatMap(enrichBranches).sort(sortByAvailability);
 
     const allHoldingsAcrossBranchesInAgency = branches.flatMap(
       getHoldingsWithInfoOnPickupAllowed
@@ -317,6 +330,8 @@ export function handleAgencyAccessData(agencies) {
           return {
             expectedDelivery: e.expectedDelivery,
             pickupAllowed: e.pickupAllowed,
+            agencyName: e.agencyName,
+            branchName: e.name,
           };
         });
 
@@ -325,7 +340,7 @@ export function handleAgencyAccessData(agencies) {
       agencyName: entry?.map((e) => e.agencyName)?.[0],
       availability: getAvailability(expectedDeliveryOnHoldingsOrAgency, entry),
       availabilityAccumulated: getAvailabilityAccumulated(
-        getAvailability(expectedDeliveryOnHoldingsOrAgency, entry)
+        getAvailability(expectedDeliveryOnHoldingsOrAgency)
       ),
       branches: branches,
       branchesNames: entry.map((e) => e.name),
@@ -334,6 +349,7 @@ export function handleAgencyAccessData(agencies) {
         .map((item) => item.expectedDelivery)
         .sort(compareDate)?.[0],
       holdingItems: allHoldingsAcrossBranchesInAgency,
+      pickupAllowed: entry?.findIndex((e) => e.pickupAllowed) > -1,
     };
   });
 

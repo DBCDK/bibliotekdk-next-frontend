@@ -17,7 +17,7 @@ const textProps = {
   lines: 2,
 };
 
-function DefaultShowingOfAgencies({ agency }) {
+function DefaultShowingOfAgency({ agency }) {
   const numberOfBranchesWithAvailable = agency?.branches?.filter(
     (branch) => branch?.availabilityAccumulated === AvailabilityEnum.NOW
   ).length;
@@ -49,7 +49,7 @@ function DefaultShowingOfAgencies({ agency }) {
     </>
   );
 }
-function QueriedShowingOfAgencies({ agency }) {
+function QueriedShowingOfAgency({ agency }) {
   const branchesWithHighlights = agency?.branches
     .map((branch) => {
       const branchName = branch?.highlights.find(
@@ -123,8 +123,6 @@ export default function AgencyLocalizationItem({
 
   const isLoading = localizationsIsLoading || singleAgencyIsLoading;
 
-  const accumulatedAvailability = agency?.availabilityAccumulated;
-
   return (
     <LocalizationItemBase
       library={agency}
@@ -138,7 +136,7 @@ export default function AgencyLocalizationItem({
           agencyId: agencyId,
         })
       }
-      accumulatedAvailability={accumulatedAvailability}
+      availabilityAccumulated={agency?.availabilityAccumulated}
     >
       {agencyHighlight ? (
         <Text className={styles.text} type={"text2"}>
@@ -149,9 +147,20 @@ export default function AgencyLocalizationItem({
           {agency?.agencyName}
         </Text>
       )}
-      {isEmpty(query) && <DefaultShowingOfAgencies agency={agency} />}
-      {!isEmpty(query) && !agencyHighlight && (
-        <QueriedShowingOfAgencies agency={agency} />
+      {agency?.pickupAllowed === false ? (
+        <Text>
+          {Translate({
+            context: "localizations",
+            label: "no_pickup_allowed_on_any_branch_in_agency",
+          })}
+        </Text>
+      ) : (
+        <>
+          {isEmpty(query) && <DefaultShowingOfAgency agency={agency} />}
+          {!isEmpty(query) && !agencyHighlight && (
+            <QueriedShowingOfAgency agency={agency} />
+          )}
+        </>
       )}
     </LocalizationItemBase>
   );
