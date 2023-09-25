@@ -16,7 +16,6 @@ function OrderConfirmationButton({
   availableAsPhysicalCopy,
   isDigitalCopy,
   isLoading,
-  blockedUser,
   onClick,
   context,
 }) {
@@ -58,11 +57,7 @@ function OrderConfirmationButton({
           )}
         </div>
         <Button
-          disabled={
-            blockedUser ||
-            blockedUser === null ||
-            (!availableAsDigitalCopy && !availableAsPhysicalCopy)
-          }
+          disabled={!availableAsDigitalCopy && !availableAsPhysicalCopy}
           skeleton={isLoading}
           onClick={onClick}
         >

@@ -63,11 +63,7 @@ export default function Wrap() {
       branchesFragments.checkBlockedUser({ branchId: loanerInfo.pickupBranch })
   );
 
-  //console.log("______________blockedUserResponse", blockedUserResponse);
-
   const branches = blockedUserResponse?.data?.branches;
-
-  //console.log("branches", branches);
 
   if (blockedUserResponse?.isLoading) {
     return <Skeleton lines={2} isSlow={blockedUserResponse?.isSlow} />;

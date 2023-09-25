@@ -177,7 +177,7 @@ function Order({
         singleManifestation={singleManifestation}
       />
       <LocalizationInformation context={context} />
-      {user && <BlockedUserInformation />}
+      {/* {user && <BlockedUserInformation />} */}
       <OrdererInformation
         context={context}
         validated={validated}

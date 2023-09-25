@@ -52,18 +52,47 @@ export function Receipt({
     !!orderData?.submitOrder?.orderId ||
     articleOrderData?.elba?.placeCopyRequest?.status === "OK";
 
-  let hasFailed =
-    (orderData?.submitOrder && !orderData?.submitOrder?.ok) ||
-    !!orderError ||
-    !!articleOrderError ||
-    (articleOrderData?.elba?.placeCopyRequest &&
-      articleOrderData?.elba?.placeCopyRequest?.status !== "OK");
+  // Define if order has failed
+  let hasFailed = false,
+    failedMessage = undefined;
+  if (orderData?.submitOrder && !orderData?.submitOrder?.ok) {
+    hasFailed = true;
+    failedMessage = orderData?.submitOrder?.status;
+  } else if (!!orderError || !!articleOrderError) {
+    hasFailed = true;
+    failedMessage = orderError || articleOrderError;
+  } else if (
+    articleOrderData?.elba?.placeCopyRequest &&
+    articleOrderData?.elba?.placeCopyRequest?.status !== "OK"
+  ) {
+    hasFailed = true;
+    failedMessage = articleOrderData?.elba?.placeCopyRequest?.status;
+  }
 
-  let failedMessage = null;
-  if (hasFailed) {
-    failedMessage = !!articleOrder
-      ? "ORDER FAILED"
-      : articleOrderData?.elba?.placeCopyRequest?.status;
+  let additonalErrorMessage = undefined;
+  let showLinkToMyLibraries = false;
+  //if (failedMessage === "BORCHK_USER_NO_LONGER_EXIST_ON_AGENCY") {
+  if (true) {
+    additonalErrorMessage = Translate({
+      context: "order",
+      label: "order-failed-user-no-longer-exists",
+    });
+    showLinkToMyLibraries = true;
+  }
+
+  switch (failedMessage) {
+    case undefined:
+      break;
+    case "BORCHK_USER_NO_LONGER_EXIST_ON_AGENCY":
+      additonalErrorMessage = Translate({
+        context: "order",
+        label: "order-failed-user-no-longer-exists",
+      });
+      showLinkToMyLibraries = true;
+    case "Papayas":
+      console.log("Mangoes and papayas are $2.79 a pound.");
+      // Expected output: "Mangoes and papayas are $2.79 a pound."
+      break;
   }
 
   // Branch name
@@ -154,8 +183,31 @@ export function Receipt({
             </div>
           )}
           <div className={styles.error}>
-            An error occured :(
-            <div>{hasFailed && failedMessage ? failedMessage : ""}</div>
+            <Title className={styles.title} type="title5" tag="h2">
+              {Translate({ context: "order", label: "errorOccured" })}
+            </Title>
+            {hasFailed && failedMessage && (
+              <Text tag="div" type="text2" className={styles.errorText}>
+                {failedMessage}
+              </Text>
+            )}
+            {additonalErrorMessage && (
+              <Text tag="div" type="text2" className={styles.errorText}>
+                {additonalErrorMessage}
+              </Text>
+            )}
+            {showLinkToMyLibraries && (
+              <Button
+                className={styles.redirect}
+                onClick={() => router.push("/profil/mine-biblioteker")}
+                type="secondary"
+              >
+                {Translate({
+                  context: "receipt",
+                  label: "seeYourLibraries",
+                })}
+              </Button>
+            )}
           </div>
         </div>
       </div>

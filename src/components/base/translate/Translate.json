@@ -2216,6 +2216,10 @@
       "show-pickup-branch": {
         "da": "Vis afhentningssted for %s",
         "en": "Show pickup location for %s"
+      },
+      "order-failed-user-no-longer-exists": {
+        "da": "Biblioteket kan ikke bekræfte de låneroplysninger, du har gemt på din profil. Dette kan fx skyldes, at du har fået nyt login eller ikke længere er låner. Kontakt biblioteket, hvis du mener dette er en fejl.",
+        "en": "The library cannot confirm the loaner information you have saved on your profile. This may be due to, for example, that you have received a new login or are no longer a loaner. Contact the library if you think this is an error."
       }
     },
     "login": {
@@ -3391,6 +3395,14 @@
       "seeLoansAndReservations": {
         "da": "Se dine lån og reserveringer",
         "en": "See your loans and reservations"
+      },
+      "seeYourLibraries": {
+        "da": "Se dine biblioteker",
+        "en": "See your libraries"
+      },
+      "errorOccured": {
+        "da": "Der opstod en fejl",
+        "en": "An error occured"
       }
     },
     "noagencies": {
