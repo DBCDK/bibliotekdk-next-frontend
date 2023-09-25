@@ -124,7 +124,7 @@ export function branchOrderPolicy({ branchId, pid }) {
 }
 
 /**
- * AgencyUrl and userIsBlocked
+ * AgencyUrl and canBorrow for a branch
  */
 export function checkBlockedUser({ branchId }) {
   return {
@@ -134,9 +134,12 @@ export function checkBlockedUser({ branchId }) {
     query checkBlockedUser($branchId: String!, $language: LanguageCode!) {
       branches(branchId: $branchId, language: $language) {
         agencyUrl
+        canBorrow {
+          canBorrow
+          statusCode
+        }
         result {
           agencyName
-        	userIsBlocked
         	branchWebsiteUrl
         }
       }

@@ -1,9 +1,5 @@
 import React, { memo } from "react";
 import styles from "./BlockedUserInformation.module.css";
-import * as branchesFragments from "@/lib/api/branches.fragments";
-import useUser from "@/components/hooks/useUser";
-import { useData } from "@/lib/api/api";
-import Skeleton from "@/components/base/skeleton";
 import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
@@ -11,14 +7,11 @@ import Link from "@/components/base/link";
 export const BlockedUserInformation = memo(function BlockedUserInformation({
   agencyName,
   branchOrAgencyUrl,
+  explanation,
 }) {
   const titleText = Translate({
     context: "order",
     label: "blocked-user-heading",
-  });
-  const explanation = Translate({
-    context: "order",
-    label: "blocked-user-explanation",
   });
   const url = Translate({
     context: "order",
@@ -53,35 +46,26 @@ export const BlockedUserInformation = memo(function BlockedUserInformation({
   );
 });
 
-export default function Wrap() {
-  const { authUser, loanerInfo, isAuthenticated, isGuestUser, isLoggedIn } =
-    useUser();
-
-  // HERE CALL borchKFragment.checkOrderAllowed
-  const blockedUserResponse = useData(
-    loanerInfo?.pickupBranch &&
-      branchesFragments.checkBlockedUser({ branchId: loanerInfo.pickupBranch })
-  );
-
-  const branches = blockedUserResponse?.data?.branches;
-
-  if (blockedUserResponse?.isLoading) {
-    return <Skeleton lines={2} isSlow={blockedUserResponse?.isSlow} />;
+export default function Wrap({ statusCode, branches }) {
+  if (!branches) {
+    return null;
   }
 
-  const blockedUser =
-    branches?.result
-      ?.map((res) => res.userIsBlocked)
-      .filter((singleUserIsBlocked) => singleUserIsBlocked === true).length > 0;
+  let explanation;
 
   if (
-    !blockedUser ||
-    !authUser ||
-    isGuestUser ||
-    !isAuthenticated ||
-    !isLoggedIn
+    statusCode === "BORCHK_USER_BLOCKED_BY_AGENCY" ||
+    statusCode === "BORCHK_USER_NO_LONGER_EXIST_ON_AGENCY"
   ) {
-    return null;
+    explanation = Translate({
+      context: "order",
+      label:
+        statusCode === "BORCHK_USER_BLOCKED_BY_AGENCY"
+          ? "blocked-user-explanation"
+          : "user-no-longer-exists-on-agency", //TODO talk to UX'er if there is a better translation
+    });
+  } else {
+    explanation = statusCode; //TODO translate, ask UX
   }
 
   return (
@@ -90,6 +74,7 @@ export default function Wrap() {
       branchOrAgencyUrl={
         branches?.result?.[0]?.branchWebsiteUrl || branches?.agencyUrl
       }
+      explanation={explanation}
     />
   );
 }
