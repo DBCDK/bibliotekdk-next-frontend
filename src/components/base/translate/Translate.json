@@ -719,13 +719,29 @@
         "da": "Information om afdelings åbningstider mangler",
         "en": "Information about the opening hours of the branch is missing"
       },
+      "see_opening_hours_of_the_library": {
+        "da": "Se bibliotekets åbningstider",
+        "en": "See the opening hours of the library"
+      },
       "no_address_information": {
         "da": "Information om afdelings adresse mangler",
         "en": "Information about the branch address is missing"
       },
+      "see_in_google_maps": {
+        "da": "Se i Google Maps",
+        "en": "See in Google Maps"
+      },
       "no_contact_information": {
         "da": "Kontaktinformation for afdeling mangler",
         "en": "Contact information of the branch is missing"
+      },
+      "phone": {
+        "da": "Telefon",
+        "en": "Phone"
+      },
+      "email": {
+        "da": "E-mail",
+        "en": "E-mail"
       },
       "branch": {
         "da": "afdeling",

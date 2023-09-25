@@ -31,7 +31,10 @@ function OpeningHours({ singleBranch }) {
           href={`${singleBranch?.branchWebsiteUrl}/biblioteker`}
           target="_blank"
         >
-          Klik her
+          {Translate({
+            context: "localizations",
+            label: "see_opening_hours_of_the_library",
+          })}
         </IconLink>
       ) : !isEmpty(singleBranch?.openingHours) ? (
         <Text type="text2">{singleBranch.openingHours}</Text>
@@ -76,6 +79,10 @@ function Address({ singleBranch }) {
             href={`https://www.google.com/maps/place/${singleBranch?.postalAddress}+${singleBranch?.postalCode}+${singleBranch?.city}`}
             target="_blank"
           >
+            {Translate({
+              context: "localizations",
+              label: "see_in_google_maps",
+            })}
             Se i Google Maps
           </IconLink>
         </>
@@ -99,13 +106,20 @@ function ContactInformation({ singleBranch }) {
         </Text>
       ) : (
         <>
-          <Text type="text2">
-            {"VipCore /1.0/api/findlibrary/{agencyId}/ -- branchPhone"}
-          </Text>
-          <Text type="text2">
-            {"VipCore /1.0/api/findlibrary/{agencyId}/ -- branchEmail"}
-          </Text>
-          <Text type="text2">Svar på danbib-bestillinger hvor?????</Text>
+          {singleBranch?.branchPhone && (
+            <Text type="text2">
+              {Translate({ context: "localizations", label: "phone" })}
+              {": "}
+              {singleBranch?.branchPhone}
+            </Text>
+          )}
+          {singleBranch?.branchEmail && (
+            <Text type="text2">
+              {Translate({ context: "localizations", label: "email" })}
+              {": "}
+              {singleBranch?.branchEmail}
+            </Text>
+          )}
         </>
       )}
     </div>
@@ -115,20 +129,21 @@ function ContactInformation({ singleBranch }) {
 function BranchDetails({ context }) {
   const { pids: pids, branchId } = context;
 
-  const { agenciesFlatSorted } = useSingleBranch({
+  const { agenciesFlatSorted, agenciesIsLoading } = useSingleBranch({
     pids: pids,
     branchId: branchId,
   });
 
   const singleBranch = agenciesFlatSorted?.[0]?.branches?.[0];
 
-  const { data: manifestationsData } = useData(
-    pids &&
-      pids.length > 0 &&
-      manifestationFragments.editionManifestations({
-        pid: pids,
-      })
-  );
+  const { data: manifestationsData, isLoading: manifestationsIsLoading } =
+    useData(
+      pids &&
+        pids.length > 0 &&
+        manifestationFragments.editionManifestations({
+          pid: pids,
+        })
+    );
   const {
     flattenedGroupedSortedManifestations: manifestationsBeforeEnriching,
   } = manifestationMaterialTypeFactory(manifestationsData?.manifestations);
@@ -161,7 +176,9 @@ function BranchDetails({ context }) {
   );
   const workId = workIds?.[0];
 
-  if (workIds.length !== 1) {
+  const branchDetailsLoading = agenciesIsLoading || manifestationsIsLoading;
+
+  if (!branchDetailsLoading && workIds.length !== 1) {
     return (
       <div>
         Error: Der burde være præcis 1 workId, men der er {workIds.length}
@@ -187,7 +204,7 @@ function BranchDetails({ context }) {
           pids={pids}
         />
       </LocalizationsBase.Information>
-      {!singleBranch?.pickupAllowed ? (
+      {!branchDetailsLoading && !singleBranch?.pickupAllowed ? (
         <LocalizationsBase.HighlightedArea>
           <Text type={"text2"}>
             {Translate({
