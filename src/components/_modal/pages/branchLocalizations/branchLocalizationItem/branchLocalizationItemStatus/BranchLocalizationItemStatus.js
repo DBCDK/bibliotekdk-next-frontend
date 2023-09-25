@@ -6,7 +6,7 @@ import {
 import Translate from "@/components/base/translate";
 import { dateToShortDate } from "@/utils/datetimeConverter";
 
-function messageWhenPickupNotAllowed() {
+function MessageWhenPickupNotAllowed() {
   return (
     <Text>
       {Translate({
@@ -16,7 +16,7 @@ function messageWhenPickupNotAllowed() {
     </Text>
   );
 }
-function messageWhenMaterialsAvailableNow(library) {
+function MessageWhenMaterialsAvailableNow({ library }) {
   return library?.availability[AvailabilityEnum.NOW] === 0 ? (
     <Text>{Translate({ context: "localizations", label: "on_shelf" })}</Text>
   ) : (
@@ -27,7 +27,7 @@ function messageWhenMaterialsAvailableNow(library) {
   );
 }
 
-function messageWhenMaterialsAvailableLater(library) {
+function MessageWhenMaterialsAvailableLater({ library }) {
   const expectedDelivery =
     library?.expectedDelivery ||
     library?.expectedDeliveryAccumulatedFromHoldings;
@@ -47,7 +47,7 @@ function messageWhenMaterialsAvailableLater(library) {
   );
 }
 
-function messageWhenMaterialsAvailableNever() {
+function MessageWhenMaterialsAvailableNever() {
   return (
     <Text>
       {Translate({ context: "localizations", label: "not_for_loan" })}
@@ -55,7 +55,7 @@ function messageWhenMaterialsAvailableNever() {
   );
 }
 
-function messageWhenMaterialsAvailableUnknown() {
+function MessageWhenMaterialsAvailableUnknown() {
   return (
     <Text>
       {Translate({ context: "localizations", label: "status_is_unknown" })}
@@ -63,25 +63,21 @@ function messageWhenMaterialsAvailableUnknown() {
   );
 }
 
-function getBranchStatusMessage(library) {
+export default function BranchLocalizationItemStatus({ library }) {
   if (
     typeof library?.pickupAllowed !== "undefined" &&
     library?.pickupAllowed === false
   ) {
-    return messageWhenPickupNotAllowed();
+    return <MessageWhenPickupNotAllowed />;
   } else if (library?.availabilityAccumulated === AvailabilityEnum.NOW) {
-    return messageWhenMaterialsAvailableNow(library);
+    return <MessageWhenMaterialsAvailableNow library={library} />;
   } else if (library?.availabilityAccumulated === AvailabilityEnum.LATER) {
-    return messageWhenMaterialsAvailableLater(library);
+    return <MessageWhenMaterialsAvailableLater library={library} />;
   } else if (library?.availabilityAccumulated === AvailabilityEnum.NEVER) {
-    return messageWhenMaterialsAvailableNever();
+    return <MessageWhenMaterialsAvailableNever />;
   } else if (library?.availabilityAccumulated === AvailabilityEnum.UNKNOWN) {
-    return messageWhenMaterialsAvailableUnknown();
+    return <MessageWhenMaterialsAvailableUnknown />;
   } else {
-    return messageWhenMaterialsAvailableUnknown();
+    return <MessageWhenMaterialsAvailableUnknown />;
   }
-}
-
-export default function BranchLocalizationItemStatus({ library }) {
-  return <div>{getBranchStatusMessage(library)}</div>;
 }

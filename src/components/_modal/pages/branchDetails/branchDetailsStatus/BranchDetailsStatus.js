@@ -55,7 +55,7 @@ export function LinkForTheBranch({ library, pids, textType = "text2" }) {
   );
 }
 
-function messageWhenPickupNotAllowed() {
+function MessageWhenPickupNotAllowed() {
   return (
     <Text type="text2">
       {Translate({
@@ -66,7 +66,7 @@ function messageWhenPickupNotAllowed() {
   );
 }
 
-function messageWhenMaterialsAvailableNow(library, manifestations) {
+function MessageWhenMaterialsAvailableNow({ library, manifestations }) {
   const locationsInBranch = uniq(
     manifestations?.map((manifestation) => manifestation?.locationInBranch)
   );
@@ -97,7 +97,7 @@ function messageWhenMaterialsAvailableNow(library, manifestations) {
   );
 }
 
-function messageWhenMaterialsAvailableLater(library) {
+function MessageWhenMaterialsAvailableLater({ library }) {
   const expectedDelivery =
     library?.expectedDelivery ||
     library?.expectedDeliveryAccumulatedFromHoldings;
@@ -116,7 +116,7 @@ function messageWhenMaterialsAvailableLater(library) {
     </Text>
   );
 }
-function messageWhenMaterialsAvailableNever() {
+function MessageWhenMaterialsAvailableNever() {
   return (
     <>
       <Text type="text2">
@@ -126,7 +126,7 @@ function messageWhenMaterialsAvailableNever() {
   );
 }
 
-function messageWhenMaterialsAvailableUnknown() {
+function MessageWhenMaterialsAvailableUnknown() {
   return (
     <>
       <Text type="text2">
@@ -141,17 +141,22 @@ function BranchStatusMessage({ library, manifestations }) {
     typeof library?.pickupAllowed !== "undefined" &&
     library?.pickupAllowed === false
   ) {
-    return messageWhenPickupNotAllowed();
+    return <MessageWhenPickupNotAllowed />;
   } else if (library?.availabilityAccumulated === AvailabilityEnum.NOW) {
-    return messageWhenMaterialsAvailableNow(library, manifestations);
+    return (
+      <MessageWhenMaterialsAvailableNow
+        library={library}
+        manifestations={manifestations}
+      />
+    );
   } else if (library?.availabilityAccumulated === AvailabilityEnum.LATER) {
-    return messageWhenMaterialsAvailableLater(library);
+    return <MessageWhenMaterialsAvailableLater library={library} />;
   } else if (library?.availabilityAccumulated === AvailabilityEnum.NEVER) {
-    return messageWhenMaterialsAvailableNever();
+    return <MessageWhenMaterialsAvailableNever />;
   } else if (library?.availabilityAccumulated === AvailabilityEnum.UNKNOWN) {
-    return messageWhenMaterialsAvailableUnknown();
+    return <MessageWhenMaterialsAvailableUnknown />;
   } else {
-    return messageWhenMaterialsAvailableUnknown();
+    return <MessageWhenMaterialsAvailableUnknown />;
   }
 }
 
