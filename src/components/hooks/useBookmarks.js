@@ -22,11 +22,8 @@ export const BookmarkSyncProvider = () => {
   return <></>;
 };
 
-export default function useBookmarks() {
-  const { data: session } = !process.env.STORYBOOK_ACTIVE && useSession();
-  const isAuthenticated = process.env.STORYBOOK_ACTIVE
-    ? false
-    : !!session?.user?.uniqueId;
+const useBookmarksCore = ({ isMock = false, session }) => {
+  const isAuthenticated = isMock ? false : !!session?.user?.uniqueId;
 
   let {
     data: localBookmarks,
@@ -134,7 +131,21 @@ export default function useBookmarks() {
       (isLoadingGlobalBookmarks && !globalBookmarksError),
     syncCookieBookmarks,
   };
-}
+};
+
+const useBookmarkImpl = () => {
+  const { data: session } = useSession();
+  return useBookmarksCore({ session });
+};
+
+const useBookmarkMock = () => {
+  return useBookmarksCore({ isMock: true });
+};
+
+const useBookmarks = process.env.STORYBOOK_ACTIVE
+  ? useBookmarkMock
+  : useBookmarkImpl;
+export default useBookmarks;
 
 export const usePopulateBookmarks = (bookmarks) => {
   /**
