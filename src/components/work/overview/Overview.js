@@ -24,7 +24,6 @@ import {
 import Title from "@/components/base/title/Title";
 import { useRouter } from "next/router";
 import Breadcrumbs from "@/components/work/overview/breadcrumbs/Breadcrumbs";
-import { openAgencyLocalizationsModal } from "@/components/work/utils";
 
 function useInitMaterialType(
   uniqueMaterialTypes,
@@ -164,16 +163,7 @@ export function Overview({
               />
               <AlternativeOptions workId={workId} selectedPids={selectedPids} />
               <Col xs={12} className={styles.info}>
-                <LocalizationsLink
-                  selectedPids={selectedPids}
-                  modalOpener={(modal, agency) =>
-                    openAgencyLocalizationsModal({
-                      modal: modal,
-                      pids: selectedPids,
-                      agency: agency,
-                    })
-                  }
-                />
+                <LocalizationsLink selectedPids={selectedPids} />
               </Col>
             </Col>
           </Col>

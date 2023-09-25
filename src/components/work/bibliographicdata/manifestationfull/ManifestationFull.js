@@ -18,10 +18,7 @@ import { cyKey } from "@/utils/trim";
 import LocalizationsLink from "@/components/work/overview/localizationslink/LocalizationsLink";
 import { useModal } from "@/components/_modal";
 import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
-import {
-  openAgencyLocalizationsModal,
-  openReferencesModal,
-} from "@/components/work/utils";
+import { openReferencesModal } from "@/components/work/utils";
 import { useData } from "@/lib/api/api";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import ManifestationParts from "@/components/manifestationparts/ManifestationParts";
@@ -105,16 +102,7 @@ function ColumnOne({ workId, manifestation }) {
       </div>
 
       <div className={styles.localizations_link}>
-        <LocalizationsLink
-          selectedPids={[manifestation?.pid]}
-          modalOpener={(modal, agency) =>
-            openAgencyLocalizationsModal({
-              modal: modal,
-              pids: [manifestation?.pid],
-              agency: agency,
-            })
-          }
-        />
+        <LocalizationsLink selectedPids={[manifestation?.pid]} />
       </div>
 
       <div className={styles.reference_downloads}>

@@ -9,14 +9,6 @@ import { accessFactory } from "@/lib/accessFactoryUtils";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import { extractCreatorsPrioritiseCorporation } from "@/lib/utils";
 
-export function openLocalizationsModal(modal, pids, agency) {
-  modal.push("localizations", {
-    title: Translate({ context: "modal", label: "title-order" }),
-    pids: pids,
-    agency: agency,
-  });
-}
-
 export function openAgencyLocalizationsModal({ modal, pids, agency }) {
   modal.push("agencyLocalizations", {
     title: Translate({ context: "modal", label: "title-agencylocalizations" }),

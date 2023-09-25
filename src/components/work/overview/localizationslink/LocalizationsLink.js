@@ -7,7 +7,7 @@ import Text from "@/components/base/text/Text";
 import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
 import styles from "./LocalizationsLink.module.css";
-import { openLocalizationsModal } from "@/components/work/utils";
+import { openAgencyLocalizationsModal } from "@/components/work/utils";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import { accessFactory } from "@/lib/accessFactoryUtils";
 import { AccessEnum } from "@/lib/enums";
@@ -65,7 +65,11 @@ export function LocalizationsLink({
 export default function Wrap({
   selectedPids,
   modalOpener = (modal, agency) =>
-    openLocalizationsModal(modal, selectedPids, agency),
+    openAgencyLocalizationsModal({
+      modal: modal,
+      pids: selectedPids,
+      agency: agency,
+    }),
 }) {
   // @TODO if user is logged in - do a holdingsitems request on user agency
   const user = useUser();
