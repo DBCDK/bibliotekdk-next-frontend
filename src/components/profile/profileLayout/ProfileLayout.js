@@ -15,9 +15,18 @@ import { signOut } from "@dbcdk/login-nextjs/client";
 import Button from "@/components/base/button";
 import { useModal } from "@/components/_modal";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
+import { useRouter } from "next/router";
 
 const CONTEXT = "profile";
-const MENUITEMS = ["loansAndReservations", "orderHistory", "myLibraries"];
+const MENUITEMS = [
+  "loansAndReservations",
+  "bookmarks",
+  "myLibraries",
+  "orderHistory",
+];
+
+/* Whitelist menuitems accessable without login */
+const WHITELIST = ["/profil/huskeliste"];
 
 /**
  * ProfileLayout to use in /profil subpages
