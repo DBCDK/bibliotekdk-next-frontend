@@ -99,7 +99,7 @@ describe("Search => storybook", () => {
     cy.get("[data-cy=result-row]")
       .should("exist")
       .should("have.attr", "data-cy", "result-row")
-      .tab()
+      .tabs(5)
       .should("have.attr", "data-cy", "result-row")
       .tabs(2)
       .focused()

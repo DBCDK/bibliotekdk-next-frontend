@@ -23,6 +23,7 @@ import { useModal } from "@/components/_modal";
 import LoginIcon from "./icons/login";
 import BurgerIcon from "./icons/burger";
 import SearchIcon from "./icons/search";
+// import BookmarkIcon from "./icons/bookmark"; TODO Use for bookmark header item
 import ExpandedSearch from "./expandedsearch/ExpandedSearch";
 import useUser from "../hooks/useUser";
 
@@ -125,6 +126,15 @@ export function Header({
       icon: LoginIcon,
       onClick: handleOnClick,
     },
+    /**
+     *  @TODO Reintroduce when bookmarks are ready
+     */
+
+    /*{
+      label: "bookmark",
+      icon: BookmarkIcon,
+      onClick: () => router.push("/profil/huskeliste"),
+    },*/
 
     {
       label: "menu",
