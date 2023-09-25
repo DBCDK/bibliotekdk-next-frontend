@@ -59,7 +59,7 @@ function ColumnOne({ workId, manifestation }) {
           })}
     </Tooltip>
   );
-
+console.log('manifestation',manifestation)
   function onClickCopyLink(event) {
     event.preventDefault();
     setCheckMarkActive(true);
@@ -99,6 +99,7 @@ function ColumnOne({ workId, manifestation }) {
           workId={manifestation.pid}
           materialTypes={[[manifestation?.materialTypes?.[0]?.specific]]}
           size={{ w: 4, h: 4 }}
+          title={manifestation?.titles?.full[0]}
         />
       </div>
 

@@ -5,6 +5,7 @@
  */
 
 export function addBookmarks({ bookmarks }) {
+  console.log('addBookmarks.bookmarks',bookmarks)
   return {
     query: `
     mutation addBookmarks($bookmarks: [BookMarkInput!]!) {
