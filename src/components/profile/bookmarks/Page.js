@@ -16,23 +16,23 @@ import List from "@/components/base/forms/list";
 
 const CONTEXT = "bookmark";
 const MENUITEMS = ["Bestil flere", "Hent referencer", "Fjern flere"];
-const sortByItems = [
+const orderByItems = [
   { label: "latestAdded", key: "createdAt" },
   { label: "alphabeticalOrder", key: "title" },
 ];
 const BookmarkPage = () => {
-  const { bookmarks: bookmarksData, setSortBy } = useBookmarks();
+  const { bookmarks: bookmarksData, setOrderBy } = useBookmarks();
   const { data } = usePopulateBookmarks(bookmarksData);
   const [activeStickyButton, setActiveStickyButton] = useState(null);
   const bookmarks = data?.works.filter((n) => n);
   const breakpoint = useBreakpoint();
-  const [sortByValue, setSortByValue] = useState(sortByItems[0].key);
+  const [orderByValue, setOrderByValue] = useState(orderByItems[0].key);
   const isMobile = breakpoint === "sm" || breakpoint === "xs";
   const [checkboxList, setCheckboxList] = useState();
 
   useEffect(() => {
-    setSortBy(sortByValue);
-  }, [sortByValue]);
+    setOrderBy(orderByValue);
+  }, [orderByValue]);
   useEffect(() => {
     const bookmarks = data?.works.filter((n) => n); // Fix so long we can recieve null from populate
     setCheckboxList(
@@ -100,12 +100,12 @@ const BookmarkPage = () => {
         </Text>
         <div>
           <List.Group className={styles.sortingContainer}>
-            {sortByItems.map(({ label, key }) => (
+            {orderByItems.map(({ label, key }) => (
               <List.Radio
                 className={styles.sortingItem}
                 key={key}
-                selected={sortByValue === key}
-                onSelect={() => setSortByValue(key)}
+                selected={orderByValue === key}
+                onSelect={() => setOrderByValue(key)}
                 label={key}
               >
                 <Text>{Translate({ context: "profile", label: label })}</Text>

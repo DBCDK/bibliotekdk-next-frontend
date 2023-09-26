@@ -1,9 +1,9 @@
-export const fetchAll = ({ sortBy }) => {
+export const fetchAll = ({ orderBy }) => {
   return {
     query: `
     query userBookmarks {
       user {
-         bookmarks(orderBy:${sortBy}) {
+         bookmarks(orderBy:${orderBy}) {
           result {
             bookmarkId
             materialType

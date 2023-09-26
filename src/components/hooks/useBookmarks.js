@@ -28,7 +28,7 @@ export const BookmarkSyncProvider = () => {
 
 const useBookmarksCore = ({ isMock = false, session }) => {
   const isAuthenticated = isMock ? false : !!session?.user?.uniqueId;
-  const [sortBy, setSortBy] = useState("createdAt");
+  const [orderBy, setOrderBy] = useState("createdAt");
 
   let {
     data: localBookmarks,
@@ -40,7 +40,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     isLoading: isLoadingGlobalBookmarks,
     error: globalBookmarksError,
     mutate: mutateGlobalBookmarks,
-  } = useData(isAuthenticated && bookmarkFragments.fetchAll({ sortBy }));
+  } = useData(isAuthenticated && bookmarkFragments.fetchAll({ orderBy }));
   const bookmarkMutation = useMutate();
   const globalBookmarks =
     globalBookmarksUserObject?.user?.bookmarks?.result?.map((bookmark) => ({
@@ -75,7 +75,6 @@ const useBookmarksCore = ({ isMock = false, session }) => {
    * Set a value in bookmark list
    */
   const setBookmark = async (value) => {
-
     if (isAuthenticated) {
       /**
        * API solution
@@ -137,7 +136,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
       (typeof localBookmarks === "undefined" && !error) ||
       (isLoadingGlobalBookmarks && !globalBookmarksError),
     syncCookieBookmarks,
-    setSortBy,
+    setOrderBy,
   };
 };
 
