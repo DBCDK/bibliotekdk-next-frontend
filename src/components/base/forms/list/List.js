@@ -34,7 +34,6 @@ function Radio({
   selected,
   _ref,
   className,
-  reversed,
   ...props
 }) {
   return (

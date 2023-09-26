@@ -17,8 +17,8 @@ import List from "@/components/base/forms/list";
 const CONTEXT = "bookmark";
 const MENUITEMS = ["Bestil flere", "Hent referencer", "Fjern flere"];
 const sortByItems = [
-  { label: "latestAdded", key: "title" },
-  { label: "alphabeticalOrder", key: "createdAt" },
+  { label: "latestAdded", key: "createdAt" },
+  { label: "alphabeticalOrder", key: "title" },
 ];
 const BookmarkPage = () => {
   const { bookmarks: bookmarksData, setSortBy } = useBookmarks();
@@ -26,7 +26,7 @@ const BookmarkPage = () => {
   const [activeStickyButton, setActiveStickyButton] = useState(null);
   const bookmarks = data?.works.filter((n) => n);
   const breakpoint = useBreakpoint();
-  const [sortByValue, setSortByValue] = useState("createdAt");
+  const [sortByValue, setSortByValue] = useState(sortByItems[0].key);
   const isMobile = breakpoint === "sm" || breakpoint === "xs";
   const [checkboxList, setCheckboxList] = useState();
 
