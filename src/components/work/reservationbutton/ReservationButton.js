@@ -135,7 +135,7 @@ export const ReservationButton = ({
   singleManifestation,
   allEnrichedAccesses, //TODO same as access?
   workId,
-  overrideButtonText= null,
+  overrideButtonText = null,
 }) => {
   const modal = useModal();
 
