@@ -59,7 +59,7 @@ function ColumnOne({ workId, manifestation }) {
           })}
     </Tooltip>
   );
-console.log('manifestation',manifestation)
+  console.log("manifestation", manifestation);
   function onClickCopyLink(event) {
     event.preventDefault();
     setCheckMarkActive(true);

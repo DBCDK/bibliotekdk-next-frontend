@@ -14,10 +14,10 @@ export function BookMarkMaterialSelector({
   workId,
   size = { w: 7, h: 7 },
   className,
-  title
+  title,
 }) {
   const bookmarkClick = () => {};
-console.log('BookMarkMaterialSelector.title',title)
+  console.log("BookMarkMaterialSelector.title", title);
   const { bookmarks, setBookmark, isLoading } = useBookmarks();
 
   const onSelect = (material, workId) => {
@@ -25,7 +25,7 @@ console.log('BookMarkMaterialSelector.title',title)
       key: workId + material,
       materialId: workId,
       materialType: material[0],
-      title
+      title,
     };
     setBookmark(item);
   };
@@ -124,7 +124,13 @@ console.log('BookMarkMaterialSelector.title',title)
   );
 }
 
-export default function wrapper({ materialTypes, workId, title, size, className }) {
+export default function wrapper({
+  materialTypes,
+  workId,
+  title,
+  size,
+  className,
+}) {
   return (
     <BookMarkMaterialSelector
       materialTypes={materialTypes}

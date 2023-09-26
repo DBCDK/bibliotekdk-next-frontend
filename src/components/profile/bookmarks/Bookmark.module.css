@@ -1,6 +1,7 @@
 .sortingRow {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
 }
 
 .smallLabel {
@@ -68,14 +69,15 @@
     display: block;
   }
   .sortingRow {
-flex-direction: column;
+    flex-direction: column;
   }
 }
 
-.sortingContainer{
+.sortingContainer {
   display: flex;
 }
 
-.sortingItem, .sortingItem:first-child{
-border: none;
+.sortingItem,
+.sortingItem:first-child {
+  border: none;
 }
