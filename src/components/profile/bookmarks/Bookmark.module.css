@@ -67,4 +67,15 @@
   .dropdownWrapper {
     display: block;
   }
+  .sortingRow {
+flex-direction: column;
+  }
+}
+
+.sortingContainer{
+  display: flex;
+}
+
+.sortingItem, .sortingItem:first-child{
+border: none;
 }

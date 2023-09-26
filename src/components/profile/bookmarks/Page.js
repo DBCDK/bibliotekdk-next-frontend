@@ -12,19 +12,27 @@ import ProfileLayout from "../profileLayout/ProfileLayout";
 import Translate from "@/components/base/translate";
 import MenuDropdown from "@/components/base/dropdown/menuDropdown/MenuDropdown";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import List from "@/components/base/forms/list";
 
 const CONTEXT = "bookmark";
 const MENUITEMS = ["Bestil flere", "Hent referencer", "Fjern flere"];
-
+const sortByItems = [
+  { label: "latestAdded", key: "title" },
+  { label: "alphabeticalOrder", key: "createdAt" },
+];
 const BookmarkPage = () => {
-  const { bookmarks: bookmarksData } = useBookmarks();
+  const { bookmarks: bookmarksData, setSortBy } = useBookmarks();
   const { data } = usePopulateBookmarks(bookmarksData);
   const [activeStickyButton, setActiveStickyButton] = useState(null);
   const bookmarks = data?.works.filter((n) => n);
   const breakpoint = useBreakpoint();
+  const [sortByValue, setSortByValue] = useState("createdAt");
   const isMobile = breakpoint === "sm" || breakpoint === "xs";
   const [checkboxList, setCheckboxList] = useState();
 
+  useEffect(() => {
+    setSortBy(sortByValue);
+  }, [sortByValue]);
   useEffect(() => {
     const bookmarks = data?.works.filter((n) => n); // Fix so long we can recieve null from populate
     setCheckboxList(
@@ -90,7 +98,21 @@ const BookmarkPage = () => {
             label: "result-amount",
           })}
         </Text>
-        <div>{/* Sorting options here */}</div>
+        <div>
+          <List.Group className={styles.sortingContainer}>
+            {sortByItems.map(({ label, key }) => (
+              <List.Radio
+                className={styles.sortingItem}
+                key={key}
+                selected={sortByValue === key}
+                onSelect={() => setSortByValue(key)}
+                label={key}
+              >
+                <Text>{Translate({ context: "profile", label: label })}</Text>
+              </List.Radio>
+            ))}
+          </List.Group>
+        </div>
       </div>
 
       <div className={styles.buttonControls}>

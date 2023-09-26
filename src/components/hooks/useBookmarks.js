@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import * as workFragments from "@/lib/api/work.fragments";
 import { useData, useMutate } from "@/lib/api/api";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import * as bookmarkMutations from "@/lib/api/bookmarks.mutations";
 import * as bookmarkFragments from "@/lib/api/bookmarks.fragments";
 import { useSession } from "next-auth/react";
@@ -28,6 +28,7 @@ export const BookmarkSyncProvider = () => {
 
 const useBookmarksCore = ({ isMock = false, session }) => {
   const isAuthenticated = isMock ? false : !!session?.user?.uniqueId;
+  const [sortBy,setSortBy] = useState("createdAt") 
 
   let {
     data: localBookmarks,
@@ -39,7 +40,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     isLoading: isLoadingGlobalBookmarks,
     error: globalBookmarksError,
     mutate: mutateGlobalBookmarks,
-  } = useData(isAuthenticated && bookmarkFragments.fetchAll());
+  } = useData(isAuthenticated && bookmarkFragments.fetchAll({sortBy}));
   const bookmarkMutation = useMutate();
   const globalBookmarks =
     globalBookmarksUserObject?.user?.bookmarks?.result?.map((bookmark) => ({
@@ -136,6 +137,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
       (typeof localBookmarks === "undefined" && !error) ||
       (isLoadingGlobalBookmarks && !globalBookmarksError),
     syncCookieBookmarks,
+    setSortBy 
   };
 };
 

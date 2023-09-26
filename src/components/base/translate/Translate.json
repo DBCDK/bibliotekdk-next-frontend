@@ -3421,6 +3421,14 @@
       "unknowMaterial": {
         "da": "Kendes ikke. Spørg biblioteket.",
         "en": "Unkonwn. Ask at the library."
+      },
+      "latestAdded":{
+        "da": "Senest tilføjet",
+        "en": "Latest added"
+      },
+      "alphabeticalOrder":{
+        "da": "Alfabetisk- titel",
+        "en": "AlphabeticalOrder - title"
       }
     },
     "receipt": {
