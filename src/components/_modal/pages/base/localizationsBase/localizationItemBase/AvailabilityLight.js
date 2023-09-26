@@ -1,9 +1,5 @@
 import { getFirstMatch } from "@/lib/utils";
 import { AvailabilityEnum } from "@/components/hooks/useHandleAgencyAccessData";
-import StatusNoHoldings from "@/public/icons/status__no_holdings.svg";
-import StatusOnShelf from "@/public/icons/status__on_shelf.svg";
-import StatusOnLoan from "@/public/icons/status__on_loan.svg";
-import StatusNotForLoan from "@/public/icons/status__not_for_loan.svg";
 import Icon from "@/components/base/icon";
 import Translate from "@/components/base/translate";
 import * as PropTypes from "prop-types";
@@ -18,31 +14,81 @@ import * as PropTypes from "prop-types";
 export function AvailabilityLight({
   availabilityAccumulated,
   pickupAllowed,
-  style = { paddingTop: "var(--pt075)" },
+  style = { paddingTop: "var(--pt05)" },
 }) {
-  const IconInstance = getFirstMatch(true, StatusNoHoldings, [
+  const iconInstance = getFirstMatch(
+    true,
+    {
+      src: "status__no_holdings.svg",
+      alt: Translate({
+        context: "localizations",
+        label: "status_is_unknown_alt",
+      }),
+    },
     [
-      typeof pickupAllowed !== "undefined" && pickupAllowed === false,
-      StatusNotForLoan,
-    ],
-    [availabilityAccumulated === AvailabilityEnum.NOW, StatusOnShelf],
-    [availabilityAccumulated === AvailabilityEnum.LATER, StatusOnLoan],
-    [availabilityAccumulated === AvailabilityEnum.NEVER, StatusNotForLoan],
-    [availabilityAccumulated === AvailabilityEnum.UNKNOWN, StatusNoHoldings],
-  ]);
-
+      [
+        typeof pickupAllowed !== "undefined" && pickupAllowed === false,
+        {
+          src: "status__not_for_loan.svg",
+          alt: Translate({
+            context: "localizations",
+            label: "no_pickup_on_library_alt",
+          }),
+        },
+      ],
+      [
+        availabilityAccumulated === AvailabilityEnum.NOW,
+        {
+          src: "status__on_shelf.svg",
+          alt: Translate({
+            context: "localizations",
+            label: "on_shelf_in_library_alt",
+          }),
+        },
+      ],
+      [
+        availabilityAccumulated === AvailabilityEnum.LATER,
+        {
+          src: "status__on_loan.svg",
+          alt: Translate({
+            context: "localizations",
+            label: "on_loan_in_library_alt",
+          }),
+        },
+      ],
+      [
+        availabilityAccumulated === AvailabilityEnum.NEVER,
+        {
+          src: "status__not_for_loan.svg",
+          alt: Translate({
+            context: "localizations",
+            label: "no_pickup_on_library_alt",
+          }),
+        },
+      ],
+      [
+        availabilityAccumulated === AvailabilityEnum.UNKNOWN,
+        {
+          src: "status__no_holdings.svg",
+          alt: Translate({
+            context: "localizations",
+            label: "status_is_unknown_alt",
+          }),
+        },
+      ],
+    ]
+  );
   return (
     <Icon
       size={{ w: 2, h: 2 }}
-      alt=""
+      alt={iconInstance.alt}
       title={Translate({
         context: "localizations",
         label: `AvailabilityEnum_${availabilityAccumulated}`,
       })}
       style={style}
-    >
-      <IconInstance />
-    </Icon>
+      src={iconInstance.src}
+    />
   );
 }
 

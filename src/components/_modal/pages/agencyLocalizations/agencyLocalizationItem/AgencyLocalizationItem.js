@@ -1,5 +1,3 @@
-import cx from "classnames";
-import styles from "./AgencyLocalizationItem.module.css";
 import Text from "@/components/base/text/Text";
 import LocalizationItemBase from "@/components/_modal/pages/base/localizationsBase/localizationItemBase/LocalizationItemBase";
 import {
@@ -12,9 +10,8 @@ import Translate from "@/components/base/translate";
 import { getLibraryType, LibraryTypeEnum } from "@/lib/utils";
 
 const textProps = {
-  className: cx(styles.text),
   clamp: true,
-  lines: 2,
+  lines: 1,
 };
 
 function DefaultShowingOfAgency({ agency }) {
@@ -71,7 +68,7 @@ function QueriedShowingOfAgency({ agency }) {
     })
     ?.map((branch, index) => {
       return (
-        <Text key={index}>
+        <Text {...textProps} key={index}>
           {branch.branchName}
           {branch.postalCode && ", "}
           {branch.postalCode}
@@ -139,13 +136,9 @@ export default function AgencyLocalizationItem({
       availabilityAccumulated={agency?.availabilityAccumulated}
     >
       {agencyHighlight ? (
-        <Text className={styles.text} type={"text2"}>
-          {highlightMarkedWords(agencyHighlight)}
-        </Text>
+        <Text type={"text2"}>{highlightMarkedWords(agencyHighlight)}</Text>
       ) : (
-        <Text {...textProps} type="text2">
-          {agency?.agencyName}
-        </Text>
+        <Text type="text2">{agency?.agencyName}</Text>
       )}
       {agency?.pickupAllowed === false ? (
         <Text>

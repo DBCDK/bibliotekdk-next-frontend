@@ -675,6 +675,22 @@
         "da": "Status kendes ikke",
         "en": "Status is unknown"
       },
+      "status_is_unknown_alt": {
+        "da": "Gråt lys som viser at status for materialet ikke kendes her",
+        "en": "Grey light shows that status for the material is unknown here"
+      },
+      "no_pickup_on_library_alt": {
+        "da": "Rødt lys viser at materialet ikke kan hentes her",
+        "en": "Red light shows that the material can't be picked up here"
+      },
+      "on_shelf_in_library_alt": {
+        "da": "Grønt lys viser at materialet findes på hylden her",
+        "en": "Green light shows that the materiale in on shelf here"
+      },
+      "on_loan_in_library_alt": {
+        "da": "Gult lys viser at materialet er udlånt herfra",
+        "en": "Yellow light shows that the material is on loan from here"
+      },
       "agency_status_only_home_at_one_or_more": {
         "da": "Er hjemme på en eller flere afdelinger, men vi har ikke detaljer om hvilke afdelinger",
         "en": "Is on the shelf at one or more branches, but we are missing the details on branches"

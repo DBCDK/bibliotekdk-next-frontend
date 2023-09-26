@@ -226,7 +226,7 @@ export function branchByBranchId({ branchId, pids, limit = 20, q = "" }) {
 /**
  * Branches in agencies
  */
-export function branchesByQuery({ q, pids, limit = 20 }) {
+export function branchesByQuery({ q, pids, limit = 50 }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `

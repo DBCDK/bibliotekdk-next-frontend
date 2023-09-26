@@ -74,21 +74,17 @@ function MessageWhenMaterialsAvailableLater({ library }) {
 }
 function MessageWhenMaterialsAvailableNever() {
   return (
-    <>
-      <Text type="text2">
-        {Translate({ context: "localizations", label: "not_for_loan" })}
-      </Text>
-    </>
+    <Text type="text2">
+      {Translate({ context: "localizations", label: "not_for_loan" })}
+    </Text>
   );
 }
 
 function MessageWhenMaterialsAvailableUnknown() {
   return (
-    <>
-      <Text type="text2">
-        {Translate({ context: "localizations", label: "status_is_unknown" })}
-      </Text>
-    </>
+    <Text type="text2">
+      {Translate({ context: "localizations", label: "status_is_unknown" })}
+    </Text>
   );
 }
 

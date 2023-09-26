@@ -29,13 +29,13 @@ import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtil
 function LocalizationsBase({
   children,
   context,
-  subtitle = null,
+  subtitle,
   pids = [],
   materialCardTemplate = (material) =>
     templateForLocalizations(material, pids.length === 1),
-  subheader = null,
-  query = null,
-  setQuery = null,
+  subheader,
+  query,
+  setQuery,
 }) {
   const { modal } = context;
 

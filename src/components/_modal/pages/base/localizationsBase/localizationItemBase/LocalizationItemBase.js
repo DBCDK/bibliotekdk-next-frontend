@@ -24,7 +24,6 @@ export default function LocalizationItemBase({
   return (
     <div className={cx(styles.container)}>
       <Link
-        a={true}
         border={{ top: { keepVisible: true }, bottom: { keepVisible: true } }}
         className={cx(styles.wrapper)}
         onClick={modalPush}
