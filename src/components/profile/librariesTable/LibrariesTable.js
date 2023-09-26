@@ -4,6 +4,7 @@ import IconButton from "@/components/base/iconButton/IconButton";
 import styles from "./LibrariesTable.module.css";
 import Title from "@/components/base/title";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import { isPublicLibrary } from "@/lib/utils";
 
 /**
  * Tablerow to be used in LibrariesTable component.
@@ -153,16 +154,3 @@ export default function LibrariesTable({ data, municipalityAgencyId }) {
     </table>
   );
 }
-
-/**
- *
- * @param {*} agencyID
- * @returns returns true if public library (Folkebibliotek)
- */
-const isPublicLibrary = (agencyID) => {
-  const faroeIslandsLibraries = ["900455", "911116", "911130"];
-  const parsedID = agencyID + "";
-  return (
-    parsedID?.charAt(0) === "7" || faroeIslandsLibraries.includes(parsedID)
-  );
-};

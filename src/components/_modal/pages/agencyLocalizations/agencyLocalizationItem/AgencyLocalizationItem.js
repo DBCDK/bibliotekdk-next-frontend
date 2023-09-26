@@ -1,0 +1,160 @@
+import Text from "@/components/base/text/Text";
+import LocalizationItemBase from "@/components/_modal/pages/base/localizationsBase/localizationItemBase/LocalizationItemBase";
+import {
+  useSingleAgency,
+  AvailabilityEnum,
+} from "@/components/hooks/useHandleAgencyAccessData";
+import isEmpty from "lodash/isEmpty";
+import { highlightMarkedWords } from "@/components/_modal/utils";
+import Translate from "@/components/base/translate";
+import { getLibraryType, LibraryTypeEnum } from "@/lib/utils";
+
+const textProps = {
+  clamp: true,
+  lines: 1,
+};
+
+function DefaultShowingOfAgency({ agency }) {
+  const numberOfBranchesWithAvailable = agency?.branches?.filter(
+    (branch) => branch?.availabilityAccumulated === AvailabilityEnum.NOW
+  ).length;
+
+  const publicLibrary = getLibraryType(agency?.agencyId);
+
+  return (
+    <>
+      <Text {...textProps}>
+        {Translate({
+          context: "localizations",
+          label:
+            numberOfBranchesWithAvailable > 1
+              ? "home_at_branches"
+              : "home_at_1_branch",
+          vars: [numberOfBranchesWithAvailable],
+        })}
+        {" " +
+          Translate({
+            context: "localizations",
+            label:
+              LibraryTypeEnum.DANISH_PUBLIC_LIBRARY !== publicLibrary
+                ? "or_more_branches"
+                : numberOfBranchesWithAvailable > 1
+                ? "branches"
+                : "branch",
+          })}
+      </Text>
+    </>
+  );
+}
+function QueriedShowingOfAgency({ agency }) {
+  const branchesWithHighlights = agency?.branches
+    .map((branch) => {
+      const branchName = branch?.highlights.find(
+        (highlight) => highlight.key === "name"
+      )?.value;
+      const postalCode = branch?.highlights.find(
+        (highlight) => highlight.key === "postalCode"
+      )?.value;
+      const city = branch?.highlights.find(
+        (highlight) => highlight.key === "city"
+      )?.value;
+      return {
+        branchName: branchName
+          ? highlightMarkedWords(branchName)
+          : branch.branchName,
+        postalCode: postalCode ? highlightMarkedWords(postalCode) : null,
+        city: city ? highlightMarkedWords(city) : null,
+      };
+    })
+    ?.map((branch, index) => {
+      return (
+        <Text {...textProps} key={index}>
+          {branch.branchName}
+          {branch.postalCode && ", "}
+          {branch.postalCode}
+          {branch.city && ", "}
+          {branch.city}
+        </Text>
+      );
+    });
+
+  return branchesWithHighlights?.length > 4 ? (
+    <>
+      {branchesWithHighlights?.slice(0, 3)}
+      <Text>
+        {Translate({
+          context: "localizations",
+          label: "additional_branches_available",
+          vars: [branchesWithHighlights?.slice(3)?.length],
+        })}
+      </Text>
+    </>
+  ) : (
+    <>{branchesWithHighlights}</>
+  );
+}
+
+export default function AgencyLocalizationItem({
+  context,
+  modal,
+  agencyId,
+  localizationsIsLoading,
+  pids,
+  query,
+}) {
+  const { agenciesFlatSorted, agenciesIsLoading: singleAgencyIsLoading } =
+    useSingleAgency(
+      agencyId &&
+        pids && {
+          pids: pids,
+          agencyId: agencyId,
+          query: query,
+        }
+    );
+
+  const agency = agenciesFlatSorted?.[0];
+
+  const agencyHighlight = agency?.branches?.[0]?.highlights?.find(
+    (highlight) => highlight.key === "agencyName"
+  )?.value;
+
+  const isLoading = localizationsIsLoading || singleAgencyIsLoading;
+
+  return (
+    <LocalizationItemBase
+      library={agency}
+      query={query}
+      itemLoading={isLoading}
+      modalPush={() =>
+        modal.push("branchLocalizations", {
+          ...context,
+          title: agency?.agencyName,
+          pids: pids,
+          agencyId: agencyId,
+        })
+      }
+      availabilityAccumulated={agency?.availabilityAccumulated}
+    >
+      {agencyHighlight ? (
+        <Text type={"text2"}>{highlightMarkedWords(agencyHighlight)}</Text>
+      ) : (
+        <Text type="text2">{agency?.agencyName}</Text>
+      )}
+      {agency?.pickupAllowed === false ? (
+        <Text>
+          {Translate({
+            context: "localizations",
+            label: "no_pickup_allowed_on_any_branch_in_agency",
+          })}
+        </Text>
+      ) : (
+        <>
+          {isEmpty(query) && <DefaultShowingOfAgency agency={agency} />}
+          {!isEmpty(query) && !agencyHighlight && (
+            <QueriedShowingOfAgency agency={agency} />
+          )}
+        </>
+      )}
+    </LocalizationItemBase>
+  );
+}

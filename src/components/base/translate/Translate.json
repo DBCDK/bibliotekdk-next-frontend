@@ -614,6 +614,148 @@
         "en": "Copy link"
       }
     },
+    "localizations": {
+      "reminder_can_be_ordered_from_anywhere": {
+        "da": "Husk at du kan bestille online og hente på dit foretrukne bibliotek, uanset hvor materialet befinder sig.",
+        "en": "Remember that you can order online and pickup in your preferred library, regardless of where the material is located."
+      },
+      "on_shelf": {
+        "da": "På hylden",
+        "en": "On shelf"
+      },
+      "no_match_for_library_search_1": {
+        "da": "Ingen biblioteker matcher din søgning.",
+        "en": "No libraries match your search query."
+      },
+      "no_match_for_library_search_2": {
+        "da": "Se status for dit foretrukne bibliotek ved at søge på navn, postnr. eller by.",
+        "en": "To see the status of your preferred library search by branch name, postal code, or city."
+      },
+      "order_to_here": {
+        "da": "Bestil til afhentning på denne afdeling",
+        "en": "Order to pickup on this branch"
+      },
+      "obs_not_orders_to_here": {
+        "da": "OBS: Biblioteket modtager ikke bestillinger fra bibliotek.dk.",
+        "en": "Note that the library does not accept orders from bibliotek.dk "
+      },
+      "additional_branches_available": {
+        "da": "+ %s afdelinger mere",
+        "en": "+ %s additional branches"
+      },
+      "no_pickup_allowed_on_branch": {
+        "da": "Ingen afhentning på afdelingen",
+        "en": "No pickup allowed on the branch"
+      },
+      "no_pickup_allowed_on_any_branch_in_agency": {
+        "da": "Ingen afhentning på afdelingerne",
+        "en": "No pickup allowed on any branch"
+      },
+      "home_at_1_branch": {
+        "da": "Hjemme på én",
+        "en": "Available at one"
+      },
+      "home_at_branches": {
+        "da": "Hjemme på %s",
+        "en": "Available at %s"
+      },
+      "order_now_pickup_at_date": {
+        "da": "Bestil nu og afhent fra d. %s",
+        "en": "Order now and pickup from the %s"
+      },
+      "order_now_pickup_at_some_point": {
+        "da": "Bestil nu og afhent senere",
+        "en": "Order now and pickup later"
+      },
+      "not_for_loan": {
+        "da": "Udlånes ikke",
+        "en": "Not for loan"
+      },
+      "status_is_unknown": {
+        "da": "Status kendes ikke",
+        "en": "Status is unknown"
+      },
+      "status_is_unknown_alt": {
+        "da": "Gråt lys som viser at status for materialet ikke kendes her",
+        "en": "Grey light shows that status for the material is unknown here"
+      },
+      "no_pickup_on_library_alt": {
+        "da": "Rødt lys viser at materialet ikke kan hentes her",
+        "en": "Red light shows that the material can't be picked up here"
+      },
+      "on_shelf_in_library_alt": {
+        "da": "Grønt lys viser at materialet findes på hylden her",
+        "en": "Green light shows that the materiale in on shelf here"
+      },
+      "on_loan_in_library_alt": {
+        "da": "Gult lys viser at materialet er udlånt herfra",
+        "en": "Yellow light shows that the material is on loan from here"
+      },
+      "agency_status_only_home_at_one_or_more": {
+        "da": "Er hjemme på en eller flere afdelinger, men vi har ikke detaljer om hvilke afdelinger",
+        "en": "Is on the shelf at one or more branches, but we are missing the details on branches"
+      },
+      "agency_status_only_loan_later_possible": {
+        "da": "Er udlånt på en eller flere afdelinger, men vi har ikke detaljer om hvilke afdelinger",
+        "en": "Is on loan at one or more branches, but we are missing the details on branches"
+      },
+      "agency_status_pickup_not_allowed": {
+        "da": "Udlånes ikke fra afdelingerne. Men måske man kan bruge materialet på lokationen",
+        "en": "Not for loan on any of the branches. However, the material might be available on site"
+      },
+      "no_status_about_the_following": {
+        "da": "Vi har ikke status for disse afdelinger",
+        "en": "We have no status on these branches"
+      },
+      "see_detailed_status": {
+        "da": "Se detaljeret status hos %s",
+        "en": "See detailed status at %s"
+      },
+      "about_the_branch": {
+        "da": "Om afdelingen",
+        "en": "About the branch"
+      },
+      "no_information_about_opening_hours": {
+        "da": "Information om afdelings åbningstider mangler",
+        "en": "Information about the opening hours of the branch is missing"
+      },
+      "see_opening_hours_of_the_library": {
+        "da": "Se bibliotekets åbningstider",
+        "en": "See the opening hours of the library"
+      },
+      "no_address_information": {
+        "da": "Information om afdelings adresse mangler",
+        "en": "Information about the branch address is missing"
+      },
+      "see_in_google_maps": {
+        "da": "Se i Google Maps",
+        "en": "See in Google Maps"
+      },
+      "no_contact_information": {
+        "da": "Kontaktinformation for afdeling mangler",
+        "en": "Contact information of the branch is missing"
+      },
+      "phone": {
+        "da": "Telefon",
+        "en": "Phone"
+      },
+      "email": {
+        "da": "E-mail",
+        "en": "E-mail"
+      },
+      "branch": {
+        "da": "afdeling",
+        "en": "branch"
+      },
+      "branches": {
+        "da": "afdelinger",
+        "en": "branches"
+      },
+      "or_more_branches": {
+        "da": "eller flere afdelinger",
+        "en": "or more branches"
+      }
+    },
     "manifestation_content": {
       "contents": {
         "da": "Indhold",
@@ -786,6 +928,10 @@
       "all-options-link": {
         "da": "Alle bestillingsmuligheder (%s)",
         "en": "All order options (%s)"
+      },
+      "all-editions": {
+        "da": "alle udgaver",
+        "en": "all editions"
       }
     },
     "details": {
@@ -1748,6 +1894,10 @@
       "title-search": {
         "da": "Flere søgemuligheder",
         "en": "Label: mangler oversættelse"
+      },
+      "title-agencylocalizations": {
+        "da": "Se hvor materialet er på hylden",
+        "en": "See where the material is on shelf"
       }
     },
     "options": {

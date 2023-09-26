@@ -211,3 +211,23 @@ export function handleSubmitOrder(
     })
   );
 }
+
+export function highlightMarkedWords(highlight) {
+  const regexed = highlight?.split(/(<mark>(?:.*?)<\/mark>)/g).map((el) => {
+    if (el.startsWith("<mark>") && el.endsWith("</mark>")) {
+      return (
+        <span key={JSON.stringify(el)} style={{ fontWeight: 700 }}>
+          {el.replace("<mark>", "").replace("</mark>", "")}
+        </span>
+      );
+    } else {
+      return <>{el}</>;
+    }
+  });
+
+  return <span>{regexed}</span>;
+}
+
+export function escapeColons(phrase) {
+  return phrase.replace(":", "%3A");
+}

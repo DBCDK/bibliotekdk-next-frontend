@@ -6,6 +6,10 @@
   width: 75%;
 }
 
+.col_flex__localizations_version {
+  background: var(--concrete);
+}
+
 @media (min-width: 364px) {
   .col_flex__vertical_version {
     width: 45%;
@@ -41,6 +45,12 @@
   gap: var(--pt1);
 }
 
+.related_element__localization_version {
+  padding: 0;
+  padding-inline: var(--pt6);
+  padding-block: var(--pt2);
+}
+
 .cover {
   object-fit: contain;
   object-position: 50% 0;
@@ -52,4 +62,8 @@
   width: 95%;
   object-position: 50% 100%;
   height: calc(var(--pt16) * 2);
+}
+
+.cover__localizations_version {
+  width: var(--pt8);
 }

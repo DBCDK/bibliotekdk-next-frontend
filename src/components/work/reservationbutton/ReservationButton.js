@@ -48,6 +48,7 @@ function ReservationButtonWrapper({
   singleManifestation = false,
   buttonType = "primary",
   size = "large",
+  overrideButtonText = null,
   className,
 }) {
   const user = useUser();
@@ -104,6 +105,7 @@ function ReservationButtonWrapper({
       singleManifestation={singleManifestation}
       allEnrichedAccesses={allEnrichedAccesses}
       workId={workId}
+      overrideButtonText={overrideButtonText}
     />
   );
 }
@@ -118,6 +120,10 @@ export default ReservationButtonWrapper;
  * @param {string} buttonType
  * @param {string} size
  * @param {[string]} pids
+ * @param singleManifestation
+ * @param allEnrichedAccesses
+ * @param workId
+ * @param overrideButtonText
  * @returns {JSX.Element}
  */
 export const ReservationButton = ({
@@ -129,6 +135,7 @@ export const ReservationButton = ({
   singleManifestation,
   allEnrichedAccesses, //TODO same as access?
   workId,
+  overrideButtonText = null,
 }) => {
   const modal = useModal();
 
@@ -246,7 +253,7 @@ export const ReservationButton = ({
     <div className={styles.wrapper}>
       <TextAboveButton access={access} user={user} />
       <Button type={buttonType} size={size} {...props}>
-        {text}
+        {overrideButtonText ?? text}
       </Button>
     </div>
   );

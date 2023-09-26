@@ -1,0 +1,54 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+/* .top is passed as className prop to Top component */
+.top {
+  padding-top: var(--pt3);
+  padding-bottom: var(--pt3);
+}
+
+@media (min-width: 576px) {
+  .top {
+    padding-top: var(--pt5);
+    padding-bottom: var(--pt3);
+  }
+}
+
+.padding_inline {
+  padding-inline: var(--pt2);
+}
+
+@media (min-width: 576px) {
+  .padding_inline {
+    padding-inline: var(--pt6);
+  }
+}
+
+.subheader_text {
+  padding-top: var(--pt1);
+  padding-bottom: var(--pt5);
+}
+
+.search_bar {
+  padding-bottom: var(--pt2);
+}
+
+.agency_list {
+  display: flex;
+  flex-direction: column;
+}
+
+.branch_details {
+  display: flex;
+  flex-direction: column;
+}
+
+.highlighted_area {
+  margin-top: var(--pt5);
+}
+
+.padding_block {
+  padding-block: var(--pt3);
+}
