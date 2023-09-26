@@ -5,9 +5,10 @@ import Text from "@/components/base/text";
 import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
 import { useModal } from "@/components/_modal";
-import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
+import { LOGIN_MODE } from "@/components/_modal/pages/login/utils";
 import { IconLink } from "@/components/base/iconlink/IconLink";
 import ChevronRight from "@/public/icons/chevron_right.svg";
+import cx from "classnames";
 
 function LocalizationInformation({
   availableAsDigitalCopy,
@@ -44,6 +45,10 @@ function LocalizationInformation({
             tag={"button"}
             iconSrc={ChevronRight}
             iconPlacement={"right"}
+            className={cx(styles.iconLink, {
+              [styles.disabled]: isLoadingBranches,
+            })}
+            skeleton={isLoadingBranches}
           >
             <Text tag="span" type="text3" className={styles.fullLink}>
               {Translate({
@@ -143,7 +148,9 @@ export default function Wrap({ context }) {
         !isLoadingBranches &&
           modal.push("pickup", {
             pid,
-            initial: { agency: pickupBranchUser?.agency },
+            initial: {
+              agencies: pickupBranchUser?.agencies,
+            },
             requireDigitalAccess,
             mode: isDigitalCopy
               ? LOGIN_MODE.SUBSCRIPTION

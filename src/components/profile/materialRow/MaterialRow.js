@@ -205,9 +205,9 @@ const DynamicColumn = ({ className, ...props }) => (
 );
 
 /* Use as section header to describe the content of the columns */
-export const MaterialHeaderRow = ({ column1, column2, column3 }) => {
+export const MaterialHeaderRow = ({ column1, column2, column3, className }) => {
   return (
-    <div className={styles.materialHeaderRow}>
+    <div className={`${styles.materialHeaderRow} ${className}`}>
       <div>
         <Text type="text3">{column1}</Text>
       </div>
@@ -303,11 +303,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
         <Title type="text1" tag="h3" id={`material-title-${materialId}`}>
           {title}
         </Title>
-        {isDebtRow && (
-          <div>
-            <Text type="text2">{library}</Text>
-          </div>
-        )}
+
         {creator && <Text type="text2">{creator}</Text>}
         {materialType && creationYear && (
           <Text type="text2" className={styles.uppercase}>
@@ -316,6 +312,11 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
         )}
 
         <div className={styles.dynamicContent}>{renderDynamicColumn()}</div>
+        {isDebtRow && (
+          <div>
+            <Text type="text2">{library}</Text>
+          </div>
+        )}
       </div>
 
       {!isDebtRow && (
@@ -366,7 +367,6 @@ const MaterialRow = (props) => {
     creationYear,
     library,
     agencyId,
-    hasCheckbox = false,
     id: materialId,
     workId,
     type,
@@ -379,8 +379,11 @@ const MaterialRow = (props) => {
     removedOrderId,
     setRemovedOrderId,
     skeleton,
+    //  For checkbox use
+    hasCheckbox = false,
+    isSelected,
+    onSelect,
   } = props;
-  const [isChecked, setIsChecked] = useState(false);
   const breakpoint = useBreakpoint();
   const { updateUserStatusInfo } = useUser();
   const modal = useModal();
@@ -415,7 +418,7 @@ const MaterialRow = (props) => {
   const getStatus = () => {
     switch (type) {
       case "DEBT":
-        return "RED";
+        return null;
       case "LOAN": {
         const dueDate = new Date(dueDateString);
         const today = new Date();
@@ -449,6 +452,27 @@ const MaterialRow = (props) => {
             holdQueuePosition={holdQueuePosition}
             pickUpExpiryDate={pickUpExpiryDate}
           />
+        );
+      case "BOOKMARK":
+        return (
+          <div className={styles.dynamicColumnHorizontal}>
+            <Button
+              type="primary"
+              size="small"
+              className={styles.bookmarkActionButton}
+            >
+              {Translate({
+                context: "bookmark",
+                label: "order",
+              })}
+            </Button>
+            <IconButton>
+              {Translate({
+                context: "bookmark",
+                label: "remove",
+              })}
+            </IconButton>
+          </div>
         );
       default:
         return null;
@@ -511,13 +535,27 @@ const MaterialRow = (props) => {
     }
   };
 
+  const onCheckboxClick = (e) => {
+    if (
+      e.target instanceof HTMLHeadingElement ||
+      e.target instanceof HTMLButtonElement ||
+      e.target.getAttribute("data-cy") === "text-fjern"
+    ) {
+      /* Element clicked is an actionable element, return */
+      return;
+    }
+    if (onSelect) {
+      onSelect();
+    }
+  };
+
   if (skeleton) {
     return (
       <SkeletonMaterialRow version={isMobileSize ? "mobile" : "desktop"} />
     );
   }
 
-  if (isMobileSize) {
+  if (isMobileSize && type !== "BOOKMARK") {
     return (
       <>
         {hasDeleteError && type === "ORDER" && (
@@ -539,7 +577,7 @@ const MaterialRow = (props) => {
       </>
     );
   }
-
+  const isDebtRow = type === "DEBT";
   return (
     <>
       {hasDeleteError && type === "ORDER" && (
@@ -556,21 +594,18 @@ const MaterialRow = (props) => {
           <article
             key={"article" + materialId}
             role="checkbox"
-            aria-checked={isChecked}
+            aria-checked={isSelected}
             tabIndex="0"
             aria-labelledby="chk1-label"
             data-id={materialId}
-            onClick={() => setIsChecked(!isChecked)}
-            className={cx(
-              styles.materialRow,
-              styles.materialRow_withCheckbox,
-              styles.materialRow_wrapper,
-              {
-                [styles.materialRow_green]: status === "GREEN",
-                [styles.materialRow_red]: status === "RED",
-                [styles.materialRow_animated]: materialId === removedOrderId,
-              }
-            )}
+            onClick={onCheckboxClick}
+            className={cx(styles.materialRow, styles.materialRow_wrapper, {
+              [styles.materialRow_withGridCheckbox]: type !== "BOOKMARK",
+              [styles.materialRow_withFlexCheckbox]: type === "BOOKMARK",
+              [styles.materialRow_green]: status === "GREEN",
+              [styles.materialRow_red]: status === "RED",
+              [styles.materialRow_animated]: materialId === removedOrderId,
+            })}
             data-cy={dataCy}
           >
             {children}
@@ -583,6 +618,7 @@ const MaterialRow = (props) => {
               [styles.materialRow_green]: status === "GREEN",
               [styles.materialRow_red]: status === "RED",
               [styles.materialRow_animated]: materialId === removedOrderId,
+              [styles.debtRow]: isDebtRow,
             })}
             data-cy={dataCy}
           >
@@ -592,17 +628,22 @@ const MaterialRow = (props) => {
       >
         <>
           {hasCheckbox && (
-            <div>
+            <div className={styles.checkboxContainer}>
               <Checkbox
-                checked={isChecked}
+                checked={isSelected}
                 id={`material-row-${materialId}`}
-                aria-labelledby={`material-title-${materialId}`}
+                ariaLabelledBy={`material-title-${materialId}`}
                 tabIndex="-1"
+                readOnly
               />
             </div>
           )}
 
-          <div className={styles.materialInfo}>
+          <div
+            className={cx(styles.materialInfo, {
+              [styles.debtMaterial]: isDebtRow,
+            })}
+          >
             {!!image && (
               <div className={styles.imageContainer}>
                 <Cover src={image} size="fill-width" />
@@ -626,13 +667,19 @@ const MaterialRow = (props) => {
                   </Link>
                 )}
               >
-                <Title
-                  type="text1"
-                  tag="h3"
-                  id={`material-title-${materialId}`}
-                >
-                  {title}
-                </Title>
+                {title ? (
+                  <Title
+                    type="text1"
+                    tag="h3"
+                    id={`material-title-${materialId}`}
+                  >
+                    {title}
+                  </Title>
+                ) : (
+                  <Text type="text2">
+                    {Translate({ context: "profile", label: "unknowMaterial" })}
+                  </Text>
+                )}
               </ConditionalWrapper>
 
               {creator && (
@@ -640,28 +687,38 @@ const MaterialRow = (props) => {
                   {creator}
                 </Text>
               )}
-              {materialType && creationYear && (
+              {materialType && (
                 <Text
                   type="text2"
                   className={styles.uppercase}
                   dataCy="materialtype-and-creationyear"
                 >
-                  {materialType}, {creationYear}
+                  {materialType} {creationYear && <>, {creationYear}</>}
                 </Text>
               )}
             </div>
           </div>
 
-          <div>{renderDynamicColumn()}</div>
+          <div className={cx({ [styles.debtDynamicColumn]: isDebtRow })}>
+            {renderDynamicColumn()}
+          </div>
 
-          <div>
+          <div className={cx({ [styles.debtLibrary]: isDebtRow })}>
             <Text type="text2">{library}</Text>
           </div>
 
-          {renewed ? (
-            <RenewedSpan textType="text3" />
-          ) : (
-            <div>{renderDynamicButton(materialId, agencyId)}</div>
+          {type !== "BOOKMARK" && (
+            <>
+              <div className={cx({ [styles.debtLibrary]: isDebtRow })}>
+                <Text type="text2">{library}</Text>
+              </div>
+
+              {renewed ? (
+                <RenewedSpan textType="text3" />
+              ) : (
+                <div>{renderDynamicButton(materialId, agencyId)}</div>
+              )}
+            </>
           )}
         </>
       </ConditionalWrapper>
@@ -670,17 +727,17 @@ const MaterialRow = (props) => {
 };
 
 MaterialRow.propTypes = {
-  image: PropTypes.string,
+  id: PropTypes.string.isRequired, //materialId
   title: PropTypes.string.isRequired,
+  image: PropTypes.string,
   creator: PropTypes.string,
   materialType: PropTypes.string,
   creationYear: PropTypes.string,
-  library: PropTypes.string.isRequired,
+  library: PropTypes.string,
   hasCheckbox: PropTypes.bool,
-  id: PropTypes.string.isRequired, //materialId
   status: PropTypes.oneOf(["NONE", "GREEN", "RED"]),
   workId: PropTypes.string,
-  type: PropTypes.oneOf(["DEBT", "LOAN", "ORDER"]),
+  type: PropTypes.oneOf(["DEBT", "LOAN", "ORDER", "BOOKMARK"]),
   holdQueuePosition: PropTypes.string,
   pickUpExpiryDate: PropTypes.string,
   dueDate: PropTypes.string,
@@ -689,6 +746,8 @@ MaterialRow.propTypes = {
   agencyId: PropTypes.string,
   removedOrderId: PropTypes.string,
   setRemovedOrderId: PropTypes.func,
+  isSelected: PropTypes.bool,
+  onSelect: PropTypes.func,
   skeleton: PropTypes.bool,
 };
 

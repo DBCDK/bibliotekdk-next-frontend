@@ -26,6 +26,14 @@
   margin: var(--pt05) 0 0 0;
 }
 
+.iconLink {
+  cursor: pointer;
+}
+
+.disabled {
+  cursor: default;
+}
+
 /* action */
 .shortLink {
   display: inline;
@@ -46,5 +54,11 @@
 
   .shortLink {
     display: none;
+  }
+
+  .iconLink {
+    width: 40%;
+    justify-content: flex-end;
+    height: var(--pt3); /*one line*/
   }
 }

@@ -164,7 +164,12 @@ function MenuGroup({ menus, categoryUrl, name, className }) {
 /**
  * Profile menu main items
  */
-const menuItems = ["loansAndReservations", "orderHistory", "myLibraries"];
+const menuItems = [
+  "loansAndReservations",
+  "bookmarks",
+  "orderHistory",
+  "myLibraries",
+];
 
 const initialLoansAndReservations = {
   loansAndReservations: [
@@ -212,9 +217,9 @@ export default function ProfileMenu() {
             name={menuItems[0]}
             categoryUrl={getProfileUrl(menuItems[0])}
           />
-          {/* more MenuLinks are coming soon */}
-          <MenuLink label={menuItems[1]} href={getProfileUrl(menuItems[1])} />
-          <MenuLink label={menuItems[2]} href={getProfileUrl(menuItems[2])} />
+          {menuItems.slice(1).map((item) => (
+            <MenuLink key={item} label={item} href={getProfileUrl(item)} />
+          ))}
         </ul>
       </nav>
     </>

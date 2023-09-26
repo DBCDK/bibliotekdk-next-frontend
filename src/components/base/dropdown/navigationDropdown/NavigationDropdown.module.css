@@ -100,3 +100,11 @@
 .menuButton:focus {
   outline: solid 2px var(--blue);
 }
+
+.icon {
+  transition: transform 0.3s ease;
+}
+
+.icon_open {
+  transform: rotate(180deg);
+}

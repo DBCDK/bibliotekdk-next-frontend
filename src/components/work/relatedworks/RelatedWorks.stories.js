@@ -22,9 +22,9 @@ function RelatedWorksComponentBuilder({
   const descriptionName = storyNameOverride ? storyNameOverride : type;
   return (
     <div>
-      <StoryTitle>OrderButton - {descriptionName}</StoryTitle>
+      <StoryTitle>ReservationButton - {descriptionName}</StoryTitle>
       <StoryDescription>
-        The OrderButton based on the type: {descriptionName}
+        The ReservationButton based on the type: {descriptionName}
       </StoryDescription>
       <RelatedWorks workId={workId} />
     </div>

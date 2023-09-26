@@ -10,7 +10,7 @@
 
 .bookmark i svg path {
   stroke: var(--gray);
-  fill: var(--white);
+  /*fill: var(--white);*/
 }
 
 /* 
@@ -25,11 +25,11 @@
   stroke: blue;
 }
 
-.bookmark:focus {
-  border-color: var(--blue);
+.bookmark:focus-visible {
+  border-color: black;
 }
 
-.bookmark:focus i svg path {
+.bookmark:focus-visible i svg path {
   stroke: blue;
 }
 
@@ -37,14 +37,26 @@
 * Selected
 *
 */
-.bookmark.selected i {
+.bookmark.selected {
+  border-color: var(--blue);
+}
+
+.bookmark.selected:hover {
+  border-color: black;
+}
+
+.bookmark.selected {
   /* Use of important to override dynamic inline style */
-  background-color: var(--blue) !important;
+  background-color: var(--blue);
+}
+
+.bookmark.selected:hover {
+  background-color: black;
 }
 
 .bookmark.selected i svg path {
   stroke: var(--white);
-  fill: var(--blue);
+  /*fill: var(--blue);*/
 }
 
 .bookmark:focus {

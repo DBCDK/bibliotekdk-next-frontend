@@ -19,7 +19,7 @@ import { useBranchUserAndHasDigitalAccess } from "@/components/work/utils";
 /**
  * Set texts BELOW reservation button - also sets the text IN the button
  * For infomedia text is set ABOVE the button ( @see ReservationButton )
- * @param work
+ * @param access list of access objects for all editions of same materialtype
  * @param skeleton
  *
  * @return {JSX.Element|null}

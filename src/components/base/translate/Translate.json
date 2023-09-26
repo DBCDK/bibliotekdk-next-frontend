@@ -108,6 +108,10 @@
       "renew-loan-tooltip": {
         "da": "Det er dit udlånsbibliotek, der sætter reglerne for om materialet kan fornyes. Tjek gerne deres retningslinjer for mere information.",
         "en": "Your library defines the rules for renewing loans. Please check their guidelines for more information."
+      },
+      "close-window": {
+        "da": "Informationerne er gemt indtil du lukker browseren. Sidder du ved en offentlig computer, anbefaler vi stærkt, at du lukker din browser efter brug for at beskytte dine personlige oplysninger.",
+        "en": "The information is saved until you close your browser. If you are using a public computer, we strongly recommend that you close your browser after use to protect your personal information."
       }
     },
     "general": {
@@ -307,6 +311,10 @@
         "da": "Email",
         "en": "Email"
       },
+      "name": {
+        "da": "Navn",
+        "en": "Name"
+      },
       "accept": {
         "da": "Godkend",
         "en": "Accept"
@@ -394,20 +402,28 @@
         "en": "NOTE: Not all libraries provide access to Infomedia articles"
       },
       "libraryAccessReadMore": {
-        "da": "Læs evt. mere om danske biblioteker på Slots og kulturstyrelsens hjemmeside.",
-        "en": "Read more about danish libraries"
+        "da": "Slots og kulturstyrelsens hjemmeside.",
+        "en": "the website of the Danish Agency for Culture and Palaces."
       },
       "libraryNoAccess": {
-        "da": "%s giver ikke adgang til at læse artiklen",
-        "en": "%s does not provide access to read the article"
+        "da": "Vi kan ikke se du er registreret på et adgangsgivende bibliotek",
+        "en": "We could not see that you are registered at a library that provides access"
       },
       "accessOpportunity": {
-        "da": "De fleste folkebiblioteker giver adgang til artikler fra Infomedia",
-        "en": "Most public libraries provide access to articles from Infomedia"
+        "da": "For at du kan få adgang til at læse artiklen skal dit bibliotek abonnere på Infomedia. De fleste folkebiblioteker abonnerer på Infomedia. Som borger kan du oprette dig på et folkebibliotek via deres hjemmeside.",
+        "en": "In order to gain acces to the article, your library must subscribe to Infomedia. Most public libraries subscribe to Infomedia articles. As a citizen, you can register at a public library via their website."
       },
       "accessOpportunity2": {
         "da": "Er du bruger ved et andet bibliotek? Så log ind der og se om de har abonnement. ",
         "en": "LABEL: mangler oversættelse"
+      },
+      "accessOpportunity3": {
+        "da": "Bibliotek.dk er en overbygning, der samler alle danske biblioteker i en løsning. Derfor afhænger dine muligheder i bibliotek.dk af, hvilke biblioteker du er registeret på. Læs evt. mere om danske biblioteker på",
+        "en": "Bibliotek.dk is a solution that collects all Danish libraries in one place. Therefore, your options in bibliotek.dk depend on which libraries you are registered at. Read more about Danish libraries at"
+      },
+      "how-to-get-access": {
+        "da": "Hvordan får jeg adgang til at læse artiklen?",
+        "en": "How to get access to read the article?"
       }
     },
     "footer": {
@@ -673,6 +689,10 @@
       }
     },
     "holdings": {
+      "text_no_localizations": {
+        "da": "Ingen biblioteker matcher din søgning. \\n Se status for dit foretrukne bibliotek ved at søge på navn, postnr. eller by.",
+        "en": "No library match for your search. \\n See status for your preferred library by searcing on name, postal cade or city."
+      },
       "label_localizaion_no_holdings": {
         "da": "Ikke på hylden. Er hjemme på en anden afdeling af %s",
         "en": "Ikke be on shelf. At home at another branch of %s"
@@ -932,6 +952,30 @@
       "title": {
         "da": "Bogmærk %s",
         "en": "Bookmark %s"
+      },
+      "page-title": {
+        "da": "Huskeliste",
+        "en": "Bookmarks"
+      },
+      "result-amount": {
+        "da": "materialer",
+        "en": "materials"
+      },
+      "select-all": {
+        "da": "Vælg alle",
+        "en": "Select All"
+      },
+      "order": {
+        "da": "Bestil",
+        "en": "Order"
+      },
+      "select-action": {
+        "da": "Referencer",
+        "en": "References"
+      },
+      "remove": {
+        "da": "Fjern",
+        "en": "Remove"
       }
     },
     "reviews": {
@@ -1032,6 +1076,10 @@
       "basket": {
         "da": "Kurv",
         "en": "Basket"
+      },
+      "bookmark": {
+        "da": "Husk",
+        "en": "Bookmarks"
       },
       "menu": {
         "da": "Menu",
@@ -1632,8 +1680,8 @@
         "en": "Composer"
       },
       "label-all": {
-        "da": "Alle materialekategorier",
-        "en": "All categories"
+        "da": "Alle",
+        "en": "All"
       },
       "label-literature": {
         "da": "Bøger",
@@ -2073,6 +2121,10 @@
         "da": "Søg på bibliotekets navn, adresse, postnr",
         "en": "Search for pickup location"
       },
+      "pickup-input-placeholder-mobil": {
+        "da": "Søg på bibliotekets navn, adresse, postnr",
+        "en": "Search for pickup location"
+      },
       "pickup-not-allowed": {
         "da": "Afhentning ikke muligt på",
         "en": "Pickup not allowed at"
@@ -2125,10 +2177,6 @@
         "da": "For at bestille dertil skal du logge ind via %s",
         "en": "To order there, you must log in via %s"
       },
-      "order-guest-login-description": {
-        "da": "%s understøtter pt. kun gæstelogin, hvilket betyder at dine oplysninger gemmes i sessionen indtil du trykker log ud eller lukker browseren",
-        "en": "%s LABEL: mangler oversættelse"
-      },
       "order-to-loaner-info": {
         "da": "Udfyld lånerinfo",
         "en": "Fill in the loaner info"
@@ -2142,8 +2190,8 @@
         "en": "%S grants no access to the book"
       },
       "info-email-message": {
-        "da": "Du kan %s",
-        "en": "You can"
+        "da": "Din mail er hentent fra %s",
+        "en": "Your email has been retrieved from %s"
       },
       "change-email-link": {
         "da": "ændre din email her",
@@ -2184,6 +2232,22 @@
       "volume": {
         "da": "Udgave",
         "en": "Volume"
+      },
+      "fillout-loaner-info": {
+        "da": "For at gennemføre bestillingen skal du udfylde dine låneroplysninger ved %s",
+        "en": "To complete the order, you need to fill out your loaner information at %s"
+      },
+      "go-to-order": {
+        "da": "Gå til bestilling",
+        "en": "Go to order"
+      },
+      "save-info-in-browser": {
+        "da": "Gem informationer til næste bestilling",
+        "en": "Save information for next order"
+      },
+      "show-pickup-branch": {
+        "da": "Vis afhentningssted for %s",
+        "en": "Show pickup location for %s"
       }
     },
     "login": {
@@ -2238,6 +2302,74 @@
       "demand_driven_acquisition-description": {
         "da": "Log ind på %s for at læse bogen",
         "en": "Login at &s to read the book"
+      },
+      "login-to-order": {
+        "da": "Log ind for at bestille",
+        "en": "Login to order"
+      },
+      "login-via-library": {
+        "da": "Log ind via dit bibliotek",
+        "en": "Login via your library"
+      },
+      "use-loan-info": {
+        "da": "Du skal bruge dine låneroplysninger i næste trin",
+        "en": "You need to use your loaner information in the next step"
+      },
+      "or-mit-id": {
+        "da": "eller med MitID",
+        "en": "or login with MitID"
+      },
+      "create-library-user": {
+        "da": "Opret dig som låner på et bibliotek",
+        "en": "Create a user at a library"
+      },
+      "login-not-supported": {
+        "da": "Log ind via %s understøttes ikke",
+        "en": "%s does not support login"
+      },
+      "but-you-can-order": {
+        "da": "Men du kan bestille materialer til %s",
+        "en": "But you can order materials to %s"
+      },
+      "more-functionality": {
+        "da": "Hvis du vil logge ind, og udnytte funktionaliteter som",
+        "en": "You need to use your loaner information from %s"
+      },
+      "functinality-1": {
+        "da": "huskeliste",
+        "en": "reminder list"
+      },
+      "functinality-2": {
+        "da": "se lån and reserveringer",
+        "en": "see loans and reservations"
+      },
+      "login-with": {
+        "da": "så skal du logge ind via dit folkebibliotek eller med MitID.",
+        "en": "you need to login via your public library or with MitID."
+      },
+      "why-login-not-suported": {
+        "da": "Hvorfor understøttes log ind ikke?",
+        "en": "Why does is login not support?"
+      },
+      "not-supported-reason": {
+        "da": "Nogle få forsknings- og uddannelsesbibliotekers systemer er ikke integereret med Bibliotek.dk, og vi vil derfor ikke kunne garantere en tværgående brugeroplevelse.",
+        "en": "A few research and educational libraries are not integrated with Bibliotek.dk, and we will therefore not be able to guarantee a cross-cutting user experience."
+      },
+      "go-to-library-login": {
+        "da": "Gå til bibliotekslogin",
+        "en": "Go to librarylogin"
+      },
+      "with-loaner-information": {
+        "da": "Med låneroplysninger",
+        "en": "With loaner information"
+      },
+      "login-type": {
+        "da": "Hvordan vil du gerne logge ind?",
+        "en": "How would you like to log in?"
+      },
+      "search-for-library": {
+        "da": "Søg efter bibliotek",
+        "en": "Search for library"
       }
     },
     "form": {
@@ -2566,7 +2698,7 @@
         "en": "Playstation 5"
       },
       "title-fiction": {
-        "da": "Skønlitteratur",
+        "da": "Bøger",
         "en": "Fiction"
       },
       "description-fiction": {
@@ -3005,8 +3137,12 @@
         "da": "Mine biblioteker",
         "en": "My libraries"
       },
+      "bookmarks": {
+        "da": "Huskeliste",
+        "en": "Bookmarks"
+      },
       "orderHistory": {
-        "da": "Bestilingshistorik",
+        "da": "Bestillingshistorik",
         "en": "Order history"
       },
       "profileMenu": {
@@ -3251,7 +3387,7 @@
         "en": "Would you like to give permission for bibliotek.dk to collect data about your orders, loans, and behavior on the website?\n\nThe collected data will be used to create an order history and personal recommendations for you.\n\nThe order history will only show orders from the date the function is activated.\n\nYour data is stored by the libraries and is only used by the libraries. This means they are never disclosed to third parties."
       },
       "revokeConsentText": {
-        "da": "Vil du ændre dit samtykke, så dine bestillinger ikke længere bliver gemt i historikken?\n\nFremfor vil der så kun blive vist bestillinger for de seneste 30 dage",
+        "da": "Vil du ændre dit samtykke, så dine bestillinger ikke længere bliver gemt i historikken?\n\nFremfor vil der så kun blive vist bestillinger for de seneste 30 dage\n\nOBS: bestillinger før de seneste 30 dage bliver først slettet i nat.",
         "en": "Do you want to change your consent so that your orders are no longer saved in the history?\n\nInstead, only orders for the past 30 days will be displayed"
       },
       "consentButton": {
@@ -3281,6 +3417,34 @@
       "emptyOrderList": {
         "da": "Bestillingshistorikken er tom",
         "en": "Your order history list is empty"
+      },
+      "unknowMaterial": {
+        "da": "Kendes ikke. Spørg biblioteket.",
+        "en": "Unkonwn. Ask at the library."
+      }
+    },
+    "receipt": {
+      "seeLoansAndReservations": {
+        "da": "Se dine lån og reserveringer",
+        "en": "See your loans and reservations"
+      }
+    },
+    "noagencies": {
+      "title": {
+        "da": "Vi kan se at du ikke er registreret på et bibliotek?",
+        "en": "We notice that you are not registred on a library?"
+      },
+      "rubrik": {
+        "da": "For at bestille og reservere materialer skal du være registreret på et bibliotek.",
+        "en": "To order materials you must be registred at a library."
+      },
+      "maintitle": {
+        "da": "Hvor vil du gerne hente din bestilling?",
+        "en": "Where would you like to pickup your order?"
+      },
+      "maintxt": {
+        "da": "Du registrerer dig på et bibliotek via det lokale bibliotek. For folkebiblioteker foregår det ved at du opretter en bruger via deres lokale hjemmeside. Herefter knyttes folkebiblioteket automatisk til din profil på bibliotek.dk. \\n Er du registreret på et uddannelsesbibliotek, kan du muligvis selv knytte biblioteket til din profil under \"Mine biblioteker\".",
+        "en": "noagencis in english please"
       }
     }
   }

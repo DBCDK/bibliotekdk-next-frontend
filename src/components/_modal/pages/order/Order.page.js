@@ -18,6 +18,7 @@ import useOrderPageInformation from "@/components/hooks/useOrderPageInformations
 import { onMailChange } from "@/components/_modal/pages/order/utils/order.utils";
 import { useRelevantAccessesForOrderPage } from "@/components/work/utils";
 import { validateEmail } from "@/utils/validateEmail";
+import NoAgenciesError from "./noAgencies/NoAgenciesError";
 
 /**
  *  Order component function
@@ -48,34 +49,39 @@ function Order({
 
   // Sets if user has unsuccessfully tried to submit the order
   const [failedSubmission, setFailedSubmission] = useState(false);
-
   const [mail, setMail] = useState(null);
   // Update email from user account
   useEffect(() => {
     const userMail = user?.userParameters?.userMail;
-    if (userMail) {
-      const status = validateEmail(userMail);
-      setMail({
-        value: userMail,
-        valid: {
-          status: status,
-          message: status
-            ? null
-            : {
-                context: "form",
-                label: "wrong-email-field",
-              },
-        },
-      });
-    }
+    const status = validateEmail(userMail);
+    setMail({
+      value: userMail,
+      valid: {
+        status: status,
+        message: status
+          ? null
+          : {
+              context: "form",
+              label: "wrong-email-field",
+            },
+      },
+    });
   }, [user?.userParameters]);
 
   function updateModal() {
     if (modal && modal.isVisible) {
       // call update if data or isLoading is changed
-      if (articleOrderMutation?.isLoading || articleOrderMutation?.data) {
+      if (
+        articleOrderMutation?.isLoading ||
+        articleOrderMutation?.data ||
+        articleOrderMutation?.error
+      ) {
         modal.update(modal.index(), { articleOrder: articleOrderMutation });
-      } else if (orderMutation.isLoading || orderMutation.data) {
+      } else if (
+        orderMutation?.isLoading ||
+        orderMutation?.data ||
+        orderMutation?.error
+      ) {
         modal.update(modal.index(), { order: orderMutation });
       }
     }
@@ -130,6 +136,32 @@ function Order({
 
   const contextWithOrderPids = { ...context, orderPids };
 
+  function onSubmitOrder() {
+    if (validated.status) {
+      modal.push("receipt", {
+        pid,
+        order: {
+          data: orderMutation.data,
+          error: orderMutation.error,
+          isLoading: orderMutation.isLoading,
+        },
+        articleOrder: {
+          data: articleOrderMutation?.data,
+          error: articleOrderMutation?.error,
+          isLoading: articleOrderMutation?.isLoading,
+        },
+        pickupBranch,
+      });
+      if (availableAsDigitalCopy) {
+        onArticleSubmit(pid, context?.periodicaForm);
+      } else {
+        onSubmit && onSubmit(orderPids, pickupBranch, context?.periodicaForm);
+      }
+    } else {
+      setFailedSubmission(true);
+    }
+  }
+
   return (
     <div
       className={`${styles.order} ${isLoadingBranches ? styles.skeleton : ""}`}
@@ -158,32 +190,7 @@ function Order({
         context={context}
         validated={validated}
         failedSubmission={failedSubmission}
-        onClick={() => {
-          if (validated.status) {
-            modal.push("receipt", {
-              pid,
-              order: {
-                data: orderMutation.data,
-                error: orderMutation.error,
-                isLoading: orderMutation.isLoading,
-              },
-              articleOrder: {
-                data: articleOrderMutation?.data,
-                error: articleOrderMutation?.error,
-                isLoading: articleOrderMutation?.isLoading,
-              },
-              pickupBranch,
-            });
-            if (availableAsDigitalCopy) {
-              onArticleSubmit(pid, context?.periodicaForm);
-            } else {
-              onSubmit &&
-                onSubmit(orderPids, pickupBranch, context?.periodicaForm);
-            }
-          } else {
-            setFailedSubmission(true);
-          }
-        }}
+        onClick={onSubmitOrder}
       />
     </div>
   );
@@ -294,6 +301,10 @@ export default function Wrap(props) {
 
   if (isManifestationsLoading) {
     return <OrderSkeleton isSlow={isManifestationsSlow} />;
+  }
+  // check if user logged in via mitId - and has no connection to any libraries
+  if (!userInfo?.loanerInfo?.pickupBranch && !userInfo?.authUser?.agencies) {
+    return <NoAgenciesError />;
   }
 
   if (manifestationError || !manifestationData?.manifestations) {

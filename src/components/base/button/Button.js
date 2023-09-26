@@ -29,6 +29,9 @@ function Button({
   disabled = false,
   tabIndex = "0",
   dataCy = null,
+  ariaExpanded = null,
+  ariaControls = null,
+  ariaLabel = null,
 }) {
   const key = dataCy || cyKey({ name: children, prefix: "button" });
 
@@ -48,6 +51,9 @@ function Button({
       aria-disabled={disabled}
       disabled={disabled}
       tabIndex={tabIndex}
+      aria-expanded={ariaExpanded}
+      aria-controls={ariaControls}
+      aria-label={ariaLabel}
     >
       {children}
     </button>
@@ -101,4 +107,6 @@ Container.propTypes = {
   disabled: PropTypes.bool,
   skeleton: PropTypes.bool,
   onClick: PropTypes.func,
+  ariaExpanded: PropTypes.bool,
+  ariaControls: PropTypes.string,
 };
