@@ -59,6 +59,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
           bookmarks: cookies.map((bookmark) => ({
             materialId: bookmark.materialId,
             materialType: bookmark.materialType,
+            title: bookmark.title,
           })),
         })
       );

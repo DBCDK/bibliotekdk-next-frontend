@@ -263,7 +263,6 @@ function Group({
       aria-label={label}
       className={cx(styles.group, props.className, {
         [styles.disabled]: !enabled,
-        [styles.boxOutline]: !disableGroupOutline,
       })}
       onKeyDown={(e) => {
         const index = childrenRef.current.findIndex(
