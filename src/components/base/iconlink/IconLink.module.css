@@ -1,4 +1,7 @@
-.padding_element {
+.padding_element_right {
+  padding-right: var(--pt1);
+}
+
+.padding_element_left {
   padding-left: var(--pt1);
-  visibility: hidden;
 }

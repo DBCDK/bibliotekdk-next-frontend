@@ -46,26 +46,34 @@ export function IconLink({
 }) {
   const IconChild = iconSrc === null ? ChevronSvg : iconSrc;
 
-  const IconComponent = () => {
+  function IconComponent() {
     return (
-      <Icon
-        size={{ w: 2, h: 2 }}
-        dataCy="icon-link-icon"
-        className={cx(...iconAnimation)}
-        title={"Link kopieret"}
-        alt={JSON.stringify(children.innerText)}
-        tabIndex="-1"
+      <span
+        alt=""
+        className={cx({
+          [styles.padding_element_right]: iconPlacement === "left",
+          [styles.padding_element_left]: iconPlacement === "right",
+        })}
       >
-        <IconChild
-          style={{
-            transform: `rotate(${iconOrientation}deg)`,
-            display: "flex",
-            ...iconStyle,
-          }}
-        />
-      </Icon>
+        <Icon
+          size={{ w: 2, h: 2 }}
+          dataCy="icon-link-icon"
+          className={cx(iconAnimation)}
+          title={"Link kopieret"}
+          alt=""
+          tabIndex="-1"
+        >
+          <IconChild
+            style={{
+              transform: `rotate(${iconOrientation}deg)`,
+              display: "flex",
+              ...iconStyle,
+            }}
+          />
+        </Icon>
+      </span>
     );
-  };
+  }
 
   return (
     <LinkOnlyInternalAnimations
@@ -77,12 +85,7 @@ export function IconLink({
       disabled={disabled}
       skeleton={skeleton}
     >
-      {iconPlacement === "left" && (
-        <>
-          <IconComponent />
-          <span aria-hidden={true} className={styles.padding_element} />
-        </>
-      )}
+      {iconPlacement === "left" && <IconComponent />}
       <Link border={disabled ? false : border} tag={"span"} disabled={disabled}>
         {typeof children === "string" ? (
           <Text type={textType} tag="span">
@@ -92,12 +95,7 @@ export function IconLink({
           children
         )}
       </Link>
-      {iconPlacement === "right" && (
-        <>
-          <span aria-hidden={true} className={styles.padding_element} />
-          <IconComponent />
-        </>
-      )}
+      {iconPlacement === "right" && <IconComponent />}
     </LinkOnlyInternalAnimations>
   );
 }
