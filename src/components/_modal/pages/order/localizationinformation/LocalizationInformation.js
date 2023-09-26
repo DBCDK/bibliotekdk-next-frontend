@@ -148,7 +148,10 @@ export default function Wrap({ context }) {
         !isLoadingBranches &&
           modal.push("pickup", {
             pid,
+<<<<<<< HEAD
             pids,
+=======
+>>>>>>> 495ef583 (more hotfix + enable all tests)
             initial: {
               agencies: pickupBranchUser?.agencies,
             },

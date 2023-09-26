@@ -76,7 +76,6 @@ describe("Order", () => {
       cy.get("body").tab();
       cy.get("[data-cy=modal-dimmer]").should("not.be.visible");
     });
-
     cy.visitWithConsoleSpy(
       "/iframe.html?id=modal-order--pickup-not-allowed&viewMode=story"
     );

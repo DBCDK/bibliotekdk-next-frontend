@@ -48,7 +48,7 @@ describe("Edition", () => {
     cy.get("[data-cy=text-udgave-underordnet]").should("not.exist");
   });
 
-  it.skip(`Any Edition no year, publisher, with ordertext, Digital copy`, () => {
+  it(`Any Edition no year, publisher, with ordertext, Digital copy`, () => {
     cy.visit(
       "/iframe.html?id=modal-edition--edition-any-manifestation-digital-copy"
     );
