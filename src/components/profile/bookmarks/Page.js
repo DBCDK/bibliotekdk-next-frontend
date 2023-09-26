@@ -20,6 +20,7 @@ const orderByItems = [
   { label: "latestAdded", key: "createdAt" },
   { label: "alphabeticalOrder", key: "title" },
 ];
+
 const BookmarkPage = () => {
   const { bookmarks: bookmarksData, setOrderBy } = useBookmarks();
   const { data } = usePopulateBookmarks(bookmarksData);
@@ -33,6 +34,7 @@ const BookmarkPage = () => {
   useEffect(() => {
     setOrderBy(orderByValue);
   }, [orderByValue]);
+
   useEffect(() => {
     const bookmarks = data?.works.filter((n) => n); // Fix so long we can recieve null from populate
     setCheckboxList(
