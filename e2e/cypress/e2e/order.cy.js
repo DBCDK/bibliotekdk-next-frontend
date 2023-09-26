@@ -1,5 +1,5 @@
 describe("Order", () => {
-  it.skip(`submits ILL order for pids that may be ordered`, () => {
+  it(`submits ILL order for pids that may be ordered`, () => {
     cy.visitWithConsoleSpy(
       "/iframe.html?id=modal-order--order-via-ill&viewMode=story"
     );
@@ -57,7 +57,7 @@ describe("Order", () => {
     cy.get("[data-cy=modal-dimmer]").should("not.be.visible");
   });
 
-  it.skip("should handle failed checkorder and pickupAllowed=false", () => {
+  it("should handle failed checkorder and pickupAllowed=false", () => {
     cy.visitWithConsoleSpy(
       "/iframe.html?id=modal-order--pickup-not-allowed&viewMode=story"
     );

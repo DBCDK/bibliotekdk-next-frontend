@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 export const AnonymousSessionContext = createContext();
 
 // in memory object for storing loaner info for current user
-let loanerInfoMock = {};
+let loanerInfoMock = { pickupBranch: "790900" };
 
 /**
  * Mock used in storybook
@@ -97,7 +97,7 @@ function useUserImpl() {
     debt: [],
     loans: [],
     orders: [],
-    agency: {},
+    agencies: [],
     ...sessionData,
   });
 
@@ -107,7 +107,7 @@ function useUserImpl() {
         debt: [],
         loans: [],
         orders: [],
-        agency: {},
+        agencies: [],
         ...sessionData,
       });
     } else if (userData && !userIsLoading) {
@@ -115,7 +115,7 @@ function useUserImpl() {
         debt: userData?.user?.debt,
         loans: userData?.user?.loans,
         orders: userData?.user?.orders,
-        agency: userData?.user?.agency,
+        agencies: userData?.user?.agencies,
         ...sessionData,
       });
     }
