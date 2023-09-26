@@ -1,178 +1,142 @@
+/**
+ * @file - Login.js
+ * contains the login page for login modal
+ */
+
 import PropTypes from "prop-types";
 import { useState } from "react";
-import debounce from "lodash/debounce";
-import find from "lodash/find";
 
-import List from "@/components/base/forms/list";
-import Search from "@/components/base/forms/search";
-import Text from "@/components/base/text";
 import Title from "@/components/base/title";
-import Translate from "@/components/base/translate";
-
-import styles from "./Login.module.css";
-import animations from "css/animations";
-import { useData } from "@/lib/api/api";
-import * as libraryFragments from "@/lib/api/library.fragments";
-import { signIn } from "next-auth/react";
-import getConfig from "next/config";
 
 import Top from "@/components/_modal/pages/base/top";
-import Router from "next/router";
+import { LOGIN_MODE } from "@/components/_modal/pages/login/utils";
 
-import { LOGIN_MODE as LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
-import useUser from "@/components/hooks/useUser";
+import { useData } from "@/lib/api/api";
+import * as libraryFragments from "@/lib/api/library.fragments";
 
-function Row({ branch, onSelect, isLoading, disabled, includeArrows, _ref }) {
-  // Check for a highlight key matching on "name" prop
-  const matchName = find(branch.highlights, {
-    key: "name",
-  });
-  // If found, use matchned name (wraps match in <mark>...</mark>)
-  const title = matchName?.value || branch.name;
+import { signIn } from "next-auth/react";
+import { showLoanerForm } from "./utils";
+import MitIDButton from "./mitIDButton/MitIDButton";
+import LibrarySearch from "./librarySearch/LibrarySearch";
 
-  // If none found use a alternative match if any found
-  const matchOthers = !matchName ? branch.highlights?.[0]?.value : null;
-  disabled = false;
-
-  return (
-    <List.FormLink
-      onSelect={() => onSelect(branch)}
-      label={branch.name}
-      disabled={disabled}
-      className={[animations["on-hover"]].join(" ")}
-      includeArrows={includeArrows}
-      _ref={_ref}
-    >
-      <>
-        <Text
-          lines={1}
-          skeleton={isLoading}
-          type="text2"
-          dataCy={`text-${branch.name}`}
-          className={[
-            animations["h-border-bottom"],
-            animations["h-color-blue"],
-          ].join(" ")}
-        >
-          <span
-            dangerouslySetInnerHTML={{
-              __html: title,
-            }}
-          />
-        </Text>
-        {matchOthers && (
-          <Text type="text3">
-            <span
-              dangerouslySetInnerHTML={{
-                __html: matchOthers,
-              }}
-            />
-          </Text>
-        )}
-      </>
-    </List.FormLink>
-  );
-}
+import styles from "./Login.module.css";
+import SearchResultList from "./searchResultList/SearchResultList";
+import MobileLoginButton from "./mobileLoginButton/MobileLoginButton";
+import useWindowSize from "@/components/hooks/useWindowSize";
 
 /**
- * Make pickup branches selectable with Radio buttons
- *
- * @param {object}
- * @param data
+ * contains the login page for login modal - both for desktop and mobile
+ * for mobile, the page shows a button, which opens a new modal with pickup locations selection and MitID login button
+ * for desktop, the page shows a search field, which filters the pickup locations and MitID login button
+ * @param {obj}
+ * @param {boolean}data
  * @param className
- * @param isVisible
- * @param onChange
- * @param isLoading
+ * @param {boolean} isVisible
+ * @param {function} onChange
+ * @param {boolean} hasQuery dont show loading skeleton if there is no query / before user has typed anything
+ * @param {boolean} isLoading
  * @param includeArrows
- * @param modal
- * @param context
+ * @param {obj} modal
+ * @param {obj} context
+ * @param {string} title
  */
-export function LoginPickup({
+export function Login({
   data,
-  className,
   isVisible,
   onChange,
+  hasQuery,
   isLoading,
   includeArrows,
   modal,
   context,
 }) {
   const allBranches = data?.result;
-  const { mode = LOGIN_MODE.PLAIN_LOGIN, originUrl = null } = context || {};
+  const {
+    title,
+    mode = LOGIN_MODE.PLAIN_LOGIN,
+    originUrl = null,
+    pids = [],
+    selectedAccesses = [],
+    workId = null,
+    singleManifestation = null,
+    callbackUID = null,
+  } = context || {};
+  const windowWidth = useWindowSize().width;
+  const isMobile = windowWidth <= 414;
 
-  const APP_URL =
-    getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
+  const showResultsList = hasQuery && allBranches?.length > 0 && !isMobile;
+  const showMitIDLogin =
+    !hasQuery || !allBranches || allBranches.length < 1 || isMobile;
 
-  // remove all modal params from callbackurl - this is login context
-  const regexp = /&modal=+[0-9]*/g;
-  const callbackurl = `${APP_URL}${Router.asPath}`.replace(regexp, "");
-
-  const user = useUser();
   const onSelect = (branch) => {
-    // edge case: - user is already logged in .. and tries to login in again with same library ..
-    // @TODO .. we need a better way (than alert) to pass a message to the user - maybe we should use bootstraps toast ??
-    const sameOrigin = branch?.agencyId === user?.loanerInfo?.pickupBranch;
-    if (sameOrigin) {
-      alert("vælg et andet bibliotek");
-      modal.prev();
+    if (branch?.borrowerCheck) {
+      modal.push("openAdgangsplatform", {
+        agencyId: branch.agencyId,
+        branchId: branch.branchId,
+        agencyName: originUrl ? originUrl : branch.agencyName, //TODO do we have originUrl and how does it look like?
+        callbackUID: callbackUID,
+      });
       return;
     }
-
-    // show loanerform for selected bracnch
-    modal.push("loanerform", {
-      branchId: branch.branchId,
-      doPolicyCheck: false,
-      callbackUrl: callbackurl,
-      mode,
-      originUrl,
-      clear: true,
-    });
+    if (showLoanerForm(mode)) {
+      modal.push("loanerform", {
+        branchId: branch.branchId,
+        pids: pids,
+        selectedAccesses: selectedAccesses,
+        workId: workId,
+        singleManifestation: singleManifestation,
+      });
+    } else {
+      modal.push("loginNotSupported", {
+        libraryName: branch.agencyName,
+      });
+    }
   };
 
+  /**
+   * If we close the login modal without loggin in,
+   * we need to remove f. ex. order modal from store,
+   * which we would have opened after login
+   */
+  function removeModalsFromStore() {
+    modal.setStore([]);
+  }
+
   return (
-    <div className={`${styles.login} ${className}`}>
-      <Top />
-      <div className={styles.search}>
+    <div className={styles.login}>
+      <Top onClose={removeModalsFromStore} />
+      <div>
         <Title type="title4" className={styles.title} tag="h2">
-          {Translate({ context: "order", label: "pickup-search-title-2" })}
+          {title}
         </Title>
-        <Text type="text3">
-          {Translate({ context: "order", label: "pickup-search-description" })}
-        </Text>
-        <Search
-          dataCy="pickup-search-input"
-          placeholder={Translate({
-            context: "order",
-            label: "pickup-input-placeholder",
-          })}
-          className={styles.input}
-          onChange={debounce((value) => onChange(value), 100)}
-        />
       </div>
-      {allBranches?.length > 0 && (
-        <List.Group
-          enabled={!isLoading && isVisible}
-          data-cy="list-branches"
-          disableGroupOutline
-        >
-          {allBranches.map((branch, idx) => {
-            return (
-              <Row
-                key={`${branch.branchId}-${idx}`}
-                branch={branch}
-                onSelect={onSelect}
-                isLoading={isLoading}
-                includeArrows={includeArrows}
-              />
-            );
-          })}
-        </List.Group>
+      {/* shown above 414px /> */}
+      <LibrarySearch onChange={onChange} desktop={true} />
+      {/* shown up to 414px /> */}
+      <MobileLoginButton
+        title={title}
+        onChange={onChange}
+        removeModalsFromStore={removeModalsFromStore}
+        isLoading={isLoading}
+        onSelect={onSelect}
+        isVisible={isVisible}
+        includeArrows={includeArrows}
+      />
+      {showResultsList && (
+        <SearchResultList
+          allBranches={allBranches}
+          isLoading={isLoading}
+          onSelect={onSelect}
+          isVisible={isVisible}
+          includeArrows={includeArrows}
+        />
       )}
+      {showMitIDLogin && <MitIDButton callBackUUID={callbackUID} />}
     </div>
   );
 }
 
-LoginPickup.propTypes = {
+Login.propTypes = {
   data: PropTypes.object,
   className: PropTypes.string,
   onClose: PropTypes.func,
@@ -190,13 +154,14 @@ LoginPickup.propTypes = {
  * @returns {component}
  */
 export default function Wrap(props) {
-  const { agency, originUrl = null } = props;
+  const { originUrl = null } = props;
 
   const [query, setQuery] = useState("");
 
   const { data, isLoading } = useData(
     libraryFragments.search({ q: query || "" })
   );
+
   const dummyData = {
     hitcount: 10,
     result: [
@@ -204,23 +169,24 @@ export default function Wrap(props) {
       { name: "This is some other branch name" },
       { name: "This is also a branch name" },
       { name: "A branch name" },
-      { name: "Also a bracndh name" },
+      { name: "Also a branch name" },
       { name: "This is some branch name" },
       { name: "This is some other branch name" },
       { name: "This is also a branch name" },
       { name: "A branch name" },
-      { name: "Also a bracndh name" },
+      { name: "Also a branch name" },
     ],
   };
 
-  const branches = !query ? agency : data?.branches;
   const includeArrows = !!query;
+
   return (
-    <LoginPickup
+    <Login
       {...props}
       isLoading={isLoading}
-      data={isLoading ? dummyData : branches}
+      data={isLoading ? dummyData : data?.branches}
       onChange={(q) => setQuery(q)}
+      hasQuery={!!query}
       includeArrows={includeArrows}
       onLogin={signIn}
       origin={originUrl}

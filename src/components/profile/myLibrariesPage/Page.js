@@ -22,6 +22,7 @@ export default function MyLibrariesPage() {
   const { data: userData } = useData(
     isAuthenticated && userFragments.branchesForUser()
   );
+
   //An array of user agencies.
   const agencies = userData?.user?.agencies
     ?.map((agency) => ({

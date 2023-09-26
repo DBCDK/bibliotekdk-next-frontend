@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 export const AnonymousSessionContext = createContext();
 
 // in memory object for storing loaner info for current user
-let loanerInfoMock = {};
+let loanerInfoMock = { pickupBranch: "790900" };
 
 /**
  * Mock used in storybook
@@ -25,8 +25,14 @@ function useAccessTokenMock() {
  */
 function useUserMock() {
   const useUserMockKey = "useUserMock";
-  const authUser = { name: "Some Name", mail: "some@mail.dk" };
-  const loggedInUser = { userName: authUser.name, userMail: authUser.mail };
+  const authUser = {
+    name: "Some Name",
+    mail: "some@mail.dk",
+  };
+  const loggedInUser = {
+    userName: authUser.name,
+    userMail: authUser.mail,
+  };
   const { data, mutate } = useSWR(useUserMockKey, () => loanerInfoMock, {
     initialData: loanerInfoMock,
   });
@@ -97,7 +103,7 @@ function useUserImpl() {
     debt: [],
     loans: [],
     orders: [],
-    agency: {},
+    agencies: [],
     ...sessionData,
   });
 
@@ -107,7 +113,7 @@ function useUserImpl() {
         debt: [],
         loans: [],
         orders: [],
-        agency: {},
+        agencies: [],
         ...sessionData,
       });
     } else if (userData && !userIsLoading) {
@@ -115,7 +121,7 @@ function useUserImpl() {
         debt: userData?.user?.debt,
         loans: userData?.user?.loans,
         orders: userData?.user?.orders,
-        agency: userData?.user?.agency,
+        agencies: userData?.user?.agencies,
         ...sessionData,
       });
     }
@@ -127,6 +133,7 @@ function useUserImpl() {
     isValidating,
   ]);
 
+  //TODO give diffferent name
   const isGuestUser =
     !isAuthenticated && Object.keys(loanerInfo?.userParameters).length > 0;
 
@@ -136,10 +143,10 @@ function useUserImpl() {
     error: userDataError,
     isAuthenticated,
     loanerInfo,
-    isGuestUser,
+    isGuestUser: isGuestUser,
     isLoggedIn: isAuthenticated || isGuestUser,
     updateLoanerInfo: async (obj) => {
-      const newSession = merge({}, sessionData, obj);
+      const newSession = (newSession = merge({}, sessionData, obj));
       // Update global loaner info object
       await sessionMutate.post(sessionFragments.submitSession(newSession));
       // Broadcast update
@@ -160,7 +167,7 @@ function useUserImpl() {
       }
       if (updatedData) await userMutate(updatedData);
     },
-    guestLogout: async () => {
+    deleteSessionData: async () => {
       // Delete global loaner info object
       await sessionMutate.post(sessionFragments.deleteSession());
       // Broadcast update

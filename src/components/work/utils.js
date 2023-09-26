@@ -23,6 +23,7 @@ export function openOrderModal({
   selectedAccesses,
   workId,
   singleManifestation,
+  storeLoanerInfo = false,
 }) {
   modal.push("order", {
     title: Translate({ context: "modal", label: "title-order" }),
@@ -30,6 +31,7 @@ export function openOrderModal({
     selectedAccesses: selectedAccesses,
     workId: workId,
     ...(singleManifestation && { orderType: "singleManifestation" }),
+    storeLoanerInfo: storeLoanerInfo,
   });
 }
 
@@ -45,7 +47,7 @@ export function openReferencesModal(modal, pids, workId, work, manifestation) {
   });
 }
 
-export function onOnlineAccess(url, target = "_blank") {
+export function goToRedirectUrl(url, target = "_blank") {
   try {
     const parsedUrl = new URL(url);
     window.open(parsedUrl.href, target);

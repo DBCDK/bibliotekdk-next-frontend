@@ -5,7 +5,6 @@ import PeriodicaForm from "./periodicaform";
 import Pickup from "./pickup";
 import Loanerform from "./loanerform";
 import Receipt from "./receipt";
-import Login from "./login";
 import Filter from "./filter";
 import References from "./references";
 import ManifestationContent from "./manifestationContent";
@@ -15,6 +14,10 @@ import AgencyLocalizations from "./agencyLocalizations";
 import BranchLocalizations from "./branchLocalizations";
 import BranchDetails from "./branchDetails";
 import OrderHistoryDataConsent from "./orderHistoryDataConsent";
+import Login from "./login";
+import MobileLogin from "./mobileLogin";
+import OpenAdgangsplatform from "./openAdgangsplatform";
+import LoginNotSupported from "./loginNotSupported";
 
 const _modal = {
   Menu,
@@ -24,7 +27,6 @@ const _modal = {
   Pickup,
   Loanerform,
   Receipt,
-  Login,
   Filter,
   References,
   ManifestationContent,
@@ -34,6 +36,10 @@ const _modal = {
   BranchLocalizations,
   BranchDetails,
   OrderHistoryDataConsent,
+  Login,
+  MobileLogin,
+  LoginNotSupported,
+  OpenAdgangsplatform,
 };
 
 export default _modal;

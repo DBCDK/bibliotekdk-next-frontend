@@ -1,4 +1,4 @@
-.prompt button {
+.prompt .signInButton {
   max-width: 320px;
   margin: var(--pt3) 0;
 }
@@ -8,4 +8,25 @@
 
 .prompt {
   margin-top: var(--pt13);
+}
+
+.inline {
+  display: inline;
+}
+
+.description {
+  padding-bottom: var(--pt3);
+}
+
+.link {
+  text-decoration: underline;
+  text-underline-offset: var(--pt05);
+}
+
+.link:hover {
+  text-decoration: none;
+}
+
+.devider {
+  margin-top: var(--pt2);
 }

@@ -10,6 +10,8 @@ import animations from "css/animations";
 import Text from "@/components/base/text";
 
 /**
+ * Navigation dropdown. Use this menu for a menu with redirects - not actions
+ *
  * This component creates a dropdown with links inside.
  * This component should standardize the accessability concerns in creating a mix between an accordion and a link list.
  */
@@ -155,9 +157,11 @@ function LinkDropdown({ context, menuItems }) {
         onClick={() => setExpandMenu(!expandMenu)}
         onKeyDown={onButtonClick}
         data-cy="mobile-menu-button"
-        className={cx(animations["on-hover"], animations["on-focus"], {
-          [styles.menuButton]: true,
-        })}
+        className={cx(
+          animations["on-hover"],
+          animations["on-focus"],
+          styles.menuButton
+        )}
       >
         <Text tag="div" type="text3" dataCy="menu-title">
           {menuTitle}
@@ -165,8 +169,15 @@ function LinkDropdown({ context, menuItems }) {
         <span className={styles.chevron}>
           <Icon
             size={{ w: 2, h: 2 }}
-            src={expandMenu ? "arrowUp.svg" : "arrowDown.svg"}
-            className={cx(animations["h-elastic"], animations["f-elastic"])}
+            src={"arrowUp.svg"}
+            className={cx(
+              styles.icon,
+              animations["h-elastic"],
+              animations["f-elastic"],
+              {
+                [styles.icon_open]: expandMenu,
+              }
+            )}
             alt=""
           />
         </span>

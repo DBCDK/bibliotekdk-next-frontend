@@ -142,7 +142,7 @@ describe("ArticlePage", () => {
       //cy.contains("Titel på Infomedia-artikel");
       cy.contains("Få adgang til hele artiklen");
 
-      cy.get("[data-cy=button-log-ind]").should("be.visible");
+      cy.get("[data-cy=article-prompt-button-log-ind]").should("be.visible");
     });
 
     it.skip("Shows login prompt when logged in user is not granted access", () => {
@@ -177,7 +177,9 @@ describe("ArticlePage", () => {
         `${nextjsBaseUrl}/infomedia/en-artikel/work-of:870971-tsart:39160846/e842b5ee`
       );
 
-      cy.contains("Testbiblioteker giver ikke adgang til at læse artiklen");
+      cy.contains(
+        "Vi kan ikke se du er registreret på et adgangsgivende bibliotek"
+      );
       cy.get("IconButton").click();
       cy.contains(
         "Er du bruger ved et andet bibliotek? Så log ind der og se om de har abonnement."

@@ -15,14 +15,32 @@
   transition: max-height 0.5s, padding 0.5s;
 }
 
-.materialRow_withCheckbox {
+.materialRow_withGridCheckbox {
   grid-template-columns: 1fr 3fr 2fr 2fr 1fr;
   cursor: pointer;
 }
 
-.materialRow_withCheckbox:focus-visible,
-.materialRow_withCheckbox:hover {
+.materialRow_withFlexCheckbox {
+  display: flex;
+  cursor: pointer;
+  grid-column-gap: unset;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.materialRow_withGridCheckbox:focus-visible,
+.materialRow_withGridCheckbox:hover,
+.materialRow_withFlexCheckbox:focus-visible,
+.materialRow_withFlexCheckbox:hover {
   outline: 1px solid var(--blue);
+}
+
+.materialRow_withFlexCheckbox .checkboxContainer {
+  margin-right: var(--pt2);
+}
+.materialRow_withFlexCheckbox .materialInfo {
+  margin-right: var(--pt9);
+  flex: 1;
 }
 
 .materialRow_wrapper {
@@ -89,11 +107,6 @@
   justify-self: flex-end;
 }
 
-/* TODO */
-/*.dynamicColumn_mobile {*/
-/*  margin-top: var(--pt1);*/
-/*}*/
-
 .blackUnderline * {
   display: inline;
 }
@@ -137,6 +150,10 @@
   flex-direction: column;
 }
 
+.dynamicColumnHorizontal {
+  display: flex;
+}
+
 .dynamicContent {
   margin-top: var(--pt1);
 }
@@ -167,6 +184,28 @@
   flex: 1;
 }
 
+.bookmarkActionButton {
+  margin-right: var(--pt3);
+  width: 100px;
+}
+
+.debtDynamicColumn {
+  grid-column: 1;
+}
+
+.debtLibrary {
+  grid-column: 2;
+}
+.debtMaterial {
+  grid-column: 3;
+}
+
+.debtRow {
+  grid-auto-flow: column;
+  grid-template-columns: 1.5fr 3fr 4fr 1fr;
+  border-bottom: unset;
+}
+
 @media (hover: hover) {
   .materialRow_mobile:focus-visible,
   .materialRow_mobile:hover {
@@ -182,6 +221,9 @@
   .materialRow_debt {
     display: flex;
   }
+  .materialRow_debt:not(:first-of-type) {
+    border-top: unset;
+  }
 }
 
 @media (min-width: 993px) {
@@ -192,5 +234,11 @@
 
   .dynamicColumn {
     flex-direction: column-reverse;
+  }
+}
+
+@media (max-width: 767px) {
+  .dynamicColumnHorizontal {
+    display: none;
   }
 }

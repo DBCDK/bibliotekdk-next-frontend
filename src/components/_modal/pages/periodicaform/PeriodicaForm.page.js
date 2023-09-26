@@ -9,14 +9,20 @@ import Translate from "@/components/base/translate";
 import { useEffect, useState } from "react";
 
 import styles from "./PeriodicaForm.module.css";
+import cx from "classnames";
 
 // TODO create jsdoc and proptypes
 
 function Field({ label, required, value, onChange, hasTry }) {
   const labelKey = `label-${label}`;
   return (
-    <div className={hasTry && required && !value?.trim() ? styles.invalid : ""}>
-      <Text id={labelKey} type="text1" tag="label">
+    <div
+      className={cx({
+        [styles.invalid]: hasTry && required && !value?.trim(),
+        [styles.field]: true,
+      })}
+    >
+      <Text id={labelKey} type="text2" tag="label">
         {Translate({
           context: "order-periodica",
           label: labelKey,

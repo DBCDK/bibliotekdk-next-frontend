@@ -27,6 +27,7 @@ import {
  * @param iconPlacement
  * @param iconStyle
  * @param target
+ * @param skeleton
  * @return {JSX.Element}
  */
 export function IconLink({
@@ -43,6 +44,7 @@ export function IconLink({
   iconOrientation = 0,
   iconPlacement = "left",
   iconStyle = {},
+  skeleton = false,
   target = "_self",
 }) {
   const IconChild = iconSrc === null ? ChevronSvg : iconSrc;
@@ -60,7 +62,7 @@ export function IconLink({
         <IconChild
           style={{
             transform: `rotate(${iconOrientation}deg)`,
-            marginTop: "var(--pt025)",
+            display: "flex",
             ...iconStyle,
           }}
         />
@@ -77,6 +79,7 @@ export function IconLink({
       tag={tag}
       disabled={disabled}
       target={target}
+      skeleton={skeleton}
     >
       {iconPlacement === "left" && <IconComponent />}
       <div>
