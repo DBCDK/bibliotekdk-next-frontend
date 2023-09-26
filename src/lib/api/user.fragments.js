@@ -23,7 +23,8 @@ export function basic() {
         mail
         address
         postalCode
-        agency {
+        agencies {
+          hitcount
           result {
             branchId
             agencyId
@@ -37,8 +38,10 @@ export function basic() {
             creator
             date
             currency
+            agencyId
         }
         loans {
+          agencyId
           loanId
           dueDate
           manifestation {
@@ -66,6 +69,7 @@ export function basic() {
           status
           pickUpBranch {
             agencyName
+            agencyId
           }
           pickUpExpiryDate
           holdQueuePosition
@@ -110,16 +114,9 @@ export function branchesForUser() {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `
-    query ($language: LanguageCode! ) {
+    query  {
       user {
         municipalityAgencyId
-        agency (language: $language){
-          result {
-            agencyId
-            agencyName
-            name
-          }
-        }
         agencies{
           result
           {
@@ -142,7 +139,7 @@ export function orderPolicy({ pid }) {
     // delay: 1000, // for debugging
     query: `query orderPolicy ($language: LanguageCode!, $pid: String! ) {
       user {
-        agency (language: $language){
+        agencies (language: $language){
           agencyUrl
           result {
             agencyName
