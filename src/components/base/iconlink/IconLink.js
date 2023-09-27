@@ -26,6 +26,7 @@ import {
  * @param iconOrientation
  * @param iconPlacement
  * @param iconStyle
+ * @param skeleton
  * @return {JSX.Element}
  */
 export function IconLink({
