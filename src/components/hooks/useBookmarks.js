@@ -178,17 +178,12 @@ export const usePopulateBookmarks = (bookmarks) => {
   /**
    * Used to populate bookmark data, to show more info about the materials
    */
-  /*if (!bookmarks || !Array.isArray(bookmarks) || bookmarks.length === 0) {
-    return [];
-  }*/
-
   const workIds = bookmarks?.filter((bookmark) =>
     bookmark.materialId.includes("work-of:")
   );
   const workPids = bookmarks?.filter(
     (bookmark) => !bookmark.materialId.includes("work-of:")
   );
-
   const { data: workByIdsData } = useData(
     workFragments.idsToWorks({ ids: workIds?.map((work) => work.materialId) })
   );
