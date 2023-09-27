@@ -46,11 +46,11 @@ export function Receipt({
     isLoading: articleOrderIsLoading,
   } = articleOrder;
 
-  // Define order status'
+  // Define order status
   const isOrdering = orderIsLoading || articleOrderIsLoading || delay;
   const isOrdered =
     !!orderData?.submitOrder?.orderId ||
-    articleOrderData?.elba?.placeCopyRequest?.status === "OK";
+    articleOrderData?.elba?.placeCopyRequest?.ok;
 
   // Define if order has failed
   let hasFailed = false,
@@ -63,7 +63,7 @@ export function Receipt({
     failedMessage = orderError || articleOrderError;
   } else if (
     articleOrderData?.elba?.placeCopyRequest &&
-    articleOrderData?.elba?.placeCopyRequest?.status !== "OK"
+    articleOrderData?.elba?.placeCopyRequest?.ok
   ) {
     hasFailed = true;
     failedMessage = articleOrderData?.elba?.placeCopyRequest?.status;
