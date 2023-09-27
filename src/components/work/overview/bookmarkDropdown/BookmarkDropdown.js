@@ -24,6 +24,7 @@ export function BookMarkMaterialSelector({
       key: workId + material,
       materialId: workId,
       materialType: material[0],
+      title: "",
     };
     setBookmark(item);
   };

@@ -115,6 +115,7 @@ const MenuDropdown = ({
   return (
     <div className={styles.container} onKeyDown={onMenuKeyDown} ref={menuRef}>
       <Button
+        className={styles.button}
         type="secondary"
         size="small"
         onClick={() => setIsOpen(!isOpen)}
@@ -130,7 +131,7 @@ const MenuDropdown = ({
           })}
           size={{ w: 2, h: "auto" }}
           alt=""
-          src={"arrowUp.svg"}
+          src={"arrowDown.svg"}
         />
       </Button>
 

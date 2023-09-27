@@ -138,6 +138,13 @@ const useBookmarksCore = ({ isMock = false, session }) => {
       );
       mutateGlobalBookmarks();
     } else {
+      const keysToDelete = bookmarksToDelete.map((i) => i.key);
+      const updated = localBookmarks.filter(
+        (item) => !keysToDelete.includes(item.key)
+      );
+      const stringified = JSON.stringify(updated);
+      localStorage.setItem(KEY_NAME, stringified);
+      mutateLocalBookmarks(updated);
     }
   };
 
@@ -190,15 +197,16 @@ export const usePopulateBookmarks = (bookmarks) => {
       pids: workPids?.map((work) => work.materialId),
     })
   );
-  const transformedWorkByPids = workByPidsData?.works?.map((work) => ({
-    ...work,
-    workId: work.workId.replace("work-of:", ""),
-  }));
-  const merged = [].concat(workByIdsData?.works, transformedWorkByPids);
 
   // Reorganize order and add bookmark data
   const data = useMemo(() => {
     if (!bookmarks) return [];
+
+    const transformedWorkByPids = workByPidsData?.works?.map((work) => ({
+      ...work,
+      workId: work.workId.replace("work-of:", ""),
+    }));
+    const merged = [].concat(workByIdsData?.works, transformedWorkByPids);
 
     return bookmarks
       .map((bookmark) => {
@@ -216,7 +224,7 @@ export const usePopulateBookmarks = (bookmarks) => {
         };
       })
       .filter((item) => item); // filter nulls
-  }, [bookmarks]);
+  }, [bookmarks, workByPidsData, workByIdsData]);
 
   return { data };
 };

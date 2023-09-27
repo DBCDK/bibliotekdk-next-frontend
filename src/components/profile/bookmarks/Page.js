@@ -6,7 +6,7 @@ import Text from "@/components/base/text";
 import Button from "@/components/base/button";
 import MaterialRow from "../materialRow/MaterialRow";
 import IconButton from "@/components/base/iconButton";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
 import ProfileLayout from "../profileLayout/ProfileLayout";
 import Translate from "@/components/base/translate";
@@ -32,7 +32,7 @@ const BookmarkPage = () => {
         isSelected: false,
       }))
     );
-  }, []);
+  }, [bookmarks.length]);
 
   const onSelectAll = () => {
     const hasUnselectedElements =
@@ -47,6 +47,19 @@ const BookmarkPage = () => {
     setActiveStickyButton(idx + ""); // Stringify, to prevent 0 == null behaviour
   };
 
+  const onStickyClick = () => {
+    switch (activeStickyButton) {
+      case "0":
+        return "Bestil";
+      case "1":
+        return "Hent referencer";
+      case "2":
+        return onDeleteSelected();
+      default:
+        console.error("button not bound correctly");
+    }
+  };
+
   const getStickyButtonText = () => {
     switch (activeStickyButton) {
       case "0":
@@ -59,7 +72,7 @@ const BookmarkPage = () => {
   };
 
   const onDeleteSelected = () => {
-    const selectedBookmarks = checkboxList.filter((i) => i.isSelected);
+    const selectedBookmarks = checkboxList.filter((i) => i.isSelected === true);
     deleteBookmarks(selectedBookmarks);
   };
 
@@ -83,7 +96,11 @@ const BookmarkPage = () => {
 
       {activeStickyButton && (
         <div className={styles.stickyButtonContainer}>
-          <Button type="primary" className={styles.stickyButton}>
+          <Button
+            type="primary"
+            className={styles.stickyButton}
+            onClick={onStickyClick}
+          >
             {getStickyButtonText()}
           </Button>
         </div>
@@ -181,7 +198,7 @@ const BookmarkPage = () => {
                     if (i !== idx) return el;
                     else
                       return {
-                        id: el.id,
+                        ...el,
                         isSelected: !el.isSelected,
                       };
                   })
