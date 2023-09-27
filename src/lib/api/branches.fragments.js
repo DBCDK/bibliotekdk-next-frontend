@@ -174,7 +174,7 @@ export function branchDigitalCopyAccess({ branchId }) {
 /**
  * Branches in agencies
  */
-export function branchesActiveInAgency({ agencyId, pids, limit = 20, q = "" }) {
+export function branchesActiveInAgency({ agencyId, pids, limit = 50, q = "" }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
@@ -197,10 +197,29 @@ export function branchesActiveInAgency({ agencyId, pids, limit = 20, q = "" }) {
   };
 }
 
+export function branchesHighlightsByAgency({ agencyId, q, limit = 50 }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query branchesHighlightsByAgency($agencyId: String!, $q: String, $limit: PaginationLimit!, $language: LanguageCode!) {
+      branches(agencyid: $agencyId, q: $q, bibdkExcludeBranches: true, limit: $limit, status: AKTIVE, language: $language) {
+        hitcount
+        agencyUrl
+        result {
+          ...branchFastFragment
+        }
+      }
+    }
+    ${branchFastFragment}`,
+    variables: { agencyId, q, limit, language: lang },
+    slowThreshold: 3000,
+  };
+}
+
 /**
  * Branches in agencies
  */
-export function branchByBranchId({ branchId, pids, limit = 20, q = "" }) {
+export function branchByBranchId({ branchId, pids, limit = 50, q = "" }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
