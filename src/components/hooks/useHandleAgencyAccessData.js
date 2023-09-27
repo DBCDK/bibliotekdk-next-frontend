@@ -2,9 +2,9 @@ import groupBy from "lodash/groupBy";
 import { getFirstMatch, getLibraryType, LibraryTypeEnum } from "@/lib/utils";
 import uniqWith from "lodash/uniqWith";
 import * as branchesFragments from "@/lib/api/branches.fragments";
-
 import { useData } from "@/lib/api/api";
 import isEmpty from "lodash/isEmpty";
+import uniq from "lodash/uniq";
 
 export const AvailabilityEnum = Object.freeze({
   NOW: "AVAILABLE_NOW",
@@ -192,6 +192,7 @@ function enrichBranches(branch) {
 
   return {
     ...branch,
+    holdingStatus: branch.holdingStatus,
     holdingItems: branchHoldingsWithInfoOnPickupAllowed,
     agencyName: branch.agencyName,
     branchName: branch.name,
@@ -270,7 +271,7 @@ export function handleAgencyAccessData(agencies) {
         .map((item) => item.expectedDelivery)
         .sort(compareDate)?.[0],
       holdingItems: allHoldingsAcrossBranchesInAgency,
-      pickupAllowed: entry?.findIndex((e) => e.pickupAllowed) > -1,
+      pickupAllowed: branches?.findIndex((e) => e.pickupAllowed) > -1,
     };
   });
 
@@ -284,8 +285,8 @@ export function handleAgencyAccessData(agencies) {
   };
 }
 
-export function useAgenciesConformingToQuery({ pids, q }) {
-  const agency = useData(
+export function useAgencyIdsConformingToQuery({ pids, q }) {
+  const agencies = useData(
     q &&
       q !== "" &&
       pids &&
@@ -295,21 +296,51 @@ export function useAgenciesConformingToQuery({ pids, q }) {
       })
   );
 
-  return handleAgencyAccessData(agency);
+  const agencyIds = uniq(
+    agencies?.data?.branches?.result?.map((branch) => branch.agencyId)
+  );
+
+  return { agencyIds: agencyIds, isLoading: agencies.isLoading };
 }
 
-export function useSingleAgency({ pids, agencyId, query = "" }) {
-  const agency = useData(
+export function useSingleAgency({ pids, agencyId }) {
+  const agencyNoHighlights = useData(
     agencyId &&
       pids &&
       branchesFragments.branchesActiveInAgency({
         agencyId: agencyId,
         pids: pids,
+      })
+  );
+
+  return handleAgencyAccessData(agencyNoHighlights);
+}
+
+export function useHighlightsForSingleAgency({ agencyId, query = "" }) {
+  const agencyWithHighlights = useData(
+    !isEmpty(agencyId) &&
+      !isEmpty(query) &&
+      branchesFragments.branchesHighlightsByAgency({
+        agencyId: agencyId,
         q: query,
       })
   );
 
-  return handleAgencyAccessData(agency);
+  const branchesWithHighlights =
+    agencyWithHighlights?.data?.branches?.result.map((branch) => {
+      return {
+        ...branch,
+        branchName: branch?.name,
+      };
+    });
+
+  return {
+    branchesWithHighlights: branchesWithHighlights,
+    agencyHighlight: branchesWithHighlights?.[0]?.highlights?.find(
+      (highlight) => highlight.key === "agencyName"
+    )?.value,
+    branchesWithHighlightsIsLoading: agencyWithHighlights.isLoading,
+  };
 }
 
 export function useSingleBranch({ pids, branchId }) {

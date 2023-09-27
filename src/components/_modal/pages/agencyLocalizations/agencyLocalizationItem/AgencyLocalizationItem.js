@@ -3,6 +3,7 @@ import LocalizationItemBase from "@/components/_modal/pages/base/localizationsBa
 import {
   useSingleAgency,
   AvailabilityEnum,
+  useHighlightsForSingleAgency,
 } from "@/components/hooks/useHandleAgencyAccessData";
 import isEmpty from "lodash/isEmpty";
 import { highlightMarkedWords } from "@/components/_modal/utils";
@@ -14,7 +15,7 @@ const textProps = {
   lines: 1,
 };
 
-function DefaultShowingOfAgency({ agency }) {
+function DefaultShowingOfAgencyBranches({ agency }) {
   const numberOfBranchesWithAvailable = agency?.branches?.filter(
     (branch) => branch?.availabilityAccumulated === AvailabilityEnum.NOW
   ).length;
@@ -46,9 +47,14 @@ function DefaultShowingOfAgency({ agency }) {
     </>
   );
 }
-function QueriedShowingOfAgency({ agency }) {
-  const branchesWithHighlights = agency?.branches
-    .map((branch) => {
+function FormattedBranchesWithHighlights({ branchesWithHighlights }) {
+  const branchesFormattedWithHighlights = branchesWithHighlights
+    ?.filter((branch) => {
+      return branch?.highlights?.some((highlight) =>
+        ["name", "postalCode", "city"].includes(highlight.key)
+      );
+    })
+    ?.map((branch) => {
       const branchName = branch?.highlights.find(
         (highlight) => highlight.key === "name"
       )?.value;
@@ -78,19 +84,19 @@ function QueriedShowingOfAgency({ agency }) {
       );
     });
 
-  return branchesWithHighlights?.length > 4 ? (
+  return branchesFormattedWithHighlights?.length > 4 ? (
     <>
-      {branchesWithHighlights?.slice(0, 3)}
+      {branchesFormattedWithHighlights?.slice(0, 3)}
       <Text>
         {Translate({
           context: "localizations",
           label: "additional_branches_available",
-          vars: [branchesWithHighlights?.slice(3)?.length],
+          vars: [branchesFormattedWithHighlights?.slice(3)?.length],
         })}
       </Text>
     </>
   ) : (
-    <>{branchesWithHighlights}</>
+    <>{branchesFormattedWithHighlights}</>
   );
 }
 
@@ -102,23 +108,36 @@ export default function AgencyLocalizationItem({
   pids,
   query,
 }) {
-  const { agenciesFlatSorted, agenciesIsLoading: singleAgencyIsLoading } =
-    useSingleAgency(
-      agencyId &&
-        pids && {
-          pids: pids,
-          agencyId: agencyId,
-          query: query,
-        }
-    );
+  const {
+    agenciesFlatSorted: agenciesFlatSortedNoHighlights,
+    agenciesIsLoading: singleAgencyIsLoading,
+  } = useSingleAgency(
+    agencyId &&
+      pids && {
+        pids: pids,
+        agencyId: agencyId,
+        query: query,
+      }
+  );
 
-  const agency = agenciesFlatSorted?.[0];
+  const {
+    branchesWithHighlights,
+    agencyHighlight,
+    branchesWithHighlightsIsLoading,
+  } = useHighlightsForSingleAgency(
+    !isEmpty(agencyId) &&
+      !isEmpty(query) && {
+        agencyId: agencyId,
+        query: query,
+      }
+  );
 
-  const agencyHighlight = agency?.branches?.[0]?.highlights?.find(
-    (highlight) => highlight.key === "agencyName"
-  )?.value;
+  const agency = agenciesFlatSortedNoHighlights?.[0];
 
-  const isLoading = localizationsIsLoading || singleAgencyIsLoading;
+  const isLoading =
+    localizationsIsLoading ||
+    singleAgencyIsLoading ||
+    branchesWithHighlightsIsLoading;
 
   return (
     <LocalizationItemBase
@@ -149,9 +168,11 @@ export default function AgencyLocalizationItem({
         </Text>
       ) : (
         <>
-          {isEmpty(query) && <DefaultShowingOfAgency agency={agency} />}
+          {isEmpty(query) && <DefaultShowingOfAgencyBranches agency={agency} />}
           {!isEmpty(query) && !agencyHighlight && (
-            <QueriedShowingOfAgency agency={agency} />
+            <FormattedBranchesWithHighlights
+              branchesWithHighlights={branchesWithHighlights}
+            />
           )}
         </>
       )}

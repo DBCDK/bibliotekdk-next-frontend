@@ -1,5 +1,5 @@
 import Translate from "@/components/base/translate";
-import { useAgenciesConformingToQuery } from "@/components/hooks/useHandleAgencyAccessData";
+import { useAgencyIdsConformingToQuery } from "@/components/hooks/useHandleAgencyAccessData";
 import { useData } from "@/lib/api/api";
 import * as localizationsFragments from "@/lib/api/localizations.fragments";
 import LocalizationsBase from "@/components/_modal/pages/base/localizationsBase/LocalizationsBase";
@@ -13,11 +13,16 @@ export default function Wrap({ context, modal }) {
   const { pids } = context;
   const [query, setQuery] = useState("");
 
-  const { agenciesFlatSorted, agenciesIsLoading } =
-    useAgenciesConformingToQuery({
-      pids: pids,
-      q: query,
-    });
+  const {
+    agencyIds: agencyIdsFromQuery,
+    isLoading: agencyIdsFromQueryIsLoading,
+  } = useAgencyIdsConformingToQuery(
+    !isEmpty(pids) &&
+      !isEmpty(query) && {
+        pids: pids,
+        q: query,
+      }
+  );
 
   const {
     data: agenciesWithHoldings,
@@ -26,15 +31,14 @@ export default function Wrap({ context, modal }) {
     pids && localizationsFragments.localizationsWithHoldings({ pids: pids })
   );
 
-  const agencyIds =
-    query && !isEmpty(query)
-      ? agenciesFlatSorted.map((singleAgency) => singleAgency.agencyId)
-      : agenciesWithHoldings?.localizationsWithHoldings?.agencies?.map(
-          (agency) => agency.agencyId
-        );
+  const agencyIds = !isEmpty(agencyIdsFromQuery)
+    ? agencyIdsFromQuery
+    : agenciesWithHoldings?.localizationsWithHoldings?.agencies?.map(
+        (agency) => agency.agencyId
+      );
 
   const localizationsIsLoading =
-    agenciesWithHoldingsIsLoading || agenciesIsLoading;
+    agenciesWithHoldingsIsLoading || agencyIdsFromQueryIsLoading;
 
   return (
     <LocalizationsBase
