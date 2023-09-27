@@ -12,7 +12,7 @@ import { useMutate } from "@/lib/api/api";
 import PropTypes from "prop-types";
 import Icon from "@/components/base/icon";
 import IconButton from "@/components/base/iconButton";
-import { getWorkUrl } from "@/lib/utils";
+import { getBookmarkMaterialUrl } from "@/lib/utils";
 import ErrorRow from "../errorRow/ErrorRow";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { useModal } from "@/components/_modal";
@@ -394,6 +394,8 @@ const MaterialRow = (props) => {
   const orderMutation = useMutate();
   const loanMutation = useMutate();
 
+  const urlToMaterial = getBookmarkMaterialUrl(creator, title, materialId);
+
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
 
@@ -660,7 +662,7 @@ const MaterialRow = (props) => {
                         keepVisible: true,
                       },
                     }}
-                    href={getWorkUrl(title, creators, workId)}
+                    href={urlToMaterial}
                     className={styles.blackUnderline}
                   >
                     {children}
