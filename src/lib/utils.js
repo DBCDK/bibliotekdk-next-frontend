@@ -38,7 +38,7 @@ export function extractCreatorsPrioritiseCorporation(creatorsBeforeFilter) {
     creatorsBeforeFilter = [creatorsBeforeFilter];
   }
   const corporations = creatorsBeforeFilter?.filter(
-    (creator) => creator.__typename === "Corporation"
+    (creator) => creator?.__typename === "Corporation"
   );
 
   return corporations?.length > 0 ? corporations : creatorsBeforeFilter;
@@ -59,6 +59,12 @@ export function encodeTitleCreator(title = "", creators = []) {
   return creator
     ? encodeString(title) + "_" + encodeString(creator.display)
     : encodeString(title);
+}
+
+export function getBookmarkMaterialUrl(creatorAsString, title, materialId) {
+  const creatorsObject = [{ display: creatorAsString }];
+  // @TODO materialId may be a pid (not workid) - get a pid and url to specific edition
+  return getWorkUrl(title, creatorsObject, materialId);
 }
 
 /**
