@@ -20,6 +20,8 @@ import { useRelevantAccessesForOrderPage } from "@/components/work/utils";
 import { validateEmail } from "@/utils/validateEmail";
 import NoAgenciesError from "./noAgencies/NoAgenciesError";
 import useUser from "@/components/hooks/useUser";
+import * as branchesFragments from "@/lib/api/branches.fragments";
+import { useData } from "@/lib/api/api";
 
 /**
  *  Order component function
@@ -48,24 +50,22 @@ function Order({
     isLoadingBranches = false,
   } = pickupBranchInfo;
 
-  const { authUser, loanerInfo, isAuthenticated, isGuestUser, isLoggedIn } =
-    useUser();
+  const { authUser, loanerInfo, isLoggedIn } = useUser();
 
-  const pickUpAgencyInfo = loanerInfo?.agencies?.find(
-    (agency) => agency?.result[0]?.agencyId === loanerInfo?.pickupBranch
+  const pickUpAgencyInfo = useData(
+    loanerInfo?.pickupBranch &&
+      branchesFragments.checkBlockedUser({ branchId: loanerInfo.pickupBranch })
   );
 
   let canBorrow = true;
-  let statusCode = "OK";
-  //TODO comment in, once api is deployed
-  // if (pickUpAgencyInfo) {
-  //   canBorrow = pickUpAgencyInfo?.canBorrow?.canBorrow;
-  //   statusCode = pickUpAgencyInfo?.canBorrow?.statusCode;
-  // }
-  const branches = pickUpAgencyInfo?.result;
+  let statusCode = "";
+  if (pickUpAgencyInfo) {
+    canBorrow = pickUpAgencyInfo?.canBorrow?.canBorrow;
+    statusCode = pickUpAgencyInfo?.canBorrow?.statusCode;
+  }
+  const branches = pickUpAgencyInfo?.data?.branches;
 
-  const noBlockedUserInfo =
-    canBorrow || !authUser || isGuestUser || !isAuthenticated || !isLoggedIn;
+  const showBlockedUserInfo = !canBorrow || !authUser || !isLoggedIn;
 
   // Sets if user has unsuccessfully tried to submit the order
   const [failedSubmission, setFailedSubmission] = useState(false);
@@ -197,7 +197,7 @@ function Order({
         singleManifestation={singleManifestation}
       />
       <LocalizationInformation context={context} />
-      {user && !noBlockedUserInfo && (
+      {user && showBlockedUserInfo && (
         <BlockedUserInformation statusCode={statusCode} branches={branches} />
       )}
       <OrdererInformation

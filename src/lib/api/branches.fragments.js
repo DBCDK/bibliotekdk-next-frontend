@@ -123,9 +123,6 @@ export function branchOrderPolicy({ branchId, pid }) {
   };
 }
 
-/**
- * AgencyUrl and canBorrow for a branch
- */
 export function checkBlockedUser({ branchId }) {
   return {
     apiUrl: ApiEnums.FBI_API,

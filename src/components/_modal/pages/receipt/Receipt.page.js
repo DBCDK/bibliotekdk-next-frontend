@@ -69,31 +69,7 @@ export function Receipt({
     failedMessage = articleOrderData?.elba?.placeCopyRequest?.status;
   }
 
-  let additonalErrorMessage = undefined;
-  let showLinkToMyLibraries = false;
-  //if (failedMessage === "BORCHK_USER_NO_LONGER_EXIST_ON_AGENCY") {
-  if (true) {
-    additonalErrorMessage = Translate({
-      context: "order",
-      label: "order-failed-user-no-longer-exists",
-    });
-    showLinkToMyLibraries = true;
-  }
-
-  switch (failedMessage) {
-    case undefined:
-      break;
-    case "BORCHK_USER_NO_LONGER_EXIST_ON_AGENCY":
-      additonalErrorMessage = Translate({
-        context: "order",
-        label: "order-failed-user-no-longer-exists",
-      });
-      showLinkToMyLibraries = true;
-    case "Papayas":
-      console.log("Mangoes and papayas are $2.79 a pound.");
-      // Expected output: "Mangoes and papayas are $2.79 a pound."
-      break;
-  }
+  const showLinkToMyLibraries = true; //TODO should link to my libraries always be shown? @UX
 
   // Branch name
   const branchName = pickupBranch?.name;
@@ -184,16 +160,11 @@ export function Receipt({
           )}
           <div className={styles.error}>
             <Title className={styles.title} type="title5" tag="h2">
-              {Translate({ context: "order", label: "errorOccured" })}
+              {Translate({ context: "receipt", label: "errorOccured" })}
             </Title>
             {hasFailed && failedMessage && (
               <Text tag="div" type="text2" className={styles.errorText}>
                 {failedMessage}
-              </Text>
-            )}
-            {additonalErrorMessage && (
-              <Text tag="div" type="text2" className={styles.errorText}>
-                {additonalErrorMessage}
               </Text>
             )}
             {showLinkToMyLibraries && (
