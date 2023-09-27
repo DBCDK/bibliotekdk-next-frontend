@@ -32,7 +32,7 @@
 .materialRow_withGridCheckbox:hover,
 .materialRow_withFlexCheckbox:focus-visible,
 .materialRow_withFlexCheckbox:hover {
-  outline: 1px solid var(--blue);
+  background-color: var(--black-squeeze);
 }
 
 .materialRow_withFlexCheckbox .checkboxContainer {
@@ -240,5 +240,9 @@
 @media (max-width: 767px) {
   .dynamicColumnHorizontal {
     display: none;
+  }
+
+  .materialRow_bookmark {
+    grid-template-columns: 1fr;
   }
 }

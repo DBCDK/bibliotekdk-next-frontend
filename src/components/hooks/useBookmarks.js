@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import * as workFragments from "@/lib/api/work.fragments";
-import { useData, useFetcher, useMutate } from "@/lib/api/api";
+import { useData, useMutate } from "@/lib/api/api";
 import { useEffect, useMemo } from "react";
 import * as bookmarkMutations from "@/lib/api/bookmarks.mutations";
 import * as bookmarkFragments from "@/lib/api/bookmarks.fragments";

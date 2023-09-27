@@ -619,6 +619,7 @@ const MaterialRow = (props) => {
               [styles.materialRow_green]: status === "GREEN",
               [styles.materialRow_red]: status === "RED",
               [styles.materialRow_animated]: materialId === removedOrderId,
+              [styles.materialRow_bookmark]: type === "BOOKMARK",
               [styles.debtRow]: isDebtRow,
             })}
             data-cy={dataCy}
@@ -743,6 +744,7 @@ MaterialRow.propTypes = {
   agencyId: PropTypes.string,
   removedOrderId: PropTypes.string,
   setRemovedOrderId: PropTypes.func,
+  onBookmarkDelete: PropTypes.func,
   isSelected: PropTypes.bool,
   onSelect: PropTypes.func,
   skeleton: PropTypes.bool,
