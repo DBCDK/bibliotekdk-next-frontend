@@ -86,7 +86,12 @@ export function IconLink({
       skeleton={skeleton}
     >
       {iconPlacement === "left" && <IconComponent />}
-      <Link border={disabled ? false : border} tag={"span"} disabled={disabled}>
+      <Link
+        border={disabled ? false : border}
+        tag={"span"}
+        disabled={disabled}
+        tabIndex="-1"
+      >
         {typeof children === "string" ? (
           <Text type={textType} tag="span">
             {children}
