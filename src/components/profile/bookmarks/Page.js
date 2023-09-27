@@ -17,20 +17,22 @@ const CONTEXT = "bookmark";
 const MENUITEMS = ["Bestil flere", "Hent referencer", "Fjern flere"];
 
 const BookmarkPage = () => {
-  const { bookmarks: bookmarksData } = useBookmarks();
-  const { data } = usePopulateBookmarks(bookmarksData);
+  const { bookmarks: bookmarksData, deleteBookmarks } = useBookmarks();
+  const { data: bookmarks } = usePopulateBookmarks(bookmarksData);
   const [activeStickyButton, setActiveStickyButton] = useState(null);
-  const bookmarks = data?.works.filter((n) => n);
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "sm" || breakpoint === "xs";
   const [checkboxList, setCheckboxList] = useState();
 
   useEffect(() => {
-    const bookmarks = data?.works.filter((n) => n); // Fix so long we can recieve null from populate
     setCheckboxList(
-      bookmarks?.map((bookmark) => ({ id: bookmark.workId, isSelected: false }))
+      bookmarks?.map((bookmark) => ({
+        key: bookmark.key,
+        bookmarkId: bookmark.bookmarkId,
+        isSelected: false,
+      }))
     );
-  }, [data]);
+  }, []);
 
   const onSelectAll = () => {
     const hasUnselectedElements =
@@ -54,6 +56,11 @@ const BookmarkPage = () => {
       case "2":
         return "Fjern";
     }
+  };
+
+  const onDeleteSelected = () => {
+    const selectedBookmarks = checkboxList.filter((i) => i.isSelected);
+    deleteBookmarks(selectedBookmarks);
   };
 
   const isAllSelected =
@@ -138,7 +145,7 @@ const BookmarkPage = () => {
             label: "select-action",
           })}
         </Button>
-        <IconButton disabled={isNothingSelected}>
+        <IconButton disabled={isNothingSelected} onClick={onDeleteSelected}>
           {Translate({
             context: CONTEXT,
             label: "remove",
@@ -163,6 +170,11 @@ const BookmarkPage = () => {
               id={bookmark?.workId}
               type="BOOKMARK"
               isSelected={checkboxList[idx]?.isSelected}
+              onBookmarkDelete={() =>
+                deleteBookmarks([
+                  { bookmarkId: bookmark.bookmarkId, key: bookmark.key },
+                ])
+              }
               onSelect={() =>
                 setCheckboxList(
                   [...checkboxList].map((el, i) => {

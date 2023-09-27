@@ -383,6 +383,7 @@ const MaterialRow = (props) => {
     hasCheckbox = false,
     isSelected,
     onSelect,
+    onBookmarkDelete,
   } = props;
   const breakpoint = useBreakpoint();
   const { updateUserStatusInfo } = useUser();
@@ -466,7 +467,7 @@ const MaterialRow = (props) => {
                 label: "order",
               })}
             </Button>
-            <IconButton>
+            <IconButton onClick={onBookmarkDelete}>
               {Translate({
                 context: "bookmark",
                 label: "remove",

@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import * as workFragments from "@/lib/api/work.fragments";
-import { useData, useMutate } from "@/lib/api/api";
-import { useEffect } from "react";
+import { useData, useFetcher, useMutate } from "@/lib/api/api";
+import { useEffect, useMemo } from "react";
 import * as bookmarkMutations from "@/lib/api/bookmarks.mutations";
 import * as bookmarkFragments from "@/lib/api/bookmarks.fragments";
 import { useSession } from "next-auth/react";
@@ -126,8 +126,22 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     mutateLocalBookmarks(empty);
   }
 
+  const deleteBookmarks = async (bookmarksToDelete) => {
+    if (isAuthenticated) {
+      const ids = bookmarksToDelete.map((i) => i.bookmarkId);
+      await bookmarkMutation.post(
+        bookmarkMutations.deleteBookmarks({
+          bookmarkIds: ids,
+        })
+      );
+      mutateGlobalBookmarks();
+    } else {
+    }
+  };
+
   return {
     setBookmark,
+    deleteBookmarks,
     clearLocalBookmarks,
     bookmarks: isAuthenticated ? globalBookmarks : localBookmarks,
     isLoading:
@@ -155,19 +169,52 @@ export const usePopulateBookmarks = (bookmarks) => {
   /**
    * Used to populate bookmark data, to show more info about the materials
    */
-  const pids = bookmarks?.map((bookmark) => {
-    /**
-     * @TODO Rework
-     */
+  /*if (!bookmarks || !Array.isArray(bookmarks) || bookmarks.length === 0) {
+    return [];
+  }*/
 
-    /* API data - or all */
-    if (bookmark.materialId) return bookmark.materialId.replace("work-of:", "");
+  const workIds = bookmarks?.filter((bookmark) =>
+    bookmark.materialId.includes("work-of:")
+  );
+  const workPids = bookmarks?.filter(
+    (bookmark) => !bookmark.materialId.includes("work-of:")
+  );
 
-    /* Local data */
-    if (bookmark.id.includes("work-of:"))
-      return bookmark.id.replace("work-of:", "");
-    return bookmark.id;
-  });
-  const { data } = useData(workFragments.pidsToWorks({ pids: pids }));
+  const { data: workByIdsData } = useData(
+    workFragments.idsToWorks({ ids: workIds?.map((work) => work.materialId) })
+  );
+  const { data: workByPidsData } = useData(
+    workFragments.pidsToWorks({
+      pids: workPids?.map((work) => work.materialId),
+    })
+  );
+  const transformedWorkByPids = workByPidsData?.works?.map((work) => ({
+    ...work,
+    workId: work.workId.replace("work-of:", ""),
+  }));
+  const merged = [].concat(workByIdsData?.works, transformedWorkByPids);
+
+  // Reorganize order and add bookmark data
+  const data = useMemo(() => {
+    if (!bookmarks) return [];
+
+    return bookmarks
+      .map((bookmark) => {
+        const workData = merged.find(
+          (item) => item?.workId === bookmark.materialId
+        );
+        if (!workData) {
+          return null;
+        }
+
+        // Merge data
+        return {
+          ...workData,
+          ...bookmark,
+        };
+      })
+      .filter((item) => item); // filter nulls
+  }, [bookmarks]);
+
   return { data };
 };
