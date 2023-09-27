@@ -660,7 +660,11 @@ const MaterialRow = (props) => {
                         keepVisible: true,
                       },
                     }}
-                    href={getWorkUrl(title, creators, workId)}
+                    href={getWorkUrl(
+                      title,
+                      [{ nameSort: creator || "", display: creator || "" }],
+                      materialId
+                    )}
                     className={styles.blackUnderline}
                   >
                     {children}
