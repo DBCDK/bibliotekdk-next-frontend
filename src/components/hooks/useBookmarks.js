@@ -199,7 +199,7 @@ export const usePopulateBookmarks = (bookmarks) => {
 
     const transformedWorkByPids = workByPidsData?.works?.map((work) => ({
       ...work,
-      workId: work.workId.replace("work-of:", ""),
+      workId: work?.workId?.replace("work-of:", ""),
     }));
     const merged = [].concat(workByIdsData?.works, transformedWorkByPids);
 
