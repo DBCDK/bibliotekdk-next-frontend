@@ -704,10 +704,6 @@ const MaterialRow = (props) => {
             {renderDynamicColumn()}
           </div>
 
-          <div className={cx({ [styles.debtLibrary]: isDebtRow })}>
-            <Text type="text2">{library}</Text>
-          </div>
-
           {type !== "BOOKMARK" && (
             <>
               <div className={cx({ [styles.debtLibrary]: isDebtRow })}>
