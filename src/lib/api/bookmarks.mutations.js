@@ -27,3 +27,20 @@ export function addBookmarks({ bookmarks }) {
     },
   };
 }
+
+export function deleteBookmarks({ bookmarkIds }) {
+  return {
+    query: `
+    mutation deleteBookmarks($bookmarkIds: [Int!]!) {
+      users {
+        deleteBookmarks(bookmarkIds: $bookmarkIds) {
+          IdsDeletedCount
+        }
+      }
+    }
+    `,
+    variables: {
+      bookmarkIds,
+    },
+  };
+}

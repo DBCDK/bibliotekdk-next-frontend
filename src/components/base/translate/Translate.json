@@ -3569,8 +3569,8 @@
         "en": "Your order history list is empty"
       },
       "unknowMaterial": {
-        "da": "Kendes ikke. Spørg biblioteket.",
-        "en": "Unkonwn. Ask at the library."
+        "da": "Ukendt titel. Kontakt dit bibliotek.",
+        "en": "Unknown title. Contact your library."
       }
     },
     "receipt": {
