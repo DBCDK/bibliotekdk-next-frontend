@@ -638,7 +638,6 @@ const MaterialRow = (props) => {
               />
             </div>
           )}
-
           <div
             className={cx(styles.materialInfo, {
               [styles.debtMaterial]: isDebtRow,
@@ -698,7 +697,6 @@ const MaterialRow = (props) => {
               )}
             </div>
           </div>
-
           <div className={cx({ [styles.debtDynamicColumn]: isDebtRow })}>
             {renderDynamicColumn()}
           </div>
