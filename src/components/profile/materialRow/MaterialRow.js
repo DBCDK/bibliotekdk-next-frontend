@@ -638,7 +638,6 @@ const MaterialRow = (props) => {
               />
             </div>
           )}
-
           <div
             className={cx(styles.materialInfo, {
               [styles.debtMaterial]: isDebtRow,
@@ -698,28 +697,20 @@ const MaterialRow = (props) => {
               )}
             </div>
           </div>
-
           <div className={cx({ [styles.debtDynamicColumn]: isDebtRow })}>
             {renderDynamicColumn()}
           </div>
+          <>
+            <div className={cx({ [styles.debtLibrary]: isDebtRow })}>
+              <Text type="text2">{library}</Text>
+            </div>
 
-          <div className={cx({ [styles.debtLibrary]: isDebtRow })}>
-            <Text type="text2">{library}</Text>
-          </div>
-
-          {type !== "BOOKMARK" && (
-            <>
-              <div className={cx({ [styles.debtLibrary]: isDebtRow })}>
-                <Text type="text2">{library}</Text>
-              </div>
-
-              {renewed ? (
-                <RenewedSpan textType="text3" />
-              ) : (
-                <div>{renderDynamicButton(materialId, agencyId)}</div>
-              )}
-            </>
-          )}
+            {renewed && type !== "BOOKMARK" ? (
+              <RenewedSpan textType="text3" />
+            ) : (
+              <div>{renderDynamicButton(materialId, agencyId)}</div>
+            )}
+          </>
         </>
       </ConditionalWrapper>
     </>

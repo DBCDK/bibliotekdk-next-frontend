@@ -29,5 +29,5 @@ p.subHeading {
   }
 }
 .debtHeader {
-  grid-template-columns: 1.5fr 3fr 4fr 1fr;
+  grid-template-columns: 1.5fr 2.1fr 4fr 1fr;
 }
