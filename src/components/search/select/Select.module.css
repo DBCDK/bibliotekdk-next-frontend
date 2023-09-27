@@ -77,6 +77,8 @@
 }
 
 .materials {
+  display: flex;
+  justify-content: space-between;
   overflow-y: hidden;
   margin: 0 -15px;
   white-space: nowrap;
@@ -89,4 +91,14 @@
 
 .materials button:last-child {
   margin: 0 0 var(--pt2) 0;
+}
+
+.filterButton {
+  max-width: 124px;
+}
+
+@media screen and (max-width: 768px) and (min-width: 991px) {
+  .filterButton {
+    display: none;
+  }
 }

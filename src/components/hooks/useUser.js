@@ -25,8 +25,14 @@ function useAccessTokenMock() {
  */
 function useUserMock() {
   const useUserMockKey = "useUserMock";
-  const authUser = { name: "Some Name", mail: "some@mail.dk" };
-  const loggedInUser = { userName: authUser.name, userMail: authUser.mail };
+  const authUser = {
+    name: "Some Name",
+    mail: "some@mail.dk",
+  };
+  const loggedInUser = {
+    userName: authUser.name,
+    userMail: authUser.mail,
+  };
   const { data, mutate } = useSWR(useUserMockKey, () => loanerInfoMock, {
     initialData: loanerInfoMock,
   });
@@ -127,6 +133,7 @@ function useUserImpl() {
     isValidating,
   ]);
 
+  //TODO give diffferent name
   const isGuestUser =
     !isAuthenticated && Object.keys(loanerInfo?.userParameters).length > 0;
 
@@ -136,10 +143,10 @@ function useUserImpl() {
     error: userDataError,
     isAuthenticated,
     loanerInfo,
-    isGuestUser,
+    isGuestUser: isGuestUser,
     isLoggedIn: isAuthenticated || isGuestUser,
     updateLoanerInfo: async (obj) => {
-      const newSession = merge({}, sessionData, obj);
+      const newSession = (newSession = merge({}, sessionData, obj));
       // Update global loaner info object
       await sessionMutate.post(sessionFragments.submitSession(newSession));
       // Broadcast update
@@ -160,7 +167,7 @@ function useUserImpl() {
       }
       if (updatedData) await userMutate(updatedData);
     },
-    guestLogout: async () => {
+    deleteSessionData: async () => {
       // Delete global loaner info object
       await sessionMutate.post(sessionFragments.deleteSession());
       // Broadcast update

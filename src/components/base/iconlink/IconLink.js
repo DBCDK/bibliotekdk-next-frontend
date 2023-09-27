@@ -42,6 +42,7 @@ export function IconLink({
   iconOrientation = 0,
   iconPlacement = "left",
   iconStyle = {},
+  skeleton = false,
 }) {
   const IconChild = iconSrc === null ? ChevronSvg : iconSrc;
 
@@ -58,7 +59,7 @@ export function IconLink({
         <IconChild
           style={{
             transform: `rotate(${iconOrientation}deg)`,
-            marginTop: "var(--pt025)",
+            display: "flex",
             ...iconStyle,
           }}
         />
@@ -74,10 +75,15 @@ export function IconLink({
       {...(onClick !== null && { onClick: onClick })}
       tag={tag}
       disabled={disabled}
+      skeleton={skeleton}
     >
       {iconPlacement === "left" && <IconComponent />}
       <div>
-        <Link border={disabled ? {} : border} tag={"span"} disabled={true}>
+        <Link
+          border={disabled ? false : border}
+          tag={"span"}
+          disabled={disabled}
+        >
           {typeof children === "string" ? (
             <Text type={textType} tag="span">
               {children}

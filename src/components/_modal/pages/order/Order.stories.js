@@ -2,7 +2,7 @@ import { StoryTitle, StoryDescription } from "@/storybook";
 
 import Modal from "@/components/_modal";
 import Pages from "@/components/_modal/pages";
-import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
+import ReservationButtonWrapper from "@/components/work/reservationbutton/ReservationButton";
 import merge from "lodash/merge";
 import automock_utils from "@/lib/automock_utils.fixture";
 
@@ -42,7 +42,7 @@ function OrderPageComponentBuilder({
         <br />
         <span>selectedPids: {selectedPids.join(", ")}</span>
       </StoryDescription>
-      <ReservationButton workId={workId} selectedPids={selectedPids} />
+      <ReservationButtonWrapper workId={workId} selectedPids={selectedPids} />
       <Modal.Container>
         <Modal.Page id="order" component={Pages.Order} />
         <Modal.Page id="periodicaform" component={Pages.PeriodicaForm} />
@@ -71,6 +71,36 @@ OrderViaILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {},
+    },
+  },
+});
+
+export function NoUserAgencies() {
+  useMockLoanerInfo({
+    pickUpBranch: "",
+    loans: [],
+    debt: [],
+    agencies: [],
+    orders: [],
+  });
+  return (
+    <OrderPageComponentBuilder
+      title="User has no agencies"
+      description="If user logs in with MitID - and has no libraries associated with user account"
+      workId={"some-work-id-1"}
+      selectedPids={["some-pid-1", "some-pid-2", "some-pid-3"]}
+    />
+  );
+}
+
+NoUserAgencies.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {
+        Query: {
+          branches: () => ({ result: [] }),
+        },
+      },
     },
   },
 });
@@ -221,10 +251,10 @@ export function NotBlockedUser() {
   useMockLoanerInfo({});
   return (
     <OrderPageComponentBuilder
-      title="User is blocked from loaning"
-      description={`User is blocked from loaning, 
-        the red user is blocked information box should be present 
-        and OrderConfirmationButton should be disabled.`}
+      title="User is NOT blocked from loaning"
+      description={`User is NOT blocked from loaning, 
+        the red user is blocked information box should NOT be present 
+        and OrderConfirmationButton should NOT be disabled.`}
       workId={"some-work-id-1"}
       selectedPids={["some-pid-1"]}
     />

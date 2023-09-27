@@ -34,6 +34,9 @@ export function Result({
 }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs" || breakpoint === "sm" || false;
+  const isTablet = breakpoint === "md";
+  const isDesktop = breakpoint === "lg" || breakpoint === "xl";
+
   const numPages = Math.ceil(hitcount / 10);
 
   const visibleClass = noRelatedSubjects ? styles.visible : "";
@@ -47,7 +50,7 @@ export function Result({
         className={`${styles.section} ${noRelatedSubjectsClass}`}
         divider={false}
         title={
-          !isLoading ? (
+          !isLoading && !isTablet ? (
             <FilterButton
               className={`${styles.filterButton} ${visibleClass}`}
             />
@@ -55,6 +58,8 @@ export function Result({
             <span />
           )
         }
+        rightSideTitle={isDesktop}
+        colSize={{ lg: { offset: 3, span: true } }}
         id="search-result-section"
       >
         {Array(isMobile ? page : 1)

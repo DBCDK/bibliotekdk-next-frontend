@@ -1,0 +1,10 @@
+.container {
+  padding: 0 var(--pt4) var(--pt4) var(--pt4);
+  height: 100%;
+  /* scroll in modal */
+  overflow-y: auto;
+}
+
+.bottommargin {
+  margin-bottom: var(--pt3);
+}

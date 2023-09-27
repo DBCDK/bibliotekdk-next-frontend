@@ -165,6 +165,32 @@ export function orderPolicy({ pid }) {
             digitalCopyAccess
           }
         }
+        agencies (language: $language){
+        agencyUrl
+        result {
+          agencyName
+          agencyId
+          name
+          city
+          postalAddress
+          postalCode
+          branchId
+          openingHours
+          borrowerCheck
+          orderPolicy(pid: $pid) {
+            orderPossible
+            orderPossibleReason
+            lookUpUrl
+          }
+          userParameters {
+            userParameterType
+            parameterRequired
+          }
+          pickupAllowed
+          userStatusUrl
+          digitalCopyAccess
+        }
+        }
       }
       monitor(name: "bibdknext_orderpolicy")
      }`,

@@ -13,90 +13,89 @@ import debounce from "lodash/debounce";
 export function OrdererInformation({
   isLoadingBranches,
   name,
-  mail,
+  hasAuthMail,
+  email,
   lockedMessage,
-  pickupBranch,
   invalidClass,
   isLoading,
-  hasBorchk,
-  email,
   onMailChange,
   message,
   validClass,
+  showMailMessage,
 }) {
   return (
-    <>
+    <div className={styles.user}>
       {(isLoadingBranches || name) && (
-        <div className={styles.user}>
+        <div>
           <Title type="title5" tag="h3">
             {Translate({ context: "order", label: "ordered-by" })}
           </Title>
           <div className={styles.name}>
+            <Text type="text2" className={styles.textinline}>
+              {Translate({ context: "general", label: "name" })}
+            </Text>
             <Text type="text1" skeleton={!name} lines={1}>
               {name}
             </Text>
           </div>
-          <div className={styles.email}>
-            <label htmlFor="order-user-email">
-              <Text type="text1" className={styles.textinline}>
-                {Translate({ context: "general", label: "email" })}
-              </Text>
-              {(isLoadingBranches ||
-                (mail && lockedMessage && pickupBranch?.borrowerCheck)) && (
-                <Tooltip
-                  placement="right"
-                  labelToTranslate="tooltip_change_email"
-                  customClass={styles.tooltip}
-                />
-              )}
-            </label>
-
-            <Email
-              className={styles.input}
-              placeholder={Translate({
-                context: "form",
-                label: "email-placeholder",
-              })}
-              invalidClass={invalidClass}
-              disabled={isLoading || (mail && hasBorchk)}
-              value={email || ""}
-              id="order-user-email"
-              onChange={debounce(onMailChange, 200)}
-              readOnly={isLoading || (mail && hasBorchk)}
-              skeleton={isLoadingBranches && !email}
-            />
-
-            {message && (
-              <div className={`${styles.emailMessage} ${validClass}`}>
-                <Text type="text3">{Translate(message)}</Text>
-              </div>
-            )}
-            {(isLoadingBranches ||
-              (mail && lockedMessage && pickupBranch?.borrowerCheck)) && (
-              <div className={`${styles.emailMessage}`}>
-                <Text
-                  type="text3"
-                  skeleton={!lockedMessage}
-                  lines={1}
-                  tag="span"
-                  className={styles.userStatusLink}
-                >
-                  {Translate(lockedMessage)}
-                  &nbsp;
-                </Text>
-              </div>
-            )}
-          </div>
         </div>
       )}
-    </>
+      <div className={styles.email}>
+        <label htmlFor="order-user-email">
+          <Text type="text2" className={styles.textinline}>
+            {Translate({ context: "general", label: "email" })}
+          </Text>
+        </label>
+
+        <Email
+          className={styles.input}
+          placeholder={Translate({
+            context: "form",
+            label: "email-placeholder",
+          })}
+          invalidClass={invalidClass}
+          disabled={isLoading || hasAuthMail}
+          value={email || ""}
+          id="order-user-email"
+          onChange={debounce(onMailChange, 200)}
+          readOnly={isLoading || hasAuthMail}
+          skeleton={isLoadingBranches && !email}
+        />
+
+        {message && (
+          <div className={`${styles.emailMessage} ${validClass}`}>
+            <Text type="text3">{Translate(message)}</Text>
+          </div>
+        )}
+        {showMailMessage && (
+          <div className={`${styles.emailMessage}`}>
+            <Text
+              type="text3"
+              skeleton={!lockedMessage}
+              lines={1}
+              tag="span"
+              className={styles.userStatusLink}
+            >
+              {Translate(lockedMessage)}
+              &nbsp;
+            </Text>
+            <Tooltip
+              placement="top"
+              labelToTranslate="tooltip_change_email"
+              customClass={styles.tooltip}
+              trigger={["hover", "focus"]}
+              iconSize="2_5"
+            />
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
 
 OrdererInformation.propTypes = {
   isLoadingBranches: PropTypes.any,
   name: PropTypes.any,
-  mail: PropTypes.any,
   lockedMessage: PropTypes.shape({
     context: PropTypes.string,
     label: PropTypes.string,
@@ -105,11 +104,12 @@ OrdererInformation.propTypes = {
   pickupBranch: PropTypes.any,
   invalidClass: PropTypes.any,
   isLoading: PropTypes.any,
-  hasBorchk: PropTypes.any,
   email: PropTypes.any,
+  hasAuthMail: PropTypes.bool,
   onMailChange: PropTypes.func,
   message: PropTypes.any,
   validClass: PropTypes.any,
+  showMailMessage: PropTypes.bool,
 };
 
 export default function Wrap({
@@ -141,14 +141,12 @@ export default function Wrap({
   } = pickupBranchInfo;
 
   const isWorkLoading = workResponse.isLoading;
-
   const hasBorchk = pickupBranch?.borrowerCheck;
 
   // user props
   const { agency } = pickupBranchUser;
   const { userName, userMail, userId, cpr, barcode, cardno, customId } =
     pickupBranchUser?.userParameters || {};
-
   const actualUserName = hasBorchk
     ? authUser?.name
     : userName || customId || userId || cpr || cardno || barcode;
@@ -170,17 +168,20 @@ export default function Wrap({
   // Email according to agency borrowerCheck (authUser.mail is from cicero and can not be changed)
   let email = hasBorchk ? authUser.mail || userMail : userMail;
 
+  const showMailMessage =
+    isLoadingBranches || (authUser?.mail && lockedMessage && hasBorchk);
+
   return (
     <OrdererInformation
       isLoadingBranches={isLoadingBranches}
       name={actualUserName}
-      mail={authUser?.mail}
+      hasAuthMail={!!authUser?.mail}
+      email={email}
       lockedMessage={lockedMessage}
       pickupBranch={pickupBranch}
       invalidClass={invalidClass}
       isLoading={isLoading}
-      hasBorchk={hasBorchk}
-      email={email}
+      showMailMessage={showMailMessage}
       onMailChange={onMailChange}
       message={message}
       validClass={validClass}

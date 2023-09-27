@@ -12,6 +12,7 @@ export default function Tooltip({
   labelToTranslate,
   customClass,
   trigger = ["focus"],
+  iconSize = 3,
   children,
 }) {
   const spanRef = useRef();
@@ -55,7 +56,7 @@ export default function Tooltip({
               src="questionmark.svg"
               alt="info"
               data-cy="tooltip-icon"
-              size={3}
+              size={iconSize}
               className={styles.tooltipCursor}
             ></Icon>
           )}
@@ -71,5 +72,6 @@ Tooltip.propTypes = {
   labelToTranslate: PropTypes.string,
   customClass: PropTypes.string,
   trigger: PropTypes.array,
+  iconSize: PropTypes.number,
   children: PropTypes.node,
 };

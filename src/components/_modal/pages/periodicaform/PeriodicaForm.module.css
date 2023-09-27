@@ -7,10 +7,12 @@
   /* scroll in modal */
   overflow-y: auto;
 }
+
 .invalid input {
   border: solid 1px var(--error);
   outline: solid 1px var(--error);
 }
+
 .errormessage {
   color: var(--error);
 }
@@ -50,5 +52,9 @@
 @media (min-width: 576px) {
   .periodicaform {
     padding: var(--pt2) var(--pt6) var(--pt4) var(--pt6);
+  }
+
+  .field {
+    padding-top: var(--pt2);
   }
 }

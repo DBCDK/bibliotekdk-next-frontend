@@ -48,6 +48,7 @@ import SetPickupBranch from "@/components/utils/SetPickupBranch";
 import { enableDebug } from "@/lib/api/api";
 
 import ErrorPage from "./500";
+import { BookmarkSyncProvider } from "@/components/hooks/useBookmarks";
 
 // kick off the polyfill!
 if (typeof window !== "undefined") {
@@ -151,6 +152,7 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
               <Modal.Page id="loanerform" component={Pages.Loanerform} />
               <Modal.Page id="receipt" component={Pages.Receipt} />
               <Modal.Page id="login" component={Pages.Login} />
+              <Modal.Page id="mobileLogin" component={Pages.MobileLogin} />
               <Modal.Page id="filter" component={Pages.Filter} />
               <Modal.Page id="localizations" component={Pages.Localizations} />
               <Modal.Page id="references" component={Pages.References} />
@@ -161,6 +163,14 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
                 component={Pages.OrderHistoryDataConsent}
               />
 
+              <Modal.Page
+                id="openAdgangsplatform"
+                component={Pages.OpenAdgangsplatform}
+              />
+              <Modal.Page
+                id="loginNotSupported"
+                component={Pages.LoginNotSupported}
+              />
               <Modal.Page
                 id="manifestationContent"
                 component={Pages.ManifestationContent}
@@ -182,6 +192,7 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
 
           {/* SetPickupBranch listens for users just logged in via adgangsplatformen */}
           <SetPickupBranch router={router} />
+          <BookmarkSyncProvider />
         </SessionProvider>
       </SWRConfig>
     </ErrorBoundary>

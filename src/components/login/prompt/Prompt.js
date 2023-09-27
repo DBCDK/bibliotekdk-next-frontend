@@ -13,9 +13,8 @@ import Divider from "@/components/base/divider";
 import Link from "@/components/base/link";
 
 import styles from "./Prompt.module.css";
-import { useState } from "react";
-import IconButton from "@/components/base/iconButton";
 import useUser from "@/components/hooks/useUser";
+import InfoDropdown from "@/components/base/infoDropdown/InfoDropdown";
 
 /**
  * Show a login prompt with a title and description
@@ -32,11 +31,11 @@ import useUser from "@/components/hooks/useUser";
 export default function LoginPrompt({
   title,
   description,
+  description2,
   buttonText = Translate({ context: "header", label: "login" }),
   linkHref = null,
   signIn,
 }) {
-  const [showMore, setShowMore] = useState(false);
   const user = useUser();
 
   return (
@@ -47,39 +46,49 @@ export default function LoginPrompt({
           <Title type="title4" tag="h3">
             {title}
           </Title>
+          {user.isAuthenticated && linkHref && (
+            <InfoDropdown
+              label="show-more"
+              buttonText={Translate({
+                context: "articles",
+                label: "how-to-get-access",
+              })}
+            >
+              <>
+                <Text type="text3" className={styles.description}>
+                  {description}
+                </Text>
+                <Text className={styles.inline} type="text3">
+                  {description2}{" "}
+                </Text>
 
-          {user.isAuthenticated && (
-            <div>
-              <IconButton
-                icon={showMore ? "arrowUp" : "arrowDown"}
-                onClick={() => setShowMore(!showMore)}
-                keepUnderline={true}
-              >
-                {Translate({
-                  context: "profile",
-                  label: showMore ? "showLess" : "showMore",
-                })}
-              </IconButton>
-            </div>
+                <Link
+                  className={`${styles.inline} ${styles.link}`}
+                  href={linkHref.href}
+                  target="_blank"
+                  border={{ top: false, bottom: true }}
+                  data_use_new_underline={false}
+                >
+                  <Text className={styles.inline} type="text3">
+                    {linkHref.text}
+                  </Text>
+                </Link>
+              </>
+            </InfoDropdown>
           )}
-          {linkHref && showMore && (
-            <>
-              <Text type="text3">{description}</Text>
-              <Link
-                href={linkHref.href}
-                target="_blank"
-                border={{ top: false, bottom: true }}
-                data_use_new_underline={false}
-              >
-                <Text type="text3">{linkHref.text}</Text>
-              </Link>
-            </>
+          {!(user.isAuthenticated && linkHref) && (
+            <Button
+              type="primary"
+              size="large"
+              onClick={signIn}
+              dataCy="article-prompt-button-log-ind"
+              className={styles.signInButton}
+            >
+              {buttonText}
+            </Button>
           )}
-          <Button type="primary" size="large" onClick={signIn}>
-            {buttonText}
-          </Button>
 
-          <Divider />
+          <Divider className={styles.devider} />
         </Col>
       </Row>
     </Container>
