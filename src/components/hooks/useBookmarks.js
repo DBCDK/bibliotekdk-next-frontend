@@ -58,6 +58,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
           bookmarks: cookies.map((bookmark) => ({
             materialId: bookmark.materialId,
             materialType: bookmark.materialType,
+            title: "",
           })),
         })
       );
@@ -82,8 +83,9 @@ const useBookmarksCore = ({ isMock = false, session }) => {
         bookmarkMutations.addBookmarks({
           bookmarks: [
             {
-              materialId: value.id,
+              materialId: value.materialId,
               materialType: value.materialType,
+              title: "",
             },
           ],
         })
