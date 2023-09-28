@@ -79,17 +79,34 @@ const useBookmarksCore = ({ isMock = false, session }) => {
       /**
        * API solution
        */
-      await bookmarkMutation.post(
-        bookmarkMutations.addBookmarks({
-          bookmarks: [
-            {
-              materialId: value.materialId,
-              materialType: value.materialType,
-              title: "",
-            },
-          ],
-        })
+
+      // Find existing
+      const existingIndex = globalBookmarks?.findIndex(
+        (bookmark) => bookmark.key === value.key
       );
+
+      if (existingIndex === -1) {
+        // Doesn't exist - Add
+        await bookmarkMutation.post(
+          bookmarkMutations.addBookmarks({
+            bookmarks: [
+              {
+                materialId: value.materialId,
+                materialType: value.materialType,
+                title: "",
+              },
+            ],
+          })
+        );
+      } else {
+        // Exists - Delete
+        const idToDelete = globalBookmarks[existingIndex].bookmarkId;
+        await bookmarkMutation.post(
+          bookmarkMutations.deleteBookmarks({
+            bookmarkIds: [idToDelete],
+          })
+        );
+      }
 
       await mutateGlobalBookmarks();
     } else {
@@ -101,12 +118,11 @@ const useBookmarksCore = ({ isMock = false, session }) => {
       const existingIndex = localBookmarks?.findIndex(
         (obj) => obj.key === value.key
       );
-      // push if not there
       if (existingIndex === -1) {
+        // push if not there
         localBookmarks?.push(value);
-      }
-      // remove if already there
-      else {
+      } else {
+        // remove if already there
         localBookmarks?.splice(existingIndex, 1);
       }
 

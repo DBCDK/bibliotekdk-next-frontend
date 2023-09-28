@@ -189,6 +189,10 @@
   width: 100px;
 }
 
+.bookmarkMaterial {
+  margin-top: var(--pt1);
+}
+
 .debtDynamicColumn {
   grid-column: 1;
 }

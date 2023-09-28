@@ -177,10 +177,7 @@ const BookmarkPage = () => {
               hasCheckbox={!isMobile || activeStickyButton !== null}
               title={bookmark?.titles?.main[0] || ""}
               creator={bookmark?.creators[0]?.display}
-              materialType={
-                bookmark?.manifestations?.bestRepresentation?.materialTypes[0]
-                  ?.specific
-              }
+              materialType={bookmark.materialType}
               image={
                 bookmark?.manifestations?.bestRepresentation?.cover?.thumbnail
               }
