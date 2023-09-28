@@ -243,11 +243,14 @@ export const ReservationButton = ({
   const { props, text } = getProps();
 
   return (
-    <div className={styles.wrapper}>
+    <>
       <TextAboveButton access={access} user={user} />
-      <Button type={buttonType} size={size} {...props}>
-        {text}
-      </Button>
-    </div>
+
+      <div className={styles.wrapper}>
+        <Button type={buttonType} size={size} {...props}>
+          {text}
+        </Button>
+      </div>
+    </>
   );
 };

@@ -1,7 +1,9 @@
 .textAboveButton {
   padding-bottom: var(--pt1);
+  flex-basis: 100%;
 }
 
 .wrapper {
   width: 100%;
+  flex: 1;
 }

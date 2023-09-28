@@ -3,6 +3,11 @@
 
 .bookmark {
   margin-left: var(--pt2);
+  max-height: var(--pt7);
+  max-width: var(--pt7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .itemContainer {
