@@ -96,11 +96,16 @@
   display: none;
 }
 
+.dropdownwrap :global(.dropdown-toggle) {
+  position: relative;
+  z-index: 2;
+}
+
 .dropdownmenu {
   margin-top: var(--pt1_5);
   border: 1px solid var(--gray);
   background-color: var(--white);
-  z-index: 1;
+  z-index: 3;
   /* bootstrap default styles override */
   border-radius: 0;
   padding: 0;
