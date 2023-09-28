@@ -12,6 +12,7 @@ export default function useOrderPageInformation(workId, pid, periodicaForm) {
     updateLoanerInfo,
     pickupBranch,
     isPickupBranchLoading,
+    isLoading: userIsLoading,
     pickupBranchUser,
     isAuthenticatedForPickupBranch,
   } = usePickupBranch(pid);
@@ -59,6 +60,7 @@ export default function useOrderPageInformation(workId, pid, periodicaForm) {
       authUser,
       loanerInfo,
       updateLoanerInfo,
+      userIsLoading,
     },
     pickupBranchInfo: {
       pickupBranch: pickupBranch,
