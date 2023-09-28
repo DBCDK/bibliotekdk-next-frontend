@@ -131,8 +131,8 @@ export function checkBlockedUser({ branchId }) {
     query checkBlockedUser($branchId: String!, $language: LanguageCode!) {
       branches(branchId: $branchId, language: $language) {
         agencyUrl
-        canBorrow {
-          canBorrow
+        borrowerStatus {
+          allowed
           statusCode
         }
         result {

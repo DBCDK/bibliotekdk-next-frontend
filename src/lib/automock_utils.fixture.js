@@ -345,8 +345,8 @@ const BRANCH_1 = {
   },
   pickupAllowed: true,
   digitalCopyAccess: false,
-  canBorrow: {
-    canBorrow: true,
+  borrowerStatus: {
+    allowed: true,
     statusCode: "OK",
   },
 };
@@ -357,8 +357,8 @@ const BRANCH_2 = {
   },
   pickupAllowed: true,
   digitalCopyAccess: false,
-  canBorrow: {
-    canBorrow: true,
+  borrowerStatus: {
+    allowed: true,
     statusCode: "OK",
   },
 };
@@ -369,8 +369,8 @@ const BRANCH_3 = {
   },
   pickupAllowed: true,
   digitalCopyAccess: true,
-  canBorrow: {
-    canBorrow: true,
+  borrowerStatus: {
+    allowed: true,
     statusCode: "OK",
   },
 };
@@ -383,8 +383,8 @@ const BRANCH_4 = {
   digitalCopyAccess: false,
   branchWebsiteUrl: "balleripraprup.dekaa",
   agencyName: "BalleRipRapRup",
-  canBorrow: {
-    canBorrow: false,
+  borrowerStatus: {
+    allowed: false,
     statusCode: "BORCHK_USER_BLOCKED_BY_AGENCY",
   },
 };
