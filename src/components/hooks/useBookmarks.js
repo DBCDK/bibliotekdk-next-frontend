@@ -82,7 +82,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
 
       // Find existing
       const existingIndex = globalBookmarks?.findIndex(
-        (obj) => obj.key === value.key
+        (bookmark) => bookmark.key === value.key
       );
 
       if (existingIndex === -1) {
