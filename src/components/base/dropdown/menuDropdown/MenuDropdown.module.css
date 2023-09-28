@@ -36,6 +36,11 @@
   background-color: var(--concrete);
 }
 
+.button {
+  display: flex;
+  align-items: center;
+}
+
 .arrowIcon {
   margin-left: var(--pt1);
   display: flex;

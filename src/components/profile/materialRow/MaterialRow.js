@@ -362,13 +362,11 @@ const MaterialRow = (props) => {
     image,
     title,
     creator,
-    creators,
     materialType,
     creationYear,
     library,
     agencyId,
     id: materialId,
-    workId,
     type,
     holdQueuePosition,
     pickUpExpiryDate,
@@ -383,6 +381,7 @@ const MaterialRow = (props) => {
     hasCheckbox = false,
     isSelected,
     onSelect,
+    onBookmarkDelete,
   } = props;
   const breakpoint = useBreakpoint();
   const { updateUserStatusInfo } = useUser();
@@ -466,7 +465,7 @@ const MaterialRow = (props) => {
                 label: "order",
               })}
             </Button>
-            <IconButton>
+            <IconButton onClick={onBookmarkDelete}>
               {Translate({
                 context: "bookmark",
                 label: "remove",
@@ -618,6 +617,7 @@ const MaterialRow = (props) => {
               [styles.materialRow_green]: status === "GREEN",
               [styles.materialRow_red]: status === "RED",
               [styles.materialRow_animated]: materialId === removedOrderId,
+              [styles.materialRow_bookmark]: type === "BOOKMARK",
               [styles.debtRow]: isDebtRow,
             })}
             data-cy={dataCy}
@@ -638,7 +638,6 @@ const MaterialRow = (props) => {
               />
             </div>
           )}
-
           <div
             className={cx(styles.materialInfo, {
               [styles.debtMaterial]: isDebtRow,
@@ -660,7 +659,11 @@ const MaterialRow = (props) => {
                         keepVisible: true,
                       },
                     }}
-                    href={getWorkUrl(title, creators, workId)}
+                    href={getWorkUrl(
+                      title,
+                      [{ nameSort: creator || "", display: creator || "" }],
+                      materialId
+                    )}
                     className={styles.blackUnderline}
                   >
                     {children}
@@ -698,13 +701,8 @@ const MaterialRow = (props) => {
               )}
             </div>
           </div>
-
           <div className={cx({ [styles.debtDynamicColumn]: isDebtRow })}>
             {renderDynamicColumn()}
-          </div>
-
-          <div className={cx({ [styles.debtLibrary]: isDebtRow })}>
-            <Text type="text2">{library}</Text>
           </div>
 
           {type !== "BOOKMARK" && (
@@ -746,6 +744,7 @@ MaterialRow.propTypes = {
   agencyId: PropTypes.string,
   removedOrderId: PropTypes.string,
   setRemovedOrderId: PropTypes.func,
+  onBookmarkDelete: PropTypes.func,
   isSelected: PropTypes.bool,
   onSelect: PropTypes.func,
   skeleton: PropTypes.bool,
