@@ -75,7 +75,6 @@ const useBookmarksCore = ({ isMock = false, session }) => {
    * Set a value in bookmark list
    */
   const setBookmark = async (value) => {
-    console.log("hello");
     if (isAuthenticated) {
       /**
        * API solution
