@@ -299,7 +299,7 @@ export default function Wrap(props) {
     error: manifestationError,
   } = manifestationResponse;
 
-  if (isManifestationsLoading) {
+  if (isManifestationsLoading || userInfo.userIsLoading) {
     return <OrderSkeleton isSlow={isManifestationsSlow} />;
   }
   // check if user logged in via mitId - and has no connection to any libraries
