@@ -1,67 +1,62 @@
 .bookmark {
-  background-color: transparent;
-  border-radius: 50%;
+  background-color: var(--white);
+  display: flex;
+  border: 2px solid var(--gray);
 }
 
-.bookmark i {
+.bookmark {
   cursor: pointer;
-  box-shadow: var(--shadow-effect);
 }
 
 .bookmark i svg path {
   stroke: var(--gray);
+  /*fill: var(--white);*/
 }
 
 /* 
-* Hover
+* Hover && focus
 *
 */
+.bookmark:hover {
+  border-color: var(--blue);
+}
 
 .bookmark:hover i svg path {
   stroke: blue;
 }
 
-.bookmark:hover {
-  /* bootstrap outline override */
-  outline: none;
-
-  box-sizing: content-box;
-  border: 2px solid var(--blue);
+.bookmark:focus-visible {
+  border-color: black;
 }
 
-.bookmark:hover i {
-  box-shadow: none;
+.bookmark:focus-visible i svg path {
+  stroke: blue;
 }
 
-/* 
+/*
 * Selected
 *
 */
+.bookmark.selected {
+  border-color: var(--blue);
+}
 
-.bookmark.selected i {
+.bookmark.selected:hover {
+  border-color: black;
+}
+
+.bookmark.selected {
   /* Use of important to override dynamic inline style */
-  background-color: var(--blue) !important;
+  background-color: var(--blue);
+}
+
+.bookmark.selected:hover {
+  background-color: black;
 }
 
 .bookmark.selected i svg path {
   stroke: var(--white);
-}
-
-/* 
-* focus
-*
-*/
-.bookmark:focus {
-  box-sizing: content-box;
-  border: 2px solid var(--blue);
-}
-
-.bookmark:focus i {
-  box-shadow: none;
-}
-
-.bookmark:focus i svg path {
-  stroke: blue;
+  /*fill: var(--blue);*/
 }
 
 .bookmark:focus {

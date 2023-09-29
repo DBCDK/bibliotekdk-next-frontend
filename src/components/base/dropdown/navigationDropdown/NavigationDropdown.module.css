@@ -1,0 +1,110 @@
+.wrapper {
+  font-family: var(--ibm_plex_sansregular);
+  position: relative;
+  width: 50%;
+  height: wrap-content;
+  padding-bottom: var(--pt3);
+}
+
+@media (min-width: 992px) {
+  .wrapper {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .wrapper {
+    width: 100%;
+    max-width: 400px;
+  }
+}
+
+.wrapper_expanded {
+  padding-bottom: var(--pt5);
+  border-bottom: none;
+}
+
+.chevron {
+  display: flex;
+  width: 20px;
+  height: 20px;
+  transition: transform 300ms ease;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+  align-self: center;
+}
+
+.menu {
+  width: 100%;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--gray);
+  background-color: var(--white);
+}
+
+.menuItem {
+  position: relative;
+  padding: var(--pt2) var(--pt2);
+  color: inherit;
+  text-decoration: none;
+  text-align: left;
+  height: 100%;
+  border-bottom: 1px solid var(--gray);
+}
+
+.menuItem:last-child {
+  border-bottom: none;
+}
+
+.menuItem:hover,
+.menuItem:focus {
+  /* overwrite link component styling */
+  color: inherit !important;
+  outline: solid 2px var(--blue);
+}
+
+.menuItem_selected {
+  margin-top: 2px;
+  background-color: var(--concrete);
+}
+
+.checkmark {
+  position: absolute;
+  right: var(--pt2);
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+
+.menuButton {
+  background-color: var(--white);
+  padding: var(--pt2) var(--pt2);
+  outline: 1px solid var(--gray);
+  min-width: 125px;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+}
+
+.menuButton:hover {
+  cursor: pointer;
+}
+
+.menuButton:hover,
+.menuButton:focus {
+  outline: solid 2px var(--blue);
+}
+
+.icon {
+  transition: transform 0.3s ease;
+}
+
+.icon_open {
+  transform: rotate(180deg);
+}

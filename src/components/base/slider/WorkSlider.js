@@ -14,7 +14,7 @@ import useWindowSize from "@/lib/useWindowSize";
 import styles from "./WorkSlider.module.css";
 import Card from "@/components/base/card";
 import MaterialCard from "@/components/base/materialcard/MaterialCard";
-import { templateForVerticalWorkCard } from "@/components/base/materialcard/templatesForMaterialCard";
+import { templateForVerticalWorkCard } from "@/components/base/materialcard/templates/templates";
 import ScrollSnapSlider from "@/components/base/scrollsnapslider/ScrollSnapSlider";
 import { useBundledElementVisibleById } from "@/components/hooks/useElementVisible";
 

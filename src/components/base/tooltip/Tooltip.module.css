@@ -1,0 +1,24 @@
+.popover {
+  border-radius: 0;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.tooltipContainer {
+  padding: var(--pt1) var(--pt1);
+  max-width: 240px;
+}
+
+.tooltipCursor {
+  cursor: pointer;
+}
+
+.tooltipWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid transparent;
+}
+
+.tooltipWrap:focus {
+  border-bottom: 1px solid var(--blue);
+}

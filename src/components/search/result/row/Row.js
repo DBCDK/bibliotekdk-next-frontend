@@ -5,9 +5,13 @@ import Translate from "@/components/base/translate";
 
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
+import BookmarkDropdown from "@/components/work/overview/bookmarkDropdown/BookmarkDropdown";
 
 import Cover from "@/components/base/cover";
-import { encodeTitleCreator } from "@/lib/utils";
+import {
+  encodeTitleCreator,
+  extractCreatorsPrioritiseCorporation,
+} from "@/lib/utils";
 import Link from "@/components/base/link";
 
 import styles from "./Row.module.css";
@@ -49,18 +53,18 @@ function TitlesForSearch({ work, isLoading }) {
       tag="h2"
       lines={4}
       clamp={true}
-      title={titles?.full?.join(" ")}
-      data-cy={"ResultRow-title"}
+      title={titles?.join(" ")}
+      dataCy={"ResultRow-title"}
       skeleton={isLoading}
       className={`${styles.display_inline}`}
     >
       <div id={titlesElementId} className={`${styles.wrap_3_lines}`}>
         <RenderTitlesWithoutLanguage titles={titles} />
-        {!titleClamped && titles?.full?.length < 2 && (
+        {!titleClamped && titles?.length < 2 && (
           <RenderLanguageAddition work={work} type={"title6"} />
         )}
       </div>
-      {(titleClamped || titles?.full?.length > 1) && (
+      {(titleClamped || titles?.length > 1) && (
         <RenderLanguageAddition work={work} type={"title6"} />
       )}
     </Title>
@@ -102,7 +106,9 @@ export default function ResultRow({
   onClick,
   isLoading,
 }) {
-  const creatorName = work?.creators?.[0]?.display;
+  const creatorsNames = extractCreatorsPrioritiseCorporation(
+    work?.creators
+  )?.map((creator) => creator.display);
 
   const { filters } = useFilters();
 
@@ -120,7 +126,7 @@ export default function ResultRow({
   uniqueMaterialTypes.sort(sortMaterialTypesByFilter(materialTypes));
 
   return (
-    <div className={styles.search}>
+    <article className={styles.search}>
       <Link
         a={true}
         border={{ top: { keepVisible: true }, bottom: { keepVisible: true } }}
@@ -130,7 +136,7 @@ export default function ResultRow({
           query: {
             title_author: encodeTitleCreator(
               work?.titles?.main?.[0],
-              work?.creators?.[0]?.display
+              work?.creators
             ),
             workId: work?.workId,
           },
@@ -139,6 +145,12 @@ export default function ResultRow({
         onClick={onClick}
       >
         <div className={styles.row_wrapper}>
+          <Cover
+            className={styles.cover}
+            src={coverDetail}
+            skeleton={!coverDetail && !work?.manifestations}
+            size="fill-width"
+          />
           <div className={styles.col_wrapper}>
             <TitlesForSearch work={work} isLoading={isLoading} />
             <Text
@@ -147,7 +159,7 @@ export default function ResultRow({
               skeleton={(!work?.creators && isLoading) || !work?.creators}
               lines={1}
             >
-              {creatorName || " "}
+              {creatorsNames?.join(", ") || " "}
             </Text>
             <div className={styles.materials}>
               <Text
@@ -164,46 +176,51 @@ export default function ResultRow({
               {uniqueMaterialTypes?.length > 0 &&
                 uniqueMaterialTypes?.map((materialTypeArray) => {
                   return (
-                    <Link
-                      border={{ top: false, bottom: { keepVisible: true } }}
-                      href={{
-                        pathname: "/materiale/[title_author]/[workId]",
-                        query: {
-                          title_author: encodeTitleCreator(
-                            work?.titles?.main?.[0],
-                            work?.creators?.[0]?.display
-                          ),
-                          type: formatMaterialTypesToUrl(materialTypeArray),
-                          workId: work?.workId,
-                        },
-                      }}
-                      key={materialTypeArray}
-                      tabIndex="-1"
+                    <span
+                      key={`material-${work?.workId}`}
+                      className={styles.material}
                     >
-                      <Text
-                        type={"text4"}
-                        tag={"span"}
-                        dataCy={
-                          "text-" +
-                          formatMaterialTypesToCypress(materialTypeArray)
-                        }
+                      <Link
+                        border={{ top: false, bottom: { keepVisible: true } }}
+                        href={{
+                          pathname: "/materiale/[title_author]/[workId]",
+                          query: {
+                            title_author: encodeTitleCreator(
+                              work?.titles?.main?.[0],
+                              work?.creators
+                            ),
+                            type: formatMaterialTypesToUrl(materialTypeArray),
+                            workId: work?.workId,
+                          },
+                        }}
+                        key={materialTypeArray}
+                        tabIndex="-1"
                       >
-                        {formatMaterialTypesToPresentation(materialTypeArray)}
-                      </Text>
-                    </Link>
+                        <Text
+                          type={"text4"}
+                          tag={"span"}
+                          dataCy={
+                            "text-" +
+                            formatMaterialTypesToCypress(materialTypeArray)
+                          }
+                        >
+                          {formatMaterialTypesToPresentation(materialTypeArray)}
+                        </Text>
+                      </Link>
+                    </span>
                   );
                 })}
             </div>
           </div>
-          <Cover
-            className={styles.cover}
-            src={coverDetail}
-            skeleton={!coverDetail && !work?.manifestations}
-            size="fill-width"
-          />
         </div>
       </Link>
-    </div>
+      <BookmarkDropdown
+        className={styles.BookmarkDropdown}
+        workId={work?.workId}
+        materialTypes={uniqueMaterialTypes}
+        size={{ w: 4, h: 4 }}
+      />
+    </article>
   );
 }
 ResultRow.propTypes = {

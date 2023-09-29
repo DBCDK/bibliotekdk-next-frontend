@@ -79,7 +79,7 @@ export function Related({ data, isLoading }) {
       {(data.length > 0 || isLoading) && (
         <div>
           <Skip
-            id="view-all-filters"
+            id="search-result-section"
             className={styles.skip}
             label={Translate({
               context: "search",

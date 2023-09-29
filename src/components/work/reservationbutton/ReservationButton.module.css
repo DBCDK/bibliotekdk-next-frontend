@@ -1,13 +1,9 @@
-.textAboveButton{
-    padding-bottom: var(--pt1);
+.textAboveButton {
+  padding-bottom: var(--pt1);
+  flex-basis: 100%;
 }
 
-.info {
-    padding-top: var(--pt1);
-    height: auto;
+.wrapper {
+  width: 100%;
+  flex: 1;
 }
-
-.info span{
-    display: block;
-}
-

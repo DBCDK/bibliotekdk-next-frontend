@@ -4,17 +4,30 @@ import {
   chainFunctions,
 } from "../utils";
 
-test("encodeTitleCreator", () => {
-  const actual = encodeTitleCreator("en Bogtitel", "En Forfatter");
-  const expected = "en-bogtitel_en-forfatter";
-  expect(actual).toEqual(expected);
+describe("encodeTitleCreator", () => {
+  it("regular", () => {
+    const actual = encodeTitleCreator("en Bogtitel", [
+      { display: "En Forfatter" },
+    ]);
+    const expected = "en-bogtitel_en-forfatter";
+    expect(actual).toEqual(expected);
+  });
+
+  it("should prioritise corporations", () => {
+    const actual = encodeTitleCreator("en bogtitel", [
+      { display: "ikke den her", __typename: "Person" },
+      { display: "den her forfatter", __typename: "Corporation" },
+    ]);
+    const expected = "en-bogtitel_den-her-forfatter";
+    expect(actual).toEqual(expected);
+  });
 });
 
 test("getCanonicalWorkUrl", () => {
   const work = {
     id: "some-work-id",
     title: "en Bogtitel",
-    creators: [{ name: "En Forfatter" }],
+    creators: [{ display: "En Forfatter" }],
   };
   const actual = getCanonicalWorkUrl(work);
   const expected =

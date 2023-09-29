@@ -7,15 +7,8 @@
   padding-top: var(--pt15);
 }
 
-.search {
-  margin-top: var(--pt3);
-}
-
 @media (min-width: 992px) {
   .top {
     padding-top: 176px;
-  }
-  .back {
-    display: initial;
   }
 }

@@ -1,16 +1,8 @@
-.linkshowmore {
-}
 .linkshowless {
   margin: auto 0 auto 0;
 }
 .hide {
   display: none;
-}
-
-.flexnav {
-  display: none;
-  width: 100%;
-  padding-right: var(--pt4);
 }
 
 .buttonflexnav {
@@ -26,10 +18,6 @@
   flex-wrap: wrap;
 }
 
-.iconinline {
-  margin-right: var(--pt1);
-}
-
 .marginauto {
   margin-left: auto;
 }
@@ -38,13 +26,6 @@
   display: flex;
   width: 100%;
   height: 50%;
-}
-
-.expandedinput {
-  height: var(--pt5);
-}
-
-.expandedsuggestercontainer {
 }
 
 .button {
@@ -58,10 +39,6 @@
   cursor: pointer;
   overflow: hidden;
   padding: var(--pt2) var(--pt6) var(--pt2) var(--pt6);
-}
-
-.suggestionswrap {
-  width: 100%;
 }
 
 .buttoninline {
@@ -83,10 +60,6 @@
 }
 
 @media (max-width: 992px) {
-  .flexnav {
-    display: flex;
-    padding: 0;
-  }
   .flex {
     /*flex-grow: 2;*/
     display: flex;
@@ -98,9 +71,6 @@
   }
   .suggesterright {
     display: block;
-    width: 100%;
-  }
-  .suggestionswrap {
     width: 100%;
   }
   .marginauto {

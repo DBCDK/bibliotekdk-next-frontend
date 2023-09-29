@@ -1,8 +1,5 @@
 .icon {
   display: inline-block;
-  /*  hack for removing whitespace around img tag */
-  font-size: 0px;
-
 }
 
 /* auto-scale child*/

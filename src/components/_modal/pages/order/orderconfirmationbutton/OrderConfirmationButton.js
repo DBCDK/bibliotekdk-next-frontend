@@ -1,11 +1,12 @@
-import styles from "@/components/_modal/pages/order/Order.module.css";
+// eslint-disable-next-line css-modules/no-unused-class
+import styles from "./OrderConfirmationButton.module.css";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import Button from "@/components/base/button";
 import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
-import { extractClassNameAndMessage } from "@/components/_modal/pages/order/utils";
+import { extractClassNameAndMessage } from "@/components/_modal/pages/order/utils/order.utils";
 import { AccessEnum } from "@/lib/enums";
 
 function OrderConfirmationButton({
@@ -15,9 +16,9 @@ function OrderConfirmationButton({
   availableAsPhysicalCopy,
   isDigitalCopy,
   isLoading,
-  blockedUser,
   onClick,
   context,
+  blockedForBranch,
 }) {
   return (
     <>
@@ -58,9 +59,9 @@ function OrderConfirmationButton({
         </div>
         <Button
           disabled={
-            blockedUser ||
-            blockedUser === null ||
-            (!availableAsDigitalCopy && !availableAsPhysicalCopy)
+            (!availableAsDigitalCopy && !availableAsPhysicalCopy) ||
+            isLoading ||
+            blockedForBranch
           }
           skeleton={isLoading}
           onClick={onClick}
@@ -79,12 +80,14 @@ OrderConfirmationButton.propTypes = {
   availableAsPhysicalCopy: PropTypes.any,
   skeleton: PropTypes.any,
   onClick: PropTypes.func,
+  blockedForBranch: PropTypes.bool,
 };
 export default function Wrap({
   context,
   validated,
   failedSubmission,
   onClick,
+  blockedForBranch,
 }) {
   const { workId, pid, periodicaForm } = context;
   const { invalidClass, actionMessage } = extractClassNameAndMessage(
@@ -92,22 +95,11 @@ export default function Wrap({
     failedSubmission
   );
 
-  const {
-    accessTypeInfo,
-    pickupBranchInfo,
-    blockedUserResponse,
-    workResponse,
-  } = useOrderPageInformation(workId, pid, periodicaForm);
+  const { accessTypeInfo, pickupBranchInfo, workResponse } =
+    useOrderPageInformation(workId, pid, periodicaForm);
 
   const { isLoading: isWorkLoading } = workResponse;
-  const { isLoading: isBlockedUserLoading } = blockedUserResponse;
   const { isLoading: isPickupBranchLoading } = pickupBranchInfo;
-
-  const blockedUser =
-    blockedUserResponse?.data?.branches?.result
-      ?.map((res) => res.userIsBlocked)
-      .filter((singleUserIsBlocked) => singleUserIsBlocked === true).length > 0;
-
   const { isDigitalCopy, availableAsDigitalCopy, availableAsPhysicalCopy } =
     accessTypeInfo;
 
@@ -118,10 +110,10 @@ export default function Wrap({
       availableAsDigitalCopy={availableAsDigitalCopy}
       availableAsPhysicalCopy={availableAsPhysicalCopy}
       isDigitalCopy={isDigitalCopy}
-      isLoading={isWorkLoading || isBlockedUserLoading || isPickupBranchLoading}
-      blockedUser={blockedUser}
+      isLoading={isWorkLoading || isPickupBranchLoading}
       onClick={onClick}
       context={context}
+      blockedForBranch={blockedForBranch}
     />
   );
 }

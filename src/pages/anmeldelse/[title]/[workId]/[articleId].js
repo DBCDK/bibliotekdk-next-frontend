@@ -21,7 +21,7 @@ import { manifestationForLectorReview } from "@/lib/api/manifestation.fragments"
 import LectorReviewPage from "@/components/article/lectorreview/LectorReviewPage";
 
 export function ReviewPage(props) {
-  const { article, notFound, isLoading, articleId } = props;
+  const { article, notFound, isLoading, articleId, material } = props;
 
   const router = useRouter();
 
@@ -34,7 +34,11 @@ export function ReviewPage(props) {
         <ContentSkeleton />
       ) : (
         <>
-          {article && <Content data={{ article }} />}
+          {article && (
+            <>
+              <Content data={{ article }} backToMaterial={material} />
+            </>
+          )}
 
           <ArticleLoginPrompt articleId={articleId} />
         </>
@@ -97,11 +101,9 @@ export default function Wrap() {
   const { data, isLoading: isLoadingWork } = useData(
     workFragments.reviews({ workId })
   );
-
   const publicReviewData = data?.work?.relations?.hasReview?.filter((el) =>
     el.access?.find((access) => access.id === articleId)
   );
-
   const {
     data: lectorReviewData,
     isLoading: lectorReviewIsLoading,
@@ -139,8 +141,18 @@ export default function Wrap() {
     );
   }
 
+  // make a heading for infomedia articles - just like librarians reviews
+  const material = {
+    pid: publicReviewData[0]?.pid,
+    titles: { full: data?.work?.titles?.main },
+    materialTypes: data?.work?.materialTypes,
+    creators: data?.work?.creators,
+    ownerWork: { workId: data?.work?.workId },
+  };
+
   return (
     <ReviewPage
+      material={material}
       article={article}
       notFound={data && !publicReviewData}
       isLoading={isLoadingWork || isLoadingInfomedia}

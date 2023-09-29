@@ -42,10 +42,14 @@ export default function WorkPage() {
   useMemo(() => {
     if (query.type) {
       router.replace(
-        { pathname: router.pathname, query },
+        { pathname: router.pathname, query: query },
         {
-          pathname: router.asPath.replace(/\?.*/, ""),
-          query,
+          pathname: router.asPath.split("#")[0].replace(/\?.*/, ""),
+          query: query,
+          ...(window.location.hash &&
+            !router.query.type && {
+              hash: window.location.hash,
+            }),
         },
         { shallow: true, scroll: false }
       );
@@ -97,8 +101,8 @@ const serverQueries = Object.values(workFragments);
  */
 function extractFixedUrl(queryRes, ctx) {
   const title = queryRes?.data?.work?.titles?.full?.[0];
-  const creator = queryRes?.data?.work?.creators?.[0]?.display;
-  const title_creator = encodeTitleCreator(title, creator);
+  const creators = queryRes?.data?.work?.creators;
+  const title_creator = encodeTitleCreator(title, creators);
 
   // look for materiale to handle "/materiale/materiale/[workId]" in url
   const fixedUrl = ctx.asPath.replace(

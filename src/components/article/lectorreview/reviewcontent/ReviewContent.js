@@ -3,9 +3,9 @@
  */
 
 import Section from "@/components/base/section";
-import styles from "@/components/article/lectorreview/LectorReviewPage.module.css";
+import styles from "./ReviewContent.module.css";
 import Col from "react-bootstrap/Col";
-import { Title } from "@/components/base/title/Title";
+import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import { getWorkUrl } from "@/lib/utils";
@@ -30,7 +30,7 @@ function substituteContentSubstitute(single) {
       workId: manifestation?.ownerWork?.workId,
       link: getWorkUrl(
         manifestation?.titles?.full?.join(": "),
-        manifestation?.creators?.[0]?.display,
+        manifestation?.creators,
         manifestation?.ownerWork?.workId
       ),
     };

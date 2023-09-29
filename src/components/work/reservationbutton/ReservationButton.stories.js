@@ -1,9 +1,9 @@
 import { StoryDescription, StoryTitle } from "@/storybook";
-import ReservationButton, {
-  OrderButton,
+import ReservationButtonWrapper, {
+  ReservationButton,
 } from "@/components/work/reservationbutton/ReservationButton";
 import { AccessEnum } from "@/lib/enums";
-import automock_utils from "@/components/_modal/pages/automock_utils";
+import automock_utils from "@/lib/automock_utils.fixture";
 import merge from "lodash/merge";
 
 const exportedObject = {
@@ -26,11 +26,11 @@ function ReservationButtonComponentBuilder({
   const descriptionName = storyNameOverride ? storyNameOverride : type;
   return (
     <div>
-      <StoryTitle>OrderButton - {descriptionName}</StoryTitle>
+      <StoryTitle>ReservationButton - {descriptionName}</StoryTitle>
       <StoryDescription>
-        The OrderButton based on the type: {descriptionName}
+        The ReservationButton based on the type: {descriptionName}
       </StoryDescription>
-      <ReservationButton
+      <ReservationButtonWrapper
         workId={workId}
         selectedPids={selectedPids.map((pid) => pid)}
         singleManifestation={false}
@@ -221,7 +221,7 @@ ReservationButtonDisabled.story = {
   }),
 };
 
-export function OrderButtonNotLoggedIn() {
+export function ReservationButtonNotLoggedIn() {
   const descriptionName = "Not logged in";
   const user = { isAuthenticated: false };
   const access = [
@@ -234,12 +234,13 @@ export function OrderButtonNotLoggedIn() {
 
   return (
     <div>
-      <StoryTitle>OrderButton - {descriptionName}</StoryTitle>
+      <StoryTitle>ReservationButton - {descriptionName}</StoryTitle>
       <StoryDescription>
-        The OrderButton based on the type: {descriptionName}
+        The ReservationButton based on the type: {descriptionName}
       </StoryDescription>
-      <OrderButton
+      <ReservationButton
         user={user}
+        singleManifestation={true}
         access={access}
         onHandleGoToLogin={() => alert("DU SKAL LOGGE IND")}
       />
@@ -325,3 +326,116 @@ ReservationButtonSlowResponse.story = {
     },
   }),
 };
+
+const descriptionName = "Not logged in flow";
+const user = {
+  authUser: {},
+  isAuthenticated: false,
+  isGuestUser: false,
+  isLoading: false,
+  isLoggedIn: false,
+  loanerInfo: {
+    debt: [],
+    loans: [],
+    orders: [],
+    agency: {},
+    userParameters: {},
+  },
+  updateLoanerInfo: () => console.log("updateLoanerInfo"),
+  updateUserStatusInfo: () => console.log("updateUserStatusInfo"),
+};
+const access = [
+  {
+    pid: "870970-basis:62831731",
+    titles: ["Fiskehuset"],
+    workTypes: ["LITERATURE"],
+    id: "infomediaUrl",
+    __typename: "InterLibraryLoan",
+    loanIsPossible: true,
+    materialTypesArray: ["bog"],
+  },
+];
+
+const allEnrichedAccesses = {
+  pid: "870970-basis:62831731",
+  titles: ["Fiskehuset"],
+  workTypes: ["LITERATURE"],
+  id: "infomediaUrl",
+  __typename: "InterLibraryLoan",
+  loanIsPossible: true,
+  materialTypesArray: ["bog"],
+};
+const buttonType = "primary";
+const size = "large";
+const pids = ["870970-basis:62831731"];
+const workId = "870970-basis:62724102";
+
+export function ReservationButtonLoginFlow() {
+  return (
+    <div>
+      <StoryTitle>ReservationButton - {descriptionName}</StoryTitle>
+      <StoryDescription>
+        The ReservationButton based on the type: {descriptionName}
+      </StoryDescription>
+      <ReservationButton
+        access={access}
+        user={user}
+        pids={pids}
+        workId={workId}
+        singleManifestation={true}
+        onHandleGoToLogin={() => alert("DU SKAL LOGGE IND")}
+        allEnrichedAccesses={allEnrichedAccesses}
+        buttonType={buttonType}
+        size={size}
+      />
+    </div>
+  );
+}
+
+ReservationButtonLoginFlow.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {},
+    },
+    nextRouter: {
+      showInfo: true,
+      query: {},
+    },
+  },
+});
+
+export function ReservationButtonNotLoggedInFlow() {
+  user.isAuthenticated = true;
+  user.isLoggedIn = true;
+  return (
+    <div>
+      <StoryTitle>ReservationButton - {descriptionName}</StoryTitle>
+      <StoryDescription>
+        The ReservationButton based on the type: {descriptionName}
+      </StoryDescription>
+      <ReservationButton
+        access={access}
+        user={user}
+        pids={pids}
+        workId={workId}
+        singleManifestation={true}
+        onHandleGoToLogin={() => alert("DU SKAL LOGGE IND")}
+        allEnrichedAccesses={allEnrichedAccesses}
+        buttonType={buttonType}
+        size={size}
+      />
+    </div>
+  );
+}
+
+ReservationButtonNotLoggedInFlow.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {},
+    },
+    nextRouter: {
+      showInfo: true,
+      query: {},
+    },
+  },
+});

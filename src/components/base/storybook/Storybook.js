@@ -4,6 +4,7 @@ import Button from "@/components/base/button";
 
 import styles from "./Storybook.module.css";
 import { useRouter } from "next/router";
+import cx from "classnames";
 
 /**
  * Function to copy text to clipboard
@@ -85,7 +86,7 @@ export function StoryDescription({ children, copy }) {
  * @param {bool} demo // makes spaces visible
  * @param {bool} copy // adds a copy button
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export function StorySpace({
   space = "2",
@@ -93,16 +94,36 @@ export function StorySpace({
   demo = false,
   copy,
 }) {
-  const demoClass = demo ? styles.demo : "";
   const key = `${direction}-space-${space}`;
-  const spaceClass = styles[key];
 
   if (copy) {
     const el = `<StorySpace direction="${direction}" space="2" />`;
     return <CopyButton el={el} txt="Copy space element" />;
   }
 
-  return <div className={`${spaceClass} ${demoClass}`} />;
+  return (
+    <div
+      className={cx({
+        [styles["v-space-1"]]: key === "v-space-1",
+        [styles["v-space-2"]]: key === "v-space-2",
+        [styles["v-space-3"]]: key === "v-space-3",
+        [styles["v-space-4"]]: key === "v-space-4",
+        [styles["v-space-5"]]: key === "v-space-5",
+        [styles["v-space-6"]]: key === "v-space-6",
+        [styles["v-space-7"]]: key === "v-space-7",
+        [styles["v-space-8"]]: key === "v-space-8",
+        [styles["h-space-1"]]: key === "h-space-1",
+        [styles["h-space-2"]]: key === "h-space-2",
+        [styles["h-space-3"]]: key === "h-space-3",
+        [styles["h-space-4"]]: key === "h-space-4",
+        [styles["h-space-5"]]: key === "h-space-5",
+        [styles["h-space-6"]]: key === "h-space-6",
+        [styles["h-space-7"]]: key === "h-space-7",
+        [styles["h-space-8"]]: key === "h-space-8",
+        [styles.demo]: demo,
+      })}
+    />
+  );
 }
 
 /**

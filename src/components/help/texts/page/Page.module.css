@@ -1,17 +1,17 @@
 .content {
-    margin-top: var(--pt12);
+  margin-top: var(--pt12);
 }
 
-.helpmenu{
-    display: none;
+.helpmenu {
+  display: none;
 }
 
 @media (min-width: 992px) {
-    .helpmenu {
-        display: block;
-    }
+  .helpmenu {
+    display: block;
+  }
 }
 
-.helptext img{
-    max-width: 100%;
+.helptext img {
+  max-width: 100%;
 }

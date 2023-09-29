@@ -11,7 +11,8 @@ export default function useDataForWorkRelationsWorkTypeFactory({ workId }) {
     isLoading: relationsIsLoading,
     error: relationsError,
   } = useData(
-    workFragments.workForWorkRelationsWorkTypeFactory({ workId: workId })
+    workId &&
+      workFragments.workForWorkRelationsWorkTypeFactory({ workId: workId })
   );
 
   return {

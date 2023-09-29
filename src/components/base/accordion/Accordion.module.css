@@ -1,39 +1,48 @@
 .element {
-  border-bottom: 1px solid var(--iron);
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
 }
 
-.element:first-child {
-  border-top: 1px solid var(--iron);
+.wrapper:focus-visible {
+  z-index: 2;
 }
 
-.element .header {
+.wrapper:hover {
+  z-index: 3;
+}
+
+.wrapper {
+  width: auto;
+
+  --underline-bottom-hover-color: var(--blue);
+  --underline-bottom-color: var(--iron);
+  --underline-top-hover-color: var(--blue);
+  --underline-top-color: var(--iron);
+  --underline-font-color: var(--mine-shaft);
+  --underline-font-hover-color: var(--mine-shaft);
+  margin-bottom: calc(var(--underline-height) * -1);
+  margin-inline: calc(var(--pt2) * -1);
+}
+
+.header_content {
   display: flex;
   align-items: center;
+  gap: var(--pt2);
   justify-content: space-between;
-  padding: var(--pt2) 0;
-  cursor: pointer;
+  padding: var(--pt2);
 }
 
-.element .header:hover {
-  border-style: solid;
-  border-width: 1px 0 1px 0;
-  border-color: var(--blue);
-  margin: -1px 0 -1px 0;
-}
-
-.element .header p {
-  margin-right: var(--pt2);
+.link_on_year {
+  --underline-bottom-color: var(--blue);
+  --underline-bottom-hover-color: var(--blue);
+  --underline-font-hover-color: var(--blue);
 }
 
 .firstelement {
   padding-left: var(--pt2);
+  display: inline;
   width: 20%;
-}
-
-.textbox {
-  display: grid;
-  grid-template-columns: 30% 38% 32%;
-  align-items: center;
 }
 
 .textbox {
@@ -41,21 +50,18 @@
   width: 100%;
 }
 
-.textbox p:first-of-type {
-  font-weight: var(--body-font-semibold);
+.textbox span:first-of-type {
+  font-family: var(--body-font-semibold);
   display: block;
 }
-.textbox p {
+
+.textbox span {
   justify-self: start;
   display: none;
 }
 
-.content > div {
-  padding-top: var(--pt2);
-}
-
-.content p {
-  padding-right: var(--pt7);
+.expandIcon {
+  padding-inline: var(--pt2);
 }
 
 .skeleton {
@@ -66,12 +72,12 @@
   background-color: var(--concrete);
 }
 
-@media (min-width: 992px) {
-  .content p {
-    padding-right: var(--pt10);
-  }
+.content {
+  padding-top: var(--pt2);
+}
 
-  .textbox p {
+@media (min-width: 992px) {
+  .textbox span {
     display: block;
   }
 
@@ -86,7 +92,11 @@
     width: 100%;
   }
 
-  .element .header {
-    padding: var(--pt2) var(--pt3) var(--pt2) 0;
+  .header_content {
+    padding: var(--pt2) 0 var(--pt2) 0;
+  }
+
+  .wrapper {
+    margin-inline: 0;
   }
 }

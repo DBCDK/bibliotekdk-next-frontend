@@ -59,7 +59,7 @@ export async function fetcher(
   const apiUrl =
     apiUrlFromQuery && config[apiUrlFromQuery]?.url
       ? config[apiUrlFromQuery]?.url
-      : config.api.url;
+      : config.fbi_api.url;
 
   const headers = {
     "Content-Type": "application/json",
@@ -146,6 +146,9 @@ export function useMutate() {
     setError(null);
     try {
       const res = await fetcherImpl(key);
+      if (res.errors) {
+        throw res.errors[0].message;
+      }
       setData(res);
     } catch (e) {
       setError(e);
@@ -176,7 +179,8 @@ export function useData(query) {
   const [isSlow, setIsSlow] = useState(false);
 
   // Fetch data
-  const { data, error, mutate } = useSWR(key, fetcherImpl, {
+  const { data, error, mutate, isValidating } = useSWR(key, fetcherImpl, {
+    keepPreviousData: true,
     loadingTimeout: query?.slowThreshold || 5000,
     onLoadingSlow: () => setIsSlow(true),
   });
@@ -187,6 +191,7 @@ export function useData(query) {
     isLoading: query && !data,
     isSlow: data ? false : isSlow,
     mutate,
+    isValidating,
   };
 }
 

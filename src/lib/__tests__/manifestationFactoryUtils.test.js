@@ -421,6 +421,7 @@ describe("manifestationMaterialTypeUtils", () => {
       "manifestationsByType",
       "flatPidsByType",
       "flattenedGroupedSortedManifestations",
+      "flattenGroupedSortedManifestationsByType",
       "manifestationsEnrichedWithDefaultFrontpage",
     ];
     expect(Object.keys(actual)).toEqual(expectedKeys);

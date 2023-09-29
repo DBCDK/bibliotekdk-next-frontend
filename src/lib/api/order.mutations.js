@@ -23,6 +23,7 @@ export function submitOrder({
       submitOrder(input: $input){
         status
         orderId
+        ok
       }
     }
     `,
@@ -73,6 +74,31 @@ export function submitPeriodicaArticleOrder({
         titleOfComponent,
         pagesOfComponent: pagination,
       },
+    },
+  };
+}
+
+/**
+ * When user deletes an order/reservation
+ *
+ * @param {object} params
+ * @param {string} params.orderId the order id
+ * @param {string} params.agencyId the agency idª
+ */
+
+export function deleteOrder({ orderId, agencyId }) {
+  return {
+    query: `
+    mutation cancelOrder($orderId: String!, $agencyId: String!) {
+      deleteOrder(orderId: $orderId, agencyId: $agencyId, dryRun: false) {
+        deleted
+        error
+      }
+    } 
+    `,
+    variables: {
+      orderId,
+      agencyId,
     },
   };
 }

@@ -1,5 +1,7 @@
 import { ApiEnums } from "@/lib/api/api";
 
+import { creatorsFragment } from "@/lib/api/fragments.utils";
+
 const CATEGORY_ENUMS = [
   "childrenBooksNonfiction",
   "childrenBooksFiction",
@@ -44,7 +46,7 @@ export function inspiration({ filters = [], limit = 10 } = {}) {
                     full
                   }
                   creators {
-                    display
+                    ...creatorsFragment
                   }
                 }
                 manifestation {
@@ -60,7 +62,8 @@ export function inspiration({ filters = [], limit = 10 } = {}) {
             }
           }
         }
-      }`,
+      }
+      ${creatorsFragment}`,
     variables: {
       limit,
       filters,

@@ -21,7 +21,7 @@ import response from "./dummy.data";
 import { useData } from "@/lib/api/api";
 import * as searchFragments from "@/lib/api/search.fragments";
 
-import animations from "@/components/base/animation/animations.module.css";
+import animations from "css/animations";
 import styles from "./Filter.module.css";
 import { FilterTypeEnum } from "@/lib/enums";
 
@@ -144,6 +144,13 @@ function SelectedFilter({
                 sortOrder === "numerical" ? "alphabetically" : "numerical"
               );
             }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                setSortOrder(
+                  sortOrder === "numerical" ? "alphabetically" : "numerical"
+                );
+              }
+            }}
           >
             <Text type="text3" tag="span">
               {Translate({
@@ -264,7 +271,7 @@ export function Filter(props) {
         <>
           <Top modal={modal} back={false} />
           <span className={styles.wrap}>
-            <Title type="title4" className={styles.title}>
+            <Title type="title4" tag="h2">
               {Translate({
                 context: "modal",
                 label: "title-filter",
@@ -292,6 +299,7 @@ export function Filter(props) {
               context: "facets",
               label: "facets-group-label",
             })}
+            disableGroupOutline
           >
             {facets
               .map((facet, idx) => {
@@ -316,9 +324,8 @@ export function Filter(props) {
                 });
 
                 return (
-                  <List.Select
+                  <List.FormLink
                     key={`${facet.name}-${idx}`}
-                    selected={false}
                     onSelect={() => modal.push("filter", { facet })}
                     label={facet.name}
                     className={`${styles.item} ${animations["on-hover"]}`}
@@ -333,7 +340,6 @@ export function Filter(props) {
                         type="text1"
                         dataCy={`text-${facet.name}`}
                         className={[
-                          styles.facet,
                           animations["h-border-bottom"],
                           animations["h-color-blue"],
                         ].join(" ")}
@@ -346,7 +352,7 @@ export function Filter(props) {
                         </Text>
                       )}
                     </span>
-                  </List.Select>
+                  </List.FormLink>
                 );
               })
               .filter((c) => c)}

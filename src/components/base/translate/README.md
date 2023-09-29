@@ -18,10 +18,13 @@ staging:
 http://bibdk-backend-www-master.febib-staging.svc.cloud.dbc.dk/
 and prod:
 http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk/
-Translations are transferred from prod to staging every now and then. So translations on staging server are NOT permanent but overwritten on transfers.
+
+The translations on staging server are overwritten with production data once in a while. So translations on staging server are NOT permanent but will be overwritten regularly. For details on this, check **OVERWRITE STG WITH PROD**
 Translation on prod are permanent.
 
 REMEMBER
+
+**ADDING NEW TRANSLATIONS**
 After you added a string to translate as described above you need to run
 a curl command to update the backend with the new translation to prod:
 
@@ -37,3 +40,23 @@ To get the translations run:
 `curl -X POST -H "Content-Type: application/json" -d @Translate.json http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk/get_translations`
 
 Again you need to pass Translate.json file
+
+## ALTER EXISTING TRANSLATIONS
+
+To alter an existing translation on staging or prod, you can do this directly in the drupal application for the respective environment:
+
+prod: http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk/admin/config/regional/translate
+staging: http://bibdk-backend-www-master.febib-staging.svc.cloud.dbc.dk/admin/config/regional/translate
+
+Ask a fellow developer for the username and password.
+
+## OVERWRITE STG WITH PROD
+
+To overwrite translations in the staging database with translations from the prod database, run
+
+https://is.dbc.dk/view/frontend/job/bibliotekdk-next/job/bibliotekdk-next-backend-build/job/master/
+
+## Use local Translate.json
+
+To use the local Translate.json file set this env variable in your .env file
+`DISABLE_DRUPAL_TRANSLATE=true`

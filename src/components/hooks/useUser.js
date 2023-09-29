@@ -5,12 +5,13 @@ import merge from "lodash/merge";
 import { useData, useMutate } from "@/lib/api/api";
 import * as userFragments from "@/lib/api/user.fragments";
 import * as sessionFragments from "@/lib/api/session.fragments";
+import { useEffect, useState } from "react";
 
 // Context for storing anonymous session
 export const AnonymousSessionContext = createContext();
 
 // in memory object for storing loaner info for current user
-let loanerInfoMock = {};
+let loanerInfoMock = { pickupBranch: "790900" };
 
 /**
  * Mock used in storybook
@@ -24,8 +25,14 @@ function useAccessTokenMock() {
  */
 function useUserMock() {
   const useUserMockKey = "useUserMock";
-  const authUser = { name: "Some Name", mail: "some@mail.dk" };
-  const loggedInUser = { userName: authUser.name, userMail: authUser.mail };
+  const authUser = {
+    name: "Some Name",
+    mail: "some@mail.dk",
+  };
+  const loggedInUser = {
+    userName: authUser.name,
+    userMail: authUser.mail,
+  };
   const { data, mutate } = useSWR(useUserMockKey, () => loanerInfoMock, {
     initialData: loanerInfoMock,
   });
@@ -60,6 +67,8 @@ function useUserImpl() {
     data: userData,
     isLoading: userIsLoading,
     error: userDataError,
+    mutate: userMutate,
+    isValidating,
   } = useData(isAuthenticated && userFragments.basic());
 
   let loggedInUser = {};
@@ -73,7 +82,7 @@ function useUserImpl() {
     }
   }
 
-  const loanerInfo = useMemo(() => {
+  const sessionData = useMemo(() => {
     const sessionCopy = data?.session;
 
     // delete all keys with no value
@@ -86,14 +95,45 @@ function useUserImpl() {
     }
     return {
       ...data?.session,
-      debt: userData?.user?.debt || [],
-      loans: userData?.user?.loans || [],
-      orders: userData?.user?.orders || [],
-      agency: userData?.user.agency || {},
       userParameters: { ...loggedInUser, ...sessionCopy?.userParameters },
     };
   }, [data?.session, loggedInUser]);
 
+  const [loanerInfo, setLoanerInfo] = useState({
+    debt: [],
+    loans: [],
+    orders: [],
+    agencies: [],
+    ...sessionData,
+  });
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setLoanerInfo({
+        debt: [],
+        loans: [],
+        orders: [],
+        agencies: [],
+        ...sessionData,
+      });
+    } else if (userData && !userIsLoading) {
+      setLoanerInfo({
+        debt: userData?.user?.debt,
+        loans: userData?.user?.loans,
+        orders: userData?.user?.orders,
+        agencies: userData?.user?.agencies,
+        ...sessionData,
+      });
+    }
+  }, [
+    JSON.stringify(userData),
+    JSON.stringify(sessionData),
+    isAuthenticated,
+    userIsLoading,
+    isValidating,
+  ]);
+
+  //TODO give diffferent name
   const isGuestUser =
     !isAuthenticated && Object.keys(loanerInfo?.userParameters).length > 0;
 
@@ -103,17 +143,31 @@ function useUserImpl() {
     error: userDataError,
     isAuthenticated,
     loanerInfo,
-    isGuestUser,
-    isLoggedIn: isAuthenticated || isGuestUser,
+    isGuestUser: isGuestUser,
+    isLoggedIn: isAuthenticated || isGuestUser, //TODO guestUsers are not logged in - maybe "hasUserParameters" is a better name
     updateLoanerInfo: async (obj) => {
-      const newSession = merge({}, loanerInfo, obj);
+      const newSession = (newSession = merge({}, sessionData, obj));
       // Update global loaner info object
       await sessionMutate.post(sessionFragments.submitSession(newSession));
-
       // Broadcast update
       await mutate();
     },
-    guestLogout: async () => {
+    updateUserStatusInfo: async (type) => {
+      // Broadcast update about either loans or orders
+      let updatedData;
+      switch (type) {
+        case "LOAN":
+          updatedData = { loans: userData?.user?.loans };
+          break;
+        case "ORDER":
+          updatedData = { orders: userData?.user?.orders };
+          break;
+        default:
+          break;
+      }
+      if (updatedData) await userMutate(updatedData);
+    },
+    deleteSessionData: async () => {
       // Delete global loaner info object
       await sessionMutate.post(sessionFragments.deleteSession());
       // Broadcast update

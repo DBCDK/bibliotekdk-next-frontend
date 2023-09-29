@@ -1,6 +1,8 @@
 import range from "lodash/range";
 import { getElementById } from "@/lib/utils";
 
+const ALIGNING_OFFSET = 2; // var(--pt2)
+
 export function scrollToElement(sliderElementId) {
   document.querySelector(`#${CSS.escape(sliderElementId)}`).scrollIntoView({
     behavior: "smooth",
@@ -12,7 +14,8 @@ export function scrollToElement(sliderElementId) {
 export function scrollToElementWithOffset(
   sliderElementId,
   orientation = "y",
-  offset = -64 // --pt8 fra spacing.css
+  offset = -64, // --pt8 fra spacing.css
+  focusElement = true
 ) {
   const element = getElementById(sliderElementId);
 
@@ -23,9 +26,11 @@ export function scrollToElementWithOffset(
     orientation === "x" ? element.offsetLeft : element.offsetTop;
 
   window.scrollTo({
-    top: elementPosition + offset,
+    top: elementPosition + offset - ALIGNING_OFFSET,
     behavior: "smooth",
   });
+
+  focusElement && element.focus({ preventScroll: true });
 }
 
 export function scrollDistance(sliderId, slideTranslation) {

@@ -1,0 +1,23 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pt4);
+  padding-top: var(--pt2);
+  padding-bottom: var(--pt2);
+}
+
+.content_section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pt1);
+}
+
+.padding_bottom_pt8 {
+  padding-bottom: var(--pt8);
+}
+
+@media (min-width: 576px) {
+  .content {
+    padding-inline: var(--pt1);
+  }
+}

@@ -3,19 +3,12 @@
     "cover": {
       "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=54189141&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=dc9018aa5381fc2f69c9"
     },
-    "path": [
-      "Bøger",
-      "Fiktion",
-      "skønlitteratur",
-      "roman"
-    ],
+    "path": ["Bøger", "Fiktion", "skønlitteratur", "roman"],
     "seo": {
       "title": "Månesøsteren af Lucinda Riley",
       "description": "Lån Månesøsteren som bog, e-bog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online."
     },
-    "workTypes": [
-      "literature"
-    ],
+    "workTypes": ["literature"],
     "fullTitle": "Månesøsteren af Lucinda Riley",
     "manifestations": [
       {
@@ -52,16 +45,12 @@
         "isbn": "9788763855099",
         "materialType": "Bog",
         "notes": [],
-        "language": [
-          "Dansk"
-        ],
+        "language": ["Dansk"],
         "originals": [],
         "originalTitle": "The moon sister",
         "pid": "870970-basis:54189141",
         "physicalDescription": "636 sider",
-        "publisher": [
-          "Cicero"
-        ],
+        "publisher": ["Cicero"],
         "shelf": "skønlitteratur",
         "title": "Månesøsteren : Tiggys historie",
         "volume": null

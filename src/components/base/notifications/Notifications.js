@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useData } from "@/lib/api/api";
 import { notificationsQuery } from "@/lib/api/notification.fragment";
 import styles from "./Notifications.module.css";
-import classNames from "classnames/bind";
+import cx from "classnames";
 import BodyParser from "@/components/base/bodyparser/BodyParser";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -11,13 +11,12 @@ import Col from "react-bootstrap/Col";
 import Icon from "@/components/base/icon/Icon";
 import { getLanguage } from "@/components/base/translate/Translate";
 import Translate from "@/components/base/translate";
-import animations from "@/components/base/animation/animations.module.css";
+import animations from "css/animations";
 
 /**
  * list of notifications
  * @param notificationArray
  * @return {unknown[]}
- * @constructor
  */
 export function Notifications({ notificationObject }) {
   // check and make it an array
@@ -32,10 +31,17 @@ export function Notifications({ notificationObject }) {
   return notificationArray.map((notification, index) => (
     <div
       key={`${notification.fieldNotificationText}_${index}`}
-      className={classNames(
-        styles[`${notification.fieldNotificationType}`],
+      className={cx(
+        {
+          [styles.warning]: notification.fieldNotificationType === "warning",
+          [styles.error]: notification.fieldNotificationType === "error",
+          [styles.info]: notification.fieldNotificationType === "info",
+          [styles.success]: notification.fieldNotificationType === "success",
+        },
         styles.notification,
-        sessionStorage.getItem("showme_" + index) === "no" ? styles.hidden : ""
+        {
+          [styles.hidden]: sessionStorage.getItem("showme_" + index) === "no",
+        }
       )}
     >
       <Container fluid>

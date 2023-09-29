@@ -4,6 +4,16 @@
   overflow: hidden;
 }
 
+/* For safari support we force display inline on children and create a newline with a :after element */
+.clamp > * {
+  display: inline;
+}
+
+.clamp > *:after {
+  content: " \A";
+  white-space: pre;
+}
+
 /* xs */
 .clamp-xs-1 {
   -webkit-line-clamp: 1;

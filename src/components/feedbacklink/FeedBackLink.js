@@ -1,4 +1,4 @@
-import styles from "@/components/feedbacklink/FeedBackLink.module.css";
+import styles from "./FeedBackLink.module.css";
 import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
@@ -6,7 +6,7 @@ import Link from "@/components/base/link";
 export default function FeedbackLink() {
   return (
     <div data-cy="feedback-wrapper" className={styles.feedbackwrap}>
-      <div className={styles.feedbacklink} data-cy="feedback-link-text">
+      <div data-cy="feedback-link-text">
         <Link
           href="https://kundeservice.dbc.dk/bibdk"
           target="_blank"

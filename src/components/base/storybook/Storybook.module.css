@@ -23,8 +23,8 @@
 .router > div {
   display: flex;
 }
-.router > div  > p:first-child {
-  margin-right: var(--pt1)
+.router > div > p:first-child {
+  margin-right: var(--pt1);
 }
 
 /* Demo */

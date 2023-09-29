@@ -3,7 +3,7 @@ import CoverCarousel, {
   CoverCarousel as NamedCoverCarousel,
 } from "./CoverCarousel";
 import { StoryDescription, StoryTitle } from "@/storybook";
-import automock_utils from "@/components/_modal/pages/automock_utils";
+import automock_utils from "@/lib/automock_utils.fixture";
 import merge from "lodash/merge";
 
 const exportedObject = {

@@ -10,14 +10,6 @@
   z-index: 1;
 }
 
-.skeleton.block {
-  display: block;
-}
-
-.skeleton.inline-block {
-  display: inline-block;
-}
-
 .lines {
   width: 100%;
   height: 100%;

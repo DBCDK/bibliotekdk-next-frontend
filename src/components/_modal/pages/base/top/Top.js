@@ -10,7 +10,7 @@ import Icon from "@/components/base/icon";
 
 import Translate from "@/components/base/translate";
 
-import animations from "@/components/base/animation/animations.module.css";
+import animations from "css/animations";
 import styles from "./Top.module.css";
 
 export function Close({ className, onClose }) {
@@ -100,6 +100,9 @@ export function Back({ className, onBack }) {
  * @param title
  * @param {boolean} back
  * @param {boolean} sticky
+ * @param titleTag
+ * @param {function} onClose
+ * @param {function} onBack
  * @returns {JSX.Element}
  */
 export default function Top({
@@ -108,6 +111,15 @@ export default function Top({
   title,
   back = true,
   sticky = false,
+  onClose = undefined,
+  onBack = undefined,
+
+  /**
+   *  Defaults heading to h2. We never want more than one h1 per page, this is a dialog that sits on top of a page.
+   *  By doing this, we avoid confusion, whether we changed page or opened a modal.
+   *  When you use this component, think about the context where the user entered the dialog.
+   */
+  titleTag = "h2",
 }) {
   let modal = useModal();
 
@@ -119,15 +131,22 @@ export default function Top({
 
   const stickyClass = sticky ? styles.sticky : "";
 
+  function handleClose() {
+    modal.clear();
+    onClose && onClose();
+  }
+
+  function handleBack() {
+    modal.prev();
+    onBack && onBack();
+  }
+
   return (
     <div className={`${styles.top} ${stickyClass} ${className.top || ""}`}>
       <div className={`${styles.wrap}`}>
-        <Close
-          onClose={() => modal.clear()}
-          className={className.close || ""}
-        />
+        <Close onClose={handleClose} className={className.close || ""} />
         {showBack && (
-          <Back onBack={() => modal.prev()} className={className.back || ""} />
+          <Back onBack={handleBack} className={className.back || ""} />
         )}
       </div>
       <div>
@@ -135,6 +154,7 @@ export default function Top({
           <Title
             type="title4"
             className={`${styles.title} ${className.title || ""}`}
+            tag={titleTag}
           >
             {title}
           </Title>

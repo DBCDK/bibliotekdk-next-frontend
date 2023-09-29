@@ -18,12 +18,9 @@
   object-position: 0% 0%;
   opacity: 0;
 
-  border: 1px solid rgba(0, 0, 0, .1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 
   box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);
-
-;
-
 }
 .cover.loaded img {
   transition: opacity 0.3s;
@@ -105,7 +102,7 @@
   width: 150px;
   height: 200px;
 }
-.large .fallback{
+.large .fallback {
   width: 200px;
   height: 300px;
 }
@@ -117,5 +114,3 @@
   width: 100%;
   height: 100px; /* how to determine height? */
 }
-
-

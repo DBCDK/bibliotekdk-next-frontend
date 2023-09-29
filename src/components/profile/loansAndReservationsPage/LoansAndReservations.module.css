@@ -8,25 +8,26 @@
   margin-bottom: var(--pt2);
 }
 
-.subHeading {
+p.subHeading {
   margin-top: -1px; /* align with breadcrumb */
-  margin-bottom: var(--pt8);
+  margin-bottom: var(--pt4);
 }
 
-.isReady {
-  display: block;
-  color: var(--success);
+.emptyMessage {
+  margin: var(--pt5) 0 var(--pt7);
+  padding-left: var(--pt1);
 }
 
-.isWarning {
-  display: block;
-  color: var(--error_temp);
-}
+@media screen and (max-width: 992px) {
+  .titleRow {
+    padding-left: var(--pt2);
+    margin-bottom: var(--pt1);
+  }
 
-.yourLibraries {
-  text-decoration: underline;
+  .emptyMessage {
+    padding-left: var(--pt2);
+  }
 }
-
-.upperCase::first-letter {
-  text-transform: capitalize;
+.debtHeader {
+  grid-template-columns: 1.5fr 2.1fr 4fr 1fr;
 }

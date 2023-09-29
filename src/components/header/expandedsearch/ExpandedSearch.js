@@ -14,7 +14,7 @@ import { expandtranslations as translations } from "@/components/header/expanded
 import { SuggestTypeEnum } from "@/lib/enums";
 
 import Label from "@/components/base/forms/label/Label";
-import SuggesterTemplate from "@/components/header/expandedsearch/SuggesterTemplate";
+import SuggesterTemplate from "@/components/header/expandedsearch/suggestertemplate/SuggesterTemplate";
 
 /**
  * Check if given object has any values.

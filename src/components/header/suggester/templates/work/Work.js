@@ -18,11 +18,9 @@ import styles from "./Work.module.css";
  * @returns {JSX.Element}
  */
 export function Work({ className = "", data = {}, skeleton = false }) {
-  const skeletonClass = skeleton ? styles.skeleton : "";
-
   return (
     <div
-      className={`${styles.work} ${className} ${skeletonClass}`}
+      className={`${styles.work} ${className}`}
       data-cy={cyKey({ name: "work-element", prefix: "suggester" })}
     >
       {/* <div className={styles.wrap}>
@@ -65,7 +63,7 @@ export function Work({ className = "", data = {}, skeleton = false }) {
  * @returns {JSX.Element}
  */
 export function WorkSkeleton(props) {
-  return <Work {...props} className={styles.skeleton} skeleton={true} />;
+  return <Work {...props} skeleton={true} />;
 }
 
 /**

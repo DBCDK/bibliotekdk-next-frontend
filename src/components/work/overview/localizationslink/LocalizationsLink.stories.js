@@ -1,6 +1,6 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
 import LocalizationsLink from "@/components/work/overview/localizationslink/LocalizationsLink";
-import automock_utils from "@/components/_modal/pages/automock_utils";
+import automock_utils from "@/lib/automock_utils.fixture";
 import merge from "lodash/merge";
 
 const exportedObject = {

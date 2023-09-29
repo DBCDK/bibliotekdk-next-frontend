@@ -1,23 +1,29 @@
-.options {
-    padding: 0 var(--pt2) var(--pt2) var(--pt2);
-    height: 100%;
+.top {
+  padding: var(--pt3) var(--pt2) var(--pt2);
+}
 
-    /* scroll in modal */
-    overflow-y: auto;
+.options {
+  padding: 0 var(--pt2) var(--pt2) var(--pt2);
+  height: 100%;
+
+  /* scroll in modal */
+  overflow-y: auto;
 }
 
 .list {
-    list-style: none;
-    margin-bottom: var(--pt2);
+  list-style: none;
+  margin-bottom: var(--pt2);
 }
 
-
 .item {
-    padding-bottom: var(--pt4);
+  padding-bottom: var(--pt4);
 }
 
 @media (min-width: 576px) {
-    .options {
-        padding: 0 var(--pt6) var(--pt6) var(--pt6);
-    }
+  .options {
+    padding: 0 var(--pt5) var(--pt3) var(--pt6);
+  }
+  .top {
+    padding: var(--pt5) var(--pt6) var(--pt3);
+  }
 }

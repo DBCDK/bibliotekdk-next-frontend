@@ -55,12 +55,11 @@ export function Header({ details }) {
   /**
    * NOTE - first creator[0], title, workid - in paramters for getCanonicalWorkUrl
    */
+
   /* title, creators, id*/
   const urlWork = {
     title: data.work?.titles?.main[0],
-    creators: data.work?.creators?.map((creator) => ({
-      name: creator.display,
-    })),
+    creators: data.work?.creators,
     id: data.work?.workId,
   };
   const canonicalWorkUrl = getCanonicalWorkUrl({ ...urlWork });

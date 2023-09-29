@@ -3,7 +3,7 @@ import {
   RenderLanguageAddition,
   RenderTitlesWithoutLanguage,
 } from "@/components/work/overview/titlerenderer/TitleRenderer";
-import { Title } from "@/components/base/title/Title";
+import Title from "@/components/base/title";
 
 const exportedObject = {
   title: "work/Overview/TitleRenderer",
@@ -29,7 +29,7 @@ function TitleRendererComponentBuilder({
       <StoryDescription>
         TitleRenderer with description: {descriptionName}
       </StoryDescription>
-      <Title type={"title3"} skeleton={false} data-cy={"title-overview"}>
+      <Title type={"title3"} skeleton={false} dataCy={"title-overview"}>
         <RenderTitlesWithoutLanguage titles={titleRendererProps?.titles} />
         <RenderLanguageAddition work={titleRendererProps} />
       </Title>

@@ -21,6 +21,7 @@ import { useModal } from "@/components/_modal";
 import LoginIcon from "./icons/login";
 import BurgerIcon from "./icons/burger";
 import SearchIcon from "./icons/search";
+// import BookmarkIcon from "./icons/bookmark"; TODO Use for bookmark header item
 import ExpandedSearch from "./expandedsearch/ExpandedSearch";
 import useUser from "../hooks/useUser";
 
@@ -39,6 +40,7 @@ import { SuggestTypeEnum } from "@/lib/enums";
 import isEqual from "lodash/isEqual";
 import isEmpty from "lodash/isEmpty";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import { openLoginModal } from "../_modal/pages/login/utils";
 
 // material Pages
 export const MATERIAL_PAGES = [
@@ -116,17 +118,20 @@ export function Header({
         if (user.isAuthenticated || user.isGuestUser) {
           router.push("/profil/laan-og-reserveringer");
         } else {
-          modal.push("login");
+          openLoginModal({ modal });
         }
       },
     },
-    /*{
-      label: "basket",
-      icon: BasketIcon,
-      onClick: () => {},
-      items: "4",
-    },
+    /**
+     *  @TODO Reintroduce when bookmarks are ready
      */
+
+    /*{
+      label: "bookmark",
+      icon: BookmarkIcon,
+      onClick: () => router.push("/profil/huskeliste"),
+    },*/
+
     {
       label: "menu",
       icon: BurgerIcon,
@@ -212,9 +217,7 @@ export function Header({
                   <DesktopMaterialSelect className={styles.select} />
 
                   <div
-                    className={`${styles.suggester__wrap} ${
-                      !collapseOpen ? styles.collapsed : ""
-                    } ${suggesterVisibleMobileClass}`}
+                    className={`${styles.suggester__wrap} ${suggesterVisibleMobileClass}`}
                   >
                     <Suggester
                       className={`${styles.suggester}`}
@@ -249,7 +252,6 @@ export function Header({
                         vars: [countQ],
                       })}
                     </MoreOptionsLink>
-
                     <ExpandedSearch
                       className={styles.expandedSearch}
                       collapseOpen={collapseOpen}
@@ -395,13 +397,7 @@ export function StaticHeader({ router = null, context }) {
  * @returns {JSX.Element}
  */
 function HeaderSkeleton(props) {
-  return (
-    <Header
-      {...props}
-      className={`${props.className} ${styles.skeleton}`}
-      skeleton={true}
-    />
-  );
+  return <Header {...props} className={`${props.className}`} skeleton={true} />;
 }
 
 /**

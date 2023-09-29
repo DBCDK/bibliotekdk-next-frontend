@@ -15,11 +15,9 @@ import styles from "./Creator.module.css";
  * @returns {component}
  */
 export function Creator({ className = "", data = {}, skeleton = false }) {
-  const skeletonClass = skeleton ? styles.skeleton : "";
-
   return (
     <div
-      className={`${styles.creator} ${className} ${skeletonClass}`}
+      className={`${styles.creator} ${className}`}
       data-cy={cyKey({ name: "creator-element", prefix: "suggester" })}
     >
       {/* <div className={styles.wrap}>
@@ -65,7 +63,7 @@ export function Creator({ className = "", data = {}, skeleton = false }) {
  * @returns {JSX.Element}
  */
 export function CreatorSkeleton(props) {
-  return <Creator {...props} className={styles.skeleton} skeleton={true} />;
+  return <Creator {...props} skeleton={true} />;
 }
 
 /**

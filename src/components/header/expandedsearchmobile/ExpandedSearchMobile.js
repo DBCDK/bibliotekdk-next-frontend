@@ -2,10 +2,10 @@
  * @file Component for specific search on title, creator and subject. Mobile version
  */
 
-import SuggesterTemplate from "../expandedsearch/SuggesterTemplate";
+import SuggesterTemplate from "../expandedsearch/suggestertemplate/SuggesterTemplate";
 import { isEmpty, useInitExpanded } from "../expandedsearch/ExpandedSearch";
 import React, { useEffect } from "react";
-import styles from "@/components/header/expandedsearchmobile/ExpandedSearchMobile.module.css";
+import styles from "./ExpandedSearchMobile.module.css";
 import Collapse from "react-bootstrap/Collapse";
 import { cyKey } from "@/utils/trim";
 import Translate from "@/components/base/translate";

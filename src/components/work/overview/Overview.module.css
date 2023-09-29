@@ -56,6 +56,8 @@
 
 .basket {
   padding-top: var(--pt3);
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .info {
@@ -73,7 +75,7 @@
   .cover_and_materialInformation {
     display: grid;
     grid-template-columns: 1fr minmax(300px, max-content);
-  /*fit-content(100%);*/
+    /*fit-content(100%);*/
     grid-template-rows: none;
   }
 

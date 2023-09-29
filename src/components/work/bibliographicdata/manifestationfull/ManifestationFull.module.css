@@ -1,0 +1,89 @@
+.fullmanifestation {
+  margin: var(--pt1) 0 var(--pt5) 0;
+}
+
+.fullmanifestation .cover {
+  margin-bottom: var(--pt3);
+}
+
+.fullmanifestation .button {
+  font-family: var(--body-font-semibold);
+  transition: color 0.5s;
+  color: var(--blue);
+  margin-left: 2px; /* Account for outline, and align with content */
+}
+
+.fullmanifestation .alternativeoptions {
+  margin-bottom: var(--pt2);
+}
+
+.fullmanifestation .localizations_link {
+  margin-bottom: var(--pt3);
+}
+
+.fullmanifestation .reference_downloads {
+  width: fit-content;
+  margin-bottom: var(--pt1);
+}
+
+.fullmanifestation .copy_link {
+  margin-bottom: var(--pt5);
+}
+
+/** styling the manifestation parts list **/
+.manifestationPartsList {
+  list-style-type: disc;
+  margin: 0 0 var(--pt05) 0;
+  justify-content: flex-start;
+  border: 0;
+}
+
+.manifestationPartsList li {
+  display: list-item;
+  padding: 0;
+  margin-left: var(--pt3);
+}
+
+.manifestationPartsList li:nth-child(even) {
+  background: none;
+}
+
+.manifestationPartsList li:nth-child(odd) {
+  background: none;
+}
+
+.manifestationPartsList p {
+  padding: 0;
+}
+
+/** end manifestation parts list **/
+.reservationwrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--pt2);
+}
+.container {
+  column-count: 1;
+  -webkit-column-count: 1;
+  column-gap: 0;
+  -webkit-column-gap: 0;
+}
+
+.item {
+  padding-bottom: var(--pt3);
+  padding-right: var(--pt5);
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+}
+
+@media (min-width: 768px) {
+  .container {
+    column-count: 2;
+    -webkit-column-count: 2;
+    margin: var(--pt1) 0 var(--pt5) 0;
+  }
+
+  .manifestationPartsList li p:first-child {
+    width: 100%;
+  }
+}

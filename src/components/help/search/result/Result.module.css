@@ -46,63 +46,6 @@
   margin: var(--pt05) 0;
 }
 
-/* Search button */
-
-.button {
-  position: relative;
-  height: 100%;
-  padding: var(--pt2) var(--pt4);
-  background-color: transparent;
-  color: var(--blue);
-  border: 1px solid var(--blue);
-  font-family: var(--body-font);
-  font-size: 20px;
-  line-height: 22px;
-  margin-left: var(--pt4);
-  cursor: pointer;
-  overflow: hidden;
-}
-
-.button span {
-  color: var(--blue);
-  position: relative;
-  z-index: 2;
-}
-
-.button .fill {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: var(--blue);
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%) scale(0.75);
-  transition-duration: 0.2s;
-  z-index: 1;
-  opacity: 0;
-}
-
-.button:hover > .fill,
-.button:focus-visible > .fill {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1.1);
-}
-
-.button:hover > span,
-.button:focus-visible > span {
-  color: white;
-}
-
-.input {
-  height: 56px;
-  border: 1px solid var(--gray);
-  font-size: 17px;
-  font-family: var(--body-font);
-  padding-left: var(--pt2);
-  max-width: 672px;
-  width: 100%;
-}
-
 .search {
   display: flex;
   flex-direction: column;

@@ -1,28 +1,9 @@
 import { StoryTitle } from "@/storybook";
+import automock_utils from "@/lib/automock_utils.fixture";
 
 import LibrariesTable from "./LibrariesTable";
-const mockData = [
-  {
-    agency: "Biblioteket kilden",
-    libraryName: "Herlev bibliotek",
-    type: "Folkebibliotek",
-  },
-  {
-    agency: null,
-    libraryName: "Ballerup bibliotek",
-    type: "Folkebibliotek",
-  },
-  {
-    agency: "Biblioteket Danasvej",
-    libraryName: "Biblioteket Frederiksberg",
-    type: "Folkebibliotek",
-  },
-  {
-    agency: "Københavns Universitetsbibliotek, Søndre Campus",
-    libraryName: "Det Kgl. Bibliotek",
-    type: "Uddannelsesbibliotek",
-  },
-];
+
+const { USER_LIBRARIES } = automock_utils();
 const exportedObject = {
   title: "profile/LibrariesTable",
 };
@@ -35,7 +16,7 @@ export function LibrariesTableStory() {
   return (
     <div>
       <StoryTitle>LibrariesTable</StoryTitle>
-      <LibrariesTable data={mockData} />
+      <LibrariesTable data={USER_LIBRARIES} />
     </div>
   );
 }

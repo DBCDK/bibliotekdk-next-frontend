@@ -1,4 +1,8 @@
-import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
+import {
+  StoryTitle,
+  StoryDescription,
+  StorySpace,
+} from "@/storybook/Storybook";
 import WrappedDetails, { DetailsSkeleton } from "./Details";
 
 const exportedObject = {
@@ -103,7 +107,27 @@ WrappedDetailsSectionMovie.story = {
           creators: () => [
             {
               display: "William Steig",
-              roles: [],
+              roles: [
+                {
+                  functionCode: "drt",
+                  function: {
+                    singular: "instruktør",
+                    plural: "instruktører",
+                  },
+                },
+              ],
+            },
+            {
+              display: "Anders Thomas Jensen",
+              roles: [
+                {
+                  functionCode: "cre",
+                  function: {
+                    singular: "ophav",
+                    plural: "ophav",
+                  },
+                },
+              ],
             },
           ],
           contributors: () => [

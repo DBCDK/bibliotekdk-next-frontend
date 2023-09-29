@@ -8,7 +8,7 @@ import LocalizationsLink from "./localizationslink";
 import WorkGroupingsOverview from "./workgroupingsoverview";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
-import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
+import ReservationButtonWrapper from "@/components/work/reservationbutton/ReservationButton";
 import useUser from "@/components/hooks/useUser";
 import styles from "./Overview.module.css";
 import OrderButtonTextBelow from "@/components/work/reservationbutton/orderbuttontextbelow/OrderButtonTextBelow";
@@ -21,9 +21,10 @@ import {
   RenderLanguageAddition,
   RenderTitlesWithoutLanguage,
 } from "@/components/work/overview/titlerenderer/TitleRenderer";
-import { Title } from "@/components/base/title/Title";
+import Title from "@/components/base/title/Title";
 import { useRouter } from "next/router";
 import Breadcrumbs from "@/components/work/overview/breadcrumbs/Breadcrumbs";
+import BookMarkDropDown from "@/components/work/overview/bookmarkDropdown/BookmarkDropdown";
 
 function useInitMaterialType(
   uniqueMaterialTypes,
@@ -92,7 +93,7 @@ export function Overview({
   ];
 
   return (
-    <div className={`${styles.background} ${className}`}>
+    <section className={`${styles.background} ${className}`}>
       <Container fluid>
         <Row className={`${styles.overview}`}>
           {/* Breadcrumbs */}
@@ -119,9 +120,10 @@ export function Overview({
             >
               <Col xs={12}>
                 <Title
-                  type={"title3"}
+                  tag="h1"
+                  type="title3"
                   skeleton={skeleton}
-                  data-cy={"title-overview"}
+                  dataCy="title-overview"
                 >
                   <RenderTitlesWithoutLanguage titles={titles} />
                   <RenderLanguageAddition work={work} />
@@ -150,11 +152,16 @@ export function Overview({
                 />
               </Col>
               <Col xs={12} sm={9} xl={7} className={styles.basket}>
-                <ReservationButton
+                <ReservationButtonWrapper
                   workId={workId}
                   selectedPids={selectedPids}
                 />
+                <BookMarkDropDown
+                  workId={workId}
+                  materialTypes={uniqueMaterialTypes}
+                />
               </Col>
+
               <OrderButtonTextBelow
                 workId={workId}
                 selectedPids={selectedPids}
@@ -168,7 +175,7 @@ export function Overview({
           </Col>
         </Row>
       </Container>
-    </div>
+    </section>
   );
 }
 

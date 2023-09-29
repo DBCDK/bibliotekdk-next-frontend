@@ -1,107 +1,41 @@
 .wrapper {
-    padding: 0 var(--pt2) var(--pt2) var(--pt2);
+  padding: 0 var(--pt2) var(--pt2) var(--pt2);
 }
 
-.pickup h2 {
-    margin: 0 0 var(--pt2) 0;
+.title,
+.description {
+  margin-bottom: var(--pt3);
 }
 
-.title, .description {
-    margin-bottom: var(--pt3);
-}
-
-.search .input {
-    margin: var(--pt2) 0;
-}
-
-.search .title {
-    padding: var(--pt1) 0;
-}
-
-.waitforme {
-    -webkit-animation: blinking 1.5s infinite linear;
-    border-radius: 50%;
-    width: 10px;
-    height: 10px;
-    margin-top: var(--pt2);
-    display: inline-block;
-}
-
-.inline{
-    display: inline;
-    padding-left: var(--pt2);
-    margin: var(--pt2) 0 var(--pt2) 0;
-}
-
-.itemwrap{
-    margin: var(--pt2);
-}
-
-.dividerpadding{
-    margin: var(--pt2) 0 var(--pt2) 0;
-}
-
-.item{
-    margin-bottom: var(--pt2);
-}
-
-.green {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    display: inline-block;
-    background-color: #27AE60;
-}
-
-.red {
-    width: 10px;
-    height: 10px;
-    background-color: #EB5757;
-    border-radius: 50%;
-    display: inline-block;
-}
-
-.yellow {
-    width: 10px;
-    height: 10px;
-    background-color: #F2C94C;
-    border-radius: 50%;
-    display: inline-block;
-}
-
-.none{
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    border: 1px solid var(--gray);
-    display: inline-block;
+.topmargin {
+  margin-top: var(--pt3);
 }
 
 @-webkit-keyframes blinking {
-    0% {
-        background-color: #27AE60;
-        margin-left: 0;
-    }
-    25% {
-        background-color: #F2C94C;
-        margin-left: 10px;
-    }
-    50% {
-        background-color: #EB5757;
-        margin-left: 20px;
-    }
-    75% {
-        background-color: #F2C94C;
-        margin-left: 10px;
-    }
-    100% {
-        background-color: #27AE60;
-        margin-left: 0;
-    }
+  0% {
+    background-color: #27ae60;
+    margin-left: 0;
+  }
+  25% {
+    background-color: #f2c94c;
+    margin-left: 10px;
+  }
+  50% {
+    background-color: #eb5757;
+    margin-left: 20px;
+  }
+  75% {
+    background-color: #f2c94c;
+    margin-left: 10px;
+  }
+  100% {
+    background-color: #27ae60;
+    margin-left: 0;
+  }
 }
 
 @media (min-width: 576px) {
-    .wrapper {
-        padding: 0 var(--pt6) var(--pt3) var(--pt6);
-    }
+  .wrapper {
+    padding: 0 var(--pt6) var(--pt3) var(--pt6);
+  }
 }

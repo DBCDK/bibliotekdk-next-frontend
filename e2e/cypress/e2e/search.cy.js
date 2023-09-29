@@ -276,7 +276,7 @@ describe("Search", () => {
     });
   });
 
-  describe("ResultRow", () => {
+  describe.only("ResultRow", () => {
     it("Should have all data", () => {
       cy.visit("/iframe.html?id=search-result-resultrow--with-all-data");
 
@@ -327,6 +327,44 @@ describe("Search", () => {
       cy.visit("/iframe.html?id=search-result-resultrow--slow-loading");
 
       cy.get("[data-cy=skeleton]").should("exist");
+    });
+
+    it("should have language when mainLanguages is other language (here klingon)", () => {
+      cy.visit(
+        "/iframe.html?id=search-result-resultrow--with-one-other-language-klingon"
+      );
+
+      cy.contains("Klingon");
+    });
+
+    it("should have two person creators (here Lotte Hammer and Søren Hammer)", () => {
+      cy.visit(
+        "/iframe.html?id=search-result-resultrow--with-two-person-creators"
+      );
+
+      cy.contains("Lotte Hammer");
+      cy.contains("Søren Hammer");
+    });
+
+    it("should have one corp creator (here Hammer Industries, but not Lotte and Søren)", () => {
+      cy.visit(
+        "/iframe.html?id=search-result-resultrow--with-one-corp-creators"
+      );
+
+      cy.contains("Hammer Industries");
+      cy.should("not.contain", "Lotte Hammer");
+      cy.should("not.contain", "Søren Hammer");
+    });
+
+    it("should have 2 corp creator (here Hammer Limited and Hammer Incorporated, but not Lotte and Søren)", () => {
+      cy.visit(
+        "/iframe.html?id=search-result-resultrow--with-two-corp-creators"
+      );
+
+      cy.contains("Hammer Limited");
+      cy.contains("Hammer Incorporated");
+      cy.should("not.contain", "Lotte Hammer");
+      cy.should("not.contain", "Søren Hammer");
     });
   });
 

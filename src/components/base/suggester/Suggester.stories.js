@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Suggester from "./";
+import Suggester from "./Suggester";
 import Input from "../forms/input/";
 
 import { StoryTitle } from "@/storybook";

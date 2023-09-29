@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 
 import Skeleton from "@/components/base/skeleton";
-
+import cx from "classnames";
 import styles from "./Checkbox.module.css";
 
 /**
@@ -19,12 +19,12 @@ export function Checkbox({
   className,
   tabIndex = "0",
   id,
-  invalid,
   checked = false,
   disabled = false,
   onChange,
   dataCy = "checkbox",
-  ariaLabel = "Some explaining label",
+  ariaLabelledBy,
+  ariaLabel = "",
   readOnly = false,
   required,
 }) {
@@ -39,17 +39,17 @@ export function Checkbox({
     setStatus(checked);
   }, [checked]);
 
-  const disabledClass = disabled ? styles.disabled : "";
-  const readOnlyClass = readOnly ? styles.readOnly : "";
-  const invalidClass = !disabledClass && invalid ? styles.error : "";
-
   return (
     <label
       htmlFor={id}
-      className={`${styles.wrap} ${disabledClass} ${readOnlyClass} ${invalidClass} ${className}`}
+      className={cx(styles.wrap, className, {
+        [styles.readOnly]: readOnly,
+        [styles.disabled]: disabled,
+      })}
     >
       <input
         id={id}
+        aria-labelledby={ariaLabelledBy}
         className={styles.input}
         checked={status}
         type="checkbox"
@@ -58,10 +58,14 @@ export function Checkbox({
         readOnly={readOnly}
         data-cy={dataCy}
         tabIndex={disabled ? "-1" : tabIndex}
-        onChange={(e) => !readOnly && setStatus(e.target.checked)}
+        onChange={(e) => {
+          if (readOnly) return;
+          setStatus(e.target.checked);
+        }}
         onKeyDown={(e) => {
-          if (e.key === "Enter" || e.keyCode === 13) {
-            !readOnly && setStatus(!status);
+          if (readOnly) return;
+          if (e.key === "Enter") {
+            setStatus(!status);
           }
         }}
       />
@@ -95,7 +99,7 @@ Checkbox.propTypes = {
  */
 export function SkeletonCheckbox() {
   return (
-    <div className={`${styles.input} ${styles.skeleton}`}>
+    <div className={`${styles.input}`}>
       <Skeleton />
     </div>
   );

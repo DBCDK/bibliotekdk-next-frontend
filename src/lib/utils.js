@@ -32,32 +32,54 @@ export function encodeString(str = "") {
     .replace(/-+/g, "-");
 }
 
+export function extractCreatorsPrioritiseCorporation(creatorsBeforeFilter) {
+  if (!creatorsBeforeFilter) return;
+  if (!Array.isArray(creatorsBeforeFilter)) {
+    creatorsBeforeFilter = [creatorsBeforeFilter];
+  }
+  const corporations = creatorsBeforeFilter?.filter(
+    (creator) => creator.__typename === "Corporation"
+  );
+
+  return corporations?.length > 0 ? corporations : creatorsBeforeFilter;
+}
+
 /**
  * Encode title and creator to be used
  * as part of the URL path
  *
  * @param {string} title
- * @param {string} creator
+ * @param {array<object>} creators
  *
  * @returns {string} encoded string
  */
-export function encodeTitleCreator(title = "", creator = "") {
-  // @TODO there may be more than one creator - should it be handled? if yes
-  // then it should be handled here - make creator an array
+export function encodeTitleCreator(title = "", creators = []) {
+  const creator = extractCreatorsPrioritiseCorporation(creators)?.[0];
+
   return creator
-    ? encodeString(title) + "_" + encodeString(creator)
+    ? encodeString(title) + "_" + encodeString(creator.display)
     : encodeString(title);
 }
 
 /**
  *
  * @param {string} fullTitle
- * @param {string} creator
+ * @param {array<object>} creators
  * @param {string} workId
- * @returns {string}
+ * @return {{query: {title_author: string, workId}, pathname: string}}
  */
-export function getWorkUrl(fullTitle, creator, workId) {
-  return `/materiale/${encodeTitleCreator(fullTitle, creator)}/${workId}`;
+export function getWorkUrl(fullTitle, creators, workId) {
+  return `/materiale/${encodeTitleCreator(fullTitle, creators)}/${workId}`;
+}
+
+/**
+ *
+ * @param {string} title
+ * @param {number|string} articleId
+ * @return {{query: {articleId, title}, pathname: string}}
+ */
+export function getArticleUrl(title, articleId) {
+  return `/artikel/${encodeString(title)}/${articleId}`;
 }
 
 /**
@@ -68,7 +90,7 @@ export function getWorkUrl(fullTitle, creator, workId) {
  * @returns {string}
  */
 export function getInfomediaReviewUrl(title, workId, id) {
-  return `/anmeldelse/${title}/${workId}/${id}`;
+  return `/anmeldelse/${encodeString(title)}/${workId}/${id}`;
 }
 
 /**
@@ -91,7 +113,7 @@ export function getMaterialReviewUrl(title, workId, pid) {
 export function getCanonicalWorkUrl({ title, creators, id }) {
   return `${APP_URL}/materiale/${encodeTitleCreator(
     title,
-    creators?.[0]?.display || creators?.[0]?.name || ""
+    extractCreatorsPrioritiseCorporation(creators) || [{ display: "" }]
   )}/${id}`;
 }
 
@@ -149,6 +171,21 @@ export function chainFunctions(functions) {
     functions.reduce((accumulator, func) => func(accumulator), initialValue);
 }
 
+/**
+ * Get the first match of a series of conditions
+ * @template T
+ * @template V
+ * @param {T} matcherValue
+ * @param {V} defaultReturn
+ * @param {[T, V][]} matcherArray
+ * @returns {V}
+ */
+export function getFirstMatch(matcherValue, defaultReturn, matcherArray) {
+  return (
+    matcherArray?.find((el) => el[0] === matcherValue)?.[1] || defaultReturn
+  );
+}
+
 export function getElementById(elementId) {
   return elementId && document.querySelector(`#${CSS.escape(elementId)}`);
 }
@@ -157,6 +194,7 @@ export function getElementById(elementId) {
  * function that translates and encodes label
  * @param {string} context
  * @param {string} label
+ * @param requestedLang
  * @returns {string}
  */
 export function translateAndEncode(context, label, requestedLang = undefined) {

@@ -9,22 +9,6 @@
   padding: 0 !important;
 }
 
-.filter {
-  display: flex;
-  justify-content: flex-end;
-  padding-top: var(--pt2);
-}
-
-.button {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-.button i {
-  margin: 0 0 0 var(--pt1);
-}
-
 @media (min-width: 992px) {
   .section {
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);

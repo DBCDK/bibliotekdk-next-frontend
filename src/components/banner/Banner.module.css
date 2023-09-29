@@ -1,19 +1,19 @@
 /* Banner */
 .bannerWrap {
-    display: none;
+  display: none;
 }
 
 @media (min-width: 768px) {
-    /* Banner */
-    .bannerWrap {
-        display: block;
-        background-color: var(--mine-shaft);
-        color: var(--white);
-    }
+  /* Banner */
+  .bannerWrap {
+    display: block;
+    background-color: var(--mine-shaft);
+    color: var(--white);
+  }
 }
 
 .banner {
-    display: flex;
-    justify-content: flex-end;
-    padding: var(--pt1) var(--pt2);
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--pt1) var(--pt2);
 }

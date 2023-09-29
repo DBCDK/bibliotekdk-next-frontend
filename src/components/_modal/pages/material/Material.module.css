@@ -1,0 +1,84 @@
+.Material {
+  padding: 0 var(--pt2);
+}
+
+.spacer {
+  margin-top: var(--pt2);
+}
+
+.splitContainer {
+  display: grid;
+  grid-column-gap: var(--pt3);
+  grid-template-columns: 3fr 1fr;
+  margin-top: var(--pt2);
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--pt3);
+}
+
+.ornament {
+  margin-right: var(--pt1);
+}
+
+.link {
+  display: inline-block;
+  margin-bottom: var(--pt2);
+}
+
+.uppercase::first-letter {
+  text-transform: uppercase;
+}
+
+.isReady {
+  color: var(--success);
+}
+
+.isWarning {
+  color: var(--error_temp);
+}
+
+.recommendationsContainer {
+  background-color: var(--jagged-ice);
+  padding: var(--pt6) 0;
+  margin: var(--pt7) calc(var(--pt2) * -1) 0;
+}
+
+.topElement {
+  padding-bottom: var(--pt1);
+}
+
+.topTitle {
+  padding-top: var(--pt4);
+}
+
+.button {
+  width: 100%;
+  height: 40px;
+}
+
+.buttonRowWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 8px;
+  margin-bottom: var(--pt4);
+}
+
+.renewError {
+  justify-content: center;
+  width: 100%;
+  height: 40px;
+}
+
+.spinner {
+  /* button height minus the paddings */
+  height: var(--pt3);
+  width: var(--pt3);
+}
+
+/* Specificity to override */
+.button button.buttonDelete {
+  white-space: nowrap;
+}

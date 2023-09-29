@@ -10,11 +10,11 @@ import Translate from "@/components/base/translate";
 import * as workFragments from "@/lib/api/work.fragments";
 
 import styles from "./Content.module.css";
-import isEqual from "lodash/isEqual";
-import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
+import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 import { useModal } from "@/components/_modal";
 import { ManifestationParts } from "@/components/manifestationparts/ManifestationParts";
 import isEmpty from "lodash/isEmpty";
+import { getFirstMatch } from "@/lib/utils";
 
 /**
  * The Component function
@@ -29,39 +29,36 @@ export function Content({
   manifestation = {},
   skeleton = false,
 }) {
-  const modal = useModal();
-
-  if (!manifestation?.tableOfContents?.listOfContent?.length) {
-    return null;
-  }
-
-  const morecontent = manifestation?.tableOfContents?.listOfContent
-    ?.map((n) => {
-      return {
-        title: n?.content,
-      };
-    })
-    // we have arrays with empty content in data - TODO tell jedi team
-    .filter((more) => !isEmpty(more.title));
-
-  if (isEmpty(morecontent)) {
-    return null;
-  }
-
   // Translate Context
   const context = { context: "content" };
-
+  const modal = useModal();
   const numberToShow = 10;
 
-  const modalOpen = () => {
+  const modalOpen = ({ parts }) => {
     modal.push("manifestationContent", {
       pid: manifestation?.pid,
       showOrderTxt: false,
       singleManifestation: true,
       showmoreButton: false,
-      parts: morecontent,
+      parts: parts,
     });
   };
+
+  const moreContent = {
+    listOfContent: manifestation?.tableOfContents?.listOfContent
+      ?.map((n) => {
+        return {
+          title: n?.content,
+        };
+      })
+      // we have arrays with empty content in data - TODO tell jedi team
+      .filter((more) => !isEmpty(more.title)),
+    content: manifestation?.tableOfContents?.content,
+  };
+
+  if (isEmpty(moreContent?.listOfContent) && isEmpty(moreContent?.content)) {
+    return null;
+  }
 
   return (
     <Section
@@ -69,15 +66,21 @@ export function Content({
       divider={{ content: false }}
     >
       <Row className={`${styles.content} ${className}`}>
-        {skeleton && <Text skeleton={skeleton}></Text>}
+        {skeleton && <Text skeleton={skeleton} lines={3} />}
         <Col xs={12} md={8}>
-          <ManifestationParts
-            parts={morecontent}
-            showMoreButton={true}
-            titlesOnly={false}
-            numberToShow={numberToShow}
-            modalOpen={modalOpen}
-          />
+          {!isEmpty(moreContent?.listOfContent) ? (
+            <ManifestationParts
+              parts={moreContent?.listOfContent}
+              showMoreButton={true}
+              titlesOnly={false}
+              numberToShow={numberToShow}
+              modalOpen={() => modalOpen({ parts: moreContent?.listOfContent })}
+            />
+          ) : !isEmpty(moreContent?.content) ? (
+            <Text type="text2">{moreContent?.content}</Text>
+          ) : (
+            <></>
+          )}
         </Col>
       </Row>
     </Section>
@@ -118,12 +121,26 @@ export default function Wrap(props) {
     workFragments.tableOfContents({ workId })
   );
 
+  const { flattenGroupedSortedManifestationsByType } =
+    manifestationMaterialTypeFactory(data?.work?.manifestations?.mostRelevant);
+
   // Find manifestation of the right type that contains tableOfContents
-  const manifestation = data?.work?.manifestations?.mostRelevant?.find(
-    (manifestation) =>
-      manifestation?.tableOfContents &&
-      isEqual(flattenMaterialType(manifestation), type)
-  );
+  const manifestations = flattenGroupedSortedManifestationsByType(type);
+
+  const sortedManifestations =
+    manifestations &&
+    [...manifestations]
+      ?.filter((el) => !isEmpty(el?.tableOfContents))
+      ?.sort((a, b) =>
+        getFirstMatch(true, 0, [
+          [!isEmpty(a?.tableOfContents?.listOfContent), -1],
+          [!isEmpty(b?.tableOfContents?.listOfContent), 1],
+          [!isEmpty(a?.tableOfContents?.content), -1],
+          [!isEmpty(b?.tableOfContents?.content), 1],
+        ])
+      );
+
+  const manifestation = sortedManifestations?.[0];
 
   if (error) {
     return null;

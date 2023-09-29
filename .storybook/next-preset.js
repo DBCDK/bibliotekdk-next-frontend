@@ -25,6 +25,14 @@ module.exports = {
             "../src/components/base/storybook"
           ),
           "@/public": path.resolve(__dirname, "../public"),
+          "css/animations": path.resolve(
+            __dirname,
+            "../src/components/base/animation/animations.module.css"
+          ),
+          "css/clamp": path.resolve(
+            __dirname,
+            "../src/components/base/clamp/Clamp.module.css"
+          ),
           "@": path.resolve(__dirname, "../src"),
         },
       },
@@ -65,11 +73,18 @@ module.exports = {
       type: "javascript/auto",
     });
 
-    // Then we tell webpack what to do with CSS modules
     newConfig.module.rules.push({
       test: /\.scss$/,
-      loaders: ["style-loader", "css-loader", "sass-loader"],
-      include: path.resolve(__dirname, "../src/scss"),
+      use: [
+        // Creates `style` nodes from JS strings
+        "style-loader",
+        // Translates CSS into CommonJS
+        "css-loader",
+        // Compiles Sass to CSS
+        "sass-loader",
+      ],
+      exclude: path.resolve(__dirname, "./node_modules"),
+      include: path.resolve(__dirname, "./src/scss"),
     });
 
     // Adds svg loader to storybook webpack config
@@ -81,7 +96,7 @@ module.exports = {
     newConfig.module.rules.push({
       test: /\.svg$/,
       enforce: "pre",
-      loader: require.resolve("@svgr/webpack"),
+      use: require.resolve("@svgr/webpack"),
     });
 
     return newConfig;

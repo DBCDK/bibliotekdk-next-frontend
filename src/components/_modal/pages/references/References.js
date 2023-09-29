@@ -43,14 +43,15 @@ export function References({ context }) {
 
   return (
     <div>
-      <div className={styles.options}>
-        <Top
-          title={Translate({
-            context: "references",
-            label: "label_references_title",
-          })}
-        />
-      </div>
+      <Top
+        className={{
+          top: styles.top,
+        }}
+        title={Translate({
+          context: "references",
+          label: "label_references_title",
+        })}
+      />
       <div className={styles.item}>
         <Edition
           context={context}

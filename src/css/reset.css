@@ -22,10 +22,6 @@ body {
   font-size: 14px;
   font-family: var(--body-font);
   color: var(--mine-shaft);
-
-  /* Scroll lock styles */
-  height: auto;
-  overflow: hidden;
 }
 
 h1,

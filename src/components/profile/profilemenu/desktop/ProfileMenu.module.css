@@ -1,3 +1,8 @@
+.nav {
+  position: sticky;
+  top: var(--pt4);
+}
+
 .menu {
   list-style: none;
 }
@@ -19,8 +24,7 @@
   margin: 0 0 0 var(--pt1);
 }
 
-.link.active i {
-  display: block;
+.simpleLink {
 }
 
 .subLink {
@@ -33,11 +37,6 @@
   white-space: normal;
 }
 
-.groupTitleContainer {
-  display: inline-flex;
-  align-items: center;
-}
-
 .groupTitle {
   word-break: break-word;
   white-space: pre-line;
@@ -47,19 +46,10 @@
 .menuLink {
   list-style: none;
 }
-.groupMenu {
-  display: none;
-}
 
 .linkGroup {
   display: flex;
   flex-direction: column;
-}
-
-@media (min-width: 992px) {
-  .groupMenu {
-    display: block;
-  }
 }
 
 .group {
@@ -72,10 +62,6 @@
 
 .group:focus {
   text-decoration: underline;
-}
-
-.groupActive p {
-  font-family: var(--body-font-semibold);
 }
 
 .itemLength {

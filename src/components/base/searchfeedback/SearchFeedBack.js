@@ -87,7 +87,7 @@ export function SearchFeedBackWrapper({ datacollect, router, ForceshowMe }) {
         setShowThankyou(false);
       }}
     >
-      <div>
+      <aside>
         {/* initial state - show thumbs up and down */}
         {showThumbs && (
           <SearchFeedBack
@@ -101,7 +101,7 @@ export function SearchFeedBackWrapper({ datacollect, router, ForceshowMe }) {
         {showForm && <SearchFeedBackForm onSubmitClick={onSubmitClick} />}
         {/* Feedback from has been posted */}
         {showImprove && <SearchFeedBackImprove />}
-      </div>
+      </aside>
     </Collapse>
   );
 }
@@ -123,8 +123,14 @@ export function SearchFeedBack({ onThumbsUp, onThumbsDown }) {
       <span className={styles.iconcontainer}>
         <span
           className={styles.spanwrap}
+          role="button"
           onClick={onThumbsUp}
-          onTouchStart={onThumbsUp}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              onThumbsUp && onThumbsUp();
+            }
+          }}
+          tabIndex={0}
         >
           <Icon
             size={{ w: "auto", h: 3 }}
@@ -136,8 +142,14 @@ export function SearchFeedBack({ onThumbsUp, onThumbsDown }) {
         </span>
         <span
           className={styles.spanwrap}
+          role="button"
           onClick={onThumbsDown}
-          onTouchStart={onThumbsUp}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              onThumbsDown && onThumbsDown();
+            }
+          }}
+          tabIndex={0}
         >
           <Icon
             size={{ w: "auto", h: 3 }}

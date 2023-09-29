@@ -3,7 +3,7 @@
   position: relative;
   display: flex;
   flex-direction: row;
-  margin-inline: calc(var(--pt2) * -1);
+  width: 100%;
 }
 
 .flex_arrow {

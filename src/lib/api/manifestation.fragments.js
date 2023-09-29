@@ -4,6 +4,11 @@
  */
 import { ApiEnums } from "@/lib/api/api";
 
+import {
+  creatorsFragment,
+  manifestationDetailsForAccessFactory,
+} from "@/lib/api/fragments.utils";
+
 export function refWorks(pid) {
   return {
     apiUrl: ApiEnums.FBI_API,
@@ -38,6 +43,9 @@ export function manifestationFullManifestation({ pid }) {
       manifestation(pid: $pid) {
         ...manifestationCoverFragment
         ...manifestationFragment
+        creators {
+          ...creatorsFragment
+        }
         ...accessFragment
       }
       monitor(name: "bibdknext_manifestation_manifestation")
@@ -45,6 +53,7 @@ export function manifestationFullManifestation({ pid }) {
     ${manifestationFragment}
     ${manifestationCoverFragment}
     ${accessFragment}
+    ${creatorsFragment}
     `,
     variables: { pid },
     slowThreshold: 3000,
@@ -71,7 +80,7 @@ export function editionManifestations({ pid }) {
           full
         }
         creators {
-          display
+          ...creatorsFragment
         }
         workTypes
         ...manifestationCoverFragment
@@ -81,6 +90,7 @@ export function editionManifestations({ pid }) {
     }
     ${manifestationCoverFragment}
     ${accessFragment}
+    ${creatorsFragment}
     `,
     variables: { pid },
     slowThreshold: 3000,
@@ -98,7 +108,7 @@ export function alternativesManifestations({ pid }) {
           main
         }
         creators {
-          display
+          ...creatorsFragment
         }
         materialTypes {
           specific
@@ -112,6 +122,7 @@ export function alternativesManifestations({ pid }) {
       monitor(name: "bibdknext_manifestation_manifestations")
     }
     ${accessFragment}
+    ${creatorsFragment}
     `,
     variables: { pid },
     slowThreshold: 3000,
@@ -156,8 +167,9 @@ export function manifestationParts({ pid }) {
               display
             }
             creators {
-              display
+              ...creatorsFragment
             }
+            contributorsFromDescription
             creatorsFromDescription            
             subjects {
               display
@@ -167,7 +179,7 @@ export function manifestationParts({ pid }) {
         }
       }
     }
-    `,
+    ${creatorsFragment}`,
     variables: { pid },
     slowThreshold: 3000,
   };
@@ -211,29 +223,6 @@ export function manifestationForLectorReview({ pid }) {
     slowThreshold: 3000,
   };
 }
-
-const manifestationDetailsForAccessFactory = `fragment manifestationDetailsForAccessFactory on Manifestation {
-  pid
-  titles {
-    main
-    full
-  }
-  creators {
-    display
-    nameSort
-    roles {
-      functionCode
-      function {
-        plural
-        singular
-      }
-    }
-  }
-  materialTypes {
-    specific
-  }
-  workTypes
-}`;
 
 const accessFragment = `fragment accessFragment on Manifestation {
   access {
@@ -282,7 +271,7 @@ const lectorReviewFragment = `fragment lectorReviewFragment on Manifestation {
            titlePlusLanguage
          }
          creators {
-           display
+           ...creatorsFragment
          }
          materialTypes {
            specific
@@ -296,17 +285,19 @@ const lectorReviewFragment = `fragment lectorReviewFragment on Manifestation {
    }
    pid
    creators {
-     display
+     ...creatorsFragment
    }
    recordCreationDate
-}`;
+}
+${creatorsFragment}`;
 
+// NOTE Creators Fragment is not added, because it is implemented from ManifestationDetailsForAccessFactory
 const reviewOfFragment = `fragment reviewOfFragment on Manifestation {
    relations {
      isReviewOf {
        pid
        creators {
-         display
+         ...creatorsFragment
        }
        materialTypes {
          specific
@@ -349,14 +340,6 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
     alternative
     parallel
   }
-  creators {
-    display
-    roles {
-      function {
-        singular
-      }
-    }
-  }
   contributors {
     display
     roles {
@@ -378,6 +361,7 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
   physicalDescriptions {
     summary
     extent
+    requirements
   }
   classifications {
     system

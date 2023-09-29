@@ -85,7 +85,7 @@ const ContactLinks = () => {
     // press: { pathname: "/", query: {} },
     contact: { pathname: "/hjaelp/kontakt-os/25", query: {} },
     privacy: {
-      pathname: "/artikel/privatlivspolitik/11",
+      pathname: "/hjaelp/privatlivspolitik-saadan-haandterer-vi-dine-data-/26",
       query: {},
     },
     suppliers: {
@@ -198,7 +198,7 @@ const BranchLinks = () => {
  */
 const FooterSection = () => {
   return (
-    <div className={styles.containerback}>
+    <footer className={styles.containerback}>
       <Container fluid>
         <Row
           as="section"
@@ -238,7 +238,7 @@ const FooterSection = () => {
           </Col>
         </Row>
       </Container>
-    </div>
+    </footer>
   );
 };
 

@@ -1,65 +1,81 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
-
-import Button from "@/components/base/button";
+import Login from "./Login";
+import Translate from "@/components/base/translate";
 import { useModal } from "@/components/_modal";
-import Modal from "@/components/_modal/Modal";
-import Pages from "@/components/_modal/pages";
 
 const exportedObject = {
-  title: "modal/Menu",
+  title: "modal/Login",
 };
 
 export default exportedObject;
 
 /**
- * Returns Modal
- *
- */
-export function ShowModal() {
-  const modal = useModal();
-  return (
-    <div style={{ height: "100vh" }}>
-      <StoryTitle>Modal</StoryTitle>
-      <StoryDescription>Full Modal component</StoryDescription>
-      <Modal.Container>
-        <Modal.Page id="menu" component={Pages.Menu} />
-      </Modal.Container>
-
-      <Button
-        type="secondary"
-        size="small"
-        onClick={() => modal.push("menu", { label: "title-menu" })}
-      >
-        {"Toggle menu"}
-      </Button>
-      {/*
-
-      <Modal
-        onClose={() => setTemplate(false)}
-        onLang={() => alert("Language changed")}
-        template={template}
-      />
-
-      */}
-    </div>
-  );
-}
-
-/**
  * Menu template
  *
  */
-export function MenuTemplate() {
+export function LoginOrder() {
+  const context = {
+    title: Translate({ context: "login", label: "login-to-order" }),
+  };
+  const modal = useModal();
+
   return (
     <div style={{ height: "100vh" }}>
-      <StoryTitle>Menu template</StoryTitle>
+      <StoryTitle>Login Modal</StoryTitle>
       <StoryDescription>
-        Modal template for the menu, this is the default template
+        Shows the login modal coming from reservation button
       </StoryDescription>
 
-      {/*
-      <Modal onClose={null} onLang={null} template={"menu"} />
-      */}
+      <Login context={context} modal={modal} />
     </div>
   );
 }
+
+export function LoginHeader() {
+  const context = {
+    title: Translate({ context: "header", label: "login" }),
+  };
+  const modal = useModal();
+  return (
+    <div style={{ height: "100vh" }}>
+      <StoryTitle>Login Modal</StoryTitle>
+      <StoryDescription>
+        Shows the login modal coming from login button in header
+      </StoryDescription>
+
+      <Login context={context} modal={modal} />
+    </div>
+  );
+}
+
+LoginHeader.story = {
+  parameters: {
+    graphql: {
+      debug: true,
+      resolvers: {
+        Query: {
+          monitor: () => "some-monitor",
+        },
+        BranchResult: {
+          hitcount: () => "10",
+          agencyUrl: () => "some-agencyUrl",
+          result: () => [
+            {
+              name: "Test agency",
+            },
+            { name: "Test agency 2" },
+          ],
+        },
+        Highlight: {
+          key: () => "some-key",
+          value: () => "some-value",
+        },
+      },
+    },
+    nextRouter: {
+      showInfo: true,
+      pathname: "/",
+      query: {},
+    },
+  },
+};

@@ -1,6 +1,6 @@
 import { StoryDescription, StoryTitle } from "@/storybook";
 import RelatedWorks from "@/components/work/relatedworks/RelatedWorks";
-import automock_utils from "@/components/_modal/pages/automock_utils";
+import automock_utils from "@/lib/automock_utils.fixture";
 import merge from "lodash/merge";
 
 const exportedObject = {
@@ -22,9 +22,9 @@ function RelatedWorksComponentBuilder({
   const descriptionName = storyNameOverride ? storyNameOverride : type;
   return (
     <div>
-      <StoryTitle>OrderButton - {descriptionName}</StoryTitle>
+      <StoryTitle>ReservationButton - {descriptionName}</StoryTitle>
       <StoryDescription>
-        The OrderButton based on the type: {descriptionName}
+        The ReservationButton based on the type: {descriptionName}
       </StoryDescription>
       <RelatedWorks workId={workId} />
     </div>

@@ -33,6 +33,7 @@ import styles from "./Suggester.module.css";
 
 import useDataCollect from "@/lib/useDataCollect";
 import { SuggestTypeEnum } from "@/lib/enums";
+import cx from "classnames";
 
 // Context
 const context = { context: "suggester" };
@@ -259,8 +260,7 @@ function renderInputComponent(
           <ArrowSvg />
         </Icon>
       </span>
-
-      <input {...props} title={placeholder} />
+      <input {...props} className={cx(props.className)} title={placeholder} />
       <span
         className={`${styles.clear} ${clearVisibleClass}`}
         onClick={() => {

@@ -20,6 +20,7 @@ import styles from "./Content.module.css";
 import BodyParser from "@/components/base/bodyparser/BodyParser";
 import { getLanguage } from "@/components/base/translate/Translate";
 import { Rating } from "@/components/base/rating/Rating";
+import { ReviewHeadingLink } from "@/components/article/lectorreview/reviewheading/ReviewHeading";
 
 function ArticleHeader({ article, skeleton }) {
   const context = { context: "articles" };
@@ -141,7 +142,12 @@ function calcReadTime(htmlString) {
  *
  * @returns {component}
  */
-export function Content({ className = "", data = {}, skeleton = false }) {
+export function Content({
+  className = "",
+  data = {},
+  backToMaterial = null,
+  skeleton = false,
+}) {
   if (!data?.article) {
     return null;
   }
@@ -162,10 +168,18 @@ export function Content({ className = "", data = {}, skeleton = false }) {
   return (
     <Container as="article" fluid>
       <Row className={`${styles.content} ${className}`}>
+        {backToMaterial && (
+          <Col xs={{ span: 1, offset: 0 }} md={{ span: 1, offset: 0 }}>
+            <ReviewHeadingLink
+              propAndChildrenInput={backToMaterial}
+              className={styles.backImageleft}
+            />
+          </Col>
+        )}
         <Col
           className={`${styles.top} ${noImageClass}`}
           xs={12}
-          lg={{ span: 8, offset: 2 }}
+          lg={{ span: 8, offset: backToMaterial ? 1 : 2 }}
         >
           <Row>
             {hasUrl && (
@@ -186,6 +200,7 @@ export function Content({ className = "", data = {}, skeleton = false }) {
                 {skeleton && <Skeleton />}
               </Col>
             )}
+
             <Col
               className={styles.right}
               xs={12}

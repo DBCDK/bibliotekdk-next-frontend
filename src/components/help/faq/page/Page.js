@@ -61,7 +61,7 @@ export default function Page() {
               />
             </Col>
             <Col xs={12} lg={6}>
-              <Faq className={styles.faq} />
+              <Faq />
             </Col>
           </Row>
         </Container>

@@ -56,6 +56,7 @@ export default function Pagination({
   numPages = 4,
   isLoading,
   MAX_VISIBLE_PAGES = 9,
+  className,
 }) {
   const {
     showPreviousPageArrow,
@@ -82,7 +83,7 @@ export default function Pagination({
   return (
     <React.Fragment>
       {numPages > 1 && numPages > currentPage && (
-        <div className={`${styles.mobile}`}>
+        <div className={`${styles.mobile} ${className}`}>
           <Button
             type="secondary"
             size="medium"
@@ -98,7 +99,7 @@ export default function Pagination({
           </Button>
         </div>
       )}
-      <div className={`${styles.pagination} ${styles.desktop}`}>
+      <div className={`${styles.pagination} ${styles.desktop} ${className}`}>
         <Arrow
           clickCallback={() => onChangeChecked(currentPage - 1)}
           arrowClass={`${styles.arrow_styling} ${
@@ -108,6 +109,8 @@ export default function Pagination({
           dataDisabled={!(!isLoading && showPreviousPageArrow)}
           size={{ w: 4, h: 4 }}
         />
+
+        {!showPreviousPageArrow && <div className={styles.arrowPlaceholder} />}
 
         {arrayOfPaginationPages.map((page, index) => {
           return (
@@ -139,6 +142,8 @@ export default function Pagination({
           dataDisabled={!(!isLoading && showNextPageArrow)}
           size={{ w: 4, h: 4 }}
         />
+
+        {!showNextPageArrow && <div className={styles.arrowPlaceholder} />}
       </div>
     </React.Fragment>
   );

@@ -2,6 +2,7 @@
 
 .wrap {
   background-color: var(--concrete);
+  margin-bottom: var(--pt8);
 }
 
 .menu {
@@ -38,45 +39,13 @@
 .menu .item {
   display: inline-block;
   margin-right: var(--pt3);
-}
-.menu .item p {
-  /* link styles override */
-  padding: 0 0 var(--pt2) 0;
-}
-.menu .item hr {
-  /* link styles override */
-  height: 2px;
-  margin-top: -2px;
-  color:red;
-}
-
-.menu .item:first-letter {
-  text-transform: uppercase;
+  padding-bottom: var(--pt2);
+  --underline-height: 2px;
+  --underline-font-hover-color: var(--mine-shaft);
+  --underline-bottom-color: var(--transparent);
 }
 
 /* hover + focus item */
-.menu .item:focus p,
-.menu .item:hover p {
-  color: var(--mine-shaft);
-}
-
-/* active */
-.menu .item.active hr {
-  transform: scale(1);
-}
-
-/* When sticky menu is moving */
-.menu.isScrolling {
-}
-
-/* when a menu item is clicked */
-.menu .item.isClicked hr {
-}
-
-.menu .item.isClicked hr {
-  transform: scale(1) !important;
-}
-
-.menu.isScrolling .item.active hr {
-  transform: scale(0);
+.menu .item.activeClass {
+  --underline-bottom-color: var(--blue);
 }

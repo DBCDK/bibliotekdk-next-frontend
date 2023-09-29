@@ -6,6 +6,7 @@ import { cyKey } from "@/utils/trim";
 import Link from "@/components/base/link";
 import Skip from "@/components/base/skip";
 import Text from "@/components/base/text";
+import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
 import Section from "@/components/base/section";
 
@@ -55,12 +56,13 @@ export function Related({ data, isLoading }) {
   return (
     <Section
       title={
-        <Text type="text1">
+        <Title type="text1" tag="h3">
           {Translate({ context: "relatedKeywords", label: "title" })}
-        </Text>
+        </Title>
       }
       className={styles.section}
-      backgroundColor="var(--jagged-ice)"
+      divider={false}
+      sectionTag="div" // Section sat in parent
     >
       <div>
         <Skip

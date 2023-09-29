@@ -1,11 +1,49 @@
 {
-  "plugins": ["cypress", "mocha", "prettier"],
-  "extends": ["next", "next/core-web-vitals", "plugin:cypress/recommended"],
+  "plugins": ["cypress", "mocha", "prettier", "css-modules"],
+  "extends": [
+    "next",
+    "next/core-web-vitals",
+    "plugin:cypress/recommended",
+    "plugin:css-modules/recommended",
+    "plugin:import/errors"
+  ],
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "map": [
+          ["@/storybook", "./src/components/base/storybook"],
+          ["@/public", "./public"],
+          [
+            "css/animations",
+            "./src/components/base/animation/animations.module.css"
+          ],
+          ["css/clamp", "./src/components/base/clamp/Clamp.module.css"],
+          ["@", "./src"]
+        ],
+        "extensions": [".js", ".jsx"]
+      }
+    }
+  },
   "rules": {
-    "prettier/prettier": "error",
+    "prettier/prettier": 1,
     "mocha/no-exclusive-tests": "error",
     "cypress/no-unnecessary-waiting": 0,
     "no-unused-vars": [2, { "vars": "all", "args": "after-used" }],
+    "import/no-unused-modules": [
+      0,
+      {
+        "unusedExports": true,
+        "missingExports": false,
+        "ignoreExports": [
+          "src/pages",
+          "src/**/__fixtures__/*",
+          "src/**/__test__/*",
+          "src/**/__tests__/*",
+          "src/**/*.stories.js",
+          "src/**/*.test.js"
+        ]
+      }
+    ],
     "no-restricted-imports": [
       "error",
       {
@@ -19,9 +57,36 @@
             "message": "usage of lodash without tree-shaking is not allowed. Use 'lodash/*', eg. 'lodash/isEmpty'"
           }
         ],
-        "patterns": ["!react-bootstrap/*", "!lodash/*"]
+        "patterns": [
+          { "group": ["!react-bootstrap/*"] },
+          { "group": ["!lodash/*"] },
+          {
+            "group": ["@/components/base/animation/animations.module.css"],
+            "message": "animation should be imported using 'import animations from 'css/animations/animations.module.css';'"
+          },
+          {
+            "group": ["@/components/base/clamp/Clamp.module.css"],
+            "message": "clamp should be imported using 'import clamp from 'css/clamp/Clamp.module.css';'"
+          },
+          {
+            "group": ["classnames/bind"],
+            "message": "classnames should be imported using 'import cx from 'classnames';'"
+          },
+          {
+            "group": [
+              "@/**/*.module.css",
+              "!./*.module.css",
+              "!@/components/base/animation/animations.module.css",
+              "!@/components/base/clamp/Clamp.module.css"
+            ],
+            "message": "css-modules may not use @/ importer. Use relative instead or src/ or something else"
+          }
+        ]
       }
     ],
+
+    "react/jsx-uses-vars": 2,
+    "react/jsx-uses-react": 2,
 
     // TODO: Turn these on at some point
     /* next/core-web-vitals */
@@ -30,7 +95,7 @@
 
     /* plugin:css-modules/recommended */
     /** Keep this rule because of error **/
-    "css-modules/no-unused-class": "off",
-    "css-modules/no-undef-class": "off"
+    "css-modules/no-unused-class": 2,
+    "css-modules/no-undef-class": 2
   }
 }

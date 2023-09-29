@@ -1,32 +1,48 @@
-.tableContainer {
-  padding-right: var(--pt4);
+.librariesTable {
+  width: 100%;
 }
-
 .tableItem {
   display: grid;
-  grid-template-columns: 3fr 3fr 3fr 1fr;
-  padding: var(--pt3) var(--pt2);
+  grid-template-columns: 6fr 2fr;
+  padding: var(--pt3) 0;
+  grid-gap: var(--pt3);
   align-items: center;
 }
+.libraryInfo {
+  display: grid;
+  grid-template-columns: 3fr 3fr;
+  align-items: center;
+  grid-gap: var(--pt2);
+}
+.libraryInfo p {
+  text-align: initial;
+}
+.headerItem {
+  text-align: initial;
+}
+@media (max-width: 575px) {
+  .libraryInfo {
+    display: block;
+  }
 
-.tableItem {
+  .headerItem {
+    display: none;
+  }
+
+  .tableItem {
+    grid-template-columns: 6fr 1fr;
+  }
+  .municipalityOfResidence {
+    font-size: 17px;
+  }
+}
+.headerRow {
+  display: grid;
+  grid-template-columns: 3fr 3fr 2fr;
+  margin-top: var(--pt7);
   border-bottom: 1px solid var(--iron);
+  width: 100%;
 }
-
-.tableItem:first-child {
-  border-top: 1px solid var(--iron);
-}
-
-.removeButton {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  width: fit-content;
-}
-.removeButtonIcon {
-  margin-left: var(--pt1);
-}
-
-.textLabel {
-  color: var(--blue);
+.tableItem {
+  width: 100%;
 }

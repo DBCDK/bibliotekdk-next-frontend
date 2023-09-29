@@ -1,0 +1,23 @@
+.action {
+  padding: var(--pt2);
+}
+
+.action {
+  margin-top: auto;
+}
+
+/* action */
+
+.action .message {
+  padding: 0 0 var(--pt2) 0;
+}
+
+.action .message.invalid {
+  color: var(--error);
+}
+
+@media (min-width: 576px) {
+  .action {
+    padding: var(--pt3) var(--pt6);
+  }
+}

@@ -5,7 +5,6 @@
   gap: var(--pt1);
 }
 
-
 @media (min-width: 992px) {
   .display_flex {
     padding-top: var(--pt1);

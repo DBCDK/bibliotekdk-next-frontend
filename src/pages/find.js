@@ -117,26 +117,29 @@ function Find() {
       <div ref={scrollRef} />
 
       <Header router={router} />
-      <Searchbar q={q} />
-      <Related q={q} />
 
-      {q && (
-        <Result
-          page={parseInt(page, 10)}
-          onPageChange={async (page, scroll) => {
-            scroll = typeof scroll !== "boolean" || scroll !== false;
-            await updateQueryParams({ page });
-            scroll && scrollToRef(scrollRef);
-          }}
-          onWorkClick={(index, work) => {
-            dataCollect.collectSearchWorkClick({
-              search_request: { q, filters },
-              search_query_hit: index + 1,
-              search_query_work: work.workId,
-            });
-          }}
-        />
-      )}
+      <main>
+        <Searchbar q={q} />
+        <Related q={q} />
+
+        {q && (
+          <Result
+            page={parseInt(page, 10)}
+            onPageChange={async (page, scroll) => {
+              scroll = typeof scroll !== "boolean" || scroll !== false;
+              await updateQueryParams({ page });
+              scroll && scrollToRef(scrollRef);
+            }}
+            onWorkClick={(index, work) => {
+              dataCollect.collectSearchWorkClick({
+                search_request: { q, filters },
+                search_query_hit: index + 1,
+                search_query_work: work.workId,
+              });
+            }}
+          />
+        )}
+      </main>
     </>
   );
 }

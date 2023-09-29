@@ -6,10 +6,12 @@ import * as libraryFragments from "@/lib/api/library.fragments";
 import Translate from "@/components/base/translate";
 import debounce from "lodash/debounce";
 import Search from "@/components/base/forms/search";
-import LocalizationItem from "./LocalizationItem";
+import LocalizationItem from "./localizationitem/LocalizationItem";
 
 import Text from "@/components/base/text/Text";
 import Title from "@/components/base/title";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
+import { NoAgenciesSearch } from "@/components/_modal/pages/localizations/NoAgenciesSearch";
 
 export function Localizations({
   context,
@@ -18,13 +20,15 @@ export function Localizations({
   onChange,
   testing = false,
 }) {
+  const isMobile = useBreakpoint() === "xs";
+
   const allBranches = branchData?.result;
   return (
     <div data-cy="localizations-modal" className={styles.wrapper}>
       <Top />
 
       <div>
-        <Title type="title4" className={styles.title}>
+        <Title type="title4" className={styles.title} tag="h2">
           {Translate({
             context: "holdings",
             label: "label_localizations_title",
@@ -42,17 +46,16 @@ export function Localizations({
       <Search
         dataCy="pickup-search-input"
         placeholder={Translate({
-          context: "order",
-          label: "pickup-input-placeholder",
+          context: isMobile ? "login" : "order",
+          label: isMobile ? "search-for-library" : "pickup-input-placeholder",
         })}
-        className={styles.input}
         onChange={debounce((value) => onChange(value), 100)}
         id="localizations_search"
       />
 
-      {!isLoading && (
+      {allBranches && !isLoading && (
         <div>
-          {allBranches?.length > 0 && (
+          {allBranches?.length > 0 ? (
             <div>
               {allBranches.map((branch, idx) => {
                 return (
@@ -69,6 +72,8 @@ export function Localizations({
                 );
               })}
             </div>
+          ) : (
+            <NoAgenciesSearch className={styles.topmargin} />
           )}
         </div>
       )}

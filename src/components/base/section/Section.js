@@ -9,6 +9,7 @@ import Text from "@/components/base/text";
 import { cyKey } from "@/utils/trim";
 
 import styles from "./Section.module.css";
+import cx from "classnames";
 
 /**
  * Divider function
@@ -40,6 +41,8 @@ function handleBooleans(obj, def) {
  */
 export default function Section({
   title = "Some section",
+  //if true the title will be shown on the right side instead of the left side
+  rightSideTitle = false,
   children = "",
   className = "",
   dataCy = "section",
@@ -49,6 +52,10 @@ export default function Section({
   space = {},
   elRef = null,
   subtitle = "",
+  headerTag = "h2",
+  sectionTag = "section",
+  id,
+  colSize = {},
 }) {
   const backgroundClass = backgroundColor ? styles.background : "";
 
@@ -87,13 +94,14 @@ export default function Section({
   if (title) {
     title =
       typeof title === "string" ? (
-        <Title type="title4" tag="h2" skeleton={isLoading}>
+        <Title type="title4" tag={headerTag} skeleton={isLoading}>
           {title}
         </Title>
       ) : (
         title
       );
   }
+  //Only show the title on the right side if desktop
 
   return (
     <div
@@ -101,10 +109,12 @@ export default function Section({
       style={style}
       data-cy={dataCy}
       ref={elRef}
+      id={id}
+      tabIndex={!!id ? -1 : null} // If id is sat, we wont the ability to set focus on element - used for skip links
     >
-      <Container className={styles.container} fluid>
-        <Row as="section" className={styles.section}>
-          {title && (
+      <Container fluid>
+        <Row as={sectionTag}>
+          {title && !rightSideTitle && (
             <Col
               xs={12}
               lg={2}
@@ -119,13 +129,30 @@ export default function Section({
 
           <Col
             xs={12}
-            lg={{ offset: title ? 1 : 0, span: true }}
+            lg={colSize.lg || { offset: title ? 1 : 0, span: true }}
             data-cy={cyKey({ name: "content", prefix: "section" })}
             className={`section-content ${styles.content} ${contentDividerClass}`}
           >
             {divider?.content}
             {children}
           </Col>
+          {title && rightSideTitle && (
+            <Col
+              xs={12}
+              lg={2}
+              data-cy={cyKey({ name: "title", prefix: "section" })}
+              className={cx(
+                "section-title",
+                styles.title,
+                titleDividerClass,
+                styles.rightSideTitle
+              )}
+            >
+              {divider?.title}
+              {title}
+              {subtitle && <Text type="text2">{subtitle}</Text>}
+            </Col>
+          )}
         </Row>
       </Container>
     </div>
@@ -147,4 +174,6 @@ Section.propTypes = {
   divider: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   space: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  headerTag: PropTypes.string,
+  sectionTag: PropTypes.string,
 };

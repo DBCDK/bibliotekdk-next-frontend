@@ -1,3 +1,16 @@
 .addLibrary {
-  margin-bottom: var(--pt4);
+  margin-top: var(--pt5);
+}
+
+.pageDescription {
+  margin-right: var(--pt1);
+}
+.pageDescriptionContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.showMoreText {
+  margin-top: var(--pt1);
+  margin-bottom: var(--pt1);
 }

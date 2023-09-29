@@ -16,11 +16,9 @@ import styles from "./Subject.module.css";
  * @returns {JSX.Element}
  */
 export function Subject({ className = "", data = {}, skeleton = false }) {
-  const skeletonClass = skeleton ? styles.skeleton : "";
-
   return (
     <div
-      className={`${styles.subject} ${className} ${skeletonClass}`}
+      className={`${styles.subject} ${className}`}
       data-cy={cyKey({ name: "subject-element", prefix: "suggester" })}
     >
       {/* <div className={styles.wrap}>
@@ -63,7 +61,7 @@ export function Subject({ className = "", data = {}, skeleton = false }) {
  * @returns {JSX.Element}
  */
 export function SubjectSkeleton(props) {
-  return <Subject {...props} className={styles.skeleton} skeleton={true} />;
+  return <Subject {...props} skeleton={true} />;
 }
 
 /**

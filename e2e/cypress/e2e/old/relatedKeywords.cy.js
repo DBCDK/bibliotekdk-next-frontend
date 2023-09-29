@@ -4,8 +4,8 @@
  */
 
 describe("Related Keywords", () => {
-  it.only(`Can tab through related keywords`, () => {
-    cy.visit("/iframe.html?id=work-relatedsubjects--default");
+  it.only(`Can tab through related keywords`, async () => {
+    await cy.visit("/iframe.html?id=work-relatedsubjects--default");
     cy.get("body")
       .tab()
       .should("have.attr", "data-cy", "related-subject-heste");
@@ -13,8 +13,8 @@ describe("Related Keywords", () => {
     cy.focused().tab().should("have.attr", "data-cy", "related-subject-heste");
   });
 
-  it(`Can visit keywords`, () => {
-    cy.visit("/iframe.html?id=work-relatedsubjects--default");
+  it(`Can visit keywords`, async () => {
+    await cy.visit("/iframe.html?id=work-relatedsubjects--default");
 
     const tag = "ridning";
     const url = `/find?q.subject=${tag}`;

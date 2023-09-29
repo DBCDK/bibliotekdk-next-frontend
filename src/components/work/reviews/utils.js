@@ -33,7 +33,7 @@ export function sortReviews(a, b) {
  *
  * @param review
  *
- * @returns {component}
+ * @returns string
  */
 
 export function getReviewType(data) {
@@ -185,10 +185,10 @@ function lectorLink({ work, key }) {
     return ". ";
   }
 
-  const creator = work?.creators[0]?.display || "";
+  const creators = work?.creators || [];
   const title = work?.titles?.main?.[0] || "";
 
-  const path = getWorkUrl(title, creator, work?.workId);
+  const path = getWorkUrl(title, creators, work?.workId);
   return (
     <Link key={key} href={path} border={{ bottom: { keepVisible: true } }}>
       {work?.titles?.main}

@@ -1,6 +1,75 @@
 .container {
-  padding-top: var(--pt6);
+  padding-top: var(--pt8);
+  min-height: calc(80vh);
 }
+
+@media screen and (max-width: 767px) {
+  .container {
+    padding-top: var(--pt3);
+  }
+}
+
 .title {
   margin-bottom: var(--pt1);
+}
+
+.navColumn {
+  min-height: calc(80vh);
+}
+
+@media screen and (max-width: 991px) {
+  .navColumn {
+    min-height: 0px;
+  }
+}
+
+.logoutContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: calc(var(--pt7) * -1);
+  padding-bottom: var(--pt2);
+}
+.logoutBtn {
+  margin-left: var(--pt4);
+}
+.profileHeaderContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+@media screen and (max-width: 576px) {
+  .logoutBtnText {
+    display: none;
+  }
+}
+@media screen and (max-width: 992px) {
+  .logoutBtn {
+    margin-left: var(--pt4);
+    margin-right: 0;
+  }
+  .logoutContainer {
+    margin-top: 0;
+  }
+}
+
+.loginTitle {
+  margin-bottom: var(--pt5);
+}
+.loginText {
+  margin-bottom: var(--pt4);
+}
+.loginButton {
+  margin-top: var(--pt5);
+  padding-left: var(--pt5);
+  padding-right: var(--pt5);
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  max-width: 400px;
+}
+@media screen and (min-width: 576px) {
+  .loginButton {
+    width: fit-content;
+  }
 }

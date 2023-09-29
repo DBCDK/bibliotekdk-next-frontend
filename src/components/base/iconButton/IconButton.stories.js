@@ -22,3 +22,20 @@ export function Remove() {
     </div>
   );
 }
+
+/**
+ * Returns add library button
+ *
+ */
+export function AddLibrary() {
+  return (
+    <div>
+      <StoryTitle>AddLibrary</StoryTitle>
+      <StoryDescription>
+        Any svg icon inside public/icons folder can be used with this component.
+        Put icon name as prop
+      </StoryDescription>
+      <IconButton icon="chevron">Tilføj uddannelsesbibliotek</IconButton>
+    </div>
+  );
+}

@@ -5,6 +5,7 @@ import { cyKey } from "@/utils/trim";
 import Skeleton from "@/components/base/skeleton";
 
 import styles from "./Button.module.css";
+import cx from "classnames";
 
 function handleOnButtonClick() {
   alert("Button clicked!");
@@ -28,19 +29,31 @@ function Button({
   disabled = false,
   tabIndex = "0",
   dataCy = null,
+  ariaExpanded = null,
+  ariaControls = null,
+  ariaLabel = null,
 }) {
-  const disabledStyle = disabled ? styles.disabled : "";
   const key = dataCy || cyKey({ name: children, prefix: "button" });
 
   return (
     <button
       id={id}
       data-cy={key}
-      className={`${className} ${styles.button} ${styles[size]} ${styles[type]}  ${disabledStyle}`}
+      className={cx(className, styles.button, {
+        [styles.large]: size === "large",
+        [styles.medium]: size === "medium",
+        [styles.small]: size === "small",
+        [styles.primary]: type === "primary",
+        [styles.secondary]: type === "secondary",
+        [styles.disabled]: disabled,
+      })}
       onClick={(e) => (onClick ? onClick(e) : handleOnButtonClick(e))}
       aria-disabled={disabled}
       disabled={disabled}
       tabIndex={tabIndex}
+      aria-expanded={ariaExpanded}
+      aria-controls={ariaControls}
+      aria-label={ariaLabel}
     >
       {children}
     </button>
@@ -94,4 +107,6 @@ Container.propTypes = {
   disabled: PropTypes.bool,
   skeleton: PropTypes.bool,
   onClick: PropTypes.func,
+  ariaExpanded: PropTypes.bool,
+  ariaControls: PropTypes.string,
 };

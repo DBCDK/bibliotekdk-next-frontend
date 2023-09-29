@@ -3,57 +3,41 @@
   --underline-bottom-hover-color: var(--mine-shaft);
 }
 
-.wrap {
-  padding: 0;
-}
-
-.content {
-  align-items: center;
-  cursor: pointer;
-}
-
-.content > div:first-child {
-  padding-bottom: var(--pt2);
-}
-
-.content > :last-child {
-  padding-left: var(--pt16);
-}
-
 .title {
-  margin-bottom: var(--pt3);
+  white-space: normal;
 }
 
-.title_title {
-  width: 300px;
-}
-
-.text {
-  margin-bottom: var(--pt1);
-}
-
-.imagewrapper {
-  position: relative;
-  /* Maintain 16:9 aspect ratio by setting padding-bottom */
-  padding-bottom: 56%;
-}
 .imageskeleton {
   padding-bottom: var(--pt05);
 }
 
-/* Custom AnimationLine */
+.content {
+  display: grid;
+  --grid_template_areas: "gridText" "gridImage";
+  gap: var(--pt2);
+  align-items: center;
 
-.title,
-.text {
-  position: relative;
+  grid-template-areas: var(--grid_template_areas);
 }
 
-.title:hover hr:last-child {
-  display: none;
+.grid__text {
+  grid-area: gridText;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pt2);
 }
 
-.content:hover .title hr,
-.content:focus-within .title hr {
-  transform: scale(1);
-  background-color: var(--mine-shaft);
+.grid__image {
+  grid-area: gridImage;
+}
+
+.button_width {
+  width: fit-content;
+}
+
+@media (min-width: 768px) {
+  .content {
+    --grid_template_areas: "gridText gridImage";
+    grid-auto-columns: 5fr 7fr;
+  }
 }

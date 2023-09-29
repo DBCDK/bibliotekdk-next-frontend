@@ -18,23 +18,22 @@
 
 /* Skeleton */
 
-.skeleton section > div h1{
+.skeleton section > div h1 {
   max-width: 400px;
 }
 
-.skeleton a{
+.skeleton a {
   pointer-events: none;
-  max-width:300px;
-  width:100%;
+  max-width: 300px;
+  width: 100%;
 }
 
-.section .divider{
-  display:none;
+.section .divider {
+  display: none;
 }
 
 @media (min-width: 992px) {
-
-  .section .divider{
-    display:block;
+  .section .divider {
+    display: block;
   }
 }

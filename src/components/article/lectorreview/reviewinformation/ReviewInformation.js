@@ -4,7 +4,7 @@
 
 import Section from "@/components/base/section";
 import Col from "react-bootstrap/Col";
-import styles from "@/components/article/lectorreview/LectorReviewPage.module.css";
+import styles from "./ReviewInformation.module.css";
 import Text from "@/components/base/text";
 import { dateToShortDate, numericToISO } from "@/utils/datetimeConverter";
 import Translate from "@/components/base/translate";

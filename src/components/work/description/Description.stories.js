@@ -1,5 +1,5 @@
 import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
-import { getDescription } from "../dummy.materialTypesApi";
+import { getDescription } from "../dummy.materialTypesApi.fixture";
 
 import { Description, DescriptionSkeleton } from "./Description";
 

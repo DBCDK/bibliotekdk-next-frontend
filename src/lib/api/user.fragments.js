@@ -1,6 +1,8 @@
 import { lang } from "@/components/base/translate";
 import { ApiEnums } from "@/lib/api/api";
 
+import { creatorsFragment } from "@/lib/api/fragments.utils";
+
 /**
  * @file Contains GraphQL queries all taking a workId as variable
  *
@@ -15,18 +17,21 @@ export function basic() {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `
-    query {
+    query BasicUser {
       user {
         name
         mail
         address
         postalCode
-        agency {
+        agencies {
+          hitcount
+          agencyUrl
           result {
             branchId
             agencyId
             agencyName
             name
+            branchWebsiteUrl
           }
         }
         debt {
@@ -35,8 +40,10 @@ export function basic() {
             creator
             date
             currency
+            agencyId
         }
         loans {
+          agencyId
           loanId
           dueDate
           manifestation {
@@ -48,7 +55,7 @@ export function basic() {
               workId
             }
             creators {
-              display
+              ...creatorsFragment
             }
             materialTypes {
               specific
@@ -64,6 +71,7 @@ export function basic() {
           status
           pickUpBranch {
             agencyName
+            agencyId
           }
           pickUpExpiryDate
           holdQueuePosition
@@ -80,7 +88,7 @@ export function basic() {
               workId
             }
             creators {
-              display
+              ...creatorsFragment
             }
             materialTypes {
               specific
@@ -92,8 +100,8 @@ export function basic() {
           }
         }   
       }
-      monitor(name: "bibdknext_user")
-     }`,
+    }
+    ${creatorsFragment}`,
     variables: {},
     slowThreshold: 3000,
   };
@@ -108,12 +116,15 @@ export function branchesForUser() {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `
-    query ($language: LanguageCode! ) {
+    query  {
       user {
-        agency (language: $language){
-          result {
-            agencyId
+        municipalityAgencyId
+        agencies{
+          result
+          {
             agencyName
+            agencyId
+            name
           }
         }
       }
@@ -130,7 +141,7 @@ export function orderPolicy({ pid }) {
     // delay: 1000, // for debugging
     query: `query orderPolicy ($language: LanguageCode!, $pid: String! ) {
       user {
-        agency (language: $language){
+        agencies (language: $language){
           agencyUrl
           result {
             agencyName
@@ -156,10 +167,55 @@ export function orderPolicy({ pid }) {
             digitalCopyAccess
           }
         }
+        agencies (language: $language){
+        agencyUrl
+        result {
+          agencyName
+          agencyId
+          name
+          city
+          postalAddress
+          postalCode
+          branchId
+          openingHours
+          borrowerCheck
+          orderPolicy(pid: $pid) {
+            orderPossible
+            orderPossibleReason
+            lookUpUrl
+          }
+          userParameters {
+            userParameterType
+            parameterRequired
+          }
+          pickupAllowed
+          userStatusUrl
+          digitalCopyAccess
+        }
+        }
       }
       monitor(name: "bibdknext_orderpolicy")
      }`,
     variables: { language: lang, pid },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * get extended user data
+ *
+ */
+export function extendedData() {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 1000, // for debugging
+    query: `
+    query  {
+      user {
+        persistUserData
+        favoritePickUpBranch
+      }
+     }`,
     slowThreshold: 3000,
   };
 }

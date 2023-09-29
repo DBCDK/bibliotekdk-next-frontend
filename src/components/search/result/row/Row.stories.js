@@ -130,6 +130,81 @@ export function WithoutMaterialTypes() {
   );
 }
 
+export function WithOneOtherLanguageKlingon() {
+  const rowProps = {
+    work: work_klingon_language,
+    className: "",
+    onClick: () => {},
+  };
+
+  return (
+    <RowComponentBuilder
+      storyNameOverride={"WithOtherLanguages"}
+      rowProps={rowProps}
+    />
+  );
+}
+
+export function WithTwoOtherLanguagesElvishKlingon() {
+  const rowProps = {
+    work: work_2_other_languages,
+    className: "",
+    onClick: () => {},
+  };
+
+  return (
+    <RowComponentBuilder
+      storyNameOverride={"WithOtherLanguages"}
+      rowProps={rowProps}
+    />
+  );
+}
+
+export function WithTwoPersonCreators() {
+  const rowProps = {
+    work: work_2_person_creators,
+    className: "",
+    onClick: () => {},
+  };
+
+  return (
+    <RowComponentBuilder
+      storyNameOverride={"WithOtherLanguages"}
+      rowProps={rowProps}
+    />
+  );
+}
+
+export function WithOneCorpCreators() {
+  const rowProps = {
+    work: work_1_corp_creators,
+    className: "",
+    onClick: () => {},
+  };
+
+  return (
+    <RowComponentBuilder
+      storyNameOverride={"WithOtherLanguages"}
+      rowProps={rowProps}
+    />
+  );
+}
+
+export function WithTwoCorpCreators() {
+  const rowProps = {
+    work: work_2_corp_creators,
+    className: "",
+    onClick: () => {},
+  };
+
+  return (
+    <RowComponentBuilder
+      storyNameOverride={"WithOtherLanguages"}
+      rowProps={rowProps}
+    />
+  );
+}
+
 export function SlowLoading() {
   const rowProps = {
     work: {},
@@ -234,6 +309,80 @@ const work = {
   },
 };
 
+const work_klingon_language = {
+  workId: "some-id-2",
+  manifestations: {
+    mostRelevant: [
+      {
+        cover: {
+          detail:
+            "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=22629344&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=0136749c6e9729d895ed",
+        },
+        materialTypes: [
+          {
+            specific: "bog",
+          },
+        ],
+      },
+    ],
+  },
+  mainLanguages: [
+    {
+      isoCode: "kli",
+      display: "Klingon",
+    },
+  ],
+  workTypes: ["LITERATURE"],
+  creators: [
+    {
+      display: "Joanne K Rowling",
+    },
+  ],
+  titles: {
+    main: ["Harry Potter og De Vises Sten"],
+    full: ["Harry Potter og De Vises Sten"],
+  },
+};
+
+const work_2_other_languages = {
+  workId: "some-id-3",
+  manifestations: {
+    mostRelevant: [
+      {
+        cover: {
+          detail:
+            "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=22629344&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=0136749c6e9729d895ed",
+        },
+        materialTypes: [
+          {
+            specific: "bog",
+          },
+        ],
+      },
+    ],
+  },
+  mainLanguages: [
+    {
+      isoCode: "elf",
+      display: "elvish",
+    },
+    {
+      isoCode: "kli",
+      display: "klingon",
+    },
+  ],
+  workTypes: ["LITERATURE"],
+  creators: [
+    {
+      display: "Joanne K Rowling",
+    },
+  ],
+  titles: {
+    main: ["Harry Potter og De Vises Sten"],
+    full: ["Harry Potter og De Vises Sten"],
+  },
+};
+
 const noMaterialTypesWork = {
   workId: "some-id-2",
   manifestations: {
@@ -256,5 +405,103 @@ const noMaterialTypesWork = {
   titles: {
     main: ["Harry Potter og De Vises Sten"],
     full: ["Harry Potter og De Vises Sten"],
+  },
+};
+
+const work_2_person_creators = {
+  workId: "some-id-2",
+  manifestations: {
+    all: [
+      {
+        cover: {
+          detail:
+            "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=54945086&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=f801abee638337e163ca",
+        },
+        materialTypes: [],
+      },
+    ],
+  },
+  creators: [
+    {
+      display: "Lotte Hammer",
+      __typename: "Person",
+    },
+    {
+      display: "Søren Hammer",
+      __typename: "Person",
+    },
+  ],
+  materialTypes: [],
+  titles: {
+    full: ["Mirakelbarnet"],
+  },
+};
+const work_1_corp_creators = {
+  workId: "some-id-2",
+  manifestations: {
+    all: [
+      {
+        cover: {
+          detail:
+            "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=54945086&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=f801abee638337e163ca",
+        },
+        materialTypes: [],
+      },
+    ],
+  },
+  creators: [
+    {
+      display: "Lotte Hammer",
+      __typename: "Person",
+    },
+    {
+      display: "Søren Hammer",
+      __typename: "Person",
+    },
+    {
+      display: "Hammer Industries",
+      __typename: "Corporation",
+    },
+  ],
+  materialTypes: [],
+  titles: {
+    full: ["Mirakelbarnet"],
+  },
+};
+
+const work_2_corp_creators = {
+  workId: "some-id-2",
+  manifestations: {
+    all: [
+      {
+        cover: {
+          detail:
+            "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=54945086&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=f801abee638337e163ca",
+        },
+        materialTypes: [],
+      },
+    ],
+  },
+  creators: [
+    {
+      display: "Lotte Hammer",
+      __typename: "Person",
+    },
+    {
+      display: "Søren Hammer",
+      __typename: "Person",
+    },
+    {
+      display: "Hammer Limited",
+      __typename: "Corporation",
+    },
+    {
+      display: "Hammer Incorporated",
+      __typename: "Corporation",
+    },
+  ],
+  materialTypes: [],
+  titles: {
+    full: ["Mirakelbarnet"],
   },
 };

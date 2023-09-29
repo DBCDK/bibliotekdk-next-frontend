@@ -2,11 +2,22 @@ import PropTypes from "prop-types";
 import styles from "./iconButton.module.css";
 import Text from "@/components/base/text";
 import Icon from "@/components/base/icon";
-import animations from "@/components/base/animation/animations.module.css";
+import animations from "css/animations";
+import Link from "@/components/base/link";
+import cx from "classnames";
+
 /**
  * An animated button that contains a text and an Icon. Pass Icon name that matches an svg file inside public/icons
  * @param {obj} props
- * @returns {component}
+ * @param {string} props.className
+ * @param {function} props.onClick
+ * @param {string} props.alt
+ * @param {obj} props.children
+ * @param {string} props.icon
+ * @param {string} props.textType
+ * @param {boolean} props.keepUnderline
+ * @param {string} props.dataCy
+ * @returns {JSX.Element}
  */
 function IconButton({
   className,
@@ -14,32 +25,44 @@ function IconButton({
   alt = "",
   children,
   icon = "close",
+  textType = "text3",
+  keepUnderline,
+  dataCy,
+  disabled,
   ...props
 }) {
+  const iconSrc = !disabled ? `${icon}.svg` : `${icon}_grey.svg`;
+
   return (
     <button
-      className={`${styles.close} ${animations["on-hover"]} ${animations["on-focus"]} ${className}`}
-      border={false}
+      className={cx(
+        styles.container,
+        animations["on-hover"],
+        animations["on-focus"],
+        styles.focusStyle,
+        className
+      )}
       onClick={() => onClick && onClick()}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.keyCode === 13) {
-          onClick && onClick();
-        }
-      }}
+      data-cy={dataCy}
+      disabled={disabled}
       {...props}
     >
-      <Text
-        type="text3"
-        className={`${animations["f-border-bottom"]} ${animations["h-border-bottom"]}`}
+      <Link
+        className={styles.textWrapper}
+        onClick={(e) => e.preventDefault()}
+        border={{ bottom: !disabled ? { keepVisible: keepUnderline } : false }}
+        tag="div"
+        tabIndex={-1}
       >
-        {children}
-      </Text>
+        <Text type={textType} tag="span">
+          {children}
+        </Text>
+      </Link>
       <Icon
         size={{ w: 2, h: "auto" }}
-        className={`${styles.icon} ${animations["h-elastic"]} ${animations["f-elastic"]}`}
+        className={`${animations["h-elastic"]} ${animations["f-elastic"]}`}
         alt={alt}
-        title={alt}
-        src={`${icon}.svg`}
+        src={iconSrc}
       />
     </button>
   );
@@ -50,6 +73,8 @@ IconButton.propTypes = {
   onClick: PropTypes.func,
   alt: PropTypes.string,
   children: PropTypes.any,
+  /** type prop for the <Text/> component */
+  textType: PropTypes.string,
   /** Has to match an svg file name inside public/icons folder*/
   icon: PropTypes.string,
 };

@@ -13,13 +13,14 @@ RUN npm version
 RUN npm set progress=false && npm config set depth 0 && \
     npm install
 
-# Run lint and tests
-RUN npm run lint
-RUN npm run test
+# Run lint and tests (f is formatted)
+RUN npm run prettier:check:f
+RUN npm run lint:f
+RUN npm run test:f
 
-# build for production
-RUN npm run build:storybook && \
-    npm run build:next && \
+# build for production (f is formatted)
+RUN npm run build:storybook:f && \
+    npm run build:next:no:lint:f && \
     npm prune --production
 
 # ---- Release ----

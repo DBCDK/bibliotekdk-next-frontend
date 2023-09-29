@@ -4,6 +4,7 @@ import Skeleton from "@/components/base/skeleton";
 
 import styles from "./Cover.module.css";
 import { useEffect, useRef, useState } from "react";
+import cx from "classnames";
 
 /**
  * The Component function
@@ -37,11 +38,7 @@ function Cover({
   }, [src]);
 
   // Add class for missing cover image
-  const missingCoverClass = src ? "" : styles.missingCover;
-
   const loadedClass = loaded ? styles.loaded : "";
-
-  const errorClass = error ? styles.error : "";
 
   const skeletonClass = skeleton || (!loaded && src) ? styles.skeleton : "";
 
@@ -58,7 +55,20 @@ function Cover({
   return (
     <div
       style={dynamicStyles}
-      className={`${styles.cover} ${frameStyle} ${loadedClass} ${errorClass} ${missingCoverClass} ${skeletonClass} ${className} ${styles[size]}`}
+      className={cx(
+        styles.cover,
+        frameStyle,
+        loadedClass,
+        skeletonClass,
+        className,
+        {
+          [styles.large]: size === "large",
+          [styles.medium]: size === "medium",
+          [styles.thumbnail]: size === "thumbnail",
+          [styles.fill]: size === "fill",
+          [styles["fill-width"]]: size === "fill-width",
+        }
+      )}
       onClick={onClick}
       data-cy={src ? "cover-present" : "missing-cover"}
     >

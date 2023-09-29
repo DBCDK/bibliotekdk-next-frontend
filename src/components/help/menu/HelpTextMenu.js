@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Router from "next/router";
 import Text from "@/components/base/text/Text";
-import styles from "@/components/help/menu/HelpTextMenu.module.css";
+import styles from "./HelpTextMenu.module.css";
 import Icon from "@/components/base/icon/Icon";
-import classNames from "classnames/bind";
+import cx from "classnames";
 import Link from "@/components/base/link";
 import { useData } from "@/lib/api/api";
 import { publishedHelptexts } from "@/lib/api/helptexts.fragments";
@@ -21,13 +21,12 @@ import Translate from "@/components/base/translate";
  * @returns {JSX.Element}
  */
 function MenuLink({ label, href = "#!", active = false }) {
-  const activeClass = active ? styles.active : "";
   const type = active ? "text1" : "text2";
 
   return (
-    <div className={`${styles.link} ${activeClass}`}>
+    <div className={styles.link}>
       <Link href={href} dataCy="menu-fixed-links">
-        <Text type={type} tag="span" className={styles.menu_link_margin}>
+        <Text type={type} tag="span">
           {Translate({ context: "help", label })}
         </Text>
       </Link>
@@ -95,7 +94,9 @@ function HelpTextGroups({ menus, groups, helpTextId, className }) {
         </div>
         <div
           key={`dev-helpmenu-${index}`}
-          className={classNames(expanded || activelink ? "" : styles.helphide)}
+          className={cx({
+            [styles.helphide]: !(expanded || activelink),
+          })}
         >
           <HelptTextMenuLinks
             menuItems={menus}
@@ -126,7 +127,7 @@ export function HelpTextMenu({ helpTexts, helpTextId, ...props }) {
   const isFaqPage = Router.pathname.includes("/faq");
 
   return (
-    <>
+    <div className={styles.container}>
       <MenuLink label="Help and guides" href="/hjaelp" />
       <MenuLink label="faq-title" href="/hjaelp/faq" active={isFaqPage} />
       <HelpTextGroups
@@ -135,7 +136,7 @@ export function HelpTextMenu({ helpTexts, helpTextId, ...props }) {
         helpTextId={helpTextId}
         groups={groups}
       />
-    </>
+    </div>
   );
 }
 

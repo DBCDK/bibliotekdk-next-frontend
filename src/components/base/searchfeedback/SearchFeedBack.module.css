@@ -15,7 +15,6 @@
   justify-content: space-between;
   align-items: center;
   max-width: 60%;
-
 }
 
 .feedbacktextarea {
@@ -32,7 +31,6 @@
   justify-content: space-between;
   width: 30%;
   margin-left: var(--pt3);
-
 }
 
 .feedbackicon {
@@ -40,7 +38,6 @@
   position: relative;
   top: 12px;
   left: 12px;
-
 }
 
 .spanwrap {
@@ -48,16 +45,16 @@
   border-radius: 50%;
   width: var(--pt6);
   height: var(--pt6);
-
-
 }
 
-.spanwrap:hover {
+.spanwrap:hover,
+.spanwrap:focus-visible {
   animation: fadeIn 1s;
   background-color: blue;
 }
 
-.spanwrap:hover img {
+.spanwrap:hover img,
+.spanwrap:focus-visible img {
   filter: invert(1);
 }
 

@@ -10,8 +10,11 @@ import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import Button from "@/components/base/button";
 import Divider from "@/components/base/divider";
+import Link from "@/components/base/link";
 
 import styles from "./Prompt.module.css";
+import useUser from "@/components/hooks/useUser";
+import InfoDropdown from "@/components/base/infoDropdown/InfoDropdown";
 
 /**
  * Show a login prompt with a title and description
@@ -28,9 +31,13 @@ import styles from "./Prompt.module.css";
 export default function LoginPrompt({
   title,
   description,
+  description2,
   buttonText = Translate({ context: "header", label: "login" }),
+  linkHref = null,
   signIn,
 }) {
+  const user = useUser();
+
   return (
     <Container className={styles.prompt} fluid>
       <Row>
@@ -39,11 +46,49 @@ export default function LoginPrompt({
           <Title type="title4" tag="h3">
             {title}
           </Title>
-          <Text type="text3">{description}</Text>
-          <Button type="primary" size="large" onClick={signIn}>
-            {buttonText}
-          </Button>
-          <Divider />
+          {user.isAuthenticated && linkHref && (
+            <InfoDropdown
+              label="show-more"
+              buttonText={Translate({
+                context: "articles",
+                label: "how-to-get-access",
+              })}
+            >
+              <>
+                <Text type="text3" className={styles.description}>
+                  {description}
+                </Text>
+                <Text className={styles.inline} type="text3">
+                  {description2}{" "}
+                </Text>
+
+                <Link
+                  className={`${styles.inline} ${styles.link}`}
+                  href={linkHref.href}
+                  target="_blank"
+                  border={{ top: false, bottom: true }}
+                  data_use_new_underline={false}
+                >
+                  <Text className={styles.inline} type="text3">
+                    {linkHref.text}
+                  </Text>
+                </Link>
+              </>
+            </InfoDropdown>
+          )}
+          {!(user.isAuthenticated && linkHref) && (
+            <Button
+              type="primary"
+              size="large"
+              onClick={signIn}
+              dataCy="article-prompt-button-log-ind"
+              className={styles.signInButton}
+            >
+              {buttonText}
+            </Button>
+          )}
+
+          <Divider className={styles.devider} />
         </Col>
       </Row>
     </Container>

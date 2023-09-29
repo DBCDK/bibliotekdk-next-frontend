@@ -7,7 +7,7 @@
 
 .input_wrap {
   width: 100%;
-  height: 64px;
+  height: var(--pt8);
   display: flex;
   align-items: center;
   padding: var(--pt2) var(--pt2) var(--pt2) 0;
@@ -23,8 +23,8 @@
 .input_wrap .arrow,
 .input_wrap .clear {
   /* override dynamic style */
-  min-width: 56px;
-  height: 56px;
+  min-width: var(--pt7);
+  height: var(--pt7);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -51,12 +51,12 @@
 
 .input {
   width: 100%;
-  height: 32px;
+  height: var(--pt4);
   font-size: 17px;
   line-height: 26px;
   font-family: var(--body-font);
   border: none;
-  padding: 0 40px 0 0;
+  padding: 0 var(--pt5) 0 0;
 
   /* remove border on iphone */
   border-radius: 0;
@@ -86,7 +86,7 @@
   border-top: none;
   height: calc(100vh - 50px);
   overflow-y: auto;
-  padding: 72px 0 16px 0;
+  padding: var(--pt9) 0 var(--pt2) 0;
   box-shadow: var(--shadow-effect);
 }
 
@@ -136,10 +136,10 @@
 @media (min-width: 992px) {
   .input {
     height: 100%;
-    padding: 16px;
+    /* The right padding has to be pt2 (for base) + 2 times pt2 for the icon */
+    padding: var(--pt2) calc(var(--pt2) * 3) var(--pt2) var(--pt2);
     border: 1px solid var(--gray);
   }
-
 
   .input__focused {
     border: 1px solid var(--blue);
@@ -147,7 +147,7 @@
   }
 
   .input_wrap {
-    height: 64px;
+    height: var(--pt8);
     padding: 0;
     border: none;
 

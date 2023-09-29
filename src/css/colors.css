@@ -30,6 +30,7 @@
   --white: #ffffff;
   --iron: #d6d6d7;
   --gray: #828282;
+  --dove: #6e6e6e;
 
   /* Alerts */
   --error: #d1414e;
@@ -45,8 +46,8 @@
   --info: #3333ff;
   --info-light: #d0e5f9;
 
-  --success: #1C7D45;
-  --success-light: #E9F7EF;
+  --success: #1c7d45;
+  --success-light: #e9f7ef;
 
   --transparent: #ff000000;
   --link-background: rgba(0, 0, 0, 0.1);

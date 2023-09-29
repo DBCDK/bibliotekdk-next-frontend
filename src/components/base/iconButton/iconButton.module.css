@@ -1,23 +1,25 @@
-.close p {
+.container {
+  cursor: pointer;
+  background-color: transparent;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.textWrapper {
   margin: 0 var(--pt1) 0 0;
 }
 
-.icon {
-  cursor: pointer;
+.focusStyle:focus-visible {
+  outline: 1px solid var(--blue);
 }
 
-.icon svg path {
-  /* default as blue icon */
-  stroke: var(--blue);
-  fill: var(--blue);
+.container:disabled {
+  cursor: none;
+  pointer-events: none;
 }
-.close {
-  cursor: pointer;
-  background-color: transparent;
-  align-items: center;
-  display: flex;
-}
-.wrap {
-  align-items: center;
-  display: flex;
+
+button.container:disabled .textWrapper * {
+  color: var(--dove);
+  --underline-bottom-color: var(--dove);
 }

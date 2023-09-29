@@ -32,6 +32,15 @@
   grid-area: 🎱️;
 }
 
+.full_cover_carousel:has(:focus-visible) button.arrow_styling {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.carousel:focus-visible {
+  outline: 2px solid var(--blue);
+}
+
 .left_arrow,
 .right_arrow {
   opacity: var(--arrow_opacity);

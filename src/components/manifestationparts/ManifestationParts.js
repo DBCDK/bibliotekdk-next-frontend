@@ -19,7 +19,9 @@ import Text from "@/components/base/text/Text";
 import React from "react";
 import isEmpty from "lodash/isEmpty";
 import { useModal } from "@/components/_modal";
-import { LinkArrow } from "@/components/_modal/pages/order/linkarrow/LinkArrow";
+import { IconLink as LinkArrow } from "@/components/base/iconlink/IconLink";
+import Translate from "@/components/base/translate";
+import cx from "classnames";
 
 export function ManifestationParts({
   parts,
@@ -29,6 +31,7 @@ export function ManifestationParts({
   modalOpen,
   showMoreButton = true,
   numberToShow,
+  breakOnCreator = false,
 }) {
   if (isEmpty(parts)) {
     return null;
@@ -37,13 +40,26 @@ export function ManifestationParts({
   const partsToShow = (numberToShow && parts?.slice(0, numberToShow)) || parts;
   const showMore = showMoreButton && parts?.length > partsToShow?.length;
 
+  // we want contributorsFromDescription AND creatorsFromDescription in the same string
+  const creatorsAndContributorsDisplay = (part) => {
+    const fromDescriptionArray = [
+      ...(part?.contributorsFromDescription
+        ? part?.contributorsFromDescription
+        : []),
+      ...(part?.creatorsFromDescription ? part?.creatorsFromDescription : []),
+    ];
+
+    const fromDescription = fromDescriptionArray?.join(", ");
+
+    return !isEmpty(fromDescription) ? (
+      <span className={styles.contributors}>({fromDescription})</span>
+    ) : null;
+  };
   const creatorsDisplay = (part) => {
-    const creatorString = !isEmpty(part.creators)
-      ? "  -  " + part.creators.map((creator) => creator.display).join(", ")
-      : !isEmpty(part.creatorsFromDescription)
-      ? "  -  " + part.creatorsFromDescription.join(", ")
-      : "";
-    return creatorString;
+    const creatorsString = part?.creators
+      ?.map((creator) => creator?.display)
+      .join(", ");
+    return !isEmpty(creatorsString) ? <span>{creatorsString}</span> : null;
   };
 
   // show some kind of contributors also
@@ -53,15 +69,37 @@ export function ManifestationParts({
   const displayarray = partsToShow.map(
     (part, index) =>
       part?.title && (
-        <li key={`manifestationlist-${index}`}>
-          <Text type="text3" lines={1} className={styles.partstitle}>
+        <li
+          key={`manifestationlist-${index}`}
+          className={styles.manifestionlistItem}
+        >
+          <Text type="text3" lines={1} className={styles.title}>
             {part.title}
-            {!titlesOnly && creatorsDisplay(part) && creatorsDisplay(part)}
+            {creatorsAndContributorsDisplay(part) &&
+              creatorsAndContributorsDisplay(part)}
           </Text>
 
-          {!titlesOnly && part.playingTime && (
-            <Text type="text3" lines={1} className={styles.nobreak}>
-              {part.playingTime}
+          {!titlesOnly && creatorsDisplay(part) && (
+            <Text
+              type="text3"
+              lines={1}
+              className={cx(styles.creator, {
+                [styles.breakOrder_creator]: breakOnCreator,
+              })}
+            >
+              {creatorsDisplay(part)}
+            </Text>
+          )}
+
+          {!titlesOnly && part?.playingTime && (
+            <Text
+              type="text3"
+              lines={1}
+              className={cx(styles.playingTime, {
+                [styles.breakOrder_playingTime]: breakOnCreator,
+              })}
+            >
+              {part?.playingTime || ""}
             </Text>
           )}
         </li>
@@ -80,17 +118,21 @@ export function ManifestationParts({
       </ul>
 
       {showMore && (
-        <>
-          <span className={`${styles.arrowAndTxtContainer} ${className}`}>
-            <div>
-              <LinkArrow className={styles.arrowchanges}>
-                <Text type="text3" lines={1} onClick={modalOpen}>
-                  Se alle ({parts.length})
-                </Text>
-              </LinkArrow>
-            </div>
-          </span>
-        </>
+        <LinkArrow
+          iconPlacement="right"
+          iconOrientation={180}
+          border={{ bottom: { keepVisible: true }, top: false }}
+          className={cx(styles.arrowchanges, className)}
+          onClick={modalOpen}
+        >
+          <Text type="text3" lines={1} tag="span">
+            {Translate({
+              context: "manifestation_content",
+              label: "see_all",
+            })}{" "}
+            ({parts.length})
+          </Text>
+        </LinkArrow>
       )}
     </div>
   );
@@ -104,6 +146,7 @@ export default function Wrap({
   label,
   showMoreButton = true,
   parts = [],
+  breakOnCreator = false,
 }) {
   const { data, isLoading, error } = useData(
     pid && manifestationFragments.manifestationParts({ pid: pid })
@@ -142,6 +185,7 @@ export default function Wrap({
       modalOpen={modalOpen}
       showMoreButton={showMoreButton}
       numberToShow={numberToShow}
+      breakOnCreator={breakOnCreator}
     />
   );
 }

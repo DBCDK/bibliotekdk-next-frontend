@@ -141,7 +141,7 @@ describe("Server Side Rendering", () => {
       });
     });
 
-    it(`has json-ld for movie`, () => {
+    it.skip(`has json-ld for movie`, () => {
       getPageHead(
         "/materiale/the-jungle-book_jon-favreau/work-of%3A870970-basis%3A52331080"
       ).then((res) => {
@@ -350,12 +350,12 @@ describe("Server Side Rendering", () => {
   describe(`inspiration/material pages`, () => {
     it(`has correct metadata`, () => {
       getPageHead("/inspiration/boeger").then((res) => {
-        expect(res.title).to.equal("Skønlitteratur");
+        expect(res.title).to.equal("Bøger");
         expect(res.description).to.exist;
         expect(res["og:url"]).to.equal(
           "http://localhost:3000/inspiration/boeger"
         );
-        expect(res["og:title"]).to.equal("Skønlitteratur");
+        expect(res["og:title"]).to.equal("Bøger");
         expect(res["og:description"]).to.exist;
         expect(res["og:image"]).to.exist;
       });

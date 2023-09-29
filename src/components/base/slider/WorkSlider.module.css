@@ -1,7 +1,7 @@
 .WorkSlider {
   position: relative;
-  margin-left: calc(var(--pt1) * -1);
-  margin-right: calc(var(--pt1) * -1);
+  margin-left: calc(var(--pt2) * -1);
+  margin-right: calc(var(--pt2) * -1);
 }
 .skeleton {
   display: flex;

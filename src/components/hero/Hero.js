@@ -1,4 +1,4 @@
-import styles from "@/components/hero/Hero.module.css";
+import styles from "./Hero.module.css";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -35,9 +35,8 @@ export function Hero({ image }) {
           md={{ span: 8, offset: 2 }}
           sm={{ span: 10, offset: 1 }}
           xs={{ span: 12, offset: 0 }}
-          className={styles.heromargin}
         >
-          <Title type="title2" className={styles.heromobiletxt}>
+          <Title type="title2" className={styles.heromobiletxt} tag="h1">
             {Translate({
               context: "general",
               label: "heroTxt",
@@ -56,7 +55,7 @@ export function Hero({ image }) {
               className={styles.heroicon}
             />
 
-            <Title type="title2" className={styles.herotitle}>
+            <Title type="title2" className={styles.herotitle} tag="h1">
               {Translate({
                 context: "general",
                 label: "heroTxt",

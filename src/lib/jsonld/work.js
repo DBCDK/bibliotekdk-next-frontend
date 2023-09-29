@@ -251,9 +251,7 @@ export function getJSONLD(work) {
   /* title, creators, id*/
   const urlWork = {
     title: work?.titles?.main[0],
-    creators: work?.creators?.map((creator) => ({
-      name: creator.display,
-    })),
+    creators: work?.creators,
     id: work?.workId,
   };
   const url = getCanonicalWorkUrl(urlWork);

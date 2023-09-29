@@ -1,6 +1,6 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
 
-import dummy_data from "./dummy_data.json";
+import dummy_data from "./dummy_data.fixture.json";
 import Modal from "@/components/_modal/Modal";
 import Pages from "@/components/_modal/pages";
 import { Options } from "./Options.page";

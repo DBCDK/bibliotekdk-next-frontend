@@ -7,15 +7,17 @@ import AccordionContext from "react-bootstrap/AccordionContext";
 import ExpandIcon from "@/components/base/animation/expand";
 
 import Text from "@/components/base/text";
+import Title from "@/components/base/title";
 
 import styles from "./Accordion.module.css";
-import animations from "@/components/base/animation/animations.module.css";
+import animations from "css/animations";
 
 import BodyParser from "@/components/base/bodyparser";
 import React, { useEffect } from "react";
 import useElementVisible from "@/components/hooks/useElementVisible";
 import { useRouter } from "next/router";
 import Link from "@/components/base/link";
+import cx from "classnames";
 
 // A variable indicating if an accordion has been rendered
 // Used to determine if we should scroll to anchor.
@@ -27,11 +29,11 @@ let firstAccordionRender = true;
  *
  * @param {obj} props
  * @param {obj} props.title
- * @param {obj} props.children
+ * @param {ReactElement|function|string} props.children
  * @param {string} props.eventKey (required!)
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export function Item({
   title,
@@ -94,48 +96,62 @@ export function Item({
   return (
     <Card className={styles.element} data-cy="accordion-item" ref={elementRef}>
       <Card.Header
+        as={Link}
+        border={{ top: { keepVisible: true }, bottom: { keepVisible: true } }}
+        // Card.Header
         tabIndex="0"
         className={[
-          styles.header,
+          styles.wrapper,
           isCurrentEventKey && styles.open,
           animations.underlineContainer__only_internal_animations,
         ].join(" ")}
         onClick={onClick}
         onKeyDown={handleKeypress}
+        role="button"
+        id={`accordion-unique-toggle-${eventKey}-${title}`}
+        aria-controls={`accordion-unique-${eventKey}-${title}`}
+        aria-expanded={isCurrentEventKey}
       >
-        <div
-          className={[
-            animations["f-translate-right"],
-            // if additional text is to be shown we need to set a wwidth (.firstelement)
-            // of first element in accordion header
-            additionalTxt && styles.firstelement,
-          ].join(" ")}
-        >
-          <Link tag={"span"}>
-            <Text type="text2" skeleton={isLoading} lines="1" tag={"span"}>
-              {title}
-            </Text>
-          </Link>
-          {subTitle && (
-            <Text tag={"span"} type="text4">
-              {subTitle}
-            </Text>
-          )}
-        </div>
-        {additionalTxt && (
-          <div className={styles.textbox}>
-            {additionalTxt?.map((txt, index) => (
-              <Text tag={"span"} type="text2" key={`addition-${index}`}>
-                {txt}
+        <div className={styles.header_content}>
+          <div
+            className={[
+              animations["f-translate-right"],
+              // if additional text is to be shown we need to set a wwidth (.firstelement)
+              // of first element in accordion header
+              additionalTxt && styles.firstelement,
+            ].join(" ")}
+          >
+            <Link tag="span" className={styles.link_on_year} tabIndex={-1}>
+              <Title type="text2" skeleton={isLoading} lines={1} tag="h3">
+                {title}
+              </Title>
+            </Link>
+            {subTitle && (
+              <Text tag={"span"} type="text4">
+                {subTitle}
               </Text>
-            ))}
+            )}
           </div>
-        )}
-        <ExpandIcon open={isCurrentEventKey} size={4} />
+          {additionalTxt && (
+            <div className={styles.textbox}>
+              {additionalTxt?.map((txt, index) => (
+                <Text tag={"span"} type="text2" key={`addition-${index}`}>
+                  {txt}
+                </Text>
+              ))}
+            </div>
+          )}
+          <div className={styles.expandIcon}>
+            <ExpandIcon open={isCurrentEventKey} size={4} />
+          </div>
+        </div>
       </Card.Header>
       <BootstrapAccordion.Collapse
         className={styles.content}
         eventKey={eventKey}
+        role="region"
+        id={`accordion-unique-${eventKey}`}
+        aria-labelledby={`accordion-unique-toggle-${eventKey}-${title}`}
       >
         <Card.Body>
           {typeof children === "function"
@@ -159,6 +175,11 @@ Item.propTypes = {
   id: PropTypes.string,
 };
 
+/**
+ *
+ * @param className
+ * @return {JSX.Element}
+ */
 export function AccordionSkeleton({ className }) {
   const dummy = [
     { title: "lorem ipsum dolor sit amet" },
@@ -167,19 +188,21 @@ export function AccordionSkeleton({ className }) {
 
   return (
     <BootstrapAccordion
-      className={`${styles.skeleton} ${className}`}
+      className={`${styles.skeleton}, ${className}`}
       data-cy="accordion"
     >
-      {dummy?.map((a, i) => (
-        <Item
-          title={a.title}
-          key={`${a.title}_${i}`}
-          eventKey={a.key || i.toString()}
-          isLoading={true}
-        >
-          <BodyParser body={a.content} />
-        </Item>
-      ))}
+      <>
+        {dummy.map((a, i) => (
+          <Item
+            title={a.title}
+            key={`${a.title}_${i}`}
+            eventKey={a.key || i.toString()}
+            isLoading={true}
+          >
+            <BodyParser body={a.content} />
+          </Item>
+        ))}
+      </>
     </BootstrapAccordion>
   );
 }
@@ -189,11 +212,11 @@ export function AccordionSkeleton({ className }) {
  *
  * @param {obj} props
  * @param {obj} props.data
- * @param {obj} props.className
- * @param {obj} props.defaultActiveKey mount section as open on the current index/key
+ * @param {string} props.className
+ * @param {string|string[]} props.defaultActiveKey mount section as open on the current index/key
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 
 export default function Accordion({
@@ -225,7 +248,7 @@ export default function Accordion({
   return (
     <BootstrapAccordion
       defaultActiveKey={defaultActiveKey}
-      className={className}
+      className={cx(className)}
       data-cy="accordion"
     >
       {data || children}
@@ -237,5 +260,9 @@ Accordion.propTypes = {
   data: PropTypes.array,
   defaultActiveKey: PropTypes.string,
   className: PropTypes.string,
-  children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+  children: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.func,
+    PropTypes.object,
+  ]),
 };

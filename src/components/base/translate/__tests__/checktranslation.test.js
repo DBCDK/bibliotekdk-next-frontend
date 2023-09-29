@@ -6,7 +6,6 @@
 
 import { checkTranslationsObject } from "@/components/base/translate/Translate";
 import translation from "@/components/base/translate/Translate.json";
-import { test } from "@jest/globals";
 
 test("Test_checkTranslations", () => {
   let input = null;

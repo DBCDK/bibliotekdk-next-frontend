@@ -31,6 +31,7 @@
 .primary.disabled {
   background-color: var(--concrete);
   outline: 2px solid var(--iron);
+  color: var(--dove);
 }
 
 /* Secondary */
@@ -48,6 +49,7 @@
 
 .secondary.disabled {
   outline: 2px solid var(--concrete);
+  color: var(--dove);
 }
 
 /* 
@@ -58,7 +60,8 @@
 /* primary */
 .primary.large {
   font-size: 20px;
-  padding: var(--pt2) 0;
+  padding-top: var(--pt2);
+  padding-bottom: var(--pt2);
 }
 
 .primary.medium {
@@ -105,7 +108,6 @@
 
 /* 
 * Disabled 
-*
 */
 
 .button.disabled {
@@ -113,16 +115,16 @@
   cursor: default;
 }
 
-.disabled,
-.disabled:hover {
-  color: var(--mine-shaft);
-}
-
 /* 
 * Skeleton
-*
 */
 
 .skeleton {
   position: relative;
+}
+
+@media (max-width: 414px) {
+  .secondary.large {
+    padding: var(--pt2) var(--pt1);
+  }
 }

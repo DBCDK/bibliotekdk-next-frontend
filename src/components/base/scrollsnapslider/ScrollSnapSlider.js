@@ -65,6 +65,7 @@ export default function ScrollSnapSlider({
           orientation={"left"}
           clickCallback={() => scrollFunction("left")}
           dataDisabled={Math.floor(containerScroll.x) <= 0}
+          tabIndex={-1}
         />
       )}
       <div
@@ -83,6 +84,7 @@ export default function ScrollSnapSlider({
           dataDisabled={
             Math.floor(containerScroll.xScrollable - containerScroll.x) <= 0
           }
+          tabIndex={-1}
         />
       )}
     </div>

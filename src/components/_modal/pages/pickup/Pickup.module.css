@@ -1,29 +1,13 @@
 .pickup {
   padding: 0 var(--pt2) var(--pt2) var(--pt2);
 }
-.pickup h2 {
-  margin: 0 0 var(--pt2) 0;
-}
 
-.search .input {
+.input {
   margin: var(--pt2) 0;
 }
 
 .search .title {
   padding: var(--pt1) 0;
-}
-
-.link > .arrow {
-  margin-left: var(--pt2);
-  outline-offset: var(--pt1);
-}
-
-.message {
-  padding: 0 0 var(--pt2) 0;
-}
-
-.disallowedTitle {
-  padding-top: var(--pt4);
 }
 
 .pickup mark {
@@ -64,22 +48,46 @@
   color: black !important;
 }
 
-.branchMessage {
-  padding-top: var(--pt05);
-  color: red;
-}
-
 .squeeze {
   padding-top: var(--pt1);
   padding-bottom: var(--pt1);
 }
 
+.pickupSelectionWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-bottom: var(--pt1);
+}
+
+.collapseWrapper {
+  width: 100%;
+}
+
+.showPickupTitle {
+  padding-bottom: var(--pt2);
+}
+
+.agencySelectionLink {
+  display: flex;
+  flex-direction: row;
+}
+
+.agencySelectionLink[aria-expanded="true"] .chevron img {
+  transform: rotate(180deg);
+}
+
+.chevron {
+  margin-left: var(--pt1);
+  align-items: center;
+}
+
+.chevron img {
+  transition: transform 0.2s linear;
+}
+
 @media (min-width: 576px) {
   .pickup {
     padding: 0 var(--pt6) var(--pt3) var(--pt6);
-  }
-
-  .link > .arrow {
-    margin-left: var(--pt6);
   }
 }

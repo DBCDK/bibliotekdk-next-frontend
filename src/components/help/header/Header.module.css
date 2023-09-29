@@ -40,20 +40,6 @@
 }
 
 /* Logo */
-
-.logoWrap:focus-visible {
-  outline: solid 1px var(--blue);
-  outline-offset: var(--pt1);
-}
-
-.logoWrap:active {
-  outline: none;
-}
-
-.logo {
-  cursor: pointer;
-}
-
 .row > div {
   /* align-self: flex-start; */
 }
@@ -115,13 +101,6 @@
     padding-top: var(--pt4);
     padding-bottom: var(--pt4);
     box-shadow: none;
-  }
-
-  .logo {
-    /* override icon inline style */
-    height: var(--pt6) !important;
-    min-height: var(--pt6) !important;
-    max-height: var(--pt6) !important;
   }
 
   .inputwrapper {

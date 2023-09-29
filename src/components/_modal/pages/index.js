@@ -5,11 +5,17 @@ import PeriodicaForm from "./periodicaform";
 import Pickup from "./pickup";
 import Loanerform from "./loanerform";
 import Receipt from "./receipt";
-import Login from "./login";
 import Filter from "./filter";
 import Localizations from "./localizations";
 import References from "./references";
 import ManifestationContent from "./manifestationContent";
+import Material from "./material";
+import DeleteOrder from "./deleteOrder";
+import OrderHistoryDataConsent from "./orderHistoryDataConsent";
+import Login from "./login";
+import MobileLogin from "./mobileLogin";
+import OpenAdgangsplatform from "./openAdgangsplatform";
+import LoginNotSupported from "./loginNotSupported";
 
 const _modal = {
   Menu,
@@ -19,11 +25,17 @@ const _modal = {
   Pickup,
   Loanerform,
   Receipt,
-  Login,
   Filter,
   Localizations,
   References,
   ManifestationContent,
+  Material,
+  DeleteOrder,
+  OrderHistoryDataConsent,
+  Login,
+  MobileLogin,
+  LoginNotSupported,
+  OpenAdgangsplatform,
 };
 
 export default _modal;

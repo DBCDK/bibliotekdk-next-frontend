@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useMemo } from "react";
 import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 
 import Section from "@/components/base/section";
 import Accordion from "@/components/base/accordion";
@@ -22,14 +21,15 @@ import styles from "./Promoted.module.css";
  * The Promoted FAQs React component
  *
  * @param {obj} props
- * @param {obj} props.className
- * @param {obj} props.data
+ * @param {string} props.className
+ * @param {array} props.data
+ * @param {boolean} props.isLoading
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export function Promoted({ className = "", data = [], isLoading }) {
-  data = useMemo(() => sortData(data), [data]);
+  const sortedData = useMemo(() => sortData(data), [data]);
 
   return (
     <Section
@@ -39,25 +39,19 @@ export function Promoted({ className = "", data = [], isLoading }) {
       space={{ bottom: false }}
       isLoading={isLoading}
     >
-      <Row>
-        <Col lg={8}>
-          <Accordion
-            data={data}
-            isLoading={isLoading}
-            className={styles.accordion}
-          />
-          <Link href="/hjaelp/faq" a={false}>
-            <Button
-              type="secondary"
-              size="medium"
-              className={styles.button}
-              skeleton={isLoading}
-            >
-              {Translate({ context: "help", label: "show-more-faq" })}
-            </Button>
-          </Link>
-        </Col>
-      </Row>
+      <Col lg={8}>
+        <Accordion data={sortedData} isLoading={isLoading} />
+        <Link href="/hjaelp/faq" a={false}>
+          <Button
+            type="secondary"
+            size="medium"
+            className={styles.button}
+            skeleton={isLoading}
+          >
+            {Translate({ context: "help", label: "show-more-faq" })}
+          </Button>
+        </Link>
+      </Col>
     </Section>
   );
 }
@@ -75,7 +69,7 @@ Promoted.propTypes = {
  * @param {obj} props.data
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Wrap(props) {
   const langcode = getLanguage();
@@ -87,9 +81,9 @@ export default function Wrap(props) {
     return null;
   }
 
-  const realdata = data?.faq?.entities;
+  const realData = data?.faq?.entities;
 
-  return <Promoted {...props} isLoading={isLoading} data={realdata} />;
+  return <Promoted {...props} isLoading={isLoading} data={realData} />;
 }
 
 Wrap.propTypes = {

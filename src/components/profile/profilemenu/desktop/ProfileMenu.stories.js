@@ -1,5 +1,5 @@
 import ProfileMenu from "./ProfileMenu";
-import automock_utils from "@/components/_modal/pages/automock_utils";
+import automock_utils from "@/lib/automock_utils.fixture";
 
 const { useMockLoanerInfo } = automock_utils();
 

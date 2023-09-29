@@ -5,7 +5,6 @@
 
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import get from "lodash/get";
 
 import Image from "@/components/base/image";
@@ -20,6 +19,8 @@ import { articlePathAndTarget } from "@/components/articles/utils";
 import styles from "./Single.module.css";
 import Translate from "@/components/base/translate";
 import React from "react";
+import cx from "classnames";
+import isEmpty from "lodash/isEmpty";
 
 /**
  * A section displaying three articles
@@ -34,8 +35,6 @@ export default function Single({ articles, skeleton }) {
   // extract image from article
   const image = article && article.fieldImage;
 
-  const skeletonClass = skeleton ? styles.skeleton : "";
-
   const { target, query, pathname } = articlePathAndTarget(article);
   // Action button label
   const btnLabel = get(article, "fieldAlternativeArticleUrl.title", false)
@@ -46,61 +45,65 @@ export default function Single({ articles, skeleton }) {
   const bodyText = get(article, "body.value", "").replace(/(<([^>]+)>)/gi, "");
 
   return (
-    <Row className={styles.wrap}>
-      <Col
-        as={LinkOnlyInternalAnimations}
-        href={{ pathname, query }}
-        target={`${target}`}
-        xs={12}
-        lg={{ span: 10, offset: 1 }}
-      >
-        <Row className={`${styles.content} ${skeletonClass}`}>
-          <Col xs={{ span: 12, order: 2 }} md={{ span: 5, order: 1 }}>
-            <span className={styles.text}>
-              <Text type="text2" lines={1} clamp={true} skeleton={skeleton}>
-                {bodyText}
-              </Text>
-            </span>
-            <Title
-              tag="h3"
-              type="title3"
-              lines={1}
-              skeleton={skeleton}
-              className={styles.title}
-            >
-              <span className={styles.title_title}>
-                <Link className={styles.underlineContainer__colors}>
-                  {article.title}
-                </Link>
-              </span>
-            </Title>
-            <Link a={false} target={`${target}`}>
-              <Button
-                onClick={() => {}}
-                type="secondary"
-                size="medium"
-                skeleton={skeleton}
-              >
-                {btnLabel}
-              </Button>
+    <Col
+      as={LinkOnlyInternalAnimations}
+      href={{ pathname, query }}
+      target={`${target}`}
+      className={cx(styles.content)}
+      xs={12}
+      lg={{ span: 10, offset: 1 }}
+    >
+      <div className={styles.grid__text}>
+        {bodyText && !isEmpty(bodyText) && (
+          <Text
+            tag="span"
+            type="text2"
+            lines={1}
+            clamp={true}
+            skeleton={skeleton}
+          >
+            {bodyText}
+          </Text>
+        )}
+        <Title
+          tag="h3"
+          type="title3"
+          lines={1}
+          skeleton={skeleton}
+          className={cx(styles.title)}
+        >
+          <span>
+            <Link className={styles.underlineContainer__colors}>
+              {article.title}
             </Link>
-          </Col>
-          <Col xs={{ span: 12, order: 1 }} md={{ span: 7, order: 2 }}>
-            <div className={styles.imagewrapper}>
-              {image && (
-                <Image
-                  src={image.url}
-                  alt={image.alt}
-                  layout="fill"
-                  objectFit="cover"
-                />
-              )}
-              {skeleton && <Skeleton className={styles.imageskeleton} />}
-            </div>
-          </Col>
-        </Row>
-      </Col>
-    </Row>
+          </span>
+        </Title>
+        <Link a={false} target={`${target}`}>
+          <Button
+            onClick={() => {}}
+            type="secondary"
+            size="medium"
+            skeleton={skeleton}
+            className={cx(styles.button_width)}
+          >
+            {btnLabel}
+          </Button>
+        </Link>
+      </div>
+      <div className={styles.grid__image}>
+        {image && (
+          <Image
+            src={image.url}
+            alt={image.alt}
+            width="100%"
+            height="62.5%"
+            layout="responsive"
+            objectFit="cover"
+          />
+        )}
+        {skeleton && <Skeleton className={styles.imageskeleton} />}
+      </div>
+    </Col>
   );
 }
 

@@ -15,6 +15,8 @@ import { useData } from "@/lib/api/api";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 
 import styles from "./Receipt.module.css";
+import { useRouter } from "next/router";
+import cx from "classnames";
 
 /**
  * Order Button
@@ -26,6 +28,7 @@ export function Receipt({
 }) {
   // get props from context
   const { pickupBranch, order = {}, articleOrder = {} } = context;
+  const router = useRouter();
 
   // Always show a 1s loader animation before receipt is visible.
   const [delay, setDelay] = useState(true);
@@ -43,28 +46,30 @@ export function Receipt({
     isLoading: articleOrderIsLoading,
   } = articleOrder;
 
-  // Define order status'
+  // Define order status
   const isOrdering = orderIsLoading || articleOrderIsLoading || delay;
   const isOrdered =
     !!orderData?.submitOrder?.orderId ||
-    articleOrderData?.elba?.placeCopyRequest?.status === "OK";
-  const isFailed =
-    !!orderError ||
-    !!articleOrderError ||
-    (articleOrderData?.elba?.placeCopyRequest &&
-      articleOrderData?.elba?.placeCopyRequest?.status !== "OK");
+    articleOrderData?.elba?.placeCopyRequest?.ok;
 
-  let failedMessage = null;
-  if (isFailed) {
-    failedMessage = !!articleOrder
-      ? "ORDER FAILED"
-      : articleOrderData?.elba?.placeCopyRequest?.status;
+  // Define if order has failed
+  let hasFailed = false,
+    failedMessage = undefined;
+  if (orderData?.submitOrder && !orderData?.submitOrder?.ok) {
+    hasFailed = true;
+    failedMessage = orderData?.submitOrder?.status;
+  } else if (!!orderError || !!articleOrderError) {
+    hasFailed = true;
+    failedMessage = orderError || articleOrderError;
+  } else if (
+    articleOrderData?.elba?.placeCopyRequest &&
+    articleOrderData?.elba?.placeCopyRequest?.ok
+  ) {
+    hasFailed = true;
+    failedMessage = articleOrderData?.elba?.placeCopyRequest?.status;
   }
 
-  // Define order status' class'
-  const orderingClass = isOrdering ? styles.ordering : "";
-  const orderedClass = isOrdered && !delay ? styles.ordered : "";
-  const failedClass = isFailed && !delay ? styles.failed : "";
+  const showLinkToMyLibraries = true; //TODO should link to my libraries always be shown? @UX
 
   // Branch name
   const branchName = pickupBranch?.name;
@@ -77,7 +82,10 @@ export function Receipt({
 
   return (
     <div
-      className={`${styles.receipt} ${orderingClass} ${orderedClass} ${failedClass}`}
+      className={cx(styles.receipt, {
+        [styles.ordered]: isOrdered && !delay,
+        [styles.failed]: hasFailed && !delay,
+      })}
     >
       <div className={styles.container}>
         <Top className={{ top: styles.top }} back={false} />
@@ -92,51 +100,85 @@ export function Receipt({
         </div>
 
         <div className={`${styles.wrap} ${styles.result}`}>
-          <div className={styles.success}>
-            <div className={styles.check}>
-              <Icon size={3} src="check.svg" />
-            </div>
+          {!hasFailed && (
+            <div className={styles.success}>
+              <div className={styles.check}>
+                <Icon size={3} src="check.svg" />
+              </div>
 
-            <Title className={styles.title} type="title4">
-              {Translate({ context: "order", label: "order-success" })}
-            </Title>
+              <>
+                <Title className={styles.title} type="title4" tag="h2">
+                  {Translate({ context: "order", label: "order-success" })}
+                </Title>
 
-            <Icon
-              className={styles.ornament}
-              size={{ w: 6, h: "auto" }}
-              src={"ornament1.svg"}
-            />
+                <Icon
+                  className={styles.ornament}
+                  size={{ w: 6, h: "auto" }}
+                  src={"ornament1.svg"}
+                />
+              </>
 
-            <Text type="text2" className={styles.message}>
-              {articleOrderData
-                ? Translate({
+              <Text type="text2" className={styles.message}>
+                {articleOrderData
+                  ? Translate({
+                      context: "order",
+                      label: "order-success-message-digital-copy",
+                    })
+                  : Translate({
+                      context: "order",
+                      label: "order-success-message",
+                      vars: [branchName],
+                    })}
+              </Text>
+
+              {orderId && (
+                <Text type="text2" className={styles.orderNumber}>
+                  {Translate({
                     context: "order",
-                    label: "order-success-message-digital-copy",
-                  })
-                : Translate({
-                    context: "order",
-                    label: "order-success-message",
-                    vars: [branchName],
+                    label: "order-success-id",
+                    vars: [orderId],
                   })}
-            </Text>
+                </Text>
+              )}
 
-            {orderId && (
-              <Text type="text2" className={styles.orderNumber}>
-                {Translate({
-                  context: "order",
-                  label: "order-success-id",
-                  vars: [orderId],
-                })}
+              {pickupBranch?.borrowerCheck && (
+                <Button
+                  className={styles.redirect}
+                  onClick={() => router.push("/profil/laan-og-reserveringer")}
+                  type="secondary"
+                >
+                  {Translate({
+                    context: "receipt",
+                    label: "seeLoansAndReservations",
+                  })}
+                </Button>
+              )}
+              <Button className={styles.close} onClick={() => modal.clear()}>
+                {Translate({ context: "general", label: "close" })}
+              </Button>
+            </div>
+          )}
+          <div className={styles.error}>
+            <Title className={styles.title} type="title5" tag="h2">
+              {Translate({ context: "receipt", label: "errorOccured" })}
+            </Title>
+            {hasFailed && failedMessage && (
+              <Text tag="div" type="text2" className={styles.errorText}>
+                {failedMessage}
               </Text>
             )}
-
-            <Button className={styles.close} onClick={() => modal.clear()}>
-              {Translate({ context: "general", label: "close" })}
-            </Button>
-          </div>
-          <div className={styles.error}>
-            An error occured :(
-            <div>{isFailed && failedMessage ? failedMessage : ""}</div>
+            {showLinkToMyLibraries && (
+              <Button
+                className={styles.redirect}
+                onClick={() => router.push("/profil/mine-biblioteker")}
+                type="secondary"
+              >
+                {Translate({
+                  context: "receipt",
+                  label: "seeYourLibraries",
+                })}
+              </Button>
+            )}
           </div>
         </div>
       </div>

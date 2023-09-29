@@ -7,6 +7,7 @@ import * as branchesFragments from "@/lib/api/branches.fragments";
 import { useMemo } from "react";
 import { accessFactory } from "@/lib/accessFactoryUtils";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
+import { extractCreatorsPrioritiseCorporation } from "@/lib/utils";
 
 export function openLocalizationsModal(modal, pids) {
   modal.push("localizations", {
@@ -21,6 +22,7 @@ export function openOrderModal({
   selectedAccesses,
   workId,
   singleManifestation,
+  storeLoanerInfo = false,
 }) {
   modal.push("order", {
     title: Translate({ context: "modal", label: "title-order" }),
@@ -28,6 +30,7 @@ export function openOrderModal({
     selectedAccesses: selectedAccesses,
     workId: workId,
     ...(singleManifestation && { orderType: "singleManifestation" }),
+    storeLoanerInfo: storeLoanerInfo,
   });
 }
 
@@ -43,13 +46,28 @@ export function openReferencesModal(modal, pids, workId, work, manifestation) {
   });
 }
 
-export function onOnlineAccess(url, target = "_blank") {
+export function goToRedirectUrl(url, target = "_blank") {
   try {
     const parsedUrl = new URL(url);
     window.open(parsedUrl.href, target);
   } catch (_) {
     Router.push(url);
   }
+}
+
+/**
+ * Generates the work page title
+ * @param {object} work
+ * @return {string}
+ */
+function getPageTitle(work) {
+  return `${work?.titles?.main[0]}${
+    work?.creators && work?.creators[0]
+      ? ` af ${extractCreatorsPrioritiseCorporation(work?.creators)
+          ?.map((creator) => creator?.display)
+          ?.join(", ")}`
+      : ""
+  }`;
 }
 
 /**
@@ -93,11 +111,7 @@ function getPageDescription(work) {
 export function getSeo(work) {
   // Return title and description
   return {
-    title: `${work?.titles?.main[0]}${
-      work?.creators && work?.creators[0]
-        ? ` af ${work?.creators[0].display}`
-        : ""
-    }`,
+    title: getPageTitle(work),
     description: getPageDescription(work),
   };
 }

@@ -2,10 +2,11 @@ import PropTypes from "prop-types";
 import Translate from "@/components/base/translate";
 import useUser from "@/components/hooks/useUser";
 import { useModal } from "@/components/_modal";
-import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
+import { LOGIN_MODE } from "@/components/_modal/pages/login/utils";
 import { useData } from "@/lib/api/api";
 import { infomediaArticle } from "@/lib/api/infomedia.fragments";
 import LoginPrompt from "./Prompt";
+import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 
 /**
@@ -36,13 +37,18 @@ export default function ArticleLoginPrompt({ articleId }) {
           context: "articles",
           label: "accessWarning",
         })}
-        signIn={() => modal.push("login", { mode: LOGIN_MODE.INFOMEDIA })}
+        signIn={() => openLoginModal({ modal, mode: LOGIN_MODE.INFOMEDIA })}
       />
     );
   }
 
   // Logged in, library does not have access
   if (!isLoading && !data?.infomedia?.article) {
+    const linkHref = {
+      href: "https://slks.dk/omraader/kulturinstitutioner/biblioteker",
+      text: Translate({ context: "articles", label: "libraryAccessReadMore" }),
+    };
+
     return (
       <LoginPrompt
         title={Translate({
@@ -52,13 +58,18 @@ export default function ArticleLoginPrompt({ articleId }) {
         })}
         description={Translate({
           context: "articles",
-          label: "accessOpportunity2",
+          label: "accessOpportunity",
+        })}
+        description2={Translate({
+          context: "articles",
+          label: "accessOpportunity3",
         })}
         buttonText={Translate({
           context: "order",
           label: "change-pickup-digital-copy-link",
         })}
-        signIn={() => modal.push("login", { mode: LOGIN_MODE.INFOMEDIA })}
+        linkHref={linkHref}
+        signIn={openLoginModal}
       />
     );
   }
@@ -67,5 +78,5 @@ export default function ArticleLoginPrompt({ articleId }) {
   return null;
 }
 ArticleLoginPrompt.propTypes = {
-  articleId: PropTypes.articleId,
+  articleId: PropTypes.string,
 };

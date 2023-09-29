@@ -9,7 +9,6 @@
 
 .body figure img {
   max-width: 100%;
-  max-height: 250px;
 }
 
 .body figure {
@@ -41,8 +40,7 @@
 .body h4,
 .body h5,
 .body h6,
-.body em[style*="bold"]
-{
+.body em[style*="bold"] {
   font-size: 17px;
   line-height: 26px;
   font-family: var(--body-font-semibold);
@@ -62,8 +60,5 @@
 @media (min-width: 992px) {
   .body figure img {
     max-width: 100%;
-    max-height: 375px;
   }
 }
-
-

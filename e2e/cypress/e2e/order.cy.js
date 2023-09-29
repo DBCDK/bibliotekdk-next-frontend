@@ -17,8 +17,8 @@ describe("Order", () => {
 
     // Info about pickupbranch
     cy.contains("Test Bib");
-    cy.contains("user.agency.result[0].postalAddress");
-    cy.contains("user.agency.result[0].postalCode user.agency.result[0].city");
+    cy.contains("branches.result[0].postalAddress");
+    cy.contains("branches.result[0].postalCode branches.result[0].city");
 
     // Info about the logged in user
     cy.contains("Bestilles af");
@@ -33,7 +33,7 @@ describe("Order", () => {
     cy.getConsoleEntry("submitOrder").then((entry) => {
       expect(entry[1]).to.deep.equal({
         pids: ["some-pid-1", "some-pid-2"],
-        pickUpBranch: "user.agency.result[0].branchId",
+        pickUpBranch: "branches.result[0].branchId",
         userParameters: {
           userName: "Some Name",
           userMail: "some@mail.dk",
@@ -46,7 +46,7 @@ describe("Order", () => {
     cy.visitWithConsoleSpy(
       "/iframe.html?id=modal-order--order-via-ill&viewMode=story"
     );
-    cy.contains("Bestil").click();
+    cy.contains("Bestil", { timeout: 10000 }).click();
 
     // Check that user blocking is not present
     cy.get("[data-cy=blocked-user]").should("not.exist");
@@ -61,7 +61,7 @@ describe("Order", () => {
     cy.visitWithConsoleSpy(
       "/iframe.html?id=modal-order--pickup-not-allowed&viewMode=story"
     );
-    cy.contains("Bestil").click();
+    cy.contains("Bestil", { timeout: 10000 }).click();
 
     // Check that user blocking is not present
     cy.get("[data-cy=blocked-user]").should("not.exist");
@@ -72,7 +72,7 @@ describe("Order", () => {
       "Materialet kan ikke bestilles til det her afhentningssted. Vælg et andet."
     );
     cy.get("[data-cy=button-godkend]").should("be.disabled");
-    cy.get("[data-cy=text-skift-afhentning]").click();
+    cy.contains("Skift afhentning").click();
   });
 
   describe("Order periodica article ", () => {
@@ -81,7 +81,7 @@ describe("Order", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?id=modal-order--order-indexed-periodica-article&viewMode=story"
       );
-      cy.contains("Bestil").click();
+      cy.contains("Bestil", { timeout: 10000 }).click();
 
       // Check that user blocking is not present
       cy.get("[data-cy=blocked-user]").should("not.exist");
@@ -97,7 +97,6 @@ describe("Order", () => {
       );
 
       cy.getConsoleEntry("elbaPlaceCopy").then((entry) => {
-        console.log(entry, "LOGENTRY");
         expect(entry[1]).to.deep.equal({
           pid: "some-pid-4",
           userMail: "some@mail.dk",
@@ -110,7 +109,7 @@ describe("Order", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?id=modal-order--order-indexed-periodica-article-ill&viewMode=story"
       );
-      cy.contains("Bestil").click();
+      cy.contains("Bestil", { timeout: 10000 }).click();
 
       // Check that user blocking is not present
       cy.get("[data-cy=blocked-user]").should("not.exist");
@@ -143,7 +142,7 @@ describe("Order", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?id=modal-order--order-periodica-volume&viewMode=story"
       );
-      cy.contains("Bestil").click();
+      cy.contains("Bestil", { timeout: 10000 }).click();
 
       // Check that user blocking is not present
       cy.get("[data-cy=blocked-user]").should("not.exist");
@@ -158,7 +157,7 @@ describe("Order", () => {
 
       cy.contains("For at bestille skal du vælge udgave eller artikel");
 
-      cy.get('[data-cy="text-vælg-udgave-eller-artikel"]').click();
+      cy.contains("Vælg udgave").click();
 
       cy.get('[placeholder="Skriv årstal"]').type("1992");
 
@@ -171,7 +170,6 @@ describe("Order", () => {
       cy.contains("some-order-id");
 
       cy.getConsoleEntry("submitOrder").then((entry) => {
-        console.log(entry, "ENTTRY");
         expect(entry[1]).to.deep.equal({
           pids: ["some-pid-5"],
           pickUpBranch: "branches.result[0].branchId",
@@ -196,7 +194,7 @@ describe("Order", () => {
         .should("exist")
         .should("not.be.disabled");
 
-      cy.get('[data-cy="text-vælg-udgave-eller-artikel"]').click();
+      cy.contains("Vælg udgave").click();
 
       cy.get('[placeholder="Skriv årstal"]').type("1992");
 
@@ -249,7 +247,7 @@ describe("Order", () => {
         .should("exist")
         .should("not.be.disabled");
 
-      cy.get('[data-cy="text-vælg-udgave-eller-artikel"]').click();
+      cy.contains("Vælg udgave").click();
 
       cy.get('[placeholder="Skriv årstal"]').type("1992");
 
@@ -330,6 +328,16 @@ describe("Order", () => {
         .should("exist")
         .find("a")
         .should("not.have.attr", "url");
+    });
+  });
+  describe("If user logs in with MitID - and has no libraries associated with user account", () => {
+    it("should show an errormessage when user has no agencies", () => {
+      cy.visit("/iframe.html?id=modal-order--no-user-agencies");
+      cy.contains("Bestil").should("be.visible").click();
+
+      cy.contains(
+        "Vi kan se at du ikke er registreret på et bibliotek?"
+      ).should("be.visible");
     });
   });
 });

@@ -1,7 +1,7 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
 
 import List from "@/components/base/forms/list";
-import animations from "@/components/base/animation/animations.module.css";
+import animations from "css/animations";
 import { useState } from "react";
 
 const exportedObject = {

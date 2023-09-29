@@ -54,9 +54,17 @@
   cursor: default;
 }
 
-.tag.disabled,
+.tag.disabled:not(.opaque),
 .tag.disabled:hover {
   color: var(--gray);
+}
+
+.tag.disabled:hover {
+  border: none;
+}
+
+.opaque {
+  /* Placeholder for class only used in extension of .disabled */
 }
 
 /* 
