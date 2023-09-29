@@ -345,7 +345,10 @@ const BRANCH_1 = {
   },
   pickupAllowed: true,
   digitalCopyAccess: false,
-  userIsBlocked: false,
+  borrowerStatus: {
+    allowed: true,
+    statusCode: "OK",
+  },
 };
 const BRANCH_2 = {
   name: "Test Bib - no orders here",
@@ -354,7 +357,10 @@ const BRANCH_2 = {
   },
   pickupAllowed: true,
   digitalCopyAccess: false,
-  userIsBlocked: false,
+  borrowerStatus: {
+    allowed: true,
+    statusCode: "OK",
+  },
 };
 const BRANCH_3 = {
   name: "Test Bib - ILL and digital copy service",
@@ -363,7 +369,10 @@ const BRANCH_3 = {
   },
   pickupAllowed: true,
   digitalCopyAccess: true,
-  userIsBlocked: false,
+  borrowerStatus: {
+    allowed: true,
+    statusCode: "OK",
+  },
 };
 const BRANCH_4 = {
   name: "Test Bib - User is blocked",
@@ -374,7 +383,10 @@ const BRANCH_4 = {
   digitalCopyAccess: false,
   branchWebsiteUrl: "balleripraprup.dekaa",
   agencyName: "BalleRipRapRup",
-  userIsBlocked: true,
+  borrowerStatus: {
+    allowed: false,
+    statusCode: "BORCHK_USER_BLOCKED_BY_AGENCY",
+  },
 };
 
 // A user with some agencies

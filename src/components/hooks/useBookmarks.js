@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import * as workFragments from "@/lib/api/work.fragments";
 import { useData, useMutate } from "@/lib/api/api";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import * as bookmarkMutations from "@/lib/api/bookmarks.mutations";
 import * as bookmarkFragments from "@/lib/api/bookmarks.fragments";
 import { useSession } from "next-auth/react";
@@ -80,17 +80,34 @@ const useBookmarksCore = ({ isMock = false, session }) => {
       /**
        * API solution
        */
-      await bookmarkMutation.post(
-        bookmarkMutations.addBookmarks({
-          bookmarks: [
-            {
-              materialId: value.materialId,
-              materialType: value.materialType,
-              title: value.title,
-            },
-          ],
-        })
+
+      // Find existing
+      const existingIndex = globalBookmarks?.findIndex(
+        (bookmark) => bookmark.key === value.key
       );
+
+      if (existingIndex === -1) {
+        // Doesn't exist - Add
+        await bookmarkMutation.post(
+          bookmarkMutations.addBookmarks({
+            bookmarks: [
+              {
+                materialId: value.materialId,
+                materialType: value.materialType,
+                title: "",
+              },
+            ],
+          })
+        );
+      } else {
+        // Exists - Delete
+        const idToDelete = globalBookmarks[existingIndex].bookmarkId;
+        await bookmarkMutation.post(
+          bookmarkMutations.deleteBookmarks({
+            bookmarkIds: [idToDelete],
+          })
+        );
+      }
 
       await mutateGlobalBookmarks();
     } else {
@@ -102,12 +119,11 @@ const useBookmarksCore = ({ isMock = false, session }) => {
       const existingIndex = localBookmarks?.findIndex(
         (obj) => obj.key === value.key
       );
-      // push if not there
       if (existingIndex === -1) {
+        // push if not there
         localBookmarks?.push(value);
-      }
-      // remove if already there
-      else {
+      } else {
+        // remove if already there
         localBookmarks?.splice(existingIndex, 1);
       }
 
@@ -129,8 +145,29 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     mutateLocalBookmarks(empty);
   }
 
+  const deleteBookmarks = async (bookmarksToDelete) => {
+    if (isAuthenticated) {
+      const ids = bookmarksToDelete.map((i) => i.bookmarkId);
+      await bookmarkMutation.post(
+        bookmarkMutations.deleteBookmarks({
+          bookmarkIds: ids,
+        })
+      );
+      mutateGlobalBookmarks();
+    } else {
+      const keysToDelete = bookmarksToDelete.map((i) => i.key);
+      const updated = localBookmarks.filter(
+        (item) => !keysToDelete.includes(item.key)
+      );
+      const stringified = JSON.stringify(updated);
+      localStorage.setItem(KEY_NAME, stringified);
+      mutateLocalBookmarks(updated);
+    }
+  };
+
   return {
     setBookmark,
+    deleteBookmarks,
     clearLocalBookmarks,
     bookmarks: isAuthenticated ? globalBookmarks : localBookmarks,
     isLoading:
@@ -159,19 +196,48 @@ export const usePopulateBookmarks = (bookmarks) => {
   /**
    * Used to populate bookmark data, to show more info about the materials
    */
-  const pids = bookmarks?.map((bookmark) => {
-    /**
-     * @TODO Rework
-     */
+  const workIds = bookmarks?.filter((bookmark) =>
+    bookmark.materialId.includes("work-of:")
+  );
+  const workPids = bookmarks?.filter(
+    (bookmark) => !bookmark.materialId.includes("work-of:")
+  );
+  const { data: workByIdsData } = useData(
+    workFragments.idsToWorks({ ids: workIds?.map((work) => work.materialId) })
+  );
+  const { data: workByPidsData } = useData(
+    workFragments.pidsToWorks({
+      pids: workPids?.map((work) => work.materialId),
+    })
+  );
 
-    /* API data - or all */
-    if (bookmark.materialId) return bookmark.materialId.replace("work-of:", "");
+  // Reorganize order and add bookmark data
+  const data = useMemo(() => {
+    if (!bookmarks) return [];
 
-    /* Local data */
-    if (bookmark.id.includes("work-of:"))
-      return bookmark.id.replace("work-of:", "");
-    return bookmark.id;
-  });
-  const { data } = useData(workFragments.pidsToWorks({ pids: pids }));
+    const transformedWorkByPids = workByPidsData?.works?.map((work) => ({
+      ...work,
+      workId: work?.workId?.replace("work-of:", ""),
+    }));
+    const merged = [].concat(workByIdsData?.works, transformedWorkByPids);
+
+    return bookmarks
+      .map((bookmark) => {
+        const workData = merged.find(
+          (item) => item?.workId === bookmark.materialId
+        );
+        if (!workData) {
+          return null;
+        }
+
+        // Merge data
+        return {
+          ...workData,
+          ...bookmark,
+        };
+      })
+      .filter((item) => item); // filter nulls
+  }, [bookmarks, workByPidsData, workByIdsData]);
+
   return { data };
 };

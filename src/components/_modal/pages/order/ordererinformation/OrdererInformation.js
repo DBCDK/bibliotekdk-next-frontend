@@ -24,9 +24,9 @@ export function OrdererInformation({
   showMailMessage,
 }) {
   return (
-    <>
+    <div className={styles.user}>
       {(isLoadingBranches || name) && (
-        <div className={styles.user}>
+        <div>
           <Title type="title5" tag="h3">
             {Translate({ context: "order", label: "ordered-by" })}
           </Title>
@@ -38,58 +38,58 @@ export function OrdererInformation({
               {name}
             </Text>
           </div>
-          <div className={styles.email}>
-            <label htmlFor="order-user-email">
-              <Text type="text2" className={styles.textinline}>
-                {Translate({ context: "general", label: "email" })}
-              </Text>
-            </label>
-
-            <Email
-              className={styles.input}
-              placeholder={Translate({
-                context: "form",
-                label: "email-placeholder",
-              })}
-              invalidClass={invalidClass}
-              disabled={isLoading || hasAuthMail}
-              value={email || ""}
-              id="order-user-email"
-              onChange={debounce(onMailChange, 200)}
-              readOnly={isLoading || hasAuthMail}
-              skeleton={isLoadingBranches && !email}
-            />
-
-            {message && (
-              <div className={`${styles.emailMessage} ${validClass}`}>
-                <Text type="text3">{Translate(message)}</Text>
-              </div>
-            )}
-            {showMailMessage && (
-              <div className={`${styles.emailMessage}`}>
-                <Text
-                  type="text3"
-                  skeleton={!lockedMessage}
-                  lines={1}
-                  tag="span"
-                  className={styles.userStatusLink}
-                >
-                  {Translate(lockedMessage)}
-                  &nbsp;
-                </Text>
-                <Tooltip
-                  placement="top"
-                  labelToTranslate="tooltip_change_email"
-                  customClass={styles.tooltip}
-                  trigger={["hover", "focus"]}
-                  iconSize="2_5"
-                />
-              </div>
-            )}
-          </div>
         </div>
       )}
-    </>
+      <div className={styles.email}>
+        <label htmlFor="order-user-email">
+          <Text type="text2" className={styles.textinline}>
+            {Translate({ context: "general", label: "email" })}
+          </Text>
+        </label>
+
+        <Email
+          className={styles.input}
+          placeholder={Translate({
+            context: "form",
+            label: "email-placeholder",
+          })}
+          invalidClass={invalidClass}
+          disabled={isLoading || hasAuthMail}
+          value={email || ""}
+          id="order-user-email"
+          onChange={debounce(onMailChange, 200)}
+          readOnly={isLoading || hasAuthMail}
+          skeleton={isLoadingBranches && !email}
+        />
+
+        {message && (
+          <div className={`${styles.emailMessage} ${validClass}`}>
+            <Text type="text3">{Translate(message)}</Text>
+          </div>
+        )}
+        {showMailMessage && (
+          <div className={`${styles.emailMessage}`}>
+            <Text
+              type="text3"
+              skeleton={!lockedMessage}
+              lines={1}
+              tag="span"
+              className={styles.userStatusLink}
+            >
+              {Translate(lockedMessage)}
+              &nbsp;
+            </Text>
+            <Tooltip
+              placement="top"
+              labelToTranslate="tooltip_change_email"
+              customClass={styles.tooltip}
+              trigger={["hover", "focus"]}
+              iconSize="2_5"
+            />
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
 

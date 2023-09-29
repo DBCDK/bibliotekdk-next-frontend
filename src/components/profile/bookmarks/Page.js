@@ -22,10 +22,9 @@ const sortByItems = [
 ];
 
 const BookmarkPage = () => {
-  const { bookmarks: bookmarksData, setSortBy } = useBookmarks();
-  const { data } = usePopulateBookmarks(bookmarksData);
+  const { bookmarks: bookmarksData, setSortBy, deleteBookmarks } = useBookmarks();
+  const { data: bookmarks } = usePopulateBookmarks(bookmarksData);
   const [activeStickyButton, setActiveStickyButton] = useState(null);
-  const bookmarks = data?.works.filter((n) => n);
   const breakpoint = useBreakpoint();
   const [sortByValue, setSortByValue] = useState(sortByItems[0].key);
   const isMobile = breakpoint === "sm" || breakpoint === "xs";
@@ -35,12 +34,16 @@ const BookmarkPage = () => {
     setSortBy(sortByValue);
   }, [sortByValue]);
 
+
   useEffect(() => {
-    const bookmarks = data?.works.filter((n) => n); // Fix so long we can recieve null from populate
     setCheckboxList(
-      bookmarks?.map((bookmark) => ({ id: bookmark.workId, isSelected: false }))
+      bookmarks?.map((bookmark) => ({
+        key: bookmark.key,
+        bookmarkId: bookmark.bookmarkId,
+        isSelected: false,
+      }))
     );
-  }, [data]);
+  }, [bookmarks.length]);
 
   const onSelectAll = () => {
     const hasUnselectedElements =
@@ -55,6 +58,19 @@ const BookmarkPage = () => {
     setActiveStickyButton(idx + ""); // Stringify, to prevent 0 == null behaviour
   };
 
+  const onStickyClick = () => {
+    switch (activeStickyButton) {
+      case "0":
+        return "Bestil";
+      case "1":
+        return "Hent referencer";
+      case "2":
+        return onDeleteSelected();
+      default:
+        console.error("button not bound correctly");
+    }
+  };
+
   const getStickyButtonText = () => {
     switch (activeStickyButton) {
       case "0":
@@ -64,6 +80,11 @@ const BookmarkPage = () => {
       case "2":
         return "Fjern";
     }
+  };
+
+  const onDeleteSelected = () => {
+    const selectedBookmarks = checkboxList.filter((i) => i.isSelected === true);
+    deleteBookmarks(selectedBookmarks);
   };
 
   const isAllSelected =
@@ -86,7 +107,11 @@ const BookmarkPage = () => {
 
       {activeStickyButton && (
         <div className={styles.stickyButtonContainer}>
-          <Button type="primary" className={styles.stickyButton}>
+          <Button
+            type="primary"
+            className={styles.stickyButton}
+            onClick={onStickyClick}
+          >
             {getStickyButtonText()}
           </Button>
         </div>
@@ -162,7 +187,7 @@ const BookmarkPage = () => {
             label: "select-action",
           })}
         </Button>
-        <IconButton disabled={isNothingSelected}>
+        <IconButton disabled={isNothingSelected} onClick={onDeleteSelected}>
           {Translate({
             context: CONTEXT,
             label: "remove",
@@ -177,23 +202,25 @@ const BookmarkPage = () => {
               hasCheckbox={!isMobile || activeStickyButton !== null}
               title={bookmark?.titles?.main[0] || ""}
               creator={bookmark?.creators[0]?.display}
-              materialType={
-                bookmark?.manifestations?.bestRepresentation?.materialTypes[0]
-                  ?.specific
-              }
+              materialType={bookmark.materialType}
               image={
                 bookmark?.manifestations?.bestRepresentation?.cover?.thumbnail
               }
               id={bookmark?.workId}
               type="BOOKMARK"
               isSelected={checkboxList[idx]?.isSelected}
+              onBookmarkDelete={() =>
+                deleteBookmarks([
+                  { bookmarkId: bookmark.bookmarkId, key: bookmark.key },
+                ])
+              }
               onSelect={() =>
                 setCheckboxList(
                   [...checkboxList].map((el, i) => {
                     if (i !== idx) return el;
                     else
                       return {
-                        id: el.id,
+                        ...el,
                         isSelected: !el.isSelected,
                       };
                   })

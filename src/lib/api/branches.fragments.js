@@ -123,9 +123,6 @@ export function branchOrderPolicy({ branchId, pid }) {
   };
 }
 
-/**
- * AgencyUrl and userIsBlocked
- */
 export function checkBlockedUser({ branchId }) {
   return {
     apiUrl: ApiEnums.FBI_API,
@@ -134,9 +131,12 @@ export function checkBlockedUser({ branchId }) {
     query checkBlockedUser($branchId: String!, $language: LanguageCode!) {
       branches(branchId: $branchId, language: $language) {
         agencyUrl
+        borrowerStatus {
+          allowed
+          statusCode
+        }
         result {
           agencyName
-        	userIsBlocked
         	branchWebsiteUrl
         }
       }

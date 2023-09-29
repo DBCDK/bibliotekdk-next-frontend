@@ -260,7 +260,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
       ...props,
     });
   };
-  const isDebtRow = type === "DEBT";
+
   return (
     <ConditionalWrapper
       condition={type === "DEBT"}
@@ -270,7 +270,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
           className={cx(styles.materialRow_mobile, {
             [styles.materialRow_green]: status === "GREEN",
             [styles.materialRow_red]: status === "RED",
-            [styles.materialRow_debt]: isDebtRow,
+            [styles.materialRow_debt]: type === "DEBT",
           })}
           data-cy={dataCy}
         >
@@ -296,7 +296,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
         </article>
       )}
     >
-      {!isDebtRow && (
+      {type !== "DEBT" && (
         <div>{!!image && <Cover src={image} size="fill-width" />}</div>
       )}
       <div className={styles.textContainer}>
@@ -312,14 +312,14 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
         )}
 
         <div className={styles.dynamicContent}>{renderDynamicColumn()}</div>
-        {isDebtRow && (
+        {type === "DEBT" && (
           <div>
             <Text type="text2">{library}</Text>
           </div>
         )}
       </div>
 
-      {!isDebtRow && (
+      {type !== "DEBT" && (
         <div className={styles.arrowright_container}>
           <Icon
             alt=""
@@ -362,13 +362,11 @@ const MaterialRow = (props) => {
     image,
     title,
     creator,
-    creators,
     materialType,
     creationYear,
     library,
     agencyId,
     id: materialId,
-    workId,
     type,
     holdQueuePosition,
     pickUpExpiryDate,
@@ -383,6 +381,7 @@ const MaterialRow = (props) => {
     hasCheckbox = false,
     isSelected,
     onSelect,
+    onBookmarkDelete,
   } = props;
   const breakpoint = useBreakpoint();
   const { updateUserStatusInfo } = useUser();
@@ -466,7 +465,7 @@ const MaterialRow = (props) => {
                 label: "order",
               })}
             </Button>
-            <IconButton>
+            <IconButton onClick={onBookmarkDelete}>
               {Translate({
                 context: "bookmark",
                 label: "remove",
@@ -577,7 +576,7 @@ const MaterialRow = (props) => {
       </>
     );
   }
-  const isDebtRow = type === "DEBT";
+
   return (
     <>
       {hasDeleteError && type === "ORDER" && (
@@ -618,7 +617,8 @@ const MaterialRow = (props) => {
               [styles.materialRow_green]: status === "GREEN",
               [styles.materialRow_red]: status === "RED",
               [styles.materialRow_animated]: materialId === removedOrderId,
-              [styles.debtRow]: isDebtRow,
+              [styles.materialRow_bookmark]: type === "BOOKMARK",
+              [styles.debtRow]: type === "DEBT",
             })}
             data-cy={dataCy}
           >
@@ -638,10 +638,9 @@ const MaterialRow = (props) => {
               />
             </div>
           )}
-
           <div
             className={cx(styles.materialInfo, {
-              [styles.debtMaterial]: isDebtRow,
+              [styles.debtMaterial]: type === "DEBT",
             })}
           >
             {!!image && (
@@ -660,7 +659,11 @@ const MaterialRow = (props) => {
                         keepVisible: true,
                       },
                     }}
-                    href={getWorkUrl(title, creators, workId)}
+                    href={getWorkUrl(
+                      title,
+                      [{ nameSort: creator || "", display: creator || "" }],
+                      materialId
+                    )}
                     className={styles.blackUnderline}
                   >
                     {children}
@@ -689,8 +692,10 @@ const MaterialRow = (props) => {
               )}
               {materialType && (
                 <Text
-                  type="text2"
-                  className={styles.uppercase}
+                  type={type === "BOOKMARK" ? "text3" : "text2"}
+                  className={cx(styles.uppercase, {
+                    [styles.bookmarkMaterial]: type === "BOOKMARK",
+                  })}
                   dataCy="materialtype-and-creationyear"
                 >
                   {materialType} {creationYear && <>, {creationYear}</>}
@@ -698,18 +703,13 @@ const MaterialRow = (props) => {
               )}
             </div>
           </div>
-
-          <div className={cx({ [styles.debtDynamicColumn]: isDebtRow })}>
+          <div className={cx({ [styles.debtDynamicColumn]: type === "DEBT" })}>
             {renderDynamicColumn()}
-          </div>
-
-          <div className={cx({ [styles.debtLibrary]: isDebtRow })}>
-            <Text type="text2">{library}</Text>
           </div>
 
           {type !== "BOOKMARK" && (
             <>
-              <div className={cx({ [styles.debtLibrary]: isDebtRow })}>
+              <div className={cx({ [styles.debtLibrary]: type === "DEBT" })}>
                 <Text type="text2">{library}</Text>
               </div>
 
@@ -746,6 +746,7 @@ MaterialRow.propTypes = {
   agencyId: PropTypes.string,
   removedOrderId: PropTypes.string,
   setRemovedOrderId: PropTypes.func,
+  onBookmarkDelete: PropTypes.func,
   isSelected: PropTypes.bool,
   onSelect: PropTypes.func,
   skeleton: PropTypes.bool,

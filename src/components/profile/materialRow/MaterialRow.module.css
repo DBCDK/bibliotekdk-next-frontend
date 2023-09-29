@@ -32,7 +32,7 @@
 .materialRow_withGridCheckbox:hover,
 .materialRow_withFlexCheckbox:focus-visible,
 .materialRow_withFlexCheckbox:hover {
-  outline: 1px solid var(--blue);
+  background-color: var(--black-squeeze);
 }
 
 .materialRow_withFlexCheckbox .checkboxContainer {
@@ -189,12 +189,17 @@
   width: 100px;
 }
 
+.bookmarkMaterial {
+  margin-top: var(--pt1);
+}
+
 .debtDynamicColumn {
   grid-column: 1;
 }
 
 .debtLibrary {
   grid-column: 2;
+  overflow-wrap: anywhere;
 }
 .debtMaterial {
   grid-column: 3;
@@ -202,7 +207,7 @@
 
 .debtRow {
   grid-auto-flow: column;
-  grid-template-columns: 1.5fr 3fr 4fr 1fr;
+  grid-template-columns: 1.5fr 2.1fr 4fr 1fr;
   border-bottom: unset;
 }
 
@@ -240,5 +245,9 @@
 @media (max-width: 767px) {
   .dynamicColumnHorizontal {
     display: none;
+  }
+
+  .materialRow_bookmark {
+    grid-template-columns: 1fr;
   }
 }
