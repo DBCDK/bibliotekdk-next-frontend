@@ -272,7 +272,6 @@ describe("Order", () => {
 
       // Check that BlockedUser does not exist
       cy.get("[data-cy=button-godkend]").should("be.visible").click();
-
       cy.contains("some-order-id", { timeout: 10000 });
 
       cy.getConsoleEntry("submitOrder").then((entry) => {
