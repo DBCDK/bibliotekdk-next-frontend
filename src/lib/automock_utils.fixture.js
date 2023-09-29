@@ -338,6 +338,16 @@ const ALL_WORKS = [
   },
 ];
 
+const BORROWER_STATUS_TRUE = {
+  allowed: true,
+  statusCode: "OK",
+};
+
+const BORROWER_STATUS_FALSE = {
+  allowed: false,
+  statusCode: "BORCHK_USER_BLOCKED_BY_AGENCY",
+};
+
 const BRANCH_1 = {
   name: "Test Bib - only physical via ILL",
   orderPolicy: {
@@ -345,10 +355,6 @@ const BRANCH_1 = {
   },
   pickupAllowed: true,
   digitalCopyAccess: false,
-  borrowerStatus: {
-    allowed: true,
-    statusCode: "OK",
-  },
 };
 const BRANCH_2 = {
   name: "Test Bib - no orders here",
@@ -357,10 +363,6 @@ const BRANCH_2 = {
   },
   pickupAllowed: true,
   digitalCopyAccess: false,
-  borrowerStatus: {
-    allowed: true,
-    statusCode: "OK",
-  },
 };
 const BRANCH_3 = {
   name: "Test Bib - ILL and digital copy service",
@@ -369,10 +371,6 @@ const BRANCH_3 = {
   },
   pickupAllowed: true,
   digitalCopyAccess: true,
-  borrowerStatus: {
-    allowed: true,
-    statusCode: "OK",
-  },
 };
 const BRANCH_4 = {
   name: "Test Bib - User is blocked",
@@ -383,35 +381,26 @@ const BRANCH_4 = {
   digitalCopyAccess: false,
   branchWebsiteUrl: "balleripraprup.dekaa",
   agencyName: "BalleRipRapRup",
-  borrowerStatus: {
-    allowed: false,
-    statusCode: "BORCHK_USER_BLOCKED_BY_AGENCY",
-  },
 };
 
 // A user with some agencies
 const USER_1 = {
-  agency: {
+  agencies: {
+    borrowerStatus: BORROWER_STATUS_TRUE,
     result: [BRANCH_1, BRANCH_2],
   },
 };
 
 const USER_2 = {
-  agency: {
-    result: [BRANCH_2],
-  },
+  agencies: { borrowerStatus: BORROWER_STATUS_TRUE, result: [BRANCH_2] },
 };
 
 const USER_3 = {
-  agency: {
-    result: [BRANCH_3],
-  },
+  agencies: { borrowerStatus: BORROWER_STATUS_TRUE, result: [BRANCH_3] },
 };
 
 const USER_4 = {
-  agency: {
-    result: [BRANCH_4],
-  },
+  agencies: { borrowerStatus: BORROWER_STATUS_TRUE, result: [BRANCH_4] },
 };
 
 const REVIEW_1 = {
@@ -507,7 +496,10 @@ const DEFAULT_STORY_PARAMETERS = {
             return ALL_WORKS.find((w) => w.workId === variables?.workId);
           },
           branches: () => {
-            return { result: [BRANCH_1, BRANCH_2, BRANCH_3] };
+            return {
+              borrowerStatus: BORROWER_STATUS_TRUE,
+              result: [BRANCH_1, BRANCH_2, BRANCH_3],
+            };
           },
         },
         ElbaServices: {
@@ -802,6 +794,7 @@ const USER_DEBT = [
 ];
 
 const USER_AGENCY = {
+  borrowerStatus: BORROWER_STATUS_TRUE,
   result: [
     {
       agencyId: "726500",
@@ -817,7 +810,7 @@ function useMockLoanerInfo({
   loans = USER_LOANS,
   orders = USER_ORDERS,
   debt = USER_DEBT,
-  agency = USER_AGENCY,
+  agencies = [USER_AGENCY],
 }) {
   const { updateLoanerInfo } = useUser();
   const id = useId();
@@ -827,7 +820,7 @@ function useMockLoanerInfo({
       loans,
       orders,
       debt,
-      agency,
+      agencies,
     });
   }, [id]);
 }
@@ -860,6 +853,8 @@ export default function automock_utils() {
     MANIFESTATION_9,
     ALL_MANIFESTATIONS,
     ALL_WORKS,
+    BORROWER_STATUS_TRUE,
+    BORROWER_STATUS_FALSE,
     BRANCH_1,
     BRANCH_2,
     BRANCH_3,

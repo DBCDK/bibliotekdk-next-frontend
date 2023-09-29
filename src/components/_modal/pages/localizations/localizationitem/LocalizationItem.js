@@ -7,6 +7,9 @@ import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
 import cx from "classnames";
+import automock_utils from "@/lib/automock_utils.fixture";
+
+const { BORROWER_STATUS_TRUE } = automock_utils();
 
 /**
  * Loading component
@@ -173,6 +176,7 @@ export default function Wrap({ props }) {
   const dummyData = {
     branches: {
       agencyUrl: "http://bibliotek.kk.dk/",
+      borrowerStatus: BORROWER_STATUS_TRUE,
       result: [
         {
           agencyUrl: "no Url",
@@ -202,6 +206,7 @@ export default function Wrap({ props }) {
   const dummyHoldings = {
     717500: {
       branches: {
+        borrowerStatus: BORROWER_STATUS_TRUE,
         agencyUrl: "http://www.rdb.dk",
         result: [
           {
@@ -240,6 +245,7 @@ export default function Wrap({ props }) {
     },
     717501: {
       branches: {
+        borrowerStatus: BORROWER_STATUS_TRUE,
         agencyUrl:
           "https://www.genvej.gentofte.bibnet.dk/sites/RKB/pub/patronstatus.html",
         result: [
@@ -263,6 +269,7 @@ export default function Wrap({ props }) {
     710111: {
       branches: {
         agencyUrl: "http://bibliotek.kk.dk/",
+        borrowerStatus: BORROWER_STATUS_TRUE,
         result: [
           {
             name: "Nørrebro Bibliotek",

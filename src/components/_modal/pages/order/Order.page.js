@@ -58,14 +58,9 @@ function Order({
   );
 
   const borrowerStatus = pickUpAgencyInfo?.data?.branches?.borrowerStatus;
-  let allowedToBorrow = true;
-  let statusCode = "";
-  if (borrowerStatus) {
-    allowedToBorrow = borrowerStatus.allowed;
-    statusCode = borrowerStatus.statusCode;
-  }
   const branches = pickUpAgencyInfo?.data?.branches;
-  const showBlockedUserInfo = !allowedToBorrow || !authUser || !isLoggedIn;
+  const showBlockedUserInfo =
+    (borrowerStatus && !borrowerStatus.allowed) || !authUser || !isLoggedIn;
 
   // Sets if user has unsuccessfully tried to submit the order
   const [failedSubmission, setFailedSubmission] = useState(false);
@@ -198,7 +193,10 @@ function Order({
       />
       <LocalizationInformation context={context} />
       {user && showBlockedUserInfo && (
-        <BlockedUserInformation statusCode={statusCode} branches={branches} />
+        <BlockedUserInformation
+          statusCode={borrowerStatus?.statusCode}
+          branches={branches}
+        />
       )}
       <OrdererInformation
         context={context}
@@ -213,7 +211,7 @@ function Order({
         validated={validated}
         failedSubmission={failedSubmission}
         onClick={onSubmitOrder}
-        blockedForBranch={!allowedToBorrow}
+        blockedForBranch={!borrowerStatus?.allowed}
       />
     </div>
   );
