@@ -8,6 +8,7 @@ import { cyKey } from "@/utils/trim";
 import useBookmarks from "@/components/hooks/useBookmarks";
 import Icon from "@/components/base/icon/Icon";
 import BookmarkMedium from "@/public/icons/bookmark_small.svg";
+import { formatMaterialTypesToPresentation } from "@/lib/manifestationFactoryUtils";
 
 export function BookMarkMaterialSelector({
   materialTypes,
@@ -21,9 +22,9 @@ export function BookMarkMaterialSelector({
 
   const onSelect = (material, workId) => {
     const item = {
-      key: workId + material,
+      key: workId + formatMaterialTypesToPresentation(material),
       materialId: workId,
-      materialType: material[0],
+      materialType: formatMaterialTypesToPresentation(material),
       title: "",
     };
     setBookmark(item);
@@ -43,7 +44,8 @@ export function BookMarkMaterialSelector({
       } else if (options.length === 1) {
         // if we have one material only we look for a specific key
         bookmarkIndex = bookmarks?.findIndex(
-          (bookm) => bookm.key === workId + options[0]
+          (bookm) =>
+            bookm.key === workId + formatMaterialTypesToPresentation(options)
         );
       }
       setActive(bookmarkIndex !== -1);
@@ -57,7 +59,7 @@ export function BookMarkMaterialSelector({
         className={`${styles.bookmark} ${className}`}
         selected={active}
         onClick={() => {
-          onSelect(options[0], workId);
+          onSelect(options, workId);
         }}
       />
     );
@@ -93,7 +95,9 @@ export function BookMarkMaterialSelector({
         {options.map((material, index) => {
           const activeItem =
             bookmarks?.findIndex(
-              (book) => book.key === workId + material[0]
+              (book) =>
+                book.key ===
+                workId + formatMaterialTypesToPresentation(material)
             ) !== -1;
           return (
             <Dropdown.Item
@@ -108,7 +112,7 @@ export function BookMarkMaterialSelector({
             >
               <div className={styles.itemContainer}>
                 <Text type="text3" className={styles.dropdownitemText}>
-                  {material}
+                  {formatMaterialTypesToPresentation(material)}
                 </Text>
 
                 <Icon size={{ w: 3, h: 3 }}>
