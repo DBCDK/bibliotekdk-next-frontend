@@ -1,9 +1,14 @@
 .display_flex {
   width: fit-content;
-  padding-top: var(--pt1);
   display: flex;
   align-items: center;
   gap: var(--pt1);
+}
+
+@media (min-width: 992px) {
+  .display_flex {
+    padding-top: var(--pt1);
+  }
 }
 
 .white {
