@@ -23,7 +23,7 @@ export function BookMarkMaterialSelector({
     const item = {
       key: workId + material,
       materialId: workId,
-      materialType: material[0],
+      materialType: material.join(", "),
       title: "",
     };
     setBookmark(item);
@@ -57,7 +57,7 @@ export function BookMarkMaterialSelector({
         className={`${styles.bookmark} ${className}`}
         selected={active}
         onClick={() => {
-          onSelect(options[0], workId);
+          onSelect(options, workId);
         }}
       />
     );
