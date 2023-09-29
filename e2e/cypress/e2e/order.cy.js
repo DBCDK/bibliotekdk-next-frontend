@@ -333,7 +333,7 @@ describe("Order", () => {
   describe("If user logs in with MitID - and has no libraries associated with user account", () => {
     it("should show an errormessage when user has no agencies", () => {
       cy.visit("/iframe.html?id=modal-order--no-user-agencies");
-      cy.contains("Bestil", { timeout: 100000 }).should("be.visible").click();
+      cy.contains("Bestil", { timeout: 10000 }).should("be.visible").click();
 
       cy.contains(
         "Vi kan se at du ikke er registreret på et bibliotek?"
