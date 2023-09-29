@@ -57,14 +57,14 @@ function Order({
       branchesFragments.checkBlockedUser({ branchId: loanerInfo.pickupBranch })
   );
 
+  const borrowerStatus = pickUpAgencyInfo?.data?.branches?.borrowerStatus;
   let allowedToBorrow = true;
   let statusCode = "";
-  if (pickUpAgencyInfo) {
-    allowedToBorrow = pickUpAgencyInfo?.borrowerStatus?.allowed;
-    statusCode = pickUpAgencyInfo?.borrowerStatus?.statusCode;
+  if (borrowerStatus) {
+    allowedToBorrow = borrowerStatus.allowed;
+    statusCode = borrowerStatus.statusCode;
   }
   const branches = pickUpAgencyInfo?.data?.branches;
-
   const showBlockedUserInfo = !allowedToBorrow || !authUser || !isLoggedIn;
 
   // Sets if user has unsuccessfully tried to submit the order
