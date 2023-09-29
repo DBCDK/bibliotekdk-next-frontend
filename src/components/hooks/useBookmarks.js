@@ -94,7 +94,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
               {
                 materialId: value.materialId,
                 materialType: value.materialType,
-                title: value.title        
+                title: value.title,
               },
             ],
           })
@@ -121,7 +121,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
       );
       if (existingIndex === -1) {
         // push if not there
-        localBookmarks?.push(value);
+        localBookmarks?.push({ ...value, createdAt: new Date() });
       } else {
         // remove if already there
         localBookmarks?.splice(existingIndex, 1);
@@ -165,11 +165,37 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     }
   };
 
+  function sortedBookMarks(bookmarksToSort) {
+    const createdAtSort = (a, b) => {
+      if (a.createdAt > b.createdAt) {
+        return -1;
+      }
+      if (a.createdAt < b.createdAt) {
+        return 1;
+      }
+      return 0;
+    };
+    const titleSort = (a, b) => {
+      if (a.title < b.title) {
+        return -1;
+      }
+      if (a.title > b.title) {
+        return 1;
+      }
+      return 0;
+    };
+
+    const sortFunction = sortBy === "createdAt" ? createdAtSort : titleSort;
+    return bookmarksToSort?.sort(sortFunction);
+  }
+
   return {
     setBookmark,
     deleteBookmarks,
     clearLocalBookmarks,
-    bookmarks: isAuthenticated ? globalBookmarks : localBookmarks,
+    bookmarks: isAuthenticated
+      ? globalBookmarks
+      : sortedBookMarks(localBookmarks),
     isLoading:
       (typeof localBookmarks === "undefined" && !error) ||
       (isLoadingGlobalBookmarks && !globalBookmarksError),

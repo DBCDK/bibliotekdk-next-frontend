@@ -22,7 +22,11 @@ const sortByItems = [
 ];
 
 const BookmarkPage = () => {
-  const { bookmarks: bookmarksData, setSortBy, deleteBookmarks } = useBookmarks();
+  const {
+    bookmarks: bookmarksData,
+    setSortBy,
+    deleteBookmarks,
+  } = useBookmarks();
   const { data: bookmarks } = usePopulateBookmarks(bookmarksData);
   const [activeStickyButton, setActiveStickyButton] = useState(null);
   const breakpoint = useBreakpoint();
@@ -33,7 +37,6 @@ const BookmarkPage = () => {
   useEffect(() => {
     setSortBy(sortByValue);
   }, [sortByValue]);
-
 
   useEffect(() => {
     setCheckboxList(
