@@ -23,7 +23,7 @@ import { useModal } from "@/components/_modal";
 import LoginIcon from "./icons/login";
 import BurgerIcon from "./icons/burger";
 import SearchIcon from "./icons/search";
-// import BookmarkIcon from "./icons/bookmark"; TODO Use for bookmark header item
+import BookmarkIcon from "./icons/bookmark";
 import ExpandedSearch from "./expandedsearch/ExpandedSearch";
 import useUser from "../hooks/useUser";
 
@@ -126,16 +126,11 @@ export function Header({
       icon: LoginIcon,
       onClick: handleOnClick,
     },
-    /**
-     *  @TODO Reintroduce when bookmarks are ready
-     */
-
-    /*{
+    {
       label: "bookmark",
       icon: BookmarkIcon,
       onClick: () => router.push("/profil/huskeliste"),
-    },*/
-
+    },
     {
       label: "menu",
       icon: BurgerIcon,
@@ -198,7 +193,7 @@ export function Header({
         <Container className={styles.header} fluid>
           <Row>
             <StaticHeader router={router} context={context} />
-            <Col xs={{ span: 9, offset: 3 }} className={styles.mobileHeader}>
+            <Col xs={{ span: 7, offset: 3 }} className={styles.mobileHeader}>
               <SkipToMainAnchor />
               <div className={styles.bottom}>
                 <form
@@ -277,33 +272,34 @@ export function Header({
                     <div className={styles.fill} />
                   </button>
                 </form>
+              </div>
+            </Col>
+            <Col xs={{ span: 2 }} className={styles.iconContainer}>
+              <div
+                className={styles.iconActions}
+                data-cy={cyKey({
+                  name: "actions",
+                  prefix: "header-bottom",
+                })}
+              >
+                {menu.map((m) => {
+                  const ActionIcon = m.icon;
 
-                <div
-                  className={styles.actions}
-                  data-cy={cyKey({
-                    name: "actions",
-                    prefix: "header-bottom",
-                  })}
-                >
-                  {menu.map((m) => {
-                    const ActionIcon = m.icon;
-
-                    return (
-                      <ActionIcon
-                        dataCy={cyKey({
-                          name: m.label,
-                          prefix: "header-link",
-                        })}
-                        key={m.label}
-                        className={styles.action}
-                        href={m.href}
-                        onClick={m.onClick}
-                        items={m.items}
-                        title={Translate({ ...context, label: m.label })}
-                      />
-                    );
-                  })}
-                </div>
+                  return (
+                    <ActionIcon
+                      dataCy={cyKey({
+                        name: m.label,
+                        prefix: "header-link",
+                      })}
+                      key={m.label}
+                      className={styles.action}
+                      href={m.href}
+                      onClick={m.onClick}
+                      items={m.items}
+                      title={Translate({ ...context, label: m.label })}
+                    />
+                  );
+                })}
               </div>
             </Col>
           </Row>

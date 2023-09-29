@@ -3,28 +3,48 @@
  */
 import PropTypes from "prop-types";
 import Action from "@/components/base/action";
-// import styles from "./bookmark.module.css";
+import styles from "./bookmark.module.css";
 import Translate from "@/components/base/translate";
+import cx from "classnames";
+import useBookmarks from "@/components/hooks/useBookmarks";
 
-/**
- * The Component function
- *
- * @param {obj} props
- * See propTypes for specific props and types
- *
- * @returns {component}
- */
 export default function BoomarkIcon(props) {
   const { className } = props;
+  const { bookmarks } = useBookmarks();
 
   return (
     <Action
       {...props}
-      className={className}
+      className={cx(className, styles.trigger)}
       animation={true}
-      icon="bookmark_full.svg"
       alt={Translate({ context: "header", label: "bookmark" })}
-    ></Action>
+    >
+      <div className={styles.container}>
+        {bookmarks && bookmarks.length > 0 && (
+          <div
+            className={cx(styles.countContainer, {
+              [styles.countContainerLarge]: bookmarks.length >= 100,
+            })}
+          >
+            {bookmarks.length}
+          </div>
+        )}
+
+        <div className={styles.icon}>
+          <div className={styles.box}>
+            <div className={styles.boxRoll}/>
+          </div>
+          <div className={styles.flagContainer}>
+            <div className={styles.flag}>
+              <div className={styles.leftBorder} />
+              <div className={styles.rightBorder} />
+              <div className={styles.leftTilt} />
+              <div className={styles.rightTilt} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </Action>
   );
 }
 

@@ -1,0 +1,158 @@
+/*
+
+TODO
+color #212121
+target 18wx22h
+
+*/
+
+.container {
+  position: relative;
+}
+
+.countContainer {
+  position: absolute;
+  right: -8px;
+  top: -8px;
+  width: var(--pt2);
+  height: var(--pt2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 500;
+  color: white;
+  font-family: var(--body-font-medium);
+  line-height: var(--pt2);
+  background-color: var(--blue);
+  border-radius: 50%;
+  padding: var(--pt05);
+  z-index: 2;
+  opacity: 1;
+}
+
+.countContainerLarge {
+  width: 20px;
+  height: 20px;
+  right: -10px;
+  top: -10px;
+}
+
+.icon {
+  width: 18px;
+  height: 24px;
+}
+
+.box {
+  border: 2px solid black;
+  height: 7px;
+  overflow: hidden;
+}
+
+.boxRoll {
+  background-color: black;
+  height: 100%;
+  width: 100%;
+  transform: translateY(-100%);
+}
+
+.flagContainer {
+  overflow: hidden;
+  height: 16px; /* +1 to make room for rotated lines */
+}
+
+.flag {
+  position: relative;
+  height: 15px;
+}
+
+.leftBorder {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: black;
+  height: 100%;
+}
+
+.rightBorder {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: black;
+  height: 100%;
+}
+
+.rightTilt {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 2px;
+  height: 11px;
+  background-color: black;
+  transform: rotate(-50deg);
+  transform-origin: bottom right;
+  border-top-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+}
+
+.leftTilt {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 2px;
+  height: 11px;
+  background-color: black;
+  transform: rotate(50deg);
+  transform-origin: bottom left;
+  border-top-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+}
+
+@media (hover: hover) {
+  .trigger:hover .flag {
+    animation: toiletRoll 0.4s linear;
+  }
+
+  .trigger:hover .boxRoll {
+    animation: toiletRollOut 0.4s linear;
+  }
+
+  .trigger:hover .countContainer {
+    animation: counterFadeIn 0.8s linear;
+  }
+}
+
+@keyframes toiletRoll {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes toiletRollOut {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes counterFadeIn {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
