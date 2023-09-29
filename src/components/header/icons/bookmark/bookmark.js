@@ -32,7 +32,7 @@ export default function BoomarkIcon(props) {
 
         <div className={styles.icon}>
           <div className={styles.box}>
-            <div className={styles.boxRoll}/>
+            <div className={styles.boxRoll} />
           </div>
           <div className={styles.flagContainer}>
             <div className={styles.flag}>

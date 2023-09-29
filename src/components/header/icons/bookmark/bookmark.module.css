@@ -1,11 +1,3 @@
-/*
-
-TODO
-color #212121
-target 18wx22h
-
-*/
-
 .container {
   position: relative;
 }
@@ -41,17 +33,17 @@ target 18wx22h
 
 .icon {
   width: 18px;
-  height: 24px;
+  height: 22px;
 }
 
 .box {
-  border: 2px solid black;
+  border: 2px solid var(--mine-shaft);
   height: 7px;
   overflow: hidden;
 }
 
 .boxRoll {
-  background-color: black;
+  background-color: var(--mine-shaft);
   height: 100%;
   width: 100%;
   transform: translateY(-100%);
@@ -73,7 +65,7 @@ target 18wx22h
   top: 0;
   bottom: 0;
   width: 2px;
-  background-color: black;
+  background-color: var(--mine-shaft);
   height: 100%;
 }
 
@@ -83,7 +75,7 @@ target 18wx22h
   top: 0;
   bottom: 0;
   width: 2px;
-  background-color: black;
+  background-color: var(--mine-shaft);
   height: 100%;
 }
 
@@ -91,9 +83,9 @@ target 18wx22h
   position: absolute;
   right: 0;
   bottom: 0;
-  width: 2px;
-  height: 11px;
-  background-color: black;
+  width: 1.5px;
+  height: 11.5px;
+  background-color: var(--mine-shaft);
   transform: rotate(-50deg);
   transform-origin: bottom right;
   border-top-right-radius: 50%;
@@ -104,9 +96,9 @@ target 18wx22h
   position: absolute;
   left: 0;
   bottom: 0;
-  width: 2px;
-  height: 11px;
-  background-color: black;
+  width: 1.5px;
+  height: 11.5px;
+  background-color: var(--mine-shaft);
   transform: rotate(50deg);
   transform-origin: bottom left;
   border-top-left-radius: 50%;
@@ -123,7 +115,7 @@ target 18wx22h
   }
 
   .trigger:hover .countContainer {
-    animation: counterFadeIn 0.8s linear;
+    animation: counterFadeIn 0.6s linear;
   }
 }
 
@@ -148,11 +140,14 @@ target 18wx22h
 @keyframes counterFadeIn {
   0% {
     opacity: 0;
+    transform: translate(-50%, 50%);
   }
-  50% {
+  66% {
     opacity: 0;
+    transform: translate(-50%, 50%);
   }
   100% {
     opacity: 1;
+    transform: translate(0, 0);
   }
 }

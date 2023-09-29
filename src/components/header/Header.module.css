@@ -247,6 +247,10 @@
   .bottom .actions .action {
     margin: 0 var(--pt3) 0 0;
   }
+
+  .header *[data-icon-type="search"] {
+    display: none;
+  }
 }
 
 @media (min-width: 1200px) {

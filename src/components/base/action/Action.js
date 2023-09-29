@@ -27,6 +27,7 @@ export default function Action({
   children = null,
   onClick = null,
   dataCy = null,
+  ...props
 }) {
   // Use html a or the Link component
   const Wrap = onClick ? "a" : Link;
@@ -44,6 +45,7 @@ export default function Action({
       className={`${className} ${styles.action}`}
       {...cy}
       aria-label={title}
+      {...props}
     >
       {badge && <Badge className={styles.badge}>{badge}</Badge>}
       <Icon size={{ w: "auto", h: 3 }} src={icon} alt={title}>
