@@ -19,6 +19,9 @@ import { onMailChange } from "@/components/_modal/pages/order/utils/order.utils"
 import { useRelevantAccessesForOrderPage } from "@/components/work/utils";
 import { validateEmail } from "@/utils/validateEmail";
 import NoAgenciesError from "./noAgencies/NoAgenciesError";
+import useUser from "@/components/hooks/useUser";
+import * as branchesFragments from "@/lib/api/branches.fragments";
+import { useData } from "@/lib/api/api";
 
 /**
  *  Order component function
@@ -46,6 +49,23 @@ function Order({
     pickupBranch,
     isLoadingBranches = false,
   } = pickupBranchInfo;
+
+  const { authUser, loanerInfo, isLoggedIn } = useUser();
+
+  const pickUpAgencyInfo = useData(
+    loanerInfo?.pickupBranch &&
+      branchesFragments.checkBlockedUser({ branchId: loanerInfo.pickupBranch })
+  );
+
+  let allowedToBorrow = true;
+  let statusCode = "";
+  if (pickUpAgencyInfo) {
+    allowedToBorrow = pickUpAgencyInfo?.borrowerStatus?.allowed;
+    statusCode = pickUpAgencyInfo?.borrowerStatus?.statusCode;
+  }
+  const branches = pickUpAgencyInfo?.data?.branches;
+
+  const showBlockedUserInfo = !allowedToBorrow || !authUser || !isLoggedIn;
 
   // Sets if user has unsuccessfully tried to submit the order
   const [failedSubmission, setFailedSubmission] = useState(false);
@@ -177,7 +197,9 @@ function Order({
         singleManifestation={singleManifestation}
       />
       <LocalizationInformation context={context} />
-      {user && <BlockedUserInformation />}
+      {user && showBlockedUserInfo && (
+        <BlockedUserInformation statusCode={statusCode} branches={branches} />
+      )}
       <OrdererInformation
         context={context}
         validated={validated}
@@ -191,6 +213,7 @@ function Order({
         validated={validated}
         failedSubmission={failedSubmission}
         onClick={onSubmitOrder}
+        blockedForBranch={!allowedToBorrow}
       />
     </div>
   );

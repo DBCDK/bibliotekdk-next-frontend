@@ -1,7 +1,6 @@
 import usePickupBranch from "@/components/hooks/usePickupBranch";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
-import * as branchesFragments from "@/lib/api/branches.fragments";
 import { inferAccessTypes } from "@/components/_modal/pages/edition/utils";
 import { useMemo } from "react";
 
@@ -40,19 +39,9 @@ export default function useOrderPageInformation(workId, pid, periodicaForm) {
     );
   }, [workData?.work, periodicaForm, pickupBranch]);
 
-  const blockedUserResponse = useData(
-    loanerInfo?.pickupBranch &&
-      branchesFragments.checkBlockedUser({
-        branchId: loanerInfo.pickupBranch,
-      })
-  );
-
-  const { isLoading: isBlockedUserLoading } = blockedUserResponse;
-
   const isLoadingBranches =
     isWorkLoading ||
     isPickupBranchLoading ||
-    isBlockedUserLoading ||
     (pickupBranchUser?.name && !pickupBranchUser?.agency);
 
   return {
@@ -79,7 +68,6 @@ export default function useOrderPageInformation(workId, pid, periodicaForm) {
       availableAsPhysicalCopy,
       requireDigitalAccess,
     },
-    blockedUserResponse,
     workResponse,
   };
 }

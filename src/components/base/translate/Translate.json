@@ -2221,6 +2221,10 @@
         "da": "Det kan skyldes, at du mangler at betale et tilgodehavende, at du har lån som ikke er afleveret eller lignende.",
         "en": "Reasons can include that you are missing a payments for late books, or that you have unreturned loans"
       },
+      "user-no-longer-exists-on-agency": {
+        "da": "Din bruger er ikke længere låner på biblioteket.",
+        "en": "Your user is no longer a loaner at the library."
+      },
       "blocked-user-link": {
         "da": "Kontakt %s for at få mere information",
         "en": "Contact %s for more information"
@@ -2248,6 +2252,10 @@
       "show-pickup-branch": {
         "da": "Vis afhentningssted for %s",
         "en": "Show pickup location for %s"
+      },
+      "order-failed-user-no-longer-exists": {
+        "da": "Biblioteket kan ikke bekræfte de låneroplysninger, du har gemt på din profil. Dette kan fx skyldes, at du har fået nyt login eller ikke længere er låner. Kontakt biblioteket, hvis du mener dette er en fejl.",
+        "en": "The library cannot confirm the loaner information you have saved on your profile. This may be due to, for example, that you have received a new login or are no longer a loaner. Contact the library if you think this is an error."
       }
     },
     "login": {
@@ -3427,6 +3435,14 @@
       "seeLoansAndReservations": {
         "da": "Se dine lån og reserveringer",
         "en": "See your loans and reservations"
+      },
+      "seeYourLibraries": {
+        "da": "Se dine biblioteker",
+        "en": "See your libraries"
+      },
+      "errorOccured": {
+        "da": "Der opstod en fejl",
+        "en": "An error occured"
       }
     },
     "noagencies": {

@@ -123,6 +123,11 @@
 /* error */
 
 .error {
+  display: flex;
+}
+
+.errorText {
+  padding-top: var(--pt2);
 }
 
 /* states */
