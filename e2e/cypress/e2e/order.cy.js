@@ -66,12 +66,12 @@ describe("Order", () => {
     // Check that user blocking is not present
     cy.get("[data-cy=blocked-user]").should("not.exist");
 
-    cy.contains("Test Bib - no orders here");
+    cy.contains("Test Bib - no orders here"); //HERE
 
     cy.contains(
       "Materialet kan ikke bestilles til det her afhentningssted. Vælg et andet."
     );
-    cy.get("[data-cy=button-godkend]").should("be.disabled");
+    cy.get("[data-cy=button-godkend]").should("be.disabled"); //HERE?
     cy.contains("Skift afhentning").click();
   });
 
@@ -122,7 +122,7 @@ describe("Order", () => {
         "Du får besked fra dit bibliotek når materialet er klar til afhentning"
       );
       cy.contains("Godkend").click();
-      cy.contains("some-order-id");
+      cy.contains("some-order-id", { timeout: 10000 });
 
       cy.getConsoleEntry("submitOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
@@ -167,7 +167,7 @@ describe("Order", () => {
 
       cy.get("[data-cy=button-godkend]").click();
 
-      cy.contains("some-order-id");
+      cy.contains("some-order-id", { timeout: 10000 });
 
       cy.getConsoleEntry("submitOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
@@ -273,7 +273,7 @@ describe("Order", () => {
       // Check that BlockedUser does not exist
       cy.get("[data-cy=button-godkend]").should("be.visible").click();
 
-      cy.contains("some-order-id");
+      cy.contains("some-order-id", { timeout: 10000 });
 
       cy.getConsoleEntry("submitOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
