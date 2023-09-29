@@ -94,7 +94,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
               {
                 materialId: value.materialId,
                 materialType: value.materialType,
-                title: "",
+                title: value.title        
               },
             ],
           })
