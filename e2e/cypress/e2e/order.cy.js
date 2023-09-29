@@ -66,12 +66,12 @@ describe("Order", () => {
     // Check that user blocking is not present
     cy.get("[data-cy=blocked-user]").should("not.exist");
 
-    cy.contains("Test Bib - no orders here"); //HERE
+    cy.contains("Test Bib - no orders here");
 
     cy.contains(
       "Materialet kan ikke bestilles til det her afhentningssted. Vælg et andet."
     );
-    cy.get("[data-cy=button-godkend]").should("be.disabled"); //HERE?
+    cy.get("[data-cy=button-godkend]").should("be.disabled");
     cy.contains("Skift afhentning").click();
   });
 

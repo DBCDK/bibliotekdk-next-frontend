@@ -58,6 +58,6 @@ describe("Edition", () => {
     cy.get("[data-cy=text-bestil-udgave]").should("not.exist");
     cy.get("[data-cy=text-udgave-underordnet]").should("exist");
 
-    cy.get("[data-cy=text-digital-kopi]").should("exist"); //HERE
+    cy.get("[data-cy=text-digital-kopi]").should("exist");
   });
 });
