@@ -89,14 +89,18 @@ export default function Wrap({
   onClick,
   blockedForBranch,
 }) {
-  const { workId, pid, periodicaForm } = context;
+  const { workId, pid, periodicaForm, pids } = context;
   const { invalidClass, actionMessage } = extractClassNameAndMessage(
     validated,
     failedSubmission
   );
 
   const { accessTypeInfo, pickupBranchInfo, workResponse } =
-    useOrderPageInformation(workId, pid, periodicaForm);
+    useOrderPageInformation({
+      workId: workId,
+      periodicaForm: periodicaForm,
+      pids: pids ?? [pid],
+    });
 
   const { isLoading: isWorkLoading } = workResponse;
   const { isLoading: isPickupBranchLoading } = pickupBranchInfo;

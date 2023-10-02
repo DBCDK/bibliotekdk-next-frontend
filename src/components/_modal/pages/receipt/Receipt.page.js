@@ -196,7 +196,7 @@ export function Receipt({
  */
 export default function Wrap(props) {
   // fetch props from context
-  const { pid, pickupBranch } = props.context;
+  const { pid, pickupBranch, pids } = props.context;
 
   // Fetch orderPolicy if it doesnt exist on pickupBranch
   const shouldFetchOrderPolicy =
@@ -206,7 +206,8 @@ export default function Wrap(props) {
     shouldFetchOrderPolicy &&
       branchesFragments.branchOrderPolicy({
         branchId: pickupBranch?.branchId,
-        pid,
+        pid: pid,
+        pids: pids ?? [pid],
       })
   );
 
