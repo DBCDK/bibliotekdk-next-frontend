@@ -153,8 +153,6 @@ export default function BranchDetails({ context }) {
 
   const orderPolicyForBranch = orderPolicyForBranches?.[0];
 
-  console.log("orderPolicyForBranch: ", orderPolicyForBranches);
-
   const singleBranch = agenciesFlatSorted?.[0]?.branches?.[0];
 
   const { data: manifestationsData, isLoading: manifestationsIsLoading } =
