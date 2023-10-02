@@ -1,5 +1,6 @@
 import * as loanMutations from "@/lib/api/loans.mutations";
 import isEmpty from "lodash/isEmpty";
+import { isString } from "lodash";
 
 export async function handleRenewLoan({ loanId, agencyId, loanMutation }) {
   await loanMutation.post(
@@ -81,14 +82,17 @@ export function getWorkUrlForProfile({
 
 /**
  * check if given pid actually is a pid (eg 870970-basis:123456)
- * @param pid
+ * @param String pid
  */
 export function isPid(pid) {
+  if (!isString(pid)) {
+    return false;
+  }
   // a pid consists of a localization (eg. 870970, a base (eg. basis) and a localid(eg. 123456)
-  const parts = pid.split(":");
+  const parts = pid?.split(":");
 
   // there should be 2 parts
-  if (!(parts.length === 2)) {
+  if (!(parts?.length === 2)) {
     return false;
   }
   // first part should be a localization (6 digits)
