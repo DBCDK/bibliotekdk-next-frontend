@@ -118,18 +118,18 @@ export default function Wrap({
   failedSubmission,
   onMailChange,
 }) {
-  const { workId, pid, periodicaForm } = context;
+  const { workId, pid, periodicaForm, pids } = context;
 
   const { validClass, invalidClass, message } = extractClassNameAndMessage(
     validated,
     failedSubmission
   );
 
-  const { userInfo, pickupBranchInfo, workResponse } = useOrderPageInformation(
-    workId,
-    pid,
-    periodicaForm
-  );
+  const { userInfo, pickupBranchInfo, workResponse } = useOrderPageInformation({
+    workId: workId,
+    periodicaForm: periodicaForm,
+    pids: pids ?? [pid],
+  });
 
   const { authUser } = userInfo;
 

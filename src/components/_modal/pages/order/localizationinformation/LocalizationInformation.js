@@ -114,13 +114,13 @@ LocalizationInformation.propTypes = {
 
 export default function Wrap({ context }) {
   const modal = useModal();
-  const { workId, pid, periodicaForm } = context;
+  const { workId, pid, periodicaForm, pids } = context;
 
-  const { pickupBranchInfo, accessTypeInfo } = useOrderPageInformation(
-    workId,
-    pid,
-    periodicaForm
-  );
+  const { pickupBranchInfo, accessTypeInfo } = useOrderPageInformation({
+    workId: workId,
+    periodicaForm: periodicaForm,
+    pids: pids ?? [pid],
+  });
 
   const {
     pickupBranch,

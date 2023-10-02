@@ -3,8 +3,13 @@ import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import { inferAccessTypes } from "@/components/_modal/pages/edition/utils";
 import { useMemo } from "react";
+import isEmpty from "lodash/isEmpty";
 
-export default function useOrderPageInformation(workId, pid, periodicaForm) {
+export default function useOrderPageInformation({
+  workId,
+  periodicaForm,
+  pids,
+}) {
   const {
     authUser,
     loanerInfo,
@@ -14,7 +19,7 @@ export default function useOrderPageInformation(workId, pid, periodicaForm) {
     isLoading: userIsLoading,
     pickupBranchUser,
     isAuthenticatedForPickupBranch,
-  } = usePickupBranch(pid);
+  } = usePickupBranch(pids && !isEmpty(pids) && { pids: pids });
 
   const workResponse = useData(
     workId && workFragments.orderPageWorkWithManifestations({ workId })

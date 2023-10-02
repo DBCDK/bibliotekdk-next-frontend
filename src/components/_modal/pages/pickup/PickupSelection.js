@@ -59,7 +59,11 @@ function PolicyLoader({ branch, onLoad, pid, requireDigitalAccess }) {
   let { data } = useData(
     pid &&
       branch?.branchId &&
-      branchesFragments.branchOrderPolicy({ branchId: branch.branchId, pid })
+      branchesFragments.branchOrderPolicy({
+        branchId: branch.branchId,
+        pid: pid,
+        pids: [pid],
+      })
   );
 
   const orderPolicy =

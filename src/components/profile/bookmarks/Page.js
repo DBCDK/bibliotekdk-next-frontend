@@ -210,6 +210,7 @@ const BookmarkPage = () => {
                 bookmark?.manifestations?.bestRepresentation?.cover?.thumbnail
               }
               id={bookmark?.workId}
+              workId={bookmark?.workId}
               type="BOOKMARK"
               isSelected={checkboxList[idx]?.isSelected}
               onBookmarkDelete={() =>
