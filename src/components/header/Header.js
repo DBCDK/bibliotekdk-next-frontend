@@ -4,8 +4,6 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import React, { useState } from "react";
 
-import { signOut } from "@dbcdk/login-nextjs/client";
-
 import useHistory from "@/components/hooks/useHistory";
 import useFilters from "@/components/hooks/useFilters";
 import useQ from "@/components/hooks/useQ";
@@ -101,14 +99,6 @@ export function Header({
   // specific material workType selected
   const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
 
-  async function handleOnClick() {
-    if (user.isAuthenticated) {
-      signOut();
-      return;
-    }
-    openLoginModal({ modal });
-  }
-
   const menu = [
     {
       label: "search",
@@ -122,9 +112,15 @@ export function Header({
       },
     },
     {
-      label: user.isAuthenticated ? "logout" : "login",
+      label: user.isAuthenticated || user.isGuestUser ? "profile" : "login",
       icon: LoginIcon,
-      onClick: handleOnClick,
+      onClick: () => {
+        if (user.isAuthenticated || user.isGuestUser) {
+          router.push("/profil/laan-og-reserveringer");
+        } else {
+          openLoginModal({ modal });
+        }
+      },
     },
     /**
      *  @TODO Reintroduce when bookmarks are ready

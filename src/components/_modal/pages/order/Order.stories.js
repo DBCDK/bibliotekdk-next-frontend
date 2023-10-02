@@ -13,6 +13,8 @@ const exportedObject = {
 export default exportedObject;
 
 const {
+  BORROWER_STATUS_FALSE,
+  BORROWER_STATUS_TRUE,
   USER_1,
   USER_2,
   USER_3,
@@ -120,7 +122,13 @@ PickupNotAllowed.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {
-        Query: { user: () => USER_2, branches: () => ({ result: [BRANCH_2] }) },
+        Query: {
+          user: () => USER_2,
+          branches: () => ({
+            borrowerStatus: BORROWER_STATUS_TRUE,
+            result: [BRANCH_2],
+          }),
+        },
       },
     },
   },
@@ -147,6 +155,7 @@ OrderIndexedPeriodicaArticle.story = merge({}, DEFAULT_STORY_PARAMETERS, {
           user: () => USER_3,
           branches: () => {
             return {
+              borrowerStatus: BORROWER_STATUS_TRUE,
               result: [BRANCH_3],
             };
           },
@@ -177,6 +186,7 @@ OrderIndexedPeriodicaArticleILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
           user: () => USER_1,
           branches: () => {
             return {
+              borrowerStatus: BORROWER_STATUS_TRUE,
               result: [BRANCH_1],
             };
           },
@@ -207,6 +217,7 @@ OrderPeriodicaVolume.story = merge({}, DEFAULT_STORY_PARAMETERS, {
           user: () => USER_3,
           branches: () => {
             return {
+              borrowerStatus: BORROWER_STATUS_TRUE,
               result: [BRANCH_3],
             };
           },
@@ -238,6 +249,7 @@ OrderPeriodicaVolumeOnlyILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
           user: () => USER_1,
           branches: () => {
             return {
+              borrowerStatus: BORROWER_STATUS_TRUE,
               result: [BRANCH_1, BRANCH_2],
             };
           },
@@ -269,6 +281,7 @@ NotBlockedUser.story = merge({}, DEFAULT_STORY_PARAMETERS, {
           user: () => USER_1,
           branches: () => {
             return {
+              borrowerStatus: BORROWER_STATUS_TRUE,
               result: [BRANCH_1, BRANCH_2],
             };
           },
@@ -297,9 +310,12 @@ BlockedUser.story = merge({}, DEFAULT_STORY_PARAMETERS, {
     graphql: {
       resolvers: {
         Query: {
-          user: () => USER_4,
+          user: () => {
+            return { ...USER_4, borrowerStatus: BORROWER_STATUS_FALSE };
+          },
           branches: () => {
             return {
+              borrowerStatus: BORROWER_STATUS_FALSE,
               result: [BRANCH_4],
             };
           },
