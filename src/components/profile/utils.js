@@ -83,17 +83,18 @@ export function getWorkUrlForProfile({
  * check if given pid actually is a pid (eg 870970-basis:123456)
  * @param pid
  */
-function isPid(pid) {
+export function isPid(pid) {
   // a pid consists of a localization (eg. 870970, a base (eg. basis) and a localid(eg. 123456)
   const parts = pid.split(":");
+
   // there should be 2 parts
-  if (!parts.length == 2) {
+  if (!(parts.length === 2)) {
     return false;
   }
   // first part should be a localization (6 digits)
-  const regex = /^[0-9]{6}$/;
+  const regex = /^[0-9]{8}$/g;
   // success or give up
-  return parts[0].match(regex);
+  return !!parts[1].trim().match(regex);
 }
 
 /**
