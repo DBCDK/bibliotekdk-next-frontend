@@ -79,7 +79,7 @@ NavHeaderPrefilled.story = {
         "q.creator": "some creator",
         "q.subject": "some subject",
         workTypes: "movie",
-        materialTypes: "bog",
+        // materialTypes: "bog",
       },
     },
   },

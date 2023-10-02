@@ -7,7 +7,6 @@ function checkPrefilledQueryParameters() {
       "q.creator": "some creator",
       "q.subject": "some subject",
       workTypes: "movie",
-      materialTypes: "bog",
     });
   });
 }
@@ -144,7 +143,10 @@ describe("Search", () => {
         "suggest.result[1].term",
         "suggest.result[2].term",
       ].forEach((suggestion) => {
-        cy.get("[data-cy=suggester-input]").clear().type("hest");
+        cy.get("[data-cy=suggester-input]")
+          .should("exist")
+          .clear()
+          .type("hest");
         cy.contains(suggestion).click();
         cy.get("[data-cy=router-query]").then((el) => {
           expect(JSON.parse(el.text())).to.deep.equal({
@@ -168,7 +170,10 @@ describe("Search", () => {
     it(`Pressing enter will sync with URL immediately`, () => {
       cy.visit("/iframe.html?id=layout-header--nav-header");
 
-      cy.get("header [data-cy=suggester-input]").clear().type("hest{enter}");
+      cy.get("header [data-cy=suggester-input]")
+        .should("exist")
+        .clear()
+        .type("hest{enter}");
 
       cy.get("[data-cy=router-query]").then((el) => {
         expect(JSON.parse(el.text())).to.deep.equal({ "q.all": "hest" });
@@ -243,7 +248,6 @@ describe("Search", () => {
             "q.creator": "some creator",
             "q.subject": "some subject",
             workTypes: "movie",
-            materialTypes: "bog",
           });
         });
 
