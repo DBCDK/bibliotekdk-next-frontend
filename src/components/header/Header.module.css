@@ -40,6 +40,22 @@
   padding: var(--pt1) 0 var(--pt1) 0;
 }
 
+.iconActions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: var(--pt1);
+  height: var(--pt9);
+}
+
+.action + .action {
+  margin-left: var(--pt2);
+}
+
+.action {
+  display: flex;
+  align-items: center;
+}
+
 .bottom .actions .action,
 .top .materials a,
 .top .actions a {
@@ -221,6 +237,7 @@
 
   .header .top {
     display: flex;
+    height: 48px;
   }
 
   .header .bottom {
@@ -229,6 +246,10 @@
 
   .bottom .actions .action {
     margin: 0 var(--pt3) 0 0;
+  }
+
+  .header *[data-icon-type="search"] {
+    display: none;
   }
 }
 

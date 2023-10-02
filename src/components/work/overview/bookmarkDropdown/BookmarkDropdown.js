@@ -15,9 +15,9 @@ export function BookMarkMaterialSelector({
   workId,
   size = { w: 7, h: 7 },
   className,
+  title,
 }) {
   const bookmarkClick = () => {};
-
   const { bookmarks, setBookmark, isLoading } = useBookmarks();
 
   const onSelect = (material, workId) => {
@@ -25,7 +25,7 @@ export function BookMarkMaterialSelector({
       key: workId + formatMaterialTypesToPresentation(material),
       materialId: workId,
       materialType: formatMaterialTypesToPresentation(material),
-      title: "",
+      title,
     };
     setBookmark(item);
   };
@@ -127,13 +127,20 @@ export function BookMarkMaterialSelector({
   );
 }
 
-export default function wrapper({ materialTypes, workId, size, className }) {
+export default function wrapper({
+  materialTypes,
+  workId,
+  title,
+  size,
+  className,
+}) {
   return (
     <BookMarkMaterialSelector
       materialTypes={materialTypes}
       workId={workId}
       size={size}
       className={className}
+      title={title}
     />
   );
 }

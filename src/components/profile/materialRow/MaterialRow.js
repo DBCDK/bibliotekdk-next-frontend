@@ -12,7 +12,6 @@ import { useMutate } from "@/lib/api/api";
 import PropTypes from "prop-types";
 import Icon from "@/components/base/icon";
 import IconButton from "@/components/base/iconButton";
-import { getWorkUrl } from "@/lib/utils";
 import ErrorRow from "../errorRow/ErrorRow";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { useModal } from "@/components/_modal";
@@ -23,6 +22,7 @@ import {
   timestampToShortDate,
 } from "@/utils/datetimeConverter";
 import {
+  getWorkUrlForProfile,
   handleLoanMutationUpdates,
   handleOrderMutationUpdates,
 } from "./../utils";
@@ -382,6 +382,8 @@ const MaterialRow = (props) => {
     isSelected,
     onSelect,
     onBookmarkDelete,
+    pid,
+    workId,
   } = props;
   const breakpoint = useBreakpoint();
   const { updateUserStatusInfo } = useUser();
@@ -659,11 +661,12 @@ const MaterialRow = (props) => {
                         keepVisible: true,
                       },
                     }}
-                    href={getWorkUrl(
-                      title,
-                      [{ nameSort: creator || "", display: creator || "" }],
-                      materialId
-                    )}
+                    href={getWorkUrlForProfile({
+                      workId,
+                      pid,
+                      materialId,
+                      materialType,
+                    })}
                     className={styles.blackUnderline}
                   >
                     {children}

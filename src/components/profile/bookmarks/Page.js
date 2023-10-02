@@ -12,17 +12,31 @@ import ProfileLayout from "../profileLayout/ProfileLayout";
 import Translate from "@/components/base/translate";
 import MenuDropdown from "@/components/base/dropdown/menuDropdown/MenuDropdown";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import List from "@/components/base/forms/list";
 
 const CONTEXT = "bookmark";
 const MENUITEMS = ["Bestil flere", "Hent referencer", "Fjern flere"];
+const sortByItems = [
+  { label: "latestAdded", key: "createdAt" },
+  { label: "alphabeticalOrder", key: "title" },
+];
 
 const BookmarkPage = () => {
-  const { bookmarks: bookmarksData, deleteBookmarks } = useBookmarks();
+  const {
+    bookmarks: bookmarksData,
+    setSortBy,
+    deleteBookmarks,
+  } = useBookmarks();
   const { data: bookmarks } = usePopulateBookmarks(bookmarksData);
   const [activeStickyButton, setActiveStickyButton] = useState(null);
   const breakpoint = useBreakpoint();
+  const [sortByValue, setSortByValue] = useState(sortByItems[0].key);
   const isMobile = breakpoint === "sm" || breakpoint === "xs";
   const [checkboxList, setCheckboxList] = useState();
+
+  useEffect(() => {
+    setSortBy(sortByValue);
+  }, [sortByValue]);
 
   useEffect(() => {
     setCheckboxList(
@@ -114,7 +128,21 @@ const BookmarkPage = () => {
             label: "result-amount",
           })}
         </Text>
-        <div>{/* Sorting options here */}</div>
+        <div>
+          <List.Group className={styles.sortingContainer} disableGroupOutline>
+            {sortByItems.map(({ label, key }) => (
+              <List.Radio
+                className={styles.sortingItem}
+                key={key}
+                selected={sortByValue === key}
+                onSelect={() => setSortByValue(key)}
+                label={key}
+              >
+                <Text>{Translate({ context: "profile", label: label })}</Text>
+              </List.Radio>
+            ))}
+          </List.Group>
+        </div>
       </div>
 
       <div className={styles.buttonControls}>
@@ -182,6 +210,7 @@ const BookmarkPage = () => {
                 bookmark?.manifestations?.bestRepresentation?.cover?.thumbnail
               }
               id={bookmark?.workId}
+              workId={bookmark?.workId}
               type="BOOKMARK"
               isSelected={checkboxList[idx]?.isSelected}
               onBookmarkDelete={() =>
