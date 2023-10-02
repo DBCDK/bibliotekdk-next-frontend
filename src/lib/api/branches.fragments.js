@@ -268,6 +268,29 @@ export function branchesByQuery({ q, pids, limit = 50 }) {
   };
 }
 
+/**
+ * Branches in agencies
+ */
+export function checkOrderPolicy({ pids, branchId, limit = 10 }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query checkOrderPolicy($branchId: String!, $pids: [String!]!, $limit: PaginationLimit!, $language: LanguageCode!) {
+      branches(branchId: $branchId, limit: $limit, bibdkExcludeBranches: true, status: AKTIVE, language: $language) {
+        result {
+          branchId
+          orderPolicy(pids: $pids) {
+            ...orderPolicyFragment
+          }
+        }
+      }
+    }
+    ${orderPolicyFragment}`,
+    variables: { branchId, pids, limit, language: lang },
+    slowThreshold: 3000,
+  };
+}
+
 const branchFastFragment = `fragment branchFastFragment on Branch {
   agencyId
   agencyName
@@ -285,6 +308,13 @@ const branchFastFragment = `fragment branchFastFragment on Branch {
   branchWebsiteUrl
   branchCatalogueUrl
   lookupUrl
+}`;
+
+const orderPolicyFragment = `fragment orderPolicyFragment on CheckOrderPolicy {
+  lookUpUrls
+  lookUpUrl
+  orderPossible
+  orderPossibleReason
 }`;
 
 const holdingStatusFragment = `fragment holdingStatusFragment on DetailedHoldings {
