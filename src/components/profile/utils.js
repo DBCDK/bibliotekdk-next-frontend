@@ -44,7 +44,7 @@ export async function handleLoanMutationUpdates(
 }
 
 /**
- * Get an url for the profile page - loans, reservation, orderhistory or cart
+ * Get an url for materials in profile pages - loans, reservation, orderhistory, cart
  * @param materialId
  * @param materialType
  * @returns {"/work/?type="|string}
@@ -55,26 +55,27 @@ export function getWorkUrlForProfile({
   materialId = "",
   materialType = "",
 }) {
-  // workid is given
-  if (!isEmpty(workId)) {
-    return `/work/${workId}${
-      materialType ? "?type=" + materialType.toLowerCase() : ""
-    }`;
-  }
+  // pid is given
   if (!isEmpty(pid) && isPid(pid)) {
     return `/linkme.php?rec.id=${pid}`;
   }
   // @TODO - materialId may be a localid - that is NOT a faust number
   // we check if given id is 8 digits - as a faust always is .. but .. is that good enough ..
   // a localid might also be 8 digits - and not be a faust
+  // this might be a faust
   if (materialId.length === 8) {
     // we assume that this is a faust
     return `/linkme.php?faust=${materialId}`;
   }
+  // workid is given
+  if (!isEmpty(workId)) {
+    return `/work/${workId}${
+      materialType ? "?type=" + materialType.toLowerCase() : ""
+    }`;
+  }
 
   // we give up -
   // @TODO sometime soon localid's may be handled in complex search so we can look up some good ids :)
-
   return null;
 }
 
