@@ -212,6 +212,8 @@ const BookmarkPage = () => {
               }
               id={bookmark?.materialId}
               edition={bookmark?.edition?.summary}
+              workId={bookmark?.workId}
+              pid={bookmark?.pid}
               type="BOOKMARK"
               isSelected={checkboxList[idx]?.isSelected}
               onBookmarkDelete={() =>

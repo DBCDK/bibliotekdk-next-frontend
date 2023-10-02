@@ -14,6 +14,7 @@ import { orderHistory } from "@/lib/api/order.fragments";
 import { useEffect, useState } from "react";
 import * as userFragments from "@/lib/api/user.fragments";
 import Skeleton from "@/components/base/skeleton/Skeleton";
+import { getWorkUrlForProfile } from "@/components/profile/utils";
 
 const itemsPerPage = 4;
 
@@ -291,11 +292,7 @@ function WorkInfo({ title, author, pidOfPrimaryObject }) {
       <Text type="text2" className={styles.orderWorkInfo}>
         {Translate({ context: "profile", label: "youHaveOrdered" }) + " "}
         <Link
-          href={getWorkUrl(
-            title,
-            [{ nameSort: author || "", display: author || "" }],
-            "work-of:" + pidOfPrimaryObject
-          )}
+          href={getWorkUrlForProfile({ pid: pidOfPrimaryObject })}
           border={{
             top: false,
             bottom: {

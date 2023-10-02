@@ -23,6 +23,7 @@ import {
   timestampToShortDate,
 } from "@/utils/datetimeConverter";
 import {
+  getWorkUrlForProfile,
   handleLoanMutationUpdates,
   handleOrderMutationUpdates,
 } from "./../utils";
@@ -383,6 +384,8 @@ const MaterialRow = (props) => {
     isSelected,
     onSelect,
     onBookmarkDelete,
+    pid,
+    workId,
   } = props;
   const breakpoint = useBreakpoint();
   const { updateUserStatusInfo } = useUser();
@@ -660,11 +663,12 @@ const MaterialRow = (props) => {
                         keepVisible: true,
                       },
                     }}
-                    href={getWorkUrl(
-                      title,
-                      [{ nameSort: creator || "", display: creator || "" }],
-                      materialId
-                    )}
+                    href={getWorkUrlForProfile({
+                      workId,
+                      pid,
+                      materialId,
+                      materialType,
+                    })}
                     className={styles.blackUnderline}
                   >
                     {children}

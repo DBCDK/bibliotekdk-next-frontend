@@ -776,6 +776,26 @@ export function pidToWorkId({ pid }) {
   };
 }
 
+export function faustToWork({ faust }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query faustToWork($faust: String!) {
+      work(faust: $faust) {
+        titles {
+          main
+        }
+        creators{
+          display
+        }
+        workId
+      }
+    }`,
+    variables: { faust },
+    slowThreshold: 3000,
+  };
+}
+
 export function oclcToWorkId({ oclc }) {
   return {
     apiUrl: ApiEnums.FBI_API,
