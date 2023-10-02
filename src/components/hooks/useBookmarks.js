@@ -56,7 +56,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     try {
       await bookmarkMutation.post(
         bookmarkMutations.addBookmarks({
-          bookmarks: cookies.map((bookmark) => ({
+          bookmarks: createdAtSort(cookies, "desc").map((bookmark) => ({
             materialId: bookmark.materialId,
             materialType: bookmark.materialType,
             title: bookmark.title,
@@ -165,28 +165,49 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     }
   };
 
-  function sortedBookMarks(bookmarksToSort) {
-    const createdAtSort = (a, b) => {
+  /**
+   * sorts bookmarkList by createdAt
+   * @param {*} bookmarkList list of bookmarks
+   * @param {*} sortDirection can be either asc or desc
+   * @returns bookmarkList
+   */
+  const createdAtSort = (bookmarkList = [], sortDirection = "asc") => {
+    return bookmarkList.sort((a, b) => {
       if (a.createdAt > b.createdAt) {
-        return -1;
+        return sortDirection === "asc" ? 1 : -1;
       }
       if (a.createdAt < b.createdAt) {
-        return 1;
+        return sortDirection === "asc" ? -1 : 1;
       }
       return 0;
-    };
-    const titleSort = (a, b) => {
+    });
+  };
+  /**
+   * sorts bookmarkList by title
+   * @param {*} bookmarkList list of bookmarks
+   * @param {*} sortDirection can be either asc or desc
+   * @returns bookmarkList
+   */
+
+  const titleSort = (bookmarkList = [], sortDirection = "asc") => {
+    return bookmarkList.sort((a, b) => {
       if (a.title < b.title) {
-        return -1;
+        return sortDirection === "asc" ? -1 : 1;
       }
       if (a.title > b.title) {
-        return 1;
+        return sortDirection === "asc" ? 1 : -1;
       }
       return 0;
-    };
+    });
+  };
 
-    const sortFunction = sortBy === "createdAt" ? createdAtSort : titleSort;
-    return bookmarksToSort?.sort(sortFunction);
+  /**
+   * Returns localbookmarks sorted by users preference
+   */
+  function sortedBookMarks(bookmarksToSort) {
+    return sortBy === "createdAt"
+      ? createdAtSort(bookmarksToSort)
+      : titleSort(bookmarksToSort);
   }
 
   return {
