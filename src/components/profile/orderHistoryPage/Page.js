@@ -8,7 +8,6 @@ import Pagination from "@/components/search/pagination/Pagination";
 
 import Link from "@/components/base/link";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
-import { getWorkUrl } from "@/lib/utils";
 import { useModal } from "@/components/_modal";
 import { orderHistory } from "@/lib/api/order.fragments";
 import { useEffect, useState } from "react";
