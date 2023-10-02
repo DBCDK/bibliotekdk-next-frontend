@@ -281,11 +281,11 @@ export default function Wrap(props) {
   }, [context.pid]);
 
   const { userInfo, pickupBranchInfo, accessTypeInfo } =
-    useOrderPageInformation(
-      context?.workId,
-      context?.pid,
-      context?.periodicaForm
-    );
+    useOrderPageInformation({
+      workId: context?.workId,
+      periodicaForm: context?.periodicaForm,
+      pids: context?.pids,
+    });
 
   const { allowedAccessesByTypeName, manifestationResponse } =
     useRelevantAccessesForOrderPage(context?.pids);

@@ -100,25 +100,28 @@ export function branchHoldings({ branchId, pids }) {
 /**
  * Get orderPolicy for a branch
  */
-export function branchOrderPolicy({ branchId, pid }) {
+export function branchOrderPolicy({ branchId, pids }) {
+  const pid = pids?.[0];
+
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `
-    query BranchesOrderPolicy($branchId: String!, $language: LanguageCode!, $pid: String!) {
+    query BranchesOrderPolicy($branchId: String!, $language: LanguageCode!, $pid: String!, $pids: [String!]!) {
       branches(branchId: $branchId, language: $language) {
         result {
-          orderPolicy(pid: $pid) {
+          orderPolicy(pid: $pid, pids: $pids) {
             orderPossible
             orderPossibleReason
             lookUpUrl
+            lookUpUrls
           }
           digitalCopyAccess
         }
       }
       monitor(name: "bibdknext_branch_orderPolicy")
      }`,
-    variables: { branchId, language: lang, pid },
+    variables: { branchId, language: lang, pid, pids },
     slowThreshold: 3000,
   };
 }
