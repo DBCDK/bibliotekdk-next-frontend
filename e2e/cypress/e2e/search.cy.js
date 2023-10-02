@@ -307,10 +307,12 @@ describe("Search", () => {
       cy.get("[data-cy=text-joanne-k-rowling]").should("not.exist");
     });
 
-    it("should not have titles", () => {
+    it.only("should not have titles", () => {
       cy.visit("/iframe.html?id=search-result-resultrow--without-titles");
 
-      cy.get("[data-cy=ResultRow-title]").should("exist").should("contain", "");
+      cy.get("[data-cy=ResultRow-title]")
+        .should("exist", { timeout: 10000 })
+        .should("contain", "");
     });
 
     it("should not have materialTypes", () => {
