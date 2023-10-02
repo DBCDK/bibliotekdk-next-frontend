@@ -3433,6 +3433,14 @@
       "unknowMaterial": {
         "da": "Ukendt titel. Kontakt dit bibliotek.",
         "en": "Unknown title. Contact your library."
+      },
+      "latestAdded": {
+        "da": "Senest tilføjet",
+        "en": "Most recently added"
+      },
+      "alphabeticalOrder": {
+        "da": "Alfabetisk - titel",
+        "en": "Alphabetical- title"
       }
     },
     "receipt": {

@@ -59,14 +59,14 @@ function Radio({
         [styles.disabledrow]: disabled,
       })}
     >
+      <div className={styles.dot} />
+      <div id="radio-label" className={styles.label}>
+        {label}
+      </div>
       <div
         className={[styles.content, animations["f-translate-right"]].join(" ")}
       >
         {children}
-      </div>
-      <div className={styles.dot} />
-      <div id="radio-label" className={styles.label}>
-        {label}
       </div>
     </div>
   );
