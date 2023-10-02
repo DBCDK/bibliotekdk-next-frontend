@@ -3,8 +3,9 @@ import { useData } from "@/lib/api/api";
 import * as userFragments from "@/lib/api/user.fragments";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 import merge from "lodash/merge";
+import isEmpty from "lodash/isEmpty";
 
-export default function usePickupBranch(pid) {
+export default function usePickupBranch({ pids }) {
   const {
     authUser,
     loanerInfo,
@@ -19,8 +20,12 @@ export default function usePickupBranch(pid) {
    */
   // Fetch branches and order policies for (loggedIn) user
   const { data: orderPolicy, isLoading: policyIsLoading } = useData(
-    pid && authUser.name && userFragments.orderPolicy({ pid })
+    pids &&
+      !isEmpty(pids) &&
+      authUser.name &&
+      userFragments.orderPolicy({ pids: pids })
   );
+
   // scope
   const defaultUserPickupBranch = orderPolicy?.user?.agency?.result[0];
 
@@ -39,7 +44,10 @@ export default function usePickupBranch(pid) {
   // Fetch order policies for selected pickupBranch (if pickupBranch differs from user agency branches)
   // check if orderPolicy already exist for selected pickupBranch
   const shouldFetchOrderPolicy =
-    pid && selectedBranch?.branchId && !selectedBranch?.orderPolicy;
+    pids &&
+    !isEmpty(pids) &&
+    selectedBranch?.branchId &&
+    !selectedBranch?.orderPolicy;
 
   // Fetch orderPolicy for selected branch, if not already exist
   const { data: selectedBranchPolicyData, isLoading: branchPolicyIsLoading } =
@@ -47,7 +55,7 @@ export default function usePickupBranch(pid) {
       shouldFetchOrderPolicy &&
         branchesFragments.branchOrderPolicy({
           branchId: selectedBranch?.branchId,
-          pid,
+          pids: pids,
         })
     );
 

@@ -233,7 +233,9 @@ export default function Wrap({
     return manifestationsData?.manifestations;
   }, [manifestationsData?.manifestations]);
 
-  const { pickupBranch } = usePickupBranch(orderPids?.[0]);
+  const { pickupBranch } = usePickupBranch(
+    orderPids && !isEmpty(orderPids) && { pids: orderPids }
+  );
 
   const inferredAccessTypes = inferAccessTypes(
     context?.periodicaForm,
