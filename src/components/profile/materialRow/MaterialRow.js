@@ -706,7 +706,8 @@ const MaterialRow = (props) => {
                   {materialType} {creationYear && <>, {creationYear}</>}
                   {edition && (
                     <>
-                      <br /> {edition}
+                      <br />
+                      {edition}
                     </>
                   )}
                 </Text>
