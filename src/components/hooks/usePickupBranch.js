@@ -11,6 +11,7 @@ export default function usePickupBranch(pid) {
     updateLoanerInfo,
     isAuthenticated,
     isGuestUser,
+    isLoading,
   } = useUser();
 
   /**
@@ -75,6 +76,7 @@ export default function usePickupBranch(pid) {
   return {
     authUser,
     loanerInfo,
+    isLoading,
     updateLoanerInfo,
     pickupBranch: initialPickupBranch.pickupBranch,
     isPickupBranchLoading,

@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import * as workFragments from "@/lib/api/work.fragments";
 import { useData, useMutate } from "@/lib/api/api";
-import { useEffect, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import * as bookmarkMutations from "@/lib/api/bookmarks.mutations";
 import * as bookmarkFragments from "@/lib/api/bookmarks.fragments";
 import { useSession } from "next-auth/react";
@@ -28,6 +28,7 @@ export const BookmarkSyncProvider = () => {
 
 const useBookmarksCore = ({ isMock = false, session }) => {
   const isAuthenticated = isMock ? false : !!session?.user?.uniqueId;
+  const [sortBy, setSortBy] = useState("createdAt");
 
   let {
     data: localBookmarks,
@@ -39,7 +40,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     isLoading: isLoadingGlobalBookmarks,
     error: globalBookmarksError,
     mutate: mutateGlobalBookmarks,
-  } = useData(isAuthenticated && bookmarkFragments.fetchAll());
+  } = useData(isAuthenticated && bookmarkFragments.fetchAll({ sortBy }));
   const bookmarkMutation = useMutate();
   const globalBookmarks =
     globalBookmarksUserObject?.user?.bookmarks?.result?.map((bookmark) => ({
@@ -55,10 +56,10 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     try {
       await bookmarkMutation.post(
         bookmarkMutations.addBookmarks({
-          bookmarks: cookies.map((bookmark) => ({
+          bookmarks: createdAtSort(cookies, "desc").map((bookmark) => ({
             materialId: bookmark.materialId,
             materialType: bookmark.materialType,
-            title: "",
+            title: bookmark.title,
           })),
         })
       );
@@ -79,17 +80,34 @@ const useBookmarksCore = ({ isMock = false, session }) => {
       /**
        * API solution
        */
-      await bookmarkMutation.post(
-        bookmarkMutations.addBookmarks({
-          bookmarks: [
-            {
-              materialId: value.materialId,
-              materialType: value.materialType,
-              title: "",
-            },
-          ],
-        })
+
+      // Find existing
+      const existingIndex = globalBookmarks?.findIndex(
+        (bookmark) => bookmark.key === value.key
       );
+
+      if (existingIndex === -1) {
+        // Doesn't exist - Add
+        await bookmarkMutation.post(
+          bookmarkMutations.addBookmarks({
+            bookmarks: [
+              {
+                materialId: value.materialId,
+                materialType: value.materialType,
+                title: value.title,
+              },
+            ],
+          })
+        );
+      } else {
+        // Exists - Delete
+        const idToDelete = globalBookmarks[existingIndex].bookmarkId;
+        await bookmarkMutation.post(
+          bookmarkMutations.deleteBookmarks({
+            bookmarkIds: [idToDelete],
+          })
+        );
+      }
 
       await mutateGlobalBookmarks();
     } else {
@@ -101,12 +119,11 @@ const useBookmarksCore = ({ isMock = false, session }) => {
       const existingIndex = localBookmarks?.findIndex(
         (obj) => obj.key === value.key
       );
-      // push if not there
       if (existingIndex === -1) {
-        localBookmarks?.push(value);
-      }
-      // remove if already there
-      else {
+        // push if not there
+        localBookmarks?.push({ ...value, createdAt: new Date() });
+      } else {
+        // remove if already there
         localBookmarks?.splice(existingIndex, 1);
       }
 
@@ -148,15 +165,63 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     }
   };
 
+  /**
+   * sorts bookmarkList by createdAt
+   * @param {*} bookmarkList list of bookmarks
+   * @param {*} sortDirection can be either asc or desc
+   * @returns bookmarkList
+   */
+  const createdAtSort = (bookmarkList = [], sortDirection = "asc") => {
+    return bookmarkList.sort((a, b) => {
+      if (a.createdAt > b.createdAt) {
+        return sortDirection === "asc" ? 1 : -1;
+      }
+      if (a.createdAt < b.createdAt) {
+        return sortDirection === "asc" ? -1 : 1;
+      }
+      return 0;
+    });
+  };
+  /**
+   * sorts bookmarkList by title
+   * @param {*} bookmarkList list of bookmarks
+   * @param {*} sortDirection can be either asc or desc
+   * @returns bookmarkList
+   */
+
+  const titleSort = (bookmarkList = [], sortDirection = "asc") => {
+    return bookmarkList.sort((a, b) => {
+      if (a.title < b.title) {
+        return sortDirection === "asc" ? -1 : 1;
+      }
+      if (a.title > b.title) {
+        return sortDirection === "asc" ? 1 : -1;
+      }
+      return 0;
+    });
+  };
+
+  /**
+   * Returns localbookmarks sorted by users preference
+   */
+  function sortedBookMarks(bookmarksToSort) {
+    return sortBy === "createdAt"
+      ? createdAtSort(bookmarksToSort)
+      : titleSort(bookmarksToSort);
+  }
+
   return {
     setBookmark,
     deleteBookmarks,
     clearLocalBookmarks,
-    bookmarks: isAuthenticated ? globalBookmarks : localBookmarks,
+    bookmarks: isAuthenticated
+      ? globalBookmarks
+      : sortedBookMarks(localBookmarks),
     isLoading:
       (typeof localBookmarks === "undefined" && !error) ||
       (isLoadingGlobalBookmarks && !globalBookmarksError),
     syncCookieBookmarks,
+    setSortBy,
   };
 };
 

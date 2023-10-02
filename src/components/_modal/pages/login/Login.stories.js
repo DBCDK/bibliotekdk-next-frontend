@@ -2,10 +2,13 @@ import { StoryTitle, StoryDescription } from "@/storybook";
 import Login from "./Login";
 import Translate from "@/components/base/translate";
 import { useModal } from "@/components/_modal";
+import automock_utils from "@/lib/automock_utils.fixture";
 
 const exportedObject = {
   title: "modal/Login",
 };
+
+const { BORROWER_STATUS_TRUE } = automock_utils();
 
 export default exportedObject;
 
@@ -59,6 +62,7 @@ LoginHeader.story = {
         BranchResult: {
           hitcount: () => "10",
           agencyUrl: () => "some-agencyUrl",
+          borrowerStatus: () => BORROWER_STATUS_TRUE,
           result: () => [
             {
               name: "Test agency",

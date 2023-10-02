@@ -1,6 +1,7 @@
 .sortingRow {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
 }
 
 .smallLabel {
@@ -67,6 +68,18 @@
   .dropdownWrapper {
     display: block;
   }
+  .sortingRow {
+    flex-direction: column;
+  }
+}
+
+.sortingContainer {
+  display: flex;
+}
+
+.sortingItem,
+.sortingItem:first-child {
+  border: none;
 }
 
 @media (min-width: 768px) {
