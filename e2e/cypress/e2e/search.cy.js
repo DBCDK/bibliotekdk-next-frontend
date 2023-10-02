@@ -276,7 +276,7 @@ describe("Search", () => {
     });
   });
 
-  describe.only("ResultRow", () => {
+  describe("ResultRow", () => {
     it("Should have all data", () => {
       cy.visit("/iframe.html?id=search-result-resultrow--with-all-data");
 
@@ -307,7 +307,7 @@ describe("Search", () => {
       cy.get("[data-cy=text-joanne-k-rowling]").should("not.exist");
     });
 
-    it.only("should not have titles", () => {
+    it("should not have titles", () => {
       cy.visit("/iframe.html?id=search-result-resultrow--without-titles");
 
       cy.get("[data-cy=ResultRow-title]")
