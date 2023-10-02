@@ -34,8 +34,6 @@ const BookmarkPage = () => {
   const isMobile = breakpoint === "sm" || breakpoint === "xs";
   const [checkboxList, setCheckboxList] = useState();
 
-  console.log(bookmarksData, bookmarks);
-
   useEffect(() => {
     setSortBy(sortByValue);
   }, [sortByValue]);
