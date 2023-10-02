@@ -22,7 +22,9 @@ function OpeningHours({ singleBranch }) {
   return (
     <div className={cx(styles.fit_content, styles.path_blue)}>
       <Text type="text1">Åbningstider</Text>
-      {!isEmpty(singleBranch?.branchWebsiteUrl) ? (
+      {!isEmpty(singleBranch?.openingHours) ? (
+        <Text type="text2">{singleBranch.openingHours}</Text>
+      ) : !isEmpty(singleBranch?.branchWebsiteUrl) ? (
         <IconLink
           iconPlacement="right"
           iconSrc={ExternalSvg}
@@ -36,8 +38,6 @@ function OpeningHours({ singleBranch }) {
             label: "see_opening_hours_of_the_library",
           })}
         </IconLink>
-      ) : !isEmpty(singleBranch?.openingHours) ? (
-        <Text type="text2">{singleBranch.openingHours}</Text>
       ) : (
         <Text type="text2">
           {Translate({
