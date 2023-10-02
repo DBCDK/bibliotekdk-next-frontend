@@ -570,23 +570,17 @@ export function pidsToWorks({ pids }) {
     apiUrl: ApiEnums.FBI_API,
     query: `
     query pidsToWorks($pids: [String!]!) {
-      works(pid: $pids) {
-        workId
-        titles {
-          main
+      manifestations(pid: $pids) {
+        pid
+        titles {main}
+        cover {
+          thumbnail
         }
         creators {
           display
         }
-        manifestations {
-          bestRepresentation {
-            cover {
-              thumbnail
-            }
-            materialTypes {
-              specific
-            }
-          }
+        edition {
+          summary
         }
       }
     }

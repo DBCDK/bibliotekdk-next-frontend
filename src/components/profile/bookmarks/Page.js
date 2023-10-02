@@ -34,6 +34,8 @@ const BookmarkPage = () => {
   const isMobile = breakpoint === "sm" || breakpoint === "xs";
   const [checkboxList, setCheckboxList] = useState();
 
+  console.log(bookmarksData, bookmarks);
+
   useEffect(() => {
     setSortBy(sortByValue);
   }, [sortByValue]);
@@ -207,9 +209,11 @@ const BookmarkPage = () => {
               creator={bookmark?.creators[0]?.display}
               materialType={bookmark.materialType}
               image={
+                bookmark?.cover?.thumbnail ??
                 bookmark?.manifestations?.bestRepresentation?.cover?.thumbnail
               }
-              id={bookmark?.workId}
+              id={bookmark?.materialId}
+              edition={bookmark?.edition?.summary}
               type="BOOKMARK"
               isSelected={checkboxList[idx]?.isSelected}
               onBookmarkDelete={() =>
