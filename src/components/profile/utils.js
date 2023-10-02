@@ -1,5 +1,6 @@
 import * as loanMutations from "@/lib/api/loans.mutations";
 import isEmpty from "lodash/isEmpty";
+import { isString } from "lodash";
 
 export async function handleRenewLoan({ loanId, agencyId, loanMutation }) {
   await loanMutation.post(
@@ -44,7 +45,7 @@ export async function handleLoanMutationUpdates(
 }
 
 /**
- * Get an url for the profile page - loans, reservation, orderhistory or cart
+ * Get an url for materials in profile pages - loans, reservation, orderhistory, cart
  * @param materialId
  * @param materialType
  * @returns {"/work/?type="|string}
@@ -55,44 +56,49 @@ export function getWorkUrlForProfile({
   materialId = "",
   materialType = "",
 }) {
-  // workid is given
-  if (!isEmpty(workId)) {
-    return `/work/${workId}${
-      materialType ? "?type=" + materialType.toLowerCase() : ""
-    }`;
-  }
+  // pid is given
   if (!isEmpty(pid) && isPid(pid)) {
     return `/linkme.php?rec.id=${pid}`;
   }
   // @TODO - materialId may be a localid - that is NOT a faust number
   // we check if given id is 8 digits - as a faust always is .. but .. is that good enough ..
   // a localid might also be 8 digits - and not be a faust
+  // this might be a faust
   if (materialId.length === 8) {
     // we assume that this is a faust
     return `/linkme.php?faust=${materialId}`;
   }
+  // workid is given
+  if (!isEmpty(workId)) {
+    return `/work/${workId}${
+      materialType ? "?type=" + materialType.toLowerCase() : ""
+    }`;
+  }
 
   // we give up -
   // @TODO sometime soon localid's may be handled in complex search so we can look up some good ids :)
-
   return null;
 }
 
 /**
  * check if given pid actually is a pid (eg 870970-basis:123456)
- * @param pid
+ * @param String pid
  */
-function isPid(pid) {
+export function isPid(pid) {
+  if (!isString(pid)) {
+    return false;
+  }
   // a pid consists of a localization (eg. 870970, a base (eg. basis) and a localid(eg. 123456)
-  const parts = pid.split(":");
+  const parts = pid?.split(":");
+
   // there should be 2 parts
-  if (!parts.length == 2) {
+  if (!(parts?.length === 2)) {
     return false;
   }
   // first part should be a localization (6 digits)
-  const regex = /^[0-9]{6}$/;
+  const regex = /^[0-9]{8}$/g;
   // success or give up
-  return parts[0].match(regex);
+  return !!parts[1].trim().match(regex);
 }
 
 /**
