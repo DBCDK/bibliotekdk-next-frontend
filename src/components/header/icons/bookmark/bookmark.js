@@ -26,7 +26,7 @@ export default function BoomarkIcon(props) {
               [styles.countContainerLarge]: bookmarks.length >= 100,
             })}
           >
-            {bookmarks.length}
+            {bookmarks.length >= 1000 ? "1k+" : bookmarks.length}
           </div>
         )}
 

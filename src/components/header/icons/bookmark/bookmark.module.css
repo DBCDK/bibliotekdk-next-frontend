@@ -107,15 +107,15 @@
 
 @media (hover: hover) {
   .trigger:hover .flag {
-    animation: toiletRoll 0.4s linear;
+    animation: toiletRoll 0.3s ease-in-out;
   }
 
   .trigger:hover .boxRoll {
-    animation: toiletRollOut 0.4s linear;
+    animation: toiletRollOut 0.3s ease-in-out;
   }
 
   .trigger:hover .countContainer {
-    animation: counterFadeIn 0.6s linear;
+    animation: counterFadeIn 0.45s ease-in-out;
   }
 }
 

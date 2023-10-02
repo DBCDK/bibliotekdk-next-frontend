@@ -274,7 +274,7 @@ export function Header({
                 </form>
               </div>
             </Col>
-            <Col xs={{ span: 2 }} className={styles.iconContainer}>
+            <Col xs={{ span: 2 }}>
               <div
                 className={styles.iconActions}
                 data-cy={cyKey({
