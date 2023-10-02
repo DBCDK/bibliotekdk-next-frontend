@@ -39,7 +39,8 @@ export const dataReducer = (dataType, data) => {
         creationYear: data?.manifestation?.recordCreationDate?.substring(0, 4),
         dueDateString: data?.dueDate,
         id: data?.loanId,
-        workId: "work-of:" + data?.manifestation?.pid,
+        pid: data?.manifestation?.pid,
+        workId: data?.manifestation?.ownerWork?.workId,
       };
     }
     case "ORDER": {

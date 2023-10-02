@@ -1,4 +1,5 @@
 import * as loanMutations from "@/lib/api/loans.mutations";
+import isEmpty from "lodash/isEmpty";
 
 export async function handleRenewLoan({ loanId, agencyId, loanMutation }) {
   await loanMutation.post(
@@ -40,6 +41,58 @@ export async function handleLoanMutationUpdates(
     //error handled inside fbi-api
     setHasRenewError(true);
   }
+}
+
+/**
+ * Get an url for the profile page - loans, reservation, orderhistory or cart
+ * @param materialId
+ * @param materialType
+ * @returns {"/work/?type="|string}
+ */
+export function getWorkUrlForProfile({
+  workId = "",
+  pid = "",
+  materialId = "",
+  materialType = "",
+}) {
+  // workid is given
+  if (!isEmpty(workId)) {
+    return `/work/${workId}${
+      materialType ? "?type=" + materialType.toLowerCase() : ""
+    }`;
+  }
+  if (!isEmpty(pid) && isPid(pid)) {
+    return `/linkme.php?rec.id=${pid}`;
+  }
+  // @TODO - materialId may be a localid - that is NOT a faust number
+  // we check if given id is 8 digits - as a faust always is .. but .. is that good enough ..
+  // a localid might also be 8 digits - and not be a faust
+  if (materialId.length === 8) {
+    // we assume that this is a faust
+    return `/linkme.php?faust=${materialId}`;
+  }
+
+  // we give up -
+  // @TODO sometime soon localid's may be handled in complex search so we can look up some good ids :)
+
+  return null;
+}
+
+/**
+ * check if given pid actually is a pid (eg 870970-basis:123456)
+ * @param pid
+ */
+function isPid(pid) {
+  // a pid consists of a localization (eg. 870970, a base (eg. basis) and a localid(eg. 123456)
+  const parts = pid.split(":");
+  // there should be 2 parts
+  if (!parts.length == 2) {
+    return false;
+  }
+  // first part should be a localization (6 digits)
+  const regex = /^[0-9]{6}$/;
+  // success or give up
+  return parts[0].match(regex);
 }
 
 /**
