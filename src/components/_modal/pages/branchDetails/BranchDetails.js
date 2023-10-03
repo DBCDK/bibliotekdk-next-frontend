@@ -2,6 +2,7 @@ import LocalizationsBase from "@/components/_modal/pages/base/localizationsBase/
 import Translate from "@/components/base/translate";
 import { useData } from "@/lib/api/api";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
+import * as branchesFragments from "@/lib/api/branches.fragments";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 import uniq from "lodash/uniq";
 import Text from "@/components/base/text/Text";
@@ -16,13 +17,16 @@ import ReservationButton from "@/components/work/reservationbutton";
 import BranchDetailsStatus from "@/components/_modal/pages/branchDetails/branchDetailsStatus/BranchDetailsStatus";
 import { useSingleBranch } from "@/components/hooks/useHandleAgencyAccessData";
 import isEmpty from "lodash/isEmpty";
+import Button from "@/components/base/button/Button";
 import * as PropTypes from "prop-types";
 
 function OpeningHours({ singleBranch }) {
   return (
     <div className={cx(styles.fit_content, styles.path_blue)}>
       <Text type="text1">Åbningstider</Text>
-      {!isEmpty(singleBranch?.branchWebsiteUrl) ? (
+      {!isEmpty(singleBranch?.openingHours) ? (
+        <Text type="text2">{singleBranch.openingHours}</Text>
+      ) : !isEmpty(singleBranch?.branchWebsiteUrl) ? (
         <IconLink
           iconPlacement="right"
           iconSrc={ExternalSvg}
@@ -36,8 +40,6 @@ function OpeningHours({ singleBranch }) {
             label: "see_opening_hours_of_the_library",
           })}
         </IconLink>
-      ) : !isEmpty(singleBranch?.openingHours) ? (
-        <Text type="text2">{singleBranch.openingHours}</Text>
       ) : (
         <Text type="text2">
           {Translate({
@@ -133,6 +135,24 @@ export default function BranchDetails({ context }) {
     branchId: branchId,
   });
 
+  const { data: orderPolicyData, isLoading: orderPolicyIsLoading } = useData(
+    pids &&
+      pids.length > 0 &&
+      branchesFragments.checkOrderPolicy({ pids: pids, branchId: branchId })
+  );
+
+  const orderPolicyForBranches = orderPolicyData?.branches?.result?.map(
+    (branch) => {
+      return {
+        branchId: branch?.branchId,
+        orderPossible: branch?.orderPolicy?.orderPossible,
+        orderPossibleReason: branch?.orderPolicy?.orderPossibleReason,
+      };
+    }
+  );
+
+  const orderPolicyForBranch = orderPolicyForBranches?.[0];
+
   const singleBranch = agenciesFlatSorted?.[0]?.branches?.[0];
 
   const { data: manifestationsData, isLoading: manifestationsIsLoading } =
@@ -175,13 +195,21 @@ export default function BranchDetails({ context }) {
   );
   const workId = workIds?.[0];
 
-  const branchDetailsLoading = agenciesIsLoading || manifestationsIsLoading;
+  const branchDetailsLoading =
+    agenciesIsLoading || manifestationsIsLoading || orderPolicyIsLoading;
+
+  const buttonSize = "medium";
+
+  if (!branchDetailsLoading && orderPolicyForBranches?.length !== 1) {
+    throw new Error(`Error: Der burde være præcis 1 branchId, men der er flere 
+        ${orderPolicyForBranches
+          ?.map((branch) => branch?.branchId)
+          .join(", ")}`);
+  }
 
   if (!branchDetailsLoading && workIds.length !== 1) {
-    return (
-      <div>
-        Error: Der burde være præcis 1 workId, men der er {workIds.length}
-      </div>
+    throw new Error(
+      `Error: Der burde være præcis 1 workId, men der er ${workIds.length}`
     );
   }
 
@@ -203,7 +231,8 @@ export default function BranchDetails({ context }) {
           pids={pids}
         />
       </LocalizationsBase.Information>
-      {!branchDetailsLoading && !singleBranch?.pickupAllowed ? (
+      {!branchDetailsLoading &&
+      (!singleBranch?.pickupAllowed || !orderPolicyForBranch?.orderPossible) ? (
         <LocalizationsBase.HighlightedArea>
           <Text type={"text2"}>
             {Translate({
@@ -216,16 +245,22 @@ export default function BranchDetails({ context }) {
         <LocalizationsBase.Information
           className={cx(styles.reservationButton_container)}
         >
-          <ReservationButton
-            workId={workId}
-            selectedPids={pids}
-            singleManifestation={false}
-            size={"medium"}
-            overrideButtonText={Translate({
-              context: "localizations",
-              label: "order_to_here",
-            })}
-          />
+          {!branchDetailsLoading ? (
+            <ReservationButton
+              workId={workId}
+              selectedPids={pids}
+              singleManifestation={false}
+              size={buttonSize}
+              overrideButtonText={Translate({
+                context: "localizations",
+                label: "order_to_here",
+              })}
+            />
+          ) : (
+            <Button size={buttonSize} skeleton={branchDetailsLoading}>
+              {"loading"}
+            </Button>
+          )}
         </LocalizationsBase.Information>
       )}
       <LocalizationsBase.Information>

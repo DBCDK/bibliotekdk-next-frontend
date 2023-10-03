@@ -31,7 +31,7 @@ export default function Wrap({ context, modal }) {
     pids && localizationsFragments.localizationsWithHoldings({ pids: pids })
   );
 
-  const agencyIds = !isEmpty(agencyIdsFromQuery)
+  const agencyIds = !isEmpty(query)
     ? agencyIdsFromQuery
     : agenciesWithHoldings?.localizationsWithHoldings?.agencies?.map(
         (agency) => agency.agencyId
