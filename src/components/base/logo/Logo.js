@@ -27,6 +27,7 @@ const DefaultLogo = ({ fill = "var(--blue)" }) => {
 
 /**
  * Return a svg with inline styling from parameter
+ * @TODO eleminate when we have the help icon
  * @param fill
  * @return {JSX.Element}
  */
