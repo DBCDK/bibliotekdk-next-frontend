@@ -1,6 +1,6 @@
 import * as loanMutations from "@/lib/api/loans.mutations";
 import isEmpty from "lodash/isEmpty";
-import { isString } from "lodash";
+import isString from "lodash/isString";
 
 export async function handleRenewLoan({ loanId, agencyId, loanMutation }) {
   await loanMutation.post(
