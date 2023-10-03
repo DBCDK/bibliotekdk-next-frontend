@@ -271,31 +271,33 @@ export function Header({
               </div>
             </Col>
             <Col xs={{ span: 2 }}>
-              <div
-                className={styles.iconActions}
-                data-cy={cyKey({
-                  name: "actions",
-                  prefix: "header-bottom",
-                })}
-              >
-                {menu.map((m) => {
-                  const ActionIcon = m.icon;
+              <div className={styles.iconActionsContainer}>
+                <div
+                  className={styles.iconActions}
+                  data-cy={cyKey({
+                    name: "actions",
+                    prefix: "header-bottom",
+                  })}
+                >
+                  {menu.map((m) => {
+                    const ActionIcon = m.icon;
 
-                  return (
-                    <ActionIcon
-                      dataCy={cyKey({
-                        name: m.label,
-                        prefix: "header-link",
-                      })}
-                      key={m.label}
-                      className={styles.action}
-                      href={m.href}
-                      onClick={m.onClick}
-                      items={m.items}
-                      title={Translate({ ...context, label: m.label })}
-                    />
-                  );
-                })}
+                    return (
+                      <ActionIcon
+                        dataCy={cyKey({
+                          name: m.label,
+                          prefix: "header-link",
+                        })}
+                        key={m.label}
+                        className={styles.action}
+                        href={m.href}
+                        onClick={m.onClick}
+                        items={m.items}
+                        title={Translate({ ...context, label: m.label })}
+                      />
+                    );
+                  })}
+                </div>
               </div>
             </Col>
           </Row>

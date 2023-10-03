@@ -40,15 +40,19 @@
   padding: var(--pt1) 0 var(--pt1) 0;
 }
 
+.iconActionsContainer {
+  padding-top: var(--pt1);
+}
+
 .iconActions {
   display: flex;
   justify-content: flex-end;
-  padding-top: var(--pt1);
-  height: var(--pt9);
+  align-items: center;
+  height: var(--pt7);
 }
 
 .action + .action {
-  margin-left: var(--pt2);
+  margin-left: var(--pt4);
 }
 
 .action {
@@ -81,7 +85,7 @@
 
 .select {
   white-space: nowrap;
-  height: 64px;
+  height: var(--pt7);
 }
 
 /* Searchbar */
@@ -90,8 +94,6 @@
   flex-grow: 2;
   display: flex;
   position: relative;
-
-  margin-right: var(--pt3);
 }
 
 .suggester__wrap {
@@ -124,13 +126,14 @@
   position: relative;
   width: 125px;
   min-width: 125px;
-  height: 64px;
+  height: var(--pt7);
   padding: var(--pt2) var(--pt4);
   background-color: transparent;
   color: var(--blue);
   border: 2px solid var(--blue);
-  font-family: var(--body-font);
+  font-family: var(--body-font-medium);
   font-size: 20px;
+  letter-spacing: 0.2px;
   line-height: 22px;
   margin-left: var(--pt4);
   cursor: pointer;

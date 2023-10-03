@@ -7,7 +7,6 @@
 
 .input_wrap {
   width: 100%;
-  height: var(--pt8);
   display: flex;
   align-items: center;
   padding: var(--pt2) var(--pt2) var(--pt2) 0;
@@ -33,7 +32,8 @@
 .input_wrap .clear {
   position: absolute;
   right: 0;
-  top: var(--pt05);
+  top: 0;
+  bottom: 0;
   transform: scale(0);
   transition: transform 0.3s;
   cursor: pointer;
@@ -147,7 +147,7 @@
   }
 
   .input_wrap {
-    height: var(--pt8);
+    height: var(--pt7);
     padding: 0;
     border: none;
 
