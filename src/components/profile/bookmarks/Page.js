@@ -13,6 +13,7 @@ import Translate from "@/components/base/translate";
 import MenuDropdown from "@/components/base/dropdown/menuDropdown/MenuDropdown";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import List from "@/components/base/forms/list";
+import isEmpty from "lodash/isEmpty";
 
 const CONTEXT = "bookmark";
 const MENUITEMS = ["Bestil flere", "Hent referencer", "Fjern flere"];
@@ -90,6 +91,26 @@ const BookmarkPage = () => {
     deleteBookmarks(selectedBookmarks);
   };
 
+  const constructEditionText = (bookmark) => {
+    if (!bookmark.pid) {
+      return null;
+    }
+
+    /**
+     * Matches string construction on work page
+     */
+    return (
+      bookmark?.hostPublication?.title ||
+      [
+        ...bookmark?.publisher,
+        ...(!isEmpty(bookmark?.edition?.edition)
+          ? [bookmark?.edition?.edition]
+          : []),
+      ].join(", ") ||
+      ""
+    );
+  };
+
   const isAllSelected =
     checkboxList?.length > 0 &&
     checkboxList?.filter((e) => e.isSelected === false).length === 0;
@@ -121,7 +142,7 @@ const BookmarkPage = () => {
       )}
 
       <div className={styles.sortingRow}>
-        <Text tag="small" type="small" className={styles.smallLabel}>
+        <Text tag="small" type="text3" className={styles.smallLabel}>
           {bookmarks?.length}{" "}
           {Translate({
             context: CONTEXT,
@@ -158,6 +179,10 @@ const BookmarkPage = () => {
             disabled={checkboxList?.length === 0}
             id="bookmarkpage-select-all"
             aria-labelledby="bookmarkpage-select-all-label"
+            ariaLabel={Translate({
+              context: CONTEXT,
+              label: "select-all",
+            })}
             tabIndex="-1"
             readOnly
             className={styles.selectAll}
@@ -207,10 +232,13 @@ const BookmarkPage = () => {
               creator={bookmark?.creators[0]?.display}
               materialType={bookmark.materialType}
               image={
+                bookmark?.cover?.thumbnail ??
                 bookmark?.manifestations?.bestRepresentation?.cover?.thumbnail
               }
-              id={bookmark?.workId}
+              id={bookmark?.materialId}
+              edition={constructEditionText(bookmark)}
               workId={bookmark?.workId}
+              pid={bookmark?.pid}
               type="BOOKMARK"
               isSelected={checkboxList[idx]?.isSelected}
               onBookmarkDelete={() =>

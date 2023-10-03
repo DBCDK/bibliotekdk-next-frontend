@@ -17,6 +17,7 @@ import * as branchesFragments from "@/lib/api/branches.fragments";
 import styles from "./Receipt.module.css";
 import { useRouter } from "next/router";
 import cx from "classnames";
+import isEmpty from "lodash/isEmpty";
 
 /**
  * Order Button
@@ -196,18 +197,20 @@ export function Receipt({
  */
 export default function Wrap(props) {
   // fetch props from context
-  const { pid, pickupBranch, pids } = props.context;
+  const { pickupBranch, pids } = props.context;
 
   // Fetch orderPolicy if it doesnt exist on pickupBranch
   const shouldFetchOrderPolicy =
-    pid && pickupBranch?.branchId && !pickupBranch?.orderPolicy;
+    pids &&
+    !isEmpty(pids) &&
+    pickupBranch?.branchId &&
+    !pickupBranch?.orderPolicy;
 
   const { data: policyData, isLoading: policyIsLoading } = useData(
     shouldFetchOrderPolicy &&
       branchesFragments.branchOrderPolicy({
         branchId: pickupBranch?.branchId,
-        pid: pid,
-        pids: pids ?? [pid],
+        pids: pids,
       })
   );
 

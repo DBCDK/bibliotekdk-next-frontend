@@ -160,6 +160,7 @@ export function Overview({
                   workId={workId}
                   materialTypes={uniqueMaterialTypes}
                   title={work?.titles?.full[0]}
+                  className={styles.svgscale}
                 />
               </Col>
 

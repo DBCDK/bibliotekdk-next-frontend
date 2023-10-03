@@ -24,6 +24,10 @@
   padding-left: calc(var(--pt2) * -1);
 }
 
+.svgscale i svg {
+  transform: scale(0.75);
+}
+
 .cover {
   /* Padding is beyond cover width */
   /* Remove the padding from Bootstrap Row */

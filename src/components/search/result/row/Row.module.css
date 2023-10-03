@@ -4,11 +4,6 @@
   position: relative;
 }
 
-.wrapper:focus,
-.wrapper:hover {
-  z-index: 2;
-}
-
 .wrapper {
   width: 100%;
 
@@ -36,7 +31,7 @@
 .col_wrapper {
   display: flex;
   flex-direction: column;
-  padding-right: 50px;
+  padding-right: var(--pt2);
 }
 
 .display_inline {
@@ -115,6 +110,6 @@
 
 .BookmarkDropdown {
   position: absolute;
-  right: 10px;
-  top: 20px;
+  right: var(--pt1);
+  top: var(--pt2);
 }

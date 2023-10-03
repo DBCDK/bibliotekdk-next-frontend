@@ -261,17 +261,22 @@ export const usePopulateBookmarks = (bookmarks) => {
   // Reorganize order and add bookmark data
   const data = useMemo(() => {
     if (!bookmarks) return [];
-
-    const transformedWorkByPids = workByPidsData?.works?.map((work) => ({
+    const transformedWorkByIds = workByIdsData?.works?.map((work) => ({
       ...work,
-      workId: work?.workId?.replace("work-of:", ""),
+      materialId: work?.workId,
     }));
-    const merged = [].concat(workByIdsData?.works, transformedWorkByPids);
+    const transformedWorkByPids = workByPidsData?.manifestations?.map(
+      (work) => ({
+        ...work,
+        materialId: work?.pid,
+      })
+    );
+    const merged = [].concat(transformedWorkByIds, transformedWorkByPids);
 
     return bookmarks
       .map((bookmark) => {
         const workData = merged.find(
-          (item) => item?.workId === bookmark.materialId
+          (item) => item?.materialId === bookmark.materialId
         );
         if (!workData) {
           return null;
