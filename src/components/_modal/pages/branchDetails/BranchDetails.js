@@ -201,19 +201,15 @@ export default function BranchDetails({ context }) {
   const buttonSize = "medium";
 
   if (!branchDetailsLoading && orderPolicyForBranches?.length !== 1) {
-    return (
-      <div>
-        Error: Der burde være præcis 1 branchId, men der er flere{" "}
-        {orderPolicyForBranches?.map((branch) => branch?.branchId).join(", ")}
-      </div>
-    );
+    throw new Error(`Error: Der burde være præcis 1 branchId, men der er flere 
+        ${orderPolicyForBranches
+          ?.map((branch) => branch?.branchId)
+          .join(", ")}`);
   }
 
   if (!branchDetailsLoading && workIds.length !== 1) {
-    return (
-      <div>
-        Error: Der burde være præcis 1 workId, men der er {workIds.length}
-      </div>
+    throw new Error(
+      `Error: Der burde være præcis 1 workId, men der er ${workIds.length}`
     );
   }
 
