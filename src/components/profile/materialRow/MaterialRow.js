@@ -704,12 +704,7 @@ const MaterialRow = (props) => {
                   dataCy="materialtype-and-creationyear"
                 >
                   {materialType} {creationYear && <>, {creationYear}</>}
-                  {edition && (
-                    <>
-                      <br />
-                      {edition}
-                    </>
-                  )}
+                  {edition && <span>{edition}</span>}
                 </Text>
               )}
             </div>
