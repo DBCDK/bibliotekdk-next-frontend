@@ -13,6 +13,7 @@ import Translate from "@/components/base/translate";
 import MenuDropdown from "@/components/base/dropdown/menuDropdown/MenuDropdown";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import List from "@/components/base/forms/list";
+import Pagination from "@/components/search/pagination/Pagination";
 import isEmpty from "lodash/isEmpty";
 
 const CONTEXT = "bookmark";
@@ -27,6 +28,9 @@ const BookmarkPage = () => {
     bookmarks: bookmarksData,
     setSortBy,
     deleteBookmarks,
+    currentPage,
+    totalPages,
+    setCurrentPage
   } = useBookmarks();
   const { data: bookmarks } = usePopulateBookmarks(bookmarksData);
   const [activeStickyButton, setActiveStickyButton] = useState(null);
@@ -111,11 +115,20 @@ const BookmarkPage = () => {
     );
   };
 
+  const onPageChange = async (newPage) => {
+    if (newPage > totalPages) {
+      newPage = totalPages;
+    }
+    setCurrentPage(newPage);
+  };
+
   const isAllSelected =
     checkboxList?.length > 0 &&
     checkboxList?.filter((e) => e.isSelected === false).length === 0;
   const isNothingSelected =
     checkboxList?.filter((e) => e.isSelected === true).length === 0;
+
+
 
   return (
     <ProfileLayout
@@ -261,6 +274,16 @@ const BookmarkPage = () => {
             />
           ))}
       </div>
+      <Pagination
+        numPages={totalPages}
+        currentPage={currentPage}
+        className={styles.pagination}
+
+
+        //   numPages={totalPages}
+        //   currentPage={parseInt(currentPage, 10)}
+         onChange={onPageChange}
+      />
     </ProfileLayout>
   );
 };

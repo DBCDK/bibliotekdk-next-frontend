@@ -7,6 +7,7 @@ import * as bookmarkFragments from "@/lib/api/bookmarks.fragments";
 import { useSession } from "next-auth/react";
 
 const KEY_NAME = "bookmarks";
+const itemsPerPage = 4;
 
 export const BookmarkSyncProvider = () => {
   const { syncCookieBookmarks } = useBookmarks();
@@ -29,6 +30,8 @@ export const BookmarkSyncProvider = () => {
 const useBookmarksCore = ({ isMock = false, session }) => {
   const isAuthenticated = isMock ? false : !!session?.user?.uniqueId;
   const [sortBy, setSortBy] = useState("createdAt");
+  //const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   let {
     data: localBookmarks,
@@ -40,7 +43,14 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     isLoading: isLoadingGlobalBookmarks,
     error: globalBookmarksError,
     mutate: mutateGlobalBookmarks,
-  } = useData(isAuthenticated && bookmarkFragments.fetchAll({ sortBy }));
+  } = useData(
+    isAuthenticated &&
+      bookmarkFragments.fetchAll({
+        sortBy,
+        limit: itemsPerPage,
+        offset: (currentPage - 1) * itemsPerPage,
+      })
+  );
   const bookmarkMutation = useMutate();
   const globalBookmarks =
     globalBookmarksUserObject?.user?.bookmarks?.result?.map((bookmark) => ({
@@ -48,6 +58,14 @@ const useBookmarksCore = ({ isMock = false, session }) => {
       key: bookmark.materialId + bookmark.materialType,
     }));
 
+    const hitcount = globalBookmarksUserObject?.user?.bookmarks?.hitcount ;
+
+    const totalPages = Math.ceil(
+      hitcount / itemsPerPage
+    );
+    console.log('totalPages',totalPages)
+
+    console.log('globalBookmarksUserObject',globalBookmarksUserObject)
   const syncCookieBookmarks = async () => {
     if (!isAuthenticated) return; // Not authenticated
     const cookies = await JSON.parse(localStorage.getItem(KEY_NAME));
@@ -222,6 +240,9 @@ const useBookmarksCore = ({ isMock = false, session }) => {
       (isLoadingGlobalBookmarks && !globalBookmarksError),
     syncCookieBookmarks,
     setSortBy,
+    currentPage,
+    totalPages,
+    setCurrentPage,
   };
 };
 

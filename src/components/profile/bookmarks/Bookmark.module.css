@@ -87,3 +87,7 @@
     display: none;
   }
 }
+
+.pagination{
+  margin-top: var(--pt3);
+}
