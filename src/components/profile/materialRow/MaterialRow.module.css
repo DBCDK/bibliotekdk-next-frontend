@@ -193,6 +193,10 @@
   margin-top: var(--pt1);
 }
 
+.bookmarkMaterial span {
+  display: block;
+}
+
 .debtDynamicColumn {
   grid-column: 1;
 }
