@@ -1,28 +1,45 @@
-import Svg from "./singleLogo.svg";
+import LogoWithText from "./logo_text.svg";
+import LogoWithoutText from "./logo_notext.svg";
 import PropTypes from "prop-types";
 import styles from "./Logo.module.css";
 import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
 import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
+import cx from "classnames";
 
 /**
  * Return a svg with inline styling from parameter
  * @param fill
  * @return {JSX.Element}
- * @constructor
  */
-export function SvgParser({ fill = "var(--blue)" }) {
-  // @TODO size is hardcoded - use var(--pt5) css prop instead
-  return <Svg width="40" height="40" fill={fill}></Svg>;
-}
+const DefaultLogo = ({ fill = "var(--blue)" }) => {
+  return (
+    <LogoWithText
+      style={{ color: fill }}
+      className={cx({
+        [styles.defaultLogo_Blue]: fill === "var(--blue)",
+        [styles.defaultLogo_White]: fill === "var(--white)",
+      })}
+    />
+  );
+};
+
+/**
+ * Return a svg with inline styling from parameter
+ * @param fill
+ * @return {JSX.Element}
+ */
+const SmallLogo = ({ fill = "var(--blue)" }) => {
+  return <LogoWithoutText width="var(--pt5)" height="var(--pt5)" fill={fill} />;
+};
 
 /**
  * Component is a svg and some text.
  * @param text
  *  LABEL of the text to show
  * @param href
- *  Where to go when clicke
+ *  Where to go when clicked
  * @param fill
  *  Color of text and svg logo
  * @param props
@@ -30,7 +47,7 @@ export function SvgParser({ fill = "var(--blue)" }) {
  * @constructor
  */
 export default function Logo({
-  text = "default_logo_txt",
+  text = "default_logo_text",
   href = "/",
   fill = "var(--blue)",
   ...props
@@ -39,6 +56,7 @@ export default function Logo({
     return <Logo {...props} />;
   }
 
+  const isDefault = text === "default_logo_text";
   const translated = Translate({ context: "logo", label: text });
   let color = "default";
   if (fill === "var(--white)") {
@@ -58,16 +76,24 @@ export default function Logo({
       })}
     >
       <div className={styles.display_flex}>
-        <SvgParser fill={fill} />
+        {isDefault ? (
+          <DefaultLogo fill={fill} />
+        ) : (
+          <>
+            <SmallLogo fill={fill} />
 
-        <Text
-          type="text1"
-          tag={"div"}
-          className={`${color === "white" ? styles.white : ""} ${styles.text}`}
-        >
-          <div className={styles.logotxt1}>{translated2[0]}</div>
-          <div>{translated2[1]}</div>
-        </Text>
+            <Text
+              type="text1"
+              tag={"div"}
+              className={`${color === "white" ? styles.white : ""} ${
+                styles.text
+              }`}
+            >
+              <div className={styles.logotxt1}>{translated2[0]}</div>
+              <div>{translated2[1]}</div>
+            </Text>
+          </>
+        )}
       </div>
     </Link>
   );

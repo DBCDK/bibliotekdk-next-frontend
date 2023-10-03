@@ -270,34 +270,32 @@ export function Header({
                 </form>
               </div>
             </Col>
-            <Col xs={{ span: 2 }}>
-              <div className={styles.iconActionsContainer}>
-                <div
-                  className={styles.iconActions}
-                  data-cy={cyKey({
-                    name: "actions",
-                    prefix: "header-bottom",
-                  })}
-                >
-                  {menu.map((m) => {
-                    const ActionIcon = m.icon;
+            <Col xs={{ span: 2 }} className={styles.iconActionsContainer}>
+              <div
+                className={styles.iconActions}
+                data-cy={cyKey({
+                  name: "actions",
+                  prefix: "header-bottom",
+                })}
+              >
+                {menu.map((m) => {
+                  const ActionIcon = m.icon;
 
-                    return (
-                      <ActionIcon
-                        dataCy={cyKey({
-                          name: m.label,
-                          prefix: "header-link",
-                        })}
-                        key={m.label}
-                        className={styles.action}
-                        href={m.href}
-                        onClick={m.onClick}
-                        items={m.items}
-                        title={Translate({ ...context, label: m.label })}
-                      />
-                    );
-                  })}
-                </div>
+                  return (
+                    <ActionIcon
+                      dataCy={cyKey({
+                        name: m.label,
+                        prefix: "header-link",
+                      })}
+                      key={m.label}
+                      className={styles.action}
+                      href={m.href}
+                      onClick={m.onClick}
+                      items={m.items}
+                      title={Translate({ ...context, label: m.label })}
+                    />
+                  );
+                })}
               </div>
             </Col>
           </Row>
@@ -317,8 +315,8 @@ export function Header({
 export function StaticHeader({ router = null, context }) {
   return (
     <>
-      <Col xs={3} lg={2}>
-        <Logo fill={"var(--blue)"} text={"default_logo_text"} />
+      <Col xs={3} lg={2} className={styles.logoWrapper}>
+        <Logo fill={"var(--blue)"} />
       </Col>
       <Col
         xs={{ span: 9, offset: 1 }}

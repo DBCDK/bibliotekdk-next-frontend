@@ -1,4 +1,5 @@
 .display_flex {
+  height: var(--pt6);
   width: fit-content;
   display: flex;
   align-items: center;
@@ -25,4 +26,16 @@
 
 .logotxt1 {
   margin-bottom: calc(var(--pt05) * -1.2);
+}
+
+.defaultLogo_Blue {
+  color: var(--blue);
+}
+
+.defaultLogo_White {
+  color: var(--white);
+}
+
+.defaultLogo_Blue *[data-text="true"] {
+  color: var(--mine-shaft);
 }

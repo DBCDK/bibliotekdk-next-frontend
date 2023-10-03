@@ -22,7 +22,7 @@ import { MATERIAL_PAGES } from "@/components/header";
  * @constructor
  */
 const FooterLogo = () => {
-  return <Logo fill={"var(--white)"} text={"default_logo_text"} />;
+  return <Logo fill="var(--white)" />;
 };
 
 /**
