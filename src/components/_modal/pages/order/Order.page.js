@@ -23,6 +23,9 @@ import useUser from "@/components/hooks/useUser";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 import { useData } from "@/lib/api/api";
 
+import * as crypto from "crypto";
+import { Confirmation } from "@/components/_modal/pages/order/confimation/Confirmation";
+
 /**
  *  Order component function
  *
@@ -151,9 +154,20 @@ function Order({
 
   const contextWithOrderPids = { ...context, orderPids };
 
+  // we need a key for the order in the receipt modal
+
+  let orderKey =
+    (orderPids &&
+      crypto.createHash("md5").update(orderPids?.join("")).digest("hex")) ||
+    "";
+  const alreadyOrdered = !!JSON.parse(
+    sessionStorage.getItem("alreadyOrdered") || "[]"
+  ).includes(orderKey);
+
   function onSubmitOrder() {
     if (validated.status) {
       modal.push("receipt", {
+        orderKey,
         pid,
         order: {
           data: orderMutation.data,
@@ -181,6 +195,8 @@ function Order({
     <div
       className={`${styles.order} ${isLoadingBranches ? styles.skeleton : ""}`}
     >
+      {alreadyOrdered && <Confirmation modal={modal} />}
+
       <Top
         title={context?.title}
         className={{

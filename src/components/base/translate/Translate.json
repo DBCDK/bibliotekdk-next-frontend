@@ -2045,6 +2045,18 @@
       }
     },
     "order": {
+      "already-ordered-message": {
+        "da": "Materialet er allerede bestilt",
+        "en": "Already ordered"
+      },
+      "order-anyway": {
+        "da": "Fortsæt bestilling",
+        "en": "Continue ordering"
+      },
+      "cancel-order": {
+        "da": "Afbryd bestllingh",
+        "en": "Cancel order"
+      },
       "specific-edition": {
         "da": "Bestil udgave",
         "en": "Order edition"

@@ -1,0 +1,31 @@
+.hideme {
+  display: none;
+}
+
+.showme {
+  top: var(--pt4);
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 50%;
+  height: 50%;
+  z-index: 1000;
+  background: #cccccc;
+  text-align: center;
+  background-color: var(--white);
+  border: 1px solid var(--iron);
+  filter: drop-shadow(0 0 0.75rem var(--iron));
+  padding: var(--pt5);
+}
+
+.centerme {
+}
+
+.buttons {
+  margin-top: var(--pt6);
+}
+
+.buttons button {
+  margin-top: var(--pt4);
+}

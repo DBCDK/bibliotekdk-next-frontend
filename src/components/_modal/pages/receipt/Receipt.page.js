@@ -63,7 +63,7 @@ export function Receipt({
     failedMessage = orderError || articleOrderError;
   } else if (
     articleOrderData?.elba?.placeCopyRequest &&
-    articleOrderData?.elba?.placeCopyRequest?.ok
+    !articleOrderData?.elba?.placeCopyRequest?.ok
   ) {
     hasFailed = true;
     failedMessage = articleOrderData?.elba?.placeCopyRequest?.status;
@@ -76,6 +76,19 @@ export function Receipt({
 
   // Order ors id on order success
   const orderId = orderData?.submitOrder?.orderId;
+
+  // add orderkey to session - for all good reasons
+  if (orderId && !hasFailed) {
+    // only add if order was successfull
+    // get session
+    const alreadyOrdered = JSON.parse(
+      sessionStorage.getItem("alreadyOrdered") || "[]"
+    );
+    // if order is NOT in session -> add it
+    !alreadyOrdered.includes(context.orderKey) &&
+      alreadyOrdered.push(context.orderKey);
+    sessionStorage.setItem("alreadyOrdered", JSON.stringify(alreadyOrdered));
+  }
 
   // Loading animation duration
   const duration = articleOrderIsLoading ? 10 : 1;
