@@ -364,6 +364,7 @@ const MaterialRow = (props) => {
     creator,
     materialType,
     creationYear,
+    edition,
     library,
     agencyId,
     id: materialId,
@@ -635,6 +636,7 @@ const MaterialRow = (props) => {
                 checked={isSelected}
                 id={`material-row-${materialId}`}
                 ariaLabelledBy={`material-title-${materialId}`}
+                ariaLabel={title}
                 tabIndex="-1"
                 readOnly
               />
@@ -702,6 +704,7 @@ const MaterialRow = (props) => {
                   dataCy="materialtype-and-creationyear"
                 >
                   {materialType} {creationYear && <>, {creationYear}</>}
+                  {edition && <span>{edition}</span>}
                 </Text>
               )}
             </div>
@@ -735,6 +738,7 @@ MaterialRow.propTypes = {
   image: PropTypes.string,
   creator: PropTypes.string,
   materialType: PropTypes.string,
+  edition: PropTypes.string,
   creationYear: PropTypes.string,
   library: PropTypes.string,
   hasCheckbox: PropTypes.bool,

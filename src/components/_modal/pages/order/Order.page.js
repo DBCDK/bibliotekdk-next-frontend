@@ -154,7 +154,7 @@ function Order({
   function onSubmitOrder() {
     if (validated.status) {
       modal.push("receipt", {
-        pid,
+        pids: orderPids,
         order: {
           data: orderMutation.data,
           error: orderMutation.error,

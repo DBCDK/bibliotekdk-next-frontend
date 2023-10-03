@@ -61,7 +61,6 @@ function PolicyLoader({ branch, onLoad, pid, requireDigitalAccess }) {
       branch?.branchId &&
       branchesFragments.branchOrderPolicy({
         branchId: branch.branchId,
-        pid: pid,
         pids: [pid],
       })
   );
