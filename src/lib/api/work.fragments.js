@@ -579,8 +579,13 @@ export function pidsToWorks({ pids }) {
         creators {
           display
         }
+        hostPublication {
+          title
+        }
+        publisher
         edition {
           summary
+          edition
         }
       }
     }

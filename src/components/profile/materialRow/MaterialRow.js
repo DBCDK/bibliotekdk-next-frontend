@@ -636,6 +636,7 @@ const MaterialRow = (props) => {
                 checked={isSelected}
                 id={`material-row-${materialId}`}
                 ariaLabelledBy={`material-title-${materialId}`}
+                ariaLabel={title}
                 tabIndex="-1"
                 readOnly
               />
