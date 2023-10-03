@@ -1,6 +1,7 @@
 .wrapper {
   display: flex;
   flex-direction: column;
+  padding-bottom: var(--pt6);
 }
 
 /* .top is passed as className prop to Top component */
