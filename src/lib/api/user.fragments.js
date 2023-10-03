@@ -136,12 +136,10 @@ export function branchesForUser() {
 }
 
 export function orderPolicy({ pids }) {
-  const pid = pids?.[0];
-
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
-    query: `query orderPolicy ($language: LanguageCode!, $pid: String!, $pids: [String!]! ) {
+    query: `query orderPolicy ($language: LanguageCode!, $pids: [String!]! ) {
       user {
         agencies (language: $language){
           agencyUrl
@@ -155,7 +153,7 @@ export function orderPolicy({ pids }) {
             branchId
             openingHours
             borrowerCheck
-            orderPolicy(pid: $pid, pids: $pids) {
+            orderPolicy(pids: $pids) {
               orderPossible
               orderPossibleReason
               lookUpUrl
@@ -182,7 +180,7 @@ export function orderPolicy({ pids }) {
           branchId
           openingHours
           borrowerCheck
-          orderPolicy(pid: $pid, pids: $pids) {
+          orderPolicy(pids: $pids) {
             orderPossible
             orderPossibleReason
             lookUpUrl
@@ -200,7 +198,7 @@ export function orderPolicy({ pids }) {
       }
       monitor(name: "bibdknext_orderpolicy")
      }`,
-    variables: { language: lang, pid, pids },
+    variables: { language: lang, pids },
     slowThreshold: 3000,
   };
 }
