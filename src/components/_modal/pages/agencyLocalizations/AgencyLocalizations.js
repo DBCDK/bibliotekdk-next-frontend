@@ -9,7 +9,14 @@ import isEmpty from "lodash/isEmpty";
 import styles from "./AgencyLocalizations.module.css";
 import Text from "@/components/base/text/Text";
 
-export default function Wrap({ context, modal }) {
+/**
+ * {@link AgencyLocalizations} presents the possible agencies with holdings or conforming to query
+ *   (or message when query yields not results). It uses {@link LocalizationsBase} and its compounded components
+ * @param {Object} context
+ * @param {Object} modal
+ * @returns {JSX.Element}
+ */
+export default function AgencyLocalizations({ context, modal }) {
   const { pids } = context;
   const [query, setQuery] = useState("");
 

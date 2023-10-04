@@ -6,6 +6,10 @@ import { useData } from "@/lib/api/api";
 import isEmpty from "lodash/isEmpty";
 import uniq from "lodash/uniq";
 
+/**
+ * @typedef AvailabilityEnum
+ * @type {Readonly<{LATER: string, NOW: string, NEVER: string, UNKNOWN: string}>}
+ */
 export const AvailabilityEnum = Object.freeze({
   NOW: "AVAILABLE_NOW",
   LATER: "AVAILABLE_LATER",
@@ -13,16 +17,34 @@ export const AvailabilityEnum = Object.freeze({
   UNKNOWN: "AVAILABILITY_UNKNOWN",
 });
 
+/**
+ * @typedef HoldingStatusEnum
+ * @type {Readonly<{ON_LOAN: string, ON_SHELF: string, NOT_FOR_LOAN: string}>}
+ */
 export const HoldingStatusEnum = Object.freeze({
   ON_SHELF: "OnShelf",
   ON_LOAN: "OnLoan",
   NOT_FOR_LOAN: "NotForLoan",
 });
 
+/**
+ * @typedef {string} DateString
+ */
+
+/**
+ * {@link dateIsToday} takes a date (string formatted YYYY-MM-DD) and returns true if date is today
+ * @param {DateString} date should be formatted YYYY-MM-DD
+ * @returns {boolean}
+ */
 export function dateIsToday(date) {
   return new Date(date).toDateString() === new Date().toDateString();
 }
 
+/**
+ * {@link checkAvailableNow} checks if the item is available now, checking expectedDelivery and status
+ * @param {Object} item
+ * @returns {boolean}
+ */
 function checkAvailableNow(item) {
   const expectedDelivery = item?.expectedDelivery;
   const status = item?.status;
@@ -35,6 +57,11 @@ function checkAvailableNow(item) {
   );
 }
 
+/**
+ * {@link dateIsLater} takes a date (string formatted YYYY-MM-DD) and returns true if date is after today
+ * @param {DateString} date should be formatted YYYY-MM-DD
+ * @returns {boolean}
+ */
 export function dateIsLater(date) {
   return (
     date &&
@@ -44,6 +71,13 @@ export function dateIsLater(date) {
   );
 }
 
+/**
+ * {@link checkAvailableLater} checks if the item's availability is available later,
+ *   checking expectedDelivery and status.
+ *   Expected usage is, that item is checked by {@link checkAvailableNow} before {@link checkAvailableLater}
+ * @param {Object} item
+ * @returns {boolean}
+ */
 function checkAvailableLater(item) {
   const expectedDelivery = item?.expectedDelivery;
   const status = item?.status;
@@ -58,6 +92,11 @@ function checkAvailableLater(item) {
   );
 }
 
+/**
+ * {@link dateIsNever} takes a date (string formatted YYYY-MM-DD) and returns true if date is literally "never"
+ * @param {DateString} date should be formatted YYYY-MM-DD
+ * @returns {boolean}
+ */
 export function dateIsNever(date) {
   return (
     date &&
@@ -67,6 +106,14 @@ export function dateIsNever(date) {
   );
 }
 
+/**
+ * {@link checkAvailableNever} checks if the item's availability is never available,
+ *   checking expectedDelivery and status.
+ *   Expected usage is, that item is checked by {@link checkAvailableNow}, {@link checkAvailableLater}
+ *   before {@link checkAvailableNever}
+ * @param {Object} item
+ * @returns {boolean}
+ */
 function checkAvailableNever(item) {
   const expectedDelivery = item?.expectedDelivery;
   const status = item?.status;
@@ -76,15 +123,32 @@ function checkAvailableNever(item) {
   );
 }
 
+/**
+ * {@link dateIsUnknown} takes a date (string formatted YYYY-MM-DD) and returns true if date is unknown
+ * @param {DateString} date should be formatted YYYY-MM-DD
+ * @returns {boolean}
+ */
 function dateIsUnknown(date) {
   return !date || typeof date !== "string" || isNaN(Date.parse(date));
 }
 
+/**
+ * {@link checkUnknownAvailability} checks if the item's availability is unknown, checking expectedDelivery
+ *   Expected usage is, that item is checked by {@link checkAvailableNow}, {@link checkAvailableLater}, {@link checkAvailableNever}
+ *   before {@link checkUnknownAvailability}
+ * @param {Object} item
+ * @returns {boolean}
+ */
 function checkUnknownAvailability(item) {
   const expectedDelivery = item?.expectedDelivery;
   return dateIsUnknown(expectedDelivery);
 }
 
+/**
+ * {@link getAvailabilityById} checks availability by pid
+ * @param {Array.<Object>} items
+ * @returns {Object}
+ */
 function getAvailabilityById(items) {
   const uniqueIdPairs = uniqWith(
     items.map((item) => {
@@ -109,6 +173,14 @@ function getAvailabilityById(items) {
   });
 }
 
+/**
+ * {@link getAvailabilityAccumulated} accumulated the availability of holdings items for the library, and returns
+ *   the best availability in order:
+ *   {@link AvailabilityEnum.NOW}, {@link AvailabilityEnum.LATER},
+ *   {@link AvailabilityEnum.NEVER}, {@link AvailabilityEnum.UNKNOWN}
+ * @param {Object} availability
+ * @returns {string}
+ */
 function getAvailabilityAccumulated(availability) {
   return availability[AvailabilityEnum.NOW] > 0
     ? AvailabilityEnum.NOW
@@ -121,6 +193,11 @@ function getAvailabilityAccumulated(availability) {
     : AvailabilityEnum.UNKNOWN;
 }
 
+/**
+ * {@link getAvailability} gets the availability of all holdings items given
+ * @param {Array.<Object>} items
+ * @returns {Object}
+ */
 function getAvailability(items) {
   const availabilityObject = {
     [AvailabilityEnum.NOW]: 0,
@@ -143,12 +220,22 @@ function getAvailability(items) {
   return availabilityObject;
 }
 
+/**
+ * {@link getExpectedDeliveryAccumulatedFromHoldings} gets and sorts expectedDelivery from all given holdings
+ * @param {Array.<Object>} holdingItems
+ * @returns {*}
+ */
 function getExpectedDeliveryAccumulatedFromHoldings(holdingItems) {
   return holdingItems
     .map((item) => item.expectedDelivery)
     .sort(compareDate)?.[0];
 }
 
+/**
+ * {@link getHoldingsWithInfoOnPickupAllowed} enriches branch's holdings items with pickupAllowed and agencyId
+ * @param {Object} branch
+ * @returns {Object}
+ */
 function getHoldingsWithInfoOnPickupAllowed(branch) {
   return branch?.holdingItems.map((item) => {
     return {
@@ -159,6 +246,14 @@ function getHoldingsWithInfoOnPickupAllowed(branch) {
   });
 }
 
+/**
+ * {@link sortByAvailability} sorts libraries by availability (and pickupAllowed === false), in the following order:
+ *   pickupAllowed === false, {@link AvailabilityEnum.NOW}, {@link AvailabilityEnum.LATER},
+ *   {@link AvailabilityEnum.NEVER}, {@link AvailabilityEnum.UNKNOWN}
+ * @param {Object} a
+ * @param {Object} b
+ * @returns {number}
+ */
 function sortByAvailability(a, b) {
   return getFirstMatch(true, 0, [
     [b?.pickupAllowed === false, -1],
@@ -172,6 +267,11 @@ function sortByAvailability(a, b) {
   ]);
 }
 
+/**
+ * {@link enrichBranches} enriches branch with e.g. availability, expectedDelivery in different forms
+ * @param {Object} branch
+ * @returns {*&{expectedDeliveryAccumulatedFromHoldings: *, holdingStatus, availabilityById: {[AvailabilityEnum.UNKNOWN]: number, [AvailabilityEnum.LATER]: number, [AvailabilityEnum.NEVER]: number, [AvailabilityEnum.NOW]: number, localHoldingsId: *, pid: *}[], expectedDelivery: *, branchName, availabilityAccumulated: string, availability: {[AvailabilityEnum.UNKNOWN]: number, [AvailabilityEnum.LATER]: number, [AvailabilityEnum.NEVER]: number, [AvailabilityEnum.NOW]: number}, agencyName, holdingItems}}
+ */
 function enrichBranches(branch) {
   const branchHoldingsWithInfoOnPickupAllowed =
     getHoldingsWithInfoOnPickupAllowed(branch);
@@ -207,6 +307,13 @@ function enrichBranches(branch) {
   };
 }
 
+/**
+ * {@link compareDate} takes 2 dates and gives back the lowest actual date
+ * (null goes to the back of sorting, but if a and b are strings we don't check)
+ * @param {DateString} a
+ * @param {DateString} b
+ * @returns {number}
+ */
 function compareDate(a, b) {
   return getFirstMatch(true, 0, [
     [!a && !b, 0],
@@ -217,6 +324,11 @@ function compareDate(a, b) {
   ]);
 }
 
+/**
+ * {@link handleAgencyAccessData} creates an object consumable by {@link AgencyLocalizations}, {@link BranchLocalizations} and {@link BranchDetails}
+ * @param {Object} agencies
+ * @returns {{agenciesIsLoading: boolean, count: number, agenciesFlatSorted: Array.<Object>}}
+ */
 export function handleAgencyAccessData(agencies) {
   const isLoading = agencies.isLoading;
 
@@ -285,6 +397,12 @@ export function handleAgencyAccessData(agencies) {
   };
 }
 
+/**
+ * {@link useAgencyIdsConformingToQuery} finds agencyIds that conform to query
+ * @param {Array.<string>} pids
+ * @param {string} q
+ * @returns {{isLoading: boolean, agencyIds: Array.<Object>}}
+ */
 export function useAgencyIdsConformingToQuery({ pids, q }) {
   const agencies = useData(
     q &&
@@ -303,6 +421,12 @@ export function useAgencyIdsConformingToQuery({ pids, q }) {
   return { agencyIds: agencyIds, isLoading: agencies.isLoading };
 }
 
+/**
+ * {@link useSingleAgency} finds an agency by its agencyId
+ * @param {Array.<string>} pids
+ * @param {string} agencyId
+ * @returns {{agenciesIsLoading: boolean, count: number, agenciesFlatSorted: Array.<Object>}}
+ */
 export function useSingleAgency({ pids, agencyId }) {
   const agencyNoHighlights = useData(
     agencyId &&
@@ -316,6 +440,12 @@ export function useSingleAgency({ pids, agencyId }) {
   return handleAgencyAccessData(agencyNoHighlights);
 }
 
+/**
+ * {@link useHighlightsForSingleAgency} finds highlights for branches in a single Agency
+ * @param {string} agencyId
+ * @param {string} query
+ * @returns {{branchesWithHighlightsIsLoading: boolean, branchesWithHighlights: Array.<Object>, agencyHighlight: Object}}
+ */
 export function useHighlightsForSingleAgency({ agencyId, query = "" }) {
   const agencyWithHighlights = useData(
     !isEmpty(agencyId) &&
@@ -343,6 +473,12 @@ export function useHighlightsForSingleAgency({ agencyId, query = "" }) {
   };
 }
 
+/**
+ * {@link useSingleBranch} finds a branch by its branchId
+ * @param {Array.<string>} pids
+ * @param {string} branchId
+ * @returns {{agenciesIsLoading: boolean, count: number, agenciesFlatSorted: Array<Object>}}
+ */
 export function useSingleBranch({ pids, branchId }) {
   const branch = useData(
     branchId &&

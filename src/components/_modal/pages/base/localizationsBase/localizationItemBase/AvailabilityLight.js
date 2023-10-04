@@ -6,9 +6,9 @@ import * as PropTypes from "prop-types";
 
 /**
  * Availability light has the color of the status of the manifestation on the library (agency or branch)
- * @param availabilityAccumulated
- * @param pickupAllowed
- * @param style
+ * @param {AvailabilityEnum} availabilityAccumulated
+ * @param {boolean} pickupAllowed
+ * @param {Object} style
  * @returns {JSX.Element}
  */
 export function AvailabilityLight({

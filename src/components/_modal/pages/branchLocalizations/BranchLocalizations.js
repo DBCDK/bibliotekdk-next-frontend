@@ -13,6 +13,12 @@ import cx from "classnames";
 import isEmpty from "lodash/isEmpty";
 import { LinkForBranch } from "@/components/_modal/pages/base/localizationsBase/linkForBranch/LinkForBranch";
 
+/**
+ * {@link OnlyInformationOnAgencyHoldings} presents Agency information for {@link BranchLocalizations}
+ * @param {Array.<string>} pids
+ * @param {Object} agency
+ * @returns {JSX.Element}
+ */
 function OnlyInformationOnAgencyHoldings({ pids, agency }) {
   return (
     <div className={styles.agency_holdings_row_wrapper}>
@@ -44,6 +50,14 @@ function OnlyInformationOnAgencyHoldings({ pids, agency }) {
   );
 }
 
+/**
+ * {@link BranchLocalizations} presents the branches in an agency.
+ *   It uses {@link LocalizationsBase} and its compounded components
+ *   {@link OnlyInformationOnAgencyHoldings} presents information on Agency level, when no branch information is available
+ * @param {Object} context
+ * @param {Object} modal
+ * @returns {JSX.Element}
+ */
 export default function BranchLocalizations({ context, modal }) {
   const { pids, agencyId } = context;
 

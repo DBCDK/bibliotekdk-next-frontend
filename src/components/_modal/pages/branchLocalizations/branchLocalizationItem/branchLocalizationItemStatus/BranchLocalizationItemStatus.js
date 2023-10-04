@@ -6,6 +6,10 @@ import {
 import Translate from "@/components/base/translate";
 import { dateToShortDate } from "@/utils/datetimeConverter";
 
+/**
+ * {@link MessageWhenPickupNotAllowed} shows a possible message in {@link BranchLocalizationItemStatus}
+ * @returns {JSX.Element}
+ */
 function MessageWhenPickupNotAllowed() {
   return (
     <Text>
@@ -16,6 +20,12 @@ function MessageWhenPickupNotAllowed() {
     </Text>
   );
 }
+
+/**
+ * {@link MessageWhenMaterialsAvailableNow} shows a possible message in {@link BranchLocalizationItemStatus}
+ * @param {Object} library
+ * @returns {JSX.Element}
+ */
 function MessageWhenMaterialsAvailableNow({ library }) {
   return library?.availability[AvailabilityEnum.NOW] === 0 ? (
     <Text>{Translate({ context: "localizations", label: "on_shelf" })}</Text>
@@ -27,6 +37,11 @@ function MessageWhenMaterialsAvailableNow({ library }) {
   );
 }
 
+/**
+ * {@link MessageWhenMaterialsAvailableLater} shows a possible message in {@link BranchLocalizationItemStatus}
+ * @param {Object} library
+ * @returns {JSX.Element}
+ */
 function MessageWhenMaterialsAvailableLater({ library }) {
   const expectedDelivery =
     library?.expectedDelivery ||
@@ -47,6 +62,10 @@ function MessageWhenMaterialsAvailableLater({ library }) {
   );
 }
 
+/**
+ * {@link MessageWhenMaterialsAvailableNever} shows a possible message in {@link BranchLocalizationItemStatus}
+ * @returns {JSX.Element}
+ */
 function MessageWhenMaterialsAvailableNever() {
   return (
     <Text>
@@ -55,6 +74,10 @@ function MessageWhenMaterialsAvailableNever() {
   );
 }
 
+/**
+ * {@link MessageWhenMaterialsAvailableUnknown} shows a possible message in {@link BranchLocalizationItemStatus}
+ * @returns {JSX.Element}
+ */
 function MessageWhenMaterialsAvailableUnknown() {
   return (
     <Text>
@@ -63,6 +86,11 @@ function MessageWhenMaterialsAvailableUnknown() {
   );
 }
 
+/**
+ * {@link BranchLocalizationItemStatus} presents the status message for {@link BranchLocalizationItem}
+ * @param {Object} library
+ * @returns {JSX.Element}
+ */
 export default function BranchLocalizationItemStatus({ library }) {
   if (
     typeof library?.pickupAllowed !== "undefined" &&

@@ -8,6 +8,11 @@ import animations from "css/animations";
 import Translate from "@/components/base/translate";
 import uniq from "lodash/uniq";
 
+/**
+ * Builds the lookupUrl
+ * @param {Object} library
+ * @returns {*|boolean|string}
+ */
 function parseBranchLookupUrlForNonPublicLibrary(library) {
   const agencyHoldings = library?.holdingStatus?.agencyHoldings;
   const lookupUrl = library?.lookupUrl || null;
@@ -28,6 +33,13 @@ function parseBranchLookupUrlForNonPublicLibrary(library) {
   }
 }
 
+/**
+ * LinkForBranch returns the link for {@link BranchDetails} (and
+ * @param library
+ * @param pids
+ * @param textType
+ * @returns {JSX.Element}
+ */
 export function LinkForBranch({ library, pids, textType = "text2" }) {
   const cqlPids = pids?.map((pid) => escapeColons(pid)).join(" OR ");
 
