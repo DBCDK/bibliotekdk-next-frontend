@@ -11,7 +11,7 @@ describe("Logo", () => {
     cy.get("[data-cy=key-logo]").should("have.attr", "href").and("equal", "/");
   });
 
-  it.skip(`View in SMALL viewport`, () => {
+  it(`View in SMALL viewport`, () => {
     cy.visit("/iframe.html?id=base-logo--blue-logo");
     cy.viewport(765, 1080);
     // verify that banner is NOT shown
