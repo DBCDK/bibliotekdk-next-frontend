@@ -113,7 +113,6 @@ export default function AgencyLocalizationItem({
       pids && {
         pids: pids,
         agencyId: agencyId,
-        query: query,
       }
   );
 
