@@ -10,11 +10,6 @@ import { highlightMarkedWords } from "@/components/_modal/utils";
 import Translate from "@/components/base/translate";
 import { getLibraryType, LibraryTypeEnum } from "@/lib/utils";
 
-const textProps = {
-  clamp: true,
-  lines: 1,
-};
-
 function DefaultShowingOfAgencyBranches({ agency }) {
   const numberOfBranchesWithAvailable = agency?.branches?.filter(
     (branch) => branch?.availabilityAccumulated === AvailabilityEnum.NOW
@@ -24,7 +19,7 @@ function DefaultShowingOfAgencyBranches({ agency }) {
 
   return (
     <>
-      <Text {...textProps}>
+      <Text clamp={true}>
         {Translate({
           context: "localizations",
           label:
@@ -76,7 +71,7 @@ function FormattedBranchesWithHighlights({ branchesWithHighlights }) {
     })
     ?.map((branch, index) => {
       return (
-        <Text {...textProps} key={index}>
+        <Text clamp={true} key={index}>
           {branch.branchName}
           {branch.postalCode && ", "}
           {branch.postalCode}
