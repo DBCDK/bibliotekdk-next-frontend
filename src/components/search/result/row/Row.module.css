@@ -20,7 +20,7 @@
 .row_wrapper {
   width: auto;
   display: grid;
-  --grid_template_columns: 1fr 3fr;
+  --grid_template_columns: 1fr 3fr 0fr;
   grid-template-columns: var(--grid_template_columns);
   justify-content: space-between;
   margin-top: var(--pt2);
@@ -104,12 +104,23 @@
   }
 
   .row_wrapper {
-    --grid_template_columns: 1fr 3fr;
+    --grid_template_columns: 1fr 3fr 0fr;
   }
+}
+
+.row_wrapper:hover button {
+  border-color: var(--gray);
+}
+
+.row_wrapper button:hover {
+  border-color: var(--blue);
 }
 
 .BookmarkDropdown {
   position: absolute;
   right: var(--pt1);
   top: var(--pt2);
+}
+.BookmarkDropdown button {
+  border: 1px solid transparent;
 }
