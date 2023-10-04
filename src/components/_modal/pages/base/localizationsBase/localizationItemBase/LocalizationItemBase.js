@@ -8,6 +8,21 @@ import { AvailabilityEnum } from "@/components/hooks/useHandleAgencyAccessData";
 import { AvailabilityLight } from "@/components/_modal/pages/base/localizationsBase/localizationItemBase/AvailabilityLight";
 import Text from "@/components/base/text/Text";
 
+/**
+ * @typedef { import("../../../agencyLocalizations/agencyLocalizationItem/AgencyLocalizationItem").default} AgencyLocalizationItem
+ * @typedef { import("../../../branchLocalizations/branchLocalizationItem/BranchLocalizationItem").default} BranchLocalizationItem
+ */
+
+/**
+ * LocalizationItemBase is used as a base for {@link AgencyLocalizationItem} and {@link BranchLocalizationItem}
+ * @param children
+ * @param {Object} library
+ * @param {function} modalPush
+ * @param {Array.<AvailabilityEnum>} possibleAvailabilities
+ * @param {boolean} itemLoading
+ * @param {AvailabilityEnum} availabilityAccumulated
+ * @returns {JSX.Element}
+ */
 export default function LocalizationItemBase({
   children,
   library,

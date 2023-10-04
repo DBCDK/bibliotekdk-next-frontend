@@ -15,11 +15,11 @@ import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 
 /**
- * Localizations Base is used in AgencyLocalizations and BranchLocalizations
+ * LocalizationsBase is used as a base for {@link AgencyLocalizations}, {@link BranchLocalizations} and {@link BranchDetails}
  * @param children
- * @param {object} modal
  * @param {object} context
  * @param {string|null} subtitle
+ * @param {Array.<string>} pids
  * @param {function} materialCardTemplate
  * @param {string|null} subheader
  * @param {string|null} query
@@ -110,6 +110,12 @@ function LocalizationsBase({
   );
 }
 
+/**
+ * Compound subcomponent List for {@link LocalizationsBase} which contains the list of branches/agencies
+ * @param children
+ * @param {string} className
+ * @returns {JSX.Element}
+ */
 export function List({ children, className }) {
   return (
     <ul
@@ -121,6 +127,12 @@ export function List({ children, className }) {
   );
 }
 
+/**
+ * Compound subcomponent Information for {@link LocalizationsBase} which can contain additional information on branches/agencies
+ * @param children
+ * @param {string} className
+ * @returns {JSX.Element}
+ */
 export function Information({ children, className }) {
   return (
     <div
@@ -131,6 +143,13 @@ export function Information({ children, className }) {
   );
 }
 
+/**
+ * Compound subcomponent HighlightedArea for {@link LocalizationsBase} which can contain highlighted areas that fills the entire width of the modal
+ * @param children
+ * @param {Object} style
+ * @param {string} className
+ * @returns {JSX.Element}
+ */
 export function HighlightedArea({
   children,
   style = {
