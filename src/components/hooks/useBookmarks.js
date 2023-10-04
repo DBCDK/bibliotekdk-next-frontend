@@ -173,10 +173,10 @@ const useBookmarksCore = ({ isMock = false, session }) => {
    */
   const createdAtSort = (bookmarkList = [], sortDirection = "asc") => {
     return bookmarkList.sort((a, b) => {
-      if (a.createdAt > b.createdAt) {
+      if (new Date(a.createdAt) < new Date(b.createdAt)) {
         return sortDirection === "asc" ? 1 : -1;
       }
-      if (a.createdAt < b.createdAt) {
+      if (new Date(a.createdAt) > new Date(b.createdAt)) {
         return sortDirection === "asc" ? -1 : 1;
       }
       return 0;
