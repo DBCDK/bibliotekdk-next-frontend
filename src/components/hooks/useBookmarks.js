@@ -229,7 +229,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
       : titleSort(bookmarksToSort);
   }
   /**
-   * Returns localbookmarks sorted by users preference
+   * Returns a subset of localbookmarks. Returns only a subset the corresponds to the current page of local bookmarks.
    */
   function currenPageBookmark(bookmarkToPaginate) {
     const startIdx = (currentPage - 1) * itemsPerPage;

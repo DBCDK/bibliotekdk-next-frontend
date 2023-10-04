@@ -31,7 +31,6 @@ const BookmarkPage = () => {
     currentPage,
     totalPages,
     setCurrentPage,
-    count,
   } = useBookmarks();
   const { data: bookmarks } = usePopulateBookmarks(bookmarksData);
   const [activeStickyButton, setActiveStickyButton] = useState(null);
