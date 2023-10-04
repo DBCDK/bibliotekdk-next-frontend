@@ -30,6 +30,8 @@ function DefaultShowingOfAgencyBranches({ agency }) {
           label:
             numberOfBranchesWithAvailable > 1
               ? "home_at_branches"
+              : numberOfBranchesWithAvailable === 0
+              ? "home_at_no_branches"
               : "home_at_1_branch",
           vars: [numberOfBranchesWithAvailable],
         })}
@@ -39,7 +41,7 @@ function DefaultShowingOfAgencyBranches({ agency }) {
             label:
               LibraryTypeEnum.DANISH_PUBLIC_LIBRARY !== publicLibrary
                 ? "or_more_branches"
-                : numberOfBranchesWithAvailable > 1
+                : numberOfBranchesWithAvailable !== 1
                 ? "branches"
                 : "branch",
           })}

@@ -659,6 +659,10 @@
         "da": "Hjemme på %s",
         "en": "Available at %s"
       },
+      "home_at_no_branches": {
+        "da": "Materialet er ikke hjemme på nogen",
+        "en": "Material is not home at any"
+      },
       "order_now_pickup_at_date": {
         "da": "Bestil nu og afhent fra d. %s",
         "en": "Order now and pickup from the %s"
