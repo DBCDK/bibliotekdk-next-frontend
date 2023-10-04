@@ -29,7 +29,7 @@ export function BlueLogo() {
       <StoryTitle>Logo component</StoryTitle>
       <StoryDescription>Hjælp og vejledninger logo</StoryDescription>
       <div style={{ backgroundColor: "blue", padding: "20px" }}>
-        <Logo type="WHITE" />
+        <Logo type="WHITE" href="/hjaelp" />
       </div>
     </div>
   );
