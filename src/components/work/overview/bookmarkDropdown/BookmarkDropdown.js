@@ -17,7 +17,6 @@ export function BookMarkMaterialSelector({
   className,
   title,
 }) {
-  const bookmarkClick = () => {};
   const { bookmarks, setBookmark, isLoading } = useBookmarks();
 
   const onSelect = (material, workId) => {
