@@ -11,6 +11,16 @@ const textProps = {
   lines: 2,
 };
 
+/**
+ * {@link BranchLocalizationItem} shows each branch found by {@link BranchLocalizations}
+ * @param {Object} context
+ * @param {Object} modal
+ * @param {string} branchId
+ * @param {Array.<string>} pids
+ * @param {boolean} primitiveDisplay
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export default function BranchLocalizationItem({
   context,
   modal,

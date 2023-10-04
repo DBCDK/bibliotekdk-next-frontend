@@ -20,6 +20,11 @@ import isEmpty from "lodash/isEmpty";
 import Button from "@/components/base/button/Button";
 import * as PropTypes from "prop-types";
 
+/**
+ * {@link OpeningHours} for {@link BranchDetails}
+ * @param {Object} singleBranch
+ * @returns {JSX.Element}
+ */
 function OpeningHours({ singleBranch }) {
   return (
     <div className={cx(styles.fit_content, styles.path_blue)}>
@@ -54,6 +59,11 @@ function OpeningHours({ singleBranch }) {
 
 OpeningHours.propTypes = { singleBranch: PropTypes.any };
 
+/**
+ * {@link Address} for {@link BranchDetails}
+ * @param {Object} singleBranch
+ * @returns {JSX.Element}
+ */
 function Address({ singleBranch }) {
   return (
     <div className={cx(styles.fit_content, styles.path_blue)}>
@@ -94,6 +104,11 @@ function Address({ singleBranch }) {
 
 Address.propTypes = { singleBranch: PropTypes.any };
 
+/**
+ * {@link ContactInformation} for {@link BranchDetails}
+ * @param {Object} singleBranch
+ * @returns {JSX.Element}
+ */
 function ContactInformation({ singleBranch }) {
   return (
     <div className={cx(styles.fit_content, styles.path_blue)}>
@@ -127,6 +142,12 @@ function ContactInformation({ singleBranch }) {
   );
 }
 
+/**
+ * {@link BranchDetails} shows the details of the Branch, including {@link MaterialCard}, {@link BranchDetailsStatus},
+ * {@link OpeningHours}, {@link Address}, and {@link ContactInformation}
+ * @param {Object} context
+ * @returns {JSX.Element}
+ */
 export default function BranchDetails({ context }) {
   const { pids: pids, branchId } = context;
 

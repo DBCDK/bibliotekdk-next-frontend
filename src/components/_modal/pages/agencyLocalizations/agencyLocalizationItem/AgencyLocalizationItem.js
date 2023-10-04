@@ -15,6 +15,11 @@ const textProps = {
   lines: 1,
 };
 
+/**
+ * When there is no query, show this default agencyBranches, which are branches that have holdings
+ * @param {string} agency
+ * @returns {JSX.Element}
+ */
 function DefaultShowingOfAgencyBranches({ agency }) {
   const numberOfBranchesWithAvailable = agency?.branches?.filter(
     (branch) => branch?.availabilityAccumulated === AvailabilityEnum.NOW
@@ -47,6 +52,12 @@ function DefaultShowingOfAgencyBranches({ agency }) {
     </>
   );
 }
+
+/**
+ * Shows the result from querying, which is the formatted branches which the necessary data for highlighting queried fields
+ * @param {Array.<Object>} branchesWithHighlights
+ * @returns {JSX.Element}
+ */
 function FormattedBranchesWithHighlights({ branchesWithHighlights }) {
   const branchesFormattedWithHighlights = branchesWithHighlights
     ?.filter((branch) => {
@@ -100,6 +111,16 @@ function FormattedBranchesWithHighlights({ branchesWithHighlights }) {
   );
 }
 
+/**
+ * {@link AgencyLocalizationItem} shows each agency found by {@link AgencyLocalizations}
+ * @param {Object} context
+ * @param {Object} modal
+ * @param {string} agencyId
+ * @param {boolean} localizationsIsLoading
+ * @param {Array.<string>} pids
+ * @param {string} query
+ * @returns {JSX.Element}
+ */
 export default function AgencyLocalizationItem({
   context,
   modal,

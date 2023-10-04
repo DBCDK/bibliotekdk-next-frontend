@@ -11,6 +11,10 @@ import Translate from "@/components/base/translate";
 import { dateToShortDate } from "@/utils/datetimeConverter";
 import { LinkForBranch } from "@/components/_modal/pages/base/localizationsBase/linkForBranch/LinkForBranch";
 
+/**
+ * {@link MessageWhenPickupNotAllowed} shows a possible message in {@link BranchStatusMessage}
+ * @returns {JSX.Element}
+ */
 function MessageWhenPickupNotAllowed() {
   return (
     <Text type="text2">
@@ -22,6 +26,12 @@ function MessageWhenPickupNotAllowed() {
   );
 }
 
+/**
+ * {@link MessageWhenMaterialsAvailableNow} shows a possible message in {@link BranchStatusMessage}
+ * @param {Object} library
+ * @param {Array.<Object>} manifestations
+ * @returns {JSX.Element}
+ */
 function MessageWhenMaterialsAvailableNow({ library, manifestations }) {
   const locationsInBranch = uniq(
     manifestations?.map((manifestation) => manifestation?.locationInBranch)
@@ -53,6 +63,11 @@ function MessageWhenMaterialsAvailableNow({ library, manifestations }) {
   );
 }
 
+/**
+ * {@link MessageWhenMaterialsAvailableLater} shows a possible message in {@link BranchStatusMessage}
+ * @param {Object} library
+ * @returns {JSX.Element}
+ */
 function MessageWhenMaterialsAvailableLater({ library }) {
   const expectedDelivery =
     library?.expectedDelivery ||
@@ -72,6 +87,11 @@ function MessageWhenMaterialsAvailableLater({ library }) {
     </Text>
   );
 }
+
+/**
+ * {@link MessageWhenMaterialsAvailableNever} shows a possible message in {@link BranchStatusMessage}
+ * @returns {JSX.Element}
+ */
 function MessageWhenMaterialsAvailableNever() {
   return (
     <Text type="text2">
@@ -80,6 +100,10 @@ function MessageWhenMaterialsAvailableNever() {
   );
 }
 
+/**
+ * {@link MessageWhenMaterialsAvailableUnknown} shows a possible message in {@link BranchStatusMessage}
+ * @returns {JSX.Element}
+ */
 function MessageWhenMaterialsAvailableUnknown() {
   return (
     <Text type="text2">
@@ -88,6 +112,15 @@ function MessageWhenMaterialsAvailableUnknown() {
   );
 }
 
+/**
+ * {@link BranchStatusMessage} presents messages for branches possible status:
+ *   {@link MessageWhenPickupNotAllowed}, {@link MessageWhenMaterialsAvailableNow},
+ *   {@link MessageWhenMaterialsAvailableLater}, {@link MessageWhenMaterialsAvailableNever},
+ *   {@link MessageWhenMaterialsAvailableUnknown}
+ * @param {Object} library
+ * @param {Array.<Object>} manifestations
+ * @returns {JSX.Element}
+ */
 function BranchStatusMessage({ library, manifestations }) {
   if (
     typeof library?.pickupAllowed !== "undefined" &&
@@ -112,6 +145,16 @@ function BranchStatusMessage({ library, manifestations }) {
   }
 }
 
+/**
+ * {@link BranchDetailsStatus} presents that Branch-wide status in {@link BranchDetails}
+ *   using {@link AvailabilityLight}, {@link BranchStatusMessage}, {@link LinkForBranch}
+ *
+ * @param {Object} library
+ * @param {Array.<Object>} manifestations
+ * @param {Array.<string>} pids
+ * @param {Array.<AvailabilityEnum>} possibleAvailabilities
+ * @returns {JSX.Element}
+ */
 export default function BranchDetailsStatus({
   library,
   manifestations,
