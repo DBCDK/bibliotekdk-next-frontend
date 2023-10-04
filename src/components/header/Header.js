@@ -316,7 +316,7 @@ export function StaticHeader({ router = null, context }) {
   return (
     <>
       <Col xs={3} lg={2} className={styles.logoWrapper}>
-        <Logo fill={"var(--blue)"} />
+        <Logo />
       </Col>
       <Col
         xs={{ span: 9, offset: 1 }}

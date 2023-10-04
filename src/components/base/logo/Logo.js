@@ -1,39 +1,10 @@
 import LogoWithText from "./logo_text.svg";
-import LogoWithoutText from "./logo_notext.svg";
 import PropTypes from "prop-types";
 import styles from "./Logo.module.css";
 import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
-import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
 import cx from "classnames";
-
-/**
- * Return a svg with inline styling from parameter
- * @param fill
- * @return {JSX.Element}
- */
-const DefaultLogo = ({ fill = "var(--blue)" }) => {
-  return (
-    <LogoWithText
-      style={{ color: fill }}
-      className={cx({
-        [styles.defaultLogo_Blue]: fill === "var(--blue)",
-        [styles.defaultLogo_White]: fill === "var(--white)",
-      })}
-    />
-  );
-};
-
-/**
- * Return a svg with inline styling from parameter
- * @TODO eleminate when we have the help icon
- * @param fill
- * @return {JSX.Element}
- */
-const SmallLogo = ({ fill = "var(--blue)" }) => {
-  return <LogoWithoutText width="var(--pt5)" height="var(--pt5)" fill={fill} />;
-};
 
 /**
  * Component is a svg and some text.
@@ -47,26 +18,10 @@ const SmallLogo = ({ fill = "var(--blue)" }) => {
  * @return {JSX.Element}
  * @constructor
  */
-export default function Logo({
-  text = "default_logo_text",
-  href = "/",
-  fill = "var(--blue)",
-  ...props
-}) {
+export default function Logo({ href = "/", type = "BLUE", ...props }) {
   if (props.skeleton) {
     return <Logo {...props} />;
   }
-
-  const isDefault = text === "default_logo_text";
-  const translated = Translate({ context: "logo", label: text });
-  let color = "default";
-  if (fill === "var(--white)") {
-    color = "white";
-  }
-
-  const translated2 = translated.map(
-    (translation) => translation.props.children
-  );
 
   return (
     <Link
@@ -77,24 +32,14 @@ export default function Logo({
       })}
     >
       <div className={styles.display_flex}>
-        {isDefault ? (
-          <DefaultLogo fill={fill} />
-        ) : (
-          <>
-            <SmallLogo fill={fill} />
-
-            <Text
-              type="text1"
-              tag={"div"}
-              className={`${color === "white" ? styles.white : ""} ${
-                styles.text
-              }`}
-            >
-              <div className={styles.logotxt1}>{translated2[0]}</div>
-              <div>{translated2[1]}</div>
-            </Text>
-          </>
-        )}
+        <LogoWithText
+          style={{ color: type === "BLUE" ? "var(--blue)" : "var(--white)" }}
+          className={cx({
+            [styles.defaultLogo_Blue]: type === "BLUE",
+            [styles.defaultLogo_White]: type === "WHITE",
+          })}
+          alt={Translate({ context: "logo", label: "default_logo_text" })}
+        />
       </div>
     </Link>
   );
@@ -102,7 +47,7 @@ export default function Logo({
 
 // PropTypes for Button component
 Logo.propTypes = {
-  text: PropTypes.oneOf(["default_logo_text", "help_logo_text"]),
+  type: PropTypes.oneOf(["BLUE", "WHITE"]),
   fill: PropTypes.oneOf(["var(--blue)", "var(--white)"]),
   href: PropTypes.string,
 };

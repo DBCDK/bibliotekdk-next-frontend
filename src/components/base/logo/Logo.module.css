@@ -12,22 +12,6 @@
   }
 }
 
-.white {
-  color: var(--white);
-}
-
-.text {
-  margin-top: calc(var(--pt05) * -0.25);
-  line-height: 22px;
-  display: flex;
-  flex-direction: column;
-  transform: scale(1, 1.05);
-}
-
-.logotxt1 {
-  margin-bottom: calc(var(--pt05) * -1.2);
-}
-
 .defaultLogo_Blue {
   color: var(--blue);
 }
