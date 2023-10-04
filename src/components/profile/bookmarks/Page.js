@@ -25,12 +25,13 @@ const sortByItems = [
 
 const BookmarkPage = () => {
   const {
-    bookmarks: bookmarksData,
+    paginatedBookmarks: bookmarksData,
     setSortBy,
     deleteBookmarks,
     currentPage,
     totalPages,
-    setCurrentPage
+    setCurrentPage,
+    count,
   } = useBookmarks();
   const { data: bookmarks } = usePopulateBookmarks(bookmarksData);
   const [activeStickyButton, setActiveStickyButton] = useState(null);
@@ -127,8 +128,6 @@ const BookmarkPage = () => {
     checkboxList?.filter((e) => e.isSelected === false).length === 0;
   const isNothingSelected =
     checkboxList?.filter((e) => e.isSelected === true).length === 0;
-
-
 
   return (
     <ProfileLayout
@@ -274,16 +273,14 @@ const BookmarkPage = () => {
             />
           ))}
       </div>
-      <Pagination
-        numPages={totalPages}
-        currentPage={currentPage}
-        className={styles.pagination}
-
-
-        //   numPages={totalPages}
-        //   currentPage={parseInt(currentPage, 10)}
-         onChange={onPageChange}
-      />
+      {totalPages > 1 && (
+        <Pagination
+          numPages={totalPages}
+          currentPage={currentPage}
+          className={styles.pagination}
+          onChange={onPageChange}
+        />
+      )}
     </ProfileLayout>
   );
 };

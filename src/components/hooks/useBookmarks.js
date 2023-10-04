@@ -30,7 +30,6 @@ export const BookmarkSyncProvider = () => {
 const useBookmarksCore = ({ isMock = false, session }) => {
   const isAuthenticated = isMock ? false : !!session?.user?.uniqueId;
   const [sortBy, setSortBy] = useState("createdAt");
-  //const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
   let {
@@ -58,14 +57,16 @@ const useBookmarksCore = ({ isMock = false, session }) => {
       key: bookmark.materialId + bookmark.materialType,
     }));
 
-    const hitcount = globalBookmarksUserObject?.user?.bookmarks?.hitcount ;
+  let hitcount = 0;
 
-    const totalPages = Math.ceil(
-      hitcount / itemsPerPage
-    );
-    console.log('totalPages',totalPages)
+  if (isAuthenticated) {
+    hitcount = globalBookmarksUserObject?.user?.bookmarks?.hitcount || 0;
+  } else {
+    hitcount = localBookmarks?.length || 0;
+  }
 
-    console.log('globalBookmarksUserObject',globalBookmarksUserObject)
+  const totalPages = Math.ceil(hitcount / itemsPerPage);
+
   const syncCookieBookmarks = async () => {
     if (!isAuthenticated) return; // Not authenticated
     const cookies = await JSON.parse(localStorage.getItem(KEY_NAME));
@@ -227,6 +228,15 @@ const useBookmarksCore = ({ isMock = false, session }) => {
       ? createdAtSort(bookmarksToSort)
       : titleSort(bookmarksToSort);
   }
+  /**
+   * Returns localbookmarks sorted by users preference
+   */
+  function currenPageBookmark(bookmarkToPaginate) {
+    const startIdx = (currentPage - 1) * itemsPerPage;
+    const endIdx = startIdx + itemsPerPage;
+    const currentPageBookmarks = bookmarkToPaginate.slice(startIdx, endIdx);
+    return currentPageBookmarks;
+  }
 
   return {
     setBookmark,
@@ -235,6 +245,9 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     bookmarks: isAuthenticated
       ? globalBookmarks
       : sortedBookMarks(localBookmarks),
+    paginatedBookmarks: isAuthenticated
+      ? globalBookmarks
+      : currenPageBookmark(sortedBookMarks(localBookmarks)),
     isLoading:
       (typeof localBookmarks === "undefined" && !error) ||
       (isLoadingGlobalBookmarks && !globalBookmarksError),
@@ -243,6 +256,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     currentPage,
     totalPages,
     setCurrentPage,
+    count: hitcount ?? localBookmarks?.length ?? 0,
   };
 };
 
