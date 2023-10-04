@@ -197,6 +197,11 @@
   display: block;
 }
 
+.bookmarkOrderButtonContainer {
+  min-width: 100px;
+  margin-right: var(--pt3);
+}
+
 .debtDynamicColumn {
   grid-column: 1;
 }

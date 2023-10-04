@@ -31,6 +31,7 @@ import { onClickDelete } from "@/components/_modal/pages/deleteOrder/utils";
 import { handleRenewLoan } from "../utils";
 import MaterialRowTooltip from "./materialRowTooltip/MaterialRowTooltip";
 import SkeletonMaterialRow from "./skeleton/Skeleton";
+import ReservationButtonWrapper from "@/components/work/reservationbutton/ReservationButton";
 
 // Set to when warning should be shown
 export const DAYS_TO_COUNTDOWN_RED = 5;
@@ -458,16 +459,26 @@ const MaterialRow = (props) => {
       case "BOOKMARK":
         return (
           <div className={styles.dynamicColumnHorizontal}>
-            <Button
-              type="primary"
-              size="small"
-              className={styles.bookmarkActionButton}
-            >
-              {Translate({
-                context: "bookmark",
-                label: "order",
-              })}
-            </Button>
+            <div className={styles.bookmarkOrderButtonContainer}>
+            {!!pid ? (
+              
+              <ReservationButtonWrapper
+                workId={workId}
+                selectedPids={[pid]}
+                singleManifestation={true}
+                buttonType="primary"
+                size="small"
+              />
+            ) : (
+              <ReservationButtonWrapper
+                workId={workId}
+                singleManifestation={false}
+                buttonType="primary"
+                size="small"
+              />
+            )}
+            </div>
+
             <IconButton onClick={onBookmarkDelete}>
               {Translate({
                 context: "bookmark",
