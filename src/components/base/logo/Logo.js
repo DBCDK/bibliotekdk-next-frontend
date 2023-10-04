@@ -8,13 +8,10 @@ import cx from "classnames";
 
 /**
  * Component is a svg and some text.
- * @param text
- *  LABEL of the text to show
  * @param href
  *  Where to go when clicked
- * @param fill
+ * @param type
  *  Color of text and svg logo
- * @param props
  * @return {JSX.Element}
  * @constructor
  */
