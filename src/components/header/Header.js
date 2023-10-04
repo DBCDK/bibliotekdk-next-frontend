@@ -270,7 +270,7 @@ export function Header({
                 </form>
               </div>
             </Col>
-            <Col xs={{ span: 2 }}>
+            <Col xs={{ span: 2 }} className={styles.iconActionsContainer}>
               <div
                 className={styles.iconActions}
                 data-cy={cyKey({
@@ -315,8 +315,8 @@ export function Header({
 export function StaticHeader({ router = null, context }) {
   return (
     <>
-      <Col xs={3} lg={2}>
-        <Logo fill={"var(--blue)"} text={"default_logo_text"} />
+      <Col xs={3} lg={2} className={styles.logoWrapper}>
+        <Logo />
       </Col>
       <Col
         xs={{ span: 9, offset: 1 }}
