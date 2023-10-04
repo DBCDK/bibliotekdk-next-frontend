@@ -24,7 +24,11 @@
   padding-left: calc(var(--pt2) * -1);
 }
 
-.svgscale i svg {
+.svgscale button {
+  border-color: var(--iron);
+}
+
+.svgscale button i svg {
   transform: scale(0.75);
 }
 

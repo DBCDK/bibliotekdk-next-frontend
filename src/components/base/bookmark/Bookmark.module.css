@@ -1,7 +1,7 @@
 .bookmark {
   background-color: var(--white);
   display: flex;
-  border: 2px solid var(--gray);
+  border: 2px solid transparent;
 }
 
 .bookmark {
