@@ -48,6 +48,5 @@ export default function Logo({ href = "/", type = "BLUE", ...props }) {
 // PropTypes for Button component
 Logo.propTypes = {
   type: PropTypes.oneOf(["BLUE", "WHITE"]),
-  fill: PropTypes.oneOf(["var(--blue)", "var(--white)"]),
   href: PropTypes.string,
 };
