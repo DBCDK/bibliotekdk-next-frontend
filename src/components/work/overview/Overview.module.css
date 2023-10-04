@@ -26,6 +26,7 @@
 
 .svgscale button {
   border-color: var(--iron);
+  border-width: 2px;
 }
 
 .svgscale button i svg {
