@@ -26,6 +26,7 @@
   margin-top: var(--pt2);
   margin-bottom: var(--pt2);
   gap: var(--pt4);
+  padding-left: var(--pt1);
 }
 
 .col_wrapper {
