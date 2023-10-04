@@ -10,11 +10,6 @@ import { highlightMarkedWords } from "@/components/_modal/utils";
 import Translate from "@/components/base/translate";
 import { getLibraryType, LibraryTypeEnum } from "@/lib/utils";
 
-const textProps = {
-  clamp: true,
-  lines: 1,
-};
-
 /**
  * When there is no query, show this default agencyBranches, which are branches that have holdings
  * @param {string} agency
@@ -29,12 +24,14 @@ function DefaultShowingOfAgencyBranches({ agency }) {
 
   return (
     <>
-      <Text {...textProps}>
+      <Text clamp={true}>
         {Translate({
           context: "localizations",
           label:
             numberOfBranchesWithAvailable > 1
               ? "home_at_branches"
+              : numberOfBranchesWithAvailable === 0
+              ? "home_at_no_branches"
               : "home_at_1_branch",
           vars: [numberOfBranchesWithAvailable],
         })}
@@ -44,7 +41,7 @@ function DefaultShowingOfAgencyBranches({ agency }) {
             label:
               LibraryTypeEnum.DANISH_PUBLIC_LIBRARY !== publicLibrary
                 ? "or_more_branches"
-                : numberOfBranchesWithAvailable > 1
+                : numberOfBranchesWithAvailable !== 1
                 ? "branches"
                 : "branch",
           })}
@@ -85,7 +82,7 @@ function FormattedBranchesWithHighlights({ branchesWithHighlights }) {
     })
     ?.map((branch, index) => {
       return (
-        <Text {...textProps} key={index}>
+        <Text clamp={true} key={index}>
           {branch.branchName}
           {branch.postalCode && ", "}
           {branch.postalCode}
@@ -137,7 +134,6 @@ export default function AgencyLocalizationItem({
       pids && {
         pids: pids,
         agencyId: agencyId,
-        query: query,
       }
   );
 

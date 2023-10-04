@@ -399,8 +399,8 @@ export function handleAgencyAccessData(agencies) {
 
 /**
  * {@link useAgencyIdsConformingToQuery} finds agencyIds that conform to query
- * @param {Array.<string>} pids
- * @param {string} q
+ * @param {Array.<string>=} pids
+ * @param {string=} q
  * @returns {{isLoading: boolean, agencyIds: Array.<Object>}}
  */
 export function useAgencyIdsConformingToQuery({ pids, q }) {
@@ -423,8 +423,8 @@ export function useAgencyIdsConformingToQuery({ pids, q }) {
 
 /**
  * {@link useSingleAgency} finds an agency by its agencyId
- * @param {Array.<string>} pids
- * @param {string} agencyId
+ * @param {Array.<string>=} pids
+ * @param {string=} agencyId
  * @returns {{agenciesIsLoading: boolean, count: number, agenciesFlatSorted: Array.<Object>}}
  */
 export function useSingleAgency({ pids, agencyId }) {
@@ -442,8 +442,8 @@ export function useSingleAgency({ pids, agencyId }) {
 
 /**
  * {@link useHighlightsForSingleAgency} finds highlights for branches in a single Agency
- * @param {string} agencyId
- * @param {string} query
+ * @param {string=} agencyId
+ * @param {string=} query
  * @returns {{branchesWithHighlightsIsLoading: boolean, branchesWithHighlights: Array.<Object>, agencyHighlight: Object}}
  */
 export function useHighlightsForSingleAgency({ agencyId, query = "" }) {
@@ -475,8 +475,8 @@ export function useHighlightsForSingleAgency({ agencyId, query = "" }) {
 
 /**
  * {@link useSingleBranch} finds a branch by its branchId
- * @param {Array.<string>} pids
- * @param {string} branchId
+ * @param {Array.<string>=} pids
+ * @param {string=} branchId
  * @returns {{agenciesIsLoading: boolean, count: number, agenciesFlatSorted: Array<Object>}}
  */
 export function useSingleBranch({ pids, branchId }) {
