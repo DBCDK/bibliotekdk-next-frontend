@@ -45,7 +45,7 @@ export function dateIsToday(date) {
  * @param {Object} item
  * @returns {boolean}
  */
-function checkAvailableNow(item) {
+export function checkAvailableNow(item) {
   const expectedDelivery = item?.expectedDelivery;
   const status = item?.status;
   const isDanishPublicLibrary =
@@ -78,7 +78,7 @@ export function dateIsLater(date) {
  * @param {Object} item
  * @returns {boolean}
  */
-function checkAvailableLater(item) {
+export function checkAvailableLater(item) {
   const expectedDelivery = item?.expectedDelivery;
   const status = item?.status;
   const isDanishPublicLibrary =
@@ -114,7 +114,7 @@ export function dateIsNever(date) {
  * @param {Object} item
  * @returns {boolean}
  */
-function checkAvailableNever(item) {
+export function checkAvailableNever(item) {
   const expectedDelivery = item?.expectedDelivery;
   const status = item?.status;
 
@@ -129,7 +129,10 @@ function checkAvailableNever(item) {
  * @returns {boolean}
  */
 function dateIsUnknown(date) {
-  return !date || typeof date !== "string" || isNaN(Date.parse(date));
+  return (
+    ((!date || isNaN(Date.parse(date))) && date !== "never") ||
+    typeof date !== "string"
+  );
 }
 
 /**
@@ -139,7 +142,7 @@ function dateIsUnknown(date) {
  * @param {Object} item
  * @returns {boolean}
  */
-function checkUnknownAvailability(item) {
+export function checkUnknownAvailability(item) {
   const expectedDelivery = item?.expectedDelivery;
   return dateIsUnknown(expectedDelivery);
 }
@@ -181,7 +184,7 @@ function getAvailabilityById(items) {
  * @param {Object} availability
  * @returns {string}
  */
-function getAvailabilityAccumulated(availability) {
+export function getAvailabilityAccumulated(availability) {
   return availability[AvailabilityEnum.NOW] > 0
     ? AvailabilityEnum.NOW
     : availability[AvailabilityEnum.LATER] > 0
@@ -198,7 +201,7 @@ function getAvailabilityAccumulated(availability) {
  * @param {Array.<Object>} items
  * @returns {Object}
  */
-function getAvailability(items) {
+export function getAvailability(items) {
   const availabilityObject = {
     [AvailabilityEnum.NOW]: 0,
     [AvailabilityEnum.LATER]: 0,
@@ -221,11 +224,11 @@ function getAvailability(items) {
 }
 
 /**
- * {@link getExpectedDeliveryAccumulatedFromHoldings} gets and sorts expectedDelivery from all given holdings
+ * {@link getExpectedDeliveryAccumulatedFromHoldings} gets the best expectedDelivery from all given holdings
  * @param {Array.<Object>} holdingItems
  * @returns {*}
  */
-function getExpectedDeliveryAccumulatedFromHoldings(holdingItems) {
+export function getExpectedDeliveryAccumulatedFromHoldings(holdingItems) {
   return holdingItems
     .map((item) => item.expectedDelivery)
     .sort(compareDate)?.[0];
@@ -236,8 +239,8 @@ function getExpectedDeliveryAccumulatedFromHoldings(holdingItems) {
  * @param {Object} branch
  * @returns {Object}
  */
-function getHoldingsWithInfoOnPickupAllowed(branch) {
-  return branch?.holdingItems.map((item) => {
+export function getHoldingsWithInfoOnPickupAllowed(branch) {
+  return branch?.holdingItems?.map((item) => {
     return {
       ...item,
       pickupAllowed: branch?.pickupAllowed,
@@ -254,7 +257,7 @@ function getHoldingsWithInfoOnPickupAllowed(branch) {
  * @param {Object} b
  * @returns {number}
  */
-function sortByAvailability(a, b) {
+export function sortByAvailability(a, b) {
   return getFirstMatch(true, 0, [
     [b?.pickupAllowed === false, -1],
     [a?.pickupAllowed === false, 1],
@@ -272,7 +275,7 @@ function sortByAvailability(a, b) {
  * @param {Object} branch
  * @returns {*&{expectedDeliveryAccumulatedFromHoldings: *, holdingStatus, availabilityById: {[AvailabilityEnum.UNKNOWN]: number, [AvailabilityEnum.LATER]: number, [AvailabilityEnum.NEVER]: number, [AvailabilityEnum.NOW]: number, localHoldingsId: *, pid: *}[], expectedDelivery: *, branchName, availabilityAccumulated: string, availability: {[AvailabilityEnum.UNKNOWN]: number, [AvailabilityEnum.LATER]: number, [AvailabilityEnum.NEVER]: number, [AvailabilityEnum.NOW]: number}, agencyName, holdingItems}}
  */
-function enrichBranches(branch) {
+export function enrichBranches(branch) {
   const branchHoldingsWithInfoOnPickupAllowed =
     getHoldingsWithInfoOnPickupAllowed(branch);
 
@@ -314,7 +317,7 @@ function enrichBranches(branch) {
  * @param {DateString} b
  * @returns {number}
  */
-function compareDate(a, b) {
+export function compareDate(a, b) {
   return getFirstMatch(true, 0, [
     [!a && !b, 0],
     [a && !b, -1],
