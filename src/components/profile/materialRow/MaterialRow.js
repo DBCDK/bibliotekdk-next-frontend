@@ -12,7 +12,6 @@ import { useMutate } from "@/lib/api/api";
 import PropTypes from "prop-types";
 import Icon from "@/components/base/icon";
 import IconButton from "@/components/base/iconButton";
-import { getWorkUrl } from "@/lib/utils";
 import ErrorRow from "../errorRow/ErrorRow";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { useModal } from "@/components/_modal";
@@ -23,6 +22,7 @@ import {
   timestampToShortDate,
 } from "@/utils/datetimeConverter";
 import {
+  getWorkUrlForProfile,
   handleLoanMutationUpdates,
   handleOrderMutationUpdates,
 } from "./../utils";
@@ -260,7 +260,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
       ...props,
     });
   };
-  const isDebtRow = type === "DEBT";
+
   return (
     <ConditionalWrapper
       condition={type === "DEBT"}
@@ -270,7 +270,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
           className={cx(styles.materialRow_mobile, {
             [styles.materialRow_green]: status === "GREEN",
             [styles.materialRow_red]: status === "RED",
-            [styles.materialRow_debt]: isDebtRow,
+            [styles.materialRow_debt]: type === "DEBT",
           })}
           data-cy={dataCy}
         >
@@ -296,7 +296,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
         </article>
       )}
     >
-      {!isDebtRow && (
+      {type !== "DEBT" && (
         <div>{!!image && <Cover src={image} size="fill-width" />}</div>
       )}
       <div className={styles.textContainer}>
@@ -312,14 +312,14 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
         )}
 
         <div className={styles.dynamicContent}>{renderDynamicColumn()}</div>
-        {isDebtRow && (
+        {type === "DEBT" && (
           <div>
             <Text type="text2">{library}</Text>
           </div>
         )}
       </div>
 
-      {!isDebtRow && (
+      {type !== "DEBT" && (
         <div className={styles.arrowright_container}>
           <Icon
             alt=""
@@ -364,6 +364,7 @@ const MaterialRow = (props) => {
     creator,
     materialType,
     creationYear,
+    edition,
     library,
     agencyId,
     id: materialId,
@@ -382,6 +383,8 @@ const MaterialRow = (props) => {
     isSelected,
     onSelect,
     onBookmarkDelete,
+    pid,
+    workId,
   } = props;
   const breakpoint = useBreakpoint();
   const { updateUserStatusInfo } = useUser();
@@ -576,7 +579,7 @@ const MaterialRow = (props) => {
       </>
     );
   }
-  const isDebtRow = type === "DEBT";
+
   return (
     <>
       {hasDeleteError && type === "ORDER" && (
@@ -618,7 +621,7 @@ const MaterialRow = (props) => {
               [styles.materialRow_red]: status === "RED",
               [styles.materialRow_animated]: materialId === removedOrderId,
               [styles.materialRow_bookmark]: type === "BOOKMARK",
-              [styles.debtRow]: isDebtRow,
+              [styles.debtRow]: type === "DEBT",
             })}
             data-cy={dataCy}
           >
@@ -633,6 +636,7 @@ const MaterialRow = (props) => {
                 checked={isSelected}
                 id={`material-row-${materialId}`}
                 ariaLabelledBy={`material-title-${materialId}`}
+                ariaLabel={title}
                 tabIndex="-1"
                 readOnly
               />
@@ -640,7 +644,7 @@ const MaterialRow = (props) => {
           )}
           <div
             className={cx(styles.materialInfo, {
-              [styles.debtMaterial]: isDebtRow,
+              [styles.debtMaterial]: type === "DEBT",
             })}
           >
             {!!image && (
@@ -659,11 +663,12 @@ const MaterialRow = (props) => {
                         keepVisible: true,
                       },
                     }}
-                    href={getWorkUrl(
-                      title,
-                      [{ nameSort: creator || "", display: creator || "" }],
-                      materialId
-                    )}
+                    href={getWorkUrlForProfile({
+                      workId,
+                      pid,
+                      materialId,
+                      materialType,
+                    })}
                     className={styles.blackUnderline}
                   >
                     {children}
@@ -692,22 +697,25 @@ const MaterialRow = (props) => {
               )}
               {materialType && (
                 <Text
-                  type="text2"
-                  className={styles.uppercase}
+                  type={type === "BOOKMARK" ? "text3" : "text2"}
+                  className={cx(styles.uppercase, {
+                    [styles.bookmarkMaterial]: type === "BOOKMARK",
+                  })}
                   dataCy="materialtype-and-creationyear"
                 >
                   {materialType} {creationYear && <>, {creationYear}</>}
+                  {edition && <span>{edition}</span>}
                 </Text>
               )}
             </div>
           </div>
-          <div className={cx({ [styles.debtDynamicColumn]: isDebtRow })}>
+          <div className={cx({ [styles.debtDynamicColumn]: type === "DEBT" })}>
             {renderDynamicColumn()}
           </div>
 
           {type !== "BOOKMARK" && (
             <>
-              <div className={cx({ [styles.debtLibrary]: isDebtRow })}>
+              <div className={cx({ [styles.debtLibrary]: type === "DEBT" })}>
                 <Text type="text2">{library}</Text>
               </div>
 
@@ -730,6 +738,7 @@ MaterialRow.propTypes = {
   image: PropTypes.string,
   creator: PropTypes.string,
   materialType: PropTypes.string,
+  edition: PropTypes.string,
   creationYear: PropTypes.string,
   library: PropTypes.string,
   hasCheckbox: PropTypes.bool,

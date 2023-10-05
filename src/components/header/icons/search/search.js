@@ -19,7 +19,11 @@ export default function SearchIcon(props) {
   const { className } = props;
 
   return (
-    <Action {...props} className={`${className} ${styles.trigger}`}>
+    <Action
+      {...props}
+      className={`${className} ${styles.trigger}`}
+      data-icon-type="search"
+    >
       <div className={styles.search}>
         <div className={styles.icon}>
           <div className={styles.lens}>

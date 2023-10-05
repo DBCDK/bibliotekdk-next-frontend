@@ -1,23 +1,25 @@
 .display_flex {
+  height: var(--pt6);
   width: fit-content;
-  padding-top: var(--pt1);
   display: flex;
   align-items: center;
   gap: var(--pt1);
 }
 
-.white {
+@media (min-width: 992px) {
+  .display_flex {
+    padding-top: var(--pt1);
+  }
+}
+
+.defaultLogo_Blue {
+  color: var(--blue);
+}
+
+.defaultLogo_White {
   color: var(--white);
 }
 
-.text {
-  margin-top: calc(var(--pt05) * -0.25);
-  line-height: 22px;
-  display: flex;
-  flex-direction: column;
-  transform: scale(1, 1.05);
-}
-
-.logotxt1 {
-  margin-bottom: calc(var(--pt05) * -1.2);
+.defaultLogo_Blue *[data-text="true"] {
+  color: var(--mine-shaft);
 }

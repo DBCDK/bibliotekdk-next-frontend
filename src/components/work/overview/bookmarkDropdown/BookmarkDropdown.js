@@ -8,23 +8,23 @@ import { cyKey } from "@/utils/trim";
 import useBookmarks from "@/components/hooks/useBookmarks";
 import Icon from "@/components/base/icon/Icon";
 import BookmarkMedium from "@/public/icons/bookmark_small.svg";
+import { formatMaterialTypesToPresentation } from "@/lib/manifestationFactoryUtils";
 
 export function BookMarkMaterialSelector({
   materialTypes,
   workId,
   size = { w: 7, h: 7 },
   className,
+  title,
 }) {
-  const bookmarkClick = () => {};
-
   const { bookmarks, setBookmark, isLoading } = useBookmarks();
 
   const onSelect = (material, workId) => {
     const item = {
-      key: workId + material,
+      key: workId + formatMaterialTypesToPresentation(material),
       materialId: workId,
-      materialType: material[0],
-      title: "",
+      materialType: formatMaterialTypesToPresentation(material),
+      title,
     };
     setBookmark(item);
   };
@@ -43,7 +43,8 @@ export function BookMarkMaterialSelector({
       } else if (options.length === 1) {
         // if we have one material only we look for a specific key
         bookmarkIndex = bookmarks?.findIndex(
-          (bookm) => bookm.key === workId + options[0]
+          (bookm) =>
+            bookm.key === workId + formatMaterialTypesToPresentation(options)
         );
       }
       setActive(bookmarkIndex !== -1);
@@ -56,8 +57,9 @@ export function BookMarkMaterialSelector({
         size={size}
         className={`${styles.bookmark} ${className}`}
         selected={active}
-        onClick={() => {
-          onSelect(options[0], workId);
+        onClick={(e) => {
+          e.preventDefault();
+          onSelect(options, workId);
         }}
       />
     );
@@ -77,7 +79,7 @@ export function BookMarkMaterialSelector({
       >
         <Bookmark
           size={size}
-          onClick={bookmarkClick}
+          onClick={(e) => e.preventDefault()}
           selected={active}
           className={styles.bookmark}
         />
@@ -93,7 +95,9 @@ export function BookMarkMaterialSelector({
         {options.map((material, index) => {
           const activeItem =
             bookmarks?.findIndex(
-              (book) => book.key === workId + material[0]
+              (book) =>
+                book.key ===
+                workId + formatMaterialTypesToPresentation(material)
             ) !== -1;
           return (
             <Dropdown.Item
@@ -102,13 +106,14 @@ export function BookMarkMaterialSelector({
               className={`${styles.dropdownitem} ${
                 activeItem ? styles.active : ""
               }`}
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 onSelect(material, workId);
               }}
             >
               <div className={styles.itemContainer}>
                 <Text type="text3" className={styles.dropdownitemText}>
-                  {material}
+                  {formatMaterialTypesToPresentation(material)}
                 </Text>
 
                 <Icon size={{ w: 3, h: 3 }}>
@@ -123,13 +128,20 @@ export function BookMarkMaterialSelector({
   );
 }
 
-export default function wrapper({ materialTypes, workId, size, className }) {
+export default function wrapper({
+  materialTypes,
+  workId,
+  title,
+  size,
+  className,
+}) {
   return (
     <BookMarkMaterialSelector
       materialTypes={materialTypes}
       workId={workId}
       size={size}
       className={className}
+      title={title}
     />
   );
 }

@@ -159,6 +159,8 @@ export function Overview({
                 <BookMarkDropDown
                   workId={workId}
                   materialTypes={uniqueMaterialTypes}
+                  title={work?.titles?.full[0]}
+                  className={styles.svgscale}
                 />
               </Col>
 

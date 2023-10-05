@@ -12,17 +12,32 @@ import ProfileLayout from "../profileLayout/ProfileLayout";
 import Translate from "@/components/base/translate";
 import MenuDropdown from "@/components/base/dropdown/menuDropdown/MenuDropdown";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import List from "@/components/base/forms/list";
+import isEmpty from "lodash/isEmpty";
 
 const CONTEXT = "bookmark";
 const MENUITEMS = ["Bestil flere", "Hent referencer", "Fjern flere"];
+const sortByItems = [
+  { label: "latestAdded", key: "createdAt" },
+  { label: "alphabeticalOrder", key: "title" },
+];
 
 const BookmarkPage = () => {
-  const { bookmarks: bookmarksData, deleteBookmarks } = useBookmarks();
+  const {
+    bookmarks: bookmarksData,
+    setSortBy,
+    deleteBookmarks,
+  } = useBookmarks();
   const { data: bookmarks } = usePopulateBookmarks(bookmarksData);
   const [activeStickyButton, setActiveStickyButton] = useState(null);
   const breakpoint = useBreakpoint();
+  const [sortByValue, setSortByValue] = useState(sortByItems[0].key);
   const isMobile = breakpoint === "sm" || breakpoint === "xs";
   const [checkboxList, setCheckboxList] = useState();
+
+  useEffect(() => {
+    setSortBy(sortByValue);
+  }, [sortByValue]);
 
   useEffect(() => {
     setCheckboxList(
@@ -76,6 +91,26 @@ const BookmarkPage = () => {
     deleteBookmarks(selectedBookmarks);
   };
 
+  const constructEditionText = (bookmark) => {
+    if (!bookmark.pid) {
+      return null;
+    }
+
+    /**
+     * Matches string construction on work page
+     */
+    return (
+      bookmark?.hostPublication?.title ||
+      [
+        ...bookmark?.publisher,
+        ...(!isEmpty(bookmark?.edition?.edition)
+          ? [bookmark?.edition?.edition]
+          : []),
+      ].join(", ") ||
+      ""
+    );
+  };
+
   const isAllSelected =
     checkboxList?.length > 0 &&
     checkboxList?.filter((e) => e.isSelected === false).length === 0;
@@ -107,14 +142,28 @@ const BookmarkPage = () => {
       )}
 
       <div className={styles.sortingRow}>
-        <Text tag="small" type="small" className={styles.smallLabel}>
+        <Text tag="small" type="text3" className={styles.smallLabel}>
           {bookmarks?.length}{" "}
           {Translate({
             context: CONTEXT,
             label: "result-amount",
           })}
         </Text>
-        <div>{/* Sorting options here */}</div>
+        <div>
+          <List.Group className={styles.sortingContainer} disableGroupOutline>
+            {sortByItems.map(({ label, key }) => (
+              <List.Radio
+                className={styles.sortingItem}
+                key={key}
+                selected={sortByValue === key}
+                onSelect={() => setSortByValue(key)}
+                label={key}
+              >
+                <Text>{Translate({ context: "profile", label: label })}</Text>
+              </List.Radio>
+            ))}
+          </List.Group>
+        </div>
       </div>
 
       <div className={styles.buttonControls}>
@@ -130,6 +179,10 @@ const BookmarkPage = () => {
             disabled={checkboxList?.length === 0}
             id="bookmarkpage-select-all"
             aria-labelledby="bookmarkpage-select-all-label"
+            ariaLabel={Translate({
+              context: CONTEXT,
+              label: "select-all",
+            })}
             tabIndex="-1"
             readOnly
             className={styles.selectAll}
@@ -177,14 +230,15 @@ const BookmarkPage = () => {
               hasCheckbox={!isMobile || activeStickyButton !== null}
               title={bookmark?.titles?.main[0] || ""}
               creator={bookmark?.creators[0]?.display}
-              materialType={
-                bookmark?.manifestations?.bestRepresentation?.materialTypes[0]
-                  ?.specific
-              }
+              materialType={bookmark.materialType}
               image={
+                bookmark?.cover?.thumbnail ??
                 bookmark?.manifestations?.bestRepresentation?.cover?.thumbnail
               }
-              id={bookmark?.workId}
+              id={bookmark?.materialId}
+              edition={constructEditionText(bookmark)}
+              workId={bookmark?.workId}
+              pid={bookmark?.pid}
               type="BOOKMARK"
               isSelected={checkboxList[idx]?.isSelected}
               onBookmarkDelete={() =>

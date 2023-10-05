@@ -212,14 +212,15 @@ export default function ResultRow({
                 })}
             </div>
           </div>
+          <BookmarkDropdown
+            className={styles.BookmarkDropdown}
+            workId={work?.workId}
+            materialTypes={uniqueMaterialTypes}
+            title={work?.titles?.full?.[0]}
+            size={{ w: 4, h: 4 }}
+          />
         </div>
       </Link>
-      <BookmarkDropdown
-        className={styles.BookmarkDropdown}
-        workId={work?.workId}
-        materialTypes={uniqueMaterialTypes}
-        size={{ w: 4, h: 4 }}
-      />
     </article>
   );
 }

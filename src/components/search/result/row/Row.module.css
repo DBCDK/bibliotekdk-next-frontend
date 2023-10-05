@@ -4,11 +4,6 @@
   position: relative;
 }
 
-.wrapper:focus,
-.wrapper:hover {
-  z-index: 2;
-}
-
 .wrapper {
   width: 100%;
 
@@ -25,22 +20,24 @@
 .row_wrapper {
   width: auto;
   display: grid;
-  --grid_template_columns: 1fr 3fr;
+  --grid_template_columns: 1fr 7fr;
   grid-template-columns: var(--grid_template_columns);
   justify-content: space-between;
   margin-top: var(--pt2);
   margin-bottom: var(--pt2);
   gap: var(--pt4);
+  padding-left: var(--pt1);
 }
 
 .col_wrapper {
   display: flex;
   flex-direction: column;
-  padding-right: 50px;
+  padding-right: var(--pt2);
 }
 
 .display_inline {
   display: inline;
+  margin-right: var(--pt3);
 }
 
 .wrap_3_lines {
@@ -109,13 +106,23 @@
   }
 
   .row_wrapper {
-    --grid_template_columns: 1fr 3fr;
+    --grid_template_columns: 1fr 7fr;
   }
+}
+
+.row_wrapper:hover button {
+  border-color: var(--gray);
+}
+
+.row_wrapper button:hover {
+  border-color: var(--blue);
 }
 
 .BookmarkDropdown {
   position: absolute;
-  right: 10px;
-  top: 20px;
-  z-index: 2;
+  right: var(--pt1);
+  top: var(--pt2);
+}
+.BookmarkDropdown button {
+  border: 1px solid transparent;
 }

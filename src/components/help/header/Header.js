@@ -42,7 +42,7 @@ export function Header({
     >
       <Row className={styles.row}>
         <Col xs={3}>
-          <Logo fill={"var(--blue)"} text={"default_logo_text"} />
+          <Logo />
         </Col>
 
         <Col

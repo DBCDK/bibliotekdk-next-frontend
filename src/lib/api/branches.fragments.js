@@ -100,32 +100,30 @@ export function branchHoldings({ branchId, pids }) {
 /**
  * Get orderPolicy for a branch
  */
-export function branchOrderPolicy({ branchId, pid }) {
+export function branchOrderPolicy({ branchId, pids }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `
-    query BranchesOrderPolicy($branchId: String!, $language: LanguageCode!, $pid: String!) {
+    query BranchesOrderPolicy($branchId: String!, $language: LanguageCode!, $pids: [String!]!) {
       branches(branchId: $branchId, language: $language) {
         result {
-          orderPolicy(pid: $pid) {
+          orderPolicy(pids: $pids) {
             orderPossible
             orderPossibleReason
             lookUpUrl
+            lookUpUrls
           }
           digitalCopyAccess
         }
       }
       monitor(name: "bibdknext_branch_orderPolicy")
      }`,
-    variables: { branchId, language: lang, pid },
+    variables: { branchId, language: lang, pids },
     slowThreshold: 3000,
   };
 }
 
-/**
- * AgencyUrl and userIsBlocked
- */
 export function checkBlockedUser({ branchId }) {
   return {
     apiUrl: ApiEnums.FBI_API,
@@ -134,9 +132,12 @@ export function checkBlockedUser({ branchId }) {
     query checkBlockedUser($branchId: String!, $language: LanguageCode!) {
       branches(branchId: $branchId, language: $language) {
         agencyUrl
+        borrowerStatus {
+          allowed
+          statusCode
+        }
         result {
           agencyName
-        	userIsBlocked
         	branchWebsiteUrl
         }
       }

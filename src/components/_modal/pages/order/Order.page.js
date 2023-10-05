@@ -19,6 +19,9 @@ import { onMailChange } from "@/components/_modal/pages/order/utils/order.utils"
 import { useRelevantAccessesForOrderPage } from "@/components/work/utils";
 import { validateEmail } from "@/utils/validateEmail";
 import NoAgenciesError from "./noAgencies/NoAgenciesError";
+import useUser from "@/components/hooks/useUser";
+import * as branchesFragments from "@/lib/api/branches.fragments";
+import { useData } from "@/lib/api/api";
 
 /**
  *  Order component function
@@ -46,6 +49,18 @@ function Order({
     pickupBranch,
     isLoadingBranches = false,
   } = pickupBranchInfo;
+
+  const { authUser, loanerInfo, isLoggedIn } = useUser();
+
+  const pickUpAgencyInfo = useData(
+    loanerInfo?.pickupBranch &&
+      branchesFragments.checkBlockedUser({ branchId: loanerInfo.pickupBranch })
+  );
+
+  const borrowerStatus = pickUpAgencyInfo?.data?.branches?.borrowerStatus;
+  const branches = pickUpAgencyInfo?.data?.branches;
+  const showBlockedUserInfo =
+    (borrowerStatus && !borrowerStatus.allowed) || !authUser || !isLoggedIn;
 
   // Sets if user has unsuccessfully tried to submit the order
   const [failedSubmission, setFailedSubmission] = useState(false);
@@ -139,7 +154,7 @@ function Order({
   function onSubmitOrder() {
     if (validated.status) {
       modal.push("receipt", {
-        pid,
+        pids: orderPids,
         order: {
           data: orderMutation.data,
           error: orderMutation.error,
@@ -177,7 +192,12 @@ function Order({
         singleManifestation={singleManifestation}
       />
       <LocalizationInformation context={context} />
-      {user && <BlockedUserInformation />}
+      {user && showBlockedUserInfo && (
+        <BlockedUserInformation
+          statusCode={borrowerStatus?.statusCode}
+          branches={branches}
+        />
+      )}
       <OrdererInformation
         context={context}
         validated={validated}
@@ -191,6 +211,7 @@ function Order({
         validated={validated}
         failedSubmission={failedSubmission}
         onClick={onSubmitOrder}
+        blockedForBranch={!borrowerStatus?.allowed}
       />
     </div>
   );
@@ -260,11 +281,11 @@ export default function Wrap(props) {
   }, [context.pid]);
 
   const { userInfo, pickupBranchInfo, accessTypeInfo } =
-    useOrderPageInformation(
-      context?.workId,
-      context?.pid,
-      context?.periodicaForm
-    );
+    useOrderPageInformation({
+      workId: context?.workId,
+      periodicaForm: context?.periodicaForm,
+      pids: context?.pids,
+    });
 
   const { allowedAccessesByTypeName, manifestationResponse } =
     useRelevantAccessesForOrderPage(context?.pids);
@@ -299,7 +320,7 @@ export default function Wrap(props) {
     error: manifestationError,
   } = manifestationResponse;
 
-  if (isManifestationsLoading) {
+  if (isManifestationsLoading || userInfo.userIsLoading) {
     return <OrderSkeleton isSlow={isManifestationsSlow} />;
   }
   // check if user logged in via mitId - and has no connection to any libraries

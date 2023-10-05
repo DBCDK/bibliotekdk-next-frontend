@@ -3,6 +3,9 @@ import { LocalizationItem } from "./localizationitem/LocalizationItem";
 import { LocalizationsLink } from "@/components/work/overview/localizationslink/LocalizationsLink";
 import Modal, { useModal } from "@/components/_modal";
 import { useEffect } from "react";
+import automock_utils from "@/lib/automock_utils.fixture";
+
+const { BORROWER_STATUS_TRUE } = automock_utils();
 
 const exportedObject = {
   title: "modal/Localizations",
@@ -13,6 +16,7 @@ export default exportedObject;
 const greatGatsby = {
   data: {
     branches: {
+      borrowerStatus: BORROWER_STATUS_TRUE,
       result: [
         {
           name: "Hovedbiblioteket, Krystalgade",
@@ -139,6 +143,7 @@ const dummySearch = {
   data: {
     branches: {
       hitcount: 7,
+      borrowerStatus: BORROWER_STATUS_TRUE,
       result: [
         {
           agencyId: "717500",

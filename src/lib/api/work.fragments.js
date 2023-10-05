@@ -570,23 +570,22 @@ export function pidsToWorks({ pids }) {
     apiUrl: ApiEnums.FBI_API,
     query: `
     query pidsToWorks($pids: [String!]!) {
-      works(pid: $pids) {
-        workId
-        titles {
-          main
+      manifestations(pid: $pids) {
+        pid
+        titles {main}
+        cover {
+          thumbnail
         }
         creators {
           display
         }
-        manifestations {
-          bestRepresentation {
-            cover {
-              thumbnail
-            }
-            materialTypes {
-              specific
-            }
-          }
+        hostPublication {
+          title
+        }
+        publisher
+        edition {
+          summary
+          edition
         }
       }
     }
@@ -778,6 +777,26 @@ export function pidToWorkId({ pid }) {
     }
     ${creatorsFragment}`,
     variables: { pid },
+    slowThreshold: 3000,
+  };
+}
+
+export function faustToWork({ faust }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query faustToWork($faust: String!) {
+      work(faust: $faust) {
+        titles {
+          main
+        }
+        creators{
+          display
+        }
+        workId
+      }
+    }`,
+    variables: { faust },
     slowThreshold: 3000,
   };
 }

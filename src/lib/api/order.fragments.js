@@ -6,7 +6,7 @@ import { ApiEnums } from "@/lib/api/api";
 export function orderHistory({ offset, limit }) {
   return {
     apiUrl: ApiEnums.FBI_API,
-    query: `query orderPolicy ($offset: Int!, $limit: PaginationLimit! ) { 
+    query: `query orderHistory($offset: Int!, $limit: PaginationLimit! ) { 
         user {
           bibliotekDkOrders(offset: $offset, limit: $limit, ) {
             result {

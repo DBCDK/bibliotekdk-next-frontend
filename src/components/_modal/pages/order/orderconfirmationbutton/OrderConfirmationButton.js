@@ -16,9 +16,9 @@ function OrderConfirmationButton({
   availableAsPhysicalCopy,
   isDigitalCopy,
   isLoading,
-  blockedUser,
   onClick,
   context,
+  blockedForBranch,
 }) {
   return (
     <>
@@ -59,9 +59,9 @@ function OrderConfirmationButton({
         </div>
         <Button
           disabled={
-            blockedUser ||
-            blockedUser === null ||
-            (!availableAsDigitalCopy && !availableAsPhysicalCopy)
+            (!availableAsDigitalCopy && !availableAsPhysicalCopy) ||
+            isLoading ||
+            blockedForBranch
           }
           skeleton={isLoading}
           onClick={onClick}
@@ -80,35 +80,30 @@ OrderConfirmationButton.propTypes = {
   availableAsPhysicalCopy: PropTypes.any,
   skeleton: PropTypes.any,
   onClick: PropTypes.func,
+  blockedForBranch: PropTypes.bool,
 };
 export default function Wrap({
   context,
   validated,
   failedSubmission,
   onClick,
+  blockedForBranch,
 }) {
-  const { workId, pid, periodicaForm } = context;
+  const { workId, pid, periodicaForm, pids } = context;
   const { invalidClass, actionMessage } = extractClassNameAndMessage(
     validated,
     failedSubmission
   );
 
-  const {
-    accessTypeInfo,
-    pickupBranchInfo,
-    blockedUserResponse,
-    workResponse,
-  } = useOrderPageInformation(workId, pid, periodicaForm);
+  const { accessTypeInfo, pickupBranchInfo, workResponse } =
+    useOrderPageInformation({
+      workId: workId,
+      periodicaForm: periodicaForm,
+      pids: pids ?? [pid],
+    });
 
   const { isLoading: isWorkLoading } = workResponse;
-  const { isLoading: isBlockedUserLoading } = blockedUserResponse;
   const { isLoading: isPickupBranchLoading } = pickupBranchInfo;
-
-  const blockedUser =
-    blockedUserResponse?.data?.branches?.result
-      ?.map((res) => res.userIsBlocked)
-      .filter((singleUserIsBlocked) => singleUserIsBlocked === true).length > 0;
-
   const { isDigitalCopy, availableAsDigitalCopy, availableAsPhysicalCopy } =
     accessTypeInfo;
 
@@ -119,10 +114,10 @@ export default function Wrap({
       availableAsDigitalCopy={availableAsDigitalCopy}
       availableAsPhysicalCopy={availableAsPhysicalCopy}
       isDigitalCopy={isDigitalCopy}
-      isLoading={isWorkLoading || isBlockedUserLoading || isPickupBranchLoading}
-      blockedUser={blockedUser}
+      isLoading={isWorkLoading || isPickupBranchLoading}
       onClick={onClick}
       context={context}
+      blockedForBranch={blockedForBranch}
     />
   );
 }
