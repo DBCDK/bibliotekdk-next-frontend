@@ -23,6 +23,7 @@ export function basic() {
         mail
         address
         postalCode
+        isCPRValidated
         agencies {
           hitcount
           result {

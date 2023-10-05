@@ -17,6 +17,8 @@ import { signIn } from "next-auth/react";
 
 import LibrarySearch from "./librarySearch/LibrarySearch";
 
+import Translate from "@/components/base/translate/Translate";
+
 import SearchResultList from "./searchResultList/SearchResultList";
 import useWindowSize from "@/components/hooks/useWindowSize";
 
@@ -49,7 +51,7 @@ export function AddLibrary({
   context,
 }) {
   const allBranches = data?.result;
-  const { title, originUrl = null, callbackUID = null } = context || {};
+  const { title } = context;
   const windowWidth = useWindowSize().width;
   const isMobile = windowWidth <= 414;
 
@@ -57,15 +59,47 @@ export function AddLibrary({
 
   const onSelect = (branch) => {
     if (branch?.borrowerCheck) {
+      const adgangsplatformTitle = Translate({
+        context: "addLibrary",
+        label: "adgangsplatformTitle",
+        vars: [branch.agencyName],
+      });
+      const adgangsplatformText = Translate({
+        context: "addLibrary",
+        label: "adgangsplatformText",
+      });
+
+      const UID = modal.saveToStore("verify", {
+        branchId: branch.branchId,
+        agencyName: branch.agencyName,
+        callbackUID: UID,
+      });
+
       modal.push("openAdgangsplatform", {
+        title: adgangsplatformTitle,
+        text: adgangsplatformText,
         agencyId: branch.agencyId,
         branchId: branch.branchId,
-        agencyName: originUrl ? originUrl : branch.agencyName, //TODO do we have originUrl and how does it look like?
-        callbackUID: callbackUID,
+        agencyName: branch.agencyName,
+        callbackUID: UID,
       });
-    } else {
-      modal.push("loginNotSupported", {
-        libraryName: branch.agencyName,
+    }
+    // if Agency doesn't support borchk - show error in modal
+    else {
+      const errorTitle = Translate({
+        context: "errorMessage",
+        label: "addLibraryNoBorchkTitle",
+      });
+      const errorText = Translate({
+        context: "errorMessage",
+        label: "addLibraryNoBorchkText",
+        vars: [`<strong>${branch.agencyName}</strong>`],
+        renderAsHtml: true,
+      });
+
+      modal.push("errorMessage", {
+        title: errorTitle,
+        text: errorText,
       });
     }
   };

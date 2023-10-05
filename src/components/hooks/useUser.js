@@ -42,6 +42,7 @@ function useUserMock() {
     isLoading: false,
     error: null,
     isAuthenticated: true,
+    isCPRValidated: true,
     isLoggedIn: true,
     loanerInfo: { ...data, userParameters: { ...loggedInUser } },
     updateLoanerInfo: (obj) => {
@@ -71,6 +72,8 @@ function useUserImpl() {
     isValidating,
   } = useData(isAuthenticated && userFragments.basic());
 
+  console.log("userData", userData);
+
   let loggedInUser = {};
   if (userData?.user) {
     const user = userData.user;
@@ -81,6 +84,8 @@ function useUserImpl() {
       loggedInUser.userMail = user.mail;
     }
   }
+
+  const isCPRValidated = !!userData?.user?.isCPRValidated;
 
   const sessionData = useMemo(() => {
     const sessionCopy = data?.session;
@@ -142,6 +147,7 @@ function useUserImpl() {
     isLoading: userIsLoading,
     error: userDataError,
     isAuthenticated,
+    isCPRValidated,
     loanerInfo,
     isGuestUser: isGuestUser,
     isLoggedIn: isAuthenticated || isGuestUser,

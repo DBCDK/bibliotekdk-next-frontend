@@ -28,6 +28,7 @@ function IconButton({
   textType = "text3",
   keepUnderline,
   dataCy,
+  disabled = false,
   ...props
 }) {
   return (
@@ -37,8 +38,11 @@ function IconButton({
         animations["on-hover"],
         animations["on-focus"],
         styles.focusStyle,
+        disabled && styles.disabled,
         className
       )}
+      disabled={disabled}
+      tabIndex={disabled ? "-1" : "0"}
       onClick={() => onClick && onClick()}
       data-cy={dataCy}
       {...props}

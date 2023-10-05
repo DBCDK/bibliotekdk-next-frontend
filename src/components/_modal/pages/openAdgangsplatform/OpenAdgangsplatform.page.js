@@ -13,21 +13,34 @@ import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
  * @param {context} context
  * @returns
  */
-export default function OpenAdgangsplatform({ context }) {
-  const { agencyName, agencyId, branchId, callbackUID } = context;
-  const callBackUrl = getCallbackUrl(branchId, callbackUID);
+export default function OpenAdgangsplatform({ modal, context }) {
+  const { agencyName, title, text, agencyId, branchId, callbackUID } = context;
+
   const onLogin = () => {
-    signIn(
-      "adgangsplatformen",
-      { callbackUrl: callBackUrl },
-      { agency: agencyId, force_login: 1 }
-    );
+    console.log("modal push => verify", { agencyId, branchId, callbackUID });
+
+    modal.push("verify", { agencyId, branchId, callbackUID });
+
+    // const callBackUrl = getCallbackUrl(branchId, callbackUID);
+
+    // signIn(
+    //   "adgangsplatformen",
+    //   { callbackUrl: callBackUrl },
+    //   { agency: agencyId, force_login: 1 }
+    // );
   };
 
   const submitting = false;
-  const title = Translate({
+
+  const defaultTitle = Translate({
     context: "login",
     label: "plainLogin-title",
+  });
+
+  const defaultText = Translate({
+    context: "login",
+    label: "plainLogin-description",
+    vars: [agencyName],
   });
 
   return (
@@ -35,14 +48,10 @@ export default function OpenAdgangsplatform({ context }) {
       <Top />
       <div>
         <Title type="title4" tag="h2">
-          {title}
+          {title || defaultTitle}
         </Title>
         <Text type="text2" tag="span" className={styles.inline}>
-          {Translate({
-            context: "login",
-            label: "plainLogin-description",
-            vars: [agencyName],
-          })}
+          {text || defaultText}
         </Text>
         <Button
           dataCy="go-to-library-login"

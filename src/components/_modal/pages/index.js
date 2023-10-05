@@ -17,6 +17,8 @@ import MobileLogin from "./mobileLogin";
 import OpenAdgangsplatform from "./openAdgangsplatform";
 import LoginNotSupported from "./loginNotSupported";
 import AddLibrary from "./addLibrary";
+import Verify from "./verify";
+import ErrorMessage from "./errorMessage";
 
 const _modal = {
   Menu,
@@ -38,6 +40,8 @@ const _modal = {
   LoginNotSupported,
   OpenAdgangsplatform,
   AddLibrary,
+  Verify,
+  ErrorMessage,
 };
 
 export default _modal;

@@ -1,0 +1,22 @@
+.container {
+  padding: 0 var(--pt2);
+}
+
+.header {
+  padding-bottom: var(--pt2);
+}
+
+.text {
+  padding-bottom: var(--pt2);
+}
+
+.closeButton {
+  margin-top: var(--pt4);
+  margin-bottom: var(--pt4);
+}
+
+@media (min-width: 576px) {
+  .container {
+    padding: var(--pt2) var(--pt6) var(--pt4);
+  }
+}

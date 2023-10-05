@@ -7,8 +7,9 @@ import * as userFragments from "@/lib/api/user.fragments";
 import useUser from "@/components/hooks/useUser";
 import Text from "@/components/base/text";
 import IconButton from "@/components/base/iconButton/IconButton";
-import { useModal } from "@/components/_modal/Modal";
+
 import { useState } from "react";
+import AddLibraryButton from "./addLibraryButton/AddLibraryButton";
 
 /**
  * Shows the users libraries and makes it possible to add a new library
@@ -23,8 +24,6 @@ export default function MyLibrariesPage() {
   const { data: userData } = useData(
     isAuthenticated && userFragments.branchesForUser()
   );
-
-  const modal = useModal();
 
   //An array of user agencies.
   const agencies = userData?.user?.agencies
@@ -62,18 +61,7 @@ export default function MyLibrariesPage() {
         data={agencies}
         municipalityAgencyId={municipalityAgencyId}
       />
-      <IconButton
-        icon="chevron"
-        className={styles.addLibrary}
-        textType="text2"
-        onClick={() =>
-          modal.push("addLibrary", {
-            title: Translate({ context: "addLibrary", label: "title" }),
-          })
-        }
-      >
-        {Translate({ context: "profile", label: "addLibrary" })}
-      </IconButton>
+      <AddLibraryButton />
     </Layout>
   );
 }

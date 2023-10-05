@@ -21,3 +21,7 @@
 .focusStyle:focus-visible {
   outline: 1px solid var(--blue);
 }
+
+.disabled {
+  pointer-events: none;
+}
