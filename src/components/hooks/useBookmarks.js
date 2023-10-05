@@ -42,15 +42,16 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     mutate: mutateGlobalBookmarks,
   } = useData(isAuthenticated && bookmarkFragments.fetchAll({ sortBy }));
   const bookmarkMutation = useMutate();
+
   const globalBookmarks =
     globalBookmarksUserObject?.user?.bookmarks?.result?.map((bookmark) => ({
       ...bookmark,
       key: bookmark.materialId + bookmark.materialType,
-    }));
+    })) || [];
 
   const syncCookieBookmarks = async () => {
     if (!isAuthenticated) return; // Not authenticated
-    const cookies = await JSON.parse(localStorage.getItem(KEY_NAME));
+    const cookies = await JSON.parse(localStorage.getItem(KEY_NAME) || "[]");
     if (!cookies || !Array.isArray(cookies) || cookies.length === 0) return; // Nothing to sync
 
     try {
