@@ -613,6 +613,16 @@ export function idsToWorks({ ids }) {
           display
         }
         manifestations {
+          mostRelevant {
+            pid
+            ownerWork {
+              workId
+              workTypes
+            }
+            materialTypes {
+              specific
+            }
+          }
           bestRepresentation {
             cover {
               thumbnail

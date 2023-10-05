@@ -31,7 +31,7 @@ import { onClickDelete } from "@/components/_modal/pages/deleteOrder/utils";
 import { handleRenewLoan } from "../utils";
 import MaterialRowTooltip from "./materialRowTooltip/MaterialRowTooltip";
 import SkeletonMaterialRow from "./skeleton/Skeleton";
-import ReservationButtonWrapper from "@/components/work/reservationbutton/ReservationButton";
+import BookmarkColumn from "./dynamicColumns/bookmarkColumn";
 
 // Set to when warning should be shown
 export const DAYS_TO_COUNTDOWN_RED = 5;
@@ -383,7 +383,9 @@ const MaterialRow = (props) => {
     hasCheckbox = false,
     isSelected,
     onSelect,
+    // Bookmark version
     onBookmarkDelete,
+    allManifestations,
     pid,
     workId,
   } = props;
@@ -458,34 +460,13 @@ const MaterialRow = (props) => {
         );
       case "BOOKMARK":
         return (
-          <div className={styles.dynamicColumnHorizontal}>
-            <div className={styles.bookmarkOrderButtonContainer}>
-            {!!pid ? (
-              
-              <ReservationButtonWrapper
-                workId={workId}
-                selectedPids={[pid]}
-                singleManifestation={true}
-                buttonType="primary"
-                size="small"
-              />
-            ) : (
-              <ReservationButtonWrapper
-                workId={workId}
-                singleManifestation={false}
-                buttonType="primary"
-                size="small"
-              />
-            )}
-            </div>
-
-            <IconButton onClick={onBookmarkDelete}>
-              {Translate({
-                context: "bookmark",
-                label: "remove",
-              })}
-            </IconButton>
-          </div>
+          <BookmarkColumn
+            workId={workId}
+            pid={pid}
+            materialType={materialType}
+            onBookmarkDelete={onBookmarkDelete}
+            allManifestations={allManifestations}
+          />
         );
       default:
         return null;
@@ -743,6 +724,10 @@ const MaterialRow = (props) => {
   );
 };
 
+/**
+ * @TODO Pack props in type packages, or something more clean
+ */
+
 MaterialRow.propTypes = {
   id: PropTypes.string.isRequired, //materialId
   title: PropTypes.string.isRequired,
@@ -765,6 +750,7 @@ MaterialRow.propTypes = {
   removedOrderId: PropTypes.string,
   setRemovedOrderId: PropTypes.func,
   onBookmarkDelete: PropTypes.func,
+  allManifestations: PropTypes.any, // @TODO
   isSelected: PropTypes.bool,
   onSelect: PropTypes.func,
   skeleton: PropTypes.bool,

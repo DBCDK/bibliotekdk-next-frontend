@@ -14,7 +14,6 @@ import MenuDropdown from "@/components/base/dropdown/menuDropdown/MenuDropdown";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import List from "@/components/base/forms/list";
 import isEmpty from "lodash/isEmpty";
-import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 
 const CONTEXT = "bookmark";
 const MENUITEMS = ["Bestil flere", "Hent referencer", "Fjern flere"];
@@ -242,6 +241,7 @@ const BookmarkPage = () => {
                 bookmark?.pid ? bookmark?.ownerWork?.workId : bookmark?.workId
               }
               pid={bookmark?.pid}
+              allManifestations={bookmark?.manifestations?.mostRelevant}
               type="BOOKMARK"
               isSelected={checkboxList[idx]?.isSelected}
               onBookmarkDelete={() =>
