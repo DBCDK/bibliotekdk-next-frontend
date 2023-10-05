@@ -34,7 +34,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     data: localBookmarks,
     mutate: mutateLocalBookmarks,
     error,
-  } = useSWR(KEY_NAME, (key) => JSON.parse(localStorage.getItem(key)) || []);
+  } = useSWR(KEY_NAME, (key) => JSON.parse(localStorage.getItem(key) || "[]"));
   const {
     data: globalBookmarksUserObject,
     isLoading: isLoadingGlobalBookmarks,
