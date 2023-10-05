@@ -5,8 +5,10 @@ import { useEffect, useState, useMemo } from "react";
 import * as bookmarkMutations from "@/lib/api/bookmarks.mutations";
 import * as bookmarkFragments from "@/lib/api/bookmarks.fragments";
 import { useSession } from "next-auth/react";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 const KEY_NAME = "bookmarks";
+const itemsPerPage = 4;
 
 export const BookmarkSyncProvider = () => {
   const { syncCookieBookmarks } = useBookmarks();
@@ -29,6 +31,9 @@ export const BookmarkSyncProvider = () => {
 const useBookmarksCore = ({ isMock = false, session }) => {
   const isAuthenticated = isMock ? false : !!session?.user?.uniqueId;
   const [sortBy, setSortBy] = useState("createdAt");
+  const [currentPage, setCurrentPage] = useState(1);
+  const breakpoint = useBreakpoint();
+  const isMobile = breakpoint === "xs" || breakpoint === "sm";
 
   let {
     data: localBookmarks,
@@ -40,13 +45,30 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     isLoading: isLoadingGlobalBookmarks,
     error: globalBookmarksError,
     mutate: mutateGlobalBookmarks,
-  } = useData(isAuthenticated && bookmarkFragments.fetchAll({ sortBy }));
+  } = useData(
+    isAuthenticated &&
+      bookmarkFragments.fetchAll({
+        sortBy,
+        limit: isMobile ? currentPage * itemsPerPage : itemsPerPage,
+        offset: isMobile ? 0 : (currentPage - 1) * itemsPerPage,
+      })
+  );
   const bookmarkMutation = useMutate();
   const globalBookmarks =
     globalBookmarksUserObject?.user?.bookmarks?.result?.map((bookmark) => ({
       ...bookmark,
       key: bookmark.materialId + bookmark.materialType,
     }));
+
+  let hitcount;
+
+  if (isAuthenticated) {
+    hitcount = globalBookmarksUserObject?.user?.bookmarks?.hitcount || 0;
+  } else {
+    hitcount = localBookmarks?.length || 0;
+  }
+
+  const totalPages = Math.ceil(hitcount / itemsPerPage);
 
   const syncCookieBookmarks = async () => {
     if (!isAuthenticated) return; // Not authenticated
@@ -209,6 +231,17 @@ const useBookmarksCore = ({ isMock = false, session }) => {
       ? createdAtSort(bookmarksToSort)
       : titleSort(bookmarksToSort);
   }
+  /**
+   * Returns a of localbookmarks that corresponds to the current page of local bookmarks.
+   */
+  function currenPageBookmark(bookmarkToPaginate) {
+    const startIdx = isMobile ? 0 : (currentPage - 1) * itemsPerPage;
+    const endIdx = isMobile
+      ? startIdx + itemsPerPage * currentPage
+      : startIdx + itemsPerPage;
+    const currentPageBookmarks = bookmarkToPaginate.slice(startIdx, endIdx);
+    return currentPageBookmarks;
+  }
 
   return {
     setBookmark,
@@ -217,11 +250,18 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     bookmarks: isAuthenticated
       ? globalBookmarks
       : sortedBookMarks(localBookmarks),
+    paginatedBookmarks: isAuthenticated
+      ? globalBookmarks
+      : currenPageBookmark(sortedBookMarks(localBookmarks)),
     isLoading:
       (typeof localBookmarks === "undefined" && !error) ||
       (isLoadingGlobalBookmarks && !globalBookmarksError),
     syncCookieBookmarks,
     setSortBy,
+    currentPage,
+    totalPages,
+    setCurrentPage,
+    count: hitcount ?? localBookmarks?.length ?? 0,
   };
 };
 
