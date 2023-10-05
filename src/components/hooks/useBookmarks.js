@@ -5,6 +5,7 @@ import { useEffect, useState, useMemo } from "react";
 import * as bookmarkMutations from "@/lib/api/bookmarks.mutations";
 import * as bookmarkFragments from "@/lib/api/bookmarks.fragments";
 import { useSession } from "next-auth/react";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 const KEY_NAME = "bookmarks";
 const itemsPerPage = 4;
@@ -31,6 +32,8 @@ const useBookmarksCore = ({ isMock = false, session }) => {
   const isAuthenticated = isMock ? false : !!session?.user?.uniqueId;
   const [sortBy, setSortBy] = useState("createdAt");
   const [currentPage, setCurrentPage] = useState(1);
+  const breakpoint = useBreakpoint();
+  const isMobile = breakpoint === "xs" || breakpoint === "sm";
 
   let {
     data: localBookmarks,
@@ -46,8 +49,8 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     isAuthenticated &&
       bookmarkFragments.fetchAll({
         sortBy,
-        limit: itemsPerPage,
-        offset: (currentPage - 1) * itemsPerPage,
+        limit: isMobile ? currentPage * itemsPerPage : itemsPerPage,
+        offset: isMobile ? 0 : (currentPage - 1) * itemsPerPage,
       })
   );
   const bookmarkMutation = useMutate();
@@ -232,8 +235,10 @@ const useBookmarksCore = ({ isMock = false, session }) => {
    * Returns a of localbookmarks that corresponds to the current page of local bookmarks.
    */
   function currenPageBookmark(bookmarkToPaginate) {
-    const startIdx = (currentPage - 1) * itemsPerPage;
-    const endIdx = startIdx + itemsPerPage;
+    const startIdx = isMobile ? 0 : (currentPage - 1) * itemsPerPage;
+    const endIdx = isMobile
+      ? startIdx + itemsPerPage * currentPage
+      : startIdx + itemsPerPage;
     const currentPageBookmarks = bookmarkToPaginate.slice(startIdx, endIdx);
     return currentPageBookmarks;
   }
