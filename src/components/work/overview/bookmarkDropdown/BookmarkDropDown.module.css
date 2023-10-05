@@ -30,8 +30,9 @@
   display: block;
 }
 
-.dropdownitem:focus {
-  background-color: transparent;
+.dropdownitem.active:focus {
+  background-color: var(--blue);
+  color: white;
 }
 
 .dropdownitemText {
@@ -56,9 +57,13 @@
   color: var(--white);
 }
 
-.dropdownitem.active:focus {
+.dropdownitem.active:focus-visible {
   background-color: black;
   color: var(--white);
+}
+
+.dropdownitem:focus {
+  background-color: transparent;
 }
 
 .dropdownitem.active:focus i svg path {

@@ -17,7 +17,6 @@ export function BookMarkMaterialSelector({
   className,
   title,
 }) {
-  const bookmarkClick = () => {};
   const { bookmarks, setBookmark, isLoading } = useBookmarks();
 
   const onSelect = (material, workId) => {
@@ -58,7 +57,8 @@ export function BookMarkMaterialSelector({
         size={size}
         className={`${styles.bookmark} ${className}`}
         selected={active}
-        onClick={() => {
+        onClick={(e) => {
+          e.preventDefault();
           onSelect(options, workId);
         }}
       />
@@ -79,7 +79,7 @@ export function BookMarkMaterialSelector({
       >
         <Bookmark
           size={size}
-          onClick={bookmarkClick}
+          onClick={(e) => e.preventDefault()}
           selected={active}
           className={styles.bookmark}
         />
@@ -106,7 +106,8 @@ export function BookMarkMaterialSelector({
               className={`${styles.dropdownitem} ${
                 activeItem ? styles.active : ""
               }`}
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 onSelect(material, workId);
               }}
             >

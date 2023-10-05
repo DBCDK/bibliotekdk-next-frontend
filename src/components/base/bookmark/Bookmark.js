@@ -49,7 +49,7 @@ function Bookmark({
       title={title}
       data-cy={key}
       className={`${className} ${styles.bookmark} ${selectedClass}`}
-      onClick={() => (onClick ? onClick() : handleOnBookmarkClick())}
+      onClick={(e) => (onClick ? onClick(e) : handleOnBookmarkClick(e))}
     >
       <Icon skeleton={skeleton} disabled={disabled} size={size} alt="bookmark">
         <BookmarkSvg />
