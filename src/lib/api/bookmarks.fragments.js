@@ -3,8 +3,8 @@ export const fetchAll = ({ sortBy, limit, offset }) => {
     query: `
     query userBookmarks {
       user {
-         bookmarks(orderBy:${sortBy}, limit:${limit}, offset:${offset} ) {
-        hitcount
+        bookmarks(orderBy:${sortBy}, limit:${limit}, offset:${offset} ) {
+          hitcount
           result {
             bookmarkId
             materialType
