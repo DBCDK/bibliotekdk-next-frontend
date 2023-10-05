@@ -57,7 +57,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
       key: bookmark.materialId + bookmark.materialType,
     }));
 
-  let hitcount = 0;
+  let hitcount;
 
   if (isAuthenticated) {
     hitcount = globalBookmarksUserObject?.user?.bookmarks?.hitcount || 0;
