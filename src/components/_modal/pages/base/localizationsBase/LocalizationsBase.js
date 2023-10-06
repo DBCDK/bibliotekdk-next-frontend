@@ -37,7 +37,7 @@ function LocalizationsBase({
   query,
   setQuery,
 }) {
-  const { modal, singleManifestation } = context;
+  const { modal } = context;
 
   const { data: manifestationsData } = useData(
     pids &&
@@ -65,8 +65,6 @@ function LocalizationsBase({
           top: cx(styles.padding_inline, styles.top),
         }}
       />
-
-      <div>Singlemanifestation: {JSON.stringify(singleManifestation)}</div>
 
       {subtitle && (
         <Title className={cx(styles.padding_inline)} type="title5" tag={"h3"}>
