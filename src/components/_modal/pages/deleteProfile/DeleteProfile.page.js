@@ -38,7 +38,7 @@ export function ProfileInfo({ modal }) {
 
   return (
     <div className={styles.modalContainer}>
-      <Top title={"Slet bruger"} back />
+      <Top title={"Slet profil"} back />
       <Text className={styles.deleteTextTitle} type="tex1">
         Vil du slette din brugerprofil på bibliotek.dk?{" "}
       </Text>
