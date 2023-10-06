@@ -56,9 +56,9 @@ export function ProfileInfo({ modal }) {
       </div>
 
       <div className={styles.buttonsContainer}>
-        <Button className={styles.logoutButton} size="large" type="primary">
+        {/* <Button className={styles.logoutButton} size="large" type="primary">
           Log ud 
-        </Button>
+        </Button> */}
         <Link
         onClick={()=>{
           modal.push("deleteProfile");
