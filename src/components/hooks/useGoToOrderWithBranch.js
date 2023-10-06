@@ -1,6 +1,6 @@
 /**
  * @file
- * This file provides the hook useGoToOrderWithBranch that helpt
+ * This file provides the hook useGoToOrderWithBranch that helps to go to Order modal with a given branch
  */
 
 import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAndSelectedPids";
@@ -50,7 +50,6 @@ export function useGoToOrderWithBranch({
   const pids = uniq(
     allEnrichedAccesses?.map((singleAccess) => singleAccess?.pid)
   );
-  //
 
   // BranchId is used to get borrowerCheck for branch
   const branchId = branchWithoutBorrowerCheck?.branchId;
