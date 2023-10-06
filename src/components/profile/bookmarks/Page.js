@@ -23,6 +23,29 @@ const sortByItems = [
   { label: "alphabeticalOrder", key: "title" },
 ];
 
+/**
+ *
+ * Radio buttons to choose how to sort Bookmarks
+ * @returns
+ */
+const SortButtons = ({ sortByItems, setSortByValue, sortByValue }) => {
+  return (
+    <List.Group className={styles.sortingContainer} disableGroupOutline>
+      {sortByItems.map(({ label, key }) => (
+        <List.Radio
+          className={styles.sortingItem}
+          key={key}
+          selected={sortByValue === key}
+          onSelect={() => setSortByValue(key)}
+          label={key}
+        >
+          <Text>{Translate({ context: "profile", label: label })}</Text>
+        </List.Radio>
+      ))}
+    </List.Group>
+  );
+};
+
 const BookmarkPage = () => {
   const {
     paginatedBookmarks: bookmarksData,
@@ -160,22 +183,21 @@ const BookmarkPage = () => {
             label: "result-amount",
           })}
         </Text>
-        <div>
-          <List.Group className={styles.sortingContainer} disableGroupOutline>
-            {sortByItems.map(({ label, key }) => (
-              <List.Radio
-                className={styles.sortingItem}
-                key={key}
-                selected={sortByValue === key}
-                onSelect={() => setSortByValue(key)}
-                label={key}
-              >
-                <Text>{Translate({ context: "profile", label: label })}</Text>
-              </List.Radio>
-            ))}
-          </List.Group>
-        </div>
+        {!isMobile && (
+          <SortButtons
+            sortByItems={sortByItems}
+            sortByValue={sortByValue}
+            setSortByValue={setSortByValue}
+          />
+        )}
       </div>
+      {isMobile && (
+        <SortButtons
+          sortByItems={sortByItems}
+          sortByValue={sortByValue}
+          setSortByValue={setSortByValue}
+        />
+      )}
 
       <div className={styles.buttonControls}>
         <div
