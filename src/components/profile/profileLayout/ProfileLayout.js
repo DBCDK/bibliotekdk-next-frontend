@@ -136,26 +136,25 @@ const LogoutButton = () => {
           className={styles.logoutBtnText}
           skeleton={user?.isLoading}
           lines={1}
-        >{`${Translate({
-          context: "profile",
-          label: "signed-in-as-name",
-        })} 
+        >
+          {`${Translate({
+            context: "profile",
+            label: "signed-in-as-name",
+          })} 
   `}
-       <Link
-       onClick={()=>{
-
-        modal.push("profileInfo");
-
-       }}
-         border={{
-          top: false,
-          bottom: {
-            keepVisible: true,
-          },
-        }}
-       >{` 
+          <Link
+            onClick={() => {
+              modal.push("profileInfo");
+            }}
+            border={{
+              top: false,
+              bottom: {
+                keepVisible: true,
+              },
+            }}
+          >{` 
         ${userName}`}</Link>
-       </Text>
+        </Text>
       )}
       {/* <Link
         onClick={() => {

@@ -45,15 +45,13 @@ export function ProfileInfo({ modal }) {
       <Text className={styles.deleteText}>
         Dette vil slette din huskeliste, bestillingshistorik, søgehistorik og
         evt. tilføjede uddannelsesbiblioteker.
-        
-        <br/> <br/>Bemærk: Du slettes ikke fra de
-        biblioteker, du er oprettet ved. Kontakt dit lokale bibliotek for dette.
+        <br /> <br />
+        Bemærk: Du slettes ikke fra de biblioteker, du er oprettet ved. Kontakt
+        dit lokale bibliotek for dette.
       </Text>
-      <div className={styles.buttonsContainer}>
-        <Button className={styles.logoutButton} size="large" type="primary">
-          Slet bruger
-        </Button>
-      </div>
+      <Button className={styles.deleteUserButton} size="large" type="primary">
+        Slet bruger
+      </Button>
     </div>
   );
 }
