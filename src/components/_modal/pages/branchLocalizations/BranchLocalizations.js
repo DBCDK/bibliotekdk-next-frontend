@@ -93,6 +93,7 @@ export default function BranchLocalizations({ context, modal }) {
   const availabilityOnAgencyAccumulated =
     agency?.availabilityOnAgencyAccumulated;
   const onlyHoldingsOnAgency =
+    availabilityOnAgencyAccumulated === AvailabilityEnum.NOW &&
     availabilityAccumulated !== availabilityOnAgencyAccumulated;
 
   return (
