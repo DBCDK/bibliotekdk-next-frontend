@@ -10,15 +10,14 @@ import Title from "@/components/base/title/Title";
 import { IconLink } from "@/components/base/iconlink/IconLink";
 import ExternalSvg from "@/public/icons/external_small.svg";
 import animations from "css/animations";
-import { templateForLocalizations } from "@/components/base/materialcard/templates/templates";
 import styles from "./BranchDetails.module.css";
 import cx from "classnames";
-import ReservationButton from "@/components/work/reservationbutton";
 import BranchDetailsStatus from "@/components/_modal/pages/branchDetails/branchDetailsStatus/BranchDetailsStatus";
 import { useSingleBranch } from "@/components/hooks/useHandleAgencyAccessData";
 import isEmpty from "lodash/isEmpty";
 import Button from "@/components/base/button/Button";
 import * as PropTypes from "prop-types";
+import { useGoToOrderWithBranch } from "@/components/hooks/useGoToOrderWithBranch";
 
 /**
  * {@link OpeningHours} for {@link BranchDetails}
@@ -216,6 +215,14 @@ export default function BranchDetails({ context }) {
   );
   const workId = workIds?.[0];
 
+  const { handleOnSelectEnriched, borrowerCheckIsLoading } =
+    useGoToOrderWithBranch({
+      context: context,
+      selectedPids: pids,
+      workId: workId,
+      branchWithoutBorrowerCheck: singleBranch,
+    });
+
   const branchDetailsLoading =
     agenciesIsLoading || manifestationsIsLoading || orderPolicyIsLoading;
 
@@ -235,11 +242,7 @@ export default function BranchDetails({ context }) {
   }
 
   return (
-    <LocalizationsBase
-      context={context}
-      pids={pids}
-      materialCardTemplate={templateForLocalizations}
-    >
+    <LocalizationsBase context={context} pids={pids}>
       <LocalizationsBase.Information>
         <Title type={"title6"} className={cx(styles.branch_status)}>
           Status
@@ -266,19 +269,22 @@ export default function BranchDetails({ context }) {
         <LocalizationsBase.Information
           className={cx(styles.reservationButton_container)}
         >
-          {!branchDetailsLoading ? (
-            <ReservationButton
-              workId={workId}
-              selectedPids={pids}
-              singleManifestation={false}
+          {!branchDetailsLoading && !borrowerCheckIsLoading ? (
+            <Button
+              type={"primary"}
               size={buttonSize}
-              overrideButtonText={Translate({
+              onClick={handleOnSelectEnriched}
+            >
+              {Translate({
                 context: "localizations",
                 label: "order_to_here",
               })}
-            />
+            </Button>
           ) : (
-            <Button size={buttonSize} skeleton={branchDetailsLoading}>
+            <Button
+              size={buttonSize}
+              skeleton={branchDetailsLoading || borrowerCheckIsLoading}
+            >
               {"loading"}
             </Button>
           )}

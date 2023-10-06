@@ -111,7 +111,10 @@ function ColumnOne({ workId, manifestation }) {
       </div>
 
       <div className={styles.localizations_link}>
-        <LocalizationsLink selectedPids={[manifestation?.pid]} />
+        <LocalizationsLink
+          selectedPids={[manifestation?.pid]}
+          singleManifestation={true}
+        />
       </div>
 
       <div className={styles.reference_downloads}>

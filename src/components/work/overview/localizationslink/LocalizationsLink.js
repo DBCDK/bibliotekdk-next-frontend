@@ -64,11 +64,13 @@ export function LocalizationsLink({
 
 export default function Wrap({
   selectedPids,
+  singleManifestation = false,
   modalOpener = (modal, agency) =>
     openAgencyLocalizationsModal({
       modal: modal,
       pids: selectedPids,
       agency: agency,
+      singleManifestation: singleManifestation,
     }),
 }) {
   // @TODO if user is logged in - do a holdingsitems request on user agency

@@ -32,7 +32,7 @@ function LocalizationsBase({
   subtitle,
   pids = [],
   materialCardTemplate = (material) =>
-    templateForLocalizations(material, pids.length === 1),
+    templateForLocalizations(material, context?.singleManifestation),
   subheader,
   query,
   setQuery,

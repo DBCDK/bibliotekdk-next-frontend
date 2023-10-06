@@ -292,6 +292,31 @@ export function checkOrderPolicy({ pids, branchId, limit = 10 }) {
   };
 }
 
+/**
+ * Branches in agencies
+ */
+export function borrowerCheck({ branchId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query borrowerCheck($branchId: String!, $language: LanguageCode!) {
+      branches(branchId: $branchId, bibdkExcludeBranches: true, status: AKTIVE, language: $language) {
+        result {
+          branchId
+          ...borrowerCheckFragment
+        }
+      }
+    }
+    ${borrowerCheckFragment}`,
+    variables: { branchId, language: lang },
+    slowThreshold: 3000,
+  };
+}
+
+const borrowerCheckFragment = `fragment borrowerCheckFragment on Branch {
+  borrowerCheck
+}`;
+
 const branchFastFragment = `fragment branchFastFragment on Branch {
   agencyId
   agencyName
