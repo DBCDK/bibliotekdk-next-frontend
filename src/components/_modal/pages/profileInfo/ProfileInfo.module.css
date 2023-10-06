@@ -2,15 +2,23 @@
   padding: 0 var(--pt2) var(--pt2) var(--pt2);
 }
 
-.dataItem {
+.dataItem:first-child {
   display: flex;
   gap: var(--pt05);
 
   padding: var(--pt3) var(--pt05);
   border-top: 1px solid var(--iron);
 }
+
+.dataItem {
+  display: flex;
+  gap: var(--pt05);
+
+  padding: var(--pt1) var(--pt05);
+}
+
 .dataItem:last-child {
-  border-bottom: 1px solid var(--iron);
+  /* border-bottom: 1px solid var(--iron); */
 }
 .dataItem p {
   font-size: 17px;
@@ -22,28 +30,23 @@
   }
 }
 
-.materialHeaderRow {
-  display: grid;
-  grid-column-gap: var(--pt3);
-  grid-template-columns: 4fr 2fr 2fr 1fr;
-  padding: var(--pt05) var(--pt1);
-  border-bottom: 1px solid var(--iron);
-}
+
 
 .buttonsContainer {
- 
-display: flex;
-    flex-direction: column;
-
+  display: flex;
+  flex-direction: column;
 }
 .logoutButton {
-    margin-top: var(--pt16);
-    margin-bottom: var(--pt4);
+  margin-top: var(--pt16);
+  margin-bottom: var(--pt4);
+}
+.deleteUserButton {
+  background-color: var(--error);
 }
 
 .deleteProfileButton {
-   align-self: center; 
-   --underline-bottom-color: var(--blue);
-   --underline-bottom-hover-color: var(--error);
-   --underline-font-hover-color: var(--error);
+  align-self: center;
+  --underline-bottom-color: var(--blue);
+  --underline-bottom-hover-color: var(--error);
+  --underline-font-hover-color: var(--error);
 }
