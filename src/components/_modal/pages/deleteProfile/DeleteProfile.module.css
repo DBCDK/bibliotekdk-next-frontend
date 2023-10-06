@@ -1,0 +1,18 @@
+.modalContainer {
+  padding: 0 var(--pt2) var(--pt2) var(--pt2);
+}
+
+@media (min-width: 576px) {
+  .modalContainer {
+    padding: 0 var(--pt6) var(--pt3) var(--pt6);
+  }
+}
+
+.deleteTextTitle{
+    margin-bottom: var(--pt2);
+}
+.deleteText{
+    margin-bottom: var(--pt7);
+    font-size: 16px;
+
+}

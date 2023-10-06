@@ -123,6 +123,7 @@ export default function ProfileLayout({ title, children }) {
 
 const LogoutButton = () => {
   const user = useUser();
+  const modal = useModal();
 
   if (!user.isAuthenticated) {
     return;
@@ -138,7 +139,23 @@ const LogoutButton = () => {
         >{`${Translate({
           context: "profile",
           label: "signed-in-as-name",
-        })} ${userName}`}</Text>
+        })} 
+       `}
+       <Link
+       onClick={()=>{
+
+        modal.push("profileInfo");
+
+       }}
+         border={{
+          top: false,
+          bottom: {
+            keepVisible: true,
+          },
+        }}
+       >{` 
+        ${userName}`}</Link>
+       </Text>
       )}
       <Link
         onClick={() => {
