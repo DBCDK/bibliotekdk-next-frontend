@@ -14,16 +14,17 @@ import isEmpty from "lodash/isEmpty";
 import { LinkForBranch } from "@/components/_modal/pages/base/localizationsBase/linkForBranch/LinkForBranch";
 
 /**
- * {@link OnlyInformationOnAgencyHoldings} presents Agency information for {@link BranchLocalizations}
+ * {@link SpecificInformationOnAgency} presents Agency information for {@link BranchLocalizations}
  * @param {Array.<string>} pids
  * @param {Object} agency
+ * @param {boolean} onlyHoldingsOnAgency
  * @returns {JSX.Element}
  */
-function OnlyInformationOnAgencyHoldings({ pids, agency }) {
+function SpecificInformationOnAgency({ pids, agency, onlyHoldingsOnAgency }) {
   return (
     <div className={styles.agency_holdings_row_wrapper}>
       <AvailabilityLight
-        availabilityAccumulated={agency.availabilityAccumulated}
+        availabilityAccumulated={agency.availabilityOnAgencyAccumulated}
         pickupAllowed={agency?.pickupAllowed}
       />
       <div className={styles.agency_holdings_result}>
@@ -33,6 +34,8 @@ function OnlyInformationOnAgencyHoldings({ pids, agency }) {
             label:
               agency?.pickupAllowed === false
                 ? "agency_status_pickup_not_allowed"
+                : onlyHoldingsOnAgency
+                ? "agency_holdings_but_no_branches"
                 : agency.availabilityAccumulated === AvailabilityEnum.NOW
                 ? "agency_status_only_home_at_one_or_more"
                 : agency.availabilityAccumulated === AvailabilityEnum.LATER
@@ -40,6 +43,7 @@ function OnlyInformationOnAgencyHoldings({ pids, agency }) {
                 : agency.availabilityAccumulated === AvailabilityEnum.NEVER
                 ? "agency_status_pickup_not_allowed"
                 : "no_status_about_the_following",
+            vars: [...(onlyHoldingsOnAgency ? [agency.agencyName] : [])],
           })}
         </Text>
         <div className={cx(styles.link_for_branch)}>
@@ -53,7 +57,7 @@ function OnlyInformationOnAgencyHoldings({ pids, agency }) {
 /**
  * {@link BranchLocalizations} presents the branches in an agency.
  *   It uses {@link LocalizationsBase} and its compounded components
- *   {@link OnlyInformationOnAgencyHoldings} presents information on Agency level, when no branch information is available
+ *   {@link SpecificInformationOnAgency} presents information on Agency level, when no branch information is available
  * @param {Object} context
  * @param {Object} modal
  * @returns {JSX.Element}
@@ -85,6 +89,13 @@ export default function BranchLocalizations({ context, modal }) {
       ].includes(branch.availabilityAccumulated)
   );
 
+  const availabilityAccumulated = agency?.availabilityAccumulated;
+  const availabilityOnAgencyAccumulated =
+    agency?.availabilityOnAgencyAccumulated;
+  const onlyHoldingsOnAgency =
+    availabilityOnAgencyAccumulated === AvailabilityEnum.NOW &&
+    availabilityAccumulated !== availabilityOnAgencyAccumulated;
+
   return (
     <LocalizationsBase
       modal={modal}
@@ -113,9 +124,25 @@ export default function BranchLocalizations({ context, modal }) {
         ))}
       </LocalizationsBase.List>
 
+      {onlyHoldingsOnAgency && (
+        <LocalizationsBase.Information>
+          <Title type={"title6"} className={styles.supplementary_status}>
+            {Translate({
+              context: "localizations",
+              label: "supplementary_status",
+            })}
+          </Title>
+          <SpecificInformationOnAgency
+            pids={pids}
+            agency={agency}
+            onlyHoldingsOnAgency={onlyHoldingsOnAgency}
+          />
+        </LocalizationsBase.Information>
+      )}
+
       {isEmpty(branchesKnownStatus) && !isEmpty(branchesUnknownStatus) && (
         <LocalizationsBase.Information>
-          <OnlyInformationOnAgencyHoldings pids={pids} agency={agency} />
+          <SpecificInformationOnAgency pids={pids} agency={agency} />
         </LocalizationsBase.Information>
       )}
       {!isEmpty(branchesUnknownStatus) && (

@@ -23,3 +23,7 @@
 .link_for_branch {
   padding-top: var(--pt1);
 }
+
+.supplementary_status {
+  padding-top: var(--pt4);
+}
