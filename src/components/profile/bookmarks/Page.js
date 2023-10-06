@@ -24,28 +24,27 @@ const sortByItems = [
 ];
 
 /**
- * 
+ *
  * Radio buttons to choose how to sort Bookmarks
- * @returns 
+ * @returns
  */
 const SortButtons = ({ sortByItems, setSortByValue, sortByValue }) => {
   return (
-      <List.Group className={styles.sortingContainer} disableGroupOutline>
-        {sortByItems.map(({ label, key }) => (
-          <List.Radio
-            className={styles.sortingItem}
-            key={key}
-            selected={sortByValue === key}
-            onSelect={() => setSortByValue(key)}
-            label={key}
-          >
-            <Text>{Translate({ context: "profile", label: label })}</Text>
-          </List.Radio>
-        ))}
-      </List.Group>
+    <List.Group className={styles.sortingContainer} disableGroupOutline>
+      {sortByItems.map(({ label, key }) => (
+        <List.Radio
+          className={styles.sortingItem}
+          key={key}
+          selected={sortByValue === key}
+          onSelect={() => setSortByValue(key)}
+          label={key}
+        >
+          <Text>{Translate({ context: "profile", label: label })}</Text>
+        </List.Radio>
+      ))}
+    </List.Group>
   );
 };
-
 
 const BookmarkPage = () => {
   const {
