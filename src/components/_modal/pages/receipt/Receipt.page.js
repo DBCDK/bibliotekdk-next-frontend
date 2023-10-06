@@ -17,6 +17,7 @@ import * as branchesFragments from "@/lib/api/branches.fragments";
 import styles from "./Receipt.module.css";
 import { useRouter } from "next/router";
 import cx from "classnames";
+import isEmpty from "lodash/isEmpty";
 
 /**
  * Order Button
@@ -46,25 +47,30 @@ export function Receipt({
     isLoading: articleOrderIsLoading,
   } = articleOrder;
 
-  // Define order status'
+  // Define order status
   const isOrdering = orderIsLoading || articleOrderIsLoading || delay;
   const isOrdered =
     !!orderData?.submitOrder?.orderId ||
-    articleOrderData?.elba?.placeCopyRequest?.status === "OK";
+    articleOrderData?.elba?.placeCopyRequest?.ok;
 
-  let hasFailed =
-    (orderData?.submitOrder && !orderData?.submitOrder?.ok) ||
-    !!orderError ||
-    !!articleOrderError ||
-    (articleOrderData?.elba?.placeCopyRequest &&
-      articleOrderData?.elba?.placeCopyRequest?.status !== "OK");
-
-  let failedMessage = null;
-  if (hasFailed) {
-    failedMessage = !!articleOrder
-      ? "ORDER FAILED"
-      : articleOrderData?.elba?.placeCopyRequest?.status;
+  // Define if order has failed
+  let hasFailed = false,
+    failedMessage = undefined;
+  if (orderData?.submitOrder && !orderData?.submitOrder?.ok) {
+    hasFailed = true;
+    failedMessage = orderData?.submitOrder?.status;
+  } else if (!!orderError || !!articleOrderError) {
+    hasFailed = true;
+    failedMessage = orderError || articleOrderError;
+  } else if (
+    articleOrderData?.elba?.placeCopyRequest &&
+    articleOrderData?.elba?.placeCopyRequest?.ok
+  ) {
+    hasFailed = true;
+    failedMessage = articleOrderData?.elba?.placeCopyRequest?.status;
   }
+
+  const showLinkToMyLibraries = true; //TODO should link to my libraries always be shown? @UX
 
   // Branch name
   const branchName = pickupBranch?.name;
@@ -154,8 +160,26 @@ export function Receipt({
             </div>
           )}
           <div className={styles.error}>
-            An error occured :(
-            <div>{hasFailed && failedMessage ? failedMessage : ""}</div>
+            <Title className={styles.title} type="title5" tag="h2">
+              {Translate({ context: "receipt", label: "errorOccured" })}
+            </Title>
+            {hasFailed && failedMessage && (
+              <Text tag="div" type="text2" className={styles.errorText}>
+                {failedMessage}
+              </Text>
+            )}
+            {showLinkToMyLibraries && (
+              <Button
+                className={styles.redirect}
+                onClick={() => router.push("/profil/mine-biblioteker")}
+                type="secondary"
+              >
+                {Translate({
+                  context: "receipt",
+                  label: "seeYourLibraries",
+                })}
+              </Button>
+            )}
           </div>
         </div>
       </div>
@@ -173,17 +197,20 @@ export function Receipt({
  */
 export default function Wrap(props) {
   // fetch props from context
-  const { pid, pickupBranch } = props.context;
+  const { pickupBranch, pids } = props.context;
 
   // Fetch orderPolicy if it doesnt exist on pickupBranch
   const shouldFetchOrderPolicy =
-    pid && pickupBranch?.branchId && !pickupBranch?.orderPolicy;
+    pids &&
+    !isEmpty(pids) &&
+    pickupBranch?.branchId &&
+    !pickupBranch?.orderPolicy;
 
   const { data: policyData, isLoading: policyIsLoading } = useData(
     shouldFetchOrderPolicy &&
       branchesFragments.branchOrderPolicy({
         branchId: pickupBranch?.branchId,
-        pid,
+        pids: pids,
       })
   );
 

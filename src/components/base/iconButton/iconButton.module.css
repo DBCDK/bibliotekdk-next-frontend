@@ -1,12 +1,3 @@
-.icon {
-  cursor: pointer;
-}
-
-.icon svg path {
-  /* default as blue icon */
-  stroke: var(--blue);
-  fill: var(--blue);
-}
 .container {
   cursor: pointer;
   background-color: transparent;
@@ -14,6 +5,7 @@
   display: flex;
   align-items: center;
 }
+
 .textWrapper {
   margin: 0 var(--pt1) 0 0;
 }
@@ -22,6 +14,12 @@
   outline: 1px solid var(--blue);
 }
 
-.disabled {
+.container:disabled {
+  cursor: none;
   pointer-events: none;
+}
+
+button.container:disabled .textWrapper * {
+  color: var(--dove);
+  --underline-bottom-color: var(--dove);
 }

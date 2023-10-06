@@ -21,6 +21,12 @@
   display: none;
 }
 
+.action p {
+  /* Adjust lineheight to pixel perfect align icons in height */
+  line-height: 14px;
+  margin-top: 4px;
+}
+
 .badge {
   position: absolute;
   top: 0;
@@ -45,11 +51,6 @@
 }
 
 @media (min-width: 992px) {
-  .action p {
-    display: block;
-    margin: 0;
-  }
-
   .action div hr:first-of-type {
     display: block;
   }

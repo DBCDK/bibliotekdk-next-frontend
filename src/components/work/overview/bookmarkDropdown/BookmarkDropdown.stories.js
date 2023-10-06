@@ -8,7 +8,7 @@ const exportedObject = {
 export default exportedObject;
 
 export function BookmarkWithDropdown() {
-  const materialtypes = ["bog", "e-bog", "fisk"];
+  const materialtypes = [["bog"], ["e-bog"], ["fisk"]];
 
   return (
     <div>
@@ -27,7 +27,7 @@ export function BookmarkWithDropdown() {
 }
 
 export function BookmarkWithDropdownOneMaterial() {
-  const materialtypes = ["bog"];
+  const materialtypes = [["bog"]];
 
   return (
     <div>

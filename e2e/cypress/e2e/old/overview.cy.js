@@ -31,11 +31,8 @@ describe("Overview", () => {
     });
 
     // Clicks
-    // TODO: Skip until bookmark is back
-    it.skip(`Can click on bookmark button`, () => {
-      cy.get(`[data-cy=bookmark-asterix-og-obelix-i-det-vilde-vesten]`)
-        .focus()
-        .click();
+    it(`Can click on bookmark button`, () => {
+      cy.get(`[data-cy=bookmark-button]`).should("be.visible").focus().click();
 
       cy.on("window:alert", (str) => {
         expect(str).to.equal(`Bookmarked!`);

@@ -29,6 +29,7 @@ import CheckMarkBlue from "@/public/icons/checkmark_blue.svg";
 import Tooltip from "react-bootstrap/Tooltip";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import cx from "classnames";
+import BookMarkDropDown from "@/components/work/overview/bookmarkDropdown/BookmarkDropdown";
 
 /**
  * Column one of full view. Some links and a button.
@@ -84,13 +85,21 @@ function ColumnOne({ workId, manifestation }) {
         />
       )}
 
-      <div className={styles.button}>
-        <ReservationButtonWrapper
-          workId={workId}
-          selectedPids={[manifestation?.pid]}
-          singleManifestation={true}
-          buttonType="secondary"
-          size="small"
+      <div className={styles.reservationwrapper}>
+        <div className={styles.button}>
+          <ReservationButtonWrapper
+            workId={workId}
+            selectedPids={[manifestation?.pid]}
+            singleManifestation={true}
+            buttonType="secondary"
+            size="small"
+          />
+        </div>
+        <BookMarkDropDown
+          workId={manifestation.pid}
+          materialTypes={[[manifestation?.materialTypes?.[0]?.specific]]}
+          size={{ w: 4, h: 4 }}
+          title={manifestation?.titles?.full[0]}
         />
       </div>
 

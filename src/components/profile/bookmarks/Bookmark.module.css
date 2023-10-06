@@ -1,0 +1,93 @@
+.sortingRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.smallLabel {
+  display: block;
+  margin-bottom: var(--pt4);
+}
+
+.buttonControls {
+  display: flex;
+  align-content: center;
+  margin-bottom: var(--pt4);
+}
+
+.selectAllButton {
+  margin-right: var(--pt4);
+  display: flex;
+  align-items: center;
+}
+
+.selectAll {
+  margin-right: var(--pt1);
+}
+
+.orderButton {
+  width: 100px;
+  margin-right: var(--pt2);
+}
+
+.referenceButton {
+  margin-right: var(--pt3);
+}
+
+.listContainer {
+  border-top: 1px solid var(--iron);
+}
+
+.dropdownWrapper {
+  display: none;
+  float: right;
+  position: relative;
+  top: -25px;
+}
+
+.stickyButtonContainer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  padding: var(--pt2);
+  background-color: white;
+  z-index: 6;
+  box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.stickyButton {
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 767px) {
+  .buttonControls {
+    display: none;
+  }
+
+  .dropdownWrapper {
+    display: block;
+  }
+  .sortingRow {
+    flex-direction: column;
+  }
+}
+
+.sortingContainer {
+  display: flex;
+}
+
+.sortingItem,
+.sortingItem:first-child {
+  border: none;
+}
+
+@media (min-width: 768px) {
+  .stickyButtonContainer {
+    display: none;
+  }
+}
+
+.pagination {
+  margin-top: var(--pt3);
+}

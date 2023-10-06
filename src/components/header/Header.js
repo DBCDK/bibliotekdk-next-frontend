@@ -4,8 +4,6 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import React, { useState } from "react";
 
-import { signOut } from "@dbcdk/login-nextjs/client";
-
 import useHistory from "@/components/hooks/useHistory";
 import useFilters from "@/components/hooks/useFilters";
 import useQ from "@/components/hooks/useQ";
@@ -23,6 +21,7 @@ import { useModal } from "@/components/_modal";
 import LoginIcon from "./icons/login";
 import BurgerIcon from "./icons/burger";
 import SearchIcon from "./icons/search";
+import BookmarkIcon from "./icons/bookmark";
 import ExpandedSearch from "./expandedsearch/ExpandedSearch";
 import useUser from "../hooks/useUser";
 
@@ -100,14 +99,6 @@ export function Header({
   // specific material workType selected
   const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
 
-  async function handleOnClick() {
-    if (user.isAuthenticated) {
-      signOut();
-      return;
-    }
-    openLoginModal({ modal });
-  }
-
   const menu = [
     {
       label: "search",
@@ -121,11 +112,21 @@ export function Header({
       },
     },
     {
-      label: user.isAuthenticated ? "logout" : "login",
+      label: user.isAuthenticated || user.isGuestUser ? "profile" : "login",
       icon: LoginIcon,
-      onClick: handleOnClick,
+      onClick: () => {
+        if (user.isAuthenticated || user.isGuestUser) {
+          router.push("/profil/laan-og-reserveringer");
+        } else {
+          openLoginModal({ modal });
+        }
+      },
     },
-
+    {
+      label: "bookmark",
+      icon: BookmarkIcon,
+      onClick: () => router.push("/profil/huskeliste"),
+    },
     {
       label: "menu",
       icon: BurgerIcon,
@@ -188,7 +189,7 @@ export function Header({
         <Container className={styles.header} fluid>
           <Row>
             <StaticHeader router={router} context={context} />
-            <Col xs={{ span: 9, offset: 3 }} className={styles.mobileHeader}>
+            <Col xs={{ span: 7, offset: 3 }} className={styles.mobileHeader}>
               <SkipToMainAnchor />
               <div className={styles.bottom}>
                 <form
@@ -267,33 +268,34 @@ export function Header({
                     <div className={styles.fill} />
                   </button>
                 </form>
+              </div>
+            </Col>
+            <Col xs={{ span: 2 }} className={styles.iconActionsContainer}>
+              <div
+                className={styles.iconActions}
+                data-cy={cyKey({
+                  name: "actions",
+                  prefix: "header-bottom",
+                })}
+              >
+                {menu.map((m) => {
+                  const ActionIcon = m.icon;
 
-                <div
-                  className={styles.actions}
-                  data-cy={cyKey({
-                    name: "actions",
-                    prefix: "header-bottom",
-                  })}
-                >
-                  {menu.map((m) => {
-                    const ActionIcon = m.icon;
-
-                    return (
-                      <ActionIcon
-                        dataCy={cyKey({
-                          name: m.label,
-                          prefix: "header-link",
-                        })}
-                        key={m.label}
-                        className={styles.action}
-                        href={m.href}
-                        onClick={m.onClick}
-                        items={m.items}
-                        title={Translate({ ...context, label: m.label })}
-                      />
-                    );
-                  })}
-                </div>
+                  return (
+                    <ActionIcon
+                      dataCy={cyKey({
+                        name: m.label,
+                        prefix: "header-link",
+                      })}
+                      key={m.label}
+                      className={styles.action}
+                      href={m.href}
+                      onClick={m.onClick}
+                      items={m.items}
+                      title={Translate({ ...context, label: m.label })}
+                    />
+                  );
+                })}
               </div>
             </Col>
           </Row>
@@ -313,8 +315,8 @@ export function Header({
 export function StaticHeader({ router = null, context }) {
   return (
     <>
-      <Col xs={3} lg={2}>
-        <Logo fill={"var(--blue)"} text={"default_logo_text"} />
+      <Col xs={3} lg={2} className={styles.logoWrapper}>
+        <Logo />
       </Col>
       <Col
         xs={{ span: 9, offset: 1 }}

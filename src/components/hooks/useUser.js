@@ -150,7 +150,7 @@ function useUserImpl() {
     isCPRValidated,
     loanerInfo,
     isGuestUser: isGuestUser,
-    isLoggedIn: isAuthenticated || isGuestUser,
+    isLoggedIn: isAuthenticated || isGuestUser, //TODO guestUsers are not logged in - maybe "hasUserParameters" is a better name
     updateLoanerInfo: async (obj) => {
       const newSession = (newSession = merge({}, sessionData, obj));
       // Update global loaner info object

@@ -10,7 +10,11 @@
  */
 import { fetchAll } from "@/lib/api/apiServerOnly";
 import { useRouter } from "next/router";
-import { pidToWorkId, oclcToWorkId } from "@/lib/api/work.fragments";
+import {
+  pidToWorkId,
+  oclcToWorkId,
+  faustToWork,
+} from "@/lib/api/work.fragments";
 import { encodeTitleCreator, getCanonicalWorkUrl } from "@/lib/utils";
 import { useData } from "@/lib/api/api";
 import Custom404 from "@/pages/404";
@@ -50,6 +54,8 @@ function LinkmePhp() {
       ? pidToWorkId({ pid: router.query["rec.id"] })
       : isOclc
       ? oclcToWorkId({ oclc: getOclcId(router.query["ccl"]) })
+      : router?.query?.["faust"]
+      ? faustToWork({ faust: router.query["faust"] })
       : null
   );
 

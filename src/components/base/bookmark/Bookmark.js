@@ -5,9 +5,7 @@ import { cyKey } from "@/utils/trim";
 import Skeleton from "@/components/base/skeleton";
 import Icon from "@/components/base/icon";
 import translate from "@/components/base/translate";
-
-import BookmarkSvg from "@/public/icons/bookmark_large.svg";
-// import BookmarkSvg from "@/public/icons/bookmark.svg";
+import BookmarkSvg from "@/public/icons/bookmark_medium.svg";
 
 import styles from "./Bookmark.module.css";
 
@@ -24,6 +22,7 @@ function handleOnBookmarkClick() {
  * @returns {component}
  */
 function Bookmark({
+  size = { w: 5, h: 5 },
   className = "",
   selected = false,
   onClick = null,
@@ -35,13 +34,13 @@ function Bookmark({
 
   const selectedClass = selected ? styles.selected : "";
 
-  const context = { context: "bookmark" };
+  const context = { context: "bibliographic-data" };
 
   // Set hover title
   const params =
     title && !skeleton
       ? { label: "title", vars: [title] }
-      : { label: "defaultTitle" };
+      : { label: "bookmark" };
 
   title = translate({ ...context, ...params });
 
@@ -50,14 +49,9 @@ function Bookmark({
       title={title}
       data-cy={key}
       className={`${className} ${styles.bookmark} ${selectedClass}`}
-      onClick={() => (onClick ? onClick() : handleOnBookmarkClick())}
+      onClick={(e) => (onClick ? onClick(e) : handleOnBookmarkClick(e))}
     >
-      <Icon
-        skeleton={skeleton}
-        disabled={disabled}
-        size={{ w: 5, h: 5 }}
-        alt="bookmark"
-      >
+      <Icon skeleton={skeleton} disabled={disabled} size={size} alt="bookmark">
         <BookmarkSvg />
       </Icon>
     </button>

@@ -1,4 +1,19 @@
 describe("Order", () => {
+  it(`should not tab to order modal after it is closed`, () => {
+    cy.visitWithConsoleSpy(
+      "/iframe.html?id=modal-order--order-via-ill&viewMode=story"
+    );
+    cy.contains("Bestil", { timeout: 10000 }).click();
+
+    // Check that user blocking is not present
+    cy.get("[data-cy=blocked-user]").should("not.exist");
+
+    cy.get("[data-cy=modal-dimmer]").should("be.visible");
+    cy.contains("Luk").click();
+    cy.get("body").tab();
+    cy.get("[data-cy=modal-dimmer]").should("not.be.visible");
+  });
+
   it(`submits ILL order for pids that may be ordered`, () => {
     cy.visitWithConsoleSpy(
       "/iframe.html?id=modal-order--order-via-ill&viewMode=story"
@@ -26,8 +41,12 @@ describe("Order", () => {
     cy.get("[data-cy=input]").should("have.value", "some@mail.dk");
 
     // Submit the order
-    cy.wait(1000);
-    cy.contains("Godkend", { timeout: 10000 }).click();
+    cy.get("[data-cy=button-godkend]")
+      .scrollIntoView()
+      .should("be.visible")
+      .should("not.be.disabled")
+      .click();
+
     cy.contains("some-order-id", { timeout: 10000 });
 
     cy.getConsoleEntry("submitOrder").then((entry) => {
@@ -40,21 +59,6 @@ describe("Order", () => {
         },
       });
     });
-  });
-
-  it(`should not tab to order modal after it is closed`, () => {
-    cy.visitWithConsoleSpy(
-      "/iframe.html?id=modal-order--order-via-ill&viewMode=story"
-    );
-    cy.contains("Bestil", { timeout: 10000 }).click();
-
-    // Check that user blocking is not present
-    cy.get("[data-cy=blocked-user]").should("not.exist");
-
-    cy.get("[data-cy=modal-dimmer]").should("be.visible");
-    cy.contains("Luk").click();
-    cy.get("body").tab();
-    cy.get("[data-cy=modal-dimmer]").should("not.be.visible");
   });
 
   it("should handle failed checkorder and pickupAllowed=false", () => {
@@ -122,7 +126,7 @@ describe("Order", () => {
         "Du får besked fra dit bibliotek når materialet er klar til afhentning"
       );
       cy.contains("Godkend").click();
-      cy.contains("some-order-id");
+      cy.contains("some-order-id", { timeout: 10000 });
 
       cy.getConsoleEntry("submitOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
@@ -167,7 +171,7 @@ describe("Order", () => {
 
       cy.get("[data-cy=button-godkend]").click();
 
-      cy.contains("some-order-id");
+      cy.contains("some-order-id", { timeout: 10000 });
 
       cy.getConsoleEntry("submitOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
@@ -187,7 +191,7 @@ describe("Order", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?id=modal-order--order-periodica-volume&viewMode=story"
       );
-      cy.contains("Bestil").click();
+      cy.contains("Bestil", { timeout: 10000 }).click();
       // Check that user blocking is not present
       cy.get("[data-cy=blocked-user]").should("not.exist");
       cy.get("[data-cy=button-godkend]")
@@ -239,7 +243,7 @@ describe("Order", () => {
         "/iframe.html?id=modal-order--order-periodica-volume-only-ill&viewMode=story"
       );
 
-      cy.contains("Bestil").click();
+      cy.contains("Bestil", { timeout: 10000 }).click();
 
       // Check that user blocking is not present
       cy.get("[data-cy=blocked-user]").should("not.exist");
@@ -271,9 +275,13 @@ describe("Order", () => {
       );
 
       // Check that BlockedUser does not exist
-      cy.get("[data-cy=button-godkend]").click();
+      cy.get("[data-cy=button-godkend]")
+        .scrollIntoView()
+        .should("be.visible")
+        .click();
 
-      cy.contains("some-order-id");
+      //cy.get("[data-cy=button-godkend]").should("be.visible").click();
+      cy.contains("some-order-id", { timeout: 10000 });
 
       cy.getConsoleEntry("submitOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
@@ -297,7 +305,7 @@ describe("Order", () => {
     it("should not block users from loaning if they are not blocked", () => {
       cy.visit("/iframe.html?id=modal-order--not-blocked-user&viewMode=story");
 
-      cy.contains("Bestil").click();
+      cy.contains("Bestil", { timeout: 10000 }).click();
 
       cy.get("[data-cy=blocked-user]").should("not.exist");
 
@@ -309,7 +317,7 @@ describe("Order", () => {
     it("should block users from loaning if they are blocked", () => {
       cy.visit("/iframe.html?id=modal-order--blocked-user&viewMode=story");
 
-      cy.contains("Bestil").click();
+      cy.contains("Bestil", { timeout: 10000 }).click();
 
       cy.get("[data-cy=blocked-user]")
         .should("exist")
@@ -333,7 +341,7 @@ describe("Order", () => {
   describe("If user logs in with MitID - and has no libraries associated with user account", () => {
     it("should show an errormessage when user has no agencies", () => {
       cy.visit("/iframe.html?id=modal-order--no-user-agencies");
-      cy.contains("Bestil").should("be.visible").click();
+      cy.contains("Bestil", { timeout: 10000 }).should("be.visible").click();
 
       cy.contains(
         "Vi kan se at du ikke er registreret på et bibliotek?"

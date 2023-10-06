@@ -30,9 +30,9 @@ describe("Dropdown", () => {
     cy.get('[data-cy="bookmark-fisk-2"]').should("be.visible").click();
 
     // background color should be blue now
-    cy.get('[data-cy="bookmark-button"] i svg path').should(
+    cy.get('[data-cy="bookmark-button"] ').should(
       "have.css",
-      "fill",
+      "background-color",
       "rgb(51, 51, 255)"
     );
   });

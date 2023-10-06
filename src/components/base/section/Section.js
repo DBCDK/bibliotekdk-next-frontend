@@ -9,6 +9,7 @@ import Text from "@/components/base/text";
 import { cyKey } from "@/utils/trim";
 
 import styles from "./Section.module.css";
+import cx from "classnames";
 
 /**
  * Divider function
@@ -40,6 +41,8 @@ function handleBooleans(obj, def) {
  */
 export default function Section({
   title = "Some section",
+  //if true the title will be shown on the right side instead of the left side
+  rightSideTitle = false,
   children = "",
   className = "",
   dataCy = "section",
@@ -52,6 +55,7 @@ export default function Section({
   headerTag = "h2",
   sectionTag = "section",
   id,
+  colSize = {},
 }) {
   const backgroundClass = backgroundColor ? styles.background : "";
 
@@ -97,6 +101,7 @@ export default function Section({
         title
       );
   }
+  //Only show the title on the right side if desktop
 
   return (
     <div
@@ -109,7 +114,7 @@ export default function Section({
     >
       <Container fluid>
         <Row as={sectionTag}>
-          {title && (
+          {title && !rightSideTitle && (
             <Col
               xs={12}
               lg={2}
@@ -124,13 +129,30 @@ export default function Section({
 
           <Col
             xs={12}
-            lg={{ offset: title ? 1 : 0, span: true }}
+            lg={colSize.lg || { offset: title ? 1 : 0, span: true }}
             data-cy={cyKey({ name: "content", prefix: "section" })}
             className={`section-content ${styles.content} ${contentDividerClass}`}
           >
             {divider?.content}
             {children}
           </Col>
+          {title && rightSideTitle && (
+            <Col
+              xs={12}
+              lg={2}
+              data-cy={cyKey({ name: "title", prefix: "section" })}
+              className={cx(
+                "section-title",
+                styles.title,
+                titleDividerClass,
+                styles.rightSideTitle
+              )}
+            >
+              {divider?.title}
+              {title}
+              {subtitle && <Text type="text2">{subtitle}</Text>}
+            </Col>
+          )}
         </Row>
       </Container>
     </div>

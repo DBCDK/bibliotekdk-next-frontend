@@ -26,11 +26,13 @@ export function basic() {
         isCPRValidated
         agencies {
           hitcount
+          agencyUrl
           result {
             branchId
             agencyId
             agencyName
             name
+            branchWebsiteUrl
           }
         }
         debt {
@@ -134,13 +136,13 @@ export function branchesForUser() {
   };
 }
 
-export function orderPolicy({ pid }) {
+export function orderPolicy({ pids }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
-    query: `query orderPolicy ($language: LanguageCode!, $pid: String! ) {
+    query: `query orderPolicy ($language: LanguageCode!, $pids: [String!]! ) {
       user {
-        agency (language: $language){
+        agencies (language: $language){
           agencyUrl
           result {
             agencyName
@@ -152,10 +154,11 @@ export function orderPolicy({ pid }) {
             branchId
             openingHours
             borrowerCheck
-            orderPolicy(pid: $pid) {
+            orderPolicy(pids: $pids) {
               orderPossible
               orderPossibleReason
               lookUpUrl
+              lookUpUrls
             }
             userParameters {
               userParameterType
@@ -178,10 +181,11 @@ export function orderPolicy({ pid }) {
           branchId
           openingHours
           borrowerCheck
-          orderPolicy(pid: $pid) {
+          orderPolicy(pids: $pids) {
             orderPossible
             orderPossibleReason
             lookUpUrl
+            lookUpUrls
           }
           userParameters {
             userParameterType
@@ -195,7 +199,7 @@ export function orderPolicy({ pid }) {
       }
       monitor(name: "bibdknext_orderpolicy")
      }`,
-    variables: { language: lang, pid },
+    variables: { language: lang, pids },
     slowThreshold: 3000,
   };
 }

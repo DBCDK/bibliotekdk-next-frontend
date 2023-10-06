@@ -5,6 +5,7 @@ import Translate from "@/components/base/translate";
 
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
+import BookmarkDropdown from "@/components/work/overview/bookmarkDropdown/BookmarkDropdown";
 
 import Cover from "@/components/base/cover";
 import {
@@ -144,6 +145,12 @@ export default function ResultRow({
         onClick={onClick}
       >
         <div className={styles.row_wrapper}>
+          <Cover
+            className={styles.cover}
+            src={coverDetail}
+            skeleton={!coverDetail && !work?.manifestations}
+            size="fill-width"
+          />
           <div className={styles.col_wrapper}>
             <TitlesForSearch work={work} isLoading={isLoading} />
             <Text
@@ -205,11 +212,12 @@ export default function ResultRow({
                 })}
             </div>
           </div>
-          <Cover
-            className={styles.cover}
-            src={coverDetail}
-            skeleton={!coverDetail && !work?.manifestations}
-            size="fill-width"
+          <BookmarkDropdown
+            className={styles.BookmarkDropdown}
+            workId={work?.workId}
+            materialTypes={uniqueMaterialTypes}
+            title={work?.titles?.full?.[0]}
+            size={{ w: 4, h: 4 }}
           />
         </div>
       </Link>
