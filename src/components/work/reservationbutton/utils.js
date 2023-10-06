@@ -88,3 +88,60 @@ export function handleGoToLogin(modal, access, user) {
     ? openLoginModal({ modal }) //TODO should we give url as param to redirect to ebookcentral or ebscohost?
     : goToRedirectUrl(access[0]?.url, urlTarget);
 }
+
+/**
+ * @param {string} materialType: general materialType 
+ * @param {string} selectedMaterialType: specific material type 
+ * @param {boolean} shortText: If material text is shortened or not
+ * @returns 
+ */
+export const constructButtonText = (materialType, selectedMaterialType, shortText) => {
+  /**
+   * @param {string} materialType 
+   * @param {string} selectedMaterialType 
+   * @returns {string} translated material action (read, listen, watch)
+   */
+  const getActionText = (materialType, selectedMaterialType) => {
+    switch (materialType) {
+      case "literature": {
+        switch (selectedMaterialType) {
+          case 'e-bog': return Translate({context: "overview", label: "material-action-read"});
+          case 'podcast': return Translate({context: "overview", label: "material-action-listen"});
+          case 'lydbog (online)': return Translate({context: "overview", label: "material-action-listen"});
+          default: return "Error"
+        }
+      }
+      case "article": return Translate({context: "overview", label: "material-action-read"});
+      case "music": return Translate({context: "overview", label: "material-action-listen"});
+      case "movie":
+      case "sheetmusic": return Translate({context: "overview", label: "material-action-see"});
+      case "game": return Translate({context: "overview", label: "material-action-play"});
+      default: return "Error"
+    }
+  }
+  
+  /**
+   * @param {string} materialType 
+   * @param {string} selectedMaterialType 
+   * @returns {string} translated material (book, movie, audiobook)
+   */
+  const getMaterialText = (materialType, selectedMaterialType) => {
+    if (materialType === "literature") {
+      switch (selectedMaterialType) {
+        case "e-bog": return Translate({context: "overview", label: "material-typename-ebook"}).toLowerCase();
+        case "podcast": return Translate({context: "overview", label: "material-typename-podcast"}).toLowerCase();
+        case "lydbog (online)": return Translate({context: "overview", label: "material-typename-audiobook"}).toLowerCase();
+        /**
+         * TODO more lydbog
+         */
+      }
+    }
+  
+    return Translate({context: "overview", label: `material-typename-${materialType}`}).toLowerCase();
+  }
+
+  // Construct string
+  const actionText = getActionText(materialType, selectedMaterialType);
+  const materialText = shortText ? Translate({context: "overview", label: "material-direction-here"}).toLowerCase() : getMaterialText(materialType, selectedMaterialType);
+  return actionText + " " + materialText;
+}

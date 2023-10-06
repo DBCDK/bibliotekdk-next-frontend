@@ -38,6 +38,8 @@ const BookmarkColumn = ({
             singleManifestation={true}
             buttonType="primary"
             size="small"
+            selectedMaterialType={materialType}
+            shortText
           />
         ) : (
           <ReservationButtonWrapper
@@ -46,6 +48,8 @@ const BookmarkColumn = ({
             singleManifestation={false}
             buttonType="primary"
             size="small"
+            selectedMaterialType={materialType}
+            shortText
           />
         )}
       </div>

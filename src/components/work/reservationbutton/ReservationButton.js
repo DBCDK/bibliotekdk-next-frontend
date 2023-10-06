@@ -6,10 +6,9 @@ import styles from "./ReservationButton.module.css";
 import { useModal } from "@/components/_modal";
 import { LOGIN_MODE } from "@/components/_modal/pages/login/utils";
 import {
+  constructButtonText,
   context,
   handleGoToLogin,
-  isOnlineTranslator,
-  workTypeTranslator,
 } from "@/components/work/reservationbutton/utils";
 import { useMemo } from "react";
 import {
@@ -48,6 +47,8 @@ function ReservationButtonWrapper({
   singleManifestation = false,
   buttonType = "primary",
   size = "large",
+  selectedMaterialType,
+  shortText,
   className,
 }) {
   const user = useUser();
@@ -101,6 +102,8 @@ function ReservationButtonWrapper({
       buttonType={buttonType}
       size={size}
       pids={pids}
+      selectedMaterialType={selectedMaterialType}
+      shortText={shortText}
       singleManifestation={singleManifestation}
       allEnrichedAccesses={allEnrichedAccesses}
       workId={workId}
@@ -127,18 +130,22 @@ export const ReservationButton = ({
   size,
   pids,
   singleManifestation,
+  selectedMaterialType: parentSelectedMaterialType,
+  shortText = false, // Shorten material text
   allEnrichedAccesses, //TODO same as access?
   workId,
 }) => {
   const modal = useModal();
+  const materialType = access?.[0]?.workTypes?.[0].toLowerCase();
+  const selectedMaterialType = Array.isArray(parentSelectedMaterialType) ? parentSelectedMaterialType?.[0].toLowerCase() : parentSelectedMaterialType.toLowerCase();
 
   const physicalCopy = checkPhysicalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
   const digitalCopy = checkDigitalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
 
-  const isOnlineTranslated = singleManifestation
+  /*const isOnlineTranslated = singleManifestation
     ? isOnlineTranslator(access?.[0]?.materialTypesArray)
     : "";
-  const workTypeTranslated = workTypeTranslator(access?.[0]?.workTypes);
+  const workTypeTranslated = workTypeTranslator(access?.[0]?.workTypes);*/
 
   const noSelectedManifestations = Boolean(isEmpty(access));
   const onlineMaterialWithoutLoginOrLoginAtUrl = Boolean(
@@ -159,13 +166,13 @@ export const ReservationButton = ({
     dataCy: "button-order-overview",
     onClick: () => handleGoToLogin(modal, access, user),
   };
-  const accessibleOnlineAndNoLoginText =
+  /*const accessibleOnlineAndNoLoginText =
     Translate({
       context: "overview",
       label: "goto",
     }) +
-    " " +
-    (isOnlineTranslated || workTypeTranslated);
+    " " + "HELLO" + 
+    (isOnlineTranslated || workTypeTranslated);*/
 
   async function handleOpenLoginAndOrderModal() {
     //add order modal to store, to be able to access when coming back from adgangsplatform/mitid?
@@ -222,6 +229,7 @@ export const ReservationButton = ({
       return {
         props: noSelectedManifestationsProps,
         text: noSelectedManifestationsTxt,
+        preferSecondary: false,
       };
     }
 
@@ -229,7 +237,8 @@ export const ReservationButton = ({
     if (onlineMaterialWithoutLoginOrLoginAtUrl) {
       return {
         props: accessibleOnlineAndNoLoginProps,
-        text: accessibleOnlineAndNoLoginText,
+        text: constructButtonText(materialType, selectedMaterialType, shortText),
+        preferSecondary: shortText // Becomes secondary button if button links to material (not ordering)
       };
     }
 
@@ -237,17 +246,18 @@ export const ReservationButton = ({
     return {
       props: loginRequiredProps,
       text: loginRequiredText,
+      preferSecondary: false
     };
   };
 
-  const { props, text } = getProps();
+  const { props, text, preferSecondary } = getProps();
 
   return (
     <>
       <TextAboveButton access={access} user={user} />
 
       <div className={styles.wrapper}>
-        <Button type={buttonType} size={size} {...props}>
+        <Button type={preferSecondary ? "secondary" : buttonType} size={size} {...props}>
           {text}
         </Button>
       </div>
