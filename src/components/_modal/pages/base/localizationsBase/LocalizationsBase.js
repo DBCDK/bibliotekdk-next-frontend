@@ -32,12 +32,12 @@ function LocalizationsBase({
   subtitle,
   pids = [],
   materialCardTemplate = (material) =>
-    templateForLocalizations(material, pids.length === 1),
+    templateForLocalizations(material, context?.singleManifestation),
   subheader,
   query,
   setQuery,
 }) {
-  const { modal } = context;
+  const { modal, singleManifestation } = context;
 
   const { data: manifestationsData } = useData(
     pids &&
@@ -65,6 +65,8 @@ function LocalizationsBase({
           top: cx(styles.padding_inline, styles.top),
         }}
       />
+
+      <div>Singlemanifestation: {JSON.stringify(singleManifestation)}</div>
 
       {subtitle && (
         <Title className={cx(styles.padding_inline)} type="title5" tag={"h3"}>
