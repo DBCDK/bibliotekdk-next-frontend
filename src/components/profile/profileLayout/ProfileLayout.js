@@ -140,8 +140,8 @@ const LogoutButton = () => {
           context: "profile",
           label: "signed-in-as-name",
         })} 
-       ${userName}`}
-       {/* <Link
+  `}
+       <Link
        onClick={()=>{
 
         modal.push("profileInfo");
@@ -154,10 +154,10 @@ const LogoutButton = () => {
           },
         }}
        >{` 
-        ${userName}`}</Link> */}
+        ${userName}`}</Link>
        </Text>
       )}
-      <Link
+      {/* <Link
         onClick={() => {
           modal.push("profileInfo");
 
@@ -173,7 +173,7 @@ const LogoutButton = () => {
         <Text>
 Indstillinger
         </Text>
-      </Link>
+      </Link> */}
     </div>
   );
 };
