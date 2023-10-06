@@ -197,11 +197,43 @@ export function getAvailabilityAccumulated(availability) {
 }
 
 /**
+ * Checks the availability on branch level, using expectedDelivery and status
+ * @param {Object} item
+ * @returns {string}
+ */
+function checkAvailabilityOnAgencyLevel(item) {
+  return getFirstMatch(true, AvailabilityEnum.UNKNOWN, [
+    [dateIsToday(item?.expectedDelivery), AvailabilityEnum.NOW],
+    [dateIsLater(item?.expectedDelivery), AvailabilityEnum.LATER],
+    [dateIsNever(item?.expectedDelivery), AvailabilityEnum.NEVER],
+    [dateIsUnknown(item?.expectedDelivery), AvailabilityEnum.UNKNOWN],
+  ]);
+}
+
+/**
+ * Checks the availability on branch level, using expectedDelivery and status
+ * @param {Object} item
+ * @returns {string}
+ */
+function checkAvailabilityOnBranchLevel(item) {
+  return getFirstMatch(true, AvailabilityEnum.UNKNOWN, [
+    [checkAvailableNow(item), AvailabilityEnum.NOW],
+    [checkAvailableLater(item), AvailabilityEnum.LATER],
+    [checkAvailableNever(item), AvailabilityEnum.NEVER],
+    [checkUnknownAvailability(item), AvailabilityEnum.UNKNOWN],
+  ]);
+}
+
+/**
  * {@link getAvailability} gets the availability of all holdings items given
  * @param {Array.<Object>} items
+ * @param {function} checkerFunction
  * @returns {Object}
  */
-export function getAvailability(items) {
+export function getAvailability(
+  items,
+  checkerFunction = (item) => checkAvailabilityOnBranchLevel(item)
+) {
   const availabilityObject = {
     [AvailabilityEnum.NOW]: 0,
     [AvailabilityEnum.LATER]: 0,
@@ -209,13 +241,12 @@ export function getAvailability(items) {
     [AvailabilityEnum.UNKNOWN]: 0,
   };
 
+  if (typeof checkerFunction !== "function") {
+    return availabilityObject;
+  }
+
   for (const item of items) {
-    const key = getFirstMatch(true, AvailabilityEnum.UNKNOWN, [
-      [checkAvailableNow(item), AvailabilityEnum.NOW],
-      [checkAvailableLater(item), AvailabilityEnum.LATER],
-      [checkAvailableNever(item), AvailabilityEnum.NEVER],
-      [checkUnknownAvailability(item), AvailabilityEnum.UNKNOWN],
-    ]);
+    const key = checkerFunction(item);
 
     availabilityObject[key] += 1;
   }
@@ -378,6 +409,11 @@ export function handleAgencyAccessData(agencies) {
       availability: getAvailability(expectedDeliveryOnHoldingsOrAgency, entry),
       availabilityAccumulated: getAvailabilityAccumulated(
         getAvailability(expectedDeliveryOnHoldingsOrAgency)
+      ),
+      availabilityOnAgencyAccumulated: getAvailabilityAccumulated(
+        getAvailability(expectedDeliveryOnHoldingsOrAgency, (item) =>
+          checkAvailabilityOnAgencyLevel(item)
+        )
       ),
       branches: branches,
       branchesNames: entry.map((e) => e.name),

@@ -655,9 +655,9 @@
         "da": "Hjemme på %s",
         "en": "Available at %s"
       },
-      "home_at_no_branches": {
-        "da": "Materialet er ikke hjemme på nogen",
-        "en": "Material is not home at any"
+      "home_no_branch_specified": {
+        "da": "Hjemme",
+        "en": "Available"
       },
       "order_now_pickup_at_date": {
         "da": "Bestil nu og afhent fra d. %s",
@@ -706,6 +706,14 @@
       "no_status_about_the_following": {
         "da": "Vi har ikke status for disse afdelinger",
         "en": "We have no status on these branches"
+      },
+      "agency_holdings_but_no_branches": {
+        "da": "%s har materialet på hylden, men har ikke oplyst hvor",
+        "en": "%s has the material on shelf, but there is no information on where"
+      },
+      "supplementary_status": {
+        "da": "Supplerende status",
+        "en": "Supplementary status"
       },
       "see_detailed_status": {
         "da": "Se detaljeret status hos %s",

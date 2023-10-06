@@ -31,20 +31,22 @@ function DefaultShowingOfAgencyBranches({ agency }) {
             numberOfBranchesWithAvailable > 1
               ? "home_at_branches"
               : numberOfBranchesWithAvailable === 0
-              ? "home_at_no_branches"
+              ? "home_no_branch_specified"
               : "home_at_1_branch",
           vars: [numberOfBranchesWithAvailable],
         })}
-        {" " +
-          Translate({
-            context: "localizations",
-            label:
-              LibraryTypeEnum.DANISH_PUBLIC_LIBRARY !== publicLibrary
-                ? "or_more_branches"
-                : numberOfBranchesWithAvailable !== 1
-                ? "branches"
-                : "branch",
-          })}
+        {(LibraryTypeEnum.DANISH_PUBLIC_LIBRARY !== publicLibrary ||
+          numberOfBranchesWithAvailable > 0) &&
+          " " +
+            Translate({
+              context: "localizations",
+              label:
+                LibraryTypeEnum.DANISH_PUBLIC_LIBRARY !== publicLibrary
+                  ? "or_more_branches"
+                  : numberOfBranchesWithAvailable > 1
+                  ? "branches"
+                  : "branch",
+            })}
       </Text>
     </>
   );
@@ -169,7 +171,7 @@ export default function AgencyLocalizationItem({
           agencyId: agencyId,
         })
       }
-      availabilityAccumulated={agency?.availabilityAccumulated}
+      availabilityAccumulated={agency?.availabilityOnAgencyAccumulated}
     >
       {agencyHighlight ? (
         <Text type={"text2"}>{highlightMarkedWords(agencyHighlight)}</Text>
