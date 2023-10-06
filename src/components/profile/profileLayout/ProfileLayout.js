@@ -140,8 +140,8 @@ const LogoutButton = () => {
           context: "profile",
           label: "signed-in-as-name",
         })} 
-       `}
-       <Link
+       ${userName}`}
+       {/* <Link
        onClick={()=>{
 
         modal.push("profileInfo");
@@ -154,14 +154,13 @@ const LogoutButton = () => {
           },
         }}
        >{` 
-        ${userName}`}</Link>
+        ${userName}`}</Link> */}
        </Text>
       )}
       <Link
         onClick={() => {
-          if (user.isAuthenticated) {
-            signOut(null, "/");
-          }
+          modal.push("profileInfo");
+
         }}
         className={styles.logoutBtn}
         border={{
@@ -172,10 +171,7 @@ const LogoutButton = () => {
         }}
       >
         <Text>
-          {Translate({
-            context: "header",
-            label: "logout",
-          })}
+Indstillinger
         </Text>
       </Link>
     </div>
