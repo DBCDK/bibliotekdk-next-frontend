@@ -240,7 +240,7 @@ export function escapeColons(phrase) {
  * @param {Object} modal
  * @param {Object} context
  * @param {function} updateLoanerInfo
- * @param {number} callbackUID
+ * @param {string} callbackUID
  * @param {function|null} overrideOrderModalPush
  */
 export function handleOnSelect(
