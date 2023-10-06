@@ -10,7 +10,6 @@ import { useMemo } from "react";
 import { accessFactory } from "@/lib/accessFactoryUtils";
 import uniq from "lodash/uniq";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
-import Translate from "@/components/base/translate";
 
 import { handleOnSelect } from "@/components/_modal/utils";
 import { useModal } from "@/components/_modal";
