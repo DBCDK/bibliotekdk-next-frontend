@@ -21,7 +21,7 @@
 }
 .row > .dot {
   position: relative;
-  height: var(--pt2);
+  height: 15px;
   width: 18px;
 }
 .row.selected > .dot {
