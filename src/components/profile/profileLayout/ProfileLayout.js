@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -138,30 +136,20 @@ const LogoutButton = () => {
           className={styles.logoutBtnText}
           skeleton={user?.isLoading}
           lines={1}
-        >
-          {`${Translate({
-            context: "profile",
-            label: "signed-in-as-name",
-          })} 
-  `}
-          <Link
-            onClick={() => {
-              modal.push("profileInfo");
-            }}
-            border={{
-              top: false,
-              bottom: {
-                keepVisible: true,
-              },
-            }}
-          >{` 
-        ${userName}`}</Link>
-        </Text>
-      )}
-      {/* <Link
-        onClick={() => {
-          modal.push("profileInfo");
+        >{`${Translate({
+          context: "profile",
+          label: "signed-in-as-name",
+        })} 
+        ${userName}
+       `}
 
+       </Text>
+      )}
+      <Link
+        onClick={() => {
+          if (user.isAuthenticated) {
+            signOut(null, "/");
+          }
         }}
         className={styles.logoutBtn}
         border={{
@@ -172,9 +160,12 @@ const LogoutButton = () => {
         }}
       >
         <Text>
-Indstillinger
+          {Translate({
+            context: "header",
+            label: "logout",
+          })}
         </Text>
-      </Link> */}
+      </Link>
     </div>
   );
 };
