@@ -192,9 +192,9 @@ export function templateForLocalizations(
     ),
     relatedElementClassName: cx(
       styles.related_element,
-      styles.related_element__localization_version
+      styles.related_element__localizations_version
     ),
-    textClassName: cx(styles.text__localization_version),
+    textClassName: cx(styles.text__localizations_version),
     coverImageClassName: cx(styles.cover, styles.cover__localizations_version),
   };
 }
