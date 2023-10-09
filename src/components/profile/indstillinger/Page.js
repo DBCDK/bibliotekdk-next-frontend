@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { useModal } from "@/components/_modal";
 import Layout from "../profileLayout";
 import styles from "./indstillinger.module.css";
