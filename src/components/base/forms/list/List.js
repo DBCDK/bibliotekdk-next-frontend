@@ -196,9 +196,7 @@ function FormLink({
       })}
       border={false}
     >
-      <div
-        className={[styles.content, animations["f-translate-right"]].join(" ")}
-      >
+      <div className={cx(styles.content, animations["f-translate-right"])}>
         {children}
       </div>
       {!disabled ? (
