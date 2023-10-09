@@ -4,7 +4,7 @@ import { ApiEnums } from "@/lib/api/api";
  * Related Subjects
  *
  * @param {Object} params
- * @param {array} params.q
+ * @param {Array} params.q
  * @param {string} params.limit
  */
 export function subjects({ q, limit = 10 }) {

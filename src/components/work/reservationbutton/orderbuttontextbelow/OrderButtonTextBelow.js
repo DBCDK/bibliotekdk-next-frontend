@@ -21,7 +21,7 @@ import { useBranchUserAndHasDigitalAccess } from "@/components/work/utils";
  * For infomedia text is set ABOVE the button ( @see ReservationButton )
  * @param access list of access objects for all editions of same materialtype
  * @param skeleton
- * @returns {JSX.Element|null}
+ * @returns {React.ReactElement|null}
  */
 function OrderButtonTextBelow({ access, skeleton }) {
   const physicalCopy = checkPhysicalCopy([access?.[0]])?.[0];

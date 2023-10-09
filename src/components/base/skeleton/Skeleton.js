@@ -5,9 +5,9 @@ import styles from "./Skeleton.module.css";
 /**
  *
  * @param {number} n (number of lines wanted)
- * @param {object || string} children
+ * @param {Object || string} children
  *
- * @returns {array} elements (lines)
+ * @returns {Array} elements (lines)
  */
 function CreateLines({ n, children }) {
   let lines = [];

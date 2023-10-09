@@ -117,7 +117,7 @@ export function handleTab(event, container) {
  * Function to get random color by random string
  *
  *  @param {string} id
- *  @param {array} colors
+ *  @param {Array} colors
  */
 export function toColor(
   id,

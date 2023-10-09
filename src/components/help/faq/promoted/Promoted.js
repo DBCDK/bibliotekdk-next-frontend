@@ -22,7 +22,7 @@ import styles from "./Promoted.module.css";
  *
  * @param {Object} props
  * @param {string} props.className
- * @param {array} props.data
+ * @param {Array} props.data
  * @param {boolean} props.isLoading
  * See propTypes for specific props and types
  *

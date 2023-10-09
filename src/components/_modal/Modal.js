@@ -86,7 +86,7 @@ let _store = [];
 
 /**
  *
- * @param {object|Array} children
+ * @param {Object|Array} children
  * @param {Object} className
  * @param mock
  * @param {string} className.dimmer

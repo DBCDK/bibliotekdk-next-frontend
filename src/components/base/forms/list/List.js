@@ -18,7 +18,7 @@ import animations from "css/animations";
  *
  * @param disabled
  * @param {Object} props
- * @param {array} props.children
+ * @param {Array} props.children
  * @param {className} props.string
  * @param {string} props.label the aria label for the radio button
  * @param {function} props.onSelect
@@ -87,7 +87,7 @@ Radio.propTypes = {
  * @param onDisabled
  * @param labelledBy
  * @param {Object} props
- * @param {array} props.children
+ * @param {Array} props.children
  * @param {className} props.string
  * @param {string} props.label the aria label for the radio button
  * @param {function} props.onSelect

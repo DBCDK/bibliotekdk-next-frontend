@@ -119,7 +119,7 @@ function groupSubjects(subjects) {
 
 /**
  * Used in manifestationParser to get a list of links to subjects.
- * @param {array} subjects
+ * @param {Array} subjects
  * @returns {React.ReactElement | null}
  */
 export function FlatSubjectsForFullManifestation({ subjects }) {

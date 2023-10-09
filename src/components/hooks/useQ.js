@@ -183,7 +183,7 @@ function useQ() {
    * Set q types in query params
    *
    * @param {Object} include
-   * @param {array} exclude
+   * @param {Array} exclude
    * @param pathname
    * @param query
    * @param method

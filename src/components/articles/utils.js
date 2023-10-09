@@ -5,10 +5,10 @@ import { encodeString } from "@/lib/utils";
 /**
  * function to sort array of articles (desc)
  *
- * @param {array} articles
+ * @param {Array} articles
  * See propTypes for specific props and types
  *
- * @returns {array}
+ * @returns {Array}
  */
 export function sortArticles(articles) {
   // remove articles with alternative url (entityUrl)

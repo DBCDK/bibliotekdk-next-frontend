@@ -53,7 +53,7 @@ export function collectRecommenderClick({
  *
  * @param {Object} params
  * @param {string} params.query
- * @param {array} params.suggestions
+ * @param {Array} params.suggestions
  */
 export function collectSuggestPresented({ query, suggestions }) {
   return {
@@ -87,7 +87,7 @@ export function collectSuggestPresented({ query, suggestions }) {
  *
  * @param {Object} params
  * @param {string} params.query
- * @param {array} params.suggestion
+ * @param {Array} params.suggestion
  * @param {number} suggest_query_hit.suggestions
  */
 export function collectSuggestClick({ query, suggestion, suggest_query_hit }) {

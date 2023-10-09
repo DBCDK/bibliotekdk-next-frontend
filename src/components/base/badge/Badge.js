@@ -7,7 +7,7 @@ import styles from "./Badge.module.css";
  *
  *
  * @param {string} className
- * @param {string | object} children
+ * @param {string | Object} children
  * See propTypes for specific props and types
  *
  * @returns {React.ReactElement | null}

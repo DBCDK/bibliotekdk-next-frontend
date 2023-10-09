@@ -173,7 +173,7 @@ function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
  * Default export function for component
  * @param helpTextId
  * @param props
- * @returns {JSX.Element|null}
+ * @returns {React.ReactElement|null}
  */
 export default function Wrap({ helpTextId, ...props }) {
   const { isLoading, data } = useData(

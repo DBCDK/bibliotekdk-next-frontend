@@ -1,5 +1,5 @@
 /**
- * Used for conditionally wrap a tag around a JSX.Element
+ * Used for conditionally wrap a tag around a React.ReactElement
  * Returns wrapper if condition is true, only children if false
  * - unless a elseWrapper is defined, which would then be returned instead of just children
  */

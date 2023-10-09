@@ -38,7 +38,7 @@ export function enableDebug() {
 /**
  * Our custom fetcher
  *
- * @param {string || object} queryStr
+ * @param {string || Object} queryStr
  * @param {string || null} userAgent
  * @param {string || null} xForwardedFor
  */

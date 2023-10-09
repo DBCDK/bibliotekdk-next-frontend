@@ -102,7 +102,7 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
  *
  * @param {string} q the query
  * @param {Object} filters for searching
- * @param {array} facets for adding filters
+ * @param {Array} facets for adding filters
  */
 export function facets({
   q,

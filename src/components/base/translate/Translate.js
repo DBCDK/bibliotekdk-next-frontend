@@ -141,7 +141,7 @@ export function setTranslations(translations) {
  *  "contactName"
  *  "contactEmail"
  *
- * @param {array} props.vars
+ * @param {Array} props.vars
  * Vars is a list of variabels, used to make the translated text more dynamic.
  * Variabels in the translated text (%s) will get replaced (in the given order).
  * Also functions/Translate functions can be passed as a variable
@@ -184,7 +184,7 @@ export function setTranslations(translations) {
  * @param {Object} props
  * @param {string} props.context
  * @param {string} props.label
- * @param {array} props.vars
+ * @param {Array} props.vars
  * @param {boolean} props.renderAsHtml
  * See propTypes for specific props and types
  *

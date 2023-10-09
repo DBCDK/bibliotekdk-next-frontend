@@ -12,7 +12,7 @@ const APP_URL =
  * when generating the URL - Like on the search page.
 
  * @param {Object} props
- * @param {array} props.preserveParams the query params to preserve
+ * @param {Array} props.preserveParams the query params to preserve
  * @returns {Object}
  */
 export default function useCanonicalUrl({ preserveParams = [] } = {}) {

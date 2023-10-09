@@ -158,7 +158,7 @@ export default function useFilters() {
    * Set filters in query params
    *
    * @param {Object} include
-   * @param {array} exclude
+   * @param {Array} exclude
    */
   const setQuery = ({ include = _filters, exclude = [] }) => {
     /**

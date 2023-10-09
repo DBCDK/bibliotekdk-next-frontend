@@ -53,7 +53,7 @@ const UnderlineTypeEnum = Object.freeze({
 /**
  * Recurse through all children and apply function on each child if it is a valid element (e.g. not a string, undefined, etc.)
  *
- * @param {object|array|string|JSX.Element} children
+ * @param {Object|Array|string|React.ReactElement} children
  * @param {function} cloneFunction
  * @returns {Array<Exclude<unknown, boolean | null | undefined>>}
  */
@@ -112,10 +112,10 @@ let inferredLinkDisplay;
 /**
  * The Component function
  *
- * @param {object|array|string|JSX.Element} children
+ * @param {Object|array|string|React.ReactElement} children
  * @param {boolean} a
  * @param linkRef
- * @param {string|object} href
+ * @param {string|Object} href
  * @param {string} target
  * @param {function} onClick
  * @param {function} onKeyDown

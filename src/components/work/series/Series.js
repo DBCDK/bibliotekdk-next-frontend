@@ -16,7 +16,7 @@ import styles from "./Series.module.css";
  *
  * @param {Object} props
  * @param {string} props.isLoading The work id
- * @param {array} props.works array of works in series
+ * @param {Array} props.works array of works in series
  */
 export function Series({ isLoading, works = [] }) {
   // Translate Context

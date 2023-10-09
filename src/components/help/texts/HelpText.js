@@ -11,7 +11,7 @@ import Skeleton from "@/components/base/skeleton";
 /**
  * Entry function for a helptext
  * @param helptext
- * @returns {JSX.Element|null}
+ * @returns {React.ReactElement|null}
  */
 export function HelpText({ helptext }) {
   if (helptext.title && helptext.body) {
@@ -42,7 +42,7 @@ HelpText.propTypes = {
 /**
  * Default export function for component
  * @param {string} helpTextId
- * @returns {JSX.Element|null}
+ * @returns {React.ReactElement|null}
  */
 export default function Wrap({ helpTextId }) {
   const { isLoading, data, error } = useData(

@@ -49,7 +49,7 @@ export function extractCreatorsPrioritiseCorporation(creatorsBeforeFilter) {
  * as part of the URL path
  *
  * @param {string} title
- * @param {array<object>} creators
+ * @param {Array<Object>} creators
  *
  * @returns {string} encoded string
  */
@@ -64,7 +64,7 @@ export function encodeTitleCreator(title = "", creators = []) {
 /**
  *
  * @param {string} fullTitle
- * @param {array<object>} creators
+ * @param {Array<Object>} creators
  * @param {string} workId
  * @returns {{query: {title_author: string, workId}, pathname: string}}
  */

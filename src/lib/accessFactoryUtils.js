@@ -18,7 +18,7 @@ import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
  * @property {boolean} loanIsPossible
  * @property {string} pid
  * @property {Array<string>} titles
- * @property {Array<object>} creators
+ * @property {Array<Object>} creators
  * @property {Array<string>} materialTypeArray
  * @property {Array<string>} workTypes
  */
