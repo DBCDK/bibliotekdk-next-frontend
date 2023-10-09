@@ -1,4 +1,5 @@
 import * as orderMutations from "@/lib/api/order.mutations";
+import Text from "@/components/base/text";
 
 // elements we want
 const elements = [
@@ -212,20 +213,33 @@ export function handleSubmitOrder(
   );
 }
 
-export function highlightMarkedWords(highlight) {
+export function highlightMarkedWords(
+  highlight,
+  regularText = "text3",
+  semiboldText = "text4"
+) {
   const regexed = highlight?.split(/(<mark>(?:.*?)<\/mark>)/g).map((el) => {
     if (el.startsWith("<mark>") && el.endsWith("</mark>")) {
       return (
-        <span key={JSON.stringify(el)} style={{ fontWeight: 700 }}>
+        <Text
+          key={JSON.stringify(el)}
+          tag="span"
+          type={semiboldText}
+          style={{ fontWeight: 700 }}
+        >
           {el.replace("<mark>", "").replace("</mark>", "")}
-        </span>
+        </Text>
       );
     } else {
       return <>{el}</>;
     }
   });
 
-  return <span>{regexed}</span>;
+  return (
+    <Text tag="span" type={regularText}>
+      {regexed}
+    </Text>
+  );
 }
 
 export function escapeColons(phrase) {
