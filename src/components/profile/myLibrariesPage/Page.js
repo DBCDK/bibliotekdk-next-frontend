@@ -12,7 +12,7 @@ import { useState } from "react";
 /**
  * Shows the users libraries and makes it possible to add a new library
  *
- * @returns {component}
+ * @returns {React.ReactElement | null}
  *
  */
 

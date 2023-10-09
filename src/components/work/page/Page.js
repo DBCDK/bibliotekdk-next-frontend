@@ -32,7 +32,7 @@ import Custom404 from "@/pages/404";
  * @param {function} onTypeChange
  * @param {function} login
  * @param {MaterialTypesArray} type
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export default function WorkPage({ workId, onTypeChange, login, type }) {
   const router = useRouter();

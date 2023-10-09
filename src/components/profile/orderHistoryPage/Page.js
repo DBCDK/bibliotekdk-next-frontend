@@ -20,7 +20,7 @@ const itemsPerPage = 4;
 /**
  * Shows the previous orders made by the user from bibliotekdk.
  *
- * @returns {component}
+ * @returns {React.ReactElement | null}
  *
  */
 
@@ -199,8 +199,8 @@ export default function OrderHistoryPage() {
 
 /**
  * TableItem shows info for a single order.
- * @param {obj} props
- * @returns {component}
+ * @param {Object} props
+ * @returns {React.ReactElement | null}
  */
 function TableItem({ order, key }) {
   const breakpoint = useBreakpoint();

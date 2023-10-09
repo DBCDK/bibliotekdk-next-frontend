@@ -21,10 +21,10 @@ import { getScrollToNextCoveredChild } from "@/components/base/scrollsnapslider/
 /**
  * The Component function
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export function Reviews({ data = [], isLoading = false }) {
   // Translate Context
@@ -82,10 +82,10 @@ export function Reviews({ data = [], isLoading = false }) {
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export function ReviewsSkeleton(props) {
   const data = {
@@ -125,10 +125,10 @@ export function ReviewsSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export default function Wrap(props) {
   const { workId } = props;

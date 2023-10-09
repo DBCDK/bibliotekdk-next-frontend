@@ -35,7 +35,7 @@ import BookMarkDropDown from "@/components/work/overview/bookmarkDropdown/Bookma
  * Column one of full view. Some links and a button.
  * @param workId
  * @param manifestation
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 function ColumnOne({ workId, manifestation }) {
   const modal = useModal();
@@ -169,7 +169,7 @@ function ColumnOne({ workId, manifestation }) {
  * @param workId
  * @param pid
  * @param hasBeenSeen
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export default function ManifestationFull({ workId, pid, hasBeenSeen }) {
   const { data } = useData(

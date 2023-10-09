@@ -5,7 +5,7 @@ import { getAccessToken } from "./refworks";
 /**
  * Parse response
  * @param response
- * @return {*}
+ * @returns {React.ReactElement | null}
  */
 function parseRis(response) {
   return response.data.ris;
@@ -15,7 +15,7 @@ function parseRis(response) {
  * Do the query via fetcher - @see /lib/api/api.js
  * @param pid
  * @param accessToken
- * @return {Promise<*>}
+ * @returns {Promise<*>}
  */
 export async function getRis(pid, accessToken) {
   const querystr = manifestationFragments.ris(pid);
@@ -28,7 +28,7 @@ export async function getRis(pid, accessToken) {
  * Entry point
  * @param req
  * @param res
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
 export default async function risHandler(req, res) {
   // get an access token for api

@@ -9,10 +9,10 @@ import styles from "./Creator.module.css";
  *
  * @param {string} className
  * @param {boolean} skeleton
- * @param {object} data
+ * @param {Object} data
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.ReactElement | null}
  */
 export function Creator({ className = "", data = {}, skeleton = false }) {
   return (
@@ -57,10 +57,10 @@ export function Creator({ className = "", data = {}, skeleton = false }) {
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export function CreatorSkeleton(props) {
   return <Creator {...props} skeleton={true} />;
@@ -69,10 +69,10 @@ export function CreatorSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export default function Wrap(props) {
   if (props.skeleton) {

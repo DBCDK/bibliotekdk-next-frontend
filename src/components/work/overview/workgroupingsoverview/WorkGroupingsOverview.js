@@ -33,7 +33,7 @@ function getAnchor(anchorReference) {
  * @param title
  * @param anchorId
  * @param scrollOffset
- * @return {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 function WorkGroupingsOverview({ description, title, anchorId, scrollOffset }) {
   const [element, setElement] = useState("");
@@ -111,7 +111,7 @@ function RenderHostPublication({ hostPublication }) {
 /**
  * Wrapper for WorkGroupingsOverview
  * @param workId
- * @return {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export default function Wrap({ workId }) {
   const work_response = useData(

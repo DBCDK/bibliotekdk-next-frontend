@@ -13,10 +13,10 @@ import useQ from "@/components/hooks/useQ";
  * It acts like a button to open the mobile suggester modal
  *
  *
- * @param {obj} props
+ * @param {Object} props
  * @param {string} props.className
  *
- * @returns {component}
+ * @returns {React.ReactElement | null}
  */
 export default function FakeSearchInput({ className, showButton = true }) {
   const router = useRouter();

@@ -19,10 +19,10 @@ import { getFirstMatch } from "@/lib/utils";
 /**
  * The Component function
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export function Content({
   className = "",
@@ -90,10 +90,10 @@ export function Content({
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export function ContentSkeleton(props) {
   return (
@@ -109,10 +109,10 @@ export function ContentSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export default function Wrap(props) {
   const { workId, type } = props;

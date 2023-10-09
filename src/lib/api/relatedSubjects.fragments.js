@@ -3,7 +3,7 @@ import { ApiEnums } from "@/lib/api/api";
 /**
  * Related Subjects
  *
- * @param {object} params
+ * @param {Object} params
  * @param {array} params.q
  * @param {string} params.limit
  */

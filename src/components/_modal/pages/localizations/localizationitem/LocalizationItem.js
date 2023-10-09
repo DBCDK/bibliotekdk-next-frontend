@@ -13,8 +13,7 @@ const { BORROWER_STATUS_TRUE } = automock_utils();
 
 /**
  * Loading component
- * @return {JSX.Element}
- * @constructor
+ * @returns {React.ReactElement | null}
  */
 function ItemSkeleton({ index }) {
   const skeletonKey = cyKey({
@@ -61,8 +60,7 @@ function parseBranchLookupUrl(branch, holdings, localIds) {
  * @param holdings
  * @param {boolean} isLoading
  * @param {number} index
- * @return {JSX.Element}
- * @constructor
+ * @returns {React.ReactElement | null}
  */
 export function LocalizationItem({ branch, holdings, isLoading, index }) {
   // here we need a branch + holdingsdata for the branch

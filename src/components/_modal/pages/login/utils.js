@@ -35,7 +35,7 @@ export const isOrderPossible = ({ mode, branch }) => {
 
 /**
  * Open login modal
- * @param {obj} modal
+ * @param {Object} modal
  * @param {string} title
  * @param {string} mode
  * @param {string} originUrl

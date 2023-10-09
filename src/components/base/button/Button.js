@@ -14,10 +14,10 @@ function handleOnButtonClick() {
 /**
  * The Component function
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.ReactElement | null}
  */
 function Button({
   children = "im a button",
@@ -63,10 +63,10 @@ function Button({
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.ReactElement | null}
  */
 function ButtonSkeleton(props) {
   return (
@@ -85,10 +85,10 @@ function ButtonSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.ReactElement | null}
  */
 export default function Container(props) {
   if (props.skeleton) {

@@ -6,10 +6,10 @@ import Text, { TextSkeleton, allTextTypes } from "../text/Text";
  *  Title is a wrapper for Text, limiting the available tags
  *  Acts as an alias for text, with certain tag limitations
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export default function Container({
   children = "I'm a title",

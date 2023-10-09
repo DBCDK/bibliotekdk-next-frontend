@@ -27,7 +27,7 @@ import {
  * @param iconPlacement
  * @param iconStyle
  * @param skeleton
- * @return {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export function IconLink({
   children,

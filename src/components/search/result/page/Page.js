@@ -11,7 +11,7 @@ import useDataCollect from "@/lib/useDataCollect";
 /**
  * Row representation of a search result entry
  *
- * @param {object} props
+ * @param {Object} props
  * See propTypes for specific props and types
  */
 export function ResultPage({ rows, onWorkClick, isLoading }) {
@@ -52,7 +52,7 @@ ResultPage.propTypes = {
  * @param {Object} props Component props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export default function Wrap({ page, onWorkClick }) {
   // settings

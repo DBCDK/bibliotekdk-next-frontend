@@ -77,7 +77,7 @@ function Find() {
   /**
    * Updates URL query params
    *
-   * @param {object} params
+   * @param {Object} params
    */
   async function updateQueryParams(params) {
     const query = { ...router.query, ...params };

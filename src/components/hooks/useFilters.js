@@ -44,7 +44,7 @@ const fetcher = () => locale;
 /**
  * function to build the default (empty) filters object
  *
- * @returns {object}
+ * @returns {Object}
  */
 
 export function buildFilters() {
@@ -56,9 +56,9 @@ export function buildFilters() {
 /**
  * Get filters from query params
  *
- * @param {object} query (defaults to router.query)
+ * @param {Object} query (defaults to router.query)
  *
- * @returns {object}
+ * @returns {Object}
  *
  */
 export function getQuery(query) {
@@ -83,7 +83,7 @@ export function getQuery(query) {
 /**
  * useFilters hook
  *
- * @returns {object}
+ * @returns {Object}
  *
  * filters
  * setFilters
@@ -126,7 +126,7 @@ export default function useFilters() {
   /**
    * Update locale filters
    *
-   * @param {object} include
+   * @param {Object} include
    *
    */
   const setFilters = (include = {}) => {
@@ -147,9 +147,9 @@ export default function useFilters() {
   /**
    * Get filters from query params
    *
-   * @param {object} query (defaults to router.query)
+   * @param {Object} query (defaults to router.query)
    *
-   * @returns {object}
+   * @returns {Object}
    *
    */
   const _getQuery = (query = router.query) => getQuery(query);
@@ -157,7 +157,7 @@ export default function useFilters() {
   /**
    * Set filters in query params
    *
-   * @param {object} include
+   * @param {Object} include
    * @param {array} exclude
    */
   const setQuery = ({ include = _filters, exclude = [] }) => {
@@ -210,7 +210,7 @@ export default function useFilters() {
    *
    * @param exclude params
    *
-   * @returns {int}
+   * @returns {number}
    */
   function getCount(exclude = []) {
     const filters = _getQuery();

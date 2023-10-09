@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    // "checkJs": true,
+    // "jsx": "react",
     "baseUrl": ".",
     "paths": {
       "@/storybook": ["src/components/base/storybook"],

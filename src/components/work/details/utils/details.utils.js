@@ -163,7 +163,7 @@ function getCreatorsAndContributors(manifestation) {
  * Get óne work with the relation of type adaption - we want the DBC work - so we look
  * for pid that starts with 870970
  * @param manifestation
- * @returns {*}
+ * @returns {React.ReactElement | null}
  *
  * @TODO - this one is  outcommented while we wait for data to be fixed
  */
@@ -214,7 +214,6 @@ function getCreatorsAndContributors(manifestation) {
  * @param skeleton
  * @returns {unknown[]}
  *  jsx element to be parsed by react
- * @constructor
  */
 
 function RenderCreatorValues({ values, skeleton }) {
@@ -275,11 +274,10 @@ function RenderCreatorValues({ values, skeleton }) {
 
 /**
  * jsxParser for movies - actors. Parse given values for html output - @see parseMovieContributors for given values
- * @param values {object}
+ * @param values {Object}
  *  eg. {skuespillere:["jens", "hans", ..], ophav:["kurt", ...]}
  * @param skeleton
  * @returns {any[]}
- * @constructor
  */
 
 function RenderMovieActorValues({ values, skeleton }) {
@@ -326,8 +324,7 @@ function RenderMovieActorValues({ values, skeleton }) {
  * We give a link to the material the movie is  based on.
  * @param values
  * @param skeleton
- * @returns {""|JSX.Element}
- * @constructor
+ * @returns {""|React.ReactElement}
  */
 // function RenderMovieAdaption({ values, skeleton }) {
 //   return values?.map((work) => {
@@ -385,8 +382,7 @@ function RenderGameLanguages({ values }) {
  * We want a special display for movies - like subtitles and synchronization.
  * @param values
  * @param skeleton
- * @returns {JSX.Element}
- * @constructor
+ * @returns {React.ReactElement | null}
  */
 function RenderMovieLanguages({ values }) {
   // get the first 2 languages of the subtitle
@@ -432,8 +428,7 @@ function RenderMovieLanguages({ values }) {
  * Link to the genre of the movie.
  * @param values
  * @param skeleton
- * @returns {*}
- * @constructor
+ * @returns {React.ReactElement | null}
  */
 
 function RenderGenre({ values }) {
@@ -499,8 +494,7 @@ function RenderMovieAudience({ values }) {
  * lex and lit for literature (difficulty level)
  *
  * @param values
- * @returns {JSX.Element}
- * @constructor
+ * @returns {React.ReactElement | null}
  */
 function RenderLitteratureAudience({ values }) {
   const general = values.generalAudience
@@ -927,7 +921,7 @@ export function fieldsForRows(manifestation, work, context) {
  * New keys are appended to base array.
  * @param baseArray
  * @param extendingArray
- * @returns {*}
+ * @returns {React.ReactElement | null}
  */
 export function filterAndMerge({ baseArray, extendingArray }) {
   // find index in basearray of key in extending array

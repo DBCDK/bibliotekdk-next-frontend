@@ -14,7 +14,7 @@ export async function handleRenewLoan({ loanId, agencyId, loanMutation }) {
 /**
  * handles updates in mutation object on loans and reservations page
  * Its called in two places, depending on if on desktop or mobile
- * @param {obj} loanMutation
+ * @param {Object} loanMutation
  * @param {function} setHasRenewError
  * @param {function} setRenewed
  * @param {function} setRenewedDueDateString
@@ -104,7 +104,7 @@ export function isPid(pid) {
 /**
  * handles updates in mutation object on loans and reservations page
  * Its called in two places, depending on if on desktop or mobile
- * @param {obj} loanMutation
+ * @param {Object} loanMutation
  * @param {function} setHasError
  * @param {function} setRemovedOrderId
  * @param {function} updateUserStatusInfo

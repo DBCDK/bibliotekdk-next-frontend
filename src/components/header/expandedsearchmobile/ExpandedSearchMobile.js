@@ -23,8 +23,7 @@ import { MoreOptionsLink } from "../utils";
  * @param workType
  * @param collapseOpen
  * @param setCollapseOpen
- * @returns {JSX.Element}
- * @constructor
+ * @returns {React.ReactElement | null}
  */
 function ExpandedSearchMobile({
   doSearch,
@@ -140,7 +139,7 @@ function ExpandedSearchMobile({
 /**
  * Wrapper
  * @param props
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export default function Wrap(props) {
   const init = useInitExpanded(props);

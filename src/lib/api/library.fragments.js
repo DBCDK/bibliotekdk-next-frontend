@@ -8,7 +8,7 @@ import { ApiEnums } from "@/lib/api/api";
 /**
  * Fast search
  *
- * @param {object} params
+ * @param {Object} params
  */
 export function search({ q, language = "da", agencyId, limit = 10, offset }) {
   return {

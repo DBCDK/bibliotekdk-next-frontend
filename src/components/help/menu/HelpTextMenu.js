@@ -18,7 +18,7 @@ import Translate from "@/components/base/translate";
 /**
  * Other menu links
  *
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 function MenuLink({ label, href = "#!", active = false }) {
   const type = active ? "text1" : "text2";
@@ -45,8 +45,7 @@ function MenuLink({ label, href = "#!", active = false }) {
  * @param groups
  * @param helpTextId
  * @param className
- * @return {*}
- * @constructor
+ * @returns {React.ReactElement | null}
  */
 function HelpTextGroups({ menus, groups, helpTextId, className }) {
   const [expandedGroup, setExpandedGroup] = useState();
@@ -115,8 +114,7 @@ function HelpTextGroups({ menus, groups, helpTextId, className }) {
  * @param helpTexts
  * @param helpTextId
  * @param props
- * @return {JSX.Element}
- * @constructor
+ * @returns {React.ReactElement | null}
  */
 export function HelpTextMenu({ helpTexts, helpTextId, ...props }) {
   const menus = helpTextParseMenu(helpTexts);
@@ -145,8 +143,7 @@ export function HelpTextMenu({ helpTexts, helpTextId, ...props }) {
  * @param menuItems
  * @param group
  * @param helpTextId
- * @return {*}
- * @constructor
+ * @returns {React.ReactElement | null}
  */
 function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
   return menuItems[group.name].map((item, index) => {
@@ -176,8 +173,7 @@ function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
  * Default export function for component
  * @param helpTextId
  * @param props
- * @return {JSX.Element|null}
- * @constructor
+ * @returns {JSX.Element|null}
  */
 export default function Wrap({ helpTextId, ...props }) {
   const { isLoading, data } = useData(

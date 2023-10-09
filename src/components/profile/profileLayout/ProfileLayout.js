@@ -33,7 +33,7 @@ const WHITELIST = ["/profil/huskeliste"];
  * Renders a side menu on left side (ProfileMenu), breadcrumb and children on right side for screen width above 1020px
  * and renders a dropdown menu (NavigationDropdown) for screen width below 1020px
  *
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export default function ProfileLayout({ title, children }) {
   const breakpoint = useBreakpoint();

@@ -5,10 +5,10 @@ import Content from "../content";
 /**
  * The Article page React component
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.ReactElement | null}
  */
 export default function ArticlePage({ articleId }) {
   return (

@@ -11,9 +11,9 @@ const APP_URL =
  * In some cases, we want to preserve query params
  * when generating the URL - Like on the search page.
 
- * @param {object} props
+ * @param {Object} props
  * @param {array} props.preserveParams the query params to preserve
- * @returns {object}
+ * @returns {Object}
  */
 export default function useCanonicalUrl({ preserveParams = [] } = {}) {
   const router = useRouter();

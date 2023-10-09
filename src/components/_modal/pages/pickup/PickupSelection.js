@@ -14,8 +14,8 @@ import cx from "classnames";
  * Select a branch and handle login
  * either the user is already logged in for that agency
  * or the user needs to log in for that agency, so prompt login or open loanerform
- * @param {obj} branch
- * @param {obj} modal
+ * @param {Object} branch
+ * @param {Object} modal
  */
 function handleOnSelect(branch, modal, context, updateLoanerInfo) {
   // Selected branch belongs to one of the user's agencies where the user is logged in
@@ -88,13 +88,13 @@ function PolicyLoader({ branch, onLoad, pid, requireDigitalAccess }) {
 
 /**
  * Row that desplays a branch
- * @param {object} branch
+ * @param {Object} branch
  * @param {boolean} selected
  * @param {function} onSelect
  * @param {boolean} isLoading
  * @param {boolean} includeArrows
- * @param {object} _ref
- * @returns {JSX.Element}
+ * @param {Object} _ref
+ * @returns {React.ReactElement | null}
  */
 function Row({ branch, selected, onSelect, isLoading, includeArrows, _ref }) {
   // Check for a highlight key matching on "name" prop

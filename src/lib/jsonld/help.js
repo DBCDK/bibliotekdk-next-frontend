@@ -6,9 +6,9 @@ import Translate from "@/components/base/translate";
  * - https://developers.google.com/search/docs/data-types/article
  *
  *
- * @param {object} article
+ * @param {Object} article
  *
- * @returns {object} JSON-LD representation of article
+ * @returns {Object} JSON-LD representation of article
  */
 export function getJSONLD({
   nid,

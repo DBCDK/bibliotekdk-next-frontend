@@ -59,7 +59,7 @@ export function hashCode(str) {
  * @param {Object} props
  * @param {Array.<Object>} props.works
  *
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
   // Setup a window resize listener, triggering a component

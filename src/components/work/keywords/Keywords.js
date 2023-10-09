@@ -34,7 +34,7 @@ function url(keyword) {
  *
  * @param {Array} keywords Get fontsize according to amount of keywords
  *
- * @returns {obj} // styles.class
+ * @returns {Object} // styles.class
  */
 function getFontSize(keywords) {
   if (!keywords) {
@@ -120,7 +120,7 @@ function groupSubjects(subjects) {
 /**
  * Used in manifestationParser to get a list of links to subjects.
  * @param {array} subjects
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export function FlatSubjectsForFullManifestation({ subjects }) {
   // const grouped = groupSubjects(subjects?.dbcVerified);
@@ -154,7 +154,7 @@ export function FlatSubjectsForFullManifestation({ subjects }) {
  * @param grouped
  * @param skeleton
  * @param sizeClass
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 function KeyWordList({ className, grouped, skeleton, sizeClass }) {
   return (
@@ -196,10 +196,10 @@ function KeyWordList({ className, grouped, skeleton, sizeClass }) {
 /**
  * The Component function
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export function Keywords({ className = "", data = [], skeleton = false }) {
   const uniqueSubjects = uniqueSubjectEntries(data);
@@ -233,10 +233,10 @@ export function Keywords({ className = "", data = [], skeleton = false }) {
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export function KeywordsSkeleton(props) {
   const data = [
@@ -263,10 +263,10 @@ export function KeywordsSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export default function Wrap(props) {
   const { workId } = props;

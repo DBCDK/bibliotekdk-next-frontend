@@ -38,10 +38,10 @@ function CopyButton({ el, txt = "Copy" }) {
  * (FOR INTERNAL/STORYBOOK USE ONLY!)
  * Function to return storybook titles
  *
- * @param {obj} children
- * @param {bool} copy // adds a copy button
+ * @param {Object} children
+ * @param {boolean} copy // adds a copy button
  *
- * @returns {component}
+ * @returns {React.ReactElement | null}
  */
 export function StoryTitle({ children, copy = false }) {
   const el = "<StoryTitle>Im a storybook title</StoryTitle>";
@@ -59,10 +59,10 @@ export function StoryTitle({ children, copy = false }) {
  * (FOR INTERNAL/STORYBOOK USE ONLY!)
  * Function to return storybook descriptions
  *
- * @param {obj} children
- * @param {bool} copy // adds a copy button
+ * @param {Object} children
+ * @param {boolean} copy // adds a copy button
  *
- * @returns {component}
+ * @returns {React.ReactElement | null}
  */
 export function StoryDescription({ children, copy }) {
   const el =
@@ -83,10 +83,10 @@ export function StoryDescription({ children, copy }) {
  *
  * @param {string} space
  * @param {string} direction
- * @param {bool} demo // makes spaces visible
- * @param {bool} copy // adds a copy button
+ * @param {boolean} demo // makes spaces visible
+ * @param {boolean} copy // adds a copy button
  *
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export function StorySpace({
   space = "2",
@@ -130,10 +130,10 @@ export function StorySpace({
  * (FOR INTERNAL/STORYBOOK USE ONLY!)
  * Function to return storybook label
  *
- * @param {obj} children
- * @param {bool} copy // adds a copy button
+ * @param {Object} children
+ * @param {boolean} copy // adds a copy button
  *
- * @returns {component}
+ * @returns {React.ReactElement | null}
  */
 export function StoryLabel({ children, copy }) {
   const el = "<StoryLabel>Im a label</StoryLabel>";
@@ -151,10 +151,10 @@ export function StoryLabel({ children, copy }) {
  * (FOR INTERNAL/STORYBOOK USE ONLY!)
  * Function to return storybook label
  *
- * @param {obj} children
- * @param {bool} copy // adds a copy button
+ * @param {Object} children
+ * @param {boolean} copy // adds a copy button
  *
- * @returns {component}
+ * @returns {React.ReactElement | null}
  */
 export function StoryRouter() {
   const router = useRouter();

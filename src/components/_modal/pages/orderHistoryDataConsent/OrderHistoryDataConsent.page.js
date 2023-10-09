@@ -16,7 +16,7 @@ import { useEffect } from "react";
 
 /**
  * This modal is used to change the users consent on storing orderhistory data for more than 30 days.
- * @returns {component}
+ * @returns {React.ReactElement | null}
  */
 export function OrderHistoryDataConsent({ modal }) {
   const userDataMutation = useMutate();

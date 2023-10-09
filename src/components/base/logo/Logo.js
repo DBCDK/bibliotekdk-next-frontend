@@ -12,8 +12,7 @@ import cx from "classnames";
  *  Where to go when clicked
  * @param type
  *  Color of text and svg logo
- * @return {JSX.Element}
- * @constructor
+ * @returns {React.ReactElement | null}
  */
 export default function Logo({ href = "/", type = "BLUE", ...props }) {
   if (props.skeleton) {

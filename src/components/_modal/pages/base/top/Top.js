@@ -96,14 +96,14 @@ export function Back({ className, onBack }) {
 /**
  *
  * @param modalBeforeCheck
- * @param {object} className
+ * @param {Object} className
  * @param title
  * @param {boolean} back
  * @param {boolean} sticky
  * @param titleTag
  * @param {function} onClose
  * @param {function} onBack
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export default function Top({
   modal: modalBeforeCheck,

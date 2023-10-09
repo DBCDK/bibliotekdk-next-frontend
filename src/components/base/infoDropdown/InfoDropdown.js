@@ -16,7 +16,7 @@ import PropTypes from "prop-types";
 /**
  * InfoDropdown component that shows a button and a text that can be toggled by button click
  * @param {*} props
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export default function InfoDropdown(props) {
   const { children, label, buttonText } = props;

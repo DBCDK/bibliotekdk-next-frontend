@@ -257,7 +257,7 @@ export function OrderSkeleton(props) {
  * @param {Object} props Component props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export default function Wrap(props) {
   // context

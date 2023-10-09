@@ -35,7 +35,7 @@ import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
  * - MaterialTypesArray (MaterialTypes of the Manifestation, as a flat array)
  * - WorkTypes
  * @param manifestation
- * @return {Access[]}
+ * @returns {Access[]}
  */
 export function getAccessForSingleManifestation(manifestation) {
   return manifestation?.access?.map((singleAccess) => {
@@ -63,7 +63,7 @@ export function getAccessForSingleManifestation(manifestation) {
  * these accesses have additional manifestation details
  * from their respective manifestation
  * @param manifestations
- * @return {Access[]}
+ * @returns {Access[]}
  */
 export function getAllAccess(manifestations) {
   return manifestations?.flatMap(getAccessForSingleManifestation);
@@ -72,7 +72,7 @@ export function getAllAccess(manifestations) {
 /**
  * Enrich InfomediaAccess with url, origin, and accessType
  * @param singleInfomediaAccess
- * @return {Access}
+ * @returns {Access}
  */
 export function enrichInfomediaAccess(singleInfomediaAccess) {
   return singleInfomediaAccess?.id
@@ -96,7 +96,7 @@ export function enrichInfomediaAccess(singleInfomediaAccess) {
  * Enrich any type of access with __typename specific fields
  * Currently only infomediaService-access is enriched
  * @param singleAccess
- * @return {Access}
+ * @returns {Access}
  */
 export function enrichSingleAccess(singleAccess) {
   const enrichMapper = {
@@ -126,7 +126,7 @@ const specialAccessTypes = {
  * if the access origin is part of the {@link specialAccessTypes}.origins
  * or if the access url startsWith elements in {@link specialAccessTypes}.urls
  * @param singleAccess
- * @return {boolean}
+ * @returns {boolean}
  */
 function checkSpecialAccess(singleAccess) {
   return (
@@ -147,7 +147,7 @@ function checkSpecialAccess(singleAccess) {
  * - (1) Origin is DBC Webarkiv
  * - (0) None of the above
  * @param access
- * @return {number}
+ * @returns {number}
  */
 export function prioritiseAccessUrl(access) {
   const accessUrl_priorityPenalty = [
@@ -172,7 +172,7 @@ export function prioritiseAccessUrl(access) {
  * - (1) Missing or Non-string id (assume string id is valid id)
  * - (0) Present id of type string
  * @param access
- * @return {number}
+ * @returns {number}
  */
 export function prioritiseInfomediaService(access) {
   return typeof access?.id === "string" && access?.id ? 0 : 1;
@@ -186,7 +186,7 @@ export function prioritiseInfomediaService(access) {
  * - (1) Origin is Ereolen Go
  * - (0) Origin is Ereolen
  * @param access
- * @return {number}
+ * @returns {number}
  */
 export function prioritiseEreol(access) {
   const ereol_priorityPenalty = [
@@ -208,7 +208,7 @@ export function prioritiseEreol(access) {
  * - (1) Missing or Non-string issn (assume string issn is valid url)
  * - (0) Present issn of type string
  * @param access
- * @return {number}
+ * @returns {number}
  */
 export function prioritiseDigitalArticleService(access) {
   return typeof access?.issn === "string" && access?.issn ? 0 : 1;
@@ -220,7 +220,7 @@ export function prioritiseDigitalArticleService(access) {
  * - (1) LoanIsPossible either not boolean or false
  * - (0) LoanIsPossible is true
  * @param access
- * @return {number}
+ * @returns {number}
  */
 export function prioritiseInterLibraryLoan(access) {
   return typeof access?.loanIsPossible === "boolean" && access?.loanIsPossible
@@ -237,7 +237,7 @@ export function prioritiseInterLibraryLoan(access) {
  * - -- (Prioritisation specified in {@link prioritiseAccessUrl}, {@link prioritiseInfomediaService},
  *   {@link prioritiseEreol}, {@link prioritiseDigitalArticleService}, {@link prioritiseInterLibraryLoan})
  * @param access
- * @return {{typenamePriority: (number), accessInternalValuePriority: (number)}}
+ * @returns {{typenamePriority: (number), accessInternalValuePriority: (number)}}
  */
 export function prioritisedAccess(access) {
   const accessPriorityMapper = {
@@ -274,7 +274,7 @@ export function prioritisedAccess(access) {
  * The sorting can be used within {@link sort} on an array
  * @param a
  * @param b
- * @return {number}
+ * @returns {number}
  */
 export function sortPrioritisedAccess(a, b) {
   const priorityA = prioritisedAccess(a);
@@ -293,7 +293,7 @@ export function sortPrioritisedAccess(a, b) {
  * - Sorting is prioritised with {@link prioritisedAccess} (see JSDoc for details)
  *   using sortfunction {@link sortPrioritisedAccess}
  * @param manifestations
- * @return {Access[]}
+ * @returns {Access[]}
  */
 export function getAllEnrichedAccessSorted(manifestations) {
   return manifestations
@@ -305,7 +305,7 @@ export function getAllEnrichedAccessSorted(manifestations) {
 /**
  * Helper function for checking if single access is __typename valid interLibraryLoan
  * @param singleAccess
- * @return {boolean}
+ * @returns {boolean}
  */
 export function validInterLibraryLoanAccess(singleAccess) {
   return (
@@ -323,7 +323,7 @@ export function validInterLibraryLoanAccess(singleAccess) {
  * - specialAccesses: includes __typename: AccessUrl and meets criteria in {@link checkSpecialAccess} {@link specialAccessTypes}
  * @param accesses
  * @param hasDigitalAccess
- * @return {{digitalArticleServiceAccesses: Access[], interLibraryLoanAccesses: Access[], onlineAccesses: Access[], specialAccesses: Access[]}}
+ * @returns {{digitalArticleServiceAccesses: Access[], interLibraryLoanAccesses: Access[], onlineAccesses: Access[], specialAccesses: Access[]}}
  */
 export function getAllowedAccessesByTypeName(accesses, hasDigitalAccess) {
   const onlineAccesses = accesses
@@ -359,7 +359,7 @@ export function getAllowedAccessesByTypeName(accesses, hasDigitalAccess) {
  * argument is manifestations instead of accesses
  * @param manifestations
  * @param hasDigitalAccess
- * @return {Access[]}
+ * @returns {Access[]}
  */
 export function getAllAllowedEnrichedAccessSorted(
   manifestations,
@@ -389,7 +389,7 @@ export function getAllAllowedEnrichedAccessSorted(
  * - Counting DigitalArticleService and InterLibraryLoan only once together
  * @param manifestations
  * @param hasDigitalAccess
- * @return {number}
+ * @returns {number}
  */
 export function getCountOfAllAllowedEnrichedAccessSorted(
   manifestations,
@@ -416,7 +416,7 @@ export function getCountOfAllAllowedEnrichedAccessSorted(
 /**
  * Check digitalCopy on single
  * @param singleAccess
- * @return {boolean}
+ * @returns {boolean}
  */
 function checkSingleDigitalCopy(singleAccess) {
   return !!(
@@ -428,7 +428,7 @@ function checkSingleDigitalCopy(singleAccess) {
 /**
  * Check digitalCopy on all given accesses
  * @param enrichedAccesses
- * @return {Array<boolean>}
+ * @returns {Array<boolean>}
  */
 export function checkDigitalCopy(enrichedAccesses) {
   return enrichedAccesses?.map(checkSingleDigitalCopy);
@@ -437,7 +437,7 @@ export function checkDigitalCopy(enrichedAccesses) {
 /**
  * Check physicalCopy on single
  * @param singleAccess
- * @return {boolean}
+ * @returns {boolean}
  */
 function checkSinglePhysicalCopy(singleAccess) {
   return !!(
@@ -449,7 +449,7 @@ function checkSinglePhysicalCopy(singleAccess) {
 /**
  * Check physicalCopy on all given accesses
  * @param enrichedAccesses
- * @return {Array<boolean>}
+ * @returns {Array<boolean>}
  */
 export function checkPhysicalCopy(enrichedAccesses) {
   return enrichedAccesses?.map(checkSinglePhysicalCopy);
@@ -458,7 +458,7 @@ export function checkPhysicalCopy(enrichedAccesses) {
 /**
  * Check isPeriodica on single
  * @param singleAccess
- * @return {boolean}
+ * @returns {boolean}
  */
 function getIsSingleAccessPeriodicaLike(singleAccess) {
   return (
@@ -472,7 +472,7 @@ function getIsSingleAccessPeriodicaLike(singleAccess) {
 /**
  * Check isPeriodica on all given accesses
  * @param enrichedAccesses
- * @return {Array<boolean>}
+ * @returns {Array<boolean>}
  */
 export function getAreAccessesPeriodicaLike(enrichedAccesses) {
   return enrichedAccesses?.map(getIsSingleAccessPeriodicaLike);
@@ -488,7 +488,7 @@ export function getAreAccessesPeriodicaLike(enrichedAccesses) {
  * - physicalCopyArray derived from {@link checkPhysicalCopy}
  * - isPeriodicalLikeArray derived from {@link getAreAccessesPeriodicaLike}
  * @param manifestations
- * @return {{digitalArticleServiceAccesses: Access[], interLibraryLoanAccesses: Access[], onlineAccesses: Access[]}|{digitalCopyArray: Array<boolean>, isPeriodicaLikeArray: Array<boolean>, getAllowedAccessesByTypeName(*): {digitalArticleServiceAccesses: Access[], interLibraryLoanAccesses: Access[], onlineAccesses: Access[]}, getAllAllowedEnrichedAccessSorted(*): Access[], physicalCopyArray: Array<boolean>, getCountOfAllAllowedEnrichedAccessSorted(*): number, allEnrichedAccesses: (Access[]|*[])}|number|Access[]}
+ * @returns {{digitalArticleServiceAccesses: Access[], interLibraryLoanAccesses: Access[], onlineAccesses: Access[]}|{digitalCopyArray: Array<boolean>, isPeriodicaLikeArray: Array<boolean>, getAllowedAccessesByTypeName(*): {digitalArticleServiceAccesses: Access[], interLibraryLoanAccesses: Access[], onlineAccesses: Access[]}, getAllAllowedEnrichedAccessSorted(*): Access[], physicalCopyArray: Array<boolean>, getCountOfAllAllowedEnrichedAccessSorted(*): number, allEnrichedAccesses: (Access[]|*[])}|number|Access[]}
  */
 export function accessFactory(manifestations) {
   const allEnrichedAccesses =

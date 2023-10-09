@@ -15,7 +15,7 @@ import uniqWith from "lodash/uniqWith";
  * Important props:
  * @param similarMaterials The similar materials found in the actual lectorReviews
  * @param sliderId is used by the ScrollSnapSlider. We pass it in case we need specials handling of the scrolling
- * @return {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export function SimilarMaterials({
   similarMaterials,

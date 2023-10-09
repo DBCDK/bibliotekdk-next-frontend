@@ -16,7 +16,7 @@ import animations from "css/animations";
 /**
  * list of notifications
  * @param notificationArray
- * @return {unknown[]}
+ * @returns {unknown[]}
  */
 export function Notifications({ notificationObject }) {
   // check and make it an array
@@ -86,7 +86,7 @@ function notificationsFilter(data) {
 
 /**
  * wrapper to export
- * @return {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export default function Wrap() {
   const langcode = { language: getLanguage() };

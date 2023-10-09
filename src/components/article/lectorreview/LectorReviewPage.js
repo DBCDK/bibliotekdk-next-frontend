@@ -19,7 +19,7 @@ import { SimilarMaterials } from "@/components/article/lectorreview/similarmater
  *  - review -> reviewByLibrarian
  *  - relations -> isReviewOf
  * @param review
- * @return {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export function LectorReviewPage({ review }) {
   const router = useRouter();

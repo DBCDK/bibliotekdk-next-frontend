@@ -21,7 +21,7 @@ export const APIMockContext = createContext();
  *
  * @param {Object} query - A query object.
  *
- * @return {string} Stringified representation of the input
+ * @returns {string} Stringified representation of the input
  */
 export function generateKey(query) {
   // Consider hashing the string to make

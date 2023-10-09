@@ -282,7 +282,7 @@ LoanerForm.propTypes = {
  * If the loaner formular is submitted, other components may retrieve the data
  * with the userLoanerInfo hook.
  *
- * @returns {component}
+ * @returns {React.ReactElement | null}
  */
 export default function Wrap(props) {
   const modal = useModal();

@@ -10,10 +10,10 @@ import styles from "./burger.module.css";
 /**
  * The Component function
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.ReactElement | null}
  */
 export default function BurgerIcon(props) {
   const { className } = props;

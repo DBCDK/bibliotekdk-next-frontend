@@ -6,11 +6,11 @@ export const PRETTY_OFFSET = 8; // var(--pt1)
  * Get section by id
  *
  * @param {string} id
- * @param {object} items
- * @param {int} menuT
- * @param {int} height
+ * @param {Object} items
+ * @param {number} menuT
+ * @param {number} height
  *
- * @returns {object}
+ * @returns {Object}
  */
 export function getSectionById(id, items, menuT, height) {
   // target section
@@ -40,10 +40,10 @@ export function getSectionById(id, items, menuT, height) {
 /**
  * Get id of the active section (visible in users viewport)
  *
- * @param {object} items
+ * @param {Object} items
  * @param {number} scrollY
- * @param {int} menuT
- * @param {int} height
+ * @param {number} menuT
+ * @param {number} height
  *
  * @returns {string|null}
  */
@@ -78,7 +78,7 @@ export function getActiveElement(items, scrollY, menuT, height) {
  *
  * @param {Object} container
  * @param {Object} section
- * @param {int} offset
+ * @param {number} offset
  * @param {function} callback
  */
 export function handleScroll(container, section, offset = 0, callback = null) {
@@ -112,7 +112,7 @@ export function handleScroll(container, section, offset = 0, callback = null) {
  * @param {Object} container
  * @param {Object} item
  *
- * @param {int} offset
+ * @param {number} offset
  * @param {function|null=} callback
  * @returns {MutableRefObject<null>}
  */

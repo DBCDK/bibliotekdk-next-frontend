@@ -178,7 +178,7 @@ export function contentParser({ content, manifestations }) {
  * Check if a paragraph holds a link to another work - if so parse as link
  * if not return a period (.)
  * @param work
- * @return {JSX.Element|string}
+ * @returns {JSX.Element|string}
  */
 function lectorLink({ work, key }) {
   if (!work) {

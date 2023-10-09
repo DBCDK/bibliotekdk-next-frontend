@@ -87,7 +87,7 @@ let _store = [];
 /**
  *
  * @param {object|Array} children
- * @param {obj} className
+ * @param {Object} className
  * @param mock
  * @param {string} className.dimmer
  * @param {string} className.modal
@@ -384,14 +384,14 @@ function Container({ children, className = {}, mock = {} }) {
 /**
  * blah blah
  *
- * @param {obj} props
+ * @param {Object} props
  * @param {string} props.index
  * @param {string} props.active
  * @param {string} props.modal
  * @param {string} props.className
  * @param {string} props.dataCy
  *
- * @returns {component}
+ * @returns {React.ReactElement | null}
  *
  */
 
@@ -537,7 +537,7 @@ export function useModal() {
   /**
    * Save a modal to the store, to be able to add it to the stack at a later time
    * @param {string} id
-   * @param {object} context
+   * @param {Object} context
    */
   function _saveToStore(id, context = {}) {
     if (id) {
@@ -617,7 +617,7 @@ export function useModal() {
    * To search for an index, an id can be passed to the function.
    *
    * OBS!!! If an ID is given, function will return the index of the first found element (from position 0) with the given id
-   * @returns {int}
+   * @returns {number}
    */
   function _index(id = null) {
     if (id) {
@@ -685,7 +685,7 @@ export function useModal() {
    * to select the next element in stack matching the id.
    *
    * @param {string} id (optional)
-   * @returns {int}
+   * @returns {number}
    */
   function _next(id) {
     const active = _index();
@@ -715,7 +715,7 @@ export function useModal() {
    * to select the previous element in stack matching the id.
    *
    * @param {string} id (optional)
-   * @returns {int}
+   * @returns {number}
    */
   function _prev(id) {
     const active = _index();

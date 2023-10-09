@@ -20,10 +20,10 @@ import styles from "./Icon.module.css";
  * @param dataCy
  * @param ariaHidden
  * @param tag
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.ReactElement | null}
  */
 function Icon({
   alt = "",
@@ -91,10 +91,10 @@ function Icon({
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.ReactElement | null}
  */
 function IconSkeleton(props) {
   return (
@@ -113,10 +113,10 @@ function IconSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export default function Container(props) {
   if (props.skeleton) {

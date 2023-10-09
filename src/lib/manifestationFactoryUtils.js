@@ -28,7 +28,7 @@ let materialTypesOrderFromEnum = [];
  * Format to array from url
  * @example formatMaterialTypesFromUrl("fisk / hest") => ["fisk", "hest"]
  * @param materialTypesUrl
- * @return {MaterialTypesArray}
+ * @returns {MaterialTypesArray}
  */
 export function formatMaterialTypesFromUrl(materialTypesUrl) {
   return materialTypesUrl !== "" ? materialTypesUrl?.split(" / ") : [];
@@ -38,7 +38,7 @@ export function formatMaterialTypesFromUrl(materialTypesUrl) {
  * Format to url from array
  * @example formatMaterialTypesToUrl(["fisk", "hest"]) => "fisk / hest"
  * @param materialTypeArray
- * @return {string}
+ * @returns {string}
  */
 export function formatMaterialTypesToUrl(materialTypeArray) {
   return materialTypeArray?.join(" / ");
@@ -48,7 +48,7 @@ export function formatMaterialTypesToUrl(materialTypeArray) {
  * Format to cypress (cypress/dataCy does not like space)
  * @example formatMaterialTypesToCypress(["fisk og hest", "ko og ged"]) => "fisk-og-hest/ko-og-ged"
  * @param materialTypeArray
- * @return {string}
+ * @returns {string}
  */
 export function formatMaterialTypesToCypress(materialTypeArray) {
   return materialTypeArray?.join("/").replace(" ", "-");
@@ -58,7 +58,7 @@ export function formatMaterialTypesToCypress(materialTypeArray) {
  * Format to presentation is MaterialTypesSwitcher and searchResult
  * @example formatMaterialTypesToPresentation(["fisk og hest", "ko og ged"]) => "Fisk og hest / Ko og ged"
  * @param materialTypeArray
- * @return {string}
+ * @returns {string}
  */
 export function formatMaterialTypesToPresentation(materialTypeArray) {
   return materialTypeArray?.map((mat) => upperFirst(mat)).join(" / ");
@@ -67,7 +67,7 @@ export function formatMaterialTypesToPresentation(materialTypeArray) {
 /**
  * Material types in a flat array
  * @param manifestation
- * @return {*|*[]}
+ * @returns {*|*[]}
  */
 export function flattenMaterialType(manifestation) {
   return (
@@ -80,7 +80,7 @@ export function flattenMaterialType(manifestation) {
 /**
  * All materialTypeArrays for all given manifestations
  * @param manifestations
- * @return {*}
+ * @returns {React.ReactElement | null}
  */
 export function flatMapMaterialTypes(manifestations) {
   return manifestations?.map(flattenMaterialType);
@@ -90,7 +90,7 @@ export function flatMapMaterialTypes(manifestations) {
  * Sorter for sorting by publication year
  * @param a
  * @param b
- * @return {number}
+ * @returns {number}
  */
 export function sorterByPublicationYear(a, b) {
   return (
@@ -103,7 +103,7 @@ export function sorterByPublicationYear(a, b) {
  * All given manifestations grouped by materialTypes
  * @param manifestations
  * @param sorter
- * @return {Object}
+ * @returns {Object}
  */
 export function groupManifestations(
   manifestations,
@@ -130,7 +130,7 @@ export function groupManifestations(
  * {@link getOrderedFlatMaterialTypes}. Also uses workType to prefer the order
  * @param materialTypesOrder
  * @param jsonedMaterialTypeArray
- * @return {*}
+ * @returns {React.ReactElement | null}
  */
 export function getElementByCustomSorting(
   materialTypesOrder,
@@ -154,7 +154,7 @@ export function getElementByCustomSorting(
  * @param a
  * @param b
  * @param materialTypesOrder
- * @return {number}
+ * @returns {number}
  */
 export function compareArraysOfStrings(
   a,
@@ -185,7 +185,7 @@ export function compareArraysOfStrings(
  * Provides all unique materialTypeArrays from a given array of materialTypeArrays
  *  Sorting is also done by sort using {@link compareArraysOfStrings}
  * @param flatMaterialTypes
- * @return {Array<MaterialTypesArray>}
+ * @returns {Array<MaterialTypesArray>}
  */
 export function getUniqueMaterialTypes(flatMaterialTypes) {
   // We use sort because we actually want to keep the unique arrays sorted
@@ -200,7 +200,7 @@ export function getUniqueMaterialTypes(flatMaterialTypes) {
  * Search for a materialTypeArray within given unique materialTypes for manifestations
  * @param typeArr
  * @param uniqueMaterialTypes
- * @return {boolean}
+ * @returns {boolean}
  */
 export function getInUniqueMaterialTypes(typeArr, uniqueMaterialTypes) {
   return (
@@ -214,7 +214,7 @@ export function getInUniqueMaterialTypes(typeArr, uniqueMaterialTypes) {
  * Get all pids from manifestations with a specific materialTypeArray
  * @param typeArr
  * @param manifestationsByType
- * @return {*|*[]}
+ * @returns {*|*[]}
  */
 export function getFlatPidsByType(typeArr, manifestationsByType) {
   return (
@@ -231,7 +231,7 @@ export function getFlatPidsByType(typeArr, manifestationsByType) {
  * Enrich manifestations with default cover image
  * @param type
  * @param manifestations
- * @return {{cover: ({detail: *}|{detail: null}), manifestations: *, materialType}}
+ * @returns {{cover: ({detail: *}|{detail: null}), manifestations: *, materialType}}
  */
 export function enrichManifestationsWithDefaultFrontpages(
   type,
@@ -249,7 +249,7 @@ export function enrichManifestationsWithDefaultFrontpages(
 /**
  * Function used for BibliographicData, for showing all manifestations of a work
  * @param manifestationsByType
- * @return {unknown[]}
+ * @returns {unknown[]}
  */
 export function flattenGroupedSortedManifestations(manifestationsByType) {
   return Object.entries(manifestationsByType)

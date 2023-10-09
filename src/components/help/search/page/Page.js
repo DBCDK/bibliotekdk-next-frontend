@@ -21,7 +21,7 @@ import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 /**
  * The page showing help search results
  *
- * @returns {component}
+ * @returns {React.ReactElement | null}
  *
  */
 export function Page({ result, isLoading, query }) {

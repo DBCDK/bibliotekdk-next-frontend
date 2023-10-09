@@ -11,10 +11,10 @@ import cx from "classnames";
 /**
  * The Component function
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.ReactElement | null}
  */
 function Text({
   children = "lorem ipsum dolor sit amet ...",
@@ -88,10 +88,10 @@ function Text({
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.ReactElement | null}
  */
 export function TextSkeleton(props) {
   if (!props.lines) {
@@ -122,10 +122,10 @@ export function TextSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.ReactElement | null}
  */
 export default function Container(props) {
   if (props.skeleton) {

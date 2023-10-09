@@ -41,8 +41,7 @@ export const isEmpty = (objectToCheck) => {
  * @param workType
  * @param collapseOpen
  * @param setCollapseOpen
- * @returns {JSX.Element}
- * @constructor
+ * @returns {React.ReactElement | null}
  */
 export function ExpandedSearch({
   workType,
@@ -172,8 +171,7 @@ export function useInitExpanded({ collapseOpen = false, setCollapseOpen }) {
  * @param {boolean} collapseOpen
  * @param {function} setCollapseOpen
  * @param {string} className
- * @returns {JSX.Element}
- * @constructor
+ * @returns {React.ReactElement | null}
  */
 export default function Wrap({
   collapseOpen = false,

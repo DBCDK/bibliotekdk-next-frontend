@@ -10,10 +10,10 @@ import styles from "./Page.module.css";
 /**
  * HelpText page React component
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export default function HelpTextPage({ helpTextId }) {
   return (

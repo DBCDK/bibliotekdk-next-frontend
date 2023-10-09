@@ -17,7 +17,7 @@ import animations from "css/animations";
  * A custom Radio Button displayed as a row
  *
  * @param disabled
- * @param {object} props
+ * @param {Object} props
  * @param {array} props.children
  * @param {className} props.string
  * @param {string} props.label the aria label for the radio button
@@ -86,7 +86,7 @@ Radio.propTypes = {
  * @param disabled
  * @param onDisabled
  * @param labelledBy
- * @param {object} props
+ * @param {Object} props
  * @param {array} props.children
  * @param {className} props.string
  * @param {string} props.label the aria label for the radio button

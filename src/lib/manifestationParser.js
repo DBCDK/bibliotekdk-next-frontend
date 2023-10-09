@@ -288,7 +288,7 @@ const fields = () => [
 /**
  * Render full and parallel titles as one block to show.
  * @param value
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 function renderFullAndParallelTitles(value) {
   return (
@@ -413,7 +413,7 @@ function renderOriginalTitle(value) {
  *
  * It tries to parse all fields that are in the "fields" array
  *
- * @param {object} manifestation
+ * @param {Object} manifestation
  * @returns {array}
  */
 export function parseManifestation(manifestation) {

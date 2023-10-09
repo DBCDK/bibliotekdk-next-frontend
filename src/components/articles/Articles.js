@@ -18,10 +18,10 @@ import styles from "./Articles.module.css";
 /**
  * The Article page React component
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.ReactElement | null}
  */
 export function Articles({ articles, skeleton }) {
   articles = useMemo(() => sortArticles(articles), [articles]);

@@ -40,7 +40,7 @@ function getContext(template) {
  * Sort remaining articles by the special 'pos' tag
  * @param {array} articles
  * @param {string} matchTag
- *  @param {int} numberOfArticles
+ *  @param {number} numberOfArticles
  *
  * @returns {array}
  */
@@ -84,7 +84,7 @@ function getArticleData(data) {
 /**
  * A section displaying three articles
  *
- * @param {object} props
+ * @param {Object} props
  * @param {string} props.title
  * @param {array} props.articles
  * @param {boolean} props.skeleton

@@ -30,10 +30,10 @@ function SkeletonCard() {
 /**
  * The card React component
  *
- * @param {object} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.ReactElement | null}
  */
 export default function Card({
   cardRef,

@@ -95,7 +95,7 @@ function sortMaterialTypesByFilter(materialTypesInFilter) {
 /**
  * Row representation of a search result entry
  *
- * @param {object} work
+ * @param {Object} work
  * @param {string} className
  * @param {function} onClick
  * @param {boolean} isLoading

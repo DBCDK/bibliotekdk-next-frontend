@@ -113,12 +113,12 @@ export default ReservationButtonWrapper;
 /**
  * For testing purpose we separate the rendered button from the skeleton
  * to be able to give mocked access obj to button
- * @param {obj} access
- * @param {obj} user
+ * @param {Object} access
+ * @param {Object} user
  * @param {string} buttonType
  * @param {string} size
  * @param {[string]} pids
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 export const ReservationButton = ({
   access, //TODO same as allEnrichedAccesses?
@@ -215,7 +215,7 @@ export const ReservationButton = ({
 
   /**
    * Get props for the button based on the case scenario
-   * @returns {object} props and text for button
+   * @returns {Object} props and text for button
    */
   const getProps = () => {
     if (noSelectedManifestations) {

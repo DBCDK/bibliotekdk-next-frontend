@@ -25,7 +25,7 @@ export function sortData(data) {
  *
  * @param {array} data
  *
- * @returns {object}
+ * @returns {Object}
  */
 export function groupData(data) {
   const fallback = Translate({ context: "help", label: "faq-group-other" });

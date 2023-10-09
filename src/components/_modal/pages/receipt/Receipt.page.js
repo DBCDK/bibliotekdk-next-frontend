@@ -190,10 +190,10 @@ export function Receipt({
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.ReactElement | null}
  */
 export default function Wrap(props) {
   // fetch props from context
