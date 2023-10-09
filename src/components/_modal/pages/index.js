@@ -39,7 +39,7 @@ const _modal = {
   LoginNotSupported,
   OpenAdgangsplatform,
   ProfileInfo,
-  DeleteProfile
+  DeleteProfile,
 };
 
 export default _modal;

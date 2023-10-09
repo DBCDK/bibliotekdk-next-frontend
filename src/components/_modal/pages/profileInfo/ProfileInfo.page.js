@@ -62,18 +62,15 @@ export function ProfileInfo({ modal }) {
           Log ud 
         </Button> */}
         <Link
-        onClick={()=>{
-          modal.push("deleteProfile");
-
-
-        }}
+          onClick={() => {
+            modal.push("deleteProfile");
+          }}
           className={styles.deleteProfileButton}
           border={{
             top: false,
             bottom: {
               keepVisible: true,
             },
-          
           }}
         >
           Slet profil

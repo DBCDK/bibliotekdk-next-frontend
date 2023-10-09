@@ -8,11 +8,10 @@
   }
 }
 
-.deleteTextTitle{
-    margin-bottom: var(--pt2);
+.deleteTextTitle {
+  margin-bottom: var(--pt2);
 }
-.deleteText{
-    margin-bottom: var(--pt7);
-    font-size: 16px;
-
+.deleteText {
+  margin-bottom: var(--pt7);
+  font-size: 16px;
 }

@@ -163,15 +163,9 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
                 component={Pages.OrderHistoryDataConsent}
               />
 
-                <Modal.Page
-                id="profileInfo"
-                component={Pages.ProfileInfo}
-              />
+              <Modal.Page id="profileInfo" component={Pages.ProfileInfo} />
 
-<Modal.Page
-                id="deleteProfile"
-                component={Pages.DeleteProfile}
-              />
+              <Modal.Page id="deleteProfile" component={Pages.DeleteProfile} />
 
               <Modal.Page
                 id="openAdgangsplatform"
