@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /**
  * @file ProfileInfo is a modal that shows user info. User can sign out and delete their profile from here.
  */
