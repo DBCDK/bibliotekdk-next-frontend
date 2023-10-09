@@ -1,58 +1,58 @@
 .modalContainer {
-    /* padding: 0 var(--pt2) var(--pt2) var(--pt2); */
-    padding-top: var(--pt4);
+  /* padding: 0 var(--pt2) var(--pt2) var(--pt2); */
+  padding-top: var(--pt4);
+}
+
+.dataItem:first-child {
+  display: flex;
+  gap: var(--pt05);
+
+  /* padding: var(--pt3) var(--pt05); */
+}
+
+.dataItem {
+  display: flex;
+  gap: var(--pt05);
+
+  padding: var(--pt1) var(--pt05);
+  margin-bottom: var(--pt05);
+}
+
+.dataItem:last-child {
+  /* border-bottom: 1px solid var(--iron); */
+}
+.dataItem p {
+  font-size: 17px;
+}
+
+@media (min-width: 576px) {
+  .modalContainer {
+    /* padding: 0 var(--pt6) var(--pt3) var(--pt6); */
   }
-  
-  .dataItem:first-child {
-    display: flex;
-    gap: var(--pt05);
-  
-    /* padding: var(--pt3) var(--pt05); */
-  }
-  
-  .dataItem {
-    display: flex;
-    gap: var(--pt05);
-  
-    padding: var(--pt1) var(--pt05);
-    margin-bottom: var(--pt05);
-  }
-  
-  .dataItem:last-child {
-    /* border-bottom: 1px solid var(--iron); */
-  }
-  .dataItem p {
-    font-size: 17px;
-  }
-  
-  @media (min-width: 576px) {
-    .modalContainer {
-      /* padding: 0 var(--pt6) var(--pt3) var(--pt6); */
-    }
-  }
-  
-  .buttonsContainer {
-    display: flex;
-    flex-direction: column;
-  }
-  .logoutButton {
-    margin-top: var(--pt16);
-    margin-bottom: var(--pt4);
-  }
-  .deleteUserButton {
-    background-color: var(--error);
-  }
-  
-  .deleteProfileButton {
-    align-self: center;
-    --underline-bottom-color: var(--blue);
-    --underline-bottom-hover-color: var(--error);
-    --underline-font-hover-color: var(--error);
-  }
-  
-  .deleteProfileButtonCustom{
-    margin-top: 100px;
-  }
-  .userInfo{
-    margin-bottom: var(--pt6);
-  }
+}
+
+.buttonsContainer {
+  display: flex;
+  flex-direction: column;
+}
+.logoutButton {
+  margin-top: var(--pt16);
+  margin-bottom: var(--pt4);
+}
+.deleteUserButton {
+  background-color: var(--error);
+}
+
+.deleteProfileButton {
+  align-self: center;
+  --underline-bottom-color: var(--blue);
+  --underline-bottom-hover-color: var(--error);
+  --underline-font-hover-color: var(--error);
+}
+
+.deleteProfileButtonCustom {
+  margin-top: 100px;
+}
+.userInfo {
+  margin-bottom: var(--pt6);
+}

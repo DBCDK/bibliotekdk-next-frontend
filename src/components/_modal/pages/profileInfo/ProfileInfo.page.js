@@ -51,19 +51,21 @@ export function ProfileInfo({ modal }) {
           <Text type="text4">Favorit afhentningssted:</Text>
           {/* <Text>Stadsbiblioteket, Lyngby</Text> */}
           <Link
-          onClick={() => {
-           alert("Vis dropdown eller modal hvor man kan ændre fav afhentingssted")
-          }}
-          className={styles.deleteProfileButton}
-          border={{
-            top: false,
-            bottom: {
-              keepVisible: true,
-            },
-          }}
-        >
-          Stadsbiblioteket, Lyngby
-        </Link>
+            onClick={() => {
+              alert(
+                "Vis dropdown eller modal hvor man kan ændre fav afhentingssted"
+              );
+            }}
+            className={styles.deleteProfileButton}
+            border={{
+              top: false,
+              bottom: {
+                keepVisible: true,
+              },
+            }}
+          >
+            Stadsbiblioteket, Lyngby
+          </Link>
         </div>
         {/* <div className={styles.dataItem}>
           <Text type="text4">Mail:</Text>
