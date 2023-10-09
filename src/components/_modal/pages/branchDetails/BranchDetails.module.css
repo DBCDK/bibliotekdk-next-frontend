@@ -1,5 +1,9 @@
+.break_word {
+  word-break: break-word;
+}
+
 .branch_status {
-  padding-top: var(--pt3);
+  padding-top: var(--pt4);
 }
 
 .padding_element_pt_two {

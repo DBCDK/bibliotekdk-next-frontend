@@ -54,6 +54,7 @@ export function templateForVerticalWorkCard(material) {
       styles.related_element,
       styles.related_element__vertical_version
     ),
+    textClassName: cx(styles.text),
     coverImageClassName: cx(styles.cover, styles.cover__vertical_version),
   };
 }
@@ -98,6 +99,7 @@ export function templateForHeaderWorkCard(material) {
     // Styling
     elementContainerClassName: cx(styles.col_flex),
     relatedElementClassName: cx(styles.related_element),
+    textClassName: cx(styles.text),
     coverImageClassName: cx(styles.cover),
   };
 }
@@ -134,6 +136,7 @@ export function templateForRelatedWorks(material) {
     // Styling
     elementContainerClassName: cx(styles.col_flex),
     relatedElementClassName: cx(styles.related_element),
+    textClassName: cx(styles.text),
     coverImageClassName: cx(styles.cover),
   };
 }
@@ -191,6 +194,7 @@ export function templateForLocalizations(
       styles.related_element,
       styles.related_element__localization_version
     ),
+    textClassName: cx(styles.text__localization_version),
     coverImageClassName: cx(styles.cover, styles.cover__localizations_version),
   };
 }
