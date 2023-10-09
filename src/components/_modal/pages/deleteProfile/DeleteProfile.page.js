@@ -50,7 +50,7 @@ export function ProfileInfo({ modal }) {
         dit lokale bibliotek for dette.
       </Text>
       <Button className={styles.deleteUserButton} size="large" type="primary">
-        Slet bruger
+        Slet profil
       </Button>
     </div>
   );

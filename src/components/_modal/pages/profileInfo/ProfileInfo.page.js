@@ -47,8 +47,8 @@ export function ProfileInfo({ modal }) {
         </div>
         <div className={styles.dataItem}>
           <Text type="text4">Favorit afhentningssted:</Text>
-          {/* <Text>Stadsbiblioteket, Lyngby</Text> */}
-          <Link
+          <Text>Stadsbiblioteket, Lyngby</Text>
+          {/* <Link
           onClick={() => {
             modal.push("deleteProfile");
           }}
@@ -61,7 +61,7 @@ export function ProfileInfo({ modal }) {
           }}
         >
           Stadsbiblioteket, Lyngby
-        </Link>
+        </Link> */}
         </div>
         {/* <div className={styles.dataItem}>
           <Text type="text4">Mail:</Text>
