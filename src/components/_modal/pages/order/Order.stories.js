@@ -122,7 +122,6 @@ PickupNotAllowed.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {
-<<<<<<< HEAD
         Query: {
           user: () => USER_2,
           branches: () => ({
@@ -130,9 +129,6 @@ PickupNotAllowed.story = merge({}, DEFAULT_STORY_PARAMETERS, {
             result: [BRANCH_2],
           }),
         },
-=======
-        Query: { user: () => USER_2, branches: () => ({ result: [BRANCH_2] }) },
->>>>>>> e38b19e7 (disabled some test for hotfix)
       },
     },
   },
