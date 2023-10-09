@@ -15,7 +15,7 @@ import PropTypes from "prop-types";
 
 /**
  * InfoDropdown component that shows a button and a text that can be toggled by button click
- * @param {*} props
+ * @param {Object} props
  * @returns {React.ReactElement | null}
  */
 export default function InfoDropdown(props) {

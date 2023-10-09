@@ -26,8 +26,8 @@ import { useData } from "@/lib/api/api";
 /**
  *  Order component function
  *
- * @param {*} param0
- * @returns JSX.Element
+ * @param {Object} props
+ * @returns {React.ReactElement | null}
  */
 function Order({
   pid,

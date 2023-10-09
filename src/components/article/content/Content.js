@@ -118,7 +118,7 @@ function getOrientation({ width, height }) {
 
 /**
  *
- * @param {*} htmlString
+ * @param {string} htmlString
  * @returns {number} time in minutes
  */
 function calcReadTime(htmlString) {

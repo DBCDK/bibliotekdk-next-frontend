@@ -310,7 +310,7 @@ function WorkInfo({ title, author, pidOfPrimaryObject }) {
 
 /**
  * Parses an iso-8601 date string into human readable date an time strings.
- * @param {*} isoDateString
+ * @param {string} isoDateString
  * @returns an object containing date and time fields. Eks {date: "D. 24. juni", time:"Kl. 11:07"}
  */
 const parseDate = (isoDateString) => {

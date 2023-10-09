@@ -156,8 +156,8 @@ export default function LibrariesTable({ data, municipalityAgencyId }) {
 
 /**
  *
- * @param {*} agencyID
- * @returns returns true if public library (Folkebibliotek)
+ * @param {string} agencyID
+ * @returns {boolean} returns true if public library (Folkebibliotek)
  */
 const isPublicLibrary = (agencyID) => {
   const faroeIslandsLibraries = ["900455", "911116", "911130"];

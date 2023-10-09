@@ -136,7 +136,8 @@ function Container({ children, className = {}, mock = {} }) {
 
   /**
    * Remove an item from the store
-   * @param {*} uid
+   * @param {string} uid
+   * @param {Object} store
    */
   function removeFromStore(uid, store) {
     const index = store.findIndex((obj) => obj.uid === uid);
@@ -748,8 +749,8 @@ export function useModal() {
    *
    * OBS!!!! skal der opdateres i localstorage stakken her?
    *
-   * @param {*} index
-   * @param {*} context
+   * @param {number} index
+   * @param {Object} context
    */
   function _update(index = _index(), context) {
     let copy = [..._stack];

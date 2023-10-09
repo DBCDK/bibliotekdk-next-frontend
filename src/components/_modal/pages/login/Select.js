@@ -16,7 +16,7 @@ import Text from "@/components/base/text";
  * @param {boolean} isLoading
  * @param {boolean} disabled
  * @param {boolean} includeArrows
- * @param {*} _ref
+ * @param {Object} _ref - React reference object {@see https://reactjs.org/docs/refs-and-the-dom.html
  * @returns
  */
 export default function Select({

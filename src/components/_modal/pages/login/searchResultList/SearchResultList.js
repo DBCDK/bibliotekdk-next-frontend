@@ -9,7 +9,7 @@ import Select from "../Select";
 
 /**
  * Shows a list of branches from the search result
- * @param {*} props
+ * @param {Object} props
  * @returns {React.ReactElement | null}
  */
 export default function SearchResultList(props) {
