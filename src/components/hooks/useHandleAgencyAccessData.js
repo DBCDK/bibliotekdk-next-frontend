@@ -440,9 +440,10 @@ export function handleAgencyAccessData(agencies) {
  * {@link useAgencyIdsConformingToQuery} finds agencyIds that conform to query
  * @param {Array.<string>=} pids
  * @param {string=} q
+ * @param limit
  * @returns {{isLoading: boolean, agencyIds: Array.<Object>}}
  */
-export function useAgencyIdsConformingToQuery({ pids, q }) {
+export function useAgencyIdsConformingToQuery({ pids, q, limit = 50 }) {
   const agencies = useData(
     q &&
       q !== "" &&
@@ -450,6 +451,7 @@ export function useAgencyIdsConformingToQuery({ pids, q }) {
       branchesFragments.branchesByQuery({
         q: q,
         pids: pids,
+        limit: limit,
       })
   );
 
@@ -464,15 +466,17 @@ export function useAgencyIdsConformingToQuery({ pids, q }) {
  * {@link useSingleAgency} finds an agency by its agencyId
  * @param {Array.<string>=} pids
  * @param {string=} agencyId
+ * @param {number} limit
  * @returns {{agenciesIsLoading: boolean, count: number, agenciesFlatSorted: Array.<Object>}}
  */
-export function useSingleAgency({ pids, agencyId }) {
+export function useSingleAgency({ pids, agencyId, limit = 50 }) {
   const agencyNoHighlights = useData(
     agencyId &&
       pids &&
       branchesFragments.branchesActiveInAgency({
         agencyId: agencyId,
         pids: pids,
+        limit: limit,
       })
   );
 

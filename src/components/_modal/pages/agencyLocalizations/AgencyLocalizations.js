@@ -8,6 +8,7 @@ import { useState } from "react";
 import isEmpty from "lodash/isEmpty";
 import styles from "./AgencyLocalizations.module.css";
 import Text from "@/components/base/text/Text";
+import Pagination from "@/components/search/pagination/Pagination";
 
 /**
  * {@link AgencyLocalizations} presents the possible agencies with holdings or conforming to query
@@ -19,6 +20,7 @@ import Text from "@/components/base/text/Text";
 export default function AgencyLocalizations({ context, modal }) {
   const { pids } = context;
   const [query, setQuery] = useState("");
+  const [limit, setLimit] = useState(10);
 
   const {
     agencyIds: agencyIdsFromQuery,
@@ -28,6 +30,7 @@ export default function AgencyLocalizations({ context, modal }) {
       !isEmpty(query) && {
         pids: pids,
         q: query,
+        limit: 100,
       }
   );
 
@@ -35,7 +38,11 @@ export default function AgencyLocalizations({ context, modal }) {
     data: agenciesWithHoldings,
     isLoading: agenciesWithHoldingsIsLoading,
   } = useData(
-    pids && localizationsFragments.localizationsWithHoldings({ pids: pids })
+    pids &&
+      localizationsFragments.localizationsWithHoldings({
+        pids: pids,
+        limit: limit,
+      })
   );
 
   const agencyIds = !isEmpty(query)
@@ -57,7 +64,10 @@ export default function AgencyLocalizations({ context, modal }) {
         label: "reminder_can_be_ordered_from_anywhere",
       })}
       query={query}
-      setQuery={setQuery}
+      setQuery={(value) => {
+        value === "" && setLimit(10);
+        setQuery(value);
+      }}
     >
       {isEmpty(agencyIds) && !localizationsIsLoading ? (
         <LocalizationsBase.Information
@@ -77,20 +87,30 @@ export default function AgencyLocalizations({ context, modal }) {
           </Text>
         </LocalizationsBase.Information>
       ) : (
-        <LocalizationsBase.List>
-          {(agencyIds ?? Array(10).fill(""))?.map((agencyId, index) => (
-            <li key={JSON.stringify(agencyId + "-" + index)}>
-              <AgencyLocalizationItem
-                context={context}
-                localizationsIsLoading={localizationsIsLoading}
-                modal={modal}
-                agencyId={agencyId}
-                pids={pids}
-                query={query}
-              />
-            </li>
-          ))}
-        </LocalizationsBase.List>
+        <>
+          <LocalizationsBase.List>
+            {(agencyIds.slice(0, limit) ?? Array(limit).fill(""))?.map(
+              (agencyId, index) => (
+                <li key={JSON.stringify(agencyId + "-" + index)}>
+                  <AgencyLocalizationItem
+                    context={context}
+                    localizationsIsLoading={localizationsIsLoading}
+                    modal={modal}
+                    agencyId={agencyId}
+                    pids={pids}
+                    query={query}
+                  />
+                </li>
+              )
+            )}
+          </LocalizationsBase.List>
+          <Pagination
+            className={styles.pagination}
+            numPages={!(limit > agencyIds?.length) ? 2 : 1}
+            forceMobileView={true}
+            onChange={() => setLimit((prev) => prev + 10)}
+          />
+        </>
       )}
     </LocalizationsBase>
   );

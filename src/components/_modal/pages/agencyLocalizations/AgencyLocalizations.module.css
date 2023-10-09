@@ -5,3 +5,7 @@
 .hint_for_no_search_results {
   padding-top: var(--pt1);
 }
+
+.pagination {
+  padding-top: var(--pt3);
+}
