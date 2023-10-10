@@ -43,6 +43,8 @@
   bottom: 0;
   left: 0;
   border-radius: 50%;
+  width: 18px;
+  height: 18px;
 }
 .row > .dot::before {
   background: var(--blue);
@@ -51,14 +53,10 @@
 }
 .row.selected > .dot::before {
   transform: scale(0.7);
-  width: 18px;
-    height: 18px;
 }
 .row > .dot::after {
   border: 1px solid var(--gray);
-  height: 18px;
-  width: 18px;
-  box-sizing: border-box; /* Added this line */
+  box-sizing: border-box;
 }
 .row.selected > .dot::after {
   border-color: var(--blue);
