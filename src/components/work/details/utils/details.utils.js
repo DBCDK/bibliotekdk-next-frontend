@@ -754,6 +754,17 @@ export function fieldsForRows(manifestation, work, context) {
       },
       {
         audience: {
+          label: Translate({ ...context, label: "level" }),
+          tooltip: "tooltip_lix",
+          value:
+            manifestation?.audience?.let || manifestation?.audience?.lix
+              ? manifestation.audience
+              : null,
+          jsxParser: RenderLitteratureAudience,
+        },
+      },
+      {
+        audienceage: {
           label: Translate({ ...context, label: "audience" }),
           value: getAudienceValues(manifestation?.audience),
         },
