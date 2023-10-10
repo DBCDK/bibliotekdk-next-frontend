@@ -27,8 +27,8 @@ export function DeleteProfile({ modal }) {
   );
   const user = useUser();
 
-  const persistUserData = !!userData?.user?.persistUserData;
-
+  const createdAt = userData?.user?.createdAt;
+  console.log("createdAt", createdAt);
   const userName = loanerInfo?.userParameters?.userName;
 
   console.log("loanerInfo", loanerInfo);

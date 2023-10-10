@@ -216,6 +216,7 @@ export function extendedData() {
       user {
         persistUserData
         favoritePickUpBranch
+        createdAt
       }
      }`,
     slowThreshold: 3000,
