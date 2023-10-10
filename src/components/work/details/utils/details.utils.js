@@ -949,3 +949,20 @@ export function filterAndMerge({ baseArray, extendingArray }) {
   });
   return baseArray;
 }
+
+/**
+ *
+ * @param {object} manifestation
+ */
+export const createManifestationText = (manifestation) => {
+  return (
+    manifestation?.hostPublication?.title ||
+    [
+      ...manifestation?.publisher,
+      ...(!isEmpty(manifestation?.edition?.edition)
+        ? [manifestation?.edition?.edition]
+        : []),
+    ].join(", ") ||
+    ""
+  );
+};
