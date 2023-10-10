@@ -654,7 +654,7 @@ const MaterialRow = (props) => {
             )}
             <div className={styles.textContainer}>
               <ConditionalWrapper
-                condition={!!title && !!creator && !!materialId}
+                condition={!!title && !!materialId}
                 wrapper={(children) => (
                   <Link
                     border={{
