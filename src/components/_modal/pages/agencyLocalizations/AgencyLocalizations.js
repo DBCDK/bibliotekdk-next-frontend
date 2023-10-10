@@ -10,8 +10,7 @@ import styles from "./AgencyLocalizations.module.css";
 import Text from "@/components/base/text/Text";
 import Pagination from "@/components/search/pagination/Pagination";
 
-const DEFAULT_LIMIT = 10;
-const DEFAULT_INCREASE = DEFAULT_LIMIT;
+const PAGE_SIZE = 10;
 
 /**
  * {@link AgencyLocalizations} presents the possible agencies with holdings or conforming to query
@@ -23,7 +22,7 @@ const DEFAULT_INCREASE = DEFAULT_LIMIT;
 export default function AgencyLocalizations({ context, modal }) {
   const { pids } = context;
   const [query, setQuery] = useState("");
-  const [limit, setLimit] = useState(DEFAULT_LIMIT);
+  const [limit, setLimit] = useState(PAGE_SIZE);
 
   const {
     agencyIds: agencyIdsFromQuery,
@@ -64,7 +63,7 @@ export default function AgencyLocalizations({ context, modal }) {
       })}
       query={query}
       setQuery={(value) => {
-        value === "" && setLimit(DEFAULT_LIMIT);
+        value === "" && setLimit(PAGE_SIZE);
         setQuery(value);
       }}
     >
@@ -107,7 +106,7 @@ export default function AgencyLocalizations({ context, modal }) {
             className={styles.pagination}
             numPages={limit <= agencyIds?.length ? 2 : 1}
             forceMobileView={true}
-            onChange={() => setLimit((prev) => prev + DEFAULT_INCREASE)}
+            onChange={() => setLimit((prev) => prev + PAGE_SIZE)}
           />
         </>
       )}
