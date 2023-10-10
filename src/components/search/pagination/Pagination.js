@@ -112,7 +112,7 @@ export default function Pagination({
 
         {!showPreviousPageArrow && <div className={styles.arrowPlaceholder} />}
 
-        {ArrayOfPaginationPages.map((page, index) => {
+        {arrayOfPaginationPages.map((page, index) => {
           return (
             <Icon
               onClick={() => onChangeChecked(page)}
