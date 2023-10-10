@@ -21,7 +21,7 @@
 }
 .row > .dot {
   position: relative;
-  height: 15px;
+  height: 18px;
   width: 18px;
 }
 .row.selected > .dot {
@@ -51,9 +51,14 @@
 }
 .row.selected > .dot::before {
   transform: scale(0.7);
+  width: 18px;
+    height: 18px;
 }
 .row > .dot::after {
   border: 1px solid var(--gray);
+  height: 18px;
+  width: 18px;
+  box-sizing: border-box; /* Added this line */
 }
 .row.selected > .dot::after {
   border-color: var(--blue);
