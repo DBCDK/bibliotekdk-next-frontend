@@ -14,7 +14,7 @@ import MenuDropdown from "@/components/base/dropdown/menuDropdown/MenuDropdown";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import List from "@/components/base/forms/list";
 import Pagination from "@/components/search/pagination/Pagination";
-import isEmpty from "lodash/isEmpty";
+import { createEditionText } from "@/components/work/details/utils/details.utils";
 
 const CONTEXT = "bookmark";
 const MENUITEMS = ["Bestil flere", "Hent referencer", "Fjern flere"];
@@ -22,6 +22,29 @@ const sortByItems = [
   { label: "latestAdded", key: "createdAt" },
   { label: "alphabeticalOrder", key: "title" },
 ];
+
+/**
+ *
+ * Radio buttons to choose how to sort Bookmarks
+ * @returns
+ */
+const SortButtons = ({ sortByItems, setSortByValue, sortByValue }) => {
+  return (
+    <List.Group className={styles.sortingContainer} disableGroupOutline>
+      {sortByItems.map(({ label, key }) => (
+        <List.Radio
+          className={styles.sortingItem}
+          key={key}
+          selected={sortByValue === key}
+          onSelect={() => setSortByValue(key)}
+          label={key}
+        >
+          <Text>{Translate({ context: "profile", label: label })}</Text>
+        </List.Radio>
+      ))}
+    </List.Group>
+  );
+};
 
 const BookmarkPage = () => {
   const {
@@ -103,16 +126,7 @@ const BookmarkPage = () => {
     /**
      * Matches string construction on work page
      */
-    return (
-      bookmark?.hostPublication?.title ||
-      [
-        ...bookmark?.publisher,
-        ...(!isEmpty(bookmark?.edition?.edition)
-          ? [bookmark?.edition?.edition]
-          : []),
-      ].join(", ") ||
-      ""
-    );
+    return createEditionText(bookmark);
   };
 
   const onPageChange = async (newPage) => {
@@ -160,22 +174,21 @@ const BookmarkPage = () => {
             label: "result-amount",
           })}
         </Text>
-        <div>
-          <List.Group className={styles.sortingContainer} disableGroupOutline>
-            {sortByItems.map(({ label, key }) => (
-              <List.Radio
-                className={styles.sortingItem}
-                key={key}
-                selected={sortByValue === key}
-                onSelect={() => setSortByValue(key)}
-                label={key}
-              >
-                <Text>{Translate({ context: "profile", label: label })}</Text>
-              </List.Radio>
-            ))}
-          </List.Group>
-        </div>
+        {!isMobile && (
+          <SortButtons
+            sortByItems={sortByItems}
+            sortByValue={sortByValue}
+            setSortByValue={setSortByValue}
+          />
+        )}
       </div>
+      {isMobile && (
+        <SortButtons
+          sortByItems={sortByItems}
+          sortByValue={sortByValue}
+          setSortByValue={setSortByValue}
+        />
+      )}
 
       <div className={styles.buttonControls}>
         <div

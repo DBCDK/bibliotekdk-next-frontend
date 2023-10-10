@@ -71,7 +71,7 @@
     .on-focus,
     .underlineContainer,
     .underlineContainer__only_internal_animations
-  ):focus-visible
+  ):focus
   .f-translate-right,
 :is(
     .on-focus,
@@ -204,7 +204,7 @@
     .on-focus,
     .underlineContainer,
     .underlineContainer__only_internal_animations
-  ):focus-visible
+  ):focus
   .f-bounce-left,
 :is(
     .on-focus,

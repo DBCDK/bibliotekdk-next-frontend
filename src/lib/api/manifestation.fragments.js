@@ -401,6 +401,20 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
   materialTypes {
     specific
   }
+  audience {
+    generalAudience
+    childrenOrAdults {
+      display
+    }
+    schoolUse {
+      display
+    }                
+    ages {
+      display
+    }                
+    lix
+    let
+  } 
   shelfmark {
     shelfmark
     postfix

@@ -26,7 +26,6 @@ export function basic() {
         municipalityAgencyId
         agencies {
           hitcount
-          agencyUrl
           result {
             branchId
             agencyId
