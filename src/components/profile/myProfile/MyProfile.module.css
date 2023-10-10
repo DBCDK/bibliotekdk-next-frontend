@@ -57,6 +57,6 @@
   margin-bottom: var(--pt6);
 }
 
-.dataItemTitle{
-  font-weight: 500;
+.dataItemTitle {
+  font-family: var(--body-font-medium);
 }

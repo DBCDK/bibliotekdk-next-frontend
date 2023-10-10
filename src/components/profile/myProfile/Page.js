@@ -11,6 +11,7 @@ import Translate from "@/components/base/translate/Translate";
 import Title from "@/components/base/title";
 import { useData } from "@/lib/api/api";
 import * as userFragments from "@/lib/api/user.fragments";
+import IconButton from "@/components/base/iconButton/IconButton";
 
 /**
  * Shows the previous orders made by the user from bibliotekdk.
@@ -26,34 +27,47 @@ export default function SettingsPage() {
     isAuthenticated && userFragments.branchesForUser()
   );
   const userName = loanerInfo?.userParameters?.userName;
-  const {agencies, municipalityAgencyId} = loanerInfo;
-  console.log('SettingsPage.municipalityAgencyId',municipalityAgencyId)
-  console.log('SettingsPage.agencies',agencies)
-  const municipalityAgency = agencies?.map(agency=>agency?.result[0]).find(agency=>agency?.agencyId==municipalityAgencyId)
-console.log('municipalityAgency',municipalityAgency)
+  const { agencies, municipalityAgencyId } = loanerInfo;
+  console.log("SettingsPage.municipalityAgencyId", municipalityAgencyId);
+  console.log("SettingsPage.agencies", agencies);
+  const municipalityAgency = agencies
+    ?.map((agency) => agency?.result[0])
+    .find((agency) => agency?.agencyId == municipalityAgencyId);
+  console.log("municipalityAgency", municipalityAgency);
   return (
     <Layout title={Translate({ context: "profile", label: "myProfile" })}>
       <div className={styles.modalContainer}>
         <div className={styles.userInfo}>
           <div className={styles.dataItem}>
-            <Title className={styles.dataItemTitle} type="title6">{Translate({context:"general",label:"name"})}</Title>
+            <Title className={styles.dataItemTitle} type="title6">
+              {Translate({ context: "general", label: "name" })}
+            </Title>
             <Text type="text2">{userName}</Text>
           </div>
           <div className={styles.dataItem}>
-          <Title className={styles.dataItemTitle}  type="title6">{Translate({context:"profile",label:"municipalityOfResidence"})}</Title>
-           <Text>{municipalityAgency?.agencyName}</Text>
+            <Title className={styles.dataItemTitle} type="title6">
+              {Translate({
+                context: "profile",
+                label: "municipalityOfResidence",
+              })}
+            </Title>
+            <Text>{municipalityAgency?.agencyName}</Text>
           </div>
           <div className={styles.dataItem}>
-          <Title className={styles.dataItemTitle}  type="title6">{Translate({ context: "profile", label: "profileCreated" })}</Title>
+            <Title className={styles.dataItemTitle} type="title6">
+              {Translate({ context: "profile", label: "profileCreated" })}
+            </Title>
             <Text>18. sep</Text>
           </div>
         </div>
 
-        <Link
+        <IconButton
+          icon="chevron"
+          keepUnderline
           onClick={() => {
             modal.push("deleteProfile");
           }}
-          className={`${styles.deleteProfileButton} ${styles.deleteProfileButtonCustom}`}
+          className={` ${styles.deleteProfileButtonCustom}`}
           border={{
             top: false,
             bottom: {
@@ -61,8 +75,10 @@ console.log('municipalityAgency',municipalityAgency)
             },
           }}
         >
-          Slet profil
-        </Link>
+          <Text type="text2">
+            {Translate({ context: "profile", label: "deleteProfile" })}
+          </Text>
+        </IconButton>
       </div>
     </Layout>
   );
