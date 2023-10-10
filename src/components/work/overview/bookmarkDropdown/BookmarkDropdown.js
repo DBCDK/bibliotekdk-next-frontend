@@ -56,7 +56,7 @@ export function BookMarkMaterialSelector({
       return;
     }
 
-    const addedEditions = bookmarks.filter(
+    const addedEditions = bookmarks?.filter(
       (bookmark) => bookmark.workId === workId
     );
     const bookmarkMatches = addedEditions.map((addedEdition) => {
