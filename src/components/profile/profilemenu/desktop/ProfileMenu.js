@@ -169,6 +169,7 @@ const menuItems = [
   "bookmarks",
   "orderHistory",
   "myLibraries",
+  "myProfile",
 ];
 
 const initialLoansAndReservations = {
@@ -221,12 +222,12 @@ export default function ProfileMenu() {
             <MenuLink key={item} label={item} href={getProfileUrl(item)} />
           ))}
 
-          <MenuLink
+          {/* <MenuLink
             mocked={true}
             key={"hej"}
             label={"Indstillinger"}
             href={"/profil/indstillinger"}
-          />
+          /> */}
         </ul>
       </nav>
     </>

@@ -3153,6 +3153,10 @@
         "da": "Bestillingshistorik",
         "en": "Order history"
       },
+      "myProfile": {
+        "da": "Min profil",
+        "en": "My profile"
+      },
       "profileMenu": {
         "da": "Profilmenu",
         "en": "Profile menu"
@@ -3205,6 +3209,14 @@
       "municipalityOfResidence": {
         "da": "Din bopælskommune",
         "en": "Municipality of residence"
+      },
+      "municipalityOfResidence": {
+        "da": "Bopælskommune",
+        "en": "Municipality of residence"
+      },
+      "profileCreated": {
+        "da": "Bibliotek.dk-profil oprettet",
+        "en": "Bibliotek.dk-profile created"
       },
       "debt": {
         "da": "Mellemværende",

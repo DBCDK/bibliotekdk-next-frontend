@@ -1,17 +1,17 @@
 .modalContainer {
   /* padding: 0 var(--pt2) var(--pt2) var(--pt2); */
-  padding-top: var(--pt4);
+  margin-top: var(--pt7);
+  padding-top: var(--pt2);
+  border-top: 1px solid var(--iron);
 }
 
 .dataItem:first-child {
-  display: flex;
   gap: var(--pt05);
 
   /* padding: var(--pt3) var(--pt05); */
 }
 
 .dataItem {
-  display: flex;
   gap: var(--pt05);
 
   padding: var(--pt1) var(--pt05);
@@ -55,4 +55,8 @@
 }
 .userInfo {
   margin-bottom: var(--pt6);
+}
+
+.dataItemTitle{
+  font-weight: 500;
 }

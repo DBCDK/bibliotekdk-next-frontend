@@ -1,5 +1,5 @@
 import Header from "@/components/header/Header";
-import Page from "@/components/profile/indstillinger";
+import Page from "@/components/profile/myProfile";
 import { useRouter } from "next/router";
 import { fetchAll } from "@/lib/api/apiServerOnly";
 

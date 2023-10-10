@@ -23,6 +23,7 @@ export function basic() {
         mail
         address
         postalCode
+        municipalityAgencyId
         agencies {
           hitcount
           agencyUrl
