@@ -63,7 +63,7 @@ function Radio({
       <div id="radio-label" className={styles.label}>
         {label}
       </div>
-      <div className={[styles.content].join(" ")}>{children}</div>
+      <div className={styles.content}>{children}</div>
     </div>
   );
 }
