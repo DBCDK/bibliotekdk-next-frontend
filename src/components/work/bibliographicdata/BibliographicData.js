@@ -17,7 +17,7 @@ import {
 } from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
 import capitalize from "lodash/capitalize";
-import { createManifestationText } from "../details/utils/details.utils";
+import { createEditionText } from "../details/utils/details.utils";
 
 /**
  * Export function of the Component
@@ -114,7 +114,7 @@ export function BibliographicData({ manifestations, workId }) {
             "";
 
           // show some publishing info
-          const shortPublishing = createManifestationText(manifestation);
+          const shortPublishing = createEditionText(manifestation);
 
           // the list to pass to accordion
           const additinalText = [

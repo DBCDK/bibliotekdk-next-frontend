@@ -9,8 +9,9 @@ import useBookmarks from "@/components/hooks/useBookmarks";
 import Icon from "@/components/base/icon/Icon";
 import BookmarkMedium from "@/public/icons/bookmark_small.svg";
 import { formatMaterialTypesToPresentation } from "@/lib/manifestationFactoryUtils";
-import { createManifestationText } from "../../details/utils/details.utils";
-import { isEmpty, upperFirst } from "lodash";
+import { createEditionText } from "../../details/utils/details.utils";
+import isEmpty from "lodash/isEmpty";
+import upperFirst from "lodash/upperFirst";
 
 export function BookMarkMaterialSelector({
   materialTypes,
@@ -70,7 +71,7 @@ export function BookMarkMaterialSelector({
         editionDisplayText:
           edition?.materialTypes?.[0]?.specific +
           ", " +
-          createManifestationText(edition),
+          createEditionText(edition),
         ...edition,
       };
     });
