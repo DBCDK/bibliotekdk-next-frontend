@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 /**
  * @file DeleteProfile is a modal where the user can confirm profile deletion.
  */
@@ -9,11 +7,12 @@ import * as userFragments from "@/lib/api/user.fragments";
 import useUser from "@/components/hooks/useUser";
 import Top from "@/components/_modal/pages/base/top";
 import styles from "./DeleteProfile.module.css";
-import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import { useEffect } from "react";
 import Button from "@/components/base/button";
-import Link from "@/components/base/link";
+import { deleteUser } from "@/lib/api/userData.mutations";
+import { useRouter } from "next/router";
+import { signOut } from "@dbcdk/login-nextjs/client";
 
 /**
  * This modal is used to change the users consent on storing orderhistory data for more than 30 days.
@@ -26,6 +25,7 @@ export function DeleteProfile({ modal }) {
     isAuthenticated && userFragments.extendedData()
   );
   const user = useUser();
+  const router = useRouter();
 
   const createdAt = userData?.user?.createdAt;
   console.log("createdAt", createdAt);
@@ -38,6 +38,11 @@ export function DeleteProfile({ modal }) {
     }
   }, [modal.isVisible]);
 
+  const handleDeleteUser = () => {
+    deleteUser({ userDataMutation });
+
+    signOut(null, "/");
+  };
   return (
     <div className={styles.modalContainer}>
       <Top title={"Slet profil"} back />
@@ -51,7 +56,12 @@ export function DeleteProfile({ modal }) {
         Bemærk: Du slettes ikke fra de biblioteker, du er oprettet ved. Kontakt
         dit lokale bibliotek for dette.
       </Text>
-      <Button className={styles.deleteUserButton} size="large" type="primary">
+      <Button
+        className={styles.deleteUserButton}
+        size="large"
+        type="primary"
+        onClick={handleDeleteUser}
+      >
         Slet profil
       </Button>
     </div>

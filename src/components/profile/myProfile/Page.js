@@ -26,12 +26,9 @@ export default function SettingsPage() {
   );
   const userName = loanerInfo?.userParameters?.userName;
   const { agencies, municipalityAgencyId } = loanerInfo;
-  console.log("SettingsPage.municipalityAgencyId", municipalityAgencyId);
-  console.log("SettingsPage.agencies", agencies);
   const municipalityAgency = agencies
     ?.map((agency) => agency?.result[0])
     .find((agency) => agency?.agencyId == municipalityAgencyId);
-  console.log("municipalityAgency", municipalityAgency);
 
   const createdAt = userData?.user?.createdAt;
   const { day, monthName, year } = parseDate(createdAt);
