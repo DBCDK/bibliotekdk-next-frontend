@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { FlatSubjectsForFullManifestation } from "@/components/work/keywords/Keywords";
 
 import { parseFunction } from "@/lib/centralParsers.utils";
+import { getAudienceValues } from "@/components/work/details/utils/export.utils";
 
 // fields to handle - add to handle a field eg. subjects or lix or let or ...
 const fields = () => [
@@ -242,6 +243,14 @@ const fields = () => [
     valueParser: (value) => value.edition || "",
   },
   {
+    dataField: "audience",
+    label: Translate({
+      context: "details",
+      label: "audience",
+    }),
+    valueParser: getAudienceValues,
+  },
+  {
     dataField: "physicalDescriptions",
     label: Translate({
       context: "bibliographic-data",
@@ -249,6 +258,7 @@ const fields = () => [
     }),
     valueParser: (value) => value?.[0]?.requirements || "",
   },
+
   /*{
     dataField: "manifestationParts",
     label: Translate({

@@ -25,7 +25,6 @@ export function basic() {
         postalCode
         agencies {
           hitcount
-          agencyUrl
           result {
             branchId
             agencyId
