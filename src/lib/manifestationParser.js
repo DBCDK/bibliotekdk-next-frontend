@@ -246,7 +246,7 @@ const fields = () => [
     dataField: "audience",
     label: Translate({
       context: "details",
-      label: "audience-age",
+      label: "audience",
     }),
     valueParser: getAudienceValues,
   },
