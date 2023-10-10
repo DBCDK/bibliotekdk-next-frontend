@@ -25,6 +25,7 @@ import Title from "@/components/base/title/Title";
 import { useRouter } from "next/router";
 import Breadcrumbs from "@/components/work/overview/breadcrumbs/Breadcrumbs";
 import BookMarkDropDown from "@/components/work/overview/bookmarkDropdown/BookmarkDropdown";
+import isEmpty from "lodash/isEmpty";
 
 function useInitMaterialType(
   uniqueMaterialTypes,
@@ -38,7 +39,7 @@ function useInitMaterialType(
     if (
       uniqueMaterialTypes &&
       uniqueMaterialTypes?.[0] !== type &&
-      (type === "" || type === [] || !inUniqueMaterialTypes(type))
+      (isEmpty(type) || !inUniqueMaterialTypes(type))
     ) {
       onTypeChange({
         type: uniqueMaterialTypes?.[0],
