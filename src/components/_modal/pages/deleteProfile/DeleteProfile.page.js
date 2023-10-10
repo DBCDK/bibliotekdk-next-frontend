@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 /**
- * @file ProfileInfo is a modal that shows user info. User can sign out and delete their profile from here.
+ * @file DeleteProfile is a modal where the user can confirm profile deletion.
  */
 import { useMutate } from "@/lib/api/api";
 import { useData } from "@/lib/api/api";
@@ -19,7 +19,7 @@ import Link from "@/components/base/link";
  * This modal is used to change the users consent on storing orderhistory data for more than 30 days.
  * @returns {component}
  */
-export function ProfileInfo({ modal }) {
+export function DeleteProfile({ modal }) {
   const userDataMutation = useMutate();
   const { isAuthenticated, loanerInfo } = useUser();
   const { data: userData, mutate } = useData(
@@ -58,4 +58,4 @@ export function ProfileInfo({ modal }) {
   );
 }
 
-export default ProfileInfo;
+export default DeleteProfile;

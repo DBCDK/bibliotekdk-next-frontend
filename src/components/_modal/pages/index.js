@@ -16,7 +16,6 @@ import Login from "./login";
 import MobileLogin from "./mobileLogin";
 import OpenAdgangsplatform from "./openAdgangsplatform";
 import LoginNotSupported from "./loginNotSupported";
-import ProfileInfo from "./profileInfo";
 import DeleteProfile from "./deleteProfile";
 
 const _modal = {
@@ -38,7 +37,6 @@ const _modal = {
   MobileLogin,
   LoginNotSupported,
   OpenAdgangsplatform,
-  ProfileInfo,
   DeleteProfile,
 };
 
