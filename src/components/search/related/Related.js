@@ -68,13 +68,7 @@ export function Related({ data, isLoading }) {
       space={{
         bottom: "var(--pt4)",
       }}
-      title={
-        noRelatedSubjects ? (
-          <span />
-        ) : (
-          <FilterButton isLoading={isLoading} className={styles.filterButton} />
-        )
-      }
+      title={noRelatedSubjects ? <span /> : null}
     >
       {(data.length > 0 || isLoading) && (
         <div>

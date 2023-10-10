@@ -11,6 +11,7 @@ import useQ from "@/components/hooks/useQ";
 import { useRouter } from "next/router";
 import FilterButton from "../filterButton";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import cx from "classnames";
 
 export function Desktop({ options = [], onSelect, selected, className }) {
   return (
@@ -88,8 +89,8 @@ export function Mobile({ options = [], onSelect, selected, className }) {
               onClick={() => onSelect(elem)}
             >
               {Translate({
-                context: "facets",
-                label: `label-${elem}`,
+                context: elem === "all" ? "general" : "facets",
+                label: elem === "all" ? elem : `label-${elem}`,
               })}
             </Tag>
           );

@@ -39,7 +39,6 @@ export function Result({
 
   const numPages = Math.ceil(hitcount / 10);
 
-  const visibleClass = noRelatedSubjects ? styles.visible : "";
   const noRelatedSubjectsClass = noRelatedSubjects
     ? styles.noRelatedSubjects
     : "";
@@ -52,7 +51,7 @@ export function Result({
         title={
           !isLoading && !isTablet ? (
             <FilterButton
-              className={`${styles.filterButton} ${visibleClass}`}
+              className={`${styles.filterButton} ${styles.visible}`}
             />
           ) : (
             <span />
