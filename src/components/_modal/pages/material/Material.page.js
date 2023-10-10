@@ -378,6 +378,7 @@ const Material = ({ context }) => {
         href={getWorkUrl(title, creators, workId)}
       >
         <Text className={styles.link} type="text2" tag="span">
+          {/* @TODO make translation */}
           Gå til bogen
         </Text>
       </Link>

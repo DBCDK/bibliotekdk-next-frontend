@@ -136,8 +136,8 @@ export const ReservationButton = ({
   workId,
 }) => {
   const modal = useModal();
-  const materialType = access?.[0]?.workTypes?.[0].toLowerCase();
-  const selectedMaterialType = Array.isArray(parentSelectedMaterialType) ? parentSelectedMaterialType?.[0].toLowerCase() : parentSelectedMaterialType.toLowerCase();
+  const materialType = access?.[0]?.workTypes?.[0]?.toLowerCase();
+  const selectedMaterialType = Array.isArray(parentSelectedMaterialType) ? parentSelectedMaterialType?.[0]?.toLowerCase() : parentSelectedMaterialType?.toLowerCase();
 
   const physicalCopy = checkPhysicalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
   const digitalCopy = checkDigitalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
