@@ -10,6 +10,9 @@ import styles from "./AgencyLocalizations.module.css";
 import Text from "@/components/base/text/Text";
 import Pagination from "@/components/search/pagination/Pagination";
 
+const DEFAULT_LIMIT = 10;
+const DEFAULT_INCREASE = DEFAULT_LIMIT;
+
 /**
  * {@link AgencyLocalizations} presents the possible agencies with holdings or conforming to query
  *   (or message when query yields not results). It uses {@link LocalizationsBase} and its compounded components
@@ -20,7 +23,7 @@ import Pagination from "@/components/search/pagination/Pagination";
 export default function AgencyLocalizations({ context, modal }) {
   const { pids } = context;
   const [query, setQuery] = useState("");
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(DEFAULT_LIMIT);
 
   const {
     agencyIds: agencyIdsFromQuery,
@@ -38,17 +41,13 @@ export default function AgencyLocalizations({ context, modal }) {
     data: agenciesWithHoldings,
     isLoading: agenciesWithHoldingsIsLoading,
   } = useData(
-    pids &&
-      localizationsFragments.localizationsWithHoldings({
-        pids: pids,
-        limit: limit,
-      })
+    pids && localizationsFragments.localizationsWithHoldings({ pids: pids })
   );
 
   const agencyIds = !isEmpty(query)
     ? agencyIdsFromQuery
     : agenciesWithHoldings?.localizationsWithHoldings?.agencies?.map(
-        (agency) => agency.agencyId
+        (agency) => agency?.agencyId
       );
 
   const localizationsIsLoading =
@@ -65,7 +64,7 @@ export default function AgencyLocalizations({ context, modal }) {
       })}
       query={query}
       setQuery={(value) => {
-        value === "" && setLimit(10);
+        value === "" && setLimit(DEFAULT_LIMIT);
         setQuery(value);
       }}
     >
@@ -89,7 +88,7 @@ export default function AgencyLocalizations({ context, modal }) {
       ) : (
         <>
           <LocalizationsBase.List>
-            {(agencyIds.slice(0, limit) ?? Array(limit).fill(""))?.map(
+            {(agencyIds?.slice(0, limit) ?? Array(limit).fill(""))?.map(
               (agencyId, index) => (
                 <li key={JSON.stringify(agencyId + "-" + index)}>
                   <AgencyLocalizationItem
@@ -106,9 +105,9 @@ export default function AgencyLocalizations({ context, modal }) {
           </LocalizationsBase.List>
           <Pagination
             className={styles.pagination}
-            numPages={!(limit > agencyIds?.length) ? 2 : 1}
+            numPages={limit <= agencyIds?.length ? 2 : 1}
             forceMobileView={true}
-            onChange={() => setLimit((prev) => prev + 10)}
+            onChange={() => setLimit((prev) => prev + DEFAULT_INCREASE)}
           />
         </>
       )}
