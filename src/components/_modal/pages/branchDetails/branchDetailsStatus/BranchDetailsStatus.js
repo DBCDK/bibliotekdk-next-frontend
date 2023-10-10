@@ -101,6 +101,18 @@ function MessageWhenMaterialsAvailableNever() {
 }
 
 /**
+ * {@link MessageWhenLibraryDoesNotOwnMaterial} shows a possible message in {@link BranchStatusMessage}
+ * @returns {JSX.Element}
+ */
+function MessageWhenLibraryDoesNotOwnMaterial() {
+  return (
+    <Text type="text2">
+      {Translate({ context: "localizations", label: "does_not_own_material" })}
+    </Text>
+  );
+}
+
+/**
  * {@link MessageWhenMaterialsAvailableUnknown} shows a possible message in {@link BranchStatusMessage}
  * @returns {JSX.Element}
  */
@@ -138,6 +150,8 @@ function BranchStatusMessage({ library, manifestations }) {
     return <MessageWhenMaterialsAvailableLater library={library} />;
   } else if (library?.availabilityAccumulated === AvailabilityEnum.NEVER) {
     return <MessageWhenMaterialsAvailableNever />;
+  } else if (library?.availabilityAccumulated === AvailabilityEnum.NOT_OWNED) {
+    return <MessageWhenLibraryDoesNotOwnMaterial />;
   } else if (library?.availabilityAccumulated === AvailabilityEnum.UNKNOWN) {
     return <MessageWhenMaterialsAvailableUnknown />;
   } else {
@@ -163,6 +177,7 @@ export default function BranchDetailsStatus({
     AvailabilityEnum.NOW,
     AvailabilityEnum.LATER,
     AvailabilityEnum.NEVER,
+    AvailabilityEnum.NOT_OWNED,
     AvailabilityEnum.UNKNOWN,
   ],
 }) {
@@ -171,19 +186,18 @@ export default function BranchDetailsStatus({
   return (
     <div className={cx(styles.row_wrapper)}>
       {possibleAvailabilities.includes(availabilityAccumulated) && (
-        <AvailabilityLight
-          availabilityAccumulated={availabilityAccumulated}
-          pickupAllowed={library?.pickupAllowed}
-        />
+        <AvailabilityLight availabilityAccumulated={availabilityAccumulated} />
       )}
       <div className={styles.result}>
         <BranchStatusMessage
           library={library}
           manifestations={manifestations}
         />
-        <div className={styles.link_for_branch}>
-          <LinkForBranch library={library} pids={pids} />
-        </div>
+        {availabilityAccumulated !== AvailabilityEnum.NOT_OWNED && (
+          <div className={styles.link_for_branch}>
+            <LinkForBranch library={library} pids={pids} />
+          </div>
+        )}
       </div>
     </div>
   );

@@ -13,7 +13,10 @@ import animations from "css/animations";
 import styles from "./BranchDetails.module.css";
 import cx from "classnames";
 import BranchDetailsStatus from "@/components/_modal/pages/branchDetails/branchDetailsStatus/BranchDetailsStatus";
-import { useSingleBranch } from "@/components/hooks/useHandleAgencyAccessData";
+import {
+  AvailabilityEnum,
+  useSingleBranch,
+} from "@/components/hooks/useHandleAgencyAccessData";
 import isEmpty from "lodash/isEmpty";
 import Button from "@/components/base/button/Button";
 import * as PropTypes from "prop-types";
@@ -266,29 +269,40 @@ export default function BranchDetails({ context }) {
           </Text>
         </LocalizationsBase.HighlightedArea>
       ) : (
-        <LocalizationsBase.Information
-          className={cx(styles.reservationButton_container)}
-        >
-          {!branchDetailsLoading && !borrowerCheckIsLoading ? (
-            <Button
-              type={"primary"}
-              size={buttonSize}
-              onClick={handleOnSelectEnriched}
-            >
-              {Translate({
-                context: "localizations",
-                label: "order_to_here",
-              })}
-            </Button>
-          ) : (
-            <Button
-              size={buttonSize}
-              skeleton={branchDetailsLoading || borrowerCheckIsLoading}
-            >
-              {"loading"}
-            </Button>
-          )}
-        </LocalizationsBase.Information>
+        <>
+          <LocalizationsBase.Information
+            className={cx(styles.reservationButton_container)}
+          >
+            {!branchDetailsLoading && !borrowerCheckIsLoading ? (
+              <Button
+                type={"primary"}
+                size={buttonSize}
+                onClick={handleOnSelectEnriched}
+              >
+                {Translate({
+                  context: "localizations",
+                  label: "order_to_here",
+                })}
+              </Button>
+            ) : (
+              <Button
+                size={buttonSize}
+                skeleton={branchDetailsLoading || borrowerCheckIsLoading}
+              >
+                {"loading"}
+              </Button>
+            )}
+          </LocalizationsBase.Information>
+          {!branchDetailsLoading &&
+            singleBranch?.availabilityAccumulated !== AvailabilityEnum.NOW && (
+              <LocalizationsBase.Subheader>
+                {Translate({
+                  context: "localizations",
+                  label: "reminder_can_be_ordered_from_anywhere",
+                })}
+              </LocalizationsBase.Subheader>
+            )}
+        </>
       )}
       <LocalizationsBase.Information>
         <Title type={"title6"} className={cx(styles.about_the_branch)}>

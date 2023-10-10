@@ -25,12 +25,12 @@ import Text from "@/components/base/text/Text";
  */
 export default function LocalizationItemBase({
   children,
-  library,
   modalPush,
   possibleAvailabilities = [
     AvailabilityEnum.NOW,
     AvailabilityEnum.LATER,
     AvailabilityEnum.NEVER,
+    AvailabilityEnum.NOT_OWNED,
     AvailabilityEnum.UNKNOWN,
   ],
   itemLoading,
@@ -51,7 +51,6 @@ export default function LocalizationItemBase({
             {possibleAvailabilities.includes(availabilityAccumulated) && (
               <AvailabilityLight
                 availabilityAccumulated={availabilityAccumulated}
-                pickupAllowed={library?.pickupAllowed}
               />
             )}
             <div className={styles.result}>{children}</div>

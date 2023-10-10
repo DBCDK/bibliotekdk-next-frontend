@@ -18,15 +18,15 @@ import { LinkForBranch } from "@/components/_modal/pages/base/localizationsBase/
  * @param {Array.<string>} pids
  * @param {Object} agency
  * @param {boolean} onlyHoldingsOnAgency
+ * @param localizationOwnsPids
  * @returns {JSX.Element}
  */
 function SpecificInformationOnAgency({ pids, agency, onlyHoldingsOnAgency }) {
+  const availabilityAccumulated = agency?.availabilityOnAgencyAccumulated;
+
   return (
     <div className={styles.agency_holdings_row_wrapper}>
-      <AvailabilityLight
-        availabilityAccumulated={agency.availabilityOnAgencyAccumulated}
-        pickupAllowed={agency?.pickupAllowed}
-      />
+      <AvailabilityLight availabilityAccumulated={availabilityAccumulated} />
       <div className={styles.agency_holdings_result}>
         <Text type="text2">
           {Translate({
@@ -42,13 +42,22 @@ function SpecificInformationOnAgency({ pids, agency, onlyHoldingsOnAgency }) {
                 ? "agency_status_only_loan_later_possible"
                 : agency.availabilityAccumulated === AvailabilityEnum.NEVER
                 ? "agency_status_pickup_not_allowed"
+                : agency.availabilityAccumulated === AvailabilityEnum.NOT_OWNED
+                ? "agency_does_not_own_material"
                 : "no_status_about_the_following",
-            vars: [...(onlyHoldingsOnAgency ? [agency.agencyName] : [])],
+            vars: [
+              ...(onlyHoldingsOnAgency ||
+              agency.availabilityAccumulated === AvailabilityEnum.NOT_OWNED
+                ? [agency.agencyName]
+                : []),
+            ],
           })}
         </Text>
-        <div className={cx(styles.link_for_branch)}>
-          <LinkForBranch library={agency?.branches?.[0]} pids={pids} />
-        </div>
+        {!agency.availabilityAccumulated === AvailabilityEnum.NOT_OWNED && (
+          <div className={cx(styles.link_for_branch)}>
+            <LinkForBranch library={agency?.branches?.[0]} pids={pids} />
+          </div>
+        )}
       </div>
     </div>
   );
@@ -77,6 +86,7 @@ export default function BranchLocalizations({ context, modal }) {
       AvailabilityEnum.NOW,
       AvailabilityEnum.LATER,
       AvailabilityEnum.NEVER,
+      AvailabilityEnum.NOT_OWNED,
     ].includes(branch.availabilityAccumulated)
   );
 
@@ -86,6 +96,7 @@ export default function BranchLocalizations({ context, modal }) {
         AvailabilityEnum.NOW,
         AvailabilityEnum.LATER,
         AvailabilityEnum.NEVER,
+        AvailabilityEnum.NOT_OWNED,
       ].includes(branch.availabilityAccumulated)
   );
 
@@ -124,7 +135,8 @@ export default function BranchLocalizations({ context, modal }) {
         ))}
       </LocalizationsBase.List>
 
-      {onlyHoldingsOnAgency && (
+      {(availabilityOnAgencyAccumulated === AvailabilityEnum.NOT_OWNED ||
+        onlyHoldingsOnAgency) && (
         <LocalizationsBase.Information>
           <Title type={"title6"} className={styles.supplementary_status}>
             {Translate({

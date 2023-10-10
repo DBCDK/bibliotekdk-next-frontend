@@ -85,11 +85,7 @@ function LocalizationsBase({
           ))}
       </div>
 
-      {subheader && (
-        <Text className={cx(styles.padding_inline, styles.subheader_text)}>
-          {subheader}
-        </Text>
-      )}
+      {subheader && <Subheader>{subheader}</Subheader>}
 
       {query !== null && setQuery && (
         <div className={cx(styles.padding_inline, styles.search_bar)}>
@@ -144,6 +140,22 @@ export function Information({ children, className }) {
 }
 
 /**
+ * Compound subcomponent Information for {@link LocalizationsBase} which can contain additional information on branches/agencies
+ * @param children
+ * @param {string} className
+ * @returns {JSX.Element}
+ */
+export function Subheader({ children, className }) {
+  return (
+    <Text
+      className={cx(styles.padding_inline, styles.subheader_text, className)}
+    >
+      {children}
+    </Text>
+  );
+}
+
+/**
  * Compound subcomponent HighlightedArea for {@link LocalizationsBase} which can contain highlighted areas that fills the entire width of the modal
  * @param children
  * @param {Object} style
@@ -171,5 +183,6 @@ export function HighlightedArea({
 LocalizationsBase.List = List;
 LocalizationsBase.Information = Information;
 LocalizationsBase.HighlightedArea = HighlightedArea;
+LocalizationsBase.Subheader = Subheader;
 
 export default LocalizationsBase;

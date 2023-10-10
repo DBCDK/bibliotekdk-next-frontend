@@ -19,7 +19,6 @@ const textProps = {
  * @param {Array.<string>} pids
  * @param {boolean} primitiveDisplay
  * @returns {JSX.Element}
- * @constructor
  */
 export default function BranchLocalizationItem({
   context,
