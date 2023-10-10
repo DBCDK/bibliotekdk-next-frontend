@@ -54,6 +54,7 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
           workTypes
           manifestations {
             mostRelevant{
+              pid
               ownerWork {
                 workTypes
               }
@@ -63,6 +64,14 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
               }
               materialTypes {
                 specific
+              }
+              hostPublication {
+                title
+              }
+              publisher
+              edition {
+                summary
+                edition
               }
             }            
           }
