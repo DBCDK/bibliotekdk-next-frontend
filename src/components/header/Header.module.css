@@ -207,7 +207,8 @@
     bottom: 0;
   }
 
-  .action + .action {
+  a.action + a.action {
+    /* Override other screen targets */
     margin-left: var(--pt3);
   }
 
@@ -293,6 +294,18 @@
 
   .header *[data-icon-type="search"] {
     display: none;
+  }
+}
+
+@media (max-width: 1200px) {
+  .action + .action {
+    margin-left: var(--pt3);
+  }
+}
+
+@media (max-width: 1040px) {
+  .action + .action {
+    margin-left: var(--pt2);
   }
 }
 

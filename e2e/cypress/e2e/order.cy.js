@@ -62,6 +62,20 @@ describe("Order", () => {
   });
 
   it("should handle failed checkorder and pickupAllowed=false", () => {
+    it(`should not tab to order modal after it is closed`, () => {
+      cy.visitWithConsoleSpy(
+        "/iframe.html?id=modal-order--order-via-ill&viewMode=story"
+      );
+      cy.contains("Bestil", { timeout: 10000 }).click();
+
+      // Check that user blocking is not present
+      cy.get("[data-cy=blocked-user]").should("not.exist");
+
+      cy.get("[data-cy=modal-dimmer]").should("be.visible");
+      cy.contains("Luk").click();
+      cy.get("body").tab();
+      cy.get("[data-cy=modal-dimmer]").should("not.be.visible");
+    });
     cy.visitWithConsoleSpy(
       "/iframe.html?id=modal-order--pickup-not-allowed&viewMode=story"
     );

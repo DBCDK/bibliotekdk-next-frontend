@@ -742,6 +742,14 @@ export function overviewWork({ workId }) {
               detail
               origin
             }
+            hostPublication {
+              title
+            }
+            publisher
+            edition {
+              summary
+              edition
+            }
             access {
               __typename
             }

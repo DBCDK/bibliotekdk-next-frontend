@@ -96,7 +96,8 @@ function ColumnOne({ workId, manifestation }) {
           />
         </div>
         <BookMarkDropDown
-          workId={manifestation.pid}
+          workId={workId}
+          materialId={manifestation.pid}
           materialTypes={[[manifestation?.materialTypes?.[0]?.specific]]}
           size={{ w: 4, h: 4 }}
           title={manifestation?.titles?.full[0]}

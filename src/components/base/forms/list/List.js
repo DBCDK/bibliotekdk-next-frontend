@@ -63,11 +63,7 @@ function Radio({
       <div id="radio-label" className={styles.label}>
         {label}
       </div>
-      <div
-        className={[styles.content, animations["f-translate-right"]].join(" ")}
-      >
-        {children}
-      </div>
+      <div className={styles.content}>{children}</div>
     </div>
   );
 }
@@ -196,9 +192,7 @@ function FormLink({
       })}
       border={false}
     >
-      <div
-        className={[styles.content, animations["f-translate-right"]].join(" ")}
-      >
+      <div className={cx(styles.content, animations["f-translate-right"])}>
         {children}
       </div>
       {!disabled ? (

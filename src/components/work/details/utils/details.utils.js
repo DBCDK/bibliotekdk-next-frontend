@@ -12,6 +12,7 @@ import { cyKey } from "@/utils/trim";
 import Image from "@/components/base/image";
 import { toLower } from "lodash/toLower";
 import { parseFunction } from "@/lib/centralParsers.utils";
+import { getAudienceValues } from "./export.utils";
 
 /**
  * Parse languages in given manifestation.
@@ -578,28 +579,6 @@ function RenderLitteratureAudience({ values }) {
  */
 export function fieldsForRows(manifestation, work, context) {
   const materialType = work?.workTypes?.[0] || null;
-  const audienceageValue = !isEmpty(manifestation?.audience?.ages)
-    ? manifestation?.audience?.ages?.map((age, index) => (
-        <Text type="text4" lines={1} key={index}>
-          {Translate({
-            ...context,
-            label: "audience-age",
-            vars: [age.display],
-          })}
-        </Text>
-      ))
-    : !isEmpty(manifestation?.audience?.generalAudience)
-    ? manifestation?.audience?.generalAudience.join(", ")
-    : !isEmpty(manifestation?.audience?.libraryRecommendation)
-    ? manifestation?.audience?.libraryRecommendation
-        .map((child) => child.display)
-        .join(", ")
-    : !isEmpty(manifestation?.audience?.primaryTarget)
-    ? manifestation?.audience?.primaryTarget
-        .map((child) => child.display)
-        .join(", ")
-    : null;
-
   const fieldsMap = {
     DEFAULT: [
       {
@@ -673,7 +652,7 @@ export function fieldsForRows(manifestation, work, context) {
       {
         audienceage: {
           label: Translate({ ...context, label: "audience" }),
-          value: audienceageValue,
+          value: getAudienceValues,
         },
       },
       {
@@ -745,10 +724,8 @@ export function fieldsForRows(manifestation, work, context) {
         },
       },
       {
-        audienceage: {
-          label: Translate({ ...context, label: "audience" }),
-          value: audienceageValue,
-        },
+        label: Translate({ ...context, label: "audience" }),
+        value: getAudienceValues,
       },
       {
         requirements: {
@@ -783,9 +760,10 @@ export function fieldsForRows(manifestation, work, context) {
       {
         audienceage: {
           label: Translate({ ...context, label: "audience" }),
-          value: audienceageValue,
+          value: getAudienceValues(manifestation?.audience),
         },
       },
+
       {
         audienceschool: {
           label: Translate({ ...context, label: "schooluse" }),
@@ -895,10 +873,8 @@ export function fieldsForRows(manifestation, work, context) {
         },
       },
       {
-        audienceage: {
-          label: Translate({ ...context, label: "audience" }),
-          value: audienceageValue,
-        },
+        label: Translate({ ...context, label: "audience" }),
+        value: getAudienceValues,
       },
       {
         adaption: {
@@ -943,3 +919,20 @@ export function filterAndMerge({ baseArray, extendingArray }) {
   });
   return baseArray;
 }
+
+/**
+ *
+ * @param {object} manifestation
+ */
+export const createEditionText = (manifestation) => {
+  return (
+    manifestation?.hostPublication?.title ||
+    [
+      ...manifestation?.publisher,
+      ...(!isEmpty(manifestation?.edition?.edition)
+        ? [manifestation?.edition?.edition]
+        : []),
+    ].join(", ") ||
+    ""
+  );
+};
