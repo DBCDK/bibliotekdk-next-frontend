@@ -13,13 +13,13 @@ import IconButton from "@/components/base/iconButton/IconButton";
 import { parseDate } from "@/lib/utils";
 
 /**
- * Shows the previous orders made by the user from bibliotekdk.
+ * Shows user info.
  *
  * @returns {component}
  *
  */
 
-export default function SettingsPage() {
+export default function MyProfilePage() {
   let modal = useModal();
   const { isAuthenticated, loanerInfo } = useUser();
   const { data: userData } = useData(

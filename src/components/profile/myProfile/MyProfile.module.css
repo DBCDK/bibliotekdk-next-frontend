@@ -1,5 +1,4 @@
 .modalContainer {
-  /* padding: 0 var(--pt2) var(--pt2) var(--pt2); */
   margin-top: var(--pt7);
   padding-top: var(--pt2);
   border-top: 1px solid var(--iron);
@@ -7,8 +6,6 @@
 
 .dataItem:first-child {
   gap: var(--pt05);
-
-  /* padding: var(--pt3) var(--pt05); */
 }
 
 .dataItem {
@@ -18,17 +15,8 @@
   margin-bottom: var(--pt05);
 }
 
-.dataItem:last-child {
-  /* border-bottom: 1px solid var(--iron); */
-}
 .dataItem p {
   font-size: 17px;
-}
-
-@media (min-width: 576px) {
-  .modalContainer {
-    /* padding: 0 var(--pt6) var(--pt3) var(--pt6); */
-  }
 }
 
 .deleteProfileButtonCustom {

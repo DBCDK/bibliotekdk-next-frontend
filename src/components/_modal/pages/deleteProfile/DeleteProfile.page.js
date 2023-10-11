@@ -15,7 +15,7 @@ import { signOut } from "@dbcdk/login-nextjs/client";
 import Translate from "@/components/base/translate/Translate";
 
 /**
- * This modal is used to change the users consent on storing orderhistory data for more than 30 days.
+ * This is a confirmation modal for user deletion.
  * @returns {component}
  */
 export function DeleteProfile({ modal }) {
