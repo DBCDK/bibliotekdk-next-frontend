@@ -59,7 +59,10 @@ const BookmarkPage = () => {
   const { data: bookmarks } = usePopulateBookmarks(bookmarksData);
   const [activeStickyButton, setActiveStickyButton] = useState(null);
   const breakpoint = useBreakpoint();
-  const [sortByValue, setSortByValue] = useState(sortByItems[0].key);
+  const [sortByValue, setSortByValue] = useState(() => {
+    const savedValue = sessionStorage.getItem("sortByValue");
+    return savedValue || sortByItems[0].key;
+  });
   const isMobile = breakpoint === "sm" || breakpoint === "xs";
   const [checkboxList, setCheckboxList] = useState();
 
@@ -76,6 +79,11 @@ const BookmarkPage = () => {
       }))
     );
   }, [bookmarks.length]);
+
+  const handleRadioChange = (value) => {
+    setSortByValue(value);
+    sessionStorage.setItem("sortByValue", value);
+  };
 
   const onSelectAll = () => {
     const hasUnselectedElements =
@@ -179,7 +187,7 @@ const BookmarkPage = () => {
           <SortButtons
             sortByItems={sortByItems}
             sortByValue={sortByValue}
-            setSortByValue={setSortByValue}
+            setSortByValue={handleRadioChange}
           />
         )}
       </div>
@@ -187,7 +195,7 @@ const BookmarkPage = () => {
         <SortButtons
           sortByItems={sortByItems}
           sortByValue={sortByValue}
-          setSortByValue={setSortByValue}
+          setSortByValue={handleRadioChange}
         />
       )}
 
