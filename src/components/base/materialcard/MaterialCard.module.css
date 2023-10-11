@@ -7,24 +7,3 @@
   cursor: pointer;
   width: 100%;
 }
-
-.text {
-  display: flex;
-  flex-direction: column;
-}
-
-.text > *:first-child {
-  padding-bottom: var(--pt05);
-}
-
-.text > *:nth-child(2) {
-  padding-bottom: var(--pt2);
-}
-
-.text > *:nth-child(n + 3) {
-  padding-bottom: 0;
-}
-
-.text > *:last-child {
-  padding-bottom: 0;
-}

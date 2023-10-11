@@ -19,7 +19,9 @@
   --underline-bottom-color: var(--iron);
   --underline-top-color: var(--iron);
   margin-bottom: calc(var(--underline-height) * -1);
-  padding-block: var(--pt1_5);
+  padding-block: var(--pt2);
+  padding-left: var(--pt1);
+  padding-right: var(--pt2);
 }
 
 @media (min-width: 992px) {
@@ -41,11 +43,11 @@
   flex-wrap: wrap;
   width: 100%;
   overflow: hidden;
+  gap: var(--pt05);
 }
 
 .arrow {
   align-self: center;
-  margin-right: var(--pt4);
 }
 
 .arrow path {

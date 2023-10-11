@@ -1,3 +1,7 @@
+.status {
+  padding-top: var(--pt4);
+}
+
 .no_status {
   padding-top: var(--pt8);
 }

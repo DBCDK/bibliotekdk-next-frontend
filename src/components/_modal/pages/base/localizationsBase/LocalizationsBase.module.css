@@ -29,10 +29,10 @@
 
 .subheader_text {
   padding-top: var(--pt1);
-  padding-bottom: var(--pt5);
 }
 
 .search_bar {
+  padding-top: var(--pt5);
   padding-bottom: var(--pt2);
 }
 
