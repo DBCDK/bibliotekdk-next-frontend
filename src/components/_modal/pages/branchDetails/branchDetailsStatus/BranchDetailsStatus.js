@@ -13,7 +13,7 @@ import { LinkForBranch } from "@/components/_modal/pages/base/localizationsBase/
 
 /**
  * {@link MessageWhenPickupNotAllowed} shows a possible message in {@link BranchStatusMessage}
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 function MessageWhenPickupNotAllowed() {
   return (
@@ -28,9 +28,10 @@ function MessageWhenPickupNotAllowed() {
 
 /**
  * {@link MessageWhenMaterialsAvailableNow} shows a possible message in {@link BranchStatusMessage}
- * @param {Object} library
- * @param {Array.<Object>} manifestations
- * @returns {JSX.Element}
+ * @param {Object} props
+ * @param {Object<string, any>} props.library
+ * @param {Array.<Object.<string, any>>} props.manifestations
+ * @returns {React.ReactElement | null}
  */
 function MessageWhenMaterialsAvailableNow({ library, manifestations }) {
   const locationsInBranch = uniq(
@@ -66,7 +67,7 @@ function MessageWhenMaterialsAvailableNow({ library, manifestations }) {
 /**
  * {@link MessageWhenMaterialsAvailableLater} shows a possible message in {@link BranchStatusMessage}
  * @param {Object} library
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 function MessageWhenMaterialsAvailableLater({ library }) {
   const expectedDelivery =
@@ -90,7 +91,7 @@ function MessageWhenMaterialsAvailableLater({ library }) {
 
 /**
  * {@link MessageWhenMaterialsAvailableNever} shows a possible message in {@link BranchStatusMessage}
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 function MessageWhenMaterialsAvailableNever() {
   return (
@@ -101,8 +102,20 @@ function MessageWhenMaterialsAvailableNever() {
 }
 
 /**
+ * {@link MessageWhenLibraryDoesNotOwnMaterial} shows a possible message in {@link BranchStatusMessage}
+ * @returns {React.ReactElement | null}
+ */
+function MessageWhenLibraryDoesNotOwnMaterial() {
+  return (
+    <Text type="text2">
+      {Translate({ context: "localizations", label: "does_not_own_material" })}
+    </Text>
+  );
+}
+
+/**
  * {@link MessageWhenMaterialsAvailableUnknown} shows a possible message in {@link BranchStatusMessage}
- * @returns {JSX.Element}
+ * @returns {React.ReactElement | null}
  */
 function MessageWhenMaterialsAvailableUnknown() {
   return (
@@ -117,9 +130,10 @@ function MessageWhenMaterialsAvailableUnknown() {
  *   {@link MessageWhenPickupNotAllowed}, {@link MessageWhenMaterialsAvailableNow},
  *   {@link MessageWhenMaterialsAvailableLater}, {@link MessageWhenMaterialsAvailableNever},
  *   {@link MessageWhenMaterialsAvailableUnknown}
- * @param {Object} library
- * @param {Array.<Object>} manifestations
- * @returns {JSX.Element}
+ * @param {Object} props
+ * @param {Object<string, any>} props.library
+ * @param {Array.<Object.<string, any>>} props.manifestations
+ * @returns {React.ReactElement | null}
  */
 function BranchStatusMessage({ library, manifestations }) {
   if (
@@ -138,6 +152,8 @@ function BranchStatusMessage({ library, manifestations }) {
     return <MessageWhenMaterialsAvailableLater library={library} />;
   } else if (library?.availabilityAccumulated === AvailabilityEnum.NEVER) {
     return <MessageWhenMaterialsAvailableNever />;
+  } else if (library?.availabilityAccumulated === AvailabilityEnum.NOT_OWNED) {
+    return <MessageWhenLibraryDoesNotOwnMaterial />;
   } else if (library?.availabilityAccumulated === AvailabilityEnum.UNKNOWN) {
     return <MessageWhenMaterialsAvailableUnknown />;
   } else {
@@ -149,11 +165,12 @@ function BranchStatusMessage({ library, manifestations }) {
  * {@link BranchDetailsStatus} presents that Branch-wide status in {@link BranchDetails}
  *   using {@link AvailabilityLight}, {@link BranchStatusMessage}, {@link LinkForBranch}
  *
- * @param {Object} library
- * @param {Array.<Object>} manifestations
- * @param {Array.<string>} pids
- * @param {Array.<AvailabilityEnum>} possibleAvailabilities
- * @returns {JSX.Element}
+ * @param {Object} props
+ * @param {Object.<string, any>} props.library
+ * @param {Array.<Object.<string, any>>} props.manifestations
+ * @param {Array.<string>} props.pids
+ * @param {Array.<AvailabilityEnum>} props.possibleAvailabilities
+ * @returns {React.ReactElement | null}
  */
 export default function BranchDetailsStatus({
   library,
@@ -163,6 +180,7 @@ export default function BranchDetailsStatus({
     AvailabilityEnum.NOW,
     AvailabilityEnum.LATER,
     AvailabilityEnum.NEVER,
+    AvailabilityEnum.NOT_OWNED,
     AvailabilityEnum.UNKNOWN,
   ],
 }) {
@@ -171,19 +189,18 @@ export default function BranchDetailsStatus({
   return (
     <div className={cx(styles.row_wrapper)}>
       {possibleAvailabilities.includes(availabilityAccumulated) && (
-        <AvailabilityLight
-          availabilityAccumulated={availabilityAccumulated}
-          pickupAllowed={library?.pickupAllowed}
-        />
+        <AvailabilityLight availabilityAccumulated={availabilityAccumulated} />
       )}
       <div className={styles.result}>
         <BranchStatusMessage
           library={library}
           manifestations={manifestations}
         />
-        <div className={styles.link_for_branch}>
-          <LinkForBranch library={library} pids={pids} />
-        </div>
+        {availabilityAccumulated !== AvailabilityEnum.NOT_OWNED && (
+          <div className={styles.link_for_branch}>
+            <LinkForBranch library={library} pids={pids} />
+          </div>
+        )}
       </div>
     </div>
   );

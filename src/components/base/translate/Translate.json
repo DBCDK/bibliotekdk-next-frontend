@@ -640,12 +640,12 @@
         "en": "+ %s additional branches"
       },
       "no_pickup_allowed_on_branch": {
-        "da": "Ingen afhentning på afdelingen",
-        "en": "No pickup allowed on the branch"
+        "da": "Modtager ikke bestillinger",
+        "en": "Does not accept orders"
       },
       "no_pickup_allowed_on_any_branch_in_agency": {
-        "da": "Ingen afhentning på afdelingerne",
-        "en": "No pickup allowed on any branch"
+        "da": "Modtager ikke bestillinger",
+        "en": "Does not accept orders"
       },
       "home_at_1_branch": {
         "da": "Hjemme på én",
@@ -670,6 +670,10 @@
       "not_for_loan": {
         "da": "Udlånes ikke",
         "en": "Not for loan"
+      },
+      "does_not_own_material": {
+        "da": "Har ikke materialet",
+        "en": "Does not own the material"
       },
       "status_is_unknown": {
         "da": "Status kendes ikke",
@@ -710,6 +714,10 @@
       "agency_holdings_but_no_branches": {
         "da": "%s har materialet på hylden, men har ikke oplyst hvor",
         "en": "%s has the material on shelf, but there is no information on where"
+      },
+      "agency_does_not_own_material": {
+        "da": "%s har ikke indkøbt materialet, men du kan bestille det til afhentning.",
+        "en": "%s hasn't bought the material, but you can order it for pickup"
       },
       "supplementary_status": {
         "da": "Supplerende status",

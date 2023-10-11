@@ -15,22 +15,22 @@ import Text from "@/components/base/text/Text";
 
 /**
  * LocalizationItemBase is used as a base for {@link AgencyLocalizationItem} and {@link BranchLocalizationItem}
- * @param children
- * @param {Object} library
- * @param {function} modalPush
- * @param {Array.<AvailabilityEnum>} possibleAvailabilities
- * @param {boolean} itemLoading
- * @param {AvailabilityEnum} availabilityAccumulated
- * @returns {JSX.Element}
+ * @param {Object} props
+ * @param {React.ReactNode | null} props.children
+ * @param {function} props.modalPush
+ * @param {Array.<AvailabilityEnum>} props.possibleAvailabilities
+ * @param {boolean} props.itemLoading
+ * @param {AvailabilityEnum} props.availabilityAccumulated
+ * @returns {React.ReactElement | null}
  */
 export default function LocalizationItemBase({
   children,
-  library,
   modalPush,
   possibleAvailabilities = [
     AvailabilityEnum.NOW,
     AvailabilityEnum.LATER,
     AvailabilityEnum.NEVER,
+    AvailabilityEnum.NOT_OWNED,
     AvailabilityEnum.UNKNOWN,
   ],
   itemLoading,
@@ -51,7 +51,6 @@ export default function LocalizationItemBase({
             {possibleAvailabilities.includes(availabilityAccumulated) && (
               <AvailabilityLight
                 availabilityAccumulated={availabilityAccumulated}
-                pickupAllowed={library?.pickupAllowed}
               />
             )}
             <div className={styles.result}>{children}</div>

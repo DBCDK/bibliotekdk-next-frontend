@@ -12,8 +12,9 @@ import { getLibraryType, LibraryTypeEnum } from "@/lib/utils";
 
 /**
  * When there is no query, show this default agencyBranches, which are branches that have holdings
- * @param {string} agency
- * @returns {JSX.Element}
+ * @param {Object} props
+ * @param {Object.<string, any>} props.agency
+ * @returns {React.ReactElement | null}
  */
 function DefaultShowingOfAgencyBranches({ agency }) {
   const numberOfBranchesWithAvailable = agency?.branches?.filter(
@@ -54,8 +55,9 @@ function DefaultShowingOfAgencyBranches({ agency }) {
 
 /**
  * Shows the result from querying, which is the formatted branches which the necessary data for highlighting queried fields
- * @param {Array.<Object>} branchesWithHighlights
- * @returns {JSX.Element}
+ * @param {Object} props
+ * @param {Array.<Object.<string, any>>} props.branchesWithHighlights
+ * @returns {React.ReactElement | null}
  */
 function FormattedBranchesWithHighlights({ branchesWithHighlights }) {
   const branchesFormattedWithHighlights = branchesWithHighlights
@@ -112,13 +114,14 @@ function FormattedBranchesWithHighlights({ branchesWithHighlights }) {
 
 /**
  * {@link AgencyLocalizationItem} shows each agency found by {@link AgencyLocalizations}
- * @param {Object} context
- * @param {Object} modal
- * @param {string} agencyId
- * @param {boolean} localizationsIsLoading
- * @param {Array.<string>} pids
- * @param {string} query
- * @returns {JSX.Element}
+ * @param {Object} props
+ * @param {Object.<string, any>} props.context
+ * @param {Object.<string, any>} props.modal
+ * @param {string} props.agencyId
+ * @param {boolean} props.localizationsIsLoading
+ * @param {Array.<string>} props.pids
+ * @param {string} props.query
+ * @returns {React.ReactElement | null}
  */
 export default function AgencyLocalizationItem({
   context,
