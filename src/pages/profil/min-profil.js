@@ -3,7 +3,7 @@ import Page from "@/components/profile/myProfile";
 import { useRouter } from "next/router";
 import { fetchAll } from "@/lib/api/apiServerOnly";
 
-export default function LoansAndReservations() {
+export default function MyProfile() {
   const router = useRouter();
 
   return (
@@ -20,6 +20,6 @@ export default function LoansAndReservations() {
  *
  * https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
  */
-LoansAndReservations.getInitialProps = (ctx) => {
+MyProfile.getInitialProps = (ctx) => {
   return fetchAll([], ctx);
 };

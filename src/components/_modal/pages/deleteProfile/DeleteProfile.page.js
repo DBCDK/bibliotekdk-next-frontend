@@ -13,6 +13,7 @@ import Button from "@/components/base/button";
 import { deleteUser } from "@/lib/api/userData.mutations";
 import { useRouter } from "next/router";
 import { signOut } from "@dbcdk/login-nextjs/client";
+import Translate from "@/components/base/translate/Translate";
 
 /**
  * This modal is used to change the users consent on storing orderhistory data for more than 30 days.
@@ -40,7 +41,6 @@ export function DeleteProfile({ modal }) {
 
   const handleDeleteUser = () => {
     deleteUser({ userDataMutation });
-
     signOut(null, "/");
   };
   return (
@@ -62,7 +62,7 @@ export function DeleteProfile({ modal }) {
         type="primary"
         onClick={handleDeleteUser}
       >
-        Slet profil
+        {Translate({ context: "profile", label: "deleteProfile" })}
       </Button>
     </div>
   );

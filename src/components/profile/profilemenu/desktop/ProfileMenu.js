@@ -30,7 +30,7 @@ function getProfileUrl(wordToTranslate) {
  * @param href
  * @returns {JSX.Element}
  */
-function MenuLink({ label, href, mocked }) {
+function MenuLink({ label, href }) {
   const router = useRouter();
   const [isActive, setIsActive] = useState(router.asPath.includes(href));
   useEffect(() => {
@@ -43,7 +43,7 @@ function MenuLink({ label, href, mocked }) {
     <li className={cx(styles.link, { [styles.simpleLink]: isActive })}>
       <Link href={href} dataCy={`menu-fixed-links-${label}`}>
         <Title type={type} tag="h5">
-          {mocked ? label : Translate({ context: CONTEXT, label })}
+          {Translate({ context: CONTEXT, label })}
         </Title>
       </Link>
     </li>
@@ -221,13 +221,6 @@ export default function ProfileMenu() {
           {menuItems.slice(1).map((item) => (
             <MenuLink key={item} label={item} href={getProfileUrl(item)} />
           ))}
-
-          {/* <MenuLink
-            mocked={true}
-            key={"hej"}
-            label={"Indstillinger"}
-            href={"/profil/indstillinger"}
-          /> */}
         </ul>
       </nav>
     </>

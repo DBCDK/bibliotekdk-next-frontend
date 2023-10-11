@@ -10,6 +10,7 @@ import Title from "@/components/base/title";
 import { useData } from "@/lib/api/api";
 import * as userFragments from "@/lib/api/user.fragments";
 import IconButton from "@/components/base/iconButton/IconButton";
+import { parseDate } from "@/lib/utils";
 
 /**
  * Shows the previous orders made by the user from bibliotekdk.
@@ -83,43 +84,3 @@ export default function SettingsPage() {
     </Layout>
   );
 }
-
-/**
- * Parses an iso-8601 date string into human readable date an time strings.
- * @param {*} isoDateString
- * @returns an object containing date and time fields. Eks {date: "D. 24. juni", time:"Kl. 11:07"}
- */
-const parseDate = (isoDateString) => {
-  const dateObj = new Date(isoDateString);
-  const day = dateObj.getUTCDate();
-  const monthNames = [
-    "jan.",
-    "feb.",
-    "mar.",
-    "apr.",
-    "maj",
-    "jun.",
-    "jul.",
-    "aug.",
-    "sep.",
-    "okt.",
-    "nov.",
-    "dec.",
-  ];
-  const monthName = monthNames[dateObj.getUTCMonth()];
-  const date = `D. ${day} ${monthName}`;
-
-  const hours = String(dateObj.getHours()).padStart(2, "0");
-  const minutes = String(dateObj.getMinutes()).padStart(2, "0");
-  const time = `Kl. ${hours}.${minutes}`;
-  const year = dateObj.getFullYear();
-  //check if the date is today:
-  const today = new Date();
-
-  const isToday =
-    dateObj.getUTCDate() === today.getUTCDate() &&
-    dateObj.getUTCMonth() === today.getUTCMonth() &&
-    dateObj.getUTCFullYear() === today.getUTCFullYear();
-
-  return { day, monthName, year, date, time, isToday };
-};
