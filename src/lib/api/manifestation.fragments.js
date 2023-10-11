@@ -68,6 +68,12 @@ export function editionManifestations({ pid }) {
         pid
         ownerWork {
           workId
+          titles {
+            full
+          }
+          creators {
+            ...creatorsFragment
+          }
         }
         materialTypes {
           specific
