@@ -86,8 +86,8 @@ export function Mobile({ options = [], onSelect, selected, className }) {
               onClick={() => onSelect(elem)}
             >
               {Translate({
-                context: "facets",
-                label: `label-${elem}`,
+                context: elem === "all" ? "general" : "facets",
+                label: elem === "all" ? elem : `label-${elem}`,
               })}
             </Tag>
           );

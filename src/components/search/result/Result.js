@@ -39,7 +39,6 @@ export function Result({
 
   const numPages = Math.ceil(hitcount / 10);
 
-  const visibleClass = noRelatedSubjects ? styles.visible : "";
   const noRelatedSubjectsClass = noRelatedSubjects
     ? styles.noRelatedSubjects
     : "";
@@ -50,9 +49,9 @@ export function Result({
         className={`${styles.section} ${noRelatedSubjectsClass}`}
         divider={false}
         title={
-          !isLoading && !isTablet ? (
+          !isLoading && !isTablet && hitcount > 0 ? (
             <FilterButton
-              className={`${styles.filterButton} ${visibleClass}`}
+              className={`${styles.filterButton} ${styles.visible}`}
             />
           ) : (
             <span />
@@ -73,11 +72,13 @@ export function Result({
             />
           ))}
       </Section>
-      <Pagination
-        numPages={numPages}
-        currentPage={parseInt(page, 10)}
-        onChange={onPageChange}
-      />
+      {hitcount > 0 && (
+        <Pagination
+          numPages={numPages}
+          currentPage={parseInt(page, 10)}
+          onChange={onPageChange}
+        />
+      )}
     </>
   );
 }
