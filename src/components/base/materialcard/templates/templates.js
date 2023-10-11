@@ -145,8 +145,14 @@ export function templateForLocalizations(
   material,
   singleManifestation = false
 ) {
-  const fullTitle = material?.titles?.full?.join(": ");
-  const creators = material?.creators;
+  const fullTitle =
+    singleManifestation === true
+      ? material?.titles?.full?.join(": ")
+      : material?.ownerWork?.titles?.full?.join(": ");
+  const creators =
+    singleManifestation === true
+      ? material?.creators
+      : material?.ownerWork?.creators;
   const firstCreator =
     extractCreatorsPrioritiseCorporation(creators)?.[0]?.display;
   const formattedMaterialTypes = formatMaterialTypesToPresentation(
