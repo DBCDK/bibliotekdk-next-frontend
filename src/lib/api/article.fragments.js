@@ -10,7 +10,7 @@ import { getLangcode } from "@/components/base/translate/Translate";
  *
  * Fetch a specific article by id (nid)
  *
- * @param {object} params
+ * @param {Object} params
  * @param {string} params.articleId the id of the article
  */
 export function article({ articleId, language }) {

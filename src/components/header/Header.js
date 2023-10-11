@@ -64,10 +64,10 @@ const actions = [
 /**
  * The Component function
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export function Header({
   className = "",
@@ -309,8 +309,7 @@ export function Header({
  * Static parts of header - logo, materialtypeslinks, header actions
  * @param router
  * @param context
- * @returns {JSX.Element}
- * @constructor
+ * @returns {React.JSX.Element}
  */
 export function StaticHeader({ router = null, context }) {
   return (
@@ -387,10 +386,10 @@ export function StaticHeader({ router = null, context }) {
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 function HeaderSkeleton(props) {
   return <Header {...props} className={`${props.className}`} skeleton={true} />;
@@ -399,10 +398,10 @@ function HeaderSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
   const router = useRouter();

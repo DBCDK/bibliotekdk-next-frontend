@@ -125,7 +125,7 @@ export function Article() {
 
 /**
  * Return a full manifestation
- * @return {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export function FullManifestation() {
   useMockLoanerInfo({});

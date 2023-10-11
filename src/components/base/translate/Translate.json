@@ -1262,8 +1262,8 @@
         "en": "LABEL: mangler oversættelse"
       },
       "showAllFilters": {
-        "da": "Vis alle filtre",
-        "en": "Refine your search"
+        "da": "Filtrer",
+        "en": "Refine"
       },
       "showAllFiltersCount": {
         "da": "Filtrer (%s)",
@@ -1838,8 +1838,8 @@
         "en": "Composer"
       },
       "label-all": {
-        "da": "Alle",
-        "en": "All"
+        "da": "Alle materialkategorier",
+        "en": "All material categories"
       },
       "label-literature": {
         "da": "Bøger",

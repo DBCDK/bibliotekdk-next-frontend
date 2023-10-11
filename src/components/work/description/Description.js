@@ -66,10 +66,10 @@ function parseForOccasion(manifestations) {
 /**
  * The Component function
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export function Description({ className = "", data = "", skeleton = false }) {
   const abstract = data?.abstract?.map((abs, index) => (
@@ -136,10 +136,10 @@ export function Description({ className = "", data = "", skeleton = false }) {
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export function DescriptionSkeleton(props) {
   return (
@@ -155,10 +155,10 @@ export function DescriptionSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
   const { workId } = props;

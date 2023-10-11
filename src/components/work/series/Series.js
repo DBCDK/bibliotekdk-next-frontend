@@ -14,9 +14,9 @@ import styles from "./Series.module.css";
 /**
  * Series React component
  *
- * @param {object} props
+ * @param {Object} props
  * @param {string} props.isLoading The work id
- * @param {array} props.works array of works in series
+ * @param {Array} props.works array of works in series
  */
 export function Series({ isLoading, works = [] }) {
   // Translate Context
@@ -43,7 +43,7 @@ Series.propTypes = {
 /**
  * Container
  *
- * @param {object} props
+ * @param {Object} props
  * @param {string} props.workId The work id
  */
 export default function Container({ workId }) {

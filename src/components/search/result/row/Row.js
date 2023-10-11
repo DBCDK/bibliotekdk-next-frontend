@@ -95,7 +95,7 @@ function sortMaterialTypesByFilter(materialTypesInFilter) {
 /**
  * Row representation of a search result entry
  *
- * @param {object} work
+ * @param {Object} work
  * @param {string} className
  * @param {function} onClick
  * @param {boolean} isLoading
@@ -214,10 +214,12 @@ export default function ResultRow({
           </div>
           <BookmarkDropdown
             className={styles.BookmarkDropdown}
+            materialId={work?.workId}
             workId={work?.workId}
             materialTypes={uniqueMaterialTypes}
             title={work?.titles?.full?.[0]}
             size={{ w: 4, h: 4 }}
+            editions={work?.manifestations?.mostRelevant}
           />
         </div>
       </Link>

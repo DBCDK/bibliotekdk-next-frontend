@@ -22,13 +22,13 @@ import { getLanguage } from "@/components/base/translate/Translate";
 /**
  * The Sections page React component
  *
- * @param {obj} props
- * @param {obj} props.className
- * @param {obj} props.data
- * @param {obj} props.skeleton
+ * @param {Object} props
+ * @param {Object} props.className
+ * @param {Object} props.data
+ * @param {Object} props.skeleton
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export function Sections({ className, data, skeleton }) {
   // Parse helptexts
@@ -105,10 +105,10 @@ Sections.propTypes = {
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export function SectionsSkeleton(props) {
   const data = [
@@ -147,10 +147,10 @@ export function SectionsSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
   // real data goes here ...

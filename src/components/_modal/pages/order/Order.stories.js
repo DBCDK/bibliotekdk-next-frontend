@@ -122,13 +122,7 @@ PickupNotAllowed.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {
-        Query: {
-          user: () => USER_2,
-          branches: () => ({
-            borrowerStatus: BORROWER_STATUS_TRUE,
-            result: [BRANCH_2],
-          }),
-        },
+        Query: { user: () => USER_2, branches: () => ({ result: [BRANCH_2] }) },
       },
     },
   },

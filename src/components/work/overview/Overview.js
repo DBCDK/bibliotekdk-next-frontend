@@ -25,6 +25,7 @@ import Title from "@/components/base/title/Title";
 import { useRouter } from "next/router";
 import Breadcrumbs from "@/components/work/overview/breadcrumbs/Breadcrumbs";
 import BookMarkDropDown from "@/components/work/overview/bookmarkDropdown/BookmarkDropdown";
+import isEmpty from "lodash/isEmpty";
 
 function useInitMaterialType(
   uniqueMaterialTypes,
@@ -38,7 +39,7 @@ function useInitMaterialType(
     if (
       uniqueMaterialTypes &&
       uniqueMaterialTypes?.[0] !== type &&
-      (type === "" || type === [] || !inUniqueMaterialTypes(type))
+      (isEmpty(type) || !inUniqueMaterialTypes(type))
     ) {
       onTypeChange({
         type: uniqueMaterialTypes?.[0],
@@ -50,10 +51,10 @@ function useInitMaterialType(
 /**
  * The Component function
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export function Overview({
   work,
@@ -157,10 +158,12 @@ export function Overview({
                   selectedPids={selectedPids}
                 />
                 <BookMarkDropDown
+                  materialId={workId}
                   workId={workId}
                   materialTypes={uniqueMaterialTypes}
                   title={work?.titles?.full[0]}
                   className={styles.svgscale}
+                  editions={work?.manifestations?.mostRelevant}
                 />
               </Col>
 
@@ -237,7 +240,7 @@ export function OverviewError() {
  * @param login
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap({ workId, type, onTypeChange, login }) {
   const user = useUser();

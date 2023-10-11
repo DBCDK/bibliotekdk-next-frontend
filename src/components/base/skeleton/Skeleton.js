@@ -4,10 +4,10 @@ import styles from "./Skeleton.module.css";
 
 /**
  *
- * @param {int} n (number of lines wanted)
- * @param {object || string} children
+ * @param {number} n (number of lines wanted)
+ * @param {Object || string} children
  *
- * @returns {array} elements (lines)
+ * @returns {Array} elements (lines)
  */
 function CreateLines({ n, children }) {
   let lines = [];
@@ -24,10 +24,10 @@ function CreateLines({ n, children }) {
 /**
  * Function to create a loading overlay on a component.
  *
- * @param {object} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export default function Skeleton({ children, className = "", lines = 1 }) {
   return (

@@ -49,13 +49,13 @@ function PolicyLoader({ branch, onLoad, pid, requireDigitalAccess }) {
 
 /**
  * Row that desplays a branch
- * @param {object} branch
+ * @param {Object} branch
  * @param {boolean} selected
  * @param {function} onSelect
  * @param {boolean} isLoading
  * @param {boolean} includeArrows
- * @param {object} _ref
- * @returns {JSX.Element}
+ * @param {Object} _ref
+ * @returns {React.JSX.Element}
  */
 function Row({ branch, selected, onSelect, isLoading, includeArrows, _ref }) {
   // Check for a highlight key matching on "name" prop

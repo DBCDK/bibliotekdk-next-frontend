@@ -123,6 +123,8 @@ export function setTranslations(translations) {
  * Documentaion:
  *
  * Props of the translate component
+ * @param {Object} props
+
  *
  * @param {string} props.context
  *  Context prop could be the name of the main component (Module), where the translate function is called.
@@ -141,7 +143,7 @@ export function setTranslations(translations) {
  *  "contactName"
  *  "contactEmail"
  *
- * @param {array} props.vars
+ * @param {Array} [props.vars]
  * Vars is a list of variabels, used to make the translated text more dynamic.
  * Variabels in the translated text (%s) will get replaced (in the given order).
  * Also functions/Translate functions can be passed as a variable
@@ -150,10 +152,13 @@ export function setTranslations(translations) {
  *  [5] => "In cart: %s" = "In cart: 5"
  *  [3, books] => "Order %s %s" = "Order 3 books"
  *
- * @param {bool} props.renderAsHtml
+ * @param {boolean} [props.renderAsHtml]
  * The translated json text can be rendered as html.
  * Html tags can be set in the json translations,
  * but also passed as variabels.
+ * 
+ * @param {string} [props.requestedLang]
+ * The language in which the text is requested. Otherwise return language depends on browser settings.
  *
  * Exampels:
  *  [1] => "Order <strong>%s<strong> book" = "Order <strong>1<strong> book"
@@ -180,14 +185,6 @@ export function setTranslations(translations) {
 
  /**
  * The Component function
- *
- * @param {obj} props
- * @param {string} props.context
- * @param {string} props.label
- * @param {array} props.vars
- * @param {bool} props.renderAsHtml
- * See propTypes for specific props and types
- *
  * @returns {string}
  *
  */
@@ -258,9 +255,9 @@ function DoTranslate({
 /**
  * Split given text in <spans>. Split by newline (\\n). We need
  * TWO backslashes since drupal escapes by default.
- * @param text
- * @param renderAsHtml
- * @return {*}
+ * @param {string} text
+ * @param {boolean} renderAsHtml
+ * @returns {string|[]}
  */
 function NewlineInText(text, renderAsHtml) {
   if (!renderAsHtml && text.indexOf("\\n") > 0) {
@@ -276,6 +273,17 @@ function NewlineInText(text, renderAsHtml) {
   return text;
 }
 
+/**
+ *
+ * @param {Object} props
+ * @param {string} props.context
+ * @param {string} props.label
+ * @param {Array} [props.vars]
+ * @param {boolean} [props.renderAsHtml]
+ * @param {string} [props.requestedLang]
+ * See propTypes for specific props and types
+ * @returns
+ */
 function Translate({
   context,
   label,

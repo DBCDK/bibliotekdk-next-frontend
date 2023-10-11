@@ -24,6 +24,7 @@
   text-align: inherit;
   white-space: nowrap;
   cursor: pointer;
+  max-width: 250px;
 }
 
 .dropdownitem.active i svg {
@@ -37,6 +38,8 @@
 
 .dropdownitemText {
   text-transform: capitalize;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
 }
 
 .dropdownitemText:hover {

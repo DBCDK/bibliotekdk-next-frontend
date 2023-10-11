@@ -39,7 +39,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     data: localBookmarks,
     mutate: mutateLocalBookmarks,
     error,
-  } = useSWR(KEY_NAME, (key) => JSON.parse(localStorage.getItem(key)) || []);
+  } = useSWR(KEY_NAME, (key) => JSON.parse(localStorage.getItem(key) || "[]"));
   const {
     data: globalBookmarksUserObject,
     isLoading: isLoadingGlobalBookmarks,
@@ -189,9 +189,9 @@ const useBookmarksCore = ({ isMock = false, session }) => {
 
   /**
    * sorts bookmarkList by createdAt
-   * @param {*} bookmarkList list of bookmarks
-   * @param {*} sortDirection can be either asc or desc
-   * @returns bookmarkList
+   * @param {Object[]} bookmarkList list of bookmarks
+   * @param {string} sortDirection can be either asc or desc
+   * @returns {Object[]} bookmarkList
    */
   const createdAtSort = (bookmarkList = [], sortDirection = "asc") => {
     return bookmarkList.sort((a, b) => {
@@ -204,13 +204,13 @@ const useBookmarksCore = ({ isMock = false, session }) => {
       return 0;
     });
   };
+
   /**
    * sorts bookmarkList by title
-   * @param {*} bookmarkList list of bookmarks
-   * @param {*} sortDirection can be either asc or desc
-   * @returns bookmarkList
+   * @param {Object[]} bookmarkList list of bookmarks
+   * @param {string} sortDirection can be either asc or desc
+   * @returns {Object[]} bookmarkList
    */
-
   const titleSort = (bookmarkList = [], sortDirection = "asc") => {
     return bookmarkList.sort((a, b) => {
       if (a.title < b.title) {
@@ -284,10 +284,10 @@ export const usePopulateBookmarks = (bookmarks) => {
    * Used to populate bookmark data, to show more info about the materials
    */
   const workIds = bookmarks?.filter((bookmark) =>
-    bookmark.materialId.includes("work-of:")
+    bookmark?.materialId?.includes("work-of:")
   );
   const workPids = bookmarks?.filter(
-    (bookmark) => !bookmark.materialId.includes("work-of:")
+    (bookmark) => !bookmark?.materialId?.includes("work-of:")
   );
   const { data: workByIdsData } = useData(
     workFragments.idsToWorks({ ids: workIds?.map((work) => work.materialId) })

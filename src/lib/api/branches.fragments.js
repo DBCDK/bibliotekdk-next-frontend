@@ -46,7 +46,7 @@ export function branchUserParameters({ branchId }) {
  * Get Holdings for a branch.
  * @param branchId
  * @param pids
- * @return {{variables: {branchId, pids}, slowThreshold: number, query: string}}
+ * @returns {{variables: {branchId, pids}, slowThreshold: number, query: string}}
  */
 export function branchHoldings({ branchId, pids }) {
   return {

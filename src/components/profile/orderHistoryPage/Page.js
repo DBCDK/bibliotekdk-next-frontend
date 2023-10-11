@@ -20,7 +20,7 @@ const itemsPerPage = 4;
 /**
  * Shows the previous orders made by the user from bibliotekdk.
  *
- * @returns {component}
+ * @returns {React.JSX.Element}
  *
  */
 
@@ -199,8 +199,8 @@ export default function OrderHistoryPage() {
 
 /**
  * TableItem shows info for a single order.
- * @param {obj} props
- * @returns {component}
+ * @param {Object} props
+ * @returns {React.JSX.Element}
  */
 function TableItem({ order, key }) {
   const breakpoint = useBreakpoint();
@@ -310,7 +310,7 @@ function WorkInfo({ title, author, pidOfPrimaryObject }) {
 
 /**
  * Parses an iso-8601 date string into human readable date an time strings.
- * @param {*} isoDateString
+ * @param {string} isoDateString
  * @returns an object containing date and time fields. Eks {date: "D. 24. juni", time:"Kl. 11:07"}
  */
 const parseDate = (isoDateString) => {

@@ -14,7 +14,7 @@ import MenuDropdown from "@/components/base/dropdown/menuDropdown/MenuDropdown";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import List from "@/components/base/forms/list";
 import Pagination from "@/components/search/pagination/Pagination";
-import isEmpty from "lodash/isEmpty";
+import { createEditionText } from "@/components/work/details/utils/details.utils";
 
 const CONTEXT = "bookmark";
 const MENUITEMS = ["Bestil flere", "Hent referencer", "Fjern flere"];
@@ -54,6 +54,7 @@ const BookmarkPage = () => {
     currentPage,
     totalPages,
     setCurrentPage,
+    count,
   } = useBookmarks();
   const { data: bookmarks } = usePopulateBookmarks(bookmarksData);
   const [activeStickyButton, setActiveStickyButton] = useState(null);
@@ -126,16 +127,7 @@ const BookmarkPage = () => {
     /**
      * Matches string construction on work page
      */
-    return (
-      bookmark?.hostPublication?.title ||
-      [
-        ...bookmark?.publisher,
-        ...(!isEmpty(bookmark?.edition?.edition)
-          ? [bookmark?.edition?.edition]
-          : []),
-      ].join(", ") ||
-      ""
-    );
+    return createEditionText(bookmark);
   };
 
   const onPageChange = async (newPage) => {
@@ -177,7 +169,7 @@ const BookmarkPage = () => {
 
       <div className={styles.sortingRow}>
         <Text tag="small" type="text3" className={styles.smallLabel}>
-          {bookmarks?.length}{" "}
+          {count}{" "}
           {Translate({
             context: CONTEXT,
             label: "result-amount",
