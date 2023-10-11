@@ -75,6 +75,18 @@ function MessageWhenMaterialsAvailableNever() {
 }
 
 /**
+ * {@link MessageWhenLibraryDoesNotOwnMaterial} shows a possible message in {@link BranchLocalizationItemStatus}
+ * @returns {JSX.Element}
+ */
+function MessageWhenLibraryDoesNotOwnMaterial() {
+  return (
+    <Text>
+      {Translate({ context: "localizations", label: "does_not_own_material" })}
+    </Text>
+  );
+}
+
+/**
  * {@link MessageWhenMaterialsAvailableUnknown} shows a possible message in {@link BranchLocalizationItemStatus}
  * @returns {JSX.Element}
  */
@@ -103,6 +115,8 @@ export default function BranchLocalizationItemStatus({ library }) {
     return <MessageWhenMaterialsAvailableLater library={library} />;
   } else if (library?.availabilityAccumulated === AvailabilityEnum.NEVER) {
     return <MessageWhenMaterialsAvailableNever />;
+  } else if (library?.availabilityAccumulated === AvailabilityEnum.NOT_OWNED) {
+    return <MessageWhenLibraryDoesNotOwnMaterial />;
   } else if (library?.availabilityAccumulated === AvailabilityEnum.UNKNOWN) {
     return <MessageWhenMaterialsAvailableUnknown />;
   } else {
