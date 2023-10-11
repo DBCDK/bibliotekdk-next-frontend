@@ -134,7 +134,7 @@ export function List({ children, className = "" }) {
  * @param {Object} props
  * @param {React.ReactNode | null} props.children
  * @param {string=} props.className
- * @returns {jsx}
+ * @returns {React.ReactElement | null}
  */
 export function Information({ children, className = "" }) {
   return (
@@ -170,7 +170,7 @@ export function Subheader({ children, className = "" }) {
  * @param {React.ReactNode | null} props.children
  * @param {Object=} props.style
  * @param {string=} props.className
- * @returns {jsx}
+ * @returns {React.ReactElement | null}
  */
 export function HighlightedArea({
   children,
