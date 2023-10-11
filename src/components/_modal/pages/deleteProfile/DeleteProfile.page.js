@@ -11,7 +11,6 @@ import Text from "@/components/base/text";
 import { useEffect } from "react";
 import Button from "@/components/base/button";
 import { deleteUser } from "@/lib/api/userData.mutations";
-import { useRouter } from "next/router";
 import { signOut } from "@dbcdk/login-nextjs/client";
 import Translate from "@/components/base/translate/Translate";
 
@@ -21,18 +20,9 @@ import Translate from "@/components/base/translate/Translate";
  */
 export function DeleteProfile({ modal }) {
   const userDataMutation = useMutate();
-  const { isAuthenticated, loanerInfo } = useUser();
-  const { data: userData, mutate } = useData(
-    isAuthenticated && userFragments.extendedData()
-  );
-  const user = useUser();
-  const router = useRouter();
+  const { isAuthenticated } = useUser();
+  const { mutate } = useData(isAuthenticated && userFragments.extendedData());
 
-  const createdAt = userData?.user?.createdAt;
-  console.log("createdAt", createdAt);
-  const userName = loanerInfo?.userParameters?.userName;
-
-  console.log("loanerInfo", loanerInfo);
   useEffect(() => {
     if (modal.isVisible) {
       mutate();
@@ -52,12 +42,7 @@ export function DeleteProfile({ modal }) {
       <Text className={styles.deleteText}>
         {Translate({ context: "profile", label: "deleteProfileText" })}
       </Text>
-      <Button
-        className={styles.deleteUserButton}
-        size="large"
-        type="primary"
-        onClick={handleDeleteUser}
-      >
+      <Button size="large" type="primary" onClick={handleDeleteUser}>
         {Translate({ context: "profile", label: "deleteProfile" })}
       </Button>
     </div>

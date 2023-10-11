@@ -123,7 +123,6 @@ export default function ProfileLayout({ title, children }) {
 
 const LogoutButton = () => {
   const user = useUser();
-  const modal = useModal();
 
   if (!user.isAuthenticated) {
     return;
