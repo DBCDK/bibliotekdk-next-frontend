@@ -23,13 +23,12 @@ export function setPersistUserDataValue({ persistUserData, userDataMutation }) {
   userDataMutation.post(q);
 }
 
-
 /**
  * Deletes user from userdata service. All added FFU libraries will also be deleted
  *
  */
 
-export function deleteUser({userDataMutation}) {
+export function deleteUser({ userDataMutation }) {
   const q = {
     query: `
     mutation{

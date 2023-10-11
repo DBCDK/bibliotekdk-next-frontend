@@ -46,15 +46,11 @@ export function DeleteProfile({ modal }) {
   return (
     <div className={styles.modalContainer}>
       <Top title={"Slet profil"} back />
-      <Text className={styles.deleteTextTitle} type="tex1">
-        Vil du slette din brugerprofil på bibliotek.dk?{" "}
+      <Text className={styles.deleteTextTitle} type="text1">
+        {Translate({ context: "profile", label: "deleteProfileTitle" })}
       </Text>
       <Text className={styles.deleteText}>
-        Dette vil slette din huskeliste, bestillingshistorik, søgehistorik og
-        evt. tilføjede uddannelsesbiblioteker.
-        <br /> <br />
-        Bemærk: Du slettes ikke fra de biblioteker, du er oprettet ved. Kontakt
-        dit lokale bibliotek for dette.
+        {Translate({ context: "profile", label: "deleteProfileText" })}
       </Text>
       <Button
         className={styles.deleteUserButton}
