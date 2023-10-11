@@ -20,7 +20,7 @@ import styles from "./Result.module.css";
 /**
  * Search result
  *
- * @param {object} props
+ * @param {Object} props
  * See propTypes for specific props and types
  */
 export function Result({
@@ -99,7 +99,7 @@ Result.propTypes = {
  * @param {Object} props Component props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap({ page, onWorkClick, onPageChange }) {
   const { getQuery, hasQuery } = useQ();

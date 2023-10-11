@@ -18,8 +18,7 @@ import { MATERIAL_PAGES } from "@/components/header";
 
 /**
  * The logo @see icons/logowhite.svg
- * @returns {JSX.Element}
- * @constructor
+ * @returns {React.JSX.Element}
  */
 const FooterLogo = () => {
   return <Logo type="WHITE" />;
@@ -28,8 +27,7 @@ const FooterLogo = () => {
 /**
  * First column holds a description of bibliotek.dk and a link to administer
  * cookie settings
- * @returns {JSX.Element}
- * @constructor
+ * @returns {React.JSX.Element}
  */
 const FirstColumn = () => {
   let label = Translate({ context: "footer", label: "hvad_er_bibliotek_dk" });
@@ -57,8 +55,7 @@ const FirstColumn = () => {
 
 /**
  * Second column holds link to contact, help, press etc.
- * @returns {JSX.Element}
- * @constructor
+ * @returns {React.JSX.Element}
  */
 const SecondColumn = () => {
   let label = Translate({ context: "footer", label: "contact" });
@@ -74,7 +71,6 @@ const SecondColumn = () => {
 /**
  * Generate links for contacts
  * @returns {unknown[]}
- * @constructor
  */
 const ContactLinks = () => {
   // Object holding info to generate contact links * NOTICE Keys of objects are translated.
@@ -148,8 +144,7 @@ const ContactLinks = () => {
 /**
  * Third column holds links to different material types
  * (don't know why it is called branches - see design)
- * @returns {JSX.Element}
- * @constructor
+ * @returns {React.JSX.Element}
  */
 const ThirdColumn = () => {
   let label = Translate({ context: "footer", label: "branches" });
@@ -168,8 +163,7 @@ const ThirdColumn = () => {
  * Generate links for materialtypes
  * Object holding info to generate links to materialtypes
  * NOTICE Keys are translated
- * @returns {JSX.Element}
- * @constructor
+ * @returns {React.JSX.Element}
  */
 const BranchLinks = () => {
   return MATERIAL_PAGES.map(({ path, label }) => (
@@ -193,8 +187,7 @@ const BranchLinks = () => {
 
 /**
  * Defines the footer section - one row with four columns
- * @returns {JSX.Element}
- * @constructor
+ * @returns {React.JSX.Element}
  */
 const FooterSection = () => {
   return (

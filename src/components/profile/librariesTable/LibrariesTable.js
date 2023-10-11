@@ -7,8 +7,8 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 /**
  * Tablerow to be used in LibrariesTable component.
- * @param {obj} props
- * @returns {component}
+ * @param {Object} props
+ * @returns {React.JSX.Element}
  */
 function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
   const breakpoint = useBreakpoint();
@@ -97,8 +97,8 @@ function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
 
 /**
  * Returns a table of users libraries
- * @param {obj} props
- * @returns {component}
+ * @param {Object} props
+ * @returns {React.JSX.Element}
  */
 export default function LibrariesTable({ data, municipalityAgencyId }) {
   const breakpoint = useBreakpoint();
@@ -156,8 +156,8 @@ export default function LibrariesTable({ data, municipalityAgencyId }) {
 
 /**
  *
- * @param {*} agencyID
- * @returns returns true if public library (Folkebibliotek)
+ * @param {string} agencyID
+ * @returns {boolean} returns true if public library (Folkebibliotek)
  */
 const isPublicLibrary = (agencyID) => {
   const faroeIslandsLibraries = ["900455", "911116", "911130"];

@@ -22,7 +22,7 @@ const MaterialCard = forwardRef(
    * @param {{ xs: OptionalColSize, sm: OptionalColSize, lg: OptionalColSize}=} colSizing
    * @param {function=} onClick
    * @param {React.MutableRefObject<any>} ref
-   * @return {JSX.Element}
+   * @returns {React.JSX.Element}
    */
   function MaterialCard(
     {

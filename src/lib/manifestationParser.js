@@ -298,7 +298,7 @@ const fields = () => [
 /**
  * Render full and parallel titles as one block to show.
  * @param value
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 function renderFullAndParallelTitles(value) {
   return (
@@ -349,7 +349,7 @@ function renderAlternativeTitles(value) {
 /**
  * Render translated titles - do not show if shown before in another title
  * @param value
- * @returns {JSX.Element|null}
+ * @returns {React.ReactElement|null}
  */
 function renderTranslatedTitle(value) {
   // only render if values are not rendered before - compare with full, parallel and main
@@ -393,7 +393,7 @@ function titlesToFilterOn(value) {
 /**
  * Render original titles
  * @param value
- * @returns {JSX.Element|null}
+ * @returns {React.ReactElement|null}
  */
 function renderOriginalTitle(value) {
   // only render if values are not rendered before - compare with full, parallel and main
@@ -423,8 +423,8 @@ function renderOriginalTitle(value) {
  *
  * It tries to parse all fields that are in the "fields" array
  *
- * @param {object} manifestation
- * @returns {array}
+ * @param {Object} manifestation
+ * @returns {Array}
  */
 export function parseManifestation(manifestation) {
   return (
