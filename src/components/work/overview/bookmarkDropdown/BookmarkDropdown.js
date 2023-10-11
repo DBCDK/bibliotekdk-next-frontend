@@ -51,12 +51,12 @@ export function BookMarkMaterialSelector({
   }, [bookmarks]);
 
   const revalidateEditions = () => {
-    if (!editions) {
+    if (!editions || !bookmarks || bookmarks.length === 0) {
       // Not needed to look for aditional dropdown items
       return;
     }
 
-    const addedEditions = bookmarks.filter(
+    const addedEditions = bookmarks?.filter(
       (bookmark) => bookmark.workId === workId
     );
     const bookmarkMatches = addedEditions.map((addedEdition) => {
