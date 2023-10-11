@@ -57,13 +57,16 @@
   column-gap: var(--pt2);
   row-gap: var(--pt05);
   align-items: center;
-  background-color: yellow;
-
   --underline-bottom-color: var(--blue);
   --underline-middle-hover-color: var(--transparent);
 }
-.material > link {
+
+.material > a {
   display: flex;
+}
+
+.material > a > span {
+  padding-top: 1px;
 }
 
 .creator {

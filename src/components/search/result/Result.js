@@ -49,7 +49,7 @@ export function Result({
         className={`${styles.section} ${noRelatedSubjectsClass}`}
         divider={false}
         title={
-          !isLoading && !isTablet ? (
+          !isLoading && !isTablet && hitcount > 0 ? (
             <FilterButton
               className={`${styles.filterButton} ${styles.visible}`}
             />
@@ -72,11 +72,13 @@ export function Result({
             />
           ))}
       </Section>
-      <Pagination
-        numPages={numPages}
-        currentPage={parseInt(page, 10)}
-        onChange={onPageChange}
-      />
+      {hitcount > 0 && (
+        <Pagination
+          numPages={numPages}
+          currentPage={parseInt(page, 10)}
+          onChange={onPageChange}
+        />
+      )}
     </>
   );
 }
