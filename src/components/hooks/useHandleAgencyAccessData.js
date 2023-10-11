@@ -8,7 +8,7 @@ import uniq from "lodash/uniq";
 
 /**
  * @typedef AvailabilityEnum
- * @type {Readonly<{LATER: string, NOW: string, NEVER: string, UNKNOWN: string}>}
+ * @type {Readonly<{LATER: string, NOW: string, NEVER: string, NOT_OWNED: string, UNKNOWN: string}>}
  */
 export const AvailabilityEnum = Object.freeze({
   NOW: "AVAILABLE_NOW",
@@ -541,9 +541,10 @@ export function useHighlightsForSingleAgency({ agencyId, query = "" }) {
 
 /**
  * {@link useSingleBranch} finds a branch by its branchId
- * @param {Array.<string>=} pids
- * @param {string=} branchId
- * @returns {{agenciesIsLoading: boolean, count: number, agenciesFlatSorted: Array<Object>}}
+ * @param {Object} props
+ * @param {Array.<string>} props.pids
+ * @param {string} props.branchId
+ * @returns {{agenciesIsLoading: boolean, count: number, agenciesFlatSorted: Array<Object.<string, any>>}}
  */
 export function useSingleBranch({ pids, branchId }) {
   const branch = useData(

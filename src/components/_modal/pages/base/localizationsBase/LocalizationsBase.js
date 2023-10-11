@@ -16,22 +16,23 @@ import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtil
 
 /**
  * LocalizationsBase is used as a base for {@link AgencyLocalizations}, {@link BranchLocalizations} and {@link BranchDetails}
- * @param children
- * @param {object} context
- * @param {string|null} subtitle
- * @param {Array.<string>} pids
- * @param {function} materialCardTemplate
- * @param {string|null} subheader
- * @param {string|null} query
- * @param {function} setQuery
- * @returns {JSX.Element}
+ * @param {Object} props
+ * @param {React.ReactNode | null} props.children
+ * @param {Object.<string, any>} props.context
+ * @param {string=} props.subtitle
+ * @param {Array.<string>=} props.pids
+ * @param {function=} props.materialCardTemplate
+ * @param {string=} props.subheader
+ * @param {string=} props.query
+ * @param {function=} props.setQuery
+ * @returns {React.ReactElement | null}
  */
 function LocalizationsBase({
   children,
   context,
   subtitle,
   pids = [],
-  materialCardTemplate = (material) =>
+  materialCardTemplate = (/** @type {Object} */ material) =>
     templateForLocalizations(material, context?.singleManifestation),
   subheader,
   query,
@@ -52,7 +53,7 @@ function LocalizationsBase({
   useEffect(() => {
     if (modal?.isVisible) {
       setTimeout(() => {
-        document.getElementById("LocalizationsBase__search").focus();
+        document.getElementById("LocalizationsBase__search")?.focus();
       }, 300);
     }
   }, [modal?.isVisible]);
@@ -60,6 +61,7 @@ function LocalizationsBase({
   return (
     <div className={styles.wrapper} key={JSON.stringify(modal)}>
       <Top
+        modal={modal}
         title={context?.title}
         className={{
           top: cx(styles.padding_inline, styles.top),
@@ -95,7 +97,10 @@ function LocalizationsBase({
               context: "order",
               label: "pickup-input-placeholder",
             })}
-            onChange={debounce((value) => setQuery(value), 100)}
+            onChange={debounce(
+              (/** @type {string} */ value) => setQuery(value),
+              100
+            )}
             id="LocalizationsBase__search"
           />
         </div>
@@ -108,11 +113,12 @@ function LocalizationsBase({
 
 /**
  * Compound subcomponent List for {@link LocalizationsBase} which contains the list of branches/agencies
- * @param children
- * @param {string} className
- * @returns {JSX.Element}
+ * @param {Object} props
+ * @param {React.ReactNode | null} props.children
+ * @param {string=} props.className
+ * @returns {React.ReactElement | null}
  */
-export function List({ children, className }) {
+export function List({ children, className = "" }) {
   return (
     <ul
       style={{ listStyleType: "none" }}
@@ -125,11 +131,12 @@ export function List({ children, className }) {
 
 /**
  * Compound subcomponent Information for {@link LocalizationsBase} which can contain additional information on branches/agencies
- * @param children
- * @param {string} className
- * @returns {JSX.Element}
+ * @param {Object} props
+ * @param {React.ReactNode | null} props.children
+ * @param {string=} props.className
+ * @returns {jsx}
  */
-export function Information({ children, className }) {
+export function Information({ children, className = "" }) {
   return (
     <div
       className={cx(styles.padding_inline, styles.branch_details, className)}
@@ -141,11 +148,12 @@ export function Information({ children, className }) {
 
 /**
  * Compound subcomponent Information for {@link LocalizationsBase} which can contain additional information on branches/agencies
- * @param children
- * @param {string} className
- * @returns {JSX.Element}
+ * @param {Object} props
+ * @param {React.ReactNode | null} props.children
+ * @param {string=} props.className
+ * @returns {React.ReactElement | null}
  */
-export function Subheader({ children, className }) {
+export function Subheader({ children, className = "" }) {
   return (
     <Text
       className={cx(styles.padding_inline, styles.subheader_text, className)}
@@ -156,18 +164,20 @@ export function Subheader({ children, className }) {
 }
 
 /**
- * Compound subcomponent HighlightedArea for {@link LocalizationsBase} which can contain highlighted areas that fills the entire width of the modal
- * @param children
- * @param {Object} style
- * @param {string} className
- * @returns {JSX.Element}
+ * Compound subcomponent HighlightedArea for {@link LocalizationsBase} which can contain
+ *   highlighted areas that fill the entire width of the modal
+ * @param {Object} props
+ * @param {React.ReactNode | null} props.children
+ * @param {Object=} props.style
+ * @param {string=} props.className
+ * @returns {jsx}
  */
 export function HighlightedArea({
   children,
   style = {
     backgroundColor: "var(--feedback-yellow-warning-background)",
   },
-  className,
+  className = "",
 }) {
   return (
     <div className={cx(styles.highlighted_area)} style={style}>

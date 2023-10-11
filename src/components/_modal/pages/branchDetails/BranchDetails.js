@@ -24,8 +24,9 @@ import { useGoToOrderWithBranch } from "@/components/hooks/useGoToOrderWithBranc
 
 /**
  * {@link OpeningHours} for {@link BranchDetails}
- * @param {Object} singleBranch
- * @returns {JSX.Element}
+ * @param {Object} props
+ * @param {Object.<string, any>} props.singleBranch
+ * @returns {React.ReactElement | null}
  */
 function OpeningHours({ singleBranch }) {
   return (
@@ -63,8 +64,9 @@ OpeningHours.propTypes = { singleBranch: PropTypes.any };
 
 /**
  * {@link Address} for {@link BranchDetails}
- * @param {Object} singleBranch
- * @returns {JSX.Element}
+ * @param {Object} props
+ * @param {Object.<string, any>} props.singleBranch
+ * @returns {React.ReactElement | null}
  */
 function Address({ singleBranch }) {
   return (
@@ -108,8 +110,9 @@ Address.propTypes = { singleBranch: PropTypes.any };
 
 /**
  * {@link ContactInformation} for {@link BranchDetails}
- * @param {Object} singleBranch
- * @returns {JSX.Element}
+ * @param {Object} props
+ * @param {Object.<string, any>} props.singleBranch
+ * @returns {React.ReactElement | null}
  */
 function ContactInformation({ singleBranch }) {
   return (
@@ -147,8 +150,9 @@ function ContactInformation({ singleBranch }) {
 /**
  * {@link BranchDetails} shows the details of the Branch, including {@link MaterialCard}, {@link BranchDetailsStatus},
  * {@link OpeningHours}, {@link Address}, and {@link ContactInformation}
- * @param {Object} context
- * @returns {JSX.Element}
+ * @param {Object} props
+ * @param {Object<string, any>} props.context
+ * @returns {React.ReactElement | null}
  */
 export default function BranchDetails({ context }) {
   const { pids: pids, branchId } = context;

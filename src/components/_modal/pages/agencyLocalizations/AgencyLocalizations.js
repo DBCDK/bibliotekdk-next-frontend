@@ -15,9 +15,11 @@ const PAGE_SIZE = 10;
 /**
  * {@link AgencyLocalizations} presents the possible agencies with holdings or conforming to query
  *   (or message when query yields not results). It uses {@link LocalizationsBase} and its compounded components
- * @param {Object} context
- * @param {Object} modal
- * @returns {JSX.Element}
+ *
+ * @param {Object} props
+ * @param {Object.<string, any>} props.context
+ * @param {Object.<string, any>} props.modal
+ * @returns {React.ReactElement | null}
  */
 export default function AgencyLocalizations({ context, modal }) {
   const { pids } = context;

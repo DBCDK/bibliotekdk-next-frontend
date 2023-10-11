@@ -279,7 +279,7 @@ describe("checkUnknownAvailability", () => {
 });
 
 describe("getAvailabilityAccumulated", () => {
-  it("is accumulated available now", () => {
+  it("availabilityAccumulated is 'now'", () => {
     const availability = {
       [AvailabilityEnum.NOW]: 1,
       [AvailabilityEnum.LATER]: 1,
@@ -290,7 +290,7 @@ describe("getAvailabilityAccumulated", () => {
     const expected = AvailabilityEnum.NOW;
     expect(actual).toEqual(expected);
   });
-  it("is accumulated available later", () => {
+  it("availabilityAccumulated is 'later'", () => {
     const availability = {
       [AvailabilityEnum.NOW]: 0,
       [AvailabilityEnum.LATER]: 1,
@@ -301,7 +301,7 @@ describe("getAvailabilityAccumulated", () => {
     const expected = AvailabilityEnum.LATER;
     expect(actual).toEqual(expected);
   });
-  it("is accumulated available never", () => {
+  it("availabilityAccumulated is 'never'", () => {
     const availability = {
       [AvailabilityEnum.NOW]: 0,
       [AvailabilityEnum.LATER]: 0,
@@ -312,7 +312,7 @@ describe("getAvailabilityAccumulated", () => {
     const expected = AvailabilityEnum.NEVER;
     expect(actual).toEqual(expected);
   });
-  it("is accumulated available unknown", () => {
+  it("availabilityAccumulated is 'unknown'", () => {
     const availability = {
       [AvailabilityEnum.NOW]: 0,
       [AvailabilityEnum.LATER]: 0,
@@ -323,7 +323,7 @@ describe("getAvailabilityAccumulated", () => {
     const expected = AvailabilityEnum.UNKNOWN;
     expect(actual).toEqual(expected);
   });
-  it("is accumulated available not owned", () => {
+  it("availabilityAccumulated is 'not owned'", () => {
     const availability = {
       [AvailabilityEnum.NOW]: 0,
       [AvailabilityEnum.LATER]: 0,
