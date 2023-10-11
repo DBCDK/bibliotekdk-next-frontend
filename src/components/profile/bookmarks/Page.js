@@ -54,6 +54,7 @@ const BookmarkPage = () => {
     currentPage,
     totalPages,
     setCurrentPage,
+    count,
   } = useBookmarks();
   const { data: bookmarks } = usePopulateBookmarks(bookmarksData);
   const [activeStickyButton, setActiveStickyButton] = useState(null);
@@ -168,7 +169,7 @@ const BookmarkPage = () => {
 
       <div className={styles.sortingRow}>
         <Text tag="small" type="text3" className={styles.smallLabel}>
-          {bookmarks?.length}{" "}
+          {count}{" "}
           {Translate({
             context: CONTEXT,
             label: "result-amount",

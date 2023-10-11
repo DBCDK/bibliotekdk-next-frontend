@@ -51,7 +51,7 @@ export function BookMarkMaterialSelector({
   }, [bookmarks]);
 
   const revalidateEditions = () => {
-    if (!editions) {
+    if (!editions || !bookmarks || bookmarks.length === 0) {
       // Not needed to look for aditional dropdown items
       return;
     }
