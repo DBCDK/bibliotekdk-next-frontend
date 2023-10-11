@@ -123,7 +123,9 @@ export default function BranchLocalizations({ context, modal }) {
       })}
     >
       <LocalizationsBase.Information>
-        <Title type={"title6"}>Status</Title>
+        <Title type={"title6"} className={styles.status}>
+          Status
+        </Title>
       </LocalizationsBase.Information>
       <LocalizationsBase.List>
         {branchesKnownStatus?.map((branch, index) => (

@@ -42,6 +42,7 @@ const MaterialCard = forwardRef(
       workId,
       elementContainerClassName,
       relatedElementClassName,
+      textClassName,
       coverImageClassName,
     } = renderProps;
 
@@ -67,7 +68,7 @@ const MaterialCard = forwardRef(
               title={fullTitle}
               alt={Translate({ context: "general", label: "frontpage" })}
             />
-            <div className={cx(styles.text)}>{children}</div>
+            <div className={cx(textClassName)}>{children}</div>
           </div>
         </Link>
       </Col>
