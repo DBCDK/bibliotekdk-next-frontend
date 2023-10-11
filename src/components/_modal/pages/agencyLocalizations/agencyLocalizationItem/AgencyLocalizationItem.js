@@ -177,7 +177,9 @@ export default function AgencyLocalizationItem({
       availabilityAccumulated={agency?.availabilityOnAgencyAccumulated}
     >
       {agencyHighlight ? (
-        <Text type={"text2"}>{highlightMarkedWords(agencyHighlight)}</Text>
+        <Text type={"text2"}>
+          {highlightMarkedWords(agencyHighlight, "text2", "text1")}
+        </Text>
       ) : (
         <Text type="text2">{agency?.agencyName}</Text>
       )}
