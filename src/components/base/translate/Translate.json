@@ -362,6 +362,10 @@
       "back-to": {
         "da": "Tilbage til",
         "en": "Back to"
+      },
+      "notNow": {
+        "da": "Ikke nu",
+        "en": "Not now"
       }
     },
     "articles": {
@@ -2523,12 +2527,28 @@
         "da": "For at tilføje biblioteket skal du logge ind. Du skal bruge dine låneroplysninger, som når du ellers låner materialer.", 
         "en": "LABEL: Mangler oversættelse!"
       },
-      "verifyTitle": {
+      "hasVerificationTitle": {
         "da": "Verificer bibliotek med MitID",
         "en": "LABEL: Mangler oversættelse!"
       },
-      "verifyText": {
+      "hasVerificationText": {
         "da": "For at undgå misbrug af adgangsmuligheder givet via uddannelsesbiblioteker skal du verificere dig selv med MitID.",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "verificationTitle": {
+        "da": "Vil du tilknytte %s til en bibliotek.dk profil?",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "verificationText": {
+        "da": "Ønsker du ikke at tilknytte [biblioteksnavn] vil du være logget ind uden at have en profil, så dine låneroplysninger er gemt til bestillinger.",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "benefitsText": {
+        "da": "Med en profil kan du: <br/> <ul><li>se dine lån og reserveringer på tværs af biblioteker</li><li>få gemt dine biblioteksinfo til nemmere bestilling</li><li>se en oversigt over dine biblioteker og afhentningssteder</li></ul> Det kræver kun at du logger ind med dit MitID første gang, så vi kan kende dig på tværs af biblioteker. <br/><br/> Du kan senere fjerne [biblioteksnavn] fra din profil under “Mine Biblioteker”, hvis du ønske dette.",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "verificationButton": {
+        "da": "Verificer med MitID",
         "en": "LABEL: Mangler oversættelse!"
       }
     },

@@ -1,44 +1,46 @@
-.login {
+.verify {
   max-width: 600px;
   padding: 0 var(--pt2);
   height: 100%;
 }
 
-.login button {
-  margin-top: var(--pt5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.login img {
+.verify img {
   margin-left: var(--pt1);
 }
-.login p {
+
+.verify p {
   margin-top: var(--pt3);
 }
 
-.inline {
+.text,
+.benefits {
   display: inline-block;
   margin-right: var(--pt2);
   margin-top: var(--pt2);
 }
 
-.mitIDButton {
-  width: 100%;
-  padding-top: var(--pt2);
-  padding-bottom: var(--pt2);
-  margin-top: var(--pt05);
-  margin-bottom: var(--pt7);
+.verify ul {
+  margin: var(--pt2) 0;
+  padding-left: var(--pt4);
 }
 
-.mitIDIcon {
-  height: fit-content;
-  max-height: fit-content;
+.verify ul li {
+  padding-left: var(--pt05);
+}
+
+.mitIDButton,
+.closeButton {
+  width: 100%;
+  margin-top: var(--pt5);
+  display: block;
+}
+
+.closeButton {
+  margin-top: var(--pt2);
 }
 
 @media (min-width: 576px) {
-  .login {
+  .verify {
     padding: var(--pt2) var(--pt6) var(--pt4) var(--pt6);
   }
 }

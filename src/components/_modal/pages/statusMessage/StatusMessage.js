@@ -4,9 +4,9 @@ import Text from "@/components/base/text";
 import Button from "@/components/base/button";
 import Translate from "@/components/base/translate";
 
-import styles from "./ErrorMessage.module.css";
+import styles from "./StatusMessage.module.css";
 
-export default function ErrorMessage({ context, modal }) {
+export default function StatusMessage({ context, modal }) {
   // handles if modal should have "back" functionality
   const hasBack = !!(modal.index?.() > 0);
 

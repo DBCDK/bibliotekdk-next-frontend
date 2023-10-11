@@ -160,7 +160,7 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
               <Modal.Page id="deleteOrder" component={Pages.DeleteOrder} />
               <Modal.Page id="addLibrary" component={Pages.AddLibrary} />
               <Modal.Page id="verify" component={Pages.Verify} />
-              <Modal.Page id="errorMessage" component={Pages.ErrorMessage} />
+              <Modal.Page id="statusMessage" component={Pages.StatusMessage} />
 
               <Modal.Page
                 id="orderHistoryDataConsent"
