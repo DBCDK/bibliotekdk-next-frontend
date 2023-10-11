@@ -14,7 +14,7 @@ import styles from "./Search.module.css";
  *
  * Get you value like <Search onChange={(value) => console.log(value)} ... />
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function Search(props) {
   const { className, onChange, onBlur, value = "", onMount } = props;

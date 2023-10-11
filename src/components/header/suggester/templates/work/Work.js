@@ -15,7 +15,7 @@ import styles from "./Work.module.css";
  * @param {Object} data
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function Work({ className = "", data = {}, skeleton = false }) {
   return (
@@ -60,7 +60,7 @@ export function Work({ className = "", data = {}, skeleton = false }) {
  * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function WorkSkeleton(props) {
   return <Work {...props} skeleton={true} />;
@@ -72,7 +72,7 @@ export function WorkSkeleton(props) {
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
   if (props.skeleton) {

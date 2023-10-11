@@ -8,7 +8,7 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
 /**
  * Tablerow to be used in LibrariesTable component.
  * @param {Object} props
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
   const breakpoint = useBreakpoint();
@@ -98,7 +98,7 @@ function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
 /**
  * Returns a table of users libraries
  * @param {Object} props
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function LibrariesTable({ data, municipalityAgencyId }) {
   const breakpoint = useBreakpoint();

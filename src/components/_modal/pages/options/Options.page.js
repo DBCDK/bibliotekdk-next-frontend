@@ -16,7 +16,7 @@ import { accessFactory } from "@/lib/accessFactoryUtils";
  * Component helper for link and description in options
  * @param props
  * @param templateProps
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function OptionsLinkAndDescription({ props, templateProps }) {
   const { className } = props;
@@ -42,7 +42,7 @@ export function OptionsLinkAndDescription({ props, templateProps }) {
  * @param access
  * @param index
  * @param accessesArray
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function optionsListAllArgs(modal, workId, access, index, accessesArray) {
   const props = {

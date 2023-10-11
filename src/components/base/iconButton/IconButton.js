@@ -17,7 +17,7 @@ import cx from "classnames";
  * @param {string} props.textType
  * @param {boolean} props.keepUnderline
  * @param {string} props.dataCy
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function IconButton({
   className,

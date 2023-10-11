@@ -13,7 +13,7 @@ import styles from "./Checkbox.module.css";
  *
  * Get you value like <Input onChange={(value) => console.log(value)} ... />
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function Checkbox({
   className,

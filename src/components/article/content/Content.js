@@ -106,7 +106,7 @@ function ArticleHeader({ article, skeleton }) {
  * @param {Object} props.width
  * @param {Object} props.height
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function getOrientation({ width, height }) {
   if (height > width) {
@@ -140,7 +140,7 @@ function calcReadTime(htmlString) {
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function Content({
   className = "",
@@ -314,7 +314,7 @@ export function Content({
  * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function ContentSkeleton(props) {
   const mock = {
@@ -341,7 +341,7 @@ export function ContentSkeleton(props) {
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
   const langcode = { language: getLanguage() };

@@ -24,7 +24,7 @@ import { getArticleUrl } from "@/lib/utils";
 /**
  * The custom Header for help page
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function Header({
   expanded = true,
@@ -117,7 +117,7 @@ Header.propTypes = {
  *
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap() {
   const router = useRouter();

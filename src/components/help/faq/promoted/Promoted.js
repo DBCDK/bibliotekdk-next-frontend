@@ -26,7 +26,7 @@ import styles from "./Promoted.module.css";
  * @param {boolean} props.isLoading
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function Promoted({ className = "", data = [], isLoading }) {
   const sortedData = useMemo(() => sortData(data), [data]);
@@ -69,7 +69,7 @@ Promoted.propTypes = {
  * @param {Object} props.data
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
   const langcode = getLanguage();

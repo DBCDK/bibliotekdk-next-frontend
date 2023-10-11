@@ -18,7 +18,7 @@ import { MATERIAL_PAGES } from "@/components/header";
 
 /**
  * The logo @see icons/logowhite.svg
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 const FooterLogo = () => {
   return <Logo type="WHITE" />;
@@ -27,7 +27,7 @@ const FooterLogo = () => {
 /**
  * First column holds a description of bibliotek.dk and a link to administer
  * cookie settings
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 const FirstColumn = () => {
   let label = Translate({ context: "footer", label: "hvad_er_bibliotek_dk" });
@@ -55,7 +55,7 @@ const FirstColumn = () => {
 
 /**
  * Second column holds link to contact, help, press etc.
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 const SecondColumn = () => {
   let label = Translate({ context: "footer", label: "contact" });
@@ -144,7 +144,7 @@ const ContactLinks = () => {
 /**
  * Third column holds links to different material types
  * (don't know why it is called branches - see design)
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 const ThirdColumn = () => {
   let label = Translate({ context: "footer", label: "branches" });
@@ -163,7 +163,7 @@ const ThirdColumn = () => {
  * Generate links for materialtypes
  * Object holding info to generate links to materialtypes
  * NOTICE Keys are translated
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 const BranchLinks = () => {
   return MATERIAL_PAGES.map(({ path, label }) => (
@@ -187,7 +187,7 @@ const BranchLinks = () => {
 
 /**
  * Defines the footer section - one row with four columns
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 const FooterSection = () => {
   return (

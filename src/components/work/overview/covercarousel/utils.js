@@ -50,7 +50,7 @@ export function getTextDescription(materialType, manifestation) {
  *  In a deterministic manner. Used in {@link getIndicesForCoverCarousel}
  * @param arr
  * @param len
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function getEvenlySpacedOutIndices(arr, len) {
   const stepSize = ceil(arr.length / len);

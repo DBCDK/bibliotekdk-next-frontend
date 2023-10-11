@@ -8,7 +8,7 @@ import Router from "next/router";
  * @param {Object} props
  * @param {Object} props.children button to change language
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 
 export default function Language({ children }) {

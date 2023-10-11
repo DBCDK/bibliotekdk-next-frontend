@@ -164,7 +164,7 @@ function getCreatorsAndContributors(manifestation) {
  * Get óne work with the relation of type adaption - we want the DBC work - so we look
  * for pid that starts with 870970
  * @param manifestation
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  *
  * @TODO - this one is  outcommented while we wait for data to be fixed
  */
@@ -383,7 +383,7 @@ function RenderGameLanguages({ values }) {
  * We want a special display for movies - like subtitles and synchronization.
  * @param values
  * @param skeleton
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function RenderMovieLanguages({ values }) {
   // get the first 2 languages of the subtitle
@@ -429,7 +429,7 @@ function RenderMovieLanguages({ values }) {
  * Link to the genre of the movie.
  * @param values
  * @param skeleton
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 
 function RenderGenre({ values }) {
@@ -495,7 +495,7 @@ function RenderMovieAudience({ values }) {
  * lex and lit for literature (difficulty level)
  *
  * @param values
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function RenderLitteratureAudience({ values }) {
   const general = values.generalAudience
@@ -897,7 +897,7 @@ export function fieldsForRows(manifestation, work, context) {
  * New keys are appended to base array.
  * @param baseArray
  * @param extendingArray
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function filterAndMerge({ baseArray, extendingArray }) {
   // find index in basearray of key in extending array

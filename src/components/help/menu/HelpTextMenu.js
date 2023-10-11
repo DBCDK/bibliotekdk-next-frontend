@@ -18,7 +18,7 @@ import Translate from "@/components/base/translate";
 /**
  * Other menu links
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function MenuLink({ label, href = "#!", active = false }) {
   const type = active ? "text1" : "text2";
@@ -45,7 +45,7 @@ function MenuLink({ label, href = "#!", active = false }) {
  * @param groups
  * @param helpTextId
  * @param className
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function HelpTextGroups({ menus, groups, helpTextId, className }) {
   const [expandedGroup, setExpandedGroup] = useState();
@@ -114,7 +114,7 @@ function HelpTextGroups({ menus, groups, helpTextId, className }) {
  * @param helpTexts
  * @param helpTextId
  * @param props
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function HelpTextMenu({ helpTexts, helpTextId, ...props }) {
   const menus = helpTextParseMenu(helpTexts);
@@ -143,7 +143,7 @@ export function HelpTextMenu({ helpTexts, helpTextId, ...props }) {
  * @param menuItems
  * @param group
  * @param helpTextId
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
   return menuItems[group.name].map((item, index) => {

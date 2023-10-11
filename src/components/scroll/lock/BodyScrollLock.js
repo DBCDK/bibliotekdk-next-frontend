@@ -59,7 +59,7 @@ function scrollLock(shouldLockScroll) {
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function BodyScrollLock({ router }) {
   // Query param targets to track

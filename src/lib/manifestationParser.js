@@ -298,7 +298,7 @@ const fields = () => [
 /**
  * Render full and parallel titles as one block to show.
  * @param value
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function renderFullAndParallelTitles(value) {
   return (

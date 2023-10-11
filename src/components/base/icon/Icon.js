@@ -23,7 +23,7 @@ import styles from "./Icon.module.css";
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function Icon({
   alt = "",
@@ -94,7 +94,7 @@ function Icon({
  * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function IconSkeleton(props) {
   return (
@@ -116,7 +116,7 @@ function IconSkeleton(props) {
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function Container(props) {
   if (props.skeleton) {

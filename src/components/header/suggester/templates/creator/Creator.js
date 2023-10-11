@@ -12,7 +12,7 @@ import styles from "./Creator.module.css";
  * @param {Object} data
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function Creator({ className = "", data = {}, skeleton = false }) {
   return (
@@ -60,7 +60,7 @@ export function Creator({ className = "", data = {}, skeleton = false }) {
  * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function CreatorSkeleton(props) {
   return <Creator {...props} skeleton={true} />;
@@ -72,7 +72,7 @@ export function CreatorSkeleton(props) {
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
   if (props.skeleton) {

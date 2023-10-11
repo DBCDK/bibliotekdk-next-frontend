@@ -16,7 +16,7 @@ import cx from "classnames";
  * for desktop, its shown in login modal
  * for mobile, its hidden in login modal and shown in a separate modal after clicking on a @MobileLoginButton
  * @param {Object} props
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function LibrarySearch(props) {
   const { onChange, desktop } = props;

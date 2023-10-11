@@ -23,7 +23,7 @@ function Separator() {
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function Breadcrumb({
   children = "Crumb",
@@ -63,7 +63,7 @@ function Breadcrumb({
  * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function BreadcrumbSkeleton(props) {
   // className={`${props.className} ${styles.skeleton}`}
@@ -91,7 +91,7 @@ function BreadcrumbSkeleton(props) {
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function Container(props) {
   let { path, crumbs = 5, skeleton, seperatorTail = false } = props;

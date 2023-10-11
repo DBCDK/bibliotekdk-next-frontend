@@ -5,7 +5,7 @@ import { getServerSession } from "@dbcdk/login-nextjs/server";
 /**
  * Parse response
  * @param ref
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function parseRefWorks(ref) {
   return ref.data.refWorks;

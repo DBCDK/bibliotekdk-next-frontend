@@ -27,7 +27,7 @@ import { useData } from "@/lib/api/api";
  *  Order component function
  *
  * @param {Object} props
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function Order({
   pid,
@@ -257,7 +257,7 @@ export function OrderSkeleton(props) {
  * @param {Object} props Component props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
   // context

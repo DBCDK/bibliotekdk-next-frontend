@@ -14,7 +14,7 @@ import styles from "./Rating.module.css";
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function Rating({
   className = "",
@@ -63,7 +63,7 @@ export function Rating({
  * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function RatingSkeleton(props) {
   return (
@@ -83,7 +83,7 @@ export function RatingSkeleton(props) {
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
   if (props.skeleton) {

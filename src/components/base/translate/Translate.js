@@ -260,7 +260,7 @@ function DoTranslate({
  * TWO backslashes since drupal escapes by default.
  * @param text
  * @param renderAsHtml
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function NewlineInText(text, renderAsHtml) {
   if (!renderAsHtml && text.indexOf("\\n") > 0) {

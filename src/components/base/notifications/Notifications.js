@@ -86,7 +86,7 @@ function notificationsFilter(data) {
 
 /**
  * wrapper to export
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap() {
   const langcode = { language: getLanguage() };

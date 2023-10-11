@@ -26,7 +26,7 @@ import InfoDropdown from "@/components/base/infoDropdown/InfoDropdown";
  * @param {string} description
  * @param {string} buttonText
  * @param {function} signIn
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function LoginPrompt({
   title,

@@ -10,7 +10,7 @@ import styles from "./Email.module.css";
  *
  * Get you value like <Email onChange={(value, valid) => console.log(value, valid)} ... />
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function Email(props) {
   const {

@@ -14,7 +14,7 @@ import cx from "classnames";
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function Text({
   children = "lorem ipsum dolor sit amet ...",
@@ -91,7 +91,7 @@ function Text({
  * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function TextSkeleton(props) {
   if (!props.lines) {
@@ -125,7 +125,7 @@ export function TextSkeleton(props) {
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function Container(props) {
   if (props.skeleton) {

@@ -22,7 +22,7 @@ import { getFirstMatch } from "@/lib/utils";
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function Content({
   className = "",
@@ -93,7 +93,7 @@ export function Content({
  * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function ContentSkeleton(props) {
   return (
@@ -112,7 +112,7 @@ export function ContentSkeleton(props) {
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
   const { workId, type } = props;

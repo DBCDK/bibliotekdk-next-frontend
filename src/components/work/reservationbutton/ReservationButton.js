@@ -118,7 +118,7 @@ export default ReservationButtonWrapper;
  * @param {string} buttonType
  * @param {string} size
  * @param {[string]} pids
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export const ReservationButton = ({
   access, //TODO same as allEnrichedAccesses?

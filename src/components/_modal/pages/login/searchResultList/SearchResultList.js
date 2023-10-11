@@ -10,7 +10,7 @@ import Select from "../Select";
 /**
  * Shows a list of branches from the search result
  * @param {Object} props
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function SearchResultList(props) {
   const { allBranches, isLoading, onSelect, isVisible, includeArrows } = props;

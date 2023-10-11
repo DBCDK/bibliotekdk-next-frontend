@@ -14,7 +14,7 @@ export default exportedObject;
 
 /**
  * a single helptext
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function OneHelpText() {
   return (

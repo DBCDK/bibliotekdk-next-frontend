@@ -19,7 +19,7 @@ import * as PropTypes from "prop-types";
  * In the cases where references are written '\reference\' we write replace \ with "
  * to indicate a named reference.
  * @param single
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function substituteContentSubstitute(single) {
   const replacers = single.manifestations?.map((manifestation) => {
@@ -52,7 +52,7 @@ function substituteContentSubstitute(single) {
  * ReviewContent handles the actual content within the {@link reviewByLibrarians}.
  * This includes ABSTRACT, DESCRIPTION, SIMILAR_MATERIALS, etc.
  * @param lectorReviews
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function ReviewContent({ lectorReviews }) {
   return (

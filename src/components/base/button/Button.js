@@ -17,7 +17,7 @@ function handleOnButtonClick() {
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function Button({
   children = "im a button",
@@ -66,7 +66,7 @@ function Button({
  * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function ButtonSkeleton(props) {
   return (
@@ -88,7 +88,7 @@ function ButtonSkeleton(props) {
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function Container(props) {
   if (props.skeleton) {

@@ -16,7 +16,7 @@ import styles from "./Label.module.css";
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function Label({
   children = "Some label",
@@ -47,7 +47,7 @@ function Label({
  * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function LabelSkeleton(props) {
   return (
@@ -65,7 +65,7 @@ function LabelSkeleton(props) {
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
   if (props.skeleton) {

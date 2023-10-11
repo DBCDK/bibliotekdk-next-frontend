@@ -13,7 +13,7 @@ import React from "react";
 /**
  * The Articles page React component
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  *
  */
 

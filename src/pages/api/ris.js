@@ -5,7 +5,7 @@ import { getAccessToken } from "./refworks";
 /**
  * Parse response
  * @param response
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function parseRis(response) {
   return response.data.ris;

@@ -69,7 +69,7 @@ function parseForOccasion(manifestations) {
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function Description({ className = "", data = "", skeleton = false }) {
   const abstract = data?.abstract?.map((abs, index) => (
@@ -139,7 +139,7 @@ export function Description({ className = "", data = "", skeleton = false }) {
  * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function DescriptionSkeleton(props) {
   return (
@@ -158,7 +158,7 @@ export function DescriptionSkeleton(props) {
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
   const { workId } = props;

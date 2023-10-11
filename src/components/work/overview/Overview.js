@@ -54,7 +54,7 @@ function useInitMaterialType(
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function Overview({
   work,
@@ -240,7 +240,7 @@ export function OverviewError() {
  * @param login
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap({ workId, type, onTypeChange, login }) {
   const user = useUser();

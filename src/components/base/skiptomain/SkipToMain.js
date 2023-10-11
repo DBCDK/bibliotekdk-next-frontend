@@ -5,7 +5,7 @@ import Text from "@/components/base/text";
 
 /**
  * Set anchor hash in url
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function SkipToMainLink() {
   return (
@@ -33,7 +33,7 @@ export function SkipToMainLink() {
 
 /**
  * Insert an anchor in page
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function SkipToMainAnchor() {
   return <div id="nav-main"></div>;

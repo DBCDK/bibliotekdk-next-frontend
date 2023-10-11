@@ -29,7 +29,7 @@ import styles from "./Input.module.css";
  *
  * Get you value like <Input onChange={(value) => console.log(value)} ... />
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function Input({
   className,

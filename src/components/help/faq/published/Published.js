@@ -19,7 +19,7 @@ import Skeleton from "@/components/base/skeleton";
  * @param {Object} props.data
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function Published({ className, data }) {
   data = useMemo(() => groupSortData(data), [data]);
@@ -56,7 +56,7 @@ Published.propTypes = {
  * @param {Object} props.data
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
   const langcode = getLanguage();

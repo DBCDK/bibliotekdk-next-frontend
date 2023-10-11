@@ -33,7 +33,7 @@ function DefaultDetailValues({ values }) {
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function Details({ className = "", manifestation = {}, work = {} }) {
   // Translate Context
@@ -111,7 +111,7 @@ function Details({ className = "", manifestation = {}, work = {} }) {
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function DetailsSkeleton() {
   const texts = [1, 2, 3, 4, 5, 6];
@@ -145,7 +145,7 @@ export function DetailsSkeleton() {
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
   const { workId, type } = props;

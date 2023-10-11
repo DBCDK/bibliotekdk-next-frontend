@@ -11,7 +11,7 @@ export default exportedObject;
 
 /**
  * HelpMenu - collapsed if no id is given
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function HelpMenu() {
   return (
@@ -24,7 +24,7 @@ export function HelpMenu() {
 
 /**
  * Help Menus - expanded to given id
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function HelpMenuWithId() {
   return (

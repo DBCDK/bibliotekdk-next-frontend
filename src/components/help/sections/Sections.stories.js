@@ -9,7 +9,7 @@ export default exportedObject;
 
 /**
  * Help Sections
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function Default() {
   const data = [
@@ -54,7 +54,7 @@ export function Default() {
 
 /**
  * Sections loading
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function Loading() {
   return (

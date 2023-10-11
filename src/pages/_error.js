@@ -9,7 +9,7 @@ import Custom500 from "@/pages/500";
 
 /**
  * Handle 500 errorcode - return page not found
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 
 function Error() {

@@ -15,7 +15,7 @@ import { useState } from "react";
 /**
  * Login modal for mobiles with search field and pickup locations selection for mobile phones
  * @param {Object} context
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function MobileLogin({ context }) {
   const { removeModalsFromStore, isVisible, onSelect } = context;

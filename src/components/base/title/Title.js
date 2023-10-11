@@ -9,7 +9,7 @@ import Text, { TextSkeleton, allTextTypes } from "../text/Text";
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function Container({
   children = "I'm a title",

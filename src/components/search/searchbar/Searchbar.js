@@ -17,7 +17,7 @@ import { useRouter } from "next/router";
  *
  * @param {string} q
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function Searchbar({ q }) {
   // modal

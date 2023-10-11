@@ -80,7 +80,7 @@ export function flattenMaterialType(manifestation) {
 /**
  * All materialTypeArrays for all given manifestations
  * @param manifestations
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function flatMapMaterialTypes(manifestations) {
   return manifestations?.map(flattenMaterialType);
@@ -130,7 +130,7 @@ export function groupManifestations(
  * {@link getOrderedFlatMaterialTypes}. Also uses workType to prefer the order
  * @param materialTypesOrder
  * @param jsonedMaterialTypeArray
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function getElementByCustomSorting(
   materialTypesOrder,

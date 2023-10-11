@@ -52,7 +52,7 @@ ResultPage.propTypes = {
  * @param {Object} props Component props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap({ page, onWorkClick }) {
   // settings

@@ -69,7 +69,7 @@ export function sortByDate(a, b) {
  * Used by {@link enrichArticleSeries} and {@link enrichDebateArticle} because the same logic is used
  * @param parentWork
  * @param articleRelevant
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function enrichAnyArticleTypeSeries(parentWork, articleRelevant) {
   const parentRelationInput = getParentRelationInput(parentWork);
@@ -148,7 +148,7 @@ export function enrichLiterature(manifestations) {
 /**
  * Returns a relationTypeEnum based on relationType of manifestation
  * @param manifestation
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function mapRelationWorkTypes(manifestation) {
   return RelationTypeEnum[manifestation?.relationType?.toUpperCase()]?.workType;
@@ -159,7 +159,7 @@ export function mapRelationWorkTypes(manifestation) {
  *  enriched with relationType and linkToWork
  * @param manifestations
  * @param work
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function enrichBySpecificWorkType(manifestations, work) {
   const relationWorkTypes = uniq(manifestations.map(mapRelationWorkTypes));
@@ -191,7 +191,7 @@ export function enrichBySpecificWorkType(manifestations, work) {
  * Removes the ownerWork and relations of an object
  *  Used in {@link parseRelations}
  * @param entry
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function filterFieldsInElement(entry) {
   delete entry.ownerWork;
@@ -207,7 +207,7 @@ export function filterFieldsInElement(entry) {
  * @param manifestation
  * @param relationType
  * @param generation
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function parseSingleRelation(manifestation, relationType, generation) {
   const workTitles = manifestation?.ownerWork?.titles;
@@ -307,7 +307,7 @@ function getAllWorksWithRelationTypeAndWorkId(relations) {
  * Filter unique relations by workId and relationType
  *  TODO: Figure out if this is the business logic we need?!
  * @param manifestations
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function getUniqWorkWithWorkId(manifestations) {
   return uniqWith(
@@ -328,7 +328,7 @@ export function getUniqWorkWithWorkId(manifestations) {
  *  - {@link flattenGroupedSortedManifestations (from manifestationFactoryUtils}}
  *  - {@link filterFieldsInElement}
  * @param work
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function parseRelations(work) {
   return chainFunctions([

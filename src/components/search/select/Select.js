@@ -68,7 +68,7 @@ export function Desktop({ options = [], onSelect, selected, className }) {
  * @param selected
  * @param count
  * @param className
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function Mobile({ options = [], onSelect, selected, className }) {
   const breakpoint = useBreakpoint();
@@ -102,7 +102,7 @@ export function Mobile({ options = [], onSelect, selected, className }) {
  * Show a 'select' list of available material filters.
  *
  * @param children
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function Wrap({ children }) {
   const { getQuery, workTypes, getCount } = useFilters();

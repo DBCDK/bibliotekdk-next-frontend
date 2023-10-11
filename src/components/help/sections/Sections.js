@@ -28,7 +28,7 @@ import { getLanguage } from "@/components/base/translate/Translate";
  * @param {Object} props.skeleton
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function Sections({ className, data, skeleton }) {
   // Parse helptexts
@@ -108,7 +108,7 @@ Sections.propTypes = {
  * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function SectionsSkeleton(props) {
   const data = [
@@ -150,7 +150,7 @@ export function SectionsSkeleton(props) {
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
   // real data goes here ...

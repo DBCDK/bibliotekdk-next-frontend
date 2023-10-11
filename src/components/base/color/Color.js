@@ -26,7 +26,7 @@ function copyToClipboard(text) {
  * @param {string} hex
  * @param {string} name
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function Color({ hex = "#3333ff", name = "blue" }) {
   return (

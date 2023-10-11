@@ -196,14 +196,15 @@ export function UserParamsForm({
 
 /**
  *  Shows login formular for FFU libraries without adgangsplatform login.
- * @param {Object} branch
- * @param {function} onSubmit
- * @param {Object} skeleton
- * @param {Object} initial
- * @param {Object} context
- * @param {boolean} storeLoanerInfo
- * @param {function} setStoreLoanerInfo
- * @returns JSX element
+ * @param {Object} props
+ * @param {Object} props.branch
+ * @param {function} props.onSubmit
+ * @param {Object} props.skeleton
+ * @param {Object} props.initial
+ * @param {Object} props.context
+ * @param {boolean} props.storeLoanerInfo
+ * @param {function} props.setStoreLoanerInfo
+ * @returns {React.JSX.Element}
  */
 export function LoanerForm({
   branch,
@@ -282,7 +283,7 @@ LoanerForm.propTypes = {
  * If the loaner formular is submitted, other components may retrieve the data
  * with the userLoanerInfo hook.
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
   const modal = useModal();

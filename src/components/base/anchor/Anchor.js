@@ -27,7 +27,7 @@ import cx from "classnames";
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 
 function Menu({
@@ -204,7 +204,7 @@ Menu.propTypes = {
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 
 function Element({ id, children, sectionRef, onChange }) {
@@ -258,7 +258,7 @@ export function getIndexForAnchor(anchorLabel, anchorChildren = theChildren) {
  * @param {Object} props.children
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function Wrap({ children }) {
   // Object to collect all section refs by id

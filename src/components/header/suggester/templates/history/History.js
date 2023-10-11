@@ -18,7 +18,7 @@ import styles from "./History.module.css";
  * @param {Object} data
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function History({ className = "", data = {}, skeleton = false }) {
   const context = { context: "suggester" };
@@ -65,7 +65,7 @@ export function History({ className = "", data = {}, skeleton = false }) {
  * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function HistorySkeleton(props) {
   return <History {...props} skeleton={true} />;
@@ -77,7 +77,7 @@ export function HistorySkeleton(props) {
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
   if (props.skeleton) {

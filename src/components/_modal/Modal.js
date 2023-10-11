@@ -392,7 +392,7 @@ function Container({ children, className = {}, mock = {} }) {
  * @param {string} props.className
  * @param {string} props.dataCy
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  *
  */
 

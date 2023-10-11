@@ -131,7 +131,7 @@ let inferredLinkDisplay;
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function Link({
   children = "Im a hyperlink now!",
@@ -246,7 +246,7 @@ function Link({
  * @param {UnderlineType} forceUnderlineType
  * @param {boolean} data_underline_animation_disabled
  * @param props
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap({
   className = "",
@@ -379,7 +379,7 @@ export function LinkOnlyInternalAnimations({
  * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function LinkSkeleton(props) {
   return (

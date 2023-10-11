@@ -16,7 +16,7 @@ import useQ from "@/components/hooks/useQ";
  * @param {Object} props
  * @param {string} props.className
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function FakeSearchInput({ className, showButton = true }) {
   const router = useRouter();

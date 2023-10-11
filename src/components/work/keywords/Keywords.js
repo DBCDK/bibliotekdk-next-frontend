@@ -120,7 +120,7 @@ function groupSubjects(subjects) {
 /**
  * Used in manifestationParser to get a list of links to subjects.
  * @param {Array} subjects
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function FlatSubjectsForFullManifestation({ subjects }) {
   // const grouped = groupSubjects(subjects?.dbcVerified);
@@ -154,7 +154,7 @@ export function FlatSubjectsForFullManifestation({ subjects }) {
  * @param grouped
  * @param skeleton
  * @param sizeClass
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function KeyWordList({ className, grouped, skeleton, sizeClass }) {
   return (
@@ -199,7 +199,7 @@ function KeyWordList({ className, grouped, skeleton, sizeClass }) {
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function Keywords({ className = "", data = [], skeleton = false }) {
   const uniqueSubjects = uniqueSubjectEntries(data);
@@ -236,7 +236,7 @@ export function Keywords({ className = "", data = [], skeleton = false }) {
  * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function KeywordsSkeleton(props) {
   const data = [
@@ -266,7 +266,7 @@ export function KeywordsSkeleton(props) {
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
   const { workId } = props;

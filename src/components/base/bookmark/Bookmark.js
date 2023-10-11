@@ -19,7 +19,7 @@ function handleOnBookmarkClick() {
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function Bookmark({
   size = { w: 5, h: 5 },
@@ -64,7 +64,7 @@ function Bookmark({
  * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 function BookmarkSkeleton(props) {
   return (
@@ -85,7 +85,7 @@ function BookmarkSkeleton(props) {
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function Container(props) {
   if (props.skeleton) {

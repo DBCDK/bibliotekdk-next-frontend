@@ -13,7 +13,7 @@ import styles from "./burger.module.css";
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export default function BurgerIcon(props) {
   const { className } = props;

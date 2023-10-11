@@ -41,7 +41,7 @@ function CopyButton({ el, txt = "Copy" }) {
  * @param {Object} children
  * @param {boolean} copy // adds a copy button
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function StoryTitle({ children, copy = false }) {
   const el = "<StoryTitle>Im a storybook title</StoryTitle>";
@@ -62,7 +62,7 @@ export function StoryTitle({ children, copy = false }) {
  * @param {Object} children
  * @param {boolean} copy // adds a copy button
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function StoryDescription({ children, copy }) {
   const el =
@@ -86,7 +86,7 @@ export function StoryDescription({ children, copy }) {
  * @param {boolean} demo // makes spaces visible
  * @param {boolean} copy // adds a copy button
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function StorySpace({
   space = "2",
@@ -133,7 +133,7 @@ export function StorySpace({
  * @param {Object} children
  * @param {boolean} copy // adds a copy button
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function StoryLabel({ children, copy }) {
   const el = "<StoryLabel>Im a label</StoryLabel>";
@@ -154,7 +154,7 @@ export function StoryLabel({ children, copy }) {
  * @param {Object} children
  * @param {boolean} copy // adds a copy button
  *
- * @returns {React.ReactElement | null}
+ * @returns {React.JSX.Element}
  */
 export function StoryRouter() {
   const router = useRouter();
