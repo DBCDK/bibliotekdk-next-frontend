@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 const KEY_NAME = "bookmarks";
-const itemsPerPage = 4;
+const itemsPerPage = 20;
 
 export const BookmarkSyncProvider = () => {
   const { syncCookieBookmarks } = useBookmarks();

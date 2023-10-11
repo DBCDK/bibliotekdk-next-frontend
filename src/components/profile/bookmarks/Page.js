@@ -118,6 +118,15 @@ const BookmarkPage = () => {
     const selectedBookmarks = checkboxList.filter((i) => i.isSelected === true);
     deleteBookmarks(selectedBookmarks);
   };
+  /**
+   * scrolls to the top of the page
+   */
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
   const constructEditionText = (bookmark) => {
     if (!bookmark.pid) {
@@ -129,12 +138,12 @@ const BookmarkPage = () => {
      */
     return createEditionText(bookmark);
   };
-
   const onPageChange = async (newPage) => {
     if (newPage > totalPages) {
       newPage = totalPages;
     }
     setCurrentPage(newPage);
+    scrollToTop();
   };
 
   const isAllSelected =
