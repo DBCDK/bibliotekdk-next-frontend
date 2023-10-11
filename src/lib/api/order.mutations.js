@@ -1,7 +1,7 @@
 /**
  * When user searches and then clicks on work
  *
- * @param {object} params
+ * @param {Object} params
  * @param {string} params.workId the work id
  */
 import { ApiEnums } from "@/lib/api/api";
@@ -81,7 +81,7 @@ export function submitPeriodicaArticleOrder({
 /**
  * When user deletes an order/reservation
  *
- * @param {object} params
+ * @param {Object} params
  * @param {string} params.orderId the order id
  * @param {string} params.agencyId the agency idª
  */

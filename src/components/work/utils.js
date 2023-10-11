@@ -64,8 +64,8 @@ export function goToRedirectUrl(url, target = "_blank") {
 
 /**
  * Generates the work page title
- * @param {object} work
- * @return {string}
+ * @param {Object} work
+ * @returns {string}
  */
 function getPageTitle(work) {
   return `${work?.titles?.main[0]}${
@@ -79,7 +79,7 @@ function getPageTitle(work) {
 
 /**
  * Generates the work page description
- * @param {object} work The work
+ * @param {Object} work The work
  * @returns {string}
  */
 function getPageDescription(work) {

@@ -1,7 +1,7 @@
 /**
  * updates the users consent to storing their data in userData api for more than 30 days
  *
- * @param {object} params
+ * @param {Object} params
  * @param {boolean} params.persistUserData
  */
 

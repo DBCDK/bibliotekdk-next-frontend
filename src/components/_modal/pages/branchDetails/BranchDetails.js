@@ -13,7 +13,10 @@ import animations from "css/animations";
 import styles from "./BranchDetails.module.css";
 import cx from "classnames";
 import BranchDetailsStatus from "@/components/_modal/pages/branchDetails/branchDetailsStatus/BranchDetailsStatus";
-import { useSingleBranch } from "@/components/hooks/useHandleAgencyAccessData";
+import {
+  AvailabilityEnum,
+  useSingleBranch,
+} from "@/components/hooks/useHandleAgencyAccessData";
 import isEmpty from "lodash/isEmpty";
 import Button from "@/components/base/button/Button";
 import * as PropTypes from "prop-types";
@@ -21,15 +24,18 @@ import { useGoToOrderWithBranch } from "@/components/hooks/useGoToOrderWithBranc
 
 /**
  * {@link OpeningHours} for {@link BranchDetails}
- * @param {Object} singleBranch
- * @returns {JSX.Element}
+ * @param {Object} props
+ * @param {Object.<string, any>} props.singleBranch
+ * @returns {React.ReactElement | null}
  */
 function OpeningHours({ singleBranch }) {
   return (
     <div className={cx(styles.fit_content, styles.path_blue)}>
       <Text type="text1">Åbningstider</Text>
       {!isEmpty(singleBranch?.openingHours) ? (
-        <Text type="text2">{singleBranch.openingHours}</Text>
+        <Text type="text2" className={styles.break_word}>
+          {singleBranch.openingHours}
+        </Text>
       ) : !isEmpty(singleBranch?.branchWebsiteUrl) ? (
         <IconLink
           iconPlacement="right"
@@ -60,8 +66,9 @@ OpeningHours.propTypes = { singleBranch: PropTypes.any };
 
 /**
  * {@link Address} for {@link BranchDetails}
- * @param {Object} singleBranch
- * @returns {JSX.Element}
+ * @param {Object} props
+ * @param {Object.<string, any>} props.singleBranch
+ * @returns {React.ReactElement | null}
  */
 function Address({ singleBranch }) {
   return (
@@ -105,8 +112,9 @@ Address.propTypes = { singleBranch: PropTypes.any };
 
 /**
  * {@link ContactInformation} for {@link BranchDetails}
- * @param {Object} singleBranch
- * @returns {JSX.Element}
+ * @param {Object} props
+ * @param {Object.<string, any>} props.singleBranch
+ * @returns {React.ReactElement | null}
  */
 function ContactInformation({ singleBranch }) {
   return (
@@ -144,8 +152,9 @@ function ContactInformation({ singleBranch }) {
 /**
  * {@link BranchDetails} shows the details of the Branch, including {@link MaterialCard}, {@link BranchDetailsStatus},
  * {@link OpeningHours}, {@link Address}, and {@link ContactInformation}
- * @param {Object} context
- * @returns {JSX.Element}
+ * @param {Object} props
+ * @param {Object<string, any>} props.context
+ * @returns {React.ReactElement | null}
  */
 export default function BranchDetails({ context }) {
   const { pids: pids, branchId } = context;
@@ -266,29 +275,40 @@ export default function BranchDetails({ context }) {
           </Text>
         </LocalizationsBase.HighlightedArea>
       ) : (
-        <LocalizationsBase.Information
-          className={cx(styles.reservationButton_container)}
-        >
-          {!branchDetailsLoading && !borrowerCheckIsLoading ? (
-            <Button
-              type={"primary"}
-              size={buttonSize}
-              onClick={handleOnSelectEnriched}
-            >
-              {Translate({
-                context: "localizations",
-                label: "order_to_here",
-              })}
-            </Button>
-          ) : (
-            <Button
-              size={buttonSize}
-              skeleton={branchDetailsLoading || borrowerCheckIsLoading}
-            >
-              {"loading"}
-            </Button>
-          )}
-        </LocalizationsBase.Information>
+        <>
+          <LocalizationsBase.Information
+            className={cx(styles.reservationButton_container)}
+          >
+            {!branchDetailsLoading && !borrowerCheckIsLoading ? (
+              <Button
+                type={"primary"}
+                size={buttonSize}
+                onClick={handleOnSelectEnriched}
+              >
+                {Translate({
+                  context: "localizations",
+                  label: "order_to_here",
+                })}
+              </Button>
+            ) : (
+              <Button
+                size={buttonSize}
+                skeleton={branchDetailsLoading || borrowerCheckIsLoading}
+              >
+                {"loading"}
+              </Button>
+            )}
+          </LocalizationsBase.Information>
+          {!branchDetailsLoading &&
+            singleBranch?.availabilityAccumulated !== AvailabilityEnum.NOW && (
+              <LocalizationsBase.Subheader>
+                {Translate({
+                  context: "localizations",
+                  label: "reminder_can_be_ordered_from_anywhere",
+                })}
+              </LocalizationsBase.Subheader>
+            )}
+        </>
       )}
       <LocalizationsBase.Information>
         <Title type={"title6"} className={cx(styles.about_the_branch)}>

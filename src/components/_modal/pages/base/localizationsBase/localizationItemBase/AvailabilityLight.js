@@ -13,7 +13,6 @@ import * as PropTypes from "prop-types";
  */
 export function AvailabilityLight({
   availabilityAccumulated,
-  pickupAllowed,
   style = { paddingTop: "var(--pt05)" },
 }) {
   const iconInstance = getFirstMatch(
@@ -26,16 +25,6 @@ export function AvailabilityLight({
       }),
     },
     [
-      [
-        typeof pickupAllowed !== "undefined" && pickupAllowed === false,
-        {
-          src: "status__not_for_loan.svg",
-          alt: Translate({
-            context: "localizations",
-            label: "no_pickup_on_library_alt",
-          }),
-        },
-      ],
       [
         availabilityAccumulated === AvailabilityEnum.NOW,
         {
@@ -78,6 +67,7 @@ export function AvailabilityLight({
       ],
     ]
   );
+
   return (
     <Icon
       size={{ w: 2, h: 2 }}

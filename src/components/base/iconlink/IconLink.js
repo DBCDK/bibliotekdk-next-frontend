@@ -28,7 +28,7 @@ import {
  * @param iconStyle
  * @param target
  * @param skeleton
- * @return {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export function IconLink({
   children,

@@ -8,12 +8,13 @@ import uniq from "lodash/uniq";
 
 /**
  * @typedef AvailabilityEnum
- * @type {Readonly<{LATER: string, NOW: string, NEVER: string, UNKNOWN: string}>}
+ * @type {Readonly<{LATER: string, NOW: string, NEVER: string, NOT_OWNED: string, UNKNOWN: string}>}
  */
 export const AvailabilityEnum = Object.freeze({
   NOW: "AVAILABLE_NOW",
   LATER: "AVAILABLE_LATER",
   NEVER: "AVAILABLE_NEVER",
+  NOT_OWNED: "AVAILABLE_NOT_OWNED",
   UNKNOWN: "AVAILABILITY_UNKNOWN",
 });
 
@@ -124,6 +125,18 @@ export function checkAvailableNever(item) {
 }
 
 /**
+ *
+ * @param item
+ * @returns {boolean}
+ */
+export function publicLibraryDoesNotOwn(item) {
+  const isDanishPublicLibrary =
+    getLibraryType(item?.agencyId) === LibraryTypeEnum.DANISH_PUBLIC_LIBRARY;
+
+  return isDanishPublicLibrary && item?.noHoldingsFlag === true;
+}
+
+/**
  * {@link dateIsUnknown} takes a date (string formatted YYYY-MM-DD) and returns true if date is unknown
  * @param {DateString} date should be formatted YYYY-MM-DD
  * @returns {boolean}
@@ -191,6 +204,8 @@ export function getAvailabilityAccumulated(availability) {
     ? AvailabilityEnum.LATER
     : availability[AvailabilityEnum.NEVER] > 0
     ? AvailabilityEnum.NEVER
+    : availability[AvailabilityEnum.NOT_OWNED] > 0
+    ? AvailabilityEnum.NOT_OWNED
     : availability[AvailabilityEnum.UNKNOWN] > 0
     ? AvailabilityEnum.UNKNOWN
     : AvailabilityEnum.UNKNOWN;
@@ -206,6 +221,7 @@ function checkAvailabilityOnAgencyLevel(item) {
     [dateIsToday(item?.expectedDelivery), AvailabilityEnum.NOW],
     [dateIsLater(item?.expectedDelivery), AvailabilityEnum.LATER],
     [dateIsNever(item?.expectedDelivery), AvailabilityEnum.NEVER],
+    [publicLibraryDoesNotOwn(item), AvailabilityEnum.NOT_OWNED],
     [dateIsUnknown(item?.expectedDelivery), AvailabilityEnum.UNKNOWN],
   ]);
 }
@@ -220,6 +236,7 @@ function checkAvailabilityOnBranchLevel(item) {
     [checkAvailableNow(item), AvailabilityEnum.NOW],
     [checkAvailableLater(item), AvailabilityEnum.LATER],
     [checkAvailableNever(item), AvailabilityEnum.NEVER],
+    [publicLibraryDoesNotOwn(item), AvailabilityEnum.NOT_OWNED],
     [checkUnknownAvailability(item), AvailabilityEnum.UNKNOWN],
   ]);
 }
@@ -238,6 +255,7 @@ export function getAvailability(
     [AvailabilityEnum.NOW]: 0,
     [AvailabilityEnum.LATER]: 0,
     [AvailabilityEnum.NEVER]: 0,
+    [AvailabilityEnum.NOT_OWNED]: 0,
     [AvailabilityEnum.UNKNOWN]: 0,
   };
 
@@ -298,6 +316,8 @@ export function sortByAvailability(a, b) {
     [b?.availabilityAccumulated === AvailabilityEnum.LATER, 1],
     [a?.availabilityAccumulated === AvailabilityEnum.NEVER, -1],
     [b?.availabilityAccumulated === AvailabilityEnum.NEVER, 1],
+    [a?.availabilityAccumulated === AvailabilityEnum.NOT_OWNED, -1],
+    [b?.availabilityAccumulated === AvailabilityEnum.NOT_OWNED, 1],
   ]);
 }
 
@@ -319,6 +339,7 @@ export function enrichBranches(branch) {
               expectedDelivery: branch?.holdingStatus?.expectedDelivery,
               agencyId: branch?.agencyId,
               pickupAllowed: branch?.pickupAllowed,
+              noHoldingsFlag: true,
             },
           ]
     )
@@ -399,7 +420,9 @@ export function handleAgencyAccessData(agencies) {
             expectedDelivery: e.expectedDelivery,
             pickupAllowed: e.pickupAllowed,
             agencyName: e.agencyName,
+            agencyId: e.agencyId,
             branchName: e.name,
+            noHoldingsFlag: true,
           };
         });
 
@@ -440,9 +463,10 @@ export function handleAgencyAccessData(agencies) {
  * {@link useAgencyIdsConformingToQuery} finds agencyIds that conform to query
  * @param {Array.<string>=} pids
  * @param {string=} q
+ * @param limit
  * @returns {{isLoading: boolean, agencyIds: Array.<Object>}}
  */
-export function useAgencyIdsConformingToQuery({ pids, q }) {
+export function useAgencyIdsConformingToQuery({ pids, q, limit = 50 }) {
   const agencies = useData(
     q &&
       q !== "" &&
@@ -450,6 +474,7 @@ export function useAgencyIdsConformingToQuery({ pids, q }) {
       branchesFragments.branchesByQuery({
         q: q,
         pids: pids,
+        limit: limit,
       })
   );
 
@@ -464,15 +489,17 @@ export function useAgencyIdsConformingToQuery({ pids, q }) {
  * {@link useSingleAgency} finds an agency by its agencyId
  * @param {Array.<string>=} pids
  * @param {string=} agencyId
+ * @param {number} limit
  * @returns {{agenciesIsLoading: boolean, count: number, agenciesFlatSorted: Array.<Object>}}
  */
-export function useSingleAgency({ pids, agencyId }) {
+export function useSingleAgency({ pids, agencyId, limit = 50 }) {
   const agencyNoHighlights = useData(
     agencyId &&
       pids &&
       branchesFragments.branchesActiveInAgency({
         agencyId: agencyId,
         pids: pids,
+        limit: limit,
       })
   );
 
@@ -514,9 +541,10 @@ export function useHighlightsForSingleAgency({ agencyId, query = "" }) {
 
 /**
  * {@link useSingleBranch} finds a branch by its branchId
- * @param {Array.<string>=} pids
- * @param {string=} branchId
- * @returns {{agenciesIsLoading: boolean, count: number, agenciesFlatSorted: Array<Object>}}
+ * @param {Object} props
+ * @param {Array.<string>} props.pids
+ * @param {string} props.branchId
+ * @returns {{agenciesIsLoading: boolean, count: number, agenciesFlatSorted: Array<Object.<string, any>>}}
  */
 export function useSingleBranch({ pids, branchId }) {
   const branch = useData(

@@ -22,7 +22,7 @@ export default exportedObject;
  * @param {number} variables.delay
  * @param {number} variables.slowThreshold
  *
- * @return {Object} a query object
+ * @returns {Object} a query object
  */
 function query({ workId, delay, slowThreshold }) {
   return {

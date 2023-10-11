@@ -25,7 +25,7 @@ import isEmpty from "lodash/isEmpty";
 /**
  * A section displaying three articles
  *
- * @param {array} articles
+ * @param {Array} articles
  * @param {boolean} skeleton
  *
  */

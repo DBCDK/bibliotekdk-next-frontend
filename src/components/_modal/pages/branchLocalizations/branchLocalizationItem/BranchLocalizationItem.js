@@ -13,13 +13,13 @@ const textProps = {
 
 /**
  * {@link BranchLocalizationItem} shows each branch found by {@link BranchLocalizations}
- * @param {Object} context
- * @param {Object} modal
- * @param {string} branchId
- * @param {Array.<string>} pids
- * @param {boolean} primitiveDisplay
- * @returns {JSX.Element}
- * @constructor
+ * @param {Object} props
+ * @param {Object} props.context
+ * @param {Object} props.modal
+ * @param {string} props.branchId
+ * @param {Array.<string>} props.pids
+ * @param {boolean} props.primitiveDisplay
+ * @returns {React.ReactElement | null}
  */
 export default function BranchLocalizationItem({
   context,

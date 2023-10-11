@@ -1,4 +1,5 @@
 import * as orderMutations from "@/lib/api/order.mutations";
+import Text from "@/components/base/text";
 
 // elements we want
 const elements = [
@@ -35,8 +36,8 @@ export function tabVisibility(container, isVisible) {
 /**
  * Function to trap Tab inside modal
  *
- * @param {obj} event current target element (focused element)
- * @param {obj} container container to trap Tab in (modal)
+ * @param {Object} event current target element (focused element)
+ * @param {Object} container container to trap Tab in (modal)
  *
  * https://medium.com/@islam.sayed8/trap-focus-inside-a-modal-aa5230326c1b
  * https://medium.com/@seif_ghezala/how-to-create-an-accessible-react-modal-5b87e6a27503
@@ -117,7 +118,7 @@ export function handleTab(event, container) {
  * Function to get random color by random string
  *
  *  @param {string} id
- *  @param {array} colors
+ *  @param {Array} colors
  */
 export function toColor(
   id,
@@ -138,7 +139,7 @@ export function toColor(
 /**
  * Function to get scrollY (scroll distance from top)
  *
- * @returns {int}
+ * @returns {number}
  */
 function getScrollYPos() {
   // Get scrollY (all browsers)
@@ -149,7 +150,7 @@ function getScrollYPos() {
 /**
  * Function to handle scrollLock on body
  *
- * @param {bool} shouldLockScroll
+ * @param {boolean} shouldLockScroll
  *
  */
 let scrollY = 0;
@@ -212,20 +213,33 @@ export function handleSubmitOrder(
   );
 }
 
-export function highlightMarkedWords(highlight) {
+export function highlightMarkedWords(
+  highlight,
+  regularText = "text3",
+  semiboldText = "text4"
+) {
   const regexed = highlight?.split(/(<mark>(?:.*?)<\/mark>)/g).map((el) => {
     if (el.startsWith("<mark>") && el.endsWith("</mark>")) {
       return (
-        <span key={JSON.stringify(el)} style={{ fontWeight: 700 }}>
+        <Text
+          key={JSON.stringify(el)}
+          tag="span"
+          type={semiboldText}
+          style={{ fontWeight: 700 }}
+        >
           {el.replace("<mark>", "").replace("</mark>", "")}
-        </span>
+        </Text>
       );
     } else {
       return <>{el}</>;
     }
   });
 
-  return <span>{regexed}</span>;
+  return (
+    <Text tag="span" type={regularText}>
+      {regexed}
+    </Text>
+  );
 }
 
 export function escapeColons(phrase) {

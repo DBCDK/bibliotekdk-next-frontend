@@ -12,6 +12,7 @@ import {
   getExpectedDeliveryAccumulatedFromHoldings,
   getHoldingsWithInfoOnPickupAllowed,
   HoldingStatusEnum,
+  publicLibraryDoesNotOwn,
   sortByAvailability,
 } from "@/components/hooks/useHandleAgencyAccessData";
 import { dateObjectToDateOnlyString } from "@/utils/datetimeConverter";
@@ -204,6 +205,44 @@ describe("checkAvailableNever", () => {
     expect(actual).toEqual(expected);
   });
 });
+
+describe("publicLibraryDoesNotOwn", () => {
+  it("publicLibrary with holdings", () => {
+    const item = {
+      agencyId: "789123",
+    };
+    const actual = publicLibraryDoesNotOwn(item);
+    const expected = false;
+    expect(actual).toEqual(expected);
+  });
+  it("publicLibrary without holdings", () => {
+    const item = {
+      agencyId: "789123",
+      noHoldingsFlag: true,
+    };
+    const actual = publicLibraryDoesNotOwn(item);
+    const expected = true;
+    expect(actual).toEqual(expected);
+  });
+  it("non-publicLibrary with holdings", () => {
+    const item = {
+      agencyId: "891234",
+    };
+    const actual = publicLibraryDoesNotOwn(item);
+    const expected = false;
+    expect(actual).toEqual(expected);
+  });
+  it("non-publicLibrary with holdings", () => {
+    const item = {
+      agencyId: "891234",
+      noHoldingsFlag: true,
+    };
+    const actual = publicLibraryDoesNotOwn(item);
+    const expected = false;
+    expect(actual).toEqual(expected);
+  });
+});
+
 describe("checkUnknownAvailability", () => {
   it("expectedDelivery is null, has unknown availability", () => {
     const item = {
@@ -240,7 +279,7 @@ describe("checkUnknownAvailability", () => {
 });
 
 describe("getAvailabilityAccumulated", () => {
-  it("is accumulated available now", () => {
+  it("availabilityAccumulated is 'now'", () => {
     const availability = {
       [AvailabilityEnum.NOW]: 1,
       [AvailabilityEnum.LATER]: 1,
@@ -251,7 +290,7 @@ describe("getAvailabilityAccumulated", () => {
     const expected = AvailabilityEnum.NOW;
     expect(actual).toEqual(expected);
   });
-  it("is accumulated available later", () => {
+  it("availabilityAccumulated is 'later'", () => {
     const availability = {
       [AvailabilityEnum.NOW]: 0,
       [AvailabilityEnum.LATER]: 1,
@@ -262,7 +301,7 @@ describe("getAvailabilityAccumulated", () => {
     const expected = AvailabilityEnum.LATER;
     expect(actual).toEqual(expected);
   });
-  it("is accumulated available never", () => {
+  it("availabilityAccumulated is 'never'", () => {
     const availability = {
       [AvailabilityEnum.NOW]: 0,
       [AvailabilityEnum.LATER]: 0,
@@ -273,7 +312,7 @@ describe("getAvailabilityAccumulated", () => {
     const expected = AvailabilityEnum.NEVER;
     expect(actual).toEqual(expected);
   });
-  it("is accumulated available unknown", () => {
+  it("availabilityAccumulated is 'unknown'", () => {
     const availability = {
       [AvailabilityEnum.NOW]: 0,
       [AvailabilityEnum.LATER]: 0,
@@ -282,6 +321,18 @@ describe("getAvailabilityAccumulated", () => {
     };
     const actual = getAvailabilityAccumulated(availability);
     const expected = AvailabilityEnum.UNKNOWN;
+    expect(actual).toEqual(expected);
+  });
+  it("availabilityAccumulated is 'not owned'", () => {
+    const availability = {
+      [AvailabilityEnum.NOW]: 0,
+      [AvailabilityEnum.LATER]: 0,
+      [AvailabilityEnum.NEVER]: 0,
+      [AvailabilityEnum.NOT_OWNED]: 1,
+      [AvailabilityEnum.UNKNOWN]: 1,
+    };
+    const actual = getAvailabilityAccumulated(availability);
+    const expected = AvailabilityEnum.NOT_OWNED;
     expect(actual).toEqual(expected);
   });
 });
@@ -294,6 +345,7 @@ describe("getAvailability", () => {
       { ...base, expectedDelivery: today },
       { ...base, expectedDelivery: tomorrow },
       { ...base, expectedDelivery: never },
+      { ...base, noHoldingsFlag: true },
       { ...base, expectedDelivery: null },
     ];
     const actual = getAvailability(items);
@@ -301,6 +353,7 @@ describe("getAvailability", () => {
       [AvailabilityEnum.NOW]: 1,
       [AvailabilityEnum.LATER]: 1,
       [AvailabilityEnum.NEVER]: 1,
+      [AvailabilityEnum.NOT_OWNED]: 1,
       [AvailabilityEnum.UNKNOWN]: 1,
     };
     expect(actual).toEqual(expected);

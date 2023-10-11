@@ -12,7 +12,7 @@ import { creatorsFragment } from "@/lib/api/fragments.utils";
  * Hitcount
  *
  * @param {string} q the query
- * @param {object} filters filters for searching
+ * @param {Object} filters filters for searching
  */
 export function hitcount({ q, filters = {} }) {
   return {
@@ -36,7 +36,7 @@ export function hitcount({ q, filters = {} }) {
  * @param {string} q the query
  * @param {number} limit number of results
  * @param {number} offset offset for pagination
- * @param {object} filters filters for searching
+ * @param {Object} filters filters for searching
  */
 export function all({ q, limit = 100, offset = 0, filters = {} }) {
   return {
@@ -54,6 +54,7 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
           workTypes
           manifestations {
             mostRelevant{
+              pid
               ownerWork {
                 workTypes
               }
@@ -63,6 +64,14 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
               }
               materialTypes {
                 specific
+              }
+              hostPublication {
+                title
+              }
+              publisher
+              edition {
+                summary
+                edition
               }
             }            
           }
@@ -101,8 +110,8 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
  * Detailed search response
  *
  * @param {string} q the query
- * @param {object} filters for searching
- * @param {array} facets for adding filters
+ * @param {Object} filters for searching
+ * @param {Array} facets for adding filters
  */
 export function facets({
   q,

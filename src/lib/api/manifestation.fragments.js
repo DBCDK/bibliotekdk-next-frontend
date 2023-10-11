@@ -68,6 +68,12 @@ export function editionManifestations({ pid }) {
         pid
         ownerWork {
           workId
+          titles {
+            full
+          }
+          creators {
+            ...creatorsFragment
+          }
         }
         materialTypes {
           specific
@@ -404,6 +410,20 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
   materialTypes {
     specific
   }
+  audience {
+    generalAudience
+    childrenOrAdults {
+      display
+    }
+    schoolUse {
+      display
+    }                
+    ages {
+      display
+    }                
+    lix
+    let
+  } 
   shelfmark {
     shelfmark
     postfix

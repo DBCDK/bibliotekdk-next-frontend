@@ -1,3 +1,7 @@
+.status {
+  padding-top: var(--pt4);
+}
+
 .no_status {
   padding-top: var(--pt8);
 }
@@ -9,7 +13,7 @@
 .agency_holdings_row_wrapper {
   display: flex;
   flex-direction: row;
-  padding-top: var(--pt3);
+  padding-top: var(--pt2_5);
 }
 
 .agency_holdings_result {

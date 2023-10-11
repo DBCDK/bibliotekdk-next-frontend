@@ -54,6 +54,7 @@ export function templateForVerticalWorkCard(material) {
       styles.related_element,
       styles.related_element__vertical_version
     ),
+    textClassName: cx(styles.text),
     coverImageClassName: cx(styles.cover, styles.cover__vertical_version),
   };
 }
@@ -98,6 +99,7 @@ export function templateForHeaderWorkCard(material) {
     // Styling
     elementContainerClassName: cx(styles.col_flex),
     relatedElementClassName: cx(styles.related_element),
+    textClassName: cx(styles.text),
     coverImageClassName: cx(styles.cover),
   };
 }
@@ -134,6 +136,7 @@ export function templateForRelatedWorks(material) {
     // Styling
     elementContainerClassName: cx(styles.col_flex),
     relatedElementClassName: cx(styles.related_element),
+    textClassName: cx(styles.text),
     coverImageClassName: cx(styles.cover),
   };
 }
@@ -142,8 +145,14 @@ export function templateForLocalizations(
   material,
   singleManifestation = false
 ) {
-  const fullTitle = material?.titles?.full?.join(": ");
-  const creators = material?.creators;
+  const fullTitle =
+    singleManifestation === true
+      ? material?.titles?.full?.join(": ")
+      : material?.ownerWork?.titles?.full?.join(": ");
+  const creators =
+    singleManifestation === true
+      ? material?.creators
+      : material?.ownerWork?.creators;
   const firstCreator =
     extractCreatorsPrioritiseCorporation(creators)?.[0]?.display;
   const formattedMaterialTypes = formatMaterialTypesToPresentation(
@@ -189,8 +198,9 @@ export function templateForLocalizations(
     ),
     relatedElementClassName: cx(
       styles.related_element,
-      styles.related_element__localization_version
+      styles.related_element__localizations_version
     ),
+    textClassName: cx(styles.text__localizations_version),
     coverImageClassName: cx(styles.cover, styles.cover__localizations_version),
   };
 }
