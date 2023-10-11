@@ -68,7 +68,7 @@ export default function MyProfilePage() {
           onClick={() => {
             modal.push("deleteProfile");
           }}
-          className={` ${styles.deleteProfileButtonCustom}`}
+          className={` ${styles.deleteProfileButton}`}
           border={{
             top: false,
             bottom: {
