@@ -69,6 +69,7 @@ const BookmarkPage = () => {
 
   useEffect(() => {
     let savedValue = sessionStorage.getItem("sortByValue");
+    //if there is no saved values in sessionstorage, use createdAt sorting as default
     setSortByValue(savedValue || sortByItems[0].key);
   }, []);
 
