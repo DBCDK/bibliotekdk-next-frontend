@@ -457,7 +457,12 @@ const BRANCH_6 = {
   holdingStatus: {
     branchId: "789124",
     expectedDelivery: TODAY,
-    holdingItems: [],
+    holdingItems: [
+      {
+        expectedDelivery: TODAY,
+        status: HoldingStatusEnum.ON_SHELF,
+      },
+    ],
   },
   pickupAllowed: true,
   digitalCopyAccess: true,
@@ -475,12 +480,34 @@ const BRANCH_7 = {
   holdingStatus: {
     branchId: "891234",
     expectedDelivery: TODAY,
-    holdingItems: [],
+    holdingItems: [
+      {
+        expectedDelivery: TODAY,
+        status: HoldingStatusEnum.ON_SHELF,
+      },
+    ],
   },
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "herligelev.dekaa",
-  agencyName: "HeligeLev",
+  agencyName: "HerligeLev",
+};
+const BRANCH_8 = {
+  name: "Test Bib - Branch with holdings",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  agencyId: "765430",
+  branchId: "765432",
+  holdingStatus: {
+    branchId: "765432",
+    expectedDelivery: TODAY,
+    holdingItems: [],
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "grullinger.dekaa",
+  agencyName: "Grullinger",
 };
 
 // A user with some agencies
@@ -970,6 +997,7 @@ export default function automock_utils() {
     BRANCH_5,
     BRANCH_6,
     BRANCH_7,
+    BRANCH_8,
     USER_1,
     USER_2,
     USER_3,
