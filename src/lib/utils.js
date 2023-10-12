@@ -206,3 +206,44 @@ export function translateAndEncode(context, label, requestedLang = undefined) {
     })
   );
 }
+
+/**
+ *
+ * @param {string} agencyID
+ * @returns {boolean} returns true if public library (Folkebibliotek)
+ */
+export const isPublicLibrary = (agencyID) => {
+  const faroeIslandsLibraries = ["900455", "911116", "911130"];
+  const parsedID = agencyID + "";
+  return (
+    parsedID?.charAt(0) === "7" || faroeIslandsLibraries.includes(parsedID)
+  );
+};
+
+export const LibraryTypeEnum = Object.freeze({
+  DANISH_PUBLIC_LIBRARY: "DANISH_PUBLIC_LIBRARY",
+  FAROESE_LIBRARY: "FAROESE_LIBRARY",
+  OTHER_LIBRARY: "OTHER_LIBRARY",
+  GREENLAND_LIBRARY: "GREENLAND_LIBRARY",
+});
+
+/**
+ * Gets the library type
+ * @param {*} agencyID
+ * @returns string true if public library (Folkebibliotek)
+ */
+export function getLibraryType(agencyID) {
+  const faroeIslandsLibraries = ["900455", "911116", "911130"];
+  const greenlandLibraries = ["900500", "911130", "945800"];
+  const parsedID = agencyID + "";
+
+  if (faroeIslandsLibraries.includes(parsedID)) {
+    return LibraryTypeEnum.FAROESE_LIBRARY;
+  } else if (greenlandLibraries.includes(parsedID)) {
+    return LibraryTypeEnum.GREENLAND_LIBRARY;
+  } else if (parsedID?.charAt(0) === "7") {
+    return LibraryTypeEnum.DANISH_PUBLIC_LIBRARY;
+  } else {
+    return LibraryTypeEnum.OTHER_LIBRARY;
+  }
+}

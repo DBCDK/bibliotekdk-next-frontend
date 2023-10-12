@@ -25,10 +25,6 @@
   margin-bottom: var(--pt4);
 }
 
-.desktop {
-  display: none;
-}
-
 .pagination button:not(.arrow_styling) {
   font-size: var(--pt2);
   line-height: var(--pt3);
@@ -64,8 +60,5 @@
   .desktop {
     display: flex;
     gap: var(--pt1);
-  }
-  .mobile {
-    display: none;
   }
 }

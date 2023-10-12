@@ -1,4 +1,5 @@
 import * as orderMutations from "@/lib/api/order.mutations";
+import Text from "@/components/base/text";
 
 // elements we want
 const elements = [
@@ -210,4 +211,98 @@ export function handleSubmitOrder(
       ...periodicaForm,
     })
   );
+}
+
+export function highlightMarkedWords(
+  highlight,
+  regularText = "text3",
+  semiboldText = "text4"
+) {
+  const regexed = highlight?.split(/(<mark>(?:.*?)<\/mark>)/g).map((el) => {
+    if (el.startsWith("<mark>") && el.endsWith("</mark>")) {
+      return (
+        <Text
+          key={JSON.stringify(el)}
+          tag="span"
+          type={semiboldText}
+          style={{ fontWeight: 700 }}
+        >
+          {el.replace("<mark>", "").replace("</mark>", "")}
+        </Text>
+      );
+    } else {
+      return <>{el}</>;
+    }
+  });
+
+  return (
+    <Text tag="span" type={regularText}>
+      {regexed}
+    </Text>
+  );
+}
+
+export function escapeColons(phrase) {
+  return phrase.replace(":", "%3A");
+}
+
+/**
+ * Select a branch and handle login
+ * either the user is already logged in for that agency
+ * or the user needs to log in for that agency, so prompt login or open loanerform
+ * @param {Object} branch
+ * @param {Object} modal
+ * @param {Object} context
+ * @param {function} updateLoanerInfo
+ * @param {string} callbackUID
+ * @param {function|null} overrideOrderModalPush
+ */
+export function handleOnSelect(
+  branch,
+  modal,
+  context,
+  updateLoanerInfo,
+  callbackUID = modal?.stack?.find((m) => m.id === "order")?.uid,
+  overrideOrderModalPush = null
+) {
+  // Selected branch belongs to one of the user's agencies where the user is logged in
+  const alreadyLoggedin = context.initial?.agencies?.find(
+    (agency) => agency.result?.[0].agencyId === branch.agencyId
+  );
+
+  // New selected branch has borrowercheck
+  const hasBorchk = branch.borrowerCheck;
+  // if selected branch has same origin as user agency
+  if (alreadyLoggedin && hasBorchk) {
+    if (
+      overrideOrderModalPush &&
+      typeof overrideOrderModalPush === "function"
+    ) {
+      updateLoanerInfo({ pickupBranch: branch.branchId }).then(() =>
+        overrideOrderModalPush()
+      );
+    } else {
+      // Set new branch without new log-in
+      updateLoanerInfo({ pickupBranch: branch.branchId });
+      // update context at previous modal
+      modal.prev();
+    }
+
+    return;
+  }
+
+  if (branch?.borrowerCheck) {
+    modal.push("openAdgangsplatform", {
+      agencyId: branch.agencyId,
+      branchId: branch.branchId,
+      agencyName: branch.agencyName,
+      callbackUID: callbackUID, //we should always have callbackUID, but if we dont, order modal is not opened after login.
+    });
+    return;
+  } else {
+    modal.push("loanerform", {
+      branchId: branch.branchId,
+      changePickupBranch: true,
+    });
+  }
 }

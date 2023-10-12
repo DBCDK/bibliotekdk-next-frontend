@@ -20,6 +20,7 @@ import styles from "./Icon.module.css";
  * @param dataCy
  * @param ariaHidden
  * @param tag
+ * @param style
  * @param {Object} props
  * See propTypes for specific props and types
  *
@@ -39,6 +40,7 @@ function Icon({
   dataCy = null,
   ariaHidden = true,
   tag = "i",
+  style = {},
   ...props
 }) {
   const disabledStyle = disabled ? styles.disabled : "";
@@ -71,6 +73,7 @@ function Icon({
   const dynamicStyles = {
     ...dimensions,
     ...backgroundColor,
+    ...style,
   };
 
   return (

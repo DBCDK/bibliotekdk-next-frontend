@@ -66,6 +66,15 @@ export function editionManifestations({ pid }) {
     query: `query editionManifestations($pid: [String!]!) {
       manifestations(pid: $pid) {
         pid
+        ownerWork {
+          workId
+          titles {
+            full
+          }
+          creators {
+            ...creatorsFragment
+          }
+        }
         materialTypes {
           specific
         }

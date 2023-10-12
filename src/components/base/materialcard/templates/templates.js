@@ -8,6 +8,7 @@ import Text from "@/components/base/text";
 import styles from "./templates.module.css";
 import { getCoverImage } from "@/components/utils/getCoverImage";
 import cx from "classnames";
+import Translate from "@/components/base/translate";
 
 function propFunc(textType, lines) {
   return {
@@ -53,6 +54,7 @@ export function templateForVerticalWorkCard(material) {
       styles.related_element,
       styles.related_element__vertical_version
     ),
+    textClassName: cx(styles.text),
     coverImageClassName: cx(styles.cover, styles.cover__vertical_version),
   };
 }
@@ -97,6 +99,7 @@ export function templateForHeaderWorkCard(material) {
     // Styling
     elementContainerClassName: cx(styles.col_flex),
     relatedElementClassName: cx(styles.related_element),
+    textClassName: cx(styles.text),
     coverImageClassName: cx(styles.cover),
   };
 }
@@ -133,6 +136,71 @@ export function templateForRelatedWorks(material) {
     // Styling
     elementContainerClassName: cx(styles.col_flex),
     relatedElementClassName: cx(styles.related_element),
+    textClassName: cx(styles.text),
     coverImageClassName: cx(styles.cover),
+  };
+}
+
+export function templateForLocalizations(
+  material,
+  singleManifestation = false
+) {
+  const fullTitle =
+    singleManifestation === true
+      ? material?.titles?.full?.join(": ")
+      : material?.ownerWork?.titles?.full?.join(": ");
+  const creators =
+    singleManifestation === true
+      ? material?.creators
+      : material?.ownerWork?.creators;
+  const firstCreator =
+    extractCreatorsPrioritiseCorporation(creators)?.[0]?.display;
+  const formattedMaterialTypes = formatMaterialTypesToPresentation(
+    material?.materialTypesArray
+  );
+
+  const edition = [
+    material?.edition?.publicationYear?.display,
+    material?.publisher,
+    material?.edition?.edition,
+  ]
+    ?.flat()
+    .filter((pre) => !isEmpty(pre))
+    ?.join(", ");
+
+  return {
+    link_href: null,
+    fullTitle: fullTitle,
+    image_src: material?.cover?.detail,
+    workId: material?.workId,
+    children: (
+      <>
+        <Text {...propFunc("text4", 2)} title={fullTitle}>
+          {fullTitle}
+        </Text>
+        {firstCreator && (
+          <Text {...propFunc("text3", 2)} title={firstCreator}>
+            {firstCreator}
+          </Text>
+        )}
+        <Text {...propFunc("text3", 1)} title={formattedMaterialTypes}>
+          {formattedMaterialTypes},{" "}
+          {!singleManifestation &&
+            Translate({ context: "overview", label: "all-editions" })}
+          {singleManifestation && edition}
+        </Text>
+      </>
+    ),
+    // Styling
+    elementContainerClassName: cx(
+      styles.col_flex,
+      styles.col_flex__localizations_version
+    ),
+    relatedElementClassName: cx(
+      styles.related_element,
+      styles.related_element__localizations_version
+    ),
+    textClassName: cx(styles.text__localizations_version),
+    coverImageClassName: cx(styles.cover, styles.cover__localizations_version),
   };
 }
