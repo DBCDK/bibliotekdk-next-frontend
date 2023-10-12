@@ -54,11 +54,14 @@ const useBookmarksCore = ({ isMock = false, session }) => {
       })
   );
   const bookmarkMutation = useMutate();
-  const globalBookmarks =
-    globalBookmarksUserObject?.user?.bookmarks?.result?.map((bookmark) => ({
-      ...bookmark,
-      key: bookmark.materialId + bookmark.materialType,
-    }));
+  const globalBookmarks = useMemo(
+    () =>
+      globalBookmarksUserObject?.user?.bookmarks?.result?.map((bookmark) => ({
+        ...bookmark,
+        key: bookmark.materialId + bookmark.materialType,
+      })),
+    [globalBookmarksUserObject]
+  );
 
   let hitcount;
 

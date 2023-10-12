@@ -48,49 +48,40 @@ export function BookMarkMaterialSelector({
       }
       setActive(bookmarkIndex !== -1);
     }
-  }, [bookmarks, options]);
+  }, [options]);
 
   const revalidateEditions = () => {
+    const defaultOptions = materialTypes.map((mat) => mat);
+
     if (!editions) {
       // Not needed to look for aditional dropdown items
+      setOptions(defaultOptions);
       return;
     }
 
-    const defaultOptions = materialTypes.map((mat) => mat);
     const addedEditions = bookmarks?.filter(
       (bookmark) => bookmark.workId === workId
     );
-    const bookmarkMatches = addedEditions?.map((addedEdition) => {
-      const edition = editions?.find(
-        (edi) => edi.pid === addedEdition.materialId
-      );
-      if (!edition) {
-        return null;
-      }
+    const bookmarkMatches = addedEditions
+      ?.map((addedEdition) => {
+        const edition = editions?.find(
+          (edi) => edi.pid === addedEdition.materialId
+        );
+        if (!edition) {
+          return null;
+        }
 
-      return {
-        editionDisplayText:
-          edition?.materialTypes?.[0]?.specific +
-          ", " +
-          createEditionText(edition),
-        ...edition,
-      };
-    });
-    // Filter already existing for good measure
-    const filteredEditions = bookmarkMatches?.filter(
-      (item) =>
-        options?.findIndex(
-          (option) => option?.editionDisplayText === item?.editionDisplayText
-        ) === -1
-    );
-    
-    if (!isEmpty(filteredEditions)) {
-      // Rerender with added options
-      setOptions(defaultOptions.concat(filteredEditions));
-    } else {
-      // Rerender with default options
-      setOptions(defaultOptions);
-    }
+        return {
+          editionDisplayText:
+            edition?.materialTypes?.[0]?.specific +
+            ", " +
+            createEditionText(edition),
+          ...edition,
+        };
+      })
+      .filter((i) => !!i);
+
+    setOptions(defaultOptions.concat(bookmarkMatches));
   };
 
   const onSelect = (material, workId) => {
@@ -170,7 +161,7 @@ export function BookMarkMaterialSelector({
       >
         {options.map((material, index) => {
           let activeItem;
-          if (material.editionDisplayText) {
+          if (material?.editionDisplayText) {
             activeItem =
               bookmarks?.findIndex(
                 (book) =>
@@ -201,7 +192,7 @@ export function BookMarkMaterialSelector({
             >
               <div className={styles.itemContainer}>
                 <Text type="text3" className={styles.dropdownitemText}>
-                  {material.editionDisplayText
+                  {material?.editionDisplayText
                     ? material.editionDisplayText
                     : formatMaterialTypesToPresentation(material)}
                 </Text>
