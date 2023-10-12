@@ -28,7 +28,7 @@ export function BookMarkMaterialSelector({
 
   useEffect(() => {
     revalidateEditions();
-  }, [editions, options, bookmarks]);
+  }, [editions, bookmarks]);
 
   useEffect(() => {
     if (!isLoading) {
@@ -48,18 +48,19 @@ export function BookMarkMaterialSelector({
       }
       setActive(bookmarkIndex !== -1);
     }
-  }, [bookmarks]);
+  }, [bookmarks, options]);
 
   const revalidateEditions = () => {
-    if (!editions || !bookmarks || bookmarks.length === 0) {
+    if (!editions) {
       // Not needed to look for aditional dropdown items
       return;
     }
 
+    const defaultOptions = materialTypes.map((mat) => mat);
     const addedEditions = bookmarks?.filter(
       (bookmark) => bookmark.workId === workId
     );
-    const bookmarkMatches = addedEditions.map((addedEdition) => {
+    const bookmarkMatches = addedEditions?.map((addedEdition) => {
       const edition = editions?.find(
         (edi) => edi.pid === addedEdition.materialId
       );
@@ -76,15 +77,19 @@ export function BookMarkMaterialSelector({
       };
     });
     // Filter already existing for good measure
-    const filteredEditions = bookmarkMatches.filter(
+    const filteredEditions = bookmarkMatches?.filter(
       (item) =>
         options?.findIndex(
           (option) => option?.editionDisplayText === item?.editionDisplayText
         ) === -1
     );
+    
     if (!isEmpty(filteredEditions)) {
       // Rerender with added options
-      setOptions(options.concat(filteredEditions));
+      setOptions(defaultOptions.concat(filteredEditions));
+    } else {
+      // Rerender with default options
+      setOptions(defaultOptions);
     }
   };
 
@@ -115,8 +120,8 @@ export function BookMarkMaterialSelector({
 
   const onDropdownToggle = (event) => {
     if (event === false) {
-      // On close - Empty options and revalidate editions
-      setOptions(materialTypes.map((mat) => mat));
+      // On close - Empty options and revalidate editions - effect subscribes to options changes
+      // setOptions(materialTypes.map((mat) => mat));
       revalidateEditions();
     }
   };

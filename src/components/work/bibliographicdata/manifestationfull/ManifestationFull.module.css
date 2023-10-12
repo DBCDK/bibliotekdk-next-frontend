@@ -59,9 +59,17 @@
 /** end manifestation parts list **/
 .reservationwrapper {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   margin-bottom: var(--pt2);
 }
+
+.reservationwrapper > div {
+  /* Override Reservation button default sizing */
+  flex: unset;
+  width: unset;
+}
+
 .container {
   column-count: 1;
   -webkit-column-count: 1;
