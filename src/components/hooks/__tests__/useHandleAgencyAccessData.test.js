@@ -13,7 +13,11 @@ import {
   getHoldingsWithInfoOnPickupAllowed,
   HoldingStatusEnum,
   publicLibraryDoesNotOwn,
+  sortByAgencyName,
   sortByAvailability,
+  sortByBranchName,
+  sortByMainBranch,
+  sortingOnNonStringLast,
 } from "@/components/hooks/useHandleAgencyAccessData";
 import { dateObjectToDateOnlyString } from "@/utils/datetimeConverter";
 
@@ -505,6 +509,97 @@ describe("sortByAvailability", () => {
     const b = { availabilityAccumulated: AvailabilityEnum.NEVER };
     const actual = sortByAvailability(a, b);
     const expected = 1;
+    expect(actual).toEqual(expected);
+  });
+});
+
+describe("sortingOnNonStringLast", () => {
+  it("sorts numbers properly last, string, name = expect -1", () => {
+    const actual = sortingOnNonStringLast("Albertslund", 12341);
+    const expected = -1;
+    expect(actual).toEqual(expected);
+  });
+  it("sorts null properly last, string, name = expect -1", () => {
+    const actual = sortingOnNonStringLast("Albertslund", null);
+    const expected = -1;
+    expect(actual).toEqual(expected);
+  });
+  it("sorts {object} properly last, string, name = expect -1", () => {
+    const actual = sortingOnNonStringLast("Albertslund", { hej: 1231 });
+    const expected = -1;
+    expect(actual).toEqual(expected);
+  });
+});
+
+describe("sortByAgencyName", () => {
+  it("sorts regular names properly, expect -1", () => {
+    const actual = sortByAgencyName(
+      { agencyName: "Albertslund" },
+      { agencyName: "Balbertslund" }
+    );
+    const expected = -1;
+    expect(actual).toEqual(expected);
+  });
+  it("sorts regular names properly, expect 1", () => {
+    const actual = sortByAgencyName(
+      { agencyName: "Balbertslund" },
+      { agencyName: "Albertslund" }
+    );
+    const expected = 1;
+    expect(actual).toEqual(expected);
+  });
+  it("sorts regular names properly (in-place), expect 0", () => {
+    const actual = sortByAgencyName(
+      { agencyName: "Albertslund" },
+      { agencyName: "Albertslund" }
+    );
+    const expected = 0;
+    expect(actual).toEqual(expected);
+  });
+});
+
+describe("sortByBranchName", () => {
+  it("sorts regular names properly, expect -1", () => {
+    const actual = sortByBranchName(
+      { branchName: "Albertslund" },
+      { branchName: "Balbertslund" }
+    );
+    const expected = -1;
+    expect(actual).toEqual(expected);
+  });
+  it("sorts regular names properly, expect 1", () => {
+    const actual = sortByBranchName(
+      { branchName: "Balbertslund" },
+      { branchName: "Albertslund" }
+    );
+    const expected = 1;
+    expect(actual).toEqual(expected);
+  });
+  it("sorts regular names properly (in-place), expect 0", () => {
+    const actual = sortByBranchName(
+      { branchName: "Albertslund" },
+      { branchName: "Albertslund" }
+    );
+    const expected = 0;
+    expect(actual).toEqual(expected);
+  });
+});
+
+describe("sortByMainBranch", () => {
+  it("sorts main branch first", () => {
+    const actual = sortByMainBranch(
+      { branchId: "789120", agencyId: "789120" },
+      { branchId: "789120", agencyId: "789123" }
+    );
+    const expected = -1;
+    expect(actual).toEqual(expected);
+  });
+  it("sorts no main branch to 0", () => {
+    const actual = sortByMainBranch(
+      { branchId: "789120", agencyId: "789123" },
+      { branchId: "789120", agencyId: "789124" }
+    );
+    const expected = 0;
     expect(actual).toEqual(expected);
   });
 });
