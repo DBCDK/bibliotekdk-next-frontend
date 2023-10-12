@@ -249,9 +249,9 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     clearLocalBookmarks,
     bookmarks: isAuthenticated
       ? globalBookmarks
-      : sortedBookMarks(localBookmarks),
+      : sortedBookMarks(localBookmarks),//remove sortedBookMarks function
     paginatedBookmarks: isAuthenticated
-      ? globalBookmarks
+      ? currenPageBookmark(sortedBookMarks(globalBookmarks))
       : currenPageBookmark(sortedBookMarks(localBookmarks)),
     isLoading:
       (typeof localBookmarks === "undefined" && !error) ||
