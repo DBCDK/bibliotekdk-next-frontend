@@ -59,16 +59,18 @@ const BookmarkPage = () => {
   const { data: bookmarks } = usePopulateBookmarks(bookmarksData);
   const [activeStickyButton, setActiveStickyButton] = useState(null);
   const breakpoint = useBreakpoint();
-  const [sortByValue, setSortByValue] = useState(() => {
-    const savedValue = sessionStorage.getItem("sortByValue");
-    return savedValue || sortByItems[0].key;
-  });
+  const [sortByValue, setSortByValue] = useState(null);
   const isMobile = breakpoint === "sm" || breakpoint === "xs";
   const [checkboxList, setCheckboxList] = useState();
 
   useEffect(() => {
     setSortBy(sortByValue);
   }, [sortByValue]);
+
+  useEffect(() => {
+    let savedValue = sessionStorage.getItem("sortByValue");
+    setSortByValue(savedValue || sortByItems[0].key);
+  }, []);
 
   useEffect(() => {
     setCheckboxList(
