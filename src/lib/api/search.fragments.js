@@ -89,6 +89,7 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
             main
             full
             parallel
+            sort
           }
         }
         hitcount

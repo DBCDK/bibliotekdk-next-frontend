@@ -100,7 +100,7 @@ function ColumnOne({ workId, manifestation }) {
           materialId={manifestation.pid}
           materialTypes={[[manifestation?.materialTypes?.[0]?.specific]]}
           size={{ w: 4, h: 4 }}
-          title={manifestation?.titles?.full[0]}
+          title={manifestation?.titles?.sort}
         />
       </div>
 

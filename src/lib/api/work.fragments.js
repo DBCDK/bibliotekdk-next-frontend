@@ -707,6 +707,7 @@ export function overviewWork({ workId }) {
         titles {
           full
           parallel
+          sort
         }
         creators {
           ...creatorsFragment
