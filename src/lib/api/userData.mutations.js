@@ -41,5 +41,5 @@ export function deleteUser({ userDataMutation }) {
       `,
   };
 
-  userDataMutation.post(q);
+  return userDataMutation.post(q);
 }

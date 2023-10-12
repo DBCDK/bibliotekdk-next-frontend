@@ -29,10 +29,11 @@ export function DeleteProfile({ modal }) {
     }
   }, [modal.isVisible]);
 
-  const handleDeleteUser = () => {
-    deleteUser({ userDataMutation });
+  const handleDeleteUser = async () => {
+    await deleteUser({ userDataMutation });
     signOut(null, "/");
   };
+
   return (
     <div className={styles.modalContainer}>
       <Top title={"Slet profil"} back />
