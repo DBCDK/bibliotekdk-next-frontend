@@ -1,0 +1,16 @@
+.row_wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.result {
+  margin-left: var(--pt1);
+  display: inline-flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.link_for_branch {
+  padding-top: var(--pt1);
+}

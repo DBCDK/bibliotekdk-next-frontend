@@ -37,15 +37,7 @@
   display: inline;
 }
 
-.filterButton {
-  display: none;
-}
-
 @media (min-width: 992px) {
-  .filterButton {
-    display: unset;
-  }
-
   .section {
     padding-top: var(--pt3);
     padding-bottom: unset;

@@ -6,7 +6,7 @@ import cx from "classnames";
 
 /**
  * shows
- * @param {Boolean} isColumn: true if text and icon should be displayed in a column
+ * @param {boolean} isColumn: true if text and icon should be displayed in a column
  * @returns
  */
 export function RenewError({ isColumn, customClass }) {

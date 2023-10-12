@@ -4,11 +4,12 @@ import IconButton from "@/components/base/iconButton/IconButton";
 import styles from "./LibrariesTable.module.css";
 import Title from "@/components/base/title";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import { isPublicLibrary } from "@/lib/utils";
 
 /**
  * Tablerow to be used in LibrariesTable component.
- * @param {obj} props
- * @returns {component}
+ * @param {Object} props
+ * @returns {React.JSX.Element}
  */
 function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
   const breakpoint = useBreakpoint();
@@ -97,8 +98,8 @@ function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
 
 /**
  * Returns a table of users libraries
- * @param {obj} props
- * @returns {component}
+ * @param {Object} props
+ * @returns {React.JSX.Element}
  */
 export default function LibrariesTable({ data, municipalityAgencyId }) {
   const breakpoint = useBreakpoint();
@@ -153,16 +154,3 @@ export default function LibrariesTable({ data, municipalityAgencyId }) {
     </table>
   );
 }
-
-/**
- *
- * @param {*} agencyID
- * @returns returns true if public library (Folkebibliotek)
- */
-const isPublicLibrary = (agencyID) => {
-  const faroeIslandsLibraries = ["900455", "911116", "911130"];
-  const parsedID = agencyID + "";
-  return (
-    parsedID?.charAt(0) === "7" || faroeIslandsLibraries.includes(parsedID)
-  );
-};

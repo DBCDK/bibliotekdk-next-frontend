@@ -49,7 +49,7 @@ export function extractCreatorsPrioritiseCorporation(creatorsBeforeFilter) {
  * as part of the URL path
  *
  * @param {string} title
- * @param {array<object>} creators
+ * @param {Array<Object>} creators
  *
  * @returns {string} encoded string
  */
@@ -64,9 +64,9 @@ export function encodeTitleCreator(title = "", creators = []) {
 /**
  *
  * @param {string} fullTitle
- * @param {array<object>} creators
+ * @param {Array<Object>} creators
  * @param {string} workId
- * @return {{query: {title_author: string, workId}, pathname: string}}
+ * @returns {{query: {title_author: string, workId}, pathname: string}}
  */
 export function getWorkUrl(fullTitle, creators, workId) {
   return `/materiale/${encodeTitleCreator(fullTitle, creators)}/${workId}`;
@@ -76,7 +76,7 @@ export function getWorkUrl(fullTitle, creators, workId) {
  *
  * @param {string} title
  * @param {number|string} articleId
- * @return {{query: {articleId, title}, pathname: string}}
+ * @returns {{query: {articleId, title}, pathname: string}}
  */
 export function getArticleUrl(title, articleId) {
   return `/artikel/${encodeString(title)}/${articleId}`;
@@ -106,7 +106,7 @@ export function getMaterialReviewUrl(title, workId, pid) {
 
 /**
  * Create canonical URL for given work
- * @param {object} work
+ * @param {Object} work
  *
  * @returns {string} The canonical work URL
  */
@@ -119,7 +119,7 @@ export function getCanonicalWorkUrl({ title, creators, id }) {
 
 /**
  * Create internal article path for given article
- * @param {object} article
+ * @param {Object} article
  *
  * @returns {string} The canonical article URL
  */
@@ -129,8 +129,8 @@ export function getArticlePath({ title, nid }) {
 
 /**
  * Create canonical URL for given article
- * @param {object} props
- * @param {object} props.article
+ * @param {Object} props
+ * @param {Object} props.article
  *
  * @returns {string} The canonical article URL
  */
@@ -144,7 +144,7 @@ export function getCanonicalArticleUrl(props) {
  * @param {string} title
  * @param {string} workId
  * @param {string} infomadiaId
- * @return {string}
+ * @returns {string}
  */
 export function infomediaUrl(title, workId, infomadiaId) {
   return `/infomedia/${title}/${workId}/${infomadiaId}`;
@@ -209,7 +209,7 @@ export function translateAndEncode(context, label, requestedLang = undefined) {
 
 /**
  * Parses an iso-8601 date string into human readable strings.
- * @param {*} isoDateString
+ * @param {string} isoDateString
  * @returns an object containing date and time fields. Eks {date: "D. 24. juni", time:"Kl. 11:07"}
  */
 export function parseDate(isoDateString) {

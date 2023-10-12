@@ -5,6 +5,7 @@
   white-space: nowrap;
   width: 100%;
   justify-content: center;
+  background-color: var(--white);
 }
 
 .filterButton i {

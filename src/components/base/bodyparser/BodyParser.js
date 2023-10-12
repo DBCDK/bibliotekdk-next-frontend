@@ -29,10 +29,10 @@ function underlineOnAnchorElements(htmlString) {
 /**
  * BodyParser
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export default function BodyParser({
   body,

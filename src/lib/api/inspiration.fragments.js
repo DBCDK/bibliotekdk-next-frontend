@@ -18,7 +18,7 @@ const CATEGORY_ENUMS = [
 /**
  * inspiration
  *
- * @param {object} params
+ * @param {Object} params
  * @param {string} params.limit
  */
 
@@ -75,8 +75,8 @@ export function inspiration({ filters = [], limit = 10 } = {}) {
 /**
  * inspiration categories for a category
  *
- * @param {object} params
- * @param {object} params.filters
+ * @param {Object} params
+ * @param {Object} params.filters
  */
 
 export function categories({ filters = [] } = {}) {

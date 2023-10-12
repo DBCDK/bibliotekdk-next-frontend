@@ -14,11 +14,11 @@ import styles from "./History.module.css";
  *
  *
  * @param {string} className
- * @param {bool} skeleton
- * @param {object} data
+ * @param {boolean} skeleton
+ * @param {Object} data
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.JSX.Element}
  */
 export function History({ className = "", data = {}, skeleton = false }) {
   const context = { context: "suggester" };
@@ -62,10 +62,10 @@ export function History({ className = "", data = {}, skeleton = false }) {
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export function HistorySkeleton(props) {
   return <History {...props} skeleton={true} />;
@@ -74,10 +74,10 @@ export function HistorySkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
   if (props.skeleton) {

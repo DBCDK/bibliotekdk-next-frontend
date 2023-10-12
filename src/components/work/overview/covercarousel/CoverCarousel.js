@@ -72,11 +72,11 @@ const CoverElement = forwardRef(function CoverElement(
 
 /**
  * CoverCarousel
- * @param {array} manifestations
- * @param {object} workTitles
+ * @param {Array} manifestations
+ * @param {Object} workTitles
  * @param sliderId
  * @param maxLength
- * @return {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export function CoverCarousel({
   manifestations,

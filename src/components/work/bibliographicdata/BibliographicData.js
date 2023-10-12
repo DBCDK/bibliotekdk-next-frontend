@@ -22,11 +22,11 @@ import { createEditionText } from "../details/utils/details.utils";
 /**
  * Export function of the Component
  *
- * @param {obj} manifestation
+ * @param {Object} manifestation
  * @param {string} workId
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export function BibliographicData({ manifestations, workId }) {
   const { flattenedGroupedSortedManifestations } = useMemo(() => {
@@ -152,7 +152,7 @@ export function BibliographicData({ manifestations, workId }) {
  * @param {string} workId
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap({ workId }) {
   const { data, isLoading, error } = useData(
