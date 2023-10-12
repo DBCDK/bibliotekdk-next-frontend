@@ -2,6 +2,14 @@
 import useUser from "@/components/hooks/useUser";
 import { useId, useMemo } from "react";
 import { AccessEnum } from "@/lib/enums";
+import { dateObjectToDateOnlyString } from "@/utils/datetimeConverter";
+import { HoldingStatusEnum } from "@/components/hooks/useHandleAgencyAccessData";
+
+const TODAY = dateObjectToDateOnlyString(new Date());
+const TOMORROW = dateObjectToDateOnlyString(
+  new Date(Date.now() + 24 * 60 * 60 * 1000)
+);
+const NEVER = "never";
 
 const MANIFESTATION_BASE = {
   titles: {
@@ -225,6 +233,31 @@ const MANIFESTATION_9 = {
   },
 };
 
+const MANIFESTATION_10 = {
+  ...MANIFESTATION_BASE,
+  pid: "some-pid-10",
+  materialTypes: [
+    {
+      specific: "bog",
+    },
+  ],
+  ownerWork: {
+    workId: "some-work-id-8",
+  },
+  titles: [{ full: "Lær at læse med Hugo og Rita" }],
+  workTypes: ["LITERATURE"],
+  tableOfContents: {
+    heading: null,
+    listOfContent: null,
+    content: `Kapitler ( 
+      Kapitel Alfabetet ; 
+      Kapitel Andre mennesker ;
+      Kapitel Ting og sager ; 
+      Kapitel Dyr og skov ;
+    ) ;`,
+  },
+};
+
 const ALL_MANIFESTATIONS = [
   MANIFESTATION_1,
   MANIFESTATION_2,
@@ -235,6 +268,7 @@ const ALL_MANIFESTATIONS = [
   MANIFESTATION_7,
   MANIFESTATION_8,
   MANIFESTATION_9,
+  MANIFESTATION_10,
 ];
 
 const ALL_WORKS = [
@@ -336,6 +370,15 @@ const ALL_WORKS = [
       all: [MANIFESTATION_9],
     },
   },
+  {
+    workId: "some-work-id-8",
+    titles: { full: ["Lær at læse med Hugo og Rita 3"] },
+    creators: [{ display: "Linoleum Gummigulv" }],
+    manifestations: {
+      mostRelevant: [MANIFESTATION_10],
+      all: [MANIFESTATION_10],
+    },
+  },
 ];
 
 const BORROWER_STATUS_TRUE = {
@@ -382,6 +425,63 @@ const BRANCH_4 = {
   branchWebsiteUrl: "balleripraprup.dekaa",
   agencyName: "BalleRipRapRup",
 };
+const BRANCH_5 = {
+  name: "Test Bib - Branch with holdings",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  agencyId: "789120",
+  branchId: "789123",
+  holdingStatus: {
+    branchId: "789123",
+    expectedDelivery: TODAY,
+    holdingItems: [
+      {
+        expectedDelivery: TODAY,
+        status: HoldingStatusEnum.ON_SHELF,
+      },
+    ],
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "balleripraprup.dekaa",
+  agencyName: "BalleRipRapRup",
+};
+const BRANCH_6 = {
+  name: "Test Bib - Branch with no holdings",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  agencyId: "789120",
+  branchId: "789124",
+  holdingStatus: {
+    branchId: "789124",
+    expectedDelivery: TODAY,
+    holdingItems: [],
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "balleripraprup.dekaa",
+  agencyName: "BalleRipRapRup",
+};
+
+const BRANCH_7 = {
+  name: "Test Bib - Branch with no holdings",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  agencyId: "891230",
+  branchId: "891234",
+  holdingStatus: {
+    branchId: "891234",
+    expectedDelivery: TODAY,
+    holdingItems: [],
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "herligelev.dekaa",
+  agencyName: "HeligeLev",
+};
 
 // A user with some agencies
 const USER_1 = {
@@ -401,6 +501,13 @@ const USER_3 = {
 
 const USER_4 = {
   agencies: { borrowerStatus: BORROWER_STATUS_TRUE, result: [BRANCH_4] },
+};
+
+const USER_5 = {
+  agencies: {
+    borrowerStatus: BORROWER_STATUS_TRUE,
+    result: [BRANCH_5, BRANCH_6],
+  },
 };
 
 const REVIEW_1 = {
@@ -851,6 +958,7 @@ export default function automock_utils() {
     MANIFESTATION_7,
     MANIFESTATION_8,
     MANIFESTATION_9,
+    MANIFESTATION_10,
     ALL_MANIFESTATIONS,
     ALL_WORKS,
     BORROWER_STATUS_TRUE,
@@ -859,10 +967,14 @@ export default function automock_utils() {
     BRANCH_2,
     BRANCH_3,
     BRANCH_4,
+    BRANCH_5,
+    BRANCH_6,
+    BRANCH_7,
     USER_1,
     USER_2,
     USER_3,
     USER_4,
+    USER_5,
     REVIEW_1,
     DEFAULT_STORY_PARAMETERS,
     useMockLoanerInfo,
@@ -870,5 +982,8 @@ export default function automock_utils() {
     USER_ORDERS,
     USER_LIBRARIES,
     USER_AGENCY,
+    TODAY,
+    TOMORROW,
+    NEVER,
   };
 }
