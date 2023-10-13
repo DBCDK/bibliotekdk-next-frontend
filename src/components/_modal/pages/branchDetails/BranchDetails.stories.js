@@ -8,7 +8,7 @@ import LocalizationsLink from "@/components/work/overview/localizationslink/Loca
 import isEmpty from "lodash/isEmpty";
 
 const exportedObject = {
-  title: "Localizations/testa",
+  title: "Localizations/Base",
 };
 
 export default exportedObject;
@@ -69,35 +69,20 @@ function LocalizationsComponentBuilder({
   );
 }
 
-export function Localizations() {
-  console.log("BRANCH_5: ", BRANCH_5);
-
+export function LocalizationsBaseFlow() {
   return (
     <LocalizationsComponentBuilder
-      title="testa"
-      description="testa1"
+      title="Localizations"
+      description="Localizations story including AgencyLocalizations, BranchLocalizations, and BranchDetails"
       workId={"some-work-id-8"}
       selectedPids={["some-pid-10"]}
     />
   );
 }
-Localizations.story = {
+LocalizationsBaseFlow.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {
-        // DetailedHoldings: {
-        //   count: () => 2,
-        //   agencyHoldings: () => {
-        //     return [
-        //       {
-        //         agencyId: () => "789120",
-        //         expectedDelivery: () => TODAY,
-        //         localisationPid: () => "some-localisationPid",
-        //         localIdentifier: () => "some-localIdentifier",
-        //       },
-        //     ];
-        //   },
-        // },
         Query: {
           branches: ({ variables }) => {
             const agencyId = variables?.agencyId;
@@ -115,8 +100,8 @@ Localizations.story = {
               ?.filter((b) => {
                 return q
                   ? [b.name, b.branchId, b.agencyId, b.agencyName].filter(
-                      (field) => field.includes(q)
-                    )
+                      (field) => field.toLowerCase().includes(q.toLowerCase())
+                    ).length > 0
                   : true;
               });
 
@@ -168,57 +153,4 @@ Localizations.story = {
       },
     },
   },
-};
-
-// Localizations.story = merge({}, DEFAULT_STORY_PARAMETERS, {
-//   parameters: {
-//     graphql: {
-//       resolvers: {
-//         DetailedHoldings: {
-//           count: () => 2,
-//           agencyHoldings: () => {
-//             return [
-//               {
-//                 agencyId: () => "789120",
-//                 expectedDelivery: () => TODAY,
-//                 localisationPid: () => "some-localisationPid",
-//                 localIdentifier: () => "some-localIdentifier",
-//               },
-//             ];
-//           },
-//         },
-//         Query: {
-//           user: () => USER_5,
-//           branches: () => {
-//             return {
-//               result: [BRANCH_5, BRANCH_6, BRANCH_7],
-//             };
-//           },
-//           localizationsWithHoldings: () => {
-//             return {
-//               count: 2,
-//               agencies: [
-//                 {
-//                   agencyId: "789120",
-//                   holdingItem: {
-//                     localizationPid: "some-pid-10",
-//                     codes: "12312",
-//                     localIdentifier: "214123",
-//                   },
-//                 },
-//                 {
-//                   agencyId: "891230",
-//                   holdingItem: {
-//                     localizationPid: "some-pid-10",
-//                     codes: "12312",
-//                     localIdentifier: "214123",
-//                   },
-//                 },
-//               ],
-//             };
-//           },
-//         },
-//       },
-//     },
-//   },
-// });
+});
