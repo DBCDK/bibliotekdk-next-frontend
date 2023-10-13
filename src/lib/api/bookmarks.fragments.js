@@ -1,4 +1,4 @@
-export const fetchAll = ({sortBy}) => {
+export const fetchAll = ({ sortBy }) => {
   return {
     query: `
     query userBookmarks($sortBy: BookMarkOrderBy) {
@@ -16,7 +16,7 @@ export const fetchAll = ({sortBy}) => {
     }
     `,
     variables: {
-      sortBy
+      sortBy,
     },
   };
 };
