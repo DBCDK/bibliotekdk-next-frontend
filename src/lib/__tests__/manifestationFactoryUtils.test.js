@@ -15,6 +15,7 @@ import {
   flatMapMaterialTypes,
   flattenMaterialType,
   formatMaterialTypesFromUrl,
+  formatMaterialTypesToPresentation,
   formatMaterialTypesToUrl,
   getElementByCustomSorting,
   getFlatPidsByType,
@@ -425,5 +426,21 @@ describe("manifestationMaterialTypeUtils", () => {
       "manifestationsEnrichedWithDefaultFrontpage",
     ];
     expect(Object.keys(actual)).toEqual(expectedKeys);
+  });
+});
+
+describe("formatMaterialTypesToPresentation", () => {
+  it("Returns as espected", () => {
+    const testSample = ["article", "article (online)"];
+
+    expect(formatMaterialTypesToPresentation(testSample)).toEqual(
+      "Article / Article (online)"
+    );
+  });
+
+  it("Returns string directly, if not array", () => {
+    const testSample = "article (online)";
+
+    expect(formatMaterialTypesToPresentation(testSample)).toEqual(testSample);
   });
 });

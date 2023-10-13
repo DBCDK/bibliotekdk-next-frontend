@@ -29,7 +29,8 @@
   border-width: 2px;
 }
 
-.svgscale button i svg {
+.svgscale button i svg,
+.svgscale i svg {
   transform: scale(0.75);
 }
 

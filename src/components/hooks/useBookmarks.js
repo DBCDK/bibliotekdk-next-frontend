@@ -54,11 +54,14 @@ const useBookmarksCore = ({ isMock = false, session }) => {
       })
   );
   const bookmarkMutation = useMutate();
-  const globalBookmarks =
-    globalBookmarksUserObject?.user?.bookmarks?.result?.map((bookmark) => ({
-      ...bookmark,
-      key: bookmark.materialId + bookmark.materialType,
-    }));
+  const globalBookmarks = useMemo(
+    () =>
+      globalBookmarksUserObject?.user?.bookmarks?.result?.map((bookmark) => ({
+        ...bookmark,
+        key: bookmark.materialId + bookmark.materialType,
+      })),
+    [globalBookmarksUserObject]
+  );
 
   let hitcount;
 
@@ -82,6 +85,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
             materialId: bookmark.materialId,
             materialType: bookmark.materialType,
             title: bookmark.title,
+            workId: bookmark.workId,
           })),
         })
       );
@@ -117,6 +121,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
                 materialId: value.materialId,
                 materialType: value.materialType,
                 title: value.title,
+                workId: value.workId,
               },
             ],
           })
