@@ -27,13 +27,13 @@ let firstAccordionRender = true;
 /**
  * The Component function
  *
- * @param {obj} props
- * @param {obj} props.title
+ * @param {Object} props
+ * @param {Object} props.title
  * @param {ReactElement|function|string} props.children
  * @param {string} props.eventKey (required!)
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export function Item({
   title,
@@ -178,7 +178,7 @@ Item.propTypes = {
 /**
  *
  * @param className
- * @return {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export function AccordionSkeleton({ className }) {
   const dummy = [
@@ -210,13 +210,13 @@ export function AccordionSkeleton({ className }) {
 /**
  * The Component function
  *
- * @param {obj} props
- * @param {obj} props.data
+ * @param {Object} props
+ * @param {Object} props.data
  * @param {string} props.className
  * @param {string|string[]} props.defaultActiveKey mount section as open on the current index/key
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 
 export default function Accordion({

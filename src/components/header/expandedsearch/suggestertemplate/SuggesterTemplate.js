@@ -21,7 +21,7 @@ import { SuggestTypeEnum } from "@/lib/enums";
  * @param {function} onClear
  * @param {string} title
  * @param {string} placeholder
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export function SuggesterWithInput({
   type,
@@ -64,8 +64,7 @@ export function SuggesterWithInput({
  *
  * @param title
  * @param {string} type
- * @return {JSX.Element}
- * @constructor
+ * @returns {React.JSX.Element}
  */
 export default function Wrap({ title = "", type = "" }) {
   const { q, setQ, setQuery } = useQ();

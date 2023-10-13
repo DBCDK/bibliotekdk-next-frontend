@@ -12,8 +12,8 @@ import Arrow from "@/components/base/animation/arrow";
 /**
  * Preview of article
  *
- * @param {object} props
- * @param {object} props.article
+ * @param {Object} props
+ * @param {Object} props.article
  * @param {boolean} props.skeleton
  */
 export default function ArticlePreview({ article, skeleton, rubrik = true }) {

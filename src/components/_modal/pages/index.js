@@ -6,11 +6,13 @@ import Pickup from "./pickup";
 import Loanerform from "./loanerform";
 import Receipt from "./receipt";
 import Filter from "./filter";
-import Localizations from "./localizations";
 import References from "./references";
 import ManifestationContent from "./manifestationContent";
 import Material from "./material";
 import DeleteOrder from "./deleteOrder";
+import AgencyLocalizations from "./agencyLocalizations";
+import BranchLocalizations from "./branchLocalizations";
+import BranchDetails from "./branchDetails";
 import OrderHistoryDataConsent from "./orderHistoryDataConsent";
 import Login from "./login";
 import MobileLogin from "./mobileLogin";
@@ -26,11 +28,13 @@ const _modal = {
   Loanerform,
   Receipt,
   Filter,
-  Localizations,
   References,
   ManifestationContent,
   Material,
   DeleteOrder,
+  AgencyLocalizations,
+  BranchLocalizations,
+  BranchDetails,
   OrderHistoryDataConsent,
   Login,
   MobileLogin,

@@ -14,7 +14,7 @@ import isEmpty from "lodash/isEmpty";
 /**
  * Extract covers that are not default
  * @param manifestations
- * @return {*|*[]}
+ * @returns {*|*[]}
  */
 export function extractGoodCover(manifestations) {
   const covers = manifestations?.flatMap(
@@ -33,7 +33,7 @@ export function extractGoodCover(manifestations) {
 /**
  * Enriches parent to follow thea same format as its relations
  * @param parentWork
- * @return {(*&{relationType: string, cover: (*|*[]), generation: number, hostPublication: (*|{})})|{}}
+ * @returns {(*&{relationType: string, cover: (*|*[]), generation: number, hostPublication: (*|{})})|{}}
  */
 export function getParentRelationInput(parentWork) {
   if (!parentWork || isEmpty(parentWork)) {
@@ -54,7 +54,7 @@ export function getParentRelationInput(parentWork) {
  *
  * @param a
  * @param b
- * @return {number}
+ * @returns {number}
  */
 export function sortByDate(a, b) {
   const collator = Intl.Collator("da");
@@ -69,7 +69,7 @@ export function sortByDate(a, b) {
  * Used by {@link enrichArticleSeries} and {@link enrichDebateArticle} because the same logic is used
  * @param parentWork
  * @param articleRelevant
- * @return {*}
+ * @returns {React.JSX.Element}
  */
 function enrichAnyArticleTypeSeries(parentWork, articleRelevant) {
   const parentRelationInput = getParentRelationInput(parentWork);
@@ -92,7 +92,7 @@ function enrichAnyArticleTypeSeries(parentWork, articleRelevant) {
  *  Used in {@link enrichBySpecificWorkType}
  * @param manifestations
  * @param parentWork
- * @return {*[]}
+ * @returns {*[]}
  */
 export function enrichArticleSeries(manifestations, parentWork) {
   const articleRelevant = manifestations.filter((manifestation) =>
@@ -108,7 +108,7 @@ export function enrichArticleSeries(manifestations, parentWork) {
  * Movies include relationTypes 'isAdaptationOf'
  *  Used in {@link enrichBySpecificWorkType}
  * @param manifestations
- * @return {*[]}
+ * @returns {*[]}
  */
 export function enrichMovie(manifestations) {
   return manifestations.filter((manifestation) =>
@@ -121,7 +121,7 @@ export function enrichMovie(manifestations) {
  *  Used in {@link enrichBySpecificWorkType}
  * @param manifestations
  * @param parentWork
- * @return {*[]}
+ * @returns {*[]}
  */
 export function enrichDebateArticle(manifestations, parentWork) {
   const debateArticleRelevant = manifestations.filter((manifestation) =>
@@ -137,7 +137,7 @@ export function enrichDebateArticle(manifestations, parentWork) {
  * Literature include relationTypes 'hasAdaptation'
  *  Used in {@link enrichBySpecificWorkType}
  * @param manifestations
- * @return {*[]}
+ * @returns {*[]}
  */
 export function enrichLiterature(manifestations) {
   return manifestations.filter((manifestation) =>
@@ -148,7 +148,7 @@ export function enrichLiterature(manifestations) {
 /**
  * Returns a relationTypeEnum based on relationType of manifestation
  * @param manifestation
- * @return {*}
+ * @returns {React.JSX.Element}
  */
 export function mapRelationWorkTypes(manifestation) {
   return RelationTypeEnum[manifestation?.relationType?.toUpperCase()]?.workType;
@@ -159,7 +159,7 @@ export function mapRelationWorkTypes(manifestation) {
  *  enriched with relationType and linkToWork
  * @param manifestations
  * @param work
- * @return {*}
+ * @returns {React.JSX.Element}
  */
 export function enrichBySpecificWorkType(manifestations, work) {
   const relationWorkTypes = uniq(manifestations.map(mapRelationWorkTypes));
@@ -191,7 +191,7 @@ export function enrichBySpecificWorkType(manifestations, work) {
  * Removes the ownerWork and relations of an object
  *  Used in {@link parseRelations}
  * @param entry
- * @return {*}
+ * @returns {React.JSX.Element}
  */
 export function filterFieldsInElement(entry) {
   delete entry.ownerWork;
@@ -207,7 +207,7 @@ export function filterFieldsInElement(entry) {
  * @param manifestation
  * @param relationType
  * @param generation
- * @return {*}
+ * @returns {React.JSX.Element}
  */
 export function parseSingleRelation(manifestation, relationType, generation) {
   const workTitles = manifestation?.ownerWork?.titles;
@@ -238,7 +238,7 @@ export function parseSingleRelation(manifestation, relationType, generation) {
  *  3 manifestations
  * @param relationTypeArray
  * @param passedFunction
- * @return {*|*[]}
+ * @returns {*|*[]}
  */
 export function parseSingleRelationObject(
   relationTypeArray,
@@ -256,7 +256,7 @@ export function parseSingleRelationObject(
  * Centralise logic for creating relations as array
  * @param relations
  * @param parser
- * @return {FlatArray<*, *>[]}
+ * @returns {FlatArray<*, *>[]}
  */
 export function getRelationsAsArray(
   relations,
@@ -277,7 +277,7 @@ export function getRelationsAsArray(
  * Gives the flattened relations and parses them to
  *  provide them with e.g. relationType and ownerWork workId
  * @param relations
- * @return {*[]}
+ * @returns {*[]}
  */
 function getAllWorksWithRelationTypeAndWorkId(relations) {
   const relationsArray_generation_1 = getRelationsAsArray(relations);
@@ -307,7 +307,7 @@ function getAllWorksWithRelationTypeAndWorkId(relations) {
  * Filter unique relations by workId and relationType
  *  TODO: Figure out if this is the business logic we need?!
  * @param manifestations
- * @return {*}
+ * @returns {React.JSX.Element}
  */
 export function getUniqWorkWithWorkId(manifestations) {
   return uniqWith(
@@ -328,7 +328,7 @@ export function getUniqWorkWithWorkId(manifestations) {
  *  - {@link flattenGroupedSortedManifestations (from manifestationFactoryUtils}}
  *  - {@link filterFieldsInElement}
  * @param work
- * @return {*}
+ * @returns {React.JSX.Element}
  */
 export function parseRelations(work) {
   return chainFunctions([
@@ -345,7 +345,7 @@ export function parseRelations(work) {
  * Returns the factory given work
  * - flatRelations derived from {@link parseRelations}
  * @param work
- * @return {{groupedRelations, groupedByRelationWorkTypes, flatRelations: *}}
+ * @returns {{groupedRelations, groupedByRelationWorkTypes, flatRelations: *}}
  */
 export function workRelationsWorkTypeFactory(work) {
   const parsedRelations = work && parseRelations(work);

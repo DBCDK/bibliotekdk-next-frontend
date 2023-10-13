@@ -173,8 +173,8 @@ const CATEGORY_COLOR = {
  * Function to trim keys for translations
  * lowercase + space replaced with '-'
  *
- * @param {*} str
- * @returns
+ * @param {string} str
+ * @returns {string}
  */
 export function trim(str) {
   return str.replace(/\s/g, "-")?.toLowerCase() || str;

@@ -14,8 +14,7 @@ import Collapse from "react-bootstrap/Collapse";
  * @param router
  * @param ForceshowMe
  *  Needed for testing
- * @returns {JSX.Element}
- * @constructor
+ * @returns {React.JSX.Element}
  */
 export function SearchFeedBackWrapper({ datacollect, router, ForceshowMe }) {
   const [showContainer, setShowContainer] = useState(ForceshowMe || false);
@@ -110,8 +109,7 @@ export function SearchFeedBackWrapper({ datacollect, router, ForceshowMe }) {
  * Thumbs up and down component - shown initially until one or the other is clicked
  * @param onThumbsUp
  * @param onThumbsDown
- * @returns {JSX.Element}
- * @constructor
+ * @returns {React.JSX.Element}
  */
 export function SearchFeedBack({ onThumbsUp, onThumbsDown }) {
   return (
@@ -166,8 +164,7 @@ export function SearchFeedBack({ onThumbsUp, onThumbsDown }) {
 
 /**
  * Feedback thankyou  - shown on submit from thumbsdown
- * @returns {JSX.Element}
- * @constructor
+ * @returns {React.JSX.Element}
  */
 export function SearchFeedBackImprove() {
   return (
@@ -192,8 +189,7 @@ export function SearchFeedBackImprove() {
 
 /**
  * Thankyou component - shown on thumbUp
- * @returns {JSX.Element}
- * @constructor
+ * @returns {React.JSX.Element}
  */
 export function SearchFeedBackThankyou() {
   return (
@@ -217,8 +213,7 @@ export function SearchFeedBackThankyou() {
 /**
  * Feedback form - shown on thumbsdown
  * @param onSubmitClick
- * @returns {JSX.Element}
- * @constructor
+ * @returns {React.JSX.Element}
  */
 export function SearchFeedBackForm({ onSubmitClick }) {
   const [hasTxt, setHasTxt] = useState(false);
