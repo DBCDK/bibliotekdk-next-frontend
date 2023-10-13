@@ -3,14 +3,13 @@ import styles from "./BookmarkDropDown.module.css";
 import Dropdown from "react-bootstrap/Dropdown";
 import Text from "@/components/base/text/Text";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { cyKey } from "@/utils/trim";
 import useBookmarks from "@/components/hooks/useBookmarks";
 import Icon from "@/components/base/icon/Icon";
 import BookmarkMedium from "@/public/icons/bookmark_small.svg";
 import { formatMaterialTypesToPresentation } from "@/lib/manifestationFactoryUtils";
 import { createEditionText } from "../../details/utils/details.utils";
-import isEmpty from "lodash/isEmpty";
 import upperFirst from "lodash/upperFirst";
 
 export function BookMarkMaterialSelector({
@@ -24,9 +23,17 @@ export function BookMarkMaterialSelector({
 }) {
   const { bookmarks, setBookmark, isLoading } = useBookmarks();
   const [active, setActive] = useState(false);
-  const [options, setOptions] = useState(materialTypes.map((mat) => mat));
+  const [options, setOptions] = useState(
+    materialTypes.map((mat) => formatMaterialTypesToPresentation(mat))
+  );
+  const isOpen = useRef(false);
 
   useEffect(() => {
+    if (isOpen.current) {
+      // on't change options if dropdown is open. Wait for close event.
+      return;
+    }
+
     revalidateEditions();
   }, [editions, bookmarks]);
 
@@ -43,7 +50,7 @@ export function BookMarkMaterialSelector({
         bookmarkIndex = bookmarks?.findIndex(
           (bookm) =>
             bookm.key ===
-            materialId + formatMaterialTypesToPresentation(options)
+            materialId + formatMaterialTypesToPresentation(options[0])
         );
       }
       setActive(bookmarkIndex !== -1);
@@ -51,7 +58,9 @@ export function BookMarkMaterialSelector({
   }, [options]);
 
   const revalidateEditions = () => {
-    const defaultOptions = materialTypes.map((mat) => mat);
+    const defaultOptions = materialTypes.map((mat) =>
+      formatMaterialTypesToPresentation(mat)
+    );
 
     if (!editions) {
       // Not needed to look for aditional dropdown items
@@ -96,7 +105,7 @@ export function BookMarkMaterialSelector({
         title,
       };
     } else {
-      // normal logic
+      // Normal logic
       item = {
         key: materialId + formatMaterialTypesToPresentation(material),
         materialId: materialId,
@@ -110,6 +119,8 @@ export function BookMarkMaterialSelector({
   };
 
   const onDropdownToggle = (event) => {
+    isOpen.current = event;
+
     if (event === false) {
       // On close - Empty options and revalidate editions - effect subscribes to options changes
       // setOptions(materialTypes.map((mat) => mat));
