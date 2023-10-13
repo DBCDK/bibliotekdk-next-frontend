@@ -224,7 +224,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
   /**
    * Returns localbookmarks sorted by users preference
    */
-  function sortedBookMarks(bookmarksToSort) {
+  function sortBookMarks(bookmarksToSort) {
     return sortBy === "createdAt"
       ? createdAtSort(bookmarksToSort)
       : titleSort(bookmarksToSort);
@@ -241,14 +241,23 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     return currentPageBookmarks;
   }
 
+  // sort local bookmarks
+  const sortedLocalBookmarks = useMemo(() => {
+    return sortBookMarks(localBookmarks);
+  }, [localBookmarks, sortBy]);
+
+  const sortedGlobalBookmarks = useMemo(() => {
+    return sortBookMarks(globalBookmarks);
+  }, [globalBookmarks,sortBy]);
+
   return {
     setBookmark,
     deleteBookmarks,
     clearLocalBookmarks,
     bookmarks: isAuthenticated ? globalBookmarks : localBookmarks,
     paginatedBookmarks: isAuthenticated
-      ? currenPageBookmark(sortedBookMarks(globalBookmarks))
-      : currenPageBookmark(sortedBookMarks(localBookmarks)),
+      ? currenPageBookmark(sortedGlobalBookmarks)
+      : currenPageBookmark(sortedLocalBookmarks),
     isLoading:
       (typeof localBookmarks === "undefined" && !error) ||
       (isLoadingGlobalBookmarks && !globalBookmarksError),
