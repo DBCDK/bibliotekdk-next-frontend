@@ -55,7 +55,7 @@ export function BookMarkMaterialSelector({
       }
       setActive(bookmarkIndex !== -1);
     }
-  }, [options]);
+  }, [options, isOpen.current]);
 
   const revalidateEditions = () => {
     const defaultOptions = materialTypes.map((mat) =>
