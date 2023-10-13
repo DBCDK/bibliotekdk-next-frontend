@@ -119,11 +119,11 @@ export function BookMarkMaterialSelector({
   };
 
   const onDropdownToggle = (event) => {
+    // Store open state in ref, so we can wait with updating options untill dropdown is closed
     isOpen.current = event;
 
     if (event === false) {
       // On close - Empty options and revalidate editions - effect subscribes to options changes
-      // setOptions(materialTypes.map((mat) => mat));
       revalidateEditions();
     }
   };
