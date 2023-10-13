@@ -49,8 +49,8 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     isAuthenticated &&
       bookmarkFragments.fetchAll({
         sortBy,
-        limit: isMobile ? currentPage * itemsPerPage : itemsPerPage,
-        offset: isMobile ? 0 : (currentPage - 1) * itemsPerPage,
+        // limit: isMobile ? currentPage * itemsPerPage : itemsPerPage,
+        // offset: isMobile ? 0 : (currentPage - 1) * itemsPerPage,
       })
   );
   const bookmarkMutation = useMutate();

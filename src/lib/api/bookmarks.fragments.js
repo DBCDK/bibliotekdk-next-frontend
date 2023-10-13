@@ -1,9 +1,9 @@
-export const fetchAll = ({ sortBy, limit, offset }) => {
+export const fetchAll = ({sortBy}) => {
   return {
     query: `
-    query userBookmarks($sortBy: BookMarkOrderBy, $limit:PaginationLimit, $offset: Int) {
+    query userBookmarks($sortBy: BookMarkOrderBy) {
       user {
-        bookmarks(orderBy:$sortBy, limit:$limit, offset: $offset) {
+        bookmarks(orderBy:$sortBy) {
           hitcount
           result {
             bookmarkId
@@ -16,9 +16,7 @@ export const fetchAll = ({ sortBy, limit, offset }) => {
     }
     `,
     variables: {
-      sortBy,
-      limit,
-      offset,
+      sortBy
     },
   };
 };
