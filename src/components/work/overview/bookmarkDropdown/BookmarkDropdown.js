@@ -15,7 +15,7 @@ import upperFirst from "lodash/upperFirst";
 export function BookMarkMaterialSelector({
   materialTypes,
   workId,
-  materialId, // A reference to the bookmark materialId - workId or pid
+  materialId = workId, // A reference to the bookmark materialId - workId or pid
   size = { w: 7, h: 7 },
   className,
   title,
