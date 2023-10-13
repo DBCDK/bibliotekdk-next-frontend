@@ -55,10 +55,11 @@ export function getWorkUrlForProfile({
   pid = "",
   materialId = "",
   materialType = "",
+  scrollToEdition = true,
 }) {
   // pid is given
   if (!isEmpty(pid) && isPid(pid)) {
-    return `/linkme.php?rec.id=${pid}`;
+    return `/linkme.php?rec.id=${pid}&scrollToEdition=${scrollToEdition}`;
   }
   // @TODO - materialId may be a localid - that is NOT a faust number
   // we check if given id is 8 digits - as a faust always is .. but .. is that good enough ..

@@ -47,7 +47,6 @@ function getOclcId(ccl) {
 
 function LinkmePhp() {
   const router = useRouter();
-
   const isOclc = router?.query?.["ref"] === "worldcat";
   const { data, isLoading } = useData(
     router?.query?.["rec.id"]
@@ -74,11 +73,14 @@ function LinkmePhp() {
   const creators = data?.work?.creators;
   const pathname = getCanonicalWorkUrl({ title, creators, id: workId });
 
+  // do we scroll to edition ? - this one is for loans on profile page where we do NOT want
+  // to scroll to specific edition - see @components/profile/utils.js::getWorkUrlForProfile
+  const scrollToEdition = router?.query?.["scrollToEdition"] || false;
   // if all is well - redirect to work page
   if (workId && data?.work) {
     const routerPath = {
       pathname: pathname,
-      hash: router.query["rec.id"],
+      ...(scrollToEdition && { hash: router.query["rec.id"] }),
     };
     router.push(routerPath);
   } else {

@@ -668,6 +668,7 @@ const MaterialRow = (props) => {
                       pid,
                       materialId,
                       materialType,
+                      scrollToEdition: !(type === "LOAN"),
                     })}
                     className={styles.blackUnderline}
                   >
