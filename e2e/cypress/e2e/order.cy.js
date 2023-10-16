@@ -52,7 +52,7 @@ describe("Order", () => {
     cy.getConsoleEntry("submitOrder").then((entry) => {
       expect(entry[1]).to.deep.equal({
         pids: ["some-pid-1", "some-pid-2"],
-        pickUpBranch: "branches.result[0].branchId",
+        pickUpBranch: "1237",
         userParameters: {
           userName: "Some Name",
           userMail: "some@mail.dk",
@@ -145,7 +145,7 @@ describe("Order", () => {
       cy.getConsoleEntry("submitOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
           pids: ["some-pid-4"],
-          pickUpBranch: "branches.result[0].branchId",
+          pickUpBranch: "1237",
           userParameters: {
             userName: "Some Name",
             userMail: "some@mail.dk",
@@ -190,7 +190,7 @@ describe("Order", () => {
       cy.getConsoleEntry("submitOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
           pids: ["some-pid-5"],
-          pickUpBranch: "branches.result[0].branchId",
+          pickUpBranch: "1235",
           userParameters: {
             userName: "Some Name",
             userMail: "some@mail.dk",
@@ -300,7 +300,7 @@ describe("Order", () => {
       cy.getConsoleEntry("submitOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
           pids: ["some-pid-5"],
-          pickUpBranch: "branches.result[0].branchId",
+          pickUpBranch: "1237",
           userParameters: {
             userName: "Some Name",
             userMail: "some@mail.dk",

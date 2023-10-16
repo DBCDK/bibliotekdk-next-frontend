@@ -2420,8 +2420,8 @@
         "en": "Save information for next order"
       },
       "show-pickup-branch": {
-        "da": "Vis afhentningssted for %s",
-        "en": "Show pickup location for %s"
+        "da": "Vis afhentningssteder for:",
+        "en": "Show pickup locations for:"
       },
       "order-failed-user-no-longer-exists": {
         "da": "Biblioteket kan ikke bekræfte de låneroplysninger, du har gemt på din profil. Dette kan fx skyldes, at du har fået nyt login eller ikke længere er låner. Kontakt biblioteket, hvis du mener dette er en fejl.",

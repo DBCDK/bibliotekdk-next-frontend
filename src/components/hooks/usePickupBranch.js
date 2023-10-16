@@ -27,7 +27,8 @@ export default function usePickupBranch({ pids }) {
   );
 
   // scope
-  const defaultUserPickupBranch = orderPolicy?.user?.agency?.result[0];
+  const defaultUserPickupBranch = orderPolicy?.user?.agencies[0]?.result[0];
+  //console.log("defaultUserPickupBranch", defaultUserPickupBranch);
 
   // fetch user parameters for the selected pickup
   // OBS! Pickup can differ from users own branches.
@@ -49,6 +50,7 @@ export default function usePickupBranch({ pids }) {
     selectedBranch?.branchId &&
     !selectedBranch?.orderPolicy;
 
+  //console.log("selectedBranch?.branchId ", selectedBranch?.branchId);
   // Fetch orderPolicy for selected branch, if not already exist
   const { data: selectedBranchPolicyData, isLoading: branchPolicyIsLoading } =
     useData(

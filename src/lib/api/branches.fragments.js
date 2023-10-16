@@ -139,8 +139,10 @@ export function checkBlockedUser({ branchId }) {
           statusCode
         }
         result {
+          borrowerCheck
           agencyName
         	branchWebsiteUrl
+
         }
       }
       monitor(name: "bibdknext_CheckBlockedUser")
