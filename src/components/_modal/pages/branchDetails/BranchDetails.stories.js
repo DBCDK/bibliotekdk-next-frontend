@@ -14,16 +14,29 @@ const exportedObject = {
 export default exportedObject;
 
 const {
-  USER_5,
   BRANCH_5,
+  BRANCH_5_1,
+  BRANCH_5_2,
   BRANCH_6,
   BRANCH_7,
-  BRANCH_8,
+  BRANCH_7_1,
+  BRANCH_7_2,
+  BRANCH_7_3,
   DEFAULT_STORY_PARAMETERS,
   ALL_WORKS,
   ALL_MANIFESTATIONS,
-  TODAY,
 } = automock_utils();
+
+const branches = [
+  BRANCH_5,
+  BRANCH_5_1,
+  BRANCH_5_2,
+  BRANCH_6,
+  BRANCH_7,
+  BRANCH_7_1,
+  BRANCH_7_2,
+  BRANCH_7_3,
+];
 
 function LocalizationsComponentBuilder({
   title,
@@ -91,8 +104,6 @@ LocalizationsBaseFlow.story = merge({}, DEFAULT_STORY_PARAMETERS, {
               : null;
             // Only on branchId, branchName, agencyId, agencyName
             const q = variables?.q;
-
-            const branches = [BRANCH_5, BRANCH_6, BRANCH_7, BRANCH_8];
 
             const res = branches
               ?.filter((b) => (agencyId ? b.agencyId === agencyId : true))

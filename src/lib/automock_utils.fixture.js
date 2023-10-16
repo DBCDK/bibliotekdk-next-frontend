@@ -426,12 +426,13 @@ const BRANCH_4 = {
   agencyName: "BalleRipRapRup",
 };
 const BRANCH_5 = {
-  name: "Test Bib - Branch with holdings",
+  name: "Ripper Bib - Branch with 2 holdings on shelf",
+  branchId: "789123",
+  agencyName: "BalleRipRapRup",
+  agencyId: "789120",
   orderPolicy: {
     orderPossible: true,
   },
-  agencyId: "789120",
-  branchId: "789123",
   holdingStatus: {
     branchId: "789123",
     expectedDelivery: TODAY,
@@ -440,65 +441,65 @@ const BRANCH_5 = {
         expectedDelivery: TODAY,
         status: HoldingStatusEnum.ON_SHELF,
       },
+      {
+        expectedDelivery: TODAY,
+        status: HoldingStatusEnum.ON_SHELF,
+      },
     ],
   },
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "balleripraprup.dekaa",
-  agencyName: "BalleRipRapRup",
 };
-const BRANCH_6 = {
-  name: "Test Bib - Branch with no holdings",
+
+const BRANCH_5_1 = {
+  name: "Rapper Bib - Branch with holdings on loan",
+  branchId: "789124",
+  agencyName: "BalleRipRapRup",
+  agencyId: "789120",
   orderPolicy: {
     orderPossible: true,
   },
-  agencyId: "789120",
-  branchId: "789124",
   holdingStatus: {
     branchId: "789124",
     expectedDelivery: TODAY,
     holdingItems: [
       {
         expectedDelivery: TODAY,
-        status: HoldingStatusEnum.ON_SHELF,
+        status: HoldingStatusEnum.ON_LOAN,
       },
     ],
   },
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "balleripraprup.dekaa",
-  agencyName: "BalleRipRapRup",
 };
-
-const BRANCH_7 = {
-  name: "Test Bib - Branch with no holdings",
+const BRANCH_5_2 = {
+  name: "Rupper Bib - Branch with no holdings but is public library",
+  branchId: "789125",
+  agencyName: "BalleRipRapRup",
+  agencyId: "789120",
   orderPolicy: {
     orderPossible: true,
   },
-  agencyId: "891230",
-  branchId: "891234",
   holdingStatus: {
-    branchId: "891234",
+    branchId: "789125",
     expectedDelivery: TODAY,
-    holdingItems: [
-      {
-        expectedDelivery: TODAY,
-        status: HoldingStatusEnum.ON_SHELF,
-      },
-    ],
+    holdingItems: [],
   },
   pickupAllowed: true,
   digitalCopyAccess: true,
-  branchWebsiteUrl: "herligelev.dekaa",
-  agencyName: "HerligeLev",
+  branchWebsiteUrl: "balleripraprup.dekaa",
 };
-const BRANCH_8 = {
-  name: "Test Bib - Branch with holdings",
+
+const BRANCH_6 = {
+  name: "Grull Ly - Branch with no holdings, is public library but agency says holdings",
+  branchId: "765432",
+  agencyName: "Grullinger",
+  agencyId: "765430",
   orderPolicy: {
     orderPossible: true,
   },
-  agencyId: "765430",
-  branchId: "765432",
   holdingStatus: {
     branchId: "765432",
     expectedDelivery: TODAY,
@@ -507,7 +508,77 @@ const BRANCH_8 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "grullinger.dekaa",
-  agencyName: "Grullinger",
+};
+
+const BRANCH_7 = {
+  name: "Herlige Lev FFU - Branch with FFU holdings",
+  branchId: "891234",
+  agencyId: "891230",
+  agencyName: "United FFUs",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  holdingStatus: {
+    branchId: "891234",
+    expectedDelivery: TODAY,
+    holdingItems: [],
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "herligelev.dekaa",
+};
+
+const BRANCH_7_1 = {
+  name: "Senge Loese FFU - Branch with FFU holdings",
+  branchId: "891235",
+  agencyName: "United FFUs",
+  agencyId: "891230",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  holdingStatus: {
+    branchId: "891235",
+    expectedDelivery: TOMORROW,
+    holdingItems: [],
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "Sengeloese.dekaa",
+};
+
+const BRANCH_7_2 = {
+  name: "Hede Huse FFU - Branch with FFU holdings",
+  branchId: "891236",
+  agencyName: "United FFUs",
+  agencyId: "891230",
+  orderPolicy: {
+    orderPossible: false,
+  },
+  holdingStatus: {
+    branchId: "891236",
+    expectedDelivery: NEVER,
+    holdingItems: [],
+  },
+  pickupAllowed: false,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "hedehuse.dekaa",
+};
+const BRANCH_7_3 = {
+  name: "Ulvs Hale FFU - Branch with FFU holdings",
+  branchId: "891237",
+  agencyName: "United FFUs",
+  agencyId: "891230",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  holdingStatus: {
+    branchId: "891237",
+    expectedDelivery: null,
+    holdingItems: [],
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "hedehuse.dekaa",
 };
 
 // A user with some agencies
@@ -995,9 +1066,13 @@ export default function automock_utils() {
     BRANCH_3,
     BRANCH_4,
     BRANCH_5,
+    BRANCH_5_1,
+    BRANCH_5_2,
     BRANCH_6,
     BRANCH_7,
-    BRANCH_8,
+    BRANCH_7_1,
+    BRANCH_7_2,
+    BRANCH_7_3,
     USER_1,
     USER_2,
     USER_3,
