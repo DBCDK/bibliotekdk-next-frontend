@@ -22,7 +22,7 @@ function filteredWork(work, selectedPids) {
     ...work,
     manifestations: { all: manifestations },
     materialTypes: materialTypes?.map((materialType) => {
-      return { specific: materialType };
+      return { materialTypeSpecific: { display: materialType } };
     }),
   };
 }

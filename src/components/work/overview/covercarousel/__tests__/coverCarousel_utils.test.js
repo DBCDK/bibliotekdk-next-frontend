@@ -95,22 +95,22 @@ describe("getTextDescription", () => {
 const manifestations = [
   {
     pid: 1,
-    materialTypes: [{ specific: "bog" }],
+    materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
     cover: { origin: "moreinfo" },
   },
   {
     pid: 2,
-    materialTypes: [{ specific: "bog" }],
+    materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
     cover: { origin: "moreinfo" },
   },
   {
     pid: 3,
-    materialTypes: [{ specific: "bog" }],
+    materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
     cover: { origin: "default" },
   },
   {
     pid: 4,
-    materialTypes: [{ specific: "bog" }],
+    materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
     cover: { origin: "default" },
   },
 ];
@@ -126,12 +126,12 @@ describe("getManifestationsWithCorrectCover", () => {
       manifestationsWithCover: [
         {
           pid: 1,
-          materialTypes: [{ specific: "bog" }],
+          materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
           cover: { origin: "moreinfo" },
         },
         {
           pid: 2,
-          materialTypes: [{ specific: "bog" }],
+          materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
           cover: { origin: "moreinfo" },
         },
       ],
@@ -149,7 +149,7 @@ describe("getManifestationsWithCorrectCover", () => {
       manifestationsWithCover: [
         {
           pid: 1,
-          materialTypes: [{ specific: "bog" }],
+          materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
           cover: { origin: "moreinfo" },
         },
       ],
@@ -167,7 +167,7 @@ describe("getManifestationsWithCorrectCover", () => {
       manifestationsWithCover: [
         {
           pid: 3,
-          materialTypes: [{ specific: "bog" }],
+          materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
           cover: { origin: "default" },
         },
       ],
