@@ -3347,9 +3347,9 @@
         "da": "De folkebiblioteker, hvor du er låner, hentes automatisk. Så hvis biblioteket ikke vises nedenfor er du ikke registreret som låner på biblioteket. Uddannelses- og forskningsbiblioteker tilføjes manuelt, via linket nedenfor.",
         "en": "The public libraries where you are a borrower are automatically downloaded. So if the library does not appear below, you are not registered as a borrower at the library. Educational and research libraries are added manually, via the link below."
       },
-      "libraries": {
-        "da": "Biblioteker",
-        "en": "Libraries"
+      "library": {
+        "da": "Bibliotek",
+        "en": "Library"
       },
       "libraryType": {
         "da": "Bibliotekstype",
