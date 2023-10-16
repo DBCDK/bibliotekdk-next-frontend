@@ -11,7 +11,6 @@
 .libraryInfo {
   display: grid;
   grid-template-columns: 3fr 3fr;
-  align-items: center;
   grid-gap: var(--pt2);
 }
 .libraryInfo p {
