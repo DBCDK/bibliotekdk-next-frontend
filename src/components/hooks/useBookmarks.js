@@ -229,7 +229,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
   /**
    * Returns localbookmarks sorted by users preference
    */
-  function sortBookMarks(bookmarksToSort) {
+  function sortBookmarks(bookmarksToSort) {
     return sortBy === "createdAt"
       ? createdAtSort(bookmarksToSort)
       : titleSort(bookmarksToSort);
@@ -248,12 +248,12 @@ const useBookmarksCore = ({ isMock = false, session }) => {
 
   // sort local bookmarks
   const sortedLocalBookmarks = useMemo(() => {
-    return sortBookMarks(localBookmarks);
+    return sortBookmarks(localBookmarks);
   }, [localBookmarks, sortBy]);
 
   // sort global bookmarks
   const sortedGlobalBookmarks = useMemo(() => {
-    return sortBookMarks(globalBookmarks);
+    return sortBookmarks(globalBookmarks);
   }, [globalBookmarks, sortBy]);
 
   return {
