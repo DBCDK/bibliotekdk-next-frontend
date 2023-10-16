@@ -10,6 +10,7 @@ export const fetchAll = ({ sortBy }) => {
             materialType
             materialId
             createdAt
+            workId
           }
         }
       }

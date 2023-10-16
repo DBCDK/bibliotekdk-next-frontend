@@ -883,6 +883,9 @@ const workSliderFragment = `fragment workSliderFragment on Work {
     main
     full
   }
+  materialTypes {
+    specific
+  }
   manifestations {
     mostRelevant {
       materialTypes {
