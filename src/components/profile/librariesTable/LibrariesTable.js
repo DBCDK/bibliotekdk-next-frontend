@@ -110,7 +110,7 @@ export default function LibrariesTable({ data, municipalityAgencyId }) {
       <>
         <div className={styles.headerRow}>
           <Text className={styles.headerItem}>
-            {Translate({ context: "profile", label: "libraries" })}
+            {Translate({ context: "profile", label: "library" })}
           </Text>
           <Text className={styles.headerItem}>
             {Translate({ context: "profile", label: "libraryType" })}
@@ -133,7 +133,7 @@ export default function LibrariesTable({ data, municipalityAgencyId }) {
       <thead>
         <tr className={styles.headerRow}>
           <th className={styles.headerItem}>
-            <Text>{Translate({ context: "profile", label: "libraries" })}</Text>
+            <Text>{Translate({ context: "profile", label: "library" })}</Text>
           </th>
           <th className={styles.headerItem}>
             <Text>
