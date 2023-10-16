@@ -39,6 +39,7 @@ import Notifications from "@/components/base/notifications/Notifications";
 import HelpHeader from "@/components/help/header";
 import FeedBackLink from "@/components/feedbacklink";
 import { SkipToMainLink } from "@/components/base/skiptomain/SkipToMain";
+import { Listener as FFUUserListener } from "@/components/ffu";
 
 import Head from "@/components/head";
 
@@ -192,10 +193,14 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
               <FeedBackLink />
               <Footer />
             </div>
+
+            {/* watch for FFU user logins - propt the users to create an bibdk account */}
+            <FFUUserListener />
           </Modal.Provider>
 
           {/* SetPickupBranch listens for users just logged in via adgangsplatformen */}
           <SetPickupBranch router={router} />
+
           <BookmarkSyncProvider />
         </SessionProvider>
       </SWRConfig>

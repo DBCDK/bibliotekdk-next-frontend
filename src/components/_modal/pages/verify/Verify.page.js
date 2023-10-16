@@ -31,7 +31,11 @@ export default function Verify({ modal, context }) {
   console.log("### verification", data, hasVerification, callbackUrl);
 
   function onMitIdLogin() {
-    const props = { accessToken: "hest", type: "FFU" };
+    const props = {
+      // accessToken: "38752b5be04b53b0260df70a47da83a409ff47a0", // testbruger
+      accessToken: "55c7f4245a46a51cbbe2f87bd7c871b3da2491a8", // mig
+      type: "FFU",
+    };
 
     // create or update session verfification process
     hasVerification

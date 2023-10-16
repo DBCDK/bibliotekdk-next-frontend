@@ -42,6 +42,8 @@ function useUserMock() {
     isLoading: false,
     error: null,
     isAuthenticated: true,
+    hasCulrUniqueId: true,
+    isCPRValidated: true,
     isCPRValidated: true,
     isLoggedIn: true,
     loanerInfo: { ...data, userParameters: { ...loggedInUser } },
@@ -62,7 +64,8 @@ function useUserImpl() {
   const { data, mutate } = useData(sessionFragments.session());
   const { data: session } = useSession();
   const sessionMutate = useMutate();
-  const isAuthenticated = !!session?.user?.uniqueId;
+  const isAuthenticated = !!session?.user?.userId;
+  const hasCulrUniqueId = !!session?.user?.uniqueId;
 
   const {
     data: userData,
@@ -71,8 +74,6 @@ function useUserImpl() {
     mutate: userMutate,
     isValidating,
   } = useData(isAuthenticated && userFragments.basic());
-
-  console.log("userData", userData);
 
   let loggedInUser = {};
   if (userData?.user) {
@@ -140,13 +141,14 @@ function useUserImpl() {
 
   //TODO give diffferent name
   const isGuestUser =
-    !isAuthenticated && Object.keys(loanerInfo?.userParameters).length > 0;
+    !hasCulrUniqueId && Object.keys(loanerInfo?.userParameters).length > 0;
 
   return {
     authUser: userData?.user || {},
     isLoading: userIsLoading,
     error: userDataError,
     isAuthenticated,
+    hasCulrUniqueId,
     isCPRValidated,
     loanerInfo,
     isGuestUser: isGuestUser,

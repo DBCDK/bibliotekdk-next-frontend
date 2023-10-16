@@ -25,13 +25,31 @@ export const options = {
     adgangsplatformen({
       clientId,
       clientSecret,
+      profile: async ({ profile }) => {
+        let id = null;
+
+        if (profile && profile.attributes && profile.attributes.userId) {
+          id = profile.attributes.userId;
+        }
+
+        if (profile && profile.attributes && profile.attributes.uniqueId) {
+          id = profile.attributes.uniqueId;
+        }
+
+        return { id };
+      },
     }),
   ],
-  debug: false,
+  debug: true,
   callbacks: {
     ...callbacks,
     session: async (...args) => {
+      console.log("###### args", args);
+
       let res = await callbacks.session(...args);
+
+      console.log("###### res", res);
+
       delete res?.user?.agencies;
       return res;
     },

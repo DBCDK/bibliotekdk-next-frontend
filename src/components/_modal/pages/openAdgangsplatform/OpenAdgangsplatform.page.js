@@ -17,17 +17,17 @@ export default function OpenAdgangsplatform({ modal, context }) {
   const { agencyName, title, text, agencyId, branchId, callbackUID } = context;
 
   const onLogin = () => {
-    console.log("modal push => verify", { agencyId, branchId, callbackUID });
+    // console.log("modal push => verify", { agencyId, branchId, callbackUID });
 
-    modal.push("verify", { agencyId, agencyName, branchId });
+    // modal.push("verify", { agencyId, agencyName, branchId });
 
-    // const callbackUrl = getCallbackUrl(branchId, callbackUID);
+    const callbackUrl = getCallbackUrl(branchId, callbackUID);
 
-    // signIn(
-    //   "adgangsplatformen",
-    //   { callbackUrl },
-    //   { agency: agencyId, force_login: 1 }
-    // );
+    signIn(
+      "adgangsplatformen",
+      { callbackUrl },
+      { agency: agencyId, force_login: 1 }
+    );
   };
 
   const submitting = false;

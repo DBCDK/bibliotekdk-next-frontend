@@ -24,6 +24,7 @@ export function basic() {
         address
         postalCode
         isCPRValidated
+        loggedInBranchId
         agencies {
           hitcount
           agencyUrl
