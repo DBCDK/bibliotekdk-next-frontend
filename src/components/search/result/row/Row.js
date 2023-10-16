@@ -124,7 +124,6 @@ export default function ResultRow({
 
   const materialTypes = filters.materialTypes;
   uniqueMaterialTypes.sort(sortMaterialTypesByFilter(materialTypes));
-
   return (
     <article className={styles.search}>
       <Link
@@ -217,7 +216,7 @@ export default function ResultRow({
             materialId={work?.workId}
             workId={work?.workId}
             materialTypes={uniqueMaterialTypes}
-            title={work?.titles?.full?.[0]}
+            title={work?.titles?.sort}
             size={{ w: 4, h: 4 }}
             editions={work?.manifestations?.mostRelevant}
           />

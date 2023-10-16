@@ -44,6 +44,9 @@ const MANIFESTATION_BASE = {
 
 const MANIFESTATION_1 = {
   ...MANIFESTATION_BASE,
+  titles: {
+    full: ["Hugo i Sølvskoven", "Begyndelsen"],
+  },
 };
 // Another manifestation that may be ordered via ILL
 const MANIFESTATION_2 = {
@@ -170,6 +173,7 @@ const MANIFESTATION_6 = {
 const MANIFESTATION_7 = {
   ...MANIFESTATION_BASE,
   pid: "some-pid-7",
+  titles: { full: ["Lær at læse med Hugo og Rita 1"] },
   materialTypes: [
     {
       specific: "ebog",
@@ -193,12 +197,12 @@ const MANIFESTATION_7 = {
 const MANIFESTATION_8 = {
   ...MANIFESTATION_BASE,
   pid: "some-pid-8",
+  titles: { full: ["Lær at læse med Hugo og Rita 2"] },
   materialTypes: [
     {
       specific: "bog",
     },
   ],
-  titles: [{ full: "Lær at læse med Hugo og Rita" }],
   workTypes: ["LITERATURE"],
   tableOfContents: {
     heading: "Kapitler",
@@ -214,12 +218,12 @@ const MANIFESTATION_8 = {
 const MANIFESTATION_9 = {
   ...MANIFESTATION_BASE,
   pid: "some-pid-9",
+  titles: { full: ["Lær at læse med Hugo og Rita 3"] },
   materialTypes: [
     {
       specific: "bog",
     },
   ],
-  titles: [{ full: "Lær at læse med Hugo og Rita" }],
   workTypes: ["LITERATURE"],
   tableOfContents: {
     heading: null,
@@ -271,114 +275,137 @@ const ALL_MANIFESTATIONS = [
   MANIFESTATION_10,
 ];
 
+const WORK_1 = {
+  workId: "some-work-id-1",
+  manifestations: {
+    all: [MANIFESTATION_1, MANIFESTATION_2, MANIFESTATION_3],
+    mostRelevant: [MANIFESTATION_1, MANIFESTATION_2, MANIFESTATION_3],
+  },
+  workTypes: ["LITERATURE"],
+  titles: {
+    full: ["Hugo i Sølvskoven", "Begyndelsen"],
+  },
+  creators: [{ display: "Børge 'Linoleum' Skovgulv Gummigulv" }],
+  materialTypes: [{ specific: "bog" }],
+  fictionNonfiction: { display: "skønlitteratur", code: "FICTION" },
+  genreAndForm: ["roman"],
+};
+
+const WORK_2 = {
+  workId: "some-work-id-2",
+  manifestations: { all: [MANIFESTATION_4], mostRelevant: [MANIFESTATION_4] },
+  workTypes: ["ARTICLE"],
+  materialTypes: [{ specific: "avisartikel" }],
+  fictionNonfiction: { display: "skønlitteratur", code: "FICTION" },
+  genreAndForm: [],
+};
+
+const WORK_3 = {
+  workId: "some-work-id-3",
+  manifestations: { all: [MANIFESTATION_5], mostRelevant: [MANIFESTATION_5] },
+  workTypes: ["PERIODICA"],
+  fictionNonfiction: null,
+  genreAndForm: ["roman"],
+};
+
+const WORK_4 = {
+  workId: "some-work-id-4",
+  manifestations: { all: [MANIFESTATION_7], mostRelevant: [MANIFESTATION_7] },
+  workTypes: ["LITERATURE"],
+  titles: {
+    full: [
+      "Hugo i Sølvskoven 3½",
+      "Ritas mellemværende i Gulvskoven med Grullerne",
+    ],
+  },
+  creators: [{ display: "Børge 'Linoleum' Skovgulv Gummigulv" }],
+  materialTypes: [
+    {
+      specific: "bog",
+    },
+  ],
+  relations: {
+    continues: [MANIFESTATION_1, MANIFESTATION_2, MANIFESTATION_3],
+    continuedIn: [MANIFESTATION_4, MANIFESTATION_5, MANIFESTATION_6],
+    hasAdaptation: [],
+    isAdaptationOf: [],
+    discusses: [],
+    discussedIn: [],
+  },
+};
+
+const WORK_5 = {
+  workId: "some-work-id-5",
+  titles: {
+    full: ["Hugo i Sølvskoven"],
+  },
+  creators: [{ display: "Linoleum Gummigulv" }],
+  manifestations: {
+    all: [
+      MANIFESTATION_1,
+      MANIFESTATION_2,
+      MANIFESTATION_3,
+      MANIFESTATION_4,
+      MANIFESTATION_5,
+      MANIFESTATION_6,
+      MANIFESTATION_7,
+    ],
+    mostRelevant: [
+      MANIFESTATION_1,
+      MANIFESTATION_2,
+      MANIFESTATION_3,
+      MANIFESTATION_4,
+      MANIFESTATION_5,
+      MANIFESTATION_6,
+      MANIFESTATION_7,
+    ],
+  },
+};
+
+const WORK_6 = {
+  workId: "some-work-id-6",
+  titles: { full: ["Lær at læse med Hugo og Rita"] },
+  creators: [{ display: "Linoleum Gummigulv" }],
+  manifestations: {
+    mostRelevant: [MANIFESTATION_9, MANIFESTATION_8],
+    all: [MANIFESTATION_9, MANIFESTATION_8],
+  },
+};
+
+const WORK_7 = {
+  workId: "some-work-id-7",
+  titles: { full: ["Lær at læse med Hugo og Rita 2"] },
+  creators: [{ display: "Linoleum Gummigulv" }],
+  manifestations: {
+    mostRelevant: [MANIFESTATION_9],
+    all: [MANIFESTATION_9],
+  },
+  materialTypes: [{ specific: "bog" }],
+};
+
+const WORK_8 = {
+  workId: "some-work-id-8",
+  titles: { full: ["Lær at læse med Hugo og Rita 3"] },
+  creators: [{ display: "Linoleum Gummigulv" }],
+  manifestations: {
+    mostRelevant: [MANIFESTATION_10],
+    all: [MANIFESTATION_10],
+  },
+};
+
 const ALL_WORKS = [
   // A work that has physical manifestations, two of them can be loaned via ILL
-  {
-    workId: "some-work-id-1",
-    manifestations: {
-      all: [MANIFESTATION_1, MANIFESTATION_2, MANIFESTATION_3],
-      mostRelevant: [MANIFESTATION_1, MANIFESTATION_2, MANIFESTATION_3],
-    },
-    workTypes: ["LITERATURE"],
-    fictionNonfiction: { display: "skønlitteratur", code: "FICTION" },
-    genreAndForm: ["roman"],
-  },
+  WORK_1,
   // A work that is an indexed periodica article
-  {
-    workId: "some-work-id-2",
-    manifestations: { all: [MANIFESTATION_4], mostRelevant: [MANIFESTATION_4] },
-    workTypes: ["ARTICLE"],
-    fictionNonfiction: { display: "skønlitteratur", code: "FICTION" },
-    genreAndForm: [],
-  },
+  WORK_2,
   // A work that is a periodica
-  {
-    workId: "some-work-id-3",
-    manifestations: { all: [MANIFESTATION_5], mostRelevant: [MANIFESTATION_5] },
-    workTypes: ["PERIODICA"],
-    fictionNonfiction: null,
-    genreAndForm: ["roman"],
-  },
+  WORK_3,
   // A work that is an ebog
-  {
-    workId: "some-work-id-4",
-    manifestations: { all: [MANIFESTATION_7], mostRelevant: [MANIFESTATION_7] },
-    workTypes: ["LITERATURE"],
-    titles: {
-      full: [
-        "Hugo i Sølvskoven 3½",
-        "Ritas mellemværende i Gulvskoven med Grullerne",
-      ],
-    },
-    creators: [{ display: "Børge 'Linoleum' Skovgulv Gummigulv" }],
-    materialTypes: [
-      {
-        specific: "bog",
-      },
-    ],
-    relations: {
-      continues: [MANIFESTATION_1, MANIFESTATION_2, MANIFESTATION_3],
-      continuedIn: [MANIFESTATION_4, MANIFESTATION_5, MANIFESTATION_6],
-      hasAdaptation: [],
-      isAdaptationOf: [],
-      discusses: [],
-      discussedIn: [],
-    },
-  },
-  {
-    workId: "some-work-id-5",
-    titles: {
-      full: ["Hugo i Sølvskoven"],
-    },
-    creators: [{ display: "Linoleum Gummigulv" }],
-    manifestations: {
-      all: [
-        MANIFESTATION_1,
-        MANIFESTATION_2,
-        MANIFESTATION_3,
-        MANIFESTATION_4,
-        MANIFESTATION_5,
-        MANIFESTATION_6,
-        MANIFESTATION_7,
-      ],
-      mostRelevant: [
-        MANIFESTATION_1,
-        MANIFESTATION_2,
-        MANIFESTATION_3,
-        MANIFESTATION_4,
-        MANIFESTATION_5,
-        MANIFESTATION_6,
-        MANIFESTATION_7,
-      ],
-    },
-  },
-  {
-    workId: "some-work-id-6",
-    titles: { full: ["Lær at læse med Hugo og Rita"] },
-    creators: [{ display: "Linoleum Gummigulv" }],
-    manifestations: {
-      mostRelevant: [MANIFESTATION_9, MANIFESTATION_8],
-      all: [MANIFESTATION_9, MANIFESTATION_8],
-    },
-  },
-  {
-    workId: "some-work-id-7",
-    titles: { full: ["Lær at læse med Hugo og Rita 2"] },
-    creators: [{ display: "Linoleum Gummigulv" }],
-    manifestations: {
-      mostRelevant: [MANIFESTATION_9],
-      all: [MANIFESTATION_9],
-    },
-  },
-  {
-    workId: "some-work-id-8",
-    titles: { full: ["Lær at læse med Hugo og Rita 3"] },
-    creators: [{ display: "Linoleum Gummigulv" }],
-    manifestations: {
-      mostRelevant: [MANIFESTATION_10],
-      all: [MANIFESTATION_10],
-    },
-  },
+  WORK_4,
+  WORK_5,
+  WORK_6,
+  WORK_7,
+  WORK_8,
 ];
 
 const BORROWER_STATUS_TRUE = {
@@ -1058,6 +1085,14 @@ export default function automock_utils() {
     MANIFESTATION_9,
     MANIFESTATION_10,
     ALL_MANIFESTATIONS,
+    WORK_1,
+    WORK_2,
+    WORK_3,
+    WORK_4,
+    WORK_5,
+    WORK_6,
+    WORK_7,
+    WORK_8,
     ALL_WORKS,
     BORROWER_STATUS_TRUE,
     BORROWER_STATUS_FALSE,

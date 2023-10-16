@@ -9,10 +9,12 @@ export function setPersistUserDataValue({ persistUserData, userDataMutation }) {
   const q = {
     query: `
       mutation setPersistUserDataValue($persistUserData: Boolean!) {
+        users{
         setPersistUserDataValue(persistUserData: $persistUserData) {
          success
          errorMessage
         }
+      }
       } 
       `,
     variables: {

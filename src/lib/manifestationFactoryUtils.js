@@ -61,7 +61,14 @@ export function formatMaterialTypesToCypress(materialTypeArray) {
  * @returns {string}
  */
 export function formatMaterialTypesToPresentation(materialTypeArray) {
-  return materialTypeArray?.map((mat) => upperFirst(mat)).join(" / ");
+  if (!Array.isArray(materialTypeArray)) {
+    return materialTypeArray;
+  }
+
+  return (
+    materialTypeArray?.map((mat) => upperFirst(mat)).join(" / ") ||
+    materialTypeArray
+  );
 }
 
 /**
