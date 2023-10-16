@@ -154,7 +154,10 @@ const BookmarkPage = () => {
       newPage = totalPages;
     }
     setCurrentPage(newPage);
-    scrollToTop();
+    const isSmallScreen = breakpoint == "xs";
+    if (!isSmallScreen) {
+      scrollToTop();
+    }
   };
 
   const isAllSelected =
