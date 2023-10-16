@@ -26,7 +26,7 @@ describe("Details-Movie", () => {
 
     cy.get("[data-cy=section-title]")
       .find("p")
-      .should("have.text", "Seneste udgave, Film (dvd)");
+      .should("have.text", "Seneste udgave, film (dvd)");
   });
 });
 
@@ -58,6 +58,6 @@ describe("Details", () => {
 
     cy.get("[data-cy=section-title]")
       .find("p")
-      .should("have.text", "Seneste udgave, Bog");
+      .should("have.text", "Seneste udgave, bog");
   });
 });
