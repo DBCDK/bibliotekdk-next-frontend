@@ -19,12 +19,12 @@ const {
   USER_1,
   USER_2,
   USER_3,
-  USER_5,
+  USER_6,
   BRANCH_1,
   BRANCH_2,
   BRANCH_3,
   BRANCH_4,
-  BRANCH_5,
+  BRANCH_8,
   DEFAULT_STORY_PARAMETERS,
   useMockLoanerInfo,
 } = automock_utils();
@@ -333,7 +333,7 @@ LibraryWithoutLoanerCheck.story = merge({}, DEFAULT_STORY_PARAMETERS, {
           branches: () => {
             return {
               borrowerStatus: BORROWER_STATUS_FALSE,
-              result: [BRANCH_5],
+              result: [BRANCH_8],
             };
           },
         },
@@ -367,13 +367,13 @@ UserWithOneAgencyBlockedOneAgencyNotBlocked.story = merge(
           Query: {
             user: () => {
               //sets the user agencies shown in "Vælg bibliotek" dropdown
-              return USER_5;
+              return USER_6;
             },
             branches: (args) => {
               //branches sets the actual pickup branch
               const selectedBranchId = args?.variables?.branchId;
               //find the agency with the selected branch
-              const agencyWithSelectedBranch = USER_5.agencies
+              const agencyWithSelectedBranch = USER_6.agencies
                 .map((a) => ({
                   ...a,
                   result: a.result.filter(

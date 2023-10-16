@@ -396,7 +396,7 @@ const BRANCH_4 = {
   agencyName: "BalleRipRapRup",
 };
 
-const BRANCH_5 = {
+const BRANCH_8 = {
   name: "No borrowerCheck",
   branchId: "1236",
   orderPolicy: {
@@ -436,7 +436,7 @@ const USER_4 = {
   agencies: [{ borrowerStatus: BORROWER_STATUS_TRUE, result: [BRANCH_4] }],
 };
 
-const USER_5 = {
+const USER_6 = {
   agencies: [
     {
       borrowerStatus: BORROWER_STATUS_FALSE,
@@ -905,12 +905,12 @@ export default function automock_utils() {
     BRANCH_2,
     BRANCH_3,
     BRANCH_4,
-    BRANCH_5,
+    BRANCH_8,
     USER_1,
     USER_2,
     USER_3,
     USER_4,
-    USER_5,
+    USER_6,
     REVIEW_1,
     DEFAULT_STORY_PARAMETERS,
     useMockLoanerInfo,
