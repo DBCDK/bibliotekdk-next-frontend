@@ -707,6 +707,7 @@ export function overviewWork({ workId }) {
         titles {
           full
           parallel
+          sort
         }
         creators {
           ...creatorsFragment
@@ -881,6 +882,9 @@ const workSliderFragment = `fragment workSliderFragment on Work {
   titles {
     main
     full
+  }
+  materialTypes {
+    specific
   }
   manifestations {
     mostRelevant {

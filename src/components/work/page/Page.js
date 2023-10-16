@@ -122,6 +122,7 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
           {/* TODO: WorkGroupingsOverview.js refererer til dennes oversættelse */}
           <Series
             workId={workId}
+            materialTypeArray={type}
             anchor-label={Translate(AnchorsEnum.SERIES)}
           />
           <Recommendations

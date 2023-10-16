@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 const KEY_NAME = "bookmarks";
-const itemsPerPage = 4;
+const ITEMS_PER_PAGE = 20;
 
 export const BookmarkSyncProvider = () => {
   const { syncCookieBookmarks } = useBookmarks();
@@ -49,16 +49,19 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     isAuthenticated &&
       bookmarkFragments.fetchAll({
         sortBy,
-        limit: isMobile ? currentPage * itemsPerPage : itemsPerPage,
-        offset: isMobile ? 0 : (currentPage - 1) * itemsPerPage,
+        limit: isMobile ? currentPage * ITEMS_PER_PAGE : ITEMS_PER_PAGE,
+        offset: isMobile ? 0 : (currentPage - 1) * ITEMS_PER_PAGE,
       })
   );
   const bookmarkMutation = useMutate();
-  const globalBookmarks =
-    globalBookmarksUserObject?.user?.bookmarks?.result?.map((bookmark) => ({
-      ...bookmark,
-      key: bookmark.materialId + bookmark.materialType,
-    }));
+  const globalBookmarks = useMemo(
+    () =>
+      globalBookmarksUserObject?.user?.bookmarks?.result?.map((bookmark) => ({
+        ...bookmark,
+        key: bookmark.materialId + bookmark.materialType,
+      })),
+    [globalBookmarksUserObject]
+  );
 
   let hitcount;
 
@@ -68,7 +71,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     hitcount = localBookmarks?.length || 0;
   }
 
-  const totalPages = Math.ceil(hitcount / itemsPerPage);
+  const totalPages = Math.ceil(hitcount / ITEMS_PER_PAGE);
 
   const syncCookieBookmarks = async () => {
     if (!isAuthenticated) return; // Not authenticated
@@ -82,6 +85,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
             materialId: bookmark.materialId,
             materialType: bookmark.materialType,
             title: bookmark.title,
+            workId: bookmark.workId,
           })),
         })
       );
@@ -117,6 +121,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
                 materialId: value.materialId,
                 materialType: value.materialType,
                 title: value.title,
+                workId: value.workId,
               },
             ],
           })
@@ -235,10 +240,10 @@ const useBookmarksCore = ({ isMock = false, session }) => {
    * Returns a of localbookmarks that corresponds to the current page of local bookmarks.
    */
   function currenPageBookmark(bookmarkToPaginate) {
-    const startIdx = isMobile ? 0 : (currentPage - 1) * itemsPerPage;
+    const startIdx = isMobile ? 0 : (currentPage - 1) * ITEMS_PER_PAGE;
     const endIdx = isMobile
-      ? startIdx + itemsPerPage * currentPage
-      : startIdx + itemsPerPage;
+      ? startIdx + ITEMS_PER_PAGE * currentPage
+      : startIdx + ITEMS_PER_PAGE;
     const currentPageBookmarks = bookmarkToPaginate.slice(startIdx, endIdx);
     return currentPageBookmarks;
   }

@@ -161,7 +161,7 @@ export function Overview({
                   materialId={workId}
                   workId={workId}
                   materialTypes={uniqueMaterialTypes}
-                  title={work?.titles?.full[0]}
+                  title={work?.titles?.sort}
                   className={styles.svgscale}
                   editions={work?.manifestations?.mostRelevant}
                 />

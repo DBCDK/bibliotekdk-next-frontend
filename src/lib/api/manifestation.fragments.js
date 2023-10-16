@@ -348,6 +348,7 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
     original
     alternative
     parallel
+    sort
   }
   contributors {
     display

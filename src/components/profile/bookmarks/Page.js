@@ -59,13 +59,19 @@ const BookmarkPage = () => {
   const { data: bookmarks } = usePopulateBookmarks(bookmarksData);
   const [activeStickyButton, setActiveStickyButton] = useState(null);
   const breakpoint = useBreakpoint();
-  const [sortByValue, setSortByValue] = useState(sortByItems[0].key);
+  const [sortByValue, setSortByValue] = useState(null);
   const isMobile = breakpoint === "sm" || breakpoint === "xs";
   const [checkboxList, setCheckboxList] = useState();
 
   useEffect(() => {
     setSortBy(sortByValue);
   }, [sortByValue]);
+
+  useEffect(() => {
+    let savedValue = sessionStorage.getItem("sortByValue");
+    //if there is no saved values in sessionstorage, use createdAt sorting as default
+    setSortByValue(savedValue || sortByItems[0].key);
+  }, []);
 
   useEffect(() => {
     setCheckboxList(
@@ -76,6 +82,11 @@ const BookmarkPage = () => {
       }))
     );
   }, [bookmarks.length]);
+
+  const handleRadioChange = (value) => {
+    setSortByValue(value);
+    sessionStorage.setItem("sortByValue", value);
+  };
 
   const onSelectAll = () => {
     const hasUnselectedElements =
@@ -118,6 +129,15 @@ const BookmarkPage = () => {
     const selectedBookmarks = checkboxList.filter((i) => i.isSelected === true);
     deleteBookmarks(selectedBookmarks);
   };
+  /**
+   * scrolls to the top of the page
+   */
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
   const constructEditionText = (bookmark) => {
     if (!bookmark.pid) {
@@ -129,12 +149,12 @@ const BookmarkPage = () => {
      */
     return createEditionText(bookmark);
   };
-
   const onPageChange = async (newPage) => {
     if (newPage > totalPages) {
       newPage = totalPages;
     }
     setCurrentPage(newPage);
+    scrollToTop();
   };
 
   const isAllSelected =
@@ -179,7 +199,7 @@ const BookmarkPage = () => {
           <SortButtons
             sortByItems={sortByItems}
             sortByValue={sortByValue}
-            setSortByValue={setSortByValue}
+            setSortByValue={handleRadioChange}
           />
         )}
       </div>
@@ -187,7 +207,7 @@ const BookmarkPage = () => {
         <SortButtons
           sortByItems={sortByItems}
           sortByValue={sortByValue}
-          setSortByValue={setSortByValue}
+          setSortByValue={handleRadioChange}
         />
       )}
 

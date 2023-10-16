@@ -65,15 +65,9 @@ function Order({
   const borrowerCheck =
     pickUpAgencyInfo?.data?.branches?.result[0].borrowerCheck;
 
-  //TODO does it make sense to move "Materialet kan ikke bestilles til det her afhentningssted. Vælg et andet." into BlockedUserInformation? (and then change BlockedUserInformation's name to sth more general)
-  const orderPossible =
-    !context.availableAsPhysicalCopy && !context.availableAsDigitalCopy;
-
   const branches = pickUpAgencyInfo?.data?.branches;
   const showBlockedUserInfo =
-    borrowerCheck &&
-    orderPossible &&
-    (userMayNotBorrow || !authUser || !isLoggedIn);
+    borrowerCheck && (userMayNotBorrow || !authUser || !isLoggedIn);
 
   // Sets if user has unsuccessfully tried to submit the order
   const [failedSubmission, setFailedSubmission] = useState(false);

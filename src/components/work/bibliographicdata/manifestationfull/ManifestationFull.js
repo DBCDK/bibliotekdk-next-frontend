@@ -86,21 +86,19 @@ function ColumnOne({ workId, manifestation }) {
       )}
 
       <div className={styles.reservationwrapper}>
-        <div className={styles.button}>
-          <ReservationButtonWrapper
-            workId={workId}
-            selectedPids={[manifestation?.pid]}
-            singleManifestation={true}
-            buttonType="secondary"
-            size="small"
-          />
-        </div>
+        <ReservationButtonWrapper
+          workId={workId}
+          selectedPids={[manifestation?.pid]}
+          singleManifestation={true}
+          buttonType="secondary"
+          size="small"
+        />
         <BookMarkDropDown
           workId={workId}
           materialId={manifestation.pid}
           materialTypes={[[manifestation?.materialTypes?.[0]?.specific]]}
           size={{ w: 4, h: 4 }}
-          title={manifestation?.titles?.full[0]}
+          title={manifestation?.titles?.sort}
         />
       </div>
 
