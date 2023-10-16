@@ -1,3 +1,4 @@
+/* eslint-disable */
 import ReservationButtonWrapper from "@/components/work/reservationbutton/ReservationButton";
 import styles from "../MaterialRow.module.css";
 import IconButton from "@/components/base/iconButton";

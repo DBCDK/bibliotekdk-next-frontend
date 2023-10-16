@@ -90,58 +90,175 @@ export function handleGoToLogin(modal, access, user) {
 }
 
 /**
- * @param {string} materialType: general materialType 
- * @param {string} selectedMaterialType: specific material type 
- * @param {boolean} shortText: If material text is shortened or not
- * @returns 
+ *
+ * @param {string} generalMaterialType
+ * @param {string} specificdMaterialType
+ * @param {boolean} shortText
+ * @returns {string} label for translations
  */
-export const constructButtonText = (materialType, selectedMaterialType, shortText) => {
+export const buttonTextLabelMaker = (
+  generalMaterialType,
+  specificdMaterialType,
+  shortText = false
+) => {
+  const getActionLabel = () => {
+    switch (generalMaterialType) {
+      case "literature": {
+        switch (specificdMaterialType) {
+          case "e-bog":
+            return "material-action-read";
+          case "podcast":
+            return "material-action-listen";
+          case "lydbog (online)":
+            return "material-action-listen";
+          default:
+            return "Error";
+        }
+      }
+      case "article":
+        return "material-action-read";
+      case "music":
+        return "material-action-listen";
+      case "movie":
+      case "sheetmusic":
+        return "material-action-see";
+      case "game":
+        return "material-action-play";
+      default:
+        return "Error";
+    }
+  };
+
+  const getMaterialLabel = () => {
+    if (shortText) return "material-direction-here";
+
+    if (generalMaterialType === "literature") {
+      switch (specificdMaterialType) {
+        case "e-bog":
+          return "material-typename-ebook";
+        case "podcast":
+          return "material-typename-podcast";
+        case "lydbog (online)":
+          "material-typename-audiobook";
+        /**
+         * TODO more lydbog
+         */
+        default:
+          return "Error";
+      }
+    }
+    return `material-typename-${specificdMaterialType}`;
+  };
+
+  return [getActionLabel(), getMaterialLabel()];
+};
+
+/**
+ * @param {string} materialType: general materialType
+ * @param {string} selectedMaterialType: specific material type
+ * @param {boolean} shortText: If material text is shortened or not
+ * @returns
+ */
+export const constructButtonText = (
+  materialType,
+  selectedMaterialType,
+  shortText
+) => {
+  const CONTEXT = "overview";
+
   /**
-   * @param {string} materialType 
-   * @param {string} selectedMaterialType 
+   * @param {string} materialType
+   * @param {string} selectedMaterialType
    * @returns {string} translated material action (read, listen, watch)
    */
   const getActionText = (materialType, selectedMaterialType) => {
     switch (materialType) {
       case "literature": {
-        switch (selectedMaterialType) {
-          case 'e-bog': return Translate({context: "overview", label: "material-action-read"});
-          case 'podcast': return Translate({context: "overview", label: "material-action-listen"});
-          case 'lydbog (online)': return Translate({context: "overview", label: "material-action-listen"});
-          default: return "Error"
+        switch (selectedMaterialType) {
+          case "e-bog":
+            return Translate({
+              context: CONTEXT,
+              label: "material-action-read",
+            });
+          case "podcast":
+            return Translate({
+              context: CONTEXT,
+              label: "material-action-listen",
+            });
+          case "lydbog (online)":
+            return Translate({
+              context: CONTEXT,
+              label: "material-action-listen",
+            });
+          default:
+            return "Error";
         }
       }
-      case "article": return Translate({context: "overview", label: "material-action-read"});
-      case "music": return Translate({context: "overview", label: "material-action-listen"});
+      case "article":
+        return Translate({
+          context: CONTEXT,
+          label: "material-action-read",
+        });
+      case "music":
+        return Translate({
+          context: CONTEXT,
+          label: "material-action-listen",
+        });
       case "movie":
-      case "sheetmusic": return Translate({context: "overview", label: "material-action-see"});
-      case "game": return Translate({context: "overview", label: "material-action-play"});
-      default: return "Error"
+      case "sheetmusic":
+        return Translate({ context: CONTEXT, label: "material-action-see" });
+      case "game":
+        return Translate({
+          context: CONTEXT,
+          label: "material-action-play",
+        });
+      default:
+        return "Error";
     }
-  }
-  
+  };
+
   /**
-   * @param {string} materialType 
-   * @param {string} selectedMaterialType 
+   * @param {string} materialType
+   * @param {string} selectedMaterialType
    * @returns {string} translated material (book, movie, audiobook)
    */
   const getMaterialText = (materialType, selectedMaterialType) => {
     if (materialType === "literature") {
       switch (selectedMaterialType) {
-        case "e-bog": return Translate({context: "overview", label: "material-typename-ebook"}).toLowerCase();
-        case "podcast": return Translate({context: "overview", label: "material-typename-podcast"}).toLowerCase();
-        case "lydbog (online)": return Translate({context: "overview", label: "material-typename-audiobook"}).toLowerCase();
+        case "e-bog":
+          return Translate({
+            context: "overview",
+            label: "material-typename-ebook",
+          }).toLowerCase();
+        case "podcast":
+          return Translate({
+            context: "overview",
+            label: "material-typename-podcast",
+          }).toLowerCase();
+        case "lydbog (online)":
+          return Translate({
+            context: "overview",
+            label: "material-typename-audiobook",
+          }).toLowerCase();
         /**
          * TODO more lydbog
          */
       }
     }
-  
-    return Translate({context: "overview", label: `material-typename-${materialType}`}).toLowerCase();
-  }
+
+    return Translate({
+      context: "overview",
+      label: `material-typename-${materialType}`,
+    }).toLowerCase();
+  };
 
   // Construct string
   const actionText = getActionText(materialType, selectedMaterialType);
-  const materialText = shortText ? Translate({context: "overview", label: "material-direction-here"}).toLowerCase() : getMaterialText(materialType, selectedMaterialType);
+  const materialText = shortText
+    ? Translate({
+        context: "overview",
+        label: "material-direction-here",
+      }).toLowerCase()
+    : getMaterialText(materialType, selectedMaterialType);
   return actionText + " " + materialText;
-}
+};

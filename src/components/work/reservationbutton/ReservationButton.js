@@ -137,7 +137,9 @@ export const ReservationButton = ({
 }) => {
   const modal = useModal();
   const materialType = access?.[0]?.workTypes?.[0]?.toLowerCase();
-  const selectedMaterialType = Array.isArray(parentSelectedMaterialType) ? parentSelectedMaterialType?.[0]?.toLowerCase() : parentSelectedMaterialType?.toLowerCase();
+  const selectedMaterialType = Array.isArray(parentSelectedMaterialType)
+    ? parentSelectedMaterialType?.[0]?.toLowerCase()
+    : parentSelectedMaterialType?.toLowerCase();
 
   const physicalCopy = checkPhysicalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
   const digitalCopy = checkDigitalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
@@ -237,8 +239,12 @@ export const ReservationButton = ({
     if (onlineMaterialWithoutLoginOrLoginAtUrl) {
       return {
         props: accessibleOnlineAndNoLoginProps,
-        text: constructButtonText(materialType, selectedMaterialType, shortText),
-        preferSecondary: shortText // Becomes secondary button if button links to material (not ordering)
+        text: constructButtonText(
+          materialType,
+          selectedMaterialType,
+          shortText
+        ),
+        preferSecondary: shortText, // Becomes secondary button if button links to material (not ordering)
       };
     }
 
@@ -246,7 +252,7 @@ export const ReservationButton = ({
     return {
       props: loginRequiredProps,
       text: loginRequiredText,
-      preferSecondary: false
+      preferSecondary: false,
     };
   };
 
@@ -257,7 +263,11 @@ export const ReservationButton = ({
       <TextAboveButton access={access} user={user} />
 
       <div className={styles.wrapper}>
-        <Button type={preferSecondary ? "secondary" : buttonType} size={size} {...props}>
+        <Button
+          type={preferSecondary ? "secondary" : buttonType}
+          size={size}
+          {...props}
+        >
           {text}
         </Button>
       </div>

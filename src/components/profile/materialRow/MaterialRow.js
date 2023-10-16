@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Cover from "@/components/base/cover";
 import Button from "@/components/base/button";
 import Text from "@/components/base/text";
