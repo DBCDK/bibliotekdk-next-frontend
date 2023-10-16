@@ -49,8 +49,6 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     isAuthenticated &&
       bookmarkFragments.fetchAll({
         sortBy,
-        limit: isMobile ? currentPage * ITEMS_PER_PAGE : ITEMS_PER_PAGE,
-        offset: isMobile ? 0 : (currentPage - 1) * ITEMS_PER_PAGE,
       })
   );
   const bookmarkMutation = useMutate();
@@ -231,7 +229,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
   /**
    * Returns localbookmarks sorted by users preference
    */
-  function sortedBookMarks(bookmarksToSort) {
+  function sortBookmarks(bookmarksToSort) {
     return sortBy === "createdAt"
       ? createdAtSort(bookmarksToSort)
       : titleSort(bookmarksToSort);
@@ -248,16 +246,24 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     return currentPageBookmarks;
   }
 
+  // sort local bookmarks
+  const sortedLocalBookmarks = useMemo(() => {
+    return sortBookmarks(localBookmarks);
+  }, [localBookmarks, sortBy]);
+
+  // sort global bookmarks
+  const sortedGlobalBookmarks = useMemo(() => {
+    return sortBookmarks(globalBookmarks);
+  }, [globalBookmarks, sortBy]);
+
   return {
     setBookmark,
     deleteBookmarks,
     clearLocalBookmarks,
-    bookmarks: isAuthenticated
-      ? globalBookmarks
-      : sortedBookMarks(localBookmarks),
+    bookmarks: isAuthenticated ? globalBookmarks : localBookmarks,
     paginatedBookmarks: isAuthenticated
-      ? globalBookmarks
-      : currenPageBookmark(sortedBookMarks(localBookmarks)),
+      ? currenPageBookmark(sortedGlobalBookmarks)
+      : currenPageBookmark(sortedLocalBookmarks),
     isLoading:
       (typeof localBookmarks === "undefined" && !error) ||
       (isLoadingGlobalBookmarks && !globalBookmarksError),
