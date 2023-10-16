@@ -218,7 +218,7 @@ function Order({
         validated={validated}
         failedSubmission={failedSubmission}
         onClick={onSubmitOrder}
-        blockedForBranch={!borrowerStatus?.allowed}
+        blockedForBranch={borrowerCheck && !borrowerStatus?.allowed}
       />
     </div>
   );

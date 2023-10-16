@@ -296,9 +296,6 @@ export function BlockedUser() {
   );
 }
 
-//TODO add stroy for user without loaner check --> should be allowed to order
-//Todo add story for user with one væsen blocked and other væsen not blocked
-
 BlockedUser.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {

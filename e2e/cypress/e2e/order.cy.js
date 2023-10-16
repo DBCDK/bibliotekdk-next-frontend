@@ -62,7 +62,7 @@ describe("Order", () => {
   });
 
   it("should handle failed checkorder and pickupAllowed=false", () => {
-    it(`should not tab to order modal after it is closed`, () => {
+    it("should not tab to order modal after it is closed", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?id=modal-order--order-via-ill&viewMode=story"
       );
@@ -350,6 +350,40 @@ describe("Order", () => {
         .should("exist")
         .find("a")
         .should("not.have.attr", "url");
+    });
+
+    it("should disable link if not present", () => {
+      cy.visit("/iframe.html?id=modal-order--library-without-loaner-check");
+
+      //open modal
+      cy.contains("Bestil", { timeout: 10000 }).click();
+      cy.contains("No borrowerCheck");
+
+      cy.get("[data-cy=button-godkend]").should("exist").should("be.enabled");
+      cy.get("[data-cy=blocked-user]").should("not.exist");
+    });
+
+    it("User is blocked for one agency but not for another", () => {
+      cy.visit(
+        "/iframe.html?id=modal-order--user-with-one-agency-blocked-one-agency-not-blocked"
+      );
+
+      //starting with blocked agency
+      cy.contains("Bestil", { timeout: 10000 }).click();
+      cy.contains("Test Bib - User is blocked");
+      cy.get("[data-cy=blocked-user]").should("be.visible");
+      cy.get("[data-cy=blocked-user]").should("be.visible");
+
+      //switching to non-blocked agency
+      cy.contains("Skift afhentning").should("exist").click();
+      cy.get("[data-cy=show-branches-for-1]").should("exist").click();
+      cy.contains("Test Bib - only physical via ILL")
+        .should("be.visible")
+        .click();
+
+      //check can order on non-blocked agency
+      cy.get("[data-cy=button-godkend]").should("exist").should("be.enabled");
+      cy.get("[data-cy=blocked-user]").should("not.exist");
     });
   });
   describe("If user logs in with MitID - and has no libraries associated with user account", () => {
