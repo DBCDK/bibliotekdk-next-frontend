@@ -57,10 +57,17 @@ function Order({
       branchesFragments.checkBlockedUser({ branchId: loanerInfo.pickupBranch })
   );
 
+  // Check if user is blocked from ordering
   const borrowerStatus = pickUpAgencyInfo?.data?.branches?.borrowerStatus;
+  const userMayNotBorrow = borrowerStatus && !borrowerStatus.allowed;
+
+  // Check if library has a borrower check
+  const borrowerCheck =
+    pickUpAgencyInfo?.data?.branches?.result[0].borrowerCheck;
+
   const branches = pickUpAgencyInfo?.data?.branches;
   const showBlockedUserInfo =
-    (borrowerStatus && !borrowerStatus.allowed) || !authUser || !isLoggedIn;
+    borrowerCheck && (userMayNotBorrow || !authUser || !isLoggedIn);
 
   // Sets if user has unsuccessfully tried to submit the order
   const [failedSubmission, setFailedSubmission] = useState(false);
@@ -211,7 +218,7 @@ function Order({
         validated={validated}
         failedSubmission={failedSubmission}
         onClick={onSubmitOrder}
-        blockedForBranch={!borrowerStatus?.allowed}
+        blockedForBranch={borrowerCheck && !borrowerStatus?.allowed}
       />
     </div>
   );

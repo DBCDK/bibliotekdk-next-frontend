@@ -419,14 +419,20 @@ const BORROWER_STATUS_FALSE = {
 };
 
 const BRANCH_1 = {
+  agencyName: "Agency 1",
+  agencyId: "1",
+  branchId: "1237",
   name: "Test Bib - only physical via ILL",
   orderPolicy: {
     orderPossible: true,
   },
   pickupAllowed: true,
+  borrowerCheck: true,
   digitalCopyAccess: false,
 };
 const BRANCH_2 = {
+  agencyName: "Agency 1",
+  branchId: "123",
   name: "Test Bib - no orders here",
   orderPolicy: {
     orderPossible: false,
@@ -435,20 +441,27 @@ const BRANCH_2 = {
   digitalCopyAccess: false,
 };
 const BRANCH_3 = {
+  agencyName: "Agency 2",
   name: "Test Bib - ILL and digital copy service",
+  branchId: "1235",
   orderPolicy: {
     orderPossible: true,
   },
+  borrowerCheck: true,
   pickupAllowed: true,
   digitalCopyAccess: true,
 };
+
 const BRANCH_4 = {
   name: "Test Bib - User is blocked",
+  agencyId: "2",
+  branchId: "1234",
   orderPolicy: {
     orderPossible: true,
   },
   pickupAllowed: true,
   digitalCopyAccess: false,
+  borrowerCheck: true,
   branchWebsiteUrl: "balleripraprup.dekaa",
   agencyName: "BalleRipRapRup",
 };
@@ -608,24 +621,40 @@ const BRANCH_7_3 = {
   branchWebsiteUrl: "hedehuse.dekaa",
 };
 
+const BRANCH_8 = {
+  name: "No borrowerCheck",
+  branchId: "1236",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: false,
+  borrowerCheck: false,
+  branchWebsiteUrl: "nocheck.dekaa",
+  agencyName: "NoCheckBib",
+  agencyId: "3",
+};
+
 // A user with some agencies
 const USER_1 = {
-  agencies: {
-    borrowerStatus: BORROWER_STATUS_TRUE,
-    result: [BRANCH_1, BRANCH_2],
-  },
+  agencies: [
+    {
+      borrowerStatus: BORROWER_STATUS_TRUE,
+      result: [BRANCH_1, BRANCH_2],
+    },
+  ],
 };
 
 const USER_2 = {
-  agencies: { borrowerStatus: BORROWER_STATUS_TRUE, result: [BRANCH_2] },
+  agencies: [{ borrowerStatus: BORROWER_STATUS_TRUE, result: [BRANCH_2] }],
 };
 
 const USER_3 = {
-  agencies: { borrowerStatus: BORROWER_STATUS_TRUE, result: [BRANCH_3] },
+  agencies: [{ borrowerStatus: BORROWER_STATUS_TRUE, result: [BRANCH_3] }],
 };
 
 const USER_4 = {
-  agencies: { borrowerStatus: BORROWER_STATUS_TRUE, result: [BRANCH_4] },
+  agencies: [{ borrowerStatus: BORROWER_STATUS_TRUE, result: [BRANCH_4] }],
 };
 
 const USER_5 = {
@@ -633,6 +662,19 @@ const USER_5 = {
     borrowerStatus: BORROWER_STATUS_TRUE,
     result: [BRANCH_5, BRANCH_6],
   },
+};
+
+const USER_6 = {
+  agencies: [
+    {
+      borrowerStatus: BORROWER_STATUS_FALSE,
+      result: [BRANCH_4, BRANCH_3],
+    },
+    {
+      borrowerStatus: BORROWER_STATUS_TRUE,
+      result: [BRANCH_1, BRANCH_2],
+    },
+  ],
 };
 
 const REVIEW_1 = {
@@ -1108,11 +1150,13 @@ export default function automock_utils() {
     BRANCH_7_1,
     BRANCH_7_2,
     BRANCH_7_3,
+    BRANCH_8,
     USER_1,
     USER_2,
     USER_3,
     USER_4,
     USER_5,
+    USER_6,
     REVIEW_1,
     DEFAULT_STORY_PARAMETERS,
     useMockLoanerInfo,
