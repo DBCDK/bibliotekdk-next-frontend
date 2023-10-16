@@ -13,7 +13,7 @@ function filteredWork(work, selectedPids) {
   const materialTypes = uniqueEntries(
     manifestations?.flatMap((manifestation) => {
       return manifestation.materialTypes?.map((materialType) => {
-        return materialType.specific;
+        return materialType.materialTypeSpecific.display;
       });
     })
   );
