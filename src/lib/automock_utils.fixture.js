@@ -30,6 +30,7 @@ const MANIFESTATION_BASE = {
   accessTypes: [{ code: "PHYSICAL", display: "fysisk" }],
   access: [
     {
+      __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
       __typename: "InterLibraryLoan",
       loanIsPossible: true,
     },
@@ -76,6 +77,7 @@ const MANIFESTATION_3 = {
   },
   access: [
     {
+      __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
       __typename: "InterLibraryLoan",
       loanIsPossible: false,
     },
@@ -103,10 +105,12 @@ const MANIFESTATION_4 = {
   ],
   access: [
     {
+      __resolveType: AccessEnum.DIGITAL_ARTICLE_SERVICE,
       __typename: "DigitalArticleService",
       issn: "some-issn",
     },
     {
+      __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
       __typename: "InterLibraryLoan",
       loanIsPossible: true,
     },
@@ -132,10 +136,12 @@ const MANIFESTATION_5 = {
   ],
   access: [
     {
+      __resolveType: AccessEnum.DIGITAL_ARTICLE_SERVICE,
       __typename: "DigitalArticleService",
       issn: "some-issn",
     },
     {
+      __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
       __typename: "InterLibraryLoan",
       loanIsPossible: true,
     },
@@ -184,6 +190,11 @@ const MANIFESTATION_7 = {
       __resolveType: AccessEnum.ACCESS_URL,
       url: "https://ereol.combo/langurl",
       origin: "https://ereol.combo",
+    },
+    {
+      __resolveType: AccessEnum.INFOMEDIA_SERVICE,
+      id: "123123",
+      pid: "321321",
     },
   ],
   workTypes: ["LITERATURE"],
