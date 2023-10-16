@@ -1,4 +1,4 @@
-import { buttonTextLabelMaker } from "../utils";
+import { buttonTextLabelMaker, constructButtonText } from "../utils";
 
 describe("Button text generation", () => {
   it("Ebook", () => {
@@ -11,7 +11,6 @@ describe("Button text generation", () => {
       `material-action-${expectedAction}`,
       "material-typename-ebook",
     ];
-    console.log(actual);
     expect(actual).toEqual(expected);
 
     const actualShort = buttonTextLabelMaker(
