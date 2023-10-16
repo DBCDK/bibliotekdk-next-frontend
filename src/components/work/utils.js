@@ -9,10 +9,17 @@ import { accessFactory } from "@/lib/accessFactoryUtils";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import { extractCreatorsPrioritiseCorporation } from "@/lib/utils";
 
-export function openLocalizationsModal(modal, pids) {
-  modal.push("localizations", {
-    title: Translate({ context: "modal", label: "title-order" }),
+export function openAgencyLocalizationsModal({
+  modal,
+  pids,
+  agency,
+  singleManifestation,
+}) {
+  modal.push("agencyLocalizations", {
+    title: Translate({ context: "modal", label: "title-agencylocalizations" }),
     pids: pids,
+    agency: agency,
+    singleManifestation: singleManifestation,
   });
 }
 
@@ -57,8 +64,8 @@ export function goToRedirectUrl(url, target = "_blank") {
 
 /**
  * Generates the work page title
- * @param {object} work
- * @return {string}
+ * @param {Object} work
+ * @returns {string}
  */
 function getPageTitle(work) {
   return `${work?.titles?.main[0]}${
@@ -72,7 +79,7 @@ function getPageTitle(work) {
 
 /**
  * Generates the work page description
- * @param {object} work The work
+ * @param {Object} work The work
  * @returns {string}
  */
 function getPageDescription(work) {

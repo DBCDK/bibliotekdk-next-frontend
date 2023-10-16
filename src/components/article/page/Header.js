@@ -21,10 +21,10 @@ import { getLanguage } from "@/components/base/translate";
 /**
  * The article page Header React component
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export default function Header({ articleId }) {
   const language = getLanguage();

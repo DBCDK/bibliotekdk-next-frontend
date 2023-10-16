@@ -5,8 +5,10 @@ import { useEffect, useState, useMemo } from "react";
 import * as bookmarkMutations from "@/lib/api/bookmarks.mutations";
 import * as bookmarkFragments from "@/lib/api/bookmarks.fragments";
 import { useSession } from "next-auth/react";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 const KEY_NAME = "bookmarks";
+const ITEMS_PER_PAGE = 20;
 
 export const BookmarkSyncProvider = () => {
   const { syncCookieBookmarks } = useBookmarks();
@@ -29,24 +31,45 @@ export const BookmarkSyncProvider = () => {
 const useBookmarksCore = ({ isMock = false, session }) => {
   const isAuthenticated = isMock ? false : !!session?.user?.uniqueId;
   const [sortBy, setSortBy] = useState("createdAt");
+  const [currentPage, setCurrentPage] = useState(1);
+  const breakpoint = useBreakpoint();
+  const isMobile = breakpoint === "xs" || breakpoint === "sm";
 
   let {
     data: localBookmarks,
     mutate: mutateLocalBookmarks,
     error,
-  } = useSWR(KEY_NAME, (key) => JSON.parse(localStorage.getItem(key)) || []);
+  } = useSWR(KEY_NAME, (key) => JSON.parse(localStorage.getItem(key) || "[]"));
   const {
     data: globalBookmarksUserObject,
     isLoading: isLoadingGlobalBookmarks,
     error: globalBookmarksError,
     mutate: mutateGlobalBookmarks,
-  } = useData(isAuthenticated && bookmarkFragments.fetchAll({ sortBy }));
+  } = useData(
+    isAuthenticated &&
+      bookmarkFragments.fetchAll({
+        sortBy,
+      })
+  );
   const bookmarkMutation = useMutate();
-  const globalBookmarks =
-    globalBookmarksUserObject?.user?.bookmarks?.result?.map((bookmark) => ({
-      ...bookmark,
-      key: bookmark.materialId + bookmark.materialType,
-    }));
+  const globalBookmarks = useMemo(
+    () =>
+      globalBookmarksUserObject?.user?.bookmarks?.result?.map((bookmark) => ({
+        ...bookmark,
+        key: bookmark.materialId + bookmark.materialType,
+      })),
+    [globalBookmarksUserObject]
+  );
+
+  let hitcount;
+
+  if (isAuthenticated) {
+    hitcount = globalBookmarksUserObject?.user?.bookmarks?.hitcount || 0;
+  } else {
+    hitcount = localBookmarks?.length || 0;
+  }
+
+  const totalPages = Math.ceil(hitcount / ITEMS_PER_PAGE);
 
   const syncCookieBookmarks = async () => {
     if (!isAuthenticated) return; // Not authenticated
@@ -60,6 +83,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
             materialId: bookmark.materialId,
             materialType: bookmark.materialType,
             title: bookmark.title,
+            workId: bookmark.workId,
           })),
         })
       );
@@ -95,6 +119,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
                 materialId: value.materialId,
                 materialType: value.materialType,
                 title: value.title,
+                workId: value.workId,
               },
             ],
           })
@@ -167,28 +192,28 @@ const useBookmarksCore = ({ isMock = false, session }) => {
 
   /**
    * sorts bookmarkList by createdAt
-   * @param {*} bookmarkList list of bookmarks
-   * @param {*} sortDirection can be either asc or desc
-   * @returns bookmarkList
+   * @param {Object[]} bookmarkList list of bookmarks
+   * @param {string} sortDirection can be either asc or desc
+   * @returns {Object[]} bookmarkList
    */
   const createdAtSort = (bookmarkList = [], sortDirection = "asc") => {
     return bookmarkList.sort((a, b) => {
-      if (a.createdAt > b.createdAt) {
+      if (new Date(a.createdAt) < new Date(b.createdAt)) {
         return sortDirection === "asc" ? 1 : -1;
       }
-      if (a.createdAt < b.createdAt) {
+      if (new Date(a.createdAt) > new Date(b.createdAt)) {
         return sortDirection === "asc" ? -1 : 1;
       }
       return 0;
     });
   };
+
   /**
    * sorts bookmarkList by title
-   * @param {*} bookmarkList list of bookmarks
-   * @param {*} sortDirection can be either asc or desc
-   * @returns bookmarkList
+   * @param {Object[]} bookmarkList list of bookmarks
+   * @param {string} sortDirection can be either asc or desc
+   * @returns {Object[]} bookmarkList
    */
-
   const titleSort = (bookmarkList = [], sortDirection = "asc") => {
     return bookmarkList.sort((a, b) => {
       if (a.title < b.title) {
@@ -204,24 +229,50 @@ const useBookmarksCore = ({ isMock = false, session }) => {
   /**
    * Returns localbookmarks sorted by users preference
    */
-  function sortedBookMarks(bookmarksToSort) {
+  function sortBookmarks(bookmarksToSort) {
     return sortBy === "createdAt"
       ? createdAtSort(bookmarksToSort)
       : titleSort(bookmarksToSort);
   }
+  /**
+   * Returns a of localbookmarks that corresponds to the current page of local bookmarks.
+   */
+  function currenPageBookmark(bookmarkToPaginate) {
+    const startIdx = isMobile ? 0 : (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIdx = isMobile
+      ? startIdx + ITEMS_PER_PAGE * currentPage
+      : startIdx + ITEMS_PER_PAGE;
+    const currentPageBookmarks = bookmarkToPaginate.slice(startIdx, endIdx);
+    return currentPageBookmarks;
+  }
+
+  // sort local bookmarks
+  const sortedLocalBookmarks = useMemo(() => {
+    return sortBookmarks(localBookmarks);
+  }, [localBookmarks, sortBy]);
+
+  // sort global bookmarks
+  const sortedGlobalBookmarks = useMemo(() => {
+    return sortBookmarks(globalBookmarks);
+  }, [globalBookmarks, sortBy]);
 
   return {
     setBookmark,
     deleteBookmarks,
     clearLocalBookmarks,
-    bookmarks: isAuthenticated
-      ? globalBookmarks
-      : sortedBookMarks(localBookmarks),
+    bookmarks: isAuthenticated ? globalBookmarks : localBookmarks,
+    paginatedBookmarks: isAuthenticated
+      ? currenPageBookmark(sortedGlobalBookmarks)
+      : currenPageBookmark(sortedLocalBookmarks),
     isLoading:
       (typeof localBookmarks === "undefined" && !error) ||
       (isLoadingGlobalBookmarks && !globalBookmarksError),
     syncCookieBookmarks,
     setSortBy,
+    currentPage,
+    totalPages,
+    setCurrentPage,
+    count: hitcount ?? localBookmarks?.length ?? 0,
   };
 };
 
@@ -244,10 +295,10 @@ export const usePopulateBookmarks = (bookmarks) => {
    * Used to populate bookmark data, to show more info about the materials
    */
   const workIds = bookmarks?.filter((bookmark) =>
-    bookmark.materialId.includes("work-of:")
+    bookmark?.materialId?.includes("work-of:")
   );
   const workPids = bookmarks?.filter(
-    (bookmark) => !bookmark.materialId.includes("work-of:")
+    (bookmark) => !bookmark?.materialId?.includes("work-of:")
   );
   const { data: workByIdsData } = useData(
     workFragments.idsToWorks({ ids: workIds?.map((work) => work.materialId) })

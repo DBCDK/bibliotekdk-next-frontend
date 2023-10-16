@@ -79,7 +79,7 @@
 .title6 {
   font-size: 18px;
   line-height: 28px;
-  font-family: var(--title-font);
+  font-family: var(--title-font-medium);
 }
 
 /* Maybe rename when revisited properly */

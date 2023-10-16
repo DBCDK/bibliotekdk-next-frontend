@@ -27,7 +27,7 @@ export default function usePickupBranch({ pids }) {
   );
 
   // scope
-  const defaultUserPickupBranch = orderPolicy?.user?.agency?.result[0];
+  const defaultUserPickupBranch = orderPolicy?.user?.agencies[0]?.result[0];
 
   // fetch user parameters for the selected pickup
   // OBS! Pickup can differ from users own branches.

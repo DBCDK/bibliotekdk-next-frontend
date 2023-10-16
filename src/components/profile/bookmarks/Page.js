@@ -13,7 +13,8 @@ import Translate from "@/components/base/translate";
 import MenuDropdown from "@/components/base/dropdown/menuDropdown/MenuDropdown";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import List from "@/components/base/forms/list";
-import isEmpty from "lodash/isEmpty";
+import Pagination from "@/components/search/pagination/Pagination";
+import { createEditionText } from "@/components/work/details/utils/details.utils";
 
 const CONTEXT = "bookmark";
 const MENUITEMS = ["Bestil flere", "Hent referencer", "Fjern flere"];
@@ -22,22 +23,55 @@ const sortByItems = [
   { label: "alphabeticalOrder", key: "title" },
 ];
 
+/**
+ *
+ * Radio buttons to choose how to sort Bookmarks
+ * @returns
+ */
+const SortButtons = ({ sortByItems, setSortByValue, sortByValue }) => {
+  return (
+    <List.Group className={styles.sortingContainer} disableGroupOutline>
+      {sortByItems.map(({ label, key }) => (
+        <List.Radio
+          className={styles.sortingItem}
+          key={key}
+          selected={sortByValue === key}
+          onSelect={() => setSortByValue(key)}
+          label={key}
+        >
+          <Text>{Translate({ context: "profile", label: label })}</Text>
+        </List.Radio>
+      ))}
+    </List.Group>
+  );
+};
+
 const BookmarkPage = () => {
   const {
-    bookmarks: bookmarksData,
+    paginatedBookmarks: bookmarksData,
     setSortBy,
     deleteBookmarks,
+    currentPage,
+    totalPages,
+    setCurrentPage,
+    count,
   } = useBookmarks();
   const { data: bookmarks } = usePopulateBookmarks(bookmarksData);
   const [activeStickyButton, setActiveStickyButton] = useState(null);
   const breakpoint = useBreakpoint();
-  const [sortByValue, setSortByValue] = useState(sortByItems[0].key);
+  const [sortByValue, setSortByValue] = useState(null);
   const isMobile = breakpoint === "sm" || breakpoint === "xs";
   const [checkboxList, setCheckboxList] = useState();
 
   useEffect(() => {
     setSortBy(sortByValue);
   }, [sortByValue]);
+
+  useEffect(() => {
+    let savedValue = sessionStorage.getItem("sortByValue");
+    //if there is no saved values in sessionstorage, use createdAt sorting as default
+    setSortByValue(savedValue || sortByItems[0].key);
+  }, []);
 
   useEffect(() => {
     setCheckboxList(
@@ -48,6 +82,11 @@ const BookmarkPage = () => {
       }))
     );
   }, [bookmarks.length]);
+
+  const handleRadioChange = (value) => {
+    setSortByValue(value);
+    sessionStorage.setItem("sortByValue", value);
+  };
 
   const onSelectAll = () => {
     const hasUnselectedElements =
@@ -90,6 +129,15 @@ const BookmarkPage = () => {
     const selectedBookmarks = checkboxList.filter((i) => i.isSelected === true);
     deleteBookmarks(selectedBookmarks);
   };
+  /**
+   * scrolls to the top of the page
+   */
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
   const constructEditionText = (bookmark) => {
     if (!bookmark.pid) {
@@ -99,16 +147,14 @@ const BookmarkPage = () => {
     /**
      * Matches string construction on work page
      */
-    return (
-      bookmark?.hostPublication?.title ||
-      [
-        ...bookmark?.publisher,
-        ...(!isEmpty(bookmark?.edition?.edition)
-          ? [bookmark?.edition?.edition]
-          : []),
-      ].join(", ") ||
-      ""
-    );
+    return createEditionText(bookmark);
+  };
+  const onPageChange = async (newPage) => {
+    if (newPage > totalPages) {
+      newPage = totalPages;
+    }
+    setCurrentPage(newPage);
+    scrollToTop();
   };
 
   const isAllSelected =
@@ -143,28 +189,27 @@ const BookmarkPage = () => {
 
       <div className={styles.sortingRow}>
         <Text tag="small" type="text3" className={styles.smallLabel}>
-          {bookmarks?.length}{" "}
+          {count}{" "}
           {Translate({
             context: CONTEXT,
             label: "result-amount",
           })}
         </Text>
-        <div>
-          <List.Group className={styles.sortingContainer} disableGroupOutline>
-            {sortByItems.map(({ label, key }) => (
-              <List.Radio
-                className={styles.sortingItem}
-                key={key}
-                selected={sortByValue === key}
-                onSelect={() => setSortByValue(key)}
-                label={key}
-              >
-                <Text>{Translate({ context: "profile", label: label })}</Text>
-              </List.Radio>
-            ))}
-          </List.Group>
-        </div>
+        {!isMobile && (
+          <SortButtons
+            sortByItems={sortByItems}
+            sortByValue={sortByValue}
+            setSortByValue={handleRadioChange}
+          />
+        )}
       </div>
+      {isMobile && (
+        <SortButtons
+          sortByItems={sortByItems}
+          sortByValue={sortByValue}
+          setSortByValue={handleRadioChange}
+        />
+      )}
 
       <div className={styles.buttonControls}>
         <div
@@ -264,6 +309,14 @@ const BookmarkPage = () => {
             />
           ))}
       </div>
+      {totalPages > 1 && (
+        <Pagination
+          numPages={totalPages}
+          currentPage={currentPage}
+          className={styles.pagination}
+          onChange={onPageChange}
+        />
+      )}
     </ProfileLayout>
   );
 };

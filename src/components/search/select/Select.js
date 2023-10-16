@@ -68,9 +68,7 @@ export function Desktop({ options = [], onSelect, selected, className }) {
  * @param selected
  * @param count
  * @param className
- *
- * @return {JSX.Element}
- * @constructor
+ * @returns {React.JSX.Element}
  */
 export function Mobile({ options = [], onSelect, selected, className }) {
   const breakpoint = useBreakpoint();
@@ -88,8 +86,8 @@ export function Mobile({ options = [], onSelect, selected, className }) {
               onClick={() => onSelect(elem)}
             >
               {Translate({
-                context: "facets",
-                label: `label-${elem}`,
+                context: elem === "all" ? "general" : "facets",
+                label: elem === "all" ? elem : `label-${elem}`,
               })}
             </Tag>
           );
@@ -104,8 +102,7 @@ export function Mobile({ options = [], onSelect, selected, className }) {
  * Show a 'select' list of available material filters.
  *
  * @param children
- * @return {JSX.Element}
- * @constructor
+ * @returns {React.JSX.Element}
  */
 function Wrap({ children }) {
   const { getQuery, workTypes, getCount } = useFilters();

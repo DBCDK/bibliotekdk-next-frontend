@@ -1,18 +1,23 @@
 export const fetchAll = ({ sortBy }) => {
   return {
     query: `
-    query userBookmarks {
+    query userBookmarks($sortBy: BookMarkOrderBy) {
       user {
-         bookmarks(orderBy:${sortBy}) {
+        bookmarks(orderBy:$sortBy) {
+          hitcount
           result {
             bookmarkId
             materialType
             materialId
             createdAt
+            workId
           }
         }
       }
     }
     `,
+    variables: {
+      sortBy,
+    },
   };
 };

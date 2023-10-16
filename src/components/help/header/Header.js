@@ -24,7 +24,7 @@ import { getArticleUrl } from "@/lib/utils";
 /**
  * The custom Header for help page
  *
- * @returns {component}
+ * @returns {React.JSX.Element}
  */
 export function Header({
   expanded = true,
@@ -42,7 +42,7 @@ export function Header({
     >
       <Row className={styles.row}>
         <Col xs={3}>
-          <Logo fill={"var(--blue)"} text={"default_logo_text"} />
+          <Logo />
         </Col>
 
         <Col
@@ -117,7 +117,7 @@ Header.propTypes = {
  *
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap() {
   const router = useRouter();

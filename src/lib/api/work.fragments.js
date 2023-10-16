@@ -45,7 +45,7 @@ export function tableOfContents({ workId }) {
  * @param {Object} variables
  * @param {string} variables.workId
  *
- * @return {Object} a query object
+ * @returns {Object} a query object
  */
 export function recommendations({ workId }) {
   return {
@@ -81,7 +81,7 @@ export function recommendations({ workId }) {
  * @param {Object} variables
  * @param {string} variables.workId
  *
- * @return {Object} a query object
+ * @returns {Object} a query object
  */
 export function reviews({ workId }) {
   return {
@@ -179,7 +179,7 @@ export function reviews({ workId }) {
  * @param {Object} variables
  * @param {string} variables.workId
  *
- * @return {Object} a query object
+ * @returns {Object} a query object
  */
 export function series({ workId }) {
   return {
@@ -211,7 +211,7 @@ export function series({ workId }) {
  * @param {Object} variables
  * @param {string} variables.workId
  *
- * @return {Object} a query object
+ * @returns {Object} a query object
  */
 export function infomediaArticlePublicInfo({ workId }) {
   return {
@@ -263,7 +263,7 @@ export function infomediaArticlePublicInfo({ workId }) {
 /**
  * Subject work info that is fast to fetch
  *
- * @param {object} params
+ * @param {Object} params
  * @param {string} params.workId the work id
  */
 export function subjects({ workId }) {
@@ -294,7 +294,7 @@ export function subjects({ workId }) {
 /**
  * Description work info that is fast to fetch
  *
- * @param {object} params
+ * @param {Object} params
  * @param {string} params.workId the work id
  */
 export function description({ workId }) {
@@ -329,7 +329,7 @@ export function description({ workId }) {
 /**
  * Description work info that is fast to fetch
  *
- * @param {object} params
+ * @param {Object} params
  * @param {string} params.workId the work id
  */
 export function buttonTxt({ workId }) {
@@ -720,6 +720,7 @@ export function overviewWork({ workId }) {
         titles {
           full
           parallel
+          sort
         }
         creators {
           ...creatorsFragment
@@ -754,6 +755,14 @@ export function overviewWork({ workId }) {
             cover {
               detail
               origin
+            }
+            hostPublication {
+              title
+            }
+            publisher
+            edition {
+              summary
+              edition
             }
             access {
               __typename
@@ -886,6 +895,9 @@ const workSliderFragment = `fragment workSliderFragment on Work {
   titles {
     main
     full
+  }
+  materialTypes {
+    specific
   }
   manifestations {
     mostRelevant {

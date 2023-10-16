@@ -1,0 +1,36 @@
+.break_word {
+  word-break: break-word;
+}
+
+.branch_status {
+  padding-top: var(--pt4);
+}
+
+.padding_element_pt_two {
+  padding-top: var(--pt2);
+  visibility: hidden;
+}
+
+.reservationButton_container {
+  display: grid;
+  grid-template-columns: 73.35%;
+  padding-top: var(--pt6);
+}
+
+.about_the_branch {
+  padding-top: var(--pt6);
+}
+
+.fit_content {
+  width: fit-content;
+  padding-top: var(--pt2);
+}
+
+.fit_content ~ .fit_content {
+  padding-top: var(--pt4);
+}
+
+.path_blue,
+.path_blue * {
+  stroke: var(--blue);
+}

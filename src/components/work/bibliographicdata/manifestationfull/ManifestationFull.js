@@ -35,7 +35,7 @@ import BookMarkDropDown from "@/components/work/overview/bookmarkDropdown/Bookma
  * Column one of full view. Some links and a button.
  * @param workId
  * @param manifestation
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 function ColumnOne({ workId, manifestation }) {
   const modal = useModal();
@@ -86,20 +86,19 @@ function ColumnOne({ workId, manifestation }) {
       )}
 
       <div className={styles.reservationwrapper}>
-        <div className={styles.button}>
-          <ReservationButtonWrapper
-            workId={workId}
-            selectedPids={[manifestation?.pid]}
-            singleManifestation={true}
-            buttonType="secondary"
-            size="small"
-          />
-        </div>
+        <ReservationButtonWrapper
+          workId={workId}
+          selectedPids={[manifestation?.pid]}
+          singleManifestation={true}
+          buttonType="secondary"
+          size="small"
+        />
         <BookMarkDropDown
-          workId={manifestation.pid}
+          workId={workId}
+          materialId={manifestation.pid}
           materialTypes={[[manifestation?.materialTypes?.[0]?.specific]]}
           size={{ w: 4, h: 4 }}
-          title={manifestation?.titles?.full[0]}
+          title={manifestation?.titles?.sort}
         />
       </div>
 
@@ -111,7 +110,10 @@ function ColumnOne({ workId, manifestation }) {
       </div>
 
       <div className={styles.localizations_link}>
-        <LocalizationsLink selectedPids={[manifestation?.pid]} />
+        <LocalizationsLink
+          selectedPids={[manifestation?.pid]}
+          singleManifestation={true}
+        />
       </div>
 
       <div className={styles.reference_downloads}>
@@ -169,7 +171,7 @@ function ColumnOne({ workId, manifestation }) {
  * @param workId
  * @param pid
  * @param hasBeenSeen
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export default function ManifestationFull({ workId, pid, hasBeenSeen }) {
   const { data } = useData(

@@ -5,10 +5,10 @@ import Router from "next/router";
 /**
  * Language change wrap
  *
- * @param {obj} props
- * @param {obj} props.children button to change language
+ * @param {Object} props
+ * @param {Object} props.children button to change language
  *
- * @returns {component}
+ * @returns {React.JSX.Element}
  */
 
 export default function Language({ children }) {

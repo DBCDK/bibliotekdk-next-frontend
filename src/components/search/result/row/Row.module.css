@@ -20,12 +20,13 @@
 .row_wrapper {
   width: auto;
   display: grid;
-  --grid_template_columns: 1fr 3fr;
+  --grid_template_columns: 1fr 7fr;
   grid-template-columns: var(--grid_template_columns);
   justify-content: space-between;
   margin-top: var(--pt2);
   margin-bottom: var(--pt2);
   gap: var(--pt4);
+  padding-left: var(--pt1);
 }
 
 .col_wrapper {
@@ -36,6 +37,7 @@
 
 .display_inline {
   display: inline;
+  margin-right: var(--pt3);
 }
 
 .wrap_3_lines {
@@ -54,21 +56,17 @@
   margin-top: var(--pt2);
   column-gap: var(--pt2);
   row-gap: var(--pt05);
-
+  align-items: center;
   --underline-bottom-color: var(--blue);
   --underline-middle-hover-color: var(--transparent);
 }
 
-.material {
-  display: inline;
+.material > a {
+  display: flex;
 }
 
-.materials > * {
-  margin-right: var(--pt2);
-}
-
-.materials > :last-child {
-  margin-right: initial;
+.material > a > span {
+  padding-top: 1px;
 }
 
 .creator {
@@ -104,12 +102,23 @@
   }
 
   .row_wrapper {
-    --grid_template_columns: 1fr 3fr;
+    --grid_template_columns: 1fr 7fr;
   }
+}
+
+.row_wrapper:hover button {
+  border-color: var(--gray);
+}
+
+.row_wrapper button:hover {
+  border-color: var(--blue);
 }
 
 .BookmarkDropdown {
   position: absolute;
   right: var(--pt1);
   top: var(--pt2);
+}
+.BookmarkDropdown button {
+  border: 1px solid transparent;
 }

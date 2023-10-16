@@ -22,3 +22,20 @@ export function localizationsQuery({ pids }) {
     slowThreshold: 3000,
   };
 }
+
+export function localizationsWithHoldings({ pids, limit = 10000, offset = 0 }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query LocalizationsWithHoldings($pids: [String!]!, $limit: Int, $offset: Int) {
+      localizationsWithHoldings(pids: $pids, limit: $limit, offset: $offset, bibdkExcludeBranches: true, status: AKTIVE) {
+        count
+        agencies {
+          agencyId
+        }
+      }
+    }`,
+    variables: { pids, limit, offset },
+    slowThreshold: 15000,
+  };
+}

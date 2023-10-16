@@ -40,15 +40,19 @@
   padding: var(--pt1) 0 var(--pt1) 0;
 }
 
+.iconActionsContainer {
+  padding-top: var(--pt1);
+}
+
 .iconActions {
   display: flex;
   justify-content: flex-end;
-  padding-top: var(--pt1);
-  height: var(--pt9);
+  align-items: center;
+  height: var(--pt7);
 }
 
 .action + .action {
-  margin-left: var(--pt2);
+  margin-left: var(--pt4);
 }
 
 .action {
@@ -81,7 +85,7 @@
 
 .select {
   white-space: nowrap;
-  height: 64px;
+  height: var(--pt7);
 }
 
 /* Searchbar */
@@ -90,8 +94,6 @@
   flex-grow: 2;
   display: flex;
   position: relative;
-
-  margin-right: var(--pt3);
 }
 
 .suggester__wrap {
@@ -124,13 +126,14 @@
   position: relative;
   width: 125px;
   min-width: 125px;
-  height: 64px;
+  height: var(--pt7);
   padding: var(--pt2) var(--pt4);
   background-color: transparent;
   color: var(--blue);
   border: 2px solid var(--blue);
-  font-family: var(--body-font);
+  font-family: var(--body-font-medium);
   font-size: 20px;
+  letter-spacing: 0.2px;
   line-height: 22px;
   margin-left: var(--pt4);
   cursor: pointer;
@@ -173,6 +176,47 @@
 }
 
 @media (max-width: 991px) {
+  .header {
+    padding-top: var(--pt1);
+    padding-bottom: var(--pt1);
+    height: var(--pt9);
+  }
+
+  .header > div {
+    height: 100%;
+  }
+
+  .logoWrapper {
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    /* Downsize icon on mobile */
+    transform: scale(calc(35 / 48)); /* Desired height 35, default height 48 */
+    transform-origin: left;
+  }
+
+  .iconActionsContainer {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: auto;
+    position: absolute;
+    right: 0;
+    top: -4px; /* Magical alignment because of svg whitespace */
+    bottom: 0;
+  }
+
+  a.action + a.action {
+    /* Override other screen targets */
+    margin-left: var(--pt3);
+  }
+
+  .action i {
+    /* Downscale icon size on mobile */
+    transform: scale(0.9);
+  }
+
   .search > * {
     display: none;
   }
@@ -250,6 +294,18 @@
 
   .header *[data-icon-type="search"] {
     display: none;
+  }
+}
+
+@media (max-width: 1200px) {
+  .action + .action {
+    margin-left: var(--pt3);
+  }
+}
+
+@media (max-width: 1040px) {
+  .action + .action {
+    margin-left: var(--pt2);
   }
 }
 

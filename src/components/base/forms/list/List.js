@@ -17,8 +17,8 @@ import animations from "css/animations";
  * A custom Radio Button displayed as a row
  *
  * @param disabled
- * @param {object} props
- * @param {array} props.children
+ * @param {Object} props
+ * @param {Array} props.children
  * @param {className} props.string
  * @param {string} props.label the aria label for the radio button
  * @param {function} props.onSelect
@@ -63,11 +63,7 @@ function Radio({
       <div id="radio-label" className={styles.label}>
         {label}
       </div>
-      <div
-        className={[styles.content, animations["f-translate-right"]].join(" ")}
-      >
-        {children}
-      </div>
+      <div className={styles.content}>{children}</div>
     </div>
   );
 }
@@ -86,8 +82,8 @@ Radio.propTypes = {
  * @param disabled
  * @param onDisabled
  * @param labelledBy
- * @param {object} props
- * @param {array} props.children
+ * @param {Object} props
+ * @param {Array} props.children
  * @param {className} props.string
  * @param {string} props.label the aria label for the radio button
  * @param {function} props.onSelect
@@ -196,9 +192,7 @@ function FormLink({
       })}
       border={false}
     >
-      <div
-        className={[styles.content, animations["f-translate-right"]].join(" ")}
-      >
+      <div className={cx(styles.content, animations["f-translate-right"])}>
         {children}
       </div>
       {!disabled ? (

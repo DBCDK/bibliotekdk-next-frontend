@@ -17,15 +17,16 @@ import {
 } from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
 import capitalize from "lodash/capitalize";
+import { createEditionText } from "../details/utils/details.utils";
 
 /**
  * Export function of the Component
  *
- * @param {obj} manifestation
+ * @param {Object} manifestation
  * @param {string} workId
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export function BibliographicData({ manifestations, workId }) {
   const { flattenedGroupedSortedManifestations } = useMemo(() => {
@@ -113,15 +114,7 @@ export function BibliographicData({ manifestations, workId }) {
             "";
 
           // show some publishing info
-          const shortPublishing =
-            manifestation?.hostPublication?.title ||
-            [
-              ...manifestation?.publisher,
-              ...(!isEmpty(manifestation?.edition?.edition)
-                ? [manifestation?.edition?.edition]
-                : []),
-            ].join(", ") ||
-            "";
+          const shortPublishing = createEditionText(manifestation);
 
           // the list to pass to accordion
           const additinalText = [
@@ -159,7 +152,7 @@ export function BibliographicData({ manifestations, workId }) {
  * @param {string} workId
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap({ workId }) {
   const { data, isLoading, error } = useData(

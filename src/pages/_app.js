@@ -154,7 +154,6 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
               <Modal.Page id="login" component={Pages.Login} />
               <Modal.Page id="mobileLogin" component={Pages.MobileLogin} />
               <Modal.Page id="filter" component={Pages.Filter} />
-              <Modal.Page id="localizations" component={Pages.Localizations} />
               <Modal.Page id="references" component={Pages.References} />
               <Modal.Page id="material" component={Pages.Material} />
               <Modal.Page id="deleteOrder" component={Pages.DeleteOrder} />
@@ -175,6 +174,15 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
                 id="manifestationContent"
                 component={Pages.ManifestationContent}
               />
+              <Modal.Page
+                id="agencyLocalizations"
+                component={Pages.AgencyLocalizations}
+              />
+              <Modal.Page
+                id="branchLocalizations"
+                component={Pages.BranchLocalizations}
+              />
+              <Modal.Page id="branchDetails" component={Pages.BranchDetails} />
             </Modal.Container>
             <Head />
             <Matomo />

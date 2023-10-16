@@ -16,10 +16,10 @@ function handleOnBookmarkClick() {
 /**
  * The Component function
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.JSX.Element}
  */
 function Bookmark({
   size = { w: 5, h: 5 },
@@ -49,7 +49,7 @@ function Bookmark({
       title={title}
       data-cy={key}
       className={`${className} ${styles.bookmark} ${selectedClass}`}
-      onClick={() => (onClick ? onClick() : handleOnBookmarkClick())}
+      onClick={(e) => (onClick ? onClick(e) : handleOnBookmarkClick(e))}
     >
       <Icon skeleton={skeleton} disabled={disabled} size={size} alt="bookmark">
         <BookmarkSvg />
@@ -61,10 +61,10 @@ function Bookmark({
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.JSX.Element}
  */
 function BookmarkSkeleton(props) {
   return (
@@ -82,10 +82,10 @@ function BookmarkSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.JSX.Element}
  */
 export default function Container(props) {
   if (props.skeleton) {
