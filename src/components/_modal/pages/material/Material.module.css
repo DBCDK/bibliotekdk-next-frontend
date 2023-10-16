@@ -82,3 +82,9 @@
 .button button.buttonDelete {
   white-space: nowrap;
 }
+
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  justify-self: flex-end;
+}

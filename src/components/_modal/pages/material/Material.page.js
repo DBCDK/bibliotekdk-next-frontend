@@ -6,10 +6,9 @@ import Icon from "@/components/base/icon";
 import styles from "./Material.module.css";
 import Translate from "@/components/base/translate";
 import {
-  MaterialRowButton,
   RenewedSpan,
   useLoanDateAnalysis,
-} from "@/components/profile/materialRow/MaterialRow";
+} from "@/components/profile/materialRow/loan/MaterialRowLoan";
 import { getWorkUrl } from "@/lib/utils";
 import { useModal } from "@/components/_modal";
 import Link from "@/components/base/link";
@@ -27,6 +26,7 @@ import {
 } from "@/components/profile/utils";
 import useUser from "@/components/hooks/useUser";
 import Spinner from "react-bootstrap/Spinner";
+import Button from "@/components/base/button";
 
 const DynamicContentLoan = ({ dueDateString, dataCyPrefix }) => {
   const { isCountdown, isOverdue, dateString, daysToDueDateString } =
@@ -257,29 +257,30 @@ const Material = ({ context }) => {
       case "LOAN":
         return (
           <div className={styles.buttonRowWrapper}>
-            <MaterialRowButton
-              size="medium"
-              wrapperClassname={styles.button}
-              disabled={hasRenewError || renewed}
-              dataCy="loan-button"
-              onClick={handleClickRenew}
-              onKeyPress={(e) => {
-                e.key === "Enter" && handleClickRenew();
-              }}
-            >
-              {isRenewing ? (
-                <Spinner
-                  animation="border"
-                  role="status"
-                  variant="light"
-                  className={styles.spinner}
-                >
-                  <span className="visually-hidden">Loading...</span>
-                </Spinner>
-              ) : (
-                Translate({ context: "profile", label: "renew" })
-              )}
-            </MaterialRowButton>
+            <div className={cx(styles.buttonContainer, styles.button)}>
+              <Button
+                size="medium"
+                disabled={hasRenewError || renewed}
+                dataCy="loan-button"
+                onClick={handleClickRenew}
+                onKeyPress={(e) => {
+                  e.key === "Enter" && handleClickRenew();
+                }}
+              >
+                {isRenewing ? (
+                  <Spinner
+                    animation="border"
+                    role="status"
+                    variant="light"
+                    className={styles.spinner}
+                  >
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
+                ) : (
+                  Translate({ context: "profile", label: "renew" })
+                )}
+              </Button>
+            </div>
             <AfterRenewMessage
               hasRenewError={hasRenewError}
               renewed={renewed}
@@ -288,24 +289,11 @@ const Material = ({ context }) => {
         );
       case "ORDER":
         return (
-          <MaterialRowButton
-            type="secondary"
-            size="medium"
-            wrapperClassname={styles.button}
-            className={styles.buttonDelete}
-            onClick={() => {
-              onClickDelete({
-                modal,
-                mobile: true,
-                pickUpExpiryDate,
-                materialId,
-                agencyId,
-                orderMutation,
-                title,
-              });
-            }}
-            onKeyPress={(e) => {
-              e.key === "Enter" &&
+          <div className={cx(styles.buttonContainer, styles.buttonDelete)}>
+            <Button
+              type="secondary"
+              size="medium"
+              onClick={() => {
                 onClickDelete({
                   modal,
                   mobile: true,
@@ -315,14 +303,27 @@ const Material = ({ context }) => {
                   orderMutation,
                   title,
                 });
-            }}
-            dataCy="order-button"
-          >
-            {Translate({
-              context: "profile",
-              label: "delete-order",
-            })}
-          </MaterialRowButton>
+              }}
+              onKeyPress={(e) => {
+                e.key === "Enter" &&
+                  onClickDelete({
+                    modal,
+                    mobile: true,
+                    pickUpExpiryDate,
+                    materialId,
+                    agencyId,
+                    orderMutation,
+                    title,
+                  });
+              }}
+              dataCy="order-button"
+            >
+              {Translate({
+                context: "profile",
+                label: "delete-order",
+              })}
+            </Button>
+          </div>
         );
     }
   };
