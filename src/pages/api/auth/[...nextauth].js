@@ -44,12 +44,7 @@ export const options = {
   callbacks: {
     ...callbacks,
     session: async (...args) => {
-      console.log("###### args", args);
-
       let res = await callbacks.session(...args);
-
-      console.log("###### res", res);
-
       delete res?.user?.agencies;
       return res;
     },

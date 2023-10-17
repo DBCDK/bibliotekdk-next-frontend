@@ -4,7 +4,6 @@ import Top from "@/components/_modal/pages/base/top";
 import Translate from "@/components/base/translate";
 import Button from "@/components/base/button";
 import { signIn } from "next-auth/react";
-import Icon from "@/components/base/icon";
 import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
 import useVerification from "@/components/hooks/useVerification";
 import { useAccessToken } from "@/components/hooks/useUser";
@@ -26,9 +25,7 @@ export default function Verify({ modal, context }) {
   const data = verification.read();
 
   // Verificationprocess already started by user (a.g. from profile/addLibraryButton)
-  const hasVerification = !!data;
-
-  console.log("### verification", data, hasVerification, callbackUrl);
+  const isOriginListener = !!data?.origin === "listener";
 
   function onMitIdLogin() {
     const props = {
@@ -38,9 +35,7 @@ export default function Verify({ modal, context }) {
     };
 
     // create or update session verfification process
-    hasVerification
-      ? verification.update(props)
-      : verification.create({ ...props, origin: "verifyModal" });
+    verification.update(props);
 
     signIn(
       "adgangsplatformen",
@@ -51,13 +46,13 @@ export default function Verify({ modal, context }) {
 
   const title = Translate({
     context: "addLibrary",
-    label: hasVerification ? "hasVerificationTitle" : "verificationTitle",
+    label: isOriginListener ? "verificationTitle" : "hasVerificationTitle",
     vars: [agencyName],
   });
 
   const text = Translate({
     context: "addLibrary",
-    label: hasVerification ? "hasVerificationText" : "verificationText",
+    label: isOriginListener ? "verificationText" : "hasVerificationText",
     vars: [agencyName],
     renderAsHtml: true,
   });
@@ -80,7 +75,7 @@ export default function Verify({ modal, context }) {
           {text}
         </Text>
 
-        {!hasVerification && (
+        {!isOriginListener && (
           <Text type="text2" tag="span" className={styles.benefits}>
             {benefits}
           </Text>
@@ -101,7 +96,7 @@ export default function Verify({ modal, context }) {
           {Translate({ context: "addLibrary", label: "verificationButton" })}
         </Button>
 
-        {!hasVerification && (
+        {!isOriginListener && (
           <Button
             type="secondary"
             className={styles.closeButton}

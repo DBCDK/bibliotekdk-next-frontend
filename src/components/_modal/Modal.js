@@ -148,7 +148,7 @@ function Container({ children, className = {}, mock = {} }) {
 
   async function moveModalFromStoreToStack(uid, stack) {
     const store = await modal.getStore();
-    const activeModal = store.find((entry) => entry.uid === uid);
+    const activeModal = store?.find((entry) => entry.uid === uid);
     if (!activeModal) return;
     activeModal.active = true;
     activeModal.loaded = true;
@@ -280,7 +280,7 @@ function Container({ children, className = {}, mock = {} }) {
     if (isVisible && modalRef.current) {
       // Wait for animation to finish
       setTimeout(() => {
-        modalRef.current.focus();
+        modalRef.current?.focus();
       }, 200);
     }
   }, [isVisible]);

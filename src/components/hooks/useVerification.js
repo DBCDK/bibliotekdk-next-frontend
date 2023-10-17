@@ -9,6 +9,8 @@ import useSWR from "swr";
 const TYPE = { FFU: "ffu", FOLK: "folk" };
 
 const KEY_NAME = "verification";
+const EXPIRATION_TTL = 1000 * 60 * 10; // 10 minutes
+const TS_TTL = 1000 * 60 * 60 * 24; // 24 hours
 
 /**
  *
@@ -16,10 +18,10 @@ const KEY_NAME = "verification";
  */
 export default function useVerification() {
   const { data, mutate, error, isLoading } = useSWR(KEY_NAME, (key) =>
-    JSON.parse(sessionStorage.getItem(key) || "{}")
+    JSON.parse(localStorage.getItem(key) || "null")
   );
 
-  console.log("### data", data);
+  console.log("useVerification => data", data);
 
   /**
    * remove already used props from props obj.
@@ -49,7 +51,7 @@ export default function useVerification() {
     _close();
 
     const ts = Date.now();
-    const ttl = 1000 * 60 * 10; // 10 minutes
+    const ttl = EXPIRATION_TTL;
     const expires = ts + ttl;
 
     // accesstoken type
@@ -59,8 +61,8 @@ export default function useVerification() {
       // remove already used props
       props = _trim(props);
 
-      const _data = { ...props, expires, tokens: { [_type]: accessToken } };
-      sessionStorage.setItem(KEY_NAME, JSON.stringify(_data));
+      const _data = { ...props, expires, ts, tokens: { [_type]: accessToken } };
+      localStorage.setItem(KEY_NAME, JSON.stringify(_data));
       mutate(_data);
     }
   }
@@ -94,7 +96,7 @@ export default function useVerification() {
           tokens: { ...data.tokens, [_type]: accessToken },
         };
 
-        sessionStorage.setItem(KEY_NAME, JSON.stringify(_data));
+        localStorage.setItem(KEY_NAME, JSON.stringify(_data));
         mutate(_data);
       }
     }
@@ -106,12 +108,13 @@ export default function useVerification() {
   function _close() {
     console.log("useVerification => close...");
 
-    sessionStorage.removeItem(KEY_NAME);
+    localStorage.removeItem(KEY_NAME);
     mutate(null);
   }
 
   /**
-   * close an open verification process
+   * read an open verification process WITHIN expiration
+   *  @returns {object|null}
    */
   function _read() {
     console.log("useVerification => read...");
@@ -120,17 +123,30 @@ export default function useVerification() {
     if (data?.expires > ts) {
       return data;
     }
+
     // expired or unset verification
-    else {
-      // close inActive verification
-      if (data?.expires) {
-        _close();
-      }
-      return null;
+    return null;
+  }
+
+  /**
+   * check if a verification process exist BEYOND expiration
+   *  @returns {boolean}
+   */
+  function _exist() {
+    const ts = Date.now();
+    const ttl = TS_TTL;
+    const expires = data?.ts + ttl;
+
+    if (expires > ts) {
+      return true;
     }
+
+    // expired or unset verification
+    return false;
   }
 
   return {
+    exist: _exist,
     create: _create,
     read: _read,
     update: _update,
