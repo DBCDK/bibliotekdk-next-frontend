@@ -18,7 +18,9 @@ describe("Order", () => {
     cy.visitWithConsoleSpy(
       "/iframe.html?id=modal-order--order-via-ill&viewMode=story"
     );
-    cy.contains("Bestil", { timeout: 10000 }).click();
+    cy.get("[data-cy=button-order-overview-enabled]")
+      .contains("Bestil", { timeout: 10000 })
+      .click();
 
     // Check that user blocking is not present
     cy.get("[data-cy=blocked-user]").should("not.exist");
