@@ -196,7 +196,7 @@ describe("Button text generation for buttons linking directly to material", () =
       " " +
       Translate({
         context: "overview",
-        label: "material-typename-music",
+        label: "material-typename-movie",
       }).toLowerCase();
     expect(actual).toEqual(expected);
 
@@ -232,7 +232,7 @@ describe("Button text generation for buttons linking directly to material", () =
       " " +
       Translate({
         context: "overview",
-        label: "material-typename-music",
+        label: "material-typename-sheetmusic",
       }).toLowerCase();
     expect(actual).toEqual(expected);
 
@@ -268,7 +268,7 @@ describe("Button text generation for buttons linking directly to material", () =
       " " +
       Translate({
         context: "overview",
-        label: "material-typename-music",
+        label: "material-typename-game",
       }).toLowerCase();
     expect(actual).toEqual(expected);
 
