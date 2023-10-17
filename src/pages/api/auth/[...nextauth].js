@@ -26,14 +26,9 @@ export const options = {
       clientId,
       clientSecret,
       profile: async ({ profile }) => {
-        let id = null;
-        if (profile && profile.attributes && profile.attributes.userId) {
-          id = profile.attributes.userId;
-        }
-        if (profile && profile.attributes && profile.attributes.uniqueId) {
-          id = profile.attributes.uniqueId;
-        }
-        return { id };
+        return {
+          id: profile?.attributes?.userId || profile?.attributes?.uniqueId,
+        };
       },
     }),
   ],

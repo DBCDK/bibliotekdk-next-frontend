@@ -138,7 +138,7 @@ function useUserImpl() {
 
   //TODO give diffferent name
   const isGuestUser =
-    !hasCulrUniqueId && Object.keys(loanerInfo?.userParameters).length > 0;
+    !isAuthenticated && Object.keys(loanerInfo?.userParameters).length > 0;
 
   return {
     authUser: userData?.user || {},
