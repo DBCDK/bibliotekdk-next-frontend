@@ -27,7 +27,7 @@ export const options = {
       clientSecret,
       profile: async ({ profile }) => {
         return {
-          id: profile?.attributes?.userId || profile?.attributes?.uniqueId,
+          id: profile?.attributes?.uniqueId || profile?.attributes?.userId,
         };
       },
     }),
