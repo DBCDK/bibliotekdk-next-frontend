@@ -40,7 +40,8 @@ function Details({ className = "", manifestation = {}, work = {} }) {
   const context = { context: "details" };
 
   // this materialtype is for displaying subtitle in section (seneste udgave)
-  const materialType = manifestation?.materialTypes?.[0]?.specific;
+  const materialType =
+    manifestation?.materialTypes?.[0]?.materialTypeSpecific?.display;
   const subtitle = Translate({
     ...context,
     label: "subtitle",

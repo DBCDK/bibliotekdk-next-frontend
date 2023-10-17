@@ -82,7 +82,7 @@ export function BookMarkMaterialSelector({
 
         return {
           editionDisplayText:
-            edition?.materialTypes?.[0]?.specific +
+            edition?.materialTypes?.[0]?.materialTypeSpecific?.display +
             ", " +
             createEditionText(edition),
           ...edition,
@@ -98,10 +98,16 @@ export function BookMarkMaterialSelector({
     if (material.editionDisplayText) {
       // Edition logic
       item = {
-        key: material.pid + upperFirst(material.materialTypes?.[0]?.specific),
+        key:
+          material.pid +
+          upperFirst(
+            material.materialTypes?.[0]?.materialTypeSpecific?.display
+          ),
         materialId: material.pid,
         workId: workId,
-        materialType: upperFirst(material.materialTypes?.[0]?.specific),
+        materialType: upperFirst(
+          material.materialTypes?.[0]?.materialTypeSpecific?.display
+        ),
         title,
       };
     } else {
@@ -178,7 +184,9 @@ export function BookMarkMaterialSelector({
                 (book) =>
                   book.key ===
                   material.pid +
-                    upperFirst(material.materialTypes?.[0]?.specific)
+                    upperFirst(
+                      material.materialTypes?.[0]?.materialTypeSpecific?.display
+                    )
               ) !== -1;
           } else {
             activeItem =

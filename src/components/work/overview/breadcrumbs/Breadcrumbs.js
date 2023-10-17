@@ -52,7 +52,11 @@ export default function Wrap({ workId }) {
   // TODO: Update this when JED 1.0 is aired
   //  There will be some new materialTypes for JED 1.0
   if (work?.workTypes?.includes("OTHER")) {
-    if (work?.materialTypes?.map((mat) => mat?.specific)?.includes("spil")) {
+    if (
+      work?.materialTypes
+        ?.map((mat) => mat?.materialTypeSpecific?.display)
+        ?.includes("spil")
+    ) {
       return (
         <Breadcrumbs>
           {[
@@ -72,7 +76,9 @@ export default function Wrap({ workId }) {
     }
   } else if (work?.workTypes?.includes("GAME")) {
     if (
-      work?.materialTypes?.map((mat) => mat?.general)?.includes("computerspil")
+      work?.materialTypes
+        ?.map((mat) => mat?.materialTypeGeneral?.display)
+        ?.includes("computerspil")
     ) {
       return (
         <Breadcrumbs>

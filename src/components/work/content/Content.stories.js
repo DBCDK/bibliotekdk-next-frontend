@@ -35,7 +35,7 @@ ContentSection.story = {
     graphql: {
       resolvers: {
         Manifestation: {
-          materialTypes: () => [{ specific: "bog" }],
+          materialTypes: () => [{ materialTypeSpecific: { display: "bog" } }],
           tableOfContents: ({ variables }) =>
             variables.workId === "some-id"
               ? {
