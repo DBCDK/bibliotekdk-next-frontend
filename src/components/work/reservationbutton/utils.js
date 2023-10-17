@@ -90,91 +90,24 @@ export function handleGoToLogin(modal, access, user) {
 }
 
 /**
- *
- * @param {string} generalMaterialType
- * @param {string} specificdMaterialType
- * @param {boolean} shortText
- * @returns {string} label for translations
- */
-export const buttonTextLabelMaker = (
-  generalMaterialType,
-  specificdMaterialType,
-  shortText = false
-) => {
-  const getActionLabel = () => {
-    switch (generalMaterialType) {
-      case "literature": {
-        switch (specificdMaterialType) {
-          case "e-bog":
-            return "material-action-read";
-          case "podcast":
-            return "material-action-listen";
-          case "lydbog (online)":
-            return "material-action-listen";
-          default:
-            return "Error";
-        }
-      }
-      case "article":
-        return "material-action-read";
-      case "music":
-        return "material-action-listen";
-      case "movie":
-      case "sheetmusic":
-        return "material-action-see";
-      case "game":
-        return "material-action-play";
-      default:
-        return "Error";
-    }
-  };
-
-  const getMaterialLabel = () => {
-    if (shortText) return "material-direction-here";
-
-    if (generalMaterialType === "literature") {
-      switch (specificdMaterialType) {
-        case "e-bog":
-          return "material-typename-ebook";
-        case "podcast":
-          return "material-typename-podcast";
-        case "lydbog (online)":
-          "material-typename-audiobook";
-        /**
-         * TODO more lydbog
-         */
-        default:
-          return "Error";
-      }
-    }
-    return `material-typename-${specificdMaterialType}`;
-  };
-
-  return [getActionLabel(), getMaterialLabel()];
-};
-
-/**
- * @param {string} materialType: general materialType
- * @param {string} selectedMaterialType: specific material type
+ * @TODO rework with JED 1.1 material type general
+ * @param {string} workType: general materialType
+ * @param {string} materialType: specific material type
  * @param {boolean} shortText: If material text is shortened or not
  * @returns
  */
-export const constructButtonText = (
-  materialType,
-  selectedMaterialType,
-  shortText
-) => {
+export const constructButtonText = (workType, materialType, shortText) => {
   const CONTEXT = "overview";
 
   /**
+   * @param {string} workType
    * @param {string} materialType
-   * @param {string} selectedMaterialType
    * @returns {string} translated material action (read, listen, watch)
    */
-  const getActionText = (materialType, selectedMaterialType) => {
-    switch (materialType) {
+  const getActionText = (workType, materialType) => {
+    switch (workType) {
       case "literature": {
-        switch (selectedMaterialType) {
+        switch (materialType) {
           case "e-bog":
             return Translate({
               context: CONTEXT,
@@ -218,13 +151,13 @@ export const constructButtonText = (
   };
 
   /**
-   * @param {string} materialType
-   * @param {string} selectedMaterialType
+   * @param {string} workType
+   * @param {string} materialTypeSpecific
    * @returns {string} translated material (book, movie, audiobook)
    */
-  const getMaterialText = (materialType, selectedMaterialType) => {
-    if (materialType === "literature") {
-      switch (selectedMaterialType) {
+  const getMaterialText = (workType, materialType) => {
+    if (workType === "literature") {
+      switch (materialType) {
         case "e-bog":
           return Translate({
             context: "overview",
@@ -240,25 +173,22 @@ export const constructButtonText = (
             context: "overview",
             label: "material-typename-audiobook",
           }).toLowerCase();
-        /**
-         * TODO more lydbog
-         */
       }
     }
 
     return Translate({
       context: "overview",
-      label: `material-typename-${materialType}`,
+      label: `material-typename-${workType}`,
     }).toLowerCase();
   };
 
   // Construct string
-  const actionText = getActionText(materialType, selectedMaterialType);
+  const actionText = getActionText(workType, materialType);
   const materialText = shortText
     ? Translate({
         context: "overview",
         label: "material-direction-here",
       }).toLowerCase()
-    : getMaterialText(materialType, selectedMaterialType);
+    : getMaterialText(workType, materialType);
   return actionText + " " + materialText;
 };

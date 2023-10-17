@@ -1,28 +1,40 @@
 import Translate from "@/components/base/translate";
-import { buttonTextLabelMaker, constructButtonText } from "../utils";
+import { constructButtonText } from "../utils";
 
-describe("Button text generation", () => {
+describe("Button text generation for buttons linking directly to material", () => {
   it("Ebook", () => {
     const materialType = "literature";
     const selectedMaterialType = "e-bog";
     const expectedAction = "read";
 
-    const actual = buttonTextLabelMaker(materialType, selectedMaterialType);
-    const expected = [
-      `material-action-${expectedAction}`,
-      "material-typename-ebook",
-    ];
+    const actual = constructButtonText(materialType, selectedMaterialType);
+    const expected =
+      Translate({
+        context: "overview",
+        label: `material-action-${expectedAction}`,
+      }) +
+      " " +
+      Translate({
+        context: "overview",
+        label: "material-typename-e-bog",
+      }).toLowerCase();
     expect(actual).toEqual(expected);
 
-    const actualShort = buttonTextLabelMaker(
+    const actualShort = constructButtonText(
       materialType,
       selectedMaterialType,
       true
     );
-    const expectedShort = [
-      `material-action-${expectedAction}`,
-      "material-direction-here",
-    ];
+    const expectedShort =
+      Translate({
+        context: "overview",
+        label: `material-action-${expectedAction}`,
+      }) +
+      " " +
+      Translate({
+        context: "overview",
+        label: "material-direction-here",
+      }).toLowerCase();
     expect(actualShort).toEqual(expectedShort);
   });
 
@@ -77,6 +89,186 @@ describe("Button text generation", () => {
       Translate({
         context: "overview",
         label: "material-typename-article",
+      }).toLowerCase();
+    expect(actual).toEqual(expected);
+
+    const actualShort = constructButtonText(
+      materialType,
+      selectedMaterialType,
+      true
+    );
+    const expectedShort =
+      Translate({
+        context: "overview",
+        label: `material-action-${expectedAction}`,
+      }) +
+      " " +
+      Translate({
+        context: "overview",
+        label: "material-direction-here",
+      }).toLowerCase();
+    expect(actualShort).toEqual(expectedShort);
+  });
+
+  it("Lydbog (online)", () => {
+    const materialType = "literature";
+    const selectedMaterialType = "lydbog (online)";
+    const expectedAction = "listen";
+
+    const actual = constructButtonText(materialType, selectedMaterialType);
+    const expected =
+      Translate({
+        context: "overview",
+        label: `material-action-${expectedAction}`,
+      }) +
+      " " +
+      Translate({
+        context: "overview",
+        label: "material-typename-audiobook",
+      }).toLowerCase();
+    expect(actual).toEqual(expected);
+
+    const actualShort = constructButtonText(
+      materialType,
+      selectedMaterialType,
+      true
+    );
+    const expectedShort =
+      Translate({
+        context: "overview",
+        label: `material-action-${expectedAction}`,
+      }) +
+      " " +
+      Translate({
+        context: "overview",
+        label: "material-direction-here",
+      }).toLowerCase();
+    expect(actualShort).toEqual(expectedShort);
+  });
+
+  it("Music", () => {
+    const materialType = "music";
+    const selectedMaterialType = "music";
+    const expectedAction = "listen";
+
+    const actual = constructButtonText(materialType, selectedMaterialType);
+    const expected =
+      Translate({
+        context: "overview",
+        label: `material-action-${expectedAction}`,
+      }) +
+      " " +
+      Translate({
+        context: "overview",
+        label: "material-typename-music",
+      }).toLowerCase();
+    expect(actual).toEqual(expected);
+
+    const actualShort = constructButtonText(
+      materialType,
+      selectedMaterialType,
+      true
+    );
+    const expectedShort =
+      Translate({
+        context: "overview",
+        label: `material-action-${expectedAction}`,
+      }) +
+      " " +
+      Translate({
+        context: "overview",
+        label: "material-direction-here",
+      }).toLowerCase();
+    expect(actualShort).toEqual(expectedShort);
+  });
+
+  it("Movie", () => {
+    const materialType = "movie";
+    const selectedMaterialType = "movie";
+    const expectedAction = "see";
+
+    const actual = constructButtonText(materialType, selectedMaterialType);
+    const expected =
+      Translate({
+        context: "overview",
+        label: `material-action-${expectedAction}`,
+      }) +
+      " " +
+      Translate({
+        context: "overview",
+        label: "material-typename-music",
+      }).toLowerCase();
+    expect(actual).toEqual(expected);
+
+    const actualShort = constructButtonText(
+      materialType,
+      selectedMaterialType,
+      true
+    );
+    const expectedShort =
+      Translate({
+        context: "overview",
+        label: `material-action-${expectedAction}`,
+      }) +
+      " " +
+      Translate({
+        context: "overview",
+        label: "material-direction-here",
+      }).toLowerCase();
+    expect(actualShort).toEqual(expectedShort);
+  });
+
+  it("Sheetmusic", () => {
+    const materialType = "sheetmusic";
+    const selectedMaterialType = "sheetmusic";
+    const expectedAction = "see";
+
+    const actual = constructButtonText(materialType, selectedMaterialType);
+    const expected =
+      Translate({
+        context: "overview",
+        label: `material-action-${expectedAction}`,
+      }) +
+      " " +
+      Translate({
+        context: "overview",
+        label: "material-typename-music",
+      }).toLowerCase();
+    expect(actual).toEqual(expected);
+
+    const actualShort = constructButtonText(
+      materialType,
+      selectedMaterialType,
+      true
+    );
+    const expectedShort =
+      Translate({
+        context: "overview",
+        label: `material-action-${expectedAction}`,
+      }) +
+      " " +
+      Translate({
+        context: "overview",
+        label: "material-direction-here",
+      }).toLowerCase();
+    expect(actualShort).toEqual(expectedShort);
+  });
+
+  it("Game", () => {
+    const materialType = "game";
+    const selectedMaterialType = "game";
+    const expectedAction = "play";
+
+    const actual = constructButtonText(materialType, selectedMaterialType);
+    const expected =
+      Translate({
+        context: "overview",
+        label: `material-action-${expectedAction}`,
+      }) +
+      " " +
+      Translate({
+        context: "overview",
+        label: "material-typename-music",
       }).toLowerCase();
     expect(actual).toEqual(expected);
 

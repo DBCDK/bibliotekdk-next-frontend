@@ -143,18 +143,13 @@ export const ReservationButton = ({
   overrideButtonText = null,
 }) => {
   const modal = useModal();
-  const materialType = access?.[0]?.workTypes?.[0]?.toLowerCase();
+  const workType = access?.[0]?.workTypes?.[0]?.toLowerCase();
   const selectedMaterialType = Array.isArray(parentSelectedMaterialType)
     ? parentSelectedMaterialType?.[0]?.toLowerCase()
     : parentSelectedMaterialType?.toLowerCase();
 
   const physicalCopy = checkPhysicalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
   const digitalCopy = checkDigitalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
-
-  /*const isOnlineTranslated = singleManifestation
-    ? isOnlineTranslator(access?.[0]?.materialTypesArray)
-    : "";
-  const workTypeTranslated = workTypeTranslator(access?.[0]?.workTypes);*/
 
   const noSelectedManifestations = Boolean(isEmpty(access));
   const onlineMaterialWithoutLoginOrLoginAtUrl = Boolean(
@@ -175,13 +170,6 @@ export const ReservationButton = ({
     dataCy: "button-order-overview",
     onClick: () => handleGoToLogin(modal, access, user),
   };
-  /*const accessibleOnlineAndNoLoginText =
-    Translate({
-      context: "overview",
-      label: "goto",
-    }) +
-    " " + "HELLO" + 
-    (isOnlineTranslated || workTypeTranslated);*/
 
   async function handleOpenLoginAndOrderModal() {
     //add order modal to store, to be able to access when coming back from adgangsplatform/mitid?
@@ -246,11 +234,7 @@ export const ReservationButton = ({
     if (onlineMaterialWithoutLoginOrLoginAtUrl) {
       return {
         props: accessibleOnlineAndNoLoginProps,
-        text: constructButtonText(
-          materialType,
-          selectedMaterialType,
-          shortText
-        ),
+        text: constructButtonText(workType, selectedMaterialType, shortText),
         preferSecondary: shortText, // Becomes secondary button if button links to material (not ordering)
       };
     }
