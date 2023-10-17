@@ -139,7 +139,7 @@ describe("getAllAccess", () => {
     const actual = getAllAccess([
       {
         pid: "1loan",
-        materialTypes: [{ specific: "bog" }],
+        materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
         access: [{ url: "urla_1_0.dekaa" }],
       },
     ]);
@@ -152,7 +152,10 @@ describe("getAllAccess", () => {
     const actual = getAllAccess([
       {
         pid: "1loan",
-        materialTypes: [{ specific: "bog" }, { specific: "lydbog (cd-mp3)" }],
+        materialTypes: [
+          { materialTypeSpecific: { display: "bog" } },
+          { materialTypeSpecific: { display: "lydbog (cd-mp3)" } },
+        ],
         access: [{ url: "urla_1_0.dekaa" }],
       },
     ]);

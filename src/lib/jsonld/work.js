@@ -82,7 +82,7 @@ function getBook({
         };
       }
       const bookFormat = getSchemaOrgBookFormat(
-        entry.materialTypes[0].specific
+        entry.materialTypes[0]?.materialTypeSpecific?.display
       );
       if (bookFormat) {
         manifestation.bookFormat = bookFormat;
@@ -242,9 +242,9 @@ export function getCoverImage(work) {
  *  - "potentialAction" is not implemented
  *  -
  *
- * @param {object} work
+ * @param {Object} work
  *
- * @returns {object} JSON-LD representation of work
+ * @returns {Object} JSON-LD representation of work
  */
 export function getJSONLD(work) {
   // set parameters for getCanonicalUrl method

@@ -2,9 +2,6 @@ import { useData } from "@/lib/api/api";
 import { subjects } from "@/lib/api/relatedSubjects.fragments";
 
 import useQ from "@/components/hooks/useQ";
-
-import FilterButton from "../filterButton";
-
 import { cyKey } from "@/utils/trim";
 
 import Link from "@/components/base/link";
@@ -68,13 +65,7 @@ export function Related({ data, isLoading }) {
       space={{
         bottom: "var(--pt4)",
       }}
-      title={
-        noRelatedSubjects ? (
-          <span />
-        ) : (
-          <FilterButton isLoading={isLoading} className={styles.filterButton} />
-        )
-      }
+      title={<span />}
     >
       {(data.length > 0 || isLoading) && (
         <div>

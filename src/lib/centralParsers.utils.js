@@ -4,7 +4,7 @@ import { HiddenRoleFunctionEnum } from "@/lib/enums";
  * Map a single person ({disploy{roles[{function, functioncode}]}}
  * @param person
  * @param hiddenRoles
- * @returns {*}
+ * @returns {React.JSX.Element}
  *  a string "disploy (function)" .. eg "ebbe fisk (instruktør)"
  */
 export function parseFunction(

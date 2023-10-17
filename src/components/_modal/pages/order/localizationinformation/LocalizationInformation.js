@@ -85,6 +85,7 @@ function LocalizationInformation({
             >{`${pickupBranch?.postalCode} ${pickupBranch?.city}`}</Text>
           </div>
         )}
+        {/* shouldnt this be moved into general warning? */}
         {!isLoadingBranches &&
           pickupBranch &&
           !availableAsPhysicalCopy &&

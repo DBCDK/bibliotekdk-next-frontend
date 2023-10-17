@@ -3,34 +3,39 @@ import styles from "./BookmarkDropDown.module.css";
 import Dropdown from "react-bootstrap/Dropdown";
 import Text from "@/components/base/text/Text";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { cyKey } from "@/utils/trim";
 import useBookmarks from "@/components/hooks/useBookmarks";
 import Icon from "@/components/base/icon/Icon";
 import BookmarkMedium from "@/public/icons/bookmark_small.svg";
 import { formatMaterialTypesToPresentation } from "@/lib/manifestationFactoryUtils";
+import { createEditionText } from "../../details/utils/details.utils";
+import upperFirst from "lodash/upperFirst";
 
 export function BookMarkMaterialSelector({
   materialTypes,
   workId,
+  materialId = workId, // A reference to the bookmark materialId - workId or pid
   size = { w: 7, h: 7 },
   className,
   title,
+  editions,
 }) {
   const { bookmarks, setBookmark, isLoading } = useBookmarks();
-
-  const onSelect = (material, workId) => {
-    const item = {
-      key: workId + formatMaterialTypesToPresentation(material),
-      materialId: workId,
-      materialType: formatMaterialTypesToPresentation(material),
-      title,
-    };
-    setBookmark(item);
-  };
-
   const [active, setActive] = useState(false);
-  const options = materialTypes.map((mat) => mat);
+  const [options, setOptions] = useState(
+    materialTypes.map((mat) => formatMaterialTypesToPresentation(mat))
+  );
+  const isOpen = useRef(false);
+
+  useEffect(() => {
+    if (isOpen.current) {
+      // on't change options if dropdown is open. Wait for close event.
+      return;
+    }
+
+    revalidateEditions();
+  }, [editions, bookmarks]);
 
   useEffect(() => {
     if (!isLoading) {
@@ -38,18 +43,96 @@ export function BookMarkMaterialSelector({
       // this one is used to set the overall button to active or not (if one of the materialtypes is selected)
       if (options.length > 1) {
         bookmarkIndex = bookmarks?.findIndex(
-          (bookm) => bookm.materialId === workId
+          (bookm) => bookm.materialId === materialId || bookm.workId === workId
         );
       } else if (options.length === 1) {
         // if we have one material only we look for a specific key
         bookmarkIndex = bookmarks?.findIndex(
           (bookm) =>
-            bookm.key === workId + formatMaterialTypesToPresentation(options)
+            bookm.key ===
+            materialId + formatMaterialTypesToPresentation(options[0])
         );
       }
       setActive(bookmarkIndex !== -1);
     }
-  }, [bookmarks]);
+  }, [options, isOpen.current]);
+
+  const revalidateEditions = () => {
+    const defaultOptions = materialTypes.map((mat) =>
+      formatMaterialTypesToPresentation(mat)
+    );
+
+    if (!editions) {
+      // Not needed to look for aditional dropdown items
+      setOptions(defaultOptions);
+      return;
+    }
+
+    const addedEditions = bookmarks?.filter(
+      (bookmark) => bookmark.workId === workId
+    );
+    const bookmarkMatches = addedEditions
+      ?.map((addedEdition) => {
+        const edition = editions?.find(
+          (edi) => edi.pid === addedEdition.materialId
+        );
+        if (!edition) {
+          return null;
+        }
+
+        return {
+          editionDisplayText:
+            edition?.materialTypes?.[0]?.materialTypeSpecific?.display +
+            ", " +
+            createEditionText(edition),
+          ...edition,
+        };
+      })
+      .filter((i) => !!i);
+
+    setOptions(defaultOptions.concat(bookmarkMatches));
+  };
+
+  const onSelect = (material, workId) => {
+    let item;
+    if (material.editionDisplayText) {
+      // Edition logic
+      item = {
+        key:
+          material.pid +
+          upperFirst(
+            material.materialTypes?.[0]?.materialTypeSpecific?.display
+          ),
+        materialId: material.pid,
+        workId: workId,
+        materialType: upperFirst(
+          material.materialTypes?.[0]?.materialTypeSpecific?.display
+        ),
+        title,
+      };
+    } else {
+      // Normal logic
+      item = {
+        key: materialId + formatMaterialTypesToPresentation(material),
+        materialId: materialId,
+        workId: workId,
+        materialType: formatMaterialTypesToPresentation(material),
+        title,
+      };
+    }
+
+    setBookmark(item);
+  };
+
+  const onDropdownToggle = (event) => {
+    // Store open state in ref, so we can wait with updating options untill dropdown is closed
+    isOpen.current = event;
+
+    if (event === false) {
+      // On close - Empty options and revalidate editions - effect subscribes to options changes
+      revalidateEditions();
+    }
+  };
 
   if (options.length === 1) {
     return (
@@ -70,6 +153,7 @@ export function BookMarkMaterialSelector({
       className={`${styles.dropdownwrap} ${className}`}
       align="end"
       autoClose="outside"
+      onToggle={onDropdownToggle}
     >
       <Dropdown.Toggle
         as="div"
@@ -93,12 +177,26 @@ export function BookMarkMaterialSelector({
         })}
       >
         {options.map((material, index) => {
-          const activeItem =
-            bookmarks?.findIndex(
-              (book) =>
-                book.key ===
-                workId + formatMaterialTypesToPresentation(material)
-            ) !== -1;
+          let activeItem;
+          if (material?.editionDisplayText) {
+            activeItem =
+              bookmarks?.findIndex(
+                (book) =>
+                  book.key ===
+                  material.pid +
+                    upperFirst(
+                      material.materialTypes?.[0]?.materialTypeSpecific?.display
+                    )
+              ) !== -1;
+          } else {
+            activeItem =
+              bookmarks?.findIndex(
+                (book) =>
+                  book.key ===
+                  workId + formatMaterialTypesToPresentation(material)
+              ) !== -1;
+          }
+
           return (
             <Dropdown.Item
               data-cy={`bookmark-${material}-${index}`}
@@ -113,7 +211,9 @@ export function BookMarkMaterialSelector({
             >
               <div className={styles.itemContainer}>
                 <Text type="text3" className={styles.dropdownitemText}>
-                  {formatMaterialTypesToPresentation(material)}
+                  {material?.editionDisplayText
+                    ? material.editionDisplayText
+                    : formatMaterialTypesToPresentation(material)}
                 </Text>
 
                 <Icon size={{ w: 3, h: 3 }}>
@@ -128,20 +228,4 @@ export function BookMarkMaterialSelector({
   );
 }
 
-export default function wrapper({
-  materialTypes,
-  workId,
-  title,
-  size,
-  className,
-}) {
-  return (
-    <BookMarkMaterialSelector
-      materialTypes={materialTypes}
-      workId={workId}
-      size={size}
-      className={className}
-      title={title}
-    />
-  );
-}
+export default BookMarkMaterialSelector;

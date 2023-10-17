@@ -654,7 +654,7 @@ const MaterialRow = (props) => {
             )}
             <div className={styles.textContainer}>
               <ConditionalWrapper
-                condition={!!title && !!creator && !!materialId}
+                condition={!!title && !!materialId}
                 wrapper={(children) => (
                   <Link
                     border={{
@@ -668,6 +668,7 @@ const MaterialRow = (props) => {
                       pid,
                       materialId,
                       materialType,
+                      scrollToEdition: !(type === "LOAN"),
                     })}
                     className={styles.blackUnderline}
                   >

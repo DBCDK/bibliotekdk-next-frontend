@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import List from "@/components/base/forms/list";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
@@ -9,46 +9,7 @@ import { useData } from "@/lib/api/api";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 import find from "lodash/find";
 import cx from "classnames";
-
-/**
- * Select a branch and handle login
- * either the user is already logged in for that agency
- * or the user needs to log in for that agency, so prompt login or open loanerform
- * @param {obj} branch
- * @param {obj} modal
- */
-function handleOnSelect(branch, modal, context, updateLoanerInfo) {
-  // Selected branch belongs to one of the user's agencies where the user is logged in
-  const alreadyLoggedin = context.initial?.agencies?.find(
-    (agency) => agency.result?.[0].agencyId === branch.agencyId
-  );
-
-  // New selected branch has borrowercheck
-  const hasBorchk = branch.borrowerCheck;
-  // if selected branch has same origin as user agency
-  if (alreadyLoggedin && hasBorchk) {
-    // Set new branch without new log-in
-    updateLoanerInfo({ pickupBranch: branch.branchId });
-    // update context at previous modal
-    modal.prev();
-    return;
-  }
-  const callbackUID = modal?.stack?.find((m) => m.id === "order").uid;
-  if (branch?.borrowerCheck) {
-    modal.push("openAdgangsplatform", {
-      agencyId: branch.agencyId,
-      branchId: branch.branchId,
-      agencyName: branch.agencyName,
-      callbackUID: callbackUID, //we should always have callbackUID, but if we dont, order modal is not opened after login.
-    });
-    return;
-  } else {
-    modal.push("loanerform", {
-      branchId: branch.branchId,
-      changePickupBranch: true,
-    });
-  }
-}
+import { handleOnSelect } from "@/components/_modal/utils";
 
 /**
  * Special component responsible for loading order policy
@@ -88,13 +49,13 @@ function PolicyLoader({ branch, onLoad, pid, requireDigitalAccess }) {
 
 /**
  * Row that desplays a branch
- * @param {object} branch
+ * @param {Object} branch
  * @param {boolean} selected
  * @param {function} onSelect
  * @param {boolean} isLoading
  * @param {boolean} includeArrows
- * @param {object} _ref
- * @returns {JSX.Element}
+ * @param {Object} _ref
+ * @returns {React.JSX.Element}
  */
 function Row({ branch, selected, onSelect, isLoading, includeArrows, _ref }) {
   // Check for a highlight key matching on "name" prop

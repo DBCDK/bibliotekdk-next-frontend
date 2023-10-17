@@ -44,7 +44,6 @@ function useUserMock() {
     isAuthenticated: true,
     hasCulrUniqueId: true,
     isCPRValidated: true,
-    isCPRValidated: true,
     isLoggedIn: true,
     loanerInfo: { ...data, userParameters: { ...loggedInUser } },
     updateLoanerInfo: (obj) => {
@@ -64,6 +63,10 @@ function useUserImpl() {
   const { data, mutate } = useData(sessionFragments.session());
   const { data: session } = useSession();
   const sessionMutate = useMutate();
+<<<<<<< HEAD
+=======
+
+>>>>>>> a9116f551804b84ef0a8750aa814ec6be32096e2
   const isAuthenticated = !!session?.user?.userId;
   const hasCulrUniqueId = !!session?.user?.uniqueId;
 
@@ -149,7 +152,10 @@ function useUserImpl() {
     error: userDataError,
     isAuthenticated,
     hasCulrUniqueId,
+<<<<<<< HEAD
     isCPRValidated,
+=======
+>>>>>>> a9116f551804b84ef0a8750aa814ec6be32096e2
     loanerInfo,
     isGuestUser: isGuestUser,
     isLoggedIn: isAuthenticated || isGuestUser, //TODO guestUsers are not logged in - maybe "hasUserParameters" is a better name

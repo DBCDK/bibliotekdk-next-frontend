@@ -57,7 +57,7 @@ WrappedDetailsSection.story = {
             lix: "2222",
           }),
 
-          materialTypes: () => [{ specific: "Bog" }],
+          materialTypes: () => [{ materialTypeSpecific: { display: "bog" } }],
         },
       },
     },
@@ -165,7 +165,9 @@ WrappedDetailsSectionMovie.story = {
             },
           ],
 
-          materialTypes: () => [{ specific: "Film (dvd)" }],
+          materialTypes: () => [
+            { materialTypeSpecific: { display: "film (dvd)" } },
+          ],
           edition: () => ({
             publicationYear: {
               display: "2011",

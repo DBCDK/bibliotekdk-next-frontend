@@ -35,7 +35,9 @@ export const dataReducer = (dataType, data) => {
         creator: extractCreatorsPrioritiseCorporation(
           data?.manifestation?.creators
         )?.[0]?.display,
-        materialType: data?.manifestation?.materialTypes?.[0]?.specific,
+        materialType:
+          data?.manifestation?.materialTypes?.[0]?.materialTypeSpecific
+            ?.display,
         creationYear: data?.manifestation?.recordCreationDate?.substring(0, 4),
         dueDateString: data?.dueDate,
         id: data?.loanId,
@@ -53,7 +55,8 @@ export const dataReducer = (dataType, data) => {
           extractCreatorsPrioritiseCorporation(
             data?.manifestation?.creators
           )?.[0]?.display || data?.creator,
-        materialType: data?.manifestation?.materialTypes?.[0].specific,
+        materialType:
+          data?.manifestation?.materialTypes?.[0].materialTypeSpecific?.display,
         creationYear: data?.manifestation?.recordCreationDate?.substring(0, 4),
         library: data?.pickUpBranch?.agencyName,
         agencyId: data?.agencyId,
