@@ -1,4 +1,4 @@
-import translate from "@/components/base/translate";
+import Translate from "@/components/base/translate";
 import { buttonTextLabelMaker, constructButtonText } from "../utils";
 
 describe("Button text generation", () => {
@@ -45,12 +45,12 @@ describe("Button text generation", () => {
     expect(actual).toEqual(expected);
 
     const actualShort = constructButtonText(
-      materialTypeShort,
-      selectedMaterialTypeShort,
+      materialType,
+      selectedMaterialType,
       true
     );
     const expectedShort =
-      translate({
+      Translate({
         context: "overview",
         label: `material-action-${expectedAction}`,
       }) +
