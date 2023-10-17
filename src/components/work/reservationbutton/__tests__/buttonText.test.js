@@ -16,7 +16,7 @@ describe("Button text generation for buttons linking directly to material", () =
       " " +
       Translate({
         context: "overview",
-        label: "material-typename-e-bog",
+        label: "material-typename-ebook",
       }).toLowerCase();
     expect(actual).toEqual(expected);
 
