@@ -8,7 +8,7 @@ import Translate from "@/components/base/translate";
 import {
   RenewedSpan,
   useLoanDateAnalysis,
-} from "@/components/profile/materialRow/loan/MaterialRowLoan";
+} from "@/components/profile/materialRow/versions/MaterialRowLoan";
 import { getWorkUrl } from "@/lib/utils";
 import { useModal } from "@/components/_modal";
 import Link from "@/components/base/link";
@@ -168,14 +168,12 @@ const Material = ({ context }) => {
     setRemovedOrderId,
     library,
   } = context;
-
   const modal = useModal();
   const orderMutation = useMutate();
   const loanMutation = useMutate();
   const [renewed, setRenewed] = useState(false);
   const [hasRenewError, setHasRenewError] = useState(false);
   const [isRenewing, setIsRenewing] = useState(false); // For spinner usage
-
   const [renewedDueDateString, setRenewedDueDateString] = useState(null);
   const { updateUserStatusInfo } = useUser();
 

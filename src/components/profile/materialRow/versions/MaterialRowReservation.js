@@ -76,23 +76,24 @@ const OrderColumn = ({ pickUpExpiryDate, holdQueuePosition }) => {
   );
 };
 
-const MaterialRowReservation = ({
-  image,
-  workId,
-  pid,
-  materialId,
-  materialType,
-  title,
-  creator,
-  edition,
-  creationYear,
-  library,
-  dataCy,
-  isMobileSize,
-  removedOrderId,
-  pickUpExpiryDate,
-  holdQueuePosition,
-}) => {
+const MaterialRowReservation = (props) => {
+  const {
+    image,
+    workId,
+    pid,
+    materialId,
+    materialType,
+    title,
+    creator,
+    edition,
+    creationYear,
+    library,
+    dataCy,
+    isMobileSize,
+    removedOrderId,
+    pickUpExpiryDate,
+    holdQueuePosition,
+  } = props;
   const status = !!pickUpExpiryDate ? "GREEN" : "NONE";
   const modal = useModal();
   const orderMutation = useMutate();
@@ -114,6 +115,7 @@ const MaterialRowReservation = ({
         context: "profile",
         label: "your-order",
       }),
+      type: "ORDER",
       ...props,
     });
   };

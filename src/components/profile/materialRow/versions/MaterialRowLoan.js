@@ -171,6 +171,7 @@ const MaterialRowLoan = (props) => {
         context: "profile",
         label: "your-loan",
       }),
+      type: "LOAN",
       ...props,
     });
   };

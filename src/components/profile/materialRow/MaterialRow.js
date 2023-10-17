@@ -6,10 +6,10 @@ import Icon from "@/components/base/icon";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import Translate from "@/components/base/translate";
 import SkeletonMaterialRow from "./skeleton/Skeleton";
-import MaterialRowLoan from "./loan/MaterialRowLoan";
-import MaterialRowDebt from "./debt/MaterialRowDebt";
-import MaterialRowBookmark from "./bookmark/MaterialRowBookmark";
-import MaterialRowReservation from "./reservation/MaterialRowReservation";
+import MaterialRowLoan from "./versions/MaterialRowLoan";
+import MaterialRowDebt from "./versions/MaterialRowDebt";
+import MaterialRowBookmark from "./versions/MaterialRowBookmark";
+import MaterialRowReservation from "./versions/MaterialRowReservation";
 
 /* Use as section header to describe the content of the columns */
 export const MaterialHeaderRow = ({ column1, column2, column3, className }) => {

@@ -270,7 +270,11 @@ export const ReservationButton = ({
       <TextAboveButton access={access} user={user} />
 
       <div className={styles.wrapper}>
-        <Button type={preferSecondary ? "secondary" : buttonType} size={size} {...props}>
+        <Button
+          type={preferSecondary ? "secondary" : buttonType}
+          size={size}
+          {...props}
+        >
           {overrideButtonText ?? text}
         </Button>
       </div>
