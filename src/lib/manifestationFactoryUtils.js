@@ -37,7 +37,7 @@ export function formatMaterialTypesFromUrl(materialTypesUrl) {
 /**
  * Format to url from array
  * @example formatMaterialTypesToUrl(["fisk", "hest"]) => "fisk / hest"
- * @param materialTypeArray
+ * @param {string[]} materialTypeArray
  * @returns {string}
  */
 export function formatMaterialTypesToUrl(materialTypeArray) {

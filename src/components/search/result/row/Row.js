@@ -174,9 +174,11 @@ export default function ResultRow({
               </Text>
               {uniqueMaterialTypes?.length > 0 &&
                 uniqueMaterialTypes?.map((materialTypeArray) => {
+                  const typeString =
+                    formatMaterialTypesToUrl(materialTypeArray);
                   return (
                     <span
-                      key={`material-${work?.workId}`}
+                      key={`${work?.workId}-${typeString}`}
                       className={styles.material}
                     >
                       <Link
@@ -188,7 +190,7 @@ export default function ResultRow({
                               work?.titles?.main?.[0],
                               work?.creators
                             ),
-                            type: formatMaterialTypesToUrl(materialTypeArray),
+                            type: typeString,
                             workId: work?.workId,
                           },
                         }}
