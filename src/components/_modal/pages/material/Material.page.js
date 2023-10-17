@@ -287,23 +287,12 @@ const Material = ({ context }) => {
         );
       case "ORDER":
         return (
-          <div className={cx(styles.buttonContainer, styles.buttonDelete)}>
-            <Button
-              type="secondary"
-              size="medium"
-              onClick={() => {
-                onClickDelete({
-                  modal,
-                  mobile: true,
-                  pickUpExpiryDate,
-                  materialId,
-                  agencyId,
-                  orderMutation,
-                  title,
-                });
-              }}
-              onKeyPress={(e) => {
-                e.key === "Enter" &&
+          <div className={styles.buttonRowWrapperOrder}>
+            <div className={cx(styles.buttonContainer, styles.buttonDelete)}>
+              <Button
+                type="secondary"
+                size="medium"
+                onClick={() => {
                   onClickDelete({
                     modal,
                     mobile: true,
@@ -313,14 +302,27 @@ const Material = ({ context }) => {
                     orderMutation,
                     title,
                   });
-              }}
-              dataCy="order-button"
-            >
-              {Translate({
-                context: "profile",
-                label: "delete-order",
-              })}
-            </Button>
+                }}
+                onKeyPress={(e) => {
+                  e.key === "Enter" &&
+                    onClickDelete({
+                      modal,
+                      mobile: true,
+                      pickUpExpiryDate,
+                      materialId,
+                      agencyId,
+                      orderMutation,
+                      title,
+                    });
+                }}
+                dataCy="order-button"
+              >
+                {Translate({
+                  context: "profile",
+                  label: "delete-order",
+                })}
+              </Button>
+            </div>
           </div>
         );
     }
@@ -377,14 +379,15 @@ const Material = ({ context }) => {
         href={getWorkUrl(title, creators, workId)}
       >
         <Text className={styles.link} type="text2" tag="span">
-          {/* @TODO make translation */}
-          Gå til bogen
+          <Translate context="profile" label="goToBook" />
         </Text>
       </Link>
 
       {type === "LOAN" && (
         <>
-          <Text type="text2">Udlånt af</Text>
+          <Text type="text2">
+            <Translate context="profile" label="lentBy" />
+          </Text>
           <Text type="text1">{library}</Text>
         </>
       )}

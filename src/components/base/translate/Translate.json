@@ -3659,6 +3659,14 @@
       "alphabeticalOrder": {
         "da": "Alfabetisk - titel",
         "en": "Alphabetical- title"
+      },
+      "goToBook": {
+        "da": "Gå til bogen",
+        "en": "Go to book"
+      },
+      "lentBy": {
+        "da": "Udlånt af",
+        "en": "Lent by"
       }
     },
     "receipt": {
