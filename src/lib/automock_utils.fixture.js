@@ -18,7 +18,7 @@ const MANIFESTATION_BASE = {
   pid: "some-pid-1",
   materialTypes: [
     {
-      specific: "bog",
+      materialTypeSpecific: { display: "bog" },
     },
   ],
   edition: {
@@ -30,6 +30,7 @@ const MANIFESTATION_BASE = {
   accessTypes: [{ code: "PHYSICAL", display: "fysisk" }],
   access: [
     {
+      __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
       __typename: "InterLibraryLoan",
       loanIsPossible: true,
     },
@@ -76,6 +77,7 @@ const MANIFESTATION_3 = {
   },
   access: [
     {
+      __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
       __typename: "InterLibraryLoan",
       loanIsPossible: false,
     },
@@ -98,15 +100,17 @@ const MANIFESTATION_4 = {
   },
   materialTypes: [
     {
-      specific: "tidsskriftsartikel",
+      materialTypeSpecific: { display: "tidsskriftsartikel" },
     },
   ],
   access: [
     {
+      __resolveType: AccessEnum.DIGITAL_ARTICLE_SERVICE,
       __typename: "DigitalArticleService",
       issn: "some-issn",
     },
     {
+      __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
       __typename: "InterLibraryLoan",
       loanIsPossible: true,
     },
@@ -127,15 +131,17 @@ const MANIFESTATION_5 = {
   },
   materialTypes: [
     {
-      specific: "tidsskrift",
+      materialTypeSpecific: { display: "tidsskrift" },
     },
   ],
   access: [
     {
+      __resolveType: AccessEnum.DIGITAL_ARTICLE_SERVICE,
       __typename: "DigitalArticleService",
       issn: "some-issn",
     },
     {
+      __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
       __typename: "InterLibraryLoan",
       loanIsPossible: true,
     },
@@ -157,7 +163,7 @@ const MANIFESTATION_6 = {
   },
   materialTypes: [
     {
-      specific: "bog",
+      materialTypeSpecific: { display: "bog" },
     },
   ],
   publisher: ["Sølvbakke"],
@@ -176,7 +182,7 @@ const MANIFESTATION_7 = {
   titles: { full: ["Lær at læse med Hugo og Rita 1"] },
   materialTypes: [
     {
-      specific: "ebog",
+      materialTypeSpecific: { display: "ebog" },
     },
   ],
   access: [
@@ -184,6 +190,11 @@ const MANIFESTATION_7 = {
       __resolveType: AccessEnum.ACCESS_URL,
       url: "https://ereol.combo/langurl",
       origin: "https://ereol.combo",
+    },
+    {
+      __resolveType: AccessEnum.INFOMEDIA_SERVICE,
+      id: "123123",
+      pid: "321321",
     },
   ],
   workTypes: ["LITERATURE"],
@@ -200,7 +211,7 @@ const MANIFESTATION_8 = {
   titles: { full: ["Lær at læse med Hugo og Rita 2"] },
   materialTypes: [
     {
-      specific: "bog",
+      materialTypeSpecific: { display: "bog" },
     },
   ],
   workTypes: ["LITERATURE"],
@@ -221,7 +232,7 @@ const MANIFESTATION_9 = {
   titles: { full: ["Lær at læse med Hugo og Rita 3"] },
   materialTypes: [
     {
-      specific: "bog",
+      materialTypeSpecific: { display: "bog" },
     },
   ],
   workTypes: ["LITERATURE"],
@@ -242,7 +253,7 @@ const MANIFESTATION_10 = {
   pid: "some-pid-10",
   materialTypes: [
     {
-      specific: "bog",
+      materialTypeSpecific: { display: "bog" },
     },
   ],
   ownerWork: {
@@ -286,7 +297,7 @@ const WORK_1 = {
     full: ["Hugo i Sølvskoven", "Begyndelsen"],
   },
   creators: [{ display: "Børge 'Linoleum' Skovgulv Gummigulv" }],
-  materialTypes: [{ specific: "bog" }],
+  materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
   fictionNonfiction: { display: "skønlitteratur", code: "FICTION" },
   genreAndForm: ["roman"],
 };
@@ -295,7 +306,7 @@ const WORK_2 = {
   workId: "some-work-id-2",
   manifestations: { all: [MANIFESTATION_4], mostRelevant: [MANIFESTATION_4] },
   workTypes: ["ARTICLE"],
-  materialTypes: [{ specific: "avisartikel" }],
+  materialTypes: [{ materialTypeSpecific: { display: "avisartikel" } }],
   fictionNonfiction: { display: "skønlitteratur", code: "FICTION" },
   genreAndForm: [],
 };
@@ -321,7 +332,7 @@ const WORK_4 = {
   creators: [{ display: "Børge 'Linoleum' Skovgulv Gummigulv" }],
   materialTypes: [
     {
-      specific: "bog",
+      materialTypeSpecific: { display: "bog" },
     },
   ],
   relations: {
@@ -380,7 +391,7 @@ const WORK_7 = {
     mostRelevant: [MANIFESTATION_9],
     all: [MANIFESTATION_9],
   },
-  materialTypes: [{ specific: "bog" }],
+  materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
 };
 
 const WORK_8 = {
@@ -842,7 +853,7 @@ const USER_LOANS = [
       ],
       materialTypes: [
         {
-          specific: "billedbog",
+          materialTypeSpecific: { display: "billedbog" },
         },
       ],
       cover: {
@@ -870,7 +881,7 @@ const USER_LOANS = [
       ],
       materialTypes: [
         {
-          specific: "bog",
+          materialTypeSpecific: { display: "bog" },
         },
       ],
       cover: {
@@ -898,7 +909,7 @@ const USER_LOANS = [
       ],
       materialTypes: [
         {
-          specific: "bog",
+          materialTypeSpecific: { display: "bog" },
         },
       ],
       cover: {
@@ -927,7 +938,7 @@ const USER_LOANS = [
       ],
       materialTypes: [
         {
-          specific: "bog",
+          materialTypeSpecific: { display: "bog" },
         },
       ],
       cover: {
@@ -963,7 +974,7 @@ const USER_ORDERS = [
       ],
       materialTypes: [
         {
-          specific: "bog",
+          materialTypeSpecific: { display: "bog" },
         },
       ],
       cover: {
@@ -996,7 +1007,7 @@ const USER_ORDERS = [
       ],
       materialTypes: [
         {
-          specific: "bog",
+          materialTypeSpecific: { display: "bog" },
         },
       ],
       cover: {
@@ -1028,7 +1039,7 @@ const USER_ORDERS = [
       ],
       materialTypes: [
         {
-          specific: "bog",
+          materialTypeSpecific: { display: "bog" },
         },
       ],
       cover: {

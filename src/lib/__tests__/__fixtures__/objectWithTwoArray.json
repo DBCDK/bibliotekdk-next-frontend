@@ -246,7 +246,9 @@
   ],
   "materialTypes": [
     {
-      "specific": "blu-ray"
+      "materialTypeSpecific": {
+        "display": "blu-ray"
+      }
     }
   ],
   "access": [{}]

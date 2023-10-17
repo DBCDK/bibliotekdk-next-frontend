@@ -77,7 +77,7 @@ BookButtonTxt.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 export function EBookButtonTxt() {
   return (
     <ButtonTxtComponentBuilder
-      type={"Ebog"}
+      type={"ebog"}
       workId={"some-workId-ebog" + time}
       selectedPids={["some-pid-ebog" + time]}
     />
@@ -89,7 +89,7 @@ EBookButtonTxt.story = {
       work: () => {
         return {
           titles: [{ main: "Hugo hejs" }],
-          materialTypes: [{ specific: "Ebog" }],
+          materialTypes: [{ materialTypeSpecific: { display: "ebog" } }],
           workTypes: ["LITERATURE"],
           manifestations: {
             mostRelevant: [
@@ -104,7 +104,7 @@ EBookButtonTxt.story = {
         return [
           {
             pid: "some-pid-ebog" + time,
-            materialTypes: [{ specific: "Ebog" }],
+            materialTypes: [{ materialTypeSpecific: { display: "ebog" } }],
             accessTypes: [
               {
                 display: "online",
@@ -128,19 +128,21 @@ EBookButtonTxt.story = {
 export function EAudioBookPhysicalButtonTxt() {
   return (
     <ButtonTxtComponentBuilder
-      type={"Lydbog (cd-mp3)"}
+      type={"lydbog (cd-mp3)"}
       workId={"some-id-physical-audio-book" + time}
       selectedPids={["some-pid-physical-audio-book" + time]}
     />
   );
 }
 EAudioBookPhysicalButtonTxt.story = {
-  ...ButtonTxtStoryBuilder("Lydbog (cd-mp3)", {
+  ...ButtonTxtStoryBuilder("lydbog (cd-mp3)", {
     Query: {
       work: () => {
         return {
           titles: [{ main: "Hugo hejs" }],
-          materialTypes: [{ specific: "Lydbog (cd-mp3)" }],
+          materialTypes: [
+            { materialTypeSpecific: { display: "lydbog (cd-mp3)" } },
+          ],
           workTypes: ["LITERATURE"],
           manifestations: {
             mostRelevant: [
@@ -155,7 +157,9 @@ EAudioBookPhysicalButtonTxt.story = {
         return [
           {
             pid: "some-pid-physical-audio-book" + time,
-            materialTypes: [{ specific: "Lydbog (cd-mp3)" }],
+            materialTypes: [
+              { materialTypeSpecific: { display: "lydbog (cd-mp3)" } },
+            ],
             access: [
               {
                 __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
@@ -173,19 +177,21 @@ EAudioBookPhysicalButtonTxt.story = {
 export function EAudioBookDigitalButtonTxt() {
   return (
     <ButtonTxtComponentBuilder
-      type={"Lydbog (net)"}
+      type={"lydbog (net)"}
       workId={"some-workId-elydbog" + time}
       selectedPids={["some-pid-elydbog" + time]}
     />
   );
 }
 EAudioBookDigitalButtonTxt.story = {
-  ...ButtonTxtStoryBuilder("Lydbog (net)", {
+  ...ButtonTxtStoryBuilder("lydbog (net)", {
     Query: {
       work: () => {
         return {
           titles: [{ main: "Hugo hejs" }],
-          materialTypes: [{ specific: "Lydbog (net)" }],
+          materialTypes: [
+            { materialTypeSpecific: { display: "lydbog (net)" } },
+          ],
           workTypes: ["LITERATURE"],
           manifestations: {
             mostRelevant: [
@@ -200,7 +206,9 @@ EAudioBookDigitalButtonTxt.story = {
         return [
           {
             pid: "some-pid-elydbog" + time,
-            materialTypes: [{ specific: "Lydbog (net)" }],
+            materialTypes: [
+              { materialTypeSpecific: { display: "lydbog (net)" } },
+            ],
             accessTypes: [
               {
                 display: "online",
@@ -224,7 +232,7 @@ EAudioBookDigitalButtonTxt.story = {
 export function PeriodicaButtonTxt() {
   return (
     <ButtonTxtComponentBuilder
-      type={"Ebog"}
+      type={"ebog"}
       workId={"some-work-id-3"}
       selectedPids={["some-pid-5"]}
       storyNameOverride={"Periodica"}
@@ -269,7 +277,7 @@ SlowLoadingButtonTxt.story = {
 
         return [
           {
-            materialTypes: [{ specific: "Ebog" }],
+            materialTypes: [{ materialTypeSpecific: { display: "ebog" } }],
             access: [{ __resolveType: "Ereol", url: "https://ereol.combo" }],
           },
         ];

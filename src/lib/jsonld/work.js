@@ -82,7 +82,7 @@ function getBook({
         };
       }
       const bookFormat = getSchemaOrgBookFormat(
-        entry.materialTypes[0].specific
+        entry.materialTypes[0]?.materialTypeSpecific?.display
       );
       if (bookFormat) {
         manifestation.bookFormat = bookFormat;

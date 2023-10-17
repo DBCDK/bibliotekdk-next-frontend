@@ -1,9 +1,13 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
 
 import dummy_data from "./dummy_data.fixture.json";
-import Modal from "@/components/_modal/Modal";
+import Modal, { useModal } from "@/components/_modal/Modal";
 import Pages from "@/components/_modal/pages";
 import { Options } from "./Options.page";
+import merge from "lodash/merge";
+import automock_utils from "@/lib/automock_utils.fixture";
+
+const { DEFAULT_STORY_PARAMETERS } = automock_utils();
 
 const exportedObject = {
   title: "modal/Options",
@@ -12,6 +16,7 @@ const exportedObject = {
 export default exportedObject;
 
 export function AllOptions() {
+  const modal = useModal();
   return (
     <div style={{ height: "100vh" }}>
       <StoryTitle>Url, pdf, infomedia and digital copy</StoryTitle>
@@ -19,24 +24,37 @@ export function AllOptions() {
         All options. Physical and digital copy are combined into one entry
       </StoryDescription>
       <Options
-        data={dummy_data.data}
-        title_author="fiske_hest"
-        workId="work-of:870971-tsart:39160846"
-        isLoading={false}
+        modal={modal}
         context={{
-          title_author: "fiske_hest",
+          title: "fiske",
           workId: "work-of:870971-tsart:39160846",
-          orderPossible: true,
-          onlineAccess:
-            dummy_data.data.work.materialTypes[0].manifestations[0]
-              .onlineAccess,
+          selectedPids: [
+            "some-pid-1",
+            "some-pid-2",
+            "some-pid-3",
+            "some-pid-4",
+            "some-pid-5",
+            "some-pid-6",
+            "some-pid-7",
+            "some-pid-8",
+            "some-pid-9",
+            "some-pid-10",
+          ],
         }}
       />
     </div>
   );
 }
+AllOptions.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {},
+    },
+  },
+});
 
 export function NoPhysicalOption() {
+  const modal = useModal();
   return (
     <div style={{ height: "100vh" }}>
       <StoryTitle>Url, pdf, infomedia and digital copy</StoryTitle>
@@ -44,21 +62,26 @@ export function NoPhysicalOption() {
         Physical order is not possible. Digital copy will have its own entry.
       </StoryDescription>
       <Options
-        data={dummy_data.data}
-        title_author="fiske_hest"
-        workId="work-of:870971-tsart:39160846"
-        isLoading={false}
+        modal={modal}
         context={{
-          title_author: "fiske_hest",
+          title_author: "fiske",
           workId: "work-of:870971-tsart:39160846",
-          orderPossible: false,
+          selectedPids: ["some-pid-7"],
         }}
       />
     </div>
   );
 }
+NoPhysicalOption.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {},
+    },
+  },
+});
 
 export function NoDigitalCopyOption() {
+  const modal = useModal();
   return (
     <div style={{ height: "100vh" }}>
       <StoryTitle>Url, pdf, infomedia and digital copy</StoryTitle>
@@ -66,54 +89,31 @@ export function NoDigitalCopyOption() {
         Digital copy is not possible. Physical order will have its own entry.
       </StoryDescription>
       <Options
-        data={{
-          work: {
-            title: "Sådan gør du din ferie mere bæredygtig",
-            materialTypes: [
-              {
-                materialType: "Tidsskriftsartikel",
-                manifestations: [
-                  {
-                    onlineAccess: [
-                      {
-                        url: "https://videnskab.dk/forskerzonen/kultur-samfund/saadan-goer-du-din-ferie-mere-baeredygtig",
-                        origin: "videnskab.dk",
-                      },
-                      {
-                        pid: "870971-tsart:39160846",
-                        infomediaId: "e842b5ee",
-                      },
-                      {
-                        type: "webArchive",
-                        url: "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=36160780&attachment_type=856_a&bibliotek=870971&source_id=870970&key=68d322934a78818989ce",
-                        pid: "870971-tsart:36160780",
-                        accessType: "webArchive",
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-        }}
-        title_author="fiske_hest"
-        workId="work-of:870971-tsart:39160846"
-        isLoading={false}
+        modal={modal}
         context={{
           title_author: "fiske_hest",
           workId: "work-of:870971-tsart:39160846",
+          selectedPids: ["some-pid-1"],
           orderPossible: true,
         }}
       />
     </div>
   );
 }
+NoDigitalCopyOption.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {},
+    },
+  },
+});
 
 /**
  * Options template - loading
  *
  */
 export function Loading() {
+  const modal = useModal();
   return (
     <div style={{ height: "100vh" }}>
       <StoryTitle>Loading</StoryTitle>
@@ -124,11 +124,14 @@ export function Loading() {
         <Modal.Page id="options" component={Pages.Options} />
       </Modal.Container>
 
-      <Options
-        data={[]}
-        isLoading={true}
-        context={{ title_author: "fiske_hest" }}
-      />
+      <Options modal={modal} context={{ title_author: "fiske_hest" }} />
     </div>
   );
 }
+Loading.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {},
+    },
+  },
+});

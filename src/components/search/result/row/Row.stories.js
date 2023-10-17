@@ -232,7 +232,7 @@ const work = {
         },
         materialTypes: [
           {
-            specific: "bog",
+            materialTypeSpecific: { display: "bog" },
           },
         ],
       },
@@ -245,28 +245,28 @@ const work = {
         },
         materialTypes: [
           {
-            specific: "bog",
+            materialTypeSpecific: { display: "bog" },
           },
           {
-            specific: "diskette",
+            materialTypeSpecific: { display: "diskette" },
           },
           {
-            specific: "ebog",
+            materialTypeSpecific: { display: "ebog" },
           },
           {
-            specific: "lydbog (bånd)",
+            materialTypeSpecific: { display: "lydbog (bånd)" },
           },
           {
-            specific: "lydbog (cd)",
+            materialTypeSpecific: { display: "lydbog (cd)" },
           },
           {
-            specific: "lydbog (cd-mp3)",
+            materialTypeSpecific: { display: "lydbog (cd-mp3)" },
           },
           {
-            specific: "lydbog (net)",
+            materialTypeSpecific: { display: "lydbog (net)" },
           },
           {
-            specific: "punktskrift",
+            materialTypeSpecific: { display: "punktskrift" },
           },
         ],
       },
@@ -279,28 +279,28 @@ const work = {
   ],
   materialTypes: [
     {
-      specific: "bog",
+      materialTypeSpecific: { display: "bog" },
     },
     {
-      specific: "diskette",
+      materialTypeSpecific: { display: "diskette" },
     },
     {
-      specific: "ebog",
+      materialTypeSpecific: { display: "ebog" },
     },
     {
-      specific: "lydbog (bånd)",
+      materialTypeSpecific: { display: "lydbog (bånd)" },
     },
     {
-      specific: "lydbog (cd)",
+      materialTypeSpecific: { display: "lydbog (cd)" },
     },
     {
-      specific: "lydbog (cd-mp3)",
+      materialTypeSpecific: { display: "lydbog (cd-mp3)" },
     },
     {
-      specific: "lydbog (net)",
+      materialTypeSpecific: { display: "lydbog (net)" },
     },
     {
-      specific: "punktskrift",
+      materialTypeSpecific: { display: "punktskrift" },
     },
   ],
   titles: {
@@ -320,7 +320,7 @@ const work_klingon_language = {
         },
         materialTypes: [
           {
-            specific: "bog",
+            materialTypeSpecific: { display: "bog" },
           },
         ],
       },
@@ -355,7 +355,7 @@ const work_2_other_languages = {
         },
         materialTypes: [
           {
-            specific: "bog",
+            materialTypeSpecific: { display: "bog" },
           },
         ],
       },

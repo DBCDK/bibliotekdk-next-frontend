@@ -6,7 +6,10 @@
 import { FilterTypeEnum } from "@/lib/enums";
 import { ApiEnums } from "@/lib/api/api";
 
-import { creatorsFragment } from "@/lib/api/fragments.utils";
+import {
+  creatorsFragment,
+  materialTypesFragment,
+} from "@/lib/api/fragments.utils";
 
 /**
  * Hitcount
@@ -63,7 +66,7 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
                 origin
               }
               materialTypes {
-                specific
+                ...materialTypesFragment
               }
               hostPublication {
                 title
@@ -79,7 +82,7 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
             ...creatorsFragment
           }
           materialTypes {
-            specific
+            ...materialTypesFragment
           }
           fictionNonfiction {
             display
@@ -96,7 +99,8 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
       }
       monitor(name: "bibdknext_search_all")
     }
-    ${creatorsFragment}`,
+    ${creatorsFragment}
+    ${materialTypesFragment}`,
     variables: {
       q,
       limit,
