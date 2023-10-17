@@ -321,6 +321,54 @@ export function sortByAvailability(a, b) {
   ]);
 }
 
+export function sortingOnNonStringLast(a, b) {
+  if (typeof a !== "string") {
+    if (typeof b !== "string") {
+      return 0;
+    } else {
+      return 1;
+    }
+  } else if (typeof b !== "string") {
+    return -1;
+  } else {
+    return 0;
+  }
+}
+
+/**
+ * Sort by agencyName using localeCompare
+ * @param a
+ * @param b
+ * @returns {number | undefined}
+ */
+export function sortByAgencyName(a, b) {
+  const anyNonString = sortingOnNonStringLast(a?.agencyName, b?.agencyName);
+  if (anyNonString !== 0) {
+    return anyNonString;
+  }
+
+  return a?.agencyName?.localeCompare(b?.agencyName);
+}
+
+export function sortByBranchName(a, b) {
+  const anyNonString = sortingOnNonStringLast(a?.agencyName, b?.agencyName);
+  if (anyNonString !== 0) {
+    return anyNonString;
+  }
+
+  return a?.branchName.localeCompare(b?.branchName);
+}
+
+export function sortByMainBranch(a, b) {
+  if (a?.branchId === a?.agencyId) {
+    return -1;
+  } else if (b?.branchId === b?.agencyId) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
 /**
  * {@link enrichBranches} enriches branch with e.g. availability, expectedDelivery in different forms
  * @param {Object} branch
@@ -407,7 +455,11 @@ export function handleAgencyAccessData(agencies) {
       e.holdingItems.map((item) => item)
     );
 
-    const branches = entry?.flatMap(enrichBranches).sort(sortByAvailability);
+    const branches = entry
+      ?.flatMap(enrichBranches)
+      ?.sort(sortByBranchName)
+      ?.sort(sortByMainBranch)
+      ?.sort(sortByAvailability);
 
     const allHoldingsAcrossBranchesInAgency = branches.flatMap(
       getHoldingsWithInfoOnPickupAllowed
@@ -449,8 +501,9 @@ export function handleAgencyAccessData(agencies) {
     };
   });
 
-  const agenciesFlatSorted =
-    Object.values(agenciesFlat).sort(sortByAvailability);
+  const agenciesFlatSorted = Object.values(agenciesFlat)
+    ?.sort(sortByAgencyName)
+    ?.sort(sortByAvailability);
 
   return {
     count: agenciesFlatSorted.length,
@@ -479,7 +532,15 @@ export function useAgencyIdsConformingToQuery({ pids, q, limit = 50 }) {
   );
 
   const agencyIds = uniq(
-    agencies?.data?.branches?.result?.map((branch) => branch.agencyId)
+    agencies?.data?.branches?.result
+      ?.map((branch) => {
+        return {
+          agencyId: branch?.agencyId,
+          agencyName: branch?.agencyName,
+        };
+      })
+      ?.sort(sortByAgencyName)
+      ?.map((branch) => branch?.agencyId)
   );
 
   return { agencyIds: agencyIds, isLoading: agencies.isLoading };
