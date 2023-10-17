@@ -1,5 +1,6 @@
 .icon {
   display: inline-block;
+  vertical-align: middle;
 }
 
 /* auto-scale child*/
@@ -8,6 +9,7 @@
 .icon svg {
   width: 100%;
   height: auto;
+  vertical-align: middle;
 }
 
 .icon.autoH img,
