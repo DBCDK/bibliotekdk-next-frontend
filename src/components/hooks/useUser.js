@@ -125,6 +125,7 @@ function useUserImpl() {
         loans: userData?.user?.loans,
         orders: userData?.user?.orders,
         agencies: userData?.user?.agencies,
+        municipalityAgencyId: userData?.user?.municipalityAgencyId,
         ...sessionData,
       });
     }

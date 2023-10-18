@@ -3375,6 +3375,10 @@
         "da": "Bestillingshistorik",
         "en": "Order history"
       },
+      "myProfile": {
+        "da": "Min profil",
+        "en": "My profile"
+      },
       "profileMenu": {
         "da": "Profilmenu",
         "en": "Profile menu"
@@ -3424,9 +3428,17 @@
         "da": "Sidst anvendt",
         "en": "Last used"
       },
-      "municipalityOfResidence": {
+      "yourMunicipalityOfResidence": {
         "da": "Din bopælskommune",
+        "en": "Your municipality of residence"
+      },
+      "municipalityOfResidence": {
+        "da": "Bopælskommune",
         "en": "Municipality of residence"
+      },
+      "profileCreated": {
+        "da": "Bibliotek.dk-profil oprettet",
+        "en": "Bibliotek.dk-profile created"
       },
       "debt": {
         "da": "Mellemværende",
@@ -3451,6 +3463,18 @@
       "delete": {
         "da": "Slet",
         "en": "Delete"
+      },
+      "deleteProfile": {
+        "da": "Slet profil",
+        "en": "Delete profile"
+      },
+      "deleteProfileText": {
+        "da": "Dette vil slette følgende data på bibliotek.dk: Din huskeliste, bestillingshistorik, søgehistorik og evt. tilføjede uddannelsesbiblioteker.\n\n\nBemærk: Du vil stadig være registreret som låner på de biblioteker, hvor du er oprettet. Ligesom at dine lån, reserveringer og mellemværende ved bibliotekerne heller ikke vil blive slettet.\n\n\nKontakt biblioteket direkte, hvis du ikke længere ønsker at være låner der.",
+        "en": ""
+      },
+      "deleteProfileTitle": {
+        "da": "Vil du slette din brugerprofil på bibliotek.dk?",
+        "en": ""
       },
       "delete-order": {
         "da": "Slet reservering",

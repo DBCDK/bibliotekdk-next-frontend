@@ -247,3 +247,40 @@ export function getLibraryType(agencyID) {
     return LibraryTypeEnum.OTHER_LIBRARY;
   }
 }
+/**
+ * Parses an iso-8601 date string into human readable strings.
+ * @param {string} isoDateString
+ * @returns an object containing date and time fields. Eks {date: "D. 24. juni", time:"Kl. 11:07"}
+ */
+export function parseDate(isoDateString) {
+  const dateObj = new Date(isoDateString);
+  const day = dateObj.getUTCDate();
+  const monthNames = [
+    "jan.",
+    "feb.",
+    "mar.",
+    "apr.",
+    "maj",
+    "jun.",
+    "jul.",
+    "aug.",
+    "sep.",
+    "okt.",
+    "nov.",
+    "dec.",
+  ];
+  const monthName = monthNames[dateObj.getUTCMonth()];
+
+  const hours = String(dateObj.getHours()).padStart(2, "0");
+  const minutes = String(dateObj.getMinutes()).padStart(2, "0");
+  const year = dateObj.getFullYear();
+  //check if the date is today:
+  const today = new Date();
+
+  const isToday =
+    dateObj.getUTCDate() === today.getUTCDate() &&
+    dateObj.getUTCMonth() === today.getUTCMonth() &&
+    dateObj.getUTCFullYear() === today.getUTCFullYear();
+
+  return { day, monthName, year, hours, minutes, isToday };
+}

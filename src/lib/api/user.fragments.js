@@ -26,6 +26,7 @@ export function basic() {
         mail
         address
         postalCode
+        municipalityAgencyId
         agencies {
           hitcount
           result {
@@ -219,6 +220,7 @@ export function extendedData() {
       user {
         persistUserData
         favoritePickUpBranch
+        createdAt
       }
      }`,
     slowThreshold: 3000,
