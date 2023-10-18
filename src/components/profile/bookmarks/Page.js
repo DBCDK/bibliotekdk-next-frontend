@@ -6,7 +6,7 @@ import Text from "@/components/base/text";
 import Button from "@/components/base/button";
 import MaterialRow from "../materialRow/MaterialRow";
 import IconButton from "@/components/base/iconButton";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
 import ProfileLayout from "../profileLayout/ProfileLayout";
 import Translate from "@/components/base/translate";
@@ -55,13 +55,16 @@ const BookmarkPage = () => {
     totalPages,
     setCurrentPage,
     count,
+    isLoading: bookmarsDataLoading,
   } = useBookmarks();
-  const { data: bookmarks } = usePopulateBookmarks(bookmarksData);
+  const { data: bookmarks, isLoading: bookmarsPopulaationLoading } =
+    usePopulateBookmarks(bookmarksData);
   const [activeStickyButton, setActiveStickyButton] = useState(null);
   const breakpoint = useBreakpoint();
   const [sortByValue, setSortByValue] = useState(null);
   const isMobile = breakpoint === "sm" || breakpoint === "xs";
   const [checkboxList, setCheckboxList] = useState();
+  const scrollToElement = useRef(null);
 
   useEffect(() => {
     setSortBy(sortByValue);
@@ -133,10 +136,7 @@ const BookmarkPage = () => {
    * scrolls to the top of the page
    */
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    scrollToElement?.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const constructEditionText = (bookmark) => {
@@ -150,14 +150,15 @@ const BookmarkPage = () => {
     return createEditionText(bookmark);
   };
   const onPageChange = async (newPage) => {
+    const isSmallScreen = breakpoint == "xs";
+
     if (newPage > totalPages) {
       newPage = totalPages;
     }
-    setCurrentPage(newPage);
-    const isSmallScreen = breakpoint == "xs";
     if (!isSmallScreen) {
       scrollToTop();
     }
+    setCurrentPage(newPage);
   };
 
   const isAllSelected =
@@ -166,6 +167,21 @@ const BookmarkPage = () => {
   const isNothingSelected =
     checkboxList?.filter((e) => e.isSelected === true).length === 0;
 
+  if (bookmarsDataLoading || bookmarsPopulaationLoading) {
+    return (
+      <ProfileLayout
+        title={Translate({
+          context: CONTEXT,
+          label: "page-title",
+        })}
+      >
+        {Array.from({ length: 20 }).map((_, i) => (
+          <MaterialRow skeleton key={`bookmark-#${i}`} id={`bookmark-#${i}`} />
+        ))}
+      </ProfileLayout>
+    );
+  }
+
   return (
     <ProfileLayout
       title={Translate({
@@ -173,6 +189,8 @@ const BookmarkPage = () => {
         label: "page-title",
       })}
     >
+      <div ref={scrollToElement} />
+
       <div className={styles.dropdownWrapper}>
         {/* TODO - make modal? not sure */}
         <MenuDropdown options={MENUITEMS} onItemClick={onDropdownClick} />
