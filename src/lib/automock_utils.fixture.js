@@ -18,7 +18,8 @@ const MANIFESTATION_BASE = {
   pid: "some-pid-1",
   materialTypes: [
     {
-      materialTypeSpecific: { display: "bog" },
+      materialTypeSpecific: { display: "bog", code: "BOOK" },
+      materialTypeGeneral: { display: "bøger", code: "BOOKS" },
     },
   ],
   edition: {
@@ -100,7 +101,8 @@ const MANIFESTATION_4 = {
   },
   materialTypes: [
     {
-      materialTypeSpecific: { display: "tidsskriftsartikel" },
+      materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+      materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
     },
   ],
   access: [
@@ -131,7 +133,11 @@ const MANIFESTATION_5 = {
   },
   materialTypes: [
     {
-      materialTypeSpecific: { display: "tidsskrift" },
+      materialTypeSpecific: { display: "tidsskrift", code: "JOURNAL" },
+      materialTypeGeneral: {
+        display: "aviser og tidsskrifter",
+        code: "NEWSPAPER_JOURNALS",
+      },
     },
   ],
   access: [
@@ -163,7 +169,8 @@ const MANIFESTATION_6 = {
   },
   materialTypes: [
     {
-      materialTypeSpecific: { display: "bog" },
+      materialTypeSpecific: { display: "bog", code: "BOOK" },
+      materialTypeGeneral: { display: "bøger", code: "BOOKS" },
     },
   ],
   publisher: ["Sølvbakke"],
@@ -182,7 +189,8 @@ const MANIFESTATION_7 = {
   titles: { full: ["Lær at læse med Hugo og Rita 1"] },
   materialTypes: [
     {
-      materialTypeSpecific: { display: "ebog" },
+      materialTypeSpecific: { display: "e-bog", code: "EBOOK" },
+      materialTypeGeneral: { display: "e-bøger", code: "EBOOKS" },
     },
   ],
   access: [
@@ -211,7 +219,8 @@ const MANIFESTATION_8 = {
   titles: { full: ["Lær at læse med Hugo og Rita 2"] },
   materialTypes: [
     {
-      materialTypeSpecific: { display: "bog" },
+      materialTypeSpecific: { display: "bog", code: "BOOK" },
+      materialTypeGeneral: { display: "bøger", code: "BOOKS" },
     },
   ],
   workTypes: ["LITERATURE"],
@@ -232,7 +241,8 @@ const MANIFESTATION_9 = {
   titles: { full: ["Lær at læse med Hugo og Rita 3"] },
   materialTypes: [
     {
-      materialTypeSpecific: { display: "bog" },
+      materialTypeSpecific: { display: "bog", code: "BOOK" },
+      materialTypeGeneral: { display: "bøger", code: "BOOKS" },
     },
   ],
   workTypes: ["LITERATURE"],
@@ -253,7 +263,8 @@ const MANIFESTATION_10 = {
   pid: "some-pid-10",
   materialTypes: [
     {
-      materialTypeSpecific: { display: "bog" },
+      materialTypeSpecific: { display: "bog", code: "BOOK" },
+      materialTypeGeneral: { display: "bøger", code: "BOOKS" },
     },
   ],
   ownerWork: {
@@ -297,7 +308,12 @@ const WORK_1 = {
     full: ["Hugo i Sølvskoven", "Begyndelsen"],
   },
   creators: [{ display: "Børge 'Linoleum' Skovgulv Gummigulv" }],
-  materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
+  materialTypes: [
+    {
+      materialTypeSpecific: { display: "bog", code: "BOOK" },
+      materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+    },
+  ],
   fictionNonfiction: { display: "skønlitteratur", code: "FICTION" },
   genreAndForm: ["roman"],
 };
@@ -306,7 +322,12 @@ const WORK_2 = {
   workId: "some-work-id-2",
   manifestations: { all: [MANIFESTATION_4], mostRelevant: [MANIFESTATION_4] },
   workTypes: ["ARTICLE"],
-  materialTypes: [{ materialTypeSpecific: { display: "avisartikel" } }],
+  materialTypes: [
+    {
+      materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+      materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+    },
+  ],
   fictionNonfiction: { display: "skønlitteratur", code: "FICTION" },
   genreAndForm: [],
 };
@@ -332,7 +353,8 @@ const WORK_4 = {
   creators: [{ display: "Børge 'Linoleum' Skovgulv Gummigulv" }],
   materialTypes: [
     {
-      materialTypeSpecific: { display: "bog" },
+      materialTypeSpecific: { display: "bog", code: "BOOK" },
+      materialTypeGeneral: { display: "bøger", code: "BOOKS" },
     },
   ],
   relations: {
@@ -391,7 +413,12 @@ const WORK_7 = {
     mostRelevant: [MANIFESTATION_9],
     all: [MANIFESTATION_9],
   },
-  materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
+  materialTypes: [
+    {
+      materialTypeSpecific: { display: "bog", code: "BOOK" },
+      materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+    },
+  ],
 };
 
 const WORK_8 = {
@@ -853,7 +880,8 @@ const USER_LOANS = [
       ],
       materialTypes: [
         {
-          materialTypeSpecific: { display: "billedbog" },
+          materialTypeSpecific: { display: "billedbog", code: "PICTURE_BOOK" },
+          materialTypeGeneral: { display: "bøger", code: "BOOKS" },
         },
       ],
       cover: {
@@ -881,7 +909,8 @@ const USER_LOANS = [
       ],
       materialTypes: [
         {
-          materialTypeSpecific: { display: "bog" },
+          materialTypeSpecific: { display: "bog", code: "BOOK" },
+          materialTypeGeneral: { display: "bøger", code: "BOOKS" },
         },
       ],
       cover: {
@@ -909,7 +938,8 @@ const USER_LOANS = [
       ],
       materialTypes: [
         {
-          materialTypeSpecific: { display: "bog" },
+          materialTypeSpecific: { display: "bog", code: "BOOK" },
+          materialTypeGeneral: { display: "bøger", code: "BOOKS" },
         },
       ],
       cover: {
@@ -938,7 +968,8 @@ const USER_LOANS = [
       ],
       materialTypes: [
         {
-          materialTypeSpecific: { display: "bog" },
+          materialTypeSpecific: { display: "bog", code: "BOOK" },
+          materialTypeGeneral: { display: "bøger", code: "BOOKS" },
         },
       ],
       cover: {
@@ -974,7 +1005,8 @@ const USER_ORDERS = [
       ],
       materialTypes: [
         {
-          materialTypeSpecific: { display: "bog" },
+          materialTypeSpecific: { display: "bog", code: "BOOK" },
+          materialTypeGeneral: { display: "bøger", code: "BOOKS" },
         },
       ],
       cover: {
@@ -1007,7 +1039,8 @@ const USER_ORDERS = [
       ],
       materialTypes: [
         {
-          materialTypeSpecific: { display: "bog" },
+          materialTypeSpecific: { display: "bog", code: "BOOK" },
+          materialTypeGeneral: { display: "bøger", code: "BOOKS" },
         },
       ],
       cover: {
@@ -1039,7 +1072,8 @@ const USER_ORDERS = [
       ],
       materialTypes: [
         {
-          materialTypeSpecific: { display: "bog" },
+          materialTypeSpecific: { display: "bog", code: "BOOK" },
+          materialTypeGeneral: { display: "bøger", code: "BOOKS" },
         },
       ],
       cover: {

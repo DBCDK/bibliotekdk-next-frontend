@@ -3,6 +3,7 @@ import Tag from "@/components/base/forms/tag";
 import {
   formatMaterialTypesToCypress,
   formatMaterialTypesToPresentation,
+  formatToStringListOfMaterialTypeField,
 } from "@/lib/manifestationFactoryUtils";
 
 export function MaterialTypeSwitcher({
@@ -12,20 +13,28 @@ export function MaterialTypeSwitcher({
   type,
 }) {
   // Handle selectedMaterial
-  function handleSelectedMaterial(materialType, type) {
+  function handleSelectedMaterial(materialTypeArrayAsSpecificDisplay, type) {
     // Update query param callback
-    if (!isEqual(type, materialType)) {
-      onTypeChange({ type: materialType });
+    if (!isEqual(type, materialTypeArrayAsSpecificDisplay)) {
+      onTypeChange({ type: materialTypeArrayAsSpecificDisplay });
     }
   }
 
   return uniqueMaterialTypes?.map((materialTypeArray) => {
+    const materialTypeArrayAsSpecificDisplay =
+      formatToStringListOfMaterialTypeField(
+        materialTypeArray,
+        "specificDisplay"
+      );
+
     //  Sets isSelected flag if button should be selected
     return (
       <Tag
-        key={materialTypeArray.join(",")}
-        selected={isEqual(materialTypeArray, type)}
-        onClick={() => handleSelectedMaterial(materialTypeArray, type)}
+        key={formatMaterialTypesToCypress(materialTypeArray)}
+        selected={isEqual(materialTypeArrayAsSpecificDisplay, type)}
+        onClick={() =>
+          handleSelectedMaterial(materialTypeArrayAsSpecificDisplay, type)
+        }
         skeleton={skeleton}
         dataCy={"tag-" + formatMaterialTypesToCypress(materialTypeArray)}
       >

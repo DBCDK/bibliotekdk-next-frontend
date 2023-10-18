@@ -310,6 +310,21 @@ describe("Search", () => {
       cy.get("[data-cy=cover-present]").should("exist");
     });
 
+    it("filters for lydbog (bånd) so should be before Bog", () => {
+      cy.visit(
+        "/iframe.html?id=search-result-resultrow--with-material-types-filtered"
+      );
+
+      cy.get("[data-cy=result-row]", { timeout: 10000 }).should("exist");
+
+      cy.get("[data-cy=link]")
+        .should("exist")
+        .eq(0)
+        .should("contain", "Lydbog (bånd)");
+
+      cy.get("[data-cy=link]").should("exist").eq(1).should("contain", "Bog");
+    });
+
     it("should not have cover", () => {
       cy.visit("/iframe.html?id=search-result-resultrow--without-cover");
 

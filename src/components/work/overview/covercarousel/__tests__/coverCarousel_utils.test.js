@@ -95,22 +95,42 @@ describe("getTextDescription", () => {
 const manifestations = [
   {
     pid: 1,
-    materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
+    materialTypes: [
+      {
+        materialTypeSpecific: { display: "bog", code: "BOOK" },
+        materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+      },
+    ],
     cover: { origin: "moreinfo" },
   },
   {
     pid: 2,
-    materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
+    materialTypes: [
+      {
+        materialTypeSpecific: { display: "bog", code: "BOOK" },
+        materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+      },
+    ],
     cover: { origin: "moreinfo" },
   },
   {
     pid: 3,
-    materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
+    materialTypes: [
+      {
+        materialTypeSpecific: { display: "bog", code: "BOOK" },
+        materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+      },
+    ],
     cover: { origin: "default" },
   },
   {
     pid: 4,
-    materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
+    materialTypes: [
+      {
+        materialTypeSpecific: { display: "bog", code: "BOOK" },
+        materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+      },
+    ],
     cover: { origin: "default" },
   },
 ];
@@ -126,16 +146,33 @@ describe("getManifestationsWithCorrectCover", () => {
       manifestationsWithCover: [
         {
           pid: 1,
-          materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
+          materialTypes: [
+            {
+              materialTypeSpecific: { display: "bog", code: "BOOK" },
+              materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+            },
+          ],
           cover: { origin: "moreinfo" },
         },
         {
           pid: 2,
-          materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
+          materialTypes: [
+            {
+              materialTypeSpecific: { display: "bog", code: "BOOK" },
+              materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+            },
+          ],
           cover: { origin: "moreinfo" },
         },
       ],
-      materialType: ["bog"],
+      materialType: [
+        {
+          specificDisplay: "bog",
+          specificCode: "BOOK",
+          generalDisplay: "bøger",
+          generalCode: "BOOKS",
+        },
+      ],
     };
     expect(actual).toMatchObject(expected);
   });
@@ -149,11 +186,23 @@ describe("getManifestationsWithCorrectCover", () => {
       manifestationsWithCover: [
         {
           pid: 1,
-          materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
+          materialTypes: [
+            {
+              materialTypeSpecific: { display: "bog", code: "BOOK" },
+              materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+            },
+          ],
           cover: { origin: "moreinfo" },
         },
       ],
-      materialType: ["bog"],
+      materialType: [
+        {
+          specificDisplay: "bog",
+          specificCode: "BOOK",
+          generalDisplay: "bøger",
+          generalCode: "BOOKS",
+        },
+      ],
     };
     expect(actual).toMatchObject(expected);
   });
@@ -167,11 +216,23 @@ describe("getManifestationsWithCorrectCover", () => {
       manifestationsWithCover: [
         {
           pid: 3,
-          materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
+          materialTypes: [
+            {
+              materialTypeSpecific: { display: "bog", code: "BOOK" },
+              materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+            },
+          ],
           cover: { origin: "default" },
         },
       ],
-      materialType: ["bog"],
+      materialType: [
+        {
+          specificDisplay: "bog",
+          specificCode: "BOOK",
+          generalDisplay: "bøger",
+          generalCode: "BOOKS",
+        },
+      ],
     };
     expect(actual).toMatchObject(expected);
   });

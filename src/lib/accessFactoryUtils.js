@@ -465,7 +465,9 @@ function getIsSingleAccessPeriodicaLike(singleAccess) {
     !!singleAccess?.workTypes?.find(
       (workType) => workType?.toLowerCase() === "periodica"
     ) ||
-    !!singleAccess?.materialTypesArray?.find((mat) => mat.includes("årbog"))
+    !!singleAccess?.materialTypesArray?.find((mat) =>
+      mat?.specificCode?.includes("YEARBOOK")
+    )
   );
 }
 

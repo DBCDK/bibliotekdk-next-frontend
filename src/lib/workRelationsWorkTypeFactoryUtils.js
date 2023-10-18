@@ -14,7 +14,7 @@ import isEmpty from "lodash/isEmpty";
 /**
  * Extract covers that are not default
  * @param manifestations
- * @returns {*|*[]}
+ * @returns {string}
  */
 export function extractGoodCover(manifestations) {
   const covers = manifestations?.flatMap(
@@ -52,8 +52,8 @@ export function getParentRelationInput(parentWork) {
 
 /**
  *
- * @param a
- * @param b
+ * @param {Object.<string, any>} a
+ * @param {Object.<string, any>} b
  * @returns {number}
  */
 export function sortByDate(a, b) {
@@ -67,9 +67,9 @@ export function sortByDate(a, b) {
 
 /**
  * Used by {@link enrichArticleSeries} and {@link enrichDebateArticle} because the same logic is used
- * @param parentWork
- * @param articleRelevant
- * @returns {React.JSX.Element}
+ * @param {Object.<string, any>} parentWork
+ * @param {Object.<string, any>} articleRelevant
+ * @returns {Array.<Object.<string, any>>}
  */
 function enrichAnyArticleTypeSeries(parentWork, articleRelevant) {
   const parentRelationInput = getParentRelationInput(parentWork);
@@ -90,9 +90,9 @@ function enrichAnyArticleTypeSeries(parentWork, articleRelevant) {
  * Article series needs to be enriched with data from ownerWork
  *  Article include relationType 'continues' and 'continuedIn'
  *  Used in {@link enrichBySpecificWorkType}
- * @param manifestations
- * @param parentWork
- * @returns {*[]}
+ * @param {Array.<Object.<string, any>>} manifestations
+ * @param {Object.<string, any>} parentWork
+ * @returns {Array.<Object.<string, any>>}
  */
 export function enrichArticleSeries(manifestations, parentWork) {
   const articleRelevant = manifestations.filter((manifestation) =>
@@ -107,8 +107,8 @@ export function enrichArticleSeries(manifestations, parentWork) {
 /**
  * Movies include relationTypes 'isAdaptationOf'
  *  Used in {@link enrichBySpecificWorkType}
- * @param manifestations
- * @returns {*[]}
+ * @param {Array.<Object.<string, any>>} manifestations
+ * @returns {Array.<Object.<string, any>>}
  */
 export function enrichMovie(manifestations) {
   return manifestations.filter((manifestation) =>
@@ -119,9 +119,9 @@ export function enrichMovie(manifestations) {
 /**
  * DebateArticles include relationTypes 'discusses' and 'discussedIn'
  *  Used in {@link enrichBySpecificWorkType}
- * @param manifestations
- * @param parentWork
- * @returns {*[]}
+ * @param {Array.<Object.<string, any>>} manifestations
+ * @param {Object.<string, any>} parentWork
+ * @returns {Array.<Object.<string, any>>}
  */
 export function enrichDebateArticle(manifestations, parentWork) {
   const debateArticleRelevant = manifestations.filter((manifestation) =>
@@ -136,8 +136,8 @@ export function enrichDebateArticle(manifestations, parentWork) {
 /**
  * Literature include relationTypes 'hasAdaptation'
  *  Used in {@link enrichBySpecificWorkType}
- * @param manifestations
- * @returns {*[]}
+ * @param {Array.<Object.<string, any>>} manifestations
+ * @returns {Array.<Object.<string, any>>}
  */
 export function enrichLiterature(manifestations) {
   return manifestations.filter((manifestation) =>
@@ -147,8 +147,8 @@ export function enrichLiterature(manifestations) {
 
 /**
  * Returns a relationTypeEnum based on relationType of manifestation
- * @param manifestation
- * @returns {React.JSX.Element}
+ * @param {Object.<string, any>} manifestation
+ * @returns {Array.<Object.<string, any>>}
  */
 export function mapRelationWorkTypes(manifestation) {
   return RelationTypeEnum[manifestation?.relationType?.toUpperCase()]?.workType;
@@ -157,9 +157,9 @@ export function mapRelationWorkTypes(manifestation) {
 /**
  * Return a unique list of manifestations(Relations)
  *  enriched with relationType and linkToWork
- * @param manifestations
- * @param work
- * @returns {React.JSX.Element}
+ * @param {Array.<Object.<string, any>>} manifestations
+ * @param {Object.<string>} work
+ * @returns {Array.<Object.<string, any>>}
  */
 export function enrichBySpecificWorkType(manifestations, work) {
   const relationWorkTypes = uniq(manifestations.map(mapRelationWorkTypes));
@@ -190,8 +190,8 @@ export function enrichBySpecificWorkType(manifestations, work) {
 /**
  * Removes the ownerWork and relations of an object
  *  Used in {@link parseRelations}
- * @param entry
- * @returns {React.JSX.Element}
+ * @param {Object.<string, any>} entry
+ * @returns {Object.<string, any>}
  */
 export function filterFieldsInElement(entry) {
   delete entry.ownerWork;
@@ -204,10 +204,10 @@ export function filterFieldsInElement(entry) {
 /**
  * Parses a single Manifestation(relation) to have the
  *  fields needed by GUI
- * @param manifestation
- * @param relationType
- * @param generation
- * @returns {React.JSX.Element}
+ * @param {Object.<string, any>} manifestation
+ * @param {string} relationType
+ * @param {number} generation
+ * @returns {Object.<string, any>}
  */
 export function parseSingleRelation(manifestation, relationType, generation) {
   const workTitles = manifestation?.ownerWork?.titles;
@@ -236,9 +236,9 @@ export function parseSingleRelation(manifestation, relationType, generation) {
  * Parse manifestations in a single relation
  *  e.g. the 'continues'-relation can have
  *  3 manifestations
- * @param relationTypeArray
- * @param passedFunction
- * @returns {*|*[]}
+ * @param {Array.<Object.<string, any>>} relationTypeArray
+ * @param {function} passedFunction
+ * @returns {Object.<string, any>}
  */
 export function parseSingleRelationObject(
   relationTypeArray,
@@ -254,8 +254,8 @@ export function parseSingleRelationObject(
 
 /**
  * Centralise logic for creating relations as array
- * @param relations
- * @param parser
+ * @param {Record.<Array.<Object.<string, any>>>} relations
+ * @param {function} parser
  * @returns {FlatArray<*, *>[]}
  */
 export function getRelationsAsArray(
@@ -276,8 +276,8 @@ export function getRelationsAsArray(
 /**
  * Gives the flattened relations and parses them to
  *  provide them with e.g. relationType and ownerWork workId
- * @param relations
- * @returns {*[]}
+ * @param {Record.<Array.<Object.<string, any>>>} relations
+ * @returns {Array.<Object.<string, any>>}
  */
 function getAllWorksWithRelationTypeAndWorkId(relations) {
   const relationsArray_generation_1 = getRelationsAsArray(relations);
@@ -306,8 +306,8 @@ function getAllWorksWithRelationTypeAndWorkId(relations) {
 /**
  * Filter unique relations by workId and relationType
  *  TODO: Figure out if this is the business logic we need?!
- * @param manifestations
- * @returns {React.JSX.Element}
+ * @param {Array.<Object.<string, any>>} manifestations
+ * @returns {Array.<Object.<string, any>>}
  */
 export function getUniqWorkWithWorkId(manifestations) {
   return uniqWith(
@@ -327,8 +327,8 @@ export function getUniqWorkWithWorkId(manifestations) {
  *  - {@link groupManifestations}
  *  - {@link flattenGroupedSortedManifestations (from manifestationFactoryUtils}}
  *  - {@link filterFieldsInElement}
- * @param work
- * @returns {React.JSX.Element}
+ * @param {Object.<string, any>} work
+ * @returns {Array.<Object.<string, any>>}
  */
 export function parseRelations(work) {
   return chainFunctions([
@@ -344,7 +344,7 @@ export function parseRelations(work) {
 /**
  * Returns the factory given work
  * - flatRelations derived from {@link parseRelations}
- * @param work
+ * @param {Object.<string, any>} work
  * @returns {{groupedRelations, groupedByRelationWorkTypes, flatRelations: *}}
  */
 export function workRelationsWorkTypeFactory(work) {

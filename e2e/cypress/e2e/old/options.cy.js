@@ -3,14 +3,15 @@
  * Test functionality modal options for article access
  */
 describe("Overview", () => {
-  before(function () {
-    cy.visit("/iframe.html?id=modal-options--all-options");
-  });
-
   it(`All option links present`, () => {
-    cy.contains("fiske", { timeout: 10000 }).should("exist");
+    cy.visit("/iframe.html?id=modal-options--all-options");
+    cy.contains("Alle bestillingsmuligheder (3)", { timeout: 15000 }).click();
+
+    cy.contains("Alle bestillingsmuligheder", { timeout: 15000 }).should(
+      "exist"
+    );
     cy.contains("Luk");
-    cy.contains("Link til ebog")
+    cy.contains("Link til E-bog")
       .should("exist")
       .parent()
       .find("a")

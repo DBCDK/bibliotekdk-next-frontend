@@ -1,6 +1,8 @@
 import { StoryDescription, StoryTitle } from "@/storybook";
 import ResultRow from "@/components/search/result/row/Row";
 import omit from "lodash/omit";
+import useFilters from "@/components/hooks/useFilters";
+import { useEffect } from "react";
 
 const exportedObject = {
   title: "search/Result/ResultRow",
@@ -9,9 +11,9 @@ const exportedObject = {
 export default exportedObject;
 
 /** RowComponentBuilder
- * @param {string} type
+ * @param {Array.<string>} type
  * @param {Object<Object<string, Array, boolean>, boolean, boolean>} editionProps
- * @param {string} storyNameOverride
+ * @param {string|null} storyNameOverride
  */
 function RowComponentBuilder({
   rowProps,
@@ -55,9 +57,34 @@ export function WithAllData() {
   );
 }
 
+export function WithMaterialTypesFiltered() {
+  const { filters, setFilters, setQuery } = useFilters();
+
+  useEffect(() => {
+    setFilters({ ...filters, materialTypesSpecific: ["lydbog (bånd)"] });
+    setQuery({ exclude: ["modal"] });
+  }, []);
+
+  const rowProps = {
+    work: work,
+    className: "",
+    onClick: () => {},
+  };
+
+  return (
+    <RowComponentBuilder
+      storyNameOverride={"WithMaterialTypesFiltered"}
+      rowProps={rowProps}
+    />
+  );
+}
+
 export function WithoutCover() {
   const rowProps = {
-    work: omit(work, ["manifestations.mostRelevant[0].cover"]),
+    work: omit({ ...work }, [
+      "manifestations.mostRelevant[0].cover",
+      "manifestations.mostRelevant[1].cover",
+    ]),
     className: "",
     onClick: () => {},
   };
@@ -72,7 +99,7 @@ export function WithoutCover() {
 
 export function WithoutCreator() {
   const rowProps = {
-    work: omit(work, ["creators"]),
+    work: omit({ ...work }, ["creators"]),
     className: "",
     onClick: () => {},
   };
@@ -87,7 +114,7 @@ export function WithoutCreator() {
 
 export function WithoutTitles() {
   const rowProps = {
-    work: omit(work, ["titles.main", "titles.full"]),
+    work: omit({ ...work }, ["titles.main", "titles.full"]),
     className: "",
     onClick: () => {},
   };
@@ -102,7 +129,7 @@ export function WithoutTitles() {
 
 export function WithoutManifestations() {
   const rowProps = {
-    work: omit(work, ["manifestations.all"]),
+    work: omit({ ...work }, ["manifestations.all"]),
     className: "",
     onClick: () => {},
   };
@@ -232,12 +259,11 @@ const work = {
         },
         materialTypes: [
           {
-            materialTypeSpecific: { display: "bog" },
+            materialTypeSpecific: { display: "bog", code: "BOOK" },
+            materialTypeGeneral: { display: "bøger", code: "BOOKS" },
           },
         ],
       },
-    ],
-    all: [
       {
         cover: {
           detail:
@@ -245,28 +271,11 @@ const work = {
         },
         materialTypes: [
           {
-            materialTypeSpecific: { display: "bog" },
-          },
-          {
-            materialTypeSpecific: { display: "diskette" },
-          },
-          {
-            materialTypeSpecific: { display: "ebog" },
-          },
-          {
-            materialTypeSpecific: { display: "lydbog (bånd)" },
-          },
-          {
-            materialTypeSpecific: { display: "lydbog (cd)" },
-          },
-          {
-            materialTypeSpecific: { display: "lydbog (cd-mp3)" },
-          },
-          {
-            materialTypeSpecific: { display: "lydbog (net)" },
-          },
-          {
-            materialTypeSpecific: { display: "punktskrift" },
+            materialTypeSpecific: {
+              display: "lydbog (bånd)",
+              code: "AUDIO_BOOK_TAPE",
+            },
+            materialTypeGeneral: { display: "lydbøger", code: "AUDIO_BOOKS" },
           },
         ],
       },
@@ -278,30 +287,57 @@ const work = {
     },
   ],
   materialTypes: [
-    {
-      materialTypeSpecific: { display: "bog" },
-    },
-    {
-      materialTypeSpecific: { display: "diskette" },
-    },
-    {
-      materialTypeSpecific: { display: "ebog" },
-    },
-    {
-      materialTypeSpecific: { display: "lydbog (bånd)" },
-    },
-    {
-      materialTypeSpecific: { display: "lydbog (cd)" },
-    },
-    {
-      materialTypeSpecific: { display: "lydbog (cd-mp3)" },
-    },
-    {
-      materialTypeSpecific: { display: "lydbog (net)" },
-    },
-    {
-      materialTypeSpecific: { display: "punktskrift" },
-    },
+    [
+      {
+        materialTypeSpecific: { display: "bog", code: "BOOK" },
+        materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+      },
+    ],
+    // {
+    //   materialTypeSpecific: { display: "diskette", code: "FLOPPY_DISK" },
+    //   materialTypeGeneral: { display: "øvrige", code: "OTHER" },
+    // },
+    // {
+    //   materialTypeSpecific: { display: "e-bog", code: "EBOOK" },
+    //   materialTypeGeneral: { display: "e-bøger", code: "EBOOKS" },
+    // },
+    [
+      {
+        materialTypeSpecific: {
+          display: "lydbog (bånd)",
+          code: "AUDIO_BOOK_TAPE",
+        },
+        materialTypeGeneral: { display: "lydbøger", code: "AUDIO_BOOKS" },
+      },
+    ],
+    // {
+    //   materialTypeSpecific: {
+    //     display: "lydbog (cd)",
+    //     code: "AUDIO_BOOK_CD",
+    //   },
+    //   materialTypeGeneral: { display: "lydbøger", code: "AUDIO_BOOKS" },
+    // },
+    // {
+    //   materialTypeSpecific: {
+    //     display: "lydbog (cd-mp3)",
+    //     code: "AUDIO_BOOK_CD_MP3",
+    //   },
+    //   materialTypeGeneral: { display: "lydbøger", code: "AUDIO_BOOKS" },
+    // },
+    // {
+    //   materialTypeSpecific: {
+    //     display: "lydbog (online)",
+    //     code: "AUDIO_BOOK_ONLINE",
+    //   },
+    //   materialTypeGeneral: { display: "lydbøger", code: "AUDIO_BOOKS" },
+    // },
+    // {
+    //   materialTypeSpecific: {
+    //     display: "punktskrift",
+    //     code: "BRAILLE",
+    //   },
+    //   materialTypeGeneral: { display: "øvrige", code: "OTHER" },
+    // },
   ],
   titles: {
     main: ["Harry Potter og De Vises Sten"],
@@ -320,7 +356,8 @@ const work_klingon_language = {
         },
         materialTypes: [
           {
-            materialTypeSpecific: { display: "bog" },
+            materialTypeSpecific: { display: "bog", code: "BOOK" },
+            materialTypeGeneral: { display: "bøger", code: "BOOKS" },
           },
         ],
       },
@@ -355,7 +392,8 @@ const work_2_other_languages = {
         },
         materialTypes: [
           {
-            materialTypeSpecific: { display: "bog" },
+            materialTypeSpecific: { display: "bog", code: "BOOK" },
+            materialTypeGeneral: { display: "bøger", code: "BOOKS" },
           },
         ],
       },
@@ -386,7 +424,7 @@ const work_2_other_languages = {
 const noMaterialTypesWork = {
   workId: "some-id-2",
   manifestations: {
-    all: [
+    mostRelevant: [
       {
         cover: {
           detail:
@@ -411,7 +449,7 @@ const noMaterialTypesWork = {
 const work_2_person_creators = {
   workId: "some-id-2",
   manifestations: {
-    all: [
+    mostRelevant: [
       {
         cover: {
           detail:
@@ -439,7 +477,7 @@ const work_2_person_creators = {
 const work_1_corp_creators = {
   workId: "some-id-2",
   manifestations: {
-    all: [
+    mostRelevant: [
       {
         cover: {
           detail:
@@ -472,7 +510,7 @@ const work_1_corp_creators = {
 const work_2_corp_creators = {
   workId: "some-id-2",
   manifestations: {
-    all: [
+    mostRelevant: [
       {
         cover: {
           detail:
