@@ -5,23 +5,64 @@
  */
 
 import useSWR from "swr";
+import { useEffect } from "react";
 
+import useUser from "@/components/hooks/useUser";
+
+/**
+ * Settings
+ */
+
+// allowed token types
 const TYPE = { FFU: "ffu", FOLK: "folk" };
-
+// storage key name
 const KEY_NAME = "verification";
-const EXPIRATION_TTL = 1000 * 60 * 10; // 10 minutes
+// verification process ttl (when using read() function)
+const EXPIRATION_TTL = 1000 * 60 * 60; // 60 minutes
+// verification object ttl (when using exist() function)
 const TS_TTL = 1000 * 60 * 60 * 24; // 24 hours
+// wipe verification if an anon session is returned
+const CLEAR_ON_SIGNOUT = true;
 
 /**
  *
- * @param {*} value
+ * Verification custom hook, to handle ffu users who wants to
+ * create or associate with a bibdk account.
+ *
+ * verifications will be cleared if a anon sesson is returned
+ *
+ * provides the following functions:
+ *
+ *  exist() - returns if any verification object exists (ttl default 24 hours)
+ *  create() - creates an verification object
+ *  read() - returns if any verification process is active (ttl default 60 minutes)
+ *  update() - update an verification
+ *  delete() - delete an verification
+ *
  */
 export default function useVerification() {
-  const { data, mutate, error, isLoading } = useSWR(KEY_NAME, (key) =>
+  const { data, mutate, error, isValidating } = useSWR(KEY_NAME, (key) =>
     JSON.parse(localStorage.getItem(key) || "null")
   );
 
-  console.log("useVerification => data", data);
+  const { isLoggedIn } = useUser();
+
+  /**
+   * cleanup
+   * clear verifications if anon session (user is logged out)
+   */
+  useEffect(() => {
+    // if clear allowed
+    if (CLEAR_ON_SIGNOUT) {
+      // data is fetched
+      if (!isValidating && data) {
+        // user is not loggedin (anon sesison)
+        if (!isLoggedIn) {
+          _close();
+        }
+      }
+    }
+  }, [isLoggedIn, data, isValidating]);
 
   /**
    * remove already used props from props obj.
@@ -37,13 +78,13 @@ export default function useVerification() {
   }
 
   /**
-   * open an verification process
+   * start an verification process
    *
    * @param {string} props.accessToken
    * @param {string} props.type
    *
    */
-  function _create(props) {
+  function _create(props = {}) {
     console.log("useVerification => create...", { ...props });
     const { type, accessToken } = props;
 
@@ -55,16 +96,22 @@ export default function useVerification() {
     const expires = ts + ttl;
 
     // accesstoken type
-    const _type = TYPE[type];
+    const _type = type && TYPE[type];
+
+    // token obj
+    const obj = {};
+
     // if valid type
     if (_type) {
-      // remove already used props
-      props = _trim(props);
-
-      const _data = { ...props, expires, ts, tokens: { [_type]: accessToken } };
-      localStorage.setItem(KEY_NAME, JSON.stringify(_data));
-      mutate(_data);
+      obj.tokens = { [_type]: accessToken };
     }
+
+    // trim props from top level (added in tokens obj)
+    props = _trim(props);
+
+    const _data = { ...props, expires, ts, ...obj };
+    localStorage.setItem(KEY_NAME, JSON.stringify(_data));
+    mutate(_data);
   }
 
   /**
@@ -75,7 +122,7 @@ export default function useVerification() {
    * @param {string} props.origin
    *
    */
-  function _update(props) {
+  function _update(props = {}) {
     console.log("useVerification => update...", { ...props });
     const { type, accessToken } = props;
 
@@ -133,6 +180,7 @@ export default function useVerification() {
    *  @returns {boolean}
    */
   function _exist() {
+    console.log("useVerification => exist...");
     const ts = Date.now();
     const ttl = TS_TTL;
     const expires = data?.ts + ttl;
@@ -151,6 +199,6 @@ export default function useVerification() {
     read: _read,
     update: _update,
     delete: _close,
-    isLoading: !error && isLoading,
+    isLoading: isValidating && !data,
   };
 }

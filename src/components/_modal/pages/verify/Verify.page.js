@@ -29,8 +29,9 @@ export default function Verify({ modal, context }) {
 
   function onMitIdLogin() {
     const props = {
+      accessToken,
       // accessToken: "38752b5be04b53b0260df70a47da83a409ff47a0", // testbruger
-      accessToken: "55c7f4245a46a51cbbe2f87bd7c871b3da2491a8", // mig
+      // accessToken: "dddf4cdce1434ae70a1f566a96165be701d4f3f4", // mig
       type: "FFU",
     };
 

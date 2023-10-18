@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 import useVerification from "@/components/hooks/useVerification";
-import { useAccessToken } from "@/components/hooks/useUser";
 import useUser from "@/components/hooks/useUser";
 import { useModal } from "@/components/_modal";
 
@@ -18,18 +16,24 @@ export default function Listener() {
   const branchId = loanerInfo?.pickupBranch;
   const agencies = authUser?.agencies;
 
-  const accessToken = useAccessToken();
   const verification = useVerification();
   const modal = useModal();
 
-  const hasVerificationProcess = verification.exist();
+  const hasVerificationObject = verification.exist();
 
-  console.log("Debug Listener ....", {
+  console.log("Debug FFU Listener ....", {
     isLoggedIn,
     agencyId,
     isAuthenticated,
     hasCulrUniqueId,
-    hasVerificationProcess,
+    hasVerificationObject,
+    status:
+      isLoggedIn &&
+      isAuthenticated &&
+      !hasCulrUniqueId &&
+      agencyId &&
+      isFFUAgency(agencyId) &&
+      !hasVerificationObject,
   });
 
   useEffect(() => {
@@ -42,7 +46,7 @@ export default function Listener() {
           // The agency which the user has signedIn to, is an FFU library
           if (agencyId && isFFUAgency(agencyId)) {
             // Users doesnt have an active verification - verification is more than 24 hours old
-            if (!hasVerificationProcess) {
+            if (!hasVerificationObject) {
               // Select the loggedInBranch from users agencies list
               let match = {};
               agencies?.forEach((agency) => {
@@ -59,21 +63,28 @@ export default function Listener() {
                   branchId: match?.branchId,
                 };
 
+                // create verification process (lasts 24 hours)
+                // can be used within 60 minutes
                 verification.create({
-                  accessToken,
-                  type: "FFU",
                   origin: "listener",
                 });
 
-                // Fire the create bibdk account modal
-                modal.push("verify", context);
+                /* if verify modal is not already triggered
+                 *
+                 * Note: bug happens when deleting storage and
+                 * refreshing page when modal is open
+                 */
+                if (modal.index("verify") < 0) {
+                  // Fire the create bibdk account modal
+                  modal.push("verify", context);
+                }
               }
             }
           }
         }
       }
     }
-  }, [isLoggedIn, hasVerificationProcess, branchId, agencies]);
+  }, [isLoggedIn, branchId, agencies]);
 
   return null;
 }

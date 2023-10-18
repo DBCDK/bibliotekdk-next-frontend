@@ -152,6 +152,9 @@ function useUserImpl() {
     loanerInfo,
     isGuestUser: isGuestUser,
     isLoggedIn: isAuthenticated || isGuestUser, //TODO guestUsers are not logged in - maybe "hasUserParameters" is a better name
+    updateUserData: async () => {
+      await userMutate();
+    },
     updateLoanerInfo: async (obj) => {
       const newSession = (newSession = merge({}, sessionData, obj));
       // Update global loaner info object

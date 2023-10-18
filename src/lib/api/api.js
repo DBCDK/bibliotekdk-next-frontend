@@ -171,6 +171,8 @@ export function useMutate() {
  * @param {Object} query - A query object.
  */
 export function useData(query) {
+  console.log("useData query", query);
+
   const keyGenerator = useKeyGenerator();
   const fetcherImpl = useFetcherImpl();
   const key = keyGenerator(query);
