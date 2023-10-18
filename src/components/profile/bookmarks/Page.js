@@ -6,7 +6,7 @@ import Text from "@/components/base/text";
 import Button from "@/components/base/button";
 import MaterialRow from "../materialRow/MaterialRow";
 import IconButton from "@/components/base/iconButton";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
 import ProfileLayout from "../profileLayout/ProfileLayout";
 import Translate from "@/components/base/translate";
@@ -64,6 +64,7 @@ const BookmarkPage = () => {
   const [sortByValue, setSortByValue] = useState(null);
   const isMobile = breakpoint === "sm" || breakpoint === "xs";
   const [checkboxList, setCheckboxList] = useState();
+  const scrollToElement = useRef(null);
 
   useEffect(() => {
     setSortBy(sortByValue);
@@ -135,10 +136,7 @@ const BookmarkPage = () => {
    * scrolls to the top of the page
    */
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 300,
-      behavior: "smooth",
-    });
+    scrollToElement?.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const constructEditionText = (bookmark) => {
@@ -191,6 +189,8 @@ const BookmarkPage = () => {
         label: "page-title",
       })}
     >
+      <div ref={scrollToElement} />
+
       <div className={styles.dropdownWrapper}>
         {/* TODO - make modal? not sure */}
         <MenuDropdown options={MENUITEMS} onItemClick={onDropdownClick} />
