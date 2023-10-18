@@ -16,10 +16,11 @@ import ReservationButton from "@/components/work/reservationbutton/ReservationBu
 
 /**
  *
- * @param pid: used for edition specific bookmarks - null if it's a workId bookmark
- * @param workId: workId for workId bookmarks
- * @param materialType used for ordering a workId bookmark
- * @param onBookmarkDelete
+ * @param {Object} props
+ * @param props.pid: used for edition specific bookmarks - null if it's a workId bookmark
+ * @param props.workId: workId for workId bookmarks
+ * @param props.materialType used for ordering a workId bookmark
+ * @param props.onBookmarkDelete
  * @returns
  */
 const BookmarkColumn = ({
@@ -40,27 +41,15 @@ const BookmarkColumn = ({
   return (
     <div className={sharedStyles.dynamicColumnHorizontal}>
       <div className={sharedStyles.bookmarkOrderButtonContainer}>
-        {!!pid ? (
-          <ReservationButton
-            workId={workId}
-            selectedPids={[pid]}
-            singleManifestation={true}
-            buttonType="primary"
-            size="small"
-            selectedMaterialType={materialType}
-            shortText
-          />
-        ) : (
-          <ReservationButton
-            workId={workId}
-            selectedPids={selectedPids}
-            singleManifestation={false}
-            buttonType="primary"
-            size="small"
-            selectedMaterialType={materialType}
-            shortText
-          />
-        )}
+        <ReservationButton
+          workId={workId}
+          selectedPids={!!pid ? [pid] : selectedPids}
+          singleManifestation={!!pid ? true : false}
+          buttonType="primary"
+          size="small"
+          selectedMaterialType={materialType}
+          shortText
+        />
       </div>
 
       <IconButton onClick={onBookmarkDelete}>
@@ -92,7 +81,7 @@ const MaterialRowBookmark = ({
     if (
       e.target instanceof HTMLHeadingElement ||
       e.target instanceof HTMLButtonElement ||
-      e.target.getAttribute("data-cy") === "text-fjern"
+      e.target.getAttribute("data-control") === "ICON-BUTTON"
     ) {
       /* Element clicked is an actionable element, return */
       return;

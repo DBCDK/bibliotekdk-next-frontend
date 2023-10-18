@@ -28,6 +28,7 @@ function Text({
   title = null,
   id,
   lines,
+  ...props
 }) {
   // Set type of tag.
   // Because this is a text component, p(aragraph) should always be used if possible!
@@ -79,6 +80,7 @@ function Text({
       data-cy={key}
       tabIndex={tabIndex}
       {...(title && { title: title })}
+      {...props}
     >
       {children}
     </Tag>

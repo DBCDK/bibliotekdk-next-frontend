@@ -18,9 +18,14 @@ import { handleRenewLoan } from "../../utils";
 import MaterialRowTooltip from "../materialRowTooltip/MaterialRowTooltip";
 import sharedStyles from "../MaterialRow.module.css";
 
-// Set to when warning should be shown
+// Set to when red text should be used for remaining loan days
 const DAYS_TO_COUNTDOWN_RED = 5;
 
+/**
+ *
+ * @param {string} dueDateString
+ * @returns {Object}
+ */
 export const useLoanDateAnalysis = (dueDateString) => {
   const router = useRouter();
   const locale = router.locale === undefined ? "da" : router.locale;
@@ -97,7 +102,7 @@ export const LoanColumn = ({ dueDateString }) => {
 /**
  * shows a span with text and a checkmark icon
  * @param {string} textType
- * @returns
+ * @returns {React.JSX.Element}
  */
 export const RenewedSpan = ({ textType = "text2" }) => {
   return (
@@ -125,6 +130,10 @@ const getStatus = (dueDateString) => {
   return isOverdue ? "RED" : "NONE";
 };
 
+/**
+ * @param {Object} props
+ * @returns {React.JSX.Element}
+ */
 const MaterialRowLoan = (props) => {
   const {
     image,
