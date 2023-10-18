@@ -18,6 +18,7 @@ import Login from "./login";
 import MobileLogin from "./mobileLogin";
 import OpenAdgangsplatform from "./openAdgangsplatform";
 import LoginNotSupported from "./loginNotSupported";
+import DeleteProfile from "./deleteProfile";
 
 const _modal = {
   Menu,
@@ -40,6 +41,7 @@ const _modal = {
   MobileLogin,
   LoginNotSupported,
   OpenAdgangsplatform,
+  DeleteProfile,
 };
 
 export default _modal;

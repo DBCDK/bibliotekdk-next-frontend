@@ -135,10 +135,14 @@ const LogoutButton = () => {
           className={styles.logoutBtnText}
           skeleton={user?.isLoading}
           lines={1}
-        >{`${Translate({
-          context: "profile",
-          label: "signed-in-as-name",
-        })} ${userName}`}</Text>
+        >
+          {`${Translate({
+            context: "profile",
+            label: "signed-in-as-name",
+          })} 
+        ${userName}
+       `}
+        </Text>
       )}
       <Link
         onClick={() => {

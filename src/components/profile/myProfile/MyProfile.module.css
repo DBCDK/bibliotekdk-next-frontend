@@ -1,0 +1,31 @@
+.modalContainer {
+  margin-top: var(--pt7);
+  padding-top: var(--pt2);
+  border-top: 1px solid var(--iron);
+}
+
+.dataItem:first-child {
+  gap: var(--pt05);
+}
+
+.dataItem {
+  gap: var(--pt05);
+
+  padding: var(--pt1) var(--pt05);
+  margin-bottom: var(--pt05);
+}
+
+.dataItem p {
+  font-size: 17px;
+}
+
+.deleteProfileButton {
+  margin-top: 100px;
+}
+.userInfo {
+  margin-bottom: var(--pt6);
+}
+
+.dataItemTitle {
+  font-family: var(--body-font-medium);
+}

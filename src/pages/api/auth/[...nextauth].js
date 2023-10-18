@@ -25,6 +25,11 @@ export const options = {
     adgangsplatformen({
       clientId,
       clientSecret,
+      profile: async ({ profile }) => {
+        return {
+          id: profile?.attributes?.uniqueId || profile?.attributes?.userId,
+        };
+      },
     }),
   ],
   debug: false,

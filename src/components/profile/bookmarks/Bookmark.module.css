@@ -19,6 +19,7 @@
   margin-right: var(--pt4);
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .selectAll {
@@ -28,6 +29,15 @@
 .orderButton {
   width: 100px;
   margin-right: var(--pt2);
+}
+
+.orderButton:not(disabled) {
+  outline: 2px solid var(--blue);
+}
+
+.orderButton:not(disabled):hover,
+.orderButton:not(disabled):focus-visible {
+  outline: 2px solid var(--mine-shaft);
 }
 
 .referenceButton {

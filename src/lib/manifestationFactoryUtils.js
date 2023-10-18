@@ -373,8 +373,6 @@ export function getInUniqueMaterialTypes(typeArr, uniqueMaterialTypes) {
   return (
     uniqueMaterialTypes?.findIndex(
       (materialTypesArr) =>
-        // specificDisplayInMaterialTypesArray(typeArr, materialTypesArr) ||
-        // specificCodeInMaterialTypesArray(typeArr, materialTypesArr)
         materialTypeFieldInMaterialTypesArray(
           typeArr,
           materialTypesArr,

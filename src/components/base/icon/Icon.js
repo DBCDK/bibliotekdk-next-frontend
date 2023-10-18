@@ -103,7 +103,7 @@ function IconSkeleton(props) {
   return (
     <Icon
       {...props}
-      className={`${props.className} ${styles.skeleton}`}
+      className={`${props.className} ${styles.skeleton} ${styles.icon}`}
       onClick={null}
       disabled={true}
     >

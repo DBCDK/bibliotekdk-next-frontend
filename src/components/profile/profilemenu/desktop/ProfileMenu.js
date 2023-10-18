@@ -169,6 +169,7 @@ const menuItems = [
   "bookmarks",
   "orderHistory",
   "myLibraries",
+  "myProfile",
 ];
 
 const initialLoansAndReservations = {

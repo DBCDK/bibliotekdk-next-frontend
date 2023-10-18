@@ -32,13 +32,15 @@ export default function MobileLogin({ context }) {
     <div className={styles.login}>
       <Top onClose={removeModalsFromStore} />
       <LibrarySearch onChange={(q) => setQuery(q)} desktop={false} />
-      <SearchResultList
-        allBranches={data?.branches?.result}
-        isLoading={isLoading}
-        onSelect={onSelect}
-        isVisible={isVisible}
-        includeArrows={includeArrows}
-      />
+      {query && (
+        <SearchResultList
+          allBranches={data?.branches?.result}
+          isLoading={isLoading}
+          onSelect={onSelect}
+          isVisible={isVisible}
+          includeArrows={includeArrows}
+        />
+      )}
     </div>
   );
 }
