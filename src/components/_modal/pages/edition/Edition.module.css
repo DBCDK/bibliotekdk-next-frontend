@@ -62,6 +62,11 @@
 
 .periodicaformlink {
   margin-top: var(--pt2);
+  cursor: pointer;
+}
+
+.periodicaformlink > span > i {
+  vertical-align: middle;
 }
 
 @media (min-width: 576px) {
