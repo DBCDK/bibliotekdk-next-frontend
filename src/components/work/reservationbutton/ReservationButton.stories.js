@@ -249,6 +249,7 @@ export function ReservationButtonNotLoggedIn() {
       <ReservationButton
         user={user}
         singleManifestation={true}
+        overrideButtonText="Gå til bog"
         access={access}
         onHandleGoToLogin={() => alert("DU SKAL LOGGE IND")}
       />

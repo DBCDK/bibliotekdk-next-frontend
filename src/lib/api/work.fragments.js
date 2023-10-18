@@ -554,6 +554,9 @@ export function pidsToWorks({ pids }) {
     query: `
     query pidsToWorks($pids: [String!]!) {
       manifestations(pid: $pids) {
+        ownerWork {
+          workId
+        }
         pid
         titles {main}
         cover {
@@ -593,6 +596,16 @@ export function idsToWorks({ ids }) {
           display
         }
         manifestations {
+          mostRelevant {
+            pid
+            ownerWork {
+              workId
+              workTypes
+            }
+            materialTypes {
+              specific
+            }
+          }
           bestRepresentation {
             cover {
               thumbnail

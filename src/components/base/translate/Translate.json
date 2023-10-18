@@ -945,6 +945,58 @@
         "da": "Alle bestillingsmuligheder (%s)",
         "en": "All order options (%s)"
       },
+      "material-action-read": {
+        "da": "Læs",
+        "en": "Read"
+      },
+      "material-action-listen": {
+        "da": "Lyt",
+        "en": "Listen"
+      },
+      "material-action-see": {
+        "da": "Se",
+        "en": "See"
+      },
+      "material-action-play": {
+        "da": "Spil",
+        "en": "Play"
+      },
+      "material-direction-here": {
+        "da": "Her",
+        "en": "Here"
+      },
+      "material-typename-ebook": {
+        "da": "E-bogen",
+        "en": "The e-book"
+      },
+      "material-typename-article": {
+        "da": "Artiklen",
+        "en": "The article"
+      },
+      "material-typename-music": {
+        "da": "Til musikken",
+        "en": "To the music"
+      },
+      "material-typename-podcast": {
+        "da": "Til podcasten",
+        "en": "To the podcast"
+      },
+      "material-typename-audiobook": {
+        "da": "Til lydbogen",
+        "en": "To the audiobook"
+      },
+      "material-typename-movie": {
+        "da": "Filmen",
+        "en": "The movie"
+      },
+      "material-typename-sheetmusic": {
+        "da": "Noderne",
+        "en": "The sheet music"
+      },
+      "material-typename-game": {
+        "da": "Spillet",
+        "en": "The game"
+      },
       "all-editions": {
         "da": "alle udgaver",
         "en": "all editions"
@@ -3607,6 +3659,14 @@
       "alphabeticalOrder": {
         "da": "Alfabetisk - titel",
         "en": "Alphabetical- title"
+      },
+      "goToBook": {
+        "da": "Gå til bogen",
+        "en": "Go to book"
+      },
+      "lentBy": {
+        "da": "Udlånt af",
+        "en": "Lent by"
       }
     },
     "receipt": {

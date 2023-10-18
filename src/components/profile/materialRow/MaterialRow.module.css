@@ -197,6 +197,17 @@
   display: block;
 }
 
+.bookmarkOrderButtonContainer {
+  width: 100px;
+  margin-right: var(--pt3);
+}
+
+.bookmarkOrderButtonContainer button[aria-disabled="false"] {
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
+
 .debtDynamicColumn {
   grid-column: 1;
 }
