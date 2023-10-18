@@ -19,9 +19,6 @@
   margin-right: var(--pt4);
   display: flex;
   align-items: center;
-}
-
-.selectAllButton:hover {
   cursor: pointer;
 }
 
