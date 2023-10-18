@@ -15,6 +15,7 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
 import List from "@/components/base/forms/list";
 import Pagination from "@/components/search/pagination/Pagination";
 import { createEditionText } from "@/components/work/details/utils/details.utils";
+import Skeleton from "@/components/base/skeleton/Skeleton";
 
 const CONTEXT = "bookmark";
 const MENUITEMS = ["Bestil flere", "Hent referencer", "Fjern flere"];
@@ -55,8 +56,10 @@ const BookmarkPage = () => {
     totalPages,
     setCurrentPage,
     count,
+    isLoading: bookmarsDataLoading,
   } = useBookmarks();
-  const { data: bookmarks } = usePopulateBookmarks(bookmarksData);
+  const { data: bookmarks, isLoading: bookmarsPopulaationLoading } =
+    usePopulateBookmarks(bookmarksData);
   const [activeStickyButton, setActiveStickyButton] = useState(null);
   const breakpoint = useBreakpoint();
   const [sortByValue, setSortByValue] = useState(null);
@@ -134,7 +137,7 @@ const BookmarkPage = () => {
    */
   const scrollToTop = () => {
     window.scrollTo({
-      top: 0,
+      top: 300,
       behavior: "smooth",
     });
   };
@@ -165,6 +168,21 @@ const BookmarkPage = () => {
     checkboxList?.filter((e) => e.isSelected === false).length === 0;
   const isNothingSelected =
     checkboxList?.filter((e) => e.isSelected === true).length === 0;
+
+  if (bookmarsDataLoading || bookmarsPopulaationLoading) {
+    return (
+      <ProfileLayout
+        title={Translate({
+          context: CONTEXT,
+          label: "page-title",
+        })}
+      >
+        {Array.from({ length: 20 }).map((_, i) => (
+          <MaterialRow skeleton key={`bookmark-#${i}`} id={`bookmark-#${i}`} />
+        ))}
+      </ProfileLayout>
+    );
+  }
 
   return (
     <ProfileLayout
