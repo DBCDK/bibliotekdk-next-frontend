@@ -152,14 +152,15 @@ const BookmarkPage = () => {
     return createEditionText(bookmark);
   };
   const onPageChange = async (newPage) => {
+    const isSmallScreen = breakpoint == "xs";
+
     if (newPage > totalPages) {
       newPage = totalPages;
     }
-    setCurrentPage(newPage);
-    const isSmallScreen = breakpoint == "xs";
     if (!isSmallScreen) {
       scrollToTop();
     }
+    setCurrentPage(newPage);
   };
 
   const isAllSelected =
