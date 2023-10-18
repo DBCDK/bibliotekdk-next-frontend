@@ -51,7 +51,7 @@ export function Receipt({
   const isOrdering = orderIsLoading || articleOrderIsLoading || delay;
   const isOrdered =
     !!orderData?.submitOrder?.orderId ||
-    articleOrderData?.elba?.placeCopyRequest?.ok;
+    articleOrderData?.elba?.placeCopyRequest?.status === "OK";
 
   // Define if order has failed
   let hasFailed = false,
@@ -64,13 +64,13 @@ export function Receipt({
     failedMessage = orderError || articleOrderError;
   } else if (
     articleOrderData?.elba?.placeCopyRequest &&
-    articleOrderData?.elba?.placeCopyRequest?.ok
+    articleOrderData?.elba?.placeCopyRequest?.status !== "OK"
   ) {
     hasFailed = true;
     failedMessage = articleOrderData?.elba?.placeCopyRequest?.status;
   }
 
-  const showLinkToMyLibraries = true; //TODO should link to my libraries always be shown? @UX
+  const showLinkToMyLibraries = true; //TODO should link to my libraries always be shown? @bibdk2021-1934
 
   // Branch name
   const branchName = pickupBranch?.name;
