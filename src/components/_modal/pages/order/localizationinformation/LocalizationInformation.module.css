@@ -30,6 +30,11 @@
   cursor: pointer;
 }
 
+.iconLink > span > i,
+.iconLink > span > i > svg {
+  vertical-align: middle;
+}
+
 .disabled {
   cursor: default;
 }
