@@ -291,11 +291,7 @@ export function parseDate(isoDateString) {
  * @param {Object} params
  */
 export async function updateQueryParams({ params, router }) {
-  console.log("params", params);
-  console.log("router", router);
-
   const query = { ...router.query, ...params };
-  console.log("query", query);
 
   await router.push(
     { pathname: router.pathname, query },
