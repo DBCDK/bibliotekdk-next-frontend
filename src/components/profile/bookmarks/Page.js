@@ -90,6 +90,8 @@ const BookmarkPage = () => {
             ? bookmark.manifestations.mostRelevant.map((i) => i.pid)
             : [bookmark.materialId],
         isSelected: false,
+        title: bookmark.titles?.main?.[0],
+        materialType: bookmark.materialType,
       }))
     );
   }, [bookmarks.length]);
