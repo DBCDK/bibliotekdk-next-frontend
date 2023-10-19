@@ -91,7 +91,7 @@ export function WrappedDetailsSectionMovie() {
         Work details component. The Section component is used for layout.
       </StoryDescription>
       <StorySpace direction="v" space="8" />
-      <WrappedDetails workId="some-hest-pid" type={["film (dvd)"]} />
+      <WrappedDetails workId="hest" type={["film (dvd)"]} />
     </div>
   );
 }
@@ -178,9 +178,9 @@ WrappedDetailsSectionMovie.story = {
             {
               materialTypeSpecific: {
                 display: "film (dvd)",
-                code: "MOVIE_DVD",
+                code: "FILM_DVD",
               },
-              materialTypeGeneral: { display: "film", code: "MOVIES" },
+              materialTypeGeneral: { display: "film", code: "FILMS" },
             },
           ],
           edition: () => ({

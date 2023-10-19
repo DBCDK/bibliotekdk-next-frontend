@@ -281,6 +281,8 @@ describe("Search", () => {
   describe(`Result`, () => {
     it(`Maps from URL params to a search result`, () => {
       cy.visit("/iframe.html?id=search-result--connected");
+      cy.contains("Hugo", { timeout: 10000 }).should("exist");
+
       cy.get("[data-cy=router-query]").then((el) => {
         expect(JSON.parse(el.text())).to.deep.equal({
           "q.all": "hest",
@@ -315,6 +317,7 @@ describe("Search", () => {
         "/iframe.html?id=search-result-resultrow--with-material-types-filtered"
       );
 
+      cy.contains("Lydbog (bånd)", { timeout: 15000 }).should("exist");
       cy.get("[data-cy=result-row]", { timeout: 10000 }).should("exist");
 
       cy.get("[data-cy=link]")
