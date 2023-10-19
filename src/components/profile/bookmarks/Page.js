@@ -15,6 +15,8 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
 import List from "@/components/base/forms/list";
 import Pagination from "@/components/search/pagination/Pagination";
 import { createEditionText } from "@/components/work/details/utils/details.utils";
+import { updateQueryParams } from "@/lib/utils";
+import { useRouter } from "next/router";
 
 const CONTEXT = "bookmark";
 const MENUITEMS = ["Bestil flere", "Hent referencer", "Fjern flere"];
@@ -65,6 +67,8 @@ const BookmarkPage = () => {
   const isMobile = breakpoint === "sm" || breakpoint === "xs";
   const [checkboxList, setCheckboxList] = useState();
   const scrollToElement = useRef(null);
+  const router = useRouter();
+  const { page } = router.query;
 
   useEffect(() => {
     setSortBy(sortByValue);
@@ -74,6 +78,10 @@ const BookmarkPage = () => {
     let savedValue = sessionStorage.getItem("sortByValue");
     //if there is no saved values in sessionstorage, use createdAt sorting as default
     setSortByValue(savedValue || sortByItems[0].key);
+    //if page is passed in url, set it as currentpage
+    if (page) {
+      setCurrentPage(page);
+    }
   }, []);
 
   useEffect(() => {
@@ -155,9 +163,13 @@ const BookmarkPage = () => {
     if (newPage > totalPages) {
       newPage = totalPages;
     }
+
     if (!isSmallScreen) {
       scrollToTop();
     }
+    //set page in url parameter
+    updateQueryParams({ params: { page: newPage }, router });
+    //update page in useBookmarkhook
     setCurrentPage(newPage);
   };
 
@@ -333,7 +345,7 @@ const BookmarkPage = () => {
       {totalPages > 1 && (
         <Pagination
           numPages={totalPages}
-          currentPage={currentPage}
+          currentPage={parseInt(currentPage, 10)}
           className={styles.pagination}
           onChange={onPageChange}
         />
