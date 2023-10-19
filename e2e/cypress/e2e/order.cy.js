@@ -63,8 +63,8 @@ describe("Order", () => {
     });
   });
 
-  it(`Order physical material fails and shows error modal correctly`, () => {
-    cy.visitWithConsoleSpy(
+  it("Order physical material fails and shows error modal correctly", () => {
+    cy.visit(
       "/iframe.html?id=modal-order--order-physical-material-fails&viewMode=story"
     );
     //open order modal
@@ -144,8 +144,8 @@ describe("Order", () => {
       });
     });
 
-    it("Should fail order indexed periodica article and open modal showing error ", () => {
-      cy.visitWithConsoleSpy(
+    it("Should fail order indexed periodica article and open modal showing error", () => {
+      cy.visit(
         "/iframe.html?id=modal-order--order-indexed-periodica-article-fails&viewMode=story"
       );
       //open order modal
