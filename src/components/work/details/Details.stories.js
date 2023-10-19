@@ -4,6 +4,8 @@ import {
   StorySpace,
 } from "@/storybook/Storybook";
 import WrappedDetails, { DetailsSkeleton } from "./Details";
+import merge from "lodash/merge";
+import automock_utils from "@/lib/automock_utils.fixture";
 
 const exportedObject = {
   title: "work/Details",
@@ -11,15 +13,17 @@ const exportedObject = {
 
 export default exportedObject;
 
+const { DEFAULT_STORY_PARAMETERS } = automock_utils();
+
 export function WrappedDetailsSection() {
   return (
     <div>
-      <StoryTitle>Detials section</StoryTitle>
+      <StoryTitle>Details section</StoryTitle>
       <StoryDescription>
         Work details component. The Section component is used for layout.
       </StoryDescription>
       <StorySpace direction="v" space="8" />
-      <WrappedDetails workId="fisk" type="bog" />
+      <WrappedDetails workId="fisk" type={["bog"]} />
     </div>
   );
 }
@@ -57,7 +61,12 @@ WrappedDetailsSection.story = {
             lix: "2222",
           }),
 
-          materialTypes: () => [{ materialTypeSpecific: { display: "bog" } }],
+          materialTypes: () => [
+            {
+              materialTypeSpecific: { display: "bog", code: "BOOK" },
+              materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+            },
+          ],
         },
       },
     },
@@ -77,12 +86,12 @@ WrappedDetailsSection.story = {
 export function WrappedDetailsSectionMovie() {
   return (
     <div>
-      <StoryTitle>Detials section</StoryTitle>
+      <StoryTitle>Details section</StoryTitle>
       <StoryDescription>
         Work details component. The Section component is used for layout.
       </StoryDescription>
       <StorySpace direction="v" space="8" />
-      <WrappedDetails workId="fisk" type="bog" />
+      <WrappedDetails workId="some-hest-pid" type={["film (dvd)"]} />
     </div>
   );
 }
@@ -166,7 +175,13 @@ WrappedDetailsSectionMovie.story = {
           ],
 
           materialTypes: () => [
-            { materialTypeSpecific: { display: "film (dvd)" } },
+            {
+              materialTypeSpecific: {
+                display: "film (dvd)",
+                code: "MOVIE_DVD",
+              },
+              materialTypeGeneral: { display: "film", code: "MOVIES" },
+            },
           ],
           edition: () => ({
             publicationYear: {
@@ -185,13 +200,79 @@ WrappedDetailsSectionMovie.story = {
 };
 
 /**
+ * Returns details section
+ *
+ */
+
+export function WrappedDetailsSectionArtikel() {
+  return (
+    <div>
+      <StoryTitle>Details section</StoryTitle>
+      <StoryDescription>
+        Work details component. The Section component is used for layout.
+      </StoryDescription>
+      <StorySpace direction="v" space="8" />
+      <WrappedDetails workId="some-work-id-2" type={["artikel"]} />
+    </div>
+  );
+}
+
+WrappedDetailsSectionArtikel.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {},
+    },
+  },
+  nextRouter: {
+    showInfo: true,
+    pathname: "/",
+    query: {},
+  },
+});
+
+/**
+ * Returns details section
+ *
+ */
+
+export function WrappedDetailsSectionNoManifestationsNoDetails() {
+  return (
+    <div>
+      <StoryTitle>Details section</StoryTitle>
+      <StoryDescription>
+        Work details component. The Section component is used for layout.
+      </StoryDescription>
+      <StorySpace direction="v" space="8" />
+      <WrappedDetails workId="some-work-id-2" type={["sdiofjsaiojf"]} />
+    </div>
+  );
+}
+
+WrappedDetailsSectionNoManifestationsNoDetails.story = merge(
+  {},
+  DEFAULT_STORY_PARAMETERS,
+  {
+    parameters: {
+      graphql: {
+        resolvers: {},
+      },
+    },
+    nextRouter: {
+      showInfo: true,
+      pathname: "/",
+      query: {},
+    },
+  }
+);
+
+/**
  * Returns loading details section
  *
  */
 export function Loading() {
   return (
     <div>
-      <StoryTitle>Detials section</StoryTitle>
+      <StoryTitle>Details section</StoryTitle>
       <StoryDescription>Loading details component</StoryDescription>
       <StorySpace direction="v" space="8" />
       <DetailsSkeleton />

@@ -2,41 +2,13 @@
  * test the details section
  */
 
-describe("Details-Movie", () => {
-  before(function () {
-    cy.visit("/iframe.html?id=work-details--wrapped-details-section-movie");
-  });
-
-  // some simple tests - at least they are there
-  it(`Elements in details present`, () => {
-    cy.get("[data-cy=text-sprog]").should("have.text", "Sprog");
-    cy.get("[data-cy=text-længde]").should("have.text", "Længde");
-    cy.get("[data-cy=text-udgivet]").should("have.text", "Udgivet");
-    cy.get("[data-cy=text-skuespillere]").should("have.text", "Skuespillere");
-
-    cy.contains("Nikolaj Lie Kaas");
-    cy.contains("William Steig (instruktør)");
-    cy.contains("Anders Thomas Jensen");
-    cy.should("not.contain", "(ophav)");
-
-    cy.get("[data-cy=text-genre-form]")
-      .next("div")
-      .first()
-      .should("have.text", "actionfilm, thriller, science fiction");
-
-    cy.get("[data-cy=section-title]")
-      .find("p")
-      .should("have.text", "Seneste udgave, film (dvd)");
-  });
-});
-
 describe("Details", () => {
-  before(function () {
+  it(`should have details for book`, () => {
     cy.visit("/iframe.html?id=work-details--wrapped-details-section");
-  });
 
-  // some simple tests - at least they are there
-  it(`Elements in details present`, () => {
+    cy.contains("Details section", { timeout: 15000 }).should("exist");
+    cy.contains("Seneste udgave, bog", { timeout: 15000 }).should("exist");
+
     cy.get("[data-cy=text-sprog]").should("have.text", "Sprog");
     cy.get("[data-cy=text-længde]").should("have.text", "Længde");
     cy.get("[data-cy=text-udgivet]").should("have.text", "Udgivet");
@@ -55,9 +27,50 @@ describe("Details", () => {
     cy.get("[data-cy=text-genre-form]").should("have.text", "genre/form");
 
     cy.get("[data-cy*=text-lix]").should("have.text", "lix: 2222");
+  });
 
-    cy.get("[data-cy=section-title]")
-      .find("p")
-      .should("have.text", "Seneste udgave, bog");
+  it(`should have details for movie`, () => {
+    cy.visit("/iframe.html?id=work-details--wrapped-details-section-movie");
+
+    cy.contains("Details section", { timeout: 15000 }).should("exist");
+    cy.contains("Seneste udgave, film (dvd)", { timeout: 15000 }).should(
+      "exist"
+    );
+
+    cy.get("[data-cy=text-sprog]").should("have.text", "Sprog");
+    cy.get("[data-cy=text-længde]").should("have.text", "Længde");
+    cy.get("[data-cy=text-udgivet]").should("have.text", "Udgivet");
+    cy.get("[data-cy=text-skuespillere]").should("have.text", "Skuespillere");
+
+    cy.contains("Nikolaj Lie Kaas");
+    cy.contains("William Steig (instruktør)");
+    cy.contains("Anders Thomas Jensen");
+    cy.should("not.contain", "(ophav)");
+
+    cy.get("[data-cy=text-genre-form]")
+      .next("div")
+      .first()
+      .should("have.text", "actionfilm, thriller, science fiction");
+  });
+
+  it(`should have details for article`, () => {
+    cy.visit("/iframe.html?id=work-details--wrapped-details-section-artikel");
+
+    cy.contains("Details section", { timeout: 15000 }).should("exist");
+    cy.contains("Seneste udgave, artikel", { timeout: 15000 }).should("exist");
+
+    cy.get("[data-cy=text-sprog]").should("exist");
+    cy.get("[data-cy=text-længde]").should("exist");
+    cy.get("[data-cy=text-udgivet]").should("exist");
+    cy.get("[data-cy=text-bidrag]").should("exist");
+  });
+
+  it("should not have details where there is no manifestation of type (should not happen)", () => {
+    cy.visit(
+      "/iframe.html?id=work-details--wrapped-details-section-no-manifestations-no-details"
+    );
+
+    cy.contains("Details section", { timeout: 15000 }).should("exist");
+    cy.contains("Seneste udgave, ", { timeout: 15000 }).should("not.exist");
   });
 });

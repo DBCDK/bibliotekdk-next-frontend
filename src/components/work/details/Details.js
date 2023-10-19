@@ -11,8 +11,10 @@ import * as workFragments from "@/lib/api/work.fragments";
 import styles from "./Details.module.css";
 import { useMemo } from "react";
 
-import isEqual from "lodash/isEqual";
-import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
+import {
+  flattenMaterialType,
+  materialTypeFieldInMaterialTypesArray,
+} from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
 
 import { fieldsForRows } from "@/components/work/details/utils/details.utils";
@@ -170,17 +172,30 @@ export default function Wrap(props) {
   const manifestations = data?.work?.manifestations?.mostRelevant;
 
   // find the selected materialType (manifestation), use first manifestation as fallback
-  const manifestationByMaterialType =
-    manifestations?.find((manifestation) => {
-      return isEqual(flattenMaterialType(manifestation), type);
-    }) || manifestations?.[0];
+  const manifestationByMaterialType = manifestations?.find((manifestation) => {
+    return materialTypeFieldInMaterialTypesArray(
+      type,
+      flattenMaterialType(manifestation)
+    );
+  });
 
   // attach relations for manifestation to display
-  if (manifestationByMaterialType)
+  if (manifestationByMaterialType) {
     manifestationByMaterialType.relations = groupedRelations;
+  }
+
+  if (
+    !overViewIsLoading &&
+    !relationsIsLoading &&
+    isEmpty(manifestationByMaterialType) &&
+    !error &&
+    !relationsError
+  ) {
+    return <></>;
+  }
 
   if (error || relationsError) {
-    return null;
+    return <></>;
   }
 
   if (overViewIsLoading || relationsIsLoading) {
@@ -188,12 +203,14 @@ export default function Wrap(props) {
   }
 
   return (
-    <Details
-      {...props}
-      manifestation={manifestationByMaterialType}
-      work={data?.work}
-      skeleton={overViewIsLoading || relationsIsLoading}
-    />
+    <>
+      <Details
+        {...props}
+        manifestation={manifestationByMaterialType}
+        work={data?.work}
+        skeleton={overViewIsLoading || relationsIsLoading}
+      />
+    </>
   );
 }
 
