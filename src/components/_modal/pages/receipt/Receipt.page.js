@@ -160,11 +160,21 @@ export function Receipt({
             </div>
           )}
           <div className={styles.error}>
-            <Title className={styles.title} type="title5" tag="h2">
+            <Title
+              className={styles.title}
+              type="title5"
+              tag="h2"
+              dataCy="error-occured-title"
+            >
               {Translate({ context: "receipt", label: "errorOccured" })}
             </Title>
             {hasFailed && failedMessage && (
-              <Text tag="div" type="text2" className={styles.errorText}>
+              <Text
+                tag="div"
+                type="text2"
+                className={styles.errorText}
+                dataCy="order-failed-message"
+              >
                 {failedMessage}
               </Text>
             )}
@@ -173,6 +183,7 @@ export function Receipt({
                 className={styles.redirect}
                 onClick={() => router.push("/profil/mine-biblioteker")}
                 type="secondary"
+                dataCy="order-failed-see-libraries-button"
               >
                 {Translate({
                   context: "receipt",
