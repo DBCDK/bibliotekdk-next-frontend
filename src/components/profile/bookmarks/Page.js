@@ -168,8 +168,7 @@ const BookmarkPage = () => {
   const isNothingSelected =
     checkboxList?.filter((e) => e.isSelected === true).length === 0;
 
-  const isLoading = bookmarsDataLoading || bookmarsPopulaationLoading;
-  if (isLoading) {
+  if (bookmarsDataLoading || bookmarsPopulaationLoading) {
     return (
       <ProfileLayout
         title={Translate({
@@ -186,8 +185,8 @@ const BookmarkPage = () => {
           <div className={styles.skeletonButtonContainer}>
             {isMobile ? (
               <>
-                <Skeleton lines={1} className={styles.skeletonLine} />
-                <Skeleton lines={1} className={styles.skeletonLine} />
+                <Skeleton lines={1} />
+                <Skeleton lines={1} />
               </>
             ) : (
               <>

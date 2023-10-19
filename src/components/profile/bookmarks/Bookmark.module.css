@@ -116,27 +116,25 @@
 .skeletonButtonContainer {
   display: flex;
   margin-bottom: var(--pt3);
-
 }
 
-.skeletonButtonContainer button:not(:first-child){
+.skeletonButtonContainer button:not(:first-child) {
   margin-left: var(--pt3);
 }
 .skeletonButtonContainer button {
   width: 100px;
-  /* margin: 0 var(--pt3); */
   height: fit-content;
 }
 @media (max-width: 767px) {
   .skeletonButtonContainer button {
-display: none;
+    display: none;
   }
   .skeletonContainer {
     padding-top: 0;
   }
 }
 
-.skeletonTopContainer{
+.skeletonTopContainer {
   display: flex;
-justify-content: space-between;
+  justify-content: space-between;
 }
