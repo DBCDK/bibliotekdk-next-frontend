@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import Translate from "@/components/base/translate/Translate";
 import Text from "@/components/base/text";
 import IconButton from "@/components/base/iconButton/IconButton";
@@ -5,6 +7,28 @@ import styles from "./LibrariesTable.module.css";
 import Title from "@/components/base/title";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { isPublicLibrary } from "@/lib/utils";
+
+import { deleteAccount } from "@/lib/api/culr.mutations";
+import { useMutate } from "@/lib/api/api";
+
+function RemoveLibraryButton({ agencyId }) {
+  const culrMutation = useMutate();
+
+  // mutation details
+  const { data, isLoading, error, post } = culrMutation;
+
+  console.log("dddddddddddata", data);
+
+  return (
+    <IconButton
+      icon="close"
+      onClick={() => post(deleteAccount({ agencyId }))}
+      alt={Translate({ context: "profile", label: "remove" })}
+    >
+      {Translate({ context: "profile", label: "remove" })}
+    </IconButton>
+  );
+}
 
 /**
  * Tablerow to be used in LibrariesTable component.
@@ -53,14 +77,7 @@ function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
       */}
         </div>
 
-        {!isPublic && (
-          <IconButton
-            icon="close"
-            alt={Translate({ context: "profile", label: "remove" })}
-          >
-            {Translate({ context: "profile", label: "remove" })}
-          </IconButton>
-        )}
+        {!isPublic && <RemoveLibraryButton agencyId={agencyId} />}
       </div>
     );
   }
@@ -84,12 +101,7 @@ function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
       </div>
       {!isPublic && (
         <td>
-          <IconButton
-            icon="close"
-            alt={Translate({ context: "profile", label: "remove" })}
-          >
-            {Translate({ context: "profile", label: "remove" })}
-          </IconButton>
+          <RemoveLibraryButton agencyId={agencyId} />
         </td>
       )}
     </tr>

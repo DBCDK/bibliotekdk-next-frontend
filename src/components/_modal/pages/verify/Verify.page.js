@@ -16,7 +16,7 @@ import styles from "./Verify.module.css";
  * @returns
  */
 export default function Verify({ modal, context }) {
-  const { agencyId, agencyName, branchId, callbackUID } = context;
+  const { title, text, agencyId, agencyName, branchId, callbackUID } = context;
   const callbackUrl = getCallbackUrl(branchId, callbackUID);
 
   const accessToken = useAccessToken();
@@ -24,14 +24,12 @@ export default function Verify({ modal, context }) {
 
   const data = verification.read();
 
-  // Verificationprocess already started by user (a.g. from profile/addLibraryButton)
-  const isOriginListener = !!data?.origin === "listener";
+  // Origin from where the verification process was started
+  const isOriginListener = !!(data?.origin === "listener");
 
   function onMitIdLogin() {
     const props = {
       accessToken,
-      // accessToken: "38752b5be04b53b0260df70a47da83a409ff47a0", // testbruger
-      // accessToken: "dddf4cdce1434ae70a1f566a96165be701d4f3f4", // mig
       type: "FFU",
     };
 
@@ -45,26 +43,6 @@ export default function Verify({ modal, context }) {
     );
   }
 
-  const title = Translate({
-    context: "addLibrary",
-    label: isOriginListener ? "verificationTitle" : "hasVerificationTitle",
-    vars: [agencyName],
-  });
-
-  const text = Translate({
-    context: "addLibrary",
-    label: isOriginListener ? "verificationText" : "hasVerificationText",
-    vars: [agencyName],
-    renderAsHtml: true,
-  });
-
-  const benefits = Translate({
-    context: "addLibrary",
-    label: "benefitsText",
-    vars: [agencyName],
-    renderAsHtml: true,
-  });
-
   return (
     <div className={styles.verify}>
       <Top />
@@ -72,13 +50,18 @@ export default function Verify({ modal, context }) {
         <Title type="title4" tag="h2">
           {title}
         </Title>
-        <Text type="text2" tag="span" className={styles.text}>
+        <Text type="text2" className={styles.text}>
           {text}
         </Text>
 
-        {!isOriginListener && (
-          <Text type="text2" tag="span" className={styles.benefits}>
-            {benefits}
+        {isOriginListener && (
+          <Text type="text2" className={styles.benefits}>
+            {Translate({
+              context: "addLibrary",
+              label: "benefitsText",
+              vars: [agencyName],
+              renderAsHtml: true,
+            })}
           </Text>
         )}
 
@@ -97,7 +80,7 @@ export default function Verify({ modal, context }) {
           {Translate({ context: "addLibrary", label: "verificationButton" })}
         </Button>
 
-        {!isOriginListener && (
+        {isOriginListener && (
           <Button
             type="secondary"
             className={styles.closeButton}

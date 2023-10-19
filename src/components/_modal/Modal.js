@@ -74,7 +74,10 @@ function deletePageUID(router) {
  * @returns {string}
  */
 function createPageUID() {
-  return Date.now() + "";
+  // Avoid store and stack items getting same UID
+  // returns whole number between 0 and 100
+  const random = Math.floor(Math.random() * 100 + 1);
+  return Date.now() + random + "";
 }
 
 // Global stack object

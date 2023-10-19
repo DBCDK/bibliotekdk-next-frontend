@@ -17,10 +17,6 @@ export default function OpenAdgangsplatform({ modal, context }) {
   const { agencyName, title, text, agencyId, branchId, callbackUID } = context;
 
   const onLogin = () => {
-    // console.log("modal push => verify", { agencyId, branchId, callbackUID });
-
-    // modal.push("verify", { agencyId, agencyName, branchId });
-
     const callbackUrl = getCallbackUrl(branchId, callbackUID);
 
     signIn(

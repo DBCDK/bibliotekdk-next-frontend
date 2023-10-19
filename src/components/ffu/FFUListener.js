@@ -2,6 +2,7 @@ import { useEffect } from "react";
 
 import useVerification from "@/components/hooks/useVerification";
 import useUser from "@/components/hooks/useUser";
+import Translate from "@/components/base/translate";
 import { useModal } from "@/components/_modal";
 
 import { isFFUAgency } from "@/utils/agency";
@@ -57,12 +58,6 @@ export default function Listener() {
 
               // if pickupBranch match found
               if (match) {
-                const context = {
-                  agencyId: match?.agencyId,
-                  agencyName: match?.agencyName,
-                  branchId: match?.branchId,
-                };
-
                 // create verification process (lasts 24 hours)
                 // can be used within 60 minutes
                 verification.create({
@@ -76,7 +71,21 @@ export default function Listener() {
                  */
                 if (modal.index("verify") < 0) {
                   // Fire the create bibdk account modal
-                  modal.push("verify", context);
+                  modal.push("verify", {
+                    agencyId: match?.agencyId,
+                    agencyName: match?.agencyName,
+                    branchId: match?.branchId,
+                    title: Translate({
+                      context: "addLibrary",
+                      label: "verificationTitle",
+                      vars: [match?.agencyName],
+                    }),
+                    text: Translate({
+                      context: "addLibrary",
+                      label: "verificationText",
+                      vars: [match?.agencyName],
+                    }),
+                  });
                 }
               }
             }

@@ -15,6 +15,9 @@ import LibrarySearch from "./librarySearch/LibrarySearch";
 import Translate from "@/components/base/translate/Translate";
 import SearchResultList from "./searchResultList/SearchResultList";
 
+import useVerification from "@/components/hooks/useVerification";
+import { useAccessToken } from "@/components/hooks/useUser";
+
 import styles from "./AddLibrary.module.css";
 
 /**
@@ -33,12 +36,16 @@ export function AddLibrary({
   isLoading,
   modal,
   context,
+  updateVerification,
 }) {
   const allBranches = data?.result;
   const { title } = context;
 
   const onSelect = (branch) => {
     if (branch?.borrowerCheck) {
+      //update session verfification process
+      updateVerification();
+
       const adgangsplatformTitle = Translate({
         context: "addLibrary",
         label: "adgangsplatformTitle",
@@ -54,9 +61,19 @@ export function AddLibrary({
         agencyId: branch.agencyId,
         branchId: branch.branchId,
         agencyName: branch.agencyName,
+        title: Translate({
+          context: "addLibrary",
+          label: "hasVerificationTitle",
+        }),
+        text: Translate({
+          context: "addLibrary",
+          label: "hasVerificationText",
+        }),
       });
 
-      // push next modal page
+      console.log("### UUUUUUUUUUUUUID", UID);
+
+      // hack to avoid getting same UID
       modal.push("openAdgangsplatform", {
         title: adgangsplatformTitle,
         text: adgangsplatformText,
@@ -68,20 +85,17 @@ export function AddLibrary({
     }
     // if Agency doesn't support borchk - show error in modal
     else {
-      const errorTitle = Translate({
-        context: "errorMessage",
-        label: "addLibraryNoBorchkTitle",
-      });
-      const errorText = Translate({
-        context: "errorMessage",
-        label: "addLibraryNoBorchkText",
-        vars: [`<strong>${branch.agencyName}</strong>`],
-        renderAsHtml: true,
-      });
-
       modal.push("statusMessage", {
-        title: errorTitle,
-        text: errorText,
+        title: Translate({
+          context: "errorMessage",
+          label: "addLibraryNoBorchkTitle",
+        }),
+        text: Translate({
+          context: "errorMessage",
+          label: "addLibraryNoBorchkText",
+          vars: [`<strong>${branch.agencyName}</strong>`],
+          renderAsHtml: true,
+        }),
       });
     }
   };
@@ -137,6 +151,9 @@ AddLibrary.propTypes = {
 export default function Wrap(props) {
   const { originUrl = null } = props;
 
+  const accessToken = useAccessToken();
+  const verification = useVerification();
+
   const [query, setQuery] = useState("");
   const { data, isLoading } = useData(
     libraryFragments.search({ q: query || "", limit: 20 })
@@ -166,6 +183,12 @@ export default function Wrap(props) {
       onChange={(q) => setQuery(q)}
       onLogin={signIn}
       origin={originUrl}
+      updateVerification={() =>
+        verification.update({
+          accessToken,
+          type: "FOLK",
+        })
+      }
     />
   );
 }
