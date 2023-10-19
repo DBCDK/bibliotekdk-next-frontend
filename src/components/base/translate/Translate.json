@@ -3691,6 +3691,14 @@
       "lentBy": {
         "da": "Udlånt af",
         "en": "Lent by"
+      },
+      "infoBoxText":{
+        "da": "Din bibliotek.dk-profil er separat fra andre bibliotekshjemmesider. Med din profil kan du administrere lån og reserveringer lavet på bibliotek.dk. Du kan se lån og reserveringer fra folkebiblioteker, men huskelisten synkroniseres ikke med andre bibliotekshjemmesider.\n\nProfilen blev oprettede d. 18 sep. 2023",
+        "en":""
+      },
+      "infoBoxTitle":{
+        "da": "Om din bibliotek.dk profil",
+        "en":""
       }
     },
     "receipt": {

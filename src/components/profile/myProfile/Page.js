@@ -1,5 +1,5 @@
 import { useModal } from "@/components/_modal";
-import Layout from "../profileLayout";
+import ProfileLayout from "../profileLayout";
 import styles from "./MyProfile.module.css";
 
 import Text from "@/components/base/text";
@@ -34,8 +34,10 @@ export default function MyProfilePage() {
   const createdAt = userData?.user?.createdAt;
   const { day, monthName, year } = parseDate(createdAt);
   return (
-    <Layout title={Translate({ context: "profile", label: "myProfile" })}>
-      <div className={styles.modalContainer}>
+    <ProfileLayout
+      title={Translate({ context: "profile", label: "myProfile" })}
+    >
+      <div className={styles.myProfileContainer}>
         <div className={styles.userInfo}>
           <div className={styles.dataItem}>
             <Title className={styles.dataItemTitle} type="title6">
@@ -61,6 +63,14 @@ export default function MyProfilePage() {
             <Text>{`${day}. ${monthName} ${year}`}</Text>
           </div>
         </div>
+        <div className={styles.infoBox}>
+          <Title type="title6">
+            {Translate({ context: "profile", label: "infoBoxTitle" })}
+          </Title>
+          <Text className={styles.infoBoxText}>
+            {Translate({ context: "profile", label: "infoBoxText" })}
+          </Text>
+        </div>
 
         <IconButton
           icon="chevron"
@@ -81,6 +91,6 @@ export default function MyProfilePage() {
           </Text>
         </IconButton>
       </div>
-    </Layout>
+    </ProfileLayout>
   );
 }

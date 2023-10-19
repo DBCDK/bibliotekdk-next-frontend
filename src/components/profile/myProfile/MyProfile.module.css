@@ -1,4 +1,4 @@
-.modalContainer {
+.myProfileContainer {
   margin-top: var(--pt7);
   padding-top: var(--pt2);
   border-top: 1px solid var(--iron);
@@ -28,4 +28,16 @@
 
 .dataItemTitle {
   font-family: var(--body-font-medium);
+}
+
+.infoBox{
+  background-color: var(--concrete);
+   width:  496px;
+  padding: var(--pt2) var(--pt2_5) 
+/*gap: 8px
+*/
+}
+.infoBoxText{
+  white-space: pre-wrap;
+  margin-top: var(--pt1);
 }
