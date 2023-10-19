@@ -58,7 +58,7 @@ export function Receipt({
     failedMessage = undefined;
   if (orderData?.submitOrder && !orderData?.submitOrder?.ok) {
     hasFailed = true;
-    failedMessage = orderData?.submitOrder?.status;
+    failedMessage = orderData?.submitOrder?.message;
   } else if (!!orderError || !!articleOrderError) {
     hasFailed = true;
     failedMessage = orderError || articleOrderError;
