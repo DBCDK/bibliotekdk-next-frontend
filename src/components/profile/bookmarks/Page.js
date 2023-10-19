@@ -15,6 +15,7 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
 import List from "@/components/base/forms/list";
 import Pagination from "@/components/search/pagination/Pagination";
 import { createEditionText } from "@/components/work/details/utils/details.utils";
+import { useModal } from "@/components/_modal";
 
 const CONTEXT = "bookmark";
 const MENUITEMS = ["Bestil flere", "Hent referencer", "Fjern flere"];
@@ -65,6 +66,7 @@ const BookmarkPage = () => {
   const isMobile = breakpoint === "sm" || breakpoint === "xs";
   const [checkboxList, setCheckboxList] = useState();
   const scrollToElement = useRef(null);
+  const modal = useModal();
 
   useEffect(() => {
     setSortBy(sortByValue);
@@ -77,14 +79,26 @@ const BookmarkPage = () => {
   }, []);
 
   useEffect(() => {
+    console.log(bookmarks);
     setCheckboxList(
       bookmarks?.map((bookmark) => ({
         key: bookmark.key,
         bookmarkId: bookmark.bookmarkId,
+        workId: bookmark.workId,
+        selectedPids:
+          bookmark.materialId === bookmark.workId
+            ? bookmark.manifestations.mostRelevant.map((i) => i.pid)
+            : [bookmark.materialId],
         isSelected: false,
       }))
     );
   }, [bookmarks.length]);
+
+  const onOrderManyClick = () => {
+    modal.push("bookmark-materialfilter", {
+      materials: checkboxList.filter((i) => i.isSelected === true),
+    });
+  };
 
   const handleRadioChange = (value) => {
     setSortByValue(value);
@@ -264,6 +278,7 @@ const BookmarkPage = () => {
           size="small"
           disabled={isNothingSelected}
           className={styles.orderButton}
+          onClick={onOrderManyClick}
         >
           {Translate({
             context: CONTEXT,

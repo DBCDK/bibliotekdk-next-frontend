@@ -19,6 +19,7 @@ import MobileLogin from "./mobileLogin";
 import OpenAdgangsplatform from "./openAdgangsplatform";
 import LoginNotSupported from "./loginNotSupported";
 import DeleteProfile from "./deleteProfile";
+import EMaterialFilter from "./bookmarkOrder/EMaterialFilter";
 
 const _modal = {
   Menu,
@@ -42,6 +43,7 @@ const _modal = {
   LoginNotSupported,
   OpenAdgangsplatform,
   DeleteProfile,
+  EMaterialFilter,
 };
 
 export default _modal;
