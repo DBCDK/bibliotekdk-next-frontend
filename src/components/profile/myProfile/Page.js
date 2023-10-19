@@ -38,58 +38,62 @@ export default function MyProfilePage() {
       title={Translate({ context: "profile", label: "myProfile" })}
     >
       <div className={styles.myProfileContainer}>
-        <div className={styles.userInfo}>
-          <div className={styles.dataItem}>
-            <Title className={styles.dataItemTitle} type="title6">
-              {Translate({ context: "general", label: "name" })}
-            </Title>
-            <Text type="text2">{userName}</Text>
-          </div>
-          {municipalityAgency?.agencyName && (
+        <div className={styles.infoContainer}>
+          <div className={styles.userInfo}>
             <div className={styles.dataItem}>
               <Title className={styles.dataItemTitle} type="title6">
-                {Translate({
-                  context: "profile",
-                  label: "municipalityOfResidence",
-                })}
+                {Translate({ context: "general", label: "name" })}
               </Title>
-              <Text>{municipalityAgency?.agencyName}</Text>
+              <Text type="text2">{userName}</Text>
             </div>
-          )}
-          <div className={styles.dataItem}>
+            {municipalityAgency?.agencyName && (
+              <div className={styles.dataItem}>
+                <Title className={styles.dataItemTitle} type="title6">
+                  {Translate({
+                    context: "profile",
+                    label: "municipalityOfResidence",
+                  })}
+                </Title>
+                <Text>{municipalityAgency?.agencyName}</Text>
+              </div>
+            )}
+            {/* <div className={styles.dataItem}>
             <Title className={styles.dataItemTitle} type="title6">
               {Translate({ context: "profile", label: "profileCreated" })}
             </Title>
             <Text>{`${day}. ${monthName} ${year}`}</Text>
+          </div> */}
           </div>
+          <div className={styles.infoBox}>
+            <Title type="title6">
+              {Translate({ context: "profile", label: "infoBoxTitle" })}
+            </Title>
+            <Text className={styles.infoBoxText}>
+              {Translate({ context: "profile", label: "infoBoxText" })}
+            </Text>
+          </div>
+          
         </div>
-        <div className={styles.infoBox}>
-          <Title type="title6">
-            {Translate({ context: "profile", label: "infoBoxTitle" })}
-          </Title>
-          <Text className={styles.infoBoxText}>
-            {Translate({ context: "profile", label: "infoBoxText" })}
-          </Text>
+        <div className={styles.buttonContainer}>
+          <IconButton
+            icon="chevron"
+            keepUnderline
+            onClick={() => {
+              modal.push("deleteProfile");
+            }}
+            className={` ${styles.deleteProfileButton}`}
+            border={{
+              top: false,
+              bottom: {
+                keepVisible: true,
+              },
+            }}
+          >
+            <Text type="text2">
+              {Translate({ context: "profile", label: "deleteProfile" })}
+            </Text>
+          </IconButton>
         </div>
-
-        <IconButton
-          icon="chevron"
-          keepUnderline
-          onClick={() => {
-            modal.push("deleteProfile");
-          }}
-          className={` ${styles.deleteProfileButton}`}
-          border={{
-            top: false,
-            bottom: {
-              keepVisible: true,
-            },
-          }}
-        >
-          <Text type="text2">
-            {Translate({ context: "profile", label: "deleteProfile" })}
-          </Text>
-        </IconButton>
       </div>
     </ProfileLayout>
   );

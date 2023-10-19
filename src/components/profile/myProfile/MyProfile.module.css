@@ -2,6 +2,7 @@
   margin-top: var(--pt7);
   padding-top: var(--pt2);
   border-top: 1px solid var(--iron);
+width: fit-content;
 }
 
 .dataItem:first-child {
@@ -24,6 +25,8 @@
 }
 .userInfo {
   margin-bottom: var(--pt6);
+  margin-right: var(--pt15);
+
 }
 
 .dataItemTitle {
@@ -40,4 +43,18 @@
 .infoBoxText{
   white-space: pre-wrap;
   margin-top: var(--pt1);
+}
+.infoContainer{
+  display: flex;
+}
+@media (max-width: 768px) {
+  .infoContainer{
+    flex-direction: column;
+    }
+}
+
+
+.buttonContainer{
+  display: flex;
+  justify-content: flex-end;
 }
