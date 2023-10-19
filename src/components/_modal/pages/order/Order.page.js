@@ -112,14 +112,7 @@ function Order({
   // An order has successfully been submitted
   useEffect(() => {
     updateModal();
-  }, [
-    orderMutation?.data,
-    orderMutation?.isLoading,
-    orderMutation?.error,
-    articleOrderMutation?.data,
-    articleOrderMutation?.isLoading,
-    articleOrderMutation?.error,
-  ]);
+  }, [orderMutation?.isLoading, articleOrderMutation?.isLoading]);
 
   const { isPeriodicaLike, availableAsDigitalCopy } = useMemo(() => {
     return accessTypeInfo;
