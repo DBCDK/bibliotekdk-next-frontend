@@ -15,6 +15,7 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
 import List from "@/components/base/forms/list";
 import Pagination from "@/components/search/pagination/Pagination";
 import { createEditionText } from "@/components/work/details/utils/details.utils";
+import Skeleton from "@/components/base/skeleton/Skeleton";
 
 const CONTEXT = "bookmark";
 const MENUITEMS = ["Bestil flere", "Hent referencer", "Fjern flere"];
@@ -167,7 +168,8 @@ const BookmarkPage = () => {
   const isNothingSelected =
     checkboxList?.filter((e) => e.isSelected === true).length === 0;
 
-  if (bookmarsDataLoading || bookmarsPopulaationLoading) {
+  const isLoading = bookmarsDataLoading || bookmarsPopulaationLoading;
+  if (isLoading) {
     return (
       <ProfileLayout
         title={Translate({
@@ -175,9 +177,34 @@ const BookmarkPage = () => {
           label: "page-title",
         })}
       >
-        {Array.from({ length: 20 }).map((_, i) => (
-          <MaterialRow skeleton key={`bookmark-#${i}`} id={`bookmark-#${i}`} />
-        ))}
+        <div className={styles.skeletonContainer}>
+          <div className={styles.skeletonTopContainer}>
+            <Skeleton lines={1} className={styles.skeletonText} />
+            <Skeleton lines={1} className={styles.skeletonText} />
+          </div>
+
+          <div className={styles.skeletonButtonContainer}>
+            {isMobile ? (
+              <>
+                <Skeleton lines={1} className={styles.skeletonLine} />
+                <Skeleton lines={1} className={styles.skeletonLine} />
+              </>
+            ) : (
+              <>
+                <Skeleton lines={1} className={styles.skeletonText} />
+                <Button skeleton />
+                <Button skeleton />
+              </>
+            )}
+          </div>
+          {Array.from({ length: 20 }).map((_, i) => (
+            <MaterialRow
+              skeleton
+              key={`bookmark-#${i}`}
+              id={`bookmark-#${i}`}
+            />
+          ))}
+        </div>
       </ProfileLayout>
     );
   }
