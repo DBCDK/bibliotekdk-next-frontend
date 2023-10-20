@@ -70,22 +70,26 @@ export default function Listener() {
                  * refreshing page when modal is open
                  */
                 if (modal.index("verify") < 0) {
-                  // Fire the create bibdk account modal
-                  modal.push("verify", {
-                    agencyId: match?.agencyId,
-                    agencyName: match?.agencyName,
-                    branchId: match?.branchId,
-                    title: Translate({
-                      context: "addLibrary",
-                      label: "verificationTitle",
-                      vars: [match?.agencyName],
-                    }),
-                    text: Translate({
-                      context: "addLibrary",
-                      label: "verificationText",
-                      vars: [match?.agencyName],
-                    }),
-                  });
+                  // Ensure other modals are initialized before 'verify' push
+                  // - Used at login in order.modal e.g.
+                  setTimeout(() => {
+                    // Fire the create bibdk account modal
+                    modal.push("verify", {
+                      agencyId: match?.agencyId,
+                      agencyName: match?.agencyName,
+                      branchId: match?.branchId,
+                      title: Translate({
+                        context: "addLibrary",
+                        label: "verificationTitle",
+                        vars: [match?.agencyName],
+                      }),
+                      text: Translate({
+                        context: "addLibrary",
+                        label: "verificationText",
+                        vars: [match?.agencyName],
+                      }),
+                    });
+                  }, 500);
                 }
               }
             }

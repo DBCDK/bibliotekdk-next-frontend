@@ -3,11 +3,11 @@ import { useEffect } from "react";
 import useVerification from "@/components/hooks/useVerification";
 import useUser from "@/components/hooks/useUser";
 import { useModal } from "@/components/_modal";
+import Translate from "@/components/base/translate";
 
 import { createAccount } from "@/lib/api/culr.mutations";
-import { getAccounts } from "@/lib/api/culr.fragments";
 
-import { useData, useMutate } from "@/lib/api/api";
+import { useMutate } from "@/lib/api/api";
 
 export default function Listener() {
   const user = useUser();
@@ -16,7 +16,7 @@ export default function Listener() {
   const modal = useModal();
 
   // mutation details
-  const { data: mutate, isLoading, error } = culrMutation;
+  const { data: mutate, error } = culrMutation;
 
   // user details
   const { isAuthenticated, hasCulrUniqueId, isCPRValidated, isLoggedIn } = user;
@@ -41,19 +41,38 @@ export default function Listener() {
 
   // Mutate createAccount response from API
   useEffect(() => {
-    if (mutate?.culr?.createAccount?.status === "OK") {
+    const status = mutate?.culr?.createAccount?.status;
+
+    if (status === "OK") {
       // Delete verification
       verification.delete();
     }
 
     // Some error occured
-    if (mutate?.culr?.createAccount?.status.includes("ERROR")) {
+    if (status?.includes("ERROR") || error) {
+      // default error message
+      let title = "titleError";
+      let text = "textError";
+
+      // CPR mismatch - 'folk' and 'bearer' token CPR doesn't match.
+      if (status === "ERROR_CPR_MISMATCH") {
+        title = "titleError";
+        text = "textError";
+      }
+
+      // trigger error modal
       modal.push("statusMessage", {
-        title: "Noget gik galt :(",
-        text: "Noget gik desværre galt, prøv igen eller kontakt support blah blah...",
+        title: Translate({
+          context: "addLibrary",
+          label: title,
+        }),
+        text: Translate({
+          context: "addLibrary",
+          label: text,
+        }),
       });
     }
-  }, [mutate]);
+  }, [mutate, error]);
 
   // CreateAccount post action to API
   useEffect(() => {
@@ -74,14 +93,6 @@ export default function Listener() {
       }
     }
   }, [isLoggedIn, isCPRValidated, hasValidVerificationProcess]);
-
-  //   const { data: culrData, error: culrError } = useData(fetch && getAccounts());
-
-  //   useEffect(() => {
-  //     if (culrData || culrError) {
-  //       setFetch(false);
-  //     }
-  //   }, [culrData, culrError]);
 
   return null;
 }

@@ -85,7 +85,6 @@ export default function useVerification() {
    *
    */
   function _create(props = {}) {
-    console.log("useVerification => create...", { ...props });
     const { type, accessToken } = props;
 
     // clear verifications
@@ -123,7 +122,6 @@ export default function useVerification() {
    *
    */
   function _update(props = {}) {
-    console.log("useVerification => update...", { ...props });
     const { type, accessToken } = props;
 
     const ts = Date.now();
@@ -153,8 +151,6 @@ export default function useVerification() {
    * close an open verification process
    */
   function _close() {
-    console.log("useVerification => close...");
-
     localStorage.removeItem(KEY_NAME);
     mutate(null);
   }
@@ -164,7 +160,6 @@ export default function useVerification() {
    *  @returns {object|null}
    */
   function _read() {
-    console.log("useVerification => read...");
     const ts = Date.now();
 
     if (data?.expires > ts) {
@@ -180,7 +175,6 @@ export default function useVerification() {
    *  @returns {boolean}
    */
   function _exist() {
-    console.log("useVerification => exist...");
     const ts = Date.now();
     const ttl = TS_TTL;
     const expires = data?.ts + ttl;

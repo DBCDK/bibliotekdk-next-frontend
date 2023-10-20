@@ -11,7 +11,7 @@ export default function StatusMessage({ context, modal }) {
   const hasBack = !!(modal.index?.() > 0);
 
   function handleOnClick() {
-    hasBack ? modal.clear() : modal.prev();
+    hasBack ? modal.prev() : modal.clear();
   }
 
   return (

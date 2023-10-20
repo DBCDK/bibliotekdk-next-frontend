@@ -16,8 +16,9 @@ import styles from "./Verify.module.css";
  * @returns
  */
 export default function Verify({ modal, context }) {
-  const { title, text, agencyId, agencyName, branchId, callbackUID } = context;
-  const callbackUrl = getCallbackUrl(branchId, callbackUID);
+  const { title, text, agencyId, agencyName } = context;
+
+  const index = modal.index?.();
 
   const accessToken = useAccessToken();
   const verification = useVerification();
@@ -27,14 +28,42 @@ export default function Verify({ modal, context }) {
   // Origin from where the verification process was started
   const isOriginListener = !!(data?.origin === "listener");
 
+  // Handles the "Skip" button click
+  function handleOnClick() {
+    // handles if modal should have "back" functionality
+    const hasBack = !!(index > 0);
+    hasBack ? modal.prev() : modal.clear();
+  }
+
+  // Handles the MitID button click
   function onMitIdLogin() {
-    const props = {
-      accessToken,
-      type: "FFU",
-    };
+    // Can be reassigned if none given
+    let callbackUID = context.callbackUID;
+
+    /* Check if verify modal "stole" the view from another modal page.
+       If no callbackUID was given in context, update UID to the previous modal page
+       callback will then return user to the original (previous) modal page  */
+    if (!callbackUID) {
+      // if a previous modal exist
+      if (index > 0) {
+        // previous modal
+        const target = modal.stack?.[index - 1];
+        // Ignore if last modal was the 'openAdgangsplatform' modal
+        if (target?.id !== "openAdgangsplatform") {
+          callbackUID = target?.uid;
+        }
+      }
+    }
+
+    // Generate callbackurl
+    // When login method is 'nemlogin' no pickupBranch is used
+    const callbackUrl = getCallbackUrl(null, callbackUID);
 
     // create or update session verfification process
-    verification.update(props);
+    verification.update({
+      accessToken,
+      type: "FFU",
+    });
 
     signIn(
       "adgangsplatformen",
@@ -84,10 +113,10 @@ export default function Verify({ modal, context }) {
           <Button
             type="secondary"
             className={styles.closeButton}
-            onClick={() => modal.clear()}
+            onClick={() => handleOnClick()}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                modal.clear();
+                handleOnClick();
               }
             }}
           >

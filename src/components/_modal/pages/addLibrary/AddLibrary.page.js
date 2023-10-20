@@ -15,6 +15,7 @@ import LibrarySearch from "./librarySearch/LibrarySearch";
 import Translate from "@/components/base/translate/Translate";
 import SearchResultList from "./searchResultList/SearchResultList";
 
+import useUser from "@/components/hooks/useUser";
 import useVerification from "@/components/hooks/useVerification";
 import { useAccessToken } from "@/components/hooks/useUser";
 
@@ -36,13 +37,48 @@ export function AddLibrary({
   isLoading,
   modal,
   context,
+  agencies,
   updateVerification,
 }) {
   const allBranches = data?.result;
   const { title } = context;
 
   const onSelect = (branch) => {
-    if (branch?.borrowerCheck) {
+    // error title and text, to be reassigned.
+    let title;
+    let text;
+
+    //  if validation is possible (borrowercheck)
+    if (!branch?.borrowerCheck) {
+      title = "addLibraryNoBorchkTitle";
+      text = "addLibraryNoBorchkText";
+    }
+
+    // if user is not already created at the target branch
+    if (agencies?.includes(branch?.agencyId)) {
+      title = "addLibraryAlreadyCreatedTitle";
+      text = "addLibraryAlreadyCreatedText";
+    }
+
+    if (title && text) {
+      // if Agency doesn't support borchk - show error in modal
+      modal.push("statusMessage", {
+        title: Translate({
+          context: "errorMessage",
+          label: title,
+          vars: [branch.agencyName],
+        }),
+        text: Translate({
+          context: "errorMessage",
+          label: text,
+          vars: [branch.agencyName],
+          renderAsHtml: true,
+        }),
+      });
+    }
+
+    // Allow addLibrary process
+    else {
       //update session verfification process
       updateVerification();
 
@@ -71,9 +107,7 @@ export function AddLibrary({
         }),
       });
 
-      console.log("### UUUUUUUUUUUUUID", UID);
-
-      // hack to avoid getting same UID
+      // fire adgangsplatform modal
       modal.push("openAdgangsplatform", {
         title: adgangsplatformTitle,
         text: adgangsplatformText,
@@ -81,21 +115,6 @@ export function AddLibrary({
         branchId: branch.branchId,
         agencyName: branch.agencyName,
         callbackUID: UID,
-      });
-    }
-    // if Agency doesn't support borchk - show error in modal
-    else {
-      modal.push("statusMessage", {
-        title: Translate({
-          context: "errorMessage",
-          label: "addLibraryNoBorchkTitle",
-        }),
-        text: Translate({
-          context: "errorMessage",
-          label: "addLibraryNoBorchkText",
-          vars: [`<strong>${branch.agencyName}</strong>`],
-          renderAsHtml: true,
-        }),
       });
     }
   };
@@ -151,8 +170,13 @@ AddLibrary.propTypes = {
 export default function Wrap(props) {
   const { originUrl = null } = props;
 
+  const { authUser } = useUser();
   const accessToken = useAccessToken();
   const verification = useVerification();
+
+  const agencies = authUser?.agencies?.map(
+    (agency) => agency?.result?.[0].agencyId
+  );
 
   const [query, setQuery] = useState("");
   const { data, isLoading } = useData(
@@ -183,6 +207,7 @@ export default function Wrap(props) {
       onChange={(q) => setQuery(q)}
       onLogin={signIn}
       origin={originUrl}
+      agencies={agencies}
       updateVerification={() =>
         verification.update({
           accessToken,

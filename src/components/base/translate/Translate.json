@@ -2720,6 +2720,22 @@
       "verificationButton": {
         "da": "Verificer med MitID",
         "en": "LABEL: Mangler oversættelse!"
+      },
+      "titleError": {
+        "da": "Noget gik ikke som forventet",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "textError": {
+        "da": "Noget gik galt da vi forsøgte at tilknytte dit uddannelsesbibliotek sammen med en bibliotek.dk profil. Prøv igen eller kontakt kundeservice.dbc.dk",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "titleErrorCPRMismatch": {
+        "da": "Uoverensstemmelse mellem CPR og MitID",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "textErrorCPRMismatch": {
+        "da": "Vi kunne ikke tilknytte dit uddannelsesbibliotek sammen med din bibliotek.dk profil, da CPR nummeret fra din bibliotek.dk profil ikke stemmer overens med det fra dit mitid. Prøv igen eller kontakt kundeservice.dbc.dk",
+        "en": "LABEL: Mangler oversættelse!"
       }
     },
     "errorMessage": {
@@ -2737,6 +2753,14 @@
       },
       "addLibraryNoBorchkText": {
         "da": "Desværre dit valgte bibliotek %s, kan ikke knyttes til denne profil. </br></br> Log ud for at kunne foretage bestilling til dette bibliotek",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "addLibraryAlreadyCreatedTitle": {
+        "da": "Du er allerede bruger på %s",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "addLibraryAlreadyCreatedText": {
+        "da": "Du er registreret hos det valgte biblioteksvæsen. Vælg et andet eller kontakt kundeservice.dbc.dk",
         "en": "LABEL: Mangler oversættelse!"
       }
     },

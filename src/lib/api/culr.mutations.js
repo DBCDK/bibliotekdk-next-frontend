@@ -19,7 +19,7 @@ export function deleteAccount({ agencyId }) {
   return {
     query: `mutation CulrDeleteAccount($input: DeleteAccountInput!) {
         culr {
-          deleteAccount(input: $input, dryRun: true) {
+          deleteAccount(input: $input, dryRun: false) {
             status
           }
         }

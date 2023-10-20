@@ -17,7 +17,19 @@ function RemoveLibraryButton({ agencyId }) {
   // mutation details
   const { data, isLoading, error, post } = culrMutation;
 
-  console.log("dddddddddddata", data);
+  // Mutate createAccount response from API
+  useEffect(() => {
+    const status = data?.culr?.deleteAccount?.status;
+
+    if (status === "OK") {
+      alert("slettet");
+    }
+
+    // Some error occured
+    if (status?.includes("ERROR") || error) {
+      alert("noget gik galt");
+    }
+  }, [data, error]);
 
   return (
     <IconButton
