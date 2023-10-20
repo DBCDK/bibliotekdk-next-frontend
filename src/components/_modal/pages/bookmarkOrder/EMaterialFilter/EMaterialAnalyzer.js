@@ -8,12 +8,11 @@ import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAn
 import { useBranchUserAndHasDigitalAccess } from "@/components/work/utils";
 
 /**
- * Fake react component - doesn't render any JSX, but use hooks.
  * returns whether the material is avaible online or not
  * @param {Object} material
  * @returns {boolean}
  */
-const AnalyzeMaterial = (material) => {
+const useAnalyzeMaterial = (material) => {
   const { workId, selectedPids } = material;
   const { manifestations } = useGetManifestationsForOrderButton(
     workId,
@@ -41,7 +40,7 @@ const AnalyzeMaterial = (material) => {
  * Visually hidden
  */
 const EMaterialAnalyzer = ({ material }) => {
-  const result = AnalyzeMaterial(material);
+  const result = useAnalyzeMaterial(material);
   return (
     <div data-accessable-ematerial={result} data-material-key={material.key} />
   );
