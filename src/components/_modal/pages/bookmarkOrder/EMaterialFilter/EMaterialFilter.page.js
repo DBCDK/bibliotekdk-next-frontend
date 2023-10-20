@@ -58,6 +58,7 @@ const EMaterialFilter = ({ context, active }) => {
         {/**
          * Workaround since hooks can't be called a dynamic amount of times.
          * This way we render a analyze component for each material & are able to reuse hooks.
+         * Visually-hidden
          */}
         {materials.map((mat) => (
           <EMaterialAnalyzer material={mat} key={mat.key} />
