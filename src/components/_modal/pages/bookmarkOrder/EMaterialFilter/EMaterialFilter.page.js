@@ -35,7 +35,9 @@ const EMaterialFilter = ({ context, active }) => {
 
   useEffect(() => {
     if (!active) {
-      console.log(materialKeys);
+      // On close, reset states to force rerender
+      setMaterialsToFilter(null);
+      setMaterialsToProceed(null);
       return;
     }
     if (!analyzeRef || !analyzeRef.current) return;
