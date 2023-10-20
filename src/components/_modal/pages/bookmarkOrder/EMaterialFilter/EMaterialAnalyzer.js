@@ -48,7 +48,11 @@ const useAnalyzeMaterial = (material) => {
 
 /**
  * Workaround for react hooks limitations
- * Visually hidden
+ * Since we cannot call a hook a dynamic amount of times, we need to render 1 React component for each material
+ * (since hooks are designed for analysing 1 material - not x amount of material).
+ * In that way we can reuse as much as possible from the 'normal' checkout flow
+ *
+ * Visually hidden JSX (by the parent), only used to pass data to parent
  */
 const EMaterialAnalyzer = ({ material }) => {
   const result = useAnalyzeMaterial(material);

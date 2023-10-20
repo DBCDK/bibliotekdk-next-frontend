@@ -33,7 +33,7 @@ const MultiOrder = ({ context }) => {
            * Data should be in materials object, if something is missing we need to add it to the fragments populateBookmarks uses
            */
           materials.map((mat) => (
-            <article>{mat.titles?.main?.[0]}</article>
+            <article key={mat.key}>{mat.titles?.main?.[0]}</article>
           ))
         }
       </div>

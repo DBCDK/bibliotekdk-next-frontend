@@ -45,8 +45,8 @@ const EMaterialFilter = ({ context, active }) => {
     if (!analyzeRef || !analyzeRef.current) return;
     if (!!materialsToFilter || !!materialsToProceed) return; // Secure only running once
 
-    const elements = [].slice.call(analyzeRef.current.children);
-    const toFilter = elements
+    const elements = Array.from(analyzeRef.current.children);
+    const filteredMaterials = elements
       .filter(
         (element) =>
           element.getAttribute("data-accessable-ematerial") === "true"
@@ -67,7 +67,7 @@ const EMaterialFilter = ({ context, active }) => {
         )
       );
 
-    setMaterialsToFilter(toFilter);
+    setMaterialsToFilter(filteredMaterials);
     setMaterialsToProceed(toProceed);
   }, [active, analyzeRef.current]);
 
