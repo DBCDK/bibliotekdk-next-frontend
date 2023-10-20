@@ -21,7 +21,7 @@ const useAnalyzeMaterial = (material) => {
     return manifestationMaterialTypeFactory(allManifestations);
   }, [workId, allManifestations]);
   const selectedPids = useMemo(
-    () => (!!pid ? [pid] : flatPidsByType([materialType.toLowerCase()])),
+    () => (!!pid ? [pid] : flatPidsByType([materialType?.toLowerCase()])),
     [materialType]
   );
 

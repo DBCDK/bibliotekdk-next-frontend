@@ -1216,6 +1216,14 @@
       "efilter-proceed": {
         "da": "Næste",
         "en": "Next"
+      },
+      "multiorder-title": {
+        "da": "Bestil",
+        "en": "Order"
+      },
+      "multiorder-subheading": {
+        "da": "Du er ved at bestille %s materialer",
+        "en": "You are about to order %s materials"
       }
     },
     "reviews": {

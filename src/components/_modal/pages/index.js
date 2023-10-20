@@ -20,6 +20,7 @@ import OpenAdgangsplatform from "./openAdgangsplatform";
 import LoginNotSupported from "./loginNotSupported";
 import DeleteProfile from "./deleteProfile";
 import EMaterialFilter from "./bookmarkOrder/EMaterialFilter";
+import MultiOrder from "./bookmarkOrder/multi-order/MultiOrder.page";
 
 const _modal = {
   Menu,
@@ -44,6 +45,7 @@ const _modal = {
   OpenAdgangsplatform,
   DeleteProfile,
   EMaterialFilter,
+  MultiOrder,
 };
 
 export default _modal;

@@ -9,6 +9,7 @@ import Translate from "@/components/base/translate";
 import useBookmarks, {
   usePopulateBookmarks,
 } from "@/components/hooks/useBookmarks";
+import { useModal } from "@/components/_modal/Modal";
 
 const CONTEXT = "bookmark-order";
 
@@ -28,6 +29,7 @@ const EMaterialFilter = ({ context, active }) => {
       ...mat,
     };
   });
+  const modal = useModal();
   const analyzeRef = useRef();
   const [materialsToFilter, setMaterialsToFilter] = useState();
   const [materialsToProceed, setMaterialsToProceed] = useState();
@@ -69,8 +71,14 @@ const EMaterialFilter = ({ context, active }) => {
     setMaterialsToProceed(toProceed);
   }, [active, analyzeRef.current]);
 
+  const onNextClick = () => {
+    modal.push("bookmark-multiorder", {
+      materials: materialsToProceed,
+    });
+  };
+
   return (
-    <section className={styles.eMaterialFilter}>
+    <div className={styles.eMaterialFilter}>
       <div ref={analyzeRef} className="visually-hidden">
         {/**
          * Workaround since hooks can't be called a dynamic amount of times.
@@ -134,10 +142,15 @@ const EMaterialFilter = ({ context, active }) => {
           vars={[materialsToProceed?.length]}
         />
       </Text>
-      <Button type="primary" size="large" skeleton={isLoading}>
+      <Button
+        type="primary"
+        size="large"
+        skeleton={isLoading}
+        onClick={onNextClick}
+      >
         <Translate context={CONTEXT} label="efilter-proceed" />
       </Button>
-    </section>
+    </div>
   );
 };
 export default EMaterialFilter;

@@ -160,6 +160,10 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
                 id="bookmark-materialfilter"
                 component={Pages.EMaterialFilter}
               />
+              <Modal.Page
+                id="bookmark-multiorder"
+                component={Pages.MultiOrder}
+              />
               <Modal.Page id="deleteOrder" component={Pages.DeleteOrder} />
               <Modal.Page
                 id="orderHistoryDataConsent"
