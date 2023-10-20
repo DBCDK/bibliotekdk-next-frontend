@@ -16,13 +16,13 @@ import cx from "classnames";
 
 const MaterialCard = forwardRef(
   /**
-   *
-   * @param {function=} propAndChildrenTemplate
-   * @param propAndChildrenInput
-   * @param {{ xs: OptionalColSize, sm: OptionalColSize, lg: OptionalColSize}=} colSizing
-   * @param {function=} onClick
-   * @param {React.MutableRefObject<any>} ref
-   * @returns {React.JSX.Element}
+   * @param {Object} props - The props object for MaterialCard.
+   * @param {function} props.propAndChildrenTemplate - A function to define prop and children rendering.
+   * @param {Object} props.propAndChildrenInput - Input for propAndChildrenTemplate function.
+   * @param {function} props.onClick - A callback function to handle click events.
+   * @param {React.MutableRefObject<any>} props.ref - A React ref object.
+   * @param {{ xs: OptionalColSize, sm: OptionalColSize, lg: OptionalColSize }} props.colSizing - An object specifying column sizing options.
+   * @returns {React.JSX.Element} - Returns a React JSX element.
    */
   function MaterialCard(
     {

@@ -18,6 +18,7 @@ function propFunc(textType, lines) {
   };
 }
 
+/**Used in Slider */
 export function templateForVerticalWorkCard(material) {
   const fullTitle = material?.titles?.full?.join(": ");
   const creators = material?.creators;
@@ -59,6 +60,7 @@ export function templateForVerticalWorkCard(material) {
   };
 }
 
+/**Used in Header */
 export function templateForHeaderWorkCard(material) {
   const fullTitle = material?.titles?.full?.join(": ");
   const creators = material?.creators;
@@ -104,6 +106,7 @@ export function templateForHeaderWorkCard(material) {
   };
 }
 
+/**Used in relatedWorks*/
 export function templateForRelatedWorks(material) {
   const fullTitle = material?.titles?.full?.join(": ");
   const creators = material?.creators;
@@ -141,6 +144,7 @@ export function templateForRelatedWorks(material) {
   };
 }
 
+/**Used in LocalizationBase */
 export function templateForLocalizations(
   material,
   singleManifestation = false
