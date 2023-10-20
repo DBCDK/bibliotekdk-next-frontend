@@ -6,6 +6,7 @@ import {
 } from "@/lib/accessFactoryUtils";
 import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAndSelectedPids";
 import { useBranchUserAndHasDigitalAccess } from "@/components/work/utils";
+import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 
 /**
  * returns whether the material is avaible online or not
@@ -13,7 +14,17 @@ import { useBranchUserAndHasDigitalAccess } from "@/components/work/utils";
  * @returns {boolean}
  */
 const useAnalyzeMaterial = (material) => {
-  const { workId, selectedPids } = material;
+  const { workId, materialType, pid } = material;
+  const allManifestations = material?.manifestations?.mostRelevant;
+
+  const { flatPidsByType } = useMemo(() => {
+    return manifestationMaterialTypeFactory(allManifestations);
+  }, [workId, allManifestations]);
+  const selectedPids = useMemo(
+    () => (!!pid ? [pid] : flatPidsByType([materialType.toLowerCase()])),
+    [materialType]
+  );
+
   const { manifestations } = useGetManifestationsForOrderButton(
     workId,
     selectedPids

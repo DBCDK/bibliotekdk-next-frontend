@@ -82,17 +82,17 @@ const BookmarkPage = () => {
   const onToggleCheckbox = (key) => {
     const index = checkboxList.findIndex((item) => item.key === key);
     const exists = index > -1;
-    const newList = [...checkboxList];
-
-    console.log(index, exists, key);
+    const newList = [...checkboxList]; // Force object copy - to tell react that this is a new state & update
 
     if (exists) {
       // Delete
       newList.splice(index, 1);
     } else {
+      const bookmarkData = allBookmarksData.find((bm) => bm.key === key);
       // Add
       newList.push({
         key: key,
+        materialId: bookmarkData.materialId,
       });
     }
 
@@ -113,7 +113,12 @@ const BookmarkPage = () => {
   const onSelectAll = () => {
     const hasUnselectedElements = checkboxList.length < allBookmarksData.length;
     if (hasUnselectedElements)
-      setCheckboxList(allBookmarksData.map((el) => ({ key: el.key })));
+      setCheckboxList(
+        allBookmarksData.map((el) => ({
+          key: el.key,
+          materialId: el.materialId,
+        }))
+      );
     else setCheckboxList([]);
   };
 

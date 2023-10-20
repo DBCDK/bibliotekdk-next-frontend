@@ -6,6 +6,9 @@ import EMaterialAnalyzer from "./EMaterialAnalyzer";
 import styles from "./EMaterialFilter.module.css";
 import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
+import useBookmarks, {
+  usePopulateBookmarks,
+} from "@/components/hooks/useBookmarks";
 
 const CONTEXT = "bookmark-order";
 
@@ -15,14 +18,26 @@ const CONTEXT = "bookmark-order";
  * Skips this step if nothing to filter
  */
 const EMaterialFilter = ({ context, active }) => {
-  const { materials } = context;
+  const { bookmarks } = useBookmarks();
+  const { materials: materialKeys } = context;
+  const { data: materialsData } = usePopulateBookmarks(materialKeys);
+  const materials = materialsData.map((mat) => {
+    const bookmark = bookmarks?.find((bm) => bm.key === mat.key);
+    return {
+      ...bookmark,
+      ...mat,
+    };
+  });
   const analyzeRef = useRef();
   const [materialsToFilter, setMaterialsToFilter] = useState();
   const [materialsToProceed, setMaterialsToProceed] = useState();
   const isLoading = !materialsToFilter || !materialsToProceed;
 
   useEffect(() => {
-    if (!active) return; // Only on open modal
+    if (!active) {
+      console.log(materialKeys);
+      return;
+    }
     if (!analyzeRef || !analyzeRef.current) return;
     if (!!materialsToFilter || !!materialsToProceed) return; // Secure only running once
 
@@ -95,7 +110,7 @@ const EMaterialFilter = ({ context, active }) => {
         {materialsToFilter?.map((mat) => (
           <li className={styles.filterItem} key={mat.key}>
             <Title titleTag="h4" type="text1">
-              {mat.title}
+              {mat.titles?.main?.[0]}
             </Title>
             <Text type="text2">{mat.materialType}</Text>
           </li>
