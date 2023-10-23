@@ -52,7 +52,6 @@ export function deleteUser({ userDataMutation }) {
  */
 
 export function addUserToUserData({ userDataMutation }) {
-  console.log(" ADDUSER in adding new user");
   const q = {
     query: `
     mutation{
