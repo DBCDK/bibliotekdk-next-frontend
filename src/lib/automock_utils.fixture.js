@@ -124,6 +124,48 @@ const MANIFESTATION_4 = {
     origin: "moreinfo",
   },
 };
+// Indexed article, that may be ordered via digital article copy
+const MANIFESTATION_4_1 = {
+  ...MANIFESTATION_BASE,
+  pid: "some-pid-4-1",
+  titles: {
+    full: [
+      "Hugo i Sølvskoven 4½",
+      "Kobberet lugter, messingen smitter, lofter suger",
+    ],
+  },
+  materialTypes: [
+    {
+      materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+      materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+    },
+    {
+      materialTypeSpecific: {
+        display: "artikel (online)",
+        code: "ARTICLE_ONLINE",
+      },
+      materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+    },
+  ],
+  access: [
+    {
+      __resolveType: AccessEnum.DIGITAL_ARTICLE_SERVICE,
+      __typename: "DigitalArticleService",
+      issn: "some-issn",
+    },
+    {
+      __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
+      __typename: "InterLibraryLoan",
+      loanIsPossible: true,
+    },
+  ],
+  workTypes: ["ARTICLE"],
+  cover: {
+    detail:
+      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=23637189&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=72eb2ae9d91fb0ffbb7f",
+    origin: "moreinfo",
+  },
+};
 // A periodica
 const MANIFESTATION_5 = {
   ...MANIFESTATION_BASE,
@@ -208,7 +250,7 @@ const MANIFESTATION_7 = {
   workTypes: ["LITERATURE"],
   cover: {
     detail:
-      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=27052509&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=3ff650fe66ef8432973c",
+      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=29053782&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=115cd0be4dc0b0e7d74e",
     origin: "moreinfo",
   },
 };
@@ -289,6 +331,7 @@ const ALL_MANIFESTATIONS = [
   MANIFESTATION_2,
   MANIFESTATION_3,
   MANIFESTATION_4,
+  MANIFESTATION_4_1,
   MANIFESTATION_5,
   MANIFESTATION_6,
   MANIFESTATION_7,
@@ -325,6 +368,30 @@ const WORK_2 = {
   materialTypes: [
     {
       materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+      materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+    },
+  ],
+  fictionNonfiction: { display: "skønlitteratur", code: "FICTION" },
+  genreAndForm: [],
+};
+
+const WORK_2_1 = {
+  workId: "some-work-id-2-1",
+  manifestations: {
+    all: [MANIFESTATION_4_1],
+    mostRelevant: [MANIFESTATION_4_1],
+  },
+  workTypes: ["ARTICLE"],
+  materialTypes: [
+    {
+      materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+      materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+    },
+    {
+      materialTypeSpecific: {
+        display: "artikel (online)",
+        code: "ARTICLE_ONLINE",
+      },
       materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
     },
   ],
@@ -436,9 +503,11 @@ const ALL_WORKS = [
   WORK_1,
   // A work that is an indexed periodica article
   WORK_2,
+  WORK_2_1,
   // A work that is a periodica
   WORK_3,
-  // A work that is an ebog
+  // A work that is an e-bog
+  WORK_4,
   WORK_4,
   WORK_5,
   WORK_6,
@@ -1165,6 +1234,7 @@ export default function automock_utils() {
     MANIFESTATION_2,
     MANIFESTATION_3,
     MANIFESTATION_4,
+    MANIFESTATION_4_1,
     MANIFESTATION_5,
     MANIFESTATION_6,
     MANIFESTATION_7,
@@ -1174,6 +1244,7 @@ export default function automock_utils() {
     ALL_MANIFESTATIONS,
     WORK_1,
     WORK_2,
+    WORK_2_1,
     WORK_3,
     WORK_4,
     WORK_5,
