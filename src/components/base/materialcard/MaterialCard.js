@@ -56,33 +56,24 @@ const MaterialCard = forwardRef(
           className={cx(elementContainerClassName)}
           as="article"
         >
-          <Link
-            href={link_href}
-            // Link props
-            className={cx(styles.link_style)}
-            border={!link_href ? false : { top: false, bottom: true }}
-            onClick={onClick}
-            disabled={!link_href && !onClick}
+          <Col
+            ref={ref}
+            id={workId}
+            className={cx(relatedElementClassName, styles.row)}
           >
-            <Col
-              ref={ref}
-              id={workId}
-              className={cx(relatedElementClassName, styles.row)}
-            >
-              <Col xs={3} className={styles.image}>
-                <img
-                  src={image_src}
-                  className={cx(coverImageClassName)}
-                  title={fullTitle}
-                  alt={Translate({ context: "general", label: "frontpage" })}
-                />
-              </Col>
-
-              <Col xs={9} className={cx(textClassName, styles.rest)}>
-                {children}
-              </Col>
+            <Col xs={3} className={styles.image}>
+              <img
+                src={image_src}
+                className={cx(coverImageClassName)}
+                title={fullTitle}
+                alt={Translate({ context: "general", label: "frontpage" })}
+              />
             </Col>
-          </Link>
+
+            <Col xs={9} className={cx(textClassName, styles.rest)}>
+              {children}
+            </Col>
+          </Col>
         </Col>
       );
     }

@@ -24,35 +24,58 @@ import MaterialCard from "@/components/base/materialcard/MaterialCard";
 import { templateNew } from "@/components/base/materialcard/templates/templates";
 import Icon from "@/components/base/icon/Icon";
 
-export const ChoosePeriodicaCopyRow = ({ periodicaForm }) => {
+export const ChoosePeriodicaCopyRow = ({
+  periodicaForm,
+  modal,
+  articleTypeTranslation,
+}) => {
   return (
-    <div className={styles.choosePeriodicaCopyRow}>
-      <Icon
-        src="exclamationmark.svg"
-        alt="info"
-        data-cy="tooltip-icon"
-        size="2_5"
-      ></Icon>
-      <IconLink
-        onClick={() => {
-          console.log("lala");
-          modal.push("periodicaform", {
-            periodicaForm: periodicaForm,
-          }); //TODO onclick not working
-        }}
-        disabled={false}
-        className={styles.periodicaformlink}
-        border={{ bottom: true, top: false }}
-        tag={"button"}
-        iconSrc={ChevronRight}
-        iconPlacement={"right"}
-      >
-        {Translate({
-          context: "order-periodica",
-          label: "title",
-        })}
-      </IconLink>
-    </div>
+    <>
+      {articleTypeTranslation ? (
+        <div className={styles.articletype}>
+          <Text type="text4">{Translate(articleTypeTranslation)}</Text>
+        </div>
+      ) : null}
+      {periodicaForm && (
+        <div className={styles.periodicasummary}>
+          {Object.entries(periodicaForm).map(([key, value]) => (
+            <Text type="text3" key={key}>
+              {Translate({
+                context: "order-periodica",
+                label: `label-${key}`,
+              })}
+              : {value}
+            </Text>
+          ))}
+        </div>
+      )}
+      <div className={styles.choosePeriodicaCopyRow}>
+        <Icon
+          src="exclamationmark.svg"
+          alt="info"
+          data-cy="tooltip-icon"
+          size="2_5"
+        ></Icon>
+        <IconLink
+          onClick={() => {
+            modal.push("periodicaform", {
+              periodicaForm: periodicaForm,
+            });
+          }}
+          disabled={false}
+          className={styles.periodicaformlink}
+          border={{ bottom: true, top: false }}
+          tag={"button"}
+          iconSrc={ChevronRight}
+          iconPlacement={"right"}
+        >
+          {Translate({
+            context: "order-periodica",
+            label: "title",
+          })}
+        </IconLink>
+      </div>
+    </>
   );
 };
 
@@ -112,7 +135,7 @@ export function Edition({
         }
       : null;
 
-  //TODO OBS: check specificEdition logic varies from LocalizationBase
+  //TODO OBS: check specificEdition logic varies from LocalizationBase --> slightly new version
   const specificEdition =
     showOrderTxt && !singleManifestation && !isArticle && !isPeriodicaLike
       ? "no-specific-edition"
@@ -287,12 +310,48 @@ export default function Wrap({
     const { flattenedGroupedSortedManifestations } =
       manifestationMaterialTypeFactory(manifestations);
     const firstManifestation = flattenedGroupedSortedManifestations[0];
-    const children = inferredAccessTypes.isPeriodicaLike ? (
-      <ChoosePeriodicaCopyRow periodicaForm={context?.periodicaForm} />
+    const {
+      isPeriodicaLike,
+      isDigitalCopy,
+      availableAsDigitalCopy,
+      isArticleRequest,
+    } = inferredAccessTypes;
+    const articleTypeTranslation =
+      isDigitalCopy &&
+      availableAsDigitalCopy &&
+      context?.selectedAccesses?.[0]?.__typename !==
+        AccessEnum.INTER_LIBRARY_LOAN
+        ? {
+            context: "order",
+            label: "will-order-digital-copy",
+          }
+        : isArticleRequest
+        ? {
+            context: "general",
+            label: "article",
+          }
+        : context?.periodicaForm
+        ? {
+            context: "general",
+            label: "volume",
+          }
+        : null;
+    const children = isPeriodicaLike ? (
+      <ChoosePeriodicaCopyRow
+        periodicaForm={context?.periodicaForm}
+        modal={modal}
+        articleTypeTranslation={articleTypeTranslation}
+      />
     ) : null;
 
     const materialCardTemplate = (/** @type {Object} */ material) =>
-      templateNew({ material, singleManifestation, children });
+      templateNew({
+        material,
+        singleManifestation,
+        children,
+        isPeriodicaLike,
+        isDigitalCopy,
+      });
     return (
       <div>
         {flattenedGroupedSortedManifestations &&

@@ -218,7 +218,7 @@ export function templateForLocalizations(
  * @returns {React.JSX.Element}
  */
 export function templateNew(
-  { material, singleManifestation, children } //Leveres som digital kopi til din mail eller "Første tilgængelige eksemplar"
+  { material, singleManifestation, children, isPeriodicaLike, isDigitalArticle } //Leveres som digital kopi til din mail eller "Første tilgængelige eksemplar"
 ) {
   const fullTitle =
     singleManifestation === true
@@ -234,9 +234,10 @@ export function templateNew(
     .filter((pre) => !isEmpty(pre))
     ?.join(", ");
   const formattedMaterialTypes = formatMaterialTypesToPresentation(
-    material?.materialTypesArray || material?.materialTypes
+    material?.materialTypesArray
   );
 
+  console.log("MATERRIAL ", material);
   const edition = [
     material?.edition?.publicationYear?.display,
     material?.publisher,
@@ -253,7 +254,7 @@ export function templateNew(
     workId: material?.workId,
     large: true,
     children: (
-      <>
+      <div>
         <Text {...propFunc("text1", 2)} title={fullTitle}>
           {fullTitle}
         </Text>
@@ -269,21 +270,23 @@ export function templateNew(
         >
           {formattedMaterialTypes}
         </Text>
-        <Text {...propFunc("text3", 1)} title={formattedMaterialTypes}>
-          {!singleManifestation &&
-            Translate({
-              context: "materialcard",
-              label: "first-available-copy",
-            })}
-          {singleManifestation && edition}
-        </Text>
+        {!isPeriodicaLike && !isDigitalArticle && (
+          <Text {...propFunc("text3", 1)} title={formattedMaterialTypes}>
+            {!singleManifestation &&
+              Translate({
+                context: "materialcard",
+                label: "first-available-copy",
+              })}
+            {singleManifestation && edition}
+          </Text>
+        )}
         {/*MAYBE Optional button component OR entire row here
          skal kunne rumme --> Vælg eksemplar eller artikel (tidskrifter - alt for damerne)
         kan ikke bestilles til dit bibliotek / fjern-knap --> huskeliste
 
         */}
         {children}
-      </>
+      </div>
     ),
     // Styling
     elementContainerClassName: cx(
