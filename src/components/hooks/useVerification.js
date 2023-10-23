@@ -41,7 +41,7 @@ const CLEAR_ON_SIGNOUT = true;
  *
  */
 export default function useVerification() {
-  const { data, mutate, error, isValidating } = useSWR(KEY_NAME, (key) =>
+  const { data, mutate, isValidating } = useSWR(KEY_NAME, (key) =>
     JSON.parse(localStorage.getItem(key) || "null")
   );
 

@@ -13,7 +13,7 @@ import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
  * @param {context} context
  * @returns
  */
-export default function OpenAdgangsplatform({ modal, context }) {
+export default function OpenAdgangsplatform({ context }) {
   const { agencyName, title, text, agencyId, branchId, callbackUID } = context;
 
   const onLogin = () => {

@@ -1,4 +1,6 @@
 import FFU from "./FFUListener";
 import Create from "./CreateListener";
 
-export default { FFU, Create };
+const obj = { FFU, Create };
+
+export default obj;

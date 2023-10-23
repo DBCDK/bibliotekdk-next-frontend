@@ -2,8 +2,6 @@ import Translate from "@/components/base/translate/Translate";
 import Layout from "../profileLayout";
 import LibrariesTable from "../librariesTable/LibrariesTable";
 import styles from "./myLibrariesPage.module.css";
-import { useData } from "@/lib/api/api";
-import * as userFragments from "@/lib/api/user.fragments";
 import useUser from "@/components/hooks/useUser";
 import Text from "@/components/base/text";
 import IconButton from "@/components/base/iconButton/IconButton";

@@ -1,5 +1,5 @@
 import { useSession } from "next-auth/react";
-import useSWR, { mutate as globalMutate } from "swr";
+import useSWR from "swr";
 import { createContext, useMemo } from "react";
 import merge from "lodash/merge";
 import { useData, useMutate } from "@/lib/api/api";

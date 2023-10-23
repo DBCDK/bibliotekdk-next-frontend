@@ -40,7 +40,6 @@ function IconButton({
         animations["on-hover"],
         animations["on-focus"],
         styles.focusStyle,
-        disabled && styles.disabled,
         className
       )}
       tabIndex={disabled ? "-1" : "0"}

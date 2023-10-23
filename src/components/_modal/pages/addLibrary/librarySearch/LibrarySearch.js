@@ -9,7 +9,6 @@ import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import styles from "./LibrarySearch.module.css";
 import PropTypes from "prop-types";
-import cx from "classnames";
 
 /**
  * search field for pickup locations with different texts for desktop and mobile
@@ -20,7 +19,7 @@ import cx from "classnames";
 export default function LibrarySearch(props) {
   const { onChange } = props;
   return (
-    <section className={cx(styles.librarySearchSection)}>
+    <section className={styles.librarySearchSection}>
       <Text type="text2">
         {Translate({ context: "addLibrary", label: "librarySearchLabel" })}
       </Text>

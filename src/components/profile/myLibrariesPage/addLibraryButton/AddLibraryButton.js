@@ -6,8 +6,6 @@ import useUser from "@/components/hooks/useUser";
 import useVerification from "@/components/hooks/useVerification";
 import { useAccessToken } from "@/components/hooks/useUser";
 
-import styles from "./AddLibraryButton.module.css";
-
 export default function AddLibraryButton({ className = "" }) {
   const modal = useModal();
   const { isCPRValidated } = useUser();
@@ -50,7 +48,7 @@ export default function AddLibraryButton({ className = "" }) {
   return (
     <IconButton
       icon="chevron"
-      className={`${className} ${styles.button}`}
+      className={`${className}`}
       textType="text2"
       onClick={() => handleOnClick()}
     >

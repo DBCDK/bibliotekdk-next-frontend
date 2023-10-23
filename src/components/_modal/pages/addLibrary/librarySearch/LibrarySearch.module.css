@@ -9,9 +9,6 @@
 }
 
 @media (max-width: 414px) {
-  .hide {
-    display: none;
-  }
   .librarySearchSection {
     padding-top: 0;
   }
