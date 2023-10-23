@@ -23,6 +23,7 @@ const MENUITEMS = [
   "bookmarks",
   "myLibraries",
   "orderHistory",
+  "myProfile"
 ];
 
 /* Whitelist menuitems accessable without login */

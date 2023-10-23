@@ -45,3 +45,27 @@ export function deleteUser({ userDataMutation }) {
 
   return userDataMutation.post(q);
 }
+
+
+/**
+ * Adds user to userdata service if user dosen't exists. 
+ *
+ */
+
+export function addUserToUserData({ userDataMutation }) {
+  console.log(' ADDUSER in adding new user')
+  const q = {
+    query: `
+    mutation{
+      users{
+        addUserToUserDataService{
+          success
+        }
+      }
+      
+    }
+      `,
+  };
+
+  return userDataMutation.post(q);
+}

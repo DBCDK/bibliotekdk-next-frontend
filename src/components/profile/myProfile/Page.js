@@ -7,10 +7,12 @@ import Text from "@/components/base/text";
 import useUser from "@/components/hooks/useUser";
 import Translate from "@/components/base/translate/Translate";
 import Title from "@/components/base/title";
-import { useData } from "@/lib/api/api";
+import { useData, useMutate } from "@/lib/api/api";
 import * as userFragments from "@/lib/api/user.fragments";
 import IconButton from "@/components/base/iconButton/IconButton";
 import { parseDate } from "@/lib/utils";
+import { useEffect } from "react";
+import { addUserToUserData } from "@/lib/api/userData.mutations";
 
 /**
  * Shows user info.
@@ -33,6 +35,7 @@ export default function MyProfilePage() {
 
   const createdAt = userData?.user?.createdAt;
   const { day, monthName, year } = parseDate(createdAt);
+  const formatedDate  = `d. ${day}. ${monthName} ${year}`
   return (
     <ProfileLayout
       title={Translate({ context: "profile", label: "myProfile" })}
@@ -69,7 +72,7 @@ export default function MyProfilePage() {
               {Translate({ context: "profile", label: "infoBoxTitle" })}
             </Title>
             <Text className={styles.infoBoxText}>
-              {Translate({ context: "profile", label: "infoBoxText" })}
+              {Translate({ context: "profile", label: "infoBoxText" , vars:[formatedDate]})}
             </Text>
           </div>
           
