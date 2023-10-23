@@ -211,10 +211,7 @@ const BookmarkPage = () => {
 
           <div className={styles.skeletonButtonContainer}>
             {isMobile ? (
-              <>
-                <Skeleton lines={1} />
-                <Skeleton lines={1} />
-              </>
+              <Skeleton lines={2} className={styles.skeletonText} />
             ) : (
               <>
                 <Skeleton lines={1} className={styles.skeletonText} />
