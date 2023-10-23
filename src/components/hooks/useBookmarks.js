@@ -300,10 +300,10 @@ export const usePopulateBookmarks = (bookmarks) => {
   const workPids = bookmarks?.filter(
     (bookmark) => !bookmark?.materialId?.includes("work-of:")
   );
-  const { data: workByIdsData } = useData(
+  const { data: workByIdsData, isLoading: idsToWorksLoading } = useData(
     workFragments.idsToWorks({ ids: workIds?.map((work) => work.materialId) })
   );
-  const { data: workByPidsData } = useData(
+  const { data: workByPidsData, isLoading: pidsToWorkLoading } = useData(
     workFragments.pidsToWorks({
       pids: workPids?.map((work) => work.materialId),
     })
@@ -341,6 +341,6 @@ export const usePopulateBookmarks = (bookmarks) => {
       })
       .filter((item) => item); // filter nulls
   }, [bookmarks, workByPidsData, workByIdsData]);
-
-  return { data };
+  const isLoading = idsToWorksLoading || pidsToWorkLoading;
+  return { data, isLoading };
 };

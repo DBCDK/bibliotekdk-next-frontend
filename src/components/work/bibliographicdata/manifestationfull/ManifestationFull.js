@@ -40,11 +40,11 @@ import BookMarkDropDown from "@/components/work/overview/bookmarkDropdown/Bookma
 function ColumnOne({ workId, manifestation }) {
   const modal = useModal();
   const copyLinkId = useId();
+  const [checkMarkActive, setCheckMarkActive] = useState(false);
+
   function permalinkToPid(hash) {
     return `/work/pid/${hash.slice(1)}`;
   }
-
-  const [checkMarkActive, setCheckMarkActive] = useState(false);
 
   const tooltip = (
     <Tooltip id={copyLinkId}>
@@ -89,6 +89,9 @@ function ColumnOne({ workId, manifestation }) {
         <ReservationButtonWrapper
           workId={workId}
           selectedPids={[manifestation?.pid]}
+          selectedMaterialType={
+            manifestation?.materialTypes?.[0]?.materialTypeSpecific?.display
+          }
           singleManifestation={true}
           buttonType="secondary"
           size="small"

@@ -22,6 +22,7 @@ export function submitOrder({
     mutation ($input: SubmitOrderInput!){
       submitOrder(input: $input){
         status
+        message
         orderId
         ok
       }
@@ -57,7 +58,9 @@ export function submitPeriodicaArticleOrder({
     query: `
     mutation ($input: CopyRequestInput!) {
       elba {
-        placeCopyRequest(input: $input) {
+        placeCopyRequest(input: $input, dryRun: ${
+          process.env.ELBA_DRY_RUN || true
+        }) {
           status
         }
       }

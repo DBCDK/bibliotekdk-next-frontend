@@ -55,7 +55,7 @@ function IconButton({
         tag="div"
         tabIndex={-1}
       >
-        <Text type={textType} tag="span">
+        <Text type={textType} tag="span" data-control="ICON-BUTTON">
           {children}
         </Text>
       </Link>

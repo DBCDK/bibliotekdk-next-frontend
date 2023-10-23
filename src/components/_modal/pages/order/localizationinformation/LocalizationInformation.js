@@ -85,7 +85,7 @@ function LocalizationInformation({
             >{`${pickupBranch?.postalCode} ${pickupBranch?.city}`}</Text>
           </div>
         )}
-        {/* shouldnt this be moved into general warning? */}
+        {/* maybe move warning together with warning in order-modal. see bibdk2021-1927 */}
         {!isLoadingBranches &&
           pickupBranch &&
           !availableAsPhysicalCopy &&

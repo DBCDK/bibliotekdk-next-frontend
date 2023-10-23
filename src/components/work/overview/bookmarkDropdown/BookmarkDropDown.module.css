@@ -42,10 +42,6 @@
   overflow-x: hidden;
 }
 
-.dropdownitemText:hover {
-  font-weight: bold;
-}
-
 .active {
   color: white;
   background-color: var(--blue);
@@ -88,7 +84,7 @@
 }
 
 .dropdownitem:hover i svg,
-.dropdownitem:focus i svg {
+.dropdownitem:focus-visible i svg {
   display: block;
 }
 

@@ -22,6 +22,9 @@ import AddLibrary from "./addLibrary";
 import Verify from "./verify";
 import StatusMessage from "./statusMessage";
 import RemoveLibrary from "./removeLibrary";
+import DeleteProfile from "./deleteProfile";
+import EMaterialFilter from "./bookmarkOrder/EMaterialFilter";
+import MultiOrder from "./bookmarkOrder/multi-order/MultiOrder.page";
 
 const _modal = {
   Menu,
@@ -48,6 +51,9 @@ const _modal = {
   Verify,
   StatusMessage,
   RemoveLibrary,
+  DeleteProfile,
+  EMaterialFilter,
+  MultiOrder,
 };
 
 export default _modal;

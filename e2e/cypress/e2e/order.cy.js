@@ -18,7 +18,9 @@ describe("Order", () => {
     cy.visitWithConsoleSpy(
       "/iframe.html?id=modal-order--order-via-ill&viewMode=story"
     );
-    cy.contains("Bestil", { timeout: 10000 }).click();
+    cy.get("[data-cy=button-order-overview-enabled]")
+      .contains("Bestil", { timeout: 10000 })
+      .click();
 
     // Check that user blocking is not present
     cy.get("[data-cy=blocked-user]").should("not.exist");
@@ -59,6 +61,25 @@ describe("Order", () => {
         },
       });
     });
+  });
+
+  it("Order physical material fails and shows error modal correctly", () => {
+    cy.visit(
+      "/iframe.html?id=modal-order--order-physical-material-fails&viewMode=story"
+    );
+    //open order modal
+    cy.contains("Bestil", { timeout: 10000 }).click();
+    // Submit the order
+    cy.get("[data-cy=button-godkend]")
+      .scrollIntoView()
+      .should("be.visible")
+      .should("not.be.disabled")
+      .click();
+
+    //order failed
+    cy.get("[data-cy=error-occured-title]").should("be.visible");
+    cy.get("[data-cy=order-failed-message").should("be.visible");
+    cy.get("[data-cy=order-failed-see-libraries-button]").should("be.visible");
   });
 
   it("should handle failed checkorder and pickupAllowed=false", () => {
@@ -121,6 +142,27 @@ describe("Order", () => {
           userName: "Some Name",
         });
       });
+    });
+
+    it("Should fail order indexed periodica article and open modal showing error", () => {
+      cy.visit(
+        "/iframe.html?id=modal-order--order-indexed-periodica-article-fails&viewMode=story"
+      );
+      //open order modal
+      cy.contains("Bestil", { timeout: 10000 }).click();
+      // Submit the order
+      cy.get("[data-cy=button-godkend]")
+        .scrollIntoView()
+        .should("be.visible")
+        .should("not.be.disabled")
+        .click();
+
+      //order failed
+      cy.get("[data-cy=error-occured-title]").should("be.visible");
+      cy.get("[data-cy=order-failed-message").should("be.visible");
+      cy.get("[data-cy=order-failed-see-libraries-button]").should(
+        "be.visible"
+      );
     });
 
     it("should order indexed periodica article through ILL (when branch is not subscribed to article service)", () => {

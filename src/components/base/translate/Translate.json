@@ -949,6 +949,58 @@
         "da": "Alle bestillingsmuligheder (%s)",
         "en": "All order options (%s)"
       },
+      "material-action-read": {
+        "da": "Læs",
+        "en": "Read"
+      },
+      "material-action-listen": {
+        "da": "Lyt",
+        "en": "Listen"
+      },
+      "material-action-see": {
+        "da": "Se",
+        "en": "See"
+      },
+      "material-action-play": {
+        "da": "Spil",
+        "en": "Play"
+      },
+      "material-direction-here": {
+        "da": "Her",
+        "en": "Here"
+      },
+      "material-typename-ebook": {
+        "da": "E-bogen",
+        "en": "The e-book"
+      },
+      "material-typename-article": {
+        "da": "Artiklen",
+        "en": "The article"
+      },
+      "material-typename-music": {
+        "da": "Til musikken",
+        "en": "To the music"
+      },
+      "material-typename-podcast": {
+        "da": "Til podcasten",
+        "en": "To the podcast"
+      },
+      "material-typename-audiobook": {
+        "da": "Til lydbogen",
+        "en": "To the audiobook"
+      },
+      "material-typename-movie": {
+        "da": "Filmen",
+        "en": "The movie"
+      },
+      "material-typename-sheetmusic": {
+        "da": "Noderne",
+        "en": "The sheet music"
+      },
+      "material-typename-game": {
+        "da": "Spillet",
+        "en": "The game"
+      },
       "all-editions": {
         "da": "alle udgaver",
         "en": "all editions"
@@ -1142,6 +1194,40 @@
       "remove": {
         "da": "Fjern",
         "en": "Remove"
+      }
+    },
+    "bookmark-order": {
+      "efilter-title": {
+        "da": "Bemærk",
+        "en": "Please notice"
+      },
+      "efilter-subheading": {
+        "da": "%s materialer findes online, og kræver ikke bestilling",
+        "en": "%s materials is available online and doesn't require an order"
+      },
+      "efilter-subheading-singular": {
+        "da": "%s materiale findes online, og kræver ikke bestilling",
+        "en": "%s material is available online and doesn't require an order"
+      },
+      "efilter-proceed-text": {
+        "da": "På næste side vises de %s materialer, som du kan bestille",
+        "en": "The %s materials you can order will show on the next page"
+      },
+      "efilter-proceed-text-singular": {
+        "da": "På næste side vises det materiale, som du kan bestille",
+        "en": "The material you can order will show on the next page"
+      },
+      "efilter-proceed": {
+        "da": "Næste",
+        "en": "Next"
+      },
+      "multiorder-title": {
+        "da": "Bestil",
+        "en": "Order"
+      },
+      "multiorder-subheading": {
+        "da": "Du er ved at bestille %s materialer",
+        "en": "You are about to order %s materials"
       }
     },
     "reviews": {
@@ -3437,6 +3523,10 @@
         "da": "Bestillingshistorik",
         "en": "Order history"
       },
+      "myProfile": {
+        "da": "Min profil",
+        "en": "My profile"
+      },
       "profileMenu": {
         "da": "Profilmenu",
         "en": "Profile menu"
@@ -3486,9 +3576,17 @@
         "da": "Sidst anvendt",
         "en": "Last used"
       },
-      "municipalityOfResidence": {
+      "yourMunicipalityOfResidence": {
         "da": "Din bopælskommune",
+        "en": "Your municipality of residence"
+      },
+      "municipalityOfResidence": {
+        "da": "Bopælskommune",
         "en": "Municipality of residence"
+      },
+      "profileCreated": {
+        "da": "Bibliotek.dk-profil oprettet",
+        "en": "Bibliotek.dk-profile created"
       },
       "debt": {
         "da": "Mellemværende",
@@ -3513,6 +3611,18 @@
       "delete": {
         "da": "Slet",
         "en": "Delete"
+      },
+      "deleteProfile": {
+        "da": "Slet profil",
+        "en": "Delete profile"
+      },
+      "deleteProfileText": {
+        "da": "Dette vil slette følgende data på bibliotek.dk: Din huskeliste, bestillingshistorik, søgehistorik og evt. tilføjede uddannelsesbiblioteker.\n\n\nBemærk: Du vil stadig være registreret som låner på de biblioteker, hvor du er oprettet. Ligesom at dine lån, reserveringer og mellemværende ved bibliotekerne heller ikke vil blive slettet.\n\n\nKontakt biblioteket direkte, hvis du ikke længere ønsker at være låner der.",
+        "en": ""
+      },
+      "deleteProfileTitle": {
+        "da": "Vil du slette din brugerprofil på bibliotek.dk?",
+        "en": ""
       },
       "delete-order": {
         "da": "Slet reservering",
@@ -3721,6 +3831,14 @@
       "alphabeticalOrder": {
         "da": "Alfabetisk - titel",
         "en": "Alphabetical- title"
+      },
+      "goToBook": {
+        "da": "Gå til bogen",
+        "en": "Go to book"
+      },
+      "lentBy": {
+        "da": "Udlånt af",
+        "en": "Lent by"
       }
     },
     "receipt": {
