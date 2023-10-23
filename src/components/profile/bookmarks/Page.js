@@ -83,37 +83,20 @@ const BookmarkPage = () => {
     //if there is no saved values in sessionstorage, use createdAt sorting as default
     setSortByValue(savedValue || sortByItems[0].key);
     //if page is passed in url, set it as currentpage
-    // if (page) {
-    //   onPageChange(page);
+    // if (page > 0) {
+    onPageChange(page);
     // }
   }, []);
 
   useEffect(() => {
+    console.log("in useeffect");
     const handleRouteChange = () => {
       console.log("useEffect.page", page);
       console.log("useEffect.currentPage", currentPage);
 
       if (currentPage !== page) {
-        const newPage = page || 1;
-        setCurrentPage(newPage);
-      }
-    };
-
-    router.events.on("routeChangeComplete", handleRouteChange);
-
-    return () => {
-      router.events.off("routeChangeComplete", handleRouteChange);
-    };
-  }, [router]);
-
-  useEffect(() => {
-    const handleRouteChange = () => {
-      console.log("useEffect.page", page);
-      console.log("useEffect.currentPage", currentPage);
-
-      if (currentPage !== page) {
-        const newPage = page || 1;
-        setCurrentPage(newPage);
+        // const newPage = page || 1;
+        onPageChange(page);
       }
     };
 
@@ -211,7 +194,6 @@ const BookmarkPage = () => {
    * scrolls to the top of the page
    */
   const scrollToTop = () => {
-    console.log("scroll to top", scrollToElement?.current);
     setTimeout(() => {
       scrollToElement?.current?.scrollIntoView({ behavior: "smooth" });
     }, 200);
@@ -230,13 +212,22 @@ const BookmarkPage = () => {
   const onPageChange = async (newPage) => {
     const isSmallScreen = breakpoint == "xs";
     console.log("in onPageChange.isSmallScreen", isSmallScreen);
-    if (newPage > totalPages) {
-      newPage = totalPages;
+    console.log("in onPageChange.newPage", newPage);
+
+    if (!newPage || newPage < 1) {
+      console.log("onPageChange.in return", newPage);
+
+      return;
     }
+    console.log("onPageChange.after return");
+    // if (newPage > totalPages) {
+    //   newPage = totalPages ;
+    // }
 
     if (!isSmallScreen) {
       scrollToTop();
     }
+    console.log("newPage.before update", newPage);
     //set page in url parameter
     updateQueryParams({ params: { page: newPage }, router });
     //update page in useBookmarkhook
