@@ -247,7 +247,12 @@
   "materialTypes": [
     {
       "materialTypeSpecific": {
-        "display": "blu-ray"
+        "display": "film (blu-ray)",
+        "code": "FILM_BLURAY"
+      },
+      "materialTypeGeneral": {
+        "display": "film",
+        "code": "FILMS"
       }
     }
   ],
