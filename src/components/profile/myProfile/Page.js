@@ -7,12 +7,10 @@ import Text from "@/components/base/text";
 import useUser from "@/components/hooks/useUser";
 import Translate from "@/components/base/translate/Translate";
 import Title from "@/components/base/title";
-import { useData, useMutate } from "@/lib/api/api";
+import { useData } from "@/lib/api/api";
 import * as userFragments from "@/lib/api/user.fragments";
 import IconButton from "@/components/base/iconButton/IconButton";
 import { parseDate } from "@/lib/utils";
-import { useEffect } from "react";
-import { addUserToUserData } from "@/lib/api/userData.mutations";
 
 /**
  * Shows user info.
@@ -35,7 +33,7 @@ export default function MyProfilePage() {
 
   const createdAt = userData?.user?.createdAt;
   const { day, monthName, year } = parseDate(createdAt);
-  const formatedDate  = `d. ${day}. ${monthName} ${year}`
+  const formatedDate = `d. ${day}. ${monthName} ${year}`;
   return (
     <ProfileLayout
       title={Translate({ context: "profile", label: "myProfile" })}
@@ -60,22 +58,19 @@ export default function MyProfilePage() {
                 <Text>{municipalityAgency?.agencyName}</Text>
               </div>
             )}
-            {/* <div className={styles.dataItem}>
-            <Title className={styles.dataItemTitle} type="title6">
-              {Translate({ context: "profile", label: "profileCreated" })}
-            </Title>
-            <Text>{`${day}. ${monthName} ${year}`}</Text>
-          </div> */}
           </div>
           <div className={styles.infoBox}>
             <Title type="title6">
               {Translate({ context: "profile", label: "infoBoxTitle" })}
             </Title>
             <Text className={styles.infoBoxText}>
-              {Translate({ context: "profile", label: "infoBoxText" , vars:[formatedDate]})}
+              {Translate({
+                context: "profile",
+                label: "infoBoxText",
+                vars: [formatedDate],
+              })}
             </Text>
           </div>
-          
         </div>
         <div className={styles.buttonContainer}>
           <IconButton

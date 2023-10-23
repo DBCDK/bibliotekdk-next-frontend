@@ -36,7 +36,6 @@
   background-color: var(--concrete);
   width: 496px;
   padding: var(--pt2) var(--pt2_5);
-
 }
 .infoBoxText {
   white-space: pre-wrap;

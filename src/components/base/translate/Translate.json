@@ -3692,13 +3692,13 @@
         "da": "Udlånt af",
         "en": "Lent by"
       },
-      "infoBoxText":{
+      "infoBoxText": {
         "da": "Din bibliotek.dk-profil er separat fra andre bibliotekshjemmesider. Med din profil kan du administrere lån og reserveringer lavet på bibliotek.dk. Du kan se lån og reserveringer fra folkebiblioteker, men huskelisten synkroniseres ikke med andre bibliotekshjemmesider.\n\nProfilen blev oprettede %s",
-        "en":""
+        "en": ""
       },
-      "infoBoxTitle":{
+      "infoBoxTitle": {
         "da": "Om din bibliotek.dk profil",
-        "en":""
+        "en": ""
       }
     },
     "receipt": {

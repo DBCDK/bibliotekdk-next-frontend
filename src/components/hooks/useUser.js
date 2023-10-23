@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
 import useSWR from "swr";
-import { createContext, useMemo, useRef } from "react";
+import { createContext, useMemo } from "react";
 import merge from "lodash/merge";
 import { useData, useMutate } from "@/lib/api/api";
 import * as userFragments from "@/lib/api/user.fragments";
