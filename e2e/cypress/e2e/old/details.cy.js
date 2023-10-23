@@ -7,7 +7,7 @@ describe("Details", () => {
     cy.visit("/iframe.html?id=work-details--wrapped-details-section");
 
     cy.contains("Details section", { timeout: 15000 }).should("exist");
-    cy.contains("Seneste udgave, bog", { timeout: 15000 }).should("exist");
+    cy.contains("Seneste udgave, Bog", { timeout: 15000 }).should("exist");
 
     cy.get("[data-cy=text-sprog]").should("have.text", "Sprog");
     cy.get("[data-cy=text-længde]").should("have.text", "Længde");
@@ -33,7 +33,7 @@ describe("Details", () => {
     cy.visit("/iframe.html?id=work-details--wrapped-details-section-movie");
 
     cy.contains("Details section", { timeout: 15000 }).should("exist");
-    cy.contains("Seneste udgave, film (dvd)", { timeout: 15000 }).should(
+    cy.contains("Seneste udgave, Film (dvd)", { timeout: 15000 }).should(
       "exist"
     );
 
@@ -57,7 +57,7 @@ describe("Details", () => {
     cy.visit("/iframe.html?id=work-details--wrapped-details-section-artikel");
 
     cy.contains("Details section", { timeout: 15000 }).should("exist");
-    cy.contains("Seneste udgave, artikel", { timeout: 15000 }).should("exist");
+    cy.contains("Seneste udgave, Artikel", { timeout: 15000 }).should("exist");
 
     cy.get("[data-cy=text-sprog]").should("exist");
     cy.get("[data-cy=text-længde]").should("exist");
