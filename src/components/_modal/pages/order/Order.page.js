@@ -92,7 +92,7 @@ function Order({
 
   function updateModal() {
     if (modal && modal.isVisible) {
-      // call update if data or isLoading is changed
+      // call update if data or isLoading or error has changed
       if (
         articleOrderMutation?.isLoading ||
         articleOrderMutation?.data ||
@@ -112,12 +112,7 @@ function Order({
   // An order has successfully been submitted
   useEffect(() => {
     updateModal();
-  }, [
-    orderMutation?.data,
-    orderMutation?.isLoading,
-    articleOrderMutation?.data,
-    articleOrderMutation?.isLoading,
-  ]);
+  }, [orderMutation?.isLoading, articleOrderMutation?.isLoading]);
 
   const { isPeriodicaLike, availableAsDigitalCopy } = useMemo(() => {
     return accessTypeInfo;
@@ -163,9 +158,9 @@ function Order({
       modal.push("receipt", {
         pids: orderPids,
         order: {
-          data: orderMutation.data,
-          error: orderMutation.error,
-          isLoading: orderMutation.isLoading,
+          data: orderMutation?.data,
+          error: orderMutation?.error,
+          isLoading: orderMutation?.isLoading,
         },
         articleOrder: {
           data: articleOrderMutation?.data,

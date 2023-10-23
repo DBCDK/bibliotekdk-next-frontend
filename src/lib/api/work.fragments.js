@@ -603,7 +603,7 @@ export function idsToWorks({ ids }) {
               workTypes
             }
             materialTypes {
-              specific
+              ...materialTypesFragment
             }
           }
           bestRepresentation {

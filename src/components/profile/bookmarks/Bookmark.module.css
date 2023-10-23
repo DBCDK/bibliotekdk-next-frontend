@@ -101,3 +101,40 @@
 .pagination {
   margin-top: var(--pt3);
 }
+
+.skeletonContainer {
+  padding-top: var(--pt8);
+}
+.skeletonText {
+  width: 100px;
+  height: 20px;
+  position: unset;
+  margin-bottom: var(--pt5);
+  margin-right: var(--pt3);
+}
+
+.skeletonButtonContainer {
+  display: flex;
+  margin-bottom: var(--pt3);
+}
+
+.skeletonButtonContainer button:not(:first-child) {
+  margin-left: var(--pt3);
+}
+.skeletonButtonContainer button {
+  width: 100px;
+  height: fit-content;
+}
+@media (max-width: 767px) {
+  .skeletonButtonContainer button {
+    display: none;
+  }
+  .skeletonContainer {
+    padding-top: 0;
+  }
+}
+
+.skeletonTopContainer {
+  display: flex;
+  justify-content: space-between;
+}

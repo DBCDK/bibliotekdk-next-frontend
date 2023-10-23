@@ -34,8 +34,8 @@ const BookmarkColumn = ({
     return manifestationMaterialTypeFactory(allManifestations);
   }, [workId, allManifestations]);
   const selectedPids = useMemo(
-    () => flatPidsByType(materialType.toLowerCase()),
-    [workId]
+    () => flatPidsByType([materialType.toLowerCase()]),
+    [materialType]
   );
 
   return (
