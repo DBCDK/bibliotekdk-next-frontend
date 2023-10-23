@@ -293,14 +293,6 @@ const work = {
         materialTypeGeneral: { display: "bøger", code: "BOOKS" },
       },
     ],
-    // {
-    //   materialTypeSpecific: { display: "diskette", code: "FLOPPY_DISK" },
-    //   materialTypeGeneral: { display: "øvrige", code: "OTHER" },
-    // },
-    // {
-    //   materialTypeSpecific: { display: "e-bog", code: "EBOOK" },
-    //   materialTypeGeneral: { display: "e-bøger", code: "EBOOKS" },
-    // },
     [
       {
         materialTypeSpecific: {
@@ -310,34 +302,6 @@ const work = {
         materialTypeGeneral: { display: "lydbøger", code: "AUDIO_BOOKS" },
       },
     ],
-    // {
-    //   materialTypeSpecific: {
-    //     display: "lydbog (cd)",
-    //     code: "AUDIO_BOOK_CD",
-    //   },
-    //   materialTypeGeneral: { display: "lydbøger", code: "AUDIO_BOOKS" },
-    // },
-    // {
-    //   materialTypeSpecific: {
-    //     display: "lydbog (cd-mp3)",
-    //     code: "AUDIO_BOOK_CD_MP3",
-    //   },
-    //   materialTypeGeneral: { display: "lydbøger", code: "AUDIO_BOOKS" },
-    // },
-    // {
-    //   materialTypeSpecific: {
-    //     display: "lydbog (online)",
-    //     code: "AUDIO_BOOK_ONLINE",
-    //   },
-    //   materialTypeGeneral: { display: "lydbøger", code: "AUDIO_BOOKS" },
-    // },
-    // {
-    //   materialTypeSpecific: {
-    //     display: "punktskrift",
-    //     code: "BRAILLE",
-    //   },
-    //   materialTypeGeneral: { display: "øvrige", code: "OTHER" },
-    // },
   ],
   titles: {
     main: ["Harry Potter og De Vises Sten"],

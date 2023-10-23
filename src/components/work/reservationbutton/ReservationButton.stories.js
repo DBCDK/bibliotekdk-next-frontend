@@ -18,7 +18,7 @@ const time = date.getTime();
 const { DEFAULT_STORY_PARAMETERS, useMockLoanerInfo } = automock_utils();
 
 function ReservationButtonComponentBuilder({
-  type = "bog",
+  type = ["bog"],
   workId = "some-id-builder" + time,
   selectedPids = ["some-other-id-builder" + time],
   storyNameOverride = null,
@@ -61,7 +61,7 @@ function ReservationButtonStoryBuilder(storyname, resolvers = {}, query = {}) {
 export function ReservationButtonPhysicalBook() {
   return (
     <ReservationButtonComponentBuilder
-      type={"bog"}
+      type={["bog"]}
       workId={"some-work-id-1"}
       selectedPids={["some-pid-1"]}
     />
@@ -80,7 +80,7 @@ export function ReservationButtonEBook() {
   useMockLoanerInfo({});
   return (
     <ReservationButtonComponentBuilder
-      type={["ebog"]}
+      type={["e-bog"]}
       workId={"some-work-id-4"}
       selectedPids={["some-pid-7"]}
     />
@@ -97,7 +97,7 @@ ReservationButtonEBook.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 export function ReservationButtonEAudioBook() {
   return (
     <ReservationButtonComponentBuilder
-      type={"EAudioBook"}
+      type={["EAudioBook"]}
       selectedPids={["some-pid-lydbog-(net)" + time]}
     />
   );
@@ -109,7 +109,13 @@ ReservationButtonEAudioBook.story = {
         return {
           titles: [{ main: "Hugo hejs" }],
           materialTypes: [
-            { materialTypeSpecific: { display: "lydbog (net)" } },
+            {
+              materialTypeSpecific: {
+                display: "lydbog (online)",
+                code: "AUDIO_BOOK_ONLINE",
+              },
+              materialTypeGeneral: { display: "lydbøger", code: "AUDIO_BOOKS" },
+            },
           ],
           workTypes: ["LITERATURE"],
           manifestations: {
@@ -126,7 +132,16 @@ ReservationButtonEAudioBook.story = {
           {
             pid: "some-pid-lydbog-(net)" + time,
             materialTypes: [
-              { materialTypeSpecific: { display: "lydbog (net)" } },
+              {
+                materialTypeSpecific: {
+                  display: "lydbog (online)",
+                  code: "AUDIO_BOOK_ONLINE",
+                },
+                materialTypeGeneral: {
+                  display: "lydbøger",
+                  code: "AUDIO_BOOKS",
+                },
+              },
             ],
             access: [
               {
@@ -145,7 +160,7 @@ export function ReservationButtonGame() {
   return (
     <ReservationButtonComponentBuilder
       selectedPids={["some-pid-game" + time]}
-      type={"Playstation 4"}
+      type={["Playstation 4"]}
     />
   );
 }
@@ -156,7 +171,16 @@ ReservationButtonGame.story = {
         return {
           titles: [{ main: "Hugo hejs" }],
           materialTypes: [
-            { materialTypeSpecific: { display: "Playstation 4" } },
+            {
+              materialTypeSpecific: {
+                display: "Playstation 4",
+                code: "PLAYSTATION_4",
+              },
+              materialTypeGeneral: {
+                display: "computerspil",
+                code: "COMPUTER_GAMES",
+              },
+            },
           ],
           workTypes: ["GAME"],
           manifestations: {
@@ -173,7 +197,16 @@ ReservationButtonGame.story = {
           {
             pid: "some-pid-game" + time,
             materialTypes: [
-              { materialTypeSpecific: { display: "Playstation 4" } },
+              {
+                materialTypeSpecific: {
+                  display: "Playstation 4",
+                  code: "PLAYSTATION_4",
+                },
+                materialTypeGeneral: {
+                  display: "computerspil",
+                  code: "COMPUTER_GAMES",
+                },
+              },
             ],
             access: [
               {
@@ -191,10 +224,10 @@ ReservationButtonGame.story = {
 export function ReservationButtonDisabled() {
   return (
     <ReservationButtonComponentBuilder
-      type={"ebog"}
+      type={["e-bog"]}
       workId={"some-id-disabled" + time}
       selectedPids={["some-pid-disabled" + time]}
-      storyNameOverride={"ebog disabled"}
+      storyNameOverride={"e-bog disabled"}
     />
   );
 }
@@ -213,7 +246,12 @@ ReservationButtonDisabled.story = {
         return {
           workId: "some-id-disabled" + time,
           titles: [{ main: "Hugo hejs" }],
-          materialTypes: [{ materialTypeSpecific: { display: "ebog" } }],
+          materialTypes: [
+            {
+              materialTypeSpecific: { display: "e-bog", code: "EBOOK" },
+              materialTypeGeneral: { display: "e-bøger", code: "EBOOKS" },
+            },
+          ],
           workTypes: ["LITERATURE"],
           manifestations: {
             mostRelevant: [
@@ -271,7 +309,12 @@ ReservationButtonPhysicalBookLoanNotPossible.story = {
       work: () => {
         return {
           titles: [{ main: "Hugo hejs" }],
-          materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
+          materialTypes: [
+            {
+              materialTypeSpecific: { display: "bog", code: "BOOK" },
+              materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+            },
+          ],
           workTypes: ["LITERATURE"],
           manifestations: {
             mostRelevant: [
@@ -286,7 +329,12 @@ ReservationButtonPhysicalBookLoanNotPossible.story = {
         return [
           {
             pid: "some-pid-bog-loan-not-possible" + time,
-            materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
+            materialTypes: [
+              {
+                materialTypeSpecific: { display: "bog", code: "BOOK" },
+                materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+              },
+            ],
             access: [],
             workTypes: ["LITERATURE"],
           },
@@ -313,7 +361,12 @@ ReservationButtonSlowResponse.story = {
 
         return {
           titles: [{ main: "Hugo hejs" }],
-          materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
+          materialTypes: [
+            {
+              materialTypeSpecific: { display: "bog", code: "BOOK" },
+              materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+            },
+          ],
           workTypes: ["LITERATURE"],
           manifestations: {
             mostRelevant: [
@@ -361,7 +414,15 @@ const access = [
     id: "infomediaUrl",
     __typename: "InterLibraryLoan",
     loanIsPossible: true,
-    materialTypesArray: ["bog"],
+    materialTypesArray: [
+      {
+        specificDisplay: "bog",
+        specificCode: "BOOK",
+        generalDisplay: "bøger",
+        generalCode: "BOOKS",
+      },
+    ],
+    specificDisplayArray: ["bog"],
   },
 ];
 
@@ -372,7 +433,15 @@ const allEnrichedAccesses = {
   id: "infomediaUrl",
   __typename: "InterLibraryLoan",
   loanIsPossible: true,
-  materialTypesArray: ["bog"],
+  materialTypesArray: [
+    {
+      specificDisplay: "bog",
+      specificCode: "BOOK",
+      generalDisplay: "bøger",
+      generalCode: "BOOKS",
+    },
+  ],
+  specificDisplayArray: ["bog"],
 };
 const buttonType = "primary";
 const size = "large";

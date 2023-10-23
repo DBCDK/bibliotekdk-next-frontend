@@ -204,7 +204,7 @@ WrappedDetailsSectionMovie.story = {
  *
  */
 
-export function WrappedDetailsSectionArtikel() {
+export function WrappedDetailsSectionArtikelArtikelOnline() {
   return (
     <div>
       <StoryTitle>Details section</StoryTitle>
@@ -212,23 +212,30 @@ export function WrappedDetailsSectionArtikel() {
         Work details component. The Section component is used for layout.
       </StoryDescription>
       <StorySpace direction="v" space="8" />
-      <WrappedDetails workId="some-work-id-2" type={["artikel"]} />
+      <WrappedDetails
+        workId="some-work-id-2-1"
+        type={["artikel", "artikel (online)"]}
+      />
     </div>
   );
 }
 
-WrappedDetailsSectionArtikel.story = merge({}, DEFAULT_STORY_PARAMETERS, {
-  parameters: {
-    graphql: {
-      resolvers: {},
+WrappedDetailsSectionArtikelArtikelOnline.story = merge(
+  {},
+  DEFAULT_STORY_PARAMETERS,
+  {
+    parameters: {
+      graphql: {
+        resolvers: {},
+      },
     },
-  },
-  nextRouter: {
-    showInfo: true,
-    pathname: "/",
-    query: {},
-  },
-});
+    nextRouter: {
+      showInfo: true,
+      pathname: "/",
+      query: {},
+    },
+  }
+);
 
 /**
  * Returns details section
