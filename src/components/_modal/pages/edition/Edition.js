@@ -20,6 +20,41 @@ import { AccessEnum } from "@/lib/enums";
 import isEmpty from "lodash/isEmpty";
 import { IconLink } from "@/components/base/iconlink/IconLink";
 import ChevronRight from "@/public/icons/chevron_right.svg";
+import MaterialCard from "@/components/base/materialcard/MaterialCard";
+import { templateNew } from "@/components/base/materialcard/templates/templates";
+import Icon from "@/components/base/icon/Icon";
+
+export const ChoosePeriodicaCopyRow = ({ periodicaForm }) => {
+  return (
+    <div className={styles.choosePeriodicaCopyRow}>
+      <Icon
+        src="exclamationmark.svg"
+        alt="info"
+        data-cy="tooltip-icon"
+        size="2_5"
+      ></Icon>
+      <IconLink
+        onClick={() => {
+          console.log("lala");
+          modal.push("periodicaform", {
+            periodicaForm: periodicaForm,
+          }); //TODO onclick not working
+        }}
+        disabled={false}
+        className={styles.periodicaformlink}
+        border={{ bottom: true, top: false }}
+        tag={"button"}
+        iconSrc={ChevronRight}
+        iconPlacement={"right"}
+      >
+        {Translate({
+          context: "order-periodica",
+          label: "title",
+        })}
+      </IconLink>
+    </div>
+  );
+};
 
 export function Edition({
   isLoading,
@@ -56,6 +91,7 @@ export function Edition({
     .filter((pre) => !isEmpty(pre))
     ?.join(", ");
 
+  //TODO OBS: check if articleTypeTranslations varies from LocalizationBase
   const articleTypeTranslation =
     isDigitalCopy &&
     availableAsDigitalCopy &&
@@ -76,6 +112,7 @@ export function Edition({
         }
       : null;
 
+  //TODO OBS: check specificEdition logic varies from LocalizationBase
   const specificEdition =
     showOrderTxt && !singleManifestation && !isArticle && !isPeriodicaLike
       ? "no-specific-edition"
@@ -203,11 +240,13 @@ export function Edition({
   );
 }
 
+//TODO Edition bliver brugt 3 steder, skal den kun skiftes her?
 export default function Wrap({
   context,
   singleManifestation = false,
   showOrderTxt = true,
   showChangeManifestation,
+  useMaterialCard = false,
 }) {
   const modal = useModal();
   let { orderPids: orderPidsBeforeFilter } = context;
@@ -243,6 +282,31 @@ export default function Wrap({
     manifestations
   );
   const coverImage = getCoverImage(manifestations);
+
+  if (useMaterialCard) {
+    const { flattenedGroupedSortedManifestations } =
+      manifestationMaterialTypeFactory(manifestations);
+    const firstManifestation = flattenedGroupedSortedManifestations[0];
+    const children = inferredAccessTypes.isPeriodicaLike ? (
+      <ChoosePeriodicaCopyRow periodicaForm={context?.periodicaForm} />
+    ) : null;
+
+    const materialCardTemplate = (/** @type {Object} */ material) =>
+      templateNew({ material, singleManifestation, children });
+    return (
+      <div>
+        {flattenedGroupedSortedManifestations &&
+          !isEmpty(flattenedGroupedSortedManifestations) && (
+            <MaterialCard
+              key={JSON.stringify("matcard+", firstManifestation)}
+              propAndChildrenTemplate={materialCardTemplate}
+              propAndChildrenInput={firstManifestation}
+              colSizing={{ xs: 12 }}
+            />
+          )}
+      </div>
+    );
+  }
 
   return (
     <Edition

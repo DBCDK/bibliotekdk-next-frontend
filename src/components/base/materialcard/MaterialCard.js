@@ -22,6 +22,7 @@ const MaterialCard = forwardRef(
    * @param {function} props.onClick - A callback function to handle click events.
    * @param {React.MutableRefObject<any>} props.ref - A React ref object.
    * @param {{ xs: OptionalColSize, sm: OptionalColSize, lg: OptionalColSize }} props.colSizing - An object specifying column sizing options.
+   * @param {boolean} [props.large] indicates if large card or small card (less items displayed)
    * @returns {React.JSX.Element} - Returns a React JSX element.
    */
   function MaterialCard(
@@ -44,7 +45,47 @@ const MaterialCard = forwardRef(
       relatedElementClassName,
       textClassName,
       coverImageClassName,
+      large,
     } = renderProps;
+
+    if (large) {
+      return (
+        <Col
+          // Col props
+          {...colSizing}
+          className={cx(elementContainerClassName)}
+          as="article"
+        >
+          <Link
+            href={link_href}
+            // Link props
+            className={cx(styles.link_style)}
+            border={!link_href ? false : { top: false, bottom: true }}
+            onClick={onClick}
+            disabled={!link_href && !onClick}
+          >
+            <Col
+              ref={ref}
+              id={workId}
+              className={cx(relatedElementClassName, styles.row)}
+            >
+              <Col xs={3} className={styles.image}>
+                <img
+                  src={image_src}
+                  className={cx(coverImageClassName)}
+                  title={fullTitle}
+                  alt={Translate({ context: "general", label: "frontpage" })}
+                />
+              </Col>
+
+              <Col xs={9} className={cx(textClassName, styles.rest)}>
+                {children}
+              </Col>
+            </Col>
+          </Link>
+        </Col>
+      );
+    }
 
     return (
       <Col

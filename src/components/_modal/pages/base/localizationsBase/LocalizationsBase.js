@@ -4,7 +4,10 @@ import cx from "classnames";
 import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 import MaterialCard from "@/components/base/materialcard/MaterialCard";
-import { templateForLocalizations } from "@/components/base/materialcard/templates/templates";
+import {
+  //templateForLocalizations,
+  templateNew,
+} from "@/components/base/materialcard/templates/templates";
 import Search from "@/components/base/forms/search";
 import Translate from "@/components/base/translate";
 import debounce from "lodash/debounce";
@@ -33,7 +36,10 @@ function LocalizationsBase({
   subtitle,
   pids = [],
   materialCardTemplate = (/** @type {Object} */ material) =>
-    templateForLocalizations(material, context?.singleManifestation),
+    templateNew({
+      material,
+      singleManifestation: context?.singleManifestation,
+    }),
   subheader,
   query,
   setQuery,
@@ -49,6 +55,7 @@ function LocalizationsBase({
   );
   const { flattenedGroupedSortedManifestations: manifestations } =
     manifestationMaterialTypeFactory(manifestationsData?.manifestations);
+  console.log("manifestations in LocalizatinBASe", manifestations);
 
   useEffect(() => {
     if (modal?.isVisible) {

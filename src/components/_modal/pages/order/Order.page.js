@@ -189,7 +189,9 @@ function Order({
           top: styles.top,
         }}
       />
+      {/*TODO SKIFT MED Material Card? */}
       <Edition
+        useMaterialCard={true}
         context={contextWithOrderPids}
         singleManifestation={singleManifestation}
       />
@@ -248,6 +250,7 @@ export function OrderSkeleton(props) {
       modal={{}}
       className={`${props.className} ${styles.skeleton}`}
       isLoading={true}
+      singleManifestation={singleManifestation}
     />
   );
 }

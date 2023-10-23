@@ -457,6 +457,7 @@ export function checkPhysicalCopy(enrichedAccesses) {
 
 /**
  * Check isPeriodica on single
+ * if true, worktype is either "periodica" or "årbog"
  * @param singleAccess
  * @returns {boolean}
  */

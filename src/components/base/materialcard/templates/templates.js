@@ -208,3 +208,95 @@ export function templateForLocalizations(
     coverImageClassName: cx(styles.cover, styles.cover__localizations_version),
   };
 }
+
+/**
+ *
+ * @param {Object} props
+ * @param {Object} props.material
+ * @param {boolean} props.singleManifestation
+ * @param {React.JSX.Element} props.children
+ * @returns {React.JSX.Element}
+ */
+export function templateNew(
+  { material, singleManifestation, children } //Leveres som digital kopi til din mail eller "Første tilgængelige eksemplar"
+) {
+  const fullTitle =
+    singleManifestation === true
+      ? material?.titles?.full?.join(": ")
+      : material?.ownerWork?.titles?.full?.join(": ");
+  const creators =
+    singleManifestation === true
+      ? material?.creators
+      : material?.ownerWork?.creators;
+
+  const creatorsString = extractCreatorsPrioritiseCorporation(creators)
+    ?.flatMap((c) => c?.display)
+    .filter((pre) => !isEmpty(pre))
+    ?.join(", ");
+  const formattedMaterialTypes = formatMaterialTypesToPresentation(
+    material?.materialTypesArray || material?.materialTypes
+  );
+
+  console.log("CREATORS ", JSON.stringify(creatorsString));
+
+  const edition = [
+    material?.edition?.publicationYear?.display,
+    material?.publisher,
+    material?.edition?.edition,
+  ]
+    ?.flat()
+    .filter((pre) => !isEmpty(pre))
+    ?.join(", ");
+
+  return {
+    link_href: null,
+    fullTitle: fullTitle,
+    image_src: material?.cover?.detail,
+    workId: material?.workId,
+    large: true,
+    children: (
+      <>
+        <Text {...propFunc("text1", 2)} title={fullTitle}>
+          {fullTitle}
+        </Text>
+        {creatorsString && (
+          <Text {...propFunc("text2", 2)} title={creatorsString}>
+            {creatorsString}
+          </Text>
+        )}
+        <Text
+          {...propFunc("text4", 1)}
+          title={formattedMaterialTypes}
+          className={styles.type_standard_version}
+        >
+          {formattedMaterialTypes}
+        </Text>
+        <Text {...propFunc("text3", 1)} title={formattedMaterialTypes}>
+          {!singleManifestation &&
+            Translate({
+              context: "materialcard",
+              label: "first-available-copy",
+            })}
+          {singleManifestation && edition}
+        </Text>
+        {/*MAYBE Optional button component OR entire row here
+         skal kunne rumme --> Vælg eksemplar eller artikel (tidskrifter - alt for damerne)
+        kan ikke bestilles til dit bibliotek / fjern-knap --> huskeliste
+
+        */}
+        {children}
+      </>
+    ),
+    // Styling
+    elementContainerClassName: cx(
+      styles.col_flex,
+      styles.col_flex__localizations_version
+    ),
+    relatedElementClassName: cx(
+      styles.related_element,
+      styles.related_element__new_version
+    ),
+    textClassName: cx(styles.text_standard_version),
+    coverImageClassName: cx(styles.cover, styles.cover__standard_version),
+  };
+}
