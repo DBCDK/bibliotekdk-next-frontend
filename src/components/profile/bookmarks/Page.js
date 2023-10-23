@@ -16,6 +16,7 @@ import List from "@/components/base/forms/list";
 import Pagination from "@/components/search/pagination/Pagination";
 import { createEditionText } from "@/components/work/details/utils/details.utils";
 import { useModal } from "@/components/_modal";
+import Skeleton from "@/components/base/skeleton/Skeleton";
 
 const CONTEXT = "bookmark";
 const MENUITEMS = ["Bestil flere", "Hent referencer", "Fjern flere"];
@@ -202,9 +203,31 @@ const BookmarkPage = () => {
           label: "page-title",
         })}
       >
-        {Array.from({ length: 20 }).map((_, i) => (
-          <MaterialRow skeleton key={`bookmark-#${i}`} id={`bookmark-#${i}`} />
-        ))}
+        <div className={styles.skeletonContainer}>
+          <div className={styles.skeletonTopContainer}>
+            <Skeleton lines={1} className={styles.skeletonText} />
+            <Skeleton lines={1} className={styles.skeletonText} />
+          </div>
+
+          <div className={styles.skeletonButtonContainer}>
+            {isMobile ? (
+              <Skeleton lines={2} className={styles.skeletonText} />
+            ) : (
+              <>
+                <Skeleton lines={1} className={styles.skeletonText} />
+                <Button skeleton />
+                <Button skeleton />
+              </>
+            )}
+          </div>
+          {Array.from({ length: 20 }).map((_, i) => (
+            <MaterialRow
+              skeleton
+              key={`bookmark-#${i}`}
+              id={`bookmark-#${i}`}
+            />
+          ))}
+        </div>
       </ProfileLayout>
     );
   }
