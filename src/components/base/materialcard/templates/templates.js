@@ -237,8 +237,6 @@ export function templateNew(
     material?.materialTypesArray || material?.materialTypes
   );
 
-  console.log("CREATORS ", JSON.stringify(creatorsString));
-
   const edition = [
     material?.edition?.publicationYear?.display,
     material?.publisher,

@@ -55,7 +55,6 @@ function LocalizationsBase({
   );
   const { flattenedGroupedSortedManifestations: manifestations } =
     manifestationMaterialTypeFactory(manifestationsData?.manifestations);
-  console.log("manifestations in LocalizatinBASe", manifestations);
 
   useEffect(() => {
     if (modal?.isVisible) {
