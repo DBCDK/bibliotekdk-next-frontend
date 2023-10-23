@@ -21,6 +21,7 @@ import LoginNotSupported from "./loginNotSupported";
 import AddLibrary from "./addLibrary";
 import Verify from "./verify";
 import StatusMessage from "./statusMessage";
+import RemoveLibrary from "./removeLibrary";
 
 const _modal = {
   Menu,
@@ -46,6 +47,7 @@ const _modal = {
   AddLibrary,
   Verify,
   StatusMessage,
+  RemoveLibrary,
 };
 
 export default _modal;

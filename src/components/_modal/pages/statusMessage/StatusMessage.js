@@ -8,7 +8,7 @@ import styles from "./StatusMessage.module.css";
 
 export default function StatusMessage({ context, modal }) {
   // handles if modal should have "back" functionality
-  const hasBack = !!(modal.index?.() > 0);
+  const hasBack = context.hasBack ?? !!(modal.index?.() > 0);
 
   function handleOnClick() {
     hasBack ? modal.prev() : modal.clear();
@@ -16,7 +16,7 @@ export default function StatusMessage({ context, modal }) {
 
   return (
     <div className={styles.container}>
-      <Top />
+      <Top back={hasBack} />
       <Title type="title4" tag="h2" className={styles.header}>
         {context.title}
       </Title>

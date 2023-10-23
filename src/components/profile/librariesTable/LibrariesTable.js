@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 import Translate from "@/components/base/translate/Translate";
 import Text from "@/components/base/text";
 import IconButton from "@/components/base/iconButton/IconButton";
@@ -8,33 +6,15 @@ import Title from "@/components/base/title";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { isPublicLibrary } from "@/lib/utils";
 
-import { deleteAccount } from "@/lib/api/culr.mutations";
-import { useMutate } from "@/lib/api/api";
+import { useModal } from "@/components/_modal";
 
-function RemoveLibraryButton({ agencyId }) {
-  const culrMutation = useMutate();
-
-  // mutation details
-  const { data, isLoading, error, post } = culrMutation;
-
-  // Mutate createAccount response from API
-  useEffect(() => {
-    const status = data?.culr?.deleteAccount?.status;
-
-    if (status === "OK") {
-      alert("slettet");
-    }
-
-    // Some error occured
-    if (status?.includes("ERROR") || error) {
-      alert("noget gik galt");
-    }
-  }, [data, error]);
+function RemoveLibraryButton({ agencyId, agencyName }) {
+  const modal = useModal();
 
   return (
     <IconButton
       icon="close"
-      onClick={() => post(deleteAccount({ agencyId }))}
+      onClick={() => modal.push("removeLibrary", { agencyId, agencyName })}
       alt={Translate({ context: "profile", label: "remove" })}
     >
       {Translate({ context: "profile", label: "remove" })}
@@ -89,7 +69,9 @@ function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
       */}
         </div>
 
-        {!isPublic && <RemoveLibraryButton agencyId={agencyId} />}
+        {!isPublic && (
+          <RemoveLibraryButton agencyId={agencyId} agencyName={agencyName} />
+        )}
       </div>
     );
   }
@@ -113,7 +95,7 @@ function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
       </div>
       {!isPublic && (
         <td>
-          <RemoveLibraryButton agencyId={agencyId} />
+          <RemoveLibraryButton agencyId={agencyId} agencyName={agencyName} />
         </td>
       )}
     </tr>

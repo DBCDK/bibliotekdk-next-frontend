@@ -19,21 +19,19 @@ import AddLibraryButton from "./addLibraryButton/AddLibraryButton";
  */
 
 export default function MyLibrariesPage() {
-  const { isAuthenticated } = useUser();
+  const { authUser } = useUser();
   const [showMore, setShowMore] = useState(false);
-  const { data: userData } = useData(
-    isAuthenticated && userFragments.branchesForUser()
-  );
 
   //An array of user agencies.
-  const agencies = userData?.user?.agencies
+  const agencies = authUser?.agencies
     ?.map((agency) => ({
       agencyId: agency?.result[0]?.agencyId,
       agencyName: agency?.result[0]?.agencyName,
     }))
     .filter((agency) => !!agency.agencyName && !!agency.agencyId);
 
-  const municipalityAgencyId = userData?.user?.municipalityAgencyId;
+  const municipalityAgencyId = authUser?.municipalityAgencyId;
+
   return (
     <Layout title={Translate({ context: "profile", label: "myLibraries" })}>
       <div className={styles.pageDescriptionContainer}>

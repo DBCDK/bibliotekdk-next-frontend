@@ -19,25 +19,18 @@ export default function Listener() {
   const { data: mutate, error } = culrMutation;
 
   // user details
-  const { isAuthenticated, hasCulrUniqueId, isCPRValidated, isLoggedIn } = user;
+  const {
+    isAuthenticated,
+    hasCulrUniqueId,
+    isCPRValidated,
+    isLoggedIn,
+    updateUserData,
+  } = user;
 
   // verification data
   const data = verification.read();
 
   const hasValidVerificationProcess = !!(data && data?.tokens?.ffu);
-
-  console.log("xxx Debug CREATE Listener ....", {
-    isLoggedIn,
-    isAuthenticated,
-    hasCulrUniqueId,
-    hasValidVerificationProcess,
-    status:
-      isLoggedIn &&
-      isAuthenticated &&
-      hasCulrUniqueId &&
-      isCPRValidated &&
-      hasValidVerificationProcess,
-  });
 
   // Mutate createAccount response from API
   useEffect(() => {
@@ -46,6 +39,8 @@ export default function Listener() {
     if (status === "OK") {
       // Delete verification
       verification.delete();
+      // broadcast user changes
+      updateUserData();
     }
 
     // Some error occured

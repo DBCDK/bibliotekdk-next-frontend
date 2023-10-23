@@ -28,6 +28,7 @@ export function basic() {
         postalCode
         isCPRValidated
         loggedInBranchId
+        municipalityAgencyId
         agencies {
           hitcount
           result {

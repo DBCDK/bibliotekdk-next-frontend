@@ -2738,6 +2738,32 @@
         "en": "LABEL: Mangler oversættelse!"
       }
     },
+    "removeLibrary": {
+      "title": {
+        "da": "Fjern %s", 
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "text": {
+        "da": "Du er ved at fjerne %s fra din liste over biblioteker. Er du sikker på at du vil fjerne biblioteket fra listen over dine biblioteker?", 
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "confirmButton": {
+        "da": "Fjern bibliotek", 
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "cancelButton": {
+        "da": "Fortryd", 
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "errorTitle": {
+        "da": "Biblioteket blev ikke fjernet", 
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "errorText": {
+        "da": "Noget gik galt da vi forsøgte at fjerne dit bibliotek fra listen, prøv igen eller kontakt kundeservice.dbc.dk", 
+        "en": "LABEL: Mangler oversættelse!"
+      }
+    },
     "errorMessage": {
       "addLibraryNotVerifiedTitle": {
         "da": "Ikke muligt",

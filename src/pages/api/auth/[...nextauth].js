@@ -32,7 +32,7 @@ export const options = {
       },
     }),
   ],
-  debug: true,
+  debug: false,
   callbacks: {
     ...callbacks,
     session: async (...args) => {

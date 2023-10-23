@@ -22,21 +22,6 @@ export default function Listener() {
 
   const hasVerificationObject = verification.exist();
 
-  console.log("Debug FFU Listener ....", {
-    isLoggedIn,
-    agencyId,
-    isAuthenticated,
-    hasCulrUniqueId,
-    hasVerificationObject,
-    status:
-      isLoggedIn &&
-      isAuthenticated &&
-      !hasCulrUniqueId &&
-      agencyId &&
-      isFFUAgency(agencyId) &&
-      !hasVerificationObject,
-  });
-
   useEffect(() => {
     // if user is signed in
     if (isLoggedIn) {
