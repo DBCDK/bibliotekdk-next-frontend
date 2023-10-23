@@ -6,24 +6,31 @@
  * and is subject for gradual change
  */
 
-/** TODO: Maybe use a map like this instead of
- *   flattening the materialTypes as in
- *   "selectMaterialBasedOnType"
- * */
 export const MaterialTypeEnum = Object.freeze({
   BOG: "bog",
-  EBOG: "ebog",
+  EBOG: "e-bog",
   "LYDBOG (NET)": "lydbog (net)",
   "LYDBOG (CD-MP3)": "lydbog (cd-mp3)",
   "LYDBOG (CD)": "Lydbog (cd)",
   "LYDBOG (BÅND)": "lydbog (bånd)",
 });
 
+/**
+ * Used for the few places in the code where we need to check on MaterialTypeGeneral.
+     This should be extended whenever we need to know new general MaterialTypes
+ * @type {Readonly<{EBOOKS: {code: string, display: string}, AUDIO_BOOKS: {code: string, display: string}, BOOKS: {code: string, display: string}}>}
+ */
+export const MaterialTypeGeneralEnum = Object.freeze({
+  BOOKS: { display: "bøger", code: "BOOKS" },
+  EBOOKS: { display: "e-bøger", code: "EBOOKS" },
+  AUDIO_BOOKS: { display: "lydbøger", code: "AUDIO_BOOKS" },
+});
+
 /* This */
 export const MaterialTypeOrderEnum = Object.freeze({
   LITERATURE: {
     BOG: { display: "bog", code: "BOOK" },
-    EBOG: { display: "ebog", code: "EBOOK" },
+    EBOG: { display: "e-bog", code: "EBOOK" },
     "LYDBOG (ONLINE)": {
       display: "lydbog (online)",
       code: "AUDIO_BOOK_ONLINE",

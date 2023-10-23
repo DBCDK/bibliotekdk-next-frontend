@@ -88,7 +88,7 @@ export const grouped5Manifestations_bog_ebog_x2__bog_x2__ebog_x1 = {
           generalCode: "EBOOKS",
         },
       ],
-      materialTypesArraySpecificDisplay: ["bog", "e-bog"],
+      specificDisplayArray: ["bog", "e-bog"],
     },
     {
       ...twoSpecificMaterialType_Bog_Ebog,
@@ -107,7 +107,7 @@ export const grouped5Manifestations_bog_ebog_x2__bog_x2__ebog_x1 = {
           generalCode: "EBOOKS",
         },
       ],
-      materialTypesArraySpecificDisplay: ["bog", "e-bog"],
+      specificDisplayArray: ["bog", "e-bog"],
     },
   ],
   bog: [
@@ -122,7 +122,7 @@ export const grouped5Manifestations_bog_ebog_x2__bog_x2__ebog_x1 = {
           generalCode: "BOOKS",
         },
       ],
-      materialTypesArraySpecificDisplay: ["bog"],
+      specificDisplayArray: ["bog"],
     },
     {
       ...oneSpecificMaterialType_Bog,
@@ -135,7 +135,7 @@ export const grouped5Manifestations_bog_ebog_x2__bog_x2__ebog_x1 = {
           generalCode: "BOOKS",
         },
       ],
-      materialTypesArraySpecificDisplay: ["bog"],
+      specificDisplayArray: ["bog"],
     },
   ],
   "e-bog": [
@@ -150,7 +150,7 @@ export const grouped5Manifestations_bog_ebog_x2__bog_x2__ebog_x1 = {
           generalCode: "EBOOKS",
         },
       ],
-      materialTypesArraySpecificDisplay: ["e-bog"],
+      specificDisplayArray: ["e-bog"],
     },
   ],
 };

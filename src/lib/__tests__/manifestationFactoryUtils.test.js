@@ -18,12 +18,14 @@ import {
   formatMaterialTypesFromUrl,
   formatMaterialTypesToPresentation,
   formatMaterialTypesToUrl,
+  formatToStringListOfMaterialTypeField,
   getElementByCustomSorting,
   getFlatPidsByType,
   getInUniqueMaterialTypes,
   getUniqueMaterialTypes,
   groupManifestations,
   manifestationMaterialTypeFactory,
+  materialTypeFieldInMaterialTypesArray,
 } from "@/lib/manifestationFactoryUtils";
 import { getOrderedFlatMaterialTypes } from "@/lib/enums_MaterialTypes";
 
@@ -35,8 +37,8 @@ test("manifestationFactoryFunctions", () => {
 
 describe("formatMaterialTypesFromUrl", () => {
   it("should split materialTypeUrl with 2 types properly", () => {
-    const actual = formatMaterialTypesFromUrl("bog / ebog");
-    const expected = ["bog", "ebog"];
+    const actual = formatMaterialTypesFromUrl("bog / e-bog");
+    const expected = ["bog", "e-bog"];
     expect(actual).toEqual(expected);
   });
   it("should make single element array with materialTypeUrl having 1 type", () => {
@@ -268,6 +270,108 @@ describe("flatMapMaterialTypes", () => {
   });
 });
 
+describe("formatToStringListOfMaterialTypeField", () => {
+  const example = [
+    {
+      specificDisplay: "bog",
+      specificCode: "BOOK",
+      generalDisplay: "bøger",
+      generalCode: "BOOKS",
+    },
+  ];
+
+  it("formats to specificDisplay (default)", () => {
+    const actual = formatToStringListOfMaterialTypeField(example);
+    const expected = ["bog"];
+    expect(actual).toEqual(expected);
+  });
+  it("formats to specificDisplay (by arguments)", () => {
+    const actual = formatToStringListOfMaterialTypeField(
+      example,
+      "specificDisplay"
+    );
+    const expected = ["bog"];
+    expect(actual).toEqual(expected);
+  });
+  it("formats to specificCode (by arguments)", () => {
+    const actual = formatToStringListOfMaterialTypeField(
+      example,
+      "specificCode"
+    );
+    const expected = ["BOOK"];
+    expect(actual).toEqual(expected);
+  });
+  it("formats to generalDisplay (by arguments)", () => {
+    const actual = formatToStringListOfMaterialTypeField(
+      example,
+      "generalDisplay"
+    );
+    const expected = ["bøger"];
+    expect(actual).toEqual(expected);
+  });
+  it("formats to generalCode (by arguments)", () => {
+    const actual = formatToStringListOfMaterialTypeField(
+      example,
+      "generalCode"
+    );
+    const expected = ["BOOKS"];
+    expect(actual).toEqual(expected);
+  });
+});
+
+describe("materialTypeFieldInMaterialTypesArray", () => {
+  const example = [
+    {
+      specificDisplay: "bog",
+      specificCode: "BOOK",
+      generalDisplay: "bøger",
+      generalCode: "BOOKS",
+    },
+  ];
+
+  it("example contains input of specificDisplayArray, default works (['bog'])", () => {
+    const actual = materialTypeFieldInMaterialTypesArray(["bog"], example);
+    const expected = true;
+    expect(actual).toEqual(expected);
+  });
+  it("example contains input of specificDisplayArray, by argument (['bog'])", () => {
+    const actual = materialTypeFieldInMaterialTypesArray(
+      ["bog"],
+      example,
+      "specificDisplay"
+    );
+    const expected = true;
+    expect(actual).toEqual(expected);
+  });
+  it("example contains input of specificCodeArray (['BOOK'])", () => {
+    const actual = materialTypeFieldInMaterialTypesArray(
+      ["BOOK"],
+      example,
+      "specificCode"
+    );
+    const expected = true;
+    expect(actual).toEqual(expected);
+  });
+  it("example contains input of generalDisplayArray (['bog'])", () => {
+    const actual = materialTypeFieldInMaterialTypesArray(
+      ["bøger"],
+      example,
+      "generalDisplay"
+    );
+    const expected = true;
+    expect(actual).toEqual(expected);
+  });
+  it("example contains input of generalCodeArray (['BOOKS'])", () => {
+    const actual = materialTypeFieldInMaterialTypesArray(
+      ["BOOKS"],
+      example,
+      "generalCode"
+    );
+    const expected = true;
+    expect(actual).toEqual(expected);
+  });
+});
+
 describe("groupManifestations", () => {
   it("should group 2 manifestations with mixed number of materialTypes properly", () => {
     const actual = groupManifestations(twoManifestations_bog_ebog__bog);
@@ -290,7 +394,7 @@ describe("groupManifestations", () => {
               generalCode: "EBOOKS",
             },
           ],
-          materialTypesArraySpecificDisplay: ["bog", "e-bog"],
+          specificDisplayArray: ["bog", "e-bog"],
         },
       ],
       bog: [
@@ -305,7 +409,7 @@ describe("groupManifestations", () => {
               generalCode: "BOOKS",
             },
           ],
-          materialTypesArraySpecificDisplay: ["bog"],
+          specificDisplayArray: ["bog"],
         },
       ],
     };
@@ -332,7 +436,7 @@ describe("groupManifestations", () => {
               generalCode: "EBOOKS",
             },
           ],
-          materialTypesArraySpecificDisplay: ["bog", "e-bog"],
+          specificDisplayArray: ["bog", "e-bog"],
         },
       ],
     };
@@ -396,7 +500,7 @@ describe("compareMaterialTypeArrays", () => {
     const expected = -1;
     expect(actual).toEqual(expected);
   });
-  it("should compare array strings properly with custom order (ebog vs billedbog; expect positive number)", () => {
+  it("should compare array strings properly with custom order (e-bog vs billedbog; expect positive number)", () => {
     const materialTypeOrder = getOrderedFlatMaterialTypes();
     const actual = compareMaterialTypeArrays(
       [
@@ -420,7 +524,7 @@ describe("compareMaterialTypeArrays", () => {
     const expected = 0;
     expect(actual).toBeLessThan(expected);
   });
-  it("should compare array strings properly with custom order (billedbog vs ebog; expect negative number)", () => {
+  it("should compare array strings properly with custom order (billedbog vs e-bog; expect negative number)", () => {
     const materialTypeOrder = getOrderedFlatMaterialTypes();
     const actual = compareMaterialTypeArrays(
       [
@@ -492,7 +596,7 @@ describe("compareMaterialTypeArrays", () => {
     const expected = 0;
     expect(actual).toBeGreaterThan(expected);
   });
-  it("should compare array strings properly (bog/ebog vs bog/ebog; expect 0)", () => {
+  it("should compare array strings properly (bog/e-bog vs bog/e-bog; expect 0)", () => {
     const actual = compareMaterialTypeArrays(
       [
         {
@@ -526,7 +630,7 @@ describe("compareMaterialTypeArrays", () => {
     const expected = 0;
     expect(actual).toEqual(expected);
   });
-  it("should compare array strings properly (bog/ebog vs bog; expect 0)", () => {
+  it("should compare array strings properly (bog/e-bog vs bog; expect 0)", () => {
     const actual = compareMaterialTypeArrays(
       [
         {
@@ -925,6 +1029,57 @@ describe("getInUniqueMaterialTypes", () => {
     const expected = false;
     expect(actual).toEqual(expected);
   });
+  it("check if specific code works (bog/BOOK in bog-materialTypeArray", () => {
+    const actual = getInUniqueMaterialTypes(
+      ["BOOK"],
+      [
+        [
+          {
+            specificDisplay: "bog",
+            specificCode: "BOOK",
+            generalDisplay: "bøger",
+            generalCode: "BOOKS",
+          },
+        ],
+      ]
+    );
+    const expected = true;
+    expect(actual).toEqual(expected);
+  });
+  it("check if general display works (bøger in bog-materialTypeArray", () => {
+    const actual = getInUniqueMaterialTypes(
+      ["bøger"],
+      [
+        [
+          {
+            specificDisplay: "bog",
+            specificCode: "BOOK",
+            generalDisplay: "bøger",
+            generalCode: "BOOKS",
+          },
+        ],
+      ]
+    );
+    const expected = true;
+    expect(actual).toEqual(expected);
+  });
+  it("check if general Code works ('BOOKS' in bog-materialTypeArray", () => {
+    const actual = getInUniqueMaterialTypes(
+      ["BOOKS"],
+      [
+        [
+          {
+            specificDisplay: "bog",
+            specificCode: "BOOK",
+            generalDisplay: "bøger",
+            generalCode: "BOOKS",
+          },
+        ],
+      ]
+    );
+    const expected = true;
+    expect(actual).toEqual(expected);
+  });
   it("check typeCombination in materialTypeArray (empty not in empty; expect false)", () => {
     const actual = getInUniqueMaterialTypes([], []);
     const expected = false;
@@ -948,7 +1103,7 @@ describe("getInUniqueMaterialTypes", () => {
 });
 
 describe("getFlatPidsByType", () => {
-  it("flatten pids from grouped (bog,ebog)", () => {
+  it("flatten pids from grouped (bog,e-bog)", () => {
     const actual = getFlatPidsByType(
       ["bog", "e-bog"],
       grouped5Manifestations_bog_ebog_x2__bog_x2__ebog_x1
@@ -1001,7 +1156,7 @@ describe("flattenGroupedSortedManifestations", () => {
             generalCode: "BOOKS",
           },
         ],
-        materialTypesArraySpecificDisplay: ["bog"],
+        specificDisplayArray: ["bog"],
       },
       {
         ...oneSpecificMaterialType_Bog,
@@ -1014,7 +1169,7 @@ describe("flattenGroupedSortedManifestations", () => {
             generalCode: "BOOKS",
           },
         ],
-        materialTypesArraySpecificDisplay: ["bog"],
+        specificDisplayArray: ["bog"],
       },
       {
         ...twoSpecificMaterialType_Bog_Ebog,
@@ -1033,7 +1188,7 @@ describe("flattenGroupedSortedManifestations", () => {
             generalCode: "EBOOKS",
           },
         ],
-        materialTypesArraySpecificDisplay: ["bog", "e-bog"],
+        specificDisplayArray: ["bog", "e-bog"],
       },
       {
         ...twoSpecificMaterialType_Bog_Ebog,
@@ -1052,7 +1207,7 @@ describe("flattenGroupedSortedManifestations", () => {
             generalCode: "EBOOKS",
           },
         ],
-        materialTypesArraySpecificDisplay: ["bog", "e-bog"],
+        specificDisplayArray: ["bog", "e-bog"],
       },
       {
         ...oneSpecificMaterialType_Ebog,
@@ -1065,7 +1220,7 @@ describe("flattenGroupedSortedManifestations", () => {
             generalCode: "EBOOKS",
           },
         ],
-        materialTypesArraySpecificDisplay: ["e-bog"],
+        specificDisplayArray: ["e-bog"],
       },
     ];
     expect(actual).toEqual(expected);

@@ -13,6 +13,7 @@ import { useMemo } from "react";
 
 import {
   flattenMaterialType,
+  formatMaterialTypesToPresentation,
   materialTypeFieldInMaterialTypesArray,
 } from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
@@ -42,8 +43,9 @@ function Details({ className = "", manifestation = {}, work = {} }) {
   const context = { context: "details" };
 
   // this materialtype is for displaying subtitle in section (seneste udgave)
-  const materialType =
-    manifestation?.materialTypes?.[0]?.materialTypeSpecific?.display;
+  const materialType = formatMaterialTypesToPresentation(
+    flattenMaterialType(manifestation)
+  );
   const subtitle = Translate({
     ...context,
     label: "subtitle",

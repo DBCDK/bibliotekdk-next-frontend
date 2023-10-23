@@ -152,7 +152,7 @@ export const constructButtonText = (workType, materialType, shortText) => {
 
   /**
    * @param {string} workType
-   * @param {string} materialTypeSpecific
+   * @param {string} materialType
    * @returns {string} translated material (book, movie, audiobook)
    */
   const getMaterialText = (workType, materialType) => {
