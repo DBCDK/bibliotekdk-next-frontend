@@ -51,26 +51,26 @@ export function Receipt({
   const isOrdering = orderIsLoading || articleOrderIsLoading || delay;
   const isOrdered =
     !!orderData?.submitOrder?.orderId ||
-    articleOrderData?.elba?.placeCopyRequest?.ok;
+    articleOrderData?.elba?.placeCopyRequest?.status === "OK";
 
   // Define if order has failed
   let hasFailed = false,
     failedMessage = undefined;
   if (orderData?.submitOrder && !orderData?.submitOrder?.ok) {
     hasFailed = true;
-    failedMessage = orderData?.submitOrder?.status;
+    failedMessage = orderData?.submitOrder?.message;
   } else if (!!orderError || !!articleOrderError) {
     hasFailed = true;
     failedMessage = orderError || articleOrderError;
   } else if (
     articleOrderData?.elba?.placeCopyRequest &&
-    articleOrderData?.elba?.placeCopyRequest?.ok
+    articleOrderData?.elba?.placeCopyRequest?.status !== "OK"
   ) {
     hasFailed = true;
     failedMessage = articleOrderData?.elba?.placeCopyRequest?.status;
   }
 
-  const showLinkToMyLibraries = true; //TODO should link to my libraries always be shown? @UX
+  const showLinkToMyLibraries = true; //TODO should link to my libraries always be shown? @bibdk2021-1934
 
   // Branch name
   const branchName = pickupBranch?.name;
@@ -160,11 +160,21 @@ export function Receipt({
             </div>
           )}
           <div className={styles.error}>
-            <Title className={styles.title} type="title5" tag="h2">
+            <Title
+              className={styles.title}
+              type="title5"
+              tag="h2"
+              dataCy="error-occured-title"
+            >
               {Translate({ context: "receipt", label: "errorOccured" })}
             </Title>
             {hasFailed && failedMessage && (
-              <Text tag="div" type="text2" className={styles.errorText}>
+              <Text
+                tag="div"
+                type="text2"
+                className={styles.errorText}
+                dataCy="order-failed-message"
+              >
                 {failedMessage}
               </Text>
             )}
@@ -173,6 +183,7 @@ export function Receipt({
                 className={styles.redirect}
                 onClick={() => router.push("/profil/mine-biblioteker")}
                 type="secondary"
+                dataCy="order-failed-see-libraries-button"
               >
                 {Translate({
                   context: "receipt",
