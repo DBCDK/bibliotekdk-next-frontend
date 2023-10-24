@@ -89,9 +89,9 @@ const BookmarkPage = () => {
   useEffect(() => {
     const handleRouteChange = () => {
       //if there is a page in url parameter, use that.
-      if (page && currentPage !== page) {
+      if (currentPage !== page) {
         const newPage = page || 1;
-        onPageChange({ page: newPage, scroll: true });
+        onPageChange({ page: newPage, scroll: false });
       }
     };
 
@@ -221,12 +221,15 @@ const BookmarkPage = () => {
     if (!page || page < 1) {
       return;
     }
+    //prevent scroll to top on small screens
     if (scroll && !isSmallScreen) {
-      //if (scroll && !isSmallScreen) {
       scrollToTop();
     }
-    //set page in url parameter
-    updateQueryParams({ params: { page: page }, router });
+
+    //set page in url parameter if higher than 1
+    if (page > 1) {
+      updateQueryParams({ params: { page: page }, router });
+    }
     //update page in useBookmarkhook
     setCurrentPage(page);
   };
