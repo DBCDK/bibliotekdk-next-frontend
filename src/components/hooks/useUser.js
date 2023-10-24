@@ -6,6 +6,7 @@ import { useData, useMutate } from "@/lib/api/api";
 import * as userFragments from "@/lib/api/user.fragments";
 import * as sessionFragments from "@/lib/api/session.fragments";
 import { useEffect, useState } from "react";
+import { addUserToUserData } from "@/lib/api/userData.mutations";
 
 // Context for storing anonymous session
 export const AnonymousSessionContext = createContext();
@@ -65,6 +66,9 @@ function useUserImpl() {
   const sessionMutate = useMutate();
   const isAuthenticated = !!session?.user?.userId;
   const hasCulrUniqueId = !!session?.user?.uniqueId;
+  const { data: extendedUserData, isLoading: isLoadingExtendedData } = useData(
+    isAuthenticated && userFragments.extendedData()
+  );
 
   const {
     data: userData,
@@ -111,6 +115,17 @@ function useUserImpl() {
     agencies: [],
     ...sessionData,
   });
+
+  //if user is logged in and not already created in userData service, then create user.
+  useEffect(() => {
+    if (
+      isAuthenticated &&
+      !isLoadingExtendedData &&
+      !extendedUserData?.user?.createdAt
+    ) {
+      addUserToUserData({ userDataMutation: sessionMutate });
+    }
+  }, [isAuthenticated, extendedUserData, isLoadingExtendedData]);
 
   useEffect(() => {
     if (!isAuthenticated) {
