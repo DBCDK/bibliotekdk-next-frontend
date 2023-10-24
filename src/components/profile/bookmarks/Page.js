@@ -188,9 +188,11 @@ const BookmarkPage = () => {
    * scrolls to the top of the page
    */
   const scrollToTop = () => {
-    setTimeout(() => {
-      scrollToElement?.current?.scrollIntoView({ behavior: "smooth" });
-    }, 300);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // setTimeout(() => {
+    //   scrollToElement?.current?.scrollIntoView({ behavior: "smooth" });
+    // }, 300);
   };
 
   const constructEditionText = (bookmark) => {
@@ -203,13 +205,23 @@ const BookmarkPage = () => {
      */
     return createEditionText(bookmark);
   };
+
+  /**
+   * Updates the current page. Updates both state and query parameter in url.
+   *
+   * @param {number} page
+   * New page number
+   * @param {boolean} scroll
+   * If true, scroll to top after page update
+   */
   const onPageChange = async ({ page, scroll }) => {
     const isSmallScreen = breakpoint == "xs";
     if (!page || page < 1) {
       return;
     }
+    if ( !isSmallScreen) {
 
-    if (scroll && !isSmallScreen) {
+    //if (scroll && !isSmallScreen) {
       scrollToTop();
     }
     //set page in url parameter
@@ -259,6 +271,7 @@ const BookmarkPage = () => {
   }
 
   return (
+
     <ProfileLayout
       title={Translate({
         context: CONTEXT,
