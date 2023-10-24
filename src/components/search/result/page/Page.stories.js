@@ -7,9 +7,9 @@ const exportedObject = {
   title: "search/Result",
 };
 
-const { ALL_WORKS } = automock_utils();
-
 export default exportedObject;
+
+const { ALL_WORKS } = automock_utils();
 
 export function Partial() {
   const partial = [
