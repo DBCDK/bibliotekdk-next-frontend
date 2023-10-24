@@ -72,8 +72,8 @@ const BookmarkPage = () => {
   const scrollToElement = useRef(null);
   const modal = useModal();
   const router = useRouter();
-  const { page:urlPage } = router.query;
-  //  const { page:urlPage }
+  const { page: urlPage } = router.query;
+
   useEffect(() => {
     setSortBy(sortByValue);
   }, [sortByValue]);
@@ -84,7 +84,6 @@ const BookmarkPage = () => {
     setSortByValue(savedValue || sortByItems[0].key);
     //if page is passed in url, set it as currentpage
     onPageChange(urlPage);
-    //    onPageChange({ page, scroll: false });
   }, []);
 
   useEffect(() => {
@@ -92,9 +91,7 @@ const BookmarkPage = () => {
       //if there is a page in url parameter, use that.
       if (currentPage !== urlPage) {
         const newPage = urlPage || 1;
-        onPageChange(newPage,true);
-
-        //  onPageChange({ page: newPage, scroll: false });
+        onPageChange(newPage, true);
       }
     };
 
@@ -222,7 +219,7 @@ const BookmarkPage = () => {
 
     //scroll to top on page change
     if (scroll) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
 
       //scrollToElement?.current?.scrollIntoView({ behavior: "smooth" });
     }
