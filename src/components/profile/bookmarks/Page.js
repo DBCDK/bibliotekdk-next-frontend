@@ -72,8 +72,8 @@ const BookmarkPage = () => {
   const scrollToElement = useRef(null);
   const modal = useModal();
   const router = useRouter();
-  const { page } = router.query;
-
+  const { page:urlPage } = router.query;
+  //  const { page:urlPage }
   useEffect(() => {
     setSortBy(sortByValue);
   }, [sortByValue]);
@@ -83,15 +83,18 @@ const BookmarkPage = () => {
     //if there is no saved values in sessionstorage, use createdAt sorting as default
     setSortByValue(savedValue || sortByItems[0].key);
     //if page is passed in url, set it as currentpage
-    onPageChange({ page, scroll: false });
+    onPageChange(urlPage);
+    //    onPageChange({ page, scroll: false });
   }, []);
 
   useEffect(() => {
     const handleRouteChange = () => {
       //if there is a page in url parameter, use that.
-      if (currentPage !== page) {
-        const newPage = page || 1;
-        onPageChange({ page: newPage, scroll: false });
+      if (currentPage !== urlPage) {
+        const newPage = urlPage || 1;
+        onPageChange(newPage,true);
+
+        //  onPageChange({ page: newPage, scroll: false });
       }
     };
 
@@ -185,17 +188,6 @@ const BookmarkPage = () => {
       .map((bm) => ({ bookmarkId: bm.bookmarkId, key: bm.key }));
     deleteBookmarks(toDelete);
   };
-  /**
-   * scrolls to the top of the page
-   */
-  const scrollToTop = () => {
-    // window.scrollTo({ top: 0, behavior: 'smooth' });
-    scrollToElement?.current?.scrollIntoView({ behavior: "smooth" });
-
-    // setTimeout(() => {
-    //   scrollToElement?.current?.scrollIntoView({ behavior: "smooth" });
-    // }, 300);
-  };
 
   const constructEditionText = (bookmark) => {
     if (!bookmark.pid) {
@@ -216,22 +208,24 @@ const BookmarkPage = () => {
    * @param {boolean} scroll
    * If true, scroll to top after page update
    */
-  const onPageChange = async ({ page, scroll }) => {
-    const isSmallScreen = breakpoint == "xs";
+  //  const onPageChange = async ({ page, scroll }) => {
+  const onPageChange = async (page, scroll) => {
     if (!page || page < 1) {
       return;
     }
-    //prevent scroll to top on small screens
-    if (scroll && !isSmallScreen) {
-      scrollToTop();
-    }
-
     //set page in url parameter if higher than 1
     if (page > 1) {
       updateQueryParams({ params: { page: page }, router });
     }
     //update page in useBookmarkhook
     setCurrentPage(page);
+
+    //scroll to top on page change
+    if (scroll) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      //scrollToElement?.current?.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   const isAllSelected = checkboxList?.length === allBookmarksData?.length;
@@ -418,7 +412,8 @@ const BookmarkPage = () => {
           numPages={totalPages}
           currentPage={parseInt(currentPage, 10)}
           className={styles.pagination}
-          onChange={(page) => onPageChange({ page: page, scroll: true })}
+          // onChange={(page) => onPageChange({ page: page, scroll: true })}
+          onChange={onPageChange}
         />
       )}
     </ProfileLayout>
