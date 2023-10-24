@@ -1192,6 +1192,40 @@
         "en": "Remove"
       }
     },
+    "bookmark-order": {
+      "efilter-title": {
+        "da": "Bemærk",
+        "en": "Please notice"
+      },
+      "efilter-subheading": {
+        "da": "%s materialer findes online, og kræver ikke bestilling",
+        "en": "%s materials is available online and doesn't require an order"
+      },
+      "efilter-subheading-singular": {
+        "da": "%s materiale findes online, og kræver ikke bestilling",
+        "en": "%s material is available online and doesn't require an order"
+      },
+      "efilter-proceed-text": {
+        "da": "På næste side vises de %s materialer, som du kan bestille",
+        "en": "The %s materials you can order will show on the next page"
+      },
+      "efilter-proceed-text-singular": {
+        "da": "På næste side vises det materiale, som du kan bestille",
+        "en": "The material you can order will show on the next page"
+      },
+      "efilter-proceed": {
+        "da": "Næste",
+        "en": "Next"
+      },
+      "multiorder-title": {
+        "da": "Bestil",
+        "en": "Order"
+      },
+      "multiorder-subheading": {
+        "da": "Du er ved at bestille %s materialer",
+        "en": "You are about to order %s materials"
+      }
+    },
     "reviews": {
       "title": {
         "da": "Anmeldelser (%s)",
