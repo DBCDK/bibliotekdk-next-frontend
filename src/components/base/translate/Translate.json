@@ -2768,19 +2768,19 @@
     },
     "addLibrary": {
       "title": {
-        "da": "Tilføj et uddannelsesbibliotek til din profil", 
+        "da": "Tilføj et uddannelsesbibliotek til din profil",
         "en": "LABEL: Mangler oversættelse!"
       },
       "librarySearchLabel": {
-        "da": "Find bibliotek", 
+        "da": "Find bibliotek",
         "en": "LABEL: Mangler oversættelse!"
       },
-      "adgangsplatformTitle":{
-        "da": "Log ind med %s", 
+      "adgangsplatformTitle": {
+        "da": "Log ind med %s",
         "en": "LABEL: Mangler oversættelse!"
       },
-      "adgangsplatformText":{
-        "da": "For at tilføje biblioteket skal du logge ind. Du skal bruge dine låneroplysninger, som når du ellers låner materialer.", 
+      "adgangsplatformText": {
+        "da": "For at tilføje biblioteket skal du logge ind. Du skal bruge dine låneroplysninger, som når du ellers låner materialer.",
         "en": "LABEL: Mangler oversættelse!"
       },
       "hasVerificationTitle": {
@@ -2826,27 +2826,27 @@
     },
     "removeLibrary": {
       "title": {
-        "da": "Fjern %s", 
+        "da": "Fjern %s",
         "en": "LABEL: Mangler oversættelse!"
       },
       "text": {
-        "da": "Du er ved at fjerne %s fra din liste over biblioteker. Er du sikker på at du vil fjerne biblioteket fra listen over dine biblioteker?", 
+        "da": "Du er ved at fjerne %s fra din liste over biblioteker. Er du sikker på at du vil fjerne biblioteket fra listen over dine biblioteker?",
         "en": "LABEL: Mangler oversættelse!"
       },
       "confirmButton": {
-        "da": "Fjern bibliotek", 
+        "da": "Fjern bibliotek",
         "en": "LABEL: Mangler oversættelse!"
       },
       "cancelButton": {
-        "da": "Fortryd", 
+        "da": "Fortryd",
         "en": "LABEL: Mangler oversættelse!"
       },
       "errorTitle": {
-        "da": "Biblioteket blev ikke fjernet", 
+        "da": "Biblioteket blev ikke fjernet",
         "en": "LABEL: Mangler oversættelse!"
       },
       "errorText": {
-        "da": "Noget gik galt da vi forsøgte at fjerne dit bibliotek fra listen, prøv igen eller kontakt kundeservice.dbc.dk", 
+        "da": "Noget gik galt da vi forsøgte at fjerne dit bibliotek fra listen, prøv igen eller kontakt kundeservice.dbc.dk",
         "en": "LABEL: Mangler oversættelse!"
       }
     },

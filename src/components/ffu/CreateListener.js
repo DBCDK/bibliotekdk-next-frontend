@@ -1,3 +1,8 @@
+/**
+ * @file Listens for FFu users which just finished the verification processs
+ * - this file contains the functionality that actually creates the user in culr
+ */
+
 import { useEffect } from "react";
 
 import useVerification from "@/components/hooks/useVerification";
@@ -71,22 +76,33 @@ export default function Listener() {
 
   // CreateAccount post action to API
   useEffect(() => {
-    // if user is signed in
-    if (isLoggedIn) {
-      // User is authenticated through adgangsplatformen
-      if (isAuthenticated) {
-        // User has no culr account (not created in culr)
-        if (hasCulrUniqueId) {
-          // if user is CPR validated
-          if (isCPRValidated) {
-            // Users has an active verification process - verification is less than 60 minutes old
-            if (hasValidVerificationProcess) {
-              culrMutation.post(createAccount(data));
-            }
-          }
-        }
-      }
+    // User is not logged IN
+    if (!isLoggedIn) {
+      return;
     }
+
+    // User is NOT authenticated through adgangsplatformen
+    if (!isAuthenticated) {
+      return;
+    }
+
+    // User has no culr account (not created in culr)
+    if (!hasCulrUniqueId) {
+      return;
+    }
+
+    // User is NOT CPR validated
+    if (!isCPRValidated) {
+      return;
+    }
+
+    // Users has NO active verification process
+    if (!hasValidVerificationProcess) {
+      return;
+    }
+
+    // Create User in CULR
+    culrMutation.post(createAccount(data));
   }, [isLoggedIn, isCPRValidated, hasValidVerificationProcess]);
 
   return null;

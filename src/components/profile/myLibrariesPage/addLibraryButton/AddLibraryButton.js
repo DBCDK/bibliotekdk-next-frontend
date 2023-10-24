@@ -1,3 +1,7 @@
+/**
+ * @file This file contains the FFU associate button
+ */
+
 import Translate from "@/components/base/translate/Translate";
 import { useModal } from "@/components/_modal/Modal";
 import IconButton from "@/components/base/iconButton/IconButton";

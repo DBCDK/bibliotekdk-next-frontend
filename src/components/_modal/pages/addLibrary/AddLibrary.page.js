@@ -1,6 +1,6 @@
 /**
- * @file - Login.js
- * contains the login page for login modal
+ * @file - AddLiobrary.js
+ * contains the ffu library selection to add FFu libraries to an folk account
  */
 
 import PropTypes from "prop-types";
@@ -22,13 +22,20 @@ import { useAccessToken } from "@/components/hooks/useUser";
 import styles from "./AddLibrary.module.css";
 
 /**
+ * Function to select a FFU library from a library list
+ * Selecttin triggers a verification process uypdate and a new login flow
+ *
  * @param {obj} data
  * @param {boolean} isVisible
  * @param {function} onChange
  * @param {boolean} isLoading
+ * @param {Array} agencies
+ * @param {func} updateVerification
  * @param {obj} modal
  * @param {obj} context
  * @param {string} context.title
+ *
+ * @returns {component}
  */
 export function AddLibrary({
   data,

@@ -1,3 +1,7 @@
+/**
+ * @file Listens for FFU user logins which potentially colud be created in CULR (Get a bibdk account)
+ */
+
 import { useEffect } from "react";
 
 import useVerification from "@/components/hooks/useVerification";
@@ -23,63 +27,71 @@ export default function Listener() {
   const hasVerificationObject = verification.exist();
 
   useEffect(() => {
-    // if user is signed in
-    if (isLoggedIn) {
-      // User is authenticated through adgangsplatformen
-      if (isAuthenticated) {
-        // User has no culr account (not created in culr)
-        if (!hasCulrUniqueId) {
-          // The agency which the user has signedIn to, is an FFU library
-          if (agencyId && isFFUAgency(agencyId)) {
-            // Users doesnt have an active verification - verification is more than 24 hours old
-            if (!hasVerificationObject) {
-              // Select the loggedInBranch from users agencies list
-              let match = {};
-              agencies?.forEach((agency) => {
-                match = agency?.result?.find(
-                  (branch) => branch.branchId === branchId
-                );
-              });
+    // if user is NOT signed in
+    if (!isLoggedIn) {
+      return;
+    }
 
-              // if pickupBranch match found
-              if (match) {
-                // create verification process (lasts 24 hours)
-                // can be used within 60 minutes
-                verification.create({
-                  origin: "listener",
-                });
+    // User is NOT authenticated through adgangsplatformen
+    if (!isAuthenticated) {
+      return;
+    }
 
-                /* if verify modal is not already triggered
-                 *
-                 * Note: bug happens when deleting storage and
-                 * refreshing page when modal is open
-                 */
-                if (modal.index("verify") < 0) {
-                  // Ensure other modals are initialized before 'verify' push
-                  // - Used at login in order.modal e.g.
-                  setTimeout(() => {
-                    // Fire the create bibdk account modal
-                    modal.push("verify", {
-                      agencyId: match?.agencyId,
-                      agencyName: match?.agencyName,
-                      branchId: match?.branchId,
-                      title: Translate({
-                        context: "addLibrary",
-                        label: "verificationTitle",
-                        vars: [match?.agencyName],
-                      }),
-                      text: Translate({
-                        context: "addLibrary",
-                        label: "verificationText",
-                        vars: [match?.agencyName],
-                      }),
-                    });
-                  }, 500);
-                }
-              }
-            }
-          }
-        }
+    // User already has a uniqueId account (exist in culr)
+    if (hasCulrUniqueId) {
+      return;
+    }
+
+    // If The agency which the user has signedIn to, is NOT an FFU library
+    if (!(agencyId && isFFUAgency(agencyId))) {
+      return;
+    }
+
+    // Users already has an active verification - verification is more than 24 hours old
+    if (hasVerificationObject) {
+      return;
+    }
+
+    // Select the loggedInBranch from users agencies list
+    let match = {};
+    agencies?.forEach((agency) => {
+      match = agency?.result?.find((branch) => branch.branchId === branchId);
+    });
+
+    // if pickupBranch match found
+    if (match) {
+      // create verification process (lasts 24 hours)
+      // can be used within 60 minutes
+      verification.create({
+        origin: "listener",
+      });
+
+      /* if verify modal is not already triggered
+       *
+       * Note: bug happens when deleting storage and
+       * refreshing page when modal is open
+       */
+      if (modal.index("verify") < 0) {
+        // Ensure other modals are initialized before 'verify' push
+        // - Used at login in order.modal e.g.
+        setTimeout(() => {
+          // Fire the create bibdk account modal
+          modal.push("verify", {
+            agencyId: match?.agencyId,
+            agencyName: match?.agencyName,
+            branchId: match?.branchId,
+            title: Translate({
+              context: "addLibrary",
+              label: "verificationTitle",
+              vars: [match?.agencyName],
+            }),
+            text: Translate({
+              context: "addLibrary",
+              label: "verificationText",
+              vars: [match?.agencyName],
+            }),
+          });
+        }, 500);
       }
     }
   }, [isLoggedIn, branchId, agencies]);

@@ -1,3 +1,8 @@
+/**
+ * @file this file shows a universal status message modal page
+ * This could be both confirmations and error messages
+ */
+
 import Top from "@/components/_modal/pages/base/top";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";

@@ -1,3 +1,7 @@
+/**
+ * @file - this file is a modal page which shows a delete library confirmation modal
+ */
+
 import { useEffect } from "react";
 
 import Top from "@/components/_modal/pages/base/top";

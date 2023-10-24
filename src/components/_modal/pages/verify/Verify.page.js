@@ -1,3 +1,7 @@
+/**
+ * @file This modal page handles the CPR verification process before creating FFU users in CULR
+ */
+
 import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 import Top from "@/components/_modal/pages/base/top";
@@ -31,7 +35,7 @@ export default function Verify({ modal, context }) {
   // Handles the "Skip" button click
   function handleOnClick() {
     // handles if modal should have "back" functionality
-    const hasBack = !!(index > 0);
+    const hasBack = index > 0;
     hasBack ? modal.prev() : modal.clear();
   }
 
