@@ -84,7 +84,7 @@ const BookmarkPage = () => {
     setSortByValue(savedValue || sortByItems[0].key);
     //if page is passed in url, set it as currentpage
     // if (page > 0) {
-    onPageChange(page);
+    onPageChange({page,scroll: false});
     // }
   }, []);
 
@@ -95,8 +95,9 @@ const BookmarkPage = () => {
       console.log("useEffect.currentPage", currentPage);
 
       if (currentPage !== page) {
-        // const newPage = page || 1;
-        onPageChange(page);
+      
+         const newPage = page || 1;
+        onPageChange({page:newPage});
       }
     };
 
@@ -209,13 +210,13 @@ const BookmarkPage = () => {
      */
     return createEditionText(bookmark);
   };
-  const onPageChange = async (newPage) => {
+  const onPageChange = async ({page,scroll}) => {
     const isSmallScreen = breakpoint == "xs";
     console.log("in onPageChange.isSmallScreen", isSmallScreen);
-    console.log("in onPageChange.newPage", newPage);
+    console.log("in onPageChange.newPage", page);
 
-    if (!newPage || newPage < 1) {
-      console.log("onPageChange.in return", newPage);
+    if (!page || page < 1) {
+      console.log("onPageChange.in return", page);
 
       return;
     }
@@ -224,14 +225,14 @@ const BookmarkPage = () => {
     //   newPage = totalPages ;
     // }
 
-    if (!isSmallScreen) {
+    if (scroll&&!isSmallScreen) {
       scrollToTop();
     }
-    console.log("newPage.before update", newPage);
+    console.log("newPage.before update", page);
     //set page in url parameter
-    updateQueryParams({ params: { page: newPage }, router });
+    updateQueryParams({ params: { page: page }, router });
     //update page in useBookmarkhook
-    setCurrentPage(newPage);
+    setCurrentPage(page);
   };
 
   const isAllSelected = checkboxList?.length === allBookmarksData?.length;
@@ -418,7 +419,7 @@ const BookmarkPage = () => {
           numPages={totalPages}
           currentPage={parseInt(currentPage, 10)}
           className={styles.pagination}
-          onChange={onPageChange}
+          onChange={(page)=>onPageChange({page: page, scroll: true})}
         />
       )}
     </ProfileLayout>
