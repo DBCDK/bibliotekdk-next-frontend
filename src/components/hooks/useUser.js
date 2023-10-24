@@ -43,6 +43,7 @@ function useUserMock() {
     error: null,
     isAuthenticated: true,
     hasCulrUniqueId: true,
+    isCPRValidated: true,
     isLoggedIn: true,
     loanerInfo: { ...data, userParameters: { ...loggedInUser } },
     updateLoanerInfo: (obj) => {
@@ -62,7 +63,6 @@ function useUserImpl() {
   const { data, mutate } = useData(sessionFragments.session());
   const { data: session } = useSession();
   const sessionMutate = useMutate();
-
   const isAuthenticated = !!session?.user?.userId;
   const hasCulrUniqueId = !!session?.user?.uniqueId;
 
@@ -84,6 +84,8 @@ function useUserImpl() {
       loggedInUser.userMail = user.mail;
     }
   }
+
+  const isCPRValidated = !!userData?.user?.isCPRValidated;
 
   const sessionData = useMemo(() => {
     const sessionCopy = data?.session;
@@ -147,9 +149,14 @@ function useUserImpl() {
     error: userDataError,
     isAuthenticated,
     hasCulrUniqueId,
+    isCPRValidated,
     loanerInfo,
     isGuestUser: isGuestUser,
     isLoggedIn: isAuthenticated || isGuestUser, //TODO guestUsers are not logged in - maybe "hasUserParameters" is a better name
+    updateUserData: () => {
+      // Broadcast update
+      userMutate();
+    },
     updateLoanerInfo: async (obj) => {
       const newSession = (newSession = merge({}, sessionData, obj));
       // Update global loaner info object

@@ -18,6 +18,10 @@ import Login from "./login";
 import MobileLogin from "./mobileLogin";
 import OpenAdgangsplatform from "./openAdgangsplatform";
 import LoginNotSupported from "./loginNotSupported";
+import AddLibrary from "./addLibrary";
+import Verify from "./verify";
+import StatusMessage from "./statusMessage";
+import RemoveLibrary from "./removeLibrary";
 import DeleteProfile from "./deleteProfile";
 import EMaterialFilter from "./bookmarkOrder/EMaterialFilter";
 import MultiOrder from "./bookmarkOrder/multi-order/MultiOrder.page";
@@ -43,6 +47,10 @@ const _modal = {
   MobileLogin,
   LoginNotSupported,
   OpenAdgangsplatform,
+  AddLibrary,
+  Verify,
+  StatusMessage,
+  RemoveLibrary,
   DeleteProfile,
   EMaterialFilter,
   MultiOrder,

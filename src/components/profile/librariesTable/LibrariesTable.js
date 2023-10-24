@@ -6,6 +6,22 @@ import Title from "@/components/base/title";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { isPublicLibrary } from "@/lib/utils";
 
+import { useModal } from "@/components/_modal";
+
+function RemoveLibraryButton({ agencyId, agencyName }) {
+  const modal = useModal();
+
+  return (
+    <IconButton
+      icon="close"
+      onClick={() => modal.push("removeLibrary", { agencyId, agencyName })}
+      alt={Translate({ context: "profile", label: "remove" })}
+    >
+      {Translate({ context: "profile", label: "remove" })}
+    </IconButton>
+  );
+}
+
 /**
  * Tablerow to be used in LibrariesTable component.
  * @param {Object} props
@@ -54,12 +70,7 @@ function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
         </div>
 
         {!isPublic && (
-          <IconButton
-            icon="close"
-            alt={Translate({ context: "profile", label: "remove" })}
-          >
-            {Translate({ context: "profile", label: "remove" })}
-          </IconButton>
+          <RemoveLibraryButton agencyId={agencyId} agencyName={agencyName} />
         )}
       </div>
     );
@@ -84,12 +95,7 @@ function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
       </div>
       {!isPublic && (
         <td>
-          <IconButton
-            icon="close"
-            alt={Translate({ context: "profile", label: "remove" })}
-          >
-            {Translate({ context: "profile", label: "remove" })}
-          </IconButton>
+          <RemoveLibraryButton agencyId={agencyId} agencyName={agencyName} />
         </td>
       )}
     </tr>
