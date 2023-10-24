@@ -210,7 +210,7 @@ const BookmarkPage = () => {
     if (!page || page < 1) {
       return;
     }
-    //set page in url parameter if higher than 1
+    //set page in url parameter if the page is greater than 1
     if (page > 1) {
       updateQueryParams({ params: { page: page }, router });
     }
@@ -409,7 +409,6 @@ const BookmarkPage = () => {
           numPages={totalPages}
           currentPage={parseInt(currentPage, 10)}
           className={styles.pagination}
-          // onChange={(page) => onPageChange({ page: page, scroll: true })}
           onChange={onPageChange}
         />
       )}
