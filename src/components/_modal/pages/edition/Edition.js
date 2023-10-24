@@ -63,7 +63,7 @@ export const ChoosePeriodicaCopyRow = ({
             });
           }}
           className={styles.periodicaformlink}
-          border={{ bottom: true, top: false }}
+          border={{ bottom: { keepVisible: true }, top: false }}
           tag={"button"}
           iconSrc={ChevronRight}
           iconPlacement={"right"}
