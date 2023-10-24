@@ -79,6 +79,35 @@ OrderViaILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   },
 });
 
+export function OrderPhysicalMaterialFails() {
+  return (
+    <OrderPageComponentBuilder
+      title="Order via ILL fails"
+      description="Showcasing an error after user submits an order - which errors could we get here, that are not caught before we order?"
+      workId={"some-work-id-1"}
+      selectedPids={["some-pid-1"]}
+    />
+  );
+}
+
+OrderPhysicalMaterialFails.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {
+        Mutation: {
+          submitOrder: () => {
+            return {
+              status: "UNKNOWN_ERROR", //which errors could we get here?
+              message: "Some unknown error occured",
+              ok: false,
+            };
+          },
+        },
+      },
+    },
+  },
+});
+
 export function NoUserAgencies() {
   useMockLoanerInfo({
     pickUpBranch: "",
@@ -156,6 +185,43 @@ OrderIndexedPeriodicaArticle.story = merge({}, DEFAULT_STORY_PARAMETERS, {
               borrowerStatus: BORROWER_STATUS_TRUE,
               result: [BRANCH_3],
             };
+          },
+        },
+      },
+    },
+  },
+});
+
+export function OrderIndexedPeriodicaArticleFails() {
+  useMockLoanerInfo({});
+  return (
+    <OrderPageComponentBuilder
+      title="Order Indexed Periodica Article fails"
+      description={`Showcasing error after digital article was ordered. Error code was randomly picked and does not depend on the underlying data such as pid, etc. Which errors could we get here?`}
+      workId={"some-work-id-2"}
+      selectedPids={["some-pid-4"]}
+    />
+  );
+}
+
+OrderIndexedPeriodicaArticleFails.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {
+        Query: {
+          user: () => USER_3,
+          branches: () => {
+            return {
+              borrowerStatus: BORROWER_STATUS_TRUE,
+              result: [BRANCH_3],
+            };
+          },
+        },
+        ElbaServices: {
+          placeCopyRequest: (args) => {
+            // Used for cypress testing
+            console.debug("elbaPlaceCopy", args?.variables?.input);
+            return { status: "ERROR_PID_NOT_RESERVABLE" }; //just a random error
           },
         },
       },
