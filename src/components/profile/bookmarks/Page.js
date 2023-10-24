@@ -83,21 +83,14 @@ const BookmarkPage = () => {
     //if there is no saved values in sessionstorage, use createdAt sorting as default
     setSortByValue(savedValue || sortByItems[0].key);
     //if page is passed in url, set it as currentpage
-    // if (page > 0) {
-    onPageChange({page,scroll: false});
-    // }
+    onPageChange({ page, scroll: false });
   }, []);
 
   useEffect(() => {
-    console.log("in useeffect");
     const handleRouteChange = () => {
-      console.log("useEffect.page", page);
-      console.log("useEffect.currentPage", currentPage);
-
       if (currentPage !== page) {
-      
-         const newPage = page || 1;
-        onPageChange({page:newPage});
+        const newPage = page || 1;
+        onPageChange({ page: newPage });
       }
     };
 
@@ -106,7 +99,7 @@ const BookmarkPage = () => {
     return () => {
       router.events.off("routeChangeComplete", handleRouteChange);
     };
-  }, [router]);
+  }, [router, isPopulateLoading]);
 
   const onToggleCheckbox = (key) => {
     const index = checkboxList.findIndex((item) => item.key === key);
@@ -197,7 +190,7 @@ const BookmarkPage = () => {
   const scrollToTop = () => {
     setTimeout(() => {
       scrollToElement?.current?.scrollIntoView({ behavior: "smooth" });
-    }, 200);
+    }, 300);
   };
 
   const constructEditionText = (bookmark) => {
@@ -210,25 +203,15 @@ const BookmarkPage = () => {
      */
     return createEditionText(bookmark);
   };
-  const onPageChange = async ({page,scroll}) => {
+  const onPageChange = async ({ page, scroll }) => {
     const isSmallScreen = breakpoint == "xs";
-    console.log("in onPageChange.isSmallScreen", isSmallScreen);
-    console.log("in onPageChange.newPage", page);
-
     if (!page || page < 1) {
-      console.log("onPageChange.in return", page);
-
       return;
     }
-    console.log("onPageChange.after return");
-    // if (newPage > totalPages) {
-    //   newPage = totalPages ;
-    // }
 
-    if (scroll&&!isSmallScreen) {
+    if (scroll && !isSmallScreen) {
       scrollToTop();
     }
-    console.log("newPage.before update", page);
     //set page in url parameter
     updateQueryParams({ params: { page: page }, router });
     //update page in useBookmarkhook
@@ -419,7 +402,7 @@ const BookmarkPage = () => {
           numPages={totalPages}
           currentPage={parseInt(currentPage, 10)}
           className={styles.pagination}
-          onChange={(page)=>onPageChange({page: page, scroll: true})}
+          onChange={(page) => onPageChange({ page: page, scroll: true })}
         />
       )}
     </ProfileLayout>
