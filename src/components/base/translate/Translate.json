@@ -2247,6 +2247,10 @@
         "da": "Vælg eksemplar eller artikel",
         "en": "LABEL: mangler oversættelse"
       },
+      "correct": {
+        "da": "Rediger eksemplar eller artikel",
+        "en": "LABEL: mangler oversættelse"
+      },
       "description": {
         "da": "Angiv den udgave, som du er interesseret i.",
         "en": "LABEL: mangler oversættelse"
