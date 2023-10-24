@@ -88,9 +88,10 @@ const BookmarkPage = () => {
 
   useEffect(() => {
     const handleRouteChange = () => {
-      if (currentPage !== page) {
+      //if there is a page in url parameter, use that.
+      if (page && currentPage !== page) {
         const newPage = page || 1;
-        onPageChange({ page: newPage });
+        onPageChange({ page: newPage, scroll: true });
       }
     };
 
@@ -99,7 +100,7 @@ const BookmarkPage = () => {
     return () => {
       router.events.off("routeChangeComplete", handleRouteChange);
     };
-  }, [router, isPopulateLoading]);
+  }, [router]);
 
   const onToggleCheckbox = (key) => {
     const index = checkboxList.findIndex((item) => item.key === key);
@@ -188,7 +189,8 @@ const BookmarkPage = () => {
    * scrolls to the top of the page
    */
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollToElement?.current?.scrollIntoView({ behavior: "smooth" });
 
     // setTimeout(() => {
     //   scrollToElement?.current?.scrollIntoView({ behavior: "smooth" });
@@ -219,9 +221,8 @@ const BookmarkPage = () => {
     if (!page || page < 1) {
       return;
     }
-    if ( !isSmallScreen) {
-
-    //if (scroll && !isSmallScreen) {
+    if (scroll && !isSmallScreen) {
+      //if (scroll && !isSmallScreen) {
       scrollToTop();
     }
     //set page in url parameter
@@ -271,7 +272,6 @@ const BookmarkPage = () => {
   }
 
   return (
-
     <ProfileLayout
       title={Translate({
         context: CONTEXT,
