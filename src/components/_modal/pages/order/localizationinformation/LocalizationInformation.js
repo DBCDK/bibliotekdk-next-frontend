@@ -19,7 +19,7 @@ function LocalizationInformation({
   onClick,
   availableAsPhysicalCopy,
 }) {
-  if (isDigitalCopy) {
+  if (availableAsDigitalCopy) {
     return null;
   }
   return (
