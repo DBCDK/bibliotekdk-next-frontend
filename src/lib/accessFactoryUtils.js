@@ -418,7 +418,7 @@ export function getCountOfAllAllowedEnrichedAccessSorted(
  * @param singleAccess
  * @returns {boolean}
  */
-export function checkSingleDigitalCopy(singleAccess) {
+function checkSingleDigitalCopy(singleAccess) {
   return !!(
     singleAccess?.__typename === AccessEnum.DIGITAL_ARTICLE_SERVICE &&
     singleAccess?.issn
