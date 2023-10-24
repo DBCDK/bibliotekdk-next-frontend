@@ -34,7 +34,7 @@
 
 .infoBox {
   background-color: var(--concrete);
-  width: 496px;
+  width: 490px;
   padding: var(--pt2) var(--pt2_5);
 }
 .infoBoxText {
@@ -43,6 +43,11 @@
 }
 .infoContainer {
   display: flex;
+}
+@media (max-width: 525px) {
+  .infoBox {
+    width: 100%;
+  }
 }
 @media (max-width: 800px) {
   .infoContainer {
