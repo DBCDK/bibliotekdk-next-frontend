@@ -1,0 +1,46 @@
+.verify {
+  max-width: 600px;
+  padding: 0 var(--pt2);
+  height: 100%;
+}
+
+.verify img {
+  margin-left: var(--pt1);
+}
+
+.verify p {
+  margin-top: var(--pt3);
+}
+
+.text,
+.benefits {
+  display: inline-block;
+  margin-right: var(--pt2);
+  margin-top: var(--pt2);
+}
+
+.verify ul {
+  margin: var(--pt2) 0;
+  padding-left: var(--pt4);
+}
+
+.verify ul li {
+  padding-left: var(--pt05);
+}
+
+.mitIDButton,
+.closeButton {
+  width: 100%;
+  margin-top: var(--pt5);
+  display: block;
+}
+
+.closeButton {
+  margin-top: var(--pt2);
+}
+
+@media (min-width: 576px) {
+  .verify {
+    padding: var(--pt2) var(--pt6) var(--pt4) var(--pt6);
+  }
+}
