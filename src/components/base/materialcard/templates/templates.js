@@ -217,9 +217,13 @@ export function templateForLocalizations(
  * @param {React.JSX.Element} props.children
  * @returns {React.JSX.Element}
  */
-export function templateNew(
-  { material, singleManifestation, children, isPeriodicaLike, isDigitalArticle } //Leveres som digital kopi til din mail eller "Første tilgængelige eksemplar"
-) {
+export function templateImageToLeft({
+  material,
+  singleManifestation,
+  children,
+  isPeriodicaLike,
+  isDigitalArticle,
+}) {
   const fullTitle =
     singleManifestation === true
       ? material?.titles?.full?.join(": ")
@@ -237,7 +241,6 @@ export function templateNew(
     material?.materialTypesArray
   );
 
-  console.log("MATERRIAL ", material);
   const edition = [
     material?.edition?.publicationYear?.display,
     material?.publisher,
@@ -252,7 +255,7 @@ export function templateNew(
     fullTitle: fullTitle,
     image_src: material?.cover?.detail,
     workId: material?.workId,
-    large: true,
+    imageLeft: true,
     children: (
       <div>
         <Text {...propFunc("text1", 2)} title={fullTitle}>
@@ -280,11 +283,6 @@ export function templateNew(
             {singleManifestation && edition}
           </Text>
         )}
-        {/*MAYBE Optional button component OR entire row here
-         skal kunne rumme --> Vælg eksemplar eller artikel (tidskrifter - alt for damerne)
-        kan ikke bestilles til dit bibliotek / fjern-knap --> huskeliste
-
-        */}
         {children}
       </div>
     ),

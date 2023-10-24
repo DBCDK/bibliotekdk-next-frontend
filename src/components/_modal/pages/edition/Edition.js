@@ -21,7 +21,7 @@ import isEmpty from "lodash/isEmpty";
 import { IconLink } from "@/components/base/iconlink/IconLink";
 import ChevronRight from "@/public/icons/chevron_right.svg";
 import MaterialCard from "@/components/base/materialcard/MaterialCard";
-import { templateNew } from "@/components/base/materialcard/templates/templates";
+import { templateImageToLeft } from "@/components/base/materialcard/templates/templates";
 import Icon from "@/components/base/icon/Icon";
 
 export const ChoosePeriodicaCopyRow = ({
@@ -62,7 +62,6 @@ export const ChoosePeriodicaCopyRow = ({
               periodicaForm: periodicaForm,
             });
           }}
-          disabled={false}
           className={styles.periodicaformlink}
           border={{ bottom: true, top: false }}
           tag={"button"}
@@ -345,7 +344,7 @@ export default function Wrap({
     ) : null;
 
     const materialCardTemplate = (/** @type {Object} */ material) =>
-      templateNew({
+      templateImageToLeft({
         material,
         singleManifestation,
         children,

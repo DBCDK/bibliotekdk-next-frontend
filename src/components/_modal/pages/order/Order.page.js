@@ -250,7 +250,7 @@ export function OrderSkeleton(props) {
       modal={{}}
       className={`${props.className} ${styles.skeleton}`}
       isLoading={true}
-      singleManifestation={singleManifestation}
+      singleManifestation={props.singleManifestation}
     />
   );
 }

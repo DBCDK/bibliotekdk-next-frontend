@@ -88,6 +88,12 @@
   margin-top: 0;
 }
 
+.text__localizations_version {
+  display: flex;
+  flex-direction: column;
+  margin-top: calc(var(--pt075) * -1);
+}
+
 /* ----------------- */
 .type_standard_version {
   padding-top: var(--pt1);

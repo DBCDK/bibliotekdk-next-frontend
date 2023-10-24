@@ -6,7 +6,7 @@ import Title from "@/components/base/title";
 import MaterialCard from "@/components/base/materialcard/MaterialCard";
 import {
   //templateForLocalizations,
-  templateNew,
+  templateImageToLeft,
 } from "@/components/base/materialcard/templates/templates";
 import Search from "@/components/base/forms/search";
 import Translate from "@/components/base/translate";
@@ -36,7 +36,7 @@ function LocalizationsBase({
   subtitle,
   pids = [],
   materialCardTemplate = (/** @type {Object} */ material) =>
-    templateNew({
+    templateImageToLeft({
       material,
       singleManifestation: context?.singleManifestation,
     }),

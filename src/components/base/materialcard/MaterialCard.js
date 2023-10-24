@@ -22,7 +22,7 @@ const MaterialCard = forwardRef(
    * @param {function} props.onClick - A callback function to handle click events.
    * @param {React.MutableRefObject<any>} props.ref - A React ref object.
    * @param {{ xs: OptionalColSize, sm: OptionalColSize, lg: OptionalColSize }} props.colSizing - An object specifying column sizing options.
-   * @param {boolean} [props.large] indicates if large card or small card (less items displayed)
+   * @param {boolean} [props.imageLeft] indicates that image should be on the left side of the card
    * @returns {React.JSX.Element} - Returns a React JSX element.
    */
   function MaterialCard(
@@ -45,12 +45,12 @@ const MaterialCard = forwardRef(
       relatedElementClassName,
       textClassName,
       coverImageClassName,
-      large,
+      imageLeft,
     } = renderProps;
 
-    if (large) {
+    if (imageLeft) {
       return (
-        <Col
+        <div
           // Col props
           {...colSizing}
           className={cx(elementContainerClassName)}
@@ -74,7 +74,7 @@ const MaterialCard = forwardRef(
               {children}
             </Col>
           </Col>
-        </Col>
+        </div>
       );
     }
 
