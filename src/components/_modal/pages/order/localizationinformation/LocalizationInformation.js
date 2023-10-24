@@ -19,6 +19,9 @@ function LocalizationInformation({
   onClick,
   availableAsPhysicalCopy,
 }) {
+  if (isDigitalCopy) {
+    return null;
+  }
   return (
     <>
       <div className={styles.pickup}>
