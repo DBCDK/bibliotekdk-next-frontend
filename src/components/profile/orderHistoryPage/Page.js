@@ -294,6 +294,7 @@ function WorkInfo({ title, author, pidOfPrimaryObject }) {
       <Text type="text2" className={styles.orderWorkInfo}>
         {Translate({ context: "profile", label: "youHaveOrdered" }) + " "}
         <Link
+          //pidOfPrimaryObject is the primary bibliographic object id (work id).
           href={getWorkUrlForProfile({ workId: pidOfPrimaryObject })}
           border={{
             top: false,
