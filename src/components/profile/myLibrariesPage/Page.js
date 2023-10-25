@@ -25,6 +25,7 @@ export default function MyLibrariesPage() {
     ?.map((agency) => ({
       agencyId: agency?.result[0]?.agencyId,
       agencyName: agency?.result[0]?.agencyName,
+      agencyType: agency?.result[0]?.agencyType,
     }))
     .filter((agency) => !!agency.agencyName && !!agency.agencyId);
 

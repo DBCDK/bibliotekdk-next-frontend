@@ -10,18 +10,26 @@ import { ApiEnums } from "@/lib/api/api";
  *
  * @param {Object} params
  */
-export function search({ q, language = "da", agencyId, limit = 10, offset }) {
+export function search({
+  q,
+  language = "da",
+  agencyId,
+  agencyTypes,
+  limit = 10,
+  offset,
+}) {
   return {
     apiUrl: ApiEnums.FBI_API,
     delay: 200, // for debugging
     query: `
-    query LibraryFragmentsSearch($q: String, $limit: PaginationLimit, $offset: Int, $language: LanguageCode, $agencyId: String) {
-      branches(q: $q, agencyid: $agencyId, language: $language, limit: $limit, offset: $offset, bibdkExcludeBranches:true, status:AKTIVE) {
+    query LibraryFragmentsSearch($q: String, $limit: PaginationLimit, $offset: Int, $language: LanguageCode, $agencyId: String, $agencyTypes: [AgencyType!]) {
+      branches(q: $q, agencyid: $agencyId, language: $language, limit: $limit, offset: $offset, bibdkExcludeBranches:true, status:AKTIVE, agencyTypes: $agencyTypes) {
         hitcount
         agencyUrl
         result {
           borrowerCheck
           agencyName
+          agencyType
           branchId
           agencyId
           name
@@ -39,7 +47,7 @@ export function search({ q, language = "da", agencyId, limit = 10, offset }) {
       }
       monitor(name: "bibdknext_library_search")
     }`,
-    variables: { q, agencyId, language, limit, offset },
+    variables: { q, agencyId, agencyTypes, language, limit, offset },
     slowThreshold: 3000,
   };
 }

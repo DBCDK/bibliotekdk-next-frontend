@@ -72,7 +72,7 @@ export default function Verify({ modal, context }) {
     signIn(
       "adgangsplatformen",
       { callbackUrl },
-      { agency: agencyId, idp: "nemlogin", force_login: 1 }
+      { idp: "nemlogin", force_login: 1 }
     );
   }
 

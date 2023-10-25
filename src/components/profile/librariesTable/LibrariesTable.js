@@ -4,7 +4,6 @@ import IconButton from "@/components/base/iconButton/IconButton";
 import styles from "./LibrariesTable.module.css";
 import Title from "@/components/base/title";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
-import { isPublicLibrary } from "@/lib/utils";
 
 import { useModal } from "@/components/_modal";
 
@@ -27,16 +26,16 @@ function RemoveLibraryButton({ agencyId, agencyName }) {
  * @param {Object} props
  * @returns {React.JSX.Element}
  */
-function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
+function TableItem({ agencyName, agencyId, agencyType, municipalityAgencyId }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs";
   const isHomeLibrary = municipalityAgencyId === agencyId;
   //const lastUsed = false; // Cannot be implemented yet
-  const isPublic = isPublicLibrary(agencyId);
+  const isFFUAgency = agencyType === "FORSKNINGSBIBLIOTEK";
 
   const type = Translate({
     context: "profile",
-    label: isPublic ? "publicLibrary" : "academicLibrary",
+    label: isFFUAgency ? "academicLibrary" : "publicLibrary",
   });
 
   if (isMobile) {
@@ -69,7 +68,7 @@ function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
       */}
         </div>
 
-        {!isPublic && (
+        {isFFUAgency && (
           <RemoveLibraryButton agencyId={agencyId} agencyName={agencyName} />
         )}
       </div>
@@ -93,7 +92,7 @@ function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
           <Text type="text2">{type}</Text>
         </td>
       </div>
-      {!isPublic && (
+      {isFFUAgency && (
         <td>
           <RemoveLibraryButton agencyId={agencyId} agencyName={agencyName} />
         </td>
