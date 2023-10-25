@@ -18,7 +18,7 @@ import ChevronLeft from "@/public/icons/chevron_left.svg";
  * ReviewHeading includes the title of LectorReviews (Bibliotekets vurdering / Librarian's Assessment)
  * It also renders the {@link MaterialCard} of the reviewed material + the back button.
  * @param propAndChildrenInput
- * @return {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export function ReviewHeading({ propAndChildrenInput }) {
   return (

@@ -20,10 +20,11 @@ import styles from "./Icon.module.css";
  * @param dataCy
  * @param ariaHidden
  * @param tag
- * @param {obj} props
+ * @param style
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.JSX.Element}
  */
 function Icon({
   alt = "",
@@ -39,6 +40,7 @@ function Icon({
   dataCy = null,
   ariaHidden = true,
   tag = "i",
+  style = {},
   ...props
 }) {
   const disabledStyle = disabled ? styles.disabled : "";
@@ -71,6 +73,7 @@ function Icon({
   const dynamicStyles = {
     ...dimensions,
     ...backgroundColor,
+    ...style,
   };
 
   return (
@@ -91,16 +94,16 @@ function Icon({
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.JSX.Element}
  */
 function IconSkeleton(props) {
   return (
     <Icon
       {...props}
-      className={`${props.className} ${styles.skeleton}`}
+      className={`${props.className} ${styles.skeleton} ${styles.icon}`}
       onClick={null}
       disabled={true}
     >
@@ -113,10 +116,10 @@ function IconSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export default function Container(props) {
   if (props.skeleton) {

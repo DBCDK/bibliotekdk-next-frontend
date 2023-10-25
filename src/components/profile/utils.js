@@ -14,7 +14,7 @@ export async function handleRenewLoan({ loanId, agencyId, loanMutation }) {
 /**
  * handles updates in mutation object on loans and reservations page
  * Its called in two places, depending on if on desktop or mobile
- * @param {obj} loanMutation
+ * @param {Object} loanMutation
  * @param {function} setHasRenewError
  * @param {function} setRenewed
  * @param {function} setRenewedDueDateString
@@ -55,10 +55,11 @@ export function getWorkUrlForProfile({
   pid = "",
   materialId = "",
   materialType = "",
+  scrollToEdition = true,
 }) {
   // pid is given
   if (!isEmpty(pid) && isPid(pid)) {
-    return `/linkme.php?rec.id=${pid}`;
+    return `/linkme.php?rec.id=${pid}&scrollToEdition=${scrollToEdition}`;
   }
   // @TODO - materialId may be a localid - that is NOT a faust number
   // we check if given id is 8 digits - as a faust always is .. but .. is that good enough ..
@@ -104,7 +105,7 @@ export function isPid(pid) {
 /**
  * handles updates in mutation object on loans and reservations page
  * Its called in two places, depending on if on desktop or mobile
- * @param {obj} loanMutation
+ * @param {Object} loanMutation
  * @param {function} setHasError
  * @param {function} setRemovedOrderId
  * @param {function} updateUserStatusInfo

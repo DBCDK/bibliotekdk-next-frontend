@@ -37,7 +37,7 @@ export function infomediaIdFromPid({ pid }) {
  * @param {Object} variables
  * @param {string} variables.id
  *
- * @return {Object} a query object
+ * @returns {Object} a query object
  */
 export function infomediaArticle({ id }) {
   return {

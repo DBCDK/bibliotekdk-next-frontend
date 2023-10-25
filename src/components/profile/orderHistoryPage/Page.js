@@ -14,13 +14,14 @@ import { useEffect, useState } from "react";
 import * as userFragments from "@/lib/api/user.fragments";
 import Skeleton from "@/components/base/skeleton/Skeleton";
 import { getWorkUrlForProfile } from "@/components/profile/utils";
+import { parseDate } from "@/lib/utils";
 
 const itemsPerPage = 4;
 
 /**
  * Shows the previous orders made by the user from bibliotekdk.
  *
- * @returns {component}
+ * @returns {React.JSX.Element}
  *
  */
 
@@ -199,8 +200,8 @@ export default function OrderHistoryPage() {
 
 /**
  * TableItem shows info for a single order.
- * @param {obj} props
- * @returns {component}
+ * @param {Object} props
+ * @returns {React.JSX.Element}
  */
 function TableItem({ order, key }) {
   const breakpoint = useBreakpoint();
@@ -210,10 +211,12 @@ function TableItem({ order, key }) {
   }
   const isMobile = breakpoint === "xs";
   const { author, title, pidOfPrimaryObject, orderId, creationDate } = order;
-  const { date, time, isToday } = parseDate(creationDate);
+  const { day, monthName, isToday, hours, minutes } = parseDate(creationDate);
+
+  const time = `Kl. ${hours}.${minutes}`;
   const dateString = isToday
     ? Translate({ context: "profile", label: "last-day" })
-    : date;
+    : `D. ${day}. ${monthName}`;
 
   if (isMobile) {
     return (
@@ -291,7 +294,8 @@ function WorkInfo({ title, author, pidOfPrimaryObject }) {
       <Text type="text2" className={styles.orderWorkInfo}>
         {Translate({ context: "profile", label: "youHaveOrdered" }) + " "}
         <Link
-          href={getWorkUrlForProfile({ pid: pidOfPrimaryObject })}
+          //pidOfPrimaryObject is the primary bibliographic object id (work id).
+          href={getWorkUrlForProfile({ workId: pidOfPrimaryObject })}
           border={{
             top: false,
             bottom: {
@@ -307,42 +311,3 @@ function WorkInfo({ title, author, pidOfPrimaryObject }) {
     </>
   );
 }
-
-/**
- * Parses an iso-8601 date string into human readable date an time strings.
- * @param {*} isoDateString
- * @returns an object containing date and time fields. Eks {date: "D. 24. juni", time:"Kl. 11:07"}
- */
-const parseDate = (isoDateString) => {
-  const dateObj = new Date(isoDateString);
-  const day = dateObj.getUTCDate();
-  const monthNames = [
-    "jan.",
-    "feb.",
-    "mar.",
-    "apr.",
-    "maj",
-    "jun.",
-    "jul.",
-    "aug.",
-    "sep.",
-    "okt.",
-    "nov.",
-    "dec.",
-  ];
-  const monthName = monthNames[dateObj.getUTCMonth()];
-  const date = `D. ${day} ${monthName}`;
-
-  const hours = String(dateObj.getHours()).padStart(2, "0");
-  const minutes = String(dateObj.getMinutes()).padStart(2, "0");
-  const time = `Kl. ${hours}.${minutes}`;
-  //check if the date is today:
-  const today = new Date();
-
-  const isToday =
-    dateObj.getUTCDate() === today.getUTCDate() &&
-    dateObj.getUTCMonth() === today.getUTCMonth() &&
-    dateObj.getUTCFullYear() === today.getUTCFullYear();
-
-  return { date, time, isToday };
-};

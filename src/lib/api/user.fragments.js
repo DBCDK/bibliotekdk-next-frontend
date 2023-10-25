@@ -1,7 +1,10 @@
 import { lang } from "@/components/base/translate";
 import { ApiEnums } from "@/lib/api/api";
 
-import { creatorsFragment } from "@/lib/api/fragments.utils";
+import {
+  creatorsFragment,
+  materialTypesFragment,
+} from "@/lib/api/fragments.utils";
 
 /**
  * @file Contains GraphQL queries all taking a workId as variable
@@ -23,9 +26,11 @@ export function basic() {
         mail
         address
         postalCode
+        isCPRValidated
+        loggedInBranchId
+        municipalityAgencyId
         agencies {
           hitcount
-          agencyUrl
           result {
             branchId
             agencyId
@@ -58,7 +63,7 @@ export function basic() {
               ...creatorsFragment
             }
             materialTypes {
-              specific
+              ...materialTypesFragment
             }
             cover {
               thumbnail
@@ -91,7 +96,7 @@ export function basic() {
               ...creatorsFragment
             }
             materialTypes {
-              specific
+              ...materialTypesFragment
             }
             cover {
               thumbnail
@@ -101,7 +106,8 @@ export function basic() {
         }   
       }
     }
-    ${creatorsFragment}`,
+    ${creatorsFragment}
+    ${materialTypesFragment}`,
     variables: {},
     slowThreshold: 3000,
   };
@@ -216,6 +222,7 @@ export function extendedData() {
       user {
         persistUserData
         favoritePickUpBranch
+        createdAt
       }
      }`,
     slowThreshold: 3000,

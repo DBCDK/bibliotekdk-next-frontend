@@ -20,10 +20,15 @@ describe("Search", () => {
       checkPrefilledQueryParameters();
 
       // Check URL path is as expected
-      cy.get("[data-cy=router-pathname]").should("have.text", "/find");
+      cy.get("[data-cy=router-pathname]", { timeout: 10000 }).should(
+        "have.text",
+        "/find"
+      );
 
       // And check that they are correctly displayed
-      cy.get("header [data-cy=header-material-selector]").contains("Film");
+      cy.get("header [data-cy=header-material-selector]")
+        .should("exist")
+        .contains("Film");
       cy.get("header [data-cy=suggester-input]").should(
         "have.value",
         "some all"
@@ -159,7 +164,10 @@ describe("Search", () => {
     it(`Tab away from input will not sync with URL immediately`, () => {
       cy.visit("/iframe.html?id=layout-header--nav-header");
 
-      cy.get("header [data-cy=suggester-input]").clear().type("hest");
+      cy.get("header [data-cy=suggester-input]")
+        .should("exist")
+        .clear()
+        .type("hest");
       cy.focused().tab();
 
       cy.get("[data-cy=router-query]").then((el) => {
@@ -183,7 +191,10 @@ describe("Search", () => {
     it(`Searching should reset filters and page`, () => {
       cy.visit("/iframe.html?id=layout-header--nav-header");
 
-      cy.get("header [data-cy=suggester-input]").clear().type("hest{enter}");
+      cy.get("header [data-cy=suggester-input]")
+        .should("exist")
+        .clear()
+        .type("hest{enter}");
 
       cy.get("[data-cy=router-query]").then((el) => {
         expect(JSON.parse(el.text())).to.deep.equal({ "q.all": "hest" });

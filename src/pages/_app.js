@@ -39,6 +39,7 @@ import Notifications from "@/components/base/notifications/Notifications";
 import HelpHeader from "@/components/help/header";
 import FeedBackLink from "@/components/feedbacklink";
 import { SkipToMainLink } from "@/components/base/skiptomain/SkipToMain";
+import Listener from "@/components/ffu";
 
 import Head from "@/components/head";
 
@@ -154,14 +155,28 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
               <Modal.Page id="login" component={Pages.Login} />
               <Modal.Page id="mobileLogin" component={Pages.MobileLogin} />
               <Modal.Page id="filter" component={Pages.Filter} />
-              <Modal.Page id="localizations" component={Pages.Localizations} />
               <Modal.Page id="references" component={Pages.References} />
               <Modal.Page id="material" component={Pages.Material} />
+              <Modal.Page
+                id="bookmark-materialfilter"
+                component={Pages.EMaterialFilter}
+              />
+              <Modal.Page
+                id="bookmark-multiorder"
+                component={Pages.MultiOrder}
+              />
               <Modal.Page id="deleteOrder" component={Pages.DeleteOrder} />
+              <Modal.Page id="addLibrary" component={Pages.AddLibrary} />
+              <Modal.Page id="verify" component={Pages.Verify} />
+              <Modal.Page id="statusMessage" component={Pages.StatusMessage} />
+              <Modal.Page id="removeLibrary" component={Pages.RemoveLibrary} />
+
               <Modal.Page
                 id="orderHistoryDataConsent"
                 component={Pages.OrderHistoryDataConsent}
               />
+
+              <Modal.Page id="deleteProfile" component={Pages.DeleteProfile} />
 
               <Modal.Page
                 id="openAdgangsplatform"
@@ -175,6 +190,15 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
                 id="manifestationContent"
                 component={Pages.ManifestationContent}
               />
+              <Modal.Page
+                id="agencyLocalizations"
+                component={Pages.AgencyLocalizations}
+              />
+              <Modal.Page
+                id="branchLocalizations"
+                component={Pages.BranchLocalizations}
+              />
+              <Modal.Page id="branchDetails" component={Pages.BranchDetails} />
             </Modal.Container>
             <Head />
             <Matomo />
@@ -188,10 +212,15 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
               <FeedBackLink />
               <Footer />
             </div>
+
+            {/* watch for FFU user logins - propt the users to create an bibdk account */}
+            <Listener.FFU />
+            <Listener.Create />
           </Modal.Provider>
 
           {/* SetPickupBranch listens for users just logged in via adgangsplatformen */}
           <SetPickupBranch router={router} />
+
           <BookmarkSyncProvider />
         </SessionProvider>
       </SWRConfig>

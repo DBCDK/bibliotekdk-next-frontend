@@ -14,8 +14,8 @@ import { useState } from "react";
 
 /**
  * Login modal for mobiles with search field and pickup locations selection for mobile phones
- * @param {obj} context
- * @returns {JSX.Element}
+ * @param {Object} context
+ * @returns {React.JSX.Element}
  */
 export default function MobileLogin({ context }) {
   const { removeModalsFromStore, isVisible, onSelect } = context;
@@ -32,13 +32,15 @@ export default function MobileLogin({ context }) {
     <div className={styles.login}>
       <Top onClose={removeModalsFromStore} />
       <LibrarySearch onChange={(q) => setQuery(q)} desktop={false} />
-      <SearchResultList
-        allBranches={data?.branches?.result}
-        isLoading={isLoading}
-        onSelect={onSelect}
-        isVisible={isVisible}
-        includeArrows={includeArrows}
-      />
+      {query && (
+        <SearchResultList
+          allBranches={data?.branches?.result}
+          isLoading={isLoading}
+          onSelect={onSelect}
+          isVisible={isVisible}
+          includeArrows={includeArrows}
+        />
+      )}
     </div>
   );
 }

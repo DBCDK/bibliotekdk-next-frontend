@@ -15,7 +15,7 @@ import useUser from "@/components/hooks/useUser";
  * It contains two types of links:
  * simple links such as "Mine biblioteker"
  * and links with subcategories such as "Lån og reserveringer" with subcateogries "Lån", "Reserveringer", "Mellemværende".
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 
 const CONTEXT = "profile";
@@ -28,7 +28,7 @@ function getProfileUrl(wordToTranslate) {
  * Simple menu link without subcategories.
  * @param label
  * @param href
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 function MenuLink({ label, href }) {
   const router = useRouter();
@@ -116,7 +116,7 @@ function SubCategory({ item, index, router, baseUrl }) {
  * @param categoryUrl
  * @param name
  * @param className
- * @return {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 function MenuGroup({ menus, categoryUrl, name, className }) {
   const router = useRouter();
@@ -169,6 +169,7 @@ const menuItems = [
   "bookmarks",
   "orderHistory",
   "myLibraries",
+  "myProfile",
 ];
 
 const initialLoansAndReservations = {
@@ -182,7 +183,7 @@ const initialLoansAndReservations = {
 /**
  * ProfileMenu to use in /profil subpages
  * Renders a side menu on left side
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export default function ProfileMenu() {
   const user = useUser();

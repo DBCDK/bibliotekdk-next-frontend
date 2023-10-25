@@ -9,12 +9,12 @@ import styles from "./Search.module.css";
 /**
  * The Component function
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
  * Get you value like <Search onChange={(value) => console.log(value)} ... />
  *
- * @returns {component}
+ * @returns {React.JSX.Element}
  */
 function Search(props) {
   const { className, onChange, onBlur, value = "", onMount } = props;

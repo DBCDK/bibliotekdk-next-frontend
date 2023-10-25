@@ -1,6 +1,13 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    //enable type checking for js files
+    // "checkJs": true, // TODO npm install --save-dev @types/react, if we enable type checking
+    // "jsx": "preserve",
+    // "allowJs": true,
+    // "declaration": true,
+    // "esModuleInterop": true,
+    //_____________
     "paths": {
       "@/storybook": ["src/components/base/storybook"],
       "@/storybook/*": ["src/components/base/storybook/*"],

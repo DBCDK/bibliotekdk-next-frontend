@@ -21,10 +21,10 @@ import styles from "./AnimationLine.module.css";
  *  }
  *
  * @param {string} className
- * @param {bool} keepVisible
+ * @param {boolean} keepVisible
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.JSX.Element}
  */
 export default function AnimationLine({ className = "", keepVisible = false }) {
   const hideClass = keepVisible ? "" : styles.hide;

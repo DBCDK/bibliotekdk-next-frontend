@@ -11,10 +11,10 @@ import cx from "classnames";
 /**
  * The Component function
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.JSX.Element}
  */
 function Text({
   children = "lorem ipsum dolor sit amet ...",
@@ -28,6 +28,7 @@ function Text({
   title = null,
   id,
   lines,
+  ...props
 }) {
   // Set type of tag.
   // Because this is a text component, p(aragraph) should always be used if possible!
@@ -79,6 +80,7 @@ function Text({
       data-cy={key}
       tabIndex={tabIndex}
       {...(title && { title: title })}
+      {...props}
     >
       {children}
     </Tag>
@@ -88,10 +90,10 @@ function Text({
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.JSX.Element}
  */
 export function TextSkeleton(props) {
   if (!props.lines) {
@@ -122,10 +124,10 @@ export function TextSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.JSX.Element}
  */
 export default function Container(props) {
   if (props.skeleton) {

@@ -49,28 +49,28 @@ export function Default() {
       ],
       materialTypes: [
         {
-          specific: "Bog",
+          materialTypeSpecific: { display: "Bog" },
         },
         {
-          specific: "Diskette",
+          materialTypeSpecific: { display: "Diskette" },
         },
         {
-          specific: "E-bog",
+          materialTypeSpecific: { display: "E-bog" },
         },
         {
-          specific: "Lydbog (bånd)",
+          materialTypeSpecific: { display: "Lydbog (bånd)" },
         },
         {
-          specific: "Lydbog (cd)",
+          materialTypeSpecific: { display: "Lydbog (cd)" },
         },
         {
-          specific: "Lydbog (cd-mp3)",
+          materialTypeSpecific: { display: "Lydbog (cd-mp3)" },
         },
         {
-          specific: "Lydbog (net)",
+          materialTypeSpecific: { display: "Lydbog (net)" },
         },
         {
-          specific: "Punktskrift",
+          materialTypeSpecific: { display: "Punktskrift" },
         },
       ],
       titles: {
@@ -97,28 +97,28 @@ export function Default() {
       ],
       materialTypes: [
         {
-          specific: "Bog",
+          materialTypeSpecific: { display: "Bog" },
         },
         {
-          specific: "Diskette",
+          materialTypeSpecific: { display: "Diskette" },
         },
         {
-          specific: "E-bog",
+          materialTypeSpecific: { display: "E-bog" },
         },
         {
-          specific: "Lydbog (bånd)",
+          materialTypeSpecific: { display: "Lydbog (bånd)" },
         },
         {
-          specific: "Lydbog (cd)",
+          materialTypeSpecific: { display: "Lydbog (cd)" },
         },
         {
-          specific: "Lydbog (cd-mp3)",
+          materialTypeSpecific: { display: "Lydbog (cd-mp3)" },
         },
         {
-          specific: "Lydbog (net)",
+          materialTypeSpecific: { display: "Lydbog (net)" },
         },
         {
-          specific: "Punktskrift",
+          materialTypeSpecific: { display: "Punktskrift" },
         },
       ],
       titles: {
@@ -145,28 +145,28 @@ export function Default() {
       ],
       materialTypes: [
         {
-          specific: "Bog",
+          materialTypeSpecific: { display: "Bog" },
         },
         {
-          specific: "Diskette",
+          materialTypeSpecific: { display: "Diskette" },
         },
         {
-          specific: "E-bog",
+          materialTypeSpecific: { display: "E-bog" },
         },
         {
-          specific: "Lydbog (bånd)",
+          materialTypeSpecific: { display: "Lydbog (bånd)" },
         },
         {
-          specific: "Lydbog (cd)",
+          materialTypeSpecific: { display: "Lydbog (cd)" },
         },
         {
-          specific: "Lydbog (cd-mp3)",
+          materialTypeSpecific: { display: "Lydbog (cd-mp3)" },
         },
         {
-          specific: "Lydbog (net)",
+          materialTypeSpecific: { display: "Lydbog (net)" },
         },
         {
-          specific: "Punktskrift",
+          materialTypeSpecific: { display: "Punktskrift" },
         },
       ],
       titles: {

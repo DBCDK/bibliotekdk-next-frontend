@@ -39,7 +39,7 @@ Connected.story = {
                 creators: [{ display: "creator-1" }],
               },
               manifestation: {
-                materialTypes: [{ specific: "bog" }],
+                materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
               },
             },
             {
@@ -49,7 +49,7 @@ Connected.story = {
                 creators: [{ display: "creator-2" }],
               },
               manifestation: {
-                materialTypes: [{ specific: "bog" }],
+                materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
               },
             },
             {
@@ -59,7 +59,7 @@ Connected.story = {
                 creators: [{ display: "creator-3" }],
               },
               manifestation: {
-                materialTypes: [{ specific: "bog" }],
+                materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
               },
             },
           ],

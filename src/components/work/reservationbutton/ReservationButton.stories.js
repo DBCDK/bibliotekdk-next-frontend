@@ -108,7 +108,9 @@ ReservationButtonEAudioBook.story = {
       work: () => {
         return {
           titles: [{ main: "Hugo hejs" }],
-          materialTypes: [{ specific: "lydbog (net)" }],
+          materialTypes: [
+            { materialTypeSpecific: { display: "lydbog (net)" } },
+          ],
           workTypes: ["LITERATURE"],
           manifestations: {
             mostRelevant: [
@@ -123,7 +125,9 @@ ReservationButtonEAudioBook.story = {
         return [
           {
             pid: "some-pid-lydbog-(net)" + time,
-            materialTypes: [{ specific: "lydbog (net)" }],
+            materialTypes: [
+              { materialTypeSpecific: { display: "lydbog (net)" } },
+            ],
             access: [
               {
                 __resolveType: AccessEnum.EREOL,
@@ -151,7 +155,9 @@ ReservationButtonGame.story = {
       work: () => {
         return {
           titles: [{ main: "Hugo hejs" }],
-          materialTypes: [{ specific: "Playstation 4" }],
+          materialTypes: [
+            { materialTypeSpecific: { display: "Playstation 4" } },
+          ],
           workTypes: ["GAME"],
           manifestations: {
             mostRelevant: [
@@ -166,7 +172,9 @@ ReservationButtonGame.story = {
         return [
           {
             pid: "some-pid-game" + time,
-            materialTypes: [{ specific: "Playstation 4" }],
+            materialTypes: [
+              { materialTypeSpecific: { display: "Playstation 4" } },
+            ],
             access: [
               {
                 __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
@@ -205,7 +213,7 @@ ReservationButtonDisabled.story = {
         return {
           workId: "some-id-disabled" + time,
           titles: [{ main: "Hugo hejs" }],
-          materialTypes: [{ specific: "ebog" }],
+          materialTypes: [{ materialTypeSpecific: { display: "ebog" } }],
           workTypes: ["LITERATURE"],
           manifestations: {
             mostRelevant: [
@@ -241,6 +249,7 @@ export function ReservationButtonNotLoggedIn() {
       <ReservationButton
         user={user}
         singleManifestation={true}
+        overrideButtonText="Gå til bog"
         access={access}
         onHandleGoToLogin={() => alert("DU SKAL LOGGE IND")}
       />
@@ -262,7 +271,7 @@ ReservationButtonPhysicalBookLoanNotPossible.story = {
       work: () => {
         return {
           titles: [{ main: "Hugo hejs" }],
-          materialTypes: [{ specific: "bog" }],
+          materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
           workTypes: ["LITERATURE"],
           manifestations: {
             mostRelevant: [
@@ -277,7 +286,7 @@ ReservationButtonPhysicalBookLoanNotPossible.story = {
         return [
           {
             pid: "some-pid-bog-loan-not-possible" + time,
-            materialTypes: [{ specific: "bog" }],
+            materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
             access: [],
             workTypes: ["LITERATURE"],
           },
@@ -304,7 +313,7 @@ ReservationButtonSlowResponse.story = {
 
         return {
           titles: [{ main: "Hugo hejs" }],
-          materialTypes: [{ specific: "bog" }],
+          materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
           workTypes: ["LITERATURE"],
           manifestations: {
             mostRelevant: [

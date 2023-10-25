@@ -23,6 +23,7 @@ const MENUITEMS = [
   "bookmarks",
   "myLibraries",
   "orderHistory",
+  "myProfile",
 ];
 
 /* Whitelist menuitems accessable without login */
@@ -33,7 +34,7 @@ const WHITELIST = ["/profil/huskeliste"];
  * Renders a side menu on left side (ProfileMenu), breadcrumb and children on right side for screen width above 1020px
  * and renders a dropdown menu (NavigationDropdown) for screen width below 1020px
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export default function ProfileLayout({ title, children }) {
   const breakpoint = useBreakpoint();
@@ -135,10 +136,14 @@ const LogoutButton = () => {
           className={styles.logoutBtnText}
           skeleton={user?.isLoading}
           lines={1}
-        >{`${Translate({
-          context: "profile",
-          label: "signed-in-as-name",
-        })} ${userName}`}</Text>
+        >
+          {`${Translate({
+            context: "profile",
+            label: "signed-in-as-name",
+          })} 
+        ${userName}
+       `}
+        </Text>
       )}
       <Link
         onClick={() => {

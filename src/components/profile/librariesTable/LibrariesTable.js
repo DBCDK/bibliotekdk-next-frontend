@@ -4,11 +4,28 @@ import IconButton from "@/components/base/iconButton/IconButton";
 import styles from "./LibrariesTable.module.css";
 import Title from "@/components/base/title";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import { isPublicLibrary } from "@/lib/utils";
+
+import { useModal } from "@/components/_modal";
+
+function RemoveLibraryButton({ agencyId, agencyName }) {
+  const modal = useModal();
+
+  return (
+    <IconButton
+      icon="close"
+      onClick={() => modal.push("removeLibrary", { agencyId, agencyName })}
+      alt={Translate({ context: "profile", label: "remove" })}
+    >
+      {Translate({ context: "profile", label: "remove" })}
+    </IconButton>
+  );
+}
 
 /**
  * Tablerow to be used in LibrariesTable component.
- * @param {obj} props
- * @returns {component}
+ * @param {Object} props
+ * @returns {React.JSX.Element}
  */
 function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
   const breakpoint = useBreakpoint();
@@ -53,12 +70,7 @@ function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
         </div>
 
         {!isPublic && (
-          <IconButton
-            icon="close"
-            alt={Translate({ context: "profile", label: "remove" })}
-          >
-            {Translate({ context: "profile", label: "remove" })}
-          </IconButton>
+          <RemoveLibraryButton agencyId={agencyId} agencyName={agencyName} />
         )}
       </div>
     );
@@ -77,18 +89,13 @@ function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
             </Text>
           )}
         </td>
-        <td>
+        <td className={styles.libraryType}>
           <Text type="text2">{type}</Text>
         </td>
       </div>
       {!isPublic && (
         <td>
-          <IconButton
-            icon="close"
-            alt={Translate({ context: "profile", label: "remove" })}
-          >
-            {Translate({ context: "profile", label: "remove" })}
-          </IconButton>
+          <RemoveLibraryButton agencyId={agencyId} agencyName={agencyName} />
         </td>
       )}
     </tr>
@@ -97,8 +104,8 @@ function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
 
 /**
  * Returns a table of users libraries
- * @param {obj} props
- * @returns {component}
+ * @param {Object} props
+ * @returns {React.JSX.Element}
  */
 export default function LibrariesTable({ data, municipalityAgencyId }) {
   const breakpoint = useBreakpoint();
@@ -109,7 +116,7 @@ export default function LibrariesTable({ data, municipalityAgencyId }) {
       <>
         <div className={styles.headerRow}>
           <Text className={styles.headerItem}>
-            {Translate({ context: "profile", label: "libraries" })}
+            {Translate({ context: "profile", label: "library" })}
           </Text>
           <Text className={styles.headerItem}>
             {Translate({ context: "profile", label: "libraryType" })}
@@ -132,7 +139,7 @@ export default function LibrariesTable({ data, municipalityAgencyId }) {
       <thead>
         <tr className={styles.headerRow}>
           <th className={styles.headerItem}>
-            <Text>{Translate({ context: "profile", label: "libraries" })}</Text>
+            <Text>{Translate({ context: "profile", label: "library" })}</Text>
           </th>
           <th className={styles.headerItem}>
             <Text>
@@ -153,16 +160,3 @@ export default function LibrariesTable({ data, municipalityAgencyId }) {
     </table>
   );
 }
-
-/**
- *
- * @param {*} agencyID
- * @returns returns true if public library (Folkebibliotek)
- */
-const isPublicLibrary = (agencyID) => {
-  const faroeIslandsLibraries = ["900455", "911116", "911130"];
-  const parsedID = agencyID + "";
-  return (
-    parsedID?.charAt(0) === "7" || faroeIslandsLibraries.includes(parsedID)
-  );
-};

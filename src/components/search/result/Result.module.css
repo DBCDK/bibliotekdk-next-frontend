@@ -12,6 +12,7 @@
 
 .filterButton {
   margin-bottom: var(--pt2);
+  width: fit-content;
 }
 
 @media (min-width: 992px) {

@@ -18,7 +18,9 @@ describe("Order", () => {
     cy.visitWithConsoleSpy(
       "/iframe.html?id=modal-order--order-via-ill&viewMode=story"
     );
-    cy.contains("Bestil", { timeout: 10000 }).click();
+    cy.get("[data-cy=button-order-overview-enabled]")
+      .contains("Bestil", { timeout: 10000 })
+      .click();
 
     // Check that user blocking is not present
     cy.get("[data-cy=blocked-user]").should("not.exist");
@@ -52,7 +54,7 @@ describe("Order", () => {
     cy.getConsoleEntry("submitOrder").then((entry) => {
       expect(entry[1]).to.deep.equal({
         pids: ["some-pid-1", "some-pid-2"],
-        pickUpBranch: "branches.result[0].branchId",
+        pickUpBranch: "1237",
         userParameters: {
           userName: "Some Name",
           userMail: "some@mail.dk",
@@ -61,7 +63,40 @@ describe("Order", () => {
     });
   });
 
+  it("Order physical material fails and shows error modal correctly", () => {
+    cy.visit(
+      "/iframe.html?id=modal-order--order-physical-material-fails&viewMode=story"
+    );
+    //open order modal
+    cy.contains("Bestil", { timeout: 10000 }).click();
+    // Submit the order
+    cy.get("[data-cy=button-godkend]")
+      .scrollIntoView()
+      .should("be.visible")
+      .should("not.be.disabled")
+      .click();
+
+    //order failed
+    cy.get("[data-cy=error-occured-title]").should("be.visible");
+    cy.get("[data-cy=order-failed-message").should("be.visible");
+    cy.get("[data-cy=order-failed-see-libraries-button]").should("be.visible");
+  });
+
   it("should handle failed checkorder and pickupAllowed=false", () => {
+    it("should not tab to order modal after it is closed", () => {
+      cy.visitWithConsoleSpy(
+        "/iframe.html?id=modal-order--order-via-ill&viewMode=story"
+      );
+      cy.contains("Bestil", { timeout: 10000 }).click();
+
+      // Check that user blocking is not present
+      cy.get("[data-cy=blocked-user]").should("not.exist");
+
+      cy.get("[data-cy=modal-dimmer]").should("be.visible");
+      cy.contains("Luk").click();
+      cy.get("body").tab();
+      cy.get("[data-cy=modal-dimmer]").should("not.be.visible");
+    });
     cy.visitWithConsoleSpy(
       "/iframe.html?id=modal-order--pickup-not-allowed&viewMode=story"
     );
@@ -109,6 +144,27 @@ describe("Order", () => {
       });
     });
 
+    it("Should fail order indexed periodica article and open modal showing error", () => {
+      cy.visit(
+        "/iframe.html?id=modal-order--order-indexed-periodica-article-fails&viewMode=story"
+      );
+      //open order modal
+      cy.contains("Bestil", { timeout: 10000 }).click();
+      // Submit the order
+      cy.get("[data-cy=button-godkend]")
+        .scrollIntoView()
+        .should("be.visible")
+        .should("not.be.disabled")
+        .click();
+
+      //order failed
+      cy.get("[data-cy=error-occured-title]").should("be.visible");
+      cy.get("[data-cy=order-failed-message").should("be.visible");
+      cy.get("[data-cy=order-failed-see-libraries-button]").should(
+        "be.visible"
+      );
+    });
+
     it("should order indexed periodica article through ILL (when branch is not subscribed to article service)", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?id=modal-order--order-indexed-periodica-article-ill&viewMode=story"
@@ -131,7 +187,7 @@ describe("Order", () => {
       cy.getConsoleEntry("submitOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
           pids: ["some-pid-4"],
-          pickUpBranch: "branches.result[0].branchId",
+          pickUpBranch: "1237",
           userParameters: {
             userName: "Some Name",
             userMail: "some@mail.dk",
@@ -176,7 +232,7 @@ describe("Order", () => {
       cy.getConsoleEntry("submitOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
           pids: ["some-pid-5"],
-          pickUpBranch: "branches.result[0].branchId",
+          pickUpBranch: "1235",
           userParameters: {
             userName: "Some Name",
             userMail: "some@mail.dk",
@@ -286,7 +342,7 @@ describe("Order", () => {
       cy.getConsoleEntry("submitOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
           pids: ["some-pid-5"],
-          pickUpBranch: "branches.result[0].branchId",
+          pickUpBranch: "1237",
           userParameters: {
             userName: "Some Name",
             userMail: "some@mail.dk",
@@ -336,6 +392,40 @@ describe("Order", () => {
         .should("exist")
         .find("a")
         .should("not.have.attr", "url");
+    });
+
+    it("should disable link if not present", () => {
+      cy.visit("/iframe.html?id=modal-order--library-without-loaner-check");
+
+      //open modal
+      cy.contains("Bestil", { timeout: 10000 }).click();
+      cy.contains("No borrowerCheck");
+
+      cy.get("[data-cy=button-godkend]").should("exist").should("be.enabled");
+      cy.get("[data-cy=blocked-user]").should("not.exist");
+    });
+
+    it("User is blocked for one agency but not for another", () => {
+      cy.visit(
+        "/iframe.html?id=modal-order--user-with-one-agency-blocked-one-agency-not-blocked"
+      );
+
+      //starting with blocked agency
+      cy.contains("Bestil", { timeout: 10000 }).click();
+      cy.contains("Test Bib - User is blocked");
+      cy.get("[data-cy=blocked-user]").should("be.visible");
+      cy.get("[data-cy=blocked-user]").should("be.visible");
+
+      //switching to non-blocked agency
+      cy.contains("Skift afhentning").should("exist").click();
+      cy.get("[data-cy=show-branches-for-1]").should("exist").click();
+      cy.contains("Test Bib - only physical via ILL")
+        .should("be.visible")
+        .click();
+
+      //check can order on non-blocked agency
+      cy.get("[data-cy=button-godkend]").should("exist").should("be.enabled");
+      cy.get("[data-cy=blocked-user]").should("not.exist");
     });
   });
   describe("If user logs in with MitID - and has no libraries associated with user account", () => {
