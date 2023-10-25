@@ -6,6 +6,9 @@ import { templateImageToLeft } from "@/components/base/materialcard/templates/te
 
 const Material = ({ material }) => {
   const { manifestations } = material;
+
+  //TODO remove check once huskeliste can handle specific editions
+  if (!manifestations?.mostRelevant) return null;
   const { digitalCopyArray, isPeriodicaLikeArray } = accessFactory(
     manifestations?.mostRelevant
   );
@@ -21,20 +24,13 @@ const Material = ({ material }) => {
   }
 
   const children = null; //Check if we have article or not
-  console.log("manifeats MOST ", manifestations.mostRelevant);
-
   const { flattenedGroupedSortedManifestations } =
     manifestationMaterialTypeFactory(manifestations.mostRelevant);
-
-  console.log(
-    "flattenedGroupedSortedManifestations ",
-    flattenedGroupedSortedManifestations
-  );
 
   const materialCardTemplate = (/** @type {Object} */ material) =>
     templateImageToLeft({
       material,
-      singleManifestation: flattenedGroupedSortedManifestations?.length > 1, //TODO ?
+      singleManifestation: flattenedGroupedSortedManifestations?.length > 1, //TODO: how do we know its a specific edition?
       children,
       isPeriodicaLike,
       isDigitalCopy,

@@ -101,7 +101,7 @@ const BookmarkPage = () => {
   };
 
   const onOrderManyClick = () => {
-    modal.push("bookmark-materialfilter", {
+    modal.push("bookmark-ematerialfilter", {
       materials: checkboxList,
     });
   };

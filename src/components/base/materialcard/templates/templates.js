@@ -226,7 +226,6 @@ export function templateImageToLeft({
   isPeriodicaLike,
   isDigitalArticle,
 }) {
-  console.log("MATERIAL ", material);
   const fullTitle =
     singleManifestation === true
       ? material?.titles?.full?.join(": ")

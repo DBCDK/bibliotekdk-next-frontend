@@ -157,7 +157,7 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
               <Modal.Page id="references" component={Pages.References} />
               <Modal.Page id="material" component={Pages.Material} />
               <Modal.Page
-                id="bookmark-materialfilter"
+                id="bookmark-ematerialfilter"
                 component={Pages.EMaterialFilter}
               />
               <Modal.Page
