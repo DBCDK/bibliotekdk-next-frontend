@@ -4,6 +4,11 @@ import isEmpty from "lodash/isEmpty";
 import MaterialCard from "@/components/base/materialcard/MaterialCard";
 import { templateImageToLeft } from "@/components/base/materialcard/templates/templates";
 
+/**
+ * Is missing article implementation
+ * @param {} param0
+ * @returns
+ */
 const Material = ({ material }) => {
   const { manifestations } = material;
 

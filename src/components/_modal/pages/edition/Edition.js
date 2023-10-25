@@ -121,7 +121,6 @@ export function Edition({
     .filter((pre) => !isEmpty(pre))
     ?.join(", ");
 
-  //TODO OBS: check if articleTypeTranslations varies from LocalizationBase
   const articleTypeTranslation =
     isDigitalCopy &&
     availableAsDigitalCopy &&
@@ -142,7 +141,6 @@ export function Edition({
         }
       : null;
 
-  //TODO OBS: check specificEdition logic varies from LocalizationBase --> slightly new version
   const specificEdition =
     showOrderTxt && !singleManifestation && !isArticle && !isPeriodicaLike
       ? "no-specific-edition"

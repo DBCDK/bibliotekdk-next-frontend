@@ -33,9 +33,16 @@ const MultiOrder = ({ context }) => {
            * @TODO Insert material card
            * Data should be in materials object, if something is missing we need to add it to the fragments populateBookmarks uses
            */
-          materials.map((material) => {
-            return <Material key={material.key} material={material} />;
-          })
+          /**
+           * @TODO use Material component inside @file ./Material/Material.js
+           * we how and which data is stored for bookmarks. when we figured this out, we can show Material component
+           */
+          // materials.map((material) => {
+          //   return <Material key={material.key} material={material} />;
+          // })
+          materials.map((mat) => (
+            <article key={mat.key}>{mat.titles?.main?.[0]}</article>
+          ))
         }
       </div>
 

@@ -601,45 +601,9 @@ export function idsToWorks({ ids }) {
         manifestations {
           mostRelevant {
             pid
-            titles{
-              full
-              main
-            }
-            edition{
-              edition
-              publicationYear{
-                display
-              }
-            }
-            publisher
-            creators{
-                display
-                roles{
-                  function{
-                    singular
-                    plural
-                  }
-                }
-              }
             ownerWork {
-             titles{
-              main
-              full
-            }
               workId
               workTypes
-              creators{
-                display
-                roles{
-                  function{
-                    singular
-                    plural
-                  }
-                }
-              }
-            }
-            cover{
-              detail
             }
             materialTypes {
               ...materialTypesFragment

@@ -180,7 +180,6 @@ export function EditionAnyManifestationImageToLeft() {
   );
 }
 
-// EditionAnyManifestation.story = { ...resolvers("AnyManifestation") };
 EditionAnyManifestationImageToLeft.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
