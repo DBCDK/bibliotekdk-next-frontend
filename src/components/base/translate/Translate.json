@@ -3617,7 +3617,7 @@
         "en": "Delete profile"
       },
       "deleteProfileText": {
-        "da": "Dette vil slette følgende data på bibliotek.dk: Din huskeliste, bestillingshistorik, søgehistorik og evt. tilføjede uddannelsesbiblioteker.\n\n\nBemærk: Du vil stadig være registreret som låner på de biblioteker, hvor du er oprettet. Ligesom at dine lån, reserveringer og mellemværende ved bibliotekerne heller ikke vil blive slettet.\n\n\nKontakt biblioteket direkte, hvis du ikke længere ønsker at være låner der.",
+        "da": "Dette vil slette følgende data på bibliotek.dk: Din huskeliste, bestillingshistorik, søgehistorik og evt. tilføjede uddannelsesbiblioteker.\n\n<strong>Bemærk</strong>: Du vil stadig være registreret som låner på de biblioteker, hvor du er oprettet. Ligesom at dine lån, reserveringer og mellemværende ved bibliotekerne heller ikke vil blive slettet.\n\nKontakt biblioteket direkte, hvis du ikke længere ønsker at være låner der.",
         "en": ""
       },
       "deleteProfileTitle": {
