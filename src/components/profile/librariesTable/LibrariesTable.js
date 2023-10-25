@@ -89,7 +89,7 @@ function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
             </Text>
           )}
         </td>
-        <td>
+        <td className={styles.libraryType}>
           <Text type="text2">{type}</Text>
         </td>
       </div>

@@ -21,6 +21,10 @@
 .libraryInfo p {
   text-align: initial;
 }
+.libraryType {
+  /* same height as library name line-height  */
+  height: var(--pt4);
+}
 .headerItem {
   text-align: initial;
 }
