@@ -219,9 +219,10 @@ const BookmarkPage = () => {
 
     //scroll to top on page change
     if (scroll) {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-
-      //scrollToElement?.current?.scrollIntoView({ behavior: "smooth" });
+      scrollToElement?.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+      });
     }
   };
 
@@ -266,153 +267,154 @@ const BookmarkPage = () => {
   }
 
   return (
-    <ProfileLayout
-      title={Translate({
-        context: CONTEXT,
-        label: "page-title",
-      })}
-    >
+    <>
       <div ref={scrollToElement} />
-
-      <div className={styles.dropdownWrapper}>
-        {/* TODO - make modal? not sure */}
-        <MenuDropdown options={MENUITEMS} onItemClick={onDropdownClick} />
-      </div>
-
-      {activeStickyButton && (
-        <div className={styles.stickyButtonContainer}>
-          <Button
-            type="primary"
-            className={styles.stickyButton}
-            onClick={onStickyClick}
-          >
-            {getStickyButtonText()}
-          </Button>
+      <ProfileLayout
+        title={Translate({
+          context: CONTEXT,
+          label: "page-title",
+        })}
+      >
+        <div className={styles.dropdownWrapper}>
+          {/* TODO - make modal? not sure */}
+          <MenuDropdown options={MENUITEMS} onItemClick={onDropdownClick} />
         </div>
-      )}
 
-      <div className={styles.sortingRow}>
-        <Text tag="small" type="text3" className={styles.smallLabel}>
-          {count}{" "}
-          {Translate({
-            context: CONTEXT,
-            label: "result-amount",
-          })}
-        </Text>
-        {!isMobile && (
+        {activeStickyButton && (
+          <div className={styles.stickyButtonContainer}>
+            <Button
+              type="primary"
+              className={styles.stickyButton}
+              onClick={onStickyClick}
+            >
+              {getStickyButtonText()}
+            </Button>
+          </div>
+        )}
+
+        <div className={styles.sortingRow}>
+          <Text tag="small" type="text3" className={styles.smallLabel}>
+            {count}{" "}
+            {Translate({
+              context: CONTEXT,
+              label: "result-amount",
+            })}
+          </Text>
+          {!isMobile && (
+            <SortButtons
+              sortByItems={sortByItems}
+              sortByValue={sortByValue}
+              setSortByValue={handleRadioChange}
+            />
+          )}
+        </div>
+        {isMobile && (
           <SortButtons
             sortByItems={sortByItems}
             sortByValue={sortByValue}
             setSortByValue={handleRadioChange}
           />
         )}
-      </div>
-      {isMobile && (
-        <SortButtons
-          sortByItems={sortByItems}
-          sortByValue={sortByValue}
-          setSortByValue={handleRadioChange}
-        />
-      )}
 
-      <div className={styles.buttonControls}>
-        <div
-          role="checkbox"
-          tabIndex={0}
-          aria-checked={isAllSelected}
-          className={styles.selectAllButton}
-          onClick={onSelectAll}
-        >
-          <Checkbox
-            checked={isAllSelected}
-            disabled={bookmarks?.length === 0}
-            id="bookmarkpage-select-all"
-            aria-labelledby="bookmarkpage-select-all-label"
-            ariaLabel={Translate({
-              context: CONTEXT,
-              label: "select-all",
-            })}
-            tabIndex="-1"
-            readOnly
-            className={styles.selectAll}
-          />
-          <Text type="text3" tag="label" id="bookmarkpage-select-all-label">
+        <div className={styles.buttonControls}>
+          <div
+            role="checkbox"
+            tabIndex={0}
+            aria-checked={isAllSelected}
+            className={styles.selectAllButton}
+            onClick={onSelectAll}
+          >
+            <Checkbox
+              checked={isAllSelected}
+              disabled={bookmarks?.length === 0}
+              id="bookmarkpage-select-all"
+              aria-labelledby="bookmarkpage-select-all-label"
+              ariaLabel={Translate({
+                context: CONTEXT,
+                label: "select-all",
+              })}
+              tabIndex="-1"
+              readOnly
+              className={styles.selectAll}
+            />
+            <Text type="text3" tag="label" id="bookmarkpage-select-all-label">
+              {Translate({
+                context: CONTEXT,
+                label: "select-all",
+              })}
+            </Text>
+          </div>
+          <Button
+            size="small"
+            disabled={isNothingSelected}
+            className={styles.orderButton}
+            onClick={onOrderManyClick}
+          >
             {Translate({
               context: CONTEXT,
-              label: "select-all",
+              label: "order",
             })}
-          </Text>
+          </Button>
+          <Button
+            size="small"
+            type="secondary"
+            disabled={isNothingSelected}
+            className={styles.referenceButton}
+          >
+            {Translate({
+              context: CONTEXT,
+              label: "select-action",
+            })}
+          </Button>
+          <IconButton disabled={isNothingSelected} onClick={onDeleteSelected}>
+            {Translate({
+              context: CONTEXT,
+              label: "remove",
+            })}
+          </IconButton>
         </div>
-        <Button
-          size="small"
-          disabled={isNothingSelected}
-          className={styles.orderButton}
-          onClick={onOrderManyClick}
-        >
-          {Translate({
-            context: CONTEXT,
-            label: "order",
-          })}
-        </Button>
-        <Button
-          size="small"
-          type="secondary"
-          disabled={isNothingSelected}
-          className={styles.referenceButton}
-        >
-          {Translate({
-            context: CONTEXT,
-            label: "select-action",
-          })}
-        </Button>
-        <IconButton disabled={isNothingSelected} onClick={onDeleteSelected}>
-          {Translate({
-            context: CONTEXT,
-            label: "remove",
-          })}
-        </IconButton>
-      </div>
-      <div className={styles.listContainer}>
-        {bookmarks?.map((bookmark, idx) => (
-          <MaterialRow
-            key={`bookmark-list-${idx}`}
-            hasCheckbox={!isMobile || activeStickyButton !== null}
-            title={bookmark?.titles?.main[0] || ""}
-            creator={bookmark?.creators[0]?.display}
-            materialType={bookmark.materialType}
-            image={
-              bookmark?.cover?.thumbnail ??
-              bookmark?.manifestations?.bestRepresentation?.cover?.thumbnail
-            }
-            id={bookmark?.materialId}
-            edition={constructEditionText(bookmark)}
-            workId={
-              bookmark?.pid ? bookmark?.ownerWork?.workId : bookmark?.workId
-            }
-            pid={bookmark?.pid}
-            allManifestations={bookmark?.manifestations?.mostRelevant}
-            type="BOOKMARK"
-            isSelected={
-              checkboxList.findIndex((item) => item.key === bookmark.key) > -1
-            }
-            onBookmarkDelete={() =>
-              deleteBookmarks([
-                { bookmarkId: bookmark.bookmarkId, key: bookmark.key },
-              ])
-            }
-            onSelect={() => onToggleCheckbox(bookmark.key)}
+        <div className={styles.listContainer}>
+          {bookmarks?.map((bookmark, idx) => (
+            <MaterialRow
+              key={`bookmark-list-${idx}`}
+              hasCheckbox={!isMobile || activeStickyButton !== null}
+              title={bookmark?.titles?.main[0] || ""}
+              creator={bookmark?.creators[0]?.display}
+              materialType={bookmark.materialType}
+              image={
+                bookmark?.cover?.thumbnail ??
+                bookmark?.manifestations?.bestRepresentation?.cover?.thumbnail
+              }
+              id={bookmark?.materialId}
+              edition={constructEditionText(bookmark)}
+              workId={
+                bookmark?.pid ? bookmark?.ownerWork?.workId : bookmark?.workId
+              }
+              pid={bookmark?.pid}
+              allManifestations={bookmark?.manifestations?.mostRelevant}
+              type="BOOKMARK"
+              isSelected={
+                checkboxList.findIndex((item) => item.key === bookmark.key) > -1
+              }
+              onBookmarkDelete={() =>
+                deleteBookmarks([
+                  { bookmarkId: bookmark.bookmarkId, key: bookmark.key },
+                ])
+              }
+              onSelect={() => onToggleCheckbox(bookmark.key)}
+            />
+          ))}
+        </div>
+        {totalPages > 1 && (
+          <Pagination
+            numPages={totalPages}
+            currentPage={parseInt(currentPage, 10)}
+            className={styles.pagination}
+            onChange={onPageChange}
           />
-        ))}
-      </div>
-      {totalPages > 1 && (
-        <Pagination
-          numPages={totalPages}
-          currentPage={parseInt(currentPage, 10)}
-          className={styles.pagination}
-          onChange={onPageChange}
-        />
-      )}
-    </ProfileLayout>
+        )}
+      </ProfileLayout>
+    </>
   );
 };
 
