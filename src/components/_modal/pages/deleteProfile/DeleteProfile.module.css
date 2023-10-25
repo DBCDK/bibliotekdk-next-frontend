@@ -16,3 +16,6 @@
   font-size: 16px;
   white-space: pre-wrap;
 }
+.deleteText strong {
+  font-family: var(--body-font-semibold);
+}

@@ -39,6 +39,7 @@ import Notifications from "@/components/base/notifications/Notifications";
 import HelpHeader from "@/components/help/header";
 import FeedBackLink from "@/components/feedbacklink";
 import { SkipToMainLink } from "@/components/base/skiptomain/SkipToMain";
+import Listener from "@/components/ffu";
 
 import Head from "@/components/head";
 
@@ -165,6 +166,11 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
                 component={Pages.MultiOrder}
               />
               <Modal.Page id="deleteOrder" component={Pages.DeleteOrder} />
+              <Modal.Page id="addLibrary" component={Pages.AddLibrary} />
+              <Modal.Page id="verify" component={Pages.Verify} />
+              <Modal.Page id="statusMessage" component={Pages.StatusMessage} />
+              <Modal.Page id="removeLibrary" component={Pages.RemoveLibrary} />
+
               <Modal.Page
                 id="orderHistoryDataConsent"
                 component={Pages.OrderHistoryDataConsent}
@@ -206,10 +212,15 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
               <FeedBackLink />
               <Footer />
             </div>
+
+            {/* watch for FFU user logins - propt the users to create an bibdk account */}
+            <Listener.FFU />
+            <Listener.Create />
           </Modal.Provider>
 
           {/* SetPickupBranch listens for users just logged in via adgangsplatformen */}
           <SetPickupBranch router={router} />
+
           <BookmarkSyncProvider />
         </SessionProvider>
       </SWRConfig>

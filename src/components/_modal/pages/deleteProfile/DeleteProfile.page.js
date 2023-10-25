@@ -41,7 +41,11 @@ export function DeleteProfile({ modal }) {
         {Translate({ context: "profile", label: "deleteProfileTitle" })}
       </Text>
       <Text className={styles.deleteText}>
-        {Translate({ context: "profile", label: "deleteProfileText" })}
+        {Translate({
+          context: "profile",
+          label: "deleteProfileText",
+          renderAsHtml: true,
+        })}
       </Text>
       <Button size="large" type="primary" onClick={handleDeleteUser}>
         {Translate({ context: "profile", label: "deleteProfile" })}

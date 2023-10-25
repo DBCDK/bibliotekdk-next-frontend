@@ -28,7 +28,7 @@ function IconButton({
   textType = "text3",
   keepUnderline,
   dataCy,
-  disabled,
+  disabled = false,
   ...props
 }) {
   const iconSrc = !disabled ? `${icon}.svg` : `${icon}_grey.svg`;
@@ -42,6 +42,7 @@ function IconButton({
         styles.focusStyle,
         className
       )}
+      tabIndex={disabled ? "-1" : "0"}
       onClick={() => onClick && onClick()}
       data-cy={dataCy}
       disabled={disabled}
