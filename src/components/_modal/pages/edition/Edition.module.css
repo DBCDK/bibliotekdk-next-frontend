@@ -64,13 +64,16 @@
   margin-top: var(--pt2);
   display: flex;
   height: fit-content;
-  justify-content: flex-end;
   flex-wrap: wrap;
   align-items: center;
 }
 
+.periodicaformfield {
+  display: flex;
+  gap: var(--pt05);
+}
+
 .periodicaformlink {
-  margin-left: var(--pt05);
   cursor: pointer;
 }
 

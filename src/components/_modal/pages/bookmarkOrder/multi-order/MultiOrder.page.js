@@ -2,6 +2,7 @@ import Title from "@/components/base/title";
 import Top from "../../base/top";
 import styles from "./MultiOrder.module.css";
 import Translate from "@/components/base/translate";
+import Material from "./Material/Material";
 
 const CONTEXT = "bookmark-order";
 
@@ -32,9 +33,9 @@ const MultiOrder = ({ context }) => {
            * @TODO Insert material card
            * Data should be in materials object, if something is missing we need to add it to the fragments populateBookmarks uses
            */
-          materials.map((mat) => (
-            <article key={mat.key}>{mat.titles?.main?.[0]}</article>
-          ))
+          materials.map((material) => {
+            return <Material key={material.key} material={material} />;
+          })
         }
       </div>
 

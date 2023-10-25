@@ -49,6 +49,8 @@ const MaterialCard = forwardRef(
     } = renderProps;
 
     if (imageLeft) {
+      console.log("render props ", renderProps);
+      console.log("imagsrc ", image_src);
       return (
         <div
           // Col props

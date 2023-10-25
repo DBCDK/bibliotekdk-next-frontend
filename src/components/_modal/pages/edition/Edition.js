@@ -39,23 +39,30 @@ export const ChoosePeriodicaCopyRow = ({
       {periodicaForm && (
         <div className={styles.periodicasummary}>
           {Object.entries(periodicaForm).map(([key, value]) => (
-            <Text type="text3" key={key}>
-              {Translate({
-                context: "order-periodica",
-                label: `label-${key}`,
-              })}
-              : {value}
-            </Text>
+            <span key={key} className={styles.periodicaformfield}>
+              <Text type="text3">
+                {Translate({
+                  context: "order-periodica",
+                  label: `label-${key}`,
+                })}
+                :
+              </Text>
+              <Text type="text4" key={key}>
+                {value}
+              </Text>
+            </span>
           ))}
         </div>
       )}
       <div className={styles.choosePeriodicaCopyRow}>
-        <Icon
-          src="exclamationmark.svg"
-          alt="info"
-          data-cy="tooltip-icon"
-          size="2_5"
-        ></Icon>
+        {!periodicaForm && (
+          <Icon
+            src="exclamationmark.svg"
+            alt="info"
+            data-cy="tooltip-icon"
+            size="2_5"
+          />
+        )}
         <IconLink
           onClick={() => {
             modal.push("periodicaform", {
@@ -70,7 +77,7 @@ export const ChoosePeriodicaCopyRow = ({
         >
           {Translate({
             context: "order-periodica",
-            label: "title",
+            label: periodicaForm ? "correct" : "title",
           })}
         </IconLink>
       </div>
@@ -306,6 +313,7 @@ export default function Wrap({
   const coverImage = getCoverImage(manifestations);
 
   if (useMaterialCard) {
+    //TODO ismaterialcard
     const { flattenedGroupedSortedManifestations } =
       manifestationMaterialTypeFactory(manifestations);
     const firstManifestation = flattenedGroupedSortedManifestations[0];

@@ -215,6 +215,8 @@ export function templateForLocalizations(
  * @param {Object} props.material
  * @param {boolean} props.singleManifestation
  * @param {React.JSX.Element} props.children
+ * @param {boolean} props.isPeriodicaLike
+ * @param {boolean} props.isDigitalArticle
  * @returns {React.JSX.Element}
  */
 export function templateImageToLeft({
@@ -224,6 +226,7 @@ export function templateImageToLeft({
   isPeriodicaLike,
   isDigitalArticle,
 }) {
+  console.log("MATERIAL ", material);
   const fullTitle =
     singleManifestation === true
       ? material?.titles?.full?.join(": ")
