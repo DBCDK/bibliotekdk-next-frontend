@@ -37,7 +37,7 @@ export const ChoosePeriodicaCopyRow = ({
         </div>
       ) : null}
       {periodicaForm && (
-        <div className={styles.periodicasummary}>
+        <div>
           {Object.entries(periodicaForm).map(([key, value]) => (
             <span key={key} className={styles.periodicaformfield}>
               <Text type="text3">
@@ -45,9 +45,9 @@ export const ChoosePeriodicaCopyRow = ({
                   context: "order-periodica",
                   label: `label-${key}`,
                 })}
-                :
               </Text>
               <Text type="text4" key={key}>
+                {": "}
                 {value}
               </Text>
             </span>
@@ -61,6 +61,7 @@ export const ChoosePeriodicaCopyRow = ({
             alt="info"
             data-cy="tooltip-icon"
             size="2_5"
+            className={styles.exclamationmark}
           />
         )}
         <IconLink
@@ -224,7 +225,7 @@ export function Edition({
           </div>
         ) : null}
         {periodicaForm && (
-          <div className={styles.periodicasummary}>
+          <div>
             {Object.entries(periodicaForm).map(([key, value]) => (
               <Text type="text3" key={key}>
                 {Translate({

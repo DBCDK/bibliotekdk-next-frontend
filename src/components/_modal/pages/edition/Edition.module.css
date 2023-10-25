@@ -56,10 +56,6 @@
   flex-shrink: 2;
 }
 
-.periodicasummary {
-  /* margin-top: var(--pt2); */
-}
-
 .choosePeriodicaCopyRow {
   margin-top: var(--pt2);
   display: flex;
@@ -68,9 +64,12 @@
   align-items: center;
 }
 
+.exclamationmark {
+  margin-right: var(--pt1);
+}
+
 .periodicaformfield {
   display: flex;
-  gap: var(--pt05);
 }
 
 .periodicaformlink {
