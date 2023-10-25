@@ -88,7 +88,7 @@ const BookmarkPage = () => {
 
   useEffect(() => {
     const handleRouteChange = () => {
-      //if there is a page in url parameter, use that.
+      //if there is a page in url parameter, use that. This is used when the router back button is pressed.
       if (currentPage !== urlPage) {
         const newPage = urlPage || 1;
         onPageChange(newPage, true);
