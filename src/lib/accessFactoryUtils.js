@@ -66,7 +66,7 @@ export function getAccessForSingleManifestation(manifestation) {
  * @returns {Access[]}
  */
 export function getAllAccess(manifestations) {
-  return manifestations?.flatMap(getAccessForSingleManifestation);
+  return manifestations?.flatMap(getAccessForSingleManifestation) || [];
 }
 
 /**
