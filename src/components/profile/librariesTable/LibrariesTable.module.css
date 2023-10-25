@@ -23,7 +23,7 @@
 }
 .libraryType {
   /* same height as library name line-height  */
-  height: var(--pt4);
+  height: 31.5px;
 }
 .headerItem {
   text-align: initial;
