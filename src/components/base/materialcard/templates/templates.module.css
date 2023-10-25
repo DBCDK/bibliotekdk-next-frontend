@@ -52,12 +52,8 @@
   gap: var(--pt3);
 }
 
-.related_element__new_version {
+.related_element__image_to_left_version {
   padding: 0;
-  /* margin-inline: var(--pt6);
-  margin-right: var(--pt9);
-  margin-block: var(--pt2); */
-  /* gap: var(--pt2); */
 }
 
 /* Text elements */
@@ -82,7 +78,7 @@
   padding-bottom: 0;
 }
 
-.text_standard_version {
+.text__image_to_left_version {
   display: flex;
   flex-direction: column;
   margin-top: 0;
@@ -95,7 +91,7 @@
 }
 
 /* ----------------- */
-.type_standard_version {
+.type__image_to_left_version {
   padding-top: var(--pt1);
   text-transform: uppercase;
 }
@@ -119,8 +115,6 @@
   max-height: var(--pt10);
 }
 
-.cover__standard_version {
+.cover__image_to_left_version {
   object-fit: cover;
-  /* object-position: 0; */
-  background-color: pink;
 }

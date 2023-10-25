@@ -271,7 +271,7 @@ export function templateImageToLeft({
         <Text
           {...propFunc("text4", 1)}
           title={formattedMaterialTypes}
-          className={styles.type_standard_version}
+          className={styles.type__image_to_left_version}
         >
           {formattedMaterialTypes}
         </Text>
@@ -295,9 +295,9 @@ export function templateImageToLeft({
     ),
     relatedElementClassName: cx(
       styles.related_element,
-      styles.related_element__new_version
+      styles.related_element__image_to_left_version
     ),
-    textClassName: cx(styles.text_standard_version),
-    coverImageClassName: cx(styles.cover, styles.cover__standard_version),
+    textClassName: cx(styles.text__image_to_left_version),
+    coverImageClassName: cx(styles.cover, styles.cover__image_to_left_version),
   };
 }

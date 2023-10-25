@@ -194,6 +194,7 @@ function Order({
         iseMaterialCard={true}
         context={contextWithOrderPids}
         singleManifestation={singleManifestation}
+        isMaterialCard={true}
       />
       <LocalizationInformation context={context} />
       {user && showBlockedUserInfo && (
