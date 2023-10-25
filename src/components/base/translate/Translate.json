@@ -366,8 +366,13 @@
       "notNow": {
         "da": "Ikke nu",
         "en": "Not now"
+      },
+      "kundeserviceBibdk": {
+        "da": "https://kundeservice.dbc.dk/bibdk",
+        "en": "https://kundeservice.dbc.dk/bibdk"
       }
     },
+
     "articles": {
       "deliveredBy": {
         "da": "Artiklen er leveret af %s",
@@ -3861,6 +3866,10 @@
       "errorOccured": {
         "da": "Der opstod en fejl",
         "en": "An error occured"
+      },
+      "tryAgain": {
+        "da": "Prøv igen eller kontakt ",
+        "en": "Try again or contact "
       }
     },
     "noagencies": {
