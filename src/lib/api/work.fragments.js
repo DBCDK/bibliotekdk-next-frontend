@@ -19,9 +19,6 @@ export function tableOfContents({ workId }) {
         manifestations {
           mostRelevant {
             pid
-            cover{
-              thumbnail
-            }
             materialTypes {
               ...materialTypesFragment
             }
