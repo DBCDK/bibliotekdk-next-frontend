@@ -217,7 +217,7 @@ describe("Order", () => {
 
       cy.contains("For at bestille skal du vælge udgave eller artikel");
 
-      cy.contains("Vælg eksemplar eller artikel").click();
+      cy.contains("Vælg eksemplar eller artikel", { timeout: 1000 }).click();
 
       cy.get('[placeholder="Skriv årstal"]').type("1992");
 
@@ -258,7 +258,7 @@ describe("Order", () => {
         .should("exist")
         .should("not.be.disabled");
 
-      cy.contains("Vælg eksemplar eller artikel").click();
+      cy.contains("Vælg eksemplar eller artikel", { timeout: 1000 }).click();
 
       cy.get('[placeholder="Skriv årstal"]').type("1992");
 
@@ -311,7 +311,7 @@ describe("Order", () => {
         .should("exist")
         .should("not.be.disabled");
 
-      cy.contains("Vælg eksemplar eller artikel").click();
+      cy.contains("Vælg eksemplar eller artikel", { timeout: 1000 }).click();
 
       cy.get('[placeholder="Skriv årstal"]').type("1992");
 
