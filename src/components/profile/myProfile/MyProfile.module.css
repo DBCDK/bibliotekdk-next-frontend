@@ -21,7 +21,7 @@
 }
 
 .deleteProfileButton {
-  margin-top: var(--pt8)
+  margin-top: var(--pt8);
 }
 .userInfo {
   margin-bottom: var(--pt6);
