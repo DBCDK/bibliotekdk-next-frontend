@@ -18,6 +18,7 @@ import styles from "./Receipt.module.css";
 import { useRouter } from "next/router";
 import cx from "classnames";
 import isEmpty from "lodash/isEmpty";
+import Link from "@/components/base/link";
 
 /**
  * Order Button
@@ -66,8 +67,8 @@ export function Receipt({
     articleOrderData?.elba?.placeCopyRequest &&
     articleOrderData?.elba?.placeCopyRequest?.status !== "OK"
   ) {
+    //articleOrder only assigns status codes, no explanatory error messages, therefor we dont show them to the user
     hasFailed = true;
-    failedMessage = articleOrderData?.elba?.placeCopyRequest?.status;
   }
 
   const showLinkToMyLibraries = true; //TODO should link to my libraries always be shown? @bibdk2021-1934
@@ -169,14 +170,35 @@ export function Receipt({
               {Translate({ context: "receipt", label: "errorOccured" })}
             </Title>
             {hasFailed && failedMessage && (
-              <Text
-                tag="div"
-                type="text2"
-                className={styles.errorText}
-                dataCy="order-failed-message"
-              >
+              <Text tag="div" type="text2" dataCy="order-failed-message">
                 {failedMessage}
               </Text>
+            )}
+            {hasFailed && (
+              <span className={styles.contactDBC}>
+                <Text tag="div" type="text2" dataCy="try-again">
+                  {Translate({
+                    context: "receipt",
+                    label: "tryAgain",
+                  })}
+                </Text>
+                <Link
+                  href={Translate({
+                    context: "general",
+                    label: "kundeserviceBibdk",
+                  })}
+                  target="_blank"
+                  border={{ top: false, bottom: { keepVisible: true } }}
+                  dataCy="feedbacklink-to-kundeservice"
+                >
+                  <Text tag="span" type="text3">
+                    {Translate({
+                      context: "general",
+                      label: "kundeserviceBibdk",
+                    })}
+                  </Text>
+                </Link>
+              </span>
             )}
             {showLinkToMyLibraries && (
               <Button
