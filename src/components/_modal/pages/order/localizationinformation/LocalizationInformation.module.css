@@ -63,6 +63,7 @@
 
   .iconLink {
     width: 40%;
+    display: flex;
     justify-content: flex-end;
     height: var(--pt3); /*one line*/
   }
