@@ -225,6 +225,10 @@ describe("Order", () => {
 
       cy.get('[data-cy="button-gem"]').click();
 
+      cy.contains("Rediger eksemplar eller artikel", { timeout: 10000 }).should(
+        "exist"
+      );
+
       cy.get("[data-cy=button-godkend]").click();
 
       cy.contains("some-order-id", { timeout: 10000 });
