@@ -275,7 +275,7 @@ export default function Wrap({
   singleManifestation = false,
   showOrderTxt = true,
   showChangeManifestation,
-  useMaterialCard = false,
+  isMaterialCard = false,
 }) {
   const modal = useModal();
   let { orderPids: orderPidsBeforeFilter } = context;
@@ -312,8 +312,7 @@ export default function Wrap({
   );
   const coverImage = getCoverImage(manifestations);
 
-  if (useMaterialCard) {
-    //TODO ismaterialcard
+  if (isMaterialCard) {
     const { flattenedGroupedSortedManifestations } =
       manifestationMaterialTypeFactory(manifestations);
     const firstManifestation = flattenedGroupedSortedManifestations[0];
