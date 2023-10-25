@@ -13,8 +13,17 @@
   grid-template-columns: 3fr 3fr;
   grid-gap: var(--pt2);
 }
+.libraryInfo td {
+  display: grid;
+  align-items: end;
+}
+
 .libraryInfo p {
   text-align: initial;
+}
+.libraryType {
+  /* same height as library name line-height  */
+  height: var(--pt4);
 }
 .headerItem {
   text-align: initial;
