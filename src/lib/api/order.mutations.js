@@ -55,14 +55,12 @@ export function submitPeriodicaArticleOrder({
   titleOfComponent,
   pagination,
 }) {
-  const elbaDryRun = getConfig()?.publicRuntimeConfig?.elbaDryRun;
-
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
     mutation ($input: CopyRequestInput!) {
       elba {
-        placeCopyRequest(input: $input, dryRun: ${elbaDryRun}) {
+        placeCopyRequest(input: $input) {
           status
         }
       }
