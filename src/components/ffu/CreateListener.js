@@ -41,36 +41,39 @@ export default function Listener() {
   useEffect(() => {
     const status = mutate?.culr?.createAccount?.status;
 
-    if (status === "OK") {
-      // Delete verification
-      verification.delete();
-      // broadcast user changes
-      updateUserData();
-    }
-
-    // Some error occured
-    if (status?.includes("ERROR") || error) {
-      // default error message
-      let title = "titleError";
-      let text = "textError";
-
-      // CPR mismatch - 'folk' and 'bearer' token CPR doesn't match.
-      if (status === "ERROR_CPR_MISMATCH") {
-        title = "titleError";
-        text = "textError";
+    if (status || error) {
+      if (status === "OK") {
+        // broadcast user changes
+        updateUserData();
       }
 
-      // trigger error modal
-      modal.push("statusMessage", {
-        title: Translate({
-          context: "addLibrary",
-          label: title,
-        }),
-        text: Translate({
-          context: "addLibrary",
-          label: text,
-        }),
-      });
+      // Some error occured
+      if (status?.includes("ERROR") || error) {
+        // default error message
+        let title = "titleError";
+        let text = "textError";
+
+        // CPR mismatch - 'folk' and 'bearer' token CPR doesn't match.
+        if (status === "ERROR_CPR_MISMATCH") {
+          title = "titleErrorCPRMismatch";
+          text = "textErrorCPRMismatch";
+        }
+
+        // trigger error modal
+        modal.push("statusMessage", {
+          title: Translate({
+            context: "addLibrary",
+            label: title,
+          }),
+          text: Translate({
+            context: "addLibrary",
+            label: text,
+          }),
+        });
+      }
+
+      // Delete verification
+      verification.delete();
     }
   }, [mutate, error]);
 

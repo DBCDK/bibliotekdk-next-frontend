@@ -586,7 +586,7 @@ export function idsToWorks({ ids }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
-    query pidsToWorks($ids: [String!]!) {
+    query idsToWorks($ids: [String!]!) {
       works(id: $ids) {
         workId
         titles {

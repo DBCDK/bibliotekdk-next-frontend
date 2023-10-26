@@ -73,7 +73,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
 
   const syncCookieBookmarks = async () => {
     if (!isAuthenticated) return; // Not authenticated
-    const cookies = await JSON.parse(localStorage.getItem(KEY_NAME));
+    const cookies = await JSON.parse(localStorage.getItem(KEY_NAME) || "[]");
     if (!cookies || !Array.isArray(cookies) || cookies.length === 0) return; // Nothing to sync
 
     try {
