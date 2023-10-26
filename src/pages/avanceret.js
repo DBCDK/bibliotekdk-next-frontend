@@ -9,7 +9,7 @@ import useDataCollect from "@/lib/useDataCollect";
 import useFilters from "@/components/hooks/useFilters";
 
 /**
- * Renders ComplexSearch page
+ * Renders AdvancedSearch page
  */
 export default function AdvancedSearchPage() {
   const router = useRouter();
