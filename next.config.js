@@ -114,9 +114,9 @@ module.exports = {
     },
     elbaDryRun: {
       elbaDryRun:
-        typeof process.env.ELBA_DRY_RUN !== "undefined"
-          ? process.env.ELBA_DRY_RUN
-          : true,
+        typeof process.env.ELBA_DRY_RUN === "undefined"
+          ? true
+          : process.env.ELBA_DRY_RUN,
     },
     // Set to false in production. When set to true, the session id is set to "test", when collecting data.
     // This allow AI to remove entries with session_id=test
