@@ -114,7 +114,7 @@ module.exports = {
     },
     elbaDryRun: {
       elbaDryRun:
-        process.env.ELBA_DRY_RUN !== "undefined"
+        typeof process.env.ELBA_DRY_RUN !== "undefined"
           ? process.env.ELBA_DRY_RUN
           : true,
     },
