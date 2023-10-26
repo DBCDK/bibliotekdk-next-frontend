@@ -55,9 +55,8 @@ export function submitPeriodicaArticleOrder({
   titleOfComponent,
   pagination,
 }) {
-  const elbaDryRun = getConfig()?.publicRuntimeConfig?.elbaDryRun?.elbaDryRun;
+  const elbaDryRun = getConfig()?.publicRuntimeConfig?.elbaDryRun;
 
-  console.log("elbaDRYRUN ", elbaDryRun);
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
