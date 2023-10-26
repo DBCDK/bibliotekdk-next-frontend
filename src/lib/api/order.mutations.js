@@ -55,7 +55,8 @@ export function submitPeriodicaArticleOrder({
   titleOfComponent,
   pagination,
 }) {
-  const elbaDryRun = getConfig()?.publicRuntimeConfig?.elba_dry_run;
+  const elbaDryRun =
+    getConfig()?.publicRuntimeConfig?.elba_dry_run?.elba_dry_run;
   const query = `
     mutation ($input: CopyRequestInput!) {
       elba {
