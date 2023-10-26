@@ -1,5 +1,5 @@
 import Title from "@/components/base/title";
-import styles from "./ComplexSearch.module.css";
+import styles from "./AdvancedSearch.module.css";
 import Translate from "@/components/base/translate/Translate";
 
 /**
@@ -7,11 +7,11 @@ import Translate from "@/components/base/translate/Translate";
  *
  */
 
-export default function ComplexSearch() {
+export default function AdvancedSearch() {
   return (
     <div className={styles.container}>
       <Title type="title3">
-        {Translate({ context: "search", label: "complexSearch" })}
+        {Translate({ context: "search", label: "advancedSearch" })}
       </Title>
     </div>
   );

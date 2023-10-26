@@ -1587,9 +1587,9 @@
         "da": "Spring lignende søgninger over",
         "en": "Label: mangler oversættelse"
       },
-      "complexSearch": {
+      "advancedSearch": {
         "da": "Avanceret søgning",
-        "en": "Complex Search"
+        "en": "Advanced Search"
       }
     },
     "suggester": {

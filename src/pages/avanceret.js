@@ -2,7 +2,7 @@ import Header from "@/components/header/Header";
 import { useRouter } from "next/router";
 import { fetchAll } from "@/lib/api/apiServerOnly";
 
-import Page from "@/components/search/complexSearch/ComplexSearch";
+import AdvancedSearch from "@/components/search/advancedSearch/AdvancedSearch";
 import { Result } from "@/components/search/result/Result";
 import useQ from "@/components/hooks/useQ";
 import useDataCollect from "@/lib/useDataCollect";
@@ -11,7 +11,7 @@ import useFilters from "@/components/hooks/useFilters";
 /**
  * Renders ComplexSearch page
  */
-export default function ComplexSearchPage() {
+export default function AdvancedSearchPage() {
   const router = useRouter();
   const q = useQ().getQuery();
   const filters = useFilters().getQuery();
@@ -22,7 +22,7 @@ export default function ComplexSearchPage() {
   return (
     <>
       <Header router={router} hideSearchBar />
-      <Page />
+      <AdvancedSearch />
 
       {q && (
         <Result
@@ -46,6 +46,6 @@ export default function ComplexSearchPage() {
  *
  * https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
  */
-ComplexSearchPage.getInitialProps = (ctx) => {
+AdvancedSearchPage.getInitialProps = (ctx) => {
   return fetchAll([], ctx);
 };
