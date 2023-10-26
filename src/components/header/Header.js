@@ -76,7 +76,7 @@ export function Header({
   user,
   modal,
   filters,
-  hideSearchBar
+  hideSearchBar,
 }) {
   const context = { context: "header" };
   const breakpoint = useBreakpoint();
@@ -192,84 +192,86 @@ export function Header({
             <StaticHeader router={router} context={context} />
             <Col xs={{ span: 7, offset: 3 }} className={styles.mobileHeader}>
               <SkipToMainAnchor />
-              {!hideSearchBar&& <div className={styles.bottom}>
-                <form
-                  onSubmit={(e) => {
-                    e?.preventDefault();
-                    doSearch(query);
+              {!hideSearchBar && (
+                <div className={styles.bottom}>
+                  <form
+                    onSubmit={(e) => {
+                      e?.preventDefault();
+                      doSearch(query);
 
-                    // view query in storybook
-                    story && alert(`/find?q.all=${query}`);
+                      // view query in storybook
+                      story && alert(`/find?q.all=${query}`);
 
-                    // Remove suggester in storybook
-                    story && story.setSuggesterVisibleMobile(false);
+                      // Remove suggester in storybook
+                      story && story.setSuggesterVisibleMobile(false);
 
-                    // remove keyboard/unfocus
-                    blurInput();
-                  }}
-                  className={`${styles.search}`}
-                  data-cy={cyKey({ name: "search", prefix: "header" })}
-                >
-                  <DesktopMaterialSelect className={styles.select} />
-
-                  <div
-                    className={`${styles.suggester__wrap} ${suggesterVisibleMobileClass}`}
+                      // remove keyboard/unfocus
+                      blurInput();
+                    }}
+                    className={`${styles.search}`}
+                    data-cy={cyKey({ name: "search", prefix: "header" })}
                   >
-                    <Suggester
-                      className={`${styles.suggester}`}
-                      history={history}
-                      clearHistory={clearHistory}
-                      isMobile={suggesterVisibleMobile}
-                      onSelect={(val) => doSearch(val)}
-                      onChange={(val) => setQ({ ...q, all: val })}
-                      onClose={() => {
-                        if (router) {
-                          // remove suggester prop from query obj
-                          router.back();
-                        }
-                        // Remove suggester in storybook
-                        story && story.setSuggesterVisibleMobile(false);
-                      }}
-                      onKeyDown={keyPressed}
-                    />
+                    <DesktopMaterialSelect className={styles.select} />
 
-                    <MoreOptionsLink
-                      onSearchClick={() => setCollapseOpen(!collapseOpen)}
-                      className={`${styles.linkshowmore} ${
+                    <div
+                      className={`${styles.suggester__wrap} ${suggesterVisibleMobileClass}`}
+                    >
+                      <Suggester
+                        className={`${styles.suggester}`}
+                        history={history}
+                        clearHistory={clearHistory}
+                        isMobile={suggesterVisibleMobile}
+                        onSelect={(val) => doSearch(val)}
+                        onChange={(val) => setQ({ ...q, all: val })}
+                        onClose={() => {
+                          if (router) {
+                            // remove suggester prop from query obj
+                            router.back();
+                          }
+                          // Remove suggester in storybook
+                          story && story.setSuggesterVisibleMobile(false);
+                        }}
+                        onKeyDown={keyPressed}
+                      />
+
+                      <MoreOptionsLink
+                        onSearchClick={() => setCollapseOpen(!collapseOpen)}
+                        className={`${styles.linkshowmore} ${
+                          collapseOpen ? styles.hidden : ""
+                        }`}
+                      >
+                        {Translate({
+                          context: "search",
+                          label:
+                            countQ === 0
+                              ? "advancedSearchLink"
+                              : "advancedSearchLinkCount",
+                          vars: [countQ],
+                        })}
+                      </MoreOptionsLink>
+                      <ExpandedSearch
+                        className={styles.expandedSearch}
+                        collapseOpen={collapseOpen}
+                        setCollapseOpen={setCollapseOpen}
+                      />
+                    </div>
+
+                    <button
+                      className={`${styles.button} ${
                         collapseOpen ? styles.hidden : ""
                       }`}
-                    >
-                      {Translate({
-                        context: "search",
-                        label:
-                          countQ === 0
-                            ? "advancedSearchLink"
-                            : "advancedSearchLinkCount",
-                        vars: [countQ],
+                      type="submit"
+                      data-cy={cyKey({
+                        name: "searchbutton",
+                        prefix: "header",
                       })}
-                    </MoreOptionsLink>
-                    <ExpandedSearch
-                      className={styles.expandedSearch}
-                      collapseOpen={collapseOpen}
-                      setCollapseOpen={setCollapseOpen}
-                    />
-                  </div>
-
-                  <button
-                    className={`${styles.button} ${
-                      collapseOpen ? styles.hidden : ""
-                    }`}
-                    type="submit"
-                    data-cy={cyKey({
-                      name: "searchbutton",
-                      prefix: "header",
-                    })}
-                  >
-                    <span>{Translate({ ...context, label: "search" })}</span>
-                    <div className={styles.fill} />
-                  </button>
-                </form>
-              </div> }
+                    >
+                      <span>{Translate({ ...context, label: "search" })}</span>
+                      <div className={styles.fill} />
+                    </button>
+                  </form>
+                </div>
+              )}
             </Col>
             <Col xs={{ span: 2 }} className={styles.iconActionsContainer}>
               <div
