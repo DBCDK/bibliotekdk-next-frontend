@@ -7,24 +7,20 @@ import { Result } from "@/components/search/result/Result";
 import useQ from "@/components/hooks/useQ";
 import useDataCollect from "@/lib/useDataCollect";
 import useFilters from "@/components/hooks/useFilters";
-import { useRef } from "react";
 
 /**
- * Renders the OrderHistory component
+ * Renders ComplexSearch page
  */
-export default function MyLibraries() {
+export default function ComplexSearchPage() {
   const router = useRouter();
   const q = useQ().getQuery();
   const filters = useFilters().getQuery();
-  const scrollRef = useRef();
-
   const dataCollect = useDataCollect();
 
   const { page = 1 } = router.query;
 
   return (
     <>
-      <div ref={scrollRef} />
       <Header router={router} hideSearchBar />
       <Page />
 
@@ -50,6 +46,6 @@ export default function MyLibraries() {
  *
  * https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
  */
-MyLibraries.getInitialProps = (ctx) => {
+ComplexSearchPage.getInitialProps = (ctx) => {
   return fetchAll([], ctx);
 };
