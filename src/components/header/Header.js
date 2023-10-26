@@ -76,6 +76,7 @@ export function Header({
   user,
   modal,
   filters,
+  hideSearchBar
 }) {
   const context = { context: "header" };
   const breakpoint = useBreakpoint();
@@ -191,7 +192,7 @@ export function Header({
             <StaticHeader router={router} context={context} />
             <Col xs={{ span: 7, offset: 3 }} className={styles.mobileHeader}>
               <SkipToMainAnchor />
-              <div className={styles.bottom}>
+              {!hideSearchBar&& <div className={styles.bottom}>
                 <form
                   onSubmit={(e) => {
                     e?.preventDefault();
@@ -268,7 +269,7 @@ export function Header({
                     <div className={styles.fill} />
                   </button>
                 </form>
-              </div>
+              </div> }
             </Col>
             <Col xs={{ span: 2 }} className={styles.iconActionsContainer}>
               <div
