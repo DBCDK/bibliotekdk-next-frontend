@@ -1,0 +1,18 @@
+.login {
+  padding: 0 var(--pt2) var(--pt2);
+}
+
+.login .title {
+  padding: var(--pt1) 0;
+}
+
+.login mark {
+  background-color: transparent;
+  font-family: var(--body-font-semibold);
+}
+
+@media (min-width: 576px) {
+  .login {
+    padding: 0 var(--pt6) var(--pt3) var(--pt6);
+  }
+}

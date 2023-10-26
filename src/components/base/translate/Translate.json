@@ -362,6 +362,10 @@
       "back-to": {
         "da": "Tilbage til",
         "en": "Back to"
+      },
+      "notNow": {
+        "da": "Ikke nu",
+        "en": "Not now"
       }
     },
     "articles": {
@@ -2762,6 +2766,116 @@
         "en": "is required"
       }
     },
+    "addLibrary": {
+      "title": {
+        "da": "Tilføj et uddannelsesbibliotek til din profil",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "librarySearchLabel": {
+        "da": "Find bibliotek",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "adgangsplatformTitle": {
+        "da": "Log ind med %s",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "adgangsplatformText": {
+        "da": "For at tilføje biblioteket skal du logge ind. Du skal bruge dine låneroplysninger, som når du ellers låner materialer.",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "hasVerificationTitle": {
+        "da": "Verificer bibliotek med MitID",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "hasVerificationText": {
+        "da": "For at undgå misbrug af adgangsmuligheder givet via uddannelsesbiblioteker skal du verificere dig selv med MitID.",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "verificationTitle": {
+        "da": "Vil du tilknytte %s til en bibliotek.dk profil?",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "verificationText": {
+        "da": "Ønsker du ikke at tilknytte %s vil du være logget ind uden at have en profil, så dine låneroplysninger er gemt til bestillinger.",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "benefitsText": {
+        "da": "Med en profil kan du: <br/> <ul><li>se dine lån og reserveringer på tværs af biblioteker</li><li>få gemt dine biblioteksinfo til nemmere bestilling</li><li>se en oversigt over dine biblioteker og afhentningssteder</li></ul> Det kræver kun at du logger ind med dit MitID første gang, så vi kan kende dig på tværs af biblioteker. <br/><br/> Du kan senere fjerne %s fra din profil under “Mine Biblioteker”, hvis du ønske dette.",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "verificationButton": {
+        "da": "Verificer med MitID",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "titleError": {
+        "da": "Noget gik ikke som forventet",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "textError": {
+        "da": "Noget gik galt da vi forsøgte at tilknytte dit uddannelsesbibliotek sammen med en bibliotek.dk profil. Prøv igen eller kontakt kundeservice.dbc.dk",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "titleErrorCPRMismatch": {
+        "da": "Uoverensstemmelse mellem CPR og MitID",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "textErrorCPRMismatch": {
+        "da": "Vi kunne ikke tilknytte dit uddannelsesbibliotek sammen med din bibliotek.dk profil, da CPR nummeret fra din bibliotek.dk profil ikke stemmer overens med det fra dit mitid. Prøv igen eller kontakt kundeservice.dbc.dk",
+        "en": "LABEL: Mangler oversættelse!"
+      }
+    },
+    "removeLibrary": {
+      "title": {
+        "da": "Fjern %s",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "text": {
+        "da": "Du er ved at fjerne %s fra din liste over biblioteker. Er du sikker på at du vil fjerne biblioteket fra listen over dine biblioteker?",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "confirmButton": {
+        "da": "Fjern bibliotek",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "cancelButton": {
+        "da": "Fortryd",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "errorTitle": {
+        "da": "Biblioteket blev ikke fjernet",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "errorText": {
+        "da": "Noget gik galt da vi forsøgte at fjerne dit bibliotek fra listen, prøv igen eller kontakt kundeservice.dbc.dk",
+        "en": "LABEL: Mangler oversættelse!"
+      }
+    },
+    "errorMessage": {
+      "addLibraryNotVerifiedTitle": {
+        "da": "Ikke muligt",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "addLibraryNotVerifiedText": {
+        "da": "Desværre kan vi ikke tilføje et uddannelsebibliotek til din profil. Kontakt kundeservice@dbc.dk for mere information",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "addLibraryNoBorchkTitle": {
+        "da": "Ikke muligt",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "addLibraryNoBorchkText": {
+        "da": "Desværre dit valgte bibliotek %s, kan ikke knyttes til denne profil. </br></br> Log ud for at kunne foretage bestilling til dette bibliotek",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "addLibraryAlreadyCreatedTitle": {
+        "da": "Du er allerede bruger på %s",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "addLibraryAlreadyCreatedText": {
+        "da": "Du er registreret hos det valgte biblioteksvæsen. Vælg et andet eller kontakt kundeservice.dbc.dk",
+        "en": "LABEL: Mangler oversættelse!"
+      }
+    },
     "metadata": {
       "frontpage-title": {
         "da": "Bibliotek.dk | Lån fra alle Danmarks biblioteker",
@@ -3503,7 +3617,7 @@
         "en": "Delete profile"
       },
       "deleteProfileText": {
-        "da": "Dette vil slette følgende data på bibliotek.dk: Din huskeliste, bestillingshistorik, søgehistorik og evt. tilføjede uddannelsesbiblioteker.\n\n\nBemærk: Du vil stadig være registreret som låner på de biblioteker, hvor du er oprettet. Ligesom at dine lån, reserveringer og mellemværende ved bibliotekerne heller ikke vil blive slettet.\n\n\nKontakt biblioteket direkte, hvis du ikke længere ønsker at være låner der.",
+        "da": "Dette vil slette følgende data på bibliotek.dk: Din huskeliste, bestillingshistorik, søgehistorik og evt. tilføjede uddannelsesbiblioteker.\n\n<strong>Bemærk</strong>: Du vil stadig være registreret som låner på de biblioteker, hvor du er oprettet. Ligesom at dine lån, reserveringer og mellemværende ved bibliotekerne heller ikke vil blive slettet.\n\nKontakt biblioteket direkte, hvis du ikke længere ønsker at være låner der.",
         "en": ""
       },
       "deleteProfileTitle": {
@@ -3725,6 +3839,14 @@
       "lentBy": {
         "da": "Udlånt af",
         "en": "Lent by"
+      },
+      "infoBoxText": {
+        "da": "Din bibliotek.dk-profil er separat fra andre bibliotekshjemmesider. Med din profil kan du administrere lån og reserveringer lavet på bibliotek.dk. Du kan se lån og reserveringer fra folkebiblioteker, men huskelisten synkroniseres ikke med andre bibliotekshjemmesider.\n\nProfilen blev oprettede %s",
+        "en": ""
+      },
+      "infoBoxTitle": {
+        "da": "Om din bibliotek.dk profil",
+        "en": ""
       }
     },
     "receipt": {

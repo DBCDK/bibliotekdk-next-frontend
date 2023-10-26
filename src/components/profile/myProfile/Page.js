@@ -1,5 +1,5 @@
 import { useModal } from "@/components/_modal";
-import Layout from "../profileLayout";
+import ProfileLayout from "../profileLayout";
 import styles from "./MyProfile.module.css";
 
 import Text from "@/components/base/text";
@@ -33,54 +33,66 @@ export default function MyProfilePage() {
 
   const createdAt = userData?.user?.createdAt;
   const { day, monthName, year } = parseDate(createdAt);
+  const formatedDate = `d. ${day}. ${monthName} ${year}`;
   return (
-    <Layout title={Translate({ context: "profile", label: "myProfile" })}>
-      <div className={styles.modalContainer}>
-        <div className={styles.userInfo}>
-          <div className={styles.dataItem}>
-            <Title className={styles.dataItemTitle} type="title6">
-              {Translate({ context: "general", label: "name" })}
-            </Title>
-            <Text type="text2">{userName}</Text>
-          </div>
-          {municipalityAgency?.agencyName && (
+    <ProfileLayout
+      title={Translate({ context: "profile", label: "myProfile" })}
+    >
+      <div className={styles.myProfileContainer}>
+        <div className={styles.infoContainer}>
+          <div className={styles.userInfo}>
             <div className={styles.dataItem}>
               <Title className={styles.dataItemTitle} type="title6">
-                {Translate({
-                  context: "profile",
-                  label: "municipalityOfResidence",
-                })}
+                {Translate({ context: "general", label: "name" })}
               </Title>
-              <Text>{municipalityAgency?.agencyName}</Text>
+              <Text type="text2">{userName}</Text>
             </div>
-          )}
-          <div className={styles.dataItem}>
-            <Title className={styles.dataItemTitle} type="title6">
-              {Translate({ context: "profile", label: "profileCreated" })}
+            {municipalityAgency?.agencyName && (
+              <div className={styles.dataItem}>
+                <Title className={styles.dataItemTitle} type="title6">
+                  {Translate({
+                    context: "profile",
+                    label: "municipalityOfResidence",
+                  })}
+                </Title>
+                <Text>{municipalityAgency?.agencyName}</Text>
+              </div>
+            )}
+          </div>
+          <div className={styles.infoBox}>
+            <Title type="title6">
+              {Translate({ context: "profile", label: "infoBoxTitle" })}
             </Title>
-            <Text>{`${day}. ${monthName} ${year}`}</Text>
+            <Text className={styles.infoBoxText}>
+              {Translate({
+                context: "profile",
+                label: "infoBoxText",
+                vars: [formatedDate],
+              })}
+            </Text>
           </div>
         </div>
-
-        <IconButton
-          icon="chevron"
-          keepUnderline
-          onClick={() => {
-            modal.push("deleteProfile");
-          }}
-          className={` ${styles.deleteProfileButton}`}
-          border={{
-            top: false,
-            bottom: {
-              keepVisible: true,
-            },
-          }}
-        >
-          <Text type="text2">
-            {Translate({ context: "profile", label: "deleteProfile" })}
-          </Text>
-        </IconButton>
+        <div className={styles.buttonContainer}>
+          <IconButton
+            icon="chevron"
+            keepUnderline
+            onClick={() => {
+              modal.push("deleteProfile");
+            }}
+            className={` ${styles.deleteProfileButton}`}
+            border={{
+              top: false,
+              bottom: {
+                keepVisible: true,
+              },
+            }}
+          >
+            <Text type="text2">
+              {Translate({ context: "profile", label: "deleteProfile" })}
+            </Text>
+          </IconButton>
+        </div>
       </div>
-    </Layout>
+    </ProfileLayout>
   );
 }

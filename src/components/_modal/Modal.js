@@ -74,7 +74,10 @@ function deletePageUID(router) {
  * @returns {string}
  */
 function createPageUID() {
-  return Date.now() + "";
+  // Avoid store and stack items getting same UID
+  // returns whole number between 0 and 100
+  const random = Math.floor(Math.random() * 100 + 1);
+  return Date.now() + random + "";
 }
 
 // Global stack object
@@ -149,7 +152,7 @@ function Container({ children, className = {}, mock = {} }) {
 
   async function moveModalFromStoreToStack(uid, stack) {
     const store = await modal.getStore();
-    const activeModal = store.find((entry) => entry.uid === uid);
+    const activeModal = store?.find((entry) => entry.uid === uid);
     if (!activeModal) return;
     activeModal.active = true;
     activeModal.loaded = true;
@@ -281,7 +284,7 @@ function Container({ children, className = {}, mock = {} }) {
     if (isVisible && modalRef.current) {
       // Wait for animation to finish
       setTimeout(() => {
-        modalRef.current.focus();
+        modalRef.current?.focus();
       }, 200);
     }
   }, [isVisible]);
