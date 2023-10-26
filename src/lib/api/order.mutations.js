@@ -1,3 +1,5 @@
+import getConfig from "next/config";
+
 /**
  * When user searches and then clicks on work
  *
