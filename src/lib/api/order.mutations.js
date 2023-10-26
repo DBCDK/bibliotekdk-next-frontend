@@ -53,19 +53,27 @@ export function submitPeriodicaArticleOrder({
   titleOfComponent,
   pagination,
 }) {
-  return {
-    apiUrl: ApiEnums.FBI_API,
-    query: `
+  const query = `
     mutation ($input: CopyRequestInput!) {
       elba {
         placeCopyRequest(input: $input, dryRun: ${
-          process.env.ELBA_DRY_RUN || true
+          process.env.NEXT_PUBLIC_ELBA_DRY_RUN || true
         }) {
           status
         }
       }
     }
-      `,
+      `;
+
+  console.log("QUERY ", query);
+  console.log(
+    "process.env.ELBA_DRY_RUN ",
+    process.env.NEXT_PUBLIC_ELBA_DRY_RUN
+  );
+
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: query,
     variables: {
       input: {
         pid,
