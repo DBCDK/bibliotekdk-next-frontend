@@ -1,3 +1,5 @@
+import getConfig from "next/config";
+
 /**
  * When user searches and then clicks on work
  *
@@ -53,14 +55,11 @@ export function submitPeriodicaArticleOrder({
   titleOfComponent,
   pagination,
 }) {
+  const elbaDryRun = getConfig()?.publicRuntimeConfig?.elba_dry_run;
   const query = `
     mutation ($input: CopyRequestInput!) {
       elba {
-        placeCopyRequest(input: $input, dryRun: ${
-          process.env.NEXT_PUBLIC_ELBA_DRY_RUN === "undefined"
-            ? true
-            : process.env.NEXT_PUBLIC_ELBA_DRY_RUN
-        }) {
+        placeCopyRequest(input: $input, dryRun: ${elbaDryRun}) {
           status
         }
       }
@@ -68,10 +67,7 @@ export function submitPeriodicaArticleOrder({
       `;
 
   console.log("QUERY ", query);
-  console.log(
-    "process.env.ELBA_DRY_RUN ",
-    process.env.NEXT_PUBLIC_ELBA_DRY_RUN
-  );
+  console.log("eblaDryRun ", elbaDryRun);
 
   return {
     apiUrl: ApiEnums.FBI_API,
