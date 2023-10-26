@@ -75,7 +75,8 @@ function LinkmePhp() {
 
   // do we scroll to edition ? - this one is for loans on profile page where we do NOT want
   // to scroll to specific edition - see @components/profile/utils.js::getWorkUrlForProfile
-  const scrollToEdition = router?.query?.["scrollToEdition"] || false;
+  const scrollToEdition =
+    router?.query?.["scrollToEdition"] === "true" || false;
   // if all is well - redirect to work page
   if (workId && data?.work) {
     const routerPath = {
