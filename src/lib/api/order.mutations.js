@@ -1,3 +1,5 @@
+import getConfig from "next/config";
+
 /**
  * When user searches and then clicks on work
  *
@@ -53,14 +55,14 @@ export function submitPeriodicaArticleOrder({
   titleOfComponent,
   pagination,
 }) {
+  const elbaDryRun = getConfig()?.publicRuntimeConfig?.elbaDryRun;
+
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
     mutation ($input: CopyRequestInput!) {
       elba {
-        placeCopyRequest(input: $input, dryRun: ${
-          process.env.ELBA_DRY_RUN || true
-        }) {
+        placeCopyRequest(input: $input, dryRun: ${elbaDryRun}) {
           status
         }
       }
