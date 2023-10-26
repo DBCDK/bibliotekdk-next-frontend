@@ -76,7 +76,7 @@ export function Header({
   user,
   modal,
   filters,
-  hideSearchBar,
+  hideSimpleSearch,
 }) {
   const context = { context: "header" };
   const breakpoint = useBreakpoint();
@@ -192,7 +192,7 @@ export function Header({
             <StaticHeader router={router} context={context} />
             <Col xs={{ span: 7, offset: 3 }} className={styles.mobileHeader}>
               <SkipToMainAnchor />
-              {!hideSearchBar && (
+              {!hideSimpleSearch && (
                 <div className={styles.bottom}>
                   <form
                     onSubmit={(e) => {
@@ -282,6 +282,10 @@ export function Header({
                 })}
               >
                 {menu.map((m) => {
+                  //hide search icon if hideSimpleSearch is true
+                  if (hideSimpleSearch && m.label == "search") {
+                    return null;
+                  }
                   const ActionIcon = m.icon;
 
                   return (

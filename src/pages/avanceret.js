@@ -21,7 +21,7 @@ export default function AdvancedSearchPage() {
 
   return (
     <>
-      <Header router={router} hideSearchBar />
+      <Header router={router} hideSimpleSearch />
       <AdvancedSearch />
 
       {q && (
