@@ -284,3 +284,21 @@ export function parseDate(isoDateString) {
 
   return { day, monthName, year, hours, minutes, isToday };
 }
+
+/**
+ * Updates URL query params
+ *
+ * @param {Object} params
+ */
+export async function updateQueryParams({ params, router }) {
+  const query = { ...router.query, ...params };
+
+  await router.push(
+    { pathname: router.pathname, query },
+    {
+      pathname: router.asPath.replace(/\?.*/, ""),
+      query,
+    },
+    { shallow: true, scroll: false }
+  );
+}

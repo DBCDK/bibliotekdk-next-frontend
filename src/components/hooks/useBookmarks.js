@@ -33,7 +33,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
   const [sortBy, setSortBy] = useState("createdAt");
   const [currentPage, setCurrentPage] = useState(1);
   const breakpoint = useBreakpoint();
-  const isMobile = breakpoint === "xs" || breakpoint === "sm";
+  const isMobile = breakpoint === "xs";
 
   let {
     data: localBookmarks,

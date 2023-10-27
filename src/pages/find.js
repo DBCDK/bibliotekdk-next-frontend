@@ -25,6 +25,7 @@ import Header from "@/components/header/Header";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 import { SuggestTypeEnum } from "@/lib/enums";
 import { useRef } from "react";
+import { updateQueryParams } from "@/lib/utils";
 
 /**
  * @file
@@ -74,24 +75,6 @@ function Find() {
     ref.current.scrollIntoView({ behavior: "smooth", block: "end" });
   }
 
-  /**
-   * Updates URL query params
-   *
-   * @param {Object} params
-   */
-  async function updateQueryParams(params) {
-    const query = { ...router.query, ...params };
-
-    await router.push(
-      { pathname: router.pathname, query },
-      {
-        pathname: router.asPath.replace(/\?.*/, ""),
-        query,
-      },
-      { shallow: true, scroll: false }
-    );
-  }
-
   return (
     <>
       <Head>
@@ -127,7 +110,7 @@ function Find() {
             page={parseInt(page, 10)}
             onPageChange={async (page, scroll) => {
               scroll = typeof scroll !== "boolean" || scroll !== false;
-              await updateQueryParams({ page });
+              await updateQueryParams({ params: { page }, router });
               scroll && scrollToRef(scrollRef);
             }}
             onWorkClick={(index, work) => {
