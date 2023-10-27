@@ -1,4 +1,5 @@
 import { accessFactory } from "@/lib/accessFactoryUtils";
+import useUser from "@/components/hooks/useUser";
 
 /**
  * Get a coverimage to use from given manifestations - from moreinfo OR default cover service
@@ -17,7 +18,8 @@ export function editionCover(manifestations) {
 export function inferAccessTypes(
   periodicaForm,
   initialPickupBranch,
-  manifestations
+  manifestations,
+  authUser
 ) {
   const {
     allEnrichedAccesses,
@@ -42,9 +44,9 @@ export function inferAccessTypes(
     !!periodicaForm?.pagination;
 
   const availableAsDigitalCopy =
-    isDigitalCopy &&
-    initialPickupBranch?.digitalCopyAccess &&
-    (isPeriodicaLike ? isArticleRequest : true);
+    (!authUser || authUser?.rights?.digitalArticleService) &&
+    (isPeriodicaLike ? isArticleRequest : true) &&
+    isDigitalCopy;
 
   const availableAsPhysicalCopy =
     isPhysicalCopy &&

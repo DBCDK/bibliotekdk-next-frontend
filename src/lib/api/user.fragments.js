@@ -27,6 +27,11 @@ export function basic() {
         address
         postalCode
         municipalityAgencyId
+        rights {
+          infomedia 
+          digitalArticleService 
+          demandDrivenAcquisition
+        }
         agencies {
           hitcount
           result {

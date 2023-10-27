@@ -124,7 +124,7 @@ export function getSeo(work) {
 }
 
 export function useBranchUserAndHasDigitalAccess(selectedPids) {
-  const { loanerInfo } = useUser();
+  const user = useUser();
 
   const {
     data: branchUserData,
@@ -132,9 +132,9 @@ export function useBranchUserAndHasDigitalAccess(selectedPids) {
     isSlow: branchIsSlow,
   } = useData(
     selectedPids &&
-      loanerInfo?.pickupBranch &&
+      user?.loanerInfo?.pickupBranch &&
       branchesFragments.branchDigitalCopyAccess({
-        branchId: loanerInfo?.pickupBranch,
+        branchId: user?.loanerInfo?.pickupBranch,
       })
   );
 
@@ -142,9 +142,10 @@ export function useBranchUserAndHasDigitalAccess(selectedPids) {
     return (
       branchUserData?.branches?.result
         ?.map((res) => res.digitalCopyAccess === true)
-        .findIndex((res) => res === true) > -1
+        .findIndex((res) => res === true) > -1 &&
+      user?.authUser?.rights?.digitalArticleService
     );
-  }, [branchUserData, loanerInfo]);
+  }, [branchUserData, user]);
 
   return {
     branchUserData: branchUserData,
