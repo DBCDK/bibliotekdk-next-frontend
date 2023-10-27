@@ -18,14 +18,14 @@ import {
   formatMaterialTypesFromUrl,
   formatMaterialTypesToPresentation,
   formatMaterialTypesToUrl,
-  formatToStringListOfMaterialTypeField,
+  flattenToMaterialTypeStringArray,
   getElementByCustomSorting,
   getFlatPidsByType,
   getInUniqueMaterialTypes,
   getUniqueMaterialTypes,
   groupManifestations,
   manifestationMaterialTypeFactory,
-  materialTypeFieldInMaterialTypesArray,
+  inMaterialTypesArrays,
 } from "@/lib/manifestationFactoryUtils";
 import { getOrderedFlatMaterialTypes } from "@/lib/enums_MaterialTypes";
 
@@ -270,7 +270,7 @@ describe("flatMapMaterialTypes", () => {
   });
 });
 
-describe("formatToStringListOfMaterialTypeField", () => {
+describe("flattenToMaterialTypeStringArray", () => {
   const example = [
     {
       specificDisplay: "bog",
@@ -281,45 +281,33 @@ describe("formatToStringListOfMaterialTypeField", () => {
   ];
 
   it("formats to specificDisplay (default)", () => {
-    const actual = formatToStringListOfMaterialTypeField(example);
+    const actual = flattenToMaterialTypeStringArray(example);
     const expected = ["bog"];
     expect(actual).toEqual(expected);
   });
   it("formats to specificDisplay (by arguments)", () => {
-    const actual = formatToStringListOfMaterialTypeField(
-      example,
-      "specificDisplay"
-    );
+    const actual = flattenToMaterialTypeStringArray(example, "specificDisplay");
     const expected = ["bog"];
     expect(actual).toEqual(expected);
   });
   it("formats to specificCode (by arguments)", () => {
-    const actual = formatToStringListOfMaterialTypeField(
-      example,
-      "specificCode"
-    );
+    const actual = flattenToMaterialTypeStringArray(example, "specificCode");
     const expected = ["BOOK"];
     expect(actual).toEqual(expected);
   });
   it("formats to generalDisplay (by arguments)", () => {
-    const actual = formatToStringListOfMaterialTypeField(
-      example,
-      "generalDisplay"
-    );
+    const actual = flattenToMaterialTypeStringArray(example, "generalDisplay");
     const expected = ["bøger"];
     expect(actual).toEqual(expected);
   });
   it("formats to generalCode (by arguments)", () => {
-    const actual = formatToStringListOfMaterialTypeField(
-      example,
-      "generalCode"
-    );
+    const actual = flattenToMaterialTypeStringArray(example, "generalCode");
     const expected = ["BOOKS"];
     expect(actual).toEqual(expected);
   });
 });
 
-describe("materialTypeFieldInMaterialTypesArray", () => {
+describe("inMaterialTypesArrays", () => {
   const example = [
     {
       specificDisplay: "bog",
@@ -330,43 +318,27 @@ describe("materialTypeFieldInMaterialTypesArray", () => {
   ];
 
   it("example contains input of specificDisplayArray, default works (['bog'])", () => {
-    const actual = materialTypeFieldInMaterialTypesArray(["bog"], example);
+    const actual = inMaterialTypesArrays(["bog"], example);
     const expected = true;
     expect(actual).toEqual(expected);
   });
   it("example contains input of specificDisplayArray, by argument (['bog'])", () => {
-    const actual = materialTypeFieldInMaterialTypesArray(
-      ["bog"],
-      example,
-      "specificDisplay"
-    );
+    const actual = inMaterialTypesArrays(["bog"], example, "specificDisplay");
     const expected = true;
     expect(actual).toEqual(expected);
   });
   it("example contains input of specificCodeArray (['BOOK'])", () => {
-    const actual = materialTypeFieldInMaterialTypesArray(
-      ["BOOK"],
-      example,
-      "specificCode"
-    );
+    const actual = inMaterialTypesArrays(["BOOK"], example, "specificCode");
     const expected = true;
     expect(actual).toEqual(expected);
   });
   it("example contains input of generalDisplayArray (['bog'])", () => {
-    const actual = materialTypeFieldInMaterialTypesArray(
-      ["bøger"],
-      example,
-      "generalDisplay"
-    );
+    const actual = inMaterialTypesArrays(["bøger"], example, "generalDisplay");
     const expected = true;
     expect(actual).toEqual(expected);
   });
   it("example contains input of generalCodeArray (['BOOKS'])", () => {
-    const actual = materialTypeFieldInMaterialTypesArray(
-      ["BOOKS"],
-      example,
-      "generalCode"
-    );
+    const actual = inMaterialTypesArrays(["BOOKS"], example, "generalCode");
     const expected = true;
     expect(actual).toEqual(expected);
   });

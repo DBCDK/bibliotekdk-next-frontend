@@ -12,7 +12,7 @@ import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import {
   flattenMaterialType,
-  materialTypeFieldInMaterialTypesArray,
+  inMaterialTypesArrays,
 } from "@/lib/manifestationFactoryUtils";
 import Translate from "@/components/base/translate";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
@@ -97,10 +97,7 @@ export default function Wrap(props) {
   // find the selected materialType (manifestation), use first manifestation as fallback
   const manifestationByMaterialType =
     manifestations?.find((manifestation) => {
-      return materialTypeFieldInMaterialTypesArray(
-        type,
-        flattenMaterialType(manifestation)
-      );
+      return inMaterialTypesArrays(type, flattenMaterialType(manifestation));
     }) || manifestations?.[0];
 
   // now get the manifestation parts

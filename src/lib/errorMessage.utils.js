@@ -25,10 +25,7 @@ export function errorMessageForErrorInMaterialTypes(manifestation) {
 `;
 }
 
-export function errorOnlyPartialMaterialTypeFromFbiApi(
-  manifestation,
-  errorCount
-) {
+export function materialTypeError(manifestation, errorCount) {
   errorCount++;
   const firstTitleOrWorkIdOrPid =
     (manifestation?.ownerWork?.workId || manifestation?.pid || "") +

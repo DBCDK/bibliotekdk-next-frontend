@@ -14,7 +14,7 @@ import { useMemo } from "react";
 import {
   flattenMaterialType,
   formatMaterialTypesToPresentation,
-  materialTypeFieldInMaterialTypesArray,
+  inMaterialTypesArrays,
 } from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
 
@@ -175,10 +175,7 @@ export default function Wrap(props) {
 
   // find the selected materialType (manifestation), use first manifestation as fallback
   const manifestationByMaterialType = manifestations?.find((manifestation) => {
-    return materialTypeFieldInMaterialTypesArray(
-      type,
-      flattenMaterialType(manifestation)
-    );
+    return inMaterialTypesArrays(type, flattenMaterialType(manifestation));
   });
 
   // attach relations for manifestation to display

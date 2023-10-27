@@ -5,7 +5,7 @@ import groupBy from "lodash/groupBy";
 import { getCoverImage } from "@/components/utils/getCoverImage";
 import { comparableYear } from "@/lib/utils";
 import { getOrderedFlatMaterialTypes } from "@/lib/enums_MaterialTypes";
-import { errorOnlyPartialMaterialTypeFromFbiApi } from "@/lib/errorMessage.utils";
+import { materialTypeError } from "@/lib/errorMessage.utils";
 
 /** @type {Array.<string>} */
 let manifestationWorkType = [];
@@ -124,7 +124,7 @@ export function formatMaterialTypesToPresentation(materialTypeArray) {
  * @returns {MaterialTypesArray}
  */
 export function flattenMaterialType(manifestation) {
-  errorOnlyPartialMaterialTypeFromFbiApi(manifestation);
+  materialTypeError(manifestation);
 
   return (
     manifestation?.materialTypes
@@ -156,7 +156,7 @@ export function flatMapMaterialTypes(manifestations) {
  * @param {("specificDisplay"|"specificCode"|"generalDisplay"|"generalCode")} materialTypeField
  * @returns {SpecificDisplayArray}
  */
-export function formatToStringListOfMaterialTypeField(
+export function flattenToMaterialTypeStringArray(
   materialTypeArray,
   materialTypeField = "specificDisplay"
 ) {
@@ -183,14 +183,14 @@ export function formatToStringListOfMaterialTypeField(
  * @param {("specificDisplay"|"specificCode"|"generalDisplay"|"generalCode")} materialTypeField
  * @returns {boolean}
  */
-export function materialTypeFieldInMaterialTypesArray(
+export function inMaterialTypesArrays(
   simplifiedMaterialTypesArray,
   materialTypesArray,
   materialTypeField = "specificDisplay"
 ) {
   return isEqual(
     simplifiedMaterialTypesArray,
-    formatToStringListOfMaterialTypeField(materialTypesArray, materialTypeField)
+    flattenToMaterialTypeStringArray(materialTypesArray, materialTypeField)
   );
 }
 
@@ -322,11 +322,11 @@ export function compareMaterialTypeArrays(
 ) {
   const aBySort = getElementByCustomSorting(
     materialTypesOrder,
-    jsonify(formatToStringListOfMaterialTypeField(a, "specificCode"))
+    jsonify(flattenToMaterialTypeStringArray(a, "specificCode"))
   );
   const bBySort = getElementByCustomSorting(
     materialTypesOrder,
-    jsonify(formatToStringListOfMaterialTypeField(b, "specificCode"))
+    jsonify(flattenToMaterialTypeStringArray(b, "specificCode"))
   );
 
   if (aBySort !== bBySort) {
@@ -334,8 +334,8 @@ export function compareMaterialTypeArrays(
   }
 
   return compareSpecificDisplayArrays(
-    formatToStringListOfMaterialTypeField(a, "specificDisplay"),
-    formatToStringListOfMaterialTypeField(b, "specificDisplay")
+    flattenToMaterialTypeStringArray(a, "specificDisplay"),
+    flattenToMaterialTypeStringArray(b, "specificDisplay")
   );
 }
 
@@ -367,26 +367,10 @@ export function getInUniqueMaterialTypes(typeArr, uniqueMaterialTypes) {
   return (
     uniqueMaterialTypes?.findIndex(
       (materialTypesArr) =>
-        materialTypeFieldInMaterialTypesArray(
-          typeArr,
-          materialTypesArr,
-          "specificDisplay"
-        ) ||
-        materialTypeFieldInMaterialTypesArray(
-          typeArr,
-          materialTypesArr,
-          "specificCode"
-        ) ||
-        materialTypeFieldInMaterialTypesArray(
-          typeArr,
-          materialTypesArr,
-          "generalCode"
-        ) ||
-        materialTypeFieldInMaterialTypesArray(
-          typeArr,
-          materialTypesArr,
-          "generalDisplay"
-        )
+        inMaterialTypesArrays(typeArr, materialTypesArr, "specificDisplay") ||
+        inMaterialTypesArrays(typeArr, materialTypesArr, "specificCode") ||
+        inMaterialTypesArrays(typeArr, materialTypesArr, "generalCode") ||
+        inMaterialTypesArrays(typeArr, materialTypesArr, "generalDisplay")
     ) > -1
   );
 }
@@ -419,7 +403,7 @@ export function enrichManifestationsWithDefaultFrontpages(
   manifestationsByType
 ) {
   const typeArrAsSpecificDefaultList =
-    formatToStringListOfMaterialTypeField(materialTypesArray);
+    flattenToMaterialTypeStringArray(materialTypesArray);
 
   const coverImage = getCoverImage(
     manifestationsByType[typeArrAsSpecificDefaultList]
@@ -461,7 +445,7 @@ export function flattenGroupedSortedManifestations(manifestationsByType) {
  */
 export function manifestationMaterialTypeFactory(manifestations) {
   manifestations?.length > 0 &&
-    errorOnlyPartialMaterialTypeFromFbiApi(manifestations?.[0], errorCount);
+    materialTypeError(manifestations?.[0], errorCount);
 
   manifestationWorkType = manifestations?.[0]?.ownerWork?.workTypes || [];
   materialTypesOrderFromEnum = getOrderedFlatMaterialTypes(
