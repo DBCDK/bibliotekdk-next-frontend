@@ -105,13 +105,17 @@ export function Options({ modal, context, user }) {
   // the next one checks for digital access .. for users already logged in :)
   // it is false if user is not logged in
   let { hasDigitalAccess } = useBranchUserAndHasDigitalAccess(selectedPids);
-  // reverse flow -BIBDK2021-1824 - if user is not logged in we
-  // check for digital access here
+  // reverse flow -BIBDK2021-1824
   const allAccess = getAllAccess(manifestations);
+  // if user is NOT authenticated we check if material can be delivered by digital article service
   if (!user?.isAuthenticated) {
     hasDigitalAccess = !!allAccess.find(
       (access) => (access.__typename = "DigitalArticleService")
     );
+  } else {
+    // if user IS authenticated - check if access rights are ok
+    hasDigitalAccess =
+      hasDigitalAccess && user?.authUser?.rights?.digitalArticleService;
   }
 
   const { getAllowedAccessesByTypeName } = useMemo(() => {
