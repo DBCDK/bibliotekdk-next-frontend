@@ -1,19 +1,4 @@
 describe("Order", () => {
-  it(`should not tab to order modal after it is closed`, () => {
-    cy.visitWithConsoleSpy(
-      "/iframe.html?id=modal-order--order-via-ill&viewMode=story"
-    );
-    cy.contains("Bestil", { timeout: 10000 }).click();
-
-    // Check that user blocking is not present
-    cy.get("[data-cy=blocked-user]").should("not.exist");
-
-    cy.get("[data-cy=modal-dimmer]").should("be.visible");
-    cy.contains("Luk").click();
-    cy.get("body").tab();
-    cy.get("[data-cy=modal-dimmer]").should("not.be.visible");
-  });
-
   it(`submits ILL order for pids that may be ordered`, () => {
     cy.visitWithConsoleSpy(
       "/iframe.html?id=modal-order--order-via-ill&viewMode=story"
@@ -61,6 +46,21 @@ describe("Order", () => {
         },
       });
     });
+  });
+
+  it(`should not tab to order modal after it is closed`, () => {
+    cy.visitWithConsoleSpy(
+      "/iframe.html?id=modal-order--order-via-ill&viewMode=story"
+    );
+    cy.contains("Bestil", { timeout: 10000 }).click();
+
+    // Check that user blocking is not present
+    cy.get("[data-cy=blocked-user]").should("not.exist");
+
+    cy.get("[data-cy=modal-dimmer]").should("be.visible");
+    cy.contains("Luk").click();
+    cy.get("body").tab();
+    cy.get("[data-cy=modal-dimmer]").should("not.be.visible");
   });
 
   it("Order physical material fails and shows error modal correctly", () => {

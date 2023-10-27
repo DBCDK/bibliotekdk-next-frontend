@@ -139,6 +139,7 @@ const MaterialRowBookmark = ({
                   pid,
                   materialId,
                   materialType,
+                  scrollToEdition: true,
                 })}
                 className={sharedStyles.blackUnderline}
               >

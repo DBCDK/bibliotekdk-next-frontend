@@ -55,7 +55,7 @@ export function getWorkUrlForProfile({
   pid = "",
   materialId = "",
   materialType = "",
-  scrollToEdition = true,
+  scrollToEdition = false,
 }) {
   // pid is given
   if (!isEmpty(pid) && isPid(pid)) {
