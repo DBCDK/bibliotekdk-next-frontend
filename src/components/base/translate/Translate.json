@@ -1586,6 +1586,10 @@
       "skipRelatedSubjects": {
         "da": "Spring lignende søgninger over",
         "en": "Label: mangler oversættelse"
+      },
+      "advancedSearch": {
+        "da": "Avanceret søgning",
+        "en": "Advanced Search"
       }
     },
     "suggester": {
@@ -3841,7 +3845,7 @@
         "en": "Lent by"
       },
       "infoBoxText": {
-        "da": "Din bibliotek.dk-profil er separat fra andre bibliotekshjemmesider. Med din profil kan du administrere lån og reserveringer lavet på bibliotek.dk. Du kan se lån og reserveringer fra folkebiblioteker, men huskelisten synkroniseres ikke med andre bibliotekshjemmesider.\n\nProfilen blev oprettede %s",
+        "da": "Din bibliotek.dk-profil er separat fra andre bibliotekshjemmesider. Med din profil kan du administrere lån og reserveringer lavet på bibliotek.dk. Du kan se lån og reserveringer fra folkebiblioteker, men huskelisten synkroniseres ikke med andre bibliotekshjemmesider.\n\nProfilen blev oprettet %s",
         "en": ""
       },
       "infoBoxTitle": {
