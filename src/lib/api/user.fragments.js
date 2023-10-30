@@ -26,6 +26,8 @@ export function basic() {
         mail
         address
         postalCode
+        isCPRValidated
+        loggedInBranchId
         municipalityAgencyId
         rights {
           infomedia 

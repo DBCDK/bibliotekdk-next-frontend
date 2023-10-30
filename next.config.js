@@ -112,6 +112,11 @@ module.exports = {
       id: process.env.COOKIEBOT_ID || "0945225b-6b16-4166-82dd-ea5947b897b3",
       mode: process.env.COOKIEBOT_MODE || "auto",
     },
+    elbaDryRun:
+      typeof process.env.ELBA_DRY_RUN === "undefined"
+        ? true
+        : process.env.ELBA_DRY_RUN,
+
     // Set to false in production. When set to true, the session id is set to "test", when collecting data.
     // This allow AI to remove entries with session_id=test
     useFixedSessionId:
