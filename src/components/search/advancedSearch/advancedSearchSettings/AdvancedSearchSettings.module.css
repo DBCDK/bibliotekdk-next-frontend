@@ -4,3 +4,7 @@
   /* Fixed height until content is implemented*/
   height: 500px;
 }
+
+.title{
+  margin-bottom: var(--pt5);
+}

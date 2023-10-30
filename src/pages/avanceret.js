@@ -2,7 +2,7 @@ import Header from "@/components/header/Header";
 import { useRouter } from "next/router";
 import { fetchAll } from "@/lib/api/apiServerOnly";
 
-import AdvancedSearch from "@/components/search/advancedSearch/AdvancedSearch";
+import AdvancedSearch from "@/components/search/advancedSearch/advancedSearchSettings/AdvancedSearchSettings";
 import Result from "@/components/search/result/Result";
 import useQ from "@/components/hooks/useQ";
 import useDataCollect from "@/lib/useDataCollect";

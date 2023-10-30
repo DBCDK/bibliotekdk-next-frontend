@@ -1595,6 +1595,22 @@
       "advancedSearch": {
         "da": "Avanceret søgning",
         "en": "Advanced Search"
+      },
+      "advanced-dropdown-all": {
+        "da":"Alle felter",
+        "en":"All fields"
+      },
+      "advanced-dropdown-title": {
+        "da":"Titel",
+        "en":"Title"
+      },
+      "advanced-dropdown-isbn": {
+        "da":"ISBN",
+        "en":"ISBN"
+      },
+      "advanced-dropdown-subject": {
+        "da":"Emne",
+        "en":"Subject"
       }
     },
     "suggester": {
