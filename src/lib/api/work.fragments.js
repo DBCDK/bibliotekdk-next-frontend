@@ -622,6 +622,13 @@ export function idsToWorks({ ids }) {
             cover {
               detail
             }
+            publisher
+            edition{
+              publicationYear{
+                display
+              }
+              edition
+            }
             pid
             ownerWork {
               workId

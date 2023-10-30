@@ -47,12 +47,12 @@ const Material = ({ material, context }) => {
         material?.materialType
       );
 
-  const isDigitalCopy = checkDigitalCopy(manifestation);
-  const isPeriodicaLike = getAreAccessesPeriodicaLike(manifestation);
+  const isDigitalCopy = checkDigitalCopy(manifestation)?.[0];
+  const isPeriodicaLike = getAreAccessesPeriodicaLike(manifestation)?.[0];
 
   let children = null;
 
-  if (isPeriodicaLike[0]) {
+  if (isPeriodicaLike) {
     const inferredAccessTypes = inferAccessTypes(
       context?.periodicaForm,
       loanerInfo.pickupBranch,

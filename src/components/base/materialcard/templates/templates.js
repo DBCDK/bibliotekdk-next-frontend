@@ -276,12 +276,12 @@ export function templateImageToLeft({
         </Text>
         {!isPeriodicaLike && !isDigitalArticle && (
           <Text {...propFunc("text3", 1)} title={formattedMaterialTypes}>
-            {!singleManifestation &&
-              Translate({
-                context: "materialcard",
-                label: "first-available-copy",
-              })}
-            {singleManifestation && edition}
+            {singleManifestation
+              ? edition
+              : Translate({
+                  context: "materialcard",
+                  label: "first-available-copy",
+                })}
           </Text>
         )}
         {children}
