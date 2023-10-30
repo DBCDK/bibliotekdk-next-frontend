@@ -79,6 +79,7 @@ describe("Order", () => {
     //order failed
     cy.get("[data-cy=error-occured-title]").should("be.visible");
     cy.get("[data-cy=order-failed-message").should("be.visible");
+    cy.get("[data-cy=try-again").should("be.visible");
     cy.get("[data-cy=order-failed-see-libraries-button]").should("be.visible");
   });
 
@@ -159,7 +160,7 @@ describe("Order", () => {
 
       //order failed
       cy.get("[data-cy=error-occured-title]").should("be.visible");
-      cy.get("[data-cy=order-failed-message").should("be.visible");
+      cy.get("[data-cy=try-again").should("be.visible");
       cy.get("[data-cy=order-failed-see-libraries-button]").should(
         "be.visible"
       );

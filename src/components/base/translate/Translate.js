@@ -291,6 +291,7 @@ function Translate({
   renderAsHtml = false,
   requestedLang = undefined,
 }) {
+  console.log("context ", context, "label ", label, "vars ", vars);
   const translated = DoTranslate({
     context,
     label,
