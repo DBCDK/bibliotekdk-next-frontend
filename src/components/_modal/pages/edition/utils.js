@@ -1,5 +1,4 @@
 import { accessFactory } from "@/lib/accessFactoryUtils";
-import useUser from "@/components/hooks/useUser";
 
 /**
  * Get a coverimage to use from given manifestations - from moreinfo OR default cover service
