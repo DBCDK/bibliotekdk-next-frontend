@@ -20,6 +20,71 @@ import { AccessEnum } from "@/lib/enums";
 import isEmpty from "lodash/isEmpty";
 import { IconLink } from "@/components/base/iconlink/IconLink";
 import ChevronRight from "@/public/icons/chevron_right.svg";
+import MaterialCard from "@/components/base/materialcard/MaterialCard";
+import { templateImageToLeft } from "@/components/base/materialcard/templates/templates";
+import Icon from "@/components/base/icon/Icon";
+
+export const ChoosePeriodicaCopyRow = ({
+  periodicaForm,
+  modal,
+  articleTypeTranslation,
+}) => {
+  return (
+    <>
+      {articleTypeTranslation ? (
+        <div className={styles.articletype}>
+          <Text type="text4">{Translate(articleTypeTranslation)}</Text>
+        </div>
+      ) : null}
+      {periodicaForm && (
+        <div>
+          {Object.entries(periodicaForm).map(([key, value]) => (
+            <span key={key} className={styles.periodicaformfield}>
+              <Text type="text3">
+                {Translate({
+                  context: "order-periodica",
+                  label: `label-${key}`,
+                })}
+              </Text>
+              <Text type="text4" key={key}>
+                {": "}
+                {value}
+              </Text>
+            </span>
+          ))}
+        </div>
+      )}
+      <div className={styles.choosePeriodicaCopyRow}>
+        {!periodicaForm && (
+          <Icon
+            src="exclamationmark.svg"
+            alt="info"
+            data-cy="tooltip-icon"
+            size="2_5"
+            className={styles.exclamationmark}
+          />
+        )}
+        <IconLink
+          onClick={() => {
+            modal.push("periodicaform", {
+              periodicaForm: periodicaForm,
+            });
+          }}
+          className={styles.periodicaformlink}
+          border={{ bottom: { keepVisible: true }, top: false }}
+          tag={"button"}
+          iconSrc={ChevronRight}
+          iconPlacement={"right"}
+        >
+          {Translate({
+            context: "order-periodica",
+            label: periodicaForm ? "correct" : "title",
+          })}
+        </IconLink>
+      </div>
+    </>
+  );
+};
 
 export function Edition({
   isLoading,
@@ -158,7 +223,7 @@ export function Edition({
           </div>
         ) : null}
         {periodicaForm && (
-          <div className={styles.periodicasummary}>
+          <div>
             {Object.entries(periodicaForm).map(([key, value]) => (
               <Text type="text3" key={key}>
                 {Translate({
@@ -203,11 +268,13 @@ export function Edition({
   );
 }
 
+//TODO Edition bliver brugt 3 steder, skal den kun skiftes her?
 export default function Wrap({
   context,
   singleManifestation = false,
   showOrderTxt = true,
   showChangeManifestation,
+  isMaterialCard = false,
 }) {
   const modal = useModal();
   let { orderPids: orderPidsBeforeFilter } = context;
@@ -243,6 +310,67 @@ export default function Wrap({
     manifestations
   );
   const coverImage = getCoverImage(manifestations);
+
+  if (isMaterialCard) {
+    const { flattenedGroupedSortedManifestations } =
+      manifestationMaterialTypeFactory(manifestations);
+    const firstManifestation = flattenedGroupedSortedManifestations[0];
+    const {
+      isPeriodicaLike,
+      isDigitalCopy,
+      availableAsDigitalCopy,
+      isArticleRequest,
+    } = inferredAccessTypes;
+    const articleTypeTranslation =
+      isDigitalCopy &&
+      availableAsDigitalCopy &&
+      context?.selectedAccesses?.[0]?.__typename !==
+        AccessEnum.INTER_LIBRARY_LOAN
+        ? {
+            context: "order",
+            label: "will-order-digital-copy",
+          }
+        : isArticleRequest
+        ? {
+            context: "general",
+            label: "article",
+          }
+        : context?.periodicaForm
+        ? {
+            context: "general",
+            label: "volume",
+          }
+        : null;
+    const children = isPeriodicaLike ? (
+      <ChoosePeriodicaCopyRow
+        periodicaForm={context?.periodicaForm}
+        modal={modal}
+        articleTypeTranslation={articleTypeTranslation}
+      />
+    ) : null;
+
+    const materialCardTemplate = (/** @type {Object} */ material) =>
+      templateImageToLeft({
+        material,
+        singleManifestation,
+        children,
+        isPeriodicaLike,
+        isDigitalCopy,
+      });
+    return (
+      <div>
+        {flattenedGroupedSortedManifestations &&
+          !isEmpty(flattenedGroupedSortedManifestations) && (
+            <MaterialCard
+              key={JSON.stringify("matcard+", firstManifestation)}
+              propAndChildrenTemplate={materialCardTemplate}
+              propAndChildrenInput={firstManifestation}
+              colSizing={{ xs: 12 }}
+            />
+          )}
+      </div>
+    );
+  }
 
   return (
     <Edition
