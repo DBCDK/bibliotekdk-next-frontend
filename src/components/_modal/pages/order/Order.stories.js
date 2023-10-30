@@ -61,6 +61,7 @@ function OrderPageComponentBuilder({
 
 // -------------------- Stories come here -----------------------
 export function OrderViaILL() {
+  useMockLoanerInfo({ rights: { digitalArticleService: false } });
   return (
     <OrderPageComponentBuilder
       title="Order via ILL"
@@ -230,7 +231,7 @@ OrderIndexedPeriodicaArticleFails.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 });
 
 export function OrderIndexedPeriodicaArticleILL() {
-  useMockLoanerInfo({});
+  useMockLoanerInfo({ rights: { digitalArticleService: false } });
   return (
     <OrderPageComponentBuilder
       title="Order Indexed Periodica Article - ILL"
@@ -261,7 +262,7 @@ OrderIndexedPeriodicaArticleILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 });
 
 export function OrderPeriodicaVolume() {
-  useMockLoanerInfo({});
+  useMockLoanerInfo({ rights: { digitalArticleService: true } });
   return (
     <OrderPageComponentBuilder
       title="Order Periodica Volume"
@@ -292,7 +293,7 @@ OrderPeriodicaVolume.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 });
 
 export function OrderPeriodicaVolumeOnlyILL() {
-  useMockLoanerInfo({});
+  useMockLoanerInfo({ rights: { digitalArticleService: false } });
   return (
     <OrderPageComponentBuilder
       title="Order Periodica Volume"
