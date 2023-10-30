@@ -1,5 +1,5 @@
 import { accessFactory } from "@/lib/accessFactoryUtils";
-import useUser from "@/components/hooks/useUser";
+import { AccessEnum } from "@/lib/enums";
 
 /**
  * Get a coverimage to use from given manifestations - from moreinfo OR default cover service
@@ -65,4 +65,41 @@ export function inferAccessTypes(
     availableAsPhysicalCopy,
     requireDigitalAccess,
   };
+}
+
+/**
+ *
+ * @param {Object} props
+ * @param {Boolean} props.isDigitalCopy
+ * @param {Boolean} props.availableAsDigitalCopy
+ * @param {Object[]} props.selectedAccesses
+ * @param {Boolean} props.isArticleRequest
+ * @param {Object} props.periodicaForm
+ * @returns {String|null}
+ */
+export function translateArticleType({
+  isDigitalCopy,
+  availableAsDigitalCopy,
+  selectedAccesses,
+  isArticleRequest,
+  periodicaForm,
+}) {
+  return isDigitalCopy &&
+    availableAsDigitalCopy &&
+    selectedAccesses?.[0]?.__typename !== AccessEnum.INTER_LIBRARY_LOAN
+    ? {
+        context: "order",
+        label: "will-order-digital-copy",
+      }
+    : isArticleRequest
+    ? {
+        context: "general",
+        label: "article",
+      }
+    : periodicaForm
+    ? {
+        context: "general",
+        label: "volume",
+      }
+    : null;
 }

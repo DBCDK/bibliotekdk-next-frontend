@@ -557,6 +557,13 @@ export function pidsToWorks({ pids }) {
         ownerWork {
           workId
         }
+        access {
+          __typename
+          ... on DigitalArticleService {
+            issn
+          }
+        }
+        workTypes
         pid
         titles {
           main
@@ -605,6 +612,13 @@ export function idsToWorks({ ids }) {
         }
         manifestations {
           mostRelevant {
+            access{
+              __typename
+              ... on DigitalArticleService {
+                issn
+              }
+            }
+            workTypes
             cover {
               detail
             }

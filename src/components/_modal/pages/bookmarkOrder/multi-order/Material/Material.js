@@ -1,8 +1,16 @@
-import { accessFactory } from "@/lib/accessFactoryUtils";
+import {
+  getAreAccessesPeriodicaLike,
+  checkDigitalCopy,
+} from "@/lib/accessFactoryUtils";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
 import MaterialCard from "@/components/base/materialcard/MaterialCard";
 import { templateImageToLeft } from "@/components/base/materialcard/templates/templates";
+import ChoosePeriodicaCopyRow from "@/components/_modal/pages/edition/choosePeriodicaCopyRow/ChoosePeriodicaCopyRow.js";
+import { translateArticleType } from "@/components/_modal/pages/edition/utils.js";
+import { inferAccessTypes } from "@/components/_modal/pages/edition/utils.js";
+import useUser from "@/components/hooks/useUser";
+import { useModal } from "@/components/_modal/Modal";
 
 /**
  * At this point, we have manifestation of all the different material types
@@ -23,10 +31,14 @@ const filterForRelevantMaterialTypes = (mostRelevant, materialType) => {
 /**
  * Is missing article implementation
  * @param {Object} material
+ * @param {Object} context
  * @returns {React.JSX.Element}
  */
-const Material = ({ material }) => {
+const Material = ({ material, context }) => {
   const isSpecificEdition = !!material?.pid;
+  const modal = useModal();
+
+  const { loanerInfo } = useUser();
 
   const manifestation = isSpecificEdition
     ? [material]
@@ -35,21 +47,35 @@ const Material = ({ material }) => {
         material?.materialType
       );
 
-  const { digitalCopyArray, isPeriodicaLikeArray } = accessFactory([
-    manifestation,
-  ]);
+  const isDigitalCopy = checkDigitalCopy(manifestation);
+  const isPeriodicaLike = getAreAccessesPeriodicaLike(manifestation);
 
-  const isDigitalCopy = digitalCopyArray?.find((single) => single === true);
-  const isPeriodicaLike = isPeriodicaLikeArray?.find(
-    (single) => single === true
-  );
+  let children = null;
 
-  if (isPeriodicaLike) {
-    //TODO implement periodica like
-    alert("implement periodia like");
+  if (isPeriodicaLike[0]) {
+    const inferredAccessTypes = inferAccessTypes(
+      context?.periodicaForm,
+      loanerInfo.pickupBranch,
+      [manifestation]
+    );
+
+    const { availableAsDigitalCopy, isArticleRequest } = inferredAccessTypes;
+
+    const articleTypeTranslation = translateArticleType({
+      isDigitalCopy,
+      availableAsDigitalCopy,
+      selectedAccesses: context?.selectedAccesses,
+      isArticleRequest,
+      periodicaForm: context?.periodicaForm,
+    });
+    children = (
+      <ChoosePeriodicaCopyRow
+        modal={modal}
+        articleTypeTranslation={articleTypeTranslation}
+      />
+    );
   }
 
-  const children = null; //Check if we have article or not
   const { flattenedGroupedSortedManifestations } =
     manifestationMaterialTypeFactory(manifestation);
 
@@ -64,16 +90,14 @@ const Material = ({ material }) => {
 
   const firstManifestation = flattenedGroupedSortedManifestations[0];
   return (
-    <>
-      {flattenedGroupedSortedManifestations &&
-        !isEmpty(flattenedGroupedSortedManifestations) && (
-          <MaterialCard
-            propAndChildrenTemplate={materialCardTemplate}
-            propAndChildrenInput={firstManifestation}
-            colSizing={{ xs: 12 }}
-          />
-        )}
-    </>
+    flattenedGroupedSortedManifestations &&
+    !isEmpty(flattenedGroupedSortedManifestations) && (
+      <MaterialCard
+        propAndChildrenTemplate={materialCardTemplate}
+        propAndChildrenInput={firstManifestation}
+        colSizing={{ xs: 12 }}
+      />
+    )
   );
 };
 

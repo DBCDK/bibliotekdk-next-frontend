@@ -1,0 +1,27 @@
+.articletype {
+  margin-top: var(--pt2);
+}
+
+.choosePeriodicaCopyRow {
+  margin-top: var(--pt2);
+  display: flex;
+  height: fit-content;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.exclamationmark {
+  margin-right: var(--pt1);
+}
+
+.periodicaformfield {
+  display: flex;
+}
+
+.periodicaformlink {
+  cursor: pointer;
+}
+
+.periodicaformlink > span > i {
+  vertical-align: middle;
+}
