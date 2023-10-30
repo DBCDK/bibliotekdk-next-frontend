@@ -234,14 +234,13 @@ export function templateImageToLeft({
     singleManifestation === true
       ? material?.creators
       : material?.ownerWork?.creators;
-
   const creatorsString = extractCreatorsPrioritiseCorporation(creators)
     ?.flatMap((c) => c?.display)
     .filter((pre) => !isEmpty(pre))
     ?.join(", ");
-  const formattedMaterialTypes = formatMaterialTypesToPresentation(
-    material?.materialTypesArray
-  );
+  const formattedMaterialTypes = singleManifestation
+    ? material?.materialType
+    : formatMaterialTypesToPresentation(material?.materialTypesArray);
 
   const edition = [
     material?.edition?.publicationYear?.display,

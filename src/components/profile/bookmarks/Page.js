@@ -70,6 +70,8 @@ const BookmarkPage = () => {
   const scrollToElement = useRef(null);
   const modal = useModal();
 
+  console.log("bookmarks", bookmarks);
+
   useEffect(() => {
     setSortBy(sortByValue);
   }, [sortByValue]);

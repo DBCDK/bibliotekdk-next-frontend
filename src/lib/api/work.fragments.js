@@ -558,8 +558,12 @@ export function pidsToWorks({ pids }) {
           workId
         }
         pid
-        titles {main}
+        titles {
+          main
+          full
+        }
         cover {
+          detail
           thumbnail
         }
         creators {
@@ -572,6 +576,9 @@ export function pidsToWorks({ pids }) {
         edition {
           summary
           edition
+          publicationYear {
+            display
+          }
         }
       }
     }
@@ -591,16 +598,26 @@ export function idsToWorks({ ids }) {
         workId
         titles {
           main
+          full
         }
         creators {
           display
         }
         manifestations {
           mostRelevant {
+            cover {
+              detail
+            }
             pid
             ownerWork {
               workId
               workTypes
+              creators{
+                display
+              }
+              titles{
+                full
+              }
             }
             materialTypes {
               ...materialTypesFragment
@@ -608,6 +625,7 @@ export function idsToWorks({ ids }) {
           }
           bestRepresentation {
             cover {
+              detail
               thumbnail
             }
             materialTypes {
