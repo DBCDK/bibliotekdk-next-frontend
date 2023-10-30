@@ -366,8 +366,13 @@
       "notNow": {
         "da": "Ikke nu",
         "en": "Not now"
+      },
+      "kundeserviceBibdk": {
+        "da": "https://kundeservice.dbc.dk/bibdk",
+        "en": "https://kundeservice.dbc.dk/bibdk"
       }
     },
+
     "articles": {
       "deliveredBy": {
         "da": "Artiklen er leveret af %s",
@@ -2252,7 +2257,11 @@
     },
     "order-periodica": {
       "title": {
-        "da": "Vælg udgave eller artikel",
+        "da": "Vælg eksemplar eller artikel",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "correct": {
+        "da": "Rediger eksemplar eller artikel",
         "en": "LABEL: mangler oversættelse"
       },
       "description": {
@@ -3865,6 +3874,87 @@
       "errorOccured": {
         "da": "Der opstod en fejl",
         "en": "An error occured"
+      },
+      "tryAgain": {
+        "da": "Prøv igen eller kontakt ",
+        "en": "Try again or contact "
+      },
+      "OWNED_ACCEPTED": {
+        "da": "Materialet kan udleveres af afhentningsstedet. Materialet er bestilt.",
+        "en": "Item available at pickupAgency, order accepted"
+      },
+      "NOT_OWNED_ILL_LOC": {
+        "da": "Materialet kan udleveres af et andet bibliotek og afhentes hos det valgte afhentningssted. Materialet er bestilt.",
+        "en": "Item not available at pickupAgency, item localised for ILL"
+      },
+      "OWNED_WRONG_MEDIUMTYPE": {
+        "da": "Materialetypen kan ikke udleveres af afhentningsstedet",
+        "en": "Item available at pickupAgency, order of mediumType not accepted"
+      },
+      "NOT_OWNED_WRONG_ILL_MEDIUMTYPE": {
+        "da": "Materialet kan ikke udleveres af afhentningsstedet og materialetypen kan ikke udleveres af afhentningsstedet",
+        "en": "Item not available at pickupAgency, ILL of mediumType not accepted"
+      },
+      "NOT_OWNED_NO_ILL_LOC": {
+        "da": "Materialet kan ikke udleveres af afhentningsstedet eller et andet bibliotek (ILL)",
+        "en": "Item not available at pickupAgency, item not localised for ILL"
+      },
+      "OWNED_OWN_CATALOGUE": {
+        "da": "Materialet kan bestilles direkte hos biblioteket",
+        "en": "Item available at pickupAgency, item may be ordered through the library's catalogue"
+      },
+      "SERVICE_UNAVAILABLE": {
+        "da": "Systemet svarer ikke",
+        "en": "Service unavailable"
+      },
+      "UNKNOWN_PICKUPAGENCY": {
+        "da": "Afhentningssted ikke fundet",
+        "en": "PickupAgency not found"
+      },
+      "UNKNOWN_USER": {
+        "da": "Brugeren ikke fundet",
+        "en": "User not found"
+      },
+
+      "INVALID_ORDER": {
+        "da": "Bestillingen kunne ikke valideres",
+        "en": "Order does not validate"
+      },
+      "ORS_ERROR": {
+        "da": "Systemet modtog ikke bestillingen",
+        "en": "Error sending order to ORS"
+      },
+      "NO_SERVICEREQUESTER": {
+        "da": "Systemet modtog ikke bestillingen",
+        "en": "ServiceRequester is obligatory"
+      },
+      "AUTHENTICATION_ERROR": {
+        "da": "Autenticitetsfejl",
+        "en": "Authentication error"
+      },
+      "UNKNOWN_ERROR": {
+        "da": "Ukendt fejl",
+        "en": "Unknown error"
+      },
+      "ERROR_UNAUTHORIZED_USER": {
+        "da": "Uautoriseret bruger",
+        "en": "Unauthorized user"
+      },
+      "ERROR_AGENCY_NOT_SUBSCRIBED": {
+        "da": "Biblioteket har ikke abonnement hertil",
+        "en": "Agency not subscribed"
+      },
+      "ERROR_INVALID_PICKUP_BRANCH": {
+        "da": "Ugyldigt afhentningssted",
+        "en": "Invalid pickup branch"
+      },
+      "ERROR_PID_NOT_RESERVABLE": {
+        "da": "Bestilling/reservering ikke mulig",
+        "en": "Order/reservation not possible"
+      },
+      "ERROR_NO_NAME_OR_EMAIL": {
+        "da": "Navn eller email mangler",
+        "en": "Name or email missing"
       }
     },
     "noagencies": {
@@ -3883,6 +3973,12 @@
       "maintxt": {
         "da": "Du registrerer dig på et bibliotek via det lokale bibliotek. For folkebiblioteker foregår det ved at du opretter en bruger via deres lokale hjemmeside. Herefter knyttes folkebiblioteket automatisk til din profil på bibliotek.dk. \\n Er du registreret på et uddannelsesbibliotek, kan du muligvis selv knytte biblioteket til din profil under \"Mine biblioteker\".",
         "en": "noagencis in english please"
+      }
+    },
+    "materialcard": {
+      "first-available-copy": {
+        "da": "Første tilgængelige eksemplar",
+        "en": "First available copy."
       }
     }
   }

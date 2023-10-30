@@ -49,6 +49,12 @@ const MANIFESTATION_1 = {
   titles: {
     full: ["Hugo i Sølvskoven", "Begyndelsen"],
   },
+  ownerWork: {
+    titles: {
+      full: ["Hugo i Sølvskoven Værk", "Begyndelsen Værk"],
+    },
+    creators: [{ display: "Linoleum Gummigulv" }],
+  },
 };
 // Another manifestation that may be ordered via ILL
 const MANIFESTATION_2 = {
@@ -56,6 +62,12 @@ const MANIFESTATION_2 = {
   pid: "some-pid-2",
   titles: {
     full: ["Hugo i Sølvskoven 2", "Rise of Rita"],
+  },
+  ownerWork: {
+    titles: {
+      full: ["Hugo i Sølvskoven 2 Værk", "Rise of Rita Værk"],
+    },
+    creators: [{ display: "Linoleum Gummigulv" }],
   },
   edition: {
     edition: "102. udgave",
@@ -75,6 +87,12 @@ const MANIFESTATION_3 = {
   pid: "some-pid-3",
   titles: {
     full: ["Hugo i Sølvskoven 3", "Gulvguldets hemmelighed"],
+  },
+  ownerWork: {
+    titles: {
+      full: ["Hugo i Sølvskoven 3 Værk", "Gulvguldets hemmelighed Værk"],
+    },
+    creators: [{ display: "Linoleum Gummigulv" }],
   },
   access: [
     {
@@ -98,6 +116,15 @@ const MANIFESTATION_4 = {
       "Hugo i Sølvskoven 4",
       "Guldet glimter, sølvet smelter, gulvet vælter",
     ],
+  },
+  ownerWork: {
+    creators: [{ display: "Linoleum Gummigulv" }],
+    titles: {
+      full: [
+        "Hugo i Sølvskoven 4 Værk",
+        "Guldet glimter, sølvet smelter, gulvet vælter Værk",
+      ],
+    },
   },
   materialTypes: [
     {
@@ -173,6 +200,15 @@ const MANIFESTATION_5 = {
   titles: {
     full: ["Hugo i Sølvskoven 5", "Gulvguldmonstrene mod Grullerne"],
   },
+  ownerWork: {
+    creators: [{ display: "Linoleum Gummigulv" }],
+    titles: {
+      full: [
+        "Hugo i Sølvskoven 5 Værk",
+        "Gulvguldmonstrene mod Grullerne Værk",
+      ],
+    },
+  },
   materialTypes: [
     {
       materialTypeSpecific: { display: "tidsskrift", code: "JOURNAL" },
@@ -209,6 +245,15 @@ const MANIFESTATION_6 = {
   titles: {
     full: ["Hugo i Sølvskoven 6", "Gulvguldmonstrene vender tilbage"],
   },
+  ownerWork: {
+    creators: [{ display: "Linoleum Gummigulv" }],
+    titles: {
+      full: [
+        "Hugo i Sølvskoven 6 Værk",
+        "Gulvguldmonstrene vender tilbage Værk",
+      ],
+    },
+  },
   materialTypes: [
     {
       materialTypeSpecific: { display: "bog", code: "BOOK" },
@@ -229,6 +274,12 @@ const MANIFESTATION_7 = {
   ...MANIFESTATION_BASE,
   pid: "some-pid-7",
   titles: { full: ["Lær at læse med Hugo og Rita 1"] },
+  ownerWork: {
+    titles: {
+      full: ["Lær at læse med Hugo og Rita 1 Værk"],
+      creators: [{ display: "Linoleum Gummigulv" }],
+    },
+  },
   materialTypes: [
     {
       materialTypeSpecific: { display: "e-bog", code: "EBOOK" },
@@ -259,6 +310,12 @@ const MANIFESTATION_8 = {
   ...MANIFESTATION_BASE,
   pid: "some-pid-8",
   titles: { full: ["Lær at læse med Hugo og Rita 2"] },
+  ownerWork: {
+    creators: [{ display: "Linoleum Gummigulv" }],
+    titles: {
+      full: ["Lær at læse med Hugo og Rita 2 Værk"],
+    },
+  },
   materialTypes: [
     {
       materialTypeSpecific: { display: "bog", code: "BOOK" },
@@ -281,6 +338,12 @@ const MANIFESTATION_9 = {
   ...MANIFESTATION_BASE,
   pid: "some-pid-9",
   titles: { full: ["Lær at læse med Hugo og Rita 3"] },
+  ownerWork: {
+    creators: [{ display: "Linoleum Gummigulv" }],
+    titles: {
+      full: ["Lær at læse med Hugo og Rita 3 Værk"],
+    },
+  },
   materialTypes: [
     {
       materialTypeSpecific: { display: "bog", code: "BOOK" },

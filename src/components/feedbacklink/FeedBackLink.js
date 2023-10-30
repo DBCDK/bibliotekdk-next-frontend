@@ -8,7 +8,10 @@ export default function FeedbackLink() {
     <div data-cy="feedback-wrapper" className={styles.feedbackwrap}>
       <div data-cy="feedback-link-text">
         <Link
-          href="https://kundeservice.dbc.dk/bibdk"
+          href={Translate({
+            context: "general",
+            label: "kundeserviceBibdk",
+          })}
           target="_blank"
           border={{ top: false, bottom: { keepVisible: true } }}
           dataCy="feedbacklink-to-kundeservice"
