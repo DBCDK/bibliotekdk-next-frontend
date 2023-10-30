@@ -460,12 +460,6 @@ export function handleAgencyAccessData(agencies) {
 
     const branches = entry
       ?.flatMap(enrichBranches)
-      // ?.sort(
-      //   (a, b) =>
-      //     sortByAvailability(a, b) ||
-      //     sortByMainBranch(a, b) ||
-      //     sortByBranchName(a, b)
-      // );
       ?.sort(sortByBranchName)
       ?.sort(sortByMainBranch)
       ?.sort(sortByAvailability);
