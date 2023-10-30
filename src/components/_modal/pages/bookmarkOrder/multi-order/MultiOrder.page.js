@@ -29,7 +29,13 @@ const MultiOrder = ({ context }) => {
 
       <div className={styles.materialList}>
         {materials.map((material) => {
-          return <Material key={material.key} material={material} />;
+          return (
+            <Material
+              key={material.key}
+              material={material}
+              context={context} //sets periodicaForm via updateModal
+            />
+          );
         })}
       </div>
 

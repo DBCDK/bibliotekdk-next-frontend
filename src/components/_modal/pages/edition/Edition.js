@@ -19,7 +19,6 @@ import {
   formatMaterialTypesToPresentation,
   manifestationMaterialTypeFactory,
 } from "@/lib/manifestationFactoryUtils";
-import { AccessEnum } from "@/lib/enums";
 import isEmpty from "lodash/isEmpty";
 import { IconLink } from "@/components/base/iconlink/IconLink";
 import ChevronRight from "@/public/icons/chevron_right.svg";
@@ -67,7 +66,7 @@ export function Edition({
     availableAsDigitalCopy,
     selectedAccesses: context?.selectedAccesses,
     isArticleRequest,
-    periodicaForm: context.periodicaForm,
+    periodicaForm: context?.periodicaForm,
   });
 
   const specificEdition =
@@ -250,26 +249,13 @@ export default function Wrap({
       availableAsDigitalCopy,
       isArticleRequest,
     } = inferredAccessTypes;
-    const articleTypeTranslation =
-      isDigitalCopy &&
-      availableAsDigitalCopy &&
-      context?.selectedAccesses?.[0]?.__typename !==
-        AccessEnum.INTER_LIBRARY_LOAN
-        ? {
-            context: "order",
-            label: "will-order-digital-copy",
-          }
-        : isArticleRequest
-        ? {
-            context: "general",
-            label: "article",
-          }
-        : context?.periodicaForm
-        ? {
-            context: "general",
-            label: "volume",
-          }
-        : null;
+    const articleTypeTranslation = translateArticleType({
+      isDigitalCopy,
+      availableAsDigitalCopy,
+      selectedAccesses: context?.selectedAccesses,
+      isArticleRequest,
+      periodicaForm: context?.periodicaForm,
+    });
     const children = isPeriodicaLike ? (
       <ChoosePeriodicaCopyRow
         periodicaForm={context?.periodicaForm}
@@ -286,6 +272,7 @@ export default function Wrap({
         isPeriodicaLike,
         isDigitalCopy,
       });
+
     return (
       <div>
         {flattenedGroupedSortedManifestations &&

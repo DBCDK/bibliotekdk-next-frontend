@@ -70,6 +70,7 @@ const Material = ({ material, context }) => {
     });
     children = (
       <ChoosePeriodicaCopyRow
+        periodicaForm={context?.periodicaForm}
         modal={modal}
         articleTypeTranslation={articleTypeTranslation}
       />
