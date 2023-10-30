@@ -57,21 +57,29 @@ export function Receipt({
   // Define if order has failed
   let hasFailed = false,
     failedMessage = undefined;
-  if (orderData?.submitOrder && !orderData?.submitOrder?.ok) {
+  if (
+    (orderData?.submitOrder && !orderData?.submitOrder?.ok) ||
+    orderData?.submitOrder?.status === "UNKNOWN_ERROR" // answer can have ok === true, but still have status with "UNKNOWN_ERROR"
+  ) {
     hasFailed = true;
-    failedMessage = orderData?.submitOrder?.message;
+    failedMessage = Translate({
+      context: "receipt",
+      label: orderData?.submitOrder?.status,
+    });
   } else if (!!orderError || !!articleOrderError) {
     hasFailed = true;
-    failedMessage = orderError || articleOrderError;
+    //error message doesnt help user, therefore, we dont show it
+    //occurs f. ex, when invalid userParams are given to submitOrder
   } else if (
     articleOrderData?.elba?.placeCopyRequest &&
     articleOrderData?.elba?.placeCopyRequest?.status !== "OK"
   ) {
-    //articleOrder only assigns status codes, no explanatory error messages, therefor we dont show them to the user
     hasFailed = true;
+    failedMessage = Translate({
+      context: "receipt",
+      label: articleOrderData?.elba?.placeCopyRequest?.status,
+    });
   }
-
-  const showLinkToMyLibraries = true; //TODO should link to my libraries always be shown? @bibdk2021-1934
 
   // Branch name
   const branchName = pickupBranch?.name;
@@ -191,7 +199,7 @@ export function Receipt({
                   border={{ top: false, bottom: { keepVisible: true } }}
                   dataCy="feedbacklink-to-kundeservice"
                 >
-                  <Text tag="span" type="text3">
+                  <Text tag="span" type="text2">
                     {Translate({
                       context: "general",
                       label: "kundeserviceBibdk",
@@ -200,19 +208,9 @@ export function Receipt({
                 </Link>
               </span>
             )}
-            {showLinkToMyLibraries && (
-              <Button
-                className={styles.redirect}
-                onClick={() => router.push("/profil/mine-biblioteker")}
-                type="secondary"
-                dataCy="order-failed-see-libraries-button"
-              >
-                {Translate({
-                  context: "receipt",
-                  label: "seeYourLibraries",
-                })}
-              </Button>
-            )}
+            <Button className={styles.redirect} onClick={() => modal.clear()}>
+              {Translate({ context: "general", label: "close" })}
+            </Button>
           </div>
         </div>
       </div>
