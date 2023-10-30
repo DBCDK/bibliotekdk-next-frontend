@@ -6,8 +6,8 @@ import { templateImageToLeft } from "@/components/base/materialcard/templates/te
 
 /**
  * Is missing article implementation
- * @param {} param0
- * @returns
+ * @param {Object} material
+ * @returns {React.JSX.Element}
  */
 const Material = ({ material }) => {
   const { manifestations } = material;
@@ -19,13 +19,13 @@ const Material = ({ material }) => {
   );
 
   const isDigitalCopy = digitalCopyArray?.find((single) => single === true);
-  //const isPhysicalCopy = physicalCopyArray?.find((single) => single === true);
   const isPeriodicaLike = isPeriodicaLikeArray?.find(
     (single) => single === true
   );
 
   if (isPeriodicaLike) {
-    console.log("PERIODICA LIKE");
+    //TODO implement periodica like
+    alert("implement periodia like");
   }
 
   const children = null; //Check if we have article or not

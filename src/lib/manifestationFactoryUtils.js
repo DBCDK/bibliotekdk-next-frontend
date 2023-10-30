@@ -76,7 +76,6 @@ export function formatMaterialTypesToPresentation(materialTypeArray) {
  * @param manifestation
  * @returns {*|*[]}
  */
-//THIS ONE gets materialtype array
 export function flattenMaterialType(manifestation) {
   return (
     manifestation?.materialTypes

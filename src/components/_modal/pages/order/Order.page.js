@@ -191,7 +191,6 @@ function Order({
       />
       {/*TODO SKIFT MED Material Card? */}
       <Edition
-        iseMaterialCard={true}
         context={contextWithOrderPids}
         singleManifestation={singleManifestation}
         isMaterialCard={true}
