@@ -724,6 +724,11 @@ const USER_2 = {
 };
 
 const USER_3 = {
+  authUser: {
+    name: "Some Name",
+    mail: "some@mail.dk",
+    rights: { digitalArticleService: false },
+  },
   agencies: [{ borrowerStatus: BORROWER_STATUS_TRUE, result: [BRANCH_3] }],
 };
 
@@ -1159,11 +1164,13 @@ function useMockLoanerInfo({
   orders = USER_ORDERS,
   debt = USER_DEBT,
   agencies = [USER_AGENCY],
+  rights = { digitalArticleService: true },
 }) {
   const { updateLoanerInfo } = useUser();
   const id = useId();
   useMemo(() => {
     updateLoanerInfo({
+      rights: rights,
       pickupBranch: pickUpBranch,
       loans,
       orders,
