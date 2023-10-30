@@ -1159,11 +1159,13 @@ function useMockLoanerInfo({
   orders = USER_ORDERS,
   debt = USER_DEBT,
   agencies = [USER_AGENCY],
+  rights = { digitalArticleService: true },
 }) {
   const { updateLoanerInfo } = useUser();
   const id = useId();
   useMemo(() => {
     updateLoanerInfo({
+      rights: rights,
       pickupBranch: pickUpBranch,
       loans,
       orders,

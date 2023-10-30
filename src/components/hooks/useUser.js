@@ -12,7 +12,10 @@ import { addUserToUserData } from "@/lib/api/userData.mutations";
 export const AnonymousSessionContext = createContext();
 
 // in memory object for storing loaner info for current user
-let loanerInfoMock = { pickupBranch: "790900" };
+let loanerInfoMock = {
+  pickupBranch: "790900",
+  rights: { digitalArticleService: false },
+};
 
 /**
  * Mock used in storybook
@@ -29,6 +32,7 @@ function useUserMock() {
   const authUser = {
     name: "Some Name",
     mail: "some@mail.dk",
+    rights: loanerInfoMock.rights,
   };
   const loggedInUser = {
     userName: authUser.name,
@@ -212,8 +216,8 @@ function useAccessTokenImpl() {
   return session?.accessToken;
 }
 
+// const useUser = process.env.STORYBOOK_ACTIVE ? useUserMock : useUserImpl;
 const useUser = process.env.STORYBOOK_ACTIVE ? useUserMock : useUserImpl;
-
 export default useUser;
 
 const useAccessToken = process.env.STORYBOOK_ACTIVE
