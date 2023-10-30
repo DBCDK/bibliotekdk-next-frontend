@@ -80,7 +80,7 @@ describe("Order", () => {
     cy.get("[data-cy=error-occured-title]").should("be.visible");
     cy.get("[data-cy=order-failed-message").should("be.visible");
     cy.get("[data-cy=try-again").should("be.visible");
-    cy.get("[data-cy=order-failed-see-libraries-button]").should("be.visible");
+    cy.get("[data-cy=button-luk]").should("be.visible");
   });
 
   it("should handle failed checkorder and pickupAllowed=false", () => {
@@ -161,9 +161,7 @@ describe("Order", () => {
       //order failed
       cy.get("[data-cy=error-occured-title]").should("be.visible");
       cy.get("[data-cy=try-again").should("be.visible");
-      cy.get("[data-cy=order-failed-see-libraries-button]").should(
-        "be.visible"
-      );
+      cy.get("[data-cy=button-luk]").should("be.visible");
     });
 
     it("should order indexed periodica article through ILL (when branch is not subscribed to article service)", () => {
