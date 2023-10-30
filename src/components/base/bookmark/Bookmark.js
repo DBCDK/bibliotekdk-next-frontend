@@ -14,7 +14,7 @@ function handleOnBookmarkClick() {
 }
 
 /**
- * The Component function
+ * Button in the shape of a bookmark icon
  *
  * @param {Object} props
  * See propTypes for specific props and types

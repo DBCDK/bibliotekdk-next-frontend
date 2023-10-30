@@ -37,6 +37,7 @@ export function openOrderModal({
     selectedAccesses: selectedAccesses,
     workId: workId,
     ...(singleManifestation && { orderType: "singleManifestation" }),
+    singleManifestation: singleManifestation,
     storeLoanerInfo: storeLoanerInfo,
   });
 }
