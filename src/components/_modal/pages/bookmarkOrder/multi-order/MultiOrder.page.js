@@ -2,6 +2,7 @@ import Title from "@/components/base/title";
 import Top from "../../base/top";
 import styles from "./MultiOrder.module.css";
 import Translate from "@/components/base/translate";
+import Material from "./Material/Material";
 
 const CONTEXT = "bookmark-order";
 
@@ -36,12 +37,9 @@ const MultiOrder = ({ context }) => {
            * @TODO use Material component inside @file ./Material/Material.js
            * we how and which data is stored for bookmarks. when we figured this out, we can show Material component
            */
-          // materials.map((material) => {
-          //   return <Material key={material.key} material={material} />;
-          // })
-          materials.map((mat) => (
-            <article key={mat.key}>{mat.titles?.main?.[0]}</article>
-          ))
+          materials.map((material) => {
+            return <Material key={material.key} material={material} />;
+          })
         }
       </div>
 

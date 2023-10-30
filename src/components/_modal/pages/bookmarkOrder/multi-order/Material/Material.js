@@ -10,6 +10,7 @@ import { templateImageToLeft } from "@/components/base/materialcard/templates/te
  * @returns {React.JSX.Element}
  */
 const Material = ({ material }) => {
+  console.log("MATERIAL ", material);
   const { manifestations } = material;
 
   //TODO remove check once huskeliste can handle specific editions
@@ -46,11 +47,14 @@ const Material = ({ material }) => {
     <div>
       {flattenedGroupedSortedManifestations &&
         !isEmpty(flattenedGroupedSortedManifestations) && (
-          <MaterialCard
-            propAndChildrenTemplate={materialCardTemplate}
-            propAndChildrenInput={firstManifestation}
-            colSizing={{ xs: 12 }}
-          />
+          <>
+            <div>{material.titles.main[0]}</div>
+            <MaterialCard
+              propAndChildrenTemplate={materialCardTemplate}
+              propAndChildrenInput={firstManifestation}
+              colSizing={{ xs: 12 }}
+            />
+          </>
         )}
     </div>
   );
