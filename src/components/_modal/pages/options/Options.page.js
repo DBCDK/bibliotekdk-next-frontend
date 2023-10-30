@@ -10,7 +10,11 @@ import Text from "@/components/base/text";
 import { useData } from "@/lib/api/api";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import { useMemo } from "react";
+<<<<<<< HEAD
+import { accessFactory } from "@/lib/accessFactoryUtils";
+=======
 import { accessFactory, getAllAccess } from "@/lib/accessFactoryUtils";
+>>>>>>> main
 import useUser from "@/components/hooks/useUser";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 
@@ -105,20 +109,14 @@ export function Options({ modal, context, user }) {
   // the next one checks for digital access .. for users already logged in :)
   // it is false if user is not logged in
   let { hasDigitalAccess } = useBranchUserAndHasDigitalAccess(selectedPids);
-  // reverse flow -BIBDK2021-1824 - if user is not logged in we
-  // check for digital access here
-  const allAccess = getAllAccess(manifestations);
-  if (!user?.isAuthenticated) {
-    hasDigitalAccess = !!allAccess.find(
-      (access) => (access.__typename = "DigitalArticleService")
-    );
-  }
 
   const { getAllowedAccessesByTypeName } = useMemo(() => {
     return accessFactory(manifestations);
   }, [manifestations]);
 
-  const allowedAccessessByType = getAllowedAccessesByTypeName(hasDigitalAccess);
+  const allowedAccessessByType = getAllowedAccessesByTypeName(
+    hasDigitalAccess || !user?.isAuthenticated
+  );
 
   const onlineAccesses = allowedAccessessByType.onlineAccesses;
   const digitalArticleServiceAccesses =
