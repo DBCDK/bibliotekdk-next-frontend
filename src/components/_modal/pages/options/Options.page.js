@@ -10,11 +10,7 @@ import Text from "@/components/base/text";
 import { useData } from "@/lib/api/api";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import { useMemo } from "react";
-<<<<<<< HEAD
 import { accessFactory } from "@/lib/accessFactoryUtils";
-=======
-import { accessFactory, getAllAccess } from "@/lib/accessFactoryUtils";
->>>>>>> main
 import useUser from "@/components/hooks/useUser";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 
