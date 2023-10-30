@@ -55,11 +55,7 @@ function toggleMenuItem(menuItem) {
   };
 }
 
-export default function AdvancedSearchDropdown({
-  context,
-  indexName,
-  menuItems = [],
-}) {
+export default function AdvancedSearchDropdown({ indexName, menuItems = [] }) {
   menuItems = menuItems.map(toggleMenuItem);
 
   const [expandMenu, setExpandMenu] = useState(false);

@@ -4,7 +4,6 @@ import AdvancedSearchDropdown, {
   FormTypeEnum,
 } from "@/components/base/dropdown/advancedSearchDropdown/AdvancedSearchDropdown";
 import merge from "lodash/merge";
-import List from "@/components/base/forms/list";
 
 const exportedObject = {
   title: "base/AdvancedSearchDropdown",
@@ -12,13 +11,7 @@ const exportedObject = {
 
 export default exportedObject;
 
-const { DEFAULT_STORY_PARAMETERS, USER_3, BRANCH_3 } = automock_utils();
-
-const rows = [
-  { title: "First", description: "der" },
-  { title: "Second", description: "der" },
-  { title: "Third", description: "der" },
-];
+const { DEFAULT_STORY_PARAMETERS } = automock_utils();
 
 export function AdvancedSearchDropdownOnlyCheckboxes() {
   const indices = [
