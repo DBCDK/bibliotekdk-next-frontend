@@ -68,10 +68,6 @@ export function PeriodicaForm({ modal, context, active }) {
   const [hasTry, setHasTry] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
-  console.log("modal", modal);
-  console.log("context", context);
-  console.log("active", active);
-
   useEffect(() => {
     if (active) {
       setHasTry(false);
