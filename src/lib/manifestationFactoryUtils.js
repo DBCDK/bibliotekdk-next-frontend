@@ -156,7 +156,7 @@ export function flatMapMaterialTypes(manifestations) {
  * @param {("specificDisplay"|"specificCode"|"generalDisplay"|"generalCode")} materialTypeField
  * @returns {SpecificDisplayArray}
  */
-export function flattenToMaterialTypeStringArray(
+export function toFlatMaterialTypes(
   materialTypeArray,
   materialTypeField = "specificDisplay"
 ) {
@@ -183,14 +183,14 @@ export function flattenToMaterialTypeStringArray(
  * @param {("specificDisplay"|"specificCode"|"generalDisplay"|"generalCode")} materialTypeField
  * @returns {boolean}
  */
-export function inMaterialTypesArrays(
+export function inFlatMaterialTypes(
   simplifiedMaterialTypesArray,
   materialTypesArray,
   materialTypeField = "specificDisplay"
 ) {
   return isEqual(
     simplifiedMaterialTypesArray,
-    flattenToMaterialTypeStringArray(materialTypesArray, materialTypeField)
+    toFlatMaterialTypes(materialTypesArray, materialTypeField)
   );
 }
 
@@ -322,11 +322,11 @@ export function compareMaterialTypeArrays(
 ) {
   const aBySort = getElementByCustomSorting(
     materialTypesOrder,
-    jsonify(flattenToMaterialTypeStringArray(a, "specificCode"))
+    jsonify(toFlatMaterialTypes(a, "specificCode"))
   );
   const bBySort = getElementByCustomSorting(
     materialTypesOrder,
-    jsonify(flattenToMaterialTypeStringArray(b, "specificCode"))
+    jsonify(toFlatMaterialTypes(b, "specificCode"))
   );
 
   if (aBySort !== bBySort) {
@@ -334,8 +334,8 @@ export function compareMaterialTypeArrays(
   }
 
   return compareSpecificDisplayArrays(
-    flattenToMaterialTypeStringArray(a, "specificDisplay"),
-    flattenToMaterialTypeStringArray(b, "specificDisplay")
+    toFlatMaterialTypes(a, "specificDisplay"),
+    toFlatMaterialTypes(b, "specificDisplay")
   );
 }
 
@@ -367,10 +367,10 @@ export function getInUniqueMaterialTypes(typeArr, uniqueMaterialTypes) {
   return (
     uniqueMaterialTypes?.findIndex(
       (materialTypesArr) =>
-        inMaterialTypesArrays(typeArr, materialTypesArr, "specificDisplay") ||
-        inMaterialTypesArrays(typeArr, materialTypesArr, "specificCode") ||
-        inMaterialTypesArrays(typeArr, materialTypesArr, "generalCode") ||
-        inMaterialTypesArrays(typeArr, materialTypesArr, "generalDisplay")
+        inFlatMaterialTypes(typeArr, materialTypesArr, "specificDisplay") ||
+        inFlatMaterialTypes(typeArr, materialTypesArr, "specificCode") ||
+        inFlatMaterialTypes(typeArr, materialTypesArr, "generalCode") ||
+        inFlatMaterialTypes(typeArr, materialTypesArr, "generalDisplay")
     ) > -1
   );
 }
@@ -402,8 +402,7 @@ export function enrichManifestationsWithDefaultFrontpages(
   materialTypesArray,
   manifestationsByType
 ) {
-  const typeArrAsSpecificDefaultList =
-    flattenToMaterialTypeStringArray(materialTypesArray);
+  const typeArrAsSpecificDefaultList = toFlatMaterialTypes(materialTypesArray);
 
   const coverImage = getCoverImage(
     manifestationsByType[typeArrAsSpecificDefaultList]

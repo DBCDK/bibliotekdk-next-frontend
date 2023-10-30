@@ -3,7 +3,7 @@ import Overview, { OverviewSkeleton } from "./Overview";
 import { StoryTitle, StoryDescription } from "@/storybook";
 import automock_utils from "@/lib/automock_utils.fixture";
 import merge from "lodash/merge";
-import { flattenToMaterialTypeStringArray } from "@/lib/manifestationFactoryUtils";
+import { toFlatMaterialTypes } from "@/lib/manifestationFactoryUtils";
 
 const exportedObject = {
   title: "work/Overview",
@@ -36,7 +36,7 @@ function OverviewComponentBuilder({
         type={overviewProps.type}
         onTypeChange={(el) =>
           overviewProps.onTypeChange(
-            flattenToMaterialTypeStringArray(el.type, "specificDisplay")
+            toFlatMaterialTypes(el.type, "specificDisplay")
           )
         }
         login={() => {}}

@@ -2,8 +2,8 @@ import Tag from "@/components/base/forms/tag";
 import {
   formatMaterialTypesToCypress,
   formatMaterialTypesToPresentation,
-  flattenToMaterialTypeStringArray,
-  inMaterialTypesArrays,
+  toFlatMaterialTypes,
+  inFlatMaterialTypes,
 } from "@/lib/manifestationFactoryUtils";
 
 export function MaterialTypeSwitcher({
@@ -15,9 +15,9 @@ export function MaterialTypeSwitcher({
   // Handle selectedMaterial
   function handleSelectedMaterial(materialTypeArray, type) {
     // Update query param callback
-    if (!inMaterialTypesArrays(type, materialTypeArray)) {
+    if (!inFlatMaterialTypes(type, materialTypeArray)) {
       onTypeChange({
-        type: flattenToMaterialTypeStringArray(materialTypeArray),
+        type: toFlatMaterialTypes(materialTypeArray),
       });
     }
   }
@@ -27,7 +27,7 @@ export function MaterialTypeSwitcher({
     return (
       <Tag
         key={formatMaterialTypesToCypress(materialTypeArray)}
-        selected={inMaterialTypesArrays(type, materialTypeArray)}
+        selected={inFlatMaterialTypes(type, materialTypeArray)}
         onClick={() => handleSelectedMaterial(materialTypeArray, type)}
         skeleton={skeleton}
         dataCy={"tag-" + formatMaterialTypesToCypress(materialTypeArray)}

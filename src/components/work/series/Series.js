@@ -13,7 +13,7 @@ import styles from "./Series.module.css";
 import {
   flattenMaterialType,
   formatMaterialTypesToPresentation,
-  flattenToMaterialTypeStringArray,
+  toFlatMaterialTypes,
 } from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
 
@@ -67,7 +67,7 @@ export default function Container({ workId, type }) {
     (member) => {
       const formattedMaterialTypes = flattenMaterialType(member);
       return type?.every((mat) =>
-        flattenToMaterialTypeStringArray(
+        toFlatMaterialTypes(
           formattedMaterialTypes,
           "specificDisplay"
         )?.includes(mat)

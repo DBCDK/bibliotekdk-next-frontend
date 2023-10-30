@@ -18,14 +18,14 @@ import {
   formatMaterialTypesFromUrl,
   formatMaterialTypesToPresentation,
   formatMaterialTypesToUrl,
-  flattenToMaterialTypeStringArray,
+  toFlatMaterialTypes,
   getElementByCustomSorting,
   getFlatPidsByType,
   getInUniqueMaterialTypes,
   getUniqueMaterialTypes,
   groupManifestations,
   manifestationMaterialTypeFactory,
-  inMaterialTypesArrays,
+  inFlatMaterialTypes,
 } from "@/lib/manifestationFactoryUtils";
 import { getOrderedFlatMaterialTypes } from "@/lib/enums_MaterialTypes";
 
@@ -270,7 +270,7 @@ describe("flatMapMaterialTypes", () => {
   });
 });
 
-describe("flattenToMaterialTypeStringArray", () => {
+describe("toFlatMaterialTypes", () => {
   const example = [
     {
       specificDisplay: "bog",
@@ -281,33 +281,33 @@ describe("flattenToMaterialTypeStringArray", () => {
   ];
 
   it("formats to specificDisplay (default)", () => {
-    const actual = flattenToMaterialTypeStringArray(example);
+    const actual = toFlatMaterialTypes(example);
     const expected = ["bog"];
     expect(actual).toEqual(expected);
   });
   it("formats to specificDisplay (by arguments)", () => {
-    const actual = flattenToMaterialTypeStringArray(example, "specificDisplay");
+    const actual = toFlatMaterialTypes(example, "specificDisplay");
     const expected = ["bog"];
     expect(actual).toEqual(expected);
   });
   it("formats to specificCode (by arguments)", () => {
-    const actual = flattenToMaterialTypeStringArray(example, "specificCode");
+    const actual = toFlatMaterialTypes(example, "specificCode");
     const expected = ["BOOK"];
     expect(actual).toEqual(expected);
   });
   it("formats to generalDisplay (by arguments)", () => {
-    const actual = flattenToMaterialTypeStringArray(example, "generalDisplay");
+    const actual = toFlatMaterialTypes(example, "generalDisplay");
     const expected = ["bøger"];
     expect(actual).toEqual(expected);
   });
   it("formats to generalCode (by arguments)", () => {
-    const actual = flattenToMaterialTypeStringArray(example, "generalCode");
+    const actual = toFlatMaterialTypes(example, "generalCode");
     const expected = ["BOOKS"];
     expect(actual).toEqual(expected);
   });
 });
 
-describe("inMaterialTypesArrays", () => {
+describe("inFlatMaterialTypes", () => {
   const example = [
     {
       specificDisplay: "bog",
@@ -318,27 +318,27 @@ describe("inMaterialTypesArrays", () => {
   ];
 
   it("example contains input of specificDisplayArray, default works (['bog'])", () => {
-    const actual = inMaterialTypesArrays(["bog"], example);
+    const actual = inFlatMaterialTypes(["bog"], example);
     const expected = true;
     expect(actual).toEqual(expected);
   });
   it("example contains input of specificDisplayArray, by argument (['bog'])", () => {
-    const actual = inMaterialTypesArrays(["bog"], example, "specificDisplay");
+    const actual = inFlatMaterialTypes(["bog"], example, "specificDisplay");
     const expected = true;
     expect(actual).toEqual(expected);
   });
   it("example contains input of specificCodeArray (['BOOK'])", () => {
-    const actual = inMaterialTypesArrays(["BOOK"], example, "specificCode");
+    const actual = inFlatMaterialTypes(["BOOK"], example, "specificCode");
     const expected = true;
     expect(actual).toEqual(expected);
   });
   it("example contains input of generalDisplayArray (['bog'])", () => {
-    const actual = inMaterialTypesArrays(["bøger"], example, "generalDisplay");
+    const actual = inFlatMaterialTypes(["bøger"], example, "generalDisplay");
     const expected = true;
     expect(actual).toEqual(expected);
   });
   it("example contains input of generalCodeArray (['BOOKS'])", () => {
-    const actual = inMaterialTypesArrays(["BOOKS"], example, "generalCode");
+    const actual = inFlatMaterialTypes(["BOOKS"], example, "generalCode");
     const expected = true;
     expect(actual).toEqual(expected);
   });
