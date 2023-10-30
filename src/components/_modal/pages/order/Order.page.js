@@ -189,9 +189,11 @@ function Order({
           top: styles.top,
         }}
       />
+      {/*TODO SKIFT MED Material Card? */}
       <Edition
         context={contextWithOrderPids}
         singleManifestation={singleManifestation}
+        isMaterialCard={true}
       />
       <LocalizationInformation context={context} />
       {user && showBlockedUserInfo && (
@@ -248,6 +250,7 @@ export function OrderSkeleton(props) {
       modal={{}}
       className={`${props.className} ${styles.skeleton}`}
       isLoading={true}
+      singleManifestation={props.singleManifestation}
     />
   );
 }
