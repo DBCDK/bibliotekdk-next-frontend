@@ -6,26 +6,13 @@ import IconButton from "@/components/base/iconButton/IconButton";
 import styles from "./FieldInput.module.css";
 import Title from "@/components/base/title";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
-//import Suggester, { focusInput, blurInput } from "./suggester/";
 import ExpandIcon from "@/components/base/animation/expand";
 import animations from "css/animations";
-
-import { useModal } from "@/components/_modal";
-import useHistory from "@/components/hooks/useHistory";
-// import Suggester, {
-//   focusInput,
-//   blurInput,
-// } from "@/components/header/suggester/Suggester";
-import useQ from "@/components/hooks/useQ";
-import cx from "classnames";
-
-import { DesktopMaterialSelect } from "../../select";
 import IndexDropdown from "../indexDropdown/IndexDropdown";
 import { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import Icon from "@/components/base/icon";
 import materialTypesLabels from "./labels.json";
-import Button from "@/components/base/button";
 import Input from "@/components/base/forms/input";
 import { useData } from "@/lib/api/api";
 import * as suggestFragments from "@/lib/api/suggest.fragments";
@@ -46,8 +33,6 @@ function FieldInput({
   materialType,
   fieldValue,
 }) {
-  const [history, setHistory, clearHistory] = useHistory();
-  //   const { q, setQ, setQuery, getCount, getQuery } = useQ();
   const [indexField, setIndexfield] = useState("all");
   const [selected, setSelected] = useState("all");
 
@@ -140,9 +125,6 @@ function FieldInput({
           {Translate({ context: "search", label: "addLine" })}
         </IconButton>
       )}
-      {/**            <ExpandIcon open={true} size={4} />
-       */}
-      {/* {isLastItem&&<Icon}       */}
     </div>
   );
 }
