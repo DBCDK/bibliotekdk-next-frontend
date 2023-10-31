@@ -1,8 +1,8 @@
 /**
  * Hitcount
  *
- * @param {string} q the query
- * @param {Object} filters filters for searching
+ * @param {string} cql  the  cql-query
+
  */
 export function doComplexSearchAll({ cql, offset, limit }) {
   return {

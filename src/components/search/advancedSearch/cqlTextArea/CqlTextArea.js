@@ -26,7 +26,7 @@ export function CqlTextArea() {
         defaultValue="title=harry AND potter"
         ref={textAreaRef}
       />
-      {/*<div className={styles.buttoninline}>*/}
+
       <div>
         <button
           className={styles.button}

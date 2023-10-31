@@ -11,7 +11,6 @@ export function AdvancedSearchResult({
   onPageChange,
   results,
 }) {
-  // console.log(page, onPageChange, onWorkClick, cql, "COMPONENT");
   const isLoading = results.isLoading;
   const hitcount = results?.data?.complexSearch?.hitcount;
   const numPages = Math.ceil(hitcount / 10);
