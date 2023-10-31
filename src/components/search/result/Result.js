@@ -24,7 +24,6 @@ import styles from "./Result.module.css";
  * See propTypes for specific props and types
  */
 export function Result({
-  q,
   page,
   isLoading,
   hitcount = 0,
@@ -66,7 +65,6 @@ export function Result({
           .map((p, index) => (
             <ResultPage
               key={`result-page-${index}`}
-              q={q}
               page={isMobile ? index + 1 : page}
               onWorkClick={onWorkClick}
             />
@@ -127,7 +125,6 @@ export default function Wrap({ page, onWorkClick, onPageChange }) {
 
   return (
     <Result
-      q={q}
       page={page}
       noRelatedSubjects={!relatedSubjects?.data?.relatedSubjects?.length > 0}
       isLoading={relatedSubjects.isLoading}
