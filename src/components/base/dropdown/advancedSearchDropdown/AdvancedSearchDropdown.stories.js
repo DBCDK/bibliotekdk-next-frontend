@@ -21,16 +21,15 @@ export function AdvancedSearchDropdownOnlyCheckboxes() {
     { itemName: "gris", formType: FormTypeEnum.CHECKBOX },
   ];
 
+  const storyTitle = "Only checkboxes";
+
   return (
     <div>
-      <StoryTitle>AdvancedSearchDropdown - Only checkboxes</StoryTitle>
+      <StoryTitle>AdvancedSearchDropdown - {storyTitle}</StoryTitle>
       <StoryDescription>
-        AdvancedSearch dropdown - Only checkboxes, aka a simple test
+        AdvancedSearch dropdown - {storyTitle}, aka a simple test
       </StoryDescription>
-      <AdvancedSearchDropdown
-        indexName={"Only checkboxes"}
-        menuItems={indices}
-      />
+      <AdvancedSearchDropdown indexName={storyTitle} menuItems={indices} />
     </div>
   );
 }

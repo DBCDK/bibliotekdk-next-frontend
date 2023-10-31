@@ -7,9 +7,11 @@ import Text from "@/components/base/text";
 import cx from "classnames";
 import Translate from "@/components/base/translate";
 import Dropdown from "react-bootstrap/Dropdown";
-import { useReducer, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import List from "@/components/base/forms/list";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
+import Link from "@/components/base/link";
+import { SliderDialogForPublicationYear } from "@/components/base/dropdown/advancedSearchDropdown/templatesForAdvancedSearch/TemplatesAdvancedSearch";
 
 export const FormTypeEnum = Object.freeze({
   CHECKBOX: "CHECKBOX",
@@ -18,9 +20,11 @@ export const FormTypeEnum = Object.freeze({
 });
 
 function ListItem({ item }) {
+function CheckboxItem({ item }) {
   return (
     <div className={cx(styles.select_wrapper)} tabIndex="-1">
       <Checkbox
+        id={item?.itemName}
         checked={item?.isChecked}
         ariaLabel={Translate({
           context: "facets",
@@ -45,33 +49,51 @@ function ListItem({ item }) {
   );
 }
 
+function initializeMenuItem(menuItem) {
+  return {
+    ...menuItem,
+    ...(menuItem?.formType === FormTypeEnum.CHECKBOX && {
+      isChecked: false,
+    }),
+    ...(menuItem?.formType === FormTypeEnum.RADIO_BUTTON && {
+      isSelected: false,
+    }),
+  };
+}
+
 function toggleMenuItem(menuItem) {
   return {
     ...menuItem,
     ...(menuItem?.formType === FormTypeEnum.CHECKBOX && {
       isChecked:
         typeof menuItem?.isChecked !== "boolean" ? false : !menuItem?.isChecked,
+      isChecked: !menuItem?.isChecked,
+    }),
     }),
   };
 }
 
 export default function AdvancedSearchDropdown({ indexName, menuItems = [] }) {
-  menuItems = menuItems.map(toggleMenuItem);
+  menuItems = menuItems.map(initializeMenuItem);
 
   const [expandMenu, setExpandMenu] = useState(false);
-  const [checkboxItems, toggleCheckboxItem] = useReducer(
+  const [menuItemsState, toggleMenuItemsState] = useReducer(
     (currentMenuItems, itemUpdate) => {
-      const nextMenuItems = currentMenuItems?.map((item) => {
-        return itemUpdate.itemName === item.itemName
-          ? toggleMenuItem(item)
-          : item;
+      const nextItem = toggleMenuItem(itemUpdate);
+
+      const nextMenuItems = currentMenuItems?.map((currentItem) => {
+        return currentItem.itemName === nextItem.itemName
+          ? nextItem
+          : currentItem.formType === FormTypeEnum.RADIO_BUTTON
+          ? initializeMenuItem(currentItem)
+          : currentItem;
       });
 
       menuItems = nextMenuItems;
 
       return nextMenuItems;
     },
-    menuItems.filter((menuItem) => menuItem.formType === FormTypeEnum.CHECKBOX),
+    menuItems,
     undefined
   );
 
@@ -114,17 +136,44 @@ export default function AdvancedSearchDropdown({ indexName, menuItems = [] }) {
           data-cy="list-terms"
           disableGroupOutline={false}
         >
-          {checkboxItems.map((item) => {
-            return (
-              <List.Select
-                key={item.itemName}
-                // onSelect={() => setIsChecked((prev) => !prev)}
-                onSelect={() => toggleCheckboxItem(item)}
-                label={item.itemName}
-              >
-                <ListItem key={item.itemName} item={item} />
-              </List.Select>
-            );
+          {menuItemsState.map((item) => {
+            if (item?.formType === FormTypeEnum.CHECKBOX) {
+              return (
+                <List.Select
+                  key={item.itemName}
+                  onSelect={() => toggleMenuItemsState(item)}
+                  label={item.itemName}
+                >
+                  <CheckboxItem item={item} />
+                </List.Select>
+              );
+            } else if (item?.formType === FormTypeEnum.RADIO_BUTTON) {
+              return (
+                <List.Radio
+                  key={item.itemName}
+                  selected={item?.isSelected}
+                  moveItemRightOnFocus={true}
+                  onSelect={() => toggleMenuItemsState(item)}
+                  label={item.itemName}
+                >
+                  <RadioButtonItem item={item} />
+                </List.Radio>
+              );
+            } else if (item?.formType === FormTypeEnum.RADIO_LINK) {
+              return (
+                <List.Radio
+                  key={item.itemName}
+                  selected={item?.isSelected}
+                  // moveItemRightOnFocus={true}
+                  onSelect={() => toggleMenuItemsState(item)}
+                  label={item.itemName}
+                >
+                  <RadioLinkItem item={item} />
+                </List.Radio>
+              );
+            } else if (item?.formType === FormTypeEnum.DIVIDER) {
+              return <hr key={Math.random()} />;
+            }
           })}
         </List.Group>
       </div>
