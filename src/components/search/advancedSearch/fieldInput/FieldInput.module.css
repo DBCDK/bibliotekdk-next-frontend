@@ -20,13 +20,11 @@
 }
 
 .dropdownwrap {
-        width: fit-content;
-    display: flex;
-margin-bottom: var(--pt2);
-background-color: white;
+  width: fit-content;
+  display: flex;
+  margin-bottom: var(--pt2);
+  /* background-color: white; */
 }
-
-
 
 .dropdownitem {
   display: block;
@@ -77,8 +75,7 @@ background-color: white;
   min-width: 125px;
   height: 100%;
   text-align: left; */
-  background-color: var(--white);
-
+  background-color: unset;
 }
 
 .dropdowntoggle[aria-expanded="true"] .dropdownicon img {

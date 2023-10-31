@@ -43,21 +43,18 @@ function FieldInput({
   const [history, setHistory, clearHistory] = useHistory();
   const { q, setQ, setQuery, getCount, getQuery } = useQ();
   const [selected, setSelected] = useState("all");
-
-  console.log("materialType", materialType);
-  console.log("materialTypesLabels", materialTypesLabels);
-  console.log("fieldValue", fieldValue);
+  const [value, setValue] = useState("");
 
   const updateQuery = (val) => {
     console.log("val", val);
   };
 
-  // function to force search onKeyDown
-  const keyPressed = (e) => {
-    if (e.key === "Enter") {
-      updateQuery(e.target.value);
-    }
-  };
+  //   // function to force search onKeyDown
+  //   const keyPressed = (e) => {
+  //     if (e.key === "Enter") {
+  //       updateQuery(e.target.value);
+  //     }
+  //   };
   const labels = materialTypesLabels[materialType].map((el) => el.label);
 
   return (
@@ -77,22 +74,32 @@ function FieldInput({
           className={styles.select}
         />
         <div className={`${styles.suggester__wrap} `}>
+          {/* <Suggestor/> */}
           <Suggester
             className={`${styles.suggester}`}
             history={history}
             clearHistory={clearHistory}
             isMobile={false}
-            onSelect={(val) => updateQuery(val)}
-            onChange={(val) => setQ({ ...q, all: val })}
-            onClose={() => {
-              if (router) {
-                // remove suggester prop from query obj
-                router.back();
-              }
-              // Remove suggester in storybook
-              // story && story.setSuggesterVisibleMobile(false);
+            onSelect={(val) => {
+              console.log("onSelect.val", val);
+              setValue(val);
+              updateQuery(val);
             }}
-            onKeyDown={keyPressed}
+            onChange={(val) => {
+              console.log("onChange.val", val);
+              setValue(val);
+
+              setQ({ ...q, all: val });
+            }}
+            // onClose={() => {
+            //   if (router) {
+            //     // remove suggester prop from query obj
+            //     router.back();
+            //   }
+            //   // Remove suggester in storybook
+            //   // story && story.setSuggesterVisibleMobile(false);
+            // }}
+            //  onKeyDown={keyPressed}
             hideClearIcon
           />
         </div>
@@ -141,19 +148,6 @@ function OperatorDropDown({
         className={styles.dropdowntoggle}
         //  onClick={toggleCollapse}
       >
-        {/* <Button
-        //dataCy={`${label}-button`}
-       // ariaControls={`${label}-text`}
-        ariaExpanded={expanded}
-        type="secondary"
-        className={cx(
-          styles.expandButton,
-          animations["on-hover"],
-          animations["on-focus"]
-        )}
-        border={false}
-        onClick={toggleCollapse}
-      > */}
         <span className={styles.expandWrap}>
           <Text
             type="text2"
