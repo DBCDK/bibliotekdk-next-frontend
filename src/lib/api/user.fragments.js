@@ -29,6 +29,11 @@ export function basic() {
         isCPRValidated
         loggedInBranchId
         municipalityAgencyId
+        rights {
+          infomedia 
+          digitalArticleService 
+          demandDrivenAcquisition
+        }
         agencies {
           hitcount
           result {

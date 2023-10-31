@@ -72,7 +72,7 @@ const EMaterialFilter = ({ context, active }) => {
   }, [active, analyzeRef.current]);
 
   const onNextClick = () => {
-    modal.push("bookmark-multiorder", {
+    modal.push("multiorder", {
       materials: materialsToProceed,
     });
   };

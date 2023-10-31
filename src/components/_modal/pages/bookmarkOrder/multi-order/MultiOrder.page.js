@@ -6,6 +6,7 @@ import Translate from "@/components/base/translate";
 import { useData } from "@/lib/api/api";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 import CheckoutForm from "./checkoutForm/MultiOrderCheckoutForm";
+import Material from "./Material/Material";
 
 const CONTEXT = "bookmark-order";
 
@@ -49,15 +50,15 @@ const MultiOrder = ({ context }) => {
       </Title>
 
       <div className={styles.materialList}>
-        {
-          /**
-           * @TODO Insert material card
-           * Data should be in materials object, if something is missing we need to add it to the fragments populateBookmarks uses
-           */
-          materials.map((mat) => (
-            <article key={mat.key}>{mat.titles?.main?.[0]}</article>
-          ))
-        }
+        {materials.map((material) => {
+          return (
+            <Material
+              key={material.key}
+              material={material}
+              context={context} //sets periodicaForm via updateModal
+            />
+          );
+        })}
       </div>
 
       <section className={styles.checkoutContainer}>

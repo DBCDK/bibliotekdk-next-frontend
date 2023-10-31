@@ -9,17 +9,22 @@ import { useModal } from "@/components/_modal";
 import { useData } from "@/lib/api/api";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import usePickupBranch from "@/components/hooks/usePickupBranch";
-import { inferAccessTypes } from "@/components/_modal/pages/edition/utils";
+import {
+  inferAccessTypes,
+  translateArticleType,
+} from "@/components/_modal/pages/edition/utils";
 import { useMemo } from "react";
 import { getCoverImage } from "@/components/utils/getCoverImage";
 import {
   formatMaterialTypesToPresentation,
   manifestationMaterialTypeFactory,
 } from "@/lib/manifestationFactoryUtils";
-import { AccessEnum } from "@/lib/enums";
 import isEmpty from "lodash/isEmpty";
 import { IconLink } from "@/components/base/iconlink/IconLink";
 import ChevronRight from "@/public/icons/chevron_right.svg";
+import MaterialCard from "@/components/base/materialcard/MaterialCard";
+import { templateImageToLeft } from "@/components/base/materialcard/templates/templates";
+import ChoosePeriodicaCopyRow from "./choosePeriodicaCopyRow/ChoosePeriodicaCopyRow.js";
 
 export function Edition({
   isLoading,
@@ -56,25 +61,13 @@ export function Edition({
     .filter((pre) => !isEmpty(pre))
     ?.join(", ");
 
-  const articleTypeTranslation =
-    isDigitalCopy &&
-    availableAsDigitalCopy &&
-    context?.selectedAccesses?.[0]?.__typename !== AccessEnum.INTER_LIBRARY_LOAN
-      ? {
-          context: "order",
-          label: "will-order-digital-copy",
-        }
-      : isArticleRequest
-      ? {
-          context: "general",
-          label: "article",
-        }
-      : periodicaForm
-      ? {
-          context: "general",
-          label: "volume",
-        }
-      : null;
+  const articleTypeTranslation = translateArticleType({
+    isDigitalCopy,
+    availableAsDigitalCopy,
+    selectedAccesses: context?.selectedAccesses,
+    isArticleRequest,
+    periodicaForm: context?.periodicaForm,
+  });
 
   const specificEdition =
     showOrderTxt && !singleManifestation && !isArticle && !isPeriodicaLike
@@ -158,7 +151,7 @@ export function Edition({
           </div>
         ) : null}
         {periodicaForm && (
-          <div className={styles.periodicasummary}>
+          <div>
             {Object.entries(periodicaForm).map(([key, value]) => (
               <Text type="text3" key={key}>
                 {Translate({
@@ -203,11 +196,13 @@ export function Edition({
   );
 }
 
+//TODO Edition bliver brugt 3 steder, skal den kun skiftes her?
 export default function Wrap({
   context,
   singleManifestation = false,
   showOrderTxt = true,
   showChangeManifestation,
+  isMaterialCard = false,
 }) {
   const modal = useModal();
   let { orderPids: orderPidsBeforeFilter } = context;
@@ -243,6 +238,55 @@ export default function Wrap({
     manifestations
   );
   const coverImage = getCoverImage(manifestations);
+
+  if (isMaterialCard) {
+    const { flattenedGroupedSortedManifestations } =
+      manifestationMaterialTypeFactory(manifestations);
+    const firstManifestation = flattenedGroupedSortedManifestations[0];
+    const {
+      isPeriodicaLike,
+      isDigitalCopy,
+      availableAsDigitalCopy,
+      isArticleRequest,
+    } = inferredAccessTypes;
+    const articleTypeTranslation = translateArticleType({
+      isDigitalCopy,
+      availableAsDigitalCopy,
+      selectedAccesses: context?.selectedAccesses,
+      isArticleRequest,
+      periodicaForm: context?.periodicaForm,
+    });
+    const children = isPeriodicaLike ? (
+      <ChoosePeriodicaCopyRow
+        periodicaForm={context?.periodicaForm}
+        modal={modal}
+        articleTypeTranslation={articleTypeTranslation}
+      />
+    ) : null;
+
+    const materialCardTemplate = (/** @type {Object} */ material) =>
+      templateImageToLeft({
+        material,
+        singleManifestation,
+        children,
+        isPeriodicaLike,
+        isDigitalCopy,
+      });
+
+    return (
+      <div>
+        {flattenedGroupedSortedManifestations &&
+          !isEmpty(flattenedGroupedSortedManifestations) && (
+            <MaterialCard
+              key={JSON.stringify("matcard+", firstManifestation)}
+              propAndChildrenTemplate={materialCardTemplate}
+              propAndChildrenInput={firstManifestation}
+              colSizing={{ xs: 12 }}
+            />
+          )}
+      </div>
+    );
+  }
 
   return (
     <Edition

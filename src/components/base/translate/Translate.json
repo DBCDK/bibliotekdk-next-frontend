@@ -2257,7 +2257,11 @@
     },
     "order-periodica": {
       "title": {
-        "da": "Vælg udgave eller artikel",
+        "da": "Vælg eksemplar eller artikel",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "correct": {
+        "da": "Rediger eksemplar eller artikel",
         "en": "LABEL: mangler oversættelse"
       },
       "description": {
@@ -3969,6 +3973,12 @@
       "maintxt": {
         "da": "Du registrerer dig på et bibliotek via det lokale bibliotek. For folkebiblioteker foregår det ved at du opretter en bruger via deres lokale hjemmeside. Herefter knyttes folkebiblioteket automatisk til din profil på bibliotek.dk. \\n Er du registreret på et uddannelsesbibliotek, kan du muligvis selv knytte biblioteket til din profil under \"Mine biblioteker\".",
         "en": "noagencis in english please"
+      }
+    },
+    "materialcard": {
+      "first-available-copy": {
+        "da": "Første tilgængelige eksemplar",
+        "en": "First available copy."
       }
     }
   }
