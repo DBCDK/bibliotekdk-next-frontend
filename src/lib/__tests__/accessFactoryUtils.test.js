@@ -139,12 +139,28 @@ describe("getAllAccess", () => {
     const actual = getAllAccess([
       {
         pid: "1loan",
-        materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
+        materialTypes: [
+          {
+            materialTypeSpecific: { display: "bog", code: "BOOK" },
+            materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+          },
+        ],
         access: [{ url: "urla_1_0.dekaa" }],
       },
     ]);
     const expected = [
-      { materialTypesArray: ["bog"], pid: "1loan", url: "urla_1_0.dekaa" },
+      {
+        materialTypesArray: [
+          {
+            specificDisplay: "bog",
+            specificCode: "BOOK",
+            generalDisplay: "bøger",
+            generalCode: "BOOKS",
+          },
+        ],
+        pid: "1loan",
+        url: "urla_1_0.dekaa",
+      },
     ];
     expect(actual).toEqual(expected);
   });
@@ -153,15 +169,37 @@ describe("getAllAccess", () => {
       {
         pid: "1loan",
         materialTypes: [
-          { materialTypeSpecific: { display: "bog" } },
-          { materialTypeSpecific: { display: "lydbog (cd-mp3)" } },
+          {
+            materialTypeSpecific: { display: "bog", code: "BOOK" },
+            materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+          },
+          {
+            materialTypeSpecific: {
+              display: "lydbog (cd-mp3)",
+              code: "AUDIO_BOOK_CD_MP3",
+            },
+            materialTypeGeneral: { display: "lydbøger", code: "AUDIO_BOOKS" },
+          },
         ],
         access: [{ url: "urla_1_0.dekaa" }],
       },
     ]);
     const expected = [
       {
-        materialTypesArray: ["bog", "lydbog (cd-mp3)"],
+        materialTypesArray: [
+          {
+            specificDisplay: "bog",
+            specificCode: "BOOK",
+            generalDisplay: "bøger",
+            generalCode: "BOOKS",
+          },
+          {
+            specificDisplay: "lydbog (cd-mp3)",
+            specificCode: "AUDIO_BOOK_CD_MP3",
+            generalDisplay: "lydbøger",
+            generalCode: "AUDIO_BOOKS",
+          },
+        ],
         pid: "1loan",
         url: "urla_1_0.dekaa",
       },
@@ -768,11 +806,31 @@ describe("getAreAccessesPeriodicaLike", () => {
       },
       {
         titles: ["HeJsÅ"],
-        materialTypesArray: ["notÅrbog", "neitherÅrbog"],
+        materialTypesArray: [
+          {
+            specificDisplay: "notÅrbog",
+            specificCode: "not_YEAR_NOT!!_BOOK",
+            generalDisplay: "aviser og tidsskrifter",
+            generalCode: "NEWSPAPER_JOURNALS",
+          },
+          {
+            specificDisplay: "neitherÅrbog",
+            specificCode: "neither_YEAR_NEITHER!!_BOOK",
+            generalDisplay: "aviser og tidsskrifter",
+            generalCode: "NEWSPAPER_JOURNALS",
+          },
+        ],
       },
       {
         titles: ["HeJsÅ"],
-        materialTypesArray: ["notÅrbog"],
+        materialTypesArray: [
+          {
+            specificDisplay: "notÅrbog",
+            specificCode: "not_YEAR_NOT!!_BOOK",
+            generalDisplay: "aviser og tidsskrifter",
+            generalCode: "NEWSPAPER_JOURNALS",
+          },
+        ],
       },
       {
         titles: ["HeJsÅ"],
@@ -784,20 +842,66 @@ describe("getAreAccessesPeriodicaLike", () => {
       },
       {
         titles: ["HeJsÅ"],
-        materialTypesArray: ["årbog"],
+        materialTypesArray: [
+          {
+            specificDisplay: "årbog",
+            specificCode: "YEARBOOK",
+            generalDisplay: "aviser og tidsskrifter",
+            generalCode: "NEWSPAPER_JOURNALS",
+          },
+        ],
       },
       {
         titles: ["HeJsÅ"],
-        materialTypesArray: ["årbog", "neitherÅrbog"],
+        materialTypesArray: [
+          {
+            specificDisplay: "årbog",
+            specificCode: "YEARBOOK",
+            generalDisplay: "aviser og tidsskrifter",
+            generalCode: "NEWSPAPER_JOURNALS",
+          },
+          {
+            specificDisplay: "neitherÅrbog",
+            specificCode: "neither_YEAR_NEITHER!!_BOOK",
+            generalDisplay: "aviser og tidsskrifter",
+            generalCode: "NEWSPAPER_JOURNALS",
+          },
+        ],
       },
       {
         titles: ["HeJsÅ"],
-        materialTypesArray: ["notÅrbog", "årbog"],
+        materialTypesArray: [
+          {
+            specificDisplay: "notÅrbog",
+            specificCode: "not_YEAR_NOT!!_BOOK",
+            generalDisplay: "aviser og tidsskrifter",
+            generalCode: "NEWSPAPER_JOURNALS",
+          },
+          {
+            specificDisplay: "årbog",
+            specificCode: "YEARBOOK",
+            generalDisplay: "aviser og tidsskrifter",
+            generalCode: "NEWSPAPER_JOURNALS",
+          },
+        ],
       },
       {
         titles: ["HeJsÅ"],
         workTypes: ["periodica"],
-        materialTypesArray: ["notÅrbog", "årbog"],
+        materialTypesArray: [
+          {
+            specificDisplay: "notÅrbog",
+            specificCode: "not_YEAR_NOT!!_BOOK",
+            generalDisplay: "aviser og tidsskrifter",
+            generalCode: "NEWSPAPER_JOURNALS",
+          },
+          {
+            specificDisplay: "årbog",
+            specificCode: "YEARBOOK",
+            generalDisplay: "aviser og tidsskrifter",
+            generalCode: "NEWSPAPER_JOURNALS",
+          },
+        ],
       },
     ]);
     const expected = [

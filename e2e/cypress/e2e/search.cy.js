@@ -281,6 +281,8 @@ describe("Search", () => {
   describe(`Result`, () => {
     it(`Maps from URL params to a search result`, () => {
       cy.visit("/iframe.html?id=search-result--connected");
+      cy.contains("Hugo", { timeout: 10000 }).should("exist");
+
       cy.get("[data-cy=router-query]").then((el) => {
         expect(JSON.parse(el.text())).to.deep.equal({
           "q.all": "hest",
@@ -308,6 +310,22 @@ describe("Search", () => {
       cy.get("[data-cy=result-row-laanemuligheder-wrap]").should("exist");
       cy.get("[data-cy=link]").should("exist").first().should("contain", "Bog");
       cy.get("[data-cy=cover-present]").should("exist");
+    });
+
+    it("filters for lydbog (bånd) so should be before Bog", () => {
+      cy.visit(
+        "/iframe.html?id=search-result-resultrow--with-material-types-filtered"
+      );
+
+      cy.contains("Lydbog (bånd)", { timeout: 15000 }).should("exist");
+      cy.get("[data-cy=result-row]", { timeout: 10000 }).should("exist");
+
+      cy.get("[data-cy=link]")
+        .should("exist")
+        .eq(0)
+        .should("contain", "Lydbog (bånd)");
+
+      cy.get("[data-cy=link]").should("exist").eq(1).should("contain", "Bog");
     });
 
     it("should not have cover", () => {

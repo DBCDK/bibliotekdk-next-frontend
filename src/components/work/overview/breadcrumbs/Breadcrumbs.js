@@ -54,8 +54,8 @@ export default function Wrap({ workId }) {
   if (work?.workTypes?.includes("OTHER")) {
     if (
       work?.materialTypes
-        ?.map((mat) => mat?.materialTypeSpecific?.display)
-        ?.includes("spil")
+        ?.map((mat) => mat?.materialTypeGeneral?.code)
+        ?.includes("BOARD_GAMES")
     ) {
       return (
         <Breadcrumbs>
@@ -77,8 +77,8 @@ export default function Wrap({ workId }) {
   } else if (work?.workTypes?.includes("GAME")) {
     if (
       work?.materialTypes
-        ?.map((mat) => mat?.materialTypeGeneral?.display)
-        ?.includes("computerspil")
+        ?.map((mat) => mat?.materialTypeGeneral?.code)
+        ?.includes("COMPUTER_GAMES")
     ) {
       return (
         <Breadcrumbs>

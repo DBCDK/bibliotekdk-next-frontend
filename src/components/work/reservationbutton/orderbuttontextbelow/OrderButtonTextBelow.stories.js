@@ -77,7 +77,7 @@ BookButtonTxt.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 export function EBookButtonTxt() {
   return (
     <ButtonTxtComponentBuilder
-      type={"ebog"}
+      type={["e-bog"]}
       workId={"some-workId-ebog" + time}
       selectedPids={["some-pid-ebog" + time]}
     />
@@ -89,7 +89,12 @@ EBookButtonTxt.story = {
       work: () => {
         return {
           titles: [{ main: "Hugo hejs" }],
-          materialTypes: [{ materialTypeSpecific: { display: "ebog" } }],
+          materialTypes: [
+            {
+              materialTypeSpecific: { display: "e-bog", code: "EBOOK" },
+              materialTypeGeneral: { display: "e-bøger", code: "EBOOKS" },
+            },
+          ],
           workTypes: ["LITERATURE"],
           manifestations: {
             mostRelevant: [
@@ -104,7 +109,12 @@ EBookButtonTxt.story = {
         return [
           {
             pid: "some-pid-ebog" + time,
-            materialTypes: [{ materialTypeSpecific: { display: "ebog" } }],
+            materialTypes: [
+              {
+                materialTypeSpecific: { display: "e-bog", code: "EBOOK" },
+                materialTypeGeneral: { display: "e-bøger", code: "EBOOKS" },
+              },
+            ],
             accessTypes: [
               {
                 display: "online",
@@ -141,7 +151,13 @@ EAudioBookPhysicalButtonTxt.story = {
         return {
           titles: [{ main: "Hugo hejs" }],
           materialTypes: [
-            { materialTypeSpecific: { display: "lydbog (cd-mp3)" } },
+            {
+              materialTypeSpecific: {
+                display: "lydbog (cd-mp3)",
+                code: "AUDIO_BOOK_CD_MP3",
+              },
+              materialTypeGeneral: { display: "lydbøger", code: "AUDIO_BOOKS" },
+            },
           ],
           workTypes: ["LITERATURE"],
           manifestations: {
@@ -158,7 +174,16 @@ EAudioBookPhysicalButtonTxt.story = {
           {
             pid: "some-pid-physical-audio-book" + time,
             materialTypes: [
-              { materialTypeSpecific: { display: "lydbog (cd-mp3)" } },
+              {
+                materialTypeSpecific: {
+                  display: "lydbog (cd-mp3)",
+                  code: "AUDIO_BOOK_CD_MP3",
+                },
+                materialTypeGeneral: {
+                  display: "lydbøger",
+                  code: "AUDIO_BOOKS",
+                },
+              },
             ],
             access: [
               {
@@ -177,7 +202,7 @@ EAudioBookPhysicalButtonTxt.story = {
 export function EAudioBookDigitalButtonTxt() {
   return (
     <ButtonTxtComponentBuilder
-      type={"lydbog (net)"}
+      type={["lydbog (net)"]}
       workId={"some-workId-elydbog" + time}
       selectedPids={["some-pid-elydbog" + time]}
     />
@@ -190,7 +215,13 @@ EAudioBookDigitalButtonTxt.story = {
         return {
           titles: [{ main: "Hugo hejs" }],
           materialTypes: [
-            { materialTypeSpecific: { display: "lydbog (net)" } },
+            {
+              materialTypeSpecific: {
+                display: "lydbog (online)",
+                code: "AUDIO_BOOK_ONLINE",
+              },
+              materialTypeGeneral: { display: "lydbøger", code: "AUDIO_BOOKS" },
+            },
           ],
           workTypes: ["LITERATURE"],
           manifestations: {
@@ -207,7 +238,16 @@ EAudioBookDigitalButtonTxt.story = {
           {
             pid: "some-pid-elydbog" + time,
             materialTypes: [
-              { materialTypeSpecific: { display: "lydbog (net)" } },
+              {
+                materialTypeSpecific: {
+                  display: "lydbog (online)",
+                  code: "AUDIO_BOOK_ONLINE",
+                },
+                materialTypeGeneral: {
+                  display: "lydbøger",
+                  code: "AUDIO_BOOKS",
+                },
+              },
             ],
             accessTypes: [
               {
@@ -232,7 +272,7 @@ EAudioBookDigitalButtonTxt.story = {
 export function PeriodicaButtonTxt() {
   return (
     <ButtonTxtComponentBuilder
-      type={"ebog"}
+      type={["e-bog"]}
       workId={"some-work-id-3"}
       selectedPids={["some-pid-5"]}
       storyNameOverride={"Periodica"}
@@ -259,7 +299,7 @@ PeriodicaButtonTxt.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 export function SlowLoadingButtonTxt() {
   return (
     <ButtonTxtComponentBuilder
-      type={"bog"}
+      type={["bog"]}
       workId={"some-id-slow-loading"}
       selectedPids={["some-other-id-slow-loading"]}
       storyNameOverride={"Slow Loading"}
@@ -277,7 +317,12 @@ SlowLoadingButtonTxt.story = {
 
         return [
           {
-            materialTypes: [{ materialTypeSpecific: { display: "ebog" } }],
+            materialTypes: [
+              {
+                materialTypeSpecific: { display: "e-bog", code: "EBOOK" },
+                materialTypeGeneral: { display: "e-bøger", code: "EBOOKS" },
+              },
+            ],
             access: [{ __resolveType: "Ereol", url: "https://ereol.combo" }],
           },
         ];

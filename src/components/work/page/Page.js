@@ -31,7 +31,7 @@ import Custom404 from "@/pages/404";
  * @param {string} workId
  * @param {function} onTypeChange
  * @param {function} login
- * @param {MaterialTypesArray} type
+ * @param {SpecificDisplayArray} type
  * @returns {React.JSX.Element}
  */
 export default function WorkPage({ workId, onTypeChange, login, type }) {
@@ -122,7 +122,7 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
           {/* TODO: WorkGroupingsOverview.js refererer til dennes oversættelse */}
           <Series
             workId={workId}
-            materialTypeArray={type}
+            type={type}
             anchor-label={Translate(AnchorsEnum.SERIES)}
           />
           <Recommendations

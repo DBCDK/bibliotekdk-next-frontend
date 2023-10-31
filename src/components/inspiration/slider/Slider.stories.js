@@ -39,7 +39,12 @@ Connected.story = {
                 creators: [{ display: "creator-1" }],
               },
               manifestation: {
-                materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
+                materialTypes: [
+                  {
+                    materialTypeSpecific: { display: "bog", code: "BOOK" },
+                    materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+                  },
+                ],
               },
             },
             {
@@ -49,7 +54,12 @@ Connected.story = {
                 creators: [{ display: "creator-2" }],
               },
               manifestation: {
-                materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
+                materialTypes: [
+                  {
+                    materialTypeSpecific: { display: "bog", code: "BOOK" },
+                    materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+                  },
+                ],
               },
             },
             {
@@ -59,7 +69,12 @@ Connected.story = {
                 creators: [{ display: "creator-3" }],
               },
               manifestation: {
-                materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
+                materialTypes: [
+                  {
+                    materialTypeSpecific: { display: "bog", code: "BOOK" },
+                    materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+                  },
+                ],
               },
             },
           ],
