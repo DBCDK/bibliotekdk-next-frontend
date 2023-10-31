@@ -1,0 +1,11 @@
+.container {
+  padding: var(--pt3) 0;
+}
+
+.container > * {
+  padding: 0;
+}
+
+.container > * + * {
+  margin-top: var(--pt3);
+}

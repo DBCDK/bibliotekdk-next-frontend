@@ -21,15 +21,6 @@
   padding-right: var(--pt2);
 }
 
-/* User */
-.invalid {
-  color: var(--error);
-}
-
-.invalid-pickup {
-  margin: var(--pt05) 0 0 0;
-}
-
 .iconLink {
   cursor: pointer;
 }
