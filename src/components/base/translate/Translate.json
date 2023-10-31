@@ -1644,6 +1644,10 @@
       "advanced-dropdown-NOT": {
         "da": "IKKE",
         "en": "NOT"
+      },
+      "remove": {
+        "da": "Fjern",
+        "en": "Remove"
       }
     },
     "suggester": {

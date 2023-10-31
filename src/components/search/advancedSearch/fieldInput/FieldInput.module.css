@@ -5,6 +5,7 @@
   margin-bottom: var(--pt2);
   flex-grow: 2;
   max-width: 672px;
+  height: var(--pt5);
 }
 
 .suggester {
@@ -124,4 +125,15 @@
   .filterButton {
     display: none;
   }
+}
+
+.suggesterInput{
+    height: var(--pt5);
+}
+.suggesterContainer{
+    height: var(--pt5);
+
+}
+.suggesterInput .clear{
+height: unset;
 }

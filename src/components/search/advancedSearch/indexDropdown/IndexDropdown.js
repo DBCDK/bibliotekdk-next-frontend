@@ -24,7 +24,7 @@ export default function IndexDropdown({
         id="dropdown-basic"
         className={styles.dropdowntoggle}
       >
-        <Text tag="span" type="text2">
+        <Text tag="span" type="text3">
           {Translate({
             context: "search",
             label: `advanced-dropdown-${selected}`,

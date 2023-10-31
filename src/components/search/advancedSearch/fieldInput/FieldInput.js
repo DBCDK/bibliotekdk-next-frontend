@@ -61,6 +61,8 @@ function FieldInput({
   const [suggestions, setSuggestions] = useState([]);
 
   console.log("value before usedata", value);
+  console.log("indexField", indexField);
+
   const { data, isLoading } = useData(
     value &&
       value !== selected &&
@@ -83,6 +85,7 @@ function FieldInput({
     );
   }, [data, isLoading]);
   const labels = materialTypesLabels[materialType].map((el) => el.label);
+  
   console.log("suggestinos.data", data);
   return (
     <div>
@@ -106,11 +109,13 @@ function FieldInput({
             data={suggestions}
             onSelect={(val) => setValue(val)}
             onClear={() => setValue("")}
+            className={styles.suggesterContainer}
           >
             <Input
+            className={styles.suggesterInput}
               value={value}
               onChange={(e) => setValue(e.target.value)}
-              placeholder='Prøv at skrive "hund"'
+              placeholder={fieldValue.placeholder}
             />
           </Suggester>
         </div>
@@ -120,7 +125,7 @@ function FieldInput({
             onClick={() => removeInputField(index)}
             className={styles.removeIcon}
           >
-            {null}
+            {Translate({context:"search",label:"remove"})}
           </IconButton>
         )}
       </div>
