@@ -16,8 +16,9 @@ import useQ from "@/components/hooks/useQ";
 import { DesktopMaterialSelect } from "../../select";
 import IndexDropdown from "../indexDropdown/IndexDropdown";
 import { useState } from "react";
-import { Dropdown } from "@/components/base/dropdown/navigationDropdown/NavigationDropdown.stories";
-
+import Dropdown from "react-bootstrap/Dropdown";
+import Icon from "@/components/base/icon";
+import materialTypesLabels from "./labels.json";
 /**
  * FieldInput to be used in FieldInput component.
  * @param {Object} props
@@ -30,10 +31,17 @@ function FieldInput({
   addAnInputField,
   removeInputField,
   isLastItem,
+  isFirstItem,
+  materialType,
+  fieldValue,
 }) {
   const [history, setHistory, clearHistory] = useHistory();
   const { q, setQ, setQuery, getCount, getQuery } = useQ();
   const [selected, setSelected] = useState("all");
+
+  console.log("materialType", materialType);
+  console.log("materialTypesLabels", materialTypesLabels);
+  console.log("fieldValue", fieldValue);
 
   const updateQuery = (val) => {
     console.log("val", val);
@@ -45,11 +53,20 @@ function FieldInput({
       updateQuery(e.target.value);
     }
   };
+  const labels = materialTypesLabels[materialType].map((el) => el.label);
+
   return (
     <div>
+      {!isFirstItem && (
+        <OperatorDropDown
+          onSelect={(value) => handlePrefixChange(index, value)}
+          selected={fieldValue.prefixOperator}
+        />
+      )}
+
       <div className={styles.inputContainer}>
         <IndexDropdown
-          options={["all", "title", "isbn", "subject"]}
+          options={labels}
           selected={selected}
           onSelect={setSelected}
           className={styles.select}
@@ -59,7 +76,7 @@ function FieldInput({
             className={`${styles.suggester}`}
             history={history}
             clearHistory={clearHistory}
-            // isMobile={suggesterVisibleMobile}
+            isMobile={false}
             onSelect={(val) => updateQuery(val)}
             onChange={(val) => setQ({ ...q, all: val })}
             onClose={() => {
@@ -73,44 +90,61 @@ function FieldInput({
             onKeyDown={keyPressed}
             hideClearIcon
           />
-
         </div>
-        <IconButton icon="close" onClick={()=>removeInputField(index)} className={styles.removeIcon}>{null}</IconButton>
-            
-
+        {!isFirstItem && (
+          <IconButton
+            icon="close"
+            onClick={() => removeInputField(index)}
+            className={styles.removeIcon}
+          >
+            {null}
+          </IconButton>
+        )}
       </div>
+
       {isLastItem && (
-        <IconButton icon="expand" onClick={addAnInputField}>
-          Tilføj
+        <IconButton icon="expand" onClick={addAnInputField} keepUnderline>
+          {Translate({ context: "search", label: "addLine" })}
         </IconButton>
       )}
       {/* {isLastItem&&<Icon}       */}
-      {/* <OperatorDropDown/> */}
     </div>
   );
 }
 const options = ["AND", "OR", "NOT"];
-function OperatorDropDown({ onSelect }) {
+function OperatorDropDown({
+  onSelect,
+  handlePrefixChange,
+  selected = "AND",
+  className,
+}) {
   return (
     <Dropdown className={`${styles.dropdownwrap} ${className}`}>
       <Dropdown.Toggle
-        data-cy={cyKey({ name: "material-selector", prefix: "header" })}
         variant="success"
         id="dropdown-basic"
         className={styles.dropdowntoggle}
       >
-        <Text tag="span" type="text2">
+        {/* <IconButton icon="arrowDown" className={styles.dropdownicon}>
           {Translate({
             context: "search",
             label: `advanced-dropdown-${selected}`,
           })}
-          <Icon
-            size={{ w: 1, h: 1 }}
-            src="arrowrightblue.svg"
-            className={styles.dropdownicon}
-            alt=""
-          />
-        </Text>
+        </IconButton> */}
+        {
+          <Text tag="span" type="text2">
+            {Translate({
+              context: "search",
+              label: `advanced-dropdown-${selected}`,
+            })}
+            <Icon
+              size={{ w: 1, h: 1 }}
+              src="arrowrightblue.svg"
+              className={styles.dropdownicon}
+              alt=""
+            />
+          </Text>
+        }
       </Dropdown.Toggle>
 
       <Dropdown.Menu className={styles.dropdownmenu}>
@@ -144,14 +178,14 @@ function OperatorDropDown({ onSelect }) {
  * @param {Object} props
  * @returns {React.JSX.Element}
  */
-export default function FieldInputContainer({ data }) {
+export default function FieldInputContainer({ data, materialType }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs";
   //   const inputFields = [1];
   //TODO move this to state. Each input should just have a value + prefexOperator. then inputValues.length is the number of input fields.
   //prefixOperator is an enum of AND, OR , NOT
   const [inputFields, setInputFields] = useState([
-    { value: "", prefixOperator: "AND" },
+    { value: "", prefixOperator: null },
   ]);
   function addInputField() {
     setInputFields((prevFields) => [
@@ -160,10 +194,14 @@ export default function FieldInputContainer({ data }) {
     ]);
   }
   function removeInputField(indexToRemove) {
-    console.log('removeInputField',removeInputField)
-    setInputFields(prevFields => prevFields.filter((_, index) => index !== indexToRemove));
+    //TODO if 1 element
+
+    console.log("removeInputField", removeInputField);
+    setInputFields((prevFields) =>
+      prevFields.filter((_, index) => index !== indexToRemove)
+    );
   }
-  
+
   function handlePrefixChange(index, newOperator) {
     setInputFields((prevFields) => {
       const newFields = [...prevFields];
@@ -171,16 +209,19 @@ export default function FieldInputContainer({ data }) {
       return newFields;
     });
   }
-  return inputFields.map((field, index) => {
+  console.log("inputFields", inputFields);
+  return inputFields?.map((field, index) => {
     return (
       <FieldInput
         key={index}
         index={index}
         addAnInputField={addInputField}
         removeInputField={removeInputField}
-
         handlePrefixChange={handlePrefixChange}
         isLastItem={index === inputFields.length - 1}
+        isFirstItem={index === 0}
+        materialType={materialType}
+        fieldValue={field}
       />
     );
   });

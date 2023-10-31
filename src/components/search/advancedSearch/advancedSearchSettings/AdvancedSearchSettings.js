@@ -9,12 +9,13 @@ import FieldInputContainer from "../fieldInput/FieldInput";
  */
 
 export default function AdvancedSearch() {
+  const materialType = "all";
   return (
     <div className={styles.container}>
       <Title type="title3" className={styles.title}>
         {Translate({ context: "search", label: "advancedSearch" })}
       </Title>
-      <FieldInputContainer/>
+      <FieldInputContainer materialType={materialType} />
     </div>
   );
 }

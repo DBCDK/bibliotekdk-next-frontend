@@ -37,7 +37,7 @@
 .dropdownmenu {
   border: 1px solid var(--blue);
   background-color: var(--white);
-  z-index: 1;
+  z-index: 5;
   /* bootstrap default styles override */
   border-radius: 0;
   padding: 0;

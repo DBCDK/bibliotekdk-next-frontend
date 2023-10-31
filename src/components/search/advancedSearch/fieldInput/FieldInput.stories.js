@@ -10,11 +10,11 @@ export default exportedObject;
  * Returns a list table libraries
  *
  */
-export function LibrariesTableStory() {
+export function FieldInputStory() {
   return (
     <div>
       <StoryTitle>FieldInput</StoryTitle>
-      <FieldInput />
+      <FieldInput materialType="all" />
     </div>
   );
 }

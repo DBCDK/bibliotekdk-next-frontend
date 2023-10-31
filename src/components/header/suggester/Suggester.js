@@ -240,8 +240,8 @@ function renderInputComponent(
     placeholder,
     "data-cy": cyKey({ name: "input", prefix: "suggester" }),
   };
-  console.log('props',props)
-  console.log('hideClearIcon',hideClearIcon)
+  console.log("props", props);
+  console.log("hideClearIcon", hideClearIcon);
 
   // Clear/Cross should be visible
   const showClear = Boolean(inputProps.value !== "");
@@ -264,17 +264,19 @@ function renderInputComponent(
         </Icon>
       </span>
       <input {...props} className={cx(props.className)} title={placeholder} />
-   {!hideClearIcon&&   <span
-        className={`${styles.clear} ${clearVisibleClass}`}
-        onClick={() => {
-          onClear();
-          focusInput();
-        }}
-      >
-        <Icon size={{ w: "auto", h: 2 }} alt="">
-          <ClearSvg />
-        </Icon>
-      </span>}
+      {!hideClearIcon && (
+        <span
+          className={`${styles.clear} ${clearVisibleClass}`}
+          onClick={() => {
+            onClear();
+            focusInput();
+          }}
+        >
+          <Icon size={{ w: "auto", h: 2 }} alt="">
+            <ClearSvg />
+          </Icon>
+        </span>
+      )}
     </div>
   );
 }
@@ -300,7 +302,7 @@ export function Suggester({
   clearHistory = null,
   selectedMaterial = null,
   onKeyDown = null,
-  hideClearIcon=false
+  hideClearIcon = false,
 }) {
   const placeholder = getPlaceholder(isMobile, selectedMaterial);
 
@@ -423,8 +425,7 @@ export function Suggester({
             setIntQuery("");
             onChange && onChange("");
           },
-          hideClearIcon,
-
+          hideClearIcon
         )
       }
       highlightFirstSuggestion={false}
