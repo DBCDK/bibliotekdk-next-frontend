@@ -66,9 +66,6 @@ export default function Wrap({ workId, selectedPids }) {
 
   const manifestations = data?.manifestations;
 
-  const type =
-    manifestations?.[0]?.materialTypes?.[0]?.materialTypeSpecific?.display;
-
   if (isLoading || branchIsLoading) {
     return (
       <Skeleton
@@ -85,7 +82,6 @@ export default function Wrap({ workId, selectedPids }) {
       hasDigitalAccess={hasDigitalAccess}
       context={{
         workId,
-        type,
         manifestations,
         title_author,
         selectedPids,

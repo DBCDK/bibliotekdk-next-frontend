@@ -13,6 +13,7 @@ import styles from "./Series.module.css";
 import {
   flattenMaterialType,
   formatMaterialTypesToPresentation,
+  toFlatMaterialTypes,
 } from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
 
@@ -23,7 +24,7 @@ import isEmpty from "lodash/isEmpty";
  * @param {string} props.isLoading The work id
  * @param {Array} props.works array of works in series
  */
-export function Series({ isLoading, works = [], materialTypeArray = [] }) {
+export function Series({ isLoading, works = [], type = [] }) {
   // Translate Context
   const context = { context: "series" };
 
@@ -31,8 +32,8 @@ export function Series({ isLoading, works = [], materialTypeArray = [] }) {
     <Section
       title={Translate({ ...context, label: "label" })}
       divider={{ content: false }}
-      {...(!isEmpty(materialTypeArray) && {
-        subtitle: formatMaterialTypesToPresentation(materialTypeArray),
+      {...(!isEmpty(type) && {
+        subtitle: formatMaterialTypesToPresentation(type),
       })}
     >
       <Row className={`${styles.series}`}>
@@ -54,7 +55,7 @@ Series.propTypes = {
  * @param {Object} props
  * @param {string} props.workId The work id
  */
-export default function Container({ workId, materialTypeArray }) {
+export default function Container({ workId, type }) {
   const { data, isLoading } = useData(workFragments.series({ workId }));
 
   // if work is not part of series, we wont show series section
@@ -65,8 +66,11 @@ export default function Container({ workId, materialTypeArray }) {
   const seriesWithSameMaterialTypes = data?.work?.seriesMembers.filter(
     (member) => {
       const formattedMaterialTypes = flattenMaterialType(member);
-      return materialTypeArray?.every((mat) =>
-        formattedMaterialTypes?.includes(mat)
+      return type?.every((mat) =>
+        toFlatMaterialTypes(
+          formattedMaterialTypes,
+          "specificDisplay"
+        )?.includes(mat)
       );
     }
   );
@@ -75,7 +79,7 @@ export default function Container({ workId, materialTypeArray }) {
     <Series
       isLoading={isLoading}
       works={seriesWithSameMaterialTypes}
-      materialTypeArray={materialTypeArray}
+      type={type}
     />
   );
 }

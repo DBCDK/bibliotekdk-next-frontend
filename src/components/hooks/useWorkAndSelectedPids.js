@@ -2,40 +2,7 @@ import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import { useMemo } from "react";
-import { uniqueEntries } from "@/lib/utils";
 import at from "lodash/at";
-
-function filteredWork(work, selectedPids) {
-  const manifestations = work?.manifestations?.all?.filter((manifestation) =>
-    selectedPids?.includes(manifestation.pid)
-  );
-
-  const materialTypes = uniqueEntries(
-    manifestations?.flatMap((manifestation) => {
-      return manifestation.materialTypes?.map((materialType) => {
-        return materialType.materialTypeSpecific.display;
-      });
-    })
-  );
-
-  return {
-    ...work,
-    manifestations: { all: manifestations },
-    materialTypes: materialTypes?.map((materialType) => {
-      return { materialTypeSpecific: { display: materialType } };
-    }),
-  };
-}
-
-export function useWorkFromSelectedPids(workFragment, selectedPids) {
-  const { data } = useData(workFragment);
-
-  return useMemo(() => {
-    return selectedPids?.length > 0
-      ? filteredWork(data?.work, selectedPids)
-      : data?.work;
-  }, [data?.work, selectedPids]);
-}
 
 export function useGetManifestationsForOrderButton(workId, selectedPids) {
   const pids = selectedPids?.filter(
