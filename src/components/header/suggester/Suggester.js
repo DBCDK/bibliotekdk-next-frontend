@@ -240,8 +240,8 @@ function renderInputComponent(
     placeholder,
     "data-cy": cyKey({ name: "input", prefix: "suggester" }),
   };
-  console.log("props", props);
-  console.log("hideClearIcon", hideClearIcon);
+  // console.log("props", props);
+  // console.log("hideClearIcon", hideClearIcon);
 
   // Clear/Cross should be visible
   const showClear = Boolean(inputProps.value !== "");
@@ -450,17 +450,20 @@ export default function Wrap(props) {
   const { filters } = useFilters();
   const { q } = useQ();
 
+
   const query = q[SuggestTypeEnum.ALL];
 
   const [selected, setSelected] = useState();
 
-  const workType = filters.workTypes?.[0] || null;
 
+  const workType = filters.workTypes?.[0] || null;
+console.log('workType',workType)
   const { data, isLoading } = useData(
     query &&
       query !== selected &&
-      suggestFragments.all({ q: query, workType: workType, limit: 10 })
+      suggestFragments.all({ q: "messi", workType: workType, limit: 10 })
   );
+  console.log('data',data)
 
   useEffect(() => {
     // Collect data

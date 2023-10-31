@@ -28,7 +28,7 @@ export function Default() {
     });
     setState({ data, q });
   }
-
+console.log('state.data',state.data)
   return (
     <div style={{ height: "100vh" }}>
       <StoryTitle>Label </StoryTitle>
