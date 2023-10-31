@@ -68,7 +68,7 @@ export function inferAccessTypes(
 }
 
 /**
- *
+ * Returns article information depending on the article type
  * @param {Object} props
  * @param {Boolean} props.isDigitalCopy
  * @param {Boolean} props.availableAsDigitalCopy
