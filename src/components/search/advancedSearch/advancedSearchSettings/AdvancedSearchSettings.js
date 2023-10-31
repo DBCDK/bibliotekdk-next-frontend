@@ -1,7 +1,7 @@
 import Title from "@/components/base/title";
 import styles from "./AdvancedSearchSettings.module.css";
 import Translate from "@/components/base/translate/Translate";
-import FieldInputContainer from "../fieldInput/FieldInput";
+import FieldInputContainer from "../fieldInput/TextInputs";
 import { CqlTextArea } from "@/components/search/advancedSearch/cqlTextArea/CqlTextArea";
 
 /**

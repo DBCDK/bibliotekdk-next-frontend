@@ -3,7 +3,7 @@ import Text from "@/components/base/text";
 import Suggester from "@/components/base/suggester/Suggester";
 
 import IconButton from "@/components/base/iconButton/IconButton";
-import styles from "./FieldInput.module.css";
+import styles from "./TextInputs.module.css";
 import Title from "@/components/base/title";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import ExpandIcon from "@/components/base/animation/expand";
@@ -131,7 +131,6 @@ function FieldInput({
 const options = ["AND", "OR", "NOT"];
 function OperatorDropDown({
   onSelect,
-  handlePrefixChange,
   selected = "AND",
   className,
 }) {
@@ -149,7 +148,6 @@ function OperatorDropDown({
         variant="success"
         id="dropdown-basic"
         className={styles.dropdowntoggle}
-        //  onClick={toggleCollapse}
       >
         <span className={styles.expandWrap}>
           <Text
@@ -165,28 +163,6 @@ function OperatorDropDown({
             alt=""
           />
         </span>
-        {/* </Button> */}
-
-        {/* <IconButton icon="arrowDown" className={styles.dropdownicon}>
-          {Translate({
-            context: "search",
-            label: `advanced-dropdown-${selected}`,
-          })}
-        </IconButton> */}
-        {/*
-          <Text tag="span" type="text2">
-            {Translate({
-              context: "search",
-              label: `advanced-dropdown-${selected}`,
-            })}
-            <Icon
-              size={{ w: 1, h: 1 }}
-              src="arrowrightblue.svg"
-              className={styles.dropdownicon}
-              alt=""
-            />
-          </Text>
-        */}
       </Dropdown.Toggle>
 
       <Dropdown.Menu className={styles.dropdownmenu}>
@@ -216,14 +192,13 @@ function OperatorDropDown({
 }
 
 /**
- * Returns a table of users libraries
+ * Returns a component that can render multiple text inputs for advanced search
  * @param {Object} props
  * @returns {React.JSX.Element}
  */
-export default function FieldInputContainer({ data, materialType }) {
+export default function TextInputs({ data, materialType }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs";
-  //   const inputFields = [1];
   //TODO move this to state. Each input should just have a value + prefexOperator. then inputValues.length is the number of input fields.
   //prefixOperator is an enum of AND, OR , NOT
   const [inputFields, setInputFields] = useState([
@@ -237,9 +212,6 @@ export default function FieldInputContainer({ data, materialType }) {
     ]);
   }
   function removeInputField(indexToRemove) {
-    //TODO if 1 element
-
-    console.log("removeInputField", removeInputField);
     setInputFields((prevFields) =>
       prevFields.filter((_, index) => index !== indexToRemove)
     );
@@ -252,7 +224,7 @@ export default function FieldInputContainer({ data, materialType }) {
       return newFields;
     });
   }
-  console.log("inputFields", inputFields);
+
   return inputFields?.map((field, index) => {
     return (
       <FieldInput
