@@ -15,7 +15,7 @@ export function getManifestationsWithCorrectCover(manifestations) {
   const { uniqueMaterialTypes, manifestationsEnrichedWithDefaultFrontpage } =
     manifestationMaterialTypeFactory(manifestations);
 
-  const { materialType, manifestations: manifestationsBeforeFilter } =
+  const { materialTypesArray, manifestations: manifestationsBeforeFilter } =
     manifestationsEnrichedWithDefaultFrontpage(uniqueMaterialTypes?.[0]);
 
   const manifestationsNotDefault = manifestationsBeforeFilter?.filter(
@@ -26,7 +26,7 @@ export function getManifestationsWithCorrectCover(manifestations) {
     manifestationsWithCover: !isEmpty(manifestationsNotDefault)
       ? manifestationsNotDefault
       : [manifestationsBeforeFilter?.[0]],
-    materialType: materialType,
+    materialType: materialTypesArray,
   };
 }
 

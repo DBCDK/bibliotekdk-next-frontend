@@ -290,19 +290,26 @@ const useBookmarks = process.env.STORYBOOK_ACTIVE
   : useBookmarkImpl;
 export default useBookmarks;
 
+/**
+ * Used to populate bookmark data, to show more info about the materials
+ * @param {Object[]} bookmarks list of bookmarks
+ * @returns {Object[]} bookmarks
+ */
 export const usePopulateBookmarks = (bookmarks) => {
-  /**
-   * Used to populate bookmark data, to show more info about the materials
-   */
+  //works (not specific edition)
   const workIds = bookmarks?.filter((bookmark) =>
     bookmark?.materialId?.includes("work-of:")
   );
+
+  //specific edition
   const workPids = bookmarks?.filter(
     (bookmark) => !bookmark?.materialId?.includes("work-of:")
   );
+
   const { data: workByIdsData, isLoading: idsToWorksLoading } = useData(
     workFragments.idsToWorks({ ids: workIds?.map((work) => work.materialId) })
   );
+
   const { data: workByPidsData, isLoading: pidsToWorkLoading } = useData(
     workFragments.pidsToWorks({
       pids: workPids?.map((work) => work.materialId),

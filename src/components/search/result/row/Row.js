@@ -122,7 +122,7 @@ export default function ResultRow({
     return manifestationMaterialTypeFactory(work?.manifestations?.mostRelevant);
   }, [work?.manifestations?.mostRelevant]);
 
-  const materialTypes = filters.materialTypes;
+  const materialTypes = filters.materialTypesSpecific;
   uniqueMaterialTypes.sort(sortMaterialTypesByFilter(materialTypes));
   return (
     <article className={styles.search}>

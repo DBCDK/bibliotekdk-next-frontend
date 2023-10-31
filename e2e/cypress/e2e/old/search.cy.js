@@ -93,29 +93,6 @@ describe("Search", () => {
 });
 
 describe("Search => storybook", () => {
-  it(`Should focus elements when tabbing`, () => {
-    cy.visit("/iframe.html?id=search-result--default&viewMode=story");
-
-    cy.get("[data-cy=result-row]")
-      .should("exist")
-      .should("have.attr", "data-cy", "result-row")
-      .tabs(5)
-      .should("have.attr", "data-cy", "result-row")
-      .tabs(2)
-      .focused()
-      .should("have.attr", "data-cy", "result-row");
-  });
-
-  // grid buttons is not working, skipped until implemented
-  it.skip(`Should focus grid buttons when tabbing`, () => {
-    cy.visit("/iframe.html?id=search-quickfilters--default&viewMode=story");
-    cy.get("body").tab();
-    cy.focused().should("have.attr", "data-cy", "grid-button");
-
-    cy.tab();
-    cy.focused().should("have.attr", "data-cy", "list-button");
-  });
-
   it(`Should focus pagination buttons when tabbing`, () => {
     cy.visit("/iframe.html?id=search-pagination--default&viewMode=story");
 

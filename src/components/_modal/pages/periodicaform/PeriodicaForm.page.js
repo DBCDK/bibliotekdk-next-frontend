@@ -11,8 +11,15 @@ import { useEffect, useState } from "react";
 import styles from "./PeriodicaForm.module.css";
 import cx from "classnames";
 
-// TODO create jsdoc and proptypes
-
+/**
+ *
+ * @param {String} label
+ * @param {Boolean} required
+ * @param {String} value
+ * @param {Function} onChange
+ * @param {Boolean} hasTry
+ * @returns
+ */
 function Field({ label, required, value, onChange, hasTry }) {
   const labelKey = `label-${label}`;
   return (
@@ -131,9 +138,13 @@ export function PeriodicaForm({ modal, context, active }) {
                 }
               });
             }
-            // Change context for previous page
-            modal.update(modal.index("order"), { periodicaForm });
-            modal.prev("order");
+            // Change context for order modal - unless we are on a multiorder page
+            let modalId = "order";
+            if (modal.stack.some((m) => m.id === "multiorder")) {
+              modalId = "multiorder";
+            }
+            modal.update(modal.index(modalId), { periodicaForm });
+            modal.prev(modalId);
           }
         }}
       >
