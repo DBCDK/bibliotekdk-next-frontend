@@ -1,0 +1,73 @@
+/*
+  Copy of LocalizationInformation.module.css
+*/
+
+.pickup {
+  padding: var(--pt2);
+}
+
+.pickup .title {
+  padding: 0 var(--pt2) 0 0;
+}
+
+/* Library */
+.library {
+  padding: var(--pt2) 0 var(--pt1) 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.library > p {
+  padding-right: var(--pt2);
+}
+
+/* User */
+.invalid {
+  color: var(--error);
+}
+
+.invalid-pickup {
+  margin: var(--pt05) 0 0 0;
+}
+
+.iconLink {
+  cursor: pointer;
+}
+
+.iconLink > span > i,
+.iconLink > span > i > svg {
+  vertical-align: middle;
+}
+
+.disabled {
+  cursor: default;
+}
+
+/* action */
+.shortLink {
+  display: inline;
+}
+
+.fullLink {
+  display: none;
+}
+
+@media (min-width: 576px) {
+  .pickup {
+    padding: var(--pt3) var(--pt6);
+  }
+
+  .fullLink {
+    display: inline;
+  }
+
+  .shortLink {
+    display: none;
+  }
+
+  .iconLink {
+    width: 40%;
+    justify-content: flex-end;
+    height: var(--pt3); /*one line*/
+  }
+}
