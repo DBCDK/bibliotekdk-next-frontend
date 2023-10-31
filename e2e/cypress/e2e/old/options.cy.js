@@ -26,7 +26,7 @@ describe("Overview", () => {
       .should(
         "have.attr",
         "href",
-        "/infomedia/manifestations-6-titles-main-0-_linoleum-gummigulv/work-of:some-pid-7/123123"
+        "/infomedia/manifestations-1-titles-main-0-_linoleum-gummigulv/work-of:some-pid-7/123123"
       );
   });
 });

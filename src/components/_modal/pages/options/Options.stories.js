@@ -6,7 +6,7 @@ import AlternativeOptions from "@/components/work/overview/alternatives/Alternat
 import merge from "lodash/merge";
 import automock_utils from "@/lib/automock_utils.fixture";
 
-const { DEFAULT_STORY_PARAMETERS } = automock_utils();
+const { DEFAULT_STORY_PARAMETERS, useMockLoanerInfo } = automock_utils();
 
 const exportedObject = {
   title: "modal/Options",
@@ -15,19 +15,9 @@ const exportedObject = {
 export default exportedObject;
 
 export function AllOptions() {
+  useMockLoanerInfo({});
   const workId = "work-of:870971-tsart:39160846";
-  const selectedPids = [
-    "some-pid-1",
-    "some-pid-2",
-    "some-pid-3",
-    "some-pid-4",
-    "some-pid-5",
-    "some-pid-6",
-    "some-pid-7",
-    "some-pid-8",
-    "some-pid-9",
-    "some-pid-10",
-  ];
+  const selectedPids = ["some-pid-5", "some-pid-7"];
 
   return (
     <>
