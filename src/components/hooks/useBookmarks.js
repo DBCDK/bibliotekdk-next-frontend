@@ -296,7 +296,7 @@ export default useBookmarks;
  * @returns {Object[]} bookmarks
  */
 export const usePopulateBookmarks = (bookmarks) => {
-  //ordered work instead of specific edition
+  //ordered works (not specific edition)
   const workIds = bookmarks?.filter((bookmark) =>
     bookmark?.materialId?.includes("work-of:")
   );
