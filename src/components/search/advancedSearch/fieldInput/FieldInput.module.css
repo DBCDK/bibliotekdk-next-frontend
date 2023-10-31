@@ -20,14 +20,13 @@
 }
 
 .dropdownwrap {
+        width: fit-content;
+    display: flex;
+margin-bottom: var(--pt2);
+background-color: white;
 }
 
-/** hide tablet and down **/
-@media (max-width: 992px) {
-  .dropdownwrap {
-    display: none;
-  }
-}
+
 
 .dropdownitem {
   display: block;
@@ -78,6 +77,8 @@
   min-width: 125px;
   height: 100%;
   text-align: left; */
+  background-color: var(--white);
+
 }
 
 .dropdowntoggle[aria-expanded="true"] .dropdownicon img {

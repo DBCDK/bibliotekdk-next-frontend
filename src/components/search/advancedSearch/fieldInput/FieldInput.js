@@ -5,6 +5,8 @@ import styles from "./FieldInput.module.css";
 import Title from "@/components/base/title";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 //import Suggester, { focusInput, blurInput } from "./suggester/";
+import ExpandIcon from "@/components/base/animation/expand";
+import animations from "css/animations";
 
 import { useModal } from "@/components/_modal";
 import useHistory from "@/components/hooks/useHistory";
@@ -13,12 +15,15 @@ import Suggester, {
   blurInput,
 } from "@/components/header/suggester/Suggester";
 import useQ from "@/components/hooks/useQ";
+import cx from "classnames";
+
 import { DesktopMaterialSelect } from "../../select";
 import IndexDropdown from "../indexDropdown/IndexDropdown";
 import { useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import Icon from "@/components/base/icon";
 import materialTypesLabels from "./labels.json";
+import Button from "@/components/base/button";
 /**
  * FieldInput to be used in FieldInput component.
  * @param {Object} props
@@ -107,6 +112,8 @@ function FieldInput({
           {Translate({ context: "search", label: "addLine" })}
         </IconButton>
       )}
+      {/**            <ExpandIcon open={true} size={4} />
+       */}
       {/* {isLastItem&&<Icon}       */}
     </div>
   );
@@ -118,20 +125,58 @@ function OperatorDropDown({
   selected = "AND",
   className,
 }) {
+  const [expanded, setExpanded] = useState(false);
+  function toggleCollapse() {
+    console.log("onclick");
+    setExpanded((current) => !current);
+  }
   return (
-    <Dropdown className={`${styles.dropdownwrap} ${className}`}>
+    <Dropdown
+      onToggle={toggleCollapse}
+      className={`${styles.dropdownwrap} ${className}`}
+    >
       <Dropdown.Toggle
         variant="success"
         id="dropdown-basic"
         className={styles.dropdowntoggle}
+        //  onClick={toggleCollapse}
       >
+        {/* <Button
+        //dataCy={`${label}-button`}
+       // ariaControls={`${label}-text`}
+        ariaExpanded={expanded}
+        type="secondary"
+        className={cx(
+          styles.expandButton,
+          animations["on-hover"],
+          animations["on-focus"]
+        )}
+        border={false}
+        onClick={toggleCollapse}
+      > */}
+        <span className={styles.expandWrap}>
+          <Text
+            type="text2"
+            className={`${animations["f-border-bottom"]} ${animations["h-border-bottom"]}`}
+          >
+            {selected}
+          </Text>
+          <Icon
+            size={{ w: "2", h: "auto" }}
+            src={expanded ? "arrowUp.svg" : "arrowDown.svg"}
+            className={styles.chevron}
+            alt=""
+          />
+        </span>
+        {/* </Button> */}
+
         {/* <IconButton icon="arrowDown" className={styles.dropdownicon}>
           {Translate({
             context: "search",
             label: `advanced-dropdown-${selected}`,
           })}
         </IconButton> */}
-        {
+        {/*
           <Text tag="span" type="text2">
             {Translate({
               context: "search",
@@ -144,7 +189,7 @@ function OperatorDropDown({
               alt=""
             />
           </Text>
-        }
+        */}
       </Dropdown.Toggle>
 
       <Dropdown.Menu className={styles.dropdownmenu}>
@@ -186,6 +231,7 @@ export default function FieldInputContainer({ data, materialType }) {
   //prefixOperator is an enum of AND, OR , NOT
   const [inputFields, setInputFields] = useState([
     { value: "", prefixOperator: null },
+    { value: "", prefixOperator: "AND" },
   ]);
   function addInputField() {
     setInputFields((prevFields) => [
