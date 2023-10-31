@@ -35,7 +35,6 @@ function CheckboxItem({ item }) {
         tabIndex="-1"
       />
       <Text
-        skeleton={false}
         type="text3"
         className={cx(
           animations["h-border-bottom"],
@@ -55,9 +54,6 @@ function initializeMenuItem(menuItem) {
     ...(menuItem?.formType === FormTypeEnum.CHECKBOX && {
       isChecked: false,
     }),
-    ...(menuItem?.formType === FormTypeEnum.RADIO_BUTTON && {
-      isSelected: false,
-    }),
   };
 }
 
@@ -65,8 +61,6 @@ function toggleMenuItem(menuItem) {
   return {
     ...menuItem,
     ...(menuItem?.formType === FormTypeEnum.CHECKBOX && {
-      isChecked:
-        typeof menuItem?.isChecked !== "boolean" ? false : !menuItem?.isChecked,
       isChecked: !menuItem?.isChecked,
     }),
     }),
