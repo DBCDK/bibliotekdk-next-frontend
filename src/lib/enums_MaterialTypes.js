@@ -51,6 +51,8 @@ export const MaterialTypeOrderEnum = Object.freeze({
   },
   MOVIE: {
     "FILM (ONLINE)": { display: "film (online)", code: "FILM_ONLINE" },
+    "FILM (DVD)": { display: "film (dvd)", code: "FILM_DVD" },
+    "FILM (BLU-RAY)": { display: "film (blu-ray)", code: "FILM_BLURAY" },
     "FILM (BLU-RAY 4K)": {
       display: "film (blu-ray 4K)",
       code: "FILM_BLURAY_4K",
@@ -59,8 +61,6 @@ export const MaterialTypeOrderEnum = Object.freeze({
       display: "film (blu-ray 3D)",
       code: "FILM_BLURAY_3D",
     },
-    "FILM (BLU-RAY)": { display: "film (blu-ray)", code: "FILM_BLURAY" },
-    "FILM (DVD)": { display: "film (dvd)", code: "FILM_DVD" },
   },
   MUSIC: {
     "MUSIK (CD)": { display: "musik (cd)", code: "MUSIC_CD" },
@@ -103,7 +103,7 @@ export function prioritiseByWorkType(a, b, workTypes) {
  * Order for materialTypes
  * @param {Array.<string>} workTypes
  * @param {Object} materialTypeEnum
- * @returns {Array.<string>}
+ * @returns {Array.<{display: SpecificDisplay, code: SpecificCode}>}
  */
 export function getOrderedFlatMaterialTypes(
   workTypes = [],
@@ -111,6 +111,5 @@ export function getOrderedFlatMaterialTypes(
 ) {
   return Object.entries(materialTypeEnum)
     .sort((a, b) => prioritiseByWorkType(a, b, workTypes))
-    .flatMap((mat) => Object.values(mat[1]))
-    .map((mat) => mat.code);
+    .flatMap((mat) => Object.values(mat[1]));
 }
