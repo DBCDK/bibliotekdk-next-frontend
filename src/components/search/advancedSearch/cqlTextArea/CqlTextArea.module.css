@@ -35,10 +35,6 @@
   overflow: hidden;
 }
 
-.button.hidden {
-  display: none;
-}
-
 .button span {
   color: var(--blue);
   position: relative;
