@@ -42,3 +42,11 @@
   align-items: center;
   gap: var(--pt1);
 }
+
+.dialog_element {
+  margin: auto;
+}
+
+.dialog_element::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}

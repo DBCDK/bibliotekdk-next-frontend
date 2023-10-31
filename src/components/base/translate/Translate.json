@@ -18,6 +18,12 @@
         "en": "Label: mangler oversættelse"
       }
     },
+    "advanced_search_dropdown": {
+      "choose_publication_year": {
+        "da": "Vælg udgivelsesår",
+        "en": "Choose publication year"
+      }
+    },
     "logo": {
       "default_logo_text": {
         "da": "Bibliotek dk",
