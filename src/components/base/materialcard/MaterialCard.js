@@ -53,14 +53,10 @@ const MaterialCard = forwardRef(
         <div
           // Col props
           {...colSizing}
-          className={cx(elementContainerClassName)}
+          className={cx(elementContainerClassName, styles.container)}
           as="article"
         >
-          <Col
-            ref={ref}
-            id={workId}
-            className={cx(relatedElementClassName, styles.row)}
-          >
+          <Col ref={ref} id={workId} className={cx(relatedElementClassName)}>
             <Col xs={3} className={styles.image}>
               <img
                 src={image_src}
@@ -70,7 +66,7 @@ const MaterialCard = forwardRef(
               />
             </Col>
 
-            <Col xs={9} className={cx(textClassName, styles.rest)}>
+            <Col xs={9} className={cx(textClassName, styles.textInformation)}>
               {children}
             </Col>
           </Col>

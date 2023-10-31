@@ -2,6 +2,7 @@ import Title from "@/components/base/title";
 import Top from "../../base/top";
 import styles from "./MultiOrder.module.css";
 import Translate from "@/components/base/translate";
+import Material from "./Material/Material";
 
 const CONTEXT = "bookmark-order";
 
@@ -27,22 +28,15 @@ const MultiOrder = ({ context }) => {
       </Title>
 
       <div className={styles.materialList}>
-        {
-          /**
-           * @TODO Insert material card
-           * Data should be in materials object, if something is missing we need to add it to the fragments populateBookmarks uses
-           */
-          /**
-           * @TODO use Material component inside @file ./Material/Material.js
-           * we how and which data is stored for bookmarks. when we figured this out, we can show Material component
-           */
-          // materials.map((material) => {
-          //   return <Material key={material.key} material={material} />;
-          // })
-          materials.map((mat) => (
-            <article key={mat.key}>{mat.titles?.main?.[0]}</article>
-          ))
-        }
+        {materials.map((material) => {
+          return (
+            <Material
+              key={material.key}
+              material={material}
+              context={context} //sets periodicaForm via updateModal
+            />
+          );
+        })}
       </div>
 
       <section className={styles.checkoutContainer}>

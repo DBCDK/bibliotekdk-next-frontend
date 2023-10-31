@@ -10,13 +10,17 @@
 
 /** ___________________ */
 /**imageLeft material card*/
-.rest {
+.textInformation {
   padding: var(--pt3) 0 var(--pt3) var(--pt2);
   padding-right: var(--pt9);
-  background-color: var(--white);
+  background-color: var(--white); /**TODO make dynamic*/
 }
-.row {
-  border: 1px solid var(--concrete);
+.container {
+  border: 1px solid var(--iron);
+}
+
+.container + .container {
+  border-top: none;
 }
 
 .image {
