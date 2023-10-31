@@ -23,6 +23,7 @@ import animations from "css/animations";
  * @param {string} props.label the aria label for the radio button
  * @param {function} props.onSelect
  * @param className
+ * @param {boolean} props.moveItemRightOnFocus
  * @param {boolean} props.selected
  * @param {function} props._ref
  */
@@ -34,6 +35,7 @@ function Radio({
   selected,
   _ref,
   className,
+  moveItemRightOnFocus,
   ...props
 }) {
   return (
@@ -59,11 +61,21 @@ function Radio({
         [styles.disabledrow]: disabled,
       })}
     >
-      <div className={styles.dot} />
+      <div
+        className={cx(styles.dot, {
+          [animations["f-translate-right"]]: moveItemRightOnFocus,
+        })}
+      />
       <div id="radio-label" className={styles.label}>
         {label}
       </div>
-      <div className={styles.content}>{children}</div>
+      <div
+        className={cx(styles.content, {
+          [animations["f-translate-right"]]: moveItemRightOnFocus,
+        })}
+      >
+        {children}
+      </div>
     </div>
   );
 }

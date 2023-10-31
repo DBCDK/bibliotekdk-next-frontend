@@ -1,0 +1,44 @@
+.chevron {
+  display: flex;
+  width: 20px;
+  height: 20px;
+  transition: transform 300ms ease;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+}
+
+.menuButton {
+  background-color: var(--white);
+  padding: var(--pt2) var(--pt2);
+  outline: 1px solid var(--gray);
+  min-width: 125px;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+}
+
+.menuButton:hover {
+  cursor: pointer;
+}
+
+.menuButton:hover,
+.menuButton:focus {
+  outline: solid 2px var(--blue);
+}
+
+.icon {
+  transition: transform 0.3s ease-in-out;
+}
+
+.icon_open {
+  transform: rotate(180deg);
+}
+
+.select_wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--pt1);
+}
