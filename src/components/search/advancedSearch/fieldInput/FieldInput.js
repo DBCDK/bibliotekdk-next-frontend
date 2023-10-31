@@ -85,7 +85,7 @@ function FieldInput({
     );
   }, [data, isLoading]);
   const labels = materialTypesLabels[materialType].map((el) => el.label);
-  
+
   console.log("suggestinos.data", data);
   return (
     <div>
@@ -112,7 +112,7 @@ function FieldInput({
             className={styles.suggesterContainer}
           >
             <Input
-            className={styles.suggesterInput}
+              className={styles.suggesterInput}
               value={value}
               onChange={(e) => setValue(e.target.value)}
               placeholder={fieldValue.placeholder}
@@ -125,13 +125,18 @@ function FieldInput({
             onClick={() => removeInputField(index)}
             className={styles.removeIcon}
           >
-            {Translate({context:"search",label:"remove"})}
+            {Translate({ context: "search", label: "remove" })}
           </IconButton>
         )}
       </div>
 
       {isLastItem && (
-        <IconButton icon="expand" onClick={addAnInputField} keepUnderline>
+        <IconButton
+          icon="expand"
+          onClick={addAnInputField}
+          keepUnderline
+          className={styles.addLine}
+        >
           {Translate({ context: "search", label: "addLine" })}
         </IconButton>
       )}

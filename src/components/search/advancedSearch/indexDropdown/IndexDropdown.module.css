@@ -1,5 +1,5 @@
 .dropdownwrap {
-    height: var(--pt5);
+  height: var(--pt5);
 }
 
 /** hide tablet and down **/
@@ -12,7 +12,7 @@
 .dropdownitem {
   display: block;
   border-bottom: 1px solid var(--mine-shaft);
-  padding: var(--pt1) var(--pt1);
+  padding: var(--pt1) var(--pt2);
   text-decoration: none;
   color: var(--mine-shaft);
   text-align: inherit;

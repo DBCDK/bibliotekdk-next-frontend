@@ -27,6 +27,10 @@
   /* background-color: white; */
 }
 
+.addLine {
+  margin-left: var(--pt2);
+  margin-top: var(--pt2);
+}
 .dropdownitem {
   display: block;
   border-bottom: 1px solid var(--mine-shaft);
@@ -127,13 +131,12 @@
   }
 }
 
-.suggesterInput{
-    height: var(--pt5);
+.suggesterInput {
+  height: var(--pt5);
 }
-.suggesterContainer{
-    height: var(--pt5);
-
+.suggesterContainer {
+  height: var(--pt5);
 }
-.suggesterInput .clear{
-height: unset;
+.suggesterInput .clear {
+  height: unset;
 }

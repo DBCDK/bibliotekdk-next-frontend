@@ -450,20 +450,18 @@ export default function Wrap(props) {
   const { filters } = useFilters();
   const { q } = useQ();
 
-
   const query = q[SuggestTypeEnum.ALL];
 
   const [selected, setSelected] = useState();
 
-
   const workType = filters.workTypes?.[0] || null;
-console.log('workType',workType)
+  console.log("workType", workType);
   const { data, isLoading } = useData(
     query &&
       query !== selected &&
       suggestFragments.all({ q: "messi", workType: workType, limit: 10 })
   );
-  console.log('data',data)
+  console.log("data", data);
 
   useEffect(() => {
     // Collect data
