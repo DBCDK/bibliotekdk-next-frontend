@@ -66,7 +66,6 @@ export function Receipt({
       context: "receipt",
       label: orderData?.submitOrder?.status,
     });
-    console.log("ERROR ");
   } else if (!!orderError || !!articleOrderError) {
     hasFailed = true;
     //error message doesnt help user, therefore, we dont show it
