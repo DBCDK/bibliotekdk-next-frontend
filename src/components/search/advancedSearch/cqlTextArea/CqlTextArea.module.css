@@ -16,24 +16,6 @@
   outline: 1px solid var(--blue);
 }
 
-.input.error {
-  border: 1px solid var(--error);
-  outline: 1px solid var(--error);
-}
-
-.input.readOnly {
-  background-color: var(--concrete);
-  color: var(--gray);
-  -webkit-text-fill-color: var(--gray);
-  cursor: not-allowed;
-}
-
-.input:disabled,
-.input:read-only {
-  color: var(--mine-shaft);
-  -webkit-text-fill-color: var(--mine-shaft);
-}
-
 /* Search button */
 
 .button {
