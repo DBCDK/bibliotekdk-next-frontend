@@ -1,19 +1,4 @@
 describe("Order", () => {
-  it(`should not tab to order modal after it is closed`, () => {
-    cy.visitWithConsoleSpy(
-      "/iframe.html?id=modal-order--order-via-ill&viewMode=story"
-    );
-    cy.contains("Bestil", { timeout: 10000 }).click();
-
-    // Check that user blocking is not present
-    cy.get("[data-cy=blocked-user]").should("not.exist");
-
-    cy.get("[data-cy=modal-dimmer]").should("be.visible");
-    cy.contains("Luk").click();
-    cy.get("body").tab();
-    cy.get("[data-cy=modal-dimmer]").should("not.be.visible");
-  });
-
   it(`submits ILL order for pids that may be ordered`, () => {
     cy.visitWithConsoleSpy(
       "/iframe.html?id=modal-order--order-via-ill&viewMode=story"
@@ -63,6 +48,21 @@ describe("Order", () => {
     });
   });
 
+  it(`should not tab to order modal after it is closed`, () => {
+    cy.visitWithConsoleSpy(
+      "/iframe.html?id=modal-order--order-via-ill&viewMode=story"
+    );
+    cy.contains("Bestil", { timeout: 10000 }).click();
+
+    // Check that user blocking is not present
+    cy.get("[data-cy=blocked-user]").should("not.exist");
+
+    cy.get("[data-cy=modal-dimmer]").should("be.visible");
+    cy.contains("Luk").click();
+    cy.get("body").tab();
+    cy.get("[data-cy=modal-dimmer]").should("not.be.visible");
+  });
+
   it("Order physical material fails and shows error modal correctly", () => {
     cy.visit(
       "/iframe.html?id=modal-order--order-physical-material-fails&viewMode=story"
@@ -79,7 +79,8 @@ describe("Order", () => {
     //order failed
     cy.get("[data-cy=error-occured-title]").should("be.visible");
     cy.get("[data-cy=order-failed-message").should("be.visible");
-    cy.get("[data-cy=order-failed-see-libraries-button]").should("be.visible");
+    cy.get("[data-cy=try-again").should("be.visible");
+    cy.get("[data-cy=button-luk]").should("be.visible");
   });
 
   it("should handle failed checkorder and pickupAllowed=false", () => {
@@ -159,10 +160,8 @@ describe("Order", () => {
 
       //order failed
       cy.get("[data-cy=error-occured-title]").should("be.visible");
-      cy.get("[data-cy=order-failed-message").should("be.visible");
-      cy.get("[data-cy=order-failed-see-libraries-button]").should(
-        "be.visible"
-      );
+      cy.get("[data-cy=try-again").should("be.visible");
+      cy.get("[data-cy=button-luk]").should("be.visible");
     });
 
     it("should order indexed periodica article through ILL (when branch is not subscribed to article service)", () => {
@@ -217,13 +216,17 @@ describe("Order", () => {
 
       cy.contains("For at bestille skal du vælge udgave eller artikel");
 
-      cy.contains("Vælg udgave").click();
+      cy.contains("Vælg eksemplar eller artikel", { timeout: 1000 }).click();
 
       cy.get('[placeholder="Skriv årstal"]').type("1992");
 
       cy.get('[placeholder="Hæfte, nummer eller bind"]').type("8");
 
       cy.get('[data-cy="button-gem"]').click();
+
+      cy.contains("Rediger eksemplar eller artikel", { timeout: 10000 }).should(
+        "exist"
+      );
 
       cy.get("[data-cy=button-godkend]").click();
 
@@ -254,7 +257,7 @@ describe("Order", () => {
         .should("exist")
         .should("not.be.disabled");
 
-      cy.contains("Vælg udgave").click();
+      cy.contains("Vælg eksemplar eller artikel", { timeout: 1000 }).click();
 
       cy.get('[placeholder="Skriv årstal"]').type("1992");
 
@@ -307,7 +310,7 @@ describe("Order", () => {
         .should("exist")
         .should("not.be.disabled");
 
-      cy.contains("Vælg udgave").click();
+      cy.contains("Vælg eksemplar eller artikel", { timeout: 1000 }).click();
 
       cy.get('[placeholder="Skriv årstal"]').type("1992");
 

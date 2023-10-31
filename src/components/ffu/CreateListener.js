@@ -41,7 +41,7 @@ export default function Listener() {
   useEffect(() => {
     const status = mutate?.culr?.createAccount?.status;
 
-    if (status) {
+    if (status || error) {
       if (status === "OK") {
         // broadcast user changes
         updateUserData();

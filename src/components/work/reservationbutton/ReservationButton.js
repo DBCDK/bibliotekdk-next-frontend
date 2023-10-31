@@ -196,7 +196,7 @@ export const ReservationButton = ({
   }
 
   const loginRequiredProps = {
-    skeleton: !access,
+    skeleton: isEmpty(access),
     dataCy: `button-order-overview-enabled`,
     onClick: () => {
       user?.isLoggedIn

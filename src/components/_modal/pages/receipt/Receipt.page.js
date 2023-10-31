@@ -18,6 +18,7 @@ import styles from "./Receipt.module.css";
 import { useRouter } from "next/router";
 import cx from "classnames";
 import isEmpty from "lodash/isEmpty";
+import Link from "@/components/base/link";
 
 /**
  * Order Button
@@ -56,21 +57,30 @@ export function Receipt({
   // Define if order has failed
   let hasFailed = false,
     failedMessage = undefined;
-  if (orderData?.submitOrder && !orderData?.submitOrder?.ok) {
+  if (
+    (orderData?.submitOrder && !orderData?.submitOrder?.ok) ||
+    orderData?.submitOrder?.status === "UNKNOWN_ERROR" // answer can have ok === true, but still have status with "UNKNOWN_ERROR"
+  ) {
     hasFailed = true;
-    failedMessage = orderData?.submitOrder?.message;
+    failedMessage = Translate({
+      context: "receipt",
+      label: orderData?.submitOrder?.status,
+    });
+    console.log("ERROR ");
   } else if (!!orderError || !!articleOrderError) {
     hasFailed = true;
-    failedMessage = orderError || articleOrderError;
+    //error message doesnt help user, therefore, we dont show it
+    //occurs f. ex, when invalid userParams are given to submitOrder
   } else if (
     articleOrderData?.elba?.placeCopyRequest &&
     articleOrderData?.elba?.placeCopyRequest?.status !== "OK"
   ) {
     hasFailed = true;
-    failedMessage = articleOrderData?.elba?.placeCopyRequest?.status;
+    failedMessage = Translate({
+      context: "receipt",
+      label: articleOrderData?.elba?.placeCopyRequest?.status,
+    });
   }
-
-  const showLinkToMyLibraries = true; //TODO should link to my libraries always be shown? @bibdk2021-1934
 
   // Branch name
   const branchName = pickupBranch?.name;
@@ -169,28 +179,39 @@ export function Receipt({
               {Translate({ context: "receipt", label: "errorOccured" })}
             </Title>
             {hasFailed && failedMessage && (
-              <Text
-                tag="div"
-                type="text2"
-                className={styles.errorText}
-                dataCy="order-failed-message"
-              >
+              <Text tag="div" type="text2" dataCy="order-failed-message">
                 {failedMessage}
               </Text>
             )}
-            {showLinkToMyLibraries && (
-              <Button
-                className={styles.redirect}
-                onClick={() => router.push("/profil/mine-biblioteker")}
-                type="secondary"
-                dataCy="order-failed-see-libraries-button"
-              >
-                {Translate({
-                  context: "receipt",
-                  label: "seeYourLibraries",
-                })}
-              </Button>
+            {hasFailed && (
+              <span className={styles.contactDBC}>
+                <Text tag="div" type="text2" dataCy="try-again">
+                  {Translate({
+                    context: "receipt",
+                    label: "tryAgain",
+                  })}
+                </Text>
+                <Link
+                  href={Translate({
+                    context: "general",
+                    label: "kundeserviceBibdk",
+                  })}
+                  target="_blank"
+                  border={{ top: false, bottom: { keepVisible: true } }}
+                  dataCy="feedbacklink-to-kundeservice"
+                >
+                  <Text tag="span" type="text2">
+                    {Translate({
+                      context: "general",
+                      label: "kundeserviceBibdk",
+                    })}
+                  </Text>
+                </Link>
+              </span>
             )}
+            <Button className={styles.redirect} onClick={() => modal.clear()}>
+              {Translate({ context: "general", label: "close" })}
+            </Button>
           </div>
         </div>
       </div>

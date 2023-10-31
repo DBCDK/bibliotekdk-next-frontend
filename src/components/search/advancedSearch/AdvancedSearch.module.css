@@ -1,0 +1,6 @@
+.container {
+  background-color: var(--concrete);
+  padding: var(--pt4);
+  /* Fixed height until content is implemented*/
+  height: 500px;
+}
