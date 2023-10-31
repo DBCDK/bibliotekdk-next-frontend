@@ -23,6 +23,8 @@ export function AdvancedSearchResult({
         colSize={{ lg: { offset: 3, span: true } }}
         id="search-result-section"
       >
+        {/* Reuse result page from simplesearch - we skip the wrap .. @TODO should we set
+        some mark .. that we are doing advanced search .. ?? */}
         <ResultPage
           rows={results?.data?.complexSearch?.works}
           onWorkClick={onWorkClick}
