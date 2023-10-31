@@ -32,7 +32,6 @@ export function MaterialTypeSwitcher({
         skeleton={skeleton}
         dataCy={"tag-" + formatMaterialTypesToCypress(materialTypeArray)}
       >
-        {/*{JSON.stringify(materialTypeArray)}*/}
         {formatMaterialTypesToPresentation(materialTypeArray)}
       </Tag>
     );

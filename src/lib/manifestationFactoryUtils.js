@@ -246,18 +246,12 @@ export function getElementByCustomSorting(
   materialTypesOrder,
   materialTypeArray
 ) {
-  const index = materialTypeArray
+  // If the materialType is not in the array, index -1 becomes the highest index + 1
+  return materialTypeArray
     .map((matArr) =>
       materialTypesOrder.findIndex((matOrder) => isEqual(matArr, matOrder))
     )
     .map((idx) => (idx === -1 ? materialTypesOrder.length : idx));
-
-  console.log("materialTypesOrder: ", materialTypesOrder);
-  console.log("materialTypeArray: ", materialTypeArray);
-  console.log("index: ", index);
-
-  // If the materialType is not in the array, index -1 becomes the highest index + 1
-  return index;
 }
 
 /**
@@ -461,9 +455,9 @@ export function enrichManifestationsWithDefaultFrontpages(
  */
 export function flattenGroupedSortedManifestations(manifestationsByType) {
   return Object.entries(manifestationsByType)
-    ?.sort((a, b) => {
-      return compareSpecificDisplayArrays(a[0].split(","), b[0].split(","));
-    })
+    ?.sort((a, b) =>
+      compareSpecificDisplayArrays(a[0].split(","), b[0].split(","))
+    )
     ?.flatMap((group) => {
       return group[1];
     });
