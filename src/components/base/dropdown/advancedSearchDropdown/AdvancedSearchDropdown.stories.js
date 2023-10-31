@@ -33,17 +33,6 @@ export function AdvancedSearchDropdownOnlyCheckboxes() {
     </div>
   );
 }
-AdvancedSearchDropdownOnlyCheckboxes.story = merge(
-  {},
-  DEFAULT_STORY_PARAMETERS,
-  {
-    parameters: {
-      graphql: {
-        resolvers: {},
-      },
-    },
-  }
-);
 export function AdvancedSearchDropdownOnlyRadioButtons() {
   const indices = [
     { itemName: "kat", formType: FormTypeEnum.RADIO_BUTTON },
@@ -52,16 +41,15 @@ export function AdvancedSearchDropdownOnlyRadioButtons() {
     { itemName: "gris", formType: FormTypeEnum.RADIO_BUTTON },
   ];
 
+  const storyTitle = "Only radio buttons";
+
   return (
     <div>
-      <StoryTitle>AdvancedSearchDropdown - Only checkboxes</StoryTitle>
+      <StoryTitle>AdvancedSearchDropdown - {storyTitle}</StoryTitle>
       <StoryDescription>
-        AdvancedSearch dropdown - Only checkboxes, aka a simple test
+        AdvancedSearch dropdown - {storyTitle}, aka a simple test
       </StoryDescription>
-      <AdvancedSearchDropdown
-        indexName={"Only radio buttons"}
-        menuItems={indices}
-      />
+      <AdvancedSearchDropdown indexName={storyTitle} menuItems={indices} />
     </div>
   );
 }
