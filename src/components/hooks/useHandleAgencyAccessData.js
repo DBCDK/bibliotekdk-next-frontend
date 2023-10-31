@@ -307,18 +307,21 @@ export function getHoldingsWithInfoOnPickupAllowed(branch) {
  * @returns {number}
  */
 export function sortByAvailability(a, b) {
-  return getFirstMatch(true, 0, [
-    [b?.pickupAllowed === false, -1],
-    [a?.pickupAllowed === false, 1],
-    [a?.availabilityAccumulated === AvailabilityEnum.NOW, -1],
-    [b?.availabilityAccumulated === AvailabilityEnum.NOW, 1],
-    [a?.availabilityAccumulated === AvailabilityEnum.LATER, -1],
-    [b?.availabilityAccumulated === AvailabilityEnum.LATER, 1],
-    [a?.availabilityAccumulated === AvailabilityEnum.NEVER, -1],
-    [b?.availabilityAccumulated === AvailabilityEnum.NEVER, 1],
-    [a?.availabilityAccumulated === AvailabilityEnum.NOT_OWNED, -1],
-    [b?.availabilityAccumulated === AvailabilityEnum.NOT_OWNED, 1],
-  ]);
+  const aAvail = a?.availabilityAccumulated;
+  const bAvail = b?.availabilityAccumulated;
+
+  return (
+    Number(b?.pickupAllowed) - Number(a?.pickupAllowed) ||
+    Number(bAvail === AvailabilityEnum.NOW) -
+      Number(aAvail === AvailabilityEnum.NOW) ||
+    Number(bAvail === AvailabilityEnum.LATER) -
+      Number(aAvail === AvailabilityEnum.LATER) ||
+    Number(bAvail === AvailabilityEnum.NEVER) -
+      Number(aAvail === AvailabilityEnum.NEVER) ||
+    Number(bAvail === AvailabilityEnum.NOT_OWNED) -
+      Number(aAvail === AvailabilityEnum.NOT_OWNED) ||
+    0
+  );
 }
 
 export function sortingOnNonStringLast(a, b) {
@@ -347,16 +350,16 @@ export function sortByAgencyName(a, b) {
     return anyNonString;
   }
 
-  return a?.agencyName?.localeCompare(b?.agencyName);
+  return a?.agencyName?.localeCompare(b?.agencyName, "da-DK");
 }
 
 export function sortByBranchName(a, b) {
-  const anyNonString = sortingOnNonStringLast(a?.agencyName, b?.agencyName);
+  const anyNonString = sortingOnNonStringLast(a?.branchName, b?.branchName);
   if (anyNonString !== 0) {
     return anyNonString;
   }
 
-  return a?.branchName.localeCompare(b?.branchName);
+  return a?.branchName?.localeCompare(b?.branchName, "da-DK");
 }
 
 export function sortByMainBranch(a, b) {
