@@ -23,7 +23,7 @@ import animations from "css/animations";
  * @param {string} props.label the aria label for the radio button
  * @param {function} props.onSelect
  * @param className
- * @param {boolean} moveItemRightOnFocus
+ * @param {boolean} props.moveItemRightOnFocus
  * @param {boolean} props.selected
  * @param {function} props._ref
  */
