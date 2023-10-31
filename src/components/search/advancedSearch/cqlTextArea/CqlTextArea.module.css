@@ -1,0 +1,89 @@
+.input {
+  border: 1px solid var(--gray);
+  padding: 0 var(--pt2);
+
+  font-size: 17px;
+  line-height: 26px;
+  font-family: var(--body-font);
+
+  /* remove border-radius on iphone */
+  border-radius: 0;
+  -webkit-appearance: none;
+}
+
+.input:focus {
+  border: 1px solid var(--blue);
+  outline: 1px solid var(--blue);
+}
+
+.input.error {
+  border: 1px solid var(--error);
+  outline: 1px solid var(--error);
+}
+
+.input.readOnly {
+  background-color: var(--concrete);
+  color: var(--gray);
+  -webkit-text-fill-color: var(--gray);
+  cursor: not-allowed;
+}
+
+.input:disabled,
+.input:read-only {
+  color: var(--mine-shaft);
+  -webkit-text-fill-color: var(--mine-shaft);
+}
+
+/* Search button */
+
+.button {
+  position: relative;
+  width: 125px;
+  min-width: 125px;
+  height: var(--pt7);
+  padding: var(--pt2) var(--pt4);
+  background-color: transparent;
+  color: var(--blue);
+  border: 2px solid var(--blue);
+  font-family: var(--body-font-medium);
+  font-size: 20px;
+  letter-spacing: 0.2px;
+  line-height: 22px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.button.hidden {
+  display: none;
+}
+
+.button span {
+  color: var(--blue);
+  position: relative;
+  z-index: 2;
+  border-width: 3px;
+}
+
+.button .fill {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: var(--blue);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.75);
+  transition-duration: 0.2s;
+  z-index: 1;
+  opacity: 0;
+}
+
+.button:hover > .fill,
+.button:focus-visible > .fill {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.button:hover > span,
+.button:focus-visible > span {
+  color: white;
+}
