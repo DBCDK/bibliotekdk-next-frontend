@@ -7,14 +7,19 @@ import Translate from "@/components/base/translate";
 
 import { useRouter } from "next/router";
 import translate from "@/components/base/translate";
+import isEmpty from "lodash/isEmpty";
 
 export function CqlTextArea() {
   const router = useRouter();
   const textAreaRef = useRef();
   const doAdvancedSearch = () => {
     const cql = textAreaRef.current.value;
-    const query = { cql: cql };
 
+    if (isEmpty(cql)) {
+      textAreaRef.current.focus();
+    }
+
+    const query = { cql: cql };
     router.push({ pathname: router.pathname, query });
   };
   const defaultCql = router?.query?.cql || "title=harry AND potter";
@@ -46,6 +51,11 @@ export function CqlTextArea() {
             prefix: "advanced-search",
           })}
           onClick={() => doAdvancedSearch()}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              doAdvancedSearch();
+            }
+          }}
         >
           <span>{Translate({ context: "header", label: "search" })}</span>
           <div className={styles.fill} />
