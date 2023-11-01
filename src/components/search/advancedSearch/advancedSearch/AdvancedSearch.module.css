@@ -8,3 +8,9 @@
 .title {
   margin-bottom: var(--pt5);
 }
+
+.topContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
