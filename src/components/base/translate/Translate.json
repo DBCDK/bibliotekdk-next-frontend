@@ -3572,15 +3572,24 @@
         "da": "Bibliotekstype",
         "en": "Library type"
       },
-      "publicLibrary": { "da": "Folkebibliotek", "en": "Public library" },
-
+      "publicLibrary": {
+        "da": "Folkebibliotek",
+        "en": "Public library"
+      },
       "academicLibrary": {
         "da": "Forskningsbibliotek",
         "en": "Academic library"
       },
+      "schoolLibrary": {
+        "da": "Skolebibliotek",
+        "en": "School library"
+      },
+      "otherLibrary": {
+        "da": "Andet",
+        "en": "Other"
+      },
       "showMore": { "da": "Vis mere", "en": "Show more" },
       "showLess": { "da": "Vis mindre", "en": "Show less" },
-
       "remove": {
         "da": "Fjern",
         "en": "Remove"

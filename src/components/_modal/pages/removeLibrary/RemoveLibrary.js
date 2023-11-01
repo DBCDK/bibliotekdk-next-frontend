@@ -24,7 +24,7 @@ export default function RemoveLibrary({ context, modal }) {
 
   // Mutation details
   const culrMutation = useMutate();
-  const { data, error, post } = culrMutation;
+  const { data, error, reset, post } = culrMutation;
 
   // Mutate deleteAccount response from API
   useEffect(() => {
@@ -34,6 +34,9 @@ export default function RemoveLibrary({ context, modal }) {
       // mutate user data
       updateUserData();
 
+      // cleanup
+      reset();
+
       // close modal
       modal.clear();
     }
@@ -41,9 +44,9 @@ export default function RemoveLibrary({ context, modal }) {
     // Some error occured
     if (status?.includes("ERROR") || error) {
       modal.push("statusMessage", {
-        hasBack: false,
         title: Translate({ context: "removeLibrary", label: "errorTitle" }),
         text: Translate({ context: "removeLibrary", label: "errorText" }),
+        back: false,
       });
     }
   }, [data, error]);
