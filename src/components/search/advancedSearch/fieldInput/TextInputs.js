@@ -29,17 +29,16 @@ function FieldInput({
   materialType,
   fieldValue,
 }) {
+  //which index is selected in the indexDropdown. (e.g. "all", "author","title" etc.)
   const [indexField, setIndexfield] = useState("all");
-  const [selected, setSelected] = useState("all");
-
+  //textinput text value
   const [value, setValue] = useState("");
-
   const [suggestions, setSuggestions] = useState([]);
+  //labels to show in IndexDropdown
+  const labels = materialTypesLabels[materialType].map((el) => el.label);
 
   const { data } = useData(
-    value &&
-      value !== selected &&
-      suggestFragments.all({ q: value, workType: null, limit: 10 })
+    value && suggestFragments.all({ q: value, workType: null, limit: 10 })
   );
 
   useEffect(() => {
@@ -49,7 +48,7 @@ function FieldInput({
       })
     );
   }, [data]);
-  const labels = materialTypesLabels[materialType].map((el) => el.label);
+
 
   return (
     <div>
@@ -69,7 +68,6 @@ function FieldInput({
         />
         <div className={`${styles.suggester__wrap} `}>
           <Suggester
-            id="some-uniq-id"
             data={suggestions}
             onSelect={(val) => setValue(val)}
             onClear={() => setValue("")}

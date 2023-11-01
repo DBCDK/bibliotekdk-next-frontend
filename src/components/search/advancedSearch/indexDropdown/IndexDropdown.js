@@ -6,7 +6,7 @@ import Text from "@/components/base/text";
 import Icon from "@/components/base/icon";
 
 /**
- * Uses in advanced search field input. Drop down to select a search index
+ * Used in advanced search field input. Drop down to select a search index
  * @param {*} param0
  * @returns
  */
