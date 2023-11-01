@@ -131,7 +131,10 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
             type="text2"
             className={`${animations["f-border-bottom"]} ${animations["h-border-bottom"]}`}
           >
-            {selected}
+            {Translate({
+              context: "search",
+              label: `advanced-dropdown-${selected}`,
+            })}
           </Text>
           <Icon
             size={{ w: "2", h: "auto" }}

@@ -69,6 +69,7 @@
 
 .dropdowntoggle {
   background-color: unset;
+  min-height: 28px;
 }
 
 .suggesterInput {

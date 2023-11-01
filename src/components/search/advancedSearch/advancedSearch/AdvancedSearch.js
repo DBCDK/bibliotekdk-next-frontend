@@ -1,5 +1,5 @@
 import Title from "@/components/base/title";
-import styles from "./AdvancedSearchSettings.module.css";
+import styles from "./AdvancedSearch.module.css";
 import Translate from "@/components/base/translate/Translate";
 import FieldInputContainer from "../fieldInput/TextInputs";
 import { CqlTextArea } from "@/components/search/advancedSearch/cqlTextArea/CqlTextArea";
@@ -9,7 +9,7 @@ import { CqlTextArea } from "@/components/search/advancedSearch/cqlTextArea/CqlT
  * @returns {React.JSX.Element}
  */
 
-export default function AdvancedSearchSettings() {
+export default function AdvancedSearch() {
   const materialType = "all";
   return (
     <div className={styles.container}>
