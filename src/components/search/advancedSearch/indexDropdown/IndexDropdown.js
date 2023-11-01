@@ -4,18 +4,18 @@ import { cyKey } from "@/utils/trim";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import Icon from "@/components/base/icon";
-import { useState } from "react";
 
+/**
+ * Uses in advanced search field input. Drop down to select a search index
+ * @param {*} param0
+ * @returns
+ */
 export default function IndexDropdown({
   options = [],
   onSelect,
   selected,
   className,
 }) {
-  console.log("translate: ", {
-    context: selected === "all" ? "general" : "search",
-    label: selected === "all" ? selected : `advanced-dropdown-${selected}`,
-  });
   return (
     <Dropdown className={`${styles.dropdownwrap} ${className}`}>
       <Dropdown.Toggle

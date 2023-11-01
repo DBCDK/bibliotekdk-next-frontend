@@ -2,13 +2,6 @@
   height: var(--pt5);
 }
 
-/** hide tablet and down **/
-/* @media (max-width: 992px) {
-  .dropdownwrap {
-    display: none;
-  }
-} */
-
 .dropdownitem {
   display: block;
   border-bottom: 1px solid var(--mine-shaft);
@@ -76,34 +69,3 @@
 .dropdownicon img {
   transition: transform 0.2s linear;
 }
-
-.materials {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  overflow-y: hidden;
-  margin: 0 -15px;
-  white-space: nowrap;
-  padding: var(--pt2) var(--pt2) var(--pt2) var(--pt2);
-}
-
-.materials button {
-  margin: 0 var(--pt2) 0 0;
-}
-
-.materials button:last-child {
-  margin: 0;
-}
-
-.filterButton {
-  max-width: 124px;
-  background-color: var(--white);
-  margin: 0;
-}
-
-/* @media screen and (max-width: 768px) and (min-width: 991px) {
-  .filterButton {
-    display: none;
-  }
-} */

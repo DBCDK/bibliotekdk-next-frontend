@@ -36,8 +36,7 @@ function FieldInput({
 
   const [suggestions, setSuggestions] = useState([]);
 
-
-  const { data, isLoading } = useData(
+  const { data } = useData(
     value &&
       value !== selected &&
       suggestFragments.all({ q: value, workType: null, limit: 10 })
@@ -74,7 +73,7 @@ function FieldInput({
             data={suggestions}
             onSelect={(val) => setValue(val)}
             onClear={() => setValue("")}
-            className={styles.suggesterContainer}
+            className={styles.suggester}
           >
             <Input
               className={styles.suggesterInput}
@@ -111,9 +110,9 @@ function FieldInput({
 const options = ["AND", "OR", "NOT"];
 
 /**
- * Dropdown for choosing a logical operator ("AND", "OR", "NOT") between text fields. 
- * @param {*} param0 
- * @returns 
+ * Dropdown for choosing a logical operator ("AND", "OR", "NOT") between text fields.
+ * @param {*} param0
+ * @returns
  */
 function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
   const [expanded, setExpanded] = useState(false);
@@ -130,7 +129,7 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
         id="dropdown-basic"
         className={styles.dropdowntoggle}
       >
-        <span className={styles.expandWrap}>
+        <span>
           <Text
             type="text2"
             className={`${animations["f-border-bottom"]} ${animations["h-border-bottom"]}`}
@@ -140,7 +139,6 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
           <Icon
             size={{ w: "2", h: "auto" }}
             src={expanded ? "arrowUp.svg" : "arrowDown.svg"}
-            className={styles.chevron}
             alt=""
           />
         </span>
@@ -177,8 +175,7 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
  * @param {Object} props
  * @returns {React.JSX.Element}
  */
-export default function TextInputs({ data, materialType }) {
-
+export default function TextInputs({ materialType }) {
   //TODO move this to state. Each input should just have a value + prefexOperator. then inputValues.length is the number of input fields.
   //prefixOperator is an enum of AND, OR , NOT
   const [inputFields, setInputFields] = useState([

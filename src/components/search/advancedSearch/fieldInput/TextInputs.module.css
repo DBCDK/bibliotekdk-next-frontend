@@ -8,9 +8,6 @@
   height: var(--pt5);
 }
 
-.suggester {
-  max-width: 100%;
-}
 .select {
   white-space: nowrap;
   height: var(--pt7);
@@ -24,7 +21,6 @@
   width: fit-content;
   display: flex;
   margin-bottom: var(--pt2);
-  /* background-color: white; */
 }
 
 .addLine {
@@ -72,71 +68,14 @@
 }
 
 .dropdowntoggle {
-  /* position: relative;
-  padding: var(--pt2) var(--pt5) var(--pt2) var(--pt2);
-  border: 1px solid var(--gray);
-  border-right: none;
-  background-color: var(--white);
-  min-width: 125px;
-  height: 100%;
-  text-align: left; */
   background-color: unset;
 }
 
-.dropdowntoggle[aria-expanded="true"] .dropdownicon img {
-  transform: rotate(180deg);
-}
 
-.dropdownicon {
-  transform: rotate(90deg);
-  position: absolute;
-  right: var(--pt2);
-  top: 0;
-  bottom: 0;
-  margin: auto;
-}
-
-.dropdownicon img {
-  transition: transform 0.2s linear;
-}
-
-.materials {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  overflow-y: hidden;
-  margin: 0 -15px;
-  white-space: nowrap;
-  padding: var(--pt2) var(--pt2) var(--pt2) var(--pt2);
-}
-
-.materials button {
-  margin: 0 var(--pt2) 0 0;
-}
-
-.materials button:last-child {
-  margin: 0;
-}
-
-.filterButton {
-  max-width: 124px;
-  background-color: var(--white);
-  margin: 0;
-}
-
-@media screen and (max-width: 768px) and (min-width: 991px) {
-  .filterButton {
-    display: none;
-  }
-}
 
 .suggesterInput {
   height: var(--pt5);
 }
-.suggesterContainer {
+.suggester {
   height: var(--pt5);
-}
-.suggesterInput .clear {
-  height: unset;
 }
