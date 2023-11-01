@@ -25,10 +25,9 @@ export default function MyLibrariesPage() {
     ?.map((agency) => ({
       agencyId: agency?.result[0]?.agencyId,
       agencyName: agency?.result[0]?.agencyName,
+      agencyType: agency?.result[0]?.agencyType,
     }))
     .filter((agency) => !!agency.agencyName && !!agency.agencyId);
-
-  const municipalityAgencyId = authUser?.municipalityAgencyId;
 
   return (
     <Layout title={Translate({ context: "profile", label: "myLibraries" })}>
@@ -53,10 +52,7 @@ export default function MyLibrariesPage() {
         </IconButton>
       </div>
 
-      <LibrariesTable
-        data={agencies}
-        municipalityAgencyId={municipalityAgencyId}
-      />
+      <LibrariesTable data={agencies} user={authUser} />
       <AddLibraryButton />
     </Layout>
   );
