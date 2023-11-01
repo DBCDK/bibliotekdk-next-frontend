@@ -68,7 +68,11 @@ function useUserImpl() {
   const { data, mutate } = useData(sessionFragments.session());
   const { data: session } = useSession();
   const sessionMutate = useMutate();
+
+  // user is authenticated thrue adgangsplatformen
   const isAuthenticated = !!session?.user?.userId;
+
+  // user exist in CULR (CULR users can both include 'folk' and cpr-verified 'ffu' users)
   const hasCulrUniqueId = !!session?.user?.uniqueId;
 
   const { data: extendedUserData, isLoading: isLoadingExtendedData } = useData(
