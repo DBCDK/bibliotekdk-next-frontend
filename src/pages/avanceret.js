@@ -1,24 +1,21 @@
 import Header from "@/components/header/Header";
 import { useRouter } from "next/router";
 import { fetchAll } from "@/lib/api/apiServerOnly";
-
 import AdvancedSearch from "@/components/search/advancedSearch/AdvancedSearch";
-import Result from "@/components/search/result/Result";
-import useQ from "@/components/hooks/useQ";
 import useDataCollect from "@/lib/useDataCollect";
-import useFilters from "@/components/hooks/useFilters";
 import { useRef } from "react";
+import AdvancedSearchResult from "@/components/search/advancedSearch/advancedSearchResult/AdvancedSearchResult";
+import isEmpty from "lodash/isEmpty";
 
 /**
  * Renders AdvancedSearch page
  */
 export default function AdvancedSearchPage() {
   const router = useRouter();
-  const q = useQ().getQuery();
-  const filters = useFilters().getQuery();
   const dataCollect = useDataCollect();
   const scrollRef = useRef();
   const { page = 1 } = router.query;
+  const cql = router?.query?.cql || "";
 
   /**
    * Updates URL query params
@@ -47,14 +44,15 @@ export default function AdvancedSearchPage() {
       <Header router={router} hideSimpleSearch />
       <AdvancedSearch />
 
-      {q && (
-        <Result
+      {!isEmpty(cql) && (
+        <AdvancedSearchResult
           page={parseInt(page, 10)}
           onPageChange={async (page, scroll) => {
             scroll = typeof scroll !== "boolean" || scroll !== false;
             await updateQueryParams({ page });
             scroll && scrollToRef(scrollRef);
           }}
+          // .. @TODO .. what to do with the datacollect ??
           onWorkClick={(index, work) => {
             dataCollect.collectSearchWorkClick({
               search_request: { q, filters },
@@ -62,6 +60,7 @@ export default function AdvancedSearchPage() {
               search_query_work: work.workId,
             });
           }}
+          cql={cql}
         />
       )}
     </>

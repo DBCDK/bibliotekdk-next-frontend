@@ -60,37 +60,37 @@ describe("getOrderedFlatMaterialTypes", () => {
     const actual = getOrderedFlatMaterialTypes(workTypes);
     const expected = Object.values(MaterialTypeOrderEnum)
       .flatMap((mat) => Object.values(mat))
-      .map((mat) => mat.display);
+      .map((mat) => mat.code);
     expect(actual).toEqual(expected);
   });
   it("should return ordered properly if workType is given (GAME; expect 'playstation 5' first)", () => {
     const workTypes = ["GAME"];
     const actual = getOrderedFlatMaterialTypes(workTypes);
-    const expected = "playstation 5";
+    const expected = "PLAYSTATION_5";
     expect(actual[0]).toEqual(expected);
   });
   it("should return ordered properly if workType is given (LITERATURE; expect 'bog' first)", () => {
     const workTypes = ["LITERATURE"];
     const actual = getOrderedFlatMaterialTypes(workTypes);
-    const expected = "bog";
+    const expected = "BOOK";
     expect(actual[0]).toEqual(expected);
   });
   it("should return ordered properly if workType is given (MOVIE; expect 'film (net)' first)", () => {
     const workTypes = ["MOVIE"];
     const actual = getOrderedFlatMaterialTypes(workTypes);
-    const expected = "film (net)";
+    const expected = "FILM_ONLINE";
     expect(actual[0]).toEqual(expected);
   });
   it("should return ordered properly if workType is given (SHEETMUSIC; expect 'e-node' first)", () => {
     const workTypes = ["SHEETMUSIC"];
     const actual = getOrderedFlatMaterialTypes(workTypes);
-    const expected = "e-node";
+    const expected = "SHEET_MUSIC_ONLINE";
     expect(actual[0]).toEqual(expected);
   });
   it("should return ordered properly if workType is given (MUSIC; expect 'cd (musik)' first)", () => {
     const workTypes = ["MUSIC"];
     const actual = getOrderedFlatMaterialTypes(workTypes);
-    const expected = "cd (musik)";
+    const expected = "MUSIC_CD";
     expect(actual[0]).toEqual(expected);
   });
 });

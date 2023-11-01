@@ -5,30 +5,60 @@ import groupBy from "lodash/groupBy";
 import { getCoverImage } from "@/components/utils/getCoverImage";
 import { comparableYear } from "@/lib/utils";
 import { getOrderedFlatMaterialTypes } from "@/lib/enums_MaterialTypes";
+import { materialTypeError } from "@/lib/errorMessage.utils";
 
+/** @type {Array.<string>} */
 let manifestationWorkType = [];
+
+/** @type {Array.<string>} */
 let materialTypesOrderFromEnum = [];
+
+let errorCount = 0;
 
 /* Typedefs for JSDOC */
 /**
- * MaterialType
- * @typedef MaterialType
- * @type {string}
+ * MaterialTypes is an object containing specificDisplay, specificCode, generalDisplay, generalCode
+ * @typedef {{specificDisplay: SpecificDisplay, specificCode: SpecificCode, generalDisplay: string, generalCode: string}} MaterialTypes
+ * @example {specificDisplay: "bog", specificCode: "BOOK", generalDisplay: "bøger", generalCode: "BOOKS"}
+ */
+/**
+ * MaterialTypeArray is an array of {@link MaterialTypes}
+ * @typedef {Array.<MaterialTypes>} MaterialTypesArray
+ * @example [
+ *   {specificDisplay: "bog", specificCode: "BOOK", generalDisplay: "bøger", generalCode: "BOOKS"},
+ *   {specificDisplay: "e-bog", specificCode: "EBOOK", generalDisplay: "e-bøger", generalCode: "EBOOKS"},
+ * ]
+ */
+/**
+ * SpecificDisplay is a string, but is supposed to map to specificDisplay in {@link MaterialTypes}
+ * @typedef {string} SpecificDisplay
  * @example "bog"
  */
 /**
- * MaterialTypeArray is an array of {@link MaterialType}
- * @typedef MaterialTypesArray
- * @type {Array<MaterialType>}
- * @example ["bog", "ebog"]
+ * SpecificDisplayArray is an array of {@link SpecificDisplay}.
+ * @typedef {Array.<SpecificDisplay>} SpecificDisplayArray
+ * @example ["bog", "e-bog"]
+ */
+/**
+ * SpecificCode is a string, but is supposed to map to specificCode in {@link MaterialTypes}
+ * @typedef {string} SpecificCode
+ * @example "BOOK"
+ */
+/**
+ * SpecificCodeArray is an array of {@link SpecificCode}.
+ * @typedef {Array.<SpecificCode>} SpecificCodeArray
+ * @example ["BOOK", "EBOOK"]
+ */
+/**
+ * @typedef {Record.<string, Array.<Object.<string, any>>>} ManifestationByType
  */
 
 /* Code */
 /**
  * Format to array from url
  * @example formatMaterialTypesFromUrl("fisk / hest") => ["fisk", "hest"]
- * @param materialTypesUrl
- * @returns {MaterialTypesArray}
+ * @param {string} materialTypesUrl
+ * @returns {SpecificDisplayArray}
  */
 export function formatMaterialTypesFromUrl(materialTypesUrl) {
   return materialTypesUrl !== "" ? materialTypesUrl?.split(" / ") : [];
@@ -37,27 +67,41 @@ export function formatMaterialTypesFromUrl(materialTypesUrl) {
 /**
  * Format to url from array
  * @example formatMaterialTypesToUrl(["fisk", "hest"]) => "fisk / hest"
- * @param {string[]} materialTypeArray
+ * @param {MaterialTypesArray|SpecificDisplayArray} materialTypeArray
  * @returns {string}
  */
 export function formatMaterialTypesToUrl(materialTypeArray) {
-  return materialTypeArray?.join(" / ");
+  return materialTypeArray
+    ?.map((mat) => (typeof mat === "string" ? mat : mat?.specificDisplay))
+    .join(" / ");
 }
 
 /**
  * Format to cypress (cypress/dataCy does not like space)
  * @example formatMaterialTypesToCypress(["fisk og hest", "ko og ged"]) => "fisk-og-hest/ko-og-ged"
- * @param materialTypeArray
+ * @param {MaterialTypesArray|SpecificDisplayArray} materialTypeArray
  * @returns {string}
  */
 export function formatMaterialTypesToCypress(materialTypeArray) {
-  return materialTypeArray?.join("/").replace(" ", "-");
+  return materialTypeArray
+    ?.map((mat) => (typeof mat === "string" ? mat : mat?.specificDisplay))
+    ?.join("/")
+    .replace(" ", "-");
 }
 
 /**
  * Format to presentation is MaterialTypesSwitcher and searchResult
- * @example formatMaterialTypesToPresentation(["fisk og hest", "ko og ged"]) => "Fisk og hest / Ko og ged"
- * @param materialTypeArray
+ * @example
+     formatMaterialTypesToPresentation(
+       ["fisk og hest", "ko og ged"]
+     ) => "Fisk og hest / Ko og ged"
+ * @example
+     formatMaterialTypesToPresentation([
+       { specificDisplay: "fisk og hest", specificCode: ..., generalDisplay: ..., generalCode: ... },
+       { specificDisplay: "ko og ged", specificCode: ..., generalDisplay: ..., generalCode: ... }
+     ]) => "Fisk og hest / Ko og ged"
+ *
+ * @param {MaterialTypesArray|SpecificDisplayArray|string} materialTypeArray
  * @returns {string}
  */
 export function formatMaterialTypesToPresentation(materialTypeArray) {
@@ -66,37 +110,94 @@ export function formatMaterialTypesToPresentation(materialTypeArray) {
   }
 
   return (
-    materialTypeArray?.map((mat) => upperFirst(mat)).join(" / ") ||
     materialTypeArray
+      ?.map((mat) =>
+        upperFirst(typeof mat === "string" ? mat : mat?.specificDisplay)
+      )
+      .join(" / ") || null
   );
 }
 
 /**
  * Material types in a flat array
- * @param manifestation
- * @returns {*|*[]}
+ * @param {Object.<string, any>} manifestation
+ * @returns {MaterialTypesArray}
  */
 export function flattenMaterialType(manifestation) {
+  materialTypeError(manifestation);
+
   return (
     manifestation?.materialTypes
-      ?.flatMap((materialType) => materialType?.materialTypeSpecific?.display)
-      .sort(compareArraysOfStrings) || []
+      ?.map((materialType) => {
+        return {
+          specificDisplay: materialType?.materialTypeSpecific?.display,
+          specificCode: materialType?.materialTypeSpecific?.code,
+          generalDisplay: materialType?.materialTypeGeneral?.display,
+          generalCode: materialType?.materialTypeGeneral?.code,
+        };
+      })
+      .sort((a, b) => compareMaterialTypeArrays([a], [b])) || []
   );
 }
 
 /**
  * All materialTypeArrays for all given manifestations
+ * @param {Object.<string, any>} manifestations
  * @param manifestations
- * @returns {React.JSX.Element}
+ * @returns {Array.<MaterialTypesArray>}
  */
 export function flatMapMaterialTypes(manifestations) {
   return manifestations?.map(flattenMaterialType);
 }
 
 /**
+ * {@link MaterialTypesArray} is turned into a {@link SpecificCodeArray}
+ * @param {MaterialTypesArray|SpecificDisplayArray} materialTypeArray
+ * @param {("specificDisplay"|"specificCode"|"generalDisplay"|"generalCode")} materialTypeField
+ * @returns {SpecificDisplayArray}
+ */
+export function toFlatMaterialTypes(
+  materialTypeArray,
+  materialTypeField = "specificDisplay"
+) {
+  if (
+    ![
+      "specificDisplay",
+      "specificCode",
+      "generalDisplay",
+      "generalCode",
+    ].includes(materialTypeField)
+  ) {
+    materialTypeField = "specificDisplay";
+  }
+
+  return materialTypeArray?.map((mat) =>
+    typeof mat === "string" ? mat : mat?.[materialTypeField]
+  );
+}
+
+/**
+ * Checks if the specificDetailsArray is in materialTypesArray
+ * @param {SpecificCodeArray} simplifiedMaterialTypesArray
+ * @param {MaterialTypesArray} materialTypesArray
+ * @param {("specificDisplay"|"specificCode"|"generalDisplay"|"generalCode")} materialTypeField
+ * @returns {boolean}
+ */
+export function inFlatMaterialTypes(
+  simplifiedMaterialTypesArray,
+  materialTypesArray,
+  materialTypeField = "specificDisplay"
+) {
+  return isEqual(
+    simplifiedMaterialTypesArray,
+    toFlatMaterialTypes(materialTypesArray, materialTypeField)
+  );
+}
+
+/**
  * Sorter for sorting by publication year
- * @param a
- * @param b
+ * @param {Object.<string, any>} a
+ * @param {Object.<string, any>} b
  * @returns {number}
  */
 export function sorterByPublicationYear(a, b) {
@@ -108,9 +209,9 @@ export function sorterByPublicationYear(a, b) {
 
 /**
  * All given manifestations grouped by materialTypes
- * @param manifestations
- * @param sorter
- * @returns {Object}
+ * @param {Object.<string, any>} manifestations
+ * @param {Function} sorter
+ * @returns {ManifestationByType}
  */
 export function groupManifestations(
   manifestations,
@@ -118,33 +219,35 @@ export function groupManifestations(
 ) {
   return groupBy(
     manifestations?.sort(sorter)?.map((manifestation) => {
+      const materialTypesArray = flattenMaterialType(manifestation);
       return {
         ...manifestation,
-        materialTypesArray: manifestation?.materialTypes
-          ?.map((mat) => mat?.materialTypeSpecific?.display)
-          .sort(compareArraysOfStrings),
+        materialTypesArray: materialTypesArray,
+        specificDisplayArray: materialTypesArray.map(
+          (mat) => mat.specificDisplay
+        ),
         ...(manifestation?.ownerWork?.workId && {
           workId: manifestation?.ownerWork?.workId,
         }),
       };
     }),
-    "materialTypesArray"
+    "specificDisplayArray"
   );
 }
 
 /**
  * Gets the prioritisation of elements based on the custom sorting defined in
  * {@link getOrderedFlatMaterialTypes}. Also uses workType to prefer the order
- * @param materialTypesOrder
- * @param jsonedMaterialTypeArray
- * @returns {React.JSX.Element}
+ * @param {Array.<string>} materialTypesOrder
+ * @param {string} jsonifiedMaterialTypeArray
+ * @returns {number}
  */
 export function getElementByCustomSorting(
   materialTypesOrder,
-  jsonedMaterialTypeArray
+  jsonifiedMaterialTypeArray
 ) {
   const index = materialTypesOrder.findIndex((mat) => {
-    return jsonedMaterialTypeArray.startsWith(mat);
+    return jsonifiedMaterialTypeArray.startsWith(mat);
   });
 
   // If the materialType is not in the array, index -1 becomes the highest index + 1
@@ -152,76 +255,131 @@ export function getElementByCustomSorting(
 }
 
 /**
- * Comparison of strings of arrays (by danish language)
- *  MaterialTypeArrays can be compared against each other to
- *  have the proper order
- * @example compareArraysOfStrings(["fisk", "ko"], ["hest", "ged"]) => 0
- * @example compareArraysOfStrings(["fisk"], ["fisk", "ko"]) => 0
- * @example compareArraysOfStrings(["fisk", "ko"], ["fisk"]) => 1
- * @param a
- * @param b
- * @param materialTypesOrder
+ * Takes a stringArray and jsonify the content to make it string-comparable
+ * @param {SpecificDisplayArray} stringArray
+ * @returns {string}
+ */
+function jsonify(stringArray) {
+  return JSON.stringify(stringArray).slice(1, -1).replaceAll(`"`, "");
+}
+
+/**
+ * Compares specificDisplay arrays
+ * @param {SpecificDisplayArray} a
+ * @param {SpecificDisplayArray} b
  * @returns {number}
  */
-export function compareArraysOfStrings(
-  a,
-  b,
-  materialTypesOrder = materialTypesOrderFromEnum || []
-) {
-  const jsonA = JSON.stringify(a).slice(1, -1).replaceAll(`"`, "");
-  const jsonB = JSON.stringify(b).slice(1, -1).replaceAll(`"`, "");
-  const emptyA = jsonA === "" ? 1 : 0;
-  const emptyB = jsonB === "" ? 1 : 0;
+export function compareSpecificDisplayArrays(a, b) {
+  const specificDisplayJsonA = jsonify(a);
+  const specificDisplayJsonB = jsonify(b);
+
+  const emptyA = specificDisplayJsonA === "" ? 1 : 0;
+  const emptyB = specificDisplayJsonB === "" ? 1 : 0;
 
   if (emptyA || emptyB) {
     return emptyA - emptyB;
   }
 
-  const aBySort = getElementByCustomSorting(materialTypesOrder, jsonA);
-  const bBySort = getElementByCustomSorting(materialTypesOrder, jsonB);
+  const collator = Intl.Collator("da");
+  return collator.compare(specificDisplayJsonA, specificDisplayJsonB);
+}
+
+/**
+ * Comparison of strings of arrays (by danish language)
+ *  MaterialTypeArrays can be compared against each other to
+ *  have the proper order
+ * @example
+     compareMaterialTypeArrays([
+       { specificDisplay: "fisk", specificCode: "FISH", generalDisplay: ..., generalCode: ... },
+       { specificDisplay: "ko", specificCode: "COW", generalDisplay: ..., generalCode: ... },
+     ], [
+       { specificDisplay: "hest", specificCode: "HORSE", generalDisplay: ..., generalCode: ... },
+       { specificDisplay: "ged", specificCode: "GOAT", generalDisplay: ..., generalCode: ... },
+     ]) => 0
+ * @example
+     compareMaterialTypeArrays([
+       { specificDisplay: "fisk", specificCode: "FISH", generalDisplay: ..., generalCode: ... },
+     ], [
+       { specificDisplay: "fisk", specificCode: "FISH", generalDisplay: ..., generalCode: ... },
+       { specificDisplay: "ko", specificCode: "COW", generalDisplay: ..., generalCode: ... },
+     ]) => 0
+ * @example
+     compareMaterialTypeArrays([
+       { specificDisplay: "fisk", specificCode: "FISH", generalDisplay: ..., generalCode: ... },
+       { specificDisplay: "ko", specificCode: "COW", generalDisplay: ..., generalCode: ... },
+     ], [
+       { specificDisplay: "fisk", specificCode: "FISH", generalDisplay: ..., generalCode: ... },
+     ]) => 1
+ * @param {MaterialTypesArray} a
+ * @param {MaterialTypesArray} b
+ * @param {Array.<string>} materialTypesOrder
+ * @returns {number}
+ */
+export function compareMaterialTypeArrays(
+  a,
+  b,
+  materialTypesOrder = materialTypesOrderFromEnum || []
+) {
+  const aBySort = getElementByCustomSorting(
+    materialTypesOrder,
+    jsonify(toFlatMaterialTypes(a, "specificCode"))
+  );
+  const bBySort = getElementByCustomSorting(
+    materialTypesOrder,
+    jsonify(toFlatMaterialTypes(b, "specificCode"))
+  );
 
   if (aBySort !== bBySort) {
     return aBySort - bBySort;
   }
 
-  const collator = Intl.Collator("da");
-  return collator.compare(jsonA, jsonB);
+  return compareSpecificDisplayArrays(
+    toFlatMaterialTypes(a, "specificDisplay"),
+    toFlatMaterialTypes(b, "specificDisplay")
+  );
 }
 
 /**
  * Provides all unique materialTypeArrays from a given array of materialTypeArrays
- *  Sorting is also done by sort using {@link compareArraysOfStrings}
- * @param flatMaterialTypes
- * @returns {Array<MaterialTypesArray>}
+ *  Sorting is also done by sort using {@link compareMaterialTypeArrays}
+ * @param {Array.<MaterialTypesArray>} arrayOfMaterialTypesArray
+ * @returns {Array.<MaterialTypesArray>}
  */
-export function getUniqueMaterialTypes(flatMaterialTypes) {
+export function getUniqueMaterialTypes(arrayOfMaterialTypesArray) {
   // We use sort because we actually want to keep the unique arrays sorted
-  return uniqWith(flatMaterialTypes, (a, b) =>
-    isEqual(a.sort(compareArraysOfStrings), b.sort(compareArraysOfStrings))
+  return uniqWith(arrayOfMaterialTypesArray, (a, b) =>
+    isEqual(
+      a.sort((a1, a2) => compareMaterialTypeArrays([a1], [a2])),
+      b.sort((b1, b2) => compareMaterialTypeArrays([b1], [b2]))
+    )
   )
-    ?.sort(compareArraysOfStrings)
+    ?.sort(compareMaterialTypeArrays)
     ?.filter((arr) => arr.length > 0);
 }
 
 /**
  * Search for a materialTypeArray within given unique materialTypes for manifestations
- * @param typeArr
- * @param uniqueMaterialTypes
+ * @param {(SpecificDisplayArray|SpecificCodeArray)} typeArr
+ * @param {Array.<MaterialTypesArray>} uniqueMaterialTypes
  * @returns {boolean}
  */
 export function getInUniqueMaterialTypes(typeArr, uniqueMaterialTypes) {
   return (
-    uniqueMaterialTypes?.findIndex((materialTypesArr) =>
-      isEqual(materialTypesArr, typeArr)
+    uniqueMaterialTypes?.findIndex(
+      (materialTypesArr) =>
+        inFlatMaterialTypes(typeArr, materialTypesArr, "specificDisplay") ||
+        inFlatMaterialTypes(typeArr, materialTypesArr, "specificCode") ||
+        inFlatMaterialTypes(typeArr, materialTypesArr, "generalCode") ||
+        inFlatMaterialTypes(typeArr, materialTypesArr, "generalDisplay")
     ) > -1
   );
 }
 
 /**
  * Get all pids from manifestations with a specific materialTypeArray
- * @param typeArr
- * @param manifestationsByType
- * @returns {*|*[]}
+ * @param {SpecificDisplayArray} typeArr
+ * @param {Object.<string, Array.<Object.<string, any>>>} manifestationsByType
+ * @returns {Array.<string>}
  */
 export function getFlatPidsByType(typeArr, manifestationsByType) {
   return (
@@ -236,31 +394,37 @@ export function getFlatPidsByType(typeArr, manifestationsByType) {
 
 /**
  * Enrich manifestations with default cover image
- * @param type
- * @param manifestations
- * @returns {{cover: ({detail: *}|{detail: null}), manifestations: *, materialType}}
+ * @param {MaterialTypesArray} materialTypesArray
+ * @param {ManifestationByType} manifestationsByType
+ * @returns {{cover: ({detail: *}|{detail: null}), manifestations: Array.<Object.<string, any>>, materialType}}
  */
 export function enrichManifestationsWithDefaultFrontpages(
-  type,
-  manifestations
+  materialTypesArray,
+  manifestationsByType
 ) {
-  const coverImage = getCoverImage(manifestations[type]);
+  const typeArrAsSpecificDefaultList = toFlatMaterialTypes(materialTypesArray);
+
+  const coverImage = getCoverImage(
+    manifestationsByType[typeArrAsSpecificDefaultList]
+  );
 
   return {
     cover: coverImage,
-    manifestations: manifestations[type],
-    materialType: type,
+    manifestations: manifestationsByType[typeArrAsSpecificDefaultList],
+    materialTypesArray: materialTypesArray,
   };
 }
 
 /**
  * Function used for BibliographicData, for showing all manifestations of a work
- * @param manifestationsByType
- * @returns {unknown[]}
+ * @param {ManifestationByType} manifestationsByType
+ * @returns {Array.<Object.<string, any>>}
  */
 export function flattenGroupedSortedManifestations(manifestationsByType) {
   return Object.entries(manifestationsByType)
-    ?.sort((a, b) => compareArraysOfStrings(a[0].split(","), b[0].split(",")))
+    ?.sort((a, b) =>
+      compareSpecificDisplayArrays(a[0].split(","), b[0].split(","))
+    )
     ?.flatMap((group) => {
       return group[1];
     });
@@ -279,19 +443,22 @@ export function flattenGroupedSortedManifestations(manifestationsByType) {
  * @returns {{flattenGroupedSortedManifestationsByType: (function(*): *[]), manifestationsByType, manifestationsEnrichedWithDefaultFrontpage: (function(*): {cover: ({detail: *}|{detail: null}), manifestations: *, materialType}), flattenedGroupedSortedManifestations: *[], flatMaterialTypes: *, inUniqueMaterialTypes: (function(*): boolean), uniqueMaterialTypes: Array<MaterialTypesArray>, flatPidsByType: (function(*): *|*[])}}
  */
 export function manifestationMaterialTypeFactory(manifestations) {
+  manifestations?.length > 0 &&
+    materialTypeError(manifestations?.[0], errorCount);
+
   manifestationWorkType = manifestations?.[0]?.ownerWork?.workTypes || [];
   materialTypesOrderFromEnum = getOrderedFlatMaterialTypes(
     manifestationWorkType
   );
-  const flatMaterialTypes = flatMapMaterialTypes(manifestations);
-  const uniqueMaterialTypes = getUniqueMaterialTypes(flatMaterialTypes);
+  const arrayOfMaterialTypesArray = flatMapMaterialTypes(manifestations);
+  const uniqueMaterialTypes = getUniqueMaterialTypes(arrayOfMaterialTypesArray);
 
   const manifestationsByType = groupManifestations(manifestations);
   const flattenedGroupedSortedManifestations =
     flattenGroupedSortedManifestations(manifestationsByType);
 
   return {
-    flatMaterialTypes: flatMaterialTypes,
+    flatMaterialTypes: arrayOfMaterialTypesArray,
     uniqueMaterialTypes: uniqueMaterialTypes,
     inUniqueMaterialTypes: (typeArr) =>
       getInUniqueMaterialTypes(typeArr, uniqueMaterialTypes),
@@ -303,7 +470,10 @@ export function manifestationMaterialTypeFactory(manifestations) {
       flattenGroupedSortedManifestations({
         [typeArr]: manifestationsByType[typeArr],
       }),
-    manifestationsEnrichedWithDefaultFrontpage: (typeArr) =>
-      enrichManifestationsWithDefaultFrontpages(typeArr, manifestationsByType),
+    manifestationsEnrichedWithDefaultFrontpage: (materialTypeArray) =>
+      enrichManifestationsWithDefaultFrontpages(
+        materialTypeArray,
+        manifestationsByType
+      ),
   };
 }
