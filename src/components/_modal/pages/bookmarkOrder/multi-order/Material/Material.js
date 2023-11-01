@@ -44,7 +44,7 @@ const filterForRelevantMaterialTypes = (mostRelevant, materialType) => {
  * @param {Object} context
  * @returns {React.JSX.Element}
  */
-const Material = ({ material, context }) => {
+const Material = ({ material, setMaterialsToShow, context }) => {
   const isSpecificEdition = !!material?.pid;
   const modal = useModal();
   const { deleteBookmarks } = useBookmarks();
@@ -52,8 +52,6 @@ const Material = ({ material, context }) => {
   const [backgroundColor, setBackgroundColor] = useState();
 
   const { loanerInfo } = useUser();
-
-  console.log("material", material);
 
   const manifestation = isSpecificEdition
     ? [material]
@@ -71,10 +69,7 @@ const Material = ({ material, context }) => {
       pids.length > 0 &&
       branchesFragments.checkOrderPolicy({
         pids: pids,
-        branchId:
-          material.titles.full[0] === "Harry Potter og De Vises Sten"
-            ? "700402"
-            : loanerInfo.pickupBranch,
+        branchId: loanerInfo.pickupBranch,
       })
   );
   useEffect(() => {
@@ -107,6 +102,18 @@ const Material = ({ material, context }) => {
 
   const { availableAsDigitalCopy, isArticleRequest } = inferredAccessTypes;
 
+  /**
+   * Removes a bookmark from data base and from the list materialsToShow to show
+   * materialsToShow is a copy of the acutal bookmarks and
+   * used to trigger rerender of modal
+   * @param {String} bookmarkId
+   * @param {String} bookmarkKey
+   */
+  const deleteBookmark = (bookmarkId, bookmarkKey) => {
+    deleteBookmarks([{ bookmarkId, key: bookmarkKey }]);
+    setMaterialsToShow((prev) => prev.filter((m) => m.key !== bookmarkKey));
+  };
+
   if (isPeriodicaLike) {
     const articleTypeTranslation = translateArticleType({
       isDigitalCopy,
@@ -134,11 +141,7 @@ const Material = ({ material, context }) => {
           })}
         </Text>
         <IconButton
-          onClick={() =>
-            deleteBookmarks([
-              { bookmarkId: material.bookmarkId, key: material.key },
-            ])
-          }
+          onClick={() => deleteBookmark(material.bookmarkId, material.key)}
         >
           {Translate({
             context: "bookmark",
