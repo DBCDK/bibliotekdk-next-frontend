@@ -1199,6 +1199,10 @@
       "remove": {
         "da": "Fjern",
         "en": "Remove"
+      },
+      "treshhold-error": {
+        "da": "OBS: Du kan max bestille 25 ad gangen.",
+        "en": "ATT: You can max order 25 at a time"
       }
     },
     "bookmark-order": {
