@@ -42,7 +42,7 @@ export default function IndexDropdown({
             <Dropdown.Item
               tabIndex="-1"
               data-cy={`item-${elem}`}
-              key={`materialdropdown-${elem}`}
+              key={`indexDropdown-${elem}`}
               className={styles.dropdownitem}
               onClick={() => {
                 onSelect(elem);

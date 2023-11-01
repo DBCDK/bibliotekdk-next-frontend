@@ -1,7 +1,7 @@
 import Title from "@/components/base/title";
 import styles from "./AdvancedSearch.module.css";
 import Translate from "@/components/base/translate/Translate";
-import FieldInputContainer from "../fieldInput/TextInputs";
+import TextInputs from "../fieldInput/TextInputs";
 import { CqlTextArea } from "@/components/search/advancedSearch/cqlTextArea/CqlTextArea";
 
 /**
@@ -10,13 +10,13 @@ import { CqlTextArea } from "@/components/search/advancedSearch/cqlTextArea/CqlT
  */
 
 export default function AdvancedSearch() {
-  const materialType = "all";
+  const workType = "all";
   return (
     <div className={styles.container}>
       <Title type="title3" className={styles.title}>
         {Translate({ context: "search", label: "advancedSearch" })}
       </Title>
-      <FieldInputContainer materialType={materialType} />
+      <TextInputs workType={workType} />
       <CqlTextArea />
     </div>
   );

@@ -9,7 +9,7 @@ import IndexDropdown from "../indexDropdown/IndexDropdown";
 import { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import Icon from "@/components/base/icon";
-import materialTypesLabels from "./labels.json";
+import workTypesLabels from "./labels.json";
 import Input from "@/components/base/forms/input";
 import { useData } from "@/lib/api/api";
 import * as suggestFragments from "@/lib/api/suggest.fragments";
@@ -26,7 +26,7 @@ function FieldInput({
   removeInputField,
   isLastItem,
   isFirstItem,
-  materialType,
+  workType,
   fieldValue,
 }) {
   //which index is selected in the indexDropdown. (e.g. "all", "author","title" etc.)
@@ -35,7 +35,8 @@ function FieldInput({
   const [value, setValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   //labels to show in IndexDropdown
-  const labels = materialTypesLabels[materialType].map((el) => el.label);
+  console.log("worktype", workType);
+  const labels = workTypesLabels[workType].map((el) => el.label);
 
   const { data } = useData(
     value && suggestFragments.all({ q: value, workType: null, limit: 10 })
@@ -149,7 +150,7 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
           return (
             <Dropdown.Item
               tabIndex="-1"
-              key={`materialdropdown-${elem}`}
+              key={`logicalOperatordropdown-${elem}`}
               className={styles.dropdownitem}
               onClick={() => {
                 onSelect(elem);
@@ -174,7 +175,7 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
  * @param {Object} props
  * @returns {React.JSX.Element}
  */
-export default function TextInputs({ materialType }) {
+export default function TextInputs({ workType }) {
   //TODO move this to state. Each input should just have a value + prefexOperator. then inputValues.length is the number of input fields.
   //prefixOperator is an enum of AND, OR , NOT
   const [inputFields, setInputFields] = useState([
@@ -211,7 +212,7 @@ export default function TextInputs({ materialType }) {
         handlePrefixChange={handlePrefixChange}
         isLastItem={index === inputFields.length - 1}
         isFirstItem={index === 0}
-        materialType={materialType}
+        workType={workType}
         fieldValue={field}
       />
     );
