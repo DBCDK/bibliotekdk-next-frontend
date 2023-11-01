@@ -20,6 +20,7 @@ export default function AdvancedSearch() {
   const [showCqlEditor, setShowCqlEditor] = useState(false);
 
   useEffect(() => {
+    //show CQL editor if there is a cql param in the url
     setShowCqlEditor(!!cql);
   }, []);
 
