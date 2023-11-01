@@ -49,7 +49,6 @@ function FieldInput({
     );
   }, [data]);
 
-
   return (
     <div>
       {!isFirstItem && (

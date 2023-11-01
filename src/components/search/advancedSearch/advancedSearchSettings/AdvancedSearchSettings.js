@@ -5,11 +5,11 @@ import FieldInputContainer from "../fieldInput/TextInputs";
 import { CqlTextArea } from "@/components/search/advancedSearch/cqlTextArea/CqlTextArea";
 
 /**
+ * Contains advanced search fields
  * @returns {React.JSX.Element}
- *
  */
 
-export default function AdvancedSearch() {
+export default function AdvancedSearchSettings() {
   const materialType = "all";
   return (
     <div className={styles.container}>
