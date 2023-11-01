@@ -20,7 +20,7 @@ import styles from "./Verify.module.css";
  * @returns
  */
 export default function Verify({ modal, context }) {
-  const { title, text, agencyId, agencyName } = context;
+  const { title, text, back, agencyName } = context;
 
   const index = modal.index?.();
 
@@ -35,7 +35,7 @@ export default function Verify({ modal, context }) {
   // Handles the "Skip" button click
   function handleOnClick() {
     // handles if modal should have "back" functionality
-    const hasBack = index > 0;
+    const hasBack = back ?? index > 0;
     hasBack ? modal.prev() : modal.clear();
   }
 
@@ -51,10 +51,13 @@ export default function Verify({ modal, context }) {
       // if a previous modal exist
       if (index > 0) {
         // previous modal
-        const target = modal.stack?.[index - 1];
+        const target = index - 1;
+        const item = modal.stack?.[target];
         // Ignore if last modal was the 'openAdgangsplatform' modal
-        if (target?.id !== "openAdgangsplatform") {
-          callbackUID = target?.uid;
+        if (item?.id !== "openAdgangsplatform") {
+          callbackUID = item?.uid;
+          // remove back functionality from the 'stolen' modal page
+          modal.update(target, { back: false });
         }
       }
     }
@@ -72,13 +75,13 @@ export default function Verify({ modal, context }) {
     signIn(
       "adgangsplatformen",
       { callbackUrl },
-      { agency: agencyId, idp: "nemlogin", force_login: 1 }
+      { idp: "nemlogin", force_login: 1 }
     );
   }
 
   return (
     <div className={styles.verify}>
-      <Top />
+      <Top back={back} />
       <div>
         <Title type="title4" tag="h2">
           {title}

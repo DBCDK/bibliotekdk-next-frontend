@@ -40,6 +40,7 @@ export function basic() {
             branchId
             agencyId
             agencyName
+            agencyType
             name
             branchWebsiteUrl
           }
