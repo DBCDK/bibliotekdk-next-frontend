@@ -303,7 +303,6 @@ export function Filter(props) {
           >
             {facets
               .map((facet, idx) => {
-                console.log("facet", facet);
                 // exclude unwanted categories (see excluded array)
                 if (excluded.includes(facet.name)) {
                   return null;
