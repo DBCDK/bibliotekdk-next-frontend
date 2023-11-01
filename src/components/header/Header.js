@@ -129,7 +129,8 @@ export function Header({
           return;
         }
         if (user.isAuthenticated) {
-          signOut(null, "/");
+          const callbackUrl = window?.location?.origin;
+          signOut(callbackUrl);
         } else {
           openLoginModal({ modal });
         }
