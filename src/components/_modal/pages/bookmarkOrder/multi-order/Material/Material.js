@@ -50,6 +50,7 @@ const filterForRelevantMaterialTypes = (mostRelevant, materialType) => {
  * @returns {React.JSX.Element}
  */
 const Material = ({ material, setMaterialsToOrder, context }) => {
+  //@TODO get manifestations in same manner for both edition and works via useData
   const isSpecificEdition = !!material?.pid;
   const modal = useModal();
   const [orderPossible, setOrderPossible] = useState(true);
