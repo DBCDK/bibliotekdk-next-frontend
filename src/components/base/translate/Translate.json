@@ -1648,6 +1648,14 @@
       "remove": {
         "da": "Fjern",
         "en": "Remove"
+      },
+      "editInCqlEditor": {
+        "da": "Rediger som CQL",
+        "en": "Edit in CQL"
+      },
+      "showInputFields": {
+        "da": "Rediger som feltsøgning",
+        "en": "Use input field search"
       }
     },
     "suggester": {
