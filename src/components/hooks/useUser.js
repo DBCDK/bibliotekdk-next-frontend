@@ -125,7 +125,7 @@ function useUserImpl() {
     ...sessionData,
   });
 
-  //if user is logged and has a uniqueId - and user is NOT already created in userData service, then create user.
+  //if user is logged in and has a uniqueId - and user is NOT already created in userData service, then create user.
   useEffect(() => {
     if (
       hasCulrUniqueId &&
