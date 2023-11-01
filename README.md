@@ -36,7 +36,7 @@ The following environment variables can be set in the application. Variables pre
 - **API_TIMEOUT_MS**
   Time in ms for how long the Next.js server should wait for data when doing server side rendering. Default is 150.
 - **NEXTAUTH_URL**
-  Used for generating redirect uris. Set to root page URL, like https://alfa.bibliotek.dk
+  Used for generating redirect uris. Set to root pageNo URL, like https://alfa.bibliotek.dk
 - **JWT_SECRET**
   Secret used to sign JWT
 - **CLIENT_ID**
