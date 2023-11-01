@@ -30,8 +30,10 @@ export function DeleteProfile({ modal }) {
   }, [modal.isVisible]);
 
   const handleDeleteUser = async () => {
+    const callbackUrl = window?.location?.origin;
+
     await deleteUser({ userDataMutation });
-    signOut(null, "/");
+    signOut(callbackUrl);
   };
 
   return (
