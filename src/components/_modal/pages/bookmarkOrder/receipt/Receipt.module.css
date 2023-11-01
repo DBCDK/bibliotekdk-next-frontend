@@ -1,0 +1,52 @@
+.receipt {
+  padding: var(--pt6) var(--pt2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.errorReceipt {
+  padding-top: var(--pt15);
+  padding-bottom: var(--pt10);
+}
+
+.check {
+  height: var(--pt9);
+  width: var(--pt9);
+  border-radius: 50%;
+  border: 1px solid var(--blue);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: var(--pt3);
+}
+
+.title {
+  margin-bottom: var(--pt3);
+}
+
+.ornament {
+  margin-bottom: var(--pt3);
+}
+
+.successMessage {
+  margin-bottom: var(--pt1);
+}
+
+.message {
+  margin-bottom: var(--pt6);
+}
+
+.errorMessage {
+  margin: var(--pt5) 0;
+  color: var(--error_temp);
+}
+
+.close {
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  margin-bottom: var(--pt3);
+}
+
+.redirect {
+  width: 100%;
+}

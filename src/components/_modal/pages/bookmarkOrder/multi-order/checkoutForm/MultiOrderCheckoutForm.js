@@ -99,6 +99,7 @@ const CheckoutForm = ({ context, materialCounts }) => {
     materialCounts;
   const disabled = digitalMaterials > 0 || materialsNotAllowed.length > 0;
   const [mail, setMail] = useState(null);
+  const modal = useModal();
   const { userInfo, pickupBranchInfo, accessTypeInfo } =
     useOrderPageInformation({
       workId: "",
@@ -129,6 +130,10 @@ const CheckoutForm = ({ context, materialCounts }) => {
 
   const onSubmit = () => {
     // Create orders
+    modal.push("multireceipt", {
+      failedMaterials: [0, 0],
+      successMaterials: [0, 0],
+    });
   };
 
   return (

@@ -28,9 +28,9 @@ const OrderPolicyWrapper = ({ material, ...props }) => {
 const MultiOrder = ({ context }) => {
   const { materials } = context;
   const materialCounts = {
-    digitalMaterials: 1,
-    materialsNotAllowed: 1,
-    materialsMissingAction: 1,
+    digitalMaterials: 0,
+    materialsNotAllowed: 0,
+    materialsMissingAction: 0,
   };
 
   return (
