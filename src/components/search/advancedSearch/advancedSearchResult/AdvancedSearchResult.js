@@ -4,6 +4,7 @@ import { ResultPage } from "@/components/search/result/page";
 import Section from "@/components/base/section";
 import Pagination from "@/components/search/pagination/Pagination";
 import PropTypes from "prop-types";
+import { CqlErrorMessage } from "@/components/search/advancedSearch/cqlTextArea/CqlErrorMessage";
 
 export function AdvancedSearchResult({
   page,
@@ -11,8 +12,7 @@ export function AdvancedSearchResult({
   onPageChange,
   results,
 }) {
-  const isLoading = results.isLoading;
-  const hitcount = results?.data?.complexSearch?.hitcount;
+  const hitcount = results?.hitcount;
   const numPages = Math.ceil(hitcount / 10);
 
   return (
@@ -22,12 +22,15 @@ export function AdvancedSearchResult({
         colSize={{ lg: { offset: 3, span: true } }}
         id="search-result-section"
       >
+        {results.errorMessage && (
+          <CqlErrorMessage message={results.errorMessage} />
+        )}
         {/* Reuse result page from simplesearch - we skip the wrap .. @TODO should we set
         some mark .. that we are doing advanced search .. ?? */}
         <ResultPage
-          rows={results?.data?.complexSearch?.works}
+          rows={results?.works}
           onWorkClick={onWorkClick}
-          isLoading={isLoading}
+          isLoading={results?.isLoading}
         />
       </Section>
       {hitcount > 0 && (
@@ -40,6 +43,17 @@ export function AdvancedSearchResult({
     </>
   );
 }
+
+function parseResponse(bigResponse) {
+  return {
+    works: bigResponse?.data?.complexSearch?.works || null,
+    hitcount: bigResponse?.data?.complexSearch?.hitcount || 0,
+    errorMessage: bigResponse?.data?.complexSearch?.errorMessage || null,
+    isLoading: bigResponse?.isLoading,
+  };
+}
+
+function parseErrorMessag(errorMessage) {}
 
 /**
  * Load the data needed for the advanced search result.
@@ -54,12 +68,18 @@ export default function Wrap({ page, onWorkClick, onPageChange, cql }) {
     doComplexSearchAll({ cql, offset: offset, limit: limit })
   );
 
+  const parsedResponse = parseResponse(bigResponse);
+
+  if (parsedResponse.errorMessage) {
+    return <div>{parsedResponse.errorMessage}</div>;
+  }
+
   return (
     <AdvancedSearchResult
       page={page}
       onWorkClick={onWorkClick}
       onPageChange={onPageChange}
-      results={bigResponse}
+      results={parsedResponse}
     />
   );
 }

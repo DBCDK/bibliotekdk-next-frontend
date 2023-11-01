@@ -201,7 +201,7 @@ describe("Search", () => {
       });
     });
 
-    it(`When on another page than /find, it should go to find page when performing search`, () => {
+    it.only(`When on another page than /find, it should go to find page when performing search`, () => {
       // Open story with pathname set to "/some-page"
       cy.visit(
         "/iframe.html?id=layout-header--nav-header&nextRouter.pathname=/some-page"

@@ -1352,6 +1352,10 @@
         "da": "Resultater",
         "en": "Result"
       },
+      "cqlsearchlabel": {
+        "da": "Cql-søgning",
+        "en": "Cql-search"
+      },
       "loanOptions": {
         "da": "Lånemuligheder:",
         "en": "Loan options:"
