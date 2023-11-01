@@ -25,6 +25,7 @@ import ChevronRight from "@/public/icons/chevron_right.svg";
 import MaterialCard from "@/components/base/materialcard/MaterialCard";
 import { templateImageToLeft } from "@/components/base/materialcard/templates/templates";
 import ChoosePeriodicaCopyRow from "./choosePeriodicaCopyRow/ChoosePeriodicaCopyRow.js";
+import { AccessEnum } from "@/lib/enums";
 
 export function Edition({
   isLoading,
@@ -264,6 +265,12 @@ export default function Wrap({
       />
     ) : null;
 
+    const isDeliveredByDigitalArticleService =
+      isDigitalCopy &&
+      availableAsDigitalCopy &&
+      context?.selectedAccesses[0]?.__typename !==
+        AccessEnum.INTER_LIBRARY_LOAN;
+
     const materialCardTemplate = (/** @type {Object} */ material) =>
       templateImageToLeft({
         material,
@@ -271,6 +278,7 @@ export default function Wrap({
         children,
         isPeriodicaLike,
         isDigitalCopy,
+        isDeliveredByDigitalArticleService,
       });
 
     return (

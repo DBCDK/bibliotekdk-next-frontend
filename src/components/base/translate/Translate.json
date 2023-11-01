@@ -4053,6 +4053,14 @@
       "first-available-copy": {
         "da": "Første tilgængelige eksemplar",
         "en": "First available copy."
+      },
+      "digital-copy": {
+        "da": "Leveres som digital kopi til din mail",
+        "en": "Delivered as a digital copy to your email"
+      },
+      "order-not-possible": {
+        "da": "Kan ikke bestilles til dit bibliotek",
+        "en": "Cannot be ordered to the chosen pickup location"
       }
     }
   }
