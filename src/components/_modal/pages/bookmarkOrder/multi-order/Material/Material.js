@@ -12,7 +12,10 @@ import { inferAccessTypes } from "@/components/_modal/pages/edition/utils.js";
 import useUser from "@/components/hooks/useUser";
 import { useModal } from "@/components/_modal/Modal";
 import { AccessEnum } from "@/lib/enums";
-import { findBackgroundColor } from "@/components/base/materialcard/materialCard.utils";
+import {
+  BackgroundColorEnum,
+  findBackgroundColor,
+} from "@/components/base/materialcard/materialCard.utils";
 import { useData } from "@/lib/api/api";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 import { useEffect, useState } from "react";
@@ -49,7 +52,9 @@ const Material = ({ material, setMaterialsToShow, context }) => {
   const modal = useModal();
   const { deleteBookmarks } = useBookmarks();
   const [orderPossible, setOrderPossible] = useState(true);
-  const [backgroundColor, setBackgroundColor] = useState();
+  const [backgroundColor, setBackgroundColor] = useState(
+    BackgroundColorEnum.NEUTRAL
+  );
 
   const { loanerInfo } = useUser();
 
@@ -82,8 +87,9 @@ const Material = ({ material, setMaterialsToShow, context }) => {
       findBackgroundColor({
         isPeriodicaLike,
         periodicaForm: context?.periodicaForm,
-        notAvailableAtLibrary:
-          !orderPolicyData?.branches?.result?.[0]?.orderPolicy?.orderPossible,
+        notAvailableAtLibrary: orderPolicyIsLoading
+          ? false //if we dont have data yet, we dont want red background
+          : !orderPolicyData?.branches?.result?.[0]?.orderPolicy?.orderPossible,
       })
     );
   }, [orderPolicyData, orderPolicyIsLoading, context?.periodicaForm]);
