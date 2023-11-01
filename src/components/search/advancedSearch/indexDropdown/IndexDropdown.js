@@ -1,6 +1,5 @@
 import Dropdown from "react-bootstrap/Dropdown";
 import styles from "./IndexDropdown.module.css";
-import { cyKey } from "@/utils/trim";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import Icon from "@/components/base/icon";
@@ -19,7 +18,6 @@ export default function IndexDropdown({
   return (
     <Dropdown className={`${styles.dropdownwrap} ${className}`}>
       <Dropdown.Toggle
-        data-cy={cyKey({ name: "material-selector", prefix: "header" })}
         variant="success"
         id="dropdown-basic"
         className={styles.dropdowntoggle}

@@ -1,7 +1,7 @@
 import Header from "@/components/header/Header";
 import { useRouter } from "next/router";
 import { fetchAll } from "@/lib/api/apiServerOnly";
-import AdvancedSearch from "@/components/search/advancedSearch/advancedSearchSettings/AdvancedSearchSettings";
+import AdvancedSearchSettings from "@/components/search/advancedSearch/advancedSearchSettings/AdvancedSearchSettings";
 import useDataCollect from "@/lib/useDataCollect";
 import { useRef } from "react";
 import AdvancedSearchResult from "@/components/search/advancedSearch/advancedSearchResult/AdvancedSearchResult";
@@ -42,7 +42,7 @@ export default function AdvancedSearchPage() {
     <>
       <div ref={scrollRef} />
       <Header router={router} hideSimpleSearch />
-      <AdvancedSearch />
+      <AdvancedSearchSettings />
 
       {!isEmpty(cql) && (
         <AdvancedSearchResult
