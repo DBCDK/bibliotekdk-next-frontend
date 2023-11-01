@@ -28,17 +28,24 @@ import useBookmarks from "@/components/hooks/useBookmarks";
 /**
  * At this point, we have manifestation of all the different material types
  * Here we filter for the materialtype the user has selected
+ * If we have compound material types (such as "den grimme ælling Bog / Lydoptagelse (cd)"), we have to split them up
  * @param {Object[]} mostRelevant
  * @param {String} materialType
  * @returns {Object[]}
  */
 const filterForRelevantMaterialTypes = (mostRelevant, materialType) => {
   if (!mostRelevant || !materialType) return [];
-  return mostRelevant.filter((single) => {
-    return single.materialTypes.some(
-      (t) => t.materialTypeSpecific.display === materialType.toLowerCase()
-    );
-  });
+  // Check if the string contains " / "
+  const splitString = materialType.split(" / ");
+  let materialTypes;
+  if (splitString.length > 1) {
+    materialTypes = splitString.map((str) => str.toLowerCase());
+  } else {
+    materialTypes = [materialType.toLowerCase()];
+  }
+  const { flattenGroupedSortedManifestationsByType } =
+    manifestationMaterialTypeFactory(mostRelevant);
+  return flattenGroupedSortedManifestationsByType(materialTypes);
 };
 
 /**
@@ -65,6 +72,7 @@ const Material = ({ material, setMaterialsToShow, context }) => {
         material?.manifestations.mostRelevant,
         material?.materialType
       );
+
   const pids = isSpecificEdition
     ? [material?.pid]
     : manifestation.map((m) => m.pid) || [];
@@ -177,7 +185,14 @@ const Material = ({ material, setMaterialsToShow, context }) => {
       backgroundColor,
     });
 
-  const firstManifestation = flattenedGroupedSortedManifestations[0];
+  const firstMoreInfoManifestation = flattenedGroupedSortedManifestations.find(
+    (manifestation) => manifestation.cover.detail.startsWith("https://moreinfo")
+  );
+
+  // If none found, take the first manifestation in the array
+  const firstManifestation =
+    firstMoreInfoManifestation || flattenedGroupedSortedManifestations[0];
+
   return (
     flattenedGroupedSortedManifestations &&
     !isEmpty(flattenedGroupedSortedManifestations) && (
