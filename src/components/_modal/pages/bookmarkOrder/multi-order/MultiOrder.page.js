@@ -27,6 +27,11 @@ const OrderPolicyWrapper = ({ material, ...props }) => {
 
 const MultiOrder = ({ context }) => {
   const { materials } = context;
+  const materialCounts = {
+    digitalMaterials: 1,
+    materialsNotAllowed: 1,
+    materialsMissingAction: 1,
+  };
 
   return (
     <div className={styles.multiOrder}>
@@ -59,7 +64,7 @@ const MultiOrder = ({ context }) => {
       </div>
 
       <section className={styles.checkoutContainer}>
-        <CheckoutForm context={context} />
+        <CheckoutForm context={context} materialCounts={materialCounts} />
       </section>
     </div>
   );

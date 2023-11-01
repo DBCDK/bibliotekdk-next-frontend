@@ -2,10 +2,6 @@
   Copy of LocalizationInformation.module.css
 */
 
-.pickup {
-  padding: var(--pt2);
-}
-
 .pickup .title {
   padding: 0 var(--pt2) 0 0;
 }
@@ -44,10 +40,6 @@
 }
 
 @media (min-width: 576px) {
-  .pickup {
-    padding: var(--pt3) var(--pt6);
-  }
-
   .fullLink {
     display: inline;
   }

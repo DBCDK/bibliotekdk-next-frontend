@@ -13,8 +13,6 @@
 
 .materialList {
   margin: 0 -48px;
-  max-height: 50vh;
-  overflow-y: scroll;
 }
 
 .checkoutContainer {

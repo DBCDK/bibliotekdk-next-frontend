@@ -94,7 +94,10 @@ const LocalizationInformation = ({
   );
 };
 
-const CheckoutForm = ({ context }) => {
+const CheckoutForm = ({ context, materialCounts }) => {
+  const { digitalMaterials, materialsNotAllowed, materialsMissingAction } =
+    materialCounts;
+  const disabled = digitalMaterials > 0 || materialsNotAllowed.length > 0;
   const [mail, setMail] = useState(null);
   const { userInfo, pickupBranchInfo, accessTypeInfo } =
     useOrderPageInformation({
@@ -124,6 +127,10 @@ const CheckoutForm = ({ context }) => {
     return { status, hasTry: false, details };
   }, [mail, pickupBranch, context?.periodicaForm?.publicationDateOfComponent]);
 
+  const onSubmit = () => {
+    // Create orders
+  };
+
   return (
     <div className={styles.container}>
       <LocalizationInformation
@@ -141,11 +148,73 @@ const CheckoutForm = ({ context }) => {
         }}
       />
 
-      <div>{/* Errors and messages */}</div>
+      <div>
+        {/* Errors and messages */}
+        {materialsNotAllowed > 0 && (
+          <Text type="text3" className={styles.errorLabel}>
+            {materialsNotAllowed ? (
+              <Translate
+                context="bookmark-order"
+                label="multiorder-cant-order-singular"
+                vars={[materialsNotAllowed]}
+              />
+            ) : (
+              <Translate
+                context="bookmark-order"
+                label="multiorder-cant-order"
+                vars={[materialsNotAllowed]}
+              />
+            )}
+          </Text>
+        )}
+        {materialsMissingAction > 0 && (
+          <Text type="text3" className={styles.errorLabel}>
+            {materialsMissingAction === 1 ? (
+              <Translate
+                context="bookmark-order"
+                label="multiorder-missing-info-singular"
+                vars={[materialsMissingAction]}
+              />
+            ) : (
+              <Translate
+                context="bookmark-order"
+                label="multiorder-missing-info"
+                vars={[materialsMissingAction]}
+              />
+            )}
+          </Text>
+        )}
+        {digitalMaterials > 0 && (
+          <Text type="text3" className={styles.formLabel}>
+            {digitalMaterials === 1 ? (
+              <Translate
+                context="bookmark-order"
+                label="multiorder-digital-copy-singular"
+                vars={[digitalMaterials]}
+              />
+            ) : (
+              <Translate
+                context="bookmark-order"
+                label="multiorder-digital-copy"
+                vars={[digitalMaterials]}
+              />
+            )}
+          </Text>
+        )}
+        <Text type="text3" className={styles.formLabel}>
+          <Translate context="order" label="order-message-library" />
+        </Text>
 
-      <Button type="primary" size="large">
-        {Translate({ context: "general", label: "accept" })}
-      </Button>
+        <Button
+          type="primary"
+          size="large"
+          className={styles.formSubmit}
+          disabled={disabled}
+          onClick={onSubmit}
+        >
+          {Translate({ context: "general", label: "accept" })}
+        </Button>
+      </div>
     </div>
   );
 };

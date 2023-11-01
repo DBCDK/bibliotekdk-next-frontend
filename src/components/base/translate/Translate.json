@@ -1233,6 +1233,30 @@
       "multiorder-subheading": {
         "da": "Du er ved at bestille %s materialer",
         "en": "You are about to order %s materials"
+      },
+      "multiorder-digital-copy-singular": {
+        "da": "%s materiale bliver leveret som digital kopi til din mail",
+        "en": "%s material will be deliveret to you as a digital copy in your mail"
+      },
+      "multiorder-digital-copy": {
+        "da": "%s materialer bliver leveret som digital kopi til din mail",
+        "en": "%s materials will be deliveret to you as a digital copy in your mail"
+      },
+      "multiorder-missing-info-singular": {
+        "da": "%s materiale mangler at få udfyldt informationer",
+        "en": "%s material needs more information"
+      },
+      "multiorder-missing-info": {
+        "da": "%s materialer mangler at få udfyldt informationer",
+        "en": "%s materials need more information"
+      },
+      "multiorder-cant-order-singular": {
+        "da": "%s materiale kan ikke bestilles",
+        "en": "%s material can't be ordered"
+      },
+      "multiorder-cant-order": {
+        "da": "%s materialer kan ikke bestilles",
+        "en": "%s materials can't be ordered"
       }
     },
     "reviews": {
