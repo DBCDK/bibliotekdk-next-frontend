@@ -53,7 +53,7 @@ function parseResponse(bigResponse) {
   };
 }
 
-function parseErrorMessag(errorMessage) {}
+// function parseErrorMessag(errorMessage) {}
 
 /**
  * Load the data needed for the advanced search result.
