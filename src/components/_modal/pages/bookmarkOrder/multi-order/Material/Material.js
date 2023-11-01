@@ -23,7 +23,6 @@ import styles from "./Material.module.css";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import IconButton from "@/components/base/iconButton";
-import useBookmarks from "@/components/hooks/useBookmarks";
 
 /**
  * At this point, we have manifestation of all the different material types
@@ -51,13 +50,13 @@ const filterForRelevantMaterialTypes = (mostRelevant, materialType) => {
 /**
  * Is missing article implementation
  * @param {Object} material
+ * @param {Function} setMaterialsToOrder
  * @param {Object} context
  * @returns {React.JSX.Element}
  */
-const Material = ({ material, setMaterialsToShow, context }) => {
+const Material = ({ material, setMaterialsToOrder, context }) => {
   const isSpecificEdition = !!material?.pid;
   const modal = useModal();
-  const { deleteBookmarks } = useBookmarks();
   const [orderPossible, setOrderPossible] = useState(true);
   const [backgroundColor, setBackgroundColor] = useState(
     BackgroundColorEnum.NEUTRAL
@@ -115,16 +114,8 @@ const Material = ({ material, setMaterialsToShow, context }) => {
 
   const { availableAsDigitalCopy, isArticleRequest } = inferredAccessTypes;
 
-  /**
-   * Removes a bookmark from data base and from the list materialsToShow to show
-   * materialsToShow is a copy of the acutal bookmarks and
-   * used to trigger rerender of modal
-   * @param {String} bookmarkId
-   * @param {String} bookmarkKey
-   */
-  const deleteBookmark = (bookmarkId, bookmarkKey) => {
-    deleteBookmarks([{ bookmarkId, key: bookmarkKey }]);
-    setMaterialsToShow((prev) => prev.filter((m) => m.key !== bookmarkKey));
+  const deleteBookmarkFromOrderList = (bookmarkKey) => {
+    setMaterialsToOrder((prev) => prev.filter((m) => m.key !== bookmarkKey));
   };
 
   if (isPeriodicaLike) {
@@ -153,9 +144,7 @@ const Material = ({ material, setMaterialsToShow, context }) => {
             label: "order-not-possible",
           })}
         </Text>
-        <IconButton
-          onClick={() => deleteBookmark(material.bookmarkId, material.key)}
-        >
+        <IconButton onClick={() => deleteBookmarkFromOrderList(material.key)}>
           {Translate({
             context: "bookmark",
             label: "remove",

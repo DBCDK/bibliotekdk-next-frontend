@@ -9,7 +9,7 @@ const CONTEXT = "bookmark-order";
 
 const MultiOrder = ({ context }) => {
   const { materials } = context;
-  const [materialsToShow, setMaterialsToShow] = useState(materials);
+  const [materialsToOrder, setMaterialsToOrder] = useState(materials);
 
   return (
     <div className={styles.multiOrder}>
@@ -25,17 +25,17 @@ const MultiOrder = ({ context }) => {
         <Translate
           context={CONTEXT}
           label="multiorder-subheading"
-          vars={[materialsToShow?.length]}
+          vars={[materialsToOrder?.length]}
         />
       </Title>
 
       <div className={styles.materialList}>
-        {materialsToShow.map((material) => {
+        {materialsToOrder.map((material) => {
           return (
             <Material
               key={material.key}
               material={material}
-              setMaterialsToShow={setMaterialsToShow}
+              setMaterialsToOrder={setMaterialsToOrder}
               context={context} //sets periodicaForm via updateModal
             />
           );
