@@ -22,7 +22,7 @@ export function Default() {
 Default.story = {
   nextRouter: {
     showInfo: true,
-    pathname: "/find",
-    query: { "q.all": "some query" },
+    pathname: "/avanceret",
+    query: { cql: "Harry potter" },
   },
 };
