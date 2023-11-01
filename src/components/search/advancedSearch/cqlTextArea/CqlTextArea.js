@@ -6,6 +6,7 @@ import { cyKey } from "@/utils/trim";
 import Translate from "@/components/base/translate";
 
 import { useRouter } from "next/router";
+import translate from "@/components/base/translate";
 
 export function CqlTextArea() {
   const router = useRouter();
@@ -16,15 +17,24 @@ export function CqlTextArea() {
 
     router.push({ pathname: router.pathname, query });
   };
+  const defaultCql = router?.query?.cql || "title=harry AND potter";
 
   return (
     <div>
+      <label for="cqlTextArea" style={{ display: "block" }}>
+        {translate({ context: "search", label: "cqlsearchlabel" })}
+      </label>
       <textarea
         className={styles.input}
         rows="4"
         cols="20"
-        defaultValue="title=harry AND potter"
+        defaultValue={defaultCql}
         ref={textAreaRef}
+        data-cy={cyKey({
+          name: "cqlTxt",
+          prefix: "advanced-search",
+        })}
+        id="cqlTextArea"
       />
 
       <div>
@@ -33,7 +43,7 @@ export function CqlTextArea() {
           type="submit"
           data-cy={cyKey({
             name: "searchbutton",
-            prefix: "advenced-search",
+            prefix: "advanced-search",
           })}
           onClick={() => doAdvancedSearch()}
         >
