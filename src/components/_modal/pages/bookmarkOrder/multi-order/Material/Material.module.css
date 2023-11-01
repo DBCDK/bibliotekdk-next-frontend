@@ -1,0 +1,5 @@
+.orderNotPossible {
+  color: var(--error);
+  padding-top: var(--pt1);
+  padding-bottom: var(--pt05);
+}

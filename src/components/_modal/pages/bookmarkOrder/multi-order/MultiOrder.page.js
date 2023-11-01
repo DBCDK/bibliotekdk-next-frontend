@@ -3,11 +3,13 @@ import Top from "../../base/top";
 import styles from "./MultiOrder.module.css";
 import Translate from "@/components/base/translate";
 import Material from "./Material/Material";
+import { useState } from "react";
 
 const CONTEXT = "bookmark-order";
 
 const MultiOrder = ({ context }) => {
   const { materials } = context;
+  const [materialsToOrder, setMaterialsToOrder] = useState(materials);
 
   return (
     <div className={styles.multiOrder}>
@@ -23,16 +25,17 @@ const MultiOrder = ({ context }) => {
         <Translate
           context={CONTEXT}
           label="multiorder-subheading"
-          vars={[materials?.length]}
+          vars={[materialsToOrder?.length]}
         />
       </Title>
 
       <div className={styles.materialList}>
-        {materials.map((material) => {
+        {materialsToOrder.map((material) => {
           return (
             <Material
               key={material.key}
               material={material}
+              setMaterialsToOrder={setMaterialsToOrder}
               context={context} //sets periodicaForm via updateModal
             />
           );

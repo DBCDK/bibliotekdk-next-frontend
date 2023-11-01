@@ -90,7 +90,7 @@ function ColumnOne({ workId, manifestation }) {
           workId={workId}
           selectedPids={[manifestation?.pid]}
           selectedMaterialType={
-            manifestation?.materialTypes?.[0]?.materialTypeSpecific?.display
+            manifestation?.materialTypes?.[0]?.materialTypeSpecific?.display //@TODO fix compound material types
           }
           singleManifestation={true}
           buttonType="secondary"
@@ -100,7 +100,7 @@ function ColumnOne({ workId, manifestation }) {
           workId={workId}
           materialId={manifestation.pid}
           materialTypes={[
-            [manifestation?.materialTypes?.[0]?.materialTypeSpecific?.display],
+            [manifestation?.materialTypes?.[0]?.materialTypeSpecific?.display], //@TODO fix compound material types
           ]}
           size={{ w: 4, h: 4 }}
           title={manifestation?.titles?.sort}
