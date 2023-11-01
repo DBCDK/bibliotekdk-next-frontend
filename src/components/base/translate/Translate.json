@@ -3572,9 +3572,9 @@
         "da": "Bibliotekstype",
         "en": "Library type"
       },
-      "publicLibrary": { 
-        "da": "Folkebibliotek", 
-        "en": "Public library" 
+      "publicLibrary": {
+        "da": "Folkebibliotek",
+        "en": "Public library"
       },
       "academicLibrary": {
         "da": "Forskningsbibliotek",
