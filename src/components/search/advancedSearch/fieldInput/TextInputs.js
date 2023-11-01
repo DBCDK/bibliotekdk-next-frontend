@@ -4,9 +4,6 @@ import Suggester from "@/components/base/suggester/Suggester";
 
 import IconButton from "@/components/base/iconButton/IconButton";
 import styles from "./TextInputs.module.css";
-import Title from "@/components/base/title";
-import useBreakpoint from "@/components/hooks/useBreakpoint";
-import ExpandIcon from "@/components/base/animation/expand";
 import animations from "css/animations";
 import IndexDropdown from "../indexDropdown/IndexDropdown";
 import { useEffect, useState } from "react";
@@ -18,13 +15,12 @@ import { useData } from "@/lib/api/api";
 import * as suggestFragments from "@/lib/api/suggest.fragments";
 
 /**
- * FieldInput to be used in FieldInput component.
+ * Returns a textinput component and a dropdown to choose which advanced search index to search in
  * @param {Object} props
  * @returns {React.JSX.Element}
  */
 function FieldInput({
   index,
-  key,
   handlePrefixChange,
   addAnInputField,
   removeInputField,
@@ -177,7 +173,7 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
 }
 
 /**
- * Returns a component that can render multiple text inputs for advanced search
+ * A dynamic component that can render multiple text inputs for advanced search
  * @param {Object} props
  * @returns {React.JSX.Element}
  */
