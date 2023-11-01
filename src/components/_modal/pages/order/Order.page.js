@@ -50,7 +50,7 @@ function Order({
     isLoadingBranches = false,
   } = pickupBranchInfo;
 
-  const { authUser, loanerInfo, isLoggedIn } = useUser();
+  const { authUser, loanerInfo, isAuthenticated } = useUser();
 
   const pickUpAgencyInfo = useData(
     loanerInfo?.pickupBranch &&
@@ -67,7 +67,7 @@ function Order({
 
   const branches = pickUpAgencyInfo?.data?.branches;
   const showBlockedUserInfo =
-    borrowerCheck && (userMayNotBorrow || !authUser || !isLoggedIn);
+    borrowerCheck && (userMayNotBorrow || !authUser || !isAuthenticated);
 
   // Sets if user has unsuccessfully tried to submit the order
   const [failedSubmission, setFailedSubmission] = useState(false);

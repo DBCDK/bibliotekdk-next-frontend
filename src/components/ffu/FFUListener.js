@@ -14,8 +14,7 @@ import { isFFUAgency } from "@/utils/agency";
 export default function Listener() {
   const user = useUser();
 
-  const { authUser, loanerInfo, isAuthenticated, hasCulrUniqueId, isLoggedIn } =
-    user;
+  const { authUser, loanerInfo, isAuthenticated, hasCulrUniqueId } = user;
 
   const agencyId = authUser?.loggedInBranchId;
   const branchId = loanerInfo?.pickupBranch;
@@ -27,11 +26,6 @@ export default function Listener() {
   const hasVerificationObject = verification.exist();
 
   useEffect(() => {
-    // if user is NOT signed in
-    if (!isLoggedIn) {
-      return;
-    }
-
     // User is NOT authenticated through adgangsplatformen
     if (!isAuthenticated) {
       return;
@@ -94,7 +88,7 @@ export default function Listener() {
         }, 500);
       }
     }
-  }, [isLoggedIn, branchId, agencies]);
+  }, [isAuthenticated, branchId, agencies]);
 
   return null;
 }

@@ -49,7 +49,7 @@ function useUserMock() {
     isAuthenticated: true,
     hasCulrUniqueId: true,
     isCPRValidated: true,
-    isLoggedIn: true,
+    isGuestUser: false,
     loanerInfo: { ...data, userParameters: { ...loggedInUser } },
     updateLoanerInfo: (obj) => {
       // Update global loaner info object
@@ -163,20 +163,26 @@ function useUserImpl() {
     isValidating,
   ]);
 
+  const hasUserParameters = Object.keys(loanerInfo?.userParameters).length > 0;
+
   //TODO give diffferent name
-  const isGuestUser =
-    !isAuthenticated && Object.keys(loanerInfo?.userParameters).length > 0;
+  const isGuestUser = !isAuthenticated && hasUserParameters;
 
   return {
     authUser: userData?.user || {},
     isLoading: userIsLoading,
     error: userDataError,
+    // User is loggedIn (verified through adgangsplatformen)
     isAuthenticated,
+    // User exist in culr
     hasCulrUniqueId,
+    // User has a CPR verified account in culr
     isCPRValidated,
-    loanerInfo,
+    // User is loggedIn as guest user
     isGuestUser,
-    isLoggedIn: isAuthenticated || isGuestUser, //TODO guestUsers are not logged in - maybe "hasUserParameters" is a better name
+    // User has added userParameters
+    hasUserParameters,
+    loanerInfo,
     updateUserData: () => {
       // Broadcast update
       userMutate();

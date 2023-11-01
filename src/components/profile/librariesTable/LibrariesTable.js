@@ -34,6 +34,7 @@ function RemoveLibraryButton({ agencyId, agencyName }) {
  * @returns {React.JSX.Element}
  */
 function TableItem({
+  data,
   agencyName,
   agencyId,
   agencyType,
@@ -44,6 +45,8 @@ function TableItem({
   const isMobile = breakpoint === "xs";
   const isHomeLibrary = municipalityAgencyId === agencyId;
   const isLoggedInLibrary = loggedInBranchId === agencyId;
+
+  const hasOnlyOneAgency = data.length <= 1;
 
   //const lastUsed = false; // Cannot be implemented yet
   const isFFUAgency = agencyType === "FORSKNINGSBIBLIOTEK";
@@ -83,7 +86,7 @@ function TableItem({
       */}
         </div>
 
-        {isFFUAgency && !isLoggedInLibrary && (
+        {isFFUAgency && !hasOnlyOneAgency && (
           <RemoveLibraryButton agencyId={agencyId} agencyName={agencyName} />
         )}
       </div>
@@ -107,9 +110,13 @@ function TableItem({
           <Text type="text2">{type}</Text>
         </td>
       </div>
-      {isFFUAgency && !isLoggedInLibrary && (
+      {isFFUAgency && !hasOnlyOneAgency && (
         <td>
-          <RemoveLibraryButton agencyId={agencyId} agencyName={agencyName} />
+          <RemoveLibraryButton
+            agencyId={agencyId}
+            agencyName={agencyName}
+            isLoggedInLibrary={isLoggedInLibrary}
+          />
         </td>
       )}
     </tr>
@@ -145,6 +152,7 @@ export default function LibrariesTable({ data, user }) {
               key={item.agencyName}
               municipalityAgencyId={municipalityAgencyId}
               loggedInBranchId={loggedInBranchId}
+              data={data}
               {...item}
             />
           ))}
@@ -172,6 +180,7 @@ export default function LibrariesTable({ data, user }) {
             key={item.agencyName}
             municipalityAgencyId={municipalityAgencyId}
             loggedInBranchId={loggedInBranchId}
+            data={data}
             {...item}
           />
         ))}

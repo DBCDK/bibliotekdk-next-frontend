@@ -41,6 +41,7 @@ import isEqual from "lodash/isEqual";
 import isEmpty from "lodash/isEmpty";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { openLoginModal } from "../_modal/pages/login/utils";
+import { signOut } from "@dbcdk/login-nextjs/client";
 
 // material Pages
 export const MATERIAL_PAGES = [
@@ -100,6 +101,13 @@ export function Header({
   // specific material workType selected
   const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
 
+  const getLoginLabel = () => {
+    if (user.hasCulrUniqueId) {
+      return "profile";
+    }
+    return user.isAuthenticated ? "logout" : "login";
+  };
+
   const menu = [
     {
       label: "search",
@@ -113,11 +121,15 @@ export function Header({
       },
     },
     {
-      label: user.isAuthenticated || user.isGuestUser ? "profile" : "login",
+      label: getLoginLabel(),
       icon: LoginIcon,
       onClick: () => {
-        if (user.isAuthenticated || user.isGuestUser) {
+        if (user.hasCulrUniqueId) {
           router.push("/profil/laan-og-reserveringer");
+          return;
+        }
+        if (user.isAuthenticated) {
+          signOut(null, "/");
         } else {
           openLoginModal({ modal });
         }

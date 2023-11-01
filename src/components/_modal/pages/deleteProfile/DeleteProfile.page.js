@@ -20,8 +20,8 @@ import Translate from "@/components/base/translate/Translate";
  */
 export function DeleteProfile({ modal }) {
   const userDataMutation = useMutate();
-  const { isAuthenticated } = useUser();
-  const { mutate } = useData(isAuthenticated && userFragments.extendedData());
+  const { hasCulrUniqueId } = useUser();
+  const { mutate } = useData(hasCulrUniqueId && userFragments.extendedData());
 
   useEffect(() => {
     if (modal.isVisible) {
