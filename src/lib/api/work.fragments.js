@@ -571,6 +571,7 @@ export function pidsToWorks({ pids }) {
         }
         cover {
           detail
+          origin
           thumbnail
         }
         creators {
@@ -621,6 +622,7 @@ export function idsToWorks({ ids }) {
             workTypes
             cover {
               detail
+              origin
             }
             publisher
             edition{

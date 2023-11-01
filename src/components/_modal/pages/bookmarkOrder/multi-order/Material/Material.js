@@ -1,8 +1,8 @@
+import { accessFactory } from "@/lib/accessFactoryUtils";
 import {
-  getAreAccessesPeriodicaLike,
-  checkDigitalCopy,
-} from "@/lib/accessFactoryUtils";
-import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
+  manifestationMaterialTypeFactory,
+  formatMaterialTypesFromUrl,
+} from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
 import MaterialCard from "@/components/base/materialcard/MaterialCard";
 import { templateImageToLeft } from "@/components/base/materialcard/templates/templates";
@@ -23,6 +23,7 @@ import styles from "./Material.module.css";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import IconButton from "@/components/base/iconButton";
+import { getManifestationWithoutDefaultCover } from "@/components/work/overview/covercarousel/utils";
 
 /**
  * At this point, we have manifestation of all the different material types
@@ -34,14 +35,8 @@ import IconButton from "@/components/base/iconButton";
  */
 const filterForRelevantMaterialTypes = (mostRelevant, materialType) => {
   if (!mostRelevant || !materialType) return [];
-  // Check if the string contains " / "
-  const splitString = materialType.split(" / ");
-  let materialTypes;
-  if (splitString.length > 1) {
-    materialTypes = splitString.map((str) => str.toLowerCase());
-  } else {
-    materialTypes = [materialType.toLowerCase()];
-  }
+
+  const materialTypes = formatMaterialTypesFromUrl(materialType);
   const { flattenGroupedSortedManifestationsByType } =
     manifestationMaterialTypeFactory(mostRelevant);
   return flattenGroupedSortedManifestationsByType(materialTypes);
@@ -64,7 +59,7 @@ const Material = ({ material, setMaterialsToOrder, context }) => {
 
   const { loanerInfo } = useUser();
 
-  const manifestation = isSpecificEdition
+  const manifestations = isSpecificEdition
     ? [material]
     : filterForRelevantMaterialTypes(
         material?.manifestations.mostRelevant,
@@ -73,7 +68,7 @@ const Material = ({ material, setMaterialsToOrder, context }) => {
 
   const pids = isSpecificEdition
     ? [material?.pid]
-    : manifestation.map((m) => m.pid) || [];
+    : manifestations.map((m) => m.pid) || [];
 
   const { data: orderPolicyData, isLoading: orderPolicyIsLoading } = useData(
     pids &&
@@ -100,19 +95,22 @@ const Material = ({ material, setMaterialsToOrder, context }) => {
     );
   }, [orderPolicyData, orderPolicyIsLoading, context?.periodicaForm]);
 
-  const accesses = manifestation?.[0]?.access; //@TODO should i check all manifestations accesses here?
-  const isDigitalCopy = checkDigitalCopy(accesses)?.[0];
-  const isPeriodicaLike = getAreAccessesPeriodicaLike(manifestation)?.[0];
+  const { allEnrichedAccesses: accesses } = accessFactory(manifestations);
 
   let children = null;
 
   const inferredAccessTypes = inferAccessTypes(
     context?.periodicaForm,
     loanerInfo.pickupBranch,
-    manifestation
+    manifestations
   );
 
-  const { availableAsDigitalCopy, isArticleRequest } = inferredAccessTypes;
+  const {
+    availableAsDigitalCopy,
+    isArticleRequest,
+    isDigitalCopy,
+    isPeriodicaLike,
+  } = inferredAccessTypes;
 
   const deleteBookmarkFromOrderList = (bookmarkKey) => {
     setMaterialsToOrder((prev) => prev.filter((m) => m.key !== bookmarkKey));
@@ -155,12 +153,11 @@ const Material = ({ material, setMaterialsToOrder, context }) => {
   }
 
   const isDeliveredByDigitalArticleService =
-    isDigitalCopy &&
     availableAsDigitalCopy &&
-    accesses[0]?.__typename !== AccessEnum.INTER_LIBRARY_LOAN; //take first access, since it has highest priority
+    accesses[0]?.__typename === AccessEnum.DIGITAL_ARTICLE_SERVICE; //take first access, since it has highest priority
 
   const { flattenedGroupedSortedManifestations } =
-    manifestationMaterialTypeFactory(manifestation);
+    manifestationMaterialTypeFactory(manifestations);
 
   const materialCardTemplate = (/** @type {Object} */ material) =>
     templateImageToLeft({
@@ -173,13 +170,15 @@ const Material = ({ material, setMaterialsToOrder, context }) => {
       backgroundColor,
     });
 
-  const firstMoreInfoManifestation = flattenedGroupedSortedManifestations.find(
-    (manifestation) => manifestation.cover.detail.startsWith("https://moreinfo")
+  // If we have manifestations with cover, take the first one
+  const manifestationsWithCover = getManifestationWithoutDefaultCover(
+    flattenedGroupedSortedManifestations
   );
 
-  // If none found, take the first manifestation in the array
-  const firstManifestation =
-    firstMoreInfoManifestation || flattenedGroupedSortedManifestations[0];
+  // If no cover found, take the first manifestation in the array
+  const firstManifestation = !isEmpty(manifestationsWithCover)
+    ? manifestationsWithCover[0]
+    : flattenedGroupedSortedManifestations[0];
 
   return (
     flattenedGroupedSortedManifestations &&

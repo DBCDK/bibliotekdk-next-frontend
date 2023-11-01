@@ -56,12 +56,14 @@ let errorCount = 0;
 /* Code */
 /**
  * Format to array from url
- * @example formatMaterialTypesFromUrl("fisk / hest") => ["fisk", "hest"]
+ * @example formatMaterialTypesFromUrl("fisk / Hest") => ["fisk", "hest"]
  * @param {string} materialTypesUrl
  * @returns {SpecificDisplayArray}
  */
 export function formatMaterialTypesFromUrl(materialTypesUrl) {
-  return materialTypesUrl !== "" ? materialTypesUrl?.split(" / ") : [];
+  if (!materialTypesUrl || materialTypesUrl === "") return [];
+  const splitMaterialTypes = materialTypesUrl.split(" / ");
+  return splitMaterialTypes.map((type) => type.toLowerCase());
 }
 
 /**

@@ -244,7 +244,7 @@ export function templateImageToLeft({
     .filter((pre) => !isEmpty(pre))
     ?.join(", ");
   const formattedMaterialTypes =
-    singleManifestation && material?.materialType
+    singleManifestation && material?.materialType //@TODO we get that from bookmarks if specific edition is marked --> would be better to retrieve manifestations directly inside of multiorder --> material
       ? material?.materialType
       : formatMaterialTypesToPresentation(material?.materialTypesArray);
 
