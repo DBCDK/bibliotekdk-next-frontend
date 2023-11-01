@@ -38,44 +38,28 @@ function FieldInput({
 
   const [value, setValue] = useState("");
 
-  const updateQuery = (val) => {
-    console.log("val", val);
-  };
-
-  const [state, setState] = useState({ q: "", data: [] });
   const [suggestions, setSuggestions] = useState([]);
 
-  console.log("value before usedata", value);
-  console.log("indexField", indexField);
 
   const { data, isLoading } = useData(
     value &&
       value !== selected &&
       suggestFragments.all({ q: value, workType: null, limit: 10 })
   );
-  //   // function to force search onKeyDown
-  //   const keyPressed = (e) => {
-  //     if (e.key === "Enter") {
-  //       updateQuery(e.target.value);
-  //     }
-  //   };
-  useEffect(() => {
-    console.log("suggestinos.useeffect.data", data);
-    console.log("suggestinos.useeffect.isLoading", isLoading);
 
+  useEffect(() => {
     setSuggestions(
       data?.suggest?.result?.map((res) => {
         return { value: res.term };
       })
     );
-  }, [data, isLoading]);
+  }, [data]);
   const labels = materialTypesLabels[materialType].map((el) => el.label);
 
-  console.log("suggestinos.data", data);
   return (
     <div>
       {!isFirstItem && (
-        <OperatorDropDown
+        <LogicalOperatorDropDown
           onSelect={(value) => handlePrefixChange(index, value)}
           selected={fieldValue.prefixOperator}
         />
@@ -129,14 +113,15 @@ function FieldInput({
   );
 }
 const options = ["AND", "OR", "NOT"];
-function OperatorDropDown({
-  onSelect,
-  selected = "AND",
-  className,
-}) {
+
+/**
+ * Dropdown for choosing a logical operator ("AND", "OR", "NOT") between text fields. 
+ * @param {*} param0 
+ * @returns 
+ */
+function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
   const [expanded, setExpanded] = useState(false);
   function toggleCollapse() {
-    console.log("onclick");
     setExpanded((current) => !current);
   }
   return (
@@ -197,8 +182,7 @@ function OperatorDropDown({
  * @returns {React.JSX.Element}
  */
 export default function TextInputs({ data, materialType }) {
-  const breakpoint = useBreakpoint();
-  const isMobile = breakpoint === "xs";
+
   //TODO move this to state. Each input should just have a value + prefexOperator. then inputValues.length is the number of input fields.
   //prefixOperator is an enum of AND, OR , NOT
   const [inputFields, setInputFields] = useState([
