@@ -1595,6 +1595,59 @@
       "advancedSearch": {
         "da": "Avanceret søgning",
         "en": "Advanced Search"
+      },
+      "addLine": {
+        "da": "Tilføj line",
+        "en": "Add field"
+      },
+      "advanced-dropdown-all": {
+        "da": "Alle felter",
+        "en": "All fields"
+      },
+      "advanced-dropdown-title": {
+        "da": "Titel",
+        "en": "Title"
+      },
+      "advanced-dropdown-isbn": {
+        "da": "ISBN",
+        "en": "ISBN"
+      },
+      "advanced-dropdown-subject": {
+        "da": "Emne",
+        "en": "subject"
+      },
+      "advanced-dropdown-publisher": {
+        "da": "Udgiver",
+        "en": "Publisher"
+      },
+      "advanced-dropdown-contributor": {
+        "da": "Medvirkende",
+        "en": "contributor"
+      },
+      "advanced-dropdown-series": {
+        "da": "Serietitel",
+        "en": "Series title"
+      },
+      "advanced-dropdown-function": {
+        "da": "Ophav",
+        "en": "function"
+      },
+
+      "advanced-dropdown-AND": {
+        "da": "OG",
+        "en": "AND"
+      },
+      "advanced-dropdown-OR": {
+        "da": "ELLER",
+        "en": "NOROT"
+      },
+      "advanced-dropdown-NOT": {
+        "da": "IKKE",
+        "en": "NOT"
+      },
+      "remove": {
+        "da": "Fjern",
+        "en": "Remove"
       }
     },
     "suggester": {
