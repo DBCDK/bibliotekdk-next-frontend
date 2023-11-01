@@ -68,7 +68,6 @@ const Material = ({ material, setMaterialsToShow, context }) => {
   const manifestation = isSpecificEdition
     ? [material]
     : filterForRelevantMaterialTypes(
-        //@TODO use accessFactory method instead
         material?.manifestations.mostRelevant,
         material?.materialType
       );
@@ -102,7 +101,7 @@ const Material = ({ material, setMaterialsToShow, context }) => {
     );
   }, [orderPolicyData, orderPolicyIsLoading, context?.periodicaForm]);
 
-  const accesses = manifestation?.[0]?.access;
+  const accesses = manifestation?.[0]?.access; //@TODO should i check all manifestations accesses here?
   const isDigitalCopy = checkDigitalCopy(accesses)?.[0];
   const isPeriodicaLike = getAreAccessesPeriodicaLike(manifestation)?.[0];
 
