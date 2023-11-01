@@ -70,8 +70,9 @@ function useUserImpl() {
   const sessionMutate = useMutate();
   const isAuthenticated = !!session?.user?.userId;
   const hasCulrUniqueId = !!session?.user?.uniqueId;
+
   const { data: extendedUserData, isLoading: isLoadingExtendedData } = useData(
-    isAuthenticated && userFragments.extendedData()
+    hasCulrUniqueId && userFragments.extendedData()
   );
 
   const {
@@ -120,16 +121,16 @@ function useUserImpl() {
     ...sessionData,
   });
 
-  //if user is logged in and not already created in userData service, then create user.
+  //if user is logged and has a uniqueId - and user is NOT already created in userData service, then create user.
   useEffect(() => {
     if (
-      isAuthenticated &&
+      hasCulrUniqueId &&
       !isLoadingExtendedData &&
       !extendedUserData?.user?.createdAt
     ) {
       addUserToUserData({ userDataMutation: sessionMutate });
     }
-  }, [isAuthenticated, extendedUserData, isLoadingExtendedData]);
+  }, [hasCulrUniqueId, extendedUserData, isLoadingExtendedData]);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -170,7 +171,7 @@ function useUserImpl() {
     hasCulrUniqueId,
     isCPRValidated,
     loanerInfo,
-    isGuestUser: isGuestUser,
+    isGuestUser,
     isLoggedIn: isAuthenticated || isGuestUser, //TODO guestUsers are not logged in - maybe "hasUserParameters" is a better name
     updateUserData: () => {
       // Broadcast update

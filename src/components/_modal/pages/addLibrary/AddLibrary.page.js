@@ -101,9 +101,6 @@ export function AddLibrary({
 
       // add modalpage to store
       const UID = modal.saveToStore("verify", {
-        agencyId: branch.agencyId,
-        branchId: branch.branchId,
-        agencyName: branch.agencyName,
         title: Translate({
           context: "addLibrary",
           label: "hasVerificationTitle",
@@ -112,6 +109,8 @@ export function AddLibrary({
           context: "addLibrary",
           label: "hasVerificationText",
         }),
+        back: false,
+        agencyName: branch.agencyName,
       });
 
       // fire adgangsplatform modal

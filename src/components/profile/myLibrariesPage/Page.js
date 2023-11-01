@@ -29,8 +29,6 @@ export default function MyLibrariesPage() {
     }))
     .filter((agency) => !!agency.agencyName && !!agency.agencyId);
 
-  const municipalityAgencyId = authUser?.municipalityAgencyId;
-
   return (
     <Layout title={Translate({ context: "profile", label: "myLibraries" })}>
       <div className={styles.pageDescriptionContainer}>
@@ -54,10 +52,7 @@ export default function MyLibrariesPage() {
         </IconButton>
       </div>
 
-      <LibrariesTable
-        data={agencies}
-        municipalityAgencyId={municipalityAgencyId}
-      />
+      <LibrariesTable data={agencies} user={authUser} />
       <AddLibraryButton />
     </Layout>
   );
