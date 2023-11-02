@@ -57,7 +57,7 @@ export default function AdvancedSearch() {
       ) : (
         <div>
           <TextInputs workType={workType} />
-          {/* Insert dropdowns now */}
+          {/* Insert dropdowns here */}
         </div>
       )}
     </div>
