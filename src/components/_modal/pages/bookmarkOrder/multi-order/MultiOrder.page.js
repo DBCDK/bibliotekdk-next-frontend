@@ -6,7 +6,9 @@ import { useData } from "@/lib/api/api";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 import CheckoutForm from "./checkoutForm/MultiOrderCheckoutForm";
 import Material from "./Material/Material";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useModal } from "@/components/_modal/Modal";
+import { StatusEnum } from "@/components/base/materialcard/materialCard.utils";
 
 const CONTEXT = "bookmark-order";
 
@@ -27,13 +29,74 @@ const OrderPolicyWrapper = ({ material, ...props }) => {
 };
 
 const MultiOrder = ({ context }) => {
+  const modal = useModal();
   const { materials } = context;
-  const materialCounts = {
-    digitalMaterials: 0,
-    materialsNotAllowed: 0,
-    materialsMissingAction: 0,
-  };
+  const analyzeRef = useRef();
+  const [materialCounts, setMaterialCounts] = useState(null);
   const [materialsToOrder, setMaterialsToOrder] = useState(materials);
+
+  useEffect(() => {
+    if (!analyzeRef || !analyzeRef.current) return;
+    if (materialCounts !== null) return;
+
+    const elements = Array.from(analyzeRef.current.children);
+    const materialsNotAvailable = elements
+      .filter(
+        (element) =>
+          element.getAttribute("data-status") === StatusEnum.NOT_AVAILABLE
+      )
+      .map((element) =>
+        materials.find(
+          (mat) => mat.key === element.getAttribute("data-material-key")
+        )
+      );
+
+    const materialsNeedsInfo = elements
+      .filter(
+        (element) =>
+          element.getAttribute("data-status") === StatusEnum.NEEDS_EDITION
+      )
+      .map((element) =>
+        materials.find(
+          (mat) => mat.key === element.getAttribute("data-material-key")
+        )
+      );
+
+    const materialsDigital = elements
+      .filter(
+        (element) => element.getAttribute("data-status") === StatusEnum.DIGITAL
+      )
+      .map((element) =>
+        materials.find(
+          (mat) => mat.key === element.getAttribute("data-material-key")
+        )
+      );
+
+    const materialsReadyToOrder = elements
+      .filter(
+        (element) => element.getAttribute("data-status") === StatusEnum.NONE
+      )
+      .map((element) =>
+        materials.find(
+          (mat) => mat.key === element.getAttribute("data-material-key")
+        )
+      );
+
+    setMaterialCounts({
+      digitalMaterials: materialsDigital?.length ?? 0,
+      materialsNotAllowed: materialsNotAvailable?.length ?? 0,
+      materialsMissingAction: materialsNeedsInfo?.length ?? 0,
+    });
+  });
+
+  const onSubmit = () => {
+    // Create orders
+    console.log(materials);
+    modal.push("multireceipt", {
+      failedMaterials: materials.slice(0, 2),
+      successMaterials: [0, 0],
+    });
+  };
 
   return (
     <div className={styles.multiOrder}>
@@ -53,7 +116,7 @@ const MultiOrder = ({ context }) => {
         />
       </Title>
 
-      <div className={styles.materialList}>
+      <div className={styles.materialList} ref={analyzeRef}>
         {materialsToOrder.map((material) => {
           return (
             <Material
@@ -66,9 +129,15 @@ const MultiOrder = ({ context }) => {
         })}
       </div>
 
-      <section className={styles.checkoutContainer}>
-        <CheckoutForm context={context} materialCounts={materialCounts} />
-      </section>
+      {materialCounts !== null && (
+        <section className={styles.checkoutContainer}>
+          <CheckoutForm
+            context={context}
+            materialCounts={materialCounts}
+            onSubmit={onSubmit}
+          />
+        </section>
+      )}
     </div>
   );
 };

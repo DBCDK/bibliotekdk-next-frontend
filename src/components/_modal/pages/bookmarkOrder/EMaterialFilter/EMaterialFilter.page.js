@@ -100,7 +100,7 @@ const EMaterialFilter = ({ context, active }) => {
       />
       <Title
         skeleton={isLoading}
-        titleTag="h3"
+        tag="h3"
         type="title6"
         className={styles.subHeading}
         lines={1}

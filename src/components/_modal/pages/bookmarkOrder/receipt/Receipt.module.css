@@ -50,3 +50,19 @@
 .redirect {
   width: 100%;
 }
+
+.materialList {
+  width: 100%;
+  margin-bottom: var(--pt8);
+}
+
+@media screen and (min-width: 768px) {
+  .receipt {
+    padding-left: var(--pt10);
+    padding-right: var(--pt10);
+  }
+
+  .materialList {
+    width: calc(100% + 160px);
+  }
+}

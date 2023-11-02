@@ -6,6 +6,8 @@ import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import { useModal } from "@/components/_modal/Modal";
 import cx from "classnames";
+import Material from "../multi-order/Material/Material";
+import { BackgroundColorEnum } from "@/components/base/materialcard/materialCard.utils";
 
 const Receipt = ({ context }) => {
   const modal = useModal();
@@ -49,12 +51,23 @@ const Receipt = ({ context }) => {
       </Text>
 
       {hasErrors && (
-        <Text type="text1" className={styles.errorMessage}>
-          {failedMaterials.length} materialer kunne ikke bestilles!
-        </Text>
-      )}
+        <>
+          <Text type="text1" className={styles.errorMessage}>
+            {failedMaterials.length} materialer kunne ikke bestilles!
+          </Text>
 
-      {/* Card List */}
+          <div className={styles.materialList}>
+            {failedMaterials.map((material) => (
+              <Material
+                key={material.key}
+                material={material}
+                backgroundColorOverride={BackgroundColorEnum.RED}
+                context={context} //sets periodicaForm via updateModal
+              />
+            ))}
+          </div>
+        </>
+      )}
 
       <Button
         type="primary"

@@ -94,12 +94,11 @@ const LocalizationInformation = ({
   );
 };
 
-const CheckoutForm = ({ context, materialCounts }) => {
+const CheckoutForm = ({ context, materialCounts, onSubmit }) => {
   const { digitalMaterials, materialsNotAllowed, materialsMissingAction } =
     materialCounts;
-  const disabled = digitalMaterials > 0 || materialsNotAllowed.length > 0;
+  const disabled = materialsMissingAction > 0 || materialsNotAllowed > 0;
   const [mail, setMail] = useState(null);
-  const modal = useModal();
   const { userInfo, pickupBranchInfo, accessTypeInfo } =
     useOrderPageInformation({
       workId: "",
@@ -128,12 +127,8 @@ const CheckoutForm = ({ context, materialCounts }) => {
     return { status, hasTry: false, details };
   }, [mail, pickupBranch, context?.periodicaForm?.publicationDateOfComponent]);
 
-  const onSubmit = () => {
-    // Create orders
-    modal.push("multireceipt", {
-      failedMaterials: [0, 0],
-      successMaterials: [0, 0],
-    });
+  const onSubmitForm = () => {
+    if (onSubmit) onSubmit();
   };
 
   return (
@@ -215,7 +210,7 @@ const CheckoutForm = ({ context, materialCounts }) => {
           size="large"
           className={styles.formSubmit}
           disabled={disabled}
-          onClick={onSubmit}
+          onClick={onSubmitForm}
         >
           {Translate({ context: "general", label: "accept" })}
         </Button>

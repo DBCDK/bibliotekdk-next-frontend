@@ -14,6 +14,7 @@ import { useModal } from "@/components/_modal/Modal";
 import { AccessEnum } from "@/lib/enums";
 import {
   BackgroundColorEnum,
+  StatusEnum,
   findBackgroundColor,
 } from "@/components/base/materialcard/materialCard.utils";
 import { useData } from "@/lib/api/api";
@@ -49,13 +50,20 @@ const filterForRelevantMaterialTypes = (mostRelevant, materialType) => {
  * @param {Object} context
  * @returns {React.JSX.Element}
  */
-const Material = ({ material, setMaterialsToOrder, context }) => {
+const Material = ({
+  material,
+  setMaterialsToOrder,
+  context,
+  canRemove = true,
+  backgroundColorOverride = BackgroundColorEnum.NEUTRAL,
+}) => {
+  console.log(backgroundColorOverride);
   //@TODO get manifestations in same manner for both edition and works via useData
   const isSpecificEdition = !!material?.pid;
   const modal = useModal();
   const [orderPossible, setOrderPossible] = useState(true);
   const [backgroundColor, setBackgroundColor] = useState(
-    BackgroundColorEnum.NEUTRAL
+    backgroundColorOverride
   );
 
   const { loanerInfo } = useUser();
@@ -85,6 +93,8 @@ const Material = ({ material, setMaterialsToOrder, context }) => {
         orderPolicyData.branches.result[0].orderPolicy.orderPossible
       );
     }
+    if (backgroundColorOverride !== BackgroundColorEnum.NEUTRAL) return; // If we override, dont reset background
+
     setBackgroundColor(
       findBackgroundColor({
         isPeriodicaLike,
@@ -181,6 +191,25 @@ const Material = ({ material, setMaterialsToOrder, context }) => {
     ? manifestationsWithCover[0]
     : flattenedGroupedSortedManifestations[0];
 
+  const getStatus = () => {
+    switch (backgroundColor) {
+      case BackgroundColorEnum.RED:
+        return StatusEnum.NOT_AVAILABLE;
+      case BackgroundColorEnum.YELLOW:
+        return StatusEnum.NEEDS_EDITION;
+      case BackgroundColorEnum.NEUTRAL:
+        if (isDeliveredByDigitalArticleService) return StatusEnum.DIGITAL;
+        else return StatusEnum.NONE;
+      default:
+        return StatusEnum.NONE;
+    }
+  };
+
+  const rootProps = {
+    "data-status": getStatus(),
+    "data-material-key": material.key,
+  };
+
   return (
     flattenedGroupedSortedManifestations &&
     !isEmpty(flattenedGroupedSortedManifestations) && (
@@ -188,6 +217,7 @@ const Material = ({ material, setMaterialsToOrder, context }) => {
         propAndChildrenTemplate={materialCardTemplate}
         propAndChildrenInput={firstManifestation}
         colSizing={{ xs: 12 }}
+        rootProps={rootProps}
       />
     )
   );
