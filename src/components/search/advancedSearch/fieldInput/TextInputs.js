@@ -10,7 +10,7 @@ import SearchIndexDropdown from "@/components/search/advancedSearch/fieldInput/s
 import { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import Icon from "@/components/base/icon";
-import workTypesLabels from "./labels.json";
+import workTypesLabels from "./labels.js";
 import Input from "@/components/base/forms/input";
 import { useData } from "@/lib/api/api";
 import * as suggestFragments from "@/lib/api/suggest.fragments";
