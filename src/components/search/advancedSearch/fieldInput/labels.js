@@ -45,7 +45,7 @@ const books = [];
 //input indexes for materialtype "articles"
 const articles = [];
 
-//TODO: add the other material type
+//TODO: add the other material types
 const labels = {
   all,
   books,
