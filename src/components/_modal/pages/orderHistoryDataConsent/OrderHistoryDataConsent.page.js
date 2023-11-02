@@ -20,9 +20,9 @@ import { useEffect } from "react";
  */
 export function OrderHistoryDataConsent({ modal }) {
   const userDataMutation = useMutate();
-  const { isAuthenticated } = useUser();
+  const { hasCulrUniqueId } = useUser();
   const { data: userData, mutate } = useData(
-    isAuthenticated && userFragments.extendedData()
+    hasCulrUniqueId && userFragments.extendedData()
   );
 
   const persistUserData = !!userData?.user?.persistUserData;

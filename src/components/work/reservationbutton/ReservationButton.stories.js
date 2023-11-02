@@ -395,7 +395,6 @@ const user = {
   isAuthenticated: false,
   isGuestUser: false,
   isLoading: false,
-  isLoggedIn: false,
   loanerInfo: {
     debt: [],
     loans: [],
@@ -484,7 +483,7 @@ ReservationButtonLoginFlow.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 
 export function ReservationButtonNotLoggedInFlow() {
   user.isAuthenticated = true;
-  user.isLoggedIn = true;
+
   return (
     <div>
       <StoryTitle>ReservationButton - {descriptionName}</StoryTitle>

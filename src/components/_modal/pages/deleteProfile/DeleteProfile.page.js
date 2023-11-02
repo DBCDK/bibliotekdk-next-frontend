@@ -20,8 +20,8 @@ import Translate from "@/components/base/translate/Translate";
  */
 export function DeleteProfile({ modal }) {
   const userDataMutation = useMutate();
-  const { isAuthenticated } = useUser();
-  const { mutate } = useData(isAuthenticated && userFragments.extendedData());
+  const { hasCulrUniqueId } = useUser();
+  const { mutate } = useData(hasCulrUniqueId && userFragments.extendedData());
 
   useEffect(() => {
     if (modal.isVisible) {
@@ -30,8 +30,10 @@ export function DeleteProfile({ modal }) {
   }, [modal.isVisible]);
 
   const handleDeleteUser = async () => {
+    const redirectUrl = window?.location?.origin;
+
     await deleteUser({ userDataMutation });
-    signOut(null, "/");
+    signOut(redirectUrl);
   };
 
   return (

@@ -13,7 +13,6 @@
 .textInformation {
   padding: var(--pt3) 0 var(--pt3) var(--pt2);
   padding-right: var(--pt9);
-  background-color: var(--white); /**TODO make dynamic*/
 }
 .container {
   border: 1px solid var(--iron);
@@ -26,7 +25,6 @@
 .image {
   padding-left: var(--pt6);
   margin-right: var(--pt3);
-  background-color: var(--concrete); /**TODO make dynamic*/
   display: flex;
   align-items: center;
 }

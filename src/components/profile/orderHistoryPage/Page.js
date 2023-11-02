@@ -26,7 +26,7 @@ const itemsPerPage = 4;
  */
 
 export default function OrderHistoryPage() {
-  const { isAuthenticated } = useUser();
+  const { hasCulrUniqueId } = useUser();
   const breakpoint = useBreakpoint();
   const modal = useModal();
   const isMobile = breakpoint === "xs" || breakpoint === "sm";
@@ -35,14 +35,14 @@ export default function OrderHistoryPage() {
   const [orderHistoryData, setOrderHistoryData] = useState([]);
   //fetch paginated orderhistorydata
   const { data, isLoading } = useData(
-    isAuthenticated &&
+    hasCulrUniqueId &&
       orderHistory({
         limit: itemsPerPage,
         offset: (currentPage - 1) * itemsPerPage,
       })
   );
   const { data: userData, mutate } = useData(
-    isAuthenticated && userFragments.extendedData()
+    hasCulrUniqueId && userFragments.extendedData()
   );
   const persistUserData = !!userData?.user?.persistUserData;
 
