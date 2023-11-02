@@ -244,7 +244,7 @@ export default function Wrap({
   if (isMaterialCard) {
     const { flattenedGroupedSortedManifestations } =
       manifestationMaterialTypeFactory(manifestations);
-    const firstManifestation = flattenedGroupedSortedManifestations[0];
+    const firstManifestation = flattenedGroupedSortedManifestations?.[0];
 
     const children = isPeriodicaLike ? (
       <ChoosePeriodicaCopyRow
@@ -257,7 +257,7 @@ export default function Wrap({
     const isDeliveredByDigitalArticleService =
       isDigitalCopy &&
       availableAsDigitalCopy &&
-      context?.selectedAccesses[0]?.__typename !==
+      context?.selectedAccesses?.[0]?.__typename !==
         AccessEnum.INTER_LIBRARY_LOAN;
 
     const materialCardTemplate = (/** @type {Object} */ material) =>
