@@ -48,7 +48,7 @@ function FieldInput({
     fieldValue?.value &&
       suggestFragments.all({ q: fieldValue.value, workType: null, limit: 10 })
   );
-  console.log(index, "fieldValue", fieldValue);
+
   useEffect(() => {
     setSuggestions(
       data?.suggest?.result?.map((res) => {
@@ -179,12 +179,7 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
  * @returns {React.JSX.Element}
  */
 export default function TextInputs({ workType }) {
-  const {
-    inputFields,
-    addInputField,
-    removeInputField,
-    handleLogicalOperatorChange,
-  } = useAdvancedSearchContext();
+  const { inputFields } = useAdvancedSearchContext();
 
   return inputFields?.map((field, index) => {
     return (
