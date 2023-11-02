@@ -53,7 +53,6 @@ const filterForRelevantMaterialTypes = (mostRelevant, materialType) => {
 const Material = ({
   material,
   setMaterialsToOrder,
-  context,
   periodicaForms,
   backgroundColorOverride = BackgroundColorEnum.NEUTRAL,
 }) => {
