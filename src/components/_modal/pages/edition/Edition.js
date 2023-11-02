@@ -225,25 +225,27 @@ export default function Wrap({
     pickupBranch,
     manifestations
   );
+  const {
+    isPeriodicaLike,
+    isDigitalCopy,
+    availableAsDigitalCopy,
+    isArticleRequest,
+  } = inferredAccessTypes;
   const coverImage = getCoverImage(manifestations);
+
+  const articleTypeTranslation = translateArticleType({
+    isDigitalCopy,
+    availableAsDigitalCopy,
+    selectedAccesses: context?.selectedAccesses,
+    isArticleRequest,
+    hasPeriodicaForm: !!periodicaForm,
+  });
 
   if (isMaterialCard) {
     const { flattenedGroupedSortedManifestations } =
       manifestationMaterialTypeFactory(manifestations);
     const firstManifestation = flattenedGroupedSortedManifestations[0];
-    const {
-      isPeriodicaLike,
-      isDigitalCopy,
-      availableAsDigitalCopy,
-      isArticleRequest,
-    } = inferredAccessTypes;
-    const articleTypeTranslation = translateArticleType({
-      isDigitalCopy,
-      availableAsDigitalCopy,
-      selectedAccesses: context?.selectedAccesses,
-      isArticleRequest,
-      hasPeriodicaForm: !!periodicaForm,
-    });
+
     const children = isPeriodicaLike ? (
       <ChoosePeriodicaCopyRow
         singleOrderPeriodicaForm={periodicaForm}
