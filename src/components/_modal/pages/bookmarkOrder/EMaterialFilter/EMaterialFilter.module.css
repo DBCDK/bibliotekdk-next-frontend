@@ -22,3 +22,7 @@
 .nextPageDescription {
   margin-bottom: var(--pt3);
 }
+
+.nextButton {
+  margin-bottom: var(--pt3);
+}
