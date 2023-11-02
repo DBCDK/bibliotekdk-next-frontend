@@ -19,8 +19,8 @@ export const BookmarkSyncProvider = () => {
       await syncCookieBookmarks();
     };
 
-    const isAuthenticated = !!session?.user?.uniqueId;
-    if (isAuthenticated) {
+    const hasCulrUniqueId = !!session?.user?.uniqueId;
+    if (hasCulrUniqueId) {
       sync();
     }
   }, [session]);
@@ -29,7 +29,7 @@ export const BookmarkSyncProvider = () => {
 };
 
 const useBookmarksCore = ({ isMock = false, session }) => {
-  const isAuthenticated = isMock ? false : !!session?.user?.uniqueId;
+  const hasCulrUniqueId = isMock ? false : !!session?.user?.uniqueId;
   const [sortBy, setSortBy] = useState("createdAt");
   const [currentPage, setCurrentPage] = useState(1);
   const breakpoint = useBreakpoint();
@@ -46,7 +46,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     error: globalBookmarksError,
     mutate: mutateGlobalBookmarks,
   } = useData(
-    isAuthenticated &&
+    hasCulrUniqueId &&
       bookmarkFragments.fetchAll({
         sortBy,
       })
@@ -63,7 +63,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
 
   let hitcount;
 
-  if (isAuthenticated) {
+  if (hasCulrUniqueId) {
     hitcount = globalBookmarksUserObject?.user?.bookmarks?.hitcount || 0;
   } else {
     hitcount = localBookmarks?.length || 0;
@@ -72,7 +72,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
   const totalPages = Math.ceil(hitcount / ITEMS_PER_PAGE);
 
   const syncCookieBookmarks = async () => {
-    if (!isAuthenticated) return; // Not authenticated
+    if (!hasCulrUniqueId) return; // Not authenticated
     const cookies = await JSON.parse(localStorage.getItem(KEY_NAME) || "[]");
     if (!cookies || !Array.isArray(cookies) || cookies.length === 0) return; // Nothing to sync
 
@@ -100,7 +100,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
    * Set a value in bookmark list
    */
   const setBookmark = async (value) => {
-    if (isAuthenticated) {
+    if (hasCulrUniqueId) {
       /**
        * API solution
        */
@@ -171,7 +171,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
   }
 
   const deleteBookmarks = async (bookmarksToDelete) => {
-    if (isAuthenticated) {
+    if (hasCulrUniqueId) {
       const ids = bookmarksToDelete.map((i) => i.bookmarkId);
       await bookmarkMutation.post(
         bookmarkMutations.deleteBookmarks({
@@ -260,8 +260,8 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     setBookmark,
     deleteBookmarks,
     clearLocalBookmarks,
-    bookmarks: isAuthenticated ? globalBookmarks : localBookmarks,
-    paginatedBookmarks: isAuthenticated
+    bookmarks: hasCulrUniqueId ? globalBookmarks : localBookmarks,
+    paginatedBookmarks: hasCulrUniqueId
       ? currenPageBookmark(sortedGlobalBookmarks)
       : currenPageBookmark(sortedLocalBookmarks),
     isLoading:

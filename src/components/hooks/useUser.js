@@ -49,7 +49,7 @@ function useUserMock() {
     isAuthenticated: true,
     hasCulrUniqueId: true,
     isCPRValidated: true,
-    isLoggedIn: true,
+    isGuestUser: false,
     loanerInfo: { ...data, userParameters: { ...loggedInUser } },
     updateLoanerInfo: (obj) => {
       // Update global loaner info object
@@ -72,7 +72,7 @@ function useUserImpl() {
   // user is authenticated thrue adgangsplatformen
   const isAuthenticated = !!session?.user?.userId;
 
-  // user exist in CULR (CULR users can both include 'folk' and cpr-verified 'ffu' users)
+  // user exists in CULR (CULR users can both include 'folk' and cpr-verified 'ffu' users)
   const hasCulrUniqueId = !!session?.user?.uniqueId;
 
   const { data: extendedUserData, isLoading: isLoadingExtendedData } = useData(
@@ -163,20 +163,23 @@ function useUserImpl() {
     isValidating,
   ]);
 
-  //TODO give diffferent name
-  const isGuestUser =
-    !isAuthenticated && Object.keys(loanerInfo?.userParameters).length > 0;
+  const hasUserParameters = Object.keys(loanerInfo?.userParameters).length > 0;
 
   return {
     authUser: userData?.user || {},
     isLoading: userIsLoading,
     error: userDataError,
+    // User is loggedIn (verified through adgangsplatformen)
     isAuthenticated,
+    // User exist in culr
     hasCulrUniqueId,
+    // User has a CPR verified account in culr
     isCPRValidated,
+    // User cannot be verified, but userParameters are saved in session
+    isGuestUser: !isAuthenticated && hasUserParameters,
+    // User has added userParameters
+    hasUserParameters,
     loanerInfo,
-    isGuestUser,
-    isLoggedIn: isAuthenticated || isGuestUser, //TODO guestUsers are not logged in - maybe "hasUserParameters" is a better name
     updateUserData: () => {
       // Broadcast update
       userMutate();
