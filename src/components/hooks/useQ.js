@@ -38,7 +38,7 @@ export const types = [
 /**
  * function to build the default (empty) q object
  *
- * @returns {object}
+ * @returns {Object}
  */
 
 function buildQ() {
@@ -52,7 +52,7 @@ function buildQ() {
  * Get all q types from query params
  *
  *
- * @returns {object}
+ * @returns {Object}
  *
  * @param query
  */
@@ -86,7 +86,7 @@ export const getQuery = (query = {}) => {
 /**
  * useQ hook
  *
- * @returns {object}
+ * @returns {Object}
  *
  * q
  * setQ
@@ -127,7 +127,7 @@ function useQ() {
   /**
    * Update the locale q
    *
-   * @param {object} include
+   * @param {Object} include
    *
    */
   const setQ = (include = {}) => {
@@ -153,7 +153,7 @@ function useQ() {
   /**
    * Clear the locale q
    *
-   * @param {object} exclude
+   * @param {Object} exclude
    *
    */
   const clearQ = ({ exclude = [] }) => {
@@ -171,9 +171,9 @@ function useQ() {
   /**
    * Get filters from query params
    *
-   * @param {object} query (defaults to router.query)
+   * @param {Object} query (defaults to router.query)
    *
-   * @returns {object}
+   * @returns {Object}
    *
    */
 
@@ -182,8 +182,8 @@ function useQ() {
   /**
    * Set q types in query params
    *
-   * @param {object} include
-   * @param {array} exclude
+   * @param {Object} include
+   * @param {Array} exclude
    * @param pathname
    * @param query
    * @param method
@@ -242,7 +242,7 @@ function useQ() {
    *
    * @param exclude params
    *
-   * @returns {int}
+   * @returns {number}
    */
   function getCount({ exclude = [] }) {
     const q = _getQuery();

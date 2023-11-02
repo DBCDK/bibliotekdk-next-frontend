@@ -126,8 +126,17 @@
   display: flex;
 }
 
-.errorText {
-  padding-top: var(--pt2);
+.error > h2 {
+  padding-bottom: var(--pt2);
+}
+
+.contactDBC {
+  display: flex;
+  flex-direction: row;
+}
+
+.contactDBC > a {
+  margin-left: var(--pt1);
 }
 
 /* states */

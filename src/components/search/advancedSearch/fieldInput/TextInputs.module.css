@@ -1,0 +1,80 @@
+.inputContainer {
+  display: flex;
+}
+.suggester__wrap {
+  margin-bottom: var(--pt2);
+  flex-grow: 2;
+  max-width: 672px;
+  height: var(--pt5);
+}
+
+.select {
+  white-space: nowrap;
+  height: var(--pt7);
+}
+.removeIcon {
+  margin-left: var(--pt2);
+  padding-bottom: var(--pt2);
+}
+
+.dropdownwrap {
+  width: fit-content;
+  display: flex;
+  margin-bottom: var(--pt2);
+}
+
+.addLine {
+  margin-left: var(--pt2);
+  margin-top: var(--pt2);
+}
+.dropdownitem {
+  display: block;
+  border-bottom: 1px solid var(--mine-shaft);
+  padding: var(--pt1) var(--pt2) var(--pt1) var(--pt2);
+  text-decoration: none;
+  color: var(--mine-shaft);
+  text-align: inherit;
+  white-space: nowrap;
+}
+
+.dropdownitem a {
+  text-decoration: none;
+}
+
+.dropdownitem:focus {
+  background: linear-gradient(to right, var(--blue) 10px, var(--concrete) 10px);
+}
+
+.dropdownitem:hover {
+  background: linear-gradient(to right, var(--blue) 10px, var(--concrete) 10px);
+}
+
+.dropdownwrap :global(.dropdown-toggle::after) {
+  display: none;
+}
+
+.dropdownmenu {
+  border: 1px solid var(--blue);
+  background-color: var(--white);
+  z-index: 5;
+  /* bootstrap default styles override */
+  border-radius: 0;
+  padding: 0;
+}
+
+.dropdowntoggle:focus {
+  border: 1px solid var(--blue);
+  outline: 1px solid var(--blue);
+}
+
+.dropdowntoggle {
+  background-color: unset;
+  min-height: 28px;
+}
+
+.suggesterInput {
+  height: var(--pt5);
+}
+.suggester {
+  height: var(--pt5);
+}

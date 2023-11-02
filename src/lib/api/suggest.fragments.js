@@ -8,7 +8,7 @@ import { ApiEnums } from "@/lib/api/api";
 /**
  * Detailed search response
  *
- * @param {object} params
+ * @param {Object} params
  * @param {string} params.q the query string
  */
 export function fast({ q, workType }) {
@@ -35,12 +35,13 @@ export function fast({ q, workType }) {
 /**
  * Detailed search response
  *
- * @param {object} params
+ * @param {Object} params
  * @param {string} params.q the query string
  */
 export function all({ q, workType, suggestType = "", limit = 100000 }) {
   workType = workType?.toUpperCase();
   suggestType = suggestType?.toUpperCase();
+
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
@@ -60,7 +61,7 @@ export function all({ q, workType, suggestType = "", limit = 100000 }) {
 /**
  * Detailed search response
  *
- * @param {object} params
+ * @param {Object} params
  * @param {string} params.q the query string
  */
 export function typedSuggest({

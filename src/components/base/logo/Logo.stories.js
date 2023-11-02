@@ -17,7 +17,7 @@ export function DefaultLogo() {
       <StoryTitle>Logo component</StoryTitle>
       <StoryDescription>Default logo</StoryDescription>
       <div style={{ padding: "20px" }}>
-        <Logo text="default_logo_text" />
+        <Logo />
       </div>
     </div>
   );
@@ -29,7 +29,7 @@ export function BlueLogo() {
       <StoryTitle>Logo component</StoryTitle>
       <StoryDescription>Hjælp og vejledninger logo</StoryDescription>
       <div style={{ backgroundColor: "blue", padding: "20px" }}>
-        <Logo fill="var(--white)" text="help_logo_text" href="/hjaelp" />
+        <Logo type="WHITE" href="/hjaelp" />
       </div>
     </div>
   );

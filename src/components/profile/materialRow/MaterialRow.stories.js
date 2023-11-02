@@ -1,4 +1,4 @@
-import MaterialRow, { MaterialRowButton } from "./MaterialRow";
+import MaterialRow from "./MaterialRow";
 import { StoryTitle } from "@/storybook";
 
 const exportedObject = {
@@ -20,7 +20,7 @@ export function MaterialRowStory() {
         creationYear="2011"
         library="Herlev bibliotek"
         id="0122"
-        renderButton={<MaterialRowButton buttonText="Forny" />}
+        type="LOAN"
       />
 
       <StoryTitle>Material Row - Order</StoryTitle>
@@ -32,7 +32,7 @@ export function MaterialRowStory() {
         creationYear="2011"
         library="Herlev bibliotek"
         id="0122"
-        renderButton={<MaterialRowButton buttonText="Slet" />}
+        type="ORDER"
       />
     </div>
   );

@@ -79,9 +79,9 @@ describe("Server Side Rendering", () => {
   describe(`material`, () => {
     it(`has correct metadata`, () => {
       const descriptionExpectation =
-        "Lån Hest, hest, tiger, tiger af Mette E. Neerlin som bog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online.";
+        "Lån Hest, hest, tiger, tiger af Mette E. Neerlin som bog, e-bog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online.";
       getPageHead(
-        "/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763?type=ebog"
+        "/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763?type=bog"
       ).then((res) => {
         expect(res.title).to.equal(
           "Hest, hest, tiger, tiger af Mette E. Neerlin"
@@ -100,7 +100,7 @@ describe("Server Side Rendering", () => {
 
     it(`has correct alternate links`, () => {
       getPageHead(
-        "/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=ebog"
+        "/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=e-bog"
       ).then((res) => {
         expect(res.alternate).to.deep.equal([
           '<link rel="alternate" hreflang="da" href="http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763"/>',
@@ -111,7 +111,7 @@ describe("Server Side Rendering", () => {
 
     it(`has json-ld for book`, () => {
       getPageHead(
-        "/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=ebog"
+        "/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=e-bog"
       ).then((res) => {
         expect(res.jsonld.mainEntity.url).to.equal(
           "http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763"
@@ -122,7 +122,7 @@ describe("Server Side Rendering", () => {
 
     it(`has json-ld for article`, () => {
       getPageHead(
-        "/materiale/psykopaten-paa-den-hvide-hest_nils-thorsen/work-of%3A870971-avis%3A33301561?type=avisartikel"
+        "/materiale/psykopaten-paa-den-hvide-hest_nils-thorsen/work-of%3A870971-avis%3A33301561?type=artikel"
       ).then((res) => {
         expect(res.jsonld.mainEntity.url).to.equal(
           "http://localhost:3000/materiale/psykopaten-paa-den-hvide-hest_nils-thorsen/work-of:870971-avis:33301561"
@@ -141,7 +141,7 @@ describe("Server Side Rendering", () => {
       });
     });
 
-    it.skip(`has json-ld for movie`, () => {
+    it(`has json-ld for movie`, () => {
       getPageHead(
         "/materiale/the-jungle-book_jon-favreau/work-of%3A870970-basis%3A52331080"
       ).then((res) => {

@@ -15,8 +15,8 @@ import cx from "classnames";
  * search field for pickup locations with different texts for desktop and mobile
  * for desktop, its shown in login modal
  * for mobile, its hidden in login modal and shown in a separate modal after clicking on a @MobileLoginButton
- * @param {*} props
- * @returns {JSX.Element}s
+ * @param {Object} props
+ * @returns {React.JSX.Element}
  */
 export default function LibrarySearch(props) {
   const { onChange, desktop } = props;

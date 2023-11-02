@@ -21,7 +21,7 @@ export const APIMockContext = createContext();
  *
  * @param {Object} query - A query object.
  *
- * @return {string} Stringified representation of the input
+ * @returns {string} Stringified representation of the input
  */
 export function generateKey(query) {
   // Consider hashing the string to make
@@ -38,7 +38,7 @@ export function enableDebug() {
 /**
  * Our custom fetcher
  *
- * @param {string || object} queryStr
+ * @param {string || Object} queryStr
  * @param {string || null} userAgent
  * @param {string || null} xForwardedFor
  */

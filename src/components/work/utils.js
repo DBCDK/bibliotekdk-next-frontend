@@ -8,11 +8,19 @@ import { useMemo } from "react";
 import { accessFactory } from "@/lib/accessFactoryUtils";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import { extractCreatorsPrioritiseCorporation } from "@/lib/utils";
+import { MaterialTypeGeneralEnum } from "@/lib/enums_MaterialTypes";
 
-export function openLocalizationsModal(modal, pids) {
-  modal.push("localizations", {
-    title: Translate({ context: "modal", label: "title-order" }),
+export function openAgencyLocalizationsModal({
+  modal,
+  pids,
+  agency,
+  singleManifestation,
+}) {
+  modal.push("agencyLocalizations", {
+    title: Translate({ context: "modal", label: "title-agencylocalizations" }),
     pids: pids,
+    agency: agency,
+    singleManifestation: singleManifestation,
   });
 }
 
@@ -30,6 +38,7 @@ export function openOrderModal({
     selectedAccesses: selectedAccesses,
     workId: workId,
     ...(singleManifestation && { orderType: "singleManifestation" }),
+    singleManifestation: singleManifestation,
     storeLoanerInfo: storeLoanerInfo,
   });
 }
@@ -57,8 +66,8 @@ export function goToRedirectUrl(url, target = "_blank") {
 
 /**
  * Generates the work page title
- * @param {object} work
- * @return {string}
+ * @param {Object} work
+ * @returns {string}
  */
 function getPageTitle(work) {
   return `${work?.titles?.main[0]}${
@@ -72,25 +81,25 @@ function getPageTitle(work) {
 
 /**
  * Generates the work page description
- * @param {object} work The work
+ * @param {Object} work The work
  * @returns {string}
  */
 function getPageDescription(work) {
   const title = work?.titles?.main[0];
   const creator = work?.creators?.[0]?.display || "";
 
-  const { uniqueMaterialTypes: materialTypes, inUniqueMaterialTypes } =
+  const { uniqueMaterialTypes: materialTypesArray, inUniqueMaterialTypes } =
     manifestationMaterialTypeFactory(work?.manifestations?.all);
 
-  // We check for "bog", "ebog", "lydbog ..."-something, and combined material (= "sammensat materiale")
+  // We check for "bog", "e-bog", "lydbog ..."-something, and combined material (= "sammensat materiale")
   let types = [];
-  inUniqueMaterialTypes(["bog"]) && types.push("bog");
-  inUniqueMaterialTypes(["ebog"]) && types.push("ebog");
-  materialTypes
-    ?.filter((matArray) => matArray.length === 1)
-    .filter((matArray) => matArray?.[0].startsWith("lydbog")).length > 0 &&
+  inUniqueMaterialTypes([MaterialTypeGeneralEnum.BOOKS.code]) &&
+    types.push("bog");
+  inUniqueMaterialTypes([MaterialTypeGeneralEnum.EBOOKS.code]) &&
+    types.push("e-bog");
+  inUniqueMaterialTypes([MaterialTypeGeneralEnum.AUDIO_BOOKS.code]) &&
     types.push("lydbog");
-  materialTypes?.filter((matArray) => matArray.length > 1).length > 1 &&
+  materialTypesArray?.filter((matArray) => matArray.length > 1).length > 1 &&
     types.push("sammensat materiale");
 
   const typesString =
@@ -117,7 +126,7 @@ export function getSeo(work) {
 }
 
 export function useBranchUserAndHasDigitalAccess(selectedPids) {
-  const { loanerInfo } = useUser();
+  const user = useUser();
 
   const {
     data: branchUserData,
@@ -125,9 +134,9 @@ export function useBranchUserAndHasDigitalAccess(selectedPids) {
     isSlow: branchIsSlow,
   } = useData(
     selectedPids &&
-      loanerInfo?.pickupBranch &&
+      user?.loanerInfo?.pickupBranch &&
       branchesFragments.branchDigitalCopyAccess({
-        branchId: loanerInfo?.pickupBranch,
+        branchId: user?.loanerInfo?.pickupBranch,
       })
   );
 
@@ -135,9 +144,10 @@ export function useBranchUserAndHasDigitalAccess(selectedPids) {
     return (
       branchUserData?.branches?.result
         ?.map((res) => res.digitalCopyAccess === true)
-        .findIndex((res) => res === true) > -1
+        .findIndex((res) => res === true) > -1 &&
+      user?.authUser?.rights?.digitalArticleService
     );
-  }, [branchUserData, loanerInfo]);
+  }, [branchUserData, user]);
 
   return {
     branchUserData: branchUserData,

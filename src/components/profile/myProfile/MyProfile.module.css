@@ -1,0 +1,67 @@
+.myProfileContainer {
+  margin-top: var(--pt7);
+  padding-top: var(--pt2);
+  border-top: 1px solid var(--iron);
+  width: fit-content;
+}
+
+.dataItem:first-child {
+  gap: var(--pt05);
+}
+
+.dataItem {
+  gap: var(--pt05);
+
+  padding: var(--pt1) var(--pt05);
+  margin-bottom: var(--pt05);
+}
+
+.dataItem p {
+  font-size: 17px;
+}
+
+.deleteProfileButton {
+  margin-top: var(--pt8);
+}
+.userInfo {
+  margin-bottom: var(--pt6);
+  margin-right: var(--pt15);
+}
+
+.dataItemTitle {
+  font-family: var(--body-font-medium);
+}
+
+.infoBox {
+  background-color: var(--concrete);
+  width: 490px;
+  padding: var(--pt2) var(--pt2_5);
+}
+.infoBoxText {
+  white-space: pre-wrap;
+  margin-top: var(--pt1);
+}
+.infoContainer {
+  display: flex;
+}
+@media (max-width: 525px) {
+  .infoBox {
+    width: 100%;
+  }
+}
+@media (max-width: 800px) {
+  .infoContainer {
+    flex-direction: column;
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1078px) {
+  .infoContainer {
+    flex-direction: column;
+  }
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+}

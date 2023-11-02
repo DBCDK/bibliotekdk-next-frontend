@@ -38,11 +38,11 @@ function getContext(template) {
  * matching matchTag
  *
  * Sort remaining articles by the special 'pos' tag
- * @param {array} articles
+ * @param {Array} articles
  * @param {string} matchTag
- *  @param {int} numberOfArticles
+ *  @param {number} numberOfArticles
  *
- * @returns {array}
+ * @returns {Array}
  */
 function parseArticles(articles, matchTag, numberOfArticles) {
   // We are filtering and sorting, hence we make us of useMemo
@@ -67,7 +67,7 @@ function parseArticles(articles, matchTag, numberOfArticles) {
 /**
  * get promoted articles
  *
- * @returns {array}
+ * @returns {Array}
  */
 
 function getArticleData(data) {
@@ -84,9 +84,9 @@ function getArticleData(data) {
 /**
  * A section displaying three articles
  *
- * @param {object} props
+ * @param {Object} props
  * @param {string} props.title
- * @param {array} props.articles
+ * @param {Array} props.articles
  * @param {boolean} props.skeleton
  * @param {string} props.matchTag
  *

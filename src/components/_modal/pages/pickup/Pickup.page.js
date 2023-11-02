@@ -21,7 +21,7 @@ import Icon from "@/components/base/icon";
 /**
  * Make pickup branches selectable with Radio buttons
  *
- * @param {object} data
+ * @param {Object} data
  * @param selected
  * @param {boolean} isVisible
  * @param {function} onChange
@@ -123,10 +123,10 @@ Pickup.propTypes = {
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
   const { initial } = props.context;

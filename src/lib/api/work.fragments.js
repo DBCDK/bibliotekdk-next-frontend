@@ -7,6 +7,7 @@ import { ApiEnums } from "@/lib/api/api";
 import {
   creatorsFragment,
   manifestationDetailsForAccessFactory,
+  materialTypesFragment,
 } from "@/lib/api/fragments.utils";
 
 export function tableOfContents({ workId }) {
@@ -19,7 +20,7 @@ export function tableOfContents({ workId }) {
           mostRelevant {
             pid
             materialTypes {
-              specific
+              ...materialTypesFragment
             }
             tableOfContents {
               heading
@@ -33,7 +34,8 @@ export function tableOfContents({ workId }) {
         }
       }
     }
-    ${manifestationDetailsForAccessFactory}`,
+    ${manifestationDetailsForAccessFactory}
+    ${materialTypesFragment}`,
     variables: { workId },
     slowThreshold: 3000,
   };
@@ -45,7 +47,7 @@ export function tableOfContents({ workId }) {
  * @param {Object} variables
  * @param {string} variables.workId
  *
- * @return {Object} a query object
+ * @returns {Object} a query object
  */
 export function recommendations({ workId }) {
   return {
@@ -81,7 +83,7 @@ export function recommendations({ workId }) {
  * @param {Object} variables
  * @param {string} variables.workId
  *
- * @return {Object} a query object
+ * @returns {Object} a query object
  */
 export function reviews({ workId }) {
   return {
@@ -179,7 +181,7 @@ export function reviews({ workId }) {
  * @param {Object} variables
  * @param {string} variables.workId
  *
- * @return {Object} a query object
+ * @returns {Object} a query object
  */
 export function series({ workId }) {
   return {
@@ -211,7 +213,7 @@ export function series({ workId }) {
  * @param {Object} variables
  * @param {string} variables.workId
  *
- * @return {Object} a query object
+ * @returns {Object} a query object
  */
 export function infomediaArticlePublicInfo({ workId }) {
   return {
@@ -263,7 +265,7 @@ export function infomediaArticlePublicInfo({ workId }) {
 /**
  * Subject work info that is fast to fetch
  *
- * @param {object} params
+ * @param {Object} params
  * @param {string} params.workId the work id
  */
 export function subjects({ workId }) {
@@ -294,7 +296,7 @@ export function subjects({ workId }) {
 /**
  * Description work info that is fast to fetch
  *
- * @param {object} params
+ * @param {Object} params
  * @param {string} params.workId the work id
  */
 export function description({ workId }) {
@@ -329,7 +331,7 @@ export function description({ workId }) {
 /**
  * Description work info that is fast to fetch
  *
- * @param {object} params
+ * @param {Object} params
  * @param {string} params.workId the work id
  */
 export function buttonTxt({ workId }) {
@@ -343,7 +345,7 @@ export function buttonTxt({ workId }) {
           main
         }
         materialTypes {
-          specific
+          ...materialTypesFragment
         }
         manifestations {
           all {
@@ -352,14 +354,15 @@ export function buttonTxt({ workId }) {
           mostRelevant {
             pid
             materialTypes {
-              specific
+              ...materialTypesFragment
             }
           }
         }
         workTypes
       }
       monitor(name: "bibdknext_work_basic")
-    }`,
+    }
+    ${materialTypesFragment}`,
     variables: { workId },
     slowThreshold: 3000,
   };
@@ -378,7 +381,7 @@ export function fbiOverviewDetail({ workId }) {
             ...creatorsFragment
           }
           materialTypes {
-            specific
+            ...materialTypesFragment
           }
           titles {
             full
@@ -466,7 +469,8 @@ export function fbiOverviewDetail({ workId }) {
       }
       ${manifestationDetailsForAccessFactory}
       ${manifestationAccess}
-      ${creatorsFragment}`,
+      ${creatorsFragment}
+      ${materialTypesFragment}`,
     variables: { workId },
     slowThreshold: 3000,
   };
@@ -543,49 +547,44 @@ export function workJsonLd({ workId }) {
   };
 }
 
-export function editionWork({ workId }) {
-  return {
-    apiUrl: ApiEnums.FBI_API,
-    query: `
-    query editionWork($workId: String!) {
-      work(id: $workId) {
-        titles {
-          full
-        }
-        materialTypes {
-          specific
-        }
-        workTypes
-      }
-      monitor(name: "bibdknext_edition_work")
-    }`,
-    variables: { workId },
-    slowThreshold: 3000,
-  };
-}
-
 export function pidsToWorks({ pids }) {
   if (!pids) return;
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
     query pidsToWorks($pids: [String!]!) {
-      works(pid: $pids) {
-        workId
+      manifestations(pid: $pids) {
+        ownerWork {
+          workId
+        }
+        access {
+          __typename
+          ... on DigitalArticleService {
+            issn
+          }
+        }
+        workTypes
+        pid
         titles {
           main
+          full
+        }
+        cover {
+          detail
+          thumbnail
         }
         creators {
           display
         }
-        manifestations {
-          bestRepresentation {
-            cover {
-              thumbnail
-            }
-            materialTypes {
-              specific
-            }
+        hostPublication {
+          title
+        }
+        publisher
+        edition {
+          summary
+          edition
+          publicationYear {
+            display
           }
         }
       }
@@ -601,28 +600,63 @@ export function idsToWorks({ ids }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
-    query pidsToWorks($ids: [String!]!) {
+    query idsToWorks($ids: [String!]!) {
       works(id: $ids) {
         workId
         titles {
           main
+          full
         }
         creators {
           display
         }
         manifestations {
+          mostRelevant {
+            access{
+              __typename
+              ... on DigitalArticleService {
+                issn
+              }
+            }
+            workTypes
+            cover {
+              detail
+            }
+            publisher
+            edition{
+              publicationYear{
+                display
+              }
+              edition
+            }
+            pid
+            ownerWork {
+              workId
+              workTypes
+              creators{
+                display
+              }
+              titles{
+                full
+              }
+            }
+            materialTypes {
+              ...materialTypesFragment
+            }
+          }
           bestRepresentation {
             cover {
+              detail
               thumbnail
             }
             materialTypes {
-              specific
+              ...materialTypesFragment
             }
           }
         }
       }
     }
-    `,
+    ${materialTypesFragment}`,
     variables: { ids },
     slowThreshold: 3000,
   };
@@ -646,7 +680,7 @@ export function listOfAllManifestations({ workId }) {
               title
             }
             materialTypes {
-              specific
+              ...materialTypesFragment
             }
             edition {
               publicationYear {
@@ -668,7 +702,8 @@ export function listOfAllManifestations({ workId }) {
       }
       monitor(name: "bibdknext_list_of_all_manifestations")
     }
-    ${creatorsFragment}`,
+    ${creatorsFragment}
+    ${materialTypesFragment}`,
     variables: { workId },
     slowThreshold: 3000,
   };
@@ -681,7 +716,7 @@ export function orderPageWorkWithManifestations({ workId }) {
     query orderPageManifestations($workId: String!) {
       work(id: $workId) {
         materialTypes {
-          specific
+          ...materialTypesFragment
         }
         workTypes
         manifestations {
@@ -693,7 +728,8 @@ export function orderPageWorkWithManifestations({ workId }) {
       }
     }
     ${manifestationDetailsForAccessFactory}
-    ${manifestationAccess}`,
+    ${manifestationAccess}
+    ${materialTypesFragment}`,
     variables: { workId },
     slowThreshold: 3000,
   };
@@ -708,13 +744,13 @@ export function overviewWork({ workId }) {
         titles {
           full
           parallel
+          sort
         }
         creators {
           ...creatorsFragment
         }
         materialTypes {
-          specific
-          general
+          ...materialTypesFragment
         }
         mainLanguages {
           display
@@ -737,11 +773,19 @@ export function overviewWork({ workId }) {
             }
             pid
             materialTypes {
-              specific
+              ...materialTypesFragment
             }
             cover {
               detail
               origin
+            }
+            hostPublication {
+              title
+            }
+            publisher
+            edition {
+              summary
+              edition
             }
             access {
               __typename
@@ -754,6 +798,7 @@ export function overviewWork({ workId }) {
     }
     ${genreAndFormAndWorkTypesFragment}
     ${creatorsFragment}
+    ${materialTypesFragment}
     `,
     variables: { workId },
     slowThreshold: 3000,
@@ -875,10 +920,27 @@ const workSliderFragment = `fragment workSliderFragment on Work {
     main
     full
   }
+  materialTypes {
+    materialTypeGeneral {
+      code
+      display
+    }
+    materialTypeSpecific {
+      code
+      display
+    }
+  }
   manifestations {
     mostRelevant {
       materialTypes {
-        specific
+        materialTypeGeneral {
+          code
+          display
+        }
+        materialTypeSpecific {
+          code
+          display
+        }
       }
       cover {
         detail
@@ -967,7 +1029,14 @@ const workRelationsWorkTypeFactory = `fragment workRelationsWorkTypeFactory on W
     full
   }
   materialTypes {
-    specific
+    materialTypeGeneral {
+      code
+      display
+    }
+    materialTypeSpecific {
+      code
+      display
+    }
   }
   workId
   workTypes

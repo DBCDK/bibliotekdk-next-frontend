@@ -157,10 +157,10 @@ function renderInputComponent({ inputComponent = {}, inputProps, onClear }) {
 /**
  * The Component function
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.JSX.Element}
  */
 function Suggester({
   id = "autosuggest",
@@ -291,10 +291,10 @@ function Suggester({
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
   let { className, data } = props;

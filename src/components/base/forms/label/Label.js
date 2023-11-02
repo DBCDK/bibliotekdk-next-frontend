@@ -13,10 +13,10 @@ import styles from "./Label.module.css";
  * @param className
  * @param htmlFor
  * @param dataCy
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.JSX.Element}
  */
 function Label({
   children = "Some label",
@@ -44,10 +44,10 @@ function Label({
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.JSX.Element}
  */
 function LabelSkeleton(props) {
   return (
@@ -62,10 +62,10 @@ function LabelSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
   if (props.skeleton) {

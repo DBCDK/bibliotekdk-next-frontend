@@ -12,10 +12,10 @@ import styles from "./Action.module.css";
  * Function to create a action menu item
  *
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.JSX.Element}
  */
 export default function Action({
   className = "",

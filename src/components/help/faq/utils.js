@@ -7,9 +7,9 @@ import Translate from "@/components/base/translate";
 /**
  * function to sort data for accordion structure
  *
- * @param {array} data
+ * @param {Array} data
  *
- * @returns {array}
+ * @returns {Array}
  */
 export function sortData(data) {
   data = data.map((d) => {
@@ -23,9 +23,9 @@ export function sortData(data) {
 /**
  * function to group data for accordion structure
  *
- * @param {array} data
+ * @param {Array} data
  *
- * @returns {object}
+ * @returns {Object}
  */
 export function groupData(data) {
   const fallback = Translate({ context: "help", label: "faq-group-other" });
@@ -41,9 +41,9 @@ export function groupData(data) {
 /**
  * function to group and sort data for accordion structure
  *
- * @param {array} data
+ * @param {Array} data
  *
- * @returns {array}
+ * @returns {Array}
  */
 export function groupSortData(data) {
   const fallback = Translate({ context: "help", label: "faq-group-other" });

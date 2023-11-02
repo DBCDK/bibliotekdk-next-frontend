@@ -1,7 +1,7 @@
 /**
  * Parse helptexts by groups
  * @param helpTexts
- * @return {{}}
+ * @returns {{}}
  *  eg. {Søgning:[{id:25, title:fisk}. {id:1,title:hest}]}
  */
 export function helpTextParseMenu(helpTexts) {
@@ -53,7 +53,7 @@ function sortOrder() {
 /**
  * Defines an element in a help group
  * @param heltptext
- * @return {{id: (number|string|*), title}}
+ * @returns {{id: (number|string|*), title}}
  */
 function setGroupElement(heltptext) {
   return {

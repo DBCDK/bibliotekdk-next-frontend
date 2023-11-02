@@ -1,0 +1,20 @@
+.multiOrder {
+  padding: 0 var(--pt6);
+  position: relative;
+}
+
+.top {
+  padding-bottom: var(--pt1);
+}
+
+.subHeading {
+  margin-bottom: var(--pt3);
+}
+
+.materialList {
+  margin: 0 -48px;
+}
+
+.checkoutContainer {
+  bottom: 0;
+}

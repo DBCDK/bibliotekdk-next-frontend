@@ -18,10 +18,10 @@ export function focusInput() {
  * Search component
  * Makes it possible to search for help texts.
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.JSX.Element}
  */
 export default function Input({
   value = "",

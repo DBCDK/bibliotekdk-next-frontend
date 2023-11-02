@@ -6,13 +6,6 @@
   margin-bottom: var(--pt3);
 }
 
-.fullmanifestation .button {
-  font-family: var(--body-font-semibold);
-  transition: color 0.5s;
-  color: var(--blue);
-  margin-left: 2px; /* Account for outline, and align with content */
-}
-
 .fullmanifestation .alternativeoptions {
   margin-bottom: var(--pt2);
 }
@@ -59,9 +52,17 @@
 /** end manifestation parts list **/
 .reservationwrapper {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   margin-bottom: var(--pt2);
 }
+
+.reservationwrapper > div {
+  /* Override Reservation button default sizing */
+  flex: unset;
+  width: unset;
+}
+
 .container {
   column-count: 1;
   -webkit-column-count: 1;

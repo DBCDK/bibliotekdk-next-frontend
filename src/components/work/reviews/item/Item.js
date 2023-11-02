@@ -22,7 +22,7 @@ import styles from "./Item.module.css";
 
 /**
  *
- * @param {*} param0
+ * @param {Object} param0
  * @returns {JSX}
  */
 function Item({ data, work, isLoading }) {

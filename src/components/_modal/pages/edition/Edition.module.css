@@ -56,12 +56,12 @@
   flex-shrink: 2;
 }
 
-.periodicasummary {
-  /* margin-top: var(--pt2); */
+.periodicaformlink {
+  cursor: pointer;
 }
 
-.periodicaformlink {
-  margin-top: var(--pt2);
+.periodicaformlink > span > i {
+  vertical-align: middle;
 }
 
 @media (min-width: 576px) {

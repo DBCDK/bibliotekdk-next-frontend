@@ -41,8 +41,11 @@ export default async function handler(req, res) {
         fetcher({
           ...func({
             workId: "work-of:870970-basis:23154382",
+            ids: ["work-of:870970-basis:23154382"],
+            pids: ["870970-basis:23154382"],
             pid: "870970-basis:23154382",
             oclc: "1200830771",
+            faust: "23154382",
           }),
           accessToken: session?.accessToken,
         }),

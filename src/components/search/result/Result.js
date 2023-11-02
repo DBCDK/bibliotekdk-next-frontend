@@ -20,11 +20,10 @@ import styles from "./Result.module.css";
 /**
  * Search result
  *
- * @param {object} props
+ * @param {Object} props
  * See propTypes for specific props and types
  */
 export function Result({
-  q,
   page,
   isLoading,
   hitcount = 0,
@@ -39,7 +38,6 @@ export function Result({
 
   const numPages = Math.ceil(hitcount / 10);
 
-  const visibleClass = noRelatedSubjects ? styles.visible : "";
   const noRelatedSubjectsClass = noRelatedSubjects
     ? styles.noRelatedSubjects
     : "";
@@ -50,9 +48,9 @@ export function Result({
         className={`${styles.section} ${noRelatedSubjectsClass}`}
         divider={false}
         title={
-          !isLoading && !isTablet ? (
+          !isLoading && !isTablet && hitcount > 0 ? (
             <FilterButton
-              className={`${styles.filterButton} ${visibleClass}`}
+              className={`${styles.filterButton} ${styles.visible}`}
             />
           ) : (
             <span />
@@ -67,17 +65,18 @@ export function Result({
           .map((p, index) => (
             <ResultPage
               key={`result-page-${index}`}
-              q={q}
               page={isMobile ? index + 1 : page}
               onWorkClick={onWorkClick}
             />
           ))}
       </Section>
-      <Pagination
-        numPages={numPages}
-        currentPage={parseInt(page, 10)}
-        onChange={onPageChange}
-      />
+      {hitcount > 0 && (
+        <Pagination
+          numPages={numPages}
+          currentPage={parseInt(page, 10)}
+          onChange={onPageChange}
+        />
+      )}
     </>
   );
 }
@@ -99,7 +98,7 @@ Result.propTypes = {
  * @param {Object} props Component props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap({ page, onWorkClick, onPageChange }) {
   const { getQuery, hasQuery } = useQ();
@@ -126,7 +125,6 @@ export default function Wrap({ page, onWorkClick, onPageChange }) {
 
   return (
     <Result
-      q={q}
       page={page}
       noRelatedSubjects={!relatedSubjects?.data?.relatedSubjects?.length > 0}
       isLoading={relatedSubjects.isLoading}

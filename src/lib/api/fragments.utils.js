@@ -51,6 +51,18 @@ const creatorsFragmentForAccessFactory = `fragment creatorsFragmentForAccessFact
     }
   }
 }`;
+
+export const materialTypesFragment = `fragment materialTypesFragment on MaterialType {
+  materialTypeGeneral {
+    code
+    display
+  }
+  materialTypeSpecific {
+    code
+    display
+  }
+}`;
+
 export const manifestationDetailsForAccessFactory = `fragment manifestationDetailsForAccessFactory on Manifestation {
   pid
   ownerWork {
@@ -72,7 +84,14 @@ export const manifestationDetailsForAccessFactory = `fragment manifestationDetai
     issue
   }
   materialTypes {
-    specific
+    materialTypeGeneral {
+      code
+      display
+    }
+    materialTypeSpecific {
+      code
+      display
+    }
   }
   workTypes
 }

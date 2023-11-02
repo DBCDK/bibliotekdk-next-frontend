@@ -6,12 +6,16 @@ import { useData, useMutate } from "@/lib/api/api";
 import * as userFragments from "@/lib/api/user.fragments";
 import * as sessionFragments from "@/lib/api/session.fragments";
 import { useEffect, useState } from "react";
+import { addUserToUserData } from "@/lib/api/userData.mutations";
 
 // Context for storing anonymous session
 export const AnonymousSessionContext = createContext();
 
 // in memory object for storing loaner info for current user
-let loanerInfoMock = { pickupBranch: "790900" };
+let loanerInfoMock = {
+  pickupBranch: "790900",
+  rights: { digitalArticleService: false },
+};
 
 /**
  * Mock used in storybook
@@ -28,6 +32,7 @@ function useUserMock() {
   const authUser = {
     name: "Some Name",
     mail: "some@mail.dk",
+    rights: loanerInfoMock.rights,
   };
   const loggedInUser = {
     userName: authUser.name,
@@ -42,6 +47,8 @@ function useUserMock() {
     isLoading: false,
     error: null,
     isAuthenticated: true,
+    hasCulrUniqueId: true,
+    isCPRValidated: true,
     isLoggedIn: true,
     loanerInfo: { ...data, userParameters: { ...loggedInUser } },
     updateLoanerInfo: (obj) => {
@@ -61,7 +68,16 @@ function useUserImpl() {
   const { data, mutate } = useData(sessionFragments.session());
   const { data: session } = useSession();
   const sessionMutate = useMutate();
-  const isAuthenticated = !!session?.user?.uniqueId;
+
+  // user is authenticated thrue adgangsplatformen
+  const isAuthenticated = !!session?.user?.userId;
+
+  // user exist in CULR (CULR users can both include 'folk' and cpr-verified 'ffu' users)
+  const hasCulrUniqueId = !!session?.user?.uniqueId;
+
+  const { data: extendedUserData, isLoading: isLoadingExtendedData } = useData(
+    hasCulrUniqueId && userFragments.extendedData()
+  );
 
   const {
     data: userData,
@@ -81,6 +97,8 @@ function useUserImpl() {
       loggedInUser.userMail = user.mail;
     }
   }
+
+  const isCPRValidated = !!userData?.user?.isCPRValidated;
 
   const sessionData = useMemo(() => {
     const sessionCopy = data?.session;
@@ -107,6 +125,17 @@ function useUserImpl() {
     ...sessionData,
   });
 
+  //if user is logged in and has a uniqueId - and user is NOT already created in userData service, then create user.
+  useEffect(() => {
+    if (
+      hasCulrUniqueId &&
+      !isLoadingExtendedData &&
+      !extendedUserData?.user?.createdAt
+    ) {
+      addUserToUserData({ userDataMutation: sessionMutate });
+    }
+  }, [hasCulrUniqueId, extendedUserData, isLoadingExtendedData]);
+
   useEffect(() => {
     if (!isAuthenticated) {
       setLoanerInfo({
@@ -122,6 +151,7 @@ function useUserImpl() {
         loans: userData?.user?.loans,
         orders: userData?.user?.orders,
         agencies: userData?.user?.agencies,
+        municipalityAgencyId: userData?.user?.municipalityAgencyId,
         ...sessionData,
       });
     }
@@ -142,9 +172,15 @@ function useUserImpl() {
     isLoading: userIsLoading,
     error: userDataError,
     isAuthenticated,
+    hasCulrUniqueId,
+    isCPRValidated,
     loanerInfo,
-    isGuestUser: isGuestUser,
+    isGuestUser,
     isLoggedIn: isAuthenticated || isGuestUser, //TODO guestUsers are not logged in - maybe "hasUserParameters" is a better name
+    updateUserData: () => {
+      // Broadcast update
+      userMutate();
+    },
     updateLoanerInfo: async (obj) => {
       const newSession = (newSession = merge({}, sessionData, obj));
       // Update global loaner info object
@@ -185,8 +221,8 @@ function useAccessTokenImpl() {
   return session?.accessToken;
 }
 
+// const useUser = process.env.STORYBOOK_ACTIVE ? useUserMock : useUserImpl;
 const useUser = process.env.STORYBOOK_ACTIVE ? useUserMock : useUserImpl;
-
 export default useUser;
 
 const useAccessToken = process.env.STORYBOOK_ACTIVE

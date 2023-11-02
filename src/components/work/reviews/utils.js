@@ -48,7 +48,7 @@ export function getReviewType(data) {
 
 /**
  *
- * @param {*} data
+ * @param {Object} data
  * @returns {string}
  */
 export function getPublisher(data) {
@@ -72,7 +72,7 @@ export function getPublisher(data) {
 
 /**
  *
- * @param {*} data
+ * @param {Object} data
  * @returns {string}
  */
 export function getDate(data) {
@@ -89,7 +89,7 @@ export function getDate(data) {
 
 /**
  *
- * @param {*} data
+ * @param {Object} data
  * @returns {string}
  */
 export function getContent(data) {
@@ -119,7 +119,7 @@ export function getContent(data) {
 
 /**
  *
- * @param {*} data
+ * @param {Object} data
  * @returns {string}
  */
 export function getUrls(data, work) {
@@ -178,7 +178,7 @@ export function contentParser({ content, manifestations }) {
  * Check if a paragraph holds a link to another work - if so parse as link
  * if not return a period (.)
  * @param work
- * @return {JSX.Element|string}
+ * @returns {React.ReactElement|string}
  */
 function lectorLink({ work, key }) {
   if (!work) {

@@ -10,8 +10,7 @@ import useBookmarks from "@/components/hooks/useBookmarks";
 
 export default function BoomarkIcon(props) {
   const { className } = props;
-  const { bookmarks } = useBookmarks();
-
+  const { count } = useBookmarks();
   return (
     <Action
       {...props}
@@ -20,13 +19,13 @@ export default function BoomarkIcon(props) {
       alt={Translate({ context: "header", label: "bookmark" })}
     >
       <div className={styles.container}>
-        {bookmarks && bookmarks.length > 0 && (
+        {count > 0 && (
           <div
             className={cx(styles.countContainer, {
-              [styles.countContainerLarge]: bookmarks.length >= 100,
+              [styles.countContainerLarge]: count >= 100,
             })}
           >
-            {bookmarks.length >= 1000 ? "1k+" : bookmarks.length}
+            {count >= 1000 ? "1k+" : count}
           </div>
         )}
 

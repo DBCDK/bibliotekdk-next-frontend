@@ -8,18 +8,21 @@ describe("Overview", () => {
       cy.visit("/iframe.html?id=work-overview--overview-wrapped");
     });
 
-    it(`Can tab through to different elements`, () => {
+    it(`have basic functionining functionality`, () => {
+      cy.contains("Overview - bog", { timeout: 15000 });
+
+      // --- Can tab through to different elements
       // Material Selection
-      cy.get("[data-cy=tag-bog]")
+      cy.get("[data-cy=tag-bog]", { timeout: 10000 })
         .focus()
         .should("have.attr", "data-cy", "tag-bog")
         .should("contain", "Bog")
         .tabs(1)
-        .should("have.attr", "data-cy", "tag-ebog")
+        .should("have.attr", "data-cy", "tag-e-bog")
         .tabs(1)
-        .should("have.attr", "data-cy", "tag-tidsskrift")
+        .should("have.attr", "data-cy", "tag-artikel")
         .tabs(1)
-        .should("have.attr", "data-cy", "tag-tidsskriftsartikel");
+        .should("have.attr", "data-cy", "tag-tidsskrift");
 
       // Creators and bookmark
       cy.get(`[data-cy=title-overview]`).contains("Hugo i Sølvskoven");
@@ -28,29 +31,27 @@ describe("Overview", () => {
         .should("have.attr", "data-cy", "tag-bog")
         .tabs(4)
         .should("have.attr", "data-cy", "button-order-overview-enabled");
-    });
 
-    // Clicks
-    it(`Can click on bookmark button`, () => {
+      // Bookmarks
       cy.get(`[data-cy=bookmark-button]`).should("be.visible").focus().click();
 
       cy.on("window:alert", (str) => {
         expect(str).to.equal(`Bookmarked!`);
       });
-    });
 
-    it(`Can click on button tag`, () => {
-      const tagEbog = "tag-ebog";
+      // Can click on button tag
+      const tagEbog = "tag-e-bog";
       const tagBog = "tag-bog";
 
       cy.get(`[data-cy=${tagEbog}]`).children("i").should("not.be.visible");
-      cy.get(`[data-cy=${tagEbog}]`).focus().contains("Ebog").click();
+      cy.get(`[data-cy=${tagEbog}]`).focus().contains("E-bog").click();
       cy.get(`[data-cy=${tagEbog}]`).children("i").should("be.visible");
       cy.get(`[data-cy=${tagBog}]`).children("i").should("not.be.visible");
     });
 
     it("Can default its first materialType: ", () => {
       cy.visit("/iframe.html?id=work-overview--overview-wrapped-no-type");
+      cy.contains("Overview -", { timeout: 15000 });
 
       cy.get("[data-cy=icon-Bog]")
         .children()
@@ -61,13 +62,16 @@ describe("Overview", () => {
         expect(url).to.contain("type=Bog");
       });
 
-      cy.get("[data-cy=button-order-overview-enabled]").should("exist");
+      cy.get("[data-cy=button-order-overview-enabled]", {
+        timeout: 10000,
+      }).should("exist");
 
-      cy.get(`[data-cy=icon-Bog]`, { timeout: 500 })
+      cy.get(`[data-cy=icon-Bog]`)
         .children()
-        .should("have.attr", "src", "/icons/checkmark.svg");
+        .should("have.attr", "src", "/icons/checkmark.svg")
+        .should("have.attr", "alt", "valgt");
 
-      cy.get("[data-cy=icon-Ebog]", { timeout: 500 })
+      cy.get("[data-cy=icon-E-bog]")
         .children()
         .should("have.attr", "src", "/icons/checkmark.svg")
         .should("have.attr", "alt", "ikke valgt");
@@ -86,7 +90,7 @@ describe("Overview", () => {
 
     // TODO: remove because should be tested reservationbutton.spec.js
     it.skip(`Can access external ebook`, () => {
-      cy.get(`[data-cy=tag-ebog]`).contains("Ebog").click();
+      cy.get(`[data-cy=tag-e-bog]`).contains("E-bog").click();
       cy.get("[data-cy=button-gå-til-bogen]").contains("Gå til bogen").click();
       cy.contains("Du bliver sendt til ebookurl.dk");
       cy.on("window:alert", (str) => {

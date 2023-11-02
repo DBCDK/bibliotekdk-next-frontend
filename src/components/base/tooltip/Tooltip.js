@@ -72,6 +72,6 @@ Tooltip.propTypes = {
   labelToTranslate: PropTypes.string,
   customClass: PropTypes.string,
   trigger: PropTypes.array,
-  iconSize: PropTypes.number,
+  iconSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   children: PropTypes.node,
 };

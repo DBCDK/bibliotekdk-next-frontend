@@ -20,6 +20,7 @@ function EditionComponentBuilder({
   editionProps,
   type = "Bog",
   storyNameOverride = null,
+  isMaterialCard = false,
 }) {
   const descriptionName = storyNameOverride ? storyNameOverride : type;
 
@@ -33,6 +34,7 @@ function EditionComponentBuilder({
         context={editionProps.context}
         singleManifestation={editionProps.singleManifestation}
         showOrderTxt={editionProps.showOrderTxt}
+        isMaterialCard={isMaterialCard}
       />
     </div>
   );
@@ -64,6 +66,38 @@ EditionSingleManifestation.story = merge({}, DEFAULT_STORY_PARAMETERS, {
     },
   },
 });
+
+export function EditionSingleManifestationImageToLeft() {
+  const editionProps = {
+    context: {
+      workId: "some-work-id",
+      pids: ["some-pid-6"],
+      orderPids: ["some-pid-6"],
+      periodicaForm: false,
+    },
+    singleManifestation: true,
+    showOrderTxt: true,
+  };
+
+  return (
+    <EditionComponentBuilder
+      editionProps={editionProps}
+      storyNameOverride={"SingleManifestation"}
+      isMaterialCard={true}
+    />
+  );
+}
+EditionSingleManifestationImageToLeft.story = merge(
+  {},
+  DEFAULT_STORY_PARAMETERS,
+  {
+    parameters: {
+      graphql: {
+        resolvers: {},
+      },
+    },
+  }
+);
 
 export function EditionSingleManifestationNoOrderTxt() {
   const editionProps = {
@@ -117,8 +151,36 @@ export function EditionAnyManifestation() {
   );
 }
 
-// EditionAnyManifestation.story = { ...resolvers("AnyManifestation") };
 EditionAnyManifestation.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {},
+    },
+  },
+});
+
+export function EditionAnyManifestationImageToLeft() {
+  const editionProps = {
+    context: {
+      workId: "some-work-id",
+      pids: ["some-pid-6"],
+      orderPids: ["some-pid-6"],
+      periodicaForm: false,
+    },
+    singleManifestation: false,
+    showOrderTxt: true,
+  };
+
+  return (
+    <EditionComponentBuilder
+      editionProps={editionProps}
+      storyNameOverride={"AnyManifestation - image to the left"}
+      isMaterialCard={true}
+    />
+  );
+}
+
+EditionAnyManifestationImageToLeft.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {},
@@ -153,6 +215,40 @@ EditionAnyManifestationNoOrderTxt.story = merge({}, DEFAULT_STORY_PARAMETERS, {
     },
   },
 });
+
+export function EditionAnyManifestationNoOrderTxtImageToLeft() {
+  const editionProps = {
+    context: {
+      workId: "some-work-id",
+      pids: ["some-pid-6"],
+      orderPids: ["some-pid-6"],
+      periodicaForm: false,
+    },
+    singleManifestation: false,
+    showOrderTxt: false,
+  };
+
+  return (
+    <EditionComponentBuilder
+      editionProps={editionProps}
+      storyNameOverride={"AnyManifestation"}
+      isMaterialCard={true}
+    />
+  );
+}
+
+EditionAnyManifestationNoOrderTxtImageToLeft.story = merge(
+  {},
+  DEFAULT_STORY_PARAMETERS,
+  {
+    parameters: {
+      graphql: {
+        resolvers: {},
+      },
+    },
+  }
+);
+
 export function EditionAnyManifestationDigitalCopy() {
   const editionProps = {
     context: {
@@ -189,3 +285,47 @@ EditionAnyManifestationDigitalCopy.story = merge({}, DEFAULT_STORY_PARAMETERS, {
     },
   },
 });
+
+export function EditionAnyManifestationDigitalCopyImageToLeft() {
+  const editionProps = {
+    context: {
+      workId: "some-work-id",
+      pids: ["some-pid-4"],
+      orderPids: ["some-pid-4"],
+      periodicaForm: false,
+    },
+    singleManifestation: false,
+    showOrderTxt: true,
+  };
+
+  return (
+    <EditionComponentBuilder
+      editionProps={editionProps}
+      storyNameOverride={
+        "EditionAnyManifestationDigitalCopyv- image to the left"
+      }
+      isMaterialCard={true}
+    />
+  );
+}
+
+EditionAnyManifestationDigitalCopyImageToLeft.story = merge(
+  {},
+  DEFAULT_STORY_PARAMETERS,
+  {
+    parameters: {
+      graphql: {
+        resolvers: {
+          Query: {
+            user: () => USER_3,
+            branches: () => {
+              return {
+                result: [BRANCH_3],
+              };
+            },
+          },
+        },
+      },
+    },
+  }
+);

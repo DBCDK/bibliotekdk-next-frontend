@@ -60,7 +60,7 @@ export default function WorkPage() {
    * Updates the query params in the url
    * (f.x. query.type which changes the type of material selected: Book, Ebook, ...)
    *
-   * @param {obj} queryInput
+   * @param {Object} queryInput
    */
   function handleOnTypeChange(queryInput) {
     setQuery({
@@ -97,7 +97,7 @@ const serverQueries = Object.values(workFragments);
  * Extract fixed url for getInitialProps to fix the url when the title_author is mucked up
  * @param queryRes
  * @param ctx
- * @return {string|null}
+ * @returns {string|null}
  */
 function extractFixedUrl(queryRes, ctx) {
   const title = queryRes?.data?.work?.titles?.full?.[0];

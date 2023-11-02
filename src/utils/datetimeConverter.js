@@ -81,3 +81,15 @@ export const dateToDayInMonth = (date) => {
     ""
   )}`;
 };
+
+/**
+ * Javascript Date to YYYY-MM-DD
+ * @param {Date} dateObject
+ */
+export function dateObjectToDateOnlyString(dateObject) {
+  const year = dateObject.getFullYear().toString().padStart(4, "0");
+  const month = (dateObject.getMonth() + 1).toString().padStart(2, "0");
+  const date = dateObject.getDate().toString().padStart(2, "0");
+
+  return `${year}-${month}-${date}`;
+}

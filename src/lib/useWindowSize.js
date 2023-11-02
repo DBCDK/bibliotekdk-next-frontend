@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 /**
  * A React hook for listening to window size
  *
- * @returns {object} size of window
+ * @returns {Object} size of window
  */
 export default function useWindowSize() {
   const [size, setSize] = useState([0, 0]);

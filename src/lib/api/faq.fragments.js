@@ -44,7 +44,7 @@ export function promotedFaqs(language) {
  * @param language
  *  NOTICE Drupals default language code is en - most (all) content is written in en ..
  *  as default
- * @return {{variables: {}, slowThreshold: number, query: string}}
+ * @returns {{variables: {}, slowThreshold: number, query: string}}
  */
 export function publishedFaqs(language) {
   const langcode = getLangcode(language);

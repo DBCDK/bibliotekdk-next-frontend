@@ -10,7 +10,7 @@ import styles from "./BodyScrollLock.module.css";
 /**
  * Function to get scrollY (scroll distance from top)
  *
- * @returns {int}
+ * @returns {number}
  */
 function getScrollYPos() {
   // Get scrollY (all browsers)
@@ -22,7 +22,7 @@ function getScrollYPos() {
 /**
  * Function to handle scrollLock on body
  *
- * @param {bool} shouldLockScroll
+ * @param {boolean} shouldLockScroll
  *
  */
 let scrollY = 0;
@@ -56,10 +56,10 @@ function scrollLock(shouldLockScroll) {
 /**
  * The Component function
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.JSX.Element}
  */
 export default function BodyScrollLock({ router }) {
   // Query param targets to track

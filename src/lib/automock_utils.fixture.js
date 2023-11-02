@@ -2,6 +2,14 @@
 import useUser from "@/components/hooks/useUser";
 import { useId, useMemo } from "react";
 import { AccessEnum } from "@/lib/enums";
+import { dateObjectToDateOnlyString } from "@/utils/datetimeConverter";
+import { HoldingStatusEnum } from "@/components/hooks/useHandleAgencyAccessData";
+
+const TODAY = dateObjectToDateOnlyString(new Date());
+const TOMORROW = dateObjectToDateOnlyString(
+  new Date(Date.now() + 24 * 60 * 60 * 1000)
+);
+const NEVER = "never";
 
 const MANIFESTATION_BASE = {
   titles: {
@@ -10,7 +18,8 @@ const MANIFESTATION_BASE = {
   pid: "some-pid-1",
   materialTypes: [
     {
-      specific: "bog",
+      materialTypeSpecific: { display: "bog", code: "BOOK" },
+      materialTypeGeneral: { display: "bøger", code: "BOOKS" },
     },
   ],
   edition: {
@@ -22,6 +31,7 @@ const MANIFESTATION_BASE = {
   accessTypes: [{ code: "PHYSICAL", display: "fysisk" }],
   access: [
     {
+      __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
       __typename: "InterLibraryLoan",
       loanIsPossible: true,
     },
@@ -36,6 +46,15 @@ const MANIFESTATION_BASE = {
 
 const MANIFESTATION_1 = {
   ...MANIFESTATION_BASE,
+  titles: {
+    full: ["Hugo i Sølvskoven", "Begyndelsen"],
+  },
+  ownerWork: {
+    titles: {
+      full: ["Hugo i Sølvskoven Værk", "Begyndelsen Værk"],
+    },
+    creators: [{ display: "Linoleum Gummigulv" }],
+  },
 };
 // Another manifestation that may be ordered via ILL
 const MANIFESTATION_2 = {
@@ -43,6 +62,12 @@ const MANIFESTATION_2 = {
   pid: "some-pid-2",
   titles: {
     full: ["Hugo i Sølvskoven 2", "Rise of Rita"],
+  },
+  ownerWork: {
+    titles: {
+      full: ["Hugo i Sølvskoven 2 Værk", "Rise of Rita Værk"],
+    },
+    creators: [{ display: "Linoleum Gummigulv" }],
   },
   edition: {
     edition: "102. udgave",
@@ -63,8 +88,15 @@ const MANIFESTATION_3 = {
   titles: {
     full: ["Hugo i Sølvskoven 3", "Gulvguldets hemmelighed"],
   },
+  ownerWork: {
+    titles: {
+      full: ["Hugo i Sølvskoven 3 Værk", "Gulvguldets hemmelighed Værk"],
+    },
+    creators: [{ display: "Linoleum Gummigulv" }],
+  },
   access: [
     {
+      __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
       __typename: "InterLibraryLoan",
       loanIsPossible: false,
     },
@@ -85,17 +117,71 @@ const MANIFESTATION_4 = {
       "Guldet glimter, sølvet smelter, gulvet vælter",
     ],
   },
+  ownerWork: {
+    creators: [{ display: "Linoleum Gummigulv" }],
+    titles: {
+      full: [
+        "Hugo i Sølvskoven 4 Værk",
+        "Guldet glimter, sølvet smelter, gulvet vælter Værk",
+      ],
+    },
+  },
   materialTypes: [
     {
-      specific: "tidsskriftsartikel",
+      materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+      materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
     },
   ],
   access: [
     {
+      __resolveType: AccessEnum.DIGITAL_ARTICLE_SERVICE,
       __typename: "DigitalArticleService",
       issn: "some-issn",
     },
     {
+      __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
+      __typename: "InterLibraryLoan",
+      loanIsPossible: true,
+    },
+  ],
+  workTypes: ["ARTICLE"],
+  cover: {
+    detail:
+      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=23637189&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=72eb2ae9d91fb0ffbb7f",
+    origin: "moreinfo",
+  },
+};
+// Indexed article, that may be ordered via digital article copy
+const MANIFESTATION_4_1 = {
+  ...MANIFESTATION_BASE,
+  pid: "some-pid-4-1",
+  titles: {
+    full: [
+      "Hugo i Sølvskoven 4½",
+      "Kobberet lugter, messingen smitter, lofter suger",
+    ],
+  },
+  materialTypes: [
+    {
+      materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+      materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+    },
+    {
+      materialTypeSpecific: {
+        display: "artikel (online)",
+        code: "ARTICLE_ONLINE",
+      },
+      materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+    },
+  ],
+  access: [
+    {
+      __resolveType: AccessEnum.DIGITAL_ARTICLE_SERVICE,
+      __typename: "DigitalArticleService",
+      issn: "some-issn",
+    },
+    {
+      __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
       __typename: "InterLibraryLoan",
       loanIsPossible: true,
     },
@@ -114,17 +200,32 @@ const MANIFESTATION_5 = {
   titles: {
     full: ["Hugo i Sølvskoven 5", "Gulvguldmonstrene mod Grullerne"],
   },
+  ownerWork: {
+    creators: [{ display: "Linoleum Gummigulv" }],
+    titles: {
+      full: [
+        "Hugo i Sølvskoven 5 Værk",
+        "Gulvguldmonstrene mod Grullerne Værk",
+      ],
+    },
+  },
   materialTypes: [
     {
-      specific: "tidsskrift",
+      materialTypeSpecific: { display: "tidsskrift", code: "JOURNAL" },
+      materialTypeGeneral: {
+        display: "aviser og tidsskrifter",
+        code: "NEWSPAPER_JOURNALS",
+      },
     },
   ],
   access: [
     {
+      __resolveType: AccessEnum.DIGITAL_ARTICLE_SERVICE,
       __typename: "DigitalArticleService",
       issn: "some-issn",
     },
     {
+      __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
       __typename: "InterLibraryLoan",
       loanIsPossible: true,
     },
@@ -144,9 +245,19 @@ const MANIFESTATION_6 = {
   titles: {
     full: ["Hugo i Sølvskoven 6", "Gulvguldmonstrene vender tilbage"],
   },
+  ownerWork: {
+    creators: [{ display: "Linoleum Gummigulv" }],
+    titles: {
+      full: [
+        "Hugo i Sølvskoven 6 Værk",
+        "Gulvguldmonstrene vender tilbage Værk",
+      ],
+    },
+  },
   materialTypes: [
     {
-      specific: "bog",
+      materialTypeSpecific: { display: "bog", code: "BOOK" },
+      materialTypeGeneral: { display: "bøger", code: "BOOKS" },
     },
   ],
   publisher: ["Sølvbakke"],
@@ -162,9 +273,17 @@ const MANIFESTATION_6 = {
 const MANIFESTATION_7 = {
   ...MANIFESTATION_BASE,
   pid: "some-pid-7",
+  titles: { full: ["Lær at læse med Hugo og Rita 1"] },
+  ownerWork: {
+    titles: {
+      full: ["Lær at læse med Hugo og Rita 1 Værk"],
+      creators: [{ display: "Linoleum Gummigulv" }],
+    },
+  },
   materialTypes: [
     {
-      specific: "ebog",
+      materialTypeSpecific: { display: "e-bog", code: "EBOOK" },
+      materialTypeGeneral: { display: "e-bøger", code: "EBOOKS" },
     },
   ],
   access: [
@@ -173,11 +292,16 @@ const MANIFESTATION_7 = {
       url: "https://ereol.combo/langurl",
       origin: "https://ereol.combo",
     },
+    {
+      __resolveType: AccessEnum.INFOMEDIA_SERVICE,
+      id: "123123",
+      pid: "321321",
+    },
   ],
   workTypes: ["LITERATURE"],
   cover: {
     detail:
-      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=27052509&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=3ff650fe66ef8432973c",
+      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=29053782&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=115cd0be4dc0b0e7d74e",
     origin: "moreinfo",
   },
 };
@@ -185,12 +309,19 @@ const MANIFESTATION_7 = {
 const MANIFESTATION_8 = {
   ...MANIFESTATION_BASE,
   pid: "some-pid-8",
+  titles: { full: ["Lær at læse med Hugo og Rita 2"] },
+  ownerWork: {
+    creators: [{ display: "Linoleum Gummigulv" }],
+    titles: {
+      full: ["Lær at læse med Hugo og Rita 2 Værk"],
+    },
+  },
   materialTypes: [
     {
-      specific: "bog",
+      materialTypeSpecific: { display: "bog", code: "BOOK" },
+      materialTypeGeneral: { display: "bøger", code: "BOOKS" },
     },
   ],
-  titles: [{ full: "Lær at læse med Hugo og Rita" }],
   workTypes: ["LITERATURE"],
   tableOfContents: {
     heading: "Kapitler",
@@ -206,11 +337,44 @@ const MANIFESTATION_8 = {
 const MANIFESTATION_9 = {
   ...MANIFESTATION_BASE,
   pid: "some-pid-9",
+  titles: { full: ["Lær at læse med Hugo og Rita 3"] },
+  ownerWork: {
+    creators: [{ display: "Linoleum Gummigulv" }],
+    titles: {
+      full: ["Lær at læse med Hugo og Rita 3 Værk"],
+    },
+  },
   materialTypes: [
     {
-      specific: "bog",
+      materialTypeSpecific: { display: "bog", code: "BOOK" },
+      materialTypeGeneral: { display: "bøger", code: "BOOKS" },
     },
   ],
+  workTypes: ["LITERATURE"],
+  tableOfContents: {
+    heading: null,
+    listOfContent: null,
+    content: `Kapitler ( 
+      Kapitel Alfabetet ; 
+      Kapitel Andre mennesker ;
+      Kapitel Ting og sager ; 
+      Kapitel Dyr og skov ;
+    ) ;`,
+  },
+};
+
+const MANIFESTATION_10 = {
+  ...MANIFESTATION_BASE,
+  pid: "some-pid-10",
+  materialTypes: [
+    {
+      materialTypeSpecific: { display: "bog", code: "BOOK" },
+      materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+    },
+  ],
+  ownerWork: {
+    workId: "some-work-id-8",
+  },
   titles: [{ full: "Lær at læse med Hugo og Rita" }],
   workTypes: ["LITERATURE"],
   tableOfContents: {
@@ -230,112 +394,188 @@ const ALL_MANIFESTATIONS = [
   MANIFESTATION_2,
   MANIFESTATION_3,
   MANIFESTATION_4,
+  MANIFESTATION_4_1,
   MANIFESTATION_5,
   MANIFESTATION_6,
   MANIFESTATION_7,
   MANIFESTATION_8,
   MANIFESTATION_9,
+  MANIFESTATION_10,
 ];
+
+const WORK_1 = {
+  workId: "some-work-id-1",
+  manifestations: {
+    all: [MANIFESTATION_1, MANIFESTATION_2, MANIFESTATION_3],
+    mostRelevant: [MANIFESTATION_1, MANIFESTATION_2, MANIFESTATION_3],
+  },
+  workTypes: ["LITERATURE"],
+  titles: {
+    full: ["Hugo i Sølvskoven", "Begyndelsen"],
+  },
+  creators: [{ display: "Børge 'Linoleum' Skovgulv Gummigulv" }],
+  materialTypes: [
+    {
+      materialTypeSpecific: { display: "bog", code: "BOOK" },
+      materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+    },
+  ],
+  fictionNonfiction: { display: "skønlitteratur", code: "FICTION" },
+  genreAndForm: ["roman"],
+};
+
+const WORK_2 = {
+  workId: "some-work-id-2",
+  manifestations: { all: [MANIFESTATION_4], mostRelevant: [MANIFESTATION_4] },
+  workTypes: ["ARTICLE"],
+  materialTypes: [
+    {
+      materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+      materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+    },
+  ],
+  fictionNonfiction: { display: "skønlitteratur", code: "FICTION" },
+  genreAndForm: [],
+};
+
+const WORK_2_1 = {
+  workId: "some-work-id-2-1",
+  manifestations: {
+    all: [MANIFESTATION_4_1],
+    mostRelevant: [MANIFESTATION_4_1],
+  },
+  workTypes: ["ARTICLE"],
+  materialTypes: [
+    {
+      materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+      materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+    },
+    {
+      materialTypeSpecific: {
+        display: "artikel (online)",
+        code: "ARTICLE_ONLINE",
+      },
+      materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+    },
+  ],
+  fictionNonfiction: { display: "skønlitteratur", code: "FICTION" },
+  genreAndForm: [],
+};
+
+const WORK_3 = {
+  workId: "some-work-id-3",
+  manifestations: { all: [MANIFESTATION_5], mostRelevant: [MANIFESTATION_5] },
+  workTypes: ["PERIODICA"],
+  fictionNonfiction: null,
+  genreAndForm: ["roman"],
+};
+
+const WORK_4 = {
+  workId: "some-work-id-4",
+  manifestations: { all: [MANIFESTATION_7], mostRelevant: [MANIFESTATION_7] },
+  workTypes: ["LITERATURE"],
+  titles: {
+    full: [
+      "Hugo i Sølvskoven 3½",
+      "Ritas mellemværende i Gulvskoven med Grullerne",
+    ],
+  },
+  creators: [{ display: "Børge 'Linoleum' Skovgulv Gummigulv" }],
+  materialTypes: [
+    {
+      materialTypeSpecific: { display: "bog", code: "BOOK" },
+      materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+    },
+  ],
+  relations: {
+    continues: [MANIFESTATION_1, MANIFESTATION_2, MANIFESTATION_3],
+    continuedIn: [MANIFESTATION_4, MANIFESTATION_5, MANIFESTATION_6],
+    hasAdaptation: [],
+    isAdaptationOf: [],
+    discusses: [],
+    discussedIn: [],
+  },
+};
+
+const WORK_5 = {
+  workId: "some-work-id-5",
+  titles: {
+    full: ["Hugo i Sølvskoven"],
+  },
+  creators: [{ display: "Linoleum Gummigulv" }],
+  manifestations: {
+    all: [
+      MANIFESTATION_1,
+      MANIFESTATION_2,
+      MANIFESTATION_3,
+      MANIFESTATION_4,
+      MANIFESTATION_5,
+      MANIFESTATION_6,
+      MANIFESTATION_7,
+    ],
+    mostRelevant: [
+      MANIFESTATION_1,
+      MANIFESTATION_2,
+      MANIFESTATION_3,
+      MANIFESTATION_4,
+      MANIFESTATION_5,
+      MANIFESTATION_6,
+      MANIFESTATION_7,
+    ],
+  },
+};
+
+const WORK_6 = {
+  workId: "some-work-id-6",
+  titles: { full: ["Lær at læse med Hugo og Rita"] },
+  creators: [{ display: "Linoleum Gummigulv" }],
+  manifestations: {
+    mostRelevant: [MANIFESTATION_9, MANIFESTATION_8],
+    all: [MANIFESTATION_9, MANIFESTATION_8],
+  },
+};
+
+const WORK_7 = {
+  workId: "some-work-id-7",
+  titles: { full: ["Lær at læse med Hugo og Rita 2"] },
+  creators: [{ display: "Linoleum Gummigulv" }],
+  manifestations: {
+    mostRelevant: [MANIFESTATION_9],
+    all: [MANIFESTATION_9],
+  },
+  materialTypes: [
+    {
+      materialTypeSpecific: { display: "bog", code: "BOOK" },
+      materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+    },
+  ],
+};
+
+const WORK_8 = {
+  workId: "some-work-id-8",
+  titles: { full: ["Lær at læse med Hugo og Rita 3"] },
+  creators: [{ display: "Linoleum Gummigulv" }],
+  manifestations: {
+    mostRelevant: [MANIFESTATION_10],
+    all: [MANIFESTATION_10],
+  },
+};
 
 const ALL_WORKS = [
   // A work that has physical manifestations, two of them can be loaned via ILL
-  {
-    workId: "some-work-id-1",
-    manifestations: {
-      all: [MANIFESTATION_1, MANIFESTATION_2, MANIFESTATION_3],
-      mostRelevant: [MANIFESTATION_1, MANIFESTATION_2, MANIFESTATION_3],
-    },
-    workTypes: ["LITERATURE"],
-    fictionNonfiction: { display: "skønlitteratur", code: "FICTION" },
-    genreAndForm: ["roman"],
-  },
+  WORK_1,
   // A work that is an indexed periodica article
-  {
-    workId: "some-work-id-2",
-    manifestations: { all: [MANIFESTATION_4], mostRelevant: [MANIFESTATION_4] },
-    workTypes: ["ARTICLE"],
-    fictionNonfiction: { display: "skønlitteratur", code: "FICTION" },
-    genreAndForm: [],
-  },
+  WORK_2,
+  WORK_2_1,
   // A work that is a periodica
-  {
-    workId: "some-work-id-3",
-    manifestations: { all: [MANIFESTATION_5], mostRelevant: [MANIFESTATION_5] },
-    workTypes: ["PERIODICA"],
-    fictionNonfiction: null,
-    genreAndForm: ["roman"],
-  },
-  // A work that is an ebog
-  {
-    workId: "some-work-id-4",
-    manifestations: { all: [MANIFESTATION_7], mostRelevant: [MANIFESTATION_7] },
-    workTypes: ["LITERATURE"],
-    titles: {
-      full: [
-        "Hugo i Sølvskoven 3½",
-        "Ritas mellemværende i Gulvskoven med Grullerne",
-      ],
-    },
-    creators: [{ display: "Børge 'Linoleum' Skovgulv Gummigulv" }],
-    materialTypes: [
-      {
-        specific: "bog",
-      },
-    ],
-    relations: {
-      continues: [MANIFESTATION_1, MANIFESTATION_2, MANIFESTATION_3],
-      continuedIn: [MANIFESTATION_4, MANIFESTATION_5, MANIFESTATION_6],
-      hasAdaptation: [],
-      isAdaptationOf: [],
-      discusses: [],
-      discussedIn: [],
-    },
-  },
-  {
-    workId: "some-work-id-5",
-    titles: {
-      full: ["Hugo i Sølvskoven"],
-    },
-    creators: [{ display: "Linoleum Gummigulv" }],
-    manifestations: {
-      all: [
-        MANIFESTATION_1,
-        MANIFESTATION_2,
-        MANIFESTATION_3,
-        MANIFESTATION_4,
-        MANIFESTATION_5,
-        MANIFESTATION_6,
-        MANIFESTATION_7,
-      ],
-      mostRelevant: [
-        MANIFESTATION_1,
-        MANIFESTATION_2,
-        MANIFESTATION_3,
-        MANIFESTATION_4,
-        MANIFESTATION_5,
-        MANIFESTATION_6,
-        MANIFESTATION_7,
-      ],
-    },
-  },
-  {
-    workId: "some-work-id-6",
-    titles: { full: ["Lær at læse med Hugo og Rita"] },
-    creators: [{ display: "Linoleum Gummigulv" }],
-    manifestations: {
-      mostRelevant: [MANIFESTATION_9, MANIFESTATION_8],
-      all: [MANIFESTATION_9, MANIFESTATION_8],
-    },
-  },
-  {
-    workId: "some-work-id-7",
-    titles: { full: ["Lær at læse med Hugo og Rita 2"] },
-    creators: [{ display: "Linoleum Gummigulv" }],
-    manifestations: {
-      mostRelevant: [MANIFESTATION_9],
-      all: [MANIFESTATION_9],
-    },
-  },
+  WORK_3,
+  // A work that is an e-bog
+  WORK_4,
+  WORK_4,
+  WORK_5,
+  WORK_6,
+  WORK_7,
+  WORK_8,
 ];
 
 const BORROWER_STATUS_TRUE = {
@@ -349,14 +589,20 @@ const BORROWER_STATUS_FALSE = {
 };
 
 const BRANCH_1 = {
+  agencyName: "Agency 1",
+  agencyId: "1",
+  branchId: "1237",
   name: "Test Bib - only physical via ILL",
   orderPolicy: {
     orderPossible: true,
   },
   pickupAllowed: true,
+  borrowerCheck: true,
   digitalCopyAccess: false,
 };
 const BRANCH_2 = {
+  agencyName: "Agency 1",
+  branchId: "123",
   name: "Test Bib - no orders here",
   orderPolicy: {
     orderPossible: false,
@@ -365,42 +611,240 @@ const BRANCH_2 = {
   digitalCopyAccess: false,
 };
 const BRANCH_3 = {
+  agencyName: "Agency 2",
   name: "Test Bib - ILL and digital copy service",
+  branchId: "1235",
   orderPolicy: {
     orderPossible: true,
   },
+  borrowerCheck: true,
   pickupAllowed: true,
   digitalCopyAccess: true,
 };
+
 const BRANCH_4 = {
   name: "Test Bib - User is blocked",
+  agencyId: "2",
+  branchId: "1234",
   orderPolicy: {
     orderPossible: true,
   },
   pickupAllowed: true,
   digitalCopyAccess: false,
+  borrowerCheck: true,
   branchWebsiteUrl: "balleripraprup.dekaa",
   agencyName: "BalleRipRapRup",
+};
+const BRANCH_5 = {
+  name: "Ripper Bib - Branch with 2 holdings on shelf",
+  branchId: "789123",
+  agencyName: "BalleRipRapRup",
+  agencyId: "789120",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  holdingStatus: {
+    branchId: "789123",
+    expectedDelivery: TODAY,
+    holdingItems: [
+      {
+        expectedDelivery: TODAY,
+        status: HoldingStatusEnum.ON_SHELF,
+      },
+      {
+        expectedDelivery: TODAY,
+        status: HoldingStatusEnum.ON_SHELF,
+      },
+    ],
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "balleripraprup.dekaa",
+};
+
+const BRANCH_5_1 = {
+  name: "Rapper Bib - Branch with holdings on loan",
+  branchId: "789124",
+  agencyName: "BalleRipRapRup",
+  agencyId: "789120",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  holdingStatus: {
+    branchId: "789124",
+    expectedDelivery: TODAY,
+    holdingItems: [
+      {
+        expectedDelivery: TODAY,
+        status: HoldingStatusEnum.ON_LOAN,
+      },
+    ],
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "balleripraprup.dekaa",
+};
+const BRANCH_5_2 = {
+  name: "Rupper Bib - Branch with no holdings but is public library",
+  branchId: "789125",
+  agencyName: "BalleRipRapRup",
+  agencyId: "789120",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  holdingStatus: {
+    branchId: "789125",
+    expectedDelivery: TODAY,
+    holdingItems: [],
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "balleripraprup.dekaa",
+};
+
+const BRANCH_6 = {
+  name: "Grull Ly - Branch with no holdings, is public library but agency says holdings",
+  branchId: "765432",
+  agencyName: "Grullinger",
+  agencyId: "765430",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  holdingStatus: {
+    branchId: "765432",
+    expectedDelivery: TODAY,
+    holdingItems: [],
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "grullinger.dekaa",
+};
+
+const BRANCH_7 = {
+  name: "Herlige Lev FFU - Branch with FFU holdings",
+  branchId: "891234",
+  agencyId: "891230",
+  agencyName: "United FFUs",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  holdingStatus: {
+    branchId: "891234",
+    expectedDelivery: TODAY,
+    holdingItems: [],
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "herligelev.dekaa",
+};
+
+const BRANCH_7_1 = {
+  name: "Senge Loese FFU - Branch with FFU holdings",
+  branchId: "891235",
+  agencyName: "United FFUs",
+  agencyId: "891230",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  holdingStatus: {
+    branchId: "891235",
+    expectedDelivery: TOMORROW,
+    holdingItems: [],
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "Sengeloese.dekaa",
+};
+
+const BRANCH_7_2 = {
+  name: "Hede Huse FFU - Branch with FFU holdings",
+  branchId: "891236",
+  agencyName: "United FFUs",
+  agencyId: "891230",
+  orderPolicy: {
+    orderPossible: false,
+  },
+  holdingStatus: {
+    branchId: "891236",
+    expectedDelivery: NEVER,
+    holdingItems: [],
+  },
+  pickupAllowed: false,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "hedehuse.dekaa",
+};
+const BRANCH_7_3 = {
+  name: "Ulvs Hale FFU - Branch with FFU holdings",
+  branchId: "891237",
+  agencyName: "United FFUs",
+  agencyId: "891230",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  holdingStatus: {
+    branchId: "891237",
+    expectedDelivery: null,
+    holdingItems: [],
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "hedehuse.dekaa",
+};
+
+const BRANCH_8 = {
+  name: "No borrowerCheck",
+  branchId: "1236",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: false,
+  borrowerCheck: false,
+  branchWebsiteUrl: "nocheck.dekaa",
+  agencyName: "NoCheckBib",
+  agencyId: "3",
 };
 
 // A user with some agencies
 const USER_1 = {
-  agencies: {
-    borrowerStatus: BORROWER_STATUS_TRUE,
-    result: [BRANCH_1, BRANCH_2],
-  },
+  agencies: [
+    {
+      borrowerStatus: BORROWER_STATUS_TRUE,
+      result: [BRANCH_1, BRANCH_2],
+    },
+  ],
 };
 
 const USER_2 = {
-  agencies: { borrowerStatus: BORROWER_STATUS_TRUE, result: [BRANCH_2] },
+  agencies: [{ borrowerStatus: BORROWER_STATUS_TRUE, result: [BRANCH_2] }],
 };
 
 const USER_3 = {
-  agencies: { borrowerStatus: BORROWER_STATUS_TRUE, result: [BRANCH_3] },
+  agencies: [{ borrowerStatus: BORROWER_STATUS_TRUE, result: [BRANCH_3] }],
 };
 
 const USER_4 = {
-  agencies: { borrowerStatus: BORROWER_STATUS_TRUE, result: [BRANCH_4] },
+  agencies: [{ borrowerStatus: BORROWER_STATUS_TRUE, result: [BRANCH_4] }],
+};
+
+const USER_5 = {
+  agencies: {
+    borrowerStatus: BORROWER_STATUS_TRUE,
+    result: [BRANCH_5, BRANCH_6],
+  },
+};
+
+const USER_6 = {
+  agencies: [
+    {
+      borrowerStatus: BORROWER_STATUS_FALSE,
+      result: [BRANCH_4, BRANCH_3],
+    },
+    {
+      borrowerStatus: BORROWER_STATUS_TRUE,
+      result: [BRANCH_1, BRANCH_2],
+    },
+  ],
 };
 
 const REVIEW_1 = {
@@ -568,7 +1012,8 @@ const USER_LOANS = [
       ],
       materialTypes: [
         {
-          specific: "billedbog",
+          materialTypeSpecific: { display: "billedbog", code: "PICTURE_BOOK" },
+          materialTypeGeneral: { display: "bøger", code: "BOOKS" },
         },
       ],
       cover: {
@@ -596,7 +1041,8 @@ const USER_LOANS = [
       ],
       materialTypes: [
         {
-          specific: "bog",
+          materialTypeSpecific: { display: "bog", code: "BOOK" },
+          materialTypeGeneral: { display: "bøger", code: "BOOKS" },
         },
       ],
       cover: {
@@ -624,7 +1070,8 @@ const USER_LOANS = [
       ],
       materialTypes: [
         {
-          specific: "bog",
+          materialTypeSpecific: { display: "bog", code: "BOOK" },
+          materialTypeGeneral: { display: "bøger", code: "BOOKS" },
         },
       ],
       cover: {
@@ -653,7 +1100,8 @@ const USER_LOANS = [
       ],
       materialTypes: [
         {
-          specific: "bog",
+          materialTypeSpecific: { display: "bog", code: "BOOK" },
+          materialTypeGeneral: { display: "bøger", code: "BOOKS" },
         },
       ],
       cover: {
@@ -689,7 +1137,8 @@ const USER_ORDERS = [
       ],
       materialTypes: [
         {
-          specific: "bog",
+          materialTypeSpecific: { display: "bog", code: "BOOK" },
+          materialTypeGeneral: { display: "bøger", code: "BOOKS" },
         },
       ],
       cover: {
@@ -722,7 +1171,8 @@ const USER_ORDERS = [
       ],
       materialTypes: [
         {
-          specific: "bog",
+          materialTypeSpecific: { display: "bog", code: "BOOK" },
+          materialTypeGeneral: { display: "bøger", code: "BOOKS" },
         },
       ],
       cover: {
@@ -754,7 +1204,8 @@ const USER_ORDERS = [
       ],
       materialTypes: [
         {
-          specific: "bog",
+          materialTypeSpecific: { display: "bog", code: "BOOK" },
+          materialTypeGeneral: { display: "bøger", code: "BOOKS" },
         },
       ],
       cover: {
@@ -811,11 +1262,13 @@ function useMockLoanerInfo({
   orders = USER_ORDERS,
   debt = USER_DEBT,
   agencies = [USER_AGENCY],
+  rights = { digitalArticleService: true },
 }) {
   const { updateLoanerInfo } = useUser();
   const id = useId();
   useMemo(() => {
     updateLoanerInfo({
+      rights: rights,
       pickupBranch: pickUpBranch,
       loans,
       orders,
@@ -846,12 +1299,23 @@ export default function automock_utils() {
     MANIFESTATION_2,
     MANIFESTATION_3,
     MANIFESTATION_4,
+    MANIFESTATION_4_1,
     MANIFESTATION_5,
     MANIFESTATION_6,
     MANIFESTATION_7,
     MANIFESTATION_8,
     MANIFESTATION_9,
+    MANIFESTATION_10,
     ALL_MANIFESTATIONS,
+    WORK_1,
+    WORK_2,
+    WORK_2_1,
+    WORK_3,
+    WORK_4,
+    WORK_5,
+    WORK_6,
+    WORK_7,
+    WORK_8,
     ALL_WORKS,
     BORROWER_STATUS_TRUE,
     BORROWER_STATUS_FALSE,
@@ -859,10 +1323,21 @@ export default function automock_utils() {
     BRANCH_2,
     BRANCH_3,
     BRANCH_4,
+    BRANCH_5,
+    BRANCH_5_1,
+    BRANCH_5_2,
+    BRANCH_6,
+    BRANCH_7,
+    BRANCH_7_1,
+    BRANCH_7_2,
+    BRANCH_7_3,
+    BRANCH_8,
     USER_1,
     USER_2,
     USER_3,
     USER_4,
+    USER_5,
+    USER_6,
     REVIEW_1,
     DEFAULT_STORY_PARAMETERS,
     useMockLoanerInfo,
@@ -870,5 +1345,8 @@ export default function automock_utils() {
     USER_ORDERS,
     USER_LIBRARIES,
     USER_AGENCY,
+    TODAY,
+    TOMORROW,
+    NEVER,
   };
 }

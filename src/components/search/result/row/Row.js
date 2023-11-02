@@ -95,7 +95,7 @@ function sortMaterialTypesByFilter(materialTypesInFilter) {
 /**
  * Row representation of a search result entry
  *
- * @param {object} work
+ * @param {Object} work
  * @param {string} className
  * @param {function} onClick
  * @param {boolean} isLoading
@@ -122,9 +122,8 @@ export default function ResultRow({
     return manifestationMaterialTypeFactory(work?.manifestations?.mostRelevant);
   }, [work?.manifestations?.mostRelevant]);
 
-  const materialTypes = filters.materialTypes;
+  const materialTypes = filters.materialTypesSpecific;
   uniqueMaterialTypes.sort(sortMaterialTypesByFilter(materialTypes));
-
   return (
     <article className={styles.search}>
       <Link
@@ -175,9 +174,11 @@ export default function ResultRow({
               </Text>
               {uniqueMaterialTypes?.length > 0 &&
                 uniqueMaterialTypes?.map((materialTypeArray) => {
+                  const typeString =
+                    formatMaterialTypesToUrl(materialTypeArray);
                   return (
                     <span
-                      key={`material-${work?.workId}`}
+                      key={`${work?.workId}-${typeString}`}
                       className={styles.material}
                     >
                       <Link
@@ -189,7 +190,7 @@ export default function ResultRow({
                               work?.titles?.main?.[0],
                               work?.creators
                             ),
-                            type: formatMaterialTypesToUrl(materialTypeArray),
+                            type: typeString,
                             workId: work?.workId,
                           },
                         }}
@@ -212,15 +213,17 @@ export default function ResultRow({
                 })}
             </div>
           </div>
+          <BookmarkDropdown
+            className={styles.BookmarkDropdown}
+            materialId={work?.workId}
+            workId={work?.workId}
+            materialTypes={uniqueMaterialTypes}
+            title={work?.titles?.sort}
+            size={{ w: 4, h: 4 }}
+            editions={work?.manifestations?.mostRelevant}
+          />
         </div>
       </Link>
-      <BookmarkDropdown
-        className={styles.BookmarkDropdown}
-        workId={work?.workId}
-        materialTypes={uniqueMaterialTypes}
-        title={work?.titles?.full?.[0]}
-        size={{ w: 4, h: 4 }}
-      />
     </article>
   );
 }

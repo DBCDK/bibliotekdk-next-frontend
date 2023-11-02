@@ -66,6 +66,10 @@
   margin-bottom: var(--pt4);
 }
 
+.buttonRowWrapperOrder {
+  margin-bottom: var(--pt4);
+}
+
 .renewError {
   justify-content: center;
   width: 100%;
@@ -81,4 +85,10 @@
 /* Specificity to override */
 .button button.buttonDelete {
   white-space: nowrap;
+}
+
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  justify-self: flex-end;
 }

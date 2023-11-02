@@ -8,16 +8,16 @@ import cx from "classnames";
 
 /**
  * An animated button that contains a text and an Icon. Pass Icon name that matches an svg file inside public/icons
- * @param {obj} props
+ * @param {Object} props
  * @param {string} props.className
  * @param {function} props.onClick
  * @param {string} props.alt
- * @param {obj} props.children
+ * @param {Object} props.children
  * @param {string} props.icon
  * @param {string} props.textType
  * @param {boolean} props.keepUnderline
  * @param {string} props.dataCy
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 function IconButton({
   className,
@@ -28,7 +28,7 @@ function IconButton({
   textType = "text3",
   keepUnderline,
   dataCy,
-  disabled,
+  disabled = false,
   ...props
 }) {
   const iconSrc = !disabled ? `${icon}.svg` : `${icon}_grey.svg`;
@@ -42,6 +42,7 @@ function IconButton({
         styles.focusStyle,
         className
       )}
+      tabIndex={disabled ? "-1" : "0"}
       onClick={() => onClick && onClick()}
       data-cy={dataCy}
       disabled={disabled}
@@ -54,7 +55,7 @@ function IconButton({
         tag="div"
         tabIndex={-1}
       >
-        <Text type={textType} tag="span">
+        <Text type={textType} tag="span" data-control="ICON-BUTTON">
           {children}
         </Text>
       </Link>

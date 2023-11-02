@@ -5,12 +5,12 @@ import styles from "./Email.module.css";
 /**
  * The Component function
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
  * Get you value like <Email onChange={(value, valid) => console.log(value, valid)} ... />
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 function Email(props) {
   const {

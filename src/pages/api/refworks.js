@@ -5,7 +5,7 @@ import { getServerSession } from "@dbcdk/login-nextjs/server";
 /**
  * Parse response
  * @param ref
- * @return {*}
+ * @returns {React.JSX.Element}
  */
 function parseRefWorks(ref) {
   return ref.data.refWorks;
@@ -15,7 +15,7 @@ function parseRefWorks(ref) {
  * Do the query via fetcher - @see /lib/api/api.js
  * @param pid
  * @param accessToken
- * @return {Promise<*>}
+ * @returns {Promise<*>}
  */
 async function getRefWorks(pid, accessToken) {
   const querystr = manifestationFragments.refWorks(pid);
@@ -27,7 +27,7 @@ async function getRefWorks(pid, accessToken) {
 /**
  * Get accesstoken - anonymous/user
  * @param context
- * @return {Promise<*>}
+ * @returns {Promise<*>}
  */
 export async function getAccessToken(context) {
   const session = await getServerSession(context.req, context.res);
@@ -38,7 +38,7 @@ export async function getAccessToken(context) {
  * Entry point
  * @param req
  * @param res
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
 export default async function refWorkHandler(req, res) {
   // get an access token for api

@@ -53,7 +53,7 @@ export function GraphQLMocker({
  * For more examples, see https://www.graphql-tools.com/docs/mocking#customizing-mocks
  *
  * @param {string} url
- * @param {object} resolvers
+ * @param {Object} resolvers
  * @param {function} beforeFetch
  * @param debug
  * @returns
@@ -241,7 +241,7 @@ export function createMockedFetcher({
    * The mocked fetcher
    *
    * @param {*} queryStr
-   * @returns {object}
+   * @returns {Object}
    */
   async function mockedFetcher(queryStr) {
     const { query, variables } =
@@ -284,7 +284,7 @@ const SYMBOL_PROCESSED = Symbol("processed");
  * Inspired by https://github.com/kiwicom/graphql-resolve-wrapper
  *
  * @param {*} schema
- * @param {func} wrapper
+ * @param {function} wrapper
  */
 function wrapResolvers(schema, wrapper) {
   const types = schema.getTypeMap();

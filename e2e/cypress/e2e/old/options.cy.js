@@ -2,31 +2,31 @@
  * @file
  * Test functionality modal options for article access
  */
-describe.skip("Overview", () => {
-  before(function () {
-    cy.visit("/iframe.html?id=modal-options--all-options");
-  });
-
+describe("Overview", () => {
   it(`All option links present`, () => {
-    cy.get("body").tab();
-    cy.focused().tab();
-    cy.focused().should(
-      "have.attr",
-      "href",
-      "https://videnskab.dk/forskerzonen/kultur-samfund/saadan-goer-du-din-ferie-mere-baeredygtig"
-    );
+    cy.visit("/iframe.html?id=modal-options--all-options");
+    cy.contains("Alle bestillingsmuligheder (3)", { timeout: 15000 }).click();
 
-    cy.focused().tab();
-    cy.focused().should(
-      "have.attr",
-      "href",
-      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=36160780&attachment_type=856_a&bibliotek=870971&source_id=870970&key=68d322934a78818989ce"
+    cy.contains("Alle bestillingsmuligheder", { timeout: 15000 }).should(
+      "exist"
     );
-    cy.focused().tab();
-    cy.focused().should(
-      "have.attr",
-      "href",
-      "/infomedia/fiske_hest/work-of:870971-tsart:39160846/e842b5ee"
-    );
+    cy.contains("Luk");
+    cy.contains("Link til E-bog")
+      .should("exist")
+      .parent()
+      .find("a")
+      .should("have.attr", "href", "https://ereol.combo/langurl");
+
+    cy.contains("Bestil digital kopi").should("exist");
+
+    cy.contains("Læs artikel")
+      .should("exist")
+      .parent()
+      .find("a")
+      .should(
+        "have.attr",
+        "href",
+        "/infomedia/manifestations-1-titles-main-0-_linoleum-gummigulv/work-of:some-pid-7/123123"
+      );
   });
 });

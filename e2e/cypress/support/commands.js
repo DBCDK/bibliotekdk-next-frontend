@@ -29,7 +29,7 @@ require("cypress-plugin-tab");
 
 /**
  * Tabs function
- * @param {int} n // n is number of tabs -> default to 1
+ * @param {number} n // n is number of tabs -> default to 1
  *
  */
 Cypress.Commands.add("tabs", (n = 1) => {

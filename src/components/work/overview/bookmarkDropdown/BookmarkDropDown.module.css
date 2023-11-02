@@ -24,22 +24,22 @@
   text-align: inherit;
   white-space: nowrap;
   cursor: pointer;
+  max-width: 250px;
 }
 
 .dropdownitem.active i svg {
   display: block;
 }
 
-.dropdownitem:focus {
-  background-color: transparent;
+.dropdownitem.active:focus {
+  background-color: var(--blue);
+  color: white;
 }
 
 .dropdownitemText {
   text-transform: capitalize;
-}
-
-.dropdownitemText:hover {
-  font-weight: bold;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
 }
 
 .active {
@@ -56,9 +56,13 @@
   color: var(--white);
 }
 
-.dropdownitem.active:focus {
+.dropdownitem.active:focus-visible {
   background-color: black;
   color: var(--white);
+}
+
+.dropdownitem:focus {
+  background-color: transparent;
 }
 
 .dropdownitem.active:focus i svg path {
@@ -80,7 +84,7 @@
 }
 
 .dropdownitem:hover i svg,
-.dropdownitem:focus i svg {
+.dropdownitem:focus-visible i svg {
   display: block;
 }
 
@@ -98,14 +102,13 @@
 
 .dropdownwrap :global(.dropdown-toggle) {
   position: relative;
-  z-index: 2;
 }
 
 .dropdownmenu {
   margin-top: var(--pt1_5);
   border: 1px solid var(--gray);
   background-color: var(--white);
-  z-index: 3;
+
   /* bootstrap default styles override */
   border-radius: 0;
   padding: 0;

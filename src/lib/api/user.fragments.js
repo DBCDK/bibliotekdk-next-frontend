@@ -1,7 +1,10 @@
 import { lang } from "@/components/base/translate";
 import { ApiEnums } from "@/lib/api/api";
 
-import { creatorsFragment } from "@/lib/api/fragments.utils";
+import {
+  creatorsFragment,
+  materialTypesFragment,
+} from "@/lib/api/fragments.utils";
 
 /**
  * @file Contains GraphQL queries all taking a workId as variable
@@ -23,13 +26,21 @@ export function basic() {
         mail
         address
         postalCode
+        isCPRValidated
+        loggedInBranchId
+        municipalityAgencyId
+        rights {
+          infomedia 
+          digitalArticleService 
+          demandDrivenAcquisition
+        }
         agencies {
           hitcount
-          agencyUrl
           result {
             branchId
             agencyId
             agencyName
+            agencyType
             name
             branchWebsiteUrl
           }
@@ -58,7 +69,7 @@ export function basic() {
               ...creatorsFragment
             }
             materialTypes {
-              specific
+              ...materialTypesFragment
             }
             cover {
               thumbnail
@@ -91,7 +102,7 @@ export function basic() {
               ...creatorsFragment
             }
             materialTypes {
-              specific
+              ...materialTypesFragment
             }
             cover {
               thumbnail
@@ -101,7 +112,8 @@ export function basic() {
         }   
       }
     }
-    ${creatorsFragment}`,
+    ${creatorsFragment}
+    ${materialTypesFragment}`,
     variables: {},
     slowThreshold: 3000,
   };
@@ -136,12 +148,10 @@ export function branchesForUser() {
 }
 
 export function orderPolicy({ pids }) {
-  const pid = pids?.[0];
-
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
-    query: `query orderPolicy ($language: LanguageCode!, $pid: String!, $pids: [String!]! ) {
+    query: `query orderPolicy ($language: LanguageCode!, $pids: [String!]! ) {
       user {
         agencies (language: $language){
           agencyUrl
@@ -155,7 +165,7 @@ export function orderPolicy({ pids }) {
             branchId
             openingHours
             borrowerCheck
-            orderPolicy(pid: $pid, pids: $pids) {
+            orderPolicy(pids: $pids) {
               orderPossible
               orderPossibleReason
               lookUpUrl
@@ -182,7 +192,7 @@ export function orderPolicy({ pids }) {
           branchId
           openingHours
           borrowerCheck
-          orderPolicy(pid: $pid, pids: $pids) {
+          orderPolicy(pids: $pids) {
             orderPossible
             orderPossibleReason
             lookUpUrl
@@ -200,7 +210,7 @@ export function orderPolicy({ pids }) {
       }
       monitor(name: "bibdknext_orderpolicy")
      }`,
-    variables: { language: lang, pid, pids },
+    variables: { language: lang, pids },
     slowThreshold: 3000,
   };
 }
@@ -218,6 +228,7 @@ export function extendedData() {
       user {
         persistUserData
         favoritePickUpBranch
+        createdAt
       }
      }`,
     slowThreshold: 3000,

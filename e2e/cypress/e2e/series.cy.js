@@ -7,21 +7,28 @@ describe("Series", () => {
 
   it(`Verify title and creator are shown`, () => {
     cy.contains("I samme serie");
-    cy.get("a").should("have.length", 2);
+    // We sort away all non-books, so we only expect 3
+    cy.get("a").should("have.length", 3);
 
-    cy.get("a").eq(0).contains("work.seriesMembers[0].titles.full[0]");
-    cy.get("a").eq(0).contains("work.seriesMembers[0].creators[");
+    cy.get("a").eq(0).contains("Hugo i Sølvskoven: Begyndelsen");
+    cy.get("a").eq(0).contains("Børge 'Linoleum' Skovgulv Gummigulv");
 
-    cy.get("a").eq(1).contains("work.seriesMembers[1].titles.full[0]");
-    cy.get("a").eq(1).contains("work.seriesMembers[1].creators[");
+    cy.get("a")
+      .eq(1)
+      .contains(
+        "Hugo i Sølvskoven 3½: Ritas mellemværende i Gulvskoven med Grullerne"
+      );
+    cy.get("a").eq(1).contains("Børge 'Linoleum' Skovgulv Gummigulv");
+
+    cy.get("a").eq(2).contains("Lær at læse med Hugo og Rita 2");
+    cy.get("a").eq(2).contains("Linoleum Gummigulv");
 
     cy.get("a")
       .eq(0)
       .should("have.attr", "href")
       .and(
         "contain",
-        "/materiale/work-seriesmembers-0-titles-full-0-work-seriesmembers-0-titles-full-1-_work-seriesmembers-0-creators"
-      )
-      .and("contain", "-display/work.seriesMembers[0].workId");
+        "/materiale/hugo-i-soelvskoven-begyndelsen_boerge-linoleum-skovgulv-gummigulv/some-work-id-1"
+      );
   });
 });

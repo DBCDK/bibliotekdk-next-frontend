@@ -53,7 +53,7 @@ const UnderlineTypeEnum = Object.freeze({
 /**
  * Recurse through all children and apply function on each child if it is a valid element (e.g. not a string, undefined, etc.)
  *
- * @param {object|array|string|JSX.Element} children
+ * @param {Object|Array|string|React.ReactElement} children
  * @param {function} cloneFunction
  * @returns {Array<Exclude<unknown, boolean | null | undefined>>}
  */
@@ -112,10 +112,10 @@ let inferredLinkDisplay;
 /**
  * The Component function
  *
- * @param {object|array|string|JSX.Element} children
+ * @param {Object|array|string|React.ReactElement} children
  * @param {boolean} a
  * @param linkRef
- * @param {string|object} href
+ * @param {string|Object} href
  * @param {string} target
  * @param {function} onClick
  * @param {function} onKeyDown
@@ -131,7 +131,7 @@ let inferredLinkDisplay;
  * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 function Link({
   children = "Im a hyperlink now!",
@@ -246,7 +246,7 @@ function Link({
  * @param {UnderlineType} forceUnderlineType
  * @param {boolean} data_underline_animation_disabled
  * @param props
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap({
   className = "",
@@ -376,10 +376,10 @@ export function LinkOnlyInternalAnimations({
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 function LinkSkeleton(props) {
   return (

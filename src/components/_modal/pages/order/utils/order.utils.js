@@ -3,10 +3,10 @@ import styles from "@/components/_modal/pages/order/Order.module.css";
 
 /**
  *
- * @param {*} value
- * @param {*} valid
- * @param updateLoanerInfo
- * @param setMail
+ * @param {string} value
+ * @param {boolean} valid
+ * @param {function} updateLoanerInfo
+ * @param {function} setMail
  */
 export function onMailChange(value, valid, updateLoanerInfo, setMail) {
   valid &&

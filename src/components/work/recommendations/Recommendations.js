@@ -24,7 +24,7 @@ import { useMemo } from "react";
 /**
  * The recommendations React component
  *
- * @param {object} props
+ * @param {Object} props
  * @param {string} props.workId The work id
  */
 export default function Recommendations({

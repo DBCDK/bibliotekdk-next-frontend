@@ -24,12 +24,12 @@ import styles from "./Input.module.css";
  * @param required
  * @param ariaLabelledby
  * @param ariaLabel
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
  * Get you value like <Input onChange={(value) => console.log(value)} ... />
  *
- * @returns {component}
+ * @returns {React.JSX.Element}
  */
 function Input({
   className,

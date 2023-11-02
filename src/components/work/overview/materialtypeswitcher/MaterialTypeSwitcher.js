@@ -1,8 +1,9 @@
-import isEqual from "lodash/isEqual";
 import Tag from "@/components/base/forms/tag";
 import {
   formatMaterialTypesToCypress,
   formatMaterialTypesToPresentation,
+  toFlatMaterialTypes,
+  inFlatMaterialTypes,
 } from "@/lib/manifestationFactoryUtils";
 
 export function MaterialTypeSwitcher({
@@ -12,10 +13,12 @@ export function MaterialTypeSwitcher({
   type,
 }) {
   // Handle selectedMaterial
-  function handleSelectedMaterial(materialType, type) {
+  function handleSelectedMaterial(materialTypeArray, type) {
     // Update query param callback
-    if (!isEqual(type, materialType)) {
-      onTypeChange({ type: materialType });
+    if (!inFlatMaterialTypes(type, materialTypeArray)) {
+      onTypeChange({
+        type: toFlatMaterialTypes(materialTypeArray),
+      });
     }
   }
 
@@ -23,8 +26,8 @@ export function MaterialTypeSwitcher({
     //  Sets isSelected flag if button should be selected
     return (
       <Tag
-        key={materialTypeArray.join(",")}
-        selected={isEqual(materialTypeArray, type)}
+        key={formatMaterialTypesToCypress(materialTypeArray)}
+        selected={inFlatMaterialTypes(type, materialTypeArray)}
         onClick={() => handleSelectedMaterial(materialTypeArray, type)}
         skeleton={skeleton}
         dataCy={"tag-" + formatMaterialTypesToCypress(materialTypeArray)}

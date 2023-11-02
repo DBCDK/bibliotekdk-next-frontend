@@ -88,7 +88,7 @@ function LinkDropdown({ context, menuItems }) {
   /**
    * Handles keyboard navigation in dropdown menu
    * If arrowDown/right or up/left, we can click into next or previous item
-   * @param {*} e
+   * @param {Object} e
    */
   function onMenuKeyDown(e) {
     switch (e.key) {

@@ -3,7 +3,7 @@
 /**
  * When user renew a loan
  *
- * @param {object} params
+ * @param {Object} params
  * @param {string} params.loanId the loan id
  * @param {string} params.agencyId the agency id
  */

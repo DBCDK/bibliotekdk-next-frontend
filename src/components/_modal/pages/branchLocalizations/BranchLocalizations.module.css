@@ -1,0 +1,33 @@
+.status {
+  padding-top: var(--pt4);
+}
+
+.no_status {
+  padding-top: var(--pt8);
+}
+
+.list {
+  padding-top: var(--pt2);
+}
+
+.agency_holdings_row_wrapper {
+  display: flex;
+  flex-direction: row;
+  padding-top: var(--pt2_5);
+}
+
+.agency_holdings_result {
+  margin-left: var(--pt1);
+  display: inline-flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.link_for_branch {
+  padding-top: var(--pt1);
+}
+
+.supplementary_status {
+  padding-top: var(--pt4);
+}

@@ -19,6 +19,9 @@ function LocalizationInformation({
   onClick,
   availableAsPhysicalCopy,
 }) {
+  if (availableAsDigitalCopy) {
+    return null;
+  }
   return (
     <>
       <div className={styles.pickup}>
@@ -85,6 +88,7 @@ function LocalizationInformation({
             >{`${pickupBranch?.postalCode} ${pickupBranch?.city}`}</Text>
           </div>
         )}
+        {/* maybe move warning together with warning in order-modal. see bibdk2021-1927 */}
         {!isLoadingBranches &&
           pickupBranch &&
           !availableAsPhysicalCopy &&
@@ -148,6 +152,7 @@ export default function Wrap({ context }) {
         !isLoadingBranches &&
           modal.push("pickup", {
             pid,
+            pids,
             initial: {
               agencies: pickupBranchUser?.agencies,
             },

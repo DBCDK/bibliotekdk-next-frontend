@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { FlatSubjectsForFullManifestation } from "@/components/work/keywords/Keywords";
 
 import { parseFunction } from "@/lib/centralParsers.utils";
+import { getAudienceValues } from "@/components/work/details/utils/export.utils";
 
 // fields to handle - add to handle a field eg. subjects or lix or let or ...
 const fields = () => [
@@ -242,6 +243,14 @@ const fields = () => [
     valueParser: (value) => value.edition || "",
   },
   {
+    dataField: "audience",
+    label: Translate({
+      context: "details",
+      label: "audience",
+    }),
+    valueParser: getAudienceValues,
+  },
+  {
     dataField: "physicalDescriptions",
     label: Translate({
       context: "bibliographic-data",
@@ -249,6 +258,7 @@ const fields = () => [
     }),
     valueParser: (value) => value?.[0]?.requirements || "",
   },
+
   /*{
     dataField: "manifestationParts",
     label: Translate({
@@ -288,7 +298,7 @@ const fields = () => [
 /**
  * Render full and parallel titles as one block to show.
  * @param value
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 function renderFullAndParallelTitles(value) {
   return (
@@ -339,7 +349,7 @@ function renderAlternativeTitles(value) {
 /**
  * Render translated titles - do not show if shown before in another title
  * @param value
- * @returns {JSX.Element|null}
+ * @returns {React.ReactElement|null}
  */
 function renderTranslatedTitle(value) {
   // only render if values are not rendered before - compare with full, parallel and main
@@ -383,7 +393,7 @@ function titlesToFilterOn(value) {
 /**
  * Render original titles
  * @param value
- * @returns {JSX.Element|null}
+ * @returns {React.ReactElement|null}
  */
 function renderOriginalTitle(value) {
   // only render if values are not rendered before - compare with full, parallel and main
@@ -413,8 +423,8 @@ function renderOriginalTitle(value) {
  *
  * It tries to parse all fields that are in the "fields" array
  *
- * @param {object} manifestation
- * @returns {array}
+ * @param {Object} manifestation
+ * @returns {Array}
  */
 export function parseManifestation(manifestation) {
   return (

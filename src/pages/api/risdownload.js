@@ -5,7 +5,7 @@ import { getRis } from "@/pages/api/ris";
  * Entry point
  * @param req
  * @param res
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
 export default async function risHandler(req, res) {
   // get an access token for api

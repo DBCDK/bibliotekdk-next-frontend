@@ -51,7 +51,7 @@
 
 .flagContainer {
   overflow: hidden;
-  height: 16px; /* +1 to make room for rotated lines */
+  height: 17px; /* +2px to make room for rotated lines */
 }
 
 .flag {

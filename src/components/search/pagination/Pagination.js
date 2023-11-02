@@ -9,6 +9,7 @@ import max from "lodash/max";
 import ceil from "lodash/ceil";
 import range from "lodash/range";
 import { Arrow } from "@/components/work/overview/covercarousel/arrow/Arrow";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 function calculatePaginationValues(currentPage, numPages, MAX_VISIBLE_PAGES) {
   const numVisiblePages =
@@ -57,7 +58,11 @@ export default function Pagination({
   isLoading,
   MAX_VISIBLE_PAGES = 9,
   className,
+  forceMobileView,
 }) {
+  const isMobile = useBreakpoint() === "xs";
+  const mobileView = forceMobileView || isMobile;
+
   const {
     showPreviousPageArrow,
     bottomVisiblePage,
@@ -82,7 +87,7 @@ export default function Pagination({
 
   return (
     <React.Fragment>
-      {numPages > 1 && numPages > currentPage && (
+      {mobileView && numPages > 1 && numPages > currentPage && (
         <div className={`${styles.mobile} ${className}`}>
           <Button
             type="secondary"
@@ -99,52 +104,56 @@ export default function Pagination({
           </Button>
         </div>
       )}
-      <div className={`${styles.pagination} ${styles.desktop} ${className}`}>
-        <Arrow
-          clickCallback={() => onChangeChecked(currentPage - 1)}
-          arrowClass={`${styles.arrow_styling} ${
-            !showPreviousPageArrow && styles.arrow_hidden
-          }`}
-          orientation={"left"}
-          dataDisabled={!(!isLoading && showPreviousPageArrow)}
-          size={{ w: 4, h: 4 }}
-        />
+      {!mobileView && (
+        <div className={`${styles.pagination} ${styles.desktop} ${className}`}>
+          <Arrow
+            clickCallback={() => onChangeChecked(currentPage - 1)}
+            arrowClass={`${styles.arrow_styling} ${
+              !showPreviousPageArrow && styles.arrow_hidden
+            }`}
+            orientation={"left"}
+            dataDisabled={!(!isLoading && showPreviousPageArrow)}
+            size={{ w: 4, h: 4 }}
+          />
 
-        {!showPreviousPageArrow && <div className={styles.arrowPlaceholder} />}
+          {!showPreviousPageArrow && (
+            <div className={styles.arrowPlaceholder} />
+          )}
 
-        {arrayOfPaginationPages.map((page, index) => {
-          return (
-            <Icon
-              onClick={() => onChangeChecked(page)}
-              onKeyDown={(event) => onKeyDown(event, page)}
-              key={index}
-              size={{ w: 4, h: 4 }}
-              bgColor={"override"}
-              className={
-                !isLoading && page === currentPage ? styles.selected : ""
-              }
-              skeleton={isLoading}
-              tabIndex="0"
-              data-cy={`page-${page}-button`}
-              alt=""
-              tag={"button"}
-            >
-              {page}
-            </Icon>
-          );
-        })}
-        <Arrow
-          clickCallback={() => onChangeChecked(currentPage + 1)}
-          arrowClass={`${styles.arrow_styling} ${
-            !showNextPageArrow && styles.arrow_hidden
-          }`}
-          orientation={"right"}
-          dataDisabled={!(!isLoading && showNextPageArrow)}
-          size={{ w: 4, h: 4 }}
-        />
+          {arrayOfPaginationPages.map((page, index) => {
+            return (
+              <Icon
+                onClick={() => onChangeChecked(page)}
+                onKeyDown={(event) => onKeyDown(event, page)}
+                key={index}
+                size={{ w: 4, h: 4 }}
+                bgColor={"override"}
+                className={
+                  !isLoading && page === currentPage ? styles.selected : ""
+                }
+                skeleton={isLoading}
+                tabIndex="0"
+                data-cy={`page-${page}-button`}
+                alt=""
+                tag={"button"}
+              >
+                {page}
+              </Icon>
+            );
+          })}
+          <Arrow
+            clickCallback={() => onChangeChecked(currentPage + 1)}
+            arrowClass={`${styles.arrow_styling} ${
+              !showNextPageArrow && styles.arrow_hidden
+            }`}
+            orientation={"right"}
+            dataDisabled={!(!isLoading && showNextPageArrow)}
+            size={{ w: 4, h: 4 }}
+          />
 
-        {!showNextPageArrow && <div className={styles.arrowPlaceholder} />}
-      </div>
+          {!showNextPageArrow && <div className={styles.arrowPlaceholder} />}
+        </div>
+      )}
     </React.Fragment>
   );
 }

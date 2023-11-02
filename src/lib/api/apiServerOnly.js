@@ -4,9 +4,9 @@ import { getServerSession } from "@dbcdk/login-nextjs/server";
 /**
  * Initializes session and fetches stuff from API
  * Required for SSR
- * @param {*} queries
- * @param {*} context
- * @param customQueryVariables
+ * @param {Array} queries
+ * @param {Object} context
+ * @param {*} customQueryVariables
  * @returns
  */
 export async function fetchAll(queries, context, customQueryVariables) {

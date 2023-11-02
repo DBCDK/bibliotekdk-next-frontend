@@ -1,0 +1,15 @@
+.librarySearchSection {
+  padding-top: var(--pt4);
+  padding-bottom: var(--pt4);
+}
+
+.search {
+  padding-top: var(--pt1);
+  padding-bottom: var(--pt1);
+}
+
+@media (max-width: 414px) {
+  .librarySearchSection {
+    padding-top: 0;
+  }
+}

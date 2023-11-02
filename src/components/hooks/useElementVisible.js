@@ -48,7 +48,7 @@ function useSetupIntersector() {
  *    - The shown image in CoverCarousel.js is reflected by DotHandler.js.
  *  ```
  * @param options
- * @return {{elementRef: React.MutableRefObject<*[]>, isVisible: Map<any, any>, hasBeenSeen: Map<any, any>}}
+ * @returns {{elementRef: React.MutableRefObject<*[]>, isVisible: Map<any, any>, hasBeenSeen: Map<any, any>}}
  */
 export function useBundledElementVisibleById(options) {
   const { elementRef, isVisible, hasBeenSeen, handleIntersection } =
@@ -97,7 +97,7 @@ export function useBundledElementVisibleById(options) {
  *    - The shown image in CoverCarousel.js is reflected by DotHandler.js.
  *  ```
  * @param options
- * @return {{elementRef: React.MutableRefObject<null>, isVisible: boolean, hasBeenSeen: boolean}}
+ * @returns {{elementRef: React.MutableRefObject<null>, isVisible: boolean, hasBeenSeen: boolean}}
  */
 export default function useElementVisible(options) {
   const elementRef = useRef(null);

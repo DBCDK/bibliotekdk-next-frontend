@@ -21,7 +21,7 @@
 }
 .row > .dot {
   position: relative;
-  height: var(--pt2);
+  height: 18px;
   width: 18px;
 }
 .row.selected > .dot {
@@ -43,6 +43,8 @@
   bottom: 0;
   left: 0;
   border-radius: 50%;
+  width: 18px;
+  height: 18px;
 }
 .row > .dot::before {
   background: var(--blue);
@@ -54,6 +56,7 @@
 }
 .row > .dot::after {
   border: 1px solid var(--gray);
+  box-sizing: border-box;
 }
 .row.selected > .dot::after {
   border-color: var(--blue);

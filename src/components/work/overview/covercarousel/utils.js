@@ -15,7 +15,7 @@ export function getManifestationsWithCorrectCover(manifestations) {
   const { uniqueMaterialTypes, manifestationsEnrichedWithDefaultFrontpage } =
     manifestationMaterialTypeFactory(manifestations);
 
-  const { materialType, manifestations: manifestationsBeforeFilter } =
+  const { materialTypesArray, manifestations: manifestationsBeforeFilter } =
     manifestationsEnrichedWithDefaultFrontpage(uniqueMaterialTypes?.[0]);
 
   const manifestationsNotDefault = manifestationsBeforeFilter?.filter(
@@ -26,7 +26,7 @@ export function getManifestationsWithCorrectCover(manifestations) {
     manifestationsWithCover: !isEmpty(manifestationsNotDefault)
       ? manifestationsNotDefault
       : [manifestationsBeforeFilter?.[0]],
-    materialType: materialType,
+    materialType: materialTypesArray,
   };
 }
 
@@ -50,7 +50,7 @@ export function getTextDescription(materialType, manifestation) {
  *  In a deterministic manner. Used in {@link getIndicesForCoverCarousel}
  * @param arr
  * @param len
- * @return {*}
+ * @returns {React.JSX.Element}
  */
 function getEvenlySpacedOutIndices(arr, len) {
   const stepSize = ceil(arr.length / len);
@@ -63,7 +63,7 @@ function getEvenlySpacedOutIndices(arr, len) {
  *  The first and last 2 indices are provides always
  *  The rest are evenly spread out by {@link getEvenlySpacedOutIndices}
  * @param length
- * @return {*[]|*}
+ * @returns {*[]|*}
  */
 export function getIndicesForCoverCarousel(length) {
   const rangeInMiddle = range(2, length - 3);

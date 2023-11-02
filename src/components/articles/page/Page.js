@@ -14,7 +14,7 @@ import React from "react";
 /**
  * The Articles page React component
  *
- * @returns {component}
+ * @returns {React.JSX.Element}
  */
 export default function Page() {
   const router = useRouter();

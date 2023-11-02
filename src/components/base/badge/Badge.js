@@ -7,10 +7,10 @@ import styles from "./Badge.module.css";
  *
  *
  * @param {string} className
- * @param {string | object} children
+ * @param {string | Object} children
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {React.JSX.Element}
  */
 export default function Badge({ className = "", children = "0" }) {
   return (

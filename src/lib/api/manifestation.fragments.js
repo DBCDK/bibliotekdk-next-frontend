@@ -7,6 +7,7 @@ import { ApiEnums } from "@/lib/api/api";
 import {
   creatorsFragment,
   manifestationDetailsForAccessFactory,
+  materialTypesFragment,
 } from "@/lib/api/fragments.utils";
 
 export function refWorks(pid) {
@@ -66,8 +67,17 @@ export function editionManifestations({ pid }) {
     query: `query editionManifestations($pid: [String!]!) {
       manifestations(pid: $pid) {
         pid
+        ownerWork {
+          workId
+          titles {
+            full
+          }
+          creators {
+            ...creatorsFragment
+          }
+        }
         materialTypes {
-          specific
+          ...materialTypesFragment
         }
         edition {
           publicationYear {
@@ -91,6 +101,7 @@ export function editionManifestations({ pid }) {
     ${manifestationCoverFragment}
     ${accessFragment}
     ${creatorsFragment}
+    ${materialTypesFragment}
     `,
     variables: { pid },
     slowThreshold: 3000,
@@ -111,7 +122,7 @@ export function alternativesManifestations({ pid }) {
           ...creatorsFragment
         }
         materialTypes {
-          specific
+          ...materialTypesFragment
         }
         accessTypes {
           display
@@ -123,6 +134,7 @@ export function alternativesManifestations({ pid }) {
     }
     ${accessFragment}
     ${creatorsFragment}
+    ${materialTypesFragment}
     `,
     variables: { pid },
     slowThreshold: 3000,
@@ -140,7 +152,7 @@ export function reservationButtonManifestations({ pid }) {
           main
         }
         materialTypes {
-          specific
+          ...materialTypesFragment
         }
         workTypes
         ...accessFragment
@@ -148,6 +160,7 @@ export function reservationButtonManifestations({ pid }) {
       monitor(name: "bibdknext_manifestation_manifestations")
     }
     ${accessFragment}
+    ${materialTypesFragment}
     `,
     variables: { pid },
     slowThreshold: 3000,
@@ -274,7 +287,14 @@ const lectorReviewFragment = `fragment lectorReviewFragment on Manifestation {
            ...creatorsFragment
          }
          materialTypes {
-           specific
+           materialTypeGeneral {
+             code
+             display
+           }
+           materialTypeSpecific {
+             code
+             display
+           }
          }
          ownerWork {
            workId
@@ -300,7 +320,14 @@ const reviewOfFragment = `fragment reviewOfFragment on Manifestation {
          ...creatorsFragment
        }
        materialTypes {
-         specific
+         materialTypeGeneral {
+           code
+           display
+         }
+         materialTypeSpecific {
+           code
+           display
+         }
        }
        titles {
          full
@@ -339,6 +366,7 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
     original
     alternative
     parallel
+    sort
   }
   contributors {
     display
@@ -399,8 +427,29 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
     display
   }
   materialTypes {
-    specific
+    materialTypeGeneral {
+      code
+      display
+    }
+    materialTypeSpecific {
+      code
+      display
+    }
   }
+  audience {
+    generalAudience
+    childrenOrAdults {
+      display
+    }
+    schoolUse {
+      display
+    }                
+    ages {
+      display
+    }                
+    lix
+    let
+  } 
   shelfmark {
     shelfmark
     postfix

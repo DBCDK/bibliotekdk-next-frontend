@@ -64,10 +64,10 @@ const actions = [
 /**
  * The Component function
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export function Header({
   className = "",
@@ -76,6 +76,7 @@ export function Header({
   user,
   modal,
   filters,
+  hideSimpleSearch,
 }) {
   const context = { context: "header" };
   const breakpoint = useBreakpoint();
@@ -191,86 +192,88 @@ export function Header({
             <StaticHeader router={router} context={context} />
             <Col xs={{ span: 7, offset: 3 }} className={styles.mobileHeader}>
               <SkipToMainAnchor />
-              <div className={styles.bottom}>
-                <form
-                  onSubmit={(e) => {
-                    e?.preventDefault();
-                    doSearch(query);
+              {!hideSimpleSearch && (
+                <div className={styles.bottom}>
+                  <form
+                    onSubmit={(e) => {
+                      e?.preventDefault();
+                      doSearch(query);
 
-                    // view query in storybook
-                    story && alert(`/find?q.all=${query}`);
+                      // view query in storybook
+                      story && alert(`/find?q.all=${query}`);
 
-                    // Remove suggester in storybook
-                    story && story.setSuggesterVisibleMobile(false);
+                      // Remove suggester in storybook
+                      story && story.setSuggesterVisibleMobile(false);
 
-                    // remove keyboard/unfocus
-                    blurInput();
-                  }}
-                  className={`${styles.search}`}
-                  data-cy={cyKey({ name: "search", prefix: "header" })}
-                >
-                  <DesktopMaterialSelect className={styles.select} />
-
-                  <div
-                    className={`${styles.suggester__wrap} ${suggesterVisibleMobileClass}`}
+                      // remove keyboard/unfocus
+                      blurInput();
+                    }}
+                    className={`${styles.search}`}
+                    data-cy={cyKey({ name: "search", prefix: "header" })}
                   >
-                    <Suggester
-                      className={`${styles.suggester}`}
-                      history={history}
-                      clearHistory={clearHistory}
-                      isMobile={suggesterVisibleMobile}
-                      onSelect={(val) => doSearch(val)}
-                      onChange={(val) => setQ({ ...q, all: val })}
-                      onClose={() => {
-                        if (router) {
-                          // remove suggester prop from query obj
-                          router.back();
-                        }
-                        // Remove suggester in storybook
-                        story && story.setSuggesterVisibleMobile(false);
-                      }}
-                      onKeyDown={keyPressed}
-                    />
+                    <DesktopMaterialSelect className={styles.select} />
 
-                    <MoreOptionsLink
-                      onSearchClick={() => setCollapseOpen(!collapseOpen)}
-                      className={`${styles.linkshowmore} ${
+                    <div
+                      className={`${styles.suggester__wrap} ${suggesterVisibleMobileClass}`}
+                    >
+                      <Suggester
+                        className={`${styles.suggester}`}
+                        history={history}
+                        clearHistory={clearHistory}
+                        isMobile={suggesterVisibleMobile}
+                        onSelect={(val) => doSearch(val)}
+                        onChange={(val) => setQ({ ...q, all: val })}
+                        onClose={() => {
+                          if (router) {
+                            // remove suggester prop from query obj
+                            router.back();
+                          }
+                          // Remove suggester in storybook
+                          story && story.setSuggesterVisibleMobile(false);
+                        }}
+                        onKeyDown={keyPressed}
+                      />
+
+                      <MoreOptionsLink
+                        onSearchClick={() => setCollapseOpen(!collapseOpen)}
+                        className={`${styles.linkshowmore} ${
+                          collapseOpen ? styles.hidden : ""
+                        }`}
+                      >
+                        {Translate({
+                          context: "search",
+                          label:
+                            countQ === 0
+                              ? "advancedSearchLink"
+                              : "advancedSearchLinkCount",
+                          vars: [countQ],
+                        })}
+                      </MoreOptionsLink>
+                      <ExpandedSearch
+                        className={styles.expandedSearch}
+                        collapseOpen={collapseOpen}
+                        setCollapseOpen={setCollapseOpen}
+                      />
+                    </div>
+
+                    <button
+                      className={`${styles.button} ${
                         collapseOpen ? styles.hidden : ""
                       }`}
-                    >
-                      {Translate({
-                        context: "search",
-                        label:
-                          countQ === 0
-                            ? "advancedSearchLink"
-                            : "advancedSearchLinkCount",
-                        vars: [countQ],
+                      type="submit"
+                      data-cy={cyKey({
+                        name: "searchbutton",
+                        prefix: "header",
                       })}
-                    </MoreOptionsLink>
-                    <ExpandedSearch
-                      className={styles.expandedSearch}
-                      collapseOpen={collapseOpen}
-                      setCollapseOpen={setCollapseOpen}
-                    />
-                  </div>
-
-                  <button
-                    className={`${styles.button} ${
-                      collapseOpen ? styles.hidden : ""
-                    }`}
-                    type="submit"
-                    data-cy={cyKey({
-                      name: "searchbutton",
-                      prefix: "header",
-                    })}
-                  >
-                    <span>{Translate({ ...context, label: "search" })}</span>
-                    <div className={styles.fill} />
-                  </button>
-                </form>
-              </div>
+                    >
+                      <span>{Translate({ ...context, label: "search" })}</span>
+                      <div className={styles.fill} />
+                    </button>
+                  </form>
+                </div>
+              )}
             </Col>
-            <Col xs={{ span: 2 }}>
+            <Col xs={{ span: 2 }} className={styles.iconActionsContainer}>
               <div
                 className={styles.iconActions}
                 data-cy={cyKey({
@@ -279,6 +282,10 @@ export function Header({
                 })}
               >
                 {menu.map((m) => {
+                  //hide search icon if hideSimpleSearch is true
+                  if (hideSimpleSearch && m.label == "search") {
+                    return null;
+                  }
                   const ActionIcon = m.icon;
 
                   return (
@@ -309,14 +316,13 @@ export function Header({
  * Static parts of header - logo, materialtypeslinks, header actions
  * @param router
  * @param context
- * @returns {JSX.Element}
- * @constructor
+ * @returns {React.JSX.Element}
  */
 export function StaticHeader({ router = null, context }) {
   return (
     <>
-      <Col xs={3} lg={2}>
-        <Logo fill={"var(--blue)"} text={"default_logo_text"} />
+      <Col xs={3} lg={2} className={styles.logoWrapper}>
+        <Logo />
       </Col>
       <Col
         xs={{ span: 9, offset: 1 }}
@@ -387,10 +393,10 @@ export function StaticHeader({ router = null, context }) {
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 function HeaderSkeleton(props) {
   return <Header {...props} className={`${props.className}`} skeleton={true} />;
@@ -399,10 +405,10 @@ function HeaderSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
   const router = useRouter();

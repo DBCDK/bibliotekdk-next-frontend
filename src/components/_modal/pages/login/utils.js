@@ -35,12 +35,12 @@ export const isOrderPossible = ({ mode, branch }) => {
 
 /**
  * Open login modal
- * @param {obj} modal
+ * @param {Object} modal
  * @param {string} title
  * @param {string} mode
  * @param {string} originUrl
- * @param {array} pids
- * @param {array} selectedAccesses
+ * @param {Array} pids
+ * @param {Array} selectedAccesses
  * @param {string} workId
  * @param {string} singleManifestation
  */
@@ -71,6 +71,15 @@ export function openLoginModal({
 }
 
 /**
+ *
+ * @param {string} string
+ * @returns {string}
+ */
+function getOperator(string) {
+  return string.includes("?") ? "&" : "?";
+}
+
+/**
  * Get a callback url to return to after sign in.
  *
  * OBS: this code is also responsible for setting **pickup branch** after login.
@@ -92,13 +101,18 @@ export function getCallbackUrl(pickupBranch, callbackUID) {
   const regex = /[&|?]modal=[0-9]*/;
   callback = callback.replace(regex, "");
 
-  //if we have callbackUID, we want to redirect to order modal after login and therefor, we append it to url
-  let newCallBack = callbackUID ? callback + `&modal=${callbackUID}` : callback;
+  // append modal if any callbackUID is given
+  // In case we want to open a specific modal after login, we append the modal UID to the url
+  if (callbackUID) {
+    const operator = getOperator(callback);
+    callback += operator + `modal=${callbackUID}`;
+  }
 
-  return pickupBranch
-    ? newCallBack +
-        (newCallBack.includes("?") ? "&" : "?") +
-        "setPickupAgency=" +
-        pickupBranch
-    : newCallBack;
+  // append pickupAgency if any given
+  if (pickupBranch) {
+    const operator = getOperator(callback);
+    callback += operator + `setPickupAgency=${pickupBranch}`;
+  }
+
+  return callback;
 }

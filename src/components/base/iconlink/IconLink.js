@@ -26,7 +26,9 @@ import {
  * @param iconOrientation
  * @param iconPlacement
  * @param iconStyle
- * @return {JSX.Element}
+ * @param target
+ * @param skeleton
+ * @returns {React.JSX.Element}
  */
 export function IconLink({
   children,
@@ -43,56 +45,65 @@ export function IconLink({
   iconPlacement = "left",
   iconStyle = {},
   skeleton = false,
+  target = "_self",
 }) {
   const IconChild = iconSrc === null ? ChevronSvg : iconSrc;
 
-  const IconComponent = () => {
+  function IconComponent() {
     return (
-      <Icon
-        size={{ w: 2, h: 2 }}
-        dataCy="icon-link-icon"
-        className={cx(...iconAnimation)}
-        title={"Link kopieret"}
-        alt={JSON.stringify(children.innerText)}
-        tabIndex="-1"
+      <span
+        alt=""
+        className={cx({
+          [styles.padding_element_right]: iconPlacement === "left",
+          [styles.padding_element_left]: iconPlacement === "right",
+        })}
       >
-        <IconChild
-          style={{
-            transform: `rotate(${iconOrientation}deg)`,
-            display: "flex",
-            ...iconStyle,
-          }}
-        />
-      </Icon>
+        <Icon
+          size={{ w: 2, h: 2 }}
+          dataCy="icon-link-icon"
+          className={cx(iconAnimation)}
+          title={"Link kopieret"}
+          alt=""
+          tabIndex="-1"
+        >
+          <IconChild
+            style={{
+              transform: `rotate(${iconOrientation}deg)`,
+              display: "flex",
+              ...iconStyle,
+            }}
+          />
+        </Icon>
+      </span>
     );
-  };
+  }
 
   return (
     <LinkOnlyInternalAnimations
       dataCy="icon-link-children"
-      className={cx(styles.flex_box, className)}
+      className={cx(className)}
       {...(href !== null && { href: href })}
       {...(onClick !== null && { onClick: onClick })}
       tag={tag}
       disabled={disabled}
+      target={target}
       skeleton={skeleton}
     >
       {iconPlacement === "left" && <IconComponent />}
-      <div>
-        <Link
-          border={disabled ? false : border}
-          tag={"span"}
-          disabled={disabled}
-        >
-          {typeof children === "string" ? (
-            <Text type={textType} tag="span">
-              {children}
-            </Text>
-          ) : (
-            children
-          )}
-        </Link>
-      </div>
+      <Link
+        border={disabled ? false : border}
+        tag={"span"}
+        disabled={disabled}
+        tabIndex="-1"
+      >
+        {typeof children === "string" ? (
+          <Text type={textType} tag="span">
+            {children}
+          </Text>
+        ) : (
+          children
+        )}
+      </Link>
       {iconPlacement === "right" && <IconComponent />}
     </LinkOnlyInternalAnimations>
   );

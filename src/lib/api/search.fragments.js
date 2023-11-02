@@ -6,13 +6,16 @@
 import { FilterTypeEnum } from "@/lib/enums";
 import { ApiEnums } from "@/lib/api/api";
 
-import { creatorsFragment } from "@/lib/api/fragments.utils";
+import {
+  creatorsFragment,
+  materialTypesFragment,
+} from "@/lib/api/fragments.utils";
 
 /**
  * Hitcount
  *
  * @param {string} q the query
- * @param {object} filters filters for searching
+ * @param {Object} filters filters for searching
  */
 export function hitcount({ q, filters = {} }) {
   return {
@@ -36,7 +39,7 @@ export function hitcount({ q, filters = {} }) {
  * @param {string} q the query
  * @param {number} limit number of results
  * @param {number} offset offset for pagination
- * @param {object} filters filters for searching
+ * @param {Object} filters filters for searching
  */
 export function all({ q, limit = 100, offset = 0, filters = {} }) {
   return {
@@ -54,6 +57,7 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
           workTypes
           manifestations {
             mostRelevant{
+              pid
               ownerWork {
                 workTypes
               }
@@ -62,7 +66,15 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
                 origin
               }
               materialTypes {
-                specific
+                ...materialTypesFragment
+              }
+              hostPublication {
+                title
+              }
+              publisher
+              edition {
+                summary
+                edition
               }
             }            
           }
@@ -70,7 +82,7 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
             ...creatorsFragment
           }
           materialTypes {
-            specific
+            ...materialTypesFragment
           }
           fictionNonfiction {
             display
@@ -80,13 +92,15 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
             main
             full
             parallel
+            sort
           }
         }
         hitcount
       }
       monitor(name: "bibdknext_search_all")
     }
-    ${creatorsFragment}`,
+    ${creatorsFragment}
+    ${materialTypesFragment}`,
     variables: {
       q,
       limit,
@@ -101,8 +115,8 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
  * Detailed search response
  *
  * @param {string} q the query
- * @param {object} filters for searching
- * @param {array} facets for adding filters
+ * @param {Object} filters for searching
+ * @param {Array} facets for adding filters
  */
 export function facets({
   q,

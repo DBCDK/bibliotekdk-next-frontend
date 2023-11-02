@@ -9,7 +9,7 @@ let loader = process.env.STORYBOOK_ACTIVE && (({ src }) => src);
  * This automatically optimize images for different devices.
  *
  * https://nextjs.org/docs/api-reference/next/image
- * @param {*} props
+ * @param {Object} props
  */
 export default function Image(props) {
   return <NextImage loader={loader} {...props} />;

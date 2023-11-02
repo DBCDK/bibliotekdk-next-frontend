@@ -5,21 +5,52 @@ import styles from "./LibrariesTable.module.css";
 import Title from "@/components/base/title";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 
+import { useModal } from "@/components/_modal";
+
+const agencyTypes = {
+  SKOLEBIBLIOTEK: "schoolLibrary",
+  FOLKEBIBLIOTEK: "publicLibrary",
+  FORSKNINGSBIBLIOTEK: "academicLibrary",
+  ANDRE: "otherLibrary",
+};
+
+function RemoveLibraryButton({ agencyId, agencyName }) {
+  const modal = useModal();
+
+  return (
+    <IconButton
+      icon="close"
+      onClick={() => modal.push("removeLibrary", { agencyId, agencyName })}
+      alt={Translate({ context: "profile", label: "remove" })}
+    >
+      {Translate({ context: "profile", label: "remove" })}
+    </IconButton>
+  );
+}
+
 /**
  * Tablerow to be used in LibrariesTable component.
- * @param {obj} props
- * @returns {component}
+ * @param {Object} props
+ * @returns {React.JSX.Element}
  */
-function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
+function TableItem({
+  agencyName,
+  agencyId,
+  agencyType,
+  municipalityAgencyId,
+  loggedInBranchId,
+}) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs";
   const isHomeLibrary = municipalityAgencyId === agencyId;
+  const isLoggedInLibrary = loggedInBranchId === agencyId;
+
   //const lastUsed = false; // Cannot be implemented yet
-  const isPublic = isPublicLibrary(agencyId);
+  const isFFUAgency = agencyType === "FORSKNINGSBIBLIOTEK";
 
   const type = Translate({
     context: "profile",
-    label: isPublic ? "publicLibrary" : "academicLibrary",
+    label: agencyTypes[agencyType],
   });
 
   if (isMobile) {
@@ -52,13 +83,8 @@ function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
       */}
         </div>
 
-        {!isPublic && (
-          <IconButton
-            icon="close"
-            alt={Translate({ context: "profile", label: "remove" })}
-          >
-            {Translate({ context: "profile", label: "remove" })}
-          </IconButton>
+        {isFFUAgency && !isLoggedInLibrary && (
+          <RemoveLibraryButton agencyId={agencyId} agencyName={agencyName} />
         )}
       </div>
     );
@@ -77,18 +103,13 @@ function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
             </Text>
           )}
         </td>
-        <td>
+        <td className={styles.libraryType}>
           <Text type="text2">{type}</Text>
         </td>
       </div>
-      {!isPublic && (
+      {isFFUAgency && !isLoggedInLibrary && (
         <td>
-          <IconButton
-            icon="close"
-            alt={Translate({ context: "profile", label: "remove" })}
-          >
-            {Translate({ context: "profile", label: "remove" })}
-          </IconButton>
+          <RemoveLibraryButton agencyId={agencyId} agencyName={agencyName} />
         </td>
       )}
     </tr>
@@ -97,19 +118,22 @@ function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
 
 /**
  * Returns a table of users libraries
- * @param {obj} props
- * @returns {component}
+ * @param {Object} props
+ * @returns {React.JSX.Element}
  */
-export default function LibrariesTable({ data, municipalityAgencyId }) {
+export default function LibrariesTable({ data, user }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs";
+
+  const municipalityAgencyId = user?.municipalityAgencyId;
+  const loggedInBranchId = user?.loggedInBranchId;
 
   if (isMobile) {
     return (
       <>
         <div className={styles.headerRow}>
           <Text className={styles.headerItem}>
-            {Translate({ context: "profile", label: "libraries" })}
+            {Translate({ context: "profile", label: "library" })}
           </Text>
           <Text className={styles.headerItem}>
             {Translate({ context: "profile", label: "libraryType" })}
@@ -120,6 +144,7 @@ export default function LibrariesTable({ data, municipalityAgencyId }) {
             <TableItem
               key={item.agencyName}
               municipalityAgencyId={municipalityAgencyId}
+              loggedInBranchId={loggedInBranchId}
               {...item}
             />
           ))}
@@ -132,7 +157,7 @@ export default function LibrariesTable({ data, municipalityAgencyId }) {
       <thead>
         <tr className={styles.headerRow}>
           <th className={styles.headerItem}>
-            <Text>{Translate({ context: "profile", label: "libraries" })}</Text>
+            <Text>{Translate({ context: "profile", label: "library" })}</Text>
           </th>
           <th className={styles.headerItem}>
             <Text>
@@ -146,6 +171,7 @@ export default function LibrariesTable({ data, municipalityAgencyId }) {
           <TableItem
             key={item.agencyName}
             municipalityAgencyId={municipalityAgencyId}
+            loggedInBranchId={loggedInBranchId}
             {...item}
           />
         ))}
@@ -153,16 +179,3 @@ export default function LibrariesTable({ data, municipalityAgencyId }) {
     </table>
   );
 }
-
-/**
- *
- * @param {*} agencyID
- * @returns returns true if public library (Folkebibliotek)
- */
-const isPublicLibrary = (agencyID) => {
-  const faroeIslandsLibraries = ["900455", "911116", "911130"];
-  const parsedID = agencyID + "";
-  return (
-    parsedID?.charAt(0) === "7" || faroeIslandsLibraries.includes(parsedID)
-  );
-};

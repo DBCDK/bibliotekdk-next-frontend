@@ -110,7 +110,12 @@ function getWork(workIds) {
     {
       workId: "work_with_stuff__0",
       workTypes: [WorkTypeEnum.ARTICLE],
-      materialTypes: [{ specific: "avisartikel" }],
+      materialTypes: [
+        {
+          materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+          materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+        },
+      ],
       titles: {
         main: ["hejmain"],
         full: ["hejfull"],
@@ -131,7 +136,12 @@ function getWork(workIds) {
           {
             pid: "continues__0",
             cover: { detail: "default.dk", origin: "default" },
-            materialTypes: [{ specific: "avisartikel" }],
+            materialTypes: [
+              {
+                materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+                materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+              },
+            ],
             ownerWork: {
               workId: "continues__0__321",
             },
@@ -140,7 +150,12 @@ function getWork(workIds) {
           {
             pid: "continues__1",
             cover: { detail: "default.dk", origin: "default" },
-            materialTypes: [{ specific: "avisartikel" }],
+            materialTypes: [
+              {
+                materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+                materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+              },
+            ],
             ownerWork: {
               workId: "continues__1__321",
             },
@@ -151,7 +166,12 @@ function getWork(workIds) {
           {
             pid: "continued_in__0",
             cover: { detail: "moreinfo.dk", origin: "moreinfo" },
-            materialTypes: [{ specific: "avisartikel" }],
+            materialTypes: [
+              {
+                materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+                materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+              },
+            ],
             ownerWork: {
               workId: "continued_in__0__321",
             },
@@ -160,7 +180,12 @@ function getWork(workIds) {
           {
             pid: "continued_in__1",
             cover: { detail: "moreinfo.dk", origin: "moreinfo" },
-            materialTypes: [{ specific: "avisartikel" }],
+            materialTypes: [
+              {
+                materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+                materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+              },
+            ],
             ownerWork: {
               workId: "continued_in__1__321",
             },
@@ -171,7 +196,12 @@ function getWork(workIds) {
           {
             pid: "has_adaptation__0",
             cover: { detail: "default.dk", origin: "default" },
-            materialTypes: [{ specific: "avisartikel" }],
+            materialTypes: [
+              {
+                materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+                materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+              },
+            ],
             ownerWork: {
               workId: "has_adaptation__0__321",
             },
@@ -179,7 +209,12 @@ function getWork(workIds) {
           {
             pid: "has_adaptation__1",
             cover: { detail: "moreinfo.dk", origin: "moreinfo" },
-            materialTypes: [{ specific: "avisartikel" }],
+            materialTypes: [
+              {
+                materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+                materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+              },
+            ],
             ownerWork: {
               workId: "has_adaptation__1__321",
             },
@@ -189,7 +224,12 @@ function getWork(workIds) {
           {
             pid: "is_adaptation_of__0",
             cover: { detail: "moreinfo.dk", origin: "moreinfo" },
-            materialTypes: [{ specific: "avisartikel" }],
+            materialTypes: [
+              {
+                materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+                materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+              },
+            ],
             ownerWork: {
               workId: "is_adaptation_of__0__321",
             },
@@ -197,7 +237,12 @@ function getWork(workIds) {
           {
             pid: "is_adaptation_of__1",
             cover: { detail: "default.dk", origin: "default" },
-            materialTypes: [{ specific: "avisartikel" }],
+            materialTypes: [
+              {
+                materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+                materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+              },
+            ],
             ownerWork: {
               workId: "is_adaptation_of__1__321",
             },
@@ -216,8 +261,20 @@ function getFlatRelations() {
       pid: "continues__0",
       cover: { detail: "default.dk", origin: "default" },
       generation: 1,
-      materialTypes: [{ specific: "avisartikel" }],
-      materialTypesArray: ["avisartikel"],
+      materialTypes: [
+        {
+          materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+          materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+        },
+      ],
+      materialTypesArray: [
+        {
+          specificDisplay: "artikel",
+          specificCode: "ARTICLE",
+          generalDisplay: "artikler",
+          generalCode: "ARTICLES",
+        },
+      ],
       relationWorkType: "ARTICLE",
       workId: "continues__0__321",
       hostPublication: { issue: "2000-01-10" },
@@ -226,19 +283,43 @@ function getFlatRelations() {
       pid: "continues__1",
       cover: { detail: "default.dk", origin: "default" },
       generation: 1,
-      materialTypes: [{ specific: "avisartikel" }],
-      materialTypesArray: ["avisartikel"],
+      materialTypes: [
+        {
+          materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+          materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+        },
+      ],
+      materialTypesArray: [
+        {
+          specificDisplay: "artikel",
+          specificCode: "ARTICLE",
+          generalDisplay: "artikler",
+          generalCode: "ARTICLES",
+        },
+      ],
       relationWorkType: "ARTICLE",
       workId: "continues__1__321",
       hostPublication: { issue: "2000-01-11" },
     },
     {
       cover: { detail: "moreinfo.dk", origin: "moreinfo" },
-      materialTypesArray: ["avisartikel"],
+      materialTypesArray: [
+        {
+          specificDisplay: "artikel",
+          specificCode: "ARTICLE",
+          generalDisplay: "artikler",
+          generalCode: "ARTICLES",
+        },
+      ],
       workId: "work_with_stuff__0",
       generation: 0,
       workTypes: [WorkTypeEnum.ARTICLE],
-      materialTypes: [{ specific: "avisartikel" }],
+      materialTypes: [
+        {
+          materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+          materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+        },
+      ],
       relationWorkType: "ARTICLE",
       titles: {
         main: ["hejmain"],
@@ -261,8 +342,20 @@ function getFlatRelations() {
       pid: "continued_in__0",
       cover: { detail: "moreinfo.dk", origin: "moreinfo" },
       generation: 1,
-      materialTypes: [{ specific: "avisartikel" }],
-      materialTypesArray: ["avisartikel"],
+      materialTypes: [
+        {
+          materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+          materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+        },
+      ],
+      materialTypesArray: [
+        {
+          specificDisplay: "artikel",
+          specificCode: "ARTICLE",
+          generalDisplay: "artikler",
+          generalCode: "ARTICLES",
+        },
+      ],
       relationWorkType: "ARTICLE",
       workId: "continued_in__0__321",
       hostPublication: { issue: "2000-01-30" },
@@ -271,8 +364,20 @@ function getFlatRelations() {
       pid: "continued_in__1",
       cover: { detail: "moreinfo.dk", origin: "moreinfo" },
       generation: 1,
-      materialTypes: [{ specific: "avisartikel" }],
-      materialTypesArray: ["avisartikel"],
+      materialTypes: [
+        {
+          materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+          materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+        },
+      ],
+      materialTypesArray: [
+        {
+          specificDisplay: "artikel",
+          specificCode: "ARTICLE",
+          generalDisplay: "artikler",
+          generalCode: "ARTICLES",
+        },
+      ],
       relationWorkType: "ARTICLE",
       workId: "continued_in__1__321",
       hostPublication: { issue: "2000-01-31" },
@@ -281,8 +386,20 @@ function getFlatRelations() {
       pid: "has_adaptation__0",
       cover: { detail: "default.dk", origin: "default" },
       generation: 1,
-      materialTypes: [{ specific: "avisartikel" }],
-      materialTypesArray: ["avisartikel"],
+      materialTypes: [
+        {
+          materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+          materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+        },
+      ],
+      materialTypesArray: [
+        {
+          specificDisplay: "artikel",
+          specificCode: "ARTICLE",
+          generalDisplay: "artikler",
+          generalCode: "ARTICLES",
+        },
+      ],
       relationWorkType: "LITERATURE",
       workId: "has_adaptation__0__321",
     },
@@ -290,8 +407,20 @@ function getFlatRelations() {
       pid: "has_adaptation__1",
       cover: { detail: "moreinfo.dk", origin: "moreinfo" },
       generation: 1,
-      materialTypes: [{ specific: "avisartikel" }],
-      materialTypesArray: ["avisartikel"],
+      materialTypes: [
+        {
+          materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+          materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+        },
+      ],
+      materialTypesArray: [
+        {
+          specificDisplay: "artikel",
+          specificCode: "ARTICLE",
+          generalDisplay: "artikler",
+          generalCode: "ARTICLES",
+        },
+      ],
       relationWorkType: "LITERATURE",
       workId: "has_adaptation__1__321",
     },
@@ -299,8 +428,20 @@ function getFlatRelations() {
       pid: "is_adaptation_of__0",
       cover: { detail: "moreinfo.dk", origin: "moreinfo" },
       generation: 1,
-      materialTypes: [{ specific: "avisartikel" }],
-      materialTypesArray: ["avisartikel"],
+      materialTypes: [
+        {
+          materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+          materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+        },
+      ],
+      materialTypesArray: [
+        {
+          specificDisplay: "artikel",
+          specificCode: "ARTICLE",
+          generalDisplay: "artikler",
+          generalCode: "ARTICLES",
+        },
+      ],
       relationWorkType: "MOVIE",
       workId: "is_adaptation_of__0__321",
     },
@@ -308,8 +449,20 @@ function getFlatRelations() {
       pid: "is_adaptation_of__1",
       cover: { detail: "default.dk", origin: "default" },
       generation: 1,
-      materialTypes: [{ specific: "avisartikel" }],
-      materialTypesArray: ["avisartikel"],
+      materialTypes: [
+        {
+          materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+          materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+        },
+      ],
+      materialTypesArray: [
+        {
+          specificDisplay: "artikel",
+          specificCode: "ARTICLE",
+          generalDisplay: "artikler",
+          generalCode: "ARTICLES",
+        },
+      ],
       relationWorkType: "MOVIE",
       workId: "is_adaptation_of__1__321",
     },

@@ -11,7 +11,7 @@ import styles from "./MobileLoginButton.module.css";
 /**
  * Shown for mobile phones 414px and below, opens pickup locations selection in new modal
  * instead of showing it in the same modal as done on desktop
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export default function MobileLoginButton(props) {
   const modal = useModal();

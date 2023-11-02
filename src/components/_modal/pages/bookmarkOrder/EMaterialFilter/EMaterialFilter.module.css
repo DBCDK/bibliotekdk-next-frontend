@@ -1,0 +1,24 @@
+.eMaterialFilter {
+  padding: 0 var(--pt6);
+}
+
+.top {
+  padding-bottom: var(--pt1);
+}
+
+.subHeading {
+  margin-bottom: var(--pt5);
+}
+
+.filterList {
+  margin-bottom: var(--pt5);
+  padding-left: var(--pt3);
+}
+
+.filterItem {
+  margin-bottom: var(--pt3);
+}
+
+.nextPageDescription {
+  margin-bottom: var(--pt3);
+}

@@ -8,12 +8,12 @@ import styles from "./Subject.module.css";
  *
  *
  * @param {string} className
- * @param {bool} skeleton
- * @param {object} data
+ * @param {boolean} skeleton
+ * @param {Object} data
  *
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export function Subject({ className = "", data = {}, skeleton = false }) {
   return (
@@ -55,10 +55,10 @@ export function Subject({ className = "", data = {}, skeleton = false }) {
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  *  See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export function SubjectSkeleton(props) {
   return <Subject {...props} skeleton={true} />;
@@ -67,10 +67,10 @@ export function SubjectSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
+ * @param {Object} props
  * See propTypes for specific props and types
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
   if (props.skeleton) {

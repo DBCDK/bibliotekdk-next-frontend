@@ -18,7 +18,7 @@ const session_id = config?.publicRuntimeConfig?.useFixedSessionId
 /**
  * When user clicks recommendation
  *
- * @param {object} params
+ * @param {Object} params
  */
 export function collectRecommenderClick({
   recommender_based_on,
@@ -51,9 +51,9 @@ export function collectRecommenderClick({
 /**
  * When user gets suggestions
  *
- * @param {object} params
+ * @param {Object} params
  * @param {string} params.query
- * @param {array} params.suggestions
+ * @param {Array} params.suggestions
  */
 export function collectSuggestPresented({ query, suggestions }) {
   return {
@@ -85,9 +85,9 @@ export function collectSuggestPresented({ query, suggestions }) {
 /**
  * When user selects suggestion
  *
- * @param {object} params
+ * @param {Object} params
  * @param {string} params.query
- * @param {array} params.suggestion
+ * @param {Array} params.suggestion
  * @param {number} suggest_query_hit.suggestions
  */
 export function collectSuggestClick({ query, suggestion, suggest_query_hit }) {
@@ -121,7 +121,7 @@ export function collectSuggestClick({ query, suggestion, suggest_query_hit }) {
 /**
  * When user searches
  *
- * @param {object} params
+ * @param {Object} params
  * @param params.search_request
  */
 export function collectSearch({
@@ -151,7 +151,7 @@ export function collectSearch({
 /**
  * When user searches and then clicks on work
  *
- * @param {object} params
+ * @param {Object} params
  * @param params.search_request
  * @param params.search_query_hit
  * @param params.search_query_work

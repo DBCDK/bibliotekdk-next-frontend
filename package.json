@@ -91,7 +91,7 @@
     "style-loader": "^3.3.3"
   },
   "dependencies": {
-    "@dbcdk/login-nextjs": "^3.2.2",
+    "@dbcdk/login-nextjs": "^3.2.4",
     "@rooks/use-mutation-observer": "^4.11.0",
     "autosuggest-highlight": "^3.1.1",
     "bootstrap": "^5.2.3",
@@ -119,7 +119,7 @@
     "react-intersection-observer": "^8.32.0",
     "sass": "^1.54.5",
     "smoothscroll-polyfill": "^0.4.4",
-    "swr": "^1.3.0",
+    "swr": "^2.2.4",
     "unfetch": "^4.1.0",
     "uuid": "^8.3.2"
   }

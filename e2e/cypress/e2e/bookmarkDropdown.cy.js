@@ -27,7 +27,10 @@ describe("Dropdown", () => {
     );
 
     // select a material
-    cy.get('[data-cy="bookmark-fisk-2"]').should("be.visible").click();
+    cy.get('[data-cy="bookmark-Fisk-2"]')
+      .should("be.visible")
+      .click()
+      .type("{esc}");
 
     // background color should be blue now
     cy.get('[data-cy="bookmark-button"] ').should(

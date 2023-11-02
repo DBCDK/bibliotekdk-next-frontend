@@ -18,7 +18,7 @@ const time = date.getTime();
 const { DEFAULT_STORY_PARAMETERS, useMockLoanerInfo } = automock_utils();
 
 function ReservationButtonComponentBuilder({
-  type = "bog",
+  type = ["bog"],
   workId = "some-id-builder" + time,
   selectedPids = ["some-other-id-builder" + time],
   storyNameOverride = null,
@@ -61,7 +61,7 @@ function ReservationButtonStoryBuilder(storyname, resolvers = {}, query = {}) {
 export function ReservationButtonPhysicalBook() {
   return (
     <ReservationButtonComponentBuilder
-      type={"bog"}
+      type={["bog"]}
       workId={"some-work-id-1"}
       selectedPids={["some-pid-1"]}
     />
@@ -80,7 +80,7 @@ export function ReservationButtonEBook() {
   useMockLoanerInfo({});
   return (
     <ReservationButtonComponentBuilder
-      type={["ebog"]}
+      type={["e-bog"]}
       workId={"some-work-id-4"}
       selectedPids={["some-pid-7"]}
     />
@@ -97,7 +97,7 @@ ReservationButtonEBook.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 export function ReservationButtonEAudioBook() {
   return (
     <ReservationButtonComponentBuilder
-      type={"EAudioBook"}
+      type={["EAudioBook"]}
       selectedPids={["some-pid-lydbog-(net)" + time]}
     />
   );
@@ -108,7 +108,15 @@ ReservationButtonEAudioBook.story = {
       work: () => {
         return {
           titles: [{ main: "Hugo hejs" }],
-          materialTypes: [{ specific: "lydbog (net)" }],
+          materialTypes: [
+            {
+              materialTypeSpecific: {
+                display: "lydbog (online)",
+                code: "AUDIO_BOOK_ONLINE",
+              },
+              materialTypeGeneral: { display: "lydbøger", code: "AUDIO_BOOKS" },
+            },
+          ],
           workTypes: ["LITERATURE"],
           manifestations: {
             mostRelevant: [
@@ -123,7 +131,18 @@ ReservationButtonEAudioBook.story = {
         return [
           {
             pid: "some-pid-lydbog-(net)" + time,
-            materialTypes: [{ specific: "lydbog (net)" }],
+            materialTypes: [
+              {
+                materialTypeSpecific: {
+                  display: "lydbog (online)",
+                  code: "AUDIO_BOOK_ONLINE",
+                },
+                materialTypeGeneral: {
+                  display: "lydbøger",
+                  code: "AUDIO_BOOKS",
+                },
+              },
+            ],
             access: [
               {
                 __resolveType: AccessEnum.EREOL,
@@ -141,7 +160,7 @@ export function ReservationButtonGame() {
   return (
     <ReservationButtonComponentBuilder
       selectedPids={["some-pid-game" + time]}
-      type={"Playstation 4"}
+      type={["Playstation 4"]}
     />
   );
 }
@@ -151,7 +170,18 @@ ReservationButtonGame.story = {
       work: () => {
         return {
           titles: [{ main: "Hugo hejs" }],
-          materialTypes: [{ specific: "Playstation 4" }],
+          materialTypes: [
+            {
+              materialTypeSpecific: {
+                display: "Playstation 4",
+                code: "PLAYSTATION_4",
+              },
+              materialTypeGeneral: {
+                display: "computerspil",
+                code: "COMPUTER_GAMES",
+              },
+            },
+          ],
           workTypes: ["GAME"],
           manifestations: {
             mostRelevant: [
@@ -166,7 +196,18 @@ ReservationButtonGame.story = {
         return [
           {
             pid: "some-pid-game" + time,
-            materialTypes: [{ specific: "Playstation 4" }],
+            materialTypes: [
+              {
+                materialTypeSpecific: {
+                  display: "Playstation 4",
+                  code: "PLAYSTATION_4",
+                },
+                materialTypeGeneral: {
+                  display: "computerspil",
+                  code: "COMPUTER_GAMES",
+                },
+              },
+            ],
             access: [
               {
                 __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
@@ -183,10 +224,10 @@ ReservationButtonGame.story = {
 export function ReservationButtonDisabled() {
   return (
     <ReservationButtonComponentBuilder
-      type={"ebog"}
+      type={["e-bog"]}
       workId={"some-id-disabled" + time}
       selectedPids={["some-pid-disabled" + time]}
-      storyNameOverride={"ebog disabled"}
+      storyNameOverride={"e-bog disabled"}
     />
   );
 }
@@ -205,7 +246,12 @@ ReservationButtonDisabled.story = {
         return {
           workId: "some-id-disabled" + time,
           titles: [{ main: "Hugo hejs" }],
-          materialTypes: [{ specific: "ebog" }],
+          materialTypes: [
+            {
+              materialTypeSpecific: { display: "e-bog", code: "EBOOK" },
+              materialTypeGeneral: { display: "e-bøger", code: "EBOOKS" },
+            },
+          ],
           workTypes: ["LITERATURE"],
           manifestations: {
             mostRelevant: [
@@ -241,6 +287,7 @@ export function ReservationButtonNotLoggedIn() {
       <ReservationButton
         user={user}
         singleManifestation={true}
+        overrideButtonText="Gå til bog"
         access={access}
         onHandleGoToLogin={() => alert("DU SKAL LOGGE IND")}
       />
@@ -262,7 +309,12 @@ ReservationButtonPhysicalBookLoanNotPossible.story = {
       work: () => {
         return {
           titles: [{ main: "Hugo hejs" }],
-          materialTypes: [{ specific: "bog" }],
+          materialTypes: [
+            {
+              materialTypeSpecific: { display: "bog", code: "BOOK" },
+              materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+            },
+          ],
           workTypes: ["LITERATURE"],
           manifestations: {
             mostRelevant: [
@@ -277,7 +329,12 @@ ReservationButtonPhysicalBookLoanNotPossible.story = {
         return [
           {
             pid: "some-pid-bog-loan-not-possible" + time,
-            materialTypes: [{ specific: "bog" }],
+            materialTypes: [
+              {
+                materialTypeSpecific: { display: "bog", code: "BOOK" },
+                materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+              },
+            ],
             access: [],
             workTypes: ["LITERATURE"],
           },
@@ -304,7 +361,12 @@ ReservationButtonSlowResponse.story = {
 
         return {
           titles: [{ main: "Hugo hejs" }],
-          materialTypes: [{ specific: "bog" }],
+          materialTypes: [
+            {
+              materialTypeSpecific: { display: "bog", code: "BOOK" },
+              materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+            },
+          ],
           workTypes: ["LITERATURE"],
           manifestations: {
             mostRelevant: [
@@ -352,7 +414,15 @@ const access = [
     id: "infomediaUrl",
     __typename: "InterLibraryLoan",
     loanIsPossible: true,
-    materialTypesArray: ["bog"],
+    materialTypesArray: [
+      {
+        specificDisplay: "bog",
+        specificCode: "BOOK",
+        generalDisplay: "bøger",
+        generalCode: "BOOKS",
+      },
+    ],
+    specificDisplayArray: ["bog"],
   },
 ];
 
@@ -363,7 +433,15 @@ const allEnrichedAccesses = {
   id: "infomediaUrl",
   __typename: "InterLibraryLoan",
   loanIsPossible: true,
-  materialTypesArray: ["bog"],
+  materialTypesArray: [
+    {
+      specificDisplay: "bog",
+      specificCode: "BOOK",
+      generalDisplay: "bøger",
+      generalCode: "BOOKS",
+    },
+  ],
+  specificDisplayArray: ["bog"],
 };
 const buttonType = "primary";
 const size = "large";

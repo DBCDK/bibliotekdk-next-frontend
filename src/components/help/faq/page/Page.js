@@ -15,7 +15,7 @@ import React from "react";
 /**
  * The FAQ page
  *
- * @returns {component}
+ * @returns {React.JSX.Element}
  *
  */
 export default function Page() {

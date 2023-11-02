@@ -17,7 +17,7 @@ import * as PropTypes from "prop-types";
  * @param creationDate
  * @param reviewCreators
  * @param onClick
- * @return {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 export function ReviewInformation({
   creationDate,

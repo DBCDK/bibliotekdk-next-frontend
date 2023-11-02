@@ -5,10 +5,10 @@ import { encodeString } from "@/lib/utils";
 /**
  * function to sort array of articles (desc)
  *
- * @param {array} articles
+ * @param {Array} articles
  * See propTypes for specific props and types
  *
- * @returns {array}
+ * @returns {Array}
  */
 export function sortArticles(articles) {
   // remove articles with alternative url (entityUrl)
@@ -24,7 +24,7 @@ export function sortArticles(articles) {
  * has an alternative url and if it is external. Return info needed to generate
  * an url.
  * @param article
- * @return {{query: {}, target: (string), pathname: (*|string)}}
+ * @returns {{query: {}, target: (string), pathname: (*|string)}}
  */
 export function articlePathAndTarget(article) {
   // Check for alternative url

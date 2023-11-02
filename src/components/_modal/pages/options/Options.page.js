@@ -11,13 +11,14 @@ import { useData } from "@/lib/api/api";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import { useMemo } from "react";
 import { accessFactory } from "@/lib/accessFactoryUtils";
+import useUser from "@/components/hooks/useUser";
+import { openLoginModal } from "@/components/_modal/pages/login/utils";
 
 /**
  * Component helper for link and description in options
  * @param props
  * @param templateProps
- * @return {JSX.Element}
- * @constructor
+ * @returns {React.JSX.Element}
  */
 export function OptionsLinkAndDescription({ props, templateProps }) {
   const { className } = props;
@@ -35,6 +36,21 @@ export function OptionsLinkAndDescription({ props, templateProps }) {
   );
 }
 
+async function handleOpenLoginAndOrderModal(modal, modalprops) {
+  const uid = await modal.saveToStore("order", {
+    ...modalprops,
+    storeLoanerInfo: true,
+  });
+  //open actual loginmodal
+  openLoginModal({
+    modal,
+    //data used for FFU without adgangsplatform to open order modal directly
+    ...modalprops,
+    //callback used for adgangsplatform/mitid login to open order modal on redirect
+    callbackUID: uid,
+  });
+}
+
 /**
  * OptionsListPrototyper is used for injecting modal and workId
  * before used inside main code
@@ -43,20 +59,28 @@ export function OptionsLinkAndDescription({ props, templateProps }) {
  * @param access
  * @param index
  * @param accessesArray
- * @return {JSX.Element}
+ * @returns {React.JSX.Element}
  */
-function optionsListAllArgs(modal, workId, access, index, accessesArray) {
+function optionsListAllArgs(modal, workId, access, index, accessesArray, user) {
+  //add order modal to store, to be able to access when coming back from adgangsplatform/mitid?
+  const orderModalProps = {
+    pids: accessesArray?.map((singleAccess) => singleAccess.pid),
+    selectedAccesses: [access],
+    workId: workId,
+    singleManifestation: true,
+  };
+
   const props = {
     ...access,
     className: styles.item,
-    onOrder: () =>
-      openOrderModal({
-        modal: modal,
-        pids: accessesArray?.map((singleAccess) => singleAccess.pid),
-        selectedAccesses: [access],
-        workId: workId,
-        singleManifestation: true,
-      }),
+    onOrder: () => {
+      user?.isLoggedIn
+        ? openOrderModal({
+            modal: modal,
+            ...orderModalProps,
+          })
+        : handleOpenLoginAndOrderModal(modal, orderModalProps);
+    },
   };
 
   return (
@@ -68,7 +92,7 @@ function optionsListAllArgs(modal, workId, access, index, accessesArray) {
   );
 }
 
-export function Options({ modal, context }) {
+export function Options({ modal, context, user }) {
   const { title, selectedPids, workId } = { ...context };
 
   const manifestationResponse = useData(
@@ -78,13 +102,17 @@ export function Options({ modal, context }) {
 
   const manifestations = manifestationResponse?.data?.manifestations;
 
-  const { hasDigitalAccess } = useBranchUserAndHasDigitalAccess(selectedPids);
+  // the next one checks for digital access .. for users already logged in :)
+  // it is false if user is not logged in
+  let { hasDigitalAccess } = useBranchUserAndHasDigitalAccess(selectedPids);
 
   const { getAllowedAccessesByTypeName } = useMemo(() => {
     return accessFactory(manifestations);
   }, [manifestations]);
 
-  const allowedAccessessByType = getAllowedAccessesByTypeName(hasDigitalAccess);
+  const allowedAccessessByType = getAllowedAccessesByTypeName(
+    hasDigitalAccess || !user?.isAuthenticated
+  );
 
   const onlineAccesses = allowedAccessessByType.onlineAccesses;
   const digitalArticleServiceAccesses =
@@ -96,7 +124,7 @@ export function Options({ modal, context }) {
   const specialAccesses = allowedAccessessByType.specialAccesses;
 
   const optionsList = (access, index, accessesArray) =>
-    optionsListAllArgs(modal, workId, access, index, accessesArray);
+    optionsListAllArgs(modal, workId, access, index, accessesArray, user);
 
   return (
     allowedAccessessByType && (
@@ -114,5 +142,6 @@ export function Options({ modal, context }) {
 }
 
 export default function Wrap(props) {
-  return <Options {...props} />;
+  const user = useUser();
+  return <Options {...{ ...props, user }} />;
 }
