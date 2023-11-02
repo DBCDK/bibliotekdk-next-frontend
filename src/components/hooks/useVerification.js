@@ -45,7 +45,7 @@ export default function useVerification() {
     JSON.parse(localStorage.getItem(key) || "null")
   );
 
-  const { isLoggedIn } = useUser();
+  const { isAuthenticated } = useUser();
 
   /**
    * cleanup
@@ -57,12 +57,12 @@ export default function useVerification() {
       // data is fetched
       if (!isValidating && data) {
         // user is not loggedin (anon sesison)
-        if (!isLoggedIn) {
+        if (!isAuthenticated) {
           _close();
         }
       }
     }
-  }, [isLoggedIn, data, isValidating]);
+  }, [isAuthenticated, data, isValidating]);
 
   /**
    * remove already used props from props obj.

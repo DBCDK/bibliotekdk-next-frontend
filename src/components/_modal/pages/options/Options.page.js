@@ -74,7 +74,7 @@ function optionsListAllArgs(modal, workId, access, index, accessesArray, user) {
     ...access,
     className: styles.item,
     onOrder: () => {
-      user?.isLoggedIn
+      user?.isAuthenticated || user.isGuestUser
         ? openOrderModal({
             modal: modal,
             ...orderModalProps,

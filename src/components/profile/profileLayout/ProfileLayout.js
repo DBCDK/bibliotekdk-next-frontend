@@ -54,19 +54,21 @@ export default function ProfileLayout({ title, children }) {
         </div>
       )}
 
-      {user?.isAuthenticated && (
+      {user?.hasCulrUniqueId && (
         <NavigationDropdown context={CONTEXT} menuItems={MENUITEMS} />
       )}
 
       <Row>
         {isDesktop && <LogoutButton />}
         <Col lg={3} className={styles.navColumn}>
-          {isDesktop && <Breadcrumb textType="text2" />}
-          {user?.isAuthenticated && <ProfileMenu />}
+          {user?.hasCulrUniqueId && isDesktop && (
+            <Breadcrumb textType="text2" />
+          )}
+          {user?.hasCulrUniqueId && <ProfileMenu />}
         </Col>
         <Col lg={9}>
           {/**page content here */}
-          {user?.isAuthenticated || WHITELIST.includes(router.pathname) ? (
+          {user?.hasCulrUniqueId || WHITELIST.includes(router.pathname) ? (
             <>
               <Title
                 className={styles.title}
