@@ -1,7 +1,7 @@
 import Header from "@/components/header/Header";
 import { useRouter } from "next/router";
 import { fetchAll } from "@/lib/api/apiServerOnly";
-import AdvancedSearch from "@/components/search/advancedSearch/AdvancedSearch";
+import AdvancedSearch from "@/components/search/advancedSearch/advancedSearch/AdvancedSearch";
 import useDataCollect from "@/lib/useDataCollect";
 import { useRef } from "react";
 import AdvancedSearchResult from "@/components/search/advancedSearch/advancedSearchResult/AdvancedSearchResult";
@@ -14,7 +14,7 @@ export default function AdvancedSearchPage() {
   const router = useRouter();
   const dataCollect = useDataCollect();
   const scrollRef = useRef();
-  const { page = 1 } = router.query;
+  const { page: pageNo = 1 } = router.query;
   const cql = router?.query?.cql || "";
 
   /**
@@ -46,7 +46,7 @@ export default function AdvancedSearchPage() {
 
       {!isEmpty(cql) && (
         <AdvancedSearchResult
-          page={parseInt(page, 10)}
+          pageNo={parseInt(pageNo, 10)}
           onPageChange={async (page, scroll) => {
             scroll = typeof scroll !== "boolean" || scroll !== false;
             await updateQueryParams({ page });
