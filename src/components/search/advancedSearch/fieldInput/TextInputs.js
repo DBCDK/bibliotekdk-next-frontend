@@ -13,6 +13,8 @@ import workTypesLabels from "./labels.json";
 import Input from "@/components/base/forms/input";
 import { useData } from "@/lib/api/api";
 import * as suggestFragments from "@/lib/api/suggest.fragments";
+import { useTextInputsContext } from "../context";
+import { LogicalOperatorsEnum } from "../../enums";
 
 /**
  * Returns a textinput component and a dropdown to choose which advanced search index to search in
@@ -29,8 +31,6 @@ function FieldInput({
   workType,
   fieldValue,
 }) {
-  //which index is selected in the indexDropdown. (e.g. "all", "author","title" etc.)
-  const [indexField, setIndexfield] = useState("all");
   //textinput text value
   const [value, setValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
@@ -62,9 +62,8 @@ function FieldInput({
       <div className={styles.inputContainer}>
         <IndexDropdown
           options={labels}
-          selected={indexField}
-          onSelect={setIndexfield}
           className={styles.select}
+          index={index}
         />
         <div className={`${styles.suggester__wrap} `}>
           <Suggester
@@ -105,8 +104,8 @@ function FieldInput({
     </div>
   );
 }
-const options = ["AND", "OR", "NOT"];
-
+const options = Object.keys(LogicalOperatorsEnum); //["AND", "OR", "NOT"];
+console.log("options", options);
 /**
  * Dropdown for choosing a logical operator ("AND", "OR", "NOT") between text fields.
  * @param {*} param0
@@ -176,31 +175,8 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
  * @returns {React.JSX.Element}
  */
 export default function TextInputs({ workType }) {
-  //TODO move this to state. Each input should just have a value + prefexOperator. then inputValues.length is the number of input fields.
-  //prefixOperator is an enum of AND, OR , NOT
-  const [inputFields, setInputFields] = useState([
-    { value: "", prefixOperator: null },
-    { value: "", prefixOperator: "AND" },
-  ]);
-  function addInputField() {
-    setInputFields((prevFields) => [
-      ...prevFields,
-      { value: "", prefixOperator: "AND" },
-    ]);
-  }
-  function removeInputField(indexToRemove) {
-    setInputFields((prevFields) =>
-      prevFields.filter((_, index) => index !== indexToRemove)
-    );
-  }
-
-  function handlePrefixChange(index, newOperator) {
-    setInputFields((prevFields) => {
-      const newFields = [...prevFields];
-      newFields[index].prefixOperator = newOperator;
-      return newFields;
-    });
-  }
+  const { inputFields, addInputField, removeInputField, handlePrefixChange } =
+    useTextInputsContext();
 
   return inputFields?.map((field, index) => {
     return (

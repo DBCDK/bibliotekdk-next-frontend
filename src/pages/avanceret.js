@@ -6,6 +6,7 @@ import useDataCollect from "@/lib/useDataCollect";
 import { useRef } from "react";
 import AdvancedSearchResult from "@/components/search/advancedSearch/advancedSearchResult/AdvancedSearchResult";
 import isEmpty from "lodash/isEmpty";
+import TextInputsProvider from "@/components/search/advancedSearch/context";
 
 /**
  * Renders AdvancedSearch page
@@ -39,7 +40,7 @@ export default function AdvancedSearchPage() {
   }
 
   return (
-    <>
+    <TextInputsProvider>
       <div ref={scrollRef} />
       <Header router={router} hideSimpleSearch />
       <AdvancedSearch />
@@ -63,7 +64,7 @@ export default function AdvancedSearchPage() {
           cql={cql}
         />
       )}
-    </>
+    </TextInputsProvider>
   );
 }
 
