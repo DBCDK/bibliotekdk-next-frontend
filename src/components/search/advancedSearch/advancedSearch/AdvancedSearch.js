@@ -21,7 +21,7 @@ export default function AdvancedSearch() {
   const [showCqlEditor, setShowCqlEditor] = useState(false);
   //Coming soon: convert state cql
   const { dropDowns, inputFields } = useAdvancedSearchContext();
-  console.log('inputFields',inputFields)
+  console.log("inputFields", inputFields);
   useEffect(() => {
     //show CQL editor if there is a cql param in the url
     setShowCqlEditor(!!cql);

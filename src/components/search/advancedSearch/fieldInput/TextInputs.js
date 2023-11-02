@@ -5,7 +5,8 @@ import Suggester from "@/components/base/suggester/Suggester";
 import IconButton from "@/components/base/iconButton/IconButton";
 import styles from "./TextInputs.module.css";
 import animations from "css/animations";
-import IndexDropdown from "./indexDropdown/IndexDropdown";
+import IndexDropdown from "@/components/search/advancedSearch/fieldInput/indexDropdown/IndexDropdown";
+
 import { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import Icon from "@/components/base/icon";
@@ -14,7 +15,7 @@ import Input from "@/components/base/forms/input";
 import { useData } from "@/lib/api/api";
 import * as suggestFragments from "@/lib/api/suggest.fragments";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/context";
-import { LogicalOperatorsEnum } from  "@/components/search/enums";
+import { LogicalOperatorsEnum } from "@/components/search/enums";
 
 /**
  * Returns a textinput component and a dropdown to choose which advanced search index to search in
@@ -173,7 +174,7 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
  */
 export default function TextInputs({ workType }) {
   const { inputFields, addInputField, removeInputField, handlePrefixChange } =
-  useAdvancedSearchContext();
+    useAdvancedSearchContext();
 
   return inputFields?.map((field, index) => {
     return (

@@ -4,7 +4,7 @@
  */
 
 import React, { createContext, useContext, useState } from "react";
-import { LogicalOperatorsEnum } from "../enums";
+import { LogicalOperatorsEnum } from "@/components/search/enums";
 
 const AdvancedSearchContext = createContext();
 
@@ -16,7 +16,11 @@ export default function AdvancedSearchProvider({ children }) {
   //prefixLogicalOperator is an enum of AND, OR , NOT
   const [inputFields, setInputFields] = useState([
     { value: "", prefixLogicalOperator: null, searchIndex: "all" },
-    { value: "", prefixLogicalOperator: LogicalOperatorsEnum.AND, searchIndex: "all" },
+    {
+      value: "",
+      prefixLogicalOperator: LogicalOperatorsEnum.AND,
+      searchIndex: "all",
+    },
   ]);
   const [dropDowns, setDropdown] = useState([
     { index: "language", value: "da" },
@@ -45,11 +49,11 @@ export default function AdvancedSearchProvider({ children }) {
       prevFields.filter((_, index) => index !== indexToRemove)
     );
   }
-/**
- * change logical operator between input fields in advanced search
- * @param {*} index 
- * @param {*} newOperator 
- */
+  /**
+   * change logical operator between input fields in advanced search
+   * @param {*} index
+   * @param {*} newOperator
+   */
   function handlePrefixChange(index, newOperator) {
     setInputFields((prevFields) => {
       const newFields = [...prevFields];
@@ -57,11 +61,11 @@ export default function AdvancedSearchProvider({ children }) {
       return newFields;
     });
   }
-/**
- * Handle field index change in indexDropdown (e.g. "all", "author","title" etc.)
- * @param {*} index 
- * @param {*} newOperator 
- */
+  /**
+   * Handle field index change in indexDropdown (e.g. "all", "author","title" etc.)
+   * @param {*} index
+   * @param {*} newOperator
+   */
   function handleIndexChange(index, newOperator) {
     setInputFields((prevFields) => {
       const newFields = [...prevFields];

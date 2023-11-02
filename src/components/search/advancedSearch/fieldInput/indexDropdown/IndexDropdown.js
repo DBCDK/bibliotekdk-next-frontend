@@ -6,7 +6,7 @@ import Icon from "@/components/base/icon";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/context";
 
 /**
- * Used in advanced search field input. Drop down to select a search index
+ * Used in advanced search field input. Drop down to select a search index. (e.g. "isbn", "author","title" etc.)
  * @param {*} param0
  * @returns
  */
