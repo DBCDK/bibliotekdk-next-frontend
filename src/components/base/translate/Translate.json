@@ -1353,8 +1353,8 @@
         "en": "Result"
       },
       "cqlsearchlabel": {
-        "da": "Cql-søgning",
-        "en": "Cql-search"
+        "da": "CQL-søgning",
+        "en": "CQL-search"
       },
       "loanOptions": {
         "da": "Lånemuligheder:",
