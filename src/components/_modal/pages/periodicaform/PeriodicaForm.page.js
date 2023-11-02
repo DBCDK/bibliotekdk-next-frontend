@@ -165,8 +165,7 @@ export function PeriodicaForm({ modal, context, active }) {
                 }
               });
             }
-            // Change context for order modal - unless we came from multiorder
-            const orderModalId = "order";
+            //update multiorder periodicaForm if we came from multiorder
             const multiorderModalId = "multiorder";
             if (modal.stack.some((m) => m.id === multiorderModalId)) {
               modal.update(modal.index(multiorderModalId), {
@@ -177,6 +176,8 @@ export function PeriodicaForm({ modal, context, active }) {
               });
               modal.prev(multiorderModalId);
             } else {
+              //else update periodicaForm for single order
+              const orderModalId = "order";
               modal.update(modal.index(orderModalId), { periodicaForm });
               modal.prev(orderModalId);
             }

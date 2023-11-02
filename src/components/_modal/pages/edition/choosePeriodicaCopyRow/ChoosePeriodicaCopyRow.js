@@ -15,7 +15,6 @@ import Translate from "@/components/base/translate";
  * @returns
  */
 export default function ChoosePeriodicaCopyRow({
-  //TODO also used for single order
   singleOrderPeriodicaForm,
   multiOrderPeriodicaForms,
   materialKey,
