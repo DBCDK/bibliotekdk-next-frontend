@@ -302,7 +302,7 @@ export function EditionAnyManifestationDigitalCopyImageToLeft() {
     <EditionComponentBuilder
       editionProps={editionProps}
       storyNameOverride={
-        "EditionAnyManifestationDigitalCopyv- image to the left"
+        "Edition Any Manifestation Digital Copy - image to the left"
       }
       isMaterialCard={true}
     />

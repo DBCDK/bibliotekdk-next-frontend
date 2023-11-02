@@ -8,16 +8,23 @@ import Translate from "@/components/base/translate";
 /**
  * Shows a button to open the periodica form modal
  * button text depends on if the user has already filled out the form or not
- * @param {Object} periodicaForm
+ * @param {Object} periodicaForm //provided when coming from single order
+ * @param {Object} periodicaForms //provided when coming from mutliorder
  * @param {Object} modal
  * @param {String} articleTypeTranslation
  * @returns
  */
 export default function ChoosePeriodicaCopyRow({
-  periodicaForm,
+  singleOrderPeriodicaForm,
+  multiOrderPeriodicaForms,
+  materialKey,
   modal,
   articleTypeTranslation,
 }) {
+  const periodicaForm = singleOrderPeriodicaForm
+    ? singleOrderPeriodicaForm
+    : multiOrderPeriodicaForms?.[materialKey];
+
   return (
     <>
       {articleTypeTranslation ? (
@@ -56,7 +63,9 @@ export default function ChoosePeriodicaCopyRow({
         <IconLink
           onClick={() => {
             modal.push("periodicaform", {
+              periodicaForms: multiOrderPeriodicaForms,
               periodicaForm: periodicaForm,
+              materialKey: materialKey,
             });
           }}
           className={styles.periodicaformlink}

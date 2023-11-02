@@ -35,7 +35,6 @@ function FieldInput({
   const [value, setValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   //labels to show in IndexDropdown
-  console.log("worktype", workType);
   const labels = workTypesLabels[workType].map((el) => el.label);
 
   const { data } = useData(
