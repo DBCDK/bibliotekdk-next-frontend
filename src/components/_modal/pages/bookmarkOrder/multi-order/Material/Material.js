@@ -46,10 +46,10 @@ const filterForRelevantMaterialTypes = (mostRelevant, materialType) => {
  * Is missing article implementation
  * @param {Object} material
  * @param {Function} setMaterialsToOrder
- * @param {Object} context
+ * @param {Object} periodicaForms
  * @returns {React.JSX.Element}
  */
-const Material = ({ material, setMaterialsToOrder, context }) => {
+const Material = ({ material, setMaterialsToOrder, periodicaForms }) => {
   //@TODO get manifestations in same manner for both edition and works via useData
   const isSpecificEdition = !!material?.pid;
   const modal = useModal();
@@ -59,6 +59,7 @@ const Material = ({ material, setMaterialsToOrder, context }) => {
   );
 
   const { loanerInfo } = useUser();
+  const periodicaForm = periodicaForms?.[material.key];
 
   const manifestations = isSpecificEdition
     ? [material]
@@ -88,20 +89,20 @@ const Material = ({ material, setMaterialsToOrder, context }) => {
     setBackgroundColor(
       findBackgroundColor({
         isPeriodicaLike,
-        periodicaForm: context?.periodicaForm,
+        hasPeriodicaForm: !!periodicaForm,
         notAvailableAtLibrary: orderPolicyIsLoading
           ? false //if we dont have data yet, we dont want red background
           : !orderPolicyData?.branches?.result?.[0]?.orderPolicy?.orderPossible,
       })
     );
-  }, [orderPolicyData, orderPolicyIsLoading, context?.periodicaForm]);
+  }, [orderPolicyData, orderPolicyIsLoading, periodicaForm]);
 
   const { allEnrichedAccesses: accesses } = accessFactory(manifestations);
 
   let children = null;
 
   const inferredAccessTypes = inferAccessTypes(
-    context?.periodicaForm,
+    periodicaForm,
     loanerInfo.pickupBranch,
     manifestations
   );
@@ -123,11 +124,13 @@ const Material = ({ material, setMaterialsToOrder, context }) => {
       availableAsDigitalCopy,
       selectedAccesses: accesses[0], //take first access, since it has highest priority
       isArticleRequest,
-      periodicaForm: context?.periodicaForm,
+      hasPeriodicaForm: !!periodicaForm,
     });
     children = (
       <ChoosePeriodicaCopyRow
-        periodicaForm={context?.periodicaForm}
+        key={material.key}
+        multiOrderPeriodicaForms={periodicaForms}
+        materialKey={material.key}
         modal={modal}
         articleTypeTranslation={articleTypeTranslation}
       />

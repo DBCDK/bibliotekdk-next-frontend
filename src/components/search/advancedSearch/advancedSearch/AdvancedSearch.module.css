@@ -1,16 +1,22 @@
 .container {
-  background-color: var(--concrete);
-  padding: var(--pt4);
-  /* Fixed height until content is implemented*/
-  min-height: 500px;
+  width: 100%;
+  padding-bottom: var(--pt2);
 }
 
-.title {
-  margin-bottom: var(--pt5);
+.background {
+  background-color: var(--concrete);
+}
+
+.right {
+  margin-left: auto;
+  margin-right: 0;
+  float: right;
 }
 
 .topContainer {
   display: flex;
-  justify-content: space-between;
+  margin-bottom: var(--pt4);
+
   width: 100%;
+  align-items: center;
 }
