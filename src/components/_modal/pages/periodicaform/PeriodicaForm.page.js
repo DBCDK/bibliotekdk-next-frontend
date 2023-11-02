@@ -69,10 +69,21 @@ export function PeriodicaForm({ modal, context, active }) {
     periodicaForm: newPeriodicaForm,
     materialKey,
   } = context;
-  console.log("PERIODICA FORM ", context);
+
   const [state, setState] = useState(newPeriodicaForm || {});
   const [hasTry, setHasTry] = useState(false);
   const [expanded, setExpanded] = useState(false);
+
+  //If we dont force update of state on materialKey change, state shows values of previous periodicaForm in multiOrder
+  useEffect(() => {
+    if (!newPeriodicaForm) {
+      // Generate a unique key to trigger a re-render and reset the state
+      const uniqueKey = Date.now();
+      setState({ key: uniqueKey });
+    } else {
+      setState(newPeriodicaForm);
+    }
+  }, [materialKey]);
 
   useEffect(() => {
     if (active) {
@@ -148,7 +159,6 @@ export function PeriodicaForm({ modal, context, active }) {
             const orderModalId = "order";
             const multiorderModalId = "multiorder";
             if (modal.stack.some((m) => m.id === multiorderModalId)) {
-              console.log("newPeriodicaForm ", newPeriodicaForm);
               modal.update(modal.index(multiorderModalId), {
                 periodicaForms: {
                   ...periodicaForms,

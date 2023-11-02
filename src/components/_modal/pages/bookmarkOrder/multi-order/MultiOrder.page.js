@@ -8,7 +8,6 @@ import { useState } from "react";
 const CONTEXT = "bookmark-order";
 
 const MultiOrder = ({ context }) => {
-  console.log("MultiOrder CONTEXT ", context);
   const { materials } = context;
   const [materialsToOrder, setMaterialsToOrder] = useState(materials);
 
