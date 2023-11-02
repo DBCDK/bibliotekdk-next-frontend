@@ -64,7 +64,13 @@ export function PeriodicaForm({ modal, context, active }) {
     { key: "pagination" },
   ];
 
-  const [state, setState] = useState(context?.periodicaForm || {});
+  const {
+    periodicaForms,
+    periodicaForm: newPeriodicaForm,
+    materialKey,
+  } = context;
+  console.log("PERIODICA FORM ", context);
+  const [state, setState] = useState(newPeriodicaForm || {});
   const [hasTry, setHasTry] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
@@ -138,13 +144,22 @@ export function PeriodicaForm({ modal, context, active }) {
                 }
               });
             }
-            // Change context for order modal - unless we are on a multiorder page
-            let modalId = "order";
-            if (modal.stack.some((m) => m.id === "multiorder")) {
-              modalId = "multiorder";
+            // Change context for order modal - unless we came from multiorder
+            const orderModalId = "order";
+            const multiorderModalId = "multiorder";
+            if (modal.stack.some((m) => m.id === multiorderModalId)) {
+              console.log("newPeriodicaForm ", newPeriodicaForm);
+              modal.update(modal.index(multiorderModalId), {
+                periodicaForms: {
+                  ...periodicaForms,
+                  [materialKey]: periodicaForm,
+                },
+              });
+              modal.prev(multiorderModalId);
+            } else {
+              modal.update(modal.index(orderModalId), { periodicaForm });
+              modal.prev(orderModalId);
             }
-            modal.update(modal.index(modalId), { periodicaForm });
-            modal.prev(modalId);
           }
         }}
       >

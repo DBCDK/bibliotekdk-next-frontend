@@ -8,6 +8,7 @@ import { useState } from "react";
 const CONTEXT = "bookmark-order";
 
 const MultiOrder = ({ context }) => {
+  console.log("MultiOrder CONTEXT ", context);
   const { materials } = context;
   const [materialsToOrder, setMaterialsToOrder] = useState(materials);
 
@@ -36,7 +37,8 @@ const MultiOrder = ({ context }) => {
               key={material.key}
               material={material}
               setMaterialsToOrder={setMaterialsToOrder}
-              context={context} //sets periodicaForm via updateModal
+              //context is responsible for updating periodica form via periodicaForm.js and modal.update
+              periodicaForms={context?.periodicaForms}
             />
           );
         })}
