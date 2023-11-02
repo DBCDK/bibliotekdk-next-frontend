@@ -5,40 +5,39 @@ import Suggester from "@/components/base/suggester/Suggester";
 import IconButton from "@/components/base/iconButton/IconButton";
 import styles from "./TextInputs.module.css";
 import animations from "css/animations";
-import IndexDropdown from "../indexDropdown/IndexDropdown";
+import SearchIndexDropdown from "@/components/search/advancedSearch/fieldInput/searchIndexDropdown/SearchIndexDropdown";
+
 import { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import Icon from "@/components/base/icon";
-import workTypesLabels from "./labels.json";
+import workTypesLabels from "./labels.js";
 import Input from "@/components/base/forms/input";
 import { useData } from "@/lib/api/api";
 import * as suggestFragments from "@/lib/api/suggest.fragments";
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
+import { LogicalOperatorsEnum } from "@/components/search/enums";
 
 /**
  * Returns a textinput component and a dropdown to choose which advanced search index to search in
  * @param {Object} props
  * @returns {React.JSX.Element}
  */
-function FieldInput({
-  index,
-  handlePrefixChange,
-  addAnInputField,
-  removeInputField,
-  isLastItem,
-  isFirstItem,
-  workType,
-  fieldValue,
-}) {
-  //which index is selected in the indexDropdown. (e.g. "all", "author","title" etc.)
-  const [indexField, setIndexfield] = useState("all");
-  //textinput text value
-  const [value, setValue] = useState("");
+function FieldInput({ key, index, workType, fieldValue }) {
   const [suggestions, setSuggestions] = useState([]);
-  //labels to show in IndexDropdown
+
+  const {
+    handleInputFieldChange,
+    removeInputField,
+    handleLogicalOperatorChange,
+  } = useAdvancedSearchContext();
+
+  //labels to show in SearchIndexDropdown
   const labels = workTypesLabels[workType].map((el) => el.label);
 
+  const isFirstItem = index === 0;
   const { data } = useData(
-    value && suggestFragments.all({ q: value, workType: null, limit: 10 })
+    fieldValue?.value &&
+      suggestFragments.all({ q: fieldValue.value, workType: null, limit: 10 })
   );
 
   useEffect(() => {
@@ -50,32 +49,35 @@ function FieldInput({
   }, [data]);
 
   return (
-    <div>
+    <div key={key}>
       {!isFirstItem && (
         <LogicalOperatorDropDown
-          onSelect={(value) => handlePrefixChange(index, value)}
-          selected={fieldValue.prefixOperator}
+          onSelect={(value) => handleLogicalOperatorChange(index, value)}
+          selected={fieldValue.prefixLogicalOperator}
         />
       )}
 
-      <div className={styles.inputContainer}>
-        <IndexDropdown
+      <div
+        className={`${styles.inputContainer} ${
+          isFirstItem ? styles.rightPadding : ""
+        }`}
+      >
+        <SearchIndexDropdown
           options={labels}
-          selected={indexField}
-          onSelect={setIndexfield}
           className={styles.select}
+          index={index}
         />
         <div className={`${styles.suggester__wrap} `}>
           <Suggester
             data={suggestions}
-            onSelect={(val) => setValue(val)}
-            onClear={() => setValue("")}
+            onSelect={(val) => handleInputFieldChange(index, val)}
+            onClear={() => handleInputFieldChange(index, "")}
             className={styles.suggester}
           >
             <Input
               className={styles.suggesterInput}
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
+              // value={value}
+              onChange={(e) => handleInputFieldChange(index, e.target.value)}
               placeholder={fieldValue.placeholder}
             />
           </Suggester>
@@ -90,22 +92,10 @@ function FieldInput({
           </IconButton>
         )}
       </div>
-
-      {isLastItem && (
-        <IconButton
-          icon="expand"
-          onClick={addAnInputField}
-          keepUnderline
-          className={styles.addLine}
-        >
-          {Translate({ context: "search", label: "addLine" })}
-        </IconButton>
-      )}
     </div>
   );
 }
-const options = ["AND", "OR", "NOT"];
-
+const options = Object.keys(LogicalOperatorsEnum); //["AND", "OR", "NOT"];
 /**
  * Dropdown for choosing a logical operator ("AND", "OR", "NOT") between text fields.
  * @param {*} param0
@@ -173,45 +163,26 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
  * @returns {React.JSX.Element}
  */
 export default function TextInputs({ workType }) {
-  //TODO move this to state. Each input should just have a value + prefexOperator. then inputValues.length is the number of input fields.
-  //prefixOperator is an enum of AND, OR , NOT
-  const [inputFields, setInputFields] = useState([
-    { value: "", prefixOperator: null },
-    { value: "", prefixOperator: "AND" },
-  ]);
-  function addInputField() {
-    setInputFields((prevFields) => [
-      ...prevFields,
-      { value: "", prefixOperator: "AND" },
-    ]);
-  }
-  function removeInputField(indexToRemove) {
-    setInputFields((prevFields) =>
-      prevFields.filter((_, index) => index !== indexToRemove)
-    );
-  }
+  const { inputFields, addInputField } = useAdvancedSearchContext();
 
-  function handlePrefixChange(index, newOperator) {
-    setInputFields((prevFields) => {
-      const newFields = [...prevFields];
-      newFields[index].prefixOperator = newOperator;
-      return newFields;
-    });
-  }
-
-  return inputFields?.map((field, index) => {
-    return (
-      <FieldInput
-        key={index}
-        index={index}
-        addAnInputField={addInputField}
-        removeInputField={removeInputField}
-        handlePrefixChange={handlePrefixChange}
-        isLastItem={index === inputFields.length - 1}
-        isFirstItem={index === 0}
-        workType={workType}
-        fieldValue={field}
-      />
-    );
-  });
+  return (
+    <>
+      {inputFields?.map((field, index) => (
+        <FieldInput
+          key={`inputField-${index}`}
+          index={index}
+          workType={workType}
+          fieldValue={field}
+        />
+      ))}
+      <IconButton
+        icon="expand"
+        onClick={addInputField}
+        keepUnderline
+        className={styles.addLine}
+      >
+        {Translate({ context: "search", label: "addLine" })}
+      </IconButton>
+    </>
+  );
 }
