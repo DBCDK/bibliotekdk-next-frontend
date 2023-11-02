@@ -199,7 +199,7 @@ export const ReservationButton = ({
     skeleton: isEmpty(access),
     dataCy: `button-order-overview-enabled`,
     onClick: () => {
-      user?.isLoggedIn
+      user?.isAuthenticated || user.isGuestUser
         ? openOrderModal({
             modal: modal,
             pids: pids,

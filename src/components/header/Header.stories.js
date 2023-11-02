@@ -131,7 +131,7 @@ export function NavHeaderUserLoggedIn() {
       </StoryDescription>
       <Header
         story={story}
-        user={{ isAuthenticated: true }}
+        user={{ hasCulrUniqueId: true }}
         filters={{
           ...filters,
           getQuery: () => ({

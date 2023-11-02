@@ -11,12 +11,19 @@ export const StatusEnum = Object.freeze({
   NEEDS_EDITION: "NEEDS-EDITION",
 });
 
+/**
+ *
+ * @param {Boolean} isPeriodicaLike
+ * @param {Boolean} hasPeriodicaForm
+ * @param {Boolean} notAvailableAtLibrary
+ * @returns
+ */
 export function findBackgroundColor({
   isPeriodicaLike,
-  periodicaForm,
+  hasPeriodicaForm,
   notAvailableAtLibrary,
 }) {
-  if (isPeriodicaLike && !periodicaForm) {
+  if (isPeriodicaLike && !hasPeriodicaForm) {
     return BackgroundColorEnum.YELLOW;
   }
   if (notAvailableAtLibrary) {

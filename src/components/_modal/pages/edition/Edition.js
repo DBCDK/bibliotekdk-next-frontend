@@ -37,15 +37,10 @@ export function Edition({
   showOrderTxt = true,
   modal = {},
   showChangeManifestation = true,
+  articleTypeTranslation,
 }) {
   const { periodicaForm } = context;
-  const {
-    isArticle,
-    isPeriodicaLike,
-    isArticleRequest,
-    isDigitalCopy,
-    availableAsDigitalCopy,
-  } = inferredAccessTypes;
+  const { isArticle, isPeriodicaLike } = inferredAccessTypes;
 
   const { flatMaterialTypes } = manifestationMaterialTypeFactory([
     manifestation,
@@ -61,14 +56,6 @@ export function Edition({
     ?.flat()
     .filter((pre) => !isEmpty(pre))
     ?.join(", ");
-
-  const articleTypeTranslation = translateArticleType({
-    isDigitalCopy,
-    availableAsDigitalCopy,
-    selectedAccesses: context?.selectedAccesses,
-    isArticleRequest,
-    periodicaForm: context?.periodicaForm,
-  });
 
   const specificEdition =
     showOrderTxt && !singleManifestation && !isArticle && !isPeriodicaLike
@@ -206,7 +193,7 @@ export default function Wrap({
   isMaterialCard = false,
 }) {
   const modal = useModal();
-  let { orderPids: orderPidsBeforeFilter } = context;
+  let { orderPids: orderPidsBeforeFilter, periodicaForm } = context;
 
   if (!Array.isArray(orderPidsBeforeFilter)) {
     orderPidsBeforeFilter = [orderPidsBeforeFilter];
@@ -234,32 +221,34 @@ export default function Wrap({
   );
 
   const inferredAccessTypes = inferAccessTypes(
-    context?.periodicaForm,
+    periodicaForm,
     pickupBranch,
     manifestations
   );
+  const {
+    isPeriodicaLike,
+    isDigitalCopy,
+    availableAsDigitalCopy,
+    isArticleRequest,
+  } = inferredAccessTypes;
   const coverImage = getCoverImage(manifestations);
+
+  const articleTypeTranslation = translateArticleType({
+    isDigitalCopy,
+    availableAsDigitalCopy,
+    selectedAccesses: context?.selectedAccesses,
+    isArticleRequest,
+    hasPeriodicaForm: !!periodicaForm,
+  });
 
   if (isMaterialCard) {
     const { flattenedGroupedSortedManifestations } =
       manifestationMaterialTypeFactory(manifestations);
-    const firstManifestation = flattenedGroupedSortedManifestations[0];
-    const {
-      isPeriodicaLike,
-      isDigitalCopy,
-      availableAsDigitalCopy,
-      isArticleRequest,
-    } = inferredAccessTypes;
-    const articleTypeTranslation = translateArticleType({
-      isDigitalCopy,
-      availableAsDigitalCopy,
-      selectedAccesses: context?.selectedAccesses,
-      isArticleRequest,
-      periodicaForm: context?.periodicaForm,
-    });
+    const firstManifestation = flattenedGroupedSortedManifestations?.[0];
+
     const children = isPeriodicaLike ? (
       <ChoosePeriodicaCopyRow
-        periodicaForm={context?.periodicaForm}
+        singleOrderPeriodicaForm={periodicaForm}
         modal={modal}
         articleTypeTranslation={articleTypeTranslation}
       />
@@ -268,7 +257,7 @@ export default function Wrap({
     const isDeliveredByDigitalArticleService =
       isDigitalCopy &&
       availableAsDigitalCopy &&
-      context?.selectedAccesses[0]?.__typename !==
+      context?.selectedAccesses?.[0]?.__typename !==
         AccessEnum.INTER_LIBRARY_LOAN;
 
     const materialCardTemplate = (/** @type {Object} */ material) =>
@@ -307,6 +296,7 @@ export default function Wrap({
       showOrderTxt={context?.showOrderTxt || showOrderTxt}
       modal={modal}
       showChangeManifestation={showChangeManifestation}
+      articleTypeTranslation={articleTypeTranslation}
     />
   );
 }
