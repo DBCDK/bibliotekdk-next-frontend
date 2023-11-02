@@ -6,7 +6,7 @@ import useDataCollect from "@/lib/useDataCollect";
 import { useRef } from "react";
 import AdvancedSearchResult from "@/components/search/advancedSearch/advancedSearchResult/AdvancedSearchResult";
 import isEmpty from "lodash/isEmpty";
-import AdvancedSearchProvider from "@/components/search/advancedSearch/context";
+import AdvancedSearchProvider from "@/components/search/advancedSearch/advancedSearchContext";
 
 /**
  * Renders AdvancedSearch page

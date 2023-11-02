@@ -14,7 +14,7 @@ import workTypesLabels from "./labels.json";
 import Input from "@/components/base/forms/input";
 import { useData } from "@/lib/api/api";
 import * as suggestFragments from "@/lib/api/suggest.fragments";
-import { useAdvancedSearchContext } from "@/components/search/advancedSearch/context";
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import { LogicalOperatorsEnum } from "@/components/search/enums";
 
 /**

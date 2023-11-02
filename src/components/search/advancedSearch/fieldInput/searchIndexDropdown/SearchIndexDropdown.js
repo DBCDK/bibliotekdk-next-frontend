@@ -3,7 +3,7 @@ import styles from "./SearchIndexDropdown.module.css";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import Icon from "@/components/base/icon";
-import { useAdvancedSearchContext } from "@/components/search/advancedSearch/context";
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
 /**
  * Used in advanced search field input. Drop down to select a search index. (e.g. "isbn", "author","title" etc.)
