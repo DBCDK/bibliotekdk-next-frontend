@@ -52,7 +52,14 @@ export default function AdvancedSearch() {
         </div>
       </div>
 
-      {showCqlEditor ? <CqlTextArea /> : <TextInputs workType={workType} />}
+      {showCqlEditor ? (
+        <CqlTextArea />
+      ) : (
+        <div>
+          <TextInputs workType={workType} />
+          {/* Insert dropdowns now */}
+        </div>
+      )}
     </div>
   );
 }
