@@ -4,7 +4,6 @@ import { ResultPage } from "@/components/search/result/page";
 import Section from "@/components/base/section";
 import Pagination from "@/components/search/pagination/Pagination";
 import PropTypes from "prop-types";
-import { CqlErrorMessage } from "@/components/search/advancedSearch/cqlTextArea/CqlErrorMessage";
 
 export function AdvancedSearchResult({
   pageNo,
@@ -16,14 +15,18 @@ export function AdvancedSearchResult({
   const hitcount = results?.hitcount;
   const numPages = Math.ceil(hitcount / 10);
 
+  if (error) {
+    return null;
+  }
   return (
     <>
       <Section
         divider={false}
-        colSize={{ lg: { offset: 3, span: true } }}
+        colSize={{ lg: { offset: 1, span: true } }}
         id="search-result-section"
+        title="Resultater"
+        subtitle={hitcount}
       >
-        {error && <CqlErrorMessage message={error} />}
         {/* Reuse result page from simplesearch - we skip the wrap .. @TODO should we set
         some mark .. that we are doing advanced search .. ?? */}
         <ResultPage
@@ -52,20 +55,6 @@ function parseResponse(bigResponse) {
   };
 }
 
-function parseErrorMessage(errorMessage) {
-  // first sentence of errormessage is (kind of) explanation
-  const explanation = errorMessage.split(",")[0];
-  // last part is location of error - starts with at: ---> .. and then the rest
-  const locationIndex = errorMessage.indexOf("at:");
-  const location = errorMessage.substring(locationIndex);
-
-  return {
-    explanation: explanation,
-    location: location,
-    full: errorMessage,
-  };
-}
-
 /**
  * Load the data needed for the advanced search result.
  *
@@ -86,11 +75,7 @@ export default function Wrap({ pageNo, onWorkClick, onPageChange, cql }) {
       onWorkClick={onWorkClick}
       onPageChange={onPageChange}
       results={parsedResponse}
-      error={
-        parsedResponse.errorMessage
-          ? parseErrorMessage(parsedResponse.errorMessage)
-          : null
-      }
+      error={parsedResponse.errorMessage}
     />
   );
 }
