@@ -46,8 +46,10 @@ const books = [];
 const articles = [];
 
 //TODO: add the other material type
-export default {
+const labels = {
   all,
   books,
   articles,
 };
+
+export default labels;

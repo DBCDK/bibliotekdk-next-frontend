@@ -57,7 +57,11 @@ function FieldInput({ key, index, workType, fieldValue }) {
         />
       )}
 
-      <div className={styles.inputContainer}>
+      <div
+        className={`${styles.inputContainer} ${
+          isFirstItem ? styles.rightPadding : ""
+        }`}
+      >
         <SearchIndexDropdown
           options={labels}
           className={styles.select}
