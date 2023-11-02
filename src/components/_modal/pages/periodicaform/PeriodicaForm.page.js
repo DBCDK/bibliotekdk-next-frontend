@@ -53,6 +53,16 @@ function Field({ label, required, value, onChange, hasTry }) {
   );
 }
 
+/**
+ * @param {Object} props
+ * @param {Object} props.modal
+ * @param {Object} props.context
+ * @param {Object} props.context.periodicaForms list of several periodicaForms, only provided from multiorder
+ * @param {Object} props.context.periodicaForm
+ * @param {String} props.context.materialKey only provided from multiorder
+ * @param {Boolean} props.active
+ * @returns {React.JSX.Element}
+ */
 export function PeriodicaForm({ modal, context, active }) {
   const fields = [
     { key: "publicationDateOfComponent", required: true },
@@ -76,10 +86,10 @@ export function PeriodicaForm({ modal, context, active }) {
 
   //If we dont force update of state on materialKey change, state shows values of previous periodicaForm in multiOrder
   useEffect(() => {
+    if (!materialKey) return; //dont set key for single order
     if (!newPeriodicaForm) {
       // Generate a unique key to trigger a re-render and reset the state
-      const uniqueKey = Date.now();
-      setState({ key: uniqueKey });
+      setState({ key: materialKey });
     } else {
       setState(newPeriodicaForm);
     }
@@ -181,12 +191,12 @@ export function PeriodicaForm({ modal, context, active }) {
               required={required}
               value={state[key]}
               hasTry={hasTry}
-              onChange={(e) =>
+              onChange={(e) => {
                 setState({
                   ...state,
                   [key]: e?.target?.value,
-                })
-              }
+                });
+              }}
             />
           );
         })}

@@ -124,7 +124,7 @@ const Material = ({ material, setMaterialsToOrder, periodicaForms }) => {
       availableAsDigitalCopy,
       selectedAccesses: accesses[0], //take first access, since it has highest priority
       isArticleRequest,
-      periodicaForm: periodicaForm, //TODO make boolean
+      hasPeriodicaForm: !!periodicaForm,
     });
     children = (
       <ChoosePeriodicaCopyRow
