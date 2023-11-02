@@ -13,8 +13,8 @@ import workTypesLabels from "./labels.json";
 import Input from "@/components/base/forms/input";
 import { useData } from "@/lib/api/api";
 import * as suggestFragments from "@/lib/api/suggest.fragments";
-import { useAdvancedSearchContext } from "../context";
-import { LogicalOperatorsEnum } from "../../enums";
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/context";
+import { LogicalOperatorsEnum } from  "@/components/search/enums";
 
 /**
  * Returns a textinput component and a dropdown to choose which advanced search index to search in
@@ -55,7 +55,7 @@ function FieldInput({
       {!isFirstItem && (
         <LogicalOperatorDropDown
           onSelect={(value) => handlePrefixChange(index, value)}
-          selected={fieldValue.prefixOperator}
+          selected={fieldValue.prefixLogicalOperator}
         />
       )}
 

@@ -3,7 +3,7 @@ import styles from "./IndexDropdown.module.css";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import Icon from "@/components/base/icon";
-import { useAdvancedSearchContext } from "../../context";
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/context";
 
 /**
  * Used in advanced search field input. Drop down to select a search index

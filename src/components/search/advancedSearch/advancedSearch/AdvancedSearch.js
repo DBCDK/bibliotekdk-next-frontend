@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
-import { useAdvancedSearchContext } from "../context";
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/context";
 
 /**
  * Contains advanced search fields

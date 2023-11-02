@@ -13,10 +13,10 @@ export function useAdvancedSearchContext() {
 }
 
 export default function AdvancedSearchProvider({ children }) {
-  //prefixOperator is an enum of AND, OR , NOT
+  //prefixLogicalOperator is an enum of AND, OR , NOT
   const [inputFields, setInputFields] = useState([
-    { value: "", prefixOperator: null, searchIndex: "all" },
-    { value: "", prefixOperator: LogicalOperatorsEnum.AND, searchIndex: "all" },
+    { value: "", prefixLogicalOperator: null, searchIndex: "all" },
+    { value: "", prefixLogicalOperator: LogicalOperatorsEnum.AND, searchIndex: "all" },
   ]);
   const [dropDowns, setDropdown] = useState([
     { index: "language", value: "da" },
@@ -31,7 +31,7 @@ export default function AdvancedSearchProvider({ children }) {
       ...prevFields,
       {
         value: "",
-        prefixOperator: LogicalOperatorsEnum.AND,
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
         searchIndex: "all",
       },
     ]);
@@ -53,7 +53,7 @@ export default function AdvancedSearchProvider({ children }) {
   function handlePrefixChange(index, newOperator) {
     setInputFields((prevFields) => {
       const newFields = [...prevFields];
-      newFields[index].prefixOperator = newOperator;
+      newFields[index].prefixLogicalOperator = newOperator;
       return newFields;
     });
   }
