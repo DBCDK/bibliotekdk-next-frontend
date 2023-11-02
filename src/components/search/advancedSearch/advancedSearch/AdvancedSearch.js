@@ -55,14 +55,14 @@ export default function AdvancedSearch() {
         </div>
       </div>
 
-      {showCqlEditor ? <CqlTextArea /> : <TextInputs workType={workType} />}
-      <Button
-        onClick={() => {
-          console.log("state", state);
-        }}
-      >
-        Søg
-      </Button>
+      {showCqlEditor ? (
+        <CqlTextArea />
+      ) : (
+        <div>
+          <TextInputs workType={workType} />
+          {/* Insert dropdowns here */}
+        </div>
+      )}
     </div>
   );
 }

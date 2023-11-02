@@ -21,9 +21,9 @@ import { parseDate } from "@/lib/utils";
 
 export default function MyProfilePage() {
   let modal = useModal();
-  const { isAuthenticated, loanerInfo } = useUser();
+  const { hasCulrUniqueId, loanerInfo } = useUser();
   const { data: userData } = useData(
-    isAuthenticated && userFragments.extendedData()
+    hasCulrUniqueId && userFragments.extendedData()
   );
   const userName = loanerInfo?.userParameters?.userName;
   const { agencies, municipalityAgencyId } = loanerInfo;
