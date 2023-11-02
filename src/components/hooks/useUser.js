@@ -72,7 +72,7 @@ function useUserImpl() {
   // user is authenticated thrue adgangsplatformen
   const isAuthenticated = !!session?.user?.userId;
 
-  // user exist in CULR (CULR users can both include 'folk' and cpr-verified 'ffu' users)
+  // user exists in CULR (CULR users can both include 'folk' and cpr-verified 'ffu' users)
   const hasCulrUniqueId = !!session?.user?.uniqueId;
 
   const { data: extendedUserData, isLoading: isLoadingExtendedData } = useData(
@@ -165,9 +165,6 @@ function useUserImpl() {
 
   const hasUserParameters = Object.keys(loanerInfo?.userParameters).length > 0;
 
-  //TODO give diffferent name
-  const isGuestUser = !isAuthenticated && hasUserParameters;
-
   return {
     authUser: userData?.user || {},
     isLoading: userIsLoading,
@@ -178,8 +175,8 @@ function useUserImpl() {
     hasCulrUniqueId,
     // User has a CPR verified account in culr
     isCPRValidated,
-    // User is loggedIn as guest user
-    isGuestUser,
+    // User cannot be verified, but userParameters are saved in session
+    isGuestUser: !isAuthenticated && hasUserParameters,
     // User has added userParameters
     hasUserParameters,
     loanerInfo,
