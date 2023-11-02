@@ -70,6 +70,13 @@
 .dropdowntoggle {
   background-color: unset;
   min-height: 28px;
+  display: flex;
+  align-items: center;
+  padding-left: var(--pt2);
+  color: var(--blue);
+}
+.dropdowntoggle p {
+  margin-right: var(--pt1);
 }
 
 .suggesterInput {

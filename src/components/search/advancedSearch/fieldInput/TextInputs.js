@@ -127,22 +127,20 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
         id="dropdown-basic"
         className={styles.dropdowntoggle}
       >
-        <span>
-          <Text
-            type="text2"
-            className={`${animations["f-border-bottom"]} ${animations["h-border-bottom"]}`}
-          >
-            {Translate({
-              context: "search",
-              label: `advanced-dropdown-${selected}`,
-            })}
-          </Text>
-          <Icon
-            size={{ w: "2", h: "auto" }}
-            src={expanded ? "arrowUp.svg" : "arrowDown.svg"}
-            alt=""
-          />
-        </span>
+        <Text
+          type="text4"
+          className={`${animations["f-border-bottom"]} ${animations["h-border-bottom"]}`}
+        >
+          {Translate({
+            context: "search",
+            label: `advanced-dropdown-${selected}`,
+          })}
+        </Text>
+        <Icon
+          size={{ w: "2", h: "auto" }}
+          src={expanded ? "arrowUp.svg" : "arrowDown.svg"}
+          alt=""
+        />
       </Dropdown.Toggle>
 
       <Dropdown.Menu className={styles.dropdownmenu}>
