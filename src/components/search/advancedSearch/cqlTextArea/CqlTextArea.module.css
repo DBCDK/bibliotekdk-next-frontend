@@ -1,11 +1,11 @@
 .input {
   border: 1px solid var(--gray);
-  padding: 0 var(--pt2);
-
+  padding: var(--pt2);
   font-size: 17px;
   line-height: 26px;
   font-family: var(--body-font);
-
+  margin-bottom: var(--pt2);
+  width: 100%;
   /* remove border-radius on iphone */
   border-radius: 0;
   -webkit-appearance: none;
@@ -14,6 +14,10 @@
 .input:focus {
   border: 1px solid var(--blue);
   outline: 1px solid var(--blue);
+}
+
+.label {
+  margin-bottom: var(--pt2);
 }
 
 /* Search button */
@@ -64,4 +68,19 @@
 .button:hover > span,
 .button:focus-visible > span {
   color: white;
+}
+
+.errorWrapper {
+  border: 1px solid purple;
+  margin-bottom: var(--pt2);
+}
+
+.errorFull {
+  padding: 0 var(--pt2);
+  background-color: var(--white);
+}
+
+.errorMessage {
+  padding: var(--pt2);
+  background-color: var(--error-light);
 }
