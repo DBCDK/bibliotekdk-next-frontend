@@ -32,7 +32,7 @@ export default function AdvancedSearch() {
       <Container fluid className={styles.container}>
         <Row className={styles.topContainer}>
           <Col>
-            <Title type="title3" className={styles.title}>
+            <Title type="title3">
               {Translate({ context: "search", label: "advancedSearch" })}
             </Title>
           </Col>

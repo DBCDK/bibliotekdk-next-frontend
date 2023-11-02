@@ -1,7 +1,7 @@
 import InfoDropdown from "@/components/base/infoDropdown/InfoDropdown";
 import { useData } from "@/lib/api/api";
 import { doComplexSearchAll } from "@/lib/api/complexSearch.fragments";
-import styles from "./CqlTextArea.module.css";
+import styles from "./CqlErrorMessage.module.css";
 
 function parseErrorMessage(errorMessage) {
   // first sentence of errormessage is (kind of) explanation

@@ -1,6 +1,6 @@
 import styles from "./CqlTextArea.module.css";
 
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 
 import { cyKey } from "@/utils/trim";
 import Translate from "@/components/base/translate";
@@ -9,7 +9,7 @@ import Text from "@/components/base/text";
 import { useRouter } from "next/router";
 import translate from "@/components/base/translate";
 import isEmpty from "lodash/isEmpty";
-import CqlErrorMessage from "@/components/search/advancedSearch/cqlTextArea/CqlErrorMessage";
+import CqlErrorMessage from "@/components/search/advancedSearch/cqlErrorMessage/CqlErrorMessage";
 
 export function CqlTextArea() {
   const router = useRouter();

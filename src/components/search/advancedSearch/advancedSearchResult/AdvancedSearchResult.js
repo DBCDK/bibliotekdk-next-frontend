@@ -4,7 +4,6 @@ import { ResultPage } from "@/components/search/result/page";
 import Section from "@/components/base/section";
 import Pagination from "@/components/search/pagination/Pagination";
 import PropTypes from "prop-types";
-import CqlErrorMessage from "@/components/search/advancedSearch/cqlTextArea/CqlErrorMessage";
 
 export function AdvancedSearchResult({
   pageNo,

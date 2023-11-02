@@ -6,7 +6,6 @@ import useDataCollect from "@/lib/useDataCollect";
 import { useRef } from "react";
 import AdvancedSearchResult from "@/components/search/advancedSearch/advancedSearchResult/AdvancedSearchResult";
 import isEmpty from "lodash/isEmpty";
-import styles from "@/components/help/page/Page.module.css";
 
 import Container from "react-bootstrap/Container";
 /**

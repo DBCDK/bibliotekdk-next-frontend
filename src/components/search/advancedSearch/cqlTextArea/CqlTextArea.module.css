@@ -69,18 +69,3 @@
 .button:focus-visible > span {
   color: white;
 }
-
-.errorWrapper {
-  border: 1px solid purple;
-  margin-bottom: var(--pt2);
-}
-
-.errorFull {
-  padding: 0 var(--pt2);
-  background-color: var(--white);
-}
-
-.errorMessage {
-  padding: var(--pt2);
-  background-color: var(--error-light);
-}
