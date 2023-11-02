@@ -128,7 +128,8 @@ const CheckoutForm = ({ context, materialCounts, onSubmit }) => {
   }, [mail, pickupBranch, context?.periodicaForm?.publicationDateOfComponent]);
 
   const onSubmitForm = () => {
-    if (onSubmit) onSubmit();
+    console.log(pickupBranch);
+    if (onSubmit) onSubmit(pickupBranch.name);
   };
 
   return (

@@ -32,12 +32,11 @@ const MultiOrder = ({ context }) => {
   const modal = useModal();
   const { materials } = context;
   const analyzeRef = useRef();
-  const [materialCounts, setMaterialCounts] = useState(null);
+  const [materialCounts, setMaterialCounts] = useState({});
   const [materialsToOrder, setMaterialsToOrder] = useState(materials);
 
   useEffect(() => {
     if (!analyzeRef || !analyzeRef.current) return;
-    if (materialCounts !== null) return;
 
     const elements = Array.from(analyzeRef.current.children);
     const materialsNotAvailable = elements
@@ -87,14 +86,14 @@ const MultiOrder = ({ context }) => {
       materialsNotAllowed: materialsNotAvailable?.length ?? 0,
       materialsMissingAction: materialsNeedsInfo?.length ?? 0,
     });
-  });
+  }, [materials, analyzeRef.current]);
 
-  const onSubmit = () => {
+  const onSubmit = (branchName) => {
     // Create orders
-    console.log(materials);
     modal.push("multireceipt", {
       failedMaterials: materials.slice(0, 2),
       successMaterials: [0, 0],
+      branchName,
     });
   };
 

@@ -54,10 +54,8 @@ const Material = ({
   material,
   setMaterialsToOrder,
   context,
-  canRemove = true,
   backgroundColorOverride = BackgroundColorEnum.NEUTRAL,
 }) => {
-  console.log(backgroundColorOverride);
   //@TODO get manifestations in same manner for both edition and works via useData
   const isSpecificEdition = !!material?.pid;
   const modal = useModal();
@@ -144,6 +142,14 @@ const Material = ({
     );
   }
 
+  if (backgroundColorOverride === BackgroundColorEnum.RED) {
+    children = (
+      <Text type="text4" className={styles.errorLabel}>
+        <Translate context="materialcard" label="error-ordering" />
+      </Text>
+    );
+  }
+
   if (!orderPossible) {
     children = (
       <>
@@ -179,6 +185,7 @@ const Material = ({
       isDigitalCopy,
       isDeliveredByDigitalArticleService,
       backgroundColor,
+      hideEditionText: backgroundColorOverride === BackgroundColorEnum.RED,
     });
 
   // If we have manifestations with cover, take the first one

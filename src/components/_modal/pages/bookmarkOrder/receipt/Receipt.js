@@ -8,12 +8,13 @@ import { useModal } from "@/components/_modal/Modal";
 import cx from "classnames";
 import Material from "../multi-order/Material/Material";
 import { BackgroundColorEnum } from "@/components/base/materialcard/materialCard.utils";
+import { useRouter } from "next/router";
 
 const Receipt = ({ context }) => {
   const modal = useModal();
-  const { successMaterials, failedMaterials } = context;
+  const { successMaterials, failedMaterials, branchName } = context;
   const hasErrors = failedMaterials.length > 0;
-  const branchName = "ADDRESSE";
+  const router = useRouter();
 
   return (
     <div className={cx(styles.receipt, { [styles.errorReceipt]: hasErrors })}>
@@ -25,7 +26,7 @@ const Receipt = ({ context }) => {
 
       <Title className={styles.title} type="title4" tag="h2">
         {hasErrors
-          ? "Bestillingsoversigt"
+          ? Translate({ context: "bookmark-order", label: "order-overview" })
           : Translate({ context: "order", label: "order-success" })}
       </Title>
 
@@ -37,23 +38,47 @@ const Receipt = ({ context }) => {
 
       {hasErrors && (
         <Text type="text2" className={styles.successMessage}>
-          {successMaterials.length} materialer er bestilt.
+          {successMaterials.length === 1 ? (
+            <Translate
+              context="bookmark-order"
+              label="is-ordered-singular"
+              vars={[successMaterials.length]}
+            />
+          ) : (
+            <Translate
+              context="bookmark-order"
+              label="is-ordered"
+              vars={[successMaterials.length]}
+            />
+          )}
         </Text>
       )}
 
       <Text type="text2" className={cx({ [styles.message]: !hasErrors })}>
-        {Translate({
-          context: "order",
-          label: "order-success-message",
-          vars: [branchName],
-          renderAsHtml: true,
-        })}
+        <Translate
+          context="order"
+          label="order-success-message"
+          vars={[branchName]}
+          renderAsHtml
+        />
       </Text>
 
       {hasErrors && (
         <>
           <Text type="text1" className={styles.errorMessage}>
-            {failedMaterials.length} materialer kunne ikke bestilles!
+            {failedMaterials.length === 1 ? (
+              <Translate
+                context="bookmark-order"
+                label="multiorder-couldnt-order-singular"
+                vars={[failedMaterials.length]}
+              />
+            ) : (
+              <Translate
+                context="bookmark-order"
+                label="multiorder-couldnt-order"
+                vars={[failedMaterials.length]}
+              />
+            )}
           </Text>
 
           <div className={styles.materialList}>
@@ -75,10 +100,15 @@ const Receipt = ({ context }) => {
         className={styles.close}
         onClick={() => modal.clear()}
       >
-        Luk
+        <Translate context="general" label="close" />
       </Button>
-      <Button type="secondary" size="large" className={styles.redirect}>
-        Gå til bestillingshistorik
+      <Button
+        type="secondary"
+        size="large"
+        className={styles.redirect}
+        onClick={() => router.push("/profil/bestillingshistorik")}
+      >
+        <Translate context="receipt" label="go-to-your-orders" />
       </Button>
     </div>
   );
