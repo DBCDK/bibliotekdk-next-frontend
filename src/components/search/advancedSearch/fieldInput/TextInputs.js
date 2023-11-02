@@ -22,26 +22,19 @@ import { LogicalOperatorsEnum } from "@/components/search/enums";
  * @param {Object} props
  * @returns {React.JSX.Element}
  */
-function FieldInput({
-  key,
-  index,
-  isLastItem,
-  isFirstItem,
-  workType,
-  fieldValue,
-}) {
+function FieldInput({ key, index, workType, fieldValue }) {
   const [suggestions, setSuggestions] = useState([]);
 
   const {
     handleInputFieldChange,
     removeInputField,
     handleLogicalOperatorChange,
-    addAnInputField,
   } = useAdvancedSearchContext();
 
   //labels to show in SearchIndexDropdown
   const labels = workTypesLabels[workType].map((el) => el.label);
 
+  const isFirstItem = index === 0;
   const { data } = useData(
     fieldValue?.value &&
       suggestFragments.all({ q: fieldValue.value, workType: null, limit: 10 })
@@ -95,17 +88,6 @@ function FieldInput({
           </IconButton>
         )}
       </div>
-
-      {isLastItem && (
-        <IconButton
-          icon="expand"
-          onClick={addAnInputField}
-          keepUnderline
-          className={styles.addLine}
-        >
-          {Translate({ context: "search", label: "addLine" })}
-        </IconButton>
-      )}
     </div>
   );
 }
@@ -177,18 +159,26 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
  * @returns {React.JSX.Element}
  */
 export default function TextInputs({ workType }) {
-  const { inputFields } = useAdvancedSearchContext();
+  const { inputFields, addInputField } = useAdvancedSearchContext();
 
-  return inputFields?.map((field, index) => {
-    return (
-      <FieldInput
-        key={`inputField-${index}`}
-        index={index}
-        isLastItem={index === inputFields.length - 1}
-        isFirstItem={index === 0}
-        workType={workType}
-        fieldValue={field}
-      />
-    );
-  });
+  return (
+    <>
+      {inputFields?.map((field, index) => (
+        <FieldInput
+          key={`inputField-${index}`}
+          index={index}
+          workType={workType}
+          fieldValue={field}
+        />
+      ))}
+      <IconButton
+        icon="expand"
+        onClick={addInputField}
+        keepUnderline
+        className={styles.addLine}
+      >
+        {Translate({ context: "search", label: "addLine" })}
+      </IconButton>
+    </>
+  );
 }
