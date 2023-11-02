@@ -5,7 +5,7 @@ import Suggester from "@/components/base/suggester/Suggester";
 import IconButton from "@/components/base/iconButton/IconButton";
 import styles from "./TextInputs.module.css";
 import animations from "css/animations";
-import IndexDropdown from "@/components/search/advancedSearch/fieldInput/indexDropdown/IndexDropdown";
+import SearchIndexDropdown from "@/components/search/advancedSearch/fieldInput/searchIndexDropdown/SearchIndexDropdown";
 
 import { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -35,7 +35,7 @@ function FieldInput({
   //textinput text value
   const [value, setValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-  //labels to show in IndexDropdown
+  //labels to show in SearchIndexDropdown
   console.log("worktype", workType);
   const labels = workTypesLabels[workType].map((el) => el.label);
 
@@ -61,7 +61,7 @@ function FieldInput({
       )}
 
       <div className={styles.inputContainer}>
-        <IndexDropdown
+        <SearchIndexDropdown
           options={labels}
           className={styles.select}
           index={index}

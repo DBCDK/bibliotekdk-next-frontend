@@ -1,5 +1,5 @@
 import Dropdown from "react-bootstrap/Dropdown";
-import styles from "./IndexDropdown.module.css";
+import styles from "./SearchIndexDropdown.module.css";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import Icon from "@/components/base/icon";

@@ -22,10 +22,11 @@ export default function AdvancedSearchProvider({ children }) {
       searchIndex: "all",
     },
   ]);
-  const [dropDowns, setDropdown] = useState([
-    { index: "language", value: "da" },
-    { index: "2-3", value: "age" },
-  ]);
+  //todo: akri will implement
+  // const [dropDowns, setDropdown] = useState([
+  //   { index: "language", value: "da" },
+  //   { index: "2-3", value: "age" },
+  // ]);
 
   /**
    * Add an extra input field
@@ -78,7 +79,7 @@ export default function AdvancedSearchProvider({ children }) {
     addInputField,
     removeInputField,
     handlePrefixChange,
-    dropDowns,
+    //  dropDowns,
     handleIndexChange,
   };
 
