@@ -1,3 +1,9 @@
+/**
+ * @file
+ * This file manages the state for an advanced search.
+ * Create a function for each state
+ */
+
 import React, { createContext, useContext, useState } from "react";
 import { LogicalOperatorsEnum } from "../enums";
 
@@ -13,14 +19,13 @@ export default function TextInputsProvider({ children }) {
     { value: "", prefixOperator: null, searchIndex: "all" },
     { value: "", prefixOperator: LogicalOperatorsEnum.AND, searchIndex: "all" },
   ]);
-  //TODO snak med akri
   const [dropDowns, setDropdown] = useState([
     { index: "language", value: "da" },
     { index: "2-3", value: "age" },
   ]);
 
   /**
-   * add an extra input field
+   * Add an extra input field
    */
   function addInputField() {
     setInputFields((prevFields) => [

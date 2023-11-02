@@ -5,7 +5,7 @@ import Suggester from "@/components/base/suggester/Suggester";
 import IconButton from "@/components/base/iconButton/IconButton";
 import styles from "./TextInputs.module.css";
 import animations from "css/animations";
-import IndexDropdown from "../indexDropdown/IndexDropdown";
+import IndexDropdown from "./indexDropdown/IndexDropdown";
 import { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import Icon from "@/components/base/icon";
