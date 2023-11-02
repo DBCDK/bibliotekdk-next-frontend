@@ -30,8 +30,6 @@ function FieldInput({
   workType,
   fieldValue,
 }) {
-  //textinput text value
-  //const [value, setValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
   const {
