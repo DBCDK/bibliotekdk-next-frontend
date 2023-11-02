@@ -148,7 +148,8 @@ const LogoutButton = () => {
       <Link
         onClick={() => {
           if (user.isAuthenticated) {
-            signOut(null, "/");
+            const redirectUrl = window?.location?.origin;
+            signOut(redirectUrl);
           }
         }}
         className={styles.logoutBtn}
