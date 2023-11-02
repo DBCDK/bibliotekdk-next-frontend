@@ -8,6 +8,7 @@ import { useMemo } from "react";
 import { accessFactory } from "@/lib/accessFactoryUtils";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import { extractCreatorsPrioritiseCorporation } from "@/lib/utils";
+import { MaterialTypeGeneralEnum } from "@/lib/enums_MaterialTypes";
 
 export function openAgencyLocalizationsModal({
   modal,
@@ -87,18 +88,18 @@ function getPageDescription(work) {
   const title = work?.titles?.main[0];
   const creator = work?.creators?.[0]?.display || "";
 
-  const { uniqueMaterialTypes: materialTypes, inUniqueMaterialTypes } =
+  const { uniqueMaterialTypes: materialTypesArray, inUniqueMaterialTypes } =
     manifestationMaterialTypeFactory(work?.manifestations?.all);
 
-  // We check for "bog", "ebog", "lydbog ..."-something, and combined material (= "sammensat materiale")
+  // We check for "bog", "e-bog", "lydbog ..."-something, and combined material (= "sammensat materiale")
   let types = [];
-  inUniqueMaterialTypes(["bog"]) && types.push("bog");
-  inUniqueMaterialTypes(["ebog"]) && types.push("ebog");
-  materialTypes
-    ?.filter((matArray) => matArray.length === 1)
-    .filter((matArray) => matArray?.[0].startsWith("lydbog")).length > 0 &&
+  inUniqueMaterialTypes([MaterialTypeGeneralEnum.BOOKS.code]) &&
+    types.push("bog");
+  inUniqueMaterialTypes([MaterialTypeGeneralEnum.EBOOKS.code]) &&
+    types.push("e-bog");
+  inUniqueMaterialTypes([MaterialTypeGeneralEnum.AUDIO_BOOKS.code]) &&
     types.push("lydbog");
-  materialTypes?.filter((matArray) => matArray.length > 1).length > 1 &&
+  materialTypesArray?.filter((matArray) => matArray.length > 1).length > 1 &&
     types.push("sammensat materiale");
 
   const typesString =

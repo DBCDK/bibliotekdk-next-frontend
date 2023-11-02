@@ -13,7 +13,7 @@ import styles from "./StatusMessage.module.css";
 
 export default function StatusMessage({ context, modal }) {
   // handles if modal should have "back" functionality
-  const hasBack = context.hasBack ?? !!(modal.index?.() > 0);
+  const hasBack = context.back ?? !!(modal.index?.() > 0);
 
   function handleOnClick() {
     hasBack ? modal.prev() : modal.clear();

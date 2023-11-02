@@ -19,7 +19,7 @@ export function WrappedSeriesSlider() {
     <div>
       <StoryTitle>Wrapped Series Slider</StoryTitle>
       <StoryDescription>Fetches data from ...</StoryDescription>
-      <WrappedSeries workId={WORK_ID} materialTypeArray={["bog"]} />
+      <WrappedSeries workId={WORK_ID} type={["bog"]} />
     </div>
   );
 }

@@ -18,7 +18,8 @@ const MANIFESTATION_BASE = {
   pid: "some-pid-1",
   materialTypes: [
     {
-      materialTypeSpecific: { display: "bog" },
+      materialTypeSpecific: { display: "bog", code: "BOOK" },
+      materialTypeGeneral: { display: "bøger", code: "BOOKS" },
     },
   ],
   edition: {
@@ -127,7 +128,50 @@ const MANIFESTATION_4 = {
   },
   materialTypes: [
     {
-      materialTypeSpecific: { display: "tidsskriftsartikel" },
+      materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+      materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+    },
+  ],
+  access: [
+    {
+      __resolveType: AccessEnum.DIGITAL_ARTICLE_SERVICE,
+      __typename: "DigitalArticleService",
+      issn: "some-issn",
+    },
+    {
+      __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
+      __typename: "InterLibraryLoan",
+      loanIsPossible: true,
+    },
+  ],
+  workTypes: ["ARTICLE"],
+  cover: {
+    detail:
+      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=23637189&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=72eb2ae9d91fb0ffbb7f",
+    origin: "moreinfo",
+  },
+};
+// Indexed article, that may be ordered via digital article copy
+const MANIFESTATION_4_1 = {
+  ...MANIFESTATION_BASE,
+  pid: "some-pid-4-1",
+  titles: {
+    full: [
+      "Hugo i Sølvskoven 4½",
+      "Kobberet lugter, messingen smitter, lofter suger",
+    ],
+  },
+  materialTypes: [
+    {
+      materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+      materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+    },
+    {
+      materialTypeSpecific: {
+        display: "artikel (online)",
+        code: "ARTICLE_ONLINE",
+      },
+      materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
     },
   ],
   access: [
@@ -167,7 +211,11 @@ const MANIFESTATION_5 = {
   },
   materialTypes: [
     {
-      materialTypeSpecific: { display: "tidsskrift" },
+      materialTypeSpecific: { display: "tidsskrift", code: "JOURNAL" },
+      materialTypeGeneral: {
+        display: "aviser og tidsskrifter",
+        code: "NEWSPAPER_JOURNALS",
+      },
     },
   ],
   access: [
@@ -208,7 +256,8 @@ const MANIFESTATION_6 = {
   },
   materialTypes: [
     {
-      materialTypeSpecific: { display: "bog" },
+      materialTypeSpecific: { display: "bog", code: "BOOK" },
+      materialTypeGeneral: { display: "bøger", code: "BOOKS" },
     },
   ],
   publisher: ["Sølvbakke"],
@@ -233,7 +282,8 @@ const MANIFESTATION_7 = {
   },
   materialTypes: [
     {
-      materialTypeSpecific: { display: "ebog" },
+      materialTypeSpecific: { display: "e-bog", code: "EBOOK" },
+      materialTypeGeneral: { display: "e-bøger", code: "EBOOKS" },
     },
   ],
   access: [
@@ -251,7 +301,7 @@ const MANIFESTATION_7 = {
   workTypes: ["LITERATURE"],
   cover: {
     detail:
-      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=27052509&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=3ff650fe66ef8432973c",
+      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=29053782&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=115cd0be4dc0b0e7d74e",
     origin: "moreinfo",
   },
 };
@@ -268,7 +318,8 @@ const MANIFESTATION_8 = {
   },
   materialTypes: [
     {
-      materialTypeSpecific: { display: "bog" },
+      materialTypeSpecific: { display: "bog", code: "BOOK" },
+      materialTypeGeneral: { display: "bøger", code: "BOOKS" },
     },
   ],
   workTypes: ["LITERATURE"],
@@ -295,7 +346,8 @@ const MANIFESTATION_9 = {
   },
   materialTypes: [
     {
-      materialTypeSpecific: { display: "bog" },
+      materialTypeSpecific: { display: "bog", code: "BOOK" },
+      materialTypeGeneral: { display: "bøger", code: "BOOKS" },
     },
   ],
   workTypes: ["LITERATURE"],
@@ -316,7 +368,8 @@ const MANIFESTATION_10 = {
   pid: "some-pid-10",
   materialTypes: [
     {
-      materialTypeSpecific: { display: "bog" },
+      materialTypeSpecific: { display: "bog", code: "BOOK" },
+      materialTypeGeneral: { display: "bøger", code: "BOOKS" },
     },
   ],
   ownerWork: {
@@ -341,6 +394,7 @@ const ALL_MANIFESTATIONS = [
   MANIFESTATION_2,
   MANIFESTATION_3,
   MANIFESTATION_4,
+  MANIFESTATION_4_1,
   MANIFESTATION_5,
   MANIFESTATION_6,
   MANIFESTATION_7,
@@ -360,7 +414,12 @@ const WORK_1 = {
     full: ["Hugo i Sølvskoven", "Begyndelsen"],
   },
   creators: [{ display: "Børge 'Linoleum' Skovgulv Gummigulv" }],
-  materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
+  materialTypes: [
+    {
+      materialTypeSpecific: { display: "bog", code: "BOOK" },
+      materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+    },
+  ],
   fictionNonfiction: { display: "skønlitteratur", code: "FICTION" },
   genreAndForm: ["roman"],
 };
@@ -369,7 +428,36 @@ const WORK_2 = {
   workId: "some-work-id-2",
   manifestations: { all: [MANIFESTATION_4], mostRelevant: [MANIFESTATION_4] },
   workTypes: ["ARTICLE"],
-  materialTypes: [{ materialTypeSpecific: { display: "avisartikel" } }],
+  materialTypes: [
+    {
+      materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+      materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+    },
+  ],
+  fictionNonfiction: { display: "skønlitteratur", code: "FICTION" },
+  genreAndForm: [],
+};
+
+const WORK_2_1 = {
+  workId: "some-work-id-2-1",
+  manifestations: {
+    all: [MANIFESTATION_4_1],
+    mostRelevant: [MANIFESTATION_4_1],
+  },
+  workTypes: ["ARTICLE"],
+  materialTypes: [
+    {
+      materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
+      materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+    },
+    {
+      materialTypeSpecific: {
+        display: "artikel (online)",
+        code: "ARTICLE_ONLINE",
+      },
+      materialTypeGeneral: { display: "artikler", code: "ARTICLES" },
+    },
+  ],
   fictionNonfiction: { display: "skønlitteratur", code: "FICTION" },
   genreAndForm: [],
 };
@@ -395,7 +483,8 @@ const WORK_4 = {
   creators: [{ display: "Børge 'Linoleum' Skovgulv Gummigulv" }],
   materialTypes: [
     {
-      materialTypeSpecific: { display: "bog" },
+      materialTypeSpecific: { display: "bog", code: "BOOK" },
+      materialTypeGeneral: { display: "bøger", code: "BOOKS" },
     },
   ],
   relations: {
@@ -454,7 +543,12 @@ const WORK_7 = {
     mostRelevant: [MANIFESTATION_9],
     all: [MANIFESTATION_9],
   },
-  materialTypes: [{ materialTypeSpecific: { display: "bog" } }],
+  materialTypes: [
+    {
+      materialTypeSpecific: { display: "bog", code: "BOOK" },
+      materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+    },
+  ],
 };
 
 const WORK_8 = {
@@ -472,9 +566,11 @@ const ALL_WORKS = [
   WORK_1,
   // A work that is an indexed periodica article
   WORK_2,
+  WORK_2_1,
   // A work that is a periodica
   WORK_3,
-  // A work that is an ebog
+  // A work that is an e-bog
+  WORK_4,
   WORK_4,
   WORK_5,
   WORK_6,
@@ -916,7 +1012,8 @@ const USER_LOANS = [
       ],
       materialTypes: [
         {
-          materialTypeSpecific: { display: "billedbog" },
+          materialTypeSpecific: { display: "billedbog", code: "PICTURE_BOOK" },
+          materialTypeGeneral: { display: "bøger", code: "BOOKS" },
         },
       ],
       cover: {
@@ -944,7 +1041,8 @@ const USER_LOANS = [
       ],
       materialTypes: [
         {
-          materialTypeSpecific: { display: "bog" },
+          materialTypeSpecific: { display: "bog", code: "BOOK" },
+          materialTypeGeneral: { display: "bøger", code: "BOOKS" },
         },
       ],
       cover: {
@@ -972,7 +1070,8 @@ const USER_LOANS = [
       ],
       materialTypes: [
         {
-          materialTypeSpecific: { display: "bog" },
+          materialTypeSpecific: { display: "bog", code: "BOOK" },
+          materialTypeGeneral: { display: "bøger", code: "BOOKS" },
         },
       ],
       cover: {
@@ -1001,7 +1100,8 @@ const USER_LOANS = [
       ],
       materialTypes: [
         {
-          materialTypeSpecific: { display: "bog" },
+          materialTypeSpecific: { display: "bog", code: "BOOK" },
+          materialTypeGeneral: { display: "bøger", code: "BOOKS" },
         },
       ],
       cover: {
@@ -1037,7 +1137,8 @@ const USER_ORDERS = [
       ],
       materialTypes: [
         {
-          materialTypeSpecific: { display: "bog" },
+          materialTypeSpecific: { display: "bog", code: "BOOK" },
+          materialTypeGeneral: { display: "bøger", code: "BOOKS" },
         },
       ],
       cover: {
@@ -1070,7 +1171,8 @@ const USER_ORDERS = [
       ],
       materialTypes: [
         {
-          materialTypeSpecific: { display: "bog" },
+          materialTypeSpecific: { display: "bog", code: "BOOK" },
+          materialTypeGeneral: { display: "bøger", code: "BOOKS" },
         },
       ],
       cover: {
@@ -1102,7 +1204,8 @@ const USER_ORDERS = [
       ],
       materialTypes: [
         {
-          materialTypeSpecific: { display: "bog" },
+          materialTypeSpecific: { display: "bog", code: "BOOK" },
+          materialTypeGeneral: { display: "bøger", code: "BOOKS" },
         },
       ],
       cover: {
@@ -1196,6 +1299,7 @@ export default function automock_utils() {
     MANIFESTATION_2,
     MANIFESTATION_3,
     MANIFESTATION_4,
+    MANIFESTATION_4_1,
     MANIFESTATION_5,
     MANIFESTATION_6,
     MANIFESTATION_7,
@@ -1205,6 +1309,7 @@ export default function automock_utils() {
     ALL_MANIFESTATIONS,
     WORK_1,
     WORK_2,
+    WORK_2_1,
     WORK_3,
     WORK_4,
     WORK_5,

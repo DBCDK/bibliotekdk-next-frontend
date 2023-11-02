@@ -3,11 +3,11 @@ import { getCanonicalWorkUrl } from "@/lib/utils";
 /**
  * Maps materialType to schema.org BookFormatType
  *
- * @param {string} materialType
+ * @param {Array.<string>} materialTypesArray
  *
  * @returns {string} schema.org BookFormatType
  */
-function getSchemaOrgBookFormat(materialType) {
+function getSchemaOrgBookFormat(materialTypesArray) {
   /** https://schema.org/BookFormatType
    * AudiobookFormat
    * EBook
@@ -16,18 +16,21 @@ function getSchemaOrgBookFormat(materialType) {
    * Paperback
    */
 
-  materialType = materialType.toLowerCase();
+  const materialTypesGeneralCode = materialTypesArray?.map(
+    (mat) => mat?.materialTypeGeneral?.code
+  );
 
-  if (materialType.includes("ebog")) {
-    return "http://schema.org/EBook";
-  } else if (materialType.includes("lydbog")) {
-    return "http://schema.org/AudiobookFormat";
-  } else if (materialType.includes("graphic")) {
-    return "http://schema.org/GraphicNovel";
-  } else if (materialType.includes("bog")) {
+  if (materialTypesGeneralCode.find((mat) => mat === "EBOOKS")) {
+    return "https://schema.org/EBook";
+  } else if (materialTypesGeneralCode.find((mat) => mat === "AUDIO_BOOKS")) {
+    return "https://schema.org/AudiobookFormat";
+  } else if (materialTypesGeneralCode.find((mat) => mat === "COMICS")) {
+    return "https://schema.org/GraphicNovel";
+  } else if (materialTypesGeneralCode.find((mat) => mat === "BOOKS")) {
     // Hardcover or paperback?
-    return "http://schema.org/Paperback";
+    return "https://schema.org/Paperback";
   }
+
   return null;
 }
 
@@ -81,9 +84,7 @@ function getBook({
           name: entry.publisher,
         };
       }
-      const bookFormat = getSchemaOrgBookFormat(
-        entry.materialTypes[0]?.materialTypeSpecific?.display
-      );
+      const bookFormat = getSchemaOrgBookFormat(entry.materialTypes);
       if (bookFormat) {
         manifestation.bookFormat = bookFormat;
       }

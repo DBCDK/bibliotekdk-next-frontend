@@ -9,6 +9,7 @@ import styles from "./templates.module.css";
 import { getCoverImage } from "@/components/utils/getCoverImage";
 import cx from "classnames";
 import Translate from "@/components/base/translate";
+import { BackgroundColorEnum } from "../materialCard.utils";
 
 function propFunc(textType, lines) {
   return {
@@ -217,6 +218,8 @@ export function templateForLocalizations(
  * @param {React.JSX.Element} props.children
  * @param {boolean} props.isPeriodicaLike
  * @param {boolean} props.isDigitalArticle
+ * @param {boolean} [props.isDeliveredByDigitalArticleService] - used to differentiate between "Første tilgængelige eksemplar" and "Leveres som digital kopi til din mail"
+ * @param {BackgroundColorEnum} [props.backgroundColor] - indicates warnings or errors in the material card - used in multiorder
  * @returns {React.JSX.Element}
  */
 export function templateImageToLeft({
@@ -225,6 +228,8 @@ export function templateImageToLeft({
   children,
   isPeriodicaLike,
   isDigitalArticle,
+  isDeliveredByDigitalArticleService = false,
+  backgroundColor = BackgroundColorEnum.NEUTRAL,
 }) {
   const fullTitle =
     singleManifestation === true
@@ -238,9 +243,10 @@ export function templateImageToLeft({
     ?.flatMap((c) => c?.display)
     .filter((pre) => !isEmpty(pre))
     ?.join(", ");
-  const formattedMaterialTypes = singleManifestation
-    ? material?.materialType
-    : formatMaterialTypesToPresentation(material?.materialTypesArray);
+  const formattedMaterialTypes =
+    singleManifestation && material?.materialType //@TODO we get that from bookmarks if specific edition is marked --> would be better to retrieve manifestations directly inside of multiorder --> material
+      ? material?.materialType
+      : formatMaterialTypesToPresentation(material?.materialTypesArray);
 
   const edition = [
     material?.edition?.publicationYear?.display,
@@ -280,7 +286,9 @@ export function templateImageToLeft({
               ? edition
               : Translate({
                   context: "materialcard",
-                  label: "first-available-copy",
+                  label: isDeliveredByDigitalArticleService
+                    ? "digital-copy"
+                    : "first-available-copy",
                 })}
           </Text>
         )}
@@ -290,13 +298,21 @@ export function templateImageToLeft({
     // Styling
     elementContainerClassName: cx(
       styles.col_flex,
-      styles.col_flex__localizations_version
+      styles.col_flex__image_to_left_version,
+      {
+        [styles.warning_yellow]: backgroundColor === BackgroundColorEnum.YELLOW,
+        [styles.error_red]: backgroundColor === BackgroundColorEnum.RED,
+      }
     ),
     relatedElementClassName: cx(
       styles.related_element,
       styles.related_element__image_to_left_version
     ),
-    textClassName: cx(styles.text__image_to_left_version),
+    textClassName: cx(styles.text__image_to_left_version, {
+      [styles.white_overlay]:
+        backgroundColor === BackgroundColorEnum.YELLOW ||
+        backgroundColor === BackgroundColorEnum.RED,
+    }),
     coverImageClassName: cx(styles.cover, styles.cover__image_to_left_version),
   };
 }

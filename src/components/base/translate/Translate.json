@@ -1380,6 +1380,10 @@
         "da": "Resultater",
         "en": "Result"
       },
+      "cqlsearchlabel": {
+        "da": "Cql-søgning",
+        "en": "Cql-search"
+      },
       "loanOptions": {
         "da": "Lånemuligheder:",
         "en": "Loan options:"
@@ -1623,6 +1627,67 @@
       "advancedSearch": {
         "da": "Avanceret søgning",
         "en": "Advanced Search"
+      },
+      "addLine": {
+        "da": "Tilføj line",
+        "en": "Add field"
+      },
+      "advanced-dropdown-all": {
+        "da": "Alle felter",
+        "en": "All fields"
+      },
+      "advanced-dropdown-title": {
+        "da": "Titel",
+        "en": "Title"
+      },
+      "advanced-dropdown-isbn": {
+        "da": "ISBN",
+        "en": "ISBN"
+      },
+      "advanced-dropdown-subject": {
+        "da": "Emne",
+        "en": "subject"
+      },
+      "advanced-dropdown-publisher": {
+        "da": "Udgiver",
+        "en": "Publisher"
+      },
+      "advanced-dropdown-contributor": {
+        "da": "Medvirkende",
+        "en": "contributor"
+      },
+      "advanced-dropdown-series": {
+        "da": "Serietitel",
+        "en": "Series title"
+      },
+      "advanced-dropdown-function": {
+        "da": "Ophav",
+        "en": "function"
+      },
+
+      "advanced-dropdown-AND": {
+        "da": "OG",
+        "en": "AND"
+      },
+      "advanced-dropdown-OR": {
+        "da": "ELLER",
+        "en": "NOROT"
+      },
+      "advanced-dropdown-NOT": {
+        "da": "IKKE",
+        "en": "NOT"
+      },
+      "remove": {
+        "da": "Fjern",
+        "en": "Remove"
+      },
+      "editInCqlEditor": {
+        "da": "Rediger som CQL",
+        "en": "Edit in CQL"
+      },
+      "showInputFields": {
+        "da": "Rediger som feltsøgning",
+        "en": "Use input field search"
       }
     },
     "suggester": {
@@ -3600,15 +3665,24 @@
         "da": "Bibliotekstype",
         "en": "Library type"
       },
-      "publicLibrary": { "da": "Folkebibliotek", "en": "Public library" },
-
+      "publicLibrary": {
+        "da": "Folkebibliotek",
+        "en": "Public library"
+      },
       "academicLibrary": {
         "da": "Forskningsbibliotek",
         "en": "Academic library"
       },
+      "schoolLibrary": {
+        "da": "Skolebibliotek",
+        "en": "School library"
+      },
+      "otherLibrary": {
+        "da": "Andet",
+        "en": "Other"
+      },
       "showMore": { "da": "Vis mere", "en": "Show more" },
       "showLess": { "da": "Vis mindre", "en": "Show less" },
-
       "remove": {
         "da": "Fjern",
         "en": "Remove"
@@ -4007,6 +4081,14 @@
       "first-available-copy": {
         "da": "Første tilgængelige eksemplar",
         "en": "First available copy."
+      },
+      "digital-copy": {
+        "da": "Leveres som digital kopi til din mail",
+        "en": "Delivered as a digital copy to your email"
+      },
+      "order-not-possible": {
+        "da": "Kan ikke bestilles til dit bibliotek",
+        "en": "Cannot be ordered to the chosen pickup location"
       }
     }
   }

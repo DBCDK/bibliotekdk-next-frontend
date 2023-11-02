@@ -6,6 +6,7 @@ import { useData } from "@/lib/api/api";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 import CheckoutForm from "./checkoutForm/MultiOrderCheckoutForm";
 import Material from "./Material/Material";
+import { useState } from "react";
 
 const CONTEXT = "bookmark-order";
 
@@ -32,6 +33,7 @@ const MultiOrder = ({ context }) => {
     materialsNotAllowed: 0,
     materialsMissingAction: 0,
   };
+  const [materialsToOrder, setMaterialsToOrder] = useState(materials);
 
   return (
     <div className={styles.multiOrder}>
@@ -47,16 +49,17 @@ const MultiOrder = ({ context }) => {
         <Translate
           context={CONTEXT}
           label="multiorder-subheading"
-          vars={[materials?.length]}
+          vars={[materialsToOrder?.length]}
         />
       </Title>
 
       <div className={styles.materialList}>
-        {materials.map((material) => {
+        {materialsToOrder.map((material) => {
           return (
             <Material
               key={material.key}
               material={material}
+              setMaterialsToOrder={setMaterialsToOrder}
               context={context} //sets periodicaForm via updateModal
             />
           );
