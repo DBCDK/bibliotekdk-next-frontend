@@ -13,7 +13,7 @@ import workTypesLabels from "./labels.json";
 import Input from "@/components/base/forms/input";
 import { useData } from "@/lib/api/api";
 import * as suggestFragments from "@/lib/api/suggest.fragments";
-import { useTextInputsContext } from "../context";
+import { useAdvancedSearchContext } from "../context";
 import { LogicalOperatorsEnum } from "../../enums";
 
 /**
@@ -105,7 +105,6 @@ function FieldInput({
   );
 }
 const options = Object.keys(LogicalOperatorsEnum); //["AND", "OR", "NOT"];
-console.log("options", options);
 /**
  * Dropdown for choosing a logical operator ("AND", "OR", "NOT") between text fields.
  * @param {*} param0
@@ -174,7 +173,7 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
  */
 export default function TextInputs({ workType }) {
   const { inputFields, addInputField, removeInputField, handlePrefixChange } =
-    useTextInputsContext();
+  useAdvancedSearchContext();
 
   return inputFields?.map((field, index) => {
     return (

@@ -3,7 +3,7 @@ import styles from "./IndexDropdown.module.css";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import Icon from "@/components/base/icon";
-import { useTextInputsContext } from "../../context";
+import { useAdvancedSearchContext } from "../../context";
 
 /**
  * Used in advanced search field input. Drop down to select a search index
@@ -11,14 +11,9 @@ import { useTextInputsContext } from "../../context";
  * @returns
  */
 export default function IndexDropdown({ options = [], className, index }) {
-  const { handleIndexChange, inputFields } = useTextInputsContext();
-  console.log("index", index);
+  const { handleIndexChange, inputFields } = useAdvancedSearchContext();
 
-  console.log("inputFields", inputFields);
   const selected = inputFields[index].searchIndex;
-  console.log("selected", selected);
-
-  console.log("selectedItem", selected);
 
   return (
     <Dropdown className={`${styles.dropdownwrap} ${className}`}>
@@ -43,7 +38,6 @@ export default function IndexDropdown({ options = [], className, index }) {
 
       <Dropdown.Menu className={styles.dropdownmenu}>
         {options.map((elem) => {
-          //   console.log('elem',elem)
           return (
             <Dropdown.Item
               tabIndex="-1"
@@ -51,9 +45,6 @@ export default function IndexDropdown({ options = [], className, index }) {
               key={`indexDropdown-${elem}`}
               className={styles.dropdownitem}
               onClick={() => {
-                //update label
-                //    onSelect(elem);
-                //update shared state
                 handleIndexChange(index, elem);
               }}
             >
