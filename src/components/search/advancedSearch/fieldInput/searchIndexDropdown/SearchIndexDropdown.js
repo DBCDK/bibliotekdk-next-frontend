@@ -1,20 +1,20 @@
 import Dropdown from "react-bootstrap/Dropdown";
-import styles from "./IndexDropdown.module.css";
+import styles from "./SearchIndexDropdown.module.css";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import Icon from "@/components/base/icon";
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
 /**
- * Used in advanced search field input. Drop down to select a search index
+ * Used in advanced search field input. Drop down to select a search index. (e.g. "isbn", "author","title" etc.)
  * @param {*} param0
  * @returns
  */
-export default function IndexDropdown({
-  options = [],
-  onSelect,
-  selected,
-  className,
-}) {
+export default function IndexDropdown({ options = [], className, index }) {
+  const { handleIndexChange, inputFields } = useAdvancedSearchContext();
+
+  const selected = inputFields[index].searchIndex;
+
   return (
     <Dropdown className={`${styles.dropdownwrap} ${className}`}>
       <Dropdown.Toggle
@@ -45,7 +45,7 @@ export default function IndexDropdown({
               key={`indexDropdown-${elem}`}
               className={styles.dropdownitem}
               onClick={() => {
-                onSelect(elem);
+                handleIndexChange(index, elem);
               }}
             >
               <Text tag="span" type="text3">

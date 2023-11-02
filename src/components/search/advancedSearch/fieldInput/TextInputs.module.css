@@ -85,3 +85,7 @@
 .suggester {
   height: var(--pt5);
 }
+
+.rightPadding {
+  padding-right: var(--pt9);
+}
