@@ -22,7 +22,7 @@ export default function AdvancedSearchProvider({ children }) {
       searchIndex: "all",
     },
   ]);
-  //todo: akri will implement
+  //TODO: Akri will implement dis
   // const [dropDowns, setDropdown] = useState([
   //   { index: "language", value: "da" },
   //   { index: "2-3", value: "age" },
@@ -55,13 +55,27 @@ export default function AdvancedSearchProvider({ children }) {
    * @param {*} index
    * @param {*} newOperator
    */
-  function handlePrefixChange(index, newOperator) {
+  function handleLogicalOperatorChange(index, newOperator) {
     setInputFields((prevFields) => {
       const newFields = [...prevFields];
       newFields[index].prefixLogicalOperator = newOperator;
       return newFields;
     });
   }
+
+  /**
+   * Handle input field value change
+   * @param {*} index
+   * @param {*} newOperator
+   */
+  function handleInputFieldChange(index, newValue) {
+    setInputFields((prevFields) => {
+      const newFields = [...prevFields];
+      newFields[index].value = newValue;
+      return newFields;
+    });
+  }
+
   /**
    * Handle field index change in indexDropdown (e.g. "all", "author","title" etc.)
    * @param {*} index
@@ -78,9 +92,11 @@ export default function AdvancedSearchProvider({ children }) {
     inputFields,
     addInputField,
     removeInputField,
-    handlePrefixChange,
+
+    handleLogicalOperatorChange,
     //  dropDowns,
     handleIndexChange,
+    handleInputFieldChange,
   };
 
   return (

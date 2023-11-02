@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
-//import { useAdvancedSearchContext } from "@/components/search/advancedSearch/context";
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/context";
 
 /**
  * Contains advanced search fields
@@ -20,7 +20,8 @@ export default function AdvancedSearch() {
   const workType = "all";
   const [showCqlEditor, setShowCqlEditor] = useState(false);
   //Coming soon: convert state cql
-  //const { dropDowns, inputFields } = useAdvancedSearchContext();
+  const { dropDowns, inputFields } = useAdvancedSearchContext();
+  //console.log("inputFields", inputFields);
   useEffect(() => {
     //show CQL editor if there is a cql param in the url
     setShowCqlEditor(!!cql);

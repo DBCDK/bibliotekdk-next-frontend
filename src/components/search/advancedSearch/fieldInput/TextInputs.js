@@ -23,26 +23,32 @@ import { LogicalOperatorsEnum } from "@/components/search/enums";
  * @returns {React.JSX.Element}
  */
 function FieldInput({
+  key,
   index,
-  handlePrefixChange,
-  addAnInputField,
-  removeInputField,
   isLastItem,
   isFirstItem,
   workType,
   fieldValue,
 }) {
   //textinput text value
-  const [value, setValue] = useState("");
+  //const [value, setValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+
+  const {
+    handleInputFieldChange,
+    removeInputField,
+    handleLogicalOperatorChange,
+    addAnInputField,
+  } = useAdvancedSearchContext();
+
   //labels to show in SearchIndexDropdown
-  console.log("worktype", workType);
   const labels = workTypesLabels[workType].map((el) => el.label);
 
   const { data } = useData(
-    value && suggestFragments.all({ q: value, workType: null, limit: 10 })
+    fieldValue?.value &&
+      suggestFragments.all({ q: fieldValue.value, workType: null, limit: 10 })
   );
-
+  console.log(index, "fieldValue", fieldValue);
   useEffect(() => {
     setSuggestions(
       data?.suggest?.result?.map((res) => {
@@ -52,10 +58,10 @@ function FieldInput({
   }, [data]);
 
   return (
-    <div>
+    <div key={key}>
       {!isFirstItem && (
         <LogicalOperatorDropDown
-          onSelect={(value) => handlePrefixChange(index, value)}
+          onSelect={(value) => handleLogicalOperatorChange(index, value)}
           selected={fieldValue.prefixLogicalOperator}
         />
       )}
@@ -69,14 +75,14 @@ function FieldInput({
         <div className={`${styles.suggester__wrap} `}>
           <Suggester
             data={suggestions}
-            onSelect={(val) => setValue(val)}
-            onClear={() => setValue("")}
+            onSelect={(val) => handleInputFieldChange(index, val)}
+            onClear={() => handleInputFieldChange(index, "")}
             className={styles.suggester}
           >
             <Input
               className={styles.suggesterInput}
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
+              // value={value}
+              onChange={(e) => handleInputFieldChange(index, e.target.value)}
               placeholder={fieldValue.placeholder}
             />
           </Suggester>
@@ -173,17 +179,18 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
  * @returns {React.JSX.Element}
  */
 export default function TextInputs({ workType }) {
-  const { inputFields, addInputField, removeInputField, handlePrefixChange } =
-    useAdvancedSearchContext();
+  const {
+    inputFields,
+    addInputField,
+    removeInputField,
+    handleLogicalOperatorChange,
+  } = useAdvancedSearchContext();
 
   return inputFields?.map((field, index) => {
     return (
       <FieldInput
-        key={index}
+        key={`inputField-${index}`}
         index={index}
-        addAnInputField={addInputField}
-        removeInputField={removeInputField}
-        handlePrefixChange={handlePrefixChange}
         isLastItem={index === inputFields.length - 1}
         isFirstItem={index === 0}
         workType={workType}
