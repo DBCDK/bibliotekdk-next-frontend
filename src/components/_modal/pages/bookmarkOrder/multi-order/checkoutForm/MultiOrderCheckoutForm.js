@@ -9,8 +9,9 @@ import Button from "@/components/base/button";
 import { useModal } from "@/components/_modal/Modal";
 import { LOGIN_MODE } from "../../../login/utils";
 import { LocalizationInformation } from "@/components/_modal/pages/order/localizationinformation/LocalizationInformation"; // Import without wrapper
+import Spinner from "react-bootstrap/Spinner";
 
-const CheckoutForm = ({ context, materialCounts, onSubmit }) => {
+const CheckoutForm = ({ context, materialCounts, onSubmit, isLoading }) => {
   const { digitalMaterials, materialsNotAllowed, materialsMissingAction } =
     materialCounts;
   const modal = useModal();
@@ -45,7 +46,7 @@ const CheckoutForm = ({ context, materialCounts, onSubmit }) => {
   }, [mail, pickupBranch, context?.periodicaForm?.publicationDateOfComponent]);
 
   const onSubmitForm = () => {
-    if (onSubmit) onSubmit(pickupBranch.name);
+    if (onSubmit) onSubmit(pickupBranch);
   };
 
   return (
@@ -130,7 +131,11 @@ const CheckoutForm = ({ context, materialCounts, onSubmit }) => {
           disabled={disabled}
           onClick={onSubmitForm}
         >
-          {Translate({ context: "general", label: "accept" })}
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            Translate({ context: "general", label: "accept" })
+          )}
         </Button>
       </div>
     </div>

@@ -3,12 +3,46 @@ import Top from "../../base/top";
 import styles from "./MultiOrder.module.css";
 import Translate from "@/components/base/translate";
 import CheckoutForm from "./checkoutForm/MultiOrderCheckoutForm";
-import Material from "./Material/Material";
+import Material, { filterForRelevantMaterialTypes } from "./Material/Material";
 import { useEffect, useRef, useState } from "react";
 import { useModal } from "@/components/_modal/Modal";
 import { StatusEnum } from "@/components/base/materialcard/materialCard.utils";
+import useUser from "@/components/hooks/useUser";
+import { useMutate } from "@/lib/api/api";
+import * as orderMutations from "@/lib/api/order.mutations";
 
 const CONTEXT = "bookmark-order";
+
+const createOrders = async ({
+  materials,
+  pickupBranch,
+  loanerInfo,
+  periodicaForms,
+  orderMutation,
+}) => {
+  /**
+   * @TODO Catch errors and send to receipt
+   */
+  await materials.map(async (material) => {
+    const isSpecificEdition = !!material.pid;
+
+    const pids = isSpecificEdition
+      ? [material.pid]
+      : filterForRelevantMaterialTypes(
+          material?.manifestations?.mostRelevant,
+          material?.materialType
+        ).map((mani) => mani.pid);
+    const periodicaForm = periodicaForms?.[material.key];
+    await orderMutation.post(
+      orderMutations.submitOrder({
+        pids,
+        branchId: pickupBranch.branchId,
+        userParameters: loanerInfo.userParameters,
+        ...periodicaForm,
+      })
+    );
+  });
+};
 
 const MultiOrder = ({ context }) => {
   const modal = useModal();
@@ -16,6 +50,9 @@ const MultiOrder = ({ context }) => {
   const analyzeRef = useRef();
   const [materialCounts, setMaterialCounts] = useState({});
   const [materialsToOrder, setMaterialsToOrder] = useState(materials);
+  const { loanerInfo } = useUser();
+  const orderMutation = useMutate();
+  const [isCreatingOrders, setIsCreatingOrders] = useState(false);
 
   useEffect(() => {
     if (!analyzeRef || !analyzeRef.current) return;
@@ -60,12 +97,20 @@ const MultiOrder = ({ context }) => {
     });
   }, [materials, analyzeRef.current]);
 
-  const onSubmit = (branchName) => {
-    // Create orders
+  const onSubmit = async (pickupBranch) => {
+    setIsCreatingOrders(true);
+    await createOrders({
+      materials: materials,
+      pickupBranch,
+      loanerInfo,
+      periodicaForms: context.periodicaForms,
+      orderMutation,
+    });
+    setIsCreatingOrders(false);
     modal.push("multireceipt", {
-      failedMaterials: materials.slice(0, 2),
-      successMaterials: [0, 0],
-      branchName,
+      failedMaterials: [], // @TODO add failing orders
+      successMaterials: materials, // @TODO add successfull orders
+      branchName: pickupBranch.name,
     });
   };
 
@@ -107,6 +152,7 @@ const MultiOrder = ({ context }) => {
             context={context}
             materialCounts={materialCounts}
             onSubmit={onSubmit}
+            isLoading={isCreatingOrders}
           />
         </section>
       )}

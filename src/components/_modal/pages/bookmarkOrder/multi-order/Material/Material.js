@@ -34,7 +34,7 @@ import { getManifestationWithoutDefaultCover } from "@/components/work/overview/
  * @param {String} materialType
  * @returns {Object[]}
  */
-const filterForRelevantMaterialTypes = (mostRelevant, materialType) => {
+export const filterForRelevantMaterialTypes = (mostRelevant, materialType) => {
   if (!mostRelevant || !materialType) return [];
 
   const materialTypes = formatMaterialTypesFromUrl(materialType);
