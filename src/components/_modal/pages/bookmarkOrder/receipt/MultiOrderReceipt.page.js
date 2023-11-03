@@ -10,7 +10,7 @@ import Material from "../multi-order/Material/Material";
 import { BackgroundColorEnum } from "@/components/base/materialcard/materialCard.utils";
 import { useRouter } from "next/router";
 
-const Receipt = ({ context }) => {
+const MultiOrderReceipt = ({ context }) => {
   const modal = useModal();
   const { successMaterials, failedMaterials, branchName } = context;
   const hasErrors = failedMaterials.length > 0;
@@ -87,7 +87,6 @@ const Receipt = ({ context }) => {
                 key={material.key}
                 material={material}
                 backgroundColorOverride={BackgroundColorEnum.RED}
-                context={context} //sets periodicaForm via updateModal
               />
             ))}
           </div>
@@ -114,4 +113,4 @@ const Receipt = ({ context }) => {
   );
 };
 
-export default Receipt;
+export default MultiOrderReceipt;

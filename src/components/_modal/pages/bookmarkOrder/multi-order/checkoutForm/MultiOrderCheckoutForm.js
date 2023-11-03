@@ -14,6 +14,9 @@ import Button from "@/components/base/button";
 import { useModal } from "@/components/_modal/Modal";
 import { LOGIN_MODE } from "../../../login/utils";
 
+/**
+ * Simplified version of LocalizationInformation, stripped from specific work logic
+ */
 const LocalizationInformation = ({
   pickupBranch,
   pickupBranchUser,
@@ -128,7 +131,6 @@ const CheckoutForm = ({ context, materialCounts, onSubmit }) => {
   }, [mail, pickupBranch, context?.periodicaForm?.publicationDateOfComponent]);
 
   const onSubmitForm = () => {
-    console.log(pickupBranch);
     if (onSubmit) onSubmit(pickupBranch.name);
   };
 
@@ -153,53 +155,41 @@ const CheckoutForm = ({ context, materialCounts, onSubmit }) => {
         {/* Errors and messages */}
         {materialsNotAllowed > 0 && (
           <Text type="text3" className={styles.errorLabel}>
-            {materialsNotAllowed ? (
-              <Translate
-                context="bookmark-order"
-                label="multiorder-cant-order-singular"
-                vars={[materialsNotAllowed]}
-              />
-            ) : (
-              <Translate
-                context="bookmark-order"
-                label="multiorder-cant-order"
-                vars={[materialsNotAllowed]}
-              />
-            )}
+            <Translate
+              context="bookmark-order"
+              label={
+                materialsNotAllowed === 1
+                  ? "multiorder-cant-order-singular"
+                  : "multiorder-cant-order"
+              }
+              vars={[materialsNotAllowed]}
+            />
           </Text>
         )}
         {materialsMissingAction > 0 && (
           <Text type="text3" className={styles.errorLabel}>
-            {materialsMissingAction === 1 ? (
-              <Translate
-                context="bookmark-order"
-                label="multiorder-missing-info-singular"
-                vars={[materialsMissingAction]}
-              />
-            ) : (
-              <Translate
-                context="bookmark-order"
-                label="multiorder-missing-info"
-                vars={[materialsMissingAction]}
-              />
-            )}
+            <Translate
+              context="bookmark-order"
+              label={
+                materialsMissingAction === 1
+                  ? "multiorder-missing-info-singular"
+                  : "multiorder-missing-info"
+              }
+              vars={[materialsMissingAction]}
+            />
           </Text>
         )}
         {digitalMaterials > 0 && (
           <Text type="text3" className={styles.formLabel}>
-            {digitalMaterials === 1 ? (
-              <Translate
-                context="bookmark-order"
-                label="multiorder-digital-copy-singular"
-                vars={[digitalMaterials]}
-              />
-            ) : (
-              <Translate
-                context="bookmark-order"
-                label="multiorder-digital-copy"
-                vars={[digitalMaterials]}
-              />
-            )}
+            <Translate
+              context="bookmark-order"
+              label={
+                digitalMaterials === 1
+                  ? "multiorder-digital-copy-singular"
+                  : "multiorder-digital-copy"
+              }
+              vars={[digitalMaterials]}
+            />
           </Text>
         )}
         <Text type="text3" className={styles.formLabel}>

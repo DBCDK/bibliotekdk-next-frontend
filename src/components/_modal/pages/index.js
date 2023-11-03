@@ -25,7 +25,7 @@ import RemoveLibrary from "./removeLibrary";
 import DeleteProfile from "./deleteProfile";
 import EMaterialFilter from "./bookmarkOrder/EMaterialFilter";
 import MultiOrder from "./bookmarkOrder/multi-order/MultiOrder.page";
-import MultiReceipt from "./bookmarkOrder/receipt/Receipt";
+import MultiReceipt from "./bookmarkOrder/receipt/MultiOrderReceipt.page";
 
 const _modal = {
   Menu,
