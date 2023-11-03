@@ -93,6 +93,9 @@ const MaterialRowReservation = (props) => {
     removedOrderId,
     pickUpExpiryDate,
     holdQueuePosition,
+    //used to delete a reservation / order
+    agencyId,
+    setRemovedOrderId,
   } = props;
   const status = !!pickUpExpiryDate ? "GREEN" : "NONE";
   const modal = useModal();
@@ -116,57 +119,68 @@ const MaterialRowReservation = (props) => {
         label: "your-order",
       }),
       type: "ORDER",
+      setHasDeleteError: setHasDeleteError,
       ...props,
     });
   };
 
   if (isMobileSize) {
     return (
-      <article
-        className={cx(sharedStyles.materialRow_mobile, {
-          [sharedStyles.materialRow_green]: status === "GREEN",
-          [sharedStyles.materialRow_red]: status === "RED",
-          [sharedStyles.materialRow_mobile_animated]:
-            materialId === removedOrderId,
-        })}
-        role="button"
-        onClick={onMobileItemClick}
-        tabIndex="0"
-        onKeyDown={(e) => {
-          e.key === "Enter" && onMobileItemClick();
-        }}
-        data-cy={dataCy}
-      >
-        <div>{!!image && <Cover src={image} size="fill-width" />}</div>
-        <div className={sharedStyles.textContainer}>
-          <Title type="text1" tag="h3" id={`material-title-${materialId}`}>
-            {title}
-          </Title>
+      <>
+        {hasDeleteError && (
+          <ErrorRow
+            text={Translate({
+              context: "profile",
+              label: "error-deleting-order",
+            })}
+          />
+        )}
+        <article
+          className={cx(sharedStyles.materialRow_mobile, {
+            [sharedStyles.materialRow_green]: status === "GREEN",
+            [sharedStyles.materialRow_red]: status === "RED",
+            [sharedStyles.materialRow_mobile_animated]:
+              materialId === removedOrderId,
+          })}
+          role="button"
+          onClick={onMobileItemClick}
+          tabIndex="0"
+          onKeyDown={(e) => {
+            e.key === "Enter" && onMobileItemClick();
+          }}
+          data-cy={dataCy}
+        >
+          <div>{!!image && <Cover src={image} size="fill-width" />}</div>
+          <div className={sharedStyles.textContainer}>
+            <Title type="text1" tag="h3" id={`material-title-${materialId}`}>
+              {title}
+            </Title>
 
-          {creator && <Text type="text2">{creator}</Text>}
-          {materialType && creationYear && (
-            <Text type="text2" className={sharedStyles.uppercase}>
-              {materialType}, {creationYear}
-            </Text>
-          )}
+            {creator && <Text type="text2">{creator}</Text>}
+            {materialType && creationYear && (
+              <Text type="text2" className={sharedStyles.uppercase}>
+                {materialType}, {creationYear}
+              </Text>
+            )}
 
-          <div className={sharedStyles.dynamicContent}>
-            <OrderColumn
-              pickUpExpiryDate={pickUpExpiryDate}
-              holdQueuePosition={holdQueuePosition}
+            <div className={sharedStyles.dynamicContent}>
+              <OrderColumn
+                pickUpExpiryDate={pickUpExpiryDate}
+                holdQueuePosition={holdQueuePosition}
+              />
+            </div>
+          </div>
+
+          <div className={sharedStyles.arrowright_container}>
+            <Icon
+              alt=""
+              size={{ w: "auto", h: 2 }}
+              src="arrowrightblue.svg"
+              className={sharedStyles.arrowright}
             />
           </div>
-        </div>
-
-        <div className={sharedStyles.arrowright_container}>
-          <Icon
-            alt=""
-            size={{ w: "auto", h: 2 }}
-            src="arrowrightblue.svg"
-            className={sharedStyles.arrowright}
-          />
-        </div>
-      </article>
+        </article>
+      </>
     );
   }
 

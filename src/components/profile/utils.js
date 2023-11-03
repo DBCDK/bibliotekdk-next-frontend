@@ -106,13 +106,13 @@ export function isPid(pid) {
  * handles updates in mutation object on loans and reservations page
  * Its called in two places, depending on if on desktop or mobile
  * @param {Object} loanMutation
- * @param {function} setHasError
+ * @param {function} setHasDeleteError
  * @param {function} setRemovedOrderId
  * @param {function} updateUserStatusInfo
  */
 export async function handleOrderMutationUpdates(
   orderMutation,
-  setHasError,
+  setHasDeleteError,
   setRemovedOrderId,
   updateUserStatusInfo
 ) {
@@ -120,7 +120,7 @@ export async function handleOrderMutationUpdates(
 
   //error not handled inside fbi-api or error while mutating
   if (error) {
-    setHasError(true);
+    setHasDeleteError(true);
     return;
   }
 
@@ -134,6 +134,6 @@ export async function handleOrderMutationUpdates(
   }
   //error deleting order inside fbi-api
   if (data.deleteOrder?.deleted === false) {
-    setHasError(true);
+    setHasDeleteError(true);
   }
 }
