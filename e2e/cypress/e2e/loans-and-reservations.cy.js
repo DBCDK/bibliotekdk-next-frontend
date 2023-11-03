@@ -4,11 +4,9 @@ describe(`Loans and reservations`, () => {
       "iframe.html?args=&id=profile-loans-and-reservations--loans-and-reservations-story&viewMode=story"
     );
 
-    cy.get("[data-cy=debt-0]").should("exist");
-    cy.get("[data-cy=order-0]").within(() => {
+    cy.get("[data-cy=articleRow-debt-0]").should("exist");
+    cy.get("[data-cy=articleRow-debt-0]").within(() => {
       cy.get("h3").should("exist");
-      cy.get("[data-cy=creator]").should("exist");
-      cy.get("[data-cy=materialtype-and-creationyear]").should("exist");
       cy.get("[data-cy=dynamic-column]").should("exist");
     });
 
@@ -21,8 +19,8 @@ describe(`Loans and reservations`, () => {
       cy.get("[data-cy=loan-0]").should("exist");
     });
 
-    cy.get("[data-cy=order-0]").should("exist");
-    cy.get("[data-cy=order-0]").within(() => {
+    cy.get("[data-cy=articleRow-order-0]").should("exist");
+    cy.get("[data-cy=articleRow-order-0]").within(() => {
       cy.get("h3").should("exist");
       cy.get("[data-cy=creator]").should("exist");
       cy.get("[data-cy=materialtype-and-creationyear]").should("exist");
@@ -34,11 +32,9 @@ describe(`Loans and reservations`, () => {
   it("Mobile renders properly", () => {
     cy.viewport("iphone-6");
 
-    cy.get("[data-cy=debt-0]").should("exist");
-    cy.get("[data-cy=order-0]").within(() => {
+    cy.get("[data-cy=articleRow-debt-0]").should("exist");
+    cy.get("[data-cy=articleRow-debt-0]").within(() => {
       cy.get("h3").should("exist");
-      cy.get("[data-cy=creator]").should("exist");
-      cy.get("[data-cy=materialtype-and-creationyear]").should("exist");
       cy.get("[data-cy=dynamic-column]").should("exist");
     });
 
@@ -51,8 +47,8 @@ describe(`Loans and reservations`, () => {
       cy.get("[data-cy=loan-0]").should("exist");
     });
 
-    cy.get("[data-cy=order-0]").should("exist");
-    cy.get("[data-cy=order-0]").within(() => {
+    cy.get("[data-cy=articleRow-order-0]").should("exist");
+    cy.get("[data-cy=articleRow-order-0]").within(() => {
       cy.get("h3").should("exist");
       cy.get("[data-cy=creator]").should("exist");
       cy.get("[data-cy=materialtype-and-creationyear]").should("exist");
@@ -74,12 +70,4 @@ describe(`Loans and reservations`, () => {
       cy.get("[data-cy=dyn-cont-loan-message]").should("exist");
     });
   });
-
-  // it("Renew fails as expected", () => {
-  //   cy.visit(
-  //     "iframe.html?args=&id=profile-loans-and-reservations--loans-and-reservations-story&viewMode=story"
-  //   );
-  //   cy.get("[data-cy=loan-3]").scrollIntoView().should("exist").click().click();
-  //   cy.contains("Kan ikke fornyes").should("exist");
-  // });
 });

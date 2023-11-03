@@ -44,7 +44,7 @@ const MaterialRowDebt = ({
           sharedStyles.materialRow_mobile,
           sharedStyles.materialRow_debt
         )}
-        data-cy={dataCy}
+        data-cy={`articleRow-${dataCy}`}
       >
         <div className={sharedStyles.textContainer}>
           <Title type="text1" tag="h3" id={`material-title-${materialId}`}>
@@ -76,7 +76,7 @@ const MaterialRowDebt = ({
         sharedStyles.materialRow_wrapper,
         sharedStyles.debtRow
       )}
-      data-cy={dataCy}
+      data-cy={`articleRow-${dataCy}`}
     >
       <div className={cx(sharedStyles.materialInfo, sharedStyles.debtMaterial)}>
         {!!image && (

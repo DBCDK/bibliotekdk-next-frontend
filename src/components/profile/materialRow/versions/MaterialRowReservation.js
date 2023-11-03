@@ -148,7 +148,7 @@ const MaterialRowReservation = (props) => {
           onKeyDown={(e) => {
             e.key === "Enter" && onMobileItemClick();
           }}
-          data-cy={dataCy}
+          data-cy={`articleRow-${dataCy}`}
         >
           <div>{!!image && <Cover src={image} size="fill-width" />}</div>
           <div className={sharedStyles.textContainer}>
@@ -205,7 +205,7 @@ const MaterialRowReservation = (props) => {
             [sharedStyles.materialRow_animated]: materialId === removedOrderId,
           }
         )}
-        data-cy={dataCy}
+        data-cy={`articleRow-${dataCy}`}
       >
         <div className={sharedStyles.materialInfo}>
           {!!image && (
