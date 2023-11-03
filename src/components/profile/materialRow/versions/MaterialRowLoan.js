@@ -149,6 +149,7 @@ const MaterialRowLoan = (props) => {
     library,
     dataCy,
     isMobileSize,
+    agencyId,
   } = props;
   const [hasRenewError, setHasRenewError] = useState(false);
   const modal = useModal();
