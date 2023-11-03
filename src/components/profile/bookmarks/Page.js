@@ -17,6 +17,8 @@ import Pagination from "@/components/search/pagination/Pagination";
 import { createEditionText } from "@/components/work/details/utils/details.utils";
 import { useModal } from "@/components/_modal";
 import Skeleton from "@/components/base/skeleton/Skeleton";
+import useUser from "@/components/hooks/useUser";
+import { openLoginModal } from "@/components/_modal/pages/login/utils";
 
 const CONTEXT = "bookmark";
 const ORDER_TRESHHOLD = 25;
@@ -69,6 +71,7 @@ const BookmarkPage = () => {
   const isMobile = breakpoint === "sm" || breakpoint === "xs";
   const [checkboxList, setCheckboxList] = useState([]);
   const scrollToElement = useRef(null);
+  const { isAuthenticated } = useUser();
   const modal = useModal();
 
   useEffect(() => {
@@ -102,9 +105,13 @@ const BookmarkPage = () => {
   };
 
   const onOrderManyClick = () => {
-    modal.push("ematerialfilter", {
-      materials: checkboxList,
-    });
+    if (isAuthenticated) {
+      modal.push("ematerialfilter", {
+        materials: checkboxList,
+      });
+    } else {
+      openLoginModal({ modal });
+    }
   };
 
   const handleRadioChange = (value) => {
