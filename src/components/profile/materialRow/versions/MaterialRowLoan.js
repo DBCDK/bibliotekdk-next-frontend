@@ -199,7 +199,7 @@ const MaterialRowLoan = (props) => {
         onKeyDown={(e) => {
           e.key === "Enter" && onMobileItemClick();
         }}
-        data-cy={dataCy}
+        data-cy={`articleRow-${dataCy}`}
       >
         <div>{!!image && <Cover src={image} size="fill-width" />}</div>
         <div className={sharedStyles.textContainer}>
@@ -246,7 +246,7 @@ const MaterialRowLoan = (props) => {
           [sharedStyles.materialRow_red]: status === "RED",
         }
       )}
-      data-cy={dataCy}
+      data-cy={`articleRow-${dataCy}`}
     >
       <div className={sharedStyles.materialInfo}>
         {!!image && (
