@@ -31,6 +31,7 @@ const MaterialCard = forwardRef(
       propAndChildrenInput,
       colSizing = { xs: 10, sm: 5, lg: 4 },
       onClick = null,
+      rootProps,
     },
     ref
   ) {
@@ -50,11 +51,12 @@ const MaterialCard = forwardRef(
 
     if (imageLeft) {
       return (
-        <div
+        <Col
           // Col props
           {...colSizing}
           className={cx(elementContainerClassName, styles.container)}
           as="article"
+          {...rootProps}
         >
           <Col ref={ref} id={workId} className={cx(relatedElementClassName)}>
             <Col xs={3} className={styles.image}>
@@ -70,7 +72,7 @@ const MaterialCard = forwardRef(
               {children}
             </Col>
           </Col>
-        </div>
+        </Col>
       );
     }
 
@@ -80,6 +82,7 @@ const MaterialCard = forwardRef(
         {...colSizing}
         className={cx(elementContainerClassName)}
         as="article"
+        {...rootProps}
       >
         <Link
           href={link_href}

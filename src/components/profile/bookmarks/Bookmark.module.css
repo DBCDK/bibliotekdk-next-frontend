@@ -70,6 +70,20 @@
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
+.closeStickySituation {
+  float: right;
+  position: relative;
+  top: -25px;
+}
+
+.treshholdWarning {
+  padding: var(--pt1) var(--pt2);
+  background-color: var(--warning-light);
+  color: var(--blue);
+  width: fit-content;
+  margin-bottom: var(--pt4);
+}
+
 @media (max-width: 767px) {
   .buttonControls {
     display: none;

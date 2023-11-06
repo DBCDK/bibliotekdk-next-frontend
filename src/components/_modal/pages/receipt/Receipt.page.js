@@ -116,17 +116,15 @@ export function Receipt({
                 <Icon size={3} src="check.svg" />
               </div>
 
-              <>
-                <Title className={styles.title} type="title4" tag="h2">
-                  {Translate({ context: "order", label: "order-success" })}
-                </Title>
+              <Title className={styles.title} type="title4" tag="h2">
+                {Translate({ context: "order", label: "order-success" })}
+              </Title>
 
-                <Icon
-                  className={styles.ornament}
-                  size={{ w: 6, h: "auto" }}
-                  src={"ornament1.svg"}
-                />
-              </>
+              <Icon
+                className={styles.ornament}
+                size={{ w: 6, h: "auto" }}
+                src={"ornament1.svg"}
+              />
 
               <Text type="text2" className={styles.message}>
                 {articleOrderData

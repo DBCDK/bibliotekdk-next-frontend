@@ -22,18 +22,23 @@ const EMaterialFilter = ({ context, active }) => {
   const { bookmarks } = useBookmarks();
   const { materials: materialKeys } = context;
   const { data: materialsData } = usePopulateBookmarks(materialKeys);
-  const materials = materialsData.map((mat) => {
-    const bookmark = bookmarks?.find((bm) => bm.key === mat.key);
-    return {
-      ...bookmark,
-      ...mat,
-    };
-  });
+  const [materials, setMaterials] = useState([]);
   const modal = useModal();
   const analyzeRef = useRef();
   const [materialsToFilter, setMaterialsToFilter] = useState();
   const [materialsToProceed, setMaterialsToProceed] = useState();
   const isLoading = !materialsToFilter || !materialsToProceed;
+
+  useEffect(() => {
+    const materials = materialsData.map((mat) => {
+      const bookmark = bookmarks?.find((bm) => bm.key === mat.key);
+      return {
+        ...bookmark,
+        ...mat,
+      };
+    });
+    setMaterials(materials);
+  }, [materialsData]);
 
   useEffect(() => {
     if (!active) {
@@ -43,33 +48,40 @@ const EMaterialFilter = ({ context, active }) => {
       return;
     }
     if (!analyzeRef || !analyzeRef.current) return;
-    if (!!materialsToFilter || !!materialsToProceed) return; // Secure only running once
+    // Secure only running once
+    if (!!materialsToFilter || !!materialsToProceed) return;
+    if (materials.length !== materialKeys.length) return;
 
-    const elements = Array.from(analyzeRef.current.children);
-    const filteredMaterials = elements
-      .filter(
-        (element) =>
-          element.getAttribute("data-accessable-ematerial") === "true"
-      )
-      .map((element) =>
-        materials.find(
-          (mat) => mat.key === element.getAttribute("data-material-key")
+    const timer = setTimeout(() => {
+      // Ensure that EMaterialAnalyzers are done rendering
+      const elements = Array.from(analyzeRef.current.children);
+      const filteredMaterials = elements
+        .filter(
+          (element) =>
+            element.getAttribute("data-accessable-ematerial") === "true"
         )
-      );
-    const toProceed = elements
-      .filter(
-        (element) =>
-          element.getAttribute("data-accessable-ematerial") === "false"
-      )
-      .map((element) =>
-        materials.find(
-          (mat) => mat.key === element.getAttribute("data-material-key")
+        .map((element) =>
+          materials.find(
+            (mat) => mat.key === element.getAttribute("data-material-key")
+          )
+        );
+      const toProceed = elements
+        .filter(
+          (element) =>
+            element.getAttribute("data-accessable-ematerial") === "false"
         )
-      );
+        .map((element) =>
+          materials.find(
+            (mat) => mat.key === element.getAttribute("data-material-key")
+          )
+        );
 
-    setMaterialsToFilter(filteredMaterials);
-    setMaterialsToProceed(toProceed);
-  }, [active, analyzeRef.current]);
+      setMaterialsToFilter(filteredMaterials);
+      setMaterialsToProceed(toProceed);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [active, analyzeRef.current, materials]);
 
   const onNextClick = () => {
     modal.push("multiorder", {
@@ -100,7 +112,7 @@ const EMaterialFilter = ({ context, active }) => {
       />
       <Title
         skeleton={isLoading}
-        titleTag="h3"
+        tag="h3"
         type="title6"
         className={styles.subHeading}
         lines={1}
@@ -119,7 +131,7 @@ const EMaterialFilter = ({ context, active }) => {
       <ul className={styles.filterList}>
         {materialsToFilter?.map((mat) => (
           <li className={styles.filterItem} key={mat.key}>
-            <Title titleTag="h4" type="text1">
+            <Title tag="h4" type="text1">
               {mat.titles?.main?.[0]}
             </Title>
             <Text type="text2">{mat.materialType}</Text>
@@ -147,6 +159,7 @@ const EMaterialFilter = ({ context, active }) => {
         size="large"
         skeleton={isLoading}
         onClick={onNextClick}
+        className={styles.nextButton}
       >
         <Translate context={CONTEXT} label="efilter-proceed" />
       </Button>
