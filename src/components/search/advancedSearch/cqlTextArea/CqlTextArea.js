@@ -11,9 +11,9 @@ import translate from "@/components/base/translate";
 import isEmpty from "lodash/isEmpty";
 import CqlErrorMessage from "@/components/search/advancedSearch/cqlErrorMessage/CqlErrorMessage";
 
-export function CqlTextArea() {
+export function CqlTextArea({ textAreaRef }) {
   const router = useRouter();
-  const textAreaRef = useRef();
+  //const textAreaRef = useRef();
   const doAdvancedSearch = () => {
     const cql = textAreaRef.current.value;
 
@@ -52,7 +52,7 @@ export function CqlTextArea() {
 
       <CqlErrorMessage cql={textAreaRef?.current?.value} />
 
-      <div>
+      {/* <div>
         <button
           className={styles.button}
           type="submit"
@@ -70,7 +70,7 @@ export function CqlTextArea() {
           <span>{Translate({ context: "header", label: "search" })}</span>
           <div className={styles.fill} />
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }
