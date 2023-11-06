@@ -30,7 +30,7 @@ function FieldInput({ key, index, workType, fieldValue }) {
     removeInputField,
     handleLogicalOperatorChange,
   } = useAdvancedSearchContext();
-console.log('fieldValue',fieldValue)
+  //console.log('fieldValue',fieldValue)
   //labels to show in SearchIndexDropdown
   const labels = workTypesLabels[workType].map((el) => el.label);
   const isFirstItem = index === 0;
@@ -69,17 +69,19 @@ console.log('fieldValue',fieldValue)
         <div className={`${styles.suggester__wrap} `}>
           <Suggester
             data={suggestions}
-          // onSelect={(selectValue)=>{console.log('selectValue',selectValue)}}
-           onSelect={(selectValue) => setTimeout(() => {
-            //TODO FIX THIS!!
-            handleInputFieldChange(index, selectValue)
-           }, 200)}
+            // onSelect={(selectValue)=>{console.log('selectValue',selectValue)}}
+            onSelect={(selectValue) =>
+              setTimeout(() => {
+                //TODO FIX THIS!!
+                handleInputFieldChange(index, selectValue);
+              }, 200)
+            }
             onClear={() => handleInputFieldChange(index, "")}
             className={styles.suggester}
           >
             <Input
               className={styles.suggesterInput}
-             value={fieldValue?.value}
+              value={fieldValue?.value}
               onChange={(e) => handleInputFieldChange(index, e.target.value)}
               placeholder={fieldValue.placeholder}
             />

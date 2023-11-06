@@ -12,7 +12,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Button from "@/components/base/button";
-import { convertObjectToCql } from "@/components/search/advancedSearch/utils";
+import { converStateToCql } from "@/components/search/advancedSearch/utils";
 import { isEmpty } from "lodash";
 /**
  * Contains advanced search fields
@@ -47,7 +47,7 @@ export default function AdvancedSearch() {
       router.push({ pathname: router.pathname, query });
     } else {
       //  convert fields to cql then do search
-      const stateTocql = convertObjectToCql(inputFields);
+      const stateTocql = converStateToCql(inputFields);
       console.log("stateTocql", stateTocql);
     }
   };
