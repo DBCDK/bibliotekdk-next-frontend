@@ -17,8 +17,11 @@ import Pagination from "@/components/search/pagination/Pagination";
 import { createEditionText } from "@/components/work/details/utils/details.utils";
 import { useModal } from "@/components/_modal";
 import Skeleton from "@/components/base/skeleton/Skeleton";
+import useUser from "@/components/hooks/useUser";
+import { openLoginModal } from "@/components/_modal/pages/login/utils";
 
 const CONTEXT = "bookmark";
+const ORDER_TRESHHOLD = 25;
 const MENUITEMS = ["Bestil flere", "Hent referencer", "Fjern flere"];
 const sortByItems = [
   { label: "latestAdded", key: "createdAt" },
@@ -68,6 +71,7 @@ const BookmarkPage = () => {
   const isMobile = breakpoint === "sm" || breakpoint === "xs";
   const [checkboxList, setCheckboxList] = useState([]);
   const scrollToElement = useRef(null);
+  const { isAuthenticated } = useUser();
   const modal = useModal();
 
   useEffect(() => {
@@ -101,9 +105,13 @@ const BookmarkPage = () => {
   };
 
   const onOrderManyClick = () => {
-    modal.push("ematerialfilter", {
-      materials: checkboxList,
-    });
+    if (isAuthenticated) {
+      modal.push("ematerialfilter", {
+        materials: checkboxList,
+      });
+    } else {
+      openLoginModal({ modal });
+    }
   };
 
   const handleRadioChange = (value) => {
@@ -241,10 +249,19 @@ const BookmarkPage = () => {
     >
       <div ref={scrollToElement} />
 
-      <div className={styles.dropdownWrapper}>
-        {/* TODO - make modal? not sure */}
-        <MenuDropdown options={MENUITEMS} onItemClick={onDropdownClick} />
-      </div>
+      {activeStickyButton ? (
+        <IconButton
+          textType="text1"
+          className={styles.closeStickySituation}
+          onClick={() => setActiveStickyButton(null)}
+        >
+          <Translate context="general" label="close" />
+        </IconButton>
+      ) : (
+        <div className={styles.dropdownWrapper}>
+          <MenuDropdown options={MENUITEMS} onItemClick={onDropdownClick} />
+        </div>
+      )}
 
       {activeStickyButton && (
         <div className={styles.stickyButtonContainer}>
@@ -312,7 +329,7 @@ const BookmarkPage = () => {
         </div>
         <Button
           size="small"
-          disabled={isNothingSelected}
+          disabled={isNothingSelected || checkboxList.length > ORDER_TRESHHOLD}
           className={styles.orderButton}
           onClick={onOrderManyClick}
         >
@@ -339,6 +356,15 @@ const BookmarkPage = () => {
           })}
         </IconButton>
       </div>
+
+      {checkboxList.length > ORDER_TRESHHOLD && (
+        <div className={styles.treshholdWarning}>
+          <Text type="text2" tag="div">
+            <Translate context="bookmark" label="treshhold-error" />
+          </Text>
+        </div>
+      )}
+
       <div className={styles.listContainer}>
         {bookmarks?.map((bookmark, idx) => (
           <MaterialRow
