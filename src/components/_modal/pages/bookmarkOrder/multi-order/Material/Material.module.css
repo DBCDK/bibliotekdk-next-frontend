@@ -3,3 +3,7 @@
   padding-top: var(--pt1);
   padding-bottom: var(--pt05);
 }
+
+.errorLabel {
+  color: var(--error_temp);
+}
