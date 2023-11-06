@@ -230,6 +230,8 @@ export function templateImageToLeft({
   isDigitalArticle,
   isDeliveredByDigitalArticleService = false,
   backgroundColor = BackgroundColorEnum.NEUTRAL,
+  elementContainerClassName,
+  linkToWork = false,
 }) {
   const fullTitle =
     singleManifestation === true
@@ -243,10 +245,12 @@ export function templateImageToLeft({
     ?.flatMap((c) => c?.display)
     .filter((pre) => !isEmpty(pre))
     ?.join(", ");
-  const formattedMaterialTypes =
-    singleManifestation && material?.materialType //@TODO we get that from bookmarks if specific edition is marked --> would be better to retrieve manifestations directly inside of multiorder --> material
-      ? material?.materialType
-      : formatMaterialTypesToPresentation(material?.materialTypesArray);
+
+  const formattedMaterialTypes = Boolean(
+    singleManifestation && material?.materialType
+  ) //@TODO we get that from bookmarks if specific edition is marked --> would be better to retrieve manifestations directly inside of multiorder --> material
+    ? material?.materialType
+    : formatMaterialTypesToPresentation(material?.materialTypesArray);
 
   const edition = [
     material?.edition?.publicationYear?.display,
@@ -258,7 +262,9 @@ export function templateImageToLeft({
     ?.join(", ");
 
   return {
-    link_href: null,
+    link_href: linkToWork
+      ? getWorkUrl(fullTitle, creators, material?.ownerWork?.workId)
+      : null,
     fullTitle: fullTitle,
     image_src: material?.cover?.detail,
     workId: material?.workId,
@@ -302,16 +308,24 @@ export function templateImageToLeft({
       {
         [styles.warning_yellow]: backgroundColor === BackgroundColorEnum.YELLOW,
         [styles.error_red]: backgroundColor === BackgroundColorEnum.RED,
+        [styles.transparent]:
+          backgroundColor === BackgroundColorEnum.TRANSPARENT,
+        [elementContainerClassName]: elementContainerClassName,
       }
     ),
     relatedElementClassName: cx(
       styles.related_element,
-      styles.related_element__image_to_left_version
+      styles.related_element__image_to_left_version,
+      {
+        [styles.transparent]:
+          backgroundColor === BackgroundColorEnum.TRANSPARENT,
+      }
     ),
     textClassName: cx(styles.text__image_to_left_version, {
       [styles.white_overlay]:
         backgroundColor === BackgroundColorEnum.YELLOW ||
         backgroundColor === BackgroundColorEnum.RED,
+      [styles.transparent]: backgroundColor === BackgroundColorEnum.TRANSPARENT,
     }),
     coverImageClassName: cx(styles.cover, styles.cover__image_to_left_version),
   };

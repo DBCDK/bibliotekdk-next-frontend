@@ -37,7 +37,6 @@
   height: 100%;
   gap: var(--pt2);
   box-sizing: border-box;
-
   padding: var(--pt1);
 
   /* Reset anchor tag */
@@ -58,6 +57,7 @@
 
 .related_element__image_to_left_version {
   padding: 0;
+  border: 1px solid var(--iron);
 }
 
 /* Text elements */
@@ -130,6 +130,11 @@
 
 .error_red {
   background-color: var(--pippin);
+}
+
+.transparent {
+  background-color: transparent;
+  border: none;
 }
 
 .white_overlay {

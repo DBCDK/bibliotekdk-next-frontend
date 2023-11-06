@@ -2,6 +2,7 @@ export const BackgroundColorEnum = Object.freeze({
   NEUTRAL: "NEUTRAL",
   YELLOW: "YELLOW",
   RED: "RED",
+  TRANSPARENT: "TRANSPARENT",
 });
 
 /**

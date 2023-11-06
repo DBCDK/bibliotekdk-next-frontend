@@ -49,11 +49,16 @@ const MaterialCard = forwardRef(
     } = renderProps;
 
     if (imageLeft) {
+      console.log("HREF ", link_href);
+      const Tag = link_href ? "a" : "div";
       return (
-        <div
+        <Tag
+          href={link_href}
           // Col props
           {...colSizing}
-          className={cx(elementContainerClassName, styles.container)}
+          className={cx(styles.container, elementContainerClassName, {
+            [styles.link_style]: !!link_href,
+          })}
           as="article"
         >
           <Col ref={ref} id={workId} className={cx(relatedElementClassName)}>
@@ -70,7 +75,7 @@ const MaterialCard = forwardRef(
               {children}
             </Col>
           </Col>
-        </div>
+        </Tag>
       );
     }
 

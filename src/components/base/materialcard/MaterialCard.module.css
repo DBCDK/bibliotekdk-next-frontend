@@ -1,4 +1,5 @@
 .link_style {
+  text-decoration: none;
   flex-grow: 1;
   /* Add underline colors */
   --underline-middle-hover-color: var(--link-background);
@@ -15,7 +16,7 @@
   padding-right: var(--pt9);
 }
 .container {
-  border: 1px solid var(--iron);
+  /* border: 1px solid var(--iron); */
 }
 
 .container + .container {
@@ -27,4 +28,22 @@
   margin-right: var(--pt3);
   display: flex;
   align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+  .image {
+    padding-left: var(--pt5);
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .image {
+    padding-left: var(--pt4);
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .image {
+    padding-left: var(--pt3);
+  }
 }
