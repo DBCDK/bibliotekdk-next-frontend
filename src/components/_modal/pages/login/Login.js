@@ -14,7 +14,7 @@ import { LOGIN_MODE } from "@/components/_modal/pages/login/utils";
 import { useData } from "@/lib/api/api";
 import * as libraryFragments from "@/lib/api/library.fragments";
 
-import { signIn } from "next-auth/react";
+import { signIn } from "@dbcdk/login-nextjs/client";
 import { showLoanerForm } from "./utils";
 import MitIDButton from "./mitIDButton/MitIDButton";
 import LibrarySearch from "./librarySearch/LibrarySearch";
