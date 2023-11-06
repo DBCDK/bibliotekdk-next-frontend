@@ -46,11 +46,21 @@ export default function AdvancedSearch() {
       const query = { cql: cql };
       router.push({ pathname: router.pathname, query });
     } else {
-      //  convert fields to cql then do search
-      const stateTocql = converStateToCql(inputFields);
-      console.log("stateTocql", stateTocql);
-    }
-  };
+    
+      const stateToString = JSON.stringify({inputFields, dropDowns});
+    // save state in url in custom format(not cql).
+    //save in param ?fieldSearch=
+//then when component is loaded, convert to cql then search
+    //convert fields to cql then do search
+
+   // console.log('JSON.stringify(inputFields)',stateToString)
+     // const stateTocql = converStateToCql(inputFields);
+    
+       const query = { fieldSearch: stateToString };
+       router.push({ pathname: router.pathname, query });
+    //   console.log("stateTocql", stateTocql);
+    // 
+  }};
 
   return (
     <div className={styles.background}>

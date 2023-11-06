@@ -4,6 +4,7 @@ import { ResultPage } from "@/components/search/result/page";
 import Section from "@/components/base/section";
 import Pagination from "@/components/search/pagination/Pagination";
 import PropTypes from "prop-types";
+import { converStateToCql } from "@/components/search/advancedSearch/utils";
 
 export function AdvancedSearchResult({
   pageNo,
@@ -60,12 +61,16 @@ function parseResponse(bigResponse) {
  *
  * @returns {React.JSX.Element}
  */
-export default function Wrap({ pageNo, onWorkClick, onPageChange, cql }) {
+export default function Wrap({ pageNo, onWorkClick, onPageChange, cql,fieldSearch }) {
   const limit = 10; // limit
   let offset = limit * (pageNo - 1); // offset
+console.log('RESULT.fieldSearch',fieldSearch)
+console.log('converStateToCql(fieldSearch)',converStateToCql(fieldSearch))
+  const cqlQuery =  cql || converStateToCql(fieldSearch)
+  console.log('Result. cqlQuery',cqlQuery)
   // use the useData hook to fetch data
   const bigResponse = useData(
-    doComplexSearchAll({ cql, offset: offset, limit: limit })
+    doComplexSearchAll({ cql:cqlQuery, offset: offset, limit: limit })
   );
 
   const parsedResponse = parseResponse(bigResponse);
