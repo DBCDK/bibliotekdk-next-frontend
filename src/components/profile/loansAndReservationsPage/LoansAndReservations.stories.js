@@ -26,4 +26,21 @@ export const LoansAndReservationsStory = () => {
   );
 };
 
+export const LoansAndReservationsStoryActions = () => {
+  useMockLoanerInfo({});
+  return (
+    <>
+      <StoryTitle>Lån og reservationer</StoryTitle>
+      <StoryDescription>
+        Kortlægning af mulige states i et lån, reservation eller mellemværende
+      </StoryDescription>
+      <Modal.Container>
+        <Modal.Page id="material" component={Pages.Material} />
+        <Modal.Page id="deleteOrder" component={Pages.DeleteOrder} />
+      </Modal.Container>
+      <LoansAndReservations />
+    </>
+  );
+};
+
 export default exportedObject;

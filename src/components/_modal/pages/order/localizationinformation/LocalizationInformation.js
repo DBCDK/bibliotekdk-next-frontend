@@ -10,8 +10,8 @@ import { IconLink } from "@/components/base/iconlink/IconLink";
 import ChevronRight from "@/public/icons/chevron_right.svg";
 import cx from "classnames";
 
-function LocalizationInformation({
-  availableAsDigitalCopy,
+export function LocalizationInformation({
+  availableAsDigitalCopy = false,
   isAuthenticated,
   isDigitalCopy,
   isLoadingBranches,

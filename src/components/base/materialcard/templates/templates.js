@@ -230,6 +230,7 @@ export function templateImageToLeft({
   isDigitalArticle,
   isDeliveredByDigitalArticleService = false,
   backgroundColor = BackgroundColorEnum.NEUTRAL,
+  hideEditionText = false,
 }) {
   const fullTitle =
     singleManifestation === true
@@ -280,7 +281,7 @@ export function templateImageToLeft({
         >
           {formattedMaterialTypes}
         </Text>
-        {!isPeriodicaLike && !isDigitalArticle && (
+        {!isPeriodicaLike && !isDigitalArticle && !hideEditionText && (
           <Text {...propFunc("text3", 1)} title={formattedMaterialTypes}>
             {singleManifestation
               ? edition

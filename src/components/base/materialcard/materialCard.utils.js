@@ -4,6 +4,13 @@ export const BackgroundColorEnum = Object.freeze({
   RED: "RED",
 });
 
+export const StatusEnum = Object.freeze({
+  NONE: "NONE",
+  NOT_AVAILABLE: "NOT-AVAILABLE",
+  DIGITAL: "DIGITAL",
+  NEEDS_EDITION: "NEEDS-EDITION",
+});
+
 /**
  *
  * @param {Boolean} isPeriodicaLike

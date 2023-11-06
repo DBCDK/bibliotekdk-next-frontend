@@ -7,6 +7,8 @@ import styles from "./TextInputs.module.css";
 import animations from "css/animations";
 import SearchIndexDropdown from "@/components/search/advancedSearch/fieldInput/searchIndexDropdown/SearchIndexDropdown";
 
+import SearchIndexDropdown from "@/components/search/advancedSearch/fieldInput/searchIndexDropdown/SearchIndexDropdown";
+
 import { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import Icon from "@/components/base/icon";
@@ -16,12 +18,15 @@ import { useData } from "@/lib/api/api";
 import * as suggestFragments from "@/lib/api/suggest.fragments";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import { LogicalOperatorsEnum } from "@/components/search/enums";
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
+import { LogicalOperatorsEnum } from "@/components/search/enums";
 
 /**
  * Returns a textinput component and a dropdown to choose which advanced search index to search in
  * @param {Object} props
  * @returns {React.JSX.Element}
  */
+function FieldInput({ key, index, workType, fieldValue }) {
 function FieldInput({ key, index, workType, fieldValue }) {
   const [suggestions, setSuggestions] = useState([]);
 
@@ -37,6 +42,8 @@ console.log('fieldValue',fieldValue)
   const { data } = useData(
     fieldValue?.value &&
       suggestFragments.all({ q: fieldValue.value, workType: null, limit: 10 })
+    fieldValue?.value &&
+      suggestFragments.all({ q: fieldValue.value, workType: null, limit: 10 })
   );
 
   useEffect(() => {
@@ -49,8 +56,11 @@ console.log('fieldValue',fieldValue)
 
   return (
     <div key={key}>
+    <div key={key}>
       {!isFirstItem && (
         <LogicalOperatorDropDown
+          onSelect={(value) => handleLogicalOperatorChange(index, value)}
+          selected={fieldValue.prefixLogicalOperator}
           onSelect={(value) => handleLogicalOperatorChange(index, value)}
           selected={fieldValue.prefixLogicalOperator}
         />
@@ -62,8 +72,15 @@ console.log('fieldValue',fieldValue)
         }`}
       >
         <SearchIndexDropdown
+      <div
+        className={`${styles.inputContainer} ${
+          isFirstItem ? styles.rightPadding : ""
+        }`}
+      >
+        <SearchIndexDropdown
           options={labels}
           className={styles.select}
+          index={index}
           index={index}
         />
         <div className={`${styles.suggester__wrap} `}>
