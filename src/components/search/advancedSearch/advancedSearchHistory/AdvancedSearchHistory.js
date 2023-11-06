@@ -8,7 +8,7 @@ import { cyKey } from "@/utils/trim";
 import Text from "@/components/base/text";
 
 export function AdvancedSearchHistory() {
-  const [storedValue, deleteValue] = useAdvancedSearchHistory();
+  const { storedValue, deleteValue } = useAdvancedSearchHistory();
   const router = useRouter();
 
   const goToCql = (value) => {

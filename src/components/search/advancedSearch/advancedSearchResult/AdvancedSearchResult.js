@@ -63,7 +63,7 @@ function parseResponse(bigResponse) {
  */
 export default function Wrap({ pageNo, onWorkClick, onPageChange, cql }) {
   // get setter for advanced search history
-  const [storedValue, setValue] = useAdvancedSearchHistory();
+  const { storedValue, setValue } = useAdvancedSearchHistory();
   const limit = 10; // limit
   let offset = limit * (pageNo - 1); // offset
   // use the useData hook to fetch data

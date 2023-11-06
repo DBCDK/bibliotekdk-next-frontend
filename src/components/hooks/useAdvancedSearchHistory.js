@@ -76,7 +76,7 @@ export const useAdvancedSearchHistory = () => {
     }
   };
 
-  return [storedValue, deleteValue, setValue, clearValues];
+  return { storedValue, setValue, deleteValue, clearValues };
 };
 
 export default useAdvancedSearchHistory;
