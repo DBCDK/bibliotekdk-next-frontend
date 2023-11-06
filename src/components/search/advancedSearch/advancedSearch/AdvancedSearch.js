@@ -48,7 +48,7 @@ export default function AdvancedSearch() {
     } else {
       //  convert fields to cql then do search
       const stateTocql = convertObjectToCql(inputFields);
-      console.log("", stateTocql);
+      console.log("stateTocql", stateTocql);
     }
   };
 

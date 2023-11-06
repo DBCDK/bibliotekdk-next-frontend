@@ -69,6 +69,9 @@ export default function AdvancedSearchProvider({ children }) {
    * @param {*} newOperator
    */
   function handleInputFieldChange(index, newValue) {
+    console.log('handleInputFieldChange.index',index)
+    console.log('handleInputFieldChange.newValue',newValue)
+
     setInputFields((prevFields) => {
       const newFields = [...prevFields];
       newFields[index].value = newValue;
