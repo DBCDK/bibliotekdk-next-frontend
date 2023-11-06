@@ -30,7 +30,7 @@ function FieldInput({ key, index, workType, fieldValue }) {
     removeInputField,
     handleLogicalOperatorChange,
   } = useAdvancedSearchContext();
-  //console.log('fieldValue',fieldValue)
+  console.log("fieldValue", fieldValue);
   //labels to show in SearchIndexDropdown
   const labels = workTypesLabels[workType].map((el) => el.label);
   const isFirstItem = index === 0;
@@ -172,14 +172,17 @@ export default function TextInputs({ workType }) {
 
   return (
     <>
-      {inputFields?.map((field, index) => (
-        <FieldInput
-          key={`inputField-${index}`}
-          index={index}
-          workType={workType}
-          fieldValue={field}
-        />
-      ))}
+      {inputFields?.map((field, index) => {
+        console.log("inputFields.map.field", field);
+        return (
+          <FieldInput
+            key={`inputField-${index}`}
+            index={index}
+            workType={workType}
+            fieldValue={field}
+          />
+        );
+      })}
       <IconButton
         icon="expand"
         onClick={addInputField}

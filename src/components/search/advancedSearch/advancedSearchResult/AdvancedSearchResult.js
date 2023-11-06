@@ -61,16 +61,22 @@ function parseResponse(bigResponse) {
  *
  * @returns {React.JSX.Element}
  */
-export default function Wrap({ pageNo, onWorkClick, onPageChange, cql,fieldSearch }) {
+export default function Wrap({
+  pageNo,
+  onWorkClick,
+  onPageChange,
+  cql,
+  fieldSearch,
+}) {
   const limit = 10; // limit
   let offset = limit * (pageNo - 1); // offset
-console.log('RESULT.fieldSearch',fieldSearch)
-console.log('converStateToCql(fieldSearch)',converStateToCql(fieldSearch))
-  const cqlQuery =  cql || converStateToCql(fieldSearch)
-  console.log('Result. cqlQuery',cqlQuery)
+  console.log("RESULT.fieldSearch", fieldSearch);
+  console.log("converStateToCql(fieldSearch)", converStateToCql(fieldSearch));
+  const cqlQuery = cql || converStateToCql(fieldSearch);
+  console.log("Result. cqlQuery", cqlQuery);
   // use the useData hook to fetch data
   const bigResponse = useData(
-    doComplexSearchAll({ cql:cqlQuery, offset: offset, limit: limit })
+    doComplexSearchAll({ cql: cqlQuery, offset: offset, limit: limit })
   );
 
   const parsedResponse = parseResponse(bigResponse);

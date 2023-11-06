@@ -91,15 +91,29 @@ export default function AdvancedSearchProvider({ children }) {
       return newFields;
     });
   }
+
+  //overrides state to the given input
+
+  function updateStatesFromObject(stateObject) {
+    console.log("in updateStatesFromObject.stateObject", stateObject);
+    if (stateObject?.inputFields) {
+      setInputFields(stateObject.inputFields);
+    }
+
+    // if (stateObject.dropDowns) {
+    //   setDropDowns(parsedData.dropDowns);
+    // }
+  }
+
   const value = {
     inputFields,
     addInputField,
     removeInputField,
-
     handleLogicalOperatorChange,
     //  dropDowns,
     handleIndexChange,
     handleInputFieldChange,
+    updateStatesFromObject,
   };
 
   return (

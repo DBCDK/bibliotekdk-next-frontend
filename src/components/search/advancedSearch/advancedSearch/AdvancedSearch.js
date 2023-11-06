@@ -19,7 +19,7 @@ import { isEmpty } from "lodash";
  * @returns {React.JSX.Element}
  */
 
-export default function AdvancedSearch() {
+export default function AdvancedSearch({ initState }) {
   const router = useRouter();
   const { cql } = router.query;
   const workType = "all";
@@ -27,11 +27,15 @@ export default function AdvancedSearch() {
   const textAreaRef = useRef(null);
 
   //Coming soon: convert inputFields and dropDowns to cql
-  const { dropDowns, inputFields } = useAdvancedSearchContext();
-
+  const { dropDowns, inputFields, updateStatesFromObject } =
+    useAdvancedSearchContext();
+  console.log("AdvancedSearch.inputFields", inputFields);
   useEffect(() => {
     //show CQL editor if there is a cql param in the url
     setShowCqlEditor(!!cql);
+    if (initState) {
+      updateStatesFromObject(initState);
+    }
   }, []);
 
   const doAdvancedSearch = () => {
@@ -46,21 +50,21 @@ export default function AdvancedSearch() {
       const query = { cql: cql };
       router.push({ pathname: router.pathname, query });
     } else {
-    
-      const stateToString = JSON.stringify({inputFields, dropDowns});
-    // save state in url in custom format(not cql).
-    //save in param ?fieldSearch=
-//then when component is loaded, convert to cql then search
-    //convert fields to cql then do search
+      const stateToString = JSON.stringify({ inputFields, dropDowns });
+      // save state in url in custom format(not cql).
+      //save in param ?fieldSearch=
+      //then when component is loaded, convert to cql then search
+      //convert fields to cql then do search
 
-   // console.log('JSON.stringify(inputFields)',stateToString)
-     // const stateTocql = converStateToCql(inputFields);
-    
-       const query = { fieldSearch: stateToString };
-       router.push({ pathname: router.pathname, query });
-    //   console.log("stateTocql", stateTocql);
-    // 
-  }};
+      // console.log('JSON.stringify(inputFields)',stateToString)
+      // const stateTocql = converStateToCql(inputFields);
+
+      const query = { fieldSearch: stateToString };
+      router.push({ pathname: router.pathname, query });
+      //   console.log("stateTocql", stateTocql);
+      //
+    }
+  };
 
   return (
     <div className={styles.background}>

@@ -37,7 +37,7 @@ function Input({
   type = "text",
   id,
   invalid,
-  value = "",
+  value = "messi",
   placeholder = null,
   disabled = false,
   onChange,
@@ -49,7 +49,8 @@ function Input({
   "aria-label": ariaLabel,
   ...props
 }) {
-  const [val, setVal] = useState(value || "");
+  console.log("in input.value", value);
+  const [val, setVal] = useState("value" || "");
   // Update value if undefined/null at first render
   useEffect(() => {
     setVal(value);

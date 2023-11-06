@@ -18,8 +18,12 @@ export default function AdvancedSearchPage() {
   const scrollRef = useRef();
   const { page: pageNo = 1 } = router.query;
   const cql = router?.query?.cql || null;
-  const fieldSearch = router?.query?.fieldSearch ? JSON.parse(router?.query?.fieldSearch) : "";
-console.log('avanceretrt.fieldSearch',fieldSearch)
+  let fieldSearch = router?.query?.fieldSearch;
+  if (fieldSearch) {
+    fieldSearch = JSON.parse(fieldSearch);
+  }
+
+  console.log("avanceretrt.fieldSearch", fieldSearch);
 
   /**
    * Updates URL query params
@@ -41,7 +45,7 @@ console.log('avanceretrt.fieldSearch',fieldSearch)
   function scrollToRef(ref) {
     ref.current.scrollIntoView({ behavior: "smooth", block: "end" });
   }
-const showResult = !isEmpty(cql) ||  !isEmpty(fieldSearch) 
+  const showResult = !isEmpty(cql) || !isEmpty(fieldSearch);
   return (
     <AdvancedSearchProvider>
       <main>
@@ -50,7 +54,7 @@ const showResult = !isEmpty(cql) ||  !isEmpty(fieldSearch) 
 
         <AdvancedSearch initState={fieldSearch} />
         <Container fluid>
-          {showResult&& (
+          {showResult && (
             <AdvancedSearchResult
               pageNo={parseInt(pageNo, 10)}
               onPageChange={async (page, scroll) => {
