@@ -58,6 +58,8 @@
 .related_element__image_to_left_version {
   padding: 0;
   border: 1px solid var(--iron);
+  gap: unset;
+  width: 100%;
 }
 
 /* Text elements */
@@ -87,6 +89,7 @@
   flex-direction: column;
   margin-top: 0;
   background: var(--white);
+  width: 100%;
 }
 
 .text__localizations_version {
@@ -135,6 +138,11 @@
 .transparent {
   background-color: transparent;
   border: none;
+}
+
+.transparent:hover,
+.transparent:focus-visible {
+  background-color: var(--pippin);
 }
 
 .white_overlay {

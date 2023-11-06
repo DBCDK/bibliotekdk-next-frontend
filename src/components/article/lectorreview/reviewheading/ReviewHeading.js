@@ -60,6 +60,7 @@ export function ReviewHeading({ propAndChildrenInput }) {
               singleManifestation: true,
               backgroundColor: BackgroundColorEnum.TRANSPARENT,
               linkToWork: true,
+              imageContainerStyle: styles.cover_image,
             }}
           />
         </div>
@@ -73,7 +74,6 @@ export function ReviewHeadingLink({ propAndChildrenInput, className }) {
     propAndChildrenInput?.workTypes
   );
   const link = templateImageToLeft(propAndChildrenInput).link_href;
-  console.log("LINK ", link);
   return (
     <div className={`${styles.back_button}  ${className}`}>
       <IconLink

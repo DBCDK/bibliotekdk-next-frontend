@@ -220,7 +220,9 @@ export function templateForLocalizations(
  * @param {boolean} props.isDigitalArticle
  * @param {boolean} [props.isDeliveredByDigitalArticleService] - used to differentiate between "Første tilgængelige eksemplar" and "Leveres som digital kopi til din mail"
  * @param {BackgroundColorEnum} [props.backgroundColor] - indicates warnings or errors in the material card - used in multiorder
- * @returns {React.JSX.Element}
+ * @param {string} [props.elementContainerClassName] - used in reviewHeader
+ * @param {string} [props.coverImageStyle] - used in reviewHeader
+ *@returns {React.JSX.Element}
  */
 export function templateImageToLeft({
   material,
@@ -231,6 +233,7 @@ export function templateImageToLeft({
   isDeliveredByDigitalArticleService = false,
   backgroundColor = BackgroundColorEnum.NEUTRAL,
   elementContainerClassName,
+  imageContainerStyle,
   linkToWork = false,
 }) {
   const fullTitle =
@@ -269,6 +272,7 @@ export function templateImageToLeft({
     image_src: material?.cover?.detail,
     workId: material?.workId,
     imageLeft: true,
+    imageContainerStyle: imageContainerStyle,
     children: (
       <div>
         <Text {...propFunc("text1", 2)} title={fullTitle}>

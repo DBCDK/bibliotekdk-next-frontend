@@ -35,6 +35,11 @@
   border-top: var(--card_border);
 }
 
+.cover_image {
+  padding-left: 0;
+  margin-right: 0;
+}
+
 @media (min-width: 768px) {
   .top {
     padding-inline: var(--pt2);

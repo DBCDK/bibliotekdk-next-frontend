@@ -44,37 +44,49 @@ const MaterialCard = forwardRef(
       elementContainerClassName,
       relatedElementClassName,
       textClassName,
+      imageContainerStyle,
       coverImageClassName,
       imageLeft,
     } = renderProps;
 
+    console.log("renderProps", imageContainerStyle);
+
     if (imageLeft) {
-      console.log("HREF ", link_href);
-      const Tag = link_href ? "a" : "div";
+      const ManifestationLink = ({ children }) => {
+        return (
+          <Link
+            href={link_href}
+            className={cx(styles.container, elementContainerClassName, {
+              [styles.link_style]: !!link_href,
+            })}
+            border={{ top: false, bottom: { keepVisible: true } }}
+          >
+            {children}
+          </Link>
+        );
+      };
+      const Tag = link_href ? ManifestationLink : "div";
       return (
         <Tag
-          href={link_href}
-          // Col props
-          {...colSizing}
           className={cx(styles.container, elementContainerClassName, {
             [styles.link_style]: !!link_href,
           })}
           as="article"
         >
-          <Col ref={ref} id={workId} className={cx(relatedElementClassName)}>
-            <Col xs={3} className={styles.image}>
+          <div ref={ref} id={workId} className={cx(relatedElementClassName)}>
+            <div className={cx(styles.image, imageContainerStyle)}>
               <img
                 src={image_src}
                 className={cx(coverImageClassName)}
                 title={fullTitle}
                 alt={Translate({ context: "general", label: "frontpage" })}
               />
-            </Col>
+            </div>
 
-            <Col xs={9} className={cx(textClassName, styles.textInformation)}>
+            <div className={cx(textClassName, styles.textInformation)}>
               {children}
-            </Col>
-          </Col>
+            </div>
+          </div>
         </Tag>
       );
     }

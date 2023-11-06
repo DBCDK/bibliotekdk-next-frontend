@@ -2,6 +2,7 @@
   text-decoration: none;
   flex-grow: 1;
   /* Add underline colors */
+
   --underline-middle-hover-color: var(--link-background);
   --underline-font-hover-color: var(--mine-shaft);
   /* -- */
@@ -16,7 +17,7 @@
   padding-right: var(--pt9);
 }
 .container {
-  /* border: 1px solid var(--iron); */
+  width: 100%;
 }
 
 .container + .container {
@@ -25,7 +26,7 @@
 
 .image {
   padding-left: var(--pt6);
-  margin-right: var(--pt3);
+  margin-right: var(--pt6);
   display: flex;
   align-items: center;
 }
