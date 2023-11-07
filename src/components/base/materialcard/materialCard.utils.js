@@ -2,6 +2,7 @@ export const BackgroundColorEnum = Object.freeze({
   NEUTRAL: "NEUTRAL",
   YELLOW: "YELLOW",
   RED: "RED",
+  UNI_RED: "UNI_RED",
 });
 
 export const StatusEnum = Object.freeze({
