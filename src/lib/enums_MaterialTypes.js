@@ -61,6 +61,23 @@ export const MaterialTypeOrderEnum = Object.freeze({
       display: "film (blu-ray 3D)",
       code: "FILM_BLURAY_3D",
     },
+    "TV_SERIES (ONLINE)": {
+      display: "tv-serie (online)",
+      code: "TV_SERIES_ONLINE",
+    },
+    "TV_SERIES (DVD)": { display: "tv-serie (dvd)", code: "TV_SERIES_DVD" },
+    "TV_SERIES (BLU-RAY)": {
+      display: "tv-serie (blu-ray)",
+      code: "TV_SERIES_BLURAY",
+    },
+    "TV_SERIES (BLU-RAY 4K)": {
+      display: "tv-serie (blu-ray 4K)",
+      code: "TV_SERIES_BLURAY_4K",
+    },
+    "TV_SERIES (BLU-RAY 3D)": {
+      display: "tv-serie (blu-ray 3D)",
+      code: "FILM_BLURAY_3D",
+    },
   },
   MUSIC: {
     "MUSIK (CD)": { display: "musik (cd)", code: "MUSIC_CD" },
@@ -70,22 +87,83 @@ export const MaterialTypeOrderEnum = Object.freeze({
     },
   },
   SHEETMUSIC: {
-    "NODE (ONLINE)": { display: "node (online)", code: "SHEET_MUSIC_ONLINE" },
     NODE: { display: "node", code: "SHEET_MUSIC" },
+    "NODE (ONLINE)": { display: "node (online)", code: "SHEET_MUSIC_ONLINE" },
+    "NODE (ELEKTRONISK)": {
+      display: "node (elektronisk)",
+      code: "SHEET_MUSIC_ELECTRONIC",
+    },
     "NODE (CD)": { display: "node (cd)", code: "SHEET_MUSIC_CD" },
   },
   GAME: {
     "PLAYSTATION 5": { display: "playstation 5", code: "PLAYSTATION_5" },
     "PLAYSTATION 4": { display: "playstation 4", code: "PLAYSTATION_4" },
     "PLAYSTATION 3": { display: "playstation 3", code: "PLAYSTATION_3" },
+    "PLAYSTATION 2": { display: "playstation 2", code: "PLAYSTATION_2" },
     PLAYSTATION: { display: "playstation", code: "PLAYSTATION" },
     "XBOX SERIES X": { display: "xbox series x", code: "XBOX_SERIES_X" },
     "XBOX ONE": { display: "xbox one", code: "XBOX_ONE" },
     "XBOX 360": { display: "xbox 360", code: "XBOX_360" },
     XBOX: { display: "xbox 360", code: "XBOX" },
+    BRÆTSPIL: { display: "brætspil", code: "BOARD_GAME" },
+    PUSLESPIL: { display: "puslespil", code: "PUZZLE" },
     COMPUTERSPIL: { display: "computerspil", code: "COMPUTER_GAME" },
+    "COMPUTERSPIL (ONLINE)": {
+      display: "computerspil (online)",
+      code: "COMPUTER_GAME_ONLINE",
+    },
+    "COMPUTERSPIL (BLU-RAY)": {
+      display: "computerspil (blu-ray)",
+      code: "COMPUTER_GAME_BLURAY",
+    },
+    "COMPUTERSPIL (DVD)": {
+      display: "computerspil (dvd)",
+      code: "COMPUTER_GAME_DVD",
+    },
     "NINTENDO SWITCH": { display: "nintendo switch", code: "NINTENDO_SWITCH" },
     WII: { display: "wii", code: "WII" },
+  },
+  OTHER: {
+    "ELEKTRONISK MATERIALE (ONLINE)": {
+      display: "elektronisk materiale (online)",
+      code: "ELECTRONIC_MATERIAL_ONLINE",
+    },
+    "ELEKTRONISK MATERIALE (BLU-RAY)": {
+      display: "elektronisk materiale (blu-ray)",
+      code: "ELECTRONIC_MATERIAL_BLURAY",
+    },
+    "ELEKTRONISK MATERIALE (DVD)": {
+      display: "elektronisk materiale (dvd)",
+      code: "ELECTRONIC_MATERIAL_DVD",
+    },
+    "ELEKTRONISK MATERIALE (DVD-ROM)": {
+      display: "elektronisk materiale (dvd-rom)",
+      code: "ELECTRONIC_MATERIAL_DVDROM",
+    },
+    "ELEKTRONISK MATERIALE (CD-ROM)": {
+      display: "elektronisk materiale (cd-rom)",
+      code: "ELECTRONIC_MATERIAL_CDROM",
+    },
+    "LYDOPTAGELSE (ONLINE)": {
+      display: "lydoptagelse (online)",
+      code: "SOUND_RECORDING_ONLINE",
+    },
+    "LYDOPTAGELSE (CD)": {
+      display: "lydoptagelse (cd)",
+      code: "SOUND_RECORDING_CD",
+    },
+    "LYDOPTAGELSE (CD-MP3)": {
+      display: "lydoptagelse (cd-mp3)",
+      code: "SOUND_RECORDING_CDROM",
+    },
+    "LYDOPTAGELSE (DVD)": {
+      display: "lydoptagelse (dvd)",
+      code: "SOUND_RECORDING_DVD",
+    },
+    "LYDOPTAGELSE (DVD-ROM)": {
+      display: "lydoptagelse (dvd-rom)",
+      code: "SOUND_RECORDING_DVDROM",
+    },
   },
 });
 
