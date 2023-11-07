@@ -1,5 +1,9 @@
 import * as orderMutations from "@/lib/api/order.mutations";
+import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
+import { isFFUAgency } from "@/utils/agency";
+
+import animations from "css/animations";
 
 // elements we want
 const elements = [
@@ -246,6 +250,10 @@ export function escapeColons(phrase) {
   return phrase.replace(":", "%3A");
 }
 
+function buildHtmlLink(txt, url) {
+  return `<a href="${url}"} target="_blank" class="${animations.underlineContainer} ${animations.top_line_false} ${animations.top_line_keep_false}">${txt}</a>`;
+}
+
 /**
  * Select a branch and handle login
  * either the user is already logged in for that agency
@@ -262,7 +270,6 @@ export function handleOnSelect(
   modal,
   context,
   updateLoanerInfo,
-  callbackUID = modal?.stack?.find((m) => m.id === "order")?.uid,
   overrideOrderModalPush = null
 ) {
   // Selected branch belongs to one of the user's agencies where the user is logged in
@@ -291,18 +298,77 @@ export function handleOnSelect(
     return;
   }
 
-  if (branch?.borrowerCheck) {
-    modal.push("openAdgangsplatform", {
-      agencyId: branch.agencyId,
-      branchId: branch.branchId,
-      agencyName: branch.agencyName,
-      callbackUID: callbackUID, //we should always have callbackUID, but if we dont, order modal is not opened after login.
-    });
-    return;
-  } else {
+  //  Show form if selected library doesn't support borchk
+  if (!branch?.borrowerCheck) {
     modal.push("loanerform", {
       branchId: branch.branchId,
       changePickupBranch: true,
     });
+
+    return;
   }
+
+  let title;
+  let text;
+
+  //  FFU library selected
+  if (isFFUAgency(branch.agencyId)) {
+    // if branch has a website url - include it as a variabel
+    let link1 = Translate({ context: "general", label: "homepage" });
+    if (branch.branchWebsiteUrl) {
+      const txt = Translate({ context: "general", label: "homepage" });
+      const url = branch.branchWebsiteUrl;
+      link1 = buildHtmlLink(txt, url);
+    }
+
+    // Link to my libraries page
+    const txt2 = Translate({ context: "profile", label: "myLibraries" });
+    const url2 = "/profil/mine-biblioteker";
+    const link2 = buildHtmlLink(txt2, url2);
+
+    title = Translate({
+      context: "login",
+      label: "title-error-not-associated",
+      vars: [branch.agencyName],
+    });
+
+    text = Translate({
+      context: "login",
+      label: "text-error-not-associated",
+      vars: [branch.agencyName, link2, branch.agencyName, link1],
+      renderAsHtml: true,
+    });
+  }
+
+  // FOLK library selected
+  else {
+    // if branch has a website url - include it as a variabel
+    let link1 = "";
+    if (branch.branchWebsiteUrl) {
+      const prefix = Translate({ context: "general", label: "link-for" });
+      const txt = branch.agencyName;
+      const url = branch.branchWebsiteUrl;
+      link1 = `${prefix} ${buildHtmlLink(txt, url)}`;
+    }
+
+    title = Translate({
+      context: "login",
+      label: "title-error-not-registered",
+      vars: [branch.agencyName],
+    });
+
+    text = Translate({
+      context: "login",
+      label: "text-error-not-registered",
+      vars: [link1],
+      renderAsHtml: true,
+    });
+  }
+
+  modal.push("statusMessage", {
+    title,
+    text,
+    agencyName: branch.agencyName,
+    button: false,
+  });
 }
