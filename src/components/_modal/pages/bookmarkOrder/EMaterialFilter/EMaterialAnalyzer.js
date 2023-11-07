@@ -40,10 +40,8 @@ const useAnalyzeMaterial = (material) => {
   );
   const physicalCopy = checkPhysicalCopy([access?.[0]])?.[0];
   const digitalCopy = checkDigitalCopy([access?.[0]])?.[0];
-  const onlineMaterialWithoutLoginOrLoginAtUrl = Boolean(
-    access?.length > 0 && !digitalCopy && !physicalCopy
-  );
-  return onlineMaterialWithoutLoginOrLoginAtUrl;
+
+  return !digitalCopy && !physicalCopy;
 };
 
 /**

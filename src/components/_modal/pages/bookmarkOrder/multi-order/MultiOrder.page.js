@@ -80,44 +80,54 @@ const MultiOrder = ({ context }) => {
     if (!analyzeRef || !analyzeRef.current) return;
 
     const elements = Array.from(analyzeRef.current.children);
-    const materialsNotAvailable = elements
-      .filter(
-        (element) =>
-          element.getAttribute("data-status") === StatusEnum.NOT_AVAILABLE
-      )
-      .map((element) =>
-        materials.find(
-          (mat) => mat.key === element.getAttribute("data-material-key")
-        )
-      );
 
-    const materialsNeedsInfo = elements
-      .filter(
-        (element) =>
-          element.getAttribute("data-status") === StatusEnum.NEEDS_EDITION
-      )
-      .map((element) =>
-        materials.find(
-          (mat) => mat.key === element.getAttribute("data-material-key")
-        )
-      );
+    const timer = setTimeout(() => {
+      /**
+       * timeout to secure elements are rerendered
+       */
 
-    const materialsDigital = elements
-      .filter(
-        (element) => element.getAttribute("data-status") === StatusEnum.DIGITAL
-      )
-      .map((element) =>
-        materials.find(
-          (mat) => mat.key === element.getAttribute("data-material-key")
+      const materialsNotAvailable = elements
+        .filter(
+          (element) =>
+            element.getAttribute("data-status") === StatusEnum.NOT_AVAILABLE
         )
-      );
+        .map((element) =>
+          materials.find(
+            (mat) => mat.key === element.getAttribute("data-material-key")
+          )
+        );
 
-    setMaterialCounts({
-      digitalMaterials: materialsDigital?.length ?? 0,
-      materialsNotAllowed: materialsNotAvailable?.length ?? 0,
-      materialsMissingAction: materialsNeedsInfo?.length ?? 0,
-    });
-  }, [materials, analyzeRef.current]);
+      const materialsNeedsInfo = elements
+        .filter(
+          (element) =>
+            element.getAttribute("data-status") === StatusEnum.NEEDS_EDITION
+        )
+        .map((element) =>
+          materials.find(
+            (mat) => mat.key === element.getAttribute("data-material-key")
+          )
+        );
+
+      const materialsDigital = elements
+        .filter(
+          (element) =>
+            element.getAttribute("data-status") === StatusEnum.DIGITAL
+        )
+        .map((element) =>
+          materials.find(
+            (mat) => mat.key === element.getAttribute("data-material-key")
+          )
+        );
+
+      setMaterialCounts({
+        digitalMaterials: materialsDigital?.length ?? 0,
+        materialsNotAllowed: materialsNotAvailable?.length ?? 0,
+        materialsMissingAction: materialsNeedsInfo?.length ?? 0,
+      });
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [materials, analyzeRef.current, context?.periodicaForms]);
 
   const onSubmit = async (pickupBranch) => {
     setIsCreatingOrders(true);
