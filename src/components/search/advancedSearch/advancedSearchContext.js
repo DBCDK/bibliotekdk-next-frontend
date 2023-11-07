@@ -94,11 +94,10 @@ export default function AdvancedSearchProvider({ children }) {
    * @param {*} stateObject
    */
   function updateStatesFromObject(stateObject) {
-    console.log("in updateStatesFromObject.stateObject", stateObject);
     if (stateObject?.inputFields) {
       setInputFields(stateObject.inputFields);
     }
-    //TODO: implement when dropdowns are readt
+    //TODO: implement when dropdowns are ready
     // if (stateObject.dropDowns) {
     //   setDropDowns(stateObject.dropDowns);
     // }

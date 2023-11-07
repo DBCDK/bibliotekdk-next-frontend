@@ -70,7 +70,7 @@ function FieldInput({ key, index, workType, fieldValue }) {
             data={suggestions}
             onSelect={(selectValue) =>
               setTimeout(() => {
-                //make sure onSelect is called after the onChange method of Input
+                // onSelect should be called after onChange. Otherwise onChange wil overrite the selected value
                 handleInputFieldChange(index, selectValue);
               }, 0)
             }

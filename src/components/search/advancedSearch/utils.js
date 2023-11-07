@@ -1,6 +1,5 @@
 //if space between input add AND between
 export function converStateToCql({ inputFields }) {
-  console.log("in converStateToCql", inputFields);
   if (!Array.isArray(inputFields) || inputFields.length === 0) {
     return ""; // Return an empty string for an empty or invalid input.
   }
@@ -17,7 +16,6 @@ export function converStateToCql({ inputFields }) {
 
     return `${logicalOperator} ${searchIndex}=${cqlValue}`;
   });
-  console.log("cqlQuery", cqlQuery);
 
   return cqlQuery.join(" ");
 }

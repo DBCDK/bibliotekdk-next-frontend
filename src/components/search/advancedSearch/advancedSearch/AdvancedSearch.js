@@ -25,9 +25,9 @@ export default function AdvancedSearch({ initState }) {
   const [showCqlEditor, setShowCqlEditor] = useState(false);
   const textAreaRef = useRef(null);
 
-  //Coming soon: convert inputFields and dropDowns to cql
   const { dropDowns, inputFields, updateStatesFromObject } =
     useAdvancedSearchContext();
+
   useEffect(() => {
     //show CQL editor if there is a cql param in the url
     setShowCqlEditor(!!cql);
@@ -36,6 +36,7 @@ export default function AdvancedSearch({ initState }) {
     }
   }, []);
 
+  //add raw cql query in url if showCqlEditor. Add state to url if fieldInputs
   const doAdvancedSearch = () => {
     if (showCqlEditor) {
       //do cql text search
@@ -50,7 +51,6 @@ export default function AdvancedSearch({ initState }) {
     } else {
       const stateToString = JSON.stringify({ inputFields, dropDowns });
       const query = { fieldSearch: stateToString };
-      //todo use one push instead of two
       router.push({ pathname: router.pathname, query });
     }
   };
