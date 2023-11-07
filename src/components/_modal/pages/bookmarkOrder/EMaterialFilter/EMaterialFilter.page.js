@@ -78,6 +78,13 @@ const EMaterialFilter = ({ context, active }) => {
 
       setMaterialsToFilter(filteredMaterials);
       setMaterialsToProceed(toProceed);
+
+      if (filteredMaterials.length === 0) {
+        // Nothing to filter - Redirect directly
+        modal.push("multiorder", {
+          materials: toProceed,
+        });
+      }
     }, 500);
 
     return () => clearTimeout(timer);
