@@ -9,7 +9,7 @@ import { useBranchUserAndHasDigitalAccess } from "@/components/work/utils";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 
 /**
- * returns whether the material is avaible online or not
+ * Returns true if first access is neither DigitalArticleService or InterLibraryLoan
  * @param {Object} material
  * @returns {boolean}
  */
