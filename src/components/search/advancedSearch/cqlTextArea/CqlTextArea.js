@@ -1,6 +1,6 @@
 import styles from "./CqlTextArea.module.css";
 
-import React from "react";
+import React, { useState } from "react";
 
 import { cyKey } from "@/utils/trim";
 import Text from "@/components/base/text";
@@ -8,11 +8,19 @@ import Text from "@/components/base/text";
 import { useRouter } from "next/router";
 import translate from "@/components/base/translate";
 import CqlErrorMessage from "@/components/search/advancedSearch/cqlErrorMessage/CqlErrorMessage";
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
 export function CqlTextArea({ textAreaRef }) {
   const router = useRouter();
   const defaultCql = router?.query?.cql || "title=harry AND potter";
+  const { parsedCQL } = useAdvancedSearchContext();
+  const [cqlValue, setCqlValue] = useState(defaultCql);
 
+  useState(() => {
+    if (parsedCQL) {
+      setCqlValue(parsedCQL);
+    }
+  }, [parsedCQL]);
   return (
     <div>
       <label
@@ -34,6 +42,10 @@ export function CqlTextArea({ textAreaRef }) {
           prefix: "advanced-search",
         })}
         id="cqlTextArea"
+        value={cqlValue}
+        onChange={(event) => {
+          setCqlValue(event.target.value);
+        }}
       />
 
       <CqlErrorMessage cql={textAreaRef?.current?.value} />

@@ -14,6 +14,7 @@ import Container from "react-bootstrap/Container";
 import Button from "@/components/base/button";
 import isEmpty from "lodash/isEmpty";
 import { AdvancedSearchHistory } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
+import { convertStateToCql } from "@/components/search/advancedSearch/utils";
 
 /**
  * Contains advanced search fields
@@ -27,7 +28,7 @@ export default function AdvancedSearch({ initState }) {
   const [showCqlEditor, setShowCqlEditor] = useState(false);
   const textAreaRef = useRef(null);
 
-  const { dropDowns, inputFields, updateStatesFromObject } =
+  const { dropDowns, inputFields, updateStatesFromObject, setParsedCQL } =
     useAdvancedSearchContext();
 
   useEffect(() => {
@@ -51,9 +52,13 @@ export default function AdvancedSearch({ initState }) {
       const query = { cql: cql };
       router.push({ pathname: router.pathname, query });
     } else {
+      //save state in url
       const stateToString = JSON.stringify({ inputFields, dropDowns });
       const query = { fieldSearch: stateToString };
       router.push({ pathname: router.pathname, query });
+      //save in state
+      const cql = convertStateToCql({ inputFields });
+      setParsedCQL(cql);
     }
   };
 

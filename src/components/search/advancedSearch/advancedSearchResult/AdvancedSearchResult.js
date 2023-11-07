@@ -74,10 +74,7 @@ export default function Wrap({
   const limit = 10; // limit
   let offset = limit * (pageNo - 1); // offset
   const cqlQuery = cql || convertStateToCql(fieldSearch);
-  console.log(
-    "convertStateToCql(fieldSearch);",
-    convertStateToCql(fieldSearch)
-  );
+
   // use the useData hook to fetch data
   const bigResponse = useData(
     doComplexSearchAll({ cql: cqlQuery, offset: offset, limit: limit })

@@ -22,6 +22,9 @@ export default function AdvancedSearchProvider({ children }) {
       searchIndex: "all",
     },
   ]);
+
+  //field search valued parsed as cql. Will be shown in cql input view.
+  const [parsedCQL, setParsedCQL] = useState(null);
   //TODO: Akri will implement dis
   // const [dropDowns, setDropdown] = useState([
   //   { index: "language", value: "da" },
@@ -90,7 +93,7 @@ export default function AdvancedSearchProvider({ children }) {
   }
 
   /**
-   *overrides state to the given input
+   *overrides state to the given input. For field search only.
    * @param {*} stateObject
    */
   function updateStatesFromObject(stateObject) {
@@ -103,6 +106,7 @@ export default function AdvancedSearchProvider({ children }) {
     // }
   }
 
+
   const value = {
     inputFields,
     addInputField,
@@ -112,6 +116,8 @@ export default function AdvancedSearchProvider({ children }) {
     handleIndexChange,
     handleInputFieldChange,
     updateStatesFromObject,
+    parsedCQL,
+    setParsedCQL,
   };
 
   return (
