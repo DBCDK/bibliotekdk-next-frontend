@@ -1660,35 +1660,35 @@
         "da": "Tilføj line",
         "en": "Add field"
       },
-      "advanced-dropdown-all": {
+      "advanced-dropdown-term.default": {
         "da": "Alle felter",
         "en": "All fields"
       },
-      "advanced-dropdown-title": {
+      "advanced-dropdown-term.title": {
         "da": "Titel",
         "en": "Title"
       },
-      "advanced-dropdown-isbn": {
+      "advanced-dropdown-term.isbn": {
         "da": "ISBN",
         "en": "ISBN"
       },
-      "advanced-dropdown-subject": {
+      "advanced-dropdown-term.subject": {
         "da": "Emne",
         "en": "subject"
       },
-      "advanced-dropdown-publisher": {
+      "advanced-dropdown-term.publisher": {
         "da": "Udgiver",
         "en": "Publisher"
       },
-      "advanced-dropdown-contributor": {
+      "advanced-dropdown-term.contributor": {
         "da": "Medvirkende",
         "en": "contributor"
       },
-      "advanced-dropdown-series": {
+      "advanced-dropdown-term.series": {
         "da": "Serietitel",
         "en": "Series title"
       },
-      "advanced-dropdown-function": {
+      "advanced-dropdown-term.function": {
         "da": "Ophav",
         "en": "function"
       },

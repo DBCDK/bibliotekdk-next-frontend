@@ -15,11 +15,11 @@ export function useAdvancedSearchContext() {
 export default function AdvancedSearchProvider({ children }) {
   //prefixLogicalOperator is an enum of AND, OR , NOT
   const [inputFields, setInputFields] = useState([
-    { value: "", prefixLogicalOperator: null, searchIndex: "all" },
+    { value: "", prefixLogicalOperator: null, searchIndex: "term.default" },
     {
       value: "",
       prefixLogicalOperator: LogicalOperatorsEnum.AND,
-      searchIndex: "all",
+      searchIndex: "term.title",
     },
   ]);
 
@@ -40,7 +40,7 @@ export default function AdvancedSearchProvider({ children }) {
       {
         value: "",
         prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "all",
+        searchIndex: "term.default",
       },
     ]);
   }

@@ -31,7 +31,7 @@ function FieldInput({ key, index, workType, fieldValue }) {
     handleLogicalOperatorChange,
   } = useAdvancedSearchContext();
   //labels to show in SearchIndexDropdown
-  const labels = workTypesLabels[workType].map((el) => el.label);
+  const labels = workTypesLabels[workType].map((el) => el.index);
   const isFirstItem = index === 0;
   const { data } = useData(
     fieldValue?.value &&
