@@ -12,8 +12,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Button from "@/components/base/button";
-import { converStateToCql } from "@/components/search/advancedSearch/utils";
-import { isEmpty } from "lodash";
+import isEmpty from "lodash/isEmpty";
 /**
  * Contains advanced search fields
  * @returns {React.JSX.Element}
@@ -29,7 +28,6 @@ export default function AdvancedSearch({ initState }) {
   //Coming soon: convert inputFields and dropDowns to cql
   const { dropDowns, inputFields, updateStatesFromObject } =
     useAdvancedSearchContext();
-  console.log("AdvancedSearch.inputFields", inputFields);
   useEffect(() => {
     //show CQL editor if there is a cql param in the url
     setShowCqlEditor(!!cql);
@@ -51,18 +49,9 @@ export default function AdvancedSearch({ initState }) {
       router.push({ pathname: router.pathname, query });
     } else {
       const stateToString = JSON.stringify({ inputFields, dropDowns });
-      // save state in url in custom format(not cql).
-      //save in param ?fieldSearch=
-      //then when component is loaded, convert to cql then search
-      //convert fields to cql then do search
-
-      // console.log('JSON.stringify(inputFields)',stateToString)
-      // const stateTocql = converStateToCql(inputFields);
-
       const query = { fieldSearch: stateToString };
+      //todo use one push instead of two
       router.push({ pathname: router.pathname, query });
-      //   console.log("stateTocql", stateTocql);
-      //
     }
   };
 
@@ -115,7 +104,7 @@ export default function AdvancedSearch({ initState }) {
         <Row className={styles.buttonRow}>
           <Col>
             <Button className={styles.button} onClick={doAdvancedSearch}>
-              søg
+              {Translate({ context: "header", label: "search" })}
             </Button>
           </Col>
         </Row>

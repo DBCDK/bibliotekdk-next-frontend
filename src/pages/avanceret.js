@@ -23,8 +23,6 @@ export default function AdvancedSearchPage() {
     fieldSearch = JSON.parse(fieldSearch);
   }
 
-  console.log("avanceretrt.fieldSearch", fieldSearch);
-
   /**
    * Updates URL query params
    *

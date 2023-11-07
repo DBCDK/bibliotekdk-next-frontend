@@ -30,7 +30,6 @@ function FieldInput({ key, index, workType, fieldValue }) {
     removeInputField,
     handleLogicalOperatorChange,
   } = useAdvancedSearchContext();
-  console.log("fieldValue", fieldValue);
   //labels to show in SearchIndexDropdown
   const labels = workTypesLabels[workType].map((el) => el.label);
   const isFirstItem = index === 0;
@@ -69,12 +68,11 @@ function FieldInput({ key, index, workType, fieldValue }) {
         <div className={`${styles.suggester__wrap} `}>
           <Suggester
             data={suggestions}
-            // onSelect={(selectValue)=>{console.log('selectValue',selectValue)}}
             onSelect={(selectValue) =>
               setTimeout(() => {
-                //TODO FIX THIS!!
+                //make sure onSelect is called after the onChange method of Input
                 handleInputFieldChange(index, selectValue);
-              }, 200)
+              }, 0)
             }
             onClear={() => handleInputFieldChange(index, "")}
             className={styles.suggester}
@@ -173,7 +171,6 @@ export default function TextInputs({ workType }) {
   return (
     <>
       {inputFields?.map((field, index) => {
-        console.log("inputFields.map.field", field);
         return (
           <FieldInput
             key={`inputField-${index}`}

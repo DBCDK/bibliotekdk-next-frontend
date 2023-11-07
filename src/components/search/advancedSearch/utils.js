@@ -5,10 +5,7 @@ export function converStateToCql({ inputFields }) {
     return ""; // Return an empty string for an empty or invalid input.
   }
 
-  console.log("inputFields", inputFields);
-  console.log("inputFields.length", inputFields.length);
   const cqlQuery = inputFields.map((item) => {
-    console.log("inputFields.item", item);
     const { value, prefixLogicalOperator, searchIndex } = item;
     if (!value) {
       return;
@@ -18,17 +15,9 @@ export function converStateToCql({ inputFields }) {
     //first element does not have a logicalOperator(AND , OR, NOT)
     const logicalOperator = prefixLogicalOperator || "";
 
-    return `${logicalOperator} ${searchIndex}="${cqlValue}"`;
+    return `${logicalOperator} ${searchIndex}=${cqlValue}`;
   });
   console.log("cqlQuery", cqlQuery);
 
   return cqlQuery.join(" ");
 }
-
-// export function stateToQueryString(state) {
-//   //const queryParams = new URLSearchParams();
-
-//   queryParams.set('fieldSearch', JSON.stringify(state.fieldSearch));
-//   queryParams.set('dropDowns', JSON.stringify(state.dropDowns));
-//   return queryParams.toString();
-// }

@@ -69,9 +69,6 @@ export default function AdvancedSearchProvider({ children }) {
    * @param {*} newOperator
    */
   function handleInputFieldChange(index, newValue) {
-    console.log("handleInputFieldChange.index", index);
-    console.log("handleInputFieldChange.newValue", newValue);
-
     setInputFields((prevFields) => {
       const newFields = [...prevFields];
       newFields[index].value = newValue;
@@ -92,16 +89,18 @@ export default function AdvancedSearchProvider({ children }) {
     });
   }
 
-  //overrides state to the given input
-
+  /**
+   *overrides state to the given input
+   * @param {*} stateObject
+   */
   function updateStatesFromObject(stateObject) {
     console.log("in updateStatesFromObject.stateObject", stateObject);
     if (stateObject?.inputFields) {
       setInputFields(stateObject.inputFields);
     }
-
+    //TODO: implement when dropdowns are readt
     // if (stateObject.dropDowns) {
-    //   setDropDowns(parsedData.dropDowns);
+    //   setDropDowns(stateObject.dropDowns);
     // }
   }
 
