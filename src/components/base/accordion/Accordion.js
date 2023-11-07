@@ -225,6 +225,7 @@ export default function Accordion({
   className = "",
   children,
   isLoading,
+  dataCy = null,
 }) {
   useEffect(() => {
     firstAccordionRender = false;
@@ -249,7 +250,7 @@ export default function Accordion({
     <BootstrapAccordion
       defaultActiveKey={defaultActiveKey}
       className={cx(className)}
-      data-cy="accordion"
+      data-cy={dataCy || "accordion"}
     >
       {data || children}
     </BootstrapAccordion>
@@ -265,4 +266,5 @@ Accordion.propTypes = {
     PropTypes.func,
     PropTypes.object,
   ]),
+  dataCy: PropTypes.string,
 };
