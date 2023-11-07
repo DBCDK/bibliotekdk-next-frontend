@@ -6,6 +6,7 @@ import styles from "./AdvancedSearchHistory.module.css";
 import { useRouter } from "next/router";
 import { cyKey } from "@/utils/trim";
 import Text from "@/components/base/text";
+import translate from "@/components/base/translate";
 
 export function AdvancedSearchHistory() {
   const { storedValue, deleteValue } = useAdvancedSearchHistory();
@@ -15,14 +16,20 @@ export function AdvancedSearchHistory() {
     router.push(`/avanceret?cql=${value.cql}`);
   };
 
+  const accordionTitle = translate({
+    context: "suggester",
+    label: "historyTitle",
+  });
+
   return (
     <Accordion
       dataCy={cyKey({
         name: "search-history",
         prefix: "advanced-search",
       })}
+      className={styles.accordionwrap}
     >
-      <Item title="Søgehistorik" key={1} id="søgehistorik-1">
+      <Item title={accordionTitle} key={1} id="søgehistorik-1">
         {storedValue?.map((stored, index) => {
           return (
             <div key={index} className={styles.history}>
@@ -33,23 +40,20 @@ export function AdvancedSearchHistory() {
                 <span>{stored?.hitcount} hits</span>
               </Text>
 
-              <span>
-                <Icon
-                  className={styles.actionicon}
-                  src="play-circle.svg"
-                  size={{ w: 2, h: "auto" }}
-                  onClick={() => goToCql(stored)}
-                />
-              </span>
-              <span>
-                <Icon
-                  data-cy={`delete-history-${index}`}
-                  className={styles.actionicon}
-                  src="close.svg"
-                  size={{ w: 2, h: "auto" }}
-                  onClick={() => deleteValue(stored)}
-                />
-              </span>
+              <Icon
+                className={styles.actionicon}
+                src="play-circle.svg"
+                size={{ w: 2, h: "auto" }}
+                onClick={() => goToCql(stored)}
+              />
+
+              <Icon
+                data-cy={`delete-history-${index}`}
+                className={styles.actionicon}
+                src="close.svg"
+                size={{ w: 2, h: "auto" }}
+                onClick={() => deleteValue(stored)}
+              />
             </div>
           );
         })}

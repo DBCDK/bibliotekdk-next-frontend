@@ -1,40 +1,31 @@
 /**
- * @file - search history for mobile suggester
+ * @file - Hook for advanced search history - localstorage
  */
 
-import { useState } from "react";
+import useSWR from "swr";
 
 const KEY = "advanced-search-history";
 
 export const useAdvancedSearchHistory = () => {
-  const [storedValue, setStoredValue] = useState(() => {
-    try {
-      return JSON.parse(localStorage?.getItem(KEY));
-    } catch (e) {
-      return [];
-    }
-  });
+  let { data: storedValue, mutate } = useSWR(KEY, (key) =>
+    JSON.parse(localStorage.getItem(key) || "[]")
+  );
 
   const setValue = (value) => {
     try {
       if (typeof window !== "undefined") {
-        // Fetch clean
-
-        const localstore = JSON.parse(localStorage.getItem(KEY) || "[]");
         // check if cql is already stored
-        const alreadyStored = !!localstore.find(
+        const alreadyStored = !!storedValue.find(
           (stor) => stor.cql === value.cql
         );
         if (!alreadyStored) {
           // Add to beginning of history array
-          localstore.unshift(value);
+          storedValue.unshift(value);
           // maintain localstorage
-          localStorage.setItem(KEY, JSON.stringify(localstore));
+          localStorage.setItem(KEY, JSON.stringify(storedValue));
           // maintain state
-          setStoredValue(localstore);
+          mutate();
         }
-
-        console.log(storedValue, "USE STORED VALUE");
       }
     } catch (err) {
       console.error(err);
@@ -44,20 +35,16 @@ export const useAdvancedSearchHistory = () => {
   const deleteValue = (value) => {
     try {
       if (typeof window !== "undefined") {
-        // Fetch clean
-        const localstore = JSON.parse(localStorage.getItem(KEY) || "[]");
-
         // get index of value to delete
-        const valueIndex = localstore.findIndex(
+        const valueIndex = storedValue.findIndex(
           (stor) => stor.cql === value.cql
         );
         if (valueIndex > -1) {
           // Add to beginning of history array
-          localstore.splice(valueIndex, 1);
-          // maintain state
-          setStoredValue(localstore);
+          storedValue.splice(valueIndex, 1);
           // update localstorage
-          localStorage.setItem(KEY, JSON.stringify(localstore));
+          localStorage.setItem(KEY, JSON.stringify(storedValue));
+          mutate();
         }
       }
     } catch (err) {
@@ -68,8 +55,9 @@ export const useAdvancedSearchHistory = () => {
   const clearValues = () => {
     try {
       if (typeof window !== "undefined") {
-        setStoredValue([]);
-        localStorage.setItem(KEY, JSON.stringify([]));
+        storedValue = [];
+        localStorage.setItem(KEY, JSON.stringify(storedValue));
+        mutate();
       }
     } catch (err) {
       console.error(err);

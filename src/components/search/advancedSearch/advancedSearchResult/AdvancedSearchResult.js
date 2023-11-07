@@ -63,7 +63,7 @@ function parseResponse(bigResponse) {
  */
 export default function Wrap({ pageNo, onWorkClick, onPageChange, cql }) {
   // get setter for advanced search history
-  const { storedValue, setValue } = useAdvancedSearchHistory();
+  const { setValue } = useAdvancedSearchHistory();
   const limit = 10; // limit
   let offset = limit * (pageNo - 1); // offset
   // use the useData hook to fetch data
@@ -73,6 +73,19 @@ export default function Wrap({ pageNo, onWorkClick, onPageChange, cql }) {
 
   const parsedResponse = parseResponse(bigResponse);
 
+  if (parsedResponse.isLoading) {
+    return (
+      <Section
+        divider={false}
+        colSize={{ lg: { offset: 1, span: true } }}
+        title="loading ..."
+        subtitle=""
+        isLoading={true}
+      >
+        <ResultPage isLoading={true} />
+      </Section>
+    );
+  }
   //update searchhistory
   if (!parsedResponse?.errorMessage) {
     // make an object for searchhistory @TODO .. the right object please

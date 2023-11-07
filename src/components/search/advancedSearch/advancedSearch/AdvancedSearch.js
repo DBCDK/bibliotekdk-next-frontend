@@ -11,6 +11,7 @@ import Text from "@/components/base/text";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
+import { AdvancedSearchHistory } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
 
 /**
  * Contains advanced search fields
@@ -72,7 +73,9 @@ export default function AdvancedSearch() {
               <TextInputs workType={workType} />
             )}
           </Col>
-          <Col></Col>
+          <Col>
+            <AdvancedSearchHistory />
+          </Col>
         </Row>
       </Container>
     </div>
