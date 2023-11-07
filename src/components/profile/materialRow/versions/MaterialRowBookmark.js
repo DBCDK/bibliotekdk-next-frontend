@@ -76,6 +76,7 @@ const MaterialRowBookmark = ({
   onBookmarkDelete,
   allManifestations,
   onSelect,
+  hasCheckbox,
 }) => {
   const onCheckboxClick = (e) => {
     if (
@@ -107,16 +108,19 @@ const MaterialRowBookmark = ({
       )}
       data-cy={dataCy}
     >
-      <div className={sharedStyles.checkboxContainer}>
-        <Checkbox
-          checked={isSelected}
-          id={`material-row-${materialId}`}
-          ariaLabelledBy={`material-title-${materialId}`}
-          ariaLabel={title}
-          tabIndex="-1"
-          readOnly
-        />
-      </div>
+      {hasCheckbox && (
+        <div className={sharedStyles.checkboxContainer}>
+          <Checkbox
+            checked={isSelected}
+            id={`material-row-${materialId}`}
+            ariaLabelledBy={`material-title-${materialId}`}
+            ariaLabel={title}
+            tabIndex="-1"
+            readOnly
+          />
+        </div>
+      )}
+
       <div className={sharedStyles.materialInfo}>
         {!!image && (
           <div className={sharedStyles.imageContainer}>

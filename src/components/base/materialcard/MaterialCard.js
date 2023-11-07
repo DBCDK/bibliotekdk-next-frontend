@@ -31,6 +31,7 @@ const MaterialCard = forwardRef(
       propAndChildrenInput,
       colSizing = { xs: 10, sm: 5, lg: 4 },
       onClick = null,
+      rootProps,
     },
     ref
   ) {
@@ -44,32 +45,49 @@ const MaterialCard = forwardRef(
       elementContainerClassName,
       relatedElementClassName,
       textClassName,
+      imageContainerStyle,
       coverImageClassName,
       imageLeft,
     } = renderProps;
 
     if (imageLeft) {
+      const ManifestationLink = ({ children }) => {
+        return (
+          <Link
+            href={link_href}
+            border={{ top: false, bottom: { keepVisible: false } }}
+          >
+            {children}
+          </Link>
+        );
+      };
+      const Tag = link_href ? ManifestationLink : "div";
       return (
         <div
-          // Col props
-          {...colSizing}
-          className={cx(elementContainerClassName, styles.container)}
+          className={cx(styles.article, elementContainerClassName)}
           as="article"
+          {...rootProps}
         >
-          <Col ref={ref} id={workId} className={cx(relatedElementClassName)}>
-            <Col xs={3} className={styles.image}>
-              <img
-                src={image_src}
-                className={cx(coverImageClassName)}
-                title={fullTitle}
-                alt={Translate({ context: "general", label: "frontpage" })}
-              />
-            </Col>
+          <Tag
+            className={cx(styles.container, {
+              [styles.link_style]: !!link_href,
+            })}
+          >
+            <div ref={ref} id={workId} className={cx(relatedElementClassName)}>
+              <div className={cx(styles.image, imageContainerStyle)}>
+                <img
+                  src={image_src}
+                  className={cx(coverImageClassName)}
+                  title={fullTitle}
+                  alt={Translate({ context: "general", label: "frontpage" })}
+                />
+              </div>
 
-            <Col xs={9} className={cx(textClassName, styles.textInformation)}>
-              {children}
-            </Col>
-          </Col>
+              <div className={cx(textClassName, styles.textInformation)}>
+                {children}
+              </div>
+            </div>
+          </Tag>
         </div>
       );
     }
@@ -80,6 +98,7 @@ const MaterialCard = forwardRef(
         {...colSizing}
         className={cx(elementContainerClassName)}
         as="article"
+        {...rootProps}
       >
         <Link
           href={link_href}

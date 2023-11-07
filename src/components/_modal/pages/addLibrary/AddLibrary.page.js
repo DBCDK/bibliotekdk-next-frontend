@@ -101,9 +101,6 @@ export function AddLibrary({
 
       // add modalpage to store
       const UID = modal.saveToStore("verify", {
-        agencyId: branch.agencyId,
-        branchId: branch.branchId,
-        agencyName: branch.agencyName,
         title: Translate({
           context: "addLibrary",
           label: "hasVerificationTitle",
@@ -112,6 +109,8 @@ export function AddLibrary({
           context: "addLibrary",
           label: "hasVerificationText",
         }),
+        back: false,
+        agencyName: branch.agencyName,
       });
 
       // fire adgangsplatform modal
@@ -185,9 +184,11 @@ export default function Wrap(props) {
     (agency) => agency?.result?.[0].agencyId
   );
 
+  const agencyTypes = ["FORSKNINGSBIBLIOTEK"];
+
   const [query, setQuery] = useState("");
   const { data, isLoading } = useData(
-    libraryFragments.search({ q: query || "", limit: 20 })
+    libraryFragments.search({ q: query || "", agencyTypes, limit: 20 })
   );
 
   const dummyData = {

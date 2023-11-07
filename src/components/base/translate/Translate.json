@@ -1225,6 +1225,10 @@
       "remove": {
         "da": "Fjern",
         "en": "Remove"
+      },
+      "treshhold-error": {
+        "da": "OBS: Du kan max bestille 25 ad gangen.",
+        "en": "ATT: You can max order 25 at a time"
       }
     },
     "bookmark-order": {
@@ -1259,6 +1263,50 @@
       "multiorder-subheading": {
         "da": "Du er ved at bestille %s materialer",
         "en": "You are about to order %s materials"
+      },
+      "multiorder-digital-copy-singular": {
+        "da": "%s materiale bliver leveret som digital kopi til din mail",
+        "en": "%s material will be deliveret to you as a digital copy in your mail"
+      },
+      "multiorder-digital-copy": {
+        "da": "%s materialer bliver leveret som digital kopi til din mail",
+        "en": "%s materials will be deliveret to you as a digital copy in your mail"
+      },
+      "multiorder-missing-info-singular": {
+        "da": "%s materiale mangler at få udfyldt informationer",
+        "en": "%s material needs more information"
+      },
+      "multiorder-missing-info": {
+        "da": "%s materialer mangler at få udfyldt informationer",
+        "en": "%s materials need more information"
+      },
+      "multiorder-cant-order-singular": {
+        "da": "%s materiale kan ikke bestilles",
+        "en": "%s material can't be ordered"
+      },
+      "multiorder-cant-order": {
+        "da": "%s materialer kan ikke bestilles",
+        "en": "%s materials can't be ordered"
+      },
+      "multiorder-couldnt-order-singular": {
+        "da": "%s materiale kunne ikke bestilles!",
+        "en": "%s material couldn't be ordered!"
+      },
+      "multiorder-couldnt-order": {
+        "da": "%s materialer kunne ikke bestilles!",
+        "en": "%s material couldn't be ordered!"
+      },
+      "order-overview": {
+        "da": "Bestillingsoversigt",
+        "en": "Order overview"
+      },
+      "is-ordered-singular": {
+        "da": "%s materiale er bestilt.",
+        "en": "%s material is ordered"
+      },
+      "is-ordered": {
+        "da": "%s materialer er bestilt.",
+        "en": "%s materials are ordered"
       }
     },
     "reviews": {
@@ -1377,6 +1425,10 @@
       "title": {
         "da": "Resultater",
         "en": "Result"
+      },
+      "cqlsearchlabel": {
+        "da": "CQL-søgning",
+        "en": "CQL-search"
       },
       "loanOptions": {
         "da": "Lånemuligheder:",
@@ -1621,6 +1673,67 @@
       "advancedSearch": {
         "da": "Avanceret søgning",
         "en": "Advanced Search"
+      },
+      "addLine": {
+        "da": "Tilføj line",
+        "en": "Add field"
+      },
+      "advanced-dropdown-all": {
+        "da": "Alle felter",
+        "en": "All fields"
+      },
+      "advanced-dropdown-title": {
+        "da": "Titel",
+        "en": "Title"
+      },
+      "advanced-dropdown-isbn": {
+        "da": "ISBN",
+        "en": "ISBN"
+      },
+      "advanced-dropdown-subject": {
+        "da": "Emne",
+        "en": "subject"
+      },
+      "advanced-dropdown-publisher": {
+        "da": "Udgiver",
+        "en": "Publisher"
+      },
+      "advanced-dropdown-contributor": {
+        "da": "Medvirkende",
+        "en": "contributor"
+      },
+      "advanced-dropdown-series": {
+        "da": "Serietitel",
+        "en": "Series title"
+      },
+      "advanced-dropdown-function": {
+        "da": "Ophav",
+        "en": "function"
+      },
+
+      "advanced-dropdown-AND": {
+        "da": "OG",
+        "en": "AND"
+      },
+      "advanced-dropdown-OR": {
+        "da": "ELLER",
+        "en": "NOROT"
+      },
+      "advanced-dropdown-NOT": {
+        "da": "IKKE",
+        "en": "NOT"
+      },
+      "remove": {
+        "da": "Fjern",
+        "en": "Remove"
+      },
+      "editInCqlEditor": {
+        "da": "Rediger som CQL",
+        "en": "Edit in CQL"
+      },
+      "showInputFields": {
+        "da": "Rediger som feltsøgning",
+        "en": "Use input field search"
       }
     },
     "suggester": {
@@ -3598,15 +3711,24 @@
         "da": "Bibliotekstype",
         "en": "Library type"
       },
-      "publicLibrary": { "da": "Folkebibliotek", "en": "Public library" },
-
+      "publicLibrary": {
+        "da": "Folkebibliotek",
+        "en": "Public library"
+      },
       "academicLibrary": {
         "da": "Forskningsbibliotek",
         "en": "Academic library"
       },
+      "schoolLibrary": {
+        "da": "Skolebibliotek",
+        "en": "School library"
+      },
+      "otherLibrary": {
+        "da": "Andet",
+        "en": "Other"
+      },
       "showMore": { "da": "Vis mere", "en": "Show more" },
       "showLess": { "da": "Vis mindre", "en": "Show less" },
-
       "remove": {
         "da": "Fjern",
         "en": "Remove"
@@ -3897,6 +4019,10 @@
         "da": "Se dine biblioteker",
         "en": "See your libraries"
       },
+      "go-to-your-orders": {
+        "da": "Gå til bestillingshistorik",
+        "en": "Go to order history"
+      },
       "errorOccured": {
         "da": "Der opstod en fejl",
         "en": "An error occured"
@@ -4005,6 +4131,18 @@
       "first-available-copy": {
         "da": "Første tilgængelige eksemplar",
         "en": "First available copy."
+      },
+      "digital-copy": {
+        "da": "Leveres som digital kopi til din mail",
+        "en": "Delivered as a digital copy to your email"
+      },
+      "order-not-possible": {
+        "da": "Kan ikke bestilles til dit bibliotek",
+        "en": "Cannot be ordered to the chosen pickup location"
+      },
+      "error-ordering": {
+        "da": "Der skete en fejl ved bestillingen. Prøv at bestille igen.",
+        "en": "There was an error creating the order. Try again."
       }
     }
   }

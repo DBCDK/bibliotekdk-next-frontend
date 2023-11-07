@@ -162,7 +162,7 @@ const Material = ({ context }) => {
     type,
     pickUpExpiryDate,
     holdQueuePosition,
-    id: materialId,
+    materialId,
     agencyId,
     setHasDeleteError,
     setRemovedOrderId,

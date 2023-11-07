@@ -5,6 +5,8 @@
 
 import { useEffect } from "react";
 
+import Router from "next/router";
+
 import useVerification from "@/components/hooks/useVerification";
 import useUser from "@/components/hooks/useUser";
 import { useModal } from "@/components/_modal";
@@ -21,16 +23,10 @@ export default function Listener() {
   const modal = useModal();
 
   // mutation details
-  const { data: mutate, error } = culrMutation;
+  const { data: mutate, reset, error } = culrMutation;
 
   // user details
-  const {
-    isAuthenticated,
-    hasCulrUniqueId,
-    isCPRValidated,
-    isLoggedIn,
-    updateUserData,
-  } = user;
+  const { hasCulrUniqueId, isCPRValidated, updateUserData } = user;
 
   // verification data
   const data = verification.read();
@@ -45,6 +41,13 @@ export default function Listener() {
       if (status === "OK") {
         // broadcast user changes
         updateUserData();
+
+        const isActive = modal.isVisible;
+
+        // Redirect user to my libraries page if no modal is active (e.g. user is in a order process)
+        if (!isActive) {
+          Router.push("/profil/mine-biblioteker");
+        }
       }
 
       // Some error occured
@@ -59,36 +62,34 @@ export default function Listener() {
           text = "textErrorCPRMismatch";
         }
 
-        // trigger error modal
-        modal.push("statusMessage", {
-          title: Translate({
-            context: "addLibrary",
-            label: title,
-          }),
-          text: Translate({
-            context: "addLibrary",
-            label: text,
-          }),
-        });
+        // Prevent multiple modal push
+        if (modal.index("statusMessage") < 0) {
+          // trigger error modal
+          modal.push("statusMessage", {
+            title: Translate({
+              context: "addLibrary",
+              label: title,
+            }),
+            text: Translate({
+              context: "addLibrary",
+              label: text,
+            }),
+          });
+        }
       }
+
+      // Cleanup
+
+      // Reset mutation response
+      reset();
 
       // Delete verification
       verification.delete();
     }
-  }, [mutate, error]);
+  }, [mutate, modal.isVisible, error]);
 
   // CreateAccount post action to API
   useEffect(() => {
-    // User is not logged IN
-    if (!isLoggedIn) {
-      return;
-    }
-
-    // User is NOT authenticated through adgangsplatformen
-    if (!isAuthenticated) {
-      return;
-    }
-
     // User has no culr account (not created in culr)
     if (!hasCulrUniqueId) {
       return;
@@ -106,7 +107,7 @@ export default function Listener() {
 
     // Create User in CULR
     culrMutation.post(createAccount(data));
-  }, [isLoggedIn, isCPRValidated, hasValidVerificationProcess]);
+  }, [hasCulrUniqueId, isCPRValidated, hasValidVerificationProcess]);
 
   return null;
 }

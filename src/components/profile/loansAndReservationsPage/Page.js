@@ -277,18 +277,21 @@ const LoansAndReservations = () => {
             />
           ))
         ) : orders && orders.length !== 0 ? (
-          orders.map((order, i) => (
-            <MaterialRow
-              {...dataReducer("ORDER", {
-                ...order,
-                agencyId: order.pickUpBranch.agencyId,
-              })}
-              removedOrderId={removedOrderId}
-              setRemovedOrderId={setRemovedOrderId}
-              key={`loan-${order.loanId}-#${i}`}
-              dataCy={`order-${i}`}
-            />
-          ))
+          orders.map((order, i) => {
+            // Log the agencyId before passing it to the MaterialRow component
+            return (
+              <MaterialRow
+                {...dataReducer("ORDER", {
+                  ...order,
+                  agencyId: order.pickUpBranch.agencyId,
+                })}
+                removedOrderId={removedOrderId}
+                setRemovedOrderId={setRemovedOrderId}
+                key={`loan-${order.loanId}-#${i}`}
+                dataCy={`order-${i}`}
+              />
+            );
+          })
         ) : (
           <Text className={styles.emptyMessage} type="text2">
             {Translate({

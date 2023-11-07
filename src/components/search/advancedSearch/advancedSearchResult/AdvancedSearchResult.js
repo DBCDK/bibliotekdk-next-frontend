@@ -4,36 +4,42 @@ import { ResultPage } from "@/components/search/result/page";
 import Section from "@/components/base/section";
 import Pagination from "@/components/search/pagination/Pagination";
 import PropTypes from "prop-types";
+import useAdvancedSearchHistory from "@/components/hooks/useAdvancedSearchHistory";
 
 export function AdvancedSearchResult({
-  page,
+  pageNo,
   onWorkClick,
   onPageChange,
   results,
+  error = null,
 }) {
-  const isLoading = results.isLoading;
-  const hitcount = results?.data?.complexSearch?.hitcount;
+  const hitcount = results?.hitcount;
   const numPages = Math.ceil(hitcount / 10);
 
+  if (error) {
+    return null;
+  }
   return (
     <>
       <Section
         divider={false}
-        colSize={{ lg: { offset: 3, span: true } }}
+        colSize={{ lg: { offset: 1, span: true } }}
         id="search-result-section"
+        title="Resultater"
+        subtitle={hitcount}
       >
         {/* Reuse result page from simplesearch - we skip the wrap .. @TODO should we set
         some mark .. that we are doing advanced search .. ?? */}
         <ResultPage
-          rows={results?.data?.complexSearch?.works}
+          rows={results?.works}
           onWorkClick={onWorkClick}
-          isLoading={isLoading}
+          isLoading={results?.isLoading}
         />
       </Section>
       {hitcount > 0 && (
         <Pagination
           numPages={numPages}
-          currentPage={parseInt(page, 10)}
+          currentPage={parseInt(pageNo, 10)}
           onChange={onPageChange}
         />
       )}
@@ -41,31 +47,68 @@ export function AdvancedSearchResult({
   );
 }
 
+function parseResponse(bigResponse) {
+  return {
+    works: bigResponse?.data?.complexSearch?.works || null,
+    hitcount: bigResponse?.data?.complexSearch?.hitcount || 0,
+    errorMessage: bigResponse?.data?.complexSearch?.errorMessage || null,
+    isLoading: bigResponse?.isLoading,
+  };
+}
+
 /**
  * Load the data needed for the advanced search result.
  *
  * @returns {React.JSX.Element}
  */
-export default function Wrap({ page, onWorkClick, onPageChange, cql }) {
+export default function Wrap({ pageNo, onWorkClick, onPageChange, cql }) {
+  // get setter for advanced search history
+  const { setValue } = useAdvancedSearchHistory();
   const limit = 10; // limit
-  let offset = limit * (page - 1); // offset
+  let offset = limit * (pageNo - 1); // offset
   // use the useData hook to fetch data
   const bigResponse = useData(
     doComplexSearchAll({ cql, offset: offset, limit: limit })
   );
 
+  const parsedResponse = parseResponse(bigResponse);
+
+  if (parsedResponse.isLoading) {
+    return (
+      <Section
+        divider={false}
+        colSize={{ lg: { offset: 1, span: true } }}
+        title="loading ..."
+        subtitle=""
+        isLoading={true}
+      >
+        <ResultPage isLoading={true} />
+      </Section>
+    );
+  }
+  //update searchhistory
+  if (!parsedResponse?.errorMessage) {
+    // make an object for searchhistory @TODO .. the right object please
+    const searchHistoryObj = {
+      hitcount: parsedResponse.hitcount,
+      cql: cql,
+    };
+    setValue(searchHistoryObj);
+  }
+
   return (
     <AdvancedSearchResult
-      page={page}
+      pageNo={pageNo}
       onWorkClick={onWorkClick}
       onPageChange={onPageChange}
-      results={bigResponse}
+      results={parsedResponse}
+      error={parsedResponse.errorMessage}
     />
   );
 }
 
 Wrap.propTypes = {
-  page: PropTypes.number,
+  pageNo: PropTypes.number,
   cql: PropTypes.string,
   onViewSelect: PropTypes.func,
   onWorkClick: PropTypes.func,

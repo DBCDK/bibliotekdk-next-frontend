@@ -4,9 +4,15 @@ import IconButton from "@/components/base/iconButton/IconButton";
 import styles from "./LibrariesTable.module.css";
 import Title from "@/components/base/title";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
-import { isPublicLibrary } from "@/lib/utils";
 
 import { useModal } from "@/components/_modal";
+
+const agencyTypes = {
+  SKOLEBIBLIOTEK: "schoolLibrary",
+  FOLKEBIBLIOTEK: "publicLibrary",
+  FORSKNINGSBIBLIOTEK: "academicLibrary",
+  ANDRE: "otherLibrary",
+};
 
 function RemoveLibraryButton({ agencyId, agencyName }) {
   const modal = useModal();
@@ -27,16 +33,27 @@ function RemoveLibraryButton({ agencyId, agencyName }) {
  * @param {Object} props
  * @returns {React.JSX.Element}
  */
-function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
+function TableItem({
+  data,
+  agencyName,
+  agencyId,
+  agencyType,
+  municipalityAgencyId,
+  loggedInBranchId,
+}) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs";
   const isHomeLibrary = municipalityAgencyId === agencyId;
+  const isLoggedInLibrary = loggedInBranchId === agencyId;
+
+  const hasOnlyOneAgency = data.length <= 1;
+
   //const lastUsed = false; // Cannot be implemented yet
-  const isPublic = isPublicLibrary(agencyId);
+  const isFFUAgency = agencyType === "FORSKNINGSBIBLIOTEK";
 
   const type = Translate({
     context: "profile",
-    label: isPublic ? "publicLibrary" : "academicLibrary",
+    label: agencyTypes[agencyType],
   });
 
   if (isMobile) {
@@ -69,7 +86,7 @@ function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
       */}
         </div>
 
-        {!isPublic && (
+        {isFFUAgency && !hasOnlyOneAgency && (
           <RemoveLibraryButton agencyId={agencyId} agencyName={agencyName} />
         )}
       </div>
@@ -93,9 +110,13 @@ function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
           <Text type="text2">{type}</Text>
         </td>
       </div>
-      {!isPublic && (
+      {isFFUAgency && !hasOnlyOneAgency && (
         <td>
-          <RemoveLibraryButton agencyId={agencyId} agencyName={agencyName} />
+          <RemoveLibraryButton
+            agencyId={agencyId}
+            agencyName={agencyName}
+            isLoggedInLibrary={isLoggedInLibrary}
+          />
         </td>
       )}
     </tr>
@@ -107,9 +128,12 @@ function TableItem({ agencyName, agencyId, municipalityAgencyId }) {
  * @param {Object} props
  * @returns {React.JSX.Element}
  */
-export default function LibrariesTable({ data, municipalityAgencyId }) {
+export default function LibrariesTable({ data, user }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs";
+
+  const municipalityAgencyId = user?.municipalityAgencyId;
+  const loggedInBranchId = user?.loggedInBranchId;
 
   if (isMobile) {
     return (
@@ -127,6 +151,8 @@ export default function LibrariesTable({ data, municipalityAgencyId }) {
             <TableItem
               key={item.agencyName}
               municipalityAgencyId={municipalityAgencyId}
+              loggedInBranchId={loggedInBranchId}
+              data={data}
               {...item}
             />
           ))}
@@ -153,6 +179,8 @@ export default function LibrariesTable({ data, municipalityAgencyId }) {
           <TableItem
             key={item.agencyName}
             municipalityAgencyId={municipalityAgencyId}
+            loggedInBranchId={loggedInBranchId}
+            data={data}
             {...item}
           />
         ))}

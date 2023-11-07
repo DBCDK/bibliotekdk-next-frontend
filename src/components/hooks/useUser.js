@@ -49,7 +49,7 @@ function useUserMock() {
     isAuthenticated: true,
     hasCulrUniqueId: true,
     isCPRValidated: true,
-    isLoggedIn: true,
+    isGuestUser: false,
     loanerInfo: { ...data, userParameters: { ...loggedInUser } },
     updateLoanerInfo: (obj) => {
       // Update global loaner info object
@@ -68,10 +68,15 @@ function useUserImpl() {
   const { data, mutate } = useData(sessionFragments.session());
   const { data: session } = useSession();
   const sessionMutate = useMutate();
+
+  // user is authenticated thrue adgangsplatformen
   const isAuthenticated = !!session?.user?.userId;
+
+  // user exists in CULR (CULR users can both include 'folk' and cpr-verified 'ffu' users)
   const hasCulrUniqueId = !!session?.user?.uniqueId;
+
   const { data: extendedUserData, isLoading: isLoadingExtendedData } = useData(
-    isAuthenticated && userFragments.extendedData()
+    hasCulrUniqueId && userFragments.extendedData()
   );
 
   const {
@@ -120,16 +125,16 @@ function useUserImpl() {
     ...sessionData,
   });
 
-  //if user is logged in and not already created in userData service, then create user.
+  //if user is logged in and has a uniqueId - and user is NOT already created in userData service, then create user.
   useEffect(() => {
     if (
-      isAuthenticated &&
+      hasCulrUniqueId &&
       !isLoadingExtendedData &&
       !extendedUserData?.user?.createdAt
     ) {
       addUserToUserData({ userDataMutation: sessionMutate });
     }
-  }, [isAuthenticated, extendedUserData, isLoadingExtendedData]);
+  }, [hasCulrUniqueId, extendedUserData, isLoadingExtendedData]);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -158,20 +163,23 @@ function useUserImpl() {
     isValidating,
   ]);
 
-  //TODO give diffferent name
-  const isGuestUser =
-    !isAuthenticated && Object.keys(loanerInfo?.userParameters).length > 0;
+  const hasUserParameters = Object.keys(loanerInfo?.userParameters).length > 0;
 
   return {
     authUser: userData?.user || {},
     isLoading: userIsLoading,
     error: userDataError,
+    // User is loggedIn (verified through adgangsplatformen)
     isAuthenticated,
+    // User exist in culr
     hasCulrUniqueId,
+    // User has a CPR verified account in culr
     isCPRValidated,
+    // User cannot be verified, but userParameters are saved in session
+    isGuestUser: !isAuthenticated && hasUserParameters,
+    // User has added userParameters
+    hasUserParameters,
     loanerInfo,
-    isGuestUser: isGuestUser,
-    isLoggedIn: isAuthenticated || isGuestUser, //TODO guestUsers are not logged in - maybe "hasUserParameters" is a better name
     updateUserData: () => {
       // Broadcast update
       userMutate();

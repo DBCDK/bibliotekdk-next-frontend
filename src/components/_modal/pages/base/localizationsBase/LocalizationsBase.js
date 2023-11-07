@@ -36,6 +36,9 @@ function LocalizationsBase({
     templateImageToLeft({
       material,
       singleManifestation: context?.singleManifestation,
+      children: null,
+      isPeriodicaLike: context?.isPeriodicaLike,
+      isDigitalArticle: context?.isDigitalArticle,
     }),
   subheader,
   query,

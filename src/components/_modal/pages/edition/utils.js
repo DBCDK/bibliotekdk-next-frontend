@@ -74,7 +74,7 @@ export function inferAccessTypes(
  * @param {Boolean} props.availableAsDigitalCopy
  * @param {Object[]} props.selectedAccesses
  * @param {Boolean} props.isArticleRequest
- * @param {Object} props.periodicaForm
+ * @param {Boolean} props.hasPeriodicaForm
  * @returns {String|null}
  */
 export function translateArticleType({
@@ -82,7 +82,7 @@ export function translateArticleType({
   availableAsDigitalCopy,
   selectedAccesses,
   isArticleRequest,
-  periodicaForm,
+  hasPeriodicaForm,
 }) {
   return isDigitalCopy &&
     availableAsDigitalCopy &&
@@ -96,7 +96,7 @@ export function translateArticleType({
         context: "general",
         label: "article",
       }
-    : periodicaForm
+    : hasPeriodicaForm
     ? {
         context: "general",
         label: "volume",

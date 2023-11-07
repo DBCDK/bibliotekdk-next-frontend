@@ -51,6 +51,7 @@
 
   --transparent: #ff000000;
   --link-background: rgba(0, 0, 0, 0.1);
+  --link-background-light: rgba(255, 255, 255, 0.7);
 
   --feedback-yellow-warning-background: #fbeaad;
 

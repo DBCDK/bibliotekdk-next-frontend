@@ -162,6 +162,7 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
                 component={Pages.EMaterialFilter}
               />
               <Modal.Page id="multiorder" component={Pages.MultiOrder} />
+              <Modal.Page id="multireceipt" component={Pages.MultiReceipt} />
               <Modal.Page id="deleteOrder" component={Pages.DeleteOrder} />
               <Modal.Page id="addLibrary" component={Pages.AddLibrary} />
               <Modal.Page id="verify" component={Pages.Verify} />

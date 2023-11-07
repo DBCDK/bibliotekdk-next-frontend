@@ -41,6 +41,7 @@ export function fast({ q, workType }) {
 export function all({ q, workType, suggestType = "", limit = 100000 }) {
   workType = workType?.toUpperCase();
   suggestType = suggestType?.toUpperCase();
+
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging

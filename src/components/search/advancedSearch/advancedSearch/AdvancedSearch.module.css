@@ -1,0 +1,22 @@
+.container {
+  width: 100%;
+  padding-bottom: var(--pt2);
+}
+
+.background {
+  background-color: var(--concrete);
+}
+
+.right {
+  margin-left: auto;
+  margin-right: 0;
+  float: right;
+}
+
+.topContainer {
+  display: flex;
+  margin-bottom: var(--pt4);
+
+  width: 100%;
+  align-items: center;
+}
