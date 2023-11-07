@@ -273,6 +273,8 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     totalPages,
     setCurrentPage,
     count: hitcount ?? localBookmarks?.length ?? 0,
+    createdAtSort,
+    titleSort,
   };
 };
 

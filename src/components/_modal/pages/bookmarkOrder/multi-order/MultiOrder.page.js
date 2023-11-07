@@ -58,9 +58,14 @@ const MultiOrder = ({ context }) => {
 
   useEffect(() => {
     if (orderMutation.data && orderMutation.data.submitMultipleOrders) {
-      const { failedAtCreation, successfullyCreated} = orderMutation.data.submitMultipleOrders;
-      const failedMaterials = failedAtCreation.map(key => materials.find(mat => mat.key === key));
-      const successMaterials = successfullyCreated.map(key => materials.find(mat => mat.key === key));
+      const { failedAtCreation, successfullyCreated } =
+        orderMutation.data.submitMultipleOrders;
+      const failedMaterials = failedAtCreation.map((key) =>
+        materials.find((mat) => mat.key === key)
+      );
+      const successMaterials = successfullyCreated.map((key) =>
+        materials.find((mat) => mat.key === key)
+      );
 
       setIsCreatingOrders(false);
       modal.push("multireceipt", {
