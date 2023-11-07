@@ -29,12 +29,12 @@
   outline: solid 2px var(--blue);
 }
 
-.icon {
-  transition: transform 0.3s ease-in-out;
+.menuButton[aria-expanded="true"] .icon_open {
+  transform: rotate(180deg);
 }
 
-.icon_open {
-  transform: rotate(180deg);
+.icon {
+  transition: transform 0.3s ease-in-out;
 }
 
 .select_wrapper {

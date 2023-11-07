@@ -12,6 +12,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import { AdvancedSearchHistory } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
+import DropdownInputs from "@/components/search/advancedSearch/dropdownInputs/DropdownInputs";
 
 /**
  * Contains advanced search fields
@@ -70,7 +71,10 @@ export default function AdvancedSearch() {
             {showCqlEditor ? (
               <CqlTextArea />
             ) : (
-              <TextInputs workType={workType} />
+              <>
+                <TextInputs workType={workType} />
+                <DropdownInputs />
+              </>
             )}
           </Col>
           <Col>

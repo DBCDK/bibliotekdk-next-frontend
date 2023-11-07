@@ -229,7 +229,14 @@ FormLink.propTypes = {
 };
 
 function Divider({ _ref }) {
-  return <hr ref={_ref} tabIndex="-1" data-list-type="divider" />;
+  return (
+    <hr
+      ref={_ref}
+      tabIndex="-1"
+      data-list-type="divider"
+      className={styles.divider}
+    />
+  );
 }
 
 function tabableItems(childrenRef) {

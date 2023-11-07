@@ -14,6 +14,7 @@ import {
   reducerForToggleMenuItemsState,
 } from "@/components/search/advancedSearch/advancedSearchHelpers/dropdownReducerFunctions";
 import styles from "./AdvancedSearchDropdown.module.css";
+import Dropdown from "react-bootstrap/Dropdown";
 
 export function useMenuItemsState(menuItems, updateIndex) {
   const [menuItemsState, toggleMenuItemsState] = useReducer(
@@ -41,26 +42,22 @@ export default function AdvancedSearchDropdown({
 }) {
   menuItems = menuItems.map(initializeMenuItem);
 
-  const [expandMenu, setExpandMenu] = useState(false);
-
   const { menuItemsState, toggleMenuItemsState } = useMenuItemsState(
     menuItems,
     updateIndex
   );
 
   return (
-    <nav className={styles.nav_element}>
+    <Dropdown className={styles.nav_element}>
       <Toggler
-        setExpandMenu={setExpandMenu}
-        expandMenu={expandMenu}
         indexName={indexName}
         indexPlaceholder={indexPlaceholder}
+        className={styles.toggler}
       />
-      {expandMenu && (
+      <Dropdown.Menu className={styles.dropdown_items} tabIndex="-1">
         <List.Group
           enabled={true}
           label={indexName}
-          className={styles.dropdown_items}
           disableGroupOutline={false}
         >
           {menuItemsState.map((item) => {
@@ -109,7 +106,7 @@ export default function AdvancedSearchDropdown({
             }
           })}
         </List.Group>
-      )}
-    </nav>
+      </Dropdown.Menu>
+    </Dropdown>
   );
 }

@@ -1,8 +1,22 @@
 .nav_element {
-  position: relative;
+  --elements_min_width: 200px;
+  --elements_max_height: 500px;
+  --box_shadow__dropdown: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  --border__dropdown: 1px solid var(--iron, #d6d6d7);
+}
+
+.toggler {
+  min-width: var(--elements_min_width);
 }
 
 .dropdown_items {
-  position: absolute;
-  width: fit-content;
+  background-color: var(--white);
+  overflow-y: scroll;
+  min-width: var(--elements_min_width);
+  max-height: var(--elements_max_height);
+  box-shadow: var(--box_shadow__dropdown);
+  border: var(--border__dropdown);
+  /* bootstrap default styles override */
+  border-radius: 0;
+  padding: 0;
 }

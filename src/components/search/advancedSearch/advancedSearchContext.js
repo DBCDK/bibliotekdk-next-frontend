@@ -3,13 +3,37 @@
  * This file manages the state for advanced search.
  */
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useReducer, useState } from "react";
 import { LogicalOperatorsEnum } from "@/components/search/enums";
+import {
+  DropdownIndicesEnum,
+  useDefaultItemsForDropdownUnits,
+} from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
+
+export const defaultDropdownIndices = [
+  { searchIndex: DropdownIndicesEnum.LANGUAGES, value: [] },
+  { searchIndex: DropdownIndicesEnum.MATERIAL_TYPES_SPECIFIC, value: [] },
+];
 
 const AdvancedSearchContext = createContext();
 
 export function useAdvancedSearchContext() {
   return useContext(AdvancedSearchContext);
+}
+
+function dropdownReducer(prev, current) {
+  return prev?.map((singleDropdownIndex) => {
+    if (current.indexName === singleDropdownIndex.searchIndex) {
+      return {
+        searchIndex: current.indexName,
+        value: current.menuItemsState
+          .filter((item) => item.isSelected === true)
+          .map((item) => item.value),
+      };
+    } else {
+      return singleDropdownIndex;
+    }
+  });
 }
 
 export default function AdvancedSearchProvider({ children }) {
@@ -22,11 +46,14 @@ export default function AdvancedSearchProvider({ children }) {
       searchIndex: "all",
     },
   ]);
-  //TODO: Akri will implement dis
-  // const [dropDowns, setDropdown] = useState([
-  //   { index: "language", value: "da" },
-  //   { index: "2-3", value: "age" },
-  // ]);
+
+  const [dropdownSearchIndices, updateDropdownSearchIndices] = useReducer(
+    dropdownReducer,
+    defaultDropdownIndices,
+    undefined
+  );
+
+  const dropdownUnits = useDefaultItemsForDropdownUnits();
 
   /**
    * Add an extra input field
@@ -94,7 +121,11 @@ export default function AdvancedSearchProvider({ children }) {
     removeInputField,
 
     handleLogicalOperatorChange,
-    //  dropDowns,
+    // dropdowns,
+    // defaultDropdownIndices,
+    dropdownUnits,
+    dropdownSearchIndices,
+    updateDropdownSearchIndices,
     handleIndexChange,
     handleInputFieldChange,
   };
