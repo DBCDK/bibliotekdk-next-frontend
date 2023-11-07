@@ -14,6 +14,7 @@ import { useModal } from "@/components/_modal/Modal";
 import { AccessEnum } from "@/lib/enums";
 import {
   BackgroundColorEnum,
+  StatusEnum,
   findBackgroundColor,
 } from "@/components/base/materialcard/materialCard.utils";
 import { useData } from "@/lib/api/api";
@@ -33,7 +34,7 @@ import { getManifestationWithoutDefaultCover } from "@/components/work/overview/
  * @param {String} materialType
  * @returns {Object[]}
  */
-const filterForRelevantMaterialTypes = (mostRelevant, materialType) => {
+export const filterForRelevantMaterialTypes = (mostRelevant, materialType) => {
   if (!mostRelevant || !materialType) return [];
 
   const materialTypes = formatMaterialTypesFromUrl(materialType);
@@ -49,13 +50,18 @@ const filterForRelevantMaterialTypes = (mostRelevant, materialType) => {
  * @param {Object} periodicaForms
  * @returns {React.JSX.Element}
  */
-const Material = ({ material, setMaterialsToOrder, periodicaForms }) => {
+const Material = ({
+  material,
+  setMaterialsToOrder,
+  periodicaForms,
+  backgroundColorOverride = BackgroundColorEnum.NEUTRAL,
+}) => {
   //@TODO get manifestations in same manner for both edition and works via useData
   const isSpecificEdition = !!material?.pid;
   const modal = useModal();
   const [orderPossible, setOrderPossible] = useState(true);
   const [backgroundColor, setBackgroundColor] = useState(
-    BackgroundColorEnum.NEUTRAL
+    backgroundColorOverride
   );
 
   const { loanerInfo } = useUser();
@@ -86,6 +92,8 @@ const Material = ({ material, setMaterialsToOrder, periodicaForms }) => {
         orderPolicyData.branches.result[0].orderPolicy.orderPossible
       );
     }
+    if (backgroundColorOverride !== BackgroundColorEnum.NEUTRAL) return; // If we override, dont reset background
+
     setBackgroundColor(
       findBackgroundColor({
         isPeriodicaLike,
@@ -137,6 +145,14 @@ const Material = ({ material, setMaterialsToOrder, periodicaForms }) => {
     );
   }
 
+  if (backgroundColorOverride === BackgroundColorEnum.RED) {
+    children = (
+      <Text type="text4" className={styles.errorLabel}>
+        <Translate context="materialcard" label="error-ordering" />
+      </Text>
+    );
+  }
+
   if (!orderPossible) {
     children = (
       <>
@@ -172,6 +188,7 @@ const Material = ({ material, setMaterialsToOrder, periodicaForms }) => {
       isDigitalCopy,
       isDeliveredByDigitalArticleService,
       backgroundColor,
+      hideEditionText: backgroundColorOverride === BackgroundColorEnum.RED,
     });
 
   // If we have manifestations with cover, take the first one
@@ -184,6 +201,25 @@ const Material = ({ material, setMaterialsToOrder, periodicaForms }) => {
     ? manifestationsWithCover[0]
     : flattenedGroupedSortedManifestations[0];
 
+  const getStatus = () => {
+    switch (backgroundColor) {
+      case BackgroundColorEnum.RED:
+        return StatusEnum.NOT_AVAILABLE;
+      case BackgroundColorEnum.YELLOW:
+        return StatusEnum.NEEDS_EDITION;
+      case BackgroundColorEnum.NEUTRAL:
+        if (isDeliveredByDigitalArticleService) return StatusEnum.DIGITAL;
+        else return StatusEnum.NONE;
+      default:
+        return StatusEnum.NONE;
+    }
+  };
+
+  const rootProps = {
+    "data-status": getStatus(),
+    "data-material-key": material.key,
+  };
+
   return (
     flattenedGroupedSortedManifestations &&
     !isEmpty(flattenedGroupedSortedManifestations) && (
@@ -191,6 +227,7 @@ const Material = ({ material, setMaterialsToOrder, periodicaForms }) => {
         propAndChildrenTemplate={materialCardTemplate}
         propAndChildrenInput={firstManifestation}
         colSizing={{ xs: 12 }}
+        rootProps={rootProps}
       />
     )
   );

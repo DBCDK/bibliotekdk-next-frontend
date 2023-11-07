@@ -31,6 +31,7 @@ const MaterialCard = forwardRef(
       propAndChildrenInput,
       colSizing = { xs: 10, sm: 5, lg: 4 },
       onClick = null,
+      rootProps,
     },
     ref
   ) {
@@ -65,6 +66,7 @@ const MaterialCard = forwardRef(
         <div
           className={cx(styles.article, elementContainerClassName)}
           as="article"
+          {...rootProps}
         >
           <Tag
             className={cx(styles.container, {
@@ -96,6 +98,7 @@ const MaterialCard = forwardRef(
         {...colSizing}
         className={cx(elementContainerClassName)}
         as="article"
+        {...rootProps}
       >
         <Link
           href={link_href}

@@ -232,6 +232,7 @@ export function templateImageToLeft({
   isDigitalArticle,
   isDeliveredByDigitalArticleService = false,
   backgroundColor = BackgroundColorEnum.NEUTRAL,
+  hideEditionText = false,
   elementContainerClassName,
   imageContainerStyle,
   linkToWork = false,
@@ -290,7 +291,7 @@ export function templateImageToLeft({
         >
           {formattedMaterialTypes}
         </Text>
-        {!isPeriodicaLike && !isDigitalArticle && (
+        {!isPeriodicaLike && !isDigitalArticle && !hideEditionText && (
           <Text {...propFunc("text3", 1)} title={formattedMaterialTypes}>
             {singleManifestation
               ? edition
