@@ -278,7 +278,6 @@ export default function Wrap({
               key={JSON.stringify("matcard+", firstManifestation)}
               propAndChildrenTemplate={materialCardTemplate}
               propAndChildrenInput={firstManifestation}
-              colSizing={{ xs: 12 }}
             />
           )}
       </div>

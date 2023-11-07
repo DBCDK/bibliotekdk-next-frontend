@@ -220,7 +220,9 @@ export function templateForLocalizations(
  * @param {boolean} props.isDigitalArticle
  * @param {boolean} [props.isDeliveredByDigitalArticleService] - used to differentiate between "Første tilgængelige eksemplar" and "Leveres som digital kopi til din mail"
  * @param {BackgroundColorEnum} [props.backgroundColor] - indicates warnings or errors in the material card - used in multiorder
- * @returns {React.JSX.Element}
+ * @param {string} [props.elementContainerClassName] - used in reviewHeader
+ * @param {string} [props.coverImageStyle] - used in reviewHeader
+ *@returns {React.JSX.Element}
  */
 export function templateImageToLeft({
   material,
@@ -231,6 +233,9 @@ export function templateImageToLeft({
   isDeliveredByDigitalArticleService = false,
   backgroundColor = BackgroundColorEnum.NEUTRAL,
   hideEditionText = false,
+  elementContainerClassName,
+  imageContainerStyle,
+  linkToWork = false,
 }) {
   const fullTitle =
     singleManifestation === true
@@ -244,10 +249,12 @@ export function templateImageToLeft({
     ?.flatMap((c) => c?.display)
     .filter((pre) => !isEmpty(pre))
     ?.join(", ");
-  const formattedMaterialTypes =
-    singleManifestation && material?.materialType //@TODO we get that from bookmarks if specific edition is marked --> would be better to retrieve manifestations directly inside of multiorder --> material
-      ? material?.materialType
-      : formatMaterialTypesToPresentation(material?.materialTypesArray);
+
+  const formattedMaterialTypes = Boolean(
+    singleManifestation && material?.materialType
+  ) //@TODO we get that from bookmarks if specific edition is marked --> would be better to retrieve manifestations directly inside of multiorder --> material
+    ? material?.materialType
+    : formatMaterialTypesToPresentation(material?.materialTypesArray);
 
   const edition = [
     material?.edition?.publicationYear?.display,
@@ -259,11 +266,14 @@ export function templateImageToLeft({
     ?.join(", ");
 
   return {
-    link_href: null,
+    link_href: linkToWork
+      ? getWorkUrl(fullTitle, creators, material?.ownerWork?.workId)
+      : null,
     fullTitle: fullTitle,
     image_src: material?.cover?.detail,
     workId: material?.workId,
     imageLeft: true,
+    imageContainerStyle: imageContainerStyle,
     children: (
       <div>
         <Text {...propFunc("text1", 2)} title={fullTitle}>
@@ -303,16 +313,22 @@ export function templateImageToLeft({
       {
         [styles.warning_yellow]: backgroundColor === BackgroundColorEnum.YELLOW,
         [styles.error_red]: backgroundColor === BackgroundColorEnum.RED,
+        [styles.uniRed]: backgroundColor === BackgroundColorEnum.UNI_RED,
+        [elementContainerClassName]: elementContainerClassName,
       }
     ),
     relatedElementClassName: cx(
       styles.related_element,
-      styles.related_element__image_to_left_version
+      styles.related_element__image_to_left_version,
+      {
+        [styles.uniRed]: backgroundColor === BackgroundColorEnum.UNI_RED,
+      }
     ),
     textClassName: cx(styles.text__image_to_left_version, {
       [styles.white_overlay]:
         backgroundColor === BackgroundColorEnum.YELLOW ||
         backgroundColor === BackgroundColorEnum.RED,
+      [styles.uniRed]: backgroundColor === BackgroundColorEnum.UNI_RED,
     }),
     coverImageClassName: cx(styles.cover, styles.cover__image_to_left_version),
   };
