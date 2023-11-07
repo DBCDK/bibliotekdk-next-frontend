@@ -1200,6 +1200,14 @@
         "da": "Fjern",
         "en": "Remove"
       },
+      "orderAnyways": {
+        "da": "Bestil alligevel",
+        "en": "Order anyways"
+      },
+      "alreadyOrderedText": {
+        "da": "Du har allerede bestilt dette materiale d. %s",
+        "en": "You have already ordered this material on %s"
+      },
       "treshhold-error": {
         "da": "OBS: Du kan max bestille 25 ad gangen.",
         "en": "ATT: You can max order 25 at a time"
@@ -2642,8 +2650,13 @@
       "order-failed-user-no-longer-exists": {
         "da": "Biblioteket kan ikke bekræfte de låneroplysninger, du har gemt på din profil. Dette kan fx skyldes, at du har fået nyt login eller ikke længere er låner. Kontakt biblioteket, hvis du mener dette er en fejl.",
         "en": "The library cannot confirm the loaner information you have saved on your profile. This may be due to, for example, that you have received a new login or are no longer a loaner. Contact the library if you think this is an error."
+      },
+      "action-alreadyOrderedText": {
+        "da": "Du har allerede bestilt dette materiale. Vælg om det skal bestilles igen.",
+        "en": "You have already ordered this material. Choose whether to order it again."
       }
     },
+
     "login": {
       "login-search-title": {
         "da": "Vælg bibliotek",

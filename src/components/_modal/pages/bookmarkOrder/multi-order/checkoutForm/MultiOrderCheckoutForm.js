@@ -73,7 +73,7 @@ const CheckoutForm = ({ context, materialCounts, onSubmit, isLoading }) => {
       <OrdererInformation
         context={context}
         validated={validated}
-        failedSubmission={false}
+        hasValidationErrors={false}
         onMailChange={(e, valid) => {
           onMailChange(e?.target?.value, valid, updateLoanerInfo, setMail);
         }}

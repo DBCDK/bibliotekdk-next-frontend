@@ -26,6 +26,9 @@ import MaterialCard from "@/components/base/materialcard/MaterialCard";
 import { templateImageToLeft } from "@/components/base/materialcard/templates/templates";
 import ChoosePeriodicaCopyRow from "./choosePeriodicaCopyRow/ChoosePeriodicaCopyRow.js";
 import { AccessEnum } from "@/lib/enums";
+import { pidHasAlreadyBeenOrdered } from "@/components/_modal/pages/order/utils/order.utils";
+import HasBeenOrderedRow from "./hasbeenOrderedRow/HasBeenOrderedRow";
+import { removeOrderIdFromSession } from "@/components/_modal/pages/order/utils/order.utils";
 
 export function Edition({
   isLoading,
@@ -191,6 +194,7 @@ export default function Wrap({
   showOrderTxt = true,
   showChangeManifestation,
   isMaterialCard = false,
+  orderKey,
 }) {
   const modal = useModal();
   let { orderPids: orderPidsBeforeFilter, periodicaForm } = context;
@@ -242,6 +246,8 @@ export default function Wrap({
   });
 
   if (isMaterialCard) {
+    const hasbeenOrdered = pidHasAlreadyBeenOrdered(orderKey);
+
     const { flattenedGroupedSortedManifestations } =
       manifestationMaterialTypeFactory(manifestations);
     const firstManifestation = flattenedGroupedSortedManifestations?.[0];
@@ -251,6 +257,17 @@ export default function Wrap({
         singleOrderPeriodicaForm={periodicaForm}
         modal={modal}
         articleTypeTranslation={articleTypeTranslation}
+      />
+    ) : null;
+
+    //TODO append or merge children somehow
+    const children2 = hasbeenOrdered ? (
+      <HasBeenOrderedRow
+        orderDate={new Date()}
+        removeOrder={() => modal.clear()}
+        acceptOrder={() => {
+          removeOrderIdFromSession(orderKey), modal.update({});
+        }}
       />
     ) : null;
 
@@ -264,7 +281,7 @@ export default function Wrap({
       templateImageToLeft({
         material,
         singleManifestation,
-        children,
+        children: children2,
         isPeriodicaLike,
         isDigitalCopy,
         isDeliveredByDigitalArticleService,

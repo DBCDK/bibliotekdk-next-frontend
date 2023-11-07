@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import merge from "lodash/merge";
 
@@ -19,6 +19,10 @@ import { useRouter } from "next/router";
 import cx from "classnames";
 import isEmpty from "lodash/isEmpty";
 import Link from "@/components/base/link";
+import {
+  pidHasAlreadyBeenOrdered,
+  setAlreadyOrdered,
+} from "@/components/_modal/pages/order/utils/order.utils";
 
 /**
  * Order Button
@@ -29,7 +33,7 @@ export function Receipt({
   context,
 }) {
   // get props from context
-  const { pickupBranch, order = {}, articleOrder = {} } = context;
+  const { pickupBranch, order = {}, articleOrder = {}, orderKey } = context;
   const router = useRouter();
 
   // Always show a 1s loader animation before receipt is visible.
@@ -80,6 +84,16 @@ export function Receipt({
       label: articleOrderData?.elba?.placeCopyRequest?.status,
     });
   }
+
+  useEffect(() => {
+    if (
+      orderData?.submitOrder?.orderId &&
+      orderKey &&
+      !pidHasAlreadyBeenOrdered(orderKey)
+    ) {
+      setAlreadyOrdered(orderKey);
+    }
+  }, [orderData?.submitOrder?.orderId]);
 
   // Branch name
   const branchName = pickupBranch?.name;

@@ -15,7 +15,11 @@ import OrderConfirmationButton from "@/components/_modal/pages/order/orderconfir
 import BlockedUserInformation from "@/components/_modal/pages/order/blockeduserinformation/BlockedUserInformation";
 import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
-import { onMailChange } from "@/components/_modal/pages/order/utils/order.utils";
+import {
+  onMailChange,
+  createOrderKey,
+  pidHasAlreadyBeenOrdered,
+} from "@/components/_modal/pages/order/utils/order.utils";
 import { useRelevantAccessesForOrderPage } from "@/components/work/utils";
 import { validateEmail } from "@/utils/validateEmail";
 import NoAgenciesError from "./noAgencies/NoAgenciesError";
@@ -70,8 +74,12 @@ function Order({
     borrowerCheck && (userMayNotBorrow || !authUser || !isAuthenticated);
 
   // Sets if user has unsuccessfully tried to submit the order
-  const [failedSubmission, setFailedSubmission] = useState(false);
+  const [hasValidationErrors, setHasValidationErrors] = useState(false);
   const [mail, setMail] = useState(null);
+  const contextWithOrderPids = { ...context, orderPids };
+  const orderKey = createOrderKey(orderPids);
+  const hasAlreadyBeenOrdered = pidHasAlreadyBeenOrdered(orderKey);
+
   // Update email from user account
   useEffect(() => {
     const userMail = user?.userParameters?.userMail;
@@ -124,9 +132,14 @@ function Order({
     const hasPid = !!pid;
     const requireYear = !!isPeriodicaLike;
     const hasYear = !!context?.periodicaForm?.publicationDateOfComponent;
+    const firstOrder = !hasAlreadyBeenOrdered;
 
     const status =
-      hasMail && hasBranchId && hasPid && (requireYear ? hasYear : true);
+      hasMail &&
+      hasBranchId &&
+      hasPid &&
+      (requireYear ? hasYear : true) &&
+      firstOrder;
 
     const details = {
       hasMail: {
@@ -134,29 +147,33 @@ function Order({
         value: mail?.value,
         message: mail?.valid?.message,
       },
+      firstOrder: {
+        status: firstOrder,
+        message: hasAlreadyBeenOrdered && { label: "alreadyOrderedText" },
+      },
       hasBranchId: { status: hasBranchId },
       hasPid: { status: hasPid },
+      hasAlreadyBeenOrdered,
       requireYear: {
         status: hasYear,
         message: requireYear && !hasYear && { label: "require-year" },
       },
     };
 
-    return { status, hasTry: failedSubmission, details };
+    return { status, hasTry: hasValidationErrors, details };
   }, [
     mail,
     pid,
     pickupBranch,
-    failedSubmission,
+    hasValidationErrors,
     context?.periodicaForm?.publicationDateOfComponent,
   ]);
-
-  const contextWithOrderPids = { ...context, orderPids };
 
   function onSubmitOrder() {
     if (validated.status) {
       modal.push("receipt", {
         pids: orderPids,
+        orderKey: orderKey,
         order: {
           data: orderMutation?.data,
           error: orderMutation?.error,
@@ -175,7 +192,7 @@ function Order({
         onSubmit && onSubmit(orderPids, pickupBranch, context?.periodicaForm);
       }
     } else {
-      setFailedSubmission(true);
+      setHasValidationErrors(true);
     }
   }
 
@@ -194,6 +211,7 @@ function Order({
         context={contextWithOrderPids}
         singleManifestation={singleManifestation}
         isMaterialCard={true}
+        orderKey={orderKey}
       />
       <LocalizationInformation context={context} />
       {user && showBlockedUserInfo && (
@@ -205,7 +223,7 @@ function Order({
       <OrdererInformation
         context={context}
         validated={validated}
-        failedSubmission={failedSubmission}
+        hasValidationErrors={hasValidationErrors}
         onMailChange={(e, valid) => {
           onMailChange(e?.target?.value, valid, updateLoanerInfo, setMail);
         }}
@@ -213,9 +231,10 @@ function Order({
       <OrderConfirmationButton
         context={context}
         validated={validated}
-        failedSubmission={failedSubmission}
+        hasValidationErrors={hasValidationErrors}
         onClick={onSubmitOrder}
         blockedForBranch={borrowerCheck && !borrowerStatus?.allowed}
+        hasAlreadyBeenOrdered={hasAlreadyBeenOrdered}
       />
     </div>
   );

@@ -6,35 +6,30 @@ import Link from "@/components/base/link";
 import Button from "@/components/base/button";
 import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
-import { extractClassNameAndMessage } from "@/components/_modal/pages/order/utils/order.utils";
+import { getStylingAndErrorMessage } from "@/components/_modal/pages/order/utils/order.utils";
 import { AccessEnum } from "@/lib/enums";
 
 function OrderConfirmationButton({
   invalidClass,
   actionMessage,
-  availableAsDigitalCopy,
-  availableAsPhysicalCopy,
-  isDigitalCopy,
   isLoading,
   onClick,
-  context,
-  blockedForBranch,
+  showOrderDigitalCopy,
+  disabled,
 }) {
   return (
     <>
       <div className={styles.action}>
         <div className={`${styles.message} ${invalidClass}`}>
-          {actionMessage ? (
+          {actionMessage && (
             <Text type="text3">
               {Translate({
                 context: "order",
                 label: `action-${actionMessage.label}`,
-              })}
+              }) + "BERND"}
             </Text>
-          ) : isDigitalCopy &&
-            availableAsDigitalCopy &&
-            context?.selectedAccesses?.[0]?.__typename !==
-              AccessEnum.INTER_LIBRARY_LOAN ? (
+          )}
+          {!actionMessage && showOrderDigitalCopy && (
             <Link
               target="_blank"
               disabled={false}
@@ -48,7 +43,8 @@ function OrderConfirmationButton({
                 })}
               </Text>
             </Link>
-          ) : (
+          )}
+          {!actionMessage && !showOrderDigitalCopy && (
             <Text type="text3">
               {Translate({
                 context: "order",
@@ -57,15 +53,7 @@ function OrderConfirmationButton({
             </Text>
           )}
         </div>
-        <Button
-          disabled={
-            (!availableAsDigitalCopy && !availableAsPhysicalCopy) ||
-            isLoading ||
-            blockedForBranch
-          }
-          skeleton={isLoading}
-          onClick={onClick}
-        >
+        <Button disabled={disabled} skeleton={isLoading} onClick={onClick}>
           {Translate({ context: "general", label: "accept" })}
         </Button>
       </div>
@@ -76,23 +64,22 @@ function OrderConfirmationButton({
 OrderConfirmationButton.propTypes = {
   invalidClass: PropTypes.any,
   actionMessage: PropTypes.any,
-  availableAsDigitalCopy: PropTypes.any,
-  availableAsPhysicalCopy: PropTypes.any,
-  skeleton: PropTypes.any,
+  isLoading: PropTypes.bool,
   onClick: PropTypes.func,
-  blockedForBranch: PropTypes.bool,
+  showOrderDigitalCopy: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 export default function Wrap({
   context,
   validated,
-  failedSubmission,
+  hasValidationErrors,
   onClick,
   blockedForBranch,
 }) {
   const { workId, pid, periodicaForm, pids } = context;
-  const { invalidClass, actionMessage } = extractClassNameAndMessage(
+  const { invalidClass, actionMessage } = getStylingAndErrorMessage(
     validated,
-    failedSubmission
+    hasValidationErrors
   );
 
   const { accessTypeInfo, pickupBranchInfo, workResponse } =
@@ -107,17 +94,25 @@ export default function Wrap({
   const { isDigitalCopy, availableAsDigitalCopy, availableAsPhysicalCopy } =
     accessTypeInfo;
 
+  const isLoading = isWorkLoading || isPickupBranchLoading;
+
   return (
     <OrderConfirmationButton
       invalidClass={invalidClass}
       actionMessage={actionMessage}
-      availableAsDigitalCopy={availableAsDigitalCopy}
-      availableAsPhysicalCopy={availableAsPhysicalCopy}
-      isDigitalCopy={isDigitalCopy}
       isLoading={isWorkLoading || isPickupBranchLoading}
       onClick={onClick}
-      context={context}
-      blockedForBranch={blockedForBranch}
+      showOrderDigitalCopy={
+        isDigitalCopy &&
+        availableAsDigitalCopy &&
+        context?.selectedAccesses?.[0]?.__typename !==
+          AccessEnum.INTER_LIBRARY_LOAN
+      }
+      disabled={
+        (!availableAsDigitalCopy && !availableAsPhysicalCopy) ||
+        isLoading ||
+        blockedForBranch
+      }
     />
   );
 }
