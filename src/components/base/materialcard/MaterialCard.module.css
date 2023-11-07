@@ -26,8 +26,7 @@
 }
 
 .image {
-  padding-left: var(--pt6);
-  margin-right: var(--pt6);
+  padding: var(--pt1) var(--pt6);
   display: flex;
   align-items: center;
 }
