@@ -106,7 +106,6 @@ export default function AdvancedSearchProvider({ children }) {
     // }
   }
 
-
   const value = {
     inputFields,
     addInputField,

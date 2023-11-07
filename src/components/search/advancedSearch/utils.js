@@ -12,10 +12,9 @@ export function convertStateToCql({ inputFields } = {}) {
     const cqlValue = value.trim().split(" ").join(` AND ${searchIndex} = `);
     let fieldCql = `${searchIndex} = ${cqlValue}`;
     if (prefixLogicalOperator) {
-      return `${prefixLogicalOperator} ${cqlValue}`;
+      return `${prefixLogicalOperator} ${fieldCql}`;
     }
     return fieldCql;
   });
-
-  return cqlQuery.join(" AND ");
+  return cqlQuery.join(" ");
 }
