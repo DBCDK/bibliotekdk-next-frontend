@@ -11,12 +11,9 @@ import { useAdvancedSearchContext } from "@/components/search/advancedSearch/adv
  * @returns
  */
 export default function IndexDropdown({ options = [], className, index }) {
-  console.log("options", options);
   const { handleIndexChange, inputFields } = useAdvancedSearchContext();
 
   const selected = inputFields[index].searchIndex;
-  console.log("selected", inputFields);
-  console.log("selected", inputFields);
 
   return (
     <Dropdown className={`${styles.dropdownwrap} ${className}`}>
@@ -41,7 +38,6 @@ export default function IndexDropdown({ options = [], className, index }) {
 
       <Dropdown.Menu className={styles.dropdownmenu}>
         {options.map((elem) => {
-          console.log("el", elem);
           return (
             <Dropdown.Item
               tabIndex="-1"
