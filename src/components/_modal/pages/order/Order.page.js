@@ -190,7 +190,6 @@ function Order({
           top: styles.top,
         }}
       />
-      {/*TODO SKIFT MED Material Card? */}
       <Edition
         context={contextWithOrderPids}
         singleManifestation={singleManifestation}

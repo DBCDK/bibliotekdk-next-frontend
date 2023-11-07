@@ -370,6 +370,14 @@
       "kundeserviceBibdk": {
         "da": "https://kundeservice.dbc.dk/bibdk",
         "en": "https://kundeservice.dbc.dk/bibdk"
+      },
+      "link-for": {
+        "da": "Link til",
+        "en": "Link for"
+      },
+      "homepage": {
+        "da": "hjemmeside",
+        "en": "homepage"
       }
     },
 
@@ -2764,6 +2772,22 @@
       "search-for-library": {
         "da": "Søg efter bibliotek",
         "en": "Search for library"
+      },
+      "title-error-not-registered": {
+        "da": "Du er ikke registreret som låner på %s",
+        "en": ""
+      },
+      "text-error-not-registered": {
+        "da": "For at bestille og låne materialer skal du være registreret på det bibliotek, hvor du vil hente materialet. </br></br> <strong>Hvordan registrerer du dig?</strong> </br> Du registrerer dig på et folkebibliotek via bibliotekets hjemmeside eller ved at henvende dig til personalet på biblioteket. Herefter knyttes biblioteket automatisk til din profil på bibliotek.dk. </br> </br> %s",
+        "en": ""
+      },
+      "title-error-not-associated": {
+        "da": "Du skal være låner hos %s for at bestille.",
+        "en": ""
+      },
+      "text-error-not-associated": {
+        "da": "<strong>Er du registreret som låner hos %s?</strong> </br> Så skal du først tilføje biblioteket til din profil, før du kan bestille. Det gør du under %s. </br> </br> <strong>Vil du gerne være låner hos %s?</strong> </br> Så skal du registrere dig hos biblioteket. Find flere oplysniger om hvordan på deres %s.",
+        "en": ""
       }
     },
     "form": {

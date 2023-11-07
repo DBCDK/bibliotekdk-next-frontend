@@ -12,7 +12,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Button from "@/components/base/button";
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty";import { AdvancedSearchHistory } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
+
 /**
  * Contains advanced search fields
  * @returns {React.JSX.Element}
@@ -99,7 +100,9 @@ export default function AdvancedSearch({ initState }) {
               </>
             )}
           </Col>
-          <Col></Col>
+          <Col>
+            <AdvancedSearchHistory />
+          </Col>
         </Row>
         <Row className={styles.buttonRow}>
           <Col>

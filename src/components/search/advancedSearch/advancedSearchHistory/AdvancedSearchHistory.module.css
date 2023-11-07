@@ -1,0 +1,14 @@
+.accordionwrap {
+  background-color: var(--white);
+}
+
+.history {
+  display: grid;
+  grid-template-columns: 10fr 1fr 1fr 1fr;
+  padding: var(--pt1);
+  background-color: var(--white);
+}
+
+.actionicon {
+  cursor: pointer;
+}

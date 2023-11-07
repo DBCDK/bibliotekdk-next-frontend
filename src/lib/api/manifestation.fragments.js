@@ -276,6 +276,12 @@ const lectorReviewFragment = `fragment lectorReviewFragment on Manifestation {
          cover {
            detail
          }
+        access {
+          __typename
+          ... on DigitalArticleService {
+            issn
+          }
+        }
          pid
          titles {
            full
@@ -319,6 +325,12 @@ const reviewOfFragment = `fragment reviewOfFragment on Manifestation {
        creators {
          ...creatorsFragment
        }
+                access {
+          __typename
+          ... on DigitalArticleService {
+            issn
+          }
+        }
        materialTypes {
          materialTypeGeneral {
            code

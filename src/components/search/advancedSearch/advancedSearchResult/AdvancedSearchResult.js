@@ -5,6 +5,7 @@ import Section from "@/components/base/section";
 import Pagination from "@/components/search/pagination/Pagination";
 import PropTypes from "prop-types";
 import { converStateToCql } from "@/components/search/advancedSearch/utils";
+import useAdvancedSearchHistory from "@/components/hooks/useAdvancedSearchHistory";
 
 export function AdvancedSearchResult({
   pageNo,
@@ -68,6 +69,8 @@ export default function Wrap({
   cql,
   fieldSearch,
 }) {
+  // get setter for advanced search history
+  const { setValue } = useAdvancedSearchHistory();
   const limit = 10; // limit
   let offset = limit * (pageNo - 1); // offset
   const cqlQuery = cql || converStateToCql(fieldSearch);
@@ -77,6 +80,30 @@ export default function Wrap({
   );
 
   const parsedResponse = parseResponse(bigResponse);
+
+  if (parsedResponse.isLoading) {
+    return (
+      <Section
+        divider={false}
+        colSize={{ lg: { offset: 1, span: true } }}
+        title="loading ..."
+        subtitle=""
+        isLoading={true}
+      >
+        <ResultPage isLoading={true} />
+      </Section>
+    );
+  }
+  //update searchhistory
+  if (!parsedResponse?.errorMessage) {
+    // make an object for searchhistory @TODO .. the right object please
+    const searchHistoryObj = {
+      hitcount: parsedResponse.hitcount,
+      cql: cql,
+    };
+    setValue(searchHistoryObj);
+  }
+
   return (
     <AdvancedSearchResult
       pageNo={pageNo}

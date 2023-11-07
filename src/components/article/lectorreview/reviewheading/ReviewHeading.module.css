@@ -35,6 +35,22 @@
   border-top: var(--card_border);
 }
 
+/* sets hover effect for both image and text block on hover */
+.work_card:hover > div > a > div > div,
+.work_card:focus-visible > div > a > div > div {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* padding only needed in reviewheader, therefor we set it here */
+.work_card > div > a > div > div {
+  padding-left: var(--pt1);
+}
+
+.cover_image {
+  padding-left: 0;
+  margin-right: 0;
+}
+
 @media (min-width: 768px) {
   .top {
     padding-inline: var(--pt2);

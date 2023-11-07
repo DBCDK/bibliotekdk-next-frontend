@@ -11,6 +11,18 @@ import CqlErrorMessage from "@/components/search/advancedSearch/cqlErrorMessage/
 
 export function CqlTextArea({ textAreaRef }) {
   const router = useRouter();
+  //const textAreaRef = useRef();
+
+  // const doAdvancedSearch = () => {
+  //   const cql = textAreaRef.current.value;
+
+  //   if (isEmpty(cql)) {
+  //     textAreaRef.current.focus();
+  //   }
+  //   const query = { cql: cql };
+  //   router.push({ pathname: router.pathname, query });
+  // };
+
   const defaultCql = router?.query?.cql || "title=harry AND potter";
 
   return (

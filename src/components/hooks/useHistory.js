@@ -1,3 +1,7 @@
+/**
+ * @file - search history for mobile suggester
+ */
+
 import { useState } from "react";
 import { SuggestTypeEnum } from "@/lib/enums";
 
