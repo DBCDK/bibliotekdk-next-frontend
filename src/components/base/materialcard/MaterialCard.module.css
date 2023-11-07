@@ -16,11 +16,12 @@
   padding: var(--pt3) 0 var(--pt3) var(--pt2);
   padding-right: var(--pt9);
 }
+
 .container {
   width: 100%;
 }
 
-.container + .container {
+.article + .article > div > div {
   border-top: none;
 }
 

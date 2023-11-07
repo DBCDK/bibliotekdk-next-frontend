@@ -35,8 +35,6 @@ export function LectorReviewPage({ review }) {
     (reviewParts) => reviewParts?.manifestations
   );
 
-  console.log("REVIEW", review);
-
   return (
     <>
       <Header router={router} />

@@ -110,7 +110,6 @@ export default function Wrap() {
     error: lectorReviewError,
   } = useData(articleId && manifestationForLectorReview({ pid: articleId }));
 
-  console.log("FIRST MANI ", lectorReviewData);
   const {
     data: infomediaArticleData,
     isLoading: isLoadingInfomedia,

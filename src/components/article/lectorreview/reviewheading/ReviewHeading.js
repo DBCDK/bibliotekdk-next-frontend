@@ -58,7 +58,7 @@ export function ReviewHeading({ propAndChildrenInput }) {
                 materialTypesArray: manifestation[0]?.materialTypesArray,
               },
               singleManifestation: true,
-              backgroundColor: BackgroundColorEnum.TRANSPARENT,
+              backgroundColor: BackgroundColorEnum.UNI_RED,
               linkToWork: true,
               imageContainerStyle: styles.cover_image,
             }}

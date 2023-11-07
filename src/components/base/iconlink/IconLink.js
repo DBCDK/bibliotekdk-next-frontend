@@ -49,8 +49,6 @@ export function IconLink({
 }) {
   const IconChild = iconSrc === null ? ChevronSvg : iconSrc;
 
-  console.log("HREF ", href);
-
   function IconComponent() {
     return (
       <span

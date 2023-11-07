@@ -312,8 +312,7 @@ export function templateImageToLeft({
       {
         [styles.warning_yellow]: backgroundColor === BackgroundColorEnum.YELLOW,
         [styles.error_red]: backgroundColor === BackgroundColorEnum.RED,
-        [styles.transparent]:
-          backgroundColor === BackgroundColorEnum.TRANSPARENT,
+        [styles.uniRed]: backgroundColor === BackgroundColorEnum.UNI_RED,
         [elementContainerClassName]: elementContainerClassName,
       }
     ),
@@ -321,15 +320,14 @@ export function templateImageToLeft({
       styles.related_element,
       styles.related_element__image_to_left_version,
       {
-        [styles.transparent]:
-          backgroundColor === BackgroundColorEnum.TRANSPARENT,
+        [styles.uniRed]: backgroundColor === BackgroundColorEnum.UNI_RED,
       }
     ),
     textClassName: cx(styles.text__image_to_left_version, {
       [styles.white_overlay]:
         backgroundColor === BackgroundColorEnum.YELLOW ||
         backgroundColor === BackgroundColorEnum.RED,
-      [styles.transparent]: backgroundColor === BackgroundColorEnum.TRANSPARENT,
+      [styles.uniRed]: backgroundColor === BackgroundColorEnum.UNI_RED,
     }),
     coverImageClassName: cx(styles.cover, styles.cover__image_to_left_version),
   };

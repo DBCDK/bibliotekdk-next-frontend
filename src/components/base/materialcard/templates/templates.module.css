@@ -135,14 +135,9 @@
   background-color: var(--pippin);
 }
 
-.transparent {
-  background-color: transparent;
-  border: none;
-}
-
-.transparent:hover,
-.transparent:focus-visible {
+.uniRed {
   background-color: var(--pippin);
+  border: none;
 }
 
 .white_overlay {

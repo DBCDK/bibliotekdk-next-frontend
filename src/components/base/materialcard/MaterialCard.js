@@ -49,17 +49,12 @@ const MaterialCard = forwardRef(
       imageLeft,
     } = renderProps;
 
-    console.log("renderProps", imageContainerStyle);
-
     if (imageLeft) {
       const ManifestationLink = ({ children }) => {
         return (
           <Link
             href={link_href}
-            className={cx(styles.container, elementContainerClassName, {
-              [styles.link_style]: !!link_href,
-            })}
-            border={{ top: false, bottom: { keepVisible: true } }}
+            border={{ top: false, bottom: { keepVisible: false } }}
           >
             {children}
           </Link>
@@ -67,27 +62,31 @@ const MaterialCard = forwardRef(
       };
       const Tag = link_href ? ManifestationLink : "div";
       return (
-        <Tag
-          className={cx(styles.container, elementContainerClassName, {
-            [styles.link_style]: !!link_href,
-          })}
+        <div
+          className={cx(styles.article, elementContainerClassName)}
           as="article"
         >
-          <div ref={ref} id={workId} className={cx(relatedElementClassName)}>
-            <div className={cx(styles.image, imageContainerStyle)}>
-              <img
-                src={image_src}
-                className={cx(coverImageClassName)}
-                title={fullTitle}
-                alt={Translate({ context: "general", label: "frontpage" })}
-              />
-            </div>
+          <Tag
+            className={cx(styles.container, {
+              [styles.link_style]: !!link_href,
+            })}
+          >
+            <div ref={ref} id={workId} className={cx(relatedElementClassName)}>
+              <div className={cx(styles.image, imageContainerStyle)}>
+                <img
+                  src={image_src}
+                  className={cx(coverImageClassName)}
+                  title={fullTitle}
+                  alt={Translate({ context: "general", label: "frontpage" })}
+                />
+              </div>
 
-            <div className={cx(textClassName, styles.textInformation)}>
-              {children}
+              <div className={cx(textClassName, styles.textInformation)}>
+                {children}
+              </div>
             </div>
-          </div>
-        </Tag>
+          </Tag>
+        </div>
       );
     }
 
