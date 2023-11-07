@@ -19,8 +19,6 @@ export default function StatusMessage({ context, modal }) {
     hasBack ? modal.prev() : modal.clear();
   }
 
-  console.log("statusMessage", context);
-
   return (
     <div className={styles.container}>
       <Top back={hasBack} />
