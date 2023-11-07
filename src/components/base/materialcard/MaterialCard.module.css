@@ -3,7 +3,7 @@
   flex-grow: 1;
   /* Add underline colors */
 
-  --underline-middle-hover-color: var(--link-background);
+  --underline-middle-hover-color: var(--link-background-light);
   --underline-font-hover-color: var(--mine-shaft);
   /* -- */
   cursor: pointer;
