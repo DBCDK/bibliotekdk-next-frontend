@@ -5,7 +5,7 @@
  */
 import PropTypes from "prop-types";
 
-import React, { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 
 import Arrow from "@/components/base/animation/arrow";
 import Link from "@/components/base/link";
@@ -228,6 +228,43 @@ FormLink.propTypes = {
   _ref: PropTypes.func,
 };
 
+function Divider({ _ref }) {
+  return <hr ref={_ref} tabIndex="-1" data-list-type="divider" />;
+}
+
+function tabableItems(childrenRef) {
+  const tabableList = Array(childrenRef.current.length)
+    .fill(null)
+    .map((_, index) => {
+      return !["divider"].includes(
+        childrenRef.current?.[index]?.getAttribute("data-list-type")
+      );
+    });
+
+  function getNextItem(currentIndex) {
+    const next = tabableList.findIndex(
+      (item, index) => item === true && currentIndex < index
+    );
+    const nextStartList = tabableList.findIndex((item) => item === true);
+
+    return next > 0 && !(next > tabableList.length - 1) ? next : nextStartList;
+  }
+
+  function getPrevItem(currentIndex) {
+    const prev = tabableList.findLastIndex(
+      (item, index) => item === true && currentIndex > index
+    );
+    const prevEndList = tabableList.findLastIndex((item) => item === true);
+    return prev > -1 ? prev : prevEndList;
+  }
+
+  return {
+    getNextItem: getNextItem,
+    getPrevItem: getPrevItem,
+    tabableList: tabableList,
+  };
+}
+
 function Group({
   children,
   enabled = true,
@@ -243,7 +280,7 @@ function Group({
     let index = 0;
     childrenRef.current.forEach((el, idx) => {
       if (el) {
-        if (el.getAttribute("data-list-type") === "link") {
+        if (["link", "divider"].includes(el.getAttribute("data-list-type"))) {
           // Return if FormLink
           return;
         }
@@ -262,6 +299,28 @@ function Group({
     }
   }, [children, enabled]);
 
+  const getPrevItem = useCallback(
+    (idx) => {
+      if (childrenRef.current) {
+        return tabableItems(childrenRef).getPrevItem(idx);
+      } else {
+        return {};
+      }
+    },
+    [children]
+  );
+
+  const getNextItem = useCallback(
+    (idx) => {
+      if (childrenRef.current) {
+        return tabableItems(childrenRef).getNextItem(idx);
+      } else {
+        return {};
+      }
+    },
+    [children]
+  );
+
   return (
     <div
       data-cy={props["data-cy"]}
@@ -276,39 +335,36 @@ function Group({
           (el) => el === document.activeElement
         );
 
+        function focusScroller(idx) {
+          childrenRef.current?.[idx]?.focus();
+          childrenRef.current?.[idx]?.scrollIntoView({ block: "center" });
+        }
+
         if (
           !childrenRef.current[index] ||
           childrenRef.current[index].getAttribute("data-list-type") === "link"
         ) {
           /**
            * We are not in a form group, break.
-           * Happens for FormLink
+           * Happens for FormLink and divider
            */
           return;
         }
 
         if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
           e.preventDefault();
-          const prevIndex =
-            index > 0 ? index - 1 : childrenRef.current.length - 1;
-          childrenRef.current[prevIndex].focus();
-          childrenRef.current[prevIndex].scrollIntoView({ block: "center" });
+          focusScroller(getPrevItem(index));
         } else if (e.key === "ArrowDown" || e.key === "ArrowRight") {
           e.preventDefault();
-          const nextIndex =
-            index < childrenRef.current.length - 1 ? index + 1 : 0;
-          childrenRef.current[nextIndex].focus();
-          childrenRef.current[nextIndex].scrollIntoView({ block: "center" });
+          focusScroller(getNextItem(index));
         } else if (e.key === "Home") {
           e.preventDefault();
           const index = 0;
-          childrenRef.current[index].focus();
-          childrenRef.current[index].scrollIntoView({ block: "center" });
+          focusScroller(index);
         } else if (e.key === "End") {
           e.preventDefault();
           const index = childrenRef.current.length - 1;
-          childrenRef.current[index].focus();
-          childrenRef.current[index].scrollIntoView({ block: "center" });
+          focusScroller(index);
         }
       }}
     >
@@ -323,6 +379,6 @@ function Group({
   );
 }
 
-const ExportedList = { Group, Radio, Select, FormLink };
+const ExportedList = { Group, Radio, Select, FormLink, Divider };
 
 export default ExportedList;

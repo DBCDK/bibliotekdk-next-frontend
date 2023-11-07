@@ -22,6 +22,26 @@
       "choose_publication_year": {
         "da": "Vælg udgivelsesår",
         "en": "Choose publication year"
+      },
+      "age_groups": {
+        "da": "Aldersgruppe",
+        "en": "Age groups"
+      },
+      "languages": {
+        "da": "Sprog",
+        "en": "Languages"
+      },
+      "all_languages": {
+        "da": "Alle sprog",
+        "en": "All languages"
+      },
+      "materialTypesSpecific": {
+        "da": "Materialetype",
+        "en": "Materialtype"
+      },
+      "all_materialTypesSpecific": {
+        "da": "Alle materialer",
+        "en": "All materials"
       }
     },
     "logo": {
