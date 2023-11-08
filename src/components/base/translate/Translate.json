@@ -1262,6 +1262,14 @@
         "da": "%s materialer bliver leveret som digital kopi til din mail",
         "en": "%s materials will be deliveret to you as a digital copy in your mail"
       },
+      "multiorder-duplicate-order-singular": {
+        "da": "%s materiale er allerede bestilt.",
+        "en": "%s material has already been ordered."
+      },
+      "multiorder-duplicate-order": {
+        "da": "%s materialer er allerede bestilt. ",
+        "en": "%s materials have already been ordered."
+      },
       "multiorder-missing-info-singular": {
         "da": "%s materiale mangler at få udfyldt informationer",
         "en": "%s material needs more information"
@@ -2660,8 +2668,12 @@
         "en": "The library cannot confirm the loaner information you have saved on your profile. This may be due to, for example, that you have received a new login or are no longer a loaner. Contact the library if you think this is an error."
       },
       "action-alreadyOrderedText": {
-        "da": "Du har allerede bestilt dette materiale. Vælg om det skal bestilles igen.",
-        "en": "You have already ordered this material. Choose whether to order it again."
+        "da": "Du har allerede bestilt dette materiale.",
+        "en": "You have already ordered this material."
+      },
+      "choose-order-again": {
+        "da": "Vælg om det skal bestilles igen.",
+        "en": "Choose if you want to order again."
       },
       "get-overview": {
         "da": "Få et overblik over dine bestillinger under",
@@ -2672,7 +2684,6 @@
         "en": "on your profile"
       }
     },
-
     "login": {
       "login-search-title": {
         "da": "Vælg bibliotek",
