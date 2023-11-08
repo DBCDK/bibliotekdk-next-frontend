@@ -150,28 +150,28 @@ export default function AdvancedSearchProvider({ children }) {
 
   /** @typedef {{
         inputFields: Array.<InputField>,
-        removeInputField: removeInputField,
+        removeInputField: (indexToRemove: number) => void,
+        addInputField: () => void,
+        handleLogicalOperatorChange: (index: number, newOperator: string) => void,
+        handleInputFieldChange: (index: number, newValue: string) => void,
+        handleIndexChange: (index: number, newOperator: string) => void,
         dropdownUnits: Array.<DropdownUnit>,
-        addInputField: addInputField,
-        handleIndexChange: handleIndexChange,
-        handleInputFieldChange: handleInputFieldChange,
         dropdownSearchIndices: Array.<DropdownSearchIndex>,
-        handleLogicalOperatorChange: handleLogicalOperatorChange,
+        updateDropdownSearchIndices: UpdateDropdownSearchIndices
         updateStatesFromObject: ({inputFields?: Array.<InputField>, dropdownSearchIndices?: Array.<DropdownSearchIndex>}) => void,
         parsedCQL: string,
         setParsedCQL: (value: string) => void,
-        updateDropdownSearchIndices: UpdateDropdownSearchIndices
    }} AdvancedSearchContextType */
   const value = {
     inputFields,
     addInputField,
     removeInputField,
     handleLogicalOperatorChange,
+    handleInputFieldChange,
+    handleIndexChange,
     dropdownUnits,
     dropdownSearchIndices,
     updateDropdownSearchIndices,
-    handleIndexChange,
-    handleInputFieldChange,
     updateStatesFromObject,
     parsedCQL,
     setParsedCQL,
