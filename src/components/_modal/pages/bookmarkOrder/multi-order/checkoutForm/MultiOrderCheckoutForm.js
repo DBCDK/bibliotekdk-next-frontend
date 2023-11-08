@@ -65,8 +65,6 @@ const CheckoutForm = ({
 
   const scrollToMaterialId = `#${duplicateOrdersMaterialIds[0]}`;
 
-  console.log("INSIDE MATERIAL ", duplicateOrdersMaterialIds);
-
   return (
     <div className={styles.container}>
       <LocalizationInformation
@@ -138,10 +136,11 @@ const CheckoutForm = ({
             />{" "}
             <Link
               href={scrollToMaterialId}
-              scroll={false}
+              scroll={true}
               className={styles.chooseOrderAgain}
               border={{ top: false, bottom: { keepVisible: true } }}
             >
+              {" "}
               <Translate context="order" label="choose-order-again" />
             </Link>
           </Text>

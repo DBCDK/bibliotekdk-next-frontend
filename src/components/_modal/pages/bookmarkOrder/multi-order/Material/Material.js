@@ -179,7 +179,7 @@ const Material = ({
         }}
         acceptOrder={() => {
           setDuplicateOrdersMaterialIds((prev) =>
-            prev.filter((m) => m !== material.materialId)
+            prev.filter((m) => m !== material.workId)
           ),
             removeOrderIdFromSession(orderKey), //keep track in multiorder.page of which pids have been ordered to force update, when this number changes
             setBackgroundColor(BackgroundColorEnum.NEUTRAL),

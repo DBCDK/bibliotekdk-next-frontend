@@ -64,11 +64,6 @@ const MultiOrder = ({ context }) => {
   const pickupBranch = useRef(); // Pickup branch from checkout form
 
   useEffect(() => {
-    console.log("duplicateOrdersMaterialIds", duplicateOrdersMaterialIds);
-    modal.update({});
-  }, [duplicateOrdersMaterialIds]);
-
-  useEffect(() => {
     if (orderMutation.data && orderMutation.data.submitMultipleOrders) {
       const { failedAtCreation, successfullyCreated } =
         orderMutation.data.submitMultipleOrders;
@@ -159,9 +154,7 @@ const MultiOrder = ({ context }) => {
           )
         );
 
-      setDuplicateOrdersMaterialIds(
-        duplicateOrders.map((mat) => mat.materialId)
-      );
+      setDuplicateOrdersMaterialIds(duplicateOrders.map((mat) => mat.workId));
       const materialsDigital = elements
         .filter(
           (element) =>
@@ -172,6 +165,8 @@ const MultiOrder = ({ context }) => {
             (mat) => mat.key === element.getAttribute("data-material-key")
           )
         );
+      console.log("duplicateMaterialIDs", duplicateOrdersMaterialIds);
+      console.log("duplicateOrders", duplicateOrders);
 
       setMaterialCounts({
         digitalMaterials: materialsDigital?.length ?? 0,
