@@ -396,6 +396,14 @@
       "kundeserviceBibdk": {
         "da": "https://kundeservice.dbc.dk/bibdk",
         "en": "https://kundeservice.dbc.dk/bibdk"
+      },
+      "link-for": {
+        "da": "Link til",
+        "en": "Link for"
+      },
+      "homepage": {
+        "da": "hjemmeside",
+        "en": "homepage"
       }
     },
 
@@ -1678,35 +1686,35 @@
         "da": "Tilføj line",
         "en": "Add field"
       },
-      "advanced-dropdown-all": {
+      "advanced-dropdown-term.default": {
         "da": "Alle felter",
         "en": "All fields"
       },
-      "advanced-dropdown-title": {
+      "advanced-dropdown-term.title": {
         "da": "Titel",
         "en": "Title"
       },
-      "advanced-dropdown-isbn": {
+      "advanced-dropdown-term.isbn": {
         "da": "ISBN",
         "en": "ISBN"
       },
-      "advanced-dropdown-subject": {
+      "advanced-dropdown-term.subject": {
         "da": "Emne",
         "en": "subject"
       },
-      "advanced-dropdown-publisher": {
+      "advanced-dropdown-term.publisher": {
         "da": "Udgiver",
         "en": "Publisher"
       },
-      "advanced-dropdown-contributor": {
+      "advanced-dropdown-term.contributor": {
         "da": "Medvirkende",
         "en": "contributor"
       },
-      "advanced-dropdown-series": {
+      "advanced-dropdown-term.series": {
         "da": "Serietitel",
         "en": "Series title"
       },
-      "advanced-dropdown-function": {
+      "advanced-dropdown-term.function": {
         "da": "Ophav",
         "en": "function"
       },
@@ -2790,6 +2798,22 @@
       "search-for-library": {
         "da": "Søg efter bibliotek",
         "en": "Search for library"
+      },
+      "title-error-not-registered": {
+        "da": "Du er ikke registreret som låner på %s",
+        "en": ""
+      },
+      "text-error-not-registered": {
+        "da": "For at bestille og låne materialer skal du være registreret på det bibliotek, hvor du vil hente materialet. </br></br> <strong>Hvordan registrerer du dig?</strong> </br> Du registrerer dig på et folkebibliotek via bibliotekets hjemmeside eller ved at henvende dig til personalet på biblioteket. Herefter knyttes biblioteket automatisk til din profil på bibliotek.dk. </br> </br> %s",
+        "en": ""
+      },
+      "title-error-not-associated": {
+        "da": "Du skal være låner hos %s for at bestille.",
+        "en": ""
+      },
+      "text-error-not-associated": {
+        "da": "<strong>Er du registreret som låner hos %s?</strong> </br> Så skal du først tilføje biblioteket til din profil, før du kan bestille. Det gør du under %s. </br> </br> <strong>Vil du gerne være låner hos %s?</strong> </br> Så skal du registrere dig hos biblioteket. Find flere oplysniger om hvordan på deres %s.",
+        "en": ""
       }
     },
     "form": {

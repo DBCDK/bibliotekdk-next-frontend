@@ -9,7 +9,7 @@ import Button from "@/components/base/button";
 import Text from "@/components/base/text";
 import styles from "./MitIDButton.module.css";
 import Translate from "@/components/base/translate";
-import { signIn } from "next-auth/react";
+import { signIn } from "@dbcdk/login-nextjs/client";
 import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
 
 /**

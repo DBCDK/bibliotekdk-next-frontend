@@ -29,18 +29,20 @@ export default function StatusMessage({ context, modal }) {
         {context.text}
       </Text>
 
-      <Button
-        type="primary"
-        className={styles.closeButton}
-        onClick={() => handleOnClick()}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            handleOnClick();
-          }
-        }}
-      >
-        {Translate({ context: "general", label: hasBack ? "back" : "close" })}
-      </Button>
+      {context.button ?? (
+        <Button
+          type="primary"
+          className={styles.closeButton}
+          onClick={() => handleOnClick()}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleOnClick();
+            }
+          }}
+        >
+          {Translate({ context: "general", label: hasBack ? "back" : "close" })}
+        </Button>
+      )}
     </div>
   );
 }

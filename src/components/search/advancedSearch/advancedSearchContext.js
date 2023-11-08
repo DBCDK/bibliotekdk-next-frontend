@@ -39,11 +39,11 @@ function dropdownReducer(prev, current) {
 export default function AdvancedSearchProvider({ children }) {
   //prefixLogicalOperator is an enum of AND, OR , NOT
   const [inputFields, setInputFields] = useState([
-    { value: "", prefixLogicalOperator: null, searchIndex: "all" },
+    { value: "", prefixLogicalOperator: null, searchIndex: "term.default" },
     {
       value: "",
       prefixLogicalOperator: LogicalOperatorsEnum.AND,
-      searchIndex: "all",
+      searchIndex: "term.title",
     },
   ]);
 
@@ -55,6 +55,15 @@ export default function AdvancedSearchProvider({ children }) {
 
   const dropdownUnits = useDefaultItemsForDropdownUnits();
 
+  //field search valued parsed as cql. Will be shown in cql input view.
+  const [parsedCQL, setParsedCQL] = useState(null);
+  //TODO: Akri will implement dis
+  // const [dropDowns, setDropdown] = useState([
+  //   { index: "language", value: "da" },
+  //   { index: "2-3", value: "age" },
+  // ]);
+
+
   /**
    * Add an extra input field
    */
@@ -64,7 +73,7 @@ export default function AdvancedSearchProvider({ children }) {
       {
         value: "",
         prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "all",
+        searchIndex: "term.default",
       },
     ]);
   }
@@ -115,11 +124,25 @@ export default function AdvancedSearchProvider({ children }) {
       return newFields;
     });
   }
+
+  /**
+   *overrides state to the given input. For field search only.
+   * @param {*} stateObject
+   */
+  function updateStatesFromObject(stateObject) {
+    if (stateObject?.inputFields) {
+      setInputFields(stateObject.inputFields);
+    }
+    //TODO: implement when dropdowns are ready
+    // if (stateObject.dropDowns) {
+    //   setDropDowns(stateObject.dropDowns);
+    // }
+  }
+
   const value = {
     inputFields,
     addInputField,
     removeInputField,
-
     handleLogicalOperatorChange,
     // dropdowns,
     // defaultDropdownIndices,
@@ -128,6 +151,9 @@ export default function AdvancedSearchProvider({ children }) {
     updateDropdownSearchIndices,
     handleIndexChange,
     handleInputFieldChange,
+    updateStatesFromObject,
+    parsedCQL,
+    setParsedCQL,
   };
 
   return (

@@ -1,3 +1,15 @@
+/**
+ * @file
+ * This is a custom component.
+ * We use it to create a dropdown for advanced search
+ *
+ * This component handles the state of the dropdown
+ * Given a list of menuItems, it will dynamically generate the
+ * menuItemsState, and then when the menuItems are selected, changed, etc.
+ * the menuItemsState updates, and the updateIndex reducer sends the
+ * data back to the context.
+ */
+
 import { useEffect, useReducer, useState } from "react";
 import List from "@/components/base/forms/list";
 import isEmpty from "lodash/isEmpty";

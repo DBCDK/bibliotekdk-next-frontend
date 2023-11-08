@@ -19,8 +19,8 @@ const CONTEXT = "bookmark-order";
  * Skips this step if nothing to filter
  */
 const EMaterialFilter = ({ context, active }) => {
-  const { bookmarks } = useBookmarks();
-  const { materials: materialKeys } = context;
+  const { bookmarks, createdAtSort, titleSort } = useBookmarks();
+  const { materials: materialKeys, sortType } = context;
   const { data: materialsData } = usePopulateBookmarks(materialKeys);
   const [materials, setMaterials] = useState([]);
   const modal = useModal();
@@ -76,8 +76,25 @@ const EMaterialFilter = ({ context, active }) => {
           )
         );
 
-      setMaterialsToFilter(filteredMaterials);
-      setMaterialsToProceed(toProceed);
+      let filteredMaterialsSorted;
+      let toProceedSorted;
+      if (sortType === "title") {
+        filteredMaterialsSorted = titleSort(filteredMaterials);
+        toProceedSorted = titleSort(toProceed);
+      } else if (sortType === "createdAt") {
+        filteredMaterialsSorted = createdAtSort(filteredMaterials);
+        toProceedSorted = createdAtSort(toProceed);
+      }
+
+      setMaterialsToFilter(filteredMaterialsSorted);
+      setMaterialsToProceed(toProceedSorted);
+
+      if (filteredMaterials.length === 0) {
+        // Nothing to filter - Redirect directly
+        modal.push("multiorder", {
+          materials: toProceedSorted,
+        });
+      }
     }, 500);
 
     return () => clearTimeout(timer);

@@ -1,3 +1,15 @@
+/**
+ * @file
+ * This is a custom component.
+ * We use it to create stateful dialogs
+ * (dialog is also known as modals)
+ *
+ * (TODO: Later we will use a hook to extract the stateful dialog)
+ *
+ * To enter the dialog, we can use the openDialog
+ * To exit the, we can use the closeDialog. And it can already close on backdrop
+ */
+
 import { useEffect, useRef, useState } from "react";
 import styles from "./StatefulDialog.module.css";
 import Link from "@/components/base/link";

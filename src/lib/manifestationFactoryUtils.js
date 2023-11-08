@@ -10,7 +10,7 @@ import { materialTypeError } from "@/lib/errorMessage.utils";
 /** @type {Array.<string>} */
 let manifestationWorkType = [];
 
-/** @type {Array.<string>} */
+/** @type {Array.<{display: SpecificDisplay, code: SpecificCode}>} */
 let materialTypesOrderFromEnum = [];
 
 let errorCount = 0;
@@ -241,19 +241,19 @@ export function groupManifestations(
  * Gets the prioritisation of elements based on the custom sorting defined in
  * {@link getOrderedFlatMaterialTypes}. Also uses workType to prefer the order
  * @param {Array.<string>} materialTypesOrder
- * @param {string} jsonifiedMaterialTypeArray
- * @returns {number}
+ * @param {Array.<string>} materialTypeArray
+ * @returns {Array.<number>}
  */
 export function getElementByCustomSorting(
   materialTypesOrder,
-  jsonifiedMaterialTypeArray
+  materialTypeArray
 ) {
-  const index = materialTypesOrder.findIndex((mat) => {
-    return jsonifiedMaterialTypeArray.startsWith(mat);
-  });
-
   // If the materialType is not in the array, index -1 becomes the highest index + 1
-  return index === -1 ? materialTypesOrder.length : index;
+  return materialTypeArray
+    .map((matArr) =>
+      materialTypesOrder.findIndex((matOrder) => isEqual(matArr, matOrder))
+    )
+    .map((idx) => (idx === -1 ? materialTypesOrder.length : idx));
 }
 
 /**
@@ -261,17 +261,46 @@ export function getElementByCustomSorting(
  * @param {SpecificDisplayArray} stringArray
  * @returns {string}
  */
-function jsonify(stringArray) {
+export function jsonify(stringArray) {
   return JSON.stringify(stringArray).slice(1, -1).replaceAll(`"`, "");
+}
+
+export function getComparisonBySort(aBySort, bBySort) {
+  if (aBySort.length === 0 || bBySort.length === 0) {
+    return bBySort.length - aBySort.length;
+  }
+
+  for (let i = 0; i < Math.min(aBySort.length, bBySort.length); i++) {
+    if (aBySort[i] !== bBySort[i]) {
+      return aBySort - bBySort;
+    }
+  }
+  return 0;
 }
 
 /**
  * Compares specificDisplay arrays
  * @param {SpecificDisplayArray} a
  * @param {SpecificDisplayArray} b
+ * @param {Array.<{display: SpecificDisplay, code: SpecificCode}>} materialTypesOrder
  * @returns {number}
  */
-export function compareSpecificDisplayArrays(a, b) {
+export function compareSpecificDisplayArrays(
+  a,
+  b,
+  materialTypesOrder = materialTypesOrderFromEnum || []
+) {
+  const materialTypesOrderCode = materialTypesOrder.map((mat) => mat.display);
+
+  const aBySort = getElementByCustomSorting(materialTypesOrderCode, a);
+  const bBySort = getElementByCustomSorting(materialTypesOrderCode, b);
+
+  const comparedBySorts = getComparisonBySort(aBySort, bBySort);
+
+  if (comparedBySorts !== 0) {
+    return comparedBySorts;
+  }
+
   const specificDisplayJsonA = jsonify(a);
   const specificDisplayJsonB = jsonify(b);
 
@@ -314,7 +343,7 @@ export function compareSpecificDisplayArrays(a, b) {
      ]) => 1
  * @param {MaterialTypesArray} a
  * @param {MaterialTypesArray} b
- * @param {Array.<string>} materialTypesOrder
+ * @param {Array.<{display: SpecificDisplay, code: SpecificCode}>} materialTypesOrder
  * @returns {number}
  */
 export function compareMaterialTypeArrays(
@@ -322,17 +351,21 @@ export function compareMaterialTypeArrays(
   b,
   materialTypesOrder = materialTypesOrderFromEnum || []
 ) {
+  const materialTypesOrderCode = materialTypesOrder.map((mat) => mat.code);
+
   const aBySort = getElementByCustomSorting(
-    materialTypesOrder,
-    jsonify(toFlatMaterialTypes(a, "specificCode"))
+    materialTypesOrderCode,
+    toFlatMaterialTypes(a, "specificCode")
   );
   const bBySort = getElementByCustomSorting(
-    materialTypesOrder,
-    jsonify(toFlatMaterialTypes(b, "specificCode"))
+    materialTypesOrderCode,
+    toFlatMaterialTypes(b, "specificCode")
   );
 
-  if (aBySort !== bBySort) {
-    return aBySort - bBySort;
+  const comparedBySorts = getComparisonBySort(aBySort, bBySort);
+
+  if (comparedBySorts !== 0) {
+    return comparedBySorts;
   }
 
   return compareSpecificDisplayArrays(

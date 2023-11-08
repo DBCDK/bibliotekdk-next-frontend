@@ -1,8 +1,12 @@
-import { adgangsplatformen, callbacks } from "@dbcdk/login-nextjs";
+import {
+  adgangsplatformen,
+  callbacks,
+  testUserProvider,
+} from "@dbcdk/login-nextjs";
 import { NextAuth } from "@dbcdk/login-nextjs";
 import { log } from "dbc-node-logger";
 import getConfig from "next/config";
-const { serverRuntimeConfig } = getConfig();
+const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 const { clientId, clientSecret } = serverRuntimeConfig;
 
 if (!clientId || !clientSecret) {
@@ -30,6 +34,11 @@ export const options = {
           id: profile?.attributes?.uniqueId || profile?.attributes?.userId,
         };
       },
+    }),
+    testUserProvider({
+      clientId,
+      clientSecret,
+      fbiApiUrl: publicRuntimeConfig.fbi_api.url,
     }),
   ],
   debug: false,

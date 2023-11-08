@@ -1,6 +1,7 @@
 .container {
   width: 100%;
-  padding-bottom: var(--pt2);
+  padding-bottom: var(--pt4);
+  padding-top: var(--pt4);
 }
 
 .background {
@@ -19,4 +20,12 @@
 
   width: 100%;
   align-items: center;
+}
+
+.buttonRow {
+  margin-top: var(--pt4);
+}
+
+.button {
+  width: 300px;
 }

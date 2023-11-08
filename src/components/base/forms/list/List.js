@@ -240,6 +240,8 @@ function Divider({ _ref }) {
 }
 
 function tabableItems(childrenRef) {
+  // tabableList is a list of true/false where false represents the List.Divider
+  //  that should not be tabbed to
   const tabableList = Array(childrenRef.current.length)
     .fill(null)
     .map((_, index) => {
@@ -248,6 +250,9 @@ function tabableItems(childrenRef) {
       );
     });
 
+  // getNextItem finds the first next tabable index after the current index
+  //  if there is no tabable index after, we make a round trip and begin from
+  //  the start of the array
   function getNextItem(currentIndex) {
     const next = tabableList.findIndex(
       (item, index) => item === true && currentIndex < index
@@ -257,6 +262,9 @@ function tabableItems(childrenRef) {
     return next > 0 && !(next > tabableList.length - 1) ? next : nextStartList;
   }
 
+  // getPrevItem finds the first earlier tabable index before the current index
+  //  if there is no tabable index before, we make a round trip and begin from
+  //  the end of the array
   function getPrevItem(currentIndex) {
     const prev = tabableList.findLastIndex(
       (item, index) => item === true && currentIndex > index
