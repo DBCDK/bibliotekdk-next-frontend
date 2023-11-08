@@ -17,9 +17,9 @@ import { AdvancedSearchHistory } from "@/components/search/advancedSearch/advanc
 import DropdownInputs from "@/components/search/advancedSearch/dropdownInputs/DropdownInputs";
 import { convertStateToCql } from "@/components/search/advancedSearch/utils";
 import {
-  DetailsForDebugState,
+  DebugStateDetails,
   prettyParseCql,
-} from "@/components/search/advancedSearch/DetailsForDebugState";
+} from "@/components/search/advancedSearch/DebugStateDetails";
 
 /**
  * Contains advanced search fields
@@ -133,7 +133,7 @@ export default function AdvancedSearch({ initState }) {
         </Row>
 
         {/* TODO: For debugging purposes. Remove when unneeded */}
-        <DetailsForDebugState
+        <DebugStateDetails
           title="Resulting cql after search (with added line breaks)"
           state={parsedCQL}
           jsonParser={prettyParseCql}

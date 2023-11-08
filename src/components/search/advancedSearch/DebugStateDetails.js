@@ -15,7 +15,7 @@ function prettyObject(state) {
   return JSON.stringify(state, null, 2);
 }
 
-export function DetailsForDebugState({
+export function DebugStateDetails({
   title,
   state,
   openDefault = true,
@@ -34,7 +34,6 @@ export function DetailsForDebugState({
         style={{
           border: "1px solid var(--gray)",
           fontSize: "14px",
-          // paddingTop: "var(--pt2)",
         }}
       >
         {jsonParser(state)}

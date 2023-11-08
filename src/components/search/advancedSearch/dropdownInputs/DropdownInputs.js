@@ -4,7 +4,7 @@ import styles from "./DropdownInputs.module.css";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
-import { DetailsForDebugState } from "@/components/search/advancedSearch/DetailsForDebugState";
+import { DebugStateDetails } from "@/components/search/advancedSearch/DebugStateDetails";
 
 const advancedSearchDropdownContext = "advanced_search_dropdown";
 
@@ -65,7 +65,7 @@ export default function DropdownInputs({}) {
       </div>
 
       {/* TODO: Remove when we place this into the code */}
-      <DetailsForDebugState
+      <DebugStateDetails
         title="Dropdown object for debug"
         state={dropdownSearchIndices}
         openDefault={false}
