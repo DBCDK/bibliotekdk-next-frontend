@@ -30,10 +30,8 @@ function FieldInput({ key, index, workType, fieldValue }) {
     removeInputField,
     handleLogicalOperatorChange,
   } = useAdvancedSearchContext();
-
   //labels to show in SearchIndexDropdown
-  const labels = workTypesLabels[workType].map((el) => el.label);
-
+  const labels = workTypesLabels[workType].map((el) => el.index);
   const isFirstItem = index === 0;
   const { data } = useData(
     fieldValue?.value &&
@@ -70,13 +68,18 @@ function FieldInput({ key, index, workType, fieldValue }) {
         <div className={`${styles.suggester__wrap} `}>
           <Suggester
             data={suggestions}
-            onSelect={(val) => handleInputFieldChange(index, val)}
+            onSelect={(selectValue) =>
+              setTimeout(() => {
+                // onSelect should be called after onChange. Otherwise onChange wil overrite the selected value
+                handleInputFieldChange(index, selectValue);
+              }, 0)
+            }
             onClear={() => handleInputFieldChange(index, "")}
             className={styles.suggester}
           >
             <Input
               className={styles.suggesterInput}
-              // value={value}
+              value={fieldValue?.value}
               onChange={(e) => handleInputFieldChange(index, e.target.value)}
               placeholder={fieldValue.placeholder}
             />
@@ -167,14 +170,16 @@ export default function TextInputs({ workType }) {
 
   return (
     <>
-      {inputFields?.map((field, index) => (
-        <FieldInput
-          key={`inputField-${index}`}
-          index={index}
-          workType={workType}
-          fieldValue={field}
-        />
-      ))}
+      {inputFields?.map((field, index) => {
+        return (
+          <FieldInput
+            key={`inputField-${index}`}
+            index={index}
+            workType={workType}
+            fieldValue={field}
+          />
+        );
+      })}
       <IconButton
         icon="expand"
         onClick={addInputField}
