@@ -7,7 +7,7 @@ import Title from "@/components/base/title";
 import Top from "@/components/_modal/pages/base/top";
 import Translate from "@/components/base/translate";
 import Button from "@/components/base/button";
-import { signIn } from "next-auth/react";
+import { signIn } from "@dbcdk/login-nextjs/client";
 import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
 import useVerification from "@/components/hooks/useVerification";
 import { useAccessToken } from "@/components/hooks/useUser";
