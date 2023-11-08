@@ -54,8 +54,6 @@ export default function AdvancedSearchDropdown({
 }) {
   menuItems = menuItems.map(initializeMenuItem);
 
-  const [expandMenu, setExpandMenu] = useState(false);
-
   const { menuItemsState, toggleMenuItemsState } = useMenuItemsState(
     menuItems,
     updateIndex
