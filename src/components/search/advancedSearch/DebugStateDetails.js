@@ -1,3 +1,9 @@
+/**
+ * @file
+ * Debugger component for state
+ * For having a useful and pretty debug for advanced search
+ */
+
 export function prettyParseCql(state) {
   return JSON.stringify(state, null, 2)
     .replaceAll(`\\"`, `\'`)
