@@ -80,13 +80,15 @@ export default function Wrap() {
   const router = useRouter();
   const { workId, infomediaId } = router.query;
 
-  const user = useUser();
+  const { authUser: user } = useUser();
+
+  const hasInfomediaAccess = user?.rights?.infomedia;
 
   const { data: infomediaPublicData, isLoading: isLoadingInfomediaPublic } =
     useData(workId && workFragments.infomediaArticlePublicInfo({ workId }));
 
   const { data: infomediaArticleData, isLoading: isLoadingInfomedia } = useData(
-    user.isAuthenticated &&
+    hasInfomediaAccess &&
       infomediaId &&
       infomediaFragments.infomediaArticle({ id: infomediaId })
   );
@@ -95,6 +97,8 @@ export default function Wrap() {
     infomediaPublicData?.work,
     infomediaArticleData?.infomedia?.article
   );
+
+  console.log({ hasInfomediaAccess, infomediaArticleData, article });
 
   return (
     <InfomediaArticle

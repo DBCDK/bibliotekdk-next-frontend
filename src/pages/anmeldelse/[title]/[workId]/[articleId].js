@@ -97,13 +97,18 @@ function parseInfomediaArticle(publicReviewData, work, infomediaArticle) {
 export default function Wrap() {
   const router = useRouter();
   const { workId, articleId } = router.query;
-  const user = useUser();
+  const { authUser: user } = useUser();
+
+  const hasInfomediaAccess = user?.rights?.infomedia;
+
   const { data, isLoading: isLoadingWork } = useData(
     workFragments.reviews({ workId })
   );
+
   const publicReviewData = data?.work?.relations?.hasReview?.filter((el) =>
     el.access?.find((access) => access.id === articleId)
   );
+
   const {
     data: lectorReviewData,
     isLoading: lectorReviewIsLoading,
@@ -115,7 +120,7 @@ export default function Wrap() {
     isLoading: isLoadingInfomedia,
     error: infomediaError,
   } = useData(
-    user.isAuthenticated && articleId && infomediaArticle({ id: articleId })
+    hasInfomediaAccess && articleId && infomediaArticle({ id: articleId })
   );
 
   const article = parseInfomediaArticle(

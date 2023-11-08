@@ -15,21 +15,27 @@ import * as branchesFragments from "@/lib/api/branches.fragments";
  *
  */
 export default function ArticleLoginPrompt({ articleId }) {
-  const user = useUser();
   const modal = useModal();
-  const { data, isLoading } = useData(
-    user.isAuthenticated && articleId && infomediaArticle({ id: articleId })
-  );
-  const pickupBranch = user?.loanerInfo?.pickupBranch;
+  const { authUser: user } = useUser();
 
-  const branchRes = useData(
-    pickupBranch &&
-      branchesFragments.branchUserParameters({ branchId: pickupBranch })
+  const hasInfomediaAccess = user?.rights?.infomedia;
+
+  const { data, isLoading } = useData(
+    hasInfomediaAccess && articleId && infomediaArticle({ id: articleId })
   );
-  const agencyName = branchRes?.data?.branches?.result?.[0]?.agencyName || "";
+
+  // Select the loggedInBranch from users agencies list
+  let branch = {};
+  user?.agencies?.forEach((agency) => {
+    branch = agency?.result?.find(
+      (branch) => branch.branchId === user.loggedInBranchId
+    );
+  });
+
+  const agencyName = branch.agencyName || "";
 
   // Not logged in, no access
-  if (!user?.isAuthenticated) {
+  if (!hasInfomediaAccess) {
     return (
       <LoginPrompt
         title={Translate({ context: "articles", label: "getAccess" })}
@@ -77,6 +83,7 @@ export default function ArticleLoginPrompt({ articleId }) {
   // All good, no login prompt needed
   return null;
 }
+
 ArticleLoginPrompt.propTypes = {
   articleId: PropTypes.string,
 };
