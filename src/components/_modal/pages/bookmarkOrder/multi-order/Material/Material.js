@@ -52,12 +52,14 @@ export const filterForRelevantMaterialTypes = (mostRelevant, materialType) => {
 /**
  * Is missing article implementation
  * @param {Object} material
+ * @param {Number} numberOfMaterialsToOrder
  * @param {Function} setMaterialsToOrder
  * @param {Object} periodicaForms
  * @returns {React.JSX.Element}
  */
 const Material = ({
   material,
+  numberOfMaterialsToOrder = 0,
   setMaterialsToOrder,
   periodicaForms,
   backgroundColorOverride = BackgroundColorEnum.NEUTRAL,
@@ -170,6 +172,8 @@ const Material = ({
         orderDate={new Date()}
         removeOrder={() => {
           deleteBookmarkFromOrderList(material.key);
+          //remove all modals, if we remove last material from order list
+          if (numberOfMaterialsToOrder === 1) modal.setStack([]);
         }}
         acceptOrder={() => {
           removeOrderIdFromSession(orderKey),

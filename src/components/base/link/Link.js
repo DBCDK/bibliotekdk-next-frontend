@@ -153,8 +153,6 @@ function Link({
   ...props
 }) {
   const Tag = tag;
-  console.log("SCROLL ", scroll);
-
   const [linkDisplay, setLinkDisplay] = useState(null);
   const [childrenDisplay, setChildrenDisplay] = useState(null);
 

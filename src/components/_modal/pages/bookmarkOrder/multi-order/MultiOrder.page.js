@@ -10,6 +10,12 @@ import { StatusEnum } from "@/components/base/materialcard/materialCard.utils";
 import useUser from "@/components/hooks/useUser";
 import { useMutate } from "@/lib/api/api";
 import * as orderMutations from "@/lib/api/order.mutations";
+import {
+  createOrderKey,
+  setAlreadyOrdered,
+} from "../../order/utils/order.utils";
+import { useRouter } from "next/router";
+import { scrollToElementWithOffset } from "@/components/base/scrollsnapslider/utils";
 
 const CONTEXT = "bookmark-order";
 
@@ -59,6 +65,15 @@ const MultiOrder = ({ context }) => {
   const [isCreatingOrders, setIsCreatingOrders] = useState(false);
   const pickupBranch = useRef(); // Pickup branch from checkout form
 
+  const router = useRouter();
+
+  useEffect(() => {
+    if (router.asPath.includes("#")) {
+      console.log("scrollToElementWithOffset");
+      scrollToElementWithOffset(duplicateOrdersMaterialIds[0], "y", 200);
+    }
+  }, [router]);
+
   useEffect(() => {
     if (orderMutation.data && orderMutation.data.submitMultipleOrders) {
       const { failedAtCreation, successfullyCreated } =
@@ -69,6 +84,35 @@ const MultiOrder = ({ context }) => {
       const successMaterials = successfullyCreated.map((key) =>
         materials.find((mat) => mat.key === key)
       );
+
+      const orderedBookmarkIds = successMaterials.map((bm) => bm.bookmarkId);
+
+      //find materialsToOrder that have been ordered successully
+      const successfullyOrderedMaterials = orderedBookmarkIds.flatMap((b) =>
+        materialsToOrder.filter((m) => {
+          if (m.bookmarkId === b) return m;
+        })
+      );
+
+      console.log("successfullyOrderedMaterials", successfullyOrderedMaterials);
+      //get the sucessfully ordered pids
+      const orderedPids = successfullyOrderedMaterials?.map((mat) => {
+        const isSpecificEdition = !!mat.pid;
+
+        return isSpecificEdition
+          ? [mat.pid]
+          : filterForRelevantMaterialTypes(
+              mat?.manifestations?.mostRelevant,
+              mat?.materialType
+            ).flatMap((mani) => mani.pid);
+      });
+
+      //set the ordered pids as already ordered in session
+      orderedPids.forEach((pids) => {
+        //Contains also pid for peridica, which we dont check at the moment
+        const orderKey = createOrderKey(pids);
+        if (orderKey !== "") setAlreadyOrdered(orderKey);
+      });
 
       setIsCreatingOrders(false);
       modal.push("multireceipt", {
@@ -122,7 +166,6 @@ const MultiOrder = ({ context }) => {
           )
         );
 
-      console.log("duplicateORders", duplicateOrders);
       setDuplicateOrdersMaterialIds(
         duplicateOrders.map((mat) => mat.materialId)
       );
@@ -184,6 +227,7 @@ const MultiOrder = ({ context }) => {
             <Material
               key={material.key}
               material={material}
+              numberOfMaterialsToOrder={materialsToOrder?.length ?? 0}
               setMaterialsToOrder={setMaterialsToOrder}
               //context is responsible for updating periodica form via periodicaForm.js and modal.update
               periodicaForms={context?.periodicaForms}
