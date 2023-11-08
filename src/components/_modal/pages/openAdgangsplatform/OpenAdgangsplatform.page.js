@@ -4,7 +4,7 @@ import Top from "@/components/_modal/pages/base/top";
 import Translate from "@/components/base/translate";
 import styles from "./OpenAdgangsplatform.module.css";
 import Button from "@/components/base/button";
-import { signIn } from "next-auth/react";
+import { signIn } from "@dbcdk/login-nextjs/client";
 import Icon from "@/components/base/icon";
 import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
 

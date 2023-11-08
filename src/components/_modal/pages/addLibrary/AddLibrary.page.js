@@ -10,7 +10,7 @@ import Title from "@/components/base/title";
 import Top from "@/components/_modal/pages/base/top";
 import { useData } from "@/lib/api/api";
 import * as libraryFragments from "@/lib/api/library.fragments";
-import { signIn } from "next-auth/react";
+import { signIn } from "@dbcdk/login-nextjs/client";
 import LibrarySearch from "./librarySearch/LibrarySearch";
 import Translate from "@/components/base/translate/Translate";
 import SearchResultList from "./searchResultList/SearchResultList";

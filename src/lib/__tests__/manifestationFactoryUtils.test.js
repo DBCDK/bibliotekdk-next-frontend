@@ -26,6 +26,7 @@ import {
   groupManifestations,
   manifestationMaterialTypeFactory,
   inFlatMaterialTypes,
+  jsonify,
 } from "@/lib/manifestationFactoryUtils";
 import { getOrderedFlatMaterialTypes } from "@/lib/enums_MaterialTypes";
 
@@ -428,7 +429,9 @@ describe("groupManifestations", () => {
 });
 
 describe("compareMaterialTypeArrays", () => {
-  it("should compare array strings properly (e-bog vs bog; expect 1)", () => {
+  const materialTypeOrder = getOrderedFlatMaterialTypes();
+
+  it("should compare array properly (e-bog vs bog; expect 1)", () => {
     const actual = compareMaterialTypeArrays(
       [
         {
@@ -445,7 +448,8 @@ describe("compareMaterialTypeArrays", () => {
           generalDisplay: "bøger",
           generalCode: "BOOKS",
         },
-      ]
+      ],
+      materialTypeOrder
     );
     const expected = 1;
     expect(actual).toEqual(expected);
@@ -467,13 +471,13 @@ describe("compareMaterialTypeArrays", () => {
           generalDisplay: "e-bøger",
           generalCode: "EBOOKS",
         },
-      ]
+      ],
+      materialTypeOrder
     );
     const expected = -1;
-    expect(actual).toEqual(expected);
+    expect(actual).toBeLessThanOrEqual(expected);
   });
   it("should compare array strings properly with custom order (e-bog vs billedbog; expect positive number)", () => {
-    const materialTypeOrder = getOrderedFlatMaterialTypes();
     const actual = compareMaterialTypeArrays(
       [
         {
@@ -678,7 +682,7 @@ describe("compareMaterialTypeArrays", () => {
     const expected = -1;
     expect(actual).toEqual(expected);
   });
-  it("should compare (empty vs bog; expect -1)", () => {
+  it("should compare (empty vs bog; expect 1)", () => {
     const actual = compareMaterialTypeArrays(
       [],
       [
@@ -695,33 +699,88 @@ describe("compareMaterialTypeArrays", () => {
   });
 });
 
+describe("jsonify", () => {
+  it("should work with single material (bog)", () => {
+    const actual = jsonify(["bog"]);
+    const expected = "bog";
+    expect(actual).toEqual(expected);
+  });
+  it("should work with composite material (bog,billedbog)", () => {
+    const actual = jsonify(["bog", "billedbog"]);
+    const expected = "bog,billedbog";
+    expect(actual).toEqual(expected);
+  });
+  it("should work with composite material (film (blu-ray),film (blu-ray 4K))", () => {
+    const actual = jsonify(["film (blu-ray)", "film (blu-ray 4K)"]);
+    const expected = "film (blu-ray),film (blu-ray 4K)";
+    expect(actual).toEqual(expected);
+  });
+});
+
 describe("getElementByCustomSorting", () => {
   it("should be 0 if materialTypesOrder is empty", () => {
     const materialTypesOrder = [];
-    const actual = getElementByCustomSorting(materialTypesOrder, "BOOK");
-    const expected = 0;
+    const actual = getElementByCustomSorting(materialTypesOrder, ["BOOK"]);
+    const expected = [0];
     expect(actual).toEqual(expected);
   });
   it("should be length of materialTypesOrder if no match", () => {
-    const materialTypesOrder = getOrderedFlatMaterialTypes();
-    const actual = getElementByCustomSorting(
-      materialTypesOrder,
-      "TOILET_HUMOR"
+    const materialTypesOrder = getOrderedFlatMaterialTypes().map(
+      (mat) => mat.code
     );
-    const expected = materialTypesOrder.length;
+    const actual = getElementByCustomSorting(materialTypesOrder, [
+      "TOILET_HUMOR",
+    ]);
+    const expected = [materialTypesOrder.length];
     expect(actual).toEqual(expected);
   });
   it("should be less than length of materialTypesOrder if match", () => {
-    const materialTypesOrder = getOrderedFlatMaterialTypes();
-    const actual = getElementByCustomSorting(materialTypesOrder, "BOOK");
-    const expected = materialTypesOrder.length;
-    expect(actual).toBeLessThan(expected);
+    const materialTypesOrder = getOrderedFlatMaterialTypes().map(
+      (mat) => mat.code
+    );
+    const actual = getElementByCustomSorting(materialTypesOrder, ["BOOK"]);
+    const expected = [materialTypesOrder.length];
+    expect(actual[0]).toBeLessThan(expected[0]);
   });
   it("should be length of materialTypes order if empty materialType", () => {
-    const materialTypesOrder = getOrderedFlatMaterialTypes();
-    const actual = getElementByCustomSorting(materialTypesOrder, "");
-    const expected = materialTypesOrder.length;
+    const materialTypesOrder = getOrderedFlatMaterialTypes().map(
+      (mat) => mat.code
+    );
+    const actual = getElementByCustomSorting(materialTypesOrder, []);
+    const expected = [];
     expect(actual).toEqual(expected);
+  });
+  it("should work with materialTypes specific order materialType", () => {
+    const materialTypesOrder = getOrderedFlatMaterialTypes().map(
+      (mat) => mat.display
+    );
+    const actual = getElementByCustomSorting(materialTypesOrder, ["bog"]);
+    const expected = [materialTypesOrder.length];
+    expect(actual[0]).toBeLessThan(expected[0]);
+  });
+  it("should have blu-ray be before blu-ray-4K", () => {
+    const materialTypesOrder = getOrderedFlatMaterialTypes().map(
+      (mat) => mat.display
+    );
+    const actual1 = getElementByCustomSorting(materialTypesOrder, [
+      "film (blu-ray)",
+    ]);
+    const actual2 = getElementByCustomSorting(materialTypesOrder, [
+      "film (blu-ray 4K)",
+    ]);
+    expect(actual1[0]).toBeLessThan(actual2[0]);
+  });
+  it("should work with composite material types", () => {
+    const materialTypesOrder = getOrderedFlatMaterialTypes().map(
+      (mat) => mat.display
+    );
+    const actual = getElementByCustomSorting(materialTypesOrder, [
+      "film (blu-ray)",
+      "film (blu-ray 4K)",
+    ]);
+    const expected = [materialTypesOrder.length, materialTypesOrder.length];
+    expect(actual[0]).toBeLessThan(actual[1]);
+    expect(actual[0]).toBeLessThan(expected[0]);
   });
 });
 
@@ -835,6 +894,7 @@ describe("getUniqueMaterialTypes", () => {
         },
       ],
     ];
+
     expect(actual).toEqual(expected);
   });
   it("should sort and output the correct materialTypeArray when having 1 type", () => {

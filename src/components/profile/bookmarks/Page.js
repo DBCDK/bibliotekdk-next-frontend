@@ -108,6 +108,7 @@ const BookmarkPage = () => {
     if (isAuthenticated) {
       modal.push("ematerialfilter", {
         materials: checkboxList,
+        sortType: sortByValue,
       });
     } else {
       openLoginModal({ modal });
