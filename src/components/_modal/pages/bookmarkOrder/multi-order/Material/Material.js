@@ -29,6 +29,8 @@ import {
   createOrderKey,
   pidHasAlreadyBeenOrdered,
 } from "../../../order/utils/order.utils";
+import HasBeenOrderedRow from "../../../edition/hasbeenOrderedRow/HasBeenOrderedRow";
+import { removeOrderIdFromSession } from "../../../order/utils/order.utils";
 
 /**
  * At this point, we have manifestation of all the different material types
@@ -82,8 +84,8 @@ const Material = ({
     ? [material?.pid]
     : manifestations.map((m) => m.pid) || [];
 
-  const oderKey = createOrderKey(pids);
-  const alreadyOrdered = pidHasAlreadyBeenOrdered(oderKey);
+  const orderKey = createOrderKey(pids);
+  const pidHasBeenOrdered = pidHasAlreadyBeenOrdered(orderKey);
 
   const { data: orderPolicyData, isLoading: orderPolicyIsLoading } = useData(
     pids &&
@@ -103,6 +105,7 @@ const Material = ({
 
     setBackgroundColor(
       findBackgroundColor({
+        pidHasBeenOrdered,
         isPeriodicaLike,
         hasPeriodicaForm: !!periodicaForm,
         notAvailableAtLibrary: orderPolicyIsLoading
@@ -159,25 +162,40 @@ const Material = ({
         <Translate context="materialcard" label="error-ordering" />
       </Text>
     );
+  }
 
-    if (!orderPossible) {
-      children.push(
-        <>
-          <Text className={styles.orderNotPossible} type="text4">
-            {Translate({
-              context: "materialcard",
-              label: "order-not-possible",
-            })}
-          </Text>
-          <IconButton onClick={() => deleteBookmarkFromOrderList(material.key)}>
-            {Translate({
-              context: "bookmark",
-              label: "remove",
-            })}
-          </IconButton>
-        </>
-      );
-    }
+  if (pidHasBeenOrdered) {
+    children.push(
+      <HasBeenOrderedRow
+        orderDate={new Date()}
+        removeOrder={() => {
+          deleteBookmarkFromOrderList(material.key);
+        }}
+        acceptOrder={() => {
+          removeOrderIdFromSession(orderKey),
+            setBackgroundColor(BackgroundColorEnum.NEUTRAL);
+        }}
+      />
+    );
+  }
+
+  if (!orderPossible) {
+    children.push(
+      <>
+        <Text className={styles.orderNotPossible} type="text4">
+          {Translate({
+            context: "materialcard",
+            label: "order-not-possible",
+          })}
+        </Text>
+        <IconButton onClick={() => deleteBookmarkFromOrderList(material.key)}>
+          {Translate({
+            context: "bookmark",
+            label: "remove",
+          })}
+        </IconButton>
+      </>
+    );
   }
 
   if (!orderPossible) {
@@ -233,7 +251,8 @@ const Material = ({
       case BackgroundColorEnum.RED:
         return StatusEnum.NOT_AVAILABLE;
       case BackgroundColorEnum.YELLOW:
-        return StatusEnum.NEEDS_EDITION;
+        if (pidHasBeenOrdered) return StatusEnum.HAS_BEEN_ORDERED;
+        else return StatusEnum.NEEDS_EDITION;
       case BackgroundColorEnum.NEUTRAL:
         if (isDeliveredByDigitalArticleService) return StatusEnum.DIGITAL;
         else return StatusEnum.NONE;

@@ -10,10 +10,21 @@ import { useModal } from "@/components/_modal/Modal";
 import { LOGIN_MODE } from "../../../login/utils";
 import { LocalizationInformation } from "@/components/_modal/pages/order/localizationinformation/LocalizationInformation"; // Import without wrapper
 import Spinner from "react-bootstrap/Spinner";
+import Link from "@/components/base/link";
 
-const CheckoutForm = ({ context, materialCounts, onSubmit, isLoading }) => {
-  const { digitalMaterials, materialsNotAllowed, materialsMissingAction } =
-    materialCounts;
+const CheckoutForm = ({
+  context,
+  materialCounts,
+  onSubmit,
+  isLoading,
+  duplicateOrdersMaterialIds,
+}) => {
+  const {
+    digitalMaterials,
+    materialsNotAllowed,
+    materialsMissingAction,
+    duplicateOrders,
+  } = materialCounts;
   const modal = useModal();
   const disabled = materialsMissingAction > 0 || materialsNotAllowed > 0;
   const [mail, setMail] = useState(null);
@@ -48,6 +59,8 @@ const CheckoutForm = ({ context, materialCounts, onSubmit, isLoading }) => {
   const onSubmitForm = () => {
     if (onSubmit) onSubmit(pickupBranch);
   };
+
+  const scrollToMaterialId = `#${duplicateOrdersMaterialIds[0]}`;
 
   return (
     <div className={styles.container}>
@@ -105,6 +118,27 @@ const CheckoutForm = ({ context, materialCounts, onSubmit, isLoading }) => {
               }
               vars={[materialsMissingAction]}
             />
+          </Text>
+        )}
+        {duplicateOrders > 0 && (
+          <Text type="text3" className={styles.errorLabel}>
+            <Translate
+              context="bookmark-order"
+              label={
+                duplicateOrders === 1
+                  ? "multiorder-duplicate-order-singular"
+                  : "multiorder-duplicate-order"
+              }
+              vars={[duplicateOrders]}
+            />{" "}
+            <Link
+              href={scrollToMaterialId}
+              scroll={false}
+              className={styles.chooseOrderAgain}
+              border={{ top: false, bottom: { keepVisible: true } }}
+            >
+              <Translate context="order" label="choose-order-again" />
+            </Link>
           </Text>
         )}
         {digitalMaterials > 0 && (

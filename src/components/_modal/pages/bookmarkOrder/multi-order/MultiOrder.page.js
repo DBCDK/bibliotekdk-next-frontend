@@ -50,6 +50,9 @@ const MultiOrder = ({ context }) => {
   const { materials } = context;
   const analyzeRef = useRef();
   const [materialCounts, setMaterialCounts] = useState({});
+  const [duplicateOrdersMaterialIds, setDuplicateOrdersMaterialIds] = useState(
+    []
+  );
   const [materialsToOrder, setMaterialsToOrder] = useState(materials);
   const { loanerInfo } = useUser();
   const orderMutation = useMutate();
@@ -108,6 +111,21 @@ const MultiOrder = ({ context }) => {
           )
         );
 
+      const duplicateOrders = elements
+        .filter(
+          (element) =>
+            element.getAttribute("data-status") === StatusEnum.HAS_BEEN_ORDERED
+        )
+        .map((element) =>
+          materials.find(
+            (mat) => mat.key === element.getAttribute("data-material-key")
+          )
+        );
+
+      console.log("duplicateORders", duplicateOrders);
+      setDuplicateOrdersMaterialIds(
+        duplicateOrders.map((mat) => mat.materialId)
+      );
       const materialsDigital = elements
         .filter(
           (element) =>
@@ -123,6 +141,7 @@ const MultiOrder = ({ context }) => {
         digitalMaterials: materialsDigital?.length ?? 0,
         materialsNotAllowed: materialsNotAvailable?.length ?? 0,
         materialsMissingAction: materialsNeedsInfo?.length ?? 0,
+        duplicateOrders: duplicateOrders?.length ?? 0,
       });
     }, 300);
 
@@ -133,7 +152,7 @@ const MultiOrder = ({ context }) => {
     setIsCreatingOrders(true);
     pickupBranch.current = pickupBranch;
     await createOrders({
-      materials: materials,
+      materials: materialsToOrder,
       pickupBranch,
       loanerInfo,
       periodicaForms: context.periodicaForms,
@@ -180,6 +199,7 @@ const MultiOrder = ({ context }) => {
             materialCounts={materialCounts}
             onSubmit={onSubmit}
             isLoading={isCreatingOrders}
+            duplicateOrdersMaterialIds={duplicateOrdersMaterialIds}
           />
         </section>
       )}
