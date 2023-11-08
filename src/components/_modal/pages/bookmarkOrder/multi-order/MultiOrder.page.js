@@ -20,28 +20,29 @@ const createOrders = async ({
   periodicaForms,
   orderMutation,
 }) => {
-  /**
-   * @TODO Catch errors and send to receipt
-   */
-  await materials.map(async (material) => {
-    const isSpecificEdition = !!material.pid;
+  await orderMutation.post(
+    orderMutations.submitMultipleOrders({
+      materialsToOrder: materials.map((material) => {
+        const isSpecificEdition = !!material.pid;
 
-    const pids = isSpecificEdition
-      ? [material.pid]
-      : filterForRelevantMaterialTypes(
-          material?.manifestations?.mostRelevant,
-          material?.materialType
-        ).map((mani) => mani.pid);
-    const periodicaForm = periodicaForms?.[material.key];
-    await orderMutation.post(
-      orderMutations.submitOrder({
-        pids,
-        branchId: pickupBranch.branchId,
-        userParameters: loanerInfo.userParameters,
-        ...periodicaForm,
-      })
-    );
-  });
+        const pids = isSpecificEdition
+          ? [material.pid]
+          : filterForRelevantMaterialTypes(
+              material?.manifestations?.mostRelevant,
+              material?.materialType
+            ).map((mani) => mani.pid);
+        const periodicaForm = periodicaForms?.[material.key];
+
+        return {
+          pids,
+          key: material.key,
+          ...periodicaForm,
+        };
+      }),
+      branchId: pickupBranch.branchId,
+      userParameters: loanerInfo.userParameters,
+    })
+  );
 };
 
 const MultiOrder = ({ context }) => {
@@ -53,64 +54,90 @@ const MultiOrder = ({ context }) => {
   const { loanerInfo } = useUser();
   const orderMutation = useMutate();
   const [isCreatingOrders, setIsCreatingOrders] = useState(false);
+  const pickupBranch = useRef(); // Pickup branch from checkout form
+
+  useEffect(() => {
+    if (orderMutation.data && orderMutation.data.submitMultipleOrders) {
+      const { failedAtCreation, successfullyCreated } =
+        orderMutation.data.submitMultipleOrders;
+      const failedMaterials = failedAtCreation.map((key) =>
+        materials.find((mat) => mat.key === key)
+      );
+      const successMaterials = successfullyCreated.map((key) =>
+        materials.find((mat) => mat.key === key)
+      );
+
+      setIsCreatingOrders(false);
+      modal.push("multireceipt", {
+        failedMaterials,
+        successMaterials,
+        branchName: pickupBranch.current?.name,
+      });
+    }
+  }, [orderMutation?.data]);
 
   useEffect(() => {
     if (!analyzeRef || !analyzeRef.current) return;
 
     const elements = Array.from(analyzeRef.current.children);
-    const materialsNotAvailable = elements
-      .filter(
-        (element) =>
-          element.getAttribute("data-status") === StatusEnum.NOT_AVAILABLE
-      )
-      .map((element) =>
-        materials.find(
-          (mat) => mat.key === element.getAttribute("data-material-key")
-        )
-      );
 
-    const materialsNeedsInfo = elements
-      .filter(
-        (element) =>
-          element.getAttribute("data-status") === StatusEnum.NEEDS_EDITION
-      )
-      .map((element) =>
-        materials.find(
-          (mat) => mat.key === element.getAttribute("data-material-key")
-        )
-      );
+    const timer = setTimeout(() => {
+      /**
+       * timeout to secure elements are rerendered
+       */
 
-    const materialsDigital = elements
-      .filter(
-        (element) => element.getAttribute("data-status") === StatusEnum.DIGITAL
-      )
-      .map((element) =>
-        materials.find(
-          (mat) => mat.key === element.getAttribute("data-material-key")
+      const materialsNotAvailable = elements
+        .filter(
+          (element) =>
+            element.getAttribute("data-status") === StatusEnum.NOT_AVAILABLE
         )
-      );
+        .map((element) =>
+          materials.find(
+            (mat) => mat.key === element.getAttribute("data-material-key")
+          )
+        );
 
-    setMaterialCounts({
-      digitalMaterials: materialsDigital?.length ?? 0,
-      materialsNotAllowed: materialsNotAvailable?.length ?? 0,
-      materialsMissingAction: materialsNeedsInfo?.length ?? 0,
-    });
-  }, [materials, analyzeRef.current]);
+      const materialsNeedsInfo = elements
+        .filter(
+          (element) =>
+            element.getAttribute("data-status") === StatusEnum.NEEDS_EDITION
+        )
+        .map((element) =>
+          materials.find(
+            (mat) => mat.key === element.getAttribute("data-material-key")
+          )
+        );
+
+      const materialsDigital = elements
+        .filter(
+          (element) =>
+            element.getAttribute("data-status") === StatusEnum.DIGITAL
+        )
+        .map((element) =>
+          materials.find(
+            (mat) => mat.key === element.getAttribute("data-material-key")
+          )
+        );
+
+      setMaterialCounts({
+        digitalMaterials: materialsDigital?.length ?? 0,
+        materialsNotAllowed: materialsNotAvailable?.length ?? 0,
+        materialsMissingAction: materialsNeedsInfo?.length ?? 0,
+      });
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [materials, analyzeRef.current, context?.periodicaForms]);
 
   const onSubmit = async (pickupBranch) => {
     setIsCreatingOrders(true);
+    pickupBranch.current = pickupBranch;
     await createOrders({
       materials: materials,
       pickupBranch,
       loanerInfo,
       periodicaForms: context.periodicaForms,
       orderMutation,
-    });
-    setIsCreatingOrders(false);
-    modal.push("multireceipt", {
-      failedMaterials: [], // @TODO add failing orders
-      successMaterials: materials, // @TODO add successfull orders
-      branchName: pickupBranch.name,
     });
   };
 
