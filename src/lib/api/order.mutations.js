@@ -6,6 +6,34 @@
  */
 import { ApiEnums } from "@/lib/api/api";
 
+export function submitMultipleOrders({
+  materialsToOrder,
+  branchId,
+  userParameters,
+  pagination,
+}) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    mutation ($input: SubmitMultipleOrdersInput!) {
+      submitMultipleOrders(input: $input) {
+        failedAtCreation
+        successfullyCreated
+        ok
+      }
+    }
+    `,
+    variables: {
+      input: {
+        materialsToOrder,
+        pickUpBranch: branchId,
+        userParameters,
+        pagination,
+      },
+    },
+  };
+}
+
 export function submitOrder({
   pids,
   branchId,
