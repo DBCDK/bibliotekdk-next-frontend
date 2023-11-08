@@ -2654,6 +2654,14 @@
       "action-alreadyOrderedText": {
         "da": "Du har allerede bestilt dette materiale. Vælg om det skal bestilles igen.",
         "en": "You have already ordered this material. Choose whether to order it again."
+      },
+      "get-overview": {
+        "da": "Få et overblik over dine bestillinger under",
+        "en": "Get an overview of your orders under"
+      },
+      "get-overview-2": {
+        "da": "din profil",
+        "en": "on your profile"
       }
     },
 

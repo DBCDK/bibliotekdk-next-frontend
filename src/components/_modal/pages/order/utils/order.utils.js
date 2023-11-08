@@ -34,9 +34,6 @@ export function getStylingAndErrorMessage(validated, hasValidationErrors) {
   const emailStatus = validated?.details?.hasMail?.status;
   const errorMessage = validated?.details?.hasMail?.message;
 
-  console.log("validated", validated);
-  console.log("hasValidationErrors", hasValidationErrors);
-
   // Check for email validation and email error messages
   const hasEmail = !!emailStatus;
 
@@ -53,18 +50,6 @@ export function getStylingAndErrorMessage(validated, hasValidationErrors) {
     (validated?.details?.requireYear?.message ||
       (!hasEmail && errorMessage) ||
       validated?.details?.firstOrder?.message);
-
-  console.log("HERE actinomessage ", actionMessage);
-  console.log(
-    "validated?.details?.firstOrder?.message",
-    validated?.details?.firstOrder?.message
-  );
-  console.log("!hasEmail && errorMessage", !hasEmail && errorMessage);
-
-  console.log(
-    "validated?.details?.firstYear?.message",
-    validated?.details?.firstYear?.message
-  );
 
   // eslint-disable-next-line css-modules/no-undef-class
   const invalidClass = actionMessage ? styles.invalid : "";
