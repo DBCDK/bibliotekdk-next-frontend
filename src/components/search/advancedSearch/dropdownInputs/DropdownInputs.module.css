@@ -1,0 +1,10 @@
+.flex_wrapper {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--pt4);
+}
+
+.dropdown_with_title {
+  display: flex;
+  flex-direction: column;
+}

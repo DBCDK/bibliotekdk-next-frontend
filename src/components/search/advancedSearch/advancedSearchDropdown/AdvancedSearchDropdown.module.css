@@ -1,0 +1,8 @@
+.nav_element {
+  position: relative;
+}
+
+.dropdown_items {
+  position: absolute;
+  width: fit-content;
+}
