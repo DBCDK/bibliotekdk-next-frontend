@@ -26,7 +26,10 @@ const CheckoutForm = ({
     duplicateOrders,
   } = materialCounts;
   const modal = useModal();
-  const disabled = materialsMissingAction > 0 || materialsNotAllowed > 0;
+  const disabled =
+    materialsMissingAction > 0 ||
+    materialsNotAllowed > 0 ||
+    duplicateOrders > 0;
   const [mail, setMail] = useState(null);
   const { userInfo, pickupBranchInfo, accessTypeInfo } =
     useOrderPageInformation({

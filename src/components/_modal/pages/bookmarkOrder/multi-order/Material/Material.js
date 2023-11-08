@@ -88,6 +88,7 @@ const Material = ({
 
   const orderKey = createOrderKey(pids);
   const pidHasBeenOrdered = pidHasAlreadyBeenOrdered(orderKey);
+  console.log("pidHasBeenOrdered", pidHasBeenOrdered);
 
   const { data: orderPolicyData, isLoading: orderPolicyIsLoading } = useData(
     pids &&
@@ -174,10 +175,12 @@ const Material = ({
           deleteBookmarkFromOrderList(material.key);
           //remove all modals, if we remove last material from order list
           if (numberOfMaterialsToOrder === 1) modal.setStack([]);
+          else modal.update({});
         }}
         acceptOrder={() => {
-          removeOrderIdFromSession(orderKey),
-            setBackgroundColor(BackgroundColorEnum.NEUTRAL);
+          removeOrderIdFromSession(orderKey), //keep track in multiorder.page of which pids have been ordered to force update, when this number changes
+            setBackgroundColor(BackgroundColorEnum.NEUTRAL),
+            modal.update({});
         }}
       />
     );

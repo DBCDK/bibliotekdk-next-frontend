@@ -756,6 +756,7 @@ export function useModal() {
    * @param {Object} context
    */
   function _update(index = _index(), context) {
+    console.log("udpateting");
     let copy = [..._stack];
     copy = copy.map((obj, i) => {
       if (index === i) {
@@ -766,6 +767,7 @@ export function useModal() {
       }
       return obj;
     });
+    console.log("udpateting", copy);
     // save && save(copy);
     // update locale stack state
     setStack(copy);

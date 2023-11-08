@@ -14,8 +14,6 @@ import {
   createOrderKey,
   setAlreadyOrdered,
 } from "../../order/utils/order.utils";
-import { useRouter } from "next/router";
-import { scrollToElementWithOffset } from "@/components/base/scrollsnapslider/utils";
 
 const CONTEXT = "bookmark-order";
 
@@ -65,14 +63,7 @@ const MultiOrder = ({ context }) => {
   const [isCreatingOrders, setIsCreatingOrders] = useState(false);
   const pickupBranch = useRef(); // Pickup branch from checkout form
 
-  const router = useRouter();
-
-  useEffect(() => {
-    if (router.asPath.includes("#")) {
-      console.log("scrollToElementWithOffset");
-      scrollToElementWithOffset(duplicateOrdersMaterialIds[0], "y", 200);
-    }
-  }, [router]);
+  useEffect(() => {}, [duplicateOrdersMaterialIds]);
 
   useEffect(() => {
     if (orderMutation.data && orderMutation.data.submitMultipleOrders) {
@@ -94,7 +85,6 @@ const MultiOrder = ({ context }) => {
         })
       );
 
-      console.log("successfullyOrderedMaterials", successfullyOrderedMaterials);
       //get the sucessfully ordered pids
       const orderedPids = successfullyOrderedMaterials?.map((mat) => {
         const isSpecificEdition = !!mat.pid;
@@ -189,7 +179,12 @@ const MultiOrder = ({ context }) => {
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [materials, analyzeRef.current, context?.periodicaForms]);
+  }, [
+    materials,
+    materialsToOrder,
+    analyzeRef.current,
+    context?.periodicaForms,
+  ]);
 
   const onSubmit = async (pickupBranch) => {
     setIsCreatingOrders(true);
