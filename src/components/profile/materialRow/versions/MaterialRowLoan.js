@@ -256,7 +256,7 @@ const MaterialRowLoan = (props) => {
         )}
         <div className={sharedStyles.textContainer}>
           <ConditionalWrapper
-            condition={!!title && !!creator && !!materialId}
+            condition={!!title && !!materialId}
             wrapper={(children) => (
               <Link
                 border={{
