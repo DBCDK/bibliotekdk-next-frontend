@@ -25,6 +25,10 @@ import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import IconButton from "@/components/base/iconButton";
 import { getManifestationWithoutDefaultCover } from "@/components/work/overview/covercarousel/utils";
+import {
+  createOrderKey,
+  pidHasAlreadyBeenOrdered,
+} from "../../../order/utils/order.utils";
 
 /**
  * At this point, we have manifestation of all the different material types
@@ -78,6 +82,9 @@ const Material = ({
     ? [material?.pid]
     : manifestations.map((m) => m.pid) || [];
 
+  const oderKey = createOrderKey(pids);
+  const alreadyOrdered = pidHasAlreadyBeenOrdered(oderKey);
+
   const { data: orderPolicyData, isLoading: orderPolicyIsLoading } = useData(
     pids &&
       pids.length > 0 &&
@@ -107,8 +114,6 @@ const Material = ({
 
   const { allEnrichedAccesses: accesses } = accessFactory(manifestations);
 
-  let children = null;
-
   const inferredAccessTypes = inferAccessTypes(
     periodicaForm,
     loanerInfo.pickupBranch,
@@ -126,15 +131,18 @@ const Material = ({
     setMaterialsToOrder((prev) => prev.filter((m) => m.key !== bookmarkKey));
   };
 
+  const articleTypeTranslation = translateArticleType({
+    isDigitalCopy,
+    availableAsDigitalCopy,
+    selectedAccesses: accesses[0], //take first access, since it has highest priority
+    isArticleRequest,
+    hasPeriodicaForm: !!periodicaForm,
+  });
+
+  const children = [];
+
   if (isPeriodicaLike) {
-    const articleTypeTranslation = translateArticleType({
-      isDigitalCopy,
-      availableAsDigitalCopy,
-      selectedAccesses: accesses[0], //take first access, since it has highest priority
-      isArticleRequest,
-      hasPeriodicaForm: !!periodicaForm,
-    });
-    children = (
+    children.push(
       <ChoosePeriodicaCopyRow
         key={material.key}
         multiOrderPeriodicaForms={periodicaForms}
@@ -146,11 +154,30 @@ const Material = ({
   }
 
   if (backgroundColorOverride === BackgroundColorEnum.RED) {
-    children = (
+    children.push(
       <Text type="text4" className={styles.errorLabel}>
         <Translate context="materialcard" label="error-ordering" />
       </Text>
     );
+
+    if (!orderPossible) {
+      children.push(
+        <>
+          <Text className={styles.orderNotPossible} type="text4">
+            {Translate({
+              context: "materialcard",
+              label: "order-not-possible",
+            })}
+          </Text>
+          <IconButton onClick={() => deleteBookmarkFromOrderList(material.key)}>
+            {Translate({
+              context: "bookmark",
+              label: "remove",
+            })}
+          </IconButton>
+        </>
+      );
+    }
   }
 
   if (!orderPossible) {

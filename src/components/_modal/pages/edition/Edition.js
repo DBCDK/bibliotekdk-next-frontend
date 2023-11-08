@@ -252,24 +252,29 @@ export default function Wrap({
       manifestationMaterialTypeFactory(manifestations);
     const firstManifestation = flattenedGroupedSortedManifestations?.[0];
 
-    const children = isPeriodicaLike ? (
-      <ChoosePeriodicaCopyRow
-        singleOrderPeriodicaForm={periodicaForm}
-        modal={modal}
-        articleTypeTranslation={articleTypeTranslation}
-      />
-    ) : null;
+    const children = [];
 
-    //TODO append or merge children somehow
-    const children2 = hasbeenOrdered ? (
-      <HasBeenOrderedRow
-        orderDate={new Date()}
-        removeOrder={() => modal.clear()}
-        acceptOrder={() => {
-          removeOrderIdFromSession(orderKey), modal.update({});
-        }}
-      />
-    ) : null;
+    if (isPeriodicaLike) {
+      children.push(
+        <ChoosePeriodicaCopyRow
+          singleOrderPeriodicaForm={periodicaForm}
+          modal={modal}
+          articleTypeTranslation={articleTypeTranslation}
+        />
+      );
+    }
+
+    if (hasbeenOrdered) {
+      children.push(
+        <HasBeenOrderedRow
+          orderDate={new Date()}
+          removeOrder={() => modal.clear()}
+          acceptOrder={() => {
+            removeOrderIdFromSession(orderKey), modal.update({});
+          }}
+        />
+      );
+    }
 
     const isDeliveredByDigitalArticleService =
       isDigitalCopy &&
@@ -281,7 +286,7 @@ export default function Wrap({
       templateImageToLeft({
         material,
         singleManifestation,
-        children: children2,
+        children,
         isPeriodicaLike,
         isDigitalCopy,
         isDeliveredByDigitalArticleService,
