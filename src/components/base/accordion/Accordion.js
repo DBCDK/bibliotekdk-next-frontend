@@ -13,16 +13,11 @@ import styles from "./Accordion.module.css";
 import animations from "css/animations";
 
 import BodyParser from "@/components/base/bodyparser";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import useElementVisible from "@/components/hooks/useElementVisible";
 import { useRouter } from "next/router";
 import Link from "@/components/base/link";
 import cx from "classnames";
-
-// A variable indicating if an accordion has been rendered
-// Used to determine if we should scroll to anchor.
-// We only want to scroll at initial load
-let firstAccordionRender = true;
 
 /**
  * The Component function
@@ -45,6 +40,8 @@ export function Item({
   id,
   isLoading,
 }) {
+  const [scrolledToHash, setScrolledToHash] = useState(false);
+
   const router = useRouter();
   const context = React.useContext(AccordionContext);
 
@@ -75,7 +72,7 @@ export function Item({
   // Check if this item should be opened at mount time,
   // considering the anchor hash from the URL
   useEffect(() => {
-    if (firstAccordionRender && id && `#${id}` === window.location.hash) {
+    if (!scrolledToHash && id && `#${id}` === window.location.hash) {
       setTimeout(() => {
         onClick();
         window.scrollTo({
@@ -87,6 +84,7 @@ export function Item({
         });
       }, 500);
     }
+    setScrolledToHash(true);
   }, []);
 
   if (typeof children === "string") {
@@ -227,10 +225,6 @@ export default function Accordion({
   isLoading,
   dataCy = null,
 }) {
-  useEffect(() => {
-    firstAccordionRender = false;
-  }, []);
-
   if (isLoading) {
     return <AccordionSkeleton className={className} />;
   }

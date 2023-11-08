@@ -67,7 +67,7 @@ export function getWorkUrlForProfile({
   // this might be a faust
   if (materialId.length === 8) {
     // we assume that this is a faust
-    return `/linkme.php?faust=${materialId}`;
+    return `/linkme.php?faust=${materialId}&scrollToEdition=${scrollToEdition}`;
   }
   // workid is given
   if (!isEmpty(workId)) {

@@ -361,7 +361,7 @@ function Group({
         ) {
           /**
            * We are not in a form group, break.
-           * Happens for FormLink and divider
+           * Happens for FormLink
            */
           return;
         }

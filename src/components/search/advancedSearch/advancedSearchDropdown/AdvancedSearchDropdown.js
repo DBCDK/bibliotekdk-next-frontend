@@ -10,7 +10,7 @@
  * data back to the context.
  */
 
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import List from "@/components/base/forms/list";
 import isEmpty from "lodash/isEmpty";
 import { DialogForPublicationYear } from "@/components/search/advancedSearch/advancedSearchHelpers/dialogForPublicationYear/DialogForPublicationYear";
@@ -53,6 +53,8 @@ export default function AdvancedSearchDropdown({
   updateIndex,
 }) {
   menuItems = menuItems.map(initializeMenuItem);
+
+  const [expandMenu, setExpandMenu] = useState(false);
 
   const { menuItemsState, toggleMenuItemsState } = useMenuItemsState(
     menuItems,
