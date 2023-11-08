@@ -27,19 +27,19 @@
         "da": "Aldersgruppe",
         "en": "Age groups"
       },
-      "languages": {
+      "term.mainlanguage": {
         "da": "Sprog",
         "en": "Languages"
       },
-      "all_languages": {
+      "all_term.mainlanguage": {
         "da": "Alle sprog",
         "en": "All languages"
       },
-      "materialTypesSpecific": {
+      "term.specificmaterialtype": {
         "da": "Materialetype",
         "en": "Materialtype"
       },
-      "all_materialTypesSpecific": {
+      "all_term.specificmaterialtype": {
         "da": "Alle materialer",
         "en": "All materials"
       }

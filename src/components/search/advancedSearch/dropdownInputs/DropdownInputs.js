@@ -4,9 +4,17 @@ import styles from "./DropdownInputs.module.css";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
+import { DetailsForDebugState } from "@/components/search/advancedSearch/DetailsForDebugState";
 
 const advancedSearchDropdownContext = "advanced_search_dropdown";
 
+/**
+ *
+ * @param {Array.<DropdownUnit>} items
+ * @param {string} indexName
+ * @param {UpdateDropdownSearchIndices} updateDropdownSearchIndices
+ * @returns {JSX.Element}
+ */
 function DropdownUnit({ items, indexName, updateDropdownSearchIndices }) {
   const indexTitle = Translate({
     context: advancedSearchDropdownContext,
@@ -57,7 +65,11 @@ export default function DropdownInputs({}) {
       </div>
 
       {/* TODO: Remove when we place this into the code */}
-      <div>{JSON.stringify(dropdownSearchIndices)}</div>
+      <DetailsForDebugState
+        title="Dropdown object for debug"
+        state={dropdownSearchIndices}
+        openDefault={false}
+      />
     </>
   );
 }

@@ -16,6 +16,10 @@ import isEmpty from "lodash/isEmpty";
 import { AdvancedSearchHistory } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
 import DropdownInputs from "@/components/search/advancedSearch/dropdownInputs/DropdownInputs";
 import { convertStateToCql } from "@/components/search/advancedSearch/utils";
+import {
+  DetailsForDebugState,
+  prettyParseCql,
+} from "@/components/search/advancedSearch/DetailsForDebugState";
 
 /**
  * Contains advanced search fields
@@ -29,8 +33,13 @@ export default function AdvancedSearch({ initState }) {
   const [showCqlEditor, setShowCqlEditor] = useState(false);
   const textAreaRef = useRef(null);
 
-  const { dropDowns, inputFields, updateStatesFromObject, setParsedCQL } =
-    useAdvancedSearchContext();
+  const {
+    inputFields,
+    dropdownSearchIndices,
+    updateStatesFromObject,
+    parsedCQL,
+    setParsedCQL,
+  } = useAdvancedSearchContext();
 
   useEffect(() => {
     //show CQL editor if there is a cql param in the url
@@ -54,11 +63,14 @@ export default function AdvancedSearch({ initState }) {
       router.push({ pathname: router.pathname, query });
     } else {
       //save state in url
-      const stateToString = JSON.stringify({ inputFields, dropDowns });
+      const stateToString = JSON.stringify({
+        inputFields,
+        dropdownSearchIndices,
+      });
       const query = { fieldSearch: stateToString };
       router.push({ pathname: router.pathname, query });
       //save in state
-      const cql = convertStateToCql({ inputFields });
+      const cql = convertStateToCql({ inputFields, dropdownSearchIndices });
       setParsedCQL(cql);
     }
   };
@@ -119,6 +131,13 @@ export default function AdvancedSearch({ initState }) {
             </Button>
           </Col>
         </Row>
+
+        {/* TODO: For debugging purposes. Remove when unneeded */}
+        <DetailsForDebugState
+          title="Resulting cql after search (with added line breaks)"
+          state={parsedCQL}
+          jsonParser={prettyParseCql}
+        />
       </Container>
     </div>
   );
