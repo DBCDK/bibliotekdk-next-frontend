@@ -63,7 +63,20 @@ const CheckoutForm = ({
     if (onSubmit) onSubmit(pickupBranch);
   };
 
-  const scrollToMaterialId = `#${duplicateOrdersMaterialIds[0]}`;
+  const scrollToMaterialId = () => {
+    const container = document.getElementById("modal_dialog");
+
+    const scrollContainer = container.querySelectorAll(
+      ".modal_page.page-current .page_content"
+    )[0];
+
+    const el = document.getElementById(duplicateOrdersMaterialIds[0]);
+
+    scrollContainer.scrollTo({
+      top: el.offsetTop,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <div className={styles.container}>
@@ -135,7 +148,7 @@ const CheckoutForm = ({
               vars={[duplicateOrdersMaterialIds?.length]}
             />{" "}
             <Link
-              href={scrollToMaterialId}
+              onClick={scrollToMaterialId}
               scroll={true}
               className={styles.chooseOrderAgain}
               border={{ top: false, bottom: { keepVisible: true } }}
