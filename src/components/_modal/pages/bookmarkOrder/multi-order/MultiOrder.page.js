@@ -63,7 +63,10 @@ const MultiOrder = ({ context }) => {
   const [isCreatingOrders, setIsCreatingOrders] = useState(false);
   const pickupBranch = useRef(); // Pickup branch from checkout form
 
-  useEffect(() => {}, [duplicateOrdersMaterialIds]);
+  useEffect(() => {
+    console.log("duplicateOrdersMaterialIds", duplicateOrdersMaterialIds);
+    modal.update({});
+  }, [duplicateOrdersMaterialIds]);
 
   useEffect(() => {
     if (orderMutation.data && orderMutation.data.submitMultipleOrders) {
@@ -224,6 +227,7 @@ const MultiOrder = ({ context }) => {
               material={material}
               numberOfMaterialsToOrder={materialsToOrder?.length ?? 0}
               setMaterialsToOrder={setMaterialsToOrder}
+              setDuplicateOrdersMaterialIds={setDuplicateOrdersMaterialIds}
               //context is responsible for updating periodica form via periodicaForm.js and modal.update
               periodicaForms={context?.periodicaForms}
             />

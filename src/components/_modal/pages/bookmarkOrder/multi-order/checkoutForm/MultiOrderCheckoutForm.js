@@ -29,7 +29,7 @@ const CheckoutForm = ({
   const disabled =
     materialsMissingAction > 0 ||
     materialsNotAllowed > 0 ||
-    duplicateOrders > 0;
+    duplicateOrdersMaterialIds?.length > 0;
   const [mail, setMail] = useState(null);
   const { userInfo, pickupBranchInfo, accessTypeInfo } =
     useOrderPageInformation({
@@ -64,6 +64,8 @@ const CheckoutForm = ({
   };
 
   const scrollToMaterialId = `#${duplicateOrdersMaterialIds[0]}`;
+
+  console.log("INSIDE MATERIAL ", duplicateOrdersMaterialIds);
 
   return (
     <div className={styles.container}>
@@ -123,7 +125,7 @@ const CheckoutForm = ({
             />
           </Text>
         )}
-        {duplicateOrders > 0 && (
+        {duplicateOrdersMaterialIds?.length > 0 && (
           <Text type="text3" className={styles.errorLabel}>
             <Translate
               context="bookmark-order"
@@ -132,7 +134,7 @@ const CheckoutForm = ({
                   ? "multiorder-duplicate-order-singular"
                   : "multiorder-duplicate-order"
               }
-              vars={[duplicateOrders]}
+              vars={[duplicateOrdersMaterialIds?.length]}
             />{" "}
             <Link
               href={scrollToMaterialId}

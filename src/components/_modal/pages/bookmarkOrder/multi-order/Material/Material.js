@@ -61,6 +61,7 @@ const Material = ({
   material,
   numberOfMaterialsToOrder = 0,
   setMaterialsToOrder,
+  setDuplicateOrdersMaterialIds,
   periodicaForms,
   backgroundColorOverride = BackgroundColorEnum.NEUTRAL,
 }) => {
@@ -88,7 +89,6 @@ const Material = ({
 
   const orderKey = createOrderKey(pids);
   const pidHasBeenOrdered = pidHasAlreadyBeenOrdered(orderKey);
-  console.log("pidHasBeenOrdered", pidHasBeenOrdered);
 
   const { data: orderPolicyData, isLoading: orderPolicyIsLoading } = useData(
     pids &&
@@ -178,7 +178,10 @@ const Material = ({
           else modal.update({});
         }}
         acceptOrder={() => {
-          removeOrderIdFromSession(orderKey), //keep track in multiorder.page of which pids have been ordered to force update, when this number changes
+          setDuplicateOrdersMaterialIds((prev) =>
+            prev.filter((m) => m !== material.materialId)
+          ),
+            removeOrderIdFromSession(orderKey), //keep track in multiorder.page of which pids have been ordered to force update, when this number changes
             setBackgroundColor(BackgroundColorEnum.NEUTRAL),
             modal.update({});
         }}
