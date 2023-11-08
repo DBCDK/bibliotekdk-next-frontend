@@ -100,7 +100,7 @@ export default function Wrap({
     // make an object for searchhistory @TODO .. the right object please
     const searchHistoryObj = {
       hitcount: parsedResponse.hitcount,
-      cql: cql,
+      cql: cqlQuery,
     };
     setValue(searchHistoryObj);
   }
