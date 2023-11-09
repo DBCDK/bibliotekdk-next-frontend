@@ -99,8 +99,6 @@ export default function Wrap() {
   const { workId, articleId } = router.query;
   const { authUser: user } = useUser();
 
-  const hasInfomediaAccess = user?.rights?.infomedia;
-
   const { data, isLoading: isLoadingWork } = useData(
     workFragments.reviews({ workId })
   );
@@ -114,6 +112,8 @@ export default function Wrap() {
     isLoading: lectorReviewIsLoading,
     error: lectorReviewError,
   } = useData(articleId && manifestationForLectorReview({ pid: articleId }));
+
+  const hasInfomediaAccess = user?.rights?.infomedia;
 
   const {
     data: infomediaArticleData,

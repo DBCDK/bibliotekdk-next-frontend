@@ -76,7 +76,7 @@ export default function Wrap({ workId, selectedPids, skeleton }) {
     useGetManifestationsForOrderButton(workId, selectedPids);
 
   const { branchIsLoading, hasDigitalAccess } =
-    useBranchUserAndHasDigitalAccess(selectedPids);
+    useBranchUserAndHasDigitalAccess();
 
   const { getAllAllowedEnrichedAccessSorted } = useMemo(
     () => accessFactory(manifestations),

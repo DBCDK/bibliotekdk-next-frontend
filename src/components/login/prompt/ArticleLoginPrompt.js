@@ -16,7 +16,7 @@ import * as branchesFragments from "@/lib/api/branches.fragments";
  */
 export default function ArticleLoginPrompt({ articleId }) {
   const modal = useModal();
-  const { authUser: user } = useUser();
+  const { authUser: user, isAuthenticated } = useUser();
 
   const hasInfomediaAccess = user?.rights?.infomedia;
 
@@ -35,7 +35,7 @@ export default function ArticleLoginPrompt({ articleId }) {
   const agencyName = branch.agencyName || "";
 
   // Not logged in, no access
-  if (!hasInfomediaAccess) {
+  if (!hasInfomediaAccess && !isAuthenticated) {
     return (
       <LoginPrompt
         title={Translate({ context: "articles", label: "getAccess" })}

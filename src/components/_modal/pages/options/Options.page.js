@@ -104,7 +104,7 @@ export function Options({ modal, context, user }) {
 
   // the next one checks for digital access .. for users already logged in :)
   // it is false if user is not logged in
-  let { hasDigitalAccess } = useBranchUserAndHasDigitalAccess(selectedPids);
+  let { hasDigitalAccess } = useBranchUserAndHasDigitalAccess();
 
   const { getAllowedAccessesByTypeName } = useMemo(() => {
     return accessFactory(manifestations);

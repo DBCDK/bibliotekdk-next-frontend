@@ -80,7 +80,7 @@ export default function Wrap() {
   const router = useRouter();
   const { workId, infomediaId } = router.query;
 
-  const { authUser: user } = useUser();
+  const { authUser: user, isAuthenticated } = useUser();
 
   const hasInfomediaAccess = user?.rights?.infomedia;
 

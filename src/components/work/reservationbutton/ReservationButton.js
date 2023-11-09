@@ -54,11 +54,10 @@ function ReservationButtonWrapper({
 }) {
   const user = useUser();
 
+  const hasDigitalAccess = user.authUser.rights.digitalArticleService;
+
   const { workResponse, manifestations, manifestationsResponse } =
     useGetManifestationsForOrderButton(workId, selectedPids);
-
-  const { branchIsLoading, hasDigitalAccess } =
-    useBranchUserAndHasDigitalAccess(selectedPids);
 
   const { getAllAllowedEnrichedAccessSorted, allEnrichedAccesses } = useMemo(
     () => accessFactory(manifestations),
@@ -81,7 +80,7 @@ function ReservationButtonWrapper({
     !manifestationsResponse ||
     manifestationsResponse?.isLoading ||
     workResponse?.isLoading ||
-    branchIsLoading
+    user.isLoading
   ) {
     return (
       <Button

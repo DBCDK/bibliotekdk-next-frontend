@@ -29,7 +29,7 @@ const useAnalyzeMaterial = (material) => {
     workId,
     selectedPids
   );
-  const { hasDigitalAccess } = useBranchUserAndHasDigitalAccess(selectedPids);
+  const { hasDigitalAccess } = useBranchUserAndHasDigitalAccess();
   const { getAllAllowedEnrichedAccessSorted } = useMemo(
     () => accessFactory(manifestations),
     [manifestations]

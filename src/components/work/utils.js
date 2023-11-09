@@ -125,41 +125,20 @@ export function getSeo(work) {
   };
 }
 
-export function useBranchUserAndHasDigitalAccess(selectedPids) {
-  const user = useUser();
+export function useBranchUserAndHasDigitalAccess() {
+  const { authUser: user, isLoading } = useUser();
 
-  const {
-    data: branchUserData,
-    isLoading: branchIsLoading,
-    isSlow: branchIsSlow,
-  } = useData(
-    selectedPids &&
-      user?.loanerInfo?.pickupBranch &&
-      branchesFragments.branchDigitalCopyAccess({
-        branchId: user?.loanerInfo?.pickupBranch,
-      })
-  );
-
-  const hasDigitalAccess = useMemo(() => {
-    return (
-      branchUserData?.branches?.result
-        ?.map((res) => res.digitalCopyAccess === true)
-        .findIndex((res) => res === true) > -1 &&
-      user?.authUser?.rights?.digitalArticleService
-    );
-  }, [branchUserData, user]);
+  const hasDigitalAccess = user?.rights?.digitalArticleService;
 
   return {
-    branchUserData: branchUserData,
-    branchIsLoading: branchIsLoading,
-    branchIsSlow: branchIsSlow,
-    hasDigitalAccess: hasDigitalAccess,
+    branchIsLoading: isLoading,
+    hasDigitalAccess,
   };
 }
 
 export function useRelevantAccessesForOrderPage(selectedPids) {
   const { branchIsLoading, hasDigitalAccess } =
-    useBranchUserAndHasDigitalAccess(selectedPids);
+    useBranchUserAndHasDigitalAccess();
 
   const manifestationsResponse = useData(
     selectedPids &&

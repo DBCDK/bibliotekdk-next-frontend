@@ -54,8 +54,8 @@ export default function Wrap({ workId, selectedPids }) {
   const router = useRouter();
   const title_author = router.query.title_author;
 
-  const { branchIsLoading, branchIsSlow, hasDigitalAccess } =
-    useBranchUserAndHasDigitalAccess(selectedPids);
+  const { branchIsLoading, hasDigitalAccess } =
+    useBranchUserAndHasDigitalAccess();
 
   const modal = useModal();
 
@@ -68,11 +68,7 @@ export default function Wrap({ workId, selectedPids }) {
 
   if (isLoading || branchIsLoading) {
     return (
-      <Skeleton
-        lines={1}
-        className={styles.skeletonstyle}
-        isSlow={isSlow || branchIsSlow}
-      />
+      <Skeleton lines={1} className={styles.skeletonstyle} isSlow={isSlow} />
     );
   }
 
