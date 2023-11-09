@@ -10,6 +10,10 @@ import { StatusEnum } from "@/components/base/materialcard/materialCard.utils";
 import useUser from "@/components/hooks/useUser";
 import { useMutate } from "@/lib/api/api";
 import * as orderMutations from "@/lib/api/order.mutations";
+import {
+  createOrderKey,
+  setAlreadyOrdered,
+} from "../../order/utils/order.utils";
 
 const CONTEXT = "bookmark-order";
 
@@ -50,6 +54,7 @@ const MultiOrder = ({ context }) => {
   const { materials } = context;
   const analyzeRef = useRef();
   const [materialCounts, setMaterialCounts] = useState({});
+  const [duplicateOrdersWorkIds, setDuplicateOrdersWorkIds] = useState([]);
   const [materialsToOrder, setMaterialsToOrder] = useState(materials);
   const { loanerInfo } = useUser();
   const orderMutation = useMutate();
@@ -66,6 +71,34 @@ const MultiOrder = ({ context }) => {
       const successMaterials = successfullyCreated.map((key) =>
         materials.find((mat) => mat.key === key)
       );
+
+      const orderedBookmarkIds = successMaterials.map((bm) => bm.bookmarkId);
+
+      //find materialsToOrder that have been ordered successully
+      const successfullyOrderedMaterials = orderedBookmarkIds.flatMap((b) =>
+        materialsToOrder.filter((m) => {
+          if (m.bookmarkId === b) return m;
+        })
+      );
+
+      //get the sucessfully ordered pids
+      const orderedPids = successfullyOrderedMaterials?.map((mat) => {
+        const isSpecificEdition = !!mat.pid;
+
+        return isSpecificEdition
+          ? [mat.pid]
+          : filterForRelevantMaterialTypes(
+              mat?.manifestations?.mostRelevant,
+              mat?.materialType
+            ).flatMap((mani) => mani.pid);
+      });
+
+      //set the ordered pids as already ordered in session
+      orderedPids.forEach((pids) => {
+        //Contains also pid for peridica, which we dont check at the moment
+        const orderKey = createOrderKey(pids);
+        if (orderKey !== "") setAlreadyOrdered(orderKey);
+      });
 
       setIsCreatingOrders(false);
       modal.push("multireceipt", {
@@ -108,6 +141,18 @@ const MultiOrder = ({ context }) => {
           )
         );
 
+      const duplicateOrders = elements
+        .filter(
+          (element) =>
+            element.getAttribute("data-status") === StatusEnum.HAS_BEEN_ORDERED
+        )
+        .map((element) =>
+          materials.find(
+            (mat) => mat.key === element.getAttribute("data-material-key")
+          )
+        );
+
+      setDuplicateOrdersWorkIds(duplicateOrders.map((mat) => mat.workId));
       const materialsDigital = elements
         .filter(
           (element) =>
@@ -123,17 +168,23 @@ const MultiOrder = ({ context }) => {
         digitalMaterials: materialsDigital?.length ?? 0,
         materialsNotAllowed: materialsNotAvailable?.length ?? 0,
         materialsMissingAction: materialsNeedsInfo?.length ?? 0,
+        duplicateOrders: duplicateOrders?.length ?? 0,
       });
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [materials, analyzeRef.current, context?.periodicaForms]);
+  }, [
+    materials,
+    materialsToOrder,
+    analyzeRef.current,
+    context?.periodicaForms,
+  ]);
 
   const onSubmit = async (pickupBranch) => {
     setIsCreatingOrders(true);
     pickupBranch.current = pickupBranch;
     await createOrders({
-      materials: materials,
+      materials: materialsToOrder,
       pickupBranch,
       loanerInfo,
       periodicaForms: context.periodicaForms,
@@ -165,7 +216,9 @@ const MultiOrder = ({ context }) => {
             <Material
               key={material.key}
               material={material}
+              numberOfMaterialsToOrder={materialsToOrder?.length ?? 0}
               setMaterialsToOrder={setMaterialsToOrder}
+              setDuplicateOrdersWorkIds={setDuplicateOrdersWorkIds}
               //context is responsible for updating periodica form via periodicaForm.js and modal.update
               periodicaForms={context?.periodicaForms}
             />
@@ -180,6 +233,7 @@ const MultiOrder = ({ context }) => {
             materialCounts={materialCounts}
             onSubmit={onSubmit}
             isLoading={isCreatingOrders}
+            duplicateOrdersWorkIds={duplicateOrdersWorkIds}
           />
         </section>
       )}

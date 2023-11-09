@@ -36,7 +36,7 @@ describe.skip(`Different ways to open login modal with library that has borrower
       .click();
     cy.get("[data-cy=text-log-ind]").should("be.visible");
     cy.get("[data-cy=pickup-search-input]").should("be.visible").type("Val");
-    cy.contains("Valby Bibliotek").click();
+    cy.contains("Valby Bibliotek").should("be.visible").click();
   });
 
   //TODO bestil should open login modal directly --> test in reservation button

@@ -62,13 +62,15 @@ describe.skip(`Loans and reservations`, () => {
     cy.viewport("iphone-6");
     cy.get("[data-cy=articleRow-loan-0]").click();
 
-    cy.get("[data-cy=loans-and-reservations-modal]").within(() => {
-      cy.get("h3").should("exist");
-      cy.get("[data-cy=creator]").should("exist");
-      cy.get("[data-cy=materialtype-and-creationyear]").should("exist");
-      cy.get("[data-cy=loan-button]").should("exist");
-      cy.get("[data-cy=dyn-cont-loan-return-date]").should("exist");
-      cy.get("[data-cy=dyn-cont-loan-message]").should("exist");
-    });
+    cy.get("[data-cy=loans-and-reservations-modal]")
+      .should("exist")
+      .within(() => {
+        cy.get("h3").should("exist");
+        cy.get("[data-cy=creator]").should("exist");
+        cy.get("[data-cy=materialtype-and-creationyear]").should("exist");
+        cy.get("[data-cy=loan-button]").should("exist");
+        cy.get("[data-cy=dyn-cont-loan-return-date]").should("exist");
+        cy.get("[data-cy=dyn-cont-loan-message]").should("exist");
+      });
   });
 });
