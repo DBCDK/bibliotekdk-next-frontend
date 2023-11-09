@@ -125,7 +125,7 @@ export default function AdvancedSearch({ initState }) {
             <AdvancedSearchHistory />
           </Col>
         </Row>
-        <Row className={styles.buttonRow} xs={2}>
+        <Row className={styles.buttonRow}>
           <Col className={styles.button_group}>
             <Button className={styles.button} onClick={doAdvancedSearch}>
               {Translate({ context: "header", label: "search" })}
