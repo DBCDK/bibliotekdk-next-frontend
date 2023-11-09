@@ -6,7 +6,6 @@ import Pagination from "@/components/search/pagination/Pagination";
 import PropTypes from "prop-types";
 import { convertStateToCql } from "@/components/search/advancedSearch/utils";
 import useAdvancedSearchHistory from "@/components/hooks/useAdvancedSearchHistory";
-import { useState } from "react";
 
 export function AdvancedSearchResult({
   pageNo,
