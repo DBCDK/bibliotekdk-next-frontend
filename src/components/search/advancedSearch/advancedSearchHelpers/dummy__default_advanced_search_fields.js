@@ -32,86 +32,86 @@ export function dummy__generalmaterialTypes() {
 
 const prioritisedLanguages = [
   {
-    term: "Dansk",
+    term: "dansk",
     key: "dan",
   },
   {
-    term: "Engelsk",
+    term: "engelsk",
     key: "eng",
   },
   {
-    term: "Tysk",
+    term: "tysk",
     key: "ger",
   },
   {
-    term: "Fransk",
+    term: "fransk",
     key: "fre",
   },
 ];
 
 const unprioritisedLanguages = [
   {
-    term: "Svensk",
+    term: "svensk",
     key: "swe",
   },
   {
-    term: "Italiensk",
+    term: "italiensk",
     key: "ita",
   },
   {
-    term: "Spansk",
+    term: "spansk",
     key: "spa",
   },
   {
-    term: "Hebraisk",
+    term: "hebraisk",
     key: "heb",
   },
   {
-    term: "Hindi",
+    term: "hindi",
     key: "hin",
   },
   {
-    term: "Tjekkisk",
+    term: "tjekkisk",
     key: "cze",
   },
   {
-    term: "Finsk",
+    term: "finsk",
     key: "fin",
   },
   {
-    term: "Græsk",
+    term: "græsk",
     key: "gre",
   },
   {
-    term: "Kroatisk",
+    term: "kroatisk",
     key: "hrv",
   },
   {
-    term: "Ungarsk",
+    term: "ungarsk",
     key: "hun",
   },
   {
-    term: "Norsk",
+    term: "norsk",
     key: "nor",
   },
   {
-    term: "Polsk",
+    term: "polsk",
     key: "pol",
   },
   {
-    term: "Portugisisk",
+    term: "portugisisk",
     key: "por",
   },
   {
-    term: "Russisk",
+    term: "russisk",
     key: "rus",
   },
   {
-    term: "Tyrkisk",
+    term: "tyrkisk",
     key: "tur",
   },
   {
-    term: "Ukrainsk",
+    term: "ukrainsk",
     key: "ukr",
   },
 ];
