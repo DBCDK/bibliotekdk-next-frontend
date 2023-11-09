@@ -7,7 +7,6 @@ import { useData } from "@/lib/api/api";
 import { infomediaArticle } from "@/lib/api/infomedia.fragments";
 import LoginPrompt from "./Prompt";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
-import * as branchesFragments from "@/lib/api/branches.fragments";
 
 /**
  * Prompt the user for log in / change library, when user is not granted access

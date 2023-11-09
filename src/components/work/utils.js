@@ -3,7 +3,6 @@ import Router from "next/router";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 import useUser from "@/components/hooks/useUser";
 import { useData } from "@/lib/api/api";
-import * as branchesFragments from "@/lib/api/branches.fragments";
 import { useMemo } from "react";
 import { accessFactory } from "@/lib/accessFactoryUtils";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
