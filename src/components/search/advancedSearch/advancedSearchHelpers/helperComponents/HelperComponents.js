@@ -88,11 +88,10 @@ export function CheckboxItem({ item, onChange = null }) {
 }
 
 export function Toggler({
-  setExpandMenu,
-  expandMenu,
+  className = "",
   indexName,
   indexPlaceholder,
-  iconSrc = "arrowUp.svg",
+  iconSrc = "arrowDown.svg",
   iconSimpleAnimations = iconSrc === "chevron_right.svg" &&
     cx(animations["h-elastic"], animations["f-elastic"]),
 }) {
@@ -101,13 +100,12 @@ export function Toggler({
       <Dropdown.Toggle
         variant="success"
         id="dropdown-basic"
-        onClick={() => setExpandMenu((prev) => !prev)}
         className={cx(
           animations["on-hover"],
           animations["on-focus"],
-          styles.menuButton
+          styles.menuButton,
+          className
         )}
-        aria-expanded={expandMenu}
       >
         <Text tag="div" type="text3" dataCy="menu-title">
           {indexPlaceholder || indexName}
@@ -117,7 +115,7 @@ export function Toggler({
             size={{ w: 2, h: 2 }}
             src={iconSrc}
             className={cx(styles.icon, iconSimpleAnimations, {
-              [iconSrc === "arrowUp.svg" && styles.icon_open]: expandMenu,
+              [styles.icon_open]: iconSrc === "arrowDown.svg",
             })}
             alt=""
           />

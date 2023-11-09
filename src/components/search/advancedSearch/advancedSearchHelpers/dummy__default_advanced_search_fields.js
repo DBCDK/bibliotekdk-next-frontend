@@ -6,15 +6,17 @@ export function dummy__languages() {
     prioritisedFormType: FormTypeEnum.CHECKBOX,
     unprioritisedItems: unprioritisedLanguages,
     unprioritisedFormType: FormTypeEnum.CHECKBOX,
+    overrideValueAs: "name",
   };
 }
 
-export function dummy__materialTypesSpecific() {
+export function dummy__specificmaterialTypes() {
   return {
     prioritisedItems: prioritisedMaterialTypeSpecific,
     prioritisedFormType: FormTypeEnum.CHECKBOX,
     unprioritisedItems: unprioritisedMaterialTypeSpecific,
     unprioritisedFormType: FormTypeEnum.CHECKBOX,
+    overrideValueAs: "name",
   };
 }
 

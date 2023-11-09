@@ -98,6 +98,8 @@ function FieldInput({ key, index, workType, fieldValue }) {
     </div>
   );
 }
+
+/** @typedef {Array.<("AND"|"OR"|"NOT"|null)>} LogicalOperatorEnumArray */
 const options = Object.keys(LogicalOperatorsEnum); //["AND", "OR", "NOT"];
 /**
  * Dropdown for choosing a logical operator ("AND", "OR", "NOT") between text fields.
@@ -136,25 +138,27 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
       </Dropdown.Toggle>
 
       <Dropdown.Menu className={styles.dropdownmenu}>
-        {options.map((elem) => {
-          return (
-            <Dropdown.Item
-              tabIndex="-1"
-              key={`logicalOperatordropdown-${elem}`}
-              className={styles.dropdownitem}
-              onClick={() => {
-                onSelect(elem);
-              }}
-            >
-              <Text tag="span" type="text3">
-                {Translate({
-                  context: "search",
-                  label: `advanced-dropdown-${elem}`,
-                })}
-              </Text>
-            </Dropdown.Item>
-          );
-        })}
+        {
+          /** @type {LogicalOperatorEnumArray} */ options.map((elem) => {
+            return (
+              <Dropdown.Item
+                tabIndex="-1"
+                key={`logicalOperatordropdown-${elem}`}
+                className={styles.dropdownitem}
+                onClick={() => {
+                  onSelect(elem);
+                }}
+              >
+                <Text tag="span" type="text3">
+                  {Translate({
+                    context: "search",
+                    label: `advanced-dropdown-${elem}`,
+                  })}
+                </Text>
+              </Dropdown.Item>
+            );
+          })
+        }
       </Dropdown.Menu>
     </Dropdown>
   );

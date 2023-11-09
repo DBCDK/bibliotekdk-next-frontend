@@ -61,6 +61,16 @@
 .row.selected > .dot::after {
   border-color: var(--blue);
 }
+
+.divider {
+  background-color: var(--iron);
+  padding: 0;
+  height: var(--pt1);
+  flex-shrink: 0;
+  align-self: stretch;
+  border: 0;
+}
+
 .label {
   display: none;
 }
