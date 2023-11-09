@@ -51,7 +51,7 @@ function ReservationButtonWrapper({
 }) {
   const user = useUser();
 
-  const hasDigitalAccess = user.authUser.rights.digitalArticleService;
+  const hasDigitalAccess = user?.authUser?.rights?.digitalArticleService;
 
   const { workResponse, manifestations, manifestationsResponse } =
     useGetManifestationsForOrderButton(workId, selectedPids);
