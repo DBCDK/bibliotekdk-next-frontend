@@ -180,7 +180,6 @@ export function useData(query) {
 
   // Fetch data
   const { data, error, mutate, isValidating } = useSWR(key, fetcherImpl, {
-    keepPreviousData: true,
     loadingTimeout: query?.slowThreshold || 5000,
     onLoadingSlow: () => setIsSlow(true),
   });

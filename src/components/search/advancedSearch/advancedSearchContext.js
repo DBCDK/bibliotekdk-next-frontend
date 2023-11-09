@@ -3,33 +3,75 @@
  * This file manages the state for advanced search.
  */
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useReducer, useState } from "react";
 import { LogicalOperatorsEnum } from "@/components/search/enums";
+import {
+  DropdownIndicesEnum,
+  useDefaultItemsForDropdownUnits,
+} from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
+import isEmpty from "lodash/isEmpty";
+
+export const defaultDropdownIndices = [
+  { searchIndex: DropdownIndicesEnum.LANGUAGES, value: [] },
+  { searchIndex: DropdownIndicesEnum.MATERIAL_TYPES_SPECIFIC, value: [] },
+];
 
 const AdvancedSearchContext = createContext();
 
+/**
+ * @returns {AdvancedSearchContextType}
+ */
 export function useAdvancedSearchContext() {
   return useContext(AdvancedSearchContext);
 }
 
+function dropdownReducer(prev, current) {
+  return prev?.map((singleDropdownIndex) => {
+    if (current.indexName === singleDropdownIndex.searchIndex) {
+      return {
+        searchIndex: current.indexName,
+        value: current.menuItemsState
+          .filter((item) => item.isSelected === true)
+          .map((item) => item.value),
+      };
+    } else {
+      return singleDropdownIndex;
+    }
+  });
+}
+
 export default function AdvancedSearchProvider({ children }) {
   //prefixLogicalOperator is an enum of AND, OR , NOT
-  const [inputFields, setInputFields] = useState([
-    { value: "", prefixLogicalOperator: null, searchIndex: "term.default" },
-    {
-      value: "",
-      prefixLogicalOperator: LogicalOperatorsEnum.AND,
-      searchIndex: "term.title",
-    },
-  ]);
+  /** @typedef {("AND"|"OR"|"NOT"|null)} PrefixLogicalOperator */
+  /** @typedef {{value: string, prefixLogicalOperator: PrefixLogicalOperator, searchIndex: string}} InputField */
+  const [/** @type Array.<InputField> */ inputFields, setInputFields] =
+    useState([
+      { value: "", prefixLogicalOperator: null, searchIndex: "term.default" },
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.title",
+      },
+    ]);
+
+  const [dropdownInitState, setDropdownInitState] = useState([]);
+
+  /** @typedef {<A>(value: A) => void} UpdateDropdownSearchIndices */
+  /** @typedef {{value: (Array.<string>|Array.<Object<>>), searchIndex: string}} DropdownSearchIndex */
+  const [
+    /** @type {Array.<DropdownSearchIndex>} */ dropdownSearchIndices,
+    /** @type {UpdateDropdownSearchIndices} */ updateDropdownSearchIndices,
+  ] = useReducer(dropdownReducer, defaultDropdownIndices, (initState) =>
+    !isEmpty(dropdownInitState) ? dropdownInitState : initState
+  );
+
+  /** @typedef {({code: string, display: string} | {key: string, term: string})} SingleItem */
+  /** @typedef {prioritisedFormType: string, prioritisedItems: Array.<SingleItem>, unprioritisedFormType: string, unprioritisedItems: Array.<SingleItem>} Items */
+  /** @typedef {indexName: string, items: Items} DropdownUnit */
+  const dropdownUnits = useDefaultItemsForDropdownUnits();
 
   //field search valued parsed as cql. Will be shown in cql input view.
   const [parsedCQL, setParsedCQL] = useState(null);
-  //TODO: Akri will implement dis
-  // const [dropDowns, setDropdown] = useState([
-  //   { index: "language", value: "da" },
-  //   { index: "2-3", value: "age" },
-  // ]);
 
   /**
    * Add an extra input field
@@ -69,7 +111,7 @@ export default function AdvancedSearchProvider({ children }) {
   /**
    * Handle input field value change
    * @param {*} index
-   * @param {*} newOperator
+   * @param {*} newValue
    */
   function handleInputFieldChange(index, newValue) {
     setInputFields((prevFields) => {
@@ -101,19 +143,35 @@ export default function AdvancedSearchProvider({ children }) {
       setInputFields(stateObject.inputFields);
     }
     //TODO: implement when dropdowns are ready
-    // if (stateObject.dropDowns) {
-    //   setDropDowns(stateObject.dropDowns);
-    // }
+    if (stateObject.dropdownSearchIndices) {
+      setDropdownInitState(stateObject.dropdownSearchIndices);
+    }
   }
 
+  /** @typedef {{
+        inputFields: Array.<InputField>,
+        removeInputField: (indexToRemove: number) => void,
+        addInputField: () => void,
+        handleLogicalOperatorChange: (index: number, newOperator: string) => void,
+        handleInputFieldChange: (index: number, newValue: string) => void,
+        handleIndexChange: (index: number, newOperator: string) => void,
+        dropdownUnits: Array.<DropdownUnit>,
+        dropdownSearchIndices: Array.<DropdownSearchIndex>,
+        updateDropdownSearchIndices: UpdateDropdownSearchIndices
+        updateStatesFromObject: ({inputFields?: Array.<InputField>, dropdownSearchIndices?: Array.<DropdownSearchIndex>}) => void,
+        parsedCQL: string,
+        setParsedCQL: (value: string) => void,
+   }} AdvancedSearchContextType */
   const value = {
     inputFields,
     addInputField,
     removeInputField,
     handleLogicalOperatorChange,
-    //  dropDowns,
-    handleIndexChange,
     handleInputFieldChange,
+    handleIndexChange,
+    dropdownUnits,
+    dropdownSearchIndices,
+    updateDropdownSearchIndices,
     updateStatesFromObject,
     parsedCQL,
     setParsedCQL,

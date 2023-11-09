@@ -1,0 +1,45 @@
+.dialog_checklist_base {
+  padding: var(--pt2);
+  width: 600px;
+  display: grid;
+  grid-template-areas:
+    "header close"
+    "prioritisedAgeGroups prioritisedAgeGroups"
+    "divider divider"
+    "unprioritisedAgeGroups unprioritisedAgeGroups";
+  gap: var(--pt2);
+}
+
+.dialog_header {
+  grid-area: header;
+  padding: var(--pt1);
+}
+
+.dialog_close_button {
+  grid-area: close;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.prioritisedAgeGroups {
+  grid-area: prioritisedAgeGroups;
+  padding: var(--pt1);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pt3);
+}
+
+.divider {
+  grid-area: divider;
+  margin: var(--pt1);
+  height: 1px;
+  color: var(--iron);
+}
+
+.unprioritisedAgeGroups {
+  grid-area: unprioritisedAgeGroups;
+  padding: var(--pt1);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pt3);
+}

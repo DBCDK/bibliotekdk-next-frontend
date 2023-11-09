@@ -1,9 +1,9 @@
-.chevron {
+.icon_area {
   display: flex;
   width: 20px;
   height: 20px;
-  transition: transform 300ms ease;
   justify-content: center;
+  transition: transform 300ms ease;
   align-content: center;
   flex-wrap: wrap;
 }
@@ -14,8 +14,8 @@
   outline: 1px solid var(--gray);
   min-width: 125px;
   height: 100%;
-  width: 100%;
   display: flex;
+  gap: var(--pt1);
   align-content: center;
   justify-content: space-between;
 }
@@ -29,12 +29,12 @@
   outline: solid 2px var(--blue);
 }
 
-.icon {
-  transition: transform 0.3s ease-in-out;
+.menuButton[aria-expanded="true"] .icon_open {
+  transform: rotate(180deg);
 }
 
-.icon_open {
-  transform: rotate(180deg);
+.icon {
+  transition: transform 0.3s ease-in-out;
 }
 
 .select_wrapper {

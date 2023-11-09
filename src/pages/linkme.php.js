@@ -83,7 +83,7 @@ function LinkmePhp() {
       pathname: pathname,
       ...(scrollToEdition && { hash: router.query["rec.id"] }),
     };
-    router.push(routerPath);
+    router.replace(routerPath);
   } else {
     // something is wrong - we did not find title/author - goto  404 (not found) page
     // check if clientside

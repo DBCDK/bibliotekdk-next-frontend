@@ -18,6 +18,32 @@
         "en": "Label: mangler oversættelse"
       }
     },
+    "advanced_search_dropdown": {
+      "choose_publication_year": {
+        "da": "Vælg udgivelsesår",
+        "en": "Choose publication year"
+      },
+      "age_groups": {
+        "da": "Aldersgruppe",
+        "en": "Age groups"
+      },
+      "term.mainlanguage": {
+        "da": "Sprog",
+        "en": "Languages"
+      },
+      "all_term.mainlanguage": {
+        "da": "Alle sprog",
+        "en": "All languages"
+      },
+      "term.specificmaterialtype": {
+        "da": "Materialetype",
+        "en": "Materialtype"
+      },
+      "all_term.specificmaterialtype": {
+        "da": "Alle materialer",
+        "en": "All materials"
+      }
+    },
     "logo": {
       "default_logo_text": {
         "da": "Bibliotek dk",
