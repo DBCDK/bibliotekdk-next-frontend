@@ -10,11 +10,21 @@ export function dummy__languages() {
   };
 }
 
+// eslint-disable-next-line css-modules/no-unused-class
 export function dummy__specificmaterialTypes() {
   return {
     prioritisedItems: prioritisedMaterialTypeSpecific,
     prioritisedFormType: FormTypeEnum.CHECKBOX,
     unprioritisedItems: unprioritisedMaterialTypeSpecific,
+    unprioritisedFormType: FormTypeEnum.CHECKBOX,
+    overrideValueAs: "name",
+  };
+}
+export function dummy__generalmaterialTypes() {
+  return {
+    prioritisedItems: prioritisedMaterialTypeGeneral,
+    prioritisedFormType: FormTypeEnum.CHECKBOX,
+    unprioritisedItems: unprioritisedMaterialTypeGeneral,
     unprioritisedFormType: FormTypeEnum.CHECKBOX,
     overrideValueAs: "name",
   };
@@ -181,5 +191,91 @@ const unprioritisedMaterialTypeSpecific = [
   {
     code: "COMIC",
     display: "tegneserie",
+  },
+];
+
+const prioritisedMaterialTypeGeneral = [
+  {
+    code: "BOOKS",
+    display: "bøger",
+  },
+  {
+    code: "EBOOKS",
+    display: "e-bøger",
+  },
+  {
+    code: "AUDIO_BOOKS",
+    display: "lydbøger",
+  },
+  {
+    code: "FILMS",
+    display: "film",
+  },
+  {
+    code: "MUSIC",
+    display: "musik",
+  },
+];
+
+const unprioritisedMaterialTypeGeneral = [
+  {
+    code: "ARTICLES",
+    display: "artikler",
+  },
+  {
+    code: "NEWSPAPER_JOURNALS",
+    display: "aviser og tidsskrifter",
+  },
+  {
+    code: "IMAGE_MATERIALS",
+    display: "billedmaterialer",
+  },
+  {
+    code: "BOARD_GAMES",
+    display: "brætspil",
+  },
+  {
+    code: "BOOKS",
+    display: "bøger",
+  },
+  {
+    code: "EBOOKS",
+    display: "e-bøger",
+  },
+  {
+    code: "COMPUTER_GAMES",
+    display: "computerspil",
+  },
+  {
+    code: "FILMS",
+    display: "film",
+  },
+  {
+    code: "TV_SERIES",
+    display: "tv-serier",
+  },
+  {
+    code: "AUDIO_BOOKS",
+    display: "lydbøger",
+  },
+  {
+    code: "MUSIC",
+    display: "musik",
+  },
+  {
+    code: "SHEET_MUSIC",
+    display: "noder",
+  },
+  {
+    code: "PODCASTS",
+    display: "podcasts",
+  },
+  {
+    code: "COMICS",
+    display: "tegneserier",
+  },
+  {
+    code: "OTHER",
+    display: "øvrige",
   },
 ];

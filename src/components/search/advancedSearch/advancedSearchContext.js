@@ -14,7 +14,7 @@ import isEmpty from "lodash/isEmpty";
 
 export const defaultDropdownIndices = [
   { searchIndex: DropdownIndicesEnum.LANGUAGES, value: [] },
-  { searchIndex: DropdownIndicesEnum.MATERIAL_TYPES_SPECIFIC, value: [] },
+  { searchIndex: DropdownIndicesEnum.MATERIAL_TYPES_GENERAL, value: [] },
 ];
 
 const AdvancedSearchContext = createContext();

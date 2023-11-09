@@ -42,6 +42,14 @@
       "all_term.specificmaterialtype": {
         "da": "Alle materialer",
         "en": "All materials"
+      },
+      "term.generalmaterialtype": {
+        "da": "Materialetype",
+        "en": "Materialtype"
+      },
+      "all_term.generalmaterialtype": {
+        "da": "Alle materialer",
+        "en": "All materials"
       }
     },
     "logo": {
