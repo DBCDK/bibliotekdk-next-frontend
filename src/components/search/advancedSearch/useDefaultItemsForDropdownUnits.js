@@ -4,9 +4,9 @@ import {
 } from "@/components/search/advancedSearch/advancedSearchHelpers/dummy__default_advanced_search_fields";
 
 export const DropdownIndicesEnum = {
-  LANGUAGES: "term.mainlanguage",
-  MATERIAL_TYPES_SPECIFIC: "term.specificmaterialtype",
-  MATERIAL_TYPES_GENERAL: "term.generalmaterialtype",
+  LANGUAGES: "phrase.mainlanguage",
+  MATERIAL_TYPES_SPECIFIC: "phrase.specificmaterialtype",
+  MATERIAL_TYPES_GENERAL: "phrase.generalmaterialtype",
 };
 
 export function useDefaultItemsForDropdownUnits() {
