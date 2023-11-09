@@ -80,7 +80,6 @@ export function setAlreadyOrdered(orderKey) {
   sessionStorage.setItem("alreadyOrdered", JSON.stringify(alreadyOrdered));
 }
 
-//TODO also check if orderKey is part of alreadyOrdered keys
 /**
  * @param {string} orderKey
  * @return {boolean} true if orderKey is part of alreadyOrdered keys

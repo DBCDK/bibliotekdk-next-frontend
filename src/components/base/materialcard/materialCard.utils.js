@@ -15,7 +15,7 @@ export const StatusEnum = Object.freeze({
 
 /**
  *
- * @param {Boolean} pidHasBeenOrdered
+ * @param {Boolean} hasAlreadyBeenOrdered
  * @param {Boolean} isPeriodicaLike
  * @param {Boolean} hasPeriodicaForm
  * @param {Boolean} notAvailableAtLibrary

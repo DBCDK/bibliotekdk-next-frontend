@@ -148,7 +148,7 @@ function Link({
   tag = "a",
   disabled = false,
   ariaLabel = "",
-  scroll = false,
+  scroll = true,
   forceUnderlineType = "INFER",
   ...props
 }) {
