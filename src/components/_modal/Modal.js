@@ -5,20 +5,16 @@ import React, {
   createContext,
   useContext,
 } from "react";
-
 import { useInView } from "react-intersection-observer";
-
-// modal utils
-import { handleTab, scrollLock } from "./utils";
-
+import { scrollLock } from "./utils";
 import useKeyPress from "@/components/hooks/useKeypress";
+import FocusLock from "react-focus-lock";
 
 // context
 export const ModalContext = createContext(null);
 
 const LOCAL_STORAGE_KEY = "modal-v2";
 const LOCAL_STORAGE_STORE_KEY = "modal-v2-store";
-
 const URL_PAGE_UID_KEY = "modal";
 
 /**
@@ -110,16 +106,10 @@ function Container({ children, className = {}, mock = {} }) {
 
   // include mocked functions
   const modal = { ..._modal, ...mock };
-
   const currentPageUid = modal.currentPageUid;
-
-  // current status of the modal dialog
   const [dialogStatus, setDialogStatus] = useState(
-    // The initial state
     modal.isVisible ? "open" : "closed"
   );
-
-  // modal ref
   const modalRef = useRef(null);
 
   // boolean stored in a ref, indicating if stack has been loaded from local storage
@@ -260,35 +250,6 @@ function Container({ children, className = {}, mock = {} }) {
     modal._doSelect(index);
   }, [currentPageUid]);
 
-  // Only allow tab on the page if the modal is not transitioning
-  useEffect(() => {
-    // If tab key is pressed down
-    function downHandler(e) {
-      if (e.key === "Tab") {
-        if (dialogStatus === "opening" || dialogStatus === "closing") {
-          e.preventDefault();
-        }
-        dialogStatus === "open" && handleTab(e, modalRef.current);
-      }
-    }
-    // Add event listeners
-    window.addEventListener("keydown", downHandler);
-    // Remove event listeners on cleanup
-    return () => {
-      window.removeEventListener("keydown", downHandler);
-    };
-  }, [dialogStatus]);
-
-  // force modal focus (accessibility)
-  useEffect(() => {
-    if (isVisible && modalRef.current) {
-      // Wait for animation to finish
-      setTimeout(() => {
-        modalRef.current?.focus();
-      }, 200);
-    }
-  }, [isVisible]);
-
   //  Closes the modal on Escape key
   useEffect(() => {
     if (isVisible && escapeEvent) {
@@ -307,9 +268,7 @@ function Container({ children, className = {}, mock = {} }) {
     if (isVisible && modalRef.current) {
       if (modal.stack.length > 1) {
         if (document) {
-          // setTimeout(() => {
           document.activeElement.blur();
-          // }, 200);
         }
       }
     }
@@ -337,7 +296,7 @@ function Container({ children, className = {}, mock = {} }) {
         data-cy="modal-dialog"
         aria-modal="true"
         role="dialog"
-        tabIndex={isVisible ? "0" : null}
+        // tabIndex={isVisible ? 0 : -1}
         ref={modalRef}
         aria-hidden={!isVisible}
         className={`modal_dialog ${
@@ -346,39 +305,41 @@ function Container({ children, className = {}, mock = {} }) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="modal_container">
-          {modal.stack.map((obj, index) => {
-            // prevent render if modal/component is not visible
-            // if (!obj.active) {
-            //   return null;
-            // }
+          <FocusLock autoFocus disabled={dialogStatus === "closed"} returnFocus>
+            {modal.stack.map((obj, index) => {
+              // prevent render if modal/component is not visible
+              // if (!obj.active) {
+              //   return null;
+              // }
 
-            // Find component by id in container children
-            const page = children.find((child) => {
-              if (child.props.id === obj.id) {
-                return child;
+              // Find component by id in container children
+              const page = children.find((child) => {
+                if (child.props.id === obj.id) {
+                  return child;
+                }
+              });
+
+              // No matching page was found
+              if (!page) {
+                return null;
               }
-            });
 
-            // No matching page was found
-            if (!page) {
-              return null;
-            }
+              // Enrich page components with props
+              return React.cloneElement(page, {
+                modal: { ...modal, ...mock },
 
-            // Enrich page components with props
-            return React.cloneElement(page, {
-              modal: { ...modal, ...mock },
-
-              // stack index
-              index,
-              context: obj.context,
-              active: obj.active,
-              className: className.page || "",
-              key: `modal-page-${index}-${obj.id}`,
-              dataCy: `modal-page-${index}`,
-              mock: page.props.mock || {},
-              props: page.props,
-            });
-          })}
+                // stack index
+                index,
+                context: obj.context,
+                active: obj.active,
+                className: className.page || "",
+                key: `modal-page-${index}-${obj.id}`,
+                dataCy: `modal-page-${index}`,
+                mock: page.props.mock || {},
+                props: page.props,
+              });
+            })}
+          </FocusLock>
         </div>
       </dialog>
     </div>
@@ -798,13 +759,9 @@ export function useModal() {
 }
 
 /**
- * blah blah
- *
  * @param children
  * @param router
- *
- * @returns
- *
+ * @returns {React.JSXElement}
  */
 export function Provider({ children, router }) {
   const [stack, setStack] = useState([]);
