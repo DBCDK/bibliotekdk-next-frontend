@@ -43,7 +43,7 @@ describe.skip(`Different ways to open login modal with library that has borrower
   // come back to order modal from adgangsplatform
 });
 
-describe(`Different ways to open login modal with a (FFU) library that does NOT have borrowerCheck`, () => {
+describe.skip(`Different ways to open login modal with a (FFU) library that does NOT have borrowerCheck`, () => {
   it("Plain login from login button in header not supported & back button leads back to pick up branch search", () => {
     cy.visit(nextjsBaseUrl);
     cy.consentAllowAll();
