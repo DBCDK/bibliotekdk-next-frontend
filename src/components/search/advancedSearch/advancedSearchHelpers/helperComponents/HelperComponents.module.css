@@ -8,6 +8,10 @@
   flex-wrap: wrap;
 }
 
+.upper_first:first-letter {
+  text-transform: capitalize;
+}
+
 .menuButton {
   background-color: var(--white);
   padding: var(--pt2) var(--pt2);

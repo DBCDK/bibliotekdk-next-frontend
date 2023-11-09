@@ -47,6 +47,7 @@ export function RadioButtonItem({ item }) {
       <Text
         type="text3"
         className={cx(
+          styles.upper_first,
           animations["h-border-bottom"],
           animations["h-color-blue"]
         )}
@@ -76,6 +77,7 @@ export function CheckboxItem({ item, onChange = null }) {
       <Text
         type="text3"
         className={cx(
+          styles.upper_first,
           animations["h-border-bottom"],
           animations["h-color-blue"]
         )}

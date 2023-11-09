@@ -3,6 +3,7 @@
  */
 import { FormTypeEnum } from "@/components/search/advancedSearch/advancedSearchHelpers/helperComponents/HelperComponents";
 import uniqWith from "lodash/uniqWith";
+import isEqual from "lodash/isEqual";
 
 export function convertSingleToDropdownInput(item, formType, overrideValueAs) {
   const key = item?.code || item?.key;
@@ -49,6 +50,9 @@ export function convertToDropdownInput({
     unprioritisedItems.map((item) =>
       convertSingleToDropdownInput(item, unprioritisedFormType, overrideValueAs)
     )
+  ).filter(
+    (item) =>
+      !convertedPrioritisedItems.some((priItem) => isEqual(priItem, item))
   );
 
   return [

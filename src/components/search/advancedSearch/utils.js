@@ -12,14 +12,16 @@ export function convertStateToCql({ inputFields, dropdownSearchIndices } = {}) {
       const prefix = !isEmpty(item.prefixLogicalOperator)
         ? [item.prefixLogicalOperator]
         : [];
-      const searchIndexWithValue = `${item.searchIndex}="${item.value}"`;
+      const searchIndexWithValue = `${
+        item.searchIndex
+      }="${item.value.replaceAll(`"`, `\\\"`)}"`;
 
       // We spread prefix, in case it is empty, and ensure no weird spaces
       return [...prefix, searchIndexWithValue].join(" ");
     });
 
   // TODO: Ensure that we want AND between dropdown items for each index
-  const AND = LogicalOperatorsEnum.AND;
+  const OR = LogicalOperatorsEnum.OR;
 
   const dropdownQuery = dropdownSearchIndices
     .filter((searchIndex) => !isEmpty(searchIndex.value))
@@ -28,7 +30,7 @@ export function convertStateToCql({ inputFields, dropdownSearchIndices } = {}) {
       //  For now we use AND with a variable
       return searchIndex.value
         .map((singleValue) => `${searchIndex.searchIndex}="${singleValue}"`)
-        .join(` ${AND} `);
+        .join(` ${OR} `);
     })
     // Items are wrapped inside parenthesis to ensure precedence
     .map((item) => `(${item})`)

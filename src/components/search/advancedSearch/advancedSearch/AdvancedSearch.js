@@ -37,6 +37,7 @@ export default function AdvancedSearch({ initState }) {
     inputFields,
     dropdownSearchIndices,
     updateStatesFromObject,
+    resetObjectState,
     parsedCQL,
     setParsedCQL,
   } = useAdvancedSearchContext();
@@ -125,10 +126,19 @@ export default function AdvancedSearch({ initState }) {
           </Col>
         </Row>
         <Row className={styles.buttonRow}>
-          <Col>
+          <Col className={styles.button_group}>
             <Button className={styles.button} onClick={doAdvancedSearch}>
               {Translate({ context: "header", label: "search" })}
             </Button>
+            <Link
+              border={{ bottom: { keepVisible: true } }}
+              onClick={() => {
+                router.push({ pathname: router.pathname, query: {} });
+                resetObjectState();
+              }}
+            >
+              Ryd søgning
+            </Link>
           </Col>
         </Row>
 

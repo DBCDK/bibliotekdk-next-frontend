@@ -10,6 +10,7 @@ export function dummy__languages() {
   };
 }
 
+// eslint-disable-next-line css-modules/no-unused-class
 export function dummy__specificmaterialTypes() {
   return {
     prioritisedItems: prioritisedMaterialTypeSpecific,
@@ -19,89 +20,98 @@ export function dummy__specificmaterialTypes() {
     overrideValueAs: "name",
   };
 }
+export function dummy__generalmaterialTypes() {
+  return {
+    prioritisedItems: prioritisedMaterialTypeGeneral,
+    prioritisedFormType: FormTypeEnum.CHECKBOX,
+    unprioritisedItems: unprioritisedMaterialTypeGeneral,
+    unprioritisedFormType: FormTypeEnum.CHECKBOX,
+    overrideValueAs: "name",
+  };
+}
 
 const prioritisedLanguages = [
   {
-    term: "Dansk",
+    term: "dansk",
     key: "dan",
   },
   {
-    term: "Engelsk",
+    term: "engelsk",
     key: "eng",
   },
   {
-    term: "Tysk",
+    term: "tysk",
     key: "ger",
   },
   {
-    term: "Fransk",
+    term: "fransk",
     key: "fre",
   },
 ];
 
 const unprioritisedLanguages = [
   {
-    term: "Svensk",
+    term: "svensk",
     key: "swe",
   },
   {
-    term: "Italiensk",
+    term: "italiensk",
     key: "ita",
   },
   {
-    term: "Spansk",
+    term: "spansk",
     key: "spa",
   },
   {
-    term: "Hebraisk",
+    term: "hebraisk",
     key: "heb",
   },
   {
-    term: "Hindi",
+    term: "hindi",
     key: "hin",
   },
   {
-    term: "Tjekkisk",
+    term: "tjekkisk",
     key: "cze",
   },
   {
-    term: "Finsk",
+    term: "finsk",
     key: "fin",
   },
   {
-    term: "Græsk",
+    term: "græsk",
     key: "gre",
   },
   {
-    term: "Kroatisk",
+    term: "kroatisk",
     key: "hrv",
   },
   {
-    term: "Ungarsk",
+    term: "ungarsk",
     key: "hun",
   },
   {
-    term: "Norsk",
+    term: "norsk",
     key: "nor",
   },
   {
-    term: "Polsk",
+    term: "polsk",
     key: "pol",
   },
   {
-    term: "Portugisisk",
+    term: "portugisisk",
     key: "por",
   },
   {
-    term: "Russisk",
+    term: "russisk",
     key: "rus",
   },
   {
-    term: "Tyrkisk",
+    term: "tyrkisk",
     key: "tur",
   },
   {
-    term: "Ukrainsk",
+    term: "ukrainsk",
     key: "ukr",
   },
 ];
@@ -181,5 +191,91 @@ const unprioritisedMaterialTypeSpecific = [
   {
     code: "COMIC",
     display: "tegneserie",
+  },
+];
+
+const prioritisedMaterialTypeGeneral = [
+  {
+    code: "BOOKS",
+    display: "bøger",
+  },
+  {
+    code: "EBOOKS",
+    display: "e-bøger",
+  },
+  {
+    code: "AUDIO_BOOKS",
+    display: "lydbøger",
+  },
+  {
+    code: "FILMS",
+    display: "film",
+  },
+  {
+    code: "MUSIC",
+    display: "musik",
+  },
+];
+
+const unprioritisedMaterialTypeGeneral = [
+  {
+    code: "ARTICLES",
+    display: "artikler",
+  },
+  {
+    code: "NEWSPAPER_JOURNALS",
+    display: "aviser og tidsskrifter",
+  },
+  {
+    code: "IMAGE_MATERIALS",
+    display: "billedmaterialer",
+  },
+  {
+    code: "BOARD_GAMES",
+    display: "brætspil",
+  },
+  {
+    code: "BOOKS",
+    display: "bøger",
+  },
+  {
+    code: "EBOOKS",
+    display: "e-bøger",
+  },
+  {
+    code: "COMPUTER_GAMES",
+    display: "computerspil",
+  },
+  {
+    code: "FILMS",
+    display: "film",
+  },
+  {
+    code: "TV_SERIES",
+    display: "tv-serier",
+  },
+  {
+    code: "AUDIO_BOOKS",
+    display: "lydbøger",
+  },
+  {
+    code: "MUSIC",
+    display: "musik",
+  },
+  {
+    code: "SHEET_MUSIC",
+    display: "noder",
+  },
+  {
+    code: "PODCASTS",
+    display: "podcasts",
+  },
+  {
+    code: "COMICS",
+    display: "tegneserier",
+  },
+  {
+    code: "OTHER",
+    display: "øvrige",
   },
 ];
