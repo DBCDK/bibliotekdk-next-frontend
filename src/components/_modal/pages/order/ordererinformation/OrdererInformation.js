@@ -8,7 +8,6 @@ import Email from "@/components/base/forms/email";
 import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
 import { getStylingAndErrorMessage } from "@/components/_modal/pages/order/utils/order.utils";
-import debounce from "lodash/debounce";
 
 export function OrdererInformation({
   isLoadingBranches,
