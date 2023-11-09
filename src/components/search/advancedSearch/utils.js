@@ -1,11 +1,12 @@
 import isEmpty from "lodash/isEmpty";
+import { LogicalOperatorsEnum } from "@/components/search/enums";
 
 export function convertStateToCql({ inputFields, dropdownSearchIndices } = {}) {
   if (!Array.isArray(inputFields) || inputFields.length === 0) {
     return "";
   }
 
-  const cqlQuery = inputFields
+  const inputFieldsQuery = inputFields
     .filter((item) => !isEmpty(item.value) && !isEmpty(item.searchIndex))
     .map((item) => {
       const prefix = !isEmpty(item.prefixLogicalOperator)
@@ -17,7 +18,8 @@ export function convertStateToCql({ inputFields, dropdownSearchIndices } = {}) {
       return [...prefix, searchIndexWithValue].join(" ");
     });
 
-  const AND = "AND";
+  // TODO: Ensure that we want AND between dropdown items for each index
+  const AND = LogicalOperatorsEnum.AND;
 
   const dropdownQuery = dropdownSearchIndices
     .filter((searchIndex) => !isEmpty(searchIndex.value))
@@ -35,7 +37,7 @@ export function convertStateToCql({ inputFields, dropdownSearchIndices } = {}) {
   return (
     "(" +
     [
-      ...(!isEmpty(cqlQuery) ? [cqlQuery.join(" ")] : []),
+      ...(!isEmpty(inputFieldsQuery) ? [inputFieldsQuery.join(" ")] : []),
       ...(!isEmpty(dropdownQuery) ? [dropdownQuery] : []),
     ].join(") AND (") +
     ")"
