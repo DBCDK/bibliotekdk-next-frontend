@@ -11,10 +11,7 @@ import {
   handleGoToLogin,
 } from "@/components/work/reservationbutton/utils";
 import { useMemo } from "react";
-import {
-  openOrderModal,
-  useBranchUserAndHasDigitalAccess,
-} from "@/components/work/utils";
+import { openOrderModal } from "@/components/work/utils";
 import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAndSelectedPids";
 import {
   accessFactory,

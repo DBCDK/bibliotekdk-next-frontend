@@ -125,6 +125,7 @@ export function getSeo(work) {
   };
 }
 
+// TODO: Remove this util function when new useUser hook is implemented - useUser/rights should be directly access in the individual components
 export function useBranchUserAndHasDigitalAccess() {
   const { authUser: user, isLoading } = useUser();
 
