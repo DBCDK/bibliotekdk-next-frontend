@@ -54,9 +54,7 @@ const MultiOrder = ({ context }) => {
   const { materials } = context;
   const analyzeRef = useRef();
   const [materialCounts, setMaterialCounts] = useState({});
-  const [duplicateOrdersMaterialIds, setDuplicateOrdersMaterialIds] = useState(
-    []
-  );
+  const [duplicateOrdersWorkIds, setDuplicateOrdersWorkIds] = useState([]);
   const [materialsToOrder, setMaterialsToOrder] = useState(materials);
   const { loanerInfo } = useUser();
   const orderMutation = useMutate();
@@ -154,7 +152,7 @@ const MultiOrder = ({ context }) => {
           )
         );
 
-      setDuplicateOrdersMaterialIds(duplicateOrders.map((mat) => mat.workId));
+      setDuplicateOrdersWorkIds(duplicateOrders.map((mat) => mat.workId));
       const materialsDigital = elements
         .filter(
           (element) =>
@@ -165,8 +163,6 @@ const MultiOrder = ({ context }) => {
             (mat) => mat.key === element.getAttribute("data-material-key")
           )
         );
-      console.log("duplicateMaterialIDs", duplicateOrdersMaterialIds);
-      console.log("duplicateOrders", duplicateOrders);
 
       setMaterialCounts({
         digitalMaterials: materialsDigital?.length ?? 0,
@@ -222,7 +218,7 @@ const MultiOrder = ({ context }) => {
               material={material}
               numberOfMaterialsToOrder={materialsToOrder?.length ?? 0}
               setMaterialsToOrder={setMaterialsToOrder}
-              setDuplicateOrdersMaterialIds={setDuplicateOrdersMaterialIds}
+              setDuplicateOrdersWorkIds={setDuplicateOrdersWorkIds}
               //context is responsible for updating periodica form via periodicaForm.js and modal.update
               periodicaForms={context?.periodicaForms}
             />
@@ -237,7 +233,7 @@ const MultiOrder = ({ context }) => {
             materialCounts={materialCounts}
             onSubmit={onSubmit}
             isLoading={isCreatingOrders}
-            duplicateOrdersMaterialIds={duplicateOrdersMaterialIds}
+            duplicateOrdersWorkIds={duplicateOrdersWorkIds}
           />
         </section>
       )}

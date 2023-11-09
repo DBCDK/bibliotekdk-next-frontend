@@ -17,7 +17,7 @@ const CheckoutForm = ({
   materialCounts,
   onSubmit,
   isLoading,
-  duplicateOrdersMaterialIds,
+  duplicateOrdersWorkIds,
 }) => {
   const {
     digitalMaterials,
@@ -29,7 +29,7 @@ const CheckoutForm = ({
   const disabled =
     materialsMissingAction > 0 ||
     materialsNotAllowed > 0 ||
-    duplicateOrdersMaterialIds?.length > 0;
+    duplicateOrdersWorkIds?.length > 0;
   const [mail, setMail] = useState(null);
   const { userInfo, pickupBranchInfo, accessTypeInfo } =
     useOrderPageInformation({
@@ -63,14 +63,14 @@ const CheckoutForm = ({
     if (onSubmit) onSubmit(pickupBranch);
   };
 
-  const scrollToMaterialId = () => {
+  const scrollToWorkId = () => {
     const container = document.getElementById("modal_dialog");
 
     const scrollContainer = container.querySelectorAll(
       ".modal_page.page-current .page_content"
     )[0];
 
-    const el = document.getElementById(duplicateOrdersMaterialIds[0]);
+    const el = document.getElementById(duplicateOrdersWorkIds[0]);
 
     scrollContainer.scrollTo({
       top: el.offsetTop,
@@ -136,7 +136,7 @@ const CheckoutForm = ({
             />
           </Text>
         )}
-        {duplicateOrdersMaterialIds?.length > 0 && (
+        {duplicateOrdersWorkIds?.length > 0 && (
           <Text type="text3" className={styles.errorLabel}>
             <Translate
               context="bookmark-order"
@@ -145,10 +145,10 @@ const CheckoutForm = ({
                   ? "multiorder-duplicate-order-singular"
                   : "multiorder-duplicate-order"
               }
-              vars={[duplicateOrdersMaterialIds?.length]}
+              vars={[duplicateOrdersWorkIds?.length]}
             />{" "}
             <Link
-              onClick={scrollToMaterialId}
+              onClick={scrollToWorkId}
               scroll={true}
               className={styles.chooseOrderAgain}
               border={{ top: false, bottom: { keepVisible: true } }}

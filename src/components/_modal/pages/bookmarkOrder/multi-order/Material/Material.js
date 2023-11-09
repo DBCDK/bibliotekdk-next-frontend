@@ -61,7 +61,7 @@ const Material = ({
   material,
   numberOfMaterialsToOrder = 0,
   setMaterialsToOrder,
-  setDuplicateOrdersMaterialIds,
+  setDuplicateOrdersWorkIds,
   periodicaForms,
   backgroundColorOverride = BackgroundColorEnum.NEUTRAL,
 }) => {
@@ -179,7 +179,7 @@ const Material = ({
           else modal.update({});
         }}
         acceptOrder={() => {
-          setDuplicateOrdersMaterialIds((prev) =>
+          setDuplicateOrdersWorkIds((prev) =>
             prev.filter((m) => m !== material.workId)
           ),
             removeOrderIdFromSession(orderKey), //keep track in multiorder.page of which pids have been ordered to force update, when this number changes
