@@ -29,3 +29,9 @@
 .button {
   width: 300px;
 }
+
+.button_group {
+  display: flex;
+  gap: var(--pt2);
+  align-items: center;
+}

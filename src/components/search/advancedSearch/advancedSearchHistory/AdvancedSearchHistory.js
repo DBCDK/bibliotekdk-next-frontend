@@ -29,7 +29,12 @@ export function AdvancedSearchHistory() {
       })}
       className={styles.accordionwrap}
     >
-      <Item title={accordionTitle} key={1} id="søgehistorik-1">
+      <Item
+        title={accordionTitle}
+        key={1}
+        id="søgehistorik-1"
+        additionalTxt={[""]}
+      >
         {storedValue?.map((stored, index) => {
           return (
             <div key={index} className={styles.history}>

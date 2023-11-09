@@ -171,6 +171,7 @@ Item.propTypes = {
   ]),
   eventKey: PropTypes.string.isRequired,
   id: PropTypes.string,
+  additionalTxt: PropTypes.string,
 };
 
 /**

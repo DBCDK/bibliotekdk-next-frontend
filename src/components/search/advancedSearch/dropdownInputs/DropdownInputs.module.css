@@ -1,0 +1,16 @@
+.dropdown_inputs_wrapper {
+  padding-block: var(--pt4);
+}
+
+.flex_wrapper {
+  display: flex;
+  gap: var(--pt4);
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.dropdown_with_title {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--pt1_5);
+}
