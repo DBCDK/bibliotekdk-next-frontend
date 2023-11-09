@@ -14,6 +14,10 @@ The development environment may be set up using either npm or docker-compose.
 - `npm run dev:next` starts Next.js development server that runs the actual application
 - `npm run cy:open` runs the test suite
 
+### Cypress single test in with cypress run
+
+- cd into (the first) e2e folder and execute `npx cypress@10.3.0 run --spec "./cypress/e2e/[name of the test].cy.js"` will run one specific test.
+
 ### docker-compose
 
 - `docker-compose -f docker-compose-dev.yml up` will start Storybook on port 4000, Next.js on port 3000
