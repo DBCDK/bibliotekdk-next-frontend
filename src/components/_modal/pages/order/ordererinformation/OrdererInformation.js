@@ -57,7 +57,7 @@ export function OrdererInformation({
           disabled={isLoading || hasAuthMail}
           value={email || ""}
           id="order-user-email"
-          onChange={debounce(onMailChange, 200)}
+          onChange={onMailChange}
           readOnly={isLoading || hasAuthMail}
           skeleton={isLoadingBranches && !email}
         />
