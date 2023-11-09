@@ -22,12 +22,15 @@ export const StatusEnum = Object.freeze({
  * @returns
  */
 export function findBackgroundColor({
-  pidHasBeenOrdered,
+  hasAlreadyBeenOrdered,
   isPeriodicaLike,
   hasPeriodicaForm,
   notAvailableAtLibrary,
 }) {
-  if ((isPeriodicaLike && !hasPeriodicaForm) || pidHasBeenOrdered) {
+  if (
+    (isPeriodicaLike && !hasPeriodicaForm) ||
+    (hasAlreadyBeenOrdered && !isPeriodicaLike)
+  ) {
     return BackgroundColorEnum.YELLOW;
   }
   if (notAvailableAtLibrary) {

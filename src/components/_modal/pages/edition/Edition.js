@@ -246,7 +246,7 @@ export default function Wrap({
   });
 
   if (isMaterialCard) {
-    const hasbeenOrdered = pidHasAlreadyBeenOrdered(orderKey);
+    const hasAlreadyBeenOrdered = pidHasAlreadyBeenOrdered(orderKey);
 
     const { flattenedGroupedSortedManifestations } =
       manifestationMaterialTypeFactory(manifestations);
@@ -264,7 +264,8 @@ export default function Wrap({
       );
     }
 
-    if (hasbeenOrdered) {
+    if (hasAlreadyBeenOrdered && !isPeriodicaLike) {
+      //TODO currently we only check for non-periodica orders
       children.push(
         <HasBeenOrderedRow
           orderDate={new Date()}

@@ -88,7 +88,7 @@ const Material = ({
     : manifestations.map((m) => m.pid) || [];
 
   const orderKey = createOrderKey(pids);
-  const pidHasBeenOrdered = pidHasAlreadyBeenOrdered(orderKey);
+  const hasAlreadyBeenOrdered = pidHasAlreadyBeenOrdered(orderKey);
 
   const { data: orderPolicyData, isLoading: orderPolicyIsLoading } = useData(
     pids &&
@@ -108,7 +108,7 @@ const Material = ({
 
     setBackgroundColor(
       findBackgroundColor({
-        pidHasBeenOrdered,
+        hasAlreadyBeenOrdered,
         isPeriodicaLike,
         hasPeriodicaForm: !!periodicaForm,
         notAvailableAtLibrary: orderPolicyIsLoading
@@ -167,7 +167,8 @@ const Material = ({
     );
   }
 
-  if (pidHasBeenOrdered) {
+  if (hasAlreadyBeenOrdered && !isPeriodicaLike) {
+    //TODO currently we only check for non-periodica orders
     children.push(
       <HasBeenOrderedRow
         orderDate={new Date()}
@@ -261,7 +262,9 @@ const Material = ({
       case BackgroundColorEnum.RED:
         return StatusEnum.NOT_AVAILABLE;
       case BackgroundColorEnum.YELLOW:
-        if (pidHasBeenOrdered) return StatusEnum.HAS_BEEN_ORDERED;
+        if (hasAlreadyBeenOrdered && !isPeriodicaLike)
+          //TODO currently we only check for non-periodica orders
+          return StatusEnum.HAS_BEEN_ORDERED;
         else return StatusEnum.NEEDS_EDITION;
       case BackgroundColorEnum.NEUTRAL:
         if (isDeliveredByDigitalArticleService) return StatusEnum.DIGITAL;

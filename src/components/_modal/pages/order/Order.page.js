@@ -132,7 +132,7 @@ function Order({
     const hasPid = !!pid;
     const requireYear = !!isPeriodicaLike;
     const hasYear = !!context?.periodicaForm?.publicationDateOfComponent;
-    const firstOrder = !hasAlreadyBeenOrdered;
+    const firstOrder = !hasAlreadyBeenOrdered || isPeriodicaLike; //TODO currently we only check for non-periodica orders
 
     const status =
       hasMail &&
@@ -149,11 +149,11 @@ function Order({
       },
       firstOrder: {
         status: firstOrder,
-        message: hasAlreadyBeenOrdered && { label: "alreadyOrderedText" },
+        message: hasAlreadyBeenOrdered &&
+          !isPeriodicaLike && { label: "alreadyOrderedText" }, //TODO currently we only check for non-periodica orders
       },
       hasBranchId: { status: hasBranchId },
       hasPid: { status: hasPid },
-      hasAlreadyBeenOrdered,
       requireYear: {
         status: hasYear,
         message: requireYear && !hasYear && { label: "require-year" },
@@ -234,7 +234,7 @@ function Order({
         hasValidationErrors={hasValidationErrors}
         onClick={onSubmitOrder}
         blockedForBranch={borrowerCheck && !borrowerStatus?.allowed}
-        hasAlreadyBeenOrdered={hasAlreadyBeenOrdered}
+        hasAlreadyBeenOrdered={hasAlreadyBeenOrdered && !isPeriodicaLike} //TODO currently we only check for non-periodica orders
       />
     </div>
   );
