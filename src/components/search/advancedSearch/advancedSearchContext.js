@@ -10,6 +10,7 @@ import {
   useDefaultItemsForDropdownUnits,
 } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
 import isEmpty from "lodash/isEmpty";
+// import { useRouter } from "next/router";
 
 export const defaultDropdownIndices = [
   { searchIndex: DropdownIndicesEnum.LANGUAGES, value: [] },
@@ -40,19 +41,31 @@ function dropdownReducer(prev, current) {
   });
 }
 
+const initialInputFields = [
+  { value: "", prefixLogicalOperator: null, searchIndex: "term.default" },
+  {
+    value: "",
+    prefixLogicalOperator: LogicalOperatorsEnum.AND,
+    searchIndex: "term.title",
+  },
+];
+
 export default function AdvancedSearchProvider({ children }) {
+  // TODO: Move this part of the state into Context
+  //  So we are able to control default view from context as well
+  // const router = useRouter();
+  // const { page: pageNo = 1 } = router.query;
+  // const cql = router?.query?.cql || null;
+  // let fieldSearch = router?.query?.fieldSearch;
+  // if (fieldSearch) {
+  //   fieldSearch = JSON.parse(fieldSearch);
+  // }
+
   //prefixLogicalOperator is an enum of AND, OR , NOT
   /** @typedef {("AND"|"OR"|"NOT"|null)} PrefixLogicalOperator */
   /** @typedef {{value: string, prefixLogicalOperator: PrefixLogicalOperator, searchIndex: string}} InputField */
   const [/** @type Array.<InputField> */ inputFields, setInputFields] =
-    useState([
-      { value: "", prefixLogicalOperator: null, searchIndex: "term.default" },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.title",
-      },
-    ]);
+    useState(initialInputFields);
 
   const [dropdownInitState, setDropdownInitState] = useState([]);
 
@@ -148,6 +161,11 @@ export default function AdvancedSearchProvider({ children }) {
     }
   }
 
+  function resetObjectState() {
+    setInputFields(initialInputFields);
+    setDropdownInitState(defaultDropdownIndices);
+  }
+
   /** @typedef {{
         inputFields: Array.<InputField>,
         removeInputField: (indexToRemove: number) => void,
@@ -157,8 +175,9 @@ export default function AdvancedSearchProvider({ children }) {
         handleIndexChange: (index: number, newOperator: string) => void,
         dropdownUnits: Array.<DropdownUnit>,
         dropdownSearchIndices: Array.<DropdownSearchIndex>,
-        updateDropdownSearchIndices: UpdateDropdownSearchIndices
+        updateDropdownSearchIndices: UpdateDropdownSearchIndices,
         updateStatesFromObject: ({inputFields?: Array.<InputField>, dropdownSearchIndices?: Array.<DropdownSearchIndex>}) => void,
+        resetObjectState: () => void,
         parsedCQL: string,
         setParsedCQL: (value: string) => void,
    }} AdvancedSearchContextType */
@@ -173,6 +192,7 @@ export default function AdvancedSearchProvider({ children }) {
     dropdownSearchIndices,
     updateDropdownSearchIndices,
     updateStatesFromObject,
+    resetObjectState,
     parsedCQL,
     setParsedCQL,
   };

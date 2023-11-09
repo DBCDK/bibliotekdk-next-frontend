@@ -9,6 +9,7 @@ export function prettyParseCql(state) {
     .replaceAll(`\\"`, `\'`)
     .replaceAll(`"`, `\n"\n`)
     .replaceAll(`\'`, `\"`)
+    .replaceAll(`\\"`, `\"`)
     .replaceAll(" AND ", "\nAND\n")
     .replaceAll(" OR ", "\nOR\n")
     .replaceAll(" NOT ", "\nNOT\n")
