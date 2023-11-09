@@ -11,8 +11,7 @@ export function prettyParseCql(state) {
     .replaceAll(`\'`, `\"`)
     .replaceAll(`\\"`, `\"`)
     .replaceAll(" AND ", "\nAND\n")
-    .replaceAll(" OR ", "\nOR\n")
-    .replaceAll(" NOT ", "\nNOT\n")
+    .replaceAll(" NOT ", "\nNOT ")
     .replaceAll("((", "((")
     .replaceAll("))", "))")
     .trim();
