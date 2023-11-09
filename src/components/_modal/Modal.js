@@ -287,7 +287,6 @@ function Container({ children, className = {}, mock = {} }) {
     <div
       id="modal_dimmer"
       data-cy="modal-dimmer"
-      aria-hidden={true}
       className={`modal_dimmer ${className.dimmer || ""} ${visibleClass}`}
       onClick={() => modal.clear()}
     >
@@ -296,7 +295,6 @@ function Container({ children, className = {}, mock = {} }) {
         data-cy="modal-dialog"
         aria-modal="true"
         role="dialog"
-        // tabIndex={isVisible ? 0 : -1}
         ref={modalRef}
         aria-hidden={!isVisible}
         className={`modal_dialog ${
@@ -307,11 +305,6 @@ function Container({ children, className = {}, mock = {} }) {
         <div className="modal_container">
           <FocusLock autoFocus disabled={dialogStatus === "closed"} returnFocus>
             {modal.stack.map((obj, index) => {
-              // prevent render if modal/component is not visible
-              // if (!obj.active) {
-              //   return null;
-              // }
-
               // Find component by id in container children
               const page = children.find((child) => {
                 if (child.props.id === obj.id) {
