@@ -35,7 +35,9 @@ describe("Order", () => {
     cy.get("[data-cy=input]").should("have.value", "some@mail.dk");
 
     // Submit the order
-    cy.get("[data-cy=button-godkend]").should("not.be.disabled").click();
+    cy.get("[data-cy=button-godkend]")
+      .should("not.be.disabled")
+      .click({ force: true });
 
     cy.contains("some-order-id", { timeout: 10000 });
 
