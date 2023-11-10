@@ -2,7 +2,7 @@ import * as orderMutations from "@/lib/api/order.mutations";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import { isFFUAgency } from "@/utils/agency";
-
+import animations from "css/animations";
 // elements we want
 const elements = [
   "a",
