@@ -88,10 +88,12 @@ export function setAlreadyOrdered(orderKey) {
  * @return {boolean} true if orderKey is part of alreadyOrdered keys
  */
 export function pidHasAlreadyBeenOrdered(orderKey) {
-  console.log("orderKey", orderKey);
-  return !!JSON.parse(
-    sessionStorage.getItem("alreadyOrdered") || "[]"
-  ).includes(orderKey);
+  //console.log("orderKey", orderKey);
+  const storage = JSON.parse(sessionStorage.getItem("alreadyOrdered") || "[]");
+  //console.log("storage", storage);
+  const alreadyOrdered = storage.includes(orderKey);
+  //console.log("alreadyOrdered", alreadyOrdered);
+  return alreadyOrdered;
 }
 
 export function removeOrderIdFromSession(orderKey) {

@@ -79,9 +79,19 @@ function Order({
   const contextWithOrderPids = { ...context, orderPids };
   const orderKey = createOrderKey(orderPids);
   const hasAlreadyBeenOrdered = pidHasAlreadyBeenOrdered(orderKey);
+  //If user wants to order again, but closes modal before ordering, we want to show warning again
   const [showAlreadyOrdered, setShowAlreadyOrdered] = useState(
     hasAlreadyBeenOrdered
   );
+
+  //always show acutal value of duplicate order warning again of hasAlreaydBeenOrdered, when we open modal.
+  useEffect(() => {
+    if (!modal) return;
+    const orderModalIdx = modal?.index("order");
+    if (modal?.index("order") > -1 && modal.stack[orderModalIdx].active) {
+      setShowAlreadyOrdered(hasAlreadyBeenOrdered);
+    }
+  }, [JSON.stringify(modal.stack)]);
 
   // Update email from user account
   useEffect(() => {
@@ -173,7 +183,6 @@ function Order({
   ]);
 
   function onSubmitOrder() {
-    console.log("clicking");
     if (validated.status) {
       modal.push("receipt", {
         pids: orderPids,
@@ -196,7 +205,6 @@ function Order({
         onSubmit && onSubmit(orderPids, pickupBranch, context?.periodicaForm);
       }
     } else {
-      console.log("HAS VALIDATION ERRORS");
       setHasValidationErrors(true);
     }
   }
