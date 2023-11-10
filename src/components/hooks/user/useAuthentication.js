@@ -1,6 +1,5 @@
-import { useData, useMutate } from "@/lib/api/api";
+import { useData } from "@/lib/api/api";
 import { useSession } from "next-auth/react";
-import * as sessionFragments from "@/lib/api/session.fragments";
 import { authentication as authenticationFragment } from "@/lib/api/authentication.fragments";
 
 /**
@@ -12,9 +11,6 @@ export default function useAuthentication() {
 
   // Fetch authentication data stored in fbi-api
   const { data, isLoading } = useData(authenticationFragment());
-
-  // Used for sending mutate requests to FBI-API
-  const mutateFbiApi = useMutate();
 
   // Check if the user is authenticated based on the presence of a uniqueId.
   const isAuthenticated = !!authenticatedSession?.user?.userId;
@@ -30,21 +26,11 @@ export default function useAuthentication() {
     !isAuthenticated &&
     Object.keys(data?.session?.userParameters || {}).length > 0;
 
-  // Either as an authenticated user, or as a guest user
-  const isLoggedIn = isAuthenticated || isGuestUser;
-
   return {
     isAuthenticated,
     hasCulrUniqueId,
     isGuestUser,
-    isLoggedIn,
     isCPRValidated,
     isLoading,
-    guestLogout: async () => {
-      // Delete global loaner info object
-      await mutateFbiApi.post(sessionFragments.deleteSession());
-      // Broadcast update
-      await guestSessionMutate();
-    },
   };
 }
