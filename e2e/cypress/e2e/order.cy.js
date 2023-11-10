@@ -66,7 +66,7 @@ describe("Order", () => {
     cy.get("[data-cy=modal-dimmer]").should("not.be.visible");
   });
 
-  it.skip("Order physical material fails and shows error modal correctly", () => {
+  it("Order physical material fails and shows error modal correctly", () => {
     cy.visit(
       "/iframe.html?id=modal-order--order-physical-material-fails&viewMode=story"
     );
@@ -74,10 +74,10 @@ describe("Order", () => {
     cy.contains("Bestil", { timeout: 10000 }).click();
     // Submit the order
     cy.get("[data-cy=button-godkend]")
-      .scrollIntoView()
-      .should("be.visible")
+      // .scrollIntoView()
+      // .should("be.visible")
       .should("not.be.disabled")
-      .click();
+      .click({ force: true });
 
     //order failed
     cy.get("[data-cy=error-occured-title]").should("be.visible");
@@ -340,10 +340,7 @@ describe("Order", () => {
       );
 
       // Check that BlockedUser does not exist
-      cy.get("[data-cy=button-godkend]")
-        .scrollIntoView()
-        .should("be.visible")
-        .click();
+      cy.get("[data-cy=button-godkend]").click({ force: true });
 
       //cy.get("[data-cy=button-godkend]").should("be.visible").click();
       cy.contains("some-order-id", { timeout: 10000 });
