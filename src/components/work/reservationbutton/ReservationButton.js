@@ -77,7 +77,7 @@ function ReservationButtonWrapper({
     !manifestationsResponse ||
     manifestationsResponse?.isLoading ||
     workResponse?.isLoading ||
-    user.isLoading
+    user?.isLoading
   ) {
     return (
       <Button

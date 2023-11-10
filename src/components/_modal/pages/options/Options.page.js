@@ -104,7 +104,7 @@ export function Options({ modal, context, user }) {
 
   // the next one checks for digital access .. for users already logged in :)
   // it is false if user is not logged in
-  let { hasDigitalAccess } = useBranchUserAndHasDigitalAccess();
+  const hasDigitalAccess = user?.rights?.digitalArticleService;
 
   const { getAllowedAccessesByTypeName } = useMemo(() => {
     return accessFactory(manifestations);

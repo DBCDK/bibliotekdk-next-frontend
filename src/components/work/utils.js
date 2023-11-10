@@ -124,21 +124,10 @@ export function getSeo(work) {
   };
 }
 
-// TODO: Remove this util function when new useUser hook is implemented - useUser/rights should be directly access in the individual components
-export function useBranchUserAndHasDigitalAccess() {
+export function useRelevantAccessesForOrderPage(selectedPids) {
   const { authUser: user, isLoading } = useUser();
 
   const hasDigitalAccess = user?.rights?.digitalArticleService;
-
-  return {
-    branchIsLoading: isLoading,
-    hasDigitalAccess,
-  };
-}
-
-export function useRelevantAccessesForOrderPage(selectedPids) {
-  const { branchIsLoading, hasDigitalAccess } =
-    useBranchUserAndHasDigitalAccess();
 
   const manifestationsResponse = useData(
     selectedPids &&
@@ -174,7 +163,7 @@ export function useRelevantAccessesForOrderPage(selectedPids) {
   );
 
   return {
-    branchIsLoading: branchIsLoading,
+    branchIsLoading: isLoading,
     manifestationResponse: manifestationsResponse,
     manifestations: manifestations,
     allowedAccessesByTypeName: allowedAccessesByTypeName,
