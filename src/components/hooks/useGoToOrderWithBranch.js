@@ -110,19 +110,18 @@ export function useGoToOrderWithBranch({
     //  - User is logged on is on selected agency borrowerCheck -> Order modal
     //  - User not logged in and agency has borrowerCheck -> adgangsplatformen modal
     //  - User not logged in and agency does not have borrowerCheck -> loanerForm modal
-    handleOnSelect(
-      branch,
-      modal,
-      {
+    handleOnSelect({
+      branch: branch,
+      modal: modal,
+      context: {
         ...context,
         initial: {
           agencies: pickupBranchUserAgencies,
         },
       },
-      updateLoanerInfo,
-      callbackUID,
-      overrideOrderModalPush
-    );
+      updateLoanerInfo: updateLoanerInfo,
+      overrideOrderModalPush: overrideOrderModalPush,
+    });
   }
 
   return {
