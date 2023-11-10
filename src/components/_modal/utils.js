@@ -250,6 +250,10 @@ export function escapeColons(phrase) {
   return phrase.replace(":", "%3A");
 }
 
+function buildHtmlLink(txt, url) {
+  return `<a href="${url}"} target="_blank" class="${animations.underlineContainer} ${animations.top_line_false} ${animations.top_line_keep_false}">${txt}</a>`;
+}
+
 /**
  * Select a branch and handle login
  * either the user is already logged in for that agency
