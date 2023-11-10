@@ -5,7 +5,6 @@
 import Translate from "@/components/base/translate/Translate";
 import { useModal } from "@/components/_modal/Modal";
 import IconButton from "@/components/base/iconButton/IconButton";
-import useUser from "@/components/hooks/useUser";
 
 import useVerification from "@/components/hooks/useVerification";
 import useAccessToken from "@/components/hooks/user/useAccessToken";

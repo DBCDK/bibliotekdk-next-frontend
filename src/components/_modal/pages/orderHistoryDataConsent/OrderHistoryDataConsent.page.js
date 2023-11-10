@@ -11,7 +11,6 @@ import { setPersistUserDataValue } from "@/lib/api/userData.mutations";
 import { useMutate } from "@/lib/api/api";
 import { useData } from "@/lib/api/api";
 import * as userFragments from "@/lib/api/user.fragments";
-import useUser from "@/components/hooks/useUser";
 import { useEffect } from "react";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 

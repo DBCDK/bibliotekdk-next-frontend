@@ -20,13 +20,6 @@ let loanerInfoMock = {
 /**
  * Mock used in storybook
  */
-function useAccessTokenMock() {
-  return "dummy-token";
-}
-
-/**
- * Mock used in storybook
- */
 function useUserMock() {
   const useUserMockKey = "useUserMock";
   const authUser = {

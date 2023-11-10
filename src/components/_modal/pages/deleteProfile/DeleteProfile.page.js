@@ -4,7 +4,6 @@
 import { useMutate } from "@/lib/api/api";
 import { useData } from "@/lib/api/api";
 import * as userFragments from "@/lib/api/user.fragments";
-import useUser from "@/components/hooks/useUser";
 import Top from "@/components/_modal/pages/base/top";
 import styles from "./DeleteProfile.module.css";
 import Text from "@/components/base/text";

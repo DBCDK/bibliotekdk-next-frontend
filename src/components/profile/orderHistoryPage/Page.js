@@ -2,7 +2,6 @@ import Translate from "@/components/base/translate/Translate";
 import Layout from "../profileLayout";
 import styles from "./orderHistoryPage.module.css";
 import { useData } from "@/lib/api/api";
-import useUser from "@/components/hooks/useUser";
 import Text from "@/components/base/text";
 import Pagination from "@/components/search/pagination/Pagination";
 
