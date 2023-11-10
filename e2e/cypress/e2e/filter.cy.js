@@ -14,8 +14,9 @@ describe("Filter", () => {
     cy.visit("/iframe.html?id=modal-filter--connected");
     cy.contains("button", "open filters").click();
     cy.wait(1000);
-    cy.focused().tab().contains("Luk");
-    cy.focused().tabs(5).contains("Luk");
+    cy.get("body").tab();
+    cy.focused().contains("Luk");
+    cy.focused().tabs(6).contains("Ryd alt");
   });
 
   it(`Can update filters in query and sync with url`, () => {
