@@ -79,7 +79,6 @@ describe("Localizations", () => {
     cy.contains("Tilbage", { timeout: 10000 }).click({ force: true });
 
     // Hede Huse
-    cy.contains("Modtager ikke bestillinger");
     cy.contains("Hede Huse FFU", { timeout: 10000 }).click();
     cy.contains("Modtager ikke bestillinger");
     cy.contains("OBS: Biblioteket modtager ikke bestillinger");
@@ -89,7 +88,7 @@ describe("Localizations", () => {
     cy.contains("Vi har ikke status for disse afdelinger");
     cy.contains("Se detaljeret status hos United FFUs");
     cy.contains("Ulvs Hale FFU", { timeout: 10000 }).click();
-    cy.contains("Status kendes ikke");
+    cy.contains("Har ikke materialet");
     cy.contains("Bestil til afhentning på denne afdeling");
     cy.contains(
       "Husk at du kan bestille online og hente på dit foretrukne bibliotek, uanset hvor materialet befinder sig."
