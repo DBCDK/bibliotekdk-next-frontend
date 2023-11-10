@@ -313,45 +313,35 @@ function Container({ children, className = {}, mock = {} }) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="modal_container">
-          <FocusLock autoFocus disabled={dialogStatus === "closed"} returnFocus>
-            {modal.stack.map((obj, index) => {
-              // Find component by id in container children
-              const page = children.find((child) => {
-                if (child.props.id === obj.id) {
-                  return child;
-                }
-              });
-
-              // No matching page was found
-              if (!page) {
-                return null;
+          {modal.stack.map((obj, index) => {
+            // Find component by id in container children
+            const page = children.find((child) => {
+              if (child.props.id === obj.id) {
+                return child;
               }
+            });
 
-              /**
-               * @TODO Rework this rendering.
-               * We can't contain the focus if we render all the modal pages, The DOM would be full of hidden content.
-               * This probably needs a rework
-               */
-              if (!obj.active) {
-                return null;
-              }
+            // No matching page was found
+            if (!page) {
+              return null;
+            }
 
-              // Enrich page components with props
-              return React.cloneElement(page, {
-                modal: { ...modal, ...mock },
+            // Enrich page components with props
+            return React.cloneElement(page, {
+              modal: { ...modal, ...mock },
 
-                // stack index
-                index,
-                context: obj.context,
-                active: obj.active,
-                className: className.page || "",
-                key: `modal-page-${index}-${obj.id}`,
-                dataCy: `modal-page-${index}`,
-                mock: page.props.mock || {},
-                props: page.props,
-              });
-            })}
-          </FocusLock>
+              // stack index
+              index,
+              context: obj.context,
+              active: obj.active,
+              className: className.page || "",
+              key: `modal-page-${index}-${obj.id}`,
+              dataCy: `modal-page-${index}`,
+              mock: page.props.mock || {},
+              props: page.props,
+              dialogStatus: dialogStatus,
+            });
+          })}
         </div>
       </dialog>
     </>
@@ -359,8 +349,6 @@ function Container({ children, className = {}, mock = {} }) {
 }
 
 /**
- * blah blah
- *
  * @param {Object} props
  * @param {string} props.index
  * @param {string} props.active
@@ -377,7 +365,8 @@ function Page(props) {
   const [status, setStatus] = useState("page-after");
 
   // props used on page
-  const { index, active, modal, className, dataCy, mock } = props;
+  const { index, active, modal, className, dataCy, mock, dialogStatus } = props;
+  const [isTransitioning, setIsTransitioning] = useState(true);
   // props we will pass to the component living on the page
   const passedProps = {
     active,
@@ -394,6 +383,15 @@ function Page(props) {
 
   // Add shadow to bottom of scroll area, if last element is not visible
   const shadowClass = inView ? "" : "page-shadow";
+
+  useEffect(() => {
+    setIsTransitioning(true);
+    const timer = setTimeout(() => {
+      setIsTransitioning(false);
+    }, 350);
+
+    return () => clearTimeout(timer);
+  }, [active]);
 
   // Update the page position status
   // This will positioning the pages left, right og in the center of the modal view.
@@ -416,10 +414,15 @@ function Page(props) {
       data-cy={dataCy}
       aria-hidden={!active}
     >
-      <div className={`page_content`}>
+      <FocusLock
+        className="page_content"
+        autoFocus
+        disabled={dialogStatus === "closed" || !active || isTransitioning}
+        returnFocus
+      >
         <props.component {...passedProps} />
         <div ref={ref} className="page_bottom" />
-      </div>
+      </FocusLock>
       <div className="content_shadow" />
     </div>
   );

@@ -58,7 +58,6 @@
   right: 0;
   top: 0;
   bottom: 0;
-  translate: none;
   left: unset;
   width: 100%;
   max-width: 576px;
@@ -90,8 +89,6 @@
 /* container */
 
 .modal_container {
-  width: 300%;
-  transform: translateX(calc((100% / 3) * -1));
   color: black;
   height: 100%;
   position: relative;
@@ -99,18 +96,17 @@
 
 /* page */
 .modal_page {
-  width: calc(100% / 3);
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
   height: 100%;
-
   background-color: white;
 
   /* animation */
   transition: transform 330ms ease-out;
-
-  /* ensures pages "spawn" position is stacked top-right */
-  position: absolute;
-  right: 0;
-  top: 0;
 }
 
 /* when modal opens */
@@ -128,20 +124,20 @@
 
 .modal_page.page-current {
   /* center of view (visible) */
-  transform: translateX(-100%);
+  transform: translateX(0%);
   z-index: 1;
 }
 
 .modal_page.page-after {
   /* right of view (invisible) */
-  transform: translateX(0);
-  z-index: 0;
+  transform: translateX(100%);
+  z-index: 1;
 }
 
 .modal_page.page-before {
   /* left of view (invisible) */
-  transform: translateX(-200%);
-  z-index: 0;
+  transform: translateX(-100%);
+  z-index: 1;
 }
 
 /* Shadow has its own div, to cover all elements (inset shadow will not cover images and form elements) */
@@ -170,18 +166,13 @@
 /*  */
 
 .page_content {
+  position: relative;
   height: 100%;
   overflow-y: auto;
 
   /* animation */
   transition-duration: 0.5s;
 }
-
-/* .modal_page.page-shadow {
-  -moz-box-shadow: inset 0 -24px 24px -24px rgba(0, 0, 0, 0.75);
-  -webkit-box-shadow: inset 0 -24px 24px -24px rgba(0, 0, 0, 0.75);
-  box-shadow: inset 0 -24px 24px -24px rgba(0, 0, 0, 0.75);
-} */
 
 /* Set 100% height to user component */
 .page_content > *:first-child {
