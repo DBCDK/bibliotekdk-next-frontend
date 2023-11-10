@@ -6,7 +6,6 @@ import {
 } from "@/lib/accessFactoryUtils";
 import useUser from "@/components/hooks/useUser";
 import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAndSelectedPids";
-import { useBranchUserAndHasDigitalAccess } from "@/components/work/utils";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 
 /**

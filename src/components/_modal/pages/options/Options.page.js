@@ -1,9 +1,6 @@
 import styles from "./Options.module.css";
 import Top from "../base/top";
-import {
-  openOrderModal,
-  useBranchUserAndHasDigitalAccess,
-} from "@/components/work/utils";
+import { openOrderModal } from "@/components/work/utils";
 import { getTemplateProps } from "@/components/_modal/pages/options/Options.helper";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
