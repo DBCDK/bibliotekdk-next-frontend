@@ -2787,6 +2787,10 @@
         "da": "eller med MitID",
         "en": "or login with MitID"
       },
+      "mit-id": {
+        "da": "MitID",
+        "en": "MitID"
+      },
       "create-library-user": {
         "da": "Opret dig som låner på et bibliotek",
         "en": "Create a user at a library"
