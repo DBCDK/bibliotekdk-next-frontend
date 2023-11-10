@@ -17,11 +17,6 @@ function getLabel(agency, onlyHoldingsOnAgency) {
   const availabilityOnAgencyAccumulated =
     agency?.availabilityOnAgencyAccumulated;
 
-  console.log(
-    "agency.availabilityAccumulated: ",
-    agency.availabilityAccumulated
-  );
-
   return agency?.pickupAllowed === false &&
     [AvailabilityEnum.NOT_OWNED, AvailabilityEnum.NOT_OWNED_FFU].includes(
       availabilityOnAgencyAccumulated

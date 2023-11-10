@@ -232,8 +232,6 @@ export function getAvailabilityAccumulated(availability) {
  * @returns {string}
  */
 function checkAvailabilityOnAgencyLevel(item) {
-  console.log("item: ", item);
-
   return getFirstMatch(true, AvailabilityEnum.UNKNOWN, [
     [dateIsToday(item?.expectedDelivery), AvailabilityEnum.NOW],
     [dateIsLater(item?.expectedDelivery), AvailabilityEnum.LATER],

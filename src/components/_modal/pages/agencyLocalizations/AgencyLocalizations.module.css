@@ -12,7 +12,7 @@
 }
 
 .no_match_for_library_search {
-  padding-top: calc(var(--pt05) + var(--pt05));
+  padding-top: var(--pt1);
 }
 
 .hint_for_no_search_results {
