@@ -90,11 +90,6 @@
   position: relative;
 }
 
-.modal_container *:focus-visible {
-  /* outline: 2px solid black !important;
-  outline-offset: 5px; */
-}
-
 /* page */
 .modal_page {
   width: calc(100% / 3);

@@ -194,6 +194,16 @@ function Container({ children, className = {}, mock = {} }) {
     }
   }, []);
 
+  // force modal focus (accessibility)
+  useEffect(() => {
+    if (isVisible && modalRef.current) {
+      // Wait for animation to finish
+      setTimeout(() => {
+        modalRef.current?.focus();
+      }, 200);
+    }
+  }, [isVisible]);
+
   useEffect(() => {
     // Return immediately if dialogStatus is already assigned the correct state
     if (
@@ -294,7 +304,6 @@ function Container({ children, className = {}, mock = {} }) {
         id="modal_dialog"
         data-cy="modal-dialog"
         aria-modal="true"
-        role="dialog"
         ref={modalRef}
         aria-hidden={!isVisible}
         className={`modal_dialog ${
@@ -314,6 +323,15 @@ function Container({ children, className = {}, mock = {} }) {
 
               // No matching page was found
               if (!page) {
+                return null;
+              }
+
+              /**
+               * @TODO Rework this rendering. 
+               * We can't contain the focus if we render all the modal pages, The DOM would be full of hidden content.
+               * This probably needs a rework
+               */
+              if(!obj.active) {
                 return null;
               }
 
