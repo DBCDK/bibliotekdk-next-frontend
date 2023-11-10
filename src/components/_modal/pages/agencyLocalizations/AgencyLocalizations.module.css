@@ -1,5 +1,18 @@
+.row_wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.result {
+  margin-left: var(--pt1);
+  display: inline-flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
 .no_match_for_library_search {
-  padding-top: calc(var(--pt2) + var(--pt1_5));
+  padding-top: calc(var(--pt05) + var(--pt05));
 }
 
 .hint_for_no_search_results {
