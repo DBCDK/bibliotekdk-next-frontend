@@ -1,5 +1,5 @@
 /**
- * submits session data
+ * user authentication stuff
  */
 import { ApiEnums } from "@/lib/api/api";
 
