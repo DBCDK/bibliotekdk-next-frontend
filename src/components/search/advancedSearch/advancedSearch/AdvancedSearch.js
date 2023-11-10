@@ -20,7 +20,10 @@ import {
   DebugStateDetails,
   prettyParseCql,
 } from "@/components/search/advancedSearch/DebugStateDetails";
+import * as PropTypes from "prop-types";
+import { ExperimentalCqlParser } from "@/components/search/advancedSearch/ExperimentalCqlParser";
 
+ExperimentalCqlParser.propTypes = { parsedCQL: PropTypes.string };
 /**
  * Contains advanced search fields
  * @returns {React.JSX.Element}
@@ -141,13 +144,13 @@ export default function AdvancedSearch({ initState }) {
             </Link>
           </Col>
         </Row>
-
         {/* TODO: For debugging purposes. Remove when unneeded */}
         <DebugStateDetails
           title="Resulting cql after search (with added line breaks)"
           state={parsedCQL}
           jsonParser={prettyParseCql}
         />
+        <ExperimentalCqlParser parsedCQL={parsedCQL} />
       </Container>
     </div>
   );

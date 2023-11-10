@@ -123,6 +123,16 @@ module.exports = function lexer(input) {
       case '"':
         doubleQuoteState = (0, ast_1.SwitchDoubleQuoteState)(doubleQuoteState);
         continue;
+      case "\\":
+        if (
+          doubleQuoteState === ast_1.DoubleQuoteState.OPEN &&
+          getNextChar() === '"'
+        ) {
+          token = token + currentChar + getNextChar();
+          pointer += 1;
+          break;
+        }
+        continue;
       case "(":
         if (doubleQuoteState === ast_1.DoubleQuoteState.CLOSED) {
           numberParenthesisOpened++;
