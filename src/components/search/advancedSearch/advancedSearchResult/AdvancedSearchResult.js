@@ -79,7 +79,6 @@ export default function Wrap({
   const bigResponse = useData(
     doComplexSearchAll({ cql: cqlQuery, offset: offset, limit: limit })
   );
-
   const parsedResponse = parseResponse(bigResponse);
 
   if (parsedResponse.isLoading) {
@@ -96,10 +95,10 @@ export default function Wrap({
     );
   }
   //update searchhistory
-  if (!parsedResponse?.errorMessage) {
+  if (!parsedResponse?.errorMessage && !parsedResponse.isLoading) {
     // make an object for searchhistory @TODO .. the right object please
     const searchHistoryObj = {
-      hitcount: parsedResponse.hitcount,
+      hitcount: parsedResponse?.hitcount,
       cql: cqlQuery,
     };
     setValue(searchHistoryObj);

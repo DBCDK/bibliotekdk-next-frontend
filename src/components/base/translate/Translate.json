@@ -18,6 +18,40 @@
         "en": "Label: mangler oversættelse"
       }
     },
+    "advanced_search_dropdown": {
+      "choose_publication_year": {
+        "da": "Vælg udgivelsesår",
+        "en": "Choose publication year"
+      },
+      "age_groups": {
+        "da": "Aldersgruppe",
+        "en": "Age groups"
+      },
+      "phrase.mainlanguage": {
+        "da": "Sprog",
+        "en": "Languages"
+      },
+      "all_phrase.mainlanguage": {
+        "da": "Alle sprog",
+        "en": "All languages"
+      },
+      "phrase.specificmaterialtype": {
+        "da": "Materialetype",
+        "en": "Materialtype"
+      },
+      "all_phrase.specificmaterialtype": {
+        "da": "Alle materialer",
+        "en": "All materials"
+      },
+      "phrase.generalmaterialtype": {
+        "da": "Materialetype",
+        "en": "Materialtype"
+      },
+      "all_phrase.generalmaterialtype": {
+        "da": "Alle materialer",
+        "en": "All materials"
+      }
+    },
     "logo": {
       "default_logo_text": {
         "da": "Bibliotek dk",
@@ -1208,6 +1242,14 @@
         "da": "Fjern",
         "en": "Remove"
       },
+      "orderAnyways": {
+        "da": "Bestil alligevel",
+        "en": "Order anyways"
+      },
+      "alreadyOrderedText": {
+        "da": "Du har allerede bestilt dette materiale d. %s",
+        "en": "You have already ordered this material on %s"
+      },
       "treshhold-error": {
         "da": "OBS: Du kan max bestille 25 ad gangen.",
         "en": "ATT: You can max order 25 at a time"
@@ -1253,6 +1295,14 @@
       "multiorder-digital-copy": {
         "da": "%s materialer bliver leveret som digital kopi til din mail",
         "en": "%s materials will be deliveret to you as a digital copy in your mail"
+      },
+      "multiorder-duplicate-order-singular": {
+        "da": "%s materiale er allerede bestilt.",
+        "en": "%s material has already been ordered."
+      },
+      "multiorder-duplicate-order": {
+        "da": "%s materialer er allerede bestilt. ",
+        "en": "%s materials have already been ordered."
       },
       "multiorder-missing-info-singular": {
         "da": "%s materiale mangler at få udfyldt informationer",
@@ -2650,6 +2700,22 @@
       "order-failed-user-no-longer-exists": {
         "da": "Biblioteket kan ikke bekræfte de låneroplysninger, du har gemt på din profil. Dette kan fx skyldes, at du har fået nyt login eller ikke længere er låner. Kontakt biblioteket, hvis du mener dette er en fejl.",
         "en": "The library cannot confirm the loaner information you have saved on your profile. This may be due to, for example, that you have received a new login or are no longer a loaner. Contact the library if you think this is an error."
+      },
+      "action-alreadyOrderedText": {
+        "da": "Du har allerede bestilt dette materiale.",
+        "en": "You have already ordered this material."
+      },
+      "choose-order-again": {
+        "da": "Vælg om det skal bestilles igen.",
+        "en": "Choose if you want to order again."
+      },
+      "get-overview": {
+        "da": "Få et overblik over dine bestillinger under",
+        "en": "Get an overview of your orders under"
+      },
+      "get-overview-2": {
+        "da": "din profil",
+        "en": "on your profile"
       }
     },
     "login": {

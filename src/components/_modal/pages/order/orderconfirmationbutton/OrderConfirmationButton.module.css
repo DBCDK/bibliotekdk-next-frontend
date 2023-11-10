@@ -2,9 +2,10 @@
   padding: var(--pt2);
 }
 
-.action {
+/*TODO are we sure about this? */
+/* .action {
   margin-top: auto;
-}
+} */
 
 /* action */
 
@@ -14,6 +15,10 @@
 
 .action .message.invalid {
   color: var(--error);
+}
+
+.goToOrderHistory {
+  padding-top: var(--pt6);
 }
 
 @media (min-width: 576px) {
