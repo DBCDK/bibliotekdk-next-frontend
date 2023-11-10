@@ -9,7 +9,8 @@ describe("Order", () => {
     cy.visitWithConsoleSpy(
       "/iframe.html?id=modal-order--order-via-ill&viewMode=story"
     );
-    cy.get("[data-cy=button-order-overview-enabled]")
+    cy.get("[data-cy=button-order-overview-enabled]", { timeout: 15000 })
+      .should("exist")
       .contains("Bestil", { timeout: 10000 })
       .click();
 
