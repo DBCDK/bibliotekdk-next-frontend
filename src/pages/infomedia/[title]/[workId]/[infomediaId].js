@@ -98,8 +98,6 @@ export default function Wrap() {
     infomediaArticleData?.infomedia?.article
   );
 
-  console.log({ hasInfomediaAccess, infomediaArticleData, article });
-
   return (
     <InfomediaArticle
       article={article}
