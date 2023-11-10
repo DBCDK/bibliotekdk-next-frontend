@@ -25,12 +25,9 @@ import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import IconButton from "@/components/base/iconButton";
 import { getManifestationWithoutDefaultCover } from "@/components/work/overview/covercarousel/utils";
-import {
-  createOrderKey,
-  pidHasAlreadyBeenOrdered,
-} from "../../../order/utils/order.utils";
+import { workHasAlreadyBeenOrdered } from "../../../order/utils/order.utils";
 import HasBeenOrderedRow from "../../../edition/hasbeenOrderedRow/HasBeenOrderedRow";
-import { removeOrderIdFromSession } from "../../../order/utils/order.utils";
+import { removeWorkIdFromSession } from "../../../order/utils/order.utils";
 
 /**
  * At this point, we have manifestation of all the different material types
@@ -87,8 +84,8 @@ const Material = ({
     ? [material?.pid]
     : manifestations.map((m) => m.pid) || [];
 
-  const orderKey = createOrderKey(pids);
-  const hasAlreadyBeenOrdered = pidHasAlreadyBeenOrdered(orderKey);
+  const workId = material.workId;
+  const hasAlreadyBeenOrdered = workHasAlreadyBeenOrdered(workId); //TODO use has already been ordered here
 
   const { data: orderPolicyData, isLoading: orderPolicyIsLoading } = useData(
     pids &&
@@ -182,7 +179,7 @@ const Material = ({
           setDuplicateOrdersWorkIds((prev) =>
             prev.filter((m) => m !== material.workId)
           ),
-            removeOrderIdFromSession(orderKey), //keep track in multiorder.page of which pids have been ordered to force update, when this number changes
+            //removeOrderIdFromSession(workId), //keep track in multiorder.page of which pids have been ordered to force update, when this number changes
             setBackgroundColor(BackgroundColorEnum.NEUTRAL),
             modal.update({});
         }}

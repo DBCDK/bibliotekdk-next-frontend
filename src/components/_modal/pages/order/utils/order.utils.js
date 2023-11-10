@@ -62,45 +62,34 @@ export function getStylingAndErrorMessage(validated, hasValidationErrors) {
   };
 }
 
-/**
- * Creates a key for each order
- * Used to check if user has already a specific material in same session
- * @param {String[]} orderPids [ '870970-basis:51900030',  '870970-basis:51900030']
- * @returns {string} '870970-basis:51900030/870970-basis:51900030'
- */
-export function createOrderKey(orderPids) {
-  console.log("to be created pids ", orderPids);
-  return (orderPids && orderPids?.join("/")) || "";
-}
-
-export function setAlreadyOrdered(orderKey) {
+export function setAlreadyOrdered(workId) {
   const alreadyOrdered = JSON.parse(
     sessionStorage.getItem("alreadyOrdered") || "[]"
   );
-  console.log("orderKey", orderKey);
 
-  alreadyOrdered.push(orderKey);
-  sessionStorage.setItem("alreadyOrdered", JSON.stringify(alreadyOrdered));
+  console.log(" setAlreadyOrdered alreadyOrdered prev", alreadyOrdered);
+  const isAlreaydOrdered = alreadyOrdered.includes(workId);
+  if (!isAlreaydOrdered) {
+    alreadyOrdered.push(workId);
+    sessionStorage.setItem("alreadyOrdered", JSON.stringify(alreadyOrdered));
+  }
 }
 
 /**
- * @param {string} orderKey
- * @return {boolean} true if orderKey is part of alreadyOrdered keys
+ * @param {string} workId
+ * @return {boolean} true if workId is part of alreadyOrdered keys
  */
-export function pidHasAlreadyBeenOrdered(orderKey) {
-  //console.log("orderKey", orderKey);
+export function workHasAlreadyBeenOrdered(workId) {
   const storage = JSON.parse(sessionStorage.getItem("alreadyOrdered") || "[]");
-  //console.log("storage", storage);
-  const alreadyOrdered = storage.includes(orderKey);
-  //console.log("alreadyOrdered", alreadyOrdered);
+  const alreadyOrdered = storage.includes(workId);
   return alreadyOrdered;
 }
 
-export function removeOrderIdFromSession(orderKey) {
+export function removeWorkIdFromSession(workId) {
   const alreadyOrdered = JSON.parse(
     sessionStorage.getItem("alreadyOrdered") || "[]"
   );
-  const index = alreadyOrdered.indexOf(orderKey);
+  const index = alreadyOrdered.indexOf(workId);
   if (index > -1) {
     alreadyOrdered.splice(index, 1);
   }

@@ -17,8 +17,7 @@ import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
 import {
   onMailChange,
-  createOrderKey,
-  pidHasAlreadyBeenOrdered,
+  workHasAlreadyBeenOrdered,
 } from "@/components/_modal/pages/order/utils/order.utils";
 import { useRelevantAccessesForOrderPage } from "@/components/work/utils";
 import { validateEmail } from "@/utils/validateEmail";
@@ -26,6 +25,8 @@ import NoAgenciesError from "./noAgencies/NoAgenciesError";
 import useUser from "@/components/hooks/useUser";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 import { useData } from "@/lib/api/api";
+import { stringify } from "@/components/_modal/utils";
+import { isEmpty } from "lodash";
 
 /**
  *  Order component function
@@ -77,8 +78,8 @@ function Order({
   const [hasValidationErrors, setHasValidationErrors] = useState(false);
   const [mail, setMail] = useState(null);
   const contextWithOrderPids = { ...context, orderPids };
-  const orderKey = createOrderKey(orderPids);
-  const hasAlreadyBeenOrdered = pidHasAlreadyBeenOrdered(orderKey);
+  const workId = context?.workId;
+  const hasAlreadyBeenOrdered = workHasAlreadyBeenOrdered(workId);
   //If user wants to order again, but closes modal before ordering, we want to show warning again
   const [showAlreadyOrdered, setShowAlreadyOrdered] = useState(
     hasAlreadyBeenOrdered
@@ -86,12 +87,12 @@ function Order({
 
   //always show acutal value of duplicate order warning again of hasAlreaydBeenOrdered, when we open modal.
   useEffect(() => {
-    if (!modal) return;
+    if (!modal || isEmpty(modal)) return;
     const orderModalIdx = modal?.index("order");
     if (modal?.index("order") > -1 && modal.stack[orderModalIdx].active) {
       setShowAlreadyOrdered(hasAlreadyBeenOrdered);
     }
-  }, [JSON.stringify(modal.stack)]);
+  }, [stringify(modal?.stack)]);
 
   // Update email from user account
   useEffect(() => {
@@ -186,7 +187,7 @@ function Order({
     if (validated.status) {
       modal.push("receipt", {
         pids: orderPids,
-        orderKey: orderKey,
+        workId: workId,
         order: {
           data: orderMutation?.data,
           error: orderMutation?.error,
@@ -224,7 +225,6 @@ function Order({
         context={contextWithOrderPids}
         singleManifestation={singleManifestation}
         isMaterialCard={true}
-        orderKey={orderKey}
         showAlreadyOrdered={showAlreadyOrdered}
         setShowArealdyOrdered={setShowAlreadyOrdered}
       />

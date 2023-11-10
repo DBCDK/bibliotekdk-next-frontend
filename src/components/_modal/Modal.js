@@ -5,7 +5,7 @@ import React, {
   createContext,
   useContext,
 } from "react";
-
+import { stringify } from "./utils";
 import { useInView } from "react-intersection-observer";
 
 // modal utils
@@ -244,7 +244,7 @@ function Container({ children, className = {}, mock = {} }) {
   // Listen for changes to the stack, and store it in local storage
   useEffect(() => {
     if (didLoad.current) {
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(modal.stack));
+      localStorage.setItem(LOCAL_STORAGE_KEY, stringify(modal.stack));
     }
   }, [modal.stack]);
 

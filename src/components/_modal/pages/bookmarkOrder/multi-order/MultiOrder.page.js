@@ -10,10 +10,7 @@ import { StatusEnum } from "@/components/base/materialcard/materialCard.utils";
 import useUser from "@/components/hooks/useUser";
 import { useMutate } from "@/lib/api/api";
 import * as orderMutations from "@/lib/api/order.mutations";
-import {
-  createOrderKey,
-  setAlreadyOrdered,
-} from "../../order/utils/order.utils";
+import { setAlreadyOrdered } from "../../order/utils/order.utils";
 
 const CONTEXT = "bookmark-order";
 
@@ -72,32 +69,10 @@ const MultiOrder = ({ context }) => {
         materials.find((mat) => mat.key === key)
       );
 
-      const orderedBookmarkIds = successMaterials.map((bm) => bm.bookmarkId);
-
-      //find materialsToOrder that have been ordered successully
-      const successfullyOrderedMaterials = orderedBookmarkIds.flatMap((b) =>
-        materialsToOrder.filter((m) => {
-          if (m.bookmarkId === b) return m;
-        })
-      );
-
-      //get the sucessfully ordered pids
-      const orderedPids = successfullyOrderedMaterials?.map((mat) => {
-        const isSpecificEdition = !!mat.pid;
-
-        return isSpecificEdition
-          ? [mat.pid]
-          : filterForRelevantMaterialTypes(
-              mat?.manifestations?.mostRelevant,
-              mat?.materialType
-            ).flatMap((mani) => mani.pid);
-      });
-
-      //set the ordered pids as already ordered in session
-      orderedPids.forEach((pids) => {
-        //Contains also pid for peridica, which we dont check at the moment
-        const orderKey = createOrderKey(pids);
-        if (orderKey !== "") setAlreadyOrdered(orderKey);
+      //set the ordered workids as already ordered in session
+      successMaterials.forEach((mat) => {
+        //TODO if not in session, add to session
+        if (mat?.workId) setAlreadyOrdered(mat.workId);
       });
 
       setIsCreatingOrders(false);
@@ -219,6 +194,7 @@ const MultiOrder = ({ context }) => {
               material={material}
               numberOfMaterialsToOrder={materialsToOrder?.length ?? 0}
               setMaterialsToOrder={setMaterialsToOrder}
+              duplicateOrdersWorkIds={duplicateOrdersWorkIds}
               setDuplicateOrdersWorkIds={setDuplicateOrdersWorkIds}
               //context is responsible for updating periodica form via periodicaForm.js and modal.update
               periodicaForms={context?.periodicaForms}
