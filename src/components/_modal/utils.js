@@ -3,7 +3,7 @@ import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import { isFFUAgency } from "@/utils/agency";
 
-import animations from "css/animations";
+import buildHtmlLink from "../utils/buildHtmlLink";
 
 // elements we want
 const elements = [

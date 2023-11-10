@@ -10,21 +10,27 @@ export const StatusEnum = Object.freeze({
   NOT_AVAILABLE: "NOT-AVAILABLE",
   DIGITAL: "DIGITAL",
   NEEDS_EDITION: "NEEDS-EDITION",
+  HAS_BEEN_ORDERED: "HAS_BEEN_ORDERED",
 });
 
 /**
  *
+ * @param {Boolean} hasAlreadyBeenOrdered
  * @param {Boolean} isPeriodicaLike
  * @param {Boolean} hasPeriodicaForm
  * @param {Boolean} notAvailableAtLibrary
  * @returns
  */
 export function findBackgroundColor({
+  hasAlreadyBeenOrdered,
   isPeriodicaLike,
   hasPeriodicaForm,
   notAvailableAtLibrary,
 }) {
-  if (isPeriodicaLike && !hasPeriodicaForm) {
+  if (
+    (isPeriodicaLike && !hasPeriodicaForm) ||
+    (hasAlreadyBeenOrdered && !isPeriodicaLike)
+  ) {
     return BackgroundColorEnum.YELLOW;
   }
   if (notAvailableAtLibrary) {

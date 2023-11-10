@@ -93,6 +93,7 @@ const EMaterialFilter = ({ context, active }) => {
         // Nothing to filter - Redirect directly
         modal.push("multiorder", {
           materials: toProceedSorted,
+          closeModalOnBack: true,
         });
       }
     }, 500);
@@ -118,8 +119,8 @@ const EMaterialFilter = ({ context, active }) => {
           <EMaterialAnalyzer material={mat} key={mat.key} />
         ))}
       </div>
-
       <Top
+        skeleton={isLoading}
         title={Translate({
           context: CONTEXT,
           label: "efilter-title",
@@ -144,7 +145,6 @@ const EMaterialFilter = ({ context, active }) => {
           vars={[materialsToFilter?.length]}
         />
       </Title>
-
       <ul className={styles.filterList}>
         {materialsToFilter?.map((mat) => (
           <li className={styles.filterItem} key={mat.key}>
@@ -155,7 +155,6 @@ const EMaterialFilter = ({ context, active }) => {
           </li>
         ))}
       </ul>
-
       <Text
         skeleton={isLoading}
         className={styles.nextPageDescription}

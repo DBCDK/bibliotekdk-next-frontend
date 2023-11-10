@@ -1,0 +1,48 @@
+.icon_area {
+  display: flex;
+  width: 20px;
+  height: 20px;
+  justify-content: center;
+  transition: transform 300ms ease;
+  align-content: center;
+  flex-wrap: wrap;
+}
+
+.upper_first:first-letter {
+  text-transform: capitalize;
+}
+
+.menuButton {
+  background-color: var(--white);
+  padding: var(--pt2) var(--pt2);
+  outline: 1px solid var(--gray);
+  min-width: 125px;
+  height: 100%;
+  display: flex;
+  gap: var(--pt1);
+  align-content: center;
+  justify-content: space-between;
+}
+
+.menuButton:hover {
+  cursor: pointer;
+}
+
+.menuButton:hover,
+.menuButton:focus {
+  outline: solid 2px var(--blue);
+}
+
+.menuButton[aria-expanded="true"] .icon_open {
+  transform: rotate(180deg);
+}
+
+.icon {
+  transition: transform 0.3s ease-in-out;
+}
+
+.select_wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--pt1);
+}

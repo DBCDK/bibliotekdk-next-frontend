@@ -114,6 +114,7 @@ export default function Top({
   sticky = false,
   onClose = undefined,
   onBack = undefined,
+  skeleton = false,
 
   /**
    *  Defaults heading to h2. We never want more than one h1 per page, this is a dialog that sits on top of a page.
@@ -153,6 +154,7 @@ export default function Top({
       <div>
         {title && (
           <Title
+            skeleton={skeleton}
             type="title4"
             className={`${styles.title} ${className.title || ""}`}
             tag={titleTag}

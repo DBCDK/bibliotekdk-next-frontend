@@ -4,7 +4,7 @@
 
 .history {
   display: grid;
-  grid-template-columns: 10fr 1fr 1fr 1fr;
+  grid-template-columns: 10fr 4fr 1fr 1fr;
   padding: var(--pt1);
   background-color: var(--white);
 }

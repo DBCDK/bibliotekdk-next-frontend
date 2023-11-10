@@ -7,8 +7,7 @@ import Tooltip from "@/components/base/tooltip";
 import Email from "@/components/base/forms/email";
 import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
-import { extractClassNameAndMessage } from "@/components/_modal/pages/order/utils/order.utils";
-import debounce from "lodash/debounce";
+import { getStylingAndErrorMessage } from "@/components/_modal/pages/order/utils/order.utils";
 
 export function OrdererInformation({
   isLoadingBranches,
@@ -57,7 +56,7 @@ export function OrdererInformation({
           disabled={isLoading || hasAuthMail}
           value={email || ""}
           id="order-user-email"
-          onChange={debounce(onMailChange, 200)}
+          onChange={onMailChange}
           readOnly={isLoading || hasAuthMail}
           skeleton={isLoadingBranches && !email}
         />
@@ -115,14 +114,14 @@ OrdererInformation.propTypes = {
 export default function Wrap({
   context,
   validated,
-  failedSubmission,
+  hasValidationErrors,
   onMailChange,
 }) {
   const { workId, pid, periodicaForm, pids } = context;
 
-  const { validClass, invalidClass, message } = extractClassNameAndMessage(
+  const { validClass, invalidClass, message } = getStylingAndErrorMessage(
     validated,
-    failedSubmission
+    hasValidationErrors
   );
 
   const { userInfo, pickupBranchInfo, workResponse } = useOrderPageInformation({

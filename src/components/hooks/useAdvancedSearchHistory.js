@@ -16,7 +16,7 @@ export const useAdvancedSearchHistory = () => {
       if (typeof window !== "undefined") {
         // check if cql is already stored
         const alreadyStored = !!storedValue.find(
-          (stor) => stor.cql === value.cql
+          (stor) => stor.cql.trim() === value.cql.trim()
         );
         if (!alreadyStored) {
           // Add to beginning of history array
