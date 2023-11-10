@@ -294,12 +294,13 @@ function Container({ children, className = {}, mock = {} }) {
   }
 
   return (
-    <div
-      id="modal_dimmer"
-      data-cy="modal-dimmer"
-      className={`modal_dimmer ${className.dimmer || ""} ${visibleClass}`}
-      onClick={() => modal.clear()}
-    >
+    <>
+      <div
+        id="modal_dimmer"
+        data-cy="modal-dimmer"
+        className={`modal_dimmer ${className.dimmer || ""} ${visibleClass}`}
+        onClick={() => modal.clear()}
+      />
       <dialog
         id="modal_dialog"
         data-cy="modal-dialog"
@@ -327,11 +328,11 @@ function Container({ children, className = {}, mock = {} }) {
               }
 
               /**
-               * @TODO Rework this rendering. 
+               * @TODO Rework this rendering.
                * We can't contain the focus if we render all the modal pages, The DOM would be full of hidden content.
                * This probably needs a rework
                */
-              if(!obj.active) {
+              if (!obj.active) {
                 return null;
               }
 
@@ -353,7 +354,7 @@ function Container({ children, className = {}, mock = {} }) {
           </FocusLock>
         </div>
       </dialog>
-    </div>
+    </>
   );
 }
 
