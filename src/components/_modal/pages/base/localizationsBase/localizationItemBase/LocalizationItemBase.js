@@ -31,6 +31,7 @@ export default function LocalizationItemBase({
     AvailabilityEnum.LATER,
     AvailabilityEnum.NEVER,
     AvailabilityEnum.NOT_OWNED,
+    AvailabilityEnum.NOT_OWNED_FFU,
     AvailabilityEnum.UNKNOWN,
   ],
   itemLoading,

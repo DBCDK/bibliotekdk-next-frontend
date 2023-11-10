@@ -90,12 +90,6 @@ export function useGoToOrderWithBranch({
   // handleOnSelectEnriched enriches handleOnSelect with all its arguments:
   //   branch, modal, context, updateLoanerInfo, callbackUID, overrideOrderModalPush
   function handleOnSelectEnriched() {
-    // callbackUID is used in handleOnSelect to add order to modal stack to return to order modal after adgangsplatformen
-    const callbackUID = modal.saveToStore("order", {
-      ...orderModalProps,
-      storeLoanerInfo: true,
-    });
-
     // overrideOrderModalPush is a callbackFunction used in handleOnSelect to open order modal,
     //   when previous modal was not order modal
     function overrideOrderModalPush() {
@@ -110,19 +104,18 @@ export function useGoToOrderWithBranch({
     //  - User is logged on is on selected agency borrowerCheck -> Order modal
     //  - User not logged in and agency has borrowerCheck -> adgangsplatformen modal
     //  - User not logged in and agency does not have borrowerCheck -> loanerForm modal
-    handleOnSelect(
-      branch,
-      modal,
-      {
+    handleOnSelect({
+      branch: branch,
+      modal: modal,
+      context: {
         ...context,
         initial: {
           agencies: pickupBranchUserAgencies,
         },
       },
-      updateLoanerInfo,
-      callbackUID,
-      overrideOrderModalPush
-    );
+      updateLoanerInfo: updateLoanerInfo,
+      overrideOrderModalPush: overrideOrderModalPush,
+    });
   }
 
   return {

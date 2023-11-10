@@ -671,10 +671,18 @@
         "en": "On shelf"
       },
       "no_match_for_library_search_1": {
-        "da": "Ingen biblioteker matcher din søgning.",
-        "en": "No libraries match your search query."
+        "da": "Ingen biblioteker matcher din søgning",
+        "en": "No libraries match your search query"
       },
       "no_match_for_library_search_2": {
+        "da": "Se status for dit foretrukne bibliotek ved at søge på navn, postnr. eller by.",
+        "en": "To see the status of your preferred library search by branch name, postal code, or city."
+      },
+      "no_libraries_with_material_home_1": {
+        "da": "Ingen biblioteker har materialet hjemme nu",
+        "en": "No libraries have the materiale home currently"
+      },
+      "no_libraries_with_material_home_2": {
         "da": "Se status for dit foretrukne bibliotek ved at søge på navn, postnr. eller by.",
         "en": "To see the status of your preferred library search by branch name, postal code, or city."
       },
@@ -754,11 +762,23 @@
         "da": "Er udlånt på en eller flere afdelinger, men vi har ikke detaljer om hvilke afdelinger",
         "en": "Is on loan at one or more branches, but we are missing the details on branches"
       },
+      "agency_does_not_own_material_and_pickup_not_allowed": {
+        "da": "%s har ikke indkøbt materialet og modtager ikke bestillinger på materialet via bibliotek.dk",
+        "en": "%s hasn't bought the material, and does not take orders on the material via bibliotek.dk"
+      },
       "agency_status_pickup_not_allowed": {
         "da": "Udlånes ikke fra afdelingerne. Men måske man kan bruge materialet på lokationen",
         "en": "Not for loan on any of the branches. However, the material might be available on site"
       },
+      "agency_no_loaner_status_was_provided": {
+        "da": "Vi kunne ikke hente udlånsstatus",
+        "en": "We did not find any status on lending"
+      },
       "no_status_about_the_following": {
+        "da": "Vi har ikke status for disse afdelinger",
+        "en": "We have no status on these branches"
+      },
+      "no_status_about_the_following__status_message": {
         "da": "Vi har ikke status for disse afdelinger",
         "en": "We have no status on these branches"
       },
@@ -767,6 +787,10 @@
         "en": "%s has the material on shelf, but there is no information on where"
       },
       "agency_does_not_own_material": {
+        "da": "%s har ikke indkøbt materialet, men du kan bestille det til afhentning.",
+        "en": "%s hasn't bought the material, but you can order it for pickup"
+      },
+      "agency_does_not_own_material__FFU": {
         "da": "%s har ikke indkøbt materialet, men du kan bestille det til afhentning.",
         "en": "%s hasn't bought the material, but you can order it for pickup"
       },

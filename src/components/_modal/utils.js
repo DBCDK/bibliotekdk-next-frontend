@@ -13,6 +13,7 @@ const elements = [
 ];
 
 // currently not in use
+// eslint-disable-next-line no-unused-vars
 export function tabVisibility(container, isVisible) {
   // build query with elements
   const query = elements.join(", ");
@@ -64,7 +65,7 @@ export function toColor(
  */
 function getScrollYPos() {
   // Get scrollY (all browsers)
-  var doc = document.documentElement;
+  let doc = document.documentElement;
   return (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
 }
 
@@ -169,7 +170,7 @@ export function escapeColons(phrase) {
 
 //TODO move to a loacation that is more central
 function buildHtmlLink(txt, url) {
-  return `<a href="${url}"} target="_blank" class="${animations.underlineContainer} ${animations.top_line_false} ${animations.top_line_keep_false}">${txt}</a>`;
+  return `<a href="${url}" target="_blank" class="${animations.underlineContainer} ${animations.top_line_false} ${animations.top_line_keep_false}">${txt}</a>`;
 }
 
 /**
@@ -180,16 +181,16 @@ function buildHtmlLink(txt, url) {
  * @param {Object} modal
  * @param {Object} context
  * @param {function} updateLoanerInfo
- * @param {string} callbackUID
  * @param {function|null} overrideOrderModalPush
+ * @returns {void}
  */
-export function handleOnSelect(
+export function handleOnSelect({
   branch,
   modal,
   context,
   updateLoanerInfo,
-  overrideOrderModalPush = null
-) {
+  overrideOrderModalPush = null,
+}) {
   // Selected branch belongs to one of the user's agencies where the user is logged in
   const alreadyLoggedin = context.initial?.agencies?.find(
     (agency) => agency.result?.[0].agencyId === branch.agencyId

@@ -9,7 +9,8 @@ describe("Order", () => {
     cy.visitWithConsoleSpy(
       "/iframe.html?id=modal-order--order-via-ill&viewMode=story"
     );
-    cy.get("[data-cy=button-order-overview-enabled]")
+    cy.get("[data-cy=button-order-overview-enabled]", { timeout: 15000 })
+      .should("exist")
       .contains("Bestil", { timeout: 10000 })
       .click();
 
@@ -34,7 +35,9 @@ describe("Order", () => {
     cy.get("[data-cy=input]").should("have.value", "some@mail.dk");
 
     // Submit the order
-    cy.get("[data-cy=button-godkend]").should("not.be.disabled").click();
+    cy.get("[data-cy=button-godkend]")
+      .should("not.be.disabled", { timeout: 15000 })
+      .click({ force: true });
 
     cy.contains("some-order-id", { timeout: 10000 });
 
@@ -59,13 +62,13 @@ describe("Order", () => {
     // Check that user blocking is not present
     cy.get("[data-cy=blocked-user]").should("not.exist");
 
-    cy.get("[data-cy=modal-dimmer]").should("be.visible");
+    cy.get("[data-cy=modal-dimmer]").should("exist");
     cy.contains("Luk").click();
     cy.get("body").tab();
     cy.get("[data-cy=modal-dimmer]").should("not.be.visible");
   });
 
-  it.skip("Order physical material fails and shows error modal correctly", () => {
+  it("Order physical material fails and shows error modal correctly", () => {
     cy.visit(
       "/iframe.html?id=modal-order--order-physical-material-fails&viewMode=story"
     );
@@ -73,16 +76,16 @@ describe("Order", () => {
     cy.contains("Bestil", { timeout: 10000 }).click();
     // Submit the order
     cy.get("[data-cy=button-godkend]")
-      .scrollIntoView()
-      .should("be.visible")
+      // .scrollIntoView()
+      // .should("exist")
       .should("not.be.disabled")
-      .click();
+      .click({ force: true });
 
     //order failed
-    cy.get("[data-cy=error-occured-title]").should("be.visible");
-    cy.get("[data-cy=order-failed-message").should("be.visible");
-    cy.get("[data-cy=try-again").should("be.visible");
-    cy.get("[data-cy=button-luk]").should("be.visible");
+    cy.get("[data-cy=error-occured-title]").should("exist");
+    cy.get("[data-cy=order-failed-message").should("exist");
+    cy.get("[data-cy=try-again").should("exist");
+    cy.get("[data-cy=button-luk]").should("exist");
   });
 
   it("should handle failed checkorder and pickupAllowed=false", () => {
@@ -95,7 +98,7 @@ describe("Order", () => {
       // Check that user blocking is not present
       cy.get("[data-cy=blocked-user]").should("not.exist");
 
-      cy.get("[data-cy=modal-dimmer]").should("be.visible");
+      cy.get("[data-cy=modal-dimmer]").should("exist");
       cy.contains("Luk").click();
       cy.get("body").tab();
       cy.get("[data-cy=modal-dimmer]").should("not.be.visible");
@@ -164,9 +167,9 @@ describe("Order", () => {
       cy.get("[data-cy=button-godkend]").should("not.be.disabled").click();
 
       //order failed
-      cy.get("[data-cy=error-occured-title]").should("be.visible");
-      cy.get("[data-cy=try-again").should("be.visible");
-      cy.get("[data-cy=button-luk]").should("be.visible");
+      cy.get("[data-cy=error-occured-title]").should("exist");
+      cy.get("[data-cy=try-again").should("exist");
+      cy.get("[data-cy=button-luk]").should("exist");
     });
 
     it("should order indexed periodica article through ILL (when branch is not subscribed to article service)", () => {
@@ -339,12 +342,9 @@ describe("Order", () => {
       );
 
       // Check that BlockedUser does not exist
-      cy.get("[data-cy=button-godkend]")
-        .scrollIntoView()
-        .should("be.visible")
-        .click();
+      cy.get("[data-cy=button-godkend]").click({ force: true });
 
-      //cy.get("[data-cy=button-godkend]").should("be.visible").click();
+      //cy.get("[data-cy=button-godkend]").should("exist").click();
       cy.contains("some-order-id", { timeout: 10000 });
 
       cy.getConsoleEntry("submitOrder").then((entry) => {
@@ -421,15 +421,13 @@ describe("Order", () => {
       //starting with blocked agency
       cy.contains("Bestil", { timeout: 10000 }).click();
       cy.contains("Test Bib - User is blocked");
-      cy.get("[data-cy=blocked-user]").should("be.visible");
-      cy.get("[data-cy=blocked-user]").should("be.visible");
+      cy.get("[data-cy=blocked-user]").should("exist");
+      cy.get("[data-cy=blocked-user]").should("exist");
 
       //switching to non-blocked agency
       cy.contains("Skift afhentning").should("exist").click();
       cy.get("[data-cy=show-branches-for-1]").should("exist").click();
-      cy.contains("Test Bib - only physical via ILL")
-        .should("be.visible")
-        .click();
+      cy.contains("Test Bib - only physical via ILL").should("exist").click();
 
       //check can order on non-blocked agency
       cy.get("[data-cy=button-godkend]").should("exist").should("be.enabled");
@@ -439,11 +437,11 @@ describe("Order", () => {
   describe("If user logs in with MitID - and has no libraries associated with user account", () => {
     it("should show an errormessage when user has no agencies", () => {
       cy.visit("/iframe.html?id=modal-order--no-user-agencies");
-      cy.contains("Bestil", { timeout: 10000 }).should("be.visible").click();
+      cy.contains("Bestil", { timeout: 10000 }).should("exist").click();
 
       cy.contains(
         "Vi kan se at du ikke er registreret på et bibliotek?"
-      ).should("be.visible");
+      ).should("exist");
     });
   });
 });

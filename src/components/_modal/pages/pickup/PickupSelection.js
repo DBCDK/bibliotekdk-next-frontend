@@ -200,7 +200,12 @@ export default function PickupSelection(props) {
                 branch={branch}
                 selected={selected}
                 onSelect={(branch) =>
-                  handleOnSelect(branch, modal, context, updateLoanerInfo)
+                  handleOnSelect({
+                    branch: branch,
+                    modal: modal,
+                    context: context,
+                    updateLoanerInfo: updateLoanerInfo,
+                  })
                 }
                 modal={modal}
                 isLoading={isLoading}

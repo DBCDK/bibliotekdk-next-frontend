@@ -1,5 +1,8 @@
 import Translate from "@/components/base/translate";
-import { useAgencyIdsConformingToQuery } from "@/components/hooks/useHandleAgencyAccessData";
+import {
+  AvailabilityEnum,
+  useAgencyIdsConformingToQuery,
+} from "@/components/hooks/useHandleAgencyAccessData";
 import { useData } from "@/lib/api/api";
 import * as localizationsFragments from "@/lib/api/localizations.fragments";
 import LocalizationsBase from "@/components/_modal/pages/base/localizationsBase/LocalizationsBase";
@@ -9,8 +12,39 @@ import isEmpty from "lodash/isEmpty";
 import styles from "./AgencyLocalizations.module.css";
 import Text from "@/components/base/text/Text";
 import Pagination from "@/components/search/pagination/Pagination";
+import { AvailabilityLight } from "@/components/_modal/pages/base/localizationsBase/localizationItemBase/AvailabilityLight";
+import cx from "classnames";
 
 const PAGE_SIZE = 10;
+
+function NoMaterialsHomeAtLocalizations({
+  labelBase,
+  availabilityLight = true,
+}) {
+  return (
+    <LocalizationsBase.Information
+      className={cx(styles.no_match_for_library_search, styles.row_wrapper)}
+    >
+      {availabilityLight && (
+        <AvailabilityLight availabilityAccumulated={AvailabilityEnum.LATER} />
+      )}
+      <div className={styles.result}>
+        <Text type="text2">
+          {Translate({
+            context: "localizations",
+            label: `${labelBase}_1`,
+          })}
+        </Text>
+        <Text type="text2" className={styles.hint_for_no_search_results}>
+          {Translate({
+            context: "localizations",
+            label: `${labelBase}_2`,
+          })}
+        </Text>
+      </div>
+    </LocalizationsBase.Information>
+  );
+}
 
 /**
  * {@link AgencyLocalizations} presents the possible agencies with holdings or conforming to query
@@ -69,23 +103,15 @@ export default function AgencyLocalizations({ context, modal }) {
         setQuery(value);
       }}
     >
-      {isEmpty(agencyIds) && !localizationsIsLoading ? (
-        <LocalizationsBase.Information
-          className={styles.no_match_for_library_search}
-        >
-          <Text type="text2">
-            {Translate({
-              context: "localizations",
-              label: "no_match_for_library_search_1",
-            })}
-          </Text>
-          <Text type="text2" className={styles.hint_for_no_search_results}>
-            {Translate({
-              context: "localizations",
-              label: "no_match_for_library_search_2",
-            })}
-          </Text>
-        </LocalizationsBase.Information>
+      {!isEmpty(query) && isEmpty(agencyIds) && !localizationsIsLoading ? (
+        <NoMaterialsHomeAtLocalizations
+          availabilityLight={false}
+          labelBase={"no_match_for_library_search"}
+        />
+      ) : isEmpty(query) && isEmpty(agencyIds) && !localizationsIsLoading ? (
+        <NoMaterialsHomeAtLocalizations
+          labelBase={"no_libraries_with_material_home"}
+        />
       ) : (
         <>
           <LocalizationsBase.List>

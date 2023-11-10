@@ -358,6 +358,7 @@ describe("getAvailability", () => {
       [AvailabilityEnum.LATER]: 1,
       [AvailabilityEnum.NEVER]: 1,
       [AvailabilityEnum.NOT_OWNED]: 1,
+      [AvailabilityEnum.NOT_OWNED_FFU]: 0,
       [AvailabilityEnum.UNKNOWN]: 1,
     };
     expect(actual).toEqual(expected);
@@ -605,7 +606,7 @@ describe("sortByMainBranch", () => {
 });
 
 describe("enrichBranches", () => {
-  it("empty holdings with branch pickupAllowed true, get availabilityAccumulated unknown", () => {
+  it("empty holdings with branch pickupAllowed true, get availabilityAccumulated not owned ffu", () => {
     const branch = {
       expectedDelivery: today,
       agencyId: "890000",
@@ -613,7 +614,7 @@ describe("enrichBranches", () => {
       holdingItems: [],
     };
     const actual = enrichBranches(branch).availabilityAccumulated;
-    const expectedAvailabilityAccumulated = AvailabilityEnum.UNKNOWN;
+    const expectedAvailabilityAccumulated = AvailabilityEnum.NOT_OWNED_FFU;
     expect(actual).toEqual(expectedAvailabilityAccumulated);
   });
 });

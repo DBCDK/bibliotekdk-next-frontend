@@ -15,6 +15,7 @@ export const AvailabilityEnum = Object.freeze({
   LATER: "AVAILABLE_LATER",
   NEVER: "AVAILABLE_NEVER",
   NOT_OWNED: "AVAILABLE_NOT_OWNED",
+  NOT_OWNED_FFU: "AVAILABLE_NOT_OWNED_ON_FFU",
   UNKNOWN: "AVAILABILITY_UNKNOWN",
 });
 
@@ -137,6 +138,18 @@ export function publicLibraryDoesNotOwn(item) {
 }
 
 /**
+ *
+ * @param item
+ * @returns {boolean}
+ */
+export function nonPublicLibraryDoesNotOwn(item) {
+  const isNonDanishPublicLibrary =
+    getLibraryType(item?.agencyId) !== LibraryTypeEnum.DANISH_PUBLIC_LIBRARY;
+
+  return isNonDanishPublicLibrary && item?.noHoldingsFlag === true;
+}
+
+/**
  * {@link dateIsUnknown} takes a date (string formatted YYYY-MM-DD) and returns true if date is unknown
  * @param {DateString} date should be formatted YYYY-MM-DD
  * @returns {boolean}
@@ -206,6 +219,8 @@ export function getAvailabilityAccumulated(availability) {
     ? AvailabilityEnum.NEVER
     : availability[AvailabilityEnum.NOT_OWNED] > 0
     ? AvailabilityEnum.NOT_OWNED
+    : availability[AvailabilityEnum.NOT_OWNED_FFU] > 0
+    ? AvailabilityEnum.NOT_OWNED_FFU
     : availability[AvailabilityEnum.UNKNOWN] > 0
     ? AvailabilityEnum.UNKNOWN
     : AvailabilityEnum.UNKNOWN;
@@ -222,6 +237,7 @@ function checkAvailabilityOnAgencyLevel(item) {
     [dateIsLater(item?.expectedDelivery), AvailabilityEnum.LATER],
     [dateIsNever(item?.expectedDelivery), AvailabilityEnum.NEVER],
     [publicLibraryDoesNotOwn(item), AvailabilityEnum.NOT_OWNED],
+    [nonPublicLibraryDoesNotOwn(item), AvailabilityEnum.NOT_OWNED_FFU],
     [dateIsUnknown(item?.expectedDelivery), AvailabilityEnum.UNKNOWN],
   ]);
 }
@@ -237,6 +253,7 @@ function checkAvailabilityOnBranchLevel(item) {
     [checkAvailableLater(item), AvailabilityEnum.LATER],
     [checkAvailableNever(item), AvailabilityEnum.NEVER],
     [publicLibraryDoesNotOwn(item), AvailabilityEnum.NOT_OWNED],
+    [nonPublicLibraryDoesNotOwn(item), AvailabilityEnum.NOT_OWNED_FFU],
     [checkUnknownAvailability(item), AvailabilityEnum.UNKNOWN],
   ]);
 }
@@ -256,6 +273,7 @@ export function getAvailability(
     [AvailabilityEnum.LATER]: 0,
     [AvailabilityEnum.NEVER]: 0,
     [AvailabilityEnum.NOT_OWNED]: 0,
+    [AvailabilityEnum.NOT_OWNED_FFU]: 0,
     [AvailabilityEnum.UNKNOWN]: 0,
   };
 
@@ -320,6 +338,8 @@ export function sortByAvailability(a, b) {
       Number(aAvail === AvailabilityEnum.NEVER) ||
     Number(bAvail === AvailabilityEnum.NOT_OWNED) -
       Number(aAvail === AvailabilityEnum.NOT_OWNED) ||
+    Number(bAvail === AvailabilityEnum.NOT_OWNED_FFU) -
+      Number(aAvail === AvailabilityEnum.NOT_OWNED_FFU) ||
     0
   );
 }
@@ -515,6 +535,18 @@ export function handleAgencyAccessData(agencies) {
   };
 }
 
+function getAgencyIds(branches) {
+  return branches
+    ?.map((branch) => {
+      return {
+        agencyId: branch?.agencyId,
+        agencyName: branch?.agencyName,
+      };
+    })
+    ?.sort(sortByAgencyName)
+    ?.map((branch) => branch?.agencyId);
+}
+
 /**
  * {@link useAgencyIdsConformingToQuery} finds agencyIds that conform to query
  * @param {Array.<string>=} pids
@@ -534,17 +566,24 @@ export function useAgencyIdsConformingToQuery({ pids, q, limit = 50 }) {
       })
   );
 
-  const agencyIds = uniq(
-    agencies?.data?.branches?.result
-      ?.map((branch) => {
-        return {
-          agencyId: branch?.agencyId,
-          agencyName: branch?.agencyName,
-        };
-      })
-      ?.sort(sortByAgencyName)
-      ?.map((branch) => branch?.agencyId)
+  const highlightsOnAgency = uniq(
+    getAgencyIds(
+      agencies?.data?.branches?.result.filter((branch) =>
+        branch.highlights.some((highlight) => highlight.key === "agencyName")
+      )
+    )
   );
+
+  const highlightsNotOnAgency = uniq(
+    getAgencyIds(
+      agencies?.data?.branches?.result.filter(
+        (branch) =>
+          !branch.highlights.some((highlight) => highlight.key === "agencyName")
+      )
+    )
+  );
+
+  const agencyIds = uniq([...highlightsOnAgency, ...highlightsNotOnAgency]);
 
   return { agencyIds: agencyIds, isLoading: agencies.isLoading };
 }
