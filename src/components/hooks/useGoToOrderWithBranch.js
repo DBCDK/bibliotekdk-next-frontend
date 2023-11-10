@@ -90,12 +90,6 @@ export function useGoToOrderWithBranch({
   // handleOnSelectEnriched enriches handleOnSelect with all its arguments:
   //   branch, modal, context, updateLoanerInfo, callbackUID, overrideOrderModalPush
   function handleOnSelectEnriched() {
-    // callbackUID is used in handleOnSelect to add order to modal stack to return to order modal after adgangsplatformen
-    const callbackUID = modal.saveToStore("order", {
-      ...orderModalProps,
-      storeLoanerInfo: true,
-    });
-
     // overrideOrderModalPush is a callbackFunction used in handleOnSelect to open order modal,
     //   when previous modal was not order modal
     function overrideOrderModalPush() {
