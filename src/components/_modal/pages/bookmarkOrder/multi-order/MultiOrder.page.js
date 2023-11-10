@@ -23,6 +23,7 @@ const createOrders = async ({
   loanerInfo,
   periodicaForms,
   orderMutation,
+  closeModalOnBack = false,
 }) => {
   await orderMutation.post(
     orderMutations.submitMultipleOrders({
@@ -51,7 +52,7 @@ const createOrders = async ({
 
 const MultiOrder = ({ context }) => {
   const modal = useModal();
-  const { materials } = context;
+  const { materials, closeModalOnBack } = context;
   const analyzeRef = useRef();
   const [materialCounts, setMaterialCounts] = useState({});
   const [duplicateOrdersWorkIds, setDuplicateOrdersWorkIds] = useState([]);
@@ -201,6 +202,7 @@ const MultiOrder = ({ context }) => {
         })}
         titleTag="h2"
         className={{ top: styles.top }}
+        onBack={() => (closeModalOnBack ? modal.setStack([]) : undefined)}
       />
       <Title type="text2" tag="h3" className={styles.subHeading}>
         <Translate
