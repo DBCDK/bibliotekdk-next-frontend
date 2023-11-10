@@ -10,9 +10,6 @@ import {
   useDefaultItemsForDropdownUnits,
 } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
 import isEmpty from "lodash/isEmpty";
-import lexer from "@/lib/cql_parser/lexer";
-import parseCqlToObject from "@/lib/cql_parser/parseCqlToObject";
-import parseObjectToCql from "@/lib/cql_parser/parseObjectToCql";
 // import { useRouter } from "next/router";
 
 export const defaultDropdownIndices = [
@@ -89,13 +86,6 @@ export default function AdvancedSearchProvider({ children }) {
   //field search valued parsed as cql. Will be shown in cql input view.
   const [parsedCQL, setParsedCQL] = useState(null);
 
-  const lexedCql = lexer(
-    `(term.default=Vanedyr) AND ((term.mainlanguage="dan")) AND ((term.generalmaterialtype="bøger"))`
-  );
-  const cqlObject = parseCqlToObject(lexedCql);
-  const cqlFromObject = parseObjectToCql(cqlObject);
-  console.log("cqlObject: ", cqlObject);
-  console.log("cqlFromObject: ", cqlFromObject);
   /**
    * Add an extra input field
    */

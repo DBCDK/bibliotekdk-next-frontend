@@ -18,8 +18,6 @@ export function ExperimentalCqlParser({ parsedCQL }) {
     cqlParsedFromObject = "parsing failed";
   }
 
-  console.log("parsedCql: ", JSON.stringify(parsedCQL));
-
   return (
     <details
       open={false}
