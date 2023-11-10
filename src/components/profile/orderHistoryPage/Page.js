@@ -15,6 +15,7 @@ import * as userFragments from "@/lib/api/user.fragments";
 import Skeleton from "@/components/base/skeleton/Skeleton";
 import { getWorkUrlForProfile } from "@/components/profile/utils";
 import { parseDate } from "@/lib/utils";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 const itemsPerPage = 4;
 
@@ -26,7 +27,7 @@ const itemsPerPage = 4;
  */
 
 export default function OrderHistoryPage() {
-  const { hasCulrUniqueId } = useUser();
+  const { hasCulrUniqueId } = useAuthentication();
   const breakpoint = useBreakpoint();
   const modal = useModal();
   const isMobile = breakpoint === "xs" || breakpoint === "sm";

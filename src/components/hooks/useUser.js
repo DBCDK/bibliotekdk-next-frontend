@@ -98,8 +98,6 @@ function useUserImpl() {
     }
   }
 
-  const isCPRValidated = !!userData?.user?.isCPRValidated;
-
   const sessionData = useMemo(() => {
     const sessionCopy = data?.session;
 
@@ -169,14 +167,9 @@ function useUserImpl() {
     authUser: userData?.user || {},
     isLoading: userIsLoading,
     error: userDataError,
-    // User is loggedIn (verified through adgangsplatformen)
-    isAuthenticated,
     // User exist in culr
     hasCulrUniqueId,
-    // User has a CPR verified account in culr
-    isCPRValidated,
-    // User cannot be verified, but userParameters are saved in session
-    isGuestUser: !isAuthenticated && hasUserParameters,
+
     // User has added userParameters
     hasUserParameters,
     loanerInfo,
@@ -215,21 +208,6 @@ function useUserImpl() {
   };
 }
 
-/**
- * Hook for getting authenticated user
- */
-function useAccessTokenImpl() {
-  const { data: session } = useSession();
-
-  return session?.accessToken;
-}
-
 // const useUser = process.env.STORYBOOK_ACTIVE ? useUserMock : useUserImpl;
 const useUser = process.env.STORYBOOK_ACTIVE ? useUserMock : useUserImpl;
 export default useUser;
-
-const useAccessToken = process.env.STORYBOOK_ACTIVE
-  ? useAccessTokenMock
-  : useAccessTokenImpl;
-
-export { useAccessToken };

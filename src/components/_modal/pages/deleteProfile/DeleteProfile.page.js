@@ -13,6 +13,7 @@ import Button from "@/components/base/button";
 import { deleteUser } from "@/lib/api/userData.mutations";
 import { signOut } from "@dbcdk/login-nextjs/client";
 import Translate from "@/components/base/translate/Translate";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 /**
  * This is a confirmation modal for user deletion.
@@ -20,7 +21,7 @@ import Translate from "@/components/base/translate/Translate";
  */
 export function DeleteProfile({ modal }) {
   const userDataMutation = useMutate();
-  const { hasCulrUniqueId } = useUser();
+  const { hasCulrUniqueId } = useAuthentication();
   const { mutate } = useData(hasCulrUniqueId && userFragments.extendedData());
 
   useEffect(() => {
