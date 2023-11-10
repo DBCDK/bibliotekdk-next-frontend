@@ -23,7 +23,6 @@ const createOrders = async ({
   loanerInfo,
   periodicaForms,
   orderMutation,
-  closeModalOnBack = false,
 }) => {
   await orderMutation.post(
     orderMutations.submitMultipleOrders({
