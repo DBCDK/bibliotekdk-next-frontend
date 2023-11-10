@@ -195,6 +195,8 @@ export default function Wrap({
   showChangeManifestation,
   isMaterialCard = false,
   orderKey,
+  showAlreadyOrdered,
+  setShowArealdyOrdered,
 }) {
   const modal = useModal();
   let { orderPids: orderPidsBeforeFilter, periodicaForm } = context;
@@ -246,8 +248,6 @@ export default function Wrap({
   });
 
   if (isMaterialCard) {
-    const hasAlreadyBeenOrdered = pidHasAlreadyBeenOrdered(orderKey);
-
     const { flattenedGroupedSortedManifestations } =
       manifestationMaterialTypeFactory(manifestations);
     const firstManifestation = flattenedGroupedSortedManifestations?.[0];
@@ -264,14 +264,14 @@ export default function Wrap({
       );
     }
 
-    if (hasAlreadyBeenOrdered && !isPeriodicaLike) {
+    if (showAlreadyOrdered && !isPeriodicaLike) {
       //TODO currently we only check for non-periodica orders
       children.push(
         <HasBeenOrderedRow
           orderDate={new Date()}
           removeOrder={() => modal.clear()}
           acceptOrder={() => {
-            removeOrderIdFromSession(orderKey), modal.update({});
+            setShowArealdyOrdered(false), modal.update({});
           }}
         />
       );

@@ -79,6 +79,9 @@ function Order({
   const contextWithOrderPids = { ...context, orderPids };
   const orderKey = createOrderKey(orderPids);
   const hasAlreadyBeenOrdered = pidHasAlreadyBeenOrdered(orderKey);
+  const [showAlreadyOrdered, setShowAlreadyOrdered] = useState(
+    hasAlreadyBeenOrdered
+  );
 
   // Update email from user account
   useEffect(() => {
@@ -132,7 +135,7 @@ function Order({
     const hasPid = !!pid;
     const requireYear = !!isPeriodicaLike;
     const hasYear = !!context?.periodicaForm?.publicationDateOfComponent;
-    const firstOrder = !hasAlreadyBeenOrdered || isPeriodicaLike; //TODO currently we only check for non-periodica orders
+    const firstOrder = !showAlreadyOrdered || isPeriodicaLike; //TODO currently we only check for non-periodica orders
 
     const status =
       hasMail &&
@@ -149,7 +152,7 @@ function Order({
       },
       firstOrder: {
         status: firstOrder,
-        message: hasAlreadyBeenOrdered &&
+        message: showAlreadyOrdered &&
           !isPeriodicaLike && { label: "alreadyOrderedText" }, //TODO currently we only check for non-periodica orders
       },
       hasBranchId: { status: hasBranchId },
@@ -170,6 +173,7 @@ function Order({
   ]);
 
   function onSubmitOrder() {
+    console.log("clicking");
     if (validated.status) {
       modal.push("receipt", {
         pids: orderPids,
@@ -192,6 +196,7 @@ function Order({
         onSubmit && onSubmit(orderPids, pickupBranch, context?.periodicaForm);
       }
     } else {
+      console.log("HAS VALIDATION ERRORS");
       setHasValidationErrors(true);
     }
   }
@@ -212,6 +217,8 @@ function Order({
         singleManifestation={singleManifestation}
         isMaterialCard={true}
         orderKey={orderKey}
+        showAlreadyOrdered={showAlreadyOrdered}
+        setShowArealdyOrdered={setShowAlreadyOrdered}
       />
       <LocalizationInformation context={context} />
       {user && showBlockedUserInfo && (
@@ -234,7 +241,7 @@ function Order({
         hasValidationErrors={hasValidationErrors}
         onClick={onSubmitOrder}
         blockedForBranch={borrowerCheck && !borrowerStatus?.allowed}
-        hasAlreadyBeenOrdered={hasAlreadyBeenOrdered && !isPeriodicaLike} //TODO currently we only check for non-periodica orders
+        hasAlreadyBeenOrdered={showAlreadyOrdered && !isPeriodicaLike} //TODO currently we only check for non-periodica orders
       />
     </div>
   );

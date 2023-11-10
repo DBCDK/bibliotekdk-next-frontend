@@ -65,10 +65,11 @@ export function getStylingAndErrorMessage(validated, hasValidationErrors) {
 /**
  * Creates a key for each order
  * Used to check if user has already a specific material in same session
- * @param {String[]} orderPids
- * @returns {string}
+ * @param {String[]} orderPids [ '870970-basis:51900030',  '870970-basis:51900030']
+ * @returns {string} '870970-basis:51900030/870970-basis:51900030'
  */
 export function createOrderKey(orderPids) {
+  console.log("to be created pids ", orderPids);
   return (orderPids && orderPids?.join("/")) || "";
 }
 
@@ -76,6 +77,8 @@ export function setAlreadyOrdered(orderKey) {
   const alreadyOrdered = JSON.parse(
     sessionStorage.getItem("alreadyOrdered") || "[]"
   );
+  console.log("orderKey", orderKey);
+
   alreadyOrdered.push(orderKey);
   sessionStorage.setItem("alreadyOrdered", JSON.stringify(alreadyOrdered));
 }
@@ -85,6 +88,7 @@ export function setAlreadyOrdered(orderKey) {
  * @return {boolean} true if orderKey is part of alreadyOrdered keys
  */
 export function pidHasAlreadyBeenOrdered(orderKey) {
+  console.log("orderKey", orderKey);
   return !!JSON.parse(
     sessionStorage.getItem("alreadyOrdered") || "[]"
   ).includes(orderKey);
