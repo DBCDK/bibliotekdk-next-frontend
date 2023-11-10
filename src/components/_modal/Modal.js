@@ -5,20 +5,16 @@ import React, {
   createContext,
   useContext,
 } from "react";
-
 import { useInView } from "react-intersection-observer";
-
-// modal utils
-import { handleTab, scrollLock } from "./utils";
-
+import { scrollLock } from "./utils";
 import useKeyPress from "@/components/hooks/useKeypress";
+import FocusLock from "react-focus-lock";
 
 // context
 export const ModalContext = createContext(null);
 
 const LOCAL_STORAGE_KEY = "modal-v2";
 const LOCAL_STORAGE_STORE_KEY = "modal-v2-store";
-
 const URL_PAGE_UID_KEY = "modal";
 
 /**
@@ -110,16 +106,10 @@ function Container({ children, className = {}, mock = {} }) {
 
   // include mocked functions
   const modal = { ..._modal, ...mock };
-
   const currentPageUid = modal.currentPageUid;
-
-  // current status of the modal dialog
   const [dialogStatus, setDialogStatus] = useState(
-    // The initial state
     modal.isVisible ? "open" : "closed"
   );
-
-  // modal ref
   const modalRef = useRef(null);
 
   // boolean stored in a ref, indicating if stack has been loaded from local storage
@@ -204,6 +194,16 @@ function Container({ children, className = {}, mock = {} }) {
     }
   }, []);
 
+  // force modal focus (accessibility)
+  useEffect(() => {
+    if (isVisible && modalRef.current) {
+      // Wait for animation to finish
+      setTimeout(() => {
+        modalRef.current?.focus();
+      }, 200);
+    }
+  }, [isVisible]);
+
   useEffect(() => {
     // Return immediately if dialogStatus is already assigned the correct state
     if (
@@ -260,35 +260,6 @@ function Container({ children, className = {}, mock = {} }) {
     modal._doSelect(index);
   }, [currentPageUid]);
 
-  // Only allow tab on the page if the modal is not transitioning
-  useEffect(() => {
-    // If tab key is pressed down
-    function downHandler(e) {
-      if (e.key === "Tab") {
-        if (dialogStatus === "opening" || dialogStatus === "closing") {
-          e.preventDefault();
-        }
-        dialogStatus === "open" && handleTab(e, modalRef.current);
-      }
-    }
-    // Add event listeners
-    window.addEventListener("keydown", downHandler);
-    // Remove event listeners on cleanup
-    return () => {
-      window.removeEventListener("keydown", downHandler);
-    };
-  }, [dialogStatus]);
-
-  // force modal focus (accessibility)
-  useEffect(() => {
-    if (isVisible && modalRef.current) {
-      // Wait for animation to finish
-      setTimeout(() => {
-        modalRef.current?.focus();
-      }, 200);
-    }
-  }, [isVisible]);
-
   //  Closes the modal on Escape key
   useEffect(() => {
     if (isVisible && escapeEvent) {
@@ -307,9 +278,7 @@ function Container({ children, className = {}, mock = {} }) {
     if (isVisible && modalRef.current) {
       if (modal.stack.length > 1) {
         if (document) {
-          // setTimeout(() => {
           document.activeElement.blur();
-          // }, 200);
         }
       }
     }
@@ -325,19 +294,17 @@ function Container({ children, className = {}, mock = {} }) {
   }
 
   return (
-    <div
-      id="modal_dimmer"
-      data-cy="modal-dimmer"
-      aria-hidden={true}
-      className={`modal_dimmer ${className.dimmer || ""} ${visibleClass}`}
-      onClick={() => modal.clear()}
-    >
+    <>
+      <div
+        id="modal_dimmer"
+        data-cy="modal-dimmer"
+        className={`modal_dimmer ${className.dimmer || ""} ${visibleClass}`}
+        onClick={() => modal.clear()}
+      />
       <dialog
         id="modal_dialog"
         data-cy="modal-dialog"
         aria-modal="true"
-        role="dialog"
-        tabIndex={isVisible ? "0" : null}
         ref={modalRef}
         aria-hidden={!isVisible}
         className={`modal_dialog ${
@@ -347,11 +314,6 @@ function Container({ children, className = {}, mock = {} }) {
       >
         <div className="modal_container">
           {modal.stack.map((obj, index) => {
-            // prevent render if modal/component is not visible
-            // if (!obj.active) {
-            //   return null;
-            // }
-
             // Find component by id in container children
             const page = children.find((child) => {
               if (child.props.id === obj.id) {
@@ -377,17 +339,16 @@ function Container({ children, className = {}, mock = {} }) {
               dataCy: `modal-page-${index}`,
               mock: page.props.mock || {},
               props: page.props,
+              dialogStatus: dialogStatus,
             });
           })}
         </div>
       </dialog>
-    </div>
+    </>
   );
 }
 
 /**
- * blah blah
- *
  * @param {Object} props
  * @param {string} props.index
  * @param {string} props.active
@@ -404,7 +365,8 @@ function Page(props) {
   const [status, setStatus] = useState("page-after");
 
   // props used on page
-  const { index, active, modal, className, dataCy, mock } = props;
+  const { index, active, modal, className, dataCy, mock, dialogStatus } = props;
+  const [isTransitioning, setIsTransitioning] = useState(true);
   // props we will pass to the component living on the page
   const passedProps = {
     active,
@@ -421,6 +383,15 @@ function Page(props) {
 
   // Add shadow to bottom of scroll area, if last element is not visible
   const shadowClass = inView ? "" : "page-shadow";
+
+  useEffect(() => {
+    setIsTransitioning(true);
+    const timer = setTimeout(() => {
+      setIsTransitioning(false);
+    }, 350);
+
+    return () => clearTimeout(timer);
+  }, [active]);
 
   // Update the page position status
   // This will positioning the pages left, right og in the center of the modal view.
@@ -443,10 +414,15 @@ function Page(props) {
       data-cy={dataCy}
       aria-hidden={!active}
     >
-      <div className={`page_content`}>
+      <FocusLock
+        className="page_content"
+        autoFocus
+        disabled={dialogStatus === "closed" || !active || isTransitioning}
+        returnFocus
+      >
         <props.component {...passedProps} />
         <div ref={ref} className="page_bottom" />
-      </div>
+      </FocusLock>
       <div className="content_shadow" />
     </div>
   );
@@ -798,13 +774,9 @@ export function useModal() {
 }
 
 /**
- * blah blah
- *
  * @param children
  * @param router
- *
- * @returns
- *
+ * @returns {React.JSXElement}
  */
 export function Provider({ children, router }) {
   const [stack, setStack] = useState([]);

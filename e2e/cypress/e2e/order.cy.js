@@ -34,11 +34,7 @@ describe("Order", () => {
     cy.get("[data-cy=input]").should("have.value", "some@mail.dk");
 
     // Submit the order
-    cy.get("[data-cy=button-godkend]")
-      .scrollIntoView()
-      .should("be.visible")
-      .should("not.be.disabled")
-      .click();
+    cy.get("[data-cy=button-godkend]").should("not.be.disabled").click();
 
     cy.contains("some-order-id", { timeout: 10000 });
 
@@ -165,11 +161,7 @@ describe("Order", () => {
       //open order modal
       cy.contains("Bestil", { timeout: 10000 }).click();
       // Submit the order
-      cy.get("[data-cy=button-godkend]")
-        .scrollIntoView()
-        .should("be.visible")
-        .should("not.be.disabled")
-        .click();
+      cy.get("[data-cy=button-godkend]").should("not.be.disabled").click();
 
       //order failed
       cy.get("[data-cy=error-occured-title]").should("be.visible");

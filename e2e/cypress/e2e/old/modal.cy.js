@@ -33,11 +33,11 @@ describe("Modal", () => {
     cy.wait(500);
 
     cy.get("body");
-    cy.focused().should("have.attr", "data-cy", "modal-dialog");
+    cy.focused().should("have.attr", "data-cy", "close-modal");
 
     // Tab to first element in modal
     cy.tabs(1);
-    cy.focused().should("have.attr", "data-cy", "close-modal");
+    cy.focused().should("have.attr", "data-cy", "menu-link-frontpage");
 
     // Tab to last element in modal
   });
@@ -48,14 +48,14 @@ describe("Modal", () => {
     cy.get("[data-cy=button-toggle-menu]").click();
     cy.wait(500);
 
-    cy.focused().should("have.attr", "data-cy", "modal-dialog");
+    cy.focused().should("have.attr", "data-cy", "close-modal");
 
     // Tab to first element in modal
     cy.focused().tab();
-    cy.focused().should("have.attr", "data-cy", "close-modal");
+    cy.focused().should("have.attr", "data-cy", "menu-link-frontpage");
 
     // Tab to last element in modal
-    cy.tabs(6);
+    cy.tabs(5);
     cy.focused().should("have.attr", "data-cy", "menu-link-language");
     /*
     // Next tab will send the tab order back to start
@@ -74,7 +74,7 @@ describe("Modal", () => {
 
     // Tab to first element in modal
     cy.get("body").tab();
-    cy.focused().should("have.attr", "data-cy", "close-modal");
+    cy.focused().should("have.attr", "data-cy", "menu-link-language");
     cy.focused().click();
 
     // Tab to last element in modal
