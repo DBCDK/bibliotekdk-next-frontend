@@ -1,6 +1,6 @@
 import styles from "./CqlTextArea.module.css";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { cyKey } from "@/utils/trim";
 import Text from "@/components/base/text";
@@ -21,6 +21,12 @@ export function CqlTextArea({ textAreaRef }) {
       setCqlValue(parsedCQL);
     }
   }, [parsedCQL]);
+
+  useEffect(() => {
+    const cql = router?.query?.cql;
+    setCqlValue(cql);
+  }, [router?.query?.cql]);
+
   return (
     <div>
       <label

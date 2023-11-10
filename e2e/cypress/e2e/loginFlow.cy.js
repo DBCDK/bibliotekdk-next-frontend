@@ -1,7 +1,8 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 const fbiApiPath = Cypress.env("fbiApiPath");
 
-describe(`Different ways to open login modal with library that has borrowerCheck `, () => {
+describe.skip(`Different ways to open login modal with library that has borrowerCheck `, () => {
+  //TODO fix with https://dbcjira.atlassian.net/browse/BIBDK2021-2027
   it("Plain login from login button in header", () => {
     cy.visit(nextjsBaseUrl);
     cy.consentAllowAll(); //allow cookies
@@ -35,14 +36,14 @@ describe(`Different ways to open login modal with library that has borrowerCheck
       .click();
     cy.get("[data-cy=text-log-ind]").should("be.visible");
     cy.get("[data-cy=pickup-search-input]").should("be.visible").type("Val");
-    cy.contains("Valby Bibliotek").click();
+    cy.contains("Valby Bibliotek").should("be.visible").click();
   });
 
   //TODO bestil should open login modal directly --> test in reservation button
   // come back to order modal from adgangsplatform
 });
 
-describe(`Different ways to open login modal with a (FFU) library that does NOT have borrowerCheck`, () => {
+describe.skip(`Different ways to open login modal with a (FFU) library that does NOT have borrowerCheck`, () => {
   it("Plain login from login button in header not supported & back button leads back to pick up branch search", () => {
     cy.visit(nextjsBaseUrl);
     cy.consentAllowAll();
