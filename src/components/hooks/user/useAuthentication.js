@@ -31,6 +31,7 @@ export default function useAuthentication() {
     hasCulrUniqueId,
     isGuestUser,
     isCPRValidated,
+    loggedInAgencyId: "", // waiting for it to be available in fbi-api
     isLoading,
   };
 }
