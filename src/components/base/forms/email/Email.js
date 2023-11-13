@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import Input from "@/components/base/forms/input";
 import styles from "./Email.module.css";
+import { validateEmail } from "@/utils/validateEmail";
 
 /**
  * The Component function
@@ -38,6 +39,7 @@ function Email(props) {
         if (onChange) {
           const value = e?.target?.value;
           onChange(e, {
+            status: validateEmail(value),
             message: getLabel(value),
           });
         }
@@ -46,6 +48,7 @@ function Email(props) {
         if (onBlur) {
           const value = e?.target?.value;
           onBlur(e, {
+            status: validateEmail(value),
             message: getLabel(value),
           });
         }

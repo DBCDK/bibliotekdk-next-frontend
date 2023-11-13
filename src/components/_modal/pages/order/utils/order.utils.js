@@ -9,12 +9,12 @@ import styles from "@/components/_modal/pages/order/Order.module.css";
  * @param {function} setMail
  */
 export function onMailChange(value, valid, updateLoanerInfo, setMail) {
-  valid &&
+  valid?.status &&
     updateLoanerInfo &&
     updateLoanerInfo({ userParameters: { userMail: value } });
   // update mail in state
   const isValid = {
-    status: valid,
+    status: valid?.status,
     message: valid ? null : "wrong-email-field",
   };
   setMail({ value, valid: isValid });
