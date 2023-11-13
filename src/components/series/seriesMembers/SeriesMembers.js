@@ -48,7 +48,7 @@ export default function SeriesMembers({ series }) {
         context: "series_page",
         label: "series_members_heading",
         vars: [workTypeTranslation],
-      })} ${firstSeriesFirstWork?.creators?.[0]?.display}`}
+      })}`}
       space={{ bottom: "var(--pt0)", top: "var(--pt4)" }}
       isLoading={worksInSeriesIsLoading}
     >
