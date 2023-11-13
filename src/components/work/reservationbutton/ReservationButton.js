@@ -1,4 +1,3 @@
-import useUser from "@/components/hooks/useUser";
 import Button from "@/components/base/button/Button";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
@@ -24,6 +23,7 @@ import {
 import isEmpty from "lodash/isEmpty";
 import uniq from "lodash/uniq";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 function TextAboveButton({ access, user }) {
   return (
@@ -52,7 +52,7 @@ function ReservationButtonWrapper({
   overrideButtonText = null,
   className,
 }) {
-  const user = useUser();
+  const { isAuthenticated, isGuestUser } = useAuthentication();
 
   const { workResponse, manifestations, manifestationsResponse } =
     useGetManifestationsForOrderButton(workId, selectedPids);
@@ -99,7 +99,7 @@ function ReservationButtonWrapper({
   return (
     <ReservationButton
       access={access}
-      user={user}
+      user={{ isAuthenticated, isGuestUser }}
       buttonType={buttonType}
       size={size}
       pids={pids}

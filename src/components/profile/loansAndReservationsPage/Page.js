@@ -1,4 +1,3 @@
-import useUser from "@/components/hooks/useUser";
 import MaterialRow, { MaterialHeaderRow } from "../materialRow/MaterialRow";
 import Title from "@/components/base/title";
 import styles from "./LoansAndReservations.module.css";
@@ -13,6 +12,7 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { arangeLoanerInfo } from "@/lib/userdataFactoryUtils";
 import Link from "@/components/base/link";
 import { useState } from "react";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 const SKELETON_ROW_AMOUNT = 2;
 
@@ -74,7 +74,7 @@ const LoansAndReservations = () => {
   const breakpoint = useBreakpoint();
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
-  const { loanerInfo, isLoading } = useUser();
+  const { loanerInfo, isLoading } = useLoanerInfo();
   const { debt, agencies, orders, loans } = arangeLoanerInfo(loanerInfo);
   const [removedOrderId, setRemovedOrderId] = useState("");
 

@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import useUser from "@/components/hooks/useUser";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 export default function SetPickupBranch({ router }) {
   // the useeffect below updates user pickupbranch after a login from loanerform.
   // when user logs in via adgangplatform a pickupbranch is set in callbackurl
   // @see LoanerForm.js
-  const { updateLoanerInfo } = useUser();
+  const { updateLoanerInfo } = useLoanerInfo();
 
   useEffect(() => {
     if (router.query.setPickupAgency) {

@@ -11,8 +11,8 @@ import { useData } from "@/lib/api/api";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import { useMemo } from "react";
 import { accessFactory } from "@/lib/accessFactoryUtils";
-import useUser from "@/components/hooks/useUser";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 /**
  * Component helper for link and description in options
@@ -142,6 +142,6 @@ export function Options({ modal, context, user }) {
 }
 
 export default function Wrap(props) {
-  const user = useUser();
-  return <Options {...{ ...props, user }} />;
+  const { isAuthenticated, isGuestUser } = useAuthentication();
+  return <Options {...{ ...props, user: { isAuthenticated, isGuestUser } }} />;
 }

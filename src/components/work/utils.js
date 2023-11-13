@@ -9,6 +9,7 @@ import { accessFactory } from "@/lib/accessFactoryUtils";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import { extractCreatorsPrioritiseCorporation } from "@/lib/utils";
 import { MaterialTypeGeneralEnum } from "@/lib/enums_MaterialTypes";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 export function openAgencyLocalizationsModal({
   modal,
@@ -127,6 +128,7 @@ export function getSeo(work) {
 
 export function useBranchUserAndHasDigitalAccess(selectedPids) {
   const user = useUser();
+  const { loanerInfo } = useLoanerInfo();
 
   const {
     data: branchUserData,
@@ -134,9 +136,9 @@ export function useBranchUserAndHasDigitalAccess(selectedPids) {
     isSlow: branchIsSlow,
   } = useData(
     selectedPids &&
-      user?.loanerInfo?.pickupBranch &&
+      loanerInfo?.pickupBranch &&
       branchesFragments.branchDigitalCopyAccess({
-        branchId: user?.loanerInfo?.pickupBranch,
+        branchId: loanerInfo?.pickupBranch,
       })
   );
 

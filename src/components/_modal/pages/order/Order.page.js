@@ -27,6 +27,7 @@ import useUser from "@/components/hooks/useUser";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 import { useData } from "@/lib/api/api";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 /**
  *  Order component function
@@ -55,8 +56,9 @@ function Order({
     isLoadingBranches = false,
   } = pickupBranchInfo;
 
-  const { authUser, loanerInfo } = useUser();
+  const { authUser } = useUser();
   const { isAuthenticated } = useAuthentication();
+  const { loanerInfo } = useLoanerInfo();
 
   const pickUpAgencyInfo = useData(
     loanerInfo?.pickupBranch &&

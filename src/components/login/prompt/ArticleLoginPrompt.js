@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import Translate from "@/components/base/translate";
-import useUser from "@/components/hooks/useUser";
 import { useModal } from "@/components/_modal";
 import { LOGIN_MODE } from "@/components/_modal/pages/login/utils";
 import { useData } from "@/lib/api/api";
@@ -8,6 +7,8 @@ import { infomediaArticle } from "@/lib/api/infomedia.fragments";
 import LoginPrompt from "./Prompt";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import * as branchesFragments from "@/lib/api/branches.fragments";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 /**
  * Prompt the user for log in / change library, when user is not granted access
@@ -15,12 +16,13 @@ import * as branchesFragments from "@/lib/api/branches.fragments";
  *
  */
 export default function ArticleLoginPrompt({ articleId }) {
-  const user = useUser();
+  const { loanerInfo } = useLoanerInfo();
+  const { isAuthenticated } = useAuthentication();
   const modal = useModal();
   const { data, isLoading } = useData(
-    user.isAuthenticated && articleId && infomediaArticle({ id: articleId })
+    isAuthenticated && articleId && infomediaArticle({ id: articleId })
   );
-  const pickupBranch = user?.loanerInfo?.pickupBranch;
+  const pickupBranch = loanerInfo?.pickupBranch;
 
   const branchRes = useData(
     pickupBranch &&
@@ -29,7 +31,7 @@ export default function ArticleLoginPrompt({ articleId }) {
   const agencyName = branchRes?.data?.branches?.result?.[0]?.agencyName || "";
 
   // Not logged in, no access
-  if (!user?.isAuthenticated) {
+  if (!isAuthenticated) {
     return (
       <LoginPrompt
         title={Translate({ context: "articles", label: "getAccess" })}

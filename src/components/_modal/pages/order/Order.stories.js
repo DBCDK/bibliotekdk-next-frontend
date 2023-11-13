@@ -5,7 +5,7 @@ import Pages from "@/components/_modal/pages";
 import ReservationButtonWrapper from "@/components/work/reservationbutton/ReservationButton";
 import merge from "lodash/merge";
 import automock_utils from "@/lib/automock_utils.fixture";
-import useUser from "@/components/hooks/useUser";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 const exportedObject = {
   title: "modal/Order",
@@ -416,7 +416,7 @@ LibraryWithoutLoanerCheck.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 });
 
 export function UserWithOneAgencyBlockedOneAgencyNotBlocked() {
-  const { loanerInfo } = useUser();
+  const { loanerInfo } = useLoanerInfo();
   useMockLoanerInfo({
     pickUpBranch: !loanerInfo.pickUpBranch ? "1234" : loanerInfo.pickUpBranch, //update pickUpBranch when user clicks on a branch in dropdown
   });

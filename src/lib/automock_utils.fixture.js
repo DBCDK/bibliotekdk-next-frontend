@@ -1,9 +1,9 @@
 // A manifestation that may be ordered via ILL
-import useUser from "@/components/hooks/useUser";
 import { useId, useMemo } from "react";
 import { AccessEnum } from "@/lib/enums";
 import { dateObjectToDateOnlyString } from "@/utils/datetimeConverter";
 import { HoldingStatusEnum } from "@/components/hooks/useHandleAgencyAccessData";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 const TODAY = dateObjectToDateOnlyString(new Date());
 const TOMORROW = dateObjectToDateOnlyString(
@@ -1264,7 +1264,7 @@ function useMockLoanerInfo({
   agencies = [USER_AGENCY],
   rights = { digitalArticleService: true },
 }) {
-  const { updateLoanerInfo } = useUser();
+  const { updateLoanerInfo } = useLoanerInfo();
   const id = useId();
   useMemo(() => {
     updateLoanerInfo({

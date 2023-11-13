@@ -5,15 +5,15 @@ import * as branchesFragments from "@/lib/api/branches.fragments";
 import merge from "lodash/merge";
 import isEmpty from "lodash/isEmpty";
 import useAuthentication from "./user/useAuthentication";
+import useLoanerInfo from "./user/useLoanerInfo";
 
 export default function usePickupBranch({ pids }) {
   const {
     authUser,
-    loanerInfo,
-    updateLoanerInfo,
 
     isLoading: userIsLoading,
   } = useUser();
+  const { loanerInfo, updateLoanerInfo } = useLoanerInfo();
   const {
     isAuthenticated,
     isGuestUser,
