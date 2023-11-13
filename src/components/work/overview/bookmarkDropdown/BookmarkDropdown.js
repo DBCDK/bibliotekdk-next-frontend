@@ -10,7 +10,6 @@ import Icon from "@/components/base/icon/Icon";
 import BookmarkMedium from "@/public/icons/bookmark_small.svg";
 import { formatMaterialTypesToPresentation } from "@/lib/manifestationFactoryUtils";
 import { createEditionText } from "../../details/utils/details.utils";
-import upperFirst from "lodash/upperFirst";
 
 export function BookMarkMaterialSelector({
   materialTypes,
