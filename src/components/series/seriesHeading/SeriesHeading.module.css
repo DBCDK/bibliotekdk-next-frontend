@@ -55,15 +55,3 @@
   grid-area: title;
   align-self: center;
 }
-
-@media (min-width: 992px) {
-  .title_box {
-    /*padding-left: var(--pt1);*/
-  }
-}
-
-@media (min-width: 1200px) {
-  /*.title_box {*/
-  /*padding-left: var(--pt5);*/
-  /*}*/
-}
