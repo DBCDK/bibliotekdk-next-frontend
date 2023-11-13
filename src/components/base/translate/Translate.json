@@ -1249,6 +1249,14 @@
       "other_works_by_the_author": {
         "da": "Andre %s af",
         "en": "Other %s in the"
+      },
+      "number_in_series": {
+        "da": "Del %s",
+        "en": "Part %s"
+      },
+      "begin_with_this": {
+        "da": "Begynd med denne",
+        "en": "Begin with this"
       }
     },
     "keywords": {

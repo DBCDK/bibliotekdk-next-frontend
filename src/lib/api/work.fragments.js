@@ -222,6 +222,40 @@ export function series({ workId }) {
 }
 
 /**
+ * Works in Series
+ *
+ * @param {Object} variables
+ * @param {string} variables.workIds
+ *
+ * @returns {Object} a query object
+ */
+export function worksInSeries({ workIds }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 4000, // for debugging
+    query: `query worksInSeries($workIds: [String!]!) {
+      works(id: $workIds) {
+        ...workSliderFragment
+        creators {
+          ...creatorsFragment
+        }
+        universe {
+          ...universeFragment
+        }
+        ...seriesFragment
+      }
+    }
+    ${workSliderFragment}
+    ${creatorsFragment}
+    ${seriesFragment}
+    ${universeFragment}
+  `,
+    variables: { workIds },
+    slowThreshold: 3000,
+  };
+}
+
+/**
  * Infomedia
  *
  * @param {Object} variables
@@ -933,6 +967,7 @@ export function workForWorkRelationsWorkTypeFactory({ workId }) {
 const workSliderFragment = `fragment workSliderFragment on Work {
   workId
   workTypes
+  abstract
   fictionNonfiction {
     display
     code

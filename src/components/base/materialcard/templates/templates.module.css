@@ -6,14 +6,6 @@
   width: 75%;
 }
 
-.col_flex__localizations_version {
-  background: var(--concrete);
-}
-
-.col_flex__image_to_left_version {
-  background: var(--concrete);
-}
-
 @media (min-width: 364px) {
   .col_flex__vertical_version {
     width: 45%;
@@ -32,6 +24,24 @@
   }
 }
 
+.col_flex__big_work_version {
+  width: 100%;
+}
+
+@media (min-width: 992px) {
+  .col_flex__big_work_version {
+    width: 77%;
+  }
+}
+
+.col_flex__localizations_version {
+  background: var(--concrete);
+}
+
+.col_flex__image_to_left_version {
+  background: var(--concrete);
+}
+
 .related_element {
   display: flex;
   height: 100%;
@@ -46,6 +56,18 @@
 .related_element__vertical_version {
   flex-direction: column;
   gap: var(--pt1);
+}
+
+.related_element__big_work_version {
+  flex-direction: column;
+  padding: 0;
+  gap: var(--pt3);
+}
+
+@media (min-width: 414px) {
+  .related_element__big_work_version {
+    flex-direction: row;
+  }
 }
 
 .related_element__localizations_version {
@@ -84,6 +106,13 @@
   padding-bottom: 0;
 }
 
+.text__big_work_version {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--pt2);
+  padding-block: var(--pt1);
+}
+
 .text__image_to_left_version {
   display: flex;
   flex-direction: column;
@@ -104,6 +133,11 @@
   text-transform: uppercase;
 }
 
+.link__big_work_version {
+  --underline-bottom-color: var(--iron);
+  --underline-middle-hover-color: var(--concrete);
+}
+
 /* ----------------- */
 
 .cover {
@@ -116,6 +150,14 @@
   width: 95%;
   object-position: 50% 100%;
   height: calc(var(--pt16) * 2);
+}
+
+.cover__big_work_version {
+  /*width: 95%;*/
+  padding: var(--pt1);
+  width: 193px;
+  /*object-position: 50% 100%;*/
+  /*height: calc(var(--pt16) * 2);*/
 }
 
 .cover__localizations_version {
@@ -142,4 +184,21 @@
 
 .white_overlay {
   background-color: rgba(255, 255, 255, 0.5);
+}
+
+.begin_with_this_and_number_in_series {
+  display: flex;
+  gap: var(--pt2);
+}
+
+.begin_with_this {
+  padding-top: var(--pt025);
+  padding-inline: var(--pt1);
+  /* Box */
+  background-color: var(--pippin);
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+
+  /* Text */
+  color: var(--blue);
+  text-transform: uppercase;
 }
