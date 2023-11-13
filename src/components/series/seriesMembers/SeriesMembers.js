@@ -8,7 +8,8 @@ import styles from "./SeriesMembers.module.css";
 
 // Remove BOOK_LARGE_PRINT because they
 //  consist of the 25 out of 33 parts in series
-//  We might need t
+//  We might need to figure out what to do with
+//  ex. lydbog (cd) for Harry Potter series
 const listOfMaterialTypesToRemove = ["BOOK_LARGE_PRINT"];
 
 function getMemberWorkIds(firstSeriesMembers) {

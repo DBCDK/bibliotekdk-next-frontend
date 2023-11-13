@@ -153,11 +153,8 @@
 }
 
 .cover__big_work_version {
-  /*width: 95%;*/
   padding: var(--pt1);
   width: 193px;
-  /*object-position: 50% 100%;*/
-  /*height: calc(var(--pt16) * 2);*/
 }
 
 .cover__localizations_version {
