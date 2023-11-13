@@ -6,25 +6,23 @@ import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import styles from "./SeriesMembers.module.css";
 
-const listOfMaterialTypesToRemove = ["BOOK_LARGE_PRINT", "AUDIO_BOOK_CD"];
+// Remove BOOK_LARGE_PRINT because they
+//  consist of the 25 out of 33 parts in series
+//  We might need t
+const listOfMaterialTypesToRemove = ["BOOK_LARGE_PRINT"];
 
 function getMemberWorkIds(firstSeriesMembers) {
-  return (
-    firstSeriesMembers
-      // Remove BOOK_LARGE_PRINT because they
-      //  consist of the 25 out of 33 parts in series
-      //  We might need
-      ?.filter(
-        (member) =>
-          !(
-            member?.work?.materialTypes?.length === 1 &&
-            listOfMaterialTypesToRemove.includes(
-              member?.work?.materialTypes?.[0]?.materialTypeSpecific?.code
-            )
+  return firstSeriesMembers
+    ?.filter(
+      (member) =>
+        !(
+          member?.work?.materialTypes?.length === 1 &&
+          listOfMaterialTypesToRemove.includes(
+            member?.work?.materialTypes?.[0]?.materialTypeSpecific?.code
           )
-      )
-      ?.map((member) => member?.work?.workId)
-  );
+        )
+    )
+    ?.map((member) => member?.work?.workId);
 }
 
 export default function SeriesMembers({ series }) {
