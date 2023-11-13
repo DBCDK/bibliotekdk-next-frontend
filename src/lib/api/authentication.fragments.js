@@ -10,6 +10,7 @@ export function authentication() {
     query: `query Authentication {
       user {
         isCPRValidated
+        loggedInAgencyId
       }
       session {
         userParameters {

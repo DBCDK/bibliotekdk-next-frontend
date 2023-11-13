@@ -21,6 +21,9 @@ export default function useAuthentication() {
   // User has a CPR verified account in culr
   const isCPRValidated = data?.user?.isCPRValidated;
 
+  // The agency that the user used for logging in
+  const loggedInAgencyId = data?.user?.loggedInAgencyId;
+
   // Check if fbi-api session contains user parameters
   const isGuestUser =
     !isAuthenticated &&
@@ -31,7 +34,7 @@ export default function useAuthentication() {
     hasCulrUniqueId,
     isGuestUser,
     isCPRValidated,
-    loggedInAgencyId: "", // waiting for it to be available in fbi-api
+    loggedInAgencyId,
     isLoading,
   };
 }
