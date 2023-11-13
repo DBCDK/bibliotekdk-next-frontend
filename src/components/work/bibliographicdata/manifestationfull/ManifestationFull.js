@@ -100,7 +100,9 @@ function ColumnOne({ workId, manifestation }) {
           workId={workId}
           materialId={manifestation.pid}
           materialTypes={[
-            [manifestation?.materialTypes?.[0]?.materialTypeSpecific?.display], //@TODO fix compound material types
+            manifestation?.materialTypes?.map(
+              (mat) => mat?.materialTypeSpecific?.display
+            ),
           ]}
           size={{ w: 4, h: 4 }}
           title={manifestation?.titles?.sort}
