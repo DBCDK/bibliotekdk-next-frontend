@@ -73,7 +73,12 @@ export function ReviewHeadingLink({ propAndChildrenInput, className }) {
   const workTypeTranslated = workTypeTranslator(
     propAndChildrenInput?.workTypes
   );
-  const link = templateImageToLeft(propAndChildrenInput).link_href;
+
+  const link = templateImageToLeft({
+    ...propAndChildrenInput,
+    ...{ linkToWork: true },
+  }).link_href;
+
   return (
     <div className={`${styles.back_button}  ${className}`}>
       <IconLink
