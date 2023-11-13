@@ -183,14 +183,7 @@ export default function AgencyLocalizationItem({
       ) : (
         <Text type="text2">{agency?.agencyName}</Text>
       )}
-      {agency?.pickupAllowed === false ? (
-        <Text>
-          {Translate({
-            context: "localizations",
-            label: "no_pickup_allowed_on_any_branch_in_agency",
-          })}
-        </Text>
-      ) : (
+      {
         <>
           {isEmpty(query) && <DefaultShowingOfAgencyBranches agency={agency} />}
           {!isEmpty(query) && !agencyHighlight && (
@@ -199,7 +192,7 @@ export default function AgencyLocalizationItem({
             />
           )}
         </>
-      )}
+      }
     </LocalizationItemBase>
   );
 }
