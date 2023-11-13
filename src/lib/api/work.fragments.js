@@ -196,11 +196,25 @@ export function series({ workId }) {
           }
         }
         ...seriesFragment
+        series {
+          members {
+            work {
+              ...workSliderFragment
+              creators {
+                ...creatorsFragment
+              }
+              universe {
+                ...universeFragment
+              }
+            }
+          }
+        }
       }
     }
     ${workSliderFragment}
     ${creatorsFragment}
     ${seriesFragment}
+    ${universeFragment}
   `,
     variables: { workId },
     slowThreshold: 3000,
@@ -918,6 +932,11 @@ export function workForWorkRelationsWorkTypeFactory({ workId }) {
 // to the WorkSlider
 const workSliderFragment = `fragment workSliderFragment on Work {
   workId
+  workTypes
+  fictionNonfiction {
+    display
+    code
+  }
   titles {
     main
     full
@@ -978,11 +997,19 @@ const coverFragment = `fragment coverFragment on Manifestation {
 const seriesFragment = `fragment seriesFragment on Work {
   series {
     title
+    readThisFirst
+    readThisWhenever
+    description
     numberInSeries {
       display
       number
     }
   }
+}`;
+
+const universeFragment = `fragment universeFragment on Universe {
+  title
+  alternativeTitles
 }`;
 
 const manifestationAccess = `fragment manifestationAccess on Manifestation {
