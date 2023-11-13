@@ -98,16 +98,10 @@ export function BookMarkMaterialSelector({
     if (material.editionDisplayText) {
       // Edition logic
       item = {
-        key:
-          material.pid +
-          upperFirst(
-            material.materialTypes?.[0]?.materialTypeSpecific?.display
-          ),
+        key: material.pid + formatMaterialTypesToPresentation(material),
         materialId: material.pid,
         workId: workId,
-        materialType: upperFirst(
-          material.materialTypes?.[0]?.materialTypeSpecific?.display
-        ),
+        materialType: formatMaterialTypesToPresentation(material),
         title,
       };
     } else {
@@ -183,10 +177,7 @@ export function BookMarkMaterialSelector({
               bookmarks?.findIndex(
                 (book) =>
                   book.key ===
-                  material.pid +
-                    upperFirst(
-                      material.materialTypes?.[0]?.materialTypeSpecific?.display
-                    )
+                  material.pid + formatMaterialTypesToPresentation(material)
               ) !== -1;
           } else {
             activeItem =
