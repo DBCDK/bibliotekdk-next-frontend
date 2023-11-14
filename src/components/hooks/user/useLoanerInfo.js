@@ -58,14 +58,14 @@ export default function useLoanerInfo() {
         address: user?.address,
         postalCode: userRes?.data?.user?.postalCode,
         rights: userRes?.data?.user?.rights,
-        pickupBranch: sessionRes?.data?.session?.pickupBranch,
-        allowSessionStorage: !!sessionRes?.data?.session?.allowSessionStorage,
+        pickupBranch: session?.pickupBranch,
+        allowSessionStorage: !!session?.allowSessionStorage,
         userParameters,
       },
       isLoading: userRes?.isLoading || sessionRes?.isLoading,
       error: userRes?.error || sessionRes?.error,
       updateLoanerInfo: async (obj) => {
-        const newSession = merge({}, sessionRes?.data?.session || {}, obj);
+        const newSession = merge({}, session || {}, obj);
         // Update global loaner info object
         await mutateFbiApi.post(sessionFragments.submitSession(newSession));
         // Broadcast update
