@@ -7,7 +7,7 @@ export default function OtherWorksByTheAuthor({ series }) {
   const workTypeTranslation = Translate({
     context: "facets",
     label: `label-${firstWorkType}`,
-  });
+  }).toLowerCase();
 
   return (
     <Section

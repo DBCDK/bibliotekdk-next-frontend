@@ -47,7 +47,9 @@ const MaterialCard = forwardRef(
       textClassName,
       imageContainerStyle,
       coverImageClassName,
+      linkClassName,
       imageLeft,
+      border,
     } = renderProps;
 
     if (imageLeft) {
@@ -103,8 +105,10 @@ const MaterialCard = forwardRef(
         <Link
           href={link_href}
           // Link props
-          className={cx(styles.link_style)}
-          border={!link_href ? false : { top: false, bottom: true }}
+          className={cx(styles.link_style, linkClassName)}
+          border={
+            !link_href ? false : border ? border : { top: false, bottom: true }
+          }
           onClick={onClick}
           disabled={!link_href && !onClick}
         >
