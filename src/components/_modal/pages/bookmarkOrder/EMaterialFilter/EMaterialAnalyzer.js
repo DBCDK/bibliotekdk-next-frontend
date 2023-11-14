@@ -4,8 +4,8 @@ import {
   checkDigitalCopy,
   checkPhysicalCopy,
 } from "@/lib/accessFactoryUtils";
+import useUser from "@/components/hooks/useUser";
 import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAndSelectedPids";
-import { useBranchUserAndHasDigitalAccess } from "@/components/work/utils";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 
 /**
@@ -14,6 +14,10 @@ import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtil
  * @returns {boolean}
  */
 const useAnalyzeMaterial = (material) => {
+  const { authUser: user } = useUser();
+
+  const hasDigitalAccess = user?.rights?.digitalArticleService;
+
   const { workId, materialType, pid } = material;
   const allManifestations = material?.manifestations?.mostRelevant;
 
@@ -29,7 +33,7 @@ const useAnalyzeMaterial = (material) => {
     workId,
     selectedPids
   );
-  const { hasDigitalAccess } = useBranchUserAndHasDigitalAccess(selectedPids);
+
   const { getAllAllowedEnrichedAccessSorted } = useMemo(
     () => accessFactory(manifestations),
     [manifestations]
