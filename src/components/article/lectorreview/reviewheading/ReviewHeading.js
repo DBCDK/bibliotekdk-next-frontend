@@ -40,6 +40,7 @@ export function ReviewHeading({ propAndChildrenInput }) {
             },
             singleManifestation: true,
             elementContainerClassName: styles.work_card,
+            linkToWork: true,
           }}
         />
         <div className={styles.title_box}>
@@ -74,10 +75,7 @@ export function ReviewHeadingLink({ propAndChildrenInput, className }) {
     propAndChildrenInput?.workTypes
   );
 
-  const link = templateImageToLeft({
-    ...propAndChildrenInput,
-    ...{ linkToWork: true },
-  }).link_href;
+  const link = templateImageToLeft(propAndChildrenInput).link_href;
 
   return (
     <div className={`${styles.back_button}  ${className}`}>
