@@ -2,7 +2,6 @@ import Translate from "@/components/base/translate/Translate";
 import Layout from "../profileLayout";
 import styles from "./orderHistoryPage.module.css";
 import { useData } from "@/lib/api/api";
-import useUser from "@/components/hooks/useUser";
 import Text from "@/components/base/text";
 import Pagination from "@/components/search/pagination/Pagination";
 
@@ -15,6 +14,7 @@ import * as userFragments from "@/lib/api/user.fragments";
 import Skeleton from "@/components/base/skeleton/Skeleton";
 import { getWorkUrlForProfile } from "@/components/profile/utils";
 import { parseDate } from "@/lib/utils";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 const itemsPerPage = 4;
 
@@ -26,7 +26,7 @@ const itemsPerPage = 4;
  */
 
 export default function OrderHistoryPage() {
-  const { hasCulrUniqueId } = useUser();
+  const { hasCulrUniqueId } = useAuthentication();
   const breakpoint = useBreakpoint();
   const modal = useModal();
   const isMobile = breakpoint === "xs" || breakpoint === "sm";

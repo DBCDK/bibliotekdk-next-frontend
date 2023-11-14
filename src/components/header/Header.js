@@ -42,6 +42,7 @@ import isEmpty from "lodash/isEmpty";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { openLoginModal } from "../_modal/pages/login/utils";
 import { signOut } from "@dbcdk/login-nextjs/client";
+import useAuthentication from "../hooks/user/useAuthentication";
 
 // material Pages
 export const MATERIAL_PAGES = [
@@ -426,6 +427,7 @@ function HeaderSkeleton(props) {
 export default function Wrap(props) {
   const router = useRouter();
   const user = useUser();
+  const { hasCulrUniqueId } = useAuthentication();
   const modal = useModal();
   const filters = useFilters();
 
@@ -436,7 +438,7 @@ export default function Wrap(props) {
   return (
     <Header
       {...props}
-      user={user}
+      user={{ ...user, hasCulrUniqueId }}
       modal={modal}
       filters={filters}
       router={router}

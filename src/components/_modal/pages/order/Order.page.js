@@ -26,6 +26,7 @@ import NoAgenciesError from "./noAgencies/NoAgenciesError";
 import useUser from "@/components/hooks/useUser";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 import { useData } from "@/lib/api/api";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 /**
  *  Order component function
@@ -54,7 +55,8 @@ function Order({
     isLoadingBranches = false,
   } = pickupBranchInfo;
 
-  const { authUser, loanerInfo, isAuthenticated } = useUser();
+  const { authUser, loanerInfo } = useUser();
+  const { isAuthenticated } = useAuthentication();
 
   const pickUpAgencyInfo = useData(
     loanerInfo?.pickupBranch &&

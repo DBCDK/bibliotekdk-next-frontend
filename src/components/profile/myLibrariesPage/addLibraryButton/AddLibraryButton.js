@@ -5,14 +5,14 @@
 import Translate from "@/components/base/translate/Translate";
 import { useModal } from "@/components/_modal/Modal";
 import IconButton from "@/components/base/iconButton/IconButton";
-import useUser from "@/components/hooks/useUser";
 
 import useVerification from "@/components/hooks/useVerification";
-import { useAccessToken } from "@/components/hooks/useUser";
+import useAccessToken from "@/components/hooks/user/useAccessToken";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 export default function AddLibraryButton({ className = "" }) {
   const modal = useModal();
-  const { isCPRValidated } = useUser();
+  const { isCPRValidated } = useAuthentication();
 
   const accessToken = useAccessToken();
   const verification = useVerification();
