@@ -7,7 +7,7 @@ import fetch from "isomorphic-unfetch";
 import storybookConfig from "@/config";
 import getConfig from "next/config";
 import useSWR from "swr";
-import { useAccessToken } from "@/components/hooks/useUser";
+import useAccessToken from "@/components/hooks/user/useAccessToken";
 
 // TODO handle config better
 const nextJsConfig = getConfig();

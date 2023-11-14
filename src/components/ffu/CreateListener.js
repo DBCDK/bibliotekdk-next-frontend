@@ -15,9 +15,11 @@ import Translate from "@/components/base/translate";
 import { createAccount } from "@/lib/api/culr.mutations";
 
 import { useMutate } from "@/lib/api/api";
+import useAuthentication from "../hooks/user/useAuthentication";
 
 export default function Listener() {
   const user = useUser();
+  const { isCPRValidated } = useAuthentication();
   const verification = useVerification();
   const culrMutation = useMutate();
   const modal = useModal();
@@ -26,7 +28,8 @@ export default function Listener() {
   const { data: mutate, reset, error } = culrMutation;
 
   // user details
-  const { hasCulrUniqueId, isCPRValidated, updateUserData } = user;
+  const { updateUserData } = user;
+  const { hasCulrUniqueId } = useAuthentication();
 
   // verification data
   const data = verification.read();

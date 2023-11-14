@@ -7,7 +7,7 @@
 import useSWR from "swr";
 import { useEffect } from "react";
 
-import useUser from "@/components/hooks/useUser";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 /**
  * Settings
@@ -45,7 +45,7 @@ export default function useVerification() {
     JSON.parse(localStorage.getItem(key) || "null")
   );
 
-  const { isAuthenticated } = useUser();
+  const { isAuthenticated } = useAuthentication();
 
   /**
    * cleanup
