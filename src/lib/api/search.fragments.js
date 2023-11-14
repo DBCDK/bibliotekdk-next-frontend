@@ -46,7 +46,7 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `
-    query ($q: SearchQuery!, $filters: SearchFilters, $offset: Int!, $limit: PaginationLimit!) {
+    query all ($q: SearchQuery!, $filters: SearchFilters, $offset: Int!, $limit: PaginationLimit!) {
       search(q: $q, filters: $filters) {
         works(limit: $limit, offset: $offset) {
           workId

@@ -7,8 +7,8 @@ import Text from "@/components/base/text/Text";
 import cx from "classnames";
 import { buildHtmlLink } from "@/lib/utils";
 
-export function LinkToCreator({ firstWorkFirstSeries, seriesIsLoading }) {
-  const firstCreator = firstWorkFirstSeries?.creators?.[0];
+export function LinkToCreator({ firstSeriesFirstWork, seriesIsLoading }) {
+  const firstCreator = firstSeriesFirstWork?.creators?.[0];
 
   return (
     <Link
@@ -35,7 +35,7 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
       <Text type={"text3"} className={styles.series_by}>
         {Translate({ context: "series_page", label: "series_by" })}{" "}
         <LinkToCreator
-          firstWorkFirstSeries={firstSeriesFirstWork}
+          firstSeriesFirstWork={firstSeriesFirstWork}
           seriesIsLoading={seriesIsLoading}
         />
       </Text>

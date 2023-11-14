@@ -10,6 +10,13 @@ import { templateForRelatedWorks } from "@/components/base/materialcard/template
 import { forwardRef } from "react";
 import cx from "classnames";
 
+function calculateBorder(link_href, border) {
+  if (!link_href) {
+    return false;
+  }
+  return border || { top: false, bottom: { keepVisible: true } };
+}
+
 /**
  * @typedef {(number|string|undefined)} OptionalColSize
  */
@@ -106,9 +113,7 @@ const MaterialCard = forwardRef(
           href={link_href}
           // Link props
           className={cx(styles.link_style, linkClassName)}
-          border={
-            !link_href ? false : border ? border : { top: false, bottom: true }
-          }
+          border={calculateBorder(link_href, border)}
           onClick={onClick}
           disabled={!link_href && !onClick}
         >
