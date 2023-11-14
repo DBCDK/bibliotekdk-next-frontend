@@ -3,7 +3,6 @@ export const creatorsFragment = `fragment creatorsFragment on Creator {
     __typename
     display
     nameSort
-    year
     roles {
       function {
         plural
@@ -16,7 +15,6 @@ export const creatorsFragment = `fragment creatorsFragment on Creator {
     __typename
     display
     nameSort
-    birthYear
     roles {
       function {
         plural
