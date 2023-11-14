@@ -807,6 +807,9 @@ const BRANCH_8 = {
 
 // A user with some agencies
 const USER_1 = {
+  name: "Some Name",
+  mail: "some@mail.dk",
+  rights: { digitalArticleService: false },
   agencies: [
     {
       borrowerStatus: BORROWER_STATUS_TRUE,
@@ -917,6 +920,9 @@ const REVIEW_1 = {
   ],
 };
 
+// Holding the current mocked session
+let currentSession = null;
+
 const DEFAULT_STORY_PARAMETERS = {
   parameters: {
     graphql: {
@@ -946,6 +952,10 @@ const DEFAULT_STORY_PARAMETERS = {
             };
           },
         },
+        Session: {
+          pickupBranch: () => currentSession?.pickupBranch || null,
+          userParameters: () => currentSession?.userParameters || null,
+        },
         ElbaServices: {
           placeCopyRequest: (args) => {
             // Used for cypress testing
@@ -954,6 +964,12 @@ const DEFAULT_STORY_PARAMETERS = {
           },
         },
         Mutation: {
+          submitSession: (args) => {
+            // Used for cypress testing
+            console.debug("submitSession", args?.variables?.input);
+            currentSession = args?.variables?.input;
+            return "OK";
+          },
           submitOrder: (args) => {
             // Used for cypress testing
             console.debug("submitOrder", args?.variables?.input);
@@ -993,6 +1009,7 @@ const createDateXDaysFromNow = (daysFromNow) => {
   today.setHours(today.getHours() + 2); // Add 2 hours to prevent that date is exactly 2 days from now
   return today.toISOString();
 };
+
 const USER_LOANS = [
   {
     loanId: "120200590",
@@ -1116,7 +1133,7 @@ const USER_LOANS = [
 const USER_ORDERS = [
   {
     orderId: "2982910",
-    status: "",
+    status: "UNKNOWN",
     pickUpBranch: {
       agencyName: "Husum Bibliotek",
     },
@@ -1150,7 +1167,7 @@ const USER_ORDERS = [
   },
   {
     orderId: "2982912",
-    status: "",
+    status: "UNKNOWN",
     pickUpBranch: {
       agencyName: "Husum Bibliotek",
     },
@@ -1184,7 +1201,7 @@ const USER_ORDERS = [
   },
   {
     orderId: "2982913",
-    status: "",
+    status: "UNKNOWN",
     pickUpBranch: {
       agencyName: "Husum Bibliotek",
     },
@@ -1217,7 +1234,7 @@ const USER_ORDERS = [
   },
   {
     orderId: "2982913",
-    status: "",
+    status: "UNKNOWN",
     pickUpBranch: {
       agencyName: "Husum Bibliotek",
     },
@@ -1246,6 +1263,7 @@ const USER_DEBT = [
 
 const USER_AGENCY = {
   borrowerStatus: BORROWER_STATUS_TRUE,
+  hitcount: 1,
   result: [
     {
       agencyId: "726500",
@@ -1256,24 +1274,12 @@ const USER_AGENCY = {
   ],
 };
 
-function useMockLoanerInfo({
-  pickUpBranch = "790900",
-  loans = USER_LOANS,
-  orders = USER_ORDERS,
-  debt = USER_DEBT,
-  agencies = [USER_AGENCY],
-  rights = { digitalArticleService: true },
-}) {
+function useMockLoanerInfo({ pickUpBranch = "790900" }) {
   const { updateLoanerInfo } = useLoanerInfo();
   const id = useId();
   useMemo(() => {
     updateLoanerInfo({
-      rights: rights,
       pickupBranch: pickUpBranch,
-      loans,
-      orders,
-      debt,
-      agencies,
     });
   }, [id]);
 }
@@ -1292,6 +1298,14 @@ const USER_LIBRARIES = [
     agencyId: "820030",
   },
 ];
+
+const USER_7 = {
+  loans: USER_LOANS,
+  orders: USER_ORDERS,
+  debt: USER_DEBT,
+  agencies: [USER_AGENCY],
+  rights: { digitalArticleService: true },
+};
 
 export default function automock_utils() {
   return {
@@ -1338,6 +1352,7 @@ export default function automock_utils() {
     USER_4,
     USER_5,
     USER_6,
+    USER_7,
     REVIEW_1,
     DEFAULT_STORY_PARAMETERS,
     useMockLoanerInfo,

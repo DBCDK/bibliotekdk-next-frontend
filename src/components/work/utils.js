@@ -1,7 +1,6 @@
 import Translate from "@/components/base/translate";
 import Router from "next/router";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
-import useUser from "@/components/hooks/useUser";
 import { useData } from "@/lib/api/api";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 import { useMemo } from "react";
@@ -127,7 +126,6 @@ export function getSeo(work) {
 }
 
 export function useBranchUserAndHasDigitalAccess(selectedPids) {
-  const user = useUser();
   const { loanerInfo } = useLoanerInfo();
 
   const {
@@ -147,9 +145,9 @@ export function useBranchUserAndHasDigitalAccess(selectedPids) {
       branchUserData?.branches?.result
         ?.map((res) => res.digitalCopyAccess === true)
         .findIndex((res) => res === true) > -1 &&
-      user?.authUser?.rights?.digitalArticleService
+      loanerInfo?.rights?.digitalArticleService
     );
-  }, [branchUserData, user]);
+  }, [branchUserData, loanerInfo]);
 
   return {
     branchUserData: branchUserData,
