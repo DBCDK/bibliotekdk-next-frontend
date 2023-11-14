@@ -21,13 +21,22 @@ export default function OtherWorksByTheAuthor({ series }) {
 
   const { data: searchData, isLoading: searchIsLoading } = useData(
     firstCreator &&
-      searchFragments.all({ q: { creator: firstCreator.display } })
+      searchFragments.all({
+        q: {
+          creator: firstCreator.display,
+        },
+        search_exact: true,
+      })
   );
   const searchWorkIds = searchData?.search?.works?.map((work) => work?.workId);
   const memberWorkIds = getMemberWorkIds(firstSeriesMembers);
 
+  // We get searchWorkIds that are not in memberWorkIds
+  //  This means we get a list of works that are not already
+  //  found in the series
   const nonIntersectingWorkIds = difference(
     searchWorkIds,
+    // Intersection finds the ones to filter out
     intersection(searchWorkIds, memberWorkIds)
   );
 

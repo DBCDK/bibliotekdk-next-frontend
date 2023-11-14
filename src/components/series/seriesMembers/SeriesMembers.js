@@ -57,7 +57,7 @@ export default function SeriesMembers({ series }) {
         {worksInSeriesData?.works?.map((work) => {
           return (
             <MaterialCard
-              key={work?.workid}
+              key={work?.workId}
               propAndChildrenTemplate={templateForBigWorkCard}
               propAndChildrenInput={work}
             >

@@ -40,14 +40,21 @@ export function hitcount({ q, filters = {} }) {
  * @param {number} limit number of results
  * @param {number} offset offset for pagination
  * @param {Object} filters filters for searching
+ * @param {Boolean} search_exact
  */
-export function all({ q, limit = 100, offset = 0, filters = {} }) {
+export function all({
+  q,
+  limit = 100,
+  offset = 0,
+  filters = {},
+  search_exact = false,
+}) {
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `
-    query all ($q: SearchQuery!, $filters: SearchFilters, $offset: Int!, $limit: PaginationLimit!) {
-      search(q: $q, filters: $filters) {
+    query all ($q: SearchQuery!, $filters: SearchFilters, $offset: Int!, $limit: PaginationLimit!, $search_exact: Boolean) {
+      search(q: $q, filters: $filters, search_exact: $search_exact) {
         works(limit: $limit, offset: $offset) {
           workId
           mainLanguages {
@@ -106,6 +113,7 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
       limit,
       offset,
       filters,
+      search_exact,
     },
     slowThreshold: 3000,
   };
