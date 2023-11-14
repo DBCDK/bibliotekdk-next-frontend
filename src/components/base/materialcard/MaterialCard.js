@@ -14,7 +14,7 @@ function calculateBorder(link_href, border) {
   if (!link_href) {
     return false;
   }
-  return border || { top: false, bottom: { keepVisible: true } };
+  return border || { top: false, bottom: true };
 }
 
 /**
