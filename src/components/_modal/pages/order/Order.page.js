@@ -297,6 +297,7 @@ export default function Wrap(props) {
   const [pid, setPid] = useState(null);
   const orderMutation = useMutate();
   const articleOrderMutation = useMutate();
+  const { loanerInfo, updateLoanerInfo } = useLoanerInfo();
 
   useEffect(() => {
     if (context?.pid?.length > 0) {
@@ -308,12 +309,11 @@ export default function Wrap(props) {
     }
   }, [context.pid]);
 
-  const { userInfo, pickupBranchInfo, accessTypeInfo } =
-    useOrderPageInformation({
-      workId: context?.workId,
-      periodicaForm: context?.periodicaForm,
-      pids: context?.pids,
-    });
+  const { pickupBranchInfo, accessTypeInfo } = useOrderPageInformation({
+    workId: context?.workId,
+    periodicaForm: context?.periodicaForm,
+    pids: context?.pids,
+  });
 
   const { allowedAccessesByTypeName, manifestationResponse } =
     useRelevantAccessesForOrderPage(context?.pids);
@@ -339,8 +339,6 @@ export default function Wrap(props) {
   const singleManifestation =
     context.orderType && context.orderType === "singleManifestation";
 
-  const { loanerInfo, updateLoanerInfo } = userInfo;
-
   const {
     data: manifestationData,
     isLoading: isManifestationsLoading,
@@ -348,11 +346,11 @@ export default function Wrap(props) {
     error: manifestationError,
   } = manifestationResponse;
 
-  if (isManifestationsLoading || userInfo.userIsLoading) {
+  if (isManifestationsLoading || loanerInfo?.isLoading) {
     return <OrderSkeleton isSlow={isManifestationsSlow} />;
   }
   // check if user logged in via mitId - and has no connection to any libraries
-  if (!userInfo?.loanerInfo?.pickupBranch && !userInfo?.authUser?.agencies) {
+  if (!loanerInfo?.pickupBranch && !loanerInfo?.agencies) {
     return <NoAgenciesError />;
   }
 
