@@ -32,7 +32,7 @@ export default function ThumbnailParade({ series, seriesIsLoading }) {
             transform: `translate(-${index * (width - offset)}px)`,
             zIndex: `${length - index}`,
           }}
-          className={cx(styles.thumbnail_container, styles.thumbnail)}
+          className={cx(styles.thumbnail)}
           src={thumbnail}
           alt=""
           width={`${width}px`}
