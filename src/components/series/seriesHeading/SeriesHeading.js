@@ -39,7 +39,7 @@ export function SeriesBreadcrumb({ firstSeriesFirstWork }) {
   );
 }
 
-export default function SeriesHeading({ series }) {
+export default function SeriesHeading({ series, seriesIsLoading }) {
   const firstSeriesFirstWork = series?.[0]?.members?.[0]?.work;
 
   return (
@@ -48,12 +48,17 @@ export default function SeriesHeading({ series }) {
       divider={false}
       title={null}
       className={`${styles.top}`}
+      isLoading={seriesIsLoading}
     >
       <Col xs={12} className={`${styles.overview}`}>
         <div className={styles.breadcrumb}>
           <SeriesBreadcrumb firstSeriesFirstWork={firstSeriesFirstWork} />
         </div>
-        <TitleBox series={series} className={styles.title_box} />
+        <TitleBox
+          series={series}
+          seriesIsLoading={seriesIsLoading}
+          className={styles.title_box}
+        />
       </Col>
     </Section>
   );

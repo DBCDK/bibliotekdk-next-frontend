@@ -61,7 +61,7 @@
 .related_element__big_work_version {
   flex-direction: column;
   padding: 0;
-  gap: var(--pt3);
+  gap: var(--pt1);
 }
 
 @media (min-width: 414px) {

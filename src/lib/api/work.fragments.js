@@ -200,6 +200,11 @@ export function series({ workId }) {
           members {
             work {
               ...workSliderFragment
+              manifestations {
+                mostRelevant {
+                  ...coverFragment
+                }
+              }
               creators {
                 ...creatorsFragment
               }
@@ -215,6 +220,7 @@ export function series({ workId }) {
     ${creatorsFragment}
     ${seriesFragment}
     ${universeFragment}
+    ${coverFragment}
   `,
     variables: { workId },
     slowThreshold: 3000,
@@ -1025,6 +1031,7 @@ const titleFragment = `fragment titleFragment on Work {
 const coverFragment = `fragment coverFragment on Manifestation {
   cover {
     detail
+    thumbnail
     origin
   }
 }`;

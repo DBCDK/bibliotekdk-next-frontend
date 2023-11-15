@@ -5,7 +5,9 @@ import Translate from "@/components/base/translate";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text/Text";
 import cx from "classnames";
-import { buildHtmlLink } from "@/lib/utils";
+// TODO: Use when universe pages are implemented
+// import { buildHtmlLink } from "@/lib/utils";
+import ThumbnailParade from "@/components/series/seriesHeading/titleBox/thumbnailParade/ThumbnailParade";
 
 export function LinkToCreator({ firstSeriesFirstWork, seriesIsLoading }) {
   const firstCreator = firstSeriesFirstWork?.creators?.[0];
@@ -29,9 +31,14 @@ export function LinkToCreator({ firstSeriesFirstWork, seriesIsLoading }) {
 
 export default function TitleBox({ series, seriesIsLoading, className }) {
   const firstSeriesFirstWork = series?.[0]?.members?.[0]?.work;
+  const description = series?.[0]?.description;
 
   return (
-    <div className={cx(className, styles.box)}>
+    <div
+      className={cx(className, styles.box, {
+        [styles.boxWithoutDescription]: !description,
+      })}
+    >
       <Text type={"text3"} className={styles.series_by}>
         {Translate({ context: "series_page", label: "series_by" })}{" "}
         <LinkToCreator
@@ -42,42 +49,42 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
       <Title type="title2" className={styles.series_title}>
         {series?.[0]?.title}
       </Title>
-      <div className={styles.series_images}>images</div>
-      {series?.[0]?.description && (
-        <div className={styles.series_description}>
-          {series?.[0]?.description}
-        </div>
-      )}
-      {firstSeriesFirstWork?.universe && (
-        <div className={styles.series_in_universe}>
+      <div className={styles.series_images}>
+        <ThumbnailParade series={series} seriesIsLoading={seriesIsLoading} />
+      </div>
+      <div className={styles.series_information}>
+        {description && <Text type="text2">{description}</Text>}
+        {firstSeriesFirstWork?.universe && (
           <Text type="text2">
             {Translate({
               context: "series_page",
               label: "part_of_universe",
               vars: [
-                buildHtmlLink(
-                  firstSeriesFirstWork?.universe?.title,
-                  "",
-                  "_self"
-                ),
+                firstSeriesFirstWork?.universe?.title,
+                // TODO: Use link when Universe has page
+                // buildHtmlLink(
+                //   firstSeriesFirstWork?.universe?.title,
+                //   "",
+                //   "_self"
+                // ),
               ],
               renderAsHtml: true,
             })}
           </Text>
-        </div>
-      )}
-      <div className={styles.series_components}>
-        {Translate({
-          context: "series_page",
-          label: "parts_in_series",
-          vars: [series?.[0]?.members?.length],
-        })}
+        )}
+        <Text type="type2">
+          {Translate({
+            context: "series_page",
+            label: "parts_in_series",
+            vars: [series?.[0]?.members?.length],
+          })}
+        </Text>
+        {series?.readThisWhenever && (
+          <Text type="type2">
+            {Translate({ context: "series_page", label: "read_this_whenever" })}
+          </Text>
+        )}
       </div>
-      {series?.readThisWhenever && (
-        <div className={styles.series_read_this_whenever}>
-          {Translate({ context: "series_page", label: "read_this_whenever" })}
-        </div>
-      )}
     </div>
   );
 }
