@@ -3,15 +3,15 @@ import automock_utils from "@/lib/automock_utils.fixture";
 import Modal from "@/components/_modal/Modal";
 import Pages from "@/components/_modal/pages";
 import { StoryTitle, StoryDescription } from "@/storybook";
+import merge from "lodash/merge";
 
-const { useMockLoanerInfo } = automock_utils();
+const { DEFAULT_STORY_PARAMETERS, USER_7 } = automock_utils();
 
 const exportedObject = {
   title: "profile/Loans and reservations",
 };
 
 export const LoansAndReservationsStory = () => {
-  useMockLoanerInfo({});
   return (
     <>
       <StoryTitle>Lån og reservationer</StoryTitle>
@@ -25,9 +25,17 @@ export const LoansAndReservationsStory = () => {
     </>
   );
 };
+LoansAndReservationsStory.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {
+        Query: { user: () => USER_7 },
+      },
+    },
+  },
+});
 
 export const LoansAndReservationsStoryActions = () => {
-  useMockLoanerInfo({});
   return (
     <>
       <StoryTitle>Lån og reservationer</StoryTitle>
@@ -42,5 +50,23 @@ export const LoansAndReservationsStoryActions = () => {
     </>
   );
 };
+LoansAndReservationsStoryActions.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {
+        Query: { user: () => USER_7 },
+        RenewLoanResponse: {
+          renewed: (args) => false,
+          error: (args) => "some error",
+          dueDate: (args) => "",
+        },
+        DeleteOrderResponse: {
+          deleted: (args) => false,
+          error: (args) => "some-error",
+        },
+      },
+    },
+  },
+});
 
 export default exportedObject;
