@@ -2,7 +2,7 @@ import { makeExecutableSchema } from "@graphql-tools/schema";
 import { addMocksToSchema } from "@graphql-tools/mock";
 import { graphql, getIntrospectionQuery, buildClientSchema } from "graphql";
 import { APIMockContext } from "./api";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const LOGGER_PREFIX = "GMOCKER:";
 const SCALAR_TYPES = ["Int", "Float", "String", "Boolean", "ID"];
@@ -12,6 +12,30 @@ const SCALAR_EXAMPLE_VALUES = {
   Boolean: true,
 };
 
+function DisplayCode({ header, code }) {
+  return (
+    <div
+      style={{
+        background: "#222222",
+        padding: 16,
+        width: 800,
+        margin: "16px 0",
+      }}
+    >
+      <p
+        style={{
+          fontSize: 28,
+          marginBottom: 24,
+          paddingBottom: 8,
+          borderBottom: "1px solid white",
+        }}
+      >
+        {header}
+      </p>
+      <pre style={{ whiteSpace: "pre-wrap" }}>{code}</pre>
+    </div>
+  );
+}
 export function GraphQLMocker({
   children,
   url,
@@ -19,14 +43,58 @@ export function GraphQLMocker({
   beforeFetch,
   debug = true,
 }) {
+  const [error, setError] = useState();
   const fetcher = useMemo(() => {
     return createMockedFetcher({
       url,
       resolvers,
       beforeFetch,
       debug,
+      onError: (e) => setError(e),
     });
   }, [url, resolvers, beforeFetch]);
+  useEffect(() => {
+    if (error) {
+      console.log(error.stack);
+    }
+  }, error);
+
+  if (error) {
+    return (
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          minHeight: "100vh",
+          background: "#cc0000",
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "column",
+          alignItems: "center",
+          color: "white",
+        }}
+      >
+        <div style={{ fontSize: 48, color: "white" }}>GraphQL ERROR!</div>
+
+        <DisplayCode
+          header="Errors"
+          code={JSON.stringify(error.response.errors, null, 2)}
+        />
+        <DisplayCode
+          header="Variables"
+          code={JSON.stringify(error.request.variables, null, 2)}
+        />
+
+        <DisplayCode
+          header="Query"
+          code={error.request.query.replace(/\\n/g, "\n")}
+        />
+        <DisplayCode header="Stacktrace" code={error.stack} />
+      </div>
+    );
+  }
   return (
     <APIMockContext.Provider
       value={{
@@ -62,6 +130,7 @@ export function createMockedFetcher({
   url,
   resolvers = {},
   beforeFetch = () => {},
+  onError = () => {},
   debug,
 }) {
   // Holds the introspect response
@@ -102,13 +171,16 @@ export function createMockedFetcher({
         }
       }
 
-      introspectResponse = await doFetch();
+      introspectResponse = doFetch();
     }
 
     try {
       // Introspection is already running, we await
       if (introspectResponse.then) {
         introspectResponse = await introspectResponse;
+      }
+      if (schemaWithMocks) {
+        return schemaWithMocks;
       }
 
       // Build the executable GraphQL schema
@@ -243,7 +315,7 @@ export function createMockedFetcher({
    * @param {*} queryStr
    * @returns {Object}
    */
-  async function mockedFetcher(queryStr) {
+  async function mockedFetcher(queryStr, callStack) {
     const { query, variables } =
       typeof queryStr === "string" ? JSON.parse(queryStr) : queryStr;
 
@@ -268,6 +340,13 @@ export function createMockedFetcher({
           .split("\n")
           .map((line) => line + "\n")
       );
+    }
+    if (res.errors) {
+      onError({
+        request: { query, variables },
+        response: { ...res },
+        stack: callStack,
+      });
     }
     return res;
   }
