@@ -3,7 +3,6 @@ import Router from "next/router";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 import useUser from "@/components/hooks/useUser";
 import { useData } from "@/lib/api/api";
-import * as branchesFragments from "@/lib/api/branches.fragments";
 import { useMemo } from "react";
 import { accessFactory } from "@/lib/accessFactoryUtils";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
@@ -125,41 +124,10 @@ export function getSeo(work) {
   };
 }
 
-export function useBranchUserAndHasDigitalAccess(selectedPids) {
-  const user = useUser();
-
-  const {
-    data: branchUserData,
-    isLoading: branchIsLoading,
-    isSlow: branchIsSlow,
-  } = useData(
-    selectedPids &&
-      user?.loanerInfo?.pickupBranch &&
-      branchesFragments.branchDigitalCopyAccess({
-        branchId: user?.loanerInfo?.pickupBranch,
-      })
-  );
-
-  const hasDigitalAccess = useMemo(() => {
-    return (
-      branchUserData?.branches?.result
-        ?.map((res) => res.digitalCopyAccess === true)
-        .findIndex((res) => res === true) > -1 &&
-      user?.authUser?.rights?.digitalArticleService
-    );
-  }, [branchUserData, user]);
-
-  return {
-    branchUserData: branchUserData,
-    branchIsLoading: branchIsLoading,
-    branchIsSlow: branchIsSlow,
-    hasDigitalAccess: hasDigitalAccess,
-  };
-}
-
 export function useRelevantAccessesForOrderPage(selectedPids) {
-  const { branchIsLoading, hasDigitalAccess } =
-    useBranchUserAndHasDigitalAccess(selectedPids);
+  const { authUser: user, isLoading } = useUser();
+
+  const hasDigitalAccess = user?.rights?.digitalArticleService;
 
   const manifestationsResponse = useData(
     selectedPids &&
@@ -195,7 +163,7 @@ export function useRelevantAccessesForOrderPage(selectedPids) {
   );
 
   return {
-    branchIsLoading: branchIsLoading,
+    branchIsLoading: isLoading,
     manifestationResponse: manifestationsResponse,
     manifestations: manifestations,
     allowedAccessesByTypeName: allowedAccessesByTypeName,
