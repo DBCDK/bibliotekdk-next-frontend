@@ -70,7 +70,7 @@ export function templateForBigWorkCard(material) {
   const coverSrc = getCoverImage(material.manifestations.mostRelevant);
 
   const readThisFirst = material?.series?.[0]?.readThisFirst;
-  const numberInSeries = material?.series?.[0]?.numberInSeries?.number;
+  const numberInSeries = material?.series?.[0]?.numberInSeries?.display;
 
   return {
     link_href: getWorkUrl(fullTitle, creators, material?.workId),

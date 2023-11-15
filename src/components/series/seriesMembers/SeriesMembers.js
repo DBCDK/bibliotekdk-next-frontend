@@ -10,9 +10,9 @@ import styles from "./SeriesMembers.module.css";
 //  consist of the 25 out of 33 parts in series
 //  We might need to figure out what to do with
 //  ex. lydbog (cd) for Harry Potter series
-const listOfMaterialTypesToRemove = ["BOOK_LARGE_PRINT"];
+const listOfMaterialTypesToRemove = [];
 
-function getMemberWorkIds(firstSeriesMembers) {
+export function getMemberWorkIds(firstSeriesMembers) {
   return firstSeriesMembers
     ?.filter(
       (member) =>
@@ -49,14 +49,15 @@ export default function SeriesMembers({ series }) {
         label: "series_members_heading",
         vars: [workTypeTranslation],
       })}`}
-      space={{ bottom: "var(--pt0)", top: "var(--pt4)" }}
+      space={{ bottom: "var(--pt0)", top: "var(--pt5)" }}
+      divider={{ content: false }}
       isLoading={worksInSeriesIsLoading}
     >
       <article className={styles.series_members_results}>
         {worksInSeriesData?.works?.map((work) => {
           return (
             <MaterialCard
-              key={work?.workid}
+              key={work?.workId}
               propAndChildrenTemplate={templateForBigWorkCard}
               propAndChildrenInput={work}
             >
