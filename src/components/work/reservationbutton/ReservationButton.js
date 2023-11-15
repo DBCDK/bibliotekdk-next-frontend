@@ -11,10 +11,7 @@ import {
   handleGoToLogin,
 } from "@/components/work/reservationbutton/utils";
 import { useMemo } from "react";
-import {
-  openOrderModal,
-  useBranchUserAndHasDigitalAccess,
-} from "@/components/work/utils";
+import { openOrderModal } from "@/components/work/utils";
 import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAndSelectedPids";
 import {
   accessFactory,
@@ -54,11 +51,10 @@ function ReservationButtonWrapper({
 }) {
   const user = useUser();
 
+  const hasDigitalAccess = user?.authUser?.rights?.digitalArticleService;
+
   const { workResponse, manifestations, manifestationsResponse } =
     useGetManifestationsForOrderButton(workId, selectedPids);
-
-  const { branchIsLoading, hasDigitalAccess } =
-    useBranchUserAndHasDigitalAccess(selectedPids);
 
   const { getAllAllowedEnrichedAccessSorted, allEnrichedAccesses } = useMemo(
     () => accessFactory(manifestations),
@@ -81,7 +77,7 @@ function ReservationButtonWrapper({
     !manifestationsResponse ||
     manifestationsResponse?.isLoading ||
     workResponse?.isLoading ||
-    branchIsLoading
+    user?.isLoading
   ) {
     return (
       <Button

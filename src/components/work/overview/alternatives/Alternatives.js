@@ -5,12 +5,12 @@ import Link from "@/components/base/link";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import { useData } from "@/lib/api/api";
 import { useRouter } from "next/router";
+import useUser from "@/components/hooks/useUser";
 import Skeleton from "@/components/base/skeleton";
 import styles from "./Alternatives.module.css";
 import Col from "react-bootstrap/Col";
 import { accessFactory } from "@/lib/accessFactoryUtils";
 import { useMemo } from "react";
-import { useBranchUserAndHasDigitalAccess } from "@/components/work/utils";
 
 function AlternativeOptions({ modal = null, hasDigitalAccess, context = {} }) {
   const { manifestations, workId, selectedPids } = { ...context };
@@ -54,8 +54,9 @@ export default function Wrap({ workId, selectedPids }) {
   const router = useRouter();
   const title_author = router.query.title_author;
 
-  const { branchIsLoading, branchIsSlow, hasDigitalAccess } =
-    useBranchUserAndHasDigitalAccess(selectedPids);
+  const { authUser: user, isLoading: userIsLoading } = useUser();
+
+  const hasDigitalAccess = user?.rights?.digitalArticleService;
 
   const modal = useModal();
 
@@ -66,13 +67,9 @@ export default function Wrap({ workId, selectedPids }) {
 
   const manifestations = data?.manifestations;
 
-  if (isLoading || branchIsLoading) {
+  if (isLoading || userIsLoading) {
     return (
-      <Skeleton
-        lines={1}
-        className={styles.skeletonstyle}
-        isSlow={isSlow || branchIsSlow}
-      />
+      <Skeleton lines={1} className={styles.skeletonstyle} isSlow={isSlow} />
     );
   }
 
