@@ -6,7 +6,6 @@ import SeriesHeading from "@/components/series/seriesHeading/SeriesHeading";
 import OtherWorksByTheAuthor from "@/components/series/otherWorksByTheAuthor/OtherWorksByTheAuthor";
 import SeriesMembers from "@/components/series/seriesMembers/SeriesMembers";
 import Custom404 from "@/pages/404";
-import { ContentSkeleton } from "@/components/work/content/Content";
 
 export default function SeriesPage() {
   const router = useRouter();
@@ -27,15 +26,12 @@ export default function SeriesPage() {
   return (
     <>
       <Header router={router} />
-      {seriesIsLoading ? (
-        <ContentSkeleton />
-      ) : (
-        <>
-          <SeriesHeading series={series} />
-          <SeriesMembers series={series} />
-          <OtherWorksByTheAuthor series={series} />
-        </>
-      )}
+      <SeriesHeading series={series} seriesIsLoading={seriesIsLoading} />
+      <SeriesMembers series={series} seriesIsLoading={seriesIsLoading} />
+      <OtherWorksByTheAuthor
+        series={series}
+        seriesIsLoading={seriesIsLoading}
+      />
     </>
   );
 }

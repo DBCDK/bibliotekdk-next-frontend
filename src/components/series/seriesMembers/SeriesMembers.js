@@ -26,7 +26,7 @@ export function getMemberWorkIds(firstSeriesMembers) {
     ?.map((member) => member?.work?.workId);
 }
 
-export default function SeriesMembers({ series }) {
+export default function SeriesMembers({ series, seriesIsLoading }) {
   const firstSeriesMembers = series?.[0]?.members;
   const firstSeriesFirstWork = firstSeriesMembers?.[0]?.work;
   const firstWorkType = firstSeriesFirstWork?.workTypes?.[0]?.toLowerCase();
@@ -51,7 +51,7 @@ export default function SeriesMembers({ series }) {
       })}`}
       space={{ bottom: "var(--pt0)", top: "var(--pt5)" }}
       divider={{ content: false }}
-      isLoading={worksInSeriesIsLoading}
+      isLoading={seriesIsLoading || worksInSeriesIsLoading}
     >
       <article className={styles.series_members_results}>
         {worksInSeriesData?.works?.map((work) => {
