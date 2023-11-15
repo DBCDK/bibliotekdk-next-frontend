@@ -60,7 +60,8 @@
 
 .related_element__big_work_version {
   flex-direction: column;
-  padding: 0;
+  padding-inline: 0;
+  padding-block: var(--pt3);
   gap: var(--pt1);
 }
 
@@ -109,6 +110,7 @@
 .text__big_work_version {
   display: flex;
   flex-direction: column;
+  padding-right: var(--pt1);
   row-gap: var(--pt2);
   padding-block: var(--pt1);
 }
@@ -135,7 +137,13 @@
 
 .link__big_work_version {
   --underline-bottom-color: var(--iron);
+  --underline-top-color: var(--iron);
   --underline-middle-hover-color: var(--concrete);
+  isolation: isolate;
+}
+
+.link__big_work_version:is(:hover, :focus-visible, :focus) {
+  z-index: 2;
 }
 
 /* ----------------- */

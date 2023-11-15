@@ -1,7 +1,10 @@
 .thumbnail_group {
-  display: flex;
   isolation: isolate;
-  align-items: end;
+}
+
+.thumbnail_container {
+  display: inline-block;
+  position: relative;
 }
 
 .thumbnail {

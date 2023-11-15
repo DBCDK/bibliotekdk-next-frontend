@@ -46,7 +46,7 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
           seriesIsLoading={seriesIsLoading}
         />
       </Text>
-      <Title type="title2" className={styles.series_title}>
+      <Title type="title2" tag={"h1"} className={styles.series_title}>
         {series?.[0]?.title}
       </Title>
       <div className={styles.series_images}>
@@ -72,7 +72,7 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
             })}
           </Text>
         )}
-        <Text type="type2">
+        <Text type="text2">
           {Translate({
             context: "series_page",
             label: "parts_in_series",
@@ -80,7 +80,7 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
           })}
         </Text>
         {series?.readThisWhenever && (
-          <Text type="type2">
+          <Text type="text2">
             {Translate({ context: "series_page", label: "read_this_whenever" })}
           </Text>
         )}

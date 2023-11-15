@@ -7,6 +7,7 @@ import * as searchFragments from "@/lib/api/search.fragments";
 import { getMemberWorkIds } from "@/components/series/seriesMembers/SeriesMembers";
 import difference from "lodash/difference";
 import intersection from "lodash/intersection";
+import styles from "./OtherWorksByTheAuthor.module.css";
 
 export default function OtherWorksByTheAuthor({ series }) {
   const firstSeriesFirstWork = series?.[0]?.members?.[0]?.work;
@@ -55,8 +56,10 @@ export default function OtherWorksByTheAuthor({ series }) {
         label: "other_works_by_the_author",
         vars: [workTypeTranslation],
       })} ${firstSeriesFirstWork?.creators?.[0]?.display}`}
+      backgroundColor={`var(--jagged-ice)`}
       divider={{ content: false }}
-      space={{ bottom: "var(--pt0)", top: "var(--pt10)" }}
+      space={{ bottom: "var(--pt0)", top: "var(--pt4)" }}
+      className={styles.section}
       isLoading={searchIsLoading}
     >
       {worksInSeriesData?.works && (

@@ -18,25 +18,34 @@ export default function ThumbnailParade({ series, seriesIsLoading }) {
     return <Skeleton />;
   }
 
+  if (length === 0) {
+    return null;
+  }
+
   return (
     <div
       className={styles.thumbnail_group}
       style={{
-        marginRight: `-${(length - 1) * (width - offset) + 1}px`,
+        width: `${width + offset * length}px`,
       }}
     >
       {thumbnails?.map((thumbnail, index) => (
-        <img
+        <div
           key={thumbnail}
           style={{
-            transform: `translate(-${index * (width - offset)}px)`,
-            zIndex: `${length - index}`,
+            marginRight: `-${width - offset}px`,
+            bottom: "100%",
+            zIndex: `-${index}`,
           }}
-          className={cx(styles.thumbnail)}
-          src={thumbnail}
-          alt=""
-          width={`${width}px`}
-        />
+          className={styles.thumbnail_container}
+        >
+          <img
+            className={cx(styles.thumbnail)}
+            src={thumbnail}
+            alt=""
+            width={`${width}px`}
+          />
+        </div>
       ))}
     </div>
   );
