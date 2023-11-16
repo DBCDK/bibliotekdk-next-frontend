@@ -1,5 +1,4 @@
 .series_members_results {
   display: flex;
   flex-direction: column;
-  gap: var(--pt3);
 }

@@ -79,22 +79,22 @@ export function templateForBigWorkCard(material) {
     workId: material?.workId,
     children: (
       <>
-        {(readThisFirst || numberInSeries) && (
+        {(numberInSeries || readThisFirst) && (
           <div className={styles.begin_with_this_and_number_in_series}>
-            {readThisFirst && (
-              <Text tag="span" type="text6" className={styles.begin_with_this}>
-                {Translate({
-                  context: "series_page",
-                  label: "begin_with_this",
-                })}
-              </Text>
-            )}
             {numberInSeries && (
               <Text tag="span" type="text4">
                 {Translate({
                   context: "series_page",
                   label: "number_in_series",
                   vars: [numberInSeries],
+                })}
+              </Text>
+            )}
+            {readThisFirst && (
+              <Text tag="span" type="text6" className={styles.begin_with_this}>
+                {Translate({
+                  context: "series_page",
+                  label: "begin_with_this",
                 })}
               </Text>
             )}
@@ -106,13 +106,13 @@ export function templateForBigWorkCard(material) {
           </Text>
         )}
         {abstract && (
-          <Text {...propFunc("text2", 2)} title={abstract}>
+          <Text {...propFunc("text2", 8)} title={abstract}>
             {abstract}
           </Text>
         )}
       </>
     ),
-    border: { top: true, bottom: { keepVisible: true } },
+    border: { top: { keepVisible: true }, bottom: { keepVisible: true } },
     // Styling
     elementContainerClassName: cx(
       styles.col_flex,
