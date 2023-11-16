@@ -1,3 +1,17 @@
+.top {
+  padding-top: var(--pt2);
+  padding-bottom: var(--pt2);
+  background-color: var(--parchment);
+}
+
+@media (min-width: 768px) {
+  .top {
+    padding-inline: var(--pt2);
+    padding-top: var(--pt2);
+    padding-bottom: var(--pt5);
+  }
+}
+
 .series_members_results {
   display: flex;
   flex-direction: column;

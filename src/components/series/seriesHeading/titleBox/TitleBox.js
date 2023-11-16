@@ -8,22 +8,22 @@ import cx from "classnames";
 // TODO: Use when universe pages are implemented
 // import { buildHtmlLink } from "@/lib/utils";
 import ThumbnailParade from "@/components/series/seriesHeading/titleBox/thumbnailParade/ThumbnailParade";
+import uniq from "lodash/uniq";
+import { getUniqueCreatorsDisplay } from "@/components/series/SeriesPage";
 
-export function LinkToCreator({ firstSeriesFirstWork, seriesIsLoading }) {
-  const firstCreator = firstSeriesFirstWork?.creators?.[0];
-
+export function LinkToCreator({ creator, seriesIsLoading }) {
   return (
     <Link
-      href={`/find?q.creator=${firstCreator?.display}`}
+      href={`/find?q.creator=${creator}`}
       dataCy={cyKey({
-        name: firstCreator?.display,
+        name: creator,
         prefix: "details-creatore",
       })}
       disabled={seriesIsLoading}
       border={{ bottom: { keepVisible: true } }}
     >
       <Text type="text3" tag={"span"} lines={0}>
-        {firstCreator?.display}
+        {creator}
       </Text>
     </Link>
   );
@@ -32,6 +32,7 @@ export function LinkToCreator({ firstSeriesFirstWork, seriesIsLoading }) {
 export default function TitleBox({ series, seriesIsLoading, className }) {
   const firstSeriesFirstWork = series?.members?.[0]?.work;
   const description = series?.description;
+  const creators = getUniqueCreatorsDisplay(series);
 
   return (
     <div
@@ -41,10 +42,16 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
     >
       <Text type={"text3"} className={styles.series_by}>
         {Translate({ context: "series_page", label: "series_by" })}{" "}
-        <LinkToCreator
-          firstSeriesFirstWork={firstSeriesFirstWork}
-          seriesIsLoading={seriesIsLoading}
-        />
+        {creators.slice(0, 2).map((creator, index, array) => (
+          <>
+            <LinkToCreator
+              creator={creator}
+              seriesIsLoading={seriesIsLoading}
+            />
+            {index !== array.length - 1 && ", "}
+          </>
+        ))}
+        {creators?.length > 2 && ", m. fl."}
       </Text>
       <Title type="title2" tag={"h1"} className={styles.series_title}>
         {series?.title}

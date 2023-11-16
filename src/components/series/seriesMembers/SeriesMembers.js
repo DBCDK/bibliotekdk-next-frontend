@@ -5,6 +5,7 @@ import { templateForBigWorkCard } from "@/components/base/materialcard/templates
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import styles from "./SeriesMembers.module.css";
+import { getUniqueCreatorsDisplay } from "@/components/series/SeriesPage";
 
 // Remove BOOK_LARGE_PRINT because they
 //  consist of the 25 out of 33 parts in series
@@ -35,6 +36,8 @@ export default function SeriesMembers({ series, seriesIsLoading }) {
     label: `label-${firstWorkType}`,
   });
 
+  const allCreators = getUniqueCreatorsDisplay(series);
+
   const memberWorkIds = getMemberWorkIds(firstSeriesMembers);
 
   const { data: worksInSeriesData, isLoading: worksInSeriesIsLoading } =
@@ -59,10 +62,11 @@ export default function SeriesMembers({ series, seriesIsLoading }) {
             <MaterialCard
               key={work?.workId}
               propAndChildrenTemplate={templateForBigWorkCard}
-              propAndChildrenInput={work}
-            >
-              work id: {work?.workId}
-            </MaterialCard>
+              propAndChildrenInput={{
+                material: work,
+                includeCreators: allCreators.length > 1,
+              }}
+            />
           );
         })}
       </article>

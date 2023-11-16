@@ -8,6 +8,15 @@ import SeriesMembers from "@/components/series/seriesMembers/SeriesMembers";
 import Custom404 from "@/pages/404";
 import isArray from "lodash/isArray";
 import { useEffect } from "react";
+import uniq from "lodash/uniq";
+
+export function getUniqueCreatorsDisplay(series) {
+  return uniq(
+    series?.members?.flatMap((member) =>
+      member?.work?.creators?.map((creator) => creator?.display)
+    )
+  );
+}
 
 export default function SeriesPage() {
   const router = useRouter();
@@ -29,7 +38,7 @@ export default function SeriesPage() {
   useEffect(() => {
     const chosenSeries = seriesData?.work?.series?.[seriesNumber];
 
-    if (!chosenSeries || chosenSeries?.length === 0) {
+    if (!seriesIsLoading && (!chosenSeries || chosenSeries?.length === 0)) {
       if (seriesNumber === 0) {
         router?.replace(`/work/${workId}`);
       }
@@ -39,7 +48,11 @@ export default function SeriesPage() {
         query: { ...router.query, seriesNumber: 0 },
       });
     }
-  }, [seriesNumber, seriesData?.work?.series?.[seriesNumber]?.length]);
+  }, [
+    seriesIsLoading,
+    seriesNumber,
+    seriesData?.work?.series?.[seriesNumber]?.length,
+  ]);
 
   const series = seriesData?.work?.series;
   const specificSeries = series?.[seriesNumber];
