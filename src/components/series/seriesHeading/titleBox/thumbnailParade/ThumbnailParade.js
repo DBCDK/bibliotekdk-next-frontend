@@ -4,7 +4,7 @@ import cx from "classnames";
 import Skeleton from "@/components/base/skeleton";
 
 export default function ThumbnailParade({ series, seriesIsLoading }) {
-  const thumbnails = series?.[0]?.members
+  const thumbnails = series?.members
     ?.map((member) => getCoverImage(member?.work?.manifestations?.mostRelevant))
     ?.filter((cover) => cover?.origin === "moreinfo")
     ?.map((cover) => cover?.thumbnail)

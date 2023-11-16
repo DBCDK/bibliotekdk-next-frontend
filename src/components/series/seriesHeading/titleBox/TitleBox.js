@@ -30,8 +30,8 @@ export function LinkToCreator({ firstSeriesFirstWork, seriesIsLoading }) {
 }
 
 export default function TitleBox({ series, seriesIsLoading, className }) {
-  const firstSeriesFirstWork = series?.[0]?.members?.[0]?.work;
-  const description = series?.[0]?.description;
+  const firstSeriesFirstWork = series?.members?.[0]?.work;
+  const description = series?.description;
 
   return (
     <div
@@ -47,7 +47,7 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
         />
       </Text>
       <Title type="title2" tag={"h1"} className={styles.series_title}>
-        {series?.[0]?.title}
+        {series?.title}
       </Title>
       <div className={styles.series_images}>
         <ThumbnailParade series={series} seriesIsLoading={seriesIsLoading} />
@@ -76,7 +76,7 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
           {Translate({
             context: "series_page",
             label: "parts_in_series",
-            vars: [series?.[0]?.members?.length],
+            vars: [series?.members?.length],
           })}
         </Text>
         {series?.readThisWhenever && (

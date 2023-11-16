@@ -27,7 +27,7 @@ export function getMemberWorkIds(firstSeriesMembers) {
 }
 
 export default function SeriesMembers({ series, seriesIsLoading }) {
-  const firstSeriesMembers = series?.[0]?.members;
+  const firstSeriesMembers = series?.members;
   const firstSeriesFirstWork = firstSeriesMembers?.[0]?.work;
   const firstWorkType = firstSeriesFirstWork?.workTypes?.[0]?.toLowerCase();
   const workTypeTranslation = Translate({

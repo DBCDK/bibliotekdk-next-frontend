@@ -10,8 +10,8 @@ import intersection from "lodash/intersection";
 import styles from "./OtherWorksByTheAuthor.module.css";
 
 export default function OtherWorksByTheAuthor({ series }) {
-  const firstSeriesFirstWork = series?.[0]?.members?.[0]?.work;
-  const firstSeriesMembers = series?.[0]?.members;
+  const firstSeriesFirstWork = series?.members?.[0]?.work;
+  const firstSeriesMembers = series?.members;
   const firstWorkType = firstSeriesFirstWork?.workTypes?.[0]?.toLowerCase();
   const workTypeTranslation = Translate({
     context: "facets",
