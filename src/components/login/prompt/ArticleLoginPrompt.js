@@ -31,7 +31,7 @@ export default function ArticleLoginPrompt({ articleId }) {
     );
   });
 
-  const agencyName = branch.agencyName || "";
+  const agencyName = branch?.agencyName || "";
 
   // Not logged in, no access
   if (!hasInfomediaAccess && !isAuthenticated) {
