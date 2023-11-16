@@ -180,6 +180,7 @@ export function createMockedFetcher({
         introspectResponse = await introspectResponse;
       }
       if (schemaWithMocks) {
+        // At this point, schema may be built already
         return schemaWithMocks;
       }
 

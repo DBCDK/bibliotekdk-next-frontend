@@ -1,3 +1,4 @@
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import { accessFactory } from "@/lib/accessFactoryUtils";
 import { AccessEnum } from "@/lib/enums";
 
@@ -19,7 +20,7 @@ export function inferAccessTypes(
   periodicaForm,
   initialPickupBranch,
   manifestations,
-  authUser
+  loanerInfo
 ) {
   const {
     allEnrichedAccesses,
@@ -44,7 +45,7 @@ export function inferAccessTypes(
     !!periodicaForm?.pagination;
 
   const availableAsDigitalCopy =
-    (!authUser || authUser?.rights?.digitalArticleService) &&
+    (!loanerInfo || loanerInfo?.rights?.digitalArticleService) &&
     (isPeriodicaLike ? isArticleRequest : true) &&
     isDigitalCopy;
 

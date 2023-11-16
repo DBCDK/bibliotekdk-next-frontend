@@ -74,6 +74,10 @@ describe("Order", () => {
     );
     //open order modal
     cy.contains("Bestil", { timeout: 10000 }).click();
+
+    // wait for data
+    cy.contains("Hugo i Sølvskoven");
+
     // Submit the order
     cy.get("[data-cy=button-godkend]")
       // .scrollIntoView()
@@ -134,6 +138,8 @@ describe("Order", () => {
         "/iframe.html?id=modal-order--order-indexed-periodica-article&viewMode=story"
       );
       cy.contains("Bestil", { timeout: 10000 }).click();
+
+      cy.contains("Hugo i Sølvskoven");
 
       // Check that user blocking is not present
       cy.get("[data-cy=blocked-user]").should("not.exist");

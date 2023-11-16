@@ -120,12 +120,7 @@ export default function Wrap({
       actionMessage={actionMessage}
       isLoading={isWorkLoading || isPickupBranchLoading}
       onClick={onClick}
-      showOrderDigitalCopy={
-        isDigitalCopy &&
-        availableAsDigitalCopy &&
-        context?.selectedAccesses?.[0]?.__typename !==
-          AccessEnum.INTER_LIBRARY_LOAN
-      }
+      showOrderDigitalCopy={isDigitalCopy && availableAsDigitalCopy}
       disabled={
         (!availableAsDigitalCopy && !availableAsPhysicalCopy) ||
         isLoading ||

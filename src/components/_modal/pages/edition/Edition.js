@@ -29,6 +29,7 @@ import { AccessEnum } from "@/lib/enums";
 import { pidHasAlreadyBeenOrdered } from "@/components/_modal/pages/order/utils/order.utils";
 import HasBeenOrderedRow from "./hasbeenOrderedRow/HasBeenOrderedRow";
 import { removeOrderIdFromSession } from "@/components/_modal/pages/order/utils/order.utils";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 export function Edition({
   isLoading,
@@ -197,6 +198,7 @@ export default function Wrap({
   orderKey,
 }) {
   const modal = useModal();
+  const { loanerInfo } = useLoanerInfo();
   let { orderPids: orderPidsBeforeFilter, periodicaForm } = context;
 
   if (!Array.isArray(orderPidsBeforeFilter)) {
@@ -227,7 +229,8 @@ export default function Wrap({
   const inferredAccessTypes = inferAccessTypes(
     periodicaForm,
     pickupBranch,
-    manifestations
+    manifestations,
+    loanerInfo
   );
   const {
     isPeriodicaLike,

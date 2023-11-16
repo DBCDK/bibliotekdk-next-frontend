@@ -60,15 +60,10 @@ function ReservationButtonWrapper({
   const { branchIsLoading, hasDigitalAccess } =
     useBranchUserAndHasDigitalAccess(selectedPids);
 
-  const { getAllAllowedEnrichedAccessSorted, allEnrichedAccesses } = useMemo(
-    () => accessFactory(manifestations),
-    [manifestations]
-  );
+  const { getAllAllowedEnrichedAccessSorted, allEnrichedAccesses } =
+    accessFactory(manifestations);
 
-  const access = useMemo(
-    () => getAllAllowedEnrichedAccessSorted(hasDigitalAccess) || [],
-    [workResponse?.data?.work, manifestations, hasDigitalAccess]
-  );
+  const access = getAllAllowedEnrichedAccessSorted(hasDigitalAccess);
 
   const pids = uniq(
     allEnrichedAccesses?.map((singleAccess) => singleAccess?.pid)
@@ -77,8 +72,8 @@ function ReservationButtonWrapper({
   if (
     !workId ||
     !selectedPids ||
-    !workResponse ||
-    !manifestationsResponse ||
+    !workResponse?.data ||
+    !manifestationsResponse?.data ||
     manifestationsResponse?.isLoading ||
     workResponse?.isLoading ||
     branchIsLoading

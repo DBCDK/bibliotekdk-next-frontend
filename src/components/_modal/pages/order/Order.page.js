@@ -350,7 +350,7 @@ export default function Wrap(props) {
     return <OrderSkeleton isSlow={isManifestationsSlow} />;
   }
   // check if user logged in via mitId - and has no connection to any libraries
-  if (!loanerInfo?.pickupBranch && !loanerInfo?.agencies) {
+  if (!loanerInfo?.pickupBranch && !loanerInfo?.agencies?.length) {
     return <NoAgenciesError />;
   }
 

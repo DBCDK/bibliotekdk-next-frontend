@@ -823,7 +823,10 @@ const USER_2 = {
 };
 
 const USER_3 = {
+  name: "Some Name",
+  mail: "some@mail.dk",
   agencies: [{ borrowerStatus: BORROWER_STATUS_TRUE, result: [BRANCH_3] }],
+  rights: { digitalArticleService: true },
 };
 
 const USER_4 = {
@@ -848,6 +851,12 @@ const USER_6 = {
       result: [BRANCH_1, BRANCH_2],
     },
   ],
+};
+
+const USER_8 = {
+  name: "Some Name",
+  mail: "some@mail.dk",
+  agencies: [],
 };
 
 const REVIEW_1 = {
@@ -1353,6 +1362,7 @@ export default function automock_utils() {
     USER_5,
     USER_6,
     USER_7,
+    USER_8,
     REVIEW_1,
     DEFAULT_STORY_PARAMETERS,
     useMockLoanerInfo,

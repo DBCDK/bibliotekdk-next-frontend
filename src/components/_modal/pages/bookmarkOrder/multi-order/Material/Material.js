@@ -123,7 +123,8 @@ const Material = ({
   const inferredAccessTypes = inferAccessTypes(
     periodicaForm,
     loanerInfo.pickupBranch,
-    manifestations
+    manifestations,
+    loanerInfo
   );
 
   const {

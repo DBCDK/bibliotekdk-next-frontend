@@ -20,6 +20,7 @@ const {
   USER_2,
   USER_3,
   USER_6,
+  USER_8,
   BRANCH_1,
   BRANCH_2,
   BRANCH_3,
@@ -110,13 +111,6 @@ OrderPhysicalMaterialFails.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 });
 
 export function NoUserAgencies() {
-  useMockLoanerInfo({
-    pickUpBranch: "",
-    loans: [],
-    debt: [],
-    agencies: [],
-    orders: [],
-  });
   return (
     <OrderPageComponentBuilder
       title="User has no agencies"
@@ -130,7 +124,11 @@ export function NoUserAgencies() {
 NoUserAgencies.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
-      resolvers: {},
+      resolvers: {
+        Query: {
+          user: () => USER_8,
+        },
+      },
     },
   },
 });
@@ -455,7 +453,7 @@ UserWithOneAgencyBlockedOneAgencyNotBlocked.story = merge(
                 }))
                 .find((a) => a.result.length > 0);
 
-              return agencyWithSelectedBranch;
+              return agencyWithSelectedBranch || [];
             },
           },
         },
