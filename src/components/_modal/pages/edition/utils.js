@@ -1,4 +1,3 @@
-import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import { accessFactory } from "@/lib/accessFactoryUtils";
 import { AccessEnum } from "@/lib/enums";
 

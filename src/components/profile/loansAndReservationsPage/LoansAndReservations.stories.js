@@ -56,13 +56,13 @@ LoansAndReservationsStoryActions.story = merge({}, DEFAULT_STORY_PARAMETERS, {
       resolvers: {
         Query: { user: () => USER_7 },
         RenewLoanResponse: {
-          renewed: (_args) => false,
-          error: (_args) => "some error",
-          dueDate: (_args) => "",
+          renewed: () => false,
+          error: () => "some error",
+          dueDate: () => "",
         },
         DeleteOrderResponse: {
-          deleted: (_args) => false,
-          error: (_args) => "some-error",
+          deleted: () => false,
+          error: () => "some-error",
         },
       },
     },
