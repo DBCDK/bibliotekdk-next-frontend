@@ -8,7 +8,6 @@ import cx from "classnames";
 // TODO: Use when universe pages are implemented
 // import { buildHtmlLink } from "@/lib/utils";
 import ThumbnailParade from "@/components/series/seriesHeading/titleBox/thumbnailParade/ThumbnailParade";
-import uniq from "lodash/uniq";
 import { getUniqueCreatorsDisplay } from "@/components/series/SeriesPage";
 
 export function LinkToCreator({ creator, seriesIsLoading }) {
