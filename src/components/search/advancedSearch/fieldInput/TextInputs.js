@@ -37,13 +37,15 @@ function FieldInput({ key, index, workType, fieldValue }) {
 
   // this is a bit quicky - should probably get the csType
   // from advancedSearchContext
+  const csTypeMap = { function: "creator" };
   const indexType = inputFields[index].searchIndex;
   const csType = indexType.split(".")[1];
+  const mappedCsType = csTypeMap[csType] || csType;
 
   /** @TODO csSuggest supports 4 indexer for now .. whatabout the NOT supported ? **/
   const { data } = useData(
     fieldValue?.value &&
-      suggestFragments.csSuggest({ q: fieldValue.value, type: csType })
+      suggestFragments.csSuggest({ q: fieldValue.value, type: mappedCsType })
   );
 
   useEffect(() => {
