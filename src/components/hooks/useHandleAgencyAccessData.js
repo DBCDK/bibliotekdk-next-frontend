@@ -33,6 +33,15 @@ export const HoldingStatusEnum = Object.freeze({
  * @typedef {string} DateString
  */
 
+// This is a list of FFUs where we expect the localizationsWithHoldings > expectedDelivery
+// on each branch is representing the actual status of the branch.
+// For now, only consists of "Det kgl. bibliotek"
+const specialFFUs = new Set(["800010"]);
+
+export function getSpecialFFUStatus(branch) {
+  return specialFFUs.has(branch?.agencyId);
+}
+
 /**
  * {@link dateIsToday} takes a date (string formatted YYYY-MM-DD) and returns true if date is today
  * @param {DateString} date should be formatted YYYY-MM-DD
@@ -50,12 +59,10 @@ export function dateIsToday(date) {
 export function checkAvailableNow(item) {
   const expectedDelivery = item?.expectedDelivery;
   const status = item?.status;
-  const isDanishPublicLibrary =
-    getLibraryType(item?.agencyId) === LibraryTypeEnum.DANISH_PUBLIC_LIBRARY;
 
   return (
     dateIsToday(expectedDelivery) &&
-    (!isDanishPublicLibrary || status === HoldingStatusEnum.ON_SHELF)
+    (getSpecialFFUStatus(item) || status === HoldingStatusEnum.ON_SHELF)
   );
 }
 
@@ -88,9 +95,12 @@ export function checkAvailableLater(item) {
 
   return (
     (dateIsLater(expectedDelivery) || dateIsToday(expectedDelivery)) &&
-    (!isDanishPublicLibrary ||
-      ![HoldingStatusEnum.NOT_FOR_LOAN].includes(status) ||
-      [HoldingStatusEnum.ON_LOAN, HoldingStatusEnum.ON_SHELF].includes(status))
+    (getSpecialFFUStatus(item) ||
+      (isDanishPublicLibrary &&
+        (![HoldingStatusEnum.NOT_FOR_LOAN].includes(status) ||
+          [HoldingStatusEnum.ON_LOAN, HoldingStatusEnum.ON_SHELF].includes(
+            status
+          ))))
   );
 }
 
@@ -416,6 +426,13 @@ export function enrichBranches(branch) {
     )
   );
 
+  const expectedDeliveryOnHoldingsOrAgency =
+    getExpectedDeliveryOnHoldingsOrAgency(
+      branch?.holdingItems,
+      branchHoldingsWithInfoOnPickupAllowed,
+      [branch]
+    );
+
   return {
     ...branch,
     holdingStatus: branch.holdingStatus,
@@ -427,6 +444,11 @@ export function enrichBranches(branch) {
       branchHoldingsWithInfoOnPickupAllowed
     ),
     availabilityAccumulated: availabilityAccumulated,
+    availabilityOnAgencyAccumulated: getAvailabilityAccumulated(
+      getAvailability(expectedDeliveryOnHoldingsOrAgency, (item) =>
+        checkAvailabilityOnAgencyLevel(item)
+      )
+    ),
     expectedDelivery: branch?.holdingStatus?.expectedDelivery,
     expectedDeliveryAccumulatedFromHoldings:
       getExpectedDeliveryAccumulatedFromHoldings(branch?.holdingItems),
@@ -448,6 +470,25 @@ export function compareDate(a, b) {
     [a > b, 1],
     [a <= b, -1],
   ]);
+}
+
+function getExpectedDeliveryOnHoldingsOrAgency(
+  holdingItems,
+  allHoldingsAcrossBranchesInAgency,
+  entry
+) {
+  return !isEmpty(holdingItems)
+    ? allHoldingsAcrossBranchesInAgency
+    : entry?.map((e) => {
+        return {
+          expectedDelivery: e.expectedDelivery,
+          pickupAllowed: e.pickupAllowed,
+          agencyName: e.agencyName,
+          agencyId: e.agencyId,
+          branchName: e.name,
+          noHoldingsFlag: true,
+        };
+      });
 }
 
 /**
@@ -488,18 +529,12 @@ export function handleAgencyAccessData(agencies) {
       getHoldingsWithInfoOnPickupAllowed
     );
 
-    const expectedDeliveryOnHoldingsOrAgency = !isEmpty(holdingItems)
-      ? allHoldingsAcrossBranchesInAgency
-      : entry?.map((e) => {
-          return {
-            expectedDelivery: e.expectedDelivery,
-            pickupAllowed: e.pickupAllowed,
-            agencyName: e.agencyName,
-            agencyId: e.agencyId,
-            branchName: e.name,
-            noHoldingsFlag: true,
-          };
-        });
+    const expectedDeliveryOnHoldingsOrAgency =
+      getExpectedDeliveryOnHoldingsOrAgency(
+        holdingItems,
+        allHoldingsAcrossBranchesInAgency,
+        entry
+      );
 
     return {
       agencyId: entry?.map((e) => e.agencyId)?.[0],
@@ -660,4 +695,13 @@ export function useSingleBranch({ pids, branchId }) {
   );
 
   return handleAgencyAccessData(branch);
+}
+
+export function isKnownStatus(branch) {
+  // If there are holdings, or the agencyId is
+  return [
+    AvailabilityEnum.NOW,
+    AvailabilityEnum.LATER,
+    AvailabilityEnum.NOT_OWNED,
+  ].includes(branch.availabilityAccumulated);
 }
