@@ -54,8 +54,7 @@ export function OtherWorksByTheAuthor({ series, seriesIsLoading, creator }) {
 }
 
 export default function Wrap({ series, seriesIsLoading }) {
-  const { creators: uniqueCreatorsDisplay, creatorsToShow } =
-    getUniqueCreatorsDisplay(series);
+  const { creators: uniqueCreatorsDisplay } = getUniqueCreatorsDisplay(series);
 
   const firstSeriesFirstWork = series?.members?.[0]?.work;
   const firstWorkType = firstSeriesFirstWork?.workTypes?.[0]?.toLowerCase();
