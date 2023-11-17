@@ -1,13 +1,17 @@
-.link_style {
-  text-decoration: none;
-  flex-grow: 1;
+.link_style_colors {
   /* Add underline colors */
 
   --underline-middle-hover-color: var(--link-background-light);
-  --underline-font-hover-color: var(--mine-shaft);
+}
+
+.base_link_style {
+  text-decoration: none;
+  flex-grow: 1;
   /* -- */
   cursor: pointer;
   width: 100%;
+  /* Add underline colors */
+  --underline-font-hover-color: var(--mine-shaft);
 }
 
 /** ___________________ */
