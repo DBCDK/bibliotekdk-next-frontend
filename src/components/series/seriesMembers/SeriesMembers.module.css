@@ -3,6 +3,6 @@
   flex-direction: column;
 }
 
-.series_members_results > a {
+.series_members_results > * {
   margin-bottom: -1px;
 }
