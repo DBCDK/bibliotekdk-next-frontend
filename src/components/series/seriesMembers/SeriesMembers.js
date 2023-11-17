@@ -37,8 +37,7 @@ export default function SeriesMembers({ series, seriesIsLoading }) {
     label: `label-${firstWorkType}`,
   });
 
-  const { creators: allCreators, creatorsToShow } =
-    getUniqueCreatorsDisplay(series);
+  const { creators: allCreators } = getUniqueCreatorsDisplay(series);
 
   const memberWorkIds = getMemberWorkIds(firstSeriesMembers);
 
