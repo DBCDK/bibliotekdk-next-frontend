@@ -32,6 +32,22 @@ export function fast({ q, workType }) {
   };
 }
 
+export function csSuggest({ q, type }) {
+  return {
+    query: `
+    query CS_suggester ($q:String!, $type:ComplexSuggestionType! ){
+        complexSuggest(q: $q, type: $type) {
+       result {
+          type
+          term
+        }
+      }
+    }`,
+    variables: { q, type },
+    slowThreshold: 3000,
+  };
+}
+
 /**
  * Detailed search response
  *
