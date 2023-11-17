@@ -8,10 +8,8 @@ import styles from "./SeriesMembers.module.css";
 
 import { getUniqueCreatorsDisplay } from "@/components/series/utils";
 
-// Remove BOOK_LARGE_PRINT because they
-//  consist of the 25 out of 33 parts in series
-//  We might need to figure out what to do with
-//  ex. lydbog (cd) for Harry Potter series
+// List for removing specific materialTypes if relevant
+//  Empty for now
 const listOfMaterialTypesToRemove = [];
 
 export function getMemberWorkIds(firstSeriesMembers) {
