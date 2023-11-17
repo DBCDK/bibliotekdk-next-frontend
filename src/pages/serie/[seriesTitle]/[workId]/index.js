@@ -12,7 +12,7 @@ export default function Wrap() {
         query: { ...router.query, seriesNumber: 0 },
       });
     }
-  }, []);
+  }, [router?.query]);
 }
 
 /**

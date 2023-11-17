@@ -8,7 +8,8 @@ import cx from "classnames";
 // TODO: Use when universe pages are implemented
 // import { buildHtmlLink } from "@/lib/utils";
 import ThumbnailParade from "@/components/series/seriesHeading/titleBox/thumbnailParade/ThumbnailParade";
-import { getUniqueCreatorsDisplay } from "@/components/series/SeriesPage";
+
+import { getUniqueCreatorsDisplay } from "@/components/series/utils";
 
 export function LinkToCreator({ creator, seriesIsLoading }) {
   return (
@@ -31,7 +32,7 @@ export function LinkToCreator({ creator, seriesIsLoading }) {
 export default function TitleBox({ series, seriesIsLoading, className }) {
   const firstSeriesFirstWork = series?.members?.[0]?.work;
   const description = series?.description;
-  const creators = getUniqueCreatorsDisplay(series);
+  const { creators, creatorsToShow } = getUniqueCreatorsDisplay(series);
 
   return (
     <div
@@ -41,7 +42,7 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
     >
       <Text type={"text3"} className={styles.series_by}>
         {Translate({ context: "series_page", label: "series_by" })}{" "}
-        {creators.slice(0, 1).map((creator, index, array) => (
+        {creators.slice(0, creatorsToShow).map((creator, index, array) => (
           <>
             <LinkToCreator
               creator={creator}
@@ -50,7 +51,7 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
             {index !== array.length - 1 && ", "}
           </>
         ))}
-        {creators?.length > 2 && ", m. fl."}
+        {creators?.length > creatorsToShow && ", m. fl."}
       </Text>
       <Title type="title2" tag={"h1"} className={styles.series_title}>
         {series?.title}

@@ -8,15 +8,6 @@ import SeriesMembers from "@/components/series/seriesMembers/SeriesMembers";
 import Custom404 from "@/pages/404";
 import isArray from "lodash/isArray";
 import { useEffect } from "react";
-import uniq from "lodash/uniq";
-
-export function getUniqueCreatorsDisplay(series) {
-  return uniq(
-    series?.members?.flatMap((member) =>
-      member?.work?.creators?.map((creator) => creator?.display)
-    )
-  );
-}
 
 export default function SeriesPage() {
   const router = useRouter();
