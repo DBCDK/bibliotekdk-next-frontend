@@ -6,10 +6,10 @@ import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import styles from "./SeriesMembers.module.css";
 
-// Remove BOOK_LARGE_PRINT because they
-//  consist of the 25 out of 33 parts in series
-//  We might need to figure out what to do with
-//  ex. lydbog (cd) for Harry Potter series
+import { getUniqueCreatorsDisplay } from "@/components/series/utils";
+
+// List for removing specific materialTypes if relevant
+//  Empty for now
 const listOfMaterialTypesToRemove = [];
 
 export function getMemberWorkIds(firstSeriesMembers) {
@@ -27,13 +27,15 @@ export function getMemberWorkIds(firstSeriesMembers) {
 }
 
 export default function SeriesMembers({ series, seriesIsLoading }) {
-  const firstSeriesMembers = series?.[0]?.members;
+  const firstSeriesMembers = series?.members;
   const firstSeriesFirstWork = firstSeriesMembers?.[0]?.work;
   const firstWorkType = firstSeriesFirstWork?.workTypes?.[0]?.toLowerCase();
   const workTypeTranslation = Translate({
     context: "facets",
     label: `label-${firstWorkType}`,
   });
+
+  const { creators: allCreators } = getUniqueCreatorsDisplay(series);
 
   const memberWorkIds = getMemberWorkIds(firstSeriesMembers);
 
@@ -59,10 +61,11 @@ export default function SeriesMembers({ series, seriesIsLoading }) {
             <MaterialCard
               key={work?.workId}
               propAndChildrenTemplate={templateForBigWorkCard}
-              propAndChildrenInput={work}
-            >
-              work id: {work?.workId}
-            </MaterialCard>
+              propAndChildrenInput={{
+                material: work,
+                includeCreators: allCreators.length > 1,
+              }}
+            />
           );
         })}
       </article>

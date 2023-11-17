@@ -9,29 +9,30 @@ import cx from "classnames";
 // import { buildHtmlLink } from "@/lib/utils";
 import ThumbnailParade from "@/components/series/seriesHeading/titleBox/thumbnailParade/ThumbnailParade";
 
-export function LinkToCreator({ firstSeriesFirstWork, seriesIsLoading }) {
-  const firstCreator = firstSeriesFirstWork?.creators?.[0];
+import { getUniqueCreatorsDisplay } from "@/components/series/utils";
 
+export function LinkToCreator({ creator, seriesIsLoading }) {
   return (
     <Link
-      href={`/find?q.creator=${firstCreator?.display}`}
+      href={`/find?q.creator=${creator}`}
       dataCy={cyKey({
-        name: firstCreator?.display,
+        name: creator,
         prefix: "details-creatore",
       })}
       disabled={seriesIsLoading}
       border={{ bottom: { keepVisible: true } }}
     >
       <Text type="text3" tag={"span"} lines={0}>
-        {firstCreator?.display}
+        {creator}
       </Text>
     </Link>
   );
 }
 
 export default function TitleBox({ series, seriesIsLoading, className }) {
-  const firstSeriesFirstWork = series?.[0]?.members?.[0]?.work;
-  const description = series?.[0]?.description;
+  const firstSeriesFirstWork = series?.members?.[0]?.work;
+  const description = series?.description;
+  const { creators, creatorsToShow } = getUniqueCreatorsDisplay(series);
 
   return (
     <div
@@ -41,13 +42,19 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
     >
       <Text type={"text3"} className={styles.series_by}>
         {Translate({ context: "series_page", label: "series_by" })}{" "}
-        <LinkToCreator
-          firstSeriesFirstWork={firstSeriesFirstWork}
-          seriesIsLoading={seriesIsLoading}
-        />
+        {creators.slice(0, creatorsToShow).map((creator, index, array) => (
+          <>
+            <LinkToCreator
+              creator={creator}
+              seriesIsLoading={seriesIsLoading}
+            />
+            {index !== array.length - 1 && ", "}
+          </>
+        ))}
+        {creators?.length > creatorsToShow && ", m. fl."}
       </Text>
       <Title type="title2" tag={"h1"} className={styles.series_title}>
-        {series?.[0]?.title}
+        {series?.title}
       </Title>
       <div className={styles.series_images}>
         <ThumbnailParade series={series} seriesIsLoading={seriesIsLoading} />
@@ -76,7 +83,7 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
           {Translate({
             context: "series_page",
             label: "parts_in_series",
-            vars: [series?.[0]?.members?.length],
+            vars: [series?.members?.length],
           })}
         </Text>
         {series?.readThisWhenever && (

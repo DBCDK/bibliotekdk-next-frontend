@@ -8,23 +8,17 @@ import { getMemberWorkIds } from "@/components/series/seriesMembers/SeriesMember
 import difference from "lodash/difference";
 import intersection from "lodash/intersection";
 import styles from "./OtherWorksByTheAuthor.module.css";
+import cx from "classnames";
+import { getUniqueCreatorsDisplay } from "@/components/series/utils";
 
-export default function OtherWorksByTheAuthor({ series }) {
-  const firstSeriesFirstWork = series?.[0]?.members?.[0]?.work;
-  const firstSeriesMembers = series?.[0]?.members;
-  const firstWorkType = firstSeriesFirstWork?.workTypes?.[0]?.toLowerCase();
-  const workTypeTranslation = Translate({
-    context: "facets",
-    label: `label-${firstWorkType}`,
-  }).toLowerCase();
-
-  const firstCreator = firstSeriesFirstWork?.creators?.[0];
+export function OtherWorksByTheAuthor({ series, seriesIsLoading, creator }) {
+  const firstSeriesMembers = series?.members;
 
   const { data: searchData, isLoading: searchIsLoading } = useData(
-    firstCreator &&
+    creator &&
       searchFragments.all({
         q: {
-          creator: firstCreator.display,
+          creator: creator,
         },
         search_exact: true,
       })
@@ -50,24 +44,51 @@ export default function OtherWorksByTheAuthor({ series }) {
     );
 
   return (
-    <Section
-      title={`${Translate({
-        context: "series_page",
-        label: "other_works_by_the_author",
-        vars: [workTypeTranslation],
-      })} ${firstSeriesFirstWork?.creators?.[0]?.display}`}
-      backgroundColor={`var(--jagged-ice)`}
-      divider={{ content: false }}
-      space={{ bottom: "var(--pt0)", top: "var(--pt4)" }}
-      className={styles.section}
-      isLoading={searchIsLoading}
-    >
-      {worksInSeriesData?.works && (
-        <WorkSlider
-          skeleton={worksInSeriesIsLoading}
-          works={worksInSeriesData?.works}
-        />
-      )}
-    </Section>
+    worksInSeriesData?.works && (
+      <WorkSlider
+        skeleton={seriesIsLoading || worksInSeriesIsLoading || searchIsLoading}
+        works={worksInSeriesData?.works}
+      />
+    )
   );
+}
+
+export default function Wrap({ series, seriesIsLoading }) {
+  const { creators: uniqueCreatorsDisplay, creatorsToShow } =
+    getUniqueCreatorsDisplay(series);
+
+  const firstSeriesFirstWork = series?.members?.[0]?.work;
+  const firstWorkType = firstSeriesFirstWork?.workTypes?.[0]?.toLowerCase();
+  const workTypeTranslation = Translate({
+    context: "facets",
+    label: `label-${firstWorkType}`,
+  }).toLowerCase();
+
+  return uniqueCreatorsDisplay
+    .slice(0, creatorsToShow)
+    .map((creator, index) => {
+      return (
+        <Section
+          key={creator}
+          title={`${Translate({
+            context: "series_page",
+            label: "other_works_by_the_author",
+            vars: [workTypeTranslation],
+          })} ${creator}`}
+          divider={false}
+          space={{ bottom: "var(--pt0)", top: "var(--pt4)" }}
+          className={cx(styles.section_color, {
+            [styles.section_first]: index === 0,
+          })}
+          isLoading={seriesIsLoading}
+        >
+          <OtherWorksByTheAuthor
+            series={series}
+            seriesIsLoading={seriesIsLoading}
+            firstSection={true}
+            creator={creator}
+          />
+        </Section>
+      );
+    });
 }

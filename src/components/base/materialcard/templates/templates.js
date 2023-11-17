@@ -62,7 +62,7 @@ export function templateForVerticalWorkCard(material) {
 }
 
 /**Used in Series page */
-export function templateForBigWorkCard(material) {
+export function templateForBigWorkCard({ material, includeCreators }) {
   const fullTitle = material?.titles?.full?.join(": ");
   const creators = material?.creators;
   const abstract = material?.abstract;
@@ -103,6 +103,12 @@ export function templateForBigWorkCard(material) {
         {fullTitle && (
           <Text {...propFunc("title4", 2)} title={fullTitle}>
             {fullTitle}
+          </Text>
+        )}
+        {includeCreators && creators && (
+          <Text {...propFunc("text2", 8)} title={abstract}>
+            {Translate({ context: "general", label: "by" })}{" "}
+            {creators.map((creator) => creator.display).join(", ")}
           </Text>
         )}
         {abstract && (

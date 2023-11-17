@@ -5,14 +5,14 @@ import Translate, { getLanguage } from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
 import TitleBox from "@/components/series/seriesHeading/titleBox/TitleBox";
 
-export function SeriesBreadcrumb({ firstSeriesFirstWork }) {
-  const firstWorkType = firstSeriesFirstWork?.workTypes?.[0]?.toLowerCase();
+export function SeriesBreadcrumb({ firstWork }) {
+  const firstWorkType = firstWork?.workTypes?.[0]?.toLowerCase();
   const workTypeTranslation = Translate({
     context: "facets",
     label: `label-${firstWorkType}`,
   });
 
-  const fictionNonFiction = firstSeriesFirstWork?.fictionNonfiction;
+  const fictionNonFiction = firstWork?.fictionNonfiction;
 
   const fictionNonfictionTranslation =
     fictionNonFiction?.code !== "NOT_SPECIFIED" && fictionNonFiction !== null
@@ -40,7 +40,7 @@ export function SeriesBreadcrumb({ firstSeriesFirstWork }) {
 }
 
 export default function SeriesHeading({ series, seriesIsLoading }) {
-  const firstSeriesFirstWork = series?.[0]?.members?.[0]?.work;
+  const firstWork = series?.members?.[0]?.work;
 
   return (
     <Section
@@ -52,7 +52,7 @@ export default function SeriesHeading({ series, seriesIsLoading }) {
     >
       <Col xs={12} className={`${styles.overview}`}>
         <div className={styles.breadcrumb}>
-          <SeriesBreadcrumb firstSeriesFirstWork={firstSeriesFirstWork} />
+          <SeriesBreadcrumb firstWork={firstWork} />
         </div>
         <TitleBox
           series={series}
