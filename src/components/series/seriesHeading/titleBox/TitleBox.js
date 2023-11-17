@@ -41,7 +41,7 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
     >
       <Text type={"text3"} className={styles.series_by}>
         {Translate({ context: "series_page", label: "series_by" })}{" "}
-        {creators.slice(0, 2).map((creator, index, array) => (
+        {creators.slice(0, 1).map((creator, index, array) => (
           <>
             <LinkToCreator
               creator={creator}

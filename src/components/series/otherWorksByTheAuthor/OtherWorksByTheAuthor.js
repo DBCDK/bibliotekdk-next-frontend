@@ -63,7 +63,7 @@ export default function Wrap({ series, seriesIsLoading }) {
     label: `label-${firstWorkType}`,
   }).toLowerCase();
 
-  return uniqueCreatorsDisplay.slice(0, 2).map((creator, index) => {
+  return uniqueCreatorsDisplay.slice(0, 1).map((creator, index) => {
     return (
       <Section
         key={creator}
