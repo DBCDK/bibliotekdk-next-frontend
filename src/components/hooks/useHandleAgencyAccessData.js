@@ -97,10 +97,8 @@ export function checkAvailableLater(item) {
     (dateIsLater(expectedDelivery) || dateIsToday(expectedDelivery)) &&
     (getSpecialFFUStatus(item) ||
       (isDanishPublicLibrary &&
-        (![HoldingStatusEnum.NOT_FOR_LOAN].includes(status) ||
-          [HoldingStatusEnum.ON_LOAN, HoldingStatusEnum.ON_SHELF].includes(
-            status
-          ))))
+        ![HoldingStatusEnum.NOT_FOR_LOAN].includes(status)) ||
+      [HoldingStatusEnum.ON_LOAN, HoldingStatusEnum.ON_SHELF].includes(status))
   );
 }
 

@@ -22,6 +22,12 @@ const {
   BRANCH_7_1,
   BRANCH_7_2,
   BRANCH_7_3,
+  BRANCH_9,
+  BRANCH_9_1,
+  BRANCH_9_2,
+  BRANCH_9_3,
+  BRANCH_10,
+  BRANCH_10_1,
   DEFAULT_STORY_PARAMETERS,
   ALL_WORKS,
   ALL_MANIFESTATIONS,
@@ -36,6 +42,12 @@ const branches = [
   BRANCH_7_1,
   BRANCH_7_2,
   BRANCH_7_3,
+  BRANCH_9,
+  BRANCH_9_1,
+  BRANCH_9_2,
+  BRANCH_9_3,
+  BRANCH_10,
+  BRANCH_10_1,
 ];
 
 function LocalizationsComponentBuilder({
@@ -150,7 +162,23 @@ LocalizationsBaseFlow.story = merge({}, DEFAULT_STORY_PARAMETERS, {
                   },
                 },
                 {
+                  agencyId: "800010",
+                  holdingItem: {
+                    localizationPid: "some-pid-10",
+                    codes: "12312",
+                    localIdentifier: "214123",
+                  },
+                },
+                {
                   agencyId: "891230",
+                  holdingItem: {
+                    localizationPid: "some-pid-10",
+                    codes: "12312",
+                    localIdentifier: "214123",
+                  },
+                },
+                {
+                  agencyId: "898760",
                   holdingItem: {
                     localizationPid: "some-pid-10",
                     codes: "12312",
