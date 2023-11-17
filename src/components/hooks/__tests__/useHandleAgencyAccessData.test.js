@@ -95,6 +95,26 @@ describe("checkAvailableNow", () => {
     const expected = false;
     expect(actual).toEqual(expected);
   });
+  it("item in NOT danishPublicLibrary, status ON_SHELF, expectedDelivery today, IS available", () => {
+    const item = {
+      agencyId: "891234",
+      expectedDelivery: today,
+      status: HoldingStatusEnum.ON_SHELF,
+    };
+    const actual = checkAvailableNow(item);
+    const expected = true;
+    expect(actual).toEqual(expected);
+  });
+  it("item in NOT danishPublicLibrary, status null, expectedDelivery today, IS NOT available", () => {
+    const item = {
+      agencyId: "891234",
+      expectedDelivery: today,
+      status: null,
+    };
+    const actual = checkAvailableNow(item);
+    const expected = false;
+    expect(actual).toEqual(expected);
+  });
   it("item in NOT danishPublicLibrary, status ON_LOAN, expectedDelivery today, IS NOT available", () => {
     const item = {
       agencyId: "891234",
@@ -178,14 +198,24 @@ describe("checkAvailableLater", () => {
     const expected = false;
     expect(actual).toEqual(expected);
   });
-  it("item in NOT danishPublicLibrary, status ON_LOAN, expectedDelivery today, IS NOT available later", () => {
+  it("item in NOT danishPublicLibrary, status null, expectedDelivery today, IS NOT available later", () => {
+    const item = {
+      agencyId: "891234",
+      expectedDelivery: today,
+      status: null,
+    };
+    const actual = checkAvailableLater(item);
+    const expected = false;
+    expect(actual).toEqual(expected);
+  });
+  it("item in NOT danishPublicLibrary, status ON_LOAN, expectedDelivery today, IS available later", () => {
     const item = {
       agencyId: "891234",
       expectedDelivery: today,
       status: HoldingStatusEnum.ON_LOAN,
     };
     const actual = checkAvailableLater(item);
-    const expected = false;
+    const expected = true;
     expect(actual).toEqual(expected);
   });
   it("item in NOT danishPublicLibrary, status ON_LOAN, expectedDelivery 'never', IS NOT available later", () => {
