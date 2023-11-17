@@ -54,8 +54,7 @@ export function OtherWorksByTheAuthor({ series, seriesIsLoading, creator }) {
 }
 
 export default function Wrap({ series, seriesIsLoading }) {
-  const { creators: uniqueCreatorsDisplay, creatorsToShow } =
-    getUniqueCreatorsDisplay(series);
+  const { creators: uniqueCreatorsDisplay } = getUniqueCreatorsDisplay(series);
 
   const firstSeriesFirstWork = series?.members?.[0]?.work;
   const firstWorkType = firstSeriesFirstWork?.workTypes?.[0]?.toLowerCase();
@@ -64,31 +63,29 @@ export default function Wrap({ series, seriesIsLoading }) {
     label: `label-${firstWorkType}`,
   }).toLowerCase();
 
-  return uniqueCreatorsDisplay
-    .slice(0, creatorsToShow)
-    .map((creator, index) => {
-      return (
-        <Section
-          key={creator}
-          title={`${Translate({
-            context: "series_page",
-            label: "other_works_by_the_author",
-            vars: [workTypeTranslation],
-          })} ${creator}`}
-          divider={false}
-          space={{ bottom: "var(--pt0)", top: "var(--pt4)" }}
-          className={cx(styles.section_color, {
-            [styles.section_first]: index === 0,
-          })}
-          isLoading={seriesIsLoading}
-        >
-          <OtherWorksByTheAuthor
-            series={series}
-            seriesIsLoading={seriesIsLoading}
-            firstSection={true}
-            creator={creator}
-          />
-        </Section>
-      );
-    });
+  return uniqueCreatorsDisplay.slice(0, 1).map((creator, index) => {
+    return (
+      <Section
+        key={creator}
+        title={`${Translate({
+          context: "series_page",
+          label: "other_works_by_the_author",
+          vars: [workTypeTranslation],
+        })} ${creator}`}
+        divider={false}
+        space={{ bottom: "var(--pt0)", top: "var(--pt4)" }}
+        className={cx(styles.section_color, {
+          [styles.section_first]: index === 0,
+        })}
+        isLoading={seriesIsLoading}
+      >
+        <OtherWorksByTheAuthor
+          series={series}
+          seriesIsLoading={seriesIsLoading}
+          firstSection={true}
+          creator={creator}
+        />
+      </Section>
+    );
+  });
 }

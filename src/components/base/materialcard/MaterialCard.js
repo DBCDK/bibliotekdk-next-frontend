@@ -79,7 +79,8 @@ const MaterialCard = forwardRef(
         >
           <Tag
             className={cx(styles.container, {
-              [styles.link_style]: !!link_href,
+              [styles.base_link_style]: !!link_href,
+              [styles.link_style_colors]: !!link_href,
             })}
           >
             <div ref={ref} id={workId} className={cx(relatedElementClassName)}>
@@ -112,7 +113,10 @@ const MaterialCard = forwardRef(
         <Link
           href={link_href}
           // Link props
-          className={cx(styles.link_style, linkClassName)}
+          className={cx(styles.base_link_style, {
+            [styles.link_style_colors]: !linkClassName,
+            [linkClassName]: linkClassName,
+          })}
           border={calculateBorder(link_href, border)}
           onClick={onClick}
           disabled={!link_href && !onClick}
