@@ -103,7 +103,7 @@ describe("Reservation button", () => {
     cy.get("[data-cy=button-order-overview-disabled]").should("be.disabled");
   });
 
-  it.only("onclick should add order-modal to store, if user logged ind", () => {
+  it("onclick should open order-modal, if user logged ind", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-login-flow"
     );
@@ -122,7 +122,7 @@ describe("Reservation button", () => {
     cy.get("[data-cy=router-query]").contains("modal");
   });
 
-  it.only("onclick should open order-modal, if user NOT logged ind", () => {
+  it("onclick should open login-modal and add order modal to store, if user NOT logged ind", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-not-logged-in-flow"
     );
@@ -132,19 +132,13 @@ describe("Reservation button", () => {
     //dont add order modal to the store
     cy.window().then((win) => {
       const addedItem = win.localStorage.getItem("modal-v2-store");
-      //   console.log("addedItem", addedItem);
-      //   const modal = JSON.parse(addedItem);
-      //   console.log("MODAL ", modal);
-      //   const uid = modal[0].id;
-      //   expect(uid).to.be.equal("order");
-      // });
+      //TODO when less flaky, check if "modal-v2-store" contains "Order"
+
       expect(addedItem).to.be.equal(null);
     });
     //open some modal directly - we cannot check if it actually is the order modal that is opened
     cy.get("[data-cy=router-query]").contains("modal");
   });
-
-  // @TODO more testing - request_button:false eg.
 });
 
 describe("ButtonTxt", () => {
