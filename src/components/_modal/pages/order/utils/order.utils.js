@@ -62,12 +62,14 @@ export function getStylingAndErrorMessage(validated, hasValidationErrors) {
   };
 }
 
+/**
+ * If workId isnt already in sessionStorage, add it
+ * @param {String} workId
+ */
 export function setAlreadyOrdered(workId) {
   const alreadyOrdered = JSON.parse(
     sessionStorage.getItem("alreadyOrdered") || "[]"
   );
-
-  console.log(" setAlreadyOrdered alreadyOrdered prev", alreadyOrdered);
   const isAlreaydOrdered = alreadyOrdered.includes(workId);
   if (!isAlreaydOrdered) {
     alreadyOrdered.push(workId);

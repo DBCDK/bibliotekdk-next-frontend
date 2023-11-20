@@ -71,7 +71,6 @@ const MultiOrder = ({ context }) => {
 
       //set the ordered workids as already ordered in session
       successMaterials.forEach((mat) => {
-        //TODO if not in session, add to session
         if (mat?.workId) setAlreadyOrdered(mat.workId);
       });
 

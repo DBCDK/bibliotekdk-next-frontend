@@ -72,7 +72,7 @@ const Material = ({
   const { loanerInfo } = useUser();
   const periodicaForm = periodicaForms?.[material.key];
   const workId = material.workId;
-  const hasAlreadyBeenOrdered = workHasAlreadyBeenOrdered(workId); //TODO do i need this anymore?
+  const hasAlreadyBeenOrdered = workHasAlreadyBeenOrdered(workId);
   const [showAlreadyOrderedWarning, setShowAlreadyOrderedWarning] = useState(
     hasAlreadyBeenOrdered
   );
