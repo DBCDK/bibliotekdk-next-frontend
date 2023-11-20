@@ -140,7 +140,7 @@ const CheckoutForm = ({
           </Text>
         )}
 
-        {!mail?.valid?.status && (
+        {mail?.valid?.status === false && (
           <Text type="text3" className={styles.errorLabel}>
             <Translate context="order" label="action-empty-email-field" />
           </Text>
