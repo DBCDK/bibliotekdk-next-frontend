@@ -50,6 +50,10 @@
       "all_phrase.generalmaterialtype": {
         "da": "Alle materialer",
         "en": "All materials"
+      },
+      "search_dropdown": {
+        "da": "Søg i %s...",
+        "en": "Search in %s..."
       }
     },
     "logo": {

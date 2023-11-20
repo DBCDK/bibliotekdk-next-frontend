@@ -29,6 +29,7 @@ function DropdownUnit({ items, indexName, updateDropdownSearchIndices }) {
     <div className={styles.dropdown_with_title}>
       <Text type={"text2"}>{indexTitle}</Text>
       <AdvancedSearchDropdown
+        indexTitle={indexTitle}
         indexName={indexName}
         indexPlaceholder={indexPlaceholder}
         menuItems={convertToDropdownInput(items)}

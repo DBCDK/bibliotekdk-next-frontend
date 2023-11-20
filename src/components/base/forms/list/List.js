@@ -12,6 +12,7 @@ import Link from "@/components/base/link";
 import styles from "./List.module.css";
 import cx from "classnames";
 import animations from "css/animations";
+import { getFirstMatch } from "@/lib/utils";
 
 /**
  * A custom Radio Button displayed as a row
@@ -285,6 +286,12 @@ function Group({
   enabled = true,
   label = "Select list group",
   disableGroupOutline = false, // Use for group of FormLinks
+  charCodeEvent = (e) => [
+    false,
+    () => {
+      return e;
+    },
+  ],
   ...props
 }) {
   const childrenRef = useRef([]);
@@ -338,6 +345,7 @@ function Group({
 
   return (
     <div
+      {...(props.id && { id: props.id })}
       data-cy={props["data-cy"]}
       role="group"
       aria-label={label}
@@ -351,6 +359,7 @@ function Group({
         );
 
         function focusScroller(idx) {
+          e.preventDefault();
           childrenRef.current?.[idx]?.focus();
           childrenRef.current?.[idx]?.scrollIntoView({ block: "center" });
         }
@@ -366,21 +375,26 @@ function Group({
           return;
         }
 
-        if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
-          e.preventDefault();
-          focusScroller(getPrevItem(index));
-        } else if (e.key === "ArrowDown" || e.key === "ArrowRight") {
-          e.preventDefault();
-          focusScroller(getNextItem(index));
-        } else if (e.key === "Home") {
-          e.preventDefault();
-          const index = 0;
-          focusScroller(index);
-        } else if (e.key === "End") {
-          e.preventDefault();
-          const index = childrenRef.current.length - 1;
-          focusScroller(index);
-        }
+        const actionArray = [
+          [
+            ["ArrowUp", "ArrowLeft"].includes(e.key),
+            () => focusScroller(getPrevItem(index)),
+          ],
+          [
+            ["ArrowDown", "ArrowRight"].includes(e.key),
+            () => focusScroller(getNextItem(index)),
+          ],
+          [["Home"].includes(e.key), () => focusScroller(0)],
+          [
+            ["End"].includes(e.key),
+            () => focusScroller(childrenRef.current.length - 1),
+          ],
+          charCodeEvent(e),
+        ];
+
+        const action = getFirstMatch(true, () => {}, actionArray);
+
+        action();
       }}
     >
       {React.Children.map(children, (child, index) =>
