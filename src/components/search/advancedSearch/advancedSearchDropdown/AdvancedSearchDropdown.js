@@ -62,6 +62,22 @@ function inFormType(formType) {
   return [FormTypeEnum.DIVIDER, FormTypeEnum.RADIO_LINK].includes(formType);
 }
 
+function sorterForMenuItems(a, b, dropdownQuery) {
+  if (inFormType(a.formType)) {
+    if (inFormType(b.formType)) {
+      return 0;
+    }
+    return 1;
+  } else if (inFormType(b.formType)) {
+    return -1;
+  } else {
+    return (
+      b?.name?.toLowerCase().includes(dropdownQuery.toLowerCase()) -
+      a?.name?.toLowerCase().includes(dropdownQuery.toLowerCase())
+    );
+  }
+}
+
 export default function AdvancedSearchDropdown({
   indexTitle,
   indexName,
@@ -112,21 +128,7 @@ export default function AdvancedSearchDropdown({
   const sortedMenuItemsState = [
     ...(!isEmpty(dropdownQuery)
       ? [...menuItemsState]
-          .sort((a, b) => {
-            if (inFormType(a.formType)) {
-              if (inFormType(b.formType)) {
-                return 0;
-              }
-              return 1;
-            } else if (inFormType(b.formType)) {
-              return -1;
-            } else {
-              return (
-                b?.name?.toLowerCase().includes(dropdownQuery.toLowerCase()) -
-                a?.name?.toLowerCase().includes(dropdownQuery.toLowerCase())
-              );
-            }
-          })
+          .sort((a, b) => sorterForMenuItems(a, b, dropdownQuery))
           .filter((item) => ![FormTypeEnum.DIVIDER].includes(item.formType))
       : [...menuItemsState]),
   ];
