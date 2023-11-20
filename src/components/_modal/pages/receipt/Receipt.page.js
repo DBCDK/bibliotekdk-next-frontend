@@ -20,7 +20,7 @@ import cx from "classnames";
 import isEmpty from "lodash/isEmpty";
 import Link from "@/components/base/link";
 import {
-  pidHasAlreadyBeenOrdered,
+  workHasAlreadyBeenOrdered,
   setAlreadyOrdered,
 } from "@/components/_modal/pages/order/utils/order.utils";
 
@@ -33,7 +33,7 @@ export function Receipt({
   context,
 }) {
   // get props from context
-  const { pickupBranch, order = {}, articleOrder = {}, orderKey } = context;
+  const { pickupBranch, order = {}, articleOrder = {}, workId } = context;
   const router = useRouter();
 
   // Always show a 1s loader animation before receipt is visible.
@@ -88,10 +88,10 @@ export function Receipt({
   useEffect(() => {
     if (
       orderData?.submitOrder?.orderId &&
-      orderKey &&
-      !pidHasAlreadyBeenOrdered(orderKey)
+      workId &&
+      !workHasAlreadyBeenOrdered(workId)
     ) {
-      setAlreadyOrdered(orderKey);
+      setAlreadyOrdered(workId);
     }
   }, [orderData?.submitOrder?.orderId]);
 

@@ -16,7 +16,7 @@ const HasBeenOrderedRow = ({ removeOrder, acceptOrder }) => {
         <IconButton onClick={removeOrder} keepUnderline={true}>
           {Translate({
             context: "bookmark",
-            label: "remove",
+            label: "dont-order",
           })}
         </IconButton>
         <IconButton

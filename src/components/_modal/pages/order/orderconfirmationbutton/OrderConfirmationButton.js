@@ -56,24 +56,26 @@ function OrderConfirmationButton({
         <Button disabled={disabled} skeleton={isLoading} onClick={onClick}>
           {Translate({ context: "general", label: "accept" })}
         </Button>
-        <Text type="text2" className={styles.goToOrderHistory}>
-          {Translate({
-            context: "order",
-            label: "get-overview",
-          })}{" "}
-          <Link
-            href={"/profil/bestillingshistorik"}
-            border={{ top: false, bottom: { keepVisible: true } }}
-            dataCy="open-order-history"
-            ariaLabel="open order history"
-          >
-            {Translate({ context: "profile", label: "orderHistory" })}
-          </Link>{" "}
-          {Translate({
-            context: "order",
-            label: "get-overview-2",
-          })}
-        </Text>
+        {actionMessage && (
+          <Text type="text2" className={styles.goToOrderHistory}>
+            {Translate({
+              context: "order",
+              label: "get-overview",
+            })}{" "}
+            <Link
+              href={"/profil/bestillingshistorik"}
+              border={{ top: false, bottom: { keepVisible: true } }}
+              dataCy="open-order-history"
+              ariaLabel="open order history"
+            >
+              {Translate({ context: "profile", label: "orderHistory" })}
+            </Link>{" "}
+            {Translate({
+              context: "order",
+              label: "get-overview-2",
+            })}
+          </Text>
+        )}
       </div>
     </>
   );
