@@ -54,9 +54,7 @@ function Input({
   const [val, setVal] = useState(value || "");
   // Update value if undefined/null at first render
   useEffect(() => {
-    if (overrideValueControl) {
-      setVal(value);
-    }
+    setVal(value);
   }, [value]);
 
   const readOnlyClass = readOnly || disabled ? styles.readOnly : "";
