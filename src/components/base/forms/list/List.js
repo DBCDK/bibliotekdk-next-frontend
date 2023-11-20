@@ -286,12 +286,7 @@ function Group({
   enabled = true,
   label = "Select list group",
   disableGroupOutline = false, // Use for group of FormLinks
-  charCodeEvent = (e) => [
-    false,
-    () => {
-      return e;
-    },
-  ],
+  charCodeEvents = () => [],
   ...props
 }) {
   const childrenRef = useRef([]);
@@ -389,7 +384,7 @@ function Group({
             ["End"].includes(e.key),
             () => focusScroller(childrenRef.current.length - 1),
           ],
-          charCodeEvent(e),
+          ...charCodeEvents(e),
         ];
 
         const action = getFirstMatch(true, () => {}, actionArray);

@@ -100,21 +100,20 @@ export default function AdvancedSearchDropdown({
     }
   }
 
-  function getCharCodeEvent(e) {
-    if (e.key === " ") {
-      e.preventDefault();
-    }
-
+  function getCharCodeEvents(e) {
     return [
-      e.key.length === 1 && e.key !== " ",
-      () => {
-        setDropdownQuery("");
-        document.getElementById(inputId).focus();
-        document
-          .getElementById(dropdownMenuId)
-          .scrollTo({ top: 0, behavior: "smooth" });
-        return e;
-      },
+      [e.key === " ", () => e.preventDefault()],
+      [
+        e.key.length === 1 && e.key !== " ",
+        () => {
+          setDropdownQuery("");
+          document.getElementById(inputId).focus();
+          document
+            .getElementById(dropdownMenuId)
+            .scrollTo({ top: 0, behavior: "smooth" });
+          return e;
+        },
+      ],
     ];
   }
 
@@ -163,7 +162,7 @@ export default function AdvancedSearchDropdown({
           enabled={true}
           label={indexName}
           disableGroupOutline={false}
-          charCodeEvent={getCharCodeEvent}
+          charCodeEvents={(e) => getCharCodeEvents(e)}
         >
           {sortedMenuItemsState.map((item, index) => {
             if (item?.formType === FormTypeEnum.CHECKBOX) {
