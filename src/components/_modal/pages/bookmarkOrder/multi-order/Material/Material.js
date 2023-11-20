@@ -57,9 +57,9 @@ const Material = ({
   material,
   numberOfMaterialsToOrder = 0,
   setMaterialsToOrder,
-  setDuplicateOrdersWorkIds,
   periodicaForms,
   backgroundColorOverride = BackgroundColorEnum.NEUTRAL,
+  setDuplicateBookmarkIds,
 }) => {
   //@TODO get manifestations in same manner for both edition and works via useData
   const isSpecificEdition = !!material?.pid;
@@ -71,6 +71,11 @@ const Material = ({
 
   const { loanerInfo } = useUser();
   const periodicaForm = periodicaForms?.[material.key];
+  const workId = material.workId;
+  const hasAlreadyBeenOrdered = workHasAlreadyBeenOrdered(workId); //TODO do i need this anymore?
+  const [showAlreadyOrderedWarning, setShowAlreadyOrderedWarning] = useState(
+    hasAlreadyBeenOrdered
+  );
 
   const manifestations = isSpecificEdition
     ? [material]
@@ -82,9 +87,6 @@ const Material = ({
   const pids = isSpecificEdition
     ? [material?.pid]
     : manifestations.map((m) => m.pid) || [];
-
-  const workId = material.workId;
-  const hasAlreadyBeenOrdered = workHasAlreadyBeenOrdered(workId); //TODO use has already been ordered here
 
   const { data: orderPolicyData, isLoading: orderPolicyIsLoading } = useData(
     pids &&
@@ -104,7 +106,7 @@ const Material = ({
 
     setBackgroundColor(
       findBackgroundColor({
-        hasAlreadyBeenOrdered,
+        hasAlreadyBeenOrdered: showAlreadyOrderedWarning,
         isPeriodicaLike,
         hasPeriodicaForm: !!periodicaForm,
         notAvailableAtLibrary: orderPolicyIsLoading
@@ -163,7 +165,7 @@ const Material = ({
     );
   }
 
-  if (hasAlreadyBeenOrdered && !isPeriodicaLike) {
+  if (showAlreadyOrderedWarning && !isPeriodicaLike) {
     //TODO currently we only check for non-periodica orders
     children.push(
       <HasBeenOrderedRow
@@ -175,33 +177,14 @@ const Material = ({
           else modal.update({});
         }}
         acceptOrder={() => {
-          setDuplicateOrdersWorkIds((prev) =>
-            prev.filter((m) => m !== material.workId)
-          ),
-            //removeOrderIdFromSession(workId), //keep track in multiorder.page of which pids have been ordered to force update, when this number changes
+          setDuplicateBookmarkIds((prev) =>
+            prev.filter((m) => m !== material.bookmarkId)
+          );
+          setShowAlreadyOrderedWarning(false),
             setBackgroundColor(BackgroundColorEnum.NEUTRAL),
             modal.update({});
         }}
       />
-    );
-  }
-
-  if (!orderPossible) {
-    children.push(
-      <>
-        <Text className={styles.orderNotPossible} type="text4">
-          {Translate({
-            context: "materialcard",
-            label: "order-not-possible",
-          })}
-        </Text>
-        <IconButton onClick={() => deleteBookmarkFromOrderList(material.key)}>
-          {Translate({
-            context: "bookmark",
-            label: "remove",
-          })}
-        </IconButton>
-      </>
     );
   }
 
@@ -258,7 +241,7 @@ const Material = ({
       case BackgroundColorEnum.RED:
         return StatusEnum.NOT_AVAILABLE;
       case BackgroundColorEnum.YELLOW:
-        if (hasAlreadyBeenOrdered && !isPeriodicaLike)
+        if (showAlreadyOrderedWarning && !isPeriodicaLike)
           //TODO currently we only check for non-periodica orders
           return StatusEnum.HAS_BEEN_ORDERED;
         else return StatusEnum.NEEDS_EDITION;

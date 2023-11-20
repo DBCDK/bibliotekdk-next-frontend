@@ -51,11 +51,11 @@ const MultiOrder = ({ context }) => {
   const { materials, closeModalOnBack } = context;
   const analyzeRef = useRef();
   const [materialCounts, setMaterialCounts] = useState({});
-  const [duplicateOrdersWorkIds, setDuplicateOrdersWorkIds] = useState([]);
   const [materialsToOrder, setMaterialsToOrder] = useState(materials);
   const { loanerInfo } = useUser();
   const orderMutation = useMutate();
   const [isCreatingOrders, setIsCreatingOrders] = useState(false);
+  const [duplicateBookmarkIds, setDuplicateBookmarkIds] = useState([]);
   const pickupBranch = useRef(); // Pickup branch from checkout form
 
   useEffect(() => {
@@ -127,7 +127,8 @@ const MultiOrder = ({ context }) => {
           )
         );
 
-      setDuplicateOrdersWorkIds(duplicateOrders.map((mat) => mat.workId));
+      setDuplicateBookmarkIds(duplicateOrders.map((mat) => mat.bookmarkId));
+
       const materialsDigital = elements
         .filter(
           (element) =>
@@ -194,8 +195,10 @@ const MultiOrder = ({ context }) => {
               material={material}
               numberOfMaterialsToOrder={materialsToOrder?.length ?? 0}
               setMaterialsToOrder={setMaterialsToOrder}
-              duplicateOrdersWorkIds={duplicateOrdersWorkIds}
-              setDuplicateOrdersWorkIds={setDuplicateOrdersWorkIds}
+              showAlreadyOrderedWarning={duplicateBookmarkIds.includes(
+                (bm) => bm === material.bookmarkId
+              )}
+              setDuplicateBookmarkIds={setDuplicateBookmarkIds}
               //context is responsible for updating periodica form via periodicaForm.js and modal.update
               periodicaForms={context?.periodicaForms}
             />
@@ -210,7 +213,7 @@ const MultiOrder = ({ context }) => {
             materialCounts={materialCounts}
             onSubmit={onSubmit}
             isLoading={isCreatingOrders}
-            duplicateOrdersWorkIds={duplicateOrdersWorkIds}
+            duplicateBookmarkIds={duplicateBookmarkIds}
           />
         </section>
       )}
