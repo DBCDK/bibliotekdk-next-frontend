@@ -132,7 +132,7 @@ describe("Reservation button", () => {
     //dont add order modal to the store
     cy.window().then((win) => {
       const addedItem = win.localStorage.getItem("modal-v2-store");
-      //TODO when less flaky, check if "modal-v2-store" contains "Order"
+      //TODO when less flaky, check if "modal-v2-store" contains "Order" - worth looking at after KFU has removed GMOCKER
 
       expect(addedItem).to.be.equal(null);
     });
