@@ -21,12 +21,13 @@ import {
 import isEmpty from "lodash/isEmpty";
 import uniq from "lodash/uniq";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
-function TextAboveButton({ access, user }) {
+function TextAboveButton({ access, isAuthenticated }) {
   return (
     (access?.[0]?.loginRequired ||
       access?.[0]?.__typename === "InfomediaService") &&
-    !user.isAuthenticated && (
+    !isAuthenticated && (
       <Text
         type="text3"
         className={styles.textAboveButton}
@@ -140,6 +141,7 @@ export const ReservationButton = ({
 }) => {
   const modal = useModal();
   const workType = access?.[0]?.workTypes?.[0]?.toLowerCase();
+  const { isAuthenticated } = useAuthentication();
   const selectedMaterialType = Array.isArray(parentSelectedMaterialType)
     ? parentSelectedMaterialType?.[0]?.toLowerCase()
     : parentSelectedMaterialType?.toLowerCase();
@@ -164,7 +166,7 @@ export const ReservationButton = ({
   const accessibleOnlineAndNoLoginProps = {
     skeleton: !access,
     dataCy: "button-order-overview",
-    onClick: () => handleGoToLogin(modal, access, user),
+    onClick: () => handleGoToLogin(modal, access, isAuthenticated),
   };
 
   async function handleOpenLoginAndOrderModal() {
@@ -195,7 +197,7 @@ export const ReservationButton = ({
     skeleton: isEmpty(access),
     dataCy: `button-order-overview-enabled`,
     onClick: () => {
-      user?.isAuthenticated || user.isGuestUser
+      isAuthenticated || user.isGuestUser
         ? openOrderModal({
             modal: modal,
             pids: pids,
@@ -247,7 +249,7 @@ export const ReservationButton = ({
 
   return (
     <>
-      <TextAboveButton access={access} user={user} />
+      <TextAboveButton access={access} isAuthenticated={isAuthenticated} />
 
       <div className={styles.wrapper}>
         <Button

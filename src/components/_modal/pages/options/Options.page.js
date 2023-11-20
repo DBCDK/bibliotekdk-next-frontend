@@ -10,6 +10,7 @@ import { useMemo } from "react";
 import { accessFactory } from "@/lib/accessFactoryUtils";
 import useUser from "@/components/hooks/useUser";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 /**
  * Component helper for link and description in options
@@ -121,7 +122,7 @@ export function Options({ modal, context, user }) {
   const specialAccesses = allowedAccessessByType.specialAccesses;
 
   const optionsList = (access, index, accessesArray) =>
-    optionsListAllArgs(modal, workId, access, index, accessesArray, user);
+    optionsListAllArgs(modal, workId, access, index, accessesArray);
 
   return (
     allowedAccessessByType && (
@@ -140,5 +141,7 @@ export function Options({ modal, context, user }) {
 
 export default function Wrap(props) {
   const user = useUser();
-  return <Options {...{ ...props, user }} />;
+  const { isAuthenticated, isGuestUser } = useAuthentication();
+  const authUser = { ...user, isAuthenticated, isGuestUser };
+  return <Options {...{ ...props, user: authUser }} />;
 }

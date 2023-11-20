@@ -13,8 +13,8 @@ import Divider from "@/components/base/divider";
 import Link from "@/components/base/link";
 
 import styles from "./Prompt.module.css";
-import useUser from "@/components/hooks/useUser";
 import InfoDropdown from "@/components/base/infoDropdown/InfoDropdown";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 /**
  * Show a login prompt with a title and description
@@ -36,7 +36,7 @@ export default function LoginPrompt({
   linkHref = null,
   signIn,
 }) {
-  const user = useUser();
+  const { isAuthenticated } = useAuthentication();
 
   return (
     <Container className={styles.prompt} fluid>
@@ -46,7 +46,7 @@ export default function LoginPrompt({
           <Title type="title4" tag="h3">
             {title}
           </Title>
-          {user.isAuthenticated && linkHref && (
+          {isAuthenticated && linkHref && (
             <InfoDropdown
               label="show-more"
               buttonText={Translate({
@@ -76,7 +76,7 @@ export default function LoginPrompt({
               </>
             </InfoDropdown>
           )}
-          {!(user.isAuthenticated && linkHref) && (
+          {!(isAuthenticated && linkHref) && (
             <Button
               type="primary"
               size="large"
