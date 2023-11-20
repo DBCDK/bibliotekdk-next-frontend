@@ -5,6 +5,9 @@ import ReservationButtonWrapper, {
 import { AccessEnum } from "@/lib/enums";
 import automock_utils from "@/lib/automock_utils.fixture";
 import merge from "lodash/merge";
+import Modal from "@/components/_modal";
+import Pages from "@/components/_modal/pages";
+import { useModal } from "@/components/_modal";
 
 const exportedObject = {
   title: "work/ReservationButton",
@@ -269,7 +272,7 @@ ReservationButtonDisabled.story = {
 
 export function ReservationButtonNotLoggedIn() {
   const descriptionName = "Not logged in";
-  const user = { isAuthenticated: false };
+  const modal = useModal();
   const access = [
     {
       pid: "some-pid-1",
@@ -290,6 +293,8 @@ export function ReservationButtonNotLoggedIn() {
         overrideButtonText="Gå til bog"
         access={access}
         onHandleGoToLogin={() => alert("DU SKAL LOGGE IND")}
+        isAuthenticated={false}
+        modal={modal}
       />
     </div>
   );
@@ -454,16 +459,18 @@ export function ReservationButtonLoginFlow() {
       <StoryDescription>
         The ReservationButton based on the type: {descriptionName}
       </StoryDescription>
-      <ReservationButton
-        access={access}
-        user={user}
-        pids={pids}
-        workId={workId}
-        singleManifestation={true}
-        onHandleGoToLogin={() => alert("DU SKAL LOGGE IND")}
-        allEnrichedAccesses={allEnrichedAccesses}
-        buttonType={buttonType}
-        size={size}
+
+      <Modal.Container>
+        <Modal.Page id="order" component={Pages.Order} />
+        <Modal.Page id="periodicaform" component={Pages.PeriodicaForm} />
+        <Modal.Page id="pickup" component={Pages.Pickup} />
+        <Modal.Page id="loanerform" component={Pages.Loanerform} />
+        <Modal.Page id="receipt" component={Pages.Receipt} />
+        <Modal.Page id="login" component={Pages.Login} />
+      </Modal.Container>
+      <ReservationButtonComponentBuilder
+        selectedPids={["some-pid-1"]}
+        workId={"some-work-id-1"}
       />
     </div>
   );
@@ -482,24 +489,23 @@ ReservationButtonLoginFlow.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 });
 
 export function ReservationButtonNotLoggedInFlow() {
-  user.isAuthenticated = true;
-
   return (
     <div>
       <StoryTitle>ReservationButton - {descriptionName}</StoryTitle>
       <StoryDescription>
         The ReservationButton based on the type: {descriptionName}
       </StoryDescription>
-      <ReservationButton
-        access={access}
-        user={user}
-        pids={pids}
-        workId={workId}
-        singleManifestation={true}
-        onHandleGoToLogin={() => alert("DU SKAL LOGGE IND")}
-        allEnrichedAccesses={allEnrichedAccesses}
-        buttonType={buttonType}
-        size={size}
+      <Modal.Container>
+        <Modal.Page id="order" component={Pages.Order} />
+        <Modal.Page id="periodicaform" component={Pages.PeriodicaForm} />
+        <Modal.Page id="pickup" component={Pages.Pickup} />
+        <Modal.Page id="loanerform" component={Pages.Loanerform} />
+        <Modal.Page id="receipt" component={Pages.Receipt} />
+        <Modal.Page id="login" component={Pages.Login} />
+      </Modal.Container>
+      <ReservationButtonComponentBuilder
+        selectedPids={["some-pid-1"]}
+        workId={"some-work-id-1"}
       />
     </div>
   );
@@ -508,11 +514,57 @@ export function ReservationButtonNotLoggedInFlow() {
 ReservationButtonNotLoggedInFlow.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
-      resolvers: {},
+      resolvers: {
+        SessionUserParameters: {
+          userId: () => "9999991",
+        },
+      },
     },
     nextRouter: {
       showInfo: true,
       query: {},
+    },
+  },
+});
+
+export function OrderPageComponentBuilder({
+  title = "some title",
+  description = "blub",
+  workId = "some-work-id-1",
+  selectedPids = ["some-pid-1"],
+}) {
+  return (
+    <>
+      <StoryTitle>{title}</StoryTitle>
+      <StoryDescription>
+        {description}
+        <br />
+        <br />
+        <span>workId: {workId}</span>
+        <br />
+        <span>selectedPids: {selectedPids.join(", ")}</span>
+      </StoryDescription>
+      <ReservationButtonWrapper workId={workId} selectedPids={selectedPids} />
+      <Modal.Container>
+        <Modal.Page id="order" component={Pages.Order} />
+        <Modal.Page id="periodicaform" component={Pages.PeriodicaForm} />
+        <Modal.Page id="pickup" component={Pages.Pickup} />
+        <Modal.Page id="loanerform" component={Pages.Loanerform} />
+        <Modal.Page id="receipt" component={Pages.Receipt} />
+        <Modal.Page id="login" component={Pages.Login} />
+      </Modal.Container>
+    </>
+  );
+}
+
+OrderPageComponentBuilder.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {
+        SessionUserParameters: {
+          userId: () => undefined,
+        },
+      },
     },
   },
 });

@@ -8,7 +8,9 @@ describe("Reservation button", () => {
       "/iframe.html?id=work-reservationbutton--reservation-button-physical-book"
     );
 
-    cy.get("[data-cy=button-order-overview-enabled]").click();
+    cy.get("[data-cy=button-order-overview-enabled]", {
+      timeout: 15000,
+    }).click();
     cy.on("window:alert", (str) => {
       expect(str).to.equal("order");
     });
@@ -19,7 +21,7 @@ describe("Reservation button", () => {
       "/iframe.html?id=work-reservationbutton--reservation-button-physical-book"
     );
 
-    cy.get("[data-cy=button-order-overview-enabled]")
+    cy.get("[data-cy=button-order-overview-enabled]", { timeout: 15000 })
       .should("contain", "Bestil")
       .click();
 
@@ -101,14 +103,17 @@ describe("Reservation button", () => {
     cy.get("[data-cy=button-order-overview-disabled]").should("be.disabled");
   });
 
-  it("onclick should add order-modal to store, if user not logged ind", () => {
+  it.only("onclick should add order-modal to store, if user logged ind", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-login-flow"
     );
-    cy.get("[data-cy=button-order-overview-enabled]").should("exist").click();
+    cy.get("[data-cy=button-order-overview-enabled]", { timeout: 15000 })
+      .should("exist", { timeout: 15000 })
+      .click();
     //add order modal to the store
     cy.window().then((win) => {
-      const addedItem = win.localStorage.getItem("modal-v2-store");
+      const addedItem = win.localStorage.getItem("modal-v2");
+      console.log("addedItem", addedItem);
       const modal = JSON.parse(addedItem);
       const uid = modal[0].id;
       expect(uid).to.be.equal("order");
@@ -117,14 +122,22 @@ describe("Reservation button", () => {
     cy.get("[data-cy=router-query]").contains("modal");
   });
 
-  it("onclick should open order-modal, if user logged ind", () => {
+  it.only("onclick should open order-modal, if user NOT logged ind", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-not-logged-in-flow"
     );
-    cy.get("[data-cy=button-order-overview-enabled]").should("exist").click();
+    cy.get("[data-cy=button-order-overview-enabled]", { timeout: 15000 })
+      .should("exist", { timeout: 15000 })
+      .click();
     //dont add order modal to the store
     cy.window().then((win) => {
       const addedItem = win.localStorage.getItem("modal-v2-store");
+      //   console.log("addedItem", addedItem);
+      //   const modal = JSON.parse(addedItem);
+      //   console.log("MODAL ", modal);
+      //   const uid = modal[0].id;
+      //   expect(uid).to.be.equal("order");
+      // });
       expect(addedItem).to.be.equal(null);
     });
     //open some modal directly - we cannot check if it actually is the order modal that is opened

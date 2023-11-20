@@ -51,6 +51,8 @@ function ReservationButtonWrapper({
   className,
 }) {
   const user = useUser();
+  const { isAuthenticated } = useAuthentication();
+  const modal = useModal();
 
   const hasDigitalAccess = user?.authUser?.rights?.digitalArticleService;
 
@@ -97,6 +99,7 @@ function ReservationButtonWrapper({
     <ReservationButton
       access={access}
       user={user}
+      isAuthenticated={isAuthenticated}
       buttonType={buttonType}
       size={size}
       pids={pids}
@@ -106,6 +109,7 @@ function ReservationButtonWrapper({
       allEnrichedAccesses={allEnrichedAccesses}
       workId={workId}
       overrideButtonText={overrideButtonText}
+      modal={modal}
     />
   );
 }
@@ -138,10 +142,10 @@ export const ReservationButton = ({
   allEnrichedAccesses, //TODO same as access?
   workId,
   overrideButtonText = null,
+  isAuthenticated,
+  modal,
 }) => {
-  const modal = useModal();
   const workType = access?.[0]?.workTypes?.[0]?.toLowerCase();
-  const { isAuthenticated } = useAuthentication();
   const selectedMaterialType = Array.isArray(parentSelectedMaterialType)
     ? parentSelectedMaterialType?.[0]?.toLowerCase()
     : parentSelectedMaterialType?.toLowerCase();
@@ -166,11 +170,11 @@ export const ReservationButton = ({
   const accessibleOnlineAndNoLoginProps = {
     skeleton: !access,
     dataCy: "button-order-overview",
-    onClick: () => handleGoToLogin(modal, access, isAuthenticated),
+    onClick: () => handleGoToLogin(modal, access, user.isAuthenticated),
   };
 
-  async function handleOpenLoginAndOrderModal() {
-    //add order modal to store, to be able to access when coming back from adgangsplatform/mitid?
+  async function handleOpenLoginAndAddOrderModalToStore() {
+    //add order modal to store, to be able to access when coming back from adgangsplatform/mitid
     const orderModalProps = {
       pids: pids,
       selectedAccesses: allEnrichedAccesses,
@@ -206,7 +210,7 @@ export const ReservationButton = ({
             singleManifestation: singleManifestation,
             storeLoanerInfo: true, // user is already logged in, we want to keep that
           })
-        : handleOpenLoginAndOrderModal();
+        : handleOpenLoginAndAddOrderModalToStore();
     },
   };
 

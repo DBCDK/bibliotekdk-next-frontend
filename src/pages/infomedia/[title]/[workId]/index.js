@@ -14,7 +14,7 @@ export default function Wrap() {
   const router = useRouter();
   const { workId, review: reviewPid } = router?.query;
   const pid = reviewPid ? reviewPid : parseForPid(workId);
-  const { isAuthenticated } = useAuthentication;
+  const { isAuthenticated } = useAuthentication();
 
   const infomediaIds = useData(
     isAuthenticated &&
