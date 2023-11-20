@@ -42,6 +42,8 @@ function Input({
   disabled = false,
   onChange,
   onBlur,
+  onKeyDown,
+  overrideValueControl,
   dataCy = "input",
   readOnly = false,
   required,
@@ -65,10 +67,11 @@ function Input({
   return (
     <input
       {...props}
+      {...(onKeyDown && { onKeyDown: onKeyDown })}
       id={id}
       className={`${styles.input} ${readOnlyClass} ${invalidClass} ${className}`}
       type={type}
-      value={val}
+      value={overrideValueControl ? value : val}
       placeholder={placeholder}
       disabled={disabled}
       readOnly={readOnly}
