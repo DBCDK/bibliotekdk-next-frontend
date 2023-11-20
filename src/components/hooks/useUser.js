@@ -166,7 +166,7 @@ function useUserImpl() {
     error: userDataError,
     // User exist in culr
     hasCulrUniqueId,
-
+    isAuthenticated, //@TODO https://dbcjira.atlassian.net/browse/BIBDK2021-2085 snak med morten
     // User has added userParameters
     hasUserParameters,
     loanerInfo,
