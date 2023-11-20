@@ -95,9 +95,49 @@ describe("checkAvailableNow", () => {
     const expected = false;
     expect(actual).toEqual(expected);
   });
-  it("item in NOT danishPublicLibrary, status ON_LOAN, expectedDelivery today, IS available", () => {
+  it("item in NOT danishPublicLibrary, status ON_SHELF, expectedDelivery today, IS available", () => {
     const item = {
       agencyId: "891234",
+      expectedDelivery: today,
+      status: HoldingStatusEnum.ON_SHELF,
+    };
+    const actual = checkAvailableNow(item);
+    const expected = true;
+    expect(actual).toEqual(expected);
+  });
+  it("item in NOT danishPublicLibrary, status null, expectedDelivery today, IS NOT available", () => {
+    const item = {
+      agencyId: "891234",
+      expectedDelivery: today,
+      status: null,
+    };
+    const actual = checkAvailableNow(item);
+    const expected = false;
+    expect(actual).toEqual(expected);
+  });
+  it("item in NOT danishPublicLibrary, status ON_LOAN, expectedDelivery today, IS NOT available", () => {
+    const item = {
+      agencyId: "891234",
+      expectedDelivery: today,
+      status: HoldingStatusEnum.ON_LOAN,
+    };
+    const actual = checkAvailableNow(item);
+    const expected = false;
+    expect(actual).toEqual(expected);
+  });
+  it("item in NOT danishPublicLibrary, status ON_LOAN, expectedDelivery 'never', IS NOT available", () => {
+    const item = {
+      agencyId: "891234",
+      expectedDelivery: never,
+      status: HoldingStatusEnum.ON_LOAN,
+    };
+    const actual = checkAvailableNow(item);
+    const expected = false;
+    expect(actual).toEqual(expected);
+  });
+  it("item in in SpecialFFUs, status ON_LOAN, expectedDelivery today, IS NOT available", () => {
+    const item = {
+      agencyId: "800010",
       expectedDelivery: today,
       status: HoldingStatusEnum.ON_LOAN,
     };
@@ -105,9 +145,9 @@ describe("checkAvailableNow", () => {
     const expected = true;
     expect(actual).toEqual(expected);
   });
-  it("item in NOT danishPublicLibrary, status ON_LOAN, expectedDelivery 'never', IS NOT available", () => {
+  it("item in SpecialFFUs, status ON_LOAN, expectedDelivery 'never', IS NOT available", () => {
     const item = {
-      agencyId: "891234",
+      agencyId: "800010",
       expectedDelivery: never,
       status: HoldingStatusEnum.ON_LOAN,
     };
@@ -158,7 +198,17 @@ describe("checkAvailableLater", () => {
     const expected = false;
     expect(actual).toEqual(expected);
   });
-  it("item in not danishPublicLibrary, status ON_LOAN, expectedDelivery today, IS available later", () => {
+  it("item in NOT danishPublicLibrary, status null, expectedDelivery today, IS NOT available later", () => {
+    const item = {
+      agencyId: "891234",
+      expectedDelivery: today,
+      status: null,
+    };
+    const actual = checkAvailableLater(item);
+    const expected = false;
+    expect(actual).toEqual(expected);
+  });
+  it("item in NOT danishPublicLibrary, status ON_LOAN, expectedDelivery today, IS available later", () => {
     const item = {
       agencyId: "891234",
       expectedDelivery: today,
@@ -168,9 +218,29 @@ describe("checkAvailableLater", () => {
     const expected = true;
     expect(actual).toEqual(expected);
   });
-  it("item in not danishPublicLibrary, status ON_LOAN, expectedDelivery 'never', IS NOT available later", () => {
+  it("item in NOT danishPublicLibrary, status ON_LOAN, expectedDelivery 'never', IS NOT available later", () => {
     const item = {
       agencyId: "891234",
+      expectedDelivery: never,
+      status: HoldingStatusEnum.ON_LOAN,
+    };
+    const actual = checkAvailableLater(item);
+    const expected = false;
+    expect(actual).toEqual(expected);
+  });
+  it("item in SpecialFFUs, status ON_LOAN, expectedDelivery today, IS available later", () => {
+    const item = {
+      agencyId: "800010",
+      expectedDelivery: today,
+      status: HoldingStatusEnum.ON_LOAN,
+    };
+    const actual = checkAvailableLater(item);
+    const expected = true;
+    expect(actual).toEqual(expected);
+  });
+  it("item in SpecialFFUs, status ON_LOAN, expectedDelivery 'never', IS NOT available later", () => {
+    const item = {
+      agencyId: "800010",
       expectedDelivery: never,
       status: HoldingStatusEnum.ON_LOAN,
     };
@@ -358,6 +428,7 @@ describe("getAvailability", () => {
       [AvailabilityEnum.LATER]: 1,
       [AvailabilityEnum.NEVER]: 1,
       [AvailabilityEnum.NOT_OWNED]: 1,
+      [AvailabilityEnum.NOT_OWNED_FFU]: 0,
       [AvailabilityEnum.UNKNOWN]: 1,
     };
     expect(actual).toEqual(expected);
@@ -605,7 +676,7 @@ describe("sortByMainBranch", () => {
 });
 
 describe("enrichBranches", () => {
-  it("empty holdings with branch pickupAllowed true, get availabilityAccumulated unknown", () => {
+  it("empty holdings with branch pickupAllowed true, get availabilityAccumulated not owned ffu", () => {
     const branch = {
       expectedDelivery: today,
       agencyId: "890000",
@@ -613,7 +684,7 @@ describe("enrichBranches", () => {
       holdingItems: [],
     };
     const actual = enrichBranches(branch).availabilityAccumulated;
-    const expectedAvailabilityAccumulated = AvailabilityEnum.UNKNOWN;
+    const expectedAvailabilityAccumulated = AvailabilityEnum.NOT_OWNED_FFU;
     expect(actual).toEqual(expectedAvailabilityAccumulated);
   });
 });

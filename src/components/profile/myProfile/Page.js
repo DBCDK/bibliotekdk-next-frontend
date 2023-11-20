@@ -11,6 +11,7 @@ import { useData } from "@/lib/api/api";
 import * as userFragments from "@/lib/api/user.fragments";
 import IconButton from "@/components/base/iconButton/IconButton";
 import { parseDate } from "@/lib/utils";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 /**
  * Shows user info.
@@ -21,7 +22,8 @@ import { parseDate } from "@/lib/utils";
 
 export default function MyProfilePage() {
   let modal = useModal();
-  const { hasCulrUniqueId, loanerInfo } = useUser();
+  const { loanerInfo } = useUser();
+  const { hasCulrUniqueId } = useAuthentication();
   const { data: userData } = useData(
     hasCulrUniqueId && userFragments.extendedData()
   );

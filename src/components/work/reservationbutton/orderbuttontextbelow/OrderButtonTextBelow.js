@@ -14,7 +14,7 @@ import {
 } from "@/lib/accessFactoryUtils";
 import { AccessEnum } from "@/lib/enums";
 import { useMemo } from "react";
-import { useBranchUserAndHasDigitalAccess } from "@/components/work/utils";
+import useUser from "@/components/hooks/useUser";
 
 /**
  * Set texts BELOW reservation button - also sets the text IN the button
@@ -75,8 +75,9 @@ export default function Wrap({ workId, selectedPids, skeleton }) {
   const { workResponse, manifestations, manifestationsResponse } =
     useGetManifestationsForOrderButton(workId, selectedPids);
 
-  const { branchIsLoading, hasDigitalAccess } =
-    useBranchUserAndHasDigitalAccess(selectedPids);
+  const { authUser: user, isLoading: userIsLoading } = useUser();
+
+  const hasDigitalAccess = user?.rights?.digitalArticleService;
 
   const { getAllAllowedEnrichedAccessSorted } = useMemo(
     () => accessFactory(manifestations),
@@ -95,7 +96,7 @@ export default function Wrap({ workId, selectedPids, skeleton }) {
     return null;
   }
 
-  if (manifestationsResponse?.isLoading || branchIsLoading) {
+  if (manifestationsResponse?.isLoading || userIsLoading) {
     return (
       <Skeleton
         lines={1}

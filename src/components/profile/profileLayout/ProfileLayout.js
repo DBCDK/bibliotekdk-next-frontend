@@ -16,6 +16,7 @@ import Button from "@/components/base/button";
 import { useModal } from "@/components/_modal";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import { useRouter } from "next/router";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 const CONTEXT = "profile";
 const MENUITEMS = [
@@ -41,7 +42,7 @@ export default function ProfileLayout({ title, children }) {
   const isMobile = breakpoint === "xs" || breakpoint === "sm";
   const isTablet = breakpoint === "md";
   const isDesktop = !isMobile && !isTablet;
-  const user = useUser();
+  const { hasCulrUniqueId } = useAuthentication();
   const modal = useModal();
   const router = useRouter();
 
@@ -54,21 +55,19 @@ export default function ProfileLayout({ title, children }) {
         </div>
       )}
 
-      {user?.hasCulrUniqueId && (
+      {hasCulrUniqueId && (
         <NavigationDropdown context={CONTEXT} menuItems={MENUITEMS} />
       )}
 
       <Row>
         {isDesktop && <LogoutButton />}
         <Col lg={3} className={styles.navColumn}>
-          {user?.hasCulrUniqueId && isDesktop && (
-            <Breadcrumb textType="text2" />
-          )}
-          {user?.hasCulrUniqueId && <ProfileMenu />}
+          {hasCulrUniqueId && isDesktop && <Breadcrumb textType="text2" />}
+          {hasCulrUniqueId && <ProfileMenu />}
         </Col>
         <Col lg={9}>
           {/**page content here */}
-          {user?.hasCulrUniqueId || WHITELIST.includes(router.pathname) ? (
+          {hasCulrUniqueId || WHITELIST.includes(router.pathname) ? (
             <>
               <Title
                 className={styles.title}
@@ -126,8 +125,9 @@ export default function ProfileLayout({ title, children }) {
 
 const LogoutButton = () => {
   const user = useUser();
+  const { isAuthenticated } = useAuthentication();
 
-  if (!user.isAuthenticated) {
+  if (!isAuthenticated) {
     return;
   }
   const userName = user?.loanerInfo?.userParameters?.userName;
@@ -149,7 +149,7 @@ const LogoutButton = () => {
       )}
       <Link
         onClick={() => {
-          if (user.isAuthenticated) {
+          if (isAuthenticated) {
             const redirectUrl = window?.location?.origin;
             signOut(redirectUrl);
           }

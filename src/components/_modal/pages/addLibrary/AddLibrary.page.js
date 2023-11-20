@@ -17,7 +17,7 @@ import SearchResultList from "./searchResultList/SearchResultList";
 
 import useUser from "@/components/hooks/useUser";
 import useVerification from "@/components/hooks/useVerification";
-import { useAccessToken } from "@/components/hooks/useUser";
+import useAccessToken from "@/components/hooks/user/useAccessToken";
 
 import styles from "./AddLibrary.module.css";
 

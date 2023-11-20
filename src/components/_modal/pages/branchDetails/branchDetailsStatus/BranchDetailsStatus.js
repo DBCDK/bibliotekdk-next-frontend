@@ -152,7 +152,11 @@ function BranchStatusMessage({ library, manifestations }) {
     return <MessageWhenMaterialsAvailableLater library={library} />;
   } else if (library?.availabilityAccumulated === AvailabilityEnum.NEVER) {
     return <MessageWhenMaterialsAvailableNever />;
-  } else if (library?.availabilityAccumulated === AvailabilityEnum.NOT_OWNED) {
+  } else if (
+    [AvailabilityEnum.NOT_OWNED, AvailabilityEnum.NOT_OWNED_FFU].includes(
+      library?.availabilityAccumulated
+    )
+  ) {
     return <MessageWhenLibraryDoesNotOwnMaterial />;
   } else if (library?.availabilityAccumulated === AvailabilityEnum.UNKNOWN) {
     return <MessageWhenMaterialsAvailableUnknown />;
@@ -181,6 +185,7 @@ export default function BranchDetailsStatus({
     AvailabilityEnum.LATER,
     AvailabilityEnum.NEVER,
     AvailabilityEnum.NOT_OWNED,
+    AvailabilityEnum.NOT_OWNED_FFU,
     AvailabilityEnum.UNKNOWN,
   ],
 }) {

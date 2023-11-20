@@ -6,7 +6,6 @@ import "lazysizes";
 import "lazysizes/plugins/attrchange/ls.attrchange";
 import "../src/scss/custom-bootstrap.scss";
 import "../src/css/styles.css";
-import { AnonymousSessionContext } from "@/components/hooks/useUser";
 import { RouterContext } from "next/dist/shared/lib/router-context"; // next 12
 
 import { Provider as ModalContextProvider } from "../src/components/_modal/Modal.js";
@@ -15,13 +14,19 @@ import { StoryRouter } from "@/components/base/storybook";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Router from "next/router";
+import { SessionProvider } from "next-auth/react";
 
 export const decorators = [
   (Story) => {
     return (
-      <AnonymousSessionContext.Provider value={{ accessToken: "dummy-token" }}>
+      <SessionProvider
+        session={{
+          accessToken: "dummy-token",
+          user: { uniqueId: "mocked-uniqueId", userId: "mocked-uniqueId" },
+        }}
+      >
         <Story />
-      </AnonymousSessionContext.Provider>
+      </SessionProvider>
     );
   },
   (Story) => {

@@ -168,10 +168,16 @@ export function Content({
   return (
     <Container as="article" fluid>
       <Row className={`${styles.content} ${className}`}>
-        {backToMaterial && (
+        {!!backToMaterial && (
           <Col xs={{ span: 1, offset: 0 }} md={{ span: 1, offset: 0 }}>
             <ReviewHeadingLink
-              propAndChildrenInput={backToMaterial}
+              propAndChildrenInput={{
+                ...{
+                  material: backToMaterial,
+                  singleManifestation: true,
+                  linkToWork: true,
+                },
+              }}
               className={styles.backImageleft}
             />
           </Col>

@@ -2,9 +2,7 @@ import * as orderMutations from "@/lib/api/order.mutations";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import { isFFUAgency } from "@/utils/agency";
-
-import buildHtmlLink from "../utils/buildHtmlLink";
-
+import animations from "css/animations";
 // elements we want
 const elements = [
   "a",
@@ -15,6 +13,7 @@ const elements = [
 ];
 
 // currently not in use
+// eslint-disable-next-line no-unused-vars
 export function tabVisibility(container, isVisible) {
   // build query with elements
   const query = elements.join(", ");
@@ -35,87 +34,6 @@ export function tabVisibility(container, isVisible) {
       el.setAttribute("data-tabindex", tabIndex);
     }
   });
-}
-
-/**
- * Function to trap Tab inside modal
- *
- * @param {Object} event current target element (focused element)
- * @param {Object} container container to trap Tab in (modal)
- *
- * https://medium.com/@islam.sayed8/trap-focus-inside-a-modal-aa5230326c1b
- * https://medium.com/@seif_ghezala/how-to-create-an-accessible-react-modal-5b87e6a27503
- */
-
-export function handleTab(event, container) {
-  event.preventDefault();
-
-  const el = container.querySelector("div.modal_page.page-current");
-
-  // Custom select string to tail after each element in list
-  // Dont select elements with display:none inline style
-  // Dont select hidden elements
-  // Dont select elements with tabindex -1
-  const select =
-    ":not([aria-hidden='true']):not([tabindex='-1']):not([style*='display:none']):not([style*='display: none']):not([disabled])";
-
-  // build query with elements
-  const query = elements.join(select + ", ") + select;
-
-  // Find mathing elements according to elements and select string
-  const matchedElements = Object.values(el.querySelectorAll(query));
-
-  // Remove elements which parent is not visible
-  const visibleChildren = matchedElements.filter(
-    (el) => el.offsetParent !== null
-  );
-
-  // Remove all elements which is display:none in computedStyles (css stylesheet)
-  // OBS! Performance Warning! getComputedStyle func can be slow
-  const sequence = visibleChildren.filter(
-    (el) => getComputedStyle(el).display !== "none"
-  );
-
-  // Debug -> remove me in future
-  console.debug("Debug", { sequence });
-
-  if (sequence.length < 1) {
-    return;
-  }
-
-  const backward = event.shiftKey;
-  const first = sequence[0];
-  const last = sequence[sequence.length - 1];
-
-  // wrap around first to last, last to first
-  const source = backward ? first : last;
-  const target = backward ? last : first;
-
-  if (source === event.target) {
-    target.focus();
-    return;
-  }
-
-  // find current position in tabsequence
-  let currentIndex;
-  const found = sequence.some(function (element, index) {
-    if (element !== event.target) {
-      return false;
-    }
-
-    currentIndex = index;
-    return true;
-  });
-
-  if (!found) {
-    // redirect to first as we're not in our tabsequence
-    first.focus();
-    return;
-  }
-
-  // shift focus to previous/next element in the sequence
-  const offset = backward ? -1 : 1;
-  sequence[currentIndex + offset].focus();
 }
 
 /**
@@ -147,7 +65,7 @@ export function toColor(
  */
 function getScrollYPos() {
   // Get scrollY (all browsers)
-  var doc = document.documentElement;
+  let doc = document.documentElement;
   return (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
 }
 
@@ -250,6 +168,11 @@ export function escapeColons(phrase) {
   return phrase.replace(":", "%3A");
 }
 
+//TODO move to a loacation that is more central
+function buildHtmlLink(txt, url) {
+  return `<a href="${url}" target="_blank" class="${animations.underlineContainer} ${animations.top_line_false} ${animations.top_line_keep_false}">${txt}</a>`;
+}
+
 /**
  * Select a branch and handle login
  * either the user is already logged in for that agency
@@ -258,16 +181,16 @@ export function escapeColons(phrase) {
  * @param {Object} modal
  * @param {Object} context
  * @param {function} updateLoanerInfo
- * @param {string} callbackUID
  * @param {function|null} overrideOrderModalPush
+ * @returns {void}
  */
-export function handleOnSelect(
+export function handleOnSelect({
   branch,
   modal,
   context,
   updateLoanerInfo,
-  overrideOrderModalPush = null
-) {
+  overrideOrderModalPush = null,
+}) {
   // Selected branch belongs to one of the user's agencies where the user is logged in
   const alreadyLoggedin = context.initial?.agencies?.find(
     (agency) => agency.result?.[0].agencyId === branch.agencyId

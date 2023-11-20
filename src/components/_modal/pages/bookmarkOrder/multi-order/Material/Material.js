@@ -27,7 +27,6 @@ import IconButton from "@/components/base/iconButton";
 import { getManifestationWithoutDefaultCover } from "@/components/work/overview/covercarousel/utils";
 import { workHasAlreadyBeenOrdered } from "../../../order/utils/order.utils";
 import HasBeenOrderedRow from "../../../edition/hasbeenOrderedRow/HasBeenOrderedRow";
-import { removeWorkIdFromSession } from "../../../order/utils/order.utils";
 
 /**
  * At this point, we have manifestation of all the different material types

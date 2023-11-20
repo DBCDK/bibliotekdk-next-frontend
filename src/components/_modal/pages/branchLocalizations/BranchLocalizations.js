@@ -3,6 +3,7 @@ import BranchLocalizationItem from "./branchLocalizationItem/BranchLocalizationI
 import Translate from "@/components/base/translate";
 import {
   AvailabilityEnum,
+  isKnownStatus,
   useSingleAgency,
 } from "@/components/hooks/useHandleAgencyAccessData";
 import styles from "./BranchLocalizations.module.css";
@@ -12,21 +13,32 @@ import { AvailabilityLight } from "@/components/_modal/pages/base/localizationsB
 import cx from "classnames";
 import isEmpty from "lodash/isEmpty";
 import { LinkForBranch } from "@/components/_modal/pages/base/localizationsBase/linkForBranch/LinkForBranch";
+import { isPublicLibrary } from "@/lib/utils";
 
 function getLabel(agency, onlyHoldingsOnAgency) {
-  return agency?.pickupAllowed === false
+  const availabilityOnAgencyAccumulated =
+    agency?.availabilityOnAgencyAccumulated;
+
+  return agency?.pickupAllowed === false &&
+    [AvailabilityEnum.NOT_OWNED, AvailabilityEnum.NOT_OWNED_FFU].includes(
+      availabilityOnAgencyAccumulated
+    )
+    ? "agency_does_not_own_material_and_pickup_not_allowed"
+    : agency?.pickupAllowed === false
     ? "agency_status_pickup_not_allowed"
     : onlyHoldingsOnAgency
     ? "agency_holdings_but_no_branches"
-    : agency.availabilityAccumulated === AvailabilityEnum.NOW
+    : availabilityOnAgencyAccumulated === AvailabilityEnum.NOW
     ? "agency_status_only_home_at_one_or_more"
-    : agency.availabilityAccumulated === AvailabilityEnum.LATER
+    : availabilityOnAgencyAccumulated === AvailabilityEnum.LATER
     ? "agency_status_only_loan_later_possible"
-    : agency.availabilityAccumulated === AvailabilityEnum.NEVER
-    ? "agency_status_pickup_not_allowed"
-    : agency.availabilityAccumulated === AvailabilityEnum.NOT_OWNED
+    : availabilityOnAgencyAccumulated === AvailabilityEnum.NEVER
+    ? "agency_no_loaner_status_was_provided"
+    : availabilityOnAgencyAccumulated === AvailabilityEnum.NOT_OWNED_FFU
+    ? "agency_does_not_own_material__FFU"
+    : availabilityOnAgencyAccumulated === AvailabilityEnum.NOT_OWNED
     ? "agency_does_not_own_material"
-    : "no_status_about_the_following";
+    : "no_status_about_the_following__status_message";
 }
 
 /**
@@ -38,11 +50,14 @@ function getLabel(agency, onlyHoldingsOnAgency) {
  * @returns {React.ReactElement | null}
  */
 function SpecificInformationOnAgency({ pids, agency, onlyHoldingsOnAgency }) {
-  const availabilityAccumulated = agency?.availabilityOnAgencyAccumulated;
+  const availabilityOnAgencyAccumulated =
+    agency?.availabilityOnAgencyAccumulated;
 
   return (
     <div className={styles.agency_holdings_row_wrapper}>
-      <AvailabilityLight availabilityAccumulated={availabilityAccumulated} />
+      <AvailabilityLight
+        availabilityAccumulated={availabilityOnAgencyAccumulated}
+      />
       <div className={styles.agency_holdings_result}>
         <Text type="text2">
           {Translate({
@@ -50,13 +65,18 @@ function SpecificInformationOnAgency({ pids, agency, onlyHoldingsOnAgency }) {
             label: getLabel(agency, onlyHoldingsOnAgency),
             vars: [
               ...(onlyHoldingsOnAgency ||
-              agency.availabilityAccumulated === AvailabilityEnum.NOT_OWNED
+              [
+                AvailabilityEnum.NOT_OWNED,
+                AvailabilityEnum.NOT_OWNED_FFU,
+              ].includes(availabilityOnAgencyAccumulated)
                 ? [agency.agencyName]
                 : []),
             ],
           })}
         </Text>
-        {!agency.availabilityAccumulated === AvailabilityEnum.NOT_OWNED && (
+        {![AvailabilityEnum.NOT_OWNED, AvailabilityEnum.NOT_OWNED_FFU].includes(
+          availabilityOnAgencyAccumulated
+        ) && (
           <div className={cx(styles.link_for_branch)}>
             <LinkForBranch library={agency?.branches?.[0]} pids={pids} />
           </div>
@@ -85,23 +105,11 @@ export default function BranchLocalizations({ context, modal }) {
 
   const agency = agenciesFlatSorted?.[0];
 
-  const branchesKnownStatus = agency?.branches?.filter((branch) =>
-    [
-      AvailabilityEnum.NOW,
-      AvailabilityEnum.LATER,
-      AvailabilityEnum.NEVER,
-      AvailabilityEnum.NOT_OWNED,
-    ].includes(branch.availabilityAccumulated)
-  );
+  const branchesKnownStatus = agency?.branches?.filter(isKnownStatus);
 
   const branchesUnknownStatus = agency?.branches?.filter(
-    (branch) =>
-      ![
-        AvailabilityEnum.NOW,
-        AvailabilityEnum.LATER,
-        AvailabilityEnum.NEVER,
-        AvailabilityEnum.NOT_OWNED,
-      ].includes(branch.availabilityAccumulated)
+    // Matches NEVER, NOT_OWNED_FFU, UNKNOWN
+    (branch) => !isKnownStatus(branch)
   );
 
   const availabilityAccumulated = agency?.availabilityAccumulated;
@@ -141,28 +149,32 @@ export default function BranchLocalizations({ context, modal }) {
         ))}
       </LocalizationsBase.List>
 
-      {(availabilityOnAgencyAccumulated === AvailabilityEnum.NOT_OWNED ||
-        onlyHoldingsOnAgency) && (
-        <LocalizationsBase.Information>
-          <Title type={"title6"} className={styles.supplementary_status}>
-            {Translate({
-              context: "localizations",
-              label: "supplementary_status",
-            })}
-          </Title>
-          <SpecificInformationOnAgency
-            pids={pids}
-            agency={agency}
-            onlyHoldingsOnAgency={onlyHoldingsOnAgency}
-          />
-        </LocalizationsBase.Information>
-      )}
-
+      {/* Status when there are no branchesWithKnownStatus */}
       {isEmpty(branchesKnownStatus) && !isEmpty(branchesUnknownStatus) && (
         <LocalizationsBase.Information>
           <SpecificInformationOnAgency pids={pids} agency={agency} />
         </LocalizationsBase.Information>
       )}
+
+      {/* Supplementary Status for branches in public libraries that all does not own material */}
+      {isPublicLibrary(agencyId) &&
+        (availabilityOnAgencyAccumulated === AvailabilityEnum.NOT_OWNED ||
+          onlyHoldingsOnAgency) && (
+          <LocalizationsBase.Information>
+            <Title type={"title6"} className={styles.supplementary_status}>
+              {Translate({
+                context: "localizations",
+                label: "supplementary_status",
+              })}
+            </Title>
+            <SpecificInformationOnAgency
+              pids={pids}
+              agency={agency}
+              onlyHoldingsOnAgency={onlyHoldingsOnAgency}
+            />
+          </LocalizationsBase.Information>
+        )}
+
       {!isEmpty(branchesUnknownStatus) && (
         <>
           <LocalizationsBase.Information>

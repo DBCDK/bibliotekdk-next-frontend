@@ -21,7 +21,7 @@ function DefaultShowingOfAgencyBranches({ agency }) {
     (branch) => branch?.availabilityAccumulated === AvailabilityEnum.NOW
   ).length;
 
-  const publicLibrary = getLibraryType(agency?.agencyId);
+  const libraryType = getLibraryType(agency?.agencyId);
 
   return (
     <>
@@ -36,13 +36,12 @@ function DefaultShowingOfAgencyBranches({ agency }) {
               : "home_at_1_branch",
           vars: [numberOfBranchesWithAvailable],
         })}
-        {(LibraryTypeEnum.DANISH_PUBLIC_LIBRARY !== publicLibrary ||
-          numberOfBranchesWithAvailable > 0) &&
+        {numberOfBranchesWithAvailable > 0 &&
           " " +
             Translate({
               context: "localizations",
               label:
-                LibraryTypeEnum.DANISH_PUBLIC_LIBRARY !== publicLibrary
+                LibraryTypeEnum.DANISH_PUBLIC_LIBRARY !== libraryType
                   ? "or_more_branches"
                   : numberOfBranchesWithAvailable > 1
                   ? "branches"
@@ -183,14 +182,7 @@ export default function AgencyLocalizationItem({
       ) : (
         <Text type="text2">{agency?.agencyName}</Text>
       )}
-      {agency?.pickupAllowed === false ? (
-        <Text>
-          {Translate({
-            context: "localizations",
-            label: "no_pickup_allowed_on_any_branch_in_agency",
-          })}
-        </Text>
-      ) : (
+      {
         <>
           {isEmpty(query) && <DefaultShowingOfAgencyBranches agency={agency} />}
           {!isEmpty(query) && !agencyHighlight && (
@@ -199,7 +191,7 @@ export default function AgencyLocalizationItem({
             />
           )}
         </>
-      )}
+      }
     </LocalizationItemBase>
   );
 }

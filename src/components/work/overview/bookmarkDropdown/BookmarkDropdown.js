@@ -10,7 +10,6 @@ import Icon from "@/components/base/icon/Icon";
 import BookmarkMedium from "@/public/icons/bookmark_small.svg";
 import { formatMaterialTypesToPresentation } from "@/lib/manifestationFactoryUtils";
 import { createEditionText } from "../../details/utils/details.utils";
-import upperFirst from "lodash/upperFirst";
 
 export function BookMarkMaterialSelector({
   materialTypes,
@@ -98,16 +97,10 @@ export function BookMarkMaterialSelector({
     if (material.editionDisplayText) {
       // Edition logic
       item = {
-        key:
-          material.pid +
-          upperFirst(
-            material.materialTypes?.[0]?.materialTypeSpecific?.display
-          ),
+        key: material.pid + formatMaterialTypesToPresentation(material),
         materialId: material.pid,
         workId: workId,
-        materialType: upperFirst(
-          material.materialTypes?.[0]?.materialTypeSpecific?.display
-        ),
+        materialType: formatMaterialTypesToPresentation(material),
         title,
       };
     } else {
@@ -183,10 +176,7 @@ export function BookMarkMaterialSelector({
               bookmarks?.findIndex(
                 (book) =>
                   book.key ===
-                  material.pid +
-                    upperFirst(
-                      material.materialTypes?.[0]?.materialTypeSpecific?.display
-                    )
+                  material.pid + formatMaterialTypesToPresentation(material)
               ) !== -1;
           } else {
             activeItem =

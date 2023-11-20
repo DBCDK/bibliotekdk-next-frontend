@@ -10,11 +10,13 @@ import Translate from "@/components/base/translate";
 import { useModal } from "@/components/_modal";
 
 import { isFFUAgency } from "@/utils/agency";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 export default function Listener() {
+  const { isAuthenticated, hasCulrUniqueId } = useAuthentication();
   const user = useUser();
 
-  const { authUser, loanerInfo, isAuthenticated, hasCulrUniqueId } = user;
+  const { authUser, loanerInfo } = user;
 
   const agencyId = authUser?.loggedInBranchId;
   const branchId = loanerInfo?.pickupBranch;

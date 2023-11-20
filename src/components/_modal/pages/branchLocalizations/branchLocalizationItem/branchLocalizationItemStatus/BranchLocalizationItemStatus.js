@@ -115,7 +115,11 @@ export default function BranchLocalizationItemStatus({ library }) {
     return <MessageWhenMaterialsAvailableLater library={library} />;
   } else if (library?.availabilityAccumulated === AvailabilityEnum.NEVER) {
     return <MessageWhenMaterialsAvailableNever />;
-  } else if (library?.availabilityAccumulated === AvailabilityEnum.NOT_OWNED) {
+  } else if (
+    [AvailabilityEnum.NOT_OWNED, AvailabilityEnum.NOT_OWNED_FFU].includes(
+      library?.availabilityAccumulated
+    )
+  ) {
     return <MessageWhenLibraryDoesNotOwnMaterial />;
   } else if (library?.availabilityAccumulated === AvailabilityEnum.UNKNOWN) {
     return <MessageWhenMaterialsAvailableUnknown />;

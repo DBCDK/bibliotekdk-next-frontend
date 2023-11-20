@@ -153,28 +153,6 @@ export function checkBlockedUser({ branchId }) {
 }
 
 /**
- * Get a single branch to determine which parameters a user is required
- * to submit when ordering stuff
- */
-export function branchDigitalCopyAccess({ branchId }) {
-  return {
-    apiUrl: ApiEnums.FBI_API,
-    // delay: 1000, // for debugging
-    query: `
-    query branchDigitalCopyAccess($branchId: String!, $language: LanguageCode!) {
-      branches(branchId: $branchId, language: $language) {
-        result {
-          digitalCopyAccess
-        }
-      }
-      monitor(name: "bibdknext_branch_digital_copy_access")
-     }`,
-    variables: { branchId, language: lang },
-    slowThreshold: 3000,
-  };
-}
-
-/**
  * Branches in agencies
  */
 export function branchesActiveInAgency({ agencyId, pids, limit = 50, q = "" }) {
