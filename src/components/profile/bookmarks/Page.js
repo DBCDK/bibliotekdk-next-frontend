@@ -115,6 +115,10 @@ const BookmarkPage = () => {
     }
   };
 
+  const onGetReferencesClick = () => {
+    console.log("GETTING REF's");
+  };
+
   const handleRadioChange = (value) => {
     setSortByValue(value);
     sessionStorage.setItem("sortByValue", value);
@@ -344,6 +348,7 @@ const BookmarkPage = () => {
           type="secondary"
           disabled={isNothingSelected}
           className={styles.referenceButton}
+          onClick={onGetReferencesClick}
         >
           {Translate({
             context: CONTEXT,
