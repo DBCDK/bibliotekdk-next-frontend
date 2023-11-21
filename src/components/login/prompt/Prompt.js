@@ -37,7 +37,6 @@ export default function LoginPrompt({
   signIn,
   isAuthenticated,
 }) {
-  console.log("IS AUTH", isAuthenticated);
   return (
     <Container className={styles.prompt} fluid>
       <Row>
