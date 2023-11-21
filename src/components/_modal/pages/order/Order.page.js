@@ -17,8 +17,7 @@ import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
 import {
   onMailChange,
-  createOrderKey,
-  pidHasAlreadyBeenOrdered,
+  workHasAlreadyBeenOrdered,
 } from "@/components/_modal/pages/order/utils/order.utils";
 import { useRelevantAccessesForOrderPage } from "@/components/work/utils";
 import { validateEmail } from "@/utils/validateEmail";
@@ -27,6 +26,8 @@ import useUser from "@/components/hooks/useUser";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 import { useData } from "@/lib/api/api";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import { stringify } from "@/components/_modal/utils";
+import isEmpty from "lodash/isEmpty";
 
 /**
  *  Order component function
@@ -79,8 +80,21 @@ function Order({
   const [hasValidationErrors, setHasValidationErrors] = useState(false);
   const [mail, setMail] = useState(null);
   const contextWithOrderPids = { ...context, orderPids };
-  const orderKey = createOrderKey(orderPids);
-  const hasAlreadyBeenOrdered = pidHasAlreadyBeenOrdered(orderKey);
+  const workId = context?.workId;
+  const hasAlreadyBeenOrdered = workHasAlreadyBeenOrdered(workId);
+  //If user wants to order again, but closes modal before ordering, we want to show warning again
+  const [showAlreadyOrdered, setShowAlreadyOrdered] = useState(
+    hasAlreadyBeenOrdered
+  );
+
+  //always show acutal value of duplicate order warning again of hasAlreaydBeenOrdered, when we open modal.
+  useEffect(() => {
+    if (!modal || isEmpty(modal)) return;
+    const orderModalIdx = modal?.index("order");
+    if (modal?.index("order") > -1 && modal.stack[orderModalIdx].active) {
+      setShowAlreadyOrdered(hasAlreadyBeenOrdered);
+    }
+  }, [stringify(modal?.stack)]);
 
   // Update email from user account
   useEffect(() => {
@@ -134,7 +148,7 @@ function Order({
     const hasPid = !!pid;
     const requireYear = !!isPeriodicaLike;
     const hasYear = !!context?.periodicaForm?.publicationDateOfComponent;
-    const firstOrder = !hasAlreadyBeenOrdered || isPeriodicaLike; //TODO currently we only check for non-periodica orders
+    const firstOrder = !showAlreadyOrdered || isPeriodicaLike; //TODO currently we only check for non-periodica orders
 
     const status =
       hasMail &&
@@ -151,7 +165,7 @@ function Order({
       },
       firstOrder: {
         status: firstOrder,
-        message: hasAlreadyBeenOrdered &&
+        message: showAlreadyOrdered &&
           !isPeriodicaLike && { label: "alreadyOrderedText" }, //TODO currently we only check for non-periodica orders
       },
       hasBranchId: { status: hasBranchId },
@@ -175,7 +189,7 @@ function Order({
     if (validated.status) {
       modal.push("receipt", {
         pids: orderPids,
-        orderKey: orderKey,
+        workId: workId,
         order: {
           data: orderMutation?.data,
           error: orderMutation?.error,
@@ -213,7 +227,8 @@ function Order({
         context={contextWithOrderPids}
         singleManifestation={singleManifestation}
         isMaterialCard={true}
-        orderKey={orderKey}
+        showAlreadyOrdered={showAlreadyOrdered}
+        setShowArealdyOrdered={setShowAlreadyOrdered}
       />
       <LocalizationInformation context={context} />
       {user && showBlockedUserInfo && (
@@ -236,7 +251,7 @@ function Order({
         hasValidationErrors={hasValidationErrors}
         onClick={onSubmitOrder}
         blockedForBranch={borrowerCheck && !borrowerStatus?.allowed}
-        hasAlreadyBeenOrdered={hasAlreadyBeenOrdered && !isPeriodicaLike} //TODO currently we only check for non-periodica orders
+        hasAlreadyBeenOrdered={showAlreadyOrdered && !isPeriodicaLike} //TODO currently we only check for non-periodica orders
       />
     </div>
   );

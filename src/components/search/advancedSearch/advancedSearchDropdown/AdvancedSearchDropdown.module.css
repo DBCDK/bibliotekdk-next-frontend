@@ -20,3 +20,11 @@
   border-radius: 0;
   padding: 0;
 }
+
+.sticky_search_bar {
+  position: sticky;
+  top: 0;
+  opacity: 100%;
+  background-color: var(--concrete);
+  z-index: 2;
+}

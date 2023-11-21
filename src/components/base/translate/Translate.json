@@ -50,6 +50,10 @@
       "all_phrase.generalmaterialtype": {
         "da": "Alle materialer",
         "en": "All materials"
+      },
+      "search_dropdown": {
+        "da": "Søg i %s...",
+        "en": "Search in %s..."
       }
     },
     "logo": {
@@ -1266,13 +1270,17 @@
         "da": "Fjern",
         "en": "Remove"
       },
+      "dont-order": {
+        "da": "Bestil ikke",
+        "en": "Don't order"
+      },
       "orderAnyways": {
         "da": "Bestil alligevel",
         "en": "Order anyways"
       },
       "alreadyOrderedText": {
-        "da": "Du har allerede bestilt dette materiale d. %s",
-        "en": "You have already ordered this material on %s"
+        "da": "Du har allerede bestilt en udgave af dette materiale",
+        "en": "You have already ordered an edition of this material"
       },
       "treshhold-error": {
         "da": "OBS: Du kan maks bestille 25 ad gangen.",
@@ -1762,6 +1770,10 @@
         "da": "Udgiver",
         "en": "Publisher"
       },
+      "advanced-dropdown-term.fictionalcharacter": {
+        "da": "Fiktiv karakter",
+        "en": "Fictional character"
+      },
       "advanced-dropdown-term.contributor": {
         "da": "Medvirkende",
         "en": "contributor"
@@ -1774,7 +1786,10 @@
         "da": "Ophav",
         "en": "function"
       },
-
+      "advanced-dropdown-term.hostpublication": {
+        "da": "Værtspublikation",
+        "en": "Hostpublication"
+      },
       "advanced-dropdown-AND": {
         "da": "OG",
         "en": "AND"
@@ -2734,8 +2749,8 @@
         "en": "The library cannot confirm the loaner information you have saved on your profile. This may be due to, for example, that you have received a new login or are no longer a loaner. Contact the library if you think this is an error."
       },
       "action-alreadyOrderedText": {
-        "da": "Du har allerede bestilt dette materiale.",
-        "en": "You have already ordered this material."
+        "da": "Du har allerede bestilt en udgave af dette materiale",
+        "en": "You have already ordered an edition of this material"
       },
       "choose-order-again": {
         "da": "Vælg om det skal bestilles igen.",

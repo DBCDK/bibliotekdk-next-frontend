@@ -17,13 +17,13 @@ const CheckoutForm = ({
   materialCounts,
   onSubmit,
   isLoading,
-  duplicateOrdersWorkIds,
+  duplicateBookmarkIds,
 }) => {
   const {
     digitalMaterials,
     materialsNotAllowed,
     materialsMissingAction,
-    duplicateOrders,
+    duplicateOrdersWorkIds,
   } = materialCounts;
   const modal = useModal();
   const disabled =
@@ -41,12 +41,7 @@ const CheckoutForm = ({
   const { pickupBranch, pickupBranchUser, isLoadingBranches } =
     pickupBranchInfo;
 
-  const { updateLoanerInfo, authUser } = userInfo;
-
-  // Mail
-  const { userMail } = pickupBranchUser?.userParameters || {};
-  const hasBorchk = pickupBranch?.borrowerCheck;
-  const email = hasBorchk ? authUser.mail || userMail : userMail;
+  const { updateLoanerInfo } = userInfo;
 
   const validated = useMemo(() => {
     const hasMail = !!mail?.valid?.status;
@@ -76,7 +71,7 @@ const CheckoutForm = ({
       ".modal_page.page-current .page_content"
     )[0];
 
-    const el = document.getElementById(duplicateOrdersWorkIds[0]);
+    const el = document.getElementById(duplicateBookmarkIds[0]);
 
     scrollContainer.scrollTo({
       top: el.offsetTop,
@@ -145,12 +140,11 @@ const CheckoutForm = ({
           </Text>
         )}
 
-        {!mail?.valid?.status ||
-          (!!email && (
-            <Text type="text3" className={styles.errorLabel}>
-              <Translate context="order" label="action-empty-email-field" />
-            </Text>
-          ))}
+        {!mail?.valid?.status && (
+          <Text type="text3" className={styles.errorLabel}>
+            <Translate context="order" label="action-empty-email-field" />
+          </Text>
+        )}
 
         {duplicateOrdersWorkIds?.length > 0 && (
           <Text type="text3" className={styles.errorLabel}>
@@ -161,7 +155,7 @@ const CheckoutForm = ({
                   ? "multiorder-duplicate-order-singular"
                   : "multiorder-duplicate-order"
               }
-              vars={[duplicateOrdersWorkIds?.length]}
+              vars={[duplicateBookmarkIds?.length]}
             />{" "}
             <Link
               onClick={scrollToWorkId}
@@ -206,6 +200,26 @@ const CheckoutForm = ({
             Translate({ context: "general", label: "accept" })
           )}
         </Button>
+        {duplicateBookmarkIds?.length > 0 && (
+          <Text type="text2" className={styles.goToOrderHistory}>
+            {Translate({
+              context: "order",
+              label: "get-overview",
+            })}{" "}
+            <Link
+              href={"/profil/bestillingshistorik"}
+              border={{ top: false, bottom: { keepVisible: true } }}
+              dataCy="open-order-history"
+              ariaLabel="open order history"
+            >
+              {Translate({ context: "profile", label: "orderHistory" })}
+            </Link>{" "}
+            {Translate({
+              context: "order",
+              label: "get-overview-2",
+            })}
+          </Text>
+        )}
       </div>
     </div>
   );
