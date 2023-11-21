@@ -74,12 +74,12 @@ export function workTypeTranslator(workTypes) {
  * @param {Object} user
  * @returns
  */
-export function handleGoToLogin(modal, access, user) {
+export function handleGoToLogin(modal, access, isAuthenticated) {
   // if this is an infomedia article it should open in same window
   const urlTarget = access[0]?.id ? "_self" : "_blank";
   // check if we should open login modal on click
   const goToLogin =
-    !user?.isAuthenticated &&
+    !isAuthenticated &&
     access[0]?.loginRequired &&
     isEbookCentralOrEbscohost(access?.[0]?.url);
 

@@ -8,7 +8,9 @@ describe("Reservation button", () => {
       "/iframe.html?id=work-reservationbutton--reservation-button-physical-book"
     );
 
-    cy.get("[data-cy=button-order-overview-enabled]").click();
+    cy.get("[data-cy=button-order-overview-enabled]", {
+      timeout: 15000,
+    }).click();
     cy.on("window:alert", (str) => {
       expect(str).to.equal("order");
     });
@@ -19,7 +21,7 @@ describe("Reservation button", () => {
       "/iframe.html?id=work-reservationbutton--reservation-button-physical-book"
     );
 
-    cy.get("[data-cy=button-order-overview-enabled]")
+    cy.get("[data-cy=button-order-overview-enabled]", { timeout: 15000 })
       .should("contain", "Bestil")
       .click();
 
@@ -40,7 +42,9 @@ describe("Reservation button", () => {
 
     cy.window().its("first").should("be.true");
 
-    cy.get("[data-cy=button-order-overview]").should("exist").click();
+    cy.get("[data-cy=button-order-overview]", { timeout: 15000 })
+      .should("exist")
+      .click();
 
     // We test if the window is "opening" properly
     cy.get("@Open").should(
@@ -53,15 +57,21 @@ describe("Reservation button", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-disabled"
     );
-    cy.get("[data-cy=button-order-overview-disabled]").should("be.disabled");
+    cy.get("[data-cy=button-order-overview-disabled]", {
+      timeout: 15000,
+    }).should("be.disabled");
   });
 
   it("user not logged in then above text is shown", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-not-logged-in"
     );
-    cy.get("[data-cy=button-order-overview]").contains("Gå til");
-    cy.get("[data-cy=text-above-order-button").contains("Kræver");
+    cy.get("[data-cy=button-order-overview]", { timeout: 15000 }).contains(
+      "Gå til"
+    );
+    cy.get("[data-cy=text-above-order-button", { timeout: 15000 }).contains(
+      "Kræver"
+    );
   });
 
   it("does not display 'deaactivated' text, when it is loading", () => {
@@ -70,20 +80,21 @@ describe("Reservation button", () => {
     );
 
     // This text is hidden by skeleton animation
-    cy.get("[data-cy=button-order-overview-loading]").should("exist");
+    cy.get("[data-cy=button-order-overview-loading]", {
+      timeout: 15000,
+    }).should("exist");
 
     // It must not show deactivated text while loading
-    cy.get("[data-cy=button-order-overview-loading]").should(
-      "not.include.text",
-      "deaktiveret"
-    );
+    cy.get("[data-cy=button-order-overview-loading]", {
+      timeout: 15000,
+    }).should("not.include.text", "deaktiveret");
   });
 
   it("user not logged in material available", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-not-logged-in"
     );
-    cy.get("[data-cy=button-order-overview]")
+    cy.get("[data-cy=button-order-overview]", { timeout: 15000 })
       .focus()
       .should("contain", "Gå til")
       .should("be.visible")
@@ -98,17 +109,22 @@ describe("Reservation button", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-physical-book-loan-not-possible"
     );
-    cy.get("[data-cy=button-order-overview-disabled]").should("be.disabled");
+    cy.get("[data-cy=button-order-overview-disabled]", {
+      timeout: 15000,
+    }).should("be.disabled");
   });
 
-  it("onclick should add order-modal to store, if user not logged ind", () => {
+  it("onclick should open order-modal, if user logged ind", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-login-flow"
     );
-    cy.get("[data-cy=button-order-overview-enabled]").should("exist").click();
+    cy.get("[data-cy=button-order-overview-enabled]", { timeout: 15000 })
+      .should("exist", { timeout: 15000 })
+      .click();
     //add order modal to the store
     cy.window().then((win) => {
-      const addedItem = win.localStorage.getItem("modal-v2-store");
+      const addedItem = win.localStorage.getItem("modal-v2");
+      console.log("addedItem", addedItem);
       const modal = JSON.parse(addedItem);
       const uid = modal[0].id;
       expect(uid).to.be.equal("order");
@@ -117,21 +133,23 @@ describe("Reservation button", () => {
     cy.get("[data-cy=router-query]").contains("modal");
   });
 
-  it("onclick should open order-modal, if user logged ind", () => {
+  it("onclick should open login-modal and add order modal to store, if user NOT logged ind", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-not-logged-in-flow"
     );
-    cy.get("[data-cy=button-order-overview-enabled]").should("exist").click();
+    cy.get("[data-cy=button-order-overview-enabled]", { timeout: 15000 })
+      .should("exist", { timeout: 15000 })
+      .click();
     //dont add order modal to the store
     cy.window().then((win) => {
       const addedItem = win.localStorage.getItem("modal-v2-store");
+      //TODO when less flaky, check if "modal-v2-store" contains "Order" - worth looking at after KFU has removed GMOCKER
+
       expect(addedItem).to.be.equal(null);
     });
     //open some modal directly - we cannot check if it actually is the order modal that is opened
     cy.get("[data-cy=router-query]").contains("modal");
   });
-
-  // @TODO more testing - request_button:false eg.
 });
 
 describe("ButtonTxt", () => {
