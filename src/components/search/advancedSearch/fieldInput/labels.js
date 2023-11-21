@@ -5,10 +5,10 @@ const all = [
     index: "term.title",
     placeholder: "title placeholder",
   },
-  {
-    index: "term.isbn",
-    placeholder: "isbn placeholder",
-  },
+  // {
+  //   index: "term.isbn",
+  //   placeholder: "isbn placeholder",
+  // },
   {
     index: "term.subject",
     placeholder: "subject placeholder",
