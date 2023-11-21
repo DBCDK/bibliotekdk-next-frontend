@@ -1762,6 +1762,10 @@
         "da": "Udgiver",
         "en": "Publisher"
       },
+      "advanced-dropdown-term.fictionalcharacter": {
+        "da": "Fiktiv karakter",
+        "en": "Fictional character"
+      },
       "advanced-dropdown-term.contributor": {
         "da": "Medvirkende",
         "en": "contributor"
@@ -1774,7 +1778,10 @@
         "da": "Ophav",
         "en": "function"
       },
-
+      "advanced-dropdown-term.hostpublication": {
+        "da": "Værtspublikation",
+        "en": "Hostpublication"
+      },
       "advanced-dropdown-AND": {
         "da": "OG",
         "en": "AND"
