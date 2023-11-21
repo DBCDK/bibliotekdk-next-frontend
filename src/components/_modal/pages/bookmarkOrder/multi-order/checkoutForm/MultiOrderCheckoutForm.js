@@ -41,7 +41,12 @@ const CheckoutForm = ({
   const { pickupBranch, pickupBranchUser, isLoadingBranches } =
     pickupBranchInfo;
 
-  const { updateLoanerInfo } = userInfo;
+  const { updateLoanerInfo, authUser } = userInfo;
+
+  // Mail
+  const { userMail } = pickupBranchUser?.userParameters || {};
+  const hasBorchk = pickupBranch?.borrowerCheck;
+  const email = hasBorchk ? authUser.mail || userMail : userMail;
 
   const validated = useMemo(() => {
     const hasMail = !!mail?.valid?.status;
@@ -140,11 +145,12 @@ const CheckoutForm = ({
           </Text>
         )}
 
-        {mail?.valid?.status === false && (
-          <Text type="text3" className={styles.errorLabel}>
-            <Translate context="order" label="action-empty-email-field" />
-          </Text>
-        )}
+        {!mail?.valid?.status ||
+          (!!email && (
+            <Text type="text3" className={styles.errorLabel}>
+              <Translate context="order" label="action-empty-email-field" />
+            </Text>
+          ))}
 
         {duplicateOrdersWorkIds?.length > 0 && (
           <Text type="text3" className={styles.errorLabel}>
