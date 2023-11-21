@@ -118,7 +118,7 @@ const MaterialRow = ({ id: materialId, skeleton, type, ...props }) => {
 
 MaterialRow.propTypes = {
   id: PropTypes.string.isRequired, //materialId
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   image: PropTypes.string,
   creator: PropTypes.string,
   materialType: PropTypes.string,
@@ -138,7 +138,7 @@ MaterialRow.propTypes = {
   removedOrderId: PropTypes.string,
   setRemovedOrderId: PropTypes.func,
   onBookmarkDelete: PropTypes.func,
-  allManifestations: PropTypes.any, // @TODO
+  allManifestations: PropTypes.any,
   isSelected: PropTypes.bool,
   onSelect: PropTypes.func,
   skeleton: PropTypes.bool,

@@ -187,22 +187,20 @@ const MultiOrder = ({ context }) => {
       </Title>
 
       <div className={styles.materialList} ref={analyzeRef}>
-        {materialsToOrder.map((material) => {
-          return (
-            <Material
-              key={material.key}
-              material={material}
-              numberOfMaterialsToOrder={materialsToOrder?.length ?? 0}
-              setMaterialsToOrder={setMaterialsToOrder}
-              showAlreadyOrderedWarning={duplicateBookmarkIds.includes(
-                (bm) => bm === material.bookmarkId
-              )}
-              setDuplicateBookmarkIds={setDuplicateBookmarkIds}
-              //context is responsible for updating periodica form via periodicaForm.js and modal.update
-              periodicaForms={context?.periodicaForms}
-            />
-          );
-        })}
+        {materialsToOrder.map((material) => (
+          <Material
+            key={material.key}
+            material={material}
+            numberOfMaterialsToOrder={materialsToOrder?.length ?? 0}
+            setMaterialsToOrder={setMaterialsToOrder}
+            showAlreadyOrderedWarning={duplicateBookmarkIds.includes(
+              (bm) => bm === material.bookmarkId
+            )}
+            setDuplicateBookmarkIds={setDuplicateBookmarkIds}
+            //context is responsible for updating periodica form via periodicaForm.js and modal.update
+            periodicaForms={context?.periodicaForms}
+          />
+        ))}
       </div>
 
       {materialCounts !== null && (

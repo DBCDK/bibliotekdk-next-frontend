@@ -1283,8 +1283,8 @@
         "en": "You have already ordered an edition of this material"
       },
       "treshhold-error": {
-        "da": "OBS: Du kan max bestille 25 ad gangen.",
-        "en": "ATT: You can max order 25 at a time"
+        "da": "OBS: Du kan maks bestille 25 ad gangen.",
+        "en": "ATT: You can maximum order 25 at a time"
       }
     },
     "bookmark-order": {
@@ -1308,9 +1308,17 @@
         "da": "På næste side vises det materiale, som du kan bestille",
         "en": "The material you can order will show on the next page"
       },
+      "efilter-back-text": {
+        "da": "Der er ingen materialer der kræver bestilling",
+        "en": "No materials requires an order"
+      },
       "efilter-proceed": {
         "da": "Næste",
         "en": "Next"
+      },
+      "efilter-back": {
+        "da": "Tilbage",
+        "en": "Back"
       },
       "multiorder-title": {
         "da": "Bestil",
