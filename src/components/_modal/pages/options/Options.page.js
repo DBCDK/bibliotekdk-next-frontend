@@ -122,7 +122,7 @@ export function Options({ modal, context, user }) {
   const specialAccesses = allowedAccessessByType.specialAccesses;
 
   const optionsList = (access, index, accessesArray) =>
-    optionsListAllArgs(modal, workId, access, index, accessesArray);
+    optionsListAllArgs(modal, workId, access, index, accessesArray, user);
 
   return (
     allowedAccessessByType && (

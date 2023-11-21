@@ -51,7 +51,7 @@ function ReservationButtonWrapper({
   className,
 }) {
   const user = useUser();
-  const { isAuthenticated } = useAuthentication();
+  const { isAuthenticated, isGuestUser } = useAuthentication();
   const modal = useModal();
 
   const hasDigitalAccess = user?.authUser?.rights?.digitalArticleService;
@@ -100,6 +100,7 @@ function ReservationButtonWrapper({
       access={access}
       user={user}
       isAuthenticated={isAuthenticated}
+      isGuestUser={isGuestUser}
       buttonType={buttonType}
       size={size}
       pids={pids}
@@ -134,6 +135,7 @@ export const ReservationButton = ({
   access, //TODO same as allEnrichedAccesses?
   user,
   isAuthenticated,
+  isGuestUser,
   buttonType,
   size,
   pids,
@@ -201,7 +203,7 @@ export const ReservationButton = ({
     skeleton: isEmpty(access),
     dataCy: `button-order-overview-enabled`,
     onClick: () => {
-      isAuthenticated || user.isGuestUser
+      isAuthenticated || isGuestUser
         ? openOrderModal({
             modal: modal,
             pids: pids,
