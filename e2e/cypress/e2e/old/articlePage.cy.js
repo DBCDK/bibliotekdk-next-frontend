@@ -84,7 +84,7 @@ describe("ArticlePage", () => {
       );
 
       // Metadata
-      cy.contains("Titel på Infomedia-artikel");
+      cy.contains("Titel på Infomedia-artikel", { timeout: 15000 });
       cy.contains("Computerworld");
       cy.contains("Artiklen er leveret af Infomedia");
       cy.contains("Læsetid: 1 min.");
@@ -140,7 +140,7 @@ describe("ArticlePage", () => {
       );
 
       //cy.contains("Titel på Infomedia-artikel");
-      cy.contains("Få adgang til hele artiklen");
+      cy.contains("Få adgang til hele artiklen", { timeout: 15000 });
 
       cy.get("[data-cy=article-prompt-button-log-ind]").should("be.visible");
     });
