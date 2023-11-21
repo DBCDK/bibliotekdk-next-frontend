@@ -133,6 +133,7 @@ export default ReservationButtonWrapper;
 export const ReservationButton = ({
   access, //TODO same as allEnrichedAccesses?
   user,
+  isAuthenticated,
   buttonType,
   size,
   pids,
@@ -142,7 +143,6 @@ export const ReservationButton = ({
   allEnrichedAccesses, //TODO same as access?
   workId,
   overrideButtonText = null,
-  isAuthenticated,
   modal,
 }) => {
   const workType = access?.[0]?.workTypes?.[0]?.toLowerCase();
@@ -170,7 +170,7 @@ export const ReservationButton = ({
   const accessibleOnlineAndNoLoginProps = {
     skeleton: !access,
     dataCy: "button-order-overview",
-    onClick: () => handleGoToLogin(modal, access, user.isAuthenticated),
+    onClick: () => handleGoToLogin(modal, access, isAuthenticated),
   };
 
   async function handleOpenLoginAndAddOrderModalToStore() {
