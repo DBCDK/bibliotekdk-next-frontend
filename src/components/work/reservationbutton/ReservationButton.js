@@ -51,7 +51,7 @@ function ReservationButtonWrapper({
   className,
 }) {
   const user = useUser();
-  const { isAuthenticated, isGuestUser } = useAuthentication();
+  const { isAuthenticated } = useAuthentication();
   const modal = useModal();
 
   const hasDigitalAccess = user?.authUser?.rights?.digitalArticleService;
