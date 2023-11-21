@@ -17,8 +17,7 @@ import useAuthentication from "@/components/hooks/user/useAuthentication";
 export default function ArticleLoginPrompt({ articleId }) {
   const modal = useModal();
   const { authUser: user } = useUser();
-  const isAuthenticated = useAuthentication();
-
+  const { isAuthenticated } = useAuthentication();
   const hasInfomediaAccess = user?.rights?.infomedia;
 
   const { data, isLoading } = useData(
@@ -35,8 +34,8 @@ export default function ArticleLoginPrompt({ articleId }) {
 
   const agencyName = branch?.agencyName || "";
 
-  // Not logged in, no access
-  if (!hasInfomediaAccess && !isAuthenticated) {
+  // Not logged in OR no access
+  if (!hasInfomediaAccess || !isAuthenticated) {
     return (
       <LoginPrompt
         title={Translate({ context: "articles", label: "getAccess" })}
@@ -78,6 +77,7 @@ export default function ArticleLoginPrompt({ articleId }) {
         })}
         linkHref={linkHref}
         signIn={openLoginModal}
+        isAuthenticated={isAuthenticated}
       />
     );
   }
