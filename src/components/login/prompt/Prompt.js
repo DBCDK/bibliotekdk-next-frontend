@@ -14,7 +14,6 @@ import Link from "@/components/base/link";
 
 import styles from "./Prompt.module.css";
 import InfoDropdown from "@/components/base/infoDropdown/InfoDropdown";
-import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 /**
  * Show a login prompt with a title and description
@@ -26,6 +25,7 @@ import useAuthentication from "@/components/hooks/user/useAuthentication";
  * @param {string} description
  * @param {string} buttonText
  * @param {function} signIn
+ * @param {boolean} isAuthenticated
  * @returns {React.JSX.Element}
  */
 export default function LoginPrompt({
@@ -35,9 +35,8 @@ export default function LoginPrompt({
   buttonText = Translate({ context: "header", label: "login" }),
   linkHref = null,
   signIn,
+  isAuthenticated,
 }) {
-  const { isAuthenticated } = useAuthentication();
-
   return (
     <Container className={styles.prompt} fluid>
       <Row>
