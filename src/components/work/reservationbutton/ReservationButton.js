@@ -100,7 +100,6 @@ function ReservationButtonWrapper({
       access={access}
       user={user}
       isAuthenticated={isAuthenticated}
-      isGuestUser={isGuestUser}
       buttonType={buttonType}
       size={size}
       pids={pids}
@@ -135,7 +134,6 @@ export const ReservationButton = ({
   access, //TODO same as allEnrichedAccesses?
   user,
   isAuthenticated,
-  isGuestUser,
   buttonType,
   size,
   pids,
@@ -203,7 +201,7 @@ export const ReservationButton = ({
     skeleton: isEmpty(access),
     dataCy: `button-order-overview-enabled`,
     onClick: () => {
-      isAuthenticated || isGuestUser
+      isAuthenticated || user.isGuestUser
         ? openOrderModal({
             modal: modal,
             pids: pids,
