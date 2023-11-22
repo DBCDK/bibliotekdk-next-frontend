@@ -13,7 +13,6 @@ import {
 export function refWorks(pid) {
   return {
     apiUrl: ApiEnums.FBI_API,
-    // delay: 250,
     query: `
     query ($pid: String!) {
       refWorks(pid:$pid)
@@ -24,15 +23,14 @@ export function refWorks(pid) {
   };
 }
 
-export function ris(pid) {
+export function ris(pids) {
   return {
     apiUrl: ApiEnums.FBI_API,
-    // delay: 250,
-    query: `query ($pid: String!) {
-      ris(pid:$pid)
+    query: `query ($pids: [String!]!) {
+      ris(pids:$pids)
       monitor(name: "bibdknext_manifestation_ris")
     }`,
-    variables: { pid },
+    variables: { pids },
     slowThreshold: 3000,
   };
 }
