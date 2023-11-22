@@ -14,8 +14,12 @@ const all = [
     placeholder: "subject placeholder",
   },
   {
-    index: "term.publisher",
+    index: "term.hostpublication",
     placeholder: "publisher placeholder",
+  },
+  {
+    index: "term.fictionalcharacter",
+    placeholder: "fictionalcharacter placeholder",
   },
   {
     index: "term.contributor",

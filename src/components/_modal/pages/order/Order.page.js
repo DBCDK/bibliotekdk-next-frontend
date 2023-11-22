@@ -27,7 +27,7 @@ import * as branchesFragments from "@/lib/api/branches.fragments";
 import { useData } from "@/lib/api/api";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import { stringify } from "@/components/_modal/utils";
-import { isEmpty } from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty";
 
 /**
  *  Order component function

@@ -7,6 +7,7 @@ import { useData } from "@/lib/api/api";
 import { infomediaArticle } from "@/lib/api/infomedia.fragments";
 import LoginPrompt from "./Prompt";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 /**
  * Prompt the user for log in / change library, when user is not granted access
@@ -15,8 +16,8 @@ import { openLoginModal } from "@/components/_modal/pages/login/utils";
  */
 export default function ArticleLoginPrompt({ articleId }) {
   const modal = useModal();
-  const { authUser: user, isAuthenticated } = useUser();
-
+  const { authUser: user } = useUser();
+  const { isAuthenticated } = useAuthentication();
   const hasInfomediaAccess = user?.rights?.infomedia;
 
   const { data, isLoading } = useData(
@@ -33,8 +34,8 @@ export default function ArticleLoginPrompt({ articleId }) {
 
   const agencyName = branch?.agencyName || "";
 
-  // Not logged in, no access
-  if (!hasInfomediaAccess && !isAuthenticated) {
+  // Not logged in OR no access
+  if (!hasInfomediaAccess || !isAuthenticated) {
     return (
       <LoginPrompt
         title={Translate({ context: "articles", label: "getAccess" })}
@@ -43,6 +44,7 @@ export default function ArticleLoginPrompt({ articleId }) {
           label: "accessWarning",
         })}
         signIn={() => openLoginModal({ modal, mode: LOGIN_MODE.INFOMEDIA })}
+        isAuthenticated={isAuthenticated}
       />
     );
   }
@@ -75,6 +77,7 @@ export default function ArticleLoginPrompt({ articleId }) {
         })}
         linkHref={linkHref}
         signIn={openLoginModal}
+        isAuthenticated={isAuthenticated}
       />
     );
   }
