@@ -23,13 +23,14 @@ const CheckoutForm = ({
     digitalMaterials,
     materialsNotAllowed,
     materialsMissingAction,
-    duplicateOrders,
+    duplicateOrdersWorkIds,
   } = materialCounts;
   const modal = useModal();
   const disabled =
     materialsMissingAction > 0 ||
     materialsNotAllowed > 0 ||
-    duplicateBookmarkIds?.length > 0;
+    duplicateOrdersWorkIds?.length > 0 ||
+    mail?.valid?.status === false;
   const [mail, setMail] = useState(null);
   const { userInfo, pickupBranchInfo, accessTypeInfo } =
     useOrderPageInformation({
@@ -110,6 +111,7 @@ const CheckoutForm = ({
 
       <div>
         {/* Errors and messages */}
+
         {materialsNotAllowed > 0 && (
           <Text type="text3" className={styles.errorLabel}>
             <Translate
@@ -123,6 +125,7 @@ const CheckoutForm = ({
             />
           </Text>
         )}
+
         {materialsMissingAction > 0 && (
           <Text type="text3" className={styles.errorLabel}>
             <Translate
@@ -136,7 +139,14 @@ const CheckoutForm = ({
             />
           </Text>
         )}
-        {duplicateBookmarkIds?.length > 0 && (
+
+        {!mail?.valid?.status && (
+          <Text type="text3" className={styles.errorLabel}>
+            <Translate context="order" label="action-empty-email-field" />
+          </Text>
+        )}
+
+        {duplicateOrdersWorkIds?.length > 0 && (
           <Text type="text3" className={styles.errorLabel}>
             <Translate
               context="bookmark-order"
@@ -158,6 +168,7 @@ const CheckoutForm = ({
             </Link>
           </Text>
         )}
+
         {digitalMaterials > 0 && (
           <Text type="text3" className={styles.formLabel}>
             <Translate
@@ -171,6 +182,7 @@ const CheckoutForm = ({
             />
           </Text>
         )}
+
         <Text type="text3" className={styles.formLabel}>
           <Translate context="order" label="order-message-library" />
         </Text>

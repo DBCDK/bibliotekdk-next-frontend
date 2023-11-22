@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useData } from "@/lib/api/api";
 import * as infomediaFragments from "@/lib/api/infomedia.fragments";
 import Custom404 from "@/pages/404";
-import useUser from "@/components/hooks/useUser";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 function parseForPid(workId) {
   const parts = workId.split(":");
@@ -14,10 +14,10 @@ export default function Wrap() {
   const router = useRouter();
   const { workId, review: reviewPid } = router?.query;
   const pid = reviewPid ? reviewPid : parseForPid(workId);
-  const user = useUser();
+  const { isAuthenticated } = useAuthentication();
 
   const infomediaIds = useData(
-    user.isAuthenticated &&
+    isAuthenticated &&
       pid &&
       infomediaFragments.infomediaIdFromPid({ pid: pid })
   )

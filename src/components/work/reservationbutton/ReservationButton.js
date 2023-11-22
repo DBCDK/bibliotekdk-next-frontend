@@ -21,12 +21,13 @@ import {
 import isEmpty from "lodash/isEmpty";
 import uniq from "lodash/uniq";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
-function TextAboveButton({ access, user }) {
+function TextAboveButton({ access, isAuthenticated }) {
   return (
     (access?.[0]?.loginRequired ||
       access?.[0]?.__typename === "InfomediaService") &&
-    !user.isAuthenticated && (
+    !isAuthenticated && (
       <Text
         type="text3"
         className={styles.textAboveButton}
@@ -50,6 +51,8 @@ function ReservationButtonWrapper({
   className,
 }) {
   const user = useUser();
+  const { isAuthenticated } = useAuthentication();
+  const modal = useModal();
 
   const hasDigitalAccess = user?.authUser?.rights?.digitalArticleService;
 
@@ -96,6 +99,7 @@ function ReservationButtonWrapper({
     <ReservationButton
       access={access}
       user={user}
+      isAuthenticated={isAuthenticated}
       buttonType={buttonType}
       size={size}
       pids={pids}
@@ -105,6 +109,7 @@ function ReservationButtonWrapper({
       allEnrichedAccesses={allEnrichedAccesses}
       workId={workId}
       overrideButtonText={overrideButtonText}
+      modal={modal}
     />
   );
 }
@@ -128,6 +133,7 @@ export default ReservationButtonWrapper;
 export const ReservationButton = ({
   access, //TODO same as allEnrichedAccesses?
   user,
+  isAuthenticated,
   buttonType,
   size,
   pids,
@@ -137,8 +143,8 @@ export const ReservationButton = ({
   allEnrichedAccesses, //TODO same as access?
   workId,
   overrideButtonText = null,
+  modal,
 }) => {
-  const modal = useModal();
   const workType = access?.[0]?.workTypes?.[0]?.toLowerCase();
   const selectedMaterialType = Array.isArray(parentSelectedMaterialType)
     ? parentSelectedMaterialType?.[0]?.toLowerCase()
@@ -164,11 +170,11 @@ export const ReservationButton = ({
   const accessibleOnlineAndNoLoginProps = {
     skeleton: !access,
     dataCy: "button-order-overview",
-    onClick: () => handleGoToLogin(modal, access, user),
+    onClick: () => handleGoToLogin(modal, access, isAuthenticated),
   };
 
-  async function handleOpenLoginAndOrderModal() {
-    //add order modal to store, to be able to access when coming back from adgangsplatform/mitid?
+  async function handleOpenLoginAndAddOrderModalToStore() {
+    //add order modal to store, to be able to access when coming back from adgangsplatform/mitid
     const orderModalProps = {
       pids: pids,
       selectedAccesses: allEnrichedAccesses,
@@ -195,7 +201,7 @@ export const ReservationButton = ({
     skeleton: isEmpty(access),
     dataCy: `button-order-overview-enabled`,
     onClick: () => {
-      user?.isAuthenticated || user.isGuestUser
+      isAuthenticated || user.isGuestUser
         ? openOrderModal({
             modal: modal,
             pids: pids,
@@ -204,7 +210,7 @@ export const ReservationButton = ({
             singleManifestation: singleManifestation,
             storeLoanerInfo: true, // user is already logged in, we want to keep that
           })
-        : handleOpenLoginAndOrderModal();
+        : handleOpenLoginAndAddOrderModalToStore();
     },
   };
 
@@ -247,7 +253,7 @@ export const ReservationButton = ({
 
   return (
     <>
-      <TextAboveButton access={access} user={user} />
+      <TextAboveButton access={access} isAuthenticated={isAuthenticated} />
 
       <div className={styles.wrapper}>
         <Button

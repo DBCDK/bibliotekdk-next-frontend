@@ -107,6 +107,10 @@ const EMaterialFilter = ({ context, active }) => {
     });
   };
 
+  const onBackClick = () => {
+    modal.clear();
+  };
+
   return (
     <div className={styles.eMaterialFilter}>
       <div ref={analyzeRef} className="visually-hidden">
@@ -163,21 +167,31 @@ const EMaterialFilter = ({ context, active }) => {
         <Translate
           context={CONTEXT}
           label={
-            materialsToProceed?.length === 1
+            materialsToProceed?.length === 0
+              ? "efilter-back-text"
+              : materialsToProceed?.length === 1
               ? "efilter-proceed-text-singular"
               : "efilter-proceed-text"
           }
           vars={[materialsToProceed?.length]}
         />
       </Text>
+
       <Button
         type="primary"
         size="large"
         skeleton={isLoading}
-        onClick={onNextClick}
+        onClick={materialsToProceed?.length === 0 ? onBackClick : onNextClick}
         className={styles.nextButton}
       >
-        <Translate context={CONTEXT} label="efilter-proceed" />
+        <Translate
+          context={CONTEXT}
+          label={
+            materialsToProceed?.length === 0
+              ? "efilter-back"
+              : "efilter-proceed"
+          }
+        />
       </Button>
     </div>
   );

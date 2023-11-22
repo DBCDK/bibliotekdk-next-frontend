@@ -5,6 +5,9 @@ import ReservationButtonWrapper, {
 import { AccessEnum } from "@/lib/enums";
 import automock_utils from "@/lib/automock_utils.fixture";
 import merge from "lodash/merge";
+import Modal from "@/components/_modal";
+import Pages from "@/components/_modal/pages";
+import { useModal } from "@/components/_modal";
 
 const exportedObject = {
   title: "work/ReservationButton",
@@ -269,7 +272,7 @@ ReservationButtonDisabled.story = {
 
 export function ReservationButtonNotLoggedIn() {
   const descriptionName = "Not logged in";
-  const user = { isAuthenticated: false };
+  const modal = useModal();
   const access = [
     {
       pid: "some-pid-1",
@@ -290,6 +293,8 @@ export function ReservationButtonNotLoggedIn() {
         overrideButtonText="Gå til bog"
         access={access}
         onHandleGoToLogin={() => alert("DU SKAL LOGGE IND")}
+        isAuthenticated={false}
+        modal={modal}
       />
     </div>
   );
@@ -405,74 +410,38 @@ const user = {
   updateLoanerInfo: () => console.log("updateLoanerInfo"),
   updateUserStatusInfo: () => console.log("updateUserStatusInfo"),
 };
-const access = [
-  {
-    pid: "870970-basis:62831731",
-    titles: ["Fiskehuset"],
-    workTypes: ["LITERATURE"],
-    id: "infomediaUrl",
-    __typename: "InterLibraryLoan",
-    loanIsPossible: true,
-    materialTypesArray: [
-      {
-        specificDisplay: "bog",
-        specificCode: "BOOK",
-        generalDisplay: "bøger",
-        generalCode: "BOOKS",
-      },
-    ],
-    specificDisplayArray: ["bog"],
-  },
-];
 
-const allEnrichedAccesses = {
-  pid: "870970-basis:62831731",
-  titles: ["Fiskehuset"],
-  workTypes: ["LITERATURE"],
-  id: "infomediaUrl",
-  __typename: "InterLibraryLoan",
-  loanIsPossible: true,
-  materialTypesArray: [
-    {
-      specificDisplay: "bog",
-      specificCode: "BOOK",
-      generalDisplay: "bøger",
-      generalCode: "BOOKS",
-    },
-  ],
-  specificDisplayArray: ["bog"],
-};
-const buttonType = "primary";
-const size = "large";
-const pids = ["870970-basis:62831731"];
-const workId = "870970-basis:62724102";
-
-export function ReservationButtonLoginFlow() {
+export function ReservationButtonNotLoggedInFlow() {
   return (
     <div>
       <StoryTitle>ReservationButton - {descriptionName}</StoryTitle>
       <StoryDescription>
         The ReservationButton based on the type: {descriptionName}
       </StoryDescription>
-      <ReservationButton
-        access={access}
-        user={user}
-        pids={pids}
-        workId={workId}
-        singleManifestation={true}
-        onHandleGoToLogin={() => alert("DU SKAL LOGGE IND")}
-        allEnrichedAccesses={allEnrichedAccesses}
-        buttonType={buttonType}
-        size={size}
+      <Modal.Container>
+        <Modal.Page id="order" component={Pages.Order} />
+        <Modal.Page id="periodicaform" component={Pages.PeriodicaForm} />
+        <Modal.Page id="pickup" component={Pages.Pickup} />
+        <Modal.Page id="loanerform" component={Pages.Loanerform} />
+        <Modal.Page id="receipt" component={Pages.Receipt} />
+        <Modal.Page id="login" component={Pages.Login} />
+      </Modal.Container>
+      <ReservationButtonComponentBuilder
+        selectedPids={["some-pid-1"]}
+        workId={"some-work-id-1"}
       />
     </div>
   );
 }
 
-ReservationButtonLoginFlow.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+ReservationButtonNotLoggedInFlow.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
-      resolvers: {},
+      resolvers: {
+        SessionUserParameters: {
+          userId: () => undefined,
+        },
+      },
     },
     nextRouter: {
       showInfo: true,
@@ -481,31 +450,31 @@ ReservationButtonLoginFlow.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   },
 });
 
-export function ReservationButtonNotLoggedInFlow() {
-  user.isAuthenticated = true;
-
+export function ReservationButtonLoginFlow() {
   return (
     <div>
       <StoryTitle>ReservationButton - {descriptionName}</StoryTitle>
       <StoryDescription>
         The ReservationButton based on the type: {descriptionName}
       </StoryDescription>
-      <ReservationButton
-        access={access}
-        user={user}
-        pids={pids}
-        workId={workId}
-        singleManifestation={true}
-        onHandleGoToLogin={() => alert("DU SKAL LOGGE IND")}
-        allEnrichedAccesses={allEnrichedAccesses}
-        buttonType={buttonType}
-        size={size}
+
+      <Modal.Container>
+        <Modal.Page id="order" component={Pages.Order} />
+        <Modal.Page id="periodicaform" component={Pages.PeriodicaForm} />
+        <Modal.Page id="pickup" component={Pages.Pickup} />
+        <Modal.Page id="loanerform" component={Pages.Loanerform} />
+        <Modal.Page id="receipt" component={Pages.Receipt} />
+        <Modal.Page id="login" component={Pages.Login} />
+      </Modal.Container>
+      <ReservationButtonComponentBuilder
+        selectedPids={["some-pid-1"]}
+        workId={"some-work-id-1"}
       />
     </div>
   );
 }
 
-ReservationButtonNotLoggedInFlow.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+ReservationButtonLoginFlow.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {},
