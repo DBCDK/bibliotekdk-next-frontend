@@ -27,6 +27,7 @@ export function AdvancedSearchDropdownOnlyCheckboxes() {
       </StoryDescription>
       <AdvancedSearchDropdown
         indexName={storyTitle}
+        indexTitle={storyTitle}
         menuItems={indices}
         updateIndex={updateIndex}
       />
@@ -53,6 +54,7 @@ export function AdvancedSearchDropdownOnlyRadioButtons() {
       </StoryDescription>
       <AdvancedSearchDropdown
         indexName={storyTitle}
+        indexTitle={storyTitle}
         menuItems={indices}
         updateIndex={updateIndex}
       />
@@ -84,6 +86,7 @@ export function AdvancedSearchDropdownCheckboxesAndRadioButtons() {
       </StoryDescription>
       <AdvancedSearchDropdown
         indexName={storyTitle}
+        indexTitle={storyTitle}
         menuItems={indices}
         updateIndex={updateIndex}
       />
@@ -116,6 +119,7 @@ export function AdvancedSearchDropdownCheckboxesAndDividerAndRadioButtons() {
       </StoryDescription>
       <AdvancedSearchDropdown
         indexName={storyTitle}
+        indexTitle={storyTitle}
         menuItems={indices}
         updateIndex={updateIndex}
       />
@@ -143,6 +147,7 @@ export function AdvancedSearchDropdownRadioButtonsAndRadioLink() {
       </StoryDescription>
       <AdvancedSearchDropdown
         indexName={storyTitle}
+        indexTitle={storyTitle}
         menuItems={indices}
         updateIndex={updateIndex}
       />
