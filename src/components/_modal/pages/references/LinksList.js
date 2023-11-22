@@ -29,8 +29,6 @@ const onlinelinks = (pids) => {
 export default function LinksList({ pids, disabled = false }) {
   const links = onlinelinks(pids);
 
-  console.log(pids);
-
   return Object.keys(links).map((onlinekey) => (
     <li className={styles.list} key={onlinekey}>
       <Link
