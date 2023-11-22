@@ -3,7 +3,7 @@ import styles from "./AdvancedSearch.module.css";
 import Translate from "@/components/base/translate/Translate";
 import TextInputs from "../fieldInput/TextInputs";
 import { CqlTextArea } from "@/components/search/advancedSearch/cqlTextArea/CqlTextArea";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
