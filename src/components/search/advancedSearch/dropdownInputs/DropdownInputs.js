@@ -1,5 +1,4 @@
 import AdvancedSearchDropdown from "@/components/search/advancedSearch/advancedSearchDropdown/AdvancedSearchDropdown";
-import { convertToDropdownInput } from "@/components/search/advancedSearch/advancedSearchHelpers/convertToDropdownInput";
 import styles from "./DropdownInputs.module.css";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
@@ -10,7 +9,7 @@ const advancedSearchDropdownContext = "advanced_search_dropdown";
 
 /**
  *
- * @param {Array.<DropdownUnit>} items
+ * @param {DropdownInputArray} items
  * @param {string} indexName
  * @param {UpdateDropdownSearchIndices} updateDropdownSearchIndices
  * @returns {JSX.Element}
@@ -32,7 +31,7 @@ function DropdownUnit({ items, indexName, updateDropdownSearchIndices }) {
         indexTitle={indexTitle}
         indexName={indexName}
         indexPlaceholder={indexPlaceholder}
-        menuItems={convertToDropdownInput(items)}
+        menuItems={items}
         updateIndex={(menuItemsState) =>
           updateDropdownSearchIndices({
             indexName: indexName,
