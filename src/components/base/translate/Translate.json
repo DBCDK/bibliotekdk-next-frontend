@@ -891,6 +891,12 @@
         "en": "Download file for EndNote, Zotero, Mendeley and ReferenceManager"
       }
     },
+    "multiReferences": {
+      "get-references": {
+        "da": "Hent referencer for %s materialer",
+        "en": "Get references for %s materials"
+      }
+    },
     "workTypeDistinctForm": {
       "isOnline": {
         "da": "denne udgave",
