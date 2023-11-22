@@ -4,6 +4,7 @@ import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import { DebugStateDetails } from "@/components/search/advancedSearch/DebugStateDetails";
+import { DropdownReducerEnum } from "@/components/search/advancedSearch/useDropdownSearchIndices";
 
 const advancedSearchDropdownContext = "advanced_search_dropdown";
 
@@ -34,8 +35,11 @@ function DropdownUnit({ items, indexName, updateDropdownSearchIndices }) {
         menuItems={items}
         updateIndex={(menuItemsState) =>
           updateDropdownSearchIndices({
-            indexName: indexName,
-            menuItemsState: menuItemsState,
+            type: DropdownReducerEnum.UPDATE,
+            payload: {
+              indexName: indexName,
+              menuItemsState: menuItemsState,
+            },
           })
         }
       />
