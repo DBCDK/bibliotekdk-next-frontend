@@ -42,11 +42,7 @@ export default function AdvancedSearchProvider({ children }) {
   // TODO: Move this part of the state into Context
   //  So we are able to control default view from context as well
   const router = useRouter();
-  const {
-    page = "1",
-    cql: cqlFromUrl = null,
-    fieldSearch = null,
-  } = router.query;
+  const { page = "1", cql: cqlFromUrl = null, fieldSearch = "" } = router.query;
   const fieldSearchFromUrl = fieldSearch && JSON.parse(fieldSearch);
 
   //// ---- Inputfields ----
