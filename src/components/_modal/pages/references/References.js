@@ -11,9 +11,9 @@ const onlinelinks = (pid) => {
     getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
 
   return {
-    refworks: `http://www.refworks.com/express/ExpressImport.asp?vendor=bibliotek.dk&filter=RefWorks Tagged Format&encoding=28591&url=${APP_URL}/api/refworks?pid=${pid}`,
-    endnote: `http://www.myendnoteweb.com/EndNoteWeb.html?func=directExport&partnerName=bibliotek.dk&dataIdentifier=1&dataRequestUrl=${APP_URL}/api/ris?pid=${pid}`,
-    file: `${APP_URL}/api/risdownload?pid=${pid}`,
+    refworks: `http://www.refworks.com/express/ExpressImport.asp?vendor=bibliotek.dk&filter=RefWorks Tagged Format&encoding=28591&url=${APP_URL}/api/refworks?pids=${pid}`,
+    endnote: `http://www.myendnoteweb.com/EndNoteWeb.html?func=directExport&partnerName=bibliotek.dk&dataIdentifier=1&dataRequestUrl=${APP_URL}/api/ris?pids=${pid}`,
+    file: `${APP_URL}/api/risdownload?pids=${pid}`,
   };
 };
 
