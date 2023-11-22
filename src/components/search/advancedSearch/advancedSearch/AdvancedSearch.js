@@ -128,8 +128,8 @@ export default function AdvancedSearch() {
             <Link
               border={{ bottom: { keepVisible: true } }}
               onClick={() => {
-                router.push({ pathname: router.pathname, query: {} });
                 resetObjectState();
+                router.push({ pathname: router.pathname });
               }}
             >
               Ryd søgning

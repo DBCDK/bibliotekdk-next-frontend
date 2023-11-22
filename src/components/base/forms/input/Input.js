@@ -19,6 +19,8 @@ import styles from "./Input.module.css";
  * @param {boolean} disabled
  * @param onChange
  * @param onBlur
+ * @param {function} onKeyDown
+ * @param {boolean} overrideValueControl
  * @param {string} dataCy
  * @param {boolean} readOnly
  * @param required

@@ -29,7 +29,6 @@ function FieldInput({ key, index, workType, fieldValue }) {
     handleInputFieldChange,
     removeInputField,
     handleLogicalOperatorChange,
-    inputFields,
   } = useAdvancedSearchContext();
   //labels to show in SearchIndexDropdown
   const labels = workTypesLabels[workType].map((el) => el.index);
@@ -38,7 +37,7 @@ function FieldInput({ key, index, workType, fieldValue }) {
   // this is a bit quicky - should probably get the csType
   // from advancedSearchContext
   const csTypeMap = { function: "creator" };
-  const indexType = inputFields[index].searchIndex;
+  const indexType = fieldValue.searchIndex;
   const csType = indexType.split(".")[1];
   const mappedCsType = csTypeMap[csType] || csType;
 
@@ -86,12 +85,14 @@ function FieldInput({ key, index, workType, fieldValue }) {
             }
             onClear={() => handleInputFieldChange(index, "")}
             className={styles.suggester}
+            initialValue={fieldValue?.value}
           >
             <Input
               className={styles.suggesterInput}
               value={fieldValue?.value}
               onChange={(e) => handleInputFieldChange(index, e.target.value)}
               placeholder={fieldValue.placeholder}
+              overrideValueControl={true}
             />
           </Suggester>
         </div>
