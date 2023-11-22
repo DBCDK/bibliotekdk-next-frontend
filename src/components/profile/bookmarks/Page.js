@@ -116,7 +116,9 @@ const BookmarkPage = () => {
   };
 
   const onGetReferencesClick = () => {
-    console.log("GETTING REF's");
+    modal.push("multiReferences", {
+      materials: checkboxList,
+    });
   };
 
   const handleRadioChange = (value) => {
