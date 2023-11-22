@@ -46,7 +46,6 @@
 .dropdowntoggle:focus {
   border: 1px solid var(--blue);
   outline: 1px solid var(--blue);
-  cursor: pointer;
 }
 
 .dropdowntoggle {
@@ -58,6 +57,7 @@
   min-width: 125px;
   height: 100%;
   text-align: left;
+  cursor: pointer;
 }
 
 .dropdowntoggle[aria-expanded="true"] .dropdownicon img {
