@@ -46,6 +46,7 @@
 .dropdowntoggle:focus {
   border: 1px solid var(--blue);
   outline: 1px solid var(--blue);
+  cursor: pointer;
 }
 
 .dropdowntoggle {
