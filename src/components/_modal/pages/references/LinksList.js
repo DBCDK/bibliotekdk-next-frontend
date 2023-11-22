@@ -7,7 +7,7 @@ import getConfig from "next/config";
 import styles from "./References.module.css";
 
 /**
- * TODO how to generate for several links?
+ * TODO hook up with @jopr s implementering
  * @param {String} pid
  * @returns
  */
