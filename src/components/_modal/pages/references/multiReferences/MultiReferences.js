@@ -40,9 +40,12 @@ const mapMaterialKeysToSelectedMaterialTypes = ({
 export default function MultiReferences({ context }) {
   const { materials } = context;
   const modal = useModal();
-  const materialKeysMissingEdition = materials.filter((material) => {
-    if (material.materialId.startsWith("work-of")) return material.key;
-  });
+  const materialKeysMissingEdition = materials
+    .filter((material) => material.materialId.startsWith("work-of"))
+    .map((material) => material.key);
+  const materialPids = materials
+    .filter((material) => !material.materialId.startsWith("work-of"))
+    .map((material) => material.materialId);
   const { data: materialsMissingEdition, isLoading } = usePopulateBookmarks(
     materialKeysMissingEdition
   );
@@ -121,7 +124,10 @@ export default function MultiReferences({ context }) {
             })}
           </Text>
         )}
-        <LinksList />
+        <LinksList
+          pids={materialPids}
+          disabled={materialKeysMissingEdition?.length > 0}
+        />
       </div>
     </div>
   );
