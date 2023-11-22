@@ -53,6 +53,9 @@ export default function MultiReferences({ context }) {
     bookmarks,
   });
 
+  const showReferencesMissing =
+    materialKeysMissingEdition.length > 0 && !isLoading;
+
   return (
     <div>
       <Top
@@ -67,19 +70,19 @@ export default function MultiReferences({ context }) {
         }}
       ></Top>
 
-      <Text
-        type="text3"
-        className={cx(styles.missingEditionText, styles.container)}
-      >
-        {Translate({
-          context: CONTEXT,
-          label: "missing-edition",
-          vars: [materialsMissingEdition.length],
-        })}
-      </Text>
-
-      {materialKeysMissingEdition.length > 0 &&
-        !isLoading &&
+      {showReferencesMissing && (
+        <Text
+          type="text3"
+          className={cx(styles.missingEditionText, styles.container)}
+        >
+          {Translate({
+            context: CONTEXT,
+            label: "missing-edition",
+            vars: [materialsMissingEdition.length],
+          })}
+        </Text>
+      )}
+      {showReferencesMissing &&
         materialsMissingEdition.map((material) => (
           <Material
             key={material.key}
@@ -88,13 +91,19 @@ export default function MultiReferences({ context }) {
             modal={modal}
           />
         ))}
-      <div className={styles.container}>
-        <Text type="text3" className={styles.chooseEditionText}>
-          {Translate({
-            context: CONTEXT,
-            label: "choose-edition",
-          })}
-        </Text>
+      <div
+        className={cx(styles.container, {
+          [styles.exportButtons]: !showReferencesMissing,
+        })}
+      >
+        {showReferencesMissing && (
+          <Text type="text3" className={styles.chooseEditionText}>
+            {Translate({
+              context: CONTEXT,
+              label: "choose-edition",
+            })}
+          </Text>
+        )}
         <LinksList />
       </div>
     </div>

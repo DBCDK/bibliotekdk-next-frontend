@@ -40,13 +40,14 @@
 
 .top {
   padding-top: var(--pt5);
+  padding-bottom: var(--pt5);
 }
 
 .missingEditionText {
   padding-top: var(--pt2);
   padding-bottom: var(--pt2);
   background: var(--feedback-yellow-warning-background-light);
-  margin: var(--pt5) 0;
+  margin: 0 0 var(--pt5) 0;
 }
 
 .chooseEditionText {
@@ -59,6 +60,11 @@
   .container {
     padding: var(--pt4) var(--pt2);
   }
+
+  .exportButtons {
+    padding-top: 0;
+  }
+
   .missingEditionText {
     padding-top: var(--pt1);
     padding-bottom: var(--pt1);
