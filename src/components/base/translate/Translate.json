@@ -895,6 +895,22 @@
       "get-references": {
         "da": "Hent referencer for %s materialer",
         "en": "Get references for %s materials"
+      },
+      "choose-edition": {
+        "da": "Vælg udgave(r) for at hente referencer",
+        "en": "Choose edition(s) to get references"
+      },
+      "choose-edition-short": {
+        "da": "Vælg udgave",
+        "en": "Choose edition"
+      },
+      "missing-edition": {
+        "da": "Der er ikke valgt en specifik udgave for %s af materialerne",
+        "en": "You have not chosen a specific edition for %s of the materials"
+      },
+      "remove": {
+        "da": "Fjern",
+        "en": "Remove"
       }
     },
     "workTypeDistinctForm": {
