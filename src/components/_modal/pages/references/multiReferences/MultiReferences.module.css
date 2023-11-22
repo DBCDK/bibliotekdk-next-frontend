@@ -1,0 +1,78 @@
+.buttonRowContainer {
+  display: flex;
+  flex-direction: row;
+  padding-top: var(--pt1);
+  justify-content: space-between;
+}
+
+.removeButton > i {
+  display: flex;
+  align-items: center;
+  margin-bottom: -1px;
+}
+
+/** button link */
+
+.buttonLink {
+  display: flex;
+  height: fit-content;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.exclamationmark {
+  margin-right: var(--pt1);
+}
+
+.link {
+  cursor: pointer;
+}
+
+.link > span > i {
+  vertical-align: middle;
+}
+
+/** modal */
+
+.container {
+  padding: 0 var(--pt6);
+}
+
+.top {
+  padding-top: var(--pt5);
+  padding-bottom: var(--pt5);
+}
+
+.missingEditionText {
+  padding-top: var(--pt2);
+  padding-bottom: var(--pt2);
+  background: var(--feedback-yellow-warning-background-light);
+  margin: 0 0 var(--pt5) 0;
+}
+
+.chooseEditionText {
+  padding-top: var(--pt5);
+  padding-bottom: var(--pt4);
+  color: var(--error_temp);
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: var(--pt4) var(--pt2);
+  }
+
+  .exportButtons {
+    padding-top: 0;
+  }
+
+  .missingEditionText {
+    padding-top: var(--pt1);
+    padding-bottom: var(--pt1);
+    margin: 0 0 var(--pt4) 0;
+  }
+
+  .chooseEditionText {
+    padding-top: 0;
+    padding-bottom: var(--pt4);
+  }
+}
