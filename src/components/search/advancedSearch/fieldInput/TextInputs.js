@@ -86,12 +86,12 @@ function FieldInput({ key, index, workType, fieldValue }) {
             }
             onClear={() => handleInputFieldChange(index, "")}
             className={styles.suggester}
+            initialValue={`${fieldValue.value}`}
           >
             <Input
               className={styles.suggesterInput}
               value={fieldValue?.value}
               onChange={(e) => handleInputFieldChange(index, e.target.value)}
-              placeholder={fieldValue.placeholder}
             />
           </Suggester>
         </div>
