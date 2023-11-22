@@ -56,15 +56,36 @@ export default function MultiReferences({ context }) {
   const showReferencesMissing =
     materialKeysMissingEdition.length > 0 && !isLoading;
 
+  const numberMaterials = materials.length;
+  const title =
+    numberMaterials === 1
+      ? Translate({
+          context: CONTEXT,
+          label: "get-reference",
+        })
+      : Translate({
+          context: CONTEXT,
+          label: "get-references",
+          vars: [numberMaterials],
+        });
+
+  const missingEditionText =
+    numberMaterials === 1
+      ? Translate({
+          context: CONTEXT,
+          label: "missing-edition-singular",
+        })
+      : Translate({
+          context: CONTEXT,
+          label: "missing-edition",
+          vars: [numberMaterials],
+        });
+
   return (
     <div>
       <Top
         skeleton={isLoading}
-        title={Translate({
-          context: CONTEXT,
-          label: "get-references",
-          vars: [materials.length],
-        })}
+        title={title}
         className={{
           top: cx(styles.container, styles.top),
         }}
@@ -75,11 +96,7 @@ export default function MultiReferences({ context }) {
           type="text3"
           className={cx(styles.missingEditionText, styles.container)}
         >
-          {Translate({
-            context: CONTEXT,
-            label: "missing-edition",
-            vars: [materialsMissingEdition.length],
-          })}
+          {missingEditionText}
         </Text>
       )}
       {showReferencesMissing &&
