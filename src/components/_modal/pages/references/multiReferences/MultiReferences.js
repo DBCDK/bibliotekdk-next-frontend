@@ -35,7 +35,7 @@ const mapMaterialKeysToSelectedMaterialTypes = ({
 
 /**
  * Modal that shows a collection of references that are missing edition
- * @returns
+ * @returns {React.JSX.Element}
  */
 export default function MultiReferences({ context }) {
   const { materials } = context;
