@@ -2,9 +2,10 @@ import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text/Text";
 import Top from "@/components/_modal/pages/base/top";
-import styles from "./References.module.css";
 import getConfig from "next/config";
 import Edition from "@/components/_modal/pages/edition/Edition";
+// eslint-disable-next-line css-modules/no-unused-class
+import styles from "./References.module.css";
 
 const onlinelinks = (pid) => {
   const APP_URL =

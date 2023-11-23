@@ -32,7 +32,7 @@ export default function LinksList({ pids, disabled = false }) {
   return Object.keys(links).map((onlinekey) => (
     <li className={styles.list} key={onlinekey}>
       <span
-        className={cx(styles.linkWrapper, {
+        className={cx({
           [styles.linkWrapperDisabled]: disabled,
         })}
       >
