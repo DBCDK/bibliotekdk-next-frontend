@@ -265,6 +265,9 @@ export function templateImageToLeft({
     .filter((pre) => !isEmpty(pre))
     ?.join(", ");
 
+  console.log("TEMPLATE material", material);
+  console.log("TEMPLATE formattedMaterialTypes", formattedMaterialTypes);
+
   return {
     link_href: linkToWork
       ? getWorkUrl(fullTitle, creators, material?.ownerWork?.workId)
