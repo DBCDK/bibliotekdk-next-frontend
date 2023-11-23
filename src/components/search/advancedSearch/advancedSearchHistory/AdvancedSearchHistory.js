@@ -32,7 +32,6 @@ export function AdvancedSearchHistory() {
       <Item
         title={accordionTitle}
         key={1}
-        id="søgehistorik-1"
         additionalTxt={[""]}
       >
         {storedValue?.map((stored, index) => {
