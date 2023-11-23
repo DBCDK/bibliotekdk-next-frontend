@@ -45,6 +45,22 @@ export default function LoginPrompt({
           <Title type="title4" tag="h3">
             {title}
           </Title>
+          {!isAuthenticated && (
+            <>
+              <Text type="text3" className={styles.description}>
+                {description}
+              </Text>
+              <Button
+                type="primary"
+                size="large"
+                onClick={signIn}
+                dataCy="article-prompt-button-log-ind"
+                className={styles.signInButton}
+              >
+                {buttonText}
+              </Button>
+            </>
+          )}
           {isAuthenticated && linkHref && (
             <InfoDropdown
               label="show-more"
@@ -75,18 +91,6 @@ export default function LoginPrompt({
               </>
             </InfoDropdown>
           )}
-          {!(isAuthenticated && linkHref) && (
-            <Button
-              type="primary"
-              size="large"
-              onClick={signIn}
-              dataCy="article-prompt-button-log-ind"
-              className={styles.signInButton}
-            >
-              {buttonText}
-            </Button>
-          )}
-
           <Divider className={styles.devider} />
         </Col>
       </Row>
