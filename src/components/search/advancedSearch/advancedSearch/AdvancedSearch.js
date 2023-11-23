@@ -3,7 +3,7 @@ import styles from "./AdvancedSearch.module.css";
 import Translate from "@/components/base/translate/Translate";
 import TextInputs from "../fieldInput/TextInputs";
 import { CqlTextArea } from "@/components/search/advancedSearch/cqlTextArea/CqlTextArea";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
@@ -29,29 +29,21 @@ ExperimentalCqlParser.propTypes = { parsedCQL: PropTypes.string };
  * @returns {React.JSX.Element}
  */
 
-export default function AdvancedSearch({ initState }) {
+export default function AdvancedSearch() {
   const router = useRouter();
-  const { cql } = router.query;
   const workType = "all";
-  const [showCqlEditor, setShowCqlEditor] = useState(false);
-  const textAreaRef = useRef(null);
 
   const {
     inputFields,
     dropdownSearchIndices,
-    updateStatesFromObject,
     resetObjectState,
     parsedCQL,
     setParsedCQL,
+    cqlFromUrl,
   } = useAdvancedSearchContext();
 
-  useEffect(() => {
-    //show CQL editor if there is a cql param in the url
-    setShowCqlEditor(!!cql);
-    if (initState) {
-      updateStatesFromObject(initState);
-    }
-  }, []);
+  const [showCqlEditor, setShowCqlEditor] = useState(!isEmpty(cqlFromUrl));
+  const textAreaRef = useRef(null);
 
   //add raw cql query in url if showCqlEditor. Add state to url if fieldInputs
   const doAdvancedSearch = () => {
