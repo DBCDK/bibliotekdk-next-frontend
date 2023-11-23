@@ -35,6 +35,11 @@ export default function AdvancedSearch({ initState }) {
   const workType = "all";
   const [showCqlEditor, setShowCqlEditor] = useState(false);
   const textAreaRef = useRef(null);
+  // const { query: { cql } } = useRouter();
+
+  // useEffect(() => {
+  //   setShowCqlEditor(!!cql)
+  // }, [cql]);
 
   const {
     inputFields,
