@@ -50,7 +50,7 @@ const SingleReference = ({ bookmarkInList, materialKeyToMaterialTypes }) => {
       material: { ...material, materialType: materialType },
       singleManifestation: true,
       isPeriodicaLike: false, //we have filtered out periodicalike materials
-      isDigitalArticle: false, //TODO
+      //isDigitalArticle doesnt matter, since we always show edition
     });
 
   return (
@@ -116,7 +116,6 @@ const MissingReferencesList = ({
  */
 export default function MultiReferences({ context }) {
   const { materials } = context;
-  console.log("materials", materials);
   const modal = useModal();
 
   const bookmarksMissingEdition = materials.filter((material) =>
@@ -124,8 +123,6 @@ export default function MultiReferences({ context }) {
   );
 
   const { bookmarks } = useBookmarks();
-
-  console.log("bookmarks", bookmarks);
 
   const materialKeyToMaterialTypes = mapMaterialKeysToSelectedMaterialTypes({
     bookmarksMissingEdition: materials,
