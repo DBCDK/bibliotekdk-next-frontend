@@ -891,6 +891,36 @@
         "en": "Download file for EndNote, Zotero, Mendeley and ReferenceManager"
       }
     },
+    "multiReferences": {
+      "get-references": {
+        "da": "Hent referencer for %s materialer",
+        "en": "Get references for %s materials"
+      },
+      "get-reference": {
+        "da": "Hent reference",
+        "en": "Get reference"
+      },
+      "choose-edition": {
+        "da": "Vælg udgave(r) for at hente referencer",
+        "en": "Choose edition(s) to get references"
+      },
+      "choose-edition-short": {
+        "da": "Vælg udgave",
+        "en": "Choose edition"
+      },
+      "missing-edition": {
+        "da": "Der er ikke valgt en specifik udgave for %s af materialerne",
+        "en": "You have not chosen a specific edition for %s of the materials"
+      },
+      "missing-edition-singular": {
+        "da": "Der er ikke valgt en specifik udgave for materialet",
+        "en": "You have not chosen a specific edition for the material"
+      },
+      "remove": {
+        "da": "Fjern",
+        "en": "Remove"
+      }
+    },
     "workTypeDistinctForm": {
       "isOnline": {
         "da": "denne udgave",
@@ -1783,7 +1813,7 @@
         "en": "Series title"
       },
       "advanced-dropdown-term.function": {
-        "da": "Ophav",
+        "da": "Forfatter/ophav",
         "en": "function"
       },
       "advanced-dropdown-term.hostpublication": {

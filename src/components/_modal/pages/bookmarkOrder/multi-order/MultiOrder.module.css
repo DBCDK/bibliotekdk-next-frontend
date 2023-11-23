@@ -18,3 +18,13 @@
 .checkoutContainer {
   bottom: 0;
 }
+
+@media (max-width: 576px) {
+  .multiOrder {
+    padding: 0 var(--pt2);
+  }
+
+  .multiOrder [class^="MultiOrder_materialList"] {
+    margin: 0 -16px;
+  }
+}

@@ -54,7 +54,7 @@
   --link-background-light: rgba(255, 255, 255, 0.7);
 
   --feedback-yellow-warning-background: #fbeaad;
-
+  --feedback-yellow-warning-background-light: #fdf5d6;
   /* skeleton */
   --skeleton-bg-color: var(--concrete);
   --skeleton-gradient-color: #e8e8e8;

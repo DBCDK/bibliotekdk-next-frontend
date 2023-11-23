@@ -280,7 +280,7 @@ export default function Wrap({
       context?.selectedAccesses?.[0]?.__typename !==
         AccessEnum.INTER_LIBRARY_LOAN;
 
-    const materialCardTemplate = (/** @type {Object} */ material) =>
+    const materialCardTemplate = (material) =>
       templateImageToLeft({
         material,
         singleManifestation,

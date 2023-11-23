@@ -30,7 +30,7 @@ import HasBeenOrderedRow from "../../../edition/hasbeenOrderedRow/HasBeenOrdered
 
 /**
  * At this point, we have manifestation of all the different material types
- * Here we filter for the materialtype the user has selected
+ * Here we filter out the manifestation with the materialtype the user has selected
  * If we have compound material types (such as "den grimme ælling Bog / Lydoptagelse (cd)"), we have to split them up
  * @param {Object[]} mostRelevant
  * @param {String} materialType

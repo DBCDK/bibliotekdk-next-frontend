@@ -192,6 +192,7 @@ function Link({
         onFocus={onFocus}
         className={className}
         tabIndex={disabled ? "-1" : tabIndex}
+        disabled={disabled}
         aria-label={ariaLabel}
         {...props}
         style={{

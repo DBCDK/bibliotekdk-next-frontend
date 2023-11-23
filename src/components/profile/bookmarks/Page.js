@@ -115,6 +115,12 @@ const BookmarkPage = () => {
     }
   };
 
+  const onGetReferencesClick = () => {
+    modal.push("multiReferences", {
+      materials: checkboxList,
+    });
+  };
+
   const handleRadioChange = (value) => {
     setSortByValue(value);
     sessionStorage.setItem("sortByValue", value);
@@ -344,6 +350,7 @@ const BookmarkPage = () => {
           type="secondary"
           disabled={isNothingSelected}
           className={styles.referenceButton}
+          onClick={onGetReferencesClick}
         >
           {Translate({
             context: CONTEXT,

@@ -1,6 +1,8 @@
 import { getAccessToken } from "@/pages/api/refworks";
 import { getRis } from "@/pages/api/ris";
 
+const FILENAME = "RIS-Export";
+
 /**
  * Entry point
  * @param req
@@ -12,11 +14,12 @@ export default async function risHandler(req, res) {
   const context = { req, res };
   const accessToken = await getAccessToken(context);
 
-  const { pid } = req.query;
-  const response = await getRis(pid, accessToken);
+  const { pids } = req.query;
+  const pidsAsArray = pids.split(",");
+  const response = await getRis(pidsAsArray, accessToken);
 
   res.setHeader("Content-Type", "application/octet-stream");
   res.setHeader("Content-Type", "text/plain");
-  res.setHeader("Content-Disposition", `attachment;filename=${pid}`);
+  res.setHeader("Content-Disposition", `attachment;filename=${FILENAME}`);
   res.status(200).send(response);
 }
