@@ -89,7 +89,7 @@ const MissingReferencesList = ({
           vars: [bookmarksMissingEdition.length],
         });
 
-  if (isLoading) return null; //TODO loading state?
+  if (isLoading) return null;
   return (
     <>
       <Text

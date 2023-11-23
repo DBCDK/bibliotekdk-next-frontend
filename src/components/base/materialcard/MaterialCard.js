@@ -51,7 +51,6 @@ const MaterialCard = forwardRef(
     } = renderProps;
 
     if (imageLeft) {
-      console.log("IMAGE LEFT", renderProps);
       const ManifestationLink = ({ children }) => {
         return (
           <Link
