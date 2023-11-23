@@ -8,10 +8,12 @@ export function convertStateToCql({ inputFields, dropdownSearchIndices } = {}) {
 
   const inputFieldsQuery = inputFields
     .filter((item) => !isEmpty(item.value) && !isEmpty(item.searchIndex))
-    .map((item) => {
-      const prefix = !isEmpty(item.prefixLogicalOperator)
-        ? [item.prefixLogicalOperator]
-        : [];
+    .map((item, index) => {
+      //first item should not have a prefixLogicalOperator
+      const prefix =
+        !isEmpty(item.prefixLogicalOperator) && index !== 0
+          ? [item.prefixLogicalOperator]
+          : [];
       const searchIndexWithValue = `${
         item.searchIndex
       }="${item.value.replaceAll(`"`, `\\\"`)}"`;
