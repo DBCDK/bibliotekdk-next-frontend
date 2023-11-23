@@ -3,7 +3,7 @@ import styles from "./AdvancedSearch.module.css";
 import Translate from "@/components/base/translate/Translate";
 import TextInputs from "../fieldInput/TextInputs";
 import { CqlTextArea } from "@/components/search/advancedSearch/cqlTextArea/CqlTextArea";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
@@ -44,6 +44,13 @@ export default function AdvancedSearch() {
 
   const [showCqlEditor, setShowCqlEditor] = useState(!isEmpty(cqlFromUrl));
   const textAreaRef = useRef(null);
+  const {
+    query: { cql },
+  } = router;
+
+  useEffect(() => {
+    setShowCqlEditor(!!cql);
+  }, [cql]);
 
   //add raw cql query in url if showCqlEditor. Add state to url if fieldInputs
   const doAdvancedSearch = () => {
