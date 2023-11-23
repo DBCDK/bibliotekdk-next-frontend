@@ -53,7 +53,7 @@ export default function ArticleLoginPrompt({ articleId }) {
   //AUTHENTICATED AND NO ACCESS either because, we couldnt fetch article (shoudl we show error instead?)
   // OR bc user doesnt have access rights
   // --> Show library name and explain how to obtain access
-  if (!isLoading && (!data?.infomedia?.article || !user.rights.infomedia)) {
+  if (!isLoading && (!data?.infomedia?.article || !hasInfomediaAccess)) {
     const linkHref = {
       href: "https://slks.dk/omraader/kulturinstitutioner/biblioteker",
       text: Translate({ context: "articles", label: "libraryAccessReadMore" }),
