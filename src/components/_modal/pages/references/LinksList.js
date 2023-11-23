@@ -2,13 +2,13 @@ import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text/Text";
 import getConfig from "next/config";
+import cx from "classnames";
 
 // eslint-disable-next-line css-modules/no-unused-class
 import styles from "./References.module.css";
 
 /**
- * TODO hook up with @jopr s implementering
- * @param {String} pid
+ * @param {Array<String>} pids
  * @returns
  */
 const onlinelinks = (pids) => {
@@ -31,17 +31,25 @@ export default function LinksList({ pids, disabled = false }) {
 
   return Object.keys(links).map((onlinekey) => (
     <li className={styles.list} key={onlinekey}>
-      <Link
-        dataCy={onlinekey}
-        border={{ bottom: { keepVisible: true } }}
-        href={links[onlinekey]}
-        target="_blank"
-        disabled={disabled}
+      <span
+        className={cx(styles.linkWrapper, {
+          [styles.linkWrapperDisabled]: disabled,
+        })}
       >
-        <Text type="text3" tag="span">
-          {Translate({ context: "references", label: `${onlinekey}_label` })}
-        </Text>
-      </Link>
+        <Link
+          className={styles.link}
+          dataCy={onlinekey}
+          border={{ bottom: { keepVisible: true } }}
+          href={links[onlinekey]}
+          target="_blank"
+          disabled={disabled}
+        >
+          <Text type="text3" tag="span">
+            {Translate({ context: "references", label: `${onlinekey}_label` })}
+          </Text>
+        </Link>
+      </span>
+
       <Text type="text3">
         {Translate({
           context: "references",
