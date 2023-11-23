@@ -6,6 +6,9 @@ import Pagination from "@/components/search/pagination/Pagination";
 import PropTypes from "prop-types";
 import { convertStateToCql } from "@/components/search/advancedSearch/utils";
 import useAdvancedSearchHistory from "@/components/hooks/useAdvancedSearchHistory";
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
+import isEmpty from "lodash/isEmpty";
+import styles from "./AdvancedSearchResult.module.css";
 
 export function AdvancedSearchResult({
   pageNo,
@@ -28,6 +31,7 @@ export function AdvancedSearchResult({
         id="search-result-section"
         title="Resultater"
         subtitle={hitcount}
+        className={styles.padding_top}
       >
         {/* Reuse result page from simplesearch - we skip the wrap .. @TODO should we set
         some mark .. that we are doing advanced search .. ?? */}
@@ -40,7 +44,7 @@ export function AdvancedSearchResult({
       {hitcount > 0 && (
         <Pagination
           numPages={numPages}
-          currentPage={parseInt(pageNo, 10)}
+          currentPage={pageNo}
           onChange={onPageChange}
         />
       )}
@@ -62,18 +66,19 @@ function parseResponse(bigResponse) {
  *
  * @returns {React.JSX.Element}
  */
-export default function Wrap({
-  pageNo,
-  onWorkClick,
-  onPageChange,
-  cql,
-  fieldSearch,
-}) {
+export default function Wrap({ onWorkClick, onPageChange }) {
+  const {
+    cqlFromUrl: cql,
+    fieldSearchFromUrl: fieldSearch,
+    pageNoFromUrl: pageNo,
+  } = useAdvancedSearchContext();
   // get setter for advanced search history
   const { setValue } = useAdvancedSearchHistory();
   const limit = 10; // limit
   let offset = limit * (pageNo - 1); // offset
   const cqlQuery = cql || convertStateToCql(fieldSearch);
+
+  const showResult = !isEmpty(fieldSearch) || !isEmpty(cql);
 
   // use the useData hook to fetch data
   const bigResponse = useData(
@@ -102,6 +107,10 @@ export default function Wrap({
       cql: cqlQuery,
     };
     setValue(searchHistoryObj);
+  }
+
+  if (!showResult) {
+    return null;
   }
 
   return (

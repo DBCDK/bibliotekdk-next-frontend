@@ -15,8 +15,16 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import Router from "next/router";
 import { SessionProvider } from "next-auth/react";
+import AdvancedSearchProvider from "@/components/search/advancedSearch/advancedSearchContext";
 
 export const decorators = [
+  (Story) => {
+    return (
+      <AdvancedSearchProvider>
+        <Story />
+      </AdvancedSearchProvider>
+    );
+  },
   (Story) => {
     return (
       <SessionProvider

@@ -40,24 +40,24 @@ const mapMaterialKeysToSelectedMaterialTypes = ({
 export default function MultiReferences({ context }) {
   const { materials } = context;
   const modal = useModal();
-  const materialKeysMissingEdition = materials
-    .filter((material) => material.materialId.startsWith("work-of"))
-    .map((material) => material.key);
+  const bookmarksMissingEdition = materials.filter((material) =>
+    material.materialId.startsWith("work-of")
+  );
   const materialPids = materials
     .filter((material) => !material.materialId.startsWith("work-of"))
     .map((material) => material.materialId);
   const { data: materialsMissingEdition, isLoading } = usePopulateBookmarks(
-    materialKeysMissingEdition
+    bookmarksMissingEdition
   );
   const { bookmarks } = useBookmarks();
 
   const materialKeyToMaterialTypes = mapMaterialKeysToSelectedMaterialTypes({
-    materialKeysMissingEdition,
+    materialKeysMissingEdition: bookmarksMissingEdition,
     bookmarks,
   });
 
   const showReferencesMissing =
-    materialKeysMissingEdition.length > 0 && !isLoading;
+    bookmarksMissingEdition.length > 0 && !isLoading;
 
   const numberMaterials = materials.length;
   const title =
@@ -81,7 +81,7 @@ export default function MultiReferences({ context }) {
       : Translate({
           context: CONTEXT,
           label: "missing-edition",
-          vars: [numberMaterials],
+          vars: [bookmarksMissingEdition.length],
         });
 
   return (
@@ -126,7 +126,7 @@ export default function MultiReferences({ context }) {
         )}
         <LinksList
           pids={materialPids}
-          disabled={materialKeysMissingEdition?.length > 0}
+          disabled={bookmarksMissingEdition?.length > 0}
         />
       </div>
     </div>
