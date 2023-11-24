@@ -45,6 +45,10 @@ export default function AdvancedSearchProvider({ children }) {
   const { page = "1", cql: cqlFromUrl = null, fieldSearch = "" } = router.query;
   const fieldSearchFromUrl = fieldSearch && JSON.parse(fieldSearch);
 
+  //// ----  Popup Trigger ----
+
+  const [showPopup, setShowPopup] = useState(false);
+
   //// ---- Inputfields ----
   const {
     inputFields,
@@ -117,6 +121,8 @@ export default function AdvancedSearchProvider({ children }) {
     fieldSearchFromUrl,
     cqlFromUrl,
     pageNoFromUrl: page,
+    showPopup, 
+    setShowPopup
   };
 
   return (

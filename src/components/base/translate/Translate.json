@@ -1521,6 +1521,10 @@
       "menu": {
         "da": "Menu",
         "en": "Menu"
+      },
+      "advanced": {
+        "da": "Avanceret",
+        "en": "Advanced"
       }
     },
     "search": {

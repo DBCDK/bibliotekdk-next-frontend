@@ -43,7 +43,7 @@ export default function AdvancedSearchPage() {
         <div ref={scrollRef} />
         <Header router={router} hideSimpleSearch />
 
-        <AdvancedSearch />
+        {/* <AdvancedSearch /> */}
         <Container fluid>
           <AdvancedSearchResult
             onPageChange={async (page, scroll) => {

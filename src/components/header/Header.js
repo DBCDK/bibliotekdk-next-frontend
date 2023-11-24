@@ -3,6 +3,7 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import React, { useState } from "react";
+import Button from 'react-bootstrap/Button';
 
 import useHistory from "@/components/hooks/useHistory";
 import useFilters from "@/components/hooks/useFilters";
@@ -43,6 +44,12 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { openLoginModal } from "../_modal/pages/login/utils";
 import { signOut } from "@dbcdk/login-nextjs/client";
 import useAuthentication from "../hooks/user/useAuthentication";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+//import AdvancedSearchTrigger from "@/components/search/advancedSearch/popover/Popover";
+
+ import PopoverTrigger from  "@/components/search/advancedSearch/popover/popoverTrigger/PopoverTrigger"
+// import Popover3 from  "@/components/search/advancedSearch/popover/Popover3"
+// import Popover4 from  "@/components/search/advancedSearch/popover/Popover4"
 
 // material Pages
 export const MATERIAL_PAGES = [
@@ -101,7 +108,13 @@ export function Header({
 
   // specific material workType selected
   const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
-
+  const AdvancedSearchPopupTrigger = () => {
+    return (
+      <OverlayTrigger trigger="click" placement="bottom" overlay={AdvancedSearchPopover}>
+        <SearchIcon title={"avanceretOv"} />
+      </OverlayTrigger>
+    );
+  };
   const getLoginLabel = () => {
     if (user.hasCulrUniqueId) {
       return "profile";
@@ -110,6 +123,11 @@ export function Header({
   };
 
   const menu = [
+    // {
+    //   label: "advanced",
+    //   icon: SearchIcon,
+    //   onClick: () => modal.push("avanceret"),
+    // },
     {
       label: "search",
       icon: SearchIcon,
@@ -206,7 +224,6 @@ export function Header({
             <StaticHeader router={router} context={context} />
             <Col xs={{ span: 7, offset: 3 }} className={styles.mobileHeader}>
               <SkipToMainAnchor />
-              {!hideSimpleSearch && (
                 <div className={styles.bottom}>
                   <form
                     onSubmit={(e) => {
@@ -285,7 +302,8 @@ export function Header({
                     </button>
                   </form>
                 </div>
-              )}
+          
+              <PopoverTrigger/>
             </Col>
             <Col xs={{ span: 2 }} className={styles.iconActionsContainer}>
               <div
@@ -309,7 +327,7 @@ export function Header({
                         prefix: "header-link",
                       })}
                       key={m.label}
-                      className={styles.action}
+                      className={`${styles.action} ${m.className}`}
                       href={m.href}
                       onClick={m.onClick}
                       items={m.items}

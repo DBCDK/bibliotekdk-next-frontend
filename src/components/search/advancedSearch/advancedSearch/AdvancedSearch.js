@@ -63,7 +63,7 @@ export default function AdvancedSearch() {
       }
 
       const query = { cql: cql };
-      router.push({ pathname: router.pathname, query });
+      router.push({ pathname: "/avanceret", query });
     } else {
       //save state in url
       const stateToString = JSON.stringify({
@@ -71,7 +71,7 @@ export default function AdvancedSearch() {
         dropdownSearchIndices,
       });
       const query = { fieldSearch: stateToString };
-      router.push({ pathname: router.pathname, query });
+      router.push({ pathname: "/avanceret", query });
       //save in state
       const cql = convertStateToCql({ inputFields, dropdownSearchIndices });
       setParsedCQL(cql);
