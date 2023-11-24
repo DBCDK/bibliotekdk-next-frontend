@@ -62,7 +62,6 @@ function OrderPageComponentBuilder({
 
 // -------------------- Stories come here -----------------------
 export function OrderViaILL() {
-  useMockLoanerInfo({ rights: { digitalArticleService: false } });
   return (
     <OrderPageComponentBuilder
       title="Order via ILL"
@@ -76,7 +75,11 @@ export function OrderViaILL() {
 OrderViaILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
-      resolvers: {},
+      resolvers: {
+        Query: {
+          user: () => ({ ...USER_1, rights: { digitalArticleService: false } }),
+        },
+      },
     },
   },
 });
@@ -127,6 +130,7 @@ NoUserAgencies.story = merge({}, DEFAULT_STORY_PARAMETERS, {
       resolvers: {
         Query: {
           user: () => USER_8,
+          session: () => null,
         },
       },
     },
@@ -229,7 +233,7 @@ OrderIndexedPeriodicaArticleFails.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 });
 
 export function OrderIndexedPeriodicaArticleILL() {
-  useMockLoanerInfo({ rights: { digitalArticleService: false } });
+  useMockLoanerInfo({});
   return (
     <OrderPageComponentBuilder
       title="Order Indexed Periodica Article - ILL"
@@ -246,7 +250,7 @@ OrderIndexedPeriodicaArticleILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
     graphql: {
       resolvers: {
         Query: {
-          user: () => USER_1,
+          user: () => ({ ...USER_1, rights: { digitalArticleService: false } }),
           branches: () => {
             return {
               borrowerStatus: BORROWER_STATUS_TRUE,
@@ -260,7 +264,7 @@ OrderIndexedPeriodicaArticleILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 });
 
 export function OrderPeriodicaVolume() {
-  useMockLoanerInfo({ rights: { digitalArticleService: true } });
+  useMockLoanerInfo({});
   return (
     <OrderPageComponentBuilder
       title="Order Periodica Volume"
@@ -277,7 +281,7 @@ OrderPeriodicaVolume.story = merge({}, DEFAULT_STORY_PARAMETERS, {
     graphql: {
       resolvers: {
         Query: {
-          user: () => USER_3,
+          user: () => ({ ...USER_3, rights: { digitalArticleService: true } }),
           branches: () => {
             return {
               borrowerStatus: BORROWER_STATUS_TRUE,
@@ -291,7 +295,7 @@ OrderPeriodicaVolume.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 });
 
 export function OrderPeriodicaVolumeOnlyILL() {
-  useMockLoanerInfo({ rights: { digitalArticleService: false } });
+  useMockLoanerInfo({});
   return (
     <OrderPageComponentBuilder
       title="Order Periodica Volume"
@@ -309,7 +313,7 @@ OrderPeriodicaVolumeOnlyILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
     graphql: {
       resolvers: {
         Query: {
-          user: () => USER_1,
+          user: () => ({ ...USER_1, rights: { digitalArticleService: false } }),
           branches: () => {
             return {
               borrowerStatus: BORROWER_STATUS_TRUE,
@@ -416,7 +420,7 @@ LibraryWithoutLoanerCheck.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 export function UserWithOneAgencyBlockedOneAgencyNotBlocked() {
   const { loanerInfo } = useLoanerInfo();
   useMockLoanerInfo({
-    pickUpBranch: !loanerInfo.pickUpBranch ? "1234" : loanerInfo.pickUpBranch, //update pickUpBranch when user clicks on a branch in dropdown
+    pickUpBranch: !loanerInfo.pickupBranch ? "1234" : loanerInfo.pickupBranch, //update pickUpBranch when user clicks on a branch in dropdown
   });
   return (
     <OrderPageComponentBuilder

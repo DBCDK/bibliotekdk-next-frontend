@@ -22,7 +22,6 @@ import {
 import { useRelevantAccessesForOrderPage } from "@/components/work/utils";
 import { validateEmail } from "@/utils/validateEmail";
 import NoAgenciesError from "./noAgencies/NoAgenciesError";
-import useUser from "@/components/hooks/useUser";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 import { useData } from "@/lib/api/api";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
@@ -57,7 +56,6 @@ function Order({
     isLoadingBranches = false,
   } = pickupBranchInfo;
 
-  const { authUser } = useUser();
   const { isAuthenticated } = useAuthentication();
   const { loanerInfo } = useLoanerInfo();
 
@@ -76,7 +74,7 @@ function Order({
 
   const branches = pickUpAgencyInfo?.data?.branches;
   const showBlockedUserInfo =
-    borrowerCheck && (userMayNotBorrow || !authUser || !isAuthenticated);
+    borrowerCheck && (userMayNotBorrow || !loanerInfo || !isAuthenticated);
 
   // Sets if user has unsuccessfully tried to submit the order
   const [hasValidationErrors, setHasValidationErrors] = useState(false);

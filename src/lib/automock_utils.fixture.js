@@ -1050,7 +1050,7 @@ const REVIEW_1 = {
 };
 
 // Holding the current mocked session
-let currentSession = null;
+let currentSession = { pickupBranch: "190101" };
 
 const DEFAULT_STORY_PARAMETERS = {
   parameters: {

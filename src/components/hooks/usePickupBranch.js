@@ -7,11 +7,7 @@ import useAuthentication from "./user/useAuthentication";
 import useLoanerInfo from "./user/useLoanerInfo";
 
 export default function usePickupBranch({ pids }) {
-  const {
-    authUser,
-
-    isLoading: userIsLoading,
-  } = useUser();
+  const { isLoading: userIsLoading } = useUser();
   const { loanerInfo, updateLoanerInfo } = useLoanerInfo();
   const {
     isAuthenticated,
@@ -27,7 +23,7 @@ export default function usePickupBranch({ pids }) {
    */
   // Fetch branches and order policies for (loggedIn) user
   const { data: orderPolicy, isLoading: policyIsLoading } = useData(
-    hasPids && authUser.name && userFragments.orderPolicy({ pids: pids })
+    hasPids && loanerInfo.name && userFragments.orderPolicy({ pids: pids })
   );
 
   // scope
@@ -83,7 +79,7 @@ export default function usePickupBranch({ pids }) {
   const isAuthenticatedForPickupBranch = isAuthenticated || isGuestUser;
 
   return {
-    authUser,
+    authUser: loanerInfo,
     loanerInfo,
     isLoading,
     updateLoanerInfo,

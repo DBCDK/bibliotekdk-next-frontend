@@ -47,7 +47,7 @@ export default function useLoanerInfo() {
     });
 
     return {
-      loanerInfo: {
+      loanerInfo: userRes && {
         agencies: user?.agencies,
         loans: user?.loans,
         orders: user?.orders,

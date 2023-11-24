@@ -125,9 +125,9 @@ export function getSeo(work) {
 }
 
 export function useRelevantAccessesForOrderPage(selectedPids) {
-  const { authUser: user, isLoading } = useUser();
+  const { loanerInfo, isLoading } = useLoanerInfo();
 
-  const hasDigitalAccess = user?.rights?.digitalArticleService;
+  const hasDigitalAccess = loanerInfo?.rights?.digitalArticleService;
 
   const manifestationsResponse = useData(
     selectedPids &&
