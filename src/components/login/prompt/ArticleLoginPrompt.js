@@ -18,7 +18,7 @@ import useUser from "@/components/hooks/useUser";
  */
 export default function ArticleLoginPrompt({ articleId }) {
   const { loanerInfo } = useLoanerInfo();
-  const { isAuthenticated } = useAuthentication();
+  const { isAuthenticated, loggedInAgencyId } = useAuthentication();
   const modal = useModal();
   const { authUser: user } = useUser();
   const hasInfomediaAccess = loanerInfo?.rights?.infomedia;
@@ -31,7 +31,7 @@ export default function ArticleLoginPrompt({ articleId }) {
   let branch = {};
   user?.agencies?.forEach((agency) => {
     branch = agency?.result?.find(
-      (branch) => branch.branchId === user.loggedInBranchId
+      (branch) => branch.agencyId === loggedInAgencyId
     );
   });
 

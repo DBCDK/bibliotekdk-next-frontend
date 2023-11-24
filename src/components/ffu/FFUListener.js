@@ -14,13 +14,14 @@ import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 export default function Listener() {
-  const { isAuthenticated, hasCulrUniqueId } = useAuthentication();
+  const { isAuthenticated, hasCulrUniqueId, loggedInAgencyId } =
+    useAuthentication();
   const user = useUser();
 
   const { authUser } = user;
   const { loanerInfo } = useLoanerInfo();
 
-  const agencyId = authUser?.loggedInBranchId;
+  const agencyId = loggedInAgencyId;
   const branchId = loanerInfo?.pickupBranch;
   const agencies = authUser?.agencies;
 
