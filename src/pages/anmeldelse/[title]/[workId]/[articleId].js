@@ -99,8 +99,9 @@ export default function Wrap() {
   const { workId, articleId } = router.query;
   const { isAuthenticated } = useAuthentication();
   const { data, isLoading: isLoadingWork } = useData(
-    workFragments.reviews({ workId })
+    workId && workFragments.reviews({ workId })
   );
+
   const publicReviewData = data?.work?.relations?.hasReview?.filter((el) =>
     el.access?.find((access) => access.id === articleId)
   );
@@ -143,7 +144,7 @@ export default function Wrap() {
 
   // make a heading for infomedia articles - just like librarians reviews
   const material = {
-    pid: publicReviewData[0]?.pid,
+    pid: publicReviewData?.[0]?.pid,
     titles: { full: data?.work?.titles?.main },
     materialTypes: data?.work?.materialTypes,
     creators: data?.work?.creators,
