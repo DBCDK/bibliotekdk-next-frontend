@@ -1521,10 +1521,6 @@
       "menu": {
         "da": "Menu",
         "en": "Menu"
-      },
-      "advanced": {
-        "da": "Avanceret",
-        "en": "Advanced"
       }
     },
     "search": {
@@ -1779,6 +1775,10 @@
       "advancedSearch": {
         "da": "Avanceret søgning",
         "en": "Advanced Search"
+      },
+      "advanced": {
+        "da": "Avanceret",
+        "en": "Advanced"
       },
       "addLine": {
         "da": "Tilføj line",

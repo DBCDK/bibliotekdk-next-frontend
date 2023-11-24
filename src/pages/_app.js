@@ -208,19 +208,18 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
             <Matomo />
             <BodyScrollLock router={router} />
             <div id="layout">
-            <AdvancedSearchProvider>
-                <Popover/>
-              <SkipToMainLink />
-              <Banner />
-              <Notifications />
-              <HelpHeader />
+              <AdvancedSearchProvider>
+                <Popover />
+                <SkipToMainLink />
+                <Banner />
+                <Notifications />
+                <HelpHeader />
 
-              <Component {...pageProps} />
+                <Component {...pageProps} />
 
-              <FeedBackLink />
-              <Footer />
+                <FeedBackLink />
+                <Footer />
               </AdvancedSearchProvider>
-
             </div>
 
             {/* watch for FFU user logins - propt the users to create an bibdk account */}

@@ -135,7 +135,7 @@
   font-size: 20px;
   letter-spacing: 0.2px;
   line-height: 22px;
-  margin-left: var(--pt4);
+  /* margin-left: var(--pt4); */
   cursor: pointer;
   overflow: hidden;
 }
@@ -292,7 +292,7 @@
     margin: 0 var(--pt3) 0 0;
   }
 
-  .header *[data-icon-type="search"] {
+  .mobileSearch {
     display: none;
   }
 }
@@ -335,4 +335,15 @@
   .wrap {
     display: none;
   }
+}
+
+.advancedSearchTrigger {
+  margin-left: var(--pt2);
+}
+
+.popoverTriggerContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: var(--pt7);
 }

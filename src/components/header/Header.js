@@ -3,7 +3,7 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import React, { useState } from "react";
-import Button from 'react-bootstrap/Button';
+import Button from "react-bootstrap/Button";
 
 import useHistory from "@/components/hooks/useHistory";
 import useFilters from "@/components/hooks/useFilters";
@@ -47,7 +47,7 @@ import useAuthentication from "../hooks/user/useAuthentication";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 //import AdvancedSearchTrigger from "@/components/search/advancedSearch/popover/Popover";
 
- import PopoverTrigger from  "@/components/search/advancedSearch/popover/popoverTrigger/PopoverTrigger"
+import PopoverTrigger from "@/components/search/advancedSearch/popover/popoverTrigger/PopoverTrigger";
 // import Popover3 from  "@/components/search/advancedSearch/popover/Popover3"
 // import Popover4 from  "@/components/search/advancedSearch/popover/Popover4"
 
@@ -108,13 +108,13 @@ export function Header({
 
   // specific material workType selected
   const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
-  const AdvancedSearchPopupTrigger = () => {
-    return (
-      <OverlayTrigger trigger="click" placement="bottom" overlay={AdvancedSearchPopover}>
-        <SearchIcon title={"avanceretOv"} />
-      </OverlayTrigger>
-    );
-  };
+  // const AdvancedSearchPopupTrigger = () => {
+  //   return (
+  //     <OverlayTrigger trigger="click" placement="bottom" overlay={AdvancedSearchPopover}>
+  //       <SearchIcon title={"avanceretOv"} />
+  //     </OverlayTrigger>
+  //   );
+  // };
   const getLoginLabel = () => {
     if (user.hasCulrUniqueId) {
       return "profile";
@@ -131,6 +131,7 @@ export function Header({
     {
       label: "search",
       icon: SearchIcon,
+      className: styles.mobileSearch,
       onClick: () => {
         !story && openMobileSuggester();
         story && story.setSuggesterVisibleMobile(true);
@@ -224,47 +225,48 @@ export function Header({
             <StaticHeader router={router} context={context} />
             <Col xs={{ span: 7, offset: 3 }} className={styles.mobileHeader}>
               <SkipToMainAnchor />
-                <div className={styles.bottom}>
-                  <form
-                    onSubmit={(e) => {
-                      e?.preventDefault();
-                      doSearch(query);
+              <div className={styles.bottom}>
+                <form
+                  onSubmit={(e) => {
+                    e?.preventDefault();
+                    doSearch(query);
 
-                      // view query in storybook
-                      story && alert(`/find?q.all=${query}`);
+                    // view query in storybook
+                    story && alert(`/find?q.all=${query}`);
 
-                      // Remove suggester in storybook
-                      story && story.setSuggesterVisibleMobile(false);
+                    // Remove suggester in storybook
+                    story && story.setSuggesterVisibleMobile(false);
 
-                      // remove keyboard/unfocus
-                      blurInput();
-                    }}
-                    className={`${styles.search}`}
-                    data-cy={cyKey({ name: "search", prefix: "header" })}
+                    // remove keyboard/unfocus
+                    blurInput();
+                  }}
+                  className={`${styles.search}`}
+                  data-cy={cyKey({ name: "search", prefix: "header" })}
+                >
+                  <DesktopMaterialSelect className={styles.select} />
+
+                  <div
+                    className={`${styles.suggester__wrap} ${suggesterVisibleMobileClass}`}
                   >
-                    <DesktopMaterialSelect className={styles.select} />
+                    <Suggester
+                      className={`${styles.suggester}`}
+                      history={history}
+                      clearHistory={clearHistory}
+                      isMobile={suggesterVisibleMobile}
+                      onSelect={(val) => doSearch(val)}
+                      onChange={(val) => setQ({ ...q, all: val })}
+                      onClose={() => {
+                        if (router) {
+                          // remove suggester prop from query obj
+                          router.back();
+                        }
+                        // Remove suggester in storybook
+                        story && story.setSuggesterVisibleMobile(false);
+                      }}
+                      onKeyDown={keyPressed}
+                    />
 
-                    <div
-                      className={`${styles.suggester__wrap} ${suggesterVisibleMobileClass}`}
-                    >
-                      <Suggester
-                        className={`${styles.suggester}`}
-                        history={history}
-                        clearHistory={clearHistory}
-                        isMobile={suggesterVisibleMobile}
-                        onSelect={(val) => doSearch(val)}
-                        onChange={(val) => setQ({ ...q, all: val })}
-                        onClose={() => {
-                          if (router) {
-                            // remove suggester prop from query obj
-                            router.back();
-                          }
-                          // Remove suggester in storybook
-                          story && story.setSuggesterVisibleMobile(false);
-                        }}
-                        onKeyDown={keyPressed}
-                      />
-
+                    {!hideSimpleSearch && (
                       <MoreOptionsLink
                         onSearchClick={() => setCollapseOpen(!collapseOpen)}
                         className={`${styles.linkshowmore} ${
@@ -280,30 +282,34 @@ export function Header({
                           vars: [countQ],
                         })}
                       </MoreOptionsLink>
-                      <ExpandedSearch
-                        className={styles.expandedSearch}
-                        collapseOpen={collapseOpen}
-                        setCollapseOpen={setCollapseOpen}
-                      />
-                    </div>
+                    )}
+                    <ExpandedSearch
+                      className={styles.expandedSearch}
+                      collapseOpen={collapseOpen}
+                      setCollapseOpen={setCollapseOpen}
+                    />
+                  </div>
 
-                    <button
-                      className={`${styles.button} ${
-                        collapseOpen ? styles.hidden : ""
-                      }`}
-                      type="submit"
-                      data-cy={cyKey({
-                        name: "searchbutton",
-                        prefix: "header",
-                      })}
-                    >
-                      <span>{Translate({ ...context, label: "search" })}</span>
-                      <div className={styles.fill} />
-                    </button>
-                  </form>
-                </div>
-          
-              <PopoverTrigger/>
+                  <button
+                    className={`${styles.button} ${
+                      collapseOpen ? styles.hidden : ""
+                    }`}
+                    type="submit"
+                    data-cy={cyKey({
+                      name: "searchbutton",
+                      prefix: "header",
+                    })}
+                  >
+                    <span>{Translate({ ...context, label: "search" })}</span>
+                    <div className={styles.fill} />
+                  </button>
+                </form>
+                {hideSimpleSearch && (
+                  <div className={styles.popoverTriggerContainer}>
+                    <PopoverTrigger className={styles.advancedSearchTrigger} />
+                  </div>
+                )}
+              </div>
             </Col>
             <Col xs={{ span: 2 }} className={styles.iconActionsContainer}>
               <div

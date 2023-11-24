@@ -37,29 +37,29 @@ export default function AdvancedSearchPage() {
   }
 
   return (
-      <main>
-        <div ref={scrollRef} />
-        <Header router={router} hideSimpleSearch />
+    <main>
+      <div ref={scrollRef} />
+      <Header router={router} hideSimpleSearch />
 
-        {/* <AdvancedSearch /> */}
-        <Container fluid>
-          <AdvancedSearchResult
-            onPageChange={async (page, scroll) => {
-              scroll = typeof scroll !== "boolean" || scroll !== false;
-              await updateQueryParams({ page });
-              scroll && scrollToRef(scrollRef);
-            }}
-            // .. @TODO .. what to do with the datacollect ??
-            onWorkClick={(index, work) => {
-              dataCollect.collectSearchWorkClick({
-                search_request: { q, filters },
-                search_query_hit: index + 1,
-                search_query_work: work.workId,
-              });
-            }}
-          />
-        </Container>
-      </main>
+      {/* <AdvancedSearch /> */}
+      <Container fluid>
+        <AdvancedSearchResult
+          onPageChange={async (page, scroll) => {
+            scroll = typeof scroll !== "boolean" || scroll !== false;
+            await updateQueryParams({ page });
+            scroll && scrollToRef(scrollRef);
+          }}
+          // .. @TODO .. what to do with the datacollect ??
+          onWorkClick={(index, work) => {
+            dataCollect.collectSearchWorkClick({
+              search_request: { q, filters },
+              search_query_hit: index + 1,
+              search_query_work: work.workId,
+            });
+          }}
+        />
+      </Container>
+    </main>
   );
 }
 
