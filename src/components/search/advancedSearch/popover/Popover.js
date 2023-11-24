@@ -1,7 +1,6 @@
 // components/Popover.js
 import { useState } from "react";
 import AdvancedSearch from "@/components/search/advancedSearch/advancedSearch/AdvancedSearch";
-import AdvancedSearchProvider from "@/components/search/advancedSearch/advancedSearchContext";
 import styles from "./Popover.module.css";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
@@ -13,11 +12,8 @@ console.log('Popover.showPopup',showPopup)
   }
   return (
     <div className={styles.popoverContainer}>
-      <AdvancedSearchProvider>
         <AdvancedSearch />
-      </AdvancedSearchProvider>
       {/* Popover content goes here */}
-      This is a popover!
     </div>
   );
 };

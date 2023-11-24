@@ -5,7 +5,6 @@ import AdvancedSearch from "@/components/search/advancedSearch/advancedSearch/Ad
 import useDataCollect from "@/lib/useDataCollect";
 import { useRef } from "react";
 import AdvancedSearchResult from "@/components/search/advancedSearch/advancedSearchResult/AdvancedSearchResult";
-import AdvancedSearchProvider from "@/components/search/advancedSearch/advancedSearchContext";
 
 import Container from "react-bootstrap/Container";
 /**
@@ -38,7 +37,6 @@ export default function AdvancedSearchPage() {
   }
 
   return (
-    <AdvancedSearchProvider>
       <main>
         <div ref={scrollRef} />
         <Header router={router} hideSimpleSearch />
@@ -62,7 +60,6 @@ export default function AdvancedSearchPage() {
           />
         </Container>
       </main>
-    </AdvancedSearchProvider>
   );
 }
 
