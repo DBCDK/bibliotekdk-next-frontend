@@ -11,7 +11,7 @@ export default function Material({
   material,
   materialKeyToMaterialTypes,
   modal,
-  onActionClick
+  onActionClick,
 }) {
   const materialType = materialKeyToMaterialTypes.find(
     (e) => e?.materialKey === material.key

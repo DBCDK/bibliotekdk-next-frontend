@@ -85,8 +85,8 @@ export default function MultiReferences({ context }) {
         });
 
   const onActionClick = (material) => {
-    modal.push("editionPicker", {material: material});
-  } 
+    modal.push("editionPicker", { material: material });
+  };
 
   return (
     <div>

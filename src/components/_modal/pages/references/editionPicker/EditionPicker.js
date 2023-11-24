@@ -6,31 +6,44 @@ import { RadioButtonItem } from "@/components/search/advancedSearch/advancedSear
 import List from "@/components/base/forms/list";
 import Text from "@/components/base/text";
 
-const EditionOption = ({manifestation, onClick}) => {
-  const { cover, edition, titles, ownerWork, pid } = manifestation; 
+const EditionOption = ({ manifestation, onClick }) => {
+  const { cover, edition, titles, ownerWork, pid } = manifestation;
   const onOptionClick = () => {
     if (!onClick) return;
     onClick(pid);
-    console.log(manifestation)
-
-  }
+    console.log(manifestation);
+  };
 
   return (
-    <article className={styles.EditionOption} role="button" onClick={onOptionClick} tabIndex={0} onKeyDown={(e) => {
-      if (e.key === "Enter") {
-        onOptionClick();
-      }
-    }}>
+    <article
+      className={styles.EditionOption}
+      role="button"
+      onClick={onOptionClick}
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          onOptionClick();
+        }
+      }}
+    >
       <div className={styles.Dot} />
-      <div className={styles.ImageContainer}><Cover src={cover?.thumbnail} size="fill-width" /></div>
+      <div className={styles.ImageContainer}>
+        <Cover src={cover?.thumbnail} size="fill-width" />
+      </div>
       <div className={styles.Info}>
         <Text>{edition?.publicationYear?.display}</Text>
-        <Title tag="h5" type="text2">{titles?.full}{edition?.edition && `, ${edition.edition}`}</Title>
-        <Text>{ownerWork?.creators?.[0]?.display}{ownerWork?.workYear?.display && `, ${ownerWork?.workYear?.display}`}</Text>
+        <Title tag="h5" type="text2">
+          {titles?.full}
+          {edition?.edition && `, ${edition.edition}`}
+        </Title>
+        <Text>
+          {ownerWork?.creators?.[0]?.display}
+          {ownerWork?.workYear?.display && `, ${ownerWork?.workYear?.display}`}
+        </Text>
       </div>
     </article>
-  )
-}
+  );
+};
 
 const EditionPicker = ({ context }) => {
   const { material, onClick } = context;
@@ -39,23 +52,20 @@ const EditionPicker = ({ context }) => {
 
   return (
     <div className={styles.EditionPicker}>
-      <Top
-        skeleton={false}
-        title={"Vælg udgave"}
-      />
+      <Top skeleton={false} title={"Vælg udgave"} />
 
-      <Title tag="h3" type="title4">{material?.titles?.full?.[0]}</Title>
-      <Title tag="h4" type="text2">{material?.creators?.[0]?.display}</Title>
+      <Title tag="h3" type="title4">
+        {material?.titles?.full?.[0]}
+      </Title>
+      <Title tag="h4" type="text2">
+        {material?.creators?.[0]?.display}
+      </Title>
 
-      {
-        manifestations.map(mani => (
-          <EditionOption manifestation={mani} onClick={onClick} />
-        ))
-      }
-
-
+      {manifestations.map((mani) => (
+        <EditionOption manifestation={mani} onClick={onClick} />
+      ))}
     </div>
-  )
-}
+  );
+};
 
 export default EditionPicker;
