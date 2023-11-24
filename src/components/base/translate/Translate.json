@@ -18,6 +18,40 @@
         "en": "Label: mangler oversættelse"
       }
     },
+    "advanced_search_sort": {
+      "sort_button": {
+        "da": "sorter",
+        "en": "sort"
+      },
+      "best_match": {
+        "da": "bedste match",
+        "en": "best match"
+      },
+      "asc_sort.latestpublicationdate": {
+        "da": "tidligste udgivelsesdato",
+        "en": "earliest publication date"
+      },
+      "desc_sort.latestpublicationdate": {
+        "da": "seneste udgivelsesdato",
+        "en": "latest publication date"
+      },
+      "asc_sort.creator": {
+        "da": "skaber a-å",
+        "en": "creator a-z"
+      },
+      "desc_sort.creator": {
+        "da": "skaber å-a",
+        "en": "creator z-a"
+      },
+      "asc_sort.title": {
+        "da": "titel a-å",
+        "en": "title a-z"
+      },
+      "desc_sort.title": {
+        "da": "titel å-a",
+        "en": "title z-a"
+      }
+    },
     "advanced_search_dropdown": {
       "choose_publication_year": {
         "da": "Vælg udgivelsesår",
