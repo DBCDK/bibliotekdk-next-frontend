@@ -265,7 +265,7 @@ export function Header({
                       }}
                       onKeyDown={keyPressed}
                     />
-
+                    {/* 
                     {!hideSimpleSearch && (
                       <MoreOptionsLink
                         onSearchClick={() => setCollapseOpen(!collapseOpen)}
@@ -282,7 +282,7 @@ export function Header({
                           vars: [countQ],
                         })}
                       </MoreOptionsLink>
-                    )}
+                    )} */}
                     <ExpandedSearch
                       className={styles.expandedSearch}
                       collapseOpen={collapseOpen}
@@ -304,11 +304,9 @@ export function Header({
                     <div className={styles.fill} />
                   </button>
                 </form>
-                {hideSimpleSearch && (
-                  <div className={styles.popoverTriggerContainer}>
-                    <PopoverTrigger className={styles.advancedSearchTrigger} />
-                  </div>
-                )}
+                <div className={styles.popoverTriggerContainer}>
+                  <PopoverTrigger className={styles.advancedSearchTrigger} />
+                </div>
               </div>
             </Col>
             <Col xs={{ span: 2 }} className={styles.iconActionsContainer}>
@@ -320,10 +318,10 @@ export function Header({
                 })}
               >
                 {menu.map((m) => {
-                  //hide search icon if hideSimpleSearch is true
-                  if (hideSimpleSearch && m.label == "search") {
-                    return null;
-                  }
+                  // //hide search icon if hideSimpleSearch is true
+                  // if (hideSimpleSearch && m.label == "search") {
+                  //   return null;
+                  // }
                   const ActionIcon = m.icon;
 
                   return (

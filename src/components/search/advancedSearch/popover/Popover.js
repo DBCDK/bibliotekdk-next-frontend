@@ -1,5 +1,5 @@
 // components/Popover.js
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AdvancedSearch from "@/components/search/advancedSearch/advancedSearch/AdvancedSearch";
 import styles from "./Popover.module.css";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
@@ -8,13 +8,30 @@ import { useAdvancedSearchContext } from "@/components/search/advancedSearch/adv
  * @returns
  */
 const Popover = () => {
-  const { showOver } = useAdvancedSearchContext();
+  const { showOver, setShowOver } = useAdvancedSearchContext();
+  const popppverRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (popppverRef.current && !popppverRef.current.contains(event.target)) {
+        setShowOver(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [popppverRef]);
+
   if (!showOver) {
     return null;
   }
   return (
-    <div className={styles.popoverContainer}>
+    <div className={styles.popoverContainer} ref={popppverRef}>
+      {/* <div className={styles.popoverContent}> */}
+
       <AdvancedSearch />
+      {/* </div> */}
     </div>
   );
 };

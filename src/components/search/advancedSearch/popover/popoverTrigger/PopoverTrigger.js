@@ -9,6 +9,7 @@ import Icon from "@/components/base/icon";
 import Action from "@/components/base/action";
 import Translate from "@/components/base/translate/Translate";
 import Text from "@/components/base/text/Text";
+import Popover from "@/components/search/advancedSearch/popover/Popover";
 
 /**
  * Opens advanced search popover
@@ -18,19 +19,23 @@ const PopoverTrigger = ({ className }) => {
   const { showOver, setShowOver } = useAdvancedSearchContext();
 
   return (
-    <div
-      className={`${styles.triggercontainer} ${className}`}
-      onClick={() => setShowOver(!showOver)}
-    >
-      <Icon
-        size={{ w: "auto", h: 3 }}
-        alt=""
-        className={`${styles.arrow} ${animations["h-bounce-right"]} ${animations["f-bounce-right"]}`}
+    <>
+      <Popover />
+
+      <div
+        className={`${styles.triggercontainer} ${className}`}
+        onClick={() => setShowOver(!showOver)}
       >
-        <SearchSvg />
-      </Icon>
-      <Text> {Translate({ context: "search", label: "advanced" })} </Text>
-    </div>
+        <Icon
+          size={{ w: "auto", h: 3 }}
+          alt=""
+          className={`${styles.arrow} ${animations["h-bounce-right"]} ${animations["f-bounce-right"]}`}
+        >
+          <SearchSvg />
+        </Icon>
+        <Text> {Translate({ context: "search", label: "advanced" })} </Text>
+      </div>
+    </>
   );
   //   return (
   //     <Action

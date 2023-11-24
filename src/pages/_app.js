@@ -209,7 +209,7 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
             <BodyScrollLock router={router} />
             <div id="layout">
               <AdvancedSearchProvider>
-                <Popover />
+                {/* <Popover /> */}
                 <SkipToMainLink />
                 <Banner />
                 <Notifications />
