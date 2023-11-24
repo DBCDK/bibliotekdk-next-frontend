@@ -9,6 +9,7 @@ import ButtonRow from "./ButtonRow";
 
 export default function Material({
   material,
+  materialKey,
   materialKeyToMaterialTypes,
   modal,
   onActionClick,
@@ -33,10 +34,8 @@ export default function Material({
   );
 
   const onEditionClick = () => {
-    if (onActionClick) onActionClick(material, materialType);
+    if (onActionClick) onActionClick(material, materialType, materialKey);
   };
-
-  const context = {}; // TODO;
 
   const children = isPeriodicaLike
     ? ChoosePeriodicaCopyRow({
@@ -44,7 +43,7 @@ export default function Material({
         modal,
         articleTypeTranslation: null,
       })
-    : ButtonRow({ onClick: onEditionClick, ...context });
+    : ButtonRow({ onClick: onEditionClick });
   const isDigitalCopy = false;
   const isDeliveredByDigitalArticleService = false;
 

@@ -3,12 +3,13 @@ import Top from "../../base/top/Top";
 import Cover from "@/components/base/cover";
 import styles from "./EditionPicker.module.css";
 import Text from "@/components/base/text";
+import translate from "@/components/base/translate";
 
-const EditionOption = ({ manifestation, onClick }) => {
+const EditionOption = ({ manifestation, onClick, materialKey }) => {
   const { cover, edition, titles, ownerWork, pid } = manifestation;
   const onOptionClick = () => {
     if (!onClick) return;
-    onClick(pid);
+    onClick(pid, materialKey);
   };
 
   return (
@@ -43,12 +44,18 @@ const EditionOption = ({ manifestation, onClick }) => {
 };
 
 const EditionPicker = ({ context }) => {
-  const { material, materialType, onEditionPick } = context;
+  const { material, materialType, onEditionPick, materialKey } = context;
   const manifestations = material?.manifestations?.mostRelevant;
 
   return (
     <div className={styles.EditionPicker}>
-      <Top skeleton={false} title={"Vælg udgave"} />
+      <Top
+        skeleton={false}
+        title={translate({
+          context: "multiReferences",
+          label: "choose-edition-short",
+        })}
+      />
 
       <Title tag="h3" type="text1" className={styles.EditionPickerTitle}>
         {material?.titles?.full?.[0]}
@@ -60,8 +67,13 @@ const EditionPicker = ({ context }) => {
         {materialType}
       </Title>
 
-      {manifestations.map((mani) => (
-        <EditionOption manifestation={mani} onClick={onEditionPick} />
+      {manifestations.map((mani, i) => (
+        <EditionOption
+          key={i}
+          manifestation={mani}
+          onClick={onEditionPick}
+          materialKey={materialKey}
+        />
       ))}
     </div>
   );

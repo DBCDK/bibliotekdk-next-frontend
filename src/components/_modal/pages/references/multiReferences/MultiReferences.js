@@ -10,6 +10,7 @@ import Text from "@/components/base/text";
 import cx from "classnames";
 import { useModal } from "@/components/_modal/Modal";
 import Material from "./Material";
+import { useState } from "react";
 
 export const CONTEXT = "multiReferences";
 
@@ -50,6 +51,9 @@ export default function MultiReferences({ context }) {
     bookmarksMissingEdition
   );
   const { bookmarks } = useBookmarks();
+  const [activeMaterialChoices, setActiveMaterialChoices] = useState(
+    bookmarksMissingEdition
+  );
 
   const materialKeyToMaterialTypes = mapMaterialKeysToSelectedMaterialTypes({
     materialKeysMissingEdition: bookmarksMissingEdition,
@@ -84,16 +88,20 @@ export default function MultiReferences({ context }) {
           vars: [bookmarksMissingEdition.length],
         });
 
-  const onEditionPick = (pid) => {
-    console.log(pid);
-    modal.pop();
+  const onEditionPick = (pid, materialKey) => {
+    modal.prev();
+    const activeChoices = [...activeMaterialChoices];
+    const index = activeChoices.findIndex((c) => c.key === materialKey);
+    activeChoices[index] = { chosenPid: pid, ...activeChoices[index] };
+    setActiveMaterialChoices([...activeChoices]); // Spread to copy object - rerenders since new object
   };
 
-  const onActionClick = (material, materialType) => {
+  const onActionClick = (material, materialType, materialKey) => {
     modal.push("editionPicker", {
       material: material,
       materialType,
       onEditionPick,
+      materialKey,
     });
   };
 
@@ -116,15 +124,18 @@ export default function MultiReferences({ context }) {
         </Text>
       )}
       {showReferencesMissing &&
-        materialsMissingEdition.map((material) => (
-          <Material
-            key={material.key}
-            material={material}
-            materialKeyToMaterialTypes={materialKeyToMaterialTypes}
-            modal={modal}
-            onActionClick={onActionClick}
-          />
-        ))}
+        materialsMissingEdition
+          .filter((_, i) => !activeMaterialChoices?.[i].chosenPid)
+          .map((material) => (
+            <Material
+              key={material.key}
+              materialKey={material.key}
+              material={material}
+              materialKeyToMaterialTypes={materialKeyToMaterialTypes}
+              modal={modal}
+              onActionClick={onActionClick}
+            />
+          ))}
       <div
         className={cx(styles.container, {
           [styles.exportButtons]: !showReferencesMissing,
