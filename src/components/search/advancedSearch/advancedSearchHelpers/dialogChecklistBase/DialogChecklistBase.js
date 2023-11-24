@@ -9,6 +9,7 @@ import {
   CheckboxItem,
   FormTypeEnum,
 } from "@/components/search/advancedSearch/advancedSearchHelpers/helperComponents/HelperComponents";
+import { ToggleMenuItemsEnum } from "@/components/search/advancedSearch/advancedSearchHelpers/dropdownReducerFunctions";
 
 export function DialogChecklistBase({ items, toggleMenuItemsState }) {
   const indexDivider = items?.findIndex(
@@ -30,7 +31,15 @@ export function DialogChecklistBase({ items, toggleMenuItemsState }) {
       </div>
       <div className={styles.prioritisedAgeGroups}>
         {items.slice(0, indexPrioritisedEnd).map((item) => (
-          <Link key={item?.name} onClick={() => toggleMenuItemsState(item)}>
+          <Link
+            key={item?.name}
+            onClick={() =>
+              toggleMenuItemsState({
+                type: ToggleMenuItemsEnum.UPDATE,
+                payload: item,
+              })
+            }
+          >
             <CheckboxItem key={item?.name} item={item} />
           </Link>
         ))}
@@ -40,7 +49,15 @@ export function DialogChecklistBase({ items, toggleMenuItemsState }) {
           <hr className={styles.divider} />
           <div className={styles.unprioritisedAgeGroups}>
             {items.slice(indexPrioritisedEnd + 1, items?.length).map((item) => (
-              <Link key={item?.name} onClick={() => toggleMenuItemsState(item)}>
+              <Link
+                key={item?.name}
+                onClick={() =>
+                  toggleMenuItemsState({
+                    type: ToggleMenuItemsEnum.UPDATE,
+                    payload: item,
+                  })
+                }
+              >
                 <CheckboxItem key={item?.name} item={item} />
               </Link>
             ))}

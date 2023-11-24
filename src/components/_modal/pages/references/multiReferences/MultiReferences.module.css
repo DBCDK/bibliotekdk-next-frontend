@@ -56,13 +56,21 @@
   color: var(--error_temp);
 }
 
+.paddingExportButtons {
+  padding-top: var(--pt5);
+}
+
 @media (max-width: 576px) {
   .container {
     padding: var(--pt4) var(--pt2);
   }
 
-  .exportButtons {
+  .exportButtonsMobile {
     padding-top: 0;
+  }
+
+  .paddingExportButtons {
+    padding-top: var(--pt3);
   }
 
   .missingEditionText {
