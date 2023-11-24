@@ -4,7 +4,6 @@ import {
 } from "@/components/search/advancedSearch/advancedSearchHelpers/dummy__default_advanced_search_fields";
 import { convertToDropdownInput } from "@/components/search/advancedSearch/advancedSearchHelpers/convertToDropdownInput";
 import { FormTypeEnum } from "@/components/search/advancedSearch/advancedSearchHelpers/helperComponents/HelperComponents";
-import isEmpty from "lodash/isEmpty";
 
 export const DropdownIndicesEnum = {
   LANGUAGES: "phrase.mainlanguage",

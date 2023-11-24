@@ -54,6 +54,12 @@ export default function AdvancedSearch() {
 
   //add raw cql query in url if showCqlEditor. Add state to url if fieldInputs
   const doAdvancedSearch = () => {
+    //save state in url
+    const stateToString = JSON.stringify({
+      inputFields,
+      dropdownSearchIndices,
+    });
+
     if (showCqlEditor) {
       //do cql text search
       const cql = textAreaRef.current.value;
@@ -62,14 +68,15 @@ export default function AdvancedSearch() {
         textAreaRef.current.focus();
       }
 
-      const query = { cql: cql };
-      router.push({ pathname: router.pathname, query });
+      if (parsedCQL === cql) {
+        const query = { fieldSearch: stateToString };
+        router.push({ pathname: router.pathname, query });
+      } else {
+        resetObjectState();
+        const query = { cql: cql };
+        router.push({ pathname: router.pathname, query });
+      }
     } else {
-      //save state in url
-      const stateToString = JSON.stringify({
-        inputFields,
-        dropdownSearchIndices,
-      });
       const query = { fieldSearch: stateToString };
       router.push({ pathname: router.pathname, query });
       //save in state
@@ -135,8 +142,8 @@ export default function AdvancedSearch() {
             <Link
               border={{ bottom: { keepVisible: true } }}
               onClick={() => {
-                router.push({ pathname: router.pathname, query: {} });
                 resetObjectState();
+                router.push({ pathname: router.pathname });
               }}
             >
               Ryd søgning
