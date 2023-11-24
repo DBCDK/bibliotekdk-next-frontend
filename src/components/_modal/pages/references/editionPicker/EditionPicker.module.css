@@ -1,10 +1,33 @@
 .EditionPicker {
-  padding: 0 var(--pt6);
+  padding: 0 var(--pt6) var(--pt10);
+}
+
+.EditionPickerTitle {
+  margin-bottom: var(--pt1);
+}
+
+.EditionPickerSubTitle {
+  margin-bottom: var(--pt4);
+}
+
+.MaterialType {
+  margin-bottom: var(--pt1);
 }
 
 .EditionOption {
   display: flex;
   padding: var(--pt1_5) 0;
+  border-top: 1px solid var(--concrete);
+  cursor: pointer;
+}
+
+.EditionOption:last-of-type {
+  border-bottom: 1px solid var(--concrete);
+}
+
+.EditionOption:hover .Dot::after,
+.EditionOption:focus-visible .Dot::after {
+  transform: scale(0.7);
 }
 
 .ImageContainer {
@@ -18,14 +41,26 @@
 
 .Dot {
   display: block;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  position: relative;
   border-radius: 50%;
   width: 18px;
   height: 18px;
   border: 1px solid black;
   margin-top: var(--pt05);
   margin-right: var(--pt2);
+}
+
+.Dot::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--blue);
+  transform: scale(0);
+  transition: transform 0.4s;
 }

@@ -2,8 +2,6 @@ import Title from "@/components/base/title";
 import Top from "../../base/top/Top";
 import Cover from "@/components/base/cover";
 import styles from "./EditionPicker.module.css";
-import { RadioButtonItem } from "@/components/search/advancedSearch/advancedSearchHelpers/helperComponents/HelperComponents";
-import List from "@/components/base/forms/list";
 import Text from "@/components/base/text";
 
 const EditionOption = ({ manifestation, onClick }) => {
@@ -11,7 +9,6 @@ const EditionOption = ({ manifestation, onClick }) => {
   const onOptionClick = () => {
     if (!onClick) return;
     onClick(pid);
-    console.log(manifestation);
   };
 
   return (
@@ -31,12 +28,12 @@ const EditionOption = ({ manifestation, onClick }) => {
         <Cover src={cover?.thumbnail} size="fill-width" />
       </div>
       <div className={styles.Info}>
-        <Text>{edition?.publicationYear?.display}</Text>
-        <Title tag="h5" type="text2">
+        <Text type="text1">{edition?.publicationYear?.display}</Text>
+        <Title tag="h5" type="text1">
           {titles?.full}
           {edition?.edition && `, ${edition.edition}`}
         </Title>
-        <Text>
+        <Text type="text2">
           {ownerWork?.creators?.[0]?.display}
           {ownerWork?.workYear?.display && `, ${ownerWork?.workYear?.display}`}
         </Text>
@@ -46,23 +43,25 @@ const EditionOption = ({ manifestation, onClick }) => {
 };
 
 const EditionPicker = ({ context }) => {
-  const { material, onClick } = context;
+  const { material, materialType, onEditionPick } = context;
   const manifestations = material?.manifestations?.mostRelevant;
-  console.log(material);
 
   return (
     <div className={styles.EditionPicker}>
       <Top skeleton={false} title={"Vælg udgave"} />
 
-      <Title tag="h3" type="title4">
+      <Title tag="h3" type="text1" className={styles.EditionPickerTitle}>
         {material?.titles?.full?.[0]}
       </Title>
-      <Title tag="h4" type="text2">
+      <Text type="text2" className={styles.EditionPickerSubTitle}>
         {material?.creators?.[0]?.display}
+      </Text>
+      <Title tag="h4" type="text2" className={styles.MaterialType}>
+        {materialType}
       </Title>
 
       {manifestations.map((mani) => (
-        <EditionOption manifestation={mani} onClick={onClick} />
+        <EditionOption manifestation={mani} onClick={onEditionPick} />
       ))}
     </div>
   );

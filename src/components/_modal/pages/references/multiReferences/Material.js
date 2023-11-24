@@ -32,7 +32,11 @@ export default function Material({
     (single) => single === true
   );
 
-  const context = {}; //TODO
+  const onEditionClick = () => {
+    if (onActionClick) onActionClick(material, materialType);
+  };
+
+  const context = {}; // TODO;
 
   const children = isPeriodicaLike
     ? ChoosePeriodicaCopyRow({
@@ -40,7 +44,7 @@ export default function Material({
         modal,
         articleTypeTranslation: null,
       })
-    : ButtonRow({ context, onClick: onActionClick });
+    : ButtonRow({ onClick: onEditionClick, ...context });
   const isDigitalCopy = false;
   const isDeliveredByDigitalArticleService = false;
 

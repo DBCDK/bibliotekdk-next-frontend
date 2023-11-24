@@ -84,8 +84,17 @@ export default function MultiReferences({ context }) {
           vars: [bookmarksMissingEdition.length],
         });
 
-  const onActionClick = (material) => {
-    modal.push("editionPicker", { material: material });
+  const onEditionPick = (pid) => {
+    console.log(pid);
+    modal.pop();
+  };
+
+  const onActionClick = (material, materialType) => {
+    modal.push("editionPicker", {
+      material: material,
+      materialType,
+      onEditionPick,
+    });
   };
 
   return (
@@ -113,7 +122,7 @@ export default function MultiReferences({ context }) {
             material={material}
             materialKeyToMaterialTypes={materialKeyToMaterialTypes}
             modal={modal}
-            onActionClick={() => onActionClick(material)}
+            onActionClick={onActionClick}
           />
         ))}
       <div
