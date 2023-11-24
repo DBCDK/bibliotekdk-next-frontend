@@ -10,7 +10,7 @@
  * data back to the context.
  */
 
-import { useEffect, useId, useReducer, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import List from "@/components/base/forms/list";
 import isEmpty from "lodash/isEmpty";
 import { DialogForPublicationYear } from "@/components/search/advancedSearch/advancedSearchHelpers/dialogForPublicationYear/DialogForPublicationYear";
@@ -22,32 +22,15 @@ import {
   Toggler,
 } from "@/components/search/advancedSearch/advancedSearchHelpers/helperComponents/HelperComponents";
 import {
-  initializeMenuItem,
-  reducerForToggleMenuItemsState,
+  ToggleMenuItemsEnum,
+  useMenuItemsState,
 } from "@/components/search/advancedSearch/advancedSearchHelpers/dropdownReducerFunctions";
 import styles from "./AdvancedSearchDropdown.module.css";
 import Dropdown from "react-bootstrap/Dropdown";
 import Input from "@/components/base/forms/input";
 import cx from "classnames";
 import Translate from "@/components/base/translate";
-
-export function useMenuItemsState(menuItems, updateIndex) {
-  const [menuItemsState, toggleMenuItemsState] = useReducer(
-    (currentMenuItems, itemUpdate) =>
-      reducerForToggleMenuItemsState({
-        currentMenuItems: currentMenuItems,
-        itemUpdate: itemUpdate,
-      }),
-    menuItems,
-    undefined
-  );
-
-  useEffect(() => {
-    updateIndex(menuItemsState);
-  }, [JSON.stringify(menuItemsState)]);
-
-  return { menuItemsState, toggleMenuItemsState };
-}
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
 function getTextType(dropdownQuery, item) {
   return (
@@ -85,6 +68,8 @@ export default function AdvancedSearchDropdown({
   menuItems = [],
   updateIndex,
 }) {
+  const { fieldSearchFromUrl } = useAdvancedSearchContext();
+
   const [dropdownQuery, setDropdownQuery] = useState("");
 
   const dropdownMenuId = useId();
@@ -117,12 +102,17 @@ export default function AdvancedSearchDropdown({
     ];
   }
 
-  menuItems = menuItems.map(initializeMenuItem);
-
   const { menuItemsState, toggleMenuItemsState } = useMenuItemsState(
     menuItems,
     updateIndex
   );
+
+  useEffect(() => {
+    toggleMenuItemsState({
+      type: ToggleMenuItemsEnum.RESET,
+      payload: menuItems,
+    });
+  }, [JSON.stringify(fieldSearchFromUrl.dropdownSearchIndices)]);
 
   const sortedMenuItemsState = [
     ...(!isEmpty(dropdownQuery)
@@ -165,11 +155,18 @@ export default function AdvancedSearchDropdown({
           charCodeEvents={(e) => getCharCodeEvents(e)}
         >
           {sortedMenuItemsState.map((item, index) => {
+            function toggler() {
+              toggleMenuItemsState({
+                type: ToggleMenuItemsEnum.UPDATE,
+                payload: item,
+              });
+            }
+
             if (item?.formType === FormTypeEnum.CHECKBOX) {
               return (
                 <List.Select
                   key={`${item.name}-${index}`}
-                  onSelect={() => toggleMenuItemsState(item)}
+                  onSelect={toggler}
                   label={item.name}
                 >
                   <CheckboxItem
@@ -184,7 +181,7 @@ export default function AdvancedSearchDropdown({
                   key={`${item.name}-${index}`}
                   selected={item?.isSelected}
                   moveItemRightOnFocus={true}
-                  onSelect={() => toggleMenuItemsState(item)}
+                  onSelect={toggler}
                   label={item.name}
                 >
                   <RadioButtonItem
@@ -199,9 +196,7 @@ export default function AdvancedSearchDropdown({
                   key={`${item.name}-${index}`}
                   selected={item?.isSelected}
                   moveItemRightOnFocus={true}
-                  onSelect={() =>
-                    !isEmpty(item?.value) && toggleMenuItemsState(item)
-                  }
+                  onSelect={() => !isEmpty(item?.value) && toggler}
                   label={item.name}
                 >
                   <RadioLinkItem
