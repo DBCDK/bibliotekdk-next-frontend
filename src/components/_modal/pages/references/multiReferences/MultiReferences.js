@@ -84,6 +84,10 @@ export default function MultiReferences({ context }) {
           vars: [bookmarksMissingEdition.length],
         });
 
+  const onActionClick = (material) => {
+    modal.push("editionPicker", {material: material});
+  } 
+
   return (
     <div>
       <Top
@@ -92,7 +96,7 @@ export default function MultiReferences({ context }) {
         className={{
           top: cx(styles.container, styles.top),
         }}
-      ></Top>
+      />
 
       {showReferencesMissing && (
         <Text
@@ -109,6 +113,7 @@ export default function MultiReferences({ context }) {
             material={material}
             materialKeyToMaterialTypes={materialKeyToMaterialTypes}
             modal={modal}
+            onActionClick={() => onActionClick(material)}
           />
         ))}
       <div

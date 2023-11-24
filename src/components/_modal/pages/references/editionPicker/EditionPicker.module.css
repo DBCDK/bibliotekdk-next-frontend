@@ -1,0 +1,31 @@
+.EditionPicker {
+  padding: 0 var(--pt6);
+}
+
+.EditionOption {
+  display: flex;
+  padding: var(--pt1_5) 0;
+}
+
+.ImageContainer {
+  width: var(--pt7);
+  margin-right: var(--pt3);
+}
+
+.Info {
+  flex: 1;
+}
+
+.Dot {
+  display: block;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  border: 1px solid black;
+  margin-top: var(--pt05);
+  margin-right: var(--pt2);
+}

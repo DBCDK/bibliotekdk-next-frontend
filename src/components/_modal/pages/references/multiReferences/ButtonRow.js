@@ -8,7 +8,7 @@ import Translate from "@/components/base/translate/Translate";
 import { CONTEXT } from "./MultiReferences";
 
 // eslint-disable-next-line no-unused-vars
-const ButtonRow = ({ context }) => {
+const ButtonRow = ({ context, onClick }) => {
   return (
     <div className={styles.buttonRowContainer}>
       <IconButton keepUnderline={true} className={styles.removeButton}>
@@ -27,9 +27,7 @@ const ButtonRow = ({ context }) => {
         />
 
         <IconLink
-          onClick={() => {
-            alert("DO STUFF");
-          }}
+          onClick={onClick}
           className={styles.link}
           border={{ bottom: { keepVisible: true }, top: false }}
           tag={"button"}

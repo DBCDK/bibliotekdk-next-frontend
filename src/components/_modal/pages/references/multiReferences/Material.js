@@ -11,6 +11,7 @@ export default function Material({
   material,
   materialKeyToMaterialTypes,
   modal,
+  onActionClick
 }) {
   const materialType = materialKeyToMaterialTypes.find(
     (e) => e?.materialKey === material.key
@@ -39,7 +40,7 @@ export default function Material({
         modal,
         articleTypeTranslation: null,
       })
-    : ButtonRow({ context });
+    : ButtonRow({ context, onClick: onActionClick });
   const isDigitalCopy = false;
   const isDeliveredByDigitalArticleService = false;
 
