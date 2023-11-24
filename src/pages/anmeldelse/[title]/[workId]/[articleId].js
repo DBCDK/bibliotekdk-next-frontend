@@ -19,6 +19,7 @@ import Custom404 from "@/pages/404";
 import { manifestationForLectorReview } from "@/lib/api/manifestation.fragments";
 import LectorReviewPage from "@/components/article/lectorreview/LectorReviewPage";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 export function ReviewPage(props) {
   const { article, notFound, isLoading, articleId, material } = props;
@@ -97,7 +98,8 @@ function parseInfomediaArticle(publicReviewData, work, infomediaArticle) {
 export default function Wrap() {
   const router = useRouter();
   const { workId, articleId } = router.query;
-  const { isAuthenticated } = useAuthentication();
+  const { loanerInfo } = useLoanerInfo();
+
   const { data, isLoading: isLoadingWork } = useData(
     workId && workFragments.reviews({ workId })
   );
@@ -105,18 +107,21 @@ export default function Wrap() {
   const publicReviewData = data?.work?.relations?.hasReview?.filter((el) =>
     el.access?.find((access) => access.id === articleId)
   );
+
   const {
     data: lectorReviewData,
     isLoading: lectorReviewIsLoading,
     error: lectorReviewError,
   } = useData(articleId && manifestationForLectorReview({ pid: articleId }));
 
+  const hasInfomediaAccess = loanerInfo?.rights?.infomedia;
+
   const {
     data: infomediaArticleData,
     isLoading: isLoadingInfomedia,
     error: infomediaError,
   } = useData(
-    isAuthenticated && articleId && infomediaArticle({ id: articleId })
+    hasInfomediaAccess && articleId && infomediaArticle({ id: articleId })
   );
 
   const article = parseInfomediaArticle(

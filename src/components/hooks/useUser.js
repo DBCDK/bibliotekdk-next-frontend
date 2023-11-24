@@ -14,7 +14,11 @@ export const AnonymousSessionContext = createContext();
 // in memory object for storing loaner info for current user
 let loanerInfoMock = {
   pickupBranch: "790900",
-  rights: { digitalArticleService: false },
+  rights: {
+    infomedia: true,
+    digitalArticleService: false,
+    demandDrivenAcquisition: false,
+  },
 };
 
 /**
@@ -162,7 +166,6 @@ function useUserImpl() {
     error: userDataError,
     // User exist in culr
     hasCulrUniqueId,
-
     // User has added userParameters
     hasUserParameters,
     loanerInfo,

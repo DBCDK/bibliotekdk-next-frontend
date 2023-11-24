@@ -15,6 +15,7 @@ import ArticleLoginPrompt from "@/components/login/prompt/ArticleLoginPrompt";
 import { timestampToShortDate } from "@/utils/datetimeConverter";
 import Error from "next/error";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 export function InfomediaArticle(props) {
   const { articleId, article, notFound, isLoading } = props;
@@ -79,14 +80,15 @@ function parseInfomediaArticle(work, infomediaArticle = {}) {
 export default function Wrap() {
   const router = useRouter();
   const { workId, infomediaId } = router.query;
+  const { loanerInfo } = useLoanerInfo();
 
-  const { isAuthenticated } = useAuthentication();
+  const hasInfomediaAccess = loanerInfo?.rights?.infomedia;
 
   const { data: infomediaPublicData, isLoading: isLoadingInfomediaPublic } =
     useData(workId && workFragments.infomediaArticlePublicInfo({ workId }));
 
   const { data: infomediaArticleData, isLoading: isLoadingInfomedia } = useData(
-    isAuthenticated &&
+    hasInfomediaAccess &&
       infomediaId &&
       infomediaFragments.infomediaArticle({ id: infomediaId })
   );

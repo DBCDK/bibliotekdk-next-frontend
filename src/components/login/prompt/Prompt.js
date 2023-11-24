@@ -26,6 +26,7 @@ import useAuthentication from "@/components/hooks/user/useAuthentication";
  * @param {string} description
  * @param {string} buttonText
  * @param {function} signIn
+ * @param {boolean} isAuthenticated
  * @returns {React.JSX.Element}
  */
 export default function LoginPrompt({
@@ -35,6 +36,7 @@ export default function LoginPrompt({
   buttonText = Translate({ context: "header", label: "login" }),
   linkHref = null,
   signIn,
+  isAuthenticated,
 }) {
   const { isAuthenticated } = useAuthentication();
 
@@ -46,6 +48,22 @@ export default function LoginPrompt({
           <Title type="title4" tag="h3">
             {title}
           </Title>
+          {!isAuthenticated && (
+            <>
+              <Text type="text3" className={styles.description}>
+                {description}
+              </Text>
+              <Button
+                type="primary"
+                size="large"
+                onClick={signIn}
+                dataCy="article-prompt-button-log-ind"
+                className={styles.signInButton}
+              >
+                {buttonText}
+              </Button>
+            </>
+          )}
           {isAuthenticated && linkHref && (
             <InfoDropdown
               label="show-more"

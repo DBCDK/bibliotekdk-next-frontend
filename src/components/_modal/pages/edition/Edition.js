@@ -26,9 +26,7 @@ import MaterialCard from "@/components/base/materialcard/MaterialCard";
 import { templateImageToLeft } from "@/components/base/materialcard/templates/templates";
 import ChoosePeriodicaCopyRow from "./choosePeriodicaCopyRow/ChoosePeriodicaCopyRow.js";
 import { AccessEnum } from "@/lib/enums";
-import { pidHasAlreadyBeenOrdered } from "@/components/_modal/pages/order/utils/order.utils";
 import HasBeenOrderedRow from "./hasbeenOrderedRow/HasBeenOrderedRow";
-import { removeOrderIdFromSession } from "@/components/_modal/pages/order/utils/order.utils";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 export function Edition({
@@ -195,7 +193,8 @@ export default function Wrap({
   showOrderTxt = true,
   showChangeManifestation,
   isMaterialCard = false,
-  orderKey,
+  showAlreadyOrdered,
+  setShowArealdyOrdered,
 }) {
   const modal = useModal();
   const { loanerInfo } = useLoanerInfo();
@@ -249,8 +248,6 @@ export default function Wrap({
   });
 
   if (isMaterialCard) {
-    const hasAlreadyBeenOrdered = pidHasAlreadyBeenOrdered(orderKey);
-
     const { flattenedGroupedSortedManifestations } =
       manifestationMaterialTypeFactory(manifestations);
     const firstManifestation = flattenedGroupedSortedManifestations?.[0];
@@ -267,14 +264,14 @@ export default function Wrap({
       );
     }
 
-    if (hasAlreadyBeenOrdered && !isPeriodicaLike) {
+    if (showAlreadyOrdered && !isPeriodicaLike) {
       //TODO currently we only check for non-periodica orders
       children.push(
         <HasBeenOrderedRow
           orderDate={new Date()}
           removeOrder={() => modal.clear()}
           acceptOrder={() => {
-            removeOrderIdFromSession(orderKey), modal.update({});
+            setShowArealdyOrdered(false), modal.update({});
           }}
         />
       );
@@ -286,7 +283,7 @@ export default function Wrap({
       context?.selectedAccesses?.[0]?.__typename !==
         AccessEnum.INTER_LIBRARY_LOAN;
 
-    const materialCardTemplate = (/** @type {Object} */ material) =>
+    const materialCardTemplate = (material) =>
       templateImageToLeft({
         material,
         singleManifestation,

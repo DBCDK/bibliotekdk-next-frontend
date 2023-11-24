@@ -33,14 +33,23 @@ function FieldInput({ key, index, workType, fieldValue }) {
   //labels to show in SearchIndexDropdown
   const labels = workTypesLabels[workType].map((el) => el.index);
   const isFirstItem = index === 0;
+
+  // this is a bit quicky - should probably get the csType
+  // from advancedSearchContext
+  const csTypeMap = { function: "creator" };
+  const indexType = fieldValue.searchIndex;
+  const csType = indexType.split(".")[1];
+  const mappedCsType = csTypeMap[csType] || csType;
+
+  /** @TODO csSuggest supports 4 indexer for now .. whatabout the NOT supported ? **/
   const { data } = useData(
     fieldValue?.value &&
-      suggestFragments.all({ q: fieldValue.value, workType: null, limit: 10 })
+      suggestFragments.csSuggest({ q: fieldValue.value, type: mappedCsType })
   );
 
   useEffect(() => {
     setSuggestions(
-      data?.suggest?.result?.map((res) => {
+      data?.complexSuggest?.result?.map((res) => {
         return { value: res.term };
       })
     );
@@ -76,12 +85,14 @@ function FieldInput({ key, index, workType, fieldValue }) {
             }
             onClear={() => handleInputFieldChange(index, "")}
             className={styles.suggester}
+            initialValue={`${fieldValue.value}`}
           >
             <Input
               className={styles.suggesterInput}
               value={fieldValue?.value}
               onChange={(e) => handleInputFieldChange(index, e.target.value)}
               placeholder={fieldValue.placeholder}
+              overrideValueControl={true}
             />
           </Suggester>
         </div>

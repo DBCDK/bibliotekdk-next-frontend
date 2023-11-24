@@ -1,9 +1,6 @@
 import styles from "./Options.module.css";
 import Top from "../base/top";
-import {
-  openOrderModal,
-  useBranchUserAndHasDigitalAccess,
-} from "@/components/work/utils";
+import { openOrderModal } from "@/components/work/utils";
 import { getTemplateProps } from "@/components/_modal/pages/options/Options.helper";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
@@ -104,7 +101,7 @@ export function Options({ modal, context, user }) {
 
   // the next one checks for digital access .. for users already logged in :)
   // it is false if user is not logged in
-  let { hasDigitalAccess } = useBranchUserAndHasDigitalAccess(selectedPids);
+  const hasDigitalAccess = user?.authUser?.rights?.digitalArticleService;
 
   const { getAllowedAccessesByTypeName } = useMemo(() => {
     return accessFactory(manifestations);

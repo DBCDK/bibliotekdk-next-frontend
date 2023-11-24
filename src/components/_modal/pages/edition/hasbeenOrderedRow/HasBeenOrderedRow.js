@@ -13,16 +13,21 @@ const HasBeenOrderedRow = ({ removeOrder, acceptOrder }) => {
         })}
       </Text>
       <div className={styles.buttonContainer}>
-        <IconButton onClick={removeOrder} keepUnderline={true}>
+        <IconButton
+          onClick={removeOrder}
+          keepUnderline={true}
+          className={styles.icon}
+        >
           {Translate({
             context: "bookmark",
-            label: "remove",
+            label: "dont-order",
           })}
         </IconButton>
         <IconButton
           onClick={acceptOrder}
           keepUnderline={true}
           icon="checkmark_blue"
+          className={styles.icon}
         >
           {Translate({
             context: "bookmark",

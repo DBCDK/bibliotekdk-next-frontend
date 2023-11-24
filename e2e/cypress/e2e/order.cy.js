@@ -5,6 +5,34 @@ describe("Order", () => {
       win.localStorage.clear();
     });
   });
+  it("Order physical material fails and shows error modal correctly", () => {
+    cy.visit(
+      "/iframe.html?id=modal-order--order-physical-material-fails&viewMode=story"
+    );
+    //open order modal
+    cy.contains("Bestil", { timeout: 10000 }).click();
+    // Submit the order
+    cy.get("[data-cy=button-godkend]")
+      // .scrollIntoView()
+      // .should("exist")
+      .should("not.be.disabled")
+      .click({ force: true });
+
+    //order failed
+    cy.get("[data-cy=error-occured-title]").should("exist");
+    cy.get("[data-cy=order-failed-message").should("exist");
+    cy.get("[data-cy=try-again").should("exist");
+    cy.get("[data-cy=button-luk]").should("exist");
+  });
+});
+
+describe("Order", () => {
+  before(() => {
+    cy.window().then((win) => {
+      win.sessionStorage.clear();
+      win.localStorage.clear();
+    });
+  });
   it(`submits ILL order for pids that may be ordered`, () => {
     cy.visitWithConsoleSpy(
       "/iframe.html?id=modal-order--order-via-ill&viewMode=story"
@@ -66,30 +94,6 @@ describe("Order", () => {
     cy.contains("Luk").click();
     cy.get("body").tab();
     cy.get("[data-cy=modal-dimmer]").should("not.be.visible");
-  });
-
-  it("Order physical material fails and shows error modal correctly", () => {
-    cy.visit(
-      "/iframe.html?id=modal-order--order-physical-material-fails&viewMode=story"
-    );
-    //open order modal
-    cy.contains("Bestil", { timeout: 10000 }).click();
-
-    // wait for data
-    cy.contains("Hugo i Sølvskoven");
-
-    // Submit the order
-    cy.get("[data-cy=button-godkend]")
-      // .scrollIntoView()
-      // .should("exist")
-      .should("not.be.disabled")
-      .click({ force: true });
-
-    //order failed
-    cy.get("[data-cy=error-occured-title]").should("exist");
-    cy.get("[data-cy=order-failed-message").should("exist");
-    cy.get("[data-cy=try-again").should("exist");
-    cy.get("[data-cy=button-luk]").should("exist");
   });
 
   it("should handle failed checkorder and pickupAllowed=false", () => {

@@ -10,7 +10,7 @@
  * data back to the context.
  */
 
-import { useEffect, useReducer } from "react";
+import { useEffect, useId, useState } from "react";
 import List from "@/components/base/forms/list";
 import isEmpty from "lodash/isEmpty";
 import { DialogForPublicationYear } from "@/components/search/advancedSearch/advancedSearchHelpers/dialogForPublicationYear/DialogForPublicationYear";
@@ -22,42 +22,105 @@ import {
   Toggler,
 } from "@/components/search/advancedSearch/advancedSearchHelpers/helperComponents/HelperComponents";
 import {
-  initializeMenuItem,
-  reducerForToggleMenuItemsState,
+  ToggleMenuItemsEnum,
+  useMenuItemsState,
 } from "@/components/search/advancedSearch/advancedSearchHelpers/dropdownReducerFunctions";
 import styles from "./AdvancedSearchDropdown.module.css";
 import Dropdown from "react-bootstrap/Dropdown";
+import Input from "@/components/base/forms/input";
+import cx from "classnames";
+import Translate from "@/components/base/translate";
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
-export function useMenuItemsState(menuItems, updateIndex) {
-  const [menuItemsState, toggleMenuItemsState] = useReducer(
-    (currentMenuItems, itemUpdate) =>
-      reducerForToggleMenuItemsState({
-        currentMenuItems: currentMenuItems,
-        itemUpdate: itemUpdate,
-      }),
-    menuItems,
-    undefined
+function getTextType(dropdownQuery, item) {
+  return (
+    !isEmpty(dropdownQuery) &&
+    item.name.toLowerCase().includes(dropdownQuery.toLowerCase()) && {
+      textType: "text4",
+    }
   );
+}
 
-  useEffect(() => {
-    updateIndex(menuItemsState);
-  }, [JSON.stringify(menuItemsState)]);
+function inFormType(formType) {
+  return [FormTypeEnum.DIVIDER, FormTypeEnum.RADIO_LINK].includes(formType);
+}
 
-  return { menuItemsState, toggleMenuItemsState };
+function sorterForMenuItems(a, b, dropdownQuery) {
+  if (inFormType(a.formType)) {
+    if (inFormType(b.formType)) {
+      return 0;
+    }
+    return 1;
+  } else if (inFormType(b.formType)) {
+    return -1;
+  } else {
+    return (
+      b?.name?.toLowerCase().includes(dropdownQuery.toLowerCase()) -
+      a?.name?.toLowerCase().includes(dropdownQuery.toLowerCase())
+    );
+  }
 }
 
 export default function AdvancedSearchDropdown({
+  indexTitle,
   indexName,
   indexPlaceholder,
   menuItems = [],
   updateIndex,
 }) {
-  menuItems = menuItems.map(initializeMenuItem);
+  const { fieldSearchFromUrl } = useAdvancedSearchContext();
+
+  const [dropdownQuery, setDropdownQuery] = useState("");
+
+  const dropdownMenuId = useId();
+  const listGroupId = useId();
+  const inputId = useId();
+
+  function handleKeyDown(e) {
+    const currentElement = document?.activeElement;
+    if (e.key === "ArrowDown" && currentElement?.id === inputId) {
+      e.preventDefault();
+      currentElement?.blur();
+      document.getElementById(listGroupId).firstElementChild?.focus();
+    }
+  }
+
+  function getCharCodeEvents(e) {
+    return [
+      [e.key === " ", () => e.preventDefault()],
+      [
+        e.key.length === 1 && e.key !== " ",
+        () => {
+          setDropdownQuery("");
+          document.getElementById(inputId).focus();
+          document
+            .getElementById(dropdownMenuId)
+            .scrollTo({ top: 0, behavior: "smooth" });
+          return e;
+        },
+      ],
+    ];
+  }
 
   const { menuItemsState, toggleMenuItemsState } = useMenuItemsState(
     menuItems,
     updateIndex
   );
+
+  useEffect(() => {
+    toggleMenuItemsState({
+      type: ToggleMenuItemsEnum.RESET,
+      payload: menuItems,
+    });
+  }, [JSON.stringify(fieldSearchFromUrl.dropdownSearchIndices)]);
+
+  const sortedMenuItemsState = [
+    ...(!isEmpty(dropdownQuery)
+      ? [...menuItemsState]
+          .sort((a, b) => sorterForMenuItems(a, b, dropdownQuery))
+          .filter((item) => ![FormTypeEnum.DIVIDER].includes(item.formType))
+      : [...menuItemsState]),
+  ];
 
   return (
     <Dropdown className={styles.nav_element}>
@@ -66,55 +129,86 @@ export default function AdvancedSearchDropdown({
         indexPlaceholder={indexPlaceholder}
         className={styles.toggler}
       />
-      <Dropdown.Menu className={styles.dropdown_items} tabIndex="-1">
+      <Dropdown.Menu
+        id={dropdownMenuId}
+        className={styles.dropdown_items}
+        tabIndex="-1"
+      >
+        <Input
+          id={inputId}
+          value={dropdownQuery}
+          className={cx(styles.sticky_search_bar)}
+          placeholder={Translate({
+            context: "advanced_search_dropdown",
+            label: "search_dropdown",
+            vars: [indexTitle.toLowerCase()],
+          })}
+          onChange={(e) => setDropdownQuery(() => e.target.value)}
+          onKeyDown={handleKeyDown}
+          overrideValueControl={true}
+        />
         <List.Group
+          id={listGroupId}
           enabled={true}
           label={indexName}
           disableGroupOutline={false}
+          charCodeEvents={(e) => getCharCodeEvents(e)}
         >
-          {menuItemsState.map((item) => {
+          {sortedMenuItemsState.map((item, index) => {
+            function toggler() {
+              toggleMenuItemsState({
+                type: ToggleMenuItemsEnum.UPDATE,
+                payload: item,
+              });
+            }
+
             if (item?.formType === FormTypeEnum.CHECKBOX) {
               return (
                 <List.Select
-                  key={item.name}
-                  onSelect={() => toggleMenuItemsState(item)}
+                  key={`${item.name}-${index}`}
+                  onSelect={toggler}
                   label={item.name}
                 >
-                  <CheckboxItem item={item} />
+                  <CheckboxItem
+                    item={item}
+                    {...getTextType(dropdownQuery, item)}
+                  />
                 </List.Select>
               );
             } else if (item?.formType === FormTypeEnum.RADIO_BUTTON) {
               return (
                 <List.Radio
-                  key={item.name}
+                  key={`${item.name}-${index}`}
                   selected={item?.isSelected}
                   moveItemRightOnFocus={true}
-                  onSelect={() => toggleMenuItemsState(item)}
+                  onSelect={toggler}
                   label={item.name}
                 >
-                  <RadioButtonItem item={item} />
+                  <RadioButtonItem
+                    item={item}
+                    {...getTextType(dropdownQuery, item)}
+                  />
                 </List.Radio>
               );
             } else if (item?.formType === FormTypeEnum.RADIO_LINK) {
               return (
                 <List.Radio
-                  key={item.name}
+                  key={`${item.name}-${index}`}
                   selected={item?.isSelected}
                   moveItemRightOnFocus={true}
-                  onSelect={() =>
-                    !isEmpty(item?.value) && toggleMenuItemsState(item)
-                  }
+                  onSelect={() => !isEmpty(item?.value) && toggler}
                   label={item.name}
                 >
                   <RadioLinkItem
                     item={item}
                     toggleMenuItemsState={toggleMenuItemsState}
                     DialogBox={DialogForPublicationYear}
+                    label={item.name}
                   />
                 </List.Radio>
               );
             } else if (item?.formType === FormTypeEnum.DIVIDER) {
-              return <List.Divider key={Math.random()} />;
+              return <List.Divider key={Math.random() + "-" + index} />;
             }
           })}
         </List.Group>

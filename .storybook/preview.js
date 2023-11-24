@@ -13,6 +13,7 @@ import { StoryRouter } from "@/components/base/storybook";
 import Router from "next/router";
 import { SessionProvider } from "next-auth/react";
 import { createMemoryRouter, useMemoryRouter } from "./nextMemoryRouter";
+import AdvancedSearchProvider from "@/components/search/advancedSearch/advancedSearchContext";
 
 const memoryRouter = createMemoryRouter();
 Router.router = memoryRouter;
@@ -30,6 +31,13 @@ export const decorators = [
         {showInfo && <StoryRouter router={memoryRouter} />}
         <Story />
       </>
+    );
+  },
+  (Story) => {
+    return (
+      <AdvancedSearchProvider>
+        <Story />
+      </AdvancedSearchProvider>
     );
   },
   (Story) => {

@@ -156,6 +156,11 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
               <Modal.Page id="mobileLogin" component={Pages.MobileLogin} />
               <Modal.Page id="filter" component={Pages.Filter} />
               <Modal.Page id="references" component={Pages.References} />
+              <Modal.Page
+                id="multiReferences"
+                component={Pages.MultiReferences}
+              />
+
               <Modal.Page id="material" component={Pages.Material} />
               <Modal.Page
                 id="ematerialfilter"

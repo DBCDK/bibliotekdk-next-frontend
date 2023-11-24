@@ -6,9 +6,11 @@
   font-family: var(--body-font);
   margin-bottom: var(--pt2);
   width: 100%;
+  max-width: 100%;
   /* remove border-radius on iphone */
   border-radius: 0;
   -webkit-appearance: none;
+  resize: both;
 }
 
 .input:focus {
