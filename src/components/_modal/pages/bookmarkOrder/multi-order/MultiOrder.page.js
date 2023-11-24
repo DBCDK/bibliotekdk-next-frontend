@@ -11,7 +11,6 @@ import { useMutate } from "@/lib/api/api";
 import * as orderMutations from "@/lib/api/order.mutations";
 import { setAlreadyOrdered } from "../../order/utils/order.utils";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
-import { setAlreadyOrdered } from "../../order/utils/order.utils";
 
 const CONTEXT = "bookmark-order";
 

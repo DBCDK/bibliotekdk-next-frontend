@@ -8,6 +8,7 @@ import LoginPrompt from "./Prompt";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import useUser from "@/components/hooks/useUser";
 
 /**
  * Prompt the user for log in when not authenticated or

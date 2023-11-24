@@ -36,7 +36,6 @@ export default function LoginPrompt({
   buttonText = Translate({ context: "header", label: "login" }),
   linkHref = null,
   signIn,
-  isAuthenticated,
 }) {
   const { isAuthenticated } = useAuthentication();
 

@@ -35,7 +35,7 @@ export const decorators = [
   },
   (Story) => {
     return (
-      <AdvancedSearchProvider>
+      <AdvancedSearchProvider router={memoryRouter}>
         <Story />
       </AdvancedSearchProvider>
     );
