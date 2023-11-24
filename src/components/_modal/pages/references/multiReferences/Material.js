@@ -35,6 +35,7 @@ export default function Material({
 
   const children = isPeriodicaLike
     ? ChoosePeriodicaCopyRow({
+        //TODO always show buttonRow
         periodicaForm: {}, //TODO grab data from here and send to references
         modal,
         articleTypeTranslation: null,
