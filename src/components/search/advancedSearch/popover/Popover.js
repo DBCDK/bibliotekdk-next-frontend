@@ -17,7 +17,7 @@ const Popover = ({ triggerContainerRef }) => {
       if (
         popppverRef.current &&
         !popppverRef.current.contains(event.target) &&
-        !triggerContainerRef.current.contains(event.target)
+        !triggerContainerRef?.current?.contains(event.target)
       ) {
         setShowOver(false);
       }

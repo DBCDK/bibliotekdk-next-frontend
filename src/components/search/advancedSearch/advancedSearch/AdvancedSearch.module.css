@@ -27,7 +27,7 @@
 }
 
 .button {
-  width: 300px;
+  max-width: 300px;
 }
 
 .button_group {

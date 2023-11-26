@@ -11,6 +11,7 @@ import Translate from "@/components/base/translate/Translate";
 import Text from "@/components/base/text/Text";
 import Popover from "@/components/search/advancedSearch/popover/Popover";
 import Tooltip from "@/components/base/tooltip/Tooltip";
+import SearchIcon from "../../../../header/icons/search/search";
 
 /**
  * Opens advanced search popover
@@ -20,6 +21,23 @@ const PopoverTrigger = ({ className }) => {
   const { showOver, setShowOver } = useAdvancedSearchContext();
   const triggerContainerRef = useRef(null);
 
+  return (
+    <>
+      <Popover triggerContainerRef={triggerContainerRef} />
+      <div className="container" ref={triggerContainerRef}>
+        <SearchIcon
+          className={`${styles.triggercontainer} ${className}`}
+          onClick={() => {
+            setShowOver(!showOver);
+          }}
+          title={Translate({ context: "search", label: "advanced" })}
+          border={{ top: false, bottom: { keepVisible: true } }}
+        />
+
+        {showOver && <div className={styles.triangle} />}
+      </div>
+    </>
+  );
   return (
     <>
       <Popover triggerContainerRef={triggerContainerRef} />
