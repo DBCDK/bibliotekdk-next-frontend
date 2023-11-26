@@ -3,7 +3,6 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
 
 import useHistory from "@/components/hooks/useHistory";
 import useFilters from "@/components/hooks/useFilters";
@@ -28,8 +27,6 @@ import useUser from "../hooks/useUser";
 
 import Logo from "@/components/base/logo/Logo";
 
-import { MoreOptionsLink } from "./utils";
-
 import { SkipToMainAnchor } from "@/components/base/skiptomain/SkipToMain";
 
 import { DesktopMaterialSelect } from "@/components/search/select";
@@ -44,12 +41,8 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { openLoginModal } from "../_modal/pages/login/utils";
 import { signOut } from "@dbcdk/login-nextjs/client";
 import useAuthentication from "../hooks/user/useAuthentication";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-//import AdvancedSearchTrigger from "@/components/search/advancedSearch/popover/Popover";
 
 import PopoverTrigger from "@/components/search/advancedSearch/popover/popoverTrigger/PopoverTrigger";
-// import Popover3 from  "@/components/search/advancedSearch/popover/Popover3"
-// import Popover4 from  "@/components/search/advancedSearch/popover/Popover4"
 
 // material Pages
 export const MATERIAL_PAGES = [
@@ -85,7 +78,6 @@ export function Header({
   user,
   modal,
   filters,
-  hideSimpleSearch,
 }) {
   const context = { context: "header" };
   const breakpoint = useBreakpoint();
@@ -108,13 +100,7 @@ export function Header({
 
   // specific material workType selected
   const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
-  // const AdvancedSearchPopupTrigger = () => {
-  //   return (
-  //     <OverlayTrigger trigger="click" placement="bottom" overlay={AdvancedSearchPopover}>
-  //       <SearchIcon title={"avanceretOv"} />
-  //     </OverlayTrigger>
-  //   );
-  // };
+
   const getLoginLabel = () => {
     if (user.hasCulrUniqueId) {
       return "profile";
@@ -265,24 +251,6 @@ export function Header({
                       }}
                       onKeyDown={keyPressed}
                     />
-                    {/* 
-                    {!hideSimpleSearch && (
-                      <MoreOptionsLink
-                        onSearchClick={() => setCollapseOpen(!collapseOpen)}
-                        className={`${styles.linkshowmore} ${
-                          collapseOpen ? styles.hidden : ""
-                        }`}
-                      >
-                        {Translate({
-                          context: "search",
-                          label:
-                            countQ === 0
-                              ? "advancedSearchLink"
-                              : "advancedSearchLinkCount",
-                          vars: [countQ],
-                        })}
-                      </MoreOptionsLink>
-                    )} */}
                     <ExpandedSearch
                       className={styles.expandedSearch}
                       collapseOpen={collapseOpen}
@@ -318,10 +286,6 @@ export function Header({
                 })}
               >
                 {menu.map((m) => {
-                  // //hide search icon if hideSimpleSearch is true
-                  // if (hideSimpleSearch && m.label == "search") {
-                  //   return null;
-                  // }
                   const ActionIcon = m.icon;
 
                   return (

@@ -256,9 +256,6 @@ export default function Wrap({
   data_underline_animation_disabled = false,
   ...props
 }) {
-  console.log("wrap log", props);
-  console.log("wrap.ref log", props.border);
-
   return (
     <Link
       className={cx(

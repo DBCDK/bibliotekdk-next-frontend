@@ -14,7 +14,6 @@ import React from "react";
 import { SessionProvider } from "next-auth/react";
 import smoothscroll from "smoothscroll-polyfill";
 import AdvancedSearchProvider from "@/components/search/advancedSearch/advancedSearchContext";
-import Popover from "@/components/search/advancedSearch/popover/Popover";
 import { SWRConfig } from "swr";
 
 import { destroy } from "@dbcdk/login-nextjs/client";
@@ -209,7 +208,6 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
             <BodyScrollLock router={router} />
             <div id="layout">
               <AdvancedSearchProvider>
-                {/* <Popover /> */}
                 <SkipToMainLink />
                 <Banner />
                 <Notifications />

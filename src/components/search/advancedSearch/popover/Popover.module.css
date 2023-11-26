@@ -9,10 +9,3 @@
   z-index: 3;
   margin-top: 150px;
 }
-
-.popoverContent {
-  position: absolute;
-
-  left: 0;
-  width: 100vw;
-}

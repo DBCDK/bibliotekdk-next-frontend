@@ -110,16 +110,6 @@
   transform: translateX(-125px);
 }
 
-.linkshowmore {
-  position: absolute;
-  right: calc(125px + var(--pt4));
-  bottom: 0;
-}
-
-.linkshowmore.hidden {
-  visibility: hidden;
-}
-
 /* Search button */
 
 .button {

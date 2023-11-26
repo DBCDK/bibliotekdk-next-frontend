@@ -1,5 +1,5 @@
 // components/Popover.js
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import AdvancedSearch from "@/components/search/advancedSearch/advancedSearch/AdvancedSearch";
 import styles from "./Popover.module.css";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
@@ -13,7 +13,6 @@ const Popover = ({ triggerContainerRef }) => {
 
   useEffect(() => {
     function handleClickOutside(event) {
-      console.log("(event.target", event.target);
       if (
         popppverRef.current &&
         !popppverRef.current.contains(event.target) &&
@@ -33,10 +32,7 @@ const Popover = ({ triggerContainerRef }) => {
   }
   return (
     <div className={styles.popoverContainer} ref={popppverRef}>
-      {/* <div className={styles.popoverContent}> */}
-
       <AdvancedSearch />
-      {/* </div> */}
     </div>
   );
 };
