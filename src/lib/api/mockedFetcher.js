@@ -207,11 +207,20 @@ function defaultMockResolver(parent, _args, context, info) {
     if (implementations) {
       if (Array.isArray(parent[fieldName])) {
         parent[fieldName].forEach(
-          (el) => (el.__typename = el.__typename || getNext(implementations))
+          (el) =>
+            (el.__typename =
+              el.__typename ||
+              (typeof el?.__resolveType === "function" && el.__resolveType()) ||
+              el?.__resolveType ||
+              getNext(implementations))
         );
       } else {
         parent[fieldName].__typename =
-          parent[fieldName].__typename || getNext(implementations);
+          parent[fieldName].__typename ||
+          (typeof parent[fieldName]?.__resolveType === "function" &&
+            parent[fieldName].__resolveType()) ||
+          parent[fieldName].__resolveType ||
+          getNext(implementations);
       }
     }
 
@@ -441,7 +450,9 @@ function addGlobalResolver(schema, resolve) {
       type?.constructor?.name === "GraphQLUnionType" ||
       type?.constructor?.name === "GraphQLInterfaceType"
     ) {
-      type.resolveType = (parent) => parent?.__typename || "hest";
+      type.resolveType = (parent) => {
+        return parent?.__typename;
+      };
     } else {
       // Traverse every field of the type
       Object.values(type.getFields?.() || {}).forEach((field) => {
