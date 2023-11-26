@@ -18,7 +18,6 @@ import ArticleLoginPrompt from "@/components/login/prompt/ArticleLoginPrompt";
 import Custom404 from "@/pages/404";
 import { manifestationForLectorReview } from "@/lib/api/manifestation.fragments";
 import LectorReviewPage from "@/components/article/lectorreview/LectorReviewPage";
-import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 export function ReviewPage(props) {
