@@ -7,13 +7,18 @@ import { useAdvancedSearchContext } from "@/components/search/advancedSearch/adv
  * Popover where advanced search can be performed
  * @returns
  */
-const Popover = () => {
+const Popover = ({ triggerContainerRef }) => {
   const { showOver, setShowOver } = useAdvancedSearchContext();
   const popppverRef = useRef(null);
 
   useEffect(() => {
     function handleClickOutside(event) {
-      if (popppverRef.current && !popppverRef.current.contains(event.target)) {
+      console.log("(event.target", event.target);
+      if (
+        popppverRef.current &&
+        !popppverRef.current.contains(event.target) &&
+        !triggerContainerRef.current.contains(event.target)
+      ) {
         setShowOver(false);
       }
     }

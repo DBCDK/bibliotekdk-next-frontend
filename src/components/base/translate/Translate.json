@@ -146,6 +146,10 @@
       "close-window": {
         "da": "Informationerne er gemt indtil du lukker browseren. Sidder du ved en offentlig computer, anbefaler vi stærkt, at du lukker din browser efter brug for at beskytte dine personlige oplysninger.",
         "en": "The information is saved until you close your browser. If you are using a public computer, we strongly recommend that you close your browser after use to protect your personal information."
+      },
+      "advanced-search-tooltip": {
+        "da": "Den avancerede søgning blev lukket. Åbn og fortsæt hvor du slap.",
+        "en": "Oversætelse mangler"
       }
     },
     "general": {

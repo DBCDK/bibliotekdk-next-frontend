@@ -10,10 +10,9 @@
   margin-top: 150px;
 }
 
-.popoverContent{
-    position: absolute;
+.popoverContent {
+  position: absolute;
 
-    left: 0;
-    width: 100vw;
-
+  left: 0;
+  width: 100vw;
 }

@@ -5,3 +5,29 @@
   align-items: center;
   cursor: pointer;
 }
+
+@media (max-width: 992px) {
+  .triggercontainer {
+    display: none;
+  }
+}
+.tip {
+  position: relative;
+  width: 0;
+  height: 0;
+  border-left: 37.5px solid transparent;
+  border-right: 37.5px solid transparent;
+  border-bottom: 42px solid var(--concrete);
+  bottom: -55px;
+  left: 57%;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+}
+.tooltipStyle {
+  background-color: var(--blue);
+}
+.triggerText {
+  user-select: none;
+}
