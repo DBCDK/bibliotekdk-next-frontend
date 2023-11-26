@@ -51,6 +51,7 @@ const PopoverTrigger = ({ className }) => {
           </Text>
         </div>
         {/* </Tooltip> */}
+        {showOver && <div className={styles.triangle} />}
       </div>
     </>
   );
