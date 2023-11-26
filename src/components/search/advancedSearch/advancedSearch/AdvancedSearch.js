@@ -40,7 +40,7 @@ export default function AdvancedSearch() {
     parsedCQL,
     setParsedCQL,
     cqlFromUrl,
-    setShowOver,
+    setShowPopover,
   } = useAdvancedSearchContext();
 
   const [showCqlEditor, setShowCqlEditor] = useState(!isEmpty(cqlFromUrl));
@@ -84,7 +84,7 @@ export default function AdvancedSearch() {
       const cql = convertStateToCql({ inputFields, dropdownSearchIndices });
       setParsedCQL(cql);
     }
-    setShowOver(false);
+    setShowPopover(false);
   };
 
   return (

@@ -47,7 +47,7 @@ export default function AdvancedSearchProvider({ children }) {
 
   //// ----  Popup Trigger ----
 
-  const [showOver, setShowOver] = useState(false);
+  const [showPopover, setShowPopover] = useState(false);
 
   //// ---- Inputfields ----
   const {
@@ -121,8 +121,8 @@ export default function AdvancedSearchProvider({ children }) {
     fieldSearchFromUrl,
     cqlFromUrl,
     pageNoFromUrl: page,
-    showOver,
-    setShowOver,
+    showPopover,
+    setShowPopover,
   };
 
   return (

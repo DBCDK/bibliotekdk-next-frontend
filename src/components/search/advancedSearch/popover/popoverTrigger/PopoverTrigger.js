@@ -10,7 +10,7 @@ import SearchIcon from "../../../../header/icons/search/search";
  * @returns
  */
 const PopoverTrigger = ({ className }) => {
-  const { showOver, setShowOver } = useAdvancedSearchContext();
+  const { showPopover, setShowPopover } = useAdvancedSearchContext();
   const triggerContainerRef = useRef(null);
 
   return (
@@ -20,13 +20,13 @@ const PopoverTrigger = ({ className }) => {
         <SearchIcon
           className={`${styles.triggercontainer} ${className}`}
           onClick={() => {
-            setShowOver(!showOver);
+            setShowPopover(!showPopover);
           }}
           title={Translate({ context: "search", label: "advanced" })}
           border={{ top: false, bottom: { keepVisible: true } }}
         />
 
-        {showOver && <div className={styles.triangle} />}
+        {showPopover && <div className={styles.triangle} />}
       </div>
     </>
   );

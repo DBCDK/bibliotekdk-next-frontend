@@ -8,7 +8,7 @@ import { useAdvancedSearchContext } from "@/components/search/advancedSearch/adv
  * @returns
  */
 const Popover = ({ triggerContainerRef }) => {
-  const { showOver, setShowOver } = useAdvancedSearchContext();
+  const { showPopover, setShowPopover } = useAdvancedSearchContext();
   const popppverRef = useRef(null);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const Popover = ({ triggerContainerRef }) => {
         !popppverRef.current.contains(event.target) &&
         !triggerContainerRef?.current?.contains(event.target)
       ) {
-        setShowOver(false);
+        setShowPopover(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -27,7 +27,7 @@ const Popover = ({ triggerContainerRef }) => {
     };
   }, [popppverRef]);
 
-  if (!showOver) {
+  if (!showPopover) {
     return null;
   }
   return (

@@ -109,11 +109,6 @@ export function Header({
   };
 
   const menu = [
-    // {
-    //   label: "advanced",
-    //   icon: SearchIcon,
-    //   onClick: () => modal.push("avanceret"),
-    // },
     {
       label: "search",
       icon: SearchIcon,
