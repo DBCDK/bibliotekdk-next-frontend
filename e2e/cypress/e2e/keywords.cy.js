@@ -50,13 +50,13 @@ describe("Keywords", () => {
 
   it(`Can visit keywords`, () => {
     const tag = "historie";
-    const url = `/find?q.subject=${tag}`;
 
     // Get selected tag
     cy.get(`[data-cy=keyword-${tag}]`)
       .children()
       .children()
       .should("have.attr", "target", "_self")
-      .should("have.attr", "href", url);
+      .should("have.attr", "href")
+      .and("include", "/avanceret?fieldSearch");
   });
 });
