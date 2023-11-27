@@ -212,7 +212,11 @@ export function useFetcher() {
 
 function getStackTrace() {
   const obj = {};
-  Error.captureStackTrace(obj, getStackTrace);
+  try {
+    // does not work in firefox..
+    Error.captureStackTrace(obj, getStackTrace);
+  } catch (e) {}
+
   return obj.stack;
 }
 
