@@ -200,12 +200,14 @@ function defaultMockResolver(parent, _args, context, info) {
     (unionValues || getInterfaceImplementations(schema)[customTypeName]);
 
   // helper for attaching __typename to interface or union
+  // It may be mocked by the parent object or by a resolver, otherwise we just pick one
   function attachTypename(target) {
     if (Array.isArray(target)) {
       target.forEach(
         (el) =>
           (el.__typename =
             el.__typename ||
+            resolvers[customTypeName]?.__resolveType?.() ||
             (typeof el?.__resolveType === "function" && el.__resolveType()) ||
             el?.__resolveType ||
             getNext(implementations))
@@ -213,6 +215,7 @@ function defaultMockResolver(parent, _args, context, info) {
     } else {
       target.__typename =
         target.__typename ||
+        resolvers[customTypeName]?.__resolveType?.() ||
         (typeof target?.__resolveType === "function" &&
           target.__resolveType()) ||
         target.__resolveType ||
