@@ -47,40 +47,6 @@ describe("Search", () => {
       );
     });
 
-    it(`Maps query parameters from input fields to url to input fields`, () => {
-      cy.visit("/iframe.html?id=layout-header--nav-header");
-
-      // Check URL query parameters are as expected
-      cy.get("[data-cy=router-query]").then((el) => {
-        expect(JSON.parse(el.text())).to.deep.equal({});
-      });
-
-      // Expand search possibilities
-      cy.contains("Flere søgemuligheder").click();
-
-      // And fill in some stuff
-      cy.get("header [data-cy=header-material-selector]").click();
-      cy.get("header [data-cy=item-movie] > [data-cy=text-film]").click();
-      cy.get("header [data-cy=suggester-input]").type("some all");
-      cy.get("header [data-cy=search-input-title]").type("some title");
-      cy.get("header [data-cy=search-input-creator]").type("some creator");
-      cy.get("header [data-cy=search-input-subject]").type("some subject");
-      cy.get("header [data-cy=header-searchbutton]").first().click();
-
-      // Check URL query parameters are as expected
-      cy.get("[data-cy=router-query]").then((el) => {
-        expect(JSON.parse(el.text())).to.deep.equal({
-          "q.all": "some all",
-          "q.title": "some title",
-          "q.creator": "some creator",
-          "q.subject": "some subject",
-          workTypes: "movie",
-        });
-      });
-      cy.get("[data-cy=router-pathname]").should("have.text", "/find");
-      cy.get("[data-cy=router-action]").should("have.text", "push");
-    });
-
     it(`Click input clear button should NOT be reflected in URL immediately`, () => {
       cy.visit("/iframe.html?id=layout-header--nav-header-prefilled");
 

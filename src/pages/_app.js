@@ -207,7 +207,7 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
             <Matomo />
             <BodyScrollLock router={router} />
             <div id="layout">
-              <AdvancedSearchProvider>
+              <AdvancedSearchProvider router={router}>
                 <SkipToMainLink />
                 <Banner />
                 <Notifications />
