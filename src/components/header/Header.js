@@ -23,7 +23,6 @@ import BurgerIcon from "./icons/burger";
 import SearchIcon from "./icons/search";
 import BookmarkIcon from "./icons/bookmark";
 import ExpandedSearch from "./expandedsearch/ExpandedSearch";
-import useUser from "../hooks/useUser";
 
 import Logo from "@/components/base/logo/Logo";
 
@@ -426,7 +425,6 @@ function HeaderSkeleton(props) {
  */
 export default function Wrap(props) {
   const router = useRouter();
-  const user = useUser();
   const { hasCulrUniqueId, isAuthenticated } = useAuthentication();
   const modal = useModal();
   const filters = useFilters();
@@ -438,7 +436,7 @@ export default function Wrap(props) {
   return (
     <Header
       {...props}
-      user={{ ...user, hasCulrUniqueId, isAuthenticated }}
+      user={{ hasCulrUniqueId, isAuthenticated }}
       modal={modal}
       filters={filters}
       router={router}

@@ -9,6 +9,8 @@ import useAdvancedSearchHistory from "@/components/hooks/useAdvancedSearchHistor
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import isEmpty from "lodash/isEmpty";
 import styles from "./AdvancedSearchResult.module.css";
+import cx from "classnames";
+import AdvancedSearchSort from "@/components/search/advancedSearch/advancedSearchSort/AdvancedSearchSort";
 
 export function AdvancedSearchResult({
   pageNo,
@@ -33,13 +35,16 @@ export function AdvancedSearchResult({
         subtitle={hitcount}
         className={styles.padding_top}
       >
+        <AdvancedSearchSort className={cx(styles.sort_container)} />
         {/* Reuse result page from simplesearch - we skip the wrap .. @TODO should we set
         some mark .. that we are doing advanced search .. ?? */}
-        <ResultPage
-          rows={results?.works}
-          onWorkClick={onWorkClick}
-          isLoading={results?.isLoading}
-        />
+        <div className={cx(styles.padding_top)}>
+          <ResultPage
+            rows={results?.works}
+            onWorkClick={onWorkClick}
+            isLoading={results?.isLoading}
+          />
+        </div>
       </Section>
       {hitcount > 0 && (
         <Pagination
@@ -71,6 +76,7 @@ export default function Wrap({ onWorkClick, onPageChange }) {
     cqlFromUrl: cql,
     fieldSearchFromUrl: fieldSearch,
     pageNoFromUrl: pageNo,
+    sort,
   } = useAdvancedSearchContext();
   // get setter for advanced search history
   const { setValue } = useAdvancedSearchHistory();
@@ -82,7 +88,12 @@ export default function Wrap({ onWorkClick, onPageChange }) {
 
   // use the useData hook to fetch data
   const bigResponse = useData(
-    doComplexSearchAll({ cql: cqlQuery, offset: offset, limit: limit })
+    doComplexSearchAll({
+      cql: cqlQuery,
+      offset: offset,
+      limit: limit,
+      ...(!isEmpty(sort) && { sort: sort }),
+    })
   );
   const parsedResponse = parseResponse(bigResponse);
 
@@ -104,6 +115,7 @@ export default function Wrap({ onWorkClick, onPageChange }) {
     // make an object for searchhistory @TODO .. the right object please
     const searchHistoryObj = {
       hitcount: parsedResponse?.hitcount,
+      fieldSearch: fieldSearch || "",
       cql: cqlQuery,
     };
     setValue(searchHistoryObj);

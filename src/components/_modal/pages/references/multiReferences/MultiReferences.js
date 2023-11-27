@@ -10,29 +10,62 @@ import Text from "@/components/base/text";
 import cx from "classnames";
 import { useModal } from "@/components/_modal/Modal";
 import Material from "./Material";
-import { accessFactory } from "@/lib/accessFactoryUtils";
 import { useEffect, useState } from "react";
+import MaterialCard from "@/components/base/materialcard/MaterialCard";
+import { templateImageToLeft } from "@/components/base/materialcard/templates/templates";
 
 export const CONTEXT = "multiReferences";
 
 /**
  * Takes all materials that miss edition and finds maps their keys to their material types
- * @param {*} materialKeysMissingEdition
+ * @param {*} bookmarksMissingEdition
  * @param {*} bookmarks
  * @returns {Array} Array of objects with materialKey and materialType
  */
 const mapMaterialKeysToSelectedMaterialTypes = ({
-  materialKeysMissingEdition,
+  bookmarksMissingEdition,
   bookmarks,
 }) => {
-  if (!materialKeysMissingEdition || !bookmarks) return [];
-  return materialKeysMissingEdition.map((material) => {
+  if (!bookmarksMissingEdition || !bookmarks) return [];
+  return bookmarksMissingEdition.map((material) => {
     const materialType = bookmarks.find(
       (bookmark) => bookmark.key === material.key
     )?.materialType;
     if (materialType)
       return { materialKey: material.key, materialType: materialType };
   });
+};
+
+const SingleReference = ({ bookmarkInList, materialKeyToMaterialTypes }) => {
+  const { data: materials, isLoading } = usePopulateBookmarks(bookmarkInList);
+
+  const material = materials[0];
+  const materialType = materialKeyToMaterialTypes.find(
+    (e) => e?.materialKey === bookmarkInList[0].key
+  )?.materialType;
+
+  if (isLoading) return null;
+
+  const materialCardTemplate = () =>
+    templateImageToLeft({
+      material: { ...material, materialType: materialType },
+      singleManifestation: true,
+      isPeriodicaLike: false, //we have filtered out periodicalike materials
+      //isDigitalArticle doesnt matter, since we always show edition
+    });
+
+  return (
+    <MaterialCard
+      propAndChildrenTemplate={materialCardTemplate}
+      propAndChildrenInput={{
+        imageLeft: true,
+        workId: material?.ownerWork?.workId,
+        fullTitle: material?.titles?.full[0],
+        image_src: material?.image?.url,
+      }}
+      colSizing={{ xs: 12 }}
+    />
+  );
 };
 
 /**
@@ -42,12 +75,10 @@ const mapMaterialKeysToSelectedMaterialTypes = ({
 export default function MultiReferences({ context }) {
   const { materials } = context;
   const modal = useModal();
+
   const bookmarksMissingEdition = materials.filter((material) =>
     material.materialId.startsWith("work-of")
   );
-  const materialPids = materials
-    .filter((material) => !material.materialId.startsWith("work-of"))
-    .map((material) => material.materialId);
   const { data: materialsMissingEdition, isLoading } = usePopulateBookmarks(
     bookmarksMissingEdition
   );
@@ -58,8 +89,8 @@ export default function MultiReferences({ context }) {
   const [periodicaFiltered, setPeriodicaFiltered] = useState([]);
 
   const materialKeyToMaterialTypes = mapMaterialKeysToSelectedMaterialTypes({
-    materialKeysMissingEdition: bookmarksMissingEdition,
-    bookmarks,
+    bookmarksMissingEdition: materials,
+    bookmarks: bookmarks,
   });
 
   const filteredManifestationsForMaterialType = (workData) => {
@@ -133,6 +164,14 @@ export default function MultiReferences({ context }) {
 
   const disableLinks = missingActionMaterials.length > 0;
   const showReferencesMissing = disableLinks && !isLoading;
+  //TODO materialPids should come from a state when we update the missing pids
+  const materialPids = materials
+    .filter((material) => !material.materialId.startsWith("work-of"))
+    .map((material) => material.materialId);
+
+  const hasMissingReferences = bookmarksMissingEdition?.length > 0;
+
+  const isSingleReference = materials.length === 1 && !hasMissingReferences;
 
   const numberMaterials = materials.length;
   const title =
@@ -179,7 +218,6 @@ export default function MultiReferences({ context }) {
   return (
     <div>
       <Top
-        skeleton={isLoading}
         title={title}
         className={{
           top: cx(styles.container, styles.top),
@@ -204,15 +242,15 @@ export default function MultiReferences({ context }) {
         </div>
       )}
 
-      {showReferencesMissing && (
+      {/*showReferencesMissing && (
         <Text
           type="text3"
           className={cx(styles.missingEditionText, styles.container)}
         >
           {missingEditionText}
         </Text>
-      )}
-      {showReferencesMissing &&
+      )*/}
+      {/*showReferencesMissing &&
         missingActionMaterials
           .filter(
             (mat) =>
@@ -227,13 +265,47 @@ export default function MultiReferences({ context }) {
               modal={modal}
               onActionClick={onActionClick}
             />
-          ))}
+          ))*/}
+      
+      {isSingleReference && (
+        <SingleReference
+          bookmarkInList={materials}
+          bookmarks={bookmarks}
+          materialKeyToMaterialTypes={materialKeyToMaterialTypes}
+        />
+      )}
+
+      {hasMissingReferences && (
+        <>
+        <Text
+          type="text3"
+          className={cx(styles.missingEditionText, styles.container)}
+        >
+          {missingEditionText}
+        </Text>
+        {missingActionMaterials
+          .filter(
+            (mat) =>
+              !activeMaterialChoices.find((o) => o.key === mat.key)?.toFilter
+          )
+          .map((material) => (
+          <Material
+            key={material.key}
+            material={material}
+            materialKeyToMaterialTypes={materialKeyToMaterialTypes}
+            modal={modal}
+          />
+        ))}
+      </>
+      )}
+
       <div
         className={cx(styles.container, {
-          [styles.exportButtons]: !showReferencesMissing,
+          [styles.exportButtonsMobile]: !hasMissingReferences,
+          [styles.paddingExportButtons]: isSingleReference,
         })}
       >
-        {showReferencesMissing && (
+        {hasMissingReferences && (
           <Text type="text3" className={styles.chooseEditionText}>
             {Translate({
               context: CONTEXT,

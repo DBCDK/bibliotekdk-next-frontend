@@ -100,7 +100,7 @@ function useUserImpl() {
 
     // delete all keys with no value
     if (sessionCopy) {
-      Object.keys(sessionCopy?.userParameters).forEach((key) => {
+      Object.keys(sessionCopy?.userParameters || {}).forEach((key) => {
         if (!sessionCopy?.userParameters[key]) {
           delete sessionCopy?.userParameters[key];
         }

@@ -8,12 +8,20 @@ import { cyKey } from "@/utils/trim";
 import Text from "@/components/base/text";
 import translate from "@/components/base/translate";
 
-export function AdvancedSearchHistory() {
+export function AdvancedSearchHistory({ type }) {
   const { storedValue, deleteValue } = useAdvancedSearchHistory();
   const router = useRouter();
 
   const goToCql = (value) => {
-    router.push(`/avanceret?cql=${value.cql}`);
+    type === "cql"
+      ? router.push({
+          pathname: router.pathname,
+          query: { cql: value.cql },
+        })
+      : router.push({
+          pathname: router.pathname,
+          query: { fieldSearch: JSON.stringify(value.fieldSearch) },
+        });
   };
 
   const accordionTitle = translate({
@@ -34,7 +42,11 @@ export function AdvancedSearchHistory() {
           return (
             <div key={index} className={styles.history}>
               <Text type="text3">
-                <span>{stored?.cql}</span>
+                <span>
+                  {type === "cql"
+                    ? stored?.cql
+                    : JSON.stringify(stored.fieldSearch)}
+                </span>
               </Text>
               <Text type="text3">
                 <span>{stored?.hitcount} hits</span>

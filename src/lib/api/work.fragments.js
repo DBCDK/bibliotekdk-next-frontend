@@ -196,13 +196,67 @@ export function series({ workId }) {
           }
         }
         ...seriesFragment
+        series {
+          members {
+            work {
+              ...workSliderFragment
+              manifestations {
+                mostRelevant {
+                  ...coverFragment
+                }
+              }
+              creators {
+                ...creatorsFragment
+              }
+              universe {
+                ...universeFragment
+              }
+            }
+          }
+        }
       }
     }
     ${workSliderFragment}
     ${creatorsFragment}
     ${seriesFragment}
+    ${universeFragment}
+    ${coverFragment}
   `,
     variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * Works in Series
+ *
+ * @param {Object} variables
+ * @param {string} variables.workIds
+ *
+ * @returns {Object} a query object
+ */
+export function worksInSeries({ workIds }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 4000, // for debugging
+    query: `query worksInSeries($workIds: [String!]!) {
+      works(id: $workIds) {
+        ...workSliderFragment
+        creators {
+          ...creatorsFragment
+        }
+        universe {
+          ...universeFragment
+        }
+        ...seriesFragment
+      }
+    }
+    ${workSliderFragment}
+    ${creatorsFragment}
+    ${seriesFragment}
+    ${universeFragment}
+  `,
+    variables: { workIds },
     slowThreshold: 3000,
   };
 }
@@ -925,6 +979,12 @@ export function workForWorkRelationsWorkTypeFactory({ workId }) {
 // to the WorkSlider
 const workSliderFragment = `fragment workSliderFragment on Work {
   workId
+  workTypes
+  abstract
+  fictionNonfiction {
+    display
+    code
+  }
   titles {
     main
     full
@@ -978,6 +1038,7 @@ const titleFragment = `fragment titleFragment on Work {
 const coverFragment = `fragment coverFragment on Manifestation {
   cover {
     detail
+    thumbnail
     origin
   }
 }`;
@@ -985,11 +1046,19 @@ const coverFragment = `fragment coverFragment on Manifestation {
 const seriesFragment = `fragment seriesFragment on Work {
   series {
     title
+    readThisFirst
+    readThisWhenever
+    description
     numberInSeries {
       display
       number
     }
   }
+}`;
+
+const universeFragment = `fragment universeFragment on Universe {
+  title
+  alternativeTitles
 }`;
 
 const manifestationAccess = `fragment manifestationAccess on Manifestation {

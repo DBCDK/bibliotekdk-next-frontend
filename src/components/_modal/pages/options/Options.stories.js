@@ -6,7 +6,8 @@ import AlternativeOptions from "@/components/work/overview/alternatives/Alternat
 import merge from "lodash/merge";
 import automock_utils from "@/lib/automock_utils.fixture";
 
-const { DEFAULT_STORY_PARAMETERS, useMockLoanerInfo } = automock_utils();
+const { DEFAULT_STORY_PARAMETERS, USER_7, useMockLoanerInfo } =
+  automock_utils();
 
 const exportedObject = {
   title: "modal/Options",
@@ -35,7 +36,7 @@ export function AllOptions() {
 AllOptions.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
-      resolvers: {},
+      resolvers: { Query: { user: () => USER_7 } },
     },
   },
 });

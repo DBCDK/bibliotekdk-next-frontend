@@ -4,9 +4,9 @@ import {
   checkDigitalCopy,
   checkPhysicalCopy,
 } from "@/lib/accessFactoryUtils";
-import useUser from "@/components/hooks/useUser";
 import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAndSelectedPids";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 /**
  * Returns true if first access is neither DigitalArticleService or InterLibraryLoan
@@ -14,9 +14,9 @@ import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtil
  * @returns {boolean}
  */
 const useAnalyzeMaterial = (material) => {
-  const { authUser: user } = useUser();
+  const { loanerInfo } = useLoanerInfo();
 
-  const hasDigitalAccess = user?.rights?.digitalArticleService;
+  const hasDigitalAccess = loanerInfo?.rights?.digitalArticleService;
 
   const { workId, materialType, pid } = material;
   const allManifestations = material?.manifestations?.mostRelevant;

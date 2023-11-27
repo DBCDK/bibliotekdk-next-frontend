@@ -8,7 +8,6 @@ import Translate from "@/components/base/translate";
 import Top from "../base/top";
 // eslint-disable-next-line css-modules/no-unused-class
 import styles from "./Pickup.module.css";
-import useUser from "@/components/hooks/useUser";
 import { useData } from "@/lib/api/api";
 import * as libraryFragments from "@/lib/api/library.fragments";
 import { LOGIN_MODE } from "@/components/_modal/pages/login/utils";
@@ -17,6 +16,7 @@ import PickupSelection from "./PickupSelection";
 import Link from "@/components/base/link";
 import Collapse from "react-bootstrap/Collapse";
 import Icon from "@/components/base/icon";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 /**
  * Make pickup branches selectable with Radio buttons
@@ -135,7 +135,7 @@ export default function Wrap(props) {
 
   const [query, setQuery] = useState("");
 
-  const { updateLoanerInfo } = useUser();
+  const { updateLoanerInfo } = useLoanerInfo();
 
   const { data, isLoading } = useData(
     libraryFragments.search({ q: query || "" })

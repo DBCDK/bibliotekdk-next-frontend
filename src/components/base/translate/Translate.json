@@ -18,6 +18,40 @@
         "en": "Label: mangler oversættelse"
       }
     },
+    "advanced_search_sort": {
+      "sort_button": {
+        "da": "sorter",
+        "en": "sort"
+      },
+      "best_match": {
+        "da": "bedste match",
+        "en": "best match"
+      },
+      "asc_sort.latestpublicationdate": {
+        "da": "tidligste udgivelsesdato",
+        "en": "earliest publication date"
+      },
+      "desc_sort.latestpublicationdate": {
+        "da": "seneste udgivelsesdato",
+        "en": "latest publication date"
+      },
+      "asc_sort.creator": {
+        "da": "skaber a-å",
+        "en": "creator a-z"
+      },
+      "desc_sort.creator": {
+        "da": "skaber å-a",
+        "en": "creator z-a"
+      },
+      "asc_sort.title": {
+        "da": "titel a-å",
+        "en": "title a-z"
+      },
+      "desc_sort.title": {
+        "da": "titel å-a",
+        "en": "title z-a"
+      }
+    },
     "advanced_search_dropdown": {
       "choose_publication_year": {
         "da": "Vælg udgivelsesår",
@@ -1257,6 +1291,44 @@
       "part": {
         "da": "%s. del - %s",
         "en": "Part %s - %s "
+      }
+    },
+    "series_page": {
+      "series_by": {
+        "da": "Serie af",
+        "en": "Series by"
+      },
+      "series": {
+        "da": "serier",
+        "en": "series"
+      },
+      "part_of_universe": {
+        "da": "Indgår i %s",
+        "en": "Part of %s"
+      },
+      "read_this_whenever": {
+        "da": "Serien kan læses i vilkårlig rækkefølge",
+        "en": "The series can be read in any order"
+      },
+      "parts_in_series": {
+        "da": "Serien består af %s dele",
+        "en": "Series consists of %s parts"
+      },
+      "series_members_heading": {
+        "da": "%s i serien",
+        "en": "Series consists of %s parts"
+      },
+      "other_works_by_the_author": {
+        "da": "Andre %s af",
+        "en": "Other %s in the"
+      },
+      "number_in_series": {
+        "da": "Del %s",
+        "en": "Part %s"
+      },
+      "begin_with_this": {
+        "da": "Begynd med denne",
+        "en": "Begin with this"
       }
     },
     "keywords": {

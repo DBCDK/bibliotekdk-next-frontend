@@ -1,7 +1,8 @@
 import { FormTypeEnum } from "@/components/search/advancedSearch/advancedSearchHelpers/helperComponents/HelperComponents";
 import isEmpty from "lodash/isEmpty";
+import { useEffect, useReducer } from "react";
 
-export function initializeMenuItem(menuItem) {
+export function resetMenuItem(menuItem) {
   return {
     ...menuItem,
     ...(FormTypeEnum.CHECKBOX === menuItem?.formType && {
@@ -12,6 +13,21 @@ export function initializeMenuItem(menuItem) {
     }),
     ...(FormTypeEnum.RADIO_LINK === menuItem?.formType && {
       isSelected: false,
+    }),
+  };
+}
+
+export function initializeMenuItem(menuItem) {
+  return {
+    ...menuItem,
+    ...(FormTypeEnum.CHECKBOX === menuItem?.formType && {
+      isSelected: menuItem?.isSelected || false,
+    }),
+    ...(FormTypeEnum.RADIO_BUTTON === menuItem?.formType && {
+      isSelected: menuItem?.isSelected || false,
+    }),
+    ...(FormTypeEnum.RADIO_LINK === menuItem?.formType && {
+      isSelected: menuItem?.isSelected || false,
     }),
   };
 }
@@ -36,22 +52,56 @@ function toggleMenuItem(itemUpdate, currentMenuItem) {
   };
 }
 
-export function reducerForToggleMenuItemsState({
-  currentMenuItems,
-  itemUpdate,
-}) {
-  const nextItem = toggleMenuItem(
-    itemUpdate,
-    currentMenuItems.find((currentItem) => currentItem.name === itemUpdate.name)
+export const ToggleMenuItemsEnum = Object.freeze({
+  RESET: "RESET",
+  UPDATE: "UPDATE",
+});
+
+export function reducerForToggleMenuItemsState({ currentMenuItems, action }) {
+  const { type, payload } = action;
+
+  switch (type) {
+    case ToggleMenuItemsEnum.RESET:
+      return payload;
+    case ToggleMenuItemsEnum.UPDATE:
+      const nextItem = toggleMenuItem(
+        payload,
+        currentMenuItems.find(
+          (currentItem) => currentItem.name === payload.name
+        )
+      );
+
+      return currentMenuItems?.map((currentItem) => {
+        return currentItem.name === nextItem.name
+          ? nextItem
+          : [FormTypeEnum.RADIO_BUTTON, FormTypeEnum.RADIO_LINK].includes(
+              currentItem?.formType
+            ) &&
+            [FormTypeEnum.RADIO_BUTTON, FormTypeEnum.RADIO_LINK].includes(
+              nextItem?.formType
+            )
+          ? resetMenuItem(currentItem)
+          : currentItem;
+      });
+    default:
+      return currentMenuItems;
+  }
+}
+
+export function useMenuItemsState(menuItems, updateIndex) {
+  const [menuItemsState, toggleMenuItemsState] = useReducer(
+    (currentMenuItems, action) =>
+      reducerForToggleMenuItemsState({
+        currentMenuItems: currentMenuItems,
+        action: { payload: action.payload, type: action.type },
+      }),
+    menuItems,
+    undefined
   );
 
-  return currentMenuItems?.map((currentItem) => {
-    return currentItem.name === nextItem.name
-      ? nextItem
-      : [FormTypeEnum.RADIO_BUTTON, FormTypeEnum.RADIO_LINK].includes(
-          currentItem?.formType
-        )
-      ? initializeMenuItem(currentItem)
-      : currentItem;
-  });
+  useEffect(() => {
+    updateIndex(menuItemsState);
+  }, [JSON.stringify(menuItemsState)]);
+
+  return { menuItemsState, toggleMenuItemsState };
 }

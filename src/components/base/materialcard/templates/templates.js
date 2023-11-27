@@ -61,6 +61,79 @@ export function templateForVerticalWorkCard(material) {
   };
 }
 
+/**Used in Series page */
+export function templateForBigWorkCard({ material, includeCreators }) {
+  const fullTitle = material?.titles?.full?.join(": ");
+  const creators = material?.creators;
+  const abstract = material?.abstract;
+
+  const coverSrc = getCoverImage(material.manifestations.mostRelevant);
+
+  const readThisFirst = material?.series?.[0]?.readThisFirst;
+  const numberInSeries = material?.series?.[0]?.numberInSeries?.display;
+
+  return {
+    link_href: getWorkUrl(fullTitle, creators, material?.workId),
+    fullTitle: fullTitle,
+    image_src: coverSrc?.detail,
+    workId: material?.workId,
+    children: (
+      <>
+        {(numberInSeries || readThisFirst) && (
+          <div className={styles.begin_with_this_and_number_in_series}>
+            {numberInSeries && (
+              <Text tag="span" type="text4">
+                {Translate({
+                  context: "series_page",
+                  label: "number_in_series",
+                  vars: [numberInSeries],
+                })}
+              </Text>
+            )}
+            {readThisFirst && (
+              <Text tag="span" type="text6" className={styles.begin_with_this}>
+                {Translate({
+                  context: "series_page",
+                  label: "begin_with_this",
+                })}
+              </Text>
+            )}
+          </div>
+        )}
+        {fullTitle && (
+          <Text {...propFunc("title4", 2)} title={fullTitle}>
+            {fullTitle}
+          </Text>
+        )}
+        {includeCreators && creators && (
+          <Text {...propFunc("text2", 8)} title={abstract}>
+            {Translate({ context: "general", label: "by" })}{" "}
+            {creators.map((creator) => creator.display).join(", ")}
+          </Text>
+        )}
+        {abstract && (
+          <Text {...propFunc("text2", 8)} title={abstract}>
+            {abstract}
+          </Text>
+        )}
+      </>
+    ),
+    border: { top: { keepVisible: true }, bottom: { keepVisible: true } },
+    // Styling
+    elementContainerClassName: cx(
+      styles.col_flex,
+      styles.col_flex__big_work_version
+    ),
+    relatedElementClassName: cx(
+      styles.related_element,
+      styles.related_element__big_work_version
+    ),
+    textClassName: cx(styles.text__big_work_version),
+    coverImageClassName: cx(styles.cover, styles.cover__big_work_version),
+    linkClassName: cx(styles.link__big_work_version),
+  };
+}
+
 /**Used in Header */
 export function templateForHeaderWorkCard(material) {
   const fullTitle = material?.titles?.full?.join(": ");
