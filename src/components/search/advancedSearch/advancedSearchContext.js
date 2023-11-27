@@ -40,9 +40,14 @@ export function useAdvancedSearchContext() {
 export default function AdvancedSearchProvider({ children, router }) {
   // TODO: Move this part of the state into Context
   //  So we are able to control default view from context as well
-
-  const { page = "1", cql: cqlFromUrl = null, fieldSearch = "" } = router.query;
+  const {
+    page = "1",
+    cql: cqlFromUrl = null,
+    fieldSearch = "",
+    sort: sortFromUrl = "",
+  } = router.query;
   const fieldSearchFromUrl = fieldSearch && JSON.parse(fieldSearch);
+  const sort = sortFromUrl && JSON.parse(sortFromUrl);
 
   //// ---- Inputfields ----
   const {
@@ -99,6 +104,7 @@ export default function AdvancedSearchProvider({ children, router }) {
         fieldSearchFromUrl: { inputFields: Array.<InputField>, dropdownSearchIndices: Array.<DropdownSearchIndex> },
         cqlFromUrl: string,
         pageNoFromUrl: number
+        sort: Array.<{ index: string, order: string }>
    }} AdvancedSearchContextType */
   const value = {
     inputFields,
@@ -116,6 +122,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     fieldSearchFromUrl,
     cqlFromUrl,
     pageNoFromUrl: page,
+    sort: sort,
   };
 
   return (
