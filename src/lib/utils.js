@@ -1,6 +1,7 @@
 import getConfig from "next/config";
 import Translate from "@/components/base/translate";
 import uniq from "lodash/uniq";
+import animations from "css/animations";
 
 const APP_URL =
   getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
@@ -172,7 +173,7 @@ export function chainFunctions(functions) {
 }
 
 /**
- * Get the first match of a series of conditions
+ * Get the first match of a firstWorkFirstSeries of conditions
  * @template T
  * @template V
  * @param {T} matcherValue
@@ -283,4 +284,11 @@ export function parseDate(isoDateString) {
     dateObj.getUTCFullYear() === today.getUTCFullYear();
 
   return { day, monthName, year, hours, minutes, isToday };
+}
+
+//TODO move to a loacation that is more central
+export function buildHtmlLink(txt, url, overrideTarget = null) {
+  const target = overrideTarget || "_blank";
+
+  return `<a href="${url}" target=${target} class="${animations.underlineContainer} ${animations.top_line_false} ${animations.top_line_keep_false}">${txt}</a>`;
 }

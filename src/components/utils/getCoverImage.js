@@ -5,6 +5,10 @@ export function getCoverImage(manifestations) {
     ) || manifestations?.find((manifestation) => manifestation?.cover?.detail);
 
   return manifestationWithCover
-    ? { detail: manifestationWithCover?.cover?.detail }
+    ? {
+        detail: manifestationWithCover?.cover?.detail,
+        origin: manifestationWithCover?.cover?.origin,
+        thumbnail: manifestationWithCover?.cover?.thumbnail,
+      }
     : { detail: null };
 }
