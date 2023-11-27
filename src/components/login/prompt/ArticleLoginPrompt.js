@@ -8,7 +8,6 @@ import LoginPrompt from "./Prompt";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
-import useUser from "@/components/hooks/useUser";
 
 /**
  * Prompt the user for log in when not authenticated or
@@ -20,7 +19,6 @@ export default function ArticleLoginPrompt({ articleId }) {
   const { loanerInfo } = useLoanerInfo();
   const { isAuthenticated, loggedInAgencyId } = useAuthentication();
   const modal = useModal();
-  const { authUser: user } = useUser();
   const hasInfomediaAccess = loanerInfo?.rights?.infomedia;
 
   const { data, isLoading } = useData(
@@ -29,7 +27,7 @@ export default function ArticleLoginPrompt({ articleId }) {
 
   // Select the loggedInBranch from users agencies list
   let branch = {};
-  user?.agencies?.forEach((agency) => {
+  loanerInfo?.agencies?.forEach((agency) => {
     branch = agency?.result?.find(
       (branch) => branch.agencyId === loggedInAgencyId
     );
