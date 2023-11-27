@@ -4,27 +4,46 @@ import styles from "./PopoverTrigger.module.css";
 import Translate from "@/components/base/translate/Translate";
 import Popover from "@/components/search/advancedSearch/popover/Popover";
 import SearchIcon from "../../../../header/icons/search/search";
+//import Tooltip from 'react-bootstrap/Tooltip';
+import { OverlayTrigger } from "react-bootstrap";
+import Tooltip from "@/components/base/tooltip/Tooltip";
 
 /**
  * Opens advanced search popover
  * @returns
  */
-const PopoverTrigger = ({ className }) => {
-  const { showPopover, setShowPopover } = useAdvancedSearchContext();
+const PopoverTrigger = ({ className, simbleSearchRef }) => {
+  const { showPopover, setShowPopover, showInfoTooltip, setShowInfoTooltip } =
+    useAdvancedSearchContext();
   const triggerContainerRef = useRef(null);
-
+  //set variable in context
+  //close if click outside
+  console.log("PopoverTrigger.showInfoTooltip", showInfoTooltip);
   return (
     <>
-      <Popover triggerContainerRef={triggerContainerRef} />
+      <Popover
+        triggerContainerRef={triggerContainerRef}
+        simbleSearchRef={simbleSearchRef}
+      />
+
       <div className="container" ref={triggerContainerRef}>
-        <SearchIcon
-          className={`${styles.triggercontainer} ${className}`}
-          onClick={() => {
-            setShowPopover(!showPopover);
-          }}
-          title={Translate({ context: "search", label: "advanced" })}
-          border={{ top: false, bottom: { keepVisible: true } }}
-        />
+        <Tooltip
+          target={triggerContainerRef}
+          show={showInfoTooltip && !showPopover}
+          labelToTranslate="advanced-search-tooltip"
+          placement="bottom"
+        >
+          <SearchIcon
+            className={`${styles.triggercontainer} ${className} ${
+              showPopover ? styles.triggerActive : ""
+            }`}
+            onClick={() => {
+              setShowPopover(!showPopover);
+            }}
+            title={Translate({ context: "search", label: "advanced" })}
+            border={{ top: false, bottom: { keepVisible: true } }}
+          />
+        </Tooltip>
 
         {showPopover && <div className={styles.triangle} />}
       </div>

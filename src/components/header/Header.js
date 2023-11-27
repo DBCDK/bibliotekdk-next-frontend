@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import React from "react";
+import React, { useRef } from "react";
 
 import useHistory from "@/components/hooks/useHistory";
 import useFilters from "@/components/hooks/useFilters";
@@ -39,6 +39,7 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { openLoginModal } from "../_modal/pages/login/utils";
 import { signOut } from "@dbcdk/login-nextjs/client";
 import useAuthentication from "../hooks/user/useAuthentication";
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
 import PopoverTrigger from "@/components/search/advancedSearch/popover/popoverTrigger/PopoverTrigger";
 
@@ -94,6 +95,10 @@ export function Header({
 
   // specific material workType selected
   const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
+
+  const simbleSearchRef = useRef(null);
+  const { showPopover, setShowPopover, showInfoTooltip, setShowInfoTooltip } =
+    useAdvancedSearchContext();
 
   const getLoginLabel = () => {
     if (user.hasCulrUniqueId) {
@@ -192,6 +197,26 @@ export function Header({
       doSearch(e.target.value);
     }
   };
+
+  const handleContainerClick = (e) => {
+    // Check if showPopover is true before logging the message
+
+    console.log("hej med dig");
+
+    if (showPopover) {
+      console.log("hej med dig");
+      setShowInfoTooltip(true);
+    }
+
+    // Your other logic here, if any
+
+    // Prevent the click event from propagating further if needed
+    //  e.stopPropagation();
+  };
+
+  const containerStyles = {
+    pointerEvents: showPopover ? "none" : "auto",
+  };
   return (
     <header className={`${styles.wrap} ${className}`}>
       <div className={styles.headerWrap}>
@@ -200,7 +225,7 @@ export function Header({
             <StaticHeader router={router} context={context} />
             <Col xs={{ span: 7, offset: 3 }} className={styles.mobileHeader}>
               <SkipToMainAnchor />
-              <div className={styles.bottom}>
+              <div className={styles.bottom} ref={simbleSearchRef}>
                 <form
                   onSubmit={(e) => {
                     e?.preventDefault();
@@ -256,7 +281,10 @@ export function Header({
                   </button>
                 </form>
                 <div className={styles.popoverTriggerContainer}>
-                  <PopoverTrigger className={styles.advancedSearchTrigger} />
+                  <PopoverTrigger
+                    className={styles.advancedSearchTrigger}
+                    simbleSearchRef={simbleSearchRef}
+                  />
                 </div>
               </div>
             </Col>

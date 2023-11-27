@@ -1,11 +1,12 @@
 import Popover from "react-bootstrap/Popover";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+
 import Icon from "@/components/base/icon";
 import styles from "./Tooltip.module.css";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import PropTypes from "prop-types";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Tooltip({
   placement = "bottom",
@@ -14,8 +15,19 @@ export default function Tooltip({
   trigger = ["focus"],
   iconSize = 3,
   children,
+  show = false,
+  target = null,
+  toolTipClassName,
 }) {
   const spanRef = useRef();
+
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return <></>;
+
   return (
     <span className={`${customClass ? customClass : ""}`}>
       <OverlayTrigger
@@ -23,10 +35,12 @@ export default function Tooltip({
         delayShow={300}
         delayHide={150}
         placement={placement}
+        show={show}
+        target={target}
         overlay={
           <Popover
             id={`tooltip-${labelToTranslate}`}
-            className={styles.popover}
+            className={`${styles.popover} ${toolTipClassName}`}
           >
             <div
               className={styles.tooltipContainer}
