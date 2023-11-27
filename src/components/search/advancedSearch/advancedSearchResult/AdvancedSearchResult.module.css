@@ -1,3 +1,9 @@
+.sort_container {
+  display: inline-flex;
+  gap: var(--pt1);
+  align-items: center;
+}
+
 .padding_top {
   padding-top: var(--pt2);
 }

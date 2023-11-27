@@ -2,17 +2,19 @@
  * Hitcount
  *
  * @param {string} cql  the  cql-query
-
+ * @param offset
+ * @param limit
+ * @param sort
  */
-export function doComplexSearchAll({ cql, offset, limit }) {
+export function doComplexSearchAll({ cql, offset, limit, sort }) {
   return {
     // delay: 1000, // for debugging
     query: `
-    query ComplexSearchAll($cql: String!, $offset: Int!, $limit: PaginationLimit!) {
+    query ComplexSearchAll($cql: String!, $offset: Int!, $limit: PaginationLimit!, $sort: [Sort!]) {
 			complexSearch(cql: $cql) {
 				hitcount
 				errorMessage
-				works(offset: $offset, limit: $limit) {
+				works(offset: $offset, limit: $limit, sort: $sort) {
 					workId
           mainLanguages {
             isoCode
@@ -98,7 +100,7 @@ export function doComplexSearchAll({ cql, offset, limit }) {
         }
 			}
 		}`,
-    variables: { cql, offset, limit },
+    variables: { cql, offset, limit, sort },
     slowThreshold: 3000,
   };
 }

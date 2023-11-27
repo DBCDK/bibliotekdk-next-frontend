@@ -1,0 +1,7 @@
+.section_color {
+  background: var(--jagged-ice);
+}
+
+.section_first {
+  margin-top: var(--pt6);
+}

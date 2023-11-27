@@ -39,6 +39,8 @@ const MANIFESTATION_BASE = {
   cover: {
     detail:
       "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=53588697&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=06bb715d932ba34098b2",
+    thumbnail:
+      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=53588697&attachment_type=forside_lille&bibliotek=870970&source_id=150020&key=06bb715d932ba34098b2",
     origin: "moreinfo",
   },
   creators: [{ display: "Linoleum Gummigulv" }],
@@ -78,6 +80,8 @@ const MANIFESTATION_2 = {
   cover: {
     detail:
       "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=21678783&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=54646db03d538703e6c1",
+    thumbnail:
+      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=21678783&attachment_type=forside_lille&bibliotek=870970&source_id=870970&key=54646db03d538703e6c1",
     origin: "moreinfo",
   },
 };
@@ -104,6 +108,8 @@ const MANIFESTATION_3 = {
   cover: {
     detail:
       "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=24777057&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=4d9e99b14209aef2a5d6",
+    thumbnail:
+      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=24777057&attachment_type=forside_lille&bibliotek=870970&source_id=870970&key=4d9e99b14209aef2a5d6",
     origin: "moreinfo",
   },
 };
@@ -148,6 +154,8 @@ const MANIFESTATION_4 = {
   cover: {
     detail:
       "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=23637189&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=72eb2ae9d91fb0ffbb7f",
+    thumbnail:
+      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=23637189&attachment_type=forside_lille&bibliotek=870970&source_id=870970&key=72eb2ae9d91fb0ffbb7f",
     origin: "moreinfo",
   },
 };
@@ -190,6 +198,8 @@ const MANIFESTATION_4_1 = {
   cover: {
     detail:
       "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=23637189&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=72eb2ae9d91fb0ffbb7f",
+    thumbnail:
+      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=23637189&attachment_type=forside_lille&bibliotek=870970&source_id=870970&key=72eb2ae9d91fb0ffbb7f",
     origin: "moreinfo",
   },
 };
@@ -234,6 +244,8 @@ const MANIFESTATION_5 = {
   cover: {
     detail:
       "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=25504097&attachment_type=forside_stor&bibliotek=870970&source_id=150015&key=f9383e2279f840a4f31e",
+    thumbnail:
+      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=25504097&attachment_type=forside_lille&bibliotek=870970&source_id=150015&key=f9383e2279f840a4f31e",
     origin: "moreinfo",
   },
 };
@@ -266,6 +278,8 @@ const MANIFESTATION_6 = {
   cover: {
     detail:
       "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=24777014&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=1965ebb8c60f848c3b2c",
+    thumbnail:
+      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=24777014&attachment_type=forside_lille&bibliotek=870970&source_id=870970&key=1965ebb8c60f848c3b2c",
     origin: "moreinfo",
   },
 };
@@ -302,6 +316,8 @@ const MANIFESTATION_7 = {
   cover: {
     detail:
       "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=29053782&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=115cd0be4dc0b0e7d74e",
+    thumbnail:
+      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=29053782&attachment_type=forside_lille&bibliotek=870970&source_id=870970&key=115cd0be4dc0b0e7d74e",
     origin: "moreinfo",
   },
 };
