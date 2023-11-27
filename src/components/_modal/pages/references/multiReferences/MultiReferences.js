@@ -60,8 +60,12 @@ export default function MultiReferences({ context }) {
     bookmarks,
   });
 
-  const showReferencesMissing =
-    bookmarksMissingEdition.length > 0 && !isLoading;
+  const missingActionMaterials = materialsMissingEdition.filter(
+    (_, i) => !activeMaterialChoices?.[i].chosenPid
+  );
+
+  const disableLinks = missingActionMaterials.length > 0;
+  const showReferencesMissing = disableLinks && !isLoading;
 
   const numberMaterials = materials.length;
   const title =
@@ -85,7 +89,7 @@ export default function MultiReferences({ context }) {
       : Translate({
           context: CONTEXT,
           label: "missing-edition",
-          vars: [bookmarksMissingEdition.length],
+          vars: [missingActionMaterials.length],
         });
 
   const onEditionPick = (pid, materialKey) => {
@@ -124,18 +128,16 @@ export default function MultiReferences({ context }) {
         </Text>
       )}
       {showReferencesMissing &&
-        materialsMissingEdition
-          .filter((_, i) => !activeMaterialChoices?.[i].chosenPid)
-          .map((material) => (
-            <Material
-              key={material.key}
-              materialKey={material.key}
-              material={material}
-              materialKeyToMaterialTypes={materialKeyToMaterialTypes}
-              modal={modal}
-              onActionClick={onActionClick}
-            />
-          ))}
+        missingActionMaterials.map((material) => (
+          <Material
+            key={material.key}
+            materialKey={material.key}
+            material={material}
+            materialKeyToMaterialTypes={materialKeyToMaterialTypes}
+            modal={modal}
+            onActionClick={onActionClick}
+          />
+        ))}
       <div
         className={cx(styles.container, {
           [styles.exportButtons]: !showReferencesMissing,
@@ -150,8 +152,13 @@ export default function MultiReferences({ context }) {
           </Text>
         )}
         <LinksList
-          pids={materialPids}
-          disabled={bookmarksMissingEdition?.length > 0}
+          pids={[
+            ...materialPids,
+            ...activeMaterialChoices
+              .map((mat) => mat.chosenPid)
+              .filter((mat) => !!mat),
+          ]}
+          disabled={disableLinks}
         />
       </div>
     </div>
