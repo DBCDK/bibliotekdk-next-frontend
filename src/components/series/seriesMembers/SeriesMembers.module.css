@@ -1,0 +1,8 @@
+.series_members_results {
+  display: flex;
+  flex-direction: column;
+}
+
+.series_members_results > * {
+  margin-bottom: -1px;
+}

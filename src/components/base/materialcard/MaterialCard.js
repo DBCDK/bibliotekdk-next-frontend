@@ -10,6 +10,13 @@ import { templateForRelatedWorks } from "@/components/base/materialcard/template
 import { forwardRef } from "react";
 import cx from "classnames";
 
+function calculateBorder(link_href, border) {
+  if (!link_href) {
+    return false;
+  }
+  return border || { top: false, bottom: true };
+}
+
 /**
  * @typedef {(number|string|undefined)} OptionalColSize
  */
@@ -47,7 +54,9 @@ const MaterialCard = forwardRef(
       textClassName,
       imageContainerStyle,
       coverImageClassName,
+      linkClassName,
       imageLeft,
+      border,
     } = renderProps;
 
     if (imageLeft) {
@@ -70,7 +79,8 @@ const MaterialCard = forwardRef(
         >
           <Tag
             className={cx(styles.container, {
-              [styles.link_style]: !!link_href,
+              [styles.base_link_style]: !!link_href,
+              [styles.link_style_colors]: !!link_href,
             })}
           >
             <div ref={ref} id={workId} className={cx(relatedElementClassName)}>
@@ -103,8 +113,11 @@ const MaterialCard = forwardRef(
         <Link
           href={link_href}
           // Link props
-          className={cx(styles.link_style)}
-          border={!link_href ? false : { top: false, bottom: true }}
+          className={cx(styles.base_link_style, {
+            [styles.link_style_colors]: !linkClassName,
+            [linkClassName]: linkClassName,
+          })}
+          border={calculateBorder(link_href, border)}
           onClick={onClick}
           disabled={!link_href && !onClick}
         >

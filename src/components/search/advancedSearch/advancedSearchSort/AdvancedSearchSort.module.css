@@ -1,0 +1,75 @@
+.nav_element {
+  --elements_min_width: 125px;
+  --elements_max_height: 500px;
+  --box_shadow__dropdown: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  --border__dropdown: 1px solid var(--iron, #d6d6d7);
+}
+
+.menuButton {
+  background-color: var(--white);
+  padding: var(--pt1);
+  height: 100%;
+  display: flex;
+  gap: var(--pt1);
+  align-content: center;
+  justify-content: space-between;
+}
+
+.menuButton:hover {
+  cursor: pointer;
+}
+
+.menuButton:hover,
+.menuButton:focus {
+  outline: solid 2px var(--blue);
+}
+
+.menuButton[aria-expanded="true"] .icon_open {
+  transform: rotate(180deg);
+}
+
+.icon {
+  transition: transform 0.3s ease-in-out;
+}
+
+.icon_area {
+  display: flex;
+  width: 20px;
+  height: 20px;
+  justify-content: center;
+  transition: transform 300ms ease;
+  align-content: center;
+  flex-wrap: wrap;
+}
+
+.dropdown_items {
+  background-color: var(--white);
+  min-width: var(--elements_min_width);
+  box-shadow: var(--box_shadow__dropdown);
+  border: var(--border__dropdown);
+  /* bootstrap default styles override */
+  border-radius: 0;
+  padding: 0;
+}
+
+.dropdown_item {
+  display: flex;
+  border-bottom: 1px solid var(--mine-shaft);
+  padding: var(--pt1) var(--pt2) var(--pt1) var(--pt2);
+  text-decoration: none;
+  color: var(--mine-shaft);
+  text-align: inherit;
+  white-space: nowrap;
+}
+
+.dropdown_item a {
+  text-decoration: none;
+}
+
+.dropdown_item:is(:focus, :hover) {
+  background: linear-gradient(to right, var(--blue) 10px, var(--concrete) 10px);
+}
+
+.upper_first:first-letter {
+  text-transform: capitalize;
+}

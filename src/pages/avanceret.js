@@ -38,7 +38,7 @@ export default function AdvancedSearchPage() {
   }
 
   return (
-    <AdvancedSearchProvider>
+    <AdvancedSearchProvider router={router}>
       <main>
         <div ref={scrollRef} />
         <Header router={router} hideSimpleSearch />

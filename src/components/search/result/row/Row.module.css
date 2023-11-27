@@ -2,6 +2,11 @@
   display: flex;
   height: fit-content;
   position: relative;
+  isolation: isolate;
+}
+
+.search:is(:focus, :focus-visible, :hover) {
+  z-index: 2;
 }
 
 .wrapper {

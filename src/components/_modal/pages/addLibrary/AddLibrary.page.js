@@ -15,11 +15,11 @@ import LibrarySearch from "./librarySearch/LibrarySearch";
 import Translate from "@/components/base/translate/Translate";
 import SearchResultList from "./searchResultList/SearchResultList";
 
-import useUser from "@/components/hooks/useUser";
 import useVerification from "@/components/hooks/useVerification";
 import useAccessToken from "@/components/hooks/user/useAccessToken";
 
 import styles from "./AddLibrary.module.css";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 /**
  * Function to select a FFU library from a library list
@@ -176,11 +176,11 @@ AddLibrary.propTypes = {
 export default function Wrap(props) {
   const { originUrl = null } = props;
 
-  const { authUser } = useUser();
+  const { loanerInfo } = useLoanerInfo();
   const accessToken = useAccessToken();
   const verification = useVerification();
 
-  const agencies = authUser?.agencies?.map(
+  const agencies = loanerInfo?.agencies?.map(
     (agency) => agency?.result?.[0].agencyId
   );
 

@@ -22,10 +22,10 @@ import {
 import { useRelevantAccessesForOrderPage } from "@/components/work/utils";
 import { validateEmail } from "@/utils/validateEmail";
 import NoAgenciesError from "./noAgencies/NoAgenciesError";
-import useUser from "@/components/hooks/useUser";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 import { useData } from "@/lib/api/api";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import { stringify } from "@/components/_modal/utils";
 import isEmpty from "lodash/isEmpty";
 
@@ -56,8 +56,8 @@ function Order({
     isLoadingBranches = false,
   } = pickupBranchInfo;
 
-  const { authUser, loanerInfo } = useUser();
   const { isAuthenticated } = useAuthentication();
+  const { loanerInfo } = useLoanerInfo();
 
   const pickUpAgencyInfo = useData(
     loanerInfo?.pickupBranch &&
@@ -74,7 +74,7 @@ function Order({
 
   const branches = pickUpAgencyInfo?.data?.branches;
   const showBlockedUserInfo =
-    borrowerCheck && (userMayNotBorrow || !authUser || !isAuthenticated);
+    borrowerCheck && (userMayNotBorrow || !loanerInfo || !isAuthenticated);
 
   // Sets if user has unsuccessfully tried to submit the order
   const [hasValidationErrors, setHasValidationErrors] = useState(false);
@@ -310,6 +310,7 @@ export default function Wrap(props) {
   const [pid, setPid] = useState(null);
   const orderMutation = useMutate();
   const articleOrderMutation = useMutate();
+  const { loanerInfo, updateLoanerInfo } = useLoanerInfo();
 
   useEffect(() => {
     if (context?.pid?.length > 0) {
@@ -321,12 +322,11 @@ export default function Wrap(props) {
     }
   }, [context.pid]);
 
-  const { userInfo, pickupBranchInfo, accessTypeInfo } =
-    useOrderPageInformation({
-      workId: context?.workId,
-      periodicaForm: context?.periodicaForm,
-      pids: context?.pids,
-    });
+  const { pickupBranchInfo, accessTypeInfo } = useOrderPageInformation({
+    workId: context?.workId,
+    periodicaForm: context?.periodicaForm,
+    pids: context?.pids,
+  });
 
   const { allowedAccessesByTypeName, manifestationResponse } =
     useRelevantAccessesForOrderPage(context?.pids);
@@ -352,8 +352,6 @@ export default function Wrap(props) {
   const singleManifestation =
     context.orderType && context.orderType === "singleManifestation";
 
-  const { loanerInfo, updateLoanerInfo } = userInfo;
-
   const {
     data: manifestationData,
     isLoading: isManifestationsLoading,
@@ -361,11 +359,11 @@ export default function Wrap(props) {
     error: manifestationError,
   } = manifestationResponse;
 
-  if (isManifestationsLoading || userInfo.userIsLoading) {
+  if (isManifestationsLoading || loanerInfo?.isLoading) {
     return <OrderSkeleton isSlow={isManifestationsSlow} />;
   }
   // check if user logged in via mitId - and has no connection to any libraries
-  if (!userInfo?.loanerInfo?.pickupBranch && !userInfo?.authUser?.agencies) {
+  if (!loanerInfo?.pickupBranch && !loanerInfo?.agencies?.length) {
     return <NoAgenciesError />;
   }
 

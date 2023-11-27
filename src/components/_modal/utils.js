@@ -2,7 +2,7 @@ import * as orderMutations from "@/lib/api/order.mutations";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import { isFFUAgency } from "@/utils/agency";
-import animations from "css/animations";
+import { buildHtmlLink } from "@/lib/utils";
 // elements we want
 const elements = [
   "a",
@@ -166,11 +166,6 @@ export function highlightMarkedWords(
 
 export function escapeColons(phrase) {
   return phrase.replace(":", "%3A");
-}
-
-//TODO move to a loacation that is more central
-function buildHtmlLink(txt, url) {
-  return `<a href="${url}" target="_blank" class="${animations.underlineContainer} ${animations.top_line_false} ${animations.top_line_keep_false}">${txt}</a>`;
 }
 
 /**
