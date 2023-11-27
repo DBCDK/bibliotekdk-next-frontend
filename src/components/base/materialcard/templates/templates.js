@@ -11,6 +11,21 @@ import cx from "classnames";
 import Translate from "@/components/base/translate";
 import { BackgroundColorEnum } from "../materialCard.utils";
 
+function ReadThisFirst({ className }) {
+  return (
+    <Text
+      tag="span"
+      type="text6"
+      className={cx(styles.begin_with_this, className)}
+    >
+      {Translate({
+        context: "series_page",
+        label: "begin_with_this",
+      })}
+    </Text>
+  );
+}
+
 function propFunc(textType, lines) {
   return {
     clamp: true,
@@ -20,13 +35,13 @@ function propFunc(textType, lines) {
 }
 
 /**Used in Slider */
-export function templateForVerticalWorkCard(material) {
+export function templateForVerticalWorkCard({ material }) {
   const fullTitle = material?.titles?.full?.join(": ");
   const creators = material?.creators;
   const firstCreator =
     extractCreatorsPrioritiseCorporation(creators)?.[0]?.display;
 
-  const coverSrc = getCoverImage(material.manifestations.mostRelevant);
+  const coverSrc = getCoverImage(material?.manifestations?.mostRelevant);
 
   return {
     link_href: getWorkUrl(fullTitle, creators, material?.workId),
@@ -61,6 +76,55 @@ export function templateForVerticalWorkCard(material) {
   };
 }
 
+/**Used in Slider */
+export function templateForSeriesSlider({ material, series }) {
+  const fullTitle = material?.titles?.full?.join(": ");
+  const creators = material?.creators;
+  const firstCreator =
+    extractCreatorsPrioritiseCorporation(creators)?.[0]?.display;
+
+  const coverSrc = getCoverImage(material?.manifestations?.mostRelevant);
+
+  const beginWithThis = series?.readThisFirst;
+  const numberInSeries = series?.numberInSeries;
+
+  return {
+    link_href: getWorkUrl(fullTitle, creators, material?.workId),
+    fullTitle: fullTitle,
+    image_src: coverSrc?.detail,
+    ImageOverlay: beginWithThis
+      ? () => <ReadThisFirst className={styles.begin_with_this_top_of_image} />
+      : () => <></>,
+    workId: material?.workId,
+    children: (
+      <>
+        {fullTitle && (
+          <Text {...propFunc("text1", 2)} title={fullTitle}>
+            {numberInSeries ? `${numberInSeries} - ` : ""}
+            {fullTitle}
+          </Text>
+        )}
+        {firstCreator && (
+          <Text {...propFunc("text2", 2)} title={firstCreator}>
+            {firstCreator}
+          </Text>
+        )}
+      </>
+    ),
+    // Styling
+    elementContainerClassName: cx(
+      styles.col_flex,
+      styles.col_flex__vertical_version
+    ),
+    relatedElementClassName: cx(
+      styles.related_element,
+      styles.related_element__series_slider_version
+    ),
+    textClassName: cx(styles.text__series_slider_version),
+    coverImageClassName: cx(styles.cover, styles.cover__series_slider_version),
+  };
+}
+
 /**Used in Series page */
 export function templateForBigWorkCard({ material, includeCreators }) {
   const fullTitle = material?.titles?.full?.join(": ");
@@ -90,14 +154,7 @@ export function templateForBigWorkCard({ material, includeCreators }) {
                 })}
               </Text>
             )}
-            {readThisFirst && (
-              <Text tag="span" type="text6" className={styles.begin_with_this}>
-                {Translate({
-                  context: "series_page",
-                  label: "begin_with_this",
-                })}
-              </Text>
-            )}
+            {readThisFirst && <ReadThisFirst />}
           </div>
         )}
         {fullTitle && (

@@ -7,7 +7,7 @@ import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import Col from "react-bootstrap/Col";
 import { templateForRelatedWorks } from "@/components/base/materialcard/templates/templates";
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 import cx from "classnames";
 
 function calculateBorder(link_href, border) {
@@ -47,6 +47,7 @@ const MaterialCard = forwardRef(
       link_href,
       fullTitle,
       image_src,
+      ImageOverlay,
       children,
       workId,
       elementContainerClassName,
@@ -58,6 +59,8 @@ const MaterialCard = forwardRef(
       imageLeft,
       border,
     } = renderProps;
+
+    const [loaded, setLoaded] = useState(false);
 
     if (imageLeft) {
       const ManifestationLink = ({ children }) => {
@@ -124,10 +127,15 @@ const MaterialCard = forwardRef(
           <div ref={ref} id={workId} className={cx(relatedElementClassName)}>
             <img
               src={image_src}
-              className={cx(coverImageClassName)}
+              className={cx(coverImageClassName, {
+                [styles.cover_image_skeleton]: !loaded,
+              })}
+              onLoad={() => setLoaded(true)}
               title={fullTitle}
-              alt={Translate({ context: "general", label: "frontpage" })}
+              alt=""
             />
+            {ImageOverlay && <ImageOverlay />}
+
             <div className={cx(textClassName)}>{children}</div>
           </div>
         </Link>

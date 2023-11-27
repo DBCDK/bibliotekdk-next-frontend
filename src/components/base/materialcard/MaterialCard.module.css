@@ -1,3 +1,13 @@
+.cover_image_skeleton {
+  display: block;
+  width: var(--cover_width_material_card);
+  height: var(--cover_height_material_card);
+  margin-inline: auto;
+
+  border: 1px solid var(--concrete);
+  outline: 0;
+}
+
 .link_style_colors {
   /* Add underline colors */
 

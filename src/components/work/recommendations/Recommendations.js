@@ -64,7 +64,11 @@ export default function Recommendations({
         <Col xs={12} md>
           <WorkSlider
             skeleton={isLoading}
-            works={works}
+            propsAndChildrenInputList={works?.map((work) => {
+              return {
+                material: work,
+              };
+            })}
             onWorkClick={(work, shownWorks, index) => {
               dataCollect.collectRecommenderClick({
                 recommender_based_on: workId,

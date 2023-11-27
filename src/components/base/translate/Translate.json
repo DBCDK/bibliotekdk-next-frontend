@@ -1287,6 +1287,10 @@
       "part": {
         "da": "%s. del - %s",
         "en": "Part %s - %s "
+      },
+      "go_to_series": {
+        "da": "Gå til serien",
+        "en": "Go to series"
       }
     },
     "series_page": {
