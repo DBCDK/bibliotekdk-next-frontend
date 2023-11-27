@@ -3,7 +3,7 @@
  * This file manages the state for advanced search.
  */
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { LogicalOperatorsEnum } from "@/components/search/enums";
 import { DropdownIndicesEnum } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
 import { useRouter } from "next/router";
@@ -77,6 +77,15 @@ export default function AdvancedSearchProvider({ children }) {
           getDefaultDropdownIndices(),
       })
   );
+
+  useEffect(() => {
+    const updatedCql = convertStateToCql({
+      inputFields,
+      dropdownSearchIndices,
+    });
+    setParsedCQL(updatedCql);
+  }, [inputFields]);
+
   //// ---- DONE: parsedCQL ----
 
   function resetObjectState() {
