@@ -131,7 +131,7 @@ export default function AdvancedSearch() {
             )}
           </Col>
           <Col>
-            <AdvancedSearchHistory />
+            <AdvancedSearchHistory type={showCqlEditor ? "cql" : "fields"} />
           </Col>
         </Row>
         <Row className={styles.buttonRow}>

@@ -104,6 +104,7 @@ export default function Wrap({ onWorkClick, onPageChange }) {
     // make an object for searchhistory @TODO .. the right object please
     const searchHistoryObj = {
       hitcount: parsedResponse?.hitcount,
+      fieldSearch: fieldSearch || "",
       cql: cqlQuery,
     };
     setValue(searchHistoryObj);
