@@ -297,7 +297,6 @@ function RenderMovieActorValues({ values, skeleton }) {
           <div key={`actors-${index}`} className={styles.link_list}>
             <Link
               href={urlToPerson(person, "contributor")}
-              // href={`/find?q.creator=${person.display}`}
               dataCy={cyKey({
                 name: person?.display,
                 prefix: "overview-genre",

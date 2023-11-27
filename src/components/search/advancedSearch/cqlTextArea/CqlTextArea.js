@@ -25,7 +25,7 @@ export function CqlTextArea({ textAreaRef }) {
   useEffect(() => {
     const cql = router?.query?.cql;
     setCqlValue(cql);
-  }, [router?.query?.cql]);
+  }, [router?.query?.cql, router?.query?.fieldSeach]);
 
   return (
     <div>
