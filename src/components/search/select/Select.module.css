@@ -57,6 +57,7 @@
   min-width: 125px;
   height: 100%;
   text-align: left;
+  cursor: pointer;
 }
 
 .dropdowntoggle[aria-expanded="true"] .dropdownicon img {

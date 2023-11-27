@@ -31,7 +31,7 @@ export function uniqueDropdownInput(items) {
  * @param prioritisedFormType
  * @param {T} unprioritisedItems
  * @param unprioritisedFormType
- * @param {("key"|"name")} overrideValueAs
+ * @param {("key"|"name"|undefined)} overrideValueAs
  * @returns {DropdownInputArray}
  */
 export function convertToDropdownInput({

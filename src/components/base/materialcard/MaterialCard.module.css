@@ -17,8 +17,7 @@
 /** ___________________ */
 /**imageLeft material card*/
 .textInformation {
-  padding: var(--pt3) 0 var(--pt3) var(--pt2);
-  padding-right: var(--pt9);
+  padding: var(--pt3) var(--pt6) var(--pt3) var(--pt2);
 }
 
 .container {
@@ -39,20 +38,12 @@
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
-@media screen and (max-width: 768px) {
-  .image {
-    padding-left: var(--pt5);
-  }
-}
-
 @media screen and (max-width: 576px) {
   .image {
-    padding-left: var(--pt4);
+    padding: var(--pt1) var(--pt2);
   }
-}
 
-@media screen and (max-width: 400px) {
-  .image {
-    padding-left: var(--pt3);
+  .textInformation {
+    padding: var(--pt3) var(--pt2) var(--pt3);
   }
 }

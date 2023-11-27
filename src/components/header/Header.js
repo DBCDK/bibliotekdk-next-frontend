@@ -427,7 +427,7 @@ function HeaderSkeleton(props) {
 export default function Wrap(props) {
   const router = useRouter();
   const user = useUser();
-  const { hasCulrUniqueId } = useAuthentication();
+  const { hasCulrUniqueId, isAuthenticated } = useAuthentication();
   const modal = useModal();
   const filters = useFilters();
 
@@ -438,7 +438,7 @@ export default function Wrap(props) {
   return (
     <Header
       {...props}
-      user={{ ...user, hasCulrUniqueId }}
+      user={{ ...user, hasCulrUniqueId, isAuthenticated }}
       modal={modal}
       filters={filters}
       router={router}

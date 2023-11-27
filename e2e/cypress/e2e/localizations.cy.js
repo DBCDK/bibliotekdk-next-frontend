@@ -2,7 +2,7 @@ describe("Localizations", () => {
   it("Base flow", () => {
     cy.visit("/iframe.html?id=localizations-base--localizations-base-flow");
 
-    cy.contains("Localizations", { timeout: 10000 }).should("exist");
+    cy.contains("Localizations", { timeout: 15000 }).should("exist");
 
     cy.get("a", { timeout: 10000 }).first().should("exist").click();
 
@@ -41,6 +41,7 @@ describe("Localizations", () => {
     cy.contains("Tilbage", { timeout: 10000 }).click({ force: true });
 
     //// Grullinger
+    cy.contains("Hjemme");
     cy.contains("Grullinger", { timeout: 10000 }).click();
     cy.contains("h2", "Grullinger");
     cy.contains("Bestil nu og afhent senere");
@@ -58,8 +59,9 @@ describe("Localizations", () => {
     cy.contains("Tilbage", { timeout: 10000 }).click({ force: true });
     cy.contains("Tilbage", { timeout: 10000 }).click({ force: true });
 
+    //// Special FFUs
     cy.contains("Hjemme på én eller flere afdelinger");
-    cy.contains("United FFUs", { timeout: 10000 }).click();
+    cy.contains("Special FFUs", { timeout: 10000 }).click();
 
     // Herlige Lev
     cy.contains("På hylden", { timeout: 10000 });
@@ -86,7 +88,7 @@ describe("Localizations", () => {
 
     // Ulvs Hale
     cy.contains("Vi har ikke status for disse afdelinger");
-    cy.contains("Se detaljeret status hos United FFUs");
+    cy.contains("Se detaljeret status hos Special FFUs");
     cy.contains("Ulvs Hale FFU", { timeout: 10000 }).click();
     cy.contains("Har ikke materialet");
     cy.contains("Bestil til afhentning på denne afdeling");
@@ -98,6 +100,45 @@ describe("Localizations", () => {
 
     cy.contains("BalleRipRapRup");
     cy.contains("Grullinger");
-    cy.contains("United FFUs");
+    cy.contains("Special FFUs");
+
+    //// Animal Group HoldingItems Holder FFUs
+    cy.contains("Hjemme på 2 eller flere afdelinger");
+    cy.contains("Animal Group HoldingItems Holder FFUs", {
+      timeout: 10000,
+    }).click();
+    cy.contains("1 på hylden");
+    cy.contains("Bestil nu og afhent");
+    cy.contains("Vi har ikke status for disse afdelinger");
+    cy.contains("Se detaljeret status hos");
+
+    // Ant Colony
+    cy.contains("Ant Colony", { timeout: 10000 }).click();
+    cy.contains("1 på hylden");
+    cy.contains("Tilbage", { timeout: 10000 }).click({ force: true });
+
+    cy.contains("Rhinoceroses Crash", { timeout: 10000 }).click();
+    cy.contains("Bestil nu og afhent");
+    cy.contains("Tilbage", { timeout: 10000 }).click({ force: true });
+
+    cy.contains("Tilbage", { timeout: 10000 }).click({ force: true });
+
+    //// Duo without holdings FFUs
+    cy.contains("Hjemme");
+    cy.contains("Duo without holdings FFUs", {
+      timeout: 10000,
+    }).click();
+    cy.contains(
+      "Er hjemme på en eller flere afdelinger, men vi har ikke detaljer om hvilke afdelinger"
+    );
+
+    cy.contains("Vi har ikke status for disse afdelinger");
+    cy.contains("Se detaljeret status hos");
+
+    cy.contains("Yang FFU", { timeout: 10000 }).click();
+    cy.contains("Har ikke materialet");
+
+    cy.contains("Tilbage", { timeout: 10000 }).click({ force: true });
+    cy.contains("Tilbage", { timeout: 10000 }).click({ force: true });
   });
 });

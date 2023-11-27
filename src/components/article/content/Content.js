@@ -195,8 +195,6 @@ export function Content({
                 md={6}
               >
                 <Image
-                  //   width={article.fieldImage.width}
-                  //   height={article.fieldImage.height}
                   src={article.fieldImage.url}
                   alt={article.fieldImage.alt || ""}
                   title={article.fieldImage.title || ""}

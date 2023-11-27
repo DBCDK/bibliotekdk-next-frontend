@@ -166,7 +166,6 @@ function useUserImpl() {
     error: userDataError,
     // User exist in culr
     hasCulrUniqueId,
-
     // User has added userParameters
     hasUserParameters,
     loanerInfo,

@@ -50,6 +50,10 @@
       "all_phrase.generalmaterialtype": {
         "da": "Alle materialer",
         "en": "All materials"
+      },
+      "search_dropdown": {
+        "da": "Søg i %s...",
+        "en": "Search in %s..."
       }
     },
     "logo": {
@@ -887,6 +891,36 @@
         "en": "Download file for EndNote, Zotero, Mendeley and ReferenceManager"
       }
     },
+    "multiReferences": {
+      "get-references": {
+        "da": "Hent referencer for %s materialer",
+        "en": "Get references for %s materials"
+      },
+      "get-reference": {
+        "da": "Hent reference",
+        "en": "Get reference"
+      },
+      "choose-edition": {
+        "da": "Vælg udgave(r) for at hente referencer",
+        "en": "Choose edition(s) to get references"
+      },
+      "choose-edition-short": {
+        "da": "Vælg udgave",
+        "en": "Choose edition"
+      },
+      "missing-edition": {
+        "da": "Der er ikke valgt en specifik udgave for %s af materialerne",
+        "en": "You have not chosen a specific edition for %s of the materials"
+      },
+      "missing-edition-singular": {
+        "da": "Der er ikke valgt en specifik udgave for materialet",
+        "en": "You have not chosen a specific edition for the material"
+      },
+      "remove": {
+        "da": "Fjern",
+        "en": "Remove"
+      }
+    },
     "workTypeDistinctForm": {
       "isOnline": {
         "da": "denne udgave",
@@ -1304,17 +1338,21 @@
         "da": "Fjern",
         "en": "Remove"
       },
+      "dont-order": {
+        "da": "Bestil ikke",
+        "en": "Don't order"
+      },
       "orderAnyways": {
         "da": "Bestil alligevel",
         "en": "Order anyways"
       },
       "alreadyOrderedText": {
-        "da": "Du har allerede bestilt dette materiale d. %s",
-        "en": "You have already ordered this material on %s"
+        "da": "Du har allerede bestilt en udgave af dette materiale",
+        "en": "You have already ordered an edition of this material"
       },
       "treshhold-error": {
-        "da": "OBS: Du kan max bestille 25 ad gangen.",
-        "en": "ATT: You can max order 25 at a time"
+        "da": "OBS: Du kan maks bestille 25 ad gangen.",
+        "en": "ATT: You can maximum order 25 at a time"
       }
     },
     "bookmark-order": {
@@ -1338,9 +1376,17 @@
         "da": "På næste side vises det materiale, som du kan bestille",
         "en": "The material you can order will show on the next page"
       },
+      "efilter-back-text": {
+        "da": "Der er ingen materialer der kræver bestilling",
+        "en": "No materials requires an order"
+      },
       "efilter-proceed": {
         "da": "Næste",
         "en": "Next"
+      },
+      "efilter-back": {
+        "da": "Tilbage",
+        "en": "Back"
       },
       "multiorder-title": {
         "da": "Bestil",
@@ -1792,6 +1838,10 @@
         "da": "Udgiver",
         "en": "Publisher"
       },
+      "advanced-dropdown-term.fictionalcharacter": {
+        "da": "Fiktiv karakter",
+        "en": "Fictional character"
+      },
       "advanced-dropdown-term.contributor": {
         "da": "Medvirkende",
         "en": "contributor"
@@ -1801,10 +1851,13 @@
         "en": "Series title"
       },
       "advanced-dropdown-term.function": {
-        "da": "Ophav",
+        "da": "Forfatter/ophav",
         "en": "function"
       },
-
+      "advanced-dropdown-term.hostpublication": {
+        "da": "Værtspublikation",
+        "en": "Hostpublication"
+      },
       "advanced-dropdown-AND": {
         "da": "OG",
         "en": "AND"
@@ -2764,8 +2817,8 @@
         "en": "The library cannot confirm the loaner information you have saved on your profile. This may be due to, for example, that you have received a new login or are no longer a loaner. Contact the library if you think this is an error."
       },
       "action-alreadyOrderedText": {
-        "da": "Du har allerede bestilt dette materiale.",
-        "en": "You have already ordered this material."
+        "da": "Du har allerede bestilt en udgave af dette materiale",
+        "en": "You have already ordered an edition of this material"
       },
       "choose-order-again": {
         "da": "Vælg om det skal bestilles igen.",

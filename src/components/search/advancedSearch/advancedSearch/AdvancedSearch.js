@@ -29,32 +29,37 @@ ExperimentalCqlParser.propTypes = { parsedCQL: PropTypes.string };
  * @returns {React.JSX.Element}
  */
 
-export default function AdvancedSearch({ initState }) {
+export default function AdvancedSearch() {
   const router = useRouter();
-  const { cql } = router.query;
   const workType = "all";
-  const [showCqlEditor, setShowCqlEditor] = useState(false);
-  const textAreaRef = useRef(null);
 
   const {
     inputFields,
     dropdownSearchIndices,
-    updateStatesFromObject,
     resetObjectState,
     parsedCQL,
     setParsedCQL,
+    cqlFromUrl,
   } = useAdvancedSearchContext();
 
+  const [showCqlEditor, setShowCqlEditor] = useState(!isEmpty(cqlFromUrl));
+  const textAreaRef = useRef(null);
+  const {
+    query: { cql },
+  } = router;
+
   useEffect(() => {
-    //show CQL editor if there is a cql param in the url
     setShowCqlEditor(!!cql);
-    if (initState) {
-      updateStatesFromObject(initState);
-    }
-  }, []);
+  }, [cql]);
 
   //add raw cql query in url if showCqlEditor. Add state to url if fieldInputs
   const doAdvancedSearch = () => {
+    //save state in url
+    const stateToString = JSON.stringify({
+      inputFields,
+      dropdownSearchIndices,
+    });
+
     if (showCqlEditor) {
       //do cql text search
       const cql = textAreaRef.current.value;
@@ -63,14 +68,15 @@ export default function AdvancedSearch({ initState }) {
         textAreaRef.current.focus();
       }
 
-      const query = { cql: cql };
-      router.push({ pathname: router.pathname, query });
+      if (parsedCQL === cql) {
+        const query = { fieldSearch: stateToString };
+        router.push({ pathname: router.pathname, query });
+      } else {
+        resetObjectState();
+        const query = { cql: cql };
+        router.push({ pathname: router.pathname, query });
+      }
     } else {
-      //save state in url
-      const stateToString = JSON.stringify({
-        inputFields,
-        dropdownSearchIndices,
-      });
       const query = { fieldSearch: stateToString };
       router.push({ pathname: router.pathname, query });
       //save in state
@@ -136,8 +142,8 @@ export default function AdvancedSearch({ initState }) {
             <Link
               border={{ bottom: { keepVisible: true } }}
               onClick={() => {
-                router.push({ pathname: router.pathname, query: {} });
                 resetObjectState();
+                router.push({ pathname: router.pathname });
               }}
             >
               Ryd søgning

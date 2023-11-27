@@ -10,10 +10,7 @@ import { StatusEnum } from "@/components/base/materialcard/materialCard.utils";
 import useUser from "@/components/hooks/useUser";
 import { useMutate } from "@/lib/api/api";
 import * as orderMutations from "@/lib/api/order.mutations";
-import {
-  createOrderKey,
-  setAlreadyOrdered,
-} from "../../order/utils/order.utils";
+import { setAlreadyOrdered } from "../../order/utils/order.utils";
 
 const CONTEXT = "bookmark-order";
 
@@ -54,11 +51,11 @@ const MultiOrder = ({ context }) => {
   const { materials, closeModalOnBack } = context;
   const analyzeRef = useRef();
   const [materialCounts, setMaterialCounts] = useState({});
-  const [duplicateOrdersWorkIds, setDuplicateOrdersWorkIds] = useState([]);
   const [materialsToOrder, setMaterialsToOrder] = useState(materials);
   const { loanerInfo } = useUser();
   const orderMutation = useMutate();
   const [isCreatingOrders, setIsCreatingOrders] = useState(false);
+  const [duplicateBookmarkIds, setDuplicateBookmarkIds] = useState([]);
   const pickupBranch = useRef(); // Pickup branch from checkout form
 
   useEffect(() => {
@@ -72,32 +69,9 @@ const MultiOrder = ({ context }) => {
         materials.find((mat) => mat.key === key)
       );
 
-      const orderedBookmarkIds = successMaterials.map((bm) => bm.bookmarkId);
-
-      //find materialsToOrder that have been ordered successully
-      const successfullyOrderedMaterials = orderedBookmarkIds.flatMap((b) =>
-        materialsToOrder.filter((m) => {
-          if (m.bookmarkId === b) return m;
-        })
-      );
-
-      //get the sucessfully ordered pids
-      const orderedPids = successfullyOrderedMaterials?.map((mat) => {
-        const isSpecificEdition = !!mat.pid;
-
-        return isSpecificEdition
-          ? [mat.pid]
-          : filterForRelevantMaterialTypes(
-              mat?.manifestations?.mostRelevant,
-              mat?.materialType
-            ).flatMap((mani) => mani.pid);
-      });
-
-      //set the ordered pids as already ordered in session
-      orderedPids.forEach((pids) => {
-        //Contains also pid for peridica, which we dont check at the moment
-        const orderKey = createOrderKey(pids);
-        if (orderKey !== "") setAlreadyOrdered(orderKey);
+      //set the ordered workids as already ordered in session
+      successMaterials.forEach((mat) => {
+        if (mat?.workId) setAlreadyOrdered(mat.workId);
       });
 
       setIsCreatingOrders(false);
@@ -152,7 +126,8 @@ const MultiOrder = ({ context }) => {
           )
         );
 
-      setDuplicateOrdersWorkIds(duplicateOrders.map((mat) => mat.workId));
+      setDuplicateBookmarkIds(duplicateOrders.map((mat) => mat.bookmarkId));
+
       const materialsDigital = elements
         .filter(
           (element) =>
@@ -212,19 +187,20 @@ const MultiOrder = ({ context }) => {
       </Title>
 
       <div className={styles.materialList} ref={analyzeRef}>
-        {materialsToOrder.map((material) => {
-          return (
-            <Material
-              key={material.key}
-              material={material}
-              numberOfMaterialsToOrder={materialsToOrder?.length ?? 0}
-              setMaterialsToOrder={setMaterialsToOrder}
-              setDuplicateOrdersWorkIds={setDuplicateOrdersWorkIds}
-              //context is responsible for updating periodica form via periodicaForm.js and modal.update
-              periodicaForms={context?.periodicaForms}
-            />
-          );
-        })}
+        {materialsToOrder.map((material) => (
+          <Material
+            key={material.key}
+            material={material}
+            numberOfMaterialsToOrder={materialsToOrder?.length ?? 0}
+            setMaterialsToOrder={setMaterialsToOrder}
+            showAlreadyOrderedWarning={duplicateBookmarkIds.includes(
+              (bm) => bm === material.bookmarkId
+            )}
+            setDuplicateBookmarkIds={setDuplicateBookmarkIds}
+            //context is responsible for updating periodica form via periodicaForm.js and modal.update
+            periodicaForms={context?.periodicaForms}
+          />
+        ))}
       </div>
 
       {materialCounts !== null && (
@@ -234,7 +210,7 @@ const MultiOrder = ({ context }) => {
             materialCounts={materialCounts}
             onSubmit={onSubmit}
             isLoading={isCreatingOrders}
-            duplicateOrdersWorkIds={duplicateOrdersWorkIds}
+            duplicateBookmarkIds={duplicateBookmarkIds}
           />
         </section>
       )}

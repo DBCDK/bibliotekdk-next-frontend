@@ -30,3 +30,7 @@
     linear-gradient(rgb(186, 77, 87), rgb(186, 77, 87)),
     linear-gradient(rgba(255, 0, 0, 0), rgba(255, 0, 0, 0));
 }
+
+.goToOrderHistory {
+  padding-top: var(--pt6);
+}

@@ -4,6 +4,12 @@
 
 .buttonContainer {
   display: flex;
+  margin-top: var(--pt05);
   flex-direction: row;
   gap: var(--pt4);
+}
+
+.icon > i {
+  display: flex;
+  align-items: center;
 }

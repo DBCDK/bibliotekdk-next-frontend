@@ -41,11 +41,11 @@ export function RadioLinkItem({
   );
 }
 
-export function RadioButtonItem({ item }) {
+export function RadioButtonItem({ item, textType = "text3" }) {
   return (
     <div className={cx(styles.select_wrapper)} tabIndex="-1">
       <Text
-        type="text3"
+        type={textType}
         className={cx(
           styles.upper_first,
           animations["h-border-bottom"],
@@ -59,7 +59,7 @@ export function RadioButtonItem({ item }) {
   );
 }
 
-export function CheckboxItem({ item, onChange = null }) {
+export function CheckboxItem({ item, onChange = null, textType = "text3" }) {
   return (
     <div className={cx(styles.select_wrapper)} tabIndex="-1">
       <Checkbox
@@ -75,7 +75,7 @@ export function CheckboxItem({ item, onChange = null }) {
         tabIndex="-1"
       />
       <Text
-        type="text3"
+        type={textType}
         className={cx(
           styles.upper_first,
           animations["h-border-bottom"],

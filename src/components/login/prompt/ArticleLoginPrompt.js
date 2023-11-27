@@ -7,16 +7,18 @@ import { useData } from "@/lib/api/api";
 import { infomediaArticle } from "@/lib/api/infomedia.fragments";
 import LoginPrompt from "./Prompt";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 /**
- * Prompt the user for log in / change library, when user is not granted access
+ * Prompt the user for log in when not authenticated or
+ * to explains how to obtain access, when user is not granted access
  * to the article
  *
  */
 export default function ArticleLoginPrompt({ articleId }) {
   const modal = useModal();
-  const { authUser: user, isAuthenticated } = useUser();
-
+  const { authUser: user } = useUser();
+  const { isAuthenticated } = useAuthentication();
   const hasInfomediaAccess = user?.rights?.infomedia;
 
   const { data, isLoading } = useData(
@@ -33,8 +35,8 @@ export default function ArticleLoginPrompt({ articleId }) {
 
   const agencyName = branch?.agencyName || "";
 
-  // Not logged in, no access
-  if (!hasInfomediaAccess && !isAuthenticated) {
+  //NOT AUTHENTICATED --> Show login button and reminder that not all libraries give access to infomedia
+  if (!isAuthenticated) {
     return (
       <LoginPrompt
         title={Translate({ context: "articles", label: "getAccess" })}
@@ -43,17 +45,19 @@ export default function ArticleLoginPrompt({ articleId }) {
           label: "accessWarning",
         })}
         signIn={() => openLoginModal({ modal, mode: LOGIN_MODE.INFOMEDIA })}
+        isAuthenticated={isAuthenticated}
       />
     );
   }
 
-  // Logged in, library does not have access
-  if (!isLoading && !data?.infomedia?.article) {
+  //AUTHENTICATED AND NO ACCESS either because, we couldnt fetch article (shoudl we show error instead?)
+  // OR bc user doesnt have access rights
+  // --> Show library name and explain how to obtain access
+  if (!isLoading && (!data?.infomedia?.article || !hasInfomediaAccess)) {
     const linkHref = {
       href: "https://slks.dk/omraader/kulturinstitutioner/biblioteker",
       text: Translate({ context: "articles", label: "libraryAccessReadMore" }),
     };
-
     return (
       <LoginPrompt
         title={Translate({
@@ -69,12 +73,9 @@ export default function ArticleLoginPrompt({ articleId }) {
           context: "articles",
           label: "accessOpportunity3",
         })}
-        buttonText={Translate({
-          context: "order",
-          label: "change-pickup-digital-copy-link",
-        })}
         linkHref={linkHref}
         signIn={openLoginModal}
+        isAuthenticated={isAuthenticated}
       />
     );
   }

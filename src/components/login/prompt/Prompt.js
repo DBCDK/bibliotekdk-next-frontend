@@ -13,7 +13,6 @@ import Divider from "@/components/base/divider";
 import Link from "@/components/base/link";
 
 import styles from "./Prompt.module.css";
-import useUser from "@/components/hooks/useUser";
 import InfoDropdown from "@/components/base/infoDropdown/InfoDropdown";
 
 /**
@@ -26,6 +25,7 @@ import InfoDropdown from "@/components/base/infoDropdown/InfoDropdown";
  * @param {string} description
  * @param {string} buttonText
  * @param {function} signIn
+ * @param {boolean} isAuthenticated
  * @returns {React.JSX.Element}
  */
 export default function LoginPrompt({
@@ -35,9 +35,8 @@ export default function LoginPrompt({
   buttonText = Translate({ context: "header", label: "login" }),
   linkHref = null,
   signIn,
+  isAuthenticated,
 }) {
-  const user = useUser();
-
   return (
     <Container className={styles.prompt} fluid>
       <Row>
@@ -46,7 +45,23 @@ export default function LoginPrompt({
           <Title type="title4" tag="h3">
             {title}
           </Title>
-          {user.isAuthenticated && linkHref && (
+          {!isAuthenticated && (
+            <>
+              <Text type="text3" className={styles.description}>
+                {description}
+              </Text>
+              <Button
+                type="primary"
+                size="large"
+                onClick={signIn}
+                dataCy="article-prompt-button-log-ind"
+                className={styles.signInButton}
+              >
+                {buttonText}
+              </Button>
+            </>
+          )}
+          {isAuthenticated && linkHref && (
             <InfoDropdown
               label="show-more"
               buttonText={Translate({
@@ -76,18 +91,6 @@ export default function LoginPrompt({
               </>
             </InfoDropdown>
           )}
-          {!(user.isAuthenticated && linkHref) && (
-            <Button
-              type="primary"
-              size="large"
-              onClick={signIn}
-              dataCy="article-prompt-button-log-ind"
-              className={styles.signInButton}
-            >
-              {buttonText}
-            </Button>
-          )}
-
           <Divider className={styles.devider} />
         </Col>
       </Row>

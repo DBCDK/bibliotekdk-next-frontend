@@ -5,6 +5,7 @@ import Translate from "@/components/base/translate";
 import { Close } from "@/components/_modal/pages/base/top";
 import Input from "@/components/base/forms/input";
 import { useEffect, useState } from "react";
+import { ToggleMenuItemsEnum } from "@/components/search/advancedSearch/advancedSearchHelpers/dropdownReducerFunctions";
 
 export function DialogForPublicationYear({ items, toggleMenuItemsState }) {
   const item = items?.[0];
@@ -20,8 +21,11 @@ export function DialogForPublicationYear({ items, toggleMenuItemsState }) {
   useEffect(() => {
     if (valueState !== null) {
       toggleMenuItemsState({
-        ...item,
-        value: valueState,
+        type: ToggleMenuItemsEnum.UPDATE,
+        payload: {
+          ...item,
+          value: valueState,
+        },
       });
     }
   }, [JSON.stringify(valueState)]);

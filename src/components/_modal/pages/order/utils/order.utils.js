@@ -63,38 +63,35 @@ export function getStylingAndErrorMessage(validated, hasValidationErrors) {
 }
 
 /**
- * Creates a key for each order
- * Used to check if user has already a specific material in same session
- * @param {String[]} orderPids
- * @returns {string}
+ * If workId isnt already in sessionStorage, add it
+ * @param {String} workId
  */
-export function createOrderKey(orderPids) {
-  return (orderPids && orderPids?.join("/")) || "";
-}
-
-export function setAlreadyOrdered(orderKey) {
+export function setAlreadyOrdered(workId) {
   const alreadyOrdered = JSON.parse(
     sessionStorage.getItem("alreadyOrdered") || "[]"
   );
-  alreadyOrdered.push(orderKey);
-  sessionStorage.setItem("alreadyOrdered", JSON.stringify(alreadyOrdered));
+  const isAlreaydOrdered = alreadyOrdered.includes(workId);
+  if (!isAlreaydOrdered) {
+    alreadyOrdered.push(workId);
+    sessionStorage.setItem("alreadyOrdered", JSON.stringify(alreadyOrdered));
+  }
 }
 
 /**
- * @param {string} orderKey
- * @return {boolean} true if orderKey is part of alreadyOrdered keys
+ * @param {string} workId
+ * @return {boolean} true if workId is part of alreadyOrdered keys
  */
-export function pidHasAlreadyBeenOrdered(orderKey) {
-  return !!JSON.parse(
-    sessionStorage.getItem("alreadyOrdered") || "[]"
-  ).includes(orderKey);
+export function workHasAlreadyBeenOrdered(workId) {
+  const storage = JSON.parse(sessionStorage.getItem("alreadyOrdered") || "[]");
+  const alreadyOrdered = storage.includes(workId);
+  return alreadyOrdered;
 }
 
-export function removeOrderIdFromSession(orderKey) {
+export function removeWorkIdFromSession(workId) {
   const alreadyOrdered = JSON.parse(
     sessionStorage.getItem("alreadyOrdered") || "[]"
   );
-  const index = alreadyOrdered.indexOf(orderKey);
+  const index = alreadyOrdered.indexOf(workId);
   if (index > -1) {
     alreadyOrdered.splice(index, 1);
   }

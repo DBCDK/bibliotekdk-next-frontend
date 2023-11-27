@@ -19,6 +19,8 @@ import styles from "./Input.module.css";
  * @param {boolean} disabled
  * @param onChange
  * @param onBlur
+ * @param {function} onKeyDown
+ * @param {boolean} overrideValueControl
  * @param {string} dataCy
  * @param {boolean} readOnly
  * @param required
@@ -42,6 +44,8 @@ function Input({
   disabled = false,
   onChange,
   onBlur,
+  onKeyDown,
+  overrideValueControl,
   dataCy = "input",
   readOnly = false,
   required,
@@ -65,10 +69,11 @@ function Input({
   return (
     <input
       {...props}
+      {...(onKeyDown && { onKeyDown: onKeyDown })}
       id={id}
       className={`${styles.input} ${readOnlyClass} ${invalidClass} ${className}`}
       type={type}
-      value={val}
+      value={overrideValueControl ? value : val}
       placeholder={placeholder}
       disabled={disabled}
       readOnly={readOnly}

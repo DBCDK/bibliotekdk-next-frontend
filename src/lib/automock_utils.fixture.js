@@ -738,14 +738,14 @@ const BRANCH_6 = {
 
 const BRANCH_7 = {
   name: "Herlige Lev FFU - Branch with FFU holdings",
-  branchId: "891234",
-  agencyId: "891230",
-  agencyName: "United FFUs",
+  branchId: "800014",
+  agencyId: "800010",
+  agencyName: "Special FFUs",
   orderPolicy: {
     orderPossible: true,
   },
   holdingStatus: {
-    branchId: "891234",
+    branchId: "800014",
     expectedDelivery: TODAY,
     holdingItems: [],
   },
@@ -756,14 +756,14 @@ const BRANCH_7 = {
 
 const BRANCH_7_1 = {
   name: "Senge Loese FFU - Branch with FFU holdings",
-  branchId: "891235",
-  agencyName: "United FFUs",
-  agencyId: "891230",
+  branchId: "800015",
+  agencyName: "Special FFUs",
+  agencyId: "800010",
   orderPolicy: {
     orderPossible: true,
   },
   holdingStatus: {
-    branchId: "891235",
+    branchId: "800015",
     expectedDelivery: TOMORROW,
     holdingItems: [],
   },
@@ -774,14 +774,14 @@ const BRANCH_7_1 = {
 
 const BRANCH_7_2 = {
   name: "Hede Huse FFU - Branch with FFU holdings",
-  branchId: "891236",
-  agencyName: "United FFUs",
-  agencyId: "891230",
+  branchId: "800016",
+  agencyName: "Special FFUs",
+  agencyId: "800010",
   orderPolicy: {
     orderPossible: false,
   },
   holdingStatus: {
-    branchId: "891236",
+    branchId: "800016",
     expectedDelivery: NEVER,
     holdingItems: [],
   },
@@ -791,14 +791,14 @@ const BRANCH_7_2 = {
 };
 const BRANCH_7_3 = {
   name: "Ulvs Hale FFU - Branch with FFU holdings",
-  branchId: "891237",
-  agencyName: "United FFUs",
-  agencyId: "891230",
+  branchId: "800017",
+  agencyName: "Special FFUs",
+  agencyId: "800010",
   orderPolicy: {
     orderPossible: true,
   },
   holdingStatus: {
-    branchId: "891237",
+    branchId: "800017",
     expectedDelivery: null,
     holdingItems: [],
   },
@@ -819,6 +819,126 @@ const BRANCH_8 = {
   branchWebsiteUrl: "nocheck.dekaa",
   agencyName: "NoCheckBib",
   agencyId: "3",
+};
+
+const BRANCH_9 = {
+  name: "Ant Colony FFU - Branch with FFU holdings",
+  branchId: "891234",
+  agencyId: "891230",
+  agencyName: "Animal Group HoldingItems Holder FFUs",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  holdingStatus: {
+    branchId: "891234",
+    expectedDelivery: TODAY,
+    holdingItems: [
+      {
+        expectedDelivery: TODAY,
+        status: HoldingStatusEnum.ON_SHELF,
+      },
+    ],
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "ant.colony.dekaa",
+};
+
+const BRANCH_9_1 = {
+  name: "Manatee Aggregation FFU - Branch with FFU holdings",
+  branchId: "891235",
+  agencyName: "Animal Group HoldingItems Holder FFUs",
+  agencyId: "891230",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  holdingStatus: {
+    branchId: "891235",
+    expectedDelivery: TODAY,
+    holdingItems: [
+      {
+        expectedDelivery: TODAY,
+        status: HoldingStatusEnum.ON_SHELF,
+      },
+    ],
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "gang.dekaa",
+};
+
+const BRANCH_9_2 = {
+  name: "Parrot Pandemonium FFU - Branch with FFU holdings",
+  branchId: "891236",
+  agencyName: "Animal Group HoldingItems Holder FFUs",
+  agencyId: "891230",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  holdingStatus: {
+    branchId: "891236",
+    expectedDelivery: null,
+    holdingItems: [],
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "parrot.pandemonium.dekaa",
+};
+const BRANCH_9_3 = {
+  name: "Rhinoceroses Crash FFU - Branch with FFU holdings",
+  branchId: "891237",
+  agencyName: "Animal Group HoldingItems Holder FFUs",
+  agencyId: "891230",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  holdingStatus: {
+    branchId: "891237",
+    expectedDelivery: TOMORROW,
+    holdingItems: [
+      {
+        expectedDelivery: TOMORROW,
+        status: HoldingStatusEnum.ON_SHELF,
+      },
+    ],
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "rhinoceroses.crash.dekaa",
+};
+const BRANCH_10 = {
+  name: "Ying FFU - Branch without FFU holdings",
+  branchId: "898761",
+  agencyName: "Duo without holdings FFUs",
+  agencyId: "898760",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  holdingStatus: {
+    branchId: "898767",
+    expectedDelivery: TODAY,
+    holdingItems: [],
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "ying.dekaa",
+};
+const BRANCH_10_1 = {
+  name: "Yang FFU - Branch without FFU holdings",
+  branchId: "898762",
+  agencyName: "Duo without holdings FFUs",
+  agencyId: "898760",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  holdingStatus: {
+    branchId: "898762",
+    expectedDelivery: TOMORROW,
+    holdingItems: [],
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "yang.dekaa",
 };
 
 // A user with some agencies
@@ -1348,6 +1468,12 @@ export default function automock_utils() {
     BRANCH_7_2,
     BRANCH_7_3,
     BRANCH_8,
+    BRANCH_9,
+    BRANCH_9_1,
+    BRANCH_9_2,
+    BRANCH_9_3,
+    BRANCH_10,
+    BRANCH_10_1,
     USER_1,
     USER_2,
     USER_3,
