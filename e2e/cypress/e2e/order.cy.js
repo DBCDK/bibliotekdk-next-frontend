@@ -143,6 +143,8 @@ describe("Order", () => {
       );
       cy.contains("Bestil", { timeout: 10000 }).click();
 
+      cy.contains("Hugo i Sølvskoven");
+
       // Check that user blocking is not present
       cy.get("[data-cy=blocked-user]").should("not.exist");
       cy.get("[data-cy=button-godkend]")
@@ -430,10 +432,9 @@ describe("Order", () => {
       cy.contains("Bestil", { timeout: 10000 }).click();
       cy.contains("Test Bib - User is blocked");
       cy.get("[data-cy=blocked-user]").should("exist");
-      cy.get("[data-cy=blocked-user]").should("exist");
 
       //switching to non-blocked agency
-      cy.contains("Skift afhentning").should("exist").click();
+      cy.contains("Skift afhentning").should("be.visible").click();
       cy.get("[data-cy=show-branches-for-1]").should("exist").click();
       cy.contains("Test Bib - only physical via ILL").should("exist").click();
 

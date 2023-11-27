@@ -4,7 +4,6 @@ import styles from "./MyProfile.module.css";
 
 import Text from "@/components/base/text";
 
-import useUser from "@/components/hooks/useUser";
 import Translate from "@/components/base/translate/Translate";
 import Title from "@/components/base/title";
 import { useData } from "@/lib/api/api";
@@ -12,6 +11,7 @@ import * as userFragments from "@/lib/api/user.fragments";
 import IconButton from "@/components/base/iconButton/IconButton";
 import { parseDate } from "@/lib/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 /**
  * Shows user info.
@@ -22,7 +22,7 @@ import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 export default function MyProfilePage() {
   let modal = useModal();
-  const { loanerInfo } = useUser();
+  const { loanerInfo } = useLoanerInfo();
   const { hasCulrUniqueId } = useAuthentication();
   const { data: userData } = useData(
     hasCulrUniqueId && userFragments.extendedData()

@@ -1,9 +1,9 @@
 // A manifestation that may be ordered via ILL
-import useUser from "@/components/hooks/useUser";
 import { useId, useMemo } from "react";
 import { AccessEnum } from "@/lib/enums";
 import { dateObjectToDateOnlyString } from "@/utils/datetimeConverter";
 import { HoldingStatusEnum } from "@/components/hooks/useHandleAgencyAccessData";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 const TODAY = dateObjectToDateOnlyString(new Date());
 const TOMORROW = dateObjectToDateOnlyString(
@@ -230,13 +230,11 @@ const MANIFESTATION_5 = {
   ],
   access: [
     {
-      __resolveType: AccessEnum.DIGITAL_ARTICLE_SERVICE,
-      __typename: "DigitalArticleService",
+      __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE,
       issn: "some-issn",
     },
     {
-      __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
-      __typename: "InterLibraryLoan",
+      __typename: AccessEnum.INTER_LIBRARY_LOAN,
       loanIsPossible: true,
     },
   ],
@@ -302,12 +300,12 @@ const MANIFESTATION_7 = {
   ],
   access: [
     {
-      __resolveType: AccessEnum.ACCESS_URL,
+      __typename: AccessEnum.ACCESS_URL,
       url: "https://ereol.combo/langurl",
       origin: "https://ereol.combo",
     },
     {
-      __resolveType: AccessEnum.INFOMEDIA_SERVICE,
+      __typename: AccessEnum.INFOMEDIA_SERVICE,
       id: "123123",
       pid: "321321",
     },
@@ -943,6 +941,9 @@ const BRANCH_10_1 = {
 
 // A user with some agencies
 const USER_1 = {
+  name: "Some Name",
+  mail: "some@mail.dk",
+  rights: { digitalArticleService: false },
   agencies: [
     {
       borrowerStatus: BORROWER_STATUS_TRUE,
@@ -956,7 +957,10 @@ const USER_2 = {
 };
 
 const USER_3 = {
+  name: "Some Name",
+  mail: "some@mail.dk",
   agencies: [{ borrowerStatus: BORROWER_STATUS_TRUE, result: [BRANCH_3] }],
+  rights: { digitalArticleService: true },
 };
 
 const USER_4 = {
@@ -981,6 +985,12 @@ const USER_6 = {
       result: [BRANCH_1, BRANCH_2],
     },
   ],
+};
+
+const USER_8 = {
+  name: "Some Name",
+  mail: "some@mail.dk",
+  agencies: [],
 };
 
 const REVIEW_1 = {
@@ -1053,16 +1063,14 @@ const REVIEW_1 = {
   ],
 };
 
+// Holding the current mocked session
+let currentSession = { pickupBranch: "190101" };
+
 const DEFAULT_STORY_PARAMETERS = {
   parameters: {
     graphql: {
       debug: true,
       resolvers: {
-        Access: {
-          __resolveType: ({ parent }) => {
-            return parent?.__typename;
-          },
-        },
         Query: {
           user: () => {
             return USER_1;
@@ -1082,6 +1090,10 @@ const DEFAULT_STORY_PARAMETERS = {
             };
           },
         },
+        Session: {
+          pickupBranch: () => currentSession?.pickupBranch || null,
+          userParameters: () => currentSession?.userParameters || null,
+        },
         ElbaServices: {
           placeCopyRequest: (args) => {
             // Used for cypress testing
@@ -1090,6 +1102,12 @@ const DEFAULT_STORY_PARAMETERS = {
           },
         },
         Mutation: {
+          submitSession: (args) => {
+            // Used for cypress testing
+            console.debug("submitSession", args?.variables?.input);
+            currentSession = args?.variables?.input;
+            return "OK";
+          },
           submitOrder: (args) => {
             // Used for cypress testing
             console.debug("submitOrder", args?.variables?.input);
@@ -1129,6 +1147,7 @@ const createDateXDaysFromNow = (daysFromNow) => {
   today.setHours(today.getHours() + 2); // Add 2 hours to prevent that date is exactly 2 days from now
   return today.toISOString();
 };
+
 const USER_LOANS = [
   {
     loanId: "120200590",
@@ -1252,7 +1271,7 @@ const USER_LOANS = [
 const USER_ORDERS = [
   {
     orderId: "2982910",
-    status: "",
+    status: "UNKNOWN",
     pickUpBranch: {
       agencyName: "Husum Bibliotek",
     },
@@ -1286,7 +1305,7 @@ const USER_ORDERS = [
   },
   {
     orderId: "2982912",
-    status: "",
+    status: "UNKNOWN",
     pickUpBranch: {
       agencyName: "Husum Bibliotek",
     },
@@ -1320,7 +1339,7 @@ const USER_ORDERS = [
   },
   {
     orderId: "2982913",
-    status: "",
+    status: "UNKNOWN",
     pickUpBranch: {
       agencyName: "Husum Bibliotek",
     },
@@ -1353,7 +1372,7 @@ const USER_ORDERS = [
   },
   {
     orderId: "2982913",
-    status: "",
+    status: "UNKNOWN",
     pickUpBranch: {
       agencyName: "Husum Bibliotek",
     },
@@ -1382,6 +1401,7 @@ const USER_DEBT = [
 
 const USER_AGENCY = {
   borrowerStatus: BORROWER_STATUS_TRUE,
+  hitcount: 1,
   result: [
     {
       agencyId: "726500",
@@ -1392,24 +1412,12 @@ const USER_AGENCY = {
   ],
 };
 
-function useMockLoanerInfo({
-  pickUpBranch = "790900",
-  loans = USER_LOANS,
-  orders = USER_ORDERS,
-  debt = USER_DEBT,
-  agencies = [USER_AGENCY],
-  rights = { digitalArticleService: true },
-}) {
-  const { updateLoanerInfo } = useUser();
+function useMockLoanerInfo({ pickUpBranch = "790900" }) {
+  const { updateLoanerInfo } = useLoanerInfo();
   const id = useId();
   useMemo(() => {
     updateLoanerInfo({
-      rights: rights,
       pickupBranch: pickUpBranch,
-      loans,
-      orders,
-      debt,
-      agencies,
     });
   }, [id]);
 }
@@ -1428,6 +1436,14 @@ const USER_LIBRARIES = [
     agencyId: "820030",
   },
 ];
+
+const USER_7 = {
+  loans: USER_LOANS,
+  orders: USER_ORDERS,
+  debt: USER_DEBT,
+  agencies: [USER_AGENCY],
+  rights: { digitalArticleService: true },
+};
 
 export default function automock_utils() {
   return {
@@ -1480,6 +1496,8 @@ export default function automock_utils() {
     USER_4,
     USER_5,
     USER_6,
+    USER_7,
+    USER_8,
     REVIEW_1,
     DEFAULT_STORY_PARAMETERS,
     useMockLoanerInfo,

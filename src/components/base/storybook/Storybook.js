@@ -3,7 +3,6 @@ import Text from "@/components/base/text";
 import Button from "@/components/base/button";
 
 import styles from "./Storybook.module.css";
-import { useRouter } from "next/router";
 import cx from "classnames";
 
 /**
@@ -156,9 +155,7 @@ export function StoryLabel({ children, copy }) {
  *
  * @returns {React.JSX.Element}
  */
-export function StoryRouter() {
-  const router = useRouter();
-
+export function StoryRouter({ router }) {
   return (
     <div className={styles.router}>
       <div>

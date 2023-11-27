@@ -14,6 +14,7 @@ import Link from "@/components/base/link";
 
 import styles from "./Prompt.module.css";
 import InfoDropdown from "@/components/base/infoDropdown/InfoDropdown";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 /**
  * Show a login prompt with a title and description
@@ -35,8 +36,9 @@ export default function LoginPrompt({
   buttonText = Translate({ context: "header", label: "login" }),
   linkHref = null,
   signIn,
-  isAuthenticated,
 }) {
+  const { isAuthenticated } = useAuthentication();
+
   return (
     <Container className={styles.prompt} fluid>
       <Row>
@@ -91,6 +93,18 @@ export default function LoginPrompt({
               </>
             </InfoDropdown>
           )}
+          {!(isAuthenticated && linkHref) && (
+            <Button
+              type="primary"
+              size="large"
+              onClick={signIn}
+              dataCy="article-prompt-button-log-ind"
+              className={styles.signInButton}
+            >
+              {buttonText}
+            </Button>
+          )}
+
           <Divider className={styles.devider} />
         </Col>
       </Row>

@@ -1,12 +1,12 @@
 import PropTypes from "prop-types";
 import Translate from "@/components/base/translate";
-import useUser from "@/components/hooks/useUser";
 import { useModal } from "@/components/_modal";
 import { LOGIN_MODE } from "@/components/_modal/pages/login/utils";
 import { useData } from "@/lib/api/api";
 import { infomediaArticle } from "@/lib/api/infomedia.fragments";
 import LoginPrompt from "./Prompt";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 /**
@@ -16,23 +16,24 @@ import useAuthentication from "@/components/hooks/user/useAuthentication";
  *
  */
 export default function ArticleLoginPrompt({ articleId }) {
+  const { loanerInfo } = useLoanerInfo();
+  const { isAuthenticated, loggedInAgencyId } = useAuthentication();
   const modal = useModal();
-  const { authUser: user } = useUser();
-  const { isAuthenticated } = useAuthentication();
-  const hasInfomediaAccess = user?.rights?.infomedia;
+  const hasInfomediaAccess = loanerInfo?.rights?.infomedia;
 
   const { data, isLoading } = useData(
-    hasInfomediaAccess && articleId && infomediaArticle({ id: articleId })
+    isAuthenticated && articleId && infomediaArticle({ id: articleId })
   );
 
   // Select the loggedInBranch from users agencies list
   let branch = {};
-  user?.agencies?.forEach((agency) => {
+  loanerInfo?.agencies?.forEach((agency) => {
     branch = agency?.result?.find(
-      (branch) => branch.branchId === user.loggedInBranchId
+      (branch) => branch.agencyId === loggedInAgencyId
     );
   });
 
+  // Not logged in, no access
   const agencyName = branch?.agencyName || "";
 
   //NOT AUTHENTICATED --> Show login button and reminder that not all libraries give access to infomedia

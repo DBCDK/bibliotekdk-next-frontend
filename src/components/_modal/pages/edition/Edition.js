@@ -27,6 +27,7 @@ import { templateImageToLeft } from "@/components/base/materialcard/templates/te
 import ChoosePeriodicaCopyRow from "./choosePeriodicaCopyRow/ChoosePeriodicaCopyRow.js";
 import { AccessEnum } from "@/lib/enums";
 import HasBeenOrderedRow from "./hasbeenOrderedRow/HasBeenOrderedRow";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 export function Edition({
   isLoading,
@@ -196,6 +197,7 @@ export default function Wrap({
   setShowArealdyOrdered,
 }) {
   const modal = useModal();
+  const { loanerInfo } = useLoanerInfo();
   let { orderPids: orderPidsBeforeFilter, periodicaForm } = context;
 
   if (!Array.isArray(orderPidsBeforeFilter)) {
@@ -226,7 +228,8 @@ export default function Wrap({
   const inferredAccessTypes = inferAccessTypes(
     periodicaForm,
     pickupBranch,
-    manifestations
+    manifestations,
+    loanerInfo
   );
   const {
     isPeriodicaLike,

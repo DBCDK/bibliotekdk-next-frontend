@@ -41,14 +41,10 @@ export default function useOrderPageInformation({
       periodicaForm,
       pickupBranch,
       workData?.work?.manifestations?.mostRelevant,
-      authUser
+      loanerInfo
     );
   }, [workData?.work, periodicaForm, pickupBranch]);
-
-  const isLoadingBranches =
-    isWorkLoading ||
-    isPickupBranchLoading ||
-    (pickupBranchUser?.name && !pickupBranchUser?.agency);
+  const isLoadingBranches = isWorkLoading || isPickupBranchLoading;
 
   return {
     userInfo: {
