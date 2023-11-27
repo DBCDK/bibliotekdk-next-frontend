@@ -73,7 +73,10 @@ export default function AdvancedSearchSort({ className }) {
   const { sort } = useAdvancedSearchContext();
 
   const bestMatch = {
-    sortTranslation: "bedste match",
+    sortTranslation: Translate({
+      context: "advanced_search_sort",
+      label: "best_match",
+    }),
     sort: [],
   };
   const sortings = [bestMatch, ...mergeSorters()];
