@@ -1,10 +1,9 @@
-// components/Popover.js
 import { useEffect, useRef } from "react";
 import AdvancedSearch from "@/components/search/advancedSearch/advancedSearch/AdvancedSearch";
 import styles from "./Popover.module.css";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 /**
- * Popover where advanced search can be performed
+ * Popover where advanced search can be performed from
  * @returns
  */
 const Popover = ({ triggerContainerRef }) => {
@@ -12,6 +11,7 @@ const Popover = ({ triggerContainerRef }) => {
   const popppverRef = useRef(null);
 
   useEffect(() => {
+    //hide if user clicks outside the popover.
     function handleClickOutside(event) {
       if (
         popppverRef.current &&
