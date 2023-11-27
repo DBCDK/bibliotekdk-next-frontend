@@ -3,10 +3,9 @@
  * This file manages the state for advanced search.
  */
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { LogicalOperatorsEnum } from "@/components/search/enums";
 import { DropdownIndicesEnum } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
-import { useRouter } from "next/router";
 import { convertStateToCql } from "@/components/search/advancedSearch/utils";
 import { useInputFields } from "@/components/search/advancedSearch/useInputFields";
 import { useDropdownSearchIndices } from "@/components/search/advancedSearch/useDropdownSearchIndices";
@@ -38,10 +37,9 @@ export function useAdvancedSearchContext() {
   return useContext(AdvancedSearchContext);
 }
 
-export default function AdvancedSearchProvider({ children }) {
+export default function AdvancedSearchProvider({ children, router }) {
   // TODO: Move this part of the state into Context
   //  So we are able to control default view from context as well
-  const router = useRouter();
   const {
     page = "1",
     cql: cqlFromUrl = null,
@@ -83,6 +81,15 @@ export default function AdvancedSearchProvider({ children }) {
           getDefaultDropdownIndices(),
       })
   );
+
+  useEffect(() => {
+    const updatedCql = convertStateToCql({
+      inputFields,
+      dropdownSearchIndices,
+    });
+    setParsedCQL(updatedCql);
+  }, [inputFields]);
+
   //// ---- DONE: parsedCQL ----
 
   function resetObjectState() {

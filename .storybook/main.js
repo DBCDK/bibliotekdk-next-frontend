@@ -15,9 +15,12 @@ module.exports = {
   addons: ["@storybook/addon-a11y"],
   framework: {
     name: "@storybook/nextjs",
-    options: {}
+    options: {},
   },
   docs: {
-    autodocs: true
-  }
+    autodocs: true,
+  },
+  features: {
+    storyStoreV7: false, // 👈 Opt out of on-demand story loading
+  },
 };

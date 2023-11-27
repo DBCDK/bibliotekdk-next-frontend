@@ -18,8 +18,8 @@ Array [
   Object {
     "dataField": "creators",
     "label": "Skabere",
-    "value": <ParsedAndRenderedCreatorsOrContributors
-      creatorsOrContributors={
+    "value": <ParsedAndRenderedCreators
+      creators={
         Array [
           Object {
             "display": "Duncan Jones",
@@ -63,8 +63,8 @@ Array [
   Object {
     "dataField": "contributors",
     "label": "Bidrag",
-    "value": <ParsedAndRenderedCreatorsOrContributors
-      creatorsOrContributors={
+    "value": <RenderContributors
+      contributors={
         Array [
           Object {
             "display": "Travis Fimmel",
@@ -284,8 +284,8 @@ Array [
   Object {
     "dataField": "creators",
     "label": "Skabere",
-    "value": <ParsedAndRenderedCreatorsOrContributors
-      creatorsOrContributors={
+    "value": <ParsedAndRenderedCreators
+      creators={
         Array [
           Object {
             "name": "some contributor",

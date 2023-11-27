@@ -4,6 +4,7 @@ import IconButton from "@/components/base/iconButton/IconButton";
 import styles from "./LibrariesTable.module.css";
 import Title from "@/components/base/title";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 import { useModal } from "@/components/_modal";
 
@@ -39,12 +40,12 @@ function TableItem({
   agencyId,
   agencyType,
   municipalityAgencyId,
-  loggedInBranchId,
+  loggedInAgencyId,
 }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs";
   const isHomeLibrary = municipalityAgencyId === agencyId;
-  const isLoggedInLibrary = loggedInBranchId === agencyId;
+  const isLoggedInLibrary = loggedInAgencyId === agencyId;
 
   const hasOnlyOneAgency = data.length <= 1;
 
@@ -132,8 +133,9 @@ export default function LibrariesTable({ data, user }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs";
 
+  const { loggedInAgencyId } = useAuthentication();
+
   const municipalityAgencyId = user?.municipalityAgencyId;
-  const loggedInBranchId = user?.loggedInBranchId;
 
   if (isMobile) {
     return (
@@ -151,7 +153,7 @@ export default function LibrariesTable({ data, user }) {
             <TableItem
               key={item.agencyName}
               municipalityAgencyId={municipalityAgencyId}
-              loggedInBranchId={loggedInBranchId}
+              loggedInAgencyId={loggedInAgencyId}
               data={data}
               {...item}
             />
@@ -179,7 +181,7 @@ export default function LibrariesTable({ data, user }) {
           <TableItem
             key={item.agencyName}
             municipalityAgencyId={municipalityAgencyId}
-            loggedInBranchId={loggedInBranchId}
+            loggedInAgencyId={loggedInAgencyId}
             data={data}
             {...item}
           />

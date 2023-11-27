@@ -12,6 +12,7 @@ import Section from "@/components/base/section";
 
 import styles from "./Related.module.css";
 import * as workFragments from "@/lib/api/work.fragments";
+import { subjectUrl } from "@/components/work/keywords/Keywords";
 
 /**
  *
@@ -21,7 +22,7 @@ function Word({ word, isLoading }) {
   return (
     <span className={styles.word}>
       <Link
-        href={`/find?q.subject=${word}`}
+        href={subjectUrl(word)}
         dataCy={cyKey({ name: word, prefix: "related-subject" })}
         disabled={isLoading}
         border={{ bottom: { keepVisible: true } }}

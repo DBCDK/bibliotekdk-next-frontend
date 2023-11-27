@@ -47,3 +47,15 @@ export function convertStateToCql({ inputFields, dropdownSearchIndices } = {}) {
     ")"
   );
 }
+
+export function getAdvancedUrl({ inputField }) {
+  const urlObject = {
+    inputFields: [inputField],
+    dropdownSearchIndices: [
+      { searchIndex: "phrase.mainlanguage", value: [] },
+      { searchIndex: "phrase.generalmaterialtype", value: [] },
+    ],
+  };
+
+  return encodeURI(`/avanceret?fieldSearch=${JSON.stringify(urlObject)}`);
+}

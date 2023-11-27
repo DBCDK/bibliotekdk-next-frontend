@@ -11,7 +11,7 @@ import { openAgencyLocalizationsModal } from "@/components/work/utils";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import { accessFactory } from "@/lib/accessFactoryUtils";
 import { AccessEnum } from "@/lib/enums";
-import useUser from "@/components/hooks/useUser";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 export function LocalizationsLink({
   localizationsCount,
@@ -74,7 +74,7 @@ export default function Wrap({
     }),
 }) {
   // @TODO if user is logged in - do a holdingsitems request on user agency
-  const user = useUser();
+  const { loanerInfo } = useLoanerInfo();
   const modal = useModal();
 
   const manifestationResponse = useData(
@@ -110,9 +110,7 @@ export default function Wrap({
   return (
     <LocalizationsLink
       localizationsCount={data?.localizations?.count || 0}
-      openLocalizationsModal={() =>
-        modalOpener(modal, user?.loanerInfo?.agency)
-      }
+      openLocalizationsModal={() => modalOpener(modal, loanerInfo?.agency)}
     />
   );
 }
