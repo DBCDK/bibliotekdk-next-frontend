@@ -107,6 +107,50 @@ export default function MultiReferences({ context }) {
     };
   };
 
+  // Filter all who user has chosen an edition
+  const missingActionMaterials = materialsMissingEdition.filter(
+    (_, i) =>
+      !activeMaterialChoices?.[i]?.chosenPid &&
+      !activeMaterialChoices?.[i]?.toFilter
+  );
+
+  const isSingleReference =
+    materials.length === 1 &&
+    !hasMissingReferences &&
+    !periodicaFiltered.length === 1;
+  const isOnlyPeriodica = periodicaFiltered.length === materials.length;
+
+  const disableLinks = missingActionMaterials.length > 0 || isOnlyPeriodica;
+  const hasMissingReferences = disableLinks && !isLoading;
+  const materialPids = materials
+    .filter((material) => !material.materialId.startsWith("work-of"))
+    .map((material) => material.materialId);
+
+  const numberMaterials = materials.length;
+  const title =
+    numberMaterials === 1
+      ? Translate({
+          context: CONTEXT,
+          label: "get-reference",
+        })
+      : Translate({
+          context: CONTEXT,
+          label: "get-references",
+          vars: [numberMaterials],
+        });
+
+  const missingEditionText =
+    numberMaterials === 1
+      ? Translate({
+          context: CONTEXT,
+          label: "missing-edition-singular",
+        })
+      : Translate({
+          context: CONTEXT,
+          label: "missing-edition",
+          vars: [missingActionMaterials.length],
+        });
+
   useEffect(() => {
     /**
      * Preselect edition if only 1 edition available for bookmark material type
@@ -157,47 +201,6 @@ export default function MultiReferences({ context }) {
     setActiveMaterialChoices(newList);
   }, [modal.isVisible, isLoading]);
 
-  // Filter all who user has chosen an edition
-  const missingActionMaterials = materialsMissingEdition.filter(
-    (_, i) => !activeMaterialChoices?.[i]?.chosenPid
-  );
-
-  const disableLinks = missingActionMaterials.length > 0;
-  const showReferencesMissing = disableLinks && !isLoading;
-  //TODO materialPids should come from a state when we update the missing pids
-  const materialPids = materials
-    .filter((material) => !material.materialId.startsWith("work-of"))
-    .map((material) => material.materialId);
-
-  const hasMissingReferences = bookmarksMissingEdition?.length > 0;
-
-  const isSingleReference = materials.length === 1 && !hasMissingReferences;
-
-  const numberMaterials = materials.length;
-  const title =
-    numberMaterials === 1
-      ? Translate({
-          context: CONTEXT,
-          label: "get-reference",
-        })
-      : Translate({
-          context: CONTEXT,
-          label: "get-references",
-          vars: [numberMaterials],
-        });
-
-  const missingEditionText =
-    numberMaterials === 1
-      ? Translate({
-          context: CONTEXT,
-          label: "missing-edition-singular",
-        })
-      : Translate({
-          context: CONTEXT,
-          label: "missing-edition",
-          vars: [missingActionMaterials.length],
-        });
-
   const onEditionPick = (pid, materialKey) => {
     modal.prev();
     const activeChoices = [...activeMaterialChoices];
@@ -231,9 +234,9 @@ export default function MultiReferences({ context }) {
           </Text>
           <ul className={styles.periodicaList}>
             {periodicaFiltered.map((item) => (
-              <li className={styles.periodicaListItem}>
+              <li className={styles.periodicaListItem} key={item.pid}>
                 <Text type="text1">{item.titles?.full?.[0]}</Text>
-                <Text type="text2">
+                <Text type="text2" className={styles.periodicaMatType}>
                   {item.materialTypes?.[0]?.materialTypeSpecific?.display}
                 </Text>
               </li>
@@ -242,31 +245,6 @@ export default function MultiReferences({ context }) {
         </div>
       )}
 
-      {/*showReferencesMissing && (
-        <Text
-          type="text3"
-          className={cx(styles.missingEditionText, styles.container)}
-        >
-          {missingEditionText}
-        </Text>
-      )*/}
-      {/*showReferencesMissing &&
-        missingActionMaterials
-          .filter(
-            (mat) =>
-              !activeMaterialChoices.find((o) => o.key === mat.key)?.toFilter
-          )
-          .map((material) => (
-            <Material
-              key={material.key}
-              materialKey={material.key}
-              material={material}
-              materialKeyToMaterialTypes={materialKeyToMaterialTypes}
-              modal={modal}
-              onActionClick={onActionClick}
-            />
-          ))*/}
-      
       {isSingleReference && (
         <SingleReference
           bookmarkInList={materials}
@@ -277,32 +255,39 @@ export default function MultiReferences({ context }) {
 
       {hasMissingReferences && (
         <>
-        <Text
-          type="text3"
-          className={cx(styles.missingEditionText, styles.container)}
-        >
-          {missingEditionText}
-        </Text>
-        {missingActionMaterials
-          .filter(
-            (mat) =>
-              !activeMaterialChoices.find((o) => o.key === mat.key)?.toFilter
-          )
-          .map((material) => (
-          <Material
-            key={material.key}
-            material={material}
-            materialKeyToMaterialTypes={materialKeyToMaterialTypes}
-            modal={modal}
-          />
-        ))}
-      </>
+          <Text
+            type="text3"
+            className={cx(styles.missingEditionText, styles.container)}
+          >
+            {missingEditionText}
+          </Text>
+          {missingActionMaterials
+            .filter(
+              // Filter periodica materials
+              (mat) =>
+                !activeMaterialChoices.find((o) => o.key === mat.key)?.toFilter
+            )
+            .map((material) => (
+              <Material
+                key={material.key}
+                materialKey={material.key}
+                material={material}
+                materialKeyToMaterialTypes={materialKeyToMaterialTypes}
+                modal={modal}
+                onActionClick={onActionClick}
+              />
+            ))}
+        </>
       )}
 
       <div
         className={cx(styles.container, {
           [styles.exportButtonsMobile]: !hasMissingReferences,
-          [styles.paddingExportButtons]: isSingleReference,
+          [styles.paddingExportButtons]:
+            isSingleReference ||
+            (!hasMissingReferences &&
+              periodicaFiltered.length > 0 &&
+              !isOnlyPeriodica),
         })}
       >
         {hasMissingReferences && (
@@ -310,6 +295,14 @@ export default function MultiReferences({ context }) {
             {Translate({
               context: CONTEXT,
               label: "choose-edition",
+            })}
+          </Text>
+        )}
+        {isOnlyPeriodica && (
+          <Text type="text3" className={styles.chooseEditionText}>
+            {Translate({
+              context: CONTEXT,
+              label: "material-not-supported",
             })}
           </Text>
         )}

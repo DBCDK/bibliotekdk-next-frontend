@@ -37,27 +37,26 @@
   padding: var(--pt2) var(--pt6);
   margin-bottom: var(--pt1);
 }
-
 .periodicaMessageTitle {
   margin-bottom: var(--pt2);
 }
-
 .periodicaList {
   padding-left: var(--pt2);
 }
-
 .periodicaListItem {
   margin-bottom: var(--pt1);
 }
-
 .periodicaListItem:last-of-type {
   margin: 0;
+}
+.periodicaMatType {
+  text-transform: capitalize;
 }
 
 /** modal */
 
 .container {
-  padding: 0 var(--pt6);
+  padding: 0 var(--pt6) var(--pt8);
 }
 
 .top {
@@ -79,7 +78,7 @@
 }
 
 .paddingExportButtons {
-  padding-top: var(--pt5);
+  margin-top: var(--pt5);
 }
 
 @media (max-width: 576px) {
@@ -92,7 +91,7 @@
   }
 
   .paddingExportButtons {
-    padding-top: var(--pt3);
+    margin-top: var(--pt3);
   }
 
   .missingEditionText {
