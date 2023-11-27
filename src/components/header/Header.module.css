@@ -106,10 +106,6 @@
   max-width: 100%;
 }
 
-.expandedSearch {
-  transform: translateX(-125px);
-}
-
 /* Search button */
 
 .button {
@@ -127,10 +123,6 @@
   line-height: 22px;
   cursor: pointer;
   overflow: hidden;
-}
-
-.button.hidden {
-  display: none;
 }
 
 .button span {

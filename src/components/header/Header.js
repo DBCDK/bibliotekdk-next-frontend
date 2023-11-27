@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import React, { useState } from "react";
+import React from "react";
 
 import useHistory from "@/components/hooks/useHistory";
 import useFilters from "@/components/hooks/useFilters";
@@ -22,7 +22,6 @@ import LoginIcon from "./icons/login";
 import BurgerIcon from "./icons/burger";
 import SearchIcon from "./icons/search";
 import BookmarkIcon from "./icons/bookmark";
-import ExpandedSearch from "./expandedsearch/ExpandedSearch";
 
 import Logo from "@/components/base/logo/Logo";
 
@@ -83,8 +82,7 @@ export function Header({
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
 
-  const { q, setQ, setQuery, getCount, getQuery } = useQ();
-  const countQ = getCount({ exclude: ["all"] });
+  const { q, setQ, setQuery, getQuery } = useQ();
 
   const query = q[SuggestTypeEnum.ALL];
 
@@ -93,9 +91,6 @@ export function Header({
 
   // workType filter param
   const { workTypes } = filters.getQuery();
-
-  // expanded search state
-  const [collapseOpen, setCollapseOpen] = useState(!!countQ);
 
   // specific material workType selected
   const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
@@ -235,6 +230,7 @@ export function Header({
                       isMobile={suggesterVisibleMobile}
                       onSelect={(val) => doSearch(val)}
                       onChange={(val) => setQ({ ...q, all: val })}
+                      dataCy={`simple-search-input`}
                       onClose={() => {
                         if (router) {
                           // remove suggester prop from query obj
@@ -245,17 +241,10 @@ export function Header({
                       }}
                       onKeyDown={keyPressed}
                     />
-                    <ExpandedSearch
-                      className={styles.expandedSearch}
-                      collapseOpen={collapseOpen}
-                      setCollapseOpen={setCollapseOpen}
-                    />
                   </div>
 
                   <button
-                    className={`${styles.button} ${
-                      collapseOpen ? styles.hidden : ""
-                    }`}
+                    className={`${styles.button}`}
                     type="submit"
                     data-cy={cyKey({
                       name: "searchbutton",
