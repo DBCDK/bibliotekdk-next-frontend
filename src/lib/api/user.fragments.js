@@ -27,7 +27,7 @@ export function basic() {
         address
         postalCode
         isCPRValidated
-        loggedInBranchId
+        loggedInAgencyId
         municipalityAgencyId
         rights {
           infomedia 
