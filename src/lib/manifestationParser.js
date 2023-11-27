@@ -7,6 +7,7 @@ import { FlatSubjectsForFullManifestation } from "@/components/work/keywords/Key
 
 import { parseFunction } from "@/lib/centralParsers.utils";
 import { getAudienceValues } from "@/components/work/details/utils/export.utils";
+import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
 
 // fields to handle - add to handle a field eg. subjects or lix or let or ...
 const fields = () => [
@@ -63,9 +64,7 @@ const fields = () => [
     }),
     valueParser: (creators) =>
       creators?.length === 1 && (
-        <ParsedAndRenderedCreatorsOrContributors
-          creatorsOrContributors={creators}
-        />
+        <ParsedAndRenderedCreators creatorsOrContributors={creators} />
       ),
   },
   {
@@ -76,9 +75,7 @@ const fields = () => [
     }),
     valueParser: (creators) =>
       creators?.length > 1 && (
-        <ParsedAndRenderedCreatorsOrContributors
-          creatorsOrContributors={creators}
-        />
+        <ParsedAndRenderedCreators creatorsOrContributors={creators} />
       ),
   },
   {
@@ -89,9 +86,7 @@ const fields = () => [
     }),
     valueParser: (contributors) =>
       contributors?.length > 0 && (
-        <ParsedAndRenderedCreatorsOrContributors
-          creatorsOrContributors={contributors}
-        />
+        <RenderContributors contributors={contributors} />
       ),
   },
   {
@@ -455,10 +450,32 @@ export function parseManifestation(manifestation) {
   );
 }
 
-export function ParsedAndRenderedCreatorsOrContributors({
-  creatorsOrContributors,
-  Tag = ManifestationLink,
-}) {
+export function urlToPerson(person, type) {
+  const inputField = {
+    value: person.display,
+    prefixLogicalOperator: null,
+    searchIndex: `term.${type}`,
+  };
+
+  return getAdvancedUrl({ inputField });
+}
+
+export function RenderContributors({ contributors = [] }) {
+  return contributors?.map((cont, idx) => (
+    <Text tag={"div"} key={`${cont?.display}${idx}`}>
+      <Link
+        href={urlToPerson(cont, "contributor")}
+        border={{ top: false, bottom: { keepVisible: true } }}
+      >
+        {cont.display}
+      </Link>
+      {parseFunction(cont)}
+      <br />
+    </Text>
+  ));
+}
+
+export function ParsedAndRenderedCreators({ creatorsOrContributors }) {
   // Used to ensure hydration is consistent
   const [hasMounted, setHasMounted] = useState(false);
   useEffect(() => {
@@ -470,22 +487,16 @@ export function ParsedAndRenderedCreatorsOrContributors({
 
   return creatorsOrContributors?.map((C, idx) => (
     <Text tag={"div"} key={`${C?.display}${idx}`}>
-      <Tag>{C?.display}</Tag>
+      <Link
+        href={urlToPerson(C, "function")}
+        border={{ top: false, bottom: { keepVisible: true } }}
+      >
+        {C.display}
+      </Link>
       {parseFunction(C)}
       <br />
     </Text>
   ));
-}
-
-function ManifestationLink({ children }) {
-  return (
-    <Link
-      href={`/find?q.creator=${children}`}
-      border={{ top: false, bottom: { keepVisible: true } }}
-    >
-      {children}
-    </Link>
-  );
 }
 
 function ParsedAndRenderedLanguages({ languages }) {
