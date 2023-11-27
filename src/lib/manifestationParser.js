@@ -475,7 +475,9 @@ export function RenderContributors({ contributors = [] }) {
   ));
 }
 
-export function ParsedAndRenderedCreators({ creatorsOrContributors }) {
+export function ParsedAndRenderedCreators({
+  creatorsOrContributors: creators,
+}) {
   // Used to ensure hydration is consistent
   const [hasMounted, setHasMounted] = useState(false);
   useEffect(() => {
@@ -485,7 +487,7 @@ export function ParsedAndRenderedCreators({ creatorsOrContributors }) {
     return null;
   }
 
-  return creatorsOrContributors?.map((C, idx) => (
+  return creators?.map((C, idx) => (
     <Text tag={"div"} key={`${C?.display}${idx}`}>
       <Link
         href={urlToPerson(C, "function")}

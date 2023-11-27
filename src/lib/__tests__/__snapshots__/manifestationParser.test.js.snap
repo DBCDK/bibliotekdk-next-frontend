@@ -19,7 +19,7 @@ Array [
     "dataField": "creators",
     "label": "Skabere",
     "value": <ParsedAndRenderedCreators
-      creatorsOrContributors={
+      creators={
         Array [
           Object {
             "display": "Duncan Jones",
@@ -285,7 +285,7 @@ Array [
     "dataField": "creators",
     "label": "Skabere",
     "value": <ParsedAndRenderedCreators
-      creatorsOrContributors={
+      creators={
         Array [
           Object {
             "name": "some contributor",
