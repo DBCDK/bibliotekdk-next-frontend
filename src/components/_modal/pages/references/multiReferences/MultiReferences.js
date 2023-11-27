@@ -109,7 +109,10 @@ export default function MultiReferences({ context }) {
         if (singleManifestation.workTypes?.[0] === "PERIODICA") {
           // Periodica - Filter from list
           newPeriodicaFiltered.push(singleManifestation);
-          return null;
+          return {
+            ...bookmark,
+            toFilter: true,
+          };
         }
 
         return {
@@ -186,8 +189,7 @@ export default function MultiReferences({ context }) {
       {periodicaFiltered.length > 0 && (
         <div className={styles.periodicaMessage}>
           <Text type="text1" className={styles.periodicaMessageTitle}>
-            Tidsskrifter har et dataformat, der ikke kan hentes som referencer.
-            Dvs. disse bliver ikke downloadet/eksporteret:
+            <Translate context="multiReferences" label="periodicaMessage" />
           </Text>
           <ul className={styles.periodicaList}>
             {periodicaFiltered.map((item) => (
@@ -211,16 +213,21 @@ export default function MultiReferences({ context }) {
         </Text>
       )}
       {showReferencesMissing &&
-        missingActionMaterials.map((material) => (
-          <Material
-            key={material.key}
-            materialKey={material.key}
-            material={material}
-            materialKeyToMaterialTypes={materialKeyToMaterialTypes}
-            modal={modal}
-            onActionClick={onActionClick}
-          />
-        ))}
+        missingActionMaterials
+          .filter(
+            (mat) =>
+              !activeMaterialChoices.find((o) => o.key === mat.key)?.toFilter
+          )
+          .map((material) => (
+            <Material
+              key={material.key}
+              materialKey={material.key}
+              material={material}
+              materialKeyToMaterialTypes={materialKeyToMaterialTypes}
+              modal={modal}
+              onActionClick={onActionClick}
+            />
+          ))}
       <div
         className={cx(styles.container, {
           [styles.exportButtons]: !showReferencesMissing,
@@ -238,9 +245,9 @@ export default function MultiReferences({ context }) {
           pids={[
             ...materialPids,
             ...activeMaterialChoices
-              .filter((mat) => !!mat)
-              .map((mat) => mat.chosenPid)
-              .filter((mat) => !!mat),
+              .filter((mat) => !mat.toFilter) // Filter periodica materials
+              .map((mat) => mat.chosenPid) // Remap to pid list
+              .filter((mat) => !!mat), // remove null pids
           ]}
           disabled={disableLinks}
         />
