@@ -7,7 +7,6 @@ import Button from "@/components/base/button";
 import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
 import { getStylingAndErrorMessage } from "@/components/_modal/pages/order/utils/order.utils";
-import { AccessEnum } from "@/lib/enums";
 
 function OrderConfirmationButton({
   invalidClass,
@@ -122,12 +121,7 @@ export default function Wrap({
       actionMessage={actionMessage}
       isLoading={isWorkLoading || isPickupBranchLoading}
       onClick={onClick}
-      showOrderDigitalCopy={
-        isDigitalCopy &&
-        availableAsDigitalCopy &&
-        context?.selectedAccesses?.[0]?.__typename !==
-          AccessEnum.INTER_LIBRARY_LOAN
-      }
+      showOrderDigitalCopy={isDigitalCopy && availableAsDigitalCopy}
       disabled={
         (!availableAsDigitalCopy && !availableAsPhysicalCopy) ||
         isLoading ||

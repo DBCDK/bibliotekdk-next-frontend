@@ -5,7 +5,7 @@ import Pages from "@/components/_modal/pages";
 import ReservationButtonWrapper from "@/components/work/reservationbutton/ReservationButton";
 import merge from "lodash/merge";
 import automock_utils from "@/lib/automock_utils.fixture";
-import useUser from "@/components/hooks/useUser";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 const exportedObject = {
   title: "modal/Order",
@@ -20,6 +20,7 @@ const {
   USER_2,
   USER_3,
   USER_6,
+  USER_8,
   BRANCH_1,
   BRANCH_2,
   BRANCH_3,
@@ -61,7 +62,6 @@ function OrderPageComponentBuilder({
 
 // -------------------- Stories come here -----------------------
 export function OrderViaILL() {
-  useMockLoanerInfo({ rights: { digitalArticleService: false } });
   return (
     <OrderPageComponentBuilder
       title="Order via ILL"
@@ -75,7 +75,11 @@ export function OrderViaILL() {
 OrderViaILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
-      resolvers: {},
+      resolvers: {
+        Query: {
+          user: () => ({ ...USER_1, rights: { digitalArticleService: false } }),
+        },
+      },
     },
   },
 });
@@ -110,13 +114,6 @@ OrderPhysicalMaterialFails.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 });
 
 export function NoUserAgencies() {
-  useMockLoanerInfo({
-    pickUpBranch: "",
-    loans: [],
-    debt: [],
-    agencies: [],
-    orders: [],
-  });
   return (
     <OrderPageComponentBuilder
       title="User has no agencies"
@@ -130,7 +127,12 @@ export function NoUserAgencies() {
 NoUserAgencies.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
-      resolvers: {},
+      resolvers: {
+        Query: {
+          user: () => USER_8,
+          session: () => null,
+        },
+      },
     },
   },
 });
@@ -231,7 +233,7 @@ OrderIndexedPeriodicaArticleFails.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 });
 
 export function OrderIndexedPeriodicaArticleILL() {
-  useMockLoanerInfo({ rights: { digitalArticleService: false } });
+  useMockLoanerInfo({});
   return (
     <OrderPageComponentBuilder
       title="Order Indexed Periodica Article - ILL"
@@ -248,7 +250,7 @@ OrderIndexedPeriodicaArticleILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
     graphql: {
       resolvers: {
         Query: {
-          user: () => USER_1,
+          user: () => ({ ...USER_1, rights: { digitalArticleService: false } }),
           branches: () => {
             return {
               borrowerStatus: BORROWER_STATUS_TRUE,
@@ -262,7 +264,7 @@ OrderIndexedPeriodicaArticleILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 });
 
 export function OrderPeriodicaVolume() {
-  useMockLoanerInfo({ rights: { digitalArticleService: true } });
+  useMockLoanerInfo({});
   return (
     <OrderPageComponentBuilder
       title="Order Periodica Volume"
@@ -279,7 +281,7 @@ OrderPeriodicaVolume.story = merge({}, DEFAULT_STORY_PARAMETERS, {
     graphql: {
       resolvers: {
         Query: {
-          user: () => USER_3,
+          user: () => ({ ...USER_3, rights: { digitalArticleService: true } }),
           branches: () => {
             return {
               borrowerStatus: BORROWER_STATUS_TRUE,
@@ -293,7 +295,7 @@ OrderPeriodicaVolume.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 });
 
 export function OrderPeriodicaVolumeOnlyILL() {
-  useMockLoanerInfo({ rights: { digitalArticleService: false } });
+  useMockLoanerInfo({});
   return (
     <OrderPageComponentBuilder
       title="Order Periodica Volume"
@@ -311,7 +313,7 @@ OrderPeriodicaVolumeOnlyILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
     graphql: {
       resolvers: {
         Query: {
-          user: () => USER_1,
+          user: () => ({ ...USER_1, rights: { digitalArticleService: false } }),
           branches: () => {
             return {
               borrowerStatus: BORROWER_STATUS_TRUE,
@@ -416,9 +418,9 @@ LibraryWithoutLoanerCheck.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 });
 
 export function UserWithOneAgencyBlockedOneAgencyNotBlocked() {
-  const { loanerInfo } = useUser();
+  const { loanerInfo } = useLoanerInfo();
   useMockLoanerInfo({
-    pickUpBranch: !loanerInfo.pickUpBranch ? "1234" : loanerInfo.pickUpBranch, //update pickUpBranch when user clicks on a branch in dropdown
+    pickUpBranch: !loanerInfo.pickupBranch ? "1234" : loanerInfo.pickupBranch, //update pickUpBranch when user clicks on a branch in dropdown
   });
   return (
     <OrderPageComponentBuilder
@@ -455,7 +457,7 @@ UserWithOneAgencyBlockedOneAgencyNotBlocked.story = merge(
                 }))
                 .find((a) => a.result.length > 0);
 
-              return agencyWithSelectedBranch;
+              return agencyWithSelectedBranch || [];
             },
           },
         },

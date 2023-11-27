@@ -7,10 +7,10 @@ import Material, { filterForRelevantMaterialTypes } from "./Material/Material";
 import { useEffect, useRef, useState } from "react";
 import { useModal } from "@/components/_modal/Modal";
 import { StatusEnum } from "@/components/base/materialcard/materialCard.utils";
-import useUser from "@/components/hooks/useUser";
 import { useMutate } from "@/lib/api/api";
 import * as orderMutations from "@/lib/api/order.mutations";
 import { setAlreadyOrdered } from "../../order/utils/order.utils";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 const CONTEXT = "bookmark-order";
 
@@ -52,7 +52,7 @@ const MultiOrder = ({ context }) => {
   const analyzeRef = useRef();
   const [materialCounts, setMaterialCounts] = useState({});
   const [materialsToOrder, setMaterialsToOrder] = useState(materials);
-  const { loanerInfo } = useUser();
+  const { loanerInfo } = useLoanerInfo();
   const orderMutation = useMutate();
   const [isCreatingOrders, setIsCreatingOrders] = useState(false);
   const [duplicateBookmarkIds, setDuplicateBookmarkIds] = useState([]);

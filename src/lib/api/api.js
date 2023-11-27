@@ -210,13 +210,29 @@ export function useFetcher() {
   return doFetch;
 }
 
+function getStackTrace() {
+  const obj = {};
+  try {
+    // does not work in firefox..
+    Error.captureStackTrace(obj, getStackTrace);
+  } catch (e) {}
+
+  return obj.stack;
+}
+
 /**
  * Will return specific implementation of fetcher
  * either a mocked one, or the real deal
  */
 function useFetcherImpl() {
   const { fetcher: mockedFetcher } = useContext(APIMockContext) || {};
-  return mockedFetcher || fetcher;
+
+  if (mockedFetcher) {
+    const stackTrace = getStackTrace();
+    return (queryStr) => mockedFetcher(queryStr, stackTrace);
+  }
+
+  return fetcher;
 }
 
 /**

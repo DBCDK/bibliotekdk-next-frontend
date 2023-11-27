@@ -9,7 +9,6 @@ import { templateImageToLeft } from "@/components/base/materialcard/templates/te
 import ChoosePeriodicaCopyRow from "@/components/_modal/pages/edition/choosePeriodicaCopyRow/ChoosePeriodicaCopyRow.js";
 import { translateArticleType } from "@/components/_modal/pages/edition/utils.js";
 import { inferAccessTypes } from "@/components/_modal/pages/edition/utils.js";
-import useUser from "@/components/hooks/useUser";
 import { useModal } from "@/components/_modal/Modal";
 import { AccessEnum } from "@/lib/enums";
 import {
@@ -27,6 +26,7 @@ import IconButton from "@/components/base/iconButton";
 import { getManifestationWithoutDefaultCover } from "@/components/work/overview/covercarousel/utils";
 import { workHasAlreadyBeenOrdered } from "../../../order/utils/order.utils";
 import HasBeenOrderedRow from "../../../edition/hasbeenOrderedRow/HasBeenOrderedRow";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 /**
  * At this point, we have manifestation of all the different material types
@@ -69,7 +69,7 @@ const Material = ({
     backgroundColorOverride
   );
 
-  const { loanerInfo } = useUser();
+  const { loanerInfo } = useLoanerInfo();
   const periodicaForm = periodicaForms?.[material.key];
   const workId = material.workId;
   const hasAlreadyBeenOrdered = workHasAlreadyBeenOrdered(workId);
@@ -121,7 +121,8 @@ const Material = ({
   const inferredAccessTypes = inferAccessTypes(
     periodicaForm,
     loanerInfo.pickupBranch,
-    manifestations
+    manifestations,
+    loanerInfo
   );
 
   const {
