@@ -27,9 +27,8 @@ const MaterialCard = forwardRef(
    * @param {function} props.propAndChildrenTemplate - A function to define prop and children rendering.
    * @param {Object} props.propAndChildrenInput - Input for propAndChildrenTemplate function.
    * @param {function} props.onClick - A callback function to handle click events.
-   * @param {React.MutableRefObject<any>} props.ref - A React ref object.
    * @param {{ xs: OptionalColSize, sm: OptionalColSize, lg: OptionalColSize }} props.colSizing - An object specifying column sizing options.
-   * @param {boolean} [props.imageLeft] indicates that image should be on the left side of the card
+   * @param {React.MutableRefObject<any>} ref - A React ref object.
    * @returns {React.JSX.Element} - Returns a React JSX element.
    */
   function MaterialCard(

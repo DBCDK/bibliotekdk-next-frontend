@@ -351,7 +351,6 @@ export function templateForLocalizations(
  * @param {boolean} [props.isDeliveredByDigitalArticleService] - used to differentiate between "Første tilgængelige eksemplar" and "Leveres som digital kopi til din mail"
  * @param {BackgroundColorEnum} [props.backgroundColor] - indicates warnings or errors in the material card - used in multiorder
  * @param {string} [props.elementContainerClassName] - used in reviewHeader
- * @param {string} [props.coverImageStyle] - used in reviewHeader
  *@returns {React.JSX.Element}
  */
 export function templateImageToLeft({
