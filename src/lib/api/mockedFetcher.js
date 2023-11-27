@@ -199,29 +199,34 @@ function defaultMockResolver(parent, _args, context, info) {
     ["GraphQLInterfaceType", "GraphQLUnionType"].includes(returnTypeName) &&
     (unionValues || getInterfaceImplementations(schema)[customTypeName]);
 
+  // helper for attaching __typename to interface or union
+  function attachTypename(target) {
+    if (Array.isArray(target)) {
+      target.forEach(
+        (el) =>
+          (el.__typename =
+            el.__typename ||
+            (typeof el?.__resolveType === "function" && el.__resolveType()) ||
+            el?.__resolveType ||
+            getNext(implementations))
+      );
+    } else {
+      target.__typename =
+        target.__typename ||
+        (typeof target?.__resolveType === "function" &&
+          target.__resolveType()) ||
+        target.__resolveType ||
+        getNext(implementations);
+    }
+  }
+
   // The field was mocked with some value
   // so we return that, instead of using a default mock
   if (typeof parent?.[fieldName] !== "undefined") {
     // If return type is interface or union, there MUST be a __typename
     // If the mock does not provide it, we attach one
     if (implementations) {
-      if (Array.isArray(parent[fieldName])) {
-        parent[fieldName].forEach(
-          (el) =>
-            (el.__typename =
-              el.__typename ||
-              (typeof el?.__resolveType === "function" && el.__resolveType()) ||
-              el?.__resolveType ||
-              getNext(implementations))
-        );
-      } else {
-        parent[fieldName].__typename =
-          parent[fieldName].__typename ||
-          (typeof parent[fieldName]?.__resolveType === "function" &&
-            parent[fieldName].__resolveType()) ||
-          parent[fieldName].__resolveType ||
-          getNext(implementations);
-      }
+      attachTypename(parent?.[fieldName]);
     }
 
     return parent?.[fieldName];
@@ -239,12 +244,16 @@ function defaultMockResolver(parent, _args, context, info) {
 
   // Check if a resolver function is provided for this field
   if (resolvers?.[parentTypeName]?.[fieldName]) {
-    return resolvers[parentTypeName][fieldName]({
+    const resolved = resolvers[parentTypeName][fieldName]({
       variables,
       path,
       getNext,
       parent,
     });
+    if (implementations) {
+      attachTypename(resolved);
+    }
+    return resolved;
   }
 
   // No mock resolver was provided for the field
@@ -450,9 +459,7 @@ function addGlobalResolver(schema, resolve) {
       type?.constructor?.name === "GraphQLUnionType" ||
       type?.constructor?.name === "GraphQLInterfaceType"
     ) {
-      type.resolveType = (parent) => {
-        return parent?.__typename;
-      };
+      type.resolveType = (parent) => parent?.__typename;
     } else {
       // Traverse every field of the type
       Object.values(type.getFields?.() || {}).forEach((field) => {
