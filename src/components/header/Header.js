@@ -225,7 +225,11 @@ export function Header({
             <StaticHeader router={router} context={context} />
             <Col xs={{ span: 7, offset: 3 }} className={styles.mobileHeader}>
               <SkipToMainAnchor />
-              <div className={styles.bottom} ref={simbleSearchRef}>
+              <div
+                className={styles.bottom}
+                ref={simbleSearchRef}
+                style={containerStyles}
+              >
                 <form
                   onSubmit={(e) => {
                     e?.preventDefault();

@@ -16,27 +16,28 @@ export default function Tooltip({
   iconSize = 3,
   children,
   show = false,
-  target = null,
+  tooltipRef,
   toolTipClassName,
 }) {
   const spanRef = useRef();
 
   const [mounted, setMounted] = useState(false);
+
+  //fixes hydration error. https://stackoverflow.com/questions/75094010/nextjs-13-hydration-failed-because-the-initial-ui-does-not-match-what-was-render
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  if (!mounted) return <></>;
-
+  if (!mounted) return null;
+  console.log("tooltip.ref", tooltipRef);
   return (
-    <span className={`${customClass ? customClass : ""}`}>
+    <span className={`${customClass ? customClass : ""}`} ref={tooltipRef}>
       <OverlayTrigger
         trigger={trigger}
         delayShow={300}
         delayHide={150}
         placement={placement}
         show={show}
-        target={target}
         overlay={
           <Popover
             id={`tooltip-${labelToTranslate}`}

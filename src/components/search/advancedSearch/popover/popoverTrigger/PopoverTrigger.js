@@ -16,6 +16,8 @@ const PopoverTrigger = ({ className, simbleSearchRef }) => {
   const { showPopover, setShowPopover, showInfoTooltip, setShowInfoTooltip } =
     useAdvancedSearchContext();
   const triggerContainerRef = useRef(null);
+  const tooltipRef = useRef(null);
+
   //set variable in context
   //close if click outside
   console.log("PopoverTrigger.showInfoTooltip", showInfoTooltip);
@@ -24,12 +26,13 @@ const PopoverTrigger = ({ className, simbleSearchRef }) => {
       <Popover
         triggerContainerRef={triggerContainerRef}
         simbleSearchRef={simbleSearchRef}
+        tooltipRef={tooltipRef}
       />
 
       <div className="container" ref={triggerContainerRef}>
         <Tooltip
-          target={triggerContainerRef}
-          show={showInfoTooltip && !showPopover}
+          tooltipRef={tooltipRef}
+          show={!showPopover && showInfoTooltip}
           labelToTranslate="advanced-search-tooltip"
           placement="bottom"
         >
