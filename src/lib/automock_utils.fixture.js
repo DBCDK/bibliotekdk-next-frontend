@@ -220,13 +220,11 @@ const MANIFESTATION_5 = {
   ],
   access: [
     {
-      __resolveType: AccessEnum.DIGITAL_ARTICLE_SERVICE,
-      __typename: "DigitalArticleService",
+      __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE,
       issn: "some-issn",
     },
     {
-      __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
-      __typename: "InterLibraryLoan",
+      __typename: AccessEnum.INTER_LIBRARY_LOAN,
       loanIsPossible: true,
     },
   ],
@@ -288,12 +286,12 @@ const MANIFESTATION_7 = {
   ],
   access: [
     {
-      __resolveType: AccessEnum.ACCESS_URL,
+      __typename: AccessEnum.ACCESS_URL,
       url: "https://ereol.combo/langurl",
       origin: "https://ereol.combo",
     },
     {
-      __resolveType: AccessEnum.INFOMEDIA_SERVICE,
+      __typename: AccessEnum.INFOMEDIA_SERVICE,
       id: "123123",
       pid: "321321",
     },
@@ -1057,11 +1055,6 @@ const DEFAULT_STORY_PARAMETERS = {
     graphql: {
       debug: true,
       resolvers: {
-        Access: {
-          __resolveType: ({ parent }) => {
-            return parent?.__typename;
-          },
-        },
         Query: {
           user: () => {
             return USER_1;

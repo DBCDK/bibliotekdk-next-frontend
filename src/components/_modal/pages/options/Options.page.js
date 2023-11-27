@@ -10,6 +10,7 @@ import { useMemo } from "react";
 import { accessFactory } from "@/lib/accessFactoryUtils";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 /**
  * Component helper for link and description in options
@@ -58,7 +59,15 @@ async function handleOpenLoginAndOrderModal(modal, modalprops) {
  * @param accessesArray
  * @returns {React.JSX.Element}
  */
-function optionsListAllArgs(modal, workId, access, index, accessesArray, user) {
+function optionsListAllArgs(
+  modal,
+  workId,
+  access,
+  index,
+  accessesArray,
+  isGuestUser,
+  isAuthenticated
+) {
   //add order modal to store, to be able to access when coming back from adgangsplatform/mitid?
   const orderModalProps = {
     pids: accessesArray?.map((singleAccess) => singleAccess.pid),
@@ -71,7 +80,7 @@ function optionsListAllArgs(modal, workId, access, index, accessesArray, user) {
     ...access,
     className: styles.item,
     onOrder: () => {
-      user?.isAuthenticated || user.isGuestUser
+      isAuthenticated || isGuestUser
         ? openOrderModal({
             modal: modal,
             ...orderModalProps,
@@ -79,7 +88,6 @@ function optionsListAllArgs(modal, workId, access, index, accessesArray, user) {
         : handleOpenLoginAndOrderModal(modal, orderModalProps);
     },
   };
-
   return (
     <OptionsLinkAndDescription
       key={access.accessType + "-" + index}
@@ -89,7 +97,13 @@ function optionsListAllArgs(modal, workId, access, index, accessesArray, user) {
   );
 }
 
-export function Options({ modal, context, user }) {
+export function Options({
+  modal,
+  context,
+  loanerInfo,
+  isAuthenticated,
+  isGuestUser,
+}) {
   const { title, selectedPids, workId } = { ...context };
 
   const manifestationResponse = useData(
@@ -101,14 +115,14 @@ export function Options({ modal, context, user }) {
 
   // the next one checks for digital access .. for users already logged in :)
   // it is false if user is not logged in
-  const hasDigitalAccess = user?.authUser?.rights?.digitalArticleService;
+  const hasDigitalAccess = loanerInfo?.rights?.digitalArticleService;
 
   const { getAllowedAccessesByTypeName } = useMemo(() => {
     return accessFactory(manifestations);
   }, [manifestations]);
 
   const allowedAccessessByType = getAllowedAccessesByTypeName(
-    hasDigitalAccess || !user?.isAuthenticated
+    hasDigitalAccess || !isAuthenticated
   );
 
   const onlineAccesses = allowedAccessessByType.onlineAccesses;
@@ -121,7 +135,15 @@ export function Options({ modal, context, user }) {
   const specialAccesses = allowedAccessessByType.specialAccesses;
 
   const optionsList = (access, index, accessesArray) =>
-    optionsListAllArgs(modal, workId, access, index, accessesArray, user);
+    optionsListAllArgs(
+      modal,
+      workId,
+      access,
+      index,
+      accessesArray,
+      isGuestUser,
+      isAuthenticated
+    );
 
   return (
     allowedAccessessByType && (
@@ -140,5 +162,8 @@ export function Options({ modal, context, user }) {
 
 export default function Wrap(props) {
   const { isAuthenticated, isGuestUser } = useAuthentication();
-  return <Options {...{ ...props, user: { isAuthenticated, isGuestUser } }} />;
+  const { loanerInfo } = useLoanerInfo();
+  return (
+    <Options {...{ ...props, loanerInfo, isAuthenticated, isGuestUser }} />
+  );
 }
