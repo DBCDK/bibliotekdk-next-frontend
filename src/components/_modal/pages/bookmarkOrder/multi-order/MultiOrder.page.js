@@ -37,7 +37,7 @@ const createOrders = async ({
         return {
           pids,
           key: material.key,
-          ...periodicaForm,
+          periodicaForm,
         };
       }),
       branchId: pickupBranch.branchId,
