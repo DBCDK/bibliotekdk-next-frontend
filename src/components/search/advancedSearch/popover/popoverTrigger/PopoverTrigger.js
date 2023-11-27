@@ -3,9 +3,8 @@ import { useAdvancedSearchContext } from "@/components/search/advancedSearch/adv
 import styles from "./PopoverTrigger.module.css";
 import Translate from "@/components/base/translate/Translate";
 import Popover from "@/components/search/advancedSearch/popover/Popover";
-import SearchIcon from "../../../../header/icons/search/search";
-//import Tooltip from 'react-bootstrap/Tooltip';
-import { OverlayTrigger } from "react-bootstrap";
+import SearchIcon from "@/components/header/icons/search/search";
+
 import Tooltip from "@/components/base/tooltip/Tooltip";
 
 /**
@@ -13,7 +12,7 @@ import Tooltip from "@/components/base/tooltip/Tooltip";
  * @returns
  */
 const PopoverTrigger = ({ className, simbleSearchRef }) => {
-  const { showPopover, setShowPopover, showInfoTooltip, setShowInfoTooltip } =
+  const { showPopover, setShowPopover, showInfoTooltip } =
     useAdvancedSearchContext();
   const triggerContainerRef = useRef(null);
   const tooltipRef = useRef(null);

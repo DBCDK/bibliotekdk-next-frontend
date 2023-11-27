@@ -39,7 +39,6 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { openLoginModal } from "../_modal/pages/login/utils";
 import { signOut } from "@dbcdk/login-nextjs/client";
 import useAuthentication from "../hooks/user/useAuthentication";
-import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
 import PopoverTrigger from "@/components/search/advancedSearch/popover/popoverTrigger/PopoverTrigger";
 
@@ -97,8 +96,6 @@ export function Header({
   const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
 
   const simbleSearchRef = useRef(null);
-  const { showPopover, setShowPopover, showInfoTooltip, setShowInfoTooltip } =
-    useAdvancedSearchContext();
 
   const getLoginLabel = () => {
     if (user.hasCulrUniqueId) {
@@ -198,25 +195,6 @@ export function Header({
     }
   };
 
-  const handleContainerClick = (e) => {
-    // Check if showPopover is true before logging the message
-
-    console.log("hej med dig");
-
-    if (showPopover) {
-      console.log("hej med dig");
-      setShowInfoTooltip(true);
-    }
-
-    // Your other logic here, if any
-
-    // Prevent the click event from propagating further if needed
-    //  e.stopPropagation();
-  };
-
-  const containerStyles = {
-    pointerEvents: showPopover ? "none" : "auto",
-  };
   return (
     <header className={`${styles.wrap} ${className}`}>
       <div className={styles.headerWrap}>
@@ -225,11 +203,7 @@ export function Header({
             <StaticHeader router={router} context={context} />
             <Col xs={{ span: 7, offset: 3 }} className={styles.mobileHeader}>
               <SkipToMainAnchor />
-              <div
-                className={styles.bottom}
-                ref={simbleSearchRef}
-                style={containerStyles}
-              >
+              <div className={styles.bottom} ref={simbleSearchRef}>
                 <form
                   onSubmit={(e) => {
                     e?.preventDefault();
