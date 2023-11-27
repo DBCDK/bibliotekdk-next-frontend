@@ -1,7 +1,5 @@
 .popoverContainer {
-  /* position: relative; */
   position: absolute;
-
   top: 0px;
   left: 0;
   width: 100vw;
