@@ -10,7 +10,8 @@ import Text from "@/components/base/text";
 import cx from "classnames";
 import { useModal } from "@/components/_modal/Modal";
 import Material from "./Material";
-import { useState } from "react";
+import { accessFactory } from "@/lib/accessFactoryUtils";
+import { useEffect, useState } from "react";
 
 export const CONTEXT = "multiReferences";
 
@@ -54,14 +55,77 @@ export default function MultiReferences({ context }) {
   const [activeMaterialChoices, setActiveMaterialChoices] = useState(
     bookmarksMissingEdition
   );
+  const [periodicaFiltered, setPeriodicaFiltered] = useState([]);
 
   const materialKeyToMaterialTypes = mapMaterialKeysToSelectedMaterialTypes({
     materialKeysMissingEdition: bookmarksMissingEdition,
     bookmarks,
   });
 
+  const filteredManifestationsForMaterialType = (workData) => {
+    // Filter only the selected material type
+    const filteredManifestations = workData.manifestations.mostRelevant.filter(
+      (mani) =>
+        mani.materialTypes?.[0]?.materialTypeSpecific?.display?.toLowerCase() ===
+        workData.materialType?.toLowerCase()
+    );
+
+    return {
+      ...workData,
+      manifestations: { mostRelevant: filteredManifestations },
+    };
+  };
+
+  useEffect(() => {
+    /**
+     * Preselect edition if only 1 edition available for bookmark material type
+     */
+
+    if (isLoading) return;
+    if (modal.isVisible === false) {
+      // Reset
+      setActiveMaterialChoices([]);
+      return;
+    }
+
+    const filteredManifestations = materialsMissingEdition.map((item) =>
+      filteredManifestationsForMaterialType(item)
+    );
+    const newPeriodicaFiltered = [];
+    const newList = bookmarksMissingEdition.map((bookmark) => {
+      const matchingData = filteredManifestations.find(
+        (dataItem) => bookmark.key === dataItem.key
+      );
+
+      if (!matchingData) {
+        return bookmark;
+      }
+
+      const manifestations = matchingData.manifestations.mostRelevant;
+
+      // If 1 option, select it
+      if (manifestations.length === 1) {
+        const singleManifestation = manifestations[0];
+        if (singleManifestation.workTypes?.[0] === "PERIODICA") {
+          // Periodica - Filter from list
+          newPeriodicaFiltered.push(singleManifestation);
+          return null;
+        }
+
+        return {
+          ...bookmark,
+          chosenPid: singleManifestation.pid,
+        };
+      } else return bookmark;
+    });
+
+    setPeriodicaFiltered(newPeriodicaFiltered);
+    setActiveMaterialChoices(newList);
+  }, [modal.isVisible, isLoading]);
+
+  // Filter all who user has chosen an edition
   const missingActionMaterials = materialsMissingEdition.filter(
-    (_, i) => !activeMaterialChoices?.[i].chosenPid
+    (_, i) => !activeMaterialChoices?.[i]?.chosenPid
   );
 
   const disableLinks = missingActionMaterials.length > 0;
@@ -102,7 +166,7 @@ export default function MultiReferences({ context }) {
 
   const onActionClick = (material, materialType, materialKey) => {
     modal.push("editionPicker", {
-      material: material,
+      material: filteredManifestationsForMaterialType(material),
       materialType,
       onEditionPick,
       materialKey,
@@ -118,6 +182,25 @@ export default function MultiReferences({ context }) {
           top: cx(styles.container, styles.top),
         }}
       />
+
+      {periodicaFiltered.length > 0 && (
+        <div className={styles.periodicaMessage}>
+          <Text type="text1" className={styles.periodicaMessageTitle}>
+            Tidsskrifter har et dataformat, der ikke kan hentes som referencer.
+            Dvs. disse bliver ikke downloadet/eksporteret:
+          </Text>
+          <ul className={styles.periodicaList}>
+            {periodicaFiltered.map((item) => (
+              <li className={styles.periodicaListItem}>
+                <Text type="text1">{item.titles?.full?.[0]}</Text>
+                <Text type="text2">
+                  {item.materialTypes?.[0]?.materialTypeSpecific?.display}
+                </Text>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {showReferencesMissing && (
         <Text
@@ -155,6 +238,7 @@ export default function MultiReferences({ context }) {
           pids={[
             ...materialPids,
             ...activeMaterialChoices
+              .filter((mat) => !!mat)
               .map((mat) => mat.chosenPid)
               .filter((mat) => !!mat),
           ]}

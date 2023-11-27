@@ -32,6 +32,28 @@
   vertical-align: middle;
 }
 
+.periodicaMessage {
+  background-color: var(--pippin);
+  padding: var(--pt2) var(--pt6);
+  margin-bottom: var(--pt1);
+}
+
+.periodicaMessageTitle {
+  margin-bottom: var(--pt2);
+}
+
+.periodicaList {
+  padding-left: var(--pt2);
+}
+
+.periodicaListItem {
+  margin-bottom: var(--pt1);
+}
+
+.periodicaListItem:last-of-type {
+  margin: 0;
+}
+
 /** modal */
 
 .container {
