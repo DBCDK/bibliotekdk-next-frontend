@@ -11,12 +11,11 @@ import Translate from "@/components/base/translate/Translate";
  * @returns
  */
 const Popover = ({ className, simpleSearchRef }) => {
-  const { showPopover, setShowPopover, setShowInfoTooltip,showInfoTooltip } =
+  const { showPopover, setShowPopover, setShowInfoTooltip, showInfoTooltip } =
     useAdvancedSearchContext();
   const popoverRef = useRef(null);
   const triggerContainerRef = useRef(null);
   const tooltipRef = useRef(null);
-
 
   useEffect(() => {
     //hide if user clicks outside the popover.

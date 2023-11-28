@@ -5,8 +5,7 @@ import FakeSearchInput from "@/components/header/suggester/FakeSearchInput";
 import Section from "@/components/base/section";
 import styles from "./Searchbar.module.css";
 import { MobileMaterialSelect } from "@/components/search/select";
-import React, { useState } from "react";
-import { useRouter } from "next/router";
+import React from "react";
 
 /**
  * A Fake Search Input Field
@@ -21,9 +20,6 @@ import { useRouter } from "next/router";
 export default function Searchbar({ q }) {
   // modal
   const modal = useModal();
-
-  const [expandedOpen, setExpandedOpen] = useState(false);
-  const router = useRouter();
 
   return (
     <div className={styles.wrap}>

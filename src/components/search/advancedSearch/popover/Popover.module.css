@@ -9,35 +9,34 @@
 }
 
 .triggercontainer {
-    display: flex;
-    flex-direction: column;
-    width: fit-content;
-    align-items: center;
-    cursor: pointer;
-    overflow: hidden;
-    margin-top: 7px;
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  align-items: center;
+  cursor: pointer;
+  overflow: hidden;
+  margin-top: 7px;
+}
+.triggerActive {
+  border-bottom: 1px solid var(--blue);
+}
+
+.triggercontainer:focus {
+  border-bottom: 1px solid var(--blue);
+}
+@media (max-width: 992px) {
+  .triggercontainer {
+    display: none;
   }
-  .triggerActive {
-    border-bottom: 1px solid var(--blue);
-  }
-  
-  .triggercontainer:focus {
-    border-bottom: 1px solid var(--blue);
-  }
-  @media (max-width: 992px) {
-    .triggercontainer {
-      display: none;
-    }
-  }
-  
-  .triangle {
-    position: relative;
-    bottom: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 75px;
-    height: 30px;
-    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-    background-color: var(--concrete);
-  }
-  
+}
+
+.triangle {
+  position: relative;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 75px;
+  height: 30px;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  background-color: var(--concrete);
+}
