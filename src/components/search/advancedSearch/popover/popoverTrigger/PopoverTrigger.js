@@ -11,17 +11,17 @@ import Tooltip from "@/components/base/tooltip/Tooltip";
  * Opens advanced search popover
  * @returns
  */
-const PopoverTrigger = ({ className, simbleSearchRef }) => {
+const PopoverTrigger = ({ className, simpleSearchRef }) => {
   const { showPopover, setShowPopover, showInfoTooltip } =
     useAdvancedSearchContext();
   const triggerContainerRef = useRef(null);
   const tooltipRef = useRef(null);
-  console.log("showInfoTooltip", showInfoTooltip);
+
   return (
     <>
       <Popover
         triggerContainerRef={triggerContainerRef}
-        simbleSearchRef={simbleSearchRef}
+        simpleSearchRef={simpleSearchRef}
         tooltipRef={tooltipRef}
       />
 

@@ -95,7 +95,7 @@ export function Header({
   // specific material workType selected
   const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
 
-  const simbleSearchRef = useRef(null);
+  const simpleSearchRef = useRef(null);
 
   const getLoginLabel = () => {
     if (user.hasCulrUniqueId) {
@@ -205,7 +205,7 @@ export function Header({
               <SkipToMainAnchor />
               <div className={styles.bottom}>
                 <form
-                  ref={simbleSearchRef}
+                  ref={simpleSearchRef}
                   onSubmit={(e) => {
                     e?.preventDefault();
                     doSearch(query);
@@ -262,7 +262,7 @@ export function Header({
                 <div className={styles.popoverTriggerContainer}>
                   <PopoverTrigger
                     className={styles.advancedSearchTrigger}
-                    simbleSearchRef={simbleSearchRef}
+                    simpleSearchRef={simpleSearchRef}
                   />
                 </div>
               </div>

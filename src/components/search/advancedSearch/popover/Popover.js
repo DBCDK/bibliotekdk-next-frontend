@@ -6,10 +6,10 @@ import { useAdvancedSearchContext } from "@/components/search/advancedSearch/adv
  * Popover where advanced search can be performed from
  * @returns
  */
-const Popover = ({ triggerContainerRef, simbleSearchRef, tooltipRef }) => {
+const Popover = ({ triggerContainerRef, simpleSearchRef, tooltipRef }) => {
   const { showPopover, setShowPopover, setShowInfoTooltip } =
     useAdvancedSearchContext();
-  const popppverRef = useRef(null);
+  const popoverRef = useRef(null);
 
   useEffect(() => {
     //hide if user clicks outside the popover.
@@ -18,20 +18,20 @@ const Popover = ({ triggerContainerRef, simbleSearchRef, tooltipRef }) => {
       const isClickInsideRef = (ref, target) => ref?.current?.contains(target);
       //if click outside popover and outside trigger, then hide popover
       if (
-        !popppverRef.current?.contains(event.target) &&
+        !popoverRef?.current?.contains(event.target) &&
         !triggerContainerRef?.current?.contains(event.target)
       ) {
         setShowPopover(false);
       }
-      //if click inside simble search, we want to show info tooltip
-      if (showPopover && isClickInsideRef(simbleSearchRef, event.target)) {
+      //if click inside simple search, we want to show info tooltip
+      if (showPopover && isClickInsideRef(simpleSearchRef, event.target)) {
         if (!isClickInsideRef(triggerContainerRef, event.target)) {
           setShowInfoTooltip(true);
         }
       }
       //else if click is outside the tooltip and the showInfoTooltip is visible, we want to hide it
       if (
-        !isClickInsideRef(simbleSearchRef, event.target) &&
+        !isClickInsideRef(simpleSearchRef, event.target) &&
         !isClickInsideRef(tooltipRef, event.target)
       ) {
         setShowInfoTooltip(false);
@@ -41,13 +41,13 @@ const Popover = ({ triggerContainerRef, simbleSearchRef, tooltipRef }) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [popppverRef, showPopover]);
+  }, [popoverRef, showPopover]);
 
   if (!showPopover) {
     return null;
   }
   return (
-    <div className={styles.popoverContainer} ref={popppverRef}>
+    <div className={styles.popoverContainer} ref={popoverRef}>
       <AdvancedSearch />
     </div>
   );
