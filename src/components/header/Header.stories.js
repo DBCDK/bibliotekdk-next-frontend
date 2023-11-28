@@ -75,9 +75,6 @@ NavHeaderPrefilled.story = {
       pathname: "/find",
       query: {
         "q.all": "some all",
-        // "q.title": "some title",
-        // "q.creator": "some creator",
-        // "q.subject": "some subject",
         workTypes: "movie",
       },
     },

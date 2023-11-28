@@ -23,7 +23,7 @@ const Popover = ({ triggerContainerRef, simbleSearchRef, tooltipRef }) => {
         setShowPopover(false);
       }
       //if click inside simble search, we want to show info tooltip
-      if (isClickInsideRef(simbleSearchRef, event.target)) {
+      if (!showPopover && isClickInsideRef(simbleSearchRef, event.target)) {
         if (!isClickInsideRef(triggerContainerRef, event.target)) {
           setShowInfoTooltip(true);
         }

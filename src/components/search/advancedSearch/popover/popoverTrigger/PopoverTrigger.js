@@ -16,7 +16,7 @@ const PopoverTrigger = ({ className, simbleSearchRef }) => {
     useAdvancedSearchContext();
   const triggerContainerRef = useRef(null);
   const tooltipRef = useRef(null);
-
+  console.log("showInfoTooltip", showInfoTooltip);
   return (
     <>
       <Popover
