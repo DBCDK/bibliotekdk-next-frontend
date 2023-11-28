@@ -15,7 +15,7 @@ export default function Tooltip({
   trigger = ["focus"],
   iconSize = 3,
   children,
-  show = false,
+  show,
   tooltipRef,
   toolTipClassName,
 }) {
@@ -29,7 +29,7 @@ export default function Tooltip({
   }, []);
 
   if (!mounted) return null;
-  console.log("tooltip.ref", tooltipRef);
+
   return (
     <span className={`${customClass ? customClass : ""}`} ref={tooltipRef}>
       <OverlayTrigger
