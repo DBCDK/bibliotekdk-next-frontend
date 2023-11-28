@@ -85,7 +85,7 @@ export function doComplexSearchAll({ cql, offset, limit, sort }) {
             materialTypeSpecific {
               code
               display
-  }
+            }
           }
           fictionNonfiction {
             display
