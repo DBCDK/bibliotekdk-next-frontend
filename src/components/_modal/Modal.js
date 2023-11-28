@@ -385,6 +385,10 @@ function Page(props) {
   // Add shadow to bottom of scroll area, if last element is not visible
   const shadowClass = inView ? "" : "page-shadow";
 
+  // Used to whitelist the dialog and hiding it from the focus lock
+  const whiteList = (el) =>
+    !(el.getAttribute("id") === "modal_dialog" && el.tabIndex === -1);
+
   useEffect(() => {
     setIsTransitioning(true);
     const timer = setTimeout(() => {
@@ -420,6 +424,7 @@ function Page(props) {
         autoFocus
         disabled={dialogStatus === "closed" || !active || isTransitioning}
         returnFocus
+        whiteList={whiteList}
       >
         <props.component {...passedProps} />
         <div ref={ref} className="page_bottom" />
