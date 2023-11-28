@@ -72,7 +72,7 @@ describe("LoanerForm", () => {
     );
   });
 
-  it.only("Checkbox working", () => {
+  it("Checkbox working", () => {
     cy.visit("/iframe.html?id=modal-loanerform--show-loaner-form-short");
 
     //we have checkbox
