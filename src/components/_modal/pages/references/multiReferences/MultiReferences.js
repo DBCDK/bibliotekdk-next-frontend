@@ -233,11 +233,18 @@ export default function MultiReferences({ context }) {
     });
   };
 
+  const onDeleteClick = (key) => {
+    const activeChoices = activeMaterialChoices;
+    const index = activeChoices.findIndex((c) => c.key === key);
+    activeChoices[index] = { toFilter: true, ...activeChoices[index] };
+    setActiveMaterialChoices([...activeChoices]); // Spread to copy object - rerenders since new object
+  };
+
   const onAutoAll = (e) => {
     if (e) {
       // Auto select newest editions
       const activeChoices = activeMaterialChoices;
-      missingActionMaterials.forEach(item => {
+      missingActionMaterials.forEach((item) => {
         const filteredManifestationsWorkData =
           filteredManifestationsForMaterialType(item);
         const manifestationsForMaterialType =
@@ -338,6 +345,7 @@ export default function MultiReferences({ context }) {
                 materialKeyToMaterialTypes={materialKeyToMaterialTypes}
                 modal={modal}
                 onActionClick={onActionClick}
+                onDeleteClick={onDeleteClick}
               />
             ))}
         </>

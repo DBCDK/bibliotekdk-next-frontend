@@ -7,11 +7,14 @@ import styles from "./MultiReferences.module.css";
 import Translate from "@/components/base/translate/Translate";
 import { CONTEXT } from "./MultiReferences";
 
-// eslint-disable-next-line no-unused-vars
-const ButtonRow = ({ context, onClick }) => {
+const ButtonRow = ({ onClick, onDeleteClick }) => {
   return (
     <div className={styles.buttonRowContainer}>
-      <IconButton keepUnderline={true} className={styles.removeButton}>
+      <IconButton
+        keepUnderline={true}
+        className={styles.removeButton}
+        onClick={onDeleteClick}
+      >
         {Translate({
           context: CONTEXT,
           label: "remove",
