@@ -160,7 +160,7 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
                 id="multiReferences"
                 component={Pages.MultiReferences}
               />
-
+              <Modal.Page id="editionPicker" component={Pages.EditionPicker} />
               <Modal.Page id="material" component={Pages.Material} />
               <Modal.Page
                 id="ematerialfilter"

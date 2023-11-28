@@ -98,6 +98,7 @@ const BookmarkPage = () => {
       newList.push({
         key: key,
         materialId: bookmarkData.materialId,
+        materialType: bookmarkData.materialType,
       });
     }
 
@@ -133,6 +134,7 @@ const BookmarkPage = () => {
         allBookmarksData.map((el) => ({
           key: el.key,
           materialId: el.materialId,
+          materialType: el.materialType,
         }))
       );
     else setCheckboxList([]);
@@ -175,7 +177,11 @@ const BookmarkPage = () => {
       .filter(
         (bm) => checkboxList.findIndex((item) => item.key === bm.key) > -1
       )
-      .map((bm) => ({ bookmarkId: bm.bookmarkId, key: bm.key }));
+      .map((bm) => ({
+        bookmarkId: bm.bookmarkId,
+        key: bm.key,
+        materialType: bm.materialType,
+      }));
     deleteBookmarks(toDelete);
   };
   /**

@@ -677,6 +677,10 @@ export function idsToWorks({ ids }) {
             cover {
               detail
               origin
+              thumbnail
+            }
+            titles {
+              full
             }
             publisher
             edition{
@@ -689,11 +693,14 @@ export function idsToWorks({ ids }) {
             ownerWork {
               workId
               workTypes
-              creators{
+              creators {
                 display
               }
               titles{
                 full
+              }
+              workYear {
+                display
               }
             }
             materialTypes {

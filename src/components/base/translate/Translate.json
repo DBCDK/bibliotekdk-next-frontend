@@ -953,6 +953,14 @@
       "remove": {
         "da": "Fjern",
         "en": "Remove"
+      },
+      "periodicaMessage": {
+        "da": "Tidsskrifter har et dataformat, der ikke kan hentes som referencer. \nDvs. disse bliver ikke downloadet/eksporteret:",
+        "en": "Journals has a dataformat which can't be exported as references. \nThese materials won't be exported"
+      },
+      "material-not-supported": {
+        "da": "Materialer er ikke supporteret til eksportering",
+        "en": "Materials isn't supported for export"
       }
     },
     "workTypeDistinctForm": {
