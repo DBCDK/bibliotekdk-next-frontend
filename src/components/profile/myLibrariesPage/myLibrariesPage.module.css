@@ -10,3 +10,7 @@
   margin-top: var(--pt1);
   margin-bottom: var(--pt1);
 }
+
+.emptyAgencyList {
+  padding: var(--pt3) 0;
+}
