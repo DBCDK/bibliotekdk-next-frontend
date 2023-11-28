@@ -114,8 +114,7 @@ describe("Search", () => {
       });
     });
 
-    //@TODO fix. Succeds locally but fails in Jenkins
-    it.skip(`All default input suggestions will search with q.all`, () => {
+    it(`All default input suggestions will search with q.all`, () => {
       cy.visit("/iframe.html?id=layout-header--nav-header");
 
       cy.get("header [data-cy=suggester-input]").clear().type("hest");
