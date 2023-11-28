@@ -40,7 +40,7 @@ import { openLoginModal } from "../_modal/pages/login/utils";
 import { signOut } from "@dbcdk/login-nextjs/client";
 import useAuthentication from "../hooks/user/useAuthentication";
 
-import PopoverTrigger from "@/components/search/advancedSearch/popover/popoverTrigger/PopoverTrigger";
+import AdvancedSearchPopover from "@/components/search/advancedSearch/popover/Popover";
 
 // material Pages
 export const MATERIAL_PAGES = [
@@ -260,7 +260,7 @@ export function Header({
                   </button>
                 </form>
                 <div className={styles.popoverTriggerContainer}>
-                  <PopoverTrigger
+                  <AdvancedSearchPopover
                     className={styles.advancedSearchTrigger}
                     simpleSearchRef={simpleSearchRef}
                   />
