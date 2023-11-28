@@ -104,3 +104,29 @@ export function doComplexSearchAll({ cql, offset, limit, sort }) {
     slowThreshold: 3000,
   };
 }
+
+/**
+ * Hitcount
+ *
+ * @param {string} cql  the  cql-query
+ * @param offset
+ * @param limit
+ * @param sort
+ */
+export function complexSearchOnlyWorkIds({ cql, offset, limit, sort }) {
+  return {
+    // delay: 1000, // for debugging
+    query: `
+    query ComplexSearchOnlyWorkIds($cql: String!, $offset: Int!, $limit: PaginationLimit!, $sort: [Sort!]) {
+			complexSearch(cql: $cql) {
+				hitcount
+				errorMessage
+				works(offset: $offset, limit: $limit, sort: $sort) {
+					workId
+        }
+			}
+		}`,
+    variables: { cql, offset, limit, sort },
+    slowThreshold: 3000,
+  };
+}

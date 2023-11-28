@@ -3,27 +3,38 @@ import Translate from "@/components/base/translate";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import WorkSlider from "@/components/base/slider/WorkSlider";
-import * as searchFragments from "@/lib/api/search.fragments";
 import { getMemberWorkIds } from "@/components/series/seriesMembers/SeriesMembers";
 import difference from "lodash/difference";
 import intersection from "lodash/intersection";
 import styles from "./OtherWorksByTheAuthor.module.css";
 import cx from "classnames";
 import { getUniqueCreatorsDisplay } from "@/components/series/utils";
+import * as complexSearchFragments from "@/lib/api/complexSearch.fragments";
 
-export function OtherWorksByTheAuthor({ series, seriesIsLoading, creator }) {
+const phrase_creatorContributor = "phrase.creatorcontributor";
+
+export function OtherWorksByTheAuthor({
+  series,
+  seriesIsLoading,
+  creator,
+  index,
+  sectionTitle,
+}) {
   const firstSeriesMembers = series?.members;
+
+  const cql = `${phrase_creatorContributor}=\"${creator}\"`;
 
   const { data: searchData, isLoading: searchIsLoading } = useData(
     creator &&
-      searchFragments.all({
-        q: {
-          creator: creator,
-        },
-        search_exact: true,
+      complexSearchFragments.complexSearchOnlyWorkIds({
+        cql: cql,
+        offset: 0,
+        limit: 50,
       })
   );
-  const searchWorkIds = searchData?.search?.works?.map((work) => work?.workId);
+  const searchWorkIds = searchData?.complexSearch?.works?.map(
+    (work) => work?.workId
+  );
   const memberWorkIds = getMemberWorkIds(firstSeriesMembers);
 
   // We get searchWorkIds that are not in memberWorkIds
@@ -43,16 +54,32 @@ export function OtherWorksByTheAuthor({ series, seriesIsLoading, creator }) {
         })
     );
 
+  if (worksInSeriesData?.works?.length === 0) {
+    return null;
+  }
+
   return (
     worksInSeriesData?.works && (
-      <WorkSlider
-        skeleton={seriesIsLoading || worksInSeriesIsLoading || searchIsLoading}
-        propsAndChildrenInputList={worksInSeriesData?.works?.map((work) => {
-          return {
-            material: work,
-          };
+      <Section
+        title={sectionTitle}
+        divider={false}
+        space={{ bottom: "var(--pt0)", top: "var(--pt4)" }}
+        className={cx(styles.section_color, {
+          [styles.section_first]: index === 0,
         })}
-      />
+        isLoading={seriesIsLoading}
+      >
+        <WorkSlider
+          skeleton={
+            seriesIsLoading || worksInSeriesIsLoading || searchIsLoading
+          }
+          propsAndChildrenInputList={worksInSeriesData?.works?.map((work) => {
+            return {
+              material: work,
+            };
+          })}
+        />
+      </Section>
     )
   );
 }
@@ -68,28 +95,22 @@ export default function Wrap({ series, seriesIsLoading }) {
   }).toLowerCase();
 
   return uniqueCreatorsDisplay.slice(0, 1).map((creator, index) => {
+    const sectionTitle = `${Translate({
+      context: "series_page",
+      label: "other_works_by_the_author",
+      vars: [workTypeTranslation],
+    })} ${creator}`;
+
     return (
-      <Section
-        key={creator}
-        title={`${Translate({
-          context: "series_page",
-          label: "other_works_by_the_author",
-          vars: [workTypeTranslation],
-        })} ${creator}`}
-        divider={false}
-        space={{ bottom: "var(--pt0)", top: "var(--pt4)" }}
-        className={cx(styles.section_color, {
-          [styles.section_first]: index === 0,
-        })}
-        isLoading={seriesIsLoading}
-      >
-        <OtherWorksByTheAuthor
-          series={series}
-          seriesIsLoading={seriesIsLoading}
-          firstSection={true}
-          creator={creator}
-        />
-      </Section>
+      <OtherWorksByTheAuthor
+        key={index}
+        series={series}
+        seriesIsLoading={seriesIsLoading}
+        firstSection={true}
+        creator={creator}
+        index={index}
+        sectionTitle={sectionTitle}
+      />
     );
   });
 }
