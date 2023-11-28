@@ -961,6 +961,22 @@
       "material-not-supported": {
         "da": "Materialer er ikke supporteret til eksportering",
         "en": "Materials isn't supported for export"
+      },
+      "missing-materials-too-many": {
+        "da": "Der er ikke valgt en specifik udgave for %s af materialerne!",
+        "en": "There is missing an edition for %s of the materials"
+      },
+      "choose-automatically": {
+        "da": "Vælg automatisk seneste udgave ved download/eksport",
+        "en": "Choose latest edition automatically for export"
+      },
+      "info-label": {
+        "da": "Du kan tilføje specifikke udgaver på en materialeside under “Informationer og udgaver”",
+        "en": "You can add specific editions on the materialpage under “Informations and editions”"
+      },
+      "info-label-bold": {
+        "da": "OBS: ",
+        "en": "NOTE: "
       }
     },
     "workTypeDistinctForm": {
@@ -1377,8 +1393,8 @@
         "en": "Order"
       },
       "select-action": {
-        "da": "Referencer",
-        "en": "References"
+        "da": "Exporter",
+        "en": "Export"
       },
       "remove": {
         "da": "Fjern",
