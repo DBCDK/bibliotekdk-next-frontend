@@ -285,7 +285,6 @@ export function WorkSliderIndented() {
       </StoryDescription>
 
       <div style={{ paddingLeft: 150 }}>
-        {/*<WorkSlider works={works} />*/}
         <Slider data={works} />
       </div>
     </div>

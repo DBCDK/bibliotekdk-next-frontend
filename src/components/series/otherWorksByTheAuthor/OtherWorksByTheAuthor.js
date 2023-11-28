@@ -47,7 +47,11 @@ export function OtherWorksByTheAuthor({ series, seriesIsLoading, creator }) {
     worksInSeriesData?.works && (
       <WorkSlider
         skeleton={seriesIsLoading || worksInSeriesIsLoading || searchIsLoading}
-        works={worksInSeriesData?.works}
+        propsAndChildrenInputList={worksInSeriesData?.works?.map((work) => {
+          return {
+            material: work,
+          };
+        })}
       />
     )
   );

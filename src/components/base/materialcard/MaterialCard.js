@@ -7,7 +7,7 @@ import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import Col from "react-bootstrap/Col";
 import { templateForRelatedWorks } from "@/components/base/materialcard/templates/templates";
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 import cx from "classnames";
 
 function calculateBorder(link_href, border) {
@@ -27,9 +27,8 @@ const MaterialCard = forwardRef(
    * @param {function} props.propAndChildrenTemplate - A function to define prop and children rendering.
    * @param {Object} props.propAndChildrenInput - Input for propAndChildrenTemplate function.
    * @param {function} props.onClick - A callback function to handle click events.
-   * @param {React.MutableRefObject<any>} props.ref - A React ref object.
    * @param {{ xs: OptionalColSize, sm: OptionalColSize, lg: OptionalColSize }} props.colSizing - An object specifying column sizing options.
-   * @param {boolean} [props.imageLeft] indicates that image should be on the left side of the card
+   * @param {React.MutableRefObject<any>} ref - A React ref object.
    * @returns {React.JSX.Element} - Returns a React JSX element.
    */
   function MaterialCard(
@@ -47,6 +46,7 @@ const MaterialCard = forwardRef(
       link_href,
       fullTitle,
       image_src,
+      ImageOverlay,
       children,
       workId,
       elementContainerClassName,
@@ -58,6 +58,8 @@ const MaterialCard = forwardRef(
       imageLeft,
       border,
     } = renderProps;
+
+    const [loaded, setLoaded] = useState(false);
 
     if (imageLeft) {
       const ManifestationLink = ({ children }) => {
@@ -124,10 +126,15 @@ const MaterialCard = forwardRef(
           <div ref={ref} id={workId} className={cx(relatedElementClassName)}>
             <img
               src={image_src}
-              className={cx(coverImageClassName)}
+              className={cx(coverImageClassName, {
+                [styles.cover_image_skeleton]: !loaded,
+              })}
+              onLoad={() => setLoaded(true)}
               title={fullTitle}
-              alt={Translate({ context: "general", label: "frontpage" })}
+              alt=""
             />
+            {ImageOverlay && <ImageOverlay />}
+
             <div className={cx(textClassName)}>{children}</div>
           </div>
         </Link>

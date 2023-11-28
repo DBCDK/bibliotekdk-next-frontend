@@ -189,12 +189,6 @@ export function series({ workId }) {
     // delay: 4000, // for debugging
     query: `query Series($workId: String!) {
       work(id: $workId) {
-        seriesMembers {
-          ...workSliderFragment
-          creators {
-            ...creatorsFragment
-          }
-        }
         ...seriesFragment
         series {
           members {
@@ -212,6 +206,9 @@ export function series({ workId }) {
                 ...universeFragment
               }
             }
+            numberInSeries
+            readThisFirst
+            readThisWhenever
           }
         }
       }
@@ -1051,7 +1048,6 @@ const seriesFragment = `fragment seriesFragment on Work {
     description
     numberInSeries {
       display
-      number
     }
   }
 }`;

@@ -120,11 +120,9 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
             <div style={{ height: "var(--pt8)" }} aria-hidden={true}></div>
           </section>
           {/* TODO: WorkGroupingsOverview.js refererer til dennes oversættelse */}
-          <Series
-            workId={workId}
-            type={type}
-            anchor-label={Translate(AnchorsEnum.SERIES)}
-          />
+          <section type={type} anchor-label={Translate(AnchorsEnum.SERIES)}>
+            <Series workId={workId} type={type} />
+          </section>
           <Recommendations
             workId={workId}
             anchor-label={Translate({
