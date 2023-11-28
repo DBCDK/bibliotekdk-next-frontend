@@ -7,7 +7,7 @@ import { useAdvancedSearchContext } from "@/components/search/advancedSearch/adv
  * @returns
  */
 const Popover = ({ triggerContainerRef, simbleSearchRef, tooltipRef }) => {
-  const { showPopover, setShowPopover, setShowInfoTooltip, showInfoTooltip } =
+  const { showPopover, setShowPopover, setShowInfoTooltip } =
     useAdvancedSearchContext();
   const popppverRef = useRef(null);
   useEffect(() => {
@@ -29,7 +29,10 @@ const Popover = ({ triggerContainerRef, simbleSearchRef, tooltipRef }) => {
         }
       }
       //else if click is outside the tooltip and the showInfoTooltip is visible, we want to hide it
-      else if (showInfoTooltip && !isClickInsideRef(tooltipRef, event.target)) {
+      if (
+        !isClickInsideRef(simbleSearchRef, event.target) &&
+        !isClickInsideRef(tooltipRef, event.target)
+      ) {
         setShowInfoTooltip(false);
       }
     }

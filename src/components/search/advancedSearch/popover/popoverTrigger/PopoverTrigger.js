@@ -17,9 +17,6 @@ const PopoverTrigger = ({ className, simbleSearchRef }) => {
   const triggerContainerRef = useRef(null);
   const tooltipRef = useRef(null);
 
-  //set variable in context
-  //close if click outside
-  console.log("PopoverTrigger.showInfoTooltip", showInfoTooltip);
   return (
     <>
       <Popover
