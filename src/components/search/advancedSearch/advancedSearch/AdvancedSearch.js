@@ -40,6 +40,7 @@ export default function AdvancedSearch() {
     parsedCQL,
     setParsedCQL,
     cqlFromUrl,
+    setShowPopover,
   } = useAdvancedSearchContext();
 
   const [showCqlEditor, setShowCqlEditor] = useState(!isEmpty(cqlFromUrl));
@@ -78,11 +79,12 @@ export default function AdvancedSearch() {
       }
     } else {
       const query = { fieldSearch: stateToString };
-      router.push({ pathname: router.pathname, query });
+      router.push({ pathname: "/avanceret", query });
       //save in state
       const cql = convertStateToCql({ inputFields, dropdownSearchIndices });
       setParsedCQL(cql);
     }
+    setShowPopover(false);
   };
 
   return (

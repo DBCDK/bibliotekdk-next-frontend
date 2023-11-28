@@ -47,7 +47,13 @@ export default function AdvancedSearchProvider({ children, router }) {
     sort: sortFromUrl = "",
   } = router.query;
   const fieldSearchFromUrl = fieldSearch && JSON.parse(fieldSearch);
+
   const sort = sortFromUrl && JSON.parse(sortFromUrl);
+
+  //// ----  Popup Trigger ----
+  const [showPopover, setShowPopover] = useState(false);
+  //if advanced search popover is open, and the user clicks on simple search, a tooltip with info will be shown.
+  const [showInfoTooltip, setShowInfoTooltip] = useState(false);
 
   //// ---- Inputfields ----
   const {
@@ -131,6 +137,10 @@ export default function AdvancedSearchProvider({ children, router }) {
     fieldSearchFromUrl,
     cqlFromUrl,
     pageNoFromUrl: page,
+    showPopover,
+    setShowPopover,
+    showInfoTooltip,
+    setShowInfoTooltip,
     sort: sort,
   };
 

@@ -1,0 +1,9 @@
+.popoverContainer {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  width: 100vw;
+  background-color: var(--white);
+  z-index: 3;
+  margin-top: 150px;
+}

@@ -1,11 +1,9 @@
 import Header from "@/components/header/Header";
 import { useRouter } from "next/router";
 import { fetchAll } from "@/lib/api/apiServerOnly";
-import AdvancedSearch from "@/components/search/advancedSearch/advancedSearch/AdvancedSearch";
 import useDataCollect from "@/lib/useDataCollect";
 import { useRef } from "react";
 import AdvancedSearchResult from "@/components/search/advancedSearch/advancedSearchResult/AdvancedSearchResult";
-import AdvancedSearchProvider from "@/components/search/advancedSearch/advancedSearchContext";
 
 import Container from "react-bootstrap/Container";
 /**
@@ -38,31 +36,27 @@ export default function AdvancedSearchPage() {
   }
 
   return (
-    <AdvancedSearchProvider router={router}>
-      <main>
-        <div ref={scrollRef} />
-        <Header router={router} hideSimpleSearch />
-
-        <AdvancedSearch />
-        <Container fluid>
-          <AdvancedSearchResult
-            onPageChange={async (page, scroll) => {
-              scroll = typeof scroll !== "boolean" || scroll !== false;
-              await updateQueryParams({ page });
-              scroll && scrollToRef(scrollRef);
-            }}
-            // .. @TODO .. what to do with the datacollect ??
-            onWorkClick={(index, work) => {
-              dataCollect.collectSearchWorkClick({
-                search_request: { q, filters },
-                search_query_hit: index + 1,
-                search_query_work: work.workId,
-              });
-            }}
-          />
-        </Container>
-      </main>
-    </AdvancedSearchProvider>
+    <main>
+      <div ref={scrollRef} />
+      <Header router={router} />
+      <Container fluid>
+        <AdvancedSearchResult
+          onPageChange={async (page, scroll) => {
+            scroll = typeof scroll !== "boolean" || scroll !== false;
+            await updateQueryParams({ page });
+            scroll && scrollToRef(scrollRef);
+          }}
+          // .. @TODO .. what to do with the datacollect ??
+          onWorkClick={(index, work) => {
+            dataCollect.collectSearchWorkClick({
+              search_request: { q, filters },
+              search_query_hit: index + 1,
+              search_query_work: work.workId,
+            });
+          }}
+        />
+      </Container>
+    </main>
   );
 }
 
