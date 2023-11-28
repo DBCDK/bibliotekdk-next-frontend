@@ -10,11 +10,16 @@ import Text from "@/components/base/text";
 import cx from "classnames";
 import { useModal } from "@/components/_modal/Modal";
 import Material from "./Material";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import MaterialCard from "@/components/base/materialcard/MaterialCard";
 import { templateImageToLeft } from "@/components/base/materialcard/templates/templates";
+import Checkbox from "@/components/base/forms/checkbox";
+import {
+  manifestationMaterialTypeFactory,
+} from "@/lib/manifestationFactoryUtils";
 
 export const CONTEXT = "multiReferences";
+const CHECKBOX_TRESHHOLD = 1;
 
 /**
  * Takes all materials that miss edition and finds maps their keys to their material types
@@ -114,6 +119,8 @@ export default function MultiReferences({ context }) {
       !activeMaterialChoices?.[i]?.toFilter
   );
 
+  const hasAutoCheckbox = useState(missingActionMaterials.length > CHECKBOX_TRESHHOLD); // Static state
+
   const isSingleReference =
     materials.length === 1 &&
     !hasMissingReferences &&
@@ -125,6 +132,7 @@ export default function MultiReferences({ context }) {
   const materialPids = materials
     .filter((material) => !material.materialId.startsWith("work-of"))
     .map((material) => material.materialId);
+  const isAutoCheckboxSelected = missingActionMaterials.length > CHECKBOX_TRESHHOLD;
 
   const numberMaterials = materials.length;
   const title =
@@ -203,7 +211,7 @@ export default function MultiReferences({ context }) {
 
   const onEditionPick = (pid, materialKey) => {
     modal.prev();
-    const activeChoices = [...activeMaterialChoices];
+    const activeChoices = activeMaterialChoices;
     const index = activeChoices.findIndex((c) => c.key === materialKey);
     activeChoices[index] = { chosenPid: pid, ...activeChoices[index] };
     setActiveMaterialChoices([...activeChoices]); // Spread to copy object - rerenders since new object
@@ -217,6 +225,28 @@ export default function MultiReferences({ context }) {
       materialKey,
     });
   };
+
+  const onAutoAll = (e) => {
+    console.log(e);
+    if (e) {
+      const activeChoices = activeMaterialChoices;
+      missingActionMaterials.map((item, i) => {
+        const filteredManifestationsWorkData = filteredManifestationsForMaterialType(item);
+        const manifestationsForMaterialType = filteredManifestationsWorkData?.manifestations?.mostRelevant;
+        const { flattenedGroupedSortedManifestations } = manifestationMaterialTypeFactory(manifestationsForMaterialType);
+        // Take newest manifestation pid
+        const pidToSelect = flattenedGroupedSortedManifestations[0].pid;
+        const index = activeChoices.findIndex((c) => c.key === item.key);
+        activeChoices[index] = {...activeChoices[index], chosenPid: pidToSelect}
+      });
+      console.log(activeMaterialChoices, activeChoices);
+      setActiveMaterialChoices([...activeChoices]); // Spread to copy object - rerenders since new object
+    } else {
+      // Deselect auto selection
+      const activeChoices = activeMaterialChoices.map(item => ({...item, chosenPid: null}));
+      setActiveMaterialChoices([...activeChoices]); // Spread to copy object - rerenders since new object
+    }
+  }
 
   return (
     <div>
@@ -253,7 +283,20 @@ export default function MultiReferences({ context }) {
         />
       )}
 
-      {hasMissingReferences && (
+      {
+        hasAutoCheckbox && (
+          <div className={styles.autoCheckbox}>
+            <Text type="text1">Der er ikke valgt en specifik udgave for 37 af materialerne!</Text>
+            <div className={styles.checkboxRow}>
+            <Checkbox className={styles.checkbox} onChange={onAutoAll} />
+            <Text type="text2">Vælg automatisk seneste udgave ved download/eksport</Text>
+              </div>
+            
+          </div>
+        )
+      }
+
+      {hasMissingReferences && !hasAutoCheckbox && (
         <>
           <Text
             type="text3"
@@ -284,13 +327,14 @@ export default function MultiReferences({ context }) {
         className={cx(styles.container, {
           [styles.exportButtonsMobile]: !hasMissingReferences,
           [styles.paddingExportButtons]:
+          isAutoCheckboxSelected ||
             isSingleReference ||
             (!hasMissingReferences &&
               periodicaFiltered.length > 0 &&
               !isOnlyPeriodica),
         })}
       >
-        {hasMissingReferences && (
+        {hasMissingReferences && !isAutoCheckboxSelected && (
           <Text type="text3" className={styles.chooseEditionText}>
             {Translate({
               context: CONTEXT,
@@ -317,6 +361,16 @@ export default function MultiReferences({ context }) {
           disabled={disableLinks}
         />
       </div>
+
+      {
+        hasAutoCheckbox && (
+          <div className={styles.infoMessage}>
+            <Text type="text1" tag="span">OBS: </Text>
+            <Text type="text2" tag="span">Du kan tilføje specifikke udgaver på en materialeside under “Informationer og udgaver”</Text>
+
+          </div>
+        )
+      }
     </div>
   );
 }
