@@ -13,8 +13,11 @@ import Material from "./Material";
 import { useEffect, useState } from "react";
 import MaterialCard from "@/components/base/materialcard/MaterialCard";
 import { templateImageToLeft } from "@/components/base/materialcard/templates/templates";
+import Checkbox from "@/components/base/forms/checkbox";
+import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 
 export const CONTEXT = "multiReferences";
+const CHECKBOX_TRESHHOLD = 20;
 
 /**
  * Takes all materials that miss edition and finds maps their keys to their material types
@@ -114,17 +117,26 @@ export default function MultiReferences({ context }) {
       !activeMaterialChoices?.[i]?.toFilter
   );
 
+  const [hasAutoCheckbox, setHasAutoCheckbox] = useState(false); // Static state
+
   const isSingleReference =
     materials.length === 1 &&
     !hasMissingReferences &&
     !periodicaFiltered.length === 1;
   const isOnlyPeriodica = periodicaFiltered.length === materials.length;
 
-  const disableLinks = missingActionMaterials.length > 0 || isOnlyPeriodica;
+  const withNewestPidsSelected = missingActionMaterials.filter((mat) => {
+    const choice = activeMaterialChoices.find((o) => o.key === mat.key);
+    if (!choice) return true;
+    return !choice.newestPid;
+  });
+  const disableLinks = withNewestPidsSelected.length > 0 || isOnlyPeriodica;
   const hasMissingReferences = disableLinks && !isLoading;
   const materialPids = materials
     .filter((material) => !material.materialId.startsWith("work-of"))
     .map((material) => material.materialId);
+  const isAutoCheckboxSelected =
+    missingActionMaterials.length > CHECKBOX_TRESHHOLD;
 
   const numberMaterials = materials.length;
   const title =
@@ -197,13 +209,16 @@ export default function MultiReferences({ context }) {
       } else return bookmark;
     });
 
+    setHasAutoCheckbox(
+      newList.filter((i) => !i.chosenPid).length > CHECKBOX_TRESHHOLD
+    );
     setPeriodicaFiltered(newPeriodicaFiltered);
     setActiveMaterialChoices(newList);
   }, [modal.isVisible, isLoading]);
 
   const onEditionPick = (pid, materialKey) => {
     modal.prev();
-    const activeChoices = [...activeMaterialChoices];
+    const activeChoices = activeMaterialChoices;
     const index = activeChoices.findIndex((c) => c.key === materialKey);
     activeChoices[index] = { chosenPid: pid, ...activeChoices[index] };
     setActiveMaterialChoices([...activeChoices]); // Spread to copy object - rerenders since new object
@@ -216,6 +231,43 @@ export default function MultiReferences({ context }) {
       onEditionPick,
       materialKey,
     });
+  };
+
+  const onDeleteClick = (key) => {
+    const activeChoices = activeMaterialChoices;
+    const index = activeChoices.findIndex((c) => c.key === key);
+    activeChoices[index] = { toFilter: true, ...activeChoices[index] };
+    setActiveMaterialChoices([...activeChoices]); // Spread to copy object - rerenders since new object
+  };
+
+  const onAutoAll = (e) => {
+    if (e) {
+      // Auto select newest editions
+      const activeChoices = activeMaterialChoices;
+      missingActionMaterials.forEach((item) => {
+        const filteredManifestationsWorkData =
+          filteredManifestationsForMaterialType(item);
+        const manifestationsForMaterialType =
+          filteredManifestationsWorkData?.manifestations?.mostRelevant;
+        const { flattenedGroupedSortedManifestations } =
+          manifestationMaterialTypeFactory(manifestationsForMaterialType);
+        // Take newest manifestation pid
+        const pidToSelect = flattenedGroupedSortedManifestations[0].pid;
+        const index = activeChoices.findIndex((c) => c.key === item.key);
+        activeChoices[index] = {
+          ...activeChoices[index],
+          newestPid: pidToSelect,
+        };
+      });
+      setActiveMaterialChoices([...activeChoices]); // Spread to copy object - rerenders since new object
+    } else {
+      // Deselect auto selection
+      const activeChoices = activeMaterialChoices.map((item) => ({
+        ...item,
+        newestPid: null,
+      }));
+      setActiveMaterialChoices([...activeChoices]); // Spread to copy object - rerenders since new object
+    }
   };
 
   return (
@@ -253,7 +305,25 @@ export default function MultiReferences({ context }) {
         />
       )}
 
-      {hasMissingReferences && (
+      {hasAutoCheckbox && (
+        <div className={styles.autoCheckbox}>
+          <Text type="text1">
+            <Translate
+              context={CONTEXT}
+              label="missing-materials-too-many"
+              vars={[missingActionMaterials.length]}
+            />
+          </Text>
+          <div className={styles.checkboxRow}>
+            <Checkbox className={styles.checkbox} onChange={onAutoAll} />
+            <Text type="text2">
+              <Translate context={CONTEXT} label="choose-automatically" />
+            </Text>
+          </div>
+        </div>
+      )}
+
+      {hasMissingReferences && !hasAutoCheckbox && (
         <>
           <Text
             type="text3"
@@ -275,6 +345,7 @@ export default function MultiReferences({ context }) {
                 materialKeyToMaterialTypes={materialKeyToMaterialTypes}
                 modal={modal}
                 onActionClick={onActionClick}
+                onDeleteClick={onDeleteClick}
               />
             ))}
         </>
@@ -284,13 +355,14 @@ export default function MultiReferences({ context }) {
         className={cx(styles.container, {
           [styles.exportButtonsMobile]: !hasMissingReferences,
           [styles.paddingExportButtons]:
+            isAutoCheckboxSelected ||
             isSingleReference ||
             (!hasMissingReferences &&
               periodicaFiltered.length > 0 &&
               !isOnlyPeriodica),
         })}
       >
-        {hasMissingReferences && (
+        {hasMissingReferences && !isAutoCheckboxSelected && (
           <Text type="text3" className={styles.chooseEditionText}>
             {Translate({
               context: CONTEXT,
@@ -311,12 +383,23 @@ export default function MultiReferences({ context }) {
             ...materialPids,
             ...activeMaterialChoices
               .filter((mat) => !mat.toFilter) // Filter periodica materials
-              .map((mat) => mat.chosenPid) // Remap to pid list
+              .map((mat) => mat.chosenPid || mat.newestPid) // Remap to pid list
               .filter((mat) => !!mat), // remove null pids
           ]}
           disabled={disableLinks}
         />
       </div>
+
+      {hasAutoCheckbox && (
+        <div className={styles.infoMessage}>
+          <Text type="text1" tag="span">
+            <Translate context={CONTEXT} label="info-label-bold" />
+          </Text>
+          <Text type="text2" tag="span">
+            <Translate context={CONTEXT} label="info-label" />
+          </Text>
+        </div>
+      )}
     </div>
   );
 }

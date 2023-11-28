@@ -13,6 +13,7 @@ export default function Material({
   materialKeyToMaterialTypes,
   modal,
   onActionClick,
+  onDeleteClick: onParentDeleteClick,
 }) {
   const materialType = materialKeyToMaterialTypes.find(
     (e) => e?.materialKey === material.key
@@ -37,6 +38,10 @@ export default function Material({
     if (onActionClick) onActionClick(material, materialType, materialKey);
   };
 
+  const onDeleteClick = () => {
+    if (onParentDeleteClick) onParentDeleteClick(materialKey);
+  };
+
   const children = isPeriodicaLike
     ? ChoosePeriodicaCopyRow({
         //TODO always show buttonRow
@@ -44,7 +49,7 @@ export default function Material({
         modal,
         articleTypeTranslation: null,
       })
-    : ButtonRow({ onClick: onEditionClick });
+    : ButtonRow({ onClick: onEditionClick, onDeleteClick });
   const isDigitalCopy = false;
   const isDeliveredByDigitalArticleService = false;
 

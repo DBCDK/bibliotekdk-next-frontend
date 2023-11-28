@@ -53,10 +53,27 @@
   text-transform: capitalize;
 }
 
+.autoCheckbox {
+  padding: var(--pt2) var(--pt6);
+  background: var(--feedback-yellow-warning-background-light);
+}
+.checkboxRow {
+  display: flex;
+  align-items: center;
+}
+.checkbox {
+  margin-right: var(--pt1);
+}
+
+.infoMessage {
+  padding: var(--pt3) var(--pt6);
+  background-color: var(--concrete);
+}
+
 /** modal */
 
 .container {
-  padding: 0 var(--pt6) var(--pt8);
+  padding: 0 var(--pt6) var(--pt6);
 }
 
 .top {
