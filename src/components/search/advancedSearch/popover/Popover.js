@@ -10,6 +10,7 @@ const Popover = ({ triggerContainerRef, simbleSearchRef, tooltipRef }) => {
   const { showPopover, setShowPopover, setShowInfoTooltip } =
     useAdvancedSearchContext();
   const popppverRef = useRef(null);
+
   useEffect(() => {
     //hide if user clicks outside the popover.
     function handleClickOutside(event) {
@@ -23,7 +24,7 @@ const Popover = ({ triggerContainerRef, simbleSearchRef, tooltipRef }) => {
         setShowPopover(false);
       }
       //if click inside simble search, we want to show info tooltip
-      if (!showPopover && isClickInsideRef(simbleSearchRef, event.target)) {
+      if (showPopover && isClickInsideRef(simbleSearchRef, event.target)) {
         if (!isClickInsideRef(triggerContainerRef, event.target)) {
           setShowInfoTooltip(true);
         }
@@ -40,7 +41,7 @@ const Popover = ({ triggerContainerRef, simbleSearchRef, tooltipRef }) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [popppverRef]);
+  }, [popppverRef, showPopover]);
 
   if (!showPopover) {
     return null;
