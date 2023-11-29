@@ -38,14 +38,14 @@
   grid-area: series_by;
 }
 
-.universe_title {
+.series_title {
   grid-area: series_title;
   padding-top: var(--pt5);
   padding-bottom: var(--pt5);
 }
 
 @media (min-width: 768px) {
-  .universe_title {
+  .series_title {
     padding-left: 0;
     padding-top: var(--pt2);
     padding-bottom: var(--pt2);
