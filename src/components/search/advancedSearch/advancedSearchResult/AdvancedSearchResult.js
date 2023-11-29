@@ -11,7 +11,7 @@ import isEmpty from "lodash/isEmpty";
 import styles from "./AdvancedSearchResult.module.css";
 import cx from "classnames";
 import AdvancedSearchSort from "@/components/search/advancedSearch/advancedSearchSort/AdvancedSearchSort";
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, Container } from "react-bootstrap";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 
@@ -31,64 +31,63 @@ export function AdvancedSearchResult({
   }
   return (
     <>
-      <Row className={styles.resultBar}>
-        <Col xs={12} lg={2}>
-          <Text type="text4">
-          Din søgning
+      <Container fluid style={{ maxWidth: "unset" }}>
+        <Row className={styles.resultBar}>
+          <Col xs={12} lg={2}>
+            <Text type="text4">Din søgning</Text>
+          </Col>
+          <Col xs={12} lg={{ offset: 1, span: true }}>
+            {"Alle felter “psykologisk tryghed” OG “fjernarbejde” "}
+          </Col>
 
-          </Text>
-        </Col>
-        <Col xs={12} lg={{ offset: 1, span: true }}>
-          {"Alle felter “psykologisk tryghed” OG “fjernarbejde” "}
-        </Col>
+          <Col xs={12} lg={2}>
+            <Link
+              onClick={() => {
+                setShowPopover(true);
+              }}
+              border={{
+                top: false,
+                bottom: {
+                  keepVisible: true,
+                },
+              }}
+            >
+              <Text type="text3" tag="span">
+                Rediger søgning{" "}
+              </Text>
+            </Link>
+          </Col>
+        </Row>
+      </Container>
 
-        <Col xs={12} lg={2}>
-          <Link
-            onClick={() => {
-              setShowPopover(true);
-            }}
-            border={{
-              top: false,
-              bottom: {
-                keepVisible: true,
-              },
-            }}
-          >
-            <Text type="text3" tag="span">
-              Rediger søgning{" "}
-            </Text>
-          </Link>
-
-          
-        </Col>
-      </Row>
-
-      <Section
-        divider={false}
-        colSize={{ lg: { offset: 1, span: true } }}
-        id="search-result-section"
-        title="Resultater"
-        subtitle={hitcount}
-        className={styles.padding_top}
-      >
-        <AdvancedSearchSort className={cx(styles.sort_container)} />
-        {/* Reuse result page from simplesearch - we skip the wrap .. @TODO should we set
+      <Container fluid>
+        <Section
+          divider={false}
+          colSize={{ lg: { offset: 1, span: true } }}
+          id="search-result-section"
+          title="Resultater"
+          subtitle={hitcount}
+          className={styles.padding_top}
+        >
+          <AdvancedSearchSort className={cx(styles.sort_container)} />
+          {/* Reuse result page from simplesearch - we skip the wrap .. @TODO should we set
         some mark .. that we are doing advanced search .. ?? */}
-        <div className={cx(styles.padding_top)}>
-          <ResultPage
-            rows={results?.works}
-            onWorkClick={onWorkClick}
-            isLoading={results?.isLoading}
+          <div className={cx(styles.padding_top)}>
+            <ResultPage
+              rows={results?.works}
+              onWorkClick={onWorkClick}
+              isLoading={results?.isLoading}
+            />
+          </div>
+        </Section>
+        {hitcount > 0 && (
+          <Pagination
+            numPages={numPages}
+            currentPage={pageNo}
+            onChange={onPageChange}
           />
-        </div>
-      </Section>
-      {hitcount > 0 && (
-        <Pagination
-          numPages={numPages}
-          currentPage={pageNo}
-          onChange={onPageChange}
-        />
-      )}
+        )}
+      </Container>
     </>
   );
 }
