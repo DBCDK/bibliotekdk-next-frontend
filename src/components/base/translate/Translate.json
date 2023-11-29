@@ -4279,6 +4279,10 @@
       "infoBoxTitle": {
         "da": "Om din bibliotek.dk profil",
         "en": ""
+      },
+      "noLibrariesMessage": {
+        "da": "Du har ingen tilknyttede biblioteker",
+        "en": "LABEL: Mangler oversættelse!"
       }
     },
     "receipt": {

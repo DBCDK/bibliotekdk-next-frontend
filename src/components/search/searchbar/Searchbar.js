@@ -5,9 +5,7 @@ import FakeSearchInput from "@/components/header/suggester/FakeSearchInput";
 import Section from "@/components/base/section";
 import styles from "./Searchbar.module.css";
 import { MobileMaterialSelect } from "@/components/search/select";
-import ExpandedSearchMobile from "@/components/header/expandedsearchmobile/ExpandedSearchMobile";
-import React, { useState } from "react";
-import { useRouter } from "next/router";
+import React from "react";
 
 /**
  * A Fake Search Input Field
@@ -23,9 +21,6 @@ export default function Searchbar({ q }) {
   // modal
   const modal = useModal();
 
-  const [expandedOpen, setExpandedOpen] = useState(false);
-  const router = useRouter();
-
   return (
     <div className={styles.wrap}>
       <Section
@@ -37,12 +32,7 @@ export default function Searchbar({ q }) {
           <Col xs={12}>
             <Row>
               <Col xs={12}>
-                <FakeSearchInput q={q} showButton={!expandedOpen} />
-                <ExpandedSearchMobile
-                  collapseOpen={expandedOpen}
-                  setCollapseOpen={setExpandedOpen}
-                  router={router}
-                />
+                <FakeSearchInput q={q} />
                 <div>
                   <MobileMaterialSelect
                     onFilterClick={() => modal.push("filter", { q })}

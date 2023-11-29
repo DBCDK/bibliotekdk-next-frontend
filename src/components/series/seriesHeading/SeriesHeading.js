@@ -4,6 +4,7 @@ import Col from "react-bootstrap/Col";
 import Translate, { getLanguage } from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
 import TitleBox from "@/components/series/seriesHeading/titleBox/TitleBox";
+import isEmpty from "lodash/isEmpty";
 
 export function SeriesBreadcrumb({ firstWork }) {
   const firstWorkType = firstWork?.workTypes?.[0]?.toLowerCase();
@@ -32,7 +33,9 @@ export function SeriesBreadcrumb({ firstWork }) {
     <Text type={"text3"}>
       {[
         ...(workTypeTranslation ? [workTypeTranslation] : []),
-        ...(fictionNonfictionTranslation ? [fictionNonfictionTranslation] : []),
+        ...(!isEmpty(fictionNonfictionTranslation)
+          ? [fictionNonfictionTranslation]
+          : []),
         seriesTranslation,
       ].join(" / ")}
     </Text>
