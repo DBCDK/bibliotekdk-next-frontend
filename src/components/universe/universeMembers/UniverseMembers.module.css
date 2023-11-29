@@ -25,6 +25,5 @@
 @media (min-width: 1400px) {
   .section_flex {
     width: 88.88%;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
