@@ -150,7 +150,7 @@ export function templateForUniversePageWork({ material }) {
     children: (
       <>
         {fullTitle && (
-          <Text {...propFunc("text1", 2)} title={fullTitle}>
+          <Text {...propFunc("text1", 3)} title={fullTitle}>
             {fullTitle}
           </Text>
         )}
@@ -227,7 +227,7 @@ export function templateForUniversePageSeries({ material }) {
     children: (
       <>
         {fullTitle && (
-          <Text {...propFunc("text1", 2)} title={fullTitle}>
+          <Text {...propFunc("text1", 3)} title={fullTitle}>
             {fullTitle}
             {Translate({ context: "universe_page", label: "series" })}
           </Text>
