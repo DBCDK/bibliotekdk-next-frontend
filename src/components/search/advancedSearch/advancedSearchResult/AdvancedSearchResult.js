@@ -14,6 +14,7 @@ import AdvancedSearchSort from "@/components/search/advancedSearch/advancedSearc
 import { Col, Row, Container } from "react-bootstrap";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
+import TopBar from "@/components/search/advancedSearch/advancedSearchResult/topBar/TopBar";
 
 export function AdvancedSearchResult({
   pageNo,
@@ -31,34 +32,7 @@ export function AdvancedSearchResult({
   }
   return (
     <>
-      <Container fluid style={{ maxWidth: "unset" }}>
-        <Row className={styles.resultBar}>
-          <Col xs={12} lg={2}>
-            <Text type="text4">Din søgning</Text>
-          </Col>
-          <Col xs={12} lg={{ offset: 1, span: true }}>
-            {"Alle felter “psykologisk tryghed” OG “fjernarbejde” "}
-          </Col>
-
-          <Col xs={12} lg={2}>
-            <Link
-              onClick={() => {
-                setShowPopover(true);
-              }}
-              border={{
-                top: false,
-                bottom: {
-                  keepVisible: true,
-                },
-              }}
-            >
-              <Text type="text3" tag="span">
-                Rediger søgning{" "}
-              </Text>
-            </Link>
-          </Col>
-        </Row>
-      </Container>
+      <TopBar />
 
       <Container fluid>
         <Section

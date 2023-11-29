@@ -77,7 +77,7 @@ export function Header({
   user,
   modal,
   filters,
-  hideShadow
+  hideShadow,
 }) {
   const context = { context: "header" };
   const breakpoint = useBreakpoint();
@@ -196,16 +196,14 @@ export function Header({
       doSearch(e.target.value);
     }
   };
-  console.log('hideShadow',hideShadow)
+  console.log("hideShadow", hideShadow);
   return (
-    <header 
-    className={cx({
-      [styles.wrap]: true,
-      [styles.noShadow]: hideShadow,
-      [className]:!!className
-
-    })}
-    
+    <header
+      className={cx({
+        [styles.wrap]: true,
+        [styles.noShadow]: hideShadow,
+        [className]: !!className,
+      })}
     >
       <div className={styles.headerWrap}>
         <Container className={styles.header} fluid>

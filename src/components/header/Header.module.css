@@ -8,9 +8,8 @@
 
   box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
 }
-.noShadow{
-  box-shadow: unset
-
+.noShadow {
+  box-shadow: unset;
 }
 
 /* Header */
