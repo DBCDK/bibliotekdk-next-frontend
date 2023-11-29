@@ -12,5 +12,6 @@
 }
 
 .emptyAgencyList {
-  padding: var(--pt3) 0;
+  margin: var(--pt5) 0 var(--pt7);
+  padding-left: var(--pt1);
 }

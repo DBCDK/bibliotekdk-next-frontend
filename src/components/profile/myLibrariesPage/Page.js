@@ -56,7 +56,7 @@ export default function MyLibrariesPage() {
 
       {!agencies?.length && (
         <div className={styles.emptyAgencyList}>
-          <Text>
+          <Text type="text2">
             {Translate({ context: "profile", label: "noLibrariesMessage" })}
           </Text>
         </div>
