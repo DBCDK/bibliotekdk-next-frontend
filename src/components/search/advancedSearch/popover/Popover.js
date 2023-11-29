@@ -80,12 +80,6 @@ const Popover = ({ className, simpleSearchRef }) => {
       </div>
     </>
   );
-
-  // return (
-  //   <div className={styles.popoverContainer} ref={popoverRef}>
-  //     <AdvancedSearch />
-  //   </div>
-  // );
 };
 
 export default Popover;
