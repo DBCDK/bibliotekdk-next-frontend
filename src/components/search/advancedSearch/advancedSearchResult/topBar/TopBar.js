@@ -1,15 +1,14 @@
-import { convertStateToCql } from "@/components/search/advancedSearch/utils";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import styles from "./TopBar.module.css";
-import cx from "classnames";
-import AdvancedSearchSort from "@/components/search/advancedSearch/advancedSearchSort/AdvancedSearchSort";
-import { Col, Row, Container } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 
 export default function TopBar({}) {
-  const { setShowPopover } = useAdvancedSearchContext();
+  const { setShowPopover, parsedCQL } = useAdvancedSearchContext();
 
   return (
     <div className={styles.container}>
@@ -21,7 +20,7 @@ export default function TopBar({}) {
             </Text>
           </Col>
           <Col xs={12} lg={{ offset: 1, span: true }}>
-            {"Alle felter “psykologisk tryghed” OG “fjernarbejde” "}
+            {parsedCQL}
           </Col>
 
           <Col xs={12} lg={2}>
@@ -37,7 +36,7 @@ export default function TopBar({}) {
               }}
             >
               <Text type="text3" tag="span">
-                {Translate({ context: "search", label: "yourSearch" })}
+                {Translate({ context: "search", label: "editSearch" })}
               </Text>
             </Link>
           </Col>

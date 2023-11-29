@@ -196,7 +196,6 @@ export function Header({
       doSearch(e.target.value);
     }
   };
-  console.log("hideShadow", hideShadow);
   return (
     <header
       className={cx({

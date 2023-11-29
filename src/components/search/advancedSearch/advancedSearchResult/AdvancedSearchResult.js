@@ -11,9 +11,7 @@ import isEmpty from "lodash/isEmpty";
 import styles from "./AdvancedSearchResult.module.css";
 import cx from "classnames";
 import AdvancedSearchSort from "@/components/search/advancedSearch/advancedSearchSort/AdvancedSearchSort";
-import { Col, Row, Container } from "react-bootstrap";
-import Link from "@/components/base/link";
-import Text from "@/components/base/text";
+import Container from "react-bootstrap/Container";
 import TopBar from "@/components/search/advancedSearch/advancedSearchResult/topBar/TopBar";
 
 export function AdvancedSearchResult({
@@ -22,7 +20,6 @@ export function AdvancedSearchResult({
   onPageChange,
   results,
   error = null,
-  setShowPopover,
 }) {
   const hitcount = results?.hitcount;
   const numPages = Math.ceil(hitcount / 10);

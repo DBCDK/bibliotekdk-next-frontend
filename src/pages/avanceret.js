@@ -5,7 +5,6 @@ import useDataCollect from "@/lib/useDataCollect";
 import { useRef } from "react";
 import AdvancedSearchResult from "@/components/search/advancedSearch/advancedSearchResult/AdvancedSearchResult";
 
-import Container from "react-bootstrap/Container";
 /**
  * Renders AdvancedSearch page
  */
