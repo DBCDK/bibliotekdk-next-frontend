@@ -4,7 +4,6 @@ import Title from "@/components/base/title";
 import Text from "@/components/base/text/Text";
 import cx from "classnames";
 export default function UniverseTitleBox({ universe, className }) {
-  // const firstSeriesFirstWork = series?.members?.[0]?.work;
   const description = universe?.description;
 
   return (
