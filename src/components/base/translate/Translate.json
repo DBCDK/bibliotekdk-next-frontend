@@ -1359,6 +1359,20 @@
         "en": "Begin with this"
       }
     },
+    "universe_page": {
+      "frontpage": {
+        "da": "Forside",
+        "en": "Frontpage"
+      },
+      "universes": {
+        "da": "Universer",
+        "en": "Universes"
+      },
+      "parts_in_universe": {
+        "da": "Universet indeholder %s serier og værker",
+        "en": "The universe has %s series and works"
+      }
+    },
     "keywords": {
       "title": {
         "da": "Tags",
@@ -2331,6 +2345,10 @@
       "label-sheetmusic": {
         "da": "Noder",
         "en": "Sheet music"
+      },
+      "label-other": {
+        "da": "Øvrige",
+        "en": "Other"
       },
       "facets-group-label": {
         "da": "Liste med filtre",
