@@ -7,6 +7,8 @@ import isArray from "lodash/isArray";
 import { useEffect } from "react";
 import UniverseHeading from "@/components/universe/universeHeading/UniverseHeading";
 import isEmpty from "lodash/isEmpty";
+import groupBy from "lodash/groupBy";
+import UniverseMembers from "@/components/universe/universeMembers/UniverseMembers";
 
 export default function UniversePage() {
   const router = useRouter();
@@ -47,6 +49,9 @@ export default function UniversePage() {
   const universes = universeData?.work?.universes;
   const specificUniverse = universes?.[universeNumber];
 
+  const seriesInUniverse = specificUniverse?.series;
+  const worksInUniverse = groupBy(specificUniverse?.works, "workTypes");
+
   if (univserseError) {
     return <Custom404 />;
   }
@@ -58,6 +63,10 @@ export default function UniversePage() {
         <UniverseHeading
           universe={specificUniverse}
           universeIsLoading={universeIsLoading}
+        />
+        <UniverseMembers
+          worksInUniverse={worksInUniverse}
+          seriesInUniverse={seriesInUniverse}
         />
       </main>
     </>

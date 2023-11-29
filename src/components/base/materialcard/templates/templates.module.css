@@ -24,6 +24,10 @@
   }
 }
 
+.col_flex__universe_page_work_version {
+  width: 100%;
+}
+
 .col_flex__big_work_version {
   width: 100%;
 }
@@ -54,6 +58,11 @@
 }
 
 .related_element__vertical_version {
+  flex-direction: column;
+  gap: var(--pt3);
+}
+
+.related_element__universe_page_work_version {
   flex-direction: column;
   gap: var(--pt3);
 }
@@ -181,6 +190,13 @@
 }
 
 .cover__vertical_version {
+  --cover_width_material_card: 95%;
+  --cover_height_material_card: calc(var(--pt16) * 2);
+
+  object-position: 50% 100%;
+}
+
+.cover__universe_page_work_version {
   --cover_width_material_card: 95%;
   --cover_height_material_card: calc(var(--pt16) * 2);
 

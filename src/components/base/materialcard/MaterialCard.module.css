@@ -11,7 +11,7 @@
 .link_style_colors {
   /* Add underline colors */
 
-  --underline-middle-hover-color: var(--link-background-light);
+  --underline-middle-hover-color: var(--link-background);
 }
 
 .base_link_style {

@@ -20,6 +20,7 @@ import {
 
 import styles from "./Anchor.module.css";
 import cx from "classnames";
+import isArray from "lodash/isArray";
 
 /**
  * Menu function - to generate the menu
@@ -279,33 +280,40 @@ function Wrap({ children }) {
     return () => window.removeEventListener("scroll", onChange);
   }, []);
 
-  return children
-    .map((child, idx) => {
-      if (!child.props["anchor-label"]) {
-        // Only allow the component Menu to not have anchor-label
-        if (child.type === Menu) {
-          return (
-            <Menu
-              key="items-menu"
-              titles={titles}
-              items={sections.current}
-              onMount={(updateMenu) => (menu.current = { updateMenu })}
-              {...child.props}
-            />
-          );
-        }
-        return null;
+  return children.flatMap((child, idx) => {
+    if (!isArray(child) && !child.props["anchor-label"]) {
+      // Only allow the component Menu to not have anchor-label
+      if (child.type === Menu) {
+        return (
+          <Menu
+            key="items-menu"
+            titles={titles}
+            items={sections.current}
+            onMount={(updateMenu) => (menu.current = { updateMenu })}
+            {...child.props}
+          />
+        );
       }
+      return null;
+    }
 
-      const anchorLabel = getAnchorLabelForChild(child);
-      // create uniq id
-      const id = getUniqueIdForAnchor(anchorLabel, idx);
+    const childList = isArray(child) ? child : [child];
 
-      // Create ref if not already exist
+    const anchorLabels = childList.map((child) =>
+      getAnchorLabelForChild(child)
+    );
+    // create uniq id
+    const ids = anchorLabels.map((anchorLabel) =>
+      getUniqueIdForAnchor(anchorLabel, idx)
+    );
+
+    console.log("childList: ", childList);
+
+    // Create ref if not already exist
+    return childList.map((child, index) => {
+      const id = ids[index];
       sections.current[id] = sections.current[id] ?? createRef();
-
       titles[id] = child.props["anchor-label"];
-
       return (
         <Element
           key={id}
@@ -316,8 +324,8 @@ function Wrap({ children }) {
           {child}
         </Element>
       );
-    })
-    .filter((c) => c);
+    });
+  });
 }
 
 Wrap.propTypes = {
