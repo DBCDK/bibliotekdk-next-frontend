@@ -3,13 +3,18 @@ import {
   manifestationMaterialTypeFactory,
 } from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
-import { extractCreatorsPrioritiseCorporation, getWorkUrl } from "@/lib/utils";
+import {
+  extractCreatorsPrioritiseCorporation,
+  getSeriesUrl,
+  getWorkUrl,
+} from "@/lib/utils";
 import Text from "@/components/base/text";
 import styles from "./templates.module.css";
 import { getCoverImage } from "@/components/utils/getCoverImage";
 import cx from "classnames";
 import Translate from "@/components/base/translate";
 import { BackgroundColorEnum } from "../materialCard.utils";
+import { useState } from "react";
 
 function ReadThisFirst({ className }) {
   return (
@@ -23,6 +28,58 @@ function ReadThisFirst({ className }) {
         label: "begin_with_this",
       })}
     </Text>
+  );
+}
+
+export function MaterialCardImages({ covers, fullTitle, className }) {
+  const [loaded, setLoaded] = useState(
+    Array.from({ length: covers.length }).fill(false)
+  );
+
+  const length = covers?.length;
+  const fullWidth = 100;
+  const offset = 16;
+
+  if (length === 0) {
+    return null;
+  }
+
+  return (
+    <div className={cx(className, styles.stacked_cover_group)}>
+      {covers?.map((image_src, index) => {
+        return (
+          <div
+            key={index}
+            style={{
+              marginLeft: `${offset * index}px`,
+              marginRight: `-${offset * index}px`,
+              marginBottom: `${offset * index}px`,
+              zIndex: `-${index}`,
+            }}
+            className={styles.stacked_cover_container}
+          >
+            <img
+              style={{
+                width: `calc(${fullWidth}% - ${(length - 1) * offset}px)`,
+                maxHeight: `var(--cover_height_material_card)`,
+              }}
+              className={cx(styles.stacked_cover, {
+                [styles.cover_image_skeleton]: !loaded,
+              })}
+              src={image_src}
+              onLoad={() =>
+                setLoaded((prev) => {
+                  prev[index] = true;
+                  return prev;
+                })
+              }
+              title={fullTitle}
+              alt=""
+            />
+          </div>
+        );
+      })}
+    </div>
   );
 }
 
@@ -76,7 +133,7 @@ export function templateForVerticalWorkCard({ material }) {
   };
 }
 
-/**Used in Universe Page */
+/**Used in Universe Page for Works */
 export function templateForUniversePageWork({ material }) {
   const fullTitle = material?.titles?.full?.join(": ");
   const creators = material?.creators;
@@ -118,6 +175,81 @@ export function templateForUniversePageWork({ material }) {
       styles.cover,
       styles.cover__universe_page_work_version
     ),
+  };
+}
+
+/**Used in Universe Page for Series */
+export function templateForUniversePageSeries({ material }) {
+  const fullTitle = material?.title;
+  const firstWork = material?.members?.[0]?.work;
+  const creators = firstWork?.creators;
+  const firstCreator =
+    extractCreatorsPrioritiseCorporation(creators)?.[0]?.display;
+
+  const coversBeforeSlice = material?.members?.map((member) =>
+    getCoverImage(member?.work?.manifestations?.mostRelevant)
+  );
+
+  const coversWithMoreinfo = coversBeforeSlice?.filter(
+    (cover) => cover?.origin === "moreinfo"
+  );
+
+  const covers = (
+    coversWithMoreinfo?.length > 0 ? coversWithMoreinfo : coversBeforeSlice
+  )
+    ?.map((cover) => cover?.detail)
+    .slice(0, 3);
+
+  const coverSrc = getCoverImage(firstWork?.manifestations?.mostRelevant);
+
+  const urlToFirstWork = getSeriesUrl(fullTitle, firstWork?.workId);
+
+  const coverImageClassName = cx(
+    styles.cover,
+    styles.cover__universe_page_series_version
+  );
+
+  return {
+    link_href: urlToFirstWork,
+    fullTitle: fullTitle,
+    image_src: covers.length === 1 ? covers?.[0] : coverSrc?.detail,
+    ImageElement:
+      covers.length > 1
+        ? () => (
+            <MaterialCardImages
+              covers={covers}
+              fullTitle={fullTitle}
+              className={coverImageClassName}
+            />
+          )
+        : null,
+    workId: material?.workId,
+    children: (
+      <>
+        {fullTitle && (
+          <Text {...propFunc("text1", 2)} title={fullTitle}>
+            {fullTitle}
+            {Translate({ context: "universe_page", label: "series" })}
+          </Text>
+        )}
+        {firstCreator && (
+          <Text {...propFunc("text2", 2)} title={firstCreator}>
+            {firstCreator}
+          </Text>
+        )}
+      </>
+    ),
+    // Styling
+    elementContainerClassName: cx(
+      styles.col_flex,
+      styles.col_flex__universe_page_work_version
+    ),
+    relatedElementClassName: cx(
+      styles.related_element,
+      styles.related_element__universe_page_work_version
+    ),
+    textClassName: cx(styles.text),
+    coverImageClassName: coverImageClassName,
   };
 }
 

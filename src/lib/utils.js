@@ -75,6 +75,17 @@ export function getWorkUrl(fullTitle, creators, workId) {
 
 /**
  *
+ * @param {string} fullTitle
+ * @param {Array<Object>} creators
+ * @param {string} workId
+ * @returns {{query: {title_author: string, workId}, pathname: string}}
+ */
+export function getSeriesUrl(fullTitle, workId) {
+  return `/serie/${encodeString(fullTitle)}/${workId}`;
+}
+
+/**
+ *
  * @param {string} title
  * @param {number|string} articleId
  * @returns {{query: {articleId, title}, pathname: string}}

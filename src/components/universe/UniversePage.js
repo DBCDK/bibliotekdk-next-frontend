@@ -9,6 +9,7 @@ import UniverseHeading from "@/components/universe/universeHeading/UniverseHeadi
 import isEmpty from "lodash/isEmpty";
 import groupBy from "lodash/groupBy";
 import UniverseMembers from "@/components/universe/universeMembers/UniverseMembers";
+import { workTypesOrder } from "@/lib/enums_MaterialTypes";
 
 export default function UniversePage() {
   const router = useRouter();
@@ -49,7 +50,19 @@ export default function UniversePage() {
   const universes = universeData?.work?.universes;
   const specificUniverse = universes?.[universeNumber];
 
-  const seriesInUniverse = specificUniverse?.series;
+  // TODO: Temporary fix that gives seriesInUniverse a random workType
+  const seriesInUniverse = groupBy(
+    specificUniverse?.series.map((singleSeries) => {
+      // const randomNumber = Math.floor(Math.random() * workTypesOrder.length);
+      const randomNumber = 0;
+      return {
+        workTypes: [workTypesOrder?.[randomNumber]],
+        ...singleSeries,
+      };
+    }),
+    "workTypes"
+  );
+
   const worksInUniverse = groupBy(specificUniverse?.works, "workTypes");
 
   if (univserseError) {

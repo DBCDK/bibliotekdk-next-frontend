@@ -177,6 +177,8 @@
   --cover_width_material_card: var(--pt11);
   --cover_height_material_card: auto;
 
+  align-self: center;
+
   object-fit: contain;
   object-position: 50% 0;
   width: var(--cover_width_material_card);
@@ -199,6 +201,13 @@
 .cover__universe_page_work_version {
   --cover_width_material_card: 95%;
   --cover_height_material_card: calc(var(--pt16) * 2);
+
+  object-position: 50% 100%;
+}
+
+.cover__universe_page_series_version {
+  --cover_width_material_card: 95%;
+  --cover_height_material_card: calc(var(--pt16) * 2 + var(--pt2));
 
   object-position: 50% 100%;
 }
@@ -265,4 +274,36 @@
   /* Text */
   color: var(--blue);
   text-transform: uppercase;
+}
+
+/* Stacking images */
+.stacked_cover_group {
+  isolation: isolate;
+  display: grid;
+  margin-inline: auto;
+  align-self: end;
+  justify-items: center;
+  align-items: end;
+}
+
+.stacked_cover_container {
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+.stacked_cover {
+  object-fit: contain;
+  object-position: 0% 50%;
+  border: 1px solid var(--concrete);
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  display: inline-block;
+}
+
+.cover_image_skeleton {
+  display: block;
+  width: var(--cover_width_material_card);
+  height: var(--cover_height_material_card);
+  margin-inline: auto;
+
+  border: 1px solid var(--concrete);
+  outline: 0;
 }

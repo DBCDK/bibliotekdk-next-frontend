@@ -1371,6 +1371,10 @@
       "parts_in_universe": {
         "da": "Universet indeholder %s serier og værker",
         "en": "The universe has %s series and works"
+      },
+      "series": {
+        "da": " (serie)",
+        "en": " (series)"
       }
     },
     "keywords": {
