@@ -7,3 +7,12 @@
 .padding_top {
   padding-top: var(--pt2);
 }
+
+.resultBar {
+  border-bottom: 1px solid var(--primary-grey-d-6-d-6-d-7, #d6d6d7);
+  background: var(--secondary-light-grey-f-2-f-2-f-2, #f2f2f2);
+  box-shadow: 0px 6px 15px 0px rgba(0, 0, 0, 0.06);
+  height: 56px;
+  /* flex-shrink: 0; */
+  align-items: center;
+}

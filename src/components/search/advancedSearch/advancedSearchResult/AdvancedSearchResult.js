@@ -11,6 +11,9 @@ import isEmpty from "lodash/isEmpty";
 import styles from "./AdvancedSearchResult.module.css";
 import cx from "classnames";
 import AdvancedSearchSort from "@/components/search/advancedSearch/advancedSearchSort/AdvancedSearchSort";
+import { Col, Row } from "react-bootstrap";
+import Link from "@/components/base/link";
+import Text from "@/components/base/text";
 
 export function AdvancedSearchResult({
   pageNo,
@@ -18,6 +21,7 @@ export function AdvancedSearchResult({
   onPageChange,
   results,
   error = null,
+  setShowPopover,
 }) {
   const hitcount = results?.hitcount;
   const numPages = Math.ceil(hitcount / 10);
@@ -27,6 +31,38 @@ export function AdvancedSearchResult({
   }
   return (
     <>
+      <Row className={styles.resultBar}>
+        <Col xs={12} lg={2}>
+          <Text type="text4">
+          Din søgning
+
+          </Text>
+        </Col>
+        <Col xs={12} lg={{ offset: 1, span: true }}>
+          {"Alle felter “psykologisk tryghed” OG “fjernarbejde” "}
+        </Col>
+
+        <Col xs={12} lg={2}>
+          <Link
+            onClick={() => {
+              setShowPopover(true);
+            }}
+            border={{
+              top: false,
+              bottom: {
+                keepVisible: true,
+              },
+            }}
+          >
+            <Text type="text3" tag="span">
+              Rediger søgning{" "}
+            </Text>
+          </Link>
+
+          
+        </Col>
+      </Row>
+
       <Section
         divider={false}
         colSize={{ lg: { offset: 1, span: true } }}
@@ -77,6 +113,7 @@ export default function Wrap({ onWorkClick, onPageChange }) {
     fieldSearchFromUrl: fieldSearch,
     pageNoFromUrl: pageNo,
     sort,
+    setShowPopover,
   } = useAdvancedSearchContext();
   // get setter for advanced search history
   const { setValue } = useAdvancedSearchHistory();
@@ -132,6 +169,7 @@ export default function Wrap({ onWorkClick, onPageChange }) {
       onPageChange={onPageChange}
       results={parsedResponse}
       error={parsedResponse.errorMessage}
+      setShowPopover={setShowPopover}
     />
   );
 }

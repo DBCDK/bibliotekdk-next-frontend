@@ -3,6 +3,7 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import React, { useRef } from "react";
+import cx from "classnames";
 
 import useHistory from "@/components/hooks/useHistory";
 import useFilters from "@/components/hooks/useFilters";
@@ -76,6 +77,7 @@ export function Header({
   user,
   modal,
   filters,
+  hideShadow
 }) {
   const context = { context: "header" };
   const breakpoint = useBreakpoint();
@@ -194,9 +196,17 @@ export function Header({
       doSearch(e.target.value);
     }
   };
-
+  console.log('hideShadow',hideShadow)
   return (
-    <header className={`${styles.wrap} ${className}`}>
+    <header 
+    className={cx({
+      [styles.wrap]: true,
+      [styles.noShadow]: hideShadow,
+      [className]:!!className
+
+    })}
+    
+    >
       <div className={styles.headerWrap}>
         <Container className={styles.header} fluid>
           <Row>
