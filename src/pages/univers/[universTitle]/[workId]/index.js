@@ -9,7 +9,7 @@ export default function Wrap() {
     if (router && !router.query.hasOwnProperty("universeNumber")) {
       router?.replace({
         pathname: router.pathname + "/[universeNumber]",
-        query: { ...router.query, seriesNumber: 0 },
+        query: { ...router.query, universeNumber: 0 },
       });
     }
   }, [router?.query]);
