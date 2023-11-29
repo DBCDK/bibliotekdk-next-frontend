@@ -1,7 +1,7 @@
 .box {
   display: grid;
-  --grid_template_area__title_box: "series_by" "series_title" "series_images"
-    "series_information";
+  --grid_template_area__title_box: "universe_title" "universe_description"
+    "universe_length";
   grid-template-areas: var(--grid_template_area__title_box);
 
   --grid_auto_columns__title_box: 1fr;
@@ -13,8 +13,8 @@
 
 @media (min-width: 768px) {
   .box {
-    --grid_template_area__title_box: "series_by series_by"
-      "series_title series_title" "series_images series_information";
+    --grid_template_area__title_box: "universe_title" "universe_description"
+      "universe_length";
     --grid_auto_columns__title_box: auto 1fr;
     column-gap: var(--pt5);
   }
@@ -34,12 +34,8 @@
   }
 }
 
-.series_by {
-  grid-area: series_by;
-}
-
 .universe_title {
-  grid-area: series_title;
+  grid-area: universe_title;
   padding-top: var(--pt5);
   padding-bottom: var(--pt5);
 }
@@ -52,13 +48,10 @@
   }
 }
 
-.series_images {
-  grid-area: series_images;
+.universe_description {
+  grid-area: universe_description;
 }
 
-.series_information {
-  grid-area: series_information;
-  display: flex;
-  flex-direction: column;
-  row-gap: var(--pt2);
+.universe_length {
+  grid-area: universe_length;
 }

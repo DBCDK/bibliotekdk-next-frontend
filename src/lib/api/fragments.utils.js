@@ -96,3 +96,66 @@ export const manifestationDetailsForAccessFactory = `fragment manifestationDetai
   workTypes
 }
 ${creatorsFragmentForAccessFactory}`;
+export const seriesFragment = `fragment seriesFragment on Series {
+  title
+  readThisFirst
+  readThisWhenever
+  description
+  numberInSeries {
+    display
+  }
+}`;
+export const universeFragment = `fragment universeFragment on Universe {
+  title
+  alternativeTitles
+  description
+}`;
+export const coverFragment = `fragment coverFragment on Manifestation {
+  cover {
+    detail
+    thumbnail
+    origin
+  }
+}`; // Use this fragments in queries that provide data
+// to the WorkSlider
+export const workSliderFragment = `fragment workSliderFragment on Work {
+  workId
+  workTypes
+  abstract
+  fictionNonfiction {
+    display
+    code
+  }
+  titles {
+    main
+    full
+  }
+  materialTypes {
+    materialTypeGeneral {
+      code
+      display
+    }
+    materialTypeSpecific {
+      code
+      display
+    }
+  }
+  manifestations {
+    mostRelevant {
+      materialTypes {
+        materialTypeGeneral {
+          code
+          display
+        }
+        materialTypeSpecific {
+          code
+          display
+        }
+      }
+      cover {
+        detail
+        origin
+      }
+    }
+  }
+}`;
