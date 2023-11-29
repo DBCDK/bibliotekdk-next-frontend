@@ -202,6 +202,7 @@ export function templateForUniversePageSeries({ material }) {
 
   const coverSrc = getCoverImage(firstWork?.manifestations?.mostRelevant);
 
+  // TODO: We need to change this if we get ids on Series. A SeriesId if you will
   const urlToFirstWork = getSeriesUrl(fullTitle, firstWork?.workId);
 
   const coverImageClassName = cx(
