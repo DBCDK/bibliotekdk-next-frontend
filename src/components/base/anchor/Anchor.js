@@ -307,8 +307,6 @@ function Wrap({ children }) {
       getUniqueIdForAnchor(anchorLabel, idx)
     );
 
-    console.log("childList: ", childList);
-
     // Create ref if not already exist
     return childList.map((child, index) => {
       const id = ids[index];
