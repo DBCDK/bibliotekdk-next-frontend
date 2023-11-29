@@ -34,7 +34,6 @@ function dropdownReducer(state, action) {
         }
       });
     default:
-      console.log("miaw: ");
       return state;
   }
 }
