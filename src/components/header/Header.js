@@ -8,6 +8,7 @@ import cx from "classnames";
 import useHistory from "@/components/hooks/useHistory";
 import useFilters from "@/components/hooks/useFilters";
 import useQ from "@/components/hooks/useQ";
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
 import { cyKey } from "@/utils/trim";
 
@@ -98,7 +99,7 @@ export function Header({
   const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
 
   const simpleSearchRef = useRef(null);
-
+  const { showInfoTooltip } = useAdvancedSearchContext();
   const getLoginLabel = () => {
     if (user.hasCulrUniqueId) {
       return "profile";
@@ -160,6 +161,9 @@ export function Header({
   const doSearch = (value) => {
     // If we are on mobile we replace
     // since we don't want to suggest modal to open if user goes back
+    if (showInfoTooltip) {
+      return;
+    }
     const method = suggesterVisibleMobile ? "replace" : "push";
 
     const type = {

@@ -42,6 +42,10 @@ const Popover = ({ className, simpleSearchRef }) => {
       ) {
         setShowInfoTooltip(false);
       }
+
+      if (showInfoTooltip && !isClickInsideRef(tooltipRef, event.target)) {
+        setShowInfoTooltip(false);
+      }
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
