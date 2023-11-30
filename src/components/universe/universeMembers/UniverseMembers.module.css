@@ -1,12 +1,20 @@
 .section_flex {
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
-  gap: var(--pt2);
+  row-gap: var(--pt4);
 }
 
 @media (min-width: 364px) {
   .section_flex {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .section_flex > *:is(:nth-child(1n), :nth-child(2n), :nth-child(3n)) {
+    box-shadow: 1px 0 0 var(--iron);
+  }
+
+  .section_flex > *:nth-child(2n) {
+    box-shadow: none;
   }
 }
 
@@ -14,11 +22,27 @@
   .section_flex {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+
+  .section_flex > *:is(:nth-child(1n), :nth-child(2n), :nth-child(3n)) {
+    box-shadow: 1px 0 0 var(--iron);
+  }
+
+  .section_flex > *:nth-child(3n) {
+    box-shadow: none;
+  }
 }
 
 @media (min-width: 768px) {
   .section_flex {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .section_flex > *:is(:nth-child(1n), :nth-child(2n), :nth-child(3n)) {
+    box-shadow: 1px 0 0 var(--iron);
+  }
+
+  .section_flex > *:nth-child(4n) {
+    box-shadow: none;
   }
 }
 
