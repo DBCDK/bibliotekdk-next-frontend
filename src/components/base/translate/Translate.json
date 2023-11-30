@@ -1359,6 +1359,20 @@
         "en": "Begin with this"
       }
     },
+    "universe_page": {
+      "frontpage": {
+        "da": "Forside",
+        "en": "Frontpage"
+      },
+      "universes": {
+        "da": "Universer",
+        "en": "Universes"
+      },
+      "parts_in_universe": {
+        "da": "Universet indeholder %s serier og værker",
+        "en": "The universe has %s series and works"
+      }
+    },
     "keywords": {
       "title": {
         "da": "Tags",
@@ -1951,6 +1965,14 @@
       "showInputFields": {
         "da": "Rediger som feltsøgning",
         "en": "Use input field search"
+      },
+      "yourSearch": {
+        "da": "Din søgning",
+        "en": "Your search"
+      },
+      "editSearch": {
+        "da": "Rediger søgning",
+        "en": "Edit search"
       }
     },
     "suggester": {
@@ -2331,6 +2353,10 @@
       "label-sheetmusic": {
         "da": "Noder",
         "en": "Sheet music"
+      },
+      "label-other": {
+        "da": "Øvrige",
+        "en": "Other"
       },
       "facets-group-label": {
         "da": "Liste med filtre",
@@ -4261,6 +4287,10 @@
       "infoBoxTitle": {
         "da": "Om din bibliotek.dk profil",
         "en": ""
+      },
+      "noLibrariesMessage": {
+        "da": "Du har ingen tilknyttede biblioteker",
+        "en": "LABEL: Mangler oversættelse!"
       }
     },
     "receipt": {

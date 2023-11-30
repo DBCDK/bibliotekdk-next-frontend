@@ -76,6 +76,51 @@ export function templateForVerticalWorkCard({ material }) {
   };
 }
 
+/**Used in Universe Page */
+export function templateForUniversePageWork({ material }) {
+  const fullTitle = material?.titles?.full?.join(": ");
+  const creators = material?.creators;
+  const firstCreator =
+    extractCreatorsPrioritiseCorporation(creators)?.[0]?.display;
+
+  const coverSrc = getCoverImage(material?.manifestations?.mostRelevant);
+
+  return {
+    link_href: getWorkUrl(fullTitle, creators, material?.workId),
+    fullTitle: fullTitle,
+    image_src: coverSrc?.detail,
+    workId: material?.workId,
+    children: (
+      <>
+        {fullTitle && (
+          <Text {...propFunc("text1", 2)} title={fullTitle}>
+            {fullTitle}
+          </Text>
+        )}
+        {firstCreator && (
+          <Text {...propFunc("text2", 2)} title={firstCreator}>
+            {firstCreator}
+          </Text>
+        )}
+      </>
+    ),
+    // Styling
+    elementContainerClassName: cx(
+      styles.col_flex,
+      styles.col_flex__universe_page_work_version
+    ),
+    relatedElementClassName: cx(
+      styles.related_element,
+      styles.related_element__universe_page_work_version
+    ),
+    textClassName: cx(styles.text),
+    coverImageClassName: cx(
+      styles.cover,
+      styles.cover__universe_page_work_version
+    ),
+  };
+}
+
 /**Used in Slider */
 export function templateForSeriesSlider({ material, series }) {
   const fullTitle = material?.titles?.full?.join(": ");

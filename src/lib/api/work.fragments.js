@@ -5,9 +5,13 @@
 
 import { ApiEnums } from "@/lib/api/api";
 import {
+  coverFragment,
   creatorsFragment,
   manifestationDetailsForAccessFactory,
   materialTypesFragment,
+  seriesFragment,
+  universeFragment,
+  workSliderFragment,
 } from "@/lib/api/fragments.utils";
 
 export function tableOfContents({ workId }) {
@@ -189,8 +193,8 @@ export function series({ workId }) {
     // delay: 4000, // for debugging
     query: `query Series($workId: String!) {
       work(id: $workId) {
-        ...seriesFragment
         series {
+          ...seriesFragment
           members {
             work {
               ...workSliderFragment
@@ -245,7 +249,9 @@ export function worksInSeries({ workIds }) {
         universe {
           ...universeFragment
         }
-        ...seriesFragment
+        series {
+          ...seriesFragment
+        }
       }
     }
     ${workSliderFragment}
@@ -972,50 +978,6 @@ export function workForWorkRelationsWorkTypeFactory({ workId }) {
   };
 }
 
-// Use this fragments in queries that provide data
-// to the WorkSlider
-const workSliderFragment = `fragment workSliderFragment on Work {
-  workId
-  workTypes
-  abstract
-  fictionNonfiction {
-    display
-    code
-  }
-  titles {
-    main
-    full
-  }
-  materialTypes {
-    materialTypeGeneral {
-      code
-      display
-    }
-    materialTypeSpecific {
-      code
-      display
-    }
-  }
-  manifestations {
-    mostRelevant {
-      materialTypes {
-        materialTypeGeneral {
-          code
-          display
-        }
-        materialTypeSpecific {
-          code
-          display
-        }
-      }
-      cover {
-        detail
-        origin
-      }
-    }
-  }
-}`;
-
 const genreAndFormAndWorkTypesFragment = `fragment genreAndFormAndWorkTypesFragment on Work {
   genreAndForm
   workTypes
@@ -1030,31 +992,6 @@ const titleFragment = `fragment titleFragment on Work {
     main
     full
   }
-}`;
-
-const coverFragment = `fragment coverFragment on Manifestation {
-  cover {
-    detail
-    thumbnail
-    origin
-  }
-}`;
-
-const seriesFragment = `fragment seriesFragment on Work {
-  series {
-    title
-    readThisFirst
-    readThisWhenever
-    description
-    numberInSeries {
-      display
-    }
-  }
-}`;
-
-const universeFragment = `fragment universeFragment on Universe {
-  title
-  alternativeTitles
 }`;
 
 const manifestationAccess = `fragment manifestationAccess on Manifestation {

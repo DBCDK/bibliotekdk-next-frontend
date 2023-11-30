@@ -3,6 +3,7 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import React, { useRef } from "react";
+import cx from "classnames";
 
 import useHistory from "@/components/hooks/useHistory";
 import useFilters from "@/components/hooks/useFilters";
@@ -40,7 +41,7 @@ import { openLoginModal } from "../_modal/pages/login/utils";
 import { signOut } from "@dbcdk/login-nextjs/client";
 import useAuthentication from "../hooks/user/useAuthentication";
 
-import PopoverTrigger from "@/components/search/advancedSearch/popover/popoverTrigger/PopoverTrigger";
+import AdvancedSearchPopover from "@/components/search/advancedSearch/popover/Popover";
 
 // material Pages
 export const MATERIAL_PAGES = [
@@ -76,6 +77,7 @@ export function Header({
   user,
   modal,
   filters,
+  hideShadow,
 }) {
   const context = { context: "header" };
   const breakpoint = useBreakpoint();
@@ -194,9 +196,14 @@ export function Header({
       doSearch(e.target.value);
     }
   };
-
   return (
-    <header className={`${styles.wrap} ${className}`}>
+    <header
+      className={cx({
+        [styles.wrap]: true,
+        [styles.noShadow]: hideShadow,
+        [className]: !!className,
+      })}
+    >
       <div className={styles.headerWrap}>
         <Container className={styles.header} fluid>
           <Row>
@@ -260,7 +267,7 @@ export function Header({
                   </button>
                 </form>
                 <div className={styles.popoverTriggerContainer}>
-                  <PopoverTrigger
+                  <AdvancedSearchPopover
                     className={styles.advancedSearchTrigger}
                     simpleSearchRef={simpleSearchRef}
                   />

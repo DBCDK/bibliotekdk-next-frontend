@@ -11,7 +11,7 @@ import ThumbnailParade from "@/components/series/seriesHeading/titleBox/thumbnai
 
 import { getUniqueCreatorsDisplay } from "@/components/series/utils";
 
-export function LinkToCreator({ creator, seriesIsLoading }) {
+export function LinkToCreator({ creator, isLoading }) {
   return (
     <Link
       href={`/find?q.creator=${creator}`}
@@ -19,7 +19,7 @@ export function LinkToCreator({ creator, seriesIsLoading }) {
         name: creator,
         prefix: "details-creatore",
       })}
-      disabled={seriesIsLoading}
+      disabled={isLoading}
       border={{ bottom: { keepVisible: true } }}
     >
       <Text type="text3" tag={"span"} lines={0}>
@@ -44,10 +44,7 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
         {Translate({ context: "series_page", label: "series_by" })}{" "}
         {creators.slice(0, creatorsToShow).map((creator, index, array) => (
           <>
-            <LinkToCreator
-              creator={creator}
-              seriesIsLoading={seriesIsLoading}
-            />
+            <LinkToCreator creator={creator} isLoading={seriesIsLoading} />
             {index !== array.length - 1 && ", "}
           </>
         ))}

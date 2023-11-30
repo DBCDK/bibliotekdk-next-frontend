@@ -5,7 +5,6 @@ import useDataCollect from "@/lib/useDataCollect";
 import { useRef } from "react";
 import AdvancedSearchResult from "@/components/search/advancedSearch/advancedSearchResult/AdvancedSearchResult";
 
-import Container from "react-bootstrap/Container";
 /**
  * Renders AdvancedSearch page
  */
@@ -38,24 +37,22 @@ export default function AdvancedSearchPage() {
   return (
     <main>
       <div ref={scrollRef} />
-      <Header router={router} />
-      <Container fluid>
-        <AdvancedSearchResult
-          onPageChange={async (page, scroll) => {
-            scroll = typeof scroll !== "boolean" || scroll !== false;
-            await updateQueryParams({ page });
-            scroll && scrollToRef(scrollRef);
-          }}
-          // .. @TODO .. what to do with the datacollect ??
-          onWorkClick={(index, work) => {
-            dataCollect.collectSearchWorkClick({
-              search_request: { q, filters },
-              search_query_hit: index + 1,
-              search_query_work: work.workId,
-            });
-          }}
-        />
-      </Container>
+      <Header router={router} hideShadow={true} />
+      <AdvancedSearchResult
+        onPageChange={async (page, scroll) => {
+          scroll = typeof scroll !== "boolean" || scroll !== false;
+          await updateQueryParams({ page });
+          scroll && scrollToRef(scrollRef);
+        }}
+        // .. @TODO .. what to do with the datacollect ??
+        onWorkClick={(index, work) => {
+          dataCollect.collectSearchWorkClick({
+            search_request: { q, filters },
+            search_query_hit: index + 1,
+            search_query_work: work.workId,
+          });
+        }}
+      />
     </main>
   );
 }
