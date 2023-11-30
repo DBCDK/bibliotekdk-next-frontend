@@ -35,7 +35,6 @@ export function FormatedQuery() {
         if (isEmpty) {
           return null;
         }
-        console.log("index", index);
         return (
           <div key={index} className={styles.formatedQueryItem}>
             {field.prefixLogicalOperator && index !== 0 && (
@@ -66,7 +65,6 @@ export function FormatedQuery() {
         if (isEmpty) {
           return null;
         }
-        console.log("filteredInputFields", filteredInputFields);
         return (
           <div key={index} className={styles.formatedQueryItem}>
             {index === 0 && filteredInputFields?.length > 0 && (
