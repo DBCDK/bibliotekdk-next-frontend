@@ -7,9 +7,81 @@ import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 
-export default function TopBar({}) {
-  const { setShowPopover, parsedCQL } = useAdvancedSearchContext();
+/**
+ * 
+ * Returns query in a human readable way. 
+ */
+export function FormatedQuery() {
+  const { setShowPopover, cqlFromUrl, fieldSearchFromUrl } =
+    useAdvancedSearchContext();
 
+  const { inputFields, dropdownSearchIndices } = fieldSearchFromUrl;
+
+  if (!!cqlFromUrl) {
+    return cqlFromUrl;
+  }
+  return (
+    <div className={styles.formatedQueryContainer}>
+      {inputFields.map((field, index) => {
+        const isEmpty = field?.value?.length === 0;
+        if (isEmpty) {
+          return null;
+        }
+        return (
+          <div key={index} className={styles.formatedQueryItem}>
+            {field.prefixLogicalOperator && (
+              <Text>
+                {Translate({
+                  context: "search",
+                  label: `advanced-dropdown-${field.prefixLogicalOperator}`,
+                })}
+              </Text>
+            )}
+            <Text type="text4" tag="span">
+              {Translate({
+                context: "search",
+                label: `advanced-dropdown-${field.searchIndex}`,
+              })}
+              :
+            </Text>
+
+            <Text>{`"${field.value}"`}</Text>
+          </div>
+        );
+      })}
+      {dropdownSearchIndices?.map((dropdownItem, index) => {
+        const isLastItem = index === dropdownSearchIndices.length - 1;
+        const isEmpty = dropdownItem?.value?.length === 0;
+
+        if (isEmpty) {
+          return null;
+        }
+        return (
+          <div key={index} className={styles.formatedQueryItem}>
+            <Text type="text4">
+              {Translate({
+                context: "advanced_search_dropdown",
+                label: dropdownItem.searchIndex,
+              })}
+              :
+            </Text>
+            <Text>{dropdownItem?.value?.join(", ")}</Text>
+            {!isLastItem && (
+              <Text>
+                {Translate({
+                  context: "search",
+                  label: `advanced-dropdown-AND`,
+                })}
+              </Text>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+export default function TopBar({}) {
+  const { setShowPopover } = useAdvancedSearchContext();
   return (
     <div className={styles.container}>
       <Container fluid>
@@ -20,7 +92,7 @@ export default function TopBar({}) {
             </Text>
           </Col>
           <Col xs={12} lg={{ offset: 1, span: true }}>
-            {parsedCQL}
+            <FormatedQuery />
           </Col>
 
           <Col xs={12} lg={2}>

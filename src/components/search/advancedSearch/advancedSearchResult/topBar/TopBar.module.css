@@ -7,3 +7,16 @@
   align-items: center;
   padding: 0 var(--pt4);
 }
+
+.formatedQueryContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+.formatedQueryItem {
+  display: flex;
+}
+
+.formatedQueryItem p,
+.formatedQueryItem span {
+  margin-right: var(--pt1);
+}
