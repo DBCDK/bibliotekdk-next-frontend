@@ -24,12 +24,52 @@ Default.loaders = [
       "advanced-search-history",
       JSON.stringify([
         {
-          hitcount: 2433,
-          cql: "title=harry NOT potter",
+          hitcount: 11,
+          fieldSearch: {
+            inputFields: [
+              {
+                value: "Malene Sølvsten",
+                prefixLogicalOperator: null,
+                searchIndex: "term.function",
+              },
+            ],
+            dropdownSearchIndices: [
+              {
+                searchIndex: "phrase.mainlanguage",
+                value: [],
+              },
+              {
+                searchIndex: "phrase.generalmaterialtype",
+                value: [],
+              },
+            ],
+          },
+          cql: '(term.function="Malene Sølvsten")',
+          timestamp: "Nov 30, 2023",
         },
         {
-          hitcount: 900,
-          cql: "title=harry AND potter",
+          hitcount: 700,
+          fieldSearch: {
+            inputFields: [
+              {
+                value: "parallelle verdener",
+                prefixLogicalOperator: null,
+                searchIndex: "term.subject",
+              },
+            ],
+            dropdownSearchIndices: [
+              {
+                searchIndex: "phrase.mainlanguage",
+                value: [],
+              },
+              {
+                searchIndex: "phrase.generalmaterialtype",
+                value: [],
+              },
+            ],
+          },
+          cql: '(term.subject="parallelle verdener")',
+          timestamp: "Nov 30, 2023",
         },
       ])
     );

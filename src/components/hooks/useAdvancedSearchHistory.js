@@ -6,6 +6,24 @@ import useSWR from "swr";
 
 const KEY = "advanced-search-history";
 
+/**
+ * Get a date on a stored search history object
+ */
+function getTimeStamp() {
+  const options = {
+    // weekday: "long",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  };
+
+  const now = new Date();
+  const fisk = now.toLocaleDateString("en-us", options);
+  console.log(fisk, "TIDSTEMPEL");
+
+  return fisk;
+}
+
 export const useAdvancedSearchHistory = () => {
   let { data: storedValue, mutate } = useSWR(KEY, (key) =>
     JSON.parse(localStorage.getItem(key) || "[]")
@@ -18,6 +36,12 @@ export const useAdvancedSearchHistory = () => {
         const alreadyStored = !!storedValue.find(
           (stor) => stor?.cql?.trim() === value?.cql?.trim()
         );
+
+        console.log(value, "VALUE");
+        value["timestamp"] = getTimeStamp();
+
+        console.log(value, "VALUES 2");
+
         if (!alreadyStored) {
           // Add to beginning of history array
           storedValue.unshift(value);
