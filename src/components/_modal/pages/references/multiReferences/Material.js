@@ -14,6 +14,7 @@ export default function Material({
   modal,
   onActionClick,
   onDeleteClick: onParentDeleteClick,
+  hideDelete,
 }) {
   const materialType = materialKeyToMaterialTypes.find(
     (e) => e?.materialKey === material.key
@@ -49,7 +50,11 @@ export default function Material({
         modal,
         articleTypeTranslation: null,
       })
-    : ButtonRow({ onClick: onEditionClick, onDeleteClick });
+    : ButtonRow({
+        onClick: onEditionClick,
+        onDeleteClick,
+        hideDelete: hideDelete,
+      });
   const isDigitalCopy = false;
   const isDeliveredByDigitalArticleService = false;
 

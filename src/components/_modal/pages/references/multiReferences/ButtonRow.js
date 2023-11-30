@@ -7,9 +7,9 @@ import styles from "./MultiReferences.module.css";
 import Translate from "@/components/base/translate/Translate";
 import { CONTEXT } from "./MultiReferences";
 
-const ButtonRow = ({ onClick, onDeleteClick }) => {
-  return (
-    <div className={styles.buttonRowContainer}>
+const ButtonRow = ({ onClick, onDeleteClick, hideDelete = false }) => (
+  <div className={styles.buttonRowContainer}>
+    {!hideDelete && (
       <IconButton
         keepUnderline={true}
         className={styles.removeButton}
@@ -20,31 +20,32 @@ const ButtonRow = ({ onClick, onDeleteClick }) => {
           label: "remove",
         })}
       </IconButton>
-      <div className={styles.buttonLink}>
-        <Icon
-          src="exclamationmark.svg"
-          alt="info"
-          data-cy="tooltip-icon"
-          size="2_5"
-          className={styles.exclamationmark}
-        />
+    )}
 
-        <IconLink
-          onClick={onClick}
-          className={styles.link}
-          border={{ bottom: { keepVisible: true }, top: false }}
-          tag={"button"}
-          iconSrc={ChevronRight}
-          iconPlacement={"right"}
-        >
-          {Translate({
-            context: CONTEXT,
-            label: "choose-edition-short",
-          })}
-        </IconLink>
-      </div>
+    <div className={styles.buttonLink}>
+      <Icon
+        src="exclamationmark.svg"
+        alt="info"
+        data-cy="tooltip-icon"
+        size="2_5"
+        className={styles.exclamationmark}
+      />
+
+      <IconLink
+        onClick={onClick}
+        className={styles.link}
+        border={{ bottom: { keepVisible: true }, top: false }}
+        tag={"button"}
+        iconSrc={ChevronRight}
+        iconPlacement={"right"}
+      >
+        {Translate({
+          context: CONTEXT,
+          label: "choose-edition-short",
+        })}
+      </IconLink>
     </div>
-  );
-};
+  </div>
+);
 
 export default ButtonRow;
