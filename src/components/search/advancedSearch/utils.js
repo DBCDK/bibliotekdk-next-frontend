@@ -6,12 +6,6 @@ export function convertStateToCql({ inputFields, dropdownSearchIndices } = {}) {
     return "";
   }
 
-  console.log("convertStateToCql.inputFields", JSON.stringify(inputFields));
-  console.log(
-    "convertStateToCql.dropdownSearchIndices",
-    JSON.stringify(dropdownSearchIndices)
-  );
-
   const inputFieldsQuery = inputFields
     .filter((item) => !isEmpty(item.value) && !isEmpty(item.searchIndex))
     .map((item, index) => {
