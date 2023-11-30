@@ -16,10 +16,7 @@ import isEmpty from "lodash/isEmpty";
 import { AdvancedSearchHistory } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
 import DropdownInputs from "@/components/search/advancedSearch/dropdownInputs/DropdownInputs";
 import { convertStateToCql } from "@/components/search/advancedSearch/utils";
-import {
-  DebugStateDetails,
-  prettyParseCql,
-} from "@/components/search/advancedSearch/DebugStateDetails";
+
 import * as PropTypes from "prop-types";
 import { ExperimentalCqlParser } from "@/components/search/advancedSearch/ExperimentalCqlParser";
 
@@ -87,6 +84,9 @@ export default function AdvancedSearch() {
     setShowPopover(false);
   };
 
+  //TODO: For debugging purposes. Remove when unneeded
+  console.log("Resulting cql after search (with added line breaks)", parsedCQL);
+
   return (
     <div className={styles.background}>
       <Container fluid className={styles.container}>
@@ -152,13 +152,6 @@ export default function AdvancedSearch() {
             </Link>
           </Col>
         </Row>
-        {/* TODO: For debugging purposes. Remove when unneeded */}
-        <DebugStateDetails
-          title="Resulting cql after search (with added line breaks)"
-          state={parsedCQL}
-          jsonParser={prettyParseCql}
-        />
-        <ExperimentalCqlParser parsedCQL={parsedCQL} />
       </Container>
     </div>
   );

@@ -49,6 +49,19 @@ const Popover = ({ className, simpleSearchRef }) => {
     };
   }, [popoverRef, showPopover]);
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        //hide popover on escape key press
+        setShowPopover(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
     <>
       {showPopover && (

@@ -3,7 +3,6 @@ import styles from "./DropdownInputs.module.css";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
-import { DebugStateDetails } from "@/components/search/advancedSearch/DebugStateDetails";
 import { DropdownReducerEnum } from "@/components/search/advancedSearch/useDropdownSearchIndices";
 
 const advancedSearchDropdownContext = "advanced_search_dropdown";
@@ -51,6 +50,8 @@ export default function DropdownInputs({}) {
   const { dropdownUnits, dropdownSearchIndices, updateDropdownSearchIndices } =
     useAdvancedSearchContext();
 
+  console.log("Dropdown object for debug", dropdownSearchIndices);
+
   return (
     <>
       <div className={styles.dropdown_inputs_wrapper}>
@@ -67,13 +68,6 @@ export default function DropdownInputs({}) {
           })}
         </div>
       </div>
-
-      {/* TODO: Remove when we place this into the code */}
-      <DebugStateDetails
-        title="Dropdown object for debug"
-        state={dropdownSearchIndices}
-        openDefault={false}
-      />
     </>
   );
 }
