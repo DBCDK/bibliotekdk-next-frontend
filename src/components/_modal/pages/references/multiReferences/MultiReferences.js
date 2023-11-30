@@ -39,9 +39,12 @@ const mapMaterialKeysToSelectedMaterialTypes = ({
   });
 };
 
-const SingleReference = ({ bookmarkInList, materialKeyToMaterialTypes }) => {
+const SingleReference = ({
+  bookmarkInList,
+  materialKeyToMaterialTypes,
+  chosenPid,
+}) => {
   const { data: materials, isLoading } = usePopulateBookmarks(bookmarkInList);
-
   const material = materials[0];
   const materialType = materialKeyToMaterialTypes.find(
     (e) => e?.materialKey === bookmarkInList[0].key
@@ -51,7 +54,20 @@ const SingleReference = ({ bookmarkInList, materialKeyToMaterialTypes }) => {
 
   const materialCardTemplate = () =>
     templateImageToLeft({
-      material: { ...material, materialType: materialType },
+      /**
+       * If chosenPid, we override what we can with the manifestation data,
+       * to get precise image and edition text etc
+       */
+
+      material: chosenPid
+        ? {
+            ...material,
+            ...material?.manifestations?.mostRelevant.find(
+              (mani) => mani.pid === chosenPid
+            ),
+            materialType: materialType,
+          }
+        : { ...material, materialType: materialType },
       singleManifestation: true,
       isPeriodicaLike: false, //we have filtered out periodicalike materials
       //isDigitalArticle doesnt matter, since we always show edition
@@ -60,12 +76,6 @@ const SingleReference = ({ bookmarkInList, materialKeyToMaterialTypes }) => {
   return (
     <MaterialCard
       propAndChildrenTemplate={materialCardTemplate}
-      propAndChildrenInput={{
-        imageLeft: true,
-        workId: material?.ownerWork?.workId,
-        fullTitle: material?.titles?.full[0],
-        image_src: material?.image?.url,
-      }}
       colSizing={{ xs: 12 }}
     />
   );
@@ -118,11 +128,6 @@ export default function MultiReferences({ context }) {
   );
 
   const [hasAutoCheckbox, setHasAutoCheckbox] = useState(false); // Static state
-
-  const isSingleReference =
-    materials.length === 1 &&
-    !hasMissingReferences &&
-    !periodicaFiltered.length === 1;
   const isOnlyPeriodica = periodicaFiltered.length === materials.length;
 
   const withNewestPidsSelected = missingActionMaterials.filter((mat) => {
@@ -132,6 +137,10 @@ export default function MultiReferences({ context }) {
   });
   const disableLinks = withNewestPidsSelected.length > 0 || isOnlyPeriodica;
   const hasMissingReferences = disableLinks && !isLoading;
+  const isSingleReference =
+    materials.length === 1 &&
+    !hasMissingReferences &&
+    periodicaFiltered.length !== 1;
   const materialPids = materials
     .filter((material) => !material.materialId.startsWith("work-of"))
     .map((material) => material.materialId);
@@ -302,6 +311,7 @@ export default function MultiReferences({ context }) {
           bookmarkInList={materials}
           bookmarks={bookmarks}
           materialKeyToMaterialTypes={materialKeyToMaterialTypes}
+          chosenPid={activeMaterialChoices?.[0]?.chosenPid}
         />
       )}
 
@@ -346,6 +356,7 @@ export default function MultiReferences({ context }) {
                 modal={modal}
                 onActionClick={onActionClick}
                 onDeleteClick={onDeleteClick}
+                hideDelete={materials.length === 1}
               />
             ))}
         </>
