@@ -31,6 +31,8 @@ export function FormatedQuery() {
         if (isEmpty) {
           return null;
         }
+        //if first item no
+        //filter for empty
         return (
           <div key={index} className={styles.formatedQueryItem}>
             {field.prefixLogicalOperator && (

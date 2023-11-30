@@ -31,7 +31,6 @@ export function AdvancedSearchResult({
     <>
       <TopBar />
 
-      <Container fluid>
         <Section
           divider={false}
           colSize={{ lg: { offset: 1, span: true } }}
@@ -58,7 +57,6 @@ export function AdvancedSearchResult({
             onChange={onPageChange}
           />
         )}
-      </Container>
     </>
   );
 }
