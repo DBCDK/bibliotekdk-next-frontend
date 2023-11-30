@@ -5,7 +5,29 @@ import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
 import Translate from "@/components/base/translate";
 import cx from "classnames";
+import useTestUser from "@/components/hooks/useTestUser";
 
+/**
+ * Mark when test user mode is active
+ */
+function TestUserActive() {
+  const { enabled } = useTestUser();
+  if (!enabled) {
+    return null;
+  }
+
+  return (
+    <div
+      style={{
+        background: "brown",
+        height: 4,
+        width: 160,
+        marginTop: 8,
+        position: "absolute",
+      }}
+    ></div>
+  );
+}
 /**
  * Component is a svg and some text.
  * @param href
@@ -37,6 +59,7 @@ export default function Logo({ href = "/", type = "BLUE", ...props }) {
           alt={Translate({ context: "logo", label: "default_logo_text" })}
         />
       </div>
+      <TestUserActive />
     </Link>
   );
 }
