@@ -173,7 +173,7 @@ export default function Wrap({
 
   useEffect(() => {
     onMailChange({ target: { value: email } });
-  }, []);
+  }, [email]);
 
   return (
     <OrdererInformation
