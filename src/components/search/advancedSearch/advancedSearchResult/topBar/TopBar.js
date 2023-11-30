@@ -6,6 +6,7 @@ import Col from "react-bootstrap/Col";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
+import isEmpty from "lodash/isEmpty";
 
 /**
  *
@@ -22,18 +23,22 @@ export function FormatedQuery() {
 
   //TODO: do this in context instead
   const filteredDropdownSearchIndices = dropdownSearchIndices.filter(
-    (dropdown) => dropdown.value?.length > 0
+    (dropdown) => !isEmpty(dropdown.value)
+  );
+  const filteredInputFields = inputFields.filter(
+    (field) => !isEmpty(field.value)
   );
   return (
     <div className={styles.formatedQueryContainer}>
-      {inputFields.map((field, index) => {
+      {filteredInputFields.map((field, index) => {
         const isEmpty = field?.value?.length === 0;
         if (isEmpty) {
           return null;
         }
+        console.log("index", index);
         return (
           <div key={index} className={styles.formatedQueryItem}>
-            {field.prefixLogicalOperator && (
+            {field.prefixLogicalOperator && index !== 0 && (
               <Text>
                 {Translate({
                   context: "search",
@@ -53,6 +58,7 @@ export function FormatedQuery() {
           </div>
         );
       })}
+
       {filteredDropdownSearchIndices?.map((dropdownItem, index) => {
         const isLastItem = index === filteredDropdownSearchIndices.length - 1;
         const isEmpty = dropdownItem?.value?.length === 0;
@@ -60,8 +66,17 @@ export function FormatedQuery() {
         if (isEmpty) {
           return null;
         }
+        console.log("filteredInputFields", filteredInputFields);
         return (
           <div key={index} className={styles.formatedQueryItem}>
+            {index === 0 && filteredInputFields?.length > 0 && (
+              <Text>
+                {Translate({
+                  context: "search",
+                  label: `advanced-dropdown-AND`,
+                })}
+              </Text>
+            )}
             <Text type="text4">
               {Translate({
                 context: "advanced_search_dropdown",
