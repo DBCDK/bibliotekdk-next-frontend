@@ -8,18 +8,22 @@ import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 
 /**
- * 
- * Returns query in a human readable way. 
+ *
+ * Returns query in a human readable way.
  */
 export function FormatedQuery() {
-  const { setShowPopover, cqlFromUrl, fieldSearchFromUrl } =
-    useAdvancedSearchContext();
+  const { cqlFromUrl, fieldSearchFromUrl } = useAdvancedSearchContext();
 
   const { inputFields, dropdownSearchIndices } = fieldSearchFromUrl;
 
   if (!!cqlFromUrl) {
     return cqlFromUrl;
   }
+
+  //TODO: do this in context instead
+  const filteredDropdownSearchIndices = dropdownSearchIndices.filter(
+    (dropdown) => dropdown.value?.length > 0
+  );
   return (
     <div className={styles.formatedQueryContainer}>
       {inputFields.map((field, index) => {
@@ -49,8 +53,8 @@ export function FormatedQuery() {
           </div>
         );
       })}
-      {dropdownSearchIndices?.map((dropdownItem, index) => {
-        const isLastItem = index === dropdownSearchIndices.length - 1;
+      {filteredDropdownSearchIndices?.map((dropdownItem, index) => {
+        const isLastItem = index === filteredDropdownSearchIndices.length - 1;
         const isEmpty = dropdownItem?.value?.length === 0;
 
         if (isEmpty) {
