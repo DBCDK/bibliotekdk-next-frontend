@@ -1969,6 +1969,14 @@
       "showInputFields": {
         "da": "Rediger som feltsøgning",
         "en": "Use input field search"
+      },
+      "yourSearch": {
+        "da": "Din søgning",
+        "en": "Your search"
+      },
+      "editSearch": {
+        "da": "Rediger søgning",
+        "en": "Edit search"
       }
     },
     "suggester": {
