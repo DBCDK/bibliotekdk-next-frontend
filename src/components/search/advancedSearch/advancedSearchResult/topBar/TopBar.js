@@ -32,8 +32,6 @@ export function FormatedQuery() {
     <div className={styles.formatedQueryContainer}>
       {filteredInputFields.map((field, index) => {
         const isEmpty = field?.value?.length === 0;
-        //if first item no
-        //filter for empty
         if (isEmpty) {
           return null;
         }
