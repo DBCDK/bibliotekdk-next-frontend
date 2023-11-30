@@ -6,7 +6,7 @@
   background-color: var(--white);
   z-index: 3;
   margin-top: 150px;
-  box-shadow: -1px 20px 20px 0px rgba(0, 0, 0, 0.06);
+  box-shadow: -1px 20px 20px -10px rgba(0, 0, 0, 0.06);
   border-bottom: 1px solid var(--iron);
   background: var(--concrete);
 }
