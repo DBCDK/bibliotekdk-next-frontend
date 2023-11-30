@@ -8,7 +8,6 @@
   grid-auto-columns: var(--grid_auto_columns__title_box);
 
   row-gap: var(--pt2);
-  padding-left: var(--pt1);
 }
 
 @media (min-width: 768px) {
@@ -36,15 +35,13 @@
 
 .universe_title {
   grid-area: universe_title;
-  padding-top: var(--pt5);
-  padding-bottom: var(--pt5);
+  padding-top: var(--pt1);
 }
 
 @media (min-width: 768px) {
   .universe_title {
     padding-left: 0;
-    padding-top: var(--pt2);
-    padding-bottom: var(--pt2);
+    padding-top: 0;
   }
 }
 
