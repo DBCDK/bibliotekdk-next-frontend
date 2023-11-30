@@ -71,11 +71,11 @@ export default function AdvancedSearch() {
 
       if (parsedCQL === cql) {
         const query = { fieldSearch: stateToString };
-        router.push({ pathname: router.pathname, query });
+        router.push({ pathname: "/avanceret", query });
       } else {
         resetObjectState();
         const query = { cql: cql };
-        router.push({ pathname: router.pathname, query });
+        router.push({ pathname: "/avanceret", query });
       }
     } else {
       const query = { fieldSearch: stateToString };
