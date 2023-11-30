@@ -76,7 +76,7 @@ const ContactLinks = () => {
   // Object holding info to generate contact links * NOTICE Keys of objects are translated.
   const contact_links = {
     // find_library: { pathname: "/", query: {} },
-    about: { pathname: "/artikel/bibliotek.dk/6", query: {} },
+    about: { pathname: "/hjaelp/om-bibliotek-dk/24", query: {} },
     help: { pathname: "/hjaelp", query: {} },
     // press: { pathname: "/", query: {} },
     contact: { pathname: "/hjaelp/kontakt-os/25", query: {} },
