@@ -11,7 +11,6 @@ import isEmpty from "lodash/isEmpty";
 import styles from "./AdvancedSearchResult.module.css";
 import cx from "classnames";
 import AdvancedSearchSort from "@/components/search/advancedSearch/advancedSearchSort/AdvancedSearchSort";
-import Container from "react-bootstrap/Container";
 import TopBar from "@/components/search/advancedSearch/advancedSearchResult/topBar/TopBar";
 
 export function AdvancedSearchResult({
@@ -31,34 +30,32 @@ export function AdvancedSearchResult({
     <>
       <TopBar />
 
-      <Container fluid>
-        <Section
-          divider={false}
-          colSize={{ lg: { offset: 1, span: true } }}
-          id="search-result-section"
-          title="Resultater"
-          subtitle={hitcount}
-          className={styles.padding_top}
-        >
-          <AdvancedSearchSort className={cx(styles.sort_container)} />
-          {/* Reuse result page from simplesearch - we skip the wrap .. @TODO should we set
+      <Section
+        divider={false}
+        colSize={{ lg: { offset: 1, span: true } }}
+        id="search-result-section"
+        title="Resultater"
+        subtitle={hitcount}
+        className={styles.padding_top}
+      >
+        <AdvancedSearchSort className={cx(styles.sort_container)} />
+        {/* Reuse result page from simplesearch - we skip the wrap .. @TODO should we set
         some mark .. that we are doing advanced search .. ?? */}
-          <div className={cx(styles.padding_top)}>
-            <ResultPage
-              rows={results?.works}
-              onWorkClick={onWorkClick}
-              isLoading={results?.isLoading}
-            />
-          </div>
-        </Section>
-        {hitcount > 0 && (
-          <Pagination
-            numPages={numPages}
-            currentPage={pageNo}
-            onChange={onPageChange}
+        <div className={cx(styles.padding_top)}>
+          <ResultPage
+            rows={results?.works}
+            onWorkClick={onWorkClick}
+            isLoading={results?.isLoading}
           />
-        )}
-      </Container>
+        </div>
+      </Section>
+      {hitcount > 0 && (
+        <Pagination
+          numPages={numPages}
+          currentPage={pageNo}
+          onChange={onPageChange}
+        />
+      )}
     </>
   );
 }
