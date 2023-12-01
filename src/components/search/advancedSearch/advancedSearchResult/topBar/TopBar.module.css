@@ -16,6 +16,11 @@
   display: flex;
 }
 
+.noWrap {
+  display: inline;
+  margin-right: var(--pt05);
+}
+
 .formatedQueryItem p,
 .formatedQueryItem span {
   margin-right: var(--pt1);

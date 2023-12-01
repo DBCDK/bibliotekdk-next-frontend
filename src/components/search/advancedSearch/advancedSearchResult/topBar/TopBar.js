@@ -7,6 +7,78 @@ import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 
+export function FormatFieldSearchIndexes({ fieldsearch }) {
+  return (
+    <>
+      <FormatFieldInput inputFields={fieldsearch.inputFields} />
+      <FormatDropdowns dropdowns={fieldsearch.dropdownSearchIndices} />
+    </>
+  );
+}
+
+function FormatFieldInput({ inputFields }) {
+  const mappedfields = inputFields.map((field, index) => {
+    const isEmpty = field?.value?.length === 0;
+    if (isEmpty) {
+      return null;
+    }
+    return (
+      <>
+        {field.prefixLogicalOperator && (
+          <Text type="text4" className={styles.noWrap}>
+            {Translate({
+              context: "search",
+              label: `advanced-dropdown-${field.prefixLogicalOperator}`,
+            })}
+          </Text>
+        )}
+        <Text type="text4" className={styles.noWrap}>
+          {Translate({
+            context: "search",
+            label: `advanced-dropdown-${field.searchIndex}`,
+          })}
+          :
+        </Text>
+
+        <Text className={styles.noWrap}>{` "${field.value}" `}</Text>
+      </>
+    );
+  });
+  return mappedfields;
+}
+
+function FormatDropdowns({ dropdowns }) {
+  const mapped = dropdowns?.map((dropdownItem, index) => {
+    const isLastItem = index === dropdowns.length - 1;
+    const isEmpty = dropdownItem?.value?.length === 0;
+
+    if (isEmpty) {
+      return null;
+    }
+    return (
+      <>
+        <Text type="text4" className={styles.noWrap}>
+          {Translate({
+            context: "advanced_search_dropdown",
+            label: dropdownItem.searchIndex,
+          })}
+          :
+        </Text>
+        <Text className={styles.noWrap}>{dropdownItem?.value?.join(", ")}</Text>
+        {!isLastItem && (
+          <Text className={styles.noWrap}>
+            {Translate({
+              context: "search",
+              label: `advanced-dropdown-AND`,
+            })}
+          </Text>
+        )}
+      </>
+    );
+  });
+  return mapped;
+}
+
 /**
  *
  * Returns query in a human readable way.
@@ -26,61 +98,12 @@ export function FormatedQuery() {
   );
   return (
     <div className={styles.formatedQueryContainer}>
-      {inputFields.map((field, index) => {
-        const isEmpty = field?.value?.length === 0;
-        if (isEmpty) {
-          return null;
-        }
-        return (
-          <div key={index} className={styles.formatedQueryItem}>
-            {field.prefixLogicalOperator && (
-              <Text>
-                {Translate({
-                  context: "search",
-                  label: `advanced-dropdown-${field.prefixLogicalOperator}`,
-                })}
-              </Text>
-            )}
-            <Text type="text4" tag="span">
-              {Translate({
-                context: "search",
-                label: `advanced-dropdown-${field.searchIndex}`,
-              })}
-              :
-            </Text>
-
-            <Text>{`"${field.value}"`}</Text>
-          </div>
-        );
-      })}
-      {filteredDropdownSearchIndices?.map((dropdownItem, index) => {
-        const isLastItem = index === filteredDropdownSearchIndices.length - 1;
-        const isEmpty = dropdownItem?.value?.length === 0;
-
-        if (isEmpty) {
-          return null;
-        }
-        return (
-          <div key={index} className={styles.formatedQueryItem}>
-            <Text type="text4">
-              {Translate({
-                context: "advanced_search_dropdown",
-                label: dropdownItem.searchIndex,
-              })}
-              :
-            </Text>
-            <Text>{dropdownItem?.value?.join(", ")}</Text>
-            {!isLastItem && (
-              <Text>
-                {Translate({
-                  context: "search",
-                  label: `advanced-dropdown-AND`,
-                })}
-              </Text>
-            )}
-          </div>
-        );
-      })}
+      <div className={styles.formatedQueryItem}>
+        <FormatFieldInput inputFields={inputFields} />
+      </div>
+      <div className={styles.formatedQueryItem}>
+        <FormatDropdowns dropdowns={filteredDropdownSearchIndices} />
+      </div>
     </div>
   );
 }
