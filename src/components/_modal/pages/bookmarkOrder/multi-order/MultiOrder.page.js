@@ -50,7 +50,7 @@ const MultiOrder = ({ context }) => {
   const modal = useModal();
   const { materials, closeModalOnBack } = context;
   const analyzeRef = useRef();
-  const [materialCounts, setMaterialCounts] = useState({});
+  const [materialCounts, setMaterialCounts] = useState({ isAnalyzed: false });
   const [materialsToOrder, setMaterialsToOrder] = useState(materials);
   const { loanerInfo } = useLoanerInfo();
   const orderMutation = useMutate();
@@ -140,6 +140,7 @@ const MultiOrder = ({ context }) => {
         );
 
       setMaterialCounts({
+        isAnalyzed: true,
         digitalMaterials: materialsDigital?.length ?? 0,
         materialsNotAllowed: materialsNotAvailable?.length ?? 0,
         materialsMissingAction: materialsNeedsInfo?.length ?? 0,
