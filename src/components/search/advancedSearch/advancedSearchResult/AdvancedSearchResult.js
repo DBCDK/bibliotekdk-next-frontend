@@ -12,7 +12,6 @@ import styles from "./AdvancedSearchResult.module.css";
 import cx from "classnames";
 import AdvancedSearchSort from "@/components/search/advancedSearch/advancedSearchSort/AdvancedSearchSort";
 import TopBar from "@/components/search/advancedSearch/advancedSearchResult/topBar/TopBar";
-import Title from "@/components/base/title";
 
 export function AdvancedSearchResult({
   pageNo,
@@ -36,8 +35,7 @@ export function AdvancedSearchResult({
         colSize={{ lg: { offset: 1, span: true } }}
         id="search-result-section"
         title="Resultater"
-        subtitle={      <Title  type="title5" className={styles.titleStyle}>
-        {hitcount}</Title>}
+        subtitle={hitcount}
         className={styles.padding_top}
       >
         <AdvancedSearchSort className={cx(styles.sort_container)} />

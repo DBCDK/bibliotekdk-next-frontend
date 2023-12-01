@@ -7,7 +7,6 @@ import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import isEmpty from "lodash/isEmpty";
-import Skeleton from "@/components/base/skeleton";
 
 /**
  *
@@ -98,12 +97,10 @@ export function FormatedQuery() {
     </div>
   );
 }
-export default function TopBar({skeleton=false}) {
+export default function TopBar({}) {
   const { setShowPopover } = useAdvancedSearchContext();
   return (
     <div className={styles.container}>
-      {skeleton && <Skeleton className={styles.skeleton} />}
-
       <Container fluid>
         <Row>
           <Col xs={12} lg={2}>
