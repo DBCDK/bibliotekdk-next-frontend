@@ -159,7 +159,7 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
 
       <Dropdown.Menu className={styles.dropdownmenu}>
         {
-          /** @type {LogicalOperatorEnumArray} */ options.map((elem, index) => {
+          /** @type {LogicalOperatorEnumArray} */ options.map((elem) => {
             return (
               <Dropdown.Item
                 tabIndex="-1"
