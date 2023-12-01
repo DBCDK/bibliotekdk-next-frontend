@@ -22,13 +22,14 @@ import { LogicalOperatorsEnum } from "@/components/search/enums";
  * @param {Object} props
  * @returns {React.JSX.Element}
  */
-function FieldInput({ key, index, workType, fieldValue }) {
+function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
   const [suggestions, setSuggestions] = useState([]);
 
   const {
     handleInputFieldChange,
     removeInputField,
     handleLogicalOperatorChange,
+    workType,
   } = useAdvancedSearchContext();
   //labels to show in SearchIndexDropdown
   const labels = workTypesLabels[workType].map((el) => el.index);
@@ -93,6 +94,13 @@ function FieldInput({ key, index, workType, fieldValue }) {
               onChange={(e) => handleInputFieldChange(index, e.target.value)}
               placeholder={fieldValue.placeholder}
               overrideValueControl={true}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+
+                  doAdvancedSearch();
+                }
+              }}
             />
           </Suggester>
         </div>
@@ -119,6 +127,7 @@ const options = Object.keys(LogicalOperatorsEnum); //["AND", "OR", "NOT"];
  */
 function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
   const [expanded, setExpanded] = useState(false);
+
   function toggleCollapse() {
     setExpanded((current) => !current);
   }
@@ -180,7 +189,7 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
  * @param {Object} props
  * @returns {React.JSX.Element}
  */
-export default function TextInputs({ workType }) {
+export default function TextInputs({ doAdvancedSearch }) {
   const { inputFields, addInputField } = useAdvancedSearchContext();
 
   return (
@@ -190,8 +199,8 @@ export default function TextInputs({ workType }) {
           <FieldInput
             key={`inputField-${index}`}
             index={index}
-            workType={workType}
             fieldValue={field}
+            doAdvancedSearch={doAdvancedSearch}
           />
         );
       })}

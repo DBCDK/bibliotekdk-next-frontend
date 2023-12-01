@@ -68,18 +68,13 @@ const Popover = ({ className, simpleSearchRef }) => {
 
   return (
     <>
-      {showPopover && (
-        <div className={styles.popoverContainer} ref={popoverRef}>
-          <AdvancedSearch />
-        </div>
-      )}
-
       <div className="container" ref={triggerContainerRef}>
         <Tooltip
           tooltipRef={tooltipRef}
           show={!showPopover && showInfoTooltip}
           labelToTranslate="advanced-search-tooltip"
           placement="bottom"
+          tabIndex="-1"
         >
           <SearchIcon
             className={`${styles.triggercontainer} ${className} ${
@@ -95,6 +90,12 @@ const Popover = ({ className, simpleSearchRef }) => {
 
         {showPopover && <div className={styles.triangle} />}
       </div>
+
+      {showPopover && (
+        <div className={styles.popoverContainer} ref={popoverRef}>
+          <AdvancedSearch />
+        </div>
+      )}
     </>
   );
 };

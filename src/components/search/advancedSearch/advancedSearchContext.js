@@ -38,8 +38,8 @@ export function useAdvancedSearchContext() {
 }
 
 export default function AdvancedSearchProvider({ children, router }) {
-  // TODO: Move this part of the state into Context
-  //  So we are able to control default view from context as well
+  const workType = "all";
+
   const {
     page = "1",
     cql: cqlFromUrl = null,
@@ -118,8 +118,13 @@ export default function AdvancedSearchProvider({ children, router }) {
         setParsedCQL: (value: string) => void,
         fieldSearchFromUrl: { inputFields: Array.<InputField>, dropdownSearchIndices: Array.<DropdownSearchIndex> },
         cqlFromUrl: string,
-        pageNoFromUrl: number
-        sort: Array.<{ index: string, order: string }>
+        pageNoFromUrl: number,
+        showPopover: boolean,
+        setShowPopover: function,
+        showInfoTooltip: boolean,
+        setShowInfoTooltip: function,
+        sort: Array.<{ index: string, order: string }>,
+        workType: string
    }} AdvancedSearchContextType */
   const value = {
     inputFields,
@@ -142,6 +147,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     showInfoTooltip,
     setShowInfoTooltip,
     sort: sort,
+    workType: workType,
   };
 
   return (
