@@ -4,7 +4,7 @@
   box-shadow: 0px 6px 15px 0px rgba(0, 0, 0, 0.06);
   display: flex;
   align-items: center;
-  padding: var(--pt2);
+  padding: var(--pt2) 0;
 }
 
 .formatedQueryContainer {
