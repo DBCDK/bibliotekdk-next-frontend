@@ -1,117 +1,149 @@
-import Accordion, { Item } from "@/components/base/accordion";
-import React from "react";
+import React, { useState } from "react";
 import useAdvancedSearchHistory from "@/components/hooks/useAdvancedSearchHistory";
-import Icon from "@/components/base/icon";
 import styles from "./AdvancedSearchHistory.module.css";
-import { useRouter } from "next/router";
-import { cyKey } from "@/utils/trim";
 import Text from "@/components/base/text";
-import translate from "@/components/base/translate";
-import { convertStateToCql } from "@/components/search/advancedSearch/utils";
+import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
+import { FormatFieldSearchIndexes } from "@/components/search/advancedSearch/advancedSearchResult/topBar/TopBar";
 
-function HistoryItem({ item, key }) {
-  console.log(item, "ITEM");
+function HistoryItem({ item, index, checked, onSelect }) {
   return (
-    <div className={styles.item}>
-      <div>X</div>
-      <div>{item.timestamp}</div>
-      <div>{convertStateToCql(item.fieldSearch)}</div>
-      <div>{item.hitcount}</div>
-      <Icon
-        className={styles.actionicon}
-        src="play-circle.svg"
-        size={{ w: 2, h: "auto" }}
-        onClick={() => goToCql(stored)}
+    <div className={styles.row}>
+      <Checkbox
+        id={`select-item-${index}`}
+        // ariaLabelledBy={`material-title-${materialId}`}
+        tabIndex="-1"
+        onChange={(e) => {
+          console.log(e, typeof e, "EEEEEEEEEEEEEEEE");
+          onSelect(item, e);
+        }}
+        checked={checked}
+        className={styles.item}
+        ariaLabelledBy={`select-item-${index}`}
+        ariaLabel={`select-item-${index}`}
       />
+      <Text type="text3" className={styles.item}>
+        {item.timestamp}
+      </Text>
+      <div>
+        <FormatFieldSearchIndexes fieldsearch={item.fieldSearch} />
+      </div>
+      <Text type="text3" className={styles.item}>
+        {item.hitcount}
+      </Text>
+    </div>
+  );
+}
 
-      <Icon
-        data-cy={`delete-history-${key}`}
-        className={styles.actionicon}
-        src="close.svg"
-        size={{ w: 2, h: "auto" }}
-        onClick={() => deleteValue(stored)}
+function HistoryHeaderActions({ setAllChecked, deleteSelected }) {
+  return (
+    <div className={styles.header}>
+      <Checkbox
+        ariaLabelledBy={`selectall`}
+        ariaLabel={`check-select-all`}
+        tabIndex="-1"
+        onChange={setAllChecked}
+        id="selectall"
       />
+      <label htmlFor="selectall">Vælg alle</label>
+      <div onClick={deleteSelected}>Fjern valgte</div>
     </div>
   );
 }
 
 function HistoryHeader() {
-  return <div className={styles.header}>fisk</div>;
+  return (
+    <div className={styles.header}>
+      <div>&nbsp;</div>
+      <Text type="text3" className={styles.item}>
+        {/*{@TODO translations}*/}
+        Tid
+      </Text>
+      <Text type="text3" className={styles.item}>
+        Søgning
+      </Text>
+      <Text type="text3" className={styles.item}>
+        Resultater
+      </Text>
+    </div>
+  );
 }
 
-export function AdvancedSearchHistory({ type }) {
+export function AdvancedSearchHistory() {
   const { storedValue, deleteValue } = useAdvancedSearchHistory();
-  const router = useRouter();
-
-  const goToCql = (value) => {
-    type === "cql"
-      ? router.push({
-          pathname: router.pathname,
-          query: { cql: value.cql },
-        })
-      : router.push({
-          pathname: router.pathname,
-          query: { fieldSearch: JSON.stringify(value.fieldSearch) },
-        });
+  const [checkboxList, setCheckboxList] = useState([]);
+  /**
+   * Set or unset ALL checkboxes in search history
+   * @param e
+   *  if the checkbox is selected or not
+   */
+  const setAllChecked = (e) => {
+    if (e) {
+      // full list
+      setCheckboxList(storedValue.map((stored) => stored.cql));
+    } else {
+      // empty list
+      setCheckboxList([]);
+    }
   };
 
-  const accordionTitle = translate({
-    context: "suggester",
-    label: "historyTitle",
-  });
+  /**
+   * Delete selected entries in search history
+   */
+  const onDeleteSelected = () => {
+    checkboxList.forEach((check) => {
+      const historyItem = storedValue.find((stored) => stored.cql === check);
+      historyItem && deleteValue(historyItem);
+    });
+  };
+
+  /**
+   * Add/remove item in list when selected/deselected
+   * * @param item
+   * @param selected
+   *  The checkbox component (components/base/forms/checkbox) returns if it has been
+   *  selected or not
+   */
+  const onSelect = (item, selected = false) => {
+    // if select is FALSE it has been deselected on gui
+    const newCheckList = checkboxList;
+    // if item is already in checkboxlist -> remove
+    const checkindex = checkboxList.findIndex((check) => check === item.cql);
+    if (checkindex !== -1) {
+      // item found in list - if deselected remove it
+      if (!selected) {
+        newCheckList.splice(checkindex, 1);
+      }
+    }
+    // if not -> add it to list .. if selected
+    else if (selected) {
+      newCheckList.push(item.cql);
+    }
+    setCheckboxList(newCheckList);
+  };
 
   return (
     <>
+      <HistoryHeaderActions
+        deleteSelected={onDeleteSelected}
+        setAllChecked={setAllChecked}
+      />
       <HistoryHeader />
       {storedValue?.map((item, index) => {
         return (
           <div className={styles.break} key={index}>
-            <HistoryItem item={item} />
+            <HistoryItem
+              // checkboxList={checkboxList}
+              item={item}
+              index={index}
+              checked={
+                checkboxList.findIndex((check) => check === item.cql) !== -1
+              }
+              deleteSelected={onDeleteSelected}
+              onSelect={onSelect}
+            />
           </div>
         );
       })}
     </>
-
-    // <Accordion
-    //   dataCy={cyKey({
-    //     name: "search-history",
-    //     prefix: "advanced-search",
-    //   })}
-    //   className={styles.accordionwrap}
-    // >
-    //   <Item title={accordionTitle} key={1} additionalTxt={[""]}>
-    //     {storedValue?.map((stored, index) => {
-    //       return (
-    //         <div key={index} className={styles.history}>
-    //           <Text type="text3">
-    //             <span>
-    //               {type === "cql"
-    //                 ? stored?.cql
-    //                 : JSON.stringify(stored.fieldSearch)}
-    //             </span>
-    //           </Text>
-    //           <Text type="text3">
-    //             <span>{stored?.hitcount} hits</span>
-    //           </Text>
-    //
-    //           <Icon
-    //             className={styles.actionicon}
-    //             src="play-circle.svg"
-    //             size={{ w: 2, h: "auto" }}
-    //             onClick={() => goToCql(stored)}
-    //           />
-    //
-    //           <Icon
-    //             data-cy={`delete-history-${index}`}
-    //             className={styles.actionicon}
-    //             src="close.svg"
-    //             size={{ w: 2, h: "auto" }}
-    //             onClick={() => deleteValue(stored)}
-    //           />
-    //         </div>
-    //       );
-    //     })}
-    //   </Item>
-    // </Accordion>
   );
 }
