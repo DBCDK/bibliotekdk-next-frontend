@@ -11,6 +11,6 @@
   color: var(--primary-blue-3333-ff, #33f);
 }
 
-.loadingSort{
+.loadingSort {
   padding: var(--pt2) 0;
 }

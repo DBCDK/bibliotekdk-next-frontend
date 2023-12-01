@@ -5,18 +5,17 @@
   display: flex;
   align-items: center;
   padding: var(--pt2);
-
 }
 
 .formatedQueryContainer {
   display: flex;
   flex-wrap: wrap;
 }
-.formatedQueryItem {
-  display: flex;
+
+.formatedQueryContainer p {
+  margin-right: var(--pt1);
 }
 
-.formatedQueryItem p,
-.formatedQueryItem span {
-  margin-right: var(--pt1);
+p.searchIndexText {
+  margin-right: 0 !important;
 }

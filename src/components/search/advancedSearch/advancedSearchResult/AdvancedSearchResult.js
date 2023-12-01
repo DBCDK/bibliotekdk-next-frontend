@@ -106,7 +106,7 @@ export default function Wrap({ onWorkClick, onPageChange }) {
   );
   const parsedResponse = parseResponse(bigResponse);
 
-    if (parsedResponse.isLoading) {
+  if (parsedResponse.isLoading) {
     return (
       <>
         <TopBar />
@@ -118,7 +118,10 @@ export default function Wrap({ onWorkClick, onPageChange }) {
           subtitle=""
           isLoading={true}
         >
-          <AdvancedSearchSort className={cx(styles.sort_container, styles.loadingSort)} skeleton={true}/>
+          <AdvancedSearchSort
+            className={cx(styles.sort_container, styles.loadingSort)}
+            skeleton={true}
+          />
           <ResultPage isLoading={true} />
         </Section>
       </>
