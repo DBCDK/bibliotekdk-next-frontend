@@ -10,7 +10,7 @@ import translate from "@/components/base/translate";
 import CqlErrorMessage from "@/components/search/advancedSearch/cqlErrorMessage/CqlErrorMessage";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
-export function CqlTextArea({ textAreaRef }) {
+export function CqlTextArea({ textAreaRef, doAdvancedSearch }) {
   const router = useRouter();
   const defaultCql = router?.query?.cql || "title=harry AND potter";
   const { parsedCQL } = useAdvancedSearchContext();
@@ -51,6 +51,12 @@ export function CqlTextArea({ textAreaRef }) {
         value={cqlValue}
         onChange={(event) => {
           setCqlValue(event.target.value);
+        }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && e.ctrlKey === true) {
+            e.preventDefault();
+            doAdvancedSearch();
+          }
         }}
       />
 

@@ -119,7 +119,10 @@ export default function AdvancedSearch() {
         <Row>
           <Col>
             {showCqlEditor ? (
-              <CqlTextArea textAreaRef={textAreaRef} />
+              <CqlTextArea
+                textAreaRef={textAreaRef}
+                doAdvancedSearch={doAdvancedSearch}
+              />
             ) : (
               <>
                 <TextInputs doAdvancedSearch={doAdvancedSearch} />
