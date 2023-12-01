@@ -11,17 +11,14 @@ const KEY = "advanced-search-history";
  */
 function getTimeStamp() {
   const options = {
-    // weekday: "long",
-    year: "numeric",
-    month: "short",
-    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
   };
 
   const now = new Date();
-  const fisk = now.toLocaleDateString("en-us", options);
-  console.log(fisk, "TIDSTEMPEL");
-
-  return fisk;
+  const stamp = now.toLocaleTimeString("en-us", options);
+  // remove the " AM/PM" part
+  return stamp.replace("AM", "").replace("PM", "").replace(":", ".").trim();
 }
 
 export const useAdvancedSearchHistory = () => {
@@ -36,12 +33,7 @@ export const useAdvancedSearchHistory = () => {
         const alreadyStored = !!storedValue.find(
           (stor) => stor?.cql?.trim() === value?.cql?.trim()
         );
-
-        console.log(value, "VALUE");
         value["timestamp"] = getTimeStamp();
-
-        console.log(value, "VALUES 2");
-
         if (!alreadyStored) {
           // Add to beginning of history array
           storedValue.unshift(value);
@@ -61,7 +53,7 @@ export const useAdvancedSearchHistory = () => {
       if (typeof window !== "undefined") {
         // get index of value to delete
         const valueIndex = storedValue.findIndex(
-          (stor) => stor.cql === value.cql
+          (stor) => stor.cql === value?.cql
         );
         if (valueIndex > -1) {
           // Add to beginning of history array
