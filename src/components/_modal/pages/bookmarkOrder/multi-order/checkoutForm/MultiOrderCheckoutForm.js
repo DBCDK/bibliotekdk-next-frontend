@@ -26,9 +26,11 @@ const CheckoutForm = ({
     materialsNotAllowed,
     materialsMissingAction,
     duplicateOrdersWorkIds,
+    isAnalyzed,
   } = materialCounts;
   const modal = useModal();
   const disabled =
+    !isAnalyzed ||
     materialsMissingAction > 0 ||
     materialsNotAllowed > 0 ||
     duplicateOrdersWorkIds?.length > 0 ||
