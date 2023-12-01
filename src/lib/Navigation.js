@@ -15,7 +15,7 @@ export const actions = [
   { label: "scientificArticles", href: "/artikler", hidden: true },
   {
     label: "askLibrarian",
-    href: "https://adm.biblioteksvagten.dk/embed/ask-question?agency_id=bibliotek.dk&require_postal_code=true&popup=n&url=https%3A%2F%2Fbibliotek.dk",
+    href: "https://www.sprgbib.dk/bv/ask",
     target: "_blank",
   },
   { label: "becomeLoaner", href: "/artikel/bliv-laaner/43" },
