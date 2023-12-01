@@ -97,7 +97,7 @@ export function FormatedQuery() {
     </div>
   );
 }
-export default function TopBar({}) {
+export default function TopBar() {
   const { setShowPopover } = useAdvancedSearchContext();
   return (
     <div className={styles.container}>
