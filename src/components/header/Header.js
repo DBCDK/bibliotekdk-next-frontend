@@ -59,7 +59,11 @@ const actions = [
     label: "digitalOffers",
     href: "/artikel/digitale-bibliotekstilbud/5",
   },
-  { label: "askLibrarian", href: "https://www.sprgbib.dk/bv/ask", target: "_blank" },
+  {
+    label: "askLibrarian",
+    href: "https://www.sprgbib.dk/bv/ask",
+    target: "_blank",
+  },
   { label: "becomeLoaner", href: "/artikel/bliv-laaner/43" },
 ];
 
