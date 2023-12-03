@@ -75,9 +75,8 @@ const MaterialCard = forwardRef(
       };
       const Tag = link_href ? ManifestationLink : "div";
       return (
-        <div
+        <article
           className={cx(styles.article, elementContainerClassName)}
-          as="article"
           {...rootProps}
         >
           <Tag
@@ -101,7 +100,7 @@ const MaterialCard = forwardRef(
               </div>
             </div>
           </Tag>
-        </div>
+        </article>
       );
     }
 
