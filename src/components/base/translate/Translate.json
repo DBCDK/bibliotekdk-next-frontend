@@ -1985,6 +1985,10 @@
       "searchHistory": {
         "da": "Søgehistorik",
         "en": "Search history"
+      },
+      "clearSearch": {
+        "da": "Ryd søgning",
+        "en": "Clear search"
       }
     },
     "suggester": {

@@ -117,7 +117,7 @@ export default function AdvancedSearch() {
               </Link>
 
               <Link
-              href="/sogehistorik"
+                href="/sogehistorik"
                 border={{
                   top: false,
                   bottom: {
@@ -138,7 +138,7 @@ export default function AdvancedSearch() {
               onClick={() => setShowPopover(false)}
               keepUnderline={true}
             >
-              {Translate({ context: "general", label: "close" })} 
+              {Translate({ context: "general", label: "close" })}
             </IconButton>
           </Col>
         </Row>
@@ -173,7 +173,7 @@ export default function AdvancedSearch() {
                 router.push({ pathname: router.pathname });
               }}
             >
-              Ryd søgning
+              {Translate({ context: "search", label: "clearSearch" })}
             </Link>
           </Col>
         </Row>

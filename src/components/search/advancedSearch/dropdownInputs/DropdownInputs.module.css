@@ -14,3 +14,11 @@
   flex-direction: column;
   row-gap: var(--pt1_5);
 }
+
+.dropdownTitle {
+  margin-bottom: var(--pt1);
+  display: flex;
+}
+.dropdownTitle p {
+  margin-right: var(--pt1);
+}
