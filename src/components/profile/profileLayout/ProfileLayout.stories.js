@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import ProfileLayout from "./ProfileLayout";
 
-const { DEFAULT_STORY_PARAMETERS, USER_7 } = automock_utils();
+const { DEFAULT_STORY_PARAMETERS } = automock_utils();
 
 const exportedObject = {
   title: "profile/layout",
