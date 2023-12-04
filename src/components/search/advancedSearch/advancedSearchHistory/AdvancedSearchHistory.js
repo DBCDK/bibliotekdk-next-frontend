@@ -39,7 +39,6 @@ function HistoryItem({ item, index, checked, onSelect }) {
     >
       <Checkbox
         id={`select-item-${index}`}
-        // ariaLabelledBy={`material-title-${materialId}`}
         tabIndex="-1"
         onChange={(e) => {
           onSelect(item, e);
@@ -51,9 +50,7 @@ function HistoryItem({ item, index, checked, onSelect }) {
       />
       <Text type="text3">{item.timestamp}</Text>
       <div className={styles.link}>
-        {/* link here*/}
         <Link
-          href="*"
           onClick={(e) => {
             e.preventDefault();
             goToItemUrl(item);
@@ -98,10 +95,14 @@ function HistoryHeaderActions({ setAllChecked, deleteSelected }) {
         className={styles.checkbox}
       />
       <label htmlFor="selectall">
-        <Text type="text3">Vælg alle</Text>
+        <Text type="text3">
+          {Translate({ context: "bookmark", label: "select-all" })}
+        </Text>
       </label>
       <div onClick={deleteSelected} className={styles.action}>
-        <Text type="text3">Fjern valgte</Text>
+        <Text type="text3">
+          {Translate({ context: "bookmark", label: "remove-selected" })}
+        </Text>
       </div>
     </div>
   );
