@@ -1,7 +1,6 @@
 import Translate from "@/components/base/translate/Translate";
 import Text from "@/components/base/text";
 import Suggester from "@/components/base/suggester/Suggester";
-import Title from "@/components/base/title";
 import IconButton from "@/components/base/iconButton/IconButton";
 import styles from "./TextInputs.module.css";
 import animations from "css/animations";
@@ -191,7 +190,9 @@ export default function TextInputs({ doAdvancedSearch }) {
 
   return (
     <>
-    <Text type="text1" className={styles.inputTitle}>Sammensæt din søgning</Text>
+      <Text type="text1" className={styles.inputTitle}>
+        {Translate({ context: "search", label: "construct-your-search" })}
+      </Text>
       {inputFields?.map((field, index) => {
         return (
           <FieldInput
@@ -217,14 +218,6 @@ export default function TextInputs({ doAdvancedSearch }) {
           src={"expand.svg"}
         />
       </Button>
-      {/* <IconButton
-        icon="expand"
-        onClick={addInputField}
-        keepUnderline
-        className={styles.addLine}
-      >
-        {Translate({ context: "search", label: "addLine" })}
-      </IconButton> */}
     </>
   );
 }

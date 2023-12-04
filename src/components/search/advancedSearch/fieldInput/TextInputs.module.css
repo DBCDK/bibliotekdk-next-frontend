@@ -32,6 +32,10 @@
   background-color: var(--white);
   padding: var(--pt05) var(--pt2_5) !important;
 }
+.addLine:hover,
+.addLine:focus {
+  outline: 1px solid var(--blue);
+}
 .expandIcon {
   margin-left: var(--pt1);
   display: flex;
@@ -95,6 +99,6 @@
 .suggester {
   height: var(--pt5);
 }
-.inputTitle{
+.inputTitle {
   margin-bottom: var(--pt2);
 }

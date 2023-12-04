@@ -1,6 +1,11 @@
 .dropdownwrap {
   height: var(--pt5);
 }
+.dropdownwrap:hover,
+.dropdownwrap:focus {
+  outline: 1px solid var(--blue);
+  cursor: pointer !important;
+}
 
 .dropdownitem {
   display: block;
