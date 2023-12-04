@@ -1,12 +1,11 @@
 import Translate from "@/components/base/translate/Translate";
 import Text from "@/components/base/text";
 import Suggester from "@/components/base/suggester/Suggester";
-
 import IconButton from "@/components/base/iconButton/IconButton";
 import styles from "./TextInputs.module.css";
 import animations from "css/animations";
 import SearchIndexDropdown from "@/components/search/advancedSearch/fieldInput/searchIndexDropdown/SearchIndexDropdown";
-
+import Button from "@/components/base/button";
 import { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import Icon from "@/components/base/icon";
@@ -65,17 +64,13 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
         />
       )}
 
-      <div
-        className={`${styles.inputContainer} ${
-          isFirstItem ? styles.rightPadding : ""
-        }`}
-      >
+      <div className={`${styles.inputContainer} r`}>
         <SearchIndexDropdown
           options={labels}
           className={styles.select}
           index={index}
         />
-        <div className={`${styles.suggester__wrap} `}>
+        <div className={`${styles.suggesterContainer} `}>
           <Suggester
             data={suggestions}
             onSelect={(selectValue) =>
@@ -109,6 +104,7 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
             icon="close"
             onClick={() => removeInputField(index)}
             className={styles.removeIcon}
+            keepUnderline={true}
           >
             {Translate({ context: "search", label: "remove" })}
           </IconButton>
@@ -194,6 +190,9 @@ export default function TextInputs({ doAdvancedSearch }) {
 
   return (
     <>
+      <Text type="text1" className={styles.inputTitle}>
+        {Translate({ context: "search", label: "construct-your-search" })}
+      </Text>
       {inputFields?.map((field, index) => {
         return (
           <FieldInput
@@ -204,14 +203,21 @@ export default function TextInputs({ doAdvancedSearch }) {
           />
         );
       })}
-      <IconButton
-        icon="expand"
-        onClick={addInputField}
-        keepUnderline
+
+      <Button
+        type="secondary"
+        size="small"
         className={styles.addLine}
+        onClick={addInputField}
+        icon="expand"
       >
-        {Translate({ context: "search", label: "addLine" })}
-      </IconButton>
+        <Text>{Translate({ context: "search", label: "addLine" })}</Text>
+        <Icon
+          className={styles.expandIcon}
+          size={{ w: 2, h: "auto" }}
+          src={"expand.svg"}
+        />
+      </Button>
     </>
   );
 }

@@ -1977,6 +1977,10 @@
       "editSearch": {
         "da": "Rediger søgning",
         "en": "Edit search"
+      },
+      "construct-your-search": {
+        "da": "Sammensæt din søgning",
+        "en": "Construct your search"
       }
     },
     "suggester": {
