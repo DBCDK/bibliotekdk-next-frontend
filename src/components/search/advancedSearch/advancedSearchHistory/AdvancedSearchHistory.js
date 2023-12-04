@@ -8,7 +8,9 @@ import Link from "@/components/base/link/Link";
 import { useRouter } from "next/router";
 import isEmpty from "lodash/isEmpty";
 import Translate from "@/components/base/translate";
+import Title from "@/components/base/title/Title";
 import cx from "classnames";
+import { cyKey } from "@/utils/trim";
 
 function HistoryItem({ item, index, checked, onSelect }) {
   const router = useRouter();
@@ -28,7 +30,13 @@ function HistoryItem({ item, index, checked, onSelect }) {
   };
 
   return (
-    <div className={cx(styles.row, styles.grid)}>
+    <div
+      className={cx(styles.row, styles.grid)}
+      data-cy={cyKey({
+        name: `history-item`,
+        prefix: "advanced-search",
+      })}
+    >
       <Checkbox
         id={`select-item-${index}`}
         // ariaLabelledBy={`material-title-${materialId}`}
@@ -172,6 +180,13 @@ export function AdvancedSearchHistory() {
 
   return (
     <>
+      <Title
+        type="title3"
+        data-cy="advanced-search-search-history"
+        className={styles.title}
+      >
+        {Translate({ context: "suggester", label: "historyTitle" })}
+      </Title>
       <HistoryHeaderActions
         deleteSelected={onDeleteSelected}
         setAllChecked={setAllChecked}

@@ -13,6 +13,10 @@
   margin-bottom: var(--pt3);
 }
 
+.title {
+  margin-bottom: var(--pt3);
+}
+
 .header {
   margin-bottom: var(--pt2);
   border-bottom: 1px solid var(--iron);
