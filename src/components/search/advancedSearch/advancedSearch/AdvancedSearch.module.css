@@ -35,3 +35,8 @@
   gap: var(--pt2);
   align-items: center;
 }
+
+.buttonContainer{
+  display: flex;
+  justify-content: space-between;
+}

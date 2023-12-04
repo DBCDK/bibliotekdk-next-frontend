@@ -16,6 +16,7 @@ import isEmpty from "lodash/isEmpty";
 import { AdvancedSearchHistory } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
 import DropdownInputs from "@/components/search/advancedSearch/dropdownInputs/DropdownInputs";
 import { convertStateToCql } from "@/components/search/advancedSearch/utils";
+import IconButton from "@/components/base/iconButton/IconButton";
 
 /**
  * Contains advanced search fields
@@ -86,14 +87,15 @@ export default function AdvancedSearch() {
     <div className={styles.background}>
       <Container fluid className={styles.container}>
         <Row className={styles.topContainer}>
-          <Col>
+          <Col md={{ offset: 3, span: 5 }} sm={12}>
             <Title type="title3">
               {Translate({ context: "search", label: "advancedSearch" })}
             </Title>
           </Col>
-          <Col>
-            <div className={styles.right}>
+          <Col md={4} sm={12} className={styles.buttonContainer}>
+            <div>
               <Link
+                style={{ marginRight: "32px" }}
                 onClick={() => {
                   setShowCqlEditor(!showCqlEditor);
                 }}
@@ -113,11 +115,38 @@ export default function AdvancedSearch() {
                   })}
                 </Text>
               </Link>
+
+              <Link
+              href="/sogehistorik"
+                border={{
+                  top: false,
+                  bottom: {
+                    keepVisible: true,
+                  },
+                }}
+              >
+                <Text type="text3" tag="span">
+                  {Translate({
+                    context: "search",
+                    label: "searchHistory",
+                  })}
+                </Text>
+              </Link>
             </div>
+            <IconButton
+              icon="close"
+              onClick={() => setShowPopover(false)}
+              keepUnderline={true}
+            >
+              {Translate({ context: "general", label: "close" })} 
+            </IconButton>
           </Col>
         </Row>
         <Row>
-          <Col>
+          <Col md={3} sm={12}>
+            {/**Insert material type select here */}
+          </Col>
+          <Col md={9} sm={12}>
             {showCqlEditor ? (
               <CqlTextArea textAreaRef={textAreaRef} />
             ) : (
@@ -127,12 +156,13 @@ export default function AdvancedSearch() {
               </>
             )}
           </Col>
-          <Col>
-            <AdvancedSearchHistory type={showCqlEditor ? "cql" : "fields"} />
-          </Col>
         </Row>
         <Row className={styles.buttonRow}>
-          <Col className={styles.button_group}>
+          <Col
+            className={styles.button_group}
+            md={{ offset: 3, span: 9 }}
+            sm={12}
+          >
             <Button className={styles.button} onClick={doAdvancedSearch}>
               {Translate({ context: "header", label: "search" })}
             </Button>

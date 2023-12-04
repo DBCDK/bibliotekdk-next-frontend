@@ -1981,6 +1981,10 @@
       "construct-your-search": {
         "da": "Sammensæt din søgning",
         "en": "Construct your search"
+      },
+      "searchHistory": {
+        "da": "Søgehistorik",
+        "en": "Search history"
       }
     },
     "suggester": {

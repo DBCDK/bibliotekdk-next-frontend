@@ -1,5 +1,6 @@
 .inputContainer {
   display: flex;
+  max-width: 500px;
 }
 .suggesterContainer {
   margin-bottom: var(--pt2);
