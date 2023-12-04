@@ -1,12 +1,12 @@
 import Translate from "@/components/base/translate/Translate";
 import Text from "@/components/base/text";
 import Suggester from "@/components/base/suggester/Suggester";
-
+import Title from "@/components/base/title";
 import IconButton from "@/components/base/iconButton/IconButton";
 import styles from "./TextInputs.module.css";
 import animations from "css/animations";
 import SearchIndexDropdown from "@/components/search/advancedSearch/fieldInput/searchIndexDropdown/SearchIndexDropdown";
-
+import Button from "@/components/base/button";
 import { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import Icon from "@/components/base/icon";
@@ -65,17 +65,13 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
         />
       )}
 
-      <div
-        className={`${styles.inputContainer} ${
-          isFirstItem ? styles.rightPadding : ""
-        }`}
-      >
+      <div className={`${styles.inputContainer} r`}>
         <SearchIndexDropdown
           options={labels}
           className={styles.select}
           index={index}
         />
-        <div className={`${styles.suggester__wrap} `}>
+        <div className={`${styles.suggesterContainer} `}>
           <Suggester
             data={suggestions}
             onSelect={(selectValue) =>
@@ -194,6 +190,7 @@ export default function TextInputs({ doAdvancedSearch }) {
 
   return (
     <>
+    <Text type="text1" className={styles.inputTitle}>Sammensæt din søgning</Text>
       {inputFields?.map((field, index) => {
         return (
           <FieldInput
@@ -204,14 +201,29 @@ export default function TextInputs({ doAdvancedSearch }) {
           />
         );
       })}
-      <IconButton
+
+      <Button
+        type="secondary"
+        size="small"
+        className={styles.addLine}
+        onClick={addInputField}
+        icon="expand"
+      >
+        <Text>{Translate({ context: "search", label: "addLine" })}</Text>
+        <Icon
+          className={styles.expandIcon}
+          size={{ w: 2, h: "auto" }}
+          src={"expand.svg"}
+        />
+      </Button>
+      {/* <IconButton
         icon="expand"
         onClick={addInputField}
         keepUnderline
         className={styles.addLine}
       >
         {Translate({ context: "search", label: "addLine" })}
-      </IconButton>
+      </IconButton> */}
     </>
   );
 }

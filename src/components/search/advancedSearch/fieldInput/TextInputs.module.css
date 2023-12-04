@@ -1,11 +1,12 @@
 .inputContainer {
   display: flex;
 }
-.suggester__wrap {
+.suggesterContainer {
   margin-bottom: var(--pt2);
   flex-grow: 2;
   max-width: 672px;
   height: var(--pt5);
+  margin-left: var(--pt1);
 }
 
 .select {
@@ -24,8 +25,19 @@
 }
 
 .addLine {
-  margin-left: var(--pt2);
+  /* margin-left: var(--pt2); */
   margin-top: var(--pt2);
+  outline: 1px solid var(--dove);
+  color: unset;
+  display: flex;
+  align-items: center;
+  background-color: var(--white);
+  padding: var(--pt1) var(--pt3);
+}
+.expandIcon {
+  margin-left: var(--pt1);
+  display: flex;
+  align-items: center;
 }
 .dropdownitem {
   display: block;
@@ -85,7 +97,6 @@
 .suggester {
   height: var(--pt5);
 }
-
-.rightPadding {
-  padding-right: var(--pt9);
+.inputTitle{
+  margin-bottom: var(--pt2);
 }
