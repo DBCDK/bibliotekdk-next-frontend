@@ -52,17 +52,6 @@ export default function ProfileLayout({ title, children }) {
 
   const showProfile = hasCulrUniqueId || isWhitelistPath;
   const showLoginToSeeProfile = !isWhitelistPath && !isAuthenticated;
-  const redirectToFrontpage =
-    !isLoading && !hasCulrUniqueId && !isWhitelistPath && isAuthenticated;
-
-  // This useEffect handles redirect to frontpage
-  // when the user is logged in, but not allowed to have profile
-  // I.e. logged in at a FFU account that is not merged in culr
-  useEffect(() => {
-    if (redirectToFrontpage) {
-      router.replace("/");
-    }
-  }, [redirectToFrontpage, router]);
 
   return (
     <Container fluid className={styles.container}>

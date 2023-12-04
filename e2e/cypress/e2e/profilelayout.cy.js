@@ -1,41 +1,25 @@
 describe("ProfileLayout", () => {
-  it(`User logged in without uniqueId must be sent to frontpage`, () => {
+  it(`User logged in without uniqueId should not see profile`, () => {
     cy.visit(
       "/iframe.html?id=profile-layout--profile-layout-no-unique-id&viewMode=story"
     );
 
-    // Wait for potential redirect
-    cy.wait(500);
+    cy.contains("Du er logget ind");
 
-    cy.get("[data-cy=router-pathname]").should("have.text", "/");
-    cy.get("[data-cy=router-action]").should("have.text", "replace");
+    cy.contains("Lån og reserveringer").should("not.exist");
+
+    cy.contains("Log venligst ind for at se din profil").should("not.exist");
   });
-  it(`User logged in without uniqueId can visit huskeliste without being redirected`, () => {
-    cy.visit(
-      "/iframe.html?id=profile-layout--profile-layout-no-unique-id&viewMode=story"
-    );
 
-    cy.contains("huskeliste").click();
-
-    // Wait for potential redirect
-    cy.wait(500);
-
-    cy.get("[data-cy=router-pathname]").should(
-      "have.text",
-      "/profil/huskeliste"
-    );
-  });
-  it(`User with uniqueId can visit profile page without being redirected`, () => {
+  it(`User with uniqueId can visit profile page`, () => {
     cy.visit(
       "/iframe.html?id=profile-layout--profile-layout-with-unique-id&viewMode=story"
     );
 
-    // Wait for potential redirect
-    cy.wait(500);
+    cy.contains("Du er logget ind");
 
-    cy.get("[data-cy=router-pathname]").should(
-      "have.text",
-      "/profil/laan-og-reserveringer"
-    );
+    cy.contains("Lån og reserveringer");
+
+    cy.contains("Log venligst ind for at se din profil").should("not.exist");
   });
 });
