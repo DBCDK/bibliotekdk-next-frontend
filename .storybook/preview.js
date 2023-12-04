@@ -40,13 +40,15 @@ export const decorators = [
       </AdvancedSearchProvider>
     );
   },
-  (Story) => {
+  (Story, context) => {
     return (
       <SessionProvider
-        session={{
-          accessToken: "dummy-token",
-          user: { uniqueId: "mocked-uniqueId", userId: "mocked-uniqueId" },
-        }}
+        session={
+          context?.parameters?.session || {
+            accessToken: "dummy-token",
+            user: { uniqueId: "mocked-uniqueId", userId: "mocked-uniqueId" },
+          }
+        }
       >
         <Story />
       </SessionProvider>
