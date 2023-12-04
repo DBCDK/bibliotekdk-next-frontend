@@ -4,7 +4,7 @@
 .dropdownwrap:hover,
 .dropdownwrap:focus {
   outline: 1px solid var(--blue);
-  cursor: pointer !important;
+  cursor: pointer;
 }
 
 .dropdownitem {
