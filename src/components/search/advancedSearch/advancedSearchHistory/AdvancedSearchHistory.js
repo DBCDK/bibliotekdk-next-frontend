@@ -4,65 +4,114 @@ import styles from "./AdvancedSearchHistory.module.css";
 import Text from "@/components/base/text";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
 import { FormatFieldSearchIndexes } from "@/components/search/advancedSearch/advancedSearchResult/topBar/TopBar";
+import Link from "@/components/base/link/Link";
+import { useRouter } from "next/router";
+import isEmpty from "lodash/isEmpty";
+import Translate from "@/components/base/translate";
+import cx from "classnames";
 
 function HistoryItem({ item, index, checked, onSelect }) {
+  const router = useRouter();
+
+  const goToItemUrl = (item) => {
+    if (item.fieldSearch) {
+      const query = {
+        fieldSearch: JSON.stringify(item.fieldSearch),
+      };
+      router.replace({
+        pathname: router.pathname,
+        query: query,
+      });
+    } else if (item.cql) {
+      router.replace({ pathname: router.pathname, query: { cql: item.cql } });
+    }
+  };
+
   return (
-    <div className={styles.row}>
+    <div className={cx(styles.row, styles.grid)}>
       <Checkbox
         id={`select-item-${index}`}
         // ariaLabelledBy={`material-title-${materialId}`}
         tabIndex="-1"
         onChange={(e) => {
-          console.log(e, typeof e, "EEEEEEEEEEEEEEEE");
           onSelect(item, e);
         }}
         checked={checked}
-        className={styles.item}
         ariaLabelledBy={`select-item-${index}`}
         ariaLabel={`select-item-${index}`}
+        className={styles.checkbox}
       />
-      <Text type="text3" className={styles.item}>
-        {item.timestamp}
-      </Text>
-      <div>
-        <FormatFieldSearchIndexes fieldsearch={item.fieldSearch} />
+      <Text type="text3">{item.timestamp}</Text>
+      <div className={styles.link}>
+        {/* link here*/}
+        <Link
+          href="*"
+          onClick={(e) => {
+            e.preventDefault();
+            goToItemUrl(item);
+          }}
+        >
+          {!isEmpty(item.fieldSearch) ? (
+            <FormatFieldSearchIndexes fieldsearch={item.fieldSearch} />
+          ) : (
+            <FormatCql item={item} />
+          )}
+        </Link>
       </div>
-      <Text type="text3" className={styles.item}>
+      <Text type="text3" className={styles.hitcount}>
         {item.hitcount}
       </Text>
     </div>
   );
 }
 
+function FormatCql({ item }) {
+  return (
+    <>
+      <Text type="text4" className={styles.inline}>
+        {Translate({ context: "search", label: "cqlsearchlabel" })}:
+      </Text>
+      <Text type="text3" className={styles.inline}>
+        {item.cql}
+      </Text>
+    </>
+  );
+}
+
 function HistoryHeaderActions({ setAllChecked, deleteSelected }) {
   return (
-    <div className={styles.header}>
+    <div className={cx(styles.actionheader)}>
       <Checkbox
         ariaLabelledBy={`selectall`}
-        ariaLabel={`check-select-all`}
+        ariaLabel="vælg alle"
         tabIndex="-1"
         onChange={setAllChecked}
         id="selectall"
+        className={styles.checkbox}
       />
-      <label htmlFor="selectall">Vælg alle</label>
-      <div onClick={deleteSelected}>Fjern valgte</div>
+      <label htmlFor="selectall">
+        <Text type="text3">Vælg alle</Text>
+      </label>
+      <div onClick={deleteSelected} className={styles.action}>
+        <Text type="text3">Fjern valgte</Text>
+      </div>
     </div>
   );
 }
 
 function HistoryHeader() {
   return (
-    <div className={styles.header}>
+    <div className={cx(styles.header, styles.grid)}>
       <div>&nbsp;</div>
-      <Text type="text3" className={styles.item}>
+      <Text type="text4">
         {/*{@TODO translations}*/}
-        Tid
+        {Translate({ context: "search", label: "timeForSearch" })}
       </Text>
-      <Text type="text3" className={styles.item}>
-        Søgning
+      <Text type="text4">
+        {Translate({ context: "search", label: "yourSearch" })}
       </Text>
-      <Text type="text3" className={styles.item}>
-        Resultater
+      <Text type="text4">
+        {Translate({ context: "search", label: "title" })}
       </Text>
     </div>
   );
@@ -130,7 +179,7 @@ export function AdvancedSearchHistory() {
       <HistoryHeader />
       {storedValue?.map((item, index) => {
         return (
-          <div className={styles.break} key={index}>
+          <div key={index}>
             <HistoryItem
               // checkboxList={checkboxList}
               item={item}
