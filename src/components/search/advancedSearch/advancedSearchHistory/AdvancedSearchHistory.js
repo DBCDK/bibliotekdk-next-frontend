@@ -99,11 +99,18 @@ function HistoryHeaderActions({ setAllChecked, deleteSelected }) {
           {Translate({ context: "bookmark", label: "select-all" })}
         </Text>
       </label>
-      <div onClick={deleteSelected} className={styles.action}>
+
+      <Link
+        border={{ top: false, bottom: { keepVisible: true } }}
+        onClick={(e) => {
+          e.preventDefault();
+          deleteSelected();
+        }}
+      >
         <Text type="text3">
           {Translate({ context: "bookmark", label: "remove-selected" })}
         </Text>
-      </div>
+      </Link>
     </div>
   );
 }
