@@ -95,7 +95,7 @@ function HistoryHeaderActions({ setAllChecked, deleteSelected }) {
         className={styles.checkbox}
       />
       <label htmlFor="selectall">
-        <Text type="text3">
+        <Text type="text3" className={styles.action}>
           {Translate({ context: "bookmark", label: "select-all" })}
         </Text>
       </label>
