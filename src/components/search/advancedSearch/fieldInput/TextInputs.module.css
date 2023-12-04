@@ -25,14 +25,12 @@
 }
 
 .addLine {
-  /* margin-left: var(--pt2); */
-  margin-top: var(--pt2);
   outline: 1px solid var(--dove);
   color: unset;
   display: flex;
   align-items: center;
   background-color: var(--white);
-  padding: var(--pt1) var(--pt3);
+  padding: var(--pt05) var(--pt2_5) !important;
 }
 .expandIcon {
   margin-left: var(--pt1);

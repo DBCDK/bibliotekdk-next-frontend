@@ -105,6 +105,7 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
             icon="close"
             onClick={() => removeInputField(index)}
             className={styles.removeIcon}
+            keepUnderline={true}
           >
             {Translate({ context: "search", label: "remove" })}
           </IconButton>
