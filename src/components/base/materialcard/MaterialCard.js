@@ -46,6 +46,7 @@ const MaterialCard = forwardRef(
       link_href,
       fullTitle,
       image_src,
+      ImageElement,
       ImageOverlay,
       children,
       workId,
@@ -74,9 +75,8 @@ const MaterialCard = forwardRef(
       };
       const Tag = link_href ? ManifestationLink : "div";
       return (
-        <div
+        <article
           className={cx(styles.article, elementContainerClassName)}
-          as="article"
           {...rootProps}
         >
           <Tag
@@ -100,7 +100,7 @@ const MaterialCard = forwardRef(
               </div>
             </div>
           </Tag>
-        </div>
+        </article>
       );
     }
 
@@ -124,16 +124,22 @@ const MaterialCard = forwardRef(
           disabled={!link_href && !onClick}
         >
           <div ref={ref} id={workId} className={cx(relatedElementClassName)}>
-            <img
-              src={image_src}
-              className={cx(coverImageClassName, {
-                [styles.cover_image_skeleton]: !loaded,
-              })}
-              onLoad={() => setLoaded(true)}
-              title={fullTitle}
-              alt=""
-            />
-            {ImageOverlay && <ImageOverlay />}
+            {ImageElement ? (
+              <ImageElement />
+            ) : (
+              <>
+                <img
+                  src={image_src}
+                  className={cx(coverImageClassName, {
+                    [styles.cover_image_skeleton]: !loaded,
+                  })}
+                  onLoad={() => setLoaded(true)}
+                  title={fullTitle}
+                  alt=""
+                />
+                {ImageOverlay && <ImageOverlay />}
+              </>
+            )}
 
             <div className={cx(textClassName)}>{children}</div>
           </div>

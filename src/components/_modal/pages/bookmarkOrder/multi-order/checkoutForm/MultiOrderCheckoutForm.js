@@ -11,6 +11,8 @@ import { LOGIN_MODE } from "../../../login/utils";
 import { LocalizationInformation } from "@/components/_modal/pages/order/localizationinformation/LocalizationInformation"; // Import without wrapper
 import Spinner from "react-bootstrap/Spinner";
 import Link from "@/components/base/link";
+import { validateEmail } from "@/utils/validateEmail";
+import { getLabel } from "@/components/base/forms/email/Email";
 
 const CheckoutForm = ({
   context,
@@ -24,9 +26,11 @@ const CheckoutForm = ({
     materialsNotAllowed,
     materialsMissingAction,
     duplicateOrdersWorkIds,
+    isAnalyzed,
   } = materialCounts;
   const modal = useModal();
   const disabled =
+    !isAnalyzed ||
     materialsMissingAction > 0 ||
     materialsNotAllowed > 0 ||
     duplicateOrdersWorkIds?.length > 0 ||
@@ -104,8 +108,17 @@ const CheckoutForm = ({
         context={context}
         validated={validated}
         hasValidationErrors={false}
-        onMailChange={(e, valid) => {
-          onMailChange(e?.target?.value, valid, updateLoanerInfo, setMail);
+        onMailChange={(e) => {
+          const value = e?.target?.value;
+          onMailChange(
+            value,
+            {
+              status: validateEmail(value),
+              message: getLabel(value),
+            },
+            updateLoanerInfo,
+            setMail
+          );
         }}
       />
 

@@ -42,6 +42,10 @@ const Popover = ({ className, simpleSearchRef }) => {
       ) {
         setShowInfoTooltip(false);
       }
+
+      if (showInfoTooltip && !isClickInsideRef(tooltipRef, event.target)) {
+        setShowInfoTooltip(false);
+      }
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -49,20 +53,28 @@ const Popover = ({ className, simpleSearchRef }) => {
     };
   }, [popoverRef, showPopover]);
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        //hide popover on escape key press
+        setShowPopover(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
     <>
-      {showPopover && (
-        <div className={styles.popoverContainer} ref={popoverRef}>
-          <AdvancedSearch />
-        </div>
-      )}
-
       <div className="container" ref={triggerContainerRef}>
         <Tooltip
           tooltipRef={tooltipRef}
           show={!showPopover && showInfoTooltip}
           labelToTranslate="advanced-search-tooltip"
           placement="bottom"
+          tabIndex="-1"
         >
           <SearchIcon
             className={`${styles.triggercontainer} ${className} ${
@@ -78,6 +90,12 @@ const Popover = ({ className, simpleSearchRef }) => {
 
         {showPopover && <div className={styles.triangle} />}
       </div>
+
+      {showPopover && (
+        <div className={styles.popoverContainer} ref={popoverRef}>
+          <AdvancedSearch />
+        </div>
+      )}
     </>
   );
 };

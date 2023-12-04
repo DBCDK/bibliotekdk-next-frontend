@@ -6,6 +6,7 @@ import Col from "react-bootstrap/Col";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
+import isEmpty from "lodash/isEmpty";
 
 export function FormatFieldSearchIndexes({ fieldsearch }) {
   return (
@@ -94,12 +95,15 @@ export function FormatedQuery() {
 
   //TODO: do this in context instead
   const filteredDropdownSearchIndices = dropdownSearchIndices.filter(
-    (dropdown) => dropdown.value?.length > 0
+    (dropdown) => !isEmpty(dropdown.value)
+  );
+  const filteredInputFields = inputFields.filter(
+    (field) => !isEmpty(field.value)
   );
   return (
     <div className={styles.formatedQueryContainer}>
       <div className={styles.formatedQueryItem}>
-        <FormatFieldInput inputFields={inputFields} />
+        <FormatFieldInput inputFields={filteredInputFields} />
       </div>
       <div className={styles.formatedQueryItem}>
         <FormatDropdowns dropdowns={filteredDropdownSearchIndices} />

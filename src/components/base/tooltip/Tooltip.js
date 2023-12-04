@@ -18,6 +18,7 @@ export default function Tooltip({
   show,
   tooltipRef,
   toolTipClassName,
+  tabIndex = 0,
 }) {
   const spanRef = useRef();
 
@@ -56,7 +57,7 @@ export default function Tooltip({
       >
         <span
           ref={spanRef}
-          tabIndex="0"
+          tabIndex={tabIndex}
           className={styles.tooltipWrap}
           onKeyUp={(e) => {
             if (e.code === "Escape") {
