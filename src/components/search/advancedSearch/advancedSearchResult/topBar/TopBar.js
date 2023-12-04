@@ -8,6 +8,38 @@ import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import isEmpty from "lodash/isEmpty";
 
+/**
+ *
+ * Returns query in a human readable way.
+ */
+export function FormatedQuery() {
+  const { cqlFromUrl, fieldSearchFromUrl } = useAdvancedSearchContext();
+
+  const { inputFields, dropdownSearchIndices } = fieldSearchFromUrl;
+
+  if (!!cqlFromUrl) {
+    return cqlFromUrl;
+  }
+
+  //TODO: do this in context instead
+  const filteredDropdownSearchIndices = dropdownSearchIndices.filter(
+    (dropdown) => !isEmpty(dropdown.value)
+  );
+  const filteredInputFields = inputFields.filter(
+    (field) => !isEmpty(field.value)
+  );
+  return (
+    <div className={styles.formatedQueryContainer}>
+      <div className={styles.formatedQueryItem}>
+        <FormatFieldInput inputFields={filteredInputFields} />
+      </div>
+      <div className={styles.formatedQueryItem}>
+        <FormatDropdowns dropdowns={filteredDropdownSearchIndices} />
+      </div>
+    </div>
+  );
+}
+
 export function FormatFieldSearchIndexes({ fieldsearch }) {
   return (
     <>
@@ -80,37 +112,6 @@ function FormatDropdowns({ dropdowns }) {
   return mapped;
 }
 
-/**
- *
- * Returns query in a human readable way.
- */
-export function FormatedQuery() {
-  const { cqlFromUrl, fieldSearchFromUrl } = useAdvancedSearchContext();
-
-  const { inputFields, dropdownSearchIndices } = fieldSearchFromUrl;
-
-  if (!!cqlFromUrl) {
-    return cqlFromUrl;
-  }
-
-  //TODO: do this in context instead
-  const filteredDropdownSearchIndices = dropdownSearchIndices.filter(
-    (dropdown) => !isEmpty(dropdown.value)
-  );
-  const filteredInputFields = inputFields.filter(
-    (field) => !isEmpty(field.value)
-  );
-  return (
-    <div className={styles.formatedQueryContainer}>
-      <div className={styles.formatedQueryItem}>
-        <FormatFieldInput inputFields={filteredInputFields} />
-      </div>
-      <div className={styles.formatedQueryItem}>
-        <FormatDropdowns dropdowns={filteredDropdownSearchIndices} />
-      </div>
-    </div>
-  );
-}
 export default function TopBar({}) {
   const { setShowPopover } = useAdvancedSearchContext();
   return (
