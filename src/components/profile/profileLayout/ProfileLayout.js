@@ -17,7 +17,6 @@ import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import { useRouter } from "next/router";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
-import { useEffect } from "react";
 
 const CONTEXT = "profile";
 const MENUITEMS = [
@@ -43,7 +42,7 @@ export default function ProfileLayout({ title, children }) {
   const isMobile = breakpoint === "xs" || breakpoint === "sm";
   const isTablet = breakpoint === "md";
   const isDesktop = !isMobile && !isTablet;
-  const { hasCulrUniqueId, isAuthenticated, isLoading } = useAuthentication();
+  const { hasCulrUniqueId, isAuthenticated } = useAuthentication();
 
   const modal = useModal();
   const router = useRouter();
