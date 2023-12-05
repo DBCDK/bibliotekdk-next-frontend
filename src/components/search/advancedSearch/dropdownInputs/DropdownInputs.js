@@ -59,7 +59,7 @@ export default function DropdownInputs({}) {
           <Text type="text1">
             {Translate({ context: "search", label: "narrow-search-more" })}
           </Text>
-          <Text type="text3">
+          <Text type="text3" className={styles.subTitle}>
             {Translate({
               context: "search",
               label: "adjusted-after-material-type",

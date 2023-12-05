@@ -20,6 +20,7 @@
   display: flex;
   align-items: center;
 }
-.dropdownTitle p {
-  margin-right: var(--pt1);
+.subTitle {
+  font-style: italic;
+  margin-left: var(--pt2);
 }
