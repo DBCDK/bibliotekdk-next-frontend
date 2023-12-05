@@ -1966,6 +1966,10 @@
         "da": "IKKE",
         "en": "NOT"
       },
+      "advanced-search-history-latest": {
+        "da": "Seneste søgninger",
+        "en": "Latest searches"
+      },
       "remove": {
         "da": "Fjern",
         "en": "Remove"
@@ -1989,6 +1993,26 @@
       "construct-your-search": {
         "da": "Sammensæt din søgning",
         "en": "Construct your search"
+      },
+      "adjusted-after-material-type": {
+        "da": "Tilpasses efter materialetype",
+        "en": "Adjusted according to material type"
+      },
+      "narrow-search-more": {
+        "da": "Afgræns yderligere",
+        "en": "narrow-search-more"
+      },
+      "searchHistory": {
+        "da": "Søgehistorik",
+        "en": "Search history"
+      },
+      "clearSearch": {
+        "da": "Ryd søgning",
+        "en": "Clear search"
+      },
+      "helpAndGuidance": {
+        "da": "Hjælp og vejledning",
+        "en": "Help and guidance"
       }
     },
     "suggester": {
