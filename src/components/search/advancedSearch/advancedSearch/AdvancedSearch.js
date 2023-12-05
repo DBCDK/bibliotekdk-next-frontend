@@ -159,7 +159,7 @@ export default function AdvancedSearch() {
         <Row className={styles.buttonRow}>
           <Col
             className={styles.button_group}
-            md={{ offset: 3, span: 9 }}
+            md={{ offset: 3, span: 5 }}
             sm={12}
           >
             <Button className={styles.button} onClick={doAdvancedSearch}>
@@ -173,6 +173,23 @@ export default function AdvancedSearch() {
               }}
             >
               {Translate({ context: "search", label: "clearSearch" })}
+            </Link>
+          </Col>
+
+          <Col md={4} sm={12} className={styles.helpLink}>
+            <Link
+              href="/hjaelp/saadan-soeger-du-i-bibliotek-dk/42"
+              border={{
+                top: false,
+                bottom: {
+                  keepVisible: true,
+                },
+              }}
+              target="_blank"
+            >
+              <Text type="text3" tag="span">
+                {Translate({ context: "search", label: "helpAndGuidance" })}
+              </Text>
             </Link>
           </Col>
         </Row>

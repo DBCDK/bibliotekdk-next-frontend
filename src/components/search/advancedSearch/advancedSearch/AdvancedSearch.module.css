@@ -1,6 +1,6 @@
 .container {
   width: 100%;
-  padding-bottom: var(--pt4);
+  padding-bottom: var(--pt7);
   padding-top: var(--pt4);
 }
 
@@ -39,4 +39,11 @@
 .buttonContainer {
   display: flex;
   justify-content: space-between;
+}
+
+.helpLink {
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: end;
+  display: flex;
 }
