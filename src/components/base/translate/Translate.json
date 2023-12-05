@@ -1966,6 +1966,10 @@
         "da": "IKKE",
         "en": "NOT"
       },
+      "advanced-search-history-latest": {
+        "da": "Seneste søgninger",
+        "en": "Latest searches"
+      },
       "remove": {
         "da": "Fjern",
         "en": "Remove"
