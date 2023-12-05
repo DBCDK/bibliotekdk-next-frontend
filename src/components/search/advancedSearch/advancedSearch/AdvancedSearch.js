@@ -33,6 +33,7 @@ export default function AdvancedSearch() {
     setParsedCQL,
     cqlFromUrl,
     setShowPopover,
+    stateToString,
   } = useAdvancedSearchContext();
 
   const [showCqlEditor, setShowCqlEditor] = useState(!isEmpty(cqlFromUrl));
@@ -47,12 +48,6 @@ export default function AdvancedSearch() {
 
   //add raw cql query in url if showCqlEditor. Add state to url if fieldInputs
   const doAdvancedSearch = () => {
-    //save state in url
-    const stateToString = JSON.stringify({
-      inputFields,
-      dropdownSearchIndices,
-    });
-
     if (showCqlEditor) {
       //do cql text search
       const cql = textAreaRef.current.value;

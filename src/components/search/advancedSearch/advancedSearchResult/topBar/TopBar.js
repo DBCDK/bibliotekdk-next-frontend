@@ -7,6 +7,7 @@ import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import isEmpty from "lodash/isEmpty";
+import { formattersAndComparitors } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
 
 /**
  *
@@ -59,6 +60,10 @@ export function FormatedQuery() {
       })}
 
       {filteredDropdownSearchIndices?.map((dropdownItem, index) => {
+        const { getPrintValue } = formattersAndComparitors(
+          dropdownItem.searchIndex
+        );
+
         const isLastItem = index === filteredDropdownSearchIndices.length - 1;
         const isEmpty = dropdownItem?.value?.length === 0;
 
@@ -82,7 +87,11 @@ export function FormatedQuery() {
               })}
               :
             </Text>
-            <Text>{dropdownItem?.value?.join(", ")}</Text>
+            <Text>
+              {dropdownItem?.value
+                ?.map((val) => getPrintValue(val.value))
+                .join(", ")}
+            </Text>
             {!isLastItem && (
               <Text>
                 {Translate({

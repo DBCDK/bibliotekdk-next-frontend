@@ -16,10 +16,14 @@ import isEmpty from "lodash/isEmpty";
 import { DialogForPublicationYear } from "@/components/search/advancedSearch/advancedSearchHelpers/dialogForPublicationYear/DialogForPublicationYear";
 import {
   CheckboxItem,
+  ClearBar,
   FormTypeEnum,
   RadioButtonItem,
   RadioLinkItem,
+  SearchBar,
   Toggler,
+  TogglerContent,
+  YearRange,
 } from "@/components/search/advancedSearch/advancedSearchHelpers/helperComponents/HelperComponents";
 import {
   ToggleMenuItemsEnum,
@@ -27,9 +31,7 @@ import {
 } from "@/components/search/advancedSearch/advancedSearchHelpers/dropdownReducerFunctions";
 import styles from "./AdvancedSearchDropdown.module.css";
 import Dropdown from "react-bootstrap/Dropdown";
-import Input from "@/components/base/forms/input";
 import cx from "classnames";
-import Translate from "@/components/base/translate";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
 function getTextType(dropdownQuery, item) {
@@ -59,6 +61,21 @@ function sorterForMenuItems(a, b, dropdownQuery) {
       a?.name?.toLowerCase().includes(dropdownQuery.toLowerCase())
     );
   }
+}
+
+function toggleYearRange(toggleMenuItemsState, targetItem, valueItem) {
+  const payload = {
+    ...targetItem,
+    value: {
+      lower: `${valueItem.value.lower}`,
+      upper: `${valueItem.value.upper}`,
+    },
+  };
+
+  toggleMenuItemsState({
+    type: ToggleMenuItemsEnum.UPDATE,
+    payload: payload,
+  });
 }
 
 export default function AdvancedSearchDropdown({
@@ -125,6 +142,13 @@ export default function AdvancedSearchDropdown({
   return (
     <Dropdown className={styles.nav_element}>
       <Toggler
+        TogglerContent={() => (
+          <TogglerContent
+            menuItemsState={menuItemsState}
+            indexName={indexName}
+            indexPlaceholder={indexPlaceholder}
+          />
+        )}
         indexName={indexName}
         indexPlaceholder={indexPlaceholder}
         className={styles.toggler}
@@ -134,84 +158,125 @@ export default function AdvancedSearchDropdown({
         className={styles.dropdown_items}
         tabIndex="-1"
       >
-        <Input
+        {/* Search Bar */}
+        <SearchBar
           id={inputId}
           value={dropdownQuery}
-          className={cx(styles.sticky_search_bar)}
-          placeholder={Translate({
-            context: "advanced_search_dropdown",
-            label: "search_dropdown",
-            vars: [indexTitle.toLowerCase()],
-          })}
+          indexTitle={indexTitle}
           onChange={(e) => setDropdownQuery(() => e.target.value)}
           onKeyDown={handleKeyDown}
-          overrideValueControl={true}
+          className={cx(styles.sticky_base_class, styles.search_bar)}
         />
+
         <List.Group
           id={listGroupId}
           enabled={true}
           label={indexName}
           disableGroupOutline={false}
           charCodeEvents={(e) => getCharCodeEvents(e)}
+          className={styles.list_group}
         >
-          {sortedMenuItemsState.map((item, index) => {
-            function toggler() {
-              toggleMenuItemsState({
-                type: ToggleMenuItemsEnum.UPDATE,
-                payload: item,
-              });
-            }
+          {sortedMenuItemsState
+            // Action_Link_Container is filtered away from List.Group
+            //  to be added sticky to bottom of Dropdown.Menu
+            .filter(
+              (item) =>
+                ![FormTypeEnum.ACTION_LINK_CONTAINER].includes(item.formType)
+            )
+            .map((item, index) => {
+              function toggler() {
+                toggleMenuItemsState({
+                  type: ToggleMenuItemsEnum.UPDATE,
+                  payload: item,
+                });
+              }
 
-            if (item?.formType === FormTypeEnum.CHECKBOX) {
-              return (
-                <List.Select
-                  key={`${item.name}-${index}`}
-                  onSelect={toggler}
-                  label={item.name}
-                >
-                  <CheckboxItem
-                    item={item}
-                    {...getTextType(dropdownQuery, item)}
-                  />
-                </List.Select>
-              );
-            } else if (item?.formType === FormTypeEnum.RADIO_BUTTON) {
-              return (
-                <List.Radio
-                  key={`${item.name}-${index}`}
-                  selected={item?.isSelected}
-                  moveItemRightOnFocus={true}
-                  onSelect={toggler}
-                  label={item.name}
-                >
-                  <RadioButtonItem
-                    item={item}
-                    {...getTextType(dropdownQuery, item)}
-                  />
-                </List.Radio>
-              );
-            } else if (item?.formType === FormTypeEnum.RADIO_LINK) {
-              return (
-                <List.Radio
-                  key={`${item.name}-${index}`}
-                  selected={item?.isSelected}
-                  moveItemRightOnFocus={true}
-                  onSelect={() => !isEmpty(item?.value) && toggler}
-                  label={item.name}
-                >
-                  <RadioLinkItem
-                    item={item}
-                    toggleMenuItemsState={toggleMenuItemsState}
-                    DialogBox={DialogForPublicationYear}
+              if (item?.formType === FormTypeEnum.CHECKBOX) {
+                return (
+                  <List.Select
+                    key={`${item.name}-${index}`}
+                    onSelect={toggler}
                     label={item.name}
-                  />
-                </List.Radio>
-              );
-            } else if (item?.formType === FormTypeEnum.DIVIDER) {
-              return <List.Divider key={Math.random() + "-" + index} />;
-            }
-          })}
+                  >
+                    <CheckboxItem
+                      item={item}
+                      {...getTextType(dropdownQuery, item)}
+                    />
+                  </List.Select>
+                );
+              } else if (item?.formType === FormTypeEnum.RADIO_BUTTON) {
+                return (
+                  <List.Radio
+                    key={`${item.name}-${index}`}
+                    selected={item?.isSelected}
+                    moveItemRightOnFocus={true}
+                    onSelect={toggler}
+                    label={item.name}
+                  >
+                    <RadioButtonItem
+                      item={item}
+                      {...getTextType(dropdownQuery, item)}
+                    />
+                  </List.Radio>
+                );
+              } else if (item?.formType === FormTypeEnum.RADIO_LINK) {
+                return (
+                  <List.Radio
+                    key={`${item.name}-${index}`}
+                    selected={item?.isSelected}
+                    moveItemRightOnFocus={true}
+                    onSelect={() => !isEmpty(item?.value) && toggler}
+                    label={item.name}
+                  >
+                    <RadioLinkItem
+                      item={item}
+                      toggleMenuItemsState={toggleMenuItemsState}
+                      DialogBox={DialogForPublicationYear}
+                      label={item.name}
+                    />
+                  </List.Radio>
+                );
+              } else if (item?.formType === FormTypeEnum.ACTION_LINK) {
+                return (
+                  <List.Select
+                    key={index}
+                    label={item.name}
+                    onSelect={() =>
+                      toggleYearRange(
+                        toggleMenuItemsState,
+                        menuItemsState.filter(
+                          (item) =>
+                            item.formType === FormTypeEnum.ACTION_LINK_CONTAINER
+                        )?.[0],
+                        item
+                      )
+                    }
+                  >
+                    {item.name}
+                  </List.Select>
+                );
+              } else if (item?.formType === FormTypeEnum.DIVIDER) {
+                return <List.Divider key={Math.random() + "-" + index} />;
+              }
+            })}
         </List.Group>
+
+        {/* Only shown when there is an ACTION_LINK_CONTAINER */}
+        <YearRange
+          menuItemsState={menuItemsState}
+          toggleMenuItemsState={toggleMenuItemsState}
+          className={cx(styles.sticky_base_class, styles.range_bar)}
+        />
+
+        <ClearBar
+          onClick={() =>
+            toggleMenuItemsState({
+              type: ToggleMenuItemsEnum.RESET,
+              payload: menuItems,
+            })
+          }
+          className={cx(styles.sticky_base_class, styles.clear_content_bar)}
+        />
       </Dropdown.Menu>
     </Dropdown>
   );

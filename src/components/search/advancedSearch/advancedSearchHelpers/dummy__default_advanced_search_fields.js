@@ -1,4 +1,7 @@
 import { FormTypeEnum } from "@/components/search/advancedSearch/advancedSearchHelpers/helperComponents/HelperComponents";
+import Translate, { getLanguage } from "@/components/base/translate";
+import { getFirstMatch } from "@/lib/utils";
+import { DropdownIndicesEnum } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
 
 export function dummy__languages() {
   return {
@@ -29,6 +32,120 @@ export function dummy__generalmaterialTypes() {
     overrideValueAs: "name",
   };
 }
+
+export function nameForActionLinkContainer(formType, searchIndex) {
+  return `${formType}__${searchIndex}`;
+}
+
+export function publicationYearIndices() {
+  const thisYear = new Date().getFullYear();
+  const nextYear = thisYear + 1;
+
+  return [
+    {
+      name: Translate({
+        context: "advanced_search_dropdown",
+        label: "this_year",
+        vars: [new Date().getFullYear()],
+      }),
+      value: { lower: thisYear, upper: nextYear },
+      formType: FormTypeEnum.ACTION_LINK,
+    },
+    {
+      name: Translate({
+        context: "advanced_search_dropdown",
+        label: "last_x_years",
+        vars: [
+          getLanguage() === "da" ? "to" : getLanguage() === "en" ? "two" : "2",
+        ],
+      }),
+      value: { lower: thisYear - 2, upper: nextYear },
+      formType: FormTypeEnum.ACTION_LINK,
+    },
+    {
+      name: Translate({
+        context: "advanced_search_dropdown",
+        label: "last_x_years",
+        vars: [
+          getLanguage() === "da"
+            ? "tre"
+            : getLanguage() === "en"
+            ? "three"
+            : "3",
+        ],
+      }),
+      value: { lower: thisYear - 3, upper: nextYear },
+      formType: FormTypeEnum.ACTION_LINK,
+    },
+    {
+      name: Translate({
+        context: "advanced_search_dropdown",
+        label: "last_x_years",
+        vars: [
+          getLanguage() === "da"
+            ? "fem"
+            : getLanguage() === "en"
+            ? "five"
+            : "5",
+        ],
+      }),
+      value: { lower: thisYear - 5, upper: nextYear },
+      formType: FormTypeEnum.ACTION_LINK,
+    },
+    {
+      name: Translate({
+        context: "advanced_search_dropdown",
+        label: "last_x_years",
+        vars: [
+          getLanguage() === "da" ? "ti" : getLanguage() === "en" ? "ten" : "10",
+        ],
+      }),
+      value: { lower: thisYear - 10, upper: nextYear },
+      formType: FormTypeEnum.ACTION_LINK,
+    },
+    {
+      name: nameForActionLinkContainer(
+        FormTypeEnum.ACTION_LINK_CONTAINER,
+        DropdownIndicesEnum.PUBLICATION_YEAR
+      ),
+      value: {},
+      formType: FormTypeEnum.ACTION_LINK_CONTAINER,
+    },
+  ];
+}
+
+export const publicationYearFormatterAndComparitor = {
+  getComparator(value) {
+    const lower = Boolean(value?.lower);
+    const upper = Boolean(value?.upper);
+
+    return getFirstMatch(true, "=", [
+      [lower && upper, " within "],
+      [lower, ">"],
+      [upper, "<"],
+    ]);
+  },
+  getFormatValue(value) {
+    const lower = Boolean(value?.lower);
+    const upper = Boolean(value?.upper);
+
+    return getFirstMatch(true, "", [
+      [lower && upper, `${value.lower} ${value.upper}`],
+      [lower, `${value.lower}`],
+      [upper, `${value.upper}`],
+    ]);
+  },
+  getPrintValue(value) {
+    const lower = Boolean(value?.lower);
+    const upper = Boolean(value?.upper);
+
+    return getFirstMatch(true, "", [
+      [lower && upper, `${value.lower}-${value.upper}`],
+      [lower, `>${value.lower}`],
+      [upper, `<${value.upper}`],
+    ]);
+  },
+};
 
 const prioritisedLanguages = [
   {
