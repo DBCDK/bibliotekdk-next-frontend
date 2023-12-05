@@ -29,7 +29,31 @@ export function FormatedQuery() {
     (field) => !isEmpty(field.value)
   );
 
-  const inputFieldsToText = filteredInputFields.map((field, index) => {
+  return (
+    <div className={styles.formatedQueryContainer}>
+      <FormatFieldInput inputFields={filteredInputFields} />
+      <FormatDropdowns
+        dropdowns={filteredDropdownSearchIndices}
+        showAndOperator={filteredDropdownSearchIndices.length > 0}
+      />
+    </div>
+  );
+}
+
+export function FormatFieldSearchIndexes({ fieldsearch }) {
+  return (
+    <div className={styles.formatedQueryContainer}>
+      <FormatFieldInput inputFields={fieldsearch.inputFields} />
+      <FormatDropdowns
+        dropdowns={fieldsearch.dropdownSearchIndices}
+        showAndOperator={!isEmpty(fieldsearch)}
+      />
+    </div>
+  );
+}
+
+function FormatFieldInput({ inputFields }) {
+  const mappedfields = inputFields?.map((field, index) => {
     const isEmpty = field?.value?.length === 0;
     if (isEmpty) {
       return null;
@@ -56,52 +80,49 @@ export function FormatedQuery() {
       </>
     );
   });
-
-  const dropdownsToText = filteredDropdownSearchIndices?.map(
-    (dropdownItem, index) => {
-      const isLastItem = index === filteredDropdownSearchIndices.length - 1;
-      const isEmpty = dropdownItem?.value?.length === 0;
-
-      if (isEmpty) {
-        return null;
-      }
-      return (
-        <>
-          {index === 0 && filteredInputFields?.length > 0 && (
-            <Text type="text2">
-              {Translate({
-                context: "search",
-                label: `advanced-dropdown-AND`,
-              })}
-            </Text>
-          )}
-          <Text type="text1" className={styles.searchIndexText}>
-            {Translate({
-              context: "advanced_search_dropdown",
-              label: dropdownItem.searchIndex,
-            })}
-            :
-          </Text>
-          <Text type="text2">{dropdownItem?.value?.join(", ")}</Text>
-          {!isLastItem && (
-            <Text type="text2">
-              {Translate({
-                context: "search",
-                label: `advanced-dropdown-AND`,
-              })}
-            </Text>
-          )}
-        </>
-      );
-    }
-  );
-  return (
-    <div className={styles.formatedQueryContainer}>
-      {inputFieldsToText}
-      {dropdownsToText}
-    </div>
-  );
+  return mappedfields;
 }
+
+function FormatDropdowns({ dropdowns, showAndOperator }) {
+  const mapped = dropdowns?.map((dropdownItem, index) => {
+    const isLastItem = index === dropdowns.length - 1;
+    const isEmpty = dropdownItem?.value?.length === 0;
+
+    if (isEmpty) {
+      return null;
+    }
+    return (
+      <>
+        {index === 0 && showAndOperator && (
+          <Text type="text2">
+            {Translate({
+              context: "search",
+              label: `advanced-dropdown-AND`,
+            })}
+          </Text>
+        )}
+        <Text type="text1" className={styles.searchIndexText}>
+          {Translate({
+            context: "advanced_search_dropdown",
+            label: dropdownItem.searchIndex,
+          })}
+          :
+        </Text>
+        <Text type="text2">{dropdownItem?.value?.join(", ")}</Text>
+        {!isLastItem && (
+          <Text type="text2">
+            {Translate({
+              context: "search",
+              label: `advanced-dropdown-AND`,
+            })}
+          </Text>
+        )}
+      </>
+    );
+  });
+  return mapped;
+}
+
 export default function TopBar() {
   const { setShowPopover } = useAdvancedSearchContext();
   return (

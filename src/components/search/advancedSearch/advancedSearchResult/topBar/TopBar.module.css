@@ -14,6 +14,7 @@
 
 .formatedQueryContainer p {
   margin-right: var(--pt1);
+  display: inline;
 }
 
 p.searchIndexText {
