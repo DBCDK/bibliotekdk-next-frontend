@@ -195,7 +195,11 @@ export default function ResultRow({
                           },
                         }}
                         key={materialTypeArray}
-                        tabIndex="-1"
+                        tabIndex={0}
+                        aria-labelledby={`TitlesForSearch__RenderTitlesWithoutLanguage-${work?.workId?.replace(
+                          /\W/g,
+                          ""
+                        )}`}
                       >
                         <Text
                           type={"text4"}

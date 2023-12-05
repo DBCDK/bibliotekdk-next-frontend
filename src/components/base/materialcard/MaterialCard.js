@@ -90,8 +90,7 @@ const MaterialCard = forwardRef(
                 <img
                   src={image_src}
                   className={cx(coverImageClassName)}
-                  title={fullTitle}
-                  alt={Translate({ context: "general", label: "frontpage" })}
+                  alt={fullTitle}
                 />
               </div>
 
@@ -134,8 +133,7 @@ const MaterialCard = forwardRef(
                     [styles.cover_image_skeleton]: !loaded,
                   })}
                   onLoad={() => setLoaded(true)}
-                  title={fullTitle}
-                  alt=""
+                  alt={fullTitle}
                 />
                 {ImageOverlay && <ImageOverlay />}
               </>

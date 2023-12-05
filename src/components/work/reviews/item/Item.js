@@ -177,6 +177,9 @@ function Item({ data, work, isLoading }) {
                       }
                       disabled={isLoading || !url}
                       border={{ top: false, bottom: { keepVisible: true } }}
+                      aria-label={
+                        hasPublisher + ", " + hasCreator + ", " + hasDate
+                      }
                     >
                       <Text
                         type="text2"
