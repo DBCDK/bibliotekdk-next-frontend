@@ -55,7 +55,6 @@ function HistoryItem({ item, index, checked, onSelect }) {
             e.preventDefault();
             goToItemUrl(item);
           }}
-          className={styles.flexme}
         >
           {!isEmpty(item.fieldSearch) ? (
             <FormatFieldSearchIndexes fieldsearch={item.fieldSearch} />
