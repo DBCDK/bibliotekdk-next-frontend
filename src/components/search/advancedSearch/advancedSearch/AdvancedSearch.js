@@ -116,7 +116,8 @@ export default function AdvancedSearch() {
               </Link>
 
               <Link
-                href="/sogehistorik"
+                onClick={() => setTimeout(() => setShowPopover(false), 100)}
+                href="/avanceret/soegehistorik"
                 border={{
                   top: false,
                   bottom: {
