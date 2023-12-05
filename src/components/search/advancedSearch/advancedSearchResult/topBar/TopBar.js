@@ -84,7 +84,7 @@ function FormatFieldInput({ inputFields }) {
 }
 
 function FormatDropdowns({ dropdowns, showAndOperator }) {
-  const mapped = dropdowns?.map((dropdownItem, index) => {
+  return dropdowns?.map((dropdownItem, index) => {
     const { getPrintValue } = formattersAndComparitors(
       dropdownItem.searchIndex
     );
@@ -127,7 +127,6 @@ function FormatDropdowns({ dropdowns, showAndOperator }) {
       </>
     );
   });
-  return mapped;
 }
 
 export default function TopBar() {
