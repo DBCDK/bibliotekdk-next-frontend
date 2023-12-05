@@ -21,11 +21,11 @@ function HistoryItem({ item, index, checked, onSelect }) {
         fieldSearch: JSON.stringify(item.fieldSearch),
       };
       router.replace({
-        pathname: router.pathname,
+        pathname: "avanceret/",
         query: query,
       });
     } else if (item.cql) {
-      router.replace({ pathname: router.pathname, query: { cql: item.cql } });
+      router.replace({ pathname: "avanceret/", query: { cql: item.cql } });
     }
   };
 
@@ -55,6 +55,7 @@ function HistoryItem({ item, index, checked, onSelect }) {
             e.preventDefault();
             goToItemUrl(item);
           }}
+          className={styles.flexme}
         >
           {!isEmpty(item.fieldSearch) ? (
             <FormatFieldSearchIndexes fieldsearch={item.fieldSearch} />

@@ -18,7 +18,7 @@ export function FormatedQuery() {
   const { inputFields, dropdownSearchIndices } = fieldSearchFromUrl;
 
   if (!!cqlFromUrl) {
-    return cqlFromUrl;
+    return <Text type="text2">{cqlFromUrl}</Text>;
   }
 
   //TODO: do this in context instead
@@ -28,44 +28,41 @@ export function FormatedQuery() {
   const filteredInputFields = inputFields.filter(
     (field) => !isEmpty(field.value)
   );
+
   return (
     <div className={styles.formatedQueryContainer}>
-      <div className={styles.formatedQueryItem}>
-        <FormatFieldInput inputFields={filteredInputFields} />
-      </div>
-      <div className={styles.formatedQueryItem}>
-        <FormatDropdowns dropdowns={filteredDropdownSearchIndices} />
-      </div>
+      <FormatFieldInput inputFields={filteredInputFields} />
+      <FormatDropdowns dropdowns={filteredDropdownSearchIndices} />
     </div>
   );
 }
 
 export function FormatFieldSearchIndexes({ fieldsearch }) {
   return (
-    <>
+    <div className={styles.formatedQueryContainer}>
       <FormatFieldInput inputFields={fieldsearch.inputFields} />
       <FormatDropdowns dropdowns={fieldsearch.dropdownSearchIndices} />
-    </>
+    </div>
   );
 }
 
 function FormatFieldInput({ inputFields }) {
-  const mappedfields = inputFields?.map((field) => {
+  const mappedfields = inputFields?.map((field, index) => {
     const isEmpty = field?.value?.length === 0;
     if (isEmpty) {
       return null;
     }
     return (
       <>
-        {field.prefixLogicalOperator && (
-          <Text type="text4" className={styles.noWrap}>
+        {field.prefixLogicalOperator && index !== 0 && (
+          <Text type="text2">
             {Translate({
               context: "search",
               label: `advanced-dropdown-${field.prefixLogicalOperator}`,
             })}
           </Text>
         )}
-        <Text type="text4" className={styles.noWrap}>
+        <Text type="text1" className={styles.searchIndexText}>
           {Translate({
             context: "search",
             label: `advanced-dropdown-${field.searchIndex}`,
@@ -73,7 +70,7 @@ function FormatFieldInput({ inputFields }) {
           :
         </Text>
 
-        <Text className={styles.noWrap}>{` "${field.value}" `}</Text>
+        <Text type="text2">{`"${field.value}"`}</Text>
       </>
     );
   });
@@ -90,16 +87,24 @@ function FormatDropdowns({ dropdowns }) {
     }
     return (
       <>
-        <Text type="text4" className={styles.noWrap}>
+        {index === 0 && filteredInputFields?.length > 0 && (
+          <Text type="text2">
+            {Translate({
+              context: "search",
+              label: `advanced-dropdown-AND`,
+            })}
+          </Text>
+        )}
+        <Text type="text1" className={styles.searchIndexText}>
           {Translate({
             context: "advanced_search_dropdown",
             label: dropdownItem.searchIndex,
           })}
           :
         </Text>
-        <Text className={styles.noWrap}>{dropdownItem?.value?.join(", ")}</Text>
+        <Text type="text2">{dropdownItem?.value?.join(", ")}</Text>
         {!isLastItem && (
-          <Text className={styles.noWrap}>
+          <Text type="text2">
             {Translate({
               context: "search",
               label: `advanced-dropdown-AND`,
@@ -112,14 +117,14 @@ function FormatDropdowns({ dropdowns }) {
   return mapped;
 }
 
-export default function TopBar({}) {
+export default function TopBar() {
   const { setShowPopover } = useAdvancedSearchContext();
   return (
     <div className={styles.container}>
       <Container fluid>
         <Row>
           <Col xs={12} lg={2}>
-            <Text type="text4">
+            <Text type="text1">
               {Translate({ context: "search", label: "yourSearch" })}
             </Text>
           </Col>

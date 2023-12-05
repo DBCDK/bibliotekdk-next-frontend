@@ -1,6 +1,11 @@
 .dropdownwrap {
   height: var(--pt5);
 }
+.dropdownwrap:hover,
+.dropdownwrap:focus {
+  outline: 1px solid var(--blue);
+  cursor: pointer;
+}
 
 .dropdownitem {
   display: block;
@@ -46,9 +51,8 @@
   position: relative;
   padding: var(--pt1) var(--pt1);
   border: 1px solid var(--gray);
-  border-right: none;
   background-color: var(--white);
-  min-width: 125px;
+  min-width: 154px;
   text-align: left;
 }
 
