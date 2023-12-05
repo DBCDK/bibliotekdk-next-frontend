@@ -51,6 +51,9 @@ export const filterForRelevantMaterialTypes = (mostRelevant, materialType) => {
  * @param {Number} numberOfMaterialsToOrder
  * @param {Function} setMaterialsToOrder
  * @param {Object} periodicaForms
+ * @param {String} backgroundColorOverride
+ * @param {Function} setDuplicateBookmarkIds
+ * @param {Boolean} appendPeriodicaRow we dont want to give user the option to enter periodica form data in list over failed orders in receipt
  * @returns {React.JSX.Element}
  */
 const Material = ({
@@ -60,6 +63,7 @@ const Material = ({
   periodicaForms,
   backgroundColorOverride = BackgroundColorEnum.NEUTRAL,
   setDuplicateBookmarkIds,
+  appendPeriodicaRow = true,
 }) => {
   //@TODO get manifestations in same manner for both edition and works via useData
   const isSpecificEdition = !!material?.pid;
@@ -146,7 +150,7 @@ const Material = ({
 
   const children = [];
 
-  if (isPeriodicaLike) {
+  if (isPeriodicaLike && appendPeriodicaRow) {
     children.push(
       <ChoosePeriodicaCopyRow
         key={material.key}

@@ -4366,7 +4366,10 @@
         "da": "Brugeren ikke fundet",
         "en": "User not found"
       },
-
+      "ERROR_UNAUTHENTICATED_USER": {
+        "da": "Brugeren er ikke logget ind",
+        "en": "User not authenticated"
+      },
       "INVALID_ORDER": {
         "da": "Bestillingen kunne ikke valideres",
         "en": "Order does not validate"
