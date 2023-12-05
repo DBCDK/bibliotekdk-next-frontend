@@ -58,9 +58,8 @@ export default function DropdownInputs({}) {
         <div className={styles.dropdownTitle}>
           <Text type="text1">
             {Translate({ context: "search", label: "narrow-search-more" })}
-          </Text>{" "}
+          </Text>
           <Text type="text3">
-            {" "}
             {Translate({
               context: "search",
               label: "adjusted-after-material-type",

@@ -8,12 +8,6 @@
   background-color: var(--concrete);
 }
 
-.right {
-  margin-left: auto;
-  margin-right: 0;
-  float: right;
-}
-
 .topContainer {
   display: flex;
   margin-bottom: var(--pt4);
