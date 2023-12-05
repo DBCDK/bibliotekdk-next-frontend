@@ -130,9 +130,9 @@ export const publicationYearFormatterAndComparitor = {
     const upper = Boolean(value?.upper);
 
     return getFirstMatch(true, "", [
-      [lower && upper, `${value.lower} ${value.upper}`],
-      [lower, `${value.lower}`],
-      [upper, `${value.upper}`],
+      [lower && upper, `${value?.lower} ${value?.upper}`],
+      [lower, `${value?.lower}`],
+      [upper, `${value?.upper}`],
     ]);
   },
   getPrintValue(value) {
@@ -140,9 +140,9 @@ export const publicationYearFormatterAndComparitor = {
     const upper = Boolean(value?.upper);
 
     return getFirstMatch(true, "", [
-      [lower && upper, `${value.lower}-${value.upper}`],
-      [lower, `>${value.lower}`],
-      [upper, `<${value.upper}`],
+      [lower && upper, `${value?.lower}-${value?.upper}`],
+      [lower, `>${value?.lower}`],
+      [upper, `<${value?.upper}`],
     ]);
   },
 };
