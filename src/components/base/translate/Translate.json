@@ -1438,6 +1438,10 @@
         "da": "Vælg alle",
         "en": "Select All"
       },
+      "remove-selected": {
+        "da": "Fjern valgte",
+        "en": "Remove selected"
+      },
       "order": {
         "da": "Bestil",
         "en": "Order"
@@ -1681,6 +1685,10 @@
       "cqlsearchlabel": {
         "da": "CQL-søgning",
         "en": "CQL-search"
+      },
+      "timeForSearch": {
+        "da": "tid",
+        "en": "time"
       },
       "loanOptions": {
         "da": "Lånemuligheder:",
@@ -2005,6 +2013,30 @@
       "editSearch": {
         "da": "Rediger søgning",
         "en": "Edit search"
+      },
+      "construct-your-search": {
+        "da": "Sammensæt din søgning",
+        "en": "Construct your search"
+      },
+      "adjusted-after-material-type": {
+        "da": "Tilpasses efter materialetype",
+        "en": "Adjusted according to material type"
+      },
+      "narrow-search-more": {
+        "da": "Afgræns yderligere",
+        "en": "narrow-search-more"
+      },
+      "searchHistory": {
+        "da": "Søgehistorik",
+        "en": "Search history"
+      },
+      "clearSearch": {
+        "da": "Ryd søgning",
+        "en": "Clear search"
+      },
+      "helpAndGuidance": {
+        "da": "Hjælp og vejledning",
+        "en": "Help and guidance"
       }
     },
     "suggester": {
