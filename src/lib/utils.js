@@ -75,6 +75,16 @@ export function getWorkUrl(fullTitle, creators, workId) {
 
 /**
  *
+ * @param {string} title
+ * @param {string} helpTextId
+ * @returns {{query: {title_author: string, workId}, pathname: string}}
+ */
+export function getHelpUrl(title, helpTextId) {
+  return `/hjaelp/${encodeString(title)}/${helpTextId}`;
+}
+
+/**
+ *
  * @param {string} fullTitle
  * @param {string} workId
  * @returns {{query: {title_author: string, workId}, pathname: string}}

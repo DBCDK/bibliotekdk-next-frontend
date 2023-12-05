@@ -14,6 +14,9 @@ export function resetMenuItem(menuItem) {
     ...(FormTypeEnum.RADIO_LINK === menuItem?.formType && {
       isSelected: false,
     }),
+    ...(FormTypeEnum.ACTION_LINK_CONTAINER === menuItem?.formType && {
+      isSelected: false,
+    }),
   };
 }
 
@@ -29,11 +32,17 @@ export function initializeMenuItem(menuItem) {
     ...(FormTypeEnum.RADIO_LINK === menuItem?.formType && {
       isSelected: menuItem?.isSelected || false,
     }),
+    ...(FormTypeEnum.ACTION_LINK_CONTAINER === menuItem?.formType && {
+      isSelected: menuItem?.isSelected || false,
+    }),
   };
 }
 
 function toggleMenuItem(itemUpdate, currentMenuItem) {
   const radioLinkNonEmptyValues = Object.values(itemUpdate.value).every(
+    (val) => !isEmpty(val)
+  );
+  const actionLinkAnyNonEmptyValue = Object.values(itemUpdate.value).some(
     (val) => !isEmpty(val)
   );
 
@@ -48,6 +57,9 @@ function toggleMenuItem(itemUpdate, currentMenuItem) {
     }),
     ...(FormTypeEnum.RADIO_LINK === itemUpdate?.formType && {
       isSelected: radioLinkNonEmptyValues,
+    }),
+    ...(FormTypeEnum.ACTION_LINK_CONTAINER === itemUpdate?.formType && {
+      isSelected: actionLinkAnyNonEmptyValue,
     }),
   };
 }

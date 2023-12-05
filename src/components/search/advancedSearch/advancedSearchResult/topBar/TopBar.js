@@ -7,6 +7,7 @@ import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import isEmpty from "lodash/isEmpty";
+import { formattersAndComparitors } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
 
 /**
  *
@@ -54,7 +55,7 @@ export function FormatFieldSearchIndexes({ fieldsearch }) {
 }
 
 function FormatFieldInput({ inputFields }) {
-  const mappedfields = inputFields?.map((field, index) => {
+  return inputFields?.map((field, index) => {
     const isEmpty = field?.value?.length === 0;
     if (isEmpty) {
       return null;
@@ -81,11 +82,13 @@ function FormatFieldInput({ inputFields }) {
       </>
     );
   });
-  return mappedfields;
 }
 
 function FormatDropdowns({ dropdowns, showAndOperator }) {
-  const mapped = dropdowns?.map((dropdownItem, index) => {
+  return dropdowns?.map((dropdownItem, index) => {
+    const { getPrintValue } = formattersAndComparitors(
+      dropdownItem.searchIndex
+    );
     const isLastItem = index === dropdowns.length - 1;
     const isEmpty = dropdownItem?.value?.length === 0;
 
@@ -109,7 +112,11 @@ function FormatDropdowns({ dropdowns, showAndOperator }) {
           })}
           :
         </Text>
-        <Text type="text2">{dropdownItem?.value?.join(", ")}</Text>
+        <Text type="text2">
+          {dropdownItem?.value
+            ?.map((val) => getPrintValue(val.value))
+            .join(", ")}
+        </Text>
         {!isLastItem && (
           <Text type="text2">
             {Translate({
@@ -121,7 +128,6 @@ function FormatDropdowns({ dropdowns, showAndOperator }) {
       </>
     );
   });
-  return mapped;
 }
 
 export default function TopBar() {

@@ -7,8 +7,11 @@ import { DialogForPublicationYear } from "@/components/search/advancedSearch/adv
 import StatefulDialog from "@/components/base/statefulDialog/StatefulDialog";
 import { useEffect, useState } from "react";
 import Icon from "@/components/base/icon";
-import styles from "./HelperComponents.module.css";
 import Dropdown from "react-bootstrap/Dropdown";
+import Input from "@/components/base/forms/input";
+import { ToggleMenuItemsEnum } from "@/components/search/advancedSearch/advancedSearchHelpers/dropdownReducerFunctions";
+import styles from "./HelperComponents.module.css";
+import Link from "@/components/base/link";
 
 /** @typedef {("CHECKBOX"|"RADIO_BUTTON"|"RADIO_LINK"|"DIVIDER")} FormType */
 export const FormTypeEnum = Object.freeze({
@@ -17,6 +20,8 @@ export const FormTypeEnum = Object.freeze({
   RADIO_LINK: "RADIO_LINK",
   MORE_OPTIONS: "MORE_OPTIONS",
   DIVIDER: "DIVIDER",
+  ACTION_LINK: "ACTION_LINK",
+  ACTION_LINK_CONTAINER: "ACTION_LINK_CONTAINER",
 });
 
 export function RadioLinkItem({
@@ -93,6 +98,11 @@ export function Toggler({
   className = "",
   indexName,
   indexPlaceholder,
+  TogglerContent = () => (
+    <Text tag="div" type="text3" dataCy="menu-title">
+      {indexPlaceholder || indexName || ""}
+    </Text>
+  ),
   iconSrc = "arrowDown.svg",
   iconSimpleAnimations = iconSrc === "chevron_right.svg" &&
     cx(animations["h-elastic"], animations["f-elastic"]),
@@ -109,9 +119,7 @@ export function Toggler({
           className
         )}
       >
-        <Text tag="div" type="text3" dataCy="menu-title">
-          {indexPlaceholder || indexName}
-        </Text>
+        <TogglerContent />
         <span className={styles.icon_area}>
           <Icon
             size={{ w: 2, h: 2 }}
@@ -124,5 +132,172 @@ export function Toggler({
         </span>
       </Dropdown.Toggle>
     )
+  );
+}
+
+export function YearRange({ menuItemsState, toggleMenuItemsState, className }) {
+  const yearRangeItems = menuItemsState.filter(
+    (item) => item.formType === FormTypeEnum.ACTION_LINK_CONTAINER
+  );
+
+  if (!(yearRangeItems.length > 0)) {
+    return null;
+  }
+
+  const yearRangeItem = yearRangeItems?.[0];
+
+  return (
+    <div className={className}>
+      <div>
+        {Translate({
+          context: "advanced_search_dropdown",
+          label: "from_range",
+        })}
+        <Input
+          type="text"
+          inputMode="numeric"
+          pattern="[0-9]*"
+          className={styles.single_range}
+          placeholder={Translate({ context: "general", label: "year" })}
+          value={yearRangeItem?.value?.lower}
+          onChange={(e) =>
+            toggleMenuItemsState({
+              type: ToggleMenuItemsEnum.UPDATE,
+              payload: {
+                ...yearRangeItem,
+                value: {
+                  lower: e?.target?.value,
+                  upper: yearRangeItem?.value?.upper,
+                },
+              },
+            })
+          }
+        />
+      </div>
+      <div className={styles.dash}>{" \u2013 "}</div>
+      <div>
+        {Translate({ context: "advanced_search_dropdown", label: "to_range" })}
+        <Input
+          type="text"
+          inputMode="numeric"
+          pattern="[0-9]*"
+          className={styles.single_range}
+          placeholder={Translate({ context: "general", label: "year" })}
+          value={yearRangeItem?.value?.upper}
+          onChange={(e) =>
+            toggleMenuItemsState({
+              type: ToggleMenuItemsEnum.UPDATE,
+              payload: {
+                ...yearRangeItem,
+                value: {
+                  lower: yearRangeItem?.value?.lower,
+                  upper: e?.target?.value,
+                },
+              },
+            })
+          }
+        />
+      </div>
+    </div>
+  );
+}
+
+export function TogglerContent({
+  menuItemsState,
+  indexName,
+  indexPlaceholder,
+}) {
+  const selectedItems = menuItemsState.filter((item) => item.isSelected);
+
+  const menuItemsFormType = menuItemsState.map((item) => item.formType);
+
+  if (selectedItems.length > 0) {
+    if (menuItemsFormType.includes(FormTypeEnum.ACTION_LINK_CONTAINER)) {
+      // If we have ACTION_LINK_CONTAINER, we show only this
+      return (
+        <Text tag="span" className={styles.toggler_content}>
+          <Text tag="span" type="text4" className={styles.label_count}>
+            {`${selectedItems?.[0]?.value?.lower || ""}-
+              ${selectedItems?.[0]?.value?.upper || ""}`}
+          </Text>
+        </Text>
+      );
+    } else {
+      // If more than 0 non-ACTION_LINK_CONTIANERs are selected, we show how many
+      return (
+        <Text tag="span" className={styles.toggler_content}>
+          {Translate({ context: "general", label: "chosen" })}
+          <Text tag="span" type="text4" className={styles.label_count}>
+            {selectedItems.length}
+          </Text>
+        </Text>
+      );
+    }
+  }
+
+  // When nothing is selected, we show the placeholder or indexName
+  return (
+    <Text tag="div" type="text3" dataCy="menu-title">
+      {indexPlaceholder || indexName}
+    </Text>
+  );
+}
+
+// The CSS can't access the backgroundImageUrl in public
+//  for both the localhost and the build:next, and build:storybook
+//  In other ways that injecting them through the javascript
+// TODO: Fix this if we find a solution later
+function searchIconInInput() {
+  const backgroundImageUrl = `/icons/search_dove.svg`;
+  const backgroundSize = "var(--pt2_5)";
+  const leftPadding = "var(--pt1_5)";
+  const rightPadding = "var(--pt1)";
+
+  return {
+    backgroundImage: `url(${backgroundImageUrl})`,
+    backgroundSize: `${backgroundSize}`,
+    paddingLeft: `calc(${backgroundSize} + ${leftPadding} + ${rightPadding})`,
+    backgroundPosition: `${leftPadding} var(--pt1)`,
+    backgroundRepeat: "no-repeat",
+  };
+}
+
+export function SearchBar({
+  id,
+  value,
+  onChange,
+  onKeyDown,
+  indexTitle,
+  className,
+}) {
+  return (
+    <Input
+      id={id}
+      value={value}
+      className={className}
+      style={searchIconInInput()}
+      placeholder={Translate({
+        context: "advanced_search_dropdown",
+        label: "search_dropdown",
+        vars: [indexTitle.toLowerCase()],
+      })}
+      onChange={onChange}
+      onKeyDown={onKeyDown}
+      overrideValueControl={true}
+    />
+  );
+}
+
+export function ClearBar({ onClick, className }) {
+  return (
+    <Text className={className} tag="div">
+      <Link
+        tag="span"
+        border={{ bottom: { keepVisible: true } }}
+        onClick={onClick}
+      >
+        {Translate({ context: "general", label: "reset" })}
+      </Link>
+    </Text>
   );
 }
