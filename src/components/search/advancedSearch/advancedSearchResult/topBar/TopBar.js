@@ -32,7 +32,10 @@ export function FormatedQuery() {
   return (
     <div className={styles.formatedQueryContainer}>
       <FormatFieldInput inputFields={filteredInputFields} />
-      <FormatDropdowns dropdowns={filteredDropdownSearchIndices} />
+      <FormatDropdowns
+        dropdowns={filteredDropdownSearchIndices}
+        showAndOperator={filteredDropdownSearchIndices.length > 0}
+      />
     </div>
   );
 }
@@ -41,7 +44,10 @@ export function FormatFieldSearchIndexes({ fieldsearch }) {
   return (
     <div className={styles.formatedQueryContainer}>
       <FormatFieldInput inputFields={fieldsearch.inputFields} />
-      <FormatDropdowns dropdowns={fieldsearch.dropdownSearchIndices} />
+      <FormatDropdowns
+        dropdowns={fieldsearch.dropdownSearchIndices}
+        showAndOperator={!isEmpty(fieldsearch)}
+      />
     </div>
   );
 }
@@ -77,7 +83,7 @@ function FormatFieldInput({ inputFields }) {
   return mappedfields;
 }
 
-function FormatDropdowns({ dropdowns }) {
+function FormatDropdowns({ dropdowns, showAndOperator }) {
   const mapped = dropdowns?.map((dropdownItem, index) => {
     const isLastItem = index === dropdowns.length - 1;
     const isEmpty = dropdownItem?.value?.length === 0;
@@ -87,7 +93,7 @@ function FormatDropdowns({ dropdowns }) {
     }
     return (
       <>
-        {index === 0 && filteredInputFields?.length > 0 && (
+        {index === 0 && showAndOperator && (
           <Text type="text2">
             {Translate({
               context: "search",
