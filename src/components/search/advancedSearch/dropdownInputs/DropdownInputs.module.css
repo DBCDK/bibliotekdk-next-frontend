@@ -18,6 +18,7 @@
 .dropdownTitle {
   margin-bottom: var(--pt1);
   display: flex;
+  align-items: center;
 }
 .dropdownTitle p {
   margin-right: var(--pt1);

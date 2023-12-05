@@ -13,7 +13,6 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Button from "@/components/base/button";
 import isEmpty from "lodash/isEmpty";
-import { AdvancedSearchHistory } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
 import DropdownInputs from "@/components/search/advancedSearch/dropdownInputs/DropdownInputs";
 import { convertStateToCql } from "@/components/search/advancedSearch/utils";
 import IconButton from "@/components/base/iconButton/IconButton";
@@ -146,7 +145,7 @@ export default function AdvancedSearch() {
           <Col md={3} sm={12}>
             {/**Insert material type select here */}
           </Col>
-          <Col md={9} sm={12}>
+          <Col md={7} sm={12}>
             {showCqlEditor ? (
               <CqlTextArea textAreaRef={textAreaRef} />
             ) : (

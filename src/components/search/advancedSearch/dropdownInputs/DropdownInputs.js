@@ -57,9 +57,15 @@ export default function DropdownInputs({}) {
       <div className={styles.dropdown_inputs_wrapper}>
         <div className={styles.dropdownTitle}>
           <Text type="text1">
-            {Translate({ context: "search", label: "construct-your-search" })}
+            {Translate({ context: "search", label: "narrow-search-more" })}
           </Text>{" "}
-          <Text type="text3">Afgræns yderligere</Text>
+          <Text type="text3">
+            {" "}
+            {Translate({
+              context: "search",
+              label: "adjusted-after-material-type",
+            })}
+          </Text>
         </div>
 
         <div className={styles.flex_wrapper}>
