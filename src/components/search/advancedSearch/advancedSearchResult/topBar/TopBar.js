@@ -55,7 +55,7 @@ export function FormatFieldSearchIndexes({ fieldsearch }) {
   );
 }
 
-function FormatFieldInput({ inputFields, showAndOperator }) {
+function FormatFieldInput({ inputFields }) {
   const mappedfields = inputFields?.map((field, index) => {
     const isEmpty = field?.value?.length === 0;
     if (isEmpty) {
