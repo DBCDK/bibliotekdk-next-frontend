@@ -87,6 +87,11 @@ export default function Wrap({ onWorkClick, onPageChange }) {
     sort,
     setShowPopover,
   } = useAdvancedSearchContext();
+
+  // we  disable the data collect for now - this one is propdrilled from
+  // components/search/result/page
+  // @TODO what to do  with dataCollect ???
+  onWorkClick = null;
   // get setter for advanced search history
   const { setValue } = useAdvancedSearchHistory();
   const limit = 10; // limit
