@@ -183,15 +183,17 @@ function LinkDropdown({ context, menuItems }) {
         </span>
       </div>
 
-      {expandMenu && (
-        <ul
-          id={uniqueIdButton}
-          role="menu"
-          aria-labelledby={uniqueIdMenu}
-          className={styles.menu}
-          data-cy="mobile-menu"
-        >
-          {menuItems.map((item, index) => {
+      <ul
+        id={uniqueIdButton}
+        role="menu"
+        aria-labelledby={uniqueIdMenu}
+        className={cx(styles.menu, {
+          [styles.menuActive]: expandMenu,
+        })}
+        data-cy="mobile-menu"
+      >
+        {expandMenu &&
+          menuItems.map((item, index) => {
             const link = encodeString(
               Translate({
                 context: context,
@@ -235,8 +237,7 @@ function LinkDropdown({ context, menuItems }) {
               </Link>
             );
           })}
-        </ul>
-      )}
+      </ul>
     </nav>
   );
 }

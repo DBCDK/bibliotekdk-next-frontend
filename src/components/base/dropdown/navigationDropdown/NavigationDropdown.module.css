@@ -42,6 +42,9 @@
   border: 1px solid var(--gray);
   background-color: var(--white);
 }
+.menu:not(.menuActive) {
+  border: 0;
+}
 
 .menuItem {
   position: relative;

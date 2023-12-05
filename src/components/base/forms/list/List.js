@@ -61,15 +61,13 @@ function Radio({
         [styles.selected]: selected,
         [styles.disabledrow]: disabled,
       })}
+      tabIndex={0}
     >
       <div
         className={cx(styles.dot, {
           [animations["f-translate-right"]]: moveItemRightOnFocus,
         })}
       />
-      <div id="radio-label" className={styles.label}>
-        {label}
-      </div>
       <div
         className={cx(styles.content, {
           [animations["f-translate-right"]]: moveItemRightOnFocus,

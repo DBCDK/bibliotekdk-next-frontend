@@ -152,7 +152,6 @@ export function BookMarkMaterialSelector({
         as="div"
         data-cy={cyKey({ name: "material-selector", prefix: "bookmark" })}
         variant="success"
-        id="dropdown-basic"
       >
         <Bookmark
           size={size}
