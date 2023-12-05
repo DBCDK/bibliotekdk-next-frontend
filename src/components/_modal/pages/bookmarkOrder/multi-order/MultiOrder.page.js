@@ -59,7 +59,6 @@ const MultiOrder = ({ context }) => {
   const pickupBranch = useRef(); // Pickup branch from checkout form
 
   useEffect(() => {
-    console.log("ORDERMUTATION ", orderMutation);
     if (orderMutation.data && orderMutation.data.submitMultipleOrders) {
       const { failedAtCreation, successfullyCreated } =
         orderMutation.data.submitMultipleOrders;
@@ -82,7 +81,7 @@ const MultiOrder = ({ context }) => {
         branchName: pickupBranch.current?.name,
       });
     }
-  }, [JSON.stringify(orderMutation?.data)]);
+  }, [orderMutation?.data]);
 
   useEffect(() => {
     if (!analyzeRef || !analyzeRef.current) return;
