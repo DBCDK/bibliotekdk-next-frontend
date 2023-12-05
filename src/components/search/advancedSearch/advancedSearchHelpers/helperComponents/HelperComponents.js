@@ -149,7 +149,10 @@ export function YearRange({ menuItemsState, toggleMenuItemsState, className }) {
   return (
     <div className={className}>
       <div>
-        Fra
+        {Translate({
+          context: "advanced_search_dropdown",
+          label: "from_range",
+        })}
         <Input
           type="text"
           inputMode="numeric"
@@ -173,7 +176,7 @@ export function YearRange({ menuItemsState, toggleMenuItemsState, className }) {
       </div>
       <div className={styles.dash}>{" \u2013 "}</div>
       <div>
-        Til
+        {Translate({ context: "advanced_search_dropdown", label: "to_range" })}
         <Input
           type="text"
           inputMode="numeric"
@@ -240,6 +243,10 @@ export function TogglerContent({
   );
 }
 
+// The CSS can't access the backgroundImageUrl in public
+//  for both the localhost and the build:next, and build:storybook
+//  In other ways that injecting them through the javascript
+// TODO: Fix this if we find a solution later
 function searchIconInInput() {
   const backgroundImageUrl = `/icons/search_dove.svg`;
   const backgroundSize = "var(--pt2_5)";

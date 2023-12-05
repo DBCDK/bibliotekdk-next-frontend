@@ -115,6 +115,11 @@ export function publicationYearIndices() {
 }
 
 export const publicationYearFormatterAndComparitor = {
+  /**
+   *
+   * @param {any|null} [value]
+   * @returns {string}
+   */
   getComparator(value) {
     const lower = Boolean(value?.lower);
     const upper = Boolean(value?.upper);

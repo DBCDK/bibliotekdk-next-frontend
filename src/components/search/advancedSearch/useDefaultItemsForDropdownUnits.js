@@ -44,6 +44,8 @@ function getDropdownFromUrl({ initDropdowns, dropdownUnit }) {
       (val) => val.name === singleItem.name
     );
 
+    // We check if we are looking at special (non-standard) indices and formTypes
+    //  If so, we need to add values to specific dropdownItems
     if (
       actualSearchIndexName &&
       specialIndices.has(actualSearchIndex.searchIndex) &&

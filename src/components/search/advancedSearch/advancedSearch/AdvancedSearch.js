@@ -16,6 +16,7 @@ import isEmpty from "lodash/isEmpty";
 import DropdownInputs from "@/components/search/advancedSearch/dropdownInputs/DropdownInputs";
 import { convertStateToCql } from "@/components/search/advancedSearch/utils";
 import IconButton from "@/components/base/iconButton/IconButton";
+import { getHelpUrl } from "@/lib/utils";
 
 /**
  * Contains advanced search fields
@@ -177,13 +178,7 @@ export default function AdvancedSearch() {
 
           <Col md={4} sm={12} className={styles.helpLink}>
             <Link
-              href={{
-                pathname: "/hjaelp/[title]/[helpTextId]",
-                query: {
-                  title: "saadan-soeger-du-i-bibliotek-dk",
-                  helpTextId: "42",
-                },
-              }}
+              href={getHelpUrl("saadan-soeger-du-i-bibliotek-dk", "42")}
               border={{
                 top: false,
                 bottom: {
