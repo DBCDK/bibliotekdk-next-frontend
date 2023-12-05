@@ -57,7 +57,7 @@ export function AdvancedSearchResult({
       {hitcount > 0 && (
         <Pagination
           numPages={numPages}
-          currentPage={parseInt(pageNo, 10)}          
+          currentPage={parseInt(pageNo, 10)}
           onChange={onPageChange}
         />
       )}
