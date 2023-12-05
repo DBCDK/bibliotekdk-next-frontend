@@ -39,8 +39,6 @@ export function FormatFieldSearchIndexes({ fieldsearch }) {
     (field) => !isEmpty(field.value)
   );
 
-  console.log(filteredDropdownSearchIndices, "FILTERED");
-
   return (
     <div className={styles.formatedQueryContainer}>
       <FormatFieldInput
