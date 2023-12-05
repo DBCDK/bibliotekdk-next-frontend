@@ -1,14 +1,58 @@
-.accordionwrap {
-  background-color: var(--white);
-}
-
-.history {
+.grid {
   display: grid;
-  grid-template-columns: 10fr 4fr 1fr 1fr;
-  padding: var(--pt1);
-  background-color: var(--white);
+  grid-template-columns: 1fr 2fr 10fr 2fr;
+  grid-template-rows: auto;
+  padding-left: var(--pt1);
 }
 
-.actionicon {
+.actionheader {
+  padding-left: var(--pt1);
+  display: flex;
+  gap: var(--pt1);
+  justify-content: flex-start;
+  margin-bottom: var(--pt3);
+}
+
+.title {
+  margin-bottom: var(--pt3);
+}
+
+.header {
+  margin-bottom: var(--pt2);
+  border-bottom: 1px solid var(--iron);
+}
+
+.link {
+  position: relative;
+  top: -4px;
+}
+
+.checkbox {
+  position: relative;
+  top: 2px;
+  display: block;
+}
+
+.row {
+  padding: var(--pt1) 0 var(--pt1) var(--pt1);
+  border-bottom: 1px solid var(--iron);
+}
+
+.inline {
+  display: inline;
+  margin-right: var(--pt05);
+}
+
+.hitcount {
+  position: relative;
+  top: -2px;
+  padding-left: var(--pt1);
+}
+
+.row:hover {
+  background-color: var(--iron);
+}
+
+.action {
   cursor: pointer;
 }

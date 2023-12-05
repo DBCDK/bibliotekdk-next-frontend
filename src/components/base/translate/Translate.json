@@ -1410,6 +1410,10 @@
         "da": "Vælg alle",
         "en": "Select All"
       },
+      "remove-selected": {
+        "da": "Fjern valgte",
+        "en": "Remove selected"
+      },
       "order": {
         "da": "Bestil",
         "en": "Order"
@@ -1653,6 +1657,10 @@
       "cqlsearchlabel": {
         "da": "CQL-søgning",
         "en": "CQL-search"
+      },
+      "timeForSearch": {
+        "da": "tid",
+        "en": "time"
       },
       "loanOptions": {
         "da": "Lånemuligheder:",
