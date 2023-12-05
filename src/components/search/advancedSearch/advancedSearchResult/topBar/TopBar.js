@@ -39,6 +39,7 @@ export function FormatFieldSearchIndexes({ fieldsearch }) {
   const filteredInputFields = fieldsearch?.inputFields?.filter(
     (field) => !isEmpty(field.value)
   );
+
   return (
     <div className={styles.formatedQueryContainer}>
       <FormatFieldInput
