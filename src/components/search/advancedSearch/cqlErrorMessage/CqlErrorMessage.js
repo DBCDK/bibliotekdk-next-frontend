@@ -2,6 +2,7 @@ import InfoDropdown from "@/components/base/infoDropdown/InfoDropdown";
 import { useData } from "@/lib/api/api";
 import { doComplexSearchAll } from "@/lib/api/complexSearch.fragments";
 import styles from "./CqlErrorMessage.module.css";
+import { isEmpty } from "lodash";
 
 function parseErrorMessage(errorMessage) {
   // first sentence of errormessage is (kind of) explanation
@@ -18,7 +19,8 @@ function parseErrorMessage(errorMessage) {
 }
 
 export function CqlErrorMessage(errormessage) {
-  if (!errormessage) {
+  console.log('errorMessage',errormessage)
+  if (isEmpty(errormessage)) {
     return null;
   }
 
@@ -40,6 +42,9 @@ export function CqlErrorMessage(errormessage) {
 }
 
 export default function Wrap({ cql }) {
+  if(isEmpty(cql)){
+    return null;
+  }
   const bigResponse = useData(doComplexSearchAll({ cql, offset: 0, limit: 1 }));
   return CqlErrorMessage(bigResponse?.data?.complexSearch?.errorMessage);
 }

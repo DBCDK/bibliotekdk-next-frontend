@@ -38,11 +38,16 @@ export function convertStateToCql({ inputFields, dropdownSearchIndices } = {}) {
     .map((item) => `(${item})`)
     .join(" AND ");
 
+  const inputFieldsEmpty = isEmpty(inputFieldsQuery);
+  const dropdownsEmpty = isEmpty(dropdownQuery);
+if(inputFieldsEmpty&&dropdownsEmpty){
+  return "";
+}
   return (
     "(" +
     [
-      ...(!isEmpty(inputFieldsQuery) ? [inputFieldsQuery.join(" ")] : []),
-      ...(!isEmpty(dropdownQuery) ? [dropdownQuery] : []),
+      ...(!inputFieldsEmpty ? [inputFieldsQuery.join(" ")] : []),
+      ...(!dropdownsEmpty ? [dropdownQuery] : []),
     ].join(") AND (") +
     ")"
   );

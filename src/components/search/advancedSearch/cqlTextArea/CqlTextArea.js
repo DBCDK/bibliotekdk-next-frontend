@@ -12,7 +12,7 @@ import { useAdvancedSearchContext } from "@/components/search/advancedSearch/adv
 
 export function CqlTextArea({ textAreaRef }) {
   const router = useRouter();
-  const defaultCql = router?.query?.cql || "title=harry AND potter";
+  const defaultCql = router?.query?.cql || "";
   const { parsedCQL } = useAdvancedSearchContext();
   const [cqlValue, setCqlValue] = useState(defaultCql);
 
