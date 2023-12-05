@@ -32,12 +32,12 @@ const createOrders = async ({
               material?.manifestations?.mostRelevant,
               material?.materialType
             ).map((mani) => mani.pid);
-        const periodicaForm = periodicaForms?.[material.key];
-
+        const periodicaFormForMaterial = periodicaForms?.[material.key];
+        const mergedFormData = { ...periodicaFormForMaterial, pid: pids[0] };
         return {
           pids,
           key: material.key,
-          periodicaForm,
+          periodicaForm: periodicaFormForMaterial ? mergedFormData : undefined,
         };
       }),
       branchId: pickupBranch.branchId,
@@ -59,6 +59,7 @@ const MultiOrder = ({ context }) => {
   const pickupBranch = useRef(); // Pickup branch from checkout form
 
   useEffect(() => {
+    console.log("ORDERMUTATION ", orderMutation);
     if (orderMutation.data && orderMutation.data.submitMultipleOrders) {
       const { failedAtCreation, successfullyCreated } =
         orderMutation.data.submitMultipleOrders;
@@ -81,7 +82,7 @@ const MultiOrder = ({ context }) => {
         branchName: pickupBranch.current?.name,
       });
     }
-  }, [orderMutation?.data]);
+  }, [JSON.stringify(orderMutation?.data)]);
 
   useEffect(() => {
     if (!analyzeRef || !analyzeRef.current) return;
