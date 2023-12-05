@@ -21,38 +21,41 @@ export function FormatedQuery() {
     return <Text type="text2">{cqlFromUrl}</Text>;
   }
 
-  //TODO: do this in context instead
-  const filteredDropdownSearchIndices = dropdownSearchIndices.filter(
-    (dropdown) => !isEmpty(dropdown.value)
-  );
-  const filteredInputFields = inputFields.filter(
-    (field) => !isEmpty(field.value)
-  );
+  const fieldsearch = {
+    inputFields,
+    dropdownSearchIndices,
+  };
 
-  return (
-    <div className={styles.formatedQueryContainer}>
-      <FormatFieldInput inputFields={filteredInputFields} />
-      <FormatDropdowns
-        dropdowns={filteredDropdownSearchIndices}
-        showAndOperator={filteredDropdownSearchIndices.length > 0}
-      />
-    </div>
-  );
+  return FormatFieldSearchIndexes({ fieldsearch });
 }
 
 export function FormatFieldSearchIndexes({ fieldsearch }) {
+  //TODO: do this in context instead
+  const filteredDropdownSearchIndices =
+    fieldsearch?.dropdownSearchIndices?.filter(
+      (dropdown) => !isEmpty(dropdown.value)
+    );
+  const filteredInputFields = fieldsearch?.inputFields?.filter(
+    (field) => !isEmpty(field.value)
+  );
+
+  console.log(filteredDropdownSearchIndices, "FILTERED");
+
   return (
     <div className={styles.formatedQueryContainer}>
-      <FormatFieldInput inputFields={fieldsearch.inputFields} />
+      <FormatFieldInput
+        inputFields={filteredInputFields}
+        showAndOperator={filteredDropdownSearchIndices?.length > 0}
+      />
       <FormatDropdowns
-        dropdowns={fieldsearch.dropdownSearchIndices}
-        showAndOperator={!isEmpty(fieldsearch)}
+        dropdowns={filteredDropdownSearchIndices}
+        showAndOperator={filteredInputFields?.length > 0}
       />
     </div>
   );
 }
 
-function FormatFieldInput({ inputFields }) {
+function FormatFieldInput({ inputFields, showAndOperator }) {
   const mappedfields = inputFields?.map((field, index) => {
     const isEmpty = field?.value?.length === 0;
     if (isEmpty) {
