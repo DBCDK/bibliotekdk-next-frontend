@@ -21,11 +21,11 @@ function HistoryItem({ item, index, checked, onSelect }) {
         fieldSearch: JSON.stringify(item.fieldSearch),
       };
       router.replace({
-        pathname: "avanceret/",
+        pathname: "/avanceret/",
         query: query,
       });
     } else if (item.cql) {
-      router.replace({ pathname: "avanceret/", query: { cql: item.cql } });
+      router.replace({ pathname: "/avanceret/", query: { cql: item.cql } });
     }
   };
 
