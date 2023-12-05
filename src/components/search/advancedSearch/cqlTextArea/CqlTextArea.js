@@ -24,11 +24,7 @@ export function CqlTextArea({ textAreaRef, doAdvancedSearch }) {
 
   return (
     <div>
-      <label
-        for="cqlTextArea"
-        style={{ display: "block" }}
-        className={styles.label}
-      >
+      <label style={{ display: "block" }} className={styles.label}>
         <Text type="text4">
           {translate({ context: "search", label: "cqlsearchlabel" })}
         </Text>

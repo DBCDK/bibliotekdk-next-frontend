@@ -54,7 +54,7 @@ export function FormatFieldSearchIndexes({ fieldsearch }) {
 }
 
 function FormatFieldInput({ inputFields }) {
-  const mappedfields = inputFields?.map((field, index) => {
+  return inputFields?.map((field, index) => {
     const isEmpty = field?.value?.length === 0;
     if (isEmpty) {
       return null;
@@ -81,7 +81,6 @@ function FormatFieldInput({ inputFields }) {
       </>
     );
   });
-  return mappedfields;
 }
 
 function FormatDropdowns({ dropdowns, showAndOperator }) {

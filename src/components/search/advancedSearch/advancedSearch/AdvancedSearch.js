@@ -177,7 +177,13 @@ export default function AdvancedSearch() {
 
           <Col md={4} sm={12} className={styles.helpLink}>
             <Link
-              href="/hjaelp/saadan-soeger-du-i-bibliotek-dk/42"
+              href={{
+                pathname: "/hjaelp/[title]/[helpTextId]",
+                query: {
+                  title: "saadan-soeger-du-i-bibliotek-dk",
+                  helpTextId: "42",
+                },
+              }}
               border={{
                 top: false,
                 bottom: {
