@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 /**
- * Renders search history AdvancedSearch  
+ * Renders search history AdvancedSearch
  */
 export default function AdvancedSearchPage() {
   const router = useRouter();
