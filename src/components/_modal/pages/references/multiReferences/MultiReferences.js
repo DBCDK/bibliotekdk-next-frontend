@@ -107,6 +107,14 @@ export default function MultiReferences({ context }) {
   });
 
   const filteredManifestationsForMaterialType = (workData) => {
+    if (workData.manifestations.mostRelevant.length === 1) {
+      /**
+       *  Only 1 manifestation, we pick it.
+       * Some cases like article (online) we get 2 material types in materialTypeSpecific.
+       * And here we bypass issues with double material types if they only have 1 manifestation anyway
+       */
+      return workData;
+    }
     // Filter only the selected material type
     const filteredManifestations = workData.manifestations.mostRelevant.filter(
       (mani) =>
@@ -187,6 +195,7 @@ export default function MultiReferences({ context }) {
     const filteredManifestations = materialsMissingEdition.map((item) =>
       filteredManifestationsForMaterialType(item)
     );
+    console.log(filteredManifestations, materialsMissingEdition);
     const newPeriodicaFiltered = [];
     const newList = bookmarksMissingEdition.map((bookmark) => {
       const matchingData = filteredManifestations.find(
