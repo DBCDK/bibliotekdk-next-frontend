@@ -13,9 +13,11 @@ export function resetMenuItem(menuItem) {
     }),
     ...(FormTypeEnum.RADIO_LINK === menuItem?.formType && {
       isSelected: false,
+      value: {},
     }),
     ...(FormTypeEnum.ACTION_LINK_CONTAINER === menuItem?.formType && {
       isSelected: false,
+      value: {},
     }),
   };
 }

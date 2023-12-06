@@ -26,6 +26,7 @@ import {
   YearRange,
 } from "@/components/search/advancedSearch/advancedSearchHelpers/helperComponents/HelperComponents";
 import {
+  resetMenuItem,
   ToggleMenuItemsEnum,
   useMenuItemsState,
 } from "@/components/search/advancedSearch/advancedSearchHelpers/dropdownReducerFunctions";
@@ -272,7 +273,7 @@ export default function AdvancedSearchDropdown({
           onClick={() =>
             toggleMenuItemsState({
               type: ToggleMenuItemsEnum.RESET,
-              payload: menuItems,
+              payload: [...menuItems.map((item) => resetMenuItem(item))],
             })
           }
           className={cx(styles.sticky_base_class, styles.clear_content_bar)}
