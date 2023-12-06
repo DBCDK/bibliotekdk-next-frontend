@@ -26,6 +26,7 @@ import {
   YearRange,
 } from "@/components/search/advancedSearch/advancedSearchHelpers/helperComponents/HelperComponents";
 import {
+  resetMenuItem,
   ToggleMenuItemsEnum,
   useMenuItemsState,
 } from "@/components/search/advancedSearch/advancedSearchHelpers/dropdownReducerFunctions";
@@ -33,6 +34,8 @@ import styles from "./AdvancedSearchDropdown.module.css";
 import Dropdown from "react-bootstrap/Dropdown";
 import cx from "classnames";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
+
+const specialFormTypes = new Set([FormTypeEnum.ACTION_LINK_CONTAINER]);
 
 function getTextType(dropdownQuery, item) {
   return (
@@ -139,6 +142,10 @@ export default function AdvancedSearchDropdown({
       : [...menuItemsState]),
   ];
 
+  const hasSpecialFormTypes = menuItemsState.some((item) =>
+    specialFormTypes.has(item.formType)
+  );
+
   return (
     <Dropdown className={styles.nav_element}>
       <Toggler
@@ -158,15 +165,17 @@ export default function AdvancedSearchDropdown({
         className={styles.dropdown_items}
         tabIndex="-1"
       >
-        {/* Search Bar */}
-        <SearchBar
-          id={inputId}
-          value={dropdownQuery}
-          indexTitle={indexTitle}
-          onChange={(e) => setDropdownQuery(() => e.target.value)}
-          onKeyDown={handleKeyDown}
-          className={cx(styles.sticky_base_class, styles.search_bar)}
-        />
+        {/* Search Bar - don't show if there is an ACTION_LINK_CONTAINER */}
+        {!hasSpecialFormTypes && (
+          <SearchBar
+            id={inputId}
+            value={dropdownQuery}
+            indexTitle={indexTitle}
+            onChange={(e) => setDropdownQuery(() => e.target.value)}
+            onKeyDown={handleKeyDown}
+            className={cx(styles.sticky_base_class, styles.search_bar)}
+          />
+        )}
 
         <List.Group
           id={listGroupId}
@@ -262,17 +271,19 @@ export default function AdvancedSearchDropdown({
         </List.Group>
 
         {/* Only shown when there is an ACTION_LINK_CONTAINER */}
-        <YearRange
-          menuItemsState={menuItemsState}
-          toggleMenuItemsState={toggleMenuItemsState}
-          className={cx(styles.sticky_base_class, styles.range_bar)}
-        />
+        {hasSpecialFormTypes && (
+          <YearRange
+            menuItemsState={menuItemsState}
+            toggleMenuItemsState={toggleMenuItemsState}
+            className={cx(styles.sticky_base_class, styles.range_bar)}
+          />
+        )}
 
         <ClearBar
           onClick={() =>
             toggleMenuItemsState({
               type: ToggleMenuItemsEnum.RESET,
-              payload: menuItems,
+              payload: [...menuItems.map((item) => resetMenuItem(item))],
             })
           }
           className={cx(styles.sticky_base_class, styles.clear_content_bar)}

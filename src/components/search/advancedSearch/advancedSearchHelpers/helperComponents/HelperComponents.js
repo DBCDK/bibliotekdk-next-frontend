@@ -217,7 +217,7 @@ export function TogglerContent({
       return (
         <Text tag="span" className={styles.toggler_content}>
           <Text tag="span" type="text4" className={styles.label_count}>
-            {`${selectedItems?.[0]?.value?.lower || ""}-
+            {`${selectedItems?.[0]?.value?.lower || ""} - 
               ${selectedItems?.[0]?.value?.upper || ""}`}
           </Text>
         </Text>
