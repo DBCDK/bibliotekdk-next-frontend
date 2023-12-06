@@ -20,7 +20,8 @@ function parseErrorMessage(errorMessage) {
 
 export function CqlErrorMessage(errormessage) {
   console.log('errorMessage',errormessage)
-  if (isEmpty(errormessage)) {
+  if (!errormessage) {
+  //if (isEmpty(errormessage)) {
     return null;
   }
 
