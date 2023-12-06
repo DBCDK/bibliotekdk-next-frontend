@@ -101,6 +101,8 @@ export const seriesFragment = `fragment seriesFragment on Series {
   readThisFirst
   readThisWhenever
   description
+  mainLanguages
+  workTypes
   numberInSeries {
     display
   }
