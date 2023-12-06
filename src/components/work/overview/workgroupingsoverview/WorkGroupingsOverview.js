@@ -21,8 +21,6 @@ import styles from "./WorkGroupingsOverview.module.css";
 import { dateToShortDate } from "@/utils/datetimeConverter";
 import { getElementById, getSeriesUrl } from "@/lib/utils";
 
-import { linkToSeries } from "@/components/work/utils";
-
 function getAnchor(anchorReference) {
   const seriesAnchorIndex = getIndexForAnchor(Translate(anchorReference));
 
