@@ -84,7 +84,6 @@ const Popover = ({ className, simpleSearchRef }) => {
               setShowPopover(!showPopover);
             }}
             title={Translate({ context: "search", label: "advanced" })}
-            border={{ top: false, bottom: { keepVisible: true } }}
           />
         </Tooltip>
 

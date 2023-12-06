@@ -73,8 +73,7 @@ export function MaterialCardImages({ covers, fullTitle, className }) {
                   return prev;
                 })
               }
-              title={fullTitle}
-              alt=""
+              alt={fullTitle}
             />
           </div>
         );

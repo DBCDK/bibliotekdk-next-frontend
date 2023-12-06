@@ -183,60 +183,56 @@ function LinkDropdown({ context, menuItems }) {
         </span>
       </div>
 
-      {expandMenu && (
-        <ul
-          id={uniqueIdButton}
-          role="menu"
-          aria-labelledby={uniqueIdMenu}
-          className={styles.menu}
-          data-cy="mobile-menu"
-        >
-          {menuItems.map((item, index) => {
-            const link = encodeString(
-              Translate({
-                context: context,
-                label: menuItems[index],
-                requestedLang: "da",
-              })
-            );
-            return (
-              <Link
-                key={`/profil/${link}`}
-                role="menuitem"
-                href={link}
-                ref={itemRefs[index]}
-              >
-                <a
-                  onClick={() => onLinkClick(index)}
-                  data-cy={`mobile-link-${menuItems[index]}`}
+      <ul id={uniqueIdButton} role="menu" aria-labelledby={uniqueIdMenu}>
+        {expandMenu && (
+          <ul className={styles.menu} data-cy="mobile-menu">
+            {menuItems.map((item, index) => {
+              const link = encodeString(
+                Translate({
+                  context: context,
+                  label: menuItems[index],
+                  requestedLang: "da",
+                })
+              );
+              return (
+                <Link
+                  key={`/profil/${link}`}
+                  role="menuitem"
+                  href={link}
                   ref={itemRefs[index]}
-                  className={cx({
-                    [styles.menuItem]: true,
-                    [styles.menuItem_selected]: isSelectedLink(index),
-                  })}
                 >
-                  <Text tag="span" type="text3">
-                    {Translate({
-                      context: context,
-                      label: menuItems[index],
+                  <a
+                    onClick={() => onLinkClick(index)}
+                    data-cy={`mobile-link-${menuItems[index]}`}
+                    ref={itemRefs[index]}
+                    className={cx({
+                      [styles.menuItem]: true,
+                      [styles.menuItem_selected]: isSelectedLink(index),
                     })}
-                  </Text>
+                  >
+                    <Text tag="span" type="text3">
+                      {Translate({
+                        context: context,
+                        label: menuItems[index],
+                      })}
+                    </Text>
 
-                  {isSelectedLink(index) && (
-                    <span className={styles.checkmark} role="presentation">
-                      <Icon
-                        size={{ w: "1_5", h: "1_5" }}
-                        src="checkmark_blue.svg"
-                        alt=""
-                      />
-                    </span>
-                  )}
-                </a>
-              </Link>
-            );
-          })}
-        </ul>
-      )}
+                    {isSelectedLink(index) && (
+                      <span className={styles.checkmark} role="presentation">
+                        <Icon
+                          size={{ w: "1_5", h: "1_5" }}
+                          src="checkmark_blue.svg"
+                          alt=""
+                        />
+                      </span>
+                    )}
+                  </a>
+                </Link>
+              );
+            })}
+          </ul>
+        )}
+      </ul>
     </nav>
   );
 }
