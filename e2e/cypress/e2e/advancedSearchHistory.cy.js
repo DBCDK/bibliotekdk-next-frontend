@@ -4,7 +4,7 @@ describe("Advanced search history", () => {
 
     cy.get("[data-cy=advanced-search-search-history]")
       .should("exist")
-      .contains("Søgehistorik");
+      .contains("Seneste søgninger");
 
     // now click to make it visible
     cy.get("[data-cy=advanced-search-history-item]").should("exist");

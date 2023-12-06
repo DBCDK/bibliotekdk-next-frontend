@@ -171,6 +171,7 @@ export function AdvancedSearchHistory() {
   /**
    * Add/remove item in list when selected/deselected
    * * @param item
+   * @param item
    * @param selected
    *  The checkbox component (components/base/forms/checkbox) returns if it has been
    *  selected or not

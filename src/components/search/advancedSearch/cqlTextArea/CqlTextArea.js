@@ -10,30 +10,21 @@ import translate from "@/components/base/translate";
 import CqlErrorMessage from "@/components/search/advancedSearch/cqlErrorMessage/CqlErrorMessage";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
-export function CqlTextArea({ textAreaRef }) {
+export function CqlTextArea({ textAreaRef, doAdvancedSearch }) {
   const router = useRouter();
-  const defaultCql = router?.query?.cql || "title=harry AND potter";
+  const defaultCql = router?.query?.cql || "term.title=(harry AND potter)";
   const { parsedCQL } = useAdvancedSearchContext();
   const [cqlValue, setCqlValue] = useState(defaultCql);
 
-  useState(() => {
+  useEffect(() => {
     if (parsedCQL) {
       setCqlValue(parsedCQL);
     }
   }, [parsedCQL]);
 
-  useEffect(() => {
-    const cql = router?.query?.cql;
-    setCqlValue(cql);
-  }, [router?.query?.cql, router?.query?.fieldSeach]);
-
   return (
     <div>
-      <label
-        for="cqlTextArea"
-        style={{ display: "block" }}
-        className={styles.label}
-      >
+      <label className={styles.label}>
         <Text type="text4">
           {translate({ context: "search", label: "cqlsearchlabel" })}
         </Text>
@@ -51,6 +42,12 @@ export function CqlTextArea({ textAreaRef }) {
         value={cqlValue}
         onChange={(event) => {
           setCqlValue(event.target.value);
+        }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && e.ctrlKey === true) {
+            e.preventDefault();
+            doAdvancedSearch();
+          }
         }}
       />
 

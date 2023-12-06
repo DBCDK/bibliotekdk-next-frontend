@@ -1,15 +1,22 @@
 import {
   dummy__generalmaterialTypes,
   dummy__languages,
+  publicationYearFormatterAndComparitor,
+  publicationYearIndices,
 } from "@/components/search/advancedSearch/advancedSearchHelpers/dummy__default_advanced_search_fields";
 import { convertToDropdownInput } from "@/components/search/advancedSearch/advancedSearchHelpers/convertToDropdownInput";
 import { FormTypeEnum } from "@/components/search/advancedSearch/advancedSearchHelpers/helperComponents/HelperComponents";
+import isEmpty from "lodash/isEmpty";
 
 export const DropdownIndicesEnum = {
   LANGUAGES: "phrase.mainlanguage",
   MATERIAL_TYPES_SPECIFIC: "phrase.specificmaterialtype",
   MATERIAL_TYPES_GENERAL: "phrase.generalmaterialtype",
+  PUBLICATION_YEAR: "publicationyear",
 };
+
+const specialIndices = new Set([DropdownIndicesEnum.PUBLICATION_YEAR]);
+const specialFormTypes = new Set([FormTypeEnum.ACTION_LINK_CONTAINER]);
 
 /**
  * If there is a fieldSearch.dropdownSearchIndices, this function
@@ -26,12 +33,31 @@ function getDropdownFromUrl({ initDropdowns, dropdownUnit }) {
 
   // If the actualSearchIndex is not the same as dropdownUnit's indexName
   //   we expect the dropdownUnit to be as default value (where no items has isSelected===true)
-  if (!actualSearchIndex) {
+  //   Also if value is empty, we expect the same behavior
+  if (!actualSearchIndex || isEmpty(actualSearchIndex.value)) {
     return dropdownUnit;
   }
 
   // We enrich the dropdownUnit with the value from initialDropdowns (be it url or a new intial dropdown)
   const enrichedDropdownUnit = dropdownUnit.items.map((singleItem) => {
+    const actualSearchIndexName = actualSearchIndex?.value?.find(
+      (val) => val.name === singleItem.name
+    );
+
+    // We check if we are looking at special (non-standard) indices and formTypes
+    //  If so, we need to add values to specific dropdownItems
+    if (
+      actualSearchIndexName &&
+      specialIndices.has(actualSearchIndex.searchIndex) &&
+      specialFormTypes.has(singleItem.formType)
+    ) {
+      return {
+        ...singleItem,
+        value: actualSearchIndex?.value?.[0]?.value,
+        isSelected: true,
+      };
+    }
+
     return {
       ...singleItem,
       isSelected:
@@ -40,7 +66,9 @@ function getDropdownFromUrl({ initDropdowns, dropdownUnit }) {
         ) ||
           ([FormTypeEnum.RADIO_LINK].includes(singleItem.formType) &&
             !isEmpty(singleItem.value))) &&
-        actualSearchIndex.value.includes(singleItem?.name),
+        actualSearchIndex.value
+          .map((val) => val.name)
+          .includes(singleItem?.name),
     };
   });
 
@@ -50,13 +78,35 @@ function getDropdownFromUrl({ initDropdowns, dropdownUnit }) {
   };
 }
 
+export function formattersAndComparitors(indexName) {
+  const withFormatters = {
+    [DropdownIndicesEnum.PUBLICATION_YEAR]:
+      publicationYearFormatterAndComparitor,
+  };
+
+  const specificFormatter = withFormatters?.[indexName];
+
+  return {
+    getComparator: !!specificFormatter?.getComparator
+      ? specificFormatter?.getComparator
+      : // eslint-disable-next-line no-unused-vars
+        (value) => "=",
+    getFormatValue: !!specificFormatter?.getFormatValue
+      ? specificFormatter?.getFormatValue
+      : (value) => value,
+    getPrintValue: !!specificFormatter?.getPrintValue
+      ? specificFormatter?.getPrintValue
+      : (value) => value,
+  };
+}
+
 /**
  *
  * @param initDropdowns
  * @returns {Array.<DropdownUnit>}
  */
 export function useDefaultItemsForDropdownUnits({ initDropdowns }) {
-  return [
+  const res = [
     {
       items: dummy__generalmaterialTypes(),
       indexName: DropdownIndicesEnum.MATERIAL_TYPES_GENERAL,
@@ -65,17 +115,22 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }) {
       items: dummy__languages(),
       indexName: DropdownIndicesEnum.LANGUAGES,
     },
-  ]
-    .map((dropdownUnit) => {
-      return {
-        items: convertToDropdownInput(dropdownUnit.items),
-        indexName: dropdownUnit.indexName,
-      };
+  ].map((dropdownUnit) => {
+    return {
+      items: convertToDropdownInput(dropdownUnit.items),
+      indexName: dropdownUnit.indexName,
+    };
+  });
+
+  const publicationYears = {
+    items: publicationYearIndices(),
+    indexName: DropdownIndicesEnum.PUBLICATION_YEAR,
+  };
+
+  return [...res, publicationYears].map((dropdownUnit) =>
+    getDropdownFromUrl({
+      initDropdowns: initDropdowns,
+      dropdownUnit: dropdownUnit,
     })
-    .map((dropdownUnit) =>
-      getDropdownFromUrl({
-        initDropdowns: initDropdowns,
-        dropdownUnit: dropdownUnit,
-      })
-    );
+  );
 }

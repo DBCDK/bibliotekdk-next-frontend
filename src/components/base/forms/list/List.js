@@ -31,7 +31,6 @@ import { getFirstMatch } from "@/lib/utils";
 function Radio({
   children,
   disabled,
-  label,
   onSelect,
   selected,
   _ref,
@@ -61,15 +60,13 @@ function Radio({
         [styles.selected]: selected,
         [styles.disabledrow]: disabled,
       })}
+      tabIndex={0}
     >
       <div
         className={cx(styles.dot, {
           [animations["f-translate-right"]]: moveItemRightOnFocus,
         })}
       />
-      <div id="radio-label" className={styles.label}>
-        {label}
-      </div>
       <div
         className={cx(styles.content, {
           [animations["f-translate-right"]]: moveItemRightOnFocus,
@@ -83,7 +80,6 @@ function Radio({
 Radio.propTypes = {
   disabled: PropTypes.bool,
   className: PropTypes.string,
-  label: PropTypes.string,
   onSelect: PropTypes.func,
   selected: PropTypes.bool,
   _ref: PropTypes.func,

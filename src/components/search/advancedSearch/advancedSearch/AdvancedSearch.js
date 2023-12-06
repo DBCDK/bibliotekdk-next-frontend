@@ -16,6 +16,7 @@ import isEmpty from "lodash/isEmpty";
 import DropdownInputs from "@/components/search/advancedSearch/dropdownInputs/DropdownInputs";
 import { convertStateToCql } from "@/components/search/advancedSearch/utils";
 import IconButton from "@/components/base/iconButton/IconButton";
+import { getHelpUrl } from "@/lib/utils";
 
 /**
  * Contains advanced search fields
@@ -33,6 +34,7 @@ export default function AdvancedSearch() {
     setParsedCQL,
     cqlFromUrl,
     setShowPopover,
+    stateToString,
   } = useAdvancedSearchContext();
 
   const [showCqlEditor, setShowCqlEditor] = useState(!isEmpty(cqlFromUrl));
@@ -47,12 +49,6 @@ export default function AdvancedSearch() {
 
   //add raw cql query in url if showCqlEditor. Add state to url if fieldInputs
   const doAdvancedSearch = () => {
-    //save state in url
-    const stateToString = JSON.stringify({
-      inputFields,
-      dropdownSearchIndices,
-    });
-
     if (showCqlEditor) {
       //do cql text search
       const cql = textAreaRef.current.value;
@@ -148,7 +144,10 @@ export default function AdvancedSearch() {
           </Col>
           <Col md={7} sm={12}>
             {showCqlEditor ? (
-              <CqlTextArea textAreaRef={textAreaRef} />
+              <CqlTextArea
+                textAreaRef={textAreaRef}
+                doAdvancedSearch={doAdvancedSearch}
+              />
             ) : (
               <>
                 <TextInputs doAdvancedSearch={doAdvancedSearch} />
@@ -179,7 +178,7 @@ export default function AdvancedSearch() {
 
           <Col md={4} sm={12} className={styles.helpLink}>
             <Link
-              href="/hjaelp/saadan-soeger-du-i-bibliotek-dk/42"
+              href={getHelpUrl("saadan-soeger-du-i-bibliotek-dk", "42")}
               border={{
                 top: false,
                 bottom: {

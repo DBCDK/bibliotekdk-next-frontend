@@ -107,6 +107,15 @@ export default function MultiReferences({ context }) {
   });
 
   const filteredManifestationsForMaterialType = (workData) => {
+    if (workData.manifestations.mostRelevant.length === 1) {
+      /**
+       *  Only 1 manifestation, we pick it.
+       * Some cases like article (online) we get 2 material types in materialTypeSpecific.
+       * And here we bypass issues with double material types if they only have 1 manifestation anyway
+       * This might be avoidable when we in the future upgrade bookmarks to use JED 1.1 and the CODE field in materialTypeSpecific
+       */
+      return workData;
+    }
     // Filter only the selected material type
     const filteredManifestations = workData.manifestations.mostRelevant.filter(
       (mani) =>

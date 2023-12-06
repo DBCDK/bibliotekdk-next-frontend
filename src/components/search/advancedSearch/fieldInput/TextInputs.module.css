@@ -12,7 +12,6 @@
 
 .select {
   white-space: nowrap;
-  height: var(--pt7);
 }
 .removeIcon {
   margin-left: var(--pt2);

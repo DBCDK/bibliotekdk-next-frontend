@@ -83,7 +83,7 @@ export default function LoginPrompt({
                   className={`${styles.inline} ${styles.link}`}
                   href={linkHref.href}
                   target="_blank"
-                  border={{ top: false, bottom: true }}
+                  border={{ top: false, bottom: { keepVisible: true } }}
                   data_use_new_underline={false}
                 >
                   <Text className={styles.inline} type="text3">
@@ -92,17 +92,6 @@ export default function LoginPrompt({
                 </Link>
               </>
             </InfoDropdown>
-          )}
-          {!(isAuthenticated && linkHref) && (
-            <Button
-              type="primary"
-              size="large"
-              onClick={signIn}
-              dataCy="article-prompt-button-log-ind"
-              className={styles.signInButton}
-            >
-              {buttonText}
-            </Button>
           )}
 
           <Divider className={styles.devider} />

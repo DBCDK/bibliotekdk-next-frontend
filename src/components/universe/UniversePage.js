@@ -11,6 +11,20 @@ import groupBy from "lodash/groupBy";
 import UniverseMembers from "@/components/universe/universeMembers/UniverseMembers";
 import { workTypesOrder } from "@/lib/enums_MaterialTypes";
 
+const allowedLanguages = new Set(["dansk", "engelsk", "ukendt sprog"]);
+const uncategorisedLangauges = new Set(["flere sprog"]);
+
+function filterOnlyWantedLanguages(singleEntry) {
+  return (
+    isEmpty(singleEntry?.mainLanguages) ||
+    singleEntry?.mainLanguages.some(
+      (singleLanguage) =>
+        allowedLanguages.has(singleLanguage) ||
+        uncategorisedLangauges.has(singleLanguage)
+    )
+  );
+}
+
 export default function UniversePage() {
   const router = useRouter();
 
@@ -52,18 +66,30 @@ export default function UniversePage() {
 
   // TODO: Temporary fix that gives seriesInUniverse a random workType
   const seriesInUniverse = groupBy(
-    specificUniverse?.series.map((singleSeries) => {
-      // const randomNumber = Math.floor(Math.random() * workTypesOrder.length);
-      const randomNumber = 0;
-      return {
-        workTypes: [workTypesOrder?.[randomNumber]],
-        ...singleSeries,
-      };
-    }),
+    specificUniverse?.series
+      .filter(filterOnlyWantedLanguages)
+      .map((singleSeries) => {
+        return {
+          ...singleSeries,
+          workTypes:
+            !isEmpty(singleSeries.workTypes) &&
+            !(
+              isEmpty(singleSeries?.mainLanguages) ||
+              singleSeries?.mainLanguages.every((singleLanguage) =>
+                uncategorisedLangauges.has(singleLanguage)
+              )
+            )
+              ? singleSeries.workTypes
+              : workTypesOrder.at(-1),
+        };
+      }),
     "workTypes"
   );
 
-  const worksInUniverse = groupBy(specificUniverse?.works, "workTypes");
+  const worksInUniverse = groupBy(
+    specificUniverse?.works.filter(filterOnlyWantedLanguages),
+    "workTypes"
+  );
 
   if (univserseError) {
     return <Custom404 />;
