@@ -43,6 +43,8 @@ export function basic() {
             agencyType
             name
             branchWebsiteUrl
+            pickupAllowed
+            borrowerCheck
           }
         }
         debt {
@@ -151,7 +153,7 @@ export function orderPolicy({ pids }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
-    query: `query orderPolicy ($language: LanguageCode!, $pids: [String!]! ) {
+    query: `query orderPolicy ($language: LanguageCode!, $pids: [String]! ) {
       user {
         agencies (language: $language){
           agencyUrl
@@ -180,34 +182,6 @@ export function orderPolicy({ pids }) {
             digitalCopyAccess
           }
         }
-        agencies (language: $language){
-        agencyUrl
-        result {
-          agencyName
-          agencyId
-          name
-          city
-          postalAddress
-          postalCode
-          branchId
-          openingHours
-          borrowerCheck
-          orderPolicy(pids: $pids) {
-            orderPossible
-            orderPossibleReason
-            lookUpUrl
-            lookUpUrls
-          }
-          userParameters {
-            userParameterType
-            parameterRequired
-          }
-          pickupAllowed
-          userStatusUrl
-          digitalCopyAccess
-        }
-        }
-      }
       monitor(name: "bibdknext_orderpolicy")
      }`,
     variables: { language: lang, pids },

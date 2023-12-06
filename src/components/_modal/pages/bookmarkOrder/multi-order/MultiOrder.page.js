@@ -151,6 +151,7 @@ const MultiOrder = ({ context }) => {
     return () => clearTimeout(timer);
   }, [
     materials,
+    pickupBranch,
     materialsToOrder,
     analyzeRef.current,
     context?.periodicaForms,

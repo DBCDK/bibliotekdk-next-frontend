@@ -88,19 +88,21 @@ const CheckoutForm = ({
       <LocalizationInformation
         pickupBranch={pickupBranch}
         pickupBranchUser={pickupBranchUser}
-        accessTypeInfo={accessTypeInfo}
+        accessTypeInfo={accessTypeInfo} //TODO we give neither workid nor pids, what info do we want to give here?
         isLoadingBranches={isLoadingBranches}
         isAuthenticated // always true here - we check before we enter this flow
         isDigitalCopy={false}
-        availableAsPhysicalCopy
+        availableAsPhysicalCopy={true}
         onClick={() => {
           !isLoadingBranches &&
             modal.push("pickup", {
               initial: {
                 agencies: pickupBranchUser?.agencies,
               },
-              requireDigitalAccess: accessTypeInfo?.requireDigitalAccess,
+              requireDigitalAccess: false,
               mode: LOGIN_MODE.ORDER_PHYSICAL,
+              pid: context?.materials?.[0].pid,
+              showAllBranches: true,
             });
         }}
       />

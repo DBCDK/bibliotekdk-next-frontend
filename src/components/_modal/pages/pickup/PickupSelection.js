@@ -68,7 +68,7 @@ function Row({ branch, selected, onSelect, isLoading, includeArrows, _ref }) {
   // If none found use a alternative match if any found
   const matchOthers = !matchName ? branch.highlights?.[0]?.value : null;
 
-  const disabled = !branch.pickupAllowed; //TODO wouldnt these branches be shown in ordernotpossible list/should we sort them out earlier?
+  const disabled = !branch.pickupAllowed;
 
   return (
     <List.FormLink
@@ -125,10 +125,11 @@ export default function PickupSelection(props) {
     // modal props
     context,
     modal,
+    showAllBranches = false,
   } = { ...props };
 
   // Get pid from modal context
-  const { pid, requireDigitalAccess } = context;
+  const { pid, requireDigitalAccess } = context; //TODO is it enough to only check for ONE pid? BIBDK2021-2203
 
   const loadedOrderPolicies = useRef({});
   const render = useState()[1];
@@ -159,7 +160,6 @@ export default function PickupSelection(props) {
       )) ||
     [];
 
-  //TODO: cant we show all agencies?
   const hasMoreMessage =
     allPoliciesLoaded &&
     data?.hitcount > data?.result?.length &&
@@ -173,7 +173,7 @@ export default function PickupSelection(props) {
         .map((branch) => {
           const key = `${branch.branchId}_${pid}`;
           return (
-            <PolicyLoader
+            <PolicyLoader //TODO can actually handle several pids at once! BIBDK2021-2203
               key={key}
               branch={branch}
               onLoad={(policy) => {
@@ -181,38 +181,41 @@ export default function PickupSelection(props) {
                 render({});
               }}
               pid={pid}
+              //pids=
               requireDigitalAccess={requireDigitalAccess}
             />
           );
         })}
 
-      {orderPossibleBranches.length > 0 && (
+      {(showAllBranches || orderPossibleBranches.length > 0) && (
         <List.Group
           enabled={!isLoading && isVisible}
           data-cy="list-branches"
           className={styles.orderPossibleGroup}
           disableGroupOutline
         >
-          {orderPossibleBranches.map((branch, idx) => {
-            return (
-              <Row
-                key={`${branch.branchId}-${idx}`}
-                branch={branch}
-                selected={selected}
-                onSelect={(branch) =>
-                  handleOnSelect({
-                    branch: branch,
-                    modal: modal,
-                    context: context,
-                    updateLoanerInfo: updateLoanerInfo,
-                  })
-                }
-                modal={modal}
-                isLoading={isLoading}
-                includeArrows={includeArrows}
-              />
-            );
-          })}
+          {(showAllBranches ? data?.result : orderPossibleBranches).map(
+            (branch, idx) => {
+              return (
+                <Row
+                  key={`${branch.branchId}-${idx}`}
+                  branch={branch}
+                  selected={selected}
+                  onSelect={(branch) =>
+                    handleOnSelect({
+                      branch: branch,
+                      modal: modal,
+                      context: context,
+                      updateLoanerInfo: updateLoanerInfo,
+                    })
+                  }
+                  modal={modal}
+                  isLoading={isLoading}
+                  includeArrows={includeArrows}
+                />
+              );
+            }
+          )}
         </List.Group>
       )}
       {!allPoliciesLoaded && (

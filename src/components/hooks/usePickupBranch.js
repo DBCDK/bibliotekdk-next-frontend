@@ -71,7 +71,7 @@ export default function usePickupBranch({ pids }) {
   };
 
   // Merge user and branches
-  const mergedUser = merge({}, loanerInfo, orderPolicy?.user);
+  const mergedUser = merge({}, loanerInfo, orderPolicy?.user); //TODO remove oderPolicy?.user ? seems to be empty but check all usecases
 
   const isPickupBranchLoading =
     policyIsLoading || userParamsIsLoading || branchPolicyIsLoading;
