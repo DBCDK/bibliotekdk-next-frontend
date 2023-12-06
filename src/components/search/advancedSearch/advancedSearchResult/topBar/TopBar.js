@@ -7,6 +7,7 @@ import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import isEmpty from "lodash/isEmpty";
+import { formattersAndComparitors } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
 
 /**
  *
@@ -21,39 +22,40 @@ export function FormatedQuery() {
     return <Text type="text2">{cqlFromUrl}</Text>;
   }
 
+  const fieldsearch = {
+    inputFields,
+    dropdownSearchIndices,
+  };
+
+  return FormatFieldSearchIndexes({ fieldsearch });
+}
+
+export function FormatFieldSearchIndexes({ fieldsearch }) {
   //TODO: do this in context instead
-  const filteredDropdownSearchIndices = dropdownSearchIndices.filter(
-    (dropdown) => !isEmpty(dropdown.value)
-  );
-  const filteredInputFields = inputFields.filter(
+  const filteredDropdownSearchIndices =
+    fieldsearch?.dropdownSearchIndices?.filter(
+      (dropdown) => !isEmpty(dropdown.value)
+    );
+  const filteredInputFields = fieldsearch?.inputFields?.filter(
     (field) => !isEmpty(field.value)
   );
 
   return (
     <div className={styles.formatedQueryContainer}>
-      <FormatFieldInput inputFields={filteredInputFields} />
+      <FormatFieldInput
+        inputFields={filteredInputFields}
+        showAndOperator={filteredDropdownSearchIndices?.length > 0}
+      />
       <FormatDropdowns
         dropdowns={filteredDropdownSearchIndices}
-        showAndOperator={filteredDropdownSearchIndices.length > 0}
-      />
-    </div>
-  );
-}
-
-export function FormatFieldSearchIndexes({ fieldsearch }) {
-  return (
-    <div className={styles.formatedQueryContainer}>
-      <FormatFieldInput inputFields={fieldsearch.inputFields} />
-      <FormatDropdowns
-        dropdowns={fieldsearch.dropdownSearchIndices}
-        showAndOperator={!isEmpty(fieldsearch)}
+        showAndOperator={filteredInputFields?.length > 0}
       />
     </div>
   );
 }
 
 function FormatFieldInput({ inputFields }) {
-  const mappedfields = inputFields?.map((field, index) => {
+  return inputFields?.map((field, index) => {
     const isEmpty = field?.value?.length === 0;
     if (isEmpty) {
       return null;
@@ -80,11 +82,13 @@ function FormatFieldInput({ inputFields }) {
       </>
     );
   });
-  return mappedfields;
 }
 
 function FormatDropdowns({ dropdowns, showAndOperator }) {
-  const mapped = dropdowns?.map((dropdownItem, index) => {
+  return dropdowns?.map((dropdownItem, index) => {
+    const { getPrintValue } = formattersAndComparitors(
+      dropdownItem.searchIndex
+    );
     const isLastItem = index === dropdowns.length - 1;
     const isEmpty = dropdownItem?.value?.length === 0;
 
@@ -108,7 +112,11 @@ function FormatDropdowns({ dropdowns, showAndOperator }) {
           })}
           :
         </Text>
-        <Text type="text2">{dropdownItem?.value?.join(", ")}</Text>
+        <Text type="text2">
+          {dropdownItem?.value
+            ?.map((val) => getPrintValue(val.value))
+            .join(", ")}
+        </Text>
         {!isLastItem && (
           <Text type="text2">
             {Translate({
@@ -120,7 +128,6 @@ function FormatDropdowns({ dropdowns, showAndOperator }) {
       </>
     );
   });
-  return mapped;
 }
 
 export default function TopBar() {

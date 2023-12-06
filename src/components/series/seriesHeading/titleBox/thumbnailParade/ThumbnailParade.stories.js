@@ -3,7 +3,7 @@ import ThumbnailParade from "@/components/series/seriesHeading/titleBox/thumbnai
 import automock_utils from "@/lib/automock_utils.fixture";
 
 const exportedObject = {
-  title: "AdvancedSearch/AdvancedSearchDropdown",
+  title: "AdvancedSearch/ThumbnailParade",
 };
 
 const {
@@ -17,55 +17,53 @@ const {
 export default exportedObject;
 
 export function ThumbnailParadeBase() {
-  const storyTitle = "Only checkboxes";
+  const storyTitle = "ThumbnailParadeBase";
 
-  const series = [
-    {
-      members: [
-        {
-          work: {
-            manifestations: {
-              mostRelevant: [MANIFESTATION_1],
-            },
+  const series = {
+    members: [
+      {
+        work: {
+          manifestations: {
+            mostRelevant: [MANIFESTATION_1],
           },
         },
-        {
-          work: {
-            manifestations: {
-              mostRelevant: [MANIFESTATION_2],
-            },
+      },
+      {
+        work: {
+          manifestations: {
+            mostRelevant: [MANIFESTATION_2],
           },
         },
-        {
-          work: {
-            manifestations: {
-              mostRelevant: [MANIFESTATION_3],
-            },
+      },
+      {
+        work: {
+          manifestations: {
+            mostRelevant: [MANIFESTATION_3],
           },
         },
-        {
-          work: {
-            manifestations: {
-              mostRelevant: [MANIFESTATION_4],
-            },
+      },
+      {
+        work: {
+          manifestations: {
+            mostRelevant: [MANIFESTATION_4],
           },
         },
-        {
-          work: {
-            manifestations: {
-              mostRelevant: [MANIFESTATION_5],
-            },
+      },
+      {
+        work: {
+          manifestations: {
+            mostRelevant: [MANIFESTATION_5],
           },
         },
-      ],
-    },
-  ];
+      },
+    ],
+  };
 
   return (
     <div>
-      <StoryTitle>AdvancedSearchDropdown - {storyTitle}</StoryTitle>
+      <StoryTitle>ThumbnailParade - {storyTitle}</StoryTitle>
       <StoryDescription>
-        AdvancedSearch dropdown - {storyTitle}, aka a simple test
+        ThumbnailParade - {storyTitle}, aka a simple test
       </StoryDescription>
       <ThumbnailParade series={series} seriesIsLoading={false} className={""} />
     </div>

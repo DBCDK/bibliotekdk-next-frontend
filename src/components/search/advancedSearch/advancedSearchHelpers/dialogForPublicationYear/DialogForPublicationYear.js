@@ -42,7 +42,9 @@ export function DialogForPublicationYear({ items, toggleMenuItemsState }) {
         <Close />
       </div>
       <Input
-        type="number"
+        type="text"
+        inputMode="numeric"
+        pattern="[0-9]*"
         className={styles.lowerRange}
         placeholder={"Big bang"}
         value={item?.value?.lower}
@@ -56,7 +58,9 @@ export function DialogForPublicationYear({ items, toggleMenuItemsState }) {
         }
       />
       <Input
-        type="number"
+        type="text"
+        inputMode="numeric"
+        pattern="[0-9]*"
         className={styles.upperRange}
         placeholder={`${new Date().getFullYear() + 1}`}
         value={item?.value?.upper}

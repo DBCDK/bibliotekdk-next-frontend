@@ -11,16 +11,24 @@ import Translate from "@/components/base/translate";
 import Section from "@/components/base/section";
 
 import styles from "./Related.module.css";
+import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
 
 /**
  *
  * Returns a item/word for the items/words component
  */
 function Word({ word, isLoading }) {
+  // make an object for advanced search to handle
+  const advancedSearchInput = (subject) => ({
+    value: subject,
+    prefixLogicalOperator: null,
+    searchIndex: "term.subject",
+  });
+
   return (
     <span className={styles.word}>
       <Link
-        href={`/find?q.subject=${word}`}
+        href={getAdvancedUrl({ inputField: advancedSearchInput(word) })}
         dataCy={cyKey({ name: word, prefix: "related-subject" })}
         disabled={isLoading}
         border={{ bottom: { keepVisible: true } }}
