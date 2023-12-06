@@ -35,6 +35,8 @@ import Dropdown from "react-bootstrap/Dropdown";
 import cx from "classnames";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
+const specialFormTypes = new Set([FormTypeEnum.ACTION_LINK_CONTAINER]);
+
 function getTextType(dropdownQuery, item) {
   return (
     !isEmpty(dropdownQuery) &&
@@ -140,8 +142,8 @@ export default function AdvancedSearchDropdown({
       : [...menuItemsState]),
   ];
 
-  const hasActionLinkContainer = menuItemsState.some(
-    (item) => item.formType === FormTypeEnum.ACTION_LINK_CONTAINER
+  const hasSpecialFormTypes = menuItemsState.some((item) =>
+    specialFormTypes.has(item.formType)
   );
 
   return (
@@ -164,7 +166,7 @@ export default function AdvancedSearchDropdown({
         tabIndex="-1"
       >
         {/* Search Bar - don't show if there is an ACTION_LINK_CONTAINER */}
-        {!hasActionLinkContainer && (
+        {!hasSpecialFormTypes && (
           <SearchBar
             id={inputId}
             value={dropdownQuery}
@@ -269,7 +271,7 @@ export default function AdvancedSearchDropdown({
         </List.Group>
 
         {/* Only shown when there is an ACTION_LINK_CONTAINER */}
-        {hasActionLinkContainer && (
+        {hasSpecialFormTypes && (
           <YearRange
             menuItemsState={menuItemsState}
             toggleMenuItemsState={toggleMenuItemsState}
