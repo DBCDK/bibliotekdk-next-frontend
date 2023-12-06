@@ -196,7 +196,6 @@ export default function MultiReferences({ context }) {
     const filteredManifestations = materialsMissingEdition.map((item) =>
       filteredManifestationsForMaterialType(item)
     );
-    console.log(filteredManifestations, materialsMissingEdition);
     const newPeriodicaFiltered = [];
     const newList = bookmarksMissingEdition.map((bookmark) => {
       const matchingData = filteredManifestations.find(
