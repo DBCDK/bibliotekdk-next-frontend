@@ -378,7 +378,9 @@ describe("Search", () => {
         .invoke("slice", "1")
         .each((el, idx) => {
           cy.get(el).click();
-          cy.get("[data-cy=router-pathname]").should("have.text", "/find");
+          cy.get("[data-cy=router-pathname]").contains(
+            "/avanceret?fieldsearch"
+          );
           cy.get("[data-cy=router-query]").should(
             "have.text",
             `{"q.subject":"relatedSubjects[${idx}]"}`
@@ -390,12 +392,15 @@ describe("Search", () => {
       cy.visit("/iframe.html?id=search-relatedsubjects--default");
 
       const tag = "ridning";
-      const url = `/find?q.subject=${tag}`;
 
       // Get selected tag
       cy.get(`[data-cy=related-subject-${tag}]`)
-        .should("have.attr", "target", "_self")
-        .should("have.attr", "href", url);
+        .should("have.attr", "target")
+        .and("include", "_self");
+
+      cy.get(`[data-cy=related-subject-${tag}]`)
+        .should("have.attr", "href")
+        .and("include", "/avanceret?fieldSearch");
     });
 
     // skip for now - hitcount has been disabled

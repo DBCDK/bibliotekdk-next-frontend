@@ -11,6 +11,7 @@ import Translate from "@/components/base/translate";
 import Title from "@/components/base/title/Title";
 import cx from "classnames";
 import { cyKey } from "@/utils/trim";
+import Icon from "@/components/base/icon/Icon";
 
 function HistoryItem({ item, index, checked, onSelect }) {
   const router = useRouter();
@@ -21,11 +22,11 @@ function HistoryItem({ item, index, checked, onSelect }) {
         fieldSearch: JSON.stringify(item.fieldSearch),
       };
       router.replace({
-        pathname: "avanceret/",
+        pathname: "/avanceret/",
         query: query,
       });
     } else if (item.cql) {
-      router.replace({ pathname: "avanceret/", query: { cql: item.cql } });
+      router.replace({ pathname: "/avanceret/", query: { cql: item.cql } });
     }
   };
 
@@ -73,10 +74,10 @@ function HistoryItem({ item, index, checked, onSelect }) {
 function FormatCql({ item }) {
   return (
     <>
-      <Text type="text4" className={styles.inline}>
+      <Text type="text1" className={styles.inline}>
         {Translate({ context: "search", label: "cqlsearchlabel" })}:
       </Text>
-      <Text type="text3" className={styles.inline}>
+      <Text type="text2" className={styles.inline}>
         {item.cql}
       </Text>
     </>
@@ -101,6 +102,7 @@ function HistoryHeaderActions({ setAllChecked, deleteSelected }) {
       </label>
 
       <Link
+        className={styles.flex}
         border={{ top: false, bottom: { keepVisible: true } }}
         onClick={(e) => {
           e.preventDefault();
@@ -110,6 +112,11 @@ function HistoryHeaderActions({ setAllChecked, deleteSelected }) {
         <Text type="text3">
           {Translate({ context: "bookmark", label: "remove-selected" })}
         </Text>
+        <Icon
+          src="close_grey.svg"
+          size={{ w: 2, h: 2 }}
+          className={styles.icon}
+        />
       </Link>
     </div>
   );
@@ -164,6 +171,7 @@ export function AdvancedSearchHistory() {
   /**
    * Add/remove item in list when selected/deselected
    * * @param item
+   * @param item
    * @param selected
    *  The checkbox component (components/base/forms/checkbox) returns if it has been
    *  selected or not
@@ -193,7 +201,10 @@ export function AdvancedSearchHistory() {
         data-cy="advanced-search-search-history"
         className={styles.title}
       >
-        {Translate({ context: "suggester", label: "historyTitle" })}
+        {Translate({
+          context: "search",
+          label: "advanced-search-history-latest",
+        })}
       </Title>
       <HistoryHeaderActions
         deleteSelected={onDeleteSelected}

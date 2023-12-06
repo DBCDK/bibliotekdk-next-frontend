@@ -3,10 +3,14 @@
   --elements_max_height: 500px;
   --box_shadow__dropdown: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   --border__dropdown: 1px solid var(--iron, #d6d6d7);
+
+  --bottom_sticky_last_height: var(--pt5);
 }
 
 .toggler {
   min-width: var(--elements_min_width);
+  height: var(--pt5);
+  align-items: center;
 }
 
 .dropdown_items {
@@ -21,10 +25,59 @@
   padding: 0;
 }
 
-.sticky_search_bar {
+.sticky_base_class {
   position: sticky;
-  top: 0;
   opacity: 100%;
-  background-color: var(--concrete);
   z-index: 2;
+
+  /* Small */
+  font-size: 14px;
+  line-height: 22px;
+  font-family: var(--body-font);
+  letter-spacing: 0.2px;
+
+  /* Bootstrap default override */
+  margin: 0;
+}
+
+.search_bar {
+  top: 0;
+  height: var(--pt5);
+}
+
+.search_bar i svg path {
+  fill: var(--blue);
+  stroke: var(--blue);
+}
+
+.range_bar {
+  display: flex;
+  gap: var(--pt2);
+  align-items: end;
+
+  bottom: var(--bottom_sticky_last_height);
+  background-color: var(--white);
+
+  padding-block: var(--pt2);
+  padding-inline: var(--pt2);
+}
+
+.clear_content_bar {
+  bottom: 0;
+
+  background-color: var(--concrete);
+  height: var(--bottom_sticky_last_height);
+  padding-block: var(--pt1);
+  padding-left: var(--pt2);
+}
+
+.clear_content_bar i svg path {
+  fill: var(--blue);
+  stroke: var(--blue);
+}
+
+.list_group > *:not(hr) {
+  padding-left: var(--pt1);
+  height: var(--pt5);
+  align-items: center;
 }

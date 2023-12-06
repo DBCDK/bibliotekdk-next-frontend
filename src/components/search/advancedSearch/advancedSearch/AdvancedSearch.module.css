@@ -9,11 +9,7 @@
 }
 
 .topContainer {
-  display: flex;
   margin-bottom: var(--pt4);
-
-  width: 100%;
-  align-items: center;
 }
 
 .buttonRow {

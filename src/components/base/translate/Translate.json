@@ -85,9 +85,33 @@
         "da": "Alle materialer",
         "en": "All materials"
       },
+      "publicationyear": {
+        "da": "Udgivelsesår",
+        "en": "Publication year"
+      },
+      "all_publicationyear": {
+        "da": "Alle udgivelsesår",
+        "en": "All publication years"
+      },
       "search_dropdown": {
         "da": "Søg i %s...",
         "en": "Search in %s..."
+      },
+      "this_year": {
+        "da": "I år (%s)",
+        "en": "This year (%s)"
+      },
+      "last_x_years": {
+        "da": "Seneste %s år",
+        "en": "Last %s years"
+      },
+      "to_range": {
+        "da": "Til",
+        "en": "To"
+      },
+      "from_range": {
+        "da": "Fra",
+        "en": "From"
       }
     },
     "logo": {
@@ -454,6 +478,18 @@
       "homepage": {
         "da": "hjemmeside",
         "en": "homepage"
+      },
+      "reset": {
+        "da": "Nulstil",
+        "en": "Reset"
+      },
+      "chosen": {
+        "da": "Valgte",
+        "en": "Chosen"
+      },
+      "year": {
+        "da": "Årstal",
+        "en": "Year"
       }
     },
 
@@ -1965,6 +2001,10 @@
       "advanced-dropdown-NOT": {
         "da": "IKKE",
         "en": "NOT"
+      },
+      "advanced-search-history-latest": {
+        "da": "Seneste søgninger",
+        "en": "Latest searches"
       },
       "remove": {
         "da": "Fjern",
@@ -4386,7 +4426,10 @@
         "da": "Brugeren ikke fundet",
         "en": "User not found"
       },
-
+      "ERROR_UNAUTHENTICATED_USER": {
+        "da": "Brugeren er ikke logget ind",
+        "en": "User not authenticated"
+      },
       "INVALID_ORDER": {
         "da": "Bestillingen kunne ikke valideres",
         "en": "Order does not validate"
