@@ -17,24 +17,13 @@ import useAuthentication from "@/components/hooks/user/useAuthentication";
  */
 export default function ArticleLoginPrompt({ articleId }) {
   const { loanerInfo } = useLoanerInfo();
-  const { isAuthenticated, loggedInAgencyId } = useAuthentication();
+  const { isAuthenticated } = useAuthentication();
   const modal = useModal();
   const hasInfomediaAccess = loanerInfo?.rights?.infomedia;
 
   const { data, isLoading } = useData(
     isAuthenticated && articleId && infomediaArticle({ id: articleId })
   );
-
-  // Select the loggedInBranch from users agencies list
-  let branch = {};
-  loanerInfo?.agencies?.forEach((agency) => {
-    branch = agency?.result?.find(
-      (branch) => branch.agencyId === loggedInAgencyId
-    );
-  });
-
-  // Not logged in, no access
-  const agencyName = branch?.agencyName || "";
 
   //NOT AUTHENTICATED --> Show login button and reminder that not all libraries give access to infomedia
   if (!isAuthenticated) {
@@ -64,7 +53,6 @@ export default function ArticleLoginPrompt({ articleId }) {
         title={Translate({
           context: "articles",
           label: "libraryNoAccess",
-          vars: [agencyName],
         })}
         description={Translate({
           context: "articles",
