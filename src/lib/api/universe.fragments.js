@@ -27,6 +27,9 @@ export function universes({ workId }) {
             universe {
               ...universeFragment
             }
+            universes {
+              ...universeFragment
+            }
           }
           series {
             ...seriesFragment
@@ -42,6 +45,9 @@ export function universes({ workId }) {
                   ...creatorsFragment
                 }
                 universe {
+                  ...universeFragment
+                }
+                universes {
                   ...universeFragment
                 }
               }

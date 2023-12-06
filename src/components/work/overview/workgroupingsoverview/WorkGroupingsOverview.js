@@ -19,7 +19,7 @@ import useDataForWorkRelationsWorkTypeFactory from "@/components/hooks/useDataFo
 import { useEffect, useState } from "react";
 import styles from "./WorkGroupingsOverview.module.css";
 import { dateToShortDate } from "@/utils/datetimeConverter";
-import { getElementById } from "@/lib/utils";
+import { getElementById, getSeriesUrl } from "@/lib/utils";
 
 import { linkToSeries } from "@/components/work/utils";
 
@@ -95,11 +95,7 @@ function getSeriesMap({ series, members, workId, index }) {
       description: `Del ${numberInSeries + " "} af `,
       title: series?.title,
       anchorId: getAnchor(AnchorsEnum.SERIES),
-      link: linkToSeries({
-        series: series,
-        workId: workId,
-        index: index,
-      }),
+      link: getSeriesUrl(series?.title, workId, index),
     }
   );
 }

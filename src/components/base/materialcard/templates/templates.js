@@ -6,9 +6,11 @@ import isEmpty from "lodash/isEmpty";
 import {
   extractCreatorsPrioritiseCorporation,
   getSeriesUrl,
+  getUniverseUrl,
   getWorkUrl,
 } from "@/lib/utils";
 import Text from "@/components/base/text";
+import Link from "@/components/base/link";
 import styles from "./templates.module.css";
 import { getCoverImage } from "@/components/utils/getCoverImage";
 import cx from "classnames";
@@ -133,8 +135,65 @@ export function templateForVerticalWorkCard({ material }) {
   };
 }
 
-/**Used in Universe Page for Works */
+export function templateForUniverseInfoCard({ material }) {
+  const coverImageClassName = cx(
+    styles.cover,
+    styles.cover__universe_info_card
+  );
+
+  const href = getUniverseUrl(
+    material?.title,
+    material?.workId,
+    material?.universeNumber
+  );
+
+  return {
+    link_href: href,
+    ImageElement: material?.title
+      ? () => (
+          <div className={coverImageClassName}>
+            <Text tag="span" type="text2">
+              <Link border={{ bottom: { keepVisible: true } }} href={href}>
+                {Translate({
+                  context: "universe",
+                  label: "everything_in_universe",
+                  vars: [material?.title],
+                })}
+              </Link>
+            </Text>
+          </div>
+        )
+      : null,
+    // Styling
+    elementContainerClassName: cx(
+      styles.col_flex,
+      styles.col_flex__vertical_version
+    ),
+    relatedElementClassName: cx(
+      styles.related_element,
+      styles.related_element__vertical_version
+    ),
+    textClassName: cx(styles.text),
+    coverImageClassName: cx(styles.cover, styles.cover__vertical_version),
+  };
+}
+
+export function templateForUniverseSliderWork({ material }) {
+  const classNameOverride = {
+    elementContainerClassName: cx(
+      styles.col_flex,
+      styles.col_flex__vertical_version
+    ),
+  };
+
+  return templateForUniverseWorkBase({ material, classNameOverride });
+}
+
 export function templateForUniversePageWork({ material }) {
+  return templateForUniverseWorkBase({ material });
+}
+/**Used in Universe Page for Works */
+export function templateForUniverseWorkBase({ material, classNameOverride }) {
   const fullTitle = material?.titles?.full?.join(": ");
   const creators = material?.creators;
   const firstCreator =
@@ -162,24 +221,39 @@ export function templateForUniversePageWork({ material }) {
       </>
     ),
     // Styling
-    elementContainerClassName: cx(
-      styles.col_flex,
-      styles.col_flex__universe_page_work_version
-    ),
-    relatedElementClassName: cx(
-      styles.related_element,
-      styles.related_element__universe_page_work_version
-    ),
-    textClassName: cx(styles.text),
-    coverImageClassName: cx(
-      styles.cover,
-      styles.cover__universe_page_work_version
-    ),
+    elementContainerClassName:
+      classNameOverride?.elementContainerClassName ||
+      cx(styles.col_flex, styles.col_flex__universe_page_work_version),
+    relatedElementClassName:
+      classNameOverride?.relatedElementClassName ||
+      cx(
+        styles.related_element,
+        styles.related_element__universe_page_work_version
+      ),
+    textClassName: classNameOverride?.textClassName || cx(styles.text),
+    coverImageClassName:
+      classNameOverride?.coverImageClassName ||
+      cx(styles.cover, styles.cover__universe_page_work_version),
   };
 }
 
-/**Used in Universe Page for Series */
+export function templateForUniverseSliderSeries({ material }) {
+  const classNameOverride = {
+    elementContainerClassName: cx(
+      styles.col_flex,
+      styles.col_flex__vertical_version
+    ),
+  };
+
+  return templateForUniverseSeriesBase({ material, classNameOverride });
+}
+
 export function templateForUniversePageSeries({ material }) {
+  return templateForUniverseSeriesBase({ material });
+}
+
+/**Used in Universe Page for Series */
+export function templateForUniverseSeriesBase({ material, classNameOverride }) {
   const fullTitle = material?.title;
   const firstWork = material?.members?.[0]?.work;
   const creators = firstWork?.creators;
@@ -241,16 +315,18 @@ export function templateForUniversePageSeries({ material }) {
       </>
     ),
     // Styling
-    elementContainerClassName: cx(
-      styles.col_flex,
-      styles.col_flex__universe_page_work_version
-    ),
-    relatedElementClassName: cx(
-      styles.related_element,
-      styles.related_element__universe_page_work_version
-    ),
-    textClassName: cx(styles.text),
-    coverImageClassName: coverImageClassName,
+    elementContainerClassName:
+      classNameOverride?.elementContainerClassName ||
+      cx(styles.col_flex, styles.col_flex__universe_page_work_version),
+    relatedElementClassName:
+      classNameOverride?.relatedElementClassName ||
+      cx(
+        styles.related_element,
+        styles.related_element__universe_page_work_version
+      ),
+    textClassName: classNameOverride?.textClassName || cx(styles.text),
+    coverImageClassName:
+      classNameOverride?.coverImageClassName || coverImageClassName,
   };
 }
 

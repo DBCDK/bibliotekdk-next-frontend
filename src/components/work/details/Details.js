@@ -8,6 +8,7 @@ import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 
 import * as workFragments from "@/lib/api/work.fragments";
+import * as universeFragments from "@/lib/api/universe.fragments";
 import styles from "./Details.module.css";
 import { useMemo } from "react";
 
@@ -171,12 +172,32 @@ export default function Wrap(props) {
 
   const { groupedRelations } = workRelationsWorkTypeFactory(relationData?.work);
 
+  const {
+    data: seriesData,
+    isLoading: seriesIsLoading,
+    error: seriesError,
+  } = useData(workId && workFragments.series({ workId: workId }));
+
+  const {
+    data: universesData,
+    isLoading: universesIsLoading,
+    error: universesError,
+  } = useData(workId && universeFragments.universes({ workId: workId }));
+
   const manifestations = data?.work?.manifestations?.mostRelevant;
 
   // find the selected materialType (manifestation), use first manifestation as fallback
   const manifestationByMaterialType = manifestations?.find((manifestation) => {
     return inFlatMaterialTypes(type, flattenMaterialType(manifestation));
   });
+
+  const work = {
+    ...data?.work,
+    series: seriesData?.work?.series || [],
+    seriesIsLoading: seriesIsLoading,
+    universes: universesData?.work?.universes || [],
+    universesIsLoading: universesIsLoading,
+  };
 
   // attach relations for manifestation to display
   if (manifestationByMaterialType) {
@@ -186,30 +207,37 @@ export default function Wrap(props) {
   if (
     !overViewIsLoading &&
     !relationsIsLoading &&
+    // !seriesIsLoading &&
+    // !universesIsLoading &&
     isEmpty(manifestationByMaterialType) &&
     !error &&
-    !relationsError
+    !relationsError //&&
+    // !seriesError &&
+    // !universesError
   ) {
     return <></>;
   }
 
-  if (error || relationsError) {
+  if (error || relationsError || seriesError || universesError) {
     return <></>;
   }
 
-  if (overViewIsLoading || relationsIsLoading) {
+  if (
+    overViewIsLoading ||
+    relationsIsLoading ||
+    seriesIsLoading ||
+    universesIsLoading
+  ) {
     return <DetailsSkeleton />;
   }
 
   return (
-    <>
-      <Details
-        {...props}
-        manifestation={manifestationByMaterialType}
-        work={data?.work}
-        skeleton={overViewIsLoading || relationsIsLoading}
-      />
-    </>
+    <Details
+      {...props}
+      manifestation={manifestationByMaterialType}
+      work={work}
+      skeleton={overViewIsLoading || relationsIsLoading}
+    />
   );
 }
 

@@ -209,6 +209,9 @@ export function series({ workId }) {
               universe {
                 ...universeFragment
               }
+              universes {
+                ...universeFragment
+              }
             }
             numberInSeries
             readThisFirst
@@ -247,6 +250,9 @@ export function worksInSeries({ workIds }) {
           ...creatorsFragment
         }
         universe {
+          ...universeFragment
+        }
+        universes {
           ...universeFragment
         }
         series {
