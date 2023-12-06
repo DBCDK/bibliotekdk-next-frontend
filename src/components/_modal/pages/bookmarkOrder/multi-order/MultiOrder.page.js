@@ -157,12 +157,12 @@ const MultiOrder = ({ context }) => {
     context?.periodicaForms,
   ]);
 
-  const onSubmit = async (pickupBranch) => {
+  const onSubmit = async (selectedPickupBranch) => {
     setIsCreatingOrders(true);
-    pickupBranch.current = pickupBranch;
+    pickupBranch.current = selectedPickupBranch;
     await createOrders({
       materials: materialsToOrder,
-      pickupBranch,
+      pickupBranch: selectedPickupBranch,
       loanerInfo,
       periodicaForms: context.periodicaForms,
       orderMutation,
