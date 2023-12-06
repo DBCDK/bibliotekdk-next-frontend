@@ -8,7 +8,7 @@
   padding-top: var(--pt2);
 }
 .titleStyle {
-  color: var(--primary-blue-3333-ff, #33f);
+  color: var(--blue);
 }
 
 .loadingSort {

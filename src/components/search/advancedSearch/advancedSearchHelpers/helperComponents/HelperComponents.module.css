@@ -46,3 +46,26 @@
   align-items: center;
   gap: var(--pt1);
 }
+
+.single_range {
+  display: flex;
+
+  height: var(--pt5);
+  width: var(--pt11);
+}
+
+.dash {
+  padding-bottom: var(--pt1);
+}
+
+.toggler_content {
+  display: flex;
+  gap: var(--pt075);
+}
+
+.label_count {
+  color: var(--white);
+  border: 1px solid var(--blue);
+  padding-inline: var(--pt075);
+  background-color: blue;
+}

@@ -14,6 +14,7 @@ export function getDefaultDropdownIndices() {
   return [
     { searchIndex: DropdownIndicesEnum.LANGUAGES, value: [] },
     { searchIndex: DropdownIndicesEnum.MATERIAL_TYPES_GENERAL, value: [] },
+    { searchIndex: DropdownIndicesEnum.PUBLICATION_YEAR, value: [] },
   ];
 }
 
@@ -88,6 +89,11 @@ export default function AdvancedSearchProvider({ children, router }) {
       })
   );
 
+  const stateToString = JSON.stringify({
+    inputFields,
+    dropdownSearchIndices,
+  });
+
   useEffect(() => {
     const updatedCql = convertStateToCql({
       inputFields,
@@ -125,6 +131,7 @@ export default function AdvancedSearchProvider({ children, router }) {
         setShowInfoTooltip: function,
         sort: Array.<{ index: string, order: string }>,
         workType: string
+        stateToString: string
    }} AdvancedSearchContextType */
   const value = {
     inputFields,
@@ -148,6 +155,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     setShowInfoTooltip,
     sort: sort,
     workType: workType,
+    stateToString,
   };
 
   return (

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import Skeleton from "@/components/base/skeleton";
 import cx from "classnames";
@@ -29,12 +29,17 @@ export function Checkbox({
   required,
 }) {
   const [status, setStatus] = useState(checked);
+  const firstUpdate = useRef(true);
 
   useEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
     onChange && onChange(status);
   }, [status]);
 
-  // Update value if undefined/null at first render
+  //Update value if undefined/null at first render
   useEffect(() => {
     setStatus(checked);
   }, [checked]);

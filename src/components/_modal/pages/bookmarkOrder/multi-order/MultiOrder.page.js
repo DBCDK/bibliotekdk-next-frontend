@@ -32,12 +32,12 @@ const createOrders = async ({
               material?.manifestations?.mostRelevant,
               material?.materialType
             ).map((mani) => mani.pid);
-        const periodicaForm = periodicaForms?.[material.key];
-
+        const periodicaFormForMaterial = periodicaForms?.[material.key];
+        const mergedFormData = { ...periodicaFormForMaterial, pid: pids[0] };
         return {
           pids,
           key: material.key,
-          ...periodicaForm,
+          periodicaForm: periodicaFormForMaterial ? mergedFormData : undefined,
         };
       }),
       branchId: pickupBranch.branchId,
