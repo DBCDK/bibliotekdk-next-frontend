@@ -206,9 +206,6 @@ export function series({ workId }) {
               creators {
                 ...creatorsFragment
               }
-              universe {
-                ...universeFragment
-              }
               universes {
                 ...universeFragment
               }
@@ -248,9 +245,6 @@ export function worksInSeries({ workIds }) {
         ...workSliderFragment
         creators {
           ...creatorsFragment
-        }
-        universe {
-          ...universeFragment
         }
         universes {
           ...universeFragment

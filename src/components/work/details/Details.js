@@ -207,13 +207,9 @@ export default function Wrap(props) {
   if (
     !overViewIsLoading &&
     !relationsIsLoading &&
-    // !seriesIsLoading &&
-    // !universesIsLoading &&
     isEmpty(manifestationByMaterialType) &&
     !error &&
-    !relationsError //&&
-    // !seriesError &&
-    // !universesError
+    !relationsError
   ) {
     return <></>;
   }
