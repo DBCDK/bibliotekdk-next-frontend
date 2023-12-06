@@ -29,19 +29,19 @@ function Item({ data, work, isLoading }) {
   const isType = getReviewType(data);
   const isMaterialReview = isType === "isMaterialReview";
 
-  const hasDate = getDate(data);
-  const hasRating = data.review?.rating;
-  const hasCreator = data.creators?.map(({ display }) => display).join(", ");
-  const hasPublisher = getPublisher(data);
-  const hasContent = getContent(data);
-  const hasUrls = getUrls(data, work) || [];
+  const date = getDate(data);
+  const rating = data.review?.rating;
+  const creator = data.creators?.map(({ display }) => display).join(", ");
+  const publisher = getPublisher(data);
+  const content = getContent(data);
+  const urls = getUrls(data, work) || [];
 
   const typeClass = styles[isType];
   // const hasDateClass = !!hasDate ? styles.hasDate : "";
-  const hasRatingClass = !!hasRating ? styles.hasRating : "";
-  const hasCreatorClass = !!hasCreator ? styles.hasCreator : "";
+  const hasRatingClass = !!rating ? styles.hasRating : "";
+  const hasCreatorClass = !!creator ? styles.hasCreator : "";
   // const hasPublisherClass = !!hasPublisher ? styles.hasPublisher : "";
-  const hasContentClass = !!hasContent.length ? styles.hasContent : "";
+  const hasContentClass = !!content.length ? styles.hasContent : "";
   // const hasUrlClass = !!hasUrls.length ? styles.hasUrl : "";
 
   const isLoadingClass = isLoading ? styles.skeleton : "";
@@ -59,9 +59,9 @@ function Item({ data, work, isLoading }) {
 
   return (
     <Col
-      xs={!!hasContent.length ? 10 : 8}
-      sm={!!hasContent.length ? 10 : 6}
-      md={!!hasContent.length ? 9 : 4}
+      xs={!!content.length ? 10 : 8}
+      sm={!!content.length ? 10 : 6}
+      md={!!content.length ? 9 : 4}
       data-cy={`review-item-${isType}`}
       className={`${styles.item} ${classNames}`}
       as="article"
@@ -69,24 +69,24 @@ function Item({ data, work, isLoading }) {
       <figure className={styles.wrap}>
         <figcaption className={styles.details}>
           <div>
-            {hasPublisher && (
+            {publisher && (
               <Title
                 type="title5"
                 className={styles.publisher}
                 skeleton={isLoading}
                 tag="h3"
               >
-                {hasPublisher}
+                {publisher}
               </Title>
             )}
-            {hasDate && (
+            {date && (
               <Text
                 type="text2"
                 className={styles.date}
                 lines={1}
                 skeleton={isLoading}
               >
-                {hasDate}
+                {date}
               </Text>
             )}
           </div>
@@ -96,13 +96,13 @@ function Item({ data, work, isLoading }) {
             </Text>
 
             <div>
-              {hasCreator && (
+              {creator && (
                 <div>
                   <Text type="text3" className={styles.by} skeleton={isLoading}>
                     {Translate({ context: "general", label: "by" })}
                   </Text>
                   <Text type="text2" skeleton={isLoading} lines={1}>
-                    {hasCreator}
+                    {creator}
                   </Text>
                 </div>
               )}
@@ -113,12 +113,12 @@ function Item({ data, work, isLoading }) {
                 skeleton={isLoading}
                 lines={1}
               >
-                {hasDate}
+                {date}
               </Text>
 
-              {hasRating && (
+              {rating && (
                 <Rating
-                  rating={hasRating}
+                  rating={rating}
                   skeleton={isLoading}
                   className={styles.rating}
                 />
@@ -134,7 +134,7 @@ function Item({ data, work, isLoading }) {
             clamp={true}
             skeleton={isLoading}
           >
-            {hasContent.map((content, i) => {
+            {content.map((content, i) => {
               return (
                 <p key={`content-${i}`}>
                   {isMaterialReview ? contentParser(content) : content}
@@ -144,7 +144,7 @@ function Item({ data, work, isLoading }) {
           </Title>
 
           <div className={styles.links}>
-            {hasUrls.map((url) => {
+            {urls.map((url) => {
               // general link text
               const shouldUseAlternateText = url?.includes("https://moreinfo");
               const reviewLinkLabel = Translate({
@@ -177,9 +177,7 @@ function Item({ data, work, isLoading }) {
                       }
                       disabled={isLoading || !url}
                       border={{ top: false, bottom: { keepVisible: true } }}
-                      aria-label={
-                        hasPublisher + ", " + hasCreator + ", " + hasDate
-                      }
+                      aria-label={publisher + ", " + creator + ", " + date}
                     >
                       <Text
                         type="text2"
