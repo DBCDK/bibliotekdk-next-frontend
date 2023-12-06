@@ -192,6 +192,7 @@ export function templateForUniverseSliderWork({ material }) {
 export function templateForUniversePageWork({ material }) {
   return templateForUniverseWorkBase({ material });
 }
+
 /**Used in Universe Page for Works */
 export function templateForUniverseWorkBase({ material, classNameOverride }) {
   const fullTitle = material?.titles?.full?.join(": ");
