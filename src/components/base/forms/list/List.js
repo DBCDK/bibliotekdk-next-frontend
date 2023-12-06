@@ -31,7 +31,6 @@ import { getFirstMatch } from "@/lib/utils";
 function Radio({
   children,
   disabled,
-  label,
   onSelect,
   selected,
   _ref,
@@ -81,7 +80,6 @@ function Radio({
 Radio.propTypes = {
   disabled: PropTypes.bool,
   className: PropTypes.string,
-  label: PropTypes.string,
   onSelect: PropTypes.func,
   selected: PropTypes.bool,
   _ref: PropTypes.func,

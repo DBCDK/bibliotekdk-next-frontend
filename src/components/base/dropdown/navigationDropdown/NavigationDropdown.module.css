@@ -42,7 +42,7 @@
   border: 1px solid var(--gray);
   background-color: var(--white);
 }
-.menu:not(.menuActive) {
+.menuClosed {
   border: 0;
 }
 

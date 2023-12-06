@@ -188,7 +188,7 @@ function LinkDropdown({ context, menuItems }) {
         role="menu"
         aria-labelledby={uniqueIdMenu}
         className={cx(styles.menu, {
-          [styles.menuActive]: expandMenu,
+          [styles.menuClosed]: !expandMenu,
         })}
         data-cy="mobile-menu"
       >
