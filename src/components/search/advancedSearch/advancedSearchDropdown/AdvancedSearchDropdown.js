@@ -140,6 +140,10 @@ export default function AdvancedSearchDropdown({
       : [...menuItemsState]),
   ];
 
+  const hasActionLinkContainer = menuItemsState.some(
+    (item) => item.formType === FormTypeEnum.ACTION_LINK_CONTAINER
+  );
+
   return (
     <Dropdown className={styles.nav_element}>
       <Toggler
@@ -159,15 +163,17 @@ export default function AdvancedSearchDropdown({
         className={styles.dropdown_items}
         tabIndex="-1"
       >
-        {/* Search Bar */}
-        <SearchBar
-          id={inputId}
-          value={dropdownQuery}
-          indexTitle={indexTitle}
-          onChange={(e) => setDropdownQuery(() => e.target.value)}
-          onKeyDown={handleKeyDown}
-          className={cx(styles.sticky_base_class, styles.search_bar)}
-        />
+        {/* Search Bar - don't show if there is an ACTION_LINK_CONTAINER */}
+        {!hasActionLinkContainer && (
+          <SearchBar
+            id={inputId}
+            value={dropdownQuery}
+            indexTitle={indexTitle}
+            onChange={(e) => setDropdownQuery(() => e.target.value)}
+            onKeyDown={handleKeyDown}
+            className={cx(styles.sticky_base_class, styles.search_bar)}
+          />
+        )}
 
         <List.Group
           id={listGroupId}
@@ -263,11 +269,13 @@ export default function AdvancedSearchDropdown({
         </List.Group>
 
         {/* Only shown when there is an ACTION_LINK_CONTAINER */}
-        <YearRange
-          menuItemsState={menuItemsState}
-          toggleMenuItemsState={toggleMenuItemsState}
-          className={cx(styles.sticky_base_class, styles.range_bar)}
-        />
+        {hasActionLinkContainer && (
+          <YearRange
+            menuItemsState={menuItemsState}
+            toggleMenuItemsState={toggleMenuItemsState}
+            className={cx(styles.sticky_base_class, styles.range_bar)}
+          />
+        )}
 
         <ClearBar
           onClick={() =>
