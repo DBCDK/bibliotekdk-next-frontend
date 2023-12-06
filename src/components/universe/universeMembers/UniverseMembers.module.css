@@ -51,3 +51,7 @@
     width: 88.88%;
   }
 }
+
+.section_flex > *:last-child {
+  box-shadow: none;
+}
