@@ -87,11 +87,16 @@ function Order({
     hasAlreadyBeenOrdered
   );
 
-  //always show acutal value of duplicate order warning again of hasAlreaydBeenOrdered, when we open modal.
+  //show acutal value of hasAlreaydBeenOrdered, when we open modal
+  // UNLESS we came back from "pickup" model, where we pick pickup branch
   useEffect(() => {
     if (!modal || isEmpty(modal)) return;
     const orderModalIdx = modal?.index("order");
-    if (modal?.index("order") > -1 && modal.stack[orderModalIdx].active) {
+    if (
+      modal?.index("order") > -1 &&
+      modal?.index("pickup") === -1 &&
+      modal.stack[orderModalIdx].active
+    ) {
       setShowAlreadyOrdered(hasAlreadyBeenOrdered);
     }
   }, [stringify(modal?.stack)]);
