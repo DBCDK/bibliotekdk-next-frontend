@@ -2434,6 +2434,10 @@
         "da": "Øvrige",
         "en": "Other"
       },
+      "label-uncategorised": {
+        "da": "Uden for kategori",
+        "en": "Outside categories"
+      },
       "facets-group-label": {
         "da": "Liste med filtre",
         "en": "List with filters"

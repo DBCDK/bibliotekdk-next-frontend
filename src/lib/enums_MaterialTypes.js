@@ -167,7 +167,10 @@ export const MaterialTypeOrderEnum = Object.freeze({
   },
 });
 
-export const workTypesOrder = Object.keys(MaterialTypeOrderEnum);
+export const workTypesOrder = Object.keys({
+  ...MaterialTypeOrderEnum,
+  UNCATEGORISED: {},
+});
 
 export function prioritiseByWorkType(a, b, workTypes) {
   const indexA = workTypes.findIndex((workType) => a[0] === workType);
