@@ -88,7 +88,7 @@ const CheckoutForm = ({
       <LocalizationInformation
         pickupBranch={pickupBranch}
         pickupBranchUser={pickupBranchUser}
-        accessTypeInfo={accessTypeInfo} //TODO we give neither workid nor pids, what info do we want to give here?
+        accessTypeInfo={accessTypeInfo}
         isLoadingBranches={isLoadingBranches}
         isAuthenticated // always true here - we check before we enter this flow
         isDigitalCopy={false}

@@ -87,8 +87,8 @@ function Order({
     hasAlreadyBeenOrdered
   );
 
-  //show acutal value of hasAlreaydBeenOrdered, when we open modal
-  // UNLESS we came back from "pickup" model, where we pick pickup branch
+  //set hasAlreaydBeenOrdered back to value stored in browser, when we open modal
+  //UNLESS we came back from "pickup" model, where we pick pickup branch
   useEffect(() => {
     if (!modal || isEmpty(modal)) return;
     const orderModalIdx = modal?.index("order");
