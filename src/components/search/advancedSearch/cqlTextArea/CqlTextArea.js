@@ -5,29 +5,19 @@ import React, { useEffect, useState } from "react";
 import { cyKey } from "@/utils/trim";
 import Text from "@/components/base/text";
 
-import { useRouter } from "next/router";
 import translate from "@/components/base/translate";
 import CqlErrorMessage from "@/components/search/advancedSearch/cqlErrorMessage/CqlErrorMessage";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
 export function CqlTextArea({ textAreaRef, doAdvancedSearch }) {
-  const router = useRouter();
-  const defaultCql = router?.query?.cql || "term.title=(harry AND potter)";
-  const { parsedCQL } = useAdvancedSearchContext();
-  const [cqlValue, setCqlValue] = useState(defaultCql);
-
-  useEffect(() => {
-    if (parsedCQL) {
-      setCqlValue(parsedCQL);
-    }
-  }, [parsedCQL]);
+  const { parsedCQL, setParsedCQL } = useAdvancedSearchContext();
 
   useEffect(() => {
     if (textAreaRef?.current) {
       textAreaRef.current.style.height = 0;
       textAreaRef.current.style.height = `${textAreaRef?.current?.scrollHeight}px`;
     }
-  }, [cqlValue]);
+  }, [parsedCQL]);
 
   return (
     <div>
@@ -45,10 +35,8 @@ export function CqlTextArea({ textAreaRef, doAdvancedSearch }) {
           prefix: "advanced-search",
         })}
         id="cqlTextArea"
-        value={cqlValue}
-        onChange={(event) => {
-          setCqlValue(event.target.value);
-        }}
+        defaultValue={parsedCQL}
+        onChange={(event) => setParsedCQL(event.target.value)}
         onKeyDown={(e) => {
           if (e.key === "Enter" && e.ctrlKey === true) {
             e.preventDefault();
