@@ -90,6 +90,7 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
               onChange={(e) => handleInputFieldChange(index, e.target.value)}
               placeholder={fieldValue.placeholder}
               overrideValueControl={true}
+              // onKeyDown overrides suggesters onKeyDown, and we don't want that
               onKeyPress={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
