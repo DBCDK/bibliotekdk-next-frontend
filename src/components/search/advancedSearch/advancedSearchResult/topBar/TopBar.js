@@ -3,7 +3,7 @@ import styles from "./TopBar.module.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Link, { LinkOnlyInternalAnimations } from "@/components/base/link";
+import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import isEmpty from "lodash/isEmpty";
