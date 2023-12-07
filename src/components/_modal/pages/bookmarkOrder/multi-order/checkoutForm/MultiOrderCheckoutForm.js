@@ -26,7 +26,6 @@ const CheckoutForm = ({
     materialsNotAllowed,
     materialsMissingAction,
     isAnalyzed,
-    duplicateOrders,
   } = materialCounts;
   const modal = useModal();
   const disabled =
@@ -75,13 +74,6 @@ const CheckoutForm = ({
       ".modal_page.page-current .page_content"
     )[0];
 
-    console.log("CNTS ", context.materials);
-    console.log(
-      "duplicateBookmarkIds",
-      context.materials.find(
-        (mat) => mat.bookmarkId === duplicateBookmarkIds?.[0]
-      ).materialId //or workid?
-    );
     const scrollToId = context?.materials?.find(
       (mat) => mat.bookmarkId === duplicateBookmarkIds?.[0]
     )?.materialId;
