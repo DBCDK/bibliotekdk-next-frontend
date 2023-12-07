@@ -30,6 +30,8 @@ function HistoryItem({ item, index, checked, onSelect }) {
     }
   };
 
+  console.log(checked, "ITEMCHECKED");
+
   return (
     <div
       className={cx(styles.row, styles.grid)}
@@ -42,6 +44,7 @@ function HistoryItem({ item, index, checked, onSelect }) {
         id={`select-item-${index}`}
         tabIndex="-1"
         onChange={(e) => {
+          console.log("ONCHENAGE");
           onSelect(item, e);
         }}
         checked={checked}
@@ -162,10 +165,15 @@ export function AdvancedSearchHistory() {
    * Delete selected entries in search history
    */
   const onDeleteSelected = () => {
+    // console.log(checkboxList, "CHECKLISTS");
+
     checkboxList.forEach((check) => {
       const historyItem = storedValue.find((stored) => stored.cql === check);
       historyItem && deleteValue(historyItem);
     });
+
+    console.log(typeof storedValue, storedValue, "STORED");
+    console.log(checkboxList, "CHECKLISTS");
   };
 
   /**
@@ -212,6 +220,8 @@ export function AdvancedSearchHistory() {
       />
       <HistoryHeader />
       {storedValue?.map((item, index) => {
+        console.log(item, "ITEM");
+
         return (
           <div key={index}>
             <HistoryItem
@@ -219,7 +229,10 @@ export function AdvancedSearchHistory() {
               item={item}
               index={index}
               checked={
-                checkboxList.findIndex((check) => check === item.cql) !== -1
+                checkboxList.findIndex((check) => {
+                  console.log(check, "CHECK");
+                  return check === item.cql;
+                }) !== -1
               }
               deleteSelected={onDeleteSelected}
               onSelect={onSelect}
