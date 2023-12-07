@@ -61,9 +61,7 @@ let errorCount = 0;
  * @returns {SpecificDisplayArray}
  */
 export function formatMaterialTypesFromUrl(materialTypesUrl) {
-  if (!materialTypesUrl || materialTypesUrl === "") return [];
-  const splitMaterialTypes = materialTypesUrl.split(" / ");
-  return splitMaterialTypes.map((type) => type.toLowerCase());
+  return materialTypesUrl !== "" ? materialTypesUrl?.split(" / ") : [];
 }
 
 /**
