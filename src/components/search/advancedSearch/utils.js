@@ -48,10 +48,6 @@ function getDropdownQuery(dropdownSearchIndices) {
   );
 }
 
-/**
- * converts state to a string that is more human readable than cql
- */
-
 export function convertStateToCql({ inputFields, dropdownSearchIndices } = {}) {
   if (!Array.isArray(inputFields) || inputFields.length === 0) {
     return "";
