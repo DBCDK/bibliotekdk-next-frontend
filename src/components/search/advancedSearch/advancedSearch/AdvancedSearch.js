@@ -51,7 +51,10 @@ export default function AdvancedSearch() {
   const doAdvancedSearch = () => {
     if (showCqlEditor) {
       //do cql text search
-      const cql = textAreaRef.current.value;
+      const divValue = textAreaRef.current.innerText;
+
+      console.log('divValue',divValue)
+      const cql = divValue;//textAreaRef.current.dataset.value;
 
       if (isEmpty(cql)) {
         textAreaRef.current.focus();

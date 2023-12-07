@@ -10,6 +10,7 @@
   border-radius: 0;
   -webkit-appearance: none;
   resize: both;
+  background-color: var(--white);
 }
 
 .input:focus {
@@ -21,3 +22,6 @@
   display: block;
   margin-bottom: var(--pt2);
 }
+
+
+

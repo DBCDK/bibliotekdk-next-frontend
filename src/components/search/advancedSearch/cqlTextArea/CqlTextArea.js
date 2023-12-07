@@ -30,6 +30,33 @@ export function CqlTextArea({ textAreaRef, doAdvancedSearch }) {
           {translate({ context: "search", label: "cqlsearchlabel" })}
         </Text>
       </label>
+
+      <div
+        role="textbox"
+        contenteditable="true"
+        aria-multiline="true"
+        aria-labelledby="txtboxMultilineLabel"
+        aria-required="true"
+        minRows={2}
+        className={styles.input}
+        defaultValue={defaultCql}
+        ref={textAreaRef}
+        data-cy={cyKey({
+          name: "cqlTxt",
+          prefix: "advanced-search",
+        })}
+        id="cqlTextArea"
+        value={cqlValue}
+        onChange={(event) => setCqlValue(event.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && e.ctrlKey === true) {
+            e.preventDefault();
+            doAdvancedSearch();
+          }
+        }}
+      ></div>
+
+      {/* 
       <TextareaAutosize
         minRows={2}
         className={styles.input}
@@ -48,7 +75,7 @@ export function CqlTextArea({ textAreaRef, doAdvancedSearch }) {
             doAdvancedSearch();
           }
         }}
-      />
+      /> */}
 
       <CqlErrorMessage cql={textAreaRef?.current?.value} />
     </div>
