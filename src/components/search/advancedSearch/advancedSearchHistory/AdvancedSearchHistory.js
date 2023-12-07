@@ -165,15 +165,10 @@ export function AdvancedSearchHistory() {
    * Delete selected entries in search history
    */
   const onDeleteSelected = () => {
-    // console.log(checkboxList, "CHECKLISTS");
-
     checkboxList.forEach((check) => {
       const historyItem = storedValue.find((stored) => stored.cql === check);
       historyItem && deleteValue(historyItem);
     });
-
-    console.log(typeof storedValue, storedValue, "STORED");
-    console.log(checkboxList, "CHECKLISTS");
   };
 
   /**
@@ -220,10 +215,8 @@ export function AdvancedSearchHistory() {
       />
       <HistoryHeader />
       {storedValue?.map((item, index) => {
-        console.log(item, "ITEM");
-
         return (
-          <div key={index}>
+          <div key={item.cql}>
             <HistoryItem
               // checkboxList={checkboxList}
               item={item}
