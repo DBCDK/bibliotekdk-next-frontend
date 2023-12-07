@@ -1,6 +1,6 @@
 import styles from "./CqlTextArea.module.css";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import { cyKey } from "@/utils/trim";
 import Text from "@/components/base/text";
