@@ -10,6 +10,8 @@
   border-radius: 0;
   -webkit-appearance: none;
   resize: both;
+  /*So it has height of two rows*/
+  min-height: 84px;
 }
 
 .input:focus {
