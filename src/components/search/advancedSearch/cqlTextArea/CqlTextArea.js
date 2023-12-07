@@ -22,6 +22,13 @@ export function CqlTextArea({ textAreaRef, doAdvancedSearch }) {
     }
   }, [parsedCQL]);
 
+  useEffect(() => {
+    if (textAreaRef?.current) {
+      textAreaRef.current.style.height = 0;
+      textAreaRef.current.style.height = `${textAreaRef?.current?.scrollHeight}px`;
+    }
+  }, [cqlValue]);
+
   return (
     <div>
       <label className={styles.label}>
@@ -30,9 +37,8 @@ export function CqlTextArea({ textAreaRef, doAdvancedSearch }) {
         </Text>
       </label>
       <textarea
+        minLength={2}
         className={styles.input}
-        rows="4"
-        defaultValue={defaultCql}
         ref={textAreaRef}
         data-cy={cyKey({
           name: "cqlTxt",

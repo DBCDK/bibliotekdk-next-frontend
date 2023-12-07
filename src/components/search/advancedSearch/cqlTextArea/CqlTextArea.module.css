@@ -6,11 +6,12 @@
   font-family: var(--body-font);
   margin-bottom: var(--pt2);
   width: 100%;
-  max-width: 100%;
   /* remove border-radius on iphone */
   border-radius: 0;
   -webkit-appearance: none;
   resize: both;
+  /*So it has height of two rows*/
+  min-height: 84px;
 }
 
 .input:focus {
