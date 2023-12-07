@@ -30,8 +30,6 @@ function HistoryItem({ item, index, checked, onSelect }) {
     }
   };
 
-  console.log(checked, "ITEMCHECKED");
-
   return (
     <div
       className={cx(styles.row, styles.grid)}
@@ -44,7 +42,6 @@ function HistoryItem({ item, index, checked, onSelect }) {
         id={`select-item-${index}`}
         tabIndex="-1"
         onChange={(e) => {
-          console.log("ONCHENAGE");
           onSelect(item, e);
         }}
         checked={checked}
@@ -218,14 +215,10 @@ export function AdvancedSearchHistory() {
         return (
           <div key={item.cql}>
             <HistoryItem
-              // checkboxList={checkboxList}
               item={item}
               index={index}
               checked={
-                checkboxList.findIndex((check) => {
-                  console.log(check, "CHECK");
-                  return check === item.cql;
-                }) !== -1
+                checkboxList.findIndex((check) => check === item.cql) !== -1
               }
               deleteSelected={onDeleteSelected}
               onSelect={onSelect}
