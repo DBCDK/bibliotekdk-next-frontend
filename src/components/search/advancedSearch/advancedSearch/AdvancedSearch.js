@@ -51,7 +51,7 @@ export default function AdvancedSearch() {
   const doAdvancedSearch = () => {
     if (showCqlEditor) {
       //do cql text search
-      const cql =  textAreaRef.current.innerText;
+      const cql = textAreaRef.current.innerText;
 
       if (isEmpty(cql)) {
         textAreaRef.current.focus();

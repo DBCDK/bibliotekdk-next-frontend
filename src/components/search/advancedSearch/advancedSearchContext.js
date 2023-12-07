@@ -9,7 +9,6 @@ import { DropdownIndicesEnum } from "@/components/search/advancedSearch/useDefau
 import { convertStateToCql } from "@/components/search/advancedSearch/utils";
 import { useInputFields } from "@/components/search/advancedSearch/useInputFields";
 import { useDropdownSearchIndices } from "@/components/search/advancedSearch/useDropdownSearchIndices";
-import { isEmpty } from "lodash";
 
 export function getDefaultDropdownIndices() {
   return [
@@ -90,15 +89,9 @@ export default function AdvancedSearchProvider({ children, router }) {
       })
   );
 
-  const cleanInputFields = inputFields.filter((el)=>!isEmpty(el.value))
-  const cleanDropdowns = dropdownSearchIndices.filter((el)=>!isEmpty(el.value))
-
-  console.log('cleanInputFields',cleanInputFields)
-  console.log('cleanDropdowns',cleanDropdowns)
-
   const stateToString = JSON.stringify({
-    inputFields:cleanInputFields,
-    dropdownSearchIndices:cleanDropdowns,
+    inputFields,
+    dropdownSearchIndices,
   });
 
   useEffect(() => {
