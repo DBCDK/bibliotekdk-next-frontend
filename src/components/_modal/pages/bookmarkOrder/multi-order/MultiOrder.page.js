@@ -21,6 +21,7 @@ const createOrders = async ({
   periodicaForms,
   orderMutation,
 }) => {
+  console.log("SUBMITMULTIpleORDERS", pickupBranch.branchId);
   await orderMutation.post(
     orderMutations.submitMultipleOrders({
       materialsToOrder: materials.map((material) => {
@@ -81,7 +82,16 @@ const MultiOrder = ({ context }) => {
         branchName: pickupBranch.current?.name,
       });
     }
-  }, [orderMutation?.data]);
+
+    if (orderMutation.error) {
+      setIsCreatingOrders(false);
+      modal.push("multireceipt", {
+        failedMaterials: materialsToOrder,
+        successMaterials: [],
+        branchName: pickupBranch.current?.name,
+      });
+    }
+  }, [orderMutation?.isLoading]);
 
   useEffect(() => {
     if (!analyzeRef || !analyzeRef.current) return;
