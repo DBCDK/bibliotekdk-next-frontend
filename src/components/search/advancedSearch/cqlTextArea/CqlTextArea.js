@@ -16,7 +16,6 @@ export function CqlTextArea({ textAreaRef, doAdvancedSearch }) {
   const { parsedCQL } = useAdvancedSearchContext();
   const [cqlValue, setCqlValue] = useState(defaultCql);
 
-
   useEffect(() => {
     if (parsedCQL) {
       setCqlValue(parsedCQL);
@@ -25,8 +24,8 @@ export function CqlTextArea({ textAreaRef, doAdvancedSearch }) {
 
   useEffect(() => {
     if (textAreaRef?.current) {
-        textAreaRef.current.style.height = 0;
-        textAreaRef.current.style.height = `${textAreaRef?.current?.scrollHeight}px`;
+      textAreaRef.current.style.height = 0;
+      textAreaRef.current.style.height = `${textAreaRef?.current?.scrollHeight}px`;
     }
   }, [cqlValue]);
 
