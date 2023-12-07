@@ -19,7 +19,7 @@ function parseErrorMessage(errorMessage) {
 }
 
 export function CqlErrorMessage(errormessage) {
-  console.log('errorMessage',errormessage)
+  //console.log('errorMessage',errormessage)
   if (!errormessage) {
   //if (isEmpty(errormessage)) {
     return null;
@@ -43,9 +43,9 @@ export function CqlErrorMessage(errormessage) {
 }
 
 export default function Wrap({ cql }) {
-  if(isEmpty(cql)){
-    return null;
-  }
+  // if(isEmpty(cql)){
+  //   return null;
+  // }
   const bigResponse = useData(doComplexSearchAll({ cql, offset: 0, limit: 1 }));
   return CqlErrorMessage(bigResponse?.data?.complexSearch?.errorMessage);
 }
