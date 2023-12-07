@@ -29,6 +29,7 @@
 .buttonContainer {
   display: flex;
   justify-content: space-between;
+  align-items: end;
 }
 
 .helpLink {
