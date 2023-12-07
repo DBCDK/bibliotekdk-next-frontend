@@ -117,7 +117,6 @@
     "react-dom": "^18.2.0",
     "react-focus-lock": "^2.9.6",
     "react-intersection-observer": "^8.32.0",
-    "react-textarea-autosize": "^8.5.3",
     "sass": "^1.54.5",
     "smoothscroll-polyfill": "^0.4.4",
     "swr": "^2.2.4",
