@@ -66,7 +66,7 @@ export default function AdvancedSearch() {
         router.push({ pathname: "/avanceret", query });
       }
     } else {
-      const query = { fieldSearch: stateToString };	
+      const query = { fieldSearch: stateToString };
       router.push({ pathname: "/avanceret", query });
       //save in state
       const cql = convertStateToCql({ inputFields, dropdownSearchIndices });
