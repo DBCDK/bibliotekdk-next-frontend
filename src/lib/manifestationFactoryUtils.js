@@ -67,10 +67,14 @@ export function formatMaterialTypesFromUrl(materialTypesUrl) {
 /**
  * Format to url from array
  * @example formatMaterialTypesToUrl(["fisk", "hest"]) => "fisk / hest"
- * @param {MaterialTypesArray|SpecificDisplayArray} materialTypeArray
+ * @param {MaterialTypesArray|SpecificDisplayArray|string} materialTypeArray
  * @returns {string}
  */
 export function formatMaterialTypesToUrl(materialTypeArray) {
+  if (!Array.isArray(materialTypeArray)) {
+    return materialTypeArray;
+  }
+
   return materialTypeArray
     ?.map((mat) => (typeof mat === "string" ? mat : mat?.specificDisplay))
     .join(" / ");
