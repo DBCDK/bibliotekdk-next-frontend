@@ -66,7 +66,9 @@ export default function AdvancedSearch() {
         router.push({ pathname: "/avanceret", query });
       }
     } else {
-      const query = !isEmpty(stateToString)?  { fieldSearch: stateToString } : null;
+      const query = !isEmpty(stateToString)
+        ? { fieldSearch: stateToString }
+        : null;
 
       router.push({ pathname: "/avanceret", query });
       //save in state
