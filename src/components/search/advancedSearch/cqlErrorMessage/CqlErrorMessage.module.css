@@ -1,6 +1,14 @@
 .errorWrapper {
-  border: 1px solid purple;
-  margin-bottom: var(--pt2);
+  padding: 0 var(--pt1) 0 0;
+}
+
+.syntaxContainer {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.action {
+  cursor: pointer;
 }
 
 .errorFull {
