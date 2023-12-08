@@ -5,7 +5,6 @@ import styles from "./CqlErrorMessage.module.css";
 import Icon from "@/components/base/icon/Icon";
 import { useState } from "react";
 import isEmpty from "lodash/isEmpty";
-import { symbol } from "prop-types";
 
 function parseErrorMessage(errorMessage) {
   if (isEmpty(errorMessage)) {
