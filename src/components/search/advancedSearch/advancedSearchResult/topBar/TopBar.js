@@ -135,7 +135,11 @@ export default function TopBar() {
   return (
     <div className={styles.container}>
       <Container fluid>
-        <Row>
+        <Row
+          onClick={() => {
+            setShowPopover(true);
+          }}
+        >
           <Col xs={12} lg={2}>
             <Text type="text1">
               {Translate({ context: "search", label: "yourSearch" })}
@@ -145,7 +149,7 @@ export default function TopBar() {
             <FormatedQuery />
           </Col>
 
-          <Col xs={12} lg={2}>
+          <Col xs={12} lg={2} className={styles.edit_search}>
             <Link
               onClick={() => {
                 setShowPopover(true);

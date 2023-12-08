@@ -82,15 +82,14 @@ export default function AdvancedSearch() {
     <div className={styles.background}>
       <Container fluid className={styles.container}>
         <Row className={styles.topContainer}>
-          <Col md={{ offset: 3, span: 5 }} sm={12}>
+          <Col md={{ offset: 3, span: 4 }} sm={12}>
             <Title type="title3">
               {Translate({ context: "search", label: "advancedSearch" })}
             </Title>
           </Col>
-          <Col md={4} sm={12} className={styles.buttonContainer}>
-            <div>
+          <Col md={3} sm={12} className={styles.buttonContainer}>
+            <Text type="text3" tag="span">
               <Link
-                style={{ marginRight: "32px" }}
                 onClick={() => {
                   setShowCqlEditor(!showCqlEditor);
                 }}
@@ -101,16 +100,14 @@ export default function AdvancedSearch() {
                   },
                 }}
               >
-                <Text type="text3" tag="span">
-                  {Translate({
-                    context: "search",
-                    label: showCqlEditor
-                      ? "showInputFields"
-                      : "editInCqlEditor",
-                  })}
-                </Text>
+                {Translate({
+                  context: "search",
+                  label: showCqlEditor ? "showInputFields" : "editInCqlEditor",
+                })}
               </Link>
+            </Text>
 
+            <Text type="text3" tag="span">
               <Link
                 onClick={() => setTimeout(() => setShowPopover(false), 100)}
                 href="/avanceret/soegehistorik"
@@ -121,14 +118,15 @@ export default function AdvancedSearch() {
                   },
                 }}
               >
-                <Text type="text3" tag="span">
-                  {Translate({
-                    context: "search",
-                    label: "searchHistory",
-                  })}
-                </Text>
+                {Translate({
+                  context: "search",
+                  label: "searchHistory",
+                })}
               </Link>
-            </div>
+            </Text>
+          </Col>
+
+          <Col md={2} sm={12} className={styles.closeContainer}>
             <IconButton
               icon="close"
               onClick={() => setShowPopover(false)}

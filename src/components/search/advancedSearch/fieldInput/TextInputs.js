@@ -72,6 +72,7 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
         />
         <div className={`${styles.suggesterContainer} `}>
           <Suggester
+            id={key}
             data={suggestions}
             onSelect={(selectValue) =>
               setTimeout(() => {
@@ -89,7 +90,8 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
               onChange={(e) => handleInputFieldChange(index, e.target.value)}
               placeholder={fieldValue.placeholder}
               overrideValueControl={true}
-              onKeyDown={(e) => {
+              // onKeyDown overrides suggesters onKeyDown, and we don't want that
+              onKeyPress={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
 

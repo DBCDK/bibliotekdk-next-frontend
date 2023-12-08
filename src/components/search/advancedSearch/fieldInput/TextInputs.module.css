@@ -94,6 +94,8 @@
 }
 
 .suggesterInput {
+  /* The right padding has to be pt2 (for base) + 2 times pt2 for the icon */
+  padding: var(--pt2) calc(var(--pt2) * 3) var(--pt2) var(--pt2);
   height: var(--pt5);
 }
 .suggester {

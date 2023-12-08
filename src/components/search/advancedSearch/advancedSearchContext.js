@@ -3,7 +3,13 @@
  * This file manages the state for advanced search.
  */
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { LogicalOperatorsEnum } from "@/components/search/enums";
 import { DropdownIndicesEnum } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
 import { convertStateToCql } from "@/components/search/advancedSearch/utils";
@@ -52,9 +58,16 @@ export default function AdvancedSearchProvider({ children, router }) {
   const sort = sortFromUrl && JSON.parse(sortFromUrl);
 
   //// ----  Popup Trigger ----
+  const popoverRef = useRef(null);
   const [showPopover, setShowPopover] = useState(false);
   //if advanced search popover is open, and the user clicks on simple search, a tooltip with info will be shown.
   const [showInfoTooltip, setShowInfoTooltip] = useState(false);
+
+  useEffect(() => {
+    if (showPopover && popoverRef.current) {
+      popoverRef?.current?.focus();
+    }
+  }, [showPopover, popoverRef.current]);
 
   //// ---- Inputfields ----
   const {
@@ -132,6 +145,7 @@ export default function AdvancedSearchProvider({ children, router }) {
         sort: Array.<{ index: string, order: string }>,
         workType: string
         stateToString: string
+        popoverRef: any
    }} AdvancedSearchContextType */
   const value = {
     inputFields,
@@ -156,6 +170,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     sort: sort,
     workType: workType,
     stateToString,
+    popoverRef,
   };
 
   return (
