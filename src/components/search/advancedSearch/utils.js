@@ -86,10 +86,6 @@ export function getAdvancedUrl({ type, value }) {
 
   const urlObject = {
     inputFields: [inputField],
-    dropdownSearchIndices: [
-      { searchIndex: "phrase.mainlanguage", value: [] },
-      { searchIndex: "phrase.generalmaterialtype", value: [] },
-    ],
   };
 
   return encodeURI(`/avanceret?fieldSearch=${JSON.stringify(urlObject)}`);
