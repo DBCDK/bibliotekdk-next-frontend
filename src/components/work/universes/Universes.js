@@ -28,7 +28,7 @@ import { getUniverseUrl } from "@/lib/utils";
  * @param {string} workId
  * @param {number} index
  */
-function Universes({ isLoading, universe = {}, workId = "", index = 0 }) {
+function Universes({ isLoading, universe = {}, workId = "" }) {
   const seriesInUniverse = universe?.series?.map((singleSeries) => {
     return {
       material: singleSeries,
@@ -44,11 +44,7 @@ function Universes({ isLoading, universe = {}, workId = "", index = 0 }) {
   });
 
   const universeCard = {
-    material: {
-      title: universe?.title,
-      workId: workId,
-      universeNumber: index,
-    },
+    material: { title: universe?.title, workId: workId },
     propsAndChildrenTemplate: templateForUniverseInfoCard,
   };
 
@@ -57,7 +53,7 @@ function Universes({ isLoading, universe = {}, workId = "", index = 0 }) {
   const propsAndChildrenInputList = [...seriesAndWorks, universeCard];
 
   const link =
-    universe?.title && workId && getUniverseUrl(universe?.title, workId, index);
+    universe?.title && workId && getUniverseUrl(universe?.title, workId);
 
   return (
     <Section
@@ -125,7 +121,6 @@ export default function Container({ workId }) {
             key={index}
             isLoading={isLoading}
             universe={singleUniverse}
-            index={index}
             workId={workId}
           />
         );
