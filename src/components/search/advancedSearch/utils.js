@@ -66,7 +66,24 @@ export function convertStateToCql({ inputFields, dropdownSearchIndices } = {}) {
   return !isEmpty(result) ? "(" + result + ")" : "";
 }
 
-export function getAdvancedUrl({ inputField }) {
+function typeToFieldindex(type) {
+  switch (type) {
+    case "creator":
+      return "term.creatorcontributor";
+    case "subject":
+      return "term.subject";
+    default:
+      return "term.function";
+  }
+}
+
+export function getAdvancedUrl({ type, value }) {
+  const inputField = {
+    value: value,
+    prefixLogicalOperator: null,
+    searchIndex: typeToFieldindex(type),
+  };
+
   const urlObject = {
     inputFields: [inputField],
     dropdownSearchIndices: [

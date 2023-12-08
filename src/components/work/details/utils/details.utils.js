@@ -13,7 +13,8 @@ import Image from "@/components/base/image";
 import { toLower } from "lodash/toLower";
 import { parseFunction } from "@/lib/centralParsers.utils";
 import { getAudienceValues } from "./export.utils";
-import { urlToPerson } from "@/lib/manifestationParser";
+
+import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
 
 /**
  * Parse languages in given manifestation.
@@ -234,7 +235,7 @@ function RenderCreatorValues({ values, skeleton }) {
             className={styles.creatorWrapper}
           >
             <Link
-              href={urlToPerson(person, "function")}
+              href={getAdvancedUrl({ type: "creator", value: person.display })}
               dataCy={cyKey({
                 name: person.display,
                 prefix: "details-creatore",
@@ -296,7 +297,7 @@ function RenderMovieActorValues({ values, skeleton }) {
         return (
           <div key={`actors-${index}`} className={styles.link_list}>
             <Link
-              href={urlToPerson(person, "contributor")}
+              href={getAdvancedUrl({ type: "creator", value: person.display })}
               dataCy={cyKey({
                 name: person?.display,
                 prefix: "overview-genre",

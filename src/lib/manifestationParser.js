@@ -450,21 +450,11 @@ export function parseManifestation(manifestation) {
   );
 }
 
-export function urlToPerson(person, type) {
-  const inputField = {
-    value: person.display,
-    prefixLogicalOperator: null,
-    searchIndex: `term.${type}`,
-  };
-
-  return getAdvancedUrl({ inputField });
-}
-
 export function RenderContributors({ contributors = [] }) {
   return contributors?.map((cont, idx) => (
     <Text tag={"div"} key={`${cont?.display}${idx}`}>
       <Link
-        href={urlToPerson(cont, "contributor")}
+        href={getAdvancedUrl({ type: "creator", value: cont.display })}
         border={{ top: false, bottom: { keepVisible: true } }}
       >
         {cont.display}
@@ -490,7 +480,7 @@ export function ParsedAndRenderedCreators({
   return creators?.map((C, idx) => (
     <Text tag={"div"} key={`${C?.display}${idx}`}>
       <Link
-        href={urlToPerson(C, "function")}
+        href={getAdvancedUrl({ type: "creator", value: C.display })}
         border={{ top: false, bottom: { keepVisible: true } }}
       >
         {C.display}

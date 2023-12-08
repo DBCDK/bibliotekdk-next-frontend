@@ -28,7 +28,7 @@ function Word({ word, isLoading }) {
   return (
     <span className={styles.word}>
       <Link
-        href={getAdvancedUrl({ inputField: advancedSearchInput(word) })}
+        href={getAdvancedUrl({ type: "subject", value: word })}
         dataCy={cyKey({ name: word, prefix: "related-subject" })}
         disabled={isLoading}
         border={{ bottom: { keepVisible: true } }}
