@@ -161,16 +161,18 @@ export default function Wrap(props) {
     error,
   } = useData(workId && workFragments.fbiOverviewDetail({ workId: workId }));
 
-  const {
-    data: relationData,
-    isLoading: relationsIsLoading,
-    error: relationsError,
-  } = useData(
-    workId &&
-      workFragments.workForWorkRelationsWorkTypeFactory({ workId: workId })
-  );
+  // TODO: Use when jed data is ready and better
+  // const {
+  //   data: relationData,
+  //   isLoading: relationsIsLoading,
+  //   error: relationsError,
+  // } = useData(
+  //   workId &&
+  //     workFragments.workForWorkRelationsWorkTypeFactory({ workId: workId })
+  // );
 
-  const { groupedRelations } = workRelationsWorkTypeFactory(relationData?.work);
+  // TODO: Use when jed data is ready and better
+  // const { groupedRelations } = workRelationsWorkTypeFactory(relationData?.work);
 
   const {
     data: seriesData,
@@ -201,28 +203,38 @@ export default function Wrap(props) {
 
   // attach relations for manifestation to display
   if (manifestationByMaterialType) {
-    manifestationByMaterialType.relations = groupedRelations;
+    // TODO: Use when jed data is ready and better
+    // manifestationByMaterialType.relations = groupedRelations;
   }
 
   if (
     !overViewIsLoading &&
-    !relationsIsLoading &&
     isEmpty(manifestationByMaterialType) &&
-    !error &&
-    !relationsError
+    !error
+    // TODO: Use when jed data is ready and better
+    // &&
+    // !relationsIsLoading &&
+    // !relationsError
   ) {
     return <></>;
   }
 
-  if (error || relationsError || seriesError || universesError) {
+  if (
+    error ||
+    seriesError ||
+    universesError
+    // TODO: Use when jed data is ready and better
+    // relationsError ||
+  ) {
     return <></>;
   }
 
   if (
     overViewIsLoading ||
-    relationsIsLoading ||
     seriesIsLoading ||
     universesIsLoading
+    // TODO: Use when jed data is ready and better
+    // relationsIsLoading ||
   ) {
     return <DetailsSkeleton />;
   }
@@ -232,7 +244,11 @@ export default function Wrap(props) {
       {...props}
       manifestation={manifestationByMaterialType}
       work={work}
-      skeleton={overViewIsLoading || relationsIsLoading}
+      skeleton={
+        overViewIsLoading
+        // TODO: Use when jed data is ready and better
+        // || relationsIsLoading
+      }
     />
   );
 }
