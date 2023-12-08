@@ -35,6 +35,13 @@
   justify-content: end;
 }
 
+.closeContainer {
+  display: flex;
+  align-self: start;
+  align-items: center;
+  justify-content: end;
+}
+
 .helpLink {
   flex-direction: row;
   justify-content: flex-end;
