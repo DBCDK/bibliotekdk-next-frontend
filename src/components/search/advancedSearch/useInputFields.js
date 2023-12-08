@@ -23,6 +23,7 @@ export function useInputFields({ fieldSearchFromUrl }) {
     }
 
     if (inputFromUrl?.inputFields) {
+      const newState = getInitialInputFields()
       setInputFields(inputFromUrl?.inputFields);
     }
   }, [router?.query?.fieldSearch]);
