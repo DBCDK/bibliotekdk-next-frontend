@@ -52,7 +52,7 @@
   padding: var(--pt1) var(--pt1);
   border: 1px solid var(--gray);
   background-color: var(--white);
-  min-width: 154px;
+  min-width: 160px;
   text-align: left;
 }
 
@@ -71,4 +71,9 @@
 
 .dropdownicon img {
   transition: transform 0.2s linear;
+}
+
+.selectedItem {
+  background-color: var(--blue);
+  color: var(--white);
 }

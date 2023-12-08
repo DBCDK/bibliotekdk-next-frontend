@@ -26,7 +26,7 @@ function getDropdownQuery(dropdownSearchIndices) {
 
   return (
     dropdownSearchIndices
-      .filter((searchIndex) => !isEmpty(searchIndex.value))
+      ?.filter((searchIndex) => !isEmpty(searchIndex.value))
       .map((searchIndex) => {
         const { getComparator, getFormatValue } = formattersAndComparitors(
           searchIndex.searchIndex

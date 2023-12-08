@@ -5,6 +5,7 @@
   display: flex;
   align-items: center;
   padding: var(--pt2) 0;
+  cursor: pointer;
 }
 
 .edit_search {
