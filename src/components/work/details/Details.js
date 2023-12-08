@@ -20,7 +20,9 @@ import {
 import isEmpty from "lodash/isEmpty";
 
 import { fieldsForRows } from "@/components/work/details/utils/details.utils";
-import { workRelationsWorkTypeFactory } from "@/lib/workRelationsWorkTypeFactoryUtils";
+
+// TODO: Use when jed data is ready and better
+// import { workRelationsWorkTypeFactory } from "@/lib/workRelationsWorkTypeFactoryUtils";
 import Tooltip from "@/components/base/tooltip";
 
 function DefaultDetailValues({ values }) {
