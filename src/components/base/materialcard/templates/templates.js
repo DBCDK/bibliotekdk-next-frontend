@@ -179,22 +179,31 @@ export function templateForUniverseInfoCard({ material }) {
 }
 
 export function templateForUniverseSliderWork({ material }) {
-  const classNameOverride = {
-    elementContainerClassName: cx(
-      styles.col_flex,
-      styles.col_flex__vertical_version
+  const classNameAddition = {
+    elementContainerClassName: cx(styles.col_flex__vertical_version),
+    relatedElementClassName: cx(
+      styles.related_element__universe_page_work_version
     ),
+    coverImageClassName: cx(styles.cover__universe_page_work_version),
   };
 
-  return templateForUniverseWorkBase({ material, classNameOverride });
+  return templateForUniverseWorkBase({ material, classNameAddition });
 }
 
 export function templateForUniversePageWork({ material }) {
-  return templateForUniverseWorkBase({ material });
+  const classNameAddition = {
+    elementContainerClassName: cx(styles.col_flex__universe_page_work_version),
+    relatedElementClassName: cx(
+      styles.related_element__universe_page_work_version
+    ),
+    coverImageClassName: cx(styles.cover__universe_page_work_version),
+  };
+
+  return templateForUniverseWorkBase({ material, classNameAddition });
 }
 
 /**Used in Universe Page for Works */
-export function templateForUniverseWorkBase({ material, classNameOverride }) {
+export function templateForUniverseWorkBase({ material, classNameAddition }) {
   const fullTitle = material?.titles?.full?.join(": ");
   const creators = material?.creators;
   const firstCreator =
@@ -222,39 +231,48 @@ export function templateForUniverseWorkBase({ material, classNameOverride }) {
       </>
     ),
     // Styling
-    elementContainerClassName:
-      classNameOverride?.elementContainerClassName ||
-      cx(styles.col_flex, styles.col_flex__universe_page_work_version),
-    relatedElementClassName:
-      classNameOverride?.relatedElementClassName ||
-      cx(
-        styles.related_element,
-        styles.related_element__universe_page_work_version
-      ),
-    textClassName: classNameOverride?.textClassName || cx(styles.text),
-    coverImageClassName:
-      classNameOverride?.coverImageClassName ||
-      cx(styles.cover, styles.cover__universe_page_work_version),
+    elementContainerClassName: cx(
+      styles.col_flex,
+      classNameAddition?.elementContainerClassName
+    ),
+    relatedElementClassName: cx(
+      styles.related_element,
+      classNameAddition?.relatedElementClassName
+    ),
+    textClassName: cx(styles.text, classNameAddition?.textClassName),
+    coverImageClassName: cx(
+      styles.cover,
+      classNameAddition?.coverImageClassName
+    ),
   };
 }
 
 export function templateForUniverseSliderSeries({ material }) {
-  const classNameOverride = {
-    elementContainerClassName: cx(
-      styles.col_flex,
-      styles.col_flex__vertical_version
+  const classNameAddition = {
+    elementContainerClassName: cx(styles.col_flex__vertical_version),
+    relatedElementClassName: cx(
+      styles.related_element__universe_page_work_version
     ),
+    coverImageClassName: cx(styles.cover__universe_page_series_version),
   };
 
-  return templateForUniverseSeriesBase({ material, classNameOverride });
+  return templateForUniverseSeriesBase({ material, classNameAddition });
 }
 
 export function templateForUniversePageSeries({ material }) {
-  return templateForUniverseSeriesBase({ material });
+  const classNameAddition = {
+    elementContainerClassName: cx(styles.col_flex__universe_page_work_version),
+    relatedElementClassName: cx(
+      styles.related_element__universe_page_work_version
+    ),
+    coverImageClassName: cx(styles.cover__universe_page_series_version),
+  };
+
+  return templateForUniverseSeriesBase({ material, classNameAddition });
 }
 
 /**Used in Universe Page for Series */
-export function templateForUniverseSeriesBase({ material, classNameOverride }) {
+export function templateForUniverseSeriesBase({ material, classNameAddition }) {
   const fullTitle = material?.title;
   const firstWork = material?.members?.[0]?.work;
   const creators = firstWork?.creators;
@@ -282,7 +300,7 @@ export function templateForUniverseSeriesBase({ material, classNameOverride }) {
 
   const coverImageClassName = cx(
     styles.cover,
-    styles.cover__universe_page_series_version
+    classNameAddition?.coverImageClassName
   );
 
   return {
@@ -316,18 +334,16 @@ export function templateForUniverseSeriesBase({ material, classNameOverride }) {
       </>
     ),
     // Styling
-    elementContainerClassName:
-      classNameOverride?.elementContainerClassName ||
-      cx(styles.col_flex, styles.col_flex__universe_page_work_version),
-    relatedElementClassName:
-      classNameOverride?.relatedElementClassName ||
-      cx(
-        styles.related_element,
-        styles.related_element__universe_page_work_version
-      ),
-    textClassName: classNameOverride?.textClassName || cx(styles.text),
-    coverImageClassName:
-      classNameOverride?.coverImageClassName || coverImageClassName,
+    elementContainerClassName: cx(
+      styles.col_flex,
+      classNameAddition?.elementContainerClassName
+    ),
+    relatedElementClassName: cx(
+      styles.related_element,
+      classNameAddition?.relatedElementClassName
+    ),
+    textClassName: cx(styles.text, classNameAddition?.textClassName),
+    coverImageClassName: coverImageClassName,
   };
 }
 
