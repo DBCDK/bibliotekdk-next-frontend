@@ -39,7 +39,7 @@ export default function UniversePage() {
   const {
     data: universeData,
     isLoading: universeIsLoading,
-    error: univserseError,
+    error: universeError,
   } = useData(workId && universeFragments.universes({ workId: workId }));
 
   useEffect(() => {
@@ -91,7 +91,7 @@ export default function UniversePage() {
     "workTypes"
   );
 
-  if (univserseError) {
+  if (universeError) {
     return <Custom404 />;
   }
 

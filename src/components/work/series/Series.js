@@ -36,7 +36,7 @@ export function Series({ isLoading, series = {}, workId = "", index = 0 }) {
     <Section
       title={
         <Title tag="h3" type="title4" skeleton={isLoading}>
-          <Link border={false} href={link}>
+          <Link border={{ bottom: true }} href={link}>
             {series.title}
           </Link>
         </Title>
