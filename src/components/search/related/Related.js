@@ -18,13 +18,6 @@ import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
  * Returns a item/word for the items/words component
  */
 function Word({ word, isLoading }) {
-  // make an object for advanced search to handle
-  const advancedSearchInput = (subject) => ({
-    value: subject,
-    prefixLogicalOperator: null,
-    searchIndex: "term.subject",
-  });
-
   return (
     <span className={styles.word}>
       <Link
