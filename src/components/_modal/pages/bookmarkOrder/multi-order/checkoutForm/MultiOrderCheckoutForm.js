@@ -27,6 +27,7 @@ const CheckoutForm = ({
     materialsMissingAction,
     duplicateOrdersWorkIds,
     isAnalyzed,
+    numberMaterialsToOrder,
   } = materialCounts;
   const modal = useModal();
   const disabled =
@@ -44,6 +45,10 @@ const CheckoutForm = ({
     });
   const { pickupBranch, pickupBranchUser, isLoadingBranches } =
     pickupBranchInfo;
+  console.log("numberMaterialsToOrderq", numberMaterialsToOrder);
+  console.log("numberMaterialsToOrderq", digitalMaterials);
+
+  const hasPhysicalOrders = numberMaterialsToOrder > digitalMaterials;
 
   const { updateLoanerInfo } = userInfo;
 
@@ -198,9 +203,18 @@ const CheckoutForm = ({
           </Text>
         )}
 
-        <Text type="text3" className={styles.formLabel}>
-          <Translate context="order" label="order-message-library" />
-        </Text>
+        {hasPhysicalOrders && (
+          <Text type="text3" className={styles.formLabel}>
+            <Translate
+              context="order"
+              label={
+                numberMaterialsToOrder === 1
+                  ? "order-message-library"
+                  : "order-message-library-plural"
+              }
+            />
+          </Text>
+        )}
 
         <Button
           type="primary"
