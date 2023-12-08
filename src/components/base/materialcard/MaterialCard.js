@@ -3,7 +3,6 @@
  * Takes template and input and outputs the result with expected CSS
  */
 import styles from "./MaterialCard.module.css";
-import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import Col from "react-bootstrap/Col";
 import { templateForRelatedWorks } from "@/components/base/materialcard/templates/templates";
@@ -90,8 +89,7 @@ const MaterialCard = forwardRef(
                 <img
                   src={image_src}
                   className={cx(coverImageClassName)}
-                  title={fullTitle}
-                  alt={Translate({ context: "general", label: "frontpage" })}
+                  alt={fullTitle}
                 />
               </div>
 
@@ -134,8 +132,7 @@ const MaterialCard = forwardRef(
                     [styles.cover_image_skeleton]: !loaded,
                   })}
                   onLoad={() => setLoaded(true)}
-                  title={fullTitle}
-                  alt=""
+                  alt={fullTitle}
                 />
                 {ImageOverlay && <ImageOverlay />}
               </>

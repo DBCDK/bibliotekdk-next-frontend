@@ -7,6 +7,11 @@
   padding: var(--pt2) 0;
 }
 
+.edit_search {
+  display: flex;
+  justify-content: end;
+}
+
 .formatedQueryContainer {
   display: flex;
   flex-wrap: wrap;

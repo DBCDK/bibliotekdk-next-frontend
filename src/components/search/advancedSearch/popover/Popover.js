@@ -11,9 +11,13 @@ import Translate from "@/components/base/translate/Translate";
  * @returns
  */
 const Popover = ({ className, simpleSearchRef }) => {
-  const { showPopover, setShowPopover, setShowInfoTooltip, showInfoTooltip } =
-    useAdvancedSearchContext();
-  const popoverRef = useRef(null);
+  const {
+    showPopover,
+    setShowPopover,
+    setShowInfoTooltip,
+    showInfoTooltip,
+    popoverRef,
+  } = useAdvancedSearchContext();
   const triggerContainerRef = useRef(null);
   const tooltipRef = useRef(null);
 
@@ -84,7 +88,6 @@ const Popover = ({ className, simpleSearchRef }) => {
               setShowPopover(!showPopover);
             }}
             title={Translate({ context: "search", label: "advanced" })}
-            border={{ top: false, bottom: { keepVisible: true } }}
           />
         </Tooltip>
 
@@ -92,7 +95,7 @@ const Popover = ({ className, simpleSearchRef }) => {
       </div>
 
       {showPopover && (
-        <div className={styles.popoverContainer} ref={popoverRef}>
+        <div tabIndex="-1" className={styles.popoverContainer} ref={popoverRef}>
           <AdvancedSearch />
         </div>
       )}

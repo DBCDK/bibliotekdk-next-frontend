@@ -84,7 +84,7 @@ const Material = ({
   const manifestations = isSpecificEdition
     ? [material]
     : filterForRelevantMaterialTypes(
-        material?.manifestations.mostRelevant,
+        material?.manifestations?.mostRelevant,
         material?.materialType
       );
 

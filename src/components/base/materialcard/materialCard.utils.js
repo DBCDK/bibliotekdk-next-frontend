@@ -14,7 +14,7 @@ export const StatusEnum = Object.freeze({
 });
 
 /**
- *
+ * Defines materialcard background color depending on material status
  * @param {Boolean} hasAlreadyBeenOrdered
  * @param {Boolean} isPeriodicaLike
  * @param {Boolean} hasPeriodicaForm
@@ -27,14 +27,14 @@ export function findBackgroundColor({
   hasPeriodicaForm,
   notAvailableAtLibrary,
 }) {
+  if (notAvailableAtLibrary) {
+    return BackgroundColorEnum.RED;
+  }
   if (
     (isPeriodicaLike && !hasPeriodicaForm) ||
     (hasAlreadyBeenOrdered && !isPeriodicaLike)
   ) {
     return BackgroundColorEnum.YELLOW;
-  }
-  if (notAvailableAtLibrary) {
-    return BackgroundColorEnum.RED;
   }
   return BackgroundColorEnum.NEUTRAL;
 }

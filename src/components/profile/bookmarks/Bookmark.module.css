@@ -21,6 +21,10 @@
   align-items: center;
   cursor: pointer;
 }
+.selectAllButton:focus-visible {
+  outline: 1px solid var(--blue);
+  outline-offset: var(--pt05);
+}
 
 .selectAll {
   margin-right: var(--pt1);
@@ -104,6 +108,10 @@
 .sortingItem,
 .sortingItem:first-child {
   border: none;
+}
+
+.sortingItem:focus-visible {
+  outline: 1px solid var(--blue);
 }
 
 @media (min-width: 768px) {

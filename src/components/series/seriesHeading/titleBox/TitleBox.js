@@ -5,16 +5,26 @@ import Translate from "@/components/base/translate";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text/Text";
 import cx from "classnames";
-// TODO: Use when universe pages are implemented
 import ThumbnailParade from "@/components/series/seriesHeading/titleBox/thumbnailParade/ThumbnailParade";
 
 import { getUniqueCreatorsDisplay } from "@/components/series/utils";
 import { buildHtmlLink, getUniverseUrl } from "@/lib/utils";
+import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
 
 export function LinkToCreator({ creator, isLoading }) {
+  // @TODO .. do we need some refactoring ?? - this inputfield is
+  // used manywhere :)
+  const href = getAdvancedUrl({
+    inputField: {
+      value: creator,
+      prefixLogicalOperator: null,
+      searchIndex: "term.function",
+    },
+  });
+
   return (
     <Link
-      href={`/find?q.creator=${creator}`}
+      href={href}
       dataCy={cyKey({
         name: creator,
         prefix: "details-creatore",

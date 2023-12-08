@@ -7,6 +7,7 @@ import Input from "@/components/base/forms/input";
 import Button from "@/components/base/button";
 import Translate, { hasTranslation } from "@/components/base/translate";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
+import { goToPreviousModal } from "./loanerform.utils.js";
 
 import Top from "../base/top";
 
@@ -348,7 +349,7 @@ export default function Wrap(props) {
     });
 
     if (changePickupBranch) {
-      props.modal.prev("order");
+      goToPreviousModal(props.modal);
     } else {
       openOrderModal({
         modal,

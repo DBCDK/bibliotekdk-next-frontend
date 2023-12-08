@@ -35,19 +35,20 @@ const sortByItems = [
  */
 const SortButtons = ({ sortByItems, setSortByValue, sortByValue }) => {
   return (
-    <List.Group className={styles.sortingContainer} disableGroupOutline>
+    <div className={styles.sortingContainer}>
       {sortByItems.map(({ label, key }) => (
         <List.Radio
           className={styles.sortingItem}
           key={key}
           selected={sortByValue === key}
           onSelect={() => setSortByValue(key)}
-          label={key}
         >
-          <Text>{Translate({ context: "profile", label: label })}</Text>
+          <Text type="text3" tag="span">
+            {Translate({ context: "profile", label: label })}
+          </Text>
         </List.Radio>
       ))}
-    </List.Group>
+    </div>
   );
 };
 
@@ -319,6 +320,11 @@ const BookmarkPage = () => {
           aria-checked={isAllSelected}
           className={styles.selectAllButton}
           onClick={onSelectAll}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              onSelectAll();
+            }
+          }}
         >
           <Checkbox
             checked={isAllSelected}
