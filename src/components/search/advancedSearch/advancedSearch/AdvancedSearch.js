@@ -33,36 +33,31 @@ export default function AdvancedSearch() {
     parsedCQL,
     setParsedCQL,
     cqlFromUrl,
+    fieldSearchFromUrl,
     setShowPopover,
     stateToString,
   } = useAdvancedSearchContext();
 
   const [showCqlEditor, setShowCqlEditor] = useState(!isEmpty(cqlFromUrl));
   const textAreaRef = useRef(null);
-  const {
-    query: { cql },
-  } = router;
 
   useEffect(() => {
-    setShowCqlEditor(!!cql);
-  }, [cql]);
+    setShowCqlEditor(!!cqlFromUrl);
+  }, [cqlFromUrl]);
 
   //add raw cql query in url if showCqlEditor. Add state to url if fieldInputs
   const doAdvancedSearch = () => {
     if (showCqlEditor) {
-      //do cql text search
-      const cql = textAreaRef.current.value;
+      const cqlParsedFromUrl = fieldSearchFromUrl
+        ? convertStateToCql(fieldSearchFromUrl)
+        : cqlFromUrl;
 
-      if (isEmpty(cql)) {
-        textAreaRef.current.focus();
-      }
-
-      if (parsedCQL === cql) {
+      if (parsedCQL === cqlParsedFromUrl) {
         const query = { fieldSearch: stateToString };
         router.push({ pathname: "/avanceret", query });
       } else {
         resetObjectState();
-        const query = { cql: cql };
+        const query = { cql: parsedCQL };
         router.push({ pathname: "/avanceret", query });
       }
     } else {
