@@ -126,7 +126,7 @@ export default function AdvancedSearch() {
             </Text>
           </Col>
 
-          <Col md={2} sm={12} className={styles.closeContainer}>
+          <Col md={2} sm={12}>
             <IconButton
               icon="close"
               onClick={() => setShowPopover(false)}

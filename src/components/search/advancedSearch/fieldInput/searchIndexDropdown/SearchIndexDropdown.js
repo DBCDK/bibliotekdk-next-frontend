@@ -39,8 +39,6 @@ export default function IndexDropdown({ options = [], className, index }) {
 
       <Dropdown.Menu className={styles.dropdownmenu}>
         {options.map((elem) => {
-          console.log("selected", selected);
-          console.log("elem", elem);
           return (
             <Dropdown.Item
               tabIndex="-1"
@@ -49,7 +47,6 @@ export default function IndexDropdown({ options = [], className, index }) {
               className={cx(styles.dropdownitem, {
                 [styles.selectedItem]: selected === elem,
               })}
-              //className={`${styles.dropdownitem} ${styles.selectedItem}`}
               onClick={() => {
                 handleIndexChange(index, elem);
               }}

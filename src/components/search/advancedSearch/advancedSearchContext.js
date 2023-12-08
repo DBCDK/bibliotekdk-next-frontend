@@ -103,20 +103,17 @@ export default function AdvancedSearchProvider({ children, router }) {
       })
   );
 
-  const state = {};
   //only add inputFields to object if there are values
   const cleanInputFields = inputFields.filter((el) => !isEmpty(el.value));
-  if (cleanInputFields.length > 0) {
-    state.inputFields = cleanInputFields;
-  }
 
   //only add dropdownSearchIndices to object if there are values
   const cleanDropdowns = dropdownSearchIndices.filter(
     (el) => !isEmpty(el.value)
   );
-  if (cleanDropdowns.length > 0) {
-    state.dropdownSearchIndices = cleanDropdowns;
-  }
+  const state = {
+    ...(cleanInputFields.length > 0 && { inputFields: cleanInputFields }),
+    ...(cleanDropdowns.length > 0 && { dropdownSearchIndices: cleanDropdowns }),
+  };
 
   //if object is empty, return empty string. Otherwise stringify state.
   const stateToString = !isEmpty(state) ? JSON.stringify(state) : "";
