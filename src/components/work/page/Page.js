@@ -22,6 +22,7 @@ import { AnchorsEnum } from "@/lib/enums";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import Custom404 from "@/pages/404";
+import Universes from "@/components/work/universes/Universes";
 
 /**
  * The work page React component
@@ -112,7 +113,6 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
             anchor-label={Translate({ context: "content", label: "title" })}
           />
           <section
-            type={type}
             anchor-label={Translate({ context: "keywords", label: "title" })}
           >
             <Keywords workId={workId} />
@@ -120,8 +120,8 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
             <div style={{ height: "var(--pt8)" }} aria-hidden={true}></div>
           </section>
           {/* TODO: WorkGroupingsOverview.js refererer til dennes oversættelse */}
-          <section type={type} anchor-label={Translate(AnchorsEnum.SERIES)}>
-            <Series workId={workId} type={type} />
+          <section anchor-label={Translate(AnchorsEnum.SERIES)}>
+            <Series workId={workId} />
           </section>
           <Recommendations
             workId={workId}
@@ -130,6 +130,9 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
               label: "remindsOf",
             })}
           />
+          <section anchor-label={Translate(AnchorsEnum.UNIVERSES)}>
+            <Universes workId={workId} />
+          </section>
           <Reviews
             workId={workId}
             anchor-label={Translate({ context: "workmenu", label: "reviews" })}

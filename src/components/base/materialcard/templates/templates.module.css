@@ -198,6 +198,21 @@
   object-position: 50% 100%;
 }
 
+.cover__universe_info_card {
+  --cover_width_material_card: 80%;
+  --cover_height_material_card: calc(var(--pt16) * 2);
+  --underline-middle-hover-color: var(--parchment);
+  --underline-bottom-color: var(--blue);
+
+  object-position: 50% 100%;
+
+  padding-inline: var(--pt1_5);
+  background-color: var(--parchment);
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
 .cover__universe_page_work_version {
   --cover_width_material_card: 95%;
   --cover_height_material_card: calc(var(--pt16) * 2);

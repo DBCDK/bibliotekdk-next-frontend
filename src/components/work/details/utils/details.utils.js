@@ -13,8 +13,8 @@ import Image from "@/components/base/image";
 import { toLower } from "lodash/toLower";
 import { parseFunction } from "@/lib/centralParsers.utils";
 import { getAudienceValues } from "./export.utils";
-
 import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
+import { getSeriesUrl, getUniverseUrl } from "@/lib/utils";
 
 /**
  * Parse languages in given manifestation.
@@ -527,6 +527,41 @@ function RenderLitteratureAudience({ values }) {
   );
 }
 
+function RenderInSeriesOrUniverse({ values }) {
+  const seriesTitle = values?.series?.map((singleSeries) => {
+    return {
+      title: `${singleSeries.title} (serie)`,
+      url: getSeriesUrl(singleSeries.title, values.workId),
+      skeleton: values?.seriesIsLoading,
+    };
+  });
+  const universesTitle = values?.universes?.map((singleUniverses) => {
+    return {
+      title: singleUniverses.title,
+      url: getUniverseUrl(singleUniverses.title, values.workId),
+      skeleton: values?.universesIsLoading,
+    };
+  });
+
+  return [...seriesTitle, ...universesTitle].map(
+    ({ title, url, skeleton }, index) => {
+      return (
+        <div key={`seriesOrUniverse-${index}`} className={styles.link_list}>
+          <Link
+            href={url}
+            disabled={skeleton}
+            border={{ bottom: { keepVisible: true } }}
+          >
+            <Text type="text4" tag="span" skeleton={skeleton} lines={0}>
+              {title}
+            </Text>
+          </Link>
+        </div>
+      );
+    }
+  );
+}
+
 /**
  * Main method for retrieving fields to show in details section on workpage.
  * Configurable arrays for different materialtypes - the fieldsMap holds array of
@@ -613,6 +648,13 @@ export function fieldsForRows(manifestation, work, context) {
           label: Translate({ ...context, label: "genre/form" }),
           value: work?.genreAndForm || [],
           jsxParser: RenderGenre,
+        },
+      },
+      {
+        in_series_or_universe: {
+          label: "Indgår i",
+          value: work,
+          jsxParser: RenderInSeriesOrUniverse,
         },
       },
       {

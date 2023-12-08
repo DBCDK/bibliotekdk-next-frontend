@@ -1395,6 +1395,24 @@
         "en": "Begin with this"
       }
     },
+    "universe": {
+      "everything_in_universe": {
+        "da": "Se alt i %s",
+        "en": "See everything in %s"
+      },
+      "label": {
+        "da": "Mere fra %s",
+        "en": "More from %s"
+      },
+      "part": {
+        "da": "%s. del - %s",
+        "en": "Part %s - %s "
+      },
+      "go_to_universe": {
+        "da": "Gå til %s",
+        "en": "Go to %s"
+      }
+    },
     "universe_page": {
       "frontpage": {
         "da": "Forside",
@@ -2697,8 +2715,12 @@
         "en": "Content"
       },
       "series": {
-        "da": "Serie",
+        "da": "Serier",
         "en": "Series"
+      },
+      "universes": {
+        "da": "Universer",
+        "en": "Universes"
       },
       "reminds-of": {
         "da": "Minder om",

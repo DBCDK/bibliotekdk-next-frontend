@@ -5,11 +5,10 @@ import Translate from "@/components/base/translate";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text/Text";
 import cx from "classnames";
-// TODO: Use when universe pages are implemented
-// import { buildHtmlLink } from "@/lib/utils";
 import ThumbnailParade from "@/components/series/seriesHeading/titleBox/thumbnailParade/ThumbnailParade";
 
 import { getUniqueCreatorsDisplay } from "@/components/series/utils";
+import { buildHtmlLink, getUniverseUrl } from "@/lib/utils";
 import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
 
 export function LinkToCreator({ creator, isLoading }) {
@@ -63,24 +62,27 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
       </div>
       <div className={styles.series_information}>
         {description && <Text type="text2">{description}</Text>}
-        {firstSeriesFirstWork?.universe && (
-          <Text type="text2">
-            {Translate({
-              context: "series_page",
-              label: "part_of_universe",
-              vars: [
-                firstSeriesFirstWork?.universe?.title,
-                // TODO: Use link when Universe has page
-                // buildHtmlLink(
-                //   firstSeriesFirstWork?.universe?.title,
-                //   "",
-                //   "_self"
-                // ),
-              ],
-              renderAsHtml: true,
-            })}
-          </Text>
-        )}
+        {firstSeriesFirstWork?.universes?.map((universe) => {
+          return (
+            <Text key={JSON.stringify(universe)} type="text2">
+              {Translate({
+                context: "series_page",
+                label: "part_of_universe",
+                vars: [
+                  buildHtmlLink(
+                    universe?.title,
+                    getUniverseUrl(
+                      universe?.title,
+                      firstSeriesFirstWork?.workId
+                    ),
+                    "_self"
+                  ),
+                ],
+                renderAsHtml: true,
+              })}
+            </Text>
+          );
+        })}
         <Text type="text2">
           {Translate({
             context: "series_page",

@@ -119,7 +119,9 @@ export default function WorkSlider({
           return (
             <MaterialCard
               key={idx}
-              propAndChildrenTemplate={propsAndChildrenTemplate}
+              propAndChildrenTemplate={
+                input?.propsAndChildrenTemplate || propsAndChildrenTemplate
+              }
               propAndChildrenInput={input}
               colSizing={{ xs: 4, sm: 3, md: 2, lg: 2 }}
               onClick={() => onClick(input.material, idx)}

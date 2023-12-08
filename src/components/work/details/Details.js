@@ -8,6 +8,7 @@ import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 
 import * as workFragments from "@/lib/api/work.fragments";
+import * as universeFragments from "@/lib/api/universe.fragments";
 import styles from "./Details.module.css";
 import { useMemo } from "react";
 
@@ -19,7 +20,9 @@ import {
 import isEmpty from "lodash/isEmpty";
 
 import { fieldsForRows } from "@/components/work/details/utils/details.utils";
-import { workRelationsWorkTypeFactory } from "@/lib/workRelationsWorkTypeFactoryUtils";
+
+// TODO: Use when jed data is ready and better
+// import { workRelationsWorkTypeFactory } from "@/lib/workRelationsWorkTypeFactoryUtils";
 import Tooltip from "@/components/base/tooltip";
 
 function DefaultDetailValues({ values }) {
@@ -160,16 +163,30 @@ export default function Wrap(props) {
     error,
   } = useData(workId && workFragments.fbiOverviewDetail({ workId: workId }));
 
-  const {
-    data: relationData,
-    isLoading: relationsIsLoading,
-    error: relationsError,
-  } = useData(
-    workId &&
-      workFragments.workForWorkRelationsWorkTypeFactory({ workId: workId })
-  );
+  // TODO: Use when jed data is ready and better
+  // const {
+  //   data: relationData,
+  //   isLoading: relationsIsLoading,
+  //   error: relationsError,
+  // } = useData(
+  //   workId &&
+  //     workFragments.workForWorkRelationsWorkTypeFactory({ workId: workId })
+  // );
 
-  const { groupedRelations } = workRelationsWorkTypeFactory(relationData?.work);
+  // TODO: Use when jed data is ready and better
+  // const { groupedRelations } = workRelationsWorkTypeFactory(relationData?.work);
+
+  const {
+    data: seriesData,
+    isLoading: seriesIsLoading,
+    error: seriesError,
+  } = useData(workId && workFragments.series({ workId: workId }));
+
+  const {
+    data: universesData,
+    isLoading: universesIsLoading,
+    error: universesError,
+  } = useData(workId && universeFragments.universes({ workId: workId }));
 
   const manifestations = data?.work?.manifestations?.mostRelevant;
 
@@ -178,38 +195,63 @@ export default function Wrap(props) {
     return inFlatMaterialTypes(type, flattenMaterialType(manifestation));
   });
 
+  const work = {
+    ...data?.work,
+    series: seriesData?.work?.series || [],
+    seriesIsLoading: seriesIsLoading,
+    universes: universesData?.work?.universes || [],
+    universesIsLoading: universesIsLoading,
+  };
+
   // attach relations for manifestation to display
   if (manifestationByMaterialType) {
-    manifestationByMaterialType.relations = groupedRelations;
+    // TODO: Use when jed data is ready and better
+    // manifestationByMaterialType.relations = groupedRelations;
   }
 
   if (
     !overViewIsLoading &&
-    !relationsIsLoading &&
     isEmpty(manifestationByMaterialType) &&
-    !error &&
-    !relationsError
+    !error
+    // TODO: Use when jed data is ready and better
+    // &&
+    // !relationsIsLoading &&
+    // !relationsError
   ) {
     return <></>;
   }
 
-  if (error || relationsError) {
+  if (
+    error ||
+    seriesError ||
+    universesError
+    // TODO: Use when jed data is ready and better
+    // relationsError ||
+  ) {
     return <></>;
   }
 
-  if (overViewIsLoading || relationsIsLoading) {
+  if (
+    overViewIsLoading ||
+    seriesIsLoading ||
+    universesIsLoading
+    // TODO: Use when jed data is ready and better
+    // relationsIsLoading ||
+  ) {
     return <DetailsSkeleton />;
   }
 
   return (
-    <>
-      <Details
-        {...props}
-        manifestation={manifestationByMaterialType}
-        work={data?.work}
-        skeleton={overViewIsLoading || relationsIsLoading}
-      />
-    </>
+    <Details
+      {...props}
+      manifestation={manifestationByMaterialType}
+      work={work}
+      skeleton={
+        overViewIsLoading
+        // TODO: Use when jed data is ready and better
+        // || relationsIsLoading
+      }
+    />
   );
 }
 
