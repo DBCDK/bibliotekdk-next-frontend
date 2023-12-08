@@ -213,9 +213,8 @@ export function AdvancedSearchHistory() {
       <HistoryHeader />
       {storedValue?.map((item, index) => {
         return (
-          <div key={index}>
+          <div key={item.cql}>
             <HistoryItem
-              // checkboxList={checkboxList}
               item={item}
               index={index}
               checked={
