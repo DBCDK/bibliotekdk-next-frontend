@@ -39,7 +39,6 @@ export function nameForActionLinkContainer(formType, searchIndex) {
 
 export function publicationYearIndices() {
   const thisYear = new Date().getFullYear();
-  const nextYear = thisYear + 1;
 
   return [
     {
@@ -48,7 +47,7 @@ export function publicationYearIndices() {
         label: "this_year",
         vars: [new Date().getFullYear()],
       }),
-      value: { lower: thisYear, upper: nextYear },
+      value: { lower: thisYear, upper: thisYear },
       formType: FormTypeEnum.ACTION_LINK,
     },
     {
@@ -59,7 +58,7 @@ export function publicationYearIndices() {
           getLanguage() === "da" ? "to" : getLanguage() === "en" ? "two" : "2",
         ],
       }),
-      value: { lower: thisYear - 2, upper: nextYear },
+      value: { lower: thisYear - 2, upper: thisYear },
       formType: FormTypeEnum.ACTION_LINK,
     },
     {
@@ -74,7 +73,7 @@ export function publicationYearIndices() {
             : "3",
         ],
       }),
-      value: { lower: thisYear - 3, upper: nextYear },
+      value: { lower: thisYear - 3, upper: thisYear },
       formType: FormTypeEnum.ACTION_LINK,
     },
     {
@@ -89,7 +88,7 @@ export function publicationYearIndices() {
             : "5",
         ],
       }),
-      value: { lower: thisYear - 5, upper: nextYear },
+      value: { lower: thisYear - 5, upper: thisYear },
       formType: FormTypeEnum.ACTION_LINK,
     },
     {
@@ -100,7 +99,7 @@ export function publicationYearIndices() {
           getLanguage() === "da" ? "ti" : getLanguage() === "en" ? "ten" : "10",
         ],
       }),
-      value: { lower: thisYear - 10, upper: nextYear },
+      value: { lower: thisYear - 10, upper: thisYear },
       formType: FormTypeEnum.ACTION_LINK,
     },
     {
@@ -149,6 +148,128 @@ export const publicationYearFormatterAndComparitor = {
       [lower, `>${value?.lower}`],
       [upper, `<${value?.upper}`],
     ]);
+  },
+  getSelectedPresentation(value) {
+    const lower = Boolean(value?.lower);
+    const upper = Boolean(value?.upper);
+
+    return `${lower ? value?.lower : ""} - ${upper ? value?.upper : ""}`;
+
+    // return getFirstMatch(true, "", [
+    //   [lower && upper, `${value?.lower}-${value?.upper}`],
+    //   [lower, `>${value?.lower}`],
+    //   [upper, `<${value?.upper}`],
+    // ]);
+  },
+};
+
+export function agesIndices() {
+  return [
+    {
+      name: Translate({
+        context: "advanced_search_dropdown",
+        label: "for_x_y_years",
+        vars: [1, 2],
+      }),
+      value: { lower: 1, upper: 2 },
+      formType: FormTypeEnum.ACTION_LINK,
+    },
+    {
+      name: Translate({
+        context: "advanced_search_dropdown",
+        label: "for_x_y_years",
+        vars: [3, 6],
+      }),
+      value: { lower: 3, upper: 6 },
+      formType: FormTypeEnum.ACTION_LINK,
+    },
+    {
+      name: Translate({
+        context: "advanced_search_dropdown",
+        label: "for_x_y_years",
+        vars: [7, 10],
+      }),
+      value: { lower: 7, upper: 10 },
+      formType: FormTypeEnum.ACTION_LINK,
+    },
+    {
+      name: Translate({
+        context: "advanced_search_dropdown",
+        label: "for_x_y_years",
+        vars: [11, 13],
+      }),
+      value: { lower: 11, upper: 13 },
+      formType: FormTypeEnum.ACTION_LINK,
+    },
+    {
+      name: Translate({
+        context: "advanced_search_dropdown",
+        label: "for_x_y_years",
+        vars: [14, 16],
+      }),
+      value: { lower: 14, upper: 16 },
+      formType: FormTypeEnum.ACTION_LINK,
+    },
+    {
+      name: nameForActionLinkContainer(
+        FormTypeEnum.ACTION_LINK_CONTAINER,
+        DropdownIndicesEnum.AGES
+      ),
+      value: {},
+      formType: FormTypeEnum.ACTION_LINK_CONTAINER,
+    },
+  ];
+}
+
+export const agesFormatterAndComparitor = {
+  /**
+   *
+   * @param {any|null} [value]
+   * @returns {string}
+   */
+  getComparator(value) {
+    const lower = Boolean(value?.lower);
+    const upper = Boolean(value?.upper);
+
+    return getFirstMatch(true, "=", [
+      [lower && upper, " within "],
+      [lower, ">"],
+      [upper, "<"],
+    ]);
+  },
+  getFormatValue(value) {
+    const lower = Boolean(value?.lower);
+    const upper = Boolean(value?.upper);
+
+    return getFirstMatch(true, "", [
+      [lower && upper, `${value?.lower} ${value?.upper}`],
+      [lower, `${value?.lower}`],
+      [upper, `${value?.upper}`],
+    ]);
+  },
+  getPrintValue(value) {
+    const lower = Boolean(value?.lower);
+    const upper = Boolean(value?.upper);
+
+    return getFirstMatch(true, "", [
+      [lower && upper, `${value?.lower}-${value?.upper}`],
+      [lower, `>${value?.lower}`],
+      [upper, `<${value?.upper}`],
+    ]);
+  },
+  getSelectedPresentation(value) {
+    const lower = Boolean(value?.lower);
+    const upper = Boolean(value?.upper);
+
+    return `${lower ? value?.lower : ""}-${
+      upper ? value?.upper : ""
+    }${Translate({ context: "advanced_search_dropdown", label: "years_old" })}`;
+
+    // return getFirstMatch(true, "", [
+    //   [lower && upper, `${value?.lower}-${value?.upper}`],
+    //   [lower, `>${value?.lower}`],
+    //   [upper, `<${value?.upper}`],
+    // ]);
   },
 };
 
