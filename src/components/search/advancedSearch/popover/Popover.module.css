@@ -1,6 +1,10 @@
+.border_none {
+  border: none !important;
+}
+
 .popoverContainer {
   position: absolute;
-  top: 0px;
+  top: 0;
   left: 0;
   width: 100vw;
   background-color: var(--white);

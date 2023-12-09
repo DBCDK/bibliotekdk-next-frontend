@@ -26,7 +26,7 @@ function DropdownUnit({ items, indexName, updateDropdownSearchIndices }) {
 
   return (
     <div className={styles.dropdown_with_title}>
-      <Text type={"text2"}>{indexTitle}</Text>
+      <Text type="text3">{indexTitle}</Text>
       <AdvancedSearchDropdown
         indexTitle={indexTitle}
         indexName={indexName}

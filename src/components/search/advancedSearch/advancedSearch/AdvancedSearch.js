@@ -161,18 +161,24 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
             md={{ offset: 3, span: 5 }}
             sm={12}
           >
-            <Button className={styles.button} onClick={doAdvancedSearch}>
-              {Translate({ context: "header", label: "search" })}
-            </Button>
-            <Link
-              border={{ bottom: { keepVisible: true } }}
-              onClick={() => {
-                resetObjectState();
-                router.push({ pathname: router.pathname });
-              }}
+            <Button
+              className={styles.button}
+              size="medium"
+              onClick={doAdvancedSearch}
             >
-              {Translate({ context: "search", label: "clearSearch" })}
-            </Link>
+              {Translate({ context: "search", label: "advancedSearch_button" })}
+            </Button>
+            <Text type="text3">
+              <Link
+                border={{ bottom: { keepVisible: true } }}
+                onClick={() => {
+                  resetObjectState();
+                  router.push({ pathname: router.pathname });
+                }}
+              >
+                {Translate({ context: "search", label: "clearSearch" })}
+              </Link>
+            </Text>
           </Col>
 
           <Col md={4} sm={12} className={styles.helpLink}>

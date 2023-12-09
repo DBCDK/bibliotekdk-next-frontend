@@ -15,16 +15,16 @@
 }
 
 .buttonRow {
-  margin-top: var(--pt4);
+  padding-top: var(--pt4);
 }
 
 .button {
-  max-width: 300px;
+  width: 156px;
 }
 
 .button_group {
   display: flex;
-  gap: var(--pt2);
+  gap: var(--pt3);
   align-items: center;
 }
 
