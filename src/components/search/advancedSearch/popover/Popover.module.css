@@ -11,6 +11,31 @@
   background: var(--concrete);
 }
 
+.popoverAnimation {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 300ms ease-out;
+}
+
+.popoverAnimation[aria-expanded="true"] {
+  grid-template-rows: 1fr;
+}
+
+.popoverAnimation_advancedSearch {
+  overflow: hidden;
+}
+
+.popoverAnimation_advancedSearch[aria-expanded="true"] {
+  overflow: visible;
+  animation: 400ms overflowToggle;
+}
+
+@keyframes overflowToggle {
+  from {
+    overflow: hidden;
+  }
+}
+
 .triggercontainer {
   display: flex;
   flex-direction: column;
