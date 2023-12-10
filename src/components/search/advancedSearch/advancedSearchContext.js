@@ -124,7 +124,7 @@ export default function AdvancedSearchProvider({ children, router }) {
       dropdownSearchIndices,
     });
     setParsedCQL(updatedCql);
-  }, [inputFields]);
+  }, [inputFields, dropdownSearchIndices]);
 
   //// ---- DONE: parsedCQL ----
 
