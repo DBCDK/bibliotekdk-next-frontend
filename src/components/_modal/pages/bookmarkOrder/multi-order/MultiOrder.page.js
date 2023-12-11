@@ -155,6 +155,7 @@ const MultiOrder = ({ context }) => {
         materialsNotAllowed: materialsNotAvailable?.length ?? 0,
         materialsMissingAction: materialsNeedsInfo?.length ?? 0,
         duplicateOrders: duplicateOrders?.length ?? 0,
+        numberMaterialsToOrder: materialsToOrder?.length ?? 0,
       });
     }, 300);
 

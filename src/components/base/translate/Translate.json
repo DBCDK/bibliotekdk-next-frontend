@@ -2910,6 +2910,10 @@
         "da": "Du får besked fra dit bibliotek når materialet er klar til afhentning",
         "en": "You will be notified by your library when the material is ready for collection"
       },
+      "order-message-library-plural": {
+        "da": "Du får besked fra dit bibliotek når materialerne er klar til afhentning",
+        "en": "You will be notified by your library when the materials are ready for collection"
+      },
       "order-success": {
         "da": "Bestillingen blev gennemført",
         "en": "The order was completed"
