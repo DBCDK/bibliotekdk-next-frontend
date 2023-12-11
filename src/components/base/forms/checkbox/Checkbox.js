@@ -20,8 +20,10 @@ export function Checkbox({
   tabIndex = "0",
   id,
   checked = false,
+  partiallyChecked = false,
   disabled = false,
   onChange,
+  onClick,
   dataCy = "checkbox",
   ariaLabelledBy,
   ariaLabel = "",
@@ -63,10 +65,15 @@ export function Checkbox({
         readOnly={readOnly}
         data-cy={dataCy}
         tabIndex={disabled ? "-1" : tabIndex}
-        onChange={(e) => {
-          if (readOnly) return;
-          setStatus(e.target.checked);
-        }}
+        {...(!onClick && {
+          onChange: (e) => {
+            if (readOnly) return;
+            setStatus(e.target.checked);
+          },
+        })}
+        {...(onClick && {
+          onClick: onClick,
+        })}
         onKeyDown={(e) => {
           if (readOnly) return;
           if (e.key === "Enter") {
@@ -75,7 +82,12 @@ export function Checkbox({
         }}
       />
       <div className={styles.border}>
-        <div className={styles.bg} />
+        <div
+          className={cx(styles.bg, {
+            [styles.partially_checked]:
+              partiallyChecked === true && checked === false,
+          })}
+        />
       </div>
       <div className={styles.label}>{ariaLabel}</div>
     </label>

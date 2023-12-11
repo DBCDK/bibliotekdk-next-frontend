@@ -84,14 +84,21 @@ function FormatCql({ item }) {
   );
 }
 
-function HistoryHeaderActions({ setAllChecked, deleteSelected }) {
+function HistoryHeaderActions({
+  setAllChecked,
+  deleteSelected,
+  checked,
+  partiallyChecked,
+}) {
   return (
     <div className={cx(styles.actionheader)}>
       <Checkbox
         ariaLabelledBy={`selectall`}
         ariaLabel="vælg alle"
         tabIndex="-1"
-        onChange={setAllChecked}
+        onClick={setAllChecked}
+        checked={checked}
+        partiallyChecked={partiallyChecked}
         id="selectall"
         className={styles.checkbox}
       />
@@ -102,8 +109,11 @@ function HistoryHeaderActions({ setAllChecked, deleteSelected }) {
       </label>
 
       <Link
-        className={styles.flex}
-        border={{ top: false, bottom: { keepVisible: true } }}
+        className={cx(styles.flex, {
+          [styles.disabled_link]: !partiallyChecked,
+        })}
+        border={{ top: false, bottom: { keepVisible: partiallyChecked } }}
+        disabled={!partiallyChecked}
         onClick={(e) => {
           e.preventDefault();
           deleteSelected();
@@ -176,15 +186,12 @@ export function AdvancedSearchHistory() {
 
   /**
    * Set or unset ALL checkboxes in search history
-   * @param e
    *  if the checkbox is selected or not
    */
-  const setAllChecked = (e) => {
-    if (e) {
-      // full list
+  const setAllChecked = () => {
+    if (checkboxList.length < storedValue.length) {
       setCheckboxList(storedValue.map((stored) => stored.cql));
     } else {
-      // empty list
       setCheckboxList([]);
     }
   };
@@ -209,7 +216,7 @@ export function AdvancedSearchHistory() {
    */
   const onSelect = (item, selected = false) => {
     // if select is FALSE it has been deselected on gui
-    const newCheckList = checkboxList;
+    const newCheckList = [...checkboxList];
     // if item is already in checkboxlist -> remove
     const checkindex = checkboxList.findIndex((check) => check === item.cql);
     if (checkindex !== -1) {
@@ -240,6 +247,8 @@ export function AdvancedSearchHistory() {
       <HistoryHeaderActions
         deleteSelected={onDeleteSelected}
         setAllChecked={setAllChecked}
+        checked={storedValue.length === checkboxList.length}
+        partiallyChecked={checkboxList.length > 0}
       />
       <HistoryHeader />
       {storedValue?.map((item, index) => {

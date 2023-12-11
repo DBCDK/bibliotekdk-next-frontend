@@ -45,6 +45,10 @@
   display: flex;
 }
 
+.disabled_link {
+  color: var(--dove);
+}
+
 .icon {
   margin-left: var(--pt1);
 }

@@ -41,6 +41,16 @@
   height: 100%;
 }
 
+.partially_checked {
+  --partial_height: 28.5%;
+  --partial_position: calc(calc(100% - var(--partial_height)) / 2);
+
+  position: relative;
+  top: var(--partial_position);
+  height: var(--partial_height);
+  background-color: var(--blue);
+}
+
 .border {
   padding: 2px;
   border: 1px solid var(--gray);
