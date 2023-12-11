@@ -2,7 +2,6 @@ import getConfig from "next/config";
 import Translate from "@/components/base/translate";
 import uniq from "lodash/uniq";
 import animations from "css/animations";
-import isEmpty from "lodash/isEmpty";
 
 const APP_URL =
   getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
