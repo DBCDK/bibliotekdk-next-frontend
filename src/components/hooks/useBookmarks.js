@@ -110,6 +110,8 @@ const useBookmarksCore = ({ isMock = false, session }) => {
         (bookmark) => bookmark.key === value.key
       );
 
+      //console.log("VALUE ", value);
+
       if (existingIndex === -1) {
         // Doesn't exist - Add
         await bookmarkMutation.post(
@@ -117,7 +119,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
             bookmarks: [
               {
                 materialId: value.materialId,
-                materialType: value.materialType,
+                materialType: value.materialType, //TODO id instead of string
                 title: value.title,
                 workId: value.workId,
               },

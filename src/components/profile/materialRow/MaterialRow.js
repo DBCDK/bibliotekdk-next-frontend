@@ -66,6 +66,10 @@ export const RenewedSpan = ({ textType = "text2" }) => {
 };
 
 const MaterialRow = ({ id: materialId, skeleton, type, ...props }) => {
+  console.log(
+    "props in material row",
+    props.allManifestations[0].materialTypes[0].materialTypeSpecific.display
+  );
   const breakpoint = useBreakpoint();
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
@@ -106,7 +110,11 @@ const MaterialRow = ({ id: materialId, skeleton, type, ...props }) => {
         <MaterialRowBookmark
           materialId={materialId}
           isMobileSize={isMobileSize}
-          {...props}
+          {...props} //TODO show display materialtype
+          materialType={
+            props.allManifestations[0].materialTypes[0].materialTypeSpecific
+              .display
+          }
         />
       );
   }

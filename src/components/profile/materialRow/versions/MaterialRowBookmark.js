@@ -30,6 +30,7 @@ const BookmarkColumn = ({
   onBookmarkDelete,
   allManifestations,
 }) => {
+  console.log("MATERIALTYPE ", materialType);
   const { flatPidsByType } = useMemo(() => {
     return manifestationMaterialTypeFactory(allManifestations);
   }, [workId, allManifestations]);
@@ -79,6 +80,9 @@ const MaterialRowBookmark = ({
   onSelect,
   hasCheckbox,
 }) => {
+  console.log("MATERIALTYPE DISPLAY ", title);
+
+  console.log("MATERIALTYPE DISPLAY ", materialType);
   const onCheckboxClick = (e) => {
     if (
       e.target instanceof HTMLHeadingElement ||
@@ -147,7 +151,7 @@ const MaterialRowBookmark = ({
                   workId,
                   pid,
                   materialId,
-                  materialType,
+                  materialType, //TODO how to get workURL?
                   scrollToEdition: true,
                 })}
                 className={sharedStyles.blackUnderline}

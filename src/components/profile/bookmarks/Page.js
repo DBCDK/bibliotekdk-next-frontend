@@ -66,6 +66,7 @@ const BookmarkPage = () => {
   } = useBookmarks();
   const { data: bookmarks, isLoading: isPopulateLoading } =
     usePopulateBookmarks(bookmarksData);
+  console.log("BOOKMARKS WITHOut TYPE? ", bookmarks);
   const [activeStickyButton, setActiveStickyButton] = useState(null);
   const breakpoint = useBreakpoint();
   const [sortByValue, setSortByValue] = useState(null);

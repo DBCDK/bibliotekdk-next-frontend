@@ -71,6 +71,8 @@ export function Overview({
       return manifestationMaterialTypeFactory(manifestations);
     }, [work, manifestations]);
 
+  console.log("UNIQUE MATERIAL TYPES", uniqueMaterialTypes);
+
   useInitMaterialType(
     uniqueMaterialTypes,
     inUniqueMaterialTypes,

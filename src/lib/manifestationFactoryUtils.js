@@ -107,14 +107,34 @@ export function formatMaterialTypesToCypress(materialTypeArray) {
  * @returns {string}
  */
 export function formatMaterialTypesToPresentation(materialTypeArray) {
+  //console.log("BERND materialTypeArray ", materialTypeArray);
   if (!Array.isArray(materialTypeArray)) {
+    //console.log("BERND NOT ARRAY ", materialTypeArray);
+
+    return materialTypeArray;
+  }
+  const bernd =
+    materialTypeArray
+      ?.map((mat) =>
+        upperFirst(typeof mat === "string" ? mat : mat?.specificDisplay)
+      )
+      .join(" / ") || null;
+
+  //console.log("BERND ", bernd);
+
+  return bernd;
+}
+
+export function formatMaterialTypesToCode(materialTypeArray) {
+  if (!Array.isArray(materialTypeArray)) {
+    //console.log("RETURN AS IS", materialTypeArray);
     return materialTypeArray;
   }
 
   return (
     materialTypeArray
       ?.map((mat) =>
-        upperFirst(typeof mat === "string" ? mat : mat?.specificDisplay)
+        upperFirst(typeof mat === "string" ? mat : mat?.specificCode)
       )
       .join(" / ") || null
   );
@@ -487,6 +507,10 @@ export function manifestationMaterialTypeFactory(manifestations) {
   );
   const arrayOfMaterialTypesArray = flatMapMaterialTypes(manifestations);
   const uniqueMaterialTypes = getUniqueMaterialTypes(arrayOfMaterialTypesArray);
+  console.log("_____________manifestations ", manifestations);
+  console.log("arrayOfMaterialTypesArray ", arrayOfMaterialTypesArray);
+
+  console.log("uniqueMaterialTypes ", uniqueMaterialTypes);
 
   const manifestationsByType = groupManifestations(manifestations);
   const flattenedGroupedSortedManifestations =

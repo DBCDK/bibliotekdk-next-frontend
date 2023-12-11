@@ -50,8 +50,6 @@ export default function DropdownInputs({}) {
   const { dropdownUnits, dropdownSearchIndices, updateDropdownSearchIndices } =
     useAdvancedSearchContext();
 
-  console.log("Dropdown object for debug", dropdownSearchIndices);
-
   return (
     <>
       <div className={styles.dropdown_inputs_wrapper}>
