@@ -27,7 +27,7 @@ import {
   formatMaterialTypesToUrl,
 } from "@/lib/manifestationFactoryUtils";
 import { workIdToTitleCreator } from "@/lib/api/work.fragments";
-import { encodeTitleCreator } from "@/lib/utils";
+import { encodeString, encodeTitleCreator } from "@/lib/utils";
 import { fetcher } from "@/lib/api/api";
 import { getServerSession } from "@dbcdk/login-nextjs/server";
 
@@ -104,13 +104,28 @@ function extractFixedUrl(queryRes, ctx) {
   const creators = queryRes?.data?.work?.creators;
   const title_creator = encodeTitleCreator(title, creators);
 
-  // look for materiale to handle "/materiale/materiale/[workId]" in url
-  const fixedUrl = ctx.asPath.replace(
-    `materiale/${ctx.query.title_author}`,
-    `materiale/${title_creator}`
-  );
+  // Change all %3A to ":" for aestetics and to ensure they are the same
+  //  across workIds from data and url
+  const workIdFromUrl = ctx.query.workId.replaceAll("%3A", ":");
+  const workId = queryRes?.data?.work?.workId.replaceAll("%3A", ":");
 
-  return title_creator && title_creator !== ctx.query.title_author && fixedUrl
+  // look for materiale to handle "/materiale/[title_author]/[workId]" in url
+  //  We exchange wrong [title_author] to actual
+  //  and then we use the persistentWorkId instead a pid one
+  const fixedUrl = ctx.asPath
+    .replaceAll("%3A", ":")
+    .replace(
+      `materiale/${ctx.query.title_author}`,
+      `materiale/${title_creator}`
+    )
+    .replace(
+      `materiale/${title_creator}/${workIdFromUrl}`,
+      `materiale/${title_creator}/${workId}`
+    );
+
+  return ((title_creator && title_creator !== ctx.query.title_author) ||
+    (workId && workId !== workIdFromUrl)) &&
+    fixedUrl
     ? fixedUrl
     : null;
 }
