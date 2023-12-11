@@ -2028,6 +2028,10 @@
         "da": "Værtspublikation",
         "en": "Hostpublication"
       },
+      "advanced-dropdown-term.creatorcontributor": {
+        "da": "Forfatter/ophav",
+        "en": "Creator"
+      },
       "advanced-dropdown-AND": {
         "da": "OG",
         "en": "AND"
