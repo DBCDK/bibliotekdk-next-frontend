@@ -49,7 +49,7 @@ function HistoryItem({ item, index, checked, onSelect }) {
         ariaLabel={`select-item-${index}`}
         className={styles.checkbox}
       />
-      <Text type="text3">{item.timestamp}</Text>
+      <Text type="text2">{item.timestamp}</Text>
       <div className={styles.link}>
         <Link
           onClick={(e) => {
@@ -64,7 +64,7 @@ function HistoryItem({ item, index, checked, onSelect }) {
           )}
         </Link>
       </div>
-      <Text type="text3" className={styles.hitcount}>
+      <Text type="text2" className={styles.hitcount}>
         {item.hitcount}
       </Text>
     </div>
@@ -96,7 +96,7 @@ function HistoryHeaderActions({ setAllChecked, deleteSelected }) {
         className={styles.checkbox}
       />
       <label htmlFor="selectall">
-        <Text type="text3" className={styles.action}>
+        <Text type="text3" className={cx(styles.action, styles.lessergap)}>
           {Translate({ context: "bookmark", label: "select-all" })}
         </Text>
       </label>
@@ -140,9 +140,40 @@ function HistoryHeader() {
   );
 }
 
+function EmptySearchHistory() {
+  return (
+    <div className={styles.emptysearchpage}>
+      <Title
+        type="title3"
+        data-cy="advanced-search-search-history"
+        className={styles.title}
+      >
+        {Translate({
+          context: "search",
+          label: "advanced-search-history-latest",
+        })}
+      </Title>
+      <div className={cx(styles.actionheader)}>
+        <Text type="text2" className={styles.inline}>
+          {Translate({
+            context: "search",
+            label: "advanced-empty-search-history",
+          })}
+        </Text>
+      </div>
+    </div>
+  );
+}
+
 export function AdvancedSearchHistory() {
   const { storedValue, deleteValue } = useAdvancedSearchHistory();
   const [checkboxList, setCheckboxList] = useState([]);
+
+  // if there is no search history
+  if (isEmpty(storedValue) || storedValue?.length < 1) {
+    return <EmptySearchHistory />;
+  }
+
   /**
    * Set or unset ALL checkboxes in search history
    * @param e
