@@ -8,10 +8,10 @@ import isEmpty from "lodash/isEmpty";
 
 function parseErrorMessage(errorMessage) {
   // first sentence of errormessage is (kind of) explanation
-  const explanation = errorMessage.split(",")[0];
+  const explanation = errorMessage?.split(",")[0];
   // last part is location of error - starts with at: ---> .. and then the rest
-  const locationIndex = errorMessage.indexOf("at:");
-  const location = errorMessage.substring(locationIndex);
+  const locationIndex = errorMessage?.indexOf("at:");
+  const location = errorMessage?.substring(locationIndex);
 
   if (isEmpty(errorMessage)) {
     return {
