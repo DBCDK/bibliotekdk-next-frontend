@@ -27,7 +27,7 @@ describe("Dropdown", () => {
     );
 
     // select a material
-    cy.get('[data-cy="bookmark-Fisk-2"]')
+    cy.get('[data-cy="bookmark-fisk-2"]')
       .should("be.visible")
       .click()
       .type("{esc}");
