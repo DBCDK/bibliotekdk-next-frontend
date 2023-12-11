@@ -84,7 +84,7 @@ WorkGroupingsOverview.propTypes = {
   seriesLink: PropTypes.string,
 };
 
-function getSeriesMap({ series, members, workId, index }) {
+function getSeriesMap({ series, members, workId }) {
   const numberInSeries = series?.numberInSeries?.display || "";
 
   return (
@@ -93,7 +93,7 @@ function getSeriesMap({ series, members, workId, index }) {
       description: `Del ${numberInSeries + " "} af `,
       title: series?.title,
       anchorId: getAnchor(AnchorsEnum.SERIES),
-      link: getSeriesUrl(series?.title, workId, index),
+      link: getSeriesUrl(series?.title, workId),
     }
   );
 }
@@ -145,11 +145,10 @@ export default function Wrap({ workId }) {
     current?.manifestations?.mostRelevant?.[0]?.hostPublication;
 
   const allSeries = work_response?.data?.work?.series || [];
-  const allSeriesMap = allSeries?.map((singleSeries, index) =>
+  const allSeriesMap = allSeries?.map((singleSeries) =>
     getSeriesMap({
       series: singleSeries,
       members: singleSeries.members?.map((member) => member?.work),
-      index: index,
       workId: workId,
     })
   );

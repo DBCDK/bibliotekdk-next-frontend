@@ -2,7 +2,6 @@ import getConfig from "next/config";
 import Translate from "@/components/base/translate";
 import uniq from "lodash/uniq";
 import animations from "css/animations";
-import isEmpty from "lodash/isEmpty";
 
 const APP_URL =
   getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
@@ -91,10 +90,8 @@ export function getHelpUrl(title, helpTextId) {
  * @param {string|number} [seriesNumber]
  * @returns {{query: {seriesTitle: string, workId: string, seriesNumber?: string}, pathname: string}}
  */
-export function getSeriesUrl(fullTitle, workId, seriesNumber = "") {
-  return `/serie/${encodeString(fullTitle)}/${workId}${
-    !isEmpty(seriesNumber) ? "/" + seriesNumber : ""
-  }`;
+export function getSeriesUrl(fullTitle, workId) {
+  return `/serie/${encodeString(fullTitle)}/${workId}`;
 }
 
 /**
@@ -104,10 +101,8 @@ export function getSeriesUrl(fullTitle, workId, seriesNumber = "") {
  * @param {string|number} [universeNumber]
  * @returns {{query: {universeTitle: string, workId: string, universeNumber?: string}, pathname: string}}
  */
-export function getUniverseUrl(fullTitle, workId, universeNumber = "") {
-  return `/univers/${encodeString(fullTitle)}/${workId}${
-    !isEmpty(universeNumber) ? "/" + universeNumber : ""
-  }`;
+export function getUniverseUrl(fullTitle, workId) {
+  return `/univers/${encodeString(fullTitle)}/${workId}`;
 }
 
 /**

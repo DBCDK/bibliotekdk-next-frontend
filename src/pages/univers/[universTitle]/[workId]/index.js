@@ -1,18 +1,8 @@
 import { fetchAll } from "@/lib/api/apiServerOnly";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
+import UniversePage from "@/components/universe/UniversePage";
 
 export default function Wrap() {
-  const router = useRouter();
-
-  useEffect(() => {
-    if (router && !router.query.hasOwnProperty("universeNumber")) {
-      router?.replace({
-        pathname: router.pathname + "/[universeNumber]",
-        query: { ...router.query, universeNumber: 0 },
-      });
-    }
-  }, [router?.query]);
+  return <UniversePage />;
 }
 
 /**
