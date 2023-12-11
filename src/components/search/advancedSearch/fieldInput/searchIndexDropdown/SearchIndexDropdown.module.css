@@ -50,10 +50,10 @@
 
 .dropdowntoggle {
   position: relative;
-  padding: var(--pt1) var(--pt1);
+  padding: var(--pt1) var(--pt1) var(--pt1) var(--pt2);
   border: 1px solid var(--gray);
   background-color: var(--white);
-  min-width: 160px;
+  min-width: 164px;
   text-align: left;
 }
 
