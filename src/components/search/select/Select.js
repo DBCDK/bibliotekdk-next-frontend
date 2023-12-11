@@ -43,7 +43,6 @@ export function Desktop({ options = [], onSelect, selected, className }) {
               tabIndex="-1"
               data-cy={`item-${elem}`}
               key={`materialdropdown-${elem}`}
-              // className={styles.dropdownitem}
               className={cx(styles.dropdownitem, {
                 [styles.selectedItem]: selected === elem,
               })}
