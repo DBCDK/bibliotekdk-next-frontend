@@ -265,7 +265,7 @@ function NewlineInText(text, renderAsHtml) {
       // on mobile devices one of the slashes is shown - make sure it it NOT there (replace)
       return (
         <span key={str + index} style={index > 0 ? { display: "block" } : {}}>
-          {str.replace("\\", "")}
+          {str.replace("\\", " ")}
         </span>
       );
     });

@@ -2044,6 +2044,10 @@
         "da": "Seneste søgninger",
         "en": "Latest searches"
       },
+      "advanced-empty-search-history": {
+        "da": "Her vil du kunne se en liste over de seneste søgninger, hvor der har været brugt avanceret søgning. Listen er midlertidig og nulstilles automatisk, når du lukker enten vinduet eller din browser. Hvis du vil gemme en søgning til senere, så tryk “Gem” ud for søgningen og den vil lægge sig på listen “Gemte søgninger”.\\n Du har ikke lavet nogen avancerede søgninger endnu.",
+        "en": "List of recent advanced searches :) - List is temporary and will be emptied automagically"
+      },
       "remove": {
         "da": "Fjern",
         "en": "Remove"

@@ -16,7 +16,7 @@ function getTimeStamp() {
   };
 
   const now = new Date();
-  const stamp = now.toLocaleTimeString("en-us", options);
+  const stamp = now.toLocaleTimeString("en-GB", options);
   // remove the " AM/PM" part
   return stamp.replace("AM", "").replace("PM", "").replace(":", ".").trim();
 }
