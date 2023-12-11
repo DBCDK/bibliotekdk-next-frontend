@@ -45,9 +45,9 @@ const CheckoutForm = ({
     });
   const { pickupBranch, pickupBranchUser, isLoadingBranches } =
     pickupBranchInfo;
-  console.log("numberMaterialsToOrderq", numberMaterialsToOrder);
-  console.log("numberMaterialsToOrderq", digitalMaterials);
 
+  // numberMaterialsToOrder contains all orders: physical and digital orders,
+  // if numberMaterialsToOrder is greater than digitalMaterials, we also have physical orders
   const hasPhysicalOrders = numberMaterialsToOrder > digitalMaterials;
 
   const { updateLoanerInfo } = userInfo;
