@@ -170,7 +170,7 @@ export function AdvancedSearchHistory() {
   const [checkboxList, setCheckboxList] = useState([]);
 
   // if there is no search history
-  if (storedValue.length < 1) {
+  if (isEmpty(storedValue) || storedValue?.length < 1) {
     return <EmptySearchHistory />;
   }
 

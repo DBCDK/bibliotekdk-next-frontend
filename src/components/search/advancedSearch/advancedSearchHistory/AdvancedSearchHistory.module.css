@@ -1,6 +1,6 @@
 .grid {
   display: grid;
-  grid-template-columns: 1fr 2fr 14fr 2fr;
+  grid-template-columns: 1fr 2fr 15fr 2fr;
   grid-template-rows: auto;
   padding-left: var(--pt1);
 }
@@ -61,8 +61,6 @@
 
 .hitcount {
   position: relative;
-  /*top: -2px;*/
-
   text-align: left;
 }
 
