@@ -1,20 +1,12 @@
-.icon_area {
-  display: flex;
-  width: 20px;
-  height: 20px;
-  justify-content: center;
-  transition: transform 300ms ease;
-  align-content: center;
-  flex-wrap: wrap;
-}
-
 .upper_first:first-letter {
   text-transform: capitalize;
 }
 
 .menuButton {
   background-color: var(--white);
-  padding: var(--pt2) var(--pt2);
+  padding-block: var(--pt2);
+  padding-left: var(--pt2);
+  padding-right: var(--pt5);
   outline: 1px solid var(--gray);
   min-width: 125px;
   height: 100%;
@@ -37,6 +29,25 @@
   transform: rotate(180deg);
 }
 
+.menuButton__text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icon_area {
+  display: flex;
+  flex-wrap: wrap;
+  width: 20px;
+  height: 20px;
+  justify-content: center;
+  transition: transform 300ms ease;
+  align-content: center;
+  position: absolute;
+
+  right: var(--pt2);
+  bottom: calc(var(--pt1) + var(--pt025));
+}
+
 .icon {
   transition: transform 0.3s ease-in-out;
 }
@@ -52,6 +63,9 @@
 
   height: var(--pt5);
   width: var(--pt11);
+
+  font-size: 14px;
+  line-height: 22px;
 }
 
 .dash {

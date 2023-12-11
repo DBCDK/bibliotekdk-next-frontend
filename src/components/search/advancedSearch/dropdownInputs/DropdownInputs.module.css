@@ -14,7 +14,7 @@
 
 .flex_wrapper {
   display: flex;
-  gap: var(--pt4);
+  gap: var(--pt1);
   padding-top: var(--pt2);
   flex-direction: row;
   flex-wrap: wrap;

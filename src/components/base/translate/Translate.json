@@ -90,8 +90,16 @@
         "en": "Publication year"
       },
       "all_publicationyear": {
-        "da": "Alle udgivelsesår",
+        "da": "Alle år",
         "en": "All publication years"
+      },
+      "ages": {
+        "da": "Aldersgruppe",
+        "en": "Audience"
+      },
+      "all_ages": {
+        "da": "Alle aldersgrupper",
+        "en": "All audiences"
       },
       "search_dropdown": {
         "da": "Søg i %s...",
@@ -105,6 +113,10 @@
         "da": "Seneste %s år",
         "en": "Last %s years"
       },
+      "for_x_y_years": {
+        "da": "For %s-%s-årige",
+        "en": "For %s-%s years"
+      },
       "to_range": {
         "da": "Til",
         "en": "To"
@@ -112,6 +124,10 @@
       "from_range": {
         "da": "Fra",
         "en": "From"
+      },
+      "years_old": {
+        "da": "-årige",
+        "en": " years old"
       }
     },
     "logo": {
