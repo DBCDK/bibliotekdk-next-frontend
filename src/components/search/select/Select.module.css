@@ -22,12 +22,13 @@
   text-decoration: none;
 }
 
+.dropdownitem:hover,
 .dropdownitem:focus {
-  background: linear-gradient(to right, var(--blue) 10px, var(--concrete) 10px);
-}
-
-.dropdownitem:hover {
-  background: linear-gradient(to right, var(--blue) 10px, var(--concrete) 10px);
+  background: linear-gradient(
+    to right,
+    var(--blue) var(--pt05),
+    var(--concrete) var(--pt05)
+  );
 }
 
 .dropdownwrap :global(.dropdown-toggle::after) {
@@ -106,4 +107,9 @@
   .filterButton {
     display: none;
   }
+}
+
+.selectedItem {
+  background-color: var(--blue);
+  color: var(--white);
 }
