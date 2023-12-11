@@ -125,11 +125,10 @@ export default function PickupSelection(props) {
     // modal props
     context,
     modal,
-    showAllBranches = false,
   } = { ...props };
 
   // Get pid from modal context
-  const { pid, requireDigitalAccess } = context; //TODO is it enough to only check for ONE pid? BIBDK2021-2203
+  const { pid, requireDigitalAccess, showAllBranches } = context; //TODO is it enough to only check for ONE pid? BIBDK2021-2203
 
   const loadedOrderPolicies = useRef({});
   const render = useState()[1];
