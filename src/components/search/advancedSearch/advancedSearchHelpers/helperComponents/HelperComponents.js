@@ -100,12 +100,7 @@ export function Toggler({
   indexName,
   indexPlaceholder,
   TogglerContent = () => (
-    <Text
-      // className={cx(styles.menuButton__text)}
-      tag="div"
-      type="text3"
-      dataCy="menu-title"
-    >
+    <Text tag="div" type="text3" dataCy="menu-title">
       {indexPlaceholder || indexName || ""}
     </Text>
   ),
