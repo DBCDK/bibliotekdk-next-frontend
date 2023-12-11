@@ -4,7 +4,7 @@ import { formattersAndComparitors } from "@/components/search/advancedSearch/use
 
 function getInputFieldsQueryToCql(inputFields) {
   return inputFields
-    .filter((item) => !isEmpty(item.value) && !isEmpty(item.searchIndex))
+    ?.filter((item) => !isEmpty(item.value) && !isEmpty(item.searchIndex))
     .map((item, index) => {
       //first item should not have a prefixLogicalOperator
       const prefix =
@@ -49,10 +49,6 @@ function getDropdownQuery(dropdownSearchIndices) {
 }
 
 export function convertStateToCql({ inputFields, dropdownSearchIndices } = {}) {
-  if (!Array.isArray(inputFields) || inputFields.length === 0) {
-    return "";
-  }
-
   const inputFieldsQuery = getInputFieldsQueryToCql(inputFields);
   const dropdownQuery = getDropdownQuery(dropdownSearchIndices);
 
