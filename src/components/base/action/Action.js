@@ -4,7 +4,6 @@ import Link from "@/components/base/link";
 import Icon from "@/components/base/icon";
 import Text from "@/components/base/text";
 import Badge from "@/components/base/badge";
-import AnimationLine from "@/components/base/animation/line";
 
 import styles from "./Action.module.css";
 
@@ -12,6 +11,15 @@ import styles from "./Action.module.css";
  * Function to create a action menu item
  *
  *
+ * @param className
+ * @param href
+ * @param badge
+ * @param title
+ * @param icon
+ * @param animation
+ * @param children
+ * @param onClick
+ * @param dataCy
  * @param {Object} props
  * See propTypes for specific props and types
  *
@@ -52,8 +60,11 @@ export default function Action({
         {children}
       </Icon>
       <div className={styles.wrap}>
-        <Text type="text3">{title}</Text>
-        {animation && <AnimationLine />}
+        <Text type="text3">
+          <Link a={false} border={{ bottom: animation }}>
+            {title}
+          </Link>
+        </Text>
       </div>
     </Wrap>
   );
