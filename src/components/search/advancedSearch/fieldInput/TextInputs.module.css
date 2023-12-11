@@ -2,6 +2,7 @@
   display: flex;
   max-width: 500px;
 }
+
 .suggesterContainer {
   margin-bottom: var(--pt2);
   flex-grow: 2;
@@ -30,7 +31,7 @@
   display: flex;
   align-items: center;
   background-color: var(--white);
-  padding: var(--pt05) var(--pt2_5) !important;
+  padding: var(--pt05) var(--pt2) !important;
 }
 .addLine:hover,
 .addLine:focus {
@@ -89,6 +90,7 @@
   padding-left: var(--pt2);
   color: var(--blue);
 }
+
 .dropdowntoggle p {
   margin-right: var(--pt1);
 }
@@ -97,6 +99,10 @@
   /* The right padding has to be pt2 (for base) + 2 times pt2 for the icon */
   padding: var(--pt2) calc(var(--pt2) * 3) var(--pt2) var(--pt2);
   height: var(--pt5);
+
+  /* Text 3*/
+  font-size: 14px;
+  line-height: 22px;
 }
 .suggester {
   height: var(--pt5);

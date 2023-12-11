@@ -1976,12 +1976,16 @@
         "da": "Avanceret søgning",
         "en": "Advanced Search"
       },
+      "advancedSearch_button": {
+        "da": "Søg avanceret",
+        "en": "Search advanced"
+      },
       "advanced": {
         "da": "Avanceret",
         "en": "Advanced"
       },
       "addLine": {
-        "da": "Tilføj line",
+        "da": "Tilføj linje",
         "en": "Add field"
       },
       "advanced-dropdown-term.default": {
