@@ -63,6 +63,9 @@
 
   height: var(--pt5);
   width: var(--pt11);
+
+  font-size: 14px;
+  line-height: 22px;
 }
 
 .dash {
