@@ -7,11 +7,13 @@ import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
+import cx from "classnames";
 
 export default function Tooltip({
   placement = "bottom",
   labelToTranslate,
   customClass,
+  childClassName,
   trigger = ["focus"],
   iconSize = 3,
   children,
@@ -58,7 +60,11 @@ export default function Tooltip({
         <span
           ref={spanRef}
           tabIndex={tabIndex}
-          className={styles.tooltipWrap}
+          className={cx(
+            styles.tooltipWrap,
+            { [styles.border_animation]: !childClassName },
+            childClassName
+          )}
           onKeyUp={(e) => {
             if (e.code === "Escape") {
               spanRef?.current?.blur?.();

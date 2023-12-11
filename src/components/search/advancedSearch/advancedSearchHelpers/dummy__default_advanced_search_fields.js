@@ -154,12 +154,6 @@ export const publicationYearFormatterAndComparitor = {
     const upper = Boolean(value?.upper);
 
     return `${lower ? value?.lower : ""} - ${upper ? value?.upper : ""}`;
-
-    // return getFirstMatch(true, "", [
-    //   [lower && upper, `${value?.lower}-${value?.upper}`],
-    //   [lower, `>${value?.lower}`],
-    //   [upper, `<${value?.upper}`],
-    // ]);
   },
 };
 
@@ -264,12 +258,6 @@ export const agesFormatterAndComparitor = {
     return `${lower ? value?.lower : ""}-${
       upper ? value?.upper : ""
     }${Translate({ context: "advanced_search_dropdown", label: "years_old" })}`;
-
-    // return getFirstMatch(true, "", [
-    //   [lower && upper, `${value?.lower}-${value?.upper}`],
-    //   [lower, `>${value?.lower}`],
-    //   [upper, `<${value?.upper}`],
-    // ]);
   },
 };
 

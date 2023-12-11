@@ -34,6 +34,7 @@ import styles from "./AdvancedSearchDropdown.module.css";
 import Dropdown from "react-bootstrap/Dropdown";
 import cx from "classnames";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
+import Text from "@/components/base/text";
 
 const specialFormTypes = new Set([FormTypeEnum.ACTION_LINK_CONTAINER]);
 
@@ -261,7 +262,7 @@ export default function AdvancedSearchDropdown({
                       )
                     }
                   >
-                    {item.name}
+                    <Text type="text3">{item.name}</Text>
                   </List.Select>
                 );
               } else if (item?.formType === FormTypeEnum.DIVIDER) {
