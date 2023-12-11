@@ -150,7 +150,7 @@ const Material = ({
 
   const children = [];
 
-  if (isPeriodicaLike && appendPeriodicaRow) {
+  if (orderPossible && isPeriodicaLike && appendPeriodicaRow) {
     children.push(
       <ChoosePeriodicaCopyRow
         key={material.key}
@@ -170,7 +170,7 @@ const Material = ({
     );
   }
 
-  if (showAlreadyOrderedWarning && !isPeriodicaLike) {
+  if (orderPossible && showAlreadyOrderedWarning && !isPeriodicaLike) {
     //TODO currently we only check for non-periodica orders
     children.push(
       <HasBeenOrderedRow
@@ -194,7 +194,7 @@ const Material = ({
   }
 
   if (!orderPossible) {
-    children = (
+    children.push(
       <>
         <Text className={styles.orderNotPossible} type="text4">
           {Translate({
