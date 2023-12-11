@@ -112,8 +112,8 @@ const MaterialRow = ({ id: materialId, skeleton, type, ...props }) => {
           isMobileSize={isMobileSize}
           {...props} //TODO show display materialtype
           materialType={
-            props.allManifestations[0].materialTypes[0].materialTypeSpecific
-              .display
+            props?.allManifestations?.[0].materialTypes?.[0]
+              ?.materialTypeSpecific?.display
           }
         />
       );
