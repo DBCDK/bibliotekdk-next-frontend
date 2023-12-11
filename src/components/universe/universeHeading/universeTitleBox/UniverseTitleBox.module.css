@@ -49,6 +49,7 @@
   grid-area: universe_description;
 }
 
-.universe_length {
-  grid-area: universe_length;
-}
+/* TODO: Insert this again later when we know how to interpret this */
+/*.universe_length {*/
+/*  grid-area: universe_length;*/
+/*}*/

@@ -14,13 +14,7 @@ import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
 export function LinkToCreator({ creator, isLoading }) {
   // @TODO .. do we need some refactoring ?? - this inputfield is
   // used manywhere :)
-  const href = getAdvancedUrl({
-    inputField: {
-      value: creator,
-      prefixLogicalOperator: null,
-      searchIndex: "term.function",
-    },
-  });
+  const href = getAdvancedUrl({ type: "creator", value: creator });
 
   return (
     <Link
@@ -54,7 +48,11 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
         {Translate({ context: "series_page", label: "series_by" })}{" "}
         {creators.slice(0, creatorsToShow).map((creator, index, array) => (
           <>
-            <LinkToCreator creator={creator} isLoading={seriesIsLoading} />
+            <LinkToCreator
+              key={index}
+              creator={creator}
+              isLoading={seriesIsLoading}
+            />
             {index !== array.length - 1 && ", "}
           </>
         ))}
@@ -89,13 +87,14 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
             </Text>
           );
         })}
-        <Text type="text2">
-          {Translate({
-            context: "series_page",
-            label: "parts_in_series",
-            vars: [series?.members?.length],
-          })}
-        </Text>
+        {/*TODO: Insert this again later when we know how to interpret this */}
+        {/*<Text type="text2">*/}
+        {/*  {Translate({*/}
+        {/*    context: "series_page",*/}
+        {/*    label: "parts_in_series",*/}
+        {/*    vars: [series?.members?.length],*/}
+        {/*  })}*/}
+        {/*</Text>*/}
         {series?.readThisWhenever && (
           <Text type="text2">
             {Translate({ context: "series_page", label: "read_this_whenever" })}

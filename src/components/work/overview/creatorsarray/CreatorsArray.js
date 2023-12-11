@@ -6,17 +6,9 @@ import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
 export function CreatorsArray({ creators: creatorsBeforeFilter, skeleton }) {
   const creators = extractCreatorsPrioritiseCorporation(creatorsBeforeFilter);
 
-  // make an object for advanced search to handle
-  const advancedSearchInput = (creator) => ({
-    value: creator,
-    prefixLogicalOperator: null,
-    searchIndex: "term.function",
-  });
-
   return (
     creators?.map((creator, index) => {
-      const urlInput = advancedSearchInput(creator.display);
-      const url = getAdvancedUrl({ inputField: urlInput });
+      const url = getAdvancedUrl({ type: "creator", value: creator.display });
       return (
         <span key={`${creator.display}-${index}`}>
           <Link

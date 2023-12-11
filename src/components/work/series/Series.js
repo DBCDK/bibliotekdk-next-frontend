@@ -13,8 +13,8 @@ import Link from "@/components/base/link";
 import Title from "@/components/base/title";
 
 import styles from "./Series.module.css";
-import { linkToSeries } from "@/components/work/utils";
 import { templateForSeriesSlider } from "@/components/base/materialcard/templates/templates";
+import { getSeriesUrl } from "@/lib/utils";
 
 /**
  * Series React component
@@ -24,13 +24,13 @@ import { templateForSeriesSlider } from "@/components/base/materialcard/template
  * @param {string} workId
  * @param {number} index
  */
-export function Series({ isLoading, series = {}, workId = "", index = 0 }) {
+export function Series({ isLoading, series = {}, workId = "" }) {
   const propsAndChildrenInputList =
     series?.members?.map((member) => {
       return { material: member?.work, series: member };
     }) || [];
 
-  const link = linkToSeries({ series: series, index: index, workId: workId });
+  const link = getSeriesUrl(series?.title, workId);
 
   return (
     <Section
@@ -105,7 +105,6 @@ export default function Container({ workId }) {
             key={index}
             isLoading={isLoading}
             series={singleSeries}
-            index={index}
             workId={workId}
           />
         );

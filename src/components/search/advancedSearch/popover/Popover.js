@@ -5,6 +5,7 @@ import { useAdvancedSearchContext } from "@/components/search/advancedSearch/adv
 import Tooltip from "@/components/base/tooltip/Tooltip";
 import SearchIcon from "@/components/header/icons/search/search";
 import Translate from "@/components/base/translate/Translate";
+import cx from "classnames";
 
 /**
  * Popover where advanced search can be performed from
@@ -74,11 +75,12 @@ const Popover = ({ className, simpleSearchRef }) => {
     <>
       <div className="container" ref={triggerContainerRef}>
         <Tooltip
+          childClassName={cx(styles.border_none)}
           tooltipRef={tooltipRef}
           show={!showPopover && showInfoTooltip}
           labelToTranslate="advanced-search-tooltip"
           placement="bottom"
-          tabIndex="-1"
+          tabIndex="0"
         >
           <SearchIcon
             className={`${styles.triggercontainer} ${className} ${
@@ -94,11 +96,17 @@ const Popover = ({ className, simpleSearchRef }) => {
         {showPopover && <div className={styles.triangle} />}
       </div>
 
-      {showPopover && (
-        <div tabIndex="-1" className={styles.popoverContainer} ref={popoverRef}>
-          <AdvancedSearch />
-        </div>
-      )}
+      <div
+        aria-expanded={showPopover}
+        tabIndex="-1"
+        className={cx(styles.popoverContainer, styles.popoverAnimation)}
+        ref={popoverRef}
+      >
+        <AdvancedSearch
+          ariaExpanded={showPopover}
+          className={cx(styles.popoverAnimation_advancedSearch)}
+        />
+      </div>
     </>
   );
 };

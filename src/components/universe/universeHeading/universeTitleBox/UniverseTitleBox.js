@@ -1,5 +1,6 @@
 import styles from "./UniverseTitleBox.module.css";
-import Translate from "@/components/base/translate";
+// {/*TODO: Insert this again later when we know how to interpret this */}
+// import Translate from "@/components/base/translate";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text/Text";
 import cx from "classnames";
@@ -20,13 +21,14 @@ export default function UniverseTitleBox({ universe, className }) {
           {description}
         </Text>
       )}
-      <Text type="text2" className={styles.universe_length}>
-        {Translate({
-          context: "universe_page",
-          label: "parts_in_universe",
-          vars: [universe?.series?.length + universe?.works?.length],
-        })}
-      </Text>
+      {/*TODO: Insert this again later when we know how to interpret this */}
+      {/*<Text type="text2" className={styles.universe_length}>*/}
+      {/*  {Translate({*/}
+      {/*    context: "universe_page",*/}
+      {/*    label: "parts_in_universe",*/}
+      {/*    vars: [universe?.series?.length + universe?.works?.length],*/}
+      {/*  })}*/}
+      {/*</Text>*/}
     </div>
   );
 }

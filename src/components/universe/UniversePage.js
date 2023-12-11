@@ -3,13 +3,13 @@ import Header from "@/components/header/Header";
 import { useData } from "@/lib/api/api";
 import * as universeFragments from "@/lib/api/universe.fragments";
 import Custom404 from "@/pages/404";
-import isArray from "lodash/isArray";
 import { useEffect } from "react";
 import UniverseHeading from "@/components/universe/universeHeading/UniverseHeading";
 import isEmpty from "lodash/isEmpty";
 import groupBy from "lodash/groupBy";
 import UniverseMembers from "@/components/universe/universeMembers/UniverseMembers";
 import { workTypesOrder } from "@/lib/enums_MaterialTypes";
+import { encodeString } from "@/lib/utils";
 
 const allowedLanguages = new Set(["dansk", "engelsk", "ukendt sprog"]);
 const uncategorisedLangauges = new Set(["flere sprog"]);
@@ -28,13 +28,7 @@ function filterOnlyWantedLanguages(singleEntry) {
 export default function UniversePage() {
   const router = useRouter();
 
-  const { workId, universeNumber: universeNumberAsString } = router.query;
-
-  const universeNumber = parseInt(
-    isArray(universeNumberAsString)
-      ? universeNumberAsString?.[0]
-      : universeNumberAsString
-  );
+  const { workId, universeTitle } = router.query;
 
   const {
     data: universeData,
@@ -42,29 +36,31 @@ export default function UniversePage() {
     error: universeError,
   } = useData(workId && universeFragments.universes({ workId: workId }));
 
+  const universes = universeData?.work?.universes;
+  const specificUniverse = universes?.find(
+    (universe) => encodeString(universe?.title) === universeTitle
+  );
+
   useEffect(() => {
-    const chosenUniverse = universeData?.work?.universes?.[universeNumber];
+    if (universes?.length === 0) {
+      router?.replace(`/work/${workId}`);
+    }
 
-    if (!universeIsLoading && (!chosenUniverse || isEmpty(chosenUniverse))) {
-      if (universeNumber === 0) {
-        router?.replace(`/work/${workId}`);
-      }
-
+    if (
+      !universeIsLoading &&
+      universes?.length > 0 &&
+      (!specificUniverse || isEmpty(specificUniverse))
+    ) {
       router?.replace({
         pathname: router.pathname,
-        query: { ...router.query, universeNumber: 0 },
+        query: {
+          ...router.query,
+          universeTitle: encodeString(universes?.[0]?.title),
+        },
       });
     }
-  }, [
-    universeIsLoading,
-    universeNumber,
-    universeData?.work?.universes?.[universeNumber]?.length,
-  ]);
+  }, [universeIsLoading, universeTitle, JSON.stringify(universes)]);
 
-  const universes = universeData?.work?.universes;
-  const specificUniverse = universes?.[universeNumber];
-
-  // TODO: Temporary fix that gives seriesInUniverse a random workType
   const seriesInUniverse = groupBy(
     specificUniverse?.series
       .filter(filterOnlyWantedLanguages)

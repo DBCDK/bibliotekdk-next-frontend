@@ -1,4 +1,6 @@
 import {
+  agesFormatterAndComparitor,
+  agesIndices,
   dummy__generalmaterialTypes,
   dummy__languages,
   publicationYearFormatterAndComparitor,
@@ -13,9 +15,13 @@ export const DropdownIndicesEnum = {
   MATERIAL_TYPES_SPECIFIC: "phrase.specificmaterialtype",
   MATERIAL_TYPES_GENERAL: "phrase.generalmaterialtype",
   PUBLICATION_YEAR: "publicationyear",
+  AGES: "ages",
 };
 
-const specialIndices = new Set([DropdownIndicesEnum.PUBLICATION_YEAR]);
+const specialIndices = new Set([
+  DropdownIndicesEnum.PUBLICATION_YEAR,
+  DropdownIndicesEnum.AGES,
+]);
 const specialFormTypes = new Set([FormTypeEnum.ACTION_LINK_CONTAINER]);
 
 /**
@@ -82,6 +88,7 @@ export function formattersAndComparitors(indexName) {
   const withFormatters = {
     [DropdownIndicesEnum.PUBLICATION_YEAR]:
       publicationYearFormatterAndComparitor,
+    [DropdownIndicesEnum.AGES]: agesFormatterAndComparitor,
   };
 
   const specificFormatter = withFormatters?.[indexName];
@@ -96,6 +103,9 @@ export function formattersAndComparitors(indexName) {
       : (value) => value,
     getPrintValue: !!specificFormatter?.getPrintValue
       ? specificFormatter?.getPrintValue
+      : (value) => value,
+    getSelectedPresentation: !!specificFormatter?.getSelectedPresentation
+      ? specificFormatter?.getSelectedPresentation
       : (value) => value,
   };
 }
@@ -127,7 +137,12 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }) {
     indexName: DropdownIndicesEnum.PUBLICATION_YEAR,
   };
 
-  return [...res, publicationYears].map((dropdownUnit) =>
+  const ages = {
+    items: agesIndices(),
+    indexName: DropdownIndicesEnum.AGES,
+  };
+
+  return [...res, publicationYears, ages].map((dropdownUnit) =>
     getDropdownFromUrl({
       initDropdowns: initDropdowns,
       dropdownUnit: dropdownUnit,

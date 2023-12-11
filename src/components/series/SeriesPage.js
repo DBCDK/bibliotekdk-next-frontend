@@ -6,19 +6,13 @@ import SeriesHeading from "@/components/series/seriesHeading/SeriesHeading";
 import OtherWorksByTheAuthor from "@/components/series/otherWorksByTheAuthor/OtherWorksByTheAuthor";
 import SeriesMembers from "@/components/series/seriesMembers/SeriesMembers";
 import Custom404 from "@/pages/404";
-import isArray from "lodash/isArray";
 import { useEffect } from "react";
+import { encodeString } from "@/lib/utils";
 
 export default function SeriesPage() {
   const router = useRouter();
 
-  const { workId, seriesNumber: seriesNumberAsString } = router.query;
-
-  const seriesNumber = parseInt(
-    isArray(seriesNumberAsString)
-      ? seriesNumberAsString?.[0]
-      : seriesNumberAsString
-  );
+  const { workId, seriesTitle } = router.query;
 
   const {
     data: seriesData,
@@ -26,27 +20,30 @@ export default function SeriesPage() {
     error: seriesError,
   } = useData(workId && workFragments.series({ workId: workId }));
 
+  const series = seriesData?.work?.series;
+  const specificSeries = series?.find(
+    (singleSeries) => encodeString(singleSeries.title) === seriesTitle
+  );
+
   useEffect(() => {
-    const chosenSeries = seriesData?.work?.series?.[seriesNumber];
+    if (series?.length === 0) {
+      router?.replace(`/work/${workId}`);
+    }
 
-    if (!seriesIsLoading && (!chosenSeries || chosenSeries?.length === 0)) {
-      if (seriesNumber === 0) {
-        router?.replace(`/work/${workId}`);
-      }
-
+    if (
+      !seriesIsLoading &&
+      series?.length > 0 &&
+      (!specificSeries || specificSeries?.length === 0)
+    ) {
       router?.replace({
         pathname: router.pathname,
-        query: { ...router.query, seriesNumber: 0 },
+        query: {
+          ...router.query,
+          seriesTitle: encodeString(series?.[0]?.title),
+        },
       });
     }
-  }, [
-    seriesIsLoading,
-    seriesNumber,
-    seriesData?.work?.series?.[seriesNumber]?.length,
-  ]);
-
-  const series = seriesData?.work?.series;
-  const specificSeries = series?.[seriesNumber];
+  }, [seriesIsLoading, seriesTitle, JSON.stringify(series)]);
 
   if (seriesError) {
     return <Custom404 />;

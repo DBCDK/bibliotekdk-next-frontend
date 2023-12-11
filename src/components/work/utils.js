@@ -172,14 +172,3 @@ export function useRelevantAccessesForOrderPage(selectedPids) {
     hasDigitalAccess: hasDigitalAccess,
   };
 }
-
-export function linkToSeries({ series, index, workId }) {
-  return {
-    pathname: "/serie/[seriesTitle]/[workId]/[seriesNumber]",
-    query: {
-      seriesTitle: series?.title,
-      workId: workId,
-      seriesNumber: index,
-    },
-  };
-}

@@ -90,8 +90,16 @@
         "en": "Publication year"
       },
       "all_publicationyear": {
-        "da": "Alle udgivelsesår",
+        "da": "Alle år",
         "en": "All publication years"
+      },
+      "ages": {
+        "da": "Aldersgruppe",
+        "en": "Audience"
+      },
+      "all_ages": {
+        "da": "Alle aldersgrupper",
+        "en": "All audiences"
       },
       "search_dropdown": {
         "da": "Søg i %s...",
@@ -105,6 +113,10 @@
         "da": "Seneste %s år",
         "en": "Last %s years"
       },
+      "for_x_y_years": {
+        "da": "For %s-%s-årige",
+        "en": "For %s-%s years"
+      },
       "to_range": {
         "da": "Til",
         "en": "To"
@@ -112,6 +124,10 @@
       "from_range": {
         "da": "Fra",
         "en": "From"
+      },
+      "years_old": {
+        "da": "-årige",
+        "en": " years old"
       }
     },
     "logo": {
@@ -1960,12 +1976,16 @@
         "da": "Avanceret søgning",
         "en": "Advanced Search"
       },
+      "advancedSearch_button": {
+        "da": "Søg avanceret",
+        "en": "Search advanced"
+      },
       "advanced": {
         "da": "Avanceret",
         "en": "Advanced"
       },
       "addLine": {
-        "da": "Tilføj line",
+        "da": "Tilføj linje",
         "en": "Add field"
       },
       "advanced-dropdown-term.default": {
@@ -2905,6 +2925,10 @@
       "order-message-library": {
         "da": "Du får besked fra dit bibliotek når materialet er klar til afhentning",
         "en": "You will be notified by your library when the material is ready for collection"
+      },
+      "order-message-library-plural": {
+        "da": "Du får besked fra dit bibliotek når materialerne er klar til afhentning",
+        "en": "You will be notified by your library when the materials are ready for collection"
       },
       "order-success": {
         "da": "Bestillingen blev gennemført",

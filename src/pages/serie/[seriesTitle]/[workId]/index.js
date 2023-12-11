@@ -1,18 +1,8 @@
 import { fetchAll } from "@/lib/api/apiServerOnly";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
+import SeriesPage from "@/components/series/SeriesPage";
 
 export default function Wrap() {
-  const router = useRouter();
-
-  useEffect(() => {
-    if (router && !router.query.hasOwnProperty("seriesNumber")) {
-      router?.replace({
-        pathname: router.pathname + "/[seriesNumber]",
-        query: { ...router.query, seriesNumber: 0 },
-      });
-    }
-  }, [router?.query]);
+  return <SeriesPage />;
 }
 
 /**

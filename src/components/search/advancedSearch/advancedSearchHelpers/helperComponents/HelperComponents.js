@@ -12,6 +12,7 @@ import Input from "@/components/base/forms/input";
 import { ToggleMenuItemsEnum } from "@/components/search/advancedSearch/advancedSearchHelpers/dropdownReducerFunctions";
 import styles from "./HelperComponents.module.css";
 import Link from "@/components/base/link";
+import { formattersAndComparitors } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
 
 /** @typedef {("CHECKBOX"|"RADIO_BUTTON"|"RADIO_LINK"|"DIVIDER")} FormType */
 export const FormTypeEnum = Object.freeze({
@@ -207,6 +208,8 @@ export function TogglerContent({
   indexName,
   indexPlaceholder,
 }) {
+  const { getSelectedPresentation } = formattersAndComparitors(indexName);
+
   const selectedItems = menuItemsState.filter((item) => item.isSelected);
 
   const menuItemsFormType = menuItemsState.map((item) => item.formType);
@@ -217,8 +220,7 @@ export function TogglerContent({
       return (
         <Text tag="span" className={styles.toggler_content}>
           <Text tag="span" type="text4" className={styles.label_count}>
-            {`${selectedItems?.[0]?.value?.lower || ""} - 
-              ${selectedItems?.[0]?.value?.upper || ""}`}
+            {getSelectedPresentation(selectedItems?.[0]?.value)}
           </Text>
         </Text>
       );
@@ -237,7 +239,12 @@ export function TogglerContent({
 
   // When nothing is selected, we show the placeholder or indexName
   return (
-    <Text tag="div" type="text3" dataCy="menu-title">
+    <Text
+      className={cx(styles.menuButton__text)}
+      tag="span"
+      type="text3"
+      dataCy="menu-title"
+    >
       {indexPlaceholder || indexName}
     </Text>
   );

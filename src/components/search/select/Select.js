@@ -11,6 +11,7 @@ import useQ from "@/components/hooks/useQ";
 import { useRouter } from "next/router";
 import FilterButton from "../filterButton";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import cx from "classnames";
 
 export function Desktop({ options = [], onSelect, selected, className }) {
   return (
@@ -42,7 +43,9 @@ export function Desktop({ options = [], onSelect, selected, className }) {
               tabIndex="-1"
               data-cy={`item-${elem}`}
               key={`materialdropdown-${elem}`}
-              className={styles.dropdownitem}
+              className={cx(styles.dropdownitem, {
+                [styles.selectedItem]: selected === elem,
+              })}
               onClick={() => {
                 onSelect(elem);
               }}

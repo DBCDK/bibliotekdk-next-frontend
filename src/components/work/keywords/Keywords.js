@@ -25,14 +25,8 @@ import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
  * @returns {string}
  */
 export function subjectUrl(keyword) {
-  const subjectField = {
-    value: keyword,
-    prefixLogicalOperator: null,
-    searchIndex: "term.subject",
-  };
-
   // we now search subjects in advanced search
-  return getAdvancedUrl({ inputField: subjectField });
+  return getAdvancedUrl({ type: "subject", value: keyword });
 }
 
 /**

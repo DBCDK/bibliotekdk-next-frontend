@@ -17,13 +17,14 @@ import DropdownInputs from "@/components/search/advancedSearch/dropdownInputs/Dr
 import { convertStateToCql } from "@/components/search/advancedSearch/utils";
 import IconButton from "@/components/base/iconButton/IconButton";
 import { getHelpUrl } from "@/lib/utils";
+import cx from "classnames";
 
 /**
  * Contains advanced search fields
  * @returns {React.JSX.Element}
  */
 
-export default function AdvancedSearch() {
+export default function AdvancedSearch({ ariaExpanded, className }) {
   const router = useRouter();
 
   const {
@@ -74,7 +75,12 @@ export default function AdvancedSearch() {
   console.log("Resulting cql after search (with added line breaks)", parsedCQL);
 
   return (
-    <div className={styles.background}>
+    <div
+      // We use areaExpanded for showing
+      //   the className
+      aria-expanded={ariaExpanded}
+      className={cx(styles.background, className)}
+    >
       <Container fluid className={styles.container}>
         <Row className={styles.topContainer}>
           <Col md={{ offset: 3, span: 4 }} sm={12}>
@@ -155,35 +161,41 @@ export default function AdvancedSearch() {
             md={{ offset: 3, span: 5 }}
             sm={12}
           >
-            <Button className={styles.button} onClick={doAdvancedSearch}>
-              {Translate({ context: "header", label: "search" })}
-            </Button>
-            <Link
-              border={{ bottom: { keepVisible: true } }}
-              onClick={() => {
-                resetObjectState();
-                router.push({ pathname: router.pathname });
-              }}
+            <Button
+              className={styles.button}
+              size="medium"
+              onClick={doAdvancedSearch}
             >
-              {Translate({ context: "search", label: "clearSearch" })}
-            </Link>
+              {Translate({ context: "search", label: "advancedSearch_button" })}
+            </Button>
+            <Text type="text3">
+              <Link
+                border={{ bottom: { keepVisible: true } }}
+                onClick={() => {
+                  resetObjectState();
+                  router.push({ pathname: router.pathname });
+                }}
+              >
+                {Translate({ context: "search", label: "clearSearch" })}
+              </Link>
+            </Text>
           </Col>
 
           <Col md={4} sm={12} className={styles.helpLink}>
-            <Link
-              href={getHelpUrl("saadan-soeger-du-i-bibliotek-dk", "42")}
-              border={{
-                top: false,
-                bottom: {
-                  keepVisible: true,
-                },
-              }}
-              target="_blank"
-            >
-              <Text type="text3" tag="span">
+            <Text type="text3" tag="span">
+              <Link
+                href={getHelpUrl("saadan-soeger-du-i-bibliotek-dk", "42")}
+                border={{
+                  top: false,
+                  bottom: {
+                    keepVisible: true,
+                  },
+                }}
+                target="_blank"
+              >
                 {Translate({ context: "search", label: "helpAndGuidance" })}
-              </Text>
-            </Link>
+              </Link>
+            </Text>
           </Col>
         </Row>
       </Container>

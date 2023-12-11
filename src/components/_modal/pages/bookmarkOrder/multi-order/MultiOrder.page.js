@@ -56,7 +56,7 @@ const MultiOrder = ({ context }) => {
   const { loanerInfo } = useLoanerInfo();
   const orderMutation = useMutate();
   const [isCreatingOrders, setIsCreatingOrders] = useState(false);
-  const [duplicateBookmarkIds, setDuplicateBookmarkIds] = useState([]);
+  const [duplicateBookmarkIds, setDuplicateBookmarkIds] = useState([]); //used to manage warning for duplicate orders without removing duplicate ids from browser storage
   const pickupBranch = useRef(); // Pickup branch from checkout form
 
   useEffect(() => {
@@ -155,6 +155,7 @@ const MultiOrder = ({ context }) => {
         materialsNotAllowed: materialsNotAvailable?.length ?? 0,
         materialsMissingAction: materialsNeedsInfo?.length ?? 0,
         duplicateOrders: duplicateOrders?.length ?? 0,
+        numberMaterialsToOrder: materialsToOrder?.length ?? 0,
       });
     }, 300);
 
