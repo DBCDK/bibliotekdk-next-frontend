@@ -1,31 +1,17 @@
 import { useEffect, useState } from "react";
 import { LogicalOperatorsEnum } from "@/components/search/enums";
 import { getInitialInputFields } from "@/components/search/advancedSearch/advancedSearchContext";
-import { useRouter } from "next/router";
 
 export function useInputFields({ fieldSearchFromUrl }) {
   //prefixLogicalOperator is an enum of AND, OR , NOT
   /** @typedef {("AND"|"OR"|"NOT"|null)} PrefixLogicalOperator */
   /** @typedef {{value: string, prefixLogicalOperator: PrefixLogicalOperator, searchIndex: string}} InputField */
   const [/** @type Array.<InputField> */ inputFields, setInputFields] =
-    useState(fieldSearchFromUrl.inputFields || getInitialInputFields());
+    useState([]);
 
-  const router = useRouter();
-
-  // update inputfields when url changes
   useEffect(() => {
-    const fields = router?.query?.fieldSearch || null;
-    let inputFromUrl;
-    try {
-      inputFromUrl = JSON.parse(fields);
-    } catch (e) {
-      inputFromUrl = null;
-    }
-
-    if (inputFromUrl?.inputFields) {
-      setInputFields(inputFromUrl?.inputFields);
-    }
-  }, [router?.query?.fieldSearch]);
+    setInputFields(fieldSearchFromUrl.inputFields || getInitialInputFields());
+  }, [JSON.stringify(fieldSearchFromUrl)]);
 
   /**
    * Add an extra input field
