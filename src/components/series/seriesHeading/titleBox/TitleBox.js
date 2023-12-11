@@ -14,13 +14,7 @@ import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
 export function LinkToCreator({ creator, isLoading }) {
   // @TODO .. do we need some refactoring ?? - this inputfield is
   // used manywhere :)
-  const href = getAdvancedUrl({
-    inputField: {
-      value: creator,
-      prefixLogicalOperator: null,
-      searchIndex: "term.function",
-    },
-  });
+  const href = getAdvancedUrl({ type: "creator", value: creator });
 
   return (
     <Link
