@@ -150,21 +150,21 @@ export default function TopBar() {
           </Col>
 
           <Col xs={12} lg={2} className={styles.edit_search}>
-            <Link
-              onClick={() => {
-                setShowPopover(true);
-              }}
-              border={{
-                top: false,
-                bottom: {
-                  keepVisible: true,
-                },
-              }}
-            >
-              <Text type="text3" tag="span">
+            <Text type="text3" tag="span">
+              <Link
+                onClick={() => {
+                  setShowPopover(true);
+                }}
+                border={{
+                  top: false,
+                  bottom: {
+                    keepVisible: true,
+                  },
+                }}
+              >
                 {Translate({ context: "search", label: "editSearch" })}
-              </Text>
-            </Link>
+              </Link>
+            </Text>
           </Col>
         </Row>
       </Container>

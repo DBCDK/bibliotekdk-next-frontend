@@ -92,17 +92,6 @@ export default function AdvancedSearchProvider({ children, router }) {
   } = useDropdownSearchIndices({ ...fieldSearchFromUrl });
 
   //// ---- parsedCQL ----
-  //field search valued parsed as cql. Will be shown in cql input view.
-  const [parsedCQL, setParsedCQL] = useState(
-    cqlFromUrl ||
-      convertStateToCql({
-        inputFields: fieldSearchFromUrl.inputFields || getInitialInputFields(),
-        dropdownSearchIndices:
-          fieldSearchFromUrl.dropdownSearchIndices ||
-          getDefaultDropdownIndices(),
-      })
-  );
-
   //only add inputFields to object if there are values
   const cleanInputFields = inputFields.filter((el) => !isEmpty(el.value));
 
@@ -118,13 +107,15 @@ export default function AdvancedSearchProvider({ children, router }) {
   //if object is empty, return empty string. Otherwise stringify state.
   const stateToString = !isEmpty(state) ? JSON.stringify(state) : "";
 
+  const [parsedCQL, setParsedCQL] = useState("");
+
   useEffect(() => {
     const updatedCql = convertStateToCql({
       inputFields,
       dropdownSearchIndices,
     });
-    setParsedCQL(updatedCql);
-  }, [inputFields]);
+    setParsedCQL(cqlFromUrl || updatedCql);
+  }, [inputFields, dropdownSearchIndices, cqlFromUrl]);
 
   //// ---- DONE: parsedCQL ----
 

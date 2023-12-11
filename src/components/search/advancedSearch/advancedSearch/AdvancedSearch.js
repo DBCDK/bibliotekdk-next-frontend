@@ -170,20 +170,20 @@ export default function AdvancedSearch() {
           </Col>
 
           <Col md={4} sm={12} className={styles.helpLink}>
-            <Link
-              href={getHelpUrl("saadan-soeger-du-i-bibliotek-dk", "42")}
-              border={{
-                top: false,
-                bottom: {
-                  keepVisible: true,
-                },
-              }}
-              target="_blank"
-            >
-              <Text type="text3" tag="span">
+            <Text type="text3" tag="span">
+              <Link
+                href={getHelpUrl("saadan-soeger-du-i-bibliotek-dk", "42")}
+                border={{
+                  top: false,
+                  bottom: {
+                    keepVisible: true,
+                  },
+                }}
+                target="_blank"
+              >
                 {Translate({ context: "search", label: "helpAndGuidance" })}
-              </Text>
-            </Link>
+              </Link>
+            </Text>
           </Col>
         </Row>
       </Container>
