@@ -123,11 +123,15 @@ function extractFixedUrl(queryRes, ctx) {
       `materiale/${title_creator}/${workId}`
     );
 
-  return ((title_creator && title_creator !== ctx.query.title_author) ||
-    (workId && workId !== workIdFromUrl)) &&
-    fixedUrl
-    ? fixedUrl
-    : null;
+  const titleCreatorWasFixed =
+    title_creator && title_creator !== ctx.query.title_author;
+  const workIdWasFixed = workId && workId !== workIdFromUrl;
+
+  if ((titleCreatorWasFixed || workIdWasFixed) && fixedUrl) {
+    return fixedUrl;
+  }
+
+  return null;
 }
 
 /**
