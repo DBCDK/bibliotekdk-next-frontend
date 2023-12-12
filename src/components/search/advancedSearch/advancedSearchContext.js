@@ -94,12 +94,13 @@ export default function AdvancedSearchProvider({ children, router }) {
 
   //// ---- parsedCQL ----
   //only add inputFields to object if there are values
-  const cleanInputFields = inputFields.filter((el) => !isEmpty(el.value));
+  const cleanInputFields =
+    inputFields?.filter((el) => !isEmpty(el.value)) || [];
 
   //only add dropdownSearchIndices to object if there are values
-  const cleanDropdowns = dropdownSearchIndices.filter(
-    (el) => !isEmpty(el.value)
-  );
+  const cleanDropdowns =
+    dropdownSearchIndices?.filter((el) => !isEmpty(el.value)) || [];
+
   const state = {
     ...(cleanInputFields.length > 0 && { inputFields: cleanInputFields }),
     ...(cleanDropdowns.length > 0 && { dropdownSearchIndices: cleanDropdowns }),

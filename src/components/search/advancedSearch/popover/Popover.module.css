@@ -15,6 +15,10 @@
   background: var(--concrete);
 }
 
+.popoverContainer:not([aria-expanded="true"]) {
+  border: none;
+}
+
 .popoverAnimation {
   display: grid;
   grid-template-rows: 0fr;
