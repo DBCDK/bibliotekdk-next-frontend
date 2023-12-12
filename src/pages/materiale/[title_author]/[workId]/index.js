@@ -27,7 +27,7 @@ import {
   formatMaterialTypesToUrl,
 } from "@/lib/manifestationFactoryUtils";
 import { workIdToTitleCreator } from "@/lib/api/work.fragments";
-import { encodeString, encodeTitleCreator } from "@/lib/utils";
+import { encodeTitleCreator } from "@/lib/utils";
 import { fetcher } from "@/lib/api/api";
 import { getServerSession } from "@dbcdk/login-nextjs/server";
 
