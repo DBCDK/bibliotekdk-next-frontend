@@ -22,7 +22,7 @@
 
 .menuButton:hover,
 .menuButton:focus {
-  outline: solid 2px var(--blue);
+  outline: 2px solid var(--blue);
 }
 
 .menuButton[aria-expanded="true"] .icon_open {
