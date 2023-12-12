@@ -25,10 +25,6 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
   const [suggestions, setSuggestions] = useState([]);
   const inputId = `complex_suggest__${fieldValue.searchIndex}-${index}`;
 
-  console.log("inputId: ", inputId);
-  console.log("key: ", key);
-  console.log("index: ", index);
-
   const {
     handleInputFieldChange,
     removeInputField,

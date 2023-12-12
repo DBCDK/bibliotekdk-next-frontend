@@ -50,7 +50,6 @@
 .dropdowntoggle {
   position: relative;
   height: var(--pt5);
-  /*padding: var(--pt1) var(--pt1) var(--pt1) var(--pt2);*/
   padding-left: var(--pt2);
   outline: 1px solid var(--dove);
   background-color: var(--white);
