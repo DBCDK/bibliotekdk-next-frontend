@@ -294,6 +294,9 @@ const useBookmarks = process.env.STORYBOOK_ACTIVE
   : useBookmarkImpl;
 export default useBookmarks;
 
+//TODO create new usePopulateBookmarks that used workId instead of materialId to work for all bookmarks in same manner
+// and then get manifestations for the relevant pids
+
 /**
  * Used to populate bookmark data, to show more info about the materials
  * @param {Object[]} bookmarks list of bookmarks
@@ -304,6 +307,7 @@ export const usePopulateBookmarks = (bookmarks) => {
   const workIds = bookmarks?.filter((bookmark) =>
     bookmark?.materialId?.includes("work-of:")
   );
+  console.log("BOOKMARKS ", bookmarks);
 
   //specific edition
   const workPids = bookmarks?.filter(

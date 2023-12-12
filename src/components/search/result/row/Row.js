@@ -21,6 +21,7 @@ import {
   formatMaterialTypesToPresentation,
   formatMaterialTypesToUrl,
   manifestationMaterialTypeFactory,
+  formatMaterialTypesToCode,
 } from "@/lib/manifestationFactoryUtils";
 import {
   RenderLanguageAddition,
@@ -121,6 +122,12 @@ export default function ResultRow({
   const { uniqueMaterialTypes } = useMemo(() => {
     return manifestationMaterialTypeFactory(work?.manifestations?.mostRelevant);
   }, [work?.manifestations?.mostRelevant]);
+
+  const materialTypesForBookmark = uniqueMaterialTypes?.map((mat) =>
+    formatMaterialTypesToCode(mat)
+  );
+
+  console.log("materialTypesForBookmark", materialTypesForBookmark);
 
   const materialTypes = filters.materialTypesSpecific;
   uniqueMaterialTypes.sort(sortMaterialTypesByFilter(materialTypes));

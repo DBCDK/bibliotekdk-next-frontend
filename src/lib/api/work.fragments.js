@@ -614,6 +614,9 @@ export function pidsToWorks({ pids }) {
         ownerWork {
           workId
         }
+        materialTypes {
+                    ...materialTypesFragment
+                  }
         access {
           __typename
           ... on DigitalArticleService {
@@ -647,6 +650,7 @@ export function pidsToWorks({ pids }) {
         }
       }
     }
+    ${materialTypesFragment}
     `,
     variables: { pids },
     slowThreshold: 3000,

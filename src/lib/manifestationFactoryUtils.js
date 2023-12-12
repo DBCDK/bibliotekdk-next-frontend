@@ -127,7 +127,7 @@ export function formatMaterialTypesToPresentation(materialTypeArray) {
 
 export function formatMaterialTypesToCode(materialTypeArray) {
   if (!Array.isArray(materialTypeArray)) {
-    //console.log("RETURN AS IS", materialTypeArray);
+    console.log("RETURN AS IS", materialTypeArray);
     return materialTypeArray;
   }
 

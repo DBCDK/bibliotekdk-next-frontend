@@ -66,10 +66,6 @@ export const RenewedSpan = ({ textType = "text2" }) => {
 };
 
 const MaterialRow = ({ id: materialId, skeleton, type, ...props }) => {
-  console.log(
-    "props in material row",
-    props.allManifestations[0].materialTypes[0].materialTypeSpecific.display
-  );
   const breakpoint = useBreakpoint();
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
@@ -106,6 +102,12 @@ const MaterialRow = ({ id: materialId, skeleton, type, ...props }) => {
         />
       );
     case "BOOKMARK":
+      if (
+        !props?.allManifestations?.[0].materialTypes?.[0]?.materialTypeSpecific
+          ?.display
+      ) {
+        console.log("XX", props);
+      }
       return (
         <MaterialRowBookmark
           materialId={materialId}
@@ -113,7 +115,7 @@ const MaterialRow = ({ id: materialId, skeleton, type, ...props }) => {
           {...props} //TODO show display materialtype
           materialType={
             props?.allManifestations?.[0].materialTypes?.[0]
-              ?.materialTypeSpecific?.display
+              ?.materialTypeSpecific?.display || props.materialType
           }
         />
       );

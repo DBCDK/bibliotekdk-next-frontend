@@ -255,6 +255,9 @@ const BookmarkPage = () => {
     );
   }
 
+  //TODO her mangler jeg materialtypesSpecific for tidsskrifter (edition)
+  console.log("bookmarks", bookmarks);
+
   return (
     <ProfileLayout
       title={Translate({
@@ -393,7 +396,7 @@ const BookmarkPage = () => {
             hasCheckbox={!isMobile || activeStickyButton !== null}
             title={bookmark?.titles?.main[0] || ""}
             creator={bookmark?.creators[0]?.display}
-            materialType={bookmark.materialType}
+            materialType={bookmark.materialType} //HERE change to pretty visning --> editions dont have mostRelevant , here an fbi api method woudl come handy
             image={
               bookmark?.cover?.thumbnail ??
               bookmark?.manifestations?.bestRepresentation?.cover?.thumbnail
