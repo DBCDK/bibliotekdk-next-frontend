@@ -89,6 +89,7 @@ function HistoryHeaderActions({
   deleteSelected,
   checked,
   partiallyChecked,
+  disabled,
 }) {
   return (
     <div className={cx(styles.actionheader)}>
@@ -100,7 +101,7 @@ function HistoryHeaderActions({
         id="selectall"
         className={styles.checkbox}
         checked={checked}
-        disabled={!partiallyChecked}
+        disabled={disabled}
       />
       <label htmlFor="selectall">
         <Text type="text3" className={styles.action}>
@@ -110,10 +111,13 @@ function HistoryHeaderActions({
 
       <Link
         className={cx(styles.flex, {
-          [styles.disabled_link]: !partiallyChecked,
+          [styles.disabled_link]: !partiallyChecked || disabled,
         })}
-        border={{ top: false, bottom: { keepVisible: partiallyChecked } }}
-        disabled={!partiallyChecked}
+        border={{
+          top: false,
+          bottom: { keepVisible: partiallyChecked && !disabled },
+        }}
+        disabled={disabled}
         onClick={(e) => {
           e.preventDefault();
           deleteSelected();
@@ -221,8 +225,9 @@ export function AdvancedSearchHistory() {
       <HistoryHeaderActions
         deleteSelected={onDeleteSelected}
         setAllChecked={setAllChecked}
-        checked={storedValue.length === checkboxList.length}
+        checked={storedValue?.length === checkboxList?.length}
         partiallyChecked={checkboxList.length > 0}
+        disabled={storedValue.length === 0}
       />
       <HistoryHeader />
       {storedValue?.map((item, index) => {
