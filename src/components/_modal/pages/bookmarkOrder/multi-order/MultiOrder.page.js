@@ -14,6 +14,22 @@ import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 const CONTEXT = "bookmark-order";
 
+const formatArticleForm = (formData, pid) => {
+  if (!formData || !pid) return null;
+
+  const { publicationDateOfComponent, authorOfComponent, titleOfComponent } =
+    formData;
+
+  return {
+    pid,
+    publicationDateOfComponent,
+    volumeOfComponent: formData.volume,
+    authorOfComponent,
+    titleOfComponent,
+    pagesOfComponent: formData.pagination,
+  };
+};
+
 const createOrders = async ({
   materials,
   pickupBranch,
@@ -21,7 +37,6 @@ const createOrders = async ({
   periodicaForms,
   orderMutation,
 }) => {
-  console.log("SUBMITMULTIpleORDERS", pickupBranch.branchId);
   await orderMutation.post(
     orderMutations.submitMultipleOrders({
       materialsToOrder: materials.map((material) => {
@@ -32,13 +47,16 @@ const createOrders = async ({
           : filterForRelevantMaterialTypes(
               material?.manifestations?.mostRelevant,
               material?.materialType
-            ).map((mani) => mani.pid);
+            ).map((mani) => mani.pid); //TODO BIBDK2021-2214
         const periodicaFormForMaterial = periodicaForms?.[material.key];
-        const mergedFormData = { ...periodicaFormForMaterial, pid: pids[0] };
+        const articleForm = formatArticleForm(
+          periodicaFormForMaterial,
+          pids[0]
+        );
         return {
           pids,
           key: material.key,
-          periodicaForm: periodicaFormForMaterial ? mergedFormData : undefined,
+          periodicaForm: articleForm ? articleForm : undefined,
         };
       }),
       branchId: pickupBranch.branchId,
