@@ -54,7 +54,7 @@ const createOrders = async ({
           pids[0]
         );
         return {
-          pids: pids[0],
+          pids,
           key: material.key,
           periodicaForm: articleForm ? articleForm : undefined,
         };
