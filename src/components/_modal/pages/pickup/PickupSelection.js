@@ -132,11 +132,13 @@ export default function PickupSelection(props) {
 
   const loadedOrderPolicies = useRef({});
   const render = useState()[1];
-
   // Incrementally creates a list of allowed branches as policies load one by one,
   // keeping the order of the original result
   let allPoliciesLoaded = !isLoading;
 
+  //policies are only checked for single orders currently, since they check for pids
+  // if we did this for multiorder, we could potentially block a branch for all orders,
+  // eventhough only one order is not possible on that specific branch
   const orderPossibleBranches =
     data?.result?.filter((branch) => {
       if (!allPoliciesLoaded) {
@@ -159,10 +161,33 @@ export default function PickupSelection(props) {
       )) ||
     [];
 
+  //for multiorder, we look at pickupAllowed since we dont have policies
+  const pickUpAllowedBranches =
+    data?.result?.filter((branch) => branch.pickupAllowed) || [];
+
+  const pickUpNotAllowedBranches =
+    data?.result?.filter((branch) => !branch.pickupAllowed) || [];
+
+  const selectableBranches = showAllBranches
+    ? pickUpAllowedBranches
+    : orderPossibleBranches;
+
+  const showSelectableBranches = selectableBranches.length > 0;
+
+  const nonSelectableBranches = showAllBranches
+    ? pickUpNotAllowedBranches
+    : orderNotPossibleBranches;
+
+  const showNonSelectableBranches = nonSelectableBranches.length > 0;
+
   const hasMoreMessage =
     allPoliciesLoaded &&
     data?.hitcount > data?.result?.length &&
     Translate({ context: "order", label: "has-more-pickup" });
+
+  //we dont show "Tjekker om der er flere mulige afhentningssteder ...", for multiorder (=showAllBranches)
+  // since we dont look at policies for multiorder
+  const showWaitingForPolicies = !allPoliciesLoaded && !showAllBranches;
 
   return (
     <>
@@ -186,38 +211,36 @@ export default function PickupSelection(props) {
           );
         })}
 
-      {(showAllBranches || orderPossibleBranches.length > 0) && (
+      {showSelectableBranches && (
         <List.Group
           enabled={!isLoading && isVisible}
           data-cy="list-branches"
           className={styles.orderPossibleGroup}
           disableGroupOutline
         >
-          {(showAllBranches ? data?.result : orderPossibleBranches).map(
-            (branch, idx) => {
-              return (
-                <Row
-                  key={`${branch.branchId}-${idx}`}
-                  branch={branch}
-                  selected={selected}
-                  onSelect={(branch) =>
-                    handleOnSelect({
-                      branch: branch,
-                      modal: modal,
-                      context: context,
-                      updateLoanerInfo: updateLoanerInfo,
-                    })
-                  }
-                  modal={modal}
-                  isLoading={isLoading}
-                  includeArrows={includeArrows}
-                />
-              );
-            }
-          )}
+          {selectableBranches.map((branch, idx) => {
+            return (
+              <Row
+                key={`${branch.branchId}-${idx}`}
+                branch={branch}
+                selected={selected}
+                onSelect={(branch) =>
+                  handleOnSelect({
+                    branch: branch,
+                    modal: modal,
+                    context: context,
+                    updateLoanerInfo: updateLoanerInfo,
+                  })
+                }
+                modal={modal}
+                isLoading={isLoading}
+                includeArrows={includeArrows}
+              />
+            );
+          })}
         </List.Group>
       )}
-      {!allPoliciesLoaded && (
+      {showWaitingForPolicies && (
         <Text type="text2" className={styles.loadingText}>
           {Translate({ context: "order", label: "check-policy-loading" })}
         </Text>
@@ -227,13 +250,14 @@ export default function PickupSelection(props) {
           {hasMoreMessage}
         </Text>
       )}
-      {orderNotPossibleBranches.length > 0 && (
+      {/** show pickup not allowed branches here  */}
+      {showNonSelectableBranches && (
         <>
           <Text type="text1" className={styles.pickupNotAllowedTitle}>
             {Translate({ context: "order", label: "pickup-not-allowed" })}
           </Text>
           <ul>
-            {orderNotPossibleBranches.map((branch, idx) => {
+            {nonSelectableBranches.map((branch, idx) => {
               return (
                 <li key={`${branch.branchId}-${idx}`}>
                   <Text type="text3">{branch.name}</Text>
