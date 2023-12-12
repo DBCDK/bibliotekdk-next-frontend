@@ -78,6 +78,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     handleLogicalOperatorChange,
     handleInputFieldChange,
     handleIndexChange,
+    // @TODO - delete ?
     // resetInputFields,
   } = useInputFields({
     fieldSearchFromUrl: { ...fieldSearchFromUrl },
@@ -88,6 +89,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     dropdownUnits,
     dropdownSearchIndices,
     updateDropdownSearchIndices,
+    // @TODO - delete ?
     // resetDropdownIndices,
   } = useDropdownSearchIndices({ ...fieldSearchFromUrl });
 
