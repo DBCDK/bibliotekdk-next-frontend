@@ -22,12 +22,12 @@
 .popoverAnimation {
   display: grid;
   grid-template-rows: 0fr;
-  transition: 300ms ease-in;
+  transition: 300ms ease-out;
 }
 
 .popoverAnimation[aria-expanded="true"] {
   grid-template-rows: 1fr;
-  transition: 300ms ease-out !important;
+  transition: 300ms ease-in;
 }
 .advancedSearch {
   overflow: hidden;
