@@ -65,13 +65,13 @@
   background-color: var(--concrete);
   visibility: hidden;
   opacity: 0;
-  transition: 0.25s ease;
+  transition: 0.5s ease;
 
 }
 
 .showTriangle{
   visibility: visible;
   opacity: 1;
-  transition: 0.25s ease;
+  transition: 0.3s ease;
 
 }
