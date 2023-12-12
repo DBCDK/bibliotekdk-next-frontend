@@ -22,26 +22,15 @@
 .popoverAnimation {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 300ms ease-out;
+  transition: 300ms ease-in;
 }
 
 .popoverAnimation[aria-expanded="true"] {
   grid-template-rows: 1fr;
+  transition: 300ms ease-out !important;
 }
-
-.popoverAnimation_advancedSearch {
+.advancedSearch {
   overflow: hidden;
-}
-
-.popoverAnimation_advancedSearch[aria-expanded="true"] {
-  overflow: visible;
-  animation: 400ms overflowToggle;
-}
-
-@keyframes overflowToggle {
-  from {
-    overflow: hidden;
-  }
 }
 
 .triggercontainer {
@@ -74,4 +63,15 @@
   height: 30px;
   clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
   background-color: var(--concrete);
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.25s ease;
+
+}
+
+.showTriangle{
+  visibility: visible;
+  opacity: 1;
+  transition: 0.25s ease;
+
 }

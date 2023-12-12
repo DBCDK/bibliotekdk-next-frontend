@@ -24,7 +24,7 @@ import cx from "classnames";
  * @returns {React.JSX.Element}
  */
 
-export default function AdvancedSearch({ ariaExpanded, className }) {
+export default function AdvancedSearch({ className }) {
   const router = useRouter();
 
   const {
@@ -71,14 +71,8 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
     setShowPopover(false);
   };
 
-
   return (
-    <div
-      // We use areaExpanded for showing
-      //   the className
-      aria-expanded={ariaExpanded}
-      className={cx(styles.background, className)}
-    >
+    <div className={cx(styles.background, className)}>
       <Container fluid className={styles.container}>
         <Row className={styles.topContainer}>
           <Col md={{ offset: 3, span: 4 }} sm={12}>
