@@ -56,7 +56,6 @@ export default function AdvancedSearchProvider({ children, router }) {
     sort: sortFromUrl = "",
   } = router.query;
   const fieldSearchFromUrl = fieldSearch && JSON.parse(fieldSearch);
-
   const sort = sortFromUrl && JSON.parse(sortFromUrl);
 
   //// ----  Popup Trigger ----
@@ -116,15 +115,17 @@ export default function AdvancedSearchProvider({ children, router }) {
       inputFields,
       dropdownSearchIndices,
     });
+
     setParsedCQL(cqlFromUrl || updatedCql);
   }, [inputFields, dropdownSearchIndices, cqlFromUrl]);
 
   //// ---- DONE: parsedCQL ----
 
-  function resetObjectState() {
-    resetInputFields();
-    resetDropdownIndices();
-  }
+  // @TODO - delete ?
+  // function resetObjectState() {
+  //   resetInputFields();
+  //   resetDropdownIndices();
+  // }
 
   /** @typedef {{
         inputFields: Array.<InputField>,
@@ -161,7 +162,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     dropdownUnits,
     dropdownSearchIndices,
     updateDropdownSearchIndices,
-    resetObjectState,
+    // resetObjectState,
     parsedCQL,
     setParsedCQL,
     fieldSearchFromUrl,

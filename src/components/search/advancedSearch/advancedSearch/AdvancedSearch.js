@@ -30,7 +30,6 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
   const {
     inputFields,
     dropdownSearchIndices,
-    resetObjectState,
     parsedCQL,
     setParsedCQL,
     cqlFromUrl,
@@ -39,12 +38,12 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
     stateToString,
   } = useAdvancedSearchContext();
 
-  const [showCqlEditor, setShowCqlEditor] = useState(!isEmpty(cqlFromUrl));
+  const [showCqlEditor, setShowCqlEditor] = useState(false);
   const textAreaRef = useRef(null);
 
   useEffect(() => {
-    setShowCqlEditor(!!cqlFromUrl);
-  }, [cqlFromUrl]);
+    setShowCqlEditor(router?.query?.mode === "cql" || !!cqlFromUrl);
+  }, [cqlFromUrl, router?.query?.mode]);
 
   //add raw cql query in url if showCqlEditor. Add state to url if fieldInputs
   const doAdvancedSearch = () => {
@@ -52,12 +51,10 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
       const cqlParsedFromUrl = fieldSearchFromUrl
         ? convertStateToCql(fieldSearchFromUrl)
         : cqlFromUrl;
-
-      if (parsedCQL === cqlParsedFromUrl) {
+      if (!cqlFromUrl && parsedCQL === cqlParsedFromUrl) {
         const query = { fieldSearch: stateToString };
         router.push({ pathname: "/avanceret", query });
       } else {
-        resetObjectState();
         const query = { cql: parsedCQL };
         router.push({ pathname: "/avanceret", query });
       }
@@ -172,8 +169,10 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
               <Link
                 border={{ bottom: { keepVisible: true } }}
                 onClick={() => {
-                  resetObjectState();
-                  router.push({ pathname: router.pathname });
+                  router.push({
+                    pathname: router.pathname,
+                    ...(showCqlEditor && { query: { mode: "cql" } }),
+                  });
                 }}
               >
                 {Translate({ context: "search", label: "clearSearch" })}
