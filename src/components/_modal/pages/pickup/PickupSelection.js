@@ -127,7 +127,6 @@ export default function PickupSelection(props) {
     modal,
   } = { ...props };
 
-  console.log("PickupSelection props ", data);
   // Get pid from modal context
   const { pid, requireDigitalAccess, showAllBranches } = context; //TODO is it enough to only check for ONE pid? BIBDK2021-2203
 
