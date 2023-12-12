@@ -7,10 +7,11 @@
   align-items: center;
 }
 
-.subTitle {
-  font-style: italic;
-  margin-left: var(--pt2);
-}
+/* TODO: Comment in when worktypes are ready */
+/*.subTitle {*/
+/*  font-style: italic;*/
+/*  margin-left: var(--pt2);*/
+/*}*/
 
 .flex_wrapper {
   display: flex;

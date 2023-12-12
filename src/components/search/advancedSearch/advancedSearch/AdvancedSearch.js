@@ -137,7 +137,7 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
           <Col md={3} sm={12}>
             {/**Insert material type select here */}
           </Col>
-          <Col md={7} sm={12}>
+          <Col md={9} sm={12}>
             {showCqlEditor ? (
               <CqlTextArea
                 textAreaRef={textAreaRef}
