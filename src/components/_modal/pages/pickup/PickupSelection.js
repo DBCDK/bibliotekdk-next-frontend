@@ -161,7 +161,7 @@ export default function PickupSelection(props) {
       )) ||
     [];
 
-  //for multiorder, we look at pickupAllowed since we dont want to
+  //for multiorder, we look at pickupAllowed since we dont have policies
   const pickUpAllowedBranches =
     data?.result?.filter((branch) => branch.pickupAllowed) || [];
 
