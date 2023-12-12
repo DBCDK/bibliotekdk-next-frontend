@@ -185,6 +185,10 @@ export default function PickupSelection(props) {
     data?.hitcount > data?.result?.length &&
     Translate({ context: "order", label: "has-more-pickup" });
 
+  //we dont show "Tjekker om der er flere mulige afhentningssteder ...", for multiorder (=showAllBranches)
+  // since we dont look at policies for multiorder
+  const showWaitingForPolicies = !allPoliciesLoaded && !showAllBranches;
+
   return (
     <>
       {/* This only loads order policies, does not render anything */}
@@ -236,7 +240,7 @@ export default function PickupSelection(props) {
           })}
         </List.Group>
       )}
-      {!allPoliciesLoaded && !showAllBranches && (
+      {showWaitingForPolicies && (
         <Text type="text2" className={styles.loadingText}>
           {Translate({ context: "order", label: "check-policy-loading" })}
         </Text>
