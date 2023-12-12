@@ -17,6 +17,7 @@ import { convertStateToCql } from "@/components/search/advancedSearch/utils";
 import IconButton from "@/components/base/iconButton/IconButton";
 import { getHelpUrl } from "@/lib/utils";
 import cx from "classnames";
+import isEmpty from "lodash/isEmpty";
 
 /**
  * Contains advanced search fields
@@ -35,6 +36,7 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
     fieldSearchFromUrl,
     setShowPopover,
     stateToString,
+    cqlButtonDisabled,
   } = useAdvancedSearchContext();
 
   const [showCqlEditor, setShowCqlEditor] = useState(false);
@@ -161,6 +163,10 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
               className={styles.button}
               size="medium"
               onClick={doAdvancedSearch}
+              disabled={
+                (showCqlEditor && cqlButtonDisabled) ||
+                (!showCqlEditor && isEmpty(stateToString))
+              }
             >
               {Translate({ context: "search", label: "advancedSearch_button" })}
             </Button>

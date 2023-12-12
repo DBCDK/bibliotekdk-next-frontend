@@ -1,22 +1,85 @@
-.errorWrapper {
-  padding: 0 var(--pt1) 0 0;
-}
-
 .syntaxContainer {
   display: flex;
   flex-direction: row-reverse;
+  margin-top: var(--pt1);
 }
 
-.action {
+.popoverAnimation {
+  position: absolute;
+  max-width: 55vw;
+  display: grid;
+
+  font-size: 0;
+  color: transparent;
+  grid-template-rows: 0fr;
+  grid-template-columns: 0fr;
+
+  transition: all 500ms ease-out, font-size 200ms ease-out;
+}
+
+.popoverAnimation[aria-expanded="true"] {
+  font-size: 17px;
+  color: var(--mine-shaft);
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
+
+  outline: 1px solid var(--blue);
+}
+
+.popoverAnimation_advancedSearch {
+  grid-area: popoverAnimation_advancedSearch;
+  overflow: hidden;
+  display: grid;
+  grid-auto-columns: 1fr var(--pt3);
+  grid-template-areas:
+    "explanation action_container"
+    "location location"
+    "full full";
+}
+
+.action_container {
+  overflow: hidden;
+  opacity: 100%;
+  grid-area: action_container;
+  padding: var(--pt05);
+  justify-items: end;
+
   cursor: pointer;
 }
 
-.errorFull {
-  padding: 0 var(--pt2);
-  background-color: var(--white);
+.action_container[aria-expanded="true"] {
+  background-color: var(--error-light);
 }
 
-.errorMessage {
-  padding: var(--pt2);
+.action_container[data-unclickable="true"] {
+  cursor: default;
+}
+
+.explanation,
+.location,
+.full {
+  overflow: hidden;
+  text-overflow: fade;
+}
+
+.explanation {
+  grid-area: explanation;
+}
+
+.location {
+  grid-area: location;
+}
+
+.full {
+  grid-area: full;
+}
+
+:is(.explanation, .location)[aria-expanded="true"] {
+  padding: var(--pt05);
   background-color: var(--error-light);
+}
+
+:is(.full)[aria-expanded="true"] {
+  padding: var(--pt05);
+  background-color: var(--white);
 }

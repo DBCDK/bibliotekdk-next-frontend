@@ -1,10 +1,11 @@
-import InfoDropdown from "@/components/base/infoDropdown/InfoDropdown";
 import { useData } from "@/lib/api/api";
 import { doComplexSearchAll } from "@/lib/api/complexSearch.fragments";
 import styles from "./CqlErrorMessage.module.css";
 import Icon from "@/components/base/icon/Icon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import isEmpty from "lodash/isEmpty";
+import cx from "classnames";
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
 function parseErrorMessage(errorMessage) {
   // first sentence of errormessage is (kind of) explanation
@@ -28,42 +29,73 @@ function parseErrorMessage(errorMessage) {
   };
 }
 
-export function CqlErrorMessage(errormessage) {
-  const [src, setSrc] = useState("status__on_shelf.svg");
-  const [showError, setShowError] = useState(false);
-  if (errormessage) {
-    setTimeout(() => {
-      setSrc("status__not_for_loan.svg");
-    }, 300);
-  } else {
-    setTimeout(() => {
-      setSrc("status__on_shelf.svg");
-    }, 300);
-  }
+const green = "status__on_shelf.svg";
+const red = "status__not_for_loan.svg";
 
-  const message = parseErrorMessage(errormessage);
+export function CqlErrorMessage({ errorMessage, isLoading, error }) {
+  const { showPopover, setCqlButtonDisabled } = useAdvancedSearchContext();
+
+  const [showCqlError, setShowCqlError] = useState(false);
+  const [src, setSrc] = useState(green);
+  const [message, setMessage] = useState({
+    explanation: "",
+    location: "",
+    full: "",
+  });
+
+  useEffect(() => {
+    if (!isLoading && !error) {
+      if (errorMessage) {
+        setSrc(red);
+        setMessage(parseErrorMessage(errorMessage));
+        setCqlButtonDisabled(true);
+      } else {
+        setSrc(green);
+        setMessage(parseErrorMessage(errorMessage));
+        setCqlButtonDisabled(false);
+      }
+    }
+  }, [errorMessage, isLoading]);
+
+  useEffect(() => {
+    if (src === green || !showPopover) {
+      setShowCqlError(false);
+    }
+  }, [src, showPopover]);
 
   return (
     <div className={styles.syntaxContainer}>
-      <Icon
-        src={src}
-        size={{ w: 2, h: "auto" }}
-        onClick={() => setShowError(!showError)}
-        className={styles.action}
-      />
-      {showError && (
-        <div className={styles.errorWrapper}>
-          <div className={styles.errorMessage}>
-            <div>{message.explanation}</div>
-            <div>{message.location}</div>
+      <div aria-expanded={showCqlError} className={cx(styles.popoverAnimation)}>
+        <div
+          aria-expanded={showCqlError}
+          data-unclickable={src === green}
+          className={cx(styles.popoverAnimation_advancedSearch)}
+        >
+          <div
+            aria-expanded={showCqlError}
+            data-unclickable={src === green}
+            className={styles.action_container}
+            hidden={!showPopover}
+          >
+            <Icon
+              src={src}
+              size={{ w: 2, h: 2 }}
+              {...(src !== green && {
+                onClick: () => setShowCqlError((prev) => !prev),
+              })}
+            />
           </div>
-          <div className={styles.errorFull}>
-            <InfoDropdown buttonText="full error message" label="Full error">
-              {message.full}
-            </InfoDropdown>
+          <div aria-expanded={showCqlError} className={styles.explanation}>
+            {message.explanation}
+          </div>
+          <div aria-expanded={showCqlError} className={styles.location}>
+            {message.location}
+          </div>
+          <div aria-expanded={showCqlError} className={styles.full}>
+            {message.full}
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }
@@ -71,5 +103,11 @@ export function CqlErrorMessage(errormessage) {
 export default function Wrap({ cql }) {
   const bigResponse = useData(doComplexSearchAll({ cql, offset: 0, limit: 1 }));
 
-  return CqlErrorMessage(bigResponse?.data?.complexSearch?.errorMessage);
+  return (
+    <CqlErrorMessage
+      errorMessage={bigResponse?.data?.complexSearch?.errorMessage}
+      isLoading={bigResponse?.isLoading}
+      error={bigResponse?.error}
+    />
+  );
 }

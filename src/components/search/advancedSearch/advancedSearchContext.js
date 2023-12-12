@@ -48,6 +48,7 @@ export function useAdvancedSearchContext() {
 
 export default function AdvancedSearchProvider({ children, router }) {
   const workType = "all";
+  const [cqlButtonDisabled, setCqlButtonDisabled] = useState();
 
   const {
     page = "1",
@@ -150,9 +151,11 @@ export default function AdvancedSearchProvider({ children, router }) {
         showInfoTooltip: boolean,
         setShowInfoTooltip: function,
         sort: Array.<{ index: string, order: string }>,
-        workType: string
-        stateToString: string
-        popoverRef: any
+        workType: string,
+        stateToString: string,
+        popoverRef: any,
+        cqlButtonDisabled: boolean,
+        setCqlButtonDisabled: function
    }} AdvancedSearchContextType */
   const value = {
     inputFields,
@@ -178,6 +181,8 @@ export default function AdvancedSearchProvider({ children, router }) {
     workType: workType,
     stateToString,
     popoverRef,
+    cqlButtonDisabled,
+    setCqlButtonDisabled,
   };
 
   return (
