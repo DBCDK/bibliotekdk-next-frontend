@@ -20,6 +20,7 @@ import Skeleton from "@/components/base/skeleton/Skeleton";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import { useMutate } from "@/lib/api/api";
+import { set } from "lodash";
 
 const CONTEXT = "bookmark";
 const ORDER_TRESHHOLD = 25;
@@ -139,6 +140,8 @@ const BookmarkPage = () => {
         sortType: sortByValue,
         orderMutation: orderMutation,
       });
+      setSuccessfullyCreatedIds([]);
+      setFailureAtCreationIds([]);
     } else {
       openLoginModal({ modal });
     }

@@ -208,6 +208,12 @@
   padding-right: 0;
 }
 
+.bookmarkOrderedIcon {
+  align-self: center;
+  height: 100%;
+  align-items: center;
+}
+
 .debtDynamicColumn {
   grid-column: 1;
 }

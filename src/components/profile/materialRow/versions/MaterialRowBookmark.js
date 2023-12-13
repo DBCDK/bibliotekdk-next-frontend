@@ -13,6 +13,7 @@ import sharedStyles from "../MaterialRow.module.css";
 import { useMemo } from "react";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
+import { TextWithCheckMark } from "../MaterialRow";
 
 /**
  *
@@ -45,7 +46,14 @@ const BookmarkColumn = ({
     <div className={sharedStyles.dynamicColumnHorizontal}>
       <div className={sharedStyles.bookmarkOrderButtonContainer}>
         {showSuccessfullyOrdered ? (
-          <Translate context="bookmark-order" label="multiorder-ordered" />
+          <TextWithCheckMark
+            text={Translate({
+              context: "bookmark-order",
+              label: "multiorder-ordered",
+            })}
+            textType="text3"
+            style={sharedStyles.bookmarkOrderedIcon}
+          />
         ) : (
           <ReservationButton
             workId={workId}

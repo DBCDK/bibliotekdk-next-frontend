@@ -7,7 +7,6 @@ import Material, { filterForRelevantMaterialTypes } from "./Material/Material";
 import { useEffect, useRef, useState } from "react";
 import { useModal } from "@/components/_modal/Modal";
 import { StatusEnum } from "@/components/base/materialcard/materialCard.utils";
-import { useMutate } from "@/lib/api/api";
 import * as orderMutations from "@/lib/api/order.mutations";
 import { setAlreadyOrdered } from "../../order/utils/order.utils";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
@@ -72,7 +71,6 @@ const MultiOrder = ({ context }) => {
   const [materialCounts, setMaterialCounts] = useState({ isAnalyzed: false });
   const [materialsToOrder, setMaterialsToOrder] = useState(materials);
   const { loanerInfo } = useLoanerInfo();
-  //const orderMutation = useMutate();
   const [isCreatingOrders, setIsCreatingOrders] = useState(false);
   const [duplicateBookmarkIds, setDuplicateBookmarkIds] = useState([]); //used to manage warning for duplicate orders without removing duplicate ids from browser storage
   const pickupBranch = useRef(); // Pickup branch from checkout form
