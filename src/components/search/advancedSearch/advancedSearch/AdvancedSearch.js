@@ -129,19 +129,21 @@ export default function AdvancedSearch({ className }) {
           <Col md={3} sm={12}>
             {/**Insert material type select here */}
           </Col>
-          <Col md={7} sm={12}>
-            {showCqlEditor ? (
+          {showCqlEditor ? (
+            <Col md={7} sm={12}>
               <CqlTextArea
                 textAreaRef={textAreaRef}
                 doAdvancedSearch={doAdvancedSearch}
               />
-            ) : (
+            </Col>
+          ) : (
+            <Col md={9} sm={12}>
               <>
                 <TextInputs doAdvancedSearch={doAdvancedSearch} />
                 <DropdownInputs />
               </>
-            )}
-          </Col>
+            </Col>
+          )}
         </Row>
         <Row className={styles.buttonRow}>
           <Col
