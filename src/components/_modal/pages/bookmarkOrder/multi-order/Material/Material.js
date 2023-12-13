@@ -53,7 +53,8 @@ export const filterForRelevantMaterialTypes = (mostRelevant, materialType) => {
  * @param {Object} periodicaForms
  * @param {String} backgroundColorOverride
  * @param {Function} setDuplicateBookmarkIds
- * @param {Boolean} appendPeriodicaRow we dont want to give user the option to enter periodica form data in list over failed orders in receipt
+ * @param {Boolean} showActions we dont wanna show actions (fjern, fillout periodica data) in receipt since the user cannot do anything about it.
+ * @param {Function} setMaterialStatusChanged callback to trigger reevaluation of error state in checkout form
  * @returns {React.JSX.Element}
  */
 const Material = ({
@@ -63,7 +64,7 @@ const Material = ({
   periodicaForms,
   backgroundColorOverride = BackgroundColorEnum.NEUTRAL,
   setDuplicateBookmarkIds,
-  appendPeriodicaRow = true,
+  showActions = true,
   setMaterialStatusChanged,
 }) => {
   //@TODO get manifestations in same manner for both edition and works via useData
@@ -165,7 +166,7 @@ const Material = ({
 
   const children = [];
 
-  if (orderPossible && isPeriodicaLike && appendPeriodicaRow) {
+  if (orderPossible && isPeriodicaLike && showActions) {
     children.push(
       <ChoosePeriodicaCopyRow
         key={material.key}
@@ -185,7 +186,12 @@ const Material = ({
     );
   }
 
-  if (orderPossible && showAlreadyOrderedWarning && !isPeriodicaLike) {
+  if (
+    orderPossible &&
+    showAlreadyOrderedWarning &&
+    !isPeriodicaLike &&
+    showActions
+  ) {
     //TODO currently we only check for non-periodica orders
     children.push(
       <HasBeenOrderedRow

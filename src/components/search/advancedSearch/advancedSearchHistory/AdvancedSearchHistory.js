@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import useAdvancedSearchHistory from "@/components/hooks/useAdvancedSearchHistory";
+import useAdvancedSearchHistory, {
+  getTimeStamp,
+} from "@/components/hooks/useAdvancedSearchHistory";
 import styles from "./AdvancedSearchHistory.module.css";
 import Text from "@/components/base/text";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
@@ -49,7 +51,9 @@ function HistoryItem({ item, index, checked, onSelect }) {
         ariaLabel={`select-item-${index}`}
         className={styles.checkbox}
       />
-      <Text type="text2">{item.timestamp}</Text>
+      <Text type="text2">
+        {item.unixtimestamp ? getTimeStamp(item.unixtimestamp) : item.timestamp}
+      </Text>
       <div className={styles.link}>
         <Link
           onClick={(e) => {
@@ -183,11 +187,6 @@ export function AdvancedSearchHistory() {
   const { storedValue, deleteValue } = useAdvancedSearchHistory();
   const [checkboxList, setCheckboxList] = useState([]);
 
-  // if there is no search history
-  if (isEmpty(storedValue) || storedValue?.length < 1) {
-    return <EmptySearchHistory />;
-  }
-
   /**
    * Set or unset ALL checkboxes in search history
    * @param e
@@ -256,25 +255,30 @@ export function AdvancedSearchHistory() {
         deleteSelected={onDeleteSelected}
         setAllChecked={setAllChecked}
         checked={storedValue?.length === checkboxList?.length}
-        partiallyChecked={checkboxList.length > 0}
-        disabled={storedValue.length === 0}
+        partiallyChecked={checkboxList?.length > 0}
+        disabled={storedValue?.length === 0 || checkboxList?.length === 0}
       />
       <HistoryHeader />
-      {storedValue?.map((item, index) => {
-        return (
-          <div key={item.cql}>
-            <HistoryItem
-              item={item}
-              index={index}
-              checked={
-                checkboxList.findIndex((check) => check === item.cql) !== -1
-              }
-              deleteSelected={onDeleteSelected}
-              onSelect={onSelect}
-            />
-          </div>
-        );
-      })}
+      {/*// if there is no search history*/}
+      {isEmpty(storedValue) || storedValue?.length < 1 ? (
+        <EmptySearchHistory />
+      ) : (
+        storedValue?.map((item, index) => {
+          return (
+            <div key={item.cql}>
+              <HistoryItem
+                item={item}
+                index={index}
+                checked={
+                  checkboxList.findIndex((check) => check === item.cql) !== -1
+                }
+                deleteSelected={onDeleteSelected}
+                onSelect={onSelect}
+              />
+            </div>
+          );
+        })
+      )}
     </>
   );
 }
