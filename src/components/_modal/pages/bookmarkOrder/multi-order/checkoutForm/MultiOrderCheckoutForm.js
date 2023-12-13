@@ -49,8 +49,6 @@ const CheckoutForm = ({
   // numberMaterialsToOrder contains all orders: physical and digital orders,
   // if numberMaterialsToOrder is greater than digitalMaterials, we also have physical orders
   const hasPhysicalOrders = numberMaterialsToOrder > digitalMaterials;
-
-  console.log("materialcounts", materialCounts);
   const { updateLoanerInfo } = userInfo;
 
   const validated = useMemo(() => {
