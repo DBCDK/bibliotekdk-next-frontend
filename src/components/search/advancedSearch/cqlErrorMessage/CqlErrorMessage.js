@@ -51,7 +51,6 @@ export function CqlErrorMessage({ errorMessage, isLoading, error }) {
         setCqlButtonDisabled(true);
       } else {
         setSrc(green);
-        setMessage(parseErrorMessage(errorMessage));
         setCqlButtonDisabled(false);
       }
     }
@@ -60,6 +59,9 @@ export function CqlErrorMessage({ errorMessage, isLoading, error }) {
   useEffect(() => {
     if (src === green || !showPopover) {
       setShowCqlError(false);
+      setTimeout(() => {
+        setMessage(parseErrorMessage(errorMessage));
+      }, 500);
     }
   }, [src, showPopover]);
 
@@ -69,7 +71,7 @@ export function CqlErrorMessage({ errorMessage, isLoading, error }) {
         <div
           aria-expanded={showCqlError}
           data-unclickable={src === green}
-          className={cx(styles.popoverAnimation_advancedSearch)}
+          className={cx(styles.popoverContent)}
         >
           <div
             aria-expanded={showCqlError}

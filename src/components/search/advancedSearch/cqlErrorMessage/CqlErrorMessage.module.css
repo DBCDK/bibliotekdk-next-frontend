@@ -14,7 +14,7 @@
   grid-template-rows: 0fr;
   grid-template-columns: 0fr;
 
-  transition: all 500ms ease-out, font-size 200ms ease-out;
+  transition: all 500ms ease-out, font-size 250ms ease-out;
 }
 
 .popoverAnimation[aria-expanded="true"] {
@@ -26,7 +26,7 @@
   outline: 1px solid var(--blue);
 }
 
-.popoverAnimation_advancedSearch {
+.popoverContent {
   grid-area: popoverAnimation_advancedSearch;
   overflow: hidden;
   display: grid;

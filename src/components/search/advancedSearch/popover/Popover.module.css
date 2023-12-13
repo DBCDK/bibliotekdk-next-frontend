@@ -29,11 +29,11 @@
   grid-template-rows: 1fr;
 }
 
-.popoverAnimation_advancedSearch {
+.popoverContent {
   overflow: hidden;
 }
 
-.popoverAnimation_advancedSearch[aria-expanded="true"] {
+.popoverContent[aria-expanded="true"] {
   overflow: visible;
   animation: 400ms overflowToggle;
 }
