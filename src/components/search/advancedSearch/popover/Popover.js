@@ -27,7 +27,6 @@ const Popover = ({ className, simpleSearchRef }) => {
     function handleClickOutside(event) {
       //returns true if the click is inside the given ref
       const isClickInsideRef = (ref, target) => ref?.current?.contains(target);
-      //TODO: THIS IS NOT REGISTERED WHEN CLICK ON BUTTON
       //if click outside popover and outside trigger, then hide popover
       if (
         !popoverRef?.current?.contains(event.target) &&

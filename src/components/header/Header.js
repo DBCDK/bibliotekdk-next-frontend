@@ -166,9 +166,6 @@ export function Header({
   const doSearch = (value) => {
     // If we are on mobile we replace
     // since we don't want to suggest modal to open if user goes back
-    // if (showInfoTooltip) {
-    //   return;
-    // }
     const method = suggesterVisibleMobile ? "replace" : "push";
 
     const type = {
