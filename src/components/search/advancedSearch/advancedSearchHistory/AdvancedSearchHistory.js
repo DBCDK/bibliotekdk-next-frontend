@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import useAdvancedSearchHistory from "@/components/hooks/useAdvancedSearchHistory";
+import useAdvancedSearchHistory, {
+  getTimeStamp,
+} from "@/components/hooks/useAdvancedSearchHistory";
 import styles from "./AdvancedSearchHistory.module.css";
 import Text from "@/components/base/text";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
@@ -49,7 +51,9 @@ function HistoryItem({ item, index, checked, onSelect }) {
         ariaLabel={`select-item-${index}`}
         className={styles.checkbox}
       />
-      <Text type="text2">{item.timestamp}</Text>
+      <Text type="text2">
+        {item.unixtimestamp ? getTimeStamp(item.unixtimestamp) : item.timestamp}
+      </Text>
       <div className={styles.link}>
         <Link
           onClick={(e) => {
