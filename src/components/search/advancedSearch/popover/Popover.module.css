@@ -13,6 +13,8 @@
   box-shadow: -1px 20px 20px -10px rgba(0, 0, 0, 0.06);
   border-bottom: 1px solid var(--iron);
   background: var(--concrete);
+  overflow-x: hidden;
+
 }
 
 .popoverContainer:not([aria-expanded="true"]) {
