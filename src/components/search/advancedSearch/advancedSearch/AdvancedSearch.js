@@ -23,7 +23,7 @@ import cx from "classnames";
  * @returns {React.JSX.Element}
  */
 
-export default function AdvancedSearch({ className }) {
+export default function AdvancedSearch({ ariaExpanded, className }) {
   const router = useRouter();
 
   const {
@@ -67,8 +67,16 @@ export default function AdvancedSearch({ className }) {
     setShowPopover(false);
   };
 
+  //TODO: For debugging purposes. Remove when unneeded
+  console.log("Resulting cql after search (with added line breaks)", parsedCQL);
+
   return (
-    <div className={cx(styles.background, className)}>
+    <div
+      // We use areaExpanded for showing
+      //   the className
+      aria-expanded={ariaExpanded}
+      className={cx(styles.background, className)}
+    >
       <Container fluid className={styles.container}>
         <Row className={styles.topContainer}>
           <Col md={{ offset: 3, span: 4 }} sm={12}>
