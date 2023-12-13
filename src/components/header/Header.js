@@ -103,7 +103,8 @@ export function Header({
   const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
 
   const simpleSearchRef = useRef(null);
-  const { showInfoTooltip } = useAdvancedSearchContext();
+  const { showInfoTooltip, showPopover, setShowInfoTooltip } =
+    useAdvancedSearchContext();
   const getLoginLabel = () => {
     if (user.hasCulrUniqueId) {
       return "profile";
@@ -165,9 +166,9 @@ export function Header({
   const doSearch = (value) => {
     // If we are on mobile we replace
     // since we don't want to suggest modal to open if user goes back
-    if (showInfoTooltip) {
-      return;
-    }
+    // if (showInfoTooltip) {
+    //   return;
+    // }
     const method = suggesterVisibleMobile ? "replace" : "push";
 
     const type = {
@@ -202,6 +203,7 @@ export function Header({
   const keyPressed = (e) => {
     if (e.key === "Enter") {
       doSearch(e.target.value);
+      setShowInfoTooltip(false);
     }
   };
   return (
@@ -219,21 +221,21 @@ export function Header({
             <Col xs={{ span: 7, offset: 3 }} className={styles.mobileHeader}>
               <SkipToMainAnchor />
               <div className={styles.bottom}>
-                <form
+                <div
                   ref={simpleSearchRef}
-                  onSubmit={(e) => {
-                    e?.preventDefault();
-                    doSearch(query);
+                  // onSubmit={(e) => {
+                  //   e?.preventDefault();
+                  //   doSearch(query);
 
-                    // view query in storybook
-                    story && alert(`/find?q.all=${query}`);
+                  //   // view query in storybook
+                  //   story && alert(`/find?q.all=${query}`);
 
-                    // Remove suggester in storybook
-                    story && story.setSuggesterVisibleMobile(false);
+                  //   // Remove suggester in storybook
+                  //   story && story.setSuggesterVisibleMobile(false);
 
-                    // remove keyboard/unfocus
-                    blurInput();
-                  }}
+                  //   // remove keyboard/unfocus
+                  //   blurInput();
+                  // }}
                   className={`${styles.search}`}
                   data-cy={cyKey({ name: "search", prefix: "header" })}
                 >
@@ -263,8 +265,25 @@ export function Header({
                   </div>
 
                   <button
+                    // disabled={showInfoTooltip}
                     className={`${styles.button}`}
-                    type="submit"
+                    //   type="submit"
+                    onClick={(e) => {
+                      if (showInfoTooltip || showPopover) {
+                        return;
+                      }
+                      e?.preventDefault();
+                      doSearch(query);
+
+                      // view query in storybook
+                      story && alert(`/find?q.all=${query}`);
+
+                      // Remove suggester in storybook
+                      story && story.setSuggesterVisibleMobile(false);
+
+                      // remove keyboard/unfocus
+                      blurInput();
+                    }}
                     data-cy={cyKey({
                       name: "searchbutton",
                       prefix: "header",
@@ -273,7 +292,7 @@ export function Header({
                     <span>{Translate({ ...context, label: "search" })}</span>
                     <div className={styles.fill} />
                   </button>
-                </form>
+                </div>
                 <div className={styles.popoverTriggerContainer}>
                   <AdvancedSearchPopover
                     className={styles.advancedSearchTrigger}
