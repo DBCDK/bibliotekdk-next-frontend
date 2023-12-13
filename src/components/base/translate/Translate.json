@@ -1598,6 +1598,14 @@
         "da": "Bestillingsoversigt",
         "en": "Order overview"
       },
+      "multiorder-ordered": {
+        "da": "Bestilt",
+        "en": "Ordered"
+      },
+      "multiorder-error-ordering": {
+        "da": "Fejl ved bestilling",
+        "en": "Error while ordering"
+      },
       "is-ordered-singular": {
         "da": "%s materiale er bestilt.",
         "en": "%s material is ordered"
