@@ -252,7 +252,6 @@ export function Header({
 
                   <button
                     className={`${styles.button}`}
-                    //   type="submit"
                     onClick={(e) => {
                       if (showInfoTooltip || showPopover) {
                         return;
