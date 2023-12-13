@@ -64,6 +64,7 @@ const Material = ({
   backgroundColorOverride = BackgroundColorEnum.NEUTRAL,
   setDuplicateBookmarkIds,
   appendPeriodicaRow = true,
+  setMaterialStatusChanged,
 }) => {
   //@TODO get manifestations in same manner for both edition and works via useData
   const isSpecificEdition = !!material?.pid;
@@ -100,6 +101,20 @@ const Material = ({
         branchId: loanerInfo.pickupBranch,
       })
   );
+
+  /**
+   * there is a timing issue, when we listen to analyzeRef.current in MultiOrder.page,
+   * which leads to occasionally wrong error messages in checkout form
+   * therefore we listen to background color changes (which determine the error state of the material card)
+   * and thus we trigger a reevaluation of the error state in the checkout form
+   * perfomes a bit slow.
+   */
+  useEffect(() => {
+    if (setMaterialStatusChanged) {
+      setMaterialStatusChanged(Date.now());
+    }
+  }, [backgroundColor]);
+
   useEffect(() => {
     if (orderPolicyData && orderPolicyData.branches) {
       setOrderPossible(
