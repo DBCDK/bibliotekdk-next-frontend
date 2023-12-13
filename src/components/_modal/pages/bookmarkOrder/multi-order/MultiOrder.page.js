@@ -76,6 +76,7 @@ const MultiOrder = ({ context }) => {
   const [isCreatingOrders, setIsCreatingOrders] = useState(false);
   const [duplicateBookmarkIds, setDuplicateBookmarkIds] = useState([]); //used to manage warning for duplicate orders without removing duplicate ids from browser storage
   const pickupBranch = useRef(); // Pickup branch from checkout form
+  const [materialStatusChanged, setMaterialStatusChanged] = useState();
 
   useEffect(() => {
     if (orderMutation.data && orderMutation.data.submitMultipleOrders) {
@@ -176,7 +177,6 @@ const MultiOrder = ({ context }) => {
         numberMaterialsToOrder: materialsToOrder?.length ?? 0,
       });
     }, 300);
-
     return () => clearTimeout(timer);
   }, [
     materials,
@@ -184,6 +184,7 @@ const MultiOrder = ({ context }) => {
     materialsToOrder,
     analyzeRef.current,
     context?.periodicaForms,
+    materialStatusChanged,
   ]);
 
   const onSubmit = async (selectedPickupBranch) => {
@@ -230,6 +231,7 @@ const MultiOrder = ({ context }) => {
             setDuplicateBookmarkIds={setDuplicateBookmarkIds}
             //context is responsible for updating periodica form via periodicaForm.js and modal.update
             periodicaForms={context?.periodicaForms}
+            setMaterialStatusChanged={setMaterialStatusChanged}
           />
         ))}
       </div>

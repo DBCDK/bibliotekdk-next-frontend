@@ -54,6 +54,7 @@ export const filterForRelevantMaterialTypes = (mostRelevant, materialType) => {
  * @param {String} backgroundColorOverride
  * @param {Function} setDuplicateBookmarkIds
  * @param {Boolean} showActions we dont wanna show actions (fjern, fillout periodica data) in receipt since the user cannot do anything about it.
+ * @param {Function} setMaterialStatusChanged callback to trigger reevaluation of error state in checkout form
  * @returns {React.JSX.Element}
  */
 const Material = ({
@@ -64,6 +65,7 @@ const Material = ({
   backgroundColorOverride = BackgroundColorEnum.NEUTRAL,
   setDuplicateBookmarkIds,
   showActions = true,
+  setMaterialStatusChanged,
 }) => {
   //@TODO get manifestations in same manner for both edition and works via useData
   const isSpecificEdition = !!material?.pid;
@@ -100,6 +102,20 @@ const Material = ({
         branchId: loanerInfo.pickupBranch,
       })
   );
+
+  /**
+   * there is a timing issue, when we listen to analyzeRef.current in MultiOrder.page,
+   * which leads to occasionally wrong error messages in checkout form
+   * therefore we listen to background color changes (which determine the error state of the material card)
+   * and thus we trigger a reevaluation of the error state in the checkout form
+   * perfomes a bit slow.
+   */
+  useEffect(() => {
+    if (setMaterialStatusChanged) {
+      setMaterialStatusChanged(Date.now());
+    }
+  }, [backgroundColor]);
+
   useEffect(() => {
     if (orderPolicyData && orderPolicyData.branches) {
       setOrderPossible(
