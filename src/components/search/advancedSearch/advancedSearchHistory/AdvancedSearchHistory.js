@@ -187,11 +187,6 @@ export function AdvancedSearchHistory() {
   const { storedValue, deleteValue } = useAdvancedSearchHistory();
   const [checkboxList, setCheckboxList] = useState([]);
 
-  // if there is no search history
-  if (isEmpty(storedValue) || storedValue?.length < 1) {
-    return <EmptySearchHistory />;
-  }
-
   /**
    * Set or unset ALL checkboxes in search history
    * @param e
@@ -260,25 +255,30 @@ export function AdvancedSearchHistory() {
         deleteSelected={onDeleteSelected}
         setAllChecked={setAllChecked}
         checked={storedValue?.length === checkboxList?.length}
-        partiallyChecked={checkboxList.length > 0}
-        disabled={storedValue.length === 0}
+        partiallyChecked={checkboxList?.length > 0}
+        disabled={storedValue?.length === 0}
       />
       <HistoryHeader />
-      {storedValue?.map((item, index) => {
-        return (
-          <div key={item.cql}>
-            <HistoryItem
-              item={item}
-              index={index}
-              checked={
-                checkboxList.findIndex((check) => check === item.cql) !== -1
-              }
-              deleteSelected={onDeleteSelected}
-              onSelect={onSelect}
-            />
-          </div>
-        );
-      })}
+      {/*// if there is no search history*/}
+      {isEmpty(storedValue) || storedValue?.length < 1 ? (
+        <EmptySearchHistory />
+      ) : (
+        storedValue?.map((item, index) => {
+          return (
+            <div key={item.cql}>
+              <HistoryItem
+                item={item}
+                index={index}
+                checked={
+                  checkboxList.findIndex((check) => check === item.cql) !== -1
+                }
+                deleteSelected={onDeleteSelected}
+                onSelect={onSelect}
+              />
+            </div>
+          );
+        })
+      )}
     </>
   );
 }
