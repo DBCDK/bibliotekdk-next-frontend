@@ -58,8 +58,34 @@ const MultiOrder = ({ context }) => {
   const [isCreatingOrders, setIsCreatingOrders] = useState(false);
   const [duplicateBookmarkIds, setDuplicateBookmarkIds] = useState([]); //used to manage warning for duplicate orders without removing duplicate ids from browser storage
   const pickupBranch = useRef(); // Pickup branch from checkout form
+  const [statusChanged, setStatusChanged] = useState(false);
 
   useEffect(() => {
+    console.log("status chagned");
+  }, [statusChanged]);
+
+  const callback = () => {
+    setStatusChanged((prev) => !prev);
+    console.log("observer is running");
+  };
+
+  useEffect(() => {
+    const observer = new MutationObserver(callback);
+
+    // Start observing the target node for configured mutations
+    //const config = { attributes: true, childList: true, subtree: true };
+    observer.observe(analyzeRef.current, {
+      attributeFilter: ["data-status"],
+      attributeOldValue: true,
+      subtree: true,
+    });
+  }, [analyzeRef.current]);
+
+  // Later, you can stop observing
+  //observer.disconnect();
+
+  useEffect(() => {
+    console.log("changing counts");
     if (orderMutation.data && orderMutation.data.submitMultipleOrders) {
       const { failedAtCreation, successfullyCreated } =
         orderMutation.data.submitMultipleOrders;
@@ -158,6 +184,7 @@ const MultiOrder = ({ context }) => {
         numberMaterialsToOrder: materialsToOrder?.length ?? 0,
       });
     }, 300);
+    console.log("___________________analyzeRef.current", analyzeRef.current);
 
     return () => clearTimeout(timer);
   }, [
@@ -166,6 +193,7 @@ const MultiOrder = ({ context }) => {
     materialsToOrder,
     analyzeRef.current,
     context?.periodicaForms,
+    statusChanged,
   ]);
 
   const onSubmit = async (selectedPickupBranch) => {
