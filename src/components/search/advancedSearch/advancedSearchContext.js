@@ -124,8 +124,6 @@ export default function AdvancedSearchProvider({ children, router }) {
   //// ---- DONE: parsedCQL ----
 
   function resetObjectState() {
-    console.log("miav");
-
     resetInputFields();
     resetDropdownIndices();
     dispatchResetMenuItemsEvent();
