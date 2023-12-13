@@ -106,7 +106,10 @@ const Popover = ({ className, simpleSearchRef }) => {
         className={cx(styles.popoverContainer, styles.popoverAnimation)}
         ref={popoverRef}
       >
-        <AdvancedSearch className={styles.advancedSearch} />
+        <AdvancedSearch
+          ariaExpanded={showPopover}
+          className={cx(styles.popoverAnimation_advancedSearch)}
+        />
       </div>
     </>
   );
