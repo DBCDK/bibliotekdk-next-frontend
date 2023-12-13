@@ -29,6 +29,8 @@ const BookmarkColumn = ({
   materialType,
   onBookmarkDelete,
   allManifestations,
+  showFailedAtCreation,
+  showSuccessfullyOrdered,
 }) => {
   const { flatPidsByType } = useMemo(() => {
     return manifestationMaterialTypeFactory(allManifestations);
@@ -39,20 +41,34 @@ const BookmarkColumn = ({
     [materialType]
   );
 
+  console.log(
+    "workid",
+    workId,
+    pid,
+    showFailedAtCreation,
+    showSuccessfullyOrdered
+  );
+
   return (
     <div className={sharedStyles.dynamicColumnHorizontal}>
       <div className={sharedStyles.bookmarkOrderButtonContainer}>
-        <ReservationButton
-          workId={workId}
-          selectedPids={!!pid ? [pid] : selectedPids}
-          singleManifestation={!!pid ? true : false}
-          buttonType="primary"
-          size="small"
-          selectedMaterialType={materialType}
-          shortText
-        />
+        {showSuccessfullyOrdered ? (
+          <div>NICE </div>
+        ) : (
+          <ReservationButton
+            workId={workId}
+            selectedPids={!!pid ? [pid] : selectedPids}
+            singleManifestation={!!pid ? true : false}
+            buttonType="primary"
+            size="small"
+            selectedMaterialType={materialType}
+            shortText
+          />
+        )}
+        {showFailedAtCreation && (
+          <Text type="text3">{"Fejl ved bestilling"}</Text>
+        )}
       </div>
-
       <IconButton onClick={onBookmarkDelete}>
         {Translate({
           context: "bookmark",
@@ -78,6 +94,8 @@ const MaterialRowBookmark = ({
   allManifestations,
   onSelect,
   hasCheckbox,
+  showSuccessfullyOrdered = false,
+  showFailedAtCreation = false,
 }) => {
   const onCheckboxClick = (e) => {
     if (
@@ -194,6 +212,8 @@ const MaterialRowBookmark = ({
           materialType={materialType}
           onBookmarkDelete={onBookmarkDelete}
           allManifestations={allManifestations}
+          showFailedAtCreation={showFailedAtCreation}
+          showSuccessfullyOrdered={showSuccessfullyOrdered}
         />
       </div>
     </article>

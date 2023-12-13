@@ -19,6 +19,7 @@ import { useModal } from "@/components/_modal";
 import Skeleton from "@/components/base/skeleton/Skeleton";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import { useMutate } from "@/lib/api/api";
 
 const CONTEXT = "bookmark";
 const ORDER_TRESHHOLD = 25;
@@ -74,6 +75,31 @@ const BookmarkPage = () => {
   const scrollToElement = useRef(null);
   const { isAuthenticated } = useAuthentication();
   const modal = useModal();
+  const orderMutation = useMutate();
+  const [successfullyCreatedIds, setSuccessfullyCreatedIds] = useState([]);
+  const [failureAtCreationIds, setFailureAtCreationIds] = useState([]);
+
+  useEffect(() => {
+    if (
+      !orderMutation?.isLoading &&
+      (orderMutation?.data || orderMutation?.error)
+    ) {
+      const idx = modal.index("multiorder");
+      modal.update(idx, {
+        orderMutation: orderMutation,
+      });
+      setCheckboxList([]);
+      console.log("orderMutation", orderMutation);
+      setSuccessfullyCreatedIds(
+        orderMutation?.data?.submitMultipleOrders?.successfullyCreated
+      );
+      setFailureAtCreationIds(
+        orderMutation?.data?.submitMultipleOrders?.failedAtCreation
+      );
+      console.log("successIds", successfullyCreatedIds);
+      console.log("failureIds", failureAtCreationIds);
+    }
+  }, [orderMutation.isLoading]);
 
   useEffect(() => {
     setSortBy(sortByValue);
@@ -111,6 +137,7 @@ const BookmarkPage = () => {
       modal.push("ematerialfilter", {
         materials: checkboxList,
         sortType: sortByValue,
+        orderMutation: orderMutation,
       });
     } else {
       openLoginModal({ modal });
@@ -284,7 +311,7 @@ const BookmarkPage = () => {
             className={styles.stickyButton}
             onClick={onStickyClick}
           >
-            {getStickyButtonText()}
+            {getStickyButtonText() + "bernd"}
           </Button>
         </div>
       )}
@@ -414,6 +441,15 @@ const BookmarkPage = () => {
               ])
             }
             onSelect={() => onToggleCheckbox(bookmark.key)}
+            showFailedAtCreation={failureAtCreationIds.find((id) => {
+              return id === bookmark.key;
+            })}
+            //if successfylleCreatedIDs contains bookmark.key, then set showSuccessfullyOrdered to true
+            showSuccessfullyOrdered={successfullyCreatedIds.find((id) => {
+              console.log("id", id, bookmark.key);
+              console.log("bookmark.key", bookmark.key);
+              return id === bookmark.key;
+            })}
           />
         ))}
       </div>

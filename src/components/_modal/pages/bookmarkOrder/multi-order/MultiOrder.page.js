@@ -67,19 +67,19 @@ const createOrders = async ({
 
 const MultiOrder = ({ context }) => {
   const modal = useModal();
-  const { materials, closeModalOnBack } = context;
+  const { materials, closeModalOnBack, orderMutation } = context;
   const analyzeRef = useRef();
   const [materialCounts, setMaterialCounts] = useState({ isAnalyzed: false });
   const [materialsToOrder, setMaterialsToOrder] = useState(materials);
   const { loanerInfo } = useLoanerInfo();
-  const orderMutation = useMutate();
+  //const orderMutation = useMutate();
   const [isCreatingOrders, setIsCreatingOrders] = useState(false);
   const [duplicateBookmarkIds, setDuplicateBookmarkIds] = useState([]); //used to manage warning for duplicate orders without removing duplicate ids from browser storage
   const pickupBranch = useRef(); // Pickup branch from checkout form
   const [materialStatusChanged, setMaterialStatusChanged] = useState();
 
   useEffect(() => {
-    if (orderMutation.data && orderMutation.data.submitMultipleOrders) {
+    if (orderMutation?.data && orderMutation.data.submitMultipleOrders) {
       const { failedAtCreation, successfullyCreated } =
         orderMutation.data.submitMultipleOrders;
       const failedMaterials = failedAtCreation.map((key) =>
@@ -102,7 +102,7 @@ const MultiOrder = ({ context }) => {
       });
     }
 
-    if (orderMutation.error) {
+    if (orderMutation?.error) {
       setIsCreatingOrders(false);
       modal.push("multireceipt", {
         failedMaterials: materialsToOrder,
@@ -110,7 +110,7 @@ const MultiOrder = ({ context }) => {
         branchName: pickupBranch.current?.name,
       });
     }
-  }, [orderMutation?.isLoading]);
+  }, [orderMutation?.isLoading, orderMutation?.error, orderMutation?.data]);
 
   useEffect(() => {
     if (!analyzeRef || !analyzeRef.current) return;
