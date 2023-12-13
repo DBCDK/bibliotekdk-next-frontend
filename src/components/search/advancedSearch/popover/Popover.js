@@ -97,8 +97,8 @@ const Popover = ({ className, simpleSearchRef }) => {
           className={cx(styles.triangle, {
             [styles.showTriangle]: showPopover,
           })}
-        />     
-         </div>
+        />
+      </div>
 
       <div
         aria-expanded={showPopover}
