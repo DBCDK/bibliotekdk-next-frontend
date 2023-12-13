@@ -78,8 +78,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     handleLogicalOperatorChange,
     handleInputFieldChange,
     handleIndexChange,
-    // @TODO - delete ?
-    // resetInputFields,
+    resetInputFields,
   } = useInputFields({
     fieldSearchFromUrl: { ...fieldSearchFromUrl },
   });
@@ -89,8 +88,9 @@ export default function AdvancedSearchProvider({ children, router }) {
     dropdownUnits,
     dropdownSearchIndices,
     updateDropdownSearchIndices,
-    // @TODO - delete ?
-    // resetDropdownIndices,
+    resetDropdownIndices,
+    resetMenuItemsEvent,
+    dispatchResetMenuItemsEvent,
   } = useDropdownSearchIndices({ ...fieldSearchFromUrl });
 
   //// ---- parsedCQL ----
@@ -123,11 +123,11 @@ export default function AdvancedSearchProvider({ children, router }) {
 
   //// ---- DONE: parsedCQL ----
 
-  // @TODO - delete ?
-  // function resetObjectState() {
-  //   resetInputFields();
-  //   resetDropdownIndices();
-  // }
+  function resetObjectState() {
+    resetInputFields();
+    resetDropdownIndices();
+    dispatchResetMenuItemsEvent();
+  }
 
   /** @typedef {{
         inputFields: Array.<InputField>,
@@ -153,6 +153,7 @@ export default function AdvancedSearchProvider({ children, router }) {
         workType: string
         stateToString: string
         popoverRef: any
+        resetMenuItemsEvent: string
    }} AdvancedSearchContextType */
   const value = {
     inputFields,
@@ -164,7 +165,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     dropdownUnits,
     dropdownSearchIndices,
     updateDropdownSearchIndices,
-    // resetObjectState,
+    resetObjectState,
     parsedCQL,
     setParsedCQL,
     fieldSearchFromUrl,
@@ -178,6 +179,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     workType: workType,
     stateToString,
     popoverRef,
+    resetMenuItemsEvent,
   };
 
   return (

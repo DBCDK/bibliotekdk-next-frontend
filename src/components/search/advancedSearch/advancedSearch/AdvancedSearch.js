@@ -35,6 +35,7 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
     fieldSearchFromUrl,
     setShowPopover,
     stateToString,
+    resetObjectState,
   } = useAdvancedSearchContext();
 
   const [showCqlEditor, setShowCqlEditor] = useState(false);
@@ -167,6 +168,7 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
               <Link
                 border={{ bottom: { keepVisible: true } }}
                 onClick={() => {
+                  resetObjectState();
                   router.push({
                     pathname: router.pathname,
                     ...(showCqlEditor && { query: { mode: "cql" } }),
