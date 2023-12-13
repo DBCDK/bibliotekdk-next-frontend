@@ -41,19 +41,11 @@ const BookmarkColumn = ({
     [materialType]
   );
 
-  console.log(
-    "workid",
-    workId,
-    pid,
-    showFailedAtCreation,
-    showSuccessfullyOrdered
-  );
-
   return (
     <div className={sharedStyles.dynamicColumnHorizontal}>
       <div className={sharedStyles.bookmarkOrderButtonContainer}>
         {showSuccessfullyOrdered ? (
-          <div>NICE </div>
+          <Translate context="bookmark-order" label="multiorder-ordered" />
         ) : (
           <ReservationButton
             workId={workId}
@@ -66,7 +58,12 @@ const BookmarkColumn = ({
           />
         )}
         {showFailedAtCreation && (
-          <Text type="text3">{"Fejl ved bestilling"}</Text>
+          <Text type="text3">
+            {Translate({
+              context: "bookmark-order",
+              label: "multiorder-error-ordering",
+            })}
+          </Text>
         )}
       </div>
       <IconButton onClick={onBookmarkDelete}>
