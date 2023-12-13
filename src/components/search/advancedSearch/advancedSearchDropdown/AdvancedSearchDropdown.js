@@ -35,6 +35,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import cx from "classnames";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import Text from "@/components/base/text";
+import Translate from "@/components/base/translate";
 
 const specialFormTypes = new Set([FormTypeEnum.ACTION_LINK_CONTAINER]);
 
@@ -277,6 +278,10 @@ export default function AdvancedSearchDropdown({
             menuItemsState={menuItemsState}
             toggleMenuItemsState={toggleMenuItemsState}
             className={cx(styles.sticky_base_class, styles.range_bar)}
+            placeholder={Translate({
+              context: "advanced_search_dropdown",
+              label: `range_placeholder_${indexName}`,
+            })}
           />
         )}
 
