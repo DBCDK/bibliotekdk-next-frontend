@@ -1188,6 +1188,10 @@
         "da": "Her",
         "en": "Here"
       },
+      "material-typename-literature": {
+        "da": "Bogen",
+        "en": "The book"
+      },
       "material-typename-ebook": {
         "da": "E-bogen",
         "en": "The e-book"
