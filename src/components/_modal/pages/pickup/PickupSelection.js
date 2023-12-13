@@ -68,7 +68,7 @@ function Row({ branch, selected, onSelect, isLoading, includeArrows, _ref }) {
   // If none found use a alternative match if any found
   const matchOthers = !matchName ? branch.highlights?.[0]?.value : null;
 
-  const disabled = !branch.pickupAllowed; //TODO wouldnt these branches be shown in ordernotpossible list/should we sort them out earlier?
+  const disabled = !branch.pickupAllowed;
 
   return (
     <List.FormLink
@@ -128,15 +128,17 @@ export default function PickupSelection(props) {
   } = { ...props };
 
   // Get pid from modal context
-  const { pid, requireDigitalAccess } = context;
+  const { pid, requireDigitalAccess, showAllBranches } = context; //TODO is it enough to only check for ONE pid? BIBDK2021-2203
 
   const loadedOrderPolicies = useRef({});
   const render = useState()[1];
-
   // Incrementally creates a list of allowed branches as policies load one by one,
   // keeping the order of the original result
   let allPoliciesLoaded = !isLoading;
 
+  //policies are only checked for single orders currently, since they check for pids
+  // if we did this for multiorder, we could potentially block a branch for all orders,
+  // eventhough only one order is not possible on that specific branch
   const orderPossibleBranches =
     data?.result?.filter((branch) => {
       if (!allPoliciesLoaded) {
@@ -159,11 +161,33 @@ export default function PickupSelection(props) {
       )) ||
     [];
 
-  //TODO: cant we show all agencies?
+  //for multiorder, we look at pickupAllowed since we dont have policies
+  const pickUpAllowedBranches =
+    data?.result?.filter((branch) => branch.pickupAllowed) || [];
+
+  const pickUpNotAllowedBranches =
+    data?.result?.filter((branch) => !branch.pickupAllowed) || [];
+
+  const selectableBranches = showAllBranches
+    ? pickUpAllowedBranches
+    : orderPossibleBranches;
+
+  const showSelectableBranches = selectableBranches.length > 0;
+
+  const nonSelectableBranches = showAllBranches
+    ? pickUpNotAllowedBranches
+    : orderNotPossibleBranches;
+
+  const showNonSelectableBranches = nonSelectableBranches.length > 0;
+
   const hasMoreMessage =
     allPoliciesLoaded &&
     data?.hitcount > data?.result?.length &&
     Translate({ context: "order", label: "has-more-pickup" });
+
+  //we dont show "Tjekker om der er flere mulige afhentningssteder ...", for multiorder (=showAllBranches)
+  // since we dont look at policies for multiorder
+  const showWaitingForPolicies = !allPoliciesLoaded && !showAllBranches;
 
   return (
     <>
@@ -173,7 +197,7 @@ export default function PickupSelection(props) {
         .map((branch) => {
           const key = `${branch.branchId}_${pid}`;
           return (
-            <PolicyLoader
+            <PolicyLoader //TODO can actually handle several pids at once! BIBDK2021-2203
               key={key}
               branch={branch}
               onLoad={(policy) => {
@@ -181,19 +205,20 @@ export default function PickupSelection(props) {
                 render({});
               }}
               pid={pid}
+              //pids=
               requireDigitalAccess={requireDigitalAccess}
             />
           );
         })}
 
-      {orderPossibleBranches.length > 0 && (
+      {showSelectableBranches && (
         <List.Group
           enabled={!isLoading && isVisible}
           data-cy="list-branches"
           className={styles.orderPossibleGroup}
           disableGroupOutline
         >
-          {orderPossibleBranches.map((branch, idx) => {
+          {selectableBranches.map((branch, idx) => {
             return (
               <Row
                 key={`${branch.branchId}-${idx}`}
@@ -215,7 +240,7 @@ export default function PickupSelection(props) {
           })}
         </List.Group>
       )}
-      {!allPoliciesLoaded && (
+      {showWaitingForPolicies && (
         <Text type="text2" className={styles.loadingText}>
           {Translate({ context: "order", label: "check-policy-loading" })}
         </Text>
@@ -225,13 +250,14 @@ export default function PickupSelection(props) {
           {hasMoreMessage}
         </Text>
       )}
-      {orderNotPossibleBranches.length > 0 && (
+      {/** show pickup not allowed branches here  */}
+      {showNonSelectableBranches && (
         <>
           <Text type="text1" className={styles.pickupNotAllowedTitle}>
             {Translate({ context: "order", label: "pickup-not-allowed" })}
           </Text>
           <ul>
-            {orderNotPossibleBranches.map((branch, idx) => {
+            {nonSelectableBranches.map((branch, idx) => {
               return (
                 <li key={`${branch.branchId}-${idx}`}>
                   <Text type="text3">{branch.name}</Text>

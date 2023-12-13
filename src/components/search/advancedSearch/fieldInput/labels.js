@@ -2,16 +2,9 @@
 const all = [
   { index: "term.default", placeholder: "all placeholder" },
   {
-    index: "term.title",
-    placeholder: "title placeholder",
-  },
-  {
-    index: "term.isbn",
-    placeholder: "isbn placeholder",
-  },
-  {
-    index: "term.subject",
-    placeholder: "subject placeholder",
+    index: "term.creatorcontributor",
+    searchType: "field",
+    placeholder: "creatorcontributor placeholder",
   },
   {
     index: "term.hostpublication",
@@ -22,17 +15,24 @@ const all = [
     placeholder: "fictionalcharacter placeholder",
   },
   {
-    index: "term.contributor",
-    placeholder: "contributor placeholder",
-  },
-  {
     index: "term.series",
     placeholder: "series placeholder",
   },
   {
-    index: "term.function",
-    searchType: "field",
-    placeholder: "function placeholder",
+    index: "term.title",
+    placeholder: "title placeholder",
+  },
+  {
+    index: "term.contributor",
+    placeholder: "contributor placeholder",
+  },
+  {
+    index: "term.subject",
+    placeholder: "subject placeholder",
+  },
+  {
+    index: "term.isbn",
+    placeholder: "isbn placeholder",
   },
 ];
 

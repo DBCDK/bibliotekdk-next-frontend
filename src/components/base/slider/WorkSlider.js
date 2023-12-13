@@ -17,6 +17,7 @@ import MaterialCard from "@/components/base/materialcard/MaterialCard";
 import { templateForVerticalWorkCard } from "@/components/base/materialcard/templates/templates";
 import ScrollSnapSlider from "@/components/base/scrollsnapslider/ScrollSnapSlider";
 import { useBundledElementVisibleById } from "@/components/hooks/useElementVisible";
+import isEmpty from "lodash/isEmpty";
 
 /**
  * The work slider skeleton React component
@@ -56,12 +57,21 @@ export function hashCode(str) {
  *
  * @param skeleton
  * @param onWorkClick
- * @param {Object} props
- * @param {Array.<Object>} props.works
+ * @param {function} propsAndChildrenTemplate
+ * @param {Array.<Object.<string, any>>} propsAndChildrenInputList
+ * @param {Array.<Object>} works
+ * @param props
  *
  * @returns {React.JSX.Element}
  */
-export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
+export default function WorkSlider({
+  skeleton,
+  works,
+  onWorkClick,
+  propsAndChildrenTemplate = templateForVerticalWorkCard,
+  propsAndChildrenInputList = [],
+  ...props
+}) {
   // Setup a window resize listener, triggering a component
   // rerender, when window size changes.
   useWindowSize();
@@ -86,6 +96,14 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
     return <WorkSliderSkeleton />;
   }
 
+  const inputList = !isEmpty(propsAndChildrenInputList)
+    ? propsAndChildrenInputList
+    : works?.map((work) => {
+        return {
+          material: work,
+        };
+      });
+
   // And finally we return the React component
   return (
     <div
@@ -97,14 +115,16 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
         sliderId={sliderId}
         childContainerClassName={styles.SlideChildren}
       >
-        {works.map((work, idx) => {
+        {inputList?.map((input, idx) => {
           return (
             <MaterialCard
-              key={JSON.stringify(work) + idx}
-              propAndChildrenTemplate={templateForVerticalWorkCard}
-              propAndChildrenInput={work}
+              key={idx}
+              propAndChildrenTemplate={
+                input?.propsAndChildrenTemplate || propsAndChildrenTemplate
+              }
+              propAndChildrenInput={input}
               colSizing={{ xs: 4, sm: 3, md: 2, lg: 2 }}
-              onClick={() => onClick(work, idx)}
+              onClick={() => onClick(input.material, idx)}
               ref={(element) => (elementRef.current[idx] = element)}
             />
           );

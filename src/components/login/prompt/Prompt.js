@@ -14,6 +14,7 @@ import Link from "@/components/base/link";
 
 import styles from "./Prompt.module.css";
 import InfoDropdown from "@/components/base/infoDropdown/InfoDropdown";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 /**
  * Show a login prompt with a title and description
@@ -35,8 +36,9 @@ export default function LoginPrompt({
   buttonText = Translate({ context: "header", label: "login" }),
   linkHref = null,
   signIn,
-  isAuthenticated,
 }) {
+  const { isAuthenticated } = useAuthentication();
+
   return (
     <Container className={styles.prompt} fluid>
       <Row>
@@ -45,6 +47,22 @@ export default function LoginPrompt({
           <Title type="title4" tag="h3">
             {title}
           </Title>
+          {!isAuthenticated && (
+            <>
+              <Text type="text3" className={styles.description}>
+                {description}
+              </Text>
+              <Button
+                type="primary"
+                size="large"
+                onClick={signIn}
+                dataCy="article-prompt-button-log-ind"
+                className={styles.signInButton}
+              >
+                {buttonText}
+              </Button>
+            </>
+          )}
           {isAuthenticated && linkHref && (
             <InfoDropdown
               label="show-more"
@@ -65,7 +83,7 @@ export default function LoginPrompt({
                   className={`${styles.inline} ${styles.link}`}
                   href={linkHref.href}
                   target="_blank"
-                  border={{ top: false, bottom: true }}
+                  border={{ top: false, bottom: { keepVisible: true } }}
                   data_use_new_underline={false}
                 >
                   <Text className={styles.inline} type="text3">
@@ -74,17 +92,6 @@ export default function LoginPrompt({
                 </Link>
               </>
             </InfoDropdown>
-          )}
-          {!(isAuthenticated && linkHref) && (
-            <Button
-              type="primary"
-              size="large"
-              onClick={signIn}
-              dataCy="article-prompt-button-log-ind"
-              className={styles.signInButton}
-            >
-              {buttonText}
-            </Button>
           )}
 
           <Divider className={styles.devider} />

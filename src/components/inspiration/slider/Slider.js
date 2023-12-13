@@ -30,8 +30,12 @@ export function Slider({ data, isLoading, lazyLoad = true, ...props }) {
       <Row>
         <Col>
           <WorkSlider
+            propsAndChildrenInputList={data?.map((work) => {
+              return {
+                material: work,
+              };
+            })}
             skeleton={isLoading || hide}
-            works={data}
             data-cy="inspiration-slider"
           />
         </Col>

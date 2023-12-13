@@ -5,6 +5,7 @@ import Translate from "@/components/base/translate";
 import { Close } from "@/components/_modal/pages/base/top";
 import Input from "@/components/base/forms/input";
 import { useEffect, useState } from "react";
+import { ToggleMenuItemsEnum } from "@/components/search/advancedSearch/advancedSearchHelpers/dropdownReducerFunctions";
 
 export function DialogForPublicationYear({ items, toggleMenuItemsState }) {
   const item = items?.[0];
@@ -20,8 +21,11 @@ export function DialogForPublicationYear({ items, toggleMenuItemsState }) {
   useEffect(() => {
     if (valueState !== null) {
       toggleMenuItemsState({
-        ...item,
-        value: valueState,
+        type: ToggleMenuItemsEnum.UPDATE,
+        payload: {
+          ...item,
+          value: valueState,
+        },
       });
     }
   }, [JSON.stringify(valueState)]);
@@ -38,7 +42,9 @@ export function DialogForPublicationYear({ items, toggleMenuItemsState }) {
         <Close />
       </div>
       <Input
-        type="number"
+        type="text"
+        inputMode="numeric"
+        pattern="[0-9]*"
         className={styles.lowerRange}
         placeholder={"Big bang"}
         value={item?.value?.lower}
@@ -52,7 +58,9 @@ export function DialogForPublicationYear({ items, toggleMenuItemsState }) {
         }
       />
       <Input
-        type="number"
+        type="text"
+        inputMode="numeric"
+        pattern="[0-9]*"
         className={styles.upperRange}
         placeholder={`${new Date().getFullYear() + 1}`}
         value={item?.value?.upper}

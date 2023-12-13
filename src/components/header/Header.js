@@ -2,11 +2,13 @@ import PropTypes from "prop-types";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import React, { useState } from "react";
+import React, { useRef } from "react";
+import cx from "classnames";
 
 import useHistory from "@/components/hooks/useHistory";
 import useFilters from "@/components/hooks/useFilters";
 import useQ from "@/components/hooks/useQ";
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
 import { cyKey } from "@/utils/trim";
 
@@ -22,12 +24,8 @@ import LoginIcon from "./icons/login";
 import BurgerIcon from "./icons/burger";
 import SearchIcon from "./icons/search";
 import BookmarkIcon from "./icons/bookmark";
-import ExpandedSearch from "./expandedsearch/ExpandedSearch";
-import useUser from "../hooks/useUser";
 
 import Logo from "@/components/base/logo/Logo";
-
-import { MoreOptionsLink } from "./utils";
 
 import { SkipToMainAnchor } from "@/components/base/skiptomain/SkipToMain";
 
@@ -43,6 +41,8 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { openLoginModal } from "../_modal/pages/login/utils";
 import { signOut } from "@dbcdk/login-nextjs/client";
 import useAuthentication from "../hooks/user/useAuthentication";
+
+import AdvancedSearchPopover from "@/components/search/advancedSearch/popover/Popover";
 
 // material Pages
 export const MATERIAL_PAGES = [
@@ -82,15 +82,14 @@ export function Header({
   user,
   modal,
   filters,
-  hideSimpleSearch,
+  hideShadow,
 }) {
   const context = { context: "header" };
   const breakpoint = useBreakpoint();
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
 
-  const { q, setQ, setQuery, getCount, getQuery } = useQ();
-  const countQ = getCount({ exclude: ["all"] });
+  const { q, setQ, setQuery, getQuery } = useQ();
 
   const query = q[SuggestTypeEnum.ALL];
 
@@ -100,12 +99,12 @@ export function Header({
   // workType filter param
   const { workTypes } = filters.getQuery();
 
-  // expanded search state
-  const [collapseOpen, setCollapseOpen] = useState(!!countQ);
-
   // specific material workType selected
   const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
 
+  const simpleSearchRef = useRef(null);
+  const { showInfoTooltip, showPopover, setShowInfoTooltip } =
+    useAdvancedSearchContext();
   const getLoginLabel = () => {
     if (user.hasCulrUniqueId) {
       return "profile";
@@ -117,6 +116,7 @@ export function Header({
     {
       label: "search",
       icon: SearchIcon,
+      className: styles.mobileSearch,
       onClick: () => {
         !story && openMobileSuggester();
         story && story.setSuggesterVisibleMobile(true);
@@ -200,20 +200,62 @@ export function Header({
   const keyPressed = (e) => {
     if (e.key === "Enter") {
       doSearch(e.target.value);
+      if (showInfoTooltip) {
+        setShowInfoTooltip(false);
+      }
     }
   };
   return (
-    <header className={`${styles.wrap} ${className}`}>
+    <header
+      className={cx({
+        [styles.wrap]: true,
+        [styles.noShadow]: hideShadow,
+        [className]: !!className,
+      })}
+    >
       <div className={styles.headerWrap}>
         <Container className={styles.header} fluid>
           <Row>
             <StaticHeader router={router} context={context} />
             <Col xs={{ span: 7, offset: 3 }} className={styles.mobileHeader}>
               <SkipToMainAnchor />
-              {!hideSimpleSearch && (
-                <div className={styles.bottom}>
-                  <form
-                    onSubmit={(e) => {
+              <div className={styles.bottom}>
+                <div
+                  ref={simpleSearchRef}
+                  className={`${styles.search}`}
+                  data-cy={cyKey({ name: "search", prefix: "header" })}
+                >
+                  <DesktopMaterialSelect className={styles.select} />
+
+                  <div
+                    className={`${styles.suggester__wrap} ${suggesterVisibleMobileClass}`}
+                  >
+                    <Suggester
+                      className={`${styles.suggester}`}
+                      history={history}
+                      clearHistory={clearHistory}
+                      isMobile={suggesterVisibleMobile}
+                      onSelect={(val) => doSearch(val)}
+                      onChange={(val) => setQ({ ...q, all: val })}
+                      dataCy={`simple-search-input`}
+                      onClose={() => {
+                        if (router) {
+                          // remove suggester prop from query obj
+                          router.back();
+                        }
+                        // Remove suggester in storybook
+                        story && story.setSuggesterVisibleMobile(false);
+                      }}
+                      onKeyDown={keyPressed}
+                    />
+                  </div>
+
+                  <button
+                    className={`${styles.button}`}
+                    onClick={(e) => {
+                      if (showInfoTooltip || showPopover) {
+                        return;
+                      }
                       e?.preventDefault();
                       doSearch(query);
 
@@ -226,70 +268,22 @@ export function Header({
                       // remove keyboard/unfocus
                       blurInput();
                     }}
-                    className={`${styles.search}`}
-                    data-cy={cyKey({ name: "search", prefix: "header" })}
+                    data-cy={cyKey({
+                      name: "searchbutton",
+                      prefix: "header",
+                    })}
                   >
-                    <DesktopMaterialSelect className={styles.select} />
-
-                    <div
-                      className={`${styles.suggester__wrap} ${suggesterVisibleMobileClass}`}
-                    >
-                      <Suggester
-                        className={`${styles.suggester}`}
-                        history={history}
-                        clearHistory={clearHistory}
-                        isMobile={suggesterVisibleMobile}
-                        onSelect={(val) => doSearch(val)}
-                        onChange={(val) => setQ({ ...q, all: val })}
-                        onClose={() => {
-                          if (router) {
-                            // remove suggester prop from query obj
-                            router.back();
-                          }
-                          // Remove suggester in storybook
-                          story && story.setSuggesterVisibleMobile(false);
-                        }}
-                        onKeyDown={keyPressed}
-                      />
-
-                      <MoreOptionsLink
-                        onSearchClick={() => setCollapseOpen(!collapseOpen)}
-                        className={`${styles.linkshowmore} ${
-                          collapseOpen ? styles.hidden : ""
-                        }`}
-                      >
-                        {Translate({
-                          context: "search",
-                          label:
-                            countQ === 0
-                              ? "advancedSearchLink"
-                              : "advancedSearchLinkCount",
-                          vars: [countQ],
-                        })}
-                      </MoreOptionsLink>
-                      <ExpandedSearch
-                        className={styles.expandedSearch}
-                        collapseOpen={collapseOpen}
-                        setCollapseOpen={setCollapseOpen}
-                      />
-                    </div>
-
-                    <button
-                      className={`${styles.button} ${
-                        collapseOpen ? styles.hidden : ""
-                      }`}
-                      type="submit"
-                      data-cy={cyKey({
-                        name: "searchbutton",
-                        prefix: "header",
-                      })}
-                    >
-                      <span>{Translate({ ...context, label: "search" })}</span>
-                      <div className={styles.fill} />
-                    </button>
-                  </form>
+                    <span>{Translate({ ...context, label: "search" })}</span>
+                    <div className={styles.fill} />
+                  </button>
                 </div>
-              )}
+                <div className={styles.popoverTriggerContainer}>
+                  <AdvancedSearchPopover
+                    className={styles.advancedSearchTrigger}
+                    simpleSearchRef={simpleSearchRef}
+                  />
+                </div>
+              </div>
             </Col>
             <Col xs={{ span: 2 }} className={styles.iconActionsContainer}>
               <div
@@ -300,10 +294,6 @@ export function Header({
                 })}
               >
                 {menu.map((m) => {
-                  //hide search icon if hideSimpleSearch is true
-                  if (hideSimpleSearch && m.label == "search") {
-                    return null;
-                  }
                   const ActionIcon = m.icon;
 
                   return (
@@ -313,7 +303,7 @@ export function Header({
                         prefix: "header-link",
                       })}
                       key={m.label}
-                      className={styles.action}
+                      className={`${styles.action} ${m.className}`}
                       href={m.href}
                       onClick={m.onClick}
                       items={m.items}
@@ -430,7 +420,6 @@ function HeaderSkeleton(props) {
  */
 export default function Wrap(props) {
   const router = useRouter();
-  const user = useUser();
   const { hasCulrUniqueId, isAuthenticated } = useAuthentication();
   const modal = useModal();
   const filters = useFilters();
@@ -442,7 +431,7 @@ export default function Wrap(props) {
   return (
     <Header
       {...props}
-      user={{ ...user, hasCulrUniqueId, isAuthenticated }}
+      user={{ hasCulrUniqueId, isAuthenticated }}
       modal={modal}
       filters={filters}
       router={router}

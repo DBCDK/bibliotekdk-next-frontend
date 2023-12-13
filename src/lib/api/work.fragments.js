@@ -5,9 +5,13 @@
 
 import { ApiEnums } from "@/lib/api/api";
 import {
+  coverFragment,
   creatorsFragment,
   manifestationDetailsForAccessFactory,
   materialTypesFragment,
+  seriesFragment,
+  universeFragment,
+  workSliderFragment,
 } from "@/lib/api/fragments.utils";
 
 export function tableOfContents({ workId }) {
@@ -189,20 +193,73 @@ export function series({ workId }) {
     // delay: 4000, // for debugging
     query: `query Series($workId: String!) {
       work(id: $workId) {
-        seriesMembers {
-          ...workSliderFragment
-          creators {
-            ...creatorsFragment
+        series {
+          ...seriesFragment
+          members {
+            work {
+              ...workSliderFragment
+              manifestations {
+                mostRelevant {
+                  ...coverFragment
+                }
+              }
+              creators {
+                ...creatorsFragment
+              }
+              universes {
+                ...universeFragment
+              }
+            }
+            numberInSeries
+            readThisFirst
+            readThisWhenever
           }
         }
-        ...seriesFragment
       }
     }
     ${workSliderFragment}
     ${creatorsFragment}
     ${seriesFragment}
+    ${universeFragment}
+    ${coverFragment}
   `,
     variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * Works in Series
+ *
+ * @param {Object} variables
+ * @param {string} variables.workIds
+ *
+ * @returns {Object} a query object
+ */
+export function worksInSeries({ workIds }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 4000, // for debugging
+    query: `query worksInSeries($workIds: [String!]!) {
+      works(id: $workIds) {
+        ...workSliderFragment
+        creators {
+          ...creatorsFragment
+        }
+        universes {
+          ...universeFragment
+        }
+        series {
+          ...seriesFragment
+        }
+      }
+    }
+    ${workSliderFragment}
+    ${creatorsFragment}
+    ${seriesFragment}
+    ${universeFragment}
+  `,
+    variables: { workIds },
     slowThreshold: 3000,
   };
 }
@@ -623,6 +680,10 @@ export function idsToWorks({ ids }) {
             cover {
               detail
               origin
+              thumbnail
+            }
+            titles {
+              full
             }
             publisher
             edition{
@@ -635,11 +696,14 @@ export function idsToWorks({ ids }) {
             ownerWork {
               workId
               workTypes
-              creators{
+              creators {
                 display
               }
               titles{
                 full
+              }
+              workYear {
+                display
               }
             }
             materialTypes {
@@ -914,44 +978,6 @@ export function workForWorkRelationsWorkTypeFactory({ workId }) {
   };
 }
 
-// Use this fragments in queries that provide data
-// to the WorkSlider
-const workSliderFragment = `fragment workSliderFragment on Work {
-  workId
-  titles {
-    main
-    full
-  }
-  materialTypes {
-    materialTypeGeneral {
-      code
-      display
-    }
-    materialTypeSpecific {
-      code
-      display
-    }
-  }
-  manifestations {
-    mostRelevant {
-      materialTypes {
-        materialTypeGeneral {
-          code
-          display
-        }
-        materialTypeSpecific {
-          code
-          display
-        }
-      }
-      cover {
-        detail
-        origin
-      }
-    }
-  }
-}`;
-
 const genreAndFormAndWorkTypesFragment = `fragment genreAndFormAndWorkTypesFragment on Work {
   genreAndForm
   workTypes
@@ -965,23 +991,6 @@ const titleFragment = `fragment titleFragment on Work {
   titles {
     main
     full
-  }
-}`;
-
-const coverFragment = `fragment coverFragment on Manifestation {
-  cover {
-    detail
-    origin
-  }
-}`;
-
-const seriesFragment = `fragment seriesFragment on Work {
-  series {
-    title
-    numberInSeries {
-      display
-      number
-    }
   }
 }`;
 

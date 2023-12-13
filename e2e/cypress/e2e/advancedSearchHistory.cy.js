@@ -4,22 +4,21 @@ describe("Advanced search history", () => {
 
     cy.get("[data-cy=advanced-search-search-history]")
       .should("exist")
-      .contains("Søgehistorik");
-
-    // list should NOT be shown as default
-    cy.get("div[class=card-body").should("not.be.visible");
+      .contains("Seneste søgninger");
 
     // now click to make it visible
-    cy.get("[data-cy=advanced-search-search-history]").should("exist").click();
+    cy.get("[data-cy=advanced-search-history-item]").should("exist");
     // there should be 2 items in list
-    cy.get("div[class=card-body] div")
+    cy.get("[data-cy=advanced-search-history-item]")
       .should("be.visible")
-      .should("have.length", 2);
+      .should("have.length", 3);
 
     // test delete function
-    cy.get("[data-cy=delete-history-0]").click();
-    cy.get("div[class=card-body] div")
+    cy.get("#select-item-0").should("exist").click({ force: true });
+
+    cy.get("[data-cy=text-fjern-valgte]").should("exist").click();
+    cy.get("[data-cy=advanced-search-history-item]")
       .should("be.visible")
-      .should("have.length", 1);
+      .should("have.length", 2);
   });
 });

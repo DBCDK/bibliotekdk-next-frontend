@@ -9,7 +9,6 @@ import { templateImageToLeft } from "@/components/base/materialcard/templates/te
 import ChoosePeriodicaCopyRow from "@/components/_modal/pages/edition/choosePeriodicaCopyRow/ChoosePeriodicaCopyRow.js";
 import { translateArticleType } from "@/components/_modal/pages/edition/utils.js";
 import { inferAccessTypes } from "@/components/_modal/pages/edition/utils.js";
-import useUser from "@/components/hooks/useUser";
 import { useModal } from "@/components/_modal/Modal";
 import { AccessEnum } from "@/lib/enums";
 import {
@@ -27,10 +26,11 @@ import IconButton from "@/components/base/iconButton";
 import { getManifestationWithoutDefaultCover } from "@/components/work/overview/covercarousel/utils";
 import { workHasAlreadyBeenOrdered } from "../../../order/utils/order.utils";
 import HasBeenOrderedRow from "../../../edition/hasbeenOrderedRow/HasBeenOrderedRow";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 /**
  * At this point, we have manifestation of all the different material types
- * Here we filter for the materialtype the user has selected
+ * Here we filter out the manifestation with the materialtype the user has selected
  * If we have compound material types (such as "den grimme ælling Bog / Lydoptagelse (cd)"), we have to split them up
  * @param {Object[]} mostRelevant
  * @param {String} materialType
@@ -51,6 +51,10 @@ export const filterForRelevantMaterialTypes = (mostRelevant, materialType) => {
  * @param {Number} numberOfMaterialsToOrder
  * @param {Function} setMaterialsToOrder
  * @param {Object} periodicaForms
+ * @param {String} backgroundColorOverride
+ * @param {Function} setDuplicateBookmarkIds
+ * @param {Boolean} showActions we dont wanna show actions (fjern, fillout periodica data) in receipt since the user cannot do anything about it.
+ * @param {Function} setMaterialStatusChanged callback to trigger reevaluation of error state in checkout form
  * @returns {React.JSX.Element}
  */
 const Material = ({
@@ -60,6 +64,8 @@ const Material = ({
   periodicaForms,
   backgroundColorOverride = BackgroundColorEnum.NEUTRAL,
   setDuplicateBookmarkIds,
+  showActions = true,
+  setMaterialStatusChanged,
 }) => {
   //@TODO get manifestations in same manner for both edition and works via useData
   const isSpecificEdition = !!material?.pid;
@@ -69,7 +75,7 @@ const Material = ({
     backgroundColorOverride
   );
 
-  const { loanerInfo } = useUser();
+  const { loanerInfo } = useLoanerInfo();
   const periodicaForm = periodicaForms?.[material.key];
   const workId = material.workId;
   const hasAlreadyBeenOrdered = workHasAlreadyBeenOrdered(workId);
@@ -80,7 +86,7 @@ const Material = ({
   const manifestations = isSpecificEdition
     ? [material]
     : filterForRelevantMaterialTypes(
-        material?.manifestations.mostRelevant,
+        material?.manifestations?.mostRelevant,
         material?.materialType
       );
 
@@ -96,6 +102,20 @@ const Material = ({
         branchId: loanerInfo.pickupBranch,
       })
   );
+
+  /**
+   * there is a timing issue, when we listen to analyzeRef.current in MultiOrder.page,
+   * which leads to occasionally wrong error messages in checkout form
+   * therefore we listen to background color changes (which determine the error state of the material card)
+   * and thus we trigger a reevaluation of the error state in the checkout form
+   * perfomes a bit slow.
+   */
+  useEffect(() => {
+    if (setMaterialStatusChanged) {
+      setMaterialStatusChanged(Date.now());
+    }
+  }, [backgroundColor]);
+
   useEffect(() => {
     if (orderPolicyData && orderPolicyData.branches) {
       setOrderPossible(
@@ -121,7 +141,8 @@ const Material = ({
   const inferredAccessTypes = inferAccessTypes(
     periodicaForm,
     loanerInfo.pickupBranch,
-    manifestations
+    manifestations,
+    loanerInfo
   );
 
   const {
@@ -145,7 +166,7 @@ const Material = ({
 
   const children = [];
 
-  if (isPeriodicaLike) {
+  if (orderPossible && isPeriodicaLike && showActions) {
     children.push(
       <ChoosePeriodicaCopyRow
         key={material.key}
@@ -165,7 +186,12 @@ const Material = ({
     );
   }
 
-  if (showAlreadyOrderedWarning && !isPeriodicaLike) {
+  if (
+    orderPossible &&
+    showAlreadyOrderedWarning &&
+    !isPeriodicaLike &&
+    showActions
+  ) {
     //TODO currently we only check for non-periodica orders
     children.push(
       <HasBeenOrderedRow
@@ -189,7 +215,7 @@ const Material = ({
   }
 
   if (!orderPossible) {
-    children = (
+    children.push(
       <>
         <Text className={styles.orderNotPossible} type="text4">
           {Translate({

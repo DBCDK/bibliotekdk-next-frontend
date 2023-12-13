@@ -12,84 +12,78 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Button from "@/components/base/button";
-import isEmpty from "lodash/isEmpty";
-import { AdvancedSearchHistory } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
 import DropdownInputs from "@/components/search/advancedSearch/dropdownInputs/DropdownInputs";
 import { convertStateToCql } from "@/components/search/advancedSearch/utils";
-import {
-  DebugStateDetails,
-  prettyParseCql,
-} from "@/components/search/advancedSearch/DebugStateDetails";
-import * as PropTypes from "prop-types";
-import { ExperimentalCqlParser } from "@/components/search/advancedSearch/ExperimentalCqlParser";
+import IconButton from "@/components/base/iconButton/IconButton";
+import { getHelpUrl } from "@/lib/utils";
+import cx from "classnames";
 
-ExperimentalCqlParser.propTypes = { parsedCQL: PropTypes.string };
 /**
  * Contains advanced search fields
  * @returns {React.JSX.Element}
  */
 
-export default function AdvancedSearch({ initState }) {
+export default function AdvancedSearch({ ariaExpanded, className }) {
   const router = useRouter();
-  const { cql } = router.query;
-  const workType = "all";
-  const [showCqlEditor, setShowCqlEditor] = useState(false);
-  const textAreaRef = useRef(null);
 
   const {
     inputFields,
     dropdownSearchIndices,
-    updateStatesFromObject,
-    resetObjectState,
     parsedCQL,
     setParsedCQL,
+    cqlFromUrl,
+    fieldSearchFromUrl,
+    setShowPopover,
+    stateToString,
+    resetObjectState,
   } = useAdvancedSearchContext();
 
+  const [showCqlEditor, setShowCqlEditor] = useState(false);
+  const textAreaRef = useRef(null);
+
   useEffect(() => {
-    //show CQL editor if there is a cql param in the url
-    setShowCqlEditor(!!cql);
-    if (initState) {
-      updateStatesFromObject(initState);
-    }
-  }, []);
+    setShowCqlEditor(router?.query?.mode === "cql" || !!cqlFromUrl);
+  }, [cqlFromUrl, router?.query?.mode]);
 
   //add raw cql query in url if showCqlEditor. Add state to url if fieldInputs
   const doAdvancedSearch = () => {
     if (showCqlEditor) {
-      //do cql text search
-      const cql = textAreaRef.current.value;
-
-      if (isEmpty(cql)) {
-        textAreaRef.current.focus();
+      const cqlParsedFromUrl = fieldSearchFromUrl
+        ? convertStateToCql(fieldSearchFromUrl)
+        : cqlFromUrl;
+      if (!cqlFromUrl && parsedCQL === cqlParsedFromUrl) {
+        const query = { fieldSearch: stateToString };
+        router.push({ pathname: "/avanceret", query });
+      } else {
+        const query = { cql: parsedCQL };
+        router.push({ pathname: "/avanceret", query });
       }
-
-      const query = { cql: cql };
-      router.push({ pathname: router.pathname, query });
     } else {
-      //save state in url
-      const stateToString = JSON.stringify({
-        inputFields,
-        dropdownSearchIndices,
-      });
       const query = { fieldSearch: stateToString };
-      router.push({ pathname: router.pathname, query });
+      router.push({ pathname: "/avanceret", query });
       //save in state
       const cql = convertStateToCql({ inputFields, dropdownSearchIndices });
       setParsedCQL(cql);
     }
+    setShowPopover(false);
   };
 
   return (
-    <div className={styles.background}>
+    <div
+      // We use areaExpanded for showing
+      //   the className
+      aria-expanded={ariaExpanded}
+      className={cx(styles.background, className)}
+    >
       <Container fluid className={styles.container}>
         <Row className={styles.topContainer}>
-          <Col>
+          <Col md={{ offset: 3, span: 4 }} sm={12}>
             <Title type="title3">
               {Translate({ context: "search", label: "advancedSearch" })}
             </Title>
           </Col>
-          <Col>
-            <div className={styles.right}>
+          <Col md={3} sm={12} className={styles.buttonContainer}>
+            <Text type="text3" tag="span">
               <Link
                 onClick={() => {
                   setShowCqlEditor(!showCqlEditor);
@@ -101,56 +95,108 @@ export default function AdvancedSearch({ initState }) {
                   },
                 }}
               >
-                <Text type="text3" tag="span">
-                  {Translate({
-                    context: "search",
-                    label: showCqlEditor
-                      ? "showInputFields"
-                      : "editInCqlEditor",
-                  })}
-                </Text>
+                {Translate({
+                  context: "search",
+                  label: showCqlEditor ? "showInputFields" : "editInCqlEditor",
+                })}
               </Link>
-            </div>
+            </Text>
+
+            <Text type="text3" tag="span">
+              <Link
+                onClick={() => setTimeout(() => setShowPopover(false), 100)}
+                href="/avanceret/soegehistorik"
+                border={{
+                  top: false,
+                  bottom: {
+                    keepVisible: true,
+                  },
+                }}
+              >
+                {Translate({
+                  context: "search",
+                  label: "searchHistory",
+                })}
+              </Link>
+            </Text>
+          </Col>
+
+          <Col md={2} sm={12} className={styles.closeContainer}>
+            <IconButton
+              icon="close"
+              onClick={() => setShowPopover(false)}
+              keepUnderline={true}
+            >
+              {Translate({ context: "general", label: "close" })}
+            </IconButton>
           </Col>
         </Row>
         <Row>
-          <Col>
-            {showCqlEditor ? (
-              <CqlTextArea textAreaRef={textAreaRef} />
-            ) : (
+          <Col md={3} sm={12}>
+            {/**Insert material type select here */}
+          </Col>
+          {showCqlEditor ? (
+            <Col md={7} sm={12}>
+              <CqlTextArea
+                textAreaRef={textAreaRef}
+                doAdvancedSearch={doAdvancedSearch}
+              />
+            </Col>
+          ) : (
+            <Col md={9} sm={12}>
               <>
-                <TextInputs workType={workType} />
+                <TextInputs doAdvancedSearch={doAdvancedSearch} />
                 <DropdownInputs />
               </>
-            )}
-          </Col>
-          <Col>
-            <AdvancedSearchHistory />
-          </Col>
+            </Col>
+          )}
         </Row>
         <Row className={styles.buttonRow}>
-          <Col className={styles.button_group}>
-            <Button className={styles.button} onClick={doAdvancedSearch}>
-              {Translate({ context: "header", label: "search" })}
-            </Button>
-            <Link
-              border={{ bottom: { keepVisible: true } }}
-              onClick={() => {
-                router.push({ pathname: router.pathname, query: {} });
-                resetObjectState();
-              }}
+          <Col
+            className={styles.button_group}
+            md={{ offset: 3, span: 5 }}
+            sm={12}
+          >
+            <Button
+              className={styles.button}
+              size="medium"
+              onClick={doAdvancedSearch}
             >
-              Ryd søgning
-            </Link>
+              {Translate({ context: "search", label: "advancedSearch_button" })}
+            </Button>
+            <Text type="text3">
+              <Link
+                border={{ bottom: { keepVisible: true } }}
+                onClick={() => {
+                  resetObjectState();
+                  router.push({
+                    pathname: router.pathname,
+                    ...(showCqlEditor && { query: { mode: "cql" } }),
+                  });
+                }}
+              >
+                {Translate({ context: "search", label: "clearSearch" })}
+              </Link>
+            </Text>
+          </Col>
+
+          <Col md={4} sm={12} className={styles.helpLink}>
+            <Text type="text3" tag="span">
+              <Link
+                href={getHelpUrl("saadan-soeger-du-i-bibliotek-dk", "42")}
+                border={{
+                  top: false,
+                  bottom: {
+                    keepVisible: true,
+                  },
+                }}
+                target="_blank"
+              >
+                {Translate({ context: "search", label: "helpAndGuidance" })}
+              </Link>
+            </Text>
           </Col>
         </Row>
-        {/* TODO: For debugging purposes. Remove when unneeded */}
-        <DebugStateDetails
-          title="Resulting cql after search (with added line breaks)"
-          state={parsedCQL}
-          jsonParser={prettyParseCql}
-        />
-        <ExperimentalCqlParser parsedCQL={parsedCQL} />
       </Container>
     </div>
   );

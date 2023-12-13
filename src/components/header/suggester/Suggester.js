@@ -267,6 +267,7 @@ function renderInputComponent(
           onClear();
           focusInput();
         }}
+        data-cy={cyKey({ name: "clear-input", prefix: "suggester" })}
       >
         <Icon size={{ w: "auto", h: 2 }} alt="">
           <ClearSvg />

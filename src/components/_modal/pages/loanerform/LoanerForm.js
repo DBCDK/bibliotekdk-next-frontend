@@ -7,6 +7,7 @@ import Input from "@/components/base/forms/input";
 import Button from "@/components/base/button";
 import Translate, { hasTranslation } from "@/components/base/translate";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
+import { goToPreviousModal } from "./loanerform.utils.js";
 
 import Top from "../base/top";
 
@@ -19,6 +20,7 @@ import { openOrderModal } from "@/components/work/utils";
 import { validateEmail } from "@/utils/validateEmail";
 import { getLabel } from "@/components/base/forms/email/Email";
 import Tooltip from "@/components/base/tooltip/Tooltip";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 const ERRORS = {
   MISSING_INPUT: "error-missing-input",
@@ -303,7 +305,8 @@ export default function Wrap(props) {
 
   const branch = data?.branches?.result?.[0];
 
-  const { loanerInfo, updateLoanerInfo, deleteSessionData } = useUser();
+  const { deleteSessionData } = useUser();
+  const { loanerInfo, updateLoanerInfo } = useLoanerInfo();
 
   //remove userdata when modal is closed - if user doesnt want to store data
   useEffect(() => {
@@ -346,7 +349,7 @@ export default function Wrap(props) {
     });
 
     if (changePickupBranch) {
-      props.modal.prev("order");
+      goToPreviousModal(props.modal);
     } else {
       openOrderModal({
         modal,

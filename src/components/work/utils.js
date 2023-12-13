@@ -1,13 +1,13 @@
 import Translate from "@/components/base/translate";
 import Router from "next/router";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
-import useUser from "@/components/hooks/useUser";
 import { useData } from "@/lib/api/api";
 import { useMemo } from "react";
 import { accessFactory } from "@/lib/accessFactoryUtils";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import { extractCreatorsPrioritiseCorporation } from "@/lib/utils";
 import { MaterialTypeGeneralEnum } from "@/lib/enums_MaterialTypes";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 export function openAgencyLocalizationsModal({
   modal,
@@ -125,9 +125,9 @@ export function getSeo(work) {
 }
 
 export function useRelevantAccessesForOrderPage(selectedPids) {
-  const { authUser: user, isLoading } = useUser();
+  const { loanerInfo, isLoading } = useLoanerInfo();
 
-  const hasDigitalAccess = user?.rights?.digitalArticleService;
+  const hasDigitalAccess = loanerInfo?.rights?.digitalArticleService;
 
   const manifestationsResponse = useData(
     selectedPids &&

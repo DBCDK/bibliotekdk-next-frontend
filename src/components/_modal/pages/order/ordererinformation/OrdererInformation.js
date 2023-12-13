@@ -8,6 +8,7 @@ import Email from "@/components/base/forms/email";
 import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
 import { getStylingAndErrorMessage } from "@/components/_modal/pages/order/utils/order.utils";
+import { useEffect } from "react";
 
 export function OrdererInformation({
   isLoadingBranches,
@@ -169,6 +170,10 @@ export default function Wrap({
 
   const showMailMessage =
     isLoadingBranches || (authUser?.mail && lockedMessage && hasBorchk);
+
+  useEffect(() => {
+    onMailChange({ target: { value: email } });
+  }, [email]);
 
   return (
     <OrdererInformation

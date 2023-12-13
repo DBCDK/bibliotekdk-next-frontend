@@ -5,7 +5,6 @@ import { useData } from "@/lib/api/api";
 import { fetchAll } from "@/lib/api/apiServerOnly";
 import * as workFragments from "@/lib/api/work.fragments";
 import * as infomediaFragments from "@/lib/api/infomedia.fragments";
-import useUser from "@/components/hooks/useUser";
 
 import {
   Content,
@@ -15,6 +14,7 @@ import {
 import ArticleLoginPrompt from "@/components/login/prompt/ArticleLoginPrompt";
 import { timestampToShortDate } from "@/utils/datetimeConverter";
 import Error from "next/error";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 export function InfomediaArticle(props) {
   const { articleId, article, notFound, isLoading } = props;
@@ -79,10 +79,9 @@ function parseInfomediaArticle(work, infomediaArticle = {}) {
 export default function Wrap() {
   const router = useRouter();
   const { workId, infomediaId } = router.query;
+  const { loanerInfo } = useLoanerInfo();
 
-  const { authUser: user } = useUser();
-
-  const hasInfomediaAccess = user?.rights?.infomedia;
+  const hasInfomediaAccess = loanerInfo?.rights?.infomedia;
 
   const { data: infomediaPublicData, isLoading: isLoadingInfomediaPublic } =
     useData(workId && workFragments.infomediaArticlePublicInfo({ workId }));

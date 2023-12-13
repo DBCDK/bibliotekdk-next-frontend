@@ -4,6 +4,10 @@
   position: relative;
 }
 
+.search:is(:focus, :focus-visible, :hover) {
+  z-index: 1;
+}
+
 .wrapper {
   width: 100%;
 

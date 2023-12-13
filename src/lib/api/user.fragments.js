@@ -27,7 +27,7 @@ export function basic() {
         address
         postalCode
         isCPRValidated
-        loggedInBranchId
+        loggedInAgencyId
         municipalityAgencyId
         rights {
           infomedia 
@@ -43,6 +43,8 @@ export function basic() {
             agencyType
             name
             branchWebsiteUrl
+            pickupAllowed
+            borrowerCheck
           }
         }
         debt {
@@ -179,33 +181,6 @@ export function orderPolicy({ pids }) {
             userStatusUrl
             digitalCopyAccess
           }
-        }
-        agencies (language: $language){
-        agencyUrl
-        result {
-          agencyName
-          agencyId
-          name
-          city
-          postalAddress
-          postalCode
-          branchId
-          openingHours
-          borrowerCheck
-          orderPolicy(pids: $pids) {
-            orderPossible
-            orderPossibleReason
-            lookUpUrl
-            lookUpUrls
-          }
-          userParameters {
-            userParameterType
-            parameterRequired
-          }
-          pickupAllowed
-          userStatusUrl
-          digitalCopyAccess
-        }
         }
       }
       monitor(name: "bibdknext_orderpolicy")

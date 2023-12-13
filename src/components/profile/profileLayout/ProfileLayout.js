@@ -7,7 +7,6 @@ import ProfileMenu from "../profilemenu/desktop/ProfileMenu";
 import Breadcrumb from "../breadcrumb/Breadcrumb";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import NavigationDropdown from "@/components/base/dropdown/navigationDropdown/NavigationDropdown";
-import useUser from "@/components/hooks/useUser";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import Translate from "@/components/base/translate/Translate";
@@ -17,6 +16,7 @@ import { useModal } from "@/components/_modal";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import { useRouter } from "next/router";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 const CONTEXT = "profile";
 const MENUITEMS = [
@@ -42,9 +42,15 @@ export default function ProfileLayout({ title, children }) {
   const isMobile = breakpoint === "xs" || breakpoint === "sm";
   const isTablet = breakpoint === "md";
   const isDesktop = !isMobile && !isTablet;
-  const { hasCulrUniqueId } = useAuthentication();
+  const { hasCulrUniqueId, isAuthenticated } = useAuthentication();
+
   const modal = useModal();
   const router = useRouter();
+
+  const isWhitelistPath = WHITELIST.includes(router.pathname);
+
+  const showProfile = hasCulrUniqueId || isWhitelistPath;
+  const showLoginToSeeProfile = !isWhitelistPath && !isAuthenticated;
 
   return (
     <Container fluid className={styles.container}>
@@ -67,7 +73,7 @@ export default function ProfileLayout({ title, children }) {
         </Col>
         <Col lg={9}>
           {/**page content here */}
-          {hasCulrUniqueId || WHITELIST.includes(router.pathname) ? (
+          {showProfile && (
             <>
               <Title
                 className={styles.title}
@@ -78,7 +84,8 @@ export default function ProfileLayout({ title, children }) {
               </Title>
               {children}
             </>
-          ) : (
+          )}
+          {showLoginToSeeProfile && (
             <div>
               <Title className={styles.loginTitle} tag="h2" type="title3">
                 {Translate({
@@ -124,21 +131,17 @@ export default function ProfileLayout({ title, children }) {
 }
 
 const LogoutButton = () => {
-  const user = useUser();
   const { isAuthenticated } = useAuthentication();
+  const { loanerInfo, isLoading } = useLoanerInfo();
 
   if (!isAuthenticated) {
     return;
   }
-  const userName = user?.loanerInfo?.userParameters?.userName;
+  const userName = loanerInfo?.userParameters?.userName;
   return (
     <div className={styles.logoutContainer}>
       {userName && (
-        <Text
-          className={styles.logoutBtnText}
-          skeleton={user?.isLoading}
-          lines={1}
-        >
+        <Text className={styles.logoutBtnText} skeleton={isLoading} lines={1}>
           {`${Translate({
             context: "profile",
             label: "signed-in-as-name",

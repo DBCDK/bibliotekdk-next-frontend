@@ -16,7 +16,7 @@ export default function Document() {
         <NextScript />
         <Script
           id="Cookiebot"
-          src="https://consent.cookiebot.com/uc.js"
+          src="https://consent.cookiebot.eu/uc.js"
           data-cbid={COOKIEBOT.id}
           data-blockingmode={COOKIEBOT.mode}
           type="text/javascript"

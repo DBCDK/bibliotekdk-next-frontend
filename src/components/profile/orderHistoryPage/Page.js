@@ -16,7 +16,7 @@ import { getWorkUrlForProfile } from "@/components/profile/utils";
 import { parseDate } from "@/lib/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 
-const itemsPerPage = 4;
+const ITEMS_PER_PAGE = 20;
 
 /**
  * Shows the previous orders made by the user from bibliotekdk.
@@ -37,8 +37,8 @@ export default function OrderHistoryPage() {
   const { data, isLoading } = useData(
     hasCulrUniqueId &&
       orderHistory({
-        limit: itemsPerPage,
-        offset: (currentPage - 1) * itemsPerPage,
+        limit: ITEMS_PER_PAGE,
+        offset: (currentPage - 1) * ITEMS_PER_PAGE,
       })
   );
   const { data: userData, mutate } = useData(
@@ -57,7 +57,7 @@ export default function OrderHistoryPage() {
     if (data) {
       const fetchedData = data?.user?.bibliotekDkOrders?.result;
       const pages = Math.ceil(
-        data?.user?.bibliotekDkOrders?.hitcount / itemsPerPage
+        data?.user?.bibliotekDkOrders?.hitcount / ITEMS_PER_PAGE
       );
       setTotalPages(pages);
       if (fetchedData) {

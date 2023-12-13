@@ -1,37 +1,50 @@
 .container {
   width: 100%;
-  padding-bottom: var(--pt4);
-  padding-top: var(--pt4);
+  padding-bottom: var(--pt7);
+  padding-top: var(--pt2);
 }
 
 .background {
   background-color: var(--concrete);
 }
 
-.right {
-  margin-left: auto;
-  margin-right: 0;
-  float: right;
-}
-
 .topContainer {
   display: flex;
+  align-items: start;
   margin-bottom: var(--pt4);
-
-  width: 100%;
-  align-items: center;
 }
 
 .buttonRow {
-  margin-top: var(--pt4);
+  padding-top: var(--pt4);
 }
 
 .button {
-  width: 300px;
+  width: 156px;
 }
 
 .button_group {
   display: flex;
-  gap: var(--pt2);
+  gap: var(--pt3);
   align-items: center;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: var(--pt3);
+  align-self: end;
+  justify-content: end;
+}
+
+.closeContainer {
+  display: flex;
+  align-self: start;
+  align-items: center;
+  justify-content: end;
+}
+
+.helpLink {
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: end;
+  display: flex;
 }

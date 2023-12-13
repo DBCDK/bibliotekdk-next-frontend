@@ -11,6 +11,8 @@ import { LOGIN_MODE } from "../../../login/utils";
 import { LocalizationInformation } from "@/components/_modal/pages/order/localizationinformation/LocalizationInformation"; // Import without wrapper
 import Spinner from "react-bootstrap/Spinner";
 import Link from "@/components/base/link";
+import { validateEmail } from "@/utils/validateEmail";
+import { getLabel } from "@/components/base/forms/email/Email";
 
 const CheckoutForm = ({
   context,
@@ -23,14 +25,17 @@ const CheckoutForm = ({
     digitalMaterials,
     materialsNotAllowed,
     materialsMissingAction,
-    duplicateOrdersWorkIds,
+    isAnalyzed,
+    numberMaterialsToOrder,
   } = materialCounts;
   const modal = useModal();
   const disabled =
+    !isAnalyzed ||
     materialsMissingAction > 0 ||
     materialsNotAllowed > 0 ||
-    duplicateOrdersWorkIds?.length > 0 ||
-    mail?.valid?.status === false;
+    duplicateBookmarkIds?.length > 0 ||
+    mail?.valid?.status === false ||
+    numberMaterialsToOrder < 1;
   const [mail, setMail] = useState(null);
   const { userInfo, pickupBranchInfo, accessTypeInfo } =
     useOrderPageInformation({
@@ -41,6 +46,9 @@ const CheckoutForm = ({
   const { pickupBranch, pickupBranchUser, isLoadingBranches } =
     pickupBranchInfo;
 
+  // numberMaterialsToOrder contains all orders: physical and digital orders,
+  // if numberMaterialsToOrder is greater than digitalMaterials, we also have physical orders
+  const hasPhysicalOrders = numberMaterialsToOrder > digitalMaterials;
   const { updateLoanerInfo } = userInfo;
 
   const validated = useMemo(() => {
@@ -71,10 +79,13 @@ const CheckoutForm = ({
       ".modal_page.page-current .page_content"
     )[0];
 
-    const el = document.getElementById(duplicateBookmarkIds[0]);
+    const scrollToId = context?.materials?.find(
+      (mat) => mat.bookmarkId === duplicateBookmarkIds?.[0]
+    )?.materialId;
+    const el = document.getElementById(scrollToId);
 
     scrollContainer.scrollTo({
-      top: el.offsetTop,
+      top: el?.offsetTop,
       behavior: "smooth",
     });
   };
@@ -88,15 +99,17 @@ const CheckoutForm = ({
         isLoadingBranches={isLoadingBranches}
         isAuthenticated // always true here - we check before we enter this flow
         isDigitalCopy={false}
-        availableAsPhysicalCopy
+        availableAsPhysicalCopy={true}
         onClick={() => {
           !isLoadingBranches &&
             modal.push("pickup", {
               initial: {
                 agencies: pickupBranchUser?.agencies,
               },
-              requireDigitalAccess: accessTypeInfo?.requireDigitalAccess,
+              requireDigitalAccess: false,
               mode: LOGIN_MODE.ORDER_PHYSICAL,
+              pid: context?.materials?.[0].pid,
+              showAllBranches: true,
             });
         }}
       />
@@ -104,8 +117,17 @@ const CheckoutForm = ({
         context={context}
         validated={validated}
         hasValidationErrors={false}
-        onMailChange={(e, valid) => {
-          onMailChange(e?.target?.value, valid, updateLoanerInfo, setMail);
+        onMailChange={(e) => {
+          const value = e?.target?.value;
+          onMailChange(
+            value,
+            {
+              status: validateEmail(value),
+              message: getLabel(value),
+            },
+            updateLoanerInfo,
+            setMail
+          );
         }}
       />
 
@@ -146,12 +168,12 @@ const CheckoutForm = ({
           </Text>
         )}
 
-        {duplicateOrdersWorkIds?.length > 0 && (
+        {duplicateBookmarkIds?.length > 0 && (
           <Text type="text3" className={styles.errorLabel}>
             <Translate
               context="bookmark-order"
               label={
-                duplicateOrders === 1
+                duplicateBookmarkIds === 1
                   ? "multiorder-duplicate-order-singular"
                   : "multiorder-duplicate-order"
               }
@@ -183,9 +205,18 @@ const CheckoutForm = ({
           </Text>
         )}
 
-        <Text type="text3" className={styles.formLabel}>
-          <Translate context="order" label="order-message-library" />
-        </Text>
+        {hasPhysicalOrders && (
+          <Text type="text3" className={styles.formLabel}>
+            <Translate
+              context="order"
+              label={
+                numberMaterialsToOrder === 1
+                  ? "order-message-library"
+                  : "order-message-library-plural"
+              }
+            />
+          </Text>
+        )}
 
         <Button
           type="primary"

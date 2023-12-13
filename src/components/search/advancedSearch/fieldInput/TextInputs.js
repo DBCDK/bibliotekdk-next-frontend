@@ -1,12 +1,11 @@
 import Translate from "@/components/base/translate/Translate";
 import Text from "@/components/base/text";
 import Suggester from "@/components/base/suggester/Suggester";
-
 import IconButton from "@/components/base/iconButton/IconButton";
 import styles from "./TextInputs.module.css";
 import animations from "css/animations";
 import SearchIndexDropdown from "@/components/search/advancedSearch/fieldInput/searchIndexDropdown/SearchIndexDropdown";
-
+import Button from "@/components/base/button";
 import { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import Icon from "@/components/base/icon";
@@ -22,14 +21,15 @@ import { LogicalOperatorsEnum } from "@/components/search/enums";
  * @param {Object} props
  * @returns {React.JSX.Element}
  */
-function FieldInput({ key, index, workType, fieldValue }) {
+function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
   const [suggestions, setSuggestions] = useState([]);
+  const inputId = `complex_suggest__${fieldValue.searchIndex}-${index}`;
 
   const {
     handleInputFieldChange,
     removeInputField,
     handleLogicalOperatorChange,
-    inputFields,
+    workType,
   } = useAdvancedSearchContext();
   //labels to show in SearchIndexDropdown
   const labels = workTypesLabels[workType].map((el) => el.index);
@@ -38,7 +38,7 @@ function FieldInput({ key, index, workType, fieldValue }) {
   // this is a bit quicky - should probably get the csType
   // from advancedSearchContext
   const csTypeMap = { function: "creator" };
-  const indexType = inputFields[index].searchIndex;
+  const indexType = fieldValue.searchIndex;
   const csType = indexType.split(".")[1];
   const mappedCsType = csTypeMap[csType] || csType;
 
@@ -65,33 +65,42 @@ function FieldInput({ key, index, workType, fieldValue }) {
         />
       )}
 
-      <div
-        className={`${styles.inputContainer} ${
-          isFirstItem ? styles.rightPadding : ""
-        }`}
-      >
+      <div className={`${styles.inputContainer} r`}>
         <SearchIndexDropdown
           options={labels}
           className={styles.select}
           index={index}
         />
-        <div className={`${styles.suggester__wrap} `}>
+        <div className={`${styles.suggesterContainer} `}>
           <Suggester
+            id={key}
             data={suggestions}
-            onSelect={(selectValue) =>
+            onSelect={(selectValue) => {
               setTimeout(() => {
                 // onSelect should be called after onChange. Otherwise onChange wil overrite the selected value
                 handleInputFieldChange(index, selectValue);
-              }, 0)
-            }
+              }, 0);
+              document?.getElementById(inputId).blur();
+            }}
             onClear={() => handleInputFieldChange(index, "")}
             className={styles.suggester}
+            initialValue={`${fieldValue.value}`}
           >
             <Input
+              id={inputId}
               className={styles.suggesterInput}
               value={fieldValue?.value}
               onChange={(e) => handleInputFieldChange(index, e.target.value)}
               placeholder={fieldValue.placeholder}
+              overrideValueControl={true}
+              // onKeyDown overrides suggesters onKeyDown, and we don't want that
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+
+                  doAdvancedSearch();
+                }
+              }}
             />
           </Suggester>
         </div>
@@ -100,6 +109,7 @@ function FieldInput({ key, index, workType, fieldValue }) {
             icon="close"
             onClick={() => removeInputField(index)}
             className={styles.removeIcon}
+            keepUnderline={true}
           >
             {Translate({ context: "search", label: "remove" })}
           </IconButton>
@@ -118,6 +128,7 @@ const options = Object.keys(LogicalOperatorsEnum); //["AND", "OR", "NOT"];
  */
 function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
   const [expanded, setExpanded] = useState(false);
+
   function toggleCollapse() {
     setExpanded((current) => !current);
   }
@@ -141,7 +152,7 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
           })}
         </Text>
         <Icon
-          size={{ w: "2", h: "auto" }}
+          size={{ w: "2", h: "2" }}
           src={expanded ? "arrowUp.svg" : "arrowDown.svg"}
           alt=""
         />
@@ -179,29 +190,38 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
  * @param {Object} props
  * @returns {React.JSX.Element}
  */
-export default function TextInputs({ workType }) {
+export default function TextInputs({ doAdvancedSearch }) {
   const { inputFields, addInputField } = useAdvancedSearchContext();
 
   return (
     <>
+      <Text type="text1" className={styles.inputTitle}>
+        {Translate({ context: "search", label: "construct-your-search" })}
+      </Text>
       {inputFields?.map((field, index) => {
         return (
           <FieldInput
             key={`inputField-${index}`}
             index={index}
-            workType={workType}
             fieldValue={field}
+            doAdvancedSearch={doAdvancedSearch}
           />
         );
       })}
-      <IconButton
-        icon="expand"
-        onClick={addInputField}
-        keepUnderline
+      <Button
+        type="secondary"
+        size="small"
         className={styles.addLine}
+        onClick={addInputField}
+        icon="expand"
       >
-        {Translate({ context: "search", label: "addLine" })}
-      </IconButton>
+        <Text>{Translate({ context: "search", label: "addLine" })}</Text>
+        <Icon
+          className={styles.expandIcon}
+          size={{ w: 2, h: "auto" }}
+          src={"expand.svg"}
+        />
+      </Button>
     </>
   );
 }

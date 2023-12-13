@@ -1,10 +1,22 @@
 .dropdown_inputs_wrapper {
-  padding-block: var(--pt4);
+  padding-top: var(--pt4);
 }
+
+.dropdownTitle {
+  display: flex;
+  align-items: center;
+}
+
+/* TODO: Comment in when worktypes are ready */
+/*.subTitle {*/
+/*  font-style: italic;*/
+/*  margin-left: var(--pt2);*/
+/*}*/
 
 .flex_wrapper {
   display: flex;
-  gap: var(--pt4);
+  gap: var(--pt1);
+  padding-top: var(--pt2);
   flex-direction: row;
   flex-wrap: wrap;
 }
@@ -12,5 +24,5 @@
 .dropdown_with_title {
   display: flex;
   flex-direction: column;
-  row-gap: var(--pt1_5);
+  row-gap: var(--pt05);
 }

@@ -33,7 +33,17 @@ WrappedSeriesSlider.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 
             return {
               ...work,
-              seriesMembers: [WORK_1, WORK_2, WORK_4, WORK_7],
+              series: [
+                {
+                  title: "Sagaen om Sølvskoven",
+                  members: [
+                    { work: WORK_1 },
+                    { work: WORK_2 },
+                    { work: WORK_4 },
+                    { work: WORK_7 },
+                  ],
+                },
+              ],
             };
           },
         },

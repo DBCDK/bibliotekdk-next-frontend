@@ -1,0 +1,55 @@
+.box {
+  display: grid;
+  --grid_template_area__title_box: "universe_title" "universe_description"
+    "universe_length";
+  grid-template-areas: var(--grid_template_area__title_box);
+
+  --grid_auto_columns__title_box: 1fr;
+  grid-auto-columns: var(--grid_auto_columns__title_box);
+
+  row-gap: var(--pt2);
+}
+
+@media (min-width: 768px) {
+  .box {
+    --grid_template_area__title_box: "universe_title" "universe_description"
+      "universe_length";
+    --grid_auto_columns__title_box: auto 1fr;
+    column-gap: var(--pt5);
+  }
+
+  .boxWithoutDescription {
+    align-items: center;
+  }
+}
+
+@media (min-width: 992px) {
+  .box {
+  }
+}
+
+@media (min-width: 1200px) {
+  .box {
+  }
+}
+
+.universe_title {
+  grid-area: universe_title;
+  padding-top: var(--pt1);
+}
+
+@media (min-width: 768px) {
+  .universe_title {
+    padding-left: 0;
+    padding-top: 0;
+  }
+}
+
+.universe_description {
+  grid-area: universe_description;
+}
+
+/* TODO: Insert this again later when we know how to interpret this */
+/*.universe_length {*/
+/*  grid-area: universe_length;*/
+/*}*/

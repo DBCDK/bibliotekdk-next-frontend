@@ -1,0 +1,16 @@
+.sort_container {
+  display: inline-flex;
+  gap: var(--pt1);
+  align-items: center;
+}
+
+.padding_top {
+  padding-top: var(--pt2);
+}
+.titleStyle {
+  color: var(--blue);
+}
+
+.loadingSort {
+  padding: var(--pt2) 0;
+}

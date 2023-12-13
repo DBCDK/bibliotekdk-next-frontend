@@ -99,9 +99,13 @@ const MaterialRowBookmark = ({
       role="checkbox"
       aria-checked={isSelected}
       tabIndex="0"
-      aria-labelledby="chk1-label"
       data-id={materialId}
       onClick={onCheckboxClick}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          onCheckboxClick(e);
+        }
+      }}
       className={cx(
         sharedStyles.materialRow,
         sharedStyles.materialRow_wrapper,

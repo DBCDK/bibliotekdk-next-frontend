@@ -53,6 +53,15 @@ export default function MyLibrariesPage() {
       </div>
 
       <LibrariesTable data={agencies} user={authUser} />
+
+      {!agencies?.length && (
+        <div className={styles.emptyAgencyList}>
+          <Text type="text2">
+            {Translate({ context: "profile", label: "noLibrariesMessage" })}
+          </Text>
+        </div>
+      )}
+
       <AddLibraryButton />
     </Layout>
   );

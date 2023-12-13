@@ -19,7 +19,7 @@ import useDataForWorkRelationsWorkTypeFactory from "@/components/hooks/useDataFo
 import { useEffect, useState } from "react";
 import styles from "./WorkGroupingsOverview.module.css";
 import { dateToShortDate } from "@/utils/datetimeConverter";
-import { getElementById } from "@/lib/utils";
+import { getElementById, getSeriesUrl } from "@/lib/utils";
 
 function getAnchor(anchorReference) {
   const seriesAnchorIndex = getIndexForAnchor(Translate(anchorReference));
@@ -33,9 +33,16 @@ function getAnchor(anchorReference) {
  * @param title
  * @param anchorId
  * @param scrollOffset
+ * @param link
  * @returns {React.JSX.Element}
  */
-function WorkGroupingsOverview({ description, title, anchorId, scrollOffset }) {
+function WorkGroupingsOverview({
+  description,
+  title,
+  anchorId,
+  scrollOffset,
+  link = null,
+}) {
   const [element, setElement] = useState("");
   const [clickFunction, setClickFunction] = useState(() => {});
 
@@ -55,12 +62,15 @@ function WorkGroupingsOverview({ description, title, anchorId, scrollOffset }) {
         <Link
           border={{ top: false, bottom: { keepVisible: true } }}
           disabled={!element}
-          onClick={clickFunction}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.keyCode === 13) {
-              clickFunction();
-            }
-          }}
+          {...(link && { href: link })}
+          {...(!link && {
+            onClick: clickFunction,
+            onKeyDown: (e) => {
+              if (e.key === "Enter" || e.keyCode === 13) {
+                clickFunction();
+              }
+            },
+          })}
         >
           {title}
         </Link>
@@ -74,15 +84,16 @@ WorkGroupingsOverview.propTypes = {
   seriesLink: PropTypes.string,
 };
 
-function getSeriesMap(series, seriesMembers) {
-  const numberInSeries = series?.numberInSeries?.number?.join(".") || "";
+function getSeriesMap({ series, members, workId }) {
+  const numberInSeries = series?.numberInSeries?.display || "";
 
   return (
-    seriesMembers?.length > 0 && {
-      partNumber: series?.numberInSeries?.number,
+    members?.length > 0 && {
+      partNumber: series?.numberInSeries?.display,
       description: `Del ${numberInSeries + " "} af `,
       title: series?.title,
       anchorId: getAnchor(AnchorsEnum.SERIES),
+      link: getSeriesUrl(series?.title, workId),
     }
   );
 }
@@ -133,16 +144,21 @@ export default function Wrap({ workId }) {
   const hostPublication =
     current?.manifestations?.mostRelevant?.[0]?.hostPublication;
 
-  const series = work_response?.data?.work?.series?.[0];
-  const seriesMembers = work_response?.data?.work?.seriesMembers;
-  const seriesMap = getSeriesMap(series, seriesMembers);
+  const allSeries = work_response?.data?.work?.series || [];
+  const allSeriesMap = allSeries?.map((singleSeries) =>
+    getSeriesMap({
+      series: singleSeries,
+      members: singleSeries.members?.map((member) => member?.work),
+      workId: workId,
+    })
+  );
 
   const continuationMap = getContinuationMap(groupedByRelationWorkTypes);
 
   // TODO: Find appropriate name for workGroup
   //  WorkGroup describes Series or continuations in this case
   const workGroupings = [
-    ...(seriesMap ? [seriesMap] : []),
+    ...allSeriesMap,
     ...(continuationMap ? [continuationMap] : []),
   ];
 
@@ -155,7 +171,7 @@ export default function Wrap({ workId }) {
   }
 
   return (
-    <>
+    <div className={styles.workgroupings_flex}>
       <RenderHostPublication hostPublication={hostPublication} />
       {hostPublication && workGroupings?.length > 0 && ". "}
       {workGroupings?.map((mapping) => (
@@ -164,7 +180,7 @@ export default function Wrap({ workId }) {
           {...mapping}
         />
       ))}
-    </>
+    </div>
   );
 }
 

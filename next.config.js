@@ -135,6 +135,12 @@ module.exports = {
         "https://fbi-api-staging.k8s.dbc.dk/SimpleSearch/graphql",
       timeout: process.env.API_TIMEOUT_MS || 150,
     },
+    fbi_api_bibdk21: {
+      url:
+        process.env.NEXT_PUBLIC_FBI_API_BIBDK21_URL ||
+        "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",
+      timeout: process.env.API_TIMEOUT_MS || 150,
+    },
     app: {
       url: process.env.NEXTAUTH_URL,
     },

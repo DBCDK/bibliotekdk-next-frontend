@@ -156,6 +156,7 @@ export default function Wrap({ context }) {
             initial: {
               agencies: pickupBranchUser?.agencies,
             },
+            showAllBranches: false,
             requireDigitalAccess,
             mode: isDigitalCopy
               ? LOGIN_MODE.SUBSCRIPTION

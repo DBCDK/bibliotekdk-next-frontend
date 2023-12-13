@@ -1,0 +1,86 @@
+.border_none {
+  border: none !important;
+}
+
+.popoverContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  background-color: var(--white);
+  z-index: 3;
+  margin-top: 150px;
+  box-shadow: -1px 20px 20px -10px rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid var(--iron);
+  background: var(--concrete);
+}
+
+.popoverContainer:not([aria-expanded="true"]) {
+  border: none;
+}
+
+.popoverAnimation {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 300ms ease-out;
+}
+
+.popoverAnimation[aria-expanded="true"] {
+  grid-template-rows: 1fr;
+}
+
+.popoverAnimation_advancedSearch {
+  overflow: hidden;
+}
+
+.popoverAnimation_advancedSearch[aria-expanded="true"] {
+  overflow: visible;
+  animation: 400ms overflowToggle;
+}
+
+@keyframes overflowToggle {
+  from {
+    overflow: hidden;
+  }
+}
+
+.triggercontainer {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  align-items: center;
+  cursor: pointer;
+  overflow: hidden;
+  margin-top: 7px;
+}
+.triggerActive {
+  border-bottom: 1px solid var(--blue);
+}
+
+.triggercontainer:focus {
+  border-bottom: 1px solid var(--blue);
+}
+@media (max-width: 992px) {
+  .triggercontainer {
+    display: none;
+  }
+}
+
+.triangle {
+  position: relative;
+  bottom: -15px;
+  left: 15%;
+  width: 75px;
+  height: 30px;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  background-color: var(--concrete);
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.5s ease;
+}
+
+.showTriangle {
+  visibility: visible;
+  opacity: 1;
+  transition: 0.3s ease;
+}

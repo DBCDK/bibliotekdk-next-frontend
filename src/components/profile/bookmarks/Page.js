@@ -35,19 +35,20 @@ const sortByItems = [
  */
 const SortButtons = ({ sortByItems, setSortByValue, sortByValue }) => {
   return (
-    <List.Group className={styles.sortingContainer} disableGroupOutline>
+    <div className={styles.sortingContainer}>
       {sortByItems.map(({ label, key }) => (
         <List.Radio
           className={styles.sortingItem}
           key={key}
           selected={sortByValue === key}
           onSelect={() => setSortByValue(key)}
-          label={key}
         >
-          <Text>{Translate({ context: "profile", label: label })}</Text>
+          <Text type="text3" tag="span">
+            {Translate({ context: "profile", label: label })}
+          </Text>
         </List.Radio>
       ))}
-    </List.Group>
+    </div>
   );
 };
 
@@ -98,6 +99,7 @@ const BookmarkPage = () => {
       newList.push({
         key: key,
         materialId: bookmarkData.materialId,
+        materialType: bookmarkData.materialType,
       });
     }
 
@@ -115,6 +117,12 @@ const BookmarkPage = () => {
     }
   };
 
+  const onGetReferencesClick = () => {
+    modal.push("multiReferences", {
+      materials: checkboxList,
+    });
+  };
+
   const handleRadioChange = (value) => {
     setSortByValue(value);
     sessionStorage.setItem("sortByValue", value);
@@ -127,6 +135,7 @@ const BookmarkPage = () => {
         allBookmarksData.map((el) => ({
           key: el.key,
           materialId: el.materialId,
+          materialType: el.materialType,
         }))
       );
     else setCheckboxList([]);
@@ -169,7 +178,11 @@ const BookmarkPage = () => {
       .filter(
         (bm) => checkboxList.findIndex((item) => item.key === bm.key) > -1
       )
-      .map((bm) => ({ bookmarkId: bm.bookmarkId, key: bm.key }));
+      .map((bm) => ({
+        bookmarkId: bm.bookmarkId,
+        key: bm.key,
+        materialType: bm.materialType,
+      }));
     deleteBookmarks(toDelete);
   };
   /**
@@ -307,6 +320,11 @@ const BookmarkPage = () => {
           aria-checked={isAllSelected}
           className={styles.selectAllButton}
           onClick={onSelectAll}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              onSelectAll();
+            }
+          }}
         >
           <Checkbox
             checked={isAllSelected}
@@ -344,6 +362,7 @@ const BookmarkPage = () => {
           type="secondary"
           disabled={isNothingSelected}
           className={styles.referenceButton}
+          onClick={onGetReferencesClick}
         >
           {Translate({
             context: CONTEXT,

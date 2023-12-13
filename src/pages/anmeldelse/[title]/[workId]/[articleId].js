@@ -4,7 +4,6 @@ import Header from "@/components/header/Header";
 import { useData } from "@/lib/api/api";
 import { fetchAll } from "@/lib/api/apiServerOnly";
 import { infomediaArticle } from "@/lib/api/infomedia.fragments";
-import useUser from "@/components/hooks/useUser";
 
 import { dateToShortDate, numericToISO } from "@/utils/datetimeConverter";
 
@@ -19,6 +18,7 @@ import ArticleLoginPrompt from "@/components/login/prompt/ArticleLoginPrompt";
 import Custom404 from "@/pages/404";
 import { manifestationForLectorReview } from "@/lib/api/manifestation.fragments";
 import LectorReviewPage from "@/components/article/lectorreview/LectorReviewPage";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 export function ReviewPage(props) {
   const { article, notFound, isLoading, articleId, material } = props;
@@ -97,10 +97,10 @@ function parseInfomediaArticle(publicReviewData, work, infomediaArticle) {
 export default function Wrap() {
   const router = useRouter();
   const { workId, articleId } = router.query;
-  const { authUser: user } = useUser();
+  const { loanerInfo } = useLoanerInfo();
 
   const { data, isLoading: isLoadingWork } = useData(
-    workFragments.reviews({ workId })
+    workId && workFragments.reviews({ workId })
   );
 
   const publicReviewData = data?.work?.relations?.hasReview?.filter((el) =>
@@ -113,7 +113,7 @@ export default function Wrap() {
     error: lectorReviewError,
   } = useData(articleId && manifestationForLectorReview({ pid: articleId }));
 
-  const hasInfomediaAccess = user?.rights?.infomedia;
+  const hasInfomediaAccess = loanerInfo?.rights?.infomedia;
 
   const {
     data: infomediaArticleData,
@@ -148,7 +148,7 @@ export default function Wrap() {
 
   // make a heading for infomedia articles - just like librarians reviews
   const material = {
-    pid: publicReviewData[0]?.pid,
+    pid: publicReviewData?.[0]?.pid,
     titles: { full: data?.work?.titles?.main },
     materialTypes: data?.work?.materialTypes,
     creators: data?.work?.creators,

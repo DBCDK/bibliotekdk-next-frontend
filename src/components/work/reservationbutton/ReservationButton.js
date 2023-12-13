@@ -1,4 +1,3 @@
-import useUser from "@/components/hooks/useUser";
 import Button from "@/components/base/button/Button";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
@@ -22,6 +21,7 @@ import isEmpty from "lodash/isEmpty";
 import uniq from "lodash/uniq";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 function TextAboveButton({ access, isAuthenticated }) {
   return (
@@ -50,11 +50,11 @@ function ReservationButtonWrapper({
   overrideButtonText = null,
   className,
 }) {
-  const user = useUser();
   const { isAuthenticated } = useAuthentication();
+  const { loanerInfo, isLoading } = useLoanerInfo();
   const modal = useModal();
 
-  const hasDigitalAccess = user?.authUser?.rights?.digitalArticleService;
+  const hasDigitalAccess = loanerInfo?.rights?.digitalArticleService;
 
   const { workResponse, manifestations, manifestationsResponse } =
     useGetManifestationsForOrderButton(workId, selectedPids);
@@ -76,11 +76,11 @@ function ReservationButtonWrapper({
   if (
     !workId ||
     !selectedPids ||
-    !workResponse ||
-    !manifestationsResponse ||
+    !workResponse?.data ||
+    !manifestationsResponse?.data ||
     manifestationsResponse?.isLoading ||
     workResponse?.isLoading ||
-    user?.isLoading
+    isLoading
   ) {
     return (
       <Button
@@ -98,7 +98,6 @@ function ReservationButtonWrapper({
   return (
     <ReservationButton
       access={access}
-      user={user}
       isAuthenticated={isAuthenticated}
       buttonType={buttonType}
       size={size}
@@ -132,8 +131,8 @@ export default ReservationButtonWrapper;
  */
 export const ReservationButton = ({
   access, //TODO same as allEnrichedAccesses?
-  user,
   isAuthenticated,
+  isGuestUser,
   buttonType,
   size,
   pids,
@@ -201,7 +200,7 @@ export const ReservationButton = ({
     skeleton: isEmpty(access),
     dataCy: `button-order-overview-enabled`,
     onClick: () => {
-      isAuthenticated || user.isGuestUser
+      isAuthenticated || isGuestUser
         ? openOrderModal({
             modal: modal,
             pids: pids,

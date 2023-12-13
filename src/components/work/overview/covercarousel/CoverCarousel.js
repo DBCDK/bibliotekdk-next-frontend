@@ -61,7 +61,10 @@ const CoverElement = forwardRef(function CoverElement(
           !loaded && styles.cover_image_skeleton
         }`}
         onLoad={() => setLoaded(true)}
-        alt={""}
+        alt={getTextDescription(
+          flattenMaterialType(manifestation),
+          manifestation
+        )}
       />
       <Text>
         {getTextDescription(flattenMaterialType(manifestation), manifestation)}

@@ -4,6 +4,7 @@ import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import Icon from "@/components/base/icon";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
+import cx from "classnames";
 
 /**
  * Used in advanced search field input. Drop down to select a search index. (e.g. "isbn", "author","title" etc.)
@@ -43,7 +44,9 @@ export default function IndexDropdown({ options = [], className, index }) {
               tabIndex="-1"
               data-cy={`item-${elem}`}
               key={`indexDropdown-${elem}`}
-              className={styles.dropdownitem}
+              className={cx(styles.dropdownitem, {
+                [styles.selectedItem]: selected === elem,
+              })}
               onClick={() => {
                 handleIndexChange(index, elem);
               }}

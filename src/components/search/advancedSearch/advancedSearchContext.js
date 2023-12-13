@@ -3,21 +3,41 @@
  * This file manages the state for advanced search.
  */
 
-import React, { createContext, useContext, useReducer, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { LogicalOperatorsEnum } from "@/components/search/enums";
-import {
-  DropdownIndicesEnum,
-  useDefaultItemsForDropdownUnits,
-} from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
+import { DropdownIndicesEnum } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
+import { convertStateToCql } from "@/components/search/advancedSearch/utils";
+import { useInputFields } from "@/components/search/advancedSearch/useInputFields";
+import { useDropdownSearchIndices } from "@/components/search/advancedSearch/useDropdownSearchIndices";
 import isEmpty from "lodash/isEmpty";
-// import { useRouter } from "next/router";
 
-export const defaultDropdownIndices = [
-  { searchIndex: DropdownIndicesEnum.LANGUAGES, value: [] },
-  { searchIndex: DropdownIndicesEnum.MATERIAL_TYPES_GENERAL, value: [] },
-];
+export function getDefaultDropdownIndices() {
+  return [
+    { searchIndex: DropdownIndicesEnum.LANGUAGES, value: [] },
+    { searchIndex: DropdownIndicesEnum.MATERIAL_TYPES_GENERAL, value: [] },
+    { searchIndex: DropdownIndicesEnum.PUBLICATION_YEAR, value: [] },
+    { searchIndex: DropdownIndicesEnum.AGES, value: [] },
+  ];
+}
 
-const AdvancedSearchContext = createContext();
+export function getInitialInputFields() {
+  return [
+    { value: "", prefixLogicalOperator: null, searchIndex: "term.default" },
+    {
+      value: "",
+      prefixLogicalOperator: LogicalOperatorsEnum.AND,
+      searchIndex: "term.title",
+    },
+  ];
+}
+
+const AdvancedSearchContext = createContext(undefined);
 
 /**
  * @returns {AdvancedSearchContextType}
@@ -26,144 +46,87 @@ export function useAdvancedSearchContext() {
   return useContext(AdvancedSearchContext);
 }
 
-function dropdownReducer(prev, current) {
-  return prev?.map((singleDropdownIndex) => {
-    if (current.indexName === singleDropdownIndex.searchIndex) {
-      return {
-        searchIndex: current.indexName,
-        value: current.menuItemsState
-          .filter((item) => item.isSelected === true)
-          .map((item) => item.value),
-      };
-    } else {
-      return singleDropdownIndex;
+export default function AdvancedSearchProvider({ children, router }) {
+  const workType = "all";
+
+  const {
+    page = "1",
+    cql: cqlFromUrl = null,
+    fieldSearch = "",
+    sort: sortFromUrl = "",
+  } = router.query;
+  const fieldSearchFromUrl = fieldSearch && JSON.parse(fieldSearch);
+  const sort = sortFromUrl && JSON.parse(sortFromUrl);
+
+  //// ----  Popup Trigger ----
+  const popoverRef = useRef(null);
+  const [showPopover, setShowPopover] = useState(false);
+  //if advanced search popover is open, and the user clicks on simple search, a tooltip with info will be shown.
+  const [showInfoTooltip, setShowInfoTooltip] = useState(false);
+
+  useEffect(() => {
+    if (showPopover && popoverRef.current) {
+      popoverRef?.current?.focus();
     }
+  }, [showPopover, popoverRef.current]);
+
+  //// ---- Inputfields ----
+  const {
+    inputFields,
+    addInputField,
+    removeInputField,
+    handleLogicalOperatorChange,
+    handleInputFieldChange,
+    handleIndexChange,
+    resetInputFields,
+  } = useInputFields({
+    fieldSearchFromUrl: { ...fieldSearchFromUrl },
   });
-}
 
-const initialInputFields = [
-  { value: "", prefixLogicalOperator: null, searchIndex: "term.default" },
-  {
-    value: "",
-    prefixLogicalOperator: LogicalOperatorsEnum.AND,
-    searchIndex: "term.title",
-  },
-];
+  //// ---- DropdownSearchIndices ----
+  const {
+    dropdownUnits,
+    dropdownSearchIndices,
+    updateDropdownSearchIndices,
+    resetDropdownIndices,
+    resetMenuItemsEvent,
+    dispatchResetMenuItemsEvent,
+  } = useDropdownSearchIndices({ ...fieldSearchFromUrl });
 
-export default function AdvancedSearchProvider({ children }) {
-  // TODO: Move this part of the state into Context
-  //  So we are able to control default view from context as well
-  // const router = useRouter();
-  // const { page: pageNo = 1 } = router.query;
-  // const cql = router?.query?.cql || null;
-  // let fieldSearch = router?.query?.fieldSearch;
-  // if (fieldSearch) {
-  //   fieldSearch = JSON.parse(fieldSearch);
-  // }
+  //// ---- parsedCQL ----
+  //only add inputFields to object if there are values
+  const cleanInputFields =
+    inputFields?.filter((el) => !isEmpty(el.value)) || [];
 
-  //prefixLogicalOperator is an enum of AND, OR , NOT
-  /** @typedef {("AND"|"OR"|"NOT"|null)} PrefixLogicalOperator */
-  /** @typedef {{value: string, prefixLogicalOperator: PrefixLogicalOperator, searchIndex: string}} InputField */
-  const [/** @type Array.<InputField> */ inputFields, setInputFields] =
-    useState(initialInputFields);
+  //only add dropdownSearchIndices to object if there are values
+  const cleanDropdowns =
+    dropdownSearchIndices?.filter((el) => !isEmpty(el.value)) || [];
 
-  const [dropdownInitState, setDropdownInitState] = useState([]);
+  const state = {
+    ...(cleanInputFields.length > 0 && { inputFields: cleanInputFields }),
+    ...(cleanDropdowns.length > 0 && { dropdownSearchIndices: cleanDropdowns }),
+  };
 
-  /** @typedef {<A>(value: A) => void} UpdateDropdownSearchIndices */
-  /** @typedef {{value: (Array.<string>|Array.<Object<>>), searchIndex: string}} DropdownSearchIndex */
-  const [
-    /** @type {Array.<DropdownSearchIndex>} */ dropdownSearchIndices,
-    /** @type {UpdateDropdownSearchIndices} */ updateDropdownSearchIndices,
-  ] = useReducer(dropdownReducer, defaultDropdownIndices, (initState) =>
-    !isEmpty(dropdownInitState) ? dropdownInitState : initState
-  );
+  //if object is empty, return empty string. Otherwise stringify state.
+  const stateToString = !isEmpty(state) ? JSON.stringify(state) : "";
 
-  /** @typedef {({code: string, display: string} | {key: string, term: string})} SingleItem */
-  /** @typedef {prioritisedFormType: string, prioritisedItems: Array.<SingleItem>, unprioritisedFormType: string, unprioritisedItems: Array.<SingleItem>} Items */
-  /** @typedef {indexName: string, items: Items} DropdownUnit */
-  const dropdownUnits = useDefaultItemsForDropdownUnits();
+  const [parsedCQL, setParsedCQL] = useState("");
 
-  //field search valued parsed as cql. Will be shown in cql input view.
-  const [parsedCQL, setParsedCQL] = useState(null);
-
-  /**
-   * Add an extra input field
-   */
-  function addInputField() {
-    setInputFields((prevFields) => [
-      ...prevFields,
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.default",
-      },
-    ]);
-  }
-  /**
-   * Remove input field from advanced search
-   * @param {*} indexToRemove
-   */
-  function removeInputField(indexToRemove) {
-    setInputFields((prevFields) =>
-      prevFields.filter((_, index) => index !== indexToRemove)
-    );
-  }
-  /**
-   * change logical operator between input fields in advanced search
-   * @param {*} index
-   * @param {*} newOperator
-   */
-  function handleLogicalOperatorChange(index, newOperator) {
-    setInputFields((prevFields) => {
-      const newFields = [...prevFields];
-      newFields[index].prefixLogicalOperator = newOperator;
-      return newFields;
+  useEffect(() => {
+    const updatedCql = convertStateToCql({
+      inputFields,
+      dropdownSearchIndices,
     });
-  }
 
-  /**
-   * Handle input field value change
-   * @param {*} index
-   * @param {*} newValue
-   */
-  function handleInputFieldChange(index, newValue) {
-    setInputFields((prevFields) => {
-      const newFields = [...prevFields];
-      newFields[index].value = newValue;
-      return newFields;
-    });
-  }
+    setParsedCQL(cqlFromUrl || updatedCql);
+  }, [inputFields, dropdownSearchIndices, cqlFromUrl]);
 
-  /**
-   * Handle field index change in indexDropdown (e.g. "all", "author","title" etc.)
-   * @param {*} index
-   * @param {*} newOperator
-   */
-  function handleIndexChange(index, newOperator) {
-    setInputFields((prevFields) => {
-      const newFields = [...prevFields];
-      newFields[index].searchIndex = newOperator;
-      return newFields;
-    });
-  }
-
-  /**
-   *overrides state to the given input. For field search only.
-   * @param {*} stateObject
-   */
-  function updateStatesFromObject(stateObject) {
-    if (stateObject?.inputFields) {
-      setInputFields(stateObject.inputFields);
-    }
-    //TODO: implement when dropdowns are ready
-    if (stateObject.dropdownSearchIndices) {
-      setDropdownInitState(stateObject.dropdownSearchIndices);
-    }
-  }
+  //// ---- DONE: parsedCQL ----
 
   function resetObjectState() {
-    setInputFields(initialInputFields);
-    setDropdownInitState(defaultDropdownIndices);
+    resetInputFields();
+    resetDropdownIndices();
+    dispatchResetMenuItemsEvent();
   }
 
   /** @typedef {{
@@ -176,10 +139,21 @@ export default function AdvancedSearchProvider({ children }) {
         dropdownUnits: Array.<DropdownUnit>,
         dropdownSearchIndices: Array.<DropdownSearchIndex>,
         updateDropdownSearchIndices: UpdateDropdownSearchIndices,
-        updateStatesFromObject: ({inputFields?: Array.<InputField>, dropdownSearchIndices?: Array.<DropdownSearchIndex>}) => void,
         resetObjectState: () => void,
         parsedCQL: string,
         setParsedCQL: (value: string) => void,
+        fieldSearchFromUrl: { inputFields: Array.<InputField>, dropdownSearchIndices: Array.<DropdownSearchIndex> },
+        cqlFromUrl: string,
+        pageNoFromUrl: number,
+        showPopover: boolean,
+        setShowPopover: function,
+        showInfoTooltip: boolean,
+        setShowInfoTooltip: function,
+        sort: Array.<{ index: string, order: string }>,
+        workType: string
+        stateToString: string
+        popoverRef: any
+        resetMenuItemsEvent: string
    }} AdvancedSearchContextType */
   const value = {
     inputFields,
@@ -191,10 +165,21 @@ export default function AdvancedSearchProvider({ children }) {
     dropdownUnits,
     dropdownSearchIndices,
     updateDropdownSearchIndices,
-    updateStatesFromObject,
     resetObjectState,
     parsedCQL,
     setParsedCQL,
+    fieldSearchFromUrl,
+    cqlFromUrl,
+    pageNoFromUrl: page,
+    showPopover,
+    setShowPopover,
+    showInfoTooltip,
+    setShowInfoTooltip,
+    sort: sort,
+    workType: workType,
+    stateToString,
+    popoverRef,
+    resetMenuItemsEvent,
   };
 
   return (

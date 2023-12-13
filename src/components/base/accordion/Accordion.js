@@ -148,7 +148,7 @@ export function Item({
         className={styles.content}
         eventKey={eventKey}
         role="region"
-        id={`accordion-unique-${eventKey}`}
+        id={`accordion-unique-${eventKey}-${title}`}
         aria-labelledby={`accordion-unique-toggle-${eventKey}-${title}`}
       >
         <Card.Body>

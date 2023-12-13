@@ -192,6 +192,7 @@ function Link({
         onFocus={onFocus}
         className={className}
         tabIndex={disabled ? "-1" : tabIndex}
+        disabled={disabled}
         aria-label={ariaLabel}
         {...props}
         style={{
@@ -318,7 +319,6 @@ Wrap.propTypes = {
   a: PropTypes.bool,
   href: PropType_Link_href,
   target: PropTypes.oneOf(["_blank", "_self", "_parent", "_top"]),
-  border: PropType_Link_border,
   onClick: PropTypes.func,
   onKeyDown: PropTypes.func,
   onFocus: PropTypes.func,
@@ -339,14 +339,11 @@ export function LinkOnlyInternalAnimations({
   href = null,
   onClick = () => {},
   target = "_self",
-  border = { top: false, bottom: false },
   children,
   disabled = false,
   skeleton = false,
   lines = 1,
 }) {
-  border = disabled ? { top: false, bottom: false } : border;
-
   if (skeleton) {
     return (
       <LinkSkeleton dataCy={dataCy} className={className} lines={lines}>
@@ -364,7 +361,6 @@ export function LinkOnlyInternalAnimations({
       href={href}
       onClick={onClick}
       target={target}
-      border={border}
       disabled={disabled}
     >
       {children}

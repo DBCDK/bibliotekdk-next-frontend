@@ -3,12 +3,18 @@
  * Takes template and input and outputs the result with expected CSS
  */
 import styles from "./MaterialCard.module.css";
-import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import Col from "react-bootstrap/Col";
 import { templateForRelatedWorks } from "@/components/base/materialcard/templates/templates";
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 import cx from "classnames";
+
+function calculateBorder(link_href, border) {
+  if (!link_href) {
+    return false;
+  }
+  return border || { top: false, bottom: true };
+}
 
 /**
  * @typedef {(number|string|undefined)} OptionalColSize
@@ -20,9 +26,8 @@ const MaterialCard = forwardRef(
    * @param {function} props.propAndChildrenTemplate - A function to define prop and children rendering.
    * @param {Object} props.propAndChildrenInput - Input for propAndChildrenTemplate function.
    * @param {function} props.onClick - A callback function to handle click events.
-   * @param {React.MutableRefObject<any>} props.ref - A React ref object.
    * @param {{ xs: OptionalColSize, sm: OptionalColSize, lg: OptionalColSize }} props.colSizing - An object specifying column sizing options.
-   * @param {boolean} [props.imageLeft] indicates that image should be on the left side of the card
+   * @param {React.MutableRefObject<any>} ref - A React ref object.
    * @returns {React.JSX.Element} - Returns a React JSX element.
    */
   function MaterialCard(
@@ -40,6 +45,8 @@ const MaterialCard = forwardRef(
       link_href,
       fullTitle,
       image_src,
+      ImageElement,
+      ImageOverlay,
       children,
       workId,
       elementContainerClassName,
@@ -47,8 +54,12 @@ const MaterialCard = forwardRef(
       textClassName,
       imageContainerStyle,
       coverImageClassName,
+      linkClassName,
       imageLeft,
+      border,
     } = renderProps;
+
+    const [loaded, setLoaded] = useState(false);
 
     if (imageLeft) {
       const ManifestationLink = ({ children }) => {
@@ -63,14 +74,14 @@ const MaterialCard = forwardRef(
       };
       const Tag = link_href ? ManifestationLink : "div";
       return (
-        <div
+        <article
           className={cx(styles.article, elementContainerClassName)}
-          as="article"
           {...rootProps}
         >
           <Tag
             className={cx(styles.container, {
-              [styles.link_style]: !!link_href,
+              [styles.base_link_style]: !!link_href,
+              [styles.link_style_colors]: !!link_href,
             })}
           >
             <div ref={ref} id={workId} className={cx(relatedElementClassName)}>
@@ -78,8 +89,7 @@ const MaterialCard = forwardRef(
                 <img
                   src={image_src}
                   className={cx(coverImageClassName)}
-                  title={fullTitle}
-                  alt={Translate({ context: "general", label: "frontpage" })}
+                  alt={fullTitle}
                 />
               </div>
 
@@ -88,7 +98,7 @@ const MaterialCard = forwardRef(
               </div>
             </div>
           </Tag>
-        </div>
+        </article>
       );
     }
 
@@ -103,18 +113,31 @@ const MaterialCard = forwardRef(
         <Link
           href={link_href}
           // Link props
-          className={cx(styles.link_style)}
-          border={!link_href ? false : { top: false, bottom: true }}
+          className={cx(styles.base_link_style, {
+            [styles.link_style_colors]: !linkClassName,
+            [linkClassName]: linkClassName,
+          })}
+          border={calculateBorder(link_href, border)}
           onClick={onClick}
           disabled={!link_href && !onClick}
         >
           <div ref={ref} id={workId} className={cx(relatedElementClassName)}>
-            <img
-              src={image_src}
-              className={cx(coverImageClassName)}
-              title={fullTitle}
-              alt={Translate({ context: "general", label: "frontpage" })}
-            />
+            {ImageElement ? (
+              <ImageElement />
+            ) : (
+              <>
+                <img
+                  src={image_src}
+                  className={cx(coverImageClassName, {
+                    [styles.cover_image_skeleton]: !loaded,
+                  })}
+                  onLoad={() => setLoaded(true)}
+                  alt={fullTitle}
+                />
+                {ImageOverlay && <ImageOverlay />}
+              </>
+            )}
+
             <div className={cx(textClassName)}>{children}</div>
           </div>
         </Link>

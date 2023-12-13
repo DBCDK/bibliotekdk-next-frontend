@@ -152,7 +152,7 @@ WrappedLectorReviewPage.story = {
                   },
                 }
               : null,
-          infomedia: () => null,
+          infomedia: () => ({}),
         },
       },
     },

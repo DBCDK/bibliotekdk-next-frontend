@@ -107,6 +107,7 @@ export const constructButtonText = (workType, materialType, shortText) => {
     switch (workType) {
       case "literature": {
         switch (materialType) {
+          case "bog":
           case "e-bog":
             return Translate({
               context: CONTEXT,

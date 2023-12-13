@@ -1,0 +1,28 @@
+.container {
+  border-bottom: 1px solid var(--iron);
+  background: var(--concrete);
+  box-shadow: 0 6px 15px 0 rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  padding: var(--pt2) 0;
+  cursor: pointer;
+}
+
+.edit_search {
+  display: flex;
+  justify-content: end;
+}
+
+.formatedQueryContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.formatedQueryContainer p {
+  margin-right: var(--pt1);
+  display: inline;
+}
+
+p.searchIndexText {
+  margin-right: 0;
+}

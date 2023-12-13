@@ -6,33 +6,57 @@ import "lazysizes";
 import "lazysizes/plugins/attrchange/ls.attrchange";
 import "../src/scss/custom-bootstrap.scss";
 import "../src/css/styles.css";
-import { RouterContext } from "next/dist/shared/lib/router-context"; // next 12
 
 import { Provider as ModalContextProvider } from "../src/components/_modal/Modal.js";
 import { GraphQLMocker } from "@/lib/api/mockedFetcher";
 import { StoryRouter } from "@/components/base/storybook";
-import { useRouter } from "next/router";
-import { useState } from "react";
 import Router from "next/router";
 import { SessionProvider } from "next-auth/react";
+import { createMemoryRouter, useMemoryRouter } from "./nextMemoryRouter";
+import AdvancedSearchProvider from "@/components/search/advancedSearch/advancedSearchContext";
+
+const memoryRouter = createMemoryRouter();
+Router.router = memoryRouter;
 
 export const decorators = [
+  (Story, context) => {
+    const { showInfo, pathname, query } = context?.parameters?.nextRouter || {};
+
+    // Register to router changes
+    // Will trigger rerender when change occurs
+    useMemoryRouter({ memoryRouter, pathname, query });
+
+    return (
+      <>
+        {showInfo && <StoryRouter router={memoryRouter} />}
+        <Story />
+      </>
+    );
+  },
   (Story) => {
     return (
+      <AdvancedSearchProvider router={memoryRouter}>
+        <Story />
+      </AdvancedSearchProvider>
+    );
+  },
+  (Story, context) => {
+    return (
       <SessionProvider
-        session={{
-          accessToken: "dummy-token",
-          user: { uniqueId: "mocked-uniqueId", userId: "mocked-uniqueId" },
-        }}
+        session={
+          context?.parameters?.session || {
+            accessToken: "dummy-token",
+            user: { uniqueId: "mocked-uniqueId", userId: "mocked-uniqueId" },
+          }
+        }
       >
         <Story />
       </SessionProvider>
     );
   },
   (Story) => {
-    const router = useRouter();
     return (
-      <ModalContextProvider router={router}>
+      <ModalContextProvider router={memoryRouter}>
         <Story />
       </ModalContextProvider>
     );
@@ -53,87 +77,11 @@ export const decorators = [
       </GraphQLMocker>
     );
   },
-  (Story, context) => {
-    const {
-      showInfo,
-      pathname = "",
-      query = {},
-    } = context?.parameters?.nextRouter || {};
-    return (
-      <RouterProvider value={{ pathname, query }}>
-        {showInfo && <StoryRouter />}
-        <Story />
-      </RouterProvider>
-    );
-  },
 ];
 
-function RouterProvider({ children, value = {} }) {
-  const [{ current, history }, setQuery] = useState({
-    current: 0,
-    history: [
-      { pathname: value.pathname || "/", query: value.query || {}, action: "" },
-    ],
-  });
-
-  function parse(...args) {
-    let pathname = args[0]?.pathname;
-    let query = args[0]?.query || {};
-    if (typeof args[0] === "string") {
-      const split = args[0].split("?");
-      pathname = split[0];
-      split[1]?.split("&")?.forEach((entry) => {
-        const param = entry?.split("=");
-        query[param?.[0]] = param?.[1];
-      });
-    }
-    return { pathname, query };
-  }
-
-  const r = {
-    ...value,
-    action: history[current].action,
-    query: history[current].query || {},
-    pathname: history[current].pathname || "/",
-    asPath: history[current].pathname || "/",
-    replace: (...args) => {
-      const { pathname, query } = parse(...args);
-      setQuery({
-        current,
-        history: [
-          ...history.slice(0, current),
-          { pathname, query, action: "replace" },
-        ],
-      });
-    },
-    push: (...args) => {
-      const { pathname, query } = parse(...args);
-      setQuery({
-        current: current + 1,
-        history: [
-          ...history.slice(0, current + 1),
-          { pathname, query, action: "push" },
-        ],
-      });
-    },
-    back: () =>
-      setQuery({
-        current: Math.max(current - 1, 0),
-        history,
-      }),
-    go: (index) =>
-      setQuery({
-        current: current + index,
-        history,
-      }),
-    prefetch: async () => {},
-  };
-  Router.router = r;
-
-  return (
-    <RouterContext.Provider value={r}>
-      {value.showInfo && <StoryRouter />}
-      {children}
-    </RouterContext.Provider>
-  );
-}
+// Setup router via storybook nextjs framework
+export const parameters = {
+  nextjs: {
+    router: memoryRouter,
+  },
+};

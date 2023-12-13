@@ -18,6 +18,40 @@
         "en": "Label: mangler oversættelse"
       }
     },
+    "advanced_search_sort": {
+      "sort_button": {
+        "da": "sorter",
+        "en": "sort"
+      },
+      "best_match": {
+        "da": "bedste match",
+        "en": "best match"
+      },
+      "asc_sort.latestpublicationdate": {
+        "da": "tidligste udgivelsesdato",
+        "en": "earliest publication date"
+      },
+      "desc_sort.latestpublicationdate": {
+        "da": "seneste udgivelsesdato",
+        "en": "latest publication date"
+      },
+      "asc_sort.creator": {
+        "da": "skaber a-å",
+        "en": "creator a-z"
+      },
+      "desc_sort.creator": {
+        "da": "skaber å-a",
+        "en": "creator z-a"
+      },
+      "asc_sort.title": {
+        "da": "titel a-å",
+        "en": "title a-z"
+      },
+      "desc_sort.title": {
+        "da": "titel å-a",
+        "en": "title z-a"
+      }
+    },
     "advanced_search_dropdown": {
       "choose_publication_year": {
         "da": "Vælg udgivelsesår",
@@ -51,9 +85,85 @@
         "da": "Alle materialer",
         "en": "All materials"
       },
+      "publicationyear": {
+        "da": "Udgivelsesår",
+        "en": "Publication year"
+      },
+      "all_publicationyear": {
+        "da": "Alle år",
+        "en": "All publication years"
+      },
+      "ages": {
+        "da": "Aldersgruppe",
+        "en": "Audience"
+      },
+      "all_ages": {
+        "da": "Alle aldersgrupper",
+        "en": "All audiences"
+      },
       "search_dropdown": {
         "da": "Søg i %s...",
         "en": "Search in %s..."
+      },
+      "this_year": {
+        "da": "I år (%s)",
+        "en": "This year (%s)"
+      },
+      "last_x_years": {
+        "da": "Seneste %s år",
+        "en": "Last %s years"
+      },
+      "for_x_y_years": {
+        "da": "For %s-%s-årige",
+        "en": "For %s-%s years"
+      },
+      "to_range": {
+        "da": "Til",
+        "en": "To"
+      },
+      "from_range": {
+        "da": "Fra",
+        "en": "From"
+      },
+      "exact_publication_year": {
+        "da": "%s",
+        "en": "%s"
+      },
+      "publication_year_range": {
+        "da": "%s - %s",
+        "en": "%s - %s"
+      },
+      "x_publication_year_and_up": {
+        "da": "%s og efter",
+        "en": "%s and after"
+      },
+      "up_to_x_publication_year": {
+        "da": "Til og med %s",
+        "en": "To and including %s"
+      },
+      "exact_years_old": {
+        "da": "%s år",
+        "en": "%s years"
+      },
+      "years_range": {
+        "da": "%s-%s-årige",
+        "en": "%s-%s years old"
+      },
+      "x_years_and_up": {
+        "da": "%s år og op",
+        "en": "%s years and up"
+      },
+      "up_to_x_years": {
+        "da": "Til og med %s år",
+        "en": "To and including %s år"
+      },
+      "range_placeholder_publicationyear": {
+        "da": "Årstal",
+        "en": "Year"
+      },
+      "range_placeholder_ages": {
+        "da": "Alder",
+        "en": "Age"
       }
     },
     "logo": {
@@ -146,6 +256,10 @@
       "close-window": {
         "da": "Informationerne er gemt indtil du lukker browseren. Sidder du ved en offentlig computer, anbefaler vi stærkt, at du lukker din browser efter brug for at beskytte dine personlige oplysninger.",
         "en": "The information is saved until you close your browser. If you are using a public computer, we strongly recommend that you close your browser after use to protect your personal information."
+      },
+      "advanced-search-tooltip": {
+        "da": "Den avancerede søgning blev lukket. Åbn og fortsæt hvor du slap.",
+        "en": "Oversætelse mangler"
       }
     },
     "general": {
@@ -416,6 +530,18 @@
       "homepage": {
         "da": "hjemmeside",
         "en": "homepage"
+      },
+      "reset": {
+        "da": "Nulstil",
+        "en": "Reset"
+      },
+      "chosen": {
+        "da": "Valgte",
+        "en": "Chosen"
+      },
+      "year": {
+        "da": "Årstal",
+        "en": "Year"
       }
     },
 
@@ -891,6 +1017,60 @@
         "en": "Download file for EndNote, Zotero, Mendeley and ReferenceManager"
       }
     },
+    "multiReferences": {
+      "get-references": {
+        "da": "Hent referencer for %s materialer",
+        "en": "Get references for %s materials"
+      },
+      "get-reference": {
+        "da": "Hent reference",
+        "en": "Get reference"
+      },
+      "choose-edition": {
+        "da": "Vælg udgave(r) for at hente referencer",
+        "en": "Choose edition(s) to get references"
+      },
+      "choose-edition-short": {
+        "da": "Vælg udgave",
+        "en": "Choose edition"
+      },
+      "missing-edition": {
+        "da": "Der er ikke valgt en specifik udgave for %s af materialerne",
+        "en": "You have not chosen a specific edition for %s of the materials"
+      },
+      "missing-edition-singular": {
+        "da": "Der er ikke valgt en specifik udgave for materialet",
+        "en": "You have not chosen a specific edition for the material"
+      },
+      "remove": {
+        "da": "Fjern",
+        "en": "Remove"
+      },
+      "periodicaMessage": {
+        "da": "Tidsskrifter har et dataformat, der ikke kan hentes som referencer. \nDvs. disse bliver ikke downloadet/eksporteret:",
+        "en": "Journals has a dataformat which can't be exported as references. \nThese materials won't be exported"
+      },
+      "material-not-supported": {
+        "da": "Materialer er ikke supporteret til eksportering",
+        "en": "Materials isn't supported for export"
+      },
+      "missing-materials-too-many": {
+        "da": "Der er ikke valgt en specifik udgave for %s af materialerne!",
+        "en": "There is missing an edition for %s of the materials"
+      },
+      "choose-automatically": {
+        "da": "Vælg automatisk seneste udgave ved download/eksport",
+        "en": "Choose latest edition automatically for export"
+      },
+      "info-label": {
+        "da": "Du kan tilføje specifikke udgaver på en materialeside under “Informationer og udgaver”",
+        "en": "You can add specific editions on the materialpage under “Informations and editions”"
+      },
+      "info-label-bold": {
+        "da": "OBS: ",
+        "en": "NOTE: "
+      }
+    },
     "workTypeDistinctForm": {
       "isOnline": {
         "da": "denne udgave",
@@ -1043,6 +1223,10 @@
       "material-direction-here": {
         "da": "Her",
         "en": "Here"
+      },
+      "material-typename-literature": {
+        "da": "Bogen",
+        "en": "The book"
       },
       "material-typename-ebook": {
         "da": "E-bogen",
@@ -1223,6 +1407,84 @@
       "part": {
         "da": "%s. del - %s",
         "en": "Part %s - %s "
+      },
+      "go_to_series": {
+        "da": "Gå til serien",
+        "en": "Go to series"
+      }
+    },
+    "series_page": {
+      "series_by": {
+        "da": "Serie af",
+        "en": "Series by"
+      },
+      "series": {
+        "da": "serier",
+        "en": "series"
+      },
+      "part_of_universe": {
+        "da": "Indgår i %s",
+        "en": "Part of %s"
+      },
+      "read_this_whenever": {
+        "da": "Serien kan læses i vilkårlig rækkefølge",
+        "en": "The series can be read in any order"
+      },
+      "parts_in_series": {
+        "da": "Serien består af %s dele",
+        "en": "Series consists of %s parts"
+      },
+      "series_members_heading": {
+        "da": "%s i serien",
+        "en": "Series consists of %s parts"
+      },
+      "other_works_by_the_author": {
+        "da": "Andre %s af",
+        "en": "Other %s in the"
+      },
+      "number_in_series": {
+        "da": "Del %s",
+        "en": "Part %s"
+      },
+      "begin_with_this": {
+        "da": "Begynd med denne",
+        "en": "Begin with this"
+      }
+    },
+    "universe": {
+      "everything_in_universe": {
+        "da": "Se alt i %s",
+        "en": "See everything in %s"
+      },
+      "label": {
+        "da": "Mere fra %s",
+        "en": "More from %s"
+      },
+      "part": {
+        "da": "%s. del - %s",
+        "en": "Part %s - %s "
+      },
+      "go_to_universe": {
+        "da": "Gå til %s",
+        "en": "Go to %s"
+      }
+    },
+    "universe_page": {
+      "frontpage": {
+        "da": "Forside",
+        "en": "Frontpage"
+      },
+      "universes": {
+        "da": "Universer",
+        "en": "Universes"
+      },
+      "parts_in_universe": {
+        "da": "Universet indeholder %s serier og værker",
+        "en": "The universe has %s series and works"
+      },
+      "series": {
+        "da": " (serie)",
+        "en": " (series)"
       }
     },
     "keywords": {
@@ -1258,13 +1520,17 @@
         "da": "Vælg alle",
         "en": "Select All"
       },
+      "remove-selected": {
+        "da": "Fjern valgte",
+        "en": "Remove selected"
+      },
       "order": {
         "da": "Bestil",
         "en": "Order"
       },
       "select-action": {
-        "da": "Referencer",
-        "en": "References"
+        "da": "Exporter",
+        "en": "Export"
       },
       "remove": {
         "da": "Fjern",
@@ -1501,6 +1767,10 @@
       "cqlsearchlabel": {
         "da": "CQL-søgning",
         "en": "CQL-search"
+      },
+      "timeForSearch": {
+        "da": "tid",
+        "en": "time"
       },
       "loanOptions": {
         "da": "Lånemuligheder:",
@@ -1746,8 +2016,16 @@
         "da": "Avanceret søgning",
         "en": "Advanced Search"
       },
+      "advancedSearch_button": {
+        "da": "Søg avanceret",
+        "en": "Search advanced"
+      },
+      "advanced": {
+        "da": "Avanceret",
+        "en": "Advanced"
+      },
       "addLine": {
-        "da": "Tilføj line",
+        "da": "Tilføj linje",
         "en": "Add field"
       },
       "advanced-dropdown-term.default": {
@@ -1783,12 +2061,16 @@
         "en": "Series title"
       },
       "advanced-dropdown-term.function": {
-        "da": "Ophav",
+        "da": "Forfatter/ophav",
         "en": "function"
       },
       "advanced-dropdown-term.hostpublication": {
         "da": "Værtspublikation",
         "en": "Hostpublication"
+      },
+      "advanced-dropdown-term.creatorcontributor": {
+        "da": "Forfatter/ophav",
+        "en": "Creator"
       },
       "advanced-dropdown-AND": {
         "da": "OG",
@@ -1802,6 +2084,14 @@
         "da": "IKKE",
         "en": "NOT"
       },
+      "advanced-search-history-latest": {
+        "da": "Seneste søgninger",
+        "en": "Latest searches"
+      },
+      "advanced-empty-search-history": {
+        "da": "Her vil du kunne se en liste over de seneste søgninger, hvor der har været brugt avanceret søgning. Listen er midlertidig og nulstilles automatisk, når du lukker enten vinduet eller din browser. Hvis du vil gemme en søgning til senere, så tryk “Gem” ud for søgningen og den vil lægge sig på listen “Gemte søgninger”.\\n Du har ikke lavet nogen avancerede søgninger endnu.",
+        "en": "List of recent advanced searches :) - List is temporary and will be emptied automagically"
+      },
       "remove": {
         "da": "Fjern",
         "en": "Remove"
@@ -1813,6 +2103,38 @@
       "showInputFields": {
         "da": "Rediger som feltsøgning",
         "en": "Use input field search"
+      },
+      "yourSearch": {
+        "da": "Din søgning",
+        "en": "Your search"
+      },
+      "editSearch": {
+        "da": "Rediger søgning",
+        "en": "Edit search"
+      },
+      "construct-your-search": {
+        "da": "Sammensæt din søgning",
+        "en": "Construct your search"
+      },
+      "adjusted-after-material-type": {
+        "da": "Tilpasses efter materialetype",
+        "en": "Adjusted according to material type"
+      },
+      "narrow-search-more": {
+        "da": "Afgræns yderligere",
+        "en": "narrow-search-more"
+      },
+      "searchHistory": {
+        "da": "Søgehistorik",
+        "en": "Search history"
+      },
+      "clearSearch": {
+        "da": "Ryd søgning",
+        "en": "Clear search"
+      },
+      "helpAndGuidance": {
+        "da": "Hjælp og vejledning",
+        "en": "Help and guidance"
       }
     },
     "suggester": {
@@ -2194,6 +2516,14 @@
         "da": "Noder",
         "en": "Sheet music"
       },
+      "label-other": {
+        "da": "Øvrige",
+        "en": "Other"
+      },
+      "label-uncategorised": {
+        "da": "Uden for kategori",
+        "en": "Outside categories"
+      },
       "facets-group-label": {
         "da": "Liste med filtre",
         "en": "List with filters"
@@ -2453,8 +2783,12 @@
         "en": "Content"
       },
       "series": {
-        "da": "Serie",
+        "da": "Serier",
         "en": "Series"
+      },
+      "universes": {
+        "da": "Universer",
+        "en": "Universes"
       },
       "reminds-of": {
         "da": "Minder om",
@@ -2639,6 +2973,10 @@
       "order-message-library": {
         "da": "Du får besked fra dit bibliotek når materialet er klar til afhentning",
         "en": "You will be notified by your library when the material is ready for collection"
+      },
+      "order-message-library-plural": {
+        "da": "Du får besked fra dit bibliotek når materialerne er klar til afhentning",
+        "en": "You will be notified by your library when the materials are ready for collection"
       },
       "order-success": {
         "da": "Bestillingen blev gennemført",
@@ -4123,6 +4461,10 @@
       "infoBoxTitle": {
         "da": "Om din bibliotek.dk profil",
         "en": ""
+      },
+      "noLibrariesMessage": {
+        "da": "Du har ingen tilknyttede biblioteker",
+        "en": "LABEL: Mangler oversættelse!"
       }
     },
     "receipt": {
@@ -4182,7 +4524,10 @@
         "da": "Brugeren ikke fundet",
         "en": "User not found"
       },
-
+      "ERROR_UNAUTHENTICATED_USER": {
+        "da": "Brugeren er ikke logget ind",
+        "en": "User not authenticated"
+      },
       "INVALID_ORDER": {
         "da": "Bestillingen kunne ikke valideres",
         "en": "Order does not validate"

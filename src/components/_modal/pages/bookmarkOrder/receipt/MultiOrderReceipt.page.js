@@ -14,6 +14,7 @@ const MultiOrderReceipt = ({ context }) => {
   const modal = useModal();
   const { successMaterials, failedMaterials, branchName } = context;
   const hasErrors = failedMaterials.length > 0;
+  const hasSuccess = successMaterials.length > 0;
   const router = useRouter();
 
   return (
@@ -36,7 +37,7 @@ const MultiOrderReceipt = ({ context }) => {
         src={"ornament1.svg"}
       />
 
-      {hasErrors && (
+      {hasErrors && hasSuccess && (
         <Text type="text2" className={styles.successMessage}>
           {successMaterials.length === 1 ? (
             <Translate
@@ -54,14 +55,16 @@ const MultiOrderReceipt = ({ context }) => {
         </Text>
       )}
 
-      <Text type="text2" className={cx({ [styles.message]: !hasErrors })}>
-        <Translate
-          context="order"
-          label="order-success-message"
-          vars={[branchName]}
-          renderAsHtml
-        />
-      </Text>
+      {hasSuccess && (
+        <Text type="text2" className={cx({ [styles.message]: !hasErrors })}>
+          <Translate
+            context="order"
+            label="order-success-message"
+            vars={[branchName]}
+            renderAsHtml
+          />
+        </Text>
+      )}
 
       {hasErrors && (
         <>
@@ -87,6 +90,7 @@ const MultiOrderReceipt = ({ context }) => {
                 key={material.key}
                 material={material}
                 backgroundColorOverride={BackgroundColorEnum.RED}
+                showActions={false}
               />
             ))}
           </div>

@@ -14,19 +14,19 @@ import Translate from "@/components/base/translate";
 import styles from "./Keywords.module.css";
 import { uniqueSubjectEntries } from "@/lib/utils";
 import { useMemo } from "react";
+import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
 
 /**
- * bibliotek.dk url
+ * bibliotek.dk subjectUrl
  *
  * @param {string} keyword
- * Create search url including keyword in current bibliotek.dk version
+ * Create search subjectUrl including keyword in current bibliotek.dk version
  *
  * @returns {string}
  */
-function url(keyword) {
-  return `/find?q.subject=${keyword}`;
-
-  //return `https://bibliotek.dk/da/search/work?search_block_form=phrase.subject%3D%22${keyword}%22#content`;
+export function subjectUrl(keyword) {
+  // we now search subjects in advanced search
+  return getAdvancedUrl({ type: "subject", value: keyword });
 }
 
 /**
@@ -132,7 +132,7 @@ export function FlatSubjectsForFullManifestation({ subjects }) {
         return (
           <span className={styles.word} key={subject + "-" + index}>
             <Link
-              href={url(subject)}
+              href={subjectUrl(subject)}
               border={{ bottom: { keepVisible: true } }}
               key={`flat-subject-${index}`}
             >
@@ -177,7 +177,7 @@ function KeyWordList({ className, grouped, skeleton, sizeClass }) {
                 >
                   <Title type="title4" skeleton={skeleton} tag="div">
                     <Link
-                      href={url(display)}
+                      href={subjectUrl(display)}
                       border={{ bottom: { keepVisible: true } }}
                     >
                       {display}

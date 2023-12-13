@@ -1,16 +1,15 @@
 import AdvancedSearchDropdown from "@/components/search/advancedSearch/advancedSearchDropdown/AdvancedSearchDropdown";
-import { convertToDropdownInput } from "@/components/search/advancedSearch/advancedSearchHelpers/convertToDropdownInput";
 import styles from "./DropdownInputs.module.css";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
-import { DebugStateDetails } from "@/components/search/advancedSearch/DebugStateDetails";
+import { DropdownReducerEnum } from "@/components/search/advancedSearch/useDropdownSearchIndices";
 
 const advancedSearchDropdownContext = "advanced_search_dropdown";
 
 /**
  *
- * @param {Array.<DropdownUnit>} items
+ * @param {DropdownInputArray} items
  * @param {string} indexName
  * @param {UpdateDropdownSearchIndices} updateDropdownSearchIndices
  * @returns {JSX.Element}
@@ -27,16 +26,19 @@ function DropdownUnit({ items, indexName, updateDropdownSearchIndices }) {
 
   return (
     <div className={styles.dropdown_with_title}>
-      <Text type={"text2"}>{indexTitle}</Text>
+      <Text type="text3">{indexTitle}</Text>
       <AdvancedSearchDropdown
         indexTitle={indexTitle}
         indexName={indexName}
         indexPlaceholder={indexPlaceholder}
-        menuItems={convertToDropdownInput(items)}
+        menuItems={items}
         updateIndex={(menuItemsState) =>
           updateDropdownSearchIndices({
-            indexName: indexName,
-            menuItemsState: menuItemsState,
+            type: DropdownReducerEnum.UPDATE,
+            payload: {
+              indexName: indexName,
+              menuItemsState: menuItemsState,
+            },
           })
         }
       />
@@ -45,12 +47,25 @@ function DropdownUnit({ items, indexName, updateDropdownSearchIndices }) {
 }
 
 export default function DropdownInputs({}) {
-  const { dropdownUnits, dropdownSearchIndices, updateDropdownSearchIndices } =
+  const { dropdownUnits, updateDropdownSearchIndices } =
     useAdvancedSearchContext();
 
   return (
     <>
       <div className={styles.dropdown_inputs_wrapper}>
+        <div className={styles.dropdownTitle}>
+          <Text type="text1">
+            {Translate({ context: "search", label: "narrow-search-more" })}
+          </Text>
+          {/* TODO: Comment in, when workTypes are commented in */}
+          {/*<Text type="text3" className={styles.subTitle}>*/}
+          {/*  {Translate({*/}
+          {/*    context: "search",*/}
+          {/*    label: "adjusted-after-material-type",*/}
+          {/*  })}*/}
+          {/*</Text>*/}
+        </div>
+
         <div className={styles.flex_wrapper}>
           {dropdownUnits.map((unit) => {
             return (
@@ -64,13 +79,6 @@ export default function DropdownInputs({}) {
           })}
         </div>
       </div>
-
-      {/* TODO: Remove when we place this into the code */}
-      <DebugStateDetails
-        title="Dropdown object for debug"
-        state={dropdownSearchIndices}
-        openDefault={false}
-      />
     </>
   );
 }

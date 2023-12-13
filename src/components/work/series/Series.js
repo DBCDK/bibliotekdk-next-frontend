@@ -9,36 +9,54 @@ import Section from "@/components/base/section";
 import WorkSlider from "@/components/base/slider/WorkSlider";
 import Translate from "@/components/base/translate";
 
+import Link from "@/components/base/link";
+import Title from "@/components/base/title";
+
 import styles from "./Series.module.css";
-import {
-  flattenMaterialType,
-  formatMaterialTypesToPresentation,
-  toFlatMaterialTypes,
-} from "@/lib/manifestationFactoryUtils";
-import isEmpty from "lodash/isEmpty";
+import { templateForSeriesSlider } from "@/components/base/materialcard/templates/templates";
+import { getSeriesUrl } from "@/lib/utils";
 
 /**
  * Series React component
  *
- * @param {Object} props
- * @param {string} props.isLoading The work id
- * @param {Array} props.works array of works in series
+ * @param {boolean} isLoading The work id
+ * @param {Object.<string, any>} series
+ * @param {string} workId
+ * @param {number} index
  */
-export function Series({ isLoading, works = [], type = [] }) {
-  // Translate Context
-  const context = { context: "series" };
+export function Series({ isLoading, series = {}, workId = "" }) {
+  const propsAndChildrenInputList =
+    series?.members?.map((member) => {
+      return { material: member?.work, series: member };
+    }) || [];
+
+  const link = getSeriesUrl(series?.title, workId);
 
   return (
     <Section
-      title={Translate({ ...context, label: "label" })}
+      title={
+        <Title tag="h3" type="title4" skeleton={isLoading}>
+          <Link border={{ bottom: true }} href={link}>
+            {series.title}
+          </Link>
+        </Title>
+      }
       divider={{ content: false }}
-      {...(!isEmpty(type) && {
-        subtitle: formatMaterialTypesToPresentation(type),
-      })}
+      subtitle={
+        <div className={styles.padding_top}>
+          <Link border={{ bottom: { keepVisible: true } }} href={link}>
+            {Translate({ context: "series", label: "go_to_series" })}
+          </Link>
+        </div>
+      }
     >
       <Row className={`${styles.series}`}>
         <Col xs={12} md>
-          <WorkSlider skeleton={isLoading} works={works} />
+          <WorkSlider
+            skeleton={isLoading}
+            propsAndChildrenTemplate={templateForSeriesSlider}
+            propsAndChildrenInputList={propsAndChildrenInputList}
+          />
         </Col>
       </Row>
     </Section>
@@ -55,32 +73,43 @@ Series.propTypes = {
  * @param {Object} props
  * @param {string} props.workId The work id
  */
-export default function Container({ workId, type }) {
+export default function Container({ workId }) {
   const { data, isLoading } = useData(workFragments.series({ workId }));
 
+  const allSeries = data?.work?.series;
+
   // if work is not part of series, we wont show series section
-  if (!isLoading && !data?.work?.seriesMembers?.length) {
+  if (!isLoading && !data?.work?.series?.length) {
     return null;
   }
 
-  const seriesWithSameMaterialTypes = data?.work?.seriesMembers.filter(
-    (member) => {
-      const formattedMaterialTypes = flattenMaterialType(member);
-      return type?.every((mat) =>
-        toFlatMaterialTypes(
-          formattedMaterialTypes,
-          "specificDisplay"
-        )?.includes(mat)
-      );
-    }
-  );
+  // TODO: Figure out if this is needed to sort by materialType
+  //   Remember to update seriesMembers to use series.members
+  // const seriesWithSameMaterialTypes = data?.work?.seriesMembers.filter(
+  //   (member) => {
+  //     const formattedMaterialTypes = flattenMaterialType(member);
+  //     return type?.every((mat) =>
+  //       toFlatMaterialTypes(
+  //         formattedMaterialTypes,
+  //         "specificDisplay"
+  //       )?.includes(mat)
+  //     );
+  //   }
+  // );
 
   return (
-    <Series
-      isLoading={isLoading}
-      works={seriesWithSameMaterialTypes}
-      type={type}
-    />
+    <>
+      {allSeries?.map((singleSeries, index) => {
+        return (
+          <Series
+            key={index}
+            isLoading={isLoading}
+            series={singleSeries}
+            workId={workId}
+          />
+        );
+      })}
+    </>
   );
 }
 Container.propTypes = {

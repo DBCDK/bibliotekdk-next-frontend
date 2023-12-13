@@ -26,6 +26,8 @@ import DeleteProfile from "./deleteProfile";
 import EMaterialFilter from "./bookmarkOrder/EMaterialFilter";
 import MultiOrder from "./bookmarkOrder/multi-order/MultiOrder.page";
 import MultiReceipt from "./bookmarkOrder/receipt/MultiOrderReceipt.page";
+import MultiReferences from "./references/multiReferences/MultiReferences";
+import EditionPicker from "./references/editionPicker/EditionPicker";
 
 const _modal = {
   Menu,
@@ -37,6 +39,8 @@ const _modal = {
   Receipt,
   Filter,
   References,
+  MultiReferences,
+  EditionPicker,
   ManifestationContent,
   Material,
   DeleteOrder,

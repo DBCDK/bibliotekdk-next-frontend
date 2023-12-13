@@ -62,7 +62,6 @@ export function IconLink({
           size={{ w: 2, h: 2 }}
           dataCy="icon-link-icon"
           className={cx(iconAnimation)}
-          title={"Link kopieret"}
           alt=""
           tabIndex="-1"
         >

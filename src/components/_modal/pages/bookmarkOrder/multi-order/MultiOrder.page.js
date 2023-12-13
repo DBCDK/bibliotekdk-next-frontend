@@ -7,12 +7,28 @@ import Material, { filterForRelevantMaterialTypes } from "./Material/Material";
 import { useEffect, useRef, useState } from "react";
 import { useModal } from "@/components/_modal/Modal";
 import { StatusEnum } from "@/components/base/materialcard/materialCard.utils";
-import useUser from "@/components/hooks/useUser";
 import { useMutate } from "@/lib/api/api";
 import * as orderMutations from "@/lib/api/order.mutations";
 import { setAlreadyOrdered } from "../../order/utils/order.utils";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 const CONTEXT = "bookmark-order";
+
+const formatArticleForm = (formData, pid) => {
+  if (!formData || !pid) return null;
+
+  const { publicationDateOfComponent, authorOfComponent, titleOfComponent } =
+    formData;
+
+  return {
+    pid,
+    publicationDateOfComponent,
+    volumeOfComponent: formData.volume,
+    authorOfComponent,
+    titleOfComponent,
+    pagesOfComponent: formData.pagination,
+  };
+};
 
 const createOrders = async ({
   materials,
@@ -31,13 +47,16 @@ const createOrders = async ({
           : filterForRelevantMaterialTypes(
               material?.manifestations?.mostRelevant,
               material?.materialType
-            ).map((mani) => mani.pid);
-        const periodicaForm = periodicaForms?.[material.key];
-
+            ).map((mani) => mani.pid); //TODO BIBDK2021-2214
+        const periodicaFormForMaterial = periodicaForms?.[material.key];
+        const articleForm = formatArticleForm(
+          periodicaFormForMaterial,
+          pids[0]
+        );
         return {
           pids,
           key: material.key,
-          ...periodicaForm,
+          periodicaForm: articleForm ? articleForm : undefined,
         };
       }),
       branchId: pickupBranch.branchId,
@@ -50,13 +69,14 @@ const MultiOrder = ({ context }) => {
   const modal = useModal();
   const { materials, closeModalOnBack } = context;
   const analyzeRef = useRef();
-  const [materialCounts, setMaterialCounts] = useState({});
+  const [materialCounts, setMaterialCounts] = useState({ isAnalyzed: false });
   const [materialsToOrder, setMaterialsToOrder] = useState(materials);
-  const { loanerInfo } = useUser();
+  const { loanerInfo } = useLoanerInfo();
   const orderMutation = useMutate();
   const [isCreatingOrders, setIsCreatingOrders] = useState(false);
-  const [duplicateBookmarkIds, setDuplicateBookmarkIds] = useState([]);
+  const [duplicateBookmarkIds, setDuplicateBookmarkIds] = useState([]); //used to manage warning for duplicate orders without removing duplicate ids from browser storage
   const pickupBranch = useRef(); // Pickup branch from checkout form
+  const [materialStatusChanged, setMaterialStatusChanged] = useState();
 
   useEffect(() => {
     if (orderMutation.data && orderMutation.data.submitMultipleOrders) {
@@ -81,7 +101,16 @@ const MultiOrder = ({ context }) => {
         branchName: pickupBranch.current?.name,
       });
     }
-  }, [orderMutation?.data]);
+
+    if (orderMutation.error) {
+      setIsCreatingOrders(false);
+      modal.push("multireceipt", {
+        failedMaterials: materialsToOrder,
+        successMaterials: [],
+        branchName: pickupBranch.current?.name,
+      });
+    }
+  }, [orderMutation?.isLoading]);
 
   useEffect(() => {
     if (!analyzeRef || !analyzeRef.current) return;
@@ -140,27 +169,30 @@ const MultiOrder = ({ context }) => {
         );
 
       setMaterialCounts({
+        isAnalyzed: true,
         digitalMaterials: materialsDigital?.length ?? 0,
         materialsNotAllowed: materialsNotAvailable?.length ?? 0,
         materialsMissingAction: materialsNeedsInfo?.length ?? 0,
         duplicateOrders: duplicateOrders?.length ?? 0,
+        numberMaterialsToOrder: materialsToOrder?.length ?? 0,
       });
     }, 300);
-
     return () => clearTimeout(timer);
   }, [
     materials,
+    pickupBranch,
     materialsToOrder,
     analyzeRef.current,
     context?.periodicaForms,
+    materialStatusChanged,
   ]);
 
-  const onSubmit = async (pickupBranch) => {
+  const onSubmit = async (selectedPickupBranch) => {
     setIsCreatingOrders(true);
-    pickupBranch.current = pickupBranch;
+    pickupBranch.current = selectedPickupBranch;
     await createOrders({
       materials: materialsToOrder,
-      pickupBranch,
+      pickupBranch: selectedPickupBranch,
       loanerInfo,
       periodicaForms: context.periodicaForms,
       orderMutation,
@@ -199,6 +231,7 @@ const MultiOrder = ({ context }) => {
             setDuplicateBookmarkIds={setDuplicateBookmarkIds}
             //context is responsible for updating periodica form via periodicaForm.js and modal.update
             periodicaForms={context?.periodicaForms}
+            setMaterialStatusChanged={setMaterialStatusChanged}
           />
         ))}
       </div>
