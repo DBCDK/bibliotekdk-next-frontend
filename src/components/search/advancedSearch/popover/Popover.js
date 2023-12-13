@@ -93,9 +93,11 @@ const Popover = ({ className, simpleSearchRef }) => {
           />
         </Tooltip>
 
-        <div className={cx(styles.triangle, {
-          [styles.showTriangle]: showPopover
-        })} />
+        <div
+          className={cx(styles.triangle, {
+            [styles.showTriangle]: showPopover,
+          })}
+        />
       </div>
 
       <div
