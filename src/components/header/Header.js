@@ -203,7 +203,9 @@ export function Header({
   const keyPressed = (e) => {
     if (e.key === "Enter") {
       doSearch(e.target.value);
-      setShowInfoTooltip(false);
+      if (showInfoTooltip) {
+        setShowInfoTooltip(false);
+      }
     }
   };
   return (
@@ -223,19 +225,6 @@ export function Header({
               <div className={styles.bottom}>
                 <div
                   ref={simpleSearchRef}
-                  // onSubmit={(e) => {
-                  //   e?.preventDefault();
-                  //   doSearch(query);
-
-                  //   // view query in storybook
-                  //   story && alert(`/find?q.all=${query}`);
-
-                  //   // Remove suggester in storybook
-                  //   story && story.setSuggesterVisibleMobile(false);
-
-                  //   // remove keyboard/unfocus
-                  //   blurInput();
-                  // }}
                   className={`${styles.search}`}
                   data-cy={cyKey({ name: "search", prefix: "header" })}
                 >
