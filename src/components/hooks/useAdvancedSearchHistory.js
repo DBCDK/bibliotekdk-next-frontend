@@ -9,16 +9,18 @@ const KEY = "advanced-search-history";
 /**
  * Get a date on a stored search history object
  */
-function getTimeStamp() {
+export function getTimeStamp(now) {
   const options = {
     hour: "2-digit",
     minute: "2-digit",
   };
-
-  const now = new Date();
-  const stamp = now.toLocaleTimeString("en-GB", options);
+  const stamp = new Date(now).toLocaleTimeString("en-GB", options);
   // remove the " AM/PM" part
   return stamp.replace("AM", "").replace("PM", "").replace(":", ".").trim();
+}
+
+function getUnixTimeStamp() {
+  return new Date().getTime();
 }
 
 export const useAdvancedSearchHistory = () => {
@@ -33,7 +35,8 @@ export const useAdvancedSearchHistory = () => {
         const alreadyStored = !!storedValue.find(
           (stor) => stor?.cql?.trim() === value?.cql?.trim()
         );
-        value["timestamp"] = getTimeStamp();
+        value["timestamp"] = getTimeStamp(getUnixTimeStamp());
+        value["unixtimestamp"] = getUnixTimeStamp();
         if (!alreadyStored) {
           // Add to beginning of history array
           storedValue.unshift(value);
