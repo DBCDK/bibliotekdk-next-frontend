@@ -74,16 +74,6 @@
   height: 30px;
   clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
   background-color: var(--concrete);
-}
-
-.triangle {
-  position: relative;
-  bottom: -15px;
-  left: 15%;
-  width: 75px;
-  height: 30px;
-  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-  background-color: var(--concrete);
   visibility: hidden;
   opacity: 0;
   transition: 0.5s ease;
