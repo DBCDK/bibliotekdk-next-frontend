@@ -256,7 +256,7 @@ export function AdvancedSearchHistory() {
         setAllChecked={setAllChecked}
         checked={storedValue?.length === checkboxList?.length}
         partiallyChecked={checkboxList?.length > 0}
-        disabled={storedValue?.length === 0}
+        disabled={storedValue?.length === 0 || checkboxList?.length === 0}
       />
       <HistoryHeader />
       {/*// if there is no search history*/}
