@@ -251,7 +251,6 @@ export function Header({
                   </div>
 
                   <button
-                    // disabled={showInfoTooltip}
                     className={`${styles.button}`}
                     //   type="submit"
                     onClick={(e) => {
