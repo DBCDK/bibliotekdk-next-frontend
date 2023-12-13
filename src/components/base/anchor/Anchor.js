@@ -37,6 +37,7 @@ function Menu({
   onMount,
   stickyTop = true,
   stickyBottom = false,
+  isLoading,
 }) {
   // currently active section (window position)
   const [activeItemId, setActiveItemId] = useState(null);
@@ -177,8 +178,11 @@ function Menu({
                       border={{ bottom: { keepVisible: true } }}
                       dataCy={"anchor-menu-item-" + index}
                       onClick={(e) => handleClick(e, id, section)}
+                      disabled={isLoading}
                     >
-                      <Text type={"text2"}>{titles[id]}</Text>
+                      <Text skeleton={isLoading} lines={1} type={"text2"}>
+                        {titles[id]}
+                      </Text>
                     </Link>
                   );
                 })}

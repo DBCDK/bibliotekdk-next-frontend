@@ -44,7 +44,12 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
         [styles.boxWithoutDescription]: !description,
       })}
     >
-      <Text type={"text3"} className={styles.series_by}>
+      <Text
+        type={"text3"}
+        skeleton={seriesIsLoading}
+        lines={1}
+        className={styles.series_by}
+      >
         {Translate({ context: "series_page", label: "series_by" })}{" "}
         {creators.slice(0, creatorsToShow).map((creator, index, array) => (
           <>
@@ -58,17 +63,32 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
         ))}
         {creators?.length > creatorsToShow && ", m. fl."}
       </Text>
-      <Title type="title2" tag={"h1"} className={styles.series_title}>
+      <Title
+        skeleton={seriesIsLoading}
+        lines={1}
+        type="title2"
+        tag={"h1"}
+        className={styles.series_title}
+      >
         {series?.title}
       </Title>
       <div className={styles.series_images}>
-        <ThumbnailParade series={series} seriesIsLoading={seriesIsLoading} />
+        <ThumbnailParade series={series} isLoading={seriesIsLoading} />
       </div>
       <div className={styles.series_information}>
-        {description && <Text type="text2">{description}</Text>}
+        {(description || seriesIsLoading) && (
+          <Text type="text2" skeleton={seriesIsLoading} lines={6}>
+            {description}
+          </Text>
+        )}
         {firstSeriesFirstWork?.universes?.map((universe) => {
           return (
-            <Text key={JSON.stringify(universe)} type="text2">
+            <Text
+              skeleton={seriesIsLoading}
+              lines={1}
+              key={JSON.stringify(universe)}
+              type="text2"
+            >
               {Translate({
                 context: "series_page",
                 label: "part_of_universe",

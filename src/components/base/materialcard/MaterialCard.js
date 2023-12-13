@@ -8,6 +8,7 @@ import Col from "react-bootstrap/Col";
 import { templateForRelatedWorks } from "@/components/base/materialcard/templates/templates";
 import { forwardRef, useState } from "react";
 import cx from "classnames";
+import Skeleton from "../skeleton/Skeleton";
 
 function calculateBorder(link_href, border) {
   if (!link_href) {
@@ -37,6 +38,7 @@ const MaterialCard = forwardRef(
       colSizing = { xs: 10, sm: 5, lg: 4 },
       onClick = null,
       rootProps,
+      isLoading,
     },
     ref
   ) {
@@ -106,7 +108,9 @@ const MaterialCard = forwardRef(
       <Col
         // Col props
         {...colSizing}
-        className={cx(elementContainerClassName)}
+        className={cx(elementContainerClassName, {
+          [styles.skeleton]: isLoading,
+        })}
         as="article"
         {...rootProps}
       >
@@ -126,6 +130,7 @@ const MaterialCard = forwardRef(
               <ImageElement />
             ) : (
               <>
+                {isLoading && <Skeleton />}
                 <img
                   src={image_src}
                   className={cx(coverImageClassName, {
@@ -134,6 +139,7 @@ const MaterialCard = forwardRef(
                   onLoad={() => setLoaded(true)}
                   alt={fullTitle}
                 />
+
                 {ImageOverlay && <ImageOverlay />}
               </>
             )}

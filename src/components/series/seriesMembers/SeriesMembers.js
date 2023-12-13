@@ -27,6 +27,9 @@ export function getMemberWorkIds(firstSeriesMembers) {
 }
 
 export default function SeriesMembers({ series, seriesIsLoading }) {
+  // skeleton dummy elements
+  const dummy = [...new Array(10).fill({})];
+
   const firstSeriesMembers = series?.members;
   const firstSeriesFirstWork = firstSeriesMembers?.[0]?.work;
   const firstWorkType = firstSeriesFirstWork?.workTypes?.[0]?.toLowerCase();

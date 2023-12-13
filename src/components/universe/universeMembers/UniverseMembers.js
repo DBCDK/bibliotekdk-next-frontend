@@ -3,6 +3,7 @@ import Translate from "@/components/base/translate";
 import Section from "@/components/base/section";
 import styles from "./UniverseMembers.module.css";
 import MaterialCard from "@/components/base/materialcard/MaterialCard";
+import { workTypes } from "@/components/hooks/useFilters";
 import {
   templateForUniversePageSeries,
   templateForUniversePageWork,
@@ -10,9 +11,14 @@ import {
 import { workTypesOrder } from "@/lib/enums_MaterialTypes";
 import uniq from "lodash/uniq";
 
-function WorkTypesSection({ workTypeTranslation, works, series }) {
+function WorkTypesSection({
+  workTypeTranslation,
+  works,
+  series,
+  universeIsLoading,
+}) {
   return (
-    <Section title={workTypeTranslation}>
+    <Section title={workTypeTranslation} isLoading={universeIsLoading}>
       <div className={styles.section_flex}>
         {series?.map((singleSeries, index) => {
           return (
@@ -27,6 +33,7 @@ function WorkTypesSection({ workTypeTranslation, works, series }) {
           return (
             <MaterialCard
               key={index}
+              isLoading={universeIsLoading}
               propAndChildrenInput={{ material: work }}
               propAndChildrenTemplate={templateForUniversePageWork}
             />
@@ -37,20 +44,27 @@ function WorkTypesSection({ workTypeTranslation, works, series }) {
   );
 }
 
-export default function UniverseMembers({ worksInUniverse, seriesInUniverse }) {
+export default function UniverseMembers({
+  worksInUniverse,
+  seriesInUniverse,
+  universeIsLoading,
+}) {
+  const dummy = [...new Array(10).fill({})];
+
   const workTypesInUniverseWorks = Object.keys(worksInUniverse);
   const workTypesInUniverseSeries = Object.keys(seriesInUniverse);
-
   const workTypesArray = workTypesOrder.filter((workType) =>
     uniq([...workTypesInUniverseWorks, ...workTypesInUniverseSeries]).includes(
       workType
     )
   );
 
+  const data = universeIsLoading ? workTypes : workTypesArray;
+
   return (
     <Anchor.Wrap>
-      <Anchor.Menu />
-      {workTypesArray.map((workTypes) => {
+      <Anchor.Menu isLoading={universeIsLoading} />
+      {data.map((workTypes) => {
         const workTypeTranslation = Translate({
           context: "facets",
           label: `label-${workTypes.toLowerCase()}`,
@@ -60,8 +74,9 @@ export default function UniverseMembers({ worksInUniverse, seriesInUniverse }) {
             key={workTypeTranslation}
             anchor-label={workTypeTranslation}
             workTypeTranslation={workTypeTranslation}
-            works={worksInUniverse?.[workTypes]}
+            works={universeIsLoading ? dummy : worksInUniverse?.[workTypes]}
             series={seriesInUniverse?.[workTypes]}
+            universeIsLoading={universeIsLoading}
           />
         );
       })}

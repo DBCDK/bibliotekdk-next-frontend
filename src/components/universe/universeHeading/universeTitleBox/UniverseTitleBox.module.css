@@ -8,6 +8,9 @@
   grid-auto-columns: var(--grid_auto_columns__title_box);
 
   row-gap: var(--pt2);
+
+  --skeleton-bg-color: var(--chamois);
+  --skeleton-gradient-color: var(--parchment);
 }
 
 @media (min-width: 768px) {

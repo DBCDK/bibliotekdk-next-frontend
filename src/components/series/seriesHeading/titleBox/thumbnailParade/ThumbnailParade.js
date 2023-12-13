@@ -3,20 +3,23 @@ import styles from "./ThumbnailParade.module.css";
 import cx from "classnames";
 import Skeleton from "@/components/base/skeleton";
 
-export default function ThumbnailParade({ series, seriesIsLoading }) {
+export default function ThumbnailParade({ series, isLoading }) {
+  // for skeleton view
+  const dummy = [...new Array(5).fill("/")];
+
   const thumbnails = series?.members
     ?.map((member) => getCoverImage(member?.work?.manifestations?.mostRelevant))
     ?.filter((cover) => cover?.origin === "moreinfo")
     ?.map((cover) => cover?.thumbnail)
     .slice(0, 5);
 
-  const length = thumbnails?.length;
+  const data = isLoading ? dummy : thumbnails;
+
+  console.log("data", data);
+
+  const length = data?.length;
   const width = 75;
   const offset = 16;
-
-  if (seriesIsLoading) {
-    return <Skeleton />;
-  }
 
   if (length === 0) {
     return null;
@@ -29,9 +32,9 @@ export default function ThumbnailParade({ series, seriesIsLoading }) {
         width: `${width + offset * length}px`,
       }}
     >
-      {thumbnails?.map((thumbnail, index) => (
+      {data?.map((thumbnail, index) => (
         <div
-          key={thumbnail}
+          key={thumbnail + index}
           style={{
             marginRight: `-${width - offset}px`,
             bottom: "100%",
@@ -39,11 +42,13 @@ export default function ThumbnailParade({ series, seriesIsLoading }) {
           }}
           className={styles.thumbnail_container}
         >
+          {isLoading && <Skeleton />}
           <img
             className={cx(styles.thumbnail)}
             src={thumbnail}
             alt=""
             width={`${width}px`}
+            height={isLoading && "120px"}
           />
         </div>
       ))}
