@@ -79,7 +79,6 @@ const MultiOrder = ({ context }) => {
   const [materialStatusChanged, setMaterialStatusChanged] = useState();
 
   useEffect(() => {
-    console.log("changing counts");
     if (orderMutation.data && orderMutation.data.submitMultipleOrders) {
       const { failedAtCreation, successfullyCreated } =
         orderMutation.data.submitMultipleOrders;
