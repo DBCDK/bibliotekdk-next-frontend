@@ -121,7 +121,7 @@ function HistoryHeaderActions({
           top: false,
           bottom: { keepVisible: partiallyChecked && !disabled },
         }}
-        disabled={disabled}
+        disabled={!partiallyChecked || disabled}
         onClick={(e) => {
           e.preventDefault();
           deleteSelected();
@@ -161,16 +161,6 @@ function HistoryHeader() {
 function EmptySearchHistory() {
   return (
     <div className={styles.emptysearchpage}>
-      <Title
-        type="title3"
-        data-cy="advanced-search-search-history"
-        className={styles.title}
-      >
-        {Translate({
-          context: "search",
-          label: "advanced-search-history-latest",
-        })}
-      </Title>
       <div className={cx(styles.actionheader)}>
         <Text type="text2" className={styles.inline}>
           {Translate({
@@ -256,7 +246,7 @@ export function AdvancedSearchHistory() {
         setAllChecked={setAllChecked}
         checked={storedValue?.length === checkboxList?.length}
         partiallyChecked={checkboxList?.length > 0}
-        disabled={storedValue?.length === 0 || checkboxList?.length === 0}
+        disabled={storedValue?.length === 0}
       />
       <HistoryHeader />
       {/*// if there is no search history*/}
