@@ -1768,6 +1768,10 @@
         "da": "CQL-søgning",
         "en": "CQL-search"
       },
+      "cqlsearchPlaceholder": {
+        "da": "Skriv cql-søgninger her",
+        "en": ""
+      },
       "timeForSearch": {
         "da": "tid",
         "en": "time"
