@@ -93,7 +93,6 @@ const BookmarkPage = () => {
    * @param {String[]} failedAtCreation
    */
   function handleOrderFinished(successfullyCreated, failedAtCreation) {
-    console.log("handleOrderFinished", successfullyCreated, failedAtCreation);
     setCheckboxList([]);
     setSuccessfullyCreatedIds((prev) => [...prev, ...successfullyCreated]);
     setFailureAtCreationIds((prev) => [...prev, ...failedAtCreation]);

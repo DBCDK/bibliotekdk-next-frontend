@@ -204,7 +204,6 @@ export const ReservationButton = ({
     skeleton: isEmpty(access),
     dataCy: `button-order-overview-enabled`,
     onClick: () => {
-      console.log("loginRequiredProps onClick", handleOrderFinished);
       isAuthenticated || isGuestUser
         ? openOrderModal({
             modal: modal,
@@ -215,7 +214,7 @@ export const ReservationButton = ({
             storeLoanerInfo: true, // user is already logged in, we want to keep that
             handleOrderFinished: handleOrderFinished,
           })
-        : handleOpenLoginAndAddOrderModalToStore(); //TODO also call handleOrderFinished here?
+        : handleOpenLoginAndAddOrderModalToStore();
     },
   };
 
