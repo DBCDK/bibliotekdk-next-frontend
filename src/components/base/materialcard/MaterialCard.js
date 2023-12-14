@@ -130,7 +130,6 @@ const MaterialCard = forwardRef(
               <ImageElement />
             ) : (
               <>
-                {isLoading && <Skeleton />}
                 <img
                   src={image_src}
                   className={cx(coverImageClassName, {

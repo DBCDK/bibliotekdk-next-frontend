@@ -65,11 +65,13 @@
 }
 
 .skeleton div {
-  position: relative;
   width: 100%;
-  height: calc(var(--pt16) * 2);
 }
 
 .skeleton img {
-  display: none;
+  background-color: var(--concrete);
+  box-shadow: none;
+  border: none;
+  filter: none;
+  height: calc(var(--pt16) * 2);
 }

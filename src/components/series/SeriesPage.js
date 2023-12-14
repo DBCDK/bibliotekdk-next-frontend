@@ -20,8 +20,6 @@ export default function SeriesPage() {
     error: seriesError,
   } = useData(workId && workFragments.series({ workId: workId }));
 
-  // const seriesIsLoading = true;
-
   const series = seriesData?.work?.series;
   const specificSeries = series?.find(
     (singleSeries) => encodeString(singleSeries.title) === seriesTitle
