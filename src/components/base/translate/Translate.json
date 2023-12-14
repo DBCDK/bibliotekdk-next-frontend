@@ -125,9 +125,45 @@
         "da": "Fra",
         "en": "From"
       },
-      "years_old": {
-        "da": "-årige",
-        "en": " years old"
+      "exact_publication_year": {
+        "da": "%s",
+        "en": "%s"
+      },
+      "publication_year_range": {
+        "da": "%s - %s",
+        "en": "%s - %s"
+      },
+      "x_publication_year_and_up": {
+        "da": "%s og efter",
+        "en": "%s and after"
+      },
+      "up_to_x_publication_year": {
+        "da": "Til og med %s",
+        "en": "To and including %s"
+      },
+      "exact_years_old": {
+        "da": "%s år",
+        "en": "%s years"
+      },
+      "years_range": {
+        "da": "%s-%s-årige",
+        "en": "%s-%s years old"
+      },
+      "x_years_and_up": {
+        "da": "%s år og op",
+        "en": "%s years and up"
+      },
+      "up_to_x_years": {
+        "da": "Til og med %s år",
+        "en": "To and including %s år"
+      },
+      "range_placeholder_publicationyear": {
+        "da": "Årstal",
+        "en": "Year"
+      },
+      "range_placeholder_ages": {
+        "da": "Alder",
+        "en": "Age"
       }
     },
     "logo": {
@@ -1187,6 +1223,10 @@
       "material-direction-here": {
         "da": "Her",
         "en": "Here"
+      },
+      "material-typename-literature": {
+        "da": "Bogen",
+        "en": "The book"
       },
       "material-typename-ebook": {
         "da": "E-bogen",

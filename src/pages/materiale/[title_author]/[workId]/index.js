@@ -100,7 +100,7 @@ const serverQueries = Object.values(workFragments);
  * @returns {string|null}
  */
 function extractFixedUrl(queryRes, ctx) {
-  const title = queryRes?.data?.work?.titles?.full?.[0];
+  const title = queryRes?.data?.work?.titles?.main?.[0];
   const creators = queryRes?.data?.work?.creators;
   const title_creator = encodeTitleCreator(title, creators);
 

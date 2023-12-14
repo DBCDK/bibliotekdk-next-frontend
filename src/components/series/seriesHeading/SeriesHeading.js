@@ -6,7 +6,7 @@ import Text from "@/components/base/text/Text";
 import TitleBox from "@/components/series/seriesHeading/titleBox/TitleBox";
 import isEmpty from "lodash/isEmpty";
 
-export function SeriesBreadcrumb({ firstWork }) {
+export function SeriesBreadcrumb({ firstWork, seriesIsLoading }) {
   const firstWorkType = firstWork?.workTypes?.[0]?.toLowerCase();
   const workTypeTranslation = Translate({
     context: "facets",
@@ -30,7 +30,7 @@ export function SeriesBreadcrumb({ firstWork }) {
   });
 
   return (
-    <Text type={"text3"}>
+    <Text type={"text3"} skeleton={seriesIsLoading} lines={1}>
       {[
         ...(workTypeTranslation ? [workTypeTranslation] : []),
         ...(!isEmpty(fictionNonfictionTranslation)
@@ -55,7 +55,10 @@ export default function SeriesHeading({ series, seriesIsLoading }) {
     >
       <Col xs={12} className={`${styles.overview}`}>
         <div className={styles.breadcrumb}>
-          <SeriesBreadcrumb firstWork={firstWork} />
+          <SeriesBreadcrumb
+            firstWork={firstWork}
+            seriesIsLoading={seriesIsLoading}
+          />
         </div>
         <TitleBox
           series={series}
