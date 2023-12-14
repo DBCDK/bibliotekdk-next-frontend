@@ -111,7 +111,7 @@ const MultiOrder = ({ context }) => {
         branchName: pickupBranch.current?.name,
       });
     }
-  }, [orderMutation?.isLoading, orderMutation?.error, orderMutation?.data]); //TODO keep error and data?
+  }, [orderMutation?.isLoading]);
 
   useEffect(() => {
     if (!analyzeRef || !analyzeRef.current) return;
