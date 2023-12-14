@@ -43,7 +43,7 @@ function dropdownReducer(state, action) {
 /**
  *
  * @param fieldSearchFromUrl
- * @returns {{dropdownUnits: Array.<DropdownUnit>, dropdownSearchIndices: Array.<DropdownSearchIndex>, setDropdownInitState: function, updateDropdownSearchIndices: <A>(value: A) => void}}
+ * @returns {{dropdownUnits: Array.<DropdownUnit>, dropdownSearchIndices: Array.<DropdownSearchIndex>, setDropdownInitState: function, updateDropdownSearchIndices: <A>(value: A) => void, resetMenuItemsEvent: string, dispatchResetMenuItemsEvent: function}}
  */
 export function useDropdownSearchIndices(fieldSearchFromUrl) {
   //// ---- DropdownSearchIndices ----
@@ -66,6 +66,8 @@ export function useDropdownSearchIndices(fieldSearchFromUrl) {
       !isEmpty(dropdownInitState) ? dropdownInitState : initState
     );
 
+  const resetMenuItemsEvent = new Event("resetMenuItemsEvent");
+
   function resetDropdownIndices() {
     setDropdownInitState([]);
     updateDropdownSearchIndices({ type: DropdownReducerEnum.RESET });
@@ -77,5 +79,7 @@ export function useDropdownSearchIndices(fieldSearchFromUrl) {
     dropdownSearchIndices: dropdownSearchIndices,
     updateDropdownSearchIndices: updateDropdownSearchIndices,
     resetDropdownIndices: resetDropdownIndices,
+    resetMenuItemsEvent: "resetMenuItemsEvent",
+    dispatchResetMenuItemsEvent: () => dispatchEvent(resetMenuItemsEvent),
   };
 }

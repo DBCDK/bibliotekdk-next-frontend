@@ -22,15 +22,26 @@
 .popoverAnimation {
   display: grid;
   grid-template-rows: 0fr;
-  transition: 300ms ease-out;
+  transition: grid-template-rows 300ms ease-out;
 }
 
 .popoverAnimation[aria-expanded="true"] {
   grid-template-rows: 1fr;
-  transition: 300ms ease-in;
 }
-.advancedSearch {
+
+.popoverAnimation_advancedSearch {
   overflow: hidden;
+}
+
+.popoverAnimation_advancedSearch[aria-expanded="true"] {
+  overflow: visible;
+  animation: 400ms overflowToggle;
+}
+
+@keyframes overflowToggle {
+  from {
+    overflow: hidden;
+  }
 }
 
 .triggercontainer {

@@ -23,7 +23,7 @@ import cx from "classnames";
  * @returns {React.JSX.Element}
  */
 
-export default function AdvancedSearch({ className }) {
+export default function AdvancedSearch({ ariaExpanded, className }) {
   const router = useRouter();
 
   const {
@@ -35,6 +35,7 @@ export default function AdvancedSearch({ className }) {
     fieldSearchFromUrl,
     setShowPopover,
     stateToString,
+    resetObjectState,
   } = useAdvancedSearchContext();
 
   const [showCqlEditor, setShowCqlEditor] = useState(false);
@@ -68,7 +69,12 @@ export default function AdvancedSearch({ className }) {
   };
 
   return (
-    <div className={cx(styles.background, className)}>
+    <div
+      // We use areaExpanded for showing
+      //   the className
+      aria-expanded={ariaExpanded}
+      className={cx(styles.background, className)}
+    >
       <Container fluid className={styles.container}>
         <Row className={styles.topContainer}>
           <Col md={{ offset: 3, span: 4 }} sm={12}>
@@ -129,19 +135,21 @@ export default function AdvancedSearch({ className }) {
           <Col md={3} sm={12}>
             {/**Insert material type select here */}
           </Col>
-          <Col md={9} sm={12}>
-            {showCqlEditor ? (
+          {showCqlEditor ? (
+            <Col md={7} sm={12}>
               <CqlTextArea
                 textAreaRef={textAreaRef}
                 doAdvancedSearch={doAdvancedSearch}
               />
-            ) : (
+            </Col>
+          ) : (
+            <Col md={9} sm={12}>
               <>
                 <TextInputs doAdvancedSearch={doAdvancedSearch} />
                 <DropdownInputs />
               </>
-            )}
-          </Col>
+            </Col>
+          )}
         </Row>
         <Row className={styles.buttonRow}>
           <Col
@@ -160,6 +168,7 @@ export default function AdvancedSearch({ className }) {
               <Link
                 border={{ bottom: { keepVisible: true } }}
                 onClick={() => {
+                  resetObjectState();
                   router.push({
                     pathname: router.pathname,
                     ...(showCqlEditor && { query: { mode: "cql" } }),

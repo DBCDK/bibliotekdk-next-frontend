@@ -166,10 +166,11 @@ describe("Server Side Rendering", () => {
 
     it(`has json-ld for creative work`, () => {
       getPageHead(
-        "/materiale/midt-i-en-droem_vagn-noergaard/work-of%3A870970-basis%3A53189148?type=node"
+        "/materiale/title_author/work-of%3A870970-basis%3A53189148?type=node"
       ).then((res) => {
         expect(res.jsonld.mainEntity.url).to.equal(
-          "http://localhost:3000/materiale/midt-i-en-droem_vagn-noergaard/work-of:870970-basis:53189148"
+          // Redirect to proper, persistent workId
+          "http://localhost:3000/materiale/midt-i-en-droem_vagn-noergaard/work-of:800010-katalog:99122931235705763"
         );
 
         expect(res.jsonld.mainEntity["@type"]).to.equal("CreativeWork");
