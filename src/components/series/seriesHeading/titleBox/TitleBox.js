@@ -89,6 +89,16 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
               key={JSON.stringify(universe)}
               type="text2"
             >
+              <Link
+                href={getUniverseUrl(
+                  universe?.title,
+                  firstSeriesFirstWork?.workId
+                )}
+                border={false}
+                style={{ display: "none" }}
+              >
+                {""}
+              </Link>
               {Translate({
                 context: "series_page",
                 label: "part_of_universe",
