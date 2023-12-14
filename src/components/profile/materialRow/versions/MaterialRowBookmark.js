@@ -14,6 +14,7 @@ import { useMemo } from "react";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
 import { TextWithCheckMark } from "../MaterialRow";
+import styles from "../MaterialRow.module.css";
 
 /**
  *
@@ -68,7 +69,7 @@ const BookmarkColumn = ({
           />
         )}
         {showFailedAtCreation && (
-          <Text type="text3">
+          <Text type="text3" className={styles.bookmarkOrderFailed}>
             {Translate({
               context: "bookmark-order",
               label: "multiorder-error-ordering",
@@ -76,7 +77,10 @@ const BookmarkColumn = ({
           </Text>
         )}
       </div>
-      <IconButton onClick={onBookmarkDelete}>
+      <IconButton
+        onClick={onBookmarkDelete}
+        className={cx({ [styles.bookmarkRemoveButton]: showFailedAtCreation })}
+      >
         {Translate({
           context: "bookmark",
           label: "remove",

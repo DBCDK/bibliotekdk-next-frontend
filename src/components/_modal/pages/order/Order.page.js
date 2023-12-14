@@ -120,8 +120,22 @@ function Order({
     });
   }, [user?.userParameters]);
 
+  /**
+   * sets texts in bookmark list to show if material order was successful or not
+   * @param {Object} mutation
+   * @param {String} key
+   */
+  function updateBookmarkList(mutation, key) {
+    if (!handleOrderFinished || !mutation) return;
+    if (mutation.data) {
+      handleOrderFinished([key], []);
+    }
+    if (mutation.error) {
+      handleOrderFinished([], [key]);
+    }
+  }
+
   function updateModal() {
-    console.log("updateModal", handleOrderFinished);
     if (modal && modal.isVisible) {
       const type =
         contextWithOrderPids?.selectedAccesses?.[0]?.materialTypesArray[0]
@@ -135,15 +149,13 @@ function Order({
         articleOrderMutation?.error
       ) {
         modal.update(modal.index(), { articleOrder: articleOrderMutation });
-        if (handleOrderFinished) {
-          handleOrderFinished([key], []);
-        }
+        updateBookmarkList(articleOrderMutation, key);
       } else if (
         orderMutation?.isLoading ||
         orderMutation?.data ||
         orderMutation?.error
       ) {
-        if (handleOrderFinished) handleOrderFinished([], [key]);
+        updateBookmarkList(orderMutation, key);
         modal.update(modal.index(), { order: orderMutation });
       }
     }

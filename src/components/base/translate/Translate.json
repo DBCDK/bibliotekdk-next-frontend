@@ -1603,8 +1603,8 @@
         "en": "Ordered"
       },
       "multiorder-error-ordering": {
-        "da": "Fejl ved bestilling",
-        "en": "Error while ordering"
+        "da": "Bestilling fejlet",
+        "en": "Order failed"
       },
       "is-ordered-singular": {
         "da": "%s materiale er bestilt.",
