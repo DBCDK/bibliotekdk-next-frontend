@@ -37,10 +37,13 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
     context: "search",
     label: `advanced-placeholder-${fieldValue?.searchIndex}`,
   }); //getPlaceholderByIndex(fieldValue?.searchIndex) //labelsFull[index].placeholder;
-  console.log("fieldValue?.searchIndex", {searchIndex:fieldValue?.searchIndex, placeholder: placeholder});
+  console.log("fieldValue?.searchIndex", {
+    searchIndex: fieldValue?.searchIndex,
+    placeholder: placeholder,
+  });
   //console.log('fieldValue',index)
 
-//  console.log("placeholder", placeholder);
+  //  console.log("placeholder", placeholder);
 
   //use translate instead
   const isFirstItem = index === 0;

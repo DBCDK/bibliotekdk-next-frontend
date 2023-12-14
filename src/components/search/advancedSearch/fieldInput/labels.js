@@ -32,11 +32,6 @@ const all = [
     index: "term.fictionalcharacter",
     placeholder: "fictionalcharacter placeholder",
   },
-
-  // {
-  //   index: "term.contributor",
-  //   placeholder: "contributor placeholder",
-  // },
 ];
 
 //input indexes for materialtype "books"
