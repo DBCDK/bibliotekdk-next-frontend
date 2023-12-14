@@ -32,6 +32,7 @@ const BookmarkColumn = ({
   allManifestations,
   showFailedAtCreation,
   showSuccessfullyOrdered,
+  handleOrderFinished,
 }) => {
   const { flatPidsByType } = useMemo(() => {
     return manifestationMaterialTypeFactory(allManifestations);
@@ -63,6 +64,7 @@ const BookmarkColumn = ({
             size="small"
             selectedMaterialType={materialType}
             shortText
+            handleOrderFinished={handleOrderFinished}
           />
         )}
         {showFailedAtCreation && (
@@ -101,6 +103,7 @@ const MaterialRowBookmark = ({
   hasCheckbox,
   showSuccessfullyOrdered = false,
   showFailedAtCreation = false,
+  handleOrderFinished,
 }) => {
   const onCheckboxClick = (e) => {
     if (
@@ -219,6 +222,7 @@ const MaterialRowBookmark = ({
           allManifestations={allManifestations}
           showFailedAtCreation={showFailedAtCreation}
           showSuccessfullyOrdered={showSuccessfullyOrdered}
+          handleOrderFinished={handleOrderFinished}
         />
       </div>
     </article>

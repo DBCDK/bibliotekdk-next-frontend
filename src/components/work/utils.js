@@ -30,7 +30,9 @@ export function openOrderModal({
   workId,
   singleManifestation,
   storeLoanerInfo = false,
+  handleOrderFinished = undefined,
 }) {
+  console.log("OPEN ORDER MODAL handleOrderFinished", handleOrderFinished);
   modal.push("order", {
     title: Translate({ context: "modal", label: "title-order" }),
     pids: pids,
@@ -39,6 +41,7 @@ export function openOrderModal({
     ...(singleManifestation && { orderType: "singleManifestation" }),
     singleManifestation: singleManifestation,
     storeLoanerInfo: storeLoanerInfo,
+    handleOrderFinished: handleOrderFinished,
   });
 }
 

@@ -81,6 +81,7 @@ function Order({
   const [mail, setMail] = useState(null);
   const contextWithOrderPids = { ...context, orderPids };
   const workId = context?.workId;
+  const handleOrderFinished = context?.handleOrderFinished;
   const hasAlreadyBeenOrdered = workHasAlreadyBeenOrdered(workId);
   //If user wants to order again, but closes modal before ordering, we want to show warning again
   const [showAlreadyOrdered, setShowAlreadyOrdered] = useState(
@@ -120,7 +121,13 @@ function Order({
   }, [user?.userParameters]);
 
   function updateModal() {
+    console.log("updateModal", handleOrderFinished);
     if (modal && modal.isVisible) {
+      const type =
+        contextWithOrderPids?.selectedAccesses?.[0]?.materialTypesArray[0]
+          .specificDisplay;
+      const workId = contextWithOrderPids?.workId;
+      const key = workId + type?.charAt(0).toUpperCase() + type?.slice(1);
       // call update if data or isLoading or error has changed
       if (
         articleOrderMutation?.isLoading ||
@@ -128,11 +135,15 @@ function Order({
         articleOrderMutation?.error
       ) {
         modal.update(modal.index(), { articleOrder: articleOrderMutation });
+        if (handleOrderFinished) {
+          handleOrderFinished([key], []);
+        }
       } else if (
         orderMutation?.isLoading ||
         orderMutation?.data ||
         orderMutation?.error
       ) {
+        if (handleOrderFinished) handleOrderFinished([], [key]);
         modal.update(modal.index(), { order: orderMutation });
       }
     }
@@ -141,6 +152,7 @@ function Order({
   // An order has successfully been submitted
   useEffect(() => {
     updateModal();
+    //TODO, call on click and give success or feailur key as []!!!
   }, [orderMutation?.isLoading, articleOrderMutation?.isLoading]);
 
   const { isPeriodicaLike, availableAsDigitalCopy } = useMemo(() => {

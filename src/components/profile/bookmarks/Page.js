@@ -93,6 +93,7 @@ const BookmarkPage = () => {
    * @param {String[]} failedAtCreation
    */
   function handleOrderFinished(successfullyCreated, failedAtCreation) {
+    console.log("handleOrderFinished", successfullyCreated, failedAtCreation);
     setCheckboxList([]);
     setSuccessfullyCreatedIds((prev) => [...prev, ...successfullyCreated]);
     setFailureAtCreationIds((prev) => [...prev, ...failedAtCreation]);
@@ -137,8 +138,6 @@ const BookmarkPage = () => {
           sortType: sortByValue,
           handleOrderFinished: handleOrderFinished,
         });
-        // setSuccessfullyCreatedIds([]);
-        // setFailureAtCreationIds([]);
       } else {
         openLoginModal({ modal }); //TODO check this flow
       }
@@ -450,6 +449,7 @@ const BookmarkPage = () => {
               successfullyCreatedIds,
               bookmark.key
             )}
+            handleOrderFinished={handleOrderFinished}
           />
         ))}
       </div>
