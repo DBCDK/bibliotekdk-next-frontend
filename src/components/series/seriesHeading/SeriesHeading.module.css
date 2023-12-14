@@ -19,6 +19,9 @@
   grid-template-areas: var(--grid_template_areas);
   grid-auto-columns: minmax(0, 1fr);
   grid-auto-flow: column;
+
+  --skeleton-bg-color: var(--chamois);
+  --skeleton-gradient-color: var(--parchment);
 }
 
 @media (min-width: 768px) {
