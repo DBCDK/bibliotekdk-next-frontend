@@ -6,7 +6,7 @@ import Text from "@/components/base/text";
 import Button from "@/components/base/button";
 import MaterialRow from "../materialRow/MaterialRow";
 import IconButton from "@/components/base/iconButton";
-import { useEffect, useRef, useState, useContext } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
 import ProfileLayout from "../profileLayout/ProfileLayout";
 import Translate from "@/components/base/translate";
@@ -94,26 +94,9 @@ const BookmarkPage = () => {
    */
   function handleOrderFinished(successfullyCreated, failedAtCreation) {
     setCheckboxList([]);
-    setSuccessfullyCreatedIds(successfullyCreated);
-    setFailureAtCreationIds(failedAtCreation);
+    setSuccessfullyCreatedIds((prev) => [...prev, ...successfullyCreated]);
+    setFailureAtCreationIds((prev) => [...prev, ...failedAtCreation]);
   }
-
-  useEffect(() => {
-    console.log("__________PAGE", checkboxList);
-  }, [checkboxList]);
-
-  useEffect(() => {
-    console.log(
-      "________changing ids",
-      successfullyCreatedIds,
-      failureAtCreationIds
-    );
-  }, [
-    successfullyCreatedIds,
-    setSuccessfullyCreatedIds,
-    failureAtCreationIds,
-    setFailureAtCreationIds,
-  ]);
 
   useEffect(() => {
     setSortBy(sortByValue);
@@ -298,9 +281,6 @@ const BookmarkPage = () => {
       </ProfileLayout>
     );
   }
-
-  console.log("failureAtCreationIds", successfullyCreatedIds);
-  console.log("TYPE  Array.isArray", Array.isArray(failureAtCreationIds));
 
   return (
     <ProfileLayout
