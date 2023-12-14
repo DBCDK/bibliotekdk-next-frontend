@@ -20,7 +20,7 @@ const CONTEXT = "bookmark-order";
  */
 const EMaterialFilter = ({ context, active }) => {
   const { bookmarks, createdAtSort, titleSort } = useBookmarks();
-  const { materials: materialKeys, sortType } = context;
+  const { materials: materialKeys, sortType, handleOrderFinished } = context;
   const { data: materialsData } = usePopulateBookmarks(materialKeys);
   const [materials, setMaterials] = useState([]);
   const modal = useModal();
@@ -94,6 +94,7 @@ const EMaterialFilter = ({ context, active }) => {
         modal.push("multiorder", {
           materials: toProceedSorted,
           closeModalOnBack: true,
+          handleOrderFinished: handleOrderFinished,
         });
       }
     }, 500);
@@ -104,6 +105,7 @@ const EMaterialFilter = ({ context, active }) => {
   const onNextClick = () => {
     modal.push("multiorder", {
       materials: materialsToProceed,
+      handleOrderFinished: handleOrderFinished,
     });
   };
 

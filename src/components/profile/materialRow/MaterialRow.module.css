@@ -208,6 +208,21 @@
   padding-right: 0;
 }
 
+.bookmarkOrderedIcon {
+  align-self: center;
+  height: 100%;
+  align-items: center;
+}
+
+.bookmarkOrderFailed {
+  padding-top: var(--pt05);
+  color: var(--error);
+}
+
+.bookmarkRemoveButton {
+  align-items: normal;
+}
+
 .debtDynamicColumn {
   grid-column: 1;
 }
