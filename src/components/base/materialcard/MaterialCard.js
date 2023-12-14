@@ -8,7 +8,6 @@ import Col from "react-bootstrap/Col";
 import { templateForRelatedWorks } from "@/components/base/materialcard/templates/templates";
 import { forwardRef, useState } from "react";
 import cx from "classnames";
-import Skeleton from "../skeleton/Skeleton";
 
 function calculateBorder(link_href, border) {
   if (!link_href) {
