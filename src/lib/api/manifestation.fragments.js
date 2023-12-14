@@ -10,15 +10,15 @@ import {
   materialTypesFragment,
 } from "@/lib/api/fragments.utils";
 
-export function refWorks(pid) {
+export function refWorks({ pids }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
-    query ($pid: String!) {
-      refWorks(pid:$pid)
+    query ($pids: [String!]!) {
+      refWorks(pids:$pids)
       monitor(name: "bibdknext_manifestation_refworks")
     }`,
-    variables: { pid },
+    variables: { pids },
     slowThreshold: 3000,
   };
 }
