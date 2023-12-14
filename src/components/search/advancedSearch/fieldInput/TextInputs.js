@@ -36,7 +36,7 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
   const placeholder = Translate({
     context: "search",
     label: `advanced-placeholder-${fieldValue?.searchIndex}`,
-  }); //getPlaceholderByIndex(fieldValue?.searchIndex) //labelsFull[index].placeholder;
+  });
 
   //use translate instead
   const isFirstItem = index === 0;
