@@ -527,39 +527,45 @@ function RenderLitteratureAudience({ values }) {
   );
 }
 
-function RenderInSeriesOrUniverse({ values }) {
-  const seriesTitle = values?.series?.map((singleSeries) => {
+function getSeriesAndUniverseTitles(work) {
+  const seriesTitle = work?.series?.map((singleSeries) => {
     return {
       title: `${singleSeries.title} (serie)`,
-      url: getSeriesUrl(singleSeries.title, values.workId),
-      skeleton: values?.seriesIsLoading,
+      url: getSeriesUrl(singleSeries.title, work.workId),
+      skeleton: work?.seriesIsLoading,
     };
   });
-  const universesTitle = values?.universes?.map((singleUniverses) => {
+  const universesTitle = work?.universes?.map((singleUniverses) => {
     return {
       title: singleUniverses.title,
-      url: getUniverseUrl(singleUniverses.title, values.workId),
-      skeleton: values?.universesIsLoading,
+      url: getUniverseUrl(singleUniverses.title, work.workId),
+      skeleton: work?.universesIsLoading,
     };
   });
 
-  return [...seriesTitle, ...universesTitle].map(
-    ({ title, url, skeleton }, index) => {
-      return (
-        <div key={`seriesOrUniverse-${index}`} className={styles.link_list}>
-          <Link
-            href={url}
-            disabled={skeleton}
-            border={{ bottom: { keepVisible: true } }}
-          >
-            <Text type="text4" tag="span" skeleton={skeleton} lines={0}>
-              {title}
-            </Text>
-          </Link>
-        </div>
-      );
-    }
-  );
+  if (seriesTitle.length === 0 && universesTitle.length === 0) {
+    return null;
+  }
+
+  return [...seriesTitle, ...universesTitle];
+}
+
+function RenderInSeriesOrUniverse({ values }) {
+  return values.map(({ title, url, skeleton }, index) => {
+    return (
+      <div key={`seriesOrUniverse-${index}`} className={styles.link_list}>
+        <Link
+          href={url}
+          disabled={skeleton}
+          border={{ bottom: { keepVisible: true } }}
+        >
+          <Text type="text4" tag="span" skeleton={skeleton} lines={0}>
+            {title}
+          </Text>
+        </Link>
+      </div>
+    );
+  });
 }
 
 /**
@@ -652,8 +658,8 @@ export function fieldsForRows(manifestation, work, context) {
       },
       {
         in_series_or_universe: {
-          label: "Indgår i",
-          value: work,
+          label: Translate({ ...context, label: "in_series_and_universes" }),
+          value: getSeriesAndUniverseTitles(work),
           jsxParser: RenderInSeriesOrUniverse,
         },
       },

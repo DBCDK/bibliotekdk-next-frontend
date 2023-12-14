@@ -1220,6 +1220,10 @@
         "da": "Spil",
         "en": "Play"
       },
+      "material-action-go-to": {
+        "da": "Gå til",
+        "en": "Go to"
+      },
       "material-direction-here": {
         "da": "Her",
         "en": "Here"
@@ -1259,6 +1263,18 @@
       "material-typename-game": {
         "da": "Spillet",
         "en": "The game"
+      },
+      "material-typename-periodica": {
+        "da": "Tidsskriftet",
+        "en": "The journal"
+      },
+      "material-typename-portrait": {
+        "da": "Portrættet",
+        "en": "The portrait"
+      },
+      "material-typename-default": {
+        "da": "Materialet",
+        "en": "The material"
       },
       "all-editions": {
         "da": "alle udgaver",
@@ -1317,6 +1333,10 @@
       "genre/form": {
         "da": "genre/form",
         "en": "genre/form"
+      },
+      "in_series_and_universes": {
+        "da": "Indgår i",
+        "en": "Found in"
       },
       "creators": {
         "da": "Ophav",
@@ -2523,6 +2543,10 @@
       "label-sheetmusic": {
         "da": "Noder",
         "en": "Sheet music"
+      },
+      "label-portrait": {
+        "da": "Potrætter",
+        "en": "Portraits"
       },
       "label-other": {
         "da": "Øvrige",
