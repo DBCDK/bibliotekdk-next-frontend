@@ -91,6 +91,8 @@ const EMaterialFilter = ({ context, active }) => {
 
       if (filteredMaterials.length === 0) {
         // Nothing to filter - Redirect directly
+        orderMutation.reset();
+
         modal.push("multiorder", {
           materials: toProceedSorted,
           closeModalOnBack: true,
@@ -103,6 +105,8 @@ const EMaterialFilter = ({ context, active }) => {
   }, [active, analyzeRef.current, materials]);
 
   const onNextClick = () => {
+    orderMutation.reset();
+
     modal.push("multiorder", {
       materials: materialsToProceed,
       orderMutation: orderMutation,

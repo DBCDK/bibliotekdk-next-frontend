@@ -66,7 +66,7 @@ const createOrders = async ({
 
 const MultiOrder = ({ context }) => {
   const modal = useModal();
-  const { materials, closeModalOnBack, orderMutation } = context;
+  const { materials, closeModalOnBack, orderMutation, banane } = context;
   const analyzeRef = useRef();
   const [materialCounts, setMaterialCounts] = useState({ isAnalyzed: false });
   const [materialsToOrder, setMaterialsToOrder] = useState(materials);
@@ -77,6 +77,11 @@ const MultiOrder = ({ context }) => {
   const [materialStatusChanged, setMaterialStatusChanged] = useState();
 
   useEffect(() => {
+    console.log("BAnane update", banane);
+  }, [banane]);
+
+  useEffect(() => {
+    console.log("MultiORder orderMutation", orderMutation);
     if (orderMutation?.data && orderMutation.data.submitMultipleOrders) {
       const { failedAtCreation, successfullyCreated } =
         orderMutation.data.submitMultipleOrders;

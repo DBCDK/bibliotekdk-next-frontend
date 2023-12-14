@@ -20,7 +20,6 @@ import Skeleton from "@/components/base/skeleton/Skeleton";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import { useMutate } from "@/lib/api/api";
-import { set } from "lodash";
 
 const CONTEXT = "bookmark";
 const ORDER_TRESHHOLD = 25;
@@ -81,26 +80,26 @@ const BookmarkPage = () => {
   const [failureAtCreationIds, setFailureAtCreationIds] = useState([]);
 
   useEffect(() => {
-    if (
-      !orderMutation?.isLoading &&
-      (orderMutation?.data || orderMutation?.error)
-    ) {
+    console.log("orderMutation bookmarkmarpage", orderMutation);
+
+    if (!orderMutation?.isLoading) {
       const idx = modal.index("multiorder");
       modal.update(idx, {
         orderMutation: orderMutation,
       });
+
       setCheckboxList([]);
-      console.log("orderMutation", orderMutation);
       setSuccessfullyCreatedIds(
         orderMutation?.data?.submitMultipleOrders?.successfullyCreated
       );
       setFailureAtCreationIds(
         orderMutation?.data?.submitMultipleOrders?.failedAtCreation
       );
+
       console.log("successIds", successfullyCreatedIds);
       console.log("failureIds", failureAtCreationIds);
     }
-  }, [orderMutation.isLoading]);
+  }, [orderMutation.isLoading, orderMutation?.data, orderMutation?.error]);
 
   useEffect(() => {
     setSortBy(sortByValue);
@@ -134,17 +133,24 @@ const BookmarkPage = () => {
   };
 
   const onOrderManyClick = () => {
-    if (isAuthenticated) {
-      modal.push("ematerialfilter", {
-        materials: checkboxList,
-        sortType: sortByValue,
-        orderMutation: orderMutation,
-      });
-      setSuccessfullyCreatedIds([]);
-      setFailureAtCreationIds([]);
-    } else {
-      openLoginModal({ modal });
-    }
+    //orderMutation.reset();
+    console.log("RESETTING", modal.stack);
+    //    modal.pop("multiorder");
+    modal.setStack([]);
+
+    setTimeout(() => {
+      if (isAuthenticated) {
+        modal.push("ematerialfilter", {
+          materials: checkboxList,
+          sortType: sortByValue,
+          orderMutation: orderMutation,
+        });
+        setSuccessfullyCreatedIds([]);
+        setFailureAtCreationIds([]);
+      } else {
+        openLoginModal({ modal });
+      }
+    }, 300);
   };
 
   const onGetReferencesClick = () => {
@@ -314,7 +320,7 @@ const BookmarkPage = () => {
             className={styles.stickyButton}
             onClick={onStickyClick}
           >
-            {getStickyButtonText() + "bernd"}
+            {getStickyButtonText()}
           </Button>
         </div>
       )}
@@ -444,13 +450,10 @@ const BookmarkPage = () => {
               ])
             }
             onSelect={() => onToggleCheckbox(bookmark.key)}
-            showFailedAtCreation={failureAtCreationIds.find((id) => {
+            showFailedAtCreation={failureAtCreationIds?.find((id) => {
               return id === bookmark.key;
             })}
-            //if successfylleCreatedIDs contains bookmark.key, then set showSuccessfullyOrdered to true
-            showSuccessfullyOrdered={successfullyCreatedIds.find((id) => {
-              console.log("id", id, bookmark.key);
-              console.log("bookmark.key", bookmark.key);
+            showSuccessfullyOrdered={successfullyCreatedIds?.find((id) => {
               return id === bookmark.key;
             })}
           />
