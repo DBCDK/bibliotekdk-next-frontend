@@ -27,6 +27,9 @@ export function getMemberWorkIds(firstSeriesMembers) {
 }
 
 export default function SeriesMembers({ series, seriesIsLoading }) {
+  // skeleton dummy elements
+  const dummy = { works: [...new Array(10).fill({})] };
+
   const firstSeriesMembers = series?.members;
   const firstSeriesFirstWork = firstSeriesMembers?.[0]?.work;
   const firstWorkType = firstSeriesFirstWork?.workTypes?.[0]?.toLowerCase();
@@ -44,6 +47,8 @@ export default function SeriesMembers({ series, seriesIsLoading }) {
       memberWorkIds && workFragments.worksInSeries({ workIds: memberWorkIds })
     );
 
+  const data = seriesIsLoading ? dummy : worksInSeriesData;
+
   return (
     <Section
       title={`${Translate({
@@ -56,7 +61,7 @@ export default function SeriesMembers({ series, seriesIsLoading }) {
       isLoading={seriesIsLoading || worksInSeriesIsLoading}
     >
       <article className={styles.series_members_results}>
-        {worksInSeriesData?.works?.map((work) => {
+        {data?.works?.map((work) => {
           return (
             <MaterialCard
               key={work?.workId}
@@ -64,7 +69,9 @@ export default function SeriesMembers({ series, seriesIsLoading }) {
               propAndChildrenInput={{
                 material: work,
                 includeCreators: allCreators.length > 1,
+                isLoading: seriesIsLoading || worksInSeriesIsLoading,
               }}
+              isLoading={seriesIsLoading || worksInSeriesIsLoading}
             />
           );
         })}

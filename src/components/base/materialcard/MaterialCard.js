@@ -37,6 +37,7 @@ const MaterialCard = forwardRef(
       colSizing = { xs: 10, sm: 5, lg: 4 },
       onClick = null,
       rootProps,
+      isLoading,
     },
     ref
   ) {
@@ -106,7 +107,9 @@ const MaterialCard = forwardRef(
       <Col
         // Col props
         {...colSizing}
-        className={cx(elementContainerClassName)}
+        className={cx(elementContainerClassName, {
+          [styles.skeleton]: isLoading,
+        })}
         as="article"
         {...rootProps}
       >
@@ -134,6 +137,7 @@ const MaterialCard = forwardRef(
                   onLoad={() => setLoaded(true)}
                   alt={fullTitle}
                 />
+
                 {ImageOverlay && <ImageOverlay />}
               </>
             )}
