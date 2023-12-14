@@ -38,7 +38,6 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
     label: `advanced-placeholder-${fieldValue?.searchIndex}`,
   });
 
-  //use translate instead
   const isFirstItem = index === 0;
 
   // this is a bit quicky - should probably get the csType
