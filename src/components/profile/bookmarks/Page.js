@@ -6,7 +6,7 @@ import Text from "@/components/base/text";
 import Button from "@/components/base/button";
 import MaterialRow from "../materialRow/MaterialRow";
 import IconButton from "@/components/base/iconButton";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
 import ProfileLayout from "../profileLayout/ProfileLayout";
 import Translate from "@/components/base/translate";
@@ -19,7 +19,6 @@ import { useModal } from "@/components/_modal";
 import Skeleton from "@/components/base/skeleton/Skeleton";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
-import { useMutate } from "@/lib/api/api";
 
 const CONTEXT = "bookmark";
 const ORDER_TRESHHOLD = 25;
@@ -53,6 +52,15 @@ const SortButtons = ({ sortByItems, setSortByValue, sortByValue }) => {
   );
 };
 
+const containsIds = (ids, key) => {
+  if (!ids || !key) return false;
+  if (!Array.isArray(ids)) return ids === key;
+  const x = ids.findIndex((id) => {
+    return id === key;
+  });
+  return x > -1;
+};
+
 const BookmarkPage = () => {
   const {
     bookmarks: allBookmarksData,
@@ -75,31 +83,37 @@ const BookmarkPage = () => {
   const scrollToElement = useRef(null);
   const { isAuthenticated } = useAuthentication();
   const modal = useModal();
-  const orderMutation = useMutate();
   const [successfullyCreatedIds, setSuccessfullyCreatedIds] = useState([]);
   const [failureAtCreationIds, setFailureAtCreationIds] = useState([]);
 
+  /**
+   * Callback that marks materials as successfully created/failed in bookmarklist
+   * when we close the receipt
+   * @param {String[]} successfullyCreated
+   * @param {String[]} failedAtCreation
+   */
+  function handleOrderFinished(successfullyCreated, failedAtCreation) {
+    setCheckboxList([]);
+    setSuccessfullyCreatedIds(successfullyCreated);
+    setFailureAtCreationIds(failedAtCreation);
+  }
+
   useEffect(() => {
-    console.log("orderMutation bookmarkmarpage", orderMutation);
+    console.log("__________PAGE", checkboxList);
+  }, [checkboxList]);
 
-    if (!orderMutation?.isLoading) {
-      const idx = modal.index("multiorder");
-      modal.update(idx, {
-        orderMutation: orderMutation,
-      });
-
-      setCheckboxList([]);
-      setSuccessfullyCreatedIds(
-        orderMutation?.data?.submitMultipleOrders?.successfullyCreated
-      );
-      setFailureAtCreationIds(
-        orderMutation?.data?.submitMultipleOrders?.failedAtCreation
-      );
-
-      console.log("successIds", successfullyCreatedIds);
-      console.log("failureIds", failureAtCreationIds);
-    }
-  }, [orderMutation.isLoading, orderMutation?.data, orderMutation?.error]);
+  useEffect(() => {
+    console.log(
+      "________changing ids",
+      successfullyCreatedIds,
+      failureAtCreationIds
+    );
+  }, [
+    successfullyCreatedIds,
+    setSuccessfullyCreatedIds,
+    failureAtCreationIds,
+    setFailureAtCreationIds,
+  ]);
 
   useEffect(() => {
     setSortBy(sortByValue);
@@ -133,22 +147,17 @@ const BookmarkPage = () => {
   };
 
   const onOrderManyClick = () => {
-    //orderMutation.reset();
-    console.log("RESETTING", modal.stack);
-    //    modal.pop("multiorder");
-    modal.setStack([]);
-
     setTimeout(() => {
       if (isAuthenticated) {
         modal.push("ematerialfilter", {
           materials: checkboxList,
           sortType: sortByValue,
-          orderMutation: orderMutation,
+          handleOrderFinished: handleOrderFinished,
         });
-        setSuccessfullyCreatedIds([]);
-        setFailureAtCreationIds([]);
+        // setSuccessfullyCreatedIds([]);
+        // setFailureAtCreationIds([]);
       } else {
-        openLoginModal({ modal });
+        openLoginModal({ modal }); //TODO check this flow
       }
     }, 300);
   };
@@ -289,6 +298,9 @@ const BookmarkPage = () => {
       </ProfileLayout>
     );
   }
+
+  console.log("failureAtCreationIds", successfullyCreatedIds);
+  console.log("TYPE  Array.isArray", Array.isArray(failureAtCreationIds));
 
   return (
     <ProfileLayout
@@ -450,12 +462,14 @@ const BookmarkPage = () => {
               ])
             }
             onSelect={() => onToggleCheckbox(bookmark.key)}
-            showFailedAtCreation={failureAtCreationIds?.find((id) => {
-              return id === bookmark.key;
-            })}
-            showSuccessfullyOrdered={successfullyCreatedIds?.find((id) => {
-              return id === bookmark.key;
-            })}
+            showFailedAtCreation={containsIds(
+              failureAtCreationIds,
+              bookmark.key
+            )}
+            showSuccessfullyOrdered={containsIds(
+              successfullyCreatedIds,
+              bookmark.key
+            )}
           />
         ))}
       </div>

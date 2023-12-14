@@ -10,6 +10,7 @@ import { StatusEnum } from "@/components/base/materialcard/materialCard.utils";
 import * as orderMutations from "@/lib/api/order.mutations";
 import { setAlreadyOrdered } from "../../order/utils/order.utils";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
+import { useMutate } from "@/lib/api/api";
 
 const CONTEXT = "bookmark-order";
 
@@ -66,7 +67,7 @@ const createOrders = async ({
 
 const MultiOrder = ({ context }) => {
   const modal = useModal();
-  const { materials, closeModalOnBack, orderMutation, banane } = context;
+  const { materials, closeModalOnBack, handleOrderFinished } = context;
   const analyzeRef = useRef();
   const [materialCounts, setMaterialCounts] = useState({ isAnalyzed: false });
   const [materialsToOrder, setMaterialsToOrder] = useState(materials);
@@ -75,13 +76,9 @@ const MultiOrder = ({ context }) => {
   const [duplicateBookmarkIds, setDuplicateBookmarkIds] = useState([]); //used to manage warning for duplicate orders without removing duplicate ids from browser storage
   const pickupBranch = useRef(); // Pickup branch from checkout form
   const [materialStatusChanged, setMaterialStatusChanged] = useState();
+  const orderMutation = useMutate();
 
   useEffect(() => {
-    console.log("BAnane update", banane);
-  }, [banane]);
-
-  useEffect(() => {
-    console.log("MultiORder orderMutation", orderMutation);
     if (orderMutation?.data && orderMutation.data.submitMultipleOrders) {
       const { failedAtCreation, successfullyCreated } =
         orderMutation.data.submitMultipleOrders;
@@ -91,6 +88,7 @@ const MultiOrder = ({ context }) => {
       const successMaterials = successfullyCreated.map((key) =>
         materials.find((mat) => mat.key === key)
       );
+      handleOrderFinished(successfullyCreated, failedAtCreation);
 
       //set the ordered workids as already ordered in session
       successMaterials.forEach((mat) => {
@@ -113,7 +111,7 @@ const MultiOrder = ({ context }) => {
         branchName: pickupBranch.current?.name,
       });
     }
-  }, [orderMutation?.isLoading, orderMutation?.error, orderMutation?.data]);
+  }, [orderMutation?.isLoading, orderMutation?.error, orderMutation?.data]); //TODO keep error and data?
 
   useEffect(() => {
     if (!analyzeRef || !analyzeRef.current) return;
