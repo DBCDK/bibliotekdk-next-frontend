@@ -17,6 +17,7 @@ import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import { useRouter } from "next/router";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
+import { deleteAlreadyOrderedFromSession } from "@/components/_modal/pages/order/utils/order.utils";
 
 const CONTEXT = "profile";
 const MENUITEMS = [
@@ -152,6 +153,7 @@ const LogoutButton = () => {
       )}
       <Link
         onClick={() => {
+          deleteAlreadyOrderedFromSession();
           if (isAuthenticated) {
             const redirectUrl = window?.location?.origin;
             signOut(redirectUrl);
