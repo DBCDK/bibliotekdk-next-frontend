@@ -41,6 +41,7 @@ export function CqlTextArea({ textAreaRef, doAdvancedSearch }) {
             doAdvancedSearch();
           }
         }}
+        placeholder="Skriv cql-søgninger her"
       />
       <CqlErrorMessage cql={textAreaRef?.current?.value} />
     </div>
