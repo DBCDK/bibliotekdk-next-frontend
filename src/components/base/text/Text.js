@@ -115,9 +115,7 @@ export function TextSkeleton(props) {
     >
       <Skeleton lines={lines} />
       {Array.from(Array(lines).keys()).map((l) => (
-        <Text key={`txt-${l}`} {...props}>
-          ...
-        </Text>
+        <Text key={`txt-${l}`} {...props} />
       ))}
     </Text>
   );
