@@ -15,8 +15,6 @@ export default function ThumbnailParade({ series, isLoading }) {
 
   const data = isLoading ? dummy : thumbnails;
 
-  console.log("data", data);
-
   const length = data?.length;
   const width = 75;
   const offset = 16;
