@@ -41,7 +41,6 @@ export function CqlTextArea({ textAreaRef, doAdvancedSearch }) {
             doAdvancedSearch();
           }
         }}
-        placeholder="hej med dig kaj"
       />
       <CqlErrorMessage cql={textAreaRef?.current?.value} />
     </div>

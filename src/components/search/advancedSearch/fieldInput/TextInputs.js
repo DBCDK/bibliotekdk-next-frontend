@@ -37,13 +37,6 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
     context: "search",
     label: `advanced-placeholder-${fieldValue?.searchIndex}`,
   }); //getPlaceholderByIndex(fieldValue?.searchIndex) //labelsFull[index].placeholder;
-  console.log("fieldValue?.searchIndex", {
-    searchIndex: fieldValue?.searchIndex,
-    placeholder: placeholder,
-  });
-  //console.log('fieldValue',index)
-
-  //  console.log("placeholder", placeholder);
 
   //use translate instead
   const isFirstItem = index === 0;
@@ -68,7 +61,7 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
       })
     );
   }, [data]);
-  console.log("fieldValue", fieldValue);
+
   return (
     <div key={key}>
       {!isFirstItem && (
@@ -212,7 +205,6 @@ export default function TextInputs({ doAdvancedSearch }) {
         {Translate({ context: "search", label: "construct-your-search" })}
       </Text>
       {inputFields?.map((field, index) => {
-        console.log("FieldInput.map", field);
         return (
           <FieldInput
             key={`inputField-${index}`}
