@@ -88,6 +88,24 @@ export const constructButtonText = (workType, materialType, shortText) => {
    */
   const getActionText = (workType, materialType) => {
     switch (workType) {
+      case "article":
+        return Translate({
+          context: CONTEXT,
+          label: "material-action-read",
+        });
+      case "music":
+        return Translate({
+          context: CONTEXT,
+          label: "material-action-listen",
+        });
+      case "movie":
+      case "sheetmusic":
+        return Translate({ context: CONTEXT, label: "material-action-see" });
+      case "game":
+        return Translate({
+          context: CONTEXT,
+          label: "material-action-play",
+        });
       case "literature": {
         switch (materialType) {
           case "bog":
