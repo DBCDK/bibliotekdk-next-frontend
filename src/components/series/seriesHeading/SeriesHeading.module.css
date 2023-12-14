@@ -1,3 +1,7 @@
+.capitalize {
+  text-transform: capitalize;
+}
+
 .top {
   padding-top: var(--pt2);
   padding-bottom: var(--pt2);

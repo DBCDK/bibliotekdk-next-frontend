@@ -44,7 +44,9 @@ export default function SeriesMembers({ series, seriesIsLoading }) {
 
   const { data: worksInSeriesData, isLoading: worksInSeriesIsLoading } =
     useData(
-      memberWorkIds && workFragments.worksInSeries({ workIds: memberWorkIds })
+      // TODO: Lazy load instead of this. Temporary fix
+      memberWorkIds &&
+        workFragments.worksInSeries({ workIds: memberWorkIds.slice(0, 200) })
     );
 
   const data = seriesIsLoading ? dummy : worksInSeriesData;

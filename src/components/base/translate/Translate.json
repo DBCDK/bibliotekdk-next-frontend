@@ -2536,6 +2536,10 @@
         "da": "Noder",
         "en": "Sheet music"
       },
+      "label-portrait": {
+        "da": "Potrætter",
+        "en": "Portraits"
+      },
       "label-other": {
         "da": "Øvrige",
         "en": "Other"

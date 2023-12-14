@@ -173,7 +173,6 @@ export default function Wrap({ workId }) {
   return (
     <div className={styles.workgroupings_flex}>
       <RenderHostPublication hostPublication={hostPublication} />
-      {hostPublication && workGroupings?.length > 0 && ". "}
       {workGroupings?.map((mapping) => (
         <WorkGroupingsOverview
           key={mapping?.title + "-" + mapping?.partNumber}
