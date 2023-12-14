@@ -2,38 +2,41 @@
 const all = [
   { index: "term.default", placeholder: "all placeholder" },
   {
-    index: "term.creatorcontributor",
-    searchType: "field",
-    placeholder: "creatorcontributor placeholder",
-  },
-  {
-    index: "term.hostpublication",
-    placeholder: "publisher placeholder",
-  },
-  {
-    index: "term.fictionalcharacter",
-    placeholder: "fictionalcharacter placeholder",
-  },
-  {
-    index: "term.series",
-    placeholder: "series placeholder",
-  },
-  {
     index: "term.title",
     placeholder: "title placeholder",
   },
   {
-    index: "term.contributor",
-    placeholder: "contributor placeholder",
+    index: "term.creatorcontributor",
+    placeholder: "creatorcontributor placeholder",
   },
   {
     index: "term.subject",
     placeholder: "subject placeholder",
   },
   {
+    index: "term.publisher",
+    placeholder: "publisher placeholder",
+  },
+  {
+    index: "dk5",
+  },
+  {
     index: "term.isbn",
     placeholder: "isbn placeholder",
   },
+  {
+    index: "term.series",
+    placeholder: "series placeholder",
+  },
+  {
+    index: "term.fictionalcharacter",
+    placeholder: "fictionalcharacter placeholder",
+  },
+
+  // {
+  //   index: "term.contributor",
+  //   placeholder: "contributor placeholder",
+  // },
 ];
 
 //input indexes for materialtype "books"

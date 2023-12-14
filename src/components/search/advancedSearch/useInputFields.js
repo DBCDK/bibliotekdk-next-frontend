@@ -69,7 +69,11 @@ export function useInputFields({ fieldSearchFromUrl }) {
    * @param {*} newOperator
    */
   function handleIndexChange(index, newOperator) {
+    console.log("handleIndexChange.newOperator", newOperator);
+    console.log("handleIndexChange.index", index);
+
     setInputFields((prevFields) => {
+      console.log("handleIndexChange.setInputFields.prevFields", prevFields);
       const newFields = [...prevFields];
       newFields[index].searchIndex = newOperator;
       return newFields;
