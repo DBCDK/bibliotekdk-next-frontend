@@ -3,7 +3,7 @@ import styles from "./MultiOrderCheckoutForm.module.css";
 import Translate from "@/components/base/translate";
 import OrdererInformation from "../../../order/ordererinformation/OrdererInformation";
 import { onMailChange } from "@/components/_modal/pages/order/utils/order.utils";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
 import Button from "@/components/base/button";
 import { useModal } from "@/components/_modal/Modal";
@@ -29,13 +29,7 @@ const CheckoutForm = ({
     numberMaterialsToOrder,
   } = materialCounts;
   const modal = useModal();
-  const disabled =
-    !isAnalyzed ||
-    materialsMissingAction > 0 ||
-    materialsNotAllowed > 0 ||
-    duplicateBookmarkIds?.length > 0 ||
-    mail?.valid?.status === false ||
-    numberMaterialsToOrder < 1;
+  const [disabled, setDisabled] = useState(true);
   const [mail, setMail] = useState(null);
   const { userInfo, pickupBranchInfo, accessTypeInfo } =
     useOrderPageInformation({
@@ -45,6 +39,24 @@ const CheckoutForm = ({
     });
   const { pickupBranch, pickupBranchUser, isLoadingBranches } =
     pickupBranchInfo;
+
+  useEffect(() => {
+    setDisabled(
+      !isAnalyzed ||
+        materialsMissingAction > 0 ||
+        materialsNotAllowed > 0 ||
+        duplicateBookmarkIds?.length > 0 ||
+        mail?.valid?.status === false ||
+        numberMaterialsToOrder < 1
+    );
+  }, [
+    isAnalyzed,
+    materialsMissingAction?.length,
+    materialsNotAllowed?.length,
+    duplicateBookmarkIds?.length,
+    mail?.valid?.status,
+    numberMaterialsToOrder,
+  ]);
 
   // numberMaterialsToOrder contains all orders: physical and digital orders,
   // if numberMaterialsToOrder is greater than digitalMaterials, we also have physical orders
@@ -64,6 +76,7 @@ const CheckoutForm = ({
       },
       hasBranchId: { status: hasBranchId },
     };
+    console.log("validated", details);
 
     return { status, hasTry: false, details };
   }, [mail, pickupBranch, context?.periodicaForm?.publicationDateOfComponent]);
