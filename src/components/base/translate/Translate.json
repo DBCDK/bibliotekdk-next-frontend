@@ -1447,8 +1447,8 @@
         "en": "series"
       },
       "part_of_universe": {
-        "da": "Indgår i %s",
-        "en": "Part of %s"
+        "da": "Indgår i ",
+        "en": "Part of "
       },
       "read_this_whenever": {
         "da": "Serien kan læses i vilkårlig rækkefølge",
