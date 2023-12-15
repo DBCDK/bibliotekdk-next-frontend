@@ -1279,6 +1279,10 @@
       "all-editions": {
         "da": "alle udgaver",
         "en": "all editions"
+      },
+      "work_groupings_overview_description": {
+        "da": "Del %s af ",
+        "en": "Part %s of "
       }
     },
     "details": {
@@ -1443,8 +1447,8 @@
         "en": "series"
       },
       "part_of_universe": {
-        "da": "Indgår i %s",
-        "en": "Part of %s"
+        "da": "Indgår i ",
+        "en": "Part of "
       },
       "read_this_whenever": {
         "da": "Serien kan læses i vilkårlig rækkefølge",

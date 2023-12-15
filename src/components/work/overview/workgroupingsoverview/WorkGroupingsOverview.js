@@ -90,7 +90,11 @@ function getSeriesMap({ series, members, workId }) {
   return (
     members?.length > 0 && {
       partNumber: series?.numberInSeries?.display,
-      description: `Del ${numberInSeries + " "} af `,
+      description: Translate({
+        context: "overview",
+        label: "work_groupings_overview_description",
+        vars: [numberInSeries + " "],
+      }),
       title: series?.title,
       anchorId: getAnchor(AnchorsEnum.SERIES),
       link: getSeriesUrl(series?.title, workId),
@@ -102,7 +106,11 @@ function getContinuationMap(groupedByRelationWorkTypes) {
   return (
     groupedByRelationWorkTypes?.[WorkTypeEnum.ARTICLE] && {
       partNumber: null,
-      description: `Del af `,
+      description: Translate({
+        context: "overview",
+        label: "work_groupings_overview_description",
+        vars: [""],
+      }),
       title: "artikelserie",
       anchorId: getAnchor(AnchorsEnum.RELATED_WORKS),
     }
