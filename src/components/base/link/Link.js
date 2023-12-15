@@ -126,6 +126,7 @@ let inferredLinkDisplay;
  * @param {string} tag
  * @param {boolean} disabled
  * @param {string} ariaLabel
+ * @param {boolean} ariaHidden
  * @param {boolean} scroll
  * @param {UnderlineType} forceUnderlineType
  * @param {Object} props
@@ -148,6 +149,7 @@ function Link({
   tag = "a",
   disabled = false,
   ariaLabel = "",
+  ariaHidden = false,
   scroll = true,
   forceUnderlineType = "INFER",
   ...props
@@ -194,6 +196,7 @@ function Link({
         tabIndex={disabled ? "-1" : tabIndex}
         disabled={disabled}
         aria-label={ariaLabel}
+        aria-hidden={ariaHidden}
         {...props}
         style={{
           ...props.style,

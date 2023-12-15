@@ -95,7 +95,7 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
                   firstSeriesFirstWork?.workId
                 )}
                 border={false}
-                style={{ display: "none" }}
+                ariaHidden={true}
               >
                 {""}
               </Link>
