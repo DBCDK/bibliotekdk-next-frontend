@@ -102,6 +102,7 @@ export default function UniversePage() {
         <UniverseMembers
           worksInUniverse={worksInUniverse}
           seriesInUniverse={seriesInUniverse}
+          universeIsLoading={universeIsLoading}
         />
       </main>
     </>

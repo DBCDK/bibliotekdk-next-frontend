@@ -166,7 +166,7 @@ export default function Wrap({
   const isLoading = isWorkLoading || isPickupBranchLoading;
 
   // Email according to agency borrowerCheck (authUser.mail is from cicero and can not be changed)
-  let email = hasBorchk ? authUser.mail || userMail : userMail;
+  let email = hasBorchk ? authUser?.mail || userMail : userMail;
 
   const showMailMessage =
     isLoadingBranches || (authUser?.mail && lockedMessage && hasBorchk);

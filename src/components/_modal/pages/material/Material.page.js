@@ -5,10 +5,8 @@ import Cover from "@/components/base/cover";
 import Icon from "@/components/base/icon";
 import styles from "./Material.module.css";
 import Translate from "@/components/base/translate";
-import {
-  RenewedSpan,
-  useLoanDateAnalysis,
-} from "@/components/profile/materialRow/versions/MaterialRowLoan";
+import { useLoanDateAnalysis } from "@/components/profile/materialRow/versions/MaterialRowLoan";
+import { TextWithCheckMark } from "@/components/profile/materialRow/MaterialRow";
 import { getWorkUrl } from "@/lib/utils";
 import { useModal } from "@/components/_modal";
 import Link from "@/components/base/link";
@@ -247,7 +245,7 @@ const Material = ({ context }) => {
   const AfterRenewMessage = ({ hasRenewError, renewed }) => {
     if (hasRenewError)
       return <RenewError isColumn={false} customClass={styles.renewError} />;
-    if (renewed) return <RenewedSpan textType="text2" />;
+    if (renewed) return <TextWithCheckMark textType="text2" />;
   };
 
   const renderDynamicButton = () => {

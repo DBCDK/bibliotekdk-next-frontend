@@ -33,6 +33,11 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
   } = useAdvancedSearchContext();
   //labels to show in SearchIndexDropdown
   const labels = workTypesLabels[workType].map((el) => el.index);
+  const placeholder = Translate({
+    context: "search",
+    label: `advanced-placeholder-${fieldValue?.searchIndex}`,
+  });
+
   const isFirstItem = index === 0;
 
   // this is a bit quicky - should probably get the csType
@@ -91,7 +96,7 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
               className={styles.suggesterInput}
               value={fieldValue?.value}
               onChange={(e) => handleInputFieldChange(index, e.target.value)}
-              placeholder={fieldValue.placeholder}
+              placeholder={placeholder}
               overrideValueControl={true}
               // onKeyDown overrides suggesters onKeyDown, and we don't want that
               onKeyPress={(e) => {

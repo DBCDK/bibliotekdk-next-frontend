@@ -49,6 +49,7 @@ function ReservationButtonWrapper({
   shortText,
   overrideButtonText = null,
   className,
+  handleOrderFinished = undefined,
 }) {
   const { isAuthenticated } = useAuthentication();
   const { loanerInfo, isLoading } = useLoanerInfo();
@@ -109,6 +110,7 @@ function ReservationButtonWrapper({
       workId={workId}
       overrideButtonText={overrideButtonText}
       modal={modal}
+      handleOrderFinished={handleOrderFinished}
     />
   );
 }
@@ -143,6 +145,7 @@ export const ReservationButton = ({
   workId,
   overrideButtonText = null,
   modal,
+  handleOrderFinished = undefined,
 }) => {
   const workType = access?.[0]?.workTypes?.[0]?.toLowerCase();
   const selectedMaterialType = Array.isArray(parentSelectedMaterialType)
@@ -179,6 +182,7 @@ export const ReservationButton = ({
       selectedAccesses: allEnrichedAccesses,
       workId: workId,
       singleManifestation: singleManifestation,
+      handleOrderFinished: handleOrderFinished,
     };
 
     const uid = await modal.saveToStore("order", {
@@ -208,6 +212,7 @@ export const ReservationButton = ({
             workId: workId,
             singleManifestation: singleManifestation,
             storeLoanerInfo: true, // user is already logged in, we want to keep that
+            handleOrderFinished: handleOrderFinished,
           })
         : handleOpenLoginAndAddOrderModalToStore();
     },
