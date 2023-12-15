@@ -10,6 +10,7 @@ import ThumbnailParade from "@/components/series/seriesHeading/titleBox/thumbnai
 import { getUniqueCreatorsDisplay } from "@/components/series/utils";
 import { buildHtmlLink, getUniverseUrl } from "@/lib/utils";
 import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
+import { useRouter } from "next/router";
 
 export function LinkToCreator({ creator, isLoading }) {
   // @TODO .. do we need some refactoring ?? - this inputfield is
@@ -37,6 +38,8 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
   const firstSeriesFirstWork = series?.members?.[0]?.work;
   const description = series?.description;
   const { creators, creatorsToShow } = getUniqueCreatorsDisplay(series);
+
+  const router = useRouter();
 
   return (
     <div
@@ -82,6 +85,9 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
           </Text>
         )}
         {firstSeriesFirstWork?.universes?.map((universe) => {
+          router.prefetch(
+            getUniverseUrl(universe?.title, firstSeriesFirstWork?.workId)
+          );
           return (
             <Text
               skeleton={seriesIsLoading}
@@ -89,16 +95,6 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
               key={JSON.stringify(universe)}
               type="text2"
             >
-              <Link
-                href={getUniverseUrl(
-                  universe?.title,
-                  firstSeriesFirstWork?.workId
-                )}
-                border={false}
-                ariaHidden={true}
-              >
-                {""}
-              </Link>
               {Translate({
                 context: "series_page",
                 label: "part_of_universe",
