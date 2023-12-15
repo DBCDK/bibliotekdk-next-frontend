@@ -76,8 +76,6 @@ const CheckoutForm = ({
       },
       hasBranchId: { status: hasBranchId },
     };
-    console.log("validated", details);
-
     return { status, hasTry: false, details };
   }, [mail, pickupBranch, context?.periodicaForm?.publicationDateOfComponent]);
 
