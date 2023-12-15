@@ -1796,6 +1796,10 @@
         "da": "CQL-søgning",
         "en": "CQL-search"
       },
+      "cqlsearchPlaceholder": {
+        "da": "Skriv cql-søgninger her",
+        "en": ""
+      },
       "timeForSearch": {
         "da": "tid",
         "en": "time"
@@ -2057,7 +2061,7 @@
         "en": "Add field"
       },
       "advanced-dropdown-term.default": {
-        "da": "Alle felter",
+        "da": "Fritekstsøgning",
         "en": "All fields"
       },
       "advanced-dropdown-term.title": {
@@ -2092,14 +2096,53 @@
         "da": "Forfatter/ophav",
         "en": "function"
       },
-      "advanced-dropdown-term.hostpublication": {
-        "da": "Værtspublikation",
-        "en": "Hostpublication"
-      },
+
       "advanced-dropdown-term.creatorcontributor": {
         "da": "Forfatter/ophav",
         "en": "Creator"
       },
+      "advanced-dropdown-dk5": {
+        "da": "DK5",
+        "en": "Creator"
+      },
+      "advanced-placeholder-term.default": {
+        "da": "Søg på titel, ophav, emne, noter mv.",
+        "en": "All fields"
+      },
+      "advanced-placeholder-term.creatorcontributor": {
+        "da": "Søg på forfatter, komponist, instruktør mv.",
+        "en": "Creator"
+      },
+      "advanced-placeholder-term.title": {
+        "da": "Søg på hovedtitel og titler fra indholdet",
+        "en": ""
+      },
+      "advanced-placeholder-term.subject": {
+        "da": "Søg på emne, sted, tidsperiode mv.",
+        "en": "subject"
+      },
+      "advanced-placeholder-term.publisher": {
+        "da": "Søg på forlag, udgiver, pladeselskab mv. ",
+        "en": "Publisher"
+      },
+      "advanced-placeholder-dk5": {
+        "da": "Søg på DK5-nummer",
+        "en": "Creator"
+      },
+
+      "advanced-placeholder-term.isbn": {
+        "da": "Søg på ISBN",
+        "en": "ISBN"
+      },
+      "advanced-placeholder-term.series": {
+        "da": "Søg på bogserie, tv-serie mv.",
+        "en": "Series title"
+      },
+      "advanced-placeholder-term.fictionalcharacter": {
+        "da": "Søg på hovedpersoner fra bøger, film og spil",
+        "en": "Fictional character"
+      },
+
       "advanced-dropdown-AND": {
         "da": "OG",
         "en": "AND"

@@ -41,6 +41,10 @@ export function CqlTextArea({ textAreaRef, doAdvancedSearch }) {
             doAdvancedSearch();
           }
         }}
+        placeholder={translate({
+          context: "search",
+          label: "cqlsearchPlaceholder",
+        })}
       />
       <CqlErrorMessage cql={textAreaRef?.current?.value} />
     </div>
