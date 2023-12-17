@@ -13,6 +13,9 @@ import cx from "classnames";
 import AdvancedSearchSort from "@/components/search/advancedSearch/advancedSearchSort/AdvancedSearchSort";
 import TopBar from "@/components/search/advancedSearch/advancedSearchResult/topBar/TopBar";
 import Title from "@/components/base/title";
+import Text from "@/components/base/text";
+import Translate from "@/components/base/translate";
+import Link from "@/components/base/link";
 
 export function AdvancedSearchResult({
   pageNo,
@@ -27,6 +30,10 @@ export function AdvancedSearchResult({
   if (error) {
     return null;
   }
+
+  if (!results?.errorMessage && !results.isLoading && results?.hitcount === 0) {
+  }
+
   return (
     <>
       <TopBar />
@@ -43,16 +50,66 @@ export function AdvancedSearchResult({
         }
         className={styles.padding_top}
       >
-        <AdvancedSearchSort className={cx(styles.sort_container)} />
         {/* Reuse result page from simplesearch - we skip the wrap .. @TODO should we set
         some mark .. that we are doing advanced search .. ?? */}
-        <div className={cx(styles.padding_top)}>
-          <ResultPage
-            rows={results?.works}
-            onWorkClick={onWorkClick}
-            isLoading={results?.isLoading}
-          />
-        </div>
+        {hitcount === 0 && (
+          <div className={styles.no_hits}>
+            <Text type="text1">
+              {Translate({
+                context: "advanced_search_result",
+                label: "no_hits__title",
+              })}
+            </Text>
+            <Text type="text2" className={styles.no_hits__description}>
+              {Translate({
+                context: "advanced_search_result",
+                label: "no_hits__description",
+              })}
+              <ul>
+                {[1, 2, 3, 4].map((item) => {
+                  return (
+                    <li key={item} className={styles.no_hits__list_item}>
+                      {Translate({
+                        context: "advanced_search_result",
+                        label: `no_hits__description__list_item_${item}`,
+                      })}
+                    </li>
+                  );
+                })}
+              </ul>
+            </Text>
+            <Text type="text2" className={styles.no_hits__help_text}>
+              {Translate({
+                context: "advanced_search_result",
+                label: "no_hits__help_text",
+              })}
+              <Link
+                border={{ bottom: { keepVisible: true } }}
+                href={Translate({
+                  context: "advanced_search_result",
+                  label: "no_hits__help_link_url",
+                })}
+              >
+                {Translate({
+                  context: "advanced_search_result",
+                  label: "no_hits__help_link_text",
+                })}
+              </Link>
+            </Text>
+          </div>
+        )}
+        {hitcount > 0 && (
+          <>
+            <AdvancedSearchSort className={cx(styles.sort_container)} />
+            <div className={cx(styles.padding_top)}>
+              <ResultPage
+                rows={results?.works}
+                onWorkClick={onWorkClick}
+                isLoading={results?.isLoading}
+              />
+            </div>
+          </>
+        )}
       </Section>
       {hitcount > 0 && (
         <Pagination

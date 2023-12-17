@@ -52,6 +52,44 @@
         "en": "title z-a"
       }
     },
+    "advanced_search_result": {
+      "no_hits__title": {
+        "da": "Din søgning matchede ikke nogen materialer.",
+        "en": "Your query did not match any material."
+      },
+      "no_hits__description": {
+        "da": "Her er nogle forslag til at forbedre søgningen:",
+        "en": "Here are some suggestions to improve the query:"
+      },
+      "no_hits__description__list_item_1": {
+        "da": "sørg for at alle ord er stavet korrekt",
+        "en": "ensure all works are spelled correctly"
+      },
+      "no_hits__description__list_item_2": {
+        "da": "prøv med nogle lignende formuleringer eller emneord",
+        "en": "try similar phrases or keywords"
+      },
+      "no_hits__description__list_item_3": {
+        "da": "prøv at fjerne et af ordene, hvis du har søgt med flere ord",
+        "en": "try removing a word if you queried on several words"
+      },
+      "no_hits__description__list_item_4": {
+        "da": "sæt evt. stjerne * efter første del af ordet, fx vegetari*",
+        "en": "mark first part of a word with a star *, for example vege*"
+      },
+      "no_hits__help_text": {
+        "da": "Ønsker du hjælp til din søgning? Så kan du også ",
+        "en": "Do you want help with your query? Then try "
+      },
+      "no_hits__help_link_text": {
+        "da": "spørge en bibliotekar",
+        "en": "asking a librarian"
+      },
+      "no_hits__help_link_url": {
+        "da": "https://www.sprgbib.dk/bv/ask",
+        "en": "https://www.sprgbib.dk/bv/ask"
+      }
+    },
     "advanced_search_dropdown": {
       "choose_publication_year": {
         "da": "Vælg udgivelsesår",
