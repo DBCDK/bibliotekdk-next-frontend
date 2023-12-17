@@ -22,7 +22,7 @@ export default function UniverseTitleBox({
         tag={"h1"}
         className={styles.universe_title}
         lines={1}
-        skeleton={universeIsLoading}
+        skeleton={universeIsLoading || !universe?.title}
       >
         {universe?.title}
       </Title>

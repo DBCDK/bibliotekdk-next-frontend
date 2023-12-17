@@ -64,7 +64,7 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
         {creators?.length > creatorsToShow && ", m. fl."}
       </Text>
       <Title
-        skeleton={seriesIsLoading}
+        skeleton={seriesIsLoading || !series?.title}
         lines={1}
         type="title2"
         tag={"h1"}
