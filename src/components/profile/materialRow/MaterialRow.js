@@ -48,7 +48,9 @@ export const getCheckedElements = (parentRef) => {
  * @returns
  */
 export const TextWithCheckMark = ({ text, textType = "text2", style }) => {
-  const label = text ? text : Translate({ context: "profile", label: "renew" });
+  const label = text
+    ? text
+    : Translate({ context: "profile", label: "renewed" });
   return (
     <span className={cx(styles.renewedWrapper, style)}>
       <Text type={textType}>{label}</Text>
