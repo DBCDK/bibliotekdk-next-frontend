@@ -18,12 +18,14 @@ import Translate from "@/components/base/translate";
 import { BackgroundColorEnum } from "../materialCard.utils";
 import { useState } from "react";
 
-function ReadThisFirst({ className }) {
+function ReadThisFirst({ className, isLoading }) {
   return (
     <Text
       tag="span"
       type="text6"
       className={cx(styles.begin_with_this, className)}
+      skeleton={isLoading}
+      lines={1}
     >
       {Translate({
         context: "series_page",
@@ -392,12 +394,16 @@ export function templateForSeriesSlider({ material, series }) {
 }
 
 /**Used in Series page */
-export function templateForBigWorkCard({ material, includeCreators }) {
+export function templateForBigWorkCard({
+  material,
+  includeCreators,
+  isLoading,
+}) {
   const fullTitle = material?.titles?.full?.join(": ");
   const creators = material?.creators;
   const abstract = material?.abstract;
 
-  const coverSrc = getCoverImage(material.manifestations.mostRelevant);
+  const coverSrc = getCoverImage(material?.manifestations?.mostRelevant);
 
   const readThisFirst = material?.series?.[0]?.readThisFirst;
   const numberInSeries = material?.series?.[0]?.numberInSeries?.display;
@@ -412,7 +418,7 @@ export function templateForBigWorkCard({ material, includeCreators }) {
         {(numberInSeries || readThisFirst) && (
           <div className={styles.begin_with_this_and_number_in_series}>
             {numberInSeries && (
-              <Text tag="span" type="text4">
+              <Text tag="span" type="text4" skeleton={isLoading} lines={1}>
                 {Translate({
                   context: "series_page",
                   label: "number_in_series",
@@ -420,22 +426,26 @@ export function templateForBigWorkCard({ material, includeCreators }) {
                 })}
               </Text>
             )}
-            {readThisFirst && <ReadThisFirst />}
+            {readThisFirst && <ReadThisFirst isLoading={isLoading} />}
           </div>
         )}
-        {fullTitle && (
-          <Text {...propFunc("title4", 2)} title={fullTitle}>
+        {(fullTitle || isLoading) && (
+          <Text
+            {...propFunc("title4", 2)}
+            title={fullTitle}
+            skeleton={isLoading}
+          >
             {fullTitle}
           </Text>
         )}
-        {includeCreators && creators && (
-          <Text {...propFunc("text2", 8)} title={abstract}>
+        {((includeCreators && creators && !isEmpty(creators)) || isLoading) && (
+          <Text {...propFunc("text2", 8)} title={abstract} skeleton={isLoading}>
             {Translate({ context: "general", label: "by" })}{" "}
-            {creators.map((creator) => creator.display).join(", ")}
+            {creators?.map((creator) => creator.display).join(", ")}
           </Text>
         )}
-        {abstract && (
-          <Text {...propFunc("text2", 8)} title={abstract}>
+        {(abstract || isLoading) && (
+          <Text {...propFunc("text2", 8)} title={abstract} skeleton={isLoading}>
             {abstract}
           </Text>
         )}
@@ -445,7 +455,8 @@ export function templateForBigWorkCard({ material, includeCreators }) {
     // Styling
     elementContainerClassName: cx(
       styles.col_flex,
-      styles.col_flex__big_work_version
+      styles.col_flex__big_work_version,
+      { [styles.skeleton]: isLoading }
     ),
     relatedElementClassName: cx(
       styles.related_element,

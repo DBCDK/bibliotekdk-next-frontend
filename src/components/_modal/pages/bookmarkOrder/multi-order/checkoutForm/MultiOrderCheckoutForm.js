@@ -34,7 +34,8 @@ const CheckoutForm = ({
     materialsMissingAction > 0 ||
     materialsNotAllowed > 0 ||
     duplicateBookmarkIds?.length > 0 ||
-    mail?.valid?.status === false;
+    mail?.valid?.status === false ||
+    numberMaterialsToOrder < 1;
   const [mail, setMail] = useState(null);
   const { userInfo, pickupBranchInfo, accessTypeInfo } =
     useOrderPageInformation({
@@ -48,7 +49,6 @@ const CheckoutForm = ({
   // numberMaterialsToOrder contains all orders: physical and digital orders,
   // if numberMaterialsToOrder is greater than digitalMaterials, we also have physical orders
   const hasPhysicalOrders = numberMaterialsToOrder > digitalMaterials;
-
   const { updateLoanerInfo } = userInfo;
 
   const validated = useMemo(() => {

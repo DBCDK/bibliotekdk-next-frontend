@@ -4,7 +4,11 @@ import styles from "./UniverseTitleBox.module.css";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text/Text";
 import cx from "classnames";
-export default function UniverseTitleBox({ universe, className }) {
+export default function UniverseTitleBox({
+  universe,
+  universeIsLoading,
+  className,
+}) {
   const description = universe?.description;
 
   return (
@@ -13,11 +17,22 @@ export default function UniverseTitleBox({ universe, className }) {
         [styles.boxWithoutDescription]: !description,
       })}
     >
-      <Title type="title2" tag={"h1"} className={styles.universe_title}>
+      <Title
+        type="title2"
+        tag={"h1"}
+        className={styles.universe_title}
+        lines={1}
+        skeleton={universeIsLoading || !universe?.title}
+      >
         {universe?.title}
       </Title>
-      {description && (
-        <Text type="text2" className={styles.universe_description}>
+      {(description || universeIsLoading) && (
+        <Text
+          type="text2"
+          className={styles.universe_description}
+          lines={2}
+          skeleton={universeIsLoading}
+        >
           {description}
         </Text>
       )}

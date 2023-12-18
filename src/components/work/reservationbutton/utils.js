@@ -1,6 +1,5 @@
 // Translate Context
 export const context = { context: "overview" };
-import { MaterialTypeEnum } from "@/lib/enums_MaterialTypes";
 import { goToRedirectUrl } from "@/components/work/utils";
 import Translate, { hasTranslation } from "@/components/base/translate";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
@@ -34,22 +33,6 @@ export function isEbookCentralOrEbscohost(url) {
   return url && (url.includes("ebookcentral") || url.includes("ebscohost"));
 }
 
-export function isOnlineTranslator(materialTypeArray) {
-  const overrideWithIsOnline =
-    materialTypeArray?.filter((specificMaterialType) =>
-      [MaterialTypeEnum.EBOG, MaterialTypeEnum["LYDBOG (NET)"]].includes(
-        specificMaterialType
-      )
-    ).length > 0;
-
-  return overrideWithIsOnline
-    ? Translate({
-        context: "workTypeDistinctForm",
-        label: "isOnline",
-      })
-    : "";
-}
-
 export function workTypeTranslator(workTypes) {
   const workType = workTypes?.[0] || "fallback";
   return hasTranslation({
@@ -71,7 +54,7 @@ export function workTypeTranslator(workTypes) {
  * otherwise open redirect url in new tab
  * @param {Object} modal
  * @param {Object} access
- * @param {Object} user
+ * @param {Object} isAuthenticated
  * @returns
  */
 export function handleGoToLogin(modal, access, isAuthenticated) {
@@ -90,9 +73,9 @@ export function handleGoToLogin(modal, access, isAuthenticated) {
 
 /**
  * @TODO rework with JED 1.1 material type general
- * @param {string} workType: general materialType
- * @param {string} materialType: specific material type
- * @param {boolean} shortText: If material text is shortened or not
+ * @param {string} workType : general materialType
+ * @param {string} materialType : specific material type
+ * @param {boolean} shortText : If material text is shortened or not
  * @returns
  */
 export const constructButtonText = (workType, materialType, shortText) => {
@@ -105,27 +88,6 @@ export const constructButtonText = (workType, materialType, shortText) => {
    */
   const getActionText = (workType, materialType) => {
     switch (workType) {
-      case "literature": {
-        switch (materialType) {
-          case "e-bog":
-            return Translate({
-              context: CONTEXT,
-              label: "material-action-read",
-            });
-          case "podcast":
-            return Translate({
-              context: CONTEXT,
-              label: "material-action-listen",
-            });
-          case "lydbog (online)":
-            return Translate({
-              context: CONTEXT,
-              label: "material-action-listen",
-            });
-          default:
-            return "Error";
-        }
-      }
       case "article":
         return Translate({
           context: CONTEXT,
@@ -144,9 +106,35 @@ export const constructButtonText = (workType, materialType, shortText) => {
           context: CONTEXT,
           label: "material-action-play",
         });
-      default:
-        return "Error";
+      case "literature": {
+        switch (materialType) {
+          case "bog":
+          case "e-bog":
+            return Translate({
+              context: CONTEXT,
+              label: "material-action-read",
+            });
+          case "podcast":
+          case "lydbog (online)":
+            return Translate({
+              context: CONTEXT,
+              label: "material-action-listen",
+            });
+        }
+      }
     }
+
+    const translation = {
+      context: CONTEXT,
+      label: `material-action-${workType}`,
+    };
+
+    return hasTranslation(translation)
+      ? Translate(translation)
+      : Translate({
+          context: "overview",
+          label: `material-action-go-to`,
+        });
   };
 
   /**
@@ -157,6 +145,11 @@ export const constructButtonText = (workType, materialType, shortText) => {
   const getMaterialText = (workType, materialType) => {
     if (workType === "literature") {
       switch (materialType) {
+        case "bog":
+          return Translate({
+            context: "overview",
+            label: "material-typename-literature",
+          }).toLowerCase();
         case "e-bog":
           return Translate({
             context: "overview",
@@ -175,10 +168,19 @@ export const constructButtonText = (workType, materialType, shortText) => {
       }
     }
 
-    return Translate({
+    const translation = {
       context: "overview",
       label: `material-typename-${workType}`,
-    }).toLowerCase();
+    };
+
+    return (
+      hasTranslation(translation)
+        ? Translate(translation)
+        : Translate({
+            context: "overview",
+            label: `material-typename-default`,
+          })
+    ).toLowerCase();
   };
 
   // Construct string

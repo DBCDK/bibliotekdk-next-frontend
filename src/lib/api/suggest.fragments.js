@@ -34,6 +34,7 @@ export function fast({ q, workType }) {
 
 export function csSuggest({ q, type }) {
   return {
+    apiUrl: ApiEnums.FBI_API_BIBDK21,
     query: `
     query CS_suggester ($q:String!, $type:ComplexSuggestionType! ){
         complexSuggest(q: $q, type: $type) {

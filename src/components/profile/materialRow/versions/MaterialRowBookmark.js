@@ -13,6 +13,8 @@ import sharedStyles from "../MaterialRow.module.css";
 import { useMemo } from "react";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
+import { TextWithCheckMark } from "../MaterialRow";
+import styles from "../MaterialRow.module.css";
 
 /**
  *
@@ -29,6 +31,9 @@ const BookmarkColumn = ({
   materialType,
   onBookmarkDelete,
   allManifestations,
+  showFailedAtCreation,
+  showSuccessfullyOrdered,
+  handleOrderFinished,
 }) => {
   console.log("MATERIALTYPE ", materialType);
   const { flatPidsByType } = useMemo(() => {
@@ -43,18 +48,40 @@ const BookmarkColumn = ({
   return (
     <div className={sharedStyles.dynamicColumnHorizontal}>
       <div className={sharedStyles.bookmarkOrderButtonContainer}>
-        <ReservationButton
-          workId={workId}
-          selectedPids={!!pid ? [pid] : selectedPids}
-          singleManifestation={!!pid ? true : false}
-          buttonType="primary"
-          size="small"
-          selectedMaterialType={materialType}
-          shortText
-        />
+        {showSuccessfullyOrdered ? (
+          <TextWithCheckMark
+            text={Translate({
+              context: "bookmark-order",
+              label: "multiorder-ordered",
+            })}
+            textType="text3"
+            style={sharedStyles.bookmarkOrderedIcon}
+          />
+        ) : (
+          <ReservationButton
+            workId={workId}
+            selectedPids={!!pid ? [pid] : selectedPids}
+            singleManifestation={!!pid ? true : false}
+            buttonType="primary"
+            size="small"
+            selectedMaterialType={materialType}
+            shortText
+            handleOrderFinished={handleOrderFinished}
+          />
+        )}
+        {showFailedAtCreation && (
+          <Text type="text3" className={styles.bookmarkOrderFailed}>
+            {Translate({
+              context: "bookmark-order",
+              label: "multiorder-error-ordering",
+            })}
+          </Text>
+        )}
       </div>
-
-      <IconButton onClick={onBookmarkDelete}>
+      <IconButton
+        onClick={onBookmarkDelete}
+        className={cx({ [styles.bookmarkRemoveButton]: showFailedAtCreation })}
+      >
         {Translate({
           context: "bookmark",
           label: "remove",
@@ -79,6 +106,9 @@ const MaterialRowBookmark = ({
   allManifestations,
   onSelect,
   hasCheckbox,
+  showSuccessfullyOrdered = false,
+  showFailedAtCreation = false,
+  handleOrderFinished,
 }) => {
   console.log("MATERIALTYPE DISPLAY ", title);
 
@@ -198,6 +228,9 @@ const MaterialRowBookmark = ({
           materialType={materialType}
           onBookmarkDelete={onBookmarkDelete}
           allManifestations={allManifestations}
+          showFailedAtCreation={showFailedAtCreation}
+          showSuccessfullyOrdered={showSuccessfullyOrdered}
+          handleOrderFinished={handleOrderFinished}
         />
       </div>
     </article>

@@ -90,7 +90,7 @@ const MultiOrderReceipt = ({ context }) => {
                 key={material.key}
                 material={material}
                 backgroundColorOverride={BackgroundColorEnum.RED}
-                appendPeriodicaRow={false}
+                showActions={false}
               />
             ))}
           </div>

@@ -97,3 +97,7 @@ export function removeWorkIdFromSession(workId) {
   }
   sessionStorage.setItem("alreadyOrdered", JSON.stringify(alreadyOrdered));
 }
+
+export function removeAlreadyOrderedFromSession() {
+  sessionStorage.removeItem("alreadyOrdered");
+}

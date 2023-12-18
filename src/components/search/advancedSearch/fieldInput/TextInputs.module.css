@@ -1,6 +1,6 @@
 .inputContainer {
   display: flex;
-  max-width: 500px;
+  max-width: 584px;
 }
 
 .suggesterContainer {
@@ -33,9 +33,10 @@
   background-color: var(--white);
   padding: var(--pt05) var(--pt2) !important;
 }
+
 .addLine:hover,
 .addLine:focus {
-  outline: 1px solid var(--blue);
+  outline: 2px solid var(--blue);
 }
 .expandIcon {
   margin-left: var(--pt1);
@@ -77,28 +78,27 @@
   padding: 0;
 }
 
-.dropdowntoggle:focus {
-  border: 1px solid var(--blue);
-  outline: 1px solid var(--blue);
-}
-
 .dropdowntoggle {
   background-color: unset;
   min-height: 28px;
   display: flex;
   align-items: center;
-  padding-left: var(--pt2);
+  gap: var(--pt1);
+  padding-inline: var(--pt2);
   color: var(--blue);
 }
 
-.dropdowntoggle p {
-  margin-right: var(--pt1);
+.dropdowntoggle:is(:focus-visible, :hover) {
+  outline: 2px solid var(--blue);
 }
 
 .suggesterInput {
   /* The right padding has to be pt2 (for base) + 2 times pt2 for the icon */
   padding: var(--pt2) calc(var(--pt2) * 3) var(--pt2) var(--pt2);
   height: var(--pt5);
+
+  border: none;
+  outline: 1px solid var(--dove);
 
   /* Text 3*/
   font-size: 14px;

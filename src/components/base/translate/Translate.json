@@ -52,6 +52,44 @@
         "en": "title z-a"
       }
     },
+    "advanced_search_result": {
+      "no_hits__title": {
+        "da": "Din søgning matchede ikke nogen materialer.",
+        "en": "Your query did not match any material."
+      },
+      "no_hits__description": {
+        "da": "Her er nogle forslag til at forbedre søgningen:",
+        "en": "Here are some suggestions to improve the query:"
+      },
+      "no_hits__description__list_item_1": {
+        "da": "sørg for at alle ord er stavet korrekt",
+        "en": "ensure all works are spelled correctly"
+      },
+      "no_hits__description__list_item_2": {
+        "da": "prøv med nogle lignende formuleringer eller emneord",
+        "en": "try similar phrases or keywords"
+      },
+      "no_hits__description__list_item_3": {
+        "da": "prøv at fjerne et af ordene, hvis du har søgt med flere ord",
+        "en": "try removing a word if you queried on several words"
+      },
+      "no_hits__description__list_item_4": {
+        "da": "sæt evt. stjerne * efter første del af ordet, fx vegetari*",
+        "en": "mark first part of a word with a star *, for example vege*"
+      },
+      "no_hits__help_text": {
+        "da": "Ønsker du hjælp til din søgning? Så kan du også ",
+        "en": "Do you want help with your query? Then try "
+      },
+      "no_hits__help_link_text": {
+        "da": "spørge en bibliotekar",
+        "en": "asking a librarian"
+      },
+      "no_hits__help_link_url": {
+        "da": "https://www.sprgbib.dk/bv/ask",
+        "en": "https://www.sprgbib.dk/bv/ask"
+      }
+    },
     "advanced_search_dropdown": {
       "choose_publication_year": {
         "da": "Vælg udgivelsesår",
@@ -125,9 +163,45 @@
         "da": "Fra",
         "en": "From"
       },
-      "years_old": {
-        "da": "-årige",
-        "en": " years old"
+      "exact_publication_year": {
+        "da": "%s",
+        "en": "%s"
+      },
+      "publication_year_range": {
+        "da": "%s - %s",
+        "en": "%s - %s"
+      },
+      "x_publication_year_and_up": {
+        "da": "%s og efter",
+        "en": "%s and after"
+      },
+      "up_to_x_publication_year": {
+        "da": "Til og med %s",
+        "en": "To and including %s"
+      },
+      "exact_years_old": {
+        "da": "%s år",
+        "en": "%s years"
+      },
+      "years_range": {
+        "da": "%s-%s-årige",
+        "en": "%s-%s years old"
+      },
+      "x_years_and_up": {
+        "da": "%s år og op",
+        "en": "%s years and up"
+      },
+      "up_to_x_years": {
+        "da": "Til og med %s år",
+        "en": "To and including %s år"
+      },
+      "range_placeholder_publicationyear": {
+        "da": "Årstal",
+        "en": "Year"
+      },
+      "range_placeholder_ages": {
+        "da": "Alder",
+        "en": "Age"
       }
     },
     "logo": {
@@ -1184,9 +1258,17 @@
         "da": "Spil",
         "en": "Play"
       },
+      "material-action-go-to": {
+        "da": "Gå til",
+        "en": "Go to"
+      },
       "material-direction-here": {
         "da": "Her",
         "en": "Here"
+      },
+      "material-typename-literature": {
+        "da": "Bogen",
+        "en": "The book"
       },
       "material-typename-ebook": {
         "da": "E-bogen",
@@ -1220,9 +1302,25 @@
         "da": "Spillet",
         "en": "The game"
       },
+      "material-typename-periodica": {
+        "da": "Tidsskriftet",
+        "en": "The journal"
+      },
+      "material-typename-portrait": {
+        "da": "Portrættet",
+        "en": "The portrait"
+      },
+      "material-typename-default": {
+        "da": "Materialet",
+        "en": "The material"
+      },
       "all-editions": {
         "da": "alle udgaver",
         "en": "all editions"
+      },
+      "work_groupings_overview_description": {
+        "da": "Del %s af ",
+        "en": "Part %s of "
       }
     },
     "details": {
@@ -1277,6 +1375,10 @@
       "genre/form": {
         "da": "genre/form",
         "en": "genre/form"
+      },
+      "in_series_and_universes": {
+        "da": "Indgår i",
+        "en": "Found in"
       },
       "creators": {
         "da": "Ophav",
@@ -1383,8 +1485,8 @@
         "en": "series"
       },
       "part_of_universe": {
-        "da": "Indgår i %s",
-        "en": "Part of %s"
+        "da": "Indgår i ",
+        "en": "Part of "
       },
       "read_this_whenever": {
         "da": "Serien kan læses i vilkårlig rækkefølge",
@@ -1598,6 +1700,14 @@
         "da": "Bestillingsoversigt",
         "en": "Order overview"
       },
+      "multiorder-ordered": {
+        "da": "Bestilt",
+        "en": "Ordered"
+      },
+      "multiorder-error-ordering": {
+        "da": "Bestilling fejlet",
+        "en": "Order failed"
+      },
       "is-ordered-singular": {
         "da": "%s materiale er bestilt.",
         "en": "%s material is ordered"
@@ -1727,6 +1837,10 @@
       "cqlsearchlabel": {
         "da": "CQL-søgning",
         "en": "CQL-search"
+      },
+      "cqlsearchPlaceholder": {
+        "da": "Skriv cql-søgninger her",
+        "en": ""
       },
       "timeForSearch": {
         "da": "tid",
@@ -1989,7 +2103,7 @@
         "en": "Add field"
       },
       "advanced-dropdown-term.default": {
-        "da": "Alle felter",
+        "da": "Fritekstsøgning",
         "en": "All fields"
       },
       "advanced-dropdown-term.title": {
@@ -2024,14 +2138,53 @@
         "da": "Forfatter/ophav",
         "en": "function"
       },
-      "advanced-dropdown-term.hostpublication": {
-        "da": "Værtspublikation",
-        "en": "Hostpublication"
-      },
+
       "advanced-dropdown-term.creatorcontributor": {
         "da": "Forfatter/ophav",
         "en": "Creator"
       },
+      "advanced-dropdown-dk5": {
+        "da": "DK5",
+        "en": "Creator"
+      },
+      "advanced-placeholder-term.default": {
+        "da": "Søg på titel, ophav, emne, noter mv.",
+        "en": "All fields"
+      },
+      "advanced-placeholder-term.creatorcontributor": {
+        "da": "Søg på forfatter, komponist, instruktør mv.",
+        "en": "Creator"
+      },
+      "advanced-placeholder-term.title": {
+        "da": "Søg på hovedtitel og titler fra indholdet",
+        "en": ""
+      },
+      "advanced-placeholder-term.subject": {
+        "da": "Søg på emne, sted, tidsperiode mv.",
+        "en": "subject"
+      },
+      "advanced-placeholder-term.publisher": {
+        "da": "Søg på forlag, udgiver, pladeselskab mv. ",
+        "en": "Publisher"
+      },
+      "advanced-placeholder-dk5": {
+        "da": "Søg på DK5-nummer",
+        "en": "Creator"
+      },
+
+      "advanced-placeholder-term.isbn": {
+        "da": "Søg på ISBN",
+        "en": "ISBN"
+      },
+      "advanced-placeholder-term.series": {
+        "da": "Søg på bogserie, tv-serie mv.",
+        "en": "Series title"
+      },
+      "advanced-placeholder-term.fictionalcharacter": {
+        "da": "Søg på hovedpersoner fra bøger, film og spil",
+        "en": "Fictional character"
+      },
+
       "advanced-dropdown-AND": {
         "da": "OG",
         "en": "AND"
@@ -2475,6 +2628,10 @@
       "label-sheetmusic": {
         "da": "Noder",
         "en": "Sheet music"
+      },
+      "label-portrait": {
+        "da": "Potrætter",
+        "en": "Portraits"
       },
       "label-other": {
         "da": "Øvrige",

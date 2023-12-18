@@ -47,7 +47,7 @@ function DropdownUnit({ items, indexName, updateDropdownSearchIndices }) {
 }
 
 export default function DropdownInputs({}) {
-  const { dropdownUnits, dropdownSearchIndices, updateDropdownSearchIndices } =
+  const { dropdownUnits, updateDropdownSearchIndices } =
     useAdvancedSearchContext();
 
   return (
@@ -57,12 +57,13 @@ export default function DropdownInputs({}) {
           <Text type="text1">
             {Translate({ context: "search", label: "narrow-search-more" })}
           </Text>
-          <Text type="text3" className={styles.subTitle}>
-            {Translate({
-              context: "search",
-              label: "adjusted-after-material-type",
-            })}
-          </Text>
+          {/* TODO: Comment in, when workTypes are commented in */}
+          {/*<Text type="text3" className={styles.subTitle}>*/}
+          {/*  {Translate({*/}
+          {/*    context: "search",*/}
+          {/*    label: "adjusted-after-material-type",*/}
+          {/*  })}*/}
+          {/*</Text>*/}
         </div>
 
         <div className={styles.flex_wrapper}>

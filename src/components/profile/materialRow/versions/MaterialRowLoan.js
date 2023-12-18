@@ -17,6 +17,7 @@ import { useRouter } from "next/router";
 import { handleRenewLoan } from "../../utils";
 import MaterialRowTooltip from "../materialRowTooltip/MaterialRowTooltip";
 import sharedStyles from "../MaterialRow.module.css";
+import { TextWithCheckMark } from "../MaterialRow";
 
 // Set to when red text should be used for remaining loan days
 const DAYS_TO_COUNTDOWN_RED = 5;
@@ -96,30 +97,6 @@ export const LoanColumn = ({ dueDateString }) => {
         </Text>
       </div>
     </div>
-  );
-};
-
-/**
- * shows a span with text and a checkmark icon
- * @param {string} textType
- * @returns {React.JSX.Element}
- */
-export const RenewedSpan = ({ textType = "text2" }) => {
-  return (
-    <span className={sharedStyles.renewedWrapper}>
-      <Text type={textType}>
-        {Translate({
-          context: "profile",
-          label: "renewed",
-        })}
-      </Text>
-      <Icon
-        size={{ w: 3, h: "auto" }}
-        src={"checkmark_blue.svg"}
-        alt=""
-        className={sharedStyles.renewedIcon}
-      />
-    </span>
   );
 };
 
@@ -318,7 +295,7 @@ const MaterialRowLoan = (props) => {
       </div>
 
       {renewed ? (
-        <RenewedSpan textType="text3" />
+        <TextWithCheckMark textType="text3" />
       ) : (
         <div>
           {hasRenewError ? (

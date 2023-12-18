@@ -123,6 +123,9 @@ export const MaterialTypeOrderEnum = Object.freeze({
     "NINTENDO SWITCH": { display: "nintendo switch", code: "NINTENDO_SWITCH" },
     WII: { display: "wii", code: "WII" },
   },
+  PORTRAIT: {
+    PORTRAIT: { display: "portræt", code: "PORTRAIT" },
+  },
   OTHER: {
     "ELEKTRONISK MATERIALE (ONLINE)": {
       display: "elektronisk materiale (online)",

@@ -10,6 +10,7 @@ import MaterialRowLoan from "./versions/MaterialRowLoan";
 import MaterialRowDebt from "./versions/MaterialRowDebt";
 import MaterialRowBookmark from "./versions/MaterialRowBookmark";
 import MaterialRowReservation from "./versions/MaterialRowReservation";
+import cx from "classnames";
 
 /* Use as section header to describe the content of the columns */
 export const MaterialHeaderRow = ({ column1, column2, column3, className }) => {
@@ -46,15 +47,13 @@ export const getCheckedElements = (parentRef) => {
  * @param {string} textType
  * @returns
  */
-export const RenewedSpan = ({ textType = "text2" }) => {
+export const TextWithCheckMark = ({ text, textType = "text2", style }) => {
+  const label = text
+    ? text
+    : Translate({ context: "profile", label: "renewed" });
   return (
-    <span className={styles.renewedWrapper}>
-      <Text type={textType}>
-        {Translate({
-          context: "profile",
-          label: "renewed",
-        })}
-      </Text>
+    <span className={cx(styles.renewedWrapper, style)}>
+      <Text type={textType}>{label}</Text>
       <Icon
         size={{ w: 3, h: "auto" }}
         src={"checkmark_blue.svg"}

@@ -20,9 +20,8 @@
   cursor: pointer;
 }
 
-.menuButton:hover,
-.menuButton:focus {
-  outline: solid 2px var(--blue);
+.menuButton:is(:focus-visible, :hover) {
+  outline: 2px solid var(--blue);
 }
 
 .menuButton[aria-expanded="true"] .icon_open {
