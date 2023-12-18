@@ -31,9 +31,6 @@ export function AdvancedSearchResult({
     return null;
   }
 
-  if (!results?.errorMessage && !results.isLoading && results?.hitcount === 0) {
-  }
-
   return (
     <>
       <TopBar />
