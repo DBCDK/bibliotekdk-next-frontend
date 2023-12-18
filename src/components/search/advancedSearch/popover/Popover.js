@@ -73,7 +73,6 @@ const Popover = ({ className, simpleSearchRef }) => {
     };
   }, []);
 
-  console.log("showPopover", showPopover);
   return (
     <>
       <div className="container" ref={triggerContainerRef}>
