@@ -52,9 +52,9 @@ const Popover = ({ className, simpleSearchRef }) => {
         setShowInfoTooltip(false);
       }
     }
-    document.addEventListener("click", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [popoverRef, showPopover]);
 
