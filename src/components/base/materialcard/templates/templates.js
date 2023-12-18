@@ -434,29 +434,18 @@ export function templateForBigWorkCard({
             {...propFunc("title4", 2)}
             title={fullTitle}
             skeleton={isLoading}
-            lines={1}
           >
             {fullTitle}
           </Text>
         )}
-        {((includeCreators && creators) || isLoading) && (
-          <Text
-            {...propFunc("text2", 8)}
-            title={abstract}
-            skeleton={isLoading}
-            lines={1}
-          >
+        {((includeCreators && creators && !isEmpty(creators)) || isLoading) && (
+          <Text {...propFunc("text2", 8)} title={abstract} skeleton={isLoading}>
             {Translate({ context: "general", label: "by" })}{" "}
             {creators?.map((creator) => creator.display).join(", ")}
           </Text>
         )}
         {(abstract || isLoading) && (
-          <Text
-            {...propFunc("text2", 8)}
-            title={abstract}
-            skeleton={isLoading}
-            lines={4}
-          >
+          <Text {...propFunc("text2", 8)} title={abstract} skeleton={isLoading}>
             {abstract}
           </Text>
         )}
