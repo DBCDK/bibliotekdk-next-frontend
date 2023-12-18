@@ -18,6 +18,7 @@ const Popover = ({ className, simpleSearchRef }) => {
     setShowInfoTooltip,
     showInfoTooltip,
     popoverRef,
+    resultTopbarRef,
   } = useAdvancedSearchContext();
   const triggerContainerRef = useRef(null);
   const tooltipRef = useRef(null);
@@ -30,7 +31,8 @@ const Popover = ({ className, simpleSearchRef }) => {
       //if click outside popover and outside trigger, then hide popover
       if (
         !popoverRef?.current?.contains(event.target) &&
-        !triggerContainerRef?.current?.contains(event.target)
+        !triggerContainerRef?.current?.contains(event.target) &&
+        !resultTopbarRef?.current.contains(event.target)
       ) {
         setShowPopover(false);
       }
@@ -71,6 +73,7 @@ const Popover = ({ className, simpleSearchRef }) => {
     };
   }, []);
 
+  console.log("showPopover", showPopover);
   return (
     <>
       <div className="container" ref={triggerContainerRef}>

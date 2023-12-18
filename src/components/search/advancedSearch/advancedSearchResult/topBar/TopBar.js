@@ -131,9 +131,10 @@ function FormatDropdowns({ dropdowns, showAndOperator }) {
 }
 
 export default function TopBar() {
-  const { setShowPopover } = useAdvancedSearchContext();
+  const { setShowPopover, showPopover, resultTopbarRef } =
+    useAdvancedSearchContext();
   return (
-    <div className={styles.container}>
+    <div className={styles.container} ref={resultTopbarRef}>
       <Container fluid>
         <Row
           onClick={() => {
@@ -152,8 +153,10 @@ export default function TopBar() {
           <Col xs={12} lg={2} className={styles.edit_search}>
             <Text type="text3" tag="span">
               <Link
-                onClick={() => {
-                  setShowPopover(true);
+                onClick={(e) => {
+                  e.preventDefault();
+                  console.log("on click");
+                  setShowPopover(!showPopover);
                 }}
                 border={{
                   top: false,

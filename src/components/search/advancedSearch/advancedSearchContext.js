@@ -64,6 +64,8 @@ export default function AdvancedSearchProvider({ children, router }) {
   //if advanced search popover is open, and the user clicks on simple search, a tooltip with info will be shown.
   const [showInfoTooltip, setShowInfoTooltip] = useState(false);
 
+  const resultTopbarRef = useRef(null);
+
   useEffect(() => {
     if (showPopover && popoverRef.current) {
       popoverRef?.current?.focus();
@@ -180,6 +182,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     stateToString,
     popoverRef,
     resetMenuItemsEvent,
+    resultTopbarRef,
   };
 
   return (
