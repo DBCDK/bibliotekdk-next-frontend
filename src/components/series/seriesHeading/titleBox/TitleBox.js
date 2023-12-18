@@ -8,7 +8,7 @@ import cx from "classnames";
 import ThumbnailParade from "@/components/series/seriesHeading/titleBox/thumbnailParade/ThumbnailParade";
 
 import { getUniqueCreatorsDisplay } from "@/components/series/utils";
-import { buildHtmlLink, getUniverseUrl } from "@/lib/utils";
+import { getUniverseUrl } from "@/lib/utils";
 import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
 
 export function LinkToCreator({ creator, isLoading }) {
@@ -89,31 +89,20 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
               key={JSON.stringify(universe)}
               type="text2"
             >
+              {Translate({
+                context: "series_page",
+                label: "part_of_universe",
+                renderAsHtml: true,
+              })}
               <Link
                 href={getUniverseUrl(
                   universe?.title,
                   firstSeriesFirstWork?.workId
                 )}
-                border={false}
-                style={{ display: "none" }}
+                border={{ bottom: { keepVisible: true } }}
               >
-                {""}
+                {universe?.title}
               </Link>
-              {Translate({
-                context: "series_page",
-                label: "part_of_universe",
-                vars: [
-                  buildHtmlLink(
-                    universe?.title,
-                    getUniverseUrl(
-                      universe?.title,
-                      firstSeriesFirstWork?.workId
-                    ),
-                    "_self"
-                  ),
-                ],
-                renderAsHtml: true,
-              })}
             </Text>
           );
         })}
