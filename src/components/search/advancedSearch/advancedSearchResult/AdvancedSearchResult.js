@@ -13,6 +13,7 @@ import cx from "classnames";
 import AdvancedSearchSort from "@/components/search/advancedSearch/advancedSearchSort/AdvancedSearchSort";
 import TopBar from "@/components/search/advancedSearch/advancedSearchResult/topBar/TopBar";
 import Title from "@/components/base/title";
+import { NoHitSearch } from "@/components/search/advancedSearch/advancedSearchResult/noHitSearch/NoHitSearch";
 
 export function AdvancedSearchResult({
   pageNo,
@@ -27,6 +28,7 @@ export function AdvancedSearchResult({
   if (error) {
     return null;
   }
+
   return (
     <>
       <TopBar />
@@ -43,16 +45,21 @@ export function AdvancedSearchResult({
         }
         className={styles.padding_top}
       >
-        <AdvancedSearchSort className={cx(styles.sort_container)} />
         {/* Reuse result page from simplesearch - we skip the wrap .. @TODO should we set
         some mark .. that we are doing advanced search .. ?? */}
-        <div className={cx(styles.padding_top)}>
-          <ResultPage
-            rows={results?.works}
-            onWorkClick={onWorkClick}
-            isLoading={results?.isLoading}
-          />
-        </div>
+        {hitcount === 0 && <NoHitSearch />}
+        {hitcount > 0 && (
+          <>
+            <AdvancedSearchSort className={cx(styles.sort_container)} />
+            <div className={cx(styles.padding_top)}>
+              <ResultPage
+                rows={results?.works}
+                onWorkClick={onWorkClick}
+                isLoading={results?.isLoading}
+              />
+            </div>
+          </>
+        )}
       </Section>
       {hitcount > 0 && (
         <Pagination
