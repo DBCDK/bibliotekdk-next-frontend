@@ -51,8 +51,8 @@ const CheckoutForm = ({
     );
   }, [
     isAnalyzed,
-    materialsMissingAction?.length,
-    materialsNotAllowed?.length,
+    materialsMissingAction,
+    materialsNotAllowed,
     duplicateBookmarkIds?.length,
     mail?.valid?.status,
     numberMaterialsToOrder,
