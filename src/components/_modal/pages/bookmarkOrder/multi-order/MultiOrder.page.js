@@ -7,10 +7,10 @@ import Material, { filterForRelevantMaterialTypes } from "./Material/Material";
 import { useEffect, useRef, useState } from "react";
 import { useModal } from "@/components/_modal/Modal";
 import { StatusEnum } from "@/components/base/materialcard/materialCard.utils";
-import { useMutate } from "@/lib/api/api";
 import * as orderMutations from "@/lib/api/order.mutations";
 import { setAlreadyOrdered } from "../../order/utils/order.utils";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
+import { useMutate } from "@/lib/api/api";
 
 const CONTEXT = "bookmark-order";
 
@@ -67,19 +67,19 @@ const createOrders = async ({
 
 const MultiOrder = ({ context }) => {
   const modal = useModal();
-  const { materials, closeModalOnBack } = context;
+  const { materials, closeModalOnBack, handleOrderFinished } = context;
   const analyzeRef = useRef();
   const [materialCounts, setMaterialCounts] = useState({ isAnalyzed: false });
   const [materialsToOrder, setMaterialsToOrder] = useState(materials);
   const { loanerInfo } = useLoanerInfo();
-  const orderMutation = useMutate();
   const [isCreatingOrders, setIsCreatingOrders] = useState(false);
   const [duplicateBookmarkIds, setDuplicateBookmarkIds] = useState([]); //used to manage warning for duplicate orders without removing duplicate ids from browser storage
   const pickupBranch = useRef(); // Pickup branch from checkout form
   const [materialStatusChanged, setMaterialStatusChanged] = useState();
+  const orderMutation = useMutate();
 
   useEffect(() => {
-    if (orderMutation.data && orderMutation.data.submitMultipleOrders) {
+    if (orderMutation?.data && orderMutation.data.submitMultipleOrders) {
       const { failedAtCreation, successfullyCreated } =
         orderMutation.data.submitMultipleOrders;
       const failedMaterials = failedAtCreation.map((key) =>
@@ -88,6 +88,7 @@ const MultiOrder = ({ context }) => {
       const successMaterials = successfullyCreated.map((key) =>
         materials.find((mat) => mat.key === key)
       );
+      handleOrderFinished(successfullyCreated, failedAtCreation);
 
       //set the ordered workids as already ordered in session
       successMaterials.forEach((mat) => {
@@ -102,7 +103,7 @@ const MultiOrder = ({ context }) => {
       });
     }
 
-    if (orderMutation.error) {
+    if (orderMutation?.error) {
       setIsCreatingOrders(false);
       modal.push("multireceipt", {
         failedMaterials: materialsToOrder,
@@ -171,10 +172,10 @@ const MultiOrder = ({ context }) => {
       setMaterialCounts({
         isAnalyzed: true,
         digitalMaterials: materialsDigital?.length ?? 0,
-        materialsNotAllowed: materialsNotAvailable?.length ?? 0,
-        materialsMissingAction: materialsNeedsInfo?.length ?? 0,
+        materialsNotAllowedCount: materialsNotAvailable?.length ?? 0,
+        materialsMissingActionCount: materialsNeedsInfo?.length ?? 0,
         duplicateOrders: duplicateOrders?.length ?? 0,
-        numberMaterialsToOrder: materialsToOrder?.length ?? 0,
+        materialsToOrderCount: materialsToOrder?.length ?? 0,
       });
     }, 300);
     return () => clearTimeout(timer);

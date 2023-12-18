@@ -22,7 +22,3 @@
   margin-right: var(--pt1);
   display: inline;
 }
-
-p.searchIndexText {
-  margin-right: 0;
-}

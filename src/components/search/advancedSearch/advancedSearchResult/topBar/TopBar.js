@@ -70,7 +70,7 @@ function FormatFieldInput({ inputFields }) {
             })}
           </Text>
         )}
-        <Text type="text1" className={styles.searchIndexText}>
+        <Text type="text1">
           {Translate({
             context: "search",
             label: `advanced-dropdown-${field.searchIndex}`,
@@ -105,7 +105,7 @@ function FormatDropdowns({ dropdowns, showAndOperator }) {
             })}
           </Text>
         )}
-        <Text type="text1" className={styles.searchIndexText}>
+        <Text type="text1">
           {Translate({
             context: "advanced_search_dropdown",
             label: dropdownItem.searchIndex,

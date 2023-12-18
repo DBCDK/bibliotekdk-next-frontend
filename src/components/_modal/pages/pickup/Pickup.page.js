@@ -53,7 +53,7 @@ export function Pickup(props) {
 
           {branchesFromLogin.map((agency, idx) => (
             <div
-              key={agency.result[0].agencyId}
+              key={agency?.result?.[0]?.agencyId}
               className={styles.pickupSelectionWrapper}
             >
               {userHasMultipleAgencies ? (
@@ -68,7 +68,9 @@ export function Pickup(props) {
                         : setExpandedAgency(idx);
                     }}
                     border={{ top: false, bottom: { keepVisible: true } }}
-                    dataCy={"show-branches-for-" + agency.result[0].agencyId}
+                    dataCy={
+                      "show-branches-for-" + agency?.result?.[0]?.agencyId
+                    }
                     ariaLabel="open agency localizations"
                   >
                     <Text tag={"span"} type="text3">

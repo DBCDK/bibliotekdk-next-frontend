@@ -30,6 +30,7 @@ export function openOrderModal({
   workId,
   singleManifestation,
   storeLoanerInfo = false,
+  handleOrderFinished = undefined,
 }) {
   modal.push("order", {
     title: Translate({ context: "modal", label: "title-order" }),
@@ -39,6 +40,7 @@ export function openOrderModal({
     ...(singleManifestation && { orderType: "singleManifestation" }),
     singleManifestation: singleManifestation,
     storeLoanerInfo: storeLoanerInfo,
+    handleOrderFinished: handleOrderFinished,
   });
 }
 

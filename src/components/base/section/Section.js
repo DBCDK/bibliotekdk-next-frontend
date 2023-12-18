@@ -94,7 +94,7 @@ export default function Section({
   if (title) {
     title =
       typeof title === "string" ? (
-        <Title type="title4" tag={headerTag} skeleton={isLoading}>
+        <Title type="title4" tag={headerTag} skeleton={isLoading} lines={1}>
           {title}
         </Title>
       ) : (

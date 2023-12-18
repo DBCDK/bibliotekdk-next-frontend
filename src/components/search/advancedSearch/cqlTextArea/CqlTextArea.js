@@ -19,7 +19,7 @@ export function CqlTextArea({ textAreaRef, doAdvancedSearch }) {
   return (
     <div>
       <label className={styles.label}>
-        <Text type="text4">
+        <Text type="text1">
           {translate({ context: "search", label: "cqlsearchlabel" })}
         </Text>
       </label>
@@ -41,6 +41,10 @@ export function CqlTextArea({ textAreaRef, doAdvancedSearch }) {
             doAdvancedSearch();
           }
         }}
+        placeholder={translate({
+          context: "search",
+          label: "cqlsearchPlaceholder",
+        })}
       />
       <CqlErrorMessage cql={textAreaRef?.current?.value} />
     </div>
