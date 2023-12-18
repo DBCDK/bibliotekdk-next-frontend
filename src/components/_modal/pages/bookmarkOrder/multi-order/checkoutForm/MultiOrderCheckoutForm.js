@@ -23,10 +23,10 @@ const CheckoutForm = ({
 }) => {
   const {
     digitalMaterials,
-    materialsNotAllowed,
-    materialsMissingAction,
+    materialsNotAllowedCount,
+    materialsMissingActionCount,
     isAnalyzed,
-    numberMaterialsToOrder,
+    materialsToOrderCount,
   } = materialCounts;
   const modal = useModal();
   const [disabled, setDisabled] = useState(true);
@@ -43,24 +43,24 @@ const CheckoutForm = ({
   useEffect(() => {
     setDisabled(
       !isAnalyzed ||
-        materialsMissingAction > 0 ||
-        materialsNotAllowed > 0 ||
+        materialsMissingActionCount > 0 ||
+        materialsNotAllowedCount > 0 ||
         duplicateBookmarkIds?.length > 0 ||
         mail?.valid?.status === false ||
-        numberMaterialsToOrder < 1
+        materialsToOrderCount < 1
     );
   }, [
     isAnalyzed,
-    materialsMissingAction,
-    materialsNotAllowed,
+    materialsMissingActionCount,
+    materialsNotAllowedCount,
     duplicateBookmarkIds?.length,
     mail?.valid?.status,
-    numberMaterialsToOrder,
+    materialsToOrderCount,
   ]);
 
-  // numberMaterialsToOrder contains all orders: physical and digital orders,
-  // if numberMaterialsToOrder is greater than digitalMaterials, we also have physical orders
-  const hasPhysicalOrders = numberMaterialsToOrder > digitalMaterials;
+  // materialsToOrderCount contains all orders: physical and digital orders,
+  // if materialsToOrderCount is greater than digitalMaterials, we also have physical orders
+  const hasPhysicalOrders = materialsToOrderCount > digitalMaterials;
   const { updateLoanerInfo } = userInfo;
 
   const validated = useMemo(() => {
@@ -145,30 +145,30 @@ const CheckoutForm = ({
       <div>
         {/* Errors and messages */}
 
-        {materialsNotAllowed > 0 && (
+        {materialsNotAllowedCount > 0 && (
           <Text type="text3" className={styles.errorLabel}>
             <Translate
               context="bookmark-order"
               label={
-                materialsNotAllowed === 1
+                materialsNotAllowedCount === 1
                   ? "multiorder-cant-order-singular"
                   : "multiorder-cant-order"
               }
-              vars={[materialsNotAllowed]}
+              vars={[materialsNotAllowedCount]}
             />
           </Text>
         )}
 
-        {materialsMissingAction > 0 && (
+        {materialsMissingActionCount > 0 && (
           <Text type="text3" className={styles.errorLabel}>
             <Translate
               context="bookmark-order"
               label={
-                materialsMissingAction === 1
+                materialsMissingActionCount === 1
                   ? "multiorder-missing-info-singular"
                   : "multiorder-missing-info"
               }
-              vars={[materialsMissingAction]}
+              vars={[materialsMissingActionCount]}
             />
           </Text>
         )}
@@ -221,7 +221,7 @@ const CheckoutForm = ({
             <Translate
               context="order"
               label={
-                numberMaterialsToOrder === 1
+                materialsToOrderCount === 1
                   ? "order-message-library"
                   : "order-message-library-plural"
               }
