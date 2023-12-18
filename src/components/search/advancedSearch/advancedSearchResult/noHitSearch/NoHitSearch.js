@@ -36,6 +36,7 @@ export function NoHitSearch() {
           label: "no_hits__help_text",
         })}
         <Link
+          target="_blank"
           border={{ bottom: { keepVisible: true } }}
           href={Translate({
             context: "advanced_search_result",
