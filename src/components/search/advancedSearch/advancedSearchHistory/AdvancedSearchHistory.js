@@ -161,7 +161,7 @@ function HistoryHeader() {
 function EmptySearchHistory() {
   return (
     <div className={styles.emptysearchpage}>
-      <div className={cx(styles.actionheader)}>
+      <div className={cx(styles.emptysearchtxt)}>
         <Text type="text2" className={styles.inline}>
           {Translate({
             context: "search",
