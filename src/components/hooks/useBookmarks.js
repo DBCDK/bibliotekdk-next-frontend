@@ -326,35 +326,48 @@ export const usePopulateBookmarksNew2 = (bookmarks) => {
     (value, idx) => workByIdsData?.works?.indexOf(value) === idx
   );
 
+  //specific edition
+  //use these pids to find the specific editions and remove all irrelevnat pids from editions
+  const specificEditions = bookmarks?.filter(
+    (bookmark) => !bookmark?.materialId?.includes("work-of:")
+  );
+
+  console.log("SPECIFIC EDITIONS ", specificEditions);
+
   const relevantWorksByBookmarkId = bookmarks?.map((bookmark) => {
     const materialTypes = bookmark?.materialType?.split(" / ");
     const work = workByIdsDataRemovedDuplicates?.find(
       (w) => w?.workId === bookmark?.workId
     );
 
-    const manifestationWithCorrectMaterialType =
+    let manifestationWithCorrectMaterialType =
       work?.manifestations?.mostRelevant.filter((m) =>
         isMaterialTypesMatch(materialTypes, m?.materialTypes)
       );
+
+    // if bookmarkId is in specificEdition array, then filter the specific edition out
+    const specificEditionBookmark = specificEditions?.find(
+      (se) => se?.bookmarkId === bookmark?.bookmarkId
+    );
+    if (specificEditionBookmark) {
+      const specificManifestation =
+        manifestationWithCorrectMaterialType?.filter(
+          (m) => m?.pid === specificEditionBookmark?.materialId
+        );
+      manifestationWithCorrectMaterialType = specificManifestation;
+    }
     return {
+      ...work,
       bookmarkId: bookmark?.bookmarkId,
       materialId: bookmark?.materialId,
+      pid: specificEditionBookmark ? bookmark?.materialId : undefined,
       key: bookmark?.key,
-      ...work,
+      workId: bookmark?.workId,
       manifestations: manifestationWithCorrectMaterialType,
     };
   });
 
-  //HIER HAB ICH DEN RICHTIGEN MATERIALTYPE NOCH MIT
   console.log("RELEVANT WORKS BASED ON BOOKMARK", relevantWorksByBookmarkId);
-
-  //specific edition
-  //use these pids to find the specific editions and remove all irrelevnat pids from editions
-  const specificEditionPids = bookmarks?.filter(
-    (bookmark) => !bookmark?.materialId?.includes("work-of:")
-  );
-
-  //TODO filter the irrelevenat bookmarks out for specific editions form relevantWorksByBookmarkId
 
   const data = useMemo(() => {
     if (!bookmarks) return [];

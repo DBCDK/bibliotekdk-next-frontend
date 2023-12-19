@@ -74,6 +74,9 @@ function ReservationButtonWrapper({
     allEnrichedAccesses?.map((singleAccess) => singleAccess?.pid)
   );
 
+  console.log("!workId", workId, "workResponse?.data", workResponse?.isLoading);
+  console.log("!selectedPids", selectedPids);
+
   if (
     !workId ||
     !selectedPids ||

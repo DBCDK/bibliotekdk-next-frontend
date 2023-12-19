@@ -101,13 +101,6 @@ const MaterialRow = ({ id: materialId, skeleton, type, ...props }) => {
         />
       );
     case "BOOKMARK":
-      // if (
-      //   !props?.allManifestations?.[0].materialTypes?.[0]?.materialTypeSpecific
-      //     ?.code
-      // ) {
-      //   console.log("XX", props);
-      // }
-
       console.log("XXX ", props);
       return (
         <MaterialRowBookmark
