@@ -107,17 +107,14 @@ const MaterialRow = ({ id: materialId, skeleton, type, ...props }) => {
       // ) {
       //   console.log("XX", props);
       // }
-      const materialTypes = props?.allManifestations?.[0]?.materialTypes //TODO BIBDK2021-2214 her burde jeg kun have relevante manifestations
-        ?.map((m) => m.materialTypeSpecific?.display)
-        ?.join("/");
 
-      console.log("materialTypes", materialTypes);
+      console.log("XXX ", props);
       return (
         <MaterialRowBookmark
           materialId={materialId}
           isMobileSize={isMobileSize}
           {...props} //TODO show display materialtype
-          materialType={materialTypes || props.materialType}
+          materialType={props.materialType}
         />
       );
   }

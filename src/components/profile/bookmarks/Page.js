@@ -19,6 +19,7 @@ import { useModal } from "@/components/_modal";
 import Skeleton from "@/components/base/skeleton/Skeleton";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import { flatMapMaterialTypes } from "@/lib/manifestationFactoryUtils";
 
 const CONTEXT = "bookmark";
 const ORDER_TRESHHOLD = 25;
@@ -285,8 +286,14 @@ const BookmarkPage = () => {
   }
 
   //TODO her mangler jeg materialtypesSpecific for tidsskrifter (edition)
-  console.log("bookmarks", bookmarks);
+  console.log("bookmarks", bookmarks.length);
 
+  const makeMaterialType = (materialTypes) => {
+    const specificDisplayMaterialTypes = materialTypes.map((materialType) => {
+      return materialType.materialTypeSpecific.display;
+    });
+    return specificDisplayMaterialTypes.join(" / ");
+  };
   return (
     <ProfileLayout
       title={Translate({
@@ -431,10 +438,9 @@ const BookmarkPage = () => {
               creator={
                 bookmark?.manifestations?.[0]?.ownerWork.creators[0]?.display
               }
-              materialType={
-                bookmark.manifestations?.[0]?.materialTypes[0]
-                  .materialTypeSpecific?.display
-              } //2214 use same variable for specific and edition HERE change to pretty visning --> editions dont have mostRelevant , here an fbi api method woudl come handy
+              materialType={makeMaterialType(
+                bookmark.manifestations?.[0]?.materialTypes
+              )}
               image={bookmark?.manifestations?.[0]?.cover?.thumbnail}
               id={bookmark?.materialId}
               edition={constructEditionText(bookmark)}

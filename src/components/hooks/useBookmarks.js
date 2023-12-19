@@ -404,7 +404,7 @@ export const usePopulateBookmarksNew = (bookmarks) => {
     })
   );
 
-  //find relevant pids with relevant worktype
+  //find relevant pids with relevant worktype //TODO check if I can use manifestationsByType!!!
   const relevantWorks = workByIdsData?.works?.map((work) => {
     const materialTypes = bookmarks
       .find((b) => b?.materialId === work.workId)
