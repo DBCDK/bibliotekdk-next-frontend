@@ -56,7 +56,6 @@ export function BookMarkMaterialSelector({
       const isActive =
         typeof bookmarkIndex != "undefined" && bookmarkIndex !== -1;
 
-      console.log("isActive", isActive);
       setActive(isActive);
     }
   }, [options, isOpen.current]);

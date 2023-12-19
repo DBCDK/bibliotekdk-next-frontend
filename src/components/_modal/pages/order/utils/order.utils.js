@@ -1,6 +1,10 @@
 // eslint-disable-next-line no-restricted-imports
 import styles from "@/components/_modal/pages/order/Order.module.css";
-import { getSessionStorageItem, removeSessionStorageItem, setSessionStorageItem } from "@/lib/utils";
+import {
+  getSessionStorageItem,
+  removeSessionStorageItem,
+  setSessionStorageItem,
+} from "@/lib/utils";
 
 /**
  *
@@ -68,7 +72,9 @@ export function getStylingAndErrorMessage(validated, hasValidationErrors) {
  * @param {String} workId
  */
 export function setAlreadyOrdered(workId) {
-  const alreadyOrdered = JSON.parse(getSessionStorageItem("alreadyOrdered") || "[]");
+  const alreadyOrdered = JSON.parse(
+    getSessionStorageItem("alreadyOrdered") || "[]"
+  );
   const isAlreaydOrdered = alreadyOrdered.includes(workId);
   if (!isAlreaydOrdered) {
     alreadyOrdered.push(workId);
@@ -87,7 +93,9 @@ export function workHasAlreadyBeenOrdered(workId) {
 }
 
 export function removeWorkIdFromSession(workId) {
-  const alreadyOrdered = JSON.parse(getSessionStorageItem("alreadyOrdered") || "[]");
+  const alreadyOrdered = JSON.parse(
+    getSessionStorageItem("alreadyOrdered") || "[]"
+  );
   const index = alreadyOrdered.indexOf(workId);
   if (index > -1) {
     alreadyOrdered.splice(index, 1);
