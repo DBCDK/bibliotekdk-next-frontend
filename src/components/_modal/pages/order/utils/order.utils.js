@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-restricted-imports
 import styles from "@/components/_modal/pages/order/Order.module.css";
+import { getSessionItem, removeSessionItem, setSessionItem } from "@/lib/utils";
 
 /**
  *
@@ -67,13 +68,11 @@ export function getStylingAndErrorMessage(validated, hasValidationErrors) {
  * @param {String} workId
  */
 export function setAlreadyOrdered(workId) {
-  const alreadyOrdered = JSON.parse(
-    sessionStorage.getItem("alreadyOrdered") || "[]"
-  );
+  const alreadyOrdered = JSON.parse(getSessionItem("alreadyOrdered") || "[]");
   const isAlreaydOrdered = alreadyOrdered.includes(workId);
   if (!isAlreaydOrdered) {
     alreadyOrdered.push(workId);
-    sessionStorage.setItem("alreadyOrdered", JSON.stringify(alreadyOrdered));
+    setSessionItem("alreadyOrdered", JSON.stringify(alreadyOrdered));
   }
 }
 
@@ -82,22 +81,20 @@ export function setAlreadyOrdered(workId) {
  * @return {boolean} true if workId is part of alreadyOrdered keys
  */
 export function workHasAlreadyBeenOrdered(workId) {
-  const storage = JSON.parse(sessionStorage.getItem("alreadyOrdered") || "[]");
+  const storage = JSON.parse(getSessionItem("alreadyOrdered") || "[]");
   const alreadyOrdered = storage.includes(workId);
   return alreadyOrdered;
 }
 
 export function removeWorkIdFromSession(workId) {
-  const alreadyOrdered = JSON.parse(
-    sessionStorage.getItem("alreadyOrdered") || "[]"
-  );
+  const alreadyOrdered = JSON.parse(getSessionItem("alreadyOrdered") || "[]");
   const index = alreadyOrdered.indexOf(workId);
   if (index > -1) {
     alreadyOrdered.splice(index, 1);
   }
-  sessionStorage.setItem("alreadyOrdered", JSON.stringify(alreadyOrdered));
+  setSessionItem("alreadyOrdered", JSON.stringify(alreadyOrdered));
 }
 
 export function removeAlreadyOrderedFromSession() {
-  sessionStorage.removeItem("alreadyOrdered");
+  removeSessionItem("alreadyOrdered");
 }

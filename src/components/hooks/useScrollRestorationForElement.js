@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 
 import Router from "next/router";
+import { getSessionItem, setSessionItem } from "@/lib/utils";
 
 const STORAGE_KEY = "scrollSnapRestoration";
 
 function getScrollSnapMap() {
-  return JSON.parse(sessionStorage.getItem(STORAGE_KEY) || "{}");
+  return JSON.parse(getSessionItem(STORAGE_KEY) || "{}");
 }
 
 function baseUrl(url) {
@@ -25,7 +26,7 @@ function saveScrollPos(url, sliderId, parentRef) {
   };
 
   scrollSnapMap[id] = scrollPos;
-  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(scrollSnapMap));
+  setSessionItem(STORAGE_KEY, JSON.stringify(scrollSnapMap));
 }
 
 function restoreScrollPos(url, sliderId, parentRef) {

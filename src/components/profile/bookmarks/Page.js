@@ -103,7 +103,7 @@ const BookmarkPage = () => {
   }, [sortByValue]);
 
   useEffect(() => {
-    let savedValue = sessionStorage.getItem("sortByValue");
+    let savedValue = setSessionItem("sortByValue");
     //if there is no saved values in sessionstorage, use createdAt sorting as default
     setSortByValue(savedValue || sortByItems[0].key);
   }, []);
@@ -151,7 +151,7 @@ const BookmarkPage = () => {
 
   const handleRadioChange = (value) => {
     setSortByValue(value);
-    sessionStorage.setItem("sortByValue", value);
+    setSessionItem("sortByValue", value);
   };
 
   const onSelectAll = () => {

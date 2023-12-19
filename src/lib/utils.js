@@ -324,3 +324,31 @@ export function buildHtmlLink(txt, url, overrideTarget = null) {
 
   return `<a href="${url}" target=${target} class="${animations.underlineContainer} ${animations.top_line_false} ${animations.top_line_keep_false}">${txt}</a>`;
 }
+
+export function setSessionItem(key, value) {
+  //private mode in Safari and firefox throws errors if sessionStorage i used.
+  try {
+    sessionStorage.setItem(key, value);
+  } catch (e) {
+    console.error("Failed to set item in sessionStorage:", e);
+  }
+}
+
+export function getSessionItem(key) {
+  try {
+    //private mode in Safari and firefox throws errors if sessionStorage i used.
+
+    return sessionStorage.getItem(key);
+  } catch (e) {
+    console.error("Failed to get item from sessionStorage:", e);
+    return null; // return a default value
+  }
+}
+
+export function removeSessionItem(key) {
+  try {
+    sessionStorage.removeItem(key);
+  } catch (e) {
+    console.error("Failed to remove item from sessionStorage:", e);
+  }
+}
