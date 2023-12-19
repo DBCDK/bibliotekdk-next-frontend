@@ -12,7 +12,7 @@ import Icon from "@/components/base/icon/Icon";
 import { getLanguage } from "@/components/base/translate/Translate";
 import Translate from "@/components/base/translate";
 import animations from "css/animations";
-import { getSessionItem, setSessionItem } from "@/lib/utils";
+import { getSessionStorageItem, setSessionStorageItem } from "@/lib/utils";
 
 /**
  * list of notifications
@@ -25,7 +25,7 @@ export function Notifications({ notificationObject }) {
 
   const [showNotification, setShowNotification] = useState(true);
   const toggleNotification = (index) => {
-    setSessionItem("showme_" + index, "no");
+    setSessionStorageItem("showme_" + index, "no");
     setShowNotification(!showNotification);
   };
 
@@ -41,7 +41,7 @@ export function Notifications({ notificationObject }) {
         },
         styles.notification,
         {
-          [styles.hidden]: getSessionItem("showme_" + index) === "no",
+          [styles.hidden]: getSessionStorageItem("showme_" + index) === "no",
         }
       )}
     >

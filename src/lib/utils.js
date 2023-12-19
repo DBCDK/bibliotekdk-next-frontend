@@ -325,7 +325,7 @@ export function buildHtmlLink(txt, url, overrideTarget = null) {
   return `<a href="${url}" target=${target} class="${animations.underlineContainer} ${animations.top_line_false} ${animations.top_line_keep_false}">${txt}</a>`;
 }
 
-export function setSessionItem(key, value) {
+export function setSessionStorageItem(key, value) {
   //private mode in Safari and firefox throws errors if sessionStorage i used.
   try {
     sessionStorage.setItem(key, value);
@@ -334,7 +334,7 @@ export function setSessionItem(key, value) {
   }
 }
 
-export function getSessionItem(key) {
+export function getSessionStorageItem(key) {
   try {
     //private mode in Safari and firefox throws errors if sessionStorage i used.
 
@@ -345,7 +345,7 @@ export function getSessionItem(key) {
   }
 }
 
-export function removeSessionItem(key) {
+export function removeSessionStorageItem(key) {
   try {
     sessionStorage.removeItem(key);
   } catch (e) {

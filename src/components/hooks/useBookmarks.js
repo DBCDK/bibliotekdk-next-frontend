@@ -75,7 +75,6 @@ const useBookmarksCore = ({ isMock = false, session }) => {
   const syncCookieBookmarks = async () => {
     if (!hasCulrUniqueId) return; // Not authenticated
     const cookies = await JSON.parse(getLocalStorageItem(KEY_NAME) || "[]");
-    console.log("cookies used localstorage", cookies);
     if (!cookies || !Array.isArray(cookies) || cookies.length === 0) return; // Nothing to sync
 
     try {
