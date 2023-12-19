@@ -314,108 +314,64 @@ export default useBookmarks;
 // and then get manifestations for the relevant pids
 
 export const usePopulateBookmarksNew2 = (bookmarks) => {
-  console.log("bookmarks RELEANT ", bookmarks);
-  //works (not specific edition)
-
+  //all works both for specific edition and entire work
   const { data: workByIdsData, isLoading: idsToWorksLoading } = useData(
     workFragments.idsToWorks({
       //TODO check which data idsToWorks really needs to get out
       ids: bookmarks?.map((work) => work.workId), //get workIds
-      //remove duplicates --> same workid but different materialtype
     })
   );
-
-  console.log("workByIdsData ", workByIdsData);
 
   const workByIdsDataRemovedDuplicates = workByIdsData?.works?.filter(
     (value, idx) => workByIdsData?.works?.indexOf(value) === idx
   );
 
-  console.log("workByIdsData", workByIdsDataRemovedDuplicates);
-
-  //find relevant pids with relevant worktype
-  // const relevantWorks = workByIdsDataRemovedDuplicates?.map((work) => {
-  //   console.log("work", work);
-  //   const materialTypes = bookmarks
-  //     .find((b) => b?.materialId === work.workId)
-  //     ?.materialType?.split(" / "); //either single worktype ("BOOK") or compound worktype such as "BOOK / SOUND_RECORDING_CD"
-  //   const manifestationWithCorrectMaterialType =
-  //     work?.manifestations?.mostRelevant.filter((m) =>
-  //       isMaterialTypesMatch(materialTypes, m?.materialTypes)
-  //     );
-
-  //   return { ...work, manifestations: manifestationWithCorrectMaterialType };
-  // });
-
-  //go through bookmarks and find the relevant worktype with relevant pid
-  const relevantWorksBasedOnBookmark = bookmarks?.map((bookmark) => {
+  const relevantWorksByBookmarkId = bookmarks?.map((bookmark) => {
     const materialTypes = bookmark?.materialType?.split(" / ");
     const work = workByIdsDataRemovedDuplicates?.find(
       (w) => w?.workId === bookmark?.workId
     );
 
-    console.log("WORK ", work, "bookmark", bookmark);
     const manifestationWithCorrectMaterialType =
       work?.manifestations?.mostRelevant.filter((m) =>
         isMaterialTypesMatch(materialTypes, m?.materialTypes)
       );
     return {
       bookmarkId: bookmark?.bookmarkId,
+      materialId: bookmark?.materialId,
       key: bookmark?.key,
       ...work,
       manifestations: manifestationWithCorrectMaterialType,
     };
   });
 
-  console.log("RELEVANT WORKS BASED ON BOOKMARK", relevantWorksBasedOnBookmark);
+  console.log("RELEVANT WORKS BASED ON BOOKMARK", relevantWorksByBookmarkId);
 
   //specific edition
-  //use these pids to find the specific editions
+  //use these pids to find the specific editions and remove all irrelevnat pids from editions
   const specificEditionPids = bookmarks?.filter(
     (bookmark) => !bookmark?.materialId?.includes("work-of:")
   );
 
-  //console.log("specificEditionPids", specificEditionPids);
+  //TODO filter the irrelevenat bookmarks out for specific editions form relevantWorksByBookmarkId
 
   const data = useMemo(() => {
     if (!bookmarks) return [];
     //cannot group if there are multiple worktypes for same workid in order
     const groupedByWorkIdAndType = {};
-    relevantWorksBasedOnBookmark?.forEach((rw) => {
-      console.log("rw", rw);
+    relevantWorksByBookmarkId?.forEach((rw) => {
       rw.manifestations?.forEach((manifestation) => {
         const key = rw?.key;
         if (!groupedByWorkIdAndType[key]) {
           groupedByWorkIdAndType[key] = [];
         }
-        console.log("manifestation", manifestation);
         groupedByWorkIdAndType[key].push(manifestation);
       });
     });
 
-    const keys = Object.keys(groupedByWorkIdAndType);
-
-    console.log("groupedByWorkId", groupedByWorkIdAndType);
-
-    const transformedWorkByIds = keys.forEach((key) => {
-      //{materialId: , manifestations: groupedByWorkIdAndType[key]}
-      const work = groupedByWorkIdAndType[key];
-      console.log("work", work);
-    });
-
-    // ([materialId, manifestations]) => ({
-    //   manifestations,
-    //   materialId,
-    // }));
-
-    console.log("groupedByWorkId", keys);
-
-    console.log("transformedWorkByIds", transformedWorkByIds);
-    console.log("transformedWorkByIds", transformedWorkByIds[keys[1]]);
-
     return bookmarks
       .map((bookmark) => {
-        const workData = transformedWorkByIds.find(
+        const workData = relevantWorksByBookmarkId?.find(
           (item) => item?.materialId === bookmark.materialId
         );
         if (!workData) {
@@ -430,8 +386,7 @@ export const usePopulateBookmarksNew2 = (bookmarks) => {
       })
       .filter((item) => item); // filter nulls
   }, [bookmarks, workByIdsData]);
-  const isLoading = idsToWorksLoading;
-  return { data, isLoading };
+  return { data, isLoading: idsToWorksLoading };
 
   //...
 };
