@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import AdvancedSearch from "@/components/search/advancedSearch/advancedSearch/AdvancedSearch";
 import styles from "./Popover.module.css";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
@@ -21,10 +21,28 @@ const Popover = ({ className, simpleSearchRef }) => {
   } = useAdvancedSearchContext();
   const triggerContainerRef = useRef(null);
   const tooltipRef = useRef(null);
+  const [mouseDownPosition, setMouseDownPosition] = useState(0);
 
   useEffect(() => {
     //hide if user clicks outside the popover.
     function handleClickOutside(event) {
+
+      const scrollbarPosition = window.innerWidth - 30;
+      console.log('\n\n\nscrollbarPosition',scrollbarPosition)
+      console.log('innerWidth',window.innerWidth)
+      console.log('event.pageX',event.pageX)
+      console.log('event.pageY !== mouseDownPosition',event.pageY !== mouseDownPosition)
+      console.log('event.pageX > scrollbarPosition ',event.pageX > scrollbarPosition )
+
+
+      //To prevent popover from collapsing
+      if (
+       // event.pageX > scrollbarPosition &&
+        event.pageY !== mouseDownPosition
+      ) {
+        return;
+      }
+      console.log("after click evetnt return");
       //returns true if the click is inside the given ref
       const isClickInsideRef = (ref, target) => ref?.current?.contains(target);
       //if click outside popover and outside trigger, then hide popover
@@ -52,11 +70,23 @@ const Popover = ({ className, simpleSearchRef }) => {
         setShowInfoTooltip(false);
       }
     }
-    document.addEventListener("click", handleClickOutside);
+    document.addEventListener("mouseup", handleClickOutside);
     return () => {
-      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("mouseup", handleClickOutside);
     };
-  }, [popoverRef, showPopover]);
+  }, [popoverRef, showPopover, mouseDownPosition]);
+
+  useEffect(() => {
+    const handleMouseDown = (event) => {
+     // console.log("event mouse down", event.pageY);
+      setMouseDownPosition(event.pageY);
+      
+    };
+    window.addEventListener("click", handleMouseDown);
+    return () => {
+      window.removeEventListener("click", handleMouseDown);
+    };
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
