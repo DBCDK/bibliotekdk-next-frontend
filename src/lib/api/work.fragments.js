@@ -12,6 +12,7 @@ import {
   seriesFragment,
   universeFragment,
   workSliderFragment,
+  materialTypesSpecificFragment,
 } from "@/lib/api/fragments.utils";
 
 export function tableOfContents({ workId }) {
@@ -604,8 +605,66 @@ export function workJsonLd({ workId }) {
   };
 }
 
+export function pidsToWork({ pids }) {
+  console.log("INSIDE ", pids);
+  if (!pids || pids?.length === 0) {
+    return { data: {}, isLoading: false };
+  }
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query pidsToWork($pids: [String!]!) {
+      manifestations(pid: $pids) {
+        ownerWork {
+          workId
+        }
+        titles{
+          main
+          full
+        }
+        access {
+          __typename
+          ... on DigitalArticleService {
+            issn
+          }
+        }
+        workTypes
+        pid
+        titles {
+          main
+          full
+        }
+        cover {
+          detail
+          origin
+          thumbnail
+        }
+        creators {
+          display
+        }
+        hostPublication {
+          title
+        }
+        publisher
+        edition {
+          summary
+          edition
+          publicationYear {
+            display
+          }
+        }
+      }
+    }`,
+    variables: { pids },
+    slowThreshold: 3000,
+  };
+}
+//     ${materialTypesSpecificFragment}
+// ${manifestationDetailsForAccessFactory}
+// ${creatorsFragment}
+
 export function pidsToWorks({ pids }) {
-  if (!pids) return;
+  if (!pids) return { data: undefined, isLoading: false };
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `

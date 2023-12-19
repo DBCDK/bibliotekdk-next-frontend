@@ -289,6 +289,22 @@ const useBookmarkMock = () => {
   return useBookmarksCore({ isMock: true });
 };
 
+//OBS order does not matter in this implementation. should it order matter?
+// "BOOK / SOUND_RECORDING_CD" and "SOUND_RECORDING_CD / BOOK" would both match
+const isMaterialTypesMatch = (workTypesOfBookmark, materialTypesOfWork) => {
+  if (!materialTypesOfWork || !workTypesOfBookmark) return false;
+  const workTypesCount = workTypesOfBookmark.length;
+  //number of single worktypes in compound worktype
+  const matches = materialTypesOfWork.filter((mt) => {
+    const code = mt?.materialTypeSpecific?.code;
+    return workTypesOfBookmark.includes(code);
+  });
+
+  //if number of matches is equal to number of worktypes in compound worktype, we have found manifestation with correct
+  //materilatype
+  return matches.length === workTypesCount;
+};
+
 const useBookmarks = process.env.STORYBOOK_ACTIVE
   ? useBookmarkMock
   : useBookmarkImpl;
@@ -296,6 +312,214 @@ export default useBookmarks;
 
 //TODO create new usePopulateBookmarks that used workId instead of materialId to work for all bookmarks in same manner
 // and then get manifestations for the relevant pids
+
+export const usePopulateBookmarksNew2 = (bookmarks) => {
+  console.log("bookmarks RELEANT ", bookmarks);
+  //works (not specific edition)
+
+  const { data: workByIdsData, isLoading: idsToWorksLoading } = useData(
+    workFragments.idsToWorks({
+      //TODO get out less
+      ids: bookmarks?.map((work) => work.workId),
+    })
+  );
+
+  console.log("workByIdsData", workByIdsData);
+
+  //find relevant pids with relevant worktype
+  const relevantWorks = workByIdsData?.works?.map((work) => {
+    const materialTypes = bookmarks
+      .find((b) => b?.materialId === work.workId)
+      ?.materialType?.split(" / "); //either single worktype ("BOOK") or compound worktype such as "BOOK / SOUND_RECORDING_CD"
+    const manifestationWithCorrectMaterialType =
+      work?.manifestations?.mostRelevant.filter((m) =>
+        isMaterialTypesMatch(materialTypes, m?.materialTypes)
+      );
+
+    return { ...work, manifestations: manifestationWithCorrectMaterialType };
+  });
+
+  console.log("RELEVANT WORKS", relevantWorks);
+
+  const relevantPidsPerWork = relevantWorks?.map((work) =>
+    work?.manifestations?.map((m) => m?.pid)
+  );
+
+  const flattedPids = relevantPidsPerWork?.flat();
+
+  console.log("FLATTENED PIDS", flattedPids);
+  //get manifestations from these pids
+  const {
+    data: manifestatonsForWorks,
+    isLoading: manifestatonsForWorksIsLoading,
+  } = useData(
+    workFragments.pidsToWork({
+      pids: flattedPids,
+    })
+  );
+
+  console.log("manifestatonsForWorks", manifestatonsForWorks);
+
+  //specific edition
+  //use these pids to find the specific editions
+  const specificEditionPids = bookmarks?.filter(
+    (bookmark) => !bookmark?.materialId?.includes("work-of:")
+  );
+
+  console.log("specificEditionPids", specificEditionPids);
+
+  const data = useMemo(() => {
+    if (!bookmarks) return [];
+    const groupedByWorkId = {};
+    relevantWorks?.forEach((rw) =>
+      rw.manifestations?.forEach((manifestation) => {
+        const workId = manifestation?.ownerWork?.workId;
+        if (!groupedByWorkId[workId]) {
+          groupedByWorkId[workId] = [];
+        }
+        groupedByWorkId[workId].push(manifestation);
+      })
+    );
+
+    const transformedWorkByIds = Object.entries(groupedByWorkId).map(
+      ([materialId, manifestations]) => ({
+        manifestations,
+        materialId,
+      })
+    );
+
+    console.log("transformedWorkByIds", transformedWorkByIds);
+
+    return bookmarks
+      .map((bookmark) => {
+        const workData = transformedWorkByIds.find(
+          (item) => item?.materialId === bookmark.materialId
+        );
+        if (!workData) {
+          return null;
+        }
+
+        // Merge data
+        return {
+          ...workData,
+          ...bookmark,
+        };
+      })
+      .filter((item) => item); // filter nulls
+  }, [bookmarks, workByIdsData]);
+  const isLoading = idsToWorksLoading || manifestatonsForWorksIsLoading;
+  return { data, isLoading };
+
+  //...
+};
+
+export const usePopulateBookmarksNew = (bookmarks) => {
+  console.log("bookmarks RELEANT ", bookmarks);
+  //works (not specific edition)
+  const workIds = bookmarks?.filter((bookmark) =>
+    bookmark?.materialId?.includes("work-of:")
+  );
+  const { data: workByIdsData, isLoading: idsToWorksLoading } = useData(
+    workFragments.idsToWorks({
+      //TODO get out less
+      ids: workIds?.map((work) => work.materialId),
+    })
+  );
+
+  //find relevant pids with relevant worktype
+  const relevantWorks = workByIdsData?.works?.map((work) => {
+    const materialTypes = bookmarks
+      .find((b) => b?.materialId === work.workId)
+      ?.materialType?.split(" / "); //either single worktype ("BOOK") or compound worktype such as "BOOK / SOUND_RECORDING_CD"
+    const manifestationWithCorrectMaterialType =
+      work?.manifestations?.mostRelevant.filter((m) =>
+        isMaterialTypesMatch(materialTypes, m?.materialTypes)
+      );
+
+    return manifestationWithCorrectMaterialType;
+  });
+
+  const relevantPidsPerWork = relevantWorks?.map((work) =>
+    work?.map((m) => m?.pid)
+  );
+
+  const flattedPids = relevantPidsPerWork?.flat();
+  //get manifestations from these pids
+  const {
+    data: manifestatonsForWorks,
+    isLoading: manifestatonsForWorksIsLoading,
+  } = useData(
+    workFragments.pidsToWork({
+      pids: flattedPids,
+    })
+  );
+
+  //get work by pids together with specific edition
+
+  //specific edition
+  const workPids = bookmarks?.filter(
+    (bookmark) => !bookmark?.materialId?.includes("work-of:")
+  );
+
+  const { data: workByPidsData, isLoading: pidsToWorkLoading } = useData(
+    workFragments.pidsToWork({
+      pids: workPids?.map((work) => work.materialId),
+    })
+  );
+
+  const data = useMemo(() => {
+    if (!bookmarks) return [];
+    const groupedByWorkId = {};
+    manifestatonsForWorks?.manifestations?.forEach((manifestation) => {
+      const workId = manifestation?.ownerWork?.workId;
+      if (!groupedByWorkId[workId]) {
+        groupedByWorkId[workId] = [];
+      }
+      groupedByWorkId[workId].push(manifestation);
+    });
+
+    const transformedWorkByIds = Object.entries(groupedByWorkId).map(
+      ([materialId, manifestations]) => ({
+        manifestations,
+        materialId,
+      })
+    );
+
+    const transformedWorkByPids = workByPidsData?.manifestations?.map(
+      (work) => ({
+        ...work,
+        materialId: work?.pid,
+      })
+    );
+    const merged = [].concat(transformedWorkByIds, transformedWorkByPids);
+    return bookmarks
+      .map((bookmark) => {
+        const workData = merged.find(
+          (item) => item?.materialId === bookmark.materialId
+        );
+        if (!workData) {
+          return null;
+        }
+
+        // Merge data
+        return {
+          ...workData,
+          ...bookmark,
+        };
+      })
+      .filter((item) => item); // filter nulls
+  }, [bookmarks, workByPidsData, workByIdsData]);
+  const isLoading = idsToWorksLoading || pidsToWorkLoading;
+  console.log(
+    "bookmarks idsToWorksLoading || pidsToWorkLoading",
+    idsToWorksLoading,
+    pidsToWorkLoading
+  );
+
+  return { data, isLoading };
+
+  //...
+};
 
 /**
  * Used to populate bookmark data, to show more info about the materials
@@ -317,6 +541,8 @@ export const usePopulateBookmarks = (bookmarks) => {
   const { data: workByIdsData, isLoading: idsToWorksLoading } = useData(
     workFragments.idsToWorks({ ids: workIds?.map((work) => work.materialId) })
   );
+
+  console.log("workByIdsData ", workByIdsData);
 
   const { data: workByPidsData, isLoading: pidsToWorkLoading } = useData(
     workFragments.pidsToWorks({

@@ -127,7 +127,7 @@ export default function ResultRow({
     formatMaterialTypesToCode(mat)
   );
 
-  console.log("materialTypesForBookmark", materialTypesForBookmark);
+  //console.log("materialTypesForBookmark", materialTypesForBookmark);
 
   const materialTypes = filters.materialTypesSpecific;
   uniqueMaterialTypes.sort(sortMaterialTypesByFilter(materialTypes));

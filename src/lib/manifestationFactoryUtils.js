@@ -507,10 +507,6 @@ export function manifestationMaterialTypeFactory(manifestations) {
   );
   const arrayOfMaterialTypesArray = flatMapMaterialTypes(manifestations);
   const uniqueMaterialTypes = getUniqueMaterialTypes(arrayOfMaterialTypesArray);
-  console.log("_____________manifestations ", manifestations);
-  console.log("arrayOfMaterialTypesArray ", arrayOfMaterialTypesArray);
-
-  console.log("uniqueMaterialTypes ", uniqueMaterialTypes);
 
   const manifestationsByType = groupManifestations(manifestations);
   const flattenedGroupedSortedManifestations =

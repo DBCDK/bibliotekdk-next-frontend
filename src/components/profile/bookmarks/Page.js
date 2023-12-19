@@ -1,5 +1,5 @@
 import useBookmarks, {
-  usePopulateBookmarks,
+  usePopulateBookmarksNew2,
 } from "@/components/hooks/useBookmarks";
 import styles from "./Bookmark.module.css";
 import Text from "@/components/base/text";
@@ -74,7 +74,8 @@ const BookmarkPage = () => {
     isLoading: bookmarsDataLoading,
   } = useBookmarks();
   const { data: bookmarks, isLoading: isPopulateLoading } =
-    usePopulateBookmarks(bookmarksData);
+    usePopulateBookmarksNew2(bookmarksData); //TODO first to exchange
+
   console.log("BOOKMARKS WITHOut TYPE? ", bookmarks);
   const [activeStickyButton, setActiveStickyButton] = useState(null);
   const breakpoint = useBreakpoint();
@@ -243,6 +244,8 @@ const BookmarkPage = () => {
 
   const isAllSelected = checkboxList?.length === allBookmarksData?.length;
   const isNothingSelected = checkboxList.length === 0;
+
+  console.log("bookmarks ", bookmarsDataLoading, isPopulateLoading);
 
   if (bookmarsDataLoading || isPopulateLoading) {
     return (
@@ -416,45 +419,52 @@ const BookmarkPage = () => {
       )}
 
       <div className={styles.listContainer}>
-        {bookmarks?.map((bookmark, idx) => (
-          <MaterialRow
-            key={`bookmark-list-${idx}`}
-            hasCheckbox={!isMobile || activeStickyButton !== null}
-            title={bookmark?.titles?.main[0] || ""}
-            creator={bookmark?.creators[0]?.display}
-            materialType={bookmark.materialType} //HERE change to pretty visning --> editions dont have mostRelevant , here an fbi api method woudl come handy
-            image={
-              bookmark?.cover?.thumbnail ??
-              bookmark?.manifestations?.bestRepresentation?.cover?.thumbnail
-            }
-            id={bookmark?.materialId}
-            edition={constructEditionText(bookmark)}
-            workId={
-              bookmark?.pid ? bookmark?.ownerWork?.workId : bookmark?.workId
-            }
-            pid={bookmark?.pid}
-            allManifestations={bookmark?.manifestations?.mostRelevant}
-            type="BOOKMARK"
-            isSelected={
-              checkboxList.findIndex((item) => item.key === bookmark.key) > -1
-            }
-            onBookmarkDelete={() =>
-              deleteBookmarks([
-                { bookmarkId: bookmark.bookmarkId, key: bookmark.key },
-              ])
-            }
-            onSelect={() => onToggleCheckbox(bookmark.key)}
-            showFailedAtCreation={containsIds(
-              failureAtCreationIds,
-              bookmark.key
-            )}
-            showSuccessfullyOrdered={containsIds(
-              successfullyCreatedIds,
-              bookmark.key
-            )}
-            handleOrderFinished={handleOrderFinished}
-          />
-        ))}
+        {bookmarks?.map(
+          (
+            bookmark,
+            idx /// why not loading?
+          ) => (
+            <MaterialRow
+              key={`bookmark-list-${idx}`}
+              hasCheckbox={!isMobile || activeStickyButton !== null}
+              title={bookmark?.manifestations?.[0]?.titles?.full || ""}
+              creator={
+                bookmark?.manifestations?.[0]?.ownerWork.creators[0]?.display
+              }
+              materialType={
+                bookmark.manifestations?.[0]?.materialTypes[0]
+                  .materialTypeSpecific?.display
+              } //2214 use same variable for specific and edition HERE change to pretty visning --> editions dont have mostRelevant , here an fbi api method woudl come handy
+              image={bookmark?.manifestations?.[0]?.cover?.thumbnail}
+              id={bookmark?.materialId}
+              edition={constructEditionText(bookmark)}
+              workId={
+                bookmark?.pid ? bookmark?.ownerWork?.workId : bookmark?.workId
+              }
+              pid={bookmark?.pid}
+              allManifestations={bookmark?.manifestations}
+              type="BOOKMARK"
+              isSelected={
+                checkboxList.findIndex((item) => item.key === bookmark.key) > -1
+              }
+              onBookmarkDelete={() =>
+                deleteBookmarks([
+                  { bookmarkId: bookmark.bookmarkId, key: bookmark.key },
+                ])
+              }
+              onSelect={() => onToggleCheckbox(bookmark.key)}
+              showFailedAtCreation={containsIds(
+                failureAtCreationIds,
+                bookmark.key
+              )}
+              showSuccessfullyOrdered={containsIds(
+                successfullyCreatedIds,
+                bookmark.key
+              )}
+              handleOrderFinished={handleOrderFinished}
+            />
+          )
+        )}
       </div>
       {totalPages > 1 && (
         <Pagination

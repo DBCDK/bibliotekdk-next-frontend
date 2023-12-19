@@ -2,7 +2,7 @@ import Translate from "@/components/base/translate/Translate";
 import Top from "../../base/top/Top";
 import LinksList from "../LinksList";
 import useBookmarks, {
-  usePopulateBookmarks,
+  usePopulateBookmarksNew,
 } from "@/components/hooks/useBookmarks";
 // eslint-disable-next-line css-modules/no-unused-class
 import styles from "./MultiReferences.module.css";
@@ -44,7 +44,8 @@ const SingleReference = ({
   materialKeyToMaterialTypes,
   chosenPid,
 }) => {
-  const { data: materials, isLoading } = usePopulateBookmarks(bookmarkInList);
+  const { data: materials, isLoading } =
+    usePopulateBookmarksNew(bookmarkInList);
   const material = materials[0];
   const materialType = materialKeyToMaterialTypes.find(
     (e) => e?.materialKey === bookmarkInList[0].key
@@ -92,7 +93,7 @@ export default function MultiReferences({ context }) {
   const bookmarksMissingEdition = materials.filter((material) =>
     material.materialId.startsWith("work-of")
   );
-  const { data: materialsMissingEdition, isLoading } = usePopulateBookmarks(
+  const { data: materialsMissingEdition, isLoading } = usePopulateBookmarksNew(
     bookmarksMissingEdition
   );
   const { bookmarks } = useBookmarks();
@@ -116,7 +117,7 @@ export default function MultiReferences({ context }) {
        */
       return workData;
     }
-    // Filter only the selected material type
+    // Filter only the selected material type //TODO BIBDK2021-2214
     const filteredManifestations = workData.manifestations.mostRelevant.filter(
       (mani) =>
         mani.materialTypes?.[0]?.materialTypeSpecific?.display?.toLowerCase() ===

@@ -101,21 +101,23 @@ const MaterialRow = ({ id: materialId, skeleton, type, ...props }) => {
         />
       );
     case "BOOKMARK":
-      if (
-        !props?.allManifestations?.[0].materialTypes?.[0]?.materialTypeSpecific
-          ?.display
-      ) {
-        console.log("XX", props);
-      }
+      // if (
+      //   !props?.allManifestations?.[0].materialTypes?.[0]?.materialTypeSpecific
+      //     ?.code
+      // ) {
+      //   console.log("XX", props);
+      // }
+      const materialTypes = props?.allManifestations?.[0]?.materialTypes //TODO BIBDK2021-2214 her burde jeg kun have relevante manifestations
+        ?.map((m) => m.materialTypeSpecific?.display)
+        ?.join("/");
+
+      console.log("materialTypes", materialTypes);
       return (
         <MaterialRowBookmark
           materialId={materialId}
           isMobileSize={isMobileSize}
           {...props} //TODO show display materialtype
-          materialType={
-            props?.allManifestations?.[0].materialTypes?.[0]
-              ?.materialTypeSpecific?.display || props.materialType
-          }
+          materialType={materialTypes || props.materialType}
         />
       );
   }

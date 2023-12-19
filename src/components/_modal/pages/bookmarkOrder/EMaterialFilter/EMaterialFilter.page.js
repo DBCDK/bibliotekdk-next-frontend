@@ -7,7 +7,7 @@ import styles from "./EMaterialFilter.module.css";
 import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
 import useBookmarks, {
-  usePopulateBookmarks,
+  usePopulateBookmarksNew,
 } from "@/components/hooks/useBookmarks";
 import { useModal } from "@/components/_modal/Modal";
 
@@ -21,7 +21,7 @@ const CONTEXT = "bookmark-order";
 const EMaterialFilter = ({ context, active }) => {
   const { bookmarks, createdAtSort, titleSort } = useBookmarks();
   const { materials: materialKeys, sortType, handleOrderFinished } = context;
-  const { data: materialsData } = usePopulateBookmarks(materialKeys);
+  const { data: materialsData } = usePopulateBookmarksNew(materialKeys);
   const [materials, setMaterials] = useState([]);
   const modal = useModal();
   const analyzeRef = useRef();

@@ -35,7 +35,6 @@ const BookmarkColumn = ({
   showSuccessfullyOrdered,
   handleOrderFinished,
 }) => {
-  console.log("MATERIALTYPE ", materialType);
   const { flatPidsByType } = useMemo(() => {
     return manifestationMaterialTypeFactory(allManifestations);
   }, [workId, allManifestations]);
@@ -110,9 +109,6 @@ const MaterialRowBookmark = ({
   showFailedAtCreation = false,
   handleOrderFinished,
 }) => {
-  console.log("MATERIALTYPE DISPLAY ", title);
-
-  console.log("MATERIALTYPE DISPLAY ", materialType);
   const onCheckboxClick = (e) => {
     if (
       e.target instanceof HTMLHeadingElement ||
