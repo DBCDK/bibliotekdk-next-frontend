@@ -13,6 +13,10 @@
   margin-bottom: var(--pt4);
 }
 
+.emptysearchtxt {
+  width: 66%;
+}
+
 .emptysearchpage {
   margin-bottom: 320px;
 }
