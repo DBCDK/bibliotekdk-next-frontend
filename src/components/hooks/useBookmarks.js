@@ -6,6 +6,7 @@ import * as bookmarkMutations from "@/lib/api/bookmarks.mutations";
 import * as bookmarkFragments from "@/lib/api/bookmarks.fragments";
 import { useSession } from "next-auth/react";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import { getLocalStorageItem, setLocalStorageItem } from "@/lib/utils";
 
 const KEY_NAME = "bookmarks";
 const ITEMS_PER_PAGE = 20;
@@ -39,7 +40,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     data: localBookmarks,
     mutate: mutateLocalBookmarks,
     error,
-  } = useSWR(KEY_NAME, (key) => JSON.parse(localStorage.getItem(key) || "[]"));
+  } = useSWR(KEY_NAME, (key) => JSON.parse(getLocalStorageItem(key) || "[]"));
   const {
     data: globalBookmarksUserObject,
     isLoading: isLoadingGlobalBookmarks,
@@ -73,7 +74,8 @@ const useBookmarksCore = ({ isMock = false, session }) => {
 
   const syncCookieBookmarks = async () => {
     if (!hasCulrUniqueId) return; // Not authenticated
-    const cookies = await JSON.parse(localStorage.getItem(KEY_NAME) || "[]");
+    const cookies = await JSON.parse(getLocalStorageItem(KEY_NAME) || "[]");
+    console.log("cookies used localstorage", cookies);
     if (!cookies || !Array.isArray(cookies) || cookies.length === 0) return; // Nothing to sync
 
     try {
@@ -154,7 +156,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
 
       // store
       const stringified = JSON.stringify(localBookmarks);
-      localStorage.setItem(KEY_NAME, stringified);
+      setLocalStorageItem(KEY_NAME, stringified);
 
       // mutate
       mutateLocalBookmarks(localBookmarks);
@@ -165,7 +167,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     const empty = [];
     // store
     const stringified = JSON.stringify(empty);
-    localStorage.setItem(KEY_NAME, stringified);
+    setLocalStorageItem(KEY_NAME, stringified);
     //mutate
     mutateLocalBookmarks(empty);
   }
@@ -185,7 +187,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
         (item) => !keysToDelete.includes(item.key)
       );
       const stringified = JSON.stringify(updated);
-      localStorage.setItem(KEY_NAME, stringified);
+      setLocalStorageItem(KEY_NAME, stringified);
       mutateLocalBookmarks(updated);
     }
   };

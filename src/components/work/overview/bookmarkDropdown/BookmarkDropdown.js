@@ -52,7 +52,12 @@ export function BookMarkMaterialSelector({
             materialId + formatMaterialTypesToPresentation(options[0])
         );
       }
-      setActive(bookmarkIndex !== -1);
+
+      const isActive =
+        typeof bookmarkIndex != "undefined" && bookmarkIndex !== -1;
+
+      console.log("isActive", isActive);
+      setActive(isActive);
     }
   }, [options, isOpen.current]);
 
@@ -171,19 +176,20 @@ export function BookMarkMaterialSelector({
         {options.map((material, index) => {
           let activeItem;
           if (material?.editionDisplayText) {
-            activeItem =
-              bookmarks?.findIndex(
-                (book) =>
-                  book.key ===
-                  material.pid + formatMaterialTypesToPresentation(material)
-              ) !== -1;
+            const itemIndex = bookmarks?.findIndex(
+              (book) =>
+                book.key ===
+                material.pid + formatMaterialTypesToPresentation(material)
+            );
+
+            activeItem = typeof itemIndex != "undefined" && itemIndex !== -1;
           } else {
-            activeItem =
-              bookmarks?.findIndex(
-                (book) =>
-                  book.key ===
-                  workId + formatMaterialTypesToPresentation(material)
-              ) !== -1;
+            const itemIndex = bookmarks?.findIndex(
+              (book) =>
+                book.key ===
+                workId + formatMaterialTypesToPresentation(material)
+            );
+            activeItem = typeof itemIndex != "undefined" && itemIndex !== -1;
           }
 
           return (

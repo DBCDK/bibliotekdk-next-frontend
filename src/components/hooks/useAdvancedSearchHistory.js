@@ -25,7 +25,7 @@ function getUnixTimeStamp() {
 
 export const useAdvancedSearchHistory = () => {
   let { data: storedValue, mutate } = useSWR(KEY, (key) =>
-    JSON.parse(localStorage.getItem(key) || "[]")
+    JSON.parse(getLocalStorageItem(key) || "[]")
   );
 
   const setValue = (value) => {
@@ -41,7 +41,7 @@ export const useAdvancedSearchHistory = () => {
           // Add to beginning of history array
           storedValue.unshift(value);
           // maintain localstorage
-          localStorage.setItem(KEY, JSON.stringify(storedValue));
+          setLocalStorageItem(KEY, JSON.stringify(storedValue));
           // maintain state
           mutate();
         }
@@ -62,7 +62,7 @@ export const useAdvancedSearchHistory = () => {
           // Add to beginning of history array
           storedValue.splice(valueIndex, 1);
           // update localstorage
-          localStorage.setItem(KEY, JSON.stringify(storedValue));
+          setLocalStorageItem(KEY, JSON.stringify(storedValue));
           mutate();
         }
       }
@@ -75,7 +75,7 @@ export const useAdvancedSearchHistory = () => {
     try {
       if (typeof window !== "undefined") {
         storedValue = [];
-        localStorage.setItem(KEY, JSON.stringify(storedValue));
+        setLocalStorageItem(KEY, JSON.stringify(storedValue));
         mutate();
       }
     } catch (err) {

@@ -352,3 +352,30 @@ export function removeSessionItem(key) {
     console.error("Failed to remove item from sessionStorage:", e);
   }
 }
+
+export function setLocalStorageItem(key, value) {
+  //private mode in Safari and firefox throws errors if localStorage i used.
+  try {
+    localStorage.setItem(key, value);
+  } catch (e) {
+    console.error("Failed to set item in localStorage:", e);
+  }
+}
+
+export function getLocalStorageItem(key) {
+  try {
+    const value = localStorage.getItem(key);
+    return value;
+  } catch (e) {
+    console.error("Failed to get item from localStorage:", e);
+    return null;
+  }
+}
+
+export function removeLocalStorageItem(key) {
+  try {
+    localStorage.removeItem(key);
+  } catch (e) {
+    console.error("Failed to remove item from localStorage:", e);
+  }
+}
