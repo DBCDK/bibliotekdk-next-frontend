@@ -7,7 +7,7 @@ import styles from "./EMaterialFilter.module.css";
 import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
 import useBookmarks, {
-  usePopulateBookmarksNew,
+  usePopulateBookmarksNew2,
 } from "@/components/hooks/useBookmarks";
 import { useModal } from "@/components/_modal/Modal";
 
@@ -21,13 +21,20 @@ const CONTEXT = "bookmark-order";
 const EMaterialFilter = ({ context, active }) => {
   const { bookmarks, createdAtSort, titleSort } = useBookmarks();
   const { materials: materialKeys, sortType, handleOrderFinished } = context;
-  const { data: materialsData } = usePopulateBookmarksNew(materialKeys);
+
+  const { data: materialsData } = usePopulateBookmarksNew2(materialKeys);
   const [materials, setMaterials] = useState([]);
   const modal = useModal();
   const analyzeRef = useRef();
   const [materialsToFilter, setMaterialsToFilter] = useState();
   const [materialsToProceed, setMaterialsToProceed] = useState();
   const isLoading = !materialsToFilter || !materialsToProceed;
+  console.log("materialsData", materialsData);
+
+  useEffect(() => {
+    console.log("materialsToFilter", materialsToFilter);
+    console.log("materialsToProceed", materialsToProceed);
+  }, [materialsToFilter, materialsToProceed]);
 
   useEffect(() => {
     const materials = materialsData.map((mat) => {
@@ -37,17 +44,19 @@ const EMaterialFilter = ({ context, active }) => {
         ...mat,
       };
     });
+    console.log("materialsData", materialsData);
     setMaterials(materials);
   }, [materialsData]);
 
   useEffect(() => {
+    console.log("MATTIS ", materials);
     if (!active) {
       // On close, reset states to force rerender
       setMaterialsToFilter(null);
       setMaterialsToProceed(null);
       return;
     }
-    if (!analyzeRef || !analyzeRef.current) return;
+    if (!analyzeRef?.current) return;
     // Secure only running once
     if (!!materialsToFilter || !!materialsToProceed) return;
     if (materials.length !== materialKeys.length) return;
@@ -55,6 +64,7 @@ const EMaterialFilter = ({ context, active }) => {
     const timer = setTimeout(() => {
       // Ensure that EMaterialAnalyzers are done rendering
       const elements = Array.from(analyzeRef.current.children);
+      console.log("elements", elements);
       const filteredMaterials = elements
         .filter(
           (element) =>
@@ -78,10 +88,14 @@ const EMaterialFilter = ({ context, active }) => {
 
       let filteredMaterialsSorted;
       let toProceedSorted;
+      console.log("filteredMaterials", filteredMaterials);
       if (sortType === "title") {
+        console.log("TITLE SORT");
         filteredMaterialsSorted = titleSort(filteredMaterials);
         toProceedSorted = titleSort(toProceed);
       } else if (sortType === "createdAt") {
+        console.log("createdAt");
+
         filteredMaterialsSorted = createdAtSort(filteredMaterials);
         toProceedSorted = createdAtSort(toProceed);
       }

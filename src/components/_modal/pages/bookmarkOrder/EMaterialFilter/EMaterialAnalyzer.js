@@ -58,6 +58,7 @@ const useAnalyzeMaterial = (material) => {
  */
 const EMaterialAnalyzer = ({ material }) => {
   const result = useAnalyzeMaterial(material);
+  console.log("material", material);
   return (
     <div data-accessable-ematerial={result} data-material-key={material.key} />
   );

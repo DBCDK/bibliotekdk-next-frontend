@@ -77,6 +77,7 @@ const BookmarkPage = () => {
     count,
     isLoading: bookmarsDataLoading,
   } = useBookmarks();
+  console.log("allBookmarksData", allBookmarksData);
   const { data: bookmarks, isLoading: isPopulateLoading } =
     usePopulateBookmarksNew2(bookmarksData); //TODO first to exchange
 
@@ -129,6 +130,9 @@ const BookmarkPage = () => {
         key: key,
         materialId: bookmarkData.materialId,
         materialType: bookmarkData.materialType,
+        workId: bookmarkData.workId,
+        materialType: bookmarkData.materialType,
+        bookmarkId: bookmarkData.bookmarkId,
       });
     }
 
@@ -168,6 +172,9 @@ const BookmarkPage = () => {
           key: el.key,
           materialId: el.materialId,
           materialType: el.materialType,
+          workId: el.workId,
+          materialType: el.materialType,
+          bookmarkId: el.bookmarkId,
         }))
       );
     else setCheckboxList([]);

@@ -332,8 +332,6 @@ export const usePopulateBookmarksNew2 = (bookmarks) => {
     (bookmark) => !bookmark?.materialId?.includes("work-of:")
   );
 
-  console.log("SPECIFIC EDITIONS ", specificEditions);
-
   const relevantWorksByBookmarkId = bookmarks?.map((bookmark) => {
     const materialTypes = bookmark?.materialType?.split(" / ");
     const work = workByIdsDataRemovedDuplicates?.find(
