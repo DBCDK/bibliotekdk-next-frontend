@@ -19,7 +19,12 @@ import { useModal } from "@/components/_modal";
 import Skeleton from "@/components/base/skeleton/Skeleton";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
-import { flatMapMaterialTypes } from "@/lib/manifestationFactoryUtils";
+import {
+  flatMapMaterialTypes,
+  flattenMaterialType,
+  formatMaterialTypesFromUrl,
+  formatMaterialTypesToPresentation,
+} from "@/lib/manifestationFactoryUtils";
 
 const CONTEXT = "bookmark";
 const ORDER_TRESHHOLD = 25;
@@ -286,14 +291,24 @@ const BookmarkPage = () => {
   }
 
   //TODO her mangler jeg materialtypesSpecific for tidsskrifter (edition)
-  console.log("bookmarks", bookmarks.length);
+  bookmarks.map((bookmark) => {
+    console.log(
+      "bookmark",
+      bookmark.bookmarkId,
+      "key",
+      bookmark.key,
+      bookmark.manifestations
+    );
+  });
 
+  //TODO check if compound material types are ordered
   const makeMaterialType = (materialTypes) => {
-    const specificDisplayMaterialTypes = materialTypes.map((materialType) => {
-      return materialType.materialTypeSpecific.display;
+    const flattenedMaterialTypes = flattenMaterialType({
+      materialTypes: materialTypes,
     });
-    return specificDisplayMaterialTypes.join(" / ");
+    return formatMaterialTypesToPresentation(flattenedMaterialTypes);
   };
+
   return (
     <ProfileLayout
       title={Translate({

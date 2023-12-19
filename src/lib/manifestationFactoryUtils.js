@@ -107,27 +107,20 @@ export function formatMaterialTypesToCypress(materialTypeArray) {
  * @returns {string}
  */
 export function formatMaterialTypesToPresentation(materialTypeArray) {
-  //console.log("BERND materialTypeArray ", materialTypeArray);
   if (!Array.isArray(materialTypeArray)) {
-    //console.log("BERND NOT ARRAY ", materialTypeArray);
-
     return materialTypeArray;
   }
-  const bernd =
+  return (
     materialTypeArray
       ?.map((mat) =>
         upperFirst(typeof mat === "string" ? mat : mat?.specificDisplay)
       )
-      .join(" / ") || null;
-
-  //console.log("BERND ", bernd);
-
-  return bernd;
+      .join(" / ") || null
+  );
 }
 
 export function formatMaterialTypesToCode(materialTypeArray) {
   if (!Array.isArray(materialTypeArray)) {
-    console.log("RETURN AS IS", materialTypeArray);
     return materialTypeArray;
   }
 

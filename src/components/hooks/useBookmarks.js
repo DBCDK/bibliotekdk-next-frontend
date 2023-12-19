@@ -345,6 +345,7 @@ export const usePopulateBookmarksNew2 = (bookmarks) => {
     };
   });
 
+  //HIER HAB ICH DEN RICHTIGEN MATERIALTYPE NOCH MIT
   console.log("RELEVANT WORKS BASED ON BOOKMARK", relevantWorksByBookmarkId);
 
   //specific edition
@@ -369,26 +370,9 @@ export const usePopulateBookmarksNew2 = (bookmarks) => {
       });
     });
 
-    return bookmarks
-      .map((bookmark) => {
-        const workData = relevantWorksByBookmarkId?.find(
-          (item) => item?.materialId === bookmark.materialId
-        );
-        if (!workData) {
-          return null;
-        }
-
-        // Merge data
-        return {
-          ...workData,
-          ...bookmark,
-        };
-      })
-      .filter((item) => item); // filter nulls
+    return relevantWorksByBookmarkId.filter((item) => item); // filter nulls
   }, [bookmarks, workByIdsData]);
   return { data, isLoading: idsToWorksLoading };
-
-  //...
 };
 
 export const usePopulateBookmarksNew = (bookmarks) => {
