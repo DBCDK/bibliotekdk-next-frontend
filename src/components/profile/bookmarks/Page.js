@@ -19,6 +19,7 @@ import { useModal } from "@/components/_modal";
 import Skeleton from "@/components/base/skeleton/Skeleton";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import { getSessionItem, setSessionItem } from "@/lib/utils";
 
 const CONTEXT = "bookmark";
 const ORDER_TRESHHOLD = 25;
@@ -103,7 +104,7 @@ const BookmarkPage = () => {
   }, [sortByValue]);
 
   useEffect(() => {
-    let savedValue = setSessionItem("sortByValue");
+    let savedValue = getSessionItem("sortByValue");
     //if there is no saved values in sessionstorage, use createdAt sorting as default
     setSortByValue(savedValue || sortByItems[0].key);
   }, []);
