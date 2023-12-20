@@ -2,6 +2,7 @@
  * @file - Hook for advanced search history - localstorage
  */
 
+import { getLocalStorageItem, setLocalStorageItem } from "@/lib/utils";
 import useSWR from "swr";
 
 const KEY = "advanced-search-history";

@@ -10,6 +10,7 @@ import { useInView } from "react-intersection-observer";
 import { scrollLock } from "./utils";
 import useKeyPress from "@/components/hooks/useKeypress";
 import FocusLock from "react-focus-lock";
+import { getLocalStorageItem, setLocalStorageItem } from "@/lib/utils";
 
 // context
 export const ModalContext = createContext(null);
