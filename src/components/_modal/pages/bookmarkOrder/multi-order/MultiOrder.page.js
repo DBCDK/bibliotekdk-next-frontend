@@ -172,10 +172,10 @@ const MultiOrder = ({ context }) => {
       setMaterialCounts({
         isAnalyzed: true,
         digitalMaterials: materialsDigital?.length ?? 0,
-        materialsNotAllowed: materialsNotAvailable?.length ?? 0,
-        materialsMissingAction: materialsNeedsInfo?.length ?? 0,
+        materialsNotAllowedCount: materialsNotAvailable?.length ?? 0,
+        materialsMissingActionCount: materialsNeedsInfo?.length ?? 0,
         duplicateOrders: duplicateOrders?.length ?? 0,
-        numberMaterialsToOrder: materialsToOrder?.length ?? 0,
+        materialsToOrderCount: materialsToOrder?.length ?? 0,
       });
     }, 300);
     return () => clearTimeout(timer);
