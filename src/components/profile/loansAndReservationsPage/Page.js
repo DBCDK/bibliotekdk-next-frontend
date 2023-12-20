@@ -13,10 +13,21 @@ import { arangeLoanerInfo } from "@/lib/userdataFactoryUtils";
 import Link from "@/components/base/link";
 import { useState } from "react";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
+import {
+  flattenMaterialType,
+  formatMaterialTypesToPresentation,
+} from "@/lib/manifestationFactoryUtils";
 
 const SKELETON_ROW_AMOUNT = 2;
 
 export const dataReducer = (dataType, data) => {
+  const flatMaterialTypes = flattenMaterialType({
+    materialTypes: data?.manifestation?.materialTypes,
+  });
+
+  const materialTypesPresentation =
+    formatMaterialTypesToPresentation(flatMaterialTypes);
+
   switch (dataType) {
     case "DEBT": {
       return {
@@ -35,8 +46,12 @@ export const dataReducer = (dataType, data) => {
         creator: extractCreatorsPrioritiseCorporation(
           data?.manifestation?.creators
         )?.[0]?.display,
+<<<<<<< HEAD
         materialType:
           data?.manifestation?.materialTypes?.[0]?.materialTypeSpecific?.code,
+=======
+        materialType: materialTypesPresentation,
+>>>>>>> main
         creationYear: data?.manifestation?.recordCreationDate?.substring(0, 4),
         dueDateString: data?.dueDate,
         id: data?.loanId,
@@ -54,8 +69,12 @@ export const dataReducer = (dataType, data) => {
           extractCreatorsPrioritiseCorporation(
             data?.manifestation?.creators
           )?.[0]?.display || data?.creator,
+<<<<<<< HEAD
         materialType:
           data?.manifestation?.materialTypes?.[0].materialTypeSpecific?.code,
+=======
+        materialType: materialTypesPresentation,
+>>>>>>> main
         creationYear: data?.manifestation?.recordCreationDate?.substring(0, 4),
         library: data?.pickUpBranch?.agencyName,
         agencyId: data?.agencyId,

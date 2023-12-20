@@ -103,6 +103,7 @@ const EMaterialFilter = ({ context, active }) => {
     return () => clearTimeout(timer);
   }, [active, analyzeRef.current, materials]);
 
+  //TODO 2214
   const createIds = (materials) => {
     return materials.map((mat) => {
       return {
