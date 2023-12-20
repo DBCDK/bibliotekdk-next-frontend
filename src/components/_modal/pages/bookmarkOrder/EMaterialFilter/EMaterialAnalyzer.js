@@ -22,16 +22,11 @@ const useAnalyzeMaterial = (material) => {
   const { loanerInfo } = useLoanerInfo();
 
   const hasDigitalAccess = loanerInfo?.rights?.digitalArticleService;
-  console.log("DIGI MATTTTTI", material);
-  console.log("DIGI hasDigitalAccess", hasDigitalAccess);
 
   const { workId, pid } = material;
   const allManifestations = material?.manifestations;
 
-  console.log("allManifestations ", allManifestations);
-
   const materialTypes = flattenMaterialType(allManifestations?.[0]);
-  console.log("MATERIALTYPES ", materialTypes);
   const flattenedDisplayTypes = toFlatMaterialTypes(
     materialTypes,
     "specificDisplay"
@@ -41,14 +36,6 @@ const useAnalyzeMaterial = (material) => {
     return manifestationMaterialTypeFactory(allManifestations);
   }, [workId, allManifestations, materialTypes]);
 
-  console.log("flattenedDisplayTypes", flattenedDisplayTypes);
-
-  console.log(
-    "flattend",
-    flatPidsByType(
-      flattenedDisplayTypes //should i give all the material types here? --> presentation material type
-    )
-  );
   const selectedPids = useMemo(
     //TODO use
     () =>
@@ -64,32 +51,18 @@ const useAnalyzeMaterial = (material) => {
     workId,
     selectedPids
   );
-  console.log("workid ", workId, "selected", selectedPids);
-
-  console.log("HERE ", manifestations);
 
   const { getAllAllowedEnrichedAccessSorted } = useMemo(
     () => accessFactory(manifestations),
     [manifestations]
   );
 
-  console.log(
-    "getAllAllowedEnrichedAccessSorted",
-    getAllAllowedEnrichedAccessSorted
-  );
   const access = useMemo(
     () => getAllAllowedEnrichedAccessSorted(hasDigitalAccess) || [],
     [manifestations, hasDigitalAccess]
   );
-  const x = checkDigitalCopy(access);
-  console.log("x", x);
-  const digitalCopy = x?.[0];
-  const xy = checkPhysicalCopy(access);
-  const physicalCopy = xy?.[0];
-  console.log("DIGI xy", xy);
-
-  console.log("DIGI ", physicalCopy, digitalCopy);
-  console.log("digi access ", access);
+  const digitalCopy = checkDigitalCopy(access)?.[0];
+  const physicalCopy = checkPhysicalCopy(access)?.[0];
 
   return !digitalCopy && !physicalCopy;
 };
@@ -105,7 +78,6 @@ const useAnalyzeMaterial = (material) => {
 const EMaterialAnalyzer = ({ material }) => {
   const result = useAnalyzeMaterial(material);
 
-  console.log("digi result", result);
   return (
     <div data-accessable-ematerial={result} data-material-key={material.key} />
   );

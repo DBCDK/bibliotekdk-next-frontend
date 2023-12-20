@@ -109,9 +109,6 @@ const useBookmarksCore = ({ isMock = false, session }) => {
       const existingIndex = globalBookmarks?.findIndex(
         (bookmark) => bookmark.key === value.key
       );
-
-      //console.log("VALUE ", value);
-
       if (existingIndex === -1) {
         // Doesn't exist - Add
         await bookmarkMutation.post(
@@ -354,7 +351,6 @@ export const usePopulateBookmarksNew2 = (bookmarks) => {
         );
       manifestationWithCorrectMaterialType = specificManifestation;
     }
-    console.log("bookmark ", bookmark);
     return {
       ...work,
       bookmarkId: bookmark?.bookmarkId,
@@ -365,8 +361,6 @@ export const usePopulateBookmarksNew2 = (bookmarks) => {
       manifestations: manifestationWithCorrectMaterialType,
     };
   });
-
-  console.log("RELEVANT WORKS BASED ON BOOKMARK", relevantWorksByBookmarkId);
 
   const data = useMemo(() => {
     if (!bookmarks) return [];
@@ -388,7 +382,6 @@ export const usePopulateBookmarksNew2 = (bookmarks) => {
 };
 
 export const usePopulateBookmarksNew = (bookmarks) => {
-  console.log("bookmarks RELEANT ", bookmarks);
   //works (not specific edition)
   const workIds = bookmarks?.filter((bookmark) =>
     bookmark?.materialId?.includes("work-of:")
@@ -421,7 +414,7 @@ export const usePopulateBookmarksNew = (bookmarks) => {
   //get manifestations from these pids
   const {
     data: manifestatonsForWorks,
-    isLoading: manifestatonsForWorksIsLoading,
+    isLoading: manifestatonsForWorksIsLoading, //TODO 2214 put into isLoading?
   } = useData(
     workFragments.pidsToWork({
       pids: flattedPids,
@@ -484,11 +477,6 @@ export const usePopulateBookmarksNew = (bookmarks) => {
       .filter((item) => item); // filter nulls
   }, [bookmarks, workByPidsData, workByIdsData]);
   const isLoading = idsToWorksLoading || pidsToWorkLoading;
-  console.log(
-    "bookmarks idsToWorksLoading || pidsToWorkLoading",
-    idsToWorksLoading,
-    pidsToWorkLoading
-  );
 
   return { data, isLoading };
 
@@ -505,7 +493,6 @@ export const usePopulateBookmarks = (bookmarks) => {
   const workIds = bookmarks?.filter((bookmark) =>
     bookmark?.materialId?.includes("work-of:")
   );
-  console.log("BOOKMARKS ", bookmarks);
 
   //specific edition
   const workPids = bookmarks?.filter(
@@ -515,8 +502,6 @@ export const usePopulateBookmarks = (bookmarks) => {
   const { data: workByIdsData, isLoading: idsToWorksLoading } = useData(
     workFragments.idsToWorks({ ids: workIds?.map((work) => work.materialId) })
   );
-
-  console.log("workByIdsData ", workByIdsData);
 
   const { data: workByPidsData, isLoading: pidsToWorkLoading } = useData(
     workFragments.pidsToWorks({

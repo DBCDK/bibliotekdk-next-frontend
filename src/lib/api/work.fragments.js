@@ -606,7 +606,6 @@ export function workJsonLd({ workId }) {
 }
 
 export function pidsToWork({ pids }) {
-  console.log("INSIDE ", pids);
   if (!pids || pids?.length === 0) {
     return { data: {}, isLoading: false };
   }

@@ -77,11 +77,8 @@ const BookmarkPage = () => {
     count,
     isLoading: bookmarsDataLoading,
   } = useBookmarks();
-  console.log("allBookmarksData", allBookmarksData);
   const { data: bookmarks, isLoading: isPopulateLoading } =
     usePopulateBookmarksNew2(bookmarksData); //TODO first to exchange
-
-  console.log("BOOKMARKS WITHOut TYPE? ", bookmarks);
   const [activeStickyButton, setActiveStickyButton] = useState(null);
   const breakpoint = useBreakpoint();
   const [sortByValue, setSortByValue] = useState(null);
@@ -310,8 +307,6 @@ const BookmarkPage = () => {
     });
     return formatMaterialTypesToPresentation(flattenedMaterialTypes);
   };
-
-  console.log("bookmarks", bookmarks);
 
   return (
     <ProfileLayout

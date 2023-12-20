@@ -25,9 +25,6 @@ export function BookMarkMaterialSelector({
   const [options, setOptions] = useState(
     materialTypes.map((mat) => formatMaterialTypesToCode(mat))
   );
-  //console.log("DEFAULT OPTIONS 2 materialTypes ", materialTypes);
-
-  console.log("DEFAULT OPTIONS 2 ", options);
 
   const isOpen = useRef(false);
 
@@ -63,8 +60,6 @@ export function BookMarkMaterialSelector({
     const defaultOptions = materialTypes.map((mat) =>
       formatMaterialTypesToCode(mat)
     );
-
-    console.log("DEFAULT OPTIONS 1 ", defaultOptions);
 
     if (!editions) {
       // Not needed to look for aditional dropdown items
@@ -108,7 +103,6 @@ export function BookMarkMaterialSelector({
         materialType: formatMaterialTypesToCode(material),
         title,
       };
-      console.log("ITEM FOR EDITION ", item);
     } else {
       // Normal logic
       item = {
@@ -118,7 +112,6 @@ export function BookMarkMaterialSelector({
         materialType: formatMaterialTypesToCode(material),
         title,
       };
-      console.log("ITEM FOR NORMAL ", item);
     }
 
     setBookmark(item);
@@ -142,7 +135,6 @@ export function BookMarkMaterialSelector({
         selected={active}
         onClick={(e) => {
           e.preventDefault();
-          console.log("ON SELECT specific ", options);
           onSelect(options, workId);
         }}
       />

@@ -30,7 +30,6 @@ const EMaterialFilter = ({ context, active }) => {
   const [materialsToFilter, setMaterialsToFilter] = useState();
   const [materialsToProceed, setMaterialsToProceed] = useState();
   const isLoading = !materialsToFilter || !materialsToProceed;
-  console.log("materialsData", materialsData);
 
   useEffect(() => {
     const materials = materialsData.map((mat) => {
@@ -58,7 +57,6 @@ const EMaterialFilter = ({ context, active }) => {
     const timer = setTimeout(() => {
       // Ensure that EMaterialAnalyzers are done rendering
       const elements = Array.from(analyzeRef.current.children);
-      console.log("elements", elements);
       const filteredMaterials = elements
         .filter(
           (element) =>
@@ -83,7 +81,7 @@ const EMaterialFilter = ({ context, active }) => {
       let filteredMaterialsSorted;
       let toProceedSorted;
       if (sortType === "title") {
-        filteredMaterialsSorted = titleSort(filteredMaterials);
+        filteredMaterialsSorted = titleSort(filteredMaterials); //pider instead of materials?
         toProceedSorted = titleSort(toProceed);
       } else if (sortType === "createdAt") {
         filteredMaterialsSorted = createdAtSort(filteredMaterials);
@@ -116,8 +114,6 @@ const EMaterialFilter = ({ context, active }) => {
   const onBackClick = () => {
     modal.clear();
   };
-
-  console.log("materialsToFilter", materialsToFilter);
 
   return (
     <div className={styles.eMaterialFilter}>

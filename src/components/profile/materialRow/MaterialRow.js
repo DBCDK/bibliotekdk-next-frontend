@@ -101,7 +101,6 @@ const MaterialRow = ({ id: materialId, skeleton, type, ...props }) => {
         />
       );
     case "BOOKMARK":
-      console.log("XXX ", props);
       return (
         <MaterialRowBookmark
           materialId={materialId}
