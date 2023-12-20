@@ -109,6 +109,7 @@ const MaterialRowBookmark = ({
   showFailedAtCreation = false,
   handleOrderFinished,
 }) => {
+  console.log("IMAGE ", image);
   const onCheckboxClick = (e) => {
     if (
       e.target instanceof HTMLHeadingElement ||

@@ -94,8 +94,6 @@ export function BookMarkMaterialSelector({
       })
       .filter((i) => !!i);
 
-    console.log("DEFAULT OPTIONS 1 ", bookmarkMatches);
-
     setOptions(defaultOptions.concat(bookmarkMatches));
   };
 

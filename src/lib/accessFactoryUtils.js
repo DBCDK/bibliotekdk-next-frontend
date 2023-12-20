@@ -440,6 +440,13 @@ export function checkDigitalCopy(enrichedAccesses) {
  * @returns {boolean}
  */
 function checkSinglePhysicalCopy(singleAccess) {
+  console.log("SINGLE ACCESS", singleAccess?.loanIsPossible);
+  console.log("SINGLE ACCESS", singleAccess?.__typename);
+  const x = !!(
+    singleAccess?.__typename === AccessEnum.INTER_LIBRARY_LOAN &&
+    singleAccess?.loanIsPossible === true
+  );
+  console.log("RESULT ", x);
   return !!(
     singleAccess?.__typename === AccessEnum.INTER_LIBRARY_LOAN &&
     singleAccess?.loanIsPossible === true

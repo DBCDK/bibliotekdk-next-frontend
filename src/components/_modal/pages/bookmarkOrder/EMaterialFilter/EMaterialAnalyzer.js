@@ -5,7 +5,12 @@ import {
   checkPhysicalCopy,
 } from "@/lib/accessFactoryUtils";
 import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAndSelectedPids";
-import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
+import {
+  flatMapMaterialTypes,
+  flattenMaterialType,
+  manifestationMaterialTypeFactory,
+  toFlatMaterialTypes,
+} from "@/lib/manifestationFactoryUtils";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 /**
@@ -17,33 +22,74 @@ const useAnalyzeMaterial = (material) => {
   const { loanerInfo } = useLoanerInfo();
 
   const hasDigitalAccess = loanerInfo?.rights?.digitalArticleService;
+  console.log("DIGI MATTTTTI", material);
+  console.log("DIGI hasDigitalAccess", hasDigitalAccess);
 
-  const { workId, materialType, pid } = material;
-  const allManifestations = material?.manifestations?.mostRelevant;
+  const { workId, pid } = material;
+  const allManifestations = material?.manifestations;
+
+  console.log("allManifestations ", allManifestations);
+
+  const materialTypes = flattenMaterialType(allManifestations?.[0]);
+  console.log("MATERIALTYPES ", materialTypes);
+  const flattenedDisplayTypes = toFlatMaterialTypes(
+    materialTypes,
+    "specificDisplay"
+  );
 
   const { flatPidsByType } = useMemo(() => {
     return manifestationMaterialTypeFactory(allManifestations);
-  }, [workId, allManifestations]);
+  }, [workId, allManifestations, materialTypes]);
+
+  console.log("flattenedDisplayTypes", flattenedDisplayTypes);
+
+  console.log(
+    "flattend",
+    flatPidsByType(
+      flattenedDisplayTypes //should i give all the material types here? --> presentation material type
+    )
+  );
   const selectedPids = useMemo(
-    () => (!!pid ? [pid] : flatPidsByType([materialType?.toLowerCase()])),
-    [materialType]
+    //TODO use
+    () =>
+      !!pid
+        ? [pid]
+        : flatPidsByType(
+            flattenedDisplayTypes //should i give all the material types here? --> presentation material type
+          ),
+    [material?.manifestations]
   );
 
   const { manifestations } = useGetManifestationsForOrderButton(
     workId,
     selectedPids
   );
+  console.log("workid ", workId, "selected", selectedPids);
+
+  console.log("HERE ", manifestations);
 
   const { getAllAllowedEnrichedAccessSorted } = useMemo(
     () => accessFactory(manifestations),
     [manifestations]
   );
+
+  console.log(
+    "getAllAllowedEnrichedAccessSorted",
+    getAllAllowedEnrichedAccessSorted
+  );
   const access = useMemo(
     () => getAllAllowedEnrichedAccessSorted(hasDigitalAccess) || [],
     [manifestations, hasDigitalAccess]
   );
-  const physicalCopy = checkPhysicalCopy([access?.[0]])?.[0];
-  const digitalCopy = checkDigitalCopy([access?.[0]])?.[0];
+  const x = checkDigitalCopy(access);
+  console.log("x", x);
+  const digitalCopy = x?.[0];
+  const xy = checkPhysicalCopy(access);
+  const physicalCopy = xy?.[0];
+  console.log("DIGI xy", xy);
+
+  console.log("DIGI ", physicalCopy, digitalCopy);
+  console.log("digi access ", access);
 
   return !digitalCopy && !physicalCopy;
 };
@@ -58,7 +104,8 @@ const useAnalyzeMaterial = (material) => {
  */
 const EMaterialAnalyzer = ({ material }) => {
   const result = useAnalyzeMaterial(material);
-  console.log("material", material);
+
+  console.log("digi result", result);
   return (
     <div data-accessable-ematerial={result} data-material-key={material.key} />
   );

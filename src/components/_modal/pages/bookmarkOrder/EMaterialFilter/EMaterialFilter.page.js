@@ -33,28 +33,17 @@ const EMaterialFilter = ({ context, active }) => {
   console.log("materialsData", materialsData);
 
   useEffect(() => {
-    console.log("materialsToFilter", materialsToFilter);
-    console.log("materialsToProceed", materialsToProceed);
-  }, [materialsToFilter, materialsToProceed]);
-
-  useEffect(() => {
     const materials = materialsData.map((mat) => {
       const bookmark = bookmarks?.find((bm) => bm.key === mat.key);
-      console.log("Matti", mat);
-      console.log("bookmark", bookmark);
-
       return {
         ...bookmark,
         ...mat,
       };
     });
-    console.log("materialsData", materialsData);
-    console.log("materials", materials);
     setMaterials(materials);
   }, [materialsData]);
 
   useEffect(() => {
-    console.log("MATTIS ", materials);
     if (!active) {
       // On close, reset states to force rerender
       setMaterialsToFilter(null);
@@ -93,14 +82,10 @@ const EMaterialFilter = ({ context, active }) => {
 
       let filteredMaterialsSorted;
       let toProceedSorted;
-      console.log("filteredMaterials", filteredMaterials);
       if (sortType === "title") {
-        console.log("TITLE SORT");
         filteredMaterialsSorted = titleSort(filteredMaterials);
         toProceedSorted = titleSort(toProceed);
       } else if (sortType === "createdAt") {
-        console.log("createdAt");
-
         filteredMaterialsSorted = createdAtSort(filteredMaterials);
         toProceedSorted = createdAtSort(toProceed);
       }
@@ -131,6 +116,8 @@ const EMaterialFilter = ({ context, active }) => {
   const onBackClick = () => {
     modal.clear();
   };
+
+  console.log("materialsToFilter", materialsToFilter);
 
   return (
     <div className={styles.eMaterialFilter}>
@@ -177,7 +164,7 @@ const EMaterialFilter = ({ context, active }) => {
               {mat.titles?.main?.[0]}
             </Title>
             <Text type="text2">
-              {constructMaterialType(mat?.manifestations[0].materialTypes)}
+              {constructMaterialType(mat?.manifestations?.[0].materialTypes)}
             </Text>
           </li>
         ))}

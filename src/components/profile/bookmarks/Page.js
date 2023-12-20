@@ -311,6 +311,8 @@ const BookmarkPage = () => {
     return formatMaterialTypesToPresentation(flattenedMaterialTypes);
   };
 
+  console.log("bookmarks", bookmarks);
+
   return (
     <ProfileLayout
       title={Translate({
