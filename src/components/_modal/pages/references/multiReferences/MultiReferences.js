@@ -88,6 +88,7 @@ const SingleReference = ({
  */
 export default function MultiReferences({ context }) {
   const { materials } = context;
+  console.log("materials ", materials);
   const modal = useModal();
 
   const bookmarksMissingEdition = materials.filter((material) =>
@@ -100,6 +101,8 @@ export default function MultiReferences({ context }) {
   const [activeMaterialChoices, setActiveMaterialChoices] = useState(
     bookmarksMissingEdition
   );
+
+  console.log("ACTIVE MATERIAL CHOICE", activeMaterialChoices);
   const [periodicaFiltered, setPeriodicaFiltered] = useState([]);
 
   const materialKeyToMaterialTypes = mapMaterialKeysToSelectedMaterialTypes({
@@ -288,6 +291,8 @@ export default function MultiReferences({ context }) {
       setActiveMaterialChoices([...activeChoices]); // Spread to copy object - rerenders since new object
     }
   };
+  console.log("missingActionMaterials", missingActionMaterials);
+  console.log("hasAutoCheckbox", hasAutoCheckbox);
 
   return (
     <div>
