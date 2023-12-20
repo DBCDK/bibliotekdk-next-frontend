@@ -6,7 +6,6 @@ import {
 } from "@/lib/accessFactoryUtils";
 import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAndSelectedPids";
 import {
-  flatMapMaterialTypes,
   flattenMaterialType,
   manifestationMaterialTypeFactory,
   toFlatMaterialTypes,
