@@ -24,17 +24,17 @@ const useAnalyzeMaterial = (material) => {
   const hasDigitalAccess = loanerInfo?.rights?.digitalArticleService;
 
   const { workId, pid } = material;
-  const allManifestations = material?.manifestations;
+  const selectedManifestations = material?.manifestations;
 
-  const materialTypes = flattenMaterialType(allManifestations?.[0]);
+  const materialTypes = flattenMaterialType(selectedManifestations?.[0]);
   const flattenedDisplayTypes = toFlatMaterialTypes(
     materialTypes,
     "specificDisplay"
   );
 
   const { flatPidsByType } = useMemo(() => {
-    return manifestationMaterialTypeFactory(allManifestations);
-  }, [workId, allManifestations, materialTypes]);
+    return manifestationMaterialTypeFactory(selectedManifestations);
+  }, [workId, selectedManifestations, materialTypes]);
 
   const selectedPids = useMemo(
     //TODO use

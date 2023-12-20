@@ -116,7 +116,7 @@ const useBookmarksCore = ({ isMock = false, session }) => {
             bookmarks: [
               {
                 materialId: value.materialId,
-                materialType: value.materialType, //TODO id instead of string
+                materialType: value.materialType, //TODO 2214 correct type already?
                 title: value.title,
                 workId: value.workId,
               },

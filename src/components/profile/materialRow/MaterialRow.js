@@ -69,6 +69,7 @@ const MaterialRow = ({ id: materialId, skeleton, type, ...props }) => {
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
 
+  console.log("MAT ROW ", materialId);
   if (skeleton) {
     return (
       <SkeletonMaterialRow version={isMobileSize ? "mobile" : "desktop"} />
@@ -106,7 +107,7 @@ const MaterialRow = ({ id: materialId, skeleton, type, ...props }) => {
           materialId={materialId}
           isMobileSize={isMobileSize}
           {...props}
-          materialType={props.materialType}
+          materialType={props.materialType} //TODO 2214 do i need this?
         />
       );
   }
