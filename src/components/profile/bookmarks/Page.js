@@ -237,7 +237,7 @@ const BookmarkPage = () => {
     return createEditionText(bookmark?.manifestations?.[0]);
   };
   const onPageChange = async (newPage) => {
-    const isSmallScreen = breakpoint == "xs";
+    const isSmallScreen = breakpoint === "xs";
 
     if (newPage > totalPages) {
       newPage = totalPages;

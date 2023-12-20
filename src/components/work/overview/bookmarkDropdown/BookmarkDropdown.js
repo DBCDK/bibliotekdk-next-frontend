@@ -36,18 +36,17 @@ export function BookMarkMaterialSelector({
   singleManifestation,
   pids,
 }) {
-  const { data: workData, isLoading: workIsLoading } = useData(
+  const { data: workData } = useData(
     workId && !singleManifestation && workFragments.overviewWork({ workId })
   );
-  const { data: manifestationData, isLoading: manifestationIsLoading } =
-    useData(
-      singleManifestation &&
-        pids &&
-        pids.length === 1 &&
-        manifestationFragments.manifestationFullManifestation({
-          pid: pids?.[0],
-        })
-    );
+  const { data: manifestationData } = useData(
+    singleManifestation &&
+      pids &&
+      pids.length === 1 &&
+      manifestationFragments.manifestationFullManifestation({
+        pid: pids?.[0],
+      })
+  );
 
   const manifestations = manifestationData
     ? [manifestationData?.manifestation]
