@@ -354,6 +354,7 @@ export const usePopulateBookmarksNew2 = (bookmarks) => {
         );
       manifestationWithCorrectMaterialType = specificManifestation;
     }
+    console.log("bookmark ", bookmark);
     return {
       ...work,
       bookmarkId: bookmark?.bookmarkId,

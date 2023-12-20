@@ -10,6 +10,7 @@ import useBookmarks, {
   usePopulateBookmarksNew2,
 } from "@/components/hooks/useBookmarks";
 import { useModal } from "@/components/_modal/Modal";
+import { constructMaterialType } from "@/lib/manifestationFactoryUtils";
 
 const CONTEXT = "bookmark-order";
 
@@ -39,12 +40,16 @@ const EMaterialFilter = ({ context, active }) => {
   useEffect(() => {
     const materials = materialsData.map((mat) => {
       const bookmark = bookmarks?.find((bm) => bm.key === mat.key);
+      console.log("Matti", mat);
+      console.log("bookmark", bookmark);
+
       return {
         ...bookmark,
         ...mat,
       };
     });
     console.log("materialsData", materialsData);
+    console.log("materials", materials);
     setMaterials(materials);
   }, [materialsData]);
 
@@ -171,7 +176,9 @@ const EMaterialFilter = ({ context, active }) => {
             <Title tag="h4" type="text1">
               {mat.titles?.main?.[0]}
             </Title>
-            <Text type="text2">{mat.materialType}</Text>
+            <Text type="text2">
+              {constructMaterialType(mat?.manifestations[0].materialTypes)}
+            </Text>
           </li>
         ))}
       </ul>

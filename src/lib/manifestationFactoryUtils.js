@@ -133,6 +133,14 @@ export function formatMaterialTypesToCode(materialTypeArray) {
   );
 }
 
+//TODO check if compound material types are sorted
+export function constructMaterialType(materialTypes) {
+  const flattenedMaterialTypes = flattenMaterialType({
+    materialTypes: materialTypes,
+  });
+  return formatMaterialTypesToPresentation(flattenedMaterialTypes);
+}
+
 /**
  * Material types in a flat array
  * @param {Object.<string, any>} manifestation
