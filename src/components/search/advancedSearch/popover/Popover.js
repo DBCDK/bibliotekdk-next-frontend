@@ -82,9 +82,9 @@ const Popover = ({ className, simpleSearchRef }) => {
       setMouseDownPosition(event.pageY);
       
     };
-    window.addEventListener("click", handleMouseDown);
+    window.addEventListener("mousedown", handleMouseDown);
     return () => {
-      window.removeEventListener("click", handleMouseDown);
+      window.removeEventListener("mousedown", handleMouseDown);
     };
   }, []);
 
