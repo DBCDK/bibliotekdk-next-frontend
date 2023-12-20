@@ -308,10 +308,15 @@ const useBookmarks = process.env.STORYBOOK_ACTIVE
   : useBookmarkImpl;
 export default useBookmarks;
 
-//TODO create new usePopulateBookmarks that used workId instead of materialId to work for all bookmarks in same manner
-// and then get manifestations for the relevant pids
-
-export const usePopulateBookmarksNew2 = (bookmarks) => {
+/**
+ * Used to populate bookmark data, to show more info about the materials
+ * Uses workid to find all manifestations for the work
+ * filters the relevant manifestations based on the materialtype
+ * and if pid provided, it will find the one relevant pid (specific edition was bookmarked)
+ * @param {Object[]} bookmarks list of bookmarks
+ * @returns {Object[]} bookmarks
+ */
+export const usePopulateBookmarks = (bookmarks) => {
   //all works both for specific edition and entire work
   const { data: workByIdsData, isLoading: idsToWorksLoading } = useData(
     workFragments.idsToWorks({
@@ -380,169 +385,4 @@ export const usePopulateBookmarksNew2 = (bookmarks) => {
     return relevantWorksByBookmarkId.filter((item) => item); // filter nulls
   }, [bookmarks, workByIdsData]);
   return { data, isLoading: idsToWorksLoading };
-};
-
-export const usePopulateBookmarksNew = (bookmarks) => {
-  //works (not specific edition)
-  const workIds = bookmarks?.filter((bookmark) =>
-    bookmark?.materialId?.includes("work-of:")
-  );
-  const { data: workByIdsData, isLoading: idsToWorksLoading } = useData(
-    workFragments.idsToWorks({
-      //TODO get out less
-      ids: workIds?.map((work) => work.materialId),
-    })
-  );
-
-  //find relevant pids with relevant worktype //TODO check if I can use manifestationsByType!!!
-  const relevantWorks = workByIdsData?.works?.map((work) => {
-    const materialTypes = bookmarks
-      .find((b) => b?.materialId === work.workId)
-      ?.materialType?.split(" / "); //either single worktype ("BOOK") or compound worktype such as "BOOK / SOUND_RECORDING_CD"
-    const manifestationWithCorrectMaterialType =
-      work?.manifestations?.mostRelevant.filter((m) =>
-        isMaterialTypesMatch(materialTypes, m?.materialTypes)
-      );
-
-    return manifestationWithCorrectMaterialType;
-  });
-
-  const relevantPidsPerWork = relevantWorks?.map((work) =>
-    work?.map((m) => m?.pid)
-  );
-
-  const flattedPids = relevantPidsPerWork?.flat();
-  //get manifestations from these pids
-  const {
-    data: manifestatonsForWorks,
-    isLoading: manifestatonsForWorksIsLoading, //TODO 2214 put into isLoading?
-  } = useData(
-    workFragments.pidsToWork({
-      pids: flattedPids,
-    })
-  );
-
-  //get work by pids together with specific edition
-
-  //specific edition
-  const workPids = bookmarks?.filter(
-    (bookmark) => !bookmark?.materialId?.includes("work-of:")
-  );
-
-  const { data: workByPidsData, isLoading: pidsToWorkLoading } = useData(
-    workFragments.pidsToWork({
-      pids: workPids?.map((work) => work.materialId),
-    })
-  );
-
-  const data = useMemo(() => {
-    if (!bookmarks) return [];
-    const groupedByWorkId = {};
-    manifestatonsForWorks?.manifestations?.forEach((manifestation) => {
-      const workId = manifestation?.ownerWork?.workId;
-      if (!groupedByWorkId[workId]) {
-        groupedByWorkId[workId] = [];
-      }
-      groupedByWorkId[workId].push(manifestation);
-    });
-
-    const transformedWorkByIds = Object.entries(groupedByWorkId).map(
-      ([materialId, manifestations]) => ({
-        manifestations,
-        materialId,
-      })
-    );
-
-    const transformedWorkByPids = workByPidsData?.manifestations?.map(
-      (work) => ({
-        ...work,
-        materialId: work?.pid,
-      })
-    );
-    const merged = [].concat(transformedWorkByIds, transformedWorkByPids);
-    return bookmarks
-      .map((bookmark) => {
-        const workData = merged.find(
-          (item) => item?.materialId === bookmark.materialId
-        );
-        if (!workData) {
-          return null;
-        }
-
-        // Merge data
-        return {
-          ...workData,
-          ...bookmark,
-        };
-      })
-      .filter((item) => item); // filter nulls
-  }, [bookmarks, workByPidsData, workByIdsData]);
-  const isLoading =
-    idsToWorksLoading || pidsToWorkLoading || manifestatonsForWorksIsLoading;
-
-  return { data, isLoading };
-
-  //...
-};
-
-/**
- * Used to populate bookmark data, to show more info about the materials
- * @param {Object[]} bookmarks list of bookmarks
- * @returns {Object[]} bookmarks
- */
-export const usePopulateBookmarks = (bookmarks) => {
-  //works (not specific edition)
-  const workIds = bookmarks?.filter((bookmark) =>
-    bookmark?.materialId?.includes("work-of:")
-  );
-
-  //specific edition
-  const workPids = bookmarks?.filter(
-    (bookmark) => !bookmark?.materialId?.includes("work-of:")
-  );
-
-  const { data: workByIdsData, isLoading: idsToWorksLoading } = useData(
-    workFragments.idsToWorks({ ids: workIds?.map((work) => work.materialId) })
-  );
-
-  const { data: workByPidsData, isLoading: pidsToWorkLoading } = useData(
-    workFragments.pidsToWorks({
-      pids: workPids?.map((work) => work.materialId),
-    })
-  );
-
-  // Reorganize order and add bookmark data
-  const data = useMemo(() => {
-    if (!bookmarks) return [];
-    const transformedWorkByIds = workByIdsData?.works?.map((work) => ({
-      ...work,
-      materialId: work?.workId,
-    }));
-    const transformedWorkByPids = workByPidsData?.manifestations?.map(
-      (work) => ({
-        ...work,
-        materialId: work?.pid,
-      })
-    );
-    const merged = [].concat(transformedWorkByIds, transformedWorkByPids);
-
-    return bookmarks
-      .map((bookmark) => {
-        const workData = merged.find(
-          (item) => item?.materialId === bookmark.materialId
-        );
-        if (!workData) {
-          return null;
-        }
-
-        // Merge data
-        return {
-          ...workData,
-          ...bookmark,
-        };
-      })
-      .filter((item) => item); // filter nulls
-  }, [bookmarks, workByPidsData, workByIdsData]);
-  const isLoading = idsToWorksLoading || pidsToWorkLoading;
-  return { data, isLoading };
 };

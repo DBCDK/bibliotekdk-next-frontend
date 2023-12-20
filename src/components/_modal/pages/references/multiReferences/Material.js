@@ -1,4 +1,3 @@
-import { filterForRelevantMaterialTypes } from "../../bookmarkOrder/multi-order/Material/Material";
 import { templateImageToLeft } from "@/components/base/materialcard/templates/templates";
 import MaterialCard from "@/components/base/materialcard/MaterialCard";
 import isEmpty from "lodash/isEmpty";
@@ -6,31 +5,24 @@ import { accessFactory } from "@/lib/accessFactoryUtils";
 import { BackgroundColorEnum } from "@/components/base/materialcard/materialCard.utils";
 import ChoosePeriodicaCopyRow from "../../edition/choosePeriodicaCopyRow/ChoosePeriodicaCopyRow";
 import ButtonRow from "./ButtonRow";
+import { constructMaterialType } from "@/components/profile/bookmarks/Page";
+import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
 
 export default function Material({
   material,
   materialKey,
-  materialKeyToMaterialTypes,
   modal,
   onActionClick,
   onDeleteClick: onParentDeleteClick,
   hideDelete,
 }) {
-  const materialType = materialKeyToMaterialTypes.find(
-    (e) => e?.materialKey === material.key
-  )?.materialType;
-
-  const manifestationsCorrectMaterialType = filterForRelevantMaterialTypes(
-    material.manifestations.mostRelevant,
-    materialType
+  const manifestations = material?.manifestations;
+  const materialType = constructMaterialType(
+    manifestations?.[0]?.materialTypes
   );
-
-  const manifestation = manifestationsCorrectMaterialType[0];
-
-  const { isPeriodicaLikeArray } = accessFactory(
-    manifestationsCorrectMaterialType
-  );
-
+  const materialTypesArray = flattenMaterialType(manifestations?.[0]);
+  const manifestation = manifestations?.[0];
+  const { isPeriodicaLikeArray } = accessFactory(manifestations);
   const isPeriodicaLike = isPeriodicaLikeArray?.find(
     (single) => single === true
   );
@@ -43,24 +35,17 @@ export default function Material({
     if (onParentDeleteClick) onParentDeleteClick(materialKey);
   };
 
-  const children = isPeriodicaLike
-    ? ChoosePeriodicaCopyRow({
-        //TODO always show buttonRow
-        periodicaForm: {}, //TODO grab data from here and send to references
-        modal,
-        articleTypeTranslation: null,
-      })
-    : ButtonRow({
-        onClick: onEditionClick,
-        onDeleteClick,
-        hideDelete: hideDelete,
-      });
+  const children = ButtonRow({
+    onClick: onEditionClick,
+    onDeleteClick,
+    hideDelete: hideDelete,
+  });
   const isDigitalCopy = false;
   const isDeliveredByDigitalArticleService = false;
 
   const materialCardTemplate = (material) =>
     templateImageToLeft({
-      material,
+      material: { ...material, materialTypesArray: materialTypesArray },
       singleManifestation: false,
       children,
       isPeriodicaLike,
@@ -71,15 +56,14 @@ export default function Material({
     });
   return (
     <>
-      {manifestationsCorrectMaterialType &&
-        !isEmpty(manifestationsCorrectMaterialType) && (
-          <MaterialCard
-            key={JSON.stringify("matcard+", manifestation)}
-            propAndChildrenTemplate={materialCardTemplate}
-            propAndChildrenInput={manifestation}
-            colSizing={{ xs: 12 }}
-          />
-        )}
+      {manifestations && !isEmpty(manifestations) && (
+        <MaterialCard
+          key={JSON.stringify("matcard+", manifestation)}
+          propAndChildrenTemplate={materialCardTemplate}
+          propAndChildrenInput={manifestation}
+          colSizing={{ xs: 12 }}
+        />
+      )}
     </>
   );
 }

@@ -2,7 +2,7 @@ import Translate from "@/components/base/translate/Translate";
 import Top from "../../base/top/Top";
 import LinksList from "../LinksList";
 import useBookmarks, {
-  usePopulateBookmarksNew,
+  usePopulateBookmarks,
 } from "@/components/hooks/useBookmarks";
 // eslint-disable-next-line css-modules/no-unused-class
 import styles from "./MultiReferences.module.css";
@@ -44,8 +44,7 @@ const SingleReference = ({
   materialKeyToMaterialTypes,
   chosenPid,
 }) => {
-  const { data: materials, isLoading } =
-    usePopulateBookmarksNew(bookmarkInList);
+  const { data: materials, isLoading } = usePopulateBookmarks(bookmarkInList);
   const material = materials[0];
   const materialType = materialKeyToMaterialTypes.find(
     (e) => e?.materialKey === bookmarkInList[0].key
@@ -63,9 +62,7 @@ const SingleReference = ({
       material: chosenPid
         ? {
             ...material,
-            ...material?.manifestations?.mostRelevant.find(
-              (mani) => mani.pid === chosenPid
-            ),
+            ...material?.manifestations?.find((mani) => mani.pid === chosenPid),
             materialType: materialType,
           }
         : { ...material, materialType: materialType },
@@ -88,13 +85,12 @@ const SingleReference = ({
  */
 export default function MultiReferences({ context }) {
   const { materials } = context;
-  console.log("materials ", materials);
   const modal = useModal();
 
   const bookmarksMissingEdition = materials.filter((material) =>
     material.materialId.startsWith("work-of")
   );
-  const { data: materialsMissingEdition, isLoading } = usePopulateBookmarksNew(
+  const { data: materialsMissingEdition, isLoading } = usePopulateBookmarks(
     bookmarksMissingEdition
   );
   const { bookmarks } = useBookmarks();
@@ -102,7 +98,6 @@ export default function MultiReferences({ context }) {
     bookmarksMissingEdition
   );
 
-  console.log("ACTIVE MATERIAL CHOICE", activeMaterialChoices);
   const [periodicaFiltered, setPeriodicaFiltered] = useState([]);
 
   const materialKeyToMaterialTypes = mapMaterialKeysToSelectedMaterialTypes({
@@ -111,7 +106,7 @@ export default function MultiReferences({ context }) {
   });
 
   const filteredManifestationsForMaterialType = (workData) => {
-    if (workData.manifestations.mostRelevant.length === 1) {
+    if (workData.manifestations?.length === 1) {
       /**
        *  Only 1 manifestation, we pick it.
        * Some cases like article (online) we get 2 material types in materialTypeSpecific.
@@ -121,7 +116,7 @@ export default function MultiReferences({ context }) {
       return workData;
     }
     // Filter only the selected material type //TODO BIBDK2021-2214
-    const filteredManifestations = workData.manifestations.mostRelevant.filter(
+    const filteredManifestations = workData.manifestations.filter(
       (mani) =>
         mani.materialTypes?.[0]?.materialTypeSpecific?.display?.toLowerCase() ===
         workData.materialType?.toLowerCase()
@@ -129,7 +124,7 @@ export default function MultiReferences({ context }) {
 
     return {
       ...workData,
-      manifestations: { mostRelevant: filteredManifestations },
+      manifestations: filteredManifestations,
     };
   };
 
@@ -154,6 +149,7 @@ export default function MultiReferences({ context }) {
     materials.length === 1 &&
     !hasMissingReferences &&
     periodicaFiltered.length !== 1;
+
   const materialPids = materials
     .filter((material) => !material.materialId.startsWith("work-of"))
     .map((material) => material.materialId);
@@ -210,7 +206,7 @@ export default function MultiReferences({ context }) {
         return bookmark;
       }
 
-      const manifestations = matchingData.manifestations.mostRelevant;
+      const manifestations = matchingData.manifestations;
 
       // If 1 option, select it
       if (manifestations.length === 1) {
@@ -248,7 +244,7 @@ export default function MultiReferences({ context }) {
 
   const onActionClick = (material, materialType, materialKey) => {
     modal.push("editionPicker", {
-      material: filteredManifestationsForMaterialType(material),
+      material,
       materialType,
       onEditionPick,
       materialKey,
@@ -270,7 +266,7 @@ export default function MultiReferences({ context }) {
         const filteredManifestationsWorkData =
           filteredManifestationsForMaterialType(item);
         const manifestationsForMaterialType =
-          filteredManifestationsWorkData?.manifestations?.mostRelevant;
+          filteredManifestationsWorkData?.manifestations;
         const { flattenedGroupedSortedManifestations } =
           manifestationMaterialTypeFactory(manifestationsForMaterialType);
         // Take newest manifestation pid
@@ -291,9 +287,6 @@ export default function MultiReferences({ context }) {
       setActiveMaterialChoices([...activeChoices]); // Spread to copy object - rerenders since new object
     }
   };
-  console.log("missingActionMaterials", missingActionMaterials);
-  console.log("hasAutoCheckbox", hasAutoCheckbox);
-
   return (
     <div>
       <Top
@@ -367,7 +360,6 @@ export default function MultiReferences({ context }) {
                 key={material.key}
                 materialKey={material.key}
                 material={material}
-                materialKeyToMaterialTypes={materialKeyToMaterialTypes}
                 modal={modal}
                 onActionClick={onActionClick}
                 onDeleteClick={onDeleteClick}

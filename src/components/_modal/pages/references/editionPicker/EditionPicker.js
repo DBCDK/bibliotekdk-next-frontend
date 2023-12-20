@@ -45,7 +45,7 @@ const EditionOption = ({ manifestation, onClick, materialKey }) => {
 
 const EditionPicker = ({ context }) => {
   const { material, materialType, onEditionPick, materialKey } = context;
-  const manifestations = material?.manifestations?.mostRelevant;
+  const manifestations = material?.manifestations;
 
   return (
     <div className={styles.EditionPicker}>
@@ -67,7 +67,7 @@ const EditionPicker = ({ context }) => {
         {materialType}
       </Title>
 
-      {manifestations.map((mani, i) => (
+      {manifestations?.map((mani, i) => (
         <EditionOption
           key={i}
           manifestation={mani}

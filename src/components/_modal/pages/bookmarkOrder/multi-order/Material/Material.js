@@ -29,23 +29,6 @@ import HasBeenOrderedRow from "../../../edition/hasbeenOrderedRow/HasBeenOrdered
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 /**
- * At this point, we have manifestation of all the different material types
- * Here we filter out the manifestation with the materialtype the user has selected
- * If we have compound material types (such as "den grimme ælling Bog / Lydoptagelse (cd)"), we have to split them up
- * @param {Object[]} mostRelevant
- * @param {String} materialType
- * @returns {Object[]}
- */
-export const filterForRelevantMaterialTypes = (mostRelevant, materialType) => {
-  if (!mostRelevant || !materialType) return [];
-
-  const materialTypes = formatMaterialTypesFromUrl(materialType);
-  const { flattenGroupedSortedManifestationsByType } =
-    manifestationMaterialTypeFactory(mostRelevant);
-  return flattenGroupedSortedManifestationsByType(materialTypes);
-};
-
-/**
  * Is missing article implementation
  * @param {Object} material
  * @param {Number} numberOfMaterialsToOrder

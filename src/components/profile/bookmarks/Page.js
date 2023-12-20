@@ -1,5 +1,5 @@
 import useBookmarks, {
-  usePopulateBookmarksNew2,
+  usePopulateBookmarks,
 } from "@/components/hooks/useBookmarks";
 import styles from "./Bookmark.module.css";
 import Text from "@/components/base/text";
@@ -66,6 +66,14 @@ const containsIds = (ids, key) => {
   return x > -1;
 };
 
+//TODO check if compound material types are ordered
+export const constructMaterialType = (materialTypes) => {
+  const flattenedMaterialTypes = flattenMaterialType({
+    materialTypes: materialTypes,
+  });
+  return formatMaterialTypesToPresentation(flattenedMaterialTypes);
+};
+
 const BookmarkPage = () => {
   const {
     bookmarks: allBookmarksData,
@@ -79,7 +87,7 @@ const BookmarkPage = () => {
     isLoading: bookmarsDataLoading,
   } = useBookmarks();
   const { data: bookmarks, isLoading: isPopulateLoading } =
-    usePopulateBookmarksNew2(bookmarksData); //TODO first to exchange
+    usePopulateBookmarks(bookmarksData); //TODO first to exchange
   const [activeStickyButton, setActiveStickyButton] = useState(null);
   const breakpoint = useBreakpoint();
   const [sortByValue, setSortByValue] = useState(null);
@@ -288,14 +296,6 @@ const BookmarkPage = () => {
       </ProfileLayout>
     );
   }
-
-  //TODO check if compound material types are ordered
-  const constructMaterialType = (materialTypes) => {
-    const flattenedMaterialTypes = flattenMaterialType({
-      materialTypes: materialTypes,
-    });
-    return formatMaterialTypesToPresentation(flattenedMaterialTypes);
-  };
 
   return (
     <ProfileLayout
