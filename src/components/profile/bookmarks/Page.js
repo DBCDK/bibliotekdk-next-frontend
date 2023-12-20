@@ -139,13 +139,14 @@ const BookmarkPage = () => {
   const onOrderManyClick = () => {
     setTimeout(() => {
       if (isAuthenticated) {
+        console.log("EMATERIAL HAS handleOrderFinished", handleOrderFinished);
         modal.push("ematerialfilter", {
           materials: checkboxList,
           sortType: sortByValue,
           handleOrderFinished: handleOrderFinished,
         });
       } else {
-        openLoginModal({ modal }); //TODO check this flow
+        openLoginModal({ modal }); //TODO 2214 check this flow
       }
     }, 300);
   };
@@ -288,17 +289,6 @@ const BookmarkPage = () => {
       </ProfileLayout>
     );
   }
-
-  //TODO her mangler jeg materialtypesSpecific for tidsskrifter (edition)
-  bookmarks.map((bookmark) => {
-    console.log(
-      "bookmark",
-      bookmark.materialId,
-      "key",
-      bookmark.key,
-      bookmark.manifestations.length
-    );
-  });
 
   //TODO check if compound material types are ordered
   const constructMaterialType = (materialTypes) => {

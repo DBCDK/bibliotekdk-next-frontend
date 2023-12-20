@@ -82,17 +82,12 @@ const Material = ({
   const [showAlreadyOrderedWarning, setShowAlreadyOrderedWarning] = useState(
     hasAlreadyBeenOrdered
   );
+  console.log("material ", material);
 
-  const manifestations = isSpecificEdition
-    ? [material]
-    : filterForRelevantMaterialTypes(
-        material?.manifestations?.mostRelevant,
-        material?.materialType
-      );
+  const manifestations = material?.manifestations || [];
 
-  const pids = isSpecificEdition
-    ? [material?.pid]
-    : manifestations.map((m) => m.pid) || [];
+  const pids = manifestations.map((m) => m.pid) || [];
+  console.log("pids ", pids);
 
   const { data: orderPolicyData, isLoading: orderPolicyIsLoading } = useData(
     pids &&

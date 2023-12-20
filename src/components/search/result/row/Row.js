@@ -21,7 +21,6 @@ import {
   formatMaterialTypesToPresentation,
   formatMaterialTypesToUrl,
   manifestationMaterialTypeFactory,
-  formatMaterialTypesToCode,
 } from "@/lib/manifestationFactoryUtils";
 import {
   RenderLanguageAddition,

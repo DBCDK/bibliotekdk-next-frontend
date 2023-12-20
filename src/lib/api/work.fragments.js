@@ -12,7 +12,6 @@ import {
   seriesFragment,
   universeFragment,
   workSliderFragment,
-  materialTypesSpecificFragment,
 } from "@/lib/api/fragments.utils";
 
 export function tableOfContents({ workId }) {

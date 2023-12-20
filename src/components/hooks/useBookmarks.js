@@ -476,7 +476,8 @@ export const usePopulateBookmarksNew = (bookmarks) => {
       })
       .filter((item) => item); // filter nulls
   }, [bookmarks, workByPidsData, workByIdsData]);
-  const isLoading = idsToWorksLoading || pidsToWorkLoading;
+  const isLoading =
+    idsToWorksLoading || pidsToWorkLoading || manifestatonsForWorksIsLoading;
 
   return { data, isLoading };
 

@@ -78,6 +78,16 @@ const MultiOrder = ({ context }) => {
   const [materialStatusChanged, setMaterialStatusChanged] = useState();
   const orderMutation = useMutate();
 
+  materials?.map((ma) =>
+    ma.manifestations?.map((man) =>
+      man.materialTypes.map((mat) =>
+        console.log("MATERIAL TYPE ", mat?.materialTypeSpecific.code)
+      )
+    )
+  );
+
+  console.log("MATERIALS TO ORDER ", materialsToOrder);
+
   useEffect(() => {
     if (orderMutation?.data && orderMutation.data.submitMultipleOrders) {
       const { failedAtCreation, successfullyCreated } =
