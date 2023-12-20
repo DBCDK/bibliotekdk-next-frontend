@@ -46,6 +46,7 @@ export default async function handler(req, res) {
             pid: "870970-basis:23154382",
             oclc: "1200830771",
             faust: "23154382",
+            workIds: ["work-of:870970-basis:52557240"],
           }),
           accessToken: session?.accessToken,
         }),
