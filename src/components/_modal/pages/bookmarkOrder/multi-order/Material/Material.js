@@ -82,13 +82,9 @@ const Material = ({
   const [showAlreadyOrderedWarning, setShowAlreadyOrderedWarning] = useState(
     hasAlreadyBeenOrdered
   );
-  console.log("material ", material);
-
   const manifestations = material?.manifestations || [];
 
   const pids = manifestations.map((m) => m.pid) || [];
-  console.log("pids ", pids);
-
   const { data: orderPolicyData, isLoading: orderPolicyIsLoading } = useData(
     pids &&
       pids.length > 0 &&

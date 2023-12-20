@@ -57,7 +57,6 @@ const SortButtons = ({ sortByItems, setSortByValue, sortByValue }) => {
 };
 
 const containsIds = (ids, key) => {
-  console.log("containsIds", ids, key);
   if (!ids || !key) return false;
   if (!Array.isArray(ids)) return ids === key;
   const x = ids.findIndex((id) => {
@@ -90,9 +89,6 @@ const BookmarkPage = () => {
   const modal = useModal();
   const [successfullyCreatedIds, setSuccessfullyCreatedIds] = useState([]);
   const [failureAtCreationIds, setFailureAtCreationIds] = useState([]);
-
-  console.log("bookmarks", bookmarks);
-
   /**
    * Callback that marks materials as successfully created/failed in bookmarklist
    * when we close the receipt
@@ -100,7 +96,6 @@ const BookmarkPage = () => {
    * @param {String[]} failedAtCreation
    */
   function handleOrderFinished(successfullyCreated, failedAtCreation) {
-    console.log("handleorder finished ", successfullyCreated, failedAtCreation);
     setCheckboxList([]);
     setSuccessfullyCreatedIds((prev) => [...prev, ...successfullyCreated]);
     setFailureAtCreationIds((prev) => [...prev, ...failedAtCreation]);
@@ -143,7 +138,6 @@ const BookmarkPage = () => {
   const onOrderManyClick = () => {
     setTimeout(() => {
       if (isAuthenticated) {
-        console.log("EMATERIAL HAS handleOrderFinished", handleOrderFinished);
         modal.push("ematerialfilter", {
           materials: checkboxList,
           sortType: sortByValue,

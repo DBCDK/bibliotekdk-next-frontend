@@ -35,19 +35,9 @@ const BookmarkColumn = ({
   showSuccessfullyOrdered,
   handleOrderFinished,
 }) => {
-  console.log("relevantManifestations", relevantManifestations); //AM I MISSING MANIFESTATIONS HERE? HP should have 12
-
   const selectedPids = useMemo(
     () => relevantManifestations.map((manifestation) => manifestation.pid),
     [materialType, relevantManifestations]
-  );
-
-  console.log("relevantManifestations", relevantManifestations);
-
-  console.log("selectedPids", selectedPids);
-  console.log(
-    "materialType",
-    constructMaterialType(relevantManifestations?.[0]?.materialTypes)
   );
   return (
     <div className={sharedStyles.dynamicColumnHorizontal}>

@@ -115,8 +115,6 @@ const EMaterialFilter = ({ context, active }) => {
   // };
 
   const onNextClick = () => {
-    console.log("toProceedSorted 2", toProceedSorted);
-
     modal.push("multiorder", {
       materials: materialsToProceed,
       handleOrderFinished: handleOrderFinished,
