@@ -126,7 +126,6 @@ const BookmarkPage = () => {
       newList.push({
         key: key,
         materialId: bookmarkData.materialId,
-        materialType: bookmarkData.materialType,
         workId: bookmarkData.workId,
         materialType: bookmarkData.materialType,
         bookmarkId: bookmarkData.bookmarkId,
@@ -168,7 +167,6 @@ const BookmarkPage = () => {
         allBookmarksData.map((el) => ({
           key: el.key,
           materialId: el.materialId,
-          materialType: el.materialType,
           workId: el.workId,
           materialType: el.materialType,
           bookmarkId: el.bookmarkId,
@@ -232,6 +230,7 @@ const BookmarkPage = () => {
     if (!bookmark.pid) {
       return null;
     }
+
     /**
      * Matches string construction on work page
      */

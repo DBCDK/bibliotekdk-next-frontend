@@ -343,7 +343,7 @@ export const usePopulateBookmarksNew2 = (bookmarks) => {
 
     // if bookmarkId is in specificEdition array, then filter the specific edition out
     const specificEditionBookmark = specificEditions?.find(
-      (se) => se?.bookmarkId === bookmark?.bookmarkId
+      (se) => se?.materialId === bookmark?.materialId
     );
     if (specificEditionBookmark) {
       const specificManifestation =
