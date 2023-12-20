@@ -26,23 +26,10 @@ const Popover = ({ className, simpleSearchRef }) => {
   useEffect(() => {
     //hide if user clicks outside the popover.
     function handleClickOutside(event) {
-
-      const scrollbarPosition = window.innerWidth - 30;
-      console.log('\n\n\nscrollbarPosition',scrollbarPosition)
-      console.log('innerWidth',window.innerWidth)
-      console.log('event.pageX',event.pageX)
-      console.log('event.pageY !== mouseDownPosition',event.pageY !== mouseDownPosition)
-      console.log('event.pageX > scrollbarPosition ',event.pageX > scrollbarPosition )
-
-
-      //To prevent popover from collapsing
-      if (
-       // event.pageX > scrollbarPosition &&
-        event.pageY !== mouseDownPosition
-      ) {
+      //To prevent popover from collapsing if user is scrolling using the scroll bar
+      if (event.pageY !== mouseDownPosition) {
         return;
       }
-      console.log("after click evetnt return");
       //returns true if the click is inside the given ref
       const isClickInsideRef = (ref, target) => ref?.current?.contains(target);
       //if click outside popover and outside trigger, then hide popover
@@ -78,9 +65,7 @@ const Popover = ({ className, simpleSearchRef }) => {
 
   useEffect(() => {
     const handleMouseDown = (event) => {
-     // console.log("event mouse down", event.pageY);
       setMouseDownPosition(event.pageY);
-      
     };
     window.addEventListener("mousedown", handleMouseDown);
     return () => {
