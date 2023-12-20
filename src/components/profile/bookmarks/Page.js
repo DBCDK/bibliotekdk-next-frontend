@@ -257,6 +257,15 @@ const BookmarkPage = () => {
     setCurrentPage(newPage);
   };
 
+  const onDeleteBookmark = (bookmark) => {
+    if (checkboxList.indexOf((bm) => bm.bookmarkId === bookmark.bookmarkId)) {
+      setCheckboxList((prev) =>
+        prev.filter((bm) => bm.bookmarkId !== bookmark.bookmarkId)
+      );
+    }
+    deleteBookmarks([{ bookmarkId: bookmark.bookmarkId, key: bookmark.key }]);
+  };
+
   const isAllSelected = checkboxList?.length === allBookmarksData?.length;
   const isNothingSelected = checkboxList.length === 0;
 
@@ -450,11 +459,7 @@ const BookmarkPage = () => {
             isSelected={
               checkboxList.findIndex((item) => item.key === bookmark.key) > -1
             }
-            onBookmarkDelete={() =>
-              deleteBookmarks([
-                { bookmarkId: bookmark.bookmarkId, key: bookmark.key },
-              ])
-            }
+            onBookmarkDelete={() => onDeleteBookmark(bookmark)}
             onSelect={() => onToggleCheckbox(bookmark.key)}
             showFailedAtCreation={containsIds(
               failureAtCreationIds,

@@ -125,9 +125,9 @@ export default function MultiReferences({ context }) {
   const isAutoCheckboxSelected =
     missingActionMaterials.length > CHECKBOX_TRESHHOLD;
 
-  const numberMaterials = materials.length;
+  const materialsCount = materials.length;
   const title =
-    numberMaterials === 1
+    materialsCount === 1
       ? Translate({
           context: CONTEXT,
           label: "get-reference",
@@ -135,11 +135,11 @@ export default function MultiReferences({ context }) {
       : Translate({
           context: CONTEXT,
           label: "get-references",
-          vars: [numberMaterials],
+          vars: [materialsCount],
         });
 
   const missingEditionText =
-    numberMaterials === 1
+    materialsCount === 1
       ? Translate({
           context: CONTEXT,
           label: "missing-edition-singular",
