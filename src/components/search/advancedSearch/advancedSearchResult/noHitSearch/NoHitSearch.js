@@ -3,7 +3,8 @@ import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import styles from "./NoHitSearch.module.css";
 
-export function NoHitSearch() {
+export function NoHitSearch({ isSimpleSearch }) {
+  const listItems = isSimpleSearch ? [1, 2, 3] : [1, 2, 3, 4];
   return (
     <div className={styles.no_hits}>
       <Text type="text1">
@@ -18,7 +19,7 @@ export function NoHitSearch() {
           label: "no_hits__description",
         })}
         <ul>
-          {[1, 2, 3, 4].map((item) => {
+          {listItems.map((item) => {
             return (
               <li key={item} className={styles.no_hits__list_item}>
                 {Translate({
