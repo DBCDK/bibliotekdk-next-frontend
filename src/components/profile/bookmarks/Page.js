@@ -374,7 +374,7 @@ const BookmarkPage = () => {
             checked={isAllSelected}
             disabled={bookmarks?.length === 0}
             id="bookmarkpage-select-all"
-            aria-labelledby="bookmarkpage-select-all-label"
+            ariaLabelledBy="bookmarkpage-select-all-label"
             ariaLabel={Translate({
               context: CONTEXT,
               label: "select-all",
@@ -434,7 +434,7 @@ const BookmarkPage = () => {
           <MaterialRow
             key={`bookmark-list-${idx}`}
             hasCheckbox={!isMobile || activeStickyButton !== null}
-            title={bookmark?.manifestations?.[0]?.titles?.full || ""}
+            title={bookmark?.manifestations?.[0]?.titles?.full?.[0] || ""}
             creator={
               bookmark?.manifestations?.[0]?.ownerWork.creators[0]?.display
             }

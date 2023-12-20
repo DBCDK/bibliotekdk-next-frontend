@@ -105,7 +105,7 @@ const MaterialRow = ({ id: materialId, skeleton, type, ...props }) => {
         <MaterialRowBookmark
           materialId={materialId}
           isMobileSize={isMobileSize}
-          {...props} //TODO show display materialtype
+          {...props}
           materialType={props.materialType}
         />
       );
