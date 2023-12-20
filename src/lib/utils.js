@@ -324,3 +324,58 @@ export function buildHtmlLink(txt, url, overrideTarget = null) {
 
   return `<a href="${url}" target=${target} class="${animations.underlineContainer} ${animations.top_line_false} ${animations.top_line_keep_false}">${txt}</a>`;
 }
+
+export function setSessionStorageItem(key, value) {
+  //private mode in Safari and firefox throws errors if sessionStorage i used.
+  try {
+    sessionStorage.setItem(key, value);
+  } catch (e) {
+    console.error("Failed to set item in sessionStorage:", e);
+  }
+}
+
+export function getSessionStorageItem(key) {
+  try {
+    //private mode in Safari and firefox throws errors if sessionStorage i used.
+
+    return sessionStorage.getItem(key);
+  } catch (e) {
+    console.error("Failed to get item from sessionStorage:", e);
+    return null; // return a default value
+  }
+}
+
+export function removeSessionStorageItem(key) {
+  try {
+    sessionStorage.removeItem(key);
+  } catch (e) {
+    console.error("Failed to remove item from sessionStorage:", e);
+  }
+}
+
+export function setLocalStorageItem(key, value) {
+  //private mode in Safari and firefox throws errors if localStorage i used.
+  try {
+    localStorage.setItem(key, value);
+  } catch (e) {
+    console.error("Failed to set item in localStorage:", e);
+  }
+}
+
+export function getLocalStorageItem(key) {
+  try {
+    const value = localStorage.getItem(key);
+    return value;
+  } catch (e) {
+    console.error("Failed to get item from localStorage:", e);
+    return null;
+  }
+}
+
+export function removeLocalStorageItem(key) {
+  try {
+    localStorage.removeItem(key);
+  } catch (e) {
+    console.error("Failed to remove item from localStorage:", e);
+  }
+}
