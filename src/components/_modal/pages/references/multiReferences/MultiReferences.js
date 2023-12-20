@@ -15,6 +15,7 @@ import MaterialCard from "@/components/base/materialcard/MaterialCard";
 import { templateImageToLeft } from "@/components/base/materialcard/templates/templates";
 import Checkbox from "@/components/base/forms/checkbox";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
+import { constructMaterialType } from "@/components/profile/bookmarks/Page";
 
 export const CONTEXT = "multiReferences";
 const CHECKBOX_TRESHHOLD = 20;
@@ -39,16 +40,12 @@ const mapMaterialKeysToSelectedMaterialTypes = ({
   });
 };
 
-const SingleReference = ({
-  bookmarkInList,
-  materialKeyToMaterialTypes,
-  chosenPid,
-}) => {
+const SingleReference = ({ bookmarkInList }) => {
   const { data: materials, isLoading } = usePopulateBookmarks(bookmarkInList);
   const material = materials[0];
-  const materialType = materialKeyToMaterialTypes.find(
-    (e) => e?.materialKey === bookmarkInList[0].key
-  )?.materialType;
+  const materialType = constructMaterialType(
+    material?.manifestations?.[0]?.materialTypes
+  );
 
   if (isLoading) return null;
 
@@ -59,13 +56,10 @@ const SingleReference = ({
        * to get precise image and edition text etc
        */
 
-      material: chosenPid
-        ? {
-            ...material,
-            ...material?.manifestations?.find((mani) => mani.pid === chosenPid),
-            materialType: materialType,
-          }
-        : { ...material, materialType: materialType },
+      material: {
+        ...material?.manifestations?.[0],
+        materialType: materialType,
+      },
       singleManifestation: true,
       isPeriodicaLike: false, //we have filtered out periodicalike materials
       //isDigitalArticle doesnt matter, since we always show edition
@@ -318,8 +312,7 @@ export default function MultiReferences({ context }) {
         <SingleReference
           bookmarkInList={materials}
           bookmarks={bookmarks}
-          materialKeyToMaterialTypes={materialKeyToMaterialTypes}
-          chosenPid={activeMaterialChoices?.[0]?.chosenPid}
+          //chosenPid={activeMaterialChoices?.[0]?.chosenPid} //WHAT DO I NEED chosenPid for?
         />
       )}
 
@@ -360,7 +353,6 @@ export default function MultiReferences({ context }) {
                 key={material.key}
                 materialKey={material.key}
                 material={material}
-                modal={modal}
                 onActionClick={onActionClick}
                 onDeleteClick={onDeleteClick}
                 hideDelete={materials.length === 1}

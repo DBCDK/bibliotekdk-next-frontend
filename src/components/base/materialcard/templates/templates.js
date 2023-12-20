@@ -661,9 +661,6 @@ export function templateImageToLeft({
   ) //@TODO we get that from bookmarks if specific edition is marked --> would be better to retrieve manifestations directly inside of multiorder --> material
     ? material?.materialType
     : formatMaterialTypesToPresentation(material?.materialTypesArray);
-  console.log("XXX ", formattedMaterialTypes),
-    console.log("singleManifestation", material?.materialTypes);
-
   const edition = [
     material?.edition?.publicationYear?.display,
     material?.publisher,

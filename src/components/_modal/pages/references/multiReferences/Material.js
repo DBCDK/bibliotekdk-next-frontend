@@ -3,7 +3,6 @@ import MaterialCard from "@/components/base/materialcard/MaterialCard";
 import isEmpty from "lodash/isEmpty";
 import { accessFactory } from "@/lib/accessFactoryUtils";
 import { BackgroundColorEnum } from "@/components/base/materialcard/materialCard.utils";
-import ChoosePeriodicaCopyRow from "../../edition/choosePeriodicaCopyRow/ChoosePeriodicaCopyRow";
 import ButtonRow from "./ButtonRow";
 import { constructMaterialType } from "@/components/profile/bookmarks/Page";
 import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
@@ -11,7 +10,6 @@ import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
 export default function Material({
   material,
   materialKey,
-  modal,
   onActionClick,
   onDeleteClick: onParentDeleteClick,
   hideDelete,
