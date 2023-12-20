@@ -7,6 +7,7 @@ import Button from "@/components/base/button";
 import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
 import { getStylingAndErrorMessage } from "@/components/_modal/pages/order/utils/order.utils";
+import { validateEmail } from "@/utils/validateEmail";
 
 function OrderConfirmationButton({
   invalidClass,
@@ -89,6 +90,7 @@ OrderConfirmationButton.propTypes = {
   disabled: PropTypes.bool,
 };
 export default function Wrap({
+  email,
   context,
   validated,
   hasValidationErrors,
@@ -125,7 +127,8 @@ export default function Wrap({
       disabled={
         (!availableAsDigitalCopy && !availableAsPhysicalCopy) ||
         isLoading ||
-        blockedForBranch
+        blockedForBranch ||
+        !validateEmail(email?.value)
       }
     />
   );
