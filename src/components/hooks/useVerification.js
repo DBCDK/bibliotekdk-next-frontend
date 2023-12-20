@@ -8,6 +8,7 @@ import useSWR from "swr";
 import { useEffect } from "react";
 
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import { getLocalStorageItem, removeLocalStorageItem } from "@/lib/utils";
 
 /**
  * Settings
@@ -42,7 +43,7 @@ const CLEAR_ON_SIGNOUT = true;
  */
 export default function useVerification() {
   const { data, mutate, isValidating } = useSWR(KEY_NAME, (key) =>
-    JSON.parse(localStorage.getItem(key) || "null")
+    JSON.parse(getLocalStorageItem(key) || "null")
   );
 
   const { isAuthenticated } = useAuthentication();
@@ -109,7 +110,7 @@ export default function useVerification() {
     props = _trim(props);
 
     const _data = { ...props, expires, ts, ...obj };
-    localStorage.setItem(KEY_NAME, JSON.stringify(_data));
+    setLocalStorageItem(KEY_NAME, JSON.stringify(_data));
     mutate(_data);
   }
 
@@ -141,7 +142,7 @@ export default function useVerification() {
           tokens: { ...data.tokens, [_type]: accessToken },
         };
 
-        localStorage.setItem(KEY_NAME, JSON.stringify(_data));
+        setLocalStorageItem(KEY_NAME, JSON.stringify(_data));
         mutate(_data);
       }
     }
@@ -151,7 +152,7 @@ export default function useVerification() {
    * close an open verification process
    */
   function _close() {
-    localStorage.removeItem(KEY_NAME);
+    removeLocalStorageItem(KEY_NAME);
     mutate(null);
   }
 
