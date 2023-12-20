@@ -1,8 +1,5 @@
 import { accessFactory } from "@/lib/accessFactoryUtils";
-import {
-  manifestationMaterialTypeFactory,
-  formatMaterialTypesFromUrl,
-} from "@/lib/manifestationFactoryUtils";
+import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
 import MaterialCard from "@/components/base/materialcard/MaterialCard";
 import { templateImageToLeft } from "@/components/base/materialcard/templates/templates";

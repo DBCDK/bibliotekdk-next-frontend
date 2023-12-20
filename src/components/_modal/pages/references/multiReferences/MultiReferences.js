@@ -20,26 +20,6 @@ import { constructMaterialType } from "@/components/profile/bookmarks/Page";
 export const CONTEXT = "multiReferences";
 const CHECKBOX_TRESHHOLD = 20;
 
-/**
- * Takes all materials that miss edition and finds maps their keys to their material types
- * @param {*} bookmarksMissingEdition
- * @param {*} bookmarks
- * @returns {Array} Array of objects with materialKey and materialType
- */
-const mapMaterialKeysToSelectedMaterialTypes = ({
-  bookmarksMissingEdition,
-  bookmarks,
-}) => {
-  if (!bookmarksMissingEdition || !bookmarks) return [];
-  return bookmarksMissingEdition.map((material) => {
-    const materialType = bookmarks.find(
-      (bookmark) => bookmark.key === material.key
-    )?.materialType;
-    if (materialType)
-      return { materialKey: material.key, materialType: materialType };
-  });
-};
-
 const SingleReference = ({ bookmarkInList }) => {
   const { data: materials, isLoading } = usePopulateBookmarks(bookmarkInList);
   const material = materials[0];
@@ -93,11 +73,6 @@ export default function MultiReferences({ context }) {
   );
 
   const [periodicaFiltered, setPeriodicaFiltered] = useState([]);
-
-  const materialKeyToMaterialTypes = mapMaterialKeysToSelectedMaterialTypes({
-    bookmarksMissingEdition: materials,
-    bookmarks: bookmarks,
-  });
 
   const filteredManifestationsForMaterialType = (workData) => {
     if (workData.manifestations?.length === 1) {
