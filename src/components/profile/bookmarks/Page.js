@@ -1,5 +1,5 @@
 import useBookmarks, {
-  usePopulateBookmarksNew2,
+  usePopulateBookmarks,
 } from "@/components/hooks/useBookmarks";
 import styles from "./Bookmark.module.css";
 import Text from "@/components/base/text";
@@ -66,6 +66,14 @@ const containsIds = (ids, key) => {
   return x > -1;
 };
 
+//TODO check if compound material types are ordered
+export const constructMaterialType = (materialTypes) => {
+  const flattenedMaterialTypes = flattenMaterialType({
+    materialTypes: materialTypes,
+  });
+  return formatMaterialTypesToPresentation(flattenedMaterialTypes);
+};
+
 const BookmarkPage = () => {
   const {
     bookmarks: allBookmarksData,
@@ -79,7 +87,7 @@ const BookmarkPage = () => {
     isLoading: bookmarsDataLoading,
   } = useBookmarks();
   const { data: bookmarks, isLoading: isPopulateLoading } =
-    usePopulateBookmarksNew2(bookmarksData); //TODO first to exchange
+    usePopulateBookmarks(bookmarksData); //TODO first to exchange
   const [activeStickyButton, setActiveStickyButton] = useState(null);
   const breakpoint = useBreakpoint();
   const [sortByValue, setSortByValue] = useState(null);
@@ -144,7 +152,7 @@ const BookmarkPage = () => {
           handleOrderFinished: handleOrderFinished,
         });
       } else {
-        openLoginModal({ modal }); //TODO 2214 check this flow
+        openLoginModal({ modal });
       }
     }, 300);
   };
@@ -248,6 +256,15 @@ const BookmarkPage = () => {
     setCurrentPage(newPage);
   };
 
+  const onDeleteBookmark = (bookmark) => {
+    if (checkboxList.indexOf((bm) => bm.bookmarkId === bookmark.bookmarkId)) {
+      setCheckboxList((prev) =>
+        prev.filter((bm) => bm.bookmarkId !== bookmark.bookmarkId)
+      );
+    }
+    deleteBookmarks([{ bookmarkId: bookmark.bookmarkId, key: bookmark.key }]);
+  };
+
   const isAllSelected = checkboxList?.length === allBookmarksData?.length;
   const isNothingSelected = checkboxList.length === 0;
 
@@ -287,14 +304,6 @@ const BookmarkPage = () => {
       </ProfileLayout>
     );
   }
-
-  //TODO check if compound material types are ordered
-  const constructMaterialType = (materialTypes) => {
-    const flattenedMaterialTypes = flattenMaterialType({
-      materialTypes: materialTypes,
-    });
-    return formatMaterialTypesToPresentation(flattenedMaterialTypes);
-  };
 
   return (
     <ProfileLayout
@@ -449,11 +458,7 @@ const BookmarkPage = () => {
             isSelected={
               checkboxList.findIndex((item) => item.key === bookmark.key) > -1
             }
-            onBookmarkDelete={() =>
-              deleteBookmarks([
-                { bookmarkId: bookmark.bookmarkId, key: bookmark.key },
-              ])
-            }
+            onBookmarkDelete={() => onDeleteBookmark(bookmark)}
             onSelect={() => onToggleCheckbox(bookmark.key)}
             showFailedAtCreation={containsIds(
               failureAtCreationIds,

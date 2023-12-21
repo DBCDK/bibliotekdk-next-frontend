@@ -7,7 +7,7 @@ import styles from "./EMaterialFilter.module.css";
 import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
 import useBookmarks, {
-  usePopulateBookmarksNew2,
+  usePopulateBookmarks,
 } from "@/components/hooks/useBookmarks";
 import { useModal } from "@/components/_modal/Modal";
 import { constructMaterialType } from "@/lib/manifestationFactoryUtils";
@@ -22,7 +22,7 @@ const CONTEXT = "bookmark-order";
 const EMaterialFilter = ({ context, active }) => {
   const { bookmarks, createdAtSort, titleSort } = useBookmarks();
   const { materials: materialKeys, sortType, handleOrderFinished } = context;
-  const { data: materialsData } = usePopulateBookmarksNew2(materialKeys);
+  const { data: materialsData } = usePopulateBookmarks(materialKeys);
   const [materials, setMaterials] = useState([]);
   const modal = useModal();
   const analyzeRef = useRef();
@@ -102,17 +102,6 @@ const EMaterialFilter = ({ context, active }) => {
 
     return () => clearTimeout(timer);
   }, [active, analyzeRef.current, materials]);
-
-  //TODO 2214
-  // const createIds = (materials) => {
-  //   return materials.map((mat) => {
-  //     return {
-  //       isSpecific: !!mat.pid,
-  //       workId: mat.workId,
-  //       pids: mat.pid ? [mat.pid] : mat.manifestations.map((man) => man.pid),
-  //     };
-  //   });
-  // };
 
   const onNextClick = () => {
     modal.push("multiorder", {
