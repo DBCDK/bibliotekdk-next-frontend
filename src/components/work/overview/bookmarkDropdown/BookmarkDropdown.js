@@ -8,8 +8,12 @@ import { cyKey } from "@/utils/trim";
 import useBookmarks from "@/components/hooks/useBookmarks";
 import Icon from "@/components/base/icon/Icon";
 import BookmarkMedium from "@/public/icons/bookmark_small.svg";
-import { formatMaterialTypesToCode } from "@/lib/manifestationFactoryUtils";
+import { formatMaterialTypesToUrl } from "@/lib/manifestationFactoryUtils";
 import { createEditionText } from "../../details/utils/details.utils";
+
+function formatToBookmarkMaterialTypes(mat) {
+  return formatMaterialTypesToUrl(mat);
+}
 
 export function BookMarkMaterialSelector({
   materialTypes,
@@ -23,7 +27,7 @@ export function BookMarkMaterialSelector({
   const { bookmarks, setBookmark, isLoading } = useBookmarks();
   const [active, setActive] = useState(false);
   const [options, setOptions] = useState(
-    materialTypes.map((mat) => formatMaterialTypesToCode(mat))
+    materialTypes.map((mat) => formatToBookmarkMaterialTypes(mat))
   );
 
   const isOpen = useRef(false);
@@ -49,7 +53,7 @@ export function BookMarkMaterialSelector({
         // if we have one material only we look for a specific key
         bookmarkIndex = bookmarks?.findIndex(
           (bookm) =>
-            bookm.key === materialId + formatMaterialTypesToCode(options[0])
+            bookm.key === materialId + formatToBookmarkMaterialTypes(options[0])
         );
       }
       setActive(bookmarkIndex !== -1);
@@ -58,7 +62,7 @@ export function BookMarkMaterialSelector({
 
   const revalidateEditions = () => {
     const defaultOptions = materialTypes.map((mat) =>
-      formatMaterialTypesToCode(mat)
+      formatToBookmarkMaterialTypes(mat)
     );
 
     if (!editions) {
@@ -97,19 +101,19 @@ export function BookMarkMaterialSelector({
     if (material.editionDisplayText) {
       // Edition logic
       item = {
-        key: material.pid + formatMaterialTypesToCode(material),
+        key: material.pid + formatToBookmarkMaterialTypes(material),
         materialId: material.pid,
         workId: workId,
-        materialType: formatMaterialTypesToCode(material),
+        materialType: formatToBookmarkMaterialTypes(material),
         title,
       };
     } else {
       // Normal logic
       item = {
-        key: materialId + formatMaterialTypesToCode(material),
+        key: materialId + formatToBookmarkMaterialTypes(material),
         materialId: materialId,
         workId: workId,
-        materialType: formatMaterialTypesToCode(material),
+        materialType: formatToBookmarkMaterialTypes(material),
         title,
       };
     }
@@ -175,13 +179,13 @@ export function BookMarkMaterialSelector({
               bookmarks?.findIndex(
                 (book) =>
                   book.key ===
-                  material.pid + formatMaterialTypesToCode(material)
+                  material.pid + formatToBookmarkMaterialTypes(material)
               ) !== -1;
           } else {
             activeItem =
               bookmarks?.findIndex(
                 (book) =>
-                  book.key === workId + formatMaterialTypesToCode(material)
+                  book.key === workId + formatToBookmarkMaterialTypes(material)
               ) !== -1;
           }
 
@@ -201,7 +205,7 @@ export function BookMarkMaterialSelector({
                 <Text type="text3" className={styles.dropdownitemText}>
                   {material?.editionDisplayText
                     ? material.editionDisplayText
-                    : formatMaterialTypesToCode(material)}
+                    : formatToBookmarkMaterialTypes(material)}
                 </Text>
 
                 <Icon size={{ w: 3, h: 3 }}>
