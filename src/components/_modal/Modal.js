@@ -477,6 +477,10 @@ export function useModal() {
    */
   async function _getStore() {
     const storeStr = getLocalStorageItem(LOCAL_STORAGE_STORE_KEY);
+
+    console.log("storeStr: ", storeStr);
+    console.log("parsed storeStr: ", JSON.parse(storeStr));
+
     return await JSON.parse(storeStr);
   }
 

@@ -48,13 +48,14 @@ function Order({
   // new modal props
   context,
   modal,
-  singleManifestation = false,
 }) {
   const {
     pickupBranchUser: user,
     pickupBranch,
     isLoadingBranches = false,
   } = pickupBranchInfo;
+
+  const singleManifestation = context?.singleManifestation;
 
   const { isAuthenticated } = useAuthentication();
   const { loanerInfo } = useLoanerInfo();
@@ -312,11 +313,13 @@ export function OrderSkeleton(props) {
       user={user}
       orderMutation={order}
       articleOrderMutation={order}
-      context={{ label: "title-order" }}
+      context={{
+        label: "title-order",
+        singleManifestation: props?.context?.singleManifestation,
+      }}
       modal={{}}
       className={`${props.className} ${styles.skeleton}`}
       isLoading={true}
-      singleManifestation={props.singleManifestation}
     />
   );
 }
@@ -379,9 +382,6 @@ export default function Wrap(props) {
     ...interLibraryLoanAccess,
   ];
 
-  const singleManifestation =
-    context.orderType && context.orderType === "singleManifestation";
-
   const {
     data: manifestationData,
     isLoading: isManifestationsLoading,
@@ -410,7 +410,6 @@ export default function Wrap(props) {
       pickupBranchInfo={pickupBranchInfo}
       context={context}
       modal={modal}
-      singleManifestation={singleManifestation}
       orderMutation={orderMutation}
       articleOrderMutation={articleOrderMutation}
       onArticleSubmit={(pid, periodicaForm = {}) =>
