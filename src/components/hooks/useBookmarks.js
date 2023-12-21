@@ -313,11 +313,12 @@ export default useBookmarks;
  */
 export const usePopulateBookmarks = (bookmarks) => {
   //all works both for specific edition and entire work
+  const workIds = bookmarks?.map((work) => work.workId);
   const { data: workByIdsData, isLoading: idsToWorksLoading } = useData(
-    workFragments.idsToWorks({
-      //TODO check which data idsToWorks really needs to get out
-      ids: bookmarks?.map((work) => work.workId), //get workIds
-    })
+    workIds &&
+      workFragments.idsToWorks({
+        ids: workIds,
+      })
   );
 
   const workByIdsDataRemovedDuplicates = workByIdsData?.works?.filter(
