@@ -1,17 +1,25 @@
 import Section from "@/components/base/section";
 import styles from "./SeriesHeading.module.css";
 import Col from "react-bootstrap/Col";
-import Translate, { getLanguage } from "@/components/base/translate";
+import Translate, {
+  getLanguage,
+  hasTranslation,
+} from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
 import TitleBox from "@/components/series/seriesHeading/titleBox/TitleBox";
 import isEmpty from "lodash/isEmpty";
 
-export function SeriesBreadcrumb({ firstWork }) {
+export function SeriesBreadcrumb({ firstWork, seriesIsLoading }) {
   const firstWorkType = firstWork?.workTypes?.[0]?.toLowerCase();
-  const workTypeTranslation = Translate({
+
+  const translationForWorkType = {
     context: "facets",
     label: `label-${firstWorkType}`,
-  });
+  };
+
+  const workTypeTranslation = hasTranslation(translationForWorkType)
+    ? Translate(translationForWorkType)
+    : "";
 
   const fictionNonFiction = firstWork?.fictionNonfiction;
 
@@ -30,7 +38,12 @@ export function SeriesBreadcrumb({ firstWork }) {
   });
 
   return (
-    <Text type={"text3"}>
+    <Text
+      type={"text3"}
+      skeleton={seriesIsLoading}
+      className={styles.capitalize}
+      lines={1}
+    >
       {[
         ...(workTypeTranslation ? [workTypeTranslation] : []),
         ...(!isEmpty(fictionNonfictionTranslation)
@@ -55,7 +68,10 @@ export default function SeriesHeading({ series, seriesIsLoading }) {
     >
       <Col xs={12} className={`${styles.overview}`}>
         <div className={styles.breadcrumb}>
-          <SeriesBreadcrumb firstWork={firstWork} />
+          <SeriesBreadcrumb
+            firstWork={firstWork}
+            seriesIsLoading={seriesIsLoading}
+          />
         </div>
         <TitleBox
           series={series}

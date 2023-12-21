@@ -6,33 +6,31 @@ const all = [
     placeholder: "title placeholder",
   },
   {
-    index: "term.isbn",
-    placeholder: "isbn placeholder",
+    index: "term.creatorcontributor",
+    placeholder: "creatorcontributor placeholder",
   },
   {
     index: "term.subject",
     placeholder: "subject placeholder",
   },
   {
-    index: "term.hostpublication",
+    index: "term.publisher",
     placeholder: "publisher placeholder",
   },
   {
-    index: "term.fictionalcharacter",
-    placeholder: "fictionalcharacter placeholder",
+    index: "dk5",
   },
   {
-    index: "term.contributor",
-    placeholder: "contributor placeholder",
+    index: "term.isbn",
+    placeholder: "isbn placeholder",
   },
   {
     index: "term.series",
     placeholder: "series placeholder",
   },
   {
-    index: "term.function",
-    searchType: "field",
-    placeholder: "function placeholder",
+    index: "term.fictionalcharacter",
+    placeholder: "fictionalcharacter placeholder",
   },
 ];
 

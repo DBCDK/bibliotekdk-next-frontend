@@ -57,3 +57,21 @@
     padding: var(--pt3) var(--pt2) var(--pt3);
   }
 }
+
+/* skeleton */
+
+.skeleton {
+  pointer-events: none;
+}
+
+.skeleton div {
+  width: 100%;
+}
+
+.skeleton img {
+  background-color: var(--concrete);
+  box-shadow: none;
+  border: none;
+  filter: none;
+  height: calc(var(--pt16) * 2);
+}

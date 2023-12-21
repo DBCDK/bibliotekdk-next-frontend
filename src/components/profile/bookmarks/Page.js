@@ -19,6 +19,7 @@ import { useModal } from "@/components/_modal";
 import Skeleton from "@/components/base/skeleton/Skeleton";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import { getSessionStorageItem, setSessionStorageItem } from "@/lib/utils";
 
 const CONTEXT = "bookmark";
 const ORDER_TRESHHOLD = 25;
@@ -52,6 +53,15 @@ const SortButtons = ({ sortByItems, setSortByValue, sortByValue }) => {
   );
 };
 
+const containsIds = (ids, key) => {
+  if (!ids || !key) return false;
+  if (!Array.isArray(ids)) return ids === key;
+  const x = ids.findIndex((id) => {
+    return id === key;
+  });
+  return x > -1;
+};
+
 const BookmarkPage = () => {
   const {
     bookmarks: allBookmarksData,
@@ -74,13 +84,27 @@ const BookmarkPage = () => {
   const scrollToElement = useRef(null);
   const { isAuthenticated } = useAuthentication();
   const modal = useModal();
+  const [successfullyCreatedIds, setSuccessfullyCreatedIds] = useState([]);
+  const [failureAtCreationIds, setFailureAtCreationIds] = useState([]);
+
+  /**
+   * Callback that marks materials as successfully created/failed in bookmarklist
+   * when we close the receipt
+   * @param {String[]} successfullyCreated
+   * @param {String[]} failedAtCreation
+   */
+  function handleOrderFinished(successfullyCreated, failedAtCreation) {
+    setCheckboxList([]);
+    setSuccessfullyCreatedIds((prev) => [...prev, ...successfullyCreated]);
+    setFailureAtCreationIds((prev) => [...prev, ...failedAtCreation]);
+  }
 
   useEffect(() => {
     setSortBy(sortByValue);
   }, [sortByValue]);
 
   useEffect(() => {
-    let savedValue = sessionStorage.getItem("sortByValue");
+    let savedValue = getSessionStorageItem("sortByValue");
     //if there is no saved values in sessionstorage, use createdAt sorting as default
     setSortByValue(savedValue || sortByItems[0].key);
   }, []);
@@ -107,14 +131,17 @@ const BookmarkPage = () => {
   };
 
   const onOrderManyClick = () => {
-    if (isAuthenticated) {
-      modal.push("ematerialfilter", {
-        materials: checkboxList,
-        sortType: sortByValue,
-      });
-    } else {
-      openLoginModal({ modal });
-    }
+    setTimeout(() => {
+      if (isAuthenticated) {
+        modal.push("ematerialfilter", {
+          materials: checkboxList,
+          sortType: sortByValue,
+          handleOrderFinished: handleOrderFinished,
+        });
+      } else {
+        openLoginModal({ modal }); //TODO check this flow
+      }
+    }, 300);
   };
 
   const onGetReferencesClick = () => {
@@ -125,7 +152,7 @@ const BookmarkPage = () => {
 
   const handleRadioChange = (value) => {
     setSortByValue(value);
-    sessionStorage.setItem("sortByValue", value);
+    setSessionStorageItem("sortByValue", value);
   };
 
   const onSelectAll = () => {
@@ -414,6 +441,15 @@ const BookmarkPage = () => {
               ])
             }
             onSelect={() => onToggleCheckbox(bookmark.key)}
+            showFailedAtCreation={containsIds(
+              failureAtCreationIds,
+              bookmark.key
+            )}
+            showSuccessfullyOrdered={containsIds(
+              successfullyCreatedIds,
+              bookmark.key
+            )}
+            handleOrderFinished={handleOrderFinished}
           />
         ))}
       </div>

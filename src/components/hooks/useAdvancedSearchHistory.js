@@ -2,6 +2,7 @@
  * @file - Hook for advanced search history - localstorage
  */
 
+import { getLocalStorageItem, setLocalStorageItem } from "@/lib/utils";
 import useSWR from "swr";
 
 const KEY = "advanced-search-history";
@@ -9,21 +10,23 @@ const KEY = "advanced-search-history";
 /**
  * Get a date on a stored search history object
  */
-function getTimeStamp() {
+export function getTimeStamp(now) {
   const options = {
     hour: "2-digit",
     minute: "2-digit",
   };
-
-  const now = new Date();
-  const stamp = now.toLocaleTimeString("en-us", options);
+  const stamp = new Date(now).toLocaleTimeString("en-GB", options);
   // remove the " AM/PM" part
   return stamp.replace("AM", "").replace("PM", "").replace(":", ".").trim();
 }
 
+function getUnixTimeStamp() {
+  return new Date().getTime();
+}
+
 export const useAdvancedSearchHistory = () => {
   let { data: storedValue, mutate } = useSWR(KEY, (key) =>
-    JSON.parse(localStorage.getItem(key) || "[]")
+    JSON.parse(getLocalStorageItem(key) || "[]")
   );
 
   const setValue = (value) => {
@@ -33,12 +36,13 @@ export const useAdvancedSearchHistory = () => {
         const alreadyStored = !!storedValue.find(
           (stor) => stor?.cql?.trim() === value?.cql?.trim()
         );
-        value["timestamp"] = getTimeStamp();
+        value["timestamp"] = getTimeStamp(getUnixTimeStamp());
+        value["unixtimestamp"] = getUnixTimeStamp();
         if (!alreadyStored) {
           // Add to beginning of history array
           storedValue.unshift(value);
           // maintain localstorage
-          localStorage.setItem(KEY, JSON.stringify(storedValue));
+          setLocalStorageItem(KEY, JSON.stringify(storedValue));
           // maintain state
           mutate();
         }
@@ -59,7 +63,7 @@ export const useAdvancedSearchHistory = () => {
           // Add to beginning of history array
           storedValue.splice(valueIndex, 1);
           // update localstorage
-          localStorage.setItem(KEY, JSON.stringify(storedValue));
+          setLocalStorageItem(KEY, JSON.stringify(storedValue));
           mutate();
         }
       }
@@ -72,7 +76,7 @@ export const useAdvancedSearchHistory = () => {
     try {
       if (typeof window !== "undefined") {
         storedValue = [];
-        localStorage.setItem(KEY, JSON.stringify(storedValue));
+        setLocalStorageItem(KEY, JSON.stringify(storedValue));
         mutate();
       }
     } catch (err) {

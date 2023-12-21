@@ -15,6 +15,10 @@
   background: var(--concrete);
 }
 
+.popoverContainer:not([aria-expanded="true"]) {
+  border: none;
+}
+
 .popoverAnimation {
   display: grid;
   grid-template-rows: 0fr;
@@ -70,4 +74,13 @@
   height: 30px;
   clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
   background-color: var(--concrete);
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.5s ease;
+}
+
+.showTriangle {
+  visibility: visible;
+  opacity: 1;
+  transition: 0.3s ease;
 }

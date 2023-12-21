@@ -23,6 +23,7 @@ import { LogicalOperatorsEnum } from "@/components/search/enums";
  */
 function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
   const [suggestions, setSuggestions] = useState([]);
+  const inputId = `complex_suggest__${fieldValue.searchIndex}-${index}`;
 
   const {
     handleInputFieldChange,
@@ -32,6 +33,11 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
   } = useAdvancedSearchContext();
   //labels to show in SearchIndexDropdown
   const labels = workTypesLabels[workType].map((el) => el.index);
+  const placeholder = Translate({
+    context: "search",
+    label: `advanced-placeholder-${fieldValue?.searchIndex}`,
+  });
+
   const isFirstItem = index === 0;
 
   // this is a bit quicky - should probably get the csType
@@ -74,21 +80,23 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
           <Suggester
             id={key}
             data={suggestions}
-            onSelect={(selectValue) =>
+            onSelect={(selectValue) => {
               setTimeout(() => {
                 // onSelect should be called after onChange. Otherwise onChange wil overrite the selected value
                 handleInputFieldChange(index, selectValue);
-              }, 0)
-            }
+              }, 0);
+              document?.getElementById(inputId).blur();
+            }}
             onClear={() => handleInputFieldChange(index, "")}
             className={styles.suggester}
             initialValue={`${fieldValue.value}`}
           >
             <Input
+              id={inputId}
               className={styles.suggesterInput}
               value={fieldValue?.value}
               onChange={(e) => handleInputFieldChange(index, e.target.value)}
-              placeholder={fieldValue.placeholder}
+              placeholder={placeholder}
               overrideValueControl={true}
               // onKeyDown overrides suggesters onKeyDown, and we don't want that
               onKeyPress={(e) => {
@@ -149,7 +157,7 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
           })}
         </Text>
         <Icon
-          size={{ w: "2", h: "auto" }}
+          size={{ w: "2", h: "2" }}
           src={expanded ? "arrowUp.svg" : "arrowDown.svg"}
           alt=""
         />
@@ -205,7 +213,6 @@ export default function TextInputs({ doAdvancedSearch }) {
           />
         );
       })}
-
       <Button
         type="secondary"
         size="small"

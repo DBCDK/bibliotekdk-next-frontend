@@ -136,7 +136,12 @@ export function Toggler({
   );
 }
 
-export function YearRange({ menuItemsState, toggleMenuItemsState, className }) {
+export function YearRange({
+  menuItemsState,
+  toggleMenuItemsState,
+  className,
+  placeholder,
+}) {
   const yearRangeItems = menuItemsState.filter(
     (item) => item.formType === FormTypeEnum.ACTION_LINK_CONTAINER
   );
@@ -159,7 +164,7 @@ export function YearRange({ menuItemsState, toggleMenuItemsState, className }) {
           inputMode="numeric"
           pattern="[0-9]*"
           className={styles.single_range}
-          placeholder={Translate({ context: "general", label: "year" })}
+          placeholder={placeholder}
           value={yearRangeItem?.value?.lower}
           onChange={(e) =>
             toggleMenuItemsState({
@@ -183,7 +188,7 @@ export function YearRange({ menuItemsState, toggleMenuItemsState, className }) {
           inputMode="numeric"
           pattern="[0-9]*"
           className={styles.single_range}
-          placeholder={Translate({ context: "general", label: "year" })}
+          placeholder={placeholder}
           value={yearRangeItem?.value?.upper}
           onChange={(e) =>
             toggleMenuItemsState({

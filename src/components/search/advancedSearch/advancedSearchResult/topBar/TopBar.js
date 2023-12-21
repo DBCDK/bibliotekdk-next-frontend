@@ -70,7 +70,7 @@ function FormatFieldInput({ inputFields }) {
             })}
           </Text>
         )}
-        <Text type="text1" className={styles.searchIndexText}>
+        <Text type="text1">
           {Translate({
             context: "search",
             label: `advanced-dropdown-${field.searchIndex}`,
@@ -86,7 +86,7 @@ function FormatFieldInput({ inputFields }) {
 
 function FormatDropdowns({ dropdowns, showAndOperator }) {
   return dropdowns?.map((dropdownItem, index) => {
-    const { getPrintValue } = formattersAndComparitors(
+    const { getSelectedPresentation } = formattersAndComparitors(
       dropdownItem.searchIndex
     );
     const isLastItem = index === dropdowns.length - 1;
@@ -105,7 +105,7 @@ function FormatDropdowns({ dropdowns, showAndOperator }) {
             })}
           </Text>
         )}
-        <Text type="text1" className={styles.searchIndexText}>
+        <Text type="text1">
           {Translate({
             context: "advanced_search_dropdown",
             label: dropdownItem.searchIndex,
@@ -114,7 +114,7 @@ function FormatDropdowns({ dropdowns, showAndOperator }) {
         </Text>
         <Text type="text2">
           {dropdownItem?.value
-            ?.map((val) => getPrintValue(val.value))
+            ?.map((val) => getSelectedPresentation(val.value))
             .join(", ")}
         </Text>
         {!isLastItem && (

@@ -153,7 +153,40 @@ export const publicationYearFormatterAndComparitor = {
     const lower = Boolean(value?.lower);
     const upper = Boolean(value?.upper);
 
-    return `${lower ? value?.lower : ""} - ${upper ? value?.upper : ""}`;
+    return getFirstMatch(true, "", [
+      [
+        lower && upper && value?.lower === value?.upper,
+        Translate({
+          context: "advanced_search_dropdown",
+          label: "exact_publication_year",
+          vars: [value?.lower],
+        }),
+      ],
+      [
+        lower && upper,
+        Translate({
+          context: "advanced_search_dropdown",
+          label: "publication_year_range",
+          vars: [value?.lower, value?.upper],
+        }),
+      ],
+      [
+        lower,
+        Translate({
+          context: "advanced_search_dropdown",
+          label: "x_publication_year_and_up",
+          vars: [value?.lower],
+        }),
+      ],
+      [
+        upper,
+        Translate({
+          context: "advanced_search_dropdown",
+          label: "up_to_x_publication_year",
+          vars: [value?.upper],
+        }),
+      ],
+    ]);
   },
 };
 
@@ -255,9 +288,40 @@ export const agesFormatterAndComparitor = {
     const lower = Boolean(value?.lower);
     const upper = Boolean(value?.upper);
 
-    return `${lower ? value?.lower : ""}-${
-      upper ? value?.upper : ""
-    }${Translate({ context: "advanced_search_dropdown", label: "years_old" })}`;
+    return getFirstMatch(true, "", [
+      [
+        lower && upper && value?.lower === value?.upper,
+        Translate({
+          context: "advanced_search_dropdown",
+          label: "exact_years_old",
+          vars: [value?.lower],
+        }),
+      ],
+      [
+        lower && upper,
+        Translate({
+          context: "advanced_search_dropdown",
+          label: "years_range",
+          vars: [value?.lower, value?.upper],
+        }),
+      ],
+      [
+        lower,
+        Translate({
+          context: "advanced_search_dropdown",
+          label: "x_years_and_up",
+          vars: [value?.lower],
+        }),
+      ],
+      [
+        upper,
+        Translate({
+          context: "advanced_search_dropdown",
+          label: "up_to_x_years",
+          vars: [value?.upper],
+        }),
+      ],
+    ]);
   },
 };
 

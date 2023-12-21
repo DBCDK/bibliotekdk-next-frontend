@@ -5,11 +5,15 @@ import Translate from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
 import UniverseTitleBox from "@/components/universe/universeHeading/universeTitleBox/UniverseTitleBox";
 
-export function UniverseBreadcrumb() {
+export function UniverseBreadcrumb({ universeIsLoading }) {
   const frontPage = Translate({ context: "universe_page", label: "frontpage" });
   const universes = Translate({ context: "universe_page", label: "universes" });
 
-  return <Text type={"text3"}>{[frontPage, universes].join(" / ")}</Text>;
+  return (
+    <Text type={"text3"} skeleton={universeIsLoading} lines={1}>
+      {[frontPage, universes].join(" / ")}
+    </Text>
+  );
 }
 
 export default function UniverseHeading({ universe, universeIsLoading }) {
@@ -23,7 +27,7 @@ export default function UniverseHeading({ universe, universeIsLoading }) {
     >
       <Col xs={12} className={`${styles.overview}`}>
         <div className={styles.breadcrumb}>
-          <UniverseBreadcrumb />
+          <UniverseBreadcrumb universeIsLoading={universeIsLoading} />
         </div>
         <UniverseTitleBox
           universe={universe}

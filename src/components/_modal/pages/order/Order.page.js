@@ -81,6 +81,7 @@ function Order({
   const [mail, setMail] = useState(null);
   const contextWithOrderPids = { ...context, orderPids };
   const workId = context?.workId;
+  const handleOrderFinished = context?.handleOrderFinished;
   const hasAlreadyBeenOrdered = workHasAlreadyBeenOrdered(workId);
   //If user wants to order again, but closes modal before ordering, we want to show warning again
   const [showAlreadyOrdered, setShowAlreadyOrdered] = useState(
@@ -119,8 +120,28 @@ function Order({
     });
   }, [user?.userParameters]);
 
+  /**
+   * sets texts in bookmark list to show if material order was successful or not
+   * @param {Object} mutation
+   * @param {String} key
+   */
+  function updateBookmarkList(mutation, key) {
+    if (!handleOrderFinished || !mutation) return;
+    if (mutation.data) {
+      handleOrderFinished([key], []);
+    }
+    if (mutation.error) {
+      handleOrderFinished([], [key]);
+    }
+  }
+
   function updateModal() {
     if (modal && modal.isVisible) {
+      const type =
+        contextWithOrderPids?.selectedAccesses?.[0]?.materialTypesArray[0]
+          .specificDisplay;
+      const workId = contextWithOrderPids?.workId;
+      const key = workId + type?.charAt(0).toUpperCase() + type?.slice(1);
       // call update if data or isLoading or error has changed
       if (
         articleOrderMutation?.isLoading ||
@@ -128,11 +149,13 @@ function Order({
         articleOrderMutation?.error
       ) {
         modal.update(modal.index(), { articleOrder: articleOrderMutation });
+        updateBookmarkList(articleOrderMutation, key);
       } else if (
         orderMutation?.isLoading ||
         orderMutation?.data ||
         orderMutation?.error
       ) {
+        updateBookmarkList(orderMutation, key);
         modal.update(modal.index(), { order: orderMutation });
       }
     }
@@ -141,6 +164,7 @@ function Order({
   // An order has successfully been submitted
   useEffect(() => {
     updateModal();
+    //TODO, call on click and give success or feailur key as []!!!
   }, [orderMutation?.isLoading, articleOrderMutation?.isLoading]);
 
   const { isPeriodicaLike, availableAsDigitalCopy } = useMemo(() => {
@@ -251,6 +275,7 @@ function Order({
         }}
       />
       <OrderConfirmationButton
+        email={mail}
         context={context}
         validated={validated}
         hasValidationErrors={hasValidationErrors}
