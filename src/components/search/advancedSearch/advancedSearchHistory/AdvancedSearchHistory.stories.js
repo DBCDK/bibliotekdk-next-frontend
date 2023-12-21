@@ -20,7 +20,7 @@ export function Default() {
 
 Default.loaders = [
   () => {
-    window.localStorage.setItem(
+    window.sessionStorage.setItem(
       "advanced-search-history",
       JSON.stringify([
         {
