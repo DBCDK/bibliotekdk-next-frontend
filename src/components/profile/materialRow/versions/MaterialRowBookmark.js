@@ -11,7 +11,7 @@ import Translate from "@/components/base/translate";
 import { getWorkUrlForProfile } from "../../utils";
 import sharedStyles from "../MaterialRow.module.css";
 import { useMemo } from "react";
-import { constructMaterialType } from "@/lib/manifestationFactoryUtils";
+import { getMaterialTypeForPresentation } from "@/lib/manifestationFactoryUtils";
 import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
 import { TextWithCheckMark } from "../MaterialRow";
 import styles from "../MaterialRow.module.css";
@@ -58,7 +58,7 @@ const BookmarkColumn = ({
             singleManifestation={!!pid ? true : false}
             buttonType="primary"
             size="small"
-            selectedMaterialType={constructMaterialType(
+            selectedMaterialType={getMaterialTypeForPresentation(
               relevantManifestations?.[0]?.materialTypes
             )}
             shortText

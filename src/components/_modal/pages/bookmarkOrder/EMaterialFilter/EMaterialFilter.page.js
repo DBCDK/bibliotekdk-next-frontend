@@ -10,7 +10,7 @@ import useBookmarks, {
   usePopulateBookmarks,
 } from "@/components/hooks/useBookmarks";
 import { useModal } from "@/components/_modal/Modal";
-import { constructMaterialType } from "@/lib/manifestationFactoryUtils";
+import { getMaterialTypeForPresentation } from "@/lib/manifestationFactoryUtils";
 
 const CONTEXT = "bookmark-order";
 
@@ -159,7 +159,9 @@ const EMaterialFilter = ({ context, active }) => {
               {mat.titles?.main?.[0]}
             </Title>
             <Text type="text2">
-              {constructMaterialType(mat?.manifestations?.[0].materialTypes)}
+              {getMaterialTypeForPresentation(
+                mat?.manifestations?.[0].materialTypes
+              )}
             </Text>
           </li>
         ))}

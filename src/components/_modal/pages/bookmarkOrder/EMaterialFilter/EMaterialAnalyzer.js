@@ -60,6 +60,7 @@ const useAnalyzeMaterial = (material) => {
     () => getAllAllowedEnrichedAccessSorted(hasDigitalAccess) || [],
     [manifestations, hasDigitalAccess]
   );
+  //the first access is always the most "generous", therefor its enough to check the first access
   const digitalCopy = checkDigitalCopy(access)?.[0];
   const physicalCopy = checkPhysicalCopy(access)?.[0];
 
