@@ -14,8 +14,10 @@ import { useEffect, useState } from "react";
 import MaterialCard from "@/components/base/materialcard/MaterialCard";
 import { templateImageToLeft } from "@/components/base/materialcard/templates/templates";
 import Checkbox from "@/components/base/forms/checkbox";
-import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
-import { constructMaterialType } from "@/components/profile/bookmarks/Page";
+import {
+  getMaterialTypeForPresentation,
+  manifestationMaterialTypeFactory,
+} from "@/lib/manifestationFactoryUtils";
 
 export const CONTEXT = "multiReferences";
 const CHECKBOX_TRESHHOLD = 20;
@@ -23,7 +25,7 @@ const CHECKBOX_TRESHHOLD = 20;
 const SingleReference = ({ bookmarkInList }) => {
   const { data: materials, isLoading } = usePopulateBookmarks(bookmarkInList);
   const material = materials[0];
-  const materialType = constructMaterialType(
+  const materialType = getMaterialTypeForPresentation(
     material?.manifestations?.[0]?.materialTypes
   );
 

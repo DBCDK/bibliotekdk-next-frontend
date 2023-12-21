@@ -19,10 +19,7 @@ import { useModal } from "@/components/_modal";
 import Skeleton from "@/components/base/skeleton/Skeleton";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
-import {
-  flattenMaterialType,
-  formatMaterialTypesToPresentation,
-} from "@/lib/manifestationFactoryUtils";
+import { getMaterialTypeForPresentation } from "@/lib/manifestationFactoryUtils";
 import { getSessionStorageItem, setSessionStorageItem } from "@/lib/utils";
 
 const CONTEXT = "bookmark";
@@ -64,14 +61,6 @@ const containsIds = (ids, key) => {
     return id === key;
   });
   return x > -1;
-};
-
-//TODO check if compound material types are ordered
-export const constructMaterialType = (materialTypes) => {
-  const flattenedMaterialTypes = flattenMaterialType({
-    materialTypes: materialTypes,
-  });
-  return formatMaterialTypesToPresentation(flattenedMaterialTypes);
 };
 
 const BookmarkPage = () => {
@@ -134,7 +123,6 @@ const BookmarkPage = () => {
       newList.push({
         key: key,
         materialId: bookmarkData.materialId,
-        materialType: bookmarkData.materialType,
         workId: bookmarkData.workId,
         materialType: bookmarkData.materialType,
         bookmarkId: bookmarkData.bookmarkId,
@@ -176,7 +164,6 @@ const BookmarkPage = () => {
         allBookmarksData.map((el) => ({
           key: el.key,
           materialId: el.materialId,
-          materialType: el.materialType,
           workId: el.workId,
           materialType: el.materialType,
           bookmarkId: el.bookmarkId,
@@ -446,7 +433,7 @@ const BookmarkPage = () => {
             creator={
               bookmark?.manifestations?.[0]?.ownerWork.creators[0]?.display
             }
-            materialType={constructMaterialType(
+            materialType={getMaterialTypeForPresentation(
               bookmark.manifestations?.[0]?.materialTypes
             )}
             image={bookmark?.manifestations?.[0]?.cover?.thumbnail}

@@ -63,13 +63,6 @@ export const materialTypesFragment = `fragment materialTypesFragment on Material
   }
 }`;
 
-export const materialTypesSpecificFragment = `fragment materialTypesSpecificFragment on MaterialType {
-materialTypeSpecific {
-    code
-    display
-  }
-}`;
-
 export const manifestationDetailsForAccessFactory = `fragment manifestationDetailsForAccessFactory on Manifestation {
   pid
   ownerWork {

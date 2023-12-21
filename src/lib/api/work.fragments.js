@@ -657,9 +657,6 @@ export function pidsToWork({ pids }) {
     slowThreshold: 3000,
   };
 }
-//     ${materialTypesSpecificFragment}
-// ${manifestationDetailsForAccessFactory}
-// ${creatorsFragment}
 
 export function pidsToWorks({ pids }) {
   if (!pids) return { data: undefined, isLoading: false };
@@ -672,8 +669,8 @@ export function pidsToWorks({ pids }) {
           workId
         }
         materialTypes {
-                    ...materialTypesFragment
-                  }
+          ...materialTypesFragment
+        }
         access {
           __typename
           ... on DigitalArticleService {
