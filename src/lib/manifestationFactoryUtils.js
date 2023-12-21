@@ -136,7 +136,16 @@ export function formatMaterialTypesToCode(materialTypeArray) {
 }
 
 //TODO check if compound material types are sorted
-export function constructMaterialType(materialTypes) {
+/**
+ *  
+    
+ * @param {Array<Object>} materialTypes [ 
+  {"materialTypeSpecific": {"display": "lydoptagelse (cd)","code": "SOUND_RECORDING_CD"},
+  {"materialTypeSpecific": {"display": "bog", "code": "BOOK"}}
+]
+ * @returns {String} "Bog / Lydoptagelse (cd)"
+ */
+export function getMaterialTypeForPresentation(materialTypes) {
   const flattenedMaterialTypes = flattenMaterialType({
     materialTypes: materialTypes,
   });
