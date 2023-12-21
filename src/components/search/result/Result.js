@@ -16,6 +16,7 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
 import ResultPage from "./page";
 
 import styles from "./Result.module.css";
+import { NoHitSearch } from "@/components/search/advancedSearch/advancedSearchResult/noHitSearch/NoHitSearch";
 
 /**
  * Search result
@@ -60,6 +61,8 @@ export function Result({
         colSize={{ lg: { offset: 3, span: true } }}
         id="search-result-section"
       >
+        {hitcount === 0 && !isLoading && <NoHitSearch isSimpleSearch={true} />}
+
         {Array(isMobile ? page : 1)
           .fill({})
           .map((p, index) => (
