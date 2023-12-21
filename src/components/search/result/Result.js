@@ -61,7 +61,7 @@ export function Result({
         colSize={{ lg: { offset: 3, span: true } }}
         id="search-result-section"
       >
-        {hitcount === 0 && <NoHitSearch isSimpleSearch={true} />}
+        {hitcount === 0 && !isLoading && <NoHitSearch isSimpleSearch={true} />}
 
         {Array(isMobile ? page : 1)
           .fill({})
