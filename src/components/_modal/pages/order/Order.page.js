@@ -276,6 +276,7 @@ function Order({
         }}
       />
       <OrderConfirmationButton
+        email={mail}
         context={context}
         validated={validated}
         hasValidationErrors={hasValidationErrors}
