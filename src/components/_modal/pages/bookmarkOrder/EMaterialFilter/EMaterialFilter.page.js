@@ -103,17 +103,6 @@ const EMaterialFilter = ({ context, active }) => {
     return () => clearTimeout(timer);
   }, [active, analyzeRef.current, materials]);
 
-  //TODO 2214
-  // const createIds = (materials) => {
-  //   return materials.map((mat) => {
-  //     return {
-  //       isSpecific: !!mat.pid,
-  //       workId: mat.workId,
-  //       pids: mat.pid ? [mat.pid] : mat.manifestations.map((man) => man.pid),
-  //     };
-  //   });
-  // };
-
   const onNextClick = () => {
     modal.push("multiorder", {
       materials: materialsToProceed,

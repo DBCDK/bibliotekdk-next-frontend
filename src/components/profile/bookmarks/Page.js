@@ -153,7 +153,7 @@ const BookmarkPage = () => {
           handleOrderFinished: handleOrderFinished,
         });
       } else {
-        openLoginModal({ modal }); //TODO 2214 check this flow
+        openLoginModal({ modal });
       }
     }, 300);
   };

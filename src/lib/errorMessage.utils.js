@@ -1,12 +1,12 @@
 export function errorMessageForErrorInMaterialTypes(manifestation) {
   const materialType = manifestation?.materialTypes?.[0];
-  const specificDisplay = materialType?.materialTypeSpecific?.display //TODO bibdk2021-2214 ?
+  const specificDisplay = materialType?.materialTypeSpecific?.display
     ? "\u{2705}"
     : "\u{274C}";
   const specificCode = materialType?.materialTypeSpecific?.code
     ? "\u{2705}"
     : "\u{274C}";
-  const generalDisplay = materialType?.materialTypeGeneral?.display //TODO bibdk2021-2214 ?
+  const generalDisplay = materialType?.materialTypeGeneral?.display
     ? "\u{2705}"
     : "\u{274C}";
   const generalCode = materialType?.materialTypeGeneral?.code

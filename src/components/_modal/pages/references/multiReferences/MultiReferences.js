@@ -87,7 +87,7 @@ export default function MultiReferences({ context }) {
     // Filter only the selected material type //TODO BIBDK2021-2214
     const filteredManifestations = workData.manifestations.filter(
       (mani) =>
-        mani.materialTypes?.[0]?.materialTypeSpecific?.display?.toLowerCase() ===
+        mani.materialTypes?.[0]?.materialTypeSpecific?.display?.toLowerCase() === // --> this is probably not working anymore
         workData.materialType?.toLowerCase()
     );
 
@@ -233,7 +233,7 @@ export default function MultiReferences({ context }) {
       const activeChoices = activeMaterialChoices;
       missingActionMaterials.forEach((item) => {
         const filteredManifestationsWorkData =
-          filteredManifestationsForMaterialType(item);
+          filteredManifestationsForMaterialType(item); //TODO 2214 - should be no need to filterhere
         const manifestationsForMaterialType =
           filteredManifestationsWorkData?.manifestations;
         const { flattenedGroupedSortedManifestations } =

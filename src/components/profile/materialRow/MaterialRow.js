@@ -105,7 +105,7 @@ const MaterialRow = ({ id: materialId, skeleton, type, ...props }) => {
           materialId={materialId}
           isMobileSize={isMobileSize}
           {...props}
-          materialType={props.materialType} //TODO 2214 do i need this?
+          materialType={props.materialType}
         />
       );
   }
