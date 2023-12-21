@@ -122,10 +122,6 @@ export default function ResultRow({
     return manifestationMaterialTypeFactory(work?.manifestations?.mostRelevant);
   }, [work?.manifestations?.mostRelevant]);
 
-  const allPids = work?.manifestations?.mostRelevant?.map(
-    (manifestation) => manifestation.pid
-  );
-
   const materialTypes = filters.materialTypesSpecific;
   uniqueMaterialTypes.sort(sortMaterialTypesByFilter(materialTypes));
   return (
@@ -225,7 +221,6 @@ export default function ResultRow({
             className={styles.BookmarkDropdown}
             materialId={work?.workId}
             workId={work?.workId}
-            pids={allPids}
             materialTypes={uniqueMaterialTypes}
             title={work?.titles?.sort}
             size={{ w: 4, h: 4 }}

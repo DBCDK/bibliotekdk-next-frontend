@@ -14,9 +14,6 @@ import {
   formatMaterialTypesToPresentation,
 } from "@/lib/manifestationFactoryUtils";
 import { createEditionText } from "../../details/utils/details.utils";
-import { useData } from "@/lib/api/api";
-import * as workFragments from "@/lib/api/work.fragments";
-import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import cx from "classnames";
 import isEmpty from "lodash/isEmpty";
 
@@ -34,25 +31,9 @@ export function BookMarkMaterialSelector({
   className,
   title,
   singleManifestation,
-  pids,
+  editions,
 }) {
-  const { data: workData } = useData(
-    workId && !singleManifestation && workFragments.overviewWork({ workId })
-  );
-  const { data: manifestationData } = useData(
-    singleManifestation &&
-      pids &&
-      pids.length === 1 &&
-      manifestationFragments.manifestationFullManifestation({
-        pid: pids?.[0],
-      })
-  );
-
-  const manifestations = manifestationData
-    ? [manifestationData?.manifestation]
-    : workData
-    ? workData?.work?.manifestations?.mostRelevant
-    : [];
+  const manifestations = editions;
 
   const {
     bookmarks: bookmarksBeforeFilterOnWorkId,
@@ -65,7 +46,9 @@ export function BookMarkMaterialSelector({
     : bookmarksBeforeFilterOnWorkId
         ?.filter((bookmark) => bookmark.workId === workId)
         .filter((bookmark) =>
-          singleManifestation ? bookmark.materialId === pids?.[0] : true
+          singleManifestation
+            ? bookmark.materialId === manifestations?.[0]?.pid
+            : true
         );
 
   const [options, setOptions] = useState(materialTypes);
@@ -84,7 +67,6 @@ export function BookMarkMaterialSelector({
   const revalidateEditions = () => {
     const defaultOptions = [...materialTypes];
 
-    // if (!editions) {
     if (singleManifestation) {
       setOptions([
         {
@@ -106,14 +88,13 @@ export function BookMarkMaterialSelector({
       };
     });
 
+    const addedEditions = bookmarks?.filter(
+      (bookmark) =>
+        bookmark.materialId !== bookmark.workId && bookmark.workId === workId
+    );
     const specificEditions =
-      bookmarks
-        ?.filter(
-          (bookmark) =>
-            bookmark.materialId !== bookmark.workId &&
-            bookmark.workId === workId
-        )
-        .map((addedEdition) => {
+      addedEditions
+        ?.map((addedEdition) => {
           const edition = manifestations?.find(
             (edi) => edi.pid === addedEdition.materialId
           );

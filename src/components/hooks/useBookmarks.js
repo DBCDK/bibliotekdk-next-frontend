@@ -7,6 +7,7 @@ import * as bookmarkFragments from "@/lib/api/bookmarks.fragments";
 import { useSession } from "next-auth/react";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { getLocalStorageItem, setLocalStorageItem } from "@/lib/utils";
+import isEqual from "lodash/isEqual";
 
 const KEY_NAME = "bookmarks";
 const ITEMS_PER_PAGE = 20;
@@ -343,7 +344,9 @@ export const usePopulateBookmarksNew2 = (bookmarks) => {
 
     // if bookmarkId is in specificEdition array, then filter the specific edition out
     const specificEditionBookmark = specificEditions?.find(
-      (se) => se?.materialId === bookmark?.materialId
+      (se) =>
+        se?.materialId === bookmark?.materialId &&
+        isEqual(se?.materialType, bookmark?.materialType)
     );
     if (specificEditionBookmark) {
       const specificManifestation =

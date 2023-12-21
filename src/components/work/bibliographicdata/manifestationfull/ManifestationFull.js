@@ -105,9 +105,9 @@ function ColumnOne({ workId, manifestation }) {
           workId={workId}
           materialId={manifestation?.pid}
           materialTypes={uniqueMaterialTypes}
-          pids={[manifestation?.pid]}
           size={{ w: 4, h: 4 }}
           title={manifestation?.titles?.sort}
+          editions={[manifestation]}
           singleManifestation={true}
         />
       </div>
