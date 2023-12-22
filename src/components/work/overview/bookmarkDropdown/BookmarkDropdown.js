@@ -197,7 +197,6 @@ export function BookMarkMaterialSelector({
                 await onSelect(material, workId);
               }}
             >
-              <div>{JSON.stringify(material)}</div>
               <div className={styles.itemContainer}>
                 <Text type="text3" className={styles.dropdownitemText}>
                   {material?.editionDisplayText}
