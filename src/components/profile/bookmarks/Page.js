@@ -19,6 +19,7 @@ import { useModal } from "@/components/_modal";
 import Skeleton from "@/components/base/skeleton/Skeleton";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import { getMaterialTypeForPresentation } from "@/lib/manifestationFactoryUtils";
 import { getSessionStorageItem, setSessionStorageItem } from "@/lib/utils";
 
 const CONTEXT = "bookmark";
@@ -75,7 +76,7 @@ const BookmarkPage = () => {
     isLoading: bookmarsDataLoading,
   } = useBookmarks();
   const { data: bookmarks, isLoading: isPopulateLoading } =
-    usePopulateBookmarks(bookmarksData);
+    usePopulateBookmarks(bookmarksData); //TODO first to exchange
   const [activeStickyButton, setActiveStickyButton] = useState(null);
   const breakpoint = useBreakpoint();
   const [sortByValue, setSortByValue] = useState(null);
@@ -86,7 +87,6 @@ const BookmarkPage = () => {
   const modal = useModal();
   const [successfullyCreatedIds, setSuccessfullyCreatedIds] = useState([]);
   const [failureAtCreationIds, setFailureAtCreationIds] = useState([]);
-
   /**
    * Callback that marks materials as successfully created/failed in bookmarklist
    * when we close the receipt
@@ -123,7 +123,9 @@ const BookmarkPage = () => {
       newList.push({
         key: key,
         materialId: bookmarkData.materialId,
+        workId: bookmarkData.workId,
         materialType: bookmarkData.materialType,
+        bookmarkId: bookmarkData.bookmarkId,
       });
     }
 
@@ -134,12 +136,12 @@ const BookmarkPage = () => {
     setTimeout(() => {
       if (isAuthenticated) {
         modal.push("ematerialfilter", {
-          materials: checkboxList,
+          bookmarksToOrder: checkboxList,
           sortType: sortByValue,
           handleOrderFinished: handleOrderFinished,
         });
       } else {
-        openLoginModal({ modal }); //TODO check this flow
+        openLoginModal({ modal });
       }
     }, 300);
   };
@@ -162,7 +164,9 @@ const BookmarkPage = () => {
         allBookmarksData.map((el) => ({
           key: el.key,
           materialId: el.materialId,
+          workId: el.workId,
           materialType: el.materialType,
+          bookmarkId: el.bookmarkId,
         }))
       );
     else setCheckboxList([]);
@@ -226,11 +230,10 @@ const BookmarkPage = () => {
     if (!bookmark.pid) {
       return null;
     }
-
     /**
      * Matches string construction on work page
      */
-    return createEditionText(bookmark);
+    return createEditionText(bookmark?.manifestations?.[0]);
   };
   const onPageChange = async (newPage) => {
     const isSmallScreen = breakpoint == "xs";
@@ -242,6 +245,15 @@ const BookmarkPage = () => {
       scrollToTop();
     }
     setCurrentPage(newPage);
+  };
+
+  const onDeleteBookmark = (bookmark) => {
+    if (checkboxList.indexOf((bm) => bm.bookmarkId === bookmark.bookmarkId)) {
+      setCheckboxList((prev) =>
+        prev.filter((bm) => bm.bookmarkId !== bookmark.bookmarkId)
+      );
+    }
+    deleteBookmarks([{ bookmarkId: bookmark.bookmarkId, key: bookmark.key }]);
   };
 
   const isAllSelected = checkboxList?.length === allBookmarksData?.length;
@@ -360,7 +372,7 @@ const BookmarkPage = () => {
             checked={isAllSelected}
             disabled={bookmarks?.length === 0}
             id="bookmarkpage-select-all"
-            aria-labelledby="bookmarkpage-select-all-label"
+            ariaLabelledBy="bookmarkpage-select-all-label"
             ariaLabel={Translate({
               context: CONTEXT,
               label: "select-all",
@@ -420,29 +432,24 @@ const BookmarkPage = () => {
           <MaterialRow
             key={`bookmark-list-${idx}`}
             hasCheckbox={!isMobile || activeStickyButton !== null}
-            title={bookmark?.titles?.main[0] || ""}
-            creator={bookmark?.creators[0]?.display}
-            materialType={bookmark.materialType}
-            image={
-              bookmark?.cover?.thumbnail ??
-              bookmark?.manifestations?.bestRepresentation?.cover?.thumbnail
+            title={bookmark?.manifestations?.[0]?.titles?.full?.[0] || ""}
+            creator={
+              bookmark?.manifestations?.[0]?.ownerWork.creators[0]?.display
             }
+            materialType={getMaterialTypeForPresentation(
+              bookmark.manifestations?.[0]?.materialTypes
+            )}
+            image={bookmark?.manifestations?.[0]?.cover?.thumbnail}
             id={bookmark?.materialId}
             edition={constructEditionText(bookmark)}
-            workId={
-              bookmark?.pid ? bookmark?.ownerWork?.workId : bookmark?.workId
-            }
+            workId={bookmark?.workId}
             pid={bookmark?.pid}
-            allManifestations={bookmark?.manifestations?.mostRelevant}
+            allManifestations={bookmark?.manifestations}
             type="BOOKMARK"
             isSelected={
               checkboxList.findIndex((item) => item.key === bookmark.key) > -1
             }
-            onBookmarkDelete={() =>
-              deleteBookmarks([
-                { bookmarkId: bookmark.bookmarkId, key: bookmark.key },
-              ])
-            }
+            onBookmarkDelete={() => onDeleteBookmark(bookmark)}
             onSelect={() => onToggleCheckbox(bookmark.key)}
             showFailedAtCreation={containsIds(
               failureAtCreationIds,

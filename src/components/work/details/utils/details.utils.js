@@ -975,6 +975,7 @@ export function filterAndMerge({ baseArray, extendingArray }) {
  * @param {object} manifestation
  */
 export const createEditionText = (manifestation) => {
+  if (!manifestation) return "";
   return (
     manifestation?.hostPublication?.title ||
     [

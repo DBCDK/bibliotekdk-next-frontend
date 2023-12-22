@@ -90,7 +90,7 @@ function ColumnOne({ workId, manifestation }) {
           workId={workId}
           selectedPids={[manifestation?.pid]}
           selectedMaterialType={
-            manifestation?.materialTypes?.[0]?.materialTypeSpecific?.display //@TODO fix compound material types
+            manifestation?.materialTypes?.[0]?.materialTypeSpecific?.code //@TODO fix compound material types
           }
           singleManifestation={true}
           buttonType="secondary"
@@ -101,7 +101,7 @@ function ColumnOne({ workId, manifestation }) {
           materialId={manifestation.pid}
           materialTypes={[
             manifestation?.materialTypes?.map(
-              (mat) => mat?.materialTypeSpecific?.display
+              (mat) => mat?.materialTypeSpecific?.code //TODO code here?
             ),
           ]}
           size={{ w: 4, h: 4 }}

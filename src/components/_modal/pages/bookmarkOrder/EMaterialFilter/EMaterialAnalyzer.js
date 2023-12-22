@@ -5,7 +5,11 @@ import {
   checkPhysicalCopy,
 } from "@/lib/accessFactoryUtils";
 import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAndSelectedPids";
-import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
+import {
+  flattenMaterialType,
+  manifestationMaterialTypeFactory,
+  toFlatMaterialTypes,
+} from "@/lib/manifestationFactoryUtils";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 /**
@@ -18,15 +22,28 @@ const useAnalyzeMaterial = (material) => {
 
   const hasDigitalAccess = loanerInfo?.rights?.digitalArticleService;
 
-  const { workId, materialType, pid } = material;
-  const allManifestations = material?.manifestations?.mostRelevant;
+  const { workId, pid } = material;
+  const selectedManifestations = material?.manifestations;
+
+  const materialTypes = flattenMaterialType(selectedManifestations?.[0]);
+  const flattenedDisplayTypes = toFlatMaterialTypes(
+    materialTypes,
+    "specificDisplay"
+  );
 
   const { flatPidsByType } = useMemo(() => {
-    return manifestationMaterialTypeFactory(allManifestations);
-  }, [workId, allManifestations]);
+    return manifestationMaterialTypeFactory(selectedManifestations);
+  }, [workId, selectedManifestations, materialTypes]);
+
   const selectedPids = useMemo(
-    () => (!!pid ? [pid] : flatPidsByType([materialType?.toLowerCase()])),
-    [materialType]
+    //TODO use
+    () =>
+      !!pid
+        ? [pid]
+        : flatPidsByType(
+            flattenedDisplayTypes //should i give all the material types here? --> presentation material type
+          ),
+    [material?.manifestations]
   );
 
   const { manifestations } = useGetManifestationsForOrderButton(
@@ -38,12 +55,14 @@ const useAnalyzeMaterial = (material) => {
     () => accessFactory(manifestations),
     [manifestations]
   );
+
   const access = useMemo(
     () => getAllAllowedEnrichedAccessSorted(hasDigitalAccess) || [],
     [manifestations, hasDigitalAccess]
   );
-  const physicalCopy = checkPhysicalCopy([access?.[0]])?.[0];
-  const digitalCopy = checkDigitalCopy([access?.[0]])?.[0];
+  //the first access is always the most "generous", therefor its enough to check the first access
+  const digitalCopy = checkDigitalCopy(access)?.[0];
+  const physicalCopy = checkPhysicalCopy(access)?.[0];
 
   return !digitalCopy && !physicalCopy;
 };
@@ -58,6 +77,7 @@ const useAnalyzeMaterial = (material) => {
  */
 const EMaterialAnalyzer = ({ material }) => {
   const result = useAnalyzeMaterial(material);
+
   return (
     <div data-accessable-ematerial={result} data-material-key={material.key} />
   );

@@ -68,7 +68,6 @@ const MaterialRow = ({ id: materialId, skeleton, type, ...props }) => {
   const breakpoint = useBreakpoint();
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
-
   if (skeleton) {
     return (
       <SkeletonMaterialRow version={isMobileSize ? "mobile" : "desktop"} />
@@ -106,6 +105,7 @@ const MaterialRow = ({ id: materialId, skeleton, type, ...props }) => {
           materialId={materialId}
           isMobileSize={isMobileSize}
           {...props}
+          materialType={props.materialType}
         />
       );
   }

@@ -11,7 +11,7 @@ import Translate from "@/components/base/translate";
 import { getWorkUrlForProfile } from "../../utils";
 import sharedStyles from "../MaterialRow.module.css";
 import { useMemo } from "react";
-import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
+import { getMaterialTypeForPresentation } from "@/lib/manifestationFactoryUtils";
 import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
 import { TextWithCheckMark } from "../MaterialRow";
 import styles from "../MaterialRow.module.css";
@@ -30,20 +30,15 @@ const BookmarkColumn = ({
   workId,
   materialType,
   onBookmarkDelete,
-  allManifestations,
+  relevantManifestations,
   showFailedAtCreation,
   showSuccessfullyOrdered,
   handleOrderFinished,
 }) => {
-  const { flatPidsByType } = useMemo(() => {
-    return manifestationMaterialTypeFactory(allManifestations);
-  }, [workId, allManifestations]);
-
   const selectedPids = useMemo(
-    () => flatPidsByType([materialType.toLowerCase().replace(" / ", ",")]),
-    [materialType]
+    () => relevantManifestations.map((manifestation) => manifestation.pid),
+    [materialType, relevantManifestations]
   );
-
   return (
     <div className={sharedStyles.dynamicColumnHorizontal}>
       <div className={sharedStyles.bookmarkOrderButtonContainer}>
@@ -59,11 +54,13 @@ const BookmarkColumn = ({
         ) : (
           <ReservationButton
             workId={workId}
-            selectedPids={!!pid ? [pid] : selectedPids}
+            selectedPids={selectedPids}
             singleManifestation={!!pid ? true : false}
             buttonType="primary"
             size="small"
-            selectedMaterialType={materialType}
+            selectedMaterialType={getMaterialTypeForPresentation(
+              relevantManifestations?.[0]?.materialTypes
+            )}
             shortText
             handleOrderFinished={handleOrderFinished}
           />
@@ -177,7 +174,7 @@ const MaterialRowBookmark = ({
                   workId,
                   pid,
                   materialId,
-                  materialType,
+                  materialType, //TODO how to get workURL?
                   scrollToEdition: true,
                 })}
                 className={sharedStyles.blackUnderline}
@@ -223,7 +220,7 @@ const MaterialRowBookmark = ({
           pid={pid}
           materialType={materialType}
           onBookmarkDelete={onBookmarkDelete}
-          allManifestations={allManifestations}
+          relevantManifestations={allManifestations}
           showFailedAtCreation={showFailedAtCreation}
           showSuccessfullyOrdered={showSuccessfullyOrdered}
           handleOrderFinished={handleOrderFinished}
