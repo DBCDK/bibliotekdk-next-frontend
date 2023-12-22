@@ -183,10 +183,13 @@ const BookmarkPage = () => {
   const onStickyClick = () => {
     switch (activeStickyButton) {
       case "0":
-        return "Bestil";
+        //bestil
+        return onOrderManyClick();
       case "1":
-        return "Hent referencer";
+        // referencer
+        return onGetReferencesClick();
       case "2":
+        // slet
         return onDeleteSelected();
       default:
         console.error("button not bound correctly");
