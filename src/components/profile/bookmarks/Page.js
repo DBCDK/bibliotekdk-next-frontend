@@ -136,7 +136,7 @@ const BookmarkPage = () => {
     setTimeout(() => {
       if (isAuthenticated) {
         modal.push("ematerialfilter", {
-          materials: checkboxList,
+          bookmarksToOrder: checkboxList,
           sortType: sortByValue,
           handleOrderFinished: handleOrderFinished,
         });

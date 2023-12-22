@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { getLocalStorageItem, setLocalStorageItem } from "@/lib/utils";
 import isEqual from "lodash/isEqual";
+import { formatMaterialTypesFromCode } from "@/lib/manifestationFactoryUtils";
 
 const KEY_NAME = "bookmarks";
 const ITEMS_PER_PAGE = 20;
@@ -335,7 +336,7 @@ export const usePopulateBookmarks = (bookmarks) => {
     if (!bookmarks) return [];
 
     const relevantWorksByBookmarkId = bookmarks?.map((bookmark) => {
-      const materialTypes = bookmark?.materialType?.split(" / ");
+      const materialTypes = formatMaterialTypesFromCode(bookmark?.materialType);
       const work = workByIdsDataRemovedDuplicates?.find(
         (w) => w?.workId === bookmark?.workId
       );

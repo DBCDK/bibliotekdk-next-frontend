@@ -20,9 +20,9 @@ const CONTEXT = "bookmark-order";
  * Skips this step if nothing to filter
  */
 const EMaterialFilter = ({ context, active }) => {
-  const { bookmarks, createdAtSort, titleSort } = useBookmarks();
-  const { materials: materialKeys, sortType, handleOrderFinished } = context;
-  const { data: materialsData } = usePopulateBookmarks(materialKeys);
+  const { bookmarks: allBookmarks, createdAtSort, titleSort } = useBookmarks();
+  const { bookmarksToOrder, sortType, handleOrderFinished } = context;
+  const { data: materialsData } = usePopulateBookmarks(bookmarksToOrder);
   const [materials, setMaterials] = useState([]);
   const modal = useModal();
   const analyzeRef = useRef();
@@ -32,7 +32,7 @@ const EMaterialFilter = ({ context, active }) => {
 
   useEffect(() => {
     const materials = materialsData.map((mat) => {
-      const bookmark = bookmarks?.find((bm) => bm.key === mat.key);
+      const bookmark = allBookmarks?.find((bm) => bm.key === mat.key);
       return {
         ...bookmark,
         ...mat,
@@ -51,7 +51,7 @@ const EMaterialFilter = ({ context, active }) => {
     if (!analyzeRef?.current) return;
     // Secure only running once
     if (!!materialsToFilter || !!materialsToProceed) return;
-    if (materials.length !== materialKeys.length) return;
+    if (materials.length !== bookmarksToOrder.length) return;
 
     const timer = setTimeout(() => {
       // Ensure that EMaterialAnalyzers are done rendering

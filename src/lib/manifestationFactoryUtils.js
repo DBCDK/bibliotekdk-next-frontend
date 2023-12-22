@@ -135,6 +135,16 @@ export function formatMaterialTypesToCode(materialTypeArray) {
   );
 }
 
+/**
+ * @example  "BOOK / AUDIO_BOOK_TAPE" => ["BOOK", "AUDIO_BOOK_TAPE"] OR "BOOK" => ["BOOK"]
+ * @param {String} materialTypeString
+ * @returns {Array<String>}
+ */
+export function formatMaterialTypesFromCode(materialTypeString) {
+  if (!materialTypeString) return [];
+  return materialTypeString?.split(" / ");
+}
+
 //TODO check if compound material types are sorted
 /**
  *  

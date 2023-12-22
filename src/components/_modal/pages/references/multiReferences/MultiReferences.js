@@ -18,6 +18,7 @@ import {
   getMaterialTypeForPresentation,
   manifestationMaterialTypeFactory,
 } from "@/lib/manifestationFactoryUtils";
+import { splitList } from "./utils";
 
 export const CONTEXT = "multiReferences";
 const CHECKBOX_TRESHHOLD = 20;
@@ -75,29 +76,6 @@ export default function MultiReferences({ context }) {
   );
 
   const [periodicaFiltered, setPeriodicaFiltered] = useState([]);
-
-  const filteredManifestationsForMaterialType = (workData) => {
-    if (workData.manifestations?.length === 1) {
-      /**
-       *  Only 1 manifestation, we pick it.
-       * Some cases like article (online) we get 2 material types in materialTypeSpecific.
-       * And here we bypass issues with double material types if they only have 1 manifestation anyway
-       * This might be avoidable when we in the future upgrade bookmarks to use JED 1.1 and the CODE field in materialTypeSpecific
-       */
-      return workData;
-    }
-    // Filter only the selected material type //TODO BIBDK2021-2214
-    const filteredManifestations = workData.manifestations.filter(
-      (mani) =>
-        mani.materialTypes?.[0]?.materialTypeSpecific?.display?.toLowerCase() === // --> this is probably not working anymore
-        workData.materialType?.toLowerCase()
-    );
-
-    return {
-      ...workData,
-      manifestations: filteredManifestations,
-    };
-  };
 
   // Filter all who user has chosen an edition
   const missingActionMaterials = materialsMissingEdition.filter(
@@ -164,45 +142,16 @@ export default function MultiReferences({ context }) {
       return;
     }
 
-    const filteredManifestations = materialsMissingEdition.map((item) =>
-      filteredManifestationsForMaterialType(item)
+    const { periodicaManifestations, nonPeriodicaManifestations } = splitList(
+      materialsMissingEdition
     );
-    const newPeriodicaFiltered = [];
-    const newList = bookmarksMissingEdition.map((bookmark) => {
-      const matchingData = filteredManifestations.find(
-        (dataItem) => bookmark.key === dataItem.key
-      );
-
-      if (!matchingData) {
-        return bookmark;
-      }
-
-      const manifestations = matchingData.manifestations;
-
-      // If 1 option, select it
-      if (manifestations.length === 1) {
-        const singleManifestation = manifestations[0];
-        if (singleManifestation.workTypes?.[0] === "PERIODICA") {
-          // Periodica - Filter from list
-          newPeriodicaFiltered.push(singleManifestation);
-          return {
-            ...bookmark,
-            toFilter: true,
-          };
-        }
-
-        return {
-          ...bookmark,
-          chosenPid: singleManifestation.pid,
-        };
-      } else return bookmark;
-    });
 
     setHasAutoCheckbox(
-      newList.filter((i) => !i.chosenPid).length > CHECKBOX_TRESHHOLD
+      nonPeriodicaManifestations.filter((i) => !i.chosenPid).length >
+        CHECKBOX_TRESHHOLD
     );
-    setPeriodicaFiltered(newPeriodicaFiltered);
-    setActiveMaterialChoices(newList);
+    setPeriodicaFiltered(periodicaManifestations);
+    setActiveMaterialChoices(nonPeriodicaManifestations);
   }, [modal.isVisible, isLoading]);
 
   const onEditionPick = (pid, materialKey) => {
@@ -234,10 +183,7 @@ export default function MultiReferences({ context }) {
       // Auto select newest editions
       const activeChoices = activeMaterialChoices;
       missingActionMaterials.forEach((item) => {
-        const filteredManifestationsWorkData =
-          filteredManifestationsForMaterialType(item); //TODO 2214 - should be no need to filterhere
-        const manifestationsForMaterialType =
-          filteredManifestationsWorkData?.manifestations;
+        const manifestationsForMaterialType = item?.manifestations;
         const { flattenedGroupedSortedManifestations } =
           manifestationMaterialTypeFactory(manifestationsForMaterialType);
         // Take newest manifestation pid
