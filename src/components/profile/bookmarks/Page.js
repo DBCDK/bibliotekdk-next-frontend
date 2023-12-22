@@ -19,10 +19,7 @@ import { useModal } from "@/components/_modal";
 import Skeleton from "@/components/base/skeleton/Skeleton";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
-import {
-  flattenMaterialType,
-  formatMaterialTypesToPresentation,
-} from "@/lib/manifestationFactoryUtils";
+import { getMaterialTypeForPresentation } from "@/lib/manifestationFactoryUtils";
 import { getSessionStorageItem, setSessionStorageItem } from "@/lib/utils";
 
 const CONTEXT = "bookmark";
@@ -64,14 +61,6 @@ const containsIds = (ids, key) => {
     return id === key;
   });
   return x > -1;
-};
-
-//TODO check if compound material types are ordered
-export const constructMaterialType = (materialTypes) => {
-  const flattenedMaterialTypes = flattenMaterialType({
-    materialTypes: materialTypes,
-  });
-  return formatMaterialTypesToPresentation(flattenedMaterialTypes);
 };
 
 const BookmarkPage = () => {
@@ -147,7 +136,7 @@ const BookmarkPage = () => {
     setTimeout(() => {
       if (isAuthenticated) {
         modal.push("ematerialfilter", {
-          materials: checkboxList,
+          bookmarksToOrder: checkboxList,
           sortType: sortByValue,
           handleOrderFinished: handleOrderFinished,
         });
@@ -194,10 +183,13 @@ const BookmarkPage = () => {
   const onStickyClick = () => {
     switch (activeStickyButton) {
       case "0":
-        return "Bestil";
+        //bestil
+        return onOrderManyClick();
       case "1":
-        return "Hent referencer";
+        // referencer
+        return onGetReferencesClick();
       case "2":
+        // slet
         return onDeleteSelected();
       default:
         console.error("button not bound correctly");
@@ -445,7 +437,7 @@ const BookmarkPage = () => {
             creator={
               bookmark?.manifestations?.[0]?.ownerWork.creators[0]?.display
             }
-            materialType={constructMaterialType(
+            materialType={getMaterialTypeForPresentation(
               bookmark.manifestations?.[0]?.materialTypes
             )}
             image={bookmark?.manifestations?.[0]?.cover?.thumbnail}

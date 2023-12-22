@@ -4,8 +4,10 @@ import isEmpty from "lodash/isEmpty";
 import { accessFactory } from "@/lib/accessFactoryUtils";
 import { BackgroundColorEnum } from "@/components/base/materialcard/materialCard.utils";
 import ButtonRow from "./ButtonRow";
-import { constructMaterialType } from "@/components/profile/bookmarks/Page";
-import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
+import {
+  flattenMaterialType,
+  getMaterialTypeForPresentation,
+} from "@/lib/manifestationFactoryUtils";
 
 export default function Material({
   material,
@@ -15,7 +17,7 @@ export default function Material({
   hideDelete,
 }) {
   const manifestations = material?.manifestations;
-  const materialType = constructMaterialType(
+  const materialType = getMaterialTypeForPresentation(
     manifestations?.[0]?.materialTypes
   );
   const materialTypesArray = flattenMaterialType(manifestations?.[0]);
