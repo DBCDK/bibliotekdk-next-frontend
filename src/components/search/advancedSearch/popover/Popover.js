@@ -22,9 +22,22 @@ const Popover = ({ className, simpleSearchRef }) => {
   const triggerContainerRef = useRef(null);
   const tooltipRef = useRef(null);
 
+  const handleScrollBarClick = () => {
+    //click on scroll bar closes the popover only in safari. This is a hack for solving the popover is closing on safari
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    const viewportWidth = window.innerWidth;
+    const clickPositionX = event.clientX;
+
+    return showPopover && isSafari && viewportWidth - clickPositionX <= 10;
+  };
   useEffect(() => {
-    //hide if user clicks outside the popover.
+    //hide popover if user clicks outside the popover.
     function handleClickOutside(event) {
+      //dont hide popover if click is on scroll bar
+      const clickOnScrollBar = handleScrollBarClick(event);
+      if (clickOnScrollBar) {
+        return;
+      }
       //returns true if the click is inside the given ref
       const isClickInsideRef = (ref, target) => ref?.current?.contains(target);
       //if click outside popover and outside trigger, then hide popover
@@ -52,9 +65,9 @@ const Popover = ({ className, simpleSearchRef }) => {
         setShowInfoTooltip(false);
       }
     }
-    document.addEventListener("mousedown", handleClickOutside);
+    document.body.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.body.removeEventListener("mousedown", handleClickOutside);
     };
   }, [popoverRef, showPopover]);
 
