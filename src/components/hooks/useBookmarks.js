@@ -9,6 +9,7 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { getLocalStorageItem, setLocalStorageItem } from "@/lib/utils";
 import isEqual from "lodash/isEqual";
 import { formatMaterialTypesFromCode } from "@/lib/manifestationFactoryUtils";
+import isEmpty from "lodash/isEmpty";
 
 const KEY_NAME = "bookmarks";
 const ITEMS_PER_PAGE = 20;
@@ -328,46 +329,44 @@ export const usePopulateBookmarks = (bookmarks) => {
 
   //specific edition
   //use these pids to find the specific editions and remove all irrelevnat pids from editions
-  const specificEditions = bookmarks?.filter(
-    (bookmark) => !bookmark?.materialId?.includes("work-of:")
-  );
+  // const specificEditions = bookmarks?.filter(
+  //   (bookmark) => !bookmark?.materialId?.includes("work-of:")
+  // ); //REMOVE?
 
   const data = useMemo(() => {
     if (!bookmarks) return [];
 
     const relevantWorksByBookmarkId = bookmarks?.map((bookmark) => {
-      const materialTypes = formatMaterialTypesFromCode(bookmark?.materialType);
+      const relevantMaterialTypes = formatMaterialTypesFromCode(
+        bookmark?.materialType
+      );
       const work = workByIdsDataRemovedDuplicates?.find(
         (w) => w?.workId === bookmark?.workId
       );
 
-      let manifestationWithCorrectMaterialType =
+      const manifestationWithCorrectMaterialTypes =
         work?.manifestations?.mostRelevant.filter((m) =>
-          isMaterialTypesMatch(materialTypes, m?.materialTypes)
+          isMaterialTypesMatch(relevantMaterialTypes, m?.materialTypes)
         );
+      const specificManifestation =
+        manifestationWithCorrectMaterialTypes?.filter(
+          (m) => m?.pid === bookmark?.materialId
+        );
+      const isSpecificEdition = !isEmpty(specificManifestation);
 
-      // if materialId is in specificEdition array, then filter the specific edition out
-      const specificEditionBookmark = specificEditions?.find(
-        (se) => se?.materialId === bookmark?.materialId //TODO 2214 use bookmarkId once we are sure, all bookmarks have it.
-        //(se) => se?.bookmarkId === bookmark?.bookmarkId
-      );
-      if (specificEditionBookmark) {
-        const specificManifestation =
-          manifestationWithCorrectMaterialType?.filter(
-            (m) => m?.pid === specificEditionBookmark?.materialId
-          );
-        manifestationWithCorrectMaterialType = specificManifestation;
-      }
       return {
         ...work,
         bookmarkId: bookmark?.bookmarkId,
         materialId: bookmark?.materialId,
-        pid: specificEditionBookmark ? bookmark?.materialId : undefined,
+        pid: isSpecificEdition ? bookmark?.materialId : undefined,
         key: bookmark?.key,
         workId: bookmark?.workId,
-        manifestations: manifestationWithCorrectMaterialType,
+        manifestations: isSpecificEdition
+          ? specificManifestation
+          : manifestationWithCorrectMaterialTypes,
       };
     });
+
     return relevantWorksByBookmarkId.filter((item) => item); // filter nulls
   }, [bookmarks, workByIdsData]);
   return { data, isLoading: idsToWorksLoading };
