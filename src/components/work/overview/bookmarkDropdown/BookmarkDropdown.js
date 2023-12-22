@@ -187,7 +187,7 @@ export function BookMarkMaterialSelector({
 
           return (
             <Dropdown.Item
-              data-cy={`bookmark-${material}-${index}`}
+              data-cy={`bookmark-${material.editionDisplayText}-${index}`}
               key={`bookmark-${index}`}
               className={cx(styles.dropdownitem, {
                 [styles.active]: !!activeItem,
@@ -197,6 +197,7 @@ export function BookMarkMaterialSelector({
                 await onSelect(material, workId);
               }}
             >
+              <div>{JSON.stringify(material)}</div>
               <div className={styles.itemContainer}>
                 <Text type="text3" className={styles.dropdownitemText}>
                   {material?.editionDisplayText}
