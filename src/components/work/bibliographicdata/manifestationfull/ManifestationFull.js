@@ -29,7 +29,8 @@ import CheckMarkBlue from "@/public/icons/checkmark_blue.svg";
 import Tooltip from "react-bootstrap/Tooltip";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import cx from "classnames";
-import BookMarkDropDown from "@/components/work/overview/bookmarkDropdown/BookmarkDropdown";
+import BookmarkDropdown from "@/components/work/overview/bookmarkDropdown/BookmarkDropdown";
+import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 
 /**
  * Column one of full view. Some links and a button.
@@ -41,6 +42,10 @@ function ColumnOne({ workId, manifestation }) {
   const modal = useModal();
   const copyLinkId = useId();
   const [checkMarkActive, setCheckMarkActive] = useState(false);
+
+  const { uniqueMaterialTypes } = manifestationMaterialTypeFactory([
+    manifestation,
+  ]);
 
   function permalinkToPid(hash) {
     return `/work/pid/${hash.slice(1)}`;
@@ -96,16 +101,14 @@ function ColumnOne({ workId, manifestation }) {
           buttonType="secondary"
           size="small"
         />
-        <BookMarkDropDown
+        <BookmarkDropdown
           workId={workId}
-          materialId={manifestation.pid}
-          materialTypes={[
-            manifestation?.materialTypes?.map(
-              (mat) => mat?.materialTypeSpecific?.code //TODO code here?
-            ),
-          ]}
+          materialId={manifestation?.pid}
+          materialTypes={uniqueMaterialTypes}
           size={{ w: 4, h: 4 }}
           title={manifestation?.titles?.sort}
+          editions={[manifestation]}
+          singleManifestation={true}
         />
       </div>
 

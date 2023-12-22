@@ -8,8 +8,20 @@ import { cyKey } from "@/utils/trim";
 import useBookmarks from "@/components/hooks/useBookmarks";
 import Icon from "@/components/base/icon/Icon";
 import BookmarkMedium from "@/public/icons/bookmark_small.svg";
-import { formatMaterialTypesToCode } from "@/lib/manifestationFactoryUtils";
+import {
+  flattenMaterialType,
+  formatMaterialTypesToCode,
+  formatMaterialTypesToPresentation,
+} from "@/lib/manifestationFactoryUtils";
 import { createEditionText } from "../../details/utils/details.utils";
+import cx from "classnames";
+import isEmpty from "lodash/isEmpty";
+
+function getBookmarkKey(material) {
+  return (
+    material?.materialId + formatMaterialTypesToCode(material?.materialTypes)
+  );
+}
 
 export function BookMarkMaterialSelector({
   materialTypes,
@@ -18,13 +30,28 @@ export function BookMarkMaterialSelector({
   size = { w: 7, h: 7 },
   className,
   title,
+  singleManifestation,
   editions,
 }) {
-  const { bookmarks, setBookmark, isLoading } = useBookmarks();
-  const [active, setActive] = useState(false);
-  const [options, setOptions] = useState(
-    materialTypes.map((mat) => formatMaterialTypesToCode(mat))
-  );
+  const manifestations = editions;
+
+  const {
+    bookmarks: bookmarksBeforeFilterOnWorkId,
+    setBookmark,
+    isLoading,
+  } = useBookmarks();
+
+  const bookmarks = isLoading
+    ? []
+    : bookmarksBeforeFilterOnWorkId
+        ?.filter((bookmark) => bookmark.workId === workId)
+        .filter((bookmark) =>
+          singleManifestation
+            ? bookmark.materialId === manifestations?.[0]?.pid
+            : true
+        );
+
+  const [options, setOptions] = useState(materialTypes);
 
   const isOpen = useRef(false);
 
@@ -35,86 +62,70 @@ export function BookMarkMaterialSelector({
     }
 
     revalidateEditions();
-  }, [editions, bookmarks]);
-
-  useEffect(() => {
-    if (!isLoading) {
-      let bookmarkIndex = -1;
-      // this one is used to set the overall button to active or not (if one of the materialtypes is selected)
-      if (options.length > 1) {
-        bookmarkIndex = bookmarks?.findIndex(
-          (bookm) => bookm.materialId === materialId || bookm.workId === workId
-        );
-      } else if (options.length === 1) {
-        // if we have one material only we look for a specific key
-        bookmarkIndex = bookmarks?.findIndex(
-          (bookm) =>
-            bookm.key === materialId + formatMaterialTypesToCode(options[0])
-        );
-      }
-      setActive(bookmarkIndex !== -1);
-    }
-  }, [options, isOpen.current]);
+  }, [JSON.stringify(bookmarks)]);
 
   const revalidateEditions = () => {
-    const defaultOptions = materialTypes.map((mat) =>
-      formatMaterialTypesToCode(mat)
-    );
+    const defaultOptions = [...materialTypes];
 
-    if (!editions) {
-      // Not needed to look for aditional dropdown items
-      setOptions(defaultOptions);
+    if (singleManifestation) {
+      setOptions([
+        {
+          editionDisplayText: formatMaterialTypesToPresentation(
+            materialTypes?.[0]
+          ),
+          materialTypes: materialTypes?.[0],
+          materialId: materialId,
+        },
+      ]);
       return;
     }
 
+    const materialTypeEditions = defaultOptions.map((mat) => {
+      return {
+        editionDisplayText: formatMaterialTypesToPresentation(mat),
+        materialTypes: mat,
+        materialId: materialId,
+      };
+    });
+
     const addedEditions = bookmarks?.filter(
-      (bookmark) => bookmark.workId === workId
+      (bookmark) =>
+        bookmark.materialId !== bookmark.workId && bookmark.workId === workId
     );
-    const bookmarkMatches = addedEditions
-      ?.map((addedEdition) => {
-        const edition = editions?.find(
-          (edi) => edi.pid === addedEdition.materialId
-        );
-        if (!edition) {
-          return null;
-        }
+    const specificEditions =
+      addedEditions
+        ?.map((addedEdition) => {
+          const edition = manifestations?.find(
+            (edi) => edi.pid === addedEdition.materialId
+          );
+          if (!edition) {
+            return null;
+          }
 
-        return {
-          editionDisplayText:
-            edition?.materialTypes?.[0]?.materialTypeSpecific?.display +
-            ", " +
-            createEditionText(edition),
-          ...edition,
-        };
-      })
-      .filter((i) => !!i);
+          return {
+            editionDisplayText:
+              formatMaterialTypesToPresentation(flattenMaterialType(edition)) +
+              ", " +
+              createEditionText(edition),
+            pid: edition?.pid,
+            ...edition,
+            materialTypes: flattenMaterialType(edition),
+            materialId: addedEdition.materialId,
+          };
+        })
+        ?.filter((i) => !!i) || [];
 
-    setOptions(defaultOptions.concat(bookmarkMatches));
+    setOptions([...materialTypeEditions, ...specificEditions]);
   };
 
-  const onSelect = (material, workId) => {
-    let item;
-    if (material.editionDisplayText) {
-      // Edition logic
-      item = {
-        key: material.pid + formatMaterialTypesToCode(material),
-        materialId: material.pid,
-        workId: workId,
-        materialType: formatMaterialTypesToCode(material),
-        title,
-      };
-    } else {
-      // Normal logic
-      item = {
-        key: materialId + formatMaterialTypesToCode(material),
-        materialId: materialId,
-        workId: workId,
-        materialType: formatMaterialTypesToCode(material),
-        title,
-      };
-    }
-
-    setBookmark(item);
+  const onSelect = async (material, workId) => {
+    await setBookmark({
+      key: getBookmarkKey(material),
+      materialId: materialId,
+      workId: workId,
+      materialType: formatMaterialTypesToCode(material.materialTypes),
+      title,
+    });
   };
 
   const onDropdownToggle = (event) => {
@@ -132,10 +143,10 @@ export function BookMarkMaterialSelector({
       <Bookmark
         size={size}
         className={`${styles.bookmark} ${className}`}
-        selected={active}
-        onClick={(e) => {
+        selected={!isEmpty(bookmarks)}
+        onClick={async (e) => {
           e.preventDefault();
-          onSelect(options, workId);
+          await onSelect(options[0], workId);
         }}
       />
     );
@@ -156,7 +167,7 @@ export function BookMarkMaterialSelector({
         <Bookmark
           size={size}
           onClick={(e) => e.preventDefault()}
-          selected={active}
+          selected={!isEmpty(bookmarks)}
           className={styles.bookmark}
         />
       </Dropdown.Toggle>
@@ -169,39 +180,26 @@ export function BookMarkMaterialSelector({
         })}
       >
         {options.map((material, index) => {
-          let activeItem;
-          if (material?.editionDisplayText) {
-            activeItem =
-              bookmarks?.findIndex(
-                (book) =>
-                  book.key ===
-                  material.pid + formatMaterialTypesToCode(material)
-              ) !== -1;
-          } else {
-            activeItem =
-              bookmarks?.findIndex(
-                (book) =>
-                  book.key === workId + formatMaterialTypesToCode(material)
-              ) !== -1;
-          }
+          const activeItem =
+            bookmarks?.findIndex(
+              (book) => book.key === getBookmarkKey(material)
+            ) !== -1;
 
           return (
             <Dropdown.Item
-              data-cy={`bookmark-${material}-${index}`}
+              data-cy={`bookmark-${material.editionDisplayText}-${index}`}
               key={`bookmark-${index}`}
-              className={`${styles.dropdownitem} ${
-                activeItem ? styles.active : ""
-              }`}
-              onClick={(e) => {
+              className={cx(styles.dropdownitem, {
+                [styles.active]: !!activeItem,
+              })}
+              onClick={async (e) => {
                 e.preventDefault();
-                onSelect(material, workId);
+                await onSelect(material, workId);
               }}
             >
               <div className={styles.itemContainer}>
                 <Text type="text3" className={styles.dropdownitemText}>
-                  {material?.editionDisplayText
-                    ? material.editionDisplayText
-                    : formatMaterialTypesToCode(material)}
+                  {material?.editionDisplayText}
                 </Text>
 
                 <Icon size={{ w: 3, h: 3 }}>

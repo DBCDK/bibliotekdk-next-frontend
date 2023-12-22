@@ -147,13 +147,15 @@ export function formatMaterialTypesFromCode(materialTypeString) {
 
 //TODO check if compound material types are sorted
 /**
- *  
-    
- * @param {Array<Object>} materialTypes [ 
-  {"materialTypeSpecific": {"display": "lydoptagelse (cd)","code": "SOUND_RECORDING_CD"},
-  {"materialTypeSpecific": {"display": "bog", "code": "BOOK"}}
-]
- * @returns {String} "Bog / Lydoptagelse (cd)"
+ * Flatten materialTypes and make presentable
+ * @example
+     getMaterialTypeForPresentation([
+       { materialTypeSpecific: { display: "lydoptagelse (cd)", code: "SOUND_RECORDING_CD" } },
+       { materialTypeSpecific: { display: "bog", code: "BOOK" } }
+     ]) => "Bog / Lydoptagelse (cd)"
+ *
+ * @param {Array<Object>} materialTypes
+ * @returns {String}
  */
 export function getMaterialTypeForPresentation(materialTypes) {
   const flattenedMaterialTypes = flattenMaterialType({
