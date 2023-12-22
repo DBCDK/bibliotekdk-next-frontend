@@ -23,7 +23,7 @@ const Popover = ({ className, simpleSearchRef }) => {
   const tooltipRef = useRef(null);
 
   const handleScrollBarClick = () => {
-    //click on scroll bar closes the popover only on safari. This is a hack for solving the popover is closing on safari
+    //click on scroll bar closes the popover only in safari. This is a hack for solving the popover is closing on safari
     const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     const viewportWidth = window.innerWidth;
     const clickPositionX = event.clientX;
