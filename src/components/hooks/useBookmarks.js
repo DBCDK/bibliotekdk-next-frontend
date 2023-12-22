@@ -7,7 +7,7 @@ import * as bookmarkFragments from "@/lib/api/bookmarks.fragments";
 import { useSession } from "next-auth/react";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { getLocalStorageItem, setLocalStorageItem } from "@/lib/utils";
-import { isEqual } from "lodash/isEqual";
+import isEqual from "lodash/isEqual";
 
 const KEY_NAME = "bookmarks";
 const ITEMS_PER_PAGE = 20;
