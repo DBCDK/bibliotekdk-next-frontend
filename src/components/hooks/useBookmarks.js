@@ -327,12 +327,6 @@ export const usePopulateBookmarks = (bookmarks) => {
     (value, idx) => workByIdsData?.works?.indexOf(value) === idx
   );
 
-  //specific edition
-  //use these pids to find the specific editions and remove all irrelevnat pids from editions
-  // const specificEditions = bookmarks?.filter(
-  //   (bookmark) => !bookmark?.materialId?.includes("work-of:")
-  // ); //REMOVE?
-
   const data = useMemo(() => {
     if (!bookmarks) return [];
 
