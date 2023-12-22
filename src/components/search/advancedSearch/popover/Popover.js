@@ -31,7 +31,7 @@ const Popover = ({ className, simpleSearchRef }) => {
     return showPopover && isSafari && viewportWidth - clickPositionX <= 10;
   };
   useEffect(() => {
-    //hide if user clicks outside the popover.
+    //hide popover if user clicks outside the popover.
     function handleClickOutside(event) {
       //dont hide popover if click is on scroll bar
       const clickOnScrollBar = handleScrollBarClick(event);
