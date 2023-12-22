@@ -230,7 +230,6 @@ const BookmarkPage = () => {
     if (!bookmark.pid) {
       return null;
     }
-
     /**
      * Matches string construction on work page
      */
