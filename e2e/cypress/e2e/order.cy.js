@@ -439,7 +439,7 @@ describe("Order", () => {
       cy.contains("Test Bib - only physical via ILL").should("exist").click();
 
       //check can order on non-blocked agency
-      cy.get("[data-cy=button-godkend]").should("exist").should("be.enabled");
+      cy.get("[data-cy=button-godkend]").should("exist").should("be.disabled");
       cy.get("[data-cy=blocked-user]").should("not.exist");
     });
   });

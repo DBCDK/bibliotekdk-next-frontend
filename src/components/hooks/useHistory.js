@@ -4,6 +4,7 @@
 
 import { useState } from "react";
 import { SuggestTypeEnum } from "@/lib/enums";
+import { getLocalStorageItem, setLocalStorageItem } from "@/lib/utils";
 
 const KEY = "bibdk-search-history";
 
@@ -38,7 +39,7 @@ export const useHistory = () => {
   const [storedValue, setStoredValue] = useState(() => {
     try {
       if (typeof window !== "undefined") {
-        const item = localStorage.getItem(KEY);
+        const item = getLocalStorageItem(KEY);
         return item ? extractStoredValue(JSON.parse(item)) : [];
       }
     } catch (err) {
@@ -52,7 +53,7 @@ export const useHistory = () => {
       if (typeof window !== "undefined") {
         // Fetch clean
         let freshStoredValue =
-          extractStoredValue(JSON.parse(localStorage.getItem(KEY))) || "[]";
+          extractStoredValue(JSON.parse(getLocalStorageItem(KEY))) || "[]";
 
         // New history obj
         const obj = {
@@ -69,7 +70,7 @@ export const useHistory = () => {
         valueToStore = valueToStore.slice(0, 8);
         // Store again
         setStoredValue(valueToStore);
-        localStorage.setItem(KEY, JSON.stringify(valueToStore));
+        setLocalStorageItem(KEY, JSON.stringify(valueToStore));
       }
     } catch (err) {
       console.error(err);
@@ -80,7 +81,7 @@ export const useHistory = () => {
     try {
       if (typeof window !== "undefined") {
         setStoredValue([]);
-        localStorage.setItem(KEY, JSON.stringify([]));
+        setLocalStorageItem(KEY, JSON.stringify([]));
       }
     } catch (err) {
       console.error(err);

@@ -10,6 +10,7 @@ import { useInView } from "react-intersection-observer";
 import { scrollLock } from "./utils";
 import useKeyPress from "@/components/hooks/useKeypress";
 import FocusLock from "react-focus-lock";
+import { getLocalStorageItem, setLocalStorageItem } from "@/lib/utils";
 
 // context
 export const ModalContext = createContext(null);
@@ -160,7 +161,7 @@ function Container({ children, className = {}, mock = {} }) {
       }
 
       // Load stack as string from local storage
-      const stackStr = localStorage.getItem(LOCAL_STORAGE_KEY);
+      const stackStr = getLocalStorageItem(LOCAL_STORAGE_KEY);
       // Parse stack
       const stack = JSON.parse(stackStr);
       let activeModalInStack = false;
@@ -245,7 +246,7 @@ function Container({ children, className = {}, mock = {} }) {
   // Listen for changes to the stack, and store it in local storage
   useEffect(() => {
     if (didLoad.current) {
-      localStorage.setItem(LOCAL_STORAGE_KEY, stringify(modal.stack));
+      setLocalStorageItem(LOCAL_STORAGE_KEY, stringify(modal.stack));
     }
   }, [modal.stack]);
 
@@ -467,7 +468,7 @@ export function useModal() {
   function setStore(store) {
     _store = store;
     _setStore(_store);
-    localStorage.setItem(LOCAL_STORAGE_STORE_KEY, JSON.stringify(store));
+    setLocalStorageItem(LOCAL_STORAGE_STORE_KEY, JSON.stringify(store));
   }
 
   /**
@@ -475,7 +476,7 @@ export function useModal() {
    * @returns current store object from browser
    */
   async function _getStore() {
-    const storeStr = localStorage.getItem(LOCAL_STORAGE_STORE_KEY);
+    const storeStr = getLocalStorageItem(LOCAL_STORAGE_STORE_KEY);
     return await JSON.parse(storeStr);
   }
 
