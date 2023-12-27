@@ -3,7 +3,7 @@ import Top from "../../base/top";
 import styles from "./MultiOrder.module.css";
 import Translate from "@/components/base/translate";
 import CheckoutForm from "./checkoutForm/MultiOrderCheckoutForm";
-import Material, { filterForRelevantMaterialTypes } from "./Material/Material";
+import Material from "./Material/Material";
 import { useEffect, useRef, useState } from "react";
 import { useModal } from "@/components/_modal/Modal";
 import { StatusEnum } from "@/components/base/materialcard/materialCard.utils";
@@ -40,14 +40,7 @@ const createOrders = async ({
   await orderMutation.post(
     orderMutations.submitMultipleOrders({
       materialsToOrder: materials.map((material) => {
-        const isSpecificEdition = !!material.pid;
-
-        const pids = isSpecificEdition
-          ? [material.pid]
-          : filterForRelevantMaterialTypes(
-              material?.manifestations?.mostRelevant,
-              material?.materialType
-            ).map((mani) => mani.pid); //TODO BIBDK2021-2214
+        const pids = material?.manifestations?.map((mani) => mani.pid);
         const periodicaFormForMaterial = periodicaForms?.[material.key];
         const articleForm = formatArticleForm(
           periodicaFormForMaterial,

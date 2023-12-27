@@ -7,6 +7,9 @@ import * as bookmarkFragments from "@/lib/api/bookmarks.fragments";
 import { useSession } from "next-auth/react";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { getLocalStorageItem, setLocalStorageItem } from "@/lib/utils";
+import isEqual from "lodash/isEqual";
+import { formatMaterialTypesFromCode } from "@/lib/manifestationFactoryUtils";
+import isEmpty from "lodash/isEmpty";
 
 const KEY_NAME = "bookmarks";
 const ITEMS_PER_PAGE = 20;
@@ -110,7 +113,6 @@ const useBookmarksCore = ({ isMock = false, session }) => {
       const existingIndex = globalBookmarks?.findIndex(
         (bookmark) => bookmark.key === value.key
       );
-
       if (existingIndex === -1) {
         // Doesn't exist - Add
         await bookmarkMutation.post(
@@ -288,6 +290,16 @@ const useBookmarkMock = () => {
   return useBookmarksCore({ isMock: true });
 };
 
+//OBS order does not matter in this implementation. should order matter?
+// "BOOK / SOUND_RECORDING_CD" and "SOUND_RECORDING_CD / BOOK" would both match
+const isMaterialTypesMatch = (workTypesOfBookmark, materialTypesOfWork) => {
+  if (!materialTypesOfWork || !workTypesOfBookmark) return false;
+  const materialTypeCodes = materialTypesOfWork.map(
+    (mt) => mt?.materialTypeSpecific?.code
+  );
+  return isEqual(new Set(workTypesOfBookmark), new Set(materialTypeCodes));
+};
+
 const useBookmarks = process.env.STORYBOOK_ACTIVE
   ? useBookmarkMock
   : useBookmarkImpl;
@@ -295,62 +307,61 @@ export default useBookmarks;
 
 /**
  * Used to populate bookmark data, to show more info about the materials
+ * Uses workid to find all manifestations for the work
+ * filters the relevant manifestations based on the materialtype
+ * and if pid provided, it will find the one relevant pid (specific edition was bookmarked)
  * @param {Object[]} bookmarks list of bookmarks
  * @returns {Object[]} bookmarks
  */
 export const usePopulateBookmarks = (bookmarks) => {
-  //works (not specific edition)
-  const workIds = bookmarks?.filter((bookmark) =>
-    bookmark?.materialId?.includes("work-of:")
-  );
-
-  //specific edition
-  const workPids = bookmarks?.filter(
-    (bookmark) => !bookmark?.materialId?.includes("work-of:")
-  );
-
+  //all works both for specific edition and entire work
+  const workIds = bookmarks?.map((work) => work.workId);
   const { data: workByIdsData, isLoading: idsToWorksLoading } = useData(
-    workFragments.idsToWorks({ ids: workIds?.map((work) => work.materialId) })
+    workIds &&
+      workFragments.idsToWorks({
+        ids: workIds,
+      })
   );
 
-  const { data: workByPidsData, isLoading: pidsToWorkLoading } = useData(
-    workFragments.pidsToWorks({
-      pids: workPids?.map((work) => work.materialId),
-    })
+  const workByIdsDataRemovedDuplicates = workByIdsData?.works?.filter(
+    (value, idx) => workByIdsData?.works?.indexOf(value) === idx
   );
 
-  // Reorganize order and add bookmark data
   const data = useMemo(() => {
     if (!bookmarks) return [];
-    const transformedWorkByIds = workByIdsData?.works?.map((work) => ({
-      ...work,
-      materialId: work?.workId,
-    }));
-    const transformedWorkByPids = workByPidsData?.manifestations?.map(
-      (work) => ({
-        ...work,
-        materialId: work?.pid,
-      })
-    );
-    const merged = [].concat(transformedWorkByIds, transformedWorkByPids);
 
-    return bookmarks
-      .map((bookmark) => {
-        const workData = merged.find(
-          (item) => item?.materialId === bookmark.materialId
+    const relevantWorksByBookmarkId = bookmarks?.map((bookmark) => {
+      const relevantMaterialTypes = formatMaterialTypesFromCode(
+        bookmark?.materialType
+      );
+      const work = workByIdsDataRemovedDuplicates?.find(
+        (w) => w?.workId === bookmark?.workId
+      );
+
+      const manifestationWithCorrectMaterialTypes =
+        work?.manifestations?.mostRelevant.filter((m) =>
+          isMaterialTypesMatch(relevantMaterialTypes, m?.materialTypes)
         );
-        if (!workData) {
-          return null;
-        }
+      const specificManifestation =
+        manifestationWithCorrectMaterialTypes?.filter(
+          (m) => m?.pid === bookmark?.materialId
+        );
+      const isSpecificEdition = !isEmpty(specificManifestation);
 
-        // Merge data
-        return {
-          ...workData,
-          ...bookmark,
-        };
-      })
-      .filter((item) => item); // filter nulls
-  }, [bookmarks, workByPidsData, workByIdsData]);
-  const isLoading = idsToWorksLoading || pidsToWorkLoading;
-  return { data, isLoading };
+      return {
+        ...work,
+        bookmarkId: bookmark?.bookmarkId,
+        materialId: bookmark?.materialId,
+        pid: isSpecificEdition ? bookmark?.materialId : undefined,
+        key: bookmark?.key,
+        workId: bookmark?.workId,
+        manifestations: isSpecificEdition
+          ? specificManifestation
+          : manifestationWithCorrectMaterialTypes,
+      };
+    });
+
+    return relevantWorksByBookmarkId.filter((item) => item); // filter nulls
+  }, [bookmarks, workByIdsData]);
+  return { data, isLoading: idsToWorksLoading };
 };

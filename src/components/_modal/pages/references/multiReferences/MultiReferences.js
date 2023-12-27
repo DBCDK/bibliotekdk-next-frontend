@@ -14,41 +14,21 @@ import { useEffect, useState } from "react";
 import MaterialCard from "@/components/base/materialcard/MaterialCard";
 import { templateImageToLeft } from "@/components/base/materialcard/templates/templates";
 import Checkbox from "@/components/base/forms/checkbox";
-import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
+import {
+  getMaterialTypeForPresentation,
+  manifestationMaterialTypeFactory,
+} from "@/lib/manifestationFactoryUtils";
+import { splitList } from "./utils";
 
 export const CONTEXT = "multiReferences";
 const CHECKBOX_TRESHHOLD = 20;
 
-/**
- * Takes all materials that miss edition and finds maps their keys to their material types
- * @param {*} bookmarksMissingEdition
- * @param {*} bookmarks
- * @returns {Array} Array of objects with materialKey and materialType
- */
-const mapMaterialKeysToSelectedMaterialTypes = ({
-  bookmarksMissingEdition,
-  bookmarks,
-}) => {
-  if (!bookmarksMissingEdition || !bookmarks) return [];
-  return bookmarksMissingEdition.map((material) => {
-    const materialType = bookmarks.find(
-      (bookmark) => bookmark.key === material.key
-    )?.materialType;
-    if (materialType)
-      return { materialKey: material.key, materialType: materialType };
-  });
-};
-
-const SingleReference = ({
-  bookmarkInList,
-  materialKeyToMaterialTypes,
-  chosenPid,
-}) => {
+const SingleReference = ({ bookmarkInList }) => {
   const { data: materials, isLoading } = usePopulateBookmarks(bookmarkInList);
   const material = materials[0];
-  const materialType = materialKeyToMaterialTypes.find(
-    (e) => e?.materialKey === bookmarkInList[0].key
-  )?.materialType;
+  const materialType = getMaterialTypeForPresentation(
+    material?.manifestations?.[0]?.materialTypes
+  );
 
   if (isLoading) return null;
 
@@ -59,15 +39,10 @@ const SingleReference = ({
        * to get precise image and edition text etc
        */
 
-      material: chosenPid
-        ? {
-            ...material,
-            ...material?.manifestations?.mostRelevant.find(
-              (mani) => mani.pid === chosenPid
-            ),
-            materialType: materialType,
-          }
-        : { ...material, materialType: materialType },
+      material: {
+        ...material?.manifestations?.[0],
+        materialType: materialType,
+      },
       singleManifestation: true,
       isPeriodicaLike: false, //we have filtered out periodicalike materials
       //isDigitalArticle doesnt matter, since we always show edition
@@ -99,35 +74,8 @@ export default function MultiReferences({ context }) {
   const [activeMaterialChoices, setActiveMaterialChoices] = useState(
     bookmarksMissingEdition
   );
+
   const [periodicaFiltered, setPeriodicaFiltered] = useState([]);
-
-  const materialKeyToMaterialTypes = mapMaterialKeysToSelectedMaterialTypes({
-    bookmarksMissingEdition: materials,
-    bookmarks: bookmarks,
-  });
-
-  const filteredManifestationsForMaterialType = (workData) => {
-    if (workData.manifestations.mostRelevant.length === 1) {
-      /**
-       *  Only 1 manifestation, we pick it.
-       * Some cases like article (online) we get 2 material types in materialTypeSpecific.
-       * And here we bypass issues with double material types if they only have 1 manifestation anyway
-       * This might be avoidable when we in the future upgrade bookmarks to use JED 1.1 and the CODE field in materialTypeSpecific
-       */
-      return workData;
-    }
-    // Filter only the selected material type
-    const filteredManifestations = workData.manifestations.mostRelevant.filter(
-      (mani) =>
-        mani.materialTypes?.[0]?.materialTypeSpecific?.display?.toLowerCase() ===
-        workData.materialType?.toLowerCase()
-    );
-
-    return {
-      ...workData,
-      manifestations: { mostRelevant: filteredManifestations },
-    };
-  };
 
   // Filter all who user has chosen an edition
   const missingActionMaterials = materialsMissingEdition.filter(
@@ -150,15 +98,16 @@ export default function MultiReferences({ context }) {
     materials.length === 1 &&
     !hasMissingReferences &&
     periodicaFiltered.length !== 1;
+
   const materialPids = materials
     .filter((material) => !material.materialId.startsWith("work-of"))
     .map((material) => material.materialId);
   const isAutoCheckboxSelected =
     missingActionMaterials.length > CHECKBOX_TRESHHOLD;
 
-  const numberMaterials = materials.length;
+  const materialsCount = materials.length;
   const title =
-    numberMaterials === 1
+    materialsCount === 1
       ? Translate({
           context: CONTEXT,
           label: "get-reference",
@@ -166,11 +115,11 @@ export default function MultiReferences({ context }) {
       : Translate({
           context: CONTEXT,
           label: "get-references",
-          vars: [numberMaterials],
+          vars: [materialsCount],
         });
 
   const missingEditionText =
-    numberMaterials === 1
+    materialsCount === 1
       ? Translate({
           context: CONTEXT,
           label: "missing-edition-singular",
@@ -193,45 +142,16 @@ export default function MultiReferences({ context }) {
       return;
     }
 
-    const filteredManifestations = materialsMissingEdition.map((item) =>
-      filteredManifestationsForMaterialType(item)
+    const { periodicaManifestations, nonPeriodicaManifestations } = splitList(
+      materialsMissingEdition
     );
-    const newPeriodicaFiltered = [];
-    const newList = bookmarksMissingEdition.map((bookmark) => {
-      const matchingData = filteredManifestations.find(
-        (dataItem) => bookmark.key === dataItem.key
-      );
-
-      if (!matchingData) {
-        return bookmark;
-      }
-
-      const manifestations = matchingData.manifestations.mostRelevant;
-
-      // If 1 option, select it
-      if (manifestations.length === 1) {
-        const singleManifestation = manifestations[0];
-        if (singleManifestation.workTypes?.[0] === "PERIODICA") {
-          // Periodica - Filter from list
-          newPeriodicaFiltered.push(singleManifestation);
-          return {
-            ...bookmark,
-            toFilter: true,
-          };
-        }
-
-        return {
-          ...bookmark,
-          chosenPid: singleManifestation.pid,
-        };
-      } else return bookmark;
-    });
 
     setHasAutoCheckbox(
-      newList.filter((i) => !i.chosenPid).length > CHECKBOX_TRESHHOLD
+      nonPeriodicaManifestations.filter((i) => !i.chosenPid).length >
+        CHECKBOX_TRESHHOLD
     );
-    setPeriodicaFiltered(newPeriodicaFiltered);
-    setActiveMaterialChoices(newList);
+    setPeriodicaFiltered(periodicaManifestations);
+    setActiveMaterialChoices(nonPeriodicaManifestations);
   }, [modal.isVisible, isLoading]);
 
   const onEditionPick = (pid, materialKey) => {
@@ -244,7 +164,7 @@ export default function MultiReferences({ context }) {
 
   const onActionClick = (material, materialType, materialKey) => {
     modal.push("editionPicker", {
-      material: filteredManifestationsForMaterialType(material),
+      material,
       materialType,
       onEditionPick,
       materialKey,
@@ -263,10 +183,7 @@ export default function MultiReferences({ context }) {
       // Auto select newest editions
       const activeChoices = activeMaterialChoices;
       missingActionMaterials.forEach((item) => {
-        const filteredManifestationsWorkData =
-          filteredManifestationsForMaterialType(item);
-        const manifestationsForMaterialType =
-          filteredManifestationsWorkData?.manifestations?.mostRelevant;
+        const manifestationsForMaterialType = item?.manifestations;
         const { flattenedGroupedSortedManifestations } =
           manifestationMaterialTypeFactory(manifestationsForMaterialType);
         // Take newest manifestation pid
@@ -287,7 +204,6 @@ export default function MultiReferences({ context }) {
       setActiveMaterialChoices([...activeChoices]); // Spread to copy object - rerenders since new object
     }
   };
-
   return (
     <div>
       <Top
@@ -319,8 +235,7 @@ export default function MultiReferences({ context }) {
         <SingleReference
           bookmarkInList={materials}
           bookmarks={bookmarks}
-          materialKeyToMaterialTypes={materialKeyToMaterialTypes}
-          chosenPid={activeMaterialChoices?.[0]?.chosenPid}
+          //chosenPid={activeMaterialChoices?.[0]?.chosenPid} //WHAT DO I NEED chosenPid for?
         />
       )}
 
@@ -361,8 +276,6 @@ export default function MultiReferences({ context }) {
                 key={material.key}
                 materialKey={material.key}
                 material={material}
-                materialKeyToMaterialTypes={materialKeyToMaterialTypes}
-                modal={modal}
                 onActionClick={onActionClick}
                 onDeleteClick={onDeleteClick}
                 hideDelete={materials.length === 1}

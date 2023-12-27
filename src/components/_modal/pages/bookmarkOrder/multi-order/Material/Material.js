@@ -1,8 +1,5 @@
 import { accessFactory } from "@/lib/accessFactoryUtils";
-import {
-  manifestationMaterialTypeFactory,
-  formatMaterialTypesFromUrl,
-} from "@/lib/manifestationFactoryUtils";
+import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
 import MaterialCard from "@/components/base/materialcard/MaterialCard";
 import { templateImageToLeft } from "@/components/base/materialcard/templates/templates";
@@ -27,23 +24,6 @@ import { getManifestationWithoutDefaultCover } from "@/components/work/overview/
 import { workHasAlreadyBeenOrdered } from "../../../order/utils/order.utils";
 import HasBeenOrderedRow from "../../../edition/hasbeenOrderedRow/HasBeenOrderedRow";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
-
-/**
- * At this point, we have manifestation of all the different material types
- * Here we filter out the manifestation with the materialtype the user has selected
- * If we have compound material types (such as "den grimme ælling Bog / Lydoptagelse (cd)"), we have to split them up
- * @param {Object[]} mostRelevant
- * @param {String} materialType
- * @returns {Object[]}
- */
-export const filterForRelevantMaterialTypes = (mostRelevant, materialType) => {
-  if (!mostRelevant || !materialType) return [];
-
-  const materialTypes = formatMaterialTypesFromUrl(materialType);
-  const { flattenGroupedSortedManifestationsByType } =
-    manifestationMaterialTypeFactory(mostRelevant);
-  return flattenGroupedSortedManifestationsByType(materialTypes);
-};
 
 /**
  * Is missing article implementation
@@ -82,18 +62,9 @@ const Material = ({
   const [showAlreadyOrderedWarning, setShowAlreadyOrderedWarning] = useState(
     hasAlreadyBeenOrdered
   );
+  const manifestations = material?.manifestations || [];
 
-  const manifestations = isSpecificEdition
-    ? [material]
-    : filterForRelevantMaterialTypes(
-        material?.manifestations?.mostRelevant,
-        material?.materialType
-      );
-
-  const pids = isSpecificEdition
-    ? [material?.pid]
-    : manifestations.map((m) => m.pid) || [];
-
+  const pids = manifestations.map((m) => m.pid) || [];
   const { data: orderPolicyData, isLoading: orderPolicyIsLoading } = useData(
     pids &&
       pids.length > 0 &&

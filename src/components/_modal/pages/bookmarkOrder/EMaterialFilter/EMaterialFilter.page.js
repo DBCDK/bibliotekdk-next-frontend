@@ -10,6 +10,7 @@ import useBookmarks, {
   usePopulateBookmarks,
 } from "@/components/hooks/useBookmarks";
 import { useModal } from "@/components/_modal/Modal";
+import { getMaterialTypeForPresentation } from "@/lib/manifestationFactoryUtils";
 
 const CONTEXT = "bookmark-order";
 
@@ -19,9 +20,9 @@ const CONTEXT = "bookmark-order";
  * Skips this step if nothing to filter
  */
 const EMaterialFilter = ({ context, active }) => {
-  const { bookmarks, createdAtSort, titleSort } = useBookmarks();
-  const { materials: materialKeys, sortType, handleOrderFinished } = context;
-  const { data: materialsData } = usePopulateBookmarks(materialKeys);
+  const { bookmarks: allBookmarks, createdAtSort, titleSort } = useBookmarks();
+  const { bookmarksToOrder, sortType, handleOrderFinished } = context;
+  const { data: materialsData } = usePopulateBookmarks(bookmarksToOrder);
   const [materials, setMaterials] = useState([]);
   const modal = useModal();
   const analyzeRef = useRef();
@@ -31,7 +32,7 @@ const EMaterialFilter = ({ context, active }) => {
 
   useEffect(() => {
     const materials = materialsData.map((mat) => {
-      const bookmark = bookmarks?.find((bm) => bm.key === mat.key);
+      const bookmark = allBookmarks?.find((bm) => bm.key === mat.key);
       return {
         ...bookmark,
         ...mat,
@@ -47,10 +48,10 @@ const EMaterialFilter = ({ context, active }) => {
       setMaterialsToProceed(null);
       return;
     }
-    if (!analyzeRef || !analyzeRef.current) return;
+    if (!analyzeRef?.current) return;
     // Secure only running once
     if (!!materialsToFilter || !!materialsToProceed) return;
-    if (materials.length !== materialKeys.length) return;
+    if (materials.length !== bookmarksToOrder.length) return;
 
     const timer = setTimeout(() => {
       // Ensure that EMaterialAnalyzers are done rendering
@@ -79,7 +80,7 @@ const EMaterialFilter = ({ context, active }) => {
       let filteredMaterialsSorted;
       let toProceedSorted;
       if (sortType === "title") {
-        filteredMaterialsSorted = titleSort(filteredMaterials);
+        filteredMaterialsSorted = titleSort(filteredMaterials); //pider instead of materials?
         toProceedSorted = titleSort(toProceed);
       } else if (sortType === "createdAt") {
         filteredMaterialsSorted = createdAtSort(filteredMaterials);
@@ -157,7 +158,11 @@ const EMaterialFilter = ({ context, active }) => {
             <Title tag="h4" type="text1">
               {mat.titles?.main?.[0]}
             </Title>
-            <Text type="text2">{mat.materialType}</Text>
+            <Text type="text2">
+              {getMaterialTypeForPresentation(
+                mat?.manifestations?.[0].materialTypes
+              )}
+            </Text>
           </li>
         ))}
       </ul>

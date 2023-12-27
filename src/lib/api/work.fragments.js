@@ -604,57 +604,7 @@ export function workJsonLd({ workId }) {
   };
 }
 
-export function pidsToWorks({ pids }) {
-  if (!pids) return;
-  return {
-    apiUrl: ApiEnums.FBI_API,
-    query: `
-    query pidsToWorks($pids: [String!]!) {
-      manifestations(pid: $pids) {
-        ownerWork {
-          workId
-        }
-        access {
-          __typename
-          ... on DigitalArticleService {
-            issn
-          }
-        }
-        workTypes
-        pid
-        titles {
-          main
-          full
-        }
-        cover {
-          detail
-          origin
-          thumbnail
-        }
-        creators {
-          display
-        }
-        hostPublication {
-          title
-        }
-        publisher
-        edition {
-          summary
-          edition
-          publicationYear {
-            display
-          }
-        }
-      }
-    }
-    `,
-    variables: { pids },
-    slowThreshold: 3000,
-  };
-}
-
 export function idsToWorks({ ids }) {
-  if (!ids) return;
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `

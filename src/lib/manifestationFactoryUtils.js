@@ -61,18 +61,20 @@ let errorCount = 0;
  * @returns {SpecificDisplayArray}
  */
 export function formatMaterialTypesFromUrl(materialTypesUrl) {
-  if (!materialTypesUrl || materialTypesUrl === "") return [];
-  const splitMaterialTypes = materialTypesUrl.split(" / ");
-  return splitMaterialTypes.map((type) => type.toLowerCase());
+  return materialTypesUrl !== "" ? materialTypesUrl?.split(" / ") : [];
 }
 
 /**
  * Format to url from array
  * @example formatMaterialTypesToUrl(["fisk", "hest"]) => "fisk / hest"
- * @param {MaterialTypesArray|SpecificDisplayArray} materialTypeArray
+ * @param {MaterialTypesArray|SpecificDisplayArray|string} materialTypeArray
  * @returns {string}
  */
 export function formatMaterialTypesToUrl(materialTypeArray) {
+  if (!Array.isArray(materialTypeArray)) {
+    return materialTypeArray;
+  }
+
   return materialTypeArray
     ?.map((mat) => (typeof mat === "string" ? mat : mat?.specificDisplay))
     .join(" / ");
@@ -110,7 +112,6 @@ export function formatMaterialTypesToPresentation(materialTypeArray) {
   if (!Array.isArray(materialTypeArray)) {
     return materialTypeArray;
   }
-
   return (
     materialTypeArray
       ?.map((mat) =>
@@ -118,6 +119,49 @@ export function formatMaterialTypesToPresentation(materialTypeArray) {
       )
       .join(" / ") || null
   );
+}
+
+export function formatMaterialTypesToCode(materialTypeArray) {
+  if (!Array.isArray(materialTypeArray)) {
+    return materialTypeArray;
+  }
+
+  return (
+    materialTypeArray
+      ?.map((mat) =>
+        upperFirst(typeof mat === "string" ? mat : mat?.specificCode)
+      )
+      .join(" / ") || null
+  );
+}
+
+/**
+ * @example  "BOOK / AUDIO_BOOK_TAPE" => ["BOOK", "AUDIO_BOOK_TAPE"] OR "BOOK" => ["BOOK"]
+ * @param {String} materialTypeString
+ * @returns {Array<String>}
+ */
+export function formatMaterialTypesFromCode(materialTypeString) {
+  if (!materialTypeString) return [];
+  return materialTypeString?.split(" / ");
+}
+
+//TODO check if compound material types are sorted
+/**
+ * Flatten materialTypes and make presentable
+ * @example
+     getMaterialTypeForPresentation([
+       { materialTypeSpecific: { display: "lydoptagelse (cd)", code: "SOUND_RECORDING_CD" } },
+       { materialTypeSpecific: { display: "bog", code: "BOOK" } }
+     ]) => "Bog / Lydoptagelse (cd)"
+ *
+ * @param {Array<Object>} materialTypes
+ * @returns {String}
+ */
+export function getMaterialTypeForPresentation(materialTypes) {
+  const flattenedMaterialTypes = flattenMaterialType({
+    materialTypes: materialTypes,
+  });
+  return formatMaterialTypesToPresentation(flattenedMaterialTypes);
 }
 
 /**

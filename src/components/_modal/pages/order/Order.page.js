@@ -28,6 +28,7 @@ import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import { stringify } from "@/components/_modal/utils";
 import isEmpty from "lodash/isEmpty";
+import { formatMaterialTypesToCode } from "@/lib/manifestationFactoryUtils";
 
 /**
  *  Order component function
@@ -138,11 +139,11 @@ function Order({
 
   function updateModal() {
     if (modal && modal.isVisible) {
-      const type =
-        contextWithOrderPids?.selectedAccesses?.[0]?.materialTypesArray[0]
-          .specificDisplay;
+      const type = formatMaterialTypesToCode(
+        contextWithOrderPids?.selectedAccesses?.[0]?.materialTypesArray
+      );
       const workId = contextWithOrderPids?.workId;
-      const key = workId + type?.charAt(0).toUpperCase() + type?.slice(1);
+      const key = workId + type;
       // call update if data or isLoading or error has changed
       if (
         articleOrderMutation?.isLoading ||
