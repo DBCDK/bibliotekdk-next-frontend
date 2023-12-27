@@ -69,16 +69,46 @@ export function getWorkUrlForProfile({
     // we assume that this is a faust
     return `/linkme.php?faust=${materialId}&scrollToEdition=${scrollToEdition}`;
   }
+
+  const hasSpaceInsideBrackets = hasSpacesInsideBrackets(materialType);
+
+  const formattedMaterialType = hasSpaceInsideBrackets
+    ? replaceSpacesInBrackets(materialType)
+    : materialType.toLowerCase();
   // workid is given
   if (!isEmpty(workId)) {
     return `/work/${workId}${
-      materialType ? "?type=" + materialType.toLowerCase() : ""
+      materialType ? "?type=" + formattedMaterialType : ""
     }`;
   }
 
   // we give up -
   // @TODO sometime soon localid's may be handled in complex search so we can look up some good ids :)
   return null;
+}
+/**
+ * @example Film (blu-ray 4K) --> film+(blu-ray+4K) OR Film (blu-ray 3D) --> film+(blu-ray+3D)
+ * @param {String} inputString
+ * @returns {String}
+ */
+function replaceSpacesInBrackets(inputString) {
+  return inputString.replace(
+    /(.*?)\((.*?)\)/g,
+    function (match, infrontOfBracket, insideBracket) {
+      const replacedInsideBrackets = insideBracket.replace(/\s+/g, "+"); // replace spaces with +
+      return (
+        infrontOfBracket.replace(/\s+/g, "+").toLowerCase() +
+        "(" +
+        replacedInsideBrackets +
+        ")"
+      );
+    }
+  );
+}
+
+function hasSpacesInsideBrackets(inputString) {
+  const regex = /\([^)]*\s[^)]*\)/;
+  return regex.test(inputString);
 }
 
 /**
