@@ -1,4 +1,5 @@
 import Tag from "@/components/base/forms/tag";
+import styles from "./MaterialTypeSwitcher.module.css";
 import {
   formatMaterialTypesToCypress,
   formatMaterialTypesToPresentation,
@@ -26,6 +27,7 @@ export function MaterialTypeSwitcher({
     //  Sets isSelected flag if button should be selected
     return (
       <Tag
+        className={styles.tag}
         key={formatMaterialTypesToCypress(materialTypeArray)}
         selected={inFlatMaterialTypes(type, materialTypeArray)}
         onClick={() => handleSelectedMaterial(materialTypeArray, type)}

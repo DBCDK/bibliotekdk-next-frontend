@@ -163,8 +163,8 @@
   margin-right: var(--pt1);
 }
 
-.uppercase::first-letter {
-  text-transform: uppercase;
+.uppercase {
+  text-transform: capitalize;
 }
 
 .renewedWrapper {

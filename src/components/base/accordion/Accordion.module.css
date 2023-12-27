@@ -50,6 +50,10 @@
   width: 100%;
 }
 
+.capitalize {
+  text-transform: capitalize;
+}
+
 .textbox span:first-of-type {
   font-family: var(--body-font-semibold);
   display: block;

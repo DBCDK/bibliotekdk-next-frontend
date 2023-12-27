@@ -133,7 +133,12 @@ export function Item({
           {additionalTxt && (
             <div className={styles.textbox}>
               {additionalTxt?.map((txt, index) => (
-                <Text tag={"span"} type="text2" key={`addition-${index}`}>
+                <Text
+                  tag={"span"}
+                  type="text2"
+                  key={`addition-${index}`}
+                  className={cx({ [styles.capitalize]: index === 0 })} //capitalize materialtype
+                >
                   {txt}
                 </Text>
               ))}
