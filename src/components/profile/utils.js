@@ -79,7 +79,7 @@ export function getWorkUrlForProfile({
   if (!isEmpty(workId)) {
     return `/work/${workId}${
       materialType ? "?type=" + formattedMaterialType : ""
-    }`;
+    }${!isEmpty(pid) ? "#" + pid : ""}`;
   }
 
   // we give up -
