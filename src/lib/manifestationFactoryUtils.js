@@ -170,7 +170,7 @@ export function getMaterialTypeForPresentation(materialTypes) {
  * @returns {MaterialTypesArray}
  */
 export function flattenMaterialType(manifestation) {
-  materialTypeError(manifestation);
+  materialTypeError(manifestation); //TODO errorCount is NaN, make more obvious if its on purpose that we dont give errorcount here.
 
   return (
     manifestation?.materialTypes
@@ -234,10 +234,40 @@ export function inFlatMaterialTypes(
   materialTypesArray,
   materialTypeField = "specificDisplay"
 ) {
-  return isEqual(
-    simplifiedMaterialTypesArray,
-    toFlatMaterialTypes(materialTypesArray, materialTypeField)
+  const flattenedMaterialTypes = toFlatMaterialTypes(
+    materialTypesArray,
+    materialTypeField
   );
+  return arraysContainSameStrings(
+    simplifiedMaterialTypesArray,
+    flattenedMaterialTypes
+  );
+}
+
+/**
+ * check if both arrays have the same string content, no matter their order
+ * @param {Array<String>} arr1
+ * @param {Array<String>} arr2
+ * @returns {Boolean}
+ */
+function arraysContainSameStrings(arr1, arr2) {
+  // Check if both arrays have the same length
+  if (arr1.length !== arr2.length) {
+    return false;
+  }
+
+  // Create copies of the arrays and sort them
+  const sortedArr1 = arr1.slice().sort();
+  const sortedArr2 = arr2.slice().sort();
+
+  // Compare the sorted arrays element by element
+  for (let i = 0; i < sortedArr1.length; i++) {
+    if (sortedArr1[i] !== sortedArr2[i]) {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 /**
@@ -523,7 +553,7 @@ export function flattenGroupedSortedManifestations(manifestationsByType) {
  */
 export function manifestationMaterialTypeFactory(manifestations) {
   manifestations?.length > 0 &&
-    materialTypeError(manifestations?.[0], errorCount);
+    materialTypeError(manifestations?.[0], errorCount); //TODO: are we sure about the scope of errorCount? i would rather have errorCount declared in a more obvious position.
 
   manifestationWorkType = manifestations?.[0]?.ownerWork?.workTypes || [];
   materialTypesOrderFromEnum = getOrderedFlatMaterialTypes(

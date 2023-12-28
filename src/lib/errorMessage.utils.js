@@ -25,6 +25,8 @@ export function errorMessageForErrorInMaterialTypes(manifestation) {
 `;
 }
 
+// TODO call method print error type to console?
+// What do we use materialTypeError if we only print this? debugging?
 export function materialTypeError(manifestation, errorCount) {
   errorCount++;
   const firstTitleOrWorkIdOrPid =
@@ -36,7 +38,6 @@ export function materialTypeError(manifestation, errorCount) {
       manifestation?.titles?.full?.[0] ||
       "");
   const materialType = manifestation?.materialTypes?.[0];
-
   if (
     errorCount < 2 &&
     manifestation?.materialTypes?.length > 0 &&
