@@ -155,6 +155,7 @@ export const ReservationButton = ({
   const physicalCopy = checkPhysicalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
   const digitalCopy = checkDigitalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
 
+  console.log("access", access);
   const noSelectedManifestations = Boolean(isEmpty(access));
   const onlineMaterialWithoutLoginOrLoginAtUrl = Boolean(
     access?.length > 0 && !digitalCopy && !physicalCopy
@@ -254,6 +255,7 @@ export const ReservationButton = ({
   };
 
   const { props, text, preferSecondary } = getProps();
+  console.log("Texxt", text);
 
   return (
     <>
