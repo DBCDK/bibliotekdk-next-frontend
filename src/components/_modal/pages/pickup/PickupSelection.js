@@ -180,7 +180,9 @@ export default function PickupSelection(props) {
 
   const showNonSelectableBranches = nonSelectableBranches.length > 0;
 
-  const hasMoreMessage =
+  //we retrieve max 10 results, if the hitcount is higher, it means there are more matches, but we dont show them
+  //therefor, we ask the user to refine her search
+  const tryMoreSpecificMessage =
     allPoliciesLoaded &&
     data?.hitcount > data?.result?.length &&
     Translate({ context: "order", label: "has-more-pickup" });
@@ -245,9 +247,9 @@ export default function PickupSelection(props) {
           {Translate({ context: "order", label: "check-policy-loading" })}
         </Text>
       )}
-      {hasMoreMessage && (
+      {tryMoreSpecificMessage && (
         <Text type="text2" className={styles.loadingText}>
-          {hasMoreMessage}
+          {tryMoreSpecificMessage}
         </Text>
       )}
       {/** show pickup not allowed branches here  */}
