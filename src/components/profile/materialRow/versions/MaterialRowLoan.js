@@ -130,10 +130,19 @@ const MaterialRowLoan = (props) => {
   } = props;
   const [hasRenewError, setHasRenewError] = useState(false);
   const modal = useModal();
-  const status = getStatus(dueDateString);
+  const [status, setStatus] = useState(
+    dueDateString ? getStatus(dueDateString) : "NONE"
+  );
   const loanMutation = useMutate();
   const [renewed, setRenewed] = useState(false);
   const [renewedDueDateString, setRenewedDueDateString] = useState(null);
+
+  useEffect(() => {
+    if (renewedDueDateString) {
+      const renewedStatus = getStatus(renewedDueDateString);
+      setStatus(renewedStatus);
+    }
+  }, [renewedDueDateString]);
 
   useEffect(() => {
     handleLoanMutationUpdates(
