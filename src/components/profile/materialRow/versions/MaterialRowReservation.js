@@ -18,6 +18,10 @@ import { dateToDayInMonth } from "@/utils/datetimeConverter";
 import { getWorkUrlForProfile, handleOrderMutationUpdates } from "../../utils";
 import { onClickDelete } from "@/components/_modal/pages/deleteOrder/utils";
 import sharedStyles from "../MaterialRow.module.css";
+import {
+  formatMaterialTypesToPresentation,
+  formatMaterialTypesToUrl,
+} from "@/lib/manifestationFactoryUtils";
 
 const OrderColumn = ({ pickUpExpiryDate, holdQueuePosition }) => {
   const breakpoint = useBreakpoint();
@@ -82,9 +86,11 @@ const MaterialRowReservation = (props) => {
     workId,
     pid,
     materialId,
-    materialType,
+    flatMaterialTypes,
     title,
+    titles,
     creator,
+    creators,
     edition,
     creationYear,
     library,
@@ -157,9 +163,10 @@ const MaterialRowReservation = (props) => {
             </Title>
 
             {creator && <Text type="text2">{creator}</Text>}
-            {materialType && creationYear && (
+            {flatMaterialTypes && creationYear && (
               <Text type="text2" className={sharedStyles.uppercase}>
-                {materialType}, {creationYear}
+                {formatMaterialTypesToPresentation(flatMaterialTypes)},{" "}
+                {creationYear}
               </Text>
             )}
 
@@ -225,10 +232,13 @@ const MaterialRowReservation = (props) => {
                     },
                   }}
                   href={getWorkUrlForProfile({
-                    workId,
-                    pid,
-                    materialId,
-                    materialType,
+                    workId: workId,
+                    pid: pid,
+                    materialTypeAsUrl:
+                      formatMaterialTypesToUrl(flatMaterialTypes),
+                    titles: titles,
+                    creators: creators,
+                    scrollToEdition: true,
                   })}
                   className={sharedStyles.blackUnderline}
                 >
@@ -256,13 +266,14 @@ const MaterialRowReservation = (props) => {
                 {creator}
               </Text>
             )}
-            {materialType && (
+            {flatMaterialTypes && (
               <Text
                 type="text2"
                 className={sharedStyles.uppercase}
                 dataCy="materialtype-and-creationyear"
               >
-                {materialType} {creationYear && <>, {creationYear}</>}
+                {formatMaterialTypesToPresentation(flatMaterialTypes)}{" "}
+                {creationYear && <>, {creationYear}</>}
                 {edition && <span>{edition}</span>}
               </Text>
             )}

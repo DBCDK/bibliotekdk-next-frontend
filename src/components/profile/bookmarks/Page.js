@@ -433,9 +433,11 @@ const BookmarkPage = () => {
             key={`bookmark-list-${idx}`}
             hasCheckbox={!isMobile || activeStickyButton !== null}
             title={bookmark?.manifestations?.[0]?.titles?.full?.[0] || ""}
+            titles={bookmark?.manifestations?.[0]?.titles}
             creator={
               bookmark?.manifestations?.[0]?.ownerWork.creators[0]?.display
             }
+            creators={bookmark?.manifestations?.[0]?.ownerWork.creators}
             materialType={getMaterialTypeForPresentation(
               bookmark.manifestations?.[0]?.materialTypes
             )}

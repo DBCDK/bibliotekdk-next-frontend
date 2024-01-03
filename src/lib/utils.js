@@ -39,7 +39,7 @@ export function extractCreatorsPrioritiseCorporation(creatorsBeforeFilter) {
     creatorsBeforeFilter = [creatorsBeforeFilter];
   }
   const corporations = creatorsBeforeFilter?.filter(
-    (creator) => creator.__typename === "Corporation"
+    (creator) => creator?.__typename === "Corporation"
   );
 
   return corporations?.length > 0 ? corporations : creatorsBeforeFilter;
@@ -87,7 +87,6 @@ export function getHelpUrl(title, helpTextId) {
  *
  * @param {string} fullTitle
  * @param {string} workId
- * @param {string|number} [seriesNumber]
  * @returns {{query: {seriesTitle: string, workId: string, seriesNumber?: string}, pathname: string}}
  */
 export function getSeriesUrl(fullTitle, workId) {
@@ -98,7 +97,6 @@ export function getSeriesUrl(fullTitle, workId) {
  *
  * @param {string} fullTitle
  * @param {string} workId
- * @param {string|number} [universeNumber]
  * @returns {{query: {universeTitle: string, workId: string, universeNumber?: string}, pathname: string}}
  */
 export function getUniverseUrl(fullTitle, workId) {
