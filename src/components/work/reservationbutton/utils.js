@@ -181,7 +181,7 @@ export const constructButtonText = (
 
     const translation = {
       context: "overview",
-      label: `material-typename-${workType.toLowerCase()}`,
+      label: `material-typename-${workType?.toLowerCase()}`,
     };
 
     return (

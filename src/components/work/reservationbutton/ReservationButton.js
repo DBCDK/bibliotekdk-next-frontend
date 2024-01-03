@@ -116,7 +116,6 @@ function ReservationButtonWrapper({
       buttonType={buttonType}
       size={size}
       pids={pids}
-      selectedMaterialTypes={access?.[0]?.materialTypesArray}
       shortText={shortText}
       singleManifestation={singleManifestation}
       allEnrichedAccesses={allEnrichedAccesses}
@@ -152,7 +151,6 @@ export const ReservationButton = ({
   size,
   pids,
   singleManifestation,
-  selectedMaterialTypes,
   shortText = false, // Shorten material text
   allEnrichedAccesses, //TODO same as access?
   workId,
@@ -250,7 +248,7 @@ export const ReservationButton = ({
         props: accessibleOnlineAndNoLoginProps,
         text: constructButtonText(
           access?.[0]?.workTypes,
-          selectedMaterialTypes,
+          access?.[0]?.materialTypesArray,
           shortText
         ),
         preferSecondary: shortText, // Becomes secondary button if button links to material (not ordering)
