@@ -15,17 +15,16 @@ import { handleOnSelect } from "@/components/_modal/utils";
  * Special component responsible for loading order policy
  * Will not render anything, but needs to be mounted
  */
-function PolicyLoader({ branch, onLoad, pid, requireDigitalAccess }) {
+function PolicyLoader({ branch, onLoad, pid, pids, requireDigitalAccess }) {
   const pickupAllowed = branch?.pickupAllowed;
   let { data } = useData(
     pid &&
       branch?.branchId &&
       branchesFragments.branchOrderPolicy({
         branchId: branch.branchId,
-        pids: [pid],
+        pids: pids || [pid],
       })
   );
-
   const orderPolicy =
     branch?.orderPolicy || data?.branches?.result?.[0]?.orderPolicy;
 
@@ -126,9 +125,8 @@ export default function PickupSelection(props) {
     context,
     modal,
   } = { ...props };
-
   // Get pid from modal context
-  const { pid, requireDigitalAccess, showAllBranches } = context; //TODO is it enough to only check for ONE pid? BIBDK2021-2203
+  const { pid, requireDigitalAccess, showAllBranches, pids } = context; //TODO is it enough to only check for ONE pid? BIBDK2021-2203
 
   const loadedOrderPolicies = useRef({});
   const render = useState()[1];
@@ -192,24 +190,25 @@ export default function PickupSelection(props) {
   return (
     <>
       {/* This only loads order policies, does not render anything */}
-      {data?.result
-        ?.filter((branch) => branch.branchId)
-        .map((branch) => {
-          const key = `${branch.branchId}_${pid}`;
-          return (
-            <PolicyLoader //TODO can actually handle several pids at once! BIBDK2021-2203
-              key={key}
-              branch={branch}
-              onLoad={(policy) => {
-                loadedOrderPolicies.current[key] = policy;
-                render({});
-              }}
-              pid={pid}
-              //pids=
-              requireDigitalAccess={requireDigitalAccess}
-            />
-          );
-        })}
+      {!showAllBranches &&
+        data?.result
+          ?.filter((branch) => branch.branchId)
+          .map((branch) => {
+            const key = `${branch.branchId}_${pid}`;
+            return (
+              <PolicyLoader //TODO can actually handle several pids at once! BIBDK2021-2203
+                key={key}
+                branch={branch}
+                onLoad={(policy) => {
+                  loadedOrderPolicies.current[key] = policy;
+                  render({});
+                }}
+                pid={pid}
+                pids={pids}
+                requireDigitalAccess={requireDigitalAccess}
+              />
+            );
+          })}
 
       {showSelectableBranches && (
         <List.Group
