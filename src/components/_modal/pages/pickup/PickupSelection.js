@@ -18,7 +18,7 @@ import { handleOnSelect } from "@/components/_modal/utils";
 function PolicyLoader({ branch, onLoad, pid, pids, requireDigitalAccess }) {
   const pickupAllowed = branch?.pickupAllowed;
   let { data } = useData(
-    pid &&
+    (pids || pids) &&
       branch?.branchId &&
       branchesFragments.branchOrderPolicy({
         branchId: branch.branchId,
@@ -126,7 +126,7 @@ export default function PickupSelection(props) {
     modal,
   } = { ...props };
   // Get pid from modal context
-  const { pid, requireDigitalAccess, showAllBranches, pids } = context; //TODO is it enough to only check for ONE pid? BIBDK2021-2203
+  const { pid, requireDigitalAccess, showAllBranches, pids } = context;
 
   const loadedOrderPolicies = useRef({});
   const render = useState()[1];
@@ -196,7 +196,7 @@ export default function PickupSelection(props) {
           .map((branch) => {
             const key = `${branch.branchId}_${pid}`;
             return (
-              <PolicyLoader //TODO can actually handle several pids at once! BIBDK2021-2203
+              <PolicyLoader
                 key={key}
                 branch={branch}
                 onLoad={(policy) => {
