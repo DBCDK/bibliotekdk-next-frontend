@@ -1,6 +1,6 @@
 import { AccessEnum } from "@/lib/enums";
 import { encodeTitleCreator, infomediaUrl } from "@/lib/utils";
-import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
+import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 
 /**
  * Access with additional manifestation details, possibly enriched,
@@ -38,6 +38,10 @@ import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
  * @returns {Access[]}
  */
 export function getAccessForSingleManifestation(manifestation) {
+  const { flatMaterialTypes } = manifestationMaterialTypeFactory([
+    manifestation,
+  ]);
+
   return manifestation?.access?.map((singleAccess) => {
     return {
       ...singleAccess,
@@ -49,7 +53,7 @@ export function getAccessForSingleManifestation(manifestation) {
         creators: manifestation?.creators,
       }),
       ...(manifestation?.materialTypes?.length > 0 && {
-        materialTypesArray: flattenMaterialType(manifestation),
+        materialTypesArray: flatMaterialTypes?.[0],
       }),
       ...(manifestation?.workTypes?.length > 0 && {
         workTypes: manifestation?.workTypes,

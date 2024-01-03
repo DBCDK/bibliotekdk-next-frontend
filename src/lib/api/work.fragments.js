@@ -10,8 +10,10 @@ import {
   manifestationDetailsForAccessFactory,
   materialTypesFragment,
   seriesFragment,
+  workTitleFragment,
   universeFragment,
   workSliderFragment,
+  manifestationTitleFragment,
 } from "@/lib/api/fragments.utils";
 
 export function tableOfContents({ workId }) {
@@ -611,12 +613,9 @@ export function idsToWorks({ ids }) {
     query idsToWorks($ids: [String!]!) {
       works(id: $ids) {
         workId
-        titles {
-          main
-          full
-        }
+        ...workTitleFragment
         creators {
-          display
+          ...creatorsFragment
         }
         manifestations {
           mostRelevant {
@@ -632,8 +631,9 @@ export function idsToWorks({ ids }) {
               origin
               thumbnail
             }
-            titles {
-              full
+            ...manifestationTitleFragment
+            creators {
+              ...creatorsFragment
             }
             publisher
             edition{
@@ -646,11 +646,9 @@ export function idsToWorks({ ids }) {
             ownerWork {
               workId
               workTypes
+              ...workTitleFragment
               creators {
-                display
-              }
-              titles{
-                full
+                ...creatorsFragment
               }
               workYear {
                 display
@@ -672,6 +670,9 @@ export function idsToWorks({ ids }) {
         }
       }
     }
+    ${manifestationTitleFragment}
+    ${workTitleFragment}
+    ${creatorsFragment}
     ${materialTypesFragment}`,
     variables: { ids },
     slowThreshold: 3000,
@@ -890,14 +891,14 @@ export function workIdToTitleCreator({ workId }) {
     query: `
     query workIdToTitleCreator($workId: String!) {
       work(id: $workId) {
-        ...titleFragment
+        ...workTitleFragment
         creators {
           ...creatorsFragment
         }
         workId
       }
     }
-    ${titleFragment}
+    ${workTitleFragment}
     ${creatorsFragment}
     `,
     variables: { workId },
@@ -934,13 +935,6 @@ const genreAndFormAndWorkTypesFragment = `fragment genreAndFormAndWorkTypesFragm
   fictionNonfiction {
     display
     code
-  }
-}`;
-
-const titleFragment = `fragment titleFragment on Work {
-  titles {
-    main
-    full
   }
 }`;
 

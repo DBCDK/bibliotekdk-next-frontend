@@ -6,6 +6,7 @@ import { getCoverImage } from "@/components/utils/getCoverImage";
 import { comparableYear } from "@/lib/utils";
 import { getOrderedFlatMaterialTypes } from "@/lib/enums_MaterialTypes";
 import { materialTypeError } from "@/lib/errorMessage.utils";
+import isArray from "lodash/isArray";
 
 /** @type {Array.<string>} */
 let manifestationWorkType = [];
@@ -114,9 +115,20 @@ export function formatMaterialTypesToPresentation(materialTypeArray) {
   }
   return (
     materialTypeArray
-      ?.map((mat) =>
-        upperFirst(typeof mat === "string" ? mat : mat?.specificDisplay)
-      )
+      ?.map((mat) => {
+        if (isArray(mat)) {
+          console.error(
+            "MaterialTypesArray is array of arrays of objects. Expected either string, array of strings, array of objects,",
+            MaterialTypesArray
+          );
+        }
+
+        if (mat.hasOwnProperty("specificDisplay")) {
+          return upperFirst(mat?.specificDisplay);
+        }
+
+        return upperFirst(mat);
+      })
       .join(" / ") || null
   );
 }
@@ -167,10 +179,14 @@ export function getMaterialTypeForPresentation(materialTypes) {
 /**
  * Material types in a flat array
  * @param {Object.<string, any>} manifestation
+ * @param {Array.<{display: SpecificDisplay, code: SpecificCode}>} materialTypesOrder
  * @returns {MaterialTypesArray}
  */
-export function flattenMaterialType(manifestation) {
-  materialTypeError(manifestation);
+export function flattenMaterialType(
+  manifestation,
+  materialTypesOrder = materialTypesOrderFromEnum || []
+) {
+  materialTypeError(manifestation, errorCount);
 
   return (
     manifestation?.materialTypes
@@ -182,18 +198,25 @@ export function flattenMaterialType(manifestation) {
           generalCode: materialType?.materialTypeGeneral?.code,
         };
       })
-      .sort((a, b) => compareMaterialTypeArrays([a], [b])) || []
+      .sort((a, b) =>
+        compareMaterialTypeArrays([a], [b], materialTypesOrder)
+      ) || []
   );
 }
 
 /**
  * All materialTypeArrays for all given manifestations
  * @param {Object.<string, any>} manifestations
- * @param manifestations
+ * @param {Array.<{display: SpecificDisplay, code: SpecificCode}>} materialTypesOrder
  * @returns {Array.<MaterialTypesArray>}
  */
-export function flatMapMaterialTypes(manifestations) {
-  return manifestations?.map(flattenMaterialType);
+export function flatMapMaterialTypes(
+  manifestations,
+  materialTypesOrder = materialTypesOrderFromEnum || []
+) {
+  return manifestations?.map((manifestation) =>
+    flattenMaterialType(manifestation, materialTypesOrder)
+  );
 }
 
 /**
@@ -316,7 +339,7 @@ export function getComparisonBySort(aBySort, bBySort) {
 
   for (let i = 0; i < Math.min(aBySort.length, bBySort.length); i++) {
     if (aBySort[i] !== bBySort[i]) {
-      return aBySort - bBySort;
+      return aBySort[i] - bBySort[i];
     }
   }
   return 0;
@@ -324,20 +347,23 @@ export function getComparisonBySort(aBySort, bBySort) {
 
 /**
  * Compares specificDisplay arrays
- * @param {SpecificDisplayArray} a
- * @param {SpecificDisplayArray} b
+ * @param {MaterialTypesArray} a
+ * @param {MaterialTypesArray} b
  * @param {Array.<{display: SpecificDisplay, code: SpecificCode}>} materialTypesOrder
  * @returns {number}
  */
-export function compareSpecificDisplayArrays(
+export function compareSingleMaterialTypesArrays(
   a,
   b,
   materialTypesOrder = materialTypesOrderFromEnum || []
 ) {
-  const materialTypesOrderCode = materialTypesOrder.map((mat) => mat.display);
+  const materialTypesOrderCode = materialTypesOrder.map((mat) => mat.code);
 
-  const aBySort = getElementByCustomSorting(materialTypesOrderCode, a);
-  const bBySort = getElementByCustomSorting(materialTypesOrderCode, b);
+  const aCode = toFlatMaterialTypes(a, "specificCode");
+  const bCode = toFlatMaterialTypes(b, "specificCode");
+
+  const aBySort = getElementByCustomSorting(materialTypesOrderCode, aCode);
+  const bBySort = getElementByCustomSorting(materialTypesOrderCode, bCode);
 
   const comparedBySorts = getComparisonBySort(aBySort, bBySort);
 
@@ -345,18 +371,18 @@ export function compareSpecificDisplayArrays(
     return comparedBySorts;
   }
 
-  const specificDisplayJsonA = jsonify(a);
-  const specificDisplayJsonB = jsonify(b);
+  const specificCodeJsonA = jsonify(aCode);
+  const specificCodeJsonB = jsonify(bCode);
 
-  const emptyA = specificDisplayJsonA === "" ? 1 : 0;
-  const emptyB = specificDisplayJsonB === "" ? 1 : 0;
+  const emptyA = specificCodeJsonA === "" ? 1 : 0;
+  const emptyB = specificCodeJsonB === "" ? 1 : 0;
 
   if (emptyA || emptyB) {
     return emptyA - emptyB;
   }
 
   const collator = Intl.Collator("da");
-  return collator.compare(specificDisplayJsonA, specificDisplayJsonB);
+  return collator.compare(specificCodeJsonA, specificCodeJsonB);
 }
 
 /**
@@ -412,27 +438,32 @@ export function compareMaterialTypeArrays(
     return comparedBySorts;
   }
 
-  return compareSpecificDisplayArrays(
-    toFlatMaterialTypes(a, "specificDisplay"),
-    toFlatMaterialTypes(b, "specificDisplay")
-  );
+  return compareSingleMaterialTypesArrays(a, b);
 }
 
 /**
  * Provides all unique materialTypeArrays from a given array of materialTypeArrays
  *  Sorting is also done by sort using {@link compareMaterialTypeArrays}
  * @param {Array.<MaterialTypesArray>} arrayOfMaterialTypesArray
+ * @param {Array.<{display: SpecificDisplay, code: SpecificCode}>} materialTypesOrder
  * @returns {Array.<MaterialTypesArray>}
  */
-export function getUniqueMaterialTypes(arrayOfMaterialTypesArray) {
+export function getUniqueMaterialTypes(
+  arrayOfMaterialTypesArray,
+  materialTypesOrder = materialTypesOrderFromEnum || []
+) {
   // We use sort because we actually want to keep the unique arrays sorted
-  return uniqWith(arrayOfMaterialTypesArray, (a, b) =>
-    isEqual(
-      a.sort((a1, a2) => compareMaterialTypeArrays([a1], [a2])),
-      b.sort((b1, b2) => compareMaterialTypeArrays([b1], [b2]))
-    )
-  )
-    ?.sort(compareMaterialTypeArrays)
+  return uniqWith(arrayOfMaterialTypesArray, (a, b) => {
+    return isEqual(
+      a.sort((a1, a2) =>
+        compareMaterialTypeArrays([a1], [a2], materialTypesOrder)
+      ),
+      b.sort((b1, b2) =>
+        compareMaterialTypeArrays([b1], [b2], materialTypesOrder)
+      )
+    );
+  })
+    ?.sort((a, b) => compareMaterialTypeArrays(a, b, materialTypesOrder))
     ?.filter((arr) => arr.length > 0);
 }
 
@@ -501,9 +532,12 @@ export function enrichManifestationsWithDefaultFrontpages(
  */
 export function flattenGroupedSortedManifestations(manifestationsByType) {
   return Object.entries(manifestationsByType)
-    ?.sort((a, b) =>
-      compareSpecificDisplayArrays(a[0].split(","), b[0].split(","))
-    )
+    ?.sort((a, b) => {
+      const aMat = a[1][0]?.materialTypesArray;
+      const bMat = b[1][0]?.materialTypesArray;
+
+      return compareSingleMaterialTypesArrays(aMat, bMat);
+    })
     ?.flatMap((group) => {
       return group[1];
     });

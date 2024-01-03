@@ -193,7 +193,8 @@ const fields = () => [
     valueParser: (values) =>
       values
         .filter((value) => value.type === "ISBN")
-        .map((value) => value.value),
+        .map((value) => value.value)
+        .join(", "),
   },
   {
     dataField: "shelfmark",
