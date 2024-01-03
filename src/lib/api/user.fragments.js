@@ -3,6 +3,7 @@ import { ApiEnums } from "@/lib/api/api";
 
 import {
   creatorsFragment,
+  manifestationTitleFragment,
   materialTypesFragment,
 } from "@/lib/api/fragments.utils";
 
@@ -61,9 +62,7 @@ export function basic() {
           dueDate
           manifestation {
             pid
-            titles {
-              main
-            }
+            ...manifestationTitleFragment
             ownerWork {
               workId
             }
@@ -94,9 +93,7 @@ export function basic() {
           title
           manifestation {
             pid
-            titles {
-              main
-            }
+            ...manifestationTitleFragment
             ownerWork {
               workId
             }
@@ -115,6 +112,7 @@ export function basic() {
       }
     }
     ${creatorsFragment}
+    ${manifestationTitleFragment}
     ${materialTypesFragment}`,
     variables: {},
     slowThreshold: 3000,
