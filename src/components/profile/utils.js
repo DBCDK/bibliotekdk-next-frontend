@@ -111,10 +111,10 @@ export function isPid(pid) {
   // Explanation:
   // * ^ : start of string
   // * ([0-9]{6,}) : At least 6 DIGITS for a agency or branch or whatever, denoted by {6,}
-  // * (-) : Agency/Branch id and rest must be divided by a "-"
+  // * (-) : Agency/Branch id and rest must be separated by a "-"
   // * ([0-9A-Za-z]+) : A base (basis, katalog, etc.) must have at least 1 character
   // * (:) : Agency/Branch id + base must be followed with ":" before faust/isbn/localId
-  // * ([0-9A-Za-z]+) : Faust, ISBN, localId, whatever must have at least 1 characterr denoted by +
+  // * ([0-9A-Za-z]+) : Faust, ISBN, localId, whatever must have at least 1 character denoted by +
   // * $ : end of string
   const regex = /^([0-9]{6,})(-)([0-9A-Za-z]+)(:)([0-9A-Za-z]+)$/g;
 
