@@ -107,7 +107,7 @@ function Order({
   // Update email from user account
   useEffect(() => {
     const userMail =
-      mail !== null ? mail?.value : user?.userParameters?.userMail;
+      mail?.value !== undefined ? mail?.value : user?.userParameters?.userMail;
     const status = validateEmail(userMail);
     setMail({
       value: userMail,
