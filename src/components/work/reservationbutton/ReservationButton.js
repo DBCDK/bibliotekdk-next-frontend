@@ -39,13 +39,26 @@ function TextAboveButton({ access, isAuthenticated }) {
   );
 }
 
+/**
+ *
+ * @param {string} workId
+ * @param {Array.<string>} selectedPids
+ * @param {boolean} singleManifestation
+ * @param {string} buttonType
+ * @param {string} size
+ * @param {string} shortText
+ * @param {string|null} overrideButtonText
+ * @param {string} className
+ * @param {any} handleOrderFinished
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function ReservationButtonWrapper({
   workId,
   selectedPids,
   singleManifestation = false,
   buttonType = "primary",
   size = "large",
-  selectedMaterialType,
   shortText,
   overrideButtonText = null,
   className,
@@ -103,7 +116,7 @@ function ReservationButtonWrapper({
       buttonType={buttonType}
       size={size}
       pids={pids}
-      selectedMaterialType={selectedMaterialType}
+      selectedMaterialTypes={access?.[0]?.materialTypesArray}
       shortText={shortText}
       singleManifestation={singleManifestation}
       allEnrichedAccesses={allEnrichedAccesses}
@@ -139,7 +152,7 @@ export const ReservationButton = ({
   size,
   pids,
   singleManifestation,
-  selectedMaterialType: parentSelectedMaterialType,
+  selectedMaterialTypes,
   shortText = false, // Shorten material text
   allEnrichedAccesses, //TODO same as access?
   workId,
@@ -147,11 +160,6 @@ export const ReservationButton = ({
   modal,
   handleOrderFinished = undefined,
 }) => {
-  const workType = access?.[0]?.workTypes?.[0]?.toLowerCase();
-  const selectedMaterialType = Array.isArray(parentSelectedMaterialType)
-    ? parentSelectedMaterialType?.[0]?.toLowerCase()
-    : parentSelectedMaterialType?.toLowerCase();
-
   const physicalCopy = checkPhysicalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
   const digitalCopy = checkDigitalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
 
@@ -240,7 +248,11 @@ export const ReservationButton = ({
     if (onlineMaterialWithoutLoginOrLoginAtUrl) {
       return {
         props: accessibleOnlineAndNoLoginProps,
-        text: constructButtonText(workType, selectedMaterialType, shortText),
+        text: constructButtonText(
+          access?.[0]?.workTypes,
+          selectedMaterialTypes,
+          shortText
+        ),
         preferSecondary: shortText, // Becomes secondary button if button links to material (not ordering)
       };
     }

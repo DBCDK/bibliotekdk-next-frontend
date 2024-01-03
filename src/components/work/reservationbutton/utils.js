@@ -73,13 +73,23 @@ export function handleGoToLogin(modal, access, isAuthenticated) {
 
 /**
  * @TODO rework with JED 1.1 material type general
- * @param {string} workType : general materialType
- * @param {string} materialType : specific material type
+ * @param {Array.<string>} workTypes : general materialType
+ * @param {Array.<Object>} materialTypes : specific material type
  * @param {boolean} shortText : If material text is shortened or not
  * @returns
  */
-export const constructButtonText = (workType, materialType, shortText) => {
+export const constructButtonText = (
+  workTypes,
+  materialTypes,
+  shortText = false
+) => {
   const CONTEXT = "overview";
+
+  // firstWorkType since we have no better option
+  const workType = workTypes?.[0];
+
+  // firstSubMaterialTypeCode since we have no better option
+  const materialType = materialTypes?.[0]?.specificCode;
 
   /**
    * @param {string} workType
@@ -88,34 +98,34 @@ export const constructButtonText = (workType, materialType, shortText) => {
    */
   const getActionText = (workType, materialType) => {
     switch (workType) {
-      case "article":
+      case "ARTICLE":
         return Translate({
           context: CONTEXT,
           label: "material-action-read",
         });
-      case "music":
+      case "MUSIC":
         return Translate({
           context: CONTEXT,
           label: "material-action-listen",
         });
-      case "movie":
-      case "sheetmusic":
+      case "MOVIE":
+      case "SHEETMUSIC":
         return Translate({ context: CONTEXT, label: "material-action-see" });
-      case "game":
+      case "GAME":
         return Translate({
           context: CONTEXT,
           label: "material-action-play",
         });
-      case "literature": {
+      case "LITERATURE": {
         switch (materialType) {
-          case "bog":
-          case "e-bog":
+          case "BOOK":
+          case "EBOOK":
             return Translate({
               context: CONTEXT,
               label: "material-action-read",
             });
-          case "podcast":
-          case "lydbog (online)":
+          case "PODCAST":
+          case "AUDIO_BOOK_ONLINE":
             return Translate({
               context: CONTEXT,
               label: "material-action-listen",
@@ -143,24 +153,25 @@ export const constructButtonText = (workType, materialType, shortText) => {
    * @returns {string} translated material (book, movie, audiobook)
    */
   const getMaterialText = (workType, materialType) => {
-    if (workType === "literature") {
+    if (workType === "LITERATURE") {
       switch (materialType) {
-        case "bog":
+        case "BOOK":
           return Translate({
             context: "overview",
             label: "material-typename-literature",
           }).toLowerCase();
-        case "e-bog":
+        case "EBOOK":
+        case "PICTURE_BOOK_ONLINE":
           return Translate({
             context: "overview",
             label: "material-typename-ebook",
           }).toLowerCase();
-        case "podcast":
+        case "PODCAST":
           return Translate({
             context: "overview",
             label: "material-typename-podcast",
           }).toLowerCase();
-        case "lydbog (online)":
+        case "AUDIO_BOOK_ONLINE":
           return Translate({
             context: "overview",
             label: "material-typename-audiobook",
@@ -170,7 +181,7 @@ export const constructButtonText = (workType, materialType, shortText) => {
 
     const translation = {
       context: "overview",
-      label: `material-typename-${workType}`,
+      label: `material-typename-${workType.toLowerCase()}`,
     };
 
     return (

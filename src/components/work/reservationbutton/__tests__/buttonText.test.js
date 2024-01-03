@@ -3,11 +3,18 @@ import { constructButtonText } from "../utils";
 
 describe("Button text generation for buttons linking directly to material", () => {
   it("Ebook", () => {
-    const materialType = "literature";
-    const selectedMaterialType = "e-bog";
+    const workTypes = ["LITERATURE"];
+    const selectedMaterialType = [
+      {
+        specificDisplay: "e-bog",
+        specificCode: "EBOOK",
+        generalDisplay: "e-bøger",
+        generalCode: "EBOOKS",
+      },
+    ];
     const expectedAction = "read";
 
-    const actual = constructButtonText(materialType, selectedMaterialType);
+    const actual = constructButtonText(workTypes, selectedMaterialType);
     const expected =
       Translate({
         context: "overview",
@@ -21,7 +28,7 @@ describe("Button text generation for buttons linking directly to material", () =
     expect(actual).toEqual(expected);
 
     const actualShort = constructButtonText(
-      materialType,
+      workTypes,
       selectedMaterialType,
       true
     );
@@ -39,11 +46,18 @@ describe("Button text generation for buttons linking directly to material", () =
   });
 
   it("Podcast", () => {
-    const materialType = "literature";
-    const selectedMaterialType = "podcast";
+    const workTypes = ["LITERATURE"];
+    const selectedMaterialType = [
+      {
+        specificDisplay: "podcast",
+        specificCode: "PODCAST",
+        generalDisplay: "podcasts",
+        generalCode: "PODCASTS",
+      },
+    ];
     const expectedAction = "listen";
 
-    const actual = constructButtonText(materialType, selectedMaterialType);
+    const actual = constructButtonText(workTypes, selectedMaterialType);
     const expected =
       Translate({
         context: "overview",
@@ -57,7 +71,7 @@ describe("Button text generation for buttons linking directly to material", () =
     expect(actual).toEqual(expected);
 
     const actualShort = constructButtonText(
-      materialType,
+      workTypes,
       selectedMaterialType,
       true
     );
@@ -75,11 +89,18 @@ describe("Button text generation for buttons linking directly to material", () =
   });
 
   it("Article", () => {
-    const materialType = "article";
-    const selectedMaterialType = "article";
+    const workTypes = ["ARTICLE"];
+    const selectedMaterialType = [
+      {
+        specificDisplay: "artikel",
+        specificCode: "ARTICLE",
+        generalDisplay: "artikler",
+        generalCode: "ARTICLES",
+      },
+    ];
     const expectedAction = "read";
 
-    const actual = constructButtonText(materialType, selectedMaterialType);
+    const actual = constructButtonText(workTypes, selectedMaterialType);
     const expected =
       Translate({
         context: "overview",
@@ -93,7 +114,7 @@ describe("Button text generation for buttons linking directly to material", () =
     expect(actual).toEqual(expected);
 
     const actualShort = constructButtonText(
-      materialType,
+      workTypes,
       selectedMaterialType,
       true
     );
@@ -111,11 +132,18 @@ describe("Button text generation for buttons linking directly to material", () =
   });
 
   it("Lydbog (online)", () => {
-    const materialType = "literature";
-    const selectedMaterialType = "lydbog (online)";
+    const workTypes = ["LITERATURE"];
+    const selectedMaterialType = [
+      {
+        specificDisplay: "lydbog (online)",
+        specificCode: "AUDIO_BOOK_ONLINE",
+        generalDisplay: "lydbøger",
+        generalCode: "AUDIO_BOOKS",
+      },
+    ];
     const expectedAction = "listen";
 
-    const actual = constructButtonText(materialType, selectedMaterialType);
+    const actual = constructButtonText(workTypes, selectedMaterialType);
     const expected =
       Translate({
         context: "overview",
@@ -129,7 +157,7 @@ describe("Button text generation for buttons linking directly to material", () =
     expect(actual).toEqual(expected);
 
     const actualShort = constructButtonText(
-      materialType,
+      workTypes,
       selectedMaterialType,
       true
     );
@@ -147,11 +175,18 @@ describe("Button text generation for buttons linking directly to material", () =
   });
 
   it("Music", () => {
-    const materialType = "music";
-    const selectedMaterialType = "music";
+    const workTypes = ["MUSIC"];
+    const selectedMaterialType = [
+      {
+        specificDisplay: "musik",
+        specificCode: "MUSIC",
+        generalDisplay: "musik",
+        generalCode: "MUSIC",
+      },
+    ];
     const expectedAction = "listen";
 
-    const actual = constructButtonText(materialType, selectedMaterialType);
+    const actual = constructButtonText(workTypes, selectedMaterialType);
     const expected =
       Translate({
         context: "overview",
@@ -165,7 +200,7 @@ describe("Button text generation for buttons linking directly to material", () =
     expect(actual).toEqual(expected);
 
     const actualShort = constructButtonText(
-      materialType,
+      workTypes,
       selectedMaterialType,
       true
     );
@@ -183,11 +218,18 @@ describe("Button text generation for buttons linking directly to material", () =
   });
 
   it("Movie", () => {
-    const materialType = "movie";
-    const selectedMaterialType = "movie";
+    const workTypes = ["MOVIE"];
+    const selectedMaterialType = [
+      {
+        specificDisplay: "film",
+        specificCode: "FILM",
+        generalDisplay: "film",
+        generalCode: "FILMS",
+      },
+    ];
     const expectedAction = "see";
 
-    const actual = constructButtonText(materialType, selectedMaterialType);
+    const actual = constructButtonText(workTypes, selectedMaterialType);
     const expected =
       Translate({
         context: "overview",
@@ -201,7 +243,7 @@ describe("Button text generation for buttons linking directly to material", () =
     expect(actual).toEqual(expected);
 
     const actualShort = constructButtonText(
-      materialType,
+      workTypes,
       selectedMaterialType,
       true
     );
@@ -219,11 +261,18 @@ describe("Button text generation for buttons linking directly to material", () =
   });
 
   it("Sheetmusic", () => {
-    const materialType = "sheetmusic";
-    const selectedMaterialType = "sheetmusic";
+    const workTypes = ["SHEETMUSIC"];
+    const selectedMaterialType = [
+      {
+        specificDisplay: "node",
+        specificCode: "SHEET_MUSIC",
+        generalDisplay: "noder",
+        generalCode: "SHEET_MUSIC",
+      },
+    ];
     const expectedAction = "see";
 
-    const actual = constructButtonText(materialType, selectedMaterialType);
+    const actual = constructButtonText(workTypes, selectedMaterialType);
     const expected =
       Translate({
         context: "overview",
@@ -237,7 +286,7 @@ describe("Button text generation for buttons linking directly to material", () =
     expect(actual).toEqual(expected);
 
     const actualShort = constructButtonText(
-      materialType,
+      workTypes,
       selectedMaterialType,
       true
     );
@@ -255,11 +304,18 @@ describe("Button text generation for buttons linking directly to material", () =
   });
 
   it("Game", () => {
-    const materialType = "game";
-    const selectedMaterialType = "game";
+    const workTypes = ["GAME"];
+    const selectedMaterialType = [
+      {
+        specificDisplay: "computerspil",
+        specificCode: "COMPUTER_GAME",
+        generalDisplay: "computerspil",
+        generalCode: "COMPUTER_GAMES",
+      },
+    ];
     const expectedAction = "play";
 
-    const actual = constructButtonText(materialType, selectedMaterialType);
+    const actual = constructButtonText(workTypes, selectedMaterialType);
     const expected =
       Translate({
         context: "overview",
@@ -273,7 +329,7 @@ describe("Button text generation for buttons linking directly to material", () =
     expect(actual).toEqual(expected);
 
     const actualShort = constructButtonText(
-      materialType,
+      workTypes,
       selectedMaterialType,
       true
     );
