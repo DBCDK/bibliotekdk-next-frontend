@@ -11,8 +11,7 @@ import Translate from "@/components/base/translate";
 import { getWorkUrlForProfile } from "../../utils";
 import sharedStyles from "../MaterialRow.module.css";
 import { useMemo } from "react";
-import { getMaterialTypeForPresentation } from "@/lib/manifestationFactoryUtils";
-import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
+import ReservationButtonWrapper from "@/components/work/reservationbutton/ReservationButton";
 import { TextWithCheckMark } from "../MaterialRow";
 import styles from "../MaterialRow.module.css";
 
