@@ -1,6 +1,7 @@
 import * as loanMutations from "@/lib/api/loans.mutations";
 import isEmpty from "lodash/isEmpty";
 import isString from "lodash/isString";
+import { getCanonicalWorkUrl } from "@/lib/utils";
 
 export async function handleRenewLoan({ loanId, agencyId, loanMutation }) {
   await loanMutation.post(
@@ -46,96 +47,85 @@ export async function handleLoanMutationUpdates(
 
 /**
  * Get an url for materials in profile pages - loans, reservation, orderhistory, cart
- * @param materialId
- * @param materialType
- * @returns {"/work/?type="|string}
+ * @param workId
+ * @param pid
+ * @param materialTypeAsUrl
+ * @param titles
+ * @param creators
+ * @param scrollToEdition
+ * @returns {{query: {workId}, pathname: string}|string}
  */
 export function getWorkUrlForProfile({
-  workId = "",
-  pid = "",
-  materialId = "",
-  materialType = "",
+  workId,
+  pid = null,
+  materialTypeAsUrl = "",
+  titles,
+  creators,
   scrollToEdition = false,
 }) {
-  // pid is given
-  if (!isEmpty(pid) && isPid(pid)) {
-    return `/linkme.php?rec.id=${pid}&scrollToEdition=${scrollToEdition}`;
-  }
-  // @TODO - materialId may be a localid - that is NOT a faust number
-  // we check if given id is 8 digits - as a faust always is .. but .. is that good enough ..
-  // a localid might also be 8 digits - and not be a faust
-  // this might be a faust
-  if (materialId.length === 8) {
-    // we assume that this is a faust
-    return `/linkme.php?faust=${materialId}&scrollToEdition=${scrollToEdition}`;
-  }
-
-  const hasSpaceInsideBrackets = hasSpacesInsideBrackets(materialType);
-
-  const formattedMaterialType = hasSpaceInsideBrackets
-    ? replaceSpacesInBrackets(materialType)
-    : materialType.toLowerCase();
-  // workid is given
-  if (!isEmpty(workId)) {
-    return `/work/${workId}${
-      materialType ? "?type=" + formattedMaterialType : ""
-    }${!isEmpty(pid) ? "#" + pid : ""}`;
-  }
-
-  // we give up -
-  // @TODO sometime soon localid's may be handled in complex search so we can look up some good ids :)
-  return null;
-}
-/**
- * @example Film (blu-ray 4K) --> film+(blu-ray+4K) OR Film (blu-ray 3D) --> film+(blu-ray+3D)
- * @param {String} inputString
- * @returns {String}
- */
-function replaceSpacesInBrackets(inputString) {
-  return inputString.replace(
-    /(.*?)\((.*?)\)/g,
-    function (match, infrontOfBracket, insideBracket) {
-      const replacedInsideBrackets = insideBracket.replace(/\s+/g, "+"); // replace spaces with +
-      return (
-        infrontOfBracket.replace(/\s+/g, "+").toLowerCase() +
-        "(" +
-        replacedInsideBrackets +
-        ")"
-      );
+  if (!workId) {
+    if (pid && !isEmpty(pid) && isPid(pid)) {
+      return `/work/${pid}`;
     }
-  );
-}
+    return "";
+  }
 
-function hasSpacesInsideBrackets(inputString) {
-  const regex = /\([^)]*\s[^)]*\)/;
-  return regex.test(inputString);
+  if (!titles || isEmpty(titles) || !creators || isEmpty(creators)) {
+    return `/work/${workId}`;
+  }
+
+  // Pathname
+  const pathname = getCanonicalWorkUrl({
+    title: titles?.main?.[0],
+    creators: creators,
+    id: workId,
+  });
+
+  // MaterialTypes
+  const chosenMaterialType =
+    materialTypeAsUrl && !isEmpty(materialTypeAsUrl) && materialTypeAsUrl;
+
+  const query = {
+    workId: workId,
+    ...(chosenMaterialType && { type: chosenMaterialType }),
+  };
+
+  return {
+    pathname: pathname,
+    query: query,
+    ...(scrollToEdition && pid && isPid(pid) && { hash: pid }),
+  };
 }
 
 /**
  * check if given pid actually is a pid (eg 870970-basis:123456)
- * @param String pid
+ * @param {string} pid
  */
 export function isPid(pid) {
   if (!isString(pid)) {
     return false;
   }
   // a pid consists of a localization (eg. 870970, a base (eg. basis) and a localid(eg. 123456)
-  const parts = pid?.split(":");
+  // We also have to accommodate eg. 800010-katalog:99121952643105763
 
-  // there should be 2 parts
-  if (!(parts?.length === 2)) {
-    return false;
-  }
-  // first part should be a localization (6 digits)
-  const regex = /^[0-9]{8}$/g;
-  // success or give up
-  return !!parts[1].trim().match(regex);
+  // Explanation:
+  // * ^ : start of string
+  // * ([0-9]{6,}) : At least 6 DIGITS for a agency or branch or whatever, denoted by {6,}
+  // * (-) : Agency/Branch id and rest must be separated by a "-"
+  // * ([0-9A-Za-z]+) : A base (basis, katalog, etc.) must have at least 1 character
+  // * (:) : Agency/Branch id + base must be followed with ":" before faust/isbn/localId
+  // * ([0-9A-Za-z]+) : Faust, ISBN, localId, whatever must have at least 1 character denoted by +
+  // * $ : end of string
+  const regex = /^([0-9]{6,})(-)([0-9A-Za-z]+)(:)([0-9A-Za-z]+)$/g;
+
+  // We should cover all pids
+  return !!pid.trim().match(regex);
 }
 
 /**
  * handles updates in mutation object on loans and reservations page
  * Its called in two places, depending on if on desktop or mobile
- * @param {Object} loanMutation
+ * @param {Object} orderMutation
  * @param {function} setHasDeleteError
  * @param {function} setRemovedOrderId
  * @param {function} updateUserStatusInfo

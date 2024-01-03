@@ -18,6 +18,10 @@ import { handleRenewLoan } from "../../utils";
 import MaterialRowTooltip from "../materialRowTooltip/MaterialRowTooltip";
 import sharedStyles from "../MaterialRow.module.css";
 import { TextWithCheckMark } from "../MaterialRow";
+import {
+  formatMaterialTypesToPresentation,
+  formatMaterialTypesToUrl,
+} from "@/lib/manifestationFactoryUtils";
 
 // Set to when red text should be used for remaining loan days
 const DAYS_TO_COUNTDOWN_RED = 5;
@@ -117,9 +121,11 @@ const MaterialRowLoan = (props) => {
     workId,
     pid,
     materialId,
-    materialType,
+    flatMaterialTypes,
     title,
+    titles,
     creator,
+    creators,
     edition,
     creationYear,
     dueDateString,
@@ -194,9 +200,10 @@ const MaterialRowLoan = (props) => {
           </Title>
 
           {creator && <Text type="text2">{creator}</Text>}
-          {materialType && creationYear && (
+          {flatMaterialTypes && creationYear && (
             <Text type="text2" className={sharedStyles.uppercase}>
-              {materialType}, {creationYear}
+              {formatMaterialTypesToPresentation(flatMaterialTypes)},{" "}
+              {creationYear}
             </Text>
           )}
 
@@ -252,10 +259,13 @@ const MaterialRowLoan = (props) => {
                   },
                 }}
                 href={getWorkUrlForProfile({
-                  workId,
-                  pid,
-                  materialId,
-                  materialType,
+                  workId: workId,
+                  pid: pid,
+                  materialTypeAsUrl:
+                    formatMaterialTypesToUrl(flatMaterialTypes),
+                  titles: titles,
+                  creators: creators,
+                  scrollToEdition: true,
                 })}
                 className={sharedStyles.blackUnderline}
               >
@@ -279,13 +289,14 @@ const MaterialRowLoan = (props) => {
               {creator}
             </Text>
           )}
-          {materialType && (
+          {flatMaterialTypes && (
             <Text
               type="text2"
               className={sharedStyles.uppercase}
               dataCy="materialtype-and-creationyear"
             >
-              {materialType} {creationYear && <>, {creationYear}</>}
+              {formatMaterialTypesToPresentation(flatMaterialTypes)}{" "}
+              {creationYear && <>, {creationYear}</>}
               {edition && <span>{edition}</span>}
             </Text>
           )}

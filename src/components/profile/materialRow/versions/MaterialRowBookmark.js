@@ -11,6 +11,11 @@ import Translate from "@/components/base/translate";
 import { getWorkUrlForProfile } from "../../utils";
 import sharedStyles from "../MaterialRow.module.css";
 import { useMemo } from "react";
+import {
+  formatMaterialTypesToPresentation,
+  formatMaterialTypesToUrl,
+  manifestationMaterialTypeFactory,
+} from "@/lib/manifestationFactoryUtils";
 import ReservationButtonWrapper from "@/components/work/reservationbutton/ReservationButton";
 import { TextWithCheckMark } from "../MaterialRow";
 import styles from "../MaterialRow.module.css";
@@ -18,26 +23,30 @@ import styles from "../MaterialRow.module.css";
 /**
  *
  * @param {Object} props
- * @param props.pid: used for edition specific bookmarks - null if it's a workId bookmark
- * @param props.workId: workId for workId bookmarks
- * @param props.materialType used for ordering a workId bookmark
+ * @param props.pid  used for edition specific bookmarks - null if it's a workId bookmark
+ * @param props.workId  workId for workId bookmarks
+ * @param props.flatMaterialTypes used for ordering a workId bookmark
  * @param props.onBookmarkDelete
  * @returns
  */
 const BookmarkColumn = ({
   pid,
   workId,
-  materialType,
+  flatMaterialTypes,
   onBookmarkDelete,
   relevantManifestations,
   showFailedAtCreation,
   showSuccessfullyOrdered,
   handleOrderFinished,
 }) => {
+  // If there is a pid we have singleManifestation
+  const singleManifestation = !!pid;
+
   const selectedPids = useMemo(
     () => relevantManifestations.map((manifestation) => manifestation.pid),
-    [materialType, relevantManifestations]
+    [flatMaterialTypes, relevantManifestations]
   );
+
   return (
     <div className={sharedStyles.dynamicColumnHorizontal}>
       <div className={sharedStyles.bookmarkOrderButtonContainer}>
@@ -54,7 +63,7 @@ const BookmarkColumn = ({
           <ReservationButtonWrapper
             workId={workId}
             selectedPids={selectedPids}
-            singleManifestation={!!pid ? true : false}
+            singleManifestation={singleManifestation}
             buttonType="primary"
             size="small"
             shortText
@@ -89,8 +98,9 @@ const MaterialRowBookmark = ({
   image,
   dataCy,
   title,
+  titles,
   creator,
-  materialType,
+  creators,
   workId,
   pid,
   edition,
@@ -115,6 +125,10 @@ const MaterialRowBookmark = ({
       onSelect();
     }
   };
+
+  const { flatMaterialTypes } = manifestationMaterialTypeFactory([
+    allManifestations?.[0],
+  ]);
 
   return (
     <article
@@ -167,10 +181,13 @@ const MaterialRowBookmark = ({
                   },
                 }}
                 href={getWorkUrlForProfile({
-                  workId,
-                  pid,
-                  materialId,
-                  materialType, //TODO how to get workURL?
+                  workId: workId,
+                  pid: pid,
+                  materialTypeAsUrl: formatMaterialTypesToUrl(
+                    flatMaterialTypes?.[0]
+                  ),
+                  titles: titles,
+                  creators: creators,
                   scrollToEdition: true,
                 })}
                 className={sharedStyles.blackUnderline}
@@ -195,7 +212,7 @@ const MaterialRowBookmark = ({
               {creator}
             </Text>
           )}
-          {materialType && (
+          {flatMaterialTypes && (
             <Text
               type="text3"
               className={cx(
@@ -204,7 +221,7 @@ const MaterialRowBookmark = ({
               )}
               dataCy="materialtype-and-creationyear"
             >
-              {materialType}
+              {formatMaterialTypesToPresentation(flatMaterialTypes?.[0])}
               {edition && <span>{edition}</span>}
             </Text>
           )}
@@ -214,7 +231,7 @@ const MaterialRowBookmark = ({
         <BookmarkColumn
           workId={workId}
           pid={pid}
-          materialType={materialType}
+          flatMaterialTypes={flatMaterialTypes}
           onBookmarkDelete={onBookmarkDelete}
           relevantManifestations={allManifestations}
           showFailedAtCreation={showFailedAtCreation}

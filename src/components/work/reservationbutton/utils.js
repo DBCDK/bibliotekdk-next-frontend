@@ -86,9 +86,16 @@ export const constructButtonText = (
   const CONTEXT = "overview";
 
   // firstWorkType since we have no better option
+  //   No better option because: The design and data cannot currently handle the complex
+  //   situation in all cases. There can be more than one workType on a work, e.g.
+  //   ["MOVIE","MUSIC"], where we could expect either "Listen here"/"Lyt her" or
+  //   "See here"/"Se her", but in this case we would always use "See here",
+  //   since "MOVIE" is first, but we can not necessarily expect that it
+  //   should not be "Listen here".
   const workType = workTypes?.[0];
 
   // firstSubMaterialTypeCode since we have no better option
+  //   No better option because: Same situation as with workTypes (e.g. ["EBOOK", "AUDIO_BOOK_ONLINE"])
   const materialType = materialTypes?.[0]?.specificCode;
 
   /**

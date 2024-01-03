@@ -8,6 +8,10 @@ import cx from "classnames";
 import Translate from "@/components/base/translate";
 import { getWorkUrlForProfile } from "../../utils";
 import sharedStyles from "../MaterialRow.module.css";
+import {
+  formatMaterialTypesToPresentation,
+  formatMaterialTypesToUrl,
+} from "@/lib/manifestationFactoryUtils";
 
 const DebtColumn = ({ amount, currency }) => {
   return (
@@ -29,7 +33,7 @@ const MaterialRowDebt = ({
   materialId,
   workId,
   pid,
-  materialType,
+  flatMaterialTypes,
   amount,
   currency,
   library,
@@ -52,9 +56,10 @@ const MaterialRowDebt = ({
           </Title>
 
           {creator && <Text type="text2">{creator}</Text>}
-          {materialType && creationYear && (
+          {flatMaterialTypes && creationYear && (
             <Text type="text2" className={sharedStyles.uppercase}>
-              {materialType}, {creationYear}
+              {formatMaterialTypesToPresentation(flatMaterialTypes)},{" "}
+              {creationYear}
             </Text>
           )}
 
@@ -96,10 +101,11 @@ const MaterialRowDebt = ({
                   },
                 }}
                 href={getWorkUrlForProfile({
-                  workId,
-                  pid,
-                  materialId,
-                  materialType,
+                  workId: workId,
+                  pid: pid,
+                  materialTypeAsUrl:
+                    formatMaterialTypesToUrl(flatMaterialTypes),
+                  scrollToEdition: true,
                 })}
                 className={sharedStyles.blackUnderline}
               >
@@ -123,13 +129,14 @@ const MaterialRowDebt = ({
               {creator}
             </Text>
           )}
-          {materialType && (
+          {flatMaterialTypes && (
             <Text
               type="text2"
               className={sharedStyles.uppercase}
               dataCy="materialtype-and-creationyear"
             >
-              {materialType} {creationYear && <>, {creationYear}</>}
+              {formatMaterialTypesToPresentation(flatMaterialTypes?.[0])}{" "}
+              {creationYear && <>, {creationYear}</>}
               {edition && <span>{edition}</span>}
             </Text>
           )}
