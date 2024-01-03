@@ -74,7 +74,7 @@ export function handleGoToLogin(modal, access, isAuthenticated) {
 /**
  * @TODO rework with JED 1.1 material type general
  * @param {Array.<string>} workTypes : general materialType
- * @param {Array.<Object>} materialTypes : specific material type
+ * @param {MaterialTypesArray} materialTypes : specific material type
  * @param {boolean} shortText : If material text is shortened or not
  * @returns
  */
