@@ -18,7 +18,7 @@ import { handleOnSelect } from "@/components/_modal/utils";
 function PolicyLoader({ branch, onLoad, pid, pids, requireDigitalAccess }) {
   const pickupAllowed = branch?.pickupAllowed;
   let { data } = useData(
-    (pids || pids) &&
+    (pid || pids) &&
       branch?.branchId &&
       branchesFragments.branchOrderPolicy({
         branchId: branch.branchId,
