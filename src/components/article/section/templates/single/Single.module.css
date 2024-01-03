@@ -9,6 +9,9 @@
 
 .imageskeleton {
   padding-bottom: var(--pt05);
+  position: relative;
+  width: 100%;
+  height: 250px;
 }
 
 .content {
