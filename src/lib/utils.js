@@ -362,8 +362,7 @@ export function setLocalStorageItem(key, value) {
 
 export function getLocalStorageItem(key) {
   try {
-    const value = localStorage.getItem(key);
-    return value;
+    return localStorage.getItem(key);
   } catch (e) {
     console.error("Failed to get item from localStorage:", e);
     return null;
