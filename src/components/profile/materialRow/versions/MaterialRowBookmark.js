@@ -11,8 +11,7 @@ import Translate from "@/components/base/translate";
 import { getWorkUrlForProfile } from "../../utils";
 import sharedStyles from "../MaterialRow.module.css";
 import { useMemo } from "react";
-import { getMaterialTypeForPresentation } from "@/lib/manifestationFactoryUtils";
-import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
+import ReservationButtonWrapper from "@/components/work/reservationbutton/ReservationButton";
 import { TextWithCheckMark } from "../MaterialRow";
 import styles from "../MaterialRow.module.css";
 
@@ -52,15 +51,12 @@ const BookmarkColumn = ({
             style={sharedStyles.bookmarkOrderedIcon}
           />
         ) : (
-          <ReservationButton
+          <ReservationButtonWrapper
             workId={workId}
             selectedPids={selectedPids}
             singleManifestation={!!pid ? true : false}
             buttonType="primary"
             size="small"
-            selectedMaterialType={getMaterialTypeForPresentation(
-              relevantManifestations?.[0]?.materialTypes
-            )}
             shortText
             handleOrderFinished={handleOrderFinished}
           />
