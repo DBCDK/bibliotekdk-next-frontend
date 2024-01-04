@@ -66,7 +66,13 @@ export const TextWithCheckMark = ({ text, textType = "text2", style }) => {
   );
 };
 
-const MaterialRow = ({ id: materialId, skeleton, type, ...props }) => {
+const MaterialRow = ({
+  id: materialId,
+  skeleton,
+  type,
+  bookmarkRef,
+  ...props
+}) => {
   const breakpoint = useBreakpoint();
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
@@ -104,6 +110,7 @@ const MaterialRow = ({ id: materialId, skeleton, type, ...props }) => {
     case "BOOKMARK":
       return (
         <MaterialRowBookmark
+          ref={bookmarkRef}
           materialId={materialId}
           isMobileSize={isMobileSize}
           {...props}

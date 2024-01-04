@@ -1,8 +1,7 @@
 import Text from "@/components/base/text";
 import Top from "../../base/top/Top";
 import Button from "@/components/base/button";
-import { useEffect, useRef, useState } from "react";
-import EMaterialAnalyzer from "./EMaterialAnalyzer";
+import { useEffect, useState } from "react";
 import styles from "./EMaterialFilter.module.css";
 import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
@@ -21,87 +20,79 @@ const CONTEXT = "bookmark-order";
  */
 const EMaterialFilter = ({ context, active }) => {
   const { bookmarks: allBookmarks, createdAtSort, titleSort } = useBookmarks();
-  const { bookmarksToOrder, sortType, handleOrderFinished } = context;
-  const { data: materialsData } = usePopulateBookmarks(bookmarksToOrder);
-  const [materials, setMaterials] = useState([]);
+  const {
+    sortType,
+    handleOrderFinished,
+    materialsToOrder,
+    materialsOnlineAvailable,
+  } = context;
+  const { data: materialsToProceedData } =
+    usePopulateBookmarks(materialsToOrder);
+  const { data: materialsOnlineAvailableData } = usePopulateBookmarks(
+    materialsOnlineAvailable
+  );
+
   const modal = useModal();
-  const analyzeRef = useRef();
   const [materialsToFilter, setMaterialsToFilter] = useState();
   const [materialsToProceed, setMaterialsToProceed] = useState();
-  const isLoading = !materialsToFilter || !materialsToProceed;
+  const isLoading = !materialsToFilter || !materialsToProceedData;
 
+  //console.log("sTUF ", materialsToOrder, materialsOnlineAvailable);
+
+  //find materials that can be phisically ordered
   useEffect(() => {
-    const materials = materialsData.map((mat) => {
+    if (!active) {
+      // On close, reset states to force rerender
+      setMaterialsToProceed(null);
+      return;
+    }
+    const materials = materialsToProceedData.map((mat) => {
       const bookmark = allBookmarks?.find((bm) => bm.key === mat.key);
       return {
         ...bookmark,
         ...mat,
       };
     });
-    setMaterials(materials);
-  }, [materialsData]);
+    let filteredMaterialsSorted = [];
 
+    if (sortType === "title") {
+      filteredMaterialsSorted = titleSort(materials); //pider instead of materials?
+    } else {
+      filteredMaterialsSorted = createdAtSort(materials);
+    }
+    setMaterialsToProceed(filteredMaterialsSorted);
+  }, [active, materialsToProceedData]);
+
+  //find online materials that should not be ordered
   useEffect(() => {
     if (!active) {
       // On close, reset states to force rerender
       setMaterialsToFilter(null);
-      setMaterialsToProceed(null);
       return;
     }
-    if (!analyzeRef?.current) return;
-    // Secure only running once
-    if (!!materialsToFilter || !!materialsToProceed) return;
-    if (materials.length !== bookmarksToOrder.length) return;
-
-    const timer = setTimeout(() => {
-      // Ensure that EMaterialAnalyzers are done rendering
-      const elements = Array.from(analyzeRef.current.children);
-      const filteredMaterials = elements
-        .filter(
-          (element) =>
-            element.getAttribute("data-accessable-ematerial") === "true"
-        )
-        .map((element) =>
-          materials.find(
-            (mat) => mat.key === element.getAttribute("data-material-key")
-          )
-        );
-      const toProceed = elements
-        .filter(
-          (element) =>
-            element.getAttribute("data-accessable-ematerial") === "false"
-        )
-        .map((element) =>
-          materials.find(
-            (mat) => mat.key === element.getAttribute("data-material-key")
-          )
-        );
-
-      let filteredMaterialsSorted;
-      let toProceedSorted;
-      if (sortType === "title") {
-        filteredMaterialsSorted = titleSort(filteredMaterials); //pider instead of materials?
-        toProceedSorted = titleSort(toProceed);
-      } else if (sortType === "createdAt") {
-        filteredMaterialsSorted = createdAtSort(filteredMaterials);
-        toProceedSorted = createdAtSort(toProceed);
-      }
-
-      setMaterialsToFilter(filteredMaterialsSorted);
-      setMaterialsToProceed(toProceedSorted);
-
-      if (filteredMaterials.length === 0) {
-        // Nothing to filter - Redirect directly
-        modal.push("multiorder", {
-          materials: toProceedSorted,
-          closeModalOnBack: true,
-          handleOrderFinished: handleOrderFinished,
-        });
-      }
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, [active, analyzeRef.current, materials]);
+    const materials = materialsOnlineAvailableData.map((mat) => {
+      const bookmark = allBookmarks?.find((bm) => bm.key === mat.key);
+      return {
+        ...bookmark,
+        ...mat,
+      };
+    });
+    let filteredMaterialsSorted = [];
+    if (sortType === "title") {
+      filteredMaterialsSorted = titleSort(materials);
+    } else {
+      filteredMaterialsSorted = createdAtSort(materials);
+    }
+    setMaterialsToFilter(filteredMaterialsSorted);
+    if (filteredMaterialsSorted.length === 0) {
+      // Nothing to filter - Redirect directly
+      modal.push("multiorder", {
+        materials: materialsToProceed,
+        closeModalOnBack: true,
+        handleOrderFinished: handleOrderFinished,
+      });
+    }
+  }, [active, materialsOnlineAvailableData]);
 
   const onNextClick = () => {
     modal.push("multiorder", {
@@ -116,16 +107,6 @@ const EMaterialFilter = ({ context, active }) => {
 
   return (
     <div className={styles.eMaterialFilter}>
-      <div ref={analyzeRef} className="visually-hidden">
-        {/**
-         * Workaround since hooks can't be called a dynamic amount of times.
-         * This way we render a analyze component for each material & are able to reuse hooks.
-         * Visually-hidden
-         */}
-        {materials.map((mat) => (
-          <EMaterialAnalyzer material={mat} key={mat.key} />
-        ))}
-      </div>
       <Top
         skeleton={isLoading}
         title={Translate({
@@ -174,13 +155,13 @@ const EMaterialFilter = ({ context, active }) => {
         <Translate
           context={CONTEXT}
           label={
-            materialsToProceed?.length === 0
+            materialsToProceedData?.length === 0
               ? "efilter-back-text"
-              : materialsToProceed?.length === 1
+              : materialsToProceedData?.length === 1
               ? "efilter-proceed-text-singular"
               : "efilter-proceed-text"
           }
-          vars={[materialsToProceed?.length]}
+          vars={[materialsToProceedData?.length]}
         />
       </Text>
 
@@ -188,13 +169,15 @@ const EMaterialFilter = ({ context, active }) => {
         type="primary"
         size="large"
         skeleton={isLoading}
-        onClick={materialsToProceed?.length === 0 ? onBackClick : onNextClick}
+        onClick={
+          materialsToProceedData?.length === 0 ? onBackClick : onNextClick
+        }
         className={styles.nextButton}
       >
         <Translate
           context={CONTEXT}
           label={
-            materialsToProceed?.length === 0
+            materialsToProceedData?.length === 0
               ? "efilter-back"
               : "efilter-proceed"
           }

@@ -64,6 +64,7 @@ const containsIds = (ids, key) => {
 };
 
 const BookmarkPage = () => {
+  const itemsRef = useRef([]);
   const {
     bookmarks: allBookmarksData,
     paginatedBookmarks: bookmarksData,
@@ -109,6 +110,10 @@ const BookmarkPage = () => {
     setSortByValue(savedValue || sortByItems[0].key);
   }, []);
 
+  useEffect(() => {
+    itemsRef.current = itemsRef.current.slice(0, bookmarks.length);
+  }, [bookmarks]);
+
   const onToggleCheckbox = (key) => {
     const index = checkboxList.findIndex((item) => item.key === key);
     const exists = index > -1;
@@ -126,6 +131,9 @@ const BookmarkPage = () => {
         workId: bookmarkData.workId,
         materialType: bookmarkData.materialType,
         bookmarkId: bookmarkData.bookmarkId,
+        isAccessibleOnline: itemsRef?.current?.find(
+          (item) => item.bookmarkKey === bookmarkData.key
+        )?.isAccessibleOnline,
       });
     }
 
@@ -133,10 +141,18 @@ const BookmarkPage = () => {
   };
 
   const onOrderManyClick = () => {
+    const materialsToOrder = checkboxList.filter(
+      (item) => !item.isAccessibleOnline
+    );
+    const materialsOnlineAvailable = checkboxList.filter(
+      (item) => item.isAccessibleOnline
+    );
     setTimeout(() => {
       if (isAuthenticated) {
         modal.push("ematerialfilter", {
           bookmarksToOrder: checkboxList,
+          materialsToOrder,
+          materialsOnlineAvailable,
           sortType: sortByValue,
           handleOrderFinished: handleOrderFinished,
         });
@@ -167,6 +183,9 @@ const BookmarkPage = () => {
           workId: el.workId,
           materialType: el.materialType,
           bookmarkId: el.bookmarkId,
+          isAccessibleOnline: itemsRef?.current?.find(
+            (item) => item.bookmarkKey === el.key
+          )?.isAccessibleOnline,
         }))
       );
     else setCheckboxList([]);
@@ -295,6 +314,8 @@ const BookmarkPage = () => {
       </ProfileLayout>
     );
   }
+
+  console.log(itemsRef.current);
 
   return (
     <ProfileLayout
@@ -430,7 +451,9 @@ const BookmarkPage = () => {
       <div className={styles.listContainer}>
         {bookmarks?.map((bookmark, idx) => (
           <MaterialRow
+            bookmarkRef={(el) => (itemsRef.current[idx] = el)}
             key={`bookmark-list-${idx}`}
+            bookmarkKey={bookmark?.key} //TODO can be undefined?
             hasCheckbox={!isMobile || activeStickyButton !== null}
             title={bookmark?.manifestations?.[0]?.titles?.full?.[0] || ""}
             titles={bookmark?.manifestations?.[0]?.titles}

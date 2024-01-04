@@ -12,7 +12,7 @@ import { formatMaterialTypesFromCode } from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
 
 const KEY_NAME = "bookmarks";
-const ITEMS_PER_PAGE = 20;
+const ITEMS_PER_PAGE = 25;
 
 export const BookmarkSyncProvider = () => {
   const { syncCookieBookmarks } = useBookmarks();

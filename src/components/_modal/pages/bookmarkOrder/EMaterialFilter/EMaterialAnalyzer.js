@@ -17,7 +17,7 @@ import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
  * @param {Object} material
  * @returns {boolean}
  */
-const useAnalyzeMaterial = (material) => {
+export const useAnalyzeMaterial = (material) => {
   const { loanerInfo } = useLoanerInfo();
 
   const hasDigitalAccess = loanerInfo?.rights?.digitalArticleService;
@@ -43,13 +43,11 @@ const useAnalyzeMaterial = (material) => {
         : flatPidsByType(
             flattenedDisplayTypes //should i give all the material types here? --> presentation material type
           ),
-    [material?.manifestations]
+    [selectedManifestations]
   );
 
-  const { manifestations } = useGetManifestationsForOrderButton(
-    workId,
-    selectedPids
-  );
+  const { manifestations, isLoading: isLoading } =
+    useGetManifestationsForOrderButton(workId, selectedPids);
 
   const { getAllAllowedEnrichedAccessSorted } = useMemo(
     () => accessFactory(manifestations),
@@ -76,10 +74,13 @@ const useAnalyzeMaterial = (material) => {
  * Visually hidden JSX (by the parent), only used to pass data to parent
  */
 const EMaterialAnalyzer = ({ material }) => {
-  const result = useAnalyzeMaterial(material);
+  const isAccessbileOnline = useAnalyzeMaterial(material);
 
   return (
-    <div data-accessable-ematerial={result} data-material-key={material.key} />
+    <div
+      data-accessable-ematerial={isAccessbileOnline}
+      data-material-key={material.key}
+    />
   );
 };
 
