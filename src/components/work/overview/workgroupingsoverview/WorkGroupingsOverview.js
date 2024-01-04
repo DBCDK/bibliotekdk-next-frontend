@@ -134,7 +134,7 @@ function RenderHostPublication({ hostPublication }) {
  */
 export default function Wrap({ workId }) {
   const work_response = useData(
-    workId && workFragments.series({ workId: workId })
+    workId && workFragments.series({ workId: workId, seriesLimit: 1 })
   );
 
   const { workRelationsWorkTypeFactory, data: workData } =

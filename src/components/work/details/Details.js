@@ -180,13 +180,26 @@ export default function Wrap(props) {
     data: seriesData,
     isLoading: seriesIsLoading,
     error: seriesError,
-  } = useData(workId && workFragments.series({ workId: workId }));
+  } = useData(
+    workId &&
+      workFragments.series({
+        workId: workId,
+        seriesLimit: 1,
+      })
+  );
 
   const {
     data: universesData,
     isLoading: universesIsLoading,
     error: universesError,
-  } = useData(workId && universeFragments.universes({ workId: workId }));
+  } = useData(
+    workId &&
+      universeFragments.universes({
+        workId: workId,
+        worksLimit: 1,
+        seriesLimit: 1,
+      })
+  );
 
   const manifestations = data?.work?.manifestations?.mostRelevant;
 

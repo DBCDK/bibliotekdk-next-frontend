@@ -15,6 +15,8 @@ import {
   workSliderFragment,
   manifestationTitleFragment,
 } from "@/lib/api/fragments.utils";
+import isEmpty from "lodash/isEmpty";
+import { getLimitOffset } from "@/lib/api/universe.fragments";
 
 export function tableOfContents({ workId }) {
   return {
@@ -189,7 +191,12 @@ export function reviews({ workId }) {
  *
  * @returns {Object} a query object
  */
-export function series({ workId }) {
+export function series({ workId, seriesLimit = null, seriesOffset = null }) {
+  const seriesLimitOffset = getLimitOffset(
+    ["limit", seriesLimit],
+    ["offset", seriesOffset]
+  );
+
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 4000, // for debugging
@@ -197,7 +204,7 @@ export function series({ workId }) {
       work(id: $workId) {
         series {
           ...seriesFragment
-          members {
+          members${seriesLimitOffset} {
             work {
               ...workSliderFragment
               manifestations {
