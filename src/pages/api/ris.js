@@ -36,7 +36,7 @@ export default async function risHandler(req, res) {
   // get an access token for api
   const context = { req, res };
   const accessToken = await getAccessToken(context);
-  // get refworks
+  // get ris
   const { pids } = req.query;
   const pidsAsArray = pids.split(",");
   const response = await getRis(pidsAsArray, accessToken);
