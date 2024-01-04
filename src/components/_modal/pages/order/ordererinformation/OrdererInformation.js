@@ -172,18 +172,19 @@ export default function Wrap({
 
   if (!email && initialmail) {
     const status = validateEmail(initialmail);
-    setMail({
-      value: initialmail,
-      valid: {
-        status: status,
-        message: status
-          ? null
-          : {
-              context: "form",
-              label: "wrong-email-field",
-            },
-      },
-    });
+    setMail &&
+      setMail({
+        value: initialmail,
+        valid: {
+          status: status,
+          message: status
+            ? null
+            : {
+                context: "form",
+                label: "wrong-email-field",
+              },
+        },
+      });
   }
 
   const showMailMessage =
