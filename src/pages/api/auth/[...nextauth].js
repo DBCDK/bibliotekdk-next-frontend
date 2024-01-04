@@ -24,13 +24,15 @@ export const options = {
         expires: null,
       },
     },
-    anonymousSession: {
+    anonymousSessionToken: {
       name: `next-auth.anon-session`,
       options: {
         httpOnly: true,
         sameSite: 'lax',
         path: '/',
-        secure: true
+        secure: true,
+        expires: null,
+
       },
     },  
   },
