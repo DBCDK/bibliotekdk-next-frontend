@@ -20,7 +20,7 @@ import {
 import ReservationButtonWrapper from "@/components/work/reservationbutton/ReservationButton";
 import { TextWithCheckMark } from "../MaterialRow";
 import styles from "../MaterialRow.module.css";
-import { useAnalyzeMaterial } from "@/components/_modal/pages/bookmarkOrder/EmaterialFilter/EMaterialAnalyzer";
+import useAnalyzeMaterial from "@/components/hooks/useAnalyzeMaterial";
 
 /**
  *
