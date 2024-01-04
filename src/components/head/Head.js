@@ -35,7 +35,11 @@ export default function _Head() {
         property="og:image"
         content={"/img/bibdk-default-img.png"}
       />
-      <meta name="referrer" content="strict-origin-when-cross-origin" />
+      {/* <meta name="referrer" content="strict-origin-when-cross-origin" /> */}
+      {/* <meta
+        http-equiv="Content-Security-Policy"
+        content={`default-src 'self'; script-src 'self' ${canonical.url};`}
+      /> */}
 
       <link rel="preconnect" href="https://moreinfo.addi.dk"></link>
       <link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" />
