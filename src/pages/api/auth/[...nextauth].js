@@ -28,13 +28,12 @@ export const options = {
       name: `next-auth.anon-session`,
       options: {
         httpOnly: true,
-        sameSite: 'lax',
-        path: '/',
+        sameSite: "lax",
+        path: "/",
         secure: true,
         expires: null,
-
       },
-    },  
+    },
   },
   providers: [
     adgangsplatformen({
