@@ -95,8 +95,8 @@ export const constructButtonText = (
   const workType = workTypes?.[0];
 
   // firstSubMaterialTypeCode since we have no better option
-  //   No better option because: Same situation as with workTypes (e.g. ["EBOOK", "AUDIO_BOOK_ONLINE"])
-  const materialType = materialTypes?.[0]?.specificCode;
+  //   No better option because: Same situation as with workTypes (e.g. ["EBOOKS", "AUDIO_BOOKS"])
+  const materialType = materialTypes?.[0]?.generalCode;
 
   /**
    * @param {string} workType
@@ -123,16 +123,16 @@ export const constructButtonText = (
           context: CONTEXT,
           label: "material-action-play",
         });
-      case "LITERATURE": {
+      default: {
         switch (materialType) {
-          case "BOOK":
-          case "EBOOK":
+          case "BOOKS":
+          case "EBOOKS":
             return Translate({
               context: CONTEXT,
               label: "material-action-read",
             });
-          case "PODCAST":
-          case "AUDIO_BOOK_ONLINE":
+          case "PODCASTS":
+          case "AUDIO_BOOKS":
             return Translate({
               context: CONTEXT,
               label: "material-action-listen",
@@ -160,30 +160,27 @@ export const constructButtonText = (
    * @returns {string} translated material (book, movie, audiobook)
    */
   const getMaterialText = (workType, materialType) => {
-    if (workType === "LITERATURE") {
-      switch (materialType) {
-        case "BOOK":
-          return Translate({
-            context: "overview",
-            label: "material-typename-literature",
-          }).toLowerCase();
-        case "EBOOK":
-        case "PICTURE_BOOK_ONLINE":
-          return Translate({
-            context: "overview",
-            label: "material-typename-ebook",
-          }).toLowerCase();
-        case "PODCAST":
-          return Translate({
-            context: "overview",
-            label: "material-typename-podcast",
-          }).toLowerCase();
-        case "AUDIO_BOOK_ONLINE":
-          return Translate({
-            context: "overview",
-            label: "material-typename-audiobook",
-          }).toLowerCase();
-      }
+    switch (materialType) {
+      case "BOOKS":
+        return Translate({
+          context: "overview",
+          label: "material-typename-literature",
+        }).toLowerCase();
+      case "EBOOKS":
+        return Translate({
+          context: "overview",
+          label: "material-typename-ebook",
+        }).toLowerCase();
+      case "PODCASTS":
+        return Translate({
+          context: "overview",
+          label: "material-typename-podcast",
+        }).toLowerCase();
+      case "AUDIO_BOOKS":
+        return Translate({
+          context: "overview",
+          label: "material-typename-audiobook",
+        }).toLowerCase();
     }
 
     const translation = {
