@@ -23,8 +23,6 @@ export function OrdererInformation({
   validClass,
   showMailMessage,
 }) {
-  console.log("INFOEMAICL", email);
-
   return (
     <div className={styles.user}>
       {(isLoadingBranches || name) && (
