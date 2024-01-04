@@ -24,6 +24,16 @@ export const options = {
         expires: null,
       },
     },
+    sessionToken: {
+      name: `next-auth.anon-session`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: true
+
+      },
+    },
   },
   providers: [
     adgangsplatformen({
