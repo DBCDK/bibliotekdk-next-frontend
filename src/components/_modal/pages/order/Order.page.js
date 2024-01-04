@@ -104,25 +104,6 @@ function Order({
     }
   }, [stringify(modal?.stack)]);
 
-  // Update email from user account
-  // useEffect(() => {
-  //   const userMail =
-  //     mail !== null ? mail?.value : user?.userParameters?.userMail;
-  //   const status = validateEmail(userMail);
-  //   setMail({
-  //     value: userMail,
-  //     valid: {
-  //       status: status,
-  //       message: status
-  //         ? null
-  //         : {
-  //             context: "form",
-  //             label: "wrong-email-field",
-  //           },
-  //     },
-  //   });
-  // }, [user?.userParameters]);
-
   /**
    * sets texts in bookmark list to show if material order was successful or not
    * @param {Object} mutation
@@ -276,6 +257,8 @@ function Order({
         onMailChange={(e, valid) => {
           onMailChange(e?.target?.value, valid, updateLoanerInfo, setMail);
         }}
+        setMail={setMail}
+        email={mail}
       />
       <OrderConfirmationButton
         email={mail}
