@@ -201,10 +201,12 @@ const useBookmarksCore = ({ isMock = false, session }) => {
    */
   const createdAtSort = (bookmarkList = [], sortDirection = "asc") => {
     return bookmarkList.sort((a, b) => {
-      if (new Date(a.createdAt) < new Date(b.createdAt)) {
+      const aDate = new Date(a.createdAt);
+      const bDate = new Date(b.createdAt);
+      if (aDate < bDate) {
         return sortDirection === "asc" ? 1 : -1;
       }
-      if (new Date(a.createdAt) > new Date(b.createdAt)) {
+      if (aDate > bDate) {
         return sortDirection === "asc" ? -1 : 1;
       }
       return 0;
@@ -219,12 +221,21 @@ const useBookmarksCore = ({ isMock = false, session }) => {
    */
   const titleSort = (bookmarkList = [], sortDirection = "asc") => {
     return bookmarkList.sort((a, b) => {
-      if (a.title < b.title) {
+      console.log("cc", a.createdAt, a);
+
+      const aTitle = a.titles?.full?.[0];
+      const bTitle = b.titles?.full?.[0];
+      if (aTitle < bTitle) {
+        console.log("A");
         return sortDirection === "asc" ? -1 : 1;
       }
-      if (a.title > b.title) {
+      if (aTitle > bTitle) {
+        console.log("B");
+
         return sortDirection === "asc" ? 1 : -1;
       }
+      console.log("NOHTING");
+
       return 0;
     });
   };
@@ -254,10 +265,19 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     return sortBookmarks(localBookmarks);
   }, [localBookmarks, sortBy]);
 
+  console.log("sortedLocalBookmarks", sortedLocalBookmarks);
   // sort global bookmarks
   const sortedGlobalBookmarks = useMemo(() => {
     return sortBookmarks(globalBookmarks);
   }, [globalBookmarks, sortBy]);
+  console.log("sortBy", sortBy);
+
+  console.log(
+    "globalBookmarks",
+    globalBookmarks?.map((i) => i.title)
+  );
+
+  console.log("sortedGlobalBookmarks", sortedGlobalBookmarks);
 
   return {
     setBookmark,

@@ -77,7 +77,7 @@ const BookmarkPage = () => {
     isLoading: bookmarsDataLoading,
   } = useBookmarks();
   const { data: populatedBookmarks, isLoading: isPopulateLoading } =
-    usePopulateBookmarks(bookmarksData); //TODO
+    usePopulateBookmarks(bookmarksData);
   const [activeStickyButton, setActiveStickyButton] = useState(null);
   const breakpoint = useBreakpoint();
   const [sortByValue, setSortByValue] = useState(null);
@@ -142,24 +142,23 @@ const BookmarkPage = () => {
   };
 
   const onOrderManyClick = () => {
-    const materialsToOrder = checkboxList.filter(
+    const bookmarksToOrder = checkboxList.filter(
       (item) => !item.isAccessibleOnline
     );
     const materialsOnlineAvailable = checkboxList.filter(
       (item) => item.isAccessibleOnline
     );
     if (isAuthenticated) {
-      console.log("materialsOnlineAvailable", materialsOnlineAvailable);
       if (materialsOnlineAvailable?.length > 0) {
         modal.push("ematerialfilter", {
-          materialsToOrder,
+          bookmarksToOrder,
           materialsOnlineAvailable,
           sortType: sortByValue, //TODO sort here instead of in efilter
           handleOrderFinished: handleOrderFinished,
         });
       } else {
         modal.push("multiorder", {
-          bookmarksToOrder: materialsToOrder,
+          bookmarksToOrder: bookmarksToOrder,
           sortType: sortByValue, //TODO sort here instead of in multiorder
           handleOrderFinished: handleOrderFinished,
         });
@@ -327,8 +326,6 @@ const BookmarkPage = () => {
       </ProfileLayout>
     );
   }
-
-  console.log(itemsRef.current);
 
   return (
     <ProfileLayout

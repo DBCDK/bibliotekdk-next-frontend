@@ -6,7 +6,11 @@ import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
 import { useModal } from "@/components/_modal/Modal";
 import { getMaterialTypeForPresentation } from "@/lib/manifestationFactoryUtils";
-
+import useBookmarks, {
+  usePopulateBookmarks,
+} from "@/components/hooks/useBookmarks";
+import { useEffect, useState } from "react";
+import { mergeBookmarksWithPopulatedData } from "@/components/profile/bookmarks/bookmarks.utils";
 const CONTEXT = "bookmark-order";
 const SKELETON_ROW_AMOUNT = 3;
 
@@ -15,15 +19,49 @@ const SKELETON_ROW_AMOUNT = 3;
  * Skips this step if nothing to filter
  */
 const EMaterialFilter = ({ context, active }) => {
-  const { handleOrderFinished, materialsToOrder, materialsOnlineAvailable } =
-    context;
+  const {
+    sortType,
+    handleOrderFinished,
+    bookmarksToOrder,
+    materialsOnlineAvailable,
+  } = context;
 
   const modal = useModal();
-  const isLoading = !materialsToOrder || !materialsOnlineAvailable;
+  const { createdAtSort, titleSort } = useBookmarks();
+  const { data: populatedBookmarks, isLoading: isPopulating } =
+    usePopulateBookmarks(materialsOnlineAvailable);
+  const [isLoading, setIsLoading] = useState(
+    !materialsOnlineAvailable || isPopulating
+  );
+  const [sortedMaterials, setSortedMaterials] = useState([]);
+
+  useEffect(() => {
+    setIsLoading(!materialsOnlineAvailable || isPopulating);
+  }, [isPopulating]);
+
+  useEffect(() => {
+    if (!active) {
+      setSortedMaterials([]);
+      return;
+    }
+    if (isPopulating) return;
+
+    const materials = mergeBookmarksWithPopulatedData(
+      materialsOnlineAvailable,
+      populatedBookmarks
+    );
+
+    const sortedList =
+      sortType === "title" ? titleSort(materials) : createdAtSort(materials);
+
+    console.log("sortType", sortType, materials[0]);
+    setSortedMaterials(sortedList);
+  }, [active, populatedBookmarks, sortType]);
 
   const onNextClick = () => {
     modal.push("multiorder", {
-      bookmarksToOrder: materialsToOrder,
+      sortType: sortType,
+      bookmarksToOrder: bookmarksToOrder,
       handleOrderFinished: handleOrderFinished,
     });
   };
@@ -66,14 +104,14 @@ const EMaterialFilter = ({ context, active }) => {
         ))
       ) : (
         <ul className={styles.filterList}>
-          {materialsOnlineAvailable?.map((mat) => (
+          {sortedMaterials?.map((mat) => (
             <li className={styles.filterItem} key={mat.key}>
               <Title tag="h4" type="text1">
                 {mat.titles?.main?.[0]}
               </Title>
               <Text type="text2">
                 {getMaterialTypeForPresentation(
-                  mat?.manifestations?.[0].materialTypes
+                  mat?.manifestations?.[0]?.materialTypes
                 )}
               </Text>
             </li>
@@ -89,13 +127,13 @@ const EMaterialFilter = ({ context, active }) => {
         <Translate
           context={CONTEXT}
           label={
-            materialsToOrder?.length === 0
+            bookmarksToOrder?.length === 0
               ? "efilter-back-text"
-              : materialsToOrder?.length === 1
+              : bookmarksToOrder?.length === 1
               ? "efilter-proceed-text-singular"
               : "efilter-proceed-text"
           }
-          vars={[materialsToOrder?.length]}
+          vars={[bookmarksToOrder?.length]}
         />
       </Text>
 
@@ -103,13 +141,13 @@ const EMaterialFilter = ({ context, active }) => {
         type="primary"
         size="large"
         skeleton={isLoading}
-        onClick={materialsToOrder?.length === 0 ? onBackClick : onNextClick}
+        onClick={bookmarksToOrder?.length === 0 ? onBackClick : onNextClick}
         className={styles.nextButton}
       >
         <Translate
           context={CONTEXT}
           label={
-            materialsToOrder?.length === 0 ? "efilter-back" : "efilter-proceed"
+            bookmarksToOrder?.length === 0 ? "efilter-back" : "efilter-proceed"
           }
         />
       </Button>
