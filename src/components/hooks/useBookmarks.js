@@ -221,21 +221,14 @@ const useBookmarksCore = ({ isMock = false, session }) => {
    */
   const titleSort = (bookmarkList = [], sortDirection = "asc") => {
     return bookmarkList.sort((a, b) => {
-      console.log("cc", a.createdAt, a);
-
       const aTitle = a.titles?.full?.[0];
       const bTitle = b.titles?.full?.[0];
       if (aTitle < bTitle) {
-        console.log("A");
         return sortDirection === "asc" ? -1 : 1;
       }
       if (aTitle > bTitle) {
-        console.log("B");
-
         return sortDirection === "asc" ? 1 : -1;
       }
-      console.log("NOHTING");
-
       return 0;
     });
   };
