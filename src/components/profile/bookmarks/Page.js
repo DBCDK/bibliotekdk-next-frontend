@@ -66,7 +66,7 @@ const containsIds = (ids, key) => {
 const BookmarkPage = () => {
   const itemsRef = useRef([]);
   const {
-    bookmarks: allBookmarksData,
+    bookmarks: allBookmarks,
     paginatedBookmarks: bookmarksData,
     setSortBy,
     deleteBookmarks,
@@ -76,8 +76,8 @@ const BookmarkPage = () => {
     count,
     isLoading: bookmarsDataLoading,
   } = useBookmarks();
-  const { data: bookmarks, isLoading: isPopulateLoading } =
-    usePopulateBookmarks(bookmarksData); //TODO first to exchange
+  const { data: populatedBookmarks, isLoading: isPopulateLoading } =
+    usePopulateBookmarks(bookmarksData); //TODO
   const [activeStickyButton, setActiveStickyButton] = useState(null);
   const breakpoint = useBreakpoint();
   const [sortByValue, setSortByValue] = useState(null);
@@ -111,8 +111,8 @@ const BookmarkPage = () => {
   }, []);
 
   useEffect(() => {
-    itemsRef.current = itemsRef.current.slice(0, bookmarks.length);
-  }, [bookmarks]);
+    itemsRef.current = itemsRef.current.slice(0, populatedBookmarks.length);
+  }, [populatedBookmarks]);
 
   const onToggleCheckbox = (key) => {
     const index = checkboxList.findIndex((item) => item.key === key);
@@ -123,9 +123,10 @@ const BookmarkPage = () => {
       // Delete
       newList.splice(index, 1);
     } else {
-      const bookmarkData = allBookmarksData.find((bm) => bm.key === key);
+      const bookmarkData = populatedBookmarks.find((bm) => bm.key === key);
       // Add
       newList.push({
+        ...bookmarkData,
         key: key,
         materialId: bookmarkData.materialId,
         workId: bookmarkData.workId,
@@ -147,19 +148,25 @@ const BookmarkPage = () => {
     const materialsOnlineAvailable = checkboxList.filter(
       (item) => item.isAccessibleOnline
     );
-    setTimeout(() => {
-      if (isAuthenticated) {
+    if (isAuthenticated) {
+      console.log("materialsOnlineAvailable", materialsOnlineAvailable);
+      if (materialsOnlineAvailable?.length > 0) {
         modal.push("ematerialfilter", {
-          bookmarksToOrder: checkboxList,
           materialsToOrder,
           materialsOnlineAvailable,
-          sortType: sortByValue,
+          sortType: sortByValue, //TODO sort here instead of in efilter
           handleOrderFinished: handleOrderFinished,
         });
       } else {
-        openLoginModal({ modal });
+        modal.push("multiorder", {
+          bookmarksToOrder: materialsToOrder,
+          sortType: sortByValue, //TODO sort here instead of in multiorder
+          handleOrderFinished: handleOrderFinished,
+        });
       }
-    }, 300);
+    } else {
+      openLoginModal({ modal });
+    }
   };
 
   const onGetReferencesClick = () => {
@@ -174,19 +181,25 @@ const BookmarkPage = () => {
   };
 
   const onSelectAll = () => {
-    const hasUnselectedElements = checkboxList.length < allBookmarksData.length;
+    const hasUnselectedElements = checkboxList.length < allBookmarks.length;
     if (hasUnselectedElements)
       setCheckboxList(
-        allBookmarksData.map((el) => ({
-          key: el.key,
-          materialId: el.materialId,
-          workId: el.workId,
-          materialType: el.materialType,
-          bookmarkId: el.bookmarkId,
-          isAccessibleOnline: itemsRef?.current?.find(
-            (item) => item.bookmarkKey === el.key
-          )?.isAccessibleOnline,
-        }))
+        allBookmarks.map((bm) => {
+          const bookmarkData = populatedBookmarks.find(
+            (pbm) => pbm.key === bm.key
+          );
+          return {
+            ...bookmarkData, //if we material data, we add it here
+            key: bm.key,
+            materialId: bm.materialId,
+            workId: bm.workId,
+            materialType: bm.materialType,
+            bookmarkId: bm.bookmarkId,
+            isAccessibleOnline: itemsRef?.current?.find(
+              (item) => item.bookmarkKey === bm.key
+            )?.isAccessibleOnline,
+          };
+        })
       );
     else setCheckboxList([]);
   };
@@ -227,7 +240,7 @@ const BookmarkPage = () => {
   };
 
   const onDeleteSelected = () => {
-    const toDelete = allBookmarksData
+    const toDelete = allBookmarks
       .filter(
         (bm) => checkboxList.findIndex((item) => item.key === bm.key) > -1
       )
@@ -275,7 +288,7 @@ const BookmarkPage = () => {
     deleteBookmarks([{ bookmarkId: bookmark.bookmarkId, key: bookmark.key }]);
   };
 
-  const isAllSelected = checkboxList?.length === allBookmarksData?.length;
+  const isAllSelected = checkboxList?.length === allBookmarks?.length;
   const isNothingSelected = checkboxList.length === 0;
 
   if (bookmarsDataLoading || isPopulateLoading) {
@@ -391,7 +404,7 @@ const BookmarkPage = () => {
         >
           <Checkbox
             checked={isAllSelected}
-            disabled={bookmarks?.length === 0}
+            disabled={populatedBookmarks?.length === 0}
             id="bookmarkpage-select-all"
             ariaLabelledBy="bookmarkpage-select-all-label"
             ariaLabel={Translate({
@@ -449,7 +462,7 @@ const BookmarkPage = () => {
       )}
 
       <div className={styles.listContainer}>
-        {bookmarks?.map((bookmark, idx) => (
+        {populatedBookmarks?.map((bookmark, idx) => (
           <MaterialRow
             bookmarkRef={(el) => (itemsRef.current[idx] = el)}
             key={`bookmark-list-${idx}`}

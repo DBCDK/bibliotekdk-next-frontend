@@ -60,10 +60,10 @@ const createOrders = async ({
 
 const MultiOrder = ({ context }) => {
   const modal = useModal();
-  const { materials, closeModalOnBack, handleOrderFinished } = context;
+  const { handleOrderFinished, bookmarksToOrder } = context;
   const analyzeRef = useRef();
   const [materialCounts, setMaterialCounts] = useState({ isAnalyzed: false });
-  const [materialsToOrder, setMaterialsToOrder] = useState(materials);
+  const [materialsToOrder, setMaterialsToOrder] = useState(bookmarksToOrder); //TODO order!
   const { loanerInfo } = useLoanerInfo();
   const [isCreatingOrders, setIsCreatingOrders] = useState(false);
   const [duplicateBookmarkIds, setDuplicateBookmarkIds] = useState([]); //used to manage warning for duplicate orders without removing duplicate ids from browser storage
@@ -76,10 +76,10 @@ const MultiOrder = ({ context }) => {
       const { failedAtCreation, successfullyCreated } =
         orderMutation.data.submitMultipleOrders;
       const failedMaterials = failedAtCreation.map((key) =>
-        materials.find((mat) => mat.key === key)
+        materialsToOrder.find((mat) => mat.key === key)
       );
       const successMaterials = successfullyCreated.map((key) =>
-        materials.find((mat) => mat.key === key)
+        materialsToOrder.find((mat) => mat.key === key)
       );
       handleOrderFinished(successfullyCreated, failedAtCreation);
 
@@ -122,7 +122,7 @@ const MultiOrder = ({ context }) => {
             element.getAttribute("data-status") === StatusEnum.NOT_AVAILABLE
         )
         .map((element) =>
-          materials.find(
+          materialsToOrder.find(
             (mat) => mat.key === element.getAttribute("data-material-key")
           )
         );
@@ -133,18 +133,19 @@ const MultiOrder = ({ context }) => {
             element.getAttribute("data-status") === StatusEnum.NEEDS_EDITION
         )
         .map((element) =>
-          materials.find(
+          materialsToOrder.find(
             (mat) => mat.key === element.getAttribute("data-material-key")
           )
         );
 
+      //TODO what about duplicate orders
       const duplicateOrders = elements
         .filter(
           (element) =>
             element.getAttribute("data-status") === StatusEnum.HAS_BEEN_ORDERED
         )
         .map((element) =>
-          materials.find(
+          materialsToOrder.find(
             (mat) => mat.key === element.getAttribute("data-material-key")
           )
         );
@@ -157,7 +158,7 @@ const MultiOrder = ({ context }) => {
             element.getAttribute("data-status") === StatusEnum.DIGITAL
         )
         .map((element) =>
-          materials.find(
+          materialsToOrder.find(
             (mat) => mat.key === element.getAttribute("data-material-key")
           )
         );
@@ -173,7 +174,7 @@ const MultiOrder = ({ context }) => {
     }, 300);
     return () => clearTimeout(timer);
   }, [
-    materials,
+    materialsToOrder,
     pickupBranch,
     materialsToOrder,
     analyzeRef.current,
@@ -202,7 +203,6 @@ const MultiOrder = ({ context }) => {
         })}
         titleTag="h2"
         className={{ top: styles.top }}
-        onBack={() => (closeModalOnBack ? modal.setStack([]) : undefined)}
       />
       <Title type="text2" tag="h3" className={styles.subHeading}>
         <Translate
