@@ -182,11 +182,13 @@ export default function Wrap(props) {
     error: seriesError,
   } = useData(
     workId &&
-      workFragments.series({
+      workFragments.seriesLight({
         workId: workId,
         seriesLimit: 1,
       })
   );
+
+  //  = useData(workId && workFragments.seriesLight({ workId: workId }));
 
   const {
     data: universesData,
@@ -194,12 +196,13 @@ export default function Wrap(props) {
     error: universesError,
   } = useData(
     workId &&
-      universeFragments.universes({
+      universeFragments.universesLight({
         workId: workId,
         worksLimit: 1,
         seriesLimit: 1,
       })
   );
+  // } = useData(workId && universeFragments.universesLight({ workId: workId }));
 
   const manifestations = data?.work?.manifestations?.mostRelevant;
 

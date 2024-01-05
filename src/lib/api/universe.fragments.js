@@ -6,50 +6,51 @@ import {
   universeFragment,
   workSliderFragment,
 } from "@/lib/api/fragments.utils";
-import isEmpty from "lodash/isEmpty";
 
-export function getLimitOffset(limit, offset) {
-  const limitOffsetChecked = [limit, offset]
-    .filter(([key, value]) => key && typeof value === "number")
-    .map(([key, value]) => `${key}: ${value}`);
-
-  return !isEmpty(limitOffsetChecked)
-    ? "(" + limitOffsetChecked.join(", ") + ")"
-    : "";
-}
-
-/**
- *
- * @param workId
- * @param {number|null} seriesLimit
- * @param {number|null} seriesOffset
- * @param {number|null} worksLimit
- * @param {number|null} worksOffset
- * @returns {{variables: {workId}, apiUrl: string, slowThreshold: number, query: string}}
- */
-export function universes({
-  workId,
-  seriesLimit = null,
-  seriesOffset = null,
-  worksLimit = null,
-  worksOffset = null,
-}) {
-  const seriesLimitOffset = getLimitOffset(
-    ["limit", seriesLimit],
-    ["offset", seriesOffset]
-  );
-  const worksLimitOffset = getLimitOffset(
-    ["limit", worksLimit],
-    ["offset", worksOffset]
-  );
-
+export function universesLight({ workId, worksLimit, seriesLimit }) {
   return {
     apiUrl: ApiEnums.FBI_API,
-    query: `query Universes($workId: String!) {
+    query: `query Universes($workId: String!, $worksLimit: Int, $seriesLimit: Int) {
       work(id: $workId) {
         universes {
           ...universeFragment
-          works${worksLimitOffset} {
+          works(limit: $worksLimit) {
+            universes {
+              ...universeFragment
+            }
+          }
+          series(limit:$seriesLimit) {
+            ...seriesFragment
+            members {
+              work {
+                universes {
+                  ...universeFragment
+                }
+              }
+              numberInSeries
+              readThisFirst
+              readThisWhenever
+            }
+          }
+        }
+      }
+    }
+    ${seriesFragment}
+    ${universeFragment}
+  `,
+    variables: { workId, worksLimit, seriesLimit },
+    slowThreshold: 3000,
+  };
+}
+
+export function universes({ workId, worksLimit, seriesLimit }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `query Universes($workId: String!, $worksLimit: Int, $seriesLimit: Int) {
+      work(id: $workId) {
+        universes {
+          ...universeFragment
+          works(limit: $worksLimit) {
             ...workSliderFragment
             manifestations {
               mostRelevant {
@@ -63,7 +64,7 @@ export function universes({
               ...universeFragment
             }
           }
-          series${seriesLimitOffset} {
+          series(limit:$seriesLimit) {
             ...seriesFragment
             members {
               work {
@@ -94,7 +95,7 @@ export function universes({
     ${universeFragment}
     ${coverFragment}
   `,
-    variables: { workId },
+    variables: { workId, worksLimit, seriesLimit },
     slowThreshold: 3000,
   };
 }

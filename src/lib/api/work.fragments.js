@@ -15,7 +15,7 @@ import {
   workSliderFragment,
   manifestationTitleFragment,
 } from "@/lib/api/fragments.utils";
-import isEmpty from "lodash/isEmpty";
+
 import { getLimitOffset } from "@/lib/api/universe.fragments";
 
 export function tableOfContents({ workId }) {
@@ -183,6 +183,35 @@ export function reviews({ workId }) {
   };
 }
 
+export function seriesLight({ workId, seriesLimit = null }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 4000, // for debugging
+    query: `query Series($workId: String!, $seriesLimit: Int) {
+      work(id: $workId) {
+        series {
+          ...seriesFragment
+          members(limit:$seriesLimit) {
+            work {
+              universes {
+                ...universeFragment
+              }
+            }
+            numberInSeries
+            readThisFirst
+            readThisWhenever
+          }
+        }
+      }
+    }
+    ${seriesFragment}
+    ${universeFragment}
+  `,
+    variables: { workId, seriesLimit },
+    slowThreshold: 3000,
+  };
+}
+
 /**
  * Series for a work
  *
@@ -191,20 +220,15 @@ export function reviews({ workId }) {
  *
  * @returns {Object} a query object
  */
-export function series({ workId, seriesLimit = null, seriesOffset = null }) {
-  const seriesLimitOffset = getLimitOffset(
-    ["limit", seriesLimit],
-    ["offset", seriesOffset]
-  );
-
+export function series({ workId, seriesLimit = null }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 4000, // for debugging
-    query: `query Series($workId: String!) {
+    query: `query Series($workId: String!, $seriesLimit: Int ) {
       work(id: $workId) {
         series {
           ...seriesFragment
-          members${seriesLimitOffset} {
+          members(limit:$seriesLimit) {
             work {
               ...workSliderFragment
               manifestations {
@@ -232,7 +256,7 @@ export function series({ workId, seriesLimit = null, seriesOffset = null }) {
     ${universeFragment}
     ${coverFragment}
   `,
-    variables: { workId },
+    variables: { workId, seriesLimit },
     slowThreshold: 3000,
   };
 }
