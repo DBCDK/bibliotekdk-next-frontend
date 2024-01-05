@@ -213,7 +213,7 @@ const MultiOrder = ({ context }) => {
       </Title>
 
       <div className={styles.materialList} ref={analyzeRef}>
-        {materialsToOrder.map((material) => (
+        {materialsToOrder?.map((material) => (
           <Material
             key={material.key}
             material={material}

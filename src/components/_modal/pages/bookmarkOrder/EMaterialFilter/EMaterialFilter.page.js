@@ -12,6 +12,7 @@ import { useModal } from "@/components/_modal/Modal";
 import { getMaterialTypeForPresentation } from "@/lib/manifestationFactoryUtils";
 
 const CONTEXT = "bookmark-order";
+const SKELETON_ROW_AMOUNT = 3;
 
 /**
  * Step 1 in the multiorder checkout flow
@@ -26,20 +27,22 @@ const EMaterialFilter = ({ context, active }) => {
     materialsToOrder,
     materialsOnlineAvailable,
   } = context;
-  const { data: materialsToProceedData } =
-    usePopulateBookmarks(materialsToOrder);
-  const { data: materialsOnlineAvailableData } = usePopulateBookmarks(
-    materialsOnlineAvailable
-  );
+  const {
+    data: materialsToProceedData,
+    isLoading: isLoadingMaterialsToProceed,
+  } = usePopulateBookmarks(materialsToOrder);
+  const {
+    data: materialsOnlineAvailableData,
+    isLoading: isLoadingOnlineMaterials,
+  } = usePopulateBookmarks(materialsOnlineAvailable);
 
   const modal = useModal();
   const [materialsToFilter, setMaterialsToFilter] = useState();
   const [materialsToProceed, setMaterialsToProceed] = useState();
-  const isLoading = !materialsToFilter || !materialsToProceedData;
+  const isLoading =
+    !materialsToFilter || !materialsToProceedData || isLoadingOnlineMaterials;
 
-  //console.log("sTUF ", materialsToOrder, materialsOnlineAvailable);
-
-  //find materials that can be phisically ordered
+  //find materials that can be ordered physically
   useEffect(() => {
     if (!active) {
       // On close, reset states to force rerender
@@ -56,7 +59,7 @@ const EMaterialFilter = ({ context, active }) => {
     let filteredMaterialsSorted = [];
 
     if (sortType === "title") {
-      filteredMaterialsSorted = titleSort(materials); //pider instead of materials?
+      filteredMaterialsSorted = titleSort(materials);
     } else {
       filteredMaterialsSorted = createdAtSort(materials);
     }
@@ -133,20 +136,27 @@ const EMaterialFilter = ({ context, active }) => {
           vars={[materialsToFilter?.length]}
         />
       </Title>
-      <ul className={styles.filterList}>
-        {materialsToFilter?.map((mat) => (
-          <li className={styles.filterItem} key={mat.key}>
-            <Title tag="h4" type="text1">
-              {mat.titles?.main?.[0]}
-            </Title>
-            <Text type="text2">
-              {getMaterialTypeForPresentation(
-                mat?.manifestations?.[0].materialTypes
-              )}
-            </Text>
-          </li>
-        ))}
-      </ul>
+      {isLoading ? (
+        [...Array(SKELETON_ROW_AMOUNT).keys()].map((_, i) => (
+          <Text skeleton={true} key={"skeleton-row-" + i} />
+        ))
+      ) : (
+        <ul className={styles.filterList}>
+          {materialsToFilter?.map((mat) => (
+            <li className={styles.filterItem} key={mat.key}>
+              <Title tag="h4" type="text1">
+                {mat.titles?.main?.[0]}
+              </Title>
+              <Text type="text2">
+                {getMaterialTypeForPresentation(
+                  mat?.manifestations?.[0].materialTypes
+                )}
+              </Text>
+            </li>
+          ))}
+        </ul>
+      )}
+
       <Text
         skeleton={isLoading}
         className={styles.nextPageDescription}
