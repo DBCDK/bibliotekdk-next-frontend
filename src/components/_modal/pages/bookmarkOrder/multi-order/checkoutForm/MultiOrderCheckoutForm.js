@@ -140,6 +140,8 @@ const CheckoutForm = ({
             setMail
           );
         }}
+        setMail={setMail}
+        email={mail}
       />
 
       <div>

@@ -8,7 +8,7 @@ import Email from "@/components/base/forms/email";
 import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
 import { getStylingAndErrorMessage } from "@/components/_modal/pages/order/utils/order.utils";
-import { useEffect } from "react";
+import { validateEmail } from "@/utils/validateEmail";
 
 export function OrdererInformation({
   isLoadingBranches,
@@ -55,7 +55,7 @@ export function OrdererInformation({
           })}
           invalidClass={invalidClass}
           disabled={isLoading || hasAuthMail}
-          value={email || ""}
+          value={email?.value || ""}
           id="order-user-email"
           onChange={onMailChange}
           readOnly={isLoading || hasAuthMail}
@@ -117,6 +117,8 @@ export default function Wrap({
   validated,
   hasValidationErrors,
   onMailChange,
+  setMail,
+  email,
 }) {
   const { workId, pid, periodicaForm, pids } = context;
 
@@ -166,21 +168,34 @@ export default function Wrap({
   const isLoading = isWorkLoading || isPickupBranchLoading;
 
   // Email according to agency borrowerCheck (authUser.mail is from cicero and can not be changed)
-  let email = hasBorchk ? authUser?.mail || userMail : userMail;
+  let initialmail = hasBorchk ? authUser?.mail || userMail : userMail;
+
+  if (!email && initialmail) {
+    const status = validateEmail(initialmail);
+    setMail &&
+      setMail({
+        value: initialmail,
+        valid: {
+          status: status,
+          message: status
+            ? null
+            : {
+                context: "form",
+                label: "wrong-email-field",
+              },
+        },
+      });
+  }
 
   const showMailMessage =
     isLoadingBranches || (authUser?.mail && lockedMessage && hasBorchk);
-
-  useEffect(() => {
-    onMailChange({ target: { value: email } });
-  }, [email]);
 
   return (
     <OrdererInformation
       isLoadingBranches={isLoadingBranches}
       name={actualUserName}
       hasAuthMail={!!authUser?.mail}
-      email={email}
+      email={email || initialmail}
       lockedMessage={lockedMessage}
       pickupBranch={pickupBranch}
       invalidClass={invalidClass}

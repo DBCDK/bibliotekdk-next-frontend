@@ -11,8 +11,9 @@ import isArray from "lodash/isArray";
 /** @type {Array.<string>} */
 let manifestationWorkType = [];
 
+// We can not use the workType when it is not there, but this will do
 /** @type {Array.<{display: SpecificDisplay, code: SpecificCode}>} */
-let materialTypesOrderFromEnum = [];
+let materialTypesOrderFromEnum = getOrderedFlatMaterialTypes();
 
 let errorCount = 0;
 

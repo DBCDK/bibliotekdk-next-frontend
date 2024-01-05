@@ -14,16 +14,17 @@ import Link from "@/components/base/link";
 import { useState } from "react";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import {
-  flattenMaterialType,
   formatMaterialTypesToPresentation,
+  manifestationMaterialTypeFactory,
 } from "@/lib/manifestationFactoryUtils";
 
 const SKELETON_ROW_AMOUNT = 2;
 
 export const dataReducer = (dataType, data) => {
-  const flatMaterialTypes = flattenMaterialType({
-    materialTypes: data?.manifestation?.materialTypes,
-  });
+  const { flatMaterialTypes: flatMaterialTypesArray } =
+    manifestationMaterialTypeFactory([data?.manifestation]);
+
+  const flatMaterialTypes = flatMaterialTypesArray?.[0];
 
   const materialTypesPresentation =
     formatMaterialTypesToPresentation(flatMaterialTypes);
