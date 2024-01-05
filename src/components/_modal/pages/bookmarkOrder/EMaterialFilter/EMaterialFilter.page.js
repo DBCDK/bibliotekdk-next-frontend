@@ -54,7 +54,6 @@ const EMaterialFilter = ({ context, active }) => {
     const sortedList =
       sortType === "title" ? titleSort(materials) : createdAtSort(materials);
 
-    console.log("sortType", sortType, materials[0]);
     setSortedMaterials(sortedList);
   }, [active, populatedBookmarks, sortType]);
 
