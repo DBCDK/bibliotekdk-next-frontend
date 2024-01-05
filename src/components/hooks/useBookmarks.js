@@ -265,19 +265,10 @@ const useBookmarksCore = ({ isMock = false, session }) => {
     return sortBookmarks(localBookmarks);
   }, [localBookmarks, sortBy]);
 
-  console.log("sortedLocalBookmarks", sortedLocalBookmarks);
   // sort global bookmarks
   const sortedGlobalBookmarks = useMemo(() => {
     return sortBookmarks(globalBookmarks);
   }, [globalBookmarks, sortBy]);
-  console.log("sortBy", sortBy);
-
-  console.log(
-    "globalBookmarks",
-    globalBookmarks?.map((i) => i.title)
-  );
-
-  console.log("sortedGlobalBookmarks", sortedGlobalBookmarks);
 
   return {
     setBookmark,
