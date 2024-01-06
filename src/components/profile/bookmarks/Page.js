@@ -73,7 +73,6 @@ const containsIds = (ids, key) => {
 const seperateOnlineAndPhysical = ({ refs, checkboxList }) => {
   const materialsOnlineAvailable = [];
   const bookmarksToOrder = [];
-  console.log("refs", refs);
   refs.forEach((item) => {
     if (item.isAccessibleOnline) {
       const match = checkboxList.find((bm) => bm.key === item.bookmarkKey);
@@ -87,7 +86,7 @@ const seperateOnlineAndPhysical = ({ refs, checkboxList }) => {
 };
 
 // eslint-disable-next-line react/display-name
-const MarkedItemsRef = forwardRef(({ bookmark, bookmarkKey }, ref) => {
+const AnalyseItemAvailability = forwardRef(({ bookmark, bookmarkKey }, ref) => {
   const { pid, workId, materialId, manifestations } = bookmark;
   const isAccessibleOnline = useAnalyzeMaterial({
     manifestations,
@@ -155,7 +154,7 @@ const BookmarkPage = () => {
     setSortByValue(savedValue || sortByItems[0].key);
   }, []);
 
-  //TODO remove dead reference when we toggle checkboxes or select all
+  //remove dead reference when we toggle checkboxes or select all
   useEffect(() => {
     itemsRef.current = itemsRef.current.slice(0, checkboxList.length);
   }, [checkboxList]);
@@ -378,11 +377,11 @@ const BookmarkPage = () => {
     >
       <div ref={scrollToElement} />
       {/*
-        invisible bookmark ref to get the online availability status of the marked bookmark
+        Mounts bookmark ref to get the online availability status of the marked bookmark
         */}
       <>
         {checkboxList.map((item, idx) => (
-          <MarkedItemsRef
+          <AnalyseItemAvailability
             key={`checkedItem-ref-${idx}`}
             bookmark={item}
             bookmarkKey={item?.key}
