@@ -22,8 +22,7 @@ export const useAnalyzeMaterial = (material) => {
 
   const hasDigitalAccess = loanerInfo?.rights?.digitalArticleService;
 
-  const { workId, pid } = material;
-  const selectedManifestations = material?.manifestations;
+  const { workId, pid, manifestations: selectedManifestations } = material;
 
   const materialTypes = flattenMaterialType(selectedManifestations?.[0]);
   const flattenedDisplayTypes = toFlatMaterialTypes(
@@ -46,8 +45,10 @@ export const useAnalyzeMaterial = (material) => {
     [selectedManifestations]
   );
 
-  const { manifestations, isLoading: isLoading } =
-    useGetManifestationsForOrderButton(workId, selectedPids);
+  const { manifestations } = useGetManifestationsForOrderButton(
+    workId,
+    selectedPids
+  );
 
   const { getAllAllowedEnrichedAccessSorted } = useMemo(
     () => accessFactory(manifestations),

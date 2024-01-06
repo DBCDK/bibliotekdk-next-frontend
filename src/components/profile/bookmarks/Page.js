@@ -6,7 +6,13 @@ import Text from "@/components/base/text";
 import Button from "@/components/base/button";
 import MaterialRow from "../materialRow/MaterialRow";
 import IconButton from "@/components/base/iconButton";
-import { useEffect, useRef, useState } from "react";
+import {
+  useEffect,
+  useRef,
+  forwardRef,
+  useState,
+  useImperativeHandle,
+} from "react";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
 import ProfileLayout from "../profileLayout/ProfileLayout";
 import Translate from "@/components/base/translate";
@@ -21,6 +27,7 @@ import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import { getMaterialTypeForPresentation } from "@/lib/manifestationFactoryUtils";
 import { getSessionStorageItem, setSessionStorageItem } from "@/lib/utils";
+import { useAnalyzeMaterial } from "@/components/hooks/useAnalyzeMaterial";
 
 const CONTEXT = "bookmark";
 const ORDER_TRESHHOLD = 25;
@@ -62,6 +69,44 @@ const containsIds = (ids, key) => {
   });
   return x > -1;
 };
+
+const seperateOnlineAndPhysical = ({ refs, checkboxList }) => {
+  const materialsOnlineAvailable = [];
+  const bookmarksToOrder = [];
+  console.log("refs", refs);
+  refs.forEach((item) => {
+    if (item.isAccessibleOnline) {
+      const match = checkboxList.find((bm) => bm.key === item.bookmarkKey);
+      match ? materialsOnlineAvailable.push(match) : "";
+    } else {
+      const match = checkboxList.find((bm) => bm.key === item.bookmarkKey);
+      match ? bookmarksToOrder.push(match) : "";
+    }
+  });
+  return { materialsOnlineAvailable, bookmarksToOrder };
+};
+
+// eslint-disable-next-line react/display-name
+const MarkedItemsRef = forwardRef(({ bookmark, bookmarkKey }, ref) => {
+  const { pid, workId, materialId, manifestations } = bookmark;
+  const isAccessibleOnline = useAnalyzeMaterial({
+    manifestations,
+    pid,
+    workId,
+    key: materialId,
+  });
+
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        isAccessibleOnline,
+        bookmarkKey,
+      };
+    },
+    [isAccessibleOnline]
+  );
+});
 
 const BookmarkPage = () => {
   const itemsRef = useRef([]);
@@ -110,9 +155,10 @@ const BookmarkPage = () => {
     setSortByValue(savedValue || sortByItems[0].key);
   }, []);
 
+  //TODO remove dead reference when we toggle checkboxes or select all
   useEffect(() => {
-    itemsRef.current = itemsRef.current.slice(0, populatedBookmarks.length);
-  }, [populatedBookmarks]);
+    itemsRef.current = itemsRef.current.slice(0, checkboxList.length);
+  }, [checkboxList]);
 
   const onToggleCheckbox = (key) => {
     const index = checkboxList.findIndex((item) => item.key === key);
@@ -132,9 +178,6 @@ const BookmarkPage = () => {
         workId: bookmarkData.workId,
         materialType: bookmarkData.materialType,
         bookmarkId: bookmarkData.bookmarkId,
-        isAccessibleOnline: itemsRef?.current?.find(
-          (item) => item.bookmarkKey === bookmarkData.key
-        )?.isAccessibleOnline,
       });
     }
 
@@ -142,24 +185,24 @@ const BookmarkPage = () => {
   };
 
   const onOrderManyClick = () => {
-    const bookmarksToOrder = checkboxList.filter(
-      (item) => !item.isAccessibleOnline
-    );
-    const materialsOnlineAvailable = checkboxList.filter(
-      (item) => item.isAccessibleOnline
-    );
+    const { materialsOnlineAvailable, bookmarksToOrder } =
+      seperateOnlineAndPhysical({
+        refs: itemsRef.current,
+        checkboxList,
+      });
+
     if (isAuthenticated) {
       if (materialsOnlineAvailable?.length > 0) {
         modal.push("ematerialfilter", {
           bookmarksToOrder,
           materialsOnlineAvailable,
-          sortType: sortByValue, //TODO sort here instead of in efilter
+          sortType: sortByValue,
           handleOrderFinished: handleOrderFinished,
         });
       } else {
         modal.push("multiorder", {
           bookmarksToOrder: bookmarksToOrder,
-          sortType: sortByValue, //TODO sort here instead of in multiorder
+          sortType: sortByValue,
           handleOrderFinished: handleOrderFinished,
         });
       }
@@ -188,19 +231,18 @@ const BookmarkPage = () => {
             (pbm) => pbm.key === bm.key
           );
           return {
-            ...bookmarkData, //if we material data, we add it here
+            ...bookmarkData,
             key: bm.key,
             materialId: bm.materialId,
             workId: bm.workId,
             materialType: bm.materialType,
             bookmarkId: bm.bookmarkId,
-            isAccessibleOnline: itemsRef?.current?.find(
-              (item) => item.bookmarkKey === bm.key
-            )?.isAccessibleOnline,
           };
         })
       );
-    else setCheckboxList([]);
+    else {
+      setCheckboxList([]);
+    }
   };
 
   const onDropdownClick = (idx) => {
@@ -335,6 +377,19 @@ const BookmarkPage = () => {
       })}
     >
       <div ref={scrollToElement} />
+      {/*
+        invisible bookmark ref to get the online availability status of the marked bookmark
+        */}
+      <>
+        {checkboxList.map((item, idx) => (
+          <MarkedItemsRef
+            key={`checkedItem-ref-${idx}`}
+            bookmark={item}
+            bookmarkKey={item?.key}
+            ref={(el) => (itemsRef.current[idx] = el)}
+          />
+        ))}
+      </>
 
       {activeStickyButton ? (
         <IconButton
@@ -461,9 +516,8 @@ const BookmarkPage = () => {
       <div className={styles.listContainer}>
         {populatedBookmarks?.map((bookmark, idx) => (
           <MaterialRow
-            bookmarkRef={(el) => (itemsRef.current[idx] = el)}
             key={`bookmark-list-${idx}`}
-            bookmarkKey={bookmark?.key} //TODO can be undefined?
+            bookmarkKey={bookmark?.key}
             hasCheckbox={!isMobile || activeStickyButton !== null}
             title={bookmark?.manifestations?.[0]?.titles?.full?.[0] || ""}
             titles={bookmark?.manifestations?.[0]?.titles}
