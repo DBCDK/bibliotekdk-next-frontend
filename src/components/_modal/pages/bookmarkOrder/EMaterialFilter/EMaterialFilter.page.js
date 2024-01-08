@@ -23,20 +23,20 @@ const EMaterialFilter = ({ context, active }) => {
     sortType,
     handleOrderFinished,
     bookmarksToOrder,
-    materialsOnlineAvailable,
+    bookmarksOnlineAvailable,
   } = context;
 
   const modal = useModal();
   const { createdAtSort, titleSort } = useBookmarks();
   const { data: populatedBookmarks, isLoading: isPopulating } =
-    usePopulateBookmarks(materialsOnlineAvailable);
+    usePopulateBookmarks(bookmarksOnlineAvailable);
   const [isLoading, setIsLoading] = useState(
-    !materialsOnlineAvailable || isPopulating
+    !bookmarksOnlineAvailable || isPopulating
   );
   const [sortedMaterials, setSortedMaterials] = useState([]);
 
   useEffect(() => {
-    setIsLoading(!materialsOnlineAvailable || isPopulating);
+    setIsLoading(!bookmarksOnlineAvailable || isPopulating);
   }, [isPopulating]);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const EMaterialFilter = ({ context, active }) => {
     if (isPopulating) return;
 
     const materials = mergeBookmarksWithPopulatedData(
-      materialsOnlineAvailable,
+      bookmarksOnlineAvailable,
       populatedBookmarks
     );
 
@@ -90,11 +90,11 @@ const EMaterialFilter = ({ context, active }) => {
         <Translate
           context={CONTEXT}
           label={
-            materialsOnlineAvailable?.length === 1
+            bookmarksOnlineAvailable?.length === 1
               ? "efilter-subheading-singular"
               : "efilter-subheading"
           }
-          vars={[materialsOnlineAvailable?.length]}
+          vars={[bookmarksOnlineAvailable?.length]}
         />
       </Title>
       {isLoading ? (

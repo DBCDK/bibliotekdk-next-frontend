@@ -69,7 +69,6 @@ const MultiOrder = ({ context }) => {
   const { sortType, handleOrderFinished, bookmarksToOrder } = context;
   const analyzeRef = useRef();
   const [materialCounts, setMaterialCounts] = useState({ isAnalyzed: false });
-  //const [materialsToOrder, setMaterialsToOrder] = useState(bookmarksToOrder); //TODO order!
   const { loanerInfo } = useLoanerInfo();
   const [isCreatingOrders, setIsCreatingOrders] = useState(false);
   const [duplicateBookmarkIds, setDuplicateBookmarkIds] = useState([]); //used to manage warning for duplicate orders without removing duplicate ids from browser storage
@@ -162,7 +161,6 @@ const MultiOrder = ({ context }) => {
           )
         );
 
-      //TODO what about duplicate orders
       const duplicateOrders = elements
         .filter(
           (element) =>

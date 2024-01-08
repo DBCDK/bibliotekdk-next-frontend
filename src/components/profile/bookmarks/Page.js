@@ -70,18 +70,24 @@ const containsIds = (ids, key) => {
   return x > -1;
 };
 
-const seperateOnlineAndPhysical = ({ refs, checkboxList }) => {
-  const materialsOnlineAvailable = [];
+/**
+ * Seperates the list of checked bookmarks into two lists, one for online available materials and one for materials that are not
+ * @param {Array<Object>} refs: list of checked bookmarks that were mounted to be able to run the online availability check hook
+ * @param {Array<Object>} checkboxList: list of checked bookmarks
+ * @returns {Object} Object that contains list of materials that are online available and list of materials that are not and therefor can be ordered
+ */
+const seperateOnlineAndPhysicalBookmarks = ({ refs, checkboxList }) => {
+  const bookmarksOnlineAvailable = [];
   const bookmarksToOrder = [];
   refs.forEach((item) => {
     const match = checkboxList.find((bm) => bm.key === item.bookmarkKey);
     match &&
       (item?.isAccessibleOnline
-        ? materialsOnlineAvailable
+        ? bookmarksOnlineAvailable
         : bookmarksToOrder
       ).push(match);
   });
-  return { materialsOnlineAvailable, bookmarksToOrder };
+  return { bookmarksOnlineAvailable, bookmarksToOrder };
 };
 
 // eslint-disable-next-line react/display-name
@@ -183,17 +189,17 @@ const BookmarkPage = () => {
   };
 
   const onOrderManyClick = () => {
-    const { materialsOnlineAvailable, bookmarksToOrder } =
-      seperateOnlineAndPhysical({
+    const { bookmarksOnlineAvailable, bookmarksToOrder } =
+      seperateOnlineAndPhysicalBookmarks({
         refs: itemsRef.current,
         checkboxList,
       });
 
     if (isAuthenticated) {
-      if (materialsOnlineAvailable?.length > 0) {
+      if (bookmarksOnlineAvailable?.length > 0) {
         modal.push("ematerialfilter", {
           bookmarksToOrder,
-          materialsOnlineAvailable,
+          bookmarksOnlineAvailable,
           sortType: sortByValue,
           handleOrderFinished: handleOrderFinished,
         });
