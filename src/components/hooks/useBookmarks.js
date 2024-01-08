@@ -309,6 +309,7 @@ export const isMaterialTypesMatch = (
 
 /**
  * Find the work index where one pid in mostRelevant matches the given materialId
+ * OBS: we cannot simply look for matching workIds, since workIds might be changing
  * @returns {number} index of work
  */
 export function findRelevantWorkIdx(
