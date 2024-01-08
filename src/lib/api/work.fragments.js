@@ -16,8 +16,6 @@ import {
   manifestationTitleFragment,
 } from "@/lib/api/fragments.utils";
 
-import { getLimitOffset } from "@/lib/api/universe.fragments";
-
 export function tableOfContents({ workId }) {
   return {
     apiUrl: ApiEnums.FBI_API,
