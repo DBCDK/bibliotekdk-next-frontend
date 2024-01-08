@@ -2,10 +2,6 @@ describe("Dropdown", () => {
   it(`Bookmark is shown`, () => {
     cy.visit("/iframe.html?id=work-overview-bookmark--bookmark-with-dropdown");
 
-    cy.window().then((win) => {
-      win.localStorage.setItem("bookmarks", "[]");
-    });
-
     // test toggle
     cy.get('[data-cy="bookmark-material-selector-dropdown"]').should(
       "not.be.exist"

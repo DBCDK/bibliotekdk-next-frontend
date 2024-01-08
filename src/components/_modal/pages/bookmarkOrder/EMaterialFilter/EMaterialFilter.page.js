@@ -20,6 +20,8 @@ const CONTEXT = "bookmark-order";
  * Skips this step if nothing to filter
  */
 const EMaterialFilter = ({ context, active }) => {
+  console.log(context);
+
   const { bookmarks: allBookmarks, createdAtSort, titleSort } = useBookmarks();
   const { bookmarksToOrder, sortType, handleOrderFinished } = context;
   const { data: materialsData } = usePopulateBookmarks(bookmarksToOrder);
@@ -29,6 +31,9 @@ const EMaterialFilter = ({ context, active }) => {
   const [materialsToFilter, setMaterialsToFilter] = useState();
   const [materialsToProceed, setMaterialsToProceed] = useState();
   const isLoading = !materialsToFilter || !materialsToProceed;
+
+  console.log("ISLOADING ????????", materialsToFilter, materialsToProceed);
+  console.log(active, "ACTIVE ?????");
 
   useEffect(() => {
     const materials = materialsData.map((mat) => {
@@ -40,6 +45,8 @@ const EMaterialFilter = ({ context, active }) => {
     });
     setMaterials(materials);
   }, [materialsData]);
+
+  // console.log(materials, "FILTERED MATERIRAL");
 
   useEffect(() => {
     if (!active) {
@@ -56,6 +63,10 @@ const EMaterialFilter = ({ context, active }) => {
     const timer = setTimeout(() => {
       // Ensure that EMaterialAnalyzers are done rendering
       const elements = Array.from(analyzeRef.current.children);
+      //
+      // console.log("ELEMENTS", elements);
+      // console.log(materials, "MATERIALS");
+
       const filteredMaterials = elements
         .filter(
           (element) =>
@@ -87,10 +98,14 @@ const EMaterialFilter = ({ context, active }) => {
         toProceedSorted = createdAtSort(toProceed);
       }
 
+      console.log("FILTERED AND SORTED", sortType, filteredMaterialsSorted);
+
       setMaterialsToFilter(filteredMaterialsSorted);
       setMaterialsToProceed(toProceedSorted);
 
       if (filteredMaterials.length === 0) {
+        console.log("MULTIORDER MODAL");
+
         // Nothing to filter - Redirect directly
         modal.push("multiorder", {
           materials: toProceedSorted,
@@ -114,6 +129,10 @@ const EMaterialFilter = ({ context, active }) => {
     modal.clear();
   };
 
+  console.log("PROCEED", materialsToProceed);
+
+  console.log("MATERIALS", materials);
+  console.log(isLoading, "ISLOADING");
   return (
     <div className={styles.eMaterialFilter}>
       <div ref={analyzeRef} className="visually-hidden">
@@ -160,7 +179,7 @@ const EMaterialFilter = ({ context, active }) => {
             </Title>
             <Text type="text2">
               {getMaterialTypeForPresentation(
-                mat?.manifestations?.[0].materialTypes
+                mat?.manifestations?.[0]?.materialTypes
               )}
             </Text>
           </li>

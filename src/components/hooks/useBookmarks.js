@@ -323,6 +323,8 @@ export const usePopulateBookmarks = (bookmarks) => {
       })
   );
 
+  console.log("DATA FROM USEPOPULATE", workByIdsData);
+
   const workByIdsDataRemovedDuplicates = workByIdsData?.works?.filter(
     (value, idx) => workByIdsData?.works?.indexOf(value) === idx
   );
