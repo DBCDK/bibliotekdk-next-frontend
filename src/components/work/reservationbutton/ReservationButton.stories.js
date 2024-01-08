@@ -407,8 +407,8 @@ const user = {
     agency: {},
     userParameters: {},
   },
-  updateLoanerInfo: () => console.log("updateLoanerInfo"),
-  updateUserStatusInfo: () => console.log("updateUserStatusInfo"),
+  updateLoanerInfo: () => alert("updateLoanerInfo"),
+  updateUserStatusInfo: () => alert("updateUserStatusInfo"),
 };
 
 export function ReservationButtonNotLoggedInFlow() {
@@ -436,13 +436,7 @@ export function ReservationButtonNotLoggedInFlow() {
 
 ReservationButtonNotLoggedInFlow.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
-    graphql: {
-      resolvers: {
-        SessionUserParameters: {
-          userId: () => undefined,
-        },
-      },
-    },
+    session: {}, // makes isAuthenticated: false
     nextRouter: {
       showInfo: true,
       query: {},

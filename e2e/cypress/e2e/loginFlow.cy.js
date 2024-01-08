@@ -1,7 +1,7 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 const fbiApiPath = Cypress.env("fbiApiPath");
 
-describe.skip(`Different ways to open login modal with library that has borrowerCheck `, () => {
+describe(`Different ways to open login modal with library that has borrowerCheck `, () => {
   //TODO fix with https://dbcjira.atlassian.net/browse/BIBDK2021-2027
   it("Plain login from login button in header", () => {
     cy.visit(nextjsBaseUrl);
@@ -38,12 +38,10 @@ describe.skip(`Different ways to open login modal with library that has borrower
     cy.get("[data-cy=pickup-search-input]").should("be.visible").type("Val");
     cy.contains("Valby Bibliotek").should("be.visible").click();
   });
-
-  //TODO bestil should open login modal directly --> test in reservation button
-  // come back to order modal from adgangsplatform
+  //bestil should open login modal directly --> test in reservation button
 });
 
-describe.skip(`Different ways to open login modal with a (FFU) library that does NOT have borrowerCheck`, () => {
+describe(`Different ways to open login modal with a (FFU) library that does NOT have borrowerCheck`, () => {
   it("Plain login from login button in header not supported & back button leads back to pick up branch search", () => {
     cy.visit(nextjsBaseUrl);
     cy.consentAllowAll();
@@ -54,9 +52,9 @@ describe.skip(`Different ways to open login modal with a (FFU) library that does
     cy.get('[data-cy="text-CBS Bibliotek - Solbjerg Plads"]')
       .should("be.visible")
       .click();
-    cy.get("[data-cy=text-log-ind-via-cbs-bibliotek-understøttes-ikke]").should(
-      "be.visible"
-    );
+    cy.get(
+      '[data-cy="text-cbs-bibliotek-login-kan-ikke-bruges-på-bibliotek.dk"]'
+    ).should("be.visible");
     cy.get("[data-cy=button-tilbage]").should("be.visible").click();
     cy.get("[data-cy=pickup-search-input]").should("be.visible");
   });
@@ -71,9 +69,9 @@ describe.skip(`Different ways to open login modal with a (FFU) library that does
     cy.get('[data-cy="text-CBS Bibliotek - Solbjerg Plads"]')
       .should("be.visible")
       .click();
-    cy.get("[data-cy=text-log-ind-via-cbs-bibliotek-understøttes-ikke]").should(
-      "be.visible"
-    );
+    cy.get(
+      '[data-cy="text-cbs-bibliotek-login-kan-ikke-bruges-på-bibliotek.dk"]'
+    ).should("be.visible");
     cy.get("[data-cy=button-tilbage]").should("be.visible").click();
     cy.get("[data-cy=pickup-search-input]").should("be.visible");
   });
@@ -100,9 +98,9 @@ describe.skip(`Different ways to open login modal with a (FFU) library that does
     cy.get('[data-cy="text-CBS Bibliotek - Solbjerg Plads"]')
       .should("be.visible")
       .click();
-    cy.get("[data-cy=text-log-ind-via-cbs-bibliotek-understøttes-ikke]").should(
-      "be.visible"
-    );
+    cy.get(
+      '[data-cy="text-cbs-bibliotek-login-kan-ikke-bruges-på-bibliotek.dk"]'
+    ).should("be.visible");
     cy.get("[data-cy=button-tilbage]").should("be.visible").click();
     cy.get("[data-cy=pickup-search-input]").should("be.visible");
   });

@@ -114,7 +114,7 @@ describe("Reservation button", () => {
     }).should("be.disabled");
   });
 
-  it("onclick should open order-modal, if user logged ind", () => {
+  it("onclick should open order-modal, when user is logged ind", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-login-flow"
     );
@@ -124,7 +124,6 @@ describe("Reservation button", () => {
     //add order modal to the store
     cy.window().then((win) => {
       const addedItem = win.localStorage.getItem("modal-v2");
-      console.log("addedItem", addedItem);
       const modal = JSON.parse(addedItem);
       const uid = modal[0].id;
       expect(uid).to.be.equal("order");
@@ -133,19 +132,19 @@ describe("Reservation button", () => {
     cy.get("[data-cy=router-query]").contains("modal");
   });
 
-  it("onclick should open login-modal and add order modal to store, if user NOT logged ind", () => {
+  it("onclick should open login-modal and add order modal to store, when user is NOT logged ind", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-not-logged-in-flow"
     );
     cy.get("[data-cy=button-order-overview-enabled]", { timeout: 15000 })
       .should("exist", { timeout: 15000 })
       .click();
-    //dont add order modal to the store
+    //dont add order modal to the modal-v2-store to come back to order modal after login
     cy.window().then((win) => {
       const addedItem = win.localStorage.getItem("modal-v2-store");
-      //TODO when less flaky, check if "modal-v2-store" contains "Order" - worth looking at after KFU has removed GMOCKER
-
-      expect(addedItem).to.be.equal(null);
+      const modal = JSON.parse(addedItem);
+      const uid = modal[0].id;
+      expect(uid).to.be.equal("order");
     });
     //open some modal directly - we cannot check if it actually is the order modal that is opened
     cy.get("[data-cy=router-query]").contains("modal");
