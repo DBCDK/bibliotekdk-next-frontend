@@ -74,7 +74,9 @@ Series.propTypes = {
  * @param {string} props.workId The work id
  */
 export default function Container({ workId }) {
-  const { data, isLoading } = useData(workFragments.series({ workId }));
+  const { data, isLoading } = useData(
+    workFragments.series({ workId, seriesLimit: 20 })
+  );
 
   const allSeries = data?.work?.series;
 

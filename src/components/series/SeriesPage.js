@@ -18,7 +18,9 @@ export default function SeriesPage() {
     data: seriesData,
     isLoading: seriesIsLoading,
     error: seriesError,
-  } = useData(workId && workFragments.series({ workId: workId }));
+  } = useData(
+    workId && workFragments.series({ workId: workId, seriesLimit: 200 })
+  );
 
   const series = seriesData?.work?.series;
   const specificSeries = series?.find(

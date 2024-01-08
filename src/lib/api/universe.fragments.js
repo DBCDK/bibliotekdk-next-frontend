@@ -7,14 +7,50 @@ import {
   workSliderFragment,
 } from "@/lib/api/fragments.utils";
 
-export function universes({ workId }) {
+export function universesLight({ workId, worksLimit, seriesLimit }) {
   return {
     apiUrl: ApiEnums.FBI_API,
-    query: `query Universes($workId: String!) {
+    query: `query Universes($workId: String!, $worksLimit: Int, $seriesLimit: Int) {
       work(id: $workId) {
         universes {
           ...universeFragment
-          works {
+          works(limit: $worksLimit) {
+            universes {
+              ...universeFragment
+            }
+          }
+          series(limit:$seriesLimit) {
+            ...seriesFragment
+            members {
+              work {
+                universes {
+                  ...universeFragment
+                }
+              }
+              numberInSeries
+              readThisFirst
+              readThisWhenever
+            }
+          }
+        }
+      }
+    }
+    ${seriesFragment}
+    ${universeFragment}
+  `,
+    variables: { workId, worksLimit, seriesLimit },
+    slowThreshold: 3000,
+  };
+}
+
+export function universes({ workId, worksLimit, seriesLimit }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `query Universes($workId: String!, $worksLimit: Int, $seriesLimit: Int) {
+      work(id: $workId) {
+        universes {
+          ...universeFragment
+          works(limit: $worksLimit) {
             ...workSliderFragment
             manifestations {
               mostRelevant {
@@ -28,7 +64,7 @@ export function universes({ workId }) {
               ...universeFragment
             }
           }
-          series {
+          series(limit:$seriesLimit) {
             ...seriesFragment
             members {
               work {
@@ -59,7 +95,7 @@ export function universes({ workId }) {
     ${universeFragment}
     ${coverFragment}
   `,
-    variables: { workId },
+    variables: { workId, worksLimit, seriesLimit },
     slowThreshold: 3000,
   };
 }
