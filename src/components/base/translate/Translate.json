@@ -3211,6 +3211,10 @@
         "da": "Vælg om det skal bestilles igen.",
         "en": "Choose if you want to order again."
       },
+      "choose-order-again-plural": {
+        "da": "Vælg om de skal bestilles igen.",
+        "en": "Choose if you want to order again."
+      },
       "get-overview": {
         "da": "Få et overblik over dine bestillinger under",
         "en": "Get an overview of your orders under"

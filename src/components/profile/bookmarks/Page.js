@@ -6,7 +6,13 @@ import Text from "@/components/base/text";
 import Button from "@/components/base/button";
 import MaterialRow from "../materialRow/MaterialRow";
 import IconButton from "@/components/base/iconButton";
-import { useEffect, useRef, useState } from "react";
+import {
+  useEffect,
+  useRef,
+  forwardRef,
+  useState,
+  useImperativeHandle,
+} from "react";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
 import ProfileLayout from "../profileLayout/ProfileLayout";
 import Translate from "@/components/base/translate";
@@ -21,6 +27,7 @@ import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import { getMaterialTypeForPresentation } from "@/lib/manifestationFactoryUtils";
 import { getSessionStorageItem, setSessionStorageItem } from "@/lib/utils";
+import { useAnalyzeMaterial } from "@/components/hooks/useAnalyzeMaterial";
 
 const CONTEXT = "bookmark";
 const ORDER_TRESHHOLD = 25;
@@ -63,9 +70,54 @@ const containsIds = (ids, key) => {
   return x > -1;
 };
 
+/**
+ * Seperates the list of checked bookmarks into two lists, one for online available materials and one for materials that are not
+ * @param {Array<Object>} refs: list of checked bookmarks that were mounted to be able to run the online availability check hook
+ * @param {Array<Object>} checkboxList: list of checked bookmarks
+ * @returns {Object} Object that contains list of materials that are online available and list of materials that are not and therefor can be ordered
+ */
+const seperateOnlineAndPhysicalBookmarks = ({ refs, checkboxList }) => {
+  const bookmarksOnlineAvailable = [];
+  const bookmarksToOrder = [];
+  refs.forEach((item) => {
+    const match = checkboxList.find((bm) => bm.key === item.bookmarkKey);
+    match &&
+      (item?.isAccessibleOnline
+        ? bookmarksOnlineAvailable
+        : bookmarksToOrder
+      ).push(match);
+  });
+  return { bookmarksOnlineAvailable, bookmarksToOrder };
+};
+
+const AnalyseItemAvailability = forwardRef(function AnalyseItemAvailability(
+  { bookmark },
+  ref
+) {
+  const { pid, workId, materialId, manifestations, key } = bookmark;
+  const isAccessibleOnline = useAnalyzeMaterial({
+    manifestations,
+    pid,
+    workId,
+    key: materialId,
+  });
+
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        isAccessibleOnline,
+        bookmarkKey: key,
+      };
+    },
+    [isAccessibleOnline]
+  );
+});
+
 const BookmarkPage = () => {
+  const itemsRef = useRef([]);
   const {
-    bookmarks: allBookmarksData,
+    bookmarks: allBookmarks,
     paginatedBookmarks: bookmarksData,
     setSortBy,
     deleteBookmarks,
@@ -75,8 +127,8 @@ const BookmarkPage = () => {
     count,
     isLoading: bookmarsDataLoading,
   } = useBookmarks();
-  const { data: bookmarks, isLoading: isPopulateLoading } =
-    usePopulateBookmarks(bookmarksData); //TODO first to exchange
+  const { data: populatedBookmarks, isLoading: isPopulateLoading } =
+    usePopulateBookmarks(bookmarksData);
   const [activeStickyButton, setActiveStickyButton] = useState(null);
   const breakpoint = useBreakpoint();
   const [sortByValue, setSortByValue] = useState(null);
@@ -109,6 +161,11 @@ const BookmarkPage = () => {
     setSortByValue(savedValue || sortByItems[0].key);
   }, []);
 
+  //remove dead reference when we toggle checkboxes or select all
+  useEffect(() => {
+    itemsRef.current = itemsRef.current.slice(0, checkboxList.length);
+  }, [checkboxList]);
+
   const onToggleCheckbox = (key) => {
     const index = checkboxList.findIndex((item) => item.key === key);
     const exists = index > -1;
@@ -118,9 +175,10 @@ const BookmarkPage = () => {
       // Delete
       newList.splice(index, 1);
     } else {
-      const bookmarkData = allBookmarksData.find((bm) => bm.key === key);
+      const bookmarkData = populatedBookmarks.find((bm) => bm.key === key);
       // Add
       newList.push({
+        ...bookmarkData,
         key: key,
         materialId: bookmarkData.materialId,
         workId: bookmarkData.workId,
@@ -133,17 +191,30 @@ const BookmarkPage = () => {
   };
 
   const onOrderManyClick = () => {
-    setTimeout(() => {
-      if (isAuthenticated) {
+    const { bookmarksOnlineAvailable, bookmarksToOrder } =
+      seperateOnlineAndPhysicalBookmarks({
+        refs: itemsRef.current,
+        checkboxList,
+      });
+
+    if (isAuthenticated) {
+      if (bookmarksOnlineAvailable?.length > 0) {
         modal.push("ematerialfilter", {
-          bookmarksToOrder: checkboxList,
+          bookmarksToOrder,
+          bookmarksOnlineAvailable,
           sortType: sortByValue,
           handleOrderFinished: handleOrderFinished,
         });
       } else {
-        openLoginModal({ modal });
+        modal.push("multiorder", {
+          bookmarksToOrder: bookmarksToOrder,
+          sortType: sortByValue,
+          handleOrderFinished: handleOrderFinished,
+        });
       }
-    }, 300);
+    } else {
+      openLoginModal({ modal });
+    }
   };
 
   const onGetReferencesClick = () => {
@@ -158,18 +229,26 @@ const BookmarkPage = () => {
   };
 
   const onSelectAll = () => {
-    const hasUnselectedElements = checkboxList.length < allBookmarksData.length;
+    const hasUnselectedElements = checkboxList.length < allBookmarks.length;
     if (hasUnselectedElements)
       setCheckboxList(
-        allBookmarksData.map((el) => ({
-          key: el.key,
-          materialId: el.materialId,
-          workId: el.workId,
-          materialType: el.materialType,
-          bookmarkId: el.bookmarkId,
-        }))
+        allBookmarks.map((bm) => {
+          const bookmarkData = populatedBookmarks.find(
+            (pbm) => pbm.key === bm.key
+          );
+          return {
+            ...bookmarkData,
+            key: bm.key,
+            materialId: bm.materialId,
+            workId: bm.workId,
+            materialType: bm.materialType,
+            bookmarkId: bm.bookmarkId,
+          };
+        })
       );
-    else setCheckboxList([]);
+    else {
+      setCheckboxList([]);
+    }
   };
 
   const onDropdownClick = (idx) => {
@@ -208,7 +287,7 @@ const BookmarkPage = () => {
   };
 
   const onDeleteSelected = () => {
-    const toDelete = allBookmarksData
+    const toDelete = allBookmarks
       .filter(
         (bm) => checkboxList.findIndex((item) => item.key === bm.key) > -1
       )
@@ -256,7 +335,7 @@ const BookmarkPage = () => {
     deleteBookmarks([{ bookmarkId: bookmark.bookmarkId, key: bookmark.key }]);
   };
 
-  const isAllSelected = checkboxList?.length === allBookmarksData?.length;
+  const isAllSelected = checkboxList?.length === allBookmarks?.length;
   const isNothingSelected = checkboxList.length === 0;
 
   if (bookmarsDataLoading || isPopulateLoading) {
@@ -304,6 +383,18 @@ const BookmarkPage = () => {
       })}
     >
       <div ref={scrollToElement} />
+      {/*
+        Mounts bookmark ref to get the online availability status of the marked bookmark
+        */}
+      <>
+        {checkboxList.map((item, idx) => (
+          <AnalyseItemAvailability
+            key={`checkedItem-ref-${idx}`}
+            bookmark={item}
+            ref={(el) => (itemsRef.current[idx] = el)}
+          />
+        ))}
+      </>
 
       {activeStickyButton ? (
         <IconButton
@@ -370,7 +461,7 @@ const BookmarkPage = () => {
         >
           <Checkbox
             checked={isAllSelected}
-            disabled={bookmarks?.length === 0}
+            disabled={populatedBookmarks?.length === 0}
             id="bookmarkpage-select-all"
             ariaLabelledBy="bookmarkpage-select-all-label"
             ariaLabel={Translate({
@@ -428,9 +519,10 @@ const BookmarkPage = () => {
       )}
 
       <div className={styles.listContainer}>
-        {bookmarks?.map((bookmark, idx) => (
+        {populatedBookmarks?.map((bookmark, idx) => (
           <MaterialRow
             key={`bookmark-list-${idx}`}
+            bookmarkKey={bookmark?.key}
             hasCheckbox={!isMobile || activeStickyButton !== null}
             title={bookmark?.manifestations?.[0]?.titles?.full?.[0] || ""}
             titles={bookmark?.manifestations?.[0]?.titles}

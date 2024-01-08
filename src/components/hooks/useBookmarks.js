@@ -12,7 +12,7 @@ import { formatMaterialTypesFromCode } from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
 
 const KEY_NAME = "bookmarks";
-const ITEMS_PER_PAGE = 20;
+const ITEMS_PER_PAGE = 25;
 
 export const BookmarkSyncProvider = () => {
   const { syncCookieBookmarks } = useBookmarks();
@@ -201,10 +201,12 @@ const useBookmarksCore = ({ isMock = false, session }) => {
    */
   const createdAtSort = (bookmarkList = [], sortDirection = "asc") => {
     return bookmarkList.sort((a, b) => {
-      if (new Date(a.createdAt) < new Date(b.createdAt)) {
+      const aDate = new Date(a.createdAt);
+      const bDate = new Date(b.createdAt);
+      if (aDate < bDate) {
         return sortDirection === "asc" ? 1 : -1;
       }
-      if (new Date(a.createdAt) > new Date(b.createdAt)) {
+      if (aDate > bDate) {
         return sortDirection === "asc" ? -1 : 1;
       }
       return 0;
@@ -219,10 +221,12 @@ const useBookmarksCore = ({ isMock = false, session }) => {
    */
   const titleSort = (bookmarkList = [], sortDirection = "asc") => {
     return bookmarkList.sort((a, b) => {
-      if (a.title < b.title) {
+      const aTitle = a.titles?.full?.[0];
+      const bTitle = b.titles?.full?.[0];
+      if (aTitle < bTitle) {
         return sortDirection === "asc" ? -1 : 1;
       }
-      if (a.title > b.title) {
+      if (aTitle > bTitle) {
         return sortDirection === "asc" ? 1 : -1;
       }
       return 0;
