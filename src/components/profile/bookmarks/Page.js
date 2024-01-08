@@ -74,20 +74,19 @@ const seperateOnlineAndPhysical = ({ refs, checkboxList }) => {
   const materialsOnlineAvailable = [];
   const bookmarksToOrder = [];
   refs.forEach((item) => {
-    if (item.isAccessibleOnline) {
-      const match = checkboxList.find((bm) => bm.key === item.bookmarkKey);
-      match ? materialsOnlineAvailable.push(match) : "";
-    } else {
-      const match = checkboxList.find((bm) => bm.key === item.bookmarkKey);
-      match ? bookmarksToOrder.push(match) : "";
-    }
+    const match = checkboxList.find((bm) => bm.key === item.bookmarkKey);
+    match &&
+      (item?.isAccessibleOnline
+        ? materialsOnlineAvailable
+        : bookmarksToOrder
+      ).push(match);
   });
   return { materialsOnlineAvailable, bookmarksToOrder };
 };
 
 // eslint-disable-next-line react/display-name
-const AnalyseItemAvailability = forwardRef(({ bookmark, bookmarkKey }, ref) => {
-  const { pid, workId, materialId, manifestations } = bookmark;
+const AnalyseItemAvailability = forwardRef(({ bookmark }, ref) => {
+  const { pid, workId, materialId, manifestations, key } = bookmark;
   const isAccessibleOnline = useAnalyzeMaterial({
     manifestations,
     pid,
@@ -100,7 +99,7 @@ const AnalyseItemAvailability = forwardRef(({ bookmark, bookmarkKey }, ref) => {
     () => {
       return {
         isAccessibleOnline,
-        bookmarkKey,
+        bookmarkKey: key,
       };
     },
     [isAccessibleOnline]
@@ -384,7 +383,6 @@ const BookmarkPage = () => {
           <AnalyseItemAvailability
             key={`checkedItem-ref-${idx}`}
             bookmark={item}
-            bookmarkKey={item?.key}
             ref={(el) => (itemsRef.current[idx] = el)}
           />
         ))}

@@ -80,11 +80,7 @@ const MultiOrder = ({ context }) => {
   const { data: populatedBookmarks, isLoading: isPopulating } =
     usePopulateBookmarks(bookmarksToOrder);
   const [sortedMaterials, setSortedMaterials] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    setIsLoading(!bookmarksToOrder || isPopulating);
-  }, [isPopulating]);
+  const isLoading = !bookmarksToOrder || isPopulating;
 
   useEffect(() => {
     if (isPopulating) return;
