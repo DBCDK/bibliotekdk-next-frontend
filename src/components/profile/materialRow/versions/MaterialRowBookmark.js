@@ -43,7 +43,7 @@ const BookmarkColumn = ({
   const singleManifestation = !!pid;
 
   const selectedPids = useMemo(
-    () => relevantManifestations.map((manifestation) => manifestation.pid),
+    () => relevantManifestations?.map((manifestation) => manifestation.pid),
     [flatMaterialTypes, relevantManifestations]
   );
 

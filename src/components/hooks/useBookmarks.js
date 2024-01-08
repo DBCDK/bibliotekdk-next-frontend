@@ -292,13 +292,34 @@ const useBookmarkMock = () => {
 
 //OBS order does not matter in this implementation. should order matter?
 // "BOOK / SOUND_RECORDING_CD" and "SOUND_RECORDING_CD / BOOK" would both match
-const isMaterialTypesMatch = (workTypesOfBookmark, materialTypesOfWork) => {
+export const isMaterialTypesMatch = (
+  workTypesOfBookmark,
+  materialTypesOfWork
+) => {
   if (!materialTypesOfWork || !workTypesOfBookmark) return false;
   const materialTypeCodes = materialTypesOfWork.map(
     (mt) => mt?.materialTypeSpecific?.code
   );
   return isEqual(new Set(workTypesOfBookmark), new Set(materialTypeCodes));
 };
+
+/**
+ * Find the work index where one pid in mostRelevant matches the given materialId
+ * @returns {number} index of work
+ */
+export function findRelevantWorkIdx(
+  workByIdsDataRemovedDuplicates,
+  materialId
+) {
+  if (!workByIdsDataRemovedDuplicates || !materialId) return -1;
+  return workByIdsDataRemovedDuplicates?.findIndex((w) => {
+    const pid = materialId?.replace("work-of:", "");
+    if (!pid) return -1;
+    return w?.manifestations?.mostRelevant?.some(
+      (mostRelevant) => mostRelevant.pid === pid
+    );
+  });
+}
 
 const useBookmarks = process.env.STORYBOOK_ACTIVE
   ? useBookmarkMock
@@ -334,9 +355,13 @@ export const usePopulateBookmarks = (bookmarks) => {
       const relevantMaterialTypes = formatMaterialTypesFromCode(
         bookmark?.materialType
       );
-      const work = workByIdsDataRemovedDuplicates?.find(
-        (w) => w?.workId === bookmark?.workId
+
+      const workIdx = findRelevantWorkIdx(
+        workByIdsDataRemovedDuplicates,
+        bookmark?.materialId
       );
+      const work =
+        workIdx > -1 ? workByIdsDataRemovedDuplicates[workIdx] : null;
 
       const manifestationWithCorrectMaterialTypes =
         work?.manifestations?.mostRelevant.filter((m) =>
@@ -348,13 +373,13 @@ export const usePopulateBookmarks = (bookmarks) => {
         );
       const isSpecificEdition = !isEmpty(specificManifestation);
 
+      if (!work) return;
       return {
         ...work,
         bookmarkId: bookmark?.bookmarkId,
         materialId: bookmark?.materialId,
         pid: isSpecificEdition ? bookmark?.materialId : undefined,
         key: bookmark?.key,
-        workId: bookmark?.workId,
         manifestations: isSpecificEdition
           ? specificManifestation
           : manifestationWithCorrectMaterialTypes,
