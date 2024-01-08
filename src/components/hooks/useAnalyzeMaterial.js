@@ -17,13 +17,12 @@ import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
  * @param {Object} material
  * @returns {boolean}
  */
-const useAnalyzeMaterial = (material) => {
+export const useAnalyzeMaterial = (material) => {
   const { loanerInfo } = useLoanerInfo();
 
   const hasDigitalAccess = loanerInfo?.rights?.digitalArticleService;
 
-  const { workId, pid } = material;
-  const selectedManifestations = material?.manifestations;
+  const { workId, pid, manifestations: selectedManifestations } = material;
 
   const materialTypes = flattenMaterialType(selectedManifestations?.[0]);
   const flattenedDisplayTypes = toFlatMaterialTypes(
@@ -43,7 +42,7 @@ const useAnalyzeMaterial = (material) => {
         : flatPidsByType(
             flattenedDisplayTypes //should i give all the material types here? --> presentation material type
           ),
-    [material?.manifestations]
+    [selectedManifestations]
   );
 
   const { manifestations } = useGetManifestationsForOrderButton(
@@ -67,20 +66,4 @@ const useAnalyzeMaterial = (material) => {
   return !digitalCopy && !physicalCopy;
 };
 
-/**
- * Workaround for react hooks limitations
- * Since we cannot call a hook a dynamic amount of times, we need to render 1 React component for each material
- * (since hooks are designed for analysing 1 material - not x amount of material).
- * In that way we can reuse as much as possible from the 'normal' checkout flow
- *
- * Visually hidden JSX (by the parent), only used to pass data to parent
- */
-const EMaterialAnalyzer = ({ material }) => {
-  const result = useAnalyzeMaterial(material);
-
-  return (
-    <div data-accessable-ematerial={result} data-material-key={material.key} />
-  );
-};
-
-export default EMaterialAnalyzer;
+export default useAnalyzeMaterial;

@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 /* eslint-disable css-modules/no-unused-class */
 import Cover from "@/components/base/cover";
 import Text from "@/components/base/text";
