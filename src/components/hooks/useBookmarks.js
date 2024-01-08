@@ -323,8 +323,6 @@ export const usePopulateBookmarks = (bookmarks) => {
       })
   );
 
-  console.log("DATA FROM USEPOPULATE", workByIdsData);
-
   const workByIdsDataRemovedDuplicates = workByIdsData?.works?.filter(
     (value, idx) => workByIdsData?.works?.indexOf(value) === idx
   );
@@ -336,6 +334,7 @@ export const usePopulateBookmarks = (bookmarks) => {
       const relevantMaterialTypes = formatMaterialTypesFromCode(
         bookmark?.materialType
       );
+
       const work = workByIdsDataRemovedDuplicates?.find(
         (w) => w?.workId === bookmark?.workId
       );
@@ -344,6 +343,7 @@ export const usePopulateBookmarks = (bookmarks) => {
         work?.manifestations?.mostRelevant.filter((m) =>
           isMaterialTypesMatch(relevantMaterialTypes, m?.materialTypes)
         );
+
       const specificManifestation =
         manifestationWithCorrectMaterialTypes?.filter(
           (m) => m?.pid === bookmark?.materialId

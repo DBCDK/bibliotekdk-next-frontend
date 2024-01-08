@@ -389,7 +389,10 @@ const MANIFESTATION_10 = {
   ownerWork: {
     workId: "some-work-id-8",
   },
-  titles: [{ full: "Lær at læse med Hugo og Rita" }],
+  titles: {
+    full: ["Lær at læse med Hugo og Rita"],
+    main: ["Lær at læse med Hugo og Rita"],
+  },
   workTypes: ["LITERATURE"],
   tableOfContents: {
     heading: null,
@@ -567,7 +570,10 @@ const WORK_7 = {
 
 const WORK_8 = {
   workId: "some-work-id-8",
-  titles: { full: ["Lær at læse med Hugo og Rita 3"] },
+  titles: {
+    full: ["Lær at læse med Hugo og Rita 3"],
+    main: ["Lær at læse med Hugo og Rita 3"],
+  },
   creators: [{ display: "Linoleum Gummigulv" }],
   manifestations: {
     mostRelevant: [MANIFESTATION_10],
