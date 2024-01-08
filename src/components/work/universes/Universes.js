@@ -104,7 +104,9 @@ Universes.propTypes = {
  * @param {string} props.workId The work id
  */
 export default function Container({ workId }) {
-  const { data, isLoading } = useData(universeFragments.universes({ workId }));
+  const { data, isLoading } = useData(
+    universeFragments.universes({ workId, seriesLimit: 20, worksLimit: 20 })
+  );
 
   const allUniverses = data?.work?.universes;
 
