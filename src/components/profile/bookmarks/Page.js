@@ -90,8 +90,10 @@ const seperateOnlineAndPhysicalBookmarks = ({ refs, checkboxList }) => {
   return { bookmarksOnlineAvailable, bookmarksToOrder };
 };
 
-// eslint-disable-next-line react/display-name
-const AnalyseItemAvailability = forwardRef(({ bookmark }, ref) => {
+const AnalyseItemAvailability = forwardRef(function AnalyseItemAvailability(
+  { bookmark },
+  ref
+) {
   const { pid, workId, materialId, manifestations, key } = bookmark;
   const isAccessibleOnline = useAnalyzeMaterial({
     manifestations,
