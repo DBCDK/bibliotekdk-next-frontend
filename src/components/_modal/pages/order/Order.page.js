@@ -20,7 +20,7 @@ import {
   workHasAlreadyBeenOrdered,
 } from "@/components/_modal/pages/order/utils/order.utils";
 import { useRelevantAccessesForOrderPage } from "@/components/work/utils";
-import { validateEmail } from "@/utils/validateEmail";
+
 import NoAgenciesError from "./noAgencies/NoAgenciesError";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 import { useData } from "@/lib/api/api";
@@ -103,25 +103,6 @@ function Order({
       setShowAlreadyOrdered(hasAlreadyBeenOrdered);
     }
   }, [stringify(modal?.stack)]);
-
-  // Update email from user account
-  useEffect(() => {
-    const userMail =
-      mail !== null ? mail?.value : user?.userParameters?.userMail;
-    const status = validateEmail(userMail);
-    setMail({
-      value: userMail,
-      valid: {
-        status: status,
-        message: status
-          ? null
-          : {
-              context: "form",
-              label: "wrong-email-field",
-            },
-      },
-    });
-  }, [user?.userParameters]);
 
   /**
    * sets texts in bookmark list to show if material order was successful or not
@@ -276,6 +257,8 @@ function Order({
         onMailChange={(e, valid) => {
           onMailChange(e?.target?.value, valid, updateLoanerInfo, setMail);
         }}
+        setMail={setMail}
+        email={mail}
       />
       <OrderConfirmationButton
         email={mail}

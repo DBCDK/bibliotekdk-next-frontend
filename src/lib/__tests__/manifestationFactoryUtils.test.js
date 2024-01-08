@@ -9,6 +9,8 @@ import {
   grouped5Manifestations_bog_ebog_x2__bog_x2__ebog_x1,
   manifestationFactoryFunctionFixture,
   combinedMaterialType_GraphicNovel_Tegneserie,
+  combinedMaterialType_Bog_EBog,
+  combinedMaterialType_LydbogOnline_LydbogCd,
 } from "@/lib/__tests__/__fixtures__/manifestationFactoryFunction.fixture";
 import {
   compareMaterialTypeArrays,
@@ -178,11 +180,56 @@ describe("flattenMaterialType", () => {
     const expected = [];
     expect(actual).toEqual(expected);
   });
-  it("should give correct order for combined materialtypes", () => {
-    // @TODO write a test here
-    const actual = flattenMaterialType(
-      combinedMaterialType_GraphicNovel_Tegneserie
-    );
+  it("should give correct order for combined materialtypes bog ebog", () => {
+    const { flatMaterialTypes } = manifestationMaterialTypeFactory([
+      combinedMaterialType_Bog_EBog,
+    ]);
+
+    const actual = flatMaterialTypes[0];
+    const expected = [
+      {
+        specificDisplay: "bog",
+        specificCode: "BOOK",
+        generalDisplay: "bøger",
+        generalCode: "BOOKS",
+      },
+      {
+        specificDisplay: "e-bog",
+        specificCode: "EBOOK",
+        generalDisplay: "e-bøger",
+        generalCode: "EBOOKS",
+      },
+    ];
+    expect(actual).toEqual(expected);
+  });
+  it("should give correct order for combined materialtypes lydbog online lydbog cd", () => {
+    const { flatMaterialTypes } = manifestationMaterialTypeFactory([
+      combinedMaterialType_LydbogOnline_LydbogCd,
+    ]);
+
+    const actual = flatMaterialTypes[0];
+    const expected = [
+      {
+        specificDisplay: "lydbog (online)",
+        specificCode: "AUDIO_BOOK_ONLINE",
+        generalDisplay: "lydbøger",
+        generalCode: "AUDIO_BOOKS",
+      },
+      {
+        specificDisplay: "lydbog (cd)",
+        specificCode: "AUDIO_BOOK_CD",
+        generalDisplay: "lydbøger",
+        generalCode: "AUDIO_BOOKS",
+      },
+    ];
+    expect(actual).toEqual(expected);
+  });
+  it("should give correct order for combined materialtypes graphicNovel tegneserie", () => {
+    const { flatMaterialTypes } = manifestationMaterialTypeFactory([
+      combinedMaterialType_GraphicNovel_Tegneserie,
+    ]);
+
+    const actual = flatMaterialTypes[0];
     const expected = [
       {
         specificDisplay: "graphic novel",
@@ -786,82 +833,87 @@ describe("getElementByCustomSorting", () => {
 
 describe("getUniqueMaterialTypes", () => {
   it("should sort and output the correct materialTypeArrays between 3 unique", () => {
-    const actual = getUniqueMaterialTypes([
+    const materialTypesOrder = getOrderedFlatMaterialTypes(["LITERATURE"]);
+
+    const actual = getUniqueMaterialTypes(
       [
-        {
-          specificDisplay: "e-bog",
-          specificCode: "EBOOK",
-          generalDisplay: "e-bøger",
-          generalCode: "EBOOKS",
-        },
+        [
+          {
+            specificDisplay: "e-bog",
+            specificCode: "EBOOK",
+            generalDisplay: "e-bøger",
+            generalCode: "EBOOKS",
+          },
+        ],
+        [
+          {
+            specificDisplay: "bog",
+            specificCode: "BOOK",
+            generalDisplay: "bøger",
+            generalCode: "BOOKS",
+          },
+        ],
+        [
+          {
+            specificDisplay: "bog",
+            specificCode: "BOOK",
+            generalDisplay: "bøger",
+            generalCode: "BOOKS",
+          },
+          {
+            specificDisplay: "e-bog",
+            specificCode: "EBOOK",
+            generalDisplay: "e-bøger",
+            generalCode: "EBOOKS",
+          },
+        ],
+        [
+          {
+            specificDisplay: "bog",
+            specificCode: "BOOK",
+            generalDisplay: "bøger",
+            generalCode: "BOOKS",
+          },
+          {
+            specificDisplay: "e-bog",
+            specificCode: "EBOOK",
+            generalDisplay: "e-bøger",
+            generalCode: "EBOOKS",
+          },
+        ],
+        [
+          {
+            specificDisplay: "e-bog",
+            specificCode: "EBOOK",
+            generalDisplay: "e-bøger",
+            generalCode: "EBOOKS",
+          },
+        ],
+        [
+          {
+            specificDisplay: "bog",
+            specificCode: "BOOK",
+            generalDisplay: "bøger",
+            generalCode: "BOOKS",
+          },
+        ],
+        [
+          {
+            specificDisplay: "bog",
+            specificCode: "BOOK",
+            generalDisplay: "bøger",
+            generalCode: "BOOKS",
+          },
+          {
+            specificDisplay: "e-bog",
+            specificCode: "EBOOK",
+            generalDisplay: "e-bøger",
+            generalCode: "EBOOKS",
+          },
+        ],
       ],
-      [
-        {
-          specificDisplay: "bog",
-          specificCode: "BOOK",
-          generalDisplay: "bøger",
-          generalCode: "BOOKS",
-        },
-      ],
-      [
-        {
-          specificDisplay: "bog",
-          specificCode: "BOOK",
-          generalDisplay: "bøger",
-          generalCode: "BOOKS",
-        },
-        {
-          specificDisplay: "e-bog",
-          specificCode: "EBOOK",
-          generalDisplay: "e-bøger",
-          generalCode: "EBOOKS",
-        },
-      ],
-      [
-        {
-          specificDisplay: "bog",
-          specificCode: "BOOK",
-          generalDisplay: "bøger",
-          generalCode: "BOOKS",
-        },
-        {
-          specificDisplay: "e-bog",
-          specificCode: "EBOOK",
-          generalDisplay: "e-bøger",
-          generalCode: "EBOOKS",
-        },
-      ],
-      [
-        {
-          specificDisplay: "e-bog",
-          specificCode: "EBOOK",
-          generalDisplay: "e-bøger",
-          generalCode: "EBOOKS",
-        },
-      ],
-      [
-        {
-          specificDisplay: "bog",
-          specificCode: "BOOK",
-          generalDisplay: "bøger",
-          generalCode: "BOOKS",
-        },
-      ],
-      [
-        {
-          specificDisplay: "bog",
-          specificCode: "BOOK",
-          generalDisplay: "bøger",
-          generalCode: "BOOKS",
-        },
-        {
-          specificDisplay: "e-bog",
-          specificCode: "EBOOK",
-          generalDisplay: "e-bøger",
-          generalCode: "EBOOKS",
-        },
-      ],
-    ]);
+      materialTypesOrder
+    );
     const expected = [
       [
         {
@@ -898,32 +950,37 @@ describe("getUniqueMaterialTypes", () => {
     expect(actual).toEqual(expected);
   });
   it("should sort and output the correct materialTypeArray when having 1 type", () => {
-    const actual = getUniqueMaterialTypes([
+    const materialTypesOrder = getOrderedFlatMaterialTypes(["LITERATURE"]);
+
+    const actual = getUniqueMaterialTypes(
       [
-        {
-          specificDisplay: "bog",
-          specificCode: "BOOK",
-          generalDisplay: "bøger",
-          generalCode: "BOOKS",
-        },
+        [
+          {
+            specificDisplay: "bog",
+            specificCode: "BOOK",
+            generalDisplay: "bøger",
+            generalCode: "BOOKS",
+          },
+        ],
+        [
+          {
+            specificDisplay: "bog",
+            specificCode: "BOOK",
+            generalDisplay: "bøger",
+            generalCode: "BOOKS",
+          },
+        ],
+        [
+          {
+            specificDisplay: "bog",
+            specificCode: "BOOK",
+            generalDisplay: "bøger",
+            generalCode: "BOOKS",
+          },
+        ],
       ],
-      [
-        {
-          specificDisplay: "bog",
-          specificCode: "BOOK",
-          generalDisplay: "bøger",
-          generalCode: "BOOKS",
-        },
-      ],
-      [
-        {
-          specificDisplay: "bog",
-          specificCode: "BOOK",
-          generalDisplay: "bøger",
-          generalCode: "BOOKS",
-        },
-      ],
-    ]);
+      materialTypesOrder
+    );
     const expected = [
       [
         {
@@ -937,7 +994,7 @@ describe("getUniqueMaterialTypes", () => {
     expect(actual).toEqual(expected);
   });
   it("should give empty materialTypeArray with no type", () => {
-    const actual = getUniqueMaterialTypes("");
+    const actual = getUniqueMaterialTypes([]);
     const expected = [];
     expect(actual).toEqual(expected);
   });

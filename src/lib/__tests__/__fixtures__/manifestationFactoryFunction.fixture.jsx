@@ -40,6 +40,35 @@ export const combinedMaterialType_GraphicNovel_Tegneserie = {
   ],
 };
 
+export const combinedMaterialType_Bog_EBog = {
+  materialTypes: [
+    {
+      materialTypeSpecific: { display: "e-bog", code: "EBOOK" },
+      materialTypeGeneral: { display: "e-bøger", code: "EBOOKS" },
+    },
+    {
+      materialTypeSpecific: { display: "bog", code: "BOOK" },
+      materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+    },
+  ],
+};
+
+export const combinedMaterialType_LydbogOnline_LydbogCd = {
+  materialTypes: [
+    {
+      materialTypeSpecific: { display: "lydbog (cd)", code: "AUDIO_BOOK_CD" },
+      materialTypeGeneral: { display: "lydbøger", code: "AUDIO_BOOKS" },
+    },
+    {
+      materialTypeSpecific: {
+        display: "lydbog (online)",
+        code: "AUDIO_BOOK_ONLINE",
+      },
+      materialTypeGeneral: { display: "lydbøger", code: "AUDIO_BOOKS" },
+    },
+  ],
+};
+
 export const oneManifestation_bog_ebog = [
   { ...twoSpecificMaterialType_Bog_Ebog, pid: "1bog2ebog" },
 ];

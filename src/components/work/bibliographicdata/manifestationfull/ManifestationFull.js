@@ -94,9 +94,6 @@ function ColumnOne({ workId, manifestation }) {
         <ReservationButtonWrapper
           workId={workId}
           selectedPids={[manifestation?.pid]}
-          selectedMaterialType={
-            manifestation?.materialTypes?.[0]?.materialTypeSpecific?.code //@TODO fix compound material types
-          }
           singleManifestation={true}
           buttonType="secondary"
           size="small"

@@ -161,3 +161,17 @@ export const workSliderFragment = `fragment workSliderFragment on Work {
     }
   }
 }`;
+
+export const workTitleFragment = `fragment workTitleFragment on Work {
+  titles {
+    main
+    full
+  }
+}`;
+
+export const manifestationTitleFragment = `fragment manifestationTitleFragment on Manifestation {
+  titles {
+    main
+    full
+  }
+}`;

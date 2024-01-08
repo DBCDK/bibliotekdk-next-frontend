@@ -44,7 +44,9 @@ export const getCheckedElements = (parentRef) => {
 
 /**
  * shows a span with text and a checkmark icon
+ * @param {string} text
  * @param {string} textType
+ * @param {string} style
  * @returns
  */
 export const TextWithCheckMark = ({ text, textType = "text2", style }) => {
@@ -105,7 +107,6 @@ const MaterialRow = ({ id: materialId, skeleton, type, ...props }) => {
           materialId={materialId}
           isMobileSize={isMobileSize}
           {...props}
-          materialType={props.materialType}
         />
       );
   }

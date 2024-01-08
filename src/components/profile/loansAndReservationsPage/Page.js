@@ -14,16 +14,17 @@ import Link from "@/components/base/link";
 import { useState } from "react";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import {
-  flattenMaterialType,
   formatMaterialTypesToPresentation,
+  manifestationMaterialTypeFactory,
 } from "@/lib/manifestationFactoryUtils";
 
 const SKELETON_ROW_AMOUNT = 2;
 
 export const dataReducer = (dataType, data) => {
-  const flatMaterialTypes = flattenMaterialType({
-    materialTypes: data?.manifestation?.materialTypes,
-  });
+  const { flatMaterialTypes: flatMaterialTypesArray } =
+    manifestationMaterialTypeFactory([data?.manifestation]);
+
+  const flatMaterialTypes = flatMaterialTypesArray?.[0];
 
   const materialTypesPresentation =
     formatMaterialTypesToPresentation(flatMaterialTypes);
@@ -34,6 +35,7 @@ export const dataReducer = (dataType, data) => {
         type: "DEBT",
         amount: data?.amount,
         title: data?.title,
+        titles: data?.manifestation?.titles,
         currency: data?.currency,
       };
     }
@@ -43,10 +45,13 @@ export const dataReducer = (dataType, data) => {
         type: "LOAN",
         image: data?.manifestation?.cover?.thumbnail,
         title: data?.manifestation?.titles?.main?.[0],
+        titles: data?.manifestation?.titles,
         creator: extractCreatorsPrioritiseCorporation(
           data?.manifestation?.creators
         )?.[0]?.display,
+        creators: data?.manifestation?.creators,
         materialType: materialTypesPresentation,
+        flatMaterialTypes: flatMaterialTypes,
         creationYear: data?.manifestation?.recordCreationDate?.substring(0, 4),
         dueDateString: data?.dueDate,
         id: data?.loanId,
@@ -60,11 +65,14 @@ export const dataReducer = (dataType, data) => {
         type: "ORDER",
         image: data?.manifestation?.cover?.thumbnail,
         title: data?.manifestation?.titles?.main?.[0] || data?.title,
+        titles: data?.manifestation?.titles,
         creator:
           extractCreatorsPrioritiseCorporation(
             data?.manifestation?.creators
           )?.[0]?.display || data?.creator,
+        creators: data?.manifestation?.creators,
         materialType: materialTypesPresentation,
+        flatMaterialTypes: flatMaterialTypes,
         creationYear: data?.manifestation?.recordCreationDate?.substring(0, 4),
         library: data?.pickUpBranch?.agencyName,
         agencyId: data?.agencyId,

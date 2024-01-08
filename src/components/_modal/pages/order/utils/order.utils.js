@@ -22,6 +22,7 @@ export function onMailChange(value, valid, updateLoanerInfo, setMail) {
     status: valid?.status,
     message: valid ? null : "wrong-email-field",
   };
+
   setMail({ value, valid: isValid });
 }
 

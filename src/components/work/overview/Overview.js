@@ -155,7 +155,6 @@ export function Overview({
                 <ReservationButtonWrapper
                   workId={workId}
                   selectedPids={selectedPids}
-                  selectedMaterialType={type}
                 />
                 <BookmarkDropdown
                   materialId={workId}
