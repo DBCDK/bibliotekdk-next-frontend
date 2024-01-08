@@ -414,7 +414,7 @@ const user = {
 export function ReservationButtonNotLoggedInFlow() {
   return (
     <div>
-      <StoryTitle>ReservationButton xx- {descriptionName}</StoryTitle>
+      <StoryTitle>ReservationButton - {descriptionName}</StoryTitle>
       <StoryDescription>
         The ReservationButton based on the type: {descriptionName}
       </StoryDescription>
