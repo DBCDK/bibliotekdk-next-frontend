@@ -9,13 +9,13 @@ import { useModal } from "@/components/_modal/Modal";
 import { StatusEnum } from "@/components/base/materialcard/materialCard.utils";
 import * as orderMutations from "@/lib/api/order.mutations";
 import { setAlreadyOrdered } from "../../order/utils/order.utils";
-import Text from "@/components/base/text";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import { useMutate } from "@/lib/api/api";
 import useBookmarks, {
   usePopulateBookmarks,
 } from "@/components/hooks/useBookmarks";
 import { mergeBookmarksWithPopulatedData } from "@/components/profile/bookmarks/bookmarks.utils";
+import MaterialRow from "@/components/profile/materialRow/MaterialRow";
 
 const CONTEXT = "bookmark-order";
 const SKELETON_ROW_AMOUNT = 3;
@@ -235,27 +235,34 @@ const MultiOrder = ({ context }) => {
         />
       </Title>
 
-      <div className={styles.materialList} ref={analyzeRef}>
-        {isLoading
-          ? [...Array(SKELETON_ROW_AMOUNT).keys()].map((_, i) => (
-              <Text skeleton={true} key={"skeleton-row-" + i} />
-            ))
-          : sortedMaterials?.map((material) => (
-              <Material
-                key={material.key}
-                material={material}
-                numberOfMaterialsToOrder={sortedMaterials?.length ?? 0}
-                setMaterialsToOrder={setSortedMaterials}
-                showAlreadyOrderedWarning={duplicateBookmarkIds.includes(
-                  (bm) => bm === material.bookmarkId
-                )}
-                setDuplicateBookmarkIds={setDuplicateBookmarkIds}
-                //context is responsible for updating periodica form via periodicaForm.js and modal.update
-                periodicaForms={context?.periodicaForms}
-                setMaterialStatusChanged={setMaterialStatusChanged}
-              />
-            ))}
-      </div>
+      {isLoading ? (
+        [...Array(SKELETON_ROW_AMOUNT).keys()].map((_, i) => (
+          <MaterialRow
+            skeleton
+            key={`material-row-skeleton-#${i}`}
+            title=""
+            library=""
+          />
+        ))
+      ) : (
+        <div className={styles.materialList} ref={analyzeRef}>
+          {sortedMaterials?.map((material) => (
+            <Material
+              key={material.key}
+              material={material}
+              numberOfMaterialsToOrder={sortedMaterials?.length ?? 0}
+              setMaterialsToOrder={setSortedMaterials}
+              showAlreadyOrderedWarning={duplicateBookmarkIds.includes(
+                (bm) => bm === material.bookmarkId
+              )}
+              setDuplicateBookmarkIds={setDuplicateBookmarkIds}
+              //context is responsible for updating periodica form via periodicaForm.js and modal.update
+              periodicaForms={context?.periodicaForms}
+              setMaterialStatusChanged={setMaterialStatusChanged}
+            />
+          ))}
+        </div>
+      )}
 
       {materialCounts !== null && (
         <section className={styles.checkoutContainer}>
