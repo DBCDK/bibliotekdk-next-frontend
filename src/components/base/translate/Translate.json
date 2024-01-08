@@ -545,6 +545,10 @@
         "da": "Spring over",
         "en": "Skip"
       },
+      "dontAskAgain": {
+        "da": "Spørg ikke igen",
+        "en": "Don't ask again"
+      },
       "multipleLanguages": {
         "da": "flere sprog",
         "en": "multiple languages"
