@@ -123,6 +123,7 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
 
           <Col md={2} sm={12} className={styles.closeContainer}>
             <IconButton
+              data-cy="advanced-search-close-button"
               icon="close"
               onClick={() => setShowPopover(false)}
               keepUnderline={true}
