@@ -1,16 +1,12 @@
 /**
  * @file
  *
- * hook to handle CPR verification process
+ * hook to handle small pices of (local)storage
  */
 
 import useSWR from "swr";
 
 import { setLocalStorageItem, getLocalStorageItem } from "@/lib/utils";
-
-/**
- * Settings
- */
 
 // storage key name
 const KEY_NAME = "storage";
@@ -32,7 +28,7 @@ export default function useStorage() {
   );
 
   /**
-   * set item
+   * set a storage item
    * @param {string} name
    * @param {object} props
    * @param {int} ttl time in ms
@@ -52,7 +48,7 @@ export default function useStorage() {
   }
 
   /**
-   * read item
+   * read a storage item
    * @param {string} name
    *
    * @returns {object}
