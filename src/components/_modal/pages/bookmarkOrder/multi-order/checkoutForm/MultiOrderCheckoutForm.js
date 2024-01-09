@@ -90,7 +90,7 @@ const CheckoutForm = ({
       ".modal_page.page-current .page_content"
     )[0];
 
-    const scrollToId = context?.materials?.find(
+    const scrollToId = context?.bookmarksToOrder?.find(
       (mat) => mat.bookmarkId === duplicateBookmarkIds?.[0]
     )?.materialId;
     const el = document.getElementById(scrollToId);
@@ -199,7 +199,14 @@ const CheckoutForm = ({
               border={{ top: false, bottom: { keepVisible: true } }}
             >
               {" "}
-              <Translate context="order" label="choose-order-again" />
+              <Translate
+                context="order"
+                label={
+                  duplicateBookmarkIds === 1
+                    ? "choose-order-again"
+                    : "choose-order-again-plural"
+                }
+              />
             </Link>
           </Text>
         )}

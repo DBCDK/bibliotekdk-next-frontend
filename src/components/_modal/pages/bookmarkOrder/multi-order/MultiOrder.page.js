@@ -11,8 +11,14 @@ import * as orderMutations from "@/lib/api/order.mutations";
 import { setAlreadyOrdered } from "../../order/utils/order.utils";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import { useMutate } from "@/lib/api/api";
+import useBookmarks, {
+  usePopulateBookmarks,
+} from "@/components/hooks/useBookmarks";
+import { mergeBookmarksWithPopulatedData } from "@/components/profile/bookmarks/bookmarks.utils";
+import MaterialRow from "@/components/profile/materialRow/MaterialRow";
 
 const CONTEXT = "bookmark-order";
+const SKELETON_ROW_AMOUNT = 3;
 
 const formatArticleForm = (formData, pid) => {
   if (!formData || !pid) return null;
@@ -60,26 +66,43 @@ const createOrders = async ({
 
 const MultiOrder = ({ context }) => {
   const modal = useModal();
-  const { materials, closeModalOnBack, handleOrderFinished } = context;
+  const { sortType, handleOrderFinished, bookmarksToOrder } = context;
   const analyzeRef = useRef();
   const [materialCounts, setMaterialCounts] = useState({ isAnalyzed: false });
-  const [materialsToOrder, setMaterialsToOrder] = useState(materials);
   const { loanerInfo } = useLoanerInfo();
   const [isCreatingOrders, setIsCreatingOrders] = useState(false);
   const [duplicateBookmarkIds, setDuplicateBookmarkIds] = useState([]); //used to manage warning for duplicate orders without removing duplicate ids from browser storage
   const pickupBranch = useRef(); // Pickup branch from checkout form
   const [materialStatusChanged, setMaterialStatusChanged] = useState();
   const orderMutation = useMutate();
+  const { titleSort, createdAtSort } = useBookmarks();
+  const { data: populatedBookmarks, isLoading: isPopulating } =
+    usePopulateBookmarks(bookmarksToOrder);
+  const [sortedMaterials, setSortedMaterials] = useState([]);
+  const isLoading = !bookmarksToOrder || isPopulating;
+
+  useEffect(() => {
+    if (isPopulating) return;
+    const materials = mergeBookmarksWithPopulatedData(
+      bookmarksToOrder,
+      populatedBookmarks
+    );
+
+    const sortedList =
+      sortType === "title" ? titleSort(materials) : createdAtSort(materials);
+
+    setSortedMaterials(sortedList);
+  }, [populatedBookmarks, sortType]);
 
   useEffect(() => {
     if (orderMutation?.data && orderMutation.data.submitMultipleOrders) {
       const { failedAtCreation, successfullyCreated } =
         orderMutation.data.submitMultipleOrders;
       const failedMaterials = failedAtCreation.map((key) =>
-        materials.find((mat) => mat.key === key)
+        sortedMaterials.find((mat) => mat.key === key)
       );
       const successMaterials = successfullyCreated.map((key) =>
-        materials.find((mat) => mat.key === key)
+        sortedMaterials.find((mat) => mat.key === key)
       );
       handleOrderFinished(successfullyCreated, failedAtCreation);
 
@@ -99,7 +122,7 @@ const MultiOrder = ({ context }) => {
     if (orderMutation?.error) {
       setIsCreatingOrders(false);
       modal.push("multireceipt", {
-        failedMaterials: materialsToOrder,
+        failedMaterials: sortedMaterials,
         successMaterials: [],
         branchName: pickupBranch.current?.name,
       });
@@ -122,7 +145,7 @@ const MultiOrder = ({ context }) => {
             element.getAttribute("data-status") === StatusEnum.NOT_AVAILABLE
         )
         .map((element) =>
-          materials.find(
+          sortedMaterials.find(
             (mat) => mat.key === element.getAttribute("data-material-key")
           )
         );
@@ -133,7 +156,7 @@ const MultiOrder = ({ context }) => {
             element.getAttribute("data-status") === StatusEnum.NEEDS_EDITION
         )
         .map((element) =>
-          materials.find(
+          sortedMaterials.find(
             (mat) => mat.key === element.getAttribute("data-material-key")
           )
         );
@@ -144,7 +167,7 @@ const MultiOrder = ({ context }) => {
             element.getAttribute("data-status") === StatusEnum.HAS_BEEN_ORDERED
         )
         .map((element) =>
-          materials.find(
+          sortedMaterials.find(
             (mat) => mat.key === element.getAttribute("data-material-key")
           )
         );
@@ -157,7 +180,7 @@ const MultiOrder = ({ context }) => {
             element.getAttribute("data-status") === StatusEnum.DIGITAL
         )
         .map((element) =>
-          materials.find(
+          sortedMaterials.find(
             (mat) => mat.key === element.getAttribute("data-material-key")
           )
         );
@@ -168,14 +191,13 @@ const MultiOrder = ({ context }) => {
         materialsNotAllowedCount: materialsNotAvailable?.length ?? 0,
         materialsMissingActionCount: materialsNeedsInfo?.length ?? 0,
         duplicateOrders: duplicateOrders?.length ?? 0,
-        materialsToOrderCount: materialsToOrder?.length ?? 0,
+        materialsToOrderCount: sortedMaterials?.length ?? 0,
       });
     }, 300);
     return () => clearTimeout(timer);
   }, [
-    materials,
     pickupBranch,
-    materialsToOrder,
+    sortedMaterials,
     analyzeRef.current,
     context?.periodicaForms,
     materialStatusChanged,
@@ -185,7 +207,7 @@ const MultiOrder = ({ context }) => {
     setIsCreatingOrders(true);
     pickupBranch.current = selectedPickupBranch;
     await createOrders({
-      materials: materialsToOrder,
+      materials: sortedMaterials,
       pickupBranch: selectedPickupBranch,
       loanerInfo,
       periodicaForms: context.periodicaForms,
@@ -202,33 +224,43 @@ const MultiOrder = ({ context }) => {
         })}
         titleTag="h2"
         className={{ top: styles.top }}
-        onBack={() => (closeModalOnBack ? modal.setStack([]) : undefined)}
       />
       <Title type="text2" tag="h3" className={styles.subHeading}>
         <Translate
           context={CONTEXT}
           label="multiorder-subheading"
-          vars={[materialsToOrder?.length]}
+          vars={[sortedMaterials?.length]}
         />
       </Title>
 
-      <div className={styles.materialList} ref={analyzeRef}>
-        {materialsToOrder.map((material) => (
-          <Material
-            key={material.key}
-            material={material}
-            numberOfMaterialsToOrder={materialsToOrder?.length ?? 0}
-            setMaterialsToOrder={setMaterialsToOrder}
-            showAlreadyOrderedWarning={duplicateBookmarkIds.includes(
-              (bm) => bm === material.bookmarkId
-            )}
-            setDuplicateBookmarkIds={setDuplicateBookmarkIds}
-            //context is responsible for updating periodica form via periodicaForm.js and modal.update
-            periodicaForms={context?.periodicaForms}
-            setMaterialStatusChanged={setMaterialStatusChanged}
+      {isLoading ? (
+        [...Array(SKELETON_ROW_AMOUNT).keys()].map((_, i) => (
+          <MaterialRow
+            skeleton
+            key={`material-row-skeleton-#${i}`}
+            title=""
+            library=""
           />
-        ))}
-      </div>
+        ))
+      ) : (
+        <div className={styles.materialList} ref={analyzeRef}>
+          {sortedMaterials?.map((material) => (
+            <Material
+              key={material.key}
+              material={material}
+              numberOfMaterialsToOrder={sortedMaterials?.length ?? 0}
+              setMaterialsToOrder={setSortedMaterials}
+              showAlreadyOrderedWarning={duplicateBookmarkIds.includes(
+                (bm) => bm === material.bookmarkId
+              )}
+              setDuplicateBookmarkIds={setDuplicateBookmarkIds}
+              //context is responsible for updating periodica form via periodicaForm.js and modal.update
+              periodicaForms={context?.periodicaForms}
+              setMaterialStatusChanged={setMaterialStatusChanged}
+            />
+          ))}
+        </div>
+      )}
 
       {materialCounts !== null && (
         <section className={styles.checkoutContainer}>
