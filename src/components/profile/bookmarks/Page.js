@@ -157,8 +157,8 @@ const BookmarkPage = () => {
 
   useEffect(() => {
     //if there is one item in the last page and the user deletes that, we should go back to the previous page.
-    if (currentPage > totalPages) {
-      onPageChange(totalPages);
+    if (currentPage > totalPages && totalPages > 0) {
+      setCurrentPage(totalPages);
     }
   }, [totalPages]);
 
