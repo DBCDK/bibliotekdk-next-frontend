@@ -12,6 +12,7 @@ import { useModal } from "@/components/_modal";
 import { isFFUAgency } from "@/utils/agency";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
+import useStorage from "@/components/hooks/useStorage";
 
 export default function Listener() {
   const { isAuthenticated, hasCulrUniqueId, loggedInAgencyId } =
@@ -26,7 +27,10 @@ export default function Listener() {
   const agencies = authUser?.agencies;
 
   const verification = useVerification();
+  const storage = useStorage();
   const modal = useModal();
+
+  const hasBlockedFFuListener = storage.read("BlockFFUListener");
 
   const hasVerificationObject = verification.exist();
 
@@ -43,6 +47,11 @@ export default function Listener() {
 
     // If The agency which the user has signedIn to, is NOT an FFU library
     if (!(agencyId && isFFUAgency(agencyId))) {
+      return;
+    }
+
+    // user has clicked "Don't show me this again" button in listener modal and is still within the given expiration date
+    if (hasBlockedFFuListener) {
       return;
     }
 

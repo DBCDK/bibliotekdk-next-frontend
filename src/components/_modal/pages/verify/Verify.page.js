@@ -12,6 +12,8 @@ import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
 import useVerification from "@/components/hooks/useVerification";
 import useAccessToken from "@/components/hooks/user/useAccessToken";
 
+import useStorage from "@/components/hooks/useStorage";
+
 import styles from "./Verify.module.css";
 
 /**
@@ -26,6 +28,7 @@ export default function Verify({ modal, context }) {
 
   const accessToken = useAccessToken();
   const verification = useVerification();
+  const storage = useStorage();
 
   const data = verification.read();
 
@@ -33,10 +36,18 @@ export default function Verify({ modal, context }) {
   const isOriginListener = !!(data?.origin === "listener");
 
   // Handles the "Skip" button click
-  function handleOnClick() {
+  function onSkipClick() {
     // handles if modal should have "back" functionality
     const hasBack = back ?? index > 0;
     hasBack ? modal.prev() : modal.clear();
+  }
+
+  function onNotAgainClick() {
+    const expiration = 1000 * 60 * 60 * 24 * 90; // 90 days
+    storage.create("BlockFFUListener", {}, expiration);
+
+    // close modal
+    onSkipClick();
   }
 
   // Handles the MitID button click
@@ -120,14 +131,29 @@ export default function Verify({ modal, context }) {
           <Button
             type="secondary"
             className={styles.closeButton}
-            onClick={() => handleOnClick()}
+            onClick={() => onSkipClick()}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                handleOnClick();
+                onSkipClick();
               }
             }}
           >
             {Translate({ context: "general", label: "notNow" })}
+          </Button>
+        )}
+
+        {isOriginListener && (
+          <Button
+            type="secondary"
+            className={styles.closeButton}
+            onClick={() => onNotAgainClick()}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                onNotAgainClick();
+              }
+            }}
+          >
+            {Translate({ context: "general", label: "dontAskAgain" })}
           </Button>
         )}
       </div>

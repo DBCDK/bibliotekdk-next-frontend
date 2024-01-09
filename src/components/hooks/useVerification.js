@@ -8,7 +8,11 @@ import useSWR from "swr";
 import { useEffect } from "react";
 
 import useAuthentication from "@/components/hooks/user/useAuthentication";
-import { getLocalStorageItem, removeLocalStorageItem } from "@/lib/utils";
+import {
+  setLocalStorageItem,
+  getLocalStorageItem,
+  removeLocalStorageItem,
+} from "@/lib/utils";
 
 /**
  * Settings
