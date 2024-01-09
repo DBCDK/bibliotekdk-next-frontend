@@ -1,16 +1,12 @@
 /**
  * @file
  *
- * hook to handle CPR verification process
+ * hook to handle small pices of (local)storage
  */
 
 import useSWR from "swr";
 
 import { setLocalStorageItem, getLocalStorageItem } from "@/lib/utils";
-
-/**
- * Settings
- */
 
 // storage key name
 const KEY_NAME = "storage";
@@ -28,13 +24,11 @@ const KEY_NAME = "storage";
  */
 export default function useStorage() {
   const { data, mutate, isValidating } = useSWR(KEY_NAME, (key) =>
-    JSON.parse(getLocalStorageItem(key) || "null")
+    JSON.parse(getLocalStorageItem(key) || "{}")
   );
 
-  console.log("### data", data);
-
   /**
-   * set item
+   * set a storage item
    * @param {string} name
    * @param {object} props
    * @param {int} ttl time in ms
@@ -54,7 +48,7 @@ export default function useStorage() {
   }
 
   /**
-   * read item
+   * read a storage item
    * @param {string} name
    *
    * @returns {object}
@@ -62,9 +56,6 @@ export default function useStorage() {
    */
   function _read(name) {
     const item = data?.[name];
-
-    console.log("item", item);
-
     if (item) {
       const ts = Date.now();
       if (item?.expires && item?.expires > ts) {

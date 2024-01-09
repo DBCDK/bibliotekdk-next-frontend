@@ -45,6 +45,9 @@ export default function Verify({ modal, context }) {
   function onNotAgainClick() {
     const expiration = 1000 * 60 * 60 * 24 * 90; // 90 days
     storage.create("BlockFFUListener", {}, expiration);
+
+    // close modal
+    onSkipClick();
   }
 
   // Handles the MitID button click

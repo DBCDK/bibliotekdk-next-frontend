@@ -50,6 +50,11 @@ export default function Listener() {
       return;
     }
 
+    // user has clicked "Don't show me this again" button in listener modal and is still within the given expiration date
+    if (hasBlockedFFuListener) {
+      return;
+    }
+
     // Users already has an active verification - verification is more than 24 hours old
     if (hasVerificationObject) {
       return;
