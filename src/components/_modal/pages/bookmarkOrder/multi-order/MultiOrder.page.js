@@ -46,6 +46,7 @@ const createOrders = async ({
           periodicaFormForMaterial,
           pids[0]
         );
+
         return {
           pids,
           key: material.key,
@@ -59,8 +60,6 @@ const createOrders = async ({
 };
 
 const MultiOrder = ({ context }) => {
-  console.log("MULTIORDER CONTEXT", context);
-
   const modal = useModal();
   const { materials, closeModalOnBack, handleOrderFinished } = context;
   const analyzeRef = useRef();

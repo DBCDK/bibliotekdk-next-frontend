@@ -90,7 +90,6 @@ const EMaterialFilter = ({ context, active }) => {
       setMaterialsToFilter(filteredMaterialsSorted);
       setMaterialsToProceed(toProceedSorted);
 
-      console.log("FILTERED", filteredMaterials);
       if (filteredMaterials.length === 0) {
         // Nothing to filter - Redirect directly
         modal.push("multiorder", {
@@ -114,8 +113,6 @@ const EMaterialFilter = ({ context, active }) => {
   const onBackClick = () => {
     modal.clear();
   };
-
-  console.log("TO FILTER", materialsToFilter);
 
   return (
     <div className={styles.eMaterialFilter}>
@@ -193,6 +190,7 @@ const EMaterialFilter = ({ context, active }) => {
         skeleton={isLoading}
         onClick={materialsToProceed?.length === 0 ? onBackClick : onNextClick}
         className={styles.nextButton}
+        dataCy="multiorder-next-button"
       >
         <Translate
           context={CONTEXT}
