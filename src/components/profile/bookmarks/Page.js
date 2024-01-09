@@ -156,6 +156,13 @@ const BookmarkPage = () => {
   }, [sortByValue]);
 
   useEffect(() => {
+    //if there is one item in the last page and the user deletes that, we should go back to the previous page.
+    if (currentPage > totalPages) {
+      onPageChange(totalPages);
+    }
+  }, [totalPages]);
+
+  useEffect(() => {
     let savedValue = getSessionStorageItem("sortByValue");
     //if there is no saved values in sessionstorage, use createdAt sorting as default
     setSortByValue(savedValue || sortByItems[0].key);
