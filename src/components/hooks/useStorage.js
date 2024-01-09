@@ -28,10 +28,8 @@ const KEY_NAME = "storage";
  */
 export default function useStorage() {
   const { data, mutate, isValidating } = useSWR(KEY_NAME, (key) =>
-    JSON.parse(getLocalStorageItem(key) || "null")
+    JSON.parse(getLocalStorageItem(key) || "{}")
   );
-
-  console.log("### data", data);
 
   /**
    * set item
@@ -62,9 +60,6 @@ export default function useStorage() {
    */
   function _read(name) {
     const item = data?.[name];
-
-    console.log("item", item);
-
     if (item) {
       const ts = Date.now();
       if (item?.expires && item?.expires > ts) {
