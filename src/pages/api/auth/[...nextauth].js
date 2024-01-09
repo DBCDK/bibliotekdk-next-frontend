@@ -25,6 +25,14 @@ export const options = {
       },
     },
   },
+  pages: {
+    // Error code passed in query string as ?error=
+    // https://next-auth.js.org/configuration/pages#sign-in-page
+    signIn: "/login/fejl",
+    // Error code passed in query string as ?error=
+    // https://next-auth.js.org/configuration/pages#error-page
+    error: "/login/fejl",
+  },
   providers: [
     adgangsplatformen({
       clientId,
@@ -48,6 +56,14 @@ export const options = {
       let res = await callbacks.session(...args);
       delete res?.user?.agencies;
       return res;
+    },
+  },
+  logger: {
+    error(code, metadata) {
+      log.error("next-auth login error", {
+        stacktrace: metadata.stack,
+        nextAuthErrorCode: code,
+      });
     },
   },
 };
