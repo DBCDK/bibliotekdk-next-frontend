@@ -545,6 +545,10 @@
         "da": "Spring over",
         "en": "Skip"
       },
+      "dontAskAgain": {
+        "da": "Spørg ikke igen",
+        "en": "Don't ask again"
+      },
       "multipleLanguages": {
         "da": "flere sprog",
         "en": "multiple languages"
@@ -3209,6 +3213,10 @@
       },
       "choose-order-again": {
         "da": "Vælg om det skal bestilles igen.",
+        "en": "Choose if you want to order again."
+      },
+      "choose-order-again-plural": {
+        "da": "Vælg om de skal bestilles igen.",
         "en": "Choose if you want to order again."
       },
       "get-overview": {
