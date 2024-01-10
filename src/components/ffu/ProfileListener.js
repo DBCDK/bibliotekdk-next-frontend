@@ -1,5 +1,5 @@
 /**
- * @file Listens for FFU user logins which potentially colud be created in CULR (Get a bibdk account)
+ * @file Listens for FFU user logins (via ffu agency) which already has a bibdk profile attached.
  */
 
 import { useEffect } from "react";

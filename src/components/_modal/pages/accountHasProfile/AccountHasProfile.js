@@ -1,5 +1,5 @@
 /**
- * @file This modal page handles the CPR verification process before creating FFU users in CULR
+ * @file This modal page inform a FFU user that their agency is already attached to a bibdk profile. User is encouraged to login by mitid or detach agency.
  */
 import { useEffect } from "react";
 

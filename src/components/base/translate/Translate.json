@@ -3518,7 +3518,7 @@
         "en": "LABEL: mangler oversættelse!"
       }
     },
-    "accountWasDetached" : {
+    "accountWasDetached": {
       "title": {
         "da": "Dit login ved %s er IKKE længere knyttet til en profil på bibliotek.dk",
         "en": "LABEL: Mangler oversættelse!"
