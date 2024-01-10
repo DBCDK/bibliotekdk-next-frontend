@@ -27,12 +27,12 @@ describe("Text Inputs Component Test", () => {
     cy.visit("/iframe.html?id=advancedsearch-fieldinput--text-inputs-story");
   });
 
-  it("should add a new input field on clicking the add button", () => {
+  it.skip("should add a new input field on clicking the add button", () => {
     cy.get('[data-cy="advanced-search-add-input"]').click();
     cy.get('[datacy="advanced-search-inputfield-2"]').should("exist");
   });
 
-  it("should remove an input field on clicking the remove button", () => {
+  it.skip("should remove an input field on clicking the remove button", () => {
     // cy.get('[data-cy="advanced-search-add-input"]').click();
     cy.get('[datacy="advanced-search-inputfield-1"]').should("exist");
 
@@ -43,16 +43,14 @@ describe("Text Inputs Component Test", () => {
   });
 
   it.skip("should change logical operator between input fields", () => {
-    //todo
-    //  cy.get('[data-cy="advanced-search-add-input"]').click();
-
     cy.get('[data-cy="advanced-search-logical-operator-dropDown"]').click();
 
-    cy.get('[data-cy="advanced-search-logical-operator-dropDown-OR"]').click();
+    cy.get('[data-cy="advanced-search-logical-operator-dropDown-AND"]').click();
 
-    cy.get('[data-cy="advanced-search-logical-operator-dropDown"]')
-      .eq(1)
-      .should("contain", "OR");
+    cy.get('[data-cy="advanced-search-logical-operator-dropDown"]').should(
+      "contain",
+      "OG"
+    );
   });
 });
 

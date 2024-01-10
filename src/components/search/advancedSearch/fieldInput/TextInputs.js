@@ -142,7 +142,6 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
     <Dropdown
       onToggle={toggleCollapse}
       className={`${styles.dropdownwrap} ${className}`}
-      dataCy={"advanced-search-logical-operator-dropDown"}
     >
       <Dropdown.Toggle
         variant="success"
@@ -150,6 +149,7 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
         className={styles.dropdowntoggle}
       >
         <Text
+          dataCy={"advanced-search-logical-operator-dropDown"}
           type="text4"
           className={`${animations["f-border-bottom"]} ${animations["h-border-bottom"]}`}
         >
@@ -170,7 +170,6 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
           /** @type {LogicalOperatorEnumArray} */ options.map((elem) => {
             return (
               <Dropdown.Item
-                dataCy={`advanced-search-logical-operator-dropDown-${elem}`}
                 tabIndex="-1"
                 key={`logicalOperatordropdown-${elem}`}
                 className={styles.dropdownitem}
@@ -178,7 +177,11 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
                   onSelect(elem);
                 }}
               >
-                <Text tag="span" type="text3">
+                <Text
+                  dataCy={`advanced-search-logical-operator-dropDown-${elem}`}
+                  tag="span"
+                  type="text3"
+                >
                   {Translate({
                     context: "search",
                     label: `advanced-dropdown-${elem}`,
