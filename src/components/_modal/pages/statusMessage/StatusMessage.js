@@ -16,6 +16,13 @@ export default function StatusMessage({ context, modal }) {
   const hasBack = context.back ?? !!(modal.index?.() > 0);
 
   function handleOnClick() {
+    // custom click event
+    if (context.onClick) {
+      context.onClick();
+      return;
+    }
+
+    // default
     hasBack ? modal.prev() : modal.clear();
   }
 
@@ -40,7 +47,11 @@ export default function StatusMessage({ context, modal }) {
             }
           }}
         >
-          {Translate({ context: "general", label: hasBack ? "back" : "close" })}
+          {context.buttonText ||
+            Translate({
+              context: "general",
+              label: hasBack ? "back" : "close",
+            })}
         </Button>
       )}
     </div>

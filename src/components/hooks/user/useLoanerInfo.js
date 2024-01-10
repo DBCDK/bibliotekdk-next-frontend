@@ -60,6 +60,7 @@ export default function useLoanerInfo() {
         rights: userRes?.data?.user?.rights,
         pickupBranch: session?.pickupBranch,
         allowSessionStorage: !!session?.allowSessionStorage,
+        omittedCulrData: userRes?.data?.user?.omittedCulrData,
         userParameters,
       },
       isLoading: userRes?.isLoading || sessionRes?.isLoading,
