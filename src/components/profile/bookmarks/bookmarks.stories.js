@@ -10,7 +10,7 @@ const exportedObject = {
 
 export default exportedObject;
 
-const { WORK_8, WORK_4, USER_2, DEFAULT_STORY_PARAMETERS } = automock_utils();
+const { WORK_11, WORK_12, USER_2, DEFAULT_STORY_PARAMETERS } = automock_utils();
 
 /**
  * Returns Bookmarks
@@ -35,7 +35,7 @@ BookmarkList.story = merge({}, DEFAULT_STORY_PARAMETERS, {
           user: () => {
             return USER_2;
           },
-          works: () => [WORK_8, WORK_4],
+          works: () => [WORK_11, WORK_12],
           checkorderpolicy: () => ({ orderPossible: true }),
           branches: () => {
             return {
@@ -58,17 +58,17 @@ BookmarkList.decorators = [
       "bookmarks",
       JSON.stringify([
         {
-          key: "some-work-id-8BOOK",
-          materialId: "some-work-id-8",
-          workId: "some-work-id-8",
+          key: "work-of:some-pid-8BOOK",
+          materialId: "work-of:some-pid-8",
+          workId: "work-of:some-pid-8",
           materialType: "BOOK",
           title: "fisk",
           createdAt: "2024-01-05T14:03:05.432Z",
         },
         {
-          key: "some-work-id-4EBOOK",
-          materialId: "some-work-id-4",
-          workId: "some-work-id-4",
+          key: "work-of:some-pid-7EBOOK",
+          materialId: "work-of:some-pid-7",
+          workId: "work-of:some-pid-7",
           materialType: "EBOOK",
           title: "fisk",
           createdAt: "2024-01-05T14:03:05.432Z",
