@@ -17,6 +17,7 @@ describe("Popover elements", () => {
     cy.get('[data-cy="advanced-search-close-button"]').click();
     cy.get('[data-cy="advanced-search-popover"]').should("not.be.visible");
   });
+
   it("should clear all input fields on clicking the clear search link", () => {
     cy.get('[data-cy="advanced-search-trigger"]').click();
 
@@ -29,7 +30,6 @@ describe("Popover elements", () => {
       .type(`Jeg hedder kaj`)
       .blur();
 
-    // Click the clear search link
     cy.get('[data-cy="advanced-search-clear-search"]').click();
 
     cy.get('[datacy="advanced-search-inputfield-0"]')
@@ -38,8 +38,6 @@ describe("Popover elements", () => {
     cy.get('[datacy="advanced-search-inputfield-1"]')
       .find("input")
       .should("have.value", "");
-
-    //todo add test for dropdowns
   });
 
   it("should be able to ses parsed inputfield search in the cql editor", () => {
@@ -88,7 +86,6 @@ describe("TextInputs test", () => {
     cy.get('[data-cy="advanced-search-remove-input"]').last().click();
 
     cy.get('[datacy="advanced-search-inputfield-1"]').should("not.exist");
-    //cy.get('[data-cy^="advanced-search-inputfield-"]').should('have.length', 1);
   });
 
   it("should change logical operator between input fields", () => {
