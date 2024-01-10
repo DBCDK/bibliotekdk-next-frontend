@@ -10,9 +10,6 @@ const exportedObject = {
 };
 
 const {
-  WORK_8,
-  WORK_7,
-  WORK_4,
   USER_3,
   BRANCH_3,
   WORK_11,
