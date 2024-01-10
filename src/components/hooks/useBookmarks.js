@@ -245,14 +245,16 @@ const useBookmarksCore = ({ isMock = false, session }) => {
    * Returns a of localbookmarks that corresponds to the current page of local bookmarks.
    */
   function currenPageBookmark(bookmarkToPaginate) {
-    const startIdx = isMobile ? 0 : (currentPage - 1) * ITEMS_PER_PAGE;
+    const startIdx = isMobile
+      ? 0
+      : (currentPage > 0 ? currentPage - 1 : currentPage) * ITEMS_PER_PAGE;
     const endIdx = isMobile
       ? startIdx + ITEMS_PER_PAGE * currentPage
       : startIdx + ITEMS_PER_PAGE;
     const currentPageBookmarks = bookmarkToPaginate.slice(startIdx, endIdx);
+
     return currentPageBookmarks;
   }
-
   // sort local bookmarks
   const sortedLocalBookmarks = useMemo(() => {
     return sortBookmarks(localBookmarks);
