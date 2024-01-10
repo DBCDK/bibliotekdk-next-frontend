@@ -56,6 +56,7 @@ const Material = ({
   );
 
   const { loanerInfo } = useLoanerInfo();
+
   const periodicaForm = periodicaForms?.[material.key];
   const workId = material.workId;
   const hasAlreadyBeenOrdered = workHasAlreadyBeenOrdered(workId);
@@ -67,6 +68,7 @@ const Material = ({
   const pids = manifestations.map((m) => m.pid) || [];
   const { data: orderPolicyData, isLoading: orderPolicyIsLoading } = useData(
     pids &&
+      loanerInfo?.pickupBranch &&
       pids.length > 0 &&
       branchesFragments.checkOrderPolicy({
         pids: pids,

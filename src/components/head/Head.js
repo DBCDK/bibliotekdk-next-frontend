@@ -35,6 +35,8 @@ export default function _Head() {
         property="og:image"
         content={"/img/bibdk-default-img.png"}
       />
+      <meta name="referrer" content="strict-origin-when-cross-origin" />
+
       <link rel="preconnect" href="https://moreinfo.addi.dk"></link>
       <link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" />
       <link rel="alternate icon" href="/favicon.ico" />

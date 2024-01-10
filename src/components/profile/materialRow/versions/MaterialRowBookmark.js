@@ -1,4 +1,3 @@
-/* eslint-disable react/display-name */
 /* eslint-disable css-modules/no-unused-class */
 import Cover from "@/components/base/cover";
 import Text from "@/components/base/text";
@@ -44,7 +43,7 @@ const BookmarkColumn = ({
   const singleManifestation = !!pid;
 
   const selectedPids = useMemo(
-    () => relevantManifestations.map((manifestation) => manifestation.pid),
+    () => relevantManifestations?.map((manifestation) => manifestation.pid),
     [flatMaterialTypes, relevantManifestations]
   );
 

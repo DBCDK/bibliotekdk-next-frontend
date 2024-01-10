@@ -127,6 +127,7 @@ const BookmarkPage = () => {
     count,
     isLoading: bookmarsDataLoading,
   } = useBookmarks();
+
   const { data: populatedBookmarks, isLoading: isPopulateLoading } =
     usePopulateBookmarks(bookmarksData);
   const [activeStickyButton, setActiveStickyButton] = useState(null);
@@ -154,6 +155,13 @@ const BookmarkPage = () => {
   useEffect(() => {
     setSortBy(sortByValue);
   }, [sortByValue]);
+
+  useEffect(() => {
+    //if there is one item in the last page and the user deletes that, we should go back to the previous page.
+    if (currentPage > totalPages && totalPages > 0) {
+      setCurrentPage(totalPages);
+    }
+  }, [totalPages]);
 
   useEffect(() => {
     let savedValue = getSessionStorageItem("sortByValue");
@@ -502,7 +510,11 @@ const BookmarkPage = () => {
             label: "select-action",
           })}
         </Button>
-        <IconButton disabled={isNothingSelected} onClick={onDeleteSelected}>
+        <IconButton
+          disabled={isNothingSelected}
+          onClick={onDeleteSelected}
+          dataCy="bookmarks-remove-from-list"
+        >
           {Translate({
             context: CONTEXT,
             label: "remove",
