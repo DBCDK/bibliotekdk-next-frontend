@@ -9,8 +9,6 @@ const exportedObject = {
   title: "modal/Materials",
 };
 
-// const { BORROWER_STATUS_TRUE } = automock_utils();
-
 const {
   WORK_8,
   WORK_7,

@@ -13,7 +13,7 @@ export default exportedObject;
 const { WORK_8, WORK_4, USER_2, DEFAULT_STORY_PARAMETERS } = automock_utils();
 
 /**
- * Returns Notification
+ * Returns Bookmarks
  *
  */
 export function BookmarkList() {
