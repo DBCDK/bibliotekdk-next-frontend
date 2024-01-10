@@ -1,11 +1,9 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
 import EMaterialFilter from "@/components/_modal/pages/bookmarkOrder/EMaterialFilter";
-import Material from "@/components/_modal/pages/bookmarkOrder/multi-order/Material/Material";
 import automock_utils from "@/lib/automock_utils.fixture";
 import merge from "lodash/merge";
 import Modal from "@/components/_modal/Modal";
 import Pages from "@/components/_modal/pages";
-import MultiReceipt from "@/components/_modal/pages/bookmarkOrder/receipt/MultiOrderReceipt.page";
 
 const exportedObject = {
   title: "modal/Materials",
