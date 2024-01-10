@@ -62,7 +62,7 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
   }, [data]);
 
   return (
-    <div key={key}>
+    <div key={key} dataCy={`advanced-search-inputfield-${index}`}>
       {!isFirstItem && (
         <LogicalOperatorDropDown
           onSelect={(value) => handleLogicalOperatorChange(index, value)}
@@ -111,6 +111,7 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
         </div>
         {!isFirstItem && (
           <IconButton
+            dataCy={"advanced-search-remove-input"}
             icon="close"
             onClick={() => removeInputField(index)}
             className={styles.removeIcon}
@@ -148,6 +149,7 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
         className={styles.dropdowntoggle}
       >
         <Text
+          dataCy={"advanced-search-logical-operator-dropDown"}
           type="text4"
           className={`${animations["f-border-bottom"]} ${animations["h-border-bottom"]}`}
         >
@@ -175,7 +177,11 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
                   onSelect(elem);
                 }}
               >
-                <Text tag="span" type="text3">
+                <Text
+                  dataCy={`advanced-search-logical-operator-dropDown-${elem}`}
+                  tag="span"
+                  type="text3"
+                >
                   {Translate({
                     context: "search",
                     label: `advanced-dropdown-${elem}`,
@@ -219,6 +225,7 @@ export default function TextInputs({ doAdvancedSearch }) {
         className={styles.addLine}
         onClick={addInputField}
         icon="expand"
+        dataCy={"advanced-search-add-input"}
       >
         <Text>{Translate({ context: "search", label: "addLine" })}</Text>
         <Icon

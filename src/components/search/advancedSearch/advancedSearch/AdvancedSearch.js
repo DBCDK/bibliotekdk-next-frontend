@@ -85,6 +85,7 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
           <Col md={3} sm={12} className={styles.buttonContainer}>
             <Text type="text3" tag="span">
               <Link
+                dataCy="edit-in-cql"
                 onClick={() => {
                   setShowCqlEditor(!showCqlEditor);
                 }}
@@ -123,6 +124,7 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
 
           <Col md={2} sm={12} className={styles.closeContainer}>
             <IconButton
+              data-cy="advanced-search-close-button"
               icon="close"
               onClick={() => setShowPopover(false)}
               keepUnderline={true}
@@ -166,6 +168,7 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
             </Button>
             <Text type="text3">
               <Link
+                dataCy="advanced-search-clear-search"
                 border={{ bottom: { keepVisible: true } }}
                 onClick={() => {
                   resetObjectState();
