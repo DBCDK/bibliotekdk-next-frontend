@@ -391,7 +391,7 @@ export default function Wrap(props) {
     error: manifestationError,
   } = manifestationResponse;
 
-  if (true || isManifestationsLoading || isLoading) {
+  if (isManifestationsLoading || isLoading) {
     return <OrderSkeleton />;
   }
   // check if user logged in via mitId - and has no connection to any libraries

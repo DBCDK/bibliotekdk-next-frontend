@@ -197,7 +197,7 @@ export default function Wrap({
   setShowArealdyOrdered,
 }) {
   const modal = useModal();
-  const { loanerInfo, isLoading } = useLoanerInfo();
+  const { loanerInfo, isLoading: isLoadingUserInfo } = useLoanerInfo();
   let { orderPids: orderPidsBeforeFilter, periodicaForm } = context;
 
   if (!Array.isArray(orderPidsBeforeFilter)) {
@@ -309,7 +309,9 @@ export default function Wrap({
 
   return (
     <Edition
-      isLoading={isLoading || manifestationIsLoading || !manifestations?.[0]}
+      isLoading={
+        isLoadingUserInfo || manifestationIsLoading || !manifestations?.[0]
+      }
       singleManifestation={singleManifestation}
       coverImage={coverImage}
       inferredAccessTypes={inferredAccessTypes}
