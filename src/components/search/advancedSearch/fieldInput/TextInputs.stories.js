@@ -3,7 +3,7 @@ import { StoryTitle } from "@/storybook";
 import TextInputs from "./TextInputs";
 
 const exportedObject = {
-  title: "search/FieldInput",
+  title: "AdvancedSearch/FieldInput",
 };
 export default exportedObject;
 /**

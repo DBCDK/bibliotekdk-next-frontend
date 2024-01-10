@@ -86,7 +86,11 @@ const Popover = ({ className, simpleSearchRef }) => {
 
   return (
     <>
-      <div className="container" ref={triggerContainerRef}>
+      <div
+        className="container"
+        ref={triggerContainerRef}
+        data-cy="advanced-search-trigger"
+      >
         <Tooltip
           childClassName={cx(styles.border_none)}
           tooltipRef={tooltipRef}
@@ -114,6 +118,7 @@ const Popover = ({ className, simpleSearchRef }) => {
       </div>
 
       <div
+        data-cy="advanced-search-popover"
         aria-expanded={showPopover}
         tabIndex="-1"
         className={cx(styles.popoverContainer, styles.popoverAnimation)}

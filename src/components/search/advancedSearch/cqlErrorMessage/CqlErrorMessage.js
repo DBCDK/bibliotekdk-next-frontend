@@ -68,7 +68,7 @@ export function CqlErrorMessage(errormessage) {
   );
 }
 
-export default function Wrap({ cql }) {
+export default function Wrap({ cql = "" }) {
   const bigResponse = useData(doComplexSearchAll({ cql, offset: 0, limit: 1 }));
 
   return CqlErrorMessage(bigResponse?.data?.complexSearch?.errorMessage);

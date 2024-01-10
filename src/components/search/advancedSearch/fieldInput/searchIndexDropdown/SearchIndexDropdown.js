@@ -23,7 +23,11 @@ export default function IndexDropdown({ options = [], className, index }) {
         id="dropdown-basic"
         className={styles.dropdowntoggle}
       >
-        <Text tag="span" type="text3">
+        <Text
+          tag="span"
+          type="text3"
+          dataCy={`advanced-search-index-dropdown-${index}`}
+        >
           {Translate({
             context: "search",
             label: `advanced-dropdown-${selected}`,
@@ -51,7 +55,11 @@ export default function IndexDropdown({ options = [], className, index }) {
                 handleIndexChange(index, elem);
               }}
             >
-              <Text tag="span" type="text3">
+              <Text
+                tag="span"
+                type="text3"
+                dataCy={`advanced-search-index-dropdown-${elem}`}
+              >
                 {Translate({
                   context: "search",
                   label: `advanced-dropdown-${elem}`,

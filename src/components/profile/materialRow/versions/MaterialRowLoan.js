@@ -119,7 +119,6 @@ const MaterialRowLoan = (props) => {
   const {
     image,
     workId,
-    pid,
     materialId,
     flatMaterialTypes,
     title,
@@ -260,7 +259,6 @@ const MaterialRowLoan = (props) => {
                 }}
                 href={getWorkUrlForProfile({
                   workId: workId,
-                  pid: pid,
                   materialTypeAsUrl:
                     formatMaterialTypesToUrl(flatMaterialTypes),
                   titles: titles,
