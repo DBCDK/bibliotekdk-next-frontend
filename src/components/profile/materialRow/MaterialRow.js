@@ -66,14 +66,20 @@ export const TextWithCheckMark = ({ text, textType = "text2", style }) => {
   );
 };
 
-const MaterialRow = ({ id: materialId, skeleton, type, ...props }) => {
+const MaterialRow = ({
+  id: materialId,
+  skeleton,
+  type,
+  skeletonVersion,
+  ...props
+}) => {
   const breakpoint = useBreakpoint();
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
+
+  const version = skeletonVersion || (isMobileSize ? "mobile" : "desktop");
   if (skeleton) {
-    return (
-      <SkeletonMaterialRow version={isMobileSize ? "mobile" : "desktop"} />
-    );
+    return <SkeletonMaterialRow version={version} />;
   }
 
   switch (type) {
