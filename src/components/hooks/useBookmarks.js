@@ -4,7 +4,7 @@ import { useData, useMutate } from "@/lib/api/api";
 import { useEffect, useState, useMemo } from "react";
 import * as bookmarkMutations from "@/lib/api/bookmarks.mutations";
 import * as bookmarkFragments from "@/lib/api/bookmarks.fragments";
-import { useSession } from "next-auth/react";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { getLocalStorageItem, setLocalStorageItem } from "@/lib/utils";
 import isEqual from "lodash/isEqual";
@@ -16,24 +16,24 @@ const ITEMS_PER_PAGE = 25;
 
 export const BookmarkSyncProvider = () => {
   const { syncCookieBookmarks } = useBookmarks();
-  const { data: session } = useSession();
+  const { hasCulrUniqueId } = useAuthentication();
 
   useEffect(() => {
     const sync = async () => {
       await syncCookieBookmarks();
     };
 
-    const hasCulrUniqueId = !!session?.user?.uniqueId;
     if (hasCulrUniqueId) {
       sync();
     }
-  }, [session]);
+  }, [hasCulrUniqueId]);
 
   return <></>;
 };
 
-const useBookmarksCore = ({ isMock = false, session }) => {
-  const hasCulrUniqueId = isMock ? false : !!session?.user?.uniqueId;
+const useBookmarksCore = ({ hasCulrUniqueId, isMock = false } = {}) => {
+  hasCulrUniqueId = isMock ? false : hasCulrUniqueId;
+
   const [sortBy, setSortBy] = useState("createdAt");
   const [currentPage, setCurrentPage] = useState(1);
   const breakpoint = useBreakpoint();
@@ -288,8 +288,8 @@ const useBookmarksCore = ({ isMock = false, session }) => {
 };
 
 const useBookmarkImpl = () => {
-  const { data: session } = useSession();
-  return useBookmarksCore({ session });
+  const { hasCulrUniqueId } = useAuthentication();
+  return useBookmarksCore({ hasCulrUniqueId });
 };
 
 const useBookmarkMock = () => {

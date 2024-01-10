@@ -11,6 +11,8 @@ export function authentication() {
       user {
         isCPRValidated
         loggedInAgencyId
+        identityProviderUsed
+        hasCulrUniqueId
       }
       session {
         userParameters {

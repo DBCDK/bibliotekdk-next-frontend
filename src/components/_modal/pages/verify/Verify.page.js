@@ -43,8 +43,8 @@ export default function Verify({ modal, context }) {
   }
 
   function onNotAgainClick() {
-    const expiration = 1000 * 60 * 60 * 24 * 90; // 90 days
-    storage.create("BlockFFUListener", {}, expiration);
+    const ttl = 1000 * 60 * 60 * 24 * 90; // 90 days
+    storage.create("BlockFFUListener", {}, ttl);
 
     // close modal
     onSkipClick();

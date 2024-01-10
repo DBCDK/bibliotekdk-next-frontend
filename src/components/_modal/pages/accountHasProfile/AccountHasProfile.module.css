@@ -1,0 +1,36 @@
+.hasProfile {
+  max-width: 600px;
+  padding: 0 var(--pt2);
+  height: 100%;
+}
+
+.hasProfile p {
+  margin-top: var(--pt2);
+}
+
+.text {
+  display: inline-block;
+  margin-right: var(--pt2);
+  margin-top: var(--pt2);
+}
+
+.remove {
+  padding-top: var(--pt10);
+}
+
+.mitIDButton,
+.removeButton {
+  width: 100%;
+  margin-top: var(--pt2);
+  display: block;
+}
+
+.removeButton {
+  margin-top: var(--pt2);
+}
+
+@media (min-width: 576px) {
+  .hasProfile {
+    padding: var(--pt2) var(--pt6) var(--pt4) var(--pt6);
+  }
+}

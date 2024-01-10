@@ -3496,6 +3496,42 @@
         "en": "is required"
       }
     },
+    "accountHasProfile": {
+      "title": {
+        "da": "Dette login ved %s er allerede knyttet til en bibliotek.dk profil",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "text": {
+        "da": "Brug i stedet MitID til at logge ind til din profil og få adgang til %s",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "loginButton": {
+        "da": "Log ind med MitID",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "textRemove": {
+        "da": "Har du ikke tidligere knyttet dette login til en bibliotek.dk profil? Eller ønsker du at fjerne tilknytningen?",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "removeButton": {
+        "da": "Fjern tilknytning til profil",
+        "en": "LABEL: mangler oversættelse!"
+      }
+    },
+    "accountWasDetached": {
+      "title": {
+        "da": "Dit login ved %s er IKKE længere knyttet til en profil på bibliotek.dk",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "text": {
+        "da": "Hvis du fortryder, kan du tilknytte biblioteket igen ved at logge ind med MitID eller via et folkebibliotek. Herefter kan du vælge at  knytte biblioteket til din Profil via menuen Profil/Mine biblioteker.",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "button": {
+        "da": "Fortsæt bestilling",
+        "en": "LABEL: Mangler oversættelse!"
+      }
+    },
     "addLibrary": {
       "title": {
         "da": "Tilføj et uddannelsesbibliotek til din profil",

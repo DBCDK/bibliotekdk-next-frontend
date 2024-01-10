@@ -30,6 +30,12 @@ export function basic() {
         isCPRValidated
         loggedInAgencyId
         municipalityAgencyId
+        omittedCulrData {
+          hasOmittedCulrUniqueId
+          hasOmittedCulrMunicipality
+          hasOmittedCulrMunicipalityAgencyId
+          hasOmittedCulrAccounts
+        }
         rights {
           infomedia 
           digitalArticleService 

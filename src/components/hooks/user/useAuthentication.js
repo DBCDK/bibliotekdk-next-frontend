@@ -16,7 +16,7 @@ export default function useAuthentication() {
   const isAuthenticated = !!authenticatedSession?.user?.userId;
 
   // user exists in CULR (CULR users can both include 'folk' and cpr-verified 'ffu' users)
-  const hasCulrUniqueId = !!authenticatedSession?.user?.uniqueId;
+  const hasCulrUniqueId = !!data?.user?.hasCulrUniqueId;
 
   // User has a CPR verified account in culr
   const isCPRValidated = data?.user?.isCPRValidated;

@@ -202,6 +202,10 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
                 component={Pages.BranchLocalizations}
               />
               <Modal.Page id="branchDetails" component={Pages.BranchDetails} />
+              <Modal.Page
+                id="accountHasProfile"
+                component={Pages.AccountHasProfile}
+              />
             </Modal.Container>
             <Head />
             <Matomo />
@@ -223,6 +227,7 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
             {/* watch for FFU user logins - propt the users to create an bibdk account */}
             <Listener.FFU />
             <Listener.Create />
+            <Listener.HasProfile />
           </Modal.Provider>
 
           {/* SetPickupBranch listens for users just logged in via adgangsplatformen */}
