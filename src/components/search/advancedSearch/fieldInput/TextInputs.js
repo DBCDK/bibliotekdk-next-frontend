@@ -21,7 +21,7 @@ import { LogicalOperatorsEnum } from "@/components/search/enums";
  * @param {Object} props
  * @returns {React.JSX.Element}
  */
-function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
+function FieldInput({ key, index, fieldValue, doAdvancedSearch, dataCy }) {
   const [suggestions, setSuggestions] = useState([]);
   const inputId = `complex_suggest__${fieldValue.searchIndex}-${index}`;
 
@@ -62,7 +62,7 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
   }, [data]);
 
   return (
-    <div key={key}>
+    <div key={key} dataCy={`advanced-search-inputfield-${index}`}>
       {!isFirstItem && (
         <LogicalOperatorDropDown
           onSelect={(value) => handleLogicalOperatorChange(index, value)}
@@ -111,6 +111,7 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
         </div>
         {!isFirstItem && (
           <IconButton
+            dataCy={"advanced-search-remove-input"}
             icon="close"
             onClick={() => removeInputField(index)}
             className={styles.removeIcon}
@@ -141,6 +142,7 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
     <Dropdown
       onToggle={toggleCollapse}
       className={`${styles.dropdownwrap} ${className}`}
+      dataCy={"advanced-search-logical-operator-dropDown"}
     >
       <Dropdown.Toggle
         variant="success"
@@ -168,6 +170,7 @@ function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
           /** @type {LogicalOperatorEnumArray} */ options.map((elem) => {
             return (
               <Dropdown.Item
+                dataCy={`advanced-search-logical-operator-dropDown-${elem}`}
                 tabIndex="-1"
                 key={`logicalOperatordropdown-${elem}`}
                 className={styles.dropdownitem}
@@ -219,6 +222,7 @@ export default function TextInputs({ doAdvancedSearch }) {
         className={styles.addLine}
         onClick={addInputField}
         icon="expand"
+        dataCy={"advanced-search-add-input"}
       >
         <Text>{Translate({ context: "search", label: "addLine" })}</Text>
         <Icon
