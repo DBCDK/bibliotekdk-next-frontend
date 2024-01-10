@@ -101,4 +101,27 @@ describe("TextInputs test", () => {
   });
 });
 
-describe("Dropdowns test", () => {});
+describe("Dropdowns test", () => {
+//Todo: implement when dropdowns has been refactored
+    beforeEach(() => {
+        cy.visit("/iframe.html?id=advancedsearch-dropdownitems--dropdown-items-base");
+      });
+      
+
+      it('should select items from a checkbox dropdown', () => {
+
+      }); 
+
+      it('should reset dropdown', () => {
+
+      }); 
+      it('search inside a dropdown', () => {
+
+      }); 
+      it('should select year range ', () => {
+
+      }); 
+      it('should select age range ', () => {
+
+      }); 
+});
