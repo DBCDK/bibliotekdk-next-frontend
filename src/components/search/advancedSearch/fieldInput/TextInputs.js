@@ -21,7 +21,7 @@ import { LogicalOperatorsEnum } from "@/components/search/enums";
  * @param {Object} props
  * @returns {React.JSX.Element}
  */
-function FieldInput({ key, index, fieldValue, doAdvancedSearch, dataCy }) {
+function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
   const [suggestions, setSuggestions] = useState([]);
   const inputId = `complex_suggest__${fieldValue.searchIndex}-${index}`;
 
