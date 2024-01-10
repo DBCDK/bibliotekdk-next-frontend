@@ -8,7 +8,7 @@
   padding-bottom: var(--pt1);
 }
 
-@media (max-width: 413px) {
+@media (max-width: 414px) {
   .hide {
     display: none;
   }
