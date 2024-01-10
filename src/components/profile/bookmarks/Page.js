@@ -344,8 +344,6 @@ const BookmarkPage = () => {
 
   const isAllSelected = checkboxList?.length === allBookmarks?.length;
   const isNothingSelected = checkboxList.length === 0;
-  console.log("allBookmarks", allBookmarks);
-  console.log("bookmarksData", bookmarksData);
 
   if (bookmarsDataLoading || isPopulateLoading) {
     return (

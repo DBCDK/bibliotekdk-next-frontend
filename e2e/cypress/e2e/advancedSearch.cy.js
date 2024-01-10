@@ -75,6 +75,7 @@ describe("TextInputs test", () => {
   });
 
   it("should add a new input field on clicking the add button", () => {
+    cy.get('[datacy="advanced-search-inputfield-2"]').should("not.exist");
     cy.get('[data-cy="advanced-search-add-input"]').click();
     cy.get('[datacy="advanced-search-inputfield-2"]').should("exist");
   });
