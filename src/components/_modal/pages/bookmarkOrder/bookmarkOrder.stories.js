@@ -14,23 +14,11 @@ const exportedObject = {
 // const { BORROWER_STATUS_TRUE } = automock_utils();
 
 const {
-  // ALL_WORKS,
   WORK_8,
   WORK_7,
-  // WORK_3,
   WORK_4,
-  // BORROWER_STATUS_FALSE,
-  // BORROWER_STATUS_TRUE,
-  // USER_1,
-  // USER_2,
   USER_3,
-  // USER_6,
-  // USER_8,
-  // BRANCH_1,
-  // BRANCH_2,
   BRANCH_3,
-  // BRANCH_4,
-  // BRANCH_8,
   DEFAULT_STORY_PARAMETERS,
   useMockLoanerInfo,
 } = automock_utils();

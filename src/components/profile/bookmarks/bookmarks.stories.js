@@ -10,27 +10,7 @@ const exportedObject = {
 
 export default exportedObject;
 
-const {
-  // ALL_WORKS,
-  WORK_8,
-  // WORK_7,
-  // WORK_3,
-  WORK_4,
-  // BORROWER_STATUS_FALSE,
-  // BORROWER_STATUS_TRUE,
-  // USER_1,
-  USER_2,
-  // USER_3,
-  // USER_6,
-  // USER_8,
-  // BRANCH_1,
-  // BRANCH_2,
-  // BRANCH_3,
-  // BRANCH_4,
-  // BRANCH_8,
-  DEFAULT_STORY_PARAMETERS,
-  // useMockLoanerInfo,
-} = automock_utils();
+const { WORK_8, WORK_4, USER_2, DEFAULT_STORY_PARAMETERS } = automock_utils();
 
 /**
  * Returns Notification
@@ -67,14 +47,6 @@ BookmarkList.story = merge({}, DEFAULT_STORY_PARAMETERS, {
             };
           },
         },
-        // Mutation: {
-        // 	submitMultipleOrders: () => ({}),
-        // },
-        // SubmitMultipleOrders: {
-        // 	failedAtCreation: () => [],
-        // 	successfullyCreated: () => ["some-work-id-8BOOK"],
-        // 	ok: () => true,
-        // },
       },
     },
   },
