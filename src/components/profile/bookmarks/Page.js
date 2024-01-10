@@ -127,6 +127,7 @@ const BookmarkPage = () => {
     count,
     isLoading: bookmarsDataLoading,
   } = useBookmarks();
+
   const { data: populatedBookmarks, isLoading: isPopulateLoading } =
     usePopulateBookmarks(bookmarksData);
   const [activeStickyButton, setActiveStickyButton] = useState(null);
@@ -509,7 +510,11 @@ const BookmarkPage = () => {
             label: "select-action",
           })}
         </Button>
-        <IconButton disabled={isNothingSelected} onClick={onDeleteSelected}>
+        <IconButton
+          disabled={isNothingSelected}
+          onClick={onDeleteSelected}
+          dataCy="bookmarks-remove-from-list"
+        >
           {Translate({
             context: CONTEXT,
             label: "remove",

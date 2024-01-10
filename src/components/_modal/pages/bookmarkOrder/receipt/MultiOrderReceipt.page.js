@@ -85,7 +85,7 @@ const MultiOrderReceipt = ({ context }) => {
           </Text>
 
           <div className={styles.materialList}>
-            {failedMaterials.map((material) => (
+            {failedMaterials?.map((material) => (
               <Material
                 key={material.key}
                 material={material}
@@ -98,6 +98,7 @@ const MultiOrderReceipt = ({ context }) => {
       )}
 
       <Button
+        dataCy="multiorder-button-close"
         type="primary"
         size="large"
         className={styles.close}
