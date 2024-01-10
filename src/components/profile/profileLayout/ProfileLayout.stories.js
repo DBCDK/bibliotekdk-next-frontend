@@ -30,6 +30,13 @@ ProfileLayoutNoUniqueId.story = merge({}, DEFAULT_STORY_PARAMETERS, {
       accessToken: "dummy-token",
       user: { uniqueId: null, userId: "mocked-uniqueId" },
     },
+    graphql: {
+      resolvers: {
+        Query: {
+          user: (args) => ({ ...args, hasCulrUniqueId: false }),
+        },
+      },
+    },
     nextRouter: { pathname: "/profil/laan-og-reserveringer" },
   },
 });
