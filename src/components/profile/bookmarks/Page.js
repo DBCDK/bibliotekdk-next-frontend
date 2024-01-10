@@ -28,7 +28,6 @@ import useAuthentication from "@/components/hooks/user/useAuthentication";
 import { getMaterialTypeForPresentation } from "@/lib/manifestationFactoryUtils";
 import { getSessionStorageItem, setSessionStorageItem } from "@/lib/utils";
 import { useAnalyzeMaterial } from "@/components/hooks/useAnalyzeMaterial";
-import { allArticles } from "@/lib/api/article.fragments";
 
 const CONTEXT = "bookmark";
 const ORDER_TRESHHOLD = 25;
