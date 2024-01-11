@@ -3368,6 +3368,14 @@
       "text-error-not-associated": {
         "da": "<strong>Er du registreret som låner hos %s?</strong> </br> Så skal du først tilføje biblioteket til din profil, før du kan bestille. Det gør du under %s. </br> </br> <strong>Vil du gerne være låner hos %s?</strong> </br> Så skal du registrere dig hos biblioteket. Find flere oplysniger om hvordan på deres %s.",
         "en": ""
+      },
+      "system-error": {
+        "da": "Der opstod en fejl i systemet i forbindelse med login. Prøv igen om lidt.",
+        "en": "A system error occurred during login, please try again in a moment."
+      },
+      "system-error-header": {
+        "da": "Loginfejl",
+        "en": "Login Error"
       }
     },
     "form": {
