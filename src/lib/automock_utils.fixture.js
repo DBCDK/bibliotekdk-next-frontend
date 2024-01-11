@@ -1456,6 +1456,7 @@ const USER_AGENCY = {
     {
       agencyId: "726500",
       agencyName: "Roskilde Bibliotekerne",
+      agencyType: "FOLKEBIBLIOTEK",
       branchId: "726500",
       name: "Roskilde Bibliotek",
     },
@@ -1476,14 +1477,18 @@ const USER_LIBRARIES = [
   {
     agencyName: "Silkeborg Biblioteker",
     agencyId: "774000",
+    agencyType: "FOLKEBIBLIOTEK",
   },
   {
     agencyId: "710100",
     agencyName: "Københavns Biblioteker",
+    agencyType: "FOLKEBIBLIOTEK",
   },
   {
     agencyName: "Syddansk Universitetsbibliotek",
     agencyId: "820030",
+    // this is a university - @TODO correct agenctyType
+    agencyType: "FOLKEBIBLIOTEK",
   },
 ];
 
