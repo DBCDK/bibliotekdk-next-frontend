@@ -3368,6 +3368,10 @@
       "system-error": {
         "da": "Der opstod en fejl i systemet i forbindelse med login. Prøv igen om lidt.",
         "en": "A system error occurred during login, please try again in a moment."
+      },
+      "system-error-header": {
+        "da": "Loginfejl",
+        "en": "Login Error"
       }
     },
     "form": {

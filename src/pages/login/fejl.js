@@ -14,10 +14,6 @@ import Row from "react-bootstrap/Row";
 import Translate from "@/components/base/translate/Translate";
 
 export default function LoginError() {
-  const errorMessage = Translate({
-    context: "login",
-    label: "system-error",
-  });
   return (
     <>
       <Header />
@@ -25,10 +21,16 @@ export default function LoginError() {
         <Row>
           <Col xs={12} lg={{ offset: 3, span: 9 }}>
             <Title type="title2" tag="h1">
-              Loginfejl
+              {Translate({
+                context: "login",
+                label: "system-error-header",
+              })}
             </Title>
             <Text type="text3" style={{ paddingTop: 24, paddingBottom: 48 }}>
-              {errorMessage}
+              {Translate({
+                context: "login",
+                label: "system-error",
+              })}
             </Text>
           </Col>
         </Row>
