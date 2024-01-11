@@ -74,7 +74,7 @@ describe("Popover elements", () => {
     );
   });
 
-  it("should clear textinput", () => {
+  it("should clear cql editor input", () => {
     cy.get('[data-cy="advanced-search-trigger"]').click();
     cy.get('[data-cy="edit-in-cql"]').click();
 
