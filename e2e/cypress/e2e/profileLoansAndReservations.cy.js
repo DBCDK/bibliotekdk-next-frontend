@@ -1,4 +1,4 @@
-describe("Libraries Table in profile", () => {
+describe("Loans and reservations in profile", () => {
   /*
    * NOTICE this test is written to ensure story book is working as expected
    * @TODO - some real tests
