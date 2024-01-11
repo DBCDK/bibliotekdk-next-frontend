@@ -63,7 +63,7 @@ export function getWorkUrlForProfile({
   creators,
   scrollToEdition = false,
 }) {
-  if (!workId) {
+  if (!workId || workId === "work-of:undefined") {
     if (pid && !isEmpty(pid) && isPid(pid)) {
       return `/work/${pid}`;
     }
