@@ -67,6 +67,22 @@ describe("Popover elements", () => {
       expectedParsedString
     );
   });
+
+  it("should clear textinput", () => {
+    cy.get('[data-cy="advanced-search-trigger"]').click();
+    cy.get('[data-cy="edit-in-cql"]').click();
+    const testString = "Hej med dig jeg hedder kaj";
+
+    cy.get('[data-cy="advanced-search-cqltxt"]').type(testString);
+
+    cy.get('[data-cy="advanced-search-cqltxt"]').should(
+      "have.value",
+      testString
+    );
+    cy.get('[data-cy="advanced-search-clear-search"]').click();
+
+    cy.get('[data-cy="advanced-search-cqltxt"]').should("have.value", "");
+  });
 });
 
 describe("TextInputs test", () => {
@@ -102,26 +118,17 @@ describe("TextInputs test", () => {
 });
 
 describe("Dropdowns test", () => {
-//Todo: implement when dropdowns has been refactored
-    beforeEach(() => {
-        cy.visit("/iframe.html?id=advancedsearch-dropdownitems--dropdown-items-base");
-      });
-      
+  //Todo: implement when dropdowns has been refactored
+  beforeEach(() => {
+    cy.visit(
+      "/iframe.html?id=advancedsearch-dropdownitems--dropdown-items-base"
+    );
+  });
 
-      it('should select items from a checkbox dropdown', () => {
+  it("should select items from a checkbox dropdown", () => {});
 
-      }); 
-
-      it('should reset dropdown', () => {
-
-      }); 
-      it('search inside a dropdown', () => {
-
-      }); 
-      it('should select year range ', () => {
-
-      }); 
-      it('should select age range ', () => {
-
-      }); 
+  it("should reset dropdown", () => {});
+  it("search inside a dropdown", () => {});
+  it("should select year range ", () => {});
+  it("should select age range ", () => {});
 });
