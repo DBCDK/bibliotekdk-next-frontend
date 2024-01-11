@@ -1,4 +1,4 @@
-describe.skip(`Loans and reservations`, () => {
+describe(`Loans and reservations`, () => {
   //TODO https://dbcjira.atlassian.net/browse/BIBDK2021-2027
   it("Renders properly", () => {
     cy.visit(
@@ -72,5 +72,22 @@ describe.skip(`Loans and reservations`, () => {
         cy.get("[data-cy=dyn-cont-loan-return-date]").should("exist");
         cy.get("[data-cy=dyn-cont-loan-message]").should("exist");
       });
+  });
+  it("Fjernlån render properly", () => {
+    cy.visit(
+      "iframe.html?args=&id=profile-loans-and-reservations--loans-and-reservations-with-fjern-laan-story&viewMode=story"
+    );
+
+    cy.get("[data-cy=text-jeg-er-et-fjernlaan-1]").should("exist");
+    cy.get("[data-cy=creator]")
+      .should("exist")
+      .should("contain", "Munk Jensen, Sanne");
+    cy.get("[data-cy=link]").first().should("not.have.attr", "href");
+
+    cy.get("[data-cy=text-jeg-er-et-fjernlaan-2]").should("exist");
+    cy.get("[data-cy=creator]")
+      .should("exist")
+      .should("contain", "Carlander, Troels B.");
+    cy.get("[data-cy=link]").eq(2).should("not.have.attr", "href"); // 3 link in index 2 is the fjernlån under orders
   });
 });
