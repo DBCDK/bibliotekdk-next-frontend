@@ -23,7 +23,7 @@ function Label({
   className = "",
   for: htmlFor = "",
   dataCy,
-  ...props
+  skeleton,
 }) {
   // generate data-cy key if none given
   const key = dataCy || cyKey({ name: children, prefix: "label" });
@@ -34,7 +34,7 @@ function Label({
       className={`${styles.label} ${className}`}
       data-cy={key}
     >
-      <Text type="text1" skeleton={props.skeleton} lines={props.lines}>
+      <Text type="text2" skeleton={skeleton} lines={1}>
         {children}
       </Text>
     </label>

@@ -3159,6 +3159,10 @@
         "da": "For at bestille skal du vælge udgave eller artikel",
         "en": "LABEL: mangler oversættelse"
       },
+      "action-missing-pincode": {
+        "da": "Du mangler at angive en pinkode",
+        "en": "LABEL: Mangler oversættelse!"
+      },
       "approve-loaner-info": {
         "da": "Godkend låneroplysninger",
         "en": "Approve loaner information"
@@ -3226,6 +3230,18 @@
       "get-overview-2": {
         "da": "din profil",
         "en": "on your profile"
+      },
+      "pincode-placeholder": {
+        "da": "Skriv din pinkode fra biblioteket",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "pincode-heading": {
+        "da": "Biblioteket kræver en pinkode ved bestilling",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "pincode-input-label": {
+        "da": "Pinkode",
+        "en": "Pincode"
       }
     },
     "login": {

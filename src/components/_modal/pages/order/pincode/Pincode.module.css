@@ -1,0 +1,25 @@
+.pincode {
+  padding: 0 var(--pt2) var(--pt2) var(--pt2);
+}
+
+.divider {
+  margin-top: calc(var(--pt1) * -1);
+  margin-bottom: var(--pt2);
+}
+
+.heading {
+}
+
+.label {
+  padding-top: var(--pt2);
+  padding-bottom: var(--pt05);
+}
+
+.input {
+}
+
+@media (min-width: 576px) {
+  .pincode {
+    padding: 0 var(--pt6) var(--pt3) var(--pt6);
+  }
+}
