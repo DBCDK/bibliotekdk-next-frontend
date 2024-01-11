@@ -4,7 +4,7 @@ import { useData, useMutate } from "@/lib/api/api";
 import { useEffect, useState, useMemo } from "react";
 import * as bookmarkMutations from "@/lib/api/bookmarks.mutations";
 import * as bookmarkFragments from "@/lib/api/bookmarks.fragments";
-import { useSession } from "next-auth/react";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { getLocalStorageItem, setLocalStorageItem } from "@/lib/utils";
 import isEqual from "lodash/isEqual";
@@ -16,24 +16,24 @@ const ITEMS_PER_PAGE = 25;
 
 export const BookmarkSyncProvider = () => {
   const { syncCookieBookmarks } = useBookmarks();
-  const { data: session } = useSession();
+  const { hasCulrUniqueId } = useAuthentication();
 
   useEffect(() => {
     const sync = async () => {
       await syncCookieBookmarks();
     };
 
-    const hasCulrUniqueId = !!session?.user?.uniqueId;
     if (hasCulrUniqueId) {
       sync();
     }
-  }, [session]);
+  }, [hasCulrUniqueId]);
 
   return <></>;
 };
 
-const useBookmarksCore = ({ isMock = false, session }) => {
-  const hasCulrUniqueId = isMock ? false : !!session?.user?.uniqueId;
+const useBookmarksCore = ({ hasCulrUniqueId, isMock = false } = {}) => {
+  hasCulrUniqueId = isMock ? false : hasCulrUniqueId;
+
   const [sortBy, setSortBy] = useState("createdAt");
   const [currentPage, setCurrentPage] = useState(1);
   const breakpoint = useBreakpoint();
@@ -245,14 +245,16 @@ const useBookmarksCore = ({ isMock = false, session }) => {
    * Returns a of localbookmarks that corresponds to the current page of local bookmarks.
    */
   function currenPageBookmark(bookmarkToPaginate) {
-    const startIdx = isMobile ? 0 : (currentPage - 1) * ITEMS_PER_PAGE;
+    const startIdx = isMobile
+      ? 0
+      : (currentPage > 0 ? currentPage - 1 : currentPage) * ITEMS_PER_PAGE;
     const endIdx = isMobile
       ? startIdx + ITEMS_PER_PAGE * currentPage
       : startIdx + ITEMS_PER_PAGE;
     const currentPageBookmarks = bookmarkToPaginate.slice(startIdx, endIdx);
+
     return currentPageBookmarks;
   }
-
   // sort local bookmarks
   const sortedLocalBookmarks = useMemo(() => {
     return sortBookmarks(localBookmarks);
@@ -286,8 +288,8 @@ const useBookmarksCore = ({ isMock = false, session }) => {
 };
 
 const useBookmarkImpl = () => {
-  const { data: session } = useSession();
-  return useBookmarksCore({ session });
+  const { hasCulrUniqueId } = useAuthentication();
+  return useBookmarksCore({ hasCulrUniqueId });
 };
 
 const useBookmarkMock = () => {
@@ -372,6 +374,7 @@ export const usePopulateBookmarks = (bookmarks) => {
         work?.manifestations?.mostRelevant.filter((m) =>
           isMaterialTypesMatch(relevantMaterialTypes, m?.materialTypes)
         );
+
       const specificManifestation =
         manifestationWithCorrectMaterialTypes?.filter(
           (m) => m?.pid === bookmark?.materialId

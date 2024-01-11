@@ -175,7 +175,11 @@ export function Receipt({
                   })}
                 </Button>
               )}
-              <Button className={styles.close} onClick={() => modal.clear()}>
+              <Button
+                className={styles.close}
+                onClick={() => modal.clear()}
+                data-cy="button-close-receipt"
+              >
                 {Translate({ context: "general", label: "close" })}
               </Button>
             </div>

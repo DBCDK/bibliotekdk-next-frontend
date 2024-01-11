@@ -21,6 +21,7 @@ export function MaterialRowStory() {
         library="Herlev bibliotek"
         id="0122"
         type="LOAN"
+        dueDateString={new Date()}
       />
 
       <StoryTitle>Material Row - Order</StoryTitle>
@@ -33,6 +34,7 @@ export function MaterialRowStory() {
         library="Herlev bibliotek"
         id="0122"
         type="ORDER"
+        pickUpExpiryDate={new Date()}
       />
     </div>
   );

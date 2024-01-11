@@ -30,6 +30,7 @@ const EMaterialFilter = ({ context, active }) => {
   const { createdAtSort, titleSort } = useBookmarks();
   const { data: populatedBookmarks, isLoading: isPopulating } =
     usePopulateBookmarks(bookmarksOnlineAvailable);
+
   const [isLoading, setIsLoading] = useState(
     !bookmarksOnlineAvailable || isPopulating
   );
@@ -80,23 +81,25 @@ const EMaterialFilter = ({ context, active }) => {
         titleTag="h2"
         className={{ top: styles.top }}
       />
-      <Title
-        skeleton={isLoading}
-        tag="h3"
-        type="title6"
-        className={styles.subHeading}
-        lines={1}
-      >
-        <Translate
-          context={CONTEXT}
-          label={
-            bookmarksOnlineAvailable?.length === 1
-              ? "efilter-subheading-singular"
-              : "efilter-subheading"
-          }
-          vars={[bookmarksOnlineAvailable?.length]}
-        />
-      </Title>
+      {bookmarksOnlineAvailable?.length > 0 && (
+        <Title
+          skeleton={isLoading}
+          tag="h3"
+          type="title6"
+          className={styles.subHeading}
+          lines={1}
+        >
+          <Translate
+            context={CONTEXT}
+            label={
+              bookmarksOnlineAvailable?.length === 1
+                ? "efilter-subheading-singular"
+                : "efilter-subheading"
+            }
+            vars={[bookmarksOnlineAvailable?.length]}
+          />
+        </Title>
+      )}
       {isLoading ? (
         [...Array(SKELETON_ROW_AMOUNT).keys()].map((_, i) => (
           <Text skeleton={true} key={"skeleton-row-" + i} />
@@ -142,6 +145,7 @@ const EMaterialFilter = ({ context, active }) => {
         skeleton={isLoading}
         onClick={bookmarksToOrder?.length === 0 ? onBackClick : onNextClick}
         className={styles.nextButton}
+        dataCy="multiorder-next-button"
       >
         <Translate
           context={CONTEXT}

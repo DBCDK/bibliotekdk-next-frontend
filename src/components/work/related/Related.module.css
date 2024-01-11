@@ -27,3 +27,13 @@
   display: inline;
   margin: 0 var(--pt3) var(--pt2) 0;
 }
+
+/* tablet and down */
+@media (max-width: 768px) {
+  .words {
+    display: block;
+    white-space: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+}

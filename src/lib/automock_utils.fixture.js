@@ -389,7 +389,10 @@ const MANIFESTATION_10 = {
   ownerWork: {
     workId: "some-work-id-8",
   },
-  titles: [{ full: "Lær at læse med Hugo og Rita" }],
+  titles: {
+    full: ["Lær at læse med Hugo og Rita"],
+    main: ["Lær at læse med Hugo og Rita"],
+  },
   workTypes: ["LITERATURE"],
   tableOfContents: {
     heading: null,
@@ -567,11 +570,56 @@ const WORK_7 = {
 
 const WORK_8 = {
   workId: "some-work-id-8",
-  titles: { full: ["Lær at læse med Hugo og Rita 3"] },
+  titles: {
+    full: ["Lær at læse med Hugo og Rita 3"],
+    main: ["Lær at læse med Hugo og Rita 3"],
+  },
   creators: [{ display: "Linoleum Gummigulv" }],
   manifestations: {
     mostRelevant: [MANIFESTATION_10],
     all: [MANIFESTATION_10],
+  },
+};
+
+// we need some works with correct constructed workIds - that is 'work-of:some-pid'
+// .. sometimes the some-pid parts changes
+const WORK_11 = {
+  workId: "work-of:some-pid-8",
+  titles: {
+    full: ["Lær at læse med Hugo og Rita 3"],
+    main: ["Lær at læse med Hugo og Rita 3"],
+  },
+  creators: [{ display: "Linoleum Gummigulv" }],
+  manifestations: {
+    mostRelevant: [MANIFESTATION_8],
+    all: [MANIFESTATION_8],
+  },
+};
+
+const WORK_12 = {
+  workId: "work-of:some-pid-7",
+  manifestations: { all: [MANIFESTATION_7], mostRelevant: [MANIFESTATION_7] },
+  workTypes: ["LITERATURE"],
+  titles: {
+    full: [
+      "Hugo i Sølvskoven 3½",
+      "Ritas mellemværende i Gulvskoven med Grullerne",
+    ],
+  },
+  creators: [{ display: "Børge 'Linoleum' Skovgulv Gummigulv" }],
+  materialTypes: [
+    {
+      materialTypeSpecific: { display: "bog", code: "BOOK" },
+      materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+    },
+  ],
+  relations: {
+    continues: [MANIFESTATION_1, MANIFESTATION_2, MANIFESTATION_3],
+    continuedIn: [MANIFESTATION_4, MANIFESTATION_5, MANIFESTATION_6],
+    hasAdaptation: [],
+    isAdaptationOf: [],
+    discusses: [],
+    discussedIn: [],
   },
 };
 
@@ -590,6 +638,8 @@ const ALL_WORKS = [
   WORK_6,
   WORK_7,
   WORK_8,
+  WORK_11,
+  WORK_12,
 ];
 
 const BORROWER_STATUS_TRUE = {
@@ -1406,6 +1456,7 @@ const USER_AGENCY = {
     {
       agencyId: "726500",
       agencyName: "Roskilde Bibliotekerne",
+      agencyType: "FOLKEBIBLIOTEK",
       branchId: "726500",
       name: "Roskilde Bibliotek",
     },
@@ -1426,14 +1477,18 @@ const USER_LIBRARIES = [
   {
     agencyName: "Silkeborg Biblioteker",
     agencyId: "774000",
+    agencyType: "FOLKEBIBLIOTEK",
   },
   {
     agencyId: "710100",
     agencyName: "Københavns Biblioteker",
+    agencyType: "FOLKEBIBLIOTEK",
   },
   {
     agencyName: "Syddansk Universitetsbibliotek",
     agencyId: "820030",
+    // this is a university - @TODO correct agenctyType
+    agencyType: "FOLKEBIBLIOTEK",
   },
 ];
 
@@ -1468,6 +1523,8 @@ export default function automock_utils() {
     WORK_6,
     WORK_7,
     WORK_8,
+    WORK_11,
+    WORK_12,
     ALL_WORKS,
     BORROWER_STATUS_TRUE,
     BORROWER_STATUS_FALSE,

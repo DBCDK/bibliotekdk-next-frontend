@@ -6,7 +6,7 @@
   padding-bottom: var(--pt4);
 }
 
-@media (min-width: 414px) {
+@media (min-width: 415px) {
   .withLoanerInfoButton,
   .chooseLoginType {
     display: none;
