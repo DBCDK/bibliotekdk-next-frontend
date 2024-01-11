@@ -44,6 +44,10 @@ export function Edition({
   const { periodicaForm } = context;
   const { isArticle, isPeriodicaLike } = inferredAccessTypes;
 
+  if (true || !manifestation?.[0]) {
+    return <div>No mani</div>;
+  }
+
   const { flatMaterialTypes } = manifestationMaterialTypeFactory([
     manifestation,
   ]);
@@ -252,6 +256,13 @@ export default function Wrap({
       manifestationMaterialTypeFactory(manifestations);
     const firstManifestation = flattenedGroupedSortedManifestations?.[0];
 
+    //TODO also add here if no manifestation
+    if (true || !firstManifestation) {
+      return (
+        <div>Vi kunne desværre ikke finde værket. Kontakt dit bibliotek.</div>
+      );
+    }
+
     const children = [];
 
     if (isPeriodicaLike) {
@@ -291,6 +302,8 @@ export default function Wrap({
         isPeriodicaLike,
         isDigitalCopy,
         isDeliveredByDigitalArticleService,
+        manifestationIsLoading,
+        isLoading: true || manifestationIsLoading,
       });
 
     return (

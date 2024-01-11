@@ -642,7 +642,30 @@ export function templateImageToLeft({
   elementContainerClassName,
   imageContainerStyle,
   linkToWork = false,
+  isLoading = true,
 }) {
+  if (isLoading) {
+    return (
+      <div>
+        <Text
+          {...propFunc("text1", 2)}
+          title="lala"
+          skeleton={true}
+          clamp={true}
+          lines={2}
+        />
+        <Text
+          {...propFunc("text4", 1)}
+          title=""
+          className={styles.type__image_to_left_version}
+          skeleton={true}
+          clamp={true}
+          lines={2}
+        />
+      </div>
+    );
+  }
+
   const fullTitle =
     singleManifestation === true
       ? material?.titles?.full?.join(": ")
@@ -681,11 +704,15 @@ export function templateImageToLeft({
     imageContainerStyle: imageContainerStyle,
     children: (
       <div>
-        <Text {...propFunc("text1", 2)} title={fullTitle}>
+        <Text {...propFunc("text1", 2)} title={fullTitle} skeleton={isLoading}>
           {fullTitle}
         </Text>
         {creatorsString && (
-          <Text {...propFunc("text2", 2)} title={creatorsString}>
+          <Text
+            {...propFunc("text2", 2)}
+            title={creatorsString}
+            skeleton={isLoading}
+          >
             {creatorsString}
           </Text>
         )}
@@ -693,11 +720,16 @@ export function templateImageToLeft({
           {...propFunc("text4", 1)}
           title={formattedMaterialTypes}
           className={styles.type__image_to_left_version}
+          skeleton={isLoading}
         >
           {formattedMaterialTypes}
         </Text>
         {!isPeriodicaLike && !isDigitalArticle && !hideEditionText && (
-          <Text {...propFunc("text3", 1)} title={formattedMaterialTypes}>
+          <Text
+            {...propFunc("text3", 1)}
+            title={formattedMaterialTypes}
+            skeleton={isLoading}
+          >
             {singleManifestation
               ? edition
               : Translate({
