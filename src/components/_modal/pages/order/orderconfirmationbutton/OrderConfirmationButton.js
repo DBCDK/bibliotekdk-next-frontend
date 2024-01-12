@@ -117,6 +117,7 @@ export default function Wrap({
 
   const isLoading = isWorkLoading || isPickupBranchLoading;
 
+  // TODO: save this check for now
   // has pincode if required
   // const hasPincode = !validated?.details?.hasPincode?.status;
 
