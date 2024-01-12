@@ -21,6 +21,10 @@
   align-items: center;
   cursor: pointer;
 }
+.selectAllButton label {
+  cursor: pointer;
+}
+
 .selectAllButton:focus-visible {
   outline: 1px solid var(--blue);
   outline-offset: var(--pt05);
