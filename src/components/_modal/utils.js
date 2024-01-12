@@ -122,6 +122,7 @@ export function handleSubmitOrder(
   pids,
   pickupBranch,
   periodicaForm,
+  pincode,
   loanerInfo,
   orderMutation
 ) {
@@ -129,7 +130,7 @@ export function handleSubmitOrder(
     orderMutations.submitOrder({
       pids,
       branchId: pickupBranch.branchId,
-      userParameters: loanerInfo.userParameters,
+      userParameters: { ...loanerInfo.userParameters, pincode },
       ...periodicaForm,
     })
   );

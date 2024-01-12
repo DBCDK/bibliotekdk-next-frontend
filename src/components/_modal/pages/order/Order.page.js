@@ -211,8 +211,6 @@ function Order({
     context?.periodicaForm?.publicationDateOfComponent,
   ]);
 
-  console.log("... validated", validated);
-
   function onSubmitOrder() {
     if (validated.status) {
       modal.push("receipt", {
@@ -233,7 +231,8 @@ function Order({
       if (availableAsDigitalCopy) {
         onArticleSubmit(pid, context?.periodicaForm);
       } else {
-        onSubmit && onSubmit(orderPids, pickupBranch, context?.periodicaForm);
+        onSubmit &&
+          onSubmit(orderPids, pickupBranch, context?.periodicaForm, pincode);
       }
     } else {
       setHasValidationErrors(true);
@@ -421,11 +420,12 @@ export default function Wrap(props) {
           articleOrderMutation
         )
       }
-      onSubmit={(pids, pickupBranch, periodicaForm = {}) =>
+      onSubmit={(pids, pickupBranch, periodicaForm = {}, pincode) =>
         handleSubmitOrder(
           pids,
           pickupBranch,
           periodicaForm,
+          pincode,
           loanerInfo,
           orderMutation
         )

@@ -9,7 +9,7 @@ import Translate from "@/components/base/translate/Translate";
 import Text from "@/components/base/text";
 import Divider from "@/components/base/divider/Divider";
 
-export function Pincode({ isLoading, isFFUAgency, onChange, error }) {
+function Pincode({ isLoading, isFFUAgency, onChange, error }) {
   if (!isLoading && !isFFUAgency) {
     return null;
   }
@@ -36,6 +36,7 @@ export function Pincode({ isLoading, isFFUAgency, onChange, error }) {
         skeleton={isLoading}
         className={styles.input}
         onChange={(e) => onChange?.(e.target.value)}
+        autocomplete="off"
         placeholder={Translate({
           context: "order",
           label: "pincode-placeholder",
