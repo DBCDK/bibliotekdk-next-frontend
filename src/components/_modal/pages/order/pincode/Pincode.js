@@ -14,8 +14,6 @@ export function Pincode({ isLoading, isFFUAgency, onChange, error }) {
     return null;
   }
 
-  console.log("error", error);
-
   return (
     <div className={styles.pincode}>
       <Divider className={styles.divider} />
@@ -47,7 +45,7 @@ export function Pincode({ isLoading, isFFUAgency, onChange, error }) {
   );
 }
 
-export default function Wrap({ onChange, validated, hasValidationErrors }) {
+export default function Wrap({ onChange, validated }) {
   const { loanerInfo } = useLoanerInfo();
 
   const { data, isLoading } = useData(
@@ -55,12 +53,13 @@ export default function Wrap({ onChange, validated, hasValidationErrors }) {
   );
 
   const hasError = !validated?.details?.hasPincode?.status;
+  const hasTry = validated.hasTry;
 
   return (
     <Pincode
       isLoading={isLoading}
       isFFUAgency={!!data?.branches?.hitcount}
-      error={hasError}
+      error={hasTry && hasError}
       onChange={onChange}
     />
   );

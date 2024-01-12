@@ -125,14 +125,14 @@ export function handleSubmitOrder(
   loanerInfo,
   orderMutation
 ) {
-  // orderMutation.post(
-  //   orderMutations.submitOrder({
-  //     pids,
-  //     branchId: pickupBranch.branchId,
-  //     userParameters: loanerInfo.userParameters,
-  //     ...periodicaForm,
-  //   })
-  // );
+  orderMutation.post(
+    orderMutations.submitOrder({
+      pids,
+      branchId: pickupBranch.branchId,
+      userParameters: loanerInfo.userParameters,
+      ...periodicaForm,
+    })
+  );
 }
 
 export function highlightMarkedWords(

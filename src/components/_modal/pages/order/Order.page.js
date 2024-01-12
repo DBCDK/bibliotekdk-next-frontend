@@ -275,11 +275,7 @@ function Order({
         setMail={setMail}
         email={mail}
       />
-      <Pincode
-        validated={validated}
-        hasValidationErrors={hasValidationErrors}
-        onChange={(val) => setPincode(val)}
-      />
+      <Pincode validated={validated} onChange={(val) => setPincode(val)} />
       <OrderConfirmationButton
         email={mail}
         context={context}
