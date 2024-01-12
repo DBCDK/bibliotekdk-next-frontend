@@ -21,10 +21,12 @@ const {
   USER_3,
   USER_6,
   USER_8,
+  USER_10,
   BRANCH_1,
   BRANCH_2,
   BRANCH_3,
   BRANCH_4,
+  BRANCH_7,
   BRANCH_8,
   DEFAULT_STORY_PARAMETERS,
   useMockLoanerInfo,
@@ -61,6 +63,7 @@ function OrderPageComponentBuilder({
 }
 
 // -------------------- Stories come here -----------------------
+
 export function OrderViaILL() {
   return (
     <OrderPageComponentBuilder
@@ -81,6 +84,35 @@ OrderViaILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
         },
         BranchResult: {
           hitcount: () => 0,
+        },
+      },
+    },
+  },
+});
+
+export function FFUOrderViaILL() {
+  return (
+    <OrderPageComponentBuilder
+      title="FFU Order via ILL"
+      description="Pincode field should be visible for FFU users"
+      workId={"some-work-id-1"}
+      selectedPids={["some-pid-1"]}
+    />
+  );
+}
+
+FFUOrderViaILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {
+        Query: {
+          user: () => USER_10,
+          branches: () => {
+            return {
+              borrowerStatus: BORROWER_STATUS_TRUE,
+              result: [BRANCH_7],
+            };
+          },
         },
       },
     },
@@ -110,9 +142,6 @@ OrderPhysicalMaterialFails.story = merge({}, DEFAULT_STORY_PARAMETERS, {
               ok: false,
             };
           },
-        },
-        BranchResult: {
-          hitcount: () => 0,
         },
       },
     },

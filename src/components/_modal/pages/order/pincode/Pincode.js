@@ -32,6 +32,7 @@ function Pincode({ isLoading, isFFUAgency, onChange, error }) {
       <Input
         id="pincode"
         type="password"
+        dataCy="pincode-input"
         invalid={error}
         skeleton={isLoading}
         onChange={(e) => onChange?.(e.target.value)}

@@ -790,10 +790,12 @@ const BRANCH_7 = {
   name: "Herlige Lev FFU - Branch with FFU holdings",
   branchId: "800014",
   agencyId: "800010",
+  agencyType: "FORSKNINGSBIBLIOTEK",
   agencyName: "Special FFUs",
   orderPolicy: {
     orderPossible: true,
   },
+  borrowerCheck: true,
   holdingStatus: {
     branchId: "800014",
     expectedDelivery: TODAY,
@@ -1043,6 +1045,18 @@ const USER_8 = {
   name: "Some Name",
   mail: "some@mail.dk",
   agencies: [],
+};
+
+const USER_10 = {
+  name: null,
+  mail: null,
+  rights: { digitalArticleService: false },
+  agencies: [
+    {
+      borrowerStatus: BORROWER_STATUS_TRUE,
+      result: [BRANCH_7],
+    },
+  ],
 };
 
 const REVIEW_1 = {
@@ -1598,6 +1612,7 @@ export default function automock_utils() {
     USER_7,
     USER_8,
     USER_9,
+    USER_10,
     REVIEW_1,
     DEFAULT_STORY_PARAMETERS,
     useMockLoanerInfo,
