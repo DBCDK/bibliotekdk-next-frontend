@@ -11,7 +11,7 @@ import {
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { arangeLoanerInfo } from "@/lib/userdataFactoryUtils";
 import Link from "@/components/base/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import {
   formatMaterialTypesToPresentation,
@@ -94,7 +94,22 @@ const LoansAndReservations = () => {
   const { loanerInfo, isLoading } = useLoanerInfo();
   const { debt, agencies, orders, loans } = arangeLoanerInfo(loanerInfo);
   const [removedOrderId, setRemovedOrderId] = useState("");
+const [orderList, setOrderList] = useState([])
+const onRemoveOrderId = (orderid)=>{
+  setRemovedOrderId(orderid)
+    // Filter out the order with the specified orderId
+    const updatedOrderList = orderList.filter(order => order.orderId !== orderid);
 
+    // Update the state with the new order list
+    setOrderList(updatedOrderList);
+}
+useEffect(()=>{
+  if(Array.isArray(orders)){
+    setOrderList(orders)
+
+  }
+}, [orders])
+console.log('orders',orders)
   function getAgencyString(agencyId) {
     if (!agencies) return "";
     return agencies.map((agency) => {
@@ -102,6 +117,13 @@ const LoansAndReservations = () => {
         return agency.result[0].agencyName;
     });
   }
+console.log('\n\n\n\n\n\n')
+console.log('orderList',orderList)
+console.log('orders',orders)
+console.log('removedOrderId',removedOrderId)
+
+
+console.log('\n\n\n\n\n\n')
 
   return (
     <ProfileLayout
@@ -259,7 +281,7 @@ const LoansAndReservations = () => {
               )}`}
             >
               {Translate({ context: "profile", label: "orders" })} (
-              {orders?.length})
+              {orderList?.length})
             </Title>
           ) : (
             <Title
@@ -293,8 +315,8 @@ const LoansAndReservations = () => {
               library=""
             />
           ))
-        ) : orders && orders.length !== 0 ? (
-          orders.map((order, i) => {
+        ) : orderList && orderList.length !== 0 ? (
+          orderList.map((order, i) => {
             // Log the agencyId before passing it to the MaterialRow component
             return (
               <MaterialRow
@@ -303,7 +325,7 @@ const LoansAndReservations = () => {
                   agencyId: order.pickUpBranch.agencyId,
                 })}
                 removedOrderId={removedOrderId}
-                setRemovedOrderId={setRemovedOrderId}
+                setRemovedOrderId={onRemoveOrderId}
                 key={`loan-${order.loanId}-#${i}`}
                 dataCy={`order-${i}`}
               />
