@@ -52,8 +52,6 @@ export default function Wrap({ onChange, validated }) {
 
   const { data, isLoading } = useData(branchId && isFFUAgency({ branchId }));
 
-  console.log("ccc", loanerInfo.pickupBranch, data);
-
   const hasError = !validated?.details?.hasPincode?.status;
   const hasTry = validated.hasTry;
 
