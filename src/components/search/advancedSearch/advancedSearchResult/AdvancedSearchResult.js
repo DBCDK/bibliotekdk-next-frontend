@@ -14,6 +14,8 @@ import AdvancedSearchSort from "@/components/search/advancedSearch/advancedSearc
 import TopBar from "@/components/search/advancedSearch/advancedSearchResult/topBar/TopBar";
 import Title from "@/components/base/title";
 import { NoHitSearch } from "@/components/search/advancedSearch/advancedSearchResult/noHitSearch/NoHitSearch";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
+import { useEffect, useState } from "react";
 
 export function AdvancedSearchResult({
   pageNo,
@@ -106,6 +108,15 @@ export default function Wrap({ onWorkClick, onPageChange }) {
   const cqlQuery = cql || convertStateToCql(fieldSearch);
 
   const showResult = !isEmpty(fieldSearch) || !isEmpty(cql);
+  const breakpoint = useBreakpoint();
+
+  const isMobile = breakpoint === "xs" || breakpoint === "sm";
+  const [searchresult, setSearchresult] = useState({
+    works: [],
+    hitcount: 0,
+    errorMessage: null,
+    isLoading: false,
+  });
 
   // use the useData hook to fetch data
   const bigResponse = useData(
@@ -116,9 +127,33 @@ export default function Wrap({ onWorkClick, onPageChange }) {
       ...(!isEmpty(sort) && { sort: sort }),
     })
   );
-  const parsedResponse = parseResponse(bigResponse);
 
-  if (parsedResponse.isLoading) {
+  useEffect(() => {
+    const parsedResponse = parseResponse(bigResponse);
+    if (parsedResponse) {
+      if (isMobile) {
+        // Ensure that both prevSearchResult.works and parsedResponse.works are arrays
+
+        setSearchresult((prevSearchResult) => {
+          const previousWorks =
+            prevSearchResult?.works?.length > 0 ? prevSearchResult?.works : [];
+          const newWorks =
+            parsedResponse?.works?.length > 0 ? parsedResponse?.works : [];
+
+          return {
+            ...parsedResponse,
+            works: [...previousWorks, ...newWorks],
+          };
+        });
+      } else {
+        // Replace the entire object for non-mobile devices
+        setSearchresult(parsedResponse);
+      }
+    }
+  }, [bigResponse.data]);
+
+  
+  if (searchresult.isLoading) {
     return (
       <>
         <TopBar />
@@ -140,10 +175,10 @@ export default function Wrap({ onWorkClick, onPageChange }) {
     );
   }
   //update searchhistory
-  if (!parsedResponse?.errorMessage && !parsedResponse.isLoading) {
+  if (!searchresult?.errorMessage && !searchresult.isLoading) {
     // make an object for searchhistory @TODO .. the right object please
     const searchHistoryObj = {
-      hitcount: parsedResponse?.hitcount,
+      hitcount: searchresult?.hitcount,
       fieldSearch: fieldSearch || "",
       cql: cqlQuery,
     };
@@ -153,14 +188,14 @@ export default function Wrap({ onWorkClick, onPageChange }) {
   if (!showResult) {
     return null;
   }
-
+  console.log("searchresult", JSON.stringify(searchresult));
   return (
     <AdvancedSearchResult
       pageNo={pageNo}
       onWorkClick={onWorkClick}
       onPageChange={onPageChange}
-      results={parsedResponse}
-      error={parsedResponse.errorMessage}
+      results={searchresult}
+      error={searchresult.errorMessage}
       setShowPopover={setShowPopover}
     />
   );
