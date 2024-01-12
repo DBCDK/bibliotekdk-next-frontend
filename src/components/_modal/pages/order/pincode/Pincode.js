@@ -17,7 +17,7 @@ function Pincode({ isLoading, isFFUAgency, onChange, error }) {
   return (
     <div className={styles.pincode}>
       <Divider className={styles.divider} />
-      <Text type="text1" className={styles.heading}>
+      <Text type="text1">
         {Translate({
           context: "order",
           label: "pincode-heading",
@@ -34,7 +34,6 @@ function Pincode({ isLoading, isFFUAgency, onChange, error }) {
         type="password"
         invalid={error}
         skeleton={isLoading}
-        className={styles.input}
         onChange={(e) => onChange?.(e.target.value)}
         autocomplete="off"
         placeholder={Translate({
