@@ -14,6 +14,7 @@
   gap: var(--pt1);
   align-content: center;
   justify-content: space-between;
+  color: black;
 }
 
 .menuButton:hover {
