@@ -66,6 +66,8 @@ export function basic() {
           agencyId
           loanId
           dueDate
+          title
+          creator
           manifestation {
             pid
             ...manifestationTitleFragment
