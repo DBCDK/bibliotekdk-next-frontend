@@ -40,15 +40,16 @@ export const dataReducer = (dataType, data) => {
       };
     }
     case "LOAN": {
-      //some loans dont have manifestation
+      //fjernlån loans dont have manifestation
       return {
         type: "LOAN",
         image: data?.manifestation?.cover?.thumbnail,
-        title: data?.manifestation?.titles?.main?.[0],
+        title: data?.manifestation?.titles?.main?.[0] || data?.title,
         titles: data?.manifestation?.titles,
-        creator: extractCreatorsPrioritiseCorporation(
-          data?.manifestation?.creators
-        )?.[0]?.display,
+        creator:
+          extractCreatorsPrioritiseCorporation(
+            data?.manifestation?.creators
+          )?.[0]?.display || data?.creator,
         creators: data?.manifestation?.creators,
         materialType: materialTypesPresentation,
         flatMaterialTypes: flatMaterialTypes,
@@ -60,7 +61,7 @@ export const dataReducer = (dataType, data) => {
       };
     }
     case "ORDER": {
-      //some orders dont have manifestation
+      //fjernlån orders dont have manifestation
       return {
         type: "ORDER",
         image: data?.manifestation?.cover?.thumbnail,
@@ -79,7 +80,7 @@ export const dataReducer = (dataType, data) => {
         holdQueuePosition: data?.holdQueuePosition,
         pickUpExpiryDate: data?.pickUpExpiryDate,
         id: data?.orderId,
-        workId: "work-of:" + data?.manifestation?.pid,
+        workId: data?.manifestation?.ownerWork?.workId,
         orderMutation: data?.orderMutation,
       };
     }

@@ -22,6 +22,7 @@ import {
   formatMaterialTypesToPresentation,
   formatMaterialTypesToUrl,
 } from "@/lib/manifestationFactoryUtils";
+import isEmpty from "lodash/isEmpty";
 
 const OrderColumn = ({ pickUpExpiryDate, holdQueuePosition }) => {
   const breakpoint = useBreakpoint();
@@ -191,6 +192,16 @@ const MaterialRowReservation = (props) => {
     );
   }
 
+  const href = getWorkUrlForProfile({
+    workId: workId,
+    pid: pid,
+    materialTypeAsUrl: formatMaterialTypesToUrl(flatMaterialTypes),
+    titles: titles,
+    creators: creators,
+  });
+
+  const hasWorkUrl = !isEmpty(href);
+
   return (
     <>
       {hasDeleteError && (
@@ -231,16 +242,9 @@ const MaterialRowReservation = (props) => {
                       keepVisible: true,
                     },
                   }}
-                  href={getWorkUrlForProfile({
-                    workId: workId,
-                    pid: pid,
-                    materialTypeAsUrl:
-                      formatMaterialTypesToUrl(flatMaterialTypes),
-                    titles: titles,
-                    creators: creators,
-                    scrollToEdition: true,
-                  })}
-                  className={sharedStyles.blackUnderline}
+                  disabled={!hasWorkUrl}
+                  href={href}
+                  className={hasWorkUrl ? sharedStyles.blackUnderline : ""}
                 >
                   {children}
                 </Link>

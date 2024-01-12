@@ -22,6 +22,7 @@ import {
   formatMaterialTypesToPresentation,
   formatMaterialTypesToUrl,
 } from "@/lib/manifestationFactoryUtils";
+import isEmpty from "lodash/isEmpty";
 
 // Set to when red text should be used for remaining loan days
 const DAYS_TO_COUNTDOWN_RED = 5;
@@ -227,6 +228,15 @@ const MaterialRowLoan = (props) => {
     );
   }
 
+  const href = getWorkUrlForProfile({
+    workId: workId,
+    materialTypeAsUrl: formatMaterialTypesToUrl(flatMaterialTypes),
+    titles: titles,
+    creators: creators,
+  });
+
+  const hasWorkUrl = !isEmpty(href);
+
   return (
     <article
       key={"article" + materialId} //to avoid rerendering
@@ -257,15 +267,9 @@ const MaterialRowLoan = (props) => {
                     keepVisible: true,
                   },
                 }}
-                href={getWorkUrlForProfile({
-                  workId: workId,
-                  materialTypeAsUrl:
-                    formatMaterialTypesToUrl(flatMaterialTypes),
-                  titles: titles,
-                  creators: creators,
-                  scrollToEdition: true,
-                })}
-                className={sharedStyles.blackUnderline}
+                disabled={!hasWorkUrl}
+                href={href}
+                className={hasWorkUrl ? sharedStyles.blackUnderline : ""}
               >
                 {children}
               </Link>
