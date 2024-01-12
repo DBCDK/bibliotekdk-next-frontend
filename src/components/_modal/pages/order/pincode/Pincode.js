@@ -49,9 +49,11 @@ function Pincode({ isLoading, isFFUAgency, onChange, error }) {
 export default function Wrap({ onChange, validated }) {
   const { loanerInfo } = useLoanerInfo();
 
-  const { data, isLoading } = useData(
-    isFFUAgency({ branchId: loanerInfo.pickupBranch })
-  );
+  const branchId = loanerInfo.pickupBranch;
+
+  const { data, isLoading } = useData(branchId && isFFUAgency({ branchId }));
+
+  console.log("ccc", loanerInfo.pickupBranch, data);
 
   const hasError = !validated?.details?.hasPincode?.status;
   const hasTry = validated.hasTry;

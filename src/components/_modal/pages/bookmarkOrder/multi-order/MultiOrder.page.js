@@ -44,6 +44,12 @@ const createOrders = async ({
   periodicaForms,
   orderMutation,
 }) => {
+  // merge pincode into userParameters
+  let userParameters = loanerInfo.userParameters;
+  if (pincode) {
+    userParameters = { ...userParameters, pincode };
+  }
+
   await orderMutation.post(
     orderMutations.submitMultipleOrders({
       materialsToOrder: materials.map((material) => {
@@ -61,7 +67,7 @@ const createOrders = async ({
         };
       }),
       branchId: pickupBranch.branchId,
-      userParameters: { ...loanerInfo.userParameters, pincode },
+      userParameters,
     })
   );
 };

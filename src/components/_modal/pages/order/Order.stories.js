@@ -79,6 +79,9 @@ OrderViaILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
         Query: {
           user: () => ({ ...USER_1, rights: { digitalArticleService: false } }),
         },
+        BranchResult: {
+          hitcount: () => 0,
+        },
       },
     },
   },
@@ -107,6 +110,9 @@ OrderPhysicalMaterialFails.story = merge({}, DEFAULT_STORY_PARAMETERS, {
               ok: false,
             };
           },
+        },
+        BranchResult: {
+          hitcount: () => 0,
         },
       },
     },

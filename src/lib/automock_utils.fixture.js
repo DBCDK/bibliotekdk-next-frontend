@@ -654,6 +654,7 @@ const BORROWER_STATUS_FALSE = {
 
 const BRANCH_1 = {
   agencyName: "Agency 1",
+  agencyType: "FOLKEBIBLIOTEK",
   agencyId: "1",
   branchId: "1237",
   name: "Test Bib - only physical via ILL",
@@ -666,6 +667,7 @@ const BRANCH_1 = {
 };
 const BRANCH_2 = {
   agencyName: "Agency 1",
+  agencyType: "FORSKNINGSBIBLIOTEK",
   branchId: "123",
   name: "Test Bib - no orders here",
   orderPolicy: {

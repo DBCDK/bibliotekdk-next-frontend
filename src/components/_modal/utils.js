@@ -126,11 +126,17 @@ export function handleSubmitOrder(
   loanerInfo,
   orderMutation
 ) {
+  // merge pincode into userParameters
+  let userParameters = loanerInfo.userParameters;
+  if (pincode) {
+    userParameters = { ...userParameters, pincode };
+  }
+
   orderMutation.post(
     orderMutations.submitOrder({
       pids,
       branchId: pickupBranch.branchId,
-      userParameters: { ...loanerInfo.userParameters, pincode },
+      userParameters,
       ...periodicaForm,
     })
   );

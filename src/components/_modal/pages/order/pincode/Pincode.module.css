@@ -7,15 +7,9 @@
   margin-bottom: var(--pt2);
 }
 
-.heading {
-}
-
 .label {
   padding-top: var(--pt2);
   padding-bottom: var(--pt05);
-}
-
-.input {
 }
 
 @media (min-width: 576px) {
