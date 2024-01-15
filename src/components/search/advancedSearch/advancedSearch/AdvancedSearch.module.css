@@ -48,3 +48,13 @@
   align-items: end;
   display: flex;
 }
+
+@media (max-width: 768px) {
+  .container {
+    border: 2px solid red;
+  }
+
+  .buttonContainer {
+    justify-content: start;
+  }
+}
