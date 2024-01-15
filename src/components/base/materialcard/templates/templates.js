@@ -642,30 +642,8 @@ export function templateImageToLeft({
   elementContainerClassName,
   imageContainerStyle,
   linkToWork = false,
-  isLoading = true,
+  isLoading,
 }) {
-  if (isLoading) {
-    return (
-      <div>
-        <Text
-          {...propFunc("text1", 2)}
-          title="lala"
-          skeleton={true}
-          clamp={true}
-          lines={2}
-        />
-        <Text
-          {...propFunc("text4", 1)}
-          title=""
-          className={styles.type__image_to_left_version}
-          skeleton={true}
-          clamp={true}
-          lines={2}
-        />
-      </div>
-    );
-  }
-
   const fullTitle =
     singleManifestation === true
       ? material?.titles?.full?.join(": ")
