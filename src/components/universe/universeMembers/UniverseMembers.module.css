@@ -16,8 +16,6 @@
   flex-direction: column;
 }
 
-
-
 @media (min-width: 364px) {
   .section_flex {
     grid-template-columns: repeat(2, minmax(0, 1fr));
