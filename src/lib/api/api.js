@@ -240,7 +240,9 @@ function useFetcherImpl() {
  */
 function useKeyGenerator() {
   const accessToken = useAccessToken();
-  return (query) => query && generateKey({ ...query, accessToken } || "");
+
+  return (query) =>
+    accessToken && query && generateKey({ ...query, accessToken } || "");
 }
 
 export const ApiEnums = Object.freeze({

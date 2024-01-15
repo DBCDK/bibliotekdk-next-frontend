@@ -99,8 +99,8 @@ export function getSeriesUrl(fullTitle, workId) {
  * @param {string} workId
  * @returns {{query: {universeTitle: string, workId: string, universeNumber?: string}, pathname: string}}
  */
-export function getUniverseUrl(fullTitle, workId) {
-  return `/univers/${encodeString(fullTitle)}/${workId}`;
+export function getUniverseUrl(fullTitle, key) {
+  return `/univers/${encodeString(fullTitle)}/${key}`;
 }
 
 /**
