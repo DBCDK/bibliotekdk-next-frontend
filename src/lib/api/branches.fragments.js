@@ -138,6 +138,9 @@ export function isFFUAgency({ branchId }) {
     query isFFUAgency($branchId: String!) {
       branches(branchId: $branchId, agencyTypes: [FORSKNINGSBIBLIOTEK]) {
         hitcount
+        result {
+          borrowerCheck
+        }
       }
     }`,
     variables: { branchId },
@@ -161,7 +164,6 @@ export function checkBlockedUser({ branchId }) {
           borrowerCheck
           agencyName
         	branchWebsiteUrl
-
         }
       }
       monitor(name: "bibdknext_CheckBlockedUser")

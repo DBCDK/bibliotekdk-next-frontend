@@ -9,11 +9,7 @@ import Translate from "@/components/base/translate/Translate";
 import Text from "@/components/base/text";
 import Divider from "@/components/base/divider/Divider";
 
-function Pincode({ isLoading, isFFUAgency, onChange, error }) {
-  if (!isLoading && !isFFUAgency) {
-    return null;
-  }
-
+function Pincode({ isLoading, onChange, error }) {
   return (
     <div className={styles.pincode}>
       <Divider className={styles.divider} />
@@ -53,13 +49,20 @@ export default function Wrap({ onChange, validated }) {
 
   const { data, isLoading } = useData(branchId && isFFUAgency({ branchId }));
 
+  const isFFU = !!data?.branches?.hitcount;
+  const hasBorchk = !!data?.branches?.result?.[0]?.borrowerCheck;
+
   const hasError = !validated?.details?.hasPincode?.status;
   const hasTry = validated.hasTry;
+
+  if (!isFFU || (isFFU && !hasBorchk)) {
+    return null;
+  }
 
   return (
     <Pincode
       isLoading={isLoading}
-      isFFUAgency={!!data?.branches?.hitcount}
+      isFFUAgency={isFFU}
       error={hasTry && hasError}
       onChange={onChange}
     />
