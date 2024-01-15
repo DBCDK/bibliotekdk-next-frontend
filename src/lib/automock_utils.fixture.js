@@ -654,6 +654,7 @@ const BORROWER_STATUS_FALSE = {
 
 const BRANCH_1 = {
   agencyName: "Agency 1",
+  agencyType: "FOLKEBIBLIOTEK",
   agencyId: "1",
   branchId: "1237",
   name: "Test Bib - only physical via ILL",
@@ -666,6 +667,7 @@ const BRANCH_1 = {
 };
 const BRANCH_2 = {
   agencyName: "Agency 1",
+  agencyType: "FORSKNINGSBIBLIOTEK",
   branchId: "123",
   name: "Test Bib - no orders here",
   orderPolicy: {
@@ -788,10 +790,12 @@ const BRANCH_7 = {
   name: "Herlige Lev FFU - Branch with FFU holdings",
   branchId: "800014",
   agencyId: "800010",
+  agencyType: "FORSKNINGSBIBLIOTEK",
   agencyName: "Special FFUs",
   orderPolicy: {
     orderPossible: true,
   },
+  borrowerCheck: true,
   holdingStatus: {
     branchId: "800014",
     expectedDelivery: TODAY,
@@ -1043,6 +1047,18 @@ const USER_8 = {
   agencies: [],
 };
 
+const USER_10 = {
+  name: null,
+  mail: null,
+  rights: { digitalArticleService: false },
+  agencies: [
+    {
+      borrowerStatus: BORROWER_STATUS_TRUE,
+      result: [BRANCH_7],
+    },
+  ],
+};
+
 const REVIEW_1 = {
   rating: "5/6",
   reviewByLibrarians: [
@@ -1198,36 +1214,38 @@ const createDateXDaysFromNow = (daysFromNow) => {
   return today.toISOString();
 };
 
-const USER_LOANS = [
-  {
-    loanId: "120200590",
-    dueDate: createDateXDaysFromNow(14),
-    manifestation: {
-      pid: "870970-basis:23518260",
-      titles: {
-        main: ["Tiger"],
-      },
-      ownerWork: {
-        workId: "work-of:870970-basis:23518260",
-      },
-      creators: [
-        {
-          display: "Jan Jutte",
-        },
-      ],
-      materialTypes: [
-        {
-          materialTypeSpecific: { display: "billedbog", code: "PICTURE_BOOK" },
-          materialTypeGeneral: { display: "bøger", code: "BOOKS" },
-        },
-      ],
-      cover: {
-        thumbnail:
-          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=47468736&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=f516a8895f6a4af424c3",
-      },
-      recordCreationDate: "20200529",
+const LOAN_1 = {
+  loanId: "120200590",
+  dueDate: createDateXDaysFromNow(14),
+  manifestation: {
+    pid: "870970-basis:23518260",
+    titles: {
+      main: ["Tiger"],
     },
+    ownerWork: {
+      workId: "work-of:870970-basis:23518260",
+    },
+    creators: [
+      {
+        display: "Jan Jutte",
+      },
+    ],
+    materialTypes: [
+      {
+        materialTypeSpecific: { display: "billedbog", code: "PICTURE_BOOK" },
+        materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+      },
+    ],
+    cover: {
+      thumbnail:
+        "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=47468736&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=f516a8895f6a4af424c3",
+    },
+    recordCreationDate: "20200529",
   },
+};
+
+const USER_LOANS = [
+  LOAN_1,
   {
     loanId: "120200589",
     dueDate: createDateXDaysFromNow(0),
@@ -1318,41 +1336,54 @@ const USER_LOANS = [
   },
 ];
 
-const USER_ORDERS = [
+const USER_LOANS_2 = [
+  LOAN_1,
   {
-    orderId: "2982910",
-    status: "UNKNOWN",
-    pickUpBranch: {
-      agencyName: "Husum Bibliotek",
-    },
-    pickUpExpiryDate: null,
-    holdQueuePosition: "5",
-    manifestation: {
-      pid: "870970-basis:23424916",
-      titles: {
-        main: ["Efter uvejret"],
-      },
-      ownerWork: {
-        workId: "work-of:870970-basis:23424916",
-      },
-      creators: [
-        {
-          display: "Lauren Brooke",
-        },
-      ],
-      materialTypes: [
-        {
-          materialTypeSpecific: { display: "bog", code: "BOOK" },
-          materialTypeGeneral: { display: "bøger", code: "BOOKS" },
-        },
-      ],
-      cover: {
-        thumbnail:
-          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=23424916&attachment_type=forside_lille&bibliotek=870970&source_id=870970&key=72fda7f507bed4f70854",
-      },
-      recordCreationDate: "20010323",
-    },
+    loanId: "120204379",
+    dueDate: createDateXDaysFromNow(2),
+    title: "Jeg er et fjernlaan 1",
+    creator: "Munk Jensen, Sanne",
+    manifestation: null,
   },
+];
+
+const ORDER_1 = {
+  orderId: "2982910",
+  status: "UNKNOWN",
+  pickUpBranch: {
+    agencyName: "Husum Bibliotek",
+  },
+  pickUpExpiryDate: null,
+  holdQueuePosition: "5",
+  manifestation: {
+    pid: "870970-basis:23424916",
+    titles: {
+      main: ["Efter uvejret"],
+    },
+    ownerWork: {
+      workId: "work-of:870970-basis:23424916",
+    },
+    creators: [
+      {
+        display: "Lauren Brooke",
+      },
+    ],
+    materialTypes: [
+      {
+        materialTypeSpecific: { display: "bog", code: "BOOK" },
+        materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+      },
+    ],
+    cover: {
+      thumbnail:
+        "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=23424916&attachment_type=forside_lille&bibliotek=870970&source_id=870970&key=72fda7f507bed4f70854",
+    },
+    recordCreationDate: "20010323",
+  },
+};
+
+const USER_ORDERS = [
+  ORDER_1,
   {
     orderId: "2982912",
     status: "UNKNOWN",
@@ -1432,6 +1463,22 @@ const USER_ORDERS = [
   },
 ];
 
+const USER_ORDERS_2 = [
+  ORDER_1,
+  {
+    orderId: "2982912",
+    status: "UNKNOWN",
+    title: "Jeg er et fjernlaan 2",
+    creator: "Carlander, Troels B.",
+    pickUpBranch: {
+      agencyName: "Husum Bibliotek",
+    },
+    pickUpExpiryDate: null,
+    holdQueuePosition: "3",
+    manifestation: null,
+  },
+];
+
 const USER_DEBT = [
   {
     title: "Den store danske møbelguide",
@@ -1500,6 +1547,15 @@ const USER_7 = {
   rights: { digitalArticleService: true },
 };
 
+//has fjernlån
+const USER_9 = {
+  loans: USER_LOANS_2,
+  orders: USER_ORDERS_2,
+  debt: [],
+  agencies: [USER_AGENCY],
+  rights: { digitalArticleService: true },
+};
+
 export default function automock_utils() {
   return {
     MANIFESTATION_1,
@@ -1555,6 +1611,8 @@ export default function automock_utils() {
     USER_6,
     USER_7,
     USER_8,
+    USER_9,
+    USER_10,
     REVIEW_1,
     DEFAULT_STORY_PARAMETERS,
     useMockLoanerInfo,

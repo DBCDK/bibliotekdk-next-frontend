@@ -55,6 +55,7 @@
   background-color: var(--white);
   min-width: 164px;
   text-align: left;
+  color: black;
 }
 
 .dropdowntoggle[aria-expanded="true"] .dropdownicon img {

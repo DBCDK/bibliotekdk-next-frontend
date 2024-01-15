@@ -304,6 +304,19 @@ const BookmarkPage = () => {
         key: bm.key,
         materialType: bm.materialType,
       }));
+    //update checkboxList
+    toDelete.forEach((bookmarkToDelete) => {
+      if (
+        checkboxList.indexOf(
+          (bm) => bm.bookmarkId === bookmarkToDelete.bookmarkId
+        )
+      ) {
+        setCheckboxList((prev) =>
+          prev.filter((bm) => bm.bookmarkId !== bookmarkToDelete.bookmarkId)
+        );
+      }
+    });
+
     deleteBookmarks(toDelete);
   };
   /**

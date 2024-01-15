@@ -118,6 +118,10 @@ export default function Wrap({
 
   const isLoading = isWorkLoading || isPickupBranchLoading || isLoadingUser;
 
+  // TODO: save this check for now
+  // has pincode if required
+  // const hasPincode = !validated?.details?.hasPincode?.status;
+
   return (
     <OrderConfirmationButton
       invalidClass={invalidClass}

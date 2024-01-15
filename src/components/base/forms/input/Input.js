@@ -109,6 +109,7 @@ Input.propTypes = {
   onBlur: PropTypes.func,
   skeleton: PropTypes.bool,
   dataCy: PropTypes.string,
+  autocomplete: PropTypes.string,
   "aria-labelledby": PropTypes.string,
   "aria-label": PropTypes.string,
 };

@@ -39,10 +39,17 @@ const formatArticleForm = (formData, pid) => {
 const createOrders = async ({
   materials,
   pickupBranch,
+  pincode,
   loanerInfo,
   periodicaForms,
   orderMutation,
 }) => {
+  // merge pincode into userParameters
+  let userParameters = loanerInfo.userParameters;
+  if (pincode) {
+    userParameters = { ...userParameters, pincode };
+  }
+
   await orderMutation.post(
     orderMutations.submitMultipleOrders({
       materialsToOrder: materials.map((material) => {
@@ -60,7 +67,7 @@ const createOrders = async ({
         };
       }),
       branchId: pickupBranch.branchId,
-      userParameters: loanerInfo.userParameters,
+      userParameters,
     })
   );
 };
@@ -105,7 +112,7 @@ const MultiOrder = ({ context }) => {
       const successMaterials = successfullyCreated.map((key) =>
         sortedMaterials.find((mat) => mat.key === key)
       );
-      handleOrderFinished(successfullyCreated, failedAtCreation);
+      handleOrderFinished?.(successfullyCreated, failedAtCreation);
 
       //set the ordered workids as already ordered in session
       successMaterials.forEach((mat) => {
@@ -204,12 +211,13 @@ const MultiOrder = ({ context }) => {
     materialStatusChanged,
   ]);
 
-  const onSubmit = async (selectedPickupBranch) => {
+  const onSubmit = async (selectedPickupBranch, pincode) => {
     setIsCreatingOrders(true);
     pickupBranch.current = selectedPickupBranch;
     await createOrders({
       materials: sortedMaterials,
       pickupBranch: selectedPickupBranch,
+      pincode,
       loanerInfo,
       periodicaForms: context.periodicaForms,
       orderMutation,

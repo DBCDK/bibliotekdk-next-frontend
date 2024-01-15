@@ -39,7 +39,7 @@
   margin-right: var(--pt2);
 }
 .materialRow_withFlexCheckbox .materialInfo {
-  margin-right: var(--pt9);
+  margin-right: var(--pt4);
   flex: 1;
 }
 
@@ -279,5 +279,9 @@
 
   .materialRow_bookmark {
     grid-template-columns: 1fr;
+  }
+
+  .materialRow_withFlexCheckbox .materialInfo {
+    margin-right: 0;
   }
 }
