@@ -64,6 +64,9 @@
   .triggercontainer {
     display: none;
   }
+  .popoverContainer {
+    margin-top: 0;
+  }
 }
 
 .triangle {
