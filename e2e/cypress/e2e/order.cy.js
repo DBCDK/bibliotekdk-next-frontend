@@ -128,6 +128,66 @@ describe("Order", () => {
     cy.contains("Skift afhentning").click();
   });
 
+  describe("Order for FFU libraries ", () => {
+    before(() => {
+      cy.window().then((win) => {
+        win.sessionStorage.clear();
+        win.localStorage.clear();
+      });
+    });
+
+    it("should contain pincode field", () => {
+      cy.visitWithConsoleSpy(
+        "/iframe.html?id=modal-order--ffu-order-via-ill&viewMode=story"
+      );
+
+      cy.contains("Bestil", { timeout: 10000 }).click();
+      cy.contains("Hugo i Sølvskoven");
+      cy.get("[data-cy=pincode-input]").scrollIntoView().should("be.visible");
+    });
+
+    it("should throw missing pincode error on submit click", () => {
+      cy.visitWithConsoleSpy(
+        "/iframe.html?id=modal-order--ffu-order-via-ill&viewMode=story"
+      );
+      cy.contains("Bestil", { timeout: 10000 }).click();
+
+      cy.contains("Hugo i Sølvskoven");
+
+      cy.get("[data-cy=input]").scrollIntoView().type("mail@mail.dk").blur();
+
+      cy.contains("Godkend").click();
+
+      cy.contains("Du mangler at angive en pinkode");
+    });
+
+    it("should successfully order item for FFU library", () => {
+      cy.visitWithConsoleSpy(
+        "/iframe.html?id=modal-order--ffu-order-via-ill&viewMode=story"
+      );
+      cy.contains("Bestil", { timeout: 10000 }).click();
+
+      cy.contains("Hugo i Sølvskoven");
+
+      cy.get("[data-cy=input]").scrollIntoView().type("some@mail.dk").blur();
+
+      cy.get("[data-cy=pincode-input]").scrollIntoView().type("1234").blur();
+
+      cy.contains("Godkend").click();
+
+      cy.getConsoleEntry("submitOrder").then((entry) => {
+        expect(entry[1]?.pickUpBranch).to.equal("800014");
+      });
+
+      cy.getConsoleEntry("submitOrder").then((entry) => {
+        expect(entry[1]?.userParameters).to.include({
+          pincode: "1234",
+          userMail: "some@mail.dk",
+        });
+      });
+    });
+  });
+
   describe("Order periodica article ", () => {
     before(() => {
       cy.window().then((win) => {

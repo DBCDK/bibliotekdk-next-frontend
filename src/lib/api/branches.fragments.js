@@ -23,6 +23,7 @@ export function branchUserParameters({ branchId }) {
           branchId
           agencyName
           agencyId
+          agencyType
           city
           postalAddress
           postalCode
@@ -122,6 +123,24 @@ export function branchOrderPolicy({ branchId, pids }) {
       monitor(name: "bibdknext_branch_orderPolicy")
      }`,
     variables: { branchId, language: lang, pids },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * Get orderPolicy for a branch
+ */
+export function isFFUAgency({ branchId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 1000, // for debugging
+    query: `
+    query isFFUAgency($branchId: String!) {
+      branches(branchId: $branchId, agencyTypes: [FORSKNINGSBIBLIOTEK]) {
+        hitcount
+      }
+    }`,
+    variables: { branchId },
     slowThreshold: 3000,
   };
 }

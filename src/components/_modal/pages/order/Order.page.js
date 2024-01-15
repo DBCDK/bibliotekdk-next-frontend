@@ -29,6 +29,7 @@ import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import { stringify } from "@/components/_modal/utils";
 import isEmpty from "lodash/isEmpty";
 import { formatMaterialTypesToCode } from "@/lib/manifestationFactoryUtils";
+import Pincode from "./pincode/Pincode";
 
 /**
  *  Order component function
@@ -81,6 +82,7 @@ function Order({
   // Sets if user has unsuccessfully tried to submit the order
   const [hasValidationErrors, setHasValidationErrors] = useState(false);
   const [mail, setMail] = useState(null);
+  const [pincode, setPincode] = useState(null);
   const contextWithOrderPids = { ...context, orderPids };
   const workId = context?.workId;
   const handleOrderFinished = context?.handleOrderFinished;
@@ -156,7 +158,12 @@ function Order({
   }, [accessTypeInfo]);
 
   const validated = useMemo(() => {
+    const pickupBranchIsFFUAgency = !!(
+      pickupBranch?.agencyType === "FORSKNINGSBIBLIOTEK"
+    );
+
     const hasMail = !!mail?.valid?.status;
+    const hasPincode = pickupBranchIsFFUAgency ? !!pincode : true;
     const hasBranchId = !!pickupBranch?.branchId;
     const hasPid = !!pid;
     const requireYear = !!isPeriodicaLike;
@@ -165,6 +172,7 @@ function Order({
 
     const status =
       hasMail &&
+      hasPincode &&
       hasBranchId &&
       hasPid &&
       (requireYear ? hasYear : true) &&
@@ -182,6 +190,10 @@ function Order({
           !isPeriodicaLike && { label: "alreadyOrderedText" }, //TODO currently we only check for non-periodica orders
       },
       hasBranchId: { status: hasBranchId },
+      hasPincode: {
+        status: hasPincode,
+        message: !hasPincode && { label: "missing-pincode" },
+      },
       hasPid: { status: hasPid },
       requireYear: {
         status: hasYear,
@@ -192,6 +204,7 @@ function Order({
     return { status, hasTry: hasValidationErrors, details };
   }, [
     mail,
+    pincode,
     pid,
     pickupBranch,
     hasValidationErrors,
@@ -218,7 +231,8 @@ function Order({
       if (availableAsDigitalCopy) {
         onArticleSubmit(pid, context?.periodicaForm);
       } else {
-        onSubmit && onSubmit(orderPids, pickupBranch, context?.periodicaForm);
+        onSubmit &&
+          onSubmit(orderPids, pickupBranch, context?.periodicaForm, pincode);
       }
     } else {
       setHasValidationErrors(true);
@@ -260,6 +274,7 @@ function Order({
         setMail={setMail}
         email={mail}
       />
+      <Pincode validated={validated} onChange={(val) => setPincode(val)} />
       <OrderConfirmationButton
         email={mail}
         context={context}
@@ -405,11 +420,12 @@ export default function Wrap(props) {
           articleOrderMutation
         )
       }
-      onSubmit={(pids, pickupBranch, periodicaForm = {}) =>
+      onSubmit={(pids, pickupBranch, periodicaForm = {}, pincode) =>
         handleSubmitOrder(
           pids,
           pickupBranch,
           periodicaForm,
+          pincode,
           loanerInfo,
           orderMutation
         )

@@ -25,21 +25,23 @@ export function OrdererInformation({
 }) {
   return (
     <div className={styles.user}>
-      {(isLoadingBranches || name) && (
-        <div>
-          <Title type="title5" tag="h3">
-            {Translate({ context: "order", label: "ordered-by" })}
-          </Title>
+      <div>
+        <Title type="title5" tag="h3">
+          {Translate({ context: "order", label: "ordered-by" })}
+        </Title>
+        {(isLoadingBranches || name) && (
           <div className={styles.name}>
             <Text type="text2" className={styles.textinline}>
               {Translate({ context: "general", label: "name" })}
             </Text>
-            <Text type="text1" skeleton={!name} lines={1}>
+            <div></div>
+            <Text type="text1" skeleton={isLoadingBranches} lines={1}>
               {name}
             </Text>
           </div>
-        </div>
-      )}
+        )}
+      </div>
+
       <div className={styles.email}>
         <label htmlFor="order-user-email">
           <Text type="text2" className={styles.textinline}>

@@ -31,6 +31,8 @@ export function onMailChange(value, valid, updateLoanerInfo, setMail) {
  * mail validation
  * year validation (article)
  * duplicate order validation
+ * pincode validation (FFU libraries only)
+ *
  * @param {Object} validated
  * @param {Boolean} hasValidationErrors
  * @returns
@@ -55,7 +57,8 @@ export function getStylingAndErrorMessage(validated, hasValidationErrors) {
     hasValidationErrors &&
     (validated?.details?.requireYear?.message ||
       (!hasEmail && errorMessage) ||
-      validated?.details?.firstOrder?.message);
+      validated?.details?.firstOrder?.message ||
+      validated?.details?.hasPincode?.message);
 
   // eslint-disable-next-line css-modules/no-undef-class
   const invalidClass = actionMessage ? styles.invalid : "";
