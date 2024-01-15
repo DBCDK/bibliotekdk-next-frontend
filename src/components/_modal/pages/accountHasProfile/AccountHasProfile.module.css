@@ -19,14 +19,15 @@
 }
 
 .mitIDButton,
+.skipButton,
 .removeButton {
   width: 100%;
   margin-top: var(--pt2);
   display: block;
 }
 
-.removeButton {
-  margin-top: var(--pt2);
+.mitIDButton {
+  margin-top: var(--pt5);
 }
 
 @media (min-width: 576px) {

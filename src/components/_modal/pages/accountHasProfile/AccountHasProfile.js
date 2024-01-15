@@ -37,6 +37,12 @@ export default function AccountHasProfile({ modal, context }) {
 
   const index = modal.index?.();
 
+  // Block This modal for a given period of time (Dont notify user about this again)
+  if (!storage.read("BlockFFUProfileListener")) {
+    const ttl = 1000 * 60 * 60 * 24; // 24 hours
+    storage.create("BlockFFUProfileListener", { clearOnSignout: true }, ttl);
+  }
+
   // Mutate deleteAccount response from API
   useEffect(() => {
     const status = data?.culr?.deleteAccount?.status;
@@ -48,9 +54,9 @@ export default function AccountHasProfile({ modal, context }) {
       // cleanup
       reset();
 
-      // Block FFU listener (Dont ask user to create a bibdk profile again)
-      const ttl = 1000 * 60 * 60 * 24 * 90; // 90 days
-      storage.create("BlockFFUListener", {}, ttl);
+      // Block FFU listener (Dont ask user to create a bibdk profile again - within the given period)
+      const ttl = 1000 * 60 * 60 * 24; // 24 hours
+      storage.create("BlockFFUCreateListener", { clearOnSignout: true }, ttl);
 
       const item = modal.stack?.[index - 1];
       const isOrderOrigin = !!(
@@ -87,6 +93,13 @@ export default function AccountHasProfile({ modal, context }) {
       });
     }
   }, [data, error]);
+
+  // Handles the "Skip" button click
+  function onSkipClick() {
+    // handles if modal should have "back" functionality
+    const hasBack = back ?? index > 0;
+    hasBack ? modal.prev() : modal.clear();
+  }
 
   // Handles the "Skip" button click
   function removeFFULibrary() {
@@ -142,7 +155,7 @@ export default function AccountHasProfile({ modal, context }) {
           {Translate({
             context: "accountHasProfile",
             label: "text",
-            vars: [agencyName],
+            renderAsHtml: true,
           })}
         </Text>
 
@@ -164,10 +177,24 @@ export default function AccountHasProfile({ modal, context }) {
           })}
         </Button>
 
+        <Button
+          type="secondary"
+          className={styles.skipButton}
+          onClick={() => onSkipClick()}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              onSkipClick();
+            }
+          }}
+        >
+          {Translate({ context: "general", label: "notNow" })}
+        </Button>
+
         <Text type="text2" className={styles.remove}>
           {Translate({
             context: "accountHasProfile",
             label: "textRemove",
+            vars: [agencyName],
           })}
         </Text>
 

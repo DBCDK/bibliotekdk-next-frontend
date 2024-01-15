@@ -33,7 +33,7 @@ export default function Listener() {
   const hasOmittedCulrData =
     !!loanerInfo.omittedCulrData?.hasOmittedCulrUniqueId;
 
-  const hasBlockedFFuListener = storage.read("BlockFFUListener");
+  const hasBlockedFFuListener = storage.read("BlockFFUCreateListener");
 
   const hasVerificationObject = verification.exist();
 
