@@ -471,9 +471,10 @@ const BookmarkPage = () => {
         <div
           role="checkbox"
           tabIndex={0}
-          aria-checked={isAllSelected}
+          aria-checked={isAllSelected && populatedBookmarks?.length > 0}
           className={styles.selectAllButton}
           onClick={onSelectAll}
+          data-cy="bookmarks-select-all-checkbox"
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               onSelectAll();
@@ -481,7 +482,7 @@ const BookmarkPage = () => {
           }}
         >
           <Checkbox
-            checked={isAllSelected}
+            checked={isAllSelected && populatedBookmarks?.length > 0}
             disabled={populatedBookmarks?.length === 0}
             id="bookmarkpage-select-all"
             ariaLabelledBy="bookmarkpage-select-all-label"

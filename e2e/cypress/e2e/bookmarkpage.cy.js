@@ -30,4 +30,16 @@ describe("Bookmark page", () => {
     cy.get("[data-cy=bookmarks-remove-from-list]").should("exist").click();
     cy.get("article").should("exist").should("have.length", 1);
   });
+
+  it(`test delete all`, () => {
+    cy.visit("/iframe.html?id=profile-bookmarks--bookmark-list");
+    // remove ALL elements from list - verify that select all is disabled
+    cy.get("article").should("exist").should("have.length", 2);
+
+    cy.get("#bookmarkpage-select-all").should("exist").click({ force: true });
+    cy.get("[data-cy=bookmarks-remove-from-list]").should("exist").click();
+    cy.get("[data-cy=bookmarks-select-all-checkbox]")
+      .should("exist")
+      .should("have.attr", "aria-checked", "false");
+  });
 });
