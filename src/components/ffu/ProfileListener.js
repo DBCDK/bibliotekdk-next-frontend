@@ -9,10 +9,13 @@ import { useModal } from "@/components/_modal";
 import { isFFUAgency } from "@/utils/agency";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
+import useStorage from "../hooks/useStorage";
 
 export default function Listener() {
   const { isAuthenticated, loggedInAgencyId } = useAuthentication();
   const { loanerInfo } = useLoanerInfo();
+
+  const storage = useStorage();
 
   const agencyId = loggedInAgencyId;
   const branchId = loanerInfo?.pickupBranch;
@@ -20,6 +23,8 @@ export default function Listener() {
 
   const hasOmittedCulrData =
     !!loanerInfo?.omittedCulrData?.hasOmittedCulrUniqueId;
+
+  const hasBlockedFFuListener = !!storage.read("BlockFFUProfileListener");
 
   const modal = useModal();
 
@@ -32,6 +37,11 @@ export default function Listener() {
     // If user data is NOT stripped for CULR informations
     // culr data is removed, if the FFU authentication is only made through borchk.
     if (!hasOmittedCulrData) {
+      return;
+    }
+
+    // user was already prompted and is still within the given expiration date
+    if (hasBlockedFFuListener) {
       return;
     }
 

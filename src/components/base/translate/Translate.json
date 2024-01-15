@@ -3530,7 +3530,7 @@
         "en": "LABEL: Mangler oversættelse!"
       },
       "text": {
-        "da": "Brug i stedet MitID til at logge ind til din profil og få adgang til %s",
+        "da": "Vil du logge ind med MitID for at få adgang til din profil? <br /><br /> Fortsætter du uden MitID, kan du stadig bestille materialer, men der vil være begrænset funktionalitet i forhold til huskeliste, lån og reserveringer mv.",
         "en": "LABEL: Mangler oversættelse!"
       },
       "loginButton": {
@@ -3538,7 +3538,7 @@
         "en": "LABEL: Mangler oversættelse!"
       },
       "textRemove": {
-        "da": "Har du ikke tidligere knyttet dette login til en bibliotek.dk profil? Eller ønsker du at fjerne tilknytningen?",
+        "da": "Vil du ikke længere have knyttet dit login ved %s til en profil på bibliotek.dk?",
         "en": "LABEL: Mangler oversættelse!"
       },
       "removeButton": {
@@ -3548,15 +3548,15 @@
     },
     "accountWasDetached": {
       "title": {
-        "da": "Dit login ved %s er IKKE længere knyttet til en profil på bibliotek.dk",
+        "da": "Dit login er ikke længere knyttet til en profil på bibliotek.dk",
         "en": "LABEL: Mangler oversættelse!"
       },
       "text": {
-        "da": "Hvis du fortryder, kan du tilknytte biblioteket igen ved at logge ind med MitID eller via et folkebibliotek. Herefter kan du vælge at  knytte biblioteket til din Profil via menuen Profil/Mine biblioteker.",
+        "da": "Hvis du fortryder, kan du nemt tilknytte biblioteket igen. Log ind med MitID eller via dit folkebibliotek og tilføj biblioteket på din profil.",
         "en": "LABEL: Mangler oversættelse!"
       },
       "button": {
-        "da": "Fortsæt bestilling",
+        "da": "Fortsæt",
         "en": "LABEL: Mangler oversættelse!"
       }
     },
@@ -3586,7 +3586,7 @@
         "en": "LABEL: Mangler oversættelse!"
       },
       "verificationTitle": {
-        "da": "Vil du tilknytte %s til en bibliotek.dk profil?",
+        "da": "Vil du knytte %s til en profil på bibliotek.dk?",
         "en": "LABEL: Mangler oversættelse!"
       },
       "verificationText": {
@@ -3594,11 +3594,11 @@
         "en": "LABEL: Mangler oversættelse!"
       },
       "benefitsText": {
-        "da": "Med en profil kan du: <br/> <ul><li>se dine lån og reserveringer på tværs af biblioteker</li><li>få gemt dine biblioteksinfo til nemmere bestilling</li><li>se en oversigt over dine biblioteker og afhentningssteder</li></ul> Det kræver kun at du logger ind med dit MitID første gang, så vi kan kende dig på tværs af biblioteker. <br/><br/> Du kan senere fjerne %s fra din profil under “Mine Biblioteker”, hvis du ønske dette.",
+        "da": "Med en profil kan du: <br/> <ul><li>nemt bestille til alle dine biblioteker</li><li>gemme materialer i huskelisten</li><li>se dine lån og reserveringer på tværs af biblioteker</li><li>se din bestillingshistorik</li></ul> Det kræver kun, at du verificerer dig med MitID. </br> Hvis du senere fortryder, kan du nemt fjerne biblioteket fra din profil. </br></br></br> Fortsætter du uden at tilknytte en profil, kan du stadig bestille materialer, men der vil være begrænset funktionalitet i forhold til huskeliste, lån og reserveringer mv.",
         "en": "LABEL: Mangler oversættelse!"
       },
       "verificationButton": {
-        "da": "Verificer med MitID",
+        "da": "Tilknyt med MitID",
         "en": "LABEL: Mangler oversættelse!"
       },
       "titleError": {

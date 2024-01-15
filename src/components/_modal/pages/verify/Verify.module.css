@@ -1,7 +1,6 @@
 .verify {
   max-width: 600px;
   padding: 0 var(--pt2);
-  height: 100%;
 }
 
 .verify img {

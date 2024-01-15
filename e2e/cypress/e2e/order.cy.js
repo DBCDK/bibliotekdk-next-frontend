@@ -33,6 +33,17 @@ describe("Order", () => {
       win.localStorage.clear();
     });
   });
+
+  it("should NOT contain pincode field", () => {
+    cy.visitWithConsoleSpy(
+      "/iframe.html?id=modal-order--ffu-order-via-ill&viewMode=story"
+    );
+
+    cy.contains("Bestil", { timeout: 10000 }).click();
+    cy.contains("Hugo i Sølvskoven");
+    cy.get("[data-cy=pincode-input]").scrollIntoView().should("not.be.visible");
+  });
+
   it(`submits ILL order for pids that may be ordered`, () => {
     cy.visitWithConsoleSpy(
       "/iframe.html?id=modal-order--order-via-ill&viewMode=story"

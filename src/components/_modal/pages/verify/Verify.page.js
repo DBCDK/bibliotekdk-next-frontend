@@ -22,7 +22,7 @@ import styles from "./Verify.module.css";
  * @returns
  */
 export default function Verify({ modal, context }) {
-  const { title, text, back, agencyName } = context;
+  const { title, text, back } = context;
 
   const index = modal.index?.();
 
@@ -44,7 +44,7 @@ export default function Verify({ modal, context }) {
 
   function onNotAgainClick() {
     const ttl = 1000 * 60 * 60 * 24 * 90; // 90 days
-    storage.create("BlockFFUListener", {}, ttl);
+    storage.create("BlockFFUCreateListener", {}, ttl);
 
     // close modal
     onSkipClick();
@@ -106,7 +106,6 @@ export default function Verify({ modal, context }) {
             {Translate({
               context: "addLibrary",
               label: "benefitsText",
-              vars: [agencyName],
               renderAsHtml: true,
             })}
           </Text>
