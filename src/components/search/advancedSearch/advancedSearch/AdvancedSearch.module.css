@@ -61,4 +61,9 @@
   .closeContainer {
     position: absolute;
   }
+
+  .closeContainer i {
+    position: relative;
+    top: 3px;
+  }
 }
