@@ -3226,6 +3226,10 @@
       "get-overview-2": {
         "da": "din profil",
         "en": "on your profile"
+      },
+      "work-not-found": {
+        "da": "Vi kunne desværre ikke finde materialet. Kontakt dit bibliotek.",
+        "en": "Unfortuntely we could not find the material. Contact your library."
       }
     },
     "login": {

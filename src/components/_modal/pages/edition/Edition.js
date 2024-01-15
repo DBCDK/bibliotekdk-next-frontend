@@ -29,6 +29,21 @@ import { AccessEnum } from "@/lib/enums";
 import HasBeenOrderedRow from "./hasbeenOrderedRow/HasBeenOrderedRow";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
+/**
+ * Shows grey box with text if no manifestation is found.
+ * @returns {React.JSX.Element} - Returns a React JSX element.
+ */
+const NoManifestationFound = () => {
+  return (
+    <Text className={styles.edition} type="text2" lines={1}>
+      {Translate({
+        context: "order",
+        label: "work-not-found",
+      })}
+    </Text>
+  );
+};
+
 export function Edition({
   isLoading,
   singleManifestation = false,
@@ -43,9 +58,8 @@ export function Edition({
 }) {
   const { periodicaForm } = context;
   const { isArticle, isPeriodicaLike } = inferredAccessTypes;
-
-  if (true || !manifestation?.[0]) {
-    return <div>No mani</div>;
+  if (!manifestation) {
+    return <NoManifestationFound />;
   }
 
   const { flatMaterialTypes } = manifestationMaterialTypeFactory([
@@ -256,11 +270,8 @@ export default function Wrap({
       manifestationMaterialTypeFactory(manifestations);
     const firstManifestation = flattenedGroupedSortedManifestations?.[0];
 
-    //TODO also add here if no manifestation
-    if (true || !firstManifestation) {
-      return (
-        <div>Vi kunne desværre ikke finde værket. Kontakt dit bibliotek.</div>
-      );
+    if (!firstManifestation) {
+      return <NoManifestationFound />;
     }
 
     const children = [];
@@ -303,7 +314,7 @@ export default function Wrap({
         isDigitalCopy,
         isDeliveredByDigitalArticleService,
         manifestationIsLoading,
-        isLoading: true || manifestationIsLoading,
+        isLoading: manifestationIsLoading,
       });
 
     return (
@@ -322,9 +333,7 @@ export default function Wrap({
 
   return (
     <Edition
-      isLoading={
-        isLoadingUserInfo || manifestationIsLoading || !manifestations?.[0]
-      }
+      isLoading={isLoadingUserInfo || manifestationIsLoading}
       singleManifestation={singleManifestation}
       coverImage={coverImage}
       inferredAccessTypes={inferredAccessTypes}
