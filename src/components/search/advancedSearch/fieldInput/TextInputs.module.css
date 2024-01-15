@@ -110,3 +110,18 @@
 .inputTitle {
   margin-bottom: var(--pt2);
 }
+
+@media (max-width: 768px) {
+  .inputContainer {
+    /*border: 2px solid green;*/
+    flex-wrap: wrap;
+  }
+  .suggesterContainer {
+    margin-left: 0;
+    margin-top: var(--pt1);
+  }
+
+  .inputTitle {
+    display: none;
+  }
+}
