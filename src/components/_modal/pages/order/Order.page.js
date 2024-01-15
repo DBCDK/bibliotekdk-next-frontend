@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useMutate } from "@/lib/api/api";
 import Top from "../base/top";
-import data from "./dummy.data";
 // eslint-disable-next-line css-modules/no-unused-class
 import styles from "./Order.module.css";
 import Edition from "@/components/_modal/pages/edition/Edition";
@@ -29,6 +28,7 @@ import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import { stringify } from "@/components/_modal/utils";
 import isEmpty from "lodash/isEmpty";
 import { formatMaterialTypesToCode } from "@/lib/manifestationFactoryUtils";
+import MaterialRow from "@/components/profile/materialRow/MaterialRow";
 import Pincode from "./pincode/Pincode";
 
 /**
@@ -58,6 +58,7 @@ function Order({
   } = pickupBranchInfo;
 
   const singleManifestation = context?.singleManifestation;
+  const isLoading = context?.isLoading;
 
   const { isAuthenticated } = useAuthentication();
   const { loanerInfo } = useLoanerInfo();
@@ -241,7 +242,9 @@ function Order({
 
   return (
     <div
-      className={`${styles.order} ${isLoadingBranches ? styles.skeleton : ""}`}
+      className={`${styles.order} ${
+        isLoadingBranches || isLoading ? styles.skeleton : ""
+      }`}
     >
       <Top
         title={context?.title}
@@ -303,24 +306,39 @@ Order.propTypes = {
   onSubmit: PropTypes.func,
 };
 
-export function OrderSkeleton(props) {
-  const { work, user, order } = data;
-
+export function OrderSkeleton() {
+  const context = {
+    workId: "",
+    pid: "",
+    periodicaForm: {},
+    pids: [],
+  };
   return (
-    <Order
-      pid="some-pid"
-      work={work}
-      user={user}
-      orderMutation={order}
-      articleOrderMutation={order}
-      context={{
-        label: "title-order",
-        singleManifestation: props?.context?.singleManifestation,
-      }}
-      modal={{}}
-      className={`${props.className} ${styles.skeleton}`}
-      isLoading={true}
-    />
+    <div className={`${styles.order} ${styles.skeleton}`}>
+      <Top
+        title=""
+        back={true}
+        className={{
+          top: styles.top,
+        }}
+      />
+      <MaterialRow
+        skeleton={true}
+        title=""
+        library=""
+        skeletonVersion="desktop"
+      />
+      <OrderConfirmationButton
+        email={""}
+        context={context}
+        validated={false}
+        hasValidationErrors={true}
+        onClick={() => {}}
+        blockedForBranch={false}
+        hasAlreadyBeenOrdered={false}
+        isLoadingUser={true}
+      />
+    </div>
   );
 }
 
@@ -343,7 +361,7 @@ export default function Wrap(props) {
   const [pid, setPid] = useState(null);
   const orderMutation = useMutate();
   const articleOrderMutation = useMutate();
-  const { loanerInfo, updateLoanerInfo } = useLoanerInfo();
+  const { loanerInfo, updateLoanerInfo, isLoading } = useLoanerInfo();
 
   useEffect(() => {
     if (context?.pid?.length > 0) {
@@ -385,12 +403,11 @@ export default function Wrap(props) {
   const {
     data: manifestationData,
     isLoading: isManifestationsLoading,
-    isSlow: isManifestationsSlow,
     error: manifestationError,
   } = manifestationResponse;
 
-  if (isManifestationsLoading || loanerInfo?.isLoading) {
-    return <OrderSkeleton isSlow={isManifestationsSlow} />;
+  if (isManifestationsLoading || isLoading) {
+    return <OrderSkeleton />;
   }
   // check if user logged in via mitId - and has no connection to any libraries
   if (!loanerInfo?.pickupBranch && !loanerInfo?.agencies?.length) {

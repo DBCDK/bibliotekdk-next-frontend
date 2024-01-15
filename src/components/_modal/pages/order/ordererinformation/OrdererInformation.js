@@ -135,7 +135,7 @@ export default function Wrap({
     pids: pids ?? [pid],
   });
 
-  const { authUser } = userInfo;
+  const { authUser, userIsLoading } = userInfo;
 
   const {
     isLoadingBranches,
@@ -167,7 +167,7 @@ export default function Wrap({
     vars: [agency?.result?.[0]?.agencyName || libraryFallback],
   };
 
-  const isLoading = isWorkLoading || isPickupBranchLoading;
+  const isLoading = isWorkLoading || isPickupBranchLoading || userIsLoading;
 
   // Email according to agency borrowerCheck (authUser.mail is from cicero and can not be changed)
   let initialmail = hasBorchk ? authUser?.mail || userMail : userMail;
