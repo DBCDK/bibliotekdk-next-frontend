@@ -41,6 +41,5 @@ describe("Bookmark page", () => {
     cy.get("[data-cy=bookmarks-select-all-checkbox]")
       .should("exist")
       .should("have.attr", "aria-checked", "false");
-    // .should("have.value", "false");
   });
 });
