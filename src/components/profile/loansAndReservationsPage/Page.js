@@ -96,16 +96,14 @@ const LoansAndReservations = () => {
   const [removedOrderId, setRemovedOrderId] = useState("");
   const [orderList, setOrderList] = useState([]);
 
-
   const onRemoveOrderId = (orderid) => {
     setRemovedOrderId(orderid);
-    // we remove the order from the ui instantly 
+    // we remove the order from the ui instantly
     const updatedOrderList = orderList.filter(
       (order) => order.orderId !== orderid
     );
     setOrderList(updatedOrderList);
   };
-
 
   useEffect(() => {
     //after deletion we fetch the orders and override the local state.
@@ -114,7 +112,6 @@ const LoansAndReservations = () => {
     }
   }, [orders]);
 
-
   function getAgencyString(agencyId) {
     if (!agencies) return "";
     return agencies.map((agency) => {
@@ -122,7 +119,6 @@ const LoansAndReservations = () => {
         return agency.result[0].agencyName;
     });
   }
-
 
   return (
     <ProfileLayout
