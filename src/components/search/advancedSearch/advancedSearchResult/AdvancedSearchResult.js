@@ -1,6 +1,6 @@
 import { doComplexSearchAll } from "@/lib/api/complexSearch.fragments";
 import { useData } from "@/lib/api/api";
-import { ResultPage } from "@/components/search/result/page";
+//import { ResultPage } from "@/components/search/result/page";
 import Section from "@/components/base/section";
 import Pagination from "@/components/search/pagination/Pagination";
 import PropTypes from "prop-types";
@@ -14,6 +14,8 @@ import AdvancedSearchSort from "@/components/search/advancedSearch/advancedSearc
 import TopBar from "@/components/search/advancedSearch/advancedSearchResult/topBar/TopBar";
 import Title from "@/components/base/title";
 import { NoHitSearch } from "@/components/search/advancedSearch/advancedSearchResult/noHitSearch/NoHitSearch";
+import ResultPage from "./ResultPage/ResultPage";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 export function AdvancedSearchResult({
   pageNo,
@@ -22,13 +24,22 @@ export function AdvancedSearchResult({
   results,
   error = null,
 }) {
-  const hitcount = results?.hitcount;
+  console.log("results", results);
+  const hitcount = 100; //results?.hitcount;
   const numPages = Math.ceil(hitcount / 10);
-
+  const breakpoint = useBreakpoint();
+  const isMobile = breakpoint === "xs" || breakpoint === "sm" || false;
+  const page = parseInt(pageNo, 10) || 1
   if (error) {
     return null;
   }
-
+  console.log("page", page);
+  console.log("hitcount", hitcount);
+  console.log("ismobile", isMobile);
+  const resultpagesNumber= isMobile ? parseInt(page) : 1;
+  console.log('resultpagesNumber',resultpagesNumber)
+  const resultPages = Array(resultpagesNumber).fill({});
+  console.log("resulprages", resultPages);
   return (
     <>
       <TopBar />
@@ -48,23 +59,29 @@ export function AdvancedSearchResult({
         {/* Reuse result page from simplesearch - we skip the wrap .. @TODO should we set
         some mark .. that we are doing advanced search .. ?? */}
         {hitcount === 0 && <NoHitSearch />}
-        {hitcount > 0 && (
-          <>
-            <AdvancedSearchSort className={cx(styles.sort_container)} />
-            <div className={cx(styles.padding_top)}>
-              <ResultPage
-                rows={results?.works}
-                onWorkClick={onWorkClick}
-                isLoading={results?.isLoading}
-              />
-            </div>
-          </>
-        )}
+        {/* {hitcount > 0 && ( */}
+        <>
+          <AdvancedSearchSort className={cx(styles.sort_container)} />
+          <div className={cx(styles.padding_top)}>
+            {Array(isMobile ? page : 1).fill({}).map((p, index) => {
+              console.log("index", index);
+              return (
+                <ResultPage
+                  key={`result-page-${index}`}
+                  page={isMobile ? index + 1 : page}
+                  onWorkClick={onWorkClick}
+                />
+              );
+            })}
+            {/* */}
+          </div>
+        </>
+        {/* // )} */}
       </Section>
       {hitcount > 0 && (
         <Pagination
           numPages={numPages}
-          currentPage={parseInt(pageNo, 10)}
+          currentPage={page}
           onChange={onPageChange}
         />
       )}
@@ -159,8 +176,8 @@ export default function Wrap({ onWorkClick, onPageChange }) {
       pageNo={pageNo}
       onWorkClick={onWorkClick}
       onPageChange={onPageChange}
-      results={parsedResponse}
-      error={parsedResponse.errorMessage}
+      //  results={parsedResponse}
+      //  error={parsedResponse.errorMessage}
       setShowPopover={setShowPopover}
     />
   );
