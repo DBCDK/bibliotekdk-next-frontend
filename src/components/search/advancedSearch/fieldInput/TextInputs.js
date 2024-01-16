@@ -1,7 +1,6 @@
 import Translate from "@/components/base/translate/Translate";
 import Text from "@/components/base/text";
 import Suggester from "@/components/base/suggester/Suggester";
-import IconButton from "@/components/base/iconButton/IconButton";
 import styles from "./TextInputs.module.css";
 import animations from "css/animations";
 import SearchIndexDropdown from "@/components/search/advancedSearch/fieldInput/searchIndexDropdown/SearchIndexDropdown";
