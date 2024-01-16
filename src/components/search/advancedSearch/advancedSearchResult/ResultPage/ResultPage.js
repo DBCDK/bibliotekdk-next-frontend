@@ -66,14 +66,13 @@ export default function Wrap({ onWorkClick, page }) {
 
   onWorkClick = null;
 
-  // get setter for advanced search history
-  const limit = 10; // limit
-  let offset = limit * (page - 1); // offset
+  const limit = 10;
+  let offset = limit * (page - 1);
   const cqlQuery = cql || convertStateToCql(fieldSearch);
 
   const showResult = !isEmpty(fieldSearch) || !isEmpty(cql);
 
-  // use the useData hook to fetch data
+  // fetch data for the specific page
   const bigResponse = useData(
     doComplexSearchAll({
       cql: cqlQuery,

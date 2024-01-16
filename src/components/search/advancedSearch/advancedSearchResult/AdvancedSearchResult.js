@@ -1,4 +1,4 @@
-import { complexSearchOnlyWorkIds } from "@/lib/api/complexSearch.fragments";
+import { hitcount } from "@/lib/api/complexSearch.fragments";
 import { useData } from "@/lib/api/api";
 import Section from "@/components/base/section";
 import Pagination from "@/components/search/pagination/Pagination";
@@ -103,7 +103,6 @@ export default function Wrap({ onWorkClick, onPageChange }) {
     cqlFromUrl: cql,
     fieldSearchFromUrl: fieldSearch,
     pageNoFromUrl: pageNo,
-    sort,
     setShowPopover,
   } = useAdvancedSearchContext();
 
@@ -113,19 +112,14 @@ export default function Wrap({ onWorkClick, onPageChange }) {
   onWorkClick = null;
   // get setter for advanced search history
   const { setValue } = useAdvancedSearchHistory();
-  const limit = 10; // limit
-  let offset = limit * (pageNo - 1); // offset
   const cqlQuery = cql || convertStateToCql(fieldSearch);
 
   const showResult = !isEmpty(fieldSearch) || !isEmpty(cql);
 
   // use the useData hook to fetch data
   const fastResponse = useData(
-    complexSearchOnlyWorkIds({
+    hitcount({
       cql: cqlQuery,
-      offset: offset,
-      limit: limit,
-      ...(!isEmpty(sort) && { sort: sort }),
     })
   );
   const parsedResponse = parseResponse(fastResponse);
