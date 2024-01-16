@@ -94,22 +94,27 @@ const LoansAndReservations = () => {
   const { loanerInfo, isLoading } = useLoanerInfo();
   const { debt, agencies, orders, loans } = arangeLoanerInfo(loanerInfo);
   const [removedOrderId, setRemovedOrderId] = useState("");
-const [orderList, setOrderList] = useState([])
-const onRemoveOrderId = (orderid)=>{
-  setRemovedOrderId(orderid)
-    // Filter out the order with the specified orderId
-    const updatedOrderList = orderList.filter(order => order.orderId !== orderid);
+  const [orderList, setOrderList] = useState([]);
 
-    // Update the state with the new order list
+
+  const onRemoveOrderId = (orderid) => {
+    setRemovedOrderId(orderid);
+    // we remove the order from the ui instantly 
+    const updatedOrderList = orderList.filter(
+      (order) => order.orderId !== orderid
+    );
     setOrderList(updatedOrderList);
-}
-useEffect(()=>{
-  if(Array.isArray(orders)){
-    setOrderList(orders)
+  };
 
-  }
-}, [orders])
-console.log('orders',orders)
+
+  useEffect(() => {
+    //after deletion we fetch the orders and override the local state.
+    if (Array.isArray(orders)) {
+      setOrderList(orders);
+    }
+  }, [orders]);
+
+
   function getAgencyString(agencyId) {
     if (!agencies) return "";
     return agencies.map((agency) => {
@@ -117,13 +122,7 @@ console.log('orders',orders)
         return agency.result[0].agencyName;
     });
   }
-console.log('\n\n\n\n\n\n')
-console.log('orderList',orderList)
-console.log('orders',orders)
-console.log('removedOrderId',removedOrderId)
 
-
-console.log('\n\n\n\n\n\n')
 
   return (
     <ProfileLayout
