@@ -84,10 +84,6 @@
 }
 
 @media (max-width: 767px) {
-  .inputTitle {
-    display: none;
-  }
-
   .bigFont {
     font-size: 17px;
   }
