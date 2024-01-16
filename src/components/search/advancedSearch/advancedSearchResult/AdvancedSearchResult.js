@@ -1,6 +1,5 @@
-import { doComplexSearchAll } from "@/lib/api/complexSearch.fragments";
+import { complexSearchOnlyWorkIds } from "@/lib/api/complexSearch.fragments";
 import { useData } from "@/lib/api/api";
-//import { ResultPage } from "@/components/search/result/page";
 import Section from "@/components/base/section";
 import Pagination from "@/components/search/pagination/Pagination";
 import PropTypes from "prop-types";
@@ -25,19 +24,19 @@ export function AdvancedSearchResult({
   error = null,
 }) {
   console.log("results", results);
-  const hitcount = 100; //results?.hitcount;
+  const hitcount = results?.hitcount;
   const numPages = Math.ceil(hitcount / 10);
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs" || breakpoint === "sm" || false;
-  const page = parseInt(pageNo, 10) || 1
+  const page = parseInt(pageNo, 10) || 1;
   if (error) {
     return null;
   }
   console.log("page", page);
   console.log("hitcount", hitcount);
   console.log("ismobile", isMobile);
-  const resultpagesNumber= isMobile ? parseInt(page) : 1;
-  console.log('resultpagesNumber',resultpagesNumber)
+  const resultpagesNumber = isMobile ? parseInt(page) : 1;
+  console.log("resultpagesNumber", resultpagesNumber);
   const resultPages = Array(resultpagesNumber).fill({});
   console.log("resulprages", resultPages);
   return (
@@ -63,16 +62,18 @@ export function AdvancedSearchResult({
         <>
           <AdvancedSearchSort className={cx(styles.sort_container)} />
           <div className={cx(styles.padding_top)}>
-            {Array(isMobile ? page : 1).fill({}).map((p, index) => {
-              console.log("index", index);
-              return (
-                <ResultPage
-                  key={`result-page-${index}`}
-                  page={isMobile ? index + 1 : page}
-                  onWorkClick={onWorkClick}
-                />
-              );
-            })}
+            {Array(isMobile ? page : 1)
+              .fill({})
+              .map((p, index) => {
+                console.log("index", index);
+                return (
+                  <ResultPage
+                    key={`result-page-${index}`}
+                    page={isMobile ? index + 1 : page}
+                    onWorkClick={onWorkClick}
+                  />
+                );
+              })}
             {/* */}
           </div>
         </>
@@ -125,15 +126,16 @@ export default function Wrap({ onWorkClick, onPageChange }) {
   const showResult = !isEmpty(fieldSearch) || !isEmpty(cql);
 
   // use the useData hook to fetch data
-  const bigResponse = useData(
-    doComplexSearchAll({
+  const fastResponse = useData(
+    complexSearchOnlyWorkIds({
       cql: cqlQuery,
       offset: offset,
       limit: limit,
       ...(!isEmpty(sort) && { sort: sort }),
     })
   );
-  const parsedResponse = parseResponse(bigResponse);
+  console.log("fastResponse", fastResponse);
+  const parsedResponse = parseResponse(fastResponse);
 
   if (parsedResponse.isLoading) {
     return (
@@ -176,7 +178,7 @@ export default function Wrap({ onWorkClick, onPageChange }) {
       pageNo={pageNo}
       onWorkClick={onWorkClick}
       onPageChange={onPageChange}
-      //  results={parsedResponse}
+      results={parsedResponse}
       //  error={parsedResponse.errorMessage}
       setShowPopover={setShowPopover}
     />
