@@ -20,11 +20,11 @@ import isEmpty from "lodash/isEmpty";
  * See propTypes for specific props and types
  */
 export function ResultPage({ rows, onWorkClick, isLoading }) {
-  if (isLoading) {
-    // Create some skeleton rows
-    rows = Array(10).fill({});
-  }
-
+  //   if (isLoading) {
+  //     // Create some skeleton rows
+  //     rows = Array(10).fill({});
+  //   }
+  console.log("isloading", isLoading);
   const resultRows = rows?.map((row, index) => (
     <Fragment key={row.workId + ":" + index}>
       <ResultRow
@@ -96,27 +96,45 @@ export default function Wrap({ onWorkClick, page }) {
     })
   );
   const parsedResponse = parseResponse(bigResponse);
-
+//  if (true) {
+  if (parsedResponse.isLoading) {
+  return  Array(10).fill({}).map((row, index) => (
+        <ResultRow
+          isLoading={true}
+          work={row}
+          key={`${row?.titles?.main}_${index}`}
+          onClick={onWorkClick && (() => onWorkClick(index, row))}
+        />
+    ));
+  }
   //   if (parsedResponse.isLoading) {
   //     return (
-  //       <>
-  //         <TopBar />
-
-  //         <Section
-  //           divider={false}
-  //           colSize={{ lg: { offset: 1, span: true } }}
-  //           title="loading ..."
-  //           subtitle=""
-  //           isLoading={true}
-  //         >
-  //           <AdvancedSearchSort
-  //         //    className={cx(styles.sort_container, styles.loadingSort)}
-  //             skeleton={true}
-  //           />
-  //           <ResultPage isLoading={true} />
-  //         </Section>
-  //       </>
+  //       <ResultRow
+  //         isLoading={true}
+  //        // work={row}
+  //       //  key={`${row?.titles?.main}_${index}`}
+  //        // onClick={onWorkClick && (() => onWorkClick(index, row))}
+  //       />
   //     );
+  //     //   return (
+  //     //     <>
+  //     //       {/* <TopBar /> */}
+
+  //     //       <Section
+  //     //         divider={false}
+  //     //         colSize={{ lg: { offset: 1, span: true } }}
+  //     //         title="loading ..."
+  //     //         subtitle=""
+  //     //         isLoading={true}
+  //     //       >
+  //     //         <AdvancedSearchSort
+  //     //       //    className={cx(styles.sort_container, styles.loadingSort)}
+  //     //           skeleton={true}
+  //     //         />
+  //     //         <ResultPage isLoading={true} />
+  //     //       </Section>
+  //     //     </>
+  //     //   );
   //   }
   //update searchhistory
   if (!parsedResponse?.errorMessage && !parsedResponse.isLoading) {

@@ -22,6 +22,8 @@ export function AdvancedSearchResult({
   onPageChange,
   results,
   error = null,
+  isLoading
+  
 }) {
   console.log("results", results);
   const hitcount = results?.hitcount;
@@ -39,6 +41,7 @@ export function AdvancedSearchResult({
   console.log("resultpagesNumber", resultpagesNumber);
   const resultPages = Array(resultpagesNumber).fill({});
   console.log("resulprages", resultPages);
+const showContent = hitcount>0 &&!isLoading;
   return (
     <>
       <TopBar />
@@ -49,7 +52,7 @@ export function AdvancedSearchResult({
         id="search-result-section"
         title="Resultater"
         subtitle={
-          <Title type="title5" className={styles.titleStyle}>
+          showContent &&       <Title type="title5" className={styles.titleStyle}>
             {hitcount}
           </Title>
         }
@@ -57,7 +60,7 @@ export function AdvancedSearchResult({
       >
         {/* Reuse result page from simplesearch - we skip the wrap .. @TODO should we set
         some mark .. that we are doing advanced search .. ?? */}
-        {hitcount === 0 && <NoHitSearch />}
+        {showContent && <NoHitSearch />}
         {/* {hitcount > 0 && ( */}
         <>
           <AdvancedSearchSort className={cx(styles.sort_container)} />
@@ -136,28 +139,30 @@ export default function Wrap({ onWorkClick, onPageChange }) {
   );
   console.log("fastResponse", fastResponse);
   const parsedResponse = parseResponse(fastResponse);
+console.log('parsedResponse.isLoading',parsedResponse.isLoading)
+//   if (false) {
 
-  if (parsedResponse.isLoading) {
-    return (
-      <>
-        <TopBar />
+//  if (parsedResponse.isLoading) {
+//     return (
+//       <>
+//         <TopBar />
 
-        <Section
-          divider={false}
-          colSize={{ lg: { offset: 1, span: true } }}
-          title="loading ..."
-          subtitle=""
-          isLoading={true}
-        >
-          <AdvancedSearchSort
-            className={cx(styles.sort_container, styles.loadingSort)}
-            skeleton={true}
-          />
-          <ResultPage isLoading={true} />
-        </Section>
-      </>
-    );
-  }
+//         <Section
+//           divider={false}
+//           colSize={{ lg: { offset: 1, span: true } }}
+//           title="loading ..."
+//           subtitle=""
+//           isLoading={true}
+//         >
+//           <AdvancedSearchSort
+//             className={cx(styles.sort_container, styles.loadingSort)}
+//             skeleton={true}
+//           />
+//           <ResultPage isLoading={true} />
+//         </Section>
+//       </>
+//     );
+//   }
   //update searchhistory
   if (!parsedResponse?.errorMessage && !parsedResponse.isLoading) {
     // make an object for searchhistory @TODO .. the right object please
@@ -181,6 +186,7 @@ export default function Wrap({ onWorkClick, onPageChange }) {
       results={parsedResponse}
       //  error={parsedResponse.errorMessage}
       setShowPopover={setShowPopover}
+      isLoading={parsedResponse.isLoading}
     />
   );
 }
