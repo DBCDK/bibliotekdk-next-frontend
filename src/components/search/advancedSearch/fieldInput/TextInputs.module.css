@@ -15,6 +15,7 @@
   white-space: nowrap;
 }
 .removeIcon {
+  display: flex;
   margin-left: var(--pt2);
   padding-bottom: var(--pt2);
 }
@@ -111,7 +112,7 @@
   margin-bottom: var(--pt2);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .inputContainer {
     /*border: 2px solid green;*/
     flex-wrap: wrap;
