@@ -17,6 +17,9 @@
   white-space: nowrap;
 }
 
+.bigFont {
+}
+
 .dropdownitem a {
   text-decoration: none;
 }
@@ -78,4 +81,28 @@
 .selectedItem {
   background-color: var(--blue);
   color: var(--white);
+}
+
+@media (max-width: 767px) {
+  .inputContainer {
+    /*border: 2px solid green;*/
+    flex-wrap: wrap;
+  }
+
+  .suggesterContainer {
+    margin-left: 0;
+    margin-top: var(--pt1);
+  }
+
+  .inputTitle {
+    display: none;
+  }
+
+  .bigFont {
+    font-size: 17px;
+  }
+
+  .dropdowntoggle {
+    min-width: 180px;
+  }
 }

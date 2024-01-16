@@ -108,6 +108,7 @@
 .suggester {
   height: var(--pt5);
 }
+
 .inputTitle {
   margin-bottom: var(--pt2);
 }
@@ -120,6 +121,10 @@
   .suggesterContainer {
     margin-left: 0;
     margin-top: var(--pt1);
+  }
+
+  .suggester input {
+    font-size: 17px;
   }
 
   .inputTitle {
