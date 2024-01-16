@@ -60,7 +60,7 @@ const MultiOrderReceipt = ({ context }) => {
           <Translate
             context="order"
             label="order-success-message"
-            vars={[branchName]}
+            vars={[`<br/> ${branchName}`]}
             renderAsHtml
           />
         </Text>
@@ -69,7 +69,7 @@ const MultiOrderReceipt = ({ context }) => {
       {hasErrors && (
         <>
           <Text type="text1" className={styles.errorMessage}>
-            {failedMaterials.length === 1 ? (
+            {failedMaterials?.length === 1 ? (
               <Translate
                 context="bookmark-order"
                 label="multiorder-couldnt-order-singular"
@@ -98,21 +98,21 @@ const MultiOrderReceipt = ({ context }) => {
       )}
 
       <Button
-        dataCy="multiorder-button-close"
-        type="primary"
-        size="large"
-        className={styles.close}
-        onClick={() => modal.clear()}
-      >
-        <Translate context="general" label="close" />
-      </Button>
-      <Button
-        type="secondary"
-        size="large"
         className={styles.redirect}
         onClick={() => router.push("/profil/bestillingshistorik")}
+        type="secondary"
       >
-        <Translate context="receipt" label="go-to-your-orders" />
+        {Translate({
+          context: "receipt",
+          label: "go-to-your-orders",
+        })}
+      </Button>
+      <Button
+        className={styles.close}
+        onClick={() => modal.clear()}
+        dataCy="multiorder-button-close"
+      >
+        {Translate({ context: "general", label: "close" })}
       </Button>
     </div>
   );

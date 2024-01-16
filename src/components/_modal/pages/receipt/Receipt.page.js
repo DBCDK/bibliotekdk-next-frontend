@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 
 import merge from "lodash/merge";
 
-import Top from "../base/top";
-
 import Button from "@/components/base/button";
 import Translate from "@/components/base/translate";
 import Progress from "@/components/base/progress";
@@ -98,9 +96,6 @@ export function Receipt({
   // Branch name
   const branchName = pickupBranch?.name;
 
-  // Order ors id on order success
-  const orderId = orderData?.submitOrder?.orderId;
-
   // Loading animation duration
   const duration = articleOrderIsLoading ? 10 : 1;
 
@@ -112,7 +107,6 @@ export function Receipt({
       })}
     >
       <div className={styles.container}>
-        <Top className={{ top: styles.top }} back={false} />
         <div className={`${styles.wrap} ${styles.progress}`}>
           <Progress
             className={styles.loader}
@@ -153,28 +147,19 @@ export function Receipt({
                     })}
               </Text>
 
-              {orderId && (
-                <Text type="text2" className={styles.orderNumber}>
-                  {Translate({
-                    context: "order",
-                    label: "order-success-id",
-                    vars: [orderId],
-                  })}
-                </Text>
-              )}
-
               {pickupBranch?.borrowerCheck && (
                 <Button
                   className={styles.redirect}
-                  onClick={() => router.push("/profil/laan-og-reserveringer")}
+                  onClick={() => router.push("/profil/bestillingshistorik")}
                   type="secondary"
                 >
                   {Translate({
                     context: "receipt",
-                    label: "seeLoansAndReservations",
+                    label: "go-to-your-orders",
                   })}
                 </Button>
               )}
+
               <Button
                 className={styles.close}
                 onClick={() => modal.clear()}
@@ -193,36 +178,34 @@ export function Receipt({
             >
               {Translate({ context: "receipt", label: "errorOccured" })}
             </Title>
-            {hasFailed && failedMessage && (
-              <Text tag="div" type="text2" dataCy="order-failed-message">
-                {failedMessage}
-              </Text>
-            )}
             {hasFailed && (
-              <span className={styles.contactDBC}>
-                <Text tag="div" type="text2" dataCy="try-again">
+              <>
+                {failedMessage && (
+                  <Text tag="div" type="text2" dataCy="order-failed-message">
+                    {failedMessage}
+                  </Text>
+                )}
+                <Text tag="span" type="text2" dataCy="try-again">
                   {Translate({
                     context: "receipt",
                     label: "tryAgain",
                   })}
-                </Text>
-                <Link
-                  href={Translate({
-                    context: "general",
-                    label: "kundeserviceBibdk",
-                  })}
-                  target="_blank"
-                  border={{ top: false, bottom: { keepVisible: true } }}
-                  dataCy="feedbacklink-to-kundeservice"
-                >
-                  <Text tag="span" type="text2">
+                  <Link
+                    href={Translate({
+                      context: "general",
+                      label: "kundeserviceBibdk",
+                    })}
+                    target="_blank"
+                    border={{ top: false, bottom: { keepVisible: true } }}
+                    dataCy="feedbacklink-to-kundeservice"
+                  >
                     {Translate({
                       context: "general",
                       label: "kundeserviceBibdk",
                     })}
-                  </Text>
-                </Link>
-              </span>
+                  </Link>
+                </Text>
+              </>
             )}
             <Button className={styles.redirect} onClick={() => modal.clear()}>
               {Translate({ context: "general", label: "close" })}
