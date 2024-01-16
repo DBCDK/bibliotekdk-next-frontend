@@ -52,6 +52,7 @@
   -webkit-line-clamp: 3; /* number of lines to show */
   line-height: 32px; /* fallback */
   max-height: calc(32px * 3); /* fallback */
+  word-break: break-all;
 }
 
 .materials {
