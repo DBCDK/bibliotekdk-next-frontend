@@ -61,7 +61,6 @@ export function AdvancedSearchResult({
             {Array(isMobile ? page : 1)
               .fill({})
               .map((p, index) => {
-                console.log("index", index);
                 return (
                   <ResultPage
                     key={`result-page-${index}`}
