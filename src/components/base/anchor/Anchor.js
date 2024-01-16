@@ -38,6 +38,7 @@ function Menu({
   stickyTop = true,
   stickyBottom = false,
   isLoading,
+  isScrolling,
 }) {
   // currently active section (window position)
   const [activeItemId, setActiveItemId] = useState(null);
@@ -116,18 +117,22 @@ function Menu({
   const handleClick = (e, id, section) => {
     e.preventDefault();
     setIsClicked(id);
-    handleScroll(
-      window,
-      section.element,
-      section.offset + PRETTY_OFFSET, // var(--pt1)
-      // callback
-      () => {
-        setTimeout(() => {
-          setIsClicked(false);
-        }, 100);
-        alignMenuItem(itemsWrap, itemRefs.current[id], 16);
-      }
-    );
+    isScrolling?.(true);
+    setTimeout(() => {
+      handleScroll(
+        window,
+        section.element,
+        section.offset + PRETTY_OFFSET, // var(--pt1)
+        // callback
+        () => {
+          setTimeout(() => {
+            setIsClicked(false);
+          }, 100);
+          alignMenuItem(itemsWrap, itemRefs.current[id], 16);
+          isScrolling?.(false);
+        }
+      );
+    }, 50);
 
     section?.element?.focus({ preventScroll: true });
   };

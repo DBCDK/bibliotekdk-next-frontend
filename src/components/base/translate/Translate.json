@@ -473,6 +473,10 @@
         "da": "Vis mere",
         "en": "Show more"
       },
+      "showAll": {
+        "da": "Vis alle",
+        "en": "Show all"
+      },
       "and": {
         "da": "og",
         "en": "and"

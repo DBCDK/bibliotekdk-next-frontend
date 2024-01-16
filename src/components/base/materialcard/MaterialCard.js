@@ -103,6 +103,9 @@ const MaterialCard = forwardRef(
       );
     }
 
+    // Don't use link component, when data is loading
+    const LinkComp = isLoading ? ({ children }) => <>{children}</> : Link;
+
     return (
       <Col
         // Col props
@@ -113,7 +116,7 @@ const MaterialCard = forwardRef(
         as="article"
         {...rootProps}
       >
-        <Link
+        <LinkComp
           href={link_href}
           // Link props
           className={cx(styles.base_link_style, {
@@ -144,7 +147,7 @@ const MaterialCard = forwardRef(
 
             <div className={cx(textClassName)}>{children}</div>
           </div>
-        </Link>
+        </LinkComp>
       </Col>
     );
   }
