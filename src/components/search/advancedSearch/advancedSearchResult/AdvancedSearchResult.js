@@ -105,8 +105,6 @@ export default function Wrap({ onWorkClick, onPageChange }) {
     setShowPopover,
   } = useAdvancedSearchContext();
 
-  // we  disable the data collect for now - this one is propdrilled from
-  // components/search/result/page
   // @TODO what to do  with dataCollect ???
   onWorkClick = null;
   // get setter for advanced search history
