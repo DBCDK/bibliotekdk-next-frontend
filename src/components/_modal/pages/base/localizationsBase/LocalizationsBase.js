@@ -98,6 +98,7 @@ function LocalizationsBase({
       {query !== null && setQuery && (
         <div className={cx(styles.padding_inline, styles.search_bar)}>
           <Search
+            className={styles.inputpadding}
             dataCy="pickup-search-input"
             placeholder={Translate({
               context: "order",

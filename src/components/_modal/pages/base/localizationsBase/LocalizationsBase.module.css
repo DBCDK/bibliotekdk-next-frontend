@@ -36,6 +36,10 @@
   padding-bottom: var(--pt2);
 }
 
+.inputpadding input {
+  padding-right: var(--pt4);
+}
+
 .agency_list {
   display: flex;
   flex-direction: column;
