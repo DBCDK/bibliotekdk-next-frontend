@@ -22,10 +22,8 @@ export function AdvancedSearchResult({
   onPageChange,
   results,
   error = null,
-  isLoading
-  
+  isLoading,
 }) {
-  console.log("results", results);
   const hitcount = results?.hitcount;
   const numPages = Math.ceil(hitcount / 10);
   const breakpoint = useBreakpoint();
@@ -34,14 +32,7 @@ export function AdvancedSearchResult({
   if (error) {
     return null;
   }
-  console.log("page", page);
-  console.log("hitcount", hitcount);
-  console.log("ismobile", isMobile);
-  const resultpagesNumber = isMobile ? parseInt(page) : 1;
-  console.log("resultpagesNumber", resultpagesNumber);
-  const resultPages = Array(resultpagesNumber).fill({});
-  console.log("resulprages", resultPages);
-const showContent = hitcount>0 &&!isLoading;
+
   return (
     <>
       <TopBar />
@@ -52,16 +43,18 @@ const showContent = hitcount>0 &&!isLoading;
         id="search-result-section"
         title="Resultater"
         subtitle={
-          showContent &&       <Title type="title5" className={styles.titleStyle}>
-            {hitcount}
-          </Title>
+          hitcount > 0 &&
+          !isLoading && (
+            <Title type="title5" className={styles.titleStyle}>
+              {hitcount}
+            </Title>
+          )
         }
         className={styles.padding_top}
       >
         {/* Reuse result page from simplesearch - we skip the wrap .. @TODO should we set
         some mark .. that we are doing advanced search .. ?? */}
-        {showContent && <NoHitSearch />}
-        {/* {hitcount > 0 && ( */}
+        {!isLoading && hitcount === 0 && <NoHitSearch />}
         <>
           <AdvancedSearchSort className={cx(styles.sort_container)} />
           <div className={cx(styles.padding_top)}>
@@ -77,10 +70,8 @@ const showContent = hitcount>0 &&!isLoading;
                   />
                 );
               })}
-            {/* */}
           </div>
         </>
-        {/* // )} */}
       </Section>
       {hitcount > 0 && (
         <Pagination
@@ -137,32 +128,8 @@ export default function Wrap({ onWorkClick, onPageChange }) {
       ...(!isEmpty(sort) && { sort: sort }),
     })
   );
-  console.log("fastResponse", fastResponse);
   const parsedResponse = parseResponse(fastResponse);
-console.log('parsedResponse.isLoading',parsedResponse.isLoading)
-//   if (false) {
 
-//  if (parsedResponse.isLoading) {
-//     return (
-//       <>
-//         <TopBar />
-
-//         <Section
-//           divider={false}
-//           colSize={{ lg: { offset: 1, span: true } }}
-//           title="loading ..."
-//           subtitle=""
-//           isLoading={true}
-//         >
-//           <AdvancedSearchSort
-//             className={cx(styles.sort_container, styles.loadingSort)}
-//             skeleton={true}
-//           />
-//           <ResultPage isLoading={true} />
-//         </Section>
-//       </>
-//     );
-//   }
   //update searchhistory
   if (!parsedResponse?.errorMessage && !parsedResponse.isLoading) {
     // make an object for searchhistory @TODO .. the right object please
@@ -184,7 +151,7 @@ console.log('parsedResponse.isLoading',parsedResponse.isLoading)
       onWorkClick={onWorkClick}
       onPageChange={onPageChange}
       results={parsedResponse}
-      //  error={parsedResponse.errorMessage}
+      error={parsedResponse.errorMessage}
       setShowPopover={setShowPopover}
       isLoading={parsedResponse.isLoading}
     />
