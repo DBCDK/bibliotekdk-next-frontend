@@ -188,10 +188,7 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
                   {Translate({ context: "search", label: "clearSearch" })}
                 </Link>
               </Text>
-            </Col>
-
-            <Col md={4} sm={12} className={styles.helpLink}>
-              <Text type="text3" tag="span">
+              <Text type="text3" tag="span" className={styles.helpLink}>
                 <Link
                   href={getHelpUrl("saadan-soeger-du-i-bibliotek-dk", "42")}
                   border={{
@@ -206,6 +203,8 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
                 </Link>
               </Text>
             </Col>
+
+            <Col md={4} sm={12} className={styles.helpLink}></Col>
           </Row>
         </Container>
       )}

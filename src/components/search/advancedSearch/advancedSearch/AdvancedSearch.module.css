@@ -46,14 +46,11 @@
   flex-direction: row;
   justify-content: flex-end;
   align-items: end;
+  margin-left: auto;
   display: flex;
 }
 
 @media (max-width: 768px) {
-  .container {
-    border: 2px solid red;
-  }
-
   .buttonContainer {
     justify-content: start;
   }
