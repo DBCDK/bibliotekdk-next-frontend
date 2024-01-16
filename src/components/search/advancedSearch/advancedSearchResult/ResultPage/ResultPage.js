@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import ResultRow from "@/components/search/result/row";
-//import { ResultPage } from "@/components/search/result/page";
 
 import { Fragment } from "react";
 import { useData } from "@/lib/api/api";
@@ -10,7 +9,6 @@ import { doComplexSearchAll } from "@/lib/api/complexSearch.fragments";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
 import { convertStateToCql } from "@/components/search/advancedSearch/utils";
-import useAdvancedSearchHistory from "@/components/hooks/useAdvancedSearchHistory";
 import isEmpty from "lodash/isEmpty";
 
 /**
@@ -47,8 +45,6 @@ ResultPage.propTypes = {
 function parseResponse(bigResponse) {
   return {
     works: bigResponse?.data?.complexSearch?.works || null,
-    hitcount: bigResponse?.data?.complexSearch?.hitcount || 0,
-    errorMessage: bigResponse?.data?.complexSearch?.errorMessage || null,
     isLoading: bigResponse?.isLoading,
   };
 }
@@ -62,19 +58,15 @@ function parseResponse(bigResponse) {
  * @returns {React.JSX.Element}
  */
 export default function Wrap({ onWorkClick, page }) {
-  //rows, onWorkClick, isLoading
   const {
     cqlFromUrl: cql,
     fieldSearchFromUrl: fieldSearch,
     sort,
   } = useAdvancedSearchContext();
 
-  // we  disable the data collect for now - this one is propdrilled from
-  // components/search/result/page
-  // @TODO what to do  with dataCollect ???
   onWorkClick = null;
+
   // get setter for advanced search history
-  const { setValue } = useAdvancedSearchHistory();
   const limit = 10; // limit
   let offset = limit * (page - 1); // offset
   const cqlQuery = cql || convertStateToCql(fieldSearch);
@@ -103,17 +95,6 @@ export default function Wrap({ onWorkClick, page }) {
           onClick={onWorkClick && (() => onWorkClick(index, row))}
         />
       ));
-  }
-
-  //update searchhistory
-  if (!parsedResponse?.errorMessage && !parsedResponse.isLoading) {
-    // make an object for searchhistory @TODO .. the right object please
-    const searchHistoryObj = {
-      hitcount: parsedResponse?.hitcount,
-      fieldSearch: fieldSearch || "",
-      cql: cqlQuery,
-    };
-    setValue(searchHistoryObj);
   }
 
   if (!showResult) {
