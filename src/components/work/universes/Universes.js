@@ -44,7 +44,7 @@ function Universes({ isLoading, universe = {}, workId = "" }) {
   });
 
   const universeCard = {
-    material: { title: universe?.title, workId: workId },
+    material: { title: universe?.title, workId: workId, key: universe?.key },
     propsAndChildrenTemplate: templateForUniverseInfoCard,
   };
 
