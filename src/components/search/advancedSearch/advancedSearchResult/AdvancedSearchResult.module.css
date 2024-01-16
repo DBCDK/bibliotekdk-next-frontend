@@ -10,7 +10,3 @@
 .titleStyle {
   color: var(--blue);
 }
-
-.loadingSort {
-  padding: var(--pt2) 0;
-}
