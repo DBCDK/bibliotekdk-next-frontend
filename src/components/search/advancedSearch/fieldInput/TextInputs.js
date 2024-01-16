@@ -110,15 +110,14 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
           </Suggester>
         </div>
         {!isFirstItem && (
-          <IconButton
-            dataCy={"advanced-search-remove-input"}
-            icon="close"
-            onClick={() => removeInputField(index)}
+          <Icon
             className={styles.removeIcon}
-            keepUnderline={true}
-          >
-            {Translate({ context: "search", label: "remove" })}
-          </IconButton>
+            dataCy={"advanced-search-remove-input"}
+            onClick={() => removeInputField(index)}
+            size={{ w: 3, h: "auto" }}
+            alt=""
+            src={"trash-2.svg"}
+          />
         )}
       </div>
     </div>

@@ -46,5 +46,21 @@
   flex-direction: row;
   justify-content: flex-end;
   align-items: end;
+  margin-left: auto;
   display: flex;
+}
+
+@media (max-width: 768px) {
+  .buttonContainer {
+    justify-content: start;
+  }
+
+  .closeContainer {
+    position: absolute;
+  }
+
+  .closeContainer i {
+    position: relative;
+    top: 3px;
+  }
 }
