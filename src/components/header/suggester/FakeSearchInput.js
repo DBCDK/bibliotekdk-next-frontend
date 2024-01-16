@@ -32,15 +32,18 @@ export default function FakeSearchInput({ className, showButton = true }) {
   return (
     <div
       className={`${styles.container} ${className} ${hasQueryClass}`}
-      onClick={() => openMobileSuggester(router)}
-      onKeyDown={(event) => {
-        if (event.key === "Enter") {
-          openMobileSuggester(router);
-        }
-      }}
       tabIndex="0"
     >
-      <div className={styles.fakeinput} data-cy="fake-search-input">
+      <div
+        className={styles.fakeinput}
+        data-cy="fake-search-input"
+        onClick={() => openMobileSuggester(router)}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            openMobileSuggester(router);
+          }
+        }}
+      >
         <Text type="text2" className={styles.placeholder}>
           {hasQuery
             ? qAll
@@ -72,6 +75,7 @@ export default function FakeSearchInput({ className, showButton = true }) {
       </div>
       {showButton && (
         <div className={styles.fakebutton} data-cy="fake-search-input-button">
+          {/** do search */}
           <Text type="text2">
             {Translate({
               context: "suggester",
