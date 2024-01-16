@@ -79,7 +79,7 @@
     .underlineContainer__only_internal_animations
   ):focus-visible
   ~ .f-translate-right {
-  transform: translateX(var(--pt2));
+  transform: translateX(var(--pt1));
 }
 
 :is(
