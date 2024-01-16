@@ -75,7 +75,6 @@ export default function FakeSearchInput({ className, showButton = true }) {
       </div>
       {showButton && (
         <div className={styles.fakebutton} data-cy="fake-search-input-button">
-          {/** do search */}
           <Text type="text2">
             {Translate({
               context: "suggester",
