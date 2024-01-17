@@ -112,8 +112,6 @@ const MenuDropdown = ({
       onParentClick(idx);
     }
     if (options?.[idx]?.callback) {
-      console.log("miav");
-      console.log("options[idx]: ", options[idx]);
       options[idx].callback();
     }
     setIsOpen(false);
@@ -152,18 +150,18 @@ const MenuDropdown = ({
         })}
       >
         {options.map((option, i) => {
-          const text = typeof option === "object" ? option.child : option;
+          const child = typeof option === "object" ? option.child : option;
 
           return (
             <div
-              key={`option-${text}`}
+              key={`option-${child}`}
               role="menuitem"
               tabIndex={0}
               onClick={() => onItemClick(i)}
               className={styles.menuitem}
               ref={itemRefs[i]}
             >
-              {text}
+              {child}
             </div>
           );
         })}
