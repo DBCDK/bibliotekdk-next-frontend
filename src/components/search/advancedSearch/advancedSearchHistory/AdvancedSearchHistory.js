@@ -116,51 +116,53 @@ function HistoryHeaderActions({
     { child: deleteSelectedLabel, callback: deleteSelected },
   ];
 
+  if (breakpoint === "xs") {
+    return (
+      <div className={cx(styles.actionheader)}>
+        <MenuDropdown options={MENUITEMS} isLeftAlligned={true} />
+      </div>
+    );
+  }
+
   return (
     <div className={cx(styles.actionheader)}>
-      {breakpoint === "xs" ? (
-        <MenuDropdown options={MENUITEMS} isLeftAlligned={true} />
-      ) : (
-        <>
-          <Checkbox
-            ariaLabelledBy={`selectall`}
-            ariaLabel="vælg alle"
-            tabIndex="-1"
-            onChange={setAllChecked}
-            id="selectall"
-            className={styles.checkbox}
-            checked={checked}
-            disabled={disabled}
-          />
-          <label htmlFor="selectall">
-            <Text type="text3" className={cx(styles.action, styles.lessergap)}>
-              {selectAllLabel}
-            </Text>
-          </label>
+      <Checkbox
+        ariaLabelledBy={`selectall`}
+        ariaLabel="vælg alle"
+        tabIndex="-1"
+        onChange={setAllChecked}
+        id="selectall"
+        className={styles.checkbox}
+        checked={checked}
+        disabled={disabled}
+      />
+      <label htmlFor="selectall">
+        <Text type="text3" className={cx(styles.action, styles.lessergap)}>
+          {selectAllLabel}
+        </Text>
+      </label>
 
-          <Link
-            className={cx(styles.flex, {
-              [styles.disabled_link]: !partiallyChecked || disabled,
-            })}
-            border={{
-              top: false,
-              bottom: { keepVisible: partiallyChecked && !disabled },
-            }}
-            disabled={!partiallyChecked || disabled}
-            onClick={(e) => {
-              e.preventDefault();
-              deleteSelected();
-            }}
-          >
-            <Text type="text3">{deleteSelectedLabel}</Text>
-            <Icon
-              src="close_grey.svg"
-              size={{ w: 2, h: 2 }}
-              className={styles.icon}
-            />
-          </Link>
-        </>
-      )}
+      <Link
+        className={cx(styles.flex, {
+          [styles.disabled_link]: !partiallyChecked || disabled,
+        })}
+        border={{
+          top: false,
+          bottom: { keepVisible: partiallyChecked && !disabled },
+        }}
+        disabled={!partiallyChecked || disabled}
+        onClick={(e) => {
+          e.preventDefault();
+          deleteSelected();
+        }}
+      >
+        <Text type="text3">{deleteSelectedLabel}</Text>
+        <Icon
+          src="close_grey.svg"
+          size={{ w: 2, h: 2 }}
+          className={styles.icon}
+        />
+      </Link>
     </div>
   );
 }
