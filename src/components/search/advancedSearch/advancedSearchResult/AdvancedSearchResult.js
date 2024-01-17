@@ -14,6 +14,7 @@ import AdvancedSearchSort from "@/components/search/advancedSearch/advancedSearc
 import TopBar from "@/components/search/advancedSearch/advancedSearchResult/topBar/TopBar";
 import Title from "@/components/base/title";
 import { NoHitSearch } from "@/components/search/advancedSearch/advancedSearchResult/noHitSearch/NoHitSearch";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 export function AdvancedSearchResult({
   pageNo,
@@ -24,6 +25,9 @@ export function AdvancedSearchResult({
 }) {
   const hitcount = results?.hitcount;
   const numPages = Math.ceil(hitcount / 10);
+
+  const breakpoint = useBreakpoint();
+  const isMobile = breakpoint === "xs" || breakpoint === "sm" || false;
 
   if (error) {
     return null;
@@ -44,7 +48,7 @@ export function AdvancedSearchResult({
           </Title>
         }
         className={styles.sectionStyle}
-        sectionContentClass={styles.sectionContentStyle}
+        sectionContentClass={isMobile ? styles.sectionContentStyle : ""}
       >
         {/* Reuse result page from simplesearch - we skip the wrap .. @TODO should we set
         some mark .. that we are doing advanced search .. ?? */}
