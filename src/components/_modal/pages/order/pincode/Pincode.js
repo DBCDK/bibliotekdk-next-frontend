@@ -1,13 +1,13 @@
 import Input from "@/components/base/forms/input";
 import Label from "@/components/base/forms/label";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
-
-import styles from "./Pincode.module.css";
 import { useData } from "@/lib/api/api";
 import { isFFUAgency } from "@/lib/api/branches.fragments";
 import Translate from "@/components/base/translate/Translate";
 import Text from "@/components/base/text";
 import Divider from "@/components/base/divider/Divider";
+
+import styles from "./Pincode.module.css";
 
 function Pincode({ isLoading, onChange, error }) {
   return (
