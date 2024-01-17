@@ -27,6 +27,10 @@
   .formatedQueryContainer {
     flex-flow: wrap;
   }
+  .formatedQueryContainer p {
+    margin-bottom: var(--pt05);
+  }
+
   .edit_search {
     justify-content: start;
   }

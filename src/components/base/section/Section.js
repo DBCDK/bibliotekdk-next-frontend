@@ -56,6 +56,7 @@ export default function Section({
   sectionTag = "section",
   id,
   colSize = {},
+  sectionContentClass = "",
 }) {
   const backgroundClass = backgroundColor ? styles.background : "";
 
@@ -131,7 +132,7 @@ export default function Section({
             xs={12}
             lg={colSize.lg || { offset: title ? 1 : 0, span: true }}
             data-cy={cyKey({ name: "content", prefix: "section" })}
-            className={`section-content ${styles.content} ${contentDividerClass}`}
+            className={`section-content  ${styles.content} ${contentDividerClass} ${sectionContentClass}`}
           >
             {divider?.content}
             {children}
@@ -174,6 +175,10 @@ Section.propTypes = {
   divider: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   space: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  sectionContentClass: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ]),
   headerTag: PropTypes.string,
   sectionTag: PropTypes.string,
 };

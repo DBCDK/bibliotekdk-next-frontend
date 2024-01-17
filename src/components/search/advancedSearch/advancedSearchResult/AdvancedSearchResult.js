@@ -43,7 +43,7 @@ export function AdvancedSearchResult({
             {hitcount}
           </Title>
         }
-        className={styles.padding_top}
+        sectionContentClass={styles.sectionContentStyle}
       >
         {/* Reuse result page from simplesearch - we skip the wrap .. @TODO should we set
         some mark .. that we are doing advanced search .. ?? */}
