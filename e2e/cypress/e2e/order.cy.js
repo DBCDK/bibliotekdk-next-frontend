@@ -1,5 +1,5 @@
 describe("Order", () => {
-  before(() => {
+  beforeEach(() => {
     cy.window().then((win) => {
       win.sessionStorage.clear();
       win.localStorage.clear();
@@ -24,15 +24,6 @@ describe("Order", () => {
     cy.get("[data-cy=try-again").should("exist");
     cy.get("[data-cy=button-luk]").should("exist");
   });
-});
-
-describe("Order", () => {
-  before(() => {
-    cy.window().then((win) => {
-      win.sessionStorage.clear();
-      win.localStorage.clear();
-    });
-  });
 
   it("should NOT contain pincode field", () => {
     cy.visitWithConsoleSpy(
@@ -41,7 +32,7 @@ describe("Order", () => {
 
     cy.contains("Bestil", { timeout: 10000 }).click();
     cy.contains("Hugo i Sølvskoven");
-    cy.get("[data-cy=pincode-input]").scrollIntoView().should("not.be.visible");
+    cy.get("[data-cy=pincode-input]").should("not.exist");
   });
 
   it(`submits ILL order for pids that may be ordered`, () => {
@@ -140,7 +131,7 @@ describe("Order", () => {
   });
 
   describe("Order for FFU libraries ", () => {
-    before(() => {
+    beforeEach(() => {
       cy.window().then((win) => {
         win.sessionStorage.clear();
         win.localStorage.clear();

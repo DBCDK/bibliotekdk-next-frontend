@@ -61,6 +61,12 @@ export function AddLibrary({
       text = "addLibraryNoBorchkText";
     }
 
+    // selected library already syncs data to culr
+    if (branch?.culrDataSync) {
+      title = "addLibraryNoBorchkTitle";
+      text = "addLibraryNoBorchkText";
+    }
+
     // if user is not already created at the target branch
     if (agencies?.includes(branch?.agencyId)) {
       title = "addLibraryAlreadyCreatedTitle";
