@@ -14,9 +14,12 @@ import Title from "@/components/base/title/Title";
 import cx from "classnames";
 import { cyKey } from "@/utils/trim";
 import Icon from "@/components/base/icon/Icon";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
+import MenuDropdown from "@/components/base/dropdown/menuDropdown/MenuDropdown";
 
 function HistoryItem({ item, index, checked, onSelect }) {
   const router = useRouter();
+  const breakpoint = useBreakpoint();
 
   const goToItemUrl = (item) => {
     if (item.fieldSearch) {
@@ -51,7 +54,7 @@ function HistoryItem({ item, index, checked, onSelect }) {
         ariaLabel={`select-item-${index}`}
         className={styles.checkbox}
       />
-      <Text type="text2">
+      <Text className={styles.timestamp} type="text2">
         {item.unixtimestamp ? getTimeStamp(item.unixtimestamp) : item.timestamp}
       </Text>
       <div className={styles.link}>
@@ -69,7 +72,9 @@ function HistoryItem({ item, index, checked, onSelect }) {
         </Link>
       </div>
       <Text type="text2" className={styles.hitcount}>
-        {item.hitcount}
+        {item.hitcount}{" "}
+        {breakpoint === "xs" &&
+          Translate({ context: "search", label: "title" }).toLowerCase()}
       </Text>
     </div>
   );
@@ -95,63 +100,88 @@ function HistoryHeaderActions({
   partiallyChecked,
   disabled,
 }) {
-  return (
-    <div className={cx(styles.actionheader)}>
-      <Checkbox
-        ariaLabelledBy={`selectall`}
-        ariaLabel="vælg alle"
-        tabIndex="-1"
-        onChange={setAllChecked}
-        id="selectall"
-        className={styles.checkbox}
-        checked={checked}
-        disabled={disabled}
-      />
-      <label htmlFor="selectall">
-        <Text type="text3" className={cx(styles.action, styles.lessergap)}>
-          {Translate({ context: "bookmark", label: "select-all" })}
-        </Text>
-      </label>
+  const breakpoint = useBreakpoint();
 
-      <Link
-        className={cx(styles.flex, {
-          [styles.disabled_link]: !partiallyChecked || disabled,
-        })}
-        border={{
-          top: false,
-          bottom: { keepVisible: partiallyChecked && !disabled },
-        }}
-        disabled={!partiallyChecked || disabled}
-        onClick={(e) => {
-          e.preventDefault();
-          deleteSelected();
-        }}
-      >
-        <Text type="text3">
-          {Translate({ context: "bookmark", label: "remove-selected" })}
-        </Text>
-        <Icon
-          src="close_grey.svg"
-          size={{ w: 2, h: 2 }}
-          className={styles.icon}
-        />
-      </Link>
-    </div>
+  const selectAllLabel = Translate({
+    context: "bookmark",
+    label: "select-all",
+  });
+  const deleteSelectedLabel = Translate({
+    context: "bookmark",
+    label: "remove-selected",
+  });
+
+  const MENUITEMS = [
+    { child: selectAllLabel, callback: setAllChecked },
+    { child: deleteSelectedLabel, callback: deleteSelected },
+  ];
+
+  return (
+    <>
+      <div className={cx(styles.actionheader)}>
+        {breakpoint === "xs" ? (
+          <MenuDropdown options={MENUITEMS} isLeftAlligned={true} />
+        ) : (
+          <>
+            <Checkbox
+              ariaLabelledBy={`selectall`}
+              ariaLabel="vælg alle"
+              tabIndex="-1"
+              onChange={setAllChecked}
+              id="selectall"
+              className={styles.checkbox}
+              checked={checked}
+              disabled={disabled}
+            />
+            <label htmlFor="selectall">
+              <Text
+                type="text3"
+                className={cx(styles.action, styles.lessergap)}
+              >
+                {selectAllLabel}
+              </Text>
+            </label>
+
+            <Link
+              className={cx(styles.flex, {
+                [styles.disabled_link]: !partiallyChecked || disabled,
+              })}
+              border={{
+                top: false,
+                bottom: { keepVisible: partiallyChecked && !disabled },
+              }}
+              disabled={!partiallyChecked || disabled}
+              onClick={(e) => {
+                e.preventDefault();
+                deleteSelected();
+              }}
+            >
+              <Text type="text3">{deleteSelectedLabel}</Text>
+              <Icon
+                src="close_grey.svg"
+                size={{ w: 2, h: 2 }}
+                className={styles.icon}
+              />
+            </Link>
+          </>
+        )}
+      </div>
+    </>
   );
 }
 
 function HistoryHeader() {
   return (
     <div className={cx(styles.header, styles.grid)}>
-      <div>&nbsp;</div>
-      <Text type="text4">
+      <div className={styles.checkbox}> </div>
+      <Text type="text4" className={styles.timestamp}>
         {/*{@TODO translations}*/}
         {Translate({ context: "search", label: "timeForSearch" })}
       </Text>
-      <Text type="text4">
+      <Text type="text4" className={styles.link}>
         {Translate({ context: "search", label: "yourSearch" })}
       </Text>
-      <Text type="text4">
+      <Text type="text4" className={styles.hitcount}>
         {Translate({ context: "search", label: "title" })}
       </Text>
     </div>
@@ -177,19 +207,16 @@ export function AdvancedSearchHistory() {
   const { storedValue, deleteValue } = useAdvancedSearchHistory();
   const [checkboxList, setCheckboxList] = useState([]);
 
+  const breakpoint = useBreakpoint();
+
   /**
    * Set or unset ALL checkboxes in search history
-   * @param e
-   *  if the checkbox is selected or not
    */
-  const setAllChecked = (e) => {
-    if (e) {
-      // full list
-      setCheckboxList(storedValue.map((stored) => stored.cql));
+  const setAllChecked = () => {
+    if (storedValue.length === checkboxList.length) {
+      setCheckboxList([]);
     } else {
-      if (storedValue.length === checkboxList.length)
-        // empty list
-        setCheckboxList([]);
+      setCheckboxList(storedValue.map((stored) => stored.cql));
     }
   };
 
@@ -230,7 +257,7 @@ export function AdvancedSearchHistory() {
   };
 
   return (
-    <>
+    <div className={styles.container}>
       <Title
         type="title3"
         data-cy="advanced-search-search-history"
@@ -248,15 +275,16 @@ export function AdvancedSearchHistory() {
         partiallyChecked={checkboxList?.length > 0}
         disabled={storedValue?.length === 0}
       />
-      <HistoryHeader />
-      {/*// if there is no search history*/}
-      {isEmpty(storedValue) || storedValue?.length < 1 ? (
-        <EmptySearchHistory />
-      ) : (
-        storedValue?.map((item, index) => {
-          return (
-            <div key={item.cql}>
+      <div className={styles.table_grid}>
+        {breakpoint !== "xs" && <HistoryHeader />}
+        {/*// if there is no search history*/}
+        {isEmpty(storedValue) || storedValue?.length < 1 ? (
+          <EmptySearchHistory />
+        ) : (
+          storedValue?.map((item, index) => {
+            return (
               <HistoryItem
+                key={item.cql}
                 item={item}
                 index={index}
                 checked={
@@ -265,10 +293,10 @@ export function AdvancedSearchHistory() {
                 deleteSelected={onDeleteSelected}
                 onSelect={onSelect}
               />
-            </div>
-          );
-        })
-      )}
-    </>
+            );
+          })
+        )}
+      </div>
+    </div>
   );
 }

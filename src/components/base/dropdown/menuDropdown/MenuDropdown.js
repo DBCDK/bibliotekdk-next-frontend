@@ -3,6 +3,7 @@ import { createRef, useEffect, useRef, useState } from "react";
 import cx from "classnames";
 import styles from "./MenuDropdown.module.css";
 import Icon from "../../icon";
+import Translate from "@/components/base/translate";
 
 /**
  * Menu dropdown. Use this menu for a menu with actions - not redirects
@@ -14,6 +15,7 @@ const MenuDropdown = ({
   onItemClick: onParentClick,
   uniqueIdButton = "menudropdown-button",
   uniqueIdMenu = "menudropdown-menu",
+  isLeftAlligned = false,
 }) => {
   const menuRef = useRef(null);
   const [itemRefs, setItemRefs] = useState([]);
@@ -109,6 +111,11 @@ const MenuDropdown = ({
     if (onParentClick) {
       onParentClick(idx);
     }
+    if (options?.[idx]?.callback) {
+      console.log("miav");
+      console.log("options[idx]: ", options[idx]);
+      options[idx].callback();
+    }
     setIsOpen(false);
   };
 
@@ -124,7 +131,7 @@ const MenuDropdown = ({
         aria-controls={uniqueIdButton}
         aria-expanded={isOpen}
       >
-        Administrer
+        {Translate({ context: "profile", label: "administer" })}
         <Icon
           className={cx(styles.arrowIcon, {
             [styles.arrowIcon_open]: isOpen,
@@ -141,20 +148,25 @@ const MenuDropdown = ({
         aria-labelledby={uniqueIdMenu}
         className={cx(styles.menu, {
           [styles.menu_open]: isOpen,
+          [styles.menu_left]: isLeftAlligned,
         })}
       >
-        {options.map((option, i) => (
-          <div
-            key={`option-${option}`}
-            role="menuitem"
-            tabIndex={0}
-            onClick={() => onItemClick(i)}
-            className={styles.menuitem}
-            ref={itemRefs[i]}
-          >
-            {option}
-          </div>
-        ))}
+        {options.map((option, i) => {
+          const text = typeof option === "object" ? option.child : option;
+
+          return (
+            <div
+              key={`option-${text}`}
+              role="menuitem"
+              tabIndex={0}
+              onClick={() => onItemClick(i)}
+              className={styles.menuitem}
+              ref={itemRefs[i]}
+            >
+              {text}
+            </div>
+          );
+        })}
       </ul>
     </div>
   );

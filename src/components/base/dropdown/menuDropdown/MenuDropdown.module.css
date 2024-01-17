@@ -12,6 +12,11 @@
   right: 0;
 }
 
+.menu_left {
+  right: unset;
+  left: 0;
+}
+
 .menu:not(.menu_open) {
   display: none;
 }
@@ -20,7 +25,7 @@
   display: block;
 }
 
-.menu:last-child() {
+.menu:last-child {
   border-bottom: 0;
 }
 

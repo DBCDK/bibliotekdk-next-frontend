@@ -4309,6 +4309,10 @@
       }
     },
     "profile": {
+      "administer": {
+        "da": "Administrer",
+        "en": "Administer"
+      },
       "myLibraries": {
         "da": "Mine biblioteker",
         "en": "My libraries"
