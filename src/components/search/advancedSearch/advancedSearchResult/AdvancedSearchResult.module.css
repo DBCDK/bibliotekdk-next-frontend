@@ -2,16 +2,19 @@
   display: inline-flex;
   gap: var(--pt1);
   align-items: center;
-}
-.titleStyle {
-  color: var(--blue);
-  font-size: 17px;
-  padding-bottom: 0;
+  margin-bottom: var(--pt2);
+  margin-top: var(--pt2);
 }
 
-.sectionStyle h2 {
+.titleStyle {
+  color: var(--blue);
+  font-family: var(--body-font-semibold);
+}
+
+.sectionTitleClass h2 {
+  margin-top: var(--pt2);
   font-size: 17px;
-  padding-bottom: 0;
+  font-family: var(--body-font-semibold);
 }
 
 .sectionContentStyle {

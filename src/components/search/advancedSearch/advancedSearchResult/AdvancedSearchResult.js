@@ -47,8 +47,8 @@ export function AdvancedSearchResult({
             {hitcount}
           </Title>
         }
-        className={styles.sectionStyle}
         sectionContentClass={isMobile ? styles.sectionContentStyle : ""}
+        sectionTitleClass={styles.sectionTitleClass}
       >
         {/* Reuse result page from simplesearch - we skip the wrap .. @TODO should we set
         some mark .. that we are doing advanced search .. ?? */}
