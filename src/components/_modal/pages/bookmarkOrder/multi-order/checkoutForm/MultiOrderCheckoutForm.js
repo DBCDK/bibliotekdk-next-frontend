@@ -46,8 +46,13 @@ const CheckoutForm = ({
     pickupBranch?.agencyType === "FORSKNINGSBIBLIOTEK"
   );
 
+  console.log("multiorder", { pickupBranch });
+
+  const shouldRequirePincode =
+    pickupBranchIsFFUAgency && pickupBranch.borrowerCheck;
+
   useEffect(() => {
-    const hasPincode = pickupBranchIsFFUAgency ? !!pincode : true;
+    const hasPincode = shouldRequirePincode ? !!pincode : true;
 
     setDisabled(
       !isAnalyzed ||

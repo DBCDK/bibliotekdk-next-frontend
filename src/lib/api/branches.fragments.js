@@ -148,6 +148,27 @@ export function isFFUAgency({ branchId }) {
   };
 }
 
+/**
+ * Get orderPolicy for a branch
+ */
+export function hasSyncedData({ branchId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 1000, // for debugging
+    query: `
+    query isFFUAgency($branchId: String!) {
+      branches(branchId: $branchId) {
+        hitcount
+        result {
+          borrowerCheck
+        }
+      }
+    }`,
+    variables: { branchId },
+    slowThreshold: 3000,
+  };
+}
+
 export function checkBlockedUser({ branchId }) {
   return {
     apiUrl: ApiEnums.FBI_API,

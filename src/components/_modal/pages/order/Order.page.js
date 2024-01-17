@@ -163,8 +163,11 @@ function Order({
       pickupBranch?.agencyType === "FORSKNINGSBIBLIOTEK"
     );
 
+    const shouldRequirePincode =
+      pickupBranchIsFFUAgency && pickupBranch.borrowerCheck;
+
     const hasMail = !!mail?.valid?.status;
-    const hasPincode = pickupBranchIsFFUAgency ? !!pincode : true;
+    const hasPincode = shouldRequirePincode ? !!pincode : true;
     const hasBranchId = !!pickupBranch?.branchId;
     const hasPid = !!pid;
     const requireYear = !!isPeriodicaLike;
