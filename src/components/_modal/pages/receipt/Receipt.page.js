@@ -21,6 +21,7 @@ import {
   workHasAlreadyBeenOrdered,
   setAlreadyOrdered,
 } from "@/components/_modal/pages/order/utils/order.utils";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 /**
  * Order Button
@@ -33,6 +34,7 @@ export function Receipt({
   // get props from context
   const { pickupBranch, order = {}, articleOrder = {}, workId } = context;
   const router = useRouter();
+  const { hasCulrUniqueId } = useAuthentication();
 
   // Always show a 1s loader animation before receipt is visible.
   const [delay, setDelay] = useState(true);
@@ -147,7 +149,7 @@ export function Receipt({
                     })}
               </Text>
 
-              {pickupBranch?.borrowerCheck && (
+              {hasCulrUniqueId && (
                 <Button
                   className={styles.redirect}
                   onClick={() => router.push("/profil/bestillingshistorik")}

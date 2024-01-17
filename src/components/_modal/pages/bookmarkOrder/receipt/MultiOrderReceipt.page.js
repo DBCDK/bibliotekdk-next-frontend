@@ -9,9 +9,11 @@ import cx from "classnames";
 import Material from "../multi-order/Material/Material";
 import { BackgroundColorEnum } from "@/components/base/materialcard/materialCard.utils";
 import { useRouter } from "next/router";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 const MultiOrderReceipt = ({ context }) => {
   const modal = useModal();
+  const { hasCulrUniqueId } = useAuthentication();
   const { successMaterials, failedMaterials, branchName } = context;
   const hasErrors = failedMaterials.length > 0;
   const hasSuccess = successMaterials.length > 0;
@@ -24,19 +26,16 @@ const MultiOrderReceipt = ({ context }) => {
           <Icon size={3} src="check.svg" />
         </div>
       )}
-
       <Title className={styles.title} type="title4" tag="h2">
         {hasErrors
           ? Translate({ context: "bookmark-order", label: "order-overview" })
           : Translate({ context: "order", label: "order-success" })}
       </Title>
-
       <Icon
         className={styles.ornament}
         size={{ w: 6, h: "auto" }}
         src={"ornament1.svg"}
       />
-
       {hasErrors && hasSuccess && (
         <Text type="text2" className={styles.successMessage}>
           {successMaterials.length === 1 ? (
@@ -54,7 +53,6 @@ const MultiOrderReceipt = ({ context }) => {
           )}
         </Text>
       )}
-
       {hasSuccess && (
         <Text type="text2" className={cx({ [styles.message]: !hasErrors })}>
           <Translate
@@ -65,7 +63,6 @@ const MultiOrderReceipt = ({ context }) => {
           />
         </Text>
       )}
-
       {hasErrors && (
         <>
           <Text type="text1" className={styles.errorMessage}>
@@ -96,17 +93,18 @@ const MultiOrderReceipt = ({ context }) => {
           </div>
         </>
       )}
-
-      <Button
-        className={styles.redirect}
-        onClick={() => router.push("/profil/bestillingshistorik")}
-        type="secondary"
-      >
-        {Translate({
-          context: "receipt",
-          label: "go-to-your-orders",
-        })}
-      </Button>
+      {hasCulrUniqueId && (
+        <Button
+          className={styles.redirect}
+          onClick={() => router.push("/profil/bestillingshistorik")}
+          type="secondary"
+        >
+          {Translate({
+            context: "receipt",
+            label: "go-to-your-orders",
+          })}
+        </Button>
+      )}
       <Button
         className={styles.close}
         onClick={() => modal.clear()}
