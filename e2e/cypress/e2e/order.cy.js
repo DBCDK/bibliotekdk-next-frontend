@@ -1,5 +1,5 @@
 describe("Order", () => {
-  beforeEach(() => {
+  before(() => {
     cy.window().then((win) => {
       win.sessionStorage.clear();
       win.localStorage.clear();
@@ -24,10 +24,19 @@ describe("Order", () => {
     cy.get("[data-cy=try-again").should("exist");
     cy.get("[data-cy=button-luk]").should("exist");
   });
+});
+
+describe("Order", () => {
+  before(() => {
+    cy.window().then((win) => {
+      win.sessionStorage.clear();
+      win.localStorage.clear();
+    });
+  });
 
   it("should NOT contain pincode field", () => {
     cy.visitWithConsoleSpy(
-      "/iframe.html?id=modal-order--ffu-order-via-ill&viewMode=story"
+      "/iframe.html?id=modal-order--order-via-ill&viewMode=story"
     );
 
     cy.contains("Bestil", { timeout: 10000 }).click();
@@ -131,7 +140,7 @@ describe("Order", () => {
   });
 
   describe("Order for FFU libraries ", () => {
-    beforeEach(() => {
+    before(() => {
       cy.window().then((win) => {
         win.sessionStorage.clear();
         win.localStorage.clear();
