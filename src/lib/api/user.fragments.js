@@ -52,6 +52,7 @@ export function basic() {
             branchWebsiteUrl
             pickupAllowed
             borrowerCheck
+            culrDataSync
           }
         }
         debt {

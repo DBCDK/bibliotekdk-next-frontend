@@ -57,6 +57,11 @@ export default function Listener() {
         return;
       }
 
+      // If agency automatically syncs data with culr
+      if (match.culrDataSync) {
+        return;
+      }
+
       // If user has omitted culr data
       // user already exist in CULR, but data is not returned for security reasons (FFU borchk login)
       if (hasOmittedCulrData) {
