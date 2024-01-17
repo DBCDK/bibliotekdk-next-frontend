@@ -8,7 +8,7 @@ import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 
 import * as workFragments from "@/lib/api/work.fragments";
-import * as universeFragments from "@/lib/api/universe.fragments";
+import { universesBasicInfoByWork } from "@/lib/api/universe.fragments";
 import styles from "./Details.module.css";
 import { useMemo } from "react";
 
@@ -196,13 +196,10 @@ export default function Wrap(props) {
     error: universesError,
   } = useData(
     workId &&
-      universeFragments.universesLight({
-        workId: workId,
-        worksLimit: 1,
-        seriesLimit: 1,
+      universesBasicInfoByWork({
+        workId,
       })
   );
-  // } = useData(workId && universeFragments.universesLight({ workId: workId }));
 
   const manifestations = data?.work?.manifestations?.mostRelevant;
 

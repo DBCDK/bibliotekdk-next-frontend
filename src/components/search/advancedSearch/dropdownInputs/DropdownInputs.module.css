@@ -26,3 +26,9 @@
   flex-direction: column;
   row-gap: var(--pt05);
 }
+
+@media (max-width: 768px) {
+  .dropdown_with_title {
+    width: 48%;
+  }
+}

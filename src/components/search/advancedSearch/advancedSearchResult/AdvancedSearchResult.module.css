@@ -3,14 +3,31 @@
   gap: var(--pt1);
   align-items: center;
 }
-
-.padding_top {
-  padding-top: var(--pt2);
-}
 .titleStyle {
   color: var(--blue);
+  font-size: 17px;
+  padding-bottom: 0;
+}
+
+.sectionStyle h2 {
+  font-size: 17px;
+  padding-bottom: 0;
+}
+
+.sectionContentStyle {
+  position: relative;
+  top: -55px;
 }
 
 .loadingSort {
   padding: var(--pt2) 0;
+}
+
+@media (max-width: 768px) {
+  .sort_container {
+    display: flex;
+    position: relative;
+    top: -32px;
+    justify-content: end;
+  }
 }

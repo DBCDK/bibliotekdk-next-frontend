@@ -189,11 +189,14 @@
   width: var(--cover_width_material_card);
   height: var(--cover_height_material_card);
 
-  filter: drop-shadow(var(--basic_box_shadow))
+  /* Filters are commented out due to performance issues,
+  especially on mobile devices. We must use an alternative */
+
+  /* filter: drop-shadow(var(--basic_box_shadow))
     drop-shadow(1px 0px 1px rgba(0, 0, 0, 0.1))
     drop-shadow(-1px 0px 1px rgba(0, 0, 0, 0.1))
     drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.1))
-    drop-shadow(0px -1px 1px rgba(0, 0, 0, 0.1));
+    drop-shadow(0px -1px 1px rgba(0, 0, 0, 0.1)); */
 }
 
 .cover__vertical_version {

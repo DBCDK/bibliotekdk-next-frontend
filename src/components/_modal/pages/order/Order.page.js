@@ -17,6 +17,7 @@ import useOrderPageInformation from "@/components/hooks/useOrderPageInformations
 import {
   onMailChange,
   workHasAlreadyBeenOrdered,
+  shouldRequirePincode,
 } from "@/components/_modal/pages/order/utils/order.utils";
 import { useRelevantAccessesForOrderPage } from "@/components/work/utils";
 
@@ -159,12 +160,10 @@ function Order({
   }, [accessTypeInfo]);
 
   const validated = useMemo(() => {
-    const pickupBranchIsFFUAgency = !!(
-      pickupBranch?.agencyType === "FORSKNINGSBIBLIOTEK"
-    );
+    const pincodeIsRequired = shouldRequirePincode(pickupBranch);
 
     const hasMail = !!mail?.valid?.status;
-    const hasPincode = pickupBranchIsFFUAgency ? !!pincode : true;
+    const hasPincode = pincodeIsRequired ? !!pincode : true;
     const hasBranchId = !!pickupBranch?.branchId;
     const hasPid = !!pid;
     const requireYear = !!isPeriodicaLike;
