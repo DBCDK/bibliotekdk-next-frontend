@@ -1,13 +1,13 @@
 import Input from "@/components/base/forms/input";
 import Label from "@/components/base/forms/label";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
-
-import styles from "./Pincode.module.css";
 import { useData } from "@/lib/api/api";
 import { isFFUAgency } from "@/lib/api/branches.fragments";
 import Translate from "@/components/base/translate/Translate";
 import Text from "@/components/base/text";
 import Divider from "@/components/base/divider/Divider";
+
+import styles from "./Pincode.module.css";
 
 function Pincode({ isLoading, onChange, error }) {
   return (
@@ -51,11 +51,12 @@ export default function Wrap({ onChange, validated }) {
 
   const isFFU = !!data?.branches?.hitcount;
   const hasBorchk = !!data?.branches?.result?.[0]?.borrowerCheck;
+  const hasDataSync = !!data?.branches?.result?.[0]?.culrDataSync;
 
   const hasError = !validated?.details?.hasPincode?.status;
   const hasTry = validated.hasTry;
 
-  if (!isFFU || (isFFU && !hasBorchk)) {
+  if (!isFFU || hasDataSync || (isFFU && !hasBorchk)) {
     return null;
   }
 

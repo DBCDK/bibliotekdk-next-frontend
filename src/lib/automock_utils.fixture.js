@@ -792,6 +792,7 @@ const BRANCH_7 = {
   agencyId: "800010",
   agencyType: "FORSKNINGSBIBLIOTEK",
   agencyName: "Special FFUs",
+  culrDataSync: false,
   orderPolicy: {
     orderPossible: true,
   },

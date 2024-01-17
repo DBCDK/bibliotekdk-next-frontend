@@ -2,14 +2,13 @@
  * @file Listens for FFU user logins which potentially colud be created in CULR (Get a bibdk account)
  */
 
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 import useVerification from "@/components/hooks/useVerification";
-import useUser from "@/components/hooks/useUser";
 import Translate from "@/components/base/translate";
 import { useModal } from "@/components/_modal";
 
-import { isFFUAgency } from "@/utils/agency";
+import { isFFUAgency, getBranchFromAgencies } from "@/utils/agency";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import useStorage from "@/components/hooks/useStorage";
@@ -17,14 +16,18 @@ import useStorage from "@/components/hooks/useStorage";
 export default function Listener() {
   const { isAuthenticated, hasCulrUniqueId, loggedInAgencyId } =
     useAuthentication();
-  const user = useUser();
 
-  const { authUser } = user;
   const { loanerInfo, isLoading } = useLoanerInfo();
 
   const agencyId = loggedInAgencyId;
   const branchId = loanerInfo?.pickupBranch;
-  const agencies = authUser?.agencies;
+  const agencies = loanerInfo?.agencies;
+
+  // Select the loggedInBranch from users agencies list
+  const match = useMemo(
+    () => getBranchFromAgencies(branchId, agencies),
+    [branchId, agencies]
+  );
 
   const verification = useVerification();
   const storage = useStorage();
@@ -50,7 +53,7 @@ export default function Listener() {
       }
 
       // If The agency which the user has signedIn to, is NOT an FFU library
-      if (!(agencyId && isFFUAgency(agencyId))) {
+      if (!(agencyId && isFFUAgency(match))) {
         return;
       }
 
@@ -69,12 +72,6 @@ export default function Listener() {
       if (hasBlockedFFuListener) {
         return;
       }
-
-      // Select the loggedInBranch from users agencies list
-      let match = {};
-      agencies?.forEach((agency) => {
-        match = agency?.result?.find((branch) => branch.branchId === branchId);
-      });
 
       // if pickupBranch match found
       if (match) {

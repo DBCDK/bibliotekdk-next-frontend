@@ -2,7 +2,10 @@ import Text from "@/components/base/text";
 import styles from "./MultiOrderCheckoutForm.module.css";
 import Translate from "@/components/base/translate";
 import OrdererInformation from "../../../order/ordererinformation/OrdererInformation";
-import { onMailChange } from "@/components/_modal/pages/order/utils/order.utils";
+import {
+  onMailChange,
+  shouldRequirePincode,
+} from "@/components/_modal/pages/order/utils/order.utils";
 import { useEffect, useMemo, useState } from "react";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
 import Button from "@/components/base/button";
@@ -42,12 +45,10 @@ const CheckoutForm = ({
   const { pickupBranch, pickupBranchUser, isLoadingBranches } =
     pickupBranchInfo;
 
-  const pickupBranchIsFFUAgency = !!(
-    pickupBranch?.agencyType === "FORSKNINGSBIBLIOTEK"
-  );
+  const pincodeIsRequired = shouldRequirePincode(pickupBranch);
 
   useEffect(() => {
-    const hasPincode = pickupBranchIsFFUAgency ? !!pincode : true;
+    const hasPincode = pincodeIsRequired ? !!pincode : true;
 
     setDisabled(
       !isAnalyzed ||
@@ -76,7 +77,7 @@ const CheckoutForm = ({
   const validated = useMemo(() => {
     const hasMail = !!mail?.valid?.status;
     const hasBranchId = !!pickupBranch?.branchId;
-    const hasPincode = pickupBranchIsFFUAgency ? !!pincode : true;
+    const hasPincode = pincodeIsRequired ? !!pincode : true;
 
     const status = hasMail && hasBranchId && hasPincode;
 

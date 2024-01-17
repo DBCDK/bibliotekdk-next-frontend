@@ -19,6 +19,7 @@ export function branchUserParameters({ branchId }) {
       branches(branchId: $branchId, language: $language) {
         result {
           borrowerCheck
+          culrDataSync
           name
           branchId
           agencyName
@@ -140,6 +141,7 @@ export function isFFUAgency({ branchId }) {
         hitcount
         result {
           borrowerCheck
+          culrDataSync
         }
       }
     }`,
