@@ -48,7 +48,7 @@ const CheckoutForm = ({
   const pincodeIsRequired = shouldRequirePincode(pickupBranch);
 
   useEffect(() => {
-    const hasPincode = shouldRequirePincode ? !!pincode : true;
+    const hasPincode = pincodeIsRequired ? !!pincode : true;
 
     setDisabled(
       !isAnalyzed ||
