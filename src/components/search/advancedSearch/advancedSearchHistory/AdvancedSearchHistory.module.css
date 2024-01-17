@@ -99,6 +99,10 @@
   }
 }
 
+.disabled_link {
+  color: var(--dove);
+}
+
 .header {
   margin-bottom: var(--pt2);
   border-bottom: 1px solid var(--iron);
@@ -106,10 +110,6 @@
 
 .flex {
   display: flex;
-}
-
-.disabled_link {
-  color: var(--dove);
 }
 
 .icon {
