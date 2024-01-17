@@ -43,6 +43,7 @@ export function AdvancedSearchResult({
             {hitcount}
           </Title>
         }
+        className={styles.sectionStyle}
         sectionContentClass={styles.sectionContentStyle}
       >
         {/* Reuse result page from simplesearch - we skip the wrap .. @TODO should we set
@@ -51,7 +52,7 @@ export function AdvancedSearchResult({
         {hitcount > 0 && (
           <>
             <AdvancedSearchSort className={cx(styles.sort_container)} />
-            <div className={cx(styles.padding_top)}>
+            <div>
               <ResultPage
                 rows={results?.works}
                 onWorkClick={onWorkClick}
