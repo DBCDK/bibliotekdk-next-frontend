@@ -51,11 +51,12 @@ export default function Wrap({ onChange, validated }) {
 
   const isFFU = !!data?.branches?.hitcount;
   const hasBorchk = !!data?.branches?.result?.[0]?.borrowerCheck;
+  const hasDataSync = !!data?.branches?.result?.[0]?.culrDataSync;
 
   const hasError = !validated?.details?.hasPincode?.status;
   const hasTry = validated.hasTry;
 
-  if (!isFFU || (isFFU && !hasBorchk)) {
+  if (!isFFU || hasDataSync || (isFFU && !hasBorchk)) {
     return null;
   }
 

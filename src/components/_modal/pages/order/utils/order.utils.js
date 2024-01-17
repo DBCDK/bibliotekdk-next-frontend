@@ -110,3 +110,15 @@ export function removeWorkIdFromSession(workId) {
 export function removeAlreadyOrderedFromSession() {
   removeSessionStorageItem("alreadyOrdered");
 }
+
+export function shouldRequirePincode(branch) {
+  const isFFU = !!(branch?.agencyType === "FORSKNINGSBIBLIOTEK");
+  const hasBorchk = branch?.borrowerCheck;
+  const hasDataSync = branch?.culrDataSync;
+
+  if (!isFFU || hasDataSync || (isFFU && !hasBorchk)) {
+    return false;
+  }
+
+  return true;
+}

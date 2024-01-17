@@ -19,6 +19,7 @@ export function branchUserParameters({ branchId }) {
       branches(branchId: $branchId, language: $language) {
         result {
           borrowerCheck
+          culrDataSync
           name
           branchId
           agencyName
@@ -140,27 +141,7 @@ export function isFFUAgency({ branchId }) {
         hitcount
         result {
           borrowerCheck
-        }
-      }
-    }`,
-    variables: { branchId },
-    slowThreshold: 3000,
-  };
-}
-
-/**
- * Get orderPolicy for a branch
- */
-export function hasSyncedData({ branchId }) {
-  return {
-    apiUrl: ApiEnums.FBI_API,
-    // delay: 1000, // for debugging
-    query: `
-    query isFFUAgency($branchId: String!) {
-      branches(branchId: $branchId) {
-        hitcount
-        result {
-          borrowerCheck
+          culrDataSync
         }
       }
     }`,
