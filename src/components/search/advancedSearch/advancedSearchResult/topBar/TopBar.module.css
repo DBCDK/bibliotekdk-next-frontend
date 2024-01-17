@@ -23,6 +23,10 @@
   display: inline;
 }
 
+.operator_color {
+  color: var(--blue);
+}
+
 @media (max-width: 768px) {
   .formatedQueryContainer {
     flex-flow: wrap;
