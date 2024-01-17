@@ -26,11 +26,12 @@ export function AdvancedSearchResult({
   const hitcount = results?.hitcount;
   const numPages = Math.ceil(hitcount / 10);
 
+  const breakpoint = useBreakpoint();
+  const isMobile = breakpoint === "xs" || breakpoint === "sm" || false;
+
   if (error) {
     return null;
   }
-  const breakpoint = useBreakpoint();
-  const isMobile = breakpoint === "xs" || breakpoint === "sm" || false;
 
   return (
     <>
