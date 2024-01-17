@@ -28,9 +28,9 @@
 
 .grid {
   display: grid;
+  grid-template-columns: auto auto 1fr;
   --grid_template_areas: "checkbox search_query search_query"
     "checkbox timestamp hitcount";
-  grid-template-columns: auto auto 1fr;
   grid-template-areas: var(--grid_template_areas);
   padding-left: var(--pt1);
   column-gap: var(--pt2);
