@@ -1,7 +1,6 @@
 import Translate from "@/components/base/translate/Translate";
 import Text from "@/components/base/text";
 import Suggester from "@/components/base/suggester/Suggester";
-import IconButton from "@/components/base/iconButton/IconButton";
 import styles from "./TextInputs.module.css";
 import animations from "css/animations";
 import SearchIndexDropdown from "@/components/search/advancedSearch/fieldInput/searchIndexDropdown/SearchIndexDropdown";
@@ -110,15 +109,14 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
           </Suggester>
         </div>
         {!isFirstItem && (
-          <IconButton
-            dataCy={"advanced-search-remove-input"}
-            icon="close"
-            onClick={() => removeInputField(index)}
+          <Icon
             className={styles.removeIcon}
-            keepUnderline={true}
-          >
-            {Translate({ context: "search", label: "remove" })}
-          </IconButton>
+            dataCy={"advanced-search-remove-input"}
+            onClick={() => removeInputField(index)}
+            size={{ w: 3, h: "auto" }}
+            alt=""
+            src={"trash-2.svg"}
+          />
         )}
       </div>
     </div>

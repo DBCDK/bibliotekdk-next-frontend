@@ -19,10 +19,12 @@ export function branchUserParameters({ branchId }) {
       branches(branchId: $branchId, language: $language) {
         result {
           borrowerCheck
+          culrDataSync
           name
           branchId
           agencyName
           agencyId
+          agencyType
           city
           postalAddress
           postalCode
@@ -126,6 +128,28 @@ export function branchOrderPolicy({ branchId, pids }) {
   };
 }
 
+/**
+ * Get orderPolicy for a branch
+ */
+export function isFFUAgency({ branchId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 1000, // for debugging
+    query: `
+    query isFFUAgency($branchId: String!) {
+      branches(branchId: $branchId, agencyTypes: [FORSKNINGSBIBLIOTEK]) {
+        hitcount
+        result {
+          borrowerCheck
+          culrDataSync
+        }
+      }
+    }`,
+    variables: { branchId },
+    slowThreshold: 3000,
+  };
+}
+
 export function checkBlockedUser({ branchId }) {
   return {
     apiUrl: ApiEnums.FBI_API,
@@ -142,7 +166,6 @@ export function checkBlockedUser({ branchId }) {
           borrowerCheck
           agencyName
         	branchWebsiteUrl
-
         }
       }
       monitor(name: "bibdknext_CheckBlockedUser")

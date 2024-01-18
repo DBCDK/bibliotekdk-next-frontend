@@ -29,6 +29,21 @@ import { AccessEnum } from "@/lib/enums";
 import HasBeenOrderedRow from "./hasbeenOrderedRow/HasBeenOrderedRow";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
+/**
+ * Shows grey box with text if no manifestation is found.
+ * @returns {React.JSX.Element} - Returns a React JSX element.
+ */
+const NoManifestationFound = () => {
+  return (
+    <Text className={styles.edition} type="text2" lines={1}>
+      {Translate({
+        context: "order",
+        label: "work-not-found",
+      })}
+    </Text>
+  );
+};
+
 export function Edition({
   isLoading,
   singleManifestation = false,
@@ -43,6 +58,9 @@ export function Edition({
 }) {
   const { periodicaForm } = context;
   const { isArticle, isPeriodicaLike } = inferredAccessTypes;
+  if (!manifestation) {
+    return <NoManifestationFound />;
+  }
 
   const { flatMaterialTypes } = manifestationMaterialTypeFactory([
     manifestation,
@@ -197,7 +215,7 @@ export default function Wrap({
   setShowArealdyOrdered,
 }) {
   const modal = useModal();
-  const { loanerInfo } = useLoanerInfo();
+  const { loanerInfo, isLoading: isLoadingUserInfo } = useLoanerInfo();
   let { orderPids: orderPidsBeforeFilter, periodicaForm } = context;
 
   if (!Array.isArray(orderPidsBeforeFilter)) {
@@ -252,6 +270,10 @@ export default function Wrap({
       manifestationMaterialTypeFactory(manifestations);
     const firstManifestation = flattenedGroupedSortedManifestations?.[0];
 
+    if (!firstManifestation) {
+      return <NoManifestationFound />;
+    }
+
     const children = [];
 
     if (isPeriodicaLike) {
@@ -291,6 +313,8 @@ export default function Wrap({
         isPeriodicaLike,
         isDigitalCopy,
         isDeliveredByDigitalArticleService,
+        manifestationIsLoading,
+        isLoading: manifestationIsLoading,
       });
 
     return (
@@ -309,7 +333,7 @@ export default function Wrap({
 
   return (
     <Edition
-      isLoading={manifestationIsLoading || !manifestations?.[0]}
+      isLoading={isLoadingUserInfo || manifestationIsLoading}
       singleManifestation={singleManifestation}
       coverImage={coverImage}
       inferredAccessTypes={inferredAccessTypes}

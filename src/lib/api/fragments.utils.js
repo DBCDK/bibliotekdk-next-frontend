@@ -102,7 +102,7 @@ export const seriesFragment = `fragment seriesFragment on Series {
   readThisWhenever
   description
   mainLanguages
-  workTypes
+  seriesWorkTypes: workTypes
   numberInSeries {
     display
   }
@@ -111,6 +111,7 @@ export const universeFragment = `fragment universeFragment on Universe {
   title
   alternativeTitles
   description
+  key
 }`;
 export const coverFragment = `fragment coverFragment on Manifestation {
   cover {

@@ -44,10 +44,15 @@ export const decorators = [
     return (
       <SessionProvider
         session={
-          context?.parameters?.session || {
-            accessToken: "dummy-token",
-            user: { uniqueId: "mocked-uniqueId", userId: "mocked-uniqueId" },
-          }
+          context?.parameters?.session
+            ? { accessToken: "dummy-token", ...context?.parameters?.session }
+            : {
+                accessToken: "dummy-token",
+                user: {
+                  uniqueId: "mocked-uniqueId",
+                  userId: "mocked-uniqueId",
+                },
+              }
         }
       >
         <Story />

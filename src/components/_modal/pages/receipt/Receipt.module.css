@@ -1,7 +1,7 @@
 /* Action button */
 
 .receipt {
-  padding: var(--pt2);
+  padding: var(--pt6) var(--pt2);
 
   height: 100%;
 
@@ -9,10 +9,10 @@
   overflow-y: auto;
 }
 
-.top {
-  width: 100%;
-  position: absolute;
-  z-index: 3;
+@media screen and (min-width: 576px) {
+  .receipt {
+    padding-inline: var(--pt9);
+  }
 }
 
 .container {
@@ -100,14 +100,12 @@
 
 .success .title,
 .success .ornament,
-.success .message,
-.success .orderNumber {
+.success .message {
   padding: var(--pt3) 0 0 0;
   text-align: center;
 }
 
-.success .message,
-.success .orderNumber {
+.success .message {
   text-align: center;
 }
 
@@ -128,21 +126,4 @@
 
 .error > h2 {
   padding-bottom: var(--pt2);
-}
-
-.contactDBC {
-  display: flex;
-  flex-direction: row;
-}
-
-.contactDBC > a {
-  margin-left: var(--pt1);
-}
-
-/* states */
-
-@media (min-width: 576px) {
-  .receipt {
-    padding: var(--pt2) var(--pt6) var(--pt4) var(--pt6);
-  }
 }

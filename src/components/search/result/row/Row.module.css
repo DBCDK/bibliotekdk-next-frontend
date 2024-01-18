@@ -37,6 +37,7 @@
   display: flex;
   flex-direction: column;
   padding-right: var(--pt2);
+  max-width: 90%;
 }
 
 .display_inline {
@@ -88,15 +89,13 @@
   max-width: 104px;
 }
 
-@media (max-width: 380px) {
-  .col_wrapper {
-    max-width: 120px;
+@media (max-width: 768px) {
+  .row_wrapper {
+    gap: var(--pt1);
+    padding-left: 0;
   }
-}
-
-@media (max-width: 430px) {
   .col_wrapper {
-    max-width: 200px;
+    padding-right: var(--pt1);
   }
 }
 

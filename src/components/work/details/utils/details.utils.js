@@ -538,7 +538,7 @@ function getSeriesAndUniverseTitles(work) {
   const universesTitle = work?.universes?.map((singleUniverses) => {
     return {
       title: singleUniverses.title,
-      url: getUniverseUrl(singleUniverses.title, work.workId),
+      url: getUniverseUrl(singleUniverses.title, singleUniverses.key),
       skeleton: work?.universesIsLoading,
     };
   });

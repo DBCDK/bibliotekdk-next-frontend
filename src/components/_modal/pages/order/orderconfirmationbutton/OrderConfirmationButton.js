@@ -96,6 +96,7 @@ export default function Wrap({
   hasValidationErrors,
   onClick,
   blockedForBranch,
+  isLoadingUser = false,
 }) {
   const { workId, pid, periodicaForm, pids } = context;
   const { invalidClass, actionMessage } = getStylingAndErrorMessage(
@@ -115,13 +116,17 @@ export default function Wrap({
   const { isDigitalCopy, availableAsDigitalCopy, availableAsPhysicalCopy } =
     accessTypeInfo;
 
-  const isLoading = isWorkLoading || isPickupBranchLoading;
+  const isLoading = isWorkLoading || isPickupBranchLoading || isLoadingUser;
+
+  // TODO: save this check for now
+  // has pincode if required
+  // const hasPincode = !validated?.details?.hasPincode?.status;
 
   return (
     <OrderConfirmationButton
       invalidClass={invalidClass}
       actionMessage={actionMessage}
-      isLoading={isWorkLoading || isPickupBranchLoading}
+      isLoading={isLoading}
       onClick={onClick}
       showOrderDigitalCopy={isDigitalCopy && availableAsDigitalCopy}
       disabled={

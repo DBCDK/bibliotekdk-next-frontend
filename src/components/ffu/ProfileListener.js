@@ -2,30 +2,41 @@
  * @file Listens for FFU user logins (via ffu agency) which already has a bibdk profile attached.
  */
 
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 import { useModal } from "@/components/_modal";
 
-import { isFFUAgency } from "@/utils/agency";
+import { isFFUAgency, getBranchFromAgencies } from "@/utils/agency";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
+import useStorage from "../hooks/useStorage";
 
 export default function Listener() {
   const { isAuthenticated, loggedInAgencyId } = useAuthentication();
   const { loanerInfo } = useLoanerInfo();
 
+  const storage = useStorage();
+
   const agencyId = loggedInAgencyId;
   const branchId = loanerInfo?.pickupBranch;
   const agencies = loanerInfo?.agencies;
 
+  // Select the loggedInBranch from users agencies list
+  const match = useMemo(
+    () => getBranchFromAgencies(branchId, agencies),
+    [branchId, agencies]
+  );
+
   const hasOmittedCulrData =
     !!loanerInfo?.omittedCulrData?.hasOmittedCulrUniqueId;
+
+  const hasBlockedFFuListener = !!storage.read("BlockFFUProfileListener");
 
   const modal = useModal();
 
   useEffect(() => {
     // If The agency which the user has signedIn to, is NOT an FFU library
-    if (!(agencyId && isFFUAgency(agencyId))) {
+    if (!(agencyId && isFFUAgency(match))) {
       return;
     }
 
@@ -35,11 +46,10 @@ export default function Listener() {
       return;
     }
 
-    // Select the loggedInBranch from users agencies list
-    let match = {};
-    agencies?.forEach((agency) => {
-      match = agency?.result?.find((branch) => branch.branchId === branchId);
-    });
+    // user was already prompted and is still within the given expiration date
+    if (hasBlockedFFuListener) {
+      return;
+    }
 
     // if pickupBranch match found
     if (match) {

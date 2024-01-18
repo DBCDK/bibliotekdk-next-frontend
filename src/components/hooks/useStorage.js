@@ -7,13 +7,20 @@
 import useSWR from "swr";
 
 import { setLocalStorageItem, getLocalStorageItem } from "@/lib/utils";
+import { useEffect } from "react";
+import useAuthentication from "./user/useAuthentication";
 
 // storage key name
 const KEY_NAME = "storage";
 
+// allow clear on signout prop
+const CLEAR_ON_SIGNOUT = true;
+
 /**
  *
  * Storage custom hook, store small pieces of informtion
+ *
+ * 'clearOnSignout' can be added as a prop, if item should be removed after user is signed out
  *
  * Provides the following functions:
  *    create() - creates a storage item
@@ -26,6 +33,28 @@ export default function useStorage() {
   const { data, mutate, isValidating } = useSWR(KEY_NAME, (key) =>
     JSON.parse(getLocalStorageItem(key) || "{}")
   );
+
+  const { isAuthenticated } = useAuthentication();
+
+  /**
+   * cleanup
+   * clear storage item on signout (user is logged out)
+   */
+  useEffect(() => {
+    // if clear allowed
+    if (CLEAR_ON_SIGNOUT) {
+      // data is fetched
+      if (!isValidating && data) {
+        // user is not loggedin (anon sesison)
+        if (!isAuthenticated) {
+          // remove items with prop 'clearOnSignout'
+          Object.entries(data).forEach(
+            ([k, v]) => v.clearOnSignout && _delete(k)
+          );
+        }
+      }
+    }
+  }, [isAuthenticated, data, isValidating]);
 
   /**
    * set a storage item
@@ -97,8 +126,11 @@ export default function useStorage() {
     const item = data?.[name];
 
     if (item) {
-      delete data?.[name];
-      mutate(data);
+      const copy = { ...data };
+      delete copy?.[name];
+
+      setLocalStorageItem(KEY_NAME, JSON.stringify(copy));
+      mutate(copy);
     }
   }
 

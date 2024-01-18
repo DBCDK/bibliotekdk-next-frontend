@@ -2,6 +2,18 @@
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
   row-gap: var(--pt4);
+  margin-top: var(--pt4);
+}
+
+.section_flex:first-of-type {
+  margin-top: 0px;
+}
+
+.expand {
+  display: flex;
+  margin-top: var(--pt4);
+  align-items: center;
+  flex-direction: column;
 }
 
 @media (min-width: 364px) {
@@ -48,7 +60,7 @@
 
 @media (min-width: 1400px) {
   .section_flex {
-    width: 88.88%;
+    width: 100%;
   }
 }
 

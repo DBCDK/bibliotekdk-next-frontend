@@ -3,71 +3,36 @@ import {
   coverFragment,
   creatorsFragment,
   seriesFragment,
-  universeFragment,
   workSliderFragment,
 } from "@/lib/api/fragments.utils";
 
-export function universesLight({ workId, worksLimit, seriesLimit }) {
+export function universeBasicInfo({ key }) {
   return {
     apiUrl: ApiEnums.FBI_API,
-    query: `query Universes($workId: String!, $worksLimit: Int, $seriesLimit: Int) {
-      work(id: $workId) {
-        universes {
-          ...universeFragment
-          works(limit: $worksLimit) {
-            universes {
-              ...universeFragment
-            }
-          }
-          series(limit:$seriesLimit) {
-            ...seriesFragment
-            members {
-              work {
-                universes {
-                  ...universeFragment
-                }
-              }
-              numberInSeries
-              readThisFirst
-              readThisWhenever
-            }
-          }
-        }
+    query: `query UniverseBasic($key: String!) {
+      universe(key: $key) {
+        key
+        title
+        description
+        workTypes
       }
     }
-    ${seriesFragment}
-    ${universeFragment}
   `,
-    variables: { workId, worksLimit, seriesLimit },
+    variables: { key },
     slowThreshold: 3000,
   };
 }
 
-export function universes({ workId, worksLimit, seriesLimit }) {
+export function universeContent({ key, workType, offset, limit }) {
   return {
     apiUrl: ApiEnums.FBI_API,
-    query: `query Universes($workId: String!, $worksLimit: Int, $seriesLimit: Int) {
-      work(id: $workId) {
-        universes {
-          ...universeFragment
-          works(limit: $worksLimit) {
-            ...workSliderFragment
-            manifestations {
-              mostRelevant {
-                ...coverFragment
-              }
-            }
-            creators {
-              ...creatorsFragment
-            }
-            universes {
-              ...universeFragment
-            }
-          }
-          series(limit:$seriesLimit) {
-            ...seriesFragment
-            members {
-              work {
+    query: `query UniverseContent($key: String!, $workType: WorkType, $offset: Int!, $limit: Int!) {
+        universe(key: $key) {
+          content(workType: $workType, offset: $offset, limit: $limit) {
+            hitcount
+            entries {
+              __typename
+              ... on Work {
                 ...workSliderFragment
                 manifestations {
                   mostRelevant {
@@ -77,13 +42,101 @@ export function universes({ workId, worksLimit, seriesLimit }) {
                 creators {
                   ...creatorsFragment
                 }
-                universes {
-                  ...universeFragment
+              }
+              ... on Series {
+                ...seriesFragment
+                members(offset: 0, limit: 3) {
+                  work {
+                    ...workSliderFragment
+                    manifestations {
+                      mostRelevant {
+                        ...coverFragment
+                      }
+                    }
+                    creators {
+                      ...creatorsFragment
+                    }
+                  }
+                  numberInSeries
+                  readThisFirst
+                  readThisWhenever
                 }
               }
-              numberInSeries
-              readThisFirst
-              readThisWhenever
+            }
+          }
+        }
+    }
+    ${workSliderFragment}
+    ${creatorsFragment}
+    ${seriesFragment}
+    ${coverFragment}
+  `,
+    variables: { key, workType: workType?.toUpperCase(), offset, limit },
+    slowThreshold: 3000,
+  };
+}
+
+export function universesBasicInfoByWork({ workId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `query UniversesBasicInfoByWork($workId: String!) {
+      work(id: $workId) {
+        universes {
+          key
+          title
+          description
+          workTypes
+        }
+      }
+    }
+  `,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+export function universesByWork({ workId, offset, limit }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `query UniversesByWork($workId: String!, $offset: Int, $limit: Int) {
+      work(id: $workId) {
+        universes {
+          title
+          key
+          content(offset: $offset, limit: $limit) {
+            hitcount
+            entries {
+              __typename
+              ... on Work {
+                ...workSliderFragment
+                manifestations {
+                  mostRelevant {
+                    ...coverFragment
+                  }
+                }
+                creators {
+                  ...creatorsFragment
+                }
+              }
+              ... on Series {
+                ...seriesFragment
+                members(offset: 0, limit: 3) {
+                  work {
+                    ...workSliderFragment
+                    manifestations {
+                      mostRelevant {
+                        ...coverFragment
+                      }
+                    }
+                    creators {
+                      ...creatorsFragment
+                    }
+                  }
+                  numberInSeries
+                  readThisFirst
+                  readThisWhenever
+                }
+              }
             }
           }
         }
@@ -92,10 +145,9 @@ export function universes({ workId, worksLimit, seriesLimit }) {
     ${workSliderFragment}
     ${creatorsFragment}
     ${seriesFragment}
-    ${universeFragment}
     ${coverFragment}
   `,
-    variables: { workId, worksLimit, seriesLimit },
+    variables: { workId, offset, limit },
     slowThreshold: 3000,
   };
 }

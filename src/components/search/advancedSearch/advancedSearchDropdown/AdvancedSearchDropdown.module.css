@@ -1,5 +1,5 @@
 .nav_element {
-  --elements_min_width: 180px;
+  --elements_min_width: 150px;
   --elements_max_height: 400px;
   --box_shadow__dropdown: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   --border__dropdown: 1px solid var(--iron, #d6d6d7);
@@ -80,4 +80,10 @@
   padding-left: var(--pt1);
   height: var(--pt5);
   align-items: center;
+}
+
+@media (max-width: 768px) {
+  .toggler {
+    width: 100%;
+  }
 }

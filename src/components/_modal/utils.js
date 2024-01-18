@@ -122,14 +122,21 @@ export function handleSubmitOrder(
   pids,
   pickupBranch,
   periodicaForm,
+  pincode,
   loanerInfo,
   orderMutation
 ) {
+  // merge pincode into userParameters
+  let userParameters = loanerInfo.userParameters;
+  if (pincode) {
+    userParameters = { ...userParameters, pincode };
+  }
+
   orderMutation.post(
     orderMutations.submitOrder({
       pids,
       branchId: pickupBranch.branchId,
-      userParameters: loanerInfo.userParameters,
+      userParameters,
       ...periodicaForm,
     })
   );
@@ -226,7 +233,7 @@ export function handleOnSelect({
   let text;
 
   //  FFU library selected
-  if (isFFUAgency(branch.agencyId)) {
+  if (isFFUAgency(branch)) {
     // if branch has a website url - include it as a variabel
     let link1 = Translate({ context: "general", label: "homepage" });
     if (branch.branchWebsiteUrl) {

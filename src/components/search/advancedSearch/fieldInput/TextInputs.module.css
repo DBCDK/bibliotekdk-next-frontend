@@ -15,6 +15,7 @@
   white-space: nowrap;
 }
 .removeIcon {
+  display: flex;
   margin-left: var(--pt2);
   padding-bottom: var(--pt2);
 }
@@ -107,6 +108,26 @@
 .suggester {
   height: var(--pt5);
 }
+
 .inputTitle {
   margin-bottom: var(--pt2);
+}
+
+@media (max-width: 767px) {
+  .inputContainer {
+    /*border: 2px solid green;*/
+    flex-wrap: wrap;
+  }
+  .suggesterContainer {
+    margin-left: 0;
+    margin-top: var(--pt1);
+  }
+
+  .suggester input {
+    font-size: 17px;
+  }
+
+  .inputTitle {
+    display: none;
+  }
 }

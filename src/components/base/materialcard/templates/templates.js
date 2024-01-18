@@ -142,7 +142,7 @@ export function templateForUniverseInfoCard({ material }) {
     styles.cover__universe_info_card
   );
 
-  const href = getUniverseUrl(material?.title, material?.workId);
+  const href = getUniverseUrl(material?.title, material?.key);
 
   return {
     link_href: href,
@@ -642,6 +642,7 @@ export function templateImageToLeft({
   elementContainerClassName,
   imageContainerStyle,
   linkToWork = false,
+  isLoading,
 }) {
   const fullTitle =
     singleManifestation === true
@@ -681,11 +682,15 @@ export function templateImageToLeft({
     imageContainerStyle: imageContainerStyle,
     children: (
       <div>
-        <Text {...propFunc("text1", 2)} title={fullTitle}>
+        <Text {...propFunc("text1", 2)} title={fullTitle} skeleton={isLoading}>
           {fullTitle}
         </Text>
         {creatorsString && (
-          <Text {...propFunc("text2", 2)} title={creatorsString}>
+          <Text
+            {...propFunc("text2", 2)}
+            title={creatorsString}
+            skeleton={isLoading}
+          >
             {creatorsString}
           </Text>
         )}
@@ -693,11 +698,16 @@ export function templateImageToLeft({
           {...propFunc("text4", 1)}
           title={formattedMaterialTypes}
           className={styles.type__image_to_left_version}
+          skeleton={isLoading}
         >
           {formattedMaterialTypes}
         </Text>
         {!isPeriodicaLike && !isDigitalArticle && !hideEditionText && (
-          <Text {...propFunc("text3", 1)} title={formattedMaterialTypes}>
+          <Text
+            {...propFunc("text3", 1)}
+            title={formattedMaterialTypes}
+            skeleton={isLoading}
+          >
             {singleManifestation
               ? edition
               : Translate({

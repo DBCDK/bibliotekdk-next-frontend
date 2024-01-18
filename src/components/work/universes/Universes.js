@@ -3,7 +3,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
 import { useData } from "@/lib/api/api";
-import * as universeFragments from "@/lib/api/universe.fragments";
+import { universesByWork } from "@/lib/api/universe.fragments";
 
 import Section from "@/components/base/section";
 import WorkSlider from "@/components/base/slider/WorkSlider";
@@ -29,31 +29,30 @@ import { getUniverseUrl } from "@/lib/utils";
  * @param {number} index
  */
 function Universes({ isLoading, universe = {}, workId = "" }) {
-  const seriesInUniverse = universe?.series?.map((singleSeries) => {
+  const seriesAndWorks = universe?.content?.entries?.map((entry) => {
+    if (entry.__typename === "Series") {
+      return {
+        material: entry,
+        propsAndChildrenTemplate: templateForUniverseSliderSeries,
+      };
+    }
     return {
-      material: singleSeries,
-      propsAndChildrenTemplate: templateForUniverseSliderSeries,
-    };
-  });
-
-  const worksInUniverse = universe?.works?.map((singleWork) => {
-    return {
-      material: singleWork,
+      material: entry,
       propsAndChildrenTemplate: templateForUniverseSliderWork,
     };
   });
 
   const universeCard = {
-    material: { title: universe?.title, workId: workId },
+    material: { title: universe?.title, workId: workId, key: universe?.key },
     propsAndChildrenTemplate: templateForUniverseInfoCard,
   };
-
-  const seriesAndWorks = [...seriesInUniverse, ...worksInUniverse].slice(0, 19);
 
   const propsAndChildrenInputList = [...seriesAndWorks, universeCard];
 
   const link =
-    universe?.title && workId && getUniverseUrl(universe?.title, workId);
+    universe?.title &&
+    universe?.key &&
+    getUniverseUrl(universe?.title, universe?.key);
 
   return (
     <Section
@@ -105,7 +104,7 @@ Universes.propTypes = {
  */
 export default function Container({ workId }) {
   const { data, isLoading } = useData(
-    universeFragments.universes({ workId, seriesLimit: 20, worksLimit: 20 })
+    workId && universesByWork({ workId, offset: 0, limit: 19 })
   );
 
   const allUniverses = data?.work?.universes;

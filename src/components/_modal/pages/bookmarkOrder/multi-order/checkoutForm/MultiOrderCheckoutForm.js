@@ -2,7 +2,10 @@ import Text from "@/components/base/text";
 import styles from "./MultiOrderCheckoutForm.module.css";
 import Translate from "@/components/base/translate";
 import OrdererInformation from "../../../order/ordererinformation/OrdererInformation";
-import { onMailChange } from "@/components/_modal/pages/order/utils/order.utils";
+import {
+  onMailChange,
+  shouldRequirePincode,
+} from "@/components/_modal/pages/order/utils/order.utils";
 import { useEffect, useMemo, useState } from "react";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
 import Button from "@/components/base/button";
@@ -13,6 +16,7 @@ import Spinner from "react-bootstrap/Spinner";
 import Link from "@/components/base/link";
 import { validateEmail } from "@/utils/validateEmail";
 import { getLabel } from "@/components/base/forms/email/Email";
+import Pincode from "../../../order/pincode";
 
 const CheckoutForm = ({
   context,
@@ -31,6 +35,7 @@ const CheckoutForm = ({
   const modal = useModal();
   const [disabled, setDisabled] = useState(true);
   const [mail, setMail] = useState(null);
+  const [pincode, setPincode] = useState(null);
   const { userInfo, pickupBranchInfo, accessTypeInfo } =
     useOrderPageInformation({
       workId: "",
@@ -40,14 +45,19 @@ const CheckoutForm = ({
   const { pickupBranch, pickupBranchUser, isLoadingBranches } =
     pickupBranchInfo;
 
+  const pincodeIsRequired = shouldRequirePincode(pickupBranch);
+
   useEffect(() => {
+    const hasPincode = pincodeIsRequired ? !!pincode : true;
+
     setDisabled(
       !isAnalyzed ||
         materialsMissingActionCount > 0 ||
         materialsNotAllowedCount > 0 ||
         duplicateBookmarkIds?.length > 0 ||
-        mail?.valid?.status === false ||
-        materialsToOrderCount < 1
+        !mail?.valid?.status ||
+        materialsToOrderCount < 1 ||
+        !hasPincode
     );
   }, [
     isAnalyzed,
@@ -56,6 +66,7 @@ const CheckoutForm = ({
     duplicateBookmarkIds?.length,
     mail?.valid?.status,
     materialsToOrderCount,
+    pincode,
   ]);
 
   // materialsToOrderCount contains all orders: physical and digital orders,
@@ -66,7 +77,9 @@ const CheckoutForm = ({
   const validated = useMemo(() => {
     const hasMail = !!mail?.valid?.status;
     const hasBranchId = !!pickupBranch?.branchId;
-    const status = hasMail && hasBranchId;
+    const hasPincode = pincodeIsRequired ? !!pincode : true;
+
+    const status = hasMail && hasBranchId && hasPincode;
 
     const details = {
       hasMail: {
@@ -74,13 +87,22 @@ const CheckoutForm = ({
         value: mail?.value,
         message: mail?.valid?.message,
       },
+      hasPincode: {
+        status: hasPincode,
+        message: !hasPincode && { label: "missing-pincode" },
+      },
       hasBranchId: { status: hasBranchId },
     };
     return { status, hasTry: false, details };
-  }, [mail, pickupBranch, context?.periodicaForm?.publicationDateOfComponent]);
+  }, [
+    mail,
+    pincode,
+    pickupBranch,
+    context?.periodicaForm?.publicationDateOfComponent,
+  ]);
 
   const onSubmitForm = () => {
-    if (onSubmit) onSubmit(pickupBranch);
+    if (onSubmit) onSubmit(pickupBranch, pincode);
   };
 
   const scrollToWorkId = () => {
@@ -144,6 +166,8 @@ const CheckoutForm = ({
         email={mail}
       />
 
+      <Pincode validated={validated} onChange={(val) => setPincode(val)} />
+
       <div>
         {/* Errors and messages */}
 
@@ -178,6 +202,12 @@ const CheckoutForm = ({
         {!mail?.valid?.status && (
           <Text type="text3" className={styles.errorLabel}>
             <Translate context="order" label="action-empty-email-field" />
+          </Text>
+        )}
+
+        {!validated?.details?.hasPincode?.status && (
+          <Text type="text3" className={styles.errorLabel}>
+            <Translate context="order" label="action-missing-pincode" />
           </Text>
         )}
 

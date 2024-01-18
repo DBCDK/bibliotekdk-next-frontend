@@ -63,7 +63,7 @@ function FormatFieldInput({ inputFields }) {
     return (
       <>
         {field.prefixLogicalOperator && index !== 0 && (
-          <Text type="text2">
+          <Text type="text2" className={styles.operator_color}>
             {Translate({
               context: "search",
               label: `advanced-dropdown-${field.prefixLogicalOperator}`,
@@ -98,7 +98,7 @@ function FormatDropdowns({ dropdowns, showAndOperator }) {
     return (
       <>
         {index === 0 && showAndOperator && (
-          <Text type="text2">
+          <Text type="text2" className={styles.operator_color}>
             {Translate({
               context: "search",
               label: `advanced-dropdown-AND`,
@@ -118,7 +118,7 @@ function FormatDropdowns({ dropdowns, showAndOperator }) {
             .join(", ")}
         </Text>
         {!isLastItem && (
-          <Text type="text2">
+          <Text type="text2" className={styles.operator_color}>
             {Translate({
               context: "search",
               label: `advanced-dropdown-AND`,

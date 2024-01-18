@@ -654,6 +654,7 @@ const BORROWER_STATUS_FALSE = {
 
 const BRANCH_1 = {
   agencyName: "Agency 1",
+  agencyType: "FOLKEBIBLIOTEK",
   agencyId: "1",
   branchId: "1237",
   name: "Test Bib - only physical via ILL",
@@ -666,6 +667,7 @@ const BRANCH_1 = {
 };
 const BRANCH_2 = {
   agencyName: "Agency 1",
+  agencyType: "FORSKNINGSBIBLIOTEK",
   branchId: "123",
   name: "Test Bib - no orders here",
   orderPolicy: {
@@ -788,10 +790,13 @@ const BRANCH_7 = {
   name: "Herlige Lev FFU - Branch with FFU holdings",
   branchId: "800014",
   agencyId: "800010",
+  agencyType: "FORSKNINGSBIBLIOTEK",
   agencyName: "Special FFUs",
+  culrDataSync: false,
   orderPolicy: {
     orderPossible: true,
   },
+  borrowerCheck: true,
   holdingStatus: {
     branchId: "800014",
     expectedDelivery: TODAY,
@@ -1041,6 +1046,18 @@ const USER_8 = {
   name: "Some Name",
   mail: "some@mail.dk",
   agencies: [],
+};
+
+const USER_10 = {
+  name: null,
+  mail: null,
+  rights: { digitalArticleService: false },
+  agencies: [
+    {
+      borrowerStatus: BORROWER_STATUS_TRUE,
+      result: [BRANCH_7],
+    },
+  ],
 };
 
 const REVIEW_1 = {
@@ -1596,6 +1613,7 @@ export default function automock_utils() {
     USER_7,
     USER_8,
     USER_9,
+    USER_10,
     REVIEW_1,
     DEFAULT_STORY_PARAMETERS,
     useMockLoanerInfo,

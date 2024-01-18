@@ -28,6 +28,7 @@ export function search({
         agencyUrl
         result {
           borrowerCheck
+          culrDataSync
           agencyName
           agencyType
           branchId

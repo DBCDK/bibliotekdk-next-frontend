@@ -1,6 +1,7 @@
 .receipt {
   padding: var(--pt6) var(--pt2);
   display: flex;
+  justify-content: center;
   flex-direction: column;
   align-items: center;
 }
@@ -18,14 +19,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: var(--pt3);
 }
 
 .title {
-  margin-bottom: var(--pt3);
+  padding-top: var(--pt3);
+  text-align: center;
 }
 
 .ornament {
+  padding-top: var(--pt3);
   margin-bottom: var(--pt3);
 }
 
@@ -34,7 +36,7 @@
 }
 
 .message {
-  margin-bottom: var(--pt6);
+  text-align: center;
 }
 
 .errorMessage {
@@ -42,13 +44,13 @@
   color: var(--error_temp);
 }
 
-.close {
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  margin-bottom: var(--pt3);
+.redirect {
+  width: 99%;
+  margin-top: var(--pt12);
 }
 
-.redirect {
-  width: 100%;
+.close {
+  margin-top: var(--pt2);
 }
 
 .materialList {
@@ -56,10 +58,9 @@
   margin-bottom: var(--pt8);
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 576px) {
   .receipt {
-    padding-left: var(--pt10);
-    padding-right: var(--pt10);
+    padding-inline: var(--pt9);
   }
 
   .materialList {

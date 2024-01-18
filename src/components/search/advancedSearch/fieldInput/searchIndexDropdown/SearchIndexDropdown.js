@@ -27,6 +27,7 @@ export default function IndexDropdown({ options = [], className, index }) {
           tag="span"
           type="text3"
           dataCy={`advanced-search-index-dropdown-${index}`}
+          className={styles.bigFont}
         >
           {Translate({
             context: "search",
@@ -59,6 +60,7 @@ export default function IndexDropdown({ options = [], className, index }) {
                 tag="span"
                 type="text3"
                 dataCy={`advanced-search-index-dropdown-${elem}`}
+                className={styles.bigFont}
               >
                 {Translate({
                   context: "search",

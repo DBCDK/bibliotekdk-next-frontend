@@ -22,3 +22,20 @@
   margin-right: var(--pt1);
   display: inline;
 }
+
+.operator_color {
+  color: var(--blue);
+}
+
+@media (max-width: 768px) {
+  .formatedQueryContainer {
+    flex-flow: wrap;
+  }
+  .formatedQueryContainer p {
+    margin-bottom: var(--pt05);
+  }
+
+  .edit_search {
+    justify-content: start;
+  }
+}

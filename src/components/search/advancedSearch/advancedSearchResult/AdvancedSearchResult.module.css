@@ -2,11 +2,31 @@
   display: inline-flex;
   gap: var(--pt1);
   align-items: center;
+  margin-bottom: var(--pt2);
+  margin-top: var(--pt2);
 }
 
-.padding_top {
-  padding-top: var(--pt2);
-}
 .titleStyle {
   color: var(--blue);
+  font-family: var(--body-font-semibold);
+}
+
+.sectionTitleClass h2 {
+  margin-top: var(--pt2);
+  font-size: 17px;
+  font-family: var(--body-font-semibold);
+}
+
+.sectionContentStyle {
+  position: relative;
+  top: -55px;
+}
+
+@media (max-width: 768px) {
+  .sort_container {
+    display: flex;
+    position: relative;
+    top: -32px;
+    justify-content: end;
+  }
 }
