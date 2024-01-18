@@ -112,14 +112,6 @@ export default function Wrap({
       pids: pids ?? [pid],
     });
 
-  console.log("fffff", {
-    validated,
-    hasValidationErrors,
-    invalidClass,
-    actionMessage,
-    pickupBranchInfo,
-  });
-
   const { isLoading: isWorkLoading } = workResponse;
   const { isLoading: isPickupBranchLoading } = pickupBranchInfo;
   const { isDigitalCopy, availableAsDigitalCopy, availableAsPhysicalCopy } =
@@ -133,8 +125,6 @@ export default function Wrap({
 
   const firstOrder = validated?.details?.firstOrder?.status;
   const hasCulrSyncData = pickupBranchInfo?.pickupBranch?.culrDataSync;
-
-  console.log({ firstOrder, hasCulrSyncData }, hasCulrSyncData && !firstOrder);
 
   return (
     <OrderConfirmationButton
