@@ -116,24 +116,24 @@ export function useMenuItemsState(menuItems, updateIndex) {
     undefined
   );
 
-  useEffect(() => {
-    function resetOnResetSearch() {
-      toggleMenuItemsState({
-        type: ToggleMenuItemsEnum.RESET,
-        payload: menuItems,
-      });
-    }
+  // useEffect(() => {
+  //   function resetOnResetSearch() {
+  //     toggleMenuItemsState({
+  //       type: ToggleMenuItemsEnum.RESET,
+  //       payload: menuItems,
+  //     });
+  //   }
 
-    window.addEventListener(resetMenuItemsEvent, resetOnResetSearch);
+  //   window.addEventListener(resetMenuItemsEvent, resetOnResetSearch);
 
-    return () => {
-      window.removeEventListener(resetMenuItemsEvent, resetOnResetSearch);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener(resetMenuItemsEvent, resetOnResetSearch);
+  //   };
+  // }, []);
 
-  useEffect(() => {
-    updateIndex(menuItemsState);
-  }, [JSON.stringify(menuItemsState)]);
+  // useEffect(() => {
+  //   updateIndex(menuItemsState);
+  // }, [JSON.stringify(menuItemsState)]);
 
   return { menuItemsState, toggleMenuItemsState };
 }

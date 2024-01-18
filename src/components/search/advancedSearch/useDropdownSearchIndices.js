@@ -23,11 +23,11 @@ function dropdownReducer(state, action) {
     case DropdownReducerEnum.UPDATE:
       return state?.map((singleDropdownIndex) => {
         if (payload.indexName === singleDropdownIndex.searchIndex) {
+          console.log('DropdownReducerEnum.payload',payload)
           return {
             searchIndex: payload.indexName,
-            value: payload.menuItemsState
-              .filter((item) => item.isSelected === true)
-              .map((item) => {
+            value: (payload?.menuItemsState || [])?.filter((item) => item.isSelected === true)
+              ?.map((item) => {
                 return { value: item.value, name: item.name };
               }),
           };

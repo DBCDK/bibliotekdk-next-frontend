@@ -65,12 +65,12 @@ export function RadioButtonItem({ item, textType = "text3" }) {
   );
 }
 
-export function CheckboxItem({ item, onChange = null, textType = "text3" }) {
+export function CheckboxItem({ item, onChange = null, textType = "text3" , isSelected}) {
   return (
     <div className={cx(styles.select_wrapper)} tabIndex="-1">
       <Checkbox
         id={item?.name}
-        checked={item?.isSelected}
+        checked={isSelected}
         ariaLabel={Translate({
           context: "facets",
           label: "checkbox-aria-label",

@@ -68,6 +68,7 @@ export default function DropdownInputs({}) {
 
         <div className={styles.flex_wrapper}>
           {dropdownUnits.map((unit) => {
+            console.log('unit',unit)
             return (
               <DropdownUnit
                 key={unit.indexName}

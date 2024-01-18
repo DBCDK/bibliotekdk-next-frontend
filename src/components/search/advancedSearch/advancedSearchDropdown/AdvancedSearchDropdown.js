@@ -36,6 +36,7 @@ import cx from "classnames";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
+import { DropdownReducerEnum } from "../useDropdownSearchIndices";
 
 const specialFormTypes = new Set([FormTypeEnum.ACTION_LINK_CONTAINER]);
 
@@ -83,6 +84,23 @@ function toggleYearRange(toggleMenuItemsState, targetItem, valueItem) {
   });
 }
 
+
+const getDropDownStateByIndex = ({dropdownSearchIndices,indexName})=>{
+ return dropdownSearchIndices?.find(item=>item.searchIndex ===indexName )
+}
+/**
+ * 
+ * returns true if item is selected in dropdownState
+ */
+const isItemSelected = ({item,dropdownState })=>{
+  
+  const res=  dropdownState.value.some(dropdownItem => dropdownItem.value === item.value);
+  console.log('isItemSelected.item',item)
+  console.log('isItemSelected.dropdownState',dropdownState)
+  console.log('isItemSelected.res',res)
+
+  return res;
+}
 export default function AdvancedSearchDropdown({
   indexTitle,
   indexName,
@@ -90,7 +108,8 @@ export default function AdvancedSearchDropdown({
   menuItems = [],
   updateIndex,
 }) {
-  const { fieldSearchFromUrl } = useAdvancedSearchContext();
+  const { fieldSearchFromUrl, dropdownSearchIndices } =
+    useAdvancedSearchContext();
 
   const [dropdownQuery, setDropdownQuery] = useState("");
 
@@ -128,7 +147,13 @@ export default function AdvancedSearchDropdown({
     menuItems,
     updateIndex
   );
+  console.log("advancedSearch.indexTitle, indexName", indexTitle, indexName);
+  console.log("advancedSearch.menuItemsState, ", menuItemsState);
 
+  console.log("advancedSearch.dropdownSearchIndices", dropdownSearchIndices);
+  
+const dropdownState =getDropDownStateByIndex({ dropdownSearchIndices, indexName})
+console.log(indexName+' dropdownState: ',dropdownState)
   useEffect(() => {
     toggleMenuItemsState({
       type: ToggleMenuItemsEnum.RESET,
@@ -196,13 +221,27 @@ export default function AdvancedSearchDropdown({
             )
             .map((item, index) => {
               function toggler() {
+                console.log('on selevt')
                 toggleMenuItemsState({
                   type: ToggleMenuItemsEnum.UPDATE,
                   payload: item,
                 });
+console.log('sortedMenuItemsState',sortedMenuItemsState)
+
+//TODO: skal fixes
+                // updateIndex({
+                //   type: DropdownReducerEnum.UPDATE,
+                //   payload: {
+                //     indexName: indexName,
+                //     menuItemsState: sortedMenuItemsState.menuItemsState
+                //     ,
+                //   },
+                // })
               }
 
               if (item?.formType === FormTypeEnum.CHECKBOX) {
+                const isSelected = isItemSelected({item,dropdownState })
+                console.log(' is item selected',isSelected)
                 return (
                   <List.Select
                     key={`${item.name}-${index}`}
@@ -211,15 +250,17 @@ export default function AdvancedSearchDropdown({
                   >
                     <CheckboxItem
                       item={item}
+                      isSelected={isSelected}
                       {...getTextType(dropdownQuery, item)}
                     />
                   </List.Select>
                 );
               } else if (item?.formType === FormTypeEnum.RADIO_BUTTON) {
+  
                 return (
                   <List.Radio
                     key={`${item.name}-${index}`}
-                    selected={item?.isSelected}
+                    selected={isSelected}
                     moveItemRightOnFocus={true}
                     onSelect={toggler}
                     label={item.name}
