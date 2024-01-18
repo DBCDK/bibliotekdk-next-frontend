@@ -8,6 +8,7 @@ import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
 import { getStylingAndErrorMessage } from "@/components/_modal/pages/order/utils/order.utils";
 import { validateEmail } from "@/utils/validateEmail";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 function OrderConfirmationButton({
   invalidClass,
@@ -15,6 +16,7 @@ function OrderConfirmationButton({
   isLoading,
   onClick,
   showOrderDigitalCopy,
+  showOrderHistory,
   disabled,
 }) {
   return (
@@ -56,7 +58,7 @@ function OrderConfirmationButton({
         <Button disabled={disabled} skeleton={isLoading} onClick={onClick}>
           {Translate({ context: "general", label: "accept" })}
         </Button>
-        {actionMessage && (
+        {showOrderHistory && (
           <Text type="text2" className={styles.goToOrderHistory}>
             {Translate({
               context: "order",
@@ -98,6 +100,7 @@ export default function Wrap({
   blockedForBranch,
   isLoadingUser = false,
 }) {
+  const { hasCulrUniqueId } = useAuthentication();
   const { workId, pid, periodicaForm, pids } = context;
   const { invalidClass, actionMessage } = getStylingAndErrorMessage(
     validated,
@@ -122,6 +125,8 @@ export default function Wrap({
   // has pincode if required
   // const hasPincode = !validated?.details?.hasPincode?.status;
 
+  const firstOrder = validated?.details?.firstOrder?.status;
+
   return (
     <OrderConfirmationButton
       invalidClass={invalidClass}
@@ -129,6 +134,7 @@ export default function Wrap({
       isLoading={isLoading}
       onClick={onClick}
       showOrderDigitalCopy={isDigitalCopy && availableAsDigitalCopy}
+      showOrderHistory={hasCulrUniqueId && !firstOrder}
       disabled={
         (!availableAsDigitalCopy && !availableAsPhysicalCopy) ||
         isLoading ||
