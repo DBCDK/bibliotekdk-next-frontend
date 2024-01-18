@@ -11,7 +11,7 @@ import {
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { arangeLoanerInfo } from "@/lib/userdataFactoryUtils";
 import Link from "@/components/base/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import {
   formatMaterialTypesToPresentation,
@@ -94,6 +94,23 @@ const LoansAndReservations = () => {
   const { loanerInfo, isLoading } = useLoanerInfo();
   const { debt, agencies, orders, loans } = arangeLoanerInfo(loanerInfo);
   const [removedOrderId, setRemovedOrderId] = useState("");
+  const [orderList, setOrderList] = useState([]);
+
+  const onRemoveOrderId = (orderid) => {
+    setRemovedOrderId(orderid);
+    // we remove the order from the ui instantly
+    const updatedOrderList = orderList.filter(
+      (order) => order.orderId !== orderid
+    );
+    setOrderList(updatedOrderList);
+  };
+
+  useEffect(() => {
+    //after deletion we fetch the orders and override the local state.
+    if (Array.isArray(orders)) {
+      setOrderList(orders);
+    }
+  }, [orders]);
 
   function getAgencyString(agencyId) {
     if (!agencies) return "";
@@ -259,7 +276,7 @@ const LoansAndReservations = () => {
               )}`}
             >
               {Translate({ context: "profile", label: "orders" })} (
-              {orders?.length})
+              {orderList?.length})
             </Title>
           ) : (
             <Title
@@ -293,8 +310,8 @@ const LoansAndReservations = () => {
               library=""
             />
           ))
-        ) : orders && orders.length !== 0 ? (
-          orders.map((order, i) => {
+        ) : orderList && orderList.length !== 0 ? (
+          orderList.map((order, i) => {
             // Log the agencyId before passing it to the MaterialRow component
             return (
               <MaterialRow
@@ -303,7 +320,7 @@ const LoansAndReservations = () => {
                   agencyId: order.pickUpBranch.agencyId,
                 })}
                 removedOrderId={removedOrderId}
-                setRemovedOrderId={setRemovedOrderId}
+                setRemovedOrderId={onRemoveOrderId}
                 key={`loan-${order.loanId}-#${i}`}
                 dataCy={`order-${i}`}
               />
