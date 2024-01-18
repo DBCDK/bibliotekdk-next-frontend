@@ -17,6 +17,7 @@ import Link from "@/components/base/link";
 import { validateEmail } from "@/utils/validateEmail";
 import { getLabel } from "@/components/base/forms/email/Email";
 import Pincode from "../../../order/pincode";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 const CheckoutForm = ({
   context,
@@ -33,6 +34,8 @@ const CheckoutForm = ({
     materialsToOrderCount,
   } = materialCounts;
   const modal = useModal();
+  const { hasCulrUniqueId } = useAuthentication();
+
   const [disabled, setDisabled] = useState(true);
   const [mail, setMail] = useState(null);
   const [pincode, setPincode] = useState(null);
@@ -281,7 +284,7 @@ const CheckoutForm = ({
             Translate({ context: "general", label: "accept" })
           )}
         </Button>
-        {duplicateBookmarkIds?.length > 0 && (
+        {hasCulrUniqueId && duplicateBookmarkIds?.length > 0 && (
           <Text type="text2" className={styles.goToOrderHistory}>
             {Translate({
               context: "order",

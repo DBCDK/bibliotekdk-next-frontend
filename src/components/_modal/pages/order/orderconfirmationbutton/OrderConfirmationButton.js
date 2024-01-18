@@ -8,6 +8,7 @@ import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
 import { getStylingAndErrorMessage } from "@/components/_modal/pages/order/utils/order.utils";
 import { validateEmail } from "@/utils/validateEmail";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 function OrderConfirmationButton({
   invalidClass,
@@ -99,6 +100,7 @@ export default function Wrap({
   blockedForBranch,
   isLoadingUser = false,
 }) {
+  const { hasCulrUniqueId } = useAuthentication();
   const { workId, pid, periodicaForm, pids } = context;
   const { invalidClass, actionMessage } = getStylingAndErrorMessage(
     validated,
@@ -124,7 +126,6 @@ export default function Wrap({
   // const hasPincode = !validated?.details?.hasPincode?.status;
 
   const firstOrder = validated?.details?.firstOrder?.status;
-  const hasCulrSyncData = pickupBranchInfo?.pickupBranch?.culrDataSync;
 
   return (
     <OrderConfirmationButton
@@ -133,7 +134,7 @@ export default function Wrap({
       isLoading={isLoading}
       onClick={onClick}
       showOrderDigitalCopy={isDigitalCopy && availableAsDigitalCopy}
-      showOrderHistory={hasCulrSyncData && !firstOrder}
+      showOrderHistory={hasCulrUniqueId && !firstOrder}
       disabled={
         (!availableAsDigitalCopy && !availableAsPhysicalCopy) ||
         isLoading ||
