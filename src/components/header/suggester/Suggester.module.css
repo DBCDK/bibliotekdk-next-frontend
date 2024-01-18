@@ -9,7 +9,7 @@
   width: 100%;
   display: flex;
   align-items: center;
-  padding: var(--pt2) var(--pt2) var(--pt2) 0;
+  padding: var(--pt2) var(--pt2) 0 0;
   border-bottom: 1px solid var(--iron);
   /* position fix hack for mobile suggester scroll */
   position: fixed;
@@ -32,7 +32,7 @@
 .input_wrap .clear {
   position: absolute;
   right: 0;
-  top: 0;
+  top: 15px;
   bottom: 0;
   transform: scale(0);
   transition: transform 0.3s;
@@ -183,5 +183,8 @@
   /* only one suggestion in list*/
   .suggestion:only-child {
     padding: var(--pt2);
+  }
+  .input_wrap .clear {
+    top: 0px;
   }
 }
