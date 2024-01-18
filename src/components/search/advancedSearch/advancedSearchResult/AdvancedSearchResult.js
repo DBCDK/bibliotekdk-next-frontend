@@ -1,6 +1,5 @@
-import { doComplexSearchAll } from "@/lib/api/complexSearch.fragments";
+import { hitcount } from "@/lib/api/complexSearch.fragments";
 import { useData } from "@/lib/api/api";
-import { ResultPage } from "@/components/search/result/page";
 import Section from "@/components/base/section";
 import Pagination from "@/components/search/pagination/Pagination";
 import PropTypes from "prop-types";
@@ -14,6 +13,7 @@ import AdvancedSearchSort from "@/components/search/advancedSearch/advancedSearc
 import TopBar from "@/components/search/advancedSearch/advancedSearchResult/topBar/TopBar";
 import Title from "@/components/base/title";
 import { NoHitSearch } from "@/components/search/advancedSearch/advancedSearchResult/noHitSearch/NoHitSearch";
+import ResultPage from "./ResultPage/ResultPage";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 export function AdvancedSearchResult({
@@ -22,12 +22,13 @@ export function AdvancedSearchResult({
   onPageChange,
   results,
   error = null,
+  isLoading,
 }) {
   const hitcount = results?.hitcount;
   const numPages = Math.ceil(hitcount / 10);
-
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs" || breakpoint === "sm" || false;
+  const page = parseInt(pageNo, 10) || 1;
 
   if (error) {
     return null;
@@ -43,33 +44,40 @@ export function AdvancedSearchResult({
         id="search-result-section"
         title="Resultater"
         subtitle={
-          <Title type="title5" className={styles.titleStyle}>
-            {hitcount}
-          </Title>
+          hitcount > 0 &&
+          !isLoading && (
+            <Title type="title5" className={styles.titleStyle}>
+              {hitcount}
+            </Title>
+          )
         }
         sectionContentClass={isMobile ? styles.sectionContentStyle : ""}
         sectionTitleClass={styles.sectionTitleClass}
       >
         {/* Reuse result page from simplesearch - we skip the wrap .. @TODO should we set
         some mark .. that we are doing advanced search .. ?? */}
-        {hitcount === 0 && <NoHitSearch />}
-        {hitcount > 0 && (
-          <>
-            <AdvancedSearchSort className={cx(styles.sort_container)} />
-            <div>
-              <ResultPage
-                rows={results?.works}
-                onWorkClick={onWorkClick}
-                isLoading={results?.isLoading}
-              />
-            </div>
-          </>
-        )}
+        {!isLoading && hitcount === 0 && <NoHitSearch />}
+        <>
+          <AdvancedSearchSort className={cx(styles.sort_container)} />
+          <div>
+            {Array(isMobile ? page : 1)
+              .fill({})
+              .map((p, index) => {
+                return (
+                  <ResultPage
+                    key={`result-page-${index}`}
+                    page={isMobile ? index + 1 : page}
+                    onWorkClick={onWorkClick}
+                  />
+                );
+              })}
+          </div>
+        </>
       </Section>
       {hitcount > 0 && (
         <Pagination
           numPages={numPages}
-          currentPage={parseInt(pageNo, 10)}
+          currentPage={page}
           onChange={onPageChange}
         />
       )}
@@ -96,54 +104,25 @@ export default function Wrap({ onWorkClick, onPageChange }) {
     cqlFromUrl: cql,
     fieldSearchFromUrl: fieldSearch,
     pageNoFromUrl: pageNo,
-    sort,
     setShowPopover,
   } = useAdvancedSearchContext();
 
-  // we  disable the data collect for now - this one is propdrilled from
-  // components/search/result/page
   // @TODO what to do  with dataCollect ???
   onWorkClick = null;
   // get setter for advanced search history
   const { setValue } = useAdvancedSearchHistory();
-  const limit = 10; // limit
-  let offset = limit * (pageNo - 1); // offset
   const cqlQuery = cql || convertStateToCql(fieldSearch);
 
   const showResult = !isEmpty(fieldSearch) || !isEmpty(cql);
 
   // use the useData hook to fetch data
-  const bigResponse = useData(
-    doComplexSearchAll({
+  const fastResponse = useData(
+    hitcount({
       cql: cqlQuery,
-      offset: offset,
-      limit: limit,
-      ...(!isEmpty(sort) && { sort: sort }),
     })
   );
-  const parsedResponse = parseResponse(bigResponse);
+  const parsedResponse = parseResponse(fastResponse);
 
-  if (parsedResponse.isLoading) {
-    return (
-      <>
-        <TopBar />
-
-        <Section
-          divider={false}
-          colSize={{ lg: { offset: 1, span: true } }}
-          title="loading ..."
-          subtitle=""
-          isLoading={true}
-        >
-          <AdvancedSearchSort
-            className={cx(styles.sort_container, styles.loadingSort)}
-            skeleton={true}
-          />
-          <ResultPage isLoading={true} />
-        </Section>
-      </>
-    );
-  }
   //update searchhistory
   if (!parsedResponse?.errorMessage && !parsedResponse.isLoading) {
     // make an object for searchhistory @TODO .. the right object please
@@ -167,6 +146,7 @@ export default function Wrap({ onWorkClick, onPageChange }) {
       results={parsedResponse}
       error={parsedResponse.errorMessage}
       setShowPopover={setShowPopover}
+      isLoading={parsedResponse.isLoading}
     />
   );
 }
