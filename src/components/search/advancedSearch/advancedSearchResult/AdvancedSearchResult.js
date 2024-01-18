@@ -15,7 +15,6 @@ import Title from "@/components/base/title";
 import { NoHitSearch } from "@/components/search/advancedSearch/advancedSearchResult/noHitSearch/NoHitSearch";
 import ResultPage from "./ResultPage/ResultPage";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
-import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 export function AdvancedSearchResult({
   pageNo,
@@ -30,7 +29,6 @@ export function AdvancedSearchResult({
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs" || breakpoint === "sm" || false;
   const page = parseInt(pageNo, 10) || 1;
-
 
   if (error) {
     return null;
@@ -61,7 +59,7 @@ export function AdvancedSearchResult({
         {!isLoading && hitcount === 0 && <NoHitSearch />}
         <>
           <AdvancedSearchSort className={cx(styles.sort_container)} />
-          <div className={cx(styles.padding_top)}>
+          <div>
             {Array(isMobile ? page : 1)
               .fill({})
               .map((p, index) => {
