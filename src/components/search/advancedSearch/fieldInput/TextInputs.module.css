@@ -18,6 +18,7 @@
   display: flex;
   margin-left: var(--pt2);
   padding-bottom: var(--pt2);
+  cursor: pointer;
 }
 
 .dropdownwrap {
