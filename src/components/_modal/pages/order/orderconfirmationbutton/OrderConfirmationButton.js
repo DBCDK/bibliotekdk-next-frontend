@@ -15,6 +15,7 @@ function OrderConfirmationButton({
   isLoading,
   onClick,
   showOrderDigitalCopy,
+  showOrderHistory,
   disabled,
 }) {
   return (
@@ -56,7 +57,7 @@ function OrderConfirmationButton({
         <Button disabled={disabled} skeleton={isLoading} onClick={onClick}>
           {Translate({ context: "general", label: "accept" })}
         </Button>
-        {actionMessage && (
+        {showOrderHistory && (
           <Text type="text2" className={styles.goToOrderHistory}>
             {Translate({
               context: "order",
@@ -111,6 +112,14 @@ export default function Wrap({
       pids: pids ?? [pid],
     });
 
+  console.log("fffff", {
+    validated,
+    hasValidationErrors,
+    invalidClass,
+    actionMessage,
+    pickupBranchInfo,
+  });
+
   const { isLoading: isWorkLoading } = workResponse;
   const { isLoading: isPickupBranchLoading } = pickupBranchInfo;
   const { isDigitalCopy, availableAsDigitalCopy, availableAsPhysicalCopy } =
@@ -122,6 +131,11 @@ export default function Wrap({
   // has pincode if required
   // const hasPincode = !validated?.details?.hasPincode?.status;
 
+  const firstOrder = validated?.details?.firstOrder?.status;
+  const hasCulrSyncData = pickupBranchInfo?.pickupBranch?.culrDataSync;
+
+  console.log({ firstOrder, hasCulrSyncData }, hasCulrSyncData && !firstOrder);
+
   return (
     <OrderConfirmationButton
       invalidClass={invalidClass}
@@ -129,6 +143,7 @@ export default function Wrap({
       isLoading={isLoading}
       onClick={onClick}
       showOrderDigitalCopy={isDigitalCopy && availableAsDigitalCopy}
+      showOrderHistory={hasCulrSyncData && !firstOrder}
       disabled={
         (!availableAsDigitalCopy && !availableAsPhysicalCopy) ||
         isLoading ||
