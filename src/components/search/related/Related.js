@@ -81,7 +81,12 @@ export function Related({ data, isLoading }) {
 
           <div className={styles.related}>
             <div className={styles.words} data-cy="words-container">
-              <Text skeleton={isLoading} lines={1} tag={"span"}>
+              <Text
+                skeleton={isLoading}
+                lines={1}
+                tag={"span"}
+                className={styles.oneline}
+              >
                 {Translate({ context: "search", label: "relatedSubjects" })}
               </Text>
               <Words data={data} isLoading={isLoading} />

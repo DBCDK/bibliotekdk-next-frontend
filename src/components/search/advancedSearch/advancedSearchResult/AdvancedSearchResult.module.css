@@ -22,10 +22,6 @@
   top: -55px;
 }
 
-.loadingSort {
-  padding: var(--pt2) 0;
-}
-
 @media (max-width: 768px) {
   .sort_container {
     display: flex;

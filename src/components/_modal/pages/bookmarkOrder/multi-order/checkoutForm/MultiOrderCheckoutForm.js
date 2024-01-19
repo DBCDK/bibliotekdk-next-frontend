@@ -17,6 +17,7 @@ import Link from "@/components/base/link";
 import { validateEmail } from "@/utils/validateEmail";
 import { getLabel } from "@/components/base/forms/email/Email";
 import Pincode from "../../../order/pincode";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 const CheckoutForm = ({
   context,
@@ -33,6 +34,8 @@ const CheckoutForm = ({
     materialsToOrderCount,
   } = materialCounts;
   const modal = useModal();
+  const { hasCulrUniqueId } = useAuthentication();
+
   const [disabled, setDisabled] = useState(true);
   const [mail, setMail] = useState(null);
   const [pincode, setPincode] = useState(null);
@@ -42,10 +45,16 @@ const CheckoutForm = ({
       periodicaForm: context?.periodicaForm,
       pids: [],
     });
+
   const { pickupBranch, pickupBranchUser, isLoadingBranches } =
     pickupBranchInfo;
 
-  const pincodeIsRequired = shouldRequirePincode(pickupBranch);
+  // materialsToOrderCount contains all orders: physical and digital orders,
+  // if materialsToOrderCount is greater than digitalMaterials, we also have physical orders
+  const hasPhysicalOrders = materialsToOrderCount > digitalMaterials;
+
+  const pincodeIsRequired =
+    hasPhysicalOrders && shouldRequirePincode(pickupBranch);
 
   useEffect(() => {
     const hasPincode = pincodeIsRequired ? !!pincode : true;
@@ -66,12 +75,10 @@ const CheckoutForm = ({
     duplicateBookmarkIds?.length,
     mail?.valid?.status,
     materialsToOrderCount,
+    pincodeIsRequired,
     pincode,
   ]);
 
-  // materialsToOrderCount contains all orders: physical and digital orders,
-  // if materialsToOrderCount is greater than digitalMaterials, we also have physical orders
-  const hasPhysicalOrders = materialsToOrderCount > digitalMaterials;
   const { updateLoanerInfo } = userInfo;
 
   const validated = useMemo(() => {
@@ -166,7 +173,11 @@ const CheckoutForm = ({
         email={mail}
       />
 
-      <Pincode validated={validated} onChange={(val) => setPincode(val)} />
+      <Pincode
+        validated={validated}
+        onChange={(val) => setPincode(val)}
+        hide={!hasPhysicalOrders}
+      />
 
       <div>
         {/* Errors and messages */}
@@ -281,7 +292,7 @@ const CheckoutForm = ({
             Translate({ context: "general", label: "accept" })
           )}
         </Button>
-        {duplicateBookmarkIds?.length > 0 && (
+        {hasCulrUniqueId && duplicateBookmarkIds?.length > 0 && (
           <Text type="text2" className={styles.goToOrderHistory}>
             {Translate({
               context: "order",

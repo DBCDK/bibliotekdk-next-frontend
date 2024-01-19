@@ -393,6 +393,10 @@ const unprioritisedLanguages = [
     key: "hin",
   },
   {
+    term: "arabisk",
+    key: "ar",
+  },
+  {
     term: "tjekkisk",
     key: "cze",
   },

@@ -134,3 +134,26 @@ export function complexSearchOnlyWorkIds({ cql, offset, limit, sort }) {
     slowThreshold: 3000,
   };
 }
+
+/**
+ * Hitcount
+ *
+ * @param {string} cql  the  cql-query
+ * @param offset
+ * @param limit
+ * @param sort
+ */
+export function hitcount({ cql, offset, limit, sort }) {
+  return {
+    apiUrl: ApiEnums.FBI_API_BIBDK21,
+    query: `
+    query hitcount($cql: String!) {
+			complexSearch(cql: $cql) {
+				hitcount
+				errorMessage
+			}
+		}`,
+    variables: { cql, offset, limit, sort },
+    slowThreshold: 3000,
+  };
+}

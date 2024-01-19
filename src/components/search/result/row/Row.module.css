@@ -125,3 +125,14 @@
 .BookmarkDropdown button {
   border: 1px solid transparent;
 }
+@media (max-width: 380px) {
+  .col_wrapper {
+    max-width: 120px;
+  }
+}
+
+@media (max-width: 430px) {
+  .col_wrapper {
+    max-width: 200px;
+  }
+}

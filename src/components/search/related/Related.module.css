@@ -23,14 +23,19 @@
 .related {
   display: block;
   margin: var(--pt2);
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.oneline {
+  white-space: nowrap;
 }
 
 .words {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  column-gap: var(--pt3);
-  row-gap: var(--pt1);
+  column-gap: var(--pt1_5);
+  margin-bottom: var(--pt1);
 }
 
 .word {

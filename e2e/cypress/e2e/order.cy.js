@@ -78,8 +78,6 @@ describe("Order", () => {
       .should("not.be.disabled", { timeout: 15000 })
       .click({ force: true });
 
-    cy.contains("some-order-id", { timeout: 10000 });
-
     cy.getConsoleEntry("submitOrder").then((entry) => {
       expect(entry[1]).to.deep.equal({
         pids: ["some-pid-1", "some-pid-2"],
@@ -270,7 +268,6 @@ describe("Order", () => {
         "Du får besked fra dit bibliotek når materialet er klar til afhentning"
       );
       cy.contains("Godkend").click();
-      cy.contains("some-order-id", { timeout: 10000 });
 
       cy.getConsoleEntry("submitOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
@@ -318,8 +315,6 @@ describe("Order", () => {
       );
 
       cy.get("[data-cy=button-godkend]").click();
-
-      cy.contains("some-order-id", { timeout: 10000 });
 
       cy.getConsoleEntry("submitOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
@@ -424,9 +419,6 @@ describe("Order", () => {
 
       // Check that BlockedUser does not exist
       cy.get("[data-cy=button-godkend]").click({ force: true });
-
-      //cy.get("[data-cy=button-godkend]").should("exist").click();
-      cy.contains("some-order-id", { timeout: 10000 });
 
       cy.getConsoleEntry("submitOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({

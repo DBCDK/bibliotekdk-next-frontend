@@ -63,4 +63,8 @@
     position: relative;
     top: 3px;
   }
+  .hide {
+    display: none;
+    transition: 1s;
+  }
 }

@@ -84,5 +84,7 @@ export function getAdvancedUrl({ type, value }) {
     inputFields: [inputField],
   };
 
-  return encodeURI(`/avanceret?fieldSearch=${JSON.stringify(urlObject)}`);
+  return `/avanceret?fieldSearch=${encodeURIComponent(
+    JSON.stringify(urlObject)
+  )}`;
 }

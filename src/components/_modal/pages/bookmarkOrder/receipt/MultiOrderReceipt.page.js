@@ -9,9 +9,11 @@ import cx from "classnames";
 import Material from "../multi-order/Material/Material";
 import { BackgroundColorEnum } from "@/components/base/materialcard/materialCard.utils";
 import { useRouter } from "next/router";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 const MultiOrderReceipt = ({ context }) => {
   const modal = useModal();
+  const { hasCulrUniqueId } = useAuthentication();
   const { successMaterials, failedMaterials, branchName } = context;
   const hasErrors = failedMaterials.length > 0;
   const hasSuccess = successMaterials.length > 0;
@@ -60,7 +62,7 @@ const MultiOrderReceipt = ({ context }) => {
           <Translate
             context="order"
             label="order-success-message"
-            vars={[branchName]}
+            vars={[`<br/> ${branchName}`]}
             renderAsHtml
           />
         </Text>
@@ -69,7 +71,7 @@ const MultiOrderReceipt = ({ context }) => {
       {hasErrors && (
         <>
           <Text type="text1" className={styles.errorMessage}>
-            {failedMaterials.length === 1 ? (
+            {failedMaterials?.length === 1 ? (
               <Translate
                 context="bookmark-order"
                 label="multiorder-couldnt-order-singular"
@@ -97,22 +99,24 @@ const MultiOrderReceipt = ({ context }) => {
         </>
       )}
 
+      {hasCulrUniqueId && (
+        <Button
+          className={styles.redirect}
+          onClick={() => router.push("/profil/bestillingshistorik")}
+          type="secondary"
+        >
+          {Translate({
+            context: "receipt",
+            label: "go-to-your-orders",
+          })}
+        </Button>
+      )}
       <Button
-        dataCy="multiorder-button-close"
-        type="primary"
-        size="large"
         className={styles.close}
         onClick={() => modal.clear()}
+        dataCy="multiorder-button-close"
       >
-        <Translate context="general" label="close" />
-      </Button>
-      <Button
-        type="secondary"
-        size="large"
-        className={styles.redirect}
-        onClick={() => router.push("/profil/bestillingshistorik")}
-      >
-        <Translate context="receipt" label="go-to-your-orders" />
+        {Translate({ context: "general", label: "close" })}
       </Button>
     </div>
   );

@@ -42,7 +42,7 @@ function Pincode({ isLoading, onChange, error }) {
   );
 }
 
-export default function Wrap({ onChange, validated }) {
+export default function Wrap({ onChange, validated, hide }) {
   const { loanerInfo } = useLoanerInfo();
 
   const branchId = loanerInfo.pickupBranch;
@@ -56,7 +56,7 @@ export default function Wrap({ onChange, validated }) {
   const hasError = !validated?.details?.hasPincode?.status;
   const hasTry = validated.hasTry;
 
-  if (!isFFU || hasDataSync || (isFFU && !hasBorchk)) {
+  if (hide || !isFFU || hasDataSync || (isFFU && !hasBorchk)) {
     return null;
   }
 
