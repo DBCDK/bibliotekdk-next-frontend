@@ -196,6 +196,7 @@ const MultiOrder = ({ context }) => {
       setMaterialCounts({
         isAnalyzed: true,
         digitalMaterials: materialsDigital?.length ?? 0,
+        physicalMaterials: sortedMaterials?.length - materialsDigital?.length,
         materialsNotAllowedCount: materialsNotAvailable?.length ?? 0,
         materialsMissingActionCount: materialsNeedsInfo?.length ?? 0,
         duplicateOrders: duplicateOrders?.length ?? 0,

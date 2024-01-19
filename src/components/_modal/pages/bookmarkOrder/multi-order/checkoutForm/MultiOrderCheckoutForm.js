@@ -45,13 +45,16 @@ const CheckoutForm = ({
       periodicaForm: context?.periodicaForm,
       pids: [],
     });
+
   const { pickupBranch, pickupBranchUser, isLoadingBranches } =
     pickupBranchInfo;
 
-  const availableAsDigitalCopy = pickupBranchInfo.availableAsDigitalCopy;
+  // materialsToOrderCount contains all orders: physical and digital orders,
+  // if materialsToOrderCount is greater than digitalMaterials, we also have physical orders
+  const hasPhysicalOrders = materialsToOrderCount > digitalMaterials;
 
   const pincodeIsRequired =
-    !availableAsDigitalCopy && shouldRequirePincode(pickupBranch);
+    hasPhysicalOrders && shouldRequirePincode(pickupBranch);
 
   useEffect(() => {
     const hasPincode = pincodeIsRequired ? !!pincode : true;
@@ -76,9 +79,6 @@ const CheckoutForm = ({
     pincode,
   ]);
 
-  // materialsToOrderCount contains all orders: physical and digital orders,
-  // if materialsToOrderCount is greater than digitalMaterials, we also have physical orders
-  const hasPhysicalOrders = materialsToOrderCount > digitalMaterials;
   const { updateLoanerInfo } = userInfo;
 
   const validated = useMemo(() => {
@@ -176,7 +176,7 @@ const CheckoutForm = ({
       <Pincode
         validated={validated}
         onChange={(val) => setPincode(val)}
-        hide={availableAsDigitalCopy}
+        hide={!hasPhysicalOrders}
       />
 
       <div>
