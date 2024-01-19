@@ -48,7 +48,10 @@ const CheckoutForm = ({
   const { pickupBranch, pickupBranchUser, isLoadingBranches } =
     pickupBranchInfo;
 
-  const pincodeIsRequired = shouldRequirePincode(pickupBranch);
+  const availableAsDigitalCopy = pickupBranchInfo.availableAsDigitalCopy;
+
+  const pincodeIsRequired =
+    !availableAsDigitalCopy && shouldRequirePincode(pickupBranch);
 
   useEffect(() => {
     const hasPincode = pincodeIsRequired ? !!pincode : true;
@@ -69,6 +72,7 @@ const CheckoutForm = ({
     duplicateBookmarkIds?.length,
     mail?.valid?.status,
     materialsToOrderCount,
+    pincodeIsRequired,
     pincode,
   ]);
 
@@ -169,7 +173,11 @@ const CheckoutForm = ({
         email={mail}
       />
 
-      <Pincode validated={validated} onChange={(val) => setPincode(val)} />
+      <Pincode
+        validated={validated}
+        onChange={(val) => setPincode(val)}
+        hide={availableAsDigitalCopy}
+      />
 
       <div>
         {/* Errors and messages */}
