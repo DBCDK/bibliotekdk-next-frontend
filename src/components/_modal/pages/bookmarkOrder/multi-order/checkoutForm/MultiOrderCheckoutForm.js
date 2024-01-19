@@ -45,10 +45,16 @@ const CheckoutForm = ({
       periodicaForm: context?.periodicaForm,
       pids: [],
     });
+
   const { pickupBranch, pickupBranchUser, isLoadingBranches } =
     pickupBranchInfo;
 
-  const pincodeIsRequired = shouldRequirePincode(pickupBranch);
+  // materialsToOrderCount contains all orders: physical and digital orders,
+  // if materialsToOrderCount is greater than digitalMaterials, we also have physical orders
+  const hasPhysicalOrders = materialsToOrderCount > digitalMaterials;
+
+  const pincodeIsRequired =
+    hasPhysicalOrders && shouldRequirePincode(pickupBranch);
 
   useEffect(() => {
     const hasPincode = pincodeIsRequired ? !!pincode : true;
@@ -69,12 +75,10 @@ const CheckoutForm = ({
     duplicateBookmarkIds?.length,
     mail?.valid?.status,
     materialsToOrderCount,
+    pincodeIsRequired,
     pincode,
   ]);
 
-  // materialsToOrderCount contains all orders: physical and digital orders,
-  // if materialsToOrderCount is greater than digitalMaterials, we also have physical orders
-  const hasPhysicalOrders = materialsToOrderCount > digitalMaterials;
   const { updateLoanerInfo } = userInfo;
 
   const validated = useMemo(() => {
@@ -169,7 +173,11 @@ const CheckoutForm = ({
         email={mail}
       />
 
-      <Pincode validated={validated} onChange={(val) => setPincode(val)} />
+      <Pincode
+        validated={validated}
+        onChange={(val) => setPincode(val)}
+        hide={!hasPhysicalOrders}
+      />
 
       <div>
         {/* Errors and messages */}
