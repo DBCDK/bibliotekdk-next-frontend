@@ -4,10 +4,10 @@
  * We use it to create a dropdown for advanced search
  *
  * This component handles the state of the dropdown
- * Given a list of menuItems, it will dynamically generate the
- * menuItemsState, and then when the menuItems are selected, changed, etc.
- * the menuItemsState updates, and the updateIndex reducer sends the
- * data back to the context.
+ * Given a list of menuItems, it will dynamically populate the
+ * forms (based on menuItems) and fill them based on the advancedSearchContext,
+ * and then when the forms are selected, changed, etc.
+ * the advancedSearchContext updates
  */
 
 import { useId, useState } from "react";

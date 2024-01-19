@@ -214,7 +214,7 @@ export function useDropdownSearchIndices(fieldSearchFromUrl) {
 
   const [dropdownInitState, setDropdownInitState] = useState([]);
 
-  /** @typedef {({ type?: string, payload: { indexName: string, menuItemsState: Array.<Object> }}) => void} UpdateDropdownSearchIndices */
+  /** @typedef {({ type?: string, payload: { indexName: string, item: Array.<Object> }}) => void} UpdateDropdownSearchIndices */
   /** @typedef {{value: (Array.<string>|Array.<Object<>>), searchIndex: string}} DropdownSearchIndex */
   /** @type {[Array.<DropdownSearchIndex>, UpdateDropdownSearchIndices]} reducer */
   const [dropdownSearchIndices, updateDropdownSearchIndices] = useReducer(
