@@ -10,35 +10,36 @@
  * data back to the context.
  */
 
-import { useEffect, useId, useState } from "react";
+import { useId, useState } from "react";
 import List from "@/components/base/forms/list";
 import isEmpty from "lodash/isEmpty";
-import { DialogForPublicationYear } from "@/components/search/advancedSearch/advancedSearchHelpers/dialogForPublicationYear/DialogForPublicationYear";
 import {
   CheckboxItem,
   ClearBar,
   FormTypeEnum,
   RadioButtonItem,
-  RadioLinkItem,
   SearchBar,
   Toggler,
   TogglerContent,
   YearRange,
 } from "@/components/search/advancedSearch/advancedSearchHelpers/helperComponents/HelperComponents";
-import {
-  resetMenuItem,
-  ToggleMenuItemsEnum,
-  useMenuItemsState,
-} from "@/components/search/advancedSearch/advancedSearchHelpers/dropdownReducerFunctions";
 import styles from "./AdvancedSearchDropdown.module.css";
 import Dropdown from "react-bootstrap/Dropdown";
 import cx from "classnames";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
+import { getNameForActionLinkContainer } from "@/components/search/advancedSearch/advancedSearchHelpers/dummy__default_advanced_search_fields";
 
 const specialFormTypes = new Set([FormTypeEnum.ACTION_LINK_CONTAINER]);
 
+/**
+ * If the dropdown has a search, and the searchQuery includes a dropdownItem
+ * We give it text4 (meaning it is bolded)
+ * @param dropdownQuery
+ * @param item
+ * @returns {false|{textType: string}}
+ */
 function getTextType(dropdownQuery, item) {
   return (
     !isEmpty(dropdownQuery) &&
@@ -68,29 +69,19 @@ function sorterForMenuItems(a, b, dropdownQuery) {
   }
 }
 
-function toggleYearRange(toggleMenuItemsState, targetItem, valueItem) {
-  const payload = {
-    ...targetItem,
-    value: {
-      lower: `${valueItem.value.lower}`,
-      upper: `${valueItem.value.upper}`,
-    },
-  };
-
-  toggleMenuItemsState({
-    type: ToggleMenuItemsEnum.UPDATE,
-    payload: payload,
-  });
-}
-
 export default function AdvancedSearchDropdown({
   indexTitle,
   indexName,
   indexPlaceholder,
   menuItems = [],
-  updateIndex,
 }) {
-  const { fieldSearchFromUrl } = useAdvancedSearchContext();
+  const {
+    getItemFromDropdownSearchIndices,
+    getIsSelected,
+    toggleIsSelected,
+    dropdownSearchIndices,
+    resetSingleIndex,
+  } = useAdvancedSearchContext();
 
   const [dropdownQuery, setDropdownQuery] = useState("");
 
@@ -124,27 +115,15 @@ export default function AdvancedSearchDropdown({
     ];
   }
 
-  const { menuItemsState, toggleMenuItemsState } = useMenuItemsState(
-    menuItems,
-    updateIndex
-  );
-
-  useEffect(() => {
-    toggleMenuItemsState({
-      type: ToggleMenuItemsEnum.RESET,
-      payload: menuItems,
-    });
-  }, [JSON.stringify(fieldSearchFromUrl.dropdownSearchIndices)]);
-
-  const sortedMenuItemsState = [
+  const sortedMenuItems = [
     ...(!isEmpty(dropdownQuery)
-      ? [...menuItemsState]
+      ? [...menuItems]
           .sort((a, b) => sorterForMenuItems(a, b, dropdownQuery))
           .filter((item) => ![FormTypeEnum.DIVIDER].includes(item.formType))
-      : [...menuItemsState]),
+      : [...menuItems]),
   ];
 
-  const hasSpecialFormTypes = menuItemsState.some((item) =>
+  const hasSpecialFormTypes = menuItems.some((item) =>
     specialFormTypes.has(item.formType)
   );
 
@@ -153,7 +132,13 @@ export default function AdvancedSearchDropdown({
       <Toggler
         TogglerContent={() => (
           <TogglerContent
-            menuItemsState={menuItemsState}
+            menuItems={menuItems}
+            selectedItems={
+              dropdownSearchIndices?.find(
+                (singleIndex) => singleIndex.searchIndex === indexName
+              )?.value
+            }
+            dropdownSearchIndices={dropdownSearchIndices}
             indexName={indexName}
             indexPlaceholder={indexPlaceholder}
           />
@@ -187,7 +172,7 @@ export default function AdvancedSearchDropdown({
           charCodeEvents={(e) => getCharCodeEvents(e)}
           className={styles.list_group}
         >
-          {sortedMenuItemsState
+          {sortedMenuItems
             // Action_Link_Container is filtered away from List.Group
             //  to be added sticky to bottom of Dropdown.Menu
             .filter(
@@ -196,10 +181,7 @@ export default function AdvancedSearchDropdown({
             )
             .map((item, index) => {
               function toggler() {
-                toggleMenuItemsState({
-                  type: ToggleMenuItemsEnum.UPDATE,
-                  payload: item,
-                });
+                toggleIsSelected(item);
               }
 
               if (item?.formType === FormTypeEnum.CHECKBOX) {
@@ -211,6 +193,7 @@ export default function AdvancedSearchDropdown({
                   >
                     <CheckboxItem
                       item={item}
+                      getIsSelected={getIsSelected}
                       {...getTextType(dropdownQuery, item)}
                     />
                   </List.Select>
@@ -219,7 +202,7 @@ export default function AdvancedSearchDropdown({
                 return (
                   <List.Radio
                     key={`${item.name}-${index}`}
-                    selected={item?.isSelected}
+                    selected={getIsSelected(item)}
                     moveItemRightOnFocus={true}
                     onSelect={toggler}
                     label={item.name}
@@ -230,38 +213,12 @@ export default function AdvancedSearchDropdown({
                     />
                   </List.Radio>
                 );
-              } else if (item?.formType === FormTypeEnum.RADIO_LINK) {
-                return (
-                  <List.Radio
-                    key={`${item.name}-${index}`}
-                    selected={item?.isSelected}
-                    moveItemRightOnFocus={true}
-                    onSelect={() => !isEmpty(item?.value) && toggler}
-                    label={item.name}
-                  >
-                    <RadioLinkItem
-                      item={item}
-                      toggleMenuItemsState={toggleMenuItemsState}
-                      DialogBox={DialogForPublicationYear}
-                      label={item.name}
-                    />
-                  </List.Radio>
-                );
               } else if (item?.formType === FormTypeEnum.ACTION_LINK) {
                 return (
                   <List.Select
                     key={index}
                     label={item.name}
-                    onSelect={() =>
-                      toggleYearRange(
-                        toggleMenuItemsState,
-                        menuItemsState.filter(
-                          (item) =>
-                            item.formType === FormTypeEnum.ACTION_LINK_CONTAINER
-                        )?.[0],
-                        item
-                      )
-                    }
+                    onSelect={() => toggleIsSelected(item)}
                   >
                     <Text type="text3">{item.name}</Text>
                   </List.Select>
@@ -275,8 +232,16 @@ export default function AdvancedSearchDropdown({
         {/* Only shown when there is an ACTION_LINK_CONTAINER */}
         {hasSpecialFormTypes && (
           <YearRange
-            menuItemsState={menuItemsState}
-            toggleMenuItemsState={toggleMenuItemsState}
+            indexName={indexName}
+            toggleIsSelected={toggleIsSelected}
+            yearRangeItem={(() =>
+              getItemFromDropdownSearchIndices(
+                getNameForActionLinkContainer(
+                  FormTypeEnum.ACTION_LINK_CONTAINER,
+                  indexName
+                ),
+                indexName
+              ))()}
             className={cx(styles.sticky_base_class, styles.range_bar)}
             placeholder={Translate({
               context: "advanced_search_dropdown",
@@ -286,12 +251,7 @@ export default function AdvancedSearchDropdown({
         )}
 
         <ClearBar
-          onClick={() =>
-            toggleMenuItemsState({
-              type: ToggleMenuItemsEnum.RESET,
-              payload: [...menuItems.map((item) => resetMenuItem(item))],
-            })
-          }
+          onClick={() => resetSingleIndex(indexName)}
           className={cx(styles.sticky_base_class, styles.clear_content_bar)}
         />
       </Dropdown.Menu>

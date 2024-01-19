@@ -3,16 +3,13 @@ import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import animations from "css/animations";
-import { DialogForPublicationYear } from "@/components/search/advancedSearch/advancedSearchHelpers/dialogForPublicationYear/DialogForPublicationYear";
-import StatefulDialog from "@/components/base/statefulDialog/StatefulDialog";
-import { useEffect, useState } from "react";
 import Icon from "@/components/base/icon";
 import Dropdown from "react-bootstrap/Dropdown";
 import Input from "@/components/base/forms/input";
-import { ToggleMenuItemsEnum } from "@/components/search/advancedSearch/advancedSearchHelpers/dropdownReducerFunctions";
 import styles from "./HelperComponents.module.css";
 import Link from "@/components/base/link";
 import { formattersAndComparitors } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
+import { useState } from "react";
 
 /** @typedef {("CHECKBOX"|"RADIO_BUTTON"|"RADIO_LINK"|"DIVIDER")} FormType */
 export const FormTypeEnum = Object.freeze({
@@ -24,28 +21,6 @@ export const FormTypeEnum = Object.freeze({
   ACTION_LINK: "ACTION_LINK",
   ACTION_LINK_CONTAINER: "ACTION_LINK_CONTAINER",
 });
-
-export function RadioLinkItem({
-  item,
-  toggleMenuItemsState,
-  DialogBox = DialogForPublicationYear,
-  titleFormatter = () =>
-    `${item?.value?.lower ? "fra " + item?.value.lower + " " : ""}${
-      item?.value?.upper ? "til " + item?.value.upper : ""
-    }` || item?.name,
-}) {
-  const [title, setTitle] = useState("");
-
-  useEffect(() => {
-    setTitle(titleFormatter);
-  }, [item?.value?.lower, item?.value?.upper]);
-
-  return (
-    <StatefulDialog title={title}>
-      <DialogBox items={[item]} toggleMenuItemsState={toggleMenuItemsState} />
-    </StatefulDialog>
-  );
-}
 
 export function RadioButtonItem({ item, textType = "text3" }) {
   return (
@@ -65,12 +40,18 @@ export function RadioButtonItem({ item, textType = "text3" }) {
   );
 }
 
-export function CheckboxItem({ item, onChange = null, textType = "text3" }) {
+export function CheckboxItem({
+  item,
+  onChange = null,
+  getIsSelected,
+  textType = "text3",
+}) {
   return (
     <div className={cx(styles.select_wrapper)} tabIndex="-1">
       <Checkbox
         id={item?.name}
-        checked={item?.isSelected}
+        // checked={item?.isSelected}
+        checked={getIsSelected(item)}
         ariaLabel={Translate({
           context: "facets",
           label: "checkbox-aria-label",
@@ -137,20 +118,17 @@ export function Toggler({
 }
 
 export function YearRange({
-  menuItemsState,
-  toggleMenuItemsState,
+  indexName,
+  toggleIsSelected,
+  yearRangeItem,
   className,
   placeholder,
 }) {
-  const yearRangeItems = menuItemsState.filter(
-    (item) => item.formType === FormTypeEnum.ACTION_LINK_CONTAINER
-  );
-
-  if (!(yearRangeItems.length > 0)) {
-    return null;
-  }
-
-  const yearRangeItem = yearRangeItems?.[0];
+  const itemPrototype = {
+    ...yearRangeItem,
+    indexName: indexName,
+    formType: FormTypeEnum.ACTION_LINK_CONTAINER,
+  };
 
   return (
     <div className={className}>
@@ -167,14 +145,11 @@ export function YearRange({
           placeholder={placeholder}
           value={yearRangeItem?.value?.lower}
           onChange={(e) =>
-            toggleMenuItemsState({
-              type: ToggleMenuItemsEnum.UPDATE,
-              payload: {
-                ...yearRangeItem,
-                value: {
-                  lower: e?.target?.value,
-                  upper: yearRangeItem?.value?.upper,
-                },
+            toggleIsSelected({
+              ...itemPrototype,
+              value: {
+                lower: e?.target?.value,
+                upper: yearRangeItem?.value?.upper,
               },
             })
           }
@@ -191,14 +166,11 @@ export function YearRange({
           placeholder={placeholder}
           value={yearRangeItem?.value?.upper}
           onChange={(e) =>
-            toggleMenuItemsState({
-              type: ToggleMenuItemsEnum.UPDATE,
-              payload: {
-                ...yearRangeItem,
-                value: {
-                  lower: yearRangeItem?.value?.lower,
-                  upper: e?.target?.value,
-                },
+            toggleIsSelected({
+              ...itemPrototype,
+              value: {
+                lower: yearRangeItem?.value?.lower,
+                upper: e?.target?.value,
               },
             })
           }
@@ -209,17 +181,16 @@ export function YearRange({
 }
 
 export function TogglerContent({
-  menuItemsState,
+  menuItems,
+  selectedItems,
   indexName,
   indexPlaceholder,
 }) {
   const { getSelectedPresentation } = formattersAndComparitors(indexName);
 
-  const selectedItems = menuItemsState.filter((item) => item.isSelected);
+  const menuItemsFormType = menuItems.map((item) => item.formType);
 
-  const menuItemsFormType = menuItemsState.map((item) => item.formType);
-
-  if (selectedItems.length > 0) {
+  if (selectedItems?.length > 0) {
     if (menuItemsFormType.includes(FormTypeEnum.ACTION_LINK_CONTAINER)) {
       // If we have ACTION_LINK_CONTAINER, we show only this
       return (
@@ -235,7 +206,7 @@ export function TogglerContent({
         <Text tag="span" className={styles.toggler_content}>
           {Translate({ context: "general", label: "chosen" })}
           <Text tag="span" type="text4" className={styles.label_count}>
-            {selectedItems.length}
+            {selectedItems?.length}
           </Text>
         </Text>
       );

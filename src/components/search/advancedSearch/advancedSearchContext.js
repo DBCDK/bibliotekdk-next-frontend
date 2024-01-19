@@ -87,10 +87,13 @@ export default function AdvancedSearchProvider({ children, router }) {
   const {
     dropdownUnits,
     dropdownSearchIndices,
-    updateDropdownSearchIndices,
     resetDropdownIndices,
-    resetMenuItemsEvent,
-    dispatchResetMenuItemsEvent,
+
+    // testa
+    getItemFromDropdownSearchIndices,
+    getIsSelected,
+    toggleIsSelected,
+    resetSingleIndex,
   } = useDropdownSearchIndices({ ...fieldSearchFromUrl });
 
   //// ---- parsedCQL ----
@@ -126,7 +129,6 @@ export default function AdvancedSearchProvider({ children, router }) {
   function resetObjectState() {
     resetInputFields();
     resetDropdownIndices();
-    dispatchResetMenuItemsEvent();
   }
 
   /** @typedef {{
@@ -138,7 +140,12 @@ export default function AdvancedSearchProvider({ children, router }) {
         handleIndexChange: (index: number, newOperator: string) => void,
         dropdownUnits: Array.<DropdownUnit>,
         dropdownSearchIndices: Array.<DropdownSearchIndex>,
-        updateDropdownSearchIndices: UpdateDropdownSearchIndices,
+
+        getIsSelected: function,
+        toggleIsSelected: function,
+        getItemFromDropdownSearchIndices: function,
+        resetSingleIndex: function,
+
         resetObjectState: () => void,
         parsedCQL: string,
         setParsedCQL: (value: string) => void,
@@ -153,18 +160,27 @@ export default function AdvancedSearchProvider({ children, router }) {
         workType: string
         stateToString: string
         popoverRef: any
-        resetMenuItemsEvent: string
    }} AdvancedSearchContextType */
   const value = {
+    // InputFields
     inputFields,
     addInputField,
     removeInputField,
     handleLogicalOperatorChange,
     handleInputFieldChange,
     handleIndexChange,
+
+    // Dropdown
     dropdownUnits,
     dropdownSearchIndices,
-    updateDropdownSearchIndices,
+
+    // Dropdown methods
+    getItemFromDropdownSearchIndices,
+    getIsSelected,
+    toggleIsSelected,
+    resetSingleIndex,
+
+    // Context state and misc
     resetObjectState,
     parsedCQL,
     setParsedCQL,
@@ -179,7 +195,6 @@ export default function AdvancedSearchProvider({ children, router }) {
     workType: workType,
     stateToString,
     popoverRef,
-    resetMenuItemsEvent,
   };
 
   return (

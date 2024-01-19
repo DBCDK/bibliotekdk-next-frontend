@@ -24,6 +24,17 @@ const specialIndices = new Set([
 ]);
 const specialFormTypes = new Set([FormTypeEnum.ACTION_LINK_CONTAINER]);
 
+function checkIsSelected(singleItem, actualSearchIndex) {
+  return (
+    ([FormTypeEnum.CHECKBOX, FormTypeEnum.RADIO_BUTTON].includes(
+      singleItem.formType
+    ) ||
+      ([FormTypeEnum.RADIO_LINK].includes(singleItem.formType) &&
+        !isEmpty(singleItem.value))) &&
+    actualSearchIndex.value.map((val) => val.name).includes(singleItem?.name)
+  );
+}
+
 /**
  * If there is a fieldSearch.dropdownSearchIndices, this function
  *   enriches the dropdownUnit with its isSelected
@@ -66,15 +77,7 @@ function getDropdownFromUrl({ initDropdowns, dropdownUnit }) {
 
     return {
       ...singleItem,
-      isSelected:
-        ([FormTypeEnum.CHECKBOX, FormTypeEnum.RADIO_BUTTON].includes(
-          singleItem.formType
-        ) ||
-          ([FormTypeEnum.RADIO_LINK].includes(singleItem.formType) &&
-            !isEmpty(singleItem.value))) &&
-        actualSearchIndex.value
-          .map((val) => val.name)
-          .includes(singleItem?.name),
+      isSelected: checkIsSelected(singleItem, actualSearchIndex),
     };
   });
 
@@ -127,7 +130,7 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }) {
     },
   ].map((dropdownUnit) => {
     return {
-      items: convertToDropdownInput(dropdownUnit.items),
+      items: convertToDropdownInput(dropdownUnit.items, dropdownUnit.indexName),
       indexName: dropdownUnit.indexName,
     };
   });

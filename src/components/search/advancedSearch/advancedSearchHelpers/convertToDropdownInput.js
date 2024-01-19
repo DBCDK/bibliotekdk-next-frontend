@@ -3,9 +3,13 @@
  */
 import { FormTypeEnum } from "@/components/search/advancedSearch/advancedSearchHelpers/helperComponents/HelperComponents";
 import uniqWith from "lodash/uniqWith";
-import isEqual from "lodash/isEqual";
 
-export function convertSingleToDropdownInput(item, formType, overrideValueAs) {
+function convertSingleToDropdownInput({
+  item,
+  formType,
+  overrideValueAs,
+  indexName,
+}) {
   const key = item?.code || item?.key;
   const name = item?.display || item?.term;
 
@@ -14,6 +18,7 @@ export function convertSingleToDropdownInput(item, formType, overrideValueAs) {
     name: name,
     value: !overrideValueAs || overrideValueAs === "key" ? key : name,
     formType: formType,
+    indexName: indexName,
   };
 }
 
@@ -27,41 +32,37 @@ export function uniqueDropdownInput(items) {
 
 /**
  * @template {DisplayCodeArray|TermKeyArray} T
- * @param {T} prioritisedItems
- * @param prioritisedFormType
- * @param {T} unprioritisedItems
- * @param unprioritisedFormType
+ * @param {Array.<{ items: T, formType: FormTypeEnum }>} elements
  * @param {("key"|"name"|undefined)} overrideValueAs
+ * @param indexName
  * @returns {DropdownInputArray}
  */
-export function convertToDropdownInput({
-  prioritisedItems,
-  prioritisedFormType,
-  unprioritisedItems,
-  unprioritisedFormType,
-  overrideValueAs,
-}) {
-  const convertedPrioritisedItems = uniqueDropdownInput(
-    prioritisedItems.map((item) =>
-      convertSingleToDropdownInput(item, prioritisedFormType, overrideValueAs)
-    )
-  );
-  const convertedUnprioritisedItems = uniqueDropdownInput(
-    unprioritisedItems.map((item) =>
-      convertSingleToDropdownInput(item, unprioritisedFormType, overrideValueAs)
-    )
-  ).filter(
-    (item) =>
-      !convertedPrioritisedItems.some((priItem) => isEqual(priItem, item))
-  );
+export function convertToDropdownInput(
+  { elements, overrideValueAs },
+  indexName
+) {
+  return uniqueDropdownInput(
+    elements
+      .filter((element) => element.items.length > 0)
+      .flatMap((element, index, array) => {
+        const formType = element.formType;
+        const items = element.items;
 
-  return [
-    ...convertedPrioritisedItems,
-    ...(convertedUnprioritisedItems.length > 0 && [
-      {
-        formType: FormTypeEnum.DIVIDER,
-      },
-    ]),
-    ...convertedUnprioritisedItems,
-  ];
+        const res = uniqueDropdownInput(
+          items.map((item) =>
+            convertSingleToDropdownInput({
+              item: item,
+              formType: formType,
+              overrideValueAs: overrideValueAs,
+              indexName: indexName,
+            })
+          )
+        );
+
+        const divider =
+          array?.length - 1 > index ? [{ formType: FormTypeEnum.DIVIDER }] : [];
+
+        return [...res, ...divider];
+      })
+  );
 }

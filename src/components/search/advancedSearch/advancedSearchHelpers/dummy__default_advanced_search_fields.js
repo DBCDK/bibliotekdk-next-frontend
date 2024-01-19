@@ -5,35 +5,50 @@ import { DropdownIndicesEnum } from "@/components/search/advancedSearch/useDefau
 
 export function dummy__languages() {
   return {
-    prioritisedItems: prioritisedLanguages,
-    prioritisedFormType: FormTypeEnum.CHECKBOX,
-    unprioritisedItems: unprioritisedLanguages,
-    unprioritisedFormType: FormTypeEnum.CHECKBOX,
     overrideValueAs: "name",
+    elements: [
+      { items: prioritisedLanguages, formType: FormTypeEnum.CHECKBOX },
+      {
+        items: unprioritisedLanguages,
+        formType: FormTypeEnum.CHECKBOX,
+      },
+    ],
   };
 }
 
 // eslint-disable-next-line css-modules/no-unused-class
 export function dummy__specificmaterialTypes() {
   return {
-    prioritisedItems: prioritisedMaterialTypeSpecific,
-    prioritisedFormType: FormTypeEnum.CHECKBOX,
-    unprioritisedItems: unprioritisedMaterialTypeSpecific,
-    unprioritisedFormType: FormTypeEnum.CHECKBOX,
     overrideValueAs: "name",
+    elements: [
+      {
+        items: prioritisedMaterialTypeSpecific,
+        formType: FormTypeEnum.CHECKBOX,
+      },
+      {
+        items: unprioritisedMaterialTypeSpecific,
+        formType: FormTypeEnum.CHECKBOX,
+      },
+    ],
   };
 }
 export function dummy__generalmaterialTypes() {
   return {
-    prioritisedItems: prioritisedMaterialTypeGeneral,
-    prioritisedFormType: FormTypeEnum.CHECKBOX,
-    unprioritisedItems: unprioritisedMaterialTypeGeneral,
-    unprioritisedFormType: FormTypeEnum.CHECKBOX,
     overrideValueAs: "name",
+    elements: [
+      {
+        items: prioritisedMaterialTypeGeneral,
+        formType: FormTypeEnum.CHECKBOX,
+      },
+      {
+        items: unprioritisedMaterialTypeGeneral,
+        formType: FormTypeEnum.CHECKBOX,
+      },
+    ],
   };
 }
 
-export function nameForActionLinkContainer(formType, searchIndex) {
+export function getNameForActionLinkContainer(formType, searchIndex) {
   return `${formType}__${searchIndex}`;
 }
 
@@ -49,6 +64,7 @@ export function publicationYearIndices() {
       }),
       value: { lower: thisYear, upper: thisYear },
       formType: FormTypeEnum.ACTION_LINK,
+      indexName: DropdownIndicesEnum.PUBLICATION_YEAR,
     },
     {
       name: Translate({
@@ -60,6 +76,7 @@ export function publicationYearIndices() {
       }),
       value: { lower: thisYear - 2, upper: thisYear },
       formType: FormTypeEnum.ACTION_LINK,
+      indexName: DropdownIndicesEnum.PUBLICATION_YEAR,
     },
     {
       name: Translate({
@@ -75,6 +92,7 @@ export function publicationYearIndices() {
       }),
       value: { lower: thisYear - 3, upper: thisYear },
       formType: FormTypeEnum.ACTION_LINK,
+      indexName: DropdownIndicesEnum.PUBLICATION_YEAR,
     },
     {
       name: Translate({
@@ -90,6 +108,7 @@ export function publicationYearIndices() {
       }),
       value: { lower: thisYear - 5, upper: thisYear },
       formType: FormTypeEnum.ACTION_LINK,
+      indexName: DropdownIndicesEnum.PUBLICATION_YEAR,
     },
     {
       name: Translate({
@@ -101,14 +120,16 @@ export function publicationYearIndices() {
       }),
       value: { lower: thisYear - 10, upper: thisYear },
       formType: FormTypeEnum.ACTION_LINK,
+      indexName: DropdownIndicesEnum.PUBLICATION_YEAR,
     },
     {
-      name: nameForActionLinkContainer(
+      name: getNameForActionLinkContainer(
         FormTypeEnum.ACTION_LINK_CONTAINER,
         DropdownIndicesEnum.PUBLICATION_YEAR
       ),
       value: {},
       formType: FormTypeEnum.ACTION_LINK_CONTAINER,
+      indexName: DropdownIndicesEnum.PUBLICATION_YEAR,
     },
   ];
 }
@@ -200,6 +221,7 @@ export function agesIndices() {
       }),
       value: { lower: 1, upper: 2 },
       formType: FormTypeEnum.ACTION_LINK,
+      indexName: DropdownIndicesEnum.AGES,
     },
     {
       name: Translate({
@@ -209,6 +231,7 @@ export function agesIndices() {
       }),
       value: { lower: 3, upper: 6 },
       formType: FormTypeEnum.ACTION_LINK,
+      indexName: DropdownIndicesEnum.AGES,
     },
     {
       name: Translate({
@@ -218,6 +241,7 @@ export function agesIndices() {
       }),
       value: { lower: 7, upper: 10 },
       formType: FormTypeEnum.ACTION_LINK,
+      indexName: DropdownIndicesEnum.AGES,
     },
     {
       name: Translate({
@@ -227,6 +251,7 @@ export function agesIndices() {
       }),
       value: { lower: 11, upper: 13 },
       formType: FormTypeEnum.ACTION_LINK,
+      indexName: DropdownIndicesEnum.AGES,
     },
     {
       name: Translate({
@@ -236,14 +261,16 @@ export function agesIndices() {
       }),
       value: { lower: 14, upper: 16 },
       formType: FormTypeEnum.ACTION_LINK,
+      indexName: DropdownIndicesEnum.AGES,
     },
     {
-      name: nameForActionLinkContainer(
+      name: getNameForActionLinkContainer(
         FormTypeEnum.ACTION_LINK_CONTAINER,
         DropdownIndicesEnum.AGES
       ),
       value: {},
       formType: FormTypeEnum.ACTION_LINK_CONTAINER,
+      indexName: DropdownIndicesEnum.AGES,
     },
   ];
 }
