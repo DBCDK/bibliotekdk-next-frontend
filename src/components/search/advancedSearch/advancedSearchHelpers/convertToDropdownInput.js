@@ -34,7 +34,7 @@ export function uniqueDropdownInput(items) {
  * @template {DisplayCodeArray|TermKeyArray} T
  * @param {Array.<{ items: T, formType: FormTypeEnum }>} elements
  * @param {("key"|"name"|undefined)} overrideValueAs
- * @param indexName
+ * @param {string} indexName
  * @returns {DropdownInputArray}
  */
 export function convertToDropdownInput(

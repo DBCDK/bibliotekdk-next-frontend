@@ -22,6 +22,8 @@ function DropdownUnit({ items, indexName }) {
     label: `all_${indexName}`,
   });
 
+  console.log("items: ", items);
+
   return (
     <div className={styles.dropdown_with_title}>
       <Text type="text3">{indexTitle}</Text>

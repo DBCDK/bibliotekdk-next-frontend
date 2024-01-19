@@ -234,14 +234,13 @@ export default function AdvancedSearchDropdown({
           <YearRange
             indexName={indexName}
             toggleIsSelected={toggleIsSelected}
-            yearRangeItem={(() =>
-              getItemFromDropdownSearchIndices(
-                getNameForActionLinkContainer(
-                  FormTypeEnum.ACTION_LINK_CONTAINER,
-                  indexName
-                ),
+            yearRangeItem={getItemFromDropdownSearchIndices(
+              getNameForActionLinkContainer(
+                FormTypeEnum.ACTION_LINK_CONTAINER,
                 indexName
-              ))()}
+              ),
+              indexName
+            )}
             className={cx(styles.sticky_base_class, styles.range_bar)}
             placeholder={Translate({
               context: "advanced_search_dropdown",

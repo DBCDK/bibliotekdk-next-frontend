@@ -87,9 +87,9 @@ export default function AdvancedSearchProvider({ children, router }) {
   const {
     dropdownUnits,
     dropdownSearchIndices,
-    resetDropdownIndices,
 
-    // testa
+    // Dropdown methods
+    resetDropdownIndices,
     getItemFromDropdownSearchIndices,
     getIsSelected,
     toggleIsSelected,
@@ -140,12 +140,10 @@ export default function AdvancedSearchProvider({ children, router }) {
         handleIndexChange: (index: number, newOperator: string) => void,
         dropdownUnits: Array.<DropdownUnit>,
         dropdownSearchIndices: Array.<DropdownSearchIndex>,
-
         getIsSelected: function,
         toggleIsSelected: function,
         getItemFromDropdownSearchIndices: function,
         resetSingleIndex: function,
-
         resetObjectState: () => void,
         parsedCQL: string,
         setParsedCQL: (value: string) => void,
