@@ -249,6 +249,9 @@ export function AdvancedSearchDropdownCheckboxesAndDividerAndRadioButtons() {
 }
 
 export function AdvancedSearchDropdownRadioButtonsAndRadioLink() {
+  const updateIndex = () => {};
+
+  const storyTitle = "Radio buttons and radio link";
   const indices = [
     {
       name: "kat",
@@ -281,9 +284,6 @@ export function AdvancedSearchDropdownRadioButtonsAndRadioLink() {
       indexName: storyTitle,
     },
   ];
-  const updateIndex = () => {};
-
-  const storyTitle = "Radio buttons and radio link";
 
   return (
     <div>

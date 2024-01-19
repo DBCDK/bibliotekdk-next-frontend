@@ -9,7 +9,6 @@ import Input from "@/components/base/forms/input";
 import styles from "./HelperComponents.module.css";
 import Link from "@/components/base/link";
 import { formattersAndComparitors } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
-import { useState } from "react";
 
 /** @typedef {("CHECKBOX"|"RADIO_BUTTON"|"RADIO_LINK"|"DIVIDER")} FormType */
 export const FormTypeEnum = Object.freeze({
