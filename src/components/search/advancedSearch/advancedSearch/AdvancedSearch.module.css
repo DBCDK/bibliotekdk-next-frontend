@@ -50,7 +50,18 @@
   display: flex;
 }
 
-@media (max-width: 768px) {
+/*
+NOTES
+463- Brug mobil-layout
+464+ Tekst til “Ryd” og “Hjælp” skal bruge desktopversionen.
+640+ Index-dropdowns og søgefelt skal ligge på samme linje.
+768+ Avanceret søgning + links + luk placeres som på desktop
+992+ Brug desktop-layout med ekstra (tom) spalte i venstre side og synlig topbar med simpleSearch, log ind etc.
+ */
+@media (min-width: 640px) {
+}
+
+@media (max-width: 463px) {
   .buttonContainer {
     justify-content: start;
   }
