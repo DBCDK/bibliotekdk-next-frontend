@@ -6,6 +6,9 @@ import Section from "@/components/base/section";
 import styles from "./Searchbar.module.css";
 import { MobileMaterialSelect } from "@/components/search/select";
 import React from "react";
+import Link from "@/components/base/link";
+import Translate from "@/components/base/translate";
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
 /**
  * A Fake Search Input Field
@@ -20,7 +23,7 @@ import React from "react";
 export default function Searchbar({ q }) {
   // modal
   const modal = useModal();
-
+  const { setShowPopover } = useAdvancedSearchContext();
   return (
     <div className={styles.wrap}>
       <Section
@@ -33,6 +36,20 @@ export default function Searchbar({ q }) {
             <Row>
               <Col xs={12}>
                 <FakeSearchInput q={q} />
+                <div className={styles.advancedSearchContainer}>
+                  <Link
+                    border={{
+                      top: false,
+                      bottom: {
+                        keepVisible: true,
+                      },
+                    }}
+                    onClick={() => setShowPopover(true)}
+                  >
+                    {Translate({ context: "search", label: "advancedSearch" })}
+                  </Link>
+                </div>
+
                 <div>
                   <MobileMaterialSelect
                     onFilterClick={() => modal.push("filter", { q })}
