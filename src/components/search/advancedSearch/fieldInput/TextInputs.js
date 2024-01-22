@@ -29,6 +29,7 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
     removeInputField,
     handleLogicalOperatorChange,
     workType,
+    showPopover,
   } = useAdvancedSearchContext();
   //labels to show in SearchIndexDropdown
   const labels = workTypesLabels[workType].map((el) => el.index);
@@ -105,6 +106,7 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
                   doAdvancedSearch();
                 }
               }}
+              disabled={!showPopover}
             />
           </Suggester>
         </div>
