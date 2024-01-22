@@ -29,6 +29,7 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
     removeInputField,
     handleLogicalOperatorChange,
     workType,
+    showPopover
   } = useAdvancedSearchContext();
   //labels to show in SearchIndexDropdown
   const labels = workTypesLabels[workType].map((el) => el.index);
@@ -60,6 +61,9 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
     );
   }, [data]);
 
+  if(!showPopover){
+    return null;
+  }
   return (
     <div key={key} dataCy={`advanced-search-inputfield-${index}`}>
       {!isFirstItem && (
