@@ -29,6 +29,7 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
     removeInputField,
     handleLogicalOperatorChange,
     workType,
+    showPopover,
   } = useAdvancedSearchContext();
   //labels to show in SearchIndexDropdown
   const labels = workTypesLabels[workType].map((el) => el.index);
@@ -97,6 +98,7 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
               onChange={(e) => handleInputFieldChange(index, e.target.value)}
               placeholder={placeholder}
               overrideValueControl={true}
+              tabIndex={showPopover ? "0" : "-1"}
               // onKeyDown overrides suggesters onKeyDown, and we don't want that
               onKeyPress={(e) => {
                 if (e.key === "Enter") {
