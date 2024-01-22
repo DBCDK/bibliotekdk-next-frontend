@@ -113,11 +113,14 @@
   margin-bottom: var(--pt2);
 }
 
-@media (max-width: 767px) {
+@media (max-width: 640px) {
   .inputContainer {
-    /*border: 2px solid green;*/
+    border: 1px solid red;
     flex-wrap: wrap;
   }
+}
+
+@media (max-width: 463px) {
   .suggesterContainer {
     margin-left: 0;
     margin-top: var(--pt1);
