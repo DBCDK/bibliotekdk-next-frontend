@@ -65,8 +65,8 @@ function Input({
   delete props.skeleton;
   delete props.invalidClass;
   delete props.onMount;
-console.log('tabIndex !== undefined ',tabIndex !== undefined )
-console.log('tabIndex  ',tabIndex)
+  console.log("tabIndex !== undefined ", tabIndex !== undefined);
+  console.log("tabIndex  ", tabIndex);
 
   return (
     <input
@@ -80,7 +80,7 @@ console.log('tabIndex  ',tabIndex)
       disabled={disabled}
       readOnly={readOnly}
       data-cy={dataCy}
-       tabIndex={ tabIndex !== undefined ? tabIndex : disabled ? "-1" : tabIndex}
+      tabIndex={tabIndex !== undefined ? tabIndex : disabled ? "-1" : tabIndex}
       onBlur={(e) => onBlur && onBlur(e)}
       onChange={(e) => {
         onChange && onChange(e);
