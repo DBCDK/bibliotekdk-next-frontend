@@ -49,7 +49,6 @@ function LinkmePhp() {
   const router = useRouter();
   const isOclc = router?.query?.["ref"] === "worldcat";
 
-  // const hasCcl = true;
   const { data, isLoading } = useData(
     router?.query?.["rec.id"]
       ? pidToWorkId({ pid: router.query["rec.id"] })
