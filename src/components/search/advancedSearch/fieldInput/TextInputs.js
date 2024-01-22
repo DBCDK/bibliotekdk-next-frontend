@@ -29,7 +29,7 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
     removeInputField,
     handleLogicalOperatorChange,
     workType,
-    showPopover
+    showPopover,
   } = useAdvancedSearchContext();
   //labels to show in SearchIndexDropdown
   const labels = workTypesLabels[workType].map((el) => el.index);
@@ -61,7 +61,7 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
     );
   }, [data]);
 
-  if(!showPopover){
+  if (!showPopover) {
     return null;
   }
   return (
