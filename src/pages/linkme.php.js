@@ -142,8 +142,6 @@ LinkmePhp.getInitialProps = async (ctx) => {
       if (hasCcl) {
         path = `${basePath}${ctx.req["url"]}`;
       }
-      ctx.res.setHeader("Content-Type", "text/plain");
-      ctx.res.setHeader("Cache-Control", "no-cache");
       ctx.res.writeHead(301, { Location: path });
       ctx.res.end();
     }
