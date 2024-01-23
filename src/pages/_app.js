@@ -50,6 +50,7 @@ import { enableDebug } from "@/lib/api/api";
 
 import ErrorPage from "./500";
 import { BookmarkSyncProvider } from "@/components/hooks/useBookmarks";
+import useIsOnline from "@/components/hooks/useIsOnline";
 
 // kick off the polyfill!
 if (typeof window !== "undefined") {
@@ -100,6 +101,7 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
   // sync pageProps
   pageProps = { ...pageProps, ..._pageProps };
 
+  const isOnline = useIsOnline();
   setLocale(router.locale);
   // pass translations to Translate component - it might be false -
   // let Translate component handle whatever could be wrong with the result
@@ -134,7 +136,7 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
           // Re-fetch session every 5 minutes
           refetchInterval={5 * 60}
           // Re-fetches session when window is focused
-          refetchOnWindowFocus={true}
+          refetchOnWindowFocus={isOnline}
         >
           <Modal.Provider
             router={{
