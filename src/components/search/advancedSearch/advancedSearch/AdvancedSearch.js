@@ -17,7 +17,6 @@ import { convertStateToCql } from "@/components/search/advancedSearch/utils";
 import IconButton from "@/components/base/iconButton/IconButton";
 import { getHelpUrl } from "@/lib/utils";
 import cx from "classnames";
-import { backgroundColor } from "@/components/base/section/Section.stories";
 
 /**
  * Contains advanced search fields
@@ -85,13 +84,7 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
                 {Translate({ context: "search", label: "advancedSearch" })}
               </Title>
             </Col>
-            <Col
-              // lg={{ offset: 0, span: 3 }}
-              lg={5}
-              md={6}
-              // sm={6}
-              className={styles.buttonContainer}
-            >
+            <Col lg={5} md={6} className={styles.buttonContainer}>
               <Text type="text3" tag="span">
                 <Link
                   dataCy="edit-in-cql"
@@ -142,10 +135,6 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
                 {Translate({ context: "general", label: "close" })}
               </IconButton>
             </Col>
-
-            {/*<Col md={2} sm={12} className={styles.closeContainer}>*/}
-
-            {/*</Col>*/}
           </Row>
           <Row>
             <Col lg={{ offset: 3, span: 4 }} md={6}>

@@ -1,12 +1,10 @@
 .inputContainer {
   display: flex;
-  /*max-width: 584px;*/
 }
 
 .suggesterContainer {
   margin-bottom: var(--pt2);
   flex-grow: 2;
-  /*max-width: 500px;*/
   height: var(--pt5);
   margin-left: var(--pt1);
 }
