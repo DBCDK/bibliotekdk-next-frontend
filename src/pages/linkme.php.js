@@ -136,15 +136,14 @@ LinkmePhp.getInitialProps = async (ctx) => {
     const hasCql = !!ctx.query["cql"];
     const hasCcl = !!ctx.query["ccl"];
     const isOclc = ctx.query["ref"] === "worldcat";
-    const basePath = "https://old.bibliotek.dk/linkme.php?";
+    const basePath = "https://old.bibliotek.dk/";
     let path;
     if (!isOclc && (hasCql || hasCcl)) {
       if (hasCcl) {
-        path = `${basePath}ccl=${ctx.query["ccl"]}`;
+        path = `${basePath}${ctx.req["url"]}`;
       }
-      if (hasCql) {
-        path = `${basePath}cql=${ctx.query["cql"]}`;
-      }
+      ctx.res.setHeader("Content-Type", "text/plain");
+      ctx.res.setHeader("Cache-Control", "no-cache");
       ctx.res.writeHead(301, { Location: path });
       ctx.res.end();
     }
