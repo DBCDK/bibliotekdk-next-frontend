@@ -189,7 +189,7 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
               </Text>
               <Text type="text3" tag="span" className={styles.helpLink}>
                 <Link
-                  href={getHelpUrl("saadan-soeger-du-i-bibliotek-dk", "42")}
+                  href={getHelpUrl("soegning-baade-enkel-og-avanceret", "179")}
                   border={{
                     top: false,
                     bottom: {
