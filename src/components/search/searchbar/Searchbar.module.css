@@ -18,3 +18,9 @@
     display: none;
   }
 }
+
+.advancedSearchContainer {
+  display: flex;
+  flex-direction: row-reverse;
+  padding: var(--pt2) 0;
+}

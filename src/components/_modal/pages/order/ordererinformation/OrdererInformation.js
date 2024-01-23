@@ -13,11 +13,9 @@ import { validateEmail } from "@/utils/validateEmail";
 export function OrdererInformation({
   isLoadingBranches,
   name,
-  hasAuthMail,
   email,
   lockedMessage,
   invalidClass,
-  isLoading,
   onMailChange,
   message,
   validClass,
@@ -56,11 +54,9 @@ export function OrdererInformation({
             label: "email-placeholder",
           })}
           invalidClass={invalidClass}
-          disabled={isLoading || hasAuthMail}
           value={email?.value || ""}
           id="order-user-email"
           onChange={onMailChange}
-          readOnly={isLoading || hasAuthMail}
           skeleton={isLoadingBranches && !email}
         />
 

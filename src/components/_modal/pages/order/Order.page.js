@@ -160,7 +160,8 @@ function Order({
   }, [accessTypeInfo]);
 
   const validated = useMemo(() => {
-    const pincodeIsRequired = shouldRequirePincode(pickupBranch);
+    const pincodeIsRequired =
+      !availableAsDigitalCopy && shouldRequirePincode(pickupBranch);
 
     const hasMail = !!mail?.valid?.status;
     const hasPincode = pincodeIsRequired ? !!pincode : true;
@@ -208,6 +209,7 @@ function Order({
     pid,
     pickupBranch,
     hasValidationErrors,
+    availableAsDigitalCopy,
     context?.periodicaForm?.publicationDateOfComponent,
   ]);
 
@@ -276,7 +278,11 @@ function Order({
         setMail={setMail}
         email={mail}
       />
-      <Pincode validated={validated} onChange={(val) => setPincode(val)} />
+      <Pincode
+        validated={validated}
+        onChange={(val) => setPincode(val)}
+        hide={availableAsDigitalCopy}
+      />
       <OrderConfirmationButton
         email={mail}
         context={context}
