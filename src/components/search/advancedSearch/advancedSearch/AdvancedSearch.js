@@ -76,137 +76,133 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
       aria-expanded={ariaExpanded}
       className={cx(styles.background, className)}
     >
-      {showPopover && (
-        <Container fluid className={styles.container}>
-          <Row className={styles.topContainer}>
-            <Col lg={{ offset: 3, span: 4 }} md={6}>
-              <Title type="title3">
-                {Translate({ context: "search", label: "advancedSearch" })}
-              </Title>
-            </Col>
-            <Col lg={5} md={6} className={styles.buttonContainer}>
-              <Text type="text3" tag="span">
-                <Link
-                  dataCy="edit-in-cql"
-                  onClick={() => {
-                    setShowCqlEditor(!showCqlEditor);
-                  }}
-                  border={{
-                    top: false,
-                    bottom: {
-                      keepVisible: true,
-                    },
-                  }}
-                >
-                  {Translate({
-                    context: "search",
-                    label: showCqlEditor
-                      ? "showInputFields"
-                      : "editInCqlEditor",
-                  })}
-                </Link>
-              </Text>
-
-              <Text type="text3" tag="span">
-                <Link
-                  onClick={() => setTimeout(() => setShowPopover(false), 100)}
-                  href="/avanceret/soegehistorik"
-                  border={{
-                    top: false,
-                    bottom: {
-                      keepVisible: true,
-                    },
-                  }}
-                >
-                  {Translate({
-                    context: "search",
-                    label: "searchHistory",
-                  })}
-                </Link>
-              </Text>
-
-              <IconButton
-                className={styles.closeContainer}
-                data-cy="advanced-search-close-button"
-                icon="close"
-                onClick={() => setShowPopover(false)}
-                keepUnderline={true}
-              >
-                {Translate({ context: "general", label: "close" })}
-              </IconButton>
-            </Col>
-          </Row>
-          <Row>
-            <Col lg={{ offset: 3, span: 4 }} md={6}>
-              {/**Insert material type select here */}
-            </Col>
-            {showCqlEditor ? (
-              <Col lg={{ offset: 3, span: 4 }} md={6}>
-                <CqlTextArea
-                  textAreaRef={textAreaRef}
-                  doAdvancedSearch={doAdvancedSearch}
-                />
-              </Col>
-            ) : (
-              <Col lg={{ offset: 3, span: 9 }} md={12}>
-                <>
-                  <TextInputs doAdvancedSearch={doAdvancedSearch} />
-                  <DropdownInputs />
-                </>
-              </Col>
-            )}
-          </Row>
-          <Row className={styles.buttonRow}>
-            <Col
-              className={styles.button_group}
-              lg={{ offset: 3, span: 9 }}
-              md={12}
-            >
-              <Button
-                className={styles.button}
-                size="medium"
-                onClick={doAdvancedSearch}
+      <Container fluid className={styles.container}>
+        <Row className={styles.topContainer}>
+          <Col lg={{ offset: 3, span: 4 }} md={6}>
+            <Title type="title3">
+              {Translate({ context: "search", label: "advancedSearch" })}
+            </Title>
+          </Col>
+          <Col lg={5} md={6} className={styles.buttonContainer}>
+            <Text type="text3" tag="span">
+              <Link
+                dataCy="edit-in-cql"
+                onClick={() => {
+                  setShowCqlEditor(!showCqlEditor);
+                }}
+                border={{
+                  top: false,
+                  bottom: {
+                    keepVisible: true,
+                  },
+                }}
               >
                 {Translate({
                   context: "search",
-                  label: "advancedSearch_button",
+                  label: showCqlEditor ? "showInputFields" : "editInCqlEditor",
                 })}
-              </Button>
-              <Text type="text3">
-                <Link
-                  dataCy="advanced-search-clear-search"
-                  border={{ bottom: { keepVisible: true } }}
-                  onClick={() => {
-                    resetObjectState();
-                    router.push({
-                      pathname: router.pathname,
-                      ...(showCqlEditor && { query: { mode: "cql" } }),
-                    });
-                  }}
-                >
-                  {Translate({ context: "search", label: "clearSearch" })}
-                </Link>
-              </Text>
-              <Text type="text3" tag="span" className={styles.helpLink}>
-                <Link
-                  href={getHelpUrl("soegning-baade-enkel-og-avanceret", "179")}
-                  border={{
-                    top: false,
-                    bottom: {
-                      keepVisible: true,
-                    },
-                  }}
-                  target="_blank"
-                >
-                  {Translate({ context: "search", label: "helpAndGuidance" })}
-                </Link>
-              </Text>
-            </Col>
+              </Link>
+            </Text>
 
-            <Col md={4} sm={12} className={styles.helpLink}></Col>
-          </Row>
-        </Container>
-      )}
+            <Text type="text3" tag="span">
+              <Link
+                onClick={() => setTimeout(() => setShowPopover(false), 100)}
+                href="/avanceret/soegehistorik"
+                border={{
+                  top: false,
+                  bottom: {
+                    keepVisible: true,
+                  },
+                }}
+              >
+                {Translate({
+                  context: "search",
+                  label: "searchHistory",
+                })}
+              </Link>
+            </Text>
+
+            <IconButton
+              className={styles.closeContainer}
+              data-cy="advanced-search-close-button"
+              icon="close"
+              onClick={() => setShowPopover(false)}
+              keepUnderline={true}
+            >
+              {Translate({ context: "general", label: "close" })}
+            </IconButton>
+          </Col>
+        </Row>
+        <Row>
+          <Col lg={{ offset: 3, span: 4 }} md={6}>
+            {/**Insert material type select here */}
+          </Col>
+          {showCqlEditor ? (
+            <Col lg={{ offset: 3, span: 4 }} md={6}>
+              <CqlTextArea
+                textAreaRef={textAreaRef}
+                doAdvancedSearch={doAdvancedSearch}
+              />
+            </Col>
+          ) : (
+            <Col lg={{ offset: 3, span: 9 }} md={12}>
+              <>
+                <TextInputs doAdvancedSearch={doAdvancedSearch} />
+                <DropdownInputs />
+              </>
+            </Col>
+          )}
+        </Row>
+        <Row className={styles.buttonRow}>
+          <Col
+            className={styles.button_group}
+            lg={{ offset: 3, span: 9 }}
+            md={12}
+          >
+            <Button
+              className={styles.button}
+              size="medium"
+              onClick={doAdvancedSearch}
+            >
+              {Translate({
+                context: "search",
+                label: "advancedSearch_button",
+              })}
+            </Button>
+            <Text type="text3">
+              <Link
+                dataCy="advanced-search-clear-search"
+                border={{ bottom: { keepVisible: true } }}
+                onClick={() => {
+                  resetObjectState();
+                  router.push({
+                    pathname: router.pathname,
+                    ...(showCqlEditor && { query: { mode: "cql" } }),
+                  });
+                }}
+              >
+                {Translate({ context: "search", label: "clearSearch" })}
+              </Link>
+            </Text>
+            <Text type="text3" tag="span" className={styles.helpLink}>
+              <Link
+                href={getHelpUrl("soegning-baade-enkel-og-avanceret", "179")}
+                border={{
+                  top: false,
+                  bottom: {
+                    keepVisible: true,
+                  },
+                }}
+                target="_blank"
+              >
+                {Translate({ context: "search", label: "helpAndGuidance" })}
+              </Link>
+            </Text>
+          </Col>
+
+          <Col md={4} sm={12} className={styles.helpLink}></Col>
+        </Row>
+      </Container>
     </div>
   );
 }
