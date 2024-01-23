@@ -139,9 +139,8 @@ LinkmePhp.getInitialProps = async (ctx) => {
     const basePath = "https://old.bibliotek.dk/";
     let path;
     if (!isOclc && (hasCql || hasCcl)) {
-      if (hasCcl) {
-        path = `${basePath}${ctx.req["url"]}`;
-      }
+      path = `${basePath}${ctx.req["url"]}`;
+
       ctx.res.writeHead(301, { Location: path });
       ctx.res.end();
     }
