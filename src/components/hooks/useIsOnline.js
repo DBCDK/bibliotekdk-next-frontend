@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 
 export default function useIsOnline() {
-  const [_, refresh] = useState();
+  const state = useState();
 
   useEffect(() => {
     function onChange() {
-      refresh({});
+      state[1]({});
     }
     window.addEventListener("offline", onChange);
     window.addEventListener("online", onChange);
