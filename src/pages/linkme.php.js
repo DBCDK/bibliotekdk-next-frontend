@@ -132,14 +132,13 @@ LinkmePhp.getInitialProps = async (ctx) => {
     ctx.res.writeHead(301, { Location: path });
     ctx.res.end();
   } else {
-    // we have no data - if ccl is given we throw it back at old.bibliotek
+    // we have no data - if ccl or cql is given we throw it back at old.bibliotek
     const hasCql = !!ctx.query["cql"];
     const hasCcl = !!ctx.query["ccl"];
     const isOclc = ctx.query["ref"] === "worldcat";
     const basePath = "https://old.bibliotek.dk/";
-    let path;
     if (!isOclc && (hasCql || hasCcl)) {
-      path = `${basePath}${ctx.req["url"]}`;
+      const path = `${basePath}${ctx.req["url"]}`;
 
       ctx.res.writeHead(301, { Location: path });
       ctx.res.end();
