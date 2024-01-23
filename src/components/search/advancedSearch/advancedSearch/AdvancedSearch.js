@@ -17,6 +17,7 @@ import { convertStateToCql } from "@/components/search/advancedSearch/utils";
 import IconButton from "@/components/base/iconButton/IconButton";
 import { getHelpUrl } from "@/lib/utils";
 import cx from "classnames";
+import { backgroundColor } from "@/components/base/section/Section.stories";
 
 /**
  * Contains advanced search fields
@@ -79,12 +80,18 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
       {showPopover && (
         <Container fluid className={styles.container}>
           <Row className={styles.topContainer}>
-            <Col md={{ offset: 3, span: 4 }} sm={12}>
+            <Col lg={{ offset: 3, span: 4 }} md={6}>
               <Title type="title3">
                 {Translate({ context: "search", label: "advancedSearch" })}
               </Title>
             </Col>
-            <Col md={3} sm={12} className={styles.buttonContainer}>
+            <Col
+              // lg={{ offset: 0, span: 3 }}
+              lg={5}
+              md={6}
+              // sm={6}
+              className={styles.buttonContainer}
+            >
               <Text type="text3" tag="span">
                 <Link
                   dataCy="edit-in-cql"
@@ -124,10 +131,9 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
                   })}
                 </Link>
               </Text>
-            </Col>
 
-            <Col md={2} sm={12} className={styles.closeContainer}>
               <IconButton
+                className={styles.closeContainer}
                 data-cy="advanced-search-close-button"
                 icon="close"
                 onClick={() => setShowPopover(false)}
@@ -136,20 +142,24 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
                 {Translate({ context: "general", label: "close" })}
               </IconButton>
             </Col>
+
+            {/*<Col md={2} sm={12} className={styles.closeContainer}>*/}
+
+            {/*</Col>*/}
           </Row>
           <Row>
-            <Col md={3} sm={12}>
+            <Col lg={{ offset: 3, span: 4 }} md={6}>
               {/**Insert material type select here */}
             </Col>
             {showCqlEditor ? (
-              <Col md={7} sm={12}>
+              <Col lg={{ offset: 3, span: 4 }} md={6}>
                 <CqlTextArea
                   textAreaRef={textAreaRef}
                   doAdvancedSearch={doAdvancedSearch}
                 />
               </Col>
             ) : (
-              <Col md={9} sm={12}>
+              <Col lg={{ offset: 3, span: 9 }} md={12}>
                 <>
                   <TextInputs doAdvancedSearch={doAdvancedSearch} />
                   <DropdownInputs />
@@ -160,8 +170,8 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
           <Row className={styles.buttonRow}>
             <Col
               className={styles.button_group}
-              md={{ offset: 3, span: 5 }}
-              sm={12}
+              lg={{ offset: 3, span: 9 }}
+              md={12}
             >
               <Button
                 className={styles.button}

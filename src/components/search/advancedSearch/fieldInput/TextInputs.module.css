@@ -1,16 +1,14 @@
 .inputContainer {
   display: flex;
-  max-width: 584px;
+  /*max-width: 584px;*/
 }
 
 .suggesterContainer {
   margin-bottom: var(--pt2);
   flex-grow: 2;
-  max-width: 672px;
+  /*max-width: 500px;*/
   height: var(--pt5);
   margin-left: var(--pt1);
-
-  border: 3px solid purple;
 }
 
 .select {
@@ -115,11 +113,42 @@
   margin-bottom: var(--pt2);
 }
 
-/* 463px up */
-@media (min-width: 463px) {
+.trashAndSuggester {
+  display: flex;
+  width: 100%;
+  margin-right: var(--pt2);
+}
+
+/* 640px up */
+@media (min-width: 640px) {
   .inputContainer {
     display: flex;
-    border: 1px solid red;
+  }
+
+  .suggesterContainer {
+    display: flex;
+  }
+}
+
+@media (min-width: 768px) {
+  .trashAndSuggester {
+    display: flex;
+    width: 100%;
+    margin-right: var(--pt2);
+    max-width: 460px;
+  }
+}
+
+/* 640px down */
+@media (max-width: 640px) {
+  .inputContainer {
+    display: block;
+  }
+
+  .suggesterContainer {
+    margin-left: 0;
+    margin-top: var(--pt1);
+    display: block;
   }
 }
 
@@ -131,9 +160,7 @@
   }
 
   .inputContainer {
-    display: flex;
     flex-wrap: wrap;
-    border: 3px solid cyan;
   }
 
   .suggester input {
