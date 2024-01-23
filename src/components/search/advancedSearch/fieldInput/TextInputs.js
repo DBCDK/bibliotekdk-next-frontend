@@ -107,17 +107,17 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
               }}
             />
           </Suggester>
-          {!isFirstItem && (
-            <Icon
-              className={styles.removeIcon}
-              dataCy={"advanced-search-remove-input"}
-              onClick={() => removeInputField(index)}
-              size={{ w: 3, h: "auto" }}
-              alt=""
-              src={"trash-2.svg"}
-            />
-          )}
         </div>
+        {!isFirstItem && (
+          <Icon
+            className={styles.removeIcon}
+            dataCy={"advanced-search-remove-input"}
+            onClick={() => removeInputField(index)}
+            size={{ w: 3, h: "auto" }}
+            alt=""
+            src={"trash-2.svg"}
+          />
+        )}
       </div>
     </div>
   );

@@ -64,7 +64,8 @@ NOTES
   }
 }
 
-@media (max-width: 463px) {
+/* 640 and down */
+@media (max-width: 640px) {
   .buttonContainer {
     justify-content: start;
   }

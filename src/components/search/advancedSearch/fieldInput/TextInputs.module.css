@@ -9,6 +9,8 @@
   max-width: 672px;
   height: var(--pt5);
   margin-left: var(--pt1);
+
+  border: 3px solid purple;
 }
 
 .select {
@@ -113,17 +115,25 @@
   margin-bottom: var(--pt2);
 }
 
-@media (max-width: 640px) {
+/* 463px up */
+@media (min-width: 463px) {
   .inputContainer {
+    display: flex;
     border: 1px solid red;
-    flex-wrap: wrap;
   }
 }
 
+/* 463 px down */
 @media (max-width: 463px) {
   .suggesterContainer {
     margin-left: 0;
     margin-top: var(--pt1);
+  }
+
+  .inputContainer {
+    display: flex;
+    flex-wrap: wrap;
+    border: 3px solid cyan;
   }
 
   .suggester input {
