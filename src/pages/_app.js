@@ -130,10 +130,11 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
           session={
             router.query.disablePagePropsSession ? undefined : pageProps.session
           }
-          options={{
-            clientMaxAge: 60, // Re-fetch session if cache is older than 60 seconds
-            keepAlive: 5 * 60, // Send keepAlive message every 5 minutes
-          }}
+          refetchWhenOffline={false}
+          // Re-fetch session every 5 minutes
+          refetchInterval={5 * 60}
+          // Re-fetches session when window is focused
+          refetchOnWindowFocus={true}
         >
           <Modal.Provider
             router={{
