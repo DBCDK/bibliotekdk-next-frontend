@@ -48,6 +48,7 @@ function getOclcId(ccl) {
 function LinkmePhp() {
   const router = useRouter();
   const isOclc = router?.query?.["ref"] === "worldcat";
+
   const { data, isLoading } = useData(
     router?.query?.["rec.id"]
       ? pidToWorkId({ pid: router.query["rec.id"] })
@@ -63,10 +64,12 @@ function LinkmePhp() {
     return <div>Redirecting ... </div>;
   }
 
-  if (data === null || data?.error) {
+  // client side - no data .. no error .. -> not found
+  if (!data || data?.error) {
     return <Custom404 />;
   }
 
+  // we have ccl and recognize it as something we can handle :)
   // make a path to redirect to
   const workId = data?.work?.workId;
   const title = data?.work?.titles?.main?.[0];
@@ -128,6 +131,18 @@ LinkmePhp.getInitialProps = async (ctx) => {
     const path = `/materiale/${title_author}/${workId}#${ctx.query["rec.id"]}`;
     ctx.res.writeHead(301, { Location: path });
     ctx.res.end();
+  } else {
+    // we have no data - if ccl or cql is given we throw it back at old.bibliotek
+    const hasCql = !!ctx.query["cql"];
+    const hasCcl = !!ctx.query["ccl"];
+    const isOclc = ctx.query["ref"] === "worldcat";
+    const basePath = "https://old.bibliotek.dk/";
+    if (!isOclc && (hasCql || hasCcl)) {
+      const path = `${basePath}${ctx.req["url"]}`;
+
+      ctx.res.writeHead(301, { Location: path });
+      ctx.res.end();
+    }
   }
 
   return serverQueries;

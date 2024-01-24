@@ -40,6 +40,7 @@
   align-self: start;
   align-items: center;
   justify-content: end;
+  transition: 250ms;
 }
 
 .helpLink {
@@ -50,6 +51,15 @@
   display: flex;
 }
 
+/*
+NOTES
+463- Brug mobil-layout
+464+ Tekst til “Ryd” og “Hjælp” skal bruge desktopversionen.
+640+ Index-dropdowns og søgefelt skal ligge på samme linje.
+768+ Avanceret søgning + links + luk placeres som på desktop
+992+ Brug desktop-layout med ekstra (tom) spalte i venstre side og synlig topbar med simpleSearch, log ind etc.
+ */
+/* 640 and down */
 @media (max-width: 768px) {
   .buttonContainer {
     justify-content: start;
@@ -57,14 +67,19 @@
 
   .closeContainer {
     position: absolute;
+    right: var(--pt2);
+    top: var(--pt3);
   }
+}
 
-  .closeContainer i {
-    position: relative;
-    top: 3px;
+/* 330px down (very small devices) */
+@media (max-width: 330px) {
+  .closeContainer {
+    position: unset;
   }
-  .hide {
-    display: none;
-    transition: 1s;
-  }
+}
+
+.hideCloseContainer {
+  visibility: hidden;
+  transition: 250ms;
 }

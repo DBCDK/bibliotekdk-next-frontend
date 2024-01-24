@@ -29,6 +29,7 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
     removeInputField,
     handleLogicalOperatorChange,
     workType,
+    showPopover,
   } = useAdvancedSearchContext();
   //labels to show in SearchIndexDropdown
   const labels = workTypesLabels[workType].map((el) => el.index);
@@ -75,49 +76,52 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
           className={styles.select}
           index={index}
         />
-        <div className={`${styles.suggesterContainer} `}>
-          <Suggester
-            id={key}
-            data={suggestions}
-            onSelect={(selectValue) => {
-              setTimeout(() => {
-                // onSelect should be called after onChange. Otherwise onChange wil overrite the selected value
-                handleInputFieldChange(index, selectValue);
-              }, 0);
-              document?.getElementById(inputId).blur();
-            }}
-            onClear={() => handleInputFieldChange(index, "")}
-            className={styles.suggester}
-            initialValue={`${fieldValue.value}`}
-          >
-            <Input
-              id={inputId}
-              className={styles.suggesterInput}
-              value={fieldValue?.value}
-              onChange={(e) => handleInputFieldChange(index, e.target.value)}
-              placeholder={placeholder}
-              overrideValueControl={true}
-              // onKeyDown overrides suggesters onKeyDown, and we don't want that
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-
-                  doAdvancedSearch();
-                }
+        <div className={styles.trashAndSuggester}>
+          <div className={`${styles.suggesterContainer} `}>
+            <Suggester
+              id={key}
+              data={suggestions}
+              onSelect={(selectValue) => {
+                setTimeout(() => {
+                  // onSelect should be called after onChange. Otherwise onChange wil overrite the selected value
+                  handleInputFieldChange(index, selectValue);
+                }, 0);
+                document?.getElementById(inputId).blur();
               }}
+              onClear={() => handleInputFieldChange(index, "")}
+              className={styles.suggester}
+              initialValue={`${fieldValue.value}`}
+            >
+              <Input
+                id={inputId}
+                className={styles.suggesterInput}
+                value={fieldValue?.value}
+                onChange={(e) => handleInputFieldChange(index, e.target.value)}
+                placeholder={placeholder}
+                overrideValueControl={true}
+                tabIndex={showPopover ? "0" : "-1"}
+                // onKeyDown overrides suggesters onKeyDown, and we don't want that
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+
+                    doAdvancedSearch();
+                  }
+                }}
+              />
+            </Suggester>
+          </div>
+          {!isFirstItem && (
+            <Icon
+              className={styles.removeIcon}
+              dataCy={"advanced-search-remove-input"}
+              onClick={() => removeInputField(index)}
+              size={{ w: 3, h: "auto" }}
+              alt=""
+              src={"trash-2.svg"}
             />
-          </Suggester>
+          )}
         </div>
-        {!isFirstItem && (
-          <Icon
-            className={styles.removeIcon}
-            dataCy={"advanced-search-remove-input"}
-            onClick={() => removeInputField(index)}
-            size={{ w: 3, h: "auto" }}
-            alt=""
-            src={"trash-2.svg"}
-          />
-        )}
       </div>
     </div>
   );
