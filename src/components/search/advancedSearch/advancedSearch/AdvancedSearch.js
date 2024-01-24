@@ -34,7 +34,6 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
     cqlFromUrl,
     fieldSearchFromUrl,
     setShowPopover,
-    showPopover,
     stateToString,
     resetObjectState,
   } = useAdvancedSearchContext();
