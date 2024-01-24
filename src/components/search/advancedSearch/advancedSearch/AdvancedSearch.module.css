@@ -80,6 +80,6 @@ NOTES
 }
 
 .hideCloseContainer {
-  visibility: hidden !important;
+  visibility: hidden;
   transition: 250ms;
 }
