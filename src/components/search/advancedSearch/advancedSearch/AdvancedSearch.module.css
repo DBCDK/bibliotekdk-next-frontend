@@ -40,6 +40,7 @@
   align-self: start;
   align-items: center;
   justify-content: end;
+  transition: 250ms;
 }
 
 .helpLink {
@@ -76,4 +77,9 @@ NOTES
   .closeContainer {
     position: unset;
   }
+}
+
+.hideCloseContainer {
+  visibility: hidden !important;
+  transition: 250ms;
 }

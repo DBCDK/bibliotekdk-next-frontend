@@ -34,6 +34,7 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
     cqlFromUrl,
     fieldSearchFromUrl,
     setShowPopover,
+    showPopover,
     stateToString,
     resetObjectState,
   } = useAdvancedSearchContext();
@@ -122,7 +123,9 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
             </Text>
 
             <IconButton
-              className={styles.closeContainer}
+              className={cx(styles.closeContainer, {
+                [styles.hideCloseContainer]: !showPopover,
+              })}
               data-cy="advanced-search-close-button"
               icon="close"
               onClick={() => setShowPopover(false)}
