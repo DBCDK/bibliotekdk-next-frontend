@@ -19,11 +19,8 @@ function matomoWaitForTracker() {
 function consentSet() {
   if (Cookiebot.consent.statistics) {
     _paq.push(["setCookieConsentGiven"]);
-    _paq.push(["setConsentGiven"]);
-    _paq.push(["trackPageView"]);
   } else {
     _paq.push(["forgetCookieConsentGiven"]);
-    _paq.push(["forgetConsentGiven"]);
   }
 }
 
