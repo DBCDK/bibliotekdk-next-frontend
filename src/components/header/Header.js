@@ -35,7 +35,6 @@ import { openMobileSuggester } from "@/components/header/suggester/Suggester";
 import styles from "./Header.module.css";
 import { useRouter } from "next/router";
 import { SuggestTypeEnum } from "@/lib/enums";
-import isEqual from "lodash/isEqual";
 import isEmpty from "lodash/isEmpty";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { openLoginModal } from "../_modal/pages/login/utils";
@@ -89,7 +88,7 @@ export function Header({
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
 
-  const { q, setQ, setQuery, getQuery } = useQ();
+  const { q, setQ, setQuery } = useQ();
 
   const query = q[SuggestTypeEnum.ALL];
 

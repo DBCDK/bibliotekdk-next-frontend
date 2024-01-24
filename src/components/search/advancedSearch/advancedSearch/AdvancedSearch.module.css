@@ -76,8 +76,4 @@ NOTES
   .closeContainer {
     position: unset;
   }
-  .hide {
-    display: none;
-    transition: 1s;
-  }
 }
