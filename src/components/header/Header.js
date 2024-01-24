@@ -175,18 +175,13 @@ export function Header({
 
     const newQ = isEmpty(value) ? { ...q, all: "" } : { ...q, all: value };
 
-    if (
-      !isEqual(newQ, getQuery()) ||
-      !router?.pathname?.startsWith?.("/find")
-    ) {
-      setQuery({
-        include: newQ,
-        exclude: ["page"],
-        pathname: "/find",
-        query: type,
-        method,
-      });
-    }
+    setQuery({
+      include: newQ,
+      exclude: ["page"],
+      pathname: "/find",
+      query: type,
+      method,
+    });
 
     document.activeElement.blur();
 
