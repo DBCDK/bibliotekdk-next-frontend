@@ -22,6 +22,8 @@ function DropdownUnit({ items, indexName }) {
     label: `all_${indexName}`,
   });
 
+  const advancedSearchContext = useAdvancedSearchContext();
+
   return (
     <div className={styles.dropdown_with_title}>
       <Text type="text3">{indexTitle}</Text>
@@ -30,6 +32,7 @@ function DropdownUnit({ items, indexName }) {
         indexName={indexName}
         indexPlaceholder={indexPlaceholder}
         menuItems={items}
+        advancedSearchContext={advancedSearchContext}
       />
     </div>
   );

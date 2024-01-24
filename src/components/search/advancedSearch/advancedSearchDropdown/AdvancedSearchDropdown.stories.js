@@ -2,6 +2,7 @@ import { StoryDescription, StoryTitle } from "@/storybook";
 import AdvancedSearchDropdown from "@/components/search/advancedSearch/advancedSearchDropdown/AdvancedSearchDropdown";
 import { FormTypeEnum } from "@/components/search/advancedSearch/advancedSearchHelpers/helperComponents/HelperComponents";
 import { getNameForActionLinkContainer } from "@/components/search/advancedSearch/advancedSearchHelpers/dummy__default_advanced_search_fields";
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
 const exportedObject = {
   title: "AdvancedSearch/AdvancedSearchDropdown",
@@ -43,6 +44,8 @@ export function AdvancedSearchDropdownOnlyCheckboxes() {
     },
   ];
 
+  const advancedSearchContext = useAdvancedSearchContext();
+
   return (
     <div>
       <StoryTitle>AdvancedSearchDropdown - {storyTitle}</StoryTitle>
@@ -54,6 +57,7 @@ export function AdvancedSearchDropdownOnlyCheckboxes() {
         indexName={storyTitle}
         indexPlaceholder={storyTitle}
         menuItems={indices}
+        advancedSearchContext={advancedSearchContext}
       />
     </div>
   );
@@ -92,6 +96,8 @@ export function AdvancedSearchDropdownOnlyRadioButtons() {
     },
   ];
 
+  const advancedSearchContext = useAdvancedSearchContext();
+
   return (
     <div>
       <StoryTitle>AdvancedSearchDropdown - {storyTitle}</StoryTitle>
@@ -103,6 +109,7 @@ export function AdvancedSearchDropdownOnlyRadioButtons() {
         indexName={storyTitle}
         indexPlaceholder={storyTitle}
         menuItems={indices}
+        advancedSearchContext={advancedSearchContext}
       />
     </div>
   );
@@ -170,6 +177,8 @@ export function AdvancedSearchDropdownCheckboxesAndRadioButtons() {
     },
   ];
 
+  const advancedSearchContext = useAdvancedSearchContext();
+
   return (
     <div>
       <StoryTitle>AdvancedSearchDropdown - {storyTitle}</StoryTitle>
@@ -181,6 +190,7 @@ export function AdvancedSearchDropdownCheckboxesAndRadioButtons() {
         indexName={storyTitle}
         indexPlaceholder={storyTitle}
         menuItems={indices}
+        advancedSearchContext={advancedSearchContext}
       />
     </div>
   );
@@ -249,6 +259,8 @@ export function AdvancedSearchDropdownCheckboxesAndDividerAndRadioButtons() {
     },
   ];
 
+  const advancedSearchContext = useAdvancedSearchContext();
+
   return (
     <div>
       <StoryTitle>AdvancedSearchDropdown - {storyTitle}</StoryTitle>
@@ -260,6 +272,7 @@ export function AdvancedSearchDropdownCheckboxesAndDividerAndRadioButtons() {
         indexName={storyTitle}
         indexPlaceholder={storyTitle}
         menuItems={indices}
+        advancedSearchContext={advancedSearchContext}
       />
     </div>
   );
@@ -316,6 +329,8 @@ export function AdvancedSearchDropdownActionLink() {
     },
   ];
 
+  const advancedSearchContext = useAdvancedSearchContext();
+
   return (
     <div>
       <StoryTitle>AdvancedSearchDropdown - {storyTitle}</StoryTitle>
@@ -327,6 +342,7 @@ export function AdvancedSearchDropdownActionLink() {
         indexName={storyTitle}
         indexPlaceholder={storyTitle}
         menuItems={indices}
+        advancedSearchContext={advancedSearchContext}
       />
     </div>
   );

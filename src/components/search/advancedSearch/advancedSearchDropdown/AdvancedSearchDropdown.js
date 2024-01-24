@@ -26,7 +26,6 @@ import {
 import styles from "./AdvancedSearchDropdown.module.css";
 import Dropdown from "react-bootstrap/Dropdown";
 import cx from "classnames";
-import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import { getNameForActionLinkContainer } from "@/components/search/advancedSearch/advancedSearchHelpers/dummy__default_advanced_search_fields";
@@ -74,6 +73,7 @@ export default function AdvancedSearchDropdown({
   indexName,
   indexPlaceholder,
   menuItems = [],
+  advancedSearchContext,
 }) {
   const {
     getItemFromDropdownSearchIndices,
@@ -81,7 +81,7 @@ export default function AdvancedSearchDropdown({
     toggleIsSelected,
     dropdownSearchIndices,
     resetSingleIndex,
-  } = useAdvancedSearchContext();
+  } = advancedSearchContext;
 
   const [dropdownQuery, setDropdownQuery] = useState("");
 
