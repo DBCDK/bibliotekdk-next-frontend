@@ -59,20 +59,18 @@ export default function usePickupBranch({ pids }) {
   const { data: extendedUserData, isLoading: isLoadingExtendedData } = useData(
     hasCulrUniqueId && userFragments.extendedData()
   );
-  const lastUsedPickUpBranch = extendedUserData?.user?.lastUsedPickUpBranch;
 
   const {
     data: userdataLastPickupBranch,
     isLoading: userDataPickupBranchIsLoading,
   } = useData(
-    lastUsedPickUpBranch &&
+    extendedUserData?.user?.lastUsedPickUpBranch &&
       branchesFragments.branchUserParameters({
-        branchId: lastUsedPickUpBranch,
+        branchId: extendedUserData?.user?.lastUsedPickUpBranch,
       })
   );
 
-  const userDataLastUsedBranchInfo =
-    userdataLastPickupBranch?.branches?.result?.[0];
+  const lastUsedPickUpBranch = userdataLastPickupBranch?.branches?.result?.[0];
 
   // scope
   const pickupBranchOrderPolicy =
@@ -87,7 +85,7 @@ export default function usePickupBranch({ pids }) {
   const initialPickupBranch = {
     pickupBranch:
       mergedSelectedBranch ||
-      userDataLastUsedBranchInfo ||
+      lastUsedPickUpBranch ||
       selectedBranch ||
       defaultUserPickupBranch ||
       null,
