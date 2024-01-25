@@ -17,6 +17,7 @@ import { convertStateToCql } from "@/components/search/advancedSearch/utils";
 import IconButton from "@/components/base/iconButton/IconButton";
 import { getHelpUrl } from "@/lib/utils";
 import cx from "classnames";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 /**
  * Contains advanced search fields
@@ -34,13 +35,14 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
     cqlFromUrl,
     fieldSearchFromUrl,
     setShowPopover,
-    showPopover,
     stateToString,
     resetObjectState,
   } = useAdvancedSearchContext();
 
   const [showCqlEditor, setShowCqlEditor] = useState(false);
   const textAreaRef = useRef(null);
+
+  const isMobile = useBreakpoint() === "xs";
 
   useEffect(() => {
     setShowCqlEditor(router?.query?.mode === "cql" || !!cqlFromUrl);
@@ -181,7 +183,12 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
                   });
                 }}
               >
-                {Translate({ context: "search", label: "clearSearch" })}
+                {isMobile
+                  ? Translate({
+                      context: "search",
+                      label: "mobile_clearSearch",
+                    })
+                  : Translate({ context: "search", label: "clearSearch" })}
               </Link>
             </Text>
             <Text type="text3" tag="span" className={styles.helpLink}>
@@ -195,7 +202,12 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
                 }}
                 target="_blank"
               >
-                {Translate({ context: "search", label: "helpAndGuidance" })}
+                {isMobile
+                  ? Translate({
+                      context: "search",
+                      label: "mobile_helpAndGuidance",
+                    })
+                  : Translate({ context: "search", label: "helpAndGuidance" })}
               </Link>
             </Text>
           </Col>
