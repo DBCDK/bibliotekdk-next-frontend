@@ -55,6 +55,7 @@ describe("Localizations", () => {
     cy.contains(
       "Husk at du kan bestille online og hente på dit foretrukne bibliotek, uanset hvor materialet befinder sig."
     );
+    cy.should("not.contain", "Grull Ly ServicePoint -");
 
     cy.contains("Tilbage", { timeout: 10000 }).click({ force: true });
     cy.contains("Tilbage", { timeout: 10000 }).click({ force: true });
