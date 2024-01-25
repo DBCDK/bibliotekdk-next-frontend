@@ -90,7 +90,7 @@ const ContactLinks = () => {
     },
     English: { pathname: "/", query: {} },
     accessibility: {
-      pathname: "https://www.was.digst.dk/beta-bibliotek-dk",
+      pathname: "https://www.was.digst.dk/bibliotek-dk",
       query: {},
       target: "_blank",
     },
