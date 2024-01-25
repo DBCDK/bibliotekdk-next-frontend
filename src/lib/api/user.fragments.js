@@ -209,7 +209,7 @@ export function extendedData() {
     query  {
       user {
         persistUserData
-        favoritePickUpBranch
+        lastUsedPickUpBranch
         createdAt
       }
      }`,

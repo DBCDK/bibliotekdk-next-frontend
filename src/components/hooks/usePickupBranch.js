@@ -13,6 +13,7 @@ export default function usePickupBranch({ pids }) {
     isAuthenticated,
     isGuestUser,
     isLoading: authIsLoading,
+    hasCulrUniqueId,
   } = useAuthentication();
 
   const isLoading = userIsLoading || authIsLoading;
@@ -26,9 +27,8 @@ export default function usePickupBranch({ pids }) {
     hasPids && loanerInfo.name && userFragments.orderPolicy({ pids: pids })
   );
 
-  // scope
+  // select first branch from user branches as default pickup branch
   const defaultUserPickupBranch = orderPolicy?.user?.agencies[0]?.result[0];
-
   // fetch user parameters for the selected pickup
   // OBS! Pickup can differ from users own branches.
   const { data: userParams, isLoading: userParamsIsLoading } = useData(
@@ -56,6 +56,24 @@ export default function usePickupBranch({ pids }) {
         })
     );
 
+  const { data: extendedUserData, isLoading: isLoadingExtendedData } = useData(
+    hasCulrUniqueId && userFragments.extendedData()
+  );
+  const lastUsedPickUpBranch = extendedUserData?.user?.lastUsedPickUpBranch;
+
+  const {
+    data: userdataLastPickupBranch,
+    isLoading: userDataPickupBranchIsLoading,
+  } = useData(
+    lastUsedPickUpBranch &&
+      branchesFragments.branchUserParameters({
+        branchId: lastUsedPickUpBranch,
+      })
+  );
+
+  const userDataLastUsedBranchInfo =
+    userdataLastPickupBranch?.branches?.result?.[0];
+
   // scope
   const pickupBranchOrderPolicy =
     selectedBranchPolicyData?.branches?.result?.[0];
@@ -65,16 +83,24 @@ export default function usePickupBranch({ pids }) {
     pickupBranchOrderPolicy &&
     merge({}, selectedBranch, pickupBranchOrderPolicy);
 
+  //fetch pickup branch
   const initialPickupBranch = {
     pickupBranch:
-      mergedSelectedBranch || selectedBranch || defaultUserPickupBranch || null,
+      mergedSelectedBranch ||
+      userDataLastUsedBranchInfo ||
+      selectedBranch ||
+      defaultUserPickupBranch ||
+      null,
   };
-
   // Merge user and branches
   const mergedUser = merge({}, loanerInfo, orderPolicy?.user); //TODO remove oderPolicy?.user ? seems to be empty but check all usecases
 
   const isPickupBranchLoading =
-    policyIsLoading || userParamsIsLoading || branchPolicyIsLoading;
+    policyIsLoading ||
+    userParamsIsLoading ||
+    branchPolicyIsLoading ||
+    isLoadingExtendedData ||
+    userDataPickupBranchIsLoading;
   const pickupBranchUser = (!userParamsIsLoading && mergedUser) || {};
   const isAuthenticatedForPickupBranch = isAuthenticated || isGuestUser;
 
