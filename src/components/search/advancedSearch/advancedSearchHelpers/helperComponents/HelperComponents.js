@@ -49,7 +49,6 @@ export function CheckboxItem({
     <div className={cx(styles.select_wrapper)} tabIndex="-1">
       <Checkbox
         id={item?.name}
-        // checked={item?.isSelected}
         checked={getIsSelected(item)}
         ariaLabel={Translate({
           context: "facets",
