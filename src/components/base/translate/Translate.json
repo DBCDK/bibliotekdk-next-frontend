@@ -2253,9 +2253,17 @@
         "da": "Ryd søgning",
         "en": "Clear search"
       },
+      "mobile_clearSearch": {
+        "da": "Ryd",
+        "en": "Clear"
+      },
       "helpAndGuidance": {
         "da": "Hjælp og vejledning",
         "en": "Help and guidance"
+      },
+      "mobile_helpAndGuidance": {
+        "da": "Hjælp",
+        "en": "Help"
       }
     },
     "suggester": {
