@@ -46,27 +46,34 @@ export const BlockedUserInformation = memo(function BlockedUserInformation({
   );
 });
 
+function translateStatusCode(statusCode) {
+  let label;
+  switch (statusCode) {
+    case "BORCHK_USER_BLOCKED_BY_AGENCY":
+      label = "blocked-user-explanation";
+      break;
+    case "UNKNOWN_USER":
+      label = "unknown-user-explanation";
+      break;
+    case "BORCHK_USER_NO_LONGER_EXIST_ON_AGENCY":
+      label = "user-no-longer-exists-on-agency";
+      break;
+    default:
+      return statusCode;
+  }
+  return Translate({
+    context: "order",
+    label: label,
+  });
+}
+
 export default function Wrap({ statusCode, branches }) {
   if (!branches) {
     return null;
   }
 
   let explanation;
-
-  if (
-    statusCode === "BORCHK_USER_BLOCKED_BY_AGENCY" ||
-    statusCode === "BORCHK_USER_NO_LONGER_EXIST_ON_AGENCY"
-  ) {
-    explanation = Translate({
-      context: "order",
-      label:
-        statusCode === "BORCHK_USER_BLOCKED_BY_AGENCY"
-          ? "blocked-user-explanation"
-          : "user-no-longer-exists-on-agency", //TODO talk to UX'er if there is a better translation
-    });
-  } else {
-    explanation = statusCode; //TODO translate, ask UX
-  }
+  explanation = translateStatusCode(statusCode);
 
   return (
     <BlockedUserInformation

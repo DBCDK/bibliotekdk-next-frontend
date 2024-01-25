@@ -16,6 +16,7 @@ export default exportedObject;
 const {
   BORROWER_STATUS_FALSE,
   BORROWER_STATUS_TRUE,
+  UNKNOWN_USER,
   USER_1,
   USER_2,
   USER_3,
@@ -63,6 +64,34 @@ function OrderPageComponentBuilder({
 }
 
 // -------------------- Stories come here -----------------------
+
+export function OrderUnknownUser() {
+  return (
+    <OrderPageComponentBuilder
+      title="Unknown user"
+      description="User is not recognized"
+      workId={"some-work-id-1"}
+      selectedPids={["some-pid-1", "some-pid-2", "some-pid-3"]}
+    />
+  );
+}
+
+OrderUnknownUser.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {
+        Query: {
+          branches: () => {
+            return {
+              borrowerStatus: UNKNOWN_USER,
+              result: [BRANCH_4],
+            };
+          },
+        },
+      },
+    },
+  },
+});
 
 export function OrderViaILL() {
   return (
