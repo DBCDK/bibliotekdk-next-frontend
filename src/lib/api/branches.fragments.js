@@ -324,6 +324,7 @@ const branchFastFragment = `fragment branchFastFragment on Branch {
   agencyId
   agencyName
   branchId
+  branchType
   name
   openingHours
   postalAddress
