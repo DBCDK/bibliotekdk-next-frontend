@@ -58,7 +58,7 @@ export function OrdererInformation({
           })}
           invalidClass={invalidClass}
           disabled={isLoading || hasAuthMail}
-          value={email?.value || ""}
+          value={email || ""}
           id="order-user-email"
           onChange={onMailChange}
           readOnly={isLoading || hasAuthMail}
@@ -185,13 +185,13 @@ export default function Wrap({
         context: "form",
         label: "wrong-email-field",
       };
-      setMail && setMail({ value: initialmail, valid: { status, message } });
+      setMail?.({ value: initialmail, valid: { status, message } });
     }
 
     if (initialmail) {
       updateEmail();
     }
-  }, [pickupAuthMail]);
+  }, [pickupAuthMail, initialmail]);
 
   const showMailMessage =
     isLoadingBranches || (pickupAuthMail && lockedMessage && hasBorchk);
@@ -201,7 +201,7 @@ export default function Wrap({
       isLoadingBranches={isLoadingBranches}
       name={actualUserName}
       hasAuthMail={!!pickupAuthMail}
-      email={email || initialmail}
+      email={email?.value || initialmail}
       lockedMessage={lockedMessage}
       pickupBranch={pickupBranch}
       invalidClass={invalidClass}
