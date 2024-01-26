@@ -81,10 +81,10 @@ export default function usePickupBranch({ pids }) {
     hasCulrUniqueId && userFragments.extendedData()
   );
 
-  //extendedUserData returns a branch id. We find branch data for that branch from the orderPolicy list that we fetched earlier.
+  //extendedUserData.user.lastUsedPickUpBranch is a branch Id. We find data for that branch from the orderPolicy list that we fetched earlier.
   const lastUsedPickUpBranch = findBranchByBranchId(
     orderPolicy?.user?.agencies,
-    extendedUserData.user.lastUsedPickUpBranch
+    extendedUserData?.user?.lastUsedPickUpBranch
   );
 
   // scope
