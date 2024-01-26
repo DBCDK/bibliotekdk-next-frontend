@@ -88,6 +88,7 @@ export function LocalizationInformation({
             >{`${pickupBranch?.postalCode} ${pickupBranch?.city}`}</Text>
           </div>
         )}
+
         {/* maybe move warning together with warning in order-modal. see bibdk2021-1927 */}
         {!isLoadingBranches &&
           pickupBranch &&

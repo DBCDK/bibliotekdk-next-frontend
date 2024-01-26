@@ -438,6 +438,9 @@ export function buttonTxt({ workId }) {
         manifestations {
           all {
             pid
+            materialTypes {
+              ...materialTypesFragment
+            }
           }
           mostRelevant {
             pid
@@ -766,7 +769,7 @@ export function orderPageWorkWithManifestations({ workId }) {
         }
         workTypes
         manifestations {
-          mostRelevant {
+          all {
             ...manifestationAccess
             ...manifestationDetailsForAccessFactory
           }
@@ -807,7 +810,7 @@ export function overviewWork({ workId }) {
         }
         workTypes
         manifestations {
-          mostRelevant {
+          all { 
             ownerWork {
               workTypes
             }

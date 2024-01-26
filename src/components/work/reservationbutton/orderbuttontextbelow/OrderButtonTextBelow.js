@@ -24,7 +24,7 @@ import useUser from "@/components/hooks/useUser";
  * @returns {React.ReactElement|null}
  */
 function OrderButtonTextBelow({ access, skeleton }) {
-  const physicalCopy = checkPhysicalCopy([access?.[0]])?.[0];
+  const physicalCopy = checkPhysicalCopy(access)?.[0];
   const digitalCopy = checkDigitalCopy([access?.[0]])?.[0];
   const isPeriodicaLike = getAreAccessesPeriodicaLike([access?.[0]])?.[0];
 

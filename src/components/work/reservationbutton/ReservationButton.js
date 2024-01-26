@@ -158,7 +158,7 @@ export const ReservationButton = ({
   modal,
   handleOrderFinished = undefined,
 }) => {
-  const physicalCopy = checkPhysicalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
+  const physicalCopy = checkPhysicalCopy(access)?.[0]; //TODO why do we check all accesses if only one is used in the end?
   const digitalCopy = checkDigitalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
 
   const noSelectedManifestations = Boolean(isEmpty(access));
