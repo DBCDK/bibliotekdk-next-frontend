@@ -136,6 +136,12 @@
   }
 }
 
+@media (max-width: 768px) {
+  .suggester input {
+    font-size: 17px;
+  }
+}
+
 /* 640px down */
 @media (max-width: 640px) {
   .inputContainer {
@@ -146,6 +152,10 @@
     margin-left: 0;
     margin-top: var(--pt1);
     display: block;
+  }
+
+  .inputTitle {
+    display: none;
   }
 }
 
@@ -158,10 +168,6 @@
 
   .inputContainer {
     flex-wrap: wrap;
-  }
-
-  .suggester input {
-    font-size: 17px;
   }
 
   .inputTitle {
