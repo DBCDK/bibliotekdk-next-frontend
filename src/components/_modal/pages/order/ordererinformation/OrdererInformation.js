@@ -170,12 +170,8 @@ export default function Wrap({
 
   const isLoading = isWorkLoading || isPickupBranchLoading || userIsLoading;
 
-  const map = {
-    732900: "moni.privat@hotmail.dk",
-    737000: "hest@mail.dk",
-    800010: null,
-  };
-  // authUser?.agencies.forEach((a) => (map[a.id] = a.user?.mail));
+  const map = {};
+  authUser?.agencies.forEach((a) => (map[a.id] = a.user?.mail));
 
   const pickupAuthMail = map?.[pickupBranch?.agencyId];
 
