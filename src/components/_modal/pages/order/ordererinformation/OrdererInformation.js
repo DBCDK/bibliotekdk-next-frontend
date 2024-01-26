@@ -9,13 +9,16 @@ import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
 import { getStylingAndErrorMessage } from "@/components/_modal/pages/order/utils/order.utils";
 import { validateEmail } from "@/utils/validateEmail";
+import { useEffect } from "react";
 
 export function OrdererInformation({
   isLoadingBranches,
   name,
+  hasAuthMail,
   email,
   lockedMessage,
   invalidClass,
+  isLoading,
   onMailChange,
   message,
   validClass,
@@ -54,9 +57,11 @@ export function OrdererInformation({
             label: "email-placeholder",
           })}
           invalidClass={invalidClass}
+          disabled={isLoading || hasAuthMail}
           value={email?.value || ""}
           id="order-user-email"
           onChange={onMailChange}
+          readOnly={isLoading || hasAuthMail}
           skeleton={isLoadingBranches && !email}
         />
 
@@ -165,34 +170,41 @@ export default function Wrap({
 
   const isLoading = isWorkLoading || isPickupBranchLoading || userIsLoading;
 
-  // Email according to agency borrowerCheck (authUser.mail is from cicero and can not be changed)
-  let initialmail = hasBorchk ? authUser?.mail || userMail : userMail;
+  const map = {
+    732900: "moni.privat@hotmail.dk",
+    737000: "hest@mail.dk",
+    800010: null,
+  };
+  // authUser?.agencies.forEach((a) => (map[a.id] = a.user?.mail));
 
-  if (!email && initialmail) {
-    const status = validateEmail(initialmail);
-    setMail &&
-      setMail({
-        value: initialmail,
-        valid: {
-          status: status,
-          message: status
-            ? null
-            : {
-                context: "form",
-                label: "wrong-email-field",
-              },
-        },
-      });
-  }
+  const pickupAuthMail = map?.[pickupBranch?.agencyId];
+
+  // Email according to agency borrowerCheck (map[pickupBranch?.agencyId] is from cicero and can not be changed)
+  let initialmail = hasBorchk ? pickupAuthMail || userMail : userMail;
+
+  useEffect(() => {
+    function updateEmail() {
+      const status = validateEmail(initialmail);
+      const message = !status && {
+        context: "form",
+        label: "wrong-email-field",
+      };
+      setMail && setMail({ value: initialmail, valid: { status, message } });
+    }
+
+    if (initialmail) {
+      updateEmail();
+    }
+  }, [pickupAuthMail]);
 
   const showMailMessage =
-    isLoadingBranches || (authUser?.mail && lockedMessage && hasBorchk);
+    isLoadingBranches || (pickupAuthMail && lockedMessage && hasBorchk);
 
   return (
     <OrdererInformation
       isLoadingBranches={isLoadingBranches}
       name={actualUserName}
-      hasAuthMail={!!authUser?.mail}
+      hasAuthMail={!!pickupAuthMail}
       email={email || initialmail}
       lockedMessage={lockedMessage}
       pickupBranch={pickupBranch}
