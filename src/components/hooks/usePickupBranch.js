@@ -6,6 +6,27 @@ import merge from "lodash/merge";
 import useAuthentication from "./user/useAuthentication";
 import useLoanerInfo from "./user/useLoanerInfo";
 
+/**
+ * Find branch with the given branchId in the list of agencies.
+ *
+ */
+function findBranchByBranchId(agencies, branchId) {
+  if (!agencies || !branchid) {
+    return null;
+  }
+  for (const agency of agencies) {
+    const brances = agency.result || [];
+
+    for (const branch of brances) {
+      if (branch.branchId === branchId) {
+        return branch;
+      }
+    }
+  }
+
+  return null; // If no item is found
+}
+
 export default function usePickupBranch({ pids }) {
   const { isLoading: userIsLoading } = useUser();
   const { loanerInfo, updateLoanerInfo } = useLoanerInfo();
@@ -60,17 +81,11 @@ export default function usePickupBranch({ pids }) {
     hasCulrUniqueId && userFragments.extendedData()
   );
 
-  const {
-    data: userdataLastPickupBranch,
-    isLoading: userDataPickupBranchIsLoading,
-  } = useData(
-    extendedUserData?.user?.lastUsedPickUpBranch &&
-      branchesFragments.branchUserParameters({
-        branchId: extendedUserData?.user?.lastUsedPickUpBranch,
-      })
+  //extendedUserData returns a branch id. We find branch data for that branch from the orderPolicy list that we fetched earlier.
+  const lastUsedPickUpBranch = findBranchByBranchId(
+    orderPolicy?.user?.agencies,
+    extendedUserData.user.lastUsedPickUpBranch
   );
-
-  const lastUsedPickUpBranch = userdataLastPickupBranch?.branches?.result?.[0];
 
   // scope
   const pickupBranchOrderPolicy =
@@ -90,6 +105,7 @@ export default function usePickupBranch({ pids }) {
       defaultUserPickupBranch ||
       null,
   };
+
   // Merge user and branches
   const mergedUser = merge({}, loanerInfo, orderPolicy?.user); //TODO remove oderPolicy?.user ? seems to be empty but check all usecases
 
@@ -97,8 +113,8 @@ export default function usePickupBranch({ pids }) {
     policyIsLoading ||
     userParamsIsLoading ||
     branchPolicyIsLoading ||
-    isLoadingExtendedData ||
-    userDataPickupBranchIsLoading;
+    isLoadingExtendedData;
+
   const pickupBranchUser = (!userParamsIsLoading && mergedUser) || {};
   const isAuthenticatedForPickupBranch = isAuthenticated || isGuestUser;
 

@@ -209,8 +209,45 @@ export function extendedData() {
     query  {
       user {
         persistUserData
-        lastUsedPickUpBranch
         createdAt
+        lastUsedPickUpBranch
+      }
+     }`,
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * get last used pickup branch
+ *
+ */
+export function lastUsedPickUpBranch() {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 1000, // for debugging
+    query: `
+    query  {
+      user {
+        lastUsedPickUpBranch {
+          borrowerCheck
+          culrDataSync
+          name
+          branchId
+          agencyName
+          agencyId
+          agencyType
+          city
+          postalAddress
+          postalCode
+          
+          userParameters {
+            userParameterType
+            parameterRequired
+            description
+          }
+          pickupAllowed
+          digitalCopyAccess
+        }
       }
      }`,
     slowThreshold: 3000,
