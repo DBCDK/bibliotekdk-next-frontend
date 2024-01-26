@@ -4,7 +4,7 @@ describe("BookmarkOrderSingle", () => {
       win.sessionStorage.clear();
     });
   });
-  it.only(`Order a single material from bookmarklist`, () => {
+  it(`Order a single material from bookmarklist`, () => {
     cy.visit(
       "/iframe.html?id=modal-materials--materials-to-order-single-material"
     );

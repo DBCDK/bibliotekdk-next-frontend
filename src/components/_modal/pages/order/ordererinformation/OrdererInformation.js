@@ -171,7 +171,7 @@ export default function Wrap({
   const isLoading = isWorkLoading || isPickupBranchLoading || userIsLoading;
 
   const map = {};
-  authUser?.agencies.forEach((a) => (map[a.id] = a.user?.mail));
+  authUser?.agencies?.forEach((a) => (map[a.id] = a.user?.mail));
 
   const pickupAuthMail = map?.[pickupBranch?.agencyId];
 
