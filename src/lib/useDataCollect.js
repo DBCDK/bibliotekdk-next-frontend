@@ -32,7 +32,8 @@ export default function useDataCollect() {
     collectSuggestClick: (obj) => enabled && fetcher(collectSuggestClick(obj)),
     collectRecommenderClick: (obj) =>
       enabled && fetcher(collectRecommenderClick(obj)),
-    collectSearchFeedback: (obj) =>
-      enabled && fetcher(collectSearchFeedback(obj)),
+
+    // statistics consent is not required, as this is an explicit user action
+    collectSearchFeedback: (obj) => fetcher(collectSearchFeedback(obj)),
   };
 }
