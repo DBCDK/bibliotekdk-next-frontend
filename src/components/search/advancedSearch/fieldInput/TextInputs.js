@@ -20,10 +20,10 @@ import { LogicalOperatorsEnum } from "@/components/search/enums";
  * @param {Object} props
  * @returns {React.JSX.Element}
  */
-function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
+function FieldInput({ itemKey, index, fieldValue, doAdvancedSearch }) {
   const [suggestions, setSuggestions] = useState([]);
   const inputId = `complex_suggest__${fieldValue.searchIndex}-${index}`;
-
+  console.log("itemKey", itemKey);
   const {
     handleInputFieldChange,
     removeInputField,
@@ -62,7 +62,7 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
   }, [data]);
 
   return (
-    <div key={key} dataCy={`advanced-search-inputfield-${index}`}>
+    <div key={itemKey} dataCy={`advanced-search-inputfield-${index}`}>
       {!isFirstItem && (
         <LogicalOperatorDropDown
           onSelect={(value) => handleLogicalOperatorChange(index, value)}
@@ -79,21 +79,21 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
         <div className={styles.trashAndSuggester}>
           <div className={`${styles.suggesterContainer} `}>
             <Suggester
-              id={key}
+              id={itemKey}
               data={suggestions}
               onSelect={(selectValue) => {
                 setTimeout(() => {
                   // onSelect should be called after onChange. Otherwise onChange wil overrite the selected value
                   handleInputFieldChange(index, selectValue);
                 }, 0);
-                document?.getElementById(inputId).blur();
+                document?.getElementById(itemKey).blur();
               }}
               onClear={() => handleInputFieldChange(index, "")}
               className={styles.suggester}
               initialValue={`${fieldValue.value}`}
             >
               <Input
-                id={inputId}
+                id={itemKey}
                 className={styles.suggesterInput}
                 value={fieldValue?.value}
                 onChange={(e) => handleInputFieldChange(index, e.target.value)}
@@ -214,7 +214,7 @@ export default function TextInputs({ doAdvancedSearch }) {
       {inputFields?.map((field, index) => {
         return (
           <FieldInput
-            key={`inputField-${index}`}
+            itemKey={`inputField-${index}`}
             index={index}
             fieldValue={field}
             doAdvancedSearch={doAdvancedSearch}
