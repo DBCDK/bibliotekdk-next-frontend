@@ -159,7 +159,7 @@ export default function Wrap(props) {
   const [query, setQuery] = useState("");
 
   const { data, isLoading } = useData(
-    libraryFragments.search({ q: query || "" })
+    libraryFragments.search({ q: query || "", limit: 30 })
   );
 
   const dummyData = {
