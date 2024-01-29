@@ -42,6 +42,7 @@ export function hitcount({ q, filters = {} }) {
  * @param {Object} filters filters for searching
  * @param {Boolean} search_exact
  */
+
 export function all({
   q,
   limit = 100,

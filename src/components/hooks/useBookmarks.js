@@ -310,7 +310,7 @@ export const isMaterialTypesMatch = (
 };
 
 /**
- * Find the work index where one pid in mostRelevant matches the given materialId
+ * Find the work index where one pid in manifestations.all matches the given materialId
  * OBS: we cannot simply look for matching workIds, since workIds might be changing
  * @returns {number} index of work
  */
@@ -322,9 +322,7 @@ export function findRelevantWorkIdx(
   return workByIdsDataRemovedDuplicates?.findIndex((w) => {
     const pid = materialId?.replace("work-of:", "");
     if (!pid) return -1;
-    return w?.manifestations?.mostRelevant?.some(
-      (mostRelevant) => mostRelevant.pid === pid
-    );
+    return w?.manifestations?.all?.some((m) => m.pid === pid);
   });
 }
 
@@ -371,7 +369,7 @@ export const usePopulateBookmarks = (bookmarks) => {
         workIdx > -1 ? workByIdsDataRemovedDuplicates[workIdx] : null;
 
       const manifestationWithCorrectMaterialTypes =
-        work?.manifestations?.mostRelevant.filter((m) =>
+        work?.manifestations?.all.filter((m) =>
           isMaterialTypesMatch(relevantMaterialTypes, m?.materialTypes)
         );
 

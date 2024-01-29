@@ -168,7 +168,7 @@ export default function Wrap({ workId }) {
 
   return (
     <BibliographicData
-      manifestations={data?.work?.manifestations?.mostRelevant}
+      manifestations={data?.work?.manifestations?.all}
       workId={workId}
     />
   );
