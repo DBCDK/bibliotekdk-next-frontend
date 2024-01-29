@@ -122,7 +122,7 @@ ReservationButtonEAudioBook.story = {
           ],
           workTypes: ["LITERATURE"],
           manifestations: {
-            mostRelevant: [
+            all: [
               {
                 pid: "some-pid-lydbog-(net)" + time,
               },
@@ -187,7 +187,7 @@ ReservationButtonGame.story = {
           ],
           workTypes: ["GAME"],
           manifestations: {
-            mostRelevant: [
+            all: [
               {
                 pid: "some-pid-game" + time,
               },
@@ -257,7 +257,7 @@ ReservationButtonDisabled.story = {
           ],
           workTypes: ["LITERATURE"],
           manifestations: {
-            mostRelevant: [
+            all: [
               {
                 pid: "some-pid-disabled" + time,
                 access: [],
@@ -322,7 +322,7 @@ ReservationButtonPhysicalBookLoanNotPossible.story = {
           ],
           workTypes: ["LITERATURE"],
           manifestations: {
-            mostRelevant: [
+            all: [
               {
                 pid: "some-pid-bog-loan-not-possible" + time,
               },
@@ -374,7 +374,7 @@ ReservationButtonSlowResponse.story = {
           ],
           workTypes: ["LITERATURE"],
           manifestations: {
-            mostRelevant: [
+            all: [
               {
                 pid: "some-pid-slow-response" + time,
               },
