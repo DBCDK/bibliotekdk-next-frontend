@@ -139,7 +139,7 @@ LinkmePhp.getInitialProps = async (ctx) => {
     const hasCql = !!ctx.query["cql"];
     const hasCcl = !!ctx.query["ccl"];
     const isOclc = ctx.query["ref"] === "worldcat";
-    const isIsbn = ctx.query["ccl"].includes("is=");
+    const isIsbn = ctx.query["ccl"]?.includes("is=");
 
     if (isIsbn) {
       const isbnnumber = isbnFromQuery(ctx.query["ccl"]);
