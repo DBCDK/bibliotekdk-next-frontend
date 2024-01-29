@@ -668,6 +668,7 @@ const BRANCH_1 = {
   pickupAllowed: true,
   borrowerCheck: true,
   digitalCopyAccess: false,
+  temporarilyClosed: false,
 };
 const BRANCH_2 = {
   agencyName: "Agency 1",
@@ -680,6 +681,7 @@ const BRANCH_2 = {
   },
   pickupAllowed: true,
   digitalCopyAccess: false,
+  temporarilyClosed: false,
 };
 const BRANCH_3 = {
   agencyName: "Agency 2",
@@ -692,6 +694,7 @@ const BRANCH_3 = {
   borrowerCheck: true,
   pickupAllowed: true,
   digitalCopyAccess: true,
+  temporarilyClosed: false,
 };
 
 const BRANCH_4 = {
@@ -707,6 +710,7 @@ const BRANCH_4 = {
   borrowerCheck: true,
   branchWebsiteUrl: "balleripraprup.dekaa",
   agencyName: "BalleRipRapRup",
+  temporarilyClosed: false,
 };
 const BRANCH_5 = {
   name: "Ripper Bib - Branch with 2 holdings on shelf",
@@ -734,6 +738,7 @@ const BRANCH_5 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "balleripraprup.dekaa",
+  temporarilyClosed: false,
 };
 
 const BRANCH_5_1 = {
@@ -758,6 +763,7 @@ const BRANCH_5_1 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "balleripraprup.dekaa",
+  temporarilyClosed: false,
 };
 const BRANCH_5_2 = {
   name: "Rupper Bib - Branch with no holdings but is public library",
@@ -776,6 +782,7 @@ const BRANCH_5_2 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "balleripraprup.dekaa",
+  temporarilyClosed: false,
 };
 
 const BRANCH_6 = {
@@ -795,6 +802,7 @@ const BRANCH_6 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "grullinger.dekaa",
+  temporarilyClosed: false,
 };
 
 const BRANCH_6_1 = {
@@ -815,6 +823,28 @@ const BRANCH_6_1 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "grullinger.dekaa",
+  temporarilyClosed: false,
+};
+
+const BRANCH_6_2 = {
+  name: "Grull Ly TemporarilyClosed with Reason. Should show reason",
+  agencyName: "Grullinger",
+  agencyId: "765430",
+  branchId: "765434",
+  branchType: "filial",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  holdingStatus: {
+    branchId: "765432",
+    expectedDelivery: TODAY,
+    holdingItems: [],
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "grullinger.dekaa",
+  temporarilyClosed: true,
+  temporarilyClosedReason: "Grull Ly TemporarilyClosed er lukket",
 };
 
 const BRANCH_7 = {
@@ -837,6 +867,7 @@ const BRANCH_7 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "herligelev.dekaa",
+  temporarilyClosed: false,
 };
 
 const BRANCH_7_1 = {
@@ -856,6 +887,7 @@ const BRANCH_7_1 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "Sengeloese.dekaa",
+  temporarilyClosed: false,
 };
 
 const BRANCH_7_2 = {
@@ -875,6 +907,7 @@ const BRANCH_7_2 = {
   pickupAllowed: false,
   digitalCopyAccess: true,
   branchWebsiteUrl: "hedehuse.dekaa",
+  temporarilyClosed: false,
 };
 const BRANCH_7_3 = {
   name: "Ulvs Hale FFU - Branch with FFU holdings",
@@ -893,6 +926,7 @@ const BRANCH_7_3 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "hedehuse.dekaa",
+  temporarilyClosed: false,
 };
 
 const BRANCH_8 = {
@@ -908,6 +942,7 @@ const BRANCH_8 = {
   branchWebsiteUrl: "nocheck.dekaa",
   agencyName: "NoCheckBib",
   agencyId: "3",
+  temporarilyClosed: false,
 };
 
 const BRANCH_9 = {
@@ -932,6 +967,7 @@ const BRANCH_9 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "ant.colony.dekaa",
+  temporarilyClosed: false,
 };
 
 const BRANCH_9_1 = {
@@ -956,6 +992,7 @@ const BRANCH_9_1 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "gang.dekaa",
+  temporarilyClosed: false,
 };
 
 const BRANCH_9_2 = {
@@ -975,6 +1012,7 @@ const BRANCH_9_2 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "parrot.pandemonium.dekaa",
+  temporarilyClosed: false,
 };
 const BRANCH_9_3 = {
   name: "Rhinoceroses Crash FFU - Branch with FFU holdings",
@@ -998,6 +1036,7 @@ const BRANCH_9_3 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "rhinoceroses.crash.dekaa",
+  temporarilyClosed: false,
 };
 const BRANCH_10 = {
   name: "Ying FFU - Branch without FFU holdings",
@@ -1016,6 +1055,7 @@ const BRANCH_10 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "ying.dekaa",
+  temporarilyClosed: false,
 };
 const BRANCH_10_1 = {
   name: "Yang FFU - Branch without FFU holdings",
@@ -1034,6 +1074,7 @@ const BRANCH_10_1 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "yang.dekaa",
+  temporarilyClosed: false,
 };
 
 // A user with some agencies
@@ -1636,6 +1677,7 @@ export default function automock_utils() {
     BRANCH_5_2,
     BRANCH_6,
     BRANCH_6_1,
+    BRANCH_6_2,
     BRANCH_7,
     BRANCH_7_1,
     BRANCH_7_2,

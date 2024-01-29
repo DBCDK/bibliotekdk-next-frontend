@@ -267,7 +267,7 @@ export default function BranchDetails({ context }) {
       {!branchDetailsLoading &&
       (!singleBranch?.pickupAllowed ||
         !orderPolicyForBranch?.orderPossible ||
-        singleBranch?.temporarilyClosed) ? (
+        singleBranch?.temporarilyClosed === true) ? (
         <LocalizationsBase.HighlightedArea>
           <Text type={"text2"}>
             {Translate({
