@@ -140,7 +140,7 @@ export default function TopBar() {
             setShowPopover(true);
           }}
         >
-          <Col xs={12} lg={2}>
+          <Col xs={12} lg={2} className={styles.your_search}>
             <Text type="text1">
               {Translate({ context: "search", label: "yourSearch" })}
             </Text>

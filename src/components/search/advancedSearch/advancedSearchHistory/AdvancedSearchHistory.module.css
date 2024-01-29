@@ -72,11 +72,17 @@
 }
 
 .actionheader {
-  padding-left: var(--pt1);
+  padding-left: var(--pt2);
   display: flex;
   gap: var(--pt3);
   justify-content: flex-start;
   margin-bottom: var(--pt4);
+}
+
+@media (min-width: 576px) {
+  .actionheader {
+    padding-left: var(--pt1);
+  }
 }
 
 .emptysearchpage {
@@ -90,7 +96,7 @@
 .title {
   padding-top: var(--pt2);
   margin-bottom: var(--pt3);
-  padding-left: var(--pt1);
+  padding-left: var(--pt2);
 }
 
 @media (min-width: 576px) {
@@ -117,8 +123,14 @@
 }
 
 .row {
-  padding: var(--pt1) 0 var(--pt1) var(--pt1);
+  padding: var(--pt1) 0 var(--pt1) var(--pt2);
   border-bottom: 1px solid var(--iron);
+}
+
+@media (min-width: 576px) {
+  .row {
+    padding-left: var(--pt1);
+  }
 }
 
 .inline {

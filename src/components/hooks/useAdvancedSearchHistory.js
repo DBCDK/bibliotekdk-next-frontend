@@ -4,6 +4,7 @@
 
 import { getSessionStorageItem, setSessionStorageItem } from "@/lib/utils";
 import useSWR from "swr";
+import { getLanguage } from "@/components/base/translate";
 
 const KEY = "advanced-search-history";
 
@@ -16,6 +17,26 @@ export function getTimeStamp(now) {
     minute: "2-digit",
   };
   const stamp = new Date(now).toLocaleTimeString("en-GB", options);
+  // remove the " AM/PM" part
+  return stamp.replace("AM", "").replace("PM", "").replace(":", ".").trim();
+}
+
+/**
+ * Get a date on a stored search history object
+ */
+export function getDateTime(now) {
+  const options = {
+    hourCycle: "h24",
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  };
+  const stamp = new Date(now).toLocaleTimeString(
+    getLanguage() === "EN_GB" ? "en-GB" : "da-DK",
+    options
+  );
   // remove the " AM/PM" part
   return stamp.replace("AM", "").replace("PM", "").replace(":", ".").trim();
 }
