@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import useAdvancedSearchHistory, {
+  getDateTime,
   getTimeStamp,
 } from "@/components/hooks/useAdvancedSearchHistory";
 import styles from "./AdvancedSearchHistory.module.css";
@@ -54,8 +55,20 @@ function HistoryItem({ item, index, checked, onSelect }) {
         ariaLabel={`select-item-${index}`}
         className={styles.checkbox}
       />
-      <Text className={styles.timestamp} type="text2">
-        {item.unixtimestamp ? getTimeStamp(item.unixtimestamp) : item.timestamp}
+      <Text
+        className={styles.timestamp}
+        type="text2"
+        title={getDateTime(item.unixtimestamp)}
+      >
+        {Translate({
+          context: "search",
+          label: "timestamp",
+          vars: [
+            item.unixtimestamp
+              ? getTimeStamp(item.unixtimestamp)
+              : item.timestamp,
+          ],
+        })}
       </Text>
       <div className={styles.link}>
         <Link

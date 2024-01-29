@@ -62,17 +62,30 @@ export function convertStateToCql({ inputFields, dropdownSearchIndices } = {}) {
   return !isEmpty(result) ? "(" + result + ")" : "";
 }
 
+/**
+ * Known indexes for generating url's
+ * @param type
+ * @returns {string}
+ */
 function typeToFieldindex(type) {
   switch (type) {
     case "creator":
       return "term.creatorcontributor";
     case "subject":
       return "term.subject";
+    case "isbn":
+      return "term.isbn";
     default:
-      return "term.function";
+      return "term.default";
   }
 }
 
+/**
+ * Get an url to advanced search (fieldsearch).
+ * @param type - the index to search in
+ * @param value - the value to search for
+ * @returns {string}
+ */
 export function getAdvancedUrl({ type, value }) {
   const inputField = {
     value: value,

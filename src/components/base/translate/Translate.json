@@ -1838,6 +1838,10 @@
       }
     },
     "search": {
+      "timestamp": {
+        "da": "Kl. %s",
+        "en": "At %s"
+      },
       "title": {
         "da": "Resultater",
         "en": "Result"

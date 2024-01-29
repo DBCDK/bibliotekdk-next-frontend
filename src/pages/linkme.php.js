@@ -18,6 +18,8 @@ import {
 import { encodeTitleCreator, getCanonicalWorkUrl } from "@/lib/utils";
 import { useData } from "@/lib/api/api";
 import Custom404 from "@/pages/404";
+import { isbnFromQuery } from "@/lib/utils";
+import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
 
 /**
  * check if query is ok - for now we only check on rec.id.
@@ -132,14 +134,26 @@ LinkmePhp.getInitialProps = async (ctx) => {
     ctx.res.writeHead(301, { Location: path });
     ctx.res.end();
   } else {
-    // we have no data - if ccl or cql is given we throw it back at old.bibliotek
+    // we do some redirects here - check for cql, ccl, ccl=is (isbn), worldcat links and handle some of it - if
+    // we give up we redirect to old.bibliotek.dk
     const hasCql = !!ctx.query["cql"];
     const hasCcl = !!ctx.query["ccl"];
     const isOclc = ctx.query["ref"] === "worldcat";
+    const isIsbn = ctx.query["ccl"]?.includes("is=");
+
+    if (isIsbn) {
+      const isbnnumber = isbnFromQuery(ctx.query["ccl"]);
+      if (isbnnumber) {
+        const path = getAdvancedUrl({ type: "isbn", value: isbnnumber });
+        ctx.res.writeHead(301, { Location: path });
+        ctx.res.end();
+      }
+    }
+
     const basePath = "https://old.bibliotek.dk/";
     if (!isOclc && (hasCql || hasCcl)) {
+      // we have no data - if ccl or cql is given we throw it back at old.bibliotek
       const path = `${basePath}${ctx.req["url"]}`;
-
       ctx.res.writeHead(301, { Location: path });
       ctx.res.end();
     }
