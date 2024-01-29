@@ -248,4 +248,5 @@ function useKeyGenerator() {
 export const ApiEnums = Object.freeze({
   FBI_API: "fbi_api",
   FBI_API_BIBDK21: "fbi_api_bibdk21",
+  FBI_API_SIMPLESEARCH: "fbi_api_simplesearch",
 });

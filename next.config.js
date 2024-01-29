@@ -123,22 +123,23 @@ module.exports = {
       typeof process.env.USE_FIXED_SESSION_ID === "undefined" ||
       process.env.USE_FIXED_SESSION_ID !== "false" ||
       !process.env.USE_FIXED_SESSION_ID,
-    api: {
-      url:
-        process.env.NEXT_PUBLIC_API_URL ||
-        "https://alfa-api.stg.bibliotek.dk/190101/SimpleSearch/graphql",
-      timeout: process.env.API_TIMEOUT_MS || 150,
-    },
     fbi_api: {
       url:
         process.env.NEXT_PUBLIC_FBI_API_URL ||
-        "https://fbi-api-staging.k8s.dbc.dk/SimpleSearch/graphql",
+        "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",
       timeout: process.env.API_TIMEOUT_MS || 150,
     },
+    // TODO - this one can be deleted when things are tested ok
     fbi_api_bibdk21: {
       url:
-        process.env.NEXT_PUBLIC_FBI_API_BIBDK21_URL ||
+        process.env.NEXT_PUBLIC_FBI_API_URL ||
         "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",
+      timeout: process.env.API_TIMEOUT_MS || 150,
+    },
+    fbi_api_simplesearch: {
+      url:
+        process.env.NEXT_PUBLIC_FBI_API_SIMPLESEARCH_URL ||
+        "https://fbi-api-staging.k8s.dbc.dk/SimpleSearch/graphql",
       timeout: process.env.API_TIMEOUT_MS || 150,
     },
     app: {
