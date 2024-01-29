@@ -338,6 +338,8 @@ const branchFastFragment = `fragment branchFastFragment on Branch {
   branchWebsiteUrl
   branchCatalogueUrl
   lookupUrl
+  temporarilyClosed
+  temporarilyClosedReason
 }`;
 
 const orderPolicyFragment = `fragment orderPolicyFragment on CheckOrderPolicy {
