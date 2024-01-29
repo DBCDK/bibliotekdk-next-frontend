@@ -11,7 +11,7 @@ import useLoanerInfo from "./user/useLoanerInfo";
  *
  */
 function findBranchByBranchId(agencies, branchId) {
-  if (!agencies || !branchid) {
+  if (!agencies || !branchId) {
     return null;
   }
   for (const agency of agencies) {
