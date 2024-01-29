@@ -40,7 +40,7 @@ export default function useOrderPageInformation({
     return inferAccessTypes(
       periodicaForm,
       pickupBranch,
-      workData?.work?.manifestations?.mostRelevant,
+      workData?.work?.manifestations?.all,
       loanerInfo
     );
   }, [workData?.work, periodicaForm, pickupBranch]);

@@ -13,14 +13,10 @@ export function useGetManifestationsForOrderButton(workId, selectedPids) {
   const workResponse = useData(workId && workFragments.buttonTxt({ workId }));
 
   const allPids = useMemo(() => {
-    return workResponse?.data?.work?.manifestations?.mostRelevant?.flatMap(
+    return workResponse?.data?.work?.manifestations?.all?.flatMap(
       (manifestation) => manifestation.pid
     );
-  }, [
-    workId,
-    selectedPids,
-    workResponse?.data?.work?.manifestations?.mostRelevant,
-  ]);
+  }, [workId, selectedPids, workResponse?.data?.work?.manifestations?.all]);
 
   const manifestationsResponse = useData(
     allPids &&
