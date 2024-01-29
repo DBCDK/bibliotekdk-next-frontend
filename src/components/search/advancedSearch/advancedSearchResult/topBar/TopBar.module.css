@@ -28,14 +28,16 @@
 }
 
 @media (max-width: 768px) {
+  .your_search {
+    margin-bottom: var(--pt1);
+  }
+
   .formatedQueryContainer {
     flex-flow: wrap;
   }
-  .formatedQueryContainer p {
-    margin-bottom: var(--pt05);
-  }
 
   .edit_search {
+    margin-top: var(--pt1);
     justify-content: start;
   }
 }
