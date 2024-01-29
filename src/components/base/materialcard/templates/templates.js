@@ -694,14 +694,16 @@ export function templateImageToLeft({
             {creatorsString}
           </Text>
         )}
-        <Text
-          {...propFunc("text4", 1)}
-          title={formattedMaterialTypes}
-          className={styles.type__image_to_left_version}
-          skeleton={isLoading}
-        >
-          {formattedMaterialTypes}
-        </Text>
+        {formattedMaterialTypes && (
+          <Text
+            {...propFunc("text4", 1)}
+            title={formattedMaterialTypes}
+            className={styles.type__image_to_left_version}
+            skeleton={isLoading}
+          >
+            {formattedMaterialTypes}
+          </Text>
+        )}
         {!isPeriodicaLike && !isDigitalArticle && !hideEditionText && (
           <Text
             {...propFunc("text3", 1)}

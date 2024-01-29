@@ -33,6 +33,20 @@ describe("Order", () => {
       win.localStorage.clear();
     });
   });
+  it("User is not recognized", () => {
+    cy.visit("/iframe.html?id=modal-order--order-unknown-user");
+    cy.contains("Bestil", { timeout: 10000 }).click();
+    cy.contains("Låneren genkendes ikke");
+  });
+});
+
+describe("Order", () => {
+  before(() => {
+    cy.window().then((win) => {
+      win.sessionStorage.clear();
+      win.localStorage.clear();
+    });
+  });
 
   it("should NOT contain pincode field", () => {
     cy.visitWithConsoleSpy(

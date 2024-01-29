@@ -1846,6 +1846,10 @@
       }
     },
     "search": {
+      "timestamp": {
+        "da": "Kl. %s",
+        "en": "At %s"
+      },
       "title": {
         "da": "Resultater",
         "en": "Result"
@@ -3198,6 +3202,10 @@
       "user-no-longer-exists-on-agency": {
         "da": "Din bruger er ikke længere låner på biblioteket.",
         "en": "Your user is no longer a loaner at the library."
+      },
+      "unknown-user-explanation": {
+        "da": "Låneren genkendes ikke",
+        "en": "Unknown user"
       },
       "blocked-user-link": {
         "da": "Kontakt %s for at få mere information",

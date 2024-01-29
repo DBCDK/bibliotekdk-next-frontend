@@ -650,6 +650,11 @@ const BORROWER_STATUS_TRUE = {
   statusCode: "OK",
 };
 
+const UNKNOWN_USER = {
+  allowed: false,
+  statusCode: "UNKNOWN_USER",
+};
+
 const BORROWER_STATUS_FALSE = {
   allowed: false,
   statusCode: "BORCHK_USER_BLOCKED_BY_AGENCY",
@@ -1666,6 +1671,7 @@ export default function automock_utils() {
     WORK_11,
     WORK_12,
     ALL_WORKS,
+    UNKNOWN_USER,
     BORROWER_STATUS_TRUE,
     BORROWER_STATUS_FALSE,
     BRANCH_1,
