@@ -12,6 +12,18 @@ const APP_URL =
  */
 
 /**
+ * Grap isbn, And ONLY the isbn,  from given ccl (is=[ISBNNUMBER]).
+ * @param ccl
+ * @returns {isbn|null}
+ */
+export function isbnFromQuery(ccl) {
+  // ccl should start with ccl=is - and end with a number (or -)
+  const regexp = /^is=([0-9\-\/]*)$/;
+  const groups = ccl.match(regexp);
+  return groups?.[1] || null;
+}
+
+/**
  * Encode string
  * Get rid of diacritics and stuff
  *

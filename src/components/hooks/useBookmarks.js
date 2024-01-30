@@ -384,6 +384,7 @@ export const usePopulateBookmarks = (bookmarks) => {
         ...work,
         bookmarkId: bookmark?.bookmarkId,
         materialId: bookmark?.materialId,
+        materialType: bookmark?.materialType,
         pid: isSpecificEdition ? bookmark?.materialId : undefined,
         key: bookmark?.key,
         manifestations: isSpecificEdition
