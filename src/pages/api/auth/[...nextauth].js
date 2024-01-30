@@ -62,8 +62,31 @@ export const options = {
   debug: false,
   callbacks: {
     ...callbacks,
+    jwt: async ({ token, user, account, profile }) => {
+      const EXPIRY_BUFFER_SEC = 60;
+
+      if (user) {
+        // Exclude user agencies from jwt cookie
+        // The agencies list can exceed the cookie byte limit (even for chunks)
+        delete profile?.attributes?.agencies;
+
+        token = {
+          accessToken: account.access_token,
+          accessTokenExpires:
+            account.expires_at * 1000 - EXPIRY_BUFFER_SEC * 1000,
+          attributes: profile.attributes,
+        };
+      }
+
+      if (!token.accessTokenExpires || token.accessTokenExpires < Date.now()) {
+        return null;
+      }
+      return token;
+    },
     session: async (...args) => {
       let res = await callbacks.session(...args);
+      // TODO: Agencies are now removed in jwt callback
+      // This could be removed when all active sessions are expired (30 days from now)
       delete res?.user?.agencies;
       return res;
     },
