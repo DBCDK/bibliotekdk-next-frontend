@@ -27,19 +27,10 @@ describe(`linkme`, () => {
     cy.contains("Grum : Roman fra Sø og Mose", { timeout: 10000 });
   });
 
-  it.skip("serverside redirect", () => {
+  it("serverside redirect", () => {
     const path = "/linkme.php/?rec.id=874310-katalog%3ADBB0422141&isBot=true";
     const url = `${nextjsBaseUrl}${path}`;
     cy.visit(url);
     cy.contains("Grum");
-    /*getPage(path).then((res) => {
-      const jsonld = JSON.parse(
-        res.body.match(
-          /<script type="application\/ld\+json">(.*?)<\/script>/
-        )?.[1]
-      );
-
-      expect(jsonld.mainEntity.name).to.equal("Grum");
-    });*/
   });
 });

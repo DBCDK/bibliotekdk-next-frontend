@@ -6,6 +6,27 @@ import merge from "lodash/merge";
 import useAuthentication from "./user/useAuthentication";
 import useLoanerInfo from "./user/useLoanerInfo";
 
+/**
+ * Find branch with the given branchId in the list of agencies.
+ *
+ */
+function findBranchByBranchId(agencies, branchId) {
+  if (!agencies || !branchId) {
+    return null;
+  }
+  for (const agency of agencies) {
+    const brances = agency.result || [];
+
+    for (const branch of brances) {
+      if (branch.branchId === branchId) {
+        return branch;
+      }
+    }
+  }
+
+  return null; // If no item is found
+}
+
 export default function usePickupBranch({ pids }) {
   const { isLoading: userIsLoading } = useUser();
   const { loanerInfo, updateLoanerInfo } = useLoanerInfo();
@@ -13,6 +34,7 @@ export default function usePickupBranch({ pids }) {
     isAuthenticated,
     isGuestUser,
     isLoading: authIsLoading,
+    hasCulrUniqueId,
   } = useAuthentication();
 
   const isLoading = userIsLoading || authIsLoading;
@@ -26,9 +48,8 @@ export default function usePickupBranch({ pids }) {
     hasPids && loanerInfo.name && userFragments.orderPolicy({ pids: pids })
   );
 
-  // scope
+  // select first branch from user branches as default pickup branch
   const defaultUserPickupBranch = orderPolicy?.user?.agencies[0]?.result[0];
-
   // fetch user parameters for the selected pickup
   // OBS! Pickup can differ from users own branches.
   const { data: userParams, isLoading: userParamsIsLoading } = useData(
@@ -56,6 +77,16 @@ export default function usePickupBranch({ pids }) {
         })
     );
 
+  const { data: extendedUserData, isLoading: isLoadingExtendedData } = useData(
+    hasCulrUniqueId && userFragments.extendedData()
+  );
+
+  //extendedUserData.user.lastUsedPickUpBranch is a branch Id. We find data for that branch from the orderPolicy list that we fetched earlier.
+  const lastUsedPickUpBranch = findBranchByBranchId(
+    orderPolicy?.user?.agencies,
+    extendedUserData?.user?.lastUsedPickUpBranch
+  );
+
   // scope
   const pickupBranchOrderPolicy =
     selectedBranchPolicyData?.branches?.result?.[0];
@@ -65,16 +96,25 @@ export default function usePickupBranch({ pids }) {
     pickupBranchOrderPolicy &&
     merge({}, selectedBranch, pickupBranchOrderPolicy);
 
+  //fetch pickup branch
   const initialPickupBranch = {
     pickupBranch:
-      mergedSelectedBranch || selectedBranch || defaultUserPickupBranch || null,
+      mergedSelectedBranch ||
+      lastUsedPickUpBranch ||
+      selectedBranch ||
+      defaultUserPickupBranch ||
+      null,
   };
 
   // Merge user and branches
   const mergedUser = merge({}, loanerInfo, orderPolicy?.user); //TODO remove oderPolicy?.user ? seems to be empty but check all usecases
 
   const isPickupBranchLoading =
-    policyIsLoading || userParamsIsLoading || branchPolicyIsLoading;
+    policyIsLoading ||
+    userParamsIsLoading ||
+    branchPolicyIsLoading ||
+    isLoadingExtendedData;
+
   const pickupBranchUser = (!userParamsIsLoading && mergedUser) || {};
   const isAuthenticatedForPickupBranch = isAuthenticated || isGuestUser;
 

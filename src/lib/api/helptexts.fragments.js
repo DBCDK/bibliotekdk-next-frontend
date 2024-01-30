@@ -9,7 +9,7 @@ export function publishedHelptexts({ language }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `query ($language: LanguageId! $langcode: [String]){
-      nodeQuery (limit:20 filter: {conditions: [
+      nodeQuery (limit:50 filter: {conditions: [
         {field: "type", value: ["help_text"]},
         {field: "status", value:"1"},
         {field: "langcode", value: $langcode}

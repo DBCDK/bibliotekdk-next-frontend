@@ -209,8 +209,8 @@ export function extendedData() {
     query  {
       user {
         persistUserData
-        favoritePickUpBranch
         createdAt
+        lastUsedPickUpBranch
       }
      }`,
     slowThreshold: 3000,
