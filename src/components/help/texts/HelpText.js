@@ -7,6 +7,7 @@ import styles from "./HelpText.module.css";
 import Breadcrumbs from "@/components/base/breadcrumbs/Breadcrumbs";
 import BodyParser from "@/components/base/bodyparser/BodyParser";
 import Skeleton from "@/components/base/skeleton";
+import Translate from "@/components/base/translate/Translate";
 
 /**
  * Entry function for a helptext
@@ -15,7 +16,8 @@ import Skeleton from "@/components/base/skeleton";
  */
 export function HelpText({ helptext }) {
   if (helptext.title && helptext.body) {
-    const path = ["help", helptext.fieldHelpTextGroup];
+    const helpText = Translate({ context: "help", label: "help-breadcrumb" });
+    const path = [helpText, helptext.fieldHelpTextGroup];
     return (
       <React.Fragment>
         <div className={styles.helpbreadcrumb}>
