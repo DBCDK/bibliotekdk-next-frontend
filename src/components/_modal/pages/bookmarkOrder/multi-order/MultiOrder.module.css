@@ -21,6 +21,7 @@
 
 .nousererror {
   margin: 0 -48px 0 -48px;
+  margin-bottom: var(--pt2);
 }
 
 @media (max-width: 576px) {

@@ -78,8 +78,6 @@ export default function Wrap({ statusCode, branches, className }) {
     return null;
   }
 
-  console.log(branches, "BRANCHES");
-
   let explanation;
   explanation = translateStatusCode(statusCode);
 

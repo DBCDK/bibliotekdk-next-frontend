@@ -92,7 +92,6 @@ const MultiOrder = ({ context }) => {
   const isLoading = !bookmarksToOrder || isPopulating;
 
   const { authUser } = usePickupBranch({});
-  console.log(authUser, "AUTHUSER");
 
   useEffect(() => {
     if (isPopulating) return;

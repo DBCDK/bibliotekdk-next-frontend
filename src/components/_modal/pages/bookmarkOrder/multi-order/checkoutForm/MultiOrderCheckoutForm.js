@@ -46,8 +46,6 @@ const CheckoutForm = ({
       pids: [],
     });
 
-  console.log(userInfo, pickupBranchInfo, "HESSSSST");
-
   const { pickupBranch, pickupBranchUser, isLoadingBranches } =
     pickupBranchInfo;
 
@@ -61,6 +59,8 @@ const CheckoutForm = ({
   useEffect(() => {
     const hasPincode = pincodeIsRequired ? !!pincode : true;
 
+    console.log(userInfo, "USERINFO");
+
     setDisabled(
       !isAnalyzed ||
         materialsMissingActionCount > 0 ||
@@ -69,7 +69,7 @@ const CheckoutForm = ({
         !mail?.valid?.status ||
         materialsToOrderCount < 1 ||
         !hasPincode ||
-        !userInfo?.authUser?.borrowerStatus?.allowed
+        userInfo?.authUser?.borrowerStatus?.allowed === false
     );
   }, [
     isAnalyzed,
