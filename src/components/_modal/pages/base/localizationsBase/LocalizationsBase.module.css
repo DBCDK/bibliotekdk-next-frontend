@@ -54,6 +54,12 @@
   margin-top: var(--pt5);
 }
 
+.highlighted_area_children {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--pt4);
+}
+
 .padding_block {
   padding-block: var(--pt3);
 }

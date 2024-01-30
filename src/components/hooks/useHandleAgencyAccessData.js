@@ -29,6 +29,18 @@ export const HoldingStatusEnum = Object.freeze({
   NOT_FOR_LOAN: "NotForLoan",
 });
 
+export const BranchTypeEnum = Object.freeze({
+  MAIN_LIBRARY: "hovedbibliotek",
+  BRANCH: "filial",
+  BOOK_BUS: "bogbus",
+});
+
+export const AllowedBranchTypes = new Set([
+  BranchTypeEnum.MAIN_LIBRARY,
+  BranchTypeEnum.BRANCH,
+  BranchTypeEnum.BOOK_BUS,
+]);
+
 /**
  * @typedef {string} DateString
  */
@@ -498,13 +510,16 @@ export function handleAgencyAccessData(agencies) {
   const isLoading = agencies.isLoading;
 
   const agenciesGrouped = groupBy(
-    agencies?.data?.branches?.result.map((res) => {
-      return {
-        ...res,
-        holdingItems: res.holdingStatus.holdingItems,
-        expectedDelivery: res.holdingStatus.expectedDelivery,
-      };
-    }),
+    agencies?.data?.branches?.result
+      // We only want to allow specific types of branches
+      ?.filter((res) => AllowedBranchTypes.has(res.branchType))
+      ?.map((res) => {
+        return {
+          ...res,
+          holdingItems: res.holdingStatus.holdingItems,
+          expectedDelivery: res.holdingStatus.expectedDelivery,
+        };
+      }),
     "agencyId"
   );
 
