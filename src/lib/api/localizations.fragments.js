@@ -23,19 +23,24 @@ export function localizationsQuery({ pids }) {
   };
 }
 
-export function localizationsWithHoldings({ pids, limit = 10000, offset = 0 }) {
+export function localizationsWithHoldings({
+  pids,
+  limit = 10000,
+  offset = 0,
+  availabilityTypes = ["NOW"],
+}) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
-    query LocalizationsWithHoldings($pids: [String!]!, $limit: Int, $offset: Int) {
-      localizationsWithHoldings(pids: $pids, limit: $limit, offset: $offset, bibdkExcludeBranches: true, status: AKTIVE) {
+    query LocalizationsWithHoldings($pids: [String!]!, $limit: Int, $offset: Int, $availabilityTypes: [AvailabilityEnum!]) {
+      localizationsWithHoldings(pids: $pids, limit: $limit, offset: $offset, bibdkExcludeBranches: true, status: AKTIVE, availabilityTypes: $availabilityTypes) {
         count
         agencies {
           agencyId
         }
       }
     }`,
-    variables: { pids, limit, offset },
+    variables: { pids, limit, offset, availabilityTypes },
     slowThreshold: 15000,
   };
 }

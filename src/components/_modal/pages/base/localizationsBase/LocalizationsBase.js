@@ -189,7 +189,12 @@ export function HighlightedArea({
   return (
     <div className={cx(styles.highlighted_area)} style={style}>
       <div
-        className={cx(styles.padding_inline, styles.padding_block, className)}
+        className={cx(
+          styles.padding_inline,
+          styles.padding_block,
+          styles.highlighted_area_children,
+          className
+        )}
       >
         {children}
       </div>

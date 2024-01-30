@@ -894,6 +894,14 @@
         "da": "Hjemme",
         "en": "Available"
       },
+      "not_on_shelf": {
+        "da": "Ikke på hylden",
+        "en": "Not of shelf"
+      },
+      "agency_shelf_status_unknown": {
+        "da": "Status kendes ikke",
+        "en": "Status is unknown"
+      },
       "order_now_pickup_at_date": {
         "da": "Bestil nu og afhent fra d. %s",
         "en": "Order now and pickup from the %s"
@@ -1838,6 +1846,10 @@
       }
     },
     "search": {
+      "timestamp": {
+        "da": "Kl. %s",
+        "en": "At %s"
+      },
       "title": {
         "da": "Resultater",
         "en": "Result"
