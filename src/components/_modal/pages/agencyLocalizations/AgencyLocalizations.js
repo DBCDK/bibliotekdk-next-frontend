@@ -138,6 +138,7 @@ export default function AgencyLocalizations({ context, modal }) {
             className={styles.pagination}
             numPages={limit <= agencyIds?.length ? 2 : 1}
             forceMobileView={true}
+            disableScrollMobileView={true}
             onChange={() => setLimit((prev) => prev + PAGE_SIZE)}
           />
         </>
