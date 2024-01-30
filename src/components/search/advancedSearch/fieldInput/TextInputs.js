@@ -20,10 +20,9 @@ import { LogicalOperatorsEnum } from "@/components/search/enums";
  * @param {Object} props
  * @returns {React.JSX.Element}
  */
-function FieldInput({ itemKey, index, fieldValue, doAdvancedSearch }) {
+function FieldInput({ index, fieldValue, doAdvancedSearch }) {
   const [suggestions, setSuggestions] = useState([]);
-  const inputId = `complex_suggest__${fieldValue.searchIndex}-${index}`;
-  console.log("itemKey", itemKey);
+  const inputId = `input-field-${index}`;
   const {
     handleInputFieldChange,
     removeInputField,
@@ -62,7 +61,7 @@ function FieldInput({ itemKey, index, fieldValue, doAdvancedSearch }) {
   }, [data]);
 
   return (
-    <div key={itemKey} dataCy={`advanced-search-inputfield-${index}`}>
+    <div key={inputId} dataCy={`advanced-search-inputfield-${index}`}>
       {!isFirstItem && (
         <LogicalOperatorDropDown
           onSelect={(value) => handleLogicalOperatorChange(index, value)}
@@ -79,21 +78,21 @@ function FieldInput({ itemKey, index, fieldValue, doAdvancedSearch }) {
         <div className={styles.trashAndSuggester}>
           <div className={`${styles.suggesterContainer} `}>
             <Suggester
-              id={itemKey}
+              id={inputId}
               data={suggestions}
               onSelect={(selectValue) => {
                 setTimeout(() => {
                   // onSelect should be called after onChange. Otherwise onChange wil overrite the selected value
                   handleInputFieldChange(index, selectValue);
                 }, 0);
-                document?.getElementById(itemKey).blur();
+                document?.getElementById(inputId).blur();
               }}
               onClear={() => handleInputFieldChange(index, "")}
               className={styles.suggester}
               initialValue={`${fieldValue.value}`}
             >
               <Input
-                id={itemKey}
+                id={inputId}
                 className={styles.suggesterInput}
                 value={fieldValue?.value}
                 onChange={(e) => handleInputFieldChange(index, e.target.value)}
@@ -214,7 +213,7 @@ export default function TextInputs({ doAdvancedSearch }) {
       {inputFields?.map((field, index) => {
         return (
           <FieldInput
-            itemKey={`inputField-${index}`}
+            key={`inputField-${index}`}
             index={index}
             fieldValue={field}
             doAdvancedSearch={doAdvancedSearch}
