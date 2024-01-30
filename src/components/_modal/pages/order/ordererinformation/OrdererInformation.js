@@ -14,11 +14,9 @@ import { useEffect } from "react";
 export function OrdererInformation({
   isLoadingBranches,
   name,
-  hasAuthMail,
   email,
   lockedMessage,
   invalidClass,
-  isLoading,
   onMailChange,
   message,
   validClass,
@@ -57,11 +55,9 @@ export function OrdererInformation({
             label: "email-placeholder",
           })}
           invalidClass={invalidClass}
-          disabled={isLoading || hasAuthMail}
           value={email || ""}
           id="order-user-email"
           onChange={onMailChange}
-          readOnly={isLoading || hasAuthMail}
           skeleton={isLoadingBranches && !email}
         />
 
@@ -193,8 +189,11 @@ export default function Wrap({
     }
   }, [pickupAuthMail, initialmail]);
 
+  const userMailIsEqual = pickupAuthMail && pickupAuthMail === email?.value;
+
   const showMailMessage =
-    isLoadingBranches || (pickupAuthMail && lockedMessage && hasBorchk);
+    isLoadingBranches ||
+    (pickupAuthMail && userMailIsEqual && lockedMessage && hasBorchk);
 
   return (
     <OrdererInformation
