@@ -3,11 +3,13 @@ import styles from "./BlockedUserInformation.module.css";
 import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
+import cx from "classnames";
 
 export const BlockedUserInformation = memo(function BlockedUserInformation({
   agencyName,
   branchOrAgencyUrl,
   explanation,
+  className,
 }) {
   const titleText = Translate({
     context: "order",
@@ -24,7 +26,11 @@ export const BlockedUserInformation = memo(function BlockedUserInformation({
   });
 
   return (
-    <Text tag={"div"} className={styles.redBorder} dataCy={"blocked-user"}>
+    <Text
+      tag={"div"}
+      className={cx(styles.redBorder, className && className)}
+      dataCy={"blocked-user"}
+    >
       <span>{titleText}</span>
       <br />
       {explanation}
@@ -67,16 +73,19 @@ function translateStatusCode(statusCode) {
   });
 }
 
-export default function Wrap({ statusCode, branches }) {
+export default function Wrap({ statusCode, branches, className }) {
   if (!branches) {
     return null;
   }
+
+  console.log(branches, "BRANCHES");
 
   let explanation;
   explanation = translateStatusCode(statusCode);
 
   return (
     <BlockedUserInformation
+      className={className}
       agencyName={branches?.result?.[0]?.agencyName}
       branchOrAgencyUrl={
         branches?.result?.[0]?.branchWebsiteUrl || branches?.agencyUrl

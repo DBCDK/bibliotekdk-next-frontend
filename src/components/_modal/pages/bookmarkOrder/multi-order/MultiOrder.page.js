@@ -16,6 +16,8 @@ import useBookmarks, {
 } from "@/components/hooks/useBookmarks";
 import { mergeBookmarksWithPopulatedData } from "@/components/profile/bookmarks/bookmarks.utils";
 import MaterialRow from "@/components/profile/materialRow/MaterialRow";
+import usePickupBranch from "@/components/hooks/usePickupBranch";
+import BlockedUserInformation from "@/components/_modal/pages/order/blockeduserinformation/BlockedUserInformation";
 
 const CONTEXT = "bookmark-order";
 const SKELETON_ROW_AMOUNT = 3;
@@ -88,6 +90,9 @@ const MultiOrder = ({ context }) => {
     usePopulateBookmarks(bookmarksToOrder);
   const [sortedMaterials, setSortedMaterials] = useState([]);
   const isLoading = !bookmarksToOrder || isPopulating;
+
+  const { authUser } = usePickupBranch({});
+  console.log(authUser, "AUTHUSER");
 
   useEffect(() => {
     if (isPopulating) return;
@@ -241,6 +246,13 @@ const MultiOrder = ({ context }) => {
           vars={[sortedMaterials?.length]}
         />
       </Title>
+      {authUser?.borrowerStatus?.allowed === false && (
+        <BlockedUserInformation
+          statusCode={authUser?.borrowerStatus?.statusCode}
+          branches={authUser?.agencies?.[0]}
+          className={styles.nousererror}
+        />
+      )}
 
       {isLoading ? (
         [...Array(SKELETON_ROW_AMOUNT).keys()].map((_, i) => (

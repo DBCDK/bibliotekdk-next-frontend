@@ -17,6 +17,10 @@ export function branchUserParameters({ branchId }) {
     query: `
     query BranchUserParameters($branchId: String!, $language: LanguageCode!) {
       branches(branchId: $branchId, language: $language) {
+        borrowerStatus {
+          allowed
+          statusCode
+        }      
         result {
           borrowerCheck
           culrDataSync

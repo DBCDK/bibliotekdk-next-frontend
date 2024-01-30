@@ -46,6 +46,8 @@ const CheckoutForm = ({
       pids: [],
     });
 
+  console.log(userInfo, pickupBranchInfo, "HESSSSST");
+
   const { pickupBranch, pickupBranchUser, isLoadingBranches } =
     pickupBranchInfo;
 
@@ -66,7 +68,8 @@ const CheckoutForm = ({
         duplicateBookmarkIds?.length > 0 ||
         !mail?.valid?.status ||
         materialsToOrderCount < 1 ||
-        !hasPincode
+        !hasPincode ||
+        !userInfo?.authUser?.borrowerStatus?.allowed
     );
   }, [
     isAnalyzed,

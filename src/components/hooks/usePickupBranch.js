@@ -59,6 +59,14 @@ export default function usePickupBranch({ pids }) {
       })
   );
 
+  const mergedLoanerInfo = {
+    ...loanerInfo,
+    ...((userParams?.branches?.borrowerStatus && {
+      borrowerStatus: userParams?.branches?.borrowerStatus,
+    }) ||
+      {}),
+  };
+
   // scope
   const selectedBranch = userParams?.branches?.result?.[0];
 
@@ -119,8 +127,8 @@ export default function usePickupBranch({ pids }) {
   const isAuthenticatedForPickupBranch = isAuthenticated || isGuestUser;
 
   return {
-    authUser: loanerInfo,
-    loanerInfo,
+    authUser: mergedLoanerInfo,
+    loanerInfo: mergedLoanerInfo,
     isLoading,
     updateLoanerInfo,
     pickupBranch: initialPickupBranch.pickupBranch,

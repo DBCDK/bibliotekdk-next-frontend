@@ -19,6 +19,10 @@
   bottom: 0;
 }
 
+.nousererror {
+  margin: 0 -48px 0 -48px;
+}
+
 @media (max-width: 576px) {
   .multiOrder {
     padding: 0 var(--pt2);
