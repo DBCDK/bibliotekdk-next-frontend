@@ -2,7 +2,10 @@
 import { useId, useMemo } from "react";
 import { AccessEnum } from "@/lib/enums";
 import { dateObjectToDateOnlyString } from "@/utils/datetimeConverter";
-import { HoldingStatusEnum } from "@/components/hooks/useHandleAgencyAccessData";
+import {
+  BranchTypeEnum,
+  HoldingStatusEnum,
+} from "@/components/hooks/useHandleAgencyAccessData";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 const TODAY = dateObjectToDateOnlyString(new Date());
@@ -662,6 +665,7 @@ const BRANCH_1 = {
   agencyType: "FOLKEBIBLIOTEK",
   agencyId: "1",
   branchId: "1237",
+  branchType: BranchTypeEnum.MAIN_LIBRARY,
   name: "Test Bib - only physical via ILL",
   orderPolicy: {
     orderPossible: true,
@@ -669,34 +673,40 @@ const BRANCH_1 = {
   pickupAllowed: true,
   borrowerCheck: true,
   digitalCopyAccess: false,
+  temporarilyClosed: false,
 };
 const BRANCH_2 = {
   agencyName: "Agency 1",
   agencyType: "FORSKNINGSBIBLIOTEK",
   branchId: "123",
+  branchType: BranchTypeEnum.MAIN_LIBRARY,
   name: "Test Bib - no orders here",
   orderPolicy: {
     orderPossible: false,
   },
   pickupAllowed: true,
   digitalCopyAccess: false,
+  temporarilyClosed: false,
 };
 const BRANCH_3 = {
   agencyName: "Agency 2",
   name: "Test Bib - ILL and digital copy service",
   branchId: "1235",
+  branchType: BranchTypeEnum.MAIN_LIBRARY,
   orderPolicy: {
     orderPossible: true,
   },
   borrowerCheck: true,
   pickupAllowed: true,
   digitalCopyAccess: true,
+  temporarilyClosed: false,
 };
 
 const BRANCH_4 = {
   name: "Test Bib - User is blocked",
   agencyId: "2",
   branchId: "1234",
+  branchType: BranchTypeEnum.BRANCH,
   orderPolicy: {
     orderPossible: true,
   },
@@ -705,12 +715,14 @@ const BRANCH_4 = {
   borrowerCheck: true,
   branchWebsiteUrl: "balleripraprup.dekaa",
   agencyName: "BalleRipRapRup",
+  temporarilyClosed: false,
 };
 const BRANCH_5 = {
   name: "Ripper Bib - Branch with 2 holdings on shelf",
-  branchId: "789123",
   agencyName: "BalleRipRapRup",
   agencyId: "789120",
+  branchId: "789123",
+  branchType: BranchTypeEnum.BRANCH,
   orderPolicy: {
     orderPossible: true,
   },
@@ -731,13 +743,15 @@ const BRANCH_5 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "balleripraprup.dekaa",
+  temporarilyClosed: false,
 };
 
 const BRANCH_5_1 = {
   name: "Rapper Bib - Branch with holdings on loan",
-  branchId: "789124",
   agencyName: "BalleRipRapRup",
   agencyId: "789120",
+  branchId: "789124",
+  branchType: BranchTypeEnum.BRANCH,
   orderPolicy: {
     orderPossible: true,
   },
@@ -754,12 +768,14 @@ const BRANCH_5_1 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "balleripraprup.dekaa",
+  temporarilyClosed: false,
 };
 const BRANCH_5_2 = {
   name: "Rupper Bib - Branch with no holdings but is public library",
-  branchId: "789125",
   agencyName: "BalleRipRapRup",
   agencyId: "789120",
+  branchId: "789125",
+  branchType: BranchTypeEnum.BRANCH,
   orderPolicy: {
     orderPossible: true,
   },
@@ -771,13 +787,15 @@ const BRANCH_5_2 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "balleripraprup.dekaa",
+  temporarilyClosed: false,
 };
 
 const BRANCH_6 = {
   name: "Grull Ly - Branch with no holdings, is public library but agency says holdings",
-  branchId: "765432",
   agencyName: "Grullinger",
   agencyId: "765430",
+  branchId: "765432",
+  branchType: BranchTypeEnum.BRANCH,
   orderPolicy: {
     orderPossible: true,
   },
@@ -789,13 +807,57 @@ const BRANCH_6 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "grullinger.dekaa",
+  temporarilyClosed: false,
+};
+
+const BRANCH_6_1 = {
+  name: "Grull Ly ServicePoint - ServicePoint (branchType) with no holdings. Should not be shown",
+  agencyName: "Grullinger",
+  agencyId: "765430",
+  branchId: "765433",
+  branchType:
+    "Servicepunkt - We can write whatever here, since it is an allowList",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  holdingStatus: {
+    branchId: "765432",
+    expectedDelivery: TODAY,
+    holdingItems: [],
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "grullinger.dekaa",
+  temporarilyClosed: false,
+};
+
+const BRANCH_6_2 = {
+  name: "Grull Ly TemporarilyClosed with Reason. Should show reason",
+  agencyName: "Grullinger",
+  agencyId: "765430",
+  branchId: "765434",
+  branchType: "filial",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  holdingStatus: {
+    branchId: "765432",
+    expectedDelivery: TODAY,
+    holdingItems: [],
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "grullinger.dekaa",
+  temporarilyClosed: true,
+  temporarilyClosedReason: "Grull Ly TemporarilyClosed er lukket",
 };
 
 const BRANCH_7 = {
   name: "Herlige Lev FFU - Branch with FFU holdings",
-  branchId: "800014",
-  agencyId: "800010",
   agencyType: "FORSKNINGSBIBLIOTEK",
+  agencyId: "800010",
+  branchId: "800014",
+  branchType: BranchTypeEnum.BRANCH,
   agencyName: "Special FFUs",
   culrDataSync: false,
   orderPolicy: {
@@ -810,13 +872,15 @@ const BRANCH_7 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "herligelev.dekaa",
+  temporarilyClosed: false,
 };
 
 const BRANCH_7_1 = {
   name: "Senge Loese FFU - Branch with FFU holdings",
-  branchId: "800015",
   agencyName: "Special FFUs",
   agencyId: "800010",
+  branchId: "800015",
+  branchType: BranchTypeEnum.BRANCH,
   orderPolicy: {
     orderPossible: true,
   },
@@ -828,13 +892,15 @@ const BRANCH_7_1 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "Sengeloese.dekaa",
+  temporarilyClosed: false,
 };
 
 const BRANCH_7_2 = {
   name: "Hede Huse FFU - Branch with FFU holdings",
-  branchId: "800016",
   agencyName: "Special FFUs",
   agencyId: "800010",
+  branchId: "800016",
+  branchType: BranchTypeEnum.BRANCH,
   orderPolicy: {
     orderPossible: false,
   },
@@ -846,12 +912,14 @@ const BRANCH_7_2 = {
   pickupAllowed: false,
   digitalCopyAccess: true,
   branchWebsiteUrl: "hedehuse.dekaa",
+  temporarilyClosed: false,
 };
 const BRANCH_7_3 = {
   name: "Ulvs Hale FFU - Branch with FFU holdings",
-  branchId: "800017",
   agencyName: "Special FFUs",
   agencyId: "800010",
+  branchId: "800017",
+  branchType: BranchTypeEnum.BRANCH,
   orderPolicy: {
     orderPossible: true,
   },
@@ -863,11 +931,13 @@ const BRANCH_7_3 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "hedehuse.dekaa",
+  temporarilyClosed: false,
 };
 
 const BRANCH_8 = {
   name: "No borrowerCheck",
   branchId: "1236",
+  branchType: BranchTypeEnum.BRANCH,
   orderPolicy: {
     orderPossible: true,
   },
@@ -877,13 +947,15 @@ const BRANCH_8 = {
   branchWebsiteUrl: "nocheck.dekaa",
   agencyName: "NoCheckBib",
   agencyId: "3",
+  temporarilyClosed: false,
 };
 
 const BRANCH_9 = {
   name: "Ant Colony FFU - Branch with FFU holdings",
-  branchId: "891234",
-  agencyId: "891230",
   agencyName: "Animal Group HoldingItems Holder FFUs",
+  agencyId: "891230",
+  branchId: "891234",
+  branchType: BranchTypeEnum.BRANCH,
   orderPolicy: {
     orderPossible: true,
   },
@@ -900,13 +972,15 @@ const BRANCH_9 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "ant.colony.dekaa",
+  temporarilyClosed: false,
 };
 
 const BRANCH_9_1 = {
   name: "Manatee Aggregation FFU - Branch with FFU holdings",
-  branchId: "891235",
   agencyName: "Animal Group HoldingItems Holder FFUs",
   agencyId: "891230",
+  branchId: "891235",
+  branchType: BranchTypeEnum.BRANCH,
   orderPolicy: {
     orderPossible: true,
   },
@@ -923,13 +997,15 @@ const BRANCH_9_1 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "gang.dekaa",
+  temporarilyClosed: false,
 };
 
 const BRANCH_9_2 = {
   name: "Parrot Pandemonium FFU - Branch with FFU holdings",
-  branchId: "891236",
   agencyName: "Animal Group HoldingItems Holder FFUs",
   agencyId: "891230",
+  branchId: "891236",
+  branchType: BranchTypeEnum.BRANCH,
   orderPolicy: {
     orderPossible: true,
   },
@@ -941,12 +1017,14 @@ const BRANCH_9_2 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "parrot.pandemonium.dekaa",
+  temporarilyClosed: false,
 };
 const BRANCH_9_3 = {
   name: "Rhinoceroses Crash FFU - Branch with FFU holdings",
-  branchId: "891237",
   agencyName: "Animal Group HoldingItems Holder FFUs",
   agencyId: "891230",
+  branchId: "891237",
+  branchType: BranchTypeEnum.BRANCH,
   orderPolicy: {
     orderPossible: true,
   },
@@ -963,12 +1041,14 @@ const BRANCH_9_3 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "rhinoceroses.crash.dekaa",
+  temporarilyClosed: false,
 };
 const BRANCH_10 = {
   name: "Ying FFU - Branch without FFU holdings",
-  branchId: "898761",
   agencyName: "Duo without holdings FFUs",
   agencyId: "898760",
+  branchId: "898761",
+  branchType: BranchTypeEnum.BRANCH,
   orderPolicy: {
     orderPossible: true,
   },
@@ -980,12 +1060,14 @@ const BRANCH_10 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "ying.dekaa",
+  temporarilyClosed: false,
 };
 const BRANCH_10_1 = {
   name: "Yang FFU - Branch without FFU holdings",
-  branchId: "898762",
   agencyName: "Duo without holdings FFUs",
   agencyId: "898760",
+  branchId: "898762",
+  branchType: BranchTypeEnum.BRANCH,
   orderPolicy: {
     orderPossible: true,
   },
@@ -997,6 +1079,7 @@ const BRANCH_10_1 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "yang.dekaa",
+  temporarilyClosed: false,
 };
 
 // A user with some agencies
@@ -1599,6 +1682,8 @@ export default function automock_utils() {
     BRANCH_5_1,
     BRANCH_5_2,
     BRANCH_6,
+    BRANCH_6_1,
+    BRANCH_6_2,
     BRANCH_7,
     BRANCH_7_1,
     BRANCH_7_2,
