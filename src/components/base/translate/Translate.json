@@ -903,8 +903,8 @@
         "en": "Status is unknown"
       },
       "order_now_pickup_at_date": {
-        "da": "Bestil nu og afhent fra d. %s",
-        "en": "Order now and pickup from the %s"
+        "da": "Forventet udlånt til d. %s",
+        "en": "Expected on loan until %s"
       },
       "order_now_pickup_at_some_point": {
         "da": "Bestil nu og afhent senere",

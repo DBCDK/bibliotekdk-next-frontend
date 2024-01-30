@@ -26,7 +26,11 @@ function NoMaterialsHomeAtLocalizations({
       className={cx(styles.no_match_for_library_search, styles.row_wrapper)}
     >
       {availabilityLight && (
-        <AvailabilityLight availabilityAccumulated={AvailabilityEnum.LATER} />
+        <AvailabilityLight
+          availabilityLightProps={{
+            availabilityAccumulated: AvailabilityEnum.LATER,
+          }}
+        />
       )}
       <div className={styles.result}>
         <Text type="text2">
