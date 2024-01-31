@@ -59,8 +59,6 @@ const CheckoutForm = ({
   useEffect(() => {
     const hasPincode = pincodeIsRequired ? !!pincode : true;
 
-    console.log(userInfo, "USERINFO");
-
     setDisabled(
       !isAnalyzed ||
         materialsMissingActionCount > 0 ||
