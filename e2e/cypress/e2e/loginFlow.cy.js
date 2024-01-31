@@ -48,12 +48,12 @@ describe(`Different ways to open login modal with a (FFU) library that does NOT 
     cy.get("[data-cy=header-link-login]").should("be.visible").click();
     cy.get("[data-cy=pickup-search-input]")
       .should("be.visible")
-      .type("CBS Bibliotek");
-    cy.get('[data-cy="text-CBS Bibliotek - Solbjerg Plads"]')
+      .type("Sankt Andreas Bibliotek");
+    cy.get('[data-cy="text-Skt. Andreas Bibliotek"]')
       .should("be.visible")
       .click();
     cy.get(
-      '[data-cy="text-cbs-bibliotek-login-kan-ikke-bruges-på-bibliotek.dk"]'
+      '[data-cy="text-log-ind-via-sankt-andreas-bibliotek-understøttes-ikke"]'
     ).should("be.visible");
     cy.get("[data-cy=button-tilbage]").should("be.visible").click();
     cy.get("[data-cy=pickup-search-input]").should("be.visible");
@@ -65,12 +65,12 @@ describe(`Different ways to open login modal with a (FFU) library that does NOT 
     cy.get("[data-cy=profile-layout-button-login]").click();
     cy.get("[data-cy=pickup-search-input]")
       .should("be.visible")
-      .type("CBS Bibliotek");
-    cy.get('[data-cy="text-CBS Bibliotek - Solbjerg Plads"]')
+      .type("Sankt Andreas Bibliotek");
+    cy.get('[data-cy="text-Skt. Andreas Bibliotek"]')
       .should("be.visible")
       .click();
     cy.get(
-      '[data-cy="text-cbs-bibliotek-login-kan-ikke-bruges-på-bibliotek.dk"]'
+      '[data-cy="text-log-ind-via-sankt-andreas-bibliotek-understøttes-ikke"]'
     ).should("be.visible");
     cy.get("[data-cy=button-tilbage]").should("be.visible").click();
     cy.get("[data-cy=pickup-search-input]").should("be.visible");
@@ -94,12 +94,12 @@ describe(`Different ways to open login modal with a (FFU) library that does NOT 
     cy.get("[data-cy=text-log-ind]").should("be.visible");
     cy.get("[data-cy=pickup-search-input]")
       .should("be.visible")
-      .type("CBS Bibliotek");
-    cy.get('[data-cy="text-CBS Bibliotek - Solbjerg Plads"]')
+      .type("Sankt Andreas Bibliotek");
+    cy.get('[data-cy="text-Skt. Andreas Bibliotek"]')
       .should("be.visible")
       .click();
     cy.get(
-      '[data-cy="text-cbs-bibliotek-login-kan-ikke-bruges-på-bibliotek.dk"]'
+      '[data-cy="text-log-ind-via-sankt-andreas-bibliotek-understøttes-ikke"]'
     ).should("be.visible");
     cy.get("[data-cy=button-tilbage]").should("be.visible").click();
     cy.get("[data-cy=pickup-search-input]").should("be.visible");
