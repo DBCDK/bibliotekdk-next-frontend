@@ -79,9 +79,9 @@ describe("Localizations", () => {
     cy.contains("Tilbage", { timeout: 10000 }).click({ force: true });
 
     // Senge Loese
-    cy.contains("Bestil nu og afhent fra", { timeout: 10000 });
+    cy.contains("Forventet udlånt til", { timeout: 10000 });
     cy.contains("Senge Loese FFU", { timeout: 10000 }).click();
-    cy.contains("Bestil nu og afhent fra");
+    cy.contains("Forventet udlånt til");
     cy.contains("Bestil til afhentning på denne afdeling");
     cy.contains(
       "Husk at du kan bestille online og hente på dit foretrukne bibliotek, uanset hvor materialet befinder sig."
@@ -98,7 +98,7 @@ describe("Localizations", () => {
     cy.contains("Vi har ikke status for disse afdelinger");
     cy.contains("Se detaljeret status hos Special FFUs");
     cy.contains("Ulvs Hale FFU", { timeout: 10000 }).click();
-    cy.contains("Har ikke materialet");
+    cy.contains("Bestil nu og afhent senere");
     cy.contains("Bestil til afhentning på denne afdeling");
     cy.contains(
       "Husk at du kan bestille online og hente på dit foretrukne bibliotek, uanset hvor materialet befinder sig."
@@ -116,7 +116,7 @@ describe("Localizations", () => {
       timeout: 10000,
     }).click();
     cy.contains("1 på hylden");
-    cy.contains("Bestil nu og afhent");
+    cy.contains("Forventet udlånt til");
     cy.contains("Vi har ikke status for disse afdelinger");
     cy.contains("Se detaljeret status hos");
 
@@ -126,7 +126,7 @@ describe("Localizations", () => {
     cy.contains("Tilbage", { timeout: 10000 }).click({ force: true });
 
     cy.contains("Rhinoceroses Crash", { timeout: 10000 }).click();
-    cy.contains("Bestil nu og afhent");
+    cy.contains("Forventet udlånt til");
     cy.contains("Tilbage", { timeout: 10000 }).click({ force: true });
 
     cy.contains("Tilbage", { timeout: 10000 }).click({ force: true });
@@ -144,7 +144,12 @@ describe("Localizations", () => {
     cy.contains("Se detaljeret status hos");
 
     cy.contains("Yang FFU", { timeout: 10000 }).click();
-    cy.contains("Har ikke materialet");
+    cy.contains("Forventet udlånt til");
+
+    cy.contains("Tilbage", { timeout: 10000 }).click({ force: true });
+
+    cy.contains("Ying FFU", { timeout: 10000 }).click();
+    cy.contains("Bestil nu og afhent senere");
 
     cy.contains("Tilbage", { timeout: 10000 }).click({ force: true });
     cy.contains("Tilbage", { timeout: 10000 }).click({ force: true });
