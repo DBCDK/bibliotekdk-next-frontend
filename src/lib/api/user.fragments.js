@@ -42,7 +42,13 @@ export function basic() {
           demandDrivenAcquisition
         }
         agencies {
+          id
+          name
+          type
           hitcount
+          user {
+            mail
+          }
           result {
             branchId
             agencyId

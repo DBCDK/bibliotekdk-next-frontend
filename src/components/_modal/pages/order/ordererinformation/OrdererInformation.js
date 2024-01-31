@@ -9,6 +9,7 @@ import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
 import { getStylingAndErrorMessage } from "@/components/_modal/pages/order/utils/order.utils";
 import { validateEmail } from "@/utils/validateEmail";
+import { useEffect } from "react";
 
 export function OrdererInformation({
   isLoadingBranches,
@@ -54,7 +55,7 @@ export function OrdererInformation({
             label: "email-placeholder",
           })}
           invalidClass={invalidClass}
-          value={email?.value || ""}
+          value={email || ""}
           id="order-user-email"
           onChange={onMailChange}
           skeleton={isLoadingBranches && !email}
@@ -165,35 +166,41 @@ export default function Wrap({
 
   const isLoading = isWorkLoading || isPickupBranchLoading || userIsLoading;
 
-  // Email according to agency borrowerCheck (authUser.mail is from cicero and can not be changed)
-  let initialmail = hasBorchk ? authUser?.mail || userMail : userMail;
+  const map = {};
+  authUser?.agencies?.forEach((a) => (map[a.id] = a.user?.mail));
 
-  if (!email && initialmail) {
-    const status = validateEmail(initialmail);
-    setMail &&
-      setMail({
-        value: initialmail,
-        valid: {
-          status: status,
-          message: status
-            ? null
-            : {
-                context: "form",
-                label: "wrong-email-field",
-              },
-        },
-      });
-  }
+  const pickupAuthMail = map?.[pickupBranch?.agencyId];
+
+  // Email according to agency borrowerCheck (map[pickupBranch?.agencyId] is from cicero and can not be changed)
+  let initialmail = hasBorchk ? pickupAuthMail || userMail : userMail;
+
+  useEffect(() => {
+    function updateEmail() {
+      const status = validateEmail(initialmail);
+      const message = !status && {
+        context: "form",
+        label: "wrong-email-field",
+      };
+      setMail?.({ value: initialmail, valid: { status, message } });
+    }
+
+    if (initialmail) {
+      updateEmail();
+    }
+  }, [pickupAuthMail, initialmail]);
+
+  const userMailIsEqual = pickupAuthMail && pickupAuthMail === email?.value;
 
   const showMailMessage =
-    isLoadingBranches || (authUser?.mail && lockedMessage && hasBorchk);
+    isLoadingBranches ||
+    (pickupAuthMail && userMailIsEqual && lockedMessage && hasBorchk);
 
   return (
     <OrdererInformation
       isLoadingBranches={isLoadingBranches}
       name={actualUserName}
-      hasAuthMail={!!authUser?.mail}
-      email={email || initialmail}
+      hasAuthMail={!!pickupAuthMail}
+      email={email?.value || initialmail}
       lockedMessage={lockedMessage}
       pickupBranch={pickupBranch}
       invalidClass={invalidClass}
