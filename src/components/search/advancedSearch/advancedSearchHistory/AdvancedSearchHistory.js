@@ -36,6 +36,10 @@ function HistoryItem({ item, index, checked, onSelect }) {
     }
   };
 
+  const timestamp = item.unixtimestamp
+    ? getTimeStamp(item.unixtimestamp)
+    : item.timestamp;
+
   return (
     <div
       className={cx(styles.row, styles.grid)}
@@ -60,15 +64,13 @@ function HistoryItem({ item, index, checked, onSelect }) {
         type="text2"
         title={getDateTime(item.unixtimestamp)}
       >
-        {Translate({
-          context: "search",
-          label: "timestamp",
-          vars: [
-            item.unixtimestamp
-              ? getTimeStamp(item.unixtimestamp)
-              : item.timestamp,
-          ],
-        })}
+        {breakpoint === "xs"
+          ? Translate({
+              context: "search",
+              label: "timestamp",
+              vars: [timestamp],
+            })
+          : timestamp}
       </Text>
       <div className={styles.link}>
         <Link
