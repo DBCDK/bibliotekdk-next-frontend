@@ -42,7 +42,13 @@ export function basic() {
           demandDrivenAcquisition
         }
         agencies {
+          id
+          name
+          type
           hitcount
+          user {
+            mail
+          }
           result {
             branchId
             agencyId
@@ -193,6 +199,25 @@ export function orderPolicy({ pids }) {
       monitor(name: "bibdknext_orderpolicy")
      }`,
     variables: { language: lang, pids },
+    slowThreshold: 3000,
+  };
+}
+
+export function borrowerStatus() {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 1000, // for debugging
+    query: `
+    query  {
+      user {
+        agencies {
+         borrowerStatus {
+          allowed
+          statusCode
+          }
+        }
+       }
+     }`,
     slowThreshold: 3000,
   };
 }
