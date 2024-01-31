@@ -19,6 +19,11 @@
   bottom: 0;
 }
 
+.nousererror {
+  margin: 0 -48px 0 -48px;
+  margin-bottom: var(--pt2);
+}
+
 @media (max-width: 576px) {
   .multiOrder {
     padding: 0 var(--pt2);
@@ -26,5 +31,10 @@
 
   .multiOrder [class^="MultiOrder_materialList"] {
     margin: 0 -16px;
+  }
+
+  .nousererror {
+    margin: 0 -24px 0 -24px;
+    margin-bottom: var(--pt2);
   }
 }
