@@ -145,6 +145,7 @@ function renderInputComponent({ inputComponent = {}, inputProps, onClear }) {
         data-cy={`${inputProps.dataCy}-clear`}
         className={`${styles.clear} ${clearVisibleClass}`}
         onClick={() => onClear()}
+        tabIndex={0}
       >
         <Icon size={{ w: "auto", h: 2 }} alt="">
           <ClearSvg />
@@ -173,6 +174,7 @@ function Suggester({
   onSelect = null,
   onChange = null,
   onBlur = null,
+
   initialValue = "",
 }) {
   // Make copy of all suggestion objects
@@ -281,6 +283,7 @@ function Suggester({
       //     setState({ ...state, _q: suggestion?.value });
       //   }
       // }}
+
       focusInputOnSuggestionClick={false}
       highlightFirstSuggestion={false}
       inputProps={inputProps}

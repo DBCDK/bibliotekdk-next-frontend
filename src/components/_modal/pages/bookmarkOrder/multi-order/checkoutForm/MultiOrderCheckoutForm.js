@@ -66,7 +66,8 @@ const CheckoutForm = ({
         duplicateBookmarkIds?.length > 0 ||
         !mail?.valid?.status ||
         materialsToOrderCount < 1 ||
-        !hasPincode
+        !hasPincode ||
+        pickupBranchInfo?.borrowerStatus?.allowed === false
     );
   }, [
     isAnalyzed,

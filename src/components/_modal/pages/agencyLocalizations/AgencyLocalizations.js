@@ -15,7 +15,7 @@ import Pagination from "@/components/search/pagination/Pagination";
 import { AvailabilityLight } from "@/components/_modal/pages/base/localizationsBase/localizationItemBase/AvailabilityLight";
 import cx from "classnames";
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 25;
 
 function NoMaterialsHomeAtLocalizations({
   labelBase,
@@ -76,7 +76,11 @@ export default function AgencyLocalizations({ context, modal }) {
     data: agenciesWithHoldings,
     isLoading: agenciesWithHoldingsIsLoading,
   } = useData(
-    pids && localizationsFragments.localizationsWithHoldings({ pids: pids })
+    pids &&
+      localizationsFragments.localizationsWithHoldings({
+        pids: pids,
+        availabilityTypes: ["NOW", "LATER", "UNKNOWN"],
+      })
   );
 
   const agencyIds = !isEmpty(query)

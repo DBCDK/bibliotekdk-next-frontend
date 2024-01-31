@@ -42,7 +42,13 @@ export function basic() {
           demandDrivenAcquisition
         }
         agencies {
+          id
+          name
+          type
           hitcount
+          user {
+            mail
+          }
           result {
             branchId
             agencyId
@@ -197,6 +203,25 @@ export function orderPolicy({ pids }) {
   };
 }
 
+export function borrowerStatus() {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 1000, // for debugging
+    query: `
+    query  {
+      user {
+        agencies {
+         borrowerStatus {
+          allowed
+          statusCode
+          }
+        }
+       }
+     }`,
+    slowThreshold: 3000,
+  };
+}
+
 /**
  * get extended user data
  *
@@ -209,8 +234,8 @@ export function extendedData() {
     query  {
       user {
         persistUserData
-        favoritePickUpBranch
         createdAt
+        lastUsedPickUpBranch
       }
      }`,
     slowThreshold: 3000,
