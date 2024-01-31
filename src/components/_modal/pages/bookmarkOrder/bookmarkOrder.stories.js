@@ -11,6 +11,7 @@ const exportedObject = {
 
 const {
   USER_3,
+  USER_6,
   BRANCH_3,
   BRANCH_4,
   WORK_11,
@@ -156,7 +157,7 @@ BlockedUser.story = merge({}, DEFAULT_STORY_PARAMETERS, {
     graphql: {
       resolvers: {
         Query: {
-          user: () => USER_3,
+          user: () => USER_6,
           works: () => [WORK_11, WORK_12],
           checkorderpolicy: () => ({ orderPossible: true }),
           branches: () => {

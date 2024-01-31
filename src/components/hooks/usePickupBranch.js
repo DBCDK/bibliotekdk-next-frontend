@@ -59,14 +59,6 @@ export default function usePickupBranch({ pids }) {
       })
   );
 
-  const mergedLoanerInfo = {
-    ...loanerInfo,
-    ...((userParams?.branches?.borrowerStatus && {
-      borrowerStatus: userParams?.branches?.borrowerStatus,
-    }) ||
-      {}),
-  };
-
   // scope
   const selectedBranch = userParams?.branches?.result?.[0];
 
@@ -87,6 +79,10 @@ export default function usePickupBranch({ pids }) {
 
   const { data: extendedUserData, isLoading: isLoadingExtendedData } = useData(
     hasCulrUniqueId && userFragments.extendedData()
+  );
+
+  const { data: borrowerStatus, isLoading: isLoadingBorrowerStatus } = useData(
+    hasCulrUniqueId && userFragments.borrowerStatus()
   );
 
   //extendedUserData.user.lastUsedPickUpBranch is a branch Id. We find data for that branch from the orderPolicy list that we fetched earlier.
@@ -121,19 +117,21 @@ export default function usePickupBranch({ pids }) {
     policyIsLoading ||
     userParamsIsLoading ||
     branchPolicyIsLoading ||
-    isLoadingExtendedData;
+    isLoadingExtendedData ||
+    isLoadingBorrowerStatus;
 
   const pickupBranchUser = (!userParamsIsLoading && mergedUser) || {};
   const isAuthenticatedForPickupBranch = isAuthenticated || isGuestUser;
 
   return {
-    authUser: mergedLoanerInfo,
-    loanerInfo: mergedLoanerInfo,
+    authUser: loanerInfo,
+    loanerInfo,
     isLoading,
     updateLoanerInfo,
     pickupBranch: initialPickupBranch.pickupBranch,
     isPickupBranchLoading,
     pickupBranchUser,
     isAuthenticatedForPickupBranch,
+    borrowerStatus: borrowerStatus?.user?.agencies?.[0]?.borrowerStatus,
   };
 }

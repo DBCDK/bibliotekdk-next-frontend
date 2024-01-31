@@ -91,7 +91,7 @@ const MultiOrder = ({ context }) => {
   const [sortedMaterials, setSortedMaterials] = useState([]);
   const isLoading = !bookmarksToOrder || isPopulating;
 
-  const { authUser } = usePickupBranch({});
+  const { borrowerStatus } = usePickupBranch({});
 
   useEffect(() => {
     if (isPopulating) return;
@@ -245,10 +245,10 @@ const MultiOrder = ({ context }) => {
           vars={[sortedMaterials?.length]}
         />
       </Title>
-      {authUser?.borrowerStatus?.allowed === false && (
+      {borrowerStatus?.allowed === false && (
         <BlockedUserInformation
-          statusCode={authUser?.borrowerStatus?.statusCode}
-          branches={authUser?.agencies?.[0]}
+          statusCode={borrowerStatus?.statusCode}
+          branches={loanerInfo?.agencies?.[0]}
           className={styles.nousererror}
         />
       )}

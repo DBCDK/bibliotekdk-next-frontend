@@ -197,6 +197,25 @@ export function orderPolicy({ pids }) {
   };
 }
 
+export function borrowerStatus() {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 1000, // for debugging
+    query: `
+    query  {
+      user {
+        agencies {
+         borrowerStatus {
+          allowed
+          statusCode
+          }
+        }
+       }
+     }`,
+    slowThreshold: 3000,
+  };
+}
+
 /**
  * get extended user data
  *

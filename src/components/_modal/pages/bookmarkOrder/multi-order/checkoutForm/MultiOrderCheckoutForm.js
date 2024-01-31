@@ -67,7 +67,7 @@ const CheckoutForm = ({
         !mail?.valid?.status ||
         materialsToOrderCount < 1 ||
         !hasPincode ||
-        userInfo?.authUser?.borrowerStatus?.allowed === false
+        pickupBranchInfo?.borrowerStatus?.allowed === false
     );
   }, [
     isAnalyzed,
