@@ -23,4 +23,5 @@ export const actions = [
   { label: "useTheLibraries", href: "/#!", hidden: true },
   { label: "mySearches", href: "/#!", hidden: true },
   { label: "helpCenter", href: "/hjaelp" },
+  { label: "contactUs", href: "/hjaelp/kontakt-os/25" },
 ];
