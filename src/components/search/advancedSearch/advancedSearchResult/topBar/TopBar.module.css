@@ -6,11 +6,18 @@
   align-items: center;
   padding: var(--pt2) 0;
   cursor: pointer;
+
+  /* Link */
+  --underline-font-hover-color: var(--mine-shaft);
 }
 
 .edit_search {
   display: flex;
   justify-content: end;
+
+  /* Link */
+  --underline-bottom-color: var(--blue);
+  --underline-bottom-hover-color: var(--blue);
 }
 
 .formatedQueryContainer {
