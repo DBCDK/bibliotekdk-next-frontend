@@ -17,6 +17,10 @@ export function branchUserParameters({ branchId }) {
     query: `
     query BranchUserParameters($branchId: String!, $language: LanguageCode!) {
       branches(branchId: $branchId, language: $language) {
+        borrowerStatus {
+          allowed
+          statusCode
+        }      
         result {
           borrowerCheck
           culrDataSync
@@ -324,6 +328,7 @@ const branchFastFragment = `fragment branchFastFragment on Branch {
   agencyId
   agencyName
   branchId
+  branchType
   name
   openingHours
   postalAddress
@@ -337,6 +342,8 @@ const branchFastFragment = `fragment branchFastFragment on Branch {
   branchWebsiteUrl
   branchCatalogueUrl
   lookupUrl
+  temporarilyClosed
+  temporarilyClosedReason
 }`;
 
 const orderPolicyFragment = `fragment orderPolicyFragment on CheckOrderPolicy {

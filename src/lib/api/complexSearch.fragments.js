@@ -10,7 +10,7 @@ import { ApiEnums } from "@/lib/api/api";
  */
 export function doComplexSearchAll({ cql, offset, limit, sort }) {
   return {
-    apiUrl: ApiEnums.FBI_API_BIBDK21,
+    apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `
     query ComplexSearchAll($cql: String!, $offset: Int!, $limit: PaginationLimit!, $sort: [Sort!]) {
@@ -118,7 +118,7 @@ export function doComplexSearchAll({ cql, offset, limit, sort }) {
  */
 export function complexSearchOnlyWorkIds({ cql, offset, limit, sort }) {
   return {
-    apiUrl: ApiEnums.FBI_API_BIBDK21,
+    apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `
     query ComplexSearchOnlyWorkIds($cql: String!, $offset: Int!, $limit: PaginationLimit!, $sort: [Sort!]) {
@@ -145,7 +145,7 @@ export function complexSearchOnlyWorkIds({ cql, offset, limit, sort }) {
  */
 export function hitcount({ cql, offset, limit, sort }) {
   return {
-    apiUrl: ApiEnums.FBI_API_BIBDK21,
+    apiUrl: ApiEnums.FBI_API,
     query: `
     query hitcount($cql: String!) {
 			complexSearch(cql: $cql) {

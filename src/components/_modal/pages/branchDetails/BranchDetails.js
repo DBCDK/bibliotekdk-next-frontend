@@ -265,7 +265,9 @@ export default function BranchDetails({ context }) {
         />
       </LocalizationsBase.Information>
       {!branchDetailsLoading &&
-      (!singleBranch?.pickupAllowed || !orderPolicyForBranch?.orderPossible) ? (
+      (!singleBranch?.pickupAllowed ||
+        !orderPolicyForBranch?.orderPossible ||
+        singleBranch?.temporarilyClosed === true) ? (
         <LocalizationsBase.HighlightedArea>
           <Text type={"text2"}>
             {Translate({
@@ -273,6 +275,9 @@ export default function BranchDetails({ context }) {
               label: "obs_not_orders_to_here",
             })}
           </Text>
+          {!!singleBranch?.temporarilyClosedReason && (
+            <Text type={"text2"}>{singleBranch?.temporarilyClosedReason}</Text>
+          )}
         </LocalizationsBase.HighlightedArea>
       ) : (
         <>

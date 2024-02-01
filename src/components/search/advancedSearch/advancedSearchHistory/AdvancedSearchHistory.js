@@ -36,6 +36,10 @@ function HistoryItem({ item, index, checked, onSelect }) {
     }
   };
 
+  const timestamp = item.unixtimestamp
+    ? getTimeStamp(item.unixtimestamp)
+    : item.timestamp;
+
   return (
     <div
       className={cx(styles.row, styles.grid)}
@@ -60,15 +64,13 @@ function HistoryItem({ item, index, checked, onSelect }) {
         type="text2"
         title={getDateTime(item.unixtimestamp)}
       >
-        {Translate({
-          context: "search",
-          label: "timestamp",
-          vars: [
-            item.unixtimestamp
-              ? getTimeStamp(item.unixtimestamp)
-              : item.timestamp,
-          ],
-        })}
+        {breakpoint === "xs"
+          ? Translate({
+              context: "search",
+              label: "timestamp",
+              vars: [timestamp],
+            })
+          : timestamp}
       </Text>
       <div className={styles.link}>
         <Link
@@ -143,11 +145,12 @@ function HistoryHeaderActions({
         ariaLabelledBy={`selectall`}
         ariaLabel="vælg alle"
         tabIndex="-1"
-        onChange={setAllChecked}
+        onClick={setAllChecked}
         id="selectall"
         className={styles.checkbox}
         checked={checked}
         disabled={disabled}
+        dataCy="advanced-search-history-selectall-checkbox"
       />
       <label htmlFor="selectall">
         <Text type="text3" className={cx(styles.action, styles.lessergap)}>
@@ -237,6 +240,8 @@ export function AdvancedSearchHistory() {
     checkboxList.forEach((check) => {
       const historyItem = storedValue.find((stored) => stored.cql === check);
       historyItem && deleteValue(historyItem);
+      //remove item from checklist too
+      onSelect(historyItem, false);
     });
   };
 

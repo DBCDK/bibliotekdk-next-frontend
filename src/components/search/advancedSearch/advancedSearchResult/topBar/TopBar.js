@@ -13,7 +13,7 @@ import { formattersAndComparitors } from "@/components/search/advancedSearch/use
  *
  * Returns query in a human readable way.
  */
-export function FormatedQuery() {
+export function FormattedQuery() {
   const { cqlFromUrl, fieldSearchFromUrl } = useAdvancedSearchContext();
 
   const { inputFields, dropdownSearchIndices } = fieldSearchFromUrl;
@@ -133,20 +133,22 @@ function FormatDropdowns({ dropdowns, showAndOperator }) {
 export default function TopBar() {
   const { setShowPopover } = useAdvancedSearchContext();
   return (
-    <div className={styles.container}>
+    <Link
+      className={styles.container}
+      onClick={() => {
+        setShowPopover(true);
+      }}
+      border={false}
+    >
       <Container fluid>
-        <Row
-          onClick={() => {
-            setShowPopover(true);
-          }}
-        >
+        <Row>
           <Col xs={12} lg={2} className={styles.your_search}>
             <Text type="text1">
               {Translate({ context: "search", label: "yourSearch" })}
             </Text>
           </Col>
           <Col xs={12} lg={{ offset: 1, span: true }}>
-            <FormatedQuery />
+            <FormattedQuery />
           </Col>
 
           <Col xs={12} lg={2} className={styles.edit_search}>
@@ -168,6 +170,6 @@ export default function TopBar() {
           </Col>
         </Row>
       </Container>
-    </div>
+    </Link>
   );
 }

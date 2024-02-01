@@ -60,8 +60,7 @@ const actions = [
   },
   {
     label: "askLibrarian",
-    href: "https://www.sprgbib.dk/bv/ask",
-    target: "_blank",
+    href: "/hjaelp/kontakt-os/25",
   },
   { label: "becomeLoaner", href: "/artikel/bliv-laaner/43" },
 ];
