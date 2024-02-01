@@ -129,13 +129,6 @@ module.exports = {
         "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",
       timeout: process.env.API_TIMEOUT_MS || 150,
     },
-    // TODO - this one can be deleted when things are tested ok
-    fbi_api_bibdk21: {
-      url:
-        process.env.NEXT_PUBLIC_FBI_API_URL ||
-        "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",
-      timeout: process.env.API_TIMEOUT_MS || 150,
-    },
     fbi_api_simplesearch: {
       url:
         process.env.NEXT_PUBLIC_FBI_API_SIMPLESEARCH_URL ||
