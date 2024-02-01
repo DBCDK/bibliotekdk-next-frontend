@@ -7,13 +7,15 @@ import Button from "@/components/base/button";
 import { signIn } from "@dbcdk/login-nextjs/client";
 import Icon from "@/components/base/icon";
 import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
+import { isFFUAgency } from "@/lib/api/branches.fragments";
+import { useData } from "@/lib/api/api";
 
 /**
  * Modal page for that contains a button to Adgangsplatform login
  * @param {context} context
  * @returns
  */
-export default function OpenAdgangsplatform({ context }) {
+export function OpenAdgangsplatform({ context, isLoading }) {
   const { agencyName, title, text, agencyId, branchId, callbackUID } = context;
 
   const onLogin = () => {
@@ -55,7 +57,8 @@ export default function OpenAdgangsplatform({ context }) {
           onBlur={(e) => {
             if (e.key === "Enter") onLogin();
           }}
-          disabled={!!submitting}
+          skeleton={isLoading}
+          disabled={isLoading || !!submitting}
           tabIndex="0"
         >
           {Translate({
@@ -70,5 +73,22 @@ export default function OpenAdgangsplatform({ context }) {
         </Button>
       </div>
     </div>
+  );
+}
+
+export default function Wrap({ context }) {
+  const { branchId, agencyId } = context;
+
+  const { data, isLoading } = useData(branchId && isFFUAgency({ branchId }));
+
+  // Override agencyId with branchId if an FFU library was selected
+  // BorrowerCheck and borrowerCheckSystem is set on branchId level for FFU libraries.
+  const isFFU = !!data?.branches?.hitcount;
+
+  return (
+    <OpenAdgangsplatform
+      context={{ ...context, agencyId: isFFU ? branchId : agencyId }}
+      isLoading={isLoading}
+    />
   );
 }
