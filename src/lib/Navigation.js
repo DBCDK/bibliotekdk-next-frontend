@@ -15,8 +15,8 @@ export const actions = [
   { label: "scientificArticles", href: "/artikler", hidden: true },
   {
     label: "askLibrarian",
-    href: "https://www.sprgbib.dk/bv/ask",
-    target: "_blank",
+    href: "/hjaelp/kontakt-os/25",
+    // target: "_blank",
   },
   { label: "becomeLoaner", href: "/artikel/bliv-laaner/43" },
   { label: "digitalOffers", href: "/artikel/digitale-bibliotekstilbud/5" },
