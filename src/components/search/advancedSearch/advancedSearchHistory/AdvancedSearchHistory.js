@@ -239,6 +239,8 @@ export function AdvancedSearchHistory() {
     checkboxList.forEach((check) => {
       const historyItem = storedValue.find((stored) => stored.cql === check);
       historyItem && deleteValue(historyItem);
+      //remove item from checklist too
+      onSelect(historyItem, false);
     });
   };
 
