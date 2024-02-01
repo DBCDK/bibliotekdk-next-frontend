@@ -283,9 +283,7 @@ export function AdvancedSearchHistory() {
       <HistoryHeaderActions
         deleteSelected={onDeleteSelected}
         setAllChecked={setAllChecked}
-        checked={
-          storedValue?.length === checkboxList?.length
-        }
+        checked={storedValue?.length === checkboxList?.length}
         partiallyChecked={checkboxList?.length > 0}
         disabled={storedValue?.length === 0}
       />
