@@ -150,6 +150,7 @@ function HistoryHeaderActions({
         className={styles.checkbox}
         checked={checked}
         disabled={disabled}
+        dataCy="advanced-search-history-selectall-checkbox"
       />
       <label htmlFor="selectall">
         <Text type="text3" className={cx(styles.action, styles.lessergap)}>
