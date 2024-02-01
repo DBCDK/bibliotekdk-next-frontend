@@ -145,7 +145,7 @@ function HistoryHeaderActions({
         ariaLabelledBy={`selectall`}
         ariaLabel="vælg alle"
         tabIndex="-1"
-        onChange={setAllChecked}
+        onClick={setAllChecked}
         id="selectall"
         className={styles.checkbox}
         checked={checked}
@@ -283,7 +283,9 @@ export function AdvancedSearchHistory() {
       <HistoryHeaderActions
         deleteSelected={onDeleteSelected}
         setAllChecked={setAllChecked}
-        checked={storedValue?.length === checkboxList?.length}
+        checked={
+          storedValue?.length === checkboxList?.length
+        }
         partiallyChecked={checkboxList?.length > 0}
         disabled={storedValue?.length === 0}
       />
