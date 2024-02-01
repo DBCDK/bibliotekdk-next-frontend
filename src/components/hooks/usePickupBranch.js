@@ -81,6 +81,10 @@ export default function usePickupBranch({ pids }) {
     hasCulrUniqueId && userFragments.extendedData()
   );
 
+  const { data: borrowerStatus, isLoading: isLoadingBorrowerStatus } = useData(
+    hasCulrUniqueId && userFragments.borrowerStatus()
+  );
+
   //extendedUserData.user.lastUsedPickUpBranch is a branch Id. We find data for that branch from the orderPolicy list that we fetched earlier.
   const lastUsedPickUpBranch = findBranchByBranchId(
     orderPolicy?.user?.agencies,
@@ -113,7 +117,8 @@ export default function usePickupBranch({ pids }) {
     policyIsLoading ||
     userParamsIsLoading ||
     branchPolicyIsLoading ||
-    isLoadingExtendedData;
+    isLoadingExtendedData ||
+    isLoadingBorrowerStatus;
 
   const pickupBranchUser = (!userParamsIsLoading && mergedUser) || {};
   const isAuthenticatedForPickupBranch = isAuthenticated || isGuestUser;
@@ -127,5 +132,6 @@ export default function usePickupBranch({ pids }) {
     isPickupBranchLoading,
     pickupBranchUser,
     isAuthenticatedForPickupBranch,
+    borrowerStatus: borrowerStatus?.user?.agencies?.[0]?.borrowerStatus,
   };
 }

@@ -19,6 +19,7 @@ export default function useOrderPageInformation({
     isLoading: userIsLoading,
     pickupBranchUser,
     isAuthenticatedForPickupBranch,
+    borrowerStatus,
   } = usePickupBranch(pids && !isEmpty(pids) && { pids: pids });
 
   const workResponse = useData(
@@ -59,6 +60,7 @@ export default function useOrderPageInformation({
       pickupBranchUser,
       isAuthenticatedForPickupBranch,
       isLoadingBranches,
+      borrowerStatus,
     },
     accessTypeInfo: {
       isArticle,

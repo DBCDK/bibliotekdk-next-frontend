@@ -1,8 +1,13 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
-const fbiApiPath = Cypress.env("fbiApiPath");
+const fbiApiPath = Cypress.env("fbiApiSimpleSearchPath");
 
 describe("Search", () => {
   beforeEach(() => {
+    cy.window().then((win) => {
+      win.sessionStorage.clear();
+      win.localStorage.clear();
+    });
+
     cy.visit(`${nextjsBaseUrl}/find?q.all=harry potter`);
     cy.consentAllowAll();
   });
@@ -40,6 +45,11 @@ describe("Search", () => {
   it(`Should link to work page`, () => {
     cy.get('[data-cy="result-row"]', { timeout: 10000 }).first().click();
     cy.url().should("include", "/materiale");
+  });
+
+  it(`Desktop: Fake searchfield not visible`, () => {
+    cy.reload();
+    cy.get('[data-cy="fake-search-input"]').should("not.be.visible");
   });
 
   it(`Should collect data when searching and clicking work`, () => {
@@ -80,10 +90,6 @@ describe("Search", () => {
       expect(data.session_id).to.equal("test");
       expect(interception.response.body.errors).to.be.undefined;
     });
-  });
-
-  it(`Desktop: Fake searchfield not visible`, () => {
-    cy.get('[data-cy="fake-search-input"]').should("not.be.visible");
   });
 
   it(`Mobile: Has searchfield including query`, () => {
