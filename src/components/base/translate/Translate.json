@@ -104,8 +104,8 @@
         "en": "Languages"
       },
       "all_phrase.mainlanguage": {
-        "da": "Alle sprog",
-        "en": "All languages"
+        "da": "Alle",
+        "en": "All"
       },
       "phrase.specificmaterialtype": {
         "da": "Materialetype",
@@ -120,24 +120,24 @@
         "en": "Materialtype"
       },
       "all_phrase.generalmaterialtype": {
-        "da": "Alle materialer",
-        "en": "All materials"
+        "da": "Alle",
+        "en": "All"
       },
       "publicationyear": {
         "da": "Udgivelsesår",
         "en": "Publication year"
       },
       "all_publicationyear": {
-        "da": "Alle år",
-        "en": "All publication years"
+        "da": "Alle",
+        "en": "All"
       },
       "ages": {
         "da": "Aldersgruppe",
         "en": "Audience"
       },
       "all_ages": {
-        "da": "Alle aldersgrupper",
-        "en": "All audiences"
+        "da": "Alle",
+        "en": "All"
       },
       "search_dropdown": {
         "da": "Søg i %s...",
@@ -2806,6 +2806,10 @@
       "helpCenter": {
         "da": "Hjælp og vejledninger",
         "en": "Help and instructions"
+      },
+      "contactUs": {
+        "da": "Kontakt os",
+        "en": "Contact us"
       }
     },
     "helpmenu": {

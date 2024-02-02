@@ -15,7 +15,7 @@ export function fast({ q, workType }) {
   workType = workType?.toUpperCase();
 
   return {
-    apiUrl: ApiEnums.FBI_API,
+    apiUrl: ApiEnums.FBI_API_SIMPLESEARCH,
     // delay: 1000, // for debugging
     query: `
     query SuggestFragmentsFast($q: String!, $workType: WorkType) {
@@ -34,7 +34,7 @@ export function fast({ q, workType }) {
 
 export function csSuggest({ q, type }) {
   return {
-    apiUrl: ApiEnums.FBI_API_BIBDK21,
+    apiUrl: ApiEnums.FBI_API,
     query: `
     query CS_suggester ($q:String!, $type:ComplexSuggestionType! ){
         complexSuggest(q: $q, type: $type) {
@@ -60,7 +60,7 @@ export function all({ q, workType, suggestType = "", limit = 100000 }) {
   suggestType = suggestType?.toUpperCase();
 
   return {
-    apiUrl: ApiEnums.FBI_API,
+    apiUrl: ApiEnums.FBI_API_SIMPLESEARCH,
     // delay: 1000, // for debugging
     query: `
     query SuggestFragmentsAll($q: String!, $workType: WorkType, $limit: Int) {
@@ -90,7 +90,7 @@ export function typedSuggest({
   workType = workType?.toUpperCase();
   suggestType = suggestType?.toUpperCase();
   return {
-    apiUrl: ApiEnums.FBI_API,
+    apiUrl: ApiEnums.FBI_API_SIMPLESEARCH,
     // delay: 1000, // for debugging
     query: `
     query SuggestFragmentsTyped($q: String!, $workType: WorkType, $suggestType: SuggestionType, $limit: Int) {

@@ -19,7 +19,7 @@ import {
  */
 export function hitcount({ q, filters = {} }) {
   return {
-    apiUrl: ApiEnums.FBI_API,
+    apiUrl: ApiEnums.FBI_API_SIMPLESEARCH,
     // delay: 1000, // for debugging
     query: `
     query ($q: SearchQuery!, $filters: SearchFilters) {
@@ -51,7 +51,7 @@ export function all({
   search_exact = false,
 }) {
   return {
-    apiUrl: ApiEnums.FBI_API,
+    apiUrl: ApiEnums.FBI_API_SIMPLESEARCH,
     // delay: 1000, // for debugging
     query: `
     query all ($q: SearchQuery!, $filters: SearchFilters, $offset: Int!, $limit: PaginationLimit!, $search_exact: Boolean) {
@@ -133,7 +133,7 @@ export function facets({
   facets = Object.values(FilterTypeEnum),
 }) {
   return {
-    apiUrl: ApiEnums.FBI_API,
+    apiUrl: ApiEnums.FBI_API_SIMPLESEARCH,
     // delay: 1000, // for debugging
     query: `
     query ($q: SearchQuery!, $filters: SearchFilters, $facets: [FacetField!]!) {
