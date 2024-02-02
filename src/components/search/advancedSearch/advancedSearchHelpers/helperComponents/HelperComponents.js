@@ -67,7 +67,11 @@ export function RadioButtonItem({ item, textType = "text3" }) {
 
 export function CheckboxItem({ item, onChange = null, textType = "text3" }) {
   return (
-    <div className={cx(styles.select_wrapper)} tabIndex="-1">
+    <div
+      className={cx(styles.select_wrapper)}
+      tabIndex="-1"
+      data-cy={`dropdown-item-checkbox-${item?.name}`}
+    >
       <Checkbox
         id={item?.name}
         checked={item?.isSelected}
@@ -234,7 +238,12 @@ export function TogglerContent({
       return (
         <Text tag="span" className={styles.toggler_content}>
           {Translate({ context: "general", label: "chosen" })}
-          <Text tag="span" type="text4" className={styles.label_count}>
+          <Text
+            tag="span"
+            type="text4"
+            className={styles.label_count}
+            data-cy={`dropdown-selected-count-${indexName}`}
+          >
             {selectedItems.length}
           </Text>
         </Text>

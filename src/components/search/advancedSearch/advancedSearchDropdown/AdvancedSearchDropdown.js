@@ -147,11 +147,13 @@ export default function AdvancedSearchDropdown({
   const hasSpecialFormTypes = menuItemsState.some((item) =>
     specialFormTypes.has(item.formType)
   );
-console.log('indexName',indexName)
-console.log('indexPlaceholder',indexPlaceholder)
+  console.log("indexName", indexName);
+  console.log("indexPlaceholder", indexPlaceholder);
 
   return (
-    <Dropdown className={styles.nav_element}         data-cy={`advanced-search-dropdown-${indexName}`}
+    <Dropdown
+      className={styles.nav_element}
+      data-cy={`advanced-search-dropdown-${indexName}`}
     >
       <Toggler
         TogglerContent={() => (
