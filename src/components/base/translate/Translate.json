@@ -2629,6 +2629,10 @@
         "da": "Alle materialkategorier",
         "en": "All material categories"
       },
+      "label-review": {
+        "da": "Anmeldelse",
+        "en": "Review"
+      },
       "label-literature": {
         "da": "Bøger",
         "en": "Books"
