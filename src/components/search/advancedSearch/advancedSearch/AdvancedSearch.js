@@ -193,25 +193,51 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
                   : Translate({ context: "search", label: "clearSearch" })}
               </Link>
             </Text>
-            <Text type="text3" tag="span" className={styles.helpLink}>
-              <Link
-                href={getHelpUrl("soegning-baade-enkel-og-avanceret", "179")}
-                border={{
-                  top: false,
-                  bottom: {
-                    keepVisible: true,
-                  },
-                }}
-                target="_blank"
-              >
-                {isMobile
-                  ? Translate({
-                      context: "search",
-                      label: "mobile_helpAndGuidance",
-                    })
-                  : Translate({ context: "search", label: "helpAndGuidance" })}
-              </Link>
-            </Text>
+            <div className={styles.helpLink}>
+              {showCqlEditor && (
+                <div>
+                  <Text type="text3" tag="span" className={styles.helpLink}>
+                    <Link
+                      href="https://fbi-api.dbc.dk/indexmapper/"
+                      border={{
+                        top: false,
+                        bottom: {
+                          keepVisible: true,
+                        },
+                      }}
+                      target="_blank"
+                    >
+                      {Translate({
+                        context: "search",
+                        label: "get-search-codes",
+                      })}
+                    </Link>
+                  </Text>
+                </div>
+              )}
+              <Text type="text3" tag="span" className={styles.helpLink}>
+                <Link
+                  href={getHelpUrl("soegning-baade-enkel-og-avanceret", "179")}
+                  border={{
+                    top: false,
+                    bottom: {
+                      keepVisible: true,
+                    },
+                  }}
+                  target="_blank"
+                >
+                  {isMobile
+                    ? Translate({
+                        context: "search",
+                        label: "mobile_helpAndGuidance",
+                      })
+                    : Translate({
+                        context: "search",
+                        label: "helpAndGuidance",
+                      })}
+                </Link>
+              </Text>
+            </div>
           </Col>
 
           <Col md={4} sm={12} className={styles.helpLink}></Col>
