@@ -438,6 +438,9 @@ export function buttonTxt({ workId }) {
         manifestations {
           all {
             pid
+            materialTypes {
+              ...materialTypesFragment
+            }
           }
           mostRelevant {
             pid
@@ -647,7 +650,7 @@ export function idsToWorks({ ids }) {
           ...creatorsFragment
         }
         manifestations {
-          mostRelevant {
+          all {
             access{
               __typename
               ... on DigitalArticleService {
@@ -715,7 +718,7 @@ export function listOfAllManifestations({ workId }) {
     query listOfAllManifestations($workId: String!) {
       work(id: $workId) {
         manifestations {
-          mostRelevant {
+          all {
             pid
             volume            
             titles {
@@ -766,7 +769,7 @@ export function orderPageWorkWithManifestations({ workId }) {
         }
         workTypes
         manifestations {
-          mostRelevant {
+          all {
             ...manifestationAccess
             ...manifestationDetailsForAccessFactory
           }
@@ -807,7 +810,7 @@ export function overviewWork({ workId }) {
         }
         workTypes
         manifestations {
-          mostRelevant {
+          all { 
             ownerWork {
               workTypes
             }

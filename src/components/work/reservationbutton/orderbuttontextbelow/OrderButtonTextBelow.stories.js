@@ -97,7 +97,7 @@ EBookButtonTxt.story = {
           ],
           workTypes: ["LITERATURE"],
           manifestations: {
-            mostRelevant: [
+            all: [
               {
                 pid: "some-pid-ebog" + time,
               },
@@ -161,7 +161,7 @@ EAudioBookPhysicalButtonTxt.story = {
           ],
           workTypes: ["LITERATURE"],
           manifestations: {
-            mostRelevant: [
+            all: [
               {
                 pid: "some-pid-physical-audio-book" + time,
               },
@@ -225,7 +225,7 @@ EAudioBookDigitalButtonTxt.story = {
           ],
           workTypes: ["LITERATURE"],
           manifestations: {
-            mostRelevant: [
+            all: [
               {
                 pid: "some-pid-elydbog" + time,
               },
