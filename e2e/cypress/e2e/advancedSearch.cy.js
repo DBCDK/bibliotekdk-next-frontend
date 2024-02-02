@@ -130,9 +130,11 @@ describe("Dropdowns test", () => {
       "/iframe.html?id=advancedsearch-dropdownitems--dropdown-items-base"
     );
   });
+  const materialTypeDropdown =
+    "advanced-search-dropdown-phrase.generalmaterialtype";
+  const languageDropdown = "advanced-search-dropdown-phrase.mainlanguage";
 
   it("should select items from a checkbox dropdown", () => {});
-
   it("should reset dropdown", () => {});
   it("search inside a dropdown", () => {});
   it("should select year range ", () => {});
