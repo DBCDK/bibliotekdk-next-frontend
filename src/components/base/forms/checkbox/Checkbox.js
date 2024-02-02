@@ -27,7 +27,7 @@ export function Checkbox({
   ariaLabel = "",
   readOnly = false,
   required,
-  ...props
+  onClick,
 }) {
   const [status, setStatus] = useState(checked);
   const firstUpdate = useRef(true);
@@ -74,7 +74,7 @@ export function Checkbox({
             setStatus(!status);
           }
         }}
-        {...props}
+        onClick={onClick}
       />
       <div className={styles.border}>
         <div className={styles.bg} />
