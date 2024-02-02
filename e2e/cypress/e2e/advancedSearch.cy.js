@@ -139,20 +139,25 @@ describe("Dropdowns test", () => {
       '[data-cy="advanced-search-dropdown-phrase.generalmaterialtype"]'
     ).click();
     //select books,movies and music
-    cy.get('[data-cy="dropdown-item-checkbox-bøger"]').click({ force: true });
-    cy.get('[data-cy="dropdown-item-checkbox-film"]').click({ force: true });
-    cy.get('[data-cy="dropdown-item-checkbox-musik"]').click({ force: true });
+    cy.get('[data-cy="list-button-0"]').click();
+    cy.get('[data-cy="list-button-1"]').click();
+    cy.get('[data-cy="list-button-2"]').click();
 
     //expect dropdown label should have value 3
     cy.get(
       '[data-cy="dropdown-selected-count-phrase.generalmaterialtype"]'
     ).should("have.text", "3");
   });
-  it("search inside a dropdown", () => {});
+  it.only("search inside a dropdown", () => {
+    cy.get(
+      '[data-cy="advanced-search-dropdown-phrase.generalmaterialtype"]'
+    ).click();
 
+    cy.get('[data-cy="dropdown-searchbar-Materialetype"]').type("tegneserier");
+    cy.get('[data-cy="text-tegneserier"]').should("have.text", "tegneserier");
+  });
 
   it("should select year range ", () => {});
   it("should select age range ", () => {});
   it("should reset dropdown", () => {});
-
 });

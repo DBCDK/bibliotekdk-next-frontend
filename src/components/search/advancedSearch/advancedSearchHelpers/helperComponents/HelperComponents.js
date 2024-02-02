@@ -70,7 +70,8 @@ export function CheckboxItem({ item, onChange = null, textType = "text3" }) {
     <div
       className={cx(styles.select_wrapper)}
       tabIndex="-1"
-      data-cy={`dropdown-item-checkbox-${item?.name}`}
+      //TODO: maybe remove
+      //  data-cy={`dropdown-item-checkbox-${item?.name}`}
     >
       <Checkbox
         id={item?.name}
@@ -291,9 +292,11 @@ export function SearchBar({
   indexTitle,
   className,
 }) {
+  console.log(" indexTitle", indexTitle);
   return (
     <Input
       id={id}
+      dataCy={`dropdown-searchbar-${indexTitle}`}
       value={value}
       className={className}
       style={searchIconInInput()}
