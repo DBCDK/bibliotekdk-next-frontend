@@ -67,12 +67,7 @@ export function RadioButtonItem({ item, textType = "text3" }) {
 
 export function CheckboxItem({ item, onChange = null, textType = "text3" }) {
   return (
-    <div
-      className={cx(styles.select_wrapper)}
-      tabIndex="-1"
-      //TODO: maybe remove
-      //  data-cy={`dropdown-item-checkbox-${item?.name}`}
-    >
+    <div className={cx(styles.select_wrapper)} tabIndex="-1">
       <Checkbox
         id={item?.name}
         checked={item?.isSelected}
@@ -299,7 +294,6 @@ export function SearchBar({
   indexTitle,
   className,
 }) {
-  console.log(" indexTitle", indexTitle);
   return (
     <Input
       id={id}
