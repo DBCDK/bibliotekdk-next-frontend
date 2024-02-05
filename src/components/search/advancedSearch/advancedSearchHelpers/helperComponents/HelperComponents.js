@@ -166,6 +166,7 @@ export function YearRange({
         })}
         <Input
           type="text"
+          dataCy="advanced-search-from-range"
           inputMode="numeric"
           pattern="[0-9]*"
           className={styles.single_range}
@@ -190,6 +191,7 @@ export function YearRange({
         {Translate({ context: "advanced_search_dropdown", label: "to_range" })}
         <Input
           type="text"
+          dataCy="advanced-search-to-range"
           inputMode="numeric"
           pattern="[0-9]*"
           className={styles.single_range}
@@ -229,7 +231,12 @@ export function TogglerContent({
       // If we have ACTION_LINK_CONTAINER, we show only this
       return (
         <Text tag="span" className={styles.toggler_content}>
-          <Text tag="span" type="text4" className={styles.label_count}>
+          <Text
+            tag="span"
+            type="text4"
+            className={styles.label_count}
+            data-cy="advanced-search-dropdown-selected-label"
+          >
             {getSelectedPresentation(selectedItems?.[0]?.value)}
           </Text>
         </Text>
@@ -319,6 +326,7 @@ export function ClearBar({ onClick, className }) {
         tag="span"
         border={{ bottom: { keepVisible: true } }}
         onClick={onClick}
+        dataCy="advanced-search-dropdown-clear"
       >
         {Translate({ context: "general", label: "reset" })}
       </Link>
