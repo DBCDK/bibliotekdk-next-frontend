@@ -131,10 +131,62 @@ describe("Dropdowns test", () => {
     );
   });
 
-  it("should select items from a checkbox dropdown", () => {});
+  it("should select items from a checkbox dropdown", () => {
+    //click on materialtype dropdown
+    cy.get(
+      '[data-cy="advanced-search-dropdown-phrase.generalmaterialtype"]'
+    ).click();
+    //select books,movies and music
+    cy.get('[data-cy="list-button-0"]').click();
+    cy.get('[data-cy="list-button-1"]').click();
+    cy.get('[data-cy="list-button-2"]').click();
 
-  it("should reset dropdown", () => {});
-  it("search inside a dropdown", () => {});
-  it("should select year range ", () => {});
-  it("should select age range ", () => {});
+    //expect dropdown label should have value 3
+    cy.get(
+      '[data-cy="dropdown-selected-count-phrase.generalmaterialtype"]'
+    ).should("have.text", "3");
+  });
+  it("search inside a dropdown", () => {
+    cy.get(
+      '[data-cy="advanced-search-dropdown-phrase.generalmaterialtype"]'
+    ).click();
+
+    cy.get('[data-cy="dropdown-searchbar-Materialetype"]').type("tegneserier");
+    cy.get('[data-cy="list-button-0"] [data-cy="text-tegneserier"]').should(
+      "have.text",
+      "tegneserier"
+    );
+  });
+
+  it("should select year range ", () => {
+    //open publication year dropdown
+    cy.get('[data-cy="advanced-search-dropdown-publicationyear"]').click();
+    //type in from input
+    cy.get('[data-cy="advanced-search-from-range"]').type(1948);
+    //type in to input
+
+    cy.get('[data-cy="advanced-search-to-range"]').type(1984);
+    //expect it to be shown in the dropdown label
+    cy.get('[data-cy="advanced-search-dropdown-selected-label"]').should(
+      "have.text",
+      "1948 - 1984"
+    );
+  });
+  it("should reset dropdown", () => {
+    //open ages modal
+    cy.get('[data-cy="advanced-search-dropdown-ages"]').click();
+    //click on 3-6 years option
+    cy.get('[data-cy="text-for-3-6-årige"]').click();
+    //Expect that it is shown in the label as selected
+    cy.get('[data-cy="advanced-search-dropdown-selected-label"]').should(
+      "have.text",
+      "3-6-årige"
+    );
+    //clear selection
+    cy.get('[data-cy="advanced-search-dropdown-clear"]').click();
+    //dropdown label should not exist
+    cy.get('[data-cy="advanced-search-dropdown-selected-label"]').should(
+      "not.exist"
+    );
+  });
 });
