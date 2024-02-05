@@ -56,7 +56,10 @@ function SpecificInformationOnAgency({ pids, agency, onlyHoldingsOnAgency }) {
   return (
     <div className={styles.agency_holdings_row_wrapper}>
       <AvailabilityLight
-        availabilityAccumulated={availabilityOnAgencyAccumulated}
+        // We're only interested in the agency in this situation
+        availabilityLightProps={{
+          availabilityAccumulated: availabilityOnAgencyAccumulated,
+        }}
       />
       <div className={styles.agency_holdings_result}>
         <Text type="text2">
@@ -141,6 +144,7 @@ export default function BranchLocalizations({ context, modal }) {
             <BranchLocalizationItem
               context={context}
               branchId={branch.branchId}
+              agencyId={branch.agencyId}
               pids={pids}
               modal={modal}
               manifestations={context.manifestations}
@@ -201,6 +205,7 @@ export default function BranchLocalizations({ context, modal }) {
                 <BranchLocalizationItem
                   context={context}
                   branchId={branch.branchId}
+                  agencyId={branch.agencyId}
                   pids={pids}
                   modal={modal}
                   manifestations={context.manifestations}

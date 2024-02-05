@@ -148,7 +148,12 @@ function BranchStatusMessage({ library, manifestations }) {
         manifestations={manifestations}
       />
     );
-  } else if (library?.availabilityAccumulated === AvailabilityEnum.LATER) {
+  } else if (
+    library?.availabilityAccumulated === AvailabilityEnum.LATER ||
+    [AvailabilityEnum.NOW, AvailabilityEnum.LATER].includes(
+      library?.availabilityOnAgencyAccumulated
+    )
+  ) {
     return <MessageWhenMaterialsAvailableLater library={library} />;
   } else if (library?.availabilityAccumulated === AvailabilityEnum.NEVER) {
     return <MessageWhenMaterialsAvailableNever />;
@@ -173,35 +178,31 @@ function BranchStatusMessage({ library, manifestations }) {
  * @param {Object.<string, any>} props.library
  * @param {Array.<Object.<string, any>>} props.manifestations
  * @param {Array.<string>} props.pids
- * @param {Array.<AvailabilityEnum>} props.possibleAvailabilities
  * @returns {React.ReactElement | null}
  */
-export default function BranchDetailsStatus({
-  library,
-  manifestations,
-  pids,
-  possibleAvailabilities = [
-    AvailabilityEnum.NOW,
-    AvailabilityEnum.LATER,
-    AvailabilityEnum.NEVER,
-    AvailabilityEnum.NOT_OWNED,
-    AvailabilityEnum.NOT_OWNED_FFU,
-    AvailabilityEnum.UNKNOWN,
-  ],
-}) {
+export default function BranchDetailsStatus({ library, manifestations, pids }) {
   const availabilityAccumulated = library?.availabilityAccumulated;
+  const availabilityOnAgencyAccumulated =
+    library?.availabilityOnAgencyAccumulated;
+  const pickupAllowed = library?.pickupAllowed;
 
   return (
     <div className={cx(styles.row_wrapper)}>
-      {possibleAvailabilities.includes(availabilityAccumulated) && (
-        <AvailabilityLight availabilityAccumulated={availabilityAccumulated} />
-      )}
+      <AvailabilityLight
+        availabilityLightProps={{
+          availabilityOnAgencyAccumulated: availabilityOnAgencyAccumulated,
+          availabilityAccumulated: availabilityAccumulated,
+          pickupAllowed: pickupAllowed,
+        }}
+      />
       <div className={styles.result}>
         <BranchStatusMessage
           library={library}
           manifestations={manifestations}
         />
-        {availabilityAccumulated !== AvailabilityEnum.NOT_OWNED && (
+        {![AvailabilityEnum.NOT_OWNED, AvailabilityEnum.NOT_OWNED_FFU].includes(
+          availabilityOnAgencyAccumulated
+        ) && (
           <div className={styles.link_for_branch}>
             <LinkForBranch library={library} pids={pids} />
           </div>
