@@ -28,6 +28,7 @@ function Text({
   title = null,
   id,
   lines,
+  ariaExpanded = true,
   ...props
 }) {
   // Set type of tag.
@@ -79,6 +80,7 @@ function Text({
       onClick={onClick}
       data-cy={key}
       tabIndex={tabIndex}
+      aria-expanded={ariaExpanded}
       {...(title && { title: title })}
       {...props}
     >
