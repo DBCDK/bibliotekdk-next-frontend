@@ -15,7 +15,7 @@ import Pagination from "@/components/search/pagination/Pagination";
 import { AvailabilityLight } from "@/components/_modal/pages/base/localizationsBase/localizationItemBase/AvailabilityLight";
 import cx from "classnames";
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 25;
 
 function NoMaterialsHomeAtLocalizations({
   labelBase,
@@ -26,7 +26,11 @@ function NoMaterialsHomeAtLocalizations({
       className={cx(styles.no_match_for_library_search, styles.row_wrapper)}
     >
       {availabilityLight && (
-        <AvailabilityLight availabilityAccumulated={AvailabilityEnum.LATER} />
+        <AvailabilityLight
+          availabilityLightProps={{
+            availabilityAccumulated: AvailabilityEnum.LATER,
+          }}
+        />
       )}
       <div className={styles.result}>
         <Text type="text2">
@@ -76,7 +80,11 @@ export default function AgencyLocalizations({ context, modal }) {
     data: agenciesWithHoldings,
     isLoading: agenciesWithHoldingsIsLoading,
   } = useData(
-    pids && localizationsFragments.localizationsWithHoldings({ pids: pids })
+    pids &&
+      localizationsFragments.localizationsWithHoldings({
+        pids: pids,
+        availabilityTypes: ["NOW", "LATER", "UNKNOWN"],
+      })
   );
 
   const agencyIds = !isEmpty(query)
@@ -134,6 +142,7 @@ export default function AgencyLocalizations({ context, modal }) {
             className={styles.pagination}
             numPages={limit <= agencyIds?.length ? 2 : 1}
             forceMobileView={true}
+            disableScrollMobileView={true}
             onChange={() => setLimit((prev) => prev + PAGE_SIZE)}
           />
         </>

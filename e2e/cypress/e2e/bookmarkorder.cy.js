@@ -73,3 +73,27 @@ describe("BookmarkOrderOnlineAndPhysical", () => {
     cy.contains("Bestillingen blev gennemført");
   });
 });
+
+describe("BookmarkOrderUserIsBlocked", () => {
+  before(() => {
+    cy.window().then((win) => {
+      win.sessionStorage.clear();
+    });
+  });
+  it(`Try to Order - user is blocked`, () => {
+    cy.visit("/iframe.html?id=modal-materials--blocked-user");
+
+    cy.contains("1 materiale findes online, og kræver ikke bestilling").should(
+      "exist"
+    );
+    // open order modal
+    cy.get("[data-cy=multiorder-next-button]")
+      .should(($el) => {
+        expect(Cypress.dom.isDetached($el)).to.eq(false);
+      })
+      .click();
+
+    // User is blocke
+    cy.contains("Biblioteket modtager desværre ikke bestillinger fra dig.");
+  });
+});

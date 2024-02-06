@@ -21,34 +21,61 @@ function DefaultShowingOfAgencyBranches({ agency }) {
     (branch) => branch?.availabilityAccumulated === AvailabilityEnum.NOW
   ).length;
 
+  const availabilityOnAgencyAccumulated =
+    agency?.availabilityOnAgencyAccumulated;
+
   const libraryType = getLibraryType(agency?.agencyId);
 
-  return (
-    <>
+  if (availabilityOnAgencyAccumulated === AvailabilityEnum.NOW) {
+    return (
+      <>
+        <Text clamp={true}>
+          {Translate({
+            context: "localizations",
+            label:
+              numberOfBranchesWithAvailable > 1
+                ? "home_at_branches"
+                : numberOfBranchesWithAvailable === 0
+                ? "home_no_branch_specified"
+                : "home_at_1_branch",
+            vars: [numberOfBranchesWithAvailable],
+          })}
+          {numberOfBranchesWithAvailable > 0 &&
+            " " +
+              Translate({
+                context: "localizations",
+                label:
+                  LibraryTypeEnum.DANISH_PUBLIC_LIBRARY !== libraryType
+                    ? "or_more_branches"
+                    : numberOfBranchesWithAvailable > 1
+                    ? "branches"
+                    : "branch",
+              })}
+        </Text>
+      </>
+    );
+  }
+
+  if (availabilityOnAgencyAccumulated === AvailabilityEnum.LATER) {
+    return (
       <Text clamp={true}>
         {Translate({
           context: "localizations",
-          label:
-            numberOfBranchesWithAvailable > 1
-              ? "home_at_branches"
-              : numberOfBranchesWithAvailable === 0
-              ? "home_no_branch_specified"
-              : "home_at_1_branch",
-          vars: [numberOfBranchesWithAvailable],
+          label: "not_on_shelf",
         })}
-        {numberOfBranchesWithAvailable > 0 &&
-          " " +
-            Translate({
-              context: "localizations",
-              label:
-                LibraryTypeEnum.DANISH_PUBLIC_LIBRARY !== libraryType
-                  ? "or_more_branches"
-                  : numberOfBranchesWithAvailable > 1
-                  ? "branches"
-                  : "branch",
-            })}
       </Text>
-    </>
+    );
+  }
+
+  // TODO: Fix NEVER, should be NO_RESPONSE
+  // This covers NEVER and all other (others shouldn't happen)
+  return (
+    <Text clamp={true}>
+      {Translate({
+        context: "localizations",
+        label: "agency_shelf_status_unknown",
+      })}
+    </Text>
   );
 }
 
@@ -173,7 +200,9 @@ export default function AgencyLocalizationItem({
           agencyId: agencyId,
         })
       }
-      availabilityAccumulated={agency?.availabilityOnAgencyAccumulated}
+      availabilityLightProps={{
+        availabilityAccumulated: agency?.availabilityOnAgencyAccumulated,
+      }}
     >
       {agencyHighlight ? (
         <Text type={"text2"}>
