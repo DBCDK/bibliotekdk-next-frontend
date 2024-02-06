@@ -196,7 +196,7 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
             <div className={styles.helpLink}>
               {showCqlEditor && (
                 <div>
-                  <Text type="text3" tag="span" className={styles.helpLink}>
+                  <Text type="text3" tag="span" className={styles.asblock}>
                     <Link
                       href="https://fbi-api.dbc.dk/indexmapper/"
                       border={{
@@ -215,7 +215,7 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
                   </Text>
                 </div>
               )}
-              <Text type="text3" tag="span" className={styles.helpLink}>
+              <Text type="text3" tag="span">
                 <Link
                   href={getHelpUrl("soegning-baade-enkel-og-avanceret", "179")}
                   border={{
