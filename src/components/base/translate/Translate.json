@@ -2276,6 +2276,10 @@
       "mobile_helpAndGuidance": {
         "da": "Hjælp",
         "en": "Help"
+      },
+      "get-search-codes": {
+        "da": "Søgekoder",
+        "en": "Search codes"
       }
     },
     "suggester": {
