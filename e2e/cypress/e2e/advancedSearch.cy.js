@@ -72,6 +72,13 @@ describe("Popover elements", () => {
       "have.value",
       expectedParsedString
     );
+
+    // assert that helplink to search code is displayed
+    cy.get('a[href="https://fbi-api.dbc.dk/indexmapper/"]').should("exist");
+    // helplink should NOT be displayed in fieldsearch
+    // switch back to fieldeditor
+    cy.get('[data-cy="edit-in-cql"]').click();
+    cy.get('a[href="https://fbi-api.dbc.dk/indexmapper/"]').should("not.exist");
   });
 
   it("should clear cql editor input", () => {
