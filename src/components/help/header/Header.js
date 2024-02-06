@@ -65,31 +65,6 @@ export function Header({
         </Col>
         <Col className={styles.right} xs={{ order: 3 }}>
           <span>
-            <Link
-              href={getArticleUrl("spoerg-en-bibliotekar", 7)}
-              className={styles.ask}
-            >
-              <Text type="text2" className={styles.full}>
-                {Translate({
-                  context: "help",
-                  label: "header-button-ask-full",
-                })}
-              </Text>
-              <Text type="text2" className={styles.short}>
-                {Translate({
-                  context: "help",
-                  label: "header-button-ask-short",
-                })}
-              </Text>
-              <Icon
-                size={2}
-                src="bubble.svg"
-                alt={Translate({
-                  context: "help",
-                  label: "header-button-ask-full",
-                })}
-              />
-            </Link>
             <BurgerIcon
               className={styles.menu}
               title={Translate({ context: "header", label: "menu" })}
