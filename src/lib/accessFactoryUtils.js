@@ -336,7 +336,9 @@ export function getAllowedAccessesByTypeName(accesses, hasDigitalAccess) {
         singleAccess?.__typename !== AccessEnum.INTER_LIBRARY_LOAN &&
         singleAccess?.__typename !== AccessEnum.DIGITAL_ARTICLE_SERVICE
     )
-    .filter((singleAccess) => !checkSpecialAccess(singleAccess));
+    ?.filter((singleAccess) => !checkSpecialAccess(singleAccess))
+    //  bug Vi skal kun bruge RESOURCE i forhold til url adgang - se https://dbcjira.atlassian.net/browse/SP-1274
+    ?.filter((singleAccess) => singleAccess?.type === "RESOURCE");
 
   const digitalArticleServiceAccesses = accesses?.filter(
     (singleAccess) =>
