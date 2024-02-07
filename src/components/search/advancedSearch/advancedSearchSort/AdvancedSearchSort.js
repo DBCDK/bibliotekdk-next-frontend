@@ -28,10 +28,28 @@ export function getSortTranslation(sortIndex, sortOrder) {
   });
 }
 
+function sortOrderRevers(sortorder) {
+  return sortorder === SortOrderEnum.ASC
+    ? SortOrderEnum.DESC
+    : SortOrderEnum.ASC;
+}
+
 function mergeSingleSorter({ index: sortIndex, order: sortOrder }) {
+  // bug https://dbcjira.atlassian.net/browse/BIBDK2021-2387 -
+  // we need to revert for dates (SortIndexEnum.SORT_LATEST_PUBLICATION_DATE) - asc is oldest first - makes sense for text - NOT dates
+  sortOrder =
+    sortIndex === SortIndexEnum.SORT_LATEST_PUBLICATION_DATE
+      ? sortOrderRevers(sortOrder)
+      : sortOrder;
+  // END bug
   return {
     sortTranslation: getSortTranslation(sortIndex, sortOrder),
-    sort: [{ index: sortIndex, order: sortOrder }],
+    sort: [
+      {
+        index: sortIndex,
+        order: sortOrder,
+      },
+    ],
   };
 }
 
@@ -41,10 +59,6 @@ function mergeSorters() {
       return mergeSingleSorter({ index: sortIndex, order: sortOrder });
     });
   });
-}
-
-function prettyPrintSort(sort) {
-  return sort.sortTranslation;
 }
 
 function handleOnSort(router, sortElement) {
@@ -104,9 +118,9 @@ export default function AdvancedSearchSort({ className }) {
               href={false}
               onClick={() => {}}
             >
-              {prettyPrintSort(
-                !isEmpty(sort) ? mergeSingleSorter(sort?.[0]) : bestMatch
-              )}
+              {!isEmpty(sort)
+                ? getSortTranslation(sort?.[0]?.index, sort?.[0]?.order)
+                : bestMatch}
             </Link>
           </Text>
           <span className={styles.icon_area}>
@@ -120,7 +134,6 @@ export default function AdvancedSearchSort({ className }) {
             />
           </span>
         </Dropdown.Toggle>
-
         <Dropdown.Menu className={styles.dropdown_items}>
           {sortings.map((sortElement) => {
             return (
@@ -136,7 +149,7 @@ export default function AdvancedSearchSort({ className }) {
                   type="text3"
                   className={cx(styles.upper_first)}
                 >
-                  {prettyPrintSort(sortElement)}
+                  {sortElement?.sortTranslation}
                 </Text>
               </Dropdown.Item>
             );
