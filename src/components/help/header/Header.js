@@ -4,9 +4,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import Translate from "@/components/base/translate";
-import Link from "@/components/base/link";
-import Icon from "@/components/base/icon";
-import Text from "@/components/base/text";
 import SearchInput from "@/components/help/search/input";
 
 import { useModal } from "@/components/_modal";
@@ -19,7 +16,6 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Logo from "@/components/base/logo/Logo";
 import { SkipToMainAnchor } from "@/components/base/skiptomain/SkipToMain";
-import { getArticleUrl } from "@/lib/utils";
 
 /**
  * The custom Header for help page
