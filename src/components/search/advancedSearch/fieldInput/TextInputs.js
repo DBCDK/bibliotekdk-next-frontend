@@ -20,10 +20,9 @@ import { LogicalOperatorsEnum } from "@/components/search/enums";
  * @param {Object} props
  * @returns {React.JSX.Element}
  */
-function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
+function FieldInput({ index, fieldValue, doAdvancedSearch }) {
   const [suggestions, setSuggestions] = useState([]);
-  const inputId = `complex_suggest__${fieldValue.searchIndex}-${index}`;
-
+  const inputId = `input-field-${index}`;
   const {
     handleInputFieldChange,
     removeInputField,
@@ -62,7 +61,7 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
   }, [data]);
 
   return (
-    <div key={key} dataCy={`advanced-search-inputfield-${index}`}>
+    <div key={inputId} dataCy={`advanced-search-inputfield-${index}`}>
       {!isFirstItem && (
         <LogicalOperatorDropDown
           onSelect={(value) => handleLogicalOperatorChange(index, value)}
@@ -79,7 +78,7 @@ function FieldInput({ key, index, fieldValue, doAdvancedSearch }) {
         <div className={styles.trashAndSuggester}>
           <div className={`${styles.suggesterContainer} `}>
             <Suggester
-              id={key}
+              id={inputId}
               data={suggestions}
               onSelect={(selectValue) => {
                 setTimeout(() => {

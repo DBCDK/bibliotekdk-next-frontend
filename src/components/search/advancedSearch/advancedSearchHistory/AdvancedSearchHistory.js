@@ -145,11 +145,12 @@ function HistoryHeaderActions({
         ariaLabelledBy={`selectall`}
         ariaLabel="vælg alle"
         tabIndex="-1"
-        onChange={setAllChecked}
+        onClick={setAllChecked}
         id="selectall"
         className={styles.checkbox}
         checked={checked}
         disabled={disabled}
+        dataCy="advanced-search-history-selectall-checkbox"
       />
       <label htmlFor="selectall">
         <Text type="text3" className={cx(styles.action, styles.lessergap)}>
@@ -239,6 +240,8 @@ export function AdvancedSearchHistory() {
     checkboxList.forEach((check) => {
       const historyItem = storedValue.find((stored) => stored.cql === check);
       historyItem && deleteValue(historyItem);
+      //remove item from checklist too
+      onSelect(historyItem, false);
     });
   };
 

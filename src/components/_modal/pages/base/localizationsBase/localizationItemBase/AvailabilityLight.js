@@ -6,15 +6,20 @@ import * as PropTypes from "prop-types";
 
 /**
  * Availability light has the color of the status of the manifestation on the library (agency or branch)
- * @param {AvailabilityEnum} availabilityAccumulated
- * @param {boolean} pickupAllowed
+ * @param {Object} availabilityLightProps
  * @param {Object} style
  * @returns {JSX.Element}
  */
 export function AvailabilityLight({
-  availabilityAccumulated,
+  availabilityLightProps,
   style = { paddingTop: "var(--pt05)" },
 }) {
+  const {
+    availabilityAccumulated,
+    availabilityOnAgencyAccumulated,
+    pickupAllowed,
+  } = availabilityLightProps;
+
   const iconInstance = getFirstMatch(
     true,
     {
@@ -26,6 +31,16 @@ export function AvailabilityLight({
     },
     [
       [
+        pickupAllowed === false,
+        {
+          src: "status__not_for_loan.svg",
+          alt: Translate({
+            context: "localizations",
+            label: "no_pickup_on_library_alt",
+          }),
+        },
+      ],
+      [
         availabilityAccumulated === AvailabilityEnum.NOW,
         {
           src: "status__on_shelf.svg",
@@ -36,7 +51,8 @@ export function AvailabilityLight({
         },
       ],
       [
-        availabilityAccumulated === AvailabilityEnum.LATER,
+        availabilityAccumulated === AvailabilityEnum.LATER ||
+          availabilityOnAgencyAccumulated === AvailabilityEnum.LATER,
         {
           src: "status__on_loan.svg",
           alt: Translate({
@@ -82,4 +98,4 @@ export function AvailabilityLight({
   );
 }
 
-AvailabilityLight.propTypes = { availabilityAccumulated: PropTypes.string };
+AvailabilityLight.propTypes = { availabilityLightProps: PropTypes.object };

@@ -59,6 +59,7 @@ export default function Pagination({
   MAX_VISIBLE_PAGES = 9,
   className,
   forceMobileView,
+  disableScrollMobileView,
 }) {
   const isMobile = useBreakpoint() === "xs";
   const mobileView = forceMobileView || isMobile;
@@ -96,7 +97,7 @@ export default function Pagination({
             skeleton={isLoading}
             onClick={(e) => {
               onChangeChecked(currentPage + 1, false);
-              e.target.scrollTo({ bottom: 0 });
+              !disableScrollMobileView && e.target.scrollTo({ bottom: 0 });
             }}
             onKeyDown={(event) => onKeyDown(event, currentPage + 1, false)}
           >

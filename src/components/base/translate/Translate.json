@@ -104,8 +104,8 @@
         "en": "Languages"
       },
       "all_phrase.mainlanguage": {
-        "da": "Alle sprog",
-        "en": "All languages"
+        "da": "Alle",
+        "en": "All"
       },
       "phrase.specificmaterialtype": {
         "da": "Materialetype",
@@ -120,24 +120,24 @@
         "en": "Materialtype"
       },
       "all_phrase.generalmaterialtype": {
-        "da": "Alle materialer",
-        "en": "All materials"
+        "da": "Alle",
+        "en": "All"
       },
       "publicationyear": {
         "da": "Udgivelsesår",
         "en": "Publication year"
       },
       "all_publicationyear": {
-        "da": "Alle år",
-        "en": "All publication years"
+        "da": "Alle",
+        "en": "All"
       },
       "ages": {
         "da": "Aldersgruppe",
         "en": "Audience"
       },
       "all_ages": {
-        "da": "Alle aldersgrupper",
-        "en": "All audiences"
+        "da": "Alle",
+        "en": "All"
       },
       "search_dropdown": {
         "da": "Søg i %s...",
@@ -903,8 +903,8 @@
         "en": "Status is unknown"
       },
       "order_now_pickup_at_date": {
-        "da": "Bestil nu og afhent fra d. %s",
-        "en": "Order now and pickup from the %s"
+        "da": "Forventet udlånt til d. %s",
+        "en": "Expected on loan until %s"
       },
       "order_now_pickup_at_some_point": {
         "da": "Bestil nu og afhent senere",
@@ -2276,6 +2276,10 @@
       "mobile_helpAndGuidance": {
         "da": "Hjælp",
         "en": "Help"
+      },
+      "get-search-codes": {
+        "da": "Søgekoder",
+        "en": "Search codes"
       }
     },
     "suggester": {
@@ -2628,6 +2632,10 @@
       "label-all": {
         "da": "Alle materialkategorier",
         "en": "All material categories"
+      },
+      "label-review": {
+        "da": "Anmeldelse",
+        "en": "Review"
       },
       "label-literature": {
         "da": "Bøger",
