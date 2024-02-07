@@ -30,15 +30,6 @@
   margin-left: auto;
 }
 
-.ask {
-  margin-right: var(--pt3);
-}
-
-.ask .full,
-.ask .short {
-  display: none;
-}
-
 /* Logo */
 .row > div {
   /* align-self: flex-start; */
