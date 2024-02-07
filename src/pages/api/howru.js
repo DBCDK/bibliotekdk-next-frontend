@@ -6,7 +6,6 @@ import { getServerSession } from "@dbcdk/login-nextjs/server";
 import { getErrorCount, resetErrorCount } from "@/utils/errorCount";
 import getConfig from "next/config";
 import { log } from "dbc-node-logger";
-import { getClientSideErrorCount } from "./errorLogger";
 const { serverRuntimeConfig } = getConfig();
 const { maxError500Count } = serverRuntimeConfig;
 
@@ -92,17 +91,6 @@ export default async function handler(req, res) {
   // push error500 object to results
   results.push(error500);
 
-  const clientErrors = getClientSideErrorCount();
-  const clientErrorsOk = clientErrors < maxError500Count;
-  if (!clientErrorsOk) {
-    ok = false;
-  }
-  results.push({
-    service: "client-errors",
-    count: clientErrors,
-    ok: clientErrorsOk,
-  });
-
   // Log the service names that cause howru to fail
   results
     .filter((service) => !service.ok)
@@ -112,7 +100,7 @@ export default async function handler(req, res) {
       });
     });
 
-  const body = { ok, upSince, services: results, clientErrors };
+  const body = { ok, upSince, services: results };
 
   log.info("howru status", {
     howruStatus: { ok, upSince, body: JSON.stringify(body) },
