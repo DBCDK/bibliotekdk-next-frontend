@@ -132,6 +132,10 @@ export function handleSubmitOrder(
     userParameters = { ...userParameters, pincode };
   }
 
+  console.log(pids, "PPPPPPPPPPPIIIIIIIIIIIIIIIIDDDDDDDDDDDDDs");
+  // pjo - make order fail
+  pids = [];
+
   orderMutation.post(
     orderMutations.submitOrder({
       pids,

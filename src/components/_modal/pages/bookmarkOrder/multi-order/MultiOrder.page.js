@@ -55,7 +55,10 @@ const createOrders = async ({
   await orderMutation.post(
     orderMutations.submitMultipleOrders({
       materialsToOrder: materials.map((material) => {
-        const pids = material?.manifestations?.map((mani) => mani.pid);
+        // const pids = material?.manifestations?.map((mani) => mani.pid);
+        //  pjo make multiple orders fail
+        const pids = [];
+
         const periodicaFormForMaterial = periodicaForms?.[material.key];
         const articleForm = formatArticleForm(
           periodicaFormForMaterial,

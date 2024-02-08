@@ -148,8 +148,12 @@ const BookmarkPage = () => {
    */
   function handleOrderFinished(successfullyCreated, failedAtCreation) {
     setCheckboxList([]);
-    setSuccessfullyCreatedIds((prev) => [...prev, ...successfullyCreated]);
-    setFailureAtCreationIds((prev) => [...prev, ...failedAtCreation]);
+    setSuccessfullyCreatedIds((prev) => [
+      ...new Set([...prev, ...successfullyCreated]),
+    ]);
+    setFailureAtCreationIds((prev) => [
+      ...new Set([...failedAtCreation, ...prev]),
+    ]);
   }
 
   useEffect(() => {
@@ -545,6 +549,8 @@ const BookmarkPage = () => {
       )}
 
       <div className={styles.listContainer}>
+        {console.log(successfullyCreatedIds, "SUCCESS")}
+        {console.log(failureAtCreationIds, "FAILURE")}
         {populatedBookmarks?.map((bookmark, idx) => (
           <MaterialRow
             key={`bookmark-list-${idx}`}
