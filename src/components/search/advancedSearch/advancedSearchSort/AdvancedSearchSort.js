@@ -120,7 +120,7 @@ export default function AdvancedSearchSort({ className }) {
             >
               {!isEmpty(sort)
                 ? getSortTranslation(sort?.[0]?.index, sort?.[0]?.order)
-                : bestMatch}
+                : bestMatch.sortTranslation}
             </Link>
           </Text>
           <span className={styles.icon_area}>
