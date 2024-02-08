@@ -362,6 +362,10 @@ const unprioritisedLanguages = [
     key: "heb",
   },
   {
+    term: "kinesisk",
+    key: "kin",
+  },
+  {
     term: "hindi",
     key: "hin",
   },
