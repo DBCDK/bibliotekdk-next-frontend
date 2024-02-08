@@ -650,7 +650,7 @@ export function idsToWorks({ ids }) {
           ...creatorsFragment
         }
         manifestations {
-          all {
+          mostRelevant {
             access{
               __typename
               ... on DigitalArticleService {
@@ -718,7 +718,7 @@ export function listOfAllManifestations({ workId }) {
     query listOfAllManifestations($workId: String!) {
       work(id: $workId) {
         manifestations {
-          all {
+          mostRelevant {
             pid
             volume            
             titles {
@@ -737,6 +737,12 @@ export function listOfAllManifestations({ workId }) {
                 year
               }
               edition
+            }
+            unit {
+              id
+              manifestations {
+                pid
+              }
             }
             creators {
               ...creatorsFragment
@@ -810,7 +816,7 @@ export function overviewWork({ workId }) {
         }
         workTypes
         manifestations {
-          all { 
+          mostRelevant { 
             ownerWork {
               workTypes
             }

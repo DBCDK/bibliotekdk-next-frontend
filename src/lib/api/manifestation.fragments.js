@@ -410,6 +410,12 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
      display
       type
     }
+  }
+  unit {
+    id
+    manifestations {
+      pid
+    }
   }  
   languages {
     original {

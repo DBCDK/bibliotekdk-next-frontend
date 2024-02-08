@@ -322,7 +322,7 @@ export function findRelevantWorkIdx(
   return workByIdsDataRemovedDuplicates?.findIndex((w) => {
     const pid = materialId?.replace("work-of:", "");
     if (!pid) return -1;
-    return w?.manifestations?.all?.some((m) => m.pid === pid);
+    return w?.manifestations?.mostRelevant?.some((m) => m.pid === pid);
   });
 }
 
@@ -369,7 +369,7 @@ export const usePopulateBookmarks = (bookmarks) => {
         workIdx > -1 ? workByIdsDataRemovedDuplicates[workIdx] : null;
 
       const manifestationWithCorrectMaterialTypes =
-        work?.manifestations?.all.filter((m) =>
+        work?.manifestations?.mostRelevant.filter((m) =>
           isMaterialTypesMatch(relevantMaterialTypes, m?.materialTypes)
         );
 

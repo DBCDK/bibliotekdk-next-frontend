@@ -41,7 +41,7 @@ export default function useOrderPageInformation({
     return inferAccessTypes(
       periodicaForm,
       pickupBranch,
-      workData?.work?.manifestations?.all,
+      workData?.work?.manifestations?.mostRelevant,
       loanerInfo
     );
   }, [workData?.work, periodicaForm, pickupBranch]);

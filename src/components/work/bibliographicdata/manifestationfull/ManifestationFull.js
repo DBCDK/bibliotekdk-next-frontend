@@ -74,6 +74,10 @@ function ColumnOne({ workId, manifestation }) {
     );
   }
 
+  const selectedPids = manifestation?.unit?.manifestations?.map(
+    ({ pid }) => pid
+  );
+
   return (
     <Col
       key={"col1" + manifestation?.pid}
@@ -93,7 +97,7 @@ function ColumnOne({ workId, manifestation }) {
       <div className={styles.reservationwrapper}>
         <ReservationButtonWrapper
           workId={workId}
-          selectedPids={[manifestation?.pid]}
+          selectedPids={selectedPids}
           singleManifestation={true}
           buttonType="secondary"
           size="small"
@@ -110,15 +114,12 @@ function ColumnOne({ workId, manifestation }) {
       </div>
 
       <div className={cx(styles.alternativeoptions)}>
-        <AlternativeOptions
-          workId={workId}
-          selectedPids={[manifestation?.pid]}
-        />
+        <AlternativeOptions workId={workId} selectedPids={selectedPids} />
       </div>
 
       <div className={styles.localizations_link}>
         <LocalizationsLink
-          selectedPids={[manifestation?.pid]}
+          selectedPids={selectedPids}
           singleManifestation={true}
         />
       </div>
@@ -128,12 +129,7 @@ function ColumnOne({ workId, manifestation }) {
           dataCy="link-references"
           border={{ bottom: { keepVisible: true } }}
           onClick={() =>
-            openReferencesModal(
-              modal,
-              [manifestation?.pid],
-              workId,
-              manifestation
-            )
+            openReferencesModal(modal, selectedPids, workId, manifestation)
           }
         >
           <Text type="text3" tag="span">

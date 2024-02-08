@@ -92,6 +92,9 @@ export function BookMarkMaterialSelector({
       (bookmark) =>
         bookmark.materialId !== bookmark.workId && bookmark.workId === workId
     );
+
+    console.log({ addedEditions, manifestations, editions });
+
     const specificEditions =
       addedEditions
         ?.map((addedEdition) => {
@@ -119,6 +122,14 @@ export function BookMarkMaterialSelector({
   };
 
   const onSelect = async (material, workId) => {
+    console.log("bookmark", {
+      key: getBookmarkKey(material),
+      materialId: materialId,
+      workId: workId,
+      materialType: formatMaterialTypesToCode(material.materialTypes),
+      title,
+    });
+
     await setBookmark({
       key: getBookmarkKey(material),
       materialId: materialId,
