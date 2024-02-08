@@ -306,6 +306,7 @@ const MANIFESTATION_7 = {
       __typename: AccessEnum.ACCESS_URL,
       url: "https://ereol.combo/langurl",
       origin: "https://ereol.combo",
+      type: "RESOURCE",
     },
     {
       __typename: AccessEnum.INFOMEDIA_SERVICE,

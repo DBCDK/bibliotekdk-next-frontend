@@ -103,9 +103,22 @@ export default async function handler(req, res) {
     ok: clientErrorsOk,
   });
 
-  res
-    .status(ok ? 200 : 500)
-    .json({ ok, upSince, services: results, clientErrors });
+  // Log the service names that cause howru to fail
+  results
+    .filter((service) => !service.ok)
+    .forEach((service) => {
+      log.info("howru service error", {
+        datasourceName: service.service,
+      });
+    });
+
+  const body = { ok, upSince, services: results, clientErrors };
+
+  log.info("howru status", {
+    howruStatus: { ok, upSince, body: JSON.stringify(body) },
+  });
+
+  res.status(ok ? 200 : 500).json(body);
 }
 
 async function errorCode500() {
