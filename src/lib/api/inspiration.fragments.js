@@ -33,7 +33,7 @@ export function inspiration({ filters = [], limit = 10 } = {}) {
   }
 
   return {
-    apiUrl: ApiEnums.FBI_API_SIMPLESEARCH,
+    apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `query ($limit: Int!, $filters: [CategoryFilter!]) {
         inspiration {
@@ -91,7 +91,7 @@ export function categories({ filters = [] } = {}) {
   }
 
   return {
-    apiUrl: ApiEnums.FBI_API_SIMPLESEARCH,
+    apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `query ($filters: [CategoryFilter!]) {
         inspiration {

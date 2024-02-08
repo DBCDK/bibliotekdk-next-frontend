@@ -200,7 +200,9 @@ export default function AgencyLocalizationItem({
           agencyId: agencyId,
         })
       }
-      availabilityAccumulated={agency?.availabilityOnAgencyAccumulated}
+      availabilityLightProps={{
+        availabilityAccumulated: agency?.availabilityOnAgencyAccumulated,
+      }}
     >
       {agencyHighlight ? (
         <Text type={"text2"}>

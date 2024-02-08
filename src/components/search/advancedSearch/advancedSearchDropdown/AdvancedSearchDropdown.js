@@ -149,7 +149,10 @@ export default function AdvancedSearchDropdown({
   );
 
   return (
-    <Dropdown className={styles.nav_element}>
+    <Dropdown
+      className={styles.nav_element}
+      data-cy={`advanced-search-dropdown-${indexName}`}
+    >
       <Toggler
         TogglerContent={() => (
           <TogglerContent

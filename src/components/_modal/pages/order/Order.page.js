@@ -26,7 +26,6 @@ import * as branchesFragments from "@/lib/api/branches.fragments";
 import { useData } from "@/lib/api/api";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
-import { stringify } from "@/components/_modal/utils";
 import isEmpty from "lodash/isEmpty";
 import { formatMaterialTypesToCode } from "@/lib/manifestationFactoryUtils";
 import MaterialRow from "@/components/profile/materialRow/MaterialRow";
@@ -106,7 +105,7 @@ function Order({
     ) {
       setShowAlreadyOrdered(hasAlreadyBeenOrdered);
     }
-  }, [stringify(modal?.stack)]);
+  }, [JSON.stringify(modal?.stack)]);
 
   /**
    * sets texts in bookmark list to show if material order was successful or not

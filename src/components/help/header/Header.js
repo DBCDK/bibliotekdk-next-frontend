@@ -4,9 +4,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import Translate from "@/components/base/translate";
-import Link from "@/components/base/link";
-import Icon from "@/components/base/icon";
-import Text from "@/components/base/text";
 import SearchInput from "@/components/help/search/input";
 
 import { useModal } from "@/components/_modal";
@@ -19,7 +16,6 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Logo from "@/components/base/logo/Logo";
 import { SkipToMainAnchor } from "@/components/base/skiptomain/SkipToMain";
-import { getArticleUrl } from "@/lib/utils";
 
 /**
  * The custom Header for help page
@@ -65,31 +61,6 @@ export function Header({
         </Col>
         <Col className={styles.right} xs={{ order: 3 }}>
           <span>
-            <Link
-              href={getArticleUrl("spoerg-en-bibliotekar", 7)}
-              className={styles.ask}
-            >
-              <Text type="text2" className={styles.full}>
-                {Translate({
-                  context: "help",
-                  label: "header-button-ask-full",
-                })}
-              </Text>
-              <Text type="text2" className={styles.short}>
-                {Translate({
-                  context: "help",
-                  label: "header-button-ask-short",
-                })}
-              </Text>
-              <Icon
-                size={2}
-                src="bubble.svg"
-                alt={Translate({
-                  context: "help",
-                  label: "header-button-ask-full",
-                })}
-              />
-            </Link>
             <BurgerIcon
               className={styles.menu}
               title={Translate({ context: "header", label: "menu" })}

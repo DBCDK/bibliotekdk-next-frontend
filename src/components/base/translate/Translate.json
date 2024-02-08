@@ -42,11 +42,11 @@
         "en": "best match"
       },
       "asc_sort.latestpublicationdate": {
-        "da": "tidligste udgivelsesdato",
+        "da": "Nyeste sidst",
         "en": "earliest publication date"
       },
       "desc_sort.latestpublicationdate": {
-        "da": "seneste udgivelsesdato",
+        "da": "Nyeste først",
         "en": "latest publication date"
       },
       "asc_sort.creator": {
@@ -917,8 +917,8 @@
         "en": "Status is unknown"
       },
       "order_now_pickup_at_date": {
-        "da": "Bestil nu og afhent fra d. %s",
-        "en": "Order now and pickup from the %s"
+        "da": "Forventet udlånt til d. %s",
+        "en": "Expected on loan until %s"
       },
       "order_now_pickup_at_some_point": {
         "da": "Bestil nu og afhent senere",
@@ -2290,6 +2290,10 @@
       "mobile_helpAndGuidance": {
         "da": "Hjælp",
         "en": "Help"
+      },
+      "get-search-codes": {
+        "da": "Søgekoder",
+        "en": "Search codes"
       }
     },
     "suggester": {

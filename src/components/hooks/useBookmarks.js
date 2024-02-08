@@ -8,7 +8,11 @@ import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { getLocalStorageItem, setLocalStorageItem } from "@/lib/utils";
 import isEqual from "lodash/isEqual";
-import { formatMaterialTypesFromCode } from "@/lib/manifestationFactoryUtils";
+import {
+  flattenMaterialType,
+  formatMaterialTypesFromCode,
+  formatMaterialTypesToCode,
+} from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
 
 const KEY_NAME = "bookmarks";
@@ -316,15 +320,36 @@ export const isMaterialTypesMatch = (
  */
 export function findRelevantWorkIdx(
   workByIdsDataRemovedDuplicates,
-  materialId
+  materialId,
+  pid,
+  materialType,
+  workId
 ) {
-  if (!workByIdsDataRemovedDuplicates || !materialId) return -1;
+  if (
+    !workByIdsDataRemovedDuplicates ||
+    !materialId ||
+    (!pid && !materialType)
+  ) {
+    return -1;
+  }
+
   return workByIdsDataRemovedDuplicates?.findIndex((w) => {
-    const pid = materialId?.replace("work-of:", "");
-    if (!pid) return -1;
-    return w?.manifestations?.mostRelevant?.some(
-      (mostRelevant) => mostRelevant.pid === pid
-    );
+    if (!w?.workId || w?.workId !== workId) {
+      return false;
+    }
+    if (pid) {
+      return w?.manifestations?.mostRelevant?.some(
+        (mostRelevant) => mostRelevant.pid === pid
+      );
+    }
+    if (materialType) {
+      return w?.manifestations?.mostRelevant?.some((mostRelevant) => {
+        return isEqual(
+          formatMaterialTypesToCode(flattenMaterialType(mostRelevant)),
+          materialType
+        );
+      });
+    }
   });
 }
 
@@ -365,7 +390,10 @@ export const usePopulateBookmarks = (bookmarks) => {
 
       const workIdx = findRelevantWorkIdx(
         workByIdsDataRemovedDuplicates,
-        bookmark?.materialId
+        bookmark?.materialId,
+        bookmark?.pid,
+        bookmark?.materialType,
+        bookmark?.workId
       );
       const work =
         workIdx > -1 ? workByIdsDataRemovedDuplicates[workIdx] : null;

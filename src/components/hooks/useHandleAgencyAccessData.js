@@ -454,6 +454,7 @@ export function enrichBranches(branch) {
       branchHoldingsWithInfoOnPickupAllowed
     ),
     availabilityAccumulated: availabilityAccumulated,
+    // Below elements might be overridden if agency has better information
     availabilityOnAgencyAccumulated: getAvailabilityAccumulated(
       getAvailability(expectedDeliveryOnHoldingsOrAgency, (item) =>
         checkAvailabilityOnAgencyLevel(item)
@@ -549,6 +550,17 @@ export function handleAgencyAccessData(agencies) {
         entry
       );
 
+    const availabilityOnAgencyAccumulated = getAvailabilityAccumulated(
+      getAvailability(expectedDeliveryOnHoldingsOrAgency, (item) =>
+        checkAvailabilityOnAgencyLevel(item)
+      )
+    );
+
+    const expectedDeliveryAccumulatedFromHoldings =
+      allHoldingsAcrossBranchesInAgency
+        .map((item) => item.expectedDelivery)
+        .sort(compareDate)?.[0];
+
     return {
       agencyId: entry?.map((e) => e.agencyId)?.[0],
       agencyName: entry?.map((e) => e.agencyName)?.[0],
@@ -556,12 +568,19 @@ export function handleAgencyAccessData(agencies) {
       availabilityAccumulated: getAvailabilityAccumulated(
         getAvailability(expectedDeliveryOnHoldingsOrAgency)
       ),
-      availabilityOnAgencyAccumulated: getAvailabilityAccumulated(
-        getAvailability(expectedDeliveryOnHoldingsOrAgency, (item) =>
-          checkAvailabilityOnAgencyLevel(item)
-        )
-      ),
-      branches: branches,
+      availabilityOnAgencyAccumulated: availabilityOnAgencyAccumulated,
+      branches: branches.map((branch) => {
+        return {
+          ...branch,
+          ...(availabilityOnAgencyAccumulated && {
+            availabilityOnAgencyAccumulated: availabilityOnAgencyAccumulated,
+          }),
+          ...(expectedDeliveryAccumulatedFromHoldings && {
+            expectedDeliveryAccumulatedFromHoldings:
+              expectedDeliveryAccumulatedFromHoldings,
+          }),
+        };
+      }),
       branchesNames: entry.map((e) => e.name),
       expectedDelivery: expectedDelivery,
       expectedDeliveryAccumulatedFromHoldings: allHoldingsAcrossBranchesInAgency
@@ -654,6 +673,10 @@ export function useSingleAgency({ pids, agencyId, limit = 50 }) {
       })
   );
 
+  if (!pids || !agencyId) {
+    return { count: 0, agenciesFlatSorted: [], agenciesIsLoading: true };
+  }
+
   return handleAgencyAccessData(agencyNoHighlights);
 }
 
@@ -688,26 +711,6 @@ export function useHighlightsForSingleAgency({ agencyId, query = "" }) {
     )?.value,
     branchesWithHighlightsIsLoading: agencyWithHighlights.isLoading,
   };
-}
-
-/**
- * {@link useSingleBranch} finds a branch by its branchId
- * @param {Object} props
- * @param {Array.<string>} props.pids
- * @param {string} props.branchId
- * @returns {{agenciesIsLoading: boolean, count: number, agenciesFlatSorted: Array<Object.<string, any>>}}
- */
-export function useSingleBranch({ pids, branchId }) {
-  const branch = useData(
-    branchId &&
-      pids &&
-      branchesFragments.branchByBranchId({
-        branchId: branchId,
-        pids: pids,
-      })
-  );
-
-  return handleAgencyAccessData(branch);
 }
 
 export function isKnownStatus(branch) {

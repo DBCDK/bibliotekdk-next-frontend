@@ -70,7 +70,9 @@ function ColumnOne({ workId, manifestation }) {
     setCheckMarkActive(true);
     setTimeout(() => setCheckMarkActive(false), 2000);
     navigator.clipboard.writeText(
-      window.location.host + permalinkToPid(window.location.hash)
+      window.location.protocol +
+        window.location.host +
+        permalinkToPid(window.location.hash)
     );
   }
 

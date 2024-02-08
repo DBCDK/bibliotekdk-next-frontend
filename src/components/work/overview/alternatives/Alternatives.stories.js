@@ -1,5 +1,6 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
 import { default as AlternativeOptions } from "./Alternatives";
+import { AccessEnum } from "@/lib/enums";
 
 const exportedObject = {
   title: "work/Overview/Alternatives",
@@ -82,7 +83,22 @@ AlternativeOptionsWithAlternatives.story = {
   ...AlternativeOptionsStoryBuilder("AlternativeOptionsWithAlternatives", {
     Query: {
       manifestations: () => {
-        return [{ access: [{ loanIsPossible: true }, { url: "notambo.dk" }] }];
+        return [
+          {
+            access: [
+              { loanIsPossible: true },
+              {
+                url: "notambo.dk",
+                type: "RESOURCE",
+                __typename: AccessEnum.ACCESS_URL,
+              },
+              {
+                id: 123,
+                __typename: AccessEnum.INFOMEDIA_SERVICE,
+              },
+            ],
+          },
+        ];
       },
     },
   }),
@@ -104,7 +120,18 @@ AlternativeOptionsSlowResponse.story = {
           setTimeout(r, 5000);
         });
 
-        return [{ access: [{ loanIsPossible: true }, { url: "notambo.dk" }] }];
+        return [
+          {
+            access: [
+              { loanIsPossible: true },
+              {
+                url: "notambo.dk",
+                type: "RESOURCE",
+                __typename: AccessEnum.ACCESS_URL,
+              },
+            ],
+          },
+        ];
       },
     },
   }),

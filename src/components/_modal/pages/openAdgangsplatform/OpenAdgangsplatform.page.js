@@ -15,7 +15,7 @@ import { useData } from "@/lib/api/api";
  * @param {context} context
  * @returns
  */
-export function OpenAdgangsplatform({ context, isLoading }) {
+export function OpenAdgangsplatform({ context, isLoading = false }) {
   const { agencyName, title, text, agencyId, branchId, callbackUID } = context;
 
   const onLogin = () => {
@@ -77,8 +77,11 @@ export function OpenAdgangsplatform({ context, isLoading }) {
 }
 
 export default function Wrap({ context }) {
-  const { branchId, agencyId } = context;
+  return <OpenAdgangsplatform context={context} />;
 
+  // *** FFU CHECK IS DISABLED FOR NOW
+
+  const { branchId, agencyId } = context;
   const { data, isLoading } = useData(branchId && isFFUAgency({ branchId }));
 
   // Override agencyId with branchId if an FFU library was selected

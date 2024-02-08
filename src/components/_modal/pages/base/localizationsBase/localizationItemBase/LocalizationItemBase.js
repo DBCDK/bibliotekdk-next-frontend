@@ -4,7 +4,6 @@ import Link from "@/components/base/link/Link";
 import ArrowSvg from "@/public/icons/arrowright.svg";
 import Icon from "@/components/base/icon";
 import animations from "css/animations";
-import { AvailabilityEnum } from "@/components/hooks/useHandleAgencyAccessData";
 import { AvailabilityLight } from "@/components/_modal/pages/base/localizationsBase/localizationItemBase/AvailabilityLight";
 import Text from "@/components/base/text/Text";
 
@@ -18,24 +17,15 @@ import Text from "@/components/base/text/Text";
  * @param {Object} props
  * @param {React.ReactNode | null} props.children
  * @param {function} props.modalPush
- * @param {Array.<AvailabilityEnum>} props.possibleAvailabilities
  * @param {boolean} props.itemLoading
- * @param {AvailabilityEnum} props.availabilityAccumulated
+ * @param {Object} props.availabilityLightProps
  * @returns {React.ReactElement | null}
  */
 export default function LocalizationItemBase({
   children,
   modalPush,
-  possibleAvailabilities = [
-    AvailabilityEnum.NOW,
-    AvailabilityEnum.LATER,
-    AvailabilityEnum.NEVER,
-    AvailabilityEnum.NOT_OWNED,
-    AvailabilityEnum.NOT_OWNED_FFU,
-    AvailabilityEnum.UNKNOWN,
-  ],
   itemLoading,
-  availabilityAccumulated,
+  availabilityLightProps,
 }) {
   return (
     <div className={cx(styles.container)}>
@@ -49,11 +39,9 @@ export default function LocalizationItemBase({
           <Text skeleton={true} clamp={true} lines={2} />
         ) : (
           <div className={cx(styles.row_wrapper)}>
-            {possibleAvailabilities.includes(availabilityAccumulated) && (
-              <AvailabilityLight
-                availabilityAccumulated={availabilityAccumulated}
-              />
-            )}
+            <AvailabilityLight
+              availabilityLightProps={availabilityLightProps}
+            />
             <div className={styles.result}>{children}</div>
             <Icon
               size={{ w: "auto", h: 3 }}

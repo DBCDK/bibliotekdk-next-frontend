@@ -111,7 +111,12 @@ export default function BranchLocalizationItemStatus({ library }) {
     return <MessageWhenPickupNotAllowed />;
   } else if (library?.availabilityAccumulated === AvailabilityEnum.NOW) {
     return <MessageWhenMaterialsAvailableNow library={library} />;
-  } else if (library?.availabilityAccumulated === AvailabilityEnum.LATER) {
+  } else if (
+    library?.availabilityAccumulated === AvailabilityEnum.LATER ||
+    [AvailabilityEnum.LATER, AvailabilityEnum.NOW].includes(
+      library?.availabilityOnAgencyAccumulated
+    )
+  ) {
     return <MessageWhenMaterialsAvailableLater library={library} />;
   } else if (library?.availabilityAccumulated === AvailabilityEnum.NEVER) {
     return <MessageWhenMaterialsAvailableNever />;

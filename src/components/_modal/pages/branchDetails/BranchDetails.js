@@ -15,7 +15,7 @@ import cx from "classnames";
 import BranchDetailsStatus from "@/components/_modal/pages/branchDetails/branchDetailsStatus/BranchDetailsStatus";
 import {
   AvailabilityEnum,
-  useSingleBranch,
+  useSingleAgency,
 } from "@/components/hooks/useHandleAgencyAccessData";
 import isEmpty from "lodash/isEmpty";
 import Button from "@/components/base/button/Button";
@@ -157,11 +157,11 @@ function ContactInformation({ singleBranch }) {
  * @returns {React.ReactElement | null}
  */
 export default function BranchDetails({ context }) {
-  const { pids: pids, branchId } = context;
+  const { pids, branchId, agencyId } = context;
 
-  const { agenciesFlatSorted, agenciesIsLoading } = useSingleBranch({
+  const { agenciesFlatSorted, agenciesIsLoading } = useSingleAgency({
     pids: pids,
-    branchId: branchId,
+    agencyId: agencyId,
   });
 
   const { data: orderPolicyData, isLoading: orderPolicyIsLoading } = useData(
@@ -182,7 +182,9 @@ export default function BranchDetails({ context }) {
 
   const orderPolicyForBranch = orderPolicyForBranches?.[0];
 
-  const singleBranch = agenciesFlatSorted?.[0]?.branches?.[0];
+  const singleBranch = agenciesFlatSorted?.[0]?.branches?.find(
+    (branch) => branch.branchId === branchId
+  );
 
   const { data: manifestationsData, isLoading: manifestationsIsLoading } =
     useData(

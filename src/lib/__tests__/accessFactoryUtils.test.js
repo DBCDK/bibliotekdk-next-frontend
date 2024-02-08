@@ -490,13 +490,18 @@ const manifestationsWithAccess = [
         __typename: AccessEnum.ACCESS_URL,
         origin: "www.dfi.dk",
         url: "dfi_1_1.dekaa",
+        type: "RESOURCE",
       },
     ],
   },
   {
     pid: "2loan",
     access: [
-      { __typename: AccessEnum.INFOMEDIA_SERVICE, id: "urla_2_0.dekaa" },
+      {
+        __typename: AccessEnum.INFOMEDIA_SERVICE,
+        id: "urla_2_0.dekaa",
+        type: "RESOURCE",
+      },
       {
         __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE,
         issn: "urla_4_1.dekaa",
@@ -506,17 +511,23 @@ const manifestationsWithAccess = [
         __typename: AccessEnum.ACCESS_URL,
         origin: "DBC Webarkiv",
         url: "urla_2_1.dekaa",
+        type: "RESOURCE",
       },
     ],
   },
   {
     pid: "3loan",
     access: [
-      { __typename: AccessEnum.INFOMEDIA_SERVICE, id: "urla_3_0.dekaa" },
+      {
+        __typename: AccessEnum.INFOMEDIA_SERVICE,
+        id: "urla_3_0.dekaa",
+        type: "RESOURCE",
+      },
       {
         __typename: AccessEnum.ACCESS_URL,
         origin: "filmstriben.dk",
         url: "www.filmstriben.dk/bibliotek/urlan",
+        type: "RESOURCE",
       },
       { __typename: AccessEnum.INTER_LIBRARY_LOAN, loanIsPossible: true },
       {
@@ -532,6 +543,7 @@ const manifestationsWithAccess = [
         __typename: AccessEnum.EREOL,
         origin: "Ereolen Go",
         url: "urla_4_0.dekaa",
+        type: "RESOURCE",
       },
       {
         __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE,
@@ -541,8 +553,9 @@ const manifestationsWithAccess = [
         __typename: AccessEnum.ACCESS_URL,
         origin: "urla.engo",
         url: "urla_4_2.dekaa",
+        type: "RESOURCE",
       },
-      { __typename: AccessEnum.INFOMEDIA_SERVICE, id: 1231 },
+      { __typename: AccessEnum.INFOMEDIA_SERVICE, id: 1231, type: "RESOURCE" },
     ],
   },
 ];
