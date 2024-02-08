@@ -104,6 +104,15 @@ const useBookmarksCore = ({ hasCulrUniqueId, isMock = false } = {}) => {
     }
   };
 
+  const getABookMark = ({ materialId, materialType, title, workId }) => {
+    return {
+      materialId: materialId,
+      materialType: materialType,
+      title: title,
+      workId: workId,
+    };
+  };
+
   /**
    * Set a value in bookmark list
    */
@@ -121,14 +130,7 @@ const useBookmarksCore = ({ hasCulrUniqueId, isMock = false } = {}) => {
         // Doesn't exist - Add
         await bookmarkMutation.post(
           bookmarkMutations.addBookmarks({
-            bookmarks: [
-              {
-                materialId: value.materialId,
-                materialType: value.materialType,
-                title: value.title,
-                workId: value.workId,
-              },
-            ],
+            bookmarks: [getABookMark(value)],
           })
         );
       } else {
@@ -272,6 +274,7 @@ const useBookmarksCore = ({ hasCulrUniqueId, isMock = false } = {}) => {
   return {
     setBookmark,
     deleteBookmarks,
+    getABookMark,
     clearLocalBookmarks,
     bookmarks: hasCulrUniqueId ? globalBookmarks : localBookmarks,
     paginatedBookmarks: hasCulrUniqueId

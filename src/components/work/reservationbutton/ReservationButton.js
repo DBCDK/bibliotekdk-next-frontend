@@ -22,6 +22,9 @@ import uniq from "lodash/uniq";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
+import useBookmarks, {
+  usePopulateBookmarks,
+} from "@/components/hooks/useBookmarks";
 
 function TextAboveButton({ access, isAuthenticated }) {
   return (
@@ -87,6 +90,35 @@ function ReservationButtonWrapper({
     allEnrichedAccesses?.map((singleAccess) => singleAccess?.pid)
   );
 
+  // const fakebookmark = () => [
+  //   {
+  //     createdAt: "2024-01-09T09:40:05.891Z",
+  //     key: "work-of:870970-basis:24541290BOOK",
+  //     materialId: "work-of:870970-basis:24541290",
+  //     materialType: "BOOK",
+  //     workId: "work-of:870970-basis:24541290",
+  //   },
+  // ];
+
+  const { getABookMark } = useBookmarks();
+  const fakeBookmark = getABookMark({
+    materialId: workId,
+    materialType: "BOOK",
+    workId: workId,
+    title: "",
+  });
+
+  const bookmarks = usePopulateBookmarks([fakeBookmark]);
+  console.log(bookmarks, "FAKED BOOKMARK");
+
+  const multiordercontext = () => {
+    return {
+      sortType: "createdAt",
+      bookmarksToOrder: bookmarks?.data,
+      handleOrderFinished: handleOrderFinished,
+    };
+  };
+
   if (
     !workId ||
     !selectedPids ||
@@ -123,6 +155,7 @@ function ReservationButtonWrapper({
       overrideButtonText={overrideButtonText}
       modal={modal}
       handleOrderFinished={handleOrderFinished}
+      multiorderContext={multiordercontext()}
     />
   );
 }
@@ -157,6 +190,7 @@ export const ReservationButton = ({
   overrideButtonText = null,
   modal,
   handleOrderFinished = undefined,
+  multiorderContext = undefined,
 }) => {
   const physicalCopy = checkPhysicalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
   const digitalCopy = checkDigitalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
@@ -219,6 +253,7 @@ export const ReservationButton = ({
             singleManifestation: singleManifestation,
             storeLoanerInfo: true, // user is already logged in, we want to keep that
             handleOrderFinished: handleOrderFinished,
+            multiOrder: multiorderContext,
           })
         : handleOpenLoginAndAddOrderModalToStore();
     },
