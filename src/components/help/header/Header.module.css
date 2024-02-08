@@ -30,15 +30,6 @@
   margin-left: auto;
 }
 
-.ask {
-  margin-right: var(--pt3);
-}
-
-.ask .full,
-.ask .short {
-  display: none;
-}
-
 /* Logo */
 .row > div {
   /* align-self: flex-start; */
@@ -79,23 +70,6 @@
   margin-top: var(--pt3);
 }
 
-@media (min-width: 364px) {
-  .ask {
-    position: relative;
-    padding-right: var(--pt3);
-  }
-
-  .ask i {
-    position: absolute;
-    top: calc(var(--pt1) * -1);
-    right: 0;
-  }
-
-  .ask .short {
-    display: block;
-  }
-}
-
 @media (min-width: 992px) {
   .header {
     padding-top: var(--pt4);
@@ -113,19 +87,5 @@
 
   .expanded .inputwrapper {
     transform: translateY(152px);
-  }
-}
-
-@media (min-width: 1220px) {
-  .ask {
-    margin-right: var(--pt8);
-  }
-
-  .ask .full {
-    display: block;
-  }
-
-  .ask .short {
-    display: none;
   }
 }
