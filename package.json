@@ -22,7 +22,7 @@
     "lint:f": "run-s -l lint",
     "lint:cacheclearing": "next lint --no-cache",
     "find:unused": "next-unused",
-"cy:run": "npx cypress@10.3.0 run --project ./e2e --spec 'e2e/cypress/e2e/old/cookiebot.cy.js'",
+    "cy:run": "npx cypress@13.6.4 run --project ./e2e",
     "cy:open": "npx cypress@13.6.4 open --project ./e2e",
     "test": "jest src/",
     "test:f": "run-s -l test",
