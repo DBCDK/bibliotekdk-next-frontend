@@ -8,9 +8,10 @@ const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 describe("CookieBot", () => {
   beforeEach(function () {
     cy.visit(`${nextjsBaseUrl}`);
+    cy.clearCookies();
   });
 
-  it(`can accept cookies`, () => {
+  it.only(`can accept cookies`, () => {
     cy.get("#CybotCookiebotDialog")
       .should("exist")
       .should("contain.text", "Hjemmesiden bruger cookies");
@@ -38,7 +39,7 @@ describe("CookieBot", () => {
     cy.get("#CookiebotWidget").should("not.exist");
   });
 
-  it(`can deny cookies`, () => {
+  it.only(`can deny cookies`, () => {
     cy.get("#CybotCookiebotDialogBodyButtonDecline").click();
 
     cy.wait(1000);
