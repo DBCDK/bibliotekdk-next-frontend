@@ -28,11 +28,11 @@
         "en": "best match"
       },
       "asc_sort.latestpublicationdate": {
-        "da": "tidligste udgivelsesdato",
+        "da": "Nyeste sidst",
         "en": "earliest publication date"
       },
       "desc_sort.latestpublicationdate": {
-        "da": "seneste udgivelsesdato",
+        "da": "Nyeste først",
         "en": "latest publication date"
       },
       "asc_sort.creator": {
