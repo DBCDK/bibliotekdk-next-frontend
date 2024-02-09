@@ -2237,6 +2237,10 @@
         "da": "Rediger som feltsøgning",
         "en": "Use input field search"
       },
+      "newFieldsSearch": {
+        "da": "Ny feltsøgning",
+        "en": "New fields search"
+      },
       "yourSearch": {
         "da": "Din søgning",
         "en": "Your search"
