@@ -221,6 +221,7 @@ const MultiOrder = ({ context }) => {
   const onSubmit = async (selectedPickupBranch, pincode) => {
     setIsCreatingOrders(true);
     pickupBranch.current = selectedPickupBranch;
+
     await createOrders({
       materials: sortedMaterials,
       pickupBranch: selectedPickupBranch,

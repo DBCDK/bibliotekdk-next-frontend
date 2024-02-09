@@ -17,7 +17,7 @@ import { createEditionText } from "../../details/utils/details.utils";
 import cx from "classnames";
 import isEmpty from "lodash/isEmpty";
 
-function getBookmarkKey(material) {
+export function getBookmarkKey(material) {
   return (
     material?.materialId + formatMaterialTypesToCode(material?.materialTypes)
   );

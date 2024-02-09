@@ -25,6 +25,11 @@ import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import useBookmarks, {
   usePopulateBookmarks,
 } from "@/components/hooks/useBookmarks";
+import { getBookmarkKey } from "@/components/work/overview/bookmarkDropdown/BookmarkDropdown";
+import {
+  formatMaterialTypesToCode,
+  manifestationMaterialTypeFactory,
+} from "@/lib/manifestationFactoryUtils";
 
 function TextAboveButton({ access, isAuthenticated }) {
   return (
@@ -91,27 +96,26 @@ function ReservationButtonWrapper({
     allEnrichedAccesses?.map((singleAccess) => singleAccess?.pid)
   );
 
-  // const fakebookmark = () => [
-  //   {
-  //     createdAt: "2024-01-09T09:40:05.891Z",
-  //     key: "work-of:870970-basis:24541290BOOK",
-  //     materialId: "work-of:870970-basis:24541290",
-  //     materialType: "BOOK",
-  //     workId: "work-of:870970-basis:24541290",
-  //   },
-  // ];
+  /** FAKE A MULTIORDER **/
+
+  const { uniqueMaterialTypes } = useMemo(() => {
+    return manifestationMaterialTypeFactory(manifestations);
+  }, [manifestations]);
 
   const { getABookMark } = useBookmarks();
   const fakeBookmark = getABookMark({
     materialId: workId,
-    materialType: "BOOK",
+    materialType: formatMaterialTypesToCode(uniqueMaterialTypes[0]),
     workId: workId,
     title: "",
   });
 
-  // @TODO get correct material type for fake bookmark eg. set materialType as "UNKNOWN" and let populateBookmarks handle it
-  // @TODO when ordering works we need a way to tell bookmarks to set a status (handleOrderFinished)
+  fakeBookmark.key = getBookmarkKey({
+    materialId: workId,
+    materialTypes: uniqueMaterialTypes[0],
+  });
 
+  // @TODO when ordering works we need a way to tell bookmarks to set a status (handleOrderFinished)
   const bookmarks = usePopulateBookmarks([fakeBookmark]);
   const multiordercontext = () => {
     return {
@@ -120,6 +124,7 @@ function ReservationButtonWrapper({
       handleOrderFinished: handleOrderFinished,
     };
   };
+  /** END FAKE MULTIORDER **/
 
   if (
     !workId ||
@@ -194,8 +199,6 @@ export const ReservationButton = ({
   handleOrderFinished = undefined,
   multiorderContext = undefined,
 }) => {
-  console.log(multiorderContext, "MULTI CONTEXT");
-
   const physicalCopy = checkPhysicalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
   const digitalCopy = checkDigitalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
 

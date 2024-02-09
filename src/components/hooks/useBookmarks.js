@@ -378,7 +378,6 @@ export const usePopulateBookmarks = (bookmarks) => {
         ids: workIds,
       })
   );
-
   const workByIdsDataRemovedDuplicates = workByIdsData?.works?.filter(
     (value, idx) => workByIdsData?.works?.indexOf(value) === idx
   );

@@ -549,8 +549,6 @@ const BookmarkPage = () => {
       )}
 
       <div className={styles.listContainer}>
-        {console.log(successfullyCreatedIds, "SUCCESS")}
-        {console.log(failureAtCreationIds, "FAILURE")}
         {populatedBookmarks?.map((bookmark, idx) => (
           <MaterialRow
             key={`bookmark-list-${idx}`}
