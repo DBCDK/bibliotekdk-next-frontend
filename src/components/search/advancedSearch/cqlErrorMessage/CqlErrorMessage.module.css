@@ -1,11 +1,12 @@
 .syntaxContainer {
-  padding-top: var(--pt1);
+  padding-top: var(--pt05);
 }
 
 .action_bubble {
   display: flex;
   flex-direction: row-reverse;
   padding: var(--pt1);
+  padding-top: var(--pt05);
 }
 .action_bubble > * {
   width: var(--pt2);
@@ -13,6 +14,11 @@
 }
 
 .errorMessage {
+  /* Link colors */
+  --underline-bottom-color: var(--error_temp);
+  --underline-bottom-hover-color: var(--error_temp);
+  --underline-font-hover-color: var(--error_temp);
+
   --cql_error_color: var(--error_temp);
   --cql_error_light_color: var(--chardon);
 
@@ -46,7 +52,13 @@
 
 .link {
   grid-area: link;
-  padding-bottom: var(--pt1);
+  padding-top: var(--pt1);
+  padding-bottom: var(--pt2);
+}
+
+.link > span > i > svg > path {
+  stroke: var(--error_temp);
+  fill: var(--error_temp);
 }
 
 .errorMessage.noError {

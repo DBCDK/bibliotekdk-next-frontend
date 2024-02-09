@@ -59,22 +59,20 @@ export function CqlErrorMessage(errormessage) {
   return (
     <div className={styles.syntaxContainer} aria-expanded={showError}>
       {!showError && (
-        <Link
-          border={false}
-          className={cx(styles.action_bubble)}
-          onClick={() => setShowError(!showError)}
-        >
-          {svg === "green" && (
-            <GreenSvg
-              className={cx(animations["h-elastic"], animations["f-elastic"])}
-            />
-          )}
-          {svg === "red" && (
-            <RedSvg
-              className={cx(animations["h-elastic"], animations["f-elastic"])}
-            />
-          )}
-        </Link>
+        <div className={cx(styles.action_bubble)}>
+          <Link border={false} onClick={() => setShowError(!showError)}>
+            {svg === "green" && (
+              <GreenSvg
+                className={cx(animations["h-elastic"], animations["f-elastic"])}
+              />
+            )}
+            {svg === "red" && (
+              <RedSvg
+                className={cx(animations["h-elastic"], animations["f-elastic"])}
+              />
+            )}
+          </Link>
+        </div>
       )}
       {showError && (
         <Text
