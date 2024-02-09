@@ -97,6 +97,8 @@ function ReservationButtonWrapper({
   );
 
   /** FAKE A MULTIORDER **/
+  // when ordering (single order) you may now pass a prop (useMultiorder) to reservationbutton
+  // if prop is true we fake a bookmark here and use the multiorder modal.
 
   const { uniqueMaterialTypes } = useMemo(() => {
     return manifestationMaterialTypeFactory(manifestations);
@@ -114,8 +116,7 @@ function ReservationButtonWrapper({
     materialId: workId,
     materialTypes: uniqueMaterialTypes[0],
   });
-
-  // @TODO when ordering works we need a way to tell bookmarks to set a status (handleOrderFinished)
+  // populate fake bookmark
   const bookmarks = usePopulateBookmarks([fakeBookmark]);
   const multiordercontext = () => {
     return {
