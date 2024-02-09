@@ -66,6 +66,7 @@ function ReservationButtonWrapper({
   overrideButtonText = null,
   className,
   handleOrderFinished = undefined,
+  useMultiOrder = false,
 }) {
   const { isAuthenticated } = useAuthentication();
   const { loanerInfo, isLoading } = useLoanerInfo();
@@ -108,9 +109,10 @@ function ReservationButtonWrapper({
     title: "",
   });
 
-  const bookmarks = usePopulateBookmarks([fakeBookmark]);
-  console.log(bookmarks, "FAKED BOOKMARK");
+  // @TODO get correct material type for fake bookmark eg. set materialType as "UNKNOWN" and let populateBookmarks handle it
+  // @TODO when ordering works we need a way to tell bookmarks to set a status (handleOrderFinished)
 
+  const bookmarks = usePopulateBookmarks([fakeBookmark]);
   const multiordercontext = () => {
     return {
       sortType: "createdAt",
@@ -155,7 +157,7 @@ function ReservationButtonWrapper({
       overrideButtonText={overrideButtonText}
       modal={modal}
       handleOrderFinished={handleOrderFinished}
-      multiorderContext={multiordercontext()}
+      multiorderContext={useMultiOrder ? multiordercontext() : null}
     />
   );
 }
@@ -192,6 +194,8 @@ export const ReservationButton = ({
   handleOrderFinished = undefined,
   multiorderContext = undefined,
 }) => {
+  console.log(multiorderContext, "MULTI CONTEXT");
+
   const physicalCopy = checkPhysicalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
   const digitalCopy = checkDigitalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
 
@@ -253,7 +257,7 @@ export const ReservationButton = ({
             singleManifestation: singleManifestation,
             storeLoanerInfo: true, // user is already logged in, we want to keep that
             handleOrderFinished: handleOrderFinished,
-            multiOrder: multiorderContext,
+            multiOrderContext: multiorderContext,
           })
         : handleOpenLoginAndAddOrderModalToStore();
     },

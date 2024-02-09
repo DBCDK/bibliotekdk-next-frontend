@@ -68,6 +68,7 @@ const BookmarkColumn = ({
             size="small"
             shortText
             handleOrderFinished={handleOrderFinished}
+            useMultiOrder={true}
           />
         )}
         {showFailedAtCreation && (
