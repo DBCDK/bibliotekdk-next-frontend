@@ -371,9 +371,12 @@ export default useBookmarks;
  */
 export const usePopulateBookmarks = (bookmarks) => {
   //all works both for specific edition and entire work
-  const workIds = bookmarks?.map((work) => work.workId);
+  const workIds = bookmarks
+    ?.map((work) => work.workId)
+    .filter((id) => id !== undefined);
+
   const { data: workByIdsData, isLoading: idsToWorksLoading } = useData(
-    workIds &&
+    !isEmpty(workIds) &&
       workFragments.idsToWorks({
         ids: workIds,
       })
