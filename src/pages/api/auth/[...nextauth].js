@@ -31,7 +31,7 @@ export const options = {
         httpOnly: true,
         sameSite: "lax",
         path: "/",
-        secure: process.env.CYPRESS ? false : true, //set secure to false when running Cypress tests
+        secure: !process.env.CYPRESS, //set secure to false when running Cypress tests
         expires: null,
       },
     },

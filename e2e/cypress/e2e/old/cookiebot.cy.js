@@ -10,7 +10,7 @@ describe("CookieBot", () => {
     cy.visit(`${nextjsBaseUrl}`);
   });
 
-  it.only(`can accept cookies`, () => {
+  it(`can accept cookies`, () => {
     cy.get("#CybotCookiebotDialog")
       .should("exist")
       .should("contain.text", "Hjemmesiden bruger cookies");
@@ -38,7 +38,7 @@ describe("CookieBot", () => {
     cy.get("#CookiebotWidget").should("not.exist");
   });
 
-  it.only(`can deny cookies`, () => {
+  it(`can deny cookies`, () => {
     cy.get("#CybotCookiebotDialogBodyButtonDecline").click();
 
     cy.wait(1000);
