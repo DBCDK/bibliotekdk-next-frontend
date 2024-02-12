@@ -30,7 +30,7 @@ export function AdvancedSearchResult({
   const isMobile = breakpoint === "xs" || breakpoint === "sm" || false;
   const page = parseInt(pageNo, 10) || 1;
 
-  if (error) {
+  if (error || isLoading) {
     return null;
   }
 
