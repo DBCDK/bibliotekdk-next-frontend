@@ -8,7 +8,6 @@ const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 describe("CookieBot", () => {
   beforeEach(function () {
     cy.visit(`${nextjsBaseUrl}`);
-    //cy.clearCookies();
   });
 
   it.only(`can accept cookies`, () => {
