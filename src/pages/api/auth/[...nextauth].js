@@ -12,7 +12,7 @@ const { clientId, clientSecret } = serverRuntimeConfig;
 if (!clientId || !clientSecret) {
   log.error("ClientId or/and clientSecret was not set. Login is not possible");
 }
-console.log("\n\n\nwindow.Cypress", window.Cypress);
+
 export const options = {
   cookies: {
     sessionToken: {
@@ -31,7 +31,7 @@ export const options = {
         httpOnly: true,
         sameSite: "lax",
         path: "/",
-        secure: !window.Cypress, //cypress will fail if secure is set to true (and it runs on localhost)
+        secure: process.env.CYPRESS ? false : true, //set secure to false when running Cypress tests
         expires: null,
       },
     },
