@@ -1,22 +1,67 @@
-.errorWrapper {
-  padding: 0 var(--pt1) 0 0;
+.syntaxContainer {
+  padding-top: var(--pt05);
 }
 
-.syntaxContainer {
+.action_bubble {
   display: flex;
   flex-direction: row-reverse;
+  padding: var(--pt1);
+  padding-top: var(--pt05);
 }
-
-.action {
-  cursor: pointer;
-}
-
-.errorFull {
-  padding: 0 var(--pt2);
-  background-color: var(--white);
+.action_bubble > * {
+  width: var(--pt2);
+  height: var(--pt2);
 }
 
 .errorMessage {
-  padding: var(--pt2);
-  background-color: var(--error-light);
+  /* Link colors */
+  --underline-bottom-color: var(--error_temp);
+  --underline-bottom-hover-color: var(--error_temp);
+  --underline-font-hover-color: var(--error_temp);
+
+  --cql_error_color: var(--error_temp);
+  --cql_error_light_color: var(--chardon);
+
+  display: grid;
+
+  grid-template-areas: "explanation close" "location close" "link close";
+  grid-auto-columns: 1fr auto;
+
+  gap: var(--pt05);
+
+  padding-right: var(--pt1);
+  padding-left: var(--pt2);
+  padding-top: var(--pt1);
+  color: var(--cql_error_color);
+  background-color: var(--cql_error_light_color);
+  border: 1px solid var(--cql_error_color);
+}
+
+.close {
+  cursor: pointer;
+  grid-area: close;
+}
+
+.explanation {
+  grid-area: explanation;
+}
+
+.location {
+  grid-area: location;
+}
+
+.link {
+  grid-area: link;
+  padding-top: var(--pt1);
+  padding-bottom: var(--pt2);
+}
+
+.link > span > i > svg > path {
+  stroke: var(--error_temp);
+  fill: var(--error_temp);
+}
+
+.errorMessage.noError {
+  --cql_error_color: var(--success);
+  --cql_error_light_color: var(--success-light);
 }
