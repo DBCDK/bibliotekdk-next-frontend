@@ -60,7 +60,7 @@ export default function usePickupBranch({ pids }) {
     orderPolicy?.user?.agencies,
     orderPolicy?.user?.agencies[0]?.result[0]?.agencyId
   );
-  // select first branch from user branches as default pickup branch
+  // set defaul pickup branch to main branch in either municipality agency or in first agency in list.
   const defaultUserPickupBranch =
     municipalityMainAgency || mainLibraryOfFirstAgency;
 
@@ -72,7 +72,6 @@ export default function usePickupBranch({ pids }) {
         branchId: loanerInfo.pickupBranch,
       })
   );
-  console.log("pickupbranch,loanerInfo,", loanerInfo);
 
   // scope
   const selectedBranch = userParams?.branches?.result?.[0];
@@ -114,9 +113,6 @@ export default function usePickupBranch({ pids }) {
   const mergedSelectedBranch =
     pickupBranchOrderPolicy &&
     merge({}, selectedBranch, pickupBranchOrderPolicy);
-
-  console.log("pickupbranch.defaultUserPickupBranch", defaultUserPickupBranch);
-  console.log("pickupbranch.selectedBranch", selectedBranch);
 
   //fetch pickup branch
   const initialPickupBranch = {
