@@ -18,6 +18,20 @@
         "en": "Label: mangler oversættelse"
       }
     },
+    "advanced_search_cql": {
+      "cql_error_link_href": {
+        "da": "/hjaelp/soegning-baade-enkel-og-avanceret/179",
+        "en": "/hjaelp/soegning-baade-enkel-og-avanceret/179"
+      },
+      "cql_error_link_text": {
+        "da": "Se hvordan cql-søgninger fungerer",
+        "en": "See how cql-queries work"
+      },
+      "cql_error_success": {
+        "da": "Ingen syntaksfejl. Godt arbejde!",
+        "en": "No syntax-errors. Good job!"
+      }
+    },
     "advanced_search_sort": {
       "sort_button": {
         "da": "sorter",
@@ -2236,6 +2250,10 @@
       "showInputFields": {
         "da": "Rediger som feltsøgning",
         "en": "Use input field search"
+      },
+      "newFieldsSearch": {
+        "da": "Ny feltsøgning",
+        "en": "New fields search"
       },
       "yourSearch": {
         "da": "Din søgning",

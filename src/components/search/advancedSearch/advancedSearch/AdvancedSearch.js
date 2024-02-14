@@ -71,6 +71,9 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
     setShowPopover(false);
   };
 
+  const canEditCqlAsInput =
+    parsedCQL === convertStateToCql({ inputFields, dropdownSearchIndices });
+
   return (
     <div
       // We use areaExpanded for showing
@@ -101,7 +104,11 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
               >
                 {Translate({
                   context: "search",
-                  label: showCqlEditor ? "showInputFields" : "editInCqlEditor",
+                  label: showCqlEditor
+                    ? canEditCqlAsInput
+                      ? "showInputFields"
+                      : "newFieldsSearch"
+                    : "editInCqlEditor",
                 })}
               </Link>
             </Text>
@@ -138,11 +145,11 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
           </Col>
         </Row>
         <Row>
-          <Col lg={{ offset: 3, span: 4 }} md={6}>
-            {/**Insert material type select here */}
-          </Col>
+          {/*<Col lg={{ offset: 3, span: 4 }} md={6}>*/}
+          {/*  /!**Insert material type select here *!/*/}
+          {/*</Col>*/}
           {showCqlEditor ? (
-            <Col lg={{ offset: 3, span: 4 }} md={6}>
+            <Col lg={{ offset: 3, span: 6 }} md={9} xs={12}>
               <CqlTextArea
                 textAreaRef={textAreaRef}
                 doAdvancedSearch={doAdvancedSearch}

@@ -19,7 +19,8 @@ export const options = {
       name: `next-auth.session-token`,
       options: {
         httpOnly: true,
-        sameSite: "lax",
+        sameSite: "Lax",
+        secure: true,
         path: "/",
         expires: null,
       },
@@ -30,7 +31,7 @@ export const options = {
         httpOnly: true,
         sameSite: "lax",
         path: "/",
-        secure: true,
+        secure: !process.env.CYPRESS, //set secure to false when running Cypress tests
         expires: null,
       },
     },
