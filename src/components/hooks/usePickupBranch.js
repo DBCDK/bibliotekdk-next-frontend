@@ -48,8 +48,22 @@ export default function usePickupBranch({ pids }) {
     hasPids && loanerInfo.name && userFragments.orderPolicy({ pids: pids })
   );
 
+  //Municipality main library
+  const municipalityMainAgency = null;
+  findBranchByBranchId(
+    orderPolicy?.user?.agencies,
+    loanerInfo?.municipalityAgencyId
+  );
+
+  //If user is not borrower in the municipality agency, we find the first main library in agencies list
+  const mainLibraryOfFirstAgency = findBranchByBranchId(
+    orderPolicy?.user?.agencies,
+    orderPolicy?.user?.agencies[0]?.result[0]?.agencyId
+  );
   // select first branch from user branches as default pickup branch
-  const defaultUserPickupBranch = orderPolicy?.user?.agencies[0]?.result[0];
+  const defaultUserPickupBranch =
+    municipalityMainAgency || mainLibraryOfFirstAgency;
+
   // fetch user parameters for the selected pickup
   // OBS! Pickup can differ from users own branches.
   const { data: userParams, isLoading: userParamsIsLoading } = useData(
@@ -58,6 +72,7 @@ export default function usePickupBranch({ pids }) {
         branchId: loanerInfo.pickupBranch,
       })
   );
+  console.log("pickupbranch,loanerInfo,", loanerInfo);
 
   // scope
   const selectedBranch = userParams?.branches?.result?.[0];
@@ -99,6 +114,9 @@ export default function usePickupBranch({ pids }) {
   const mergedSelectedBranch =
     pickupBranchOrderPolicy &&
     merge({}, selectedBranch, pickupBranchOrderPolicy);
+
+  console.log("pickupbranch.defaultUserPickupBranch", defaultUserPickupBranch);
+  console.log("pickupbranch.selectedBranch", selectedBranch);
 
   //fetch pickup branch
   const initialPickupBranch = {
