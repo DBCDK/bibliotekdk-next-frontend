@@ -139,3 +139,27 @@ export function NavHeaderUserLoggedIn() {
     </div>
   );
 }
+
+export function NavHeaderFFU() {
+  const filters = useFilters();
+
+  return (
+    <div style={{ height: "800px" }}>
+      <StoryTitle>Header</StoryTitle>
+      <StoryDescription>
+        User with no culr id can not use profile functionality
+      </StoryDescription>
+      <Header
+        user={{ hasCulrUniqueId: false, isAuthenticated: true }}
+        filters={{
+          ...filters,
+          getQuery: () => ({
+            workTypes: "all",
+          }),
+        }}
+      />
+
+      <Searchbar />
+    </div>
+  );
+}
