@@ -48,7 +48,7 @@ function ColumnOne({ workId, manifestation }) {
   ]);
 
   function permalinkToPid(hash) {
-    return `/work/pid/${hash.slice(1)}`;
+    return `/work/pid/${hash.slice(1)}?scrollToEdition=true`;
   }
 
   const tooltip = (
@@ -71,6 +71,7 @@ function ColumnOne({ workId, manifestation }) {
     setTimeout(() => setCheckMarkActive(false), 2000);
     navigator.clipboard.writeText(
       window.location.protocol +
+        "//" +
         window.location.host +
         permalinkToPid(window.location.hash)
     );
