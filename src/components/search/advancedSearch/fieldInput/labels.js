@@ -32,6 +32,9 @@ const all = [
     index: "term.fictionalcharacter",
     placeholder: "fictionalcharacter placeholder",
   },
+  {
+    index: "term.hostpublication",
+  },
 ];
 
 //input indexes for materialtype "books"

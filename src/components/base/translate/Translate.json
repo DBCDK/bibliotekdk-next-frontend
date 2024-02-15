@@ -2160,6 +2160,10 @@
         "da": "Fiktiv karakter",
         "en": "Fictional character"
       },
+      "advanced-dropdown-term.hostpublication": {
+        "da": "Værtspublikation",
+        "en": "Hostpublication"
+      },
       "advanced-dropdown-term.contributor": {
         "da": "Medvirkende",
         "en": "contributor"
@@ -2218,7 +2222,10 @@
         "da": "Søg på hovedpersoner fra bøger, film og spil",
         "en": "Fictional character"
       },
-
+      "advanced-placeholder-term.hostpublication": {
+        "da": "Søg på Værtspublikation",
+        "en": "Hostpublication"
+      },
       "advanced-dropdown-AND": {
         "da": "OG",
         "en": "AND"
