@@ -33,6 +33,10 @@ export function fast({ q, workType }) {
 }
 
 export function csSuggest({ q, type }) {
+  //Prevent sending suggestion request when type is "isbn". There is no isbn suggestion.
+  if (type === "isbn") {
+    return null;
+  }
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `

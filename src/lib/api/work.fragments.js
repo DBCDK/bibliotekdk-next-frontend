@@ -268,6 +268,9 @@ export function series({ workId, seriesLimit = null }) {
  * @returns {Object} a query object
  */
 export function worksInSeries({ workIds }) {
+  if (!workIds) {
+    return null;
+  }
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 4000, // for debugging
@@ -636,6 +639,9 @@ export function workJsonLd({ workId }) {
 }
 
 export function idsToWorks({ ids }) {
+  if (!ids || ids.length === 0) {
+    return null;
+  }
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
@@ -852,6 +858,9 @@ export function overviewWork({ workId }) {
 }
 
 export function pidToWorkId({ pid }) {
+  if (!pid) {
+    return null;
+  }
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
@@ -874,6 +883,10 @@ export function pidToWorkId({ pid }) {
 }
 
 export function faustToWork({ faust }) {
+  if (!faust) {
+    return null;
+  }
+
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
@@ -894,6 +907,9 @@ export function faustToWork({ faust }) {
 }
 
 export function oclcToWorkId({ oclc }) {
+  if (!oclc) {
+    return null;
+  }
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
