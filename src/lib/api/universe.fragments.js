@@ -77,10 +77,6 @@ export function universeContent({ key, workType, offset, limit }) {
 }
 
 export function universesBasicInfoByWork({ workId }) {
-  if (workId) {
-    return null;
-  }
-
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `query UniversesBasicInfoByWork($workId: String!) {
@@ -100,10 +96,6 @@ export function universesBasicInfoByWork({ workId }) {
 }
 
 export function universesByWork({ workId, offset, limit }) {
-  if (workId) {
-    return null;
-  }
-
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `query UniversesByWork($workId: String!, $offset: Int, $limit: Int) {
