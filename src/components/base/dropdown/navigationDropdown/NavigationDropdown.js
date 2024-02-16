@@ -206,6 +206,7 @@ function LinkDropdown({ context, menuItems }) {
                     [styles.menuItem]: true,
                     [styles.menuItem_selected]: isSelectedLink(index),
                   })}
+                  legacyBehavior
                 >
                   <Text tag="span" type="text3">
                     {Translate({

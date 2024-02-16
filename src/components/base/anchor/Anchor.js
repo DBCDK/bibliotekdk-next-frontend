@@ -54,6 +54,17 @@ function Menu({
   const itemsWrap = useRef(null);
   // menu item container ref
   const itemRefs = useRef({});
+  // window distance from top
+  const scrollY = typeof window !== "undefined" ? window?.scrollY : 0;
+
+  // window Height
+  const windowH = typeof window !== "undefined" ? window.innerHeight : 0;
+
+  // Menu distance from top
+  const menuT = (menuWrap.current && menuWrap.current.offsetTop) || windowH;
+  // Calc height for placeholder (used by the wrap while menu is fixed)
+  const height =
+    (menuWrap.current && menuWrap.current.children[0]?.clientHeight) || 56;
 
   // Handle mounting + clientside render menu
   useEffect(() => {
@@ -85,20 +96,13 @@ function Menu({
   }
 
   // window distance from top
-  const scrollY = window.scrollY;
+  // const scrollY = window.scrollY;
 
   // window Height
-  const windowH = window.innerHeight;
+  // const windowH = window.innerHeight;
 
   const distanceToBottom =
     document?.body?.offsetHeight - (window?.innerHeight + window?.pageYOffset);
-
-  // Calc height for placeholder (used by the wrap while menu is fixed)
-  const height =
-    (menuWrap.current && menuWrap.current.children[0]?.clientHeight) || 56;
-
-  // Menu distance from top
-  const menuT = (menuWrap.current && menuWrap.current.offsetTop) || windowH;
 
   // Menu is sticky options
   const isStickyTop = stickyTop && scrollY > menuT;

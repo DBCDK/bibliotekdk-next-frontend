@@ -92,14 +92,16 @@ export default function Single({ articles, skeleton }) {
       </div>
       <div className={styles.grid__image}>
         {image && (
-          <Image
-            src={image.url}
-            alt={image.alt}
-            width="100%"
-            height="62.5%"
-            layout="responsive"
-            objectFit="cover"
-          />
+          <div className={styles.imagewrapper}>
+            <Image
+              src={image.url}
+              alt={image.alt}
+              // width="100%"
+              // height="62.5%"
+              layout="fill"
+              objectFit="cover"
+            />
+          </div>
         )}
         {skeleton && <Skeleton className={styles.imageskeleton} />}
       </div>
