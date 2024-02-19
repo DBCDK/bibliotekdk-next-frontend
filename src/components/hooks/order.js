@@ -254,9 +254,7 @@ export function usePincode() {
 }
 
 /**
- * Hook for getting and setting pincode.
- * Pincode resets when user leaves order modal
- * It also checks if pickup branch requires pincode
+ * Hook for getting and setting mail
  */
 export function useMail() {
   const { loanerInfo, isLoading: isLoadingLoanerInfo } = useLoanerInfo();
