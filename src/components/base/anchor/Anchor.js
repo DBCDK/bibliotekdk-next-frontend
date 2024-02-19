@@ -95,12 +95,6 @@ function Menu({
     return null;
   }
 
-  // window distance from top
-  // const scrollY = window.scrollY;
-
-  // window Height
-  // const windowH = window.innerHeight;
-
   const distanceToBottom =
     document?.body?.offsetHeight - (window?.innerHeight + window?.pageYOffset);
 

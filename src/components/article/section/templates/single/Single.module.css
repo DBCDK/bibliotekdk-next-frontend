@@ -47,7 +47,6 @@
 
 .imagewrapper {
   position: relative;
-  /* Maintain 16:9 aspect ratio by setting padding-bottom */
   padding-bottom: 62%;
   margin-bottom: var(--pt2);
 }
