@@ -29,12 +29,15 @@ export default function useAuthentication() {
     !isAuthenticated &&
     Object.keys(data?.session?.userParameters || {}).length > 0;
 
+  const identityProviderUsed = data?.user?.identityProviderUsed;
+
   return {
     isAuthenticated,
     hasCulrUniqueId,
     isGuestUser,
     isCPRValidated,
     loggedInAgencyId,
+    identityProviderUsed,
     isLoading,
   };
 }
