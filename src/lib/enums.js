@@ -7,6 +7,15 @@ export const SuggestTypeEnum = Object.freeze({
   ALL: "all",
 });
 
+export const AdvFacetsTypeEnum = Object.freeze({
+  MATERIAL_TYPES: "specificmaterialtype",
+  SUBJECT: "subject",
+  CREATORS: "creators",
+  MAIN_LANGUAGE: "mainlanguage",
+  GENRE_AND_FORM: "genreAndForm",
+  CHILDREN_OR_ADULTS: "childrenOrAdults",
+});
+
 export const FilterTypeEnum = Object.freeze({
   MATERIAL_TYPES: "materialTypesSpecific",
   ACCESS_TYPES: "accessTypes",
