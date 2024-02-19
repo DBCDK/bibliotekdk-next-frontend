@@ -30,13 +30,13 @@ export function AdvancedSearchResult({
   const isMobile = breakpoint === "xs" || breakpoint === "sm" || false;
   const page = parseInt(pageNo, 10) || 1;
 
-  if (error || isLoading) {
+  if (error) {
     return null;
   }
 
   return (
     <>
-      <TopBar />
+      <TopBar isLoading={isLoading} />
 
       <Section
         divider={false}
