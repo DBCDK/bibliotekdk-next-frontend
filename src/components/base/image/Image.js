@@ -12,6 +12,5 @@ let loader = process.env.STORYBOOK_ACTIVE && (({ src }) => src);
  * @param {Object} props
  */
 export default function Image(props) {
-  console.log("image props", props);
   return <NextImage loader={loader} {...props} />;
 }

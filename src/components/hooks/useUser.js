@@ -174,7 +174,6 @@ function useUserImpl() {
       userMutate();
     },
     updateLoanerInfo: async (obj) => {
-      // const newSession = (newSession = merge({}, sessionData, obj));
       const newSession = merge({}, sessionData, obj);
 
       // Update global loaner info object
