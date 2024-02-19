@@ -4,6 +4,7 @@ import mockedFacets from "./mockedFacets.json";
 import styles from "./advancedFacets.module.css";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
 import { useState } from "react";
+import { useFacets } from "@/components/search/advancedSearch/useFacets";
 
 function AdvancedFacets(facets) {
   // filter out facets NOT found in request
@@ -29,9 +30,12 @@ function AdvancedFacets(facets) {
 
 function AccordianItem({ facetName, facets, index }) {
   const [selectedItems, setSelectedItems] = useState([]);
+
+  const { addFacet } = useFacets();
   // @TODO - use query -> setQuery when checked or unchecked and do a live search
   const onItemClick = (checked, name) => {
     if (checked) {
+      addFacet(name, facetName);
       // selected -> add to list
       const fisk = selectedItems.concat([name]);
       setSelectedItems(fisk);
