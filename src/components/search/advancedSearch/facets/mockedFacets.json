@@ -1,0 +1,109 @@
+{
+  "workIds": [
+    "work-of:870970-basis:52035260",
+    "work-of:870970-basis:27644317",
+    "work-of:870970-basis:62986115",
+    "work-of:870970-basis:01671197",
+    "work-of:870970-basis:05818230",
+    "work-of:870970-basis:46867394",
+    "work-of:870970-basis:134579307",
+    "work-of:870970-basis:07111223",
+    "work-of:870970-basis:53576885",
+    "work-of:870970-basis:28768524"
+  ],
+  "workdIds": [
+    "work-of:870970-basis:52035260",
+    "work-of:870970-basis:27644317",
+    "work-of:870970-basis:62986115",
+    "work-of:870970-basis:01671197",
+    "work-of:870970-basis:05818230",
+    "work-of:870970-basis:46867394",
+    "work-of:870970-basis:134579307",
+    "work-of:870970-basis:07111223",
+    "work-of:870970-basis:53576885",
+    "work-of:870970-basis:28768524"
+  ],
+  "solrQuery": "term.title:fisk",
+  "solrFilter": "{!collapse field=workid} AND ({!terms f=\"collection_identifier\"}150005-analyse,150005-anmeld,150005-artikel,150005-portraet,150008-plus,150021-bibliotek,150021-fjern,150053-turteori,150057-kbebog,150061-ebog,150061-netlydbog,150094-artikel,150096-slaegt,159080-fagbib,159081-fagbib,159082-fagbib,159083-fagbib,159084-fagbib,159085-fagbib,159086-fagbib,800000-accessholdings,800000-bibdk,851680-fagbib,870970-accessholdings,870970-accessmetadata,870970-lokalbibl,870970-udland,870971-avis,870971-faktalink,870971-forfweb,870971-tsart,874310-katalog,911116-katalog)",
+  "tokenizerDurationInMs": 0,
+  "solrExecutionDurationInMs": 2601,
+  "numFound": 5751,
+  "trackingId": "e5e9f5e8-781a-4339-bc6f-0cc7713666d8",
+  "facets": [
+    {
+      "name": "phrase.mainlanguage",
+      "values": [
+        { "key": "dansk", "score": 5334 },
+        { "key": "engelsk", "score": 90 },
+        { "key": "norsk", "score": 75 },
+        { "key": "svensk", "score": 57 },
+        { "key": "flere sprog", "score": 23 },
+        { "key": "tysk", "score": 16 },
+        { "key": "sproget kan ikke bestemmes", "score": 15 },
+        { "key": "finsk", "score": 6 },
+        { "key": "islandsk", "score": 6 },
+        { "key": "færøsk", "score": 5 }
+      ]
+    },
+    {
+      "name": "phrase.genreandform",
+      "values": [
+        { "key": "opskrifter", "score": 77 },
+        { "key": "kogebøger", "score": 64 },
+        { "key": "roman", "score": 60 },
+        { "key": "eksamensopgaver under disputatsniveau", "score": 31 },
+        { "key": "for børn", "score": 29 },
+        { "key": "interviews", "score": 27 },
+        { "key": "tests", "score": 27 },
+        { "key": "dansk pop/rock", "score": 26 },
+        { "key": "rock", "score": 23 },
+        { "key": "serie", "score": 23 }
+      ]
+    },
+    {
+      "name": "phrase.subject",
+      "values": [
+        { "key": "fiskeri", "score": 2782 },
+        { "key": "lystfiskeri", "score": 2497 },
+        { "key": "fisk", "score": 703 },
+        { "key": "fluefiskeri", "score": 520 },
+        { "key": "havørredfiskeri", "score": 519 },
+        { "key": "havfiskeri", "score": 508 },
+        { "key": "kystfiskeri", "score": 504 },
+        { "key": "havørred", "score": 418 },
+        { "key": "ørredfiskeri", "score": 294 },
+        { "key": "danmark", "score": 268 }
+      ]
+    },
+    {
+      "name": "phrase.creator",
+      "values": [
+        { "key": "steen ulnits", "score": 254 },
+        { "key": "jens bursell", "score": 210 },
+        { "key": "niels vestergaard", "score": 121 },
+        { "key": "steen larsen", "score": 106 },
+        { "key": "gordon p. henriksen", "score": 87 },
+        { "key": "lars nielsen", "score": 80 },
+        { "key": "jens ploug hansen", "score": 74 },
+        { "key": "rasmus hansen", "score": 66 },
+        { "key": "per ekstrøm", "score": 64 },
+        { "key": "rasmus ovesen", "score": 52 }
+      ]
+    },
+    {
+      "name": "phrase.specificmaterialtype",
+      "values": [
+        { "key": "artikel", "score": 4092 },
+        { "key": "bog", "score": 1029 },
+        { "key": "artikel (online)", "score": 428 },
+        { "key": "musik (cd)", "score": 134 },
+        { "key": "billedbog", "score": 51 },
+        { "key": "tidsskrift", "score": 46 },
+        { "key": "node", "score": 41 },
+        { "key": "aarbog", "score": 23 },
+        { "key": "musik (grammofonplade)", "score": 23 },
+        { "key": "e-bog", "score": 22 }
+      ]
+    }
+  ]
+}

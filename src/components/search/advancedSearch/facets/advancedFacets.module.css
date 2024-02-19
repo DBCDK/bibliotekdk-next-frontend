@@ -1,0 +1,14 @@
+.item {
+  border: 1px solid green;
+  display: grid;
+  grid-template-columns: 1fr 100fr 100fr;
+  align-items: center;
+}
+
+.checkbox {
+  margin-right: var(--pt2);
+}
+
+.score {
+  text-align: right;
+}
