@@ -200,29 +200,34 @@ function LinkDropdown({ context, menuItems }) {
                   role="menuitem"
                   href={link}
                   ref={itemRefs[index]}
-                  onClick={() => onLinkClick(index)}
-                  data-cy={`mobile-link-${menuItems[index]}`}
-                  className={cx({
-                    [styles.menuItem]: true,
-                    [styles.menuItem_selected]: isSelectedLink(index),
-                  })}
                   legacyBehavior
                 >
-                  <Text tag="span" type="text3">
-                    {Translate({
-                      context: context,
-                      label: menuItems[index],
+                  <a
+                    onClick={() => onLinkClick(index)}
+                    data-cy={`mobile-link-${menuItems[index]}`}
+                    ref={itemRefs[index]}
+                    className={cx({
+                      [styles.menuItem]: true,
+                      [styles.menuItem_selected]: isSelectedLink(index),
                     })}
-                  </Text>
-                  {isSelectedLink(index) && (
-                    <span className={styles.checkmark} role="presentation">
-                      <Icon
-                        size={{ w: "1_5", h: "1_5" }}
-                        src="checkmark_blue.svg"
-                        alt=""
-                      />
-                    </span>
-                  )}
+                  >
+                    <Text tag="span" type="text3">
+                      {Translate({
+                        context: context,
+                        label: menuItems[index],
+                      })}
+                    </Text>
+
+                    {isSelectedLink(index) && (
+                      <span className={styles.checkmark} role="presentation">
+                        <Icon
+                          size={{ w: "1_5", h: "1_5" }}
+                          src="checkmark_blue.svg"
+                          alt=""
+                        />
+                      </span>
+                    )}
+                  </a>
                 </Link>
               );
             })}
