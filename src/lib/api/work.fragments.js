@@ -974,49 +974,6 @@ export function workForWorkRelationsWorkTypeFactory({ workId }) {
   };
 }
 
-export function accessForManifestations({ pids }) {
-  return {
-    apiUrl: ApiEnums.FBI_API,
-    query: `query AccessForManifestations($pids: [String!]!) {
-    manifestations(pid: $pids) {
-      pid
-      unit {
-        manifestations {
-          pid
-          access {
-            __typename
-            ... on AccessUrl {
-              origin
-              url
-              note
-              loginRequired
-              type
-            }
-            ... on InfomediaService {
-              id
-            }
-            ... on Ereol {
-              origin
-              url
-              canAlwaysBeLoaned
-              note
-            }
-            ... on DigitalArticleService {
-              issn
-            }
-            ... on InterLibraryLoan {
-              loanIsPossible
-            }
-          }
-        }
-      }
-    }
-  }`,
-    variables: { pids },
-    delay: 400,
-  };
-}
-
 const genreAndFormAndWorkTypesFragment = `fragment genreAndFormAndWorkTypesFragment on Work {
   genreAndForm
   workTypes
