@@ -133,6 +133,7 @@ LinkmePhp.getInitialProps = async (ctx) => {
     const path = `/materiale/${title_author}/${workId}#${ctx.query["rec.id"]}`;
     ctx.res.writeHead(301, { Location: path });
     ctx.res.end();
+    return;
   } else {
     // we do some redirects here - check for cql, ccl, ccl=is (isbn), worldcat links and handle some of it - if
     // we give up we redirect to old.bibliotek.dk
@@ -147,6 +148,7 @@ LinkmePhp.getInitialProps = async (ctx) => {
         const path = getAdvancedUrl({ type: "isbn", value: isbnnumber });
         ctx.res.writeHead(301, { Location: path });
         ctx.res.end();
+        return;
       }
     }
 
@@ -156,6 +158,7 @@ LinkmePhp.getInitialProps = async (ctx) => {
       const path = `${basePath}${ctx.req["url"]}`;
       ctx.res.writeHead(301, { Location: path });
       ctx.res.end();
+      return;
     }
   }
 
