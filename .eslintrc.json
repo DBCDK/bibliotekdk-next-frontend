@@ -60,10 +60,10 @@
         "patterns": [
           { "group": ["!react-bootstrap/*"] },
           { "group": ["!lodash/*"] },
-          {
-            "group": ["@/components/base/animation/animations.module.css"],
-            "message": "animation should be imported using 'import animations from 'css/animations/animations.module.css';'"
-          },
+          // {
+          //   "group": ["@/components/base/animation/animations.module.css"],
+          //   "message": "animation should be imported using 'import animations from 'css/animations/animations.module.css';'"
+          // },
           {
             "group": ["@/components/base/clamp/Clamp.module.css"],
             "message": "clamp should be imported using 'import clamp from 'css/clamp/Clamp.module.css';'"

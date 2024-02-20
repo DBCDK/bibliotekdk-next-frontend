@@ -7,7 +7,7 @@ import Text from "@/components/base/text";
 import isEqual from "lodash/isEqual";
 import cx from "classnames";
 import { IconLink } from "@/components/base/iconlink/IconLink";
-import animations from "css/animations";
+import animations from "@/components/base/animation/animations.module.css";
 import Link from "@/components/base/link";
 import CloseSvg from "@/public/icons/close_grey.svg";
 import RedSvg from "@/public/icons/status__not_for_loan.svg";

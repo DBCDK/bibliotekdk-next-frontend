@@ -11,7 +11,7 @@ import Arrow from "@/components/base/animation/arrow";
 import Link from "@/components/base/link";
 import styles from "./List.module.css";
 import cx from "classnames";
-import animations from "css/animations";
+import animations from "@/components/base/animation/animations.module.css";
 import { getFirstMatch } from "@/lib/utils";
 
 /**

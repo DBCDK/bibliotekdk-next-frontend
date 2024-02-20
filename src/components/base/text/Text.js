@@ -5,7 +5,7 @@ import { cyKey } from "@/utils/trim";
 import Skeleton from "@/components/base/skeleton";
 
 import styles from "./Text.module.css";
-import clampStyles from "css/clamp";
+import clampStyles from "@/components/base/clamp/Clamp.module.css";
 import cx from "classnames";
 
 /**

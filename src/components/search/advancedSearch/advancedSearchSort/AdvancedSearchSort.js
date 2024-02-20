@@ -6,7 +6,7 @@ import cx from "classnames";
 import styles from "./AdvancedSearchSort.module.css";
 import { useRouter } from "next/router";
 import isEmpty from "lodash/isEmpty";
-import animations from "css/animations";
+import animations from "@/components/base/animation/animations.module.css";
 import Link from "@/components/base/link";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 

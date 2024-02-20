@@ -2,7 +2,7 @@ import cx from "classnames";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
-import animations from "css/animations";
+import animations from "@/components/base/animation/animations.module.css";
 import { DialogForPublicationYear } from "@/components/search/advancedSearch/advancedSearchHelpers/dialogForPublicationYear/DialogForPublicationYear";
 import StatefulDialog from "@/components/base/statefulDialog/StatefulDialog";
 import { useEffect, useState } from "react";
