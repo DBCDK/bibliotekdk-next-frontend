@@ -20,7 +20,9 @@ export function AdvancedFacets({ facets }) {
     })
   );
 
-  const { addFacet, removeFacet } = useFacets();
+  const { addFacet, removeFacet, selectedFacets } = useFacets();
+
+  console.log(selectedFacets, "SELECTED FACETS");
 
   // @TODO - use query -> setQuery when checked or unchecked and do a live search
   const onItemClick = (checked, name, facetName) => {
