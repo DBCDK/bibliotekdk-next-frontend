@@ -16,6 +16,7 @@ import { convertStateToCql } from "@/components/search/advancedSearch/utils";
 import { useInputFields } from "@/components/search/advancedSearch/useInputFields";
 import { useDropdownSearchIndices } from "@/components/search/advancedSearch/useDropdownSearchIndices";
 import isEmpty from "lodash/isEmpty";
+import { useFacets } from "@/components/search/advancedSearch/useFacets";
 
 export function getDefaultDropdownIndices() {
   return [
@@ -93,6 +94,8 @@ export default function AdvancedSearchProvider({ children, router }) {
     dispatchResetMenuItemsEvent,
   } = useDropdownSearchIndices({ ...fieldSearchFromUrl });
 
+  const { selectedFacets } = useFacets();
+
   //// ---- parsedCQL ----
   //only add inputFields to object if there are values
   const cleanInputFields =
@@ -116,6 +119,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     const updatedCql = convertStateToCql({
       inputFields,
       dropdownSearchIndices,
+      selectedFacets,
     });
 
     setParsedCQL(cqlFromUrl || updatedCql);
