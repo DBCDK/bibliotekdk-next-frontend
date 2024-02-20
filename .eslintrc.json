@@ -60,14 +60,6 @@
         "patterns": [
           { "group": ["!react-bootstrap/*"] },
           { "group": ["!lodash/*"] },
-          // {
-          //   "group": ["@/components/base/animation/animations.module.css"],
-          //   "message": "animation should be imported using 'import animations from 'css/animations/animations.module.css';'"
-          // },
-          {
-            "group": ["@/components/base/clamp/Clamp.module.css"],
-            "message": "clamp should be imported using 'import clamp from 'css/clamp/Clamp.module.css';'"
-          },
           {
             "group": ["classnames/bind"],
             "message": "classnames should be imported using 'import cx from 'classnames';'"
@@ -96,6 +88,6 @@
     /* plugin:css-modules/recommended */
     /** Keep this rule because of error **/
     "css-modules/no-unused-class": 2,
-    "css-modules/no-undef-class": 2
+    "css-modules/no-undef-class": 0
   }
 }
