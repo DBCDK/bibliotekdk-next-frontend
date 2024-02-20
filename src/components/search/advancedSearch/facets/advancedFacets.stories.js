@@ -1,5 +1,6 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
-import AdvancedFacets from "@/components/search/advancedSearch/facets/advancedFacets";
+import { AdvancedFacets } from "@/components/search/advancedSearch/facets/advancedFacets";
+import mockedFacets from "./mockedFacets.json";
 
 const exportedObject = {
   title: "advancedsearch/facets",
@@ -14,7 +15,7 @@ export function Default() {
       <StoryDescription>
         Facets for filtering advanced search result
       </StoryDescription>
-      <AdvancedFacets />
+      <AdvancedFacets facets={mockedFacets.facets} />
     </div>
   );
 }
