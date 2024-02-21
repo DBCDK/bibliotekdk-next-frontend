@@ -88,6 +88,7 @@
     /* plugin:css-modules/recommended */
     /** Keep this rule because of error **/
     "css-modules/no-unused-class": 2,
+    //After upgrading to nextjs 14, this sarted throwing lint errors from the files components/base/animation/animations.module.css and components/base/clamp/Clamp.module.css 
     "css-modules/no-undef-class": 0
   }
 }
