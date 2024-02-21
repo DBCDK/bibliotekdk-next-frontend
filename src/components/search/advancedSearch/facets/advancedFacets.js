@@ -3,12 +3,12 @@ import Accordion, { Item } from "@/components/base/accordion/Accordion";
 
 import styles from "./advancedFacets.module.css";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
-import { useState } from "react";
+
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
 
 /**
  *
- * @param facets - facet from search result
+ * @param facets - facets from search result
  * @returns {JSX.Element}
  * @constructor
  */
@@ -21,8 +21,6 @@ export function AdvancedFacets({ facets }) {
   );
 
   const { addFacet, removeFacet, selectedFacets } = useFacets();
-
-  console.log(selectedFacets, "SELECTED FACETS");
 
   // @TODO - use query -> setQuery when checked or unchecked and do a live search
   const onItemClick = (checked, name, facetName) => {
@@ -43,6 +41,7 @@ export function AdvancedFacets({ facets }) {
           index={index}
           facets={facets}
           key={`${facetName}-${index}`}
+          selectedFacets={selectedFacets}
           onItemClick={onItemClick}
         />
       ))}
@@ -50,36 +49,62 @@ export function AdvancedFacets({ facets }) {
   );
 }
 
-function AccordianItem({ facetName, facets, index, onItemClick }) {
-  // const [selectedItems, setSelectedItems] = useState([]);
+function AccordianItem({
+  facetName,
+  facets,
+  index,
+  selectedFacets,
+  onItemClick,
+}) {
+  const current = selectedFacets?.find((sel) =>
+    sel.searchIndex.includes(facetName)
+  );
 
   return (
     <Item
       title={facetName}
-      // subTitle={selectedItems.length}
+      subTitle={`${current?.values?.length || ""}`}
       eventKey={index.toString()}
       key={`${index}-${facetName}`}
+      id={`${index}-${facetName}`}
     >
       <ListItem
-        onItemClick={onItemClick}
         facet={facets.find((facet) => {
           return facet.name.includes(facetName);
         })}
         facetName={facetName}
+        selectedFacets={selectedFacets}
+        onItemClick={onItemClick}
       />
     </Item>
   );
 }
 
-function ListItem({ facet, onItemClick, facetName }) {
+function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
+  const current = selectedFacets?.find((sel) =>
+    sel?.searchIndex?.includes(facetName)
+  );
+
+  let initialcheck;
   return (
-    <ul>
+    <ul data-cy={`${facetName}`}>
       {facet.values.map((facet, index) => (
-        <li key={`${index}-${facet.key}`} className={styles.item}>
+        <li
+          key={`${index}-${facet.key}`}
+          className={styles.item}
+          data-cy={`li-${facetName}-${facet.key}`}
+        >
+          {
+            (initialcheck = !!current?.values?.find((val) => {
+              return val.name === facet.key;
+            }))
+          }
           <Checkbox
+            id={`${facet.key}-${index}`}
             ariaLabel={facet.key}
             className={styles.checkbox}
             onChange={(checked) => onItemClick(checked, facet.key, facetName)}
+            checked={initialcheck}
           />
           <span>{facet.key}</span>
           <span className={styles.score}>{facet.score}</span>
