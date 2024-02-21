@@ -148,8 +148,12 @@ const BookmarkPage = () => {
    */
   function handleOrderFinished(successfullyCreated, failedAtCreation) {
     setCheckboxList([]);
-    setSuccessfullyCreatedIds((prev) => [...prev, ...successfullyCreated]);
-    setFailureAtCreationIds((prev) => [...prev, ...failedAtCreation]);
+    setSuccessfullyCreatedIds((prev) => [
+      ...new Set([...prev, ...successfullyCreated]),
+    ]);
+    setFailureAtCreationIds((prev) => [
+      ...new Set([...failedAtCreation, ...prev]),
+    ]);
   }
 
   useEffect(() => {

@@ -138,7 +138,6 @@ export function formatMaterialTypesToCode(materialTypeArray) {
   if (!Array.isArray(materialTypeArray)) {
     return materialTypeArray;
   }
-
   return (
     materialTypeArray
       ?.map((mat) =>

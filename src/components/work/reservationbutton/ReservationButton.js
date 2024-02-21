@@ -22,6 +22,14 @@ import uniq from "lodash/uniq";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
+import useBookmarks, {
+  usePopulateBookmarks,
+} from "@/components/hooks/useBookmarks";
+import { getBookmarkKey } from "@/components/work/overview/bookmarkDropdown/BookmarkDropdown";
+import {
+  formatMaterialTypesToCode,
+  manifestationMaterialTypeFactory,
+} from "@/lib/manifestationFactoryUtils";
 
 function TextAboveButton({ access, isAuthenticated }) {
   return (
@@ -63,6 +71,7 @@ function ReservationButtonWrapper({
   overrideButtonText = null,
   className,
   handleOrderFinished = undefined,
+  useMultiOrder = false,
 }) {
   const { isAuthenticated } = useAuthentication();
   const { loanerInfo, isLoading } = useLoanerInfo();
@@ -86,6 +95,37 @@ function ReservationButtonWrapper({
   const pids = uniq(
     allEnrichedAccesses?.map((singleAccess) => singleAccess?.pid)
   );
+
+  /** FAKE A MULTIORDER **/
+  // when ordering (single order) you may now pass a prop (useMultiorder) to reservationbutton
+  // if prop is true we fake a bookmark here and use the multiorder modal.
+
+  const { uniqueMaterialTypes } = useMemo(() => {
+    return manifestationMaterialTypeFactory(manifestations);
+  }, [manifestations]);
+
+  const { getABookMark } = useBookmarks();
+  const fakeBookmark = getABookMark({
+    materialId: workId,
+    materialType: formatMaterialTypesToCode(uniqueMaterialTypes[0]),
+    workId: workId,
+    title: "",
+  });
+
+  fakeBookmark.key = getBookmarkKey({
+    materialId: workId,
+    materialTypes: uniqueMaterialTypes[0],
+  });
+  // populate fake bookmark
+  const bookmarks = usePopulateBookmarks([fakeBookmark]);
+  const multiordercontext = () => {
+    return {
+      sortType: "createdAt",
+      bookmarksToOrder: bookmarks?.data,
+      handleOrderFinished: handleOrderFinished,
+    };
+  };
+  /** END FAKE MULTIORDER **/
 
   if (
     !workId ||
@@ -123,6 +163,7 @@ function ReservationButtonWrapper({
       overrideButtonText={overrideButtonText}
       modal={modal}
       handleOrderFinished={handleOrderFinished}
+      multiorderContext={useMultiOrder ? multiordercontext() : null}
     />
   );
 }
@@ -157,6 +198,7 @@ export const ReservationButton = ({
   overrideButtonText = null,
   modal,
   handleOrderFinished = undefined,
+  multiorderContext = undefined,
 }) => {
   const physicalCopy = checkPhysicalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
   const digitalCopy = checkDigitalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
@@ -219,6 +261,7 @@ export const ReservationButton = ({
             singleManifestation: singleManifestation,
             storeLoanerInfo: true, // user is already logged in, we want to keep that
             handleOrderFinished: handleOrderFinished,
+            multiOrderContext: multiorderContext,
           })
         : handleOpenLoginAndAddOrderModalToStore();
     },

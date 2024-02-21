@@ -131,7 +131,6 @@ export function handleSubmitOrder(
   if (pincode) {
     userParameters = { ...userParameters, pincode };
   }
-
   orderMutation.post(
     orderMutations.submitOrder({
       pids,

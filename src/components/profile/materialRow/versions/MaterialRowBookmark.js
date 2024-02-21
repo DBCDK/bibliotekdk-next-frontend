@@ -50,7 +50,7 @@ const BookmarkColumn = ({
   return (
     <div className={sharedStyles.dynamicColumnHorizontal}>
       <div className={sharedStyles.bookmarkOrderButtonContainer}>
-        {showSuccessfullyOrdered ? (
+        {!showFailedAtCreation && showSuccessfullyOrdered ? (
           <TextWithCheckMark
             text={Translate({
               context: "bookmark-order",
@@ -68,6 +68,7 @@ const BookmarkColumn = ({
             size="small"
             shortText
             handleOrderFinished={handleOrderFinished}
+            useMultiOrder={true}
           />
         )}
         {showFailedAtCreation && (

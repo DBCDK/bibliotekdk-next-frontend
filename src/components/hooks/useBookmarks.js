@@ -104,6 +104,15 @@ const useBookmarksCore = ({ hasCulrUniqueId, isMock = false } = {}) => {
     }
   };
 
+  const getABookMark = ({ materialId, materialType, title, workId }) => {
+    return {
+      materialId: materialId,
+      materialType: materialType,
+      title: title,
+      workId: workId,
+    };
+  };
+
   /**
    * Set a value in bookmark list
    */
@@ -121,14 +130,7 @@ const useBookmarksCore = ({ hasCulrUniqueId, isMock = false } = {}) => {
         // Doesn't exist - Add
         await bookmarkMutation.post(
           bookmarkMutations.addBookmarks({
-            bookmarks: [
-              {
-                materialId: value.materialId,
-                materialType: value.materialType,
-                title: value.title,
-                workId: value.workId,
-              },
-            ],
+            bookmarks: [getABookMark(value)],
           })
         );
       } else {
@@ -272,6 +274,7 @@ const useBookmarksCore = ({ hasCulrUniqueId, isMock = false } = {}) => {
   return {
     setBookmark,
     deleteBookmarks,
+    getABookMark,
     clearLocalBookmarks,
     bookmarks: hasCulrUniqueId ? globalBookmarks : localBookmarks,
     paginatedBookmarks: hasCulrUniqueId
@@ -368,14 +371,16 @@ export default useBookmarks;
  */
 export const usePopulateBookmarks = (bookmarks) => {
   //all works both for specific edition and entire work
-  const workIds = bookmarks?.map((work) => work.workId);
+  const workIds = bookmarks
+    ?.map((work) => work.workId)
+    .filter((id) => id !== undefined);
+
   const { data: workByIdsData, isLoading: idsToWorksLoading } = useData(
-    workIds &&
+    !isEmpty(workIds) &&
       workFragments.idsToWorks({
         ids: workIds,
       })
   );
-
   const workByIdsDataRemovedDuplicates = workByIdsData?.works?.filter(
     (value, idx) => workByIdsData?.works?.indexOf(value) === idx
   );
