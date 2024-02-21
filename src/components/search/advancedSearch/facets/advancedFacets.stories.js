@@ -34,9 +34,7 @@ export function FacetsInUrl() {
   return (
     <div>
       <StoryTitle>Advanced search facets</StoryTitle>
-      <StoryDescription>
-        Facets for filtering advanced search result
-      </StoryDescription>
+      <StoryDescription>Set facets from url</StoryDescription>
       <AdvancedFacets facets={mockedFacets.facets} />
     </div>
   );
@@ -48,21 +46,8 @@ FacetsInUrl.story = {
       showInfo: true,
       pathname: "/avanceret",
       query: {
-        fieldSearch: {
-          facets: [
-            {
-              searchIndex: "phrase.specificmaterialtype",
-              values: [
-                { value: "e-bog", name: "e-bog" },
-                { value: "node", name: "node" },
-              ],
-            },
-            {
-              searchIndex: "phrase.subject",
-              values: [{ value: "fisk", name: "fisk" }],
-            },
-          ],
-        },
+        facets:
+          '[{"searchIndex": "phrase.specificmaterialtype", "values": [{ "value": "e-bog", "name": "e-bog" },{ "value": "node", "name": "node" } ]},{ "searchIndex": "phrase.subject", "values": [{ "value": "fisk", "name": "fisk" }]}]',
       },
     },
   },
