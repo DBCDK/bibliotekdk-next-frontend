@@ -48,7 +48,7 @@ describe("Facets", () => {
       const facets = fisk.facets;
       console.log(facets, "FACETS");
 
-      expect(facets.includes("artikel"));
+      assert(facets.includes("artikel"));
     });
 
     // and again
@@ -59,15 +59,8 @@ describe("Facets", () => {
     cy.get("[data-cy=router-query]").then((el) => {
       const fisk = JSON.parse(el.text());
       const facets = fisk.facets;
-      console.log(facets, "FACETS");
-      expect(facets.includes("ufle"));
-    });
 
-    // hmm ... this one doesn't work .. i wonder why checked attribute is not updated on checkbox ??
-    // cy.get("[data-cy=accordion-item]")
-    //   .first()
-    //   .find("li")
-    //   .find("[checked]")
-    //   .should("have.length", 1);
+      assert(facets.includes("aarbog"));
+    });
   });
 });

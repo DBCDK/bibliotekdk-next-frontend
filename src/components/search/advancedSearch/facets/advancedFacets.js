@@ -34,7 +34,7 @@ export function AdvancedFacets({ facets }) {
   };
 
   return (
-    <Accordion>
+    <Accordion className={styles.fisk}>
       {filteredFacets.map((facetName, index) => (
         <AccordianItem
           facetName={facetName}
@@ -60,10 +60,18 @@ function AccordianItem({
     sel.searchIndex.includes(facetName)
   );
 
+  const titleElement = () => {
+    return (
+      <>
+        <span>{facetName}</span>
+        <span>{current?.values?.length || ""}</span>
+      </>
+    );
+  };
+
   return (
     <Item
-      title={facetName}
-      subTitle={`${current?.values?.length || ""}`}
+      title={titleElement()}
       eventKey={index.toString()}
       key={`${index}-${facetName}`}
       id={`${index}-${facetName}`}

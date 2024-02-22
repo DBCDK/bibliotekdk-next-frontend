@@ -6,7 +6,7 @@ export function useFacets() {
   const [selectedFacets, setSelectedFacets] = useState(facetsFromUrl());
 
   /**
-   * Add an extra facet - we keep facets in a state for
+   * Add an extra facet and push facets to query - we keep facets in a state for
    * advanced search context to understand
    */
   function addFacet(value, searchindex) {
@@ -21,29 +21,24 @@ export function useFacets() {
         return [...prev];
       });
     } else {
-      const newFacets = [
-        {
-          searchIndex: searchindex,
-          values: [{ value: value, name: value }],
-        },
-      ];
+      const newFacet = {
+        searchIndex: searchindex,
+        values: [{ value: value, name: value }],
+      };
+      selectedFacets.push(newFacet);
 
       setSelectedFacets((prev) => {
-        return [...prev, ...newFacets];
+        return [...prev];
       });
     }
-    setTimeout(() => {
-      pushFacetUrl();
-    }, 300);
+
+    pushFacetUrl();
   }
 
   function pushFacetUrl() {
-    if (selectedFacets.length < 1) {
-      return null;
-    }
-
     const query = router?.query;
     query["facets"] = JSON.stringify(selectedFacets);
+
     router.push({
       pathname: router.pathname,
       query: query,
@@ -51,7 +46,7 @@ export function useFacets() {
   }
 
   /**
-   * Remove a facet value from selection
+   * Remove a facet value from selection and push facets to query
    * @param value
    * @param searchindex
    */
@@ -63,9 +58,7 @@ export function useFacets() {
     // find facet(value) in values
     const indx = indexedFacet?.values?.findIndex((val) => val.value === value);
     indexedFacet?.values?.splice(indx, 1);
-    // @TODO if values are empty -- remove entire facet
     if (indexedFacet?.values?.length < 1) {
-      // @TODO delete
       const indexToDelete = selectedFacets?.findIndex((facet) => {
         return facet.searchIndex.includes(searchindex);
       });
