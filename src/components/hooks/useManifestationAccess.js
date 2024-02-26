@@ -1,5 +1,5 @@
 import { useData } from "@/lib/api/api";
-import { accessForManifestations } from "@/lib/api/work.fragments";
+import { accessForManifestations } from "@/lib/api/access.fragments";
 import { AccessEnum } from "@/lib/enums";
 import { useMemo } from "react";
 import useLoanerInfo from "./user/useLoanerInfo";
@@ -144,7 +144,7 @@ export function useManifestationAccess({ pids, filter }) {
 
     let workTypesMap = {};
     data?.manifestations?.forEach((m) =>
-      m.workTypes?.forEach((workType) => (workTypesMap[workType] = true))
+      m?.workTypes?.forEach((workType) => (workTypesMap[workType] = true))
     );
 
     return {
