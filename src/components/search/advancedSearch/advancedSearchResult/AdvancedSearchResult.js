@@ -106,7 +106,6 @@ export function AdvancedSearchResult({
 }
 
 function parseResponse(bigResponse) {
-  console.log(bigResponse, "FASTRESPONSE");
   return {
     works: bigResponse?.data?.complexSearch?.works || null,
     hitcount: bigResponse?.data?.complexSearch?.hitcount || 0,
@@ -150,8 +149,6 @@ export default function Wrap({ onWorkClick, onPageChange }) {
     })
   );
   const parsedResponse = parseResponse(fastResponse);
-
-  console.log(parsedResponse, "PARSEDRESPONSE");
 
   //update searchhistory
   if (!parsedResponse?.errorMessage && !parsedResponse.isLoading) {

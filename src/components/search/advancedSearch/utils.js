@@ -93,8 +93,6 @@ export function convertStateToCql({
     ...(!isEmpty(facetQuery) ? [facetQuery] : []),
   ].join(`) ${AND} (`);
 
-  console.log(result, "RESULT");
-
   return !isEmpty(result) ? "(" + result + ")" : "";
 }
 

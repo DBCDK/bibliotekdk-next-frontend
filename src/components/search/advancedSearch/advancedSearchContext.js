@@ -55,9 +55,13 @@ export default function AdvancedSearchProvider({ children, router }) {
     cql: cqlFromUrl = null,
     fieldSearch = "",
     sort: sortFromUrl = "",
+    facets: facetsFromUrl = "",
   } = router.query;
   const fieldSearchFromUrl = fieldSearch && JSON.parse(fieldSearch);
   const sort = sortFromUrl && JSON.parse(sortFromUrl);
+  const facets = facetsFromUrl && JSON.parse(facetsFromUrl);
+
+  console.log(facets, "FACETS");
 
   //// ----  Popup Trigger ----
   const popoverRef = useRef(null);
@@ -94,8 +98,6 @@ export default function AdvancedSearchProvider({ children, router }) {
     dispatchResetMenuItemsEvent,
   } = useDropdownSearchIndices({ ...fieldSearchFromUrl });
 
-  const { selectedFacets } = useFacets();
-
   //// ---- parsedCQL ----
   //only add inputFields to object if there are values
   const cleanInputFields =
@@ -119,7 +121,6 @@ export default function AdvancedSearchProvider({ children, router }) {
     const updatedCql = convertStateToCql({
       inputFields,
       dropdownSearchIndices,
-      selectedFacets,
     });
 
     setParsedCQL(cqlFromUrl || updatedCql);

@@ -91,7 +91,6 @@ export default function Wrap({ onWorkClick, page }) {
     })
   );
 
-  console.log(bigResponse, "BIGRESPONSE");
   const parsedResponse = parseResponse(bigResponse);
 
   if (parsedResponse.isLoading) {
