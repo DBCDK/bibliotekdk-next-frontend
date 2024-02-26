@@ -64,7 +64,7 @@ function optionsListAllArgs({ access, index, accessesArray, startOrderFlow }) {
 }
 
 export function Options({ context, loanerInfo, isAuthenticated }) {
-  const { title, selectedPids, workId } = { ...context };
+  const { title, selectedPids } = { ...context };
   const { start } = useOrderFlow();
 
   const manifestationResponse = useData(

@@ -8,7 +8,8 @@ import { useState, useEffect, useRef, useMemo } from "react";
  *
  */
 export function useMany(parametersArray, useCustomHook) {
-  const [_, forceRender] = useState();
+  const forceRenderState = useState();
+  const forceRender = forceRenderState[1];
   const forceRenderThrottled = throttle(forceRender, 500);
 
   // Holds the response for each hook

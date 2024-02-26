@@ -7,9 +7,10 @@ import { useOrderFlow } from "@/components/hooks/order";
 import { useMemo } from "react";
 import Button from "@/components/base/button";
 
-export default {
+const exportedObject = {
   title: "order/MultiOrder",
 };
+export default exportedObject;
 
 const AUTHENTICATED_USER = "AUTHENTICATED_USER";
 const FFU_USER = "FFU_USER";

@@ -21,9 +21,7 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
 import List from "@/components/base/forms/list";
 import Pagination from "@/components/search/pagination/Pagination";
 import { createEditionText } from "@/components/work/details/utils/details.utils";
-import { useModal } from "@/components/_modal";
 import Skeleton from "@/components/base/skeleton/Skeleton";
-import useAuthentication from "@/components/hooks/user/useAuthentication";
 import { getMaterialTypeForPresentation } from "@/lib/manifestationFactoryUtils";
 import { getSessionStorageItem, setSessionStorageItem } from "@/lib/utils";
 import { useAnalyzeMaterial } from "@/components/hooks/useAnalyzeMaterial";
@@ -116,7 +114,6 @@ const BookmarkPage = () => {
   const isMobile = breakpoint === "sm" || breakpoint === "xs";
   const [checkboxList, setCheckboxList] = useState([]);
   const scrollToElement = useRef(null);
-  const { isAuthenticated } = useAuthentication();
   const [successfullyCreatedIds, setSuccessfullyCreatedIds] = useState([]);
   const [failureAtCreationIds, setFailureAtCreationIds] = useState([]);
   const { start } = useOrderFlow();

@@ -3,20 +3,17 @@ import Translate from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
 import styles from "./ReservationButton.module.css";
 import { useModal } from "@/components/_modal";
-import { LOGIN_MODE } from "@/components/_modal/pages/login/utils";
 import {
   constructButtonText,
   context,
   handleGoToLogin,
 } from "@/components/work/reservationbutton/utils";
 import isEmpty from "lodash/isEmpty";
-import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import { useManifestationAccess } from "@/components/hooks/useManifestationAccess";
 import { useData } from "@/lib/api/api";
 import { overviewWork } from "@/lib/api/work.fragments";
 import { useOrderFlow } from "@/components/hooks/order";
-import { useRouter } from "next/router";
 
 function TextAboveButton({ access, isAuthenticated }) {
   return (

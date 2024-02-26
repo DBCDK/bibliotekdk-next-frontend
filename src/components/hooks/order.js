@@ -75,7 +75,6 @@ export function usePeriodica({ pids }) {
 export function useOrderService({ pids }) {
   const { branchId, isLoading: pickupBranchIsLoading } = usePickupBranchId();
   const {
-    access,
     digitalCopyPids,
     physicalCopyPids,
     isLoading: accessIsLoading,
@@ -453,26 +452,27 @@ export function useOrderPolicy({ branchId, pids }) {
   };
 }
 
-export function useMultiOrderValidation({ orders }) {
-  const { renderMe, result } = useMany(orders, (order) => {
-    const materialData = useManifestationData({ pids: order.pids });
-    return {
+function useSingleMaterialValidation(order) {
+  const materialData = useManifestationData({ pids: order.pids });
+  return {
+    pids: order.pids,
+    alreadyOrdered: useShowAlreadyOrdered({ pids: order.pids }),
+    manifestationAccess: useManifestationAccess({
       pids: order.pids,
-      alreadyOrdered: useShowAlreadyOrdered({ pids: order.pids }),
-      manifestationAccess: useManifestationAccess({
-        pids: order.pids,
-        filter: [
-          AccessEnum.INTER_LIBRARY_LOAN,
-          AccessEnum.DIGITAL_ARTICLE_SERVICE,
-        ],
-      }),
-      orderService: useOrderService({ pids: order.pids }),
-      validation: useOrderValidation({ pids: order.pids }),
-      materialData,
-      periodicaForm: usePeriodicaForm(materialData?.workId),
-      order,
-    };
-  });
+      filter: [
+        AccessEnum.INTER_LIBRARY_LOAN,
+        AccessEnum.DIGITAL_ARTICLE_SERVICE,
+      ],
+    }),
+    orderService: useOrderService({ pids: order.pids }),
+    validation: useOrderValidation({ pids: order.pids }),
+    materialData,
+    periodicaForm: usePeriodicaForm(materialData?.workId),
+    order,
+  };
+}
+export function useMultiOrderValidation({ orders }) {
+  const { renderMe, result } = useMany(orders, useSingleMaterialValidation);
 
   const validation = useMemo(() => {
     return {
@@ -551,7 +551,8 @@ export function useSubmitOrders({ orders }) {
   const { loanerInfo } = useLoanerInfo();
   const { mail } = useMail();
   const { branchId } = usePickupBranchId();
-  const [_, setOrderCompleted] = useGlobalState({
+
+  const setOrderCompleted = useGlobalState({
     key: "orderCompleted",
     initial: false,
   });
@@ -624,7 +625,7 @@ export function useSubmitOrders({ orders }) {
         const workId = entry?.materialData?.workId;
         setAlreadyOrdered(workId);
       });
-      setOrderCompleted(Date.now());
+      setOrderCompleted[1](Date.now());
     }, 1000);
 
     return receipt;

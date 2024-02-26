@@ -32,12 +32,10 @@ export function onMailChange(value, valid, updateLoanerInfo, setMail) {
  * @param {Boolean} hasValidationErrors
  * @returns
  */
-export function getStylingAndErrorMessage(validated, hasValidationErrors) {
+export function getStylingAndErrorMessage(validated) {
   // Get email messages
   const emailStatus = validated?.details?.hasMail?.status;
   const errorMessage = validated?.details?.hasMail?.message;
-
-  console.log("styling", { validated, emailStatus, errorMessage });
 
   // Check for email validation and email error messages
   const hasEmail = !!emailStatus;

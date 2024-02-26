@@ -1,5 +1,5 @@
 // eslint-disable-next-line css-modules/no-unused-class
-import orderStyles from "@/components/_modal/pages/order/Order.module.css";
+import orderStyles from "../Order.module.css";
 
 import styles from "./OrderConfirmationButton.module.css";
 import Text from "@/components/base/text";
