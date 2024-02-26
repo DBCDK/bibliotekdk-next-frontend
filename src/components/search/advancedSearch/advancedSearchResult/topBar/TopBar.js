@@ -44,8 +44,6 @@ export function FormatFieldSearchIndexes({ fieldsearch }) {
 
   const { selectedFacets } = useFacets();
 
-  console.log(selectedFacets, "SELECTEDFACESTS");
-
   return (
     <div className={styles.formatedQueryContainer}>
       <FormatFieldInput
