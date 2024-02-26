@@ -153,14 +153,17 @@ export function useManifestationAccess({ pids, filter }) {
     };
   }, [data, loanerInfo]);
 
+  const hasDigitalCopy = !!res?.accessMap?.[AccessEnum.DIGITAL_ARTICLE_SERVICE];
+  const hasPhysicalCopy = !!res?.accessMap?.[AccessEnum.INTER_LIBRARY_LOAN];
   return {
     ...res,
-    hasDigitalCopy: !!res?.accessMap?.[AccessEnum.DIGITAL_ARTICLE_SERVICE],
-    hasPhysicalCopy: !!res?.accessMap?.[AccessEnum.INTER_LIBRARY_LOAN],
+    hasDigitalCopy,
+    hasPhysicalCopy,
     digitalCopyPids:
       res?.accessMap?.[AccessEnum.DIGITAL_ARTICLE_SERVICE]?.pids || [],
     physicalCopyPids:
       res?.accessMap?.[AccessEnum.INTER_LIBRARY_LOAN]?.pids || [],
+    supportsOrderFlow: hasDigitalCopy || hasPhysicalCopy,
     isLoading: loanerInfoIsLoading || accessIsLoading,
   };
 }

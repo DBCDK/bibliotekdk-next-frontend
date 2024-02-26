@@ -144,16 +144,20 @@ export function useMutate() {
     setisLoading(true);
     setData(null);
     setError(null);
+    let res;
+    let error;
     try {
-      const res = await fetcherImpl(key);
+      res = await fetcherImpl(key);
       if (res.errors) {
         throw res.errors[0].message;
       }
       setData(res);
     } catch (e) {
+      error = e;
       setError(e);
     }
     setisLoading(false);
+    return { data: res?.data, error };
   }
   return {
     data: data?.data,

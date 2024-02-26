@@ -4,6 +4,7 @@ import Icon from "@/components/base/icon/Icon";
 import styles from "./ChoosePeriodicaCopyRow.module.css";
 import ChevronRight from "@/public/icons/chevron_right.svg";
 import Translate from "@/components/base/translate";
+import { usePeriodicaForm } from "@/components/hooks/order";
 
 /**
  * Shows a button to open the periodica form modal
@@ -15,15 +16,11 @@ import Translate from "@/components/base/translate";
  * @returns
  */
 export default function ChoosePeriodicaCopyRow({
-  singleOrderPeriodicaForm,
-  multiOrderPeriodicaForms,
-  materialKey,
   modal,
   articleTypeTranslation,
+  workId,
 }) {
-  const periodicaForm = singleOrderPeriodicaForm
-    ? singleOrderPeriodicaForm
-    : multiOrderPeriodicaForms?.[materialKey];
+  const { periodicaForm } = usePeriodicaForm(workId);
 
   return (
     <>
@@ -63,9 +60,7 @@ export default function ChoosePeriodicaCopyRow({
         <IconLink
           onClick={() => {
             modal.push("periodicaform", {
-              periodicaForms: multiOrderPeriodicaForms,
-              periodicaForm: periodicaForm,
-              materialKey: materialKey,
+              workId: workId,
             });
           }}
           className={styles.periodicaformlink}

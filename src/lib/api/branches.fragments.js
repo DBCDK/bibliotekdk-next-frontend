@@ -17,6 +17,7 @@ export function branchUserParameters({ branchId }) {
     query: `
     query BranchUserParameters($branchId: String!, $language: LanguageCode!) {
       branches(branchId: $branchId, language: $language) {
+        agencyUrl
         borrowerStatus {
           allowed
           statusCode
@@ -39,6 +40,7 @@ export function branchUserParameters({ branchId }) {
           }
           pickupAllowed
           digitalCopyAccess
+          branchWebsiteUrl
         }
       }
       monitor(name: "bibdknext_branch_user_parameters")

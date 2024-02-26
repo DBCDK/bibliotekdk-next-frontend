@@ -72,9 +72,16 @@ export function editionManifestations({ pid }) {
           workId
           titles {
             full
+            main
           }
           creators {
             ...creatorsFragment
+          }
+          materialTypes {
+            materialTypeSpecific{
+              code
+              display
+            }
           }
         }
         materialTypes {
@@ -89,6 +96,7 @@ export function editionManifestations({ pid }) {
         publisher
         titles {
           full
+          main
         }
         creators {
           ...creatorsFragment

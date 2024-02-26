@@ -23,11 +23,11 @@ import Pagination from "@/components/search/pagination/Pagination";
 import { createEditionText } from "@/components/work/details/utils/details.utils";
 import { useModal } from "@/components/_modal";
 import Skeleton from "@/components/base/skeleton/Skeleton";
-import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import { getMaterialTypeForPresentation } from "@/lib/manifestationFactoryUtils";
 import { getSessionStorageItem, setSessionStorageItem } from "@/lib/utils";
 import { useAnalyzeMaterial } from "@/components/hooks/useAnalyzeMaterial";
+import { useOrderFlow } from "@/components/hooks/order";
 
 const CONTEXT = "bookmark";
 const ORDER_TRESHHOLD = 25;
@@ -68,26 +68,6 @@ const containsIds = (ids, key) => {
     return id === key;
   });
   return x > -1;
-};
-
-/**
- * Seperates the list of checked bookmarks into two lists, one for online available materials and one for materials that are not
- * @param {Array<Object>} refs: list of checked bookmarks that were mounted to be able to run the online availability check hook
- * @param {Array<Object>} checkboxList: list of checked bookmarks
- * @returns {Object} Object that contains list of materials that are online available and list of materials that are not and therefor can be ordered
- */
-const seperateOnlineAndPhysicalBookmarks = ({ refs, checkboxList }) => {
-  const bookmarksOnlineAvailable = [];
-  const bookmarksToOrder = [];
-  refs.forEach((item) => {
-    const match = checkboxList.find((bm) => bm.key === item.bookmarkKey);
-    match &&
-      (item?.isAccessibleOnline
-        ? bookmarksOnlineAvailable
-        : bookmarksToOrder
-      ).push(match);
-  });
-  return { bookmarksOnlineAvailable, bookmarksToOrder };
 };
 
 const AnalyseItemAvailability = forwardRef(function AnalyseItemAvailability(
@@ -137,9 +117,9 @@ const BookmarkPage = () => {
   const [checkboxList, setCheckboxList] = useState([]);
   const scrollToElement = useRef(null);
   const { isAuthenticated } = useAuthentication();
-  const modal = useModal();
   const [successfullyCreatedIds, setSuccessfullyCreatedIds] = useState([]);
   const [failureAtCreationIds, setFailureAtCreationIds] = useState([]);
+  const { start } = useOrderFlow();
   /**
    * Callback that marks materials as successfully created/failed in bookmarklist
    * when we close the receipt
@@ -199,29 +179,11 @@ const BookmarkPage = () => {
   };
 
   const onOrderManyClick = () => {
-    const { bookmarksOnlineAvailable, bookmarksToOrder } =
-      seperateOnlineAndPhysicalBookmarks({
-        refs: itemsRef.current,
-        checkboxList,
-      });
-
-    if (isAuthenticated) {
-      if (bookmarksOnlineAvailable?.length > 0) {
-        modal.push("ematerialfilter", {
-          bookmarksToOrder,
-          bookmarksOnlineAvailable,
-          sortType: sortByValue,
-          handleOrderFinished: handleOrderFinished,
-        });
-      } else {
-        modal.push("multiorder", {
-          bookmarksToOrder: bookmarksToOrder,
-          sortType: sortByValue,
-          handleOrderFinished: handleOrderFinished,
-        });
-      }
-    } else {
-      openLoginModal({ modal });
+    const orders = checkboxList?.map((order) => ({
+      pids: order?.manifestations?.map((manifestation) => manifestation?.pid),
+    }));
+    if (orders?.length > 0) {
+      start({ orders });
     }
   };
 

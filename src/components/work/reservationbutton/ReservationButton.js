@@ -9,19 +9,13 @@ import {
   context,
   handleGoToLogin,
 } from "@/components/work/reservationbutton/utils";
-import { useMemo } from "react";
-import { openOrderModal } from "@/components/work/utils";
-import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAndSelectedPids";
-import {
-  accessFactory,
-  checkDigitalCopy,
-  checkPhysicalCopy,
-} from "@/lib/accessFactoryUtils";
 import isEmpty from "lodash/isEmpty";
-import uniq from "lodash/uniq";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
-import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
+import { useManifestationAccess } from "@/components/hooks/useManifestationAccess";
+import { useData } from "@/lib/api/api";
+import { overviewWork } from "@/lib/api/work.fragments";
+import { useOrderFlow } from "@/components/hooks/order";
 
 function TextAboveButton({ access, isAuthenticated }) {
   return (
@@ -64,65 +58,74 @@ function ReservationButtonWrapper({
   className,
   handleOrderFinished = undefined,
 }) {
-  const { isAuthenticated } = useAuthentication();
-  const { loanerInfo, isLoading } = useLoanerInfo();
+  const { data: workData, isLoadingWorkData } = useData(
+    overviewWork({ workId })
+  );
+
+  const {
+    access,
+    hasPhysicalCopy,
+    hasDigitalCopy,
+    isLoading: isLoadingAccess,
+  } = useManifestationAccess({
+    pids: selectedPids,
+  });
+
+  const workTypes = workData?.work?.workTypes;
+  const materialTypes = workData?.work?.materialTypes?.map(
+    (type) => type?.materialTypeGeneral?.code
+  );
+
+  const {
+    isAuthenticated,
+    isGuestUser,
+    isLoading: isLoadingAuthentication,
+  } = useAuthentication();
   const modal = useModal();
-
-  const hasDigitalAccess = loanerInfo?.rights?.digitalArticleService;
-
-  const { workResponse, manifestations, manifestationsResponse } =
-    useGetManifestationsForOrderButton(workId, selectedPids);
-
-  const { getAllAllowedEnrichedAccessSorted, allEnrichedAccesses } = useMemo(
-    () => accessFactory(manifestations),
-    [manifestations]
-  );
-
-  const access = useMemo(
-    () => getAllAllowedEnrichedAccessSorted(hasDigitalAccess) || [],
-    [workResponse?.data?.work, manifestations, hasDigitalAccess]
-  );
-
-  const pids = uniq(
-    allEnrichedAccesses?.map((singleAccess) => singleAccess?.pid)
-  );
 
   if (
     !workId ||
     !selectedPids ||
-    !workResponse?.data ||
-    !manifestationsResponse?.data ||
-    manifestationsResponse?.isLoading ||
-    workResponse?.isLoading ||
-    isLoading
+    selectedPids?.length === 0 ||
+    isLoadingAuthentication ||
+    isLoadingWorkData ||
+    isLoadingAccess
   ) {
     return (
-      <Button
-        skeleton={true}
-        type={buttonType}
-        size={size}
-        dataCy={"button-order-overview-loading"}
-        className={className}
-      >
-        {"loading"}
-      </Button>
+      <div className={styles.wrapper}>
+        <Button
+          skeleton={true}
+          type={buttonType}
+          size={size}
+          dataCy={"button-order-overview-loading"}
+          className={className}
+        >
+          {"loading"}
+        </Button>
+      </div>
     );
   }
 
   return (
     <ReservationButton
-      access={access}
-      isAuthenticated={isAuthenticated}
-      buttonType={buttonType}
-      size={size}
-      pids={pids}
-      shortText={shortText}
-      singleManifestation={singleManifestation}
-      allEnrichedAccesses={allEnrichedAccesses}
-      workId={workId}
-      overrideButtonText={overrideButtonText}
-      modal={modal}
-      handleOrderFinished={handleOrderFinished}
+      {...{
+        access,
+        isAuthenticated,
+        isGuestUser,
+        buttonType,
+        size,
+        pids: selectedPids,
+        shortText,
+        singleManifestation,
+        workId,
+        overrideButtonText,
+        modal,
+        handleOrderFinished,
+        workTypes,
+        materialTypes,
+        hasPhysicalCopy,
+        hasDigitalCopy,
+      }}
     />
   );
 }
@@ -144,7 +147,7 @@ export default ReservationButtonWrapper;
  * @returns {React.JSX.Element}
  */
 export const ReservationButton = ({
-  access, //TODO same as allEnrichedAccesses?
+  access,
   isAuthenticated,
   isGuestUser,
   buttonType,
@@ -152,18 +155,20 @@ export const ReservationButton = ({
   pids,
   singleManifestation,
   shortText = false, // Shorten material text
-  allEnrichedAccesses, //TODO same as access?
   workId,
   overrideButtonText = null,
   modal,
   handleOrderFinished = undefined,
+  workTypes,
+  materialTypes,
+  hasDigitalCopy,
+  hasPhysicalCopy,
 }) => {
-  const physicalCopy = checkPhysicalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
-  const digitalCopy = checkDigitalCopy([access?.[0]])?.[0]; //TODO why do we check all accesses if only one is used in the end?
-
+  const { start } = useOrderFlow();
   const noSelectedManifestations = Boolean(isEmpty(access));
+
   const onlineMaterialWithoutLoginOrLoginAtUrl = Boolean(
-    access?.length > 0 && !digitalCopy && !physicalCopy
+    access?.length > 0 && !hasDigitalCopy && !hasPhysicalCopy
   );
 
   const noSelectedManifestationsProps = {
@@ -172,7 +177,7 @@ export const ReservationButton = ({
   };
   const noSelectedManifestationsTxt = Translate({
     context: "overview",
-    label: !physicalCopy ? "Order-online-disabled" : "Order-disabled",
+    label: !hasPhysicalCopy ? "Order-online-disabled" : "Order-disabled",
   });
 
   const accessibleOnlineAndNoLoginProps = {
@@ -185,7 +190,7 @@ export const ReservationButton = ({
     //add order modal to store, to be able to access when coming back from adgangsplatform/mitid
     const orderModalProps = {
       pids: pids,
-      selectedAccesses: allEnrichedAccesses,
+      selectedAccesses: access,
       workId: workId,
       singleManifestation: singleManifestation,
       handleOrderFinished: handleOrderFinished,
@@ -210,17 +215,7 @@ export const ReservationButton = ({
     skeleton: isEmpty(access),
     dataCy: `button-order-overview-enabled`,
     onClick: () => {
-      isAuthenticated || isGuestUser
-        ? openOrderModal({
-            modal: modal,
-            pids: pids,
-            selectedAccesses: allEnrichedAccesses,
-            workId: workId,
-            singleManifestation: singleManifestation,
-            storeLoanerInfo: true, // user is already logged in, we want to keep that
-            handleOrderFinished: handleOrderFinished,
-          })
-        : handleOpenLoginAndAddOrderModalToStore();
+      start({ orders: [{ pids }] });
     },
   };
 
@@ -246,11 +241,7 @@ export const ReservationButton = ({
     if (onlineMaterialWithoutLoginOrLoginAtUrl) {
       return {
         props: accessibleOnlineAndNoLoginProps,
-        text: constructButtonText(
-          access?.[0]?.workTypes,
-          access?.[0]?.materialTypesArray,
-          shortText
-        ),
+        text: constructButtonText(workTypes, materialTypes, shortText),
         preferSecondary: shortText, // Becomes secondary button if button links to material (not ordering)
       };
     }
