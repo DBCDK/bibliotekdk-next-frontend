@@ -16,6 +16,7 @@ import { useManifestationAccess } from "@/components/hooks/useManifestationAcces
 import { useData } from "@/lib/api/api";
 import { overviewWork } from "@/lib/api/work.fragments";
 import { useOrderFlow } from "@/components/hooks/order";
+import { useRouter } from "next/router";
 
 function TextAboveButton({ access, isAuthenticated }) {
   return (
@@ -106,6 +107,7 @@ function ReservationButtonWrapper({
     );
   }
 
+  console.log("access", access);
   return (
     <ReservationButton
       {...{
@@ -149,26 +151,21 @@ export default ReservationButtonWrapper;
 export const ReservationButton = ({
   access,
   isAuthenticated,
-  isGuestUser,
   buttonType,
   size,
   pids,
-  singleManifestation,
   shortText = false, // Shorten material text
-  workId,
   overrideButtonText = null,
   modal,
-  handleOrderFinished = undefined,
   workTypes,
   materialTypes,
-  hasDigitalCopy,
   hasPhysicalCopy,
 }) => {
   const { start } = useOrderFlow();
   const noSelectedManifestations = Boolean(isEmpty(access));
 
   const onlineMaterialWithoutLoginOrLoginAtUrl = Boolean(
-    access?.length > 0 && !hasDigitalCopy && !hasPhysicalCopy
+    access?.filter((entry) => entry?.url).length > 0
   );
 
   const noSelectedManifestationsProps = {
@@ -185,31 +182,6 @@ export const ReservationButton = ({
     dataCy: "button-order-overview",
     onClick: () => handleGoToLogin(modal, access, isAuthenticated),
   };
-
-  async function handleOpenLoginAndAddOrderModalToStore() {
-    //add order modal to store, to be able to access when coming back from adgangsplatform/mitid
-    const orderModalProps = {
-      pids: pids,
-      selectedAccesses: access,
-      workId: workId,
-      singleManifestation: singleManifestation,
-      handleOrderFinished: handleOrderFinished,
-    };
-
-    const uid = await modal.saveToStore("order", {
-      ...orderModalProps,
-      storeLoanerInfo: true,
-    });
-    //open actual loginmodal
-    openLoginModal({
-      modal,
-      mode: LOGIN_MODE.ORDER_PHYSICAL,
-      //data used for FFU without adgangsplatform to open order modal directly
-      ...orderModalProps,
-      //callback used for adgangsplatform/mitid login to open order modal on redirect
-      callbackUID: uid,
-    });
-  }
 
   const loginRequiredProps = {
     skeleton: isEmpty(access),
