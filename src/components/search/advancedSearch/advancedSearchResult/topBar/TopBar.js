@@ -8,7 +8,7 @@ import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import isEmpty from "lodash/isEmpty";
 import { formattersAndComparitors } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
-import { getFacetsQuery } from "@/components/search/advancedSearch/utils";
+// import { getFacetsQuery } from "@/components/search/advancedSearch/utils";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
 
 /**
@@ -54,7 +54,7 @@ export function FormatFieldSearchIndexes({ fieldsearch }) {
         dropdowns={filteredDropdownSearchIndices}
         showAndOperator={filteredInputFields?.length > 0}
       />
-      <Text type="text1">{getFacetsQuery(selectedFacets)}</Text>
+      {/*<Text type="text1">{getFacetsQuery(selectedFacets)}</Text>*/}
     </div>
   );
 }
