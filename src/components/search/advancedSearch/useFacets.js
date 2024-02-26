@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { AdvFacetsTypeEnum } from "@/lib/enums";
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
 export function useFacets() {
   const router = useRouter();
@@ -39,10 +40,12 @@ export function useFacets() {
     pushFacetUrl();
   }
 
+  /**
+   * Push to query when a facet is added/removed
+   */
   function pushFacetUrl() {
     const query = router?.query;
     query["facets"] = JSON.stringify(selectedFacets);
-
     router.push({
       pathname: router.pathname,
       query: query,
@@ -77,7 +80,6 @@ export function useFacets() {
 
   function facetsFromUrl() {
     const query = router?.query;
-
     const facets = query?.facets && JSON.parse(query?.facets);
     return facets || [];
   }

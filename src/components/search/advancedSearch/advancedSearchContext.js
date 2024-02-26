@@ -16,7 +16,6 @@ import { convertStateToCql } from "@/components/search/advancedSearch/utils";
 import { useInputFields } from "@/components/search/advancedSearch/useInputFields";
 import { useDropdownSearchIndices } from "@/components/search/advancedSearch/useDropdownSearchIndices";
 import isEmpty from "lodash/isEmpty";
-import { useFacets } from "@/components/search/advancedSearch/useFacets";
 
 export function getDefaultDropdownIndices() {
   return [
@@ -55,13 +54,11 @@ export default function AdvancedSearchProvider({ children, router }) {
     cql: cqlFromUrl = null,
     fieldSearch = "",
     sort: sortFromUrl = "",
-    facets: facetsFromUrl = "",
+    facets: facetsFromUrl = "[]",
   } = router.query;
   const fieldSearchFromUrl = fieldSearch && JSON.parse(fieldSearch);
   const sort = sortFromUrl && JSON.parse(sortFromUrl);
   const facets = facetsFromUrl && JSON.parse(facetsFromUrl);
-
-  console.log(facets, "FACETS");
 
   //// ----  Popup Trigger ----
   const popoverRef = useRef(null);
@@ -173,6 +170,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     resetObjectState,
     parsedCQL,
     setParsedCQL,
+    facets,
     fieldSearchFromUrl,
     cqlFromUrl,
     pageNoFromUrl: page,

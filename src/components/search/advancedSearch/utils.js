@@ -1,6 +1,7 @@
 import isEmpty from "lodash/isEmpty";
 import { LogicalOperatorsEnum } from "@/components/search/enums";
 import { formattersAndComparitors } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
+import { serialize } from "swr/_internal";
 
 function getInputFieldsQueryToCql(inputFields) {
   return inputFields
@@ -51,22 +52,22 @@ function getDropdownQuery(dropdownSearchIndices) {
 export function getFacetsQuery(facets) {
   const OR = LogicalOperatorsEnum.OR;
   const AND = LogicalOperatorsEnum.AND;
+  const INDEXPREFIX = "phrase.";
+
+  if (isEmpty(facets)) {
+    return "";
+  }
 
   return (
     facets
       ?.filter((facet) => !isEmpty(facet.values))
       .map((facet) => {
-        const { getComparator, getFormatValue } = formattersAndComparitors(
-          facet.searchIndex
-        );
-
+        const searchindex = `${INDEXPREFIX}${facet.searchIndex}`;
         // Each dropdownSearchIndex needs to be joined together.
         //  For now we use AND with a variable
         return facet.values
           .map((singleValue) => {
-            return `${facet.searchIndex}${getComparator?.(
-              singleValue?.value
-            )}"${getFormatValue?.(singleValue?.value)}"`;
+            return `${searchindex}="${singleValue?.value}"`;
           })
           .join(` ${OR} `);
       })
