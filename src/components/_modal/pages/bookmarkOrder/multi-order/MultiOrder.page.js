@@ -50,7 +50,11 @@ const MultiOrder = () => {
         <Title type="text2" tag="h3" className={styles.subHeading}>
           <Translate
             context={CONTEXT}
-            label="multiorder-subheading"
+            label={
+              orders?.length === 1
+                ? "multiorder-subheading-singular"
+                : "multiorder-subheading"
+            }
             vars={[orders?.length]}
           />
         </Title>
