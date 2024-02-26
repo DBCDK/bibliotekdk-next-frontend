@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { AdvFacetsTypeEnum } from "@/lib/enums";
 
 export function useFacets() {
   const router = useRouter();
   const [selectedFacets, setSelectedFacets] = useState(facetsFromUrl());
+
+  const facetsFromEnum = Object.values(AdvFacetsTypeEnum);
 
   /**
    * Add an extra facet and push facets to query - we keep facets in a state for
@@ -15,6 +18,7 @@ export function useFacets() {
       return facet.searchIndex.includes(searchindex);
     });
 
+    // @TODO translate name :)
     if (addToIndex !== undefined) {
       addToIndex.values.push({ value: value, name: value });
       setSelectedFacets((prev) => {
@@ -78,5 +82,5 @@ export function useFacets() {
     return facets || [];
   }
 
-  return { selectedFacets, addFacet, removeFacet };
+  return { selectedFacets, addFacet, removeFacet, facetsFromEnum };
 }

@@ -15,6 +15,8 @@ import Title from "@/components/base/title";
 import { NoHitSearch } from "@/components/search/advancedSearch/advancedSearchResult/noHitSearch/NoHitSearch";
 import ResultPage from "./ResultPage/ResultPage";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import { AdvancedFacets } from "@/components/search/advancedSearch/facets/advancedFacets";
+import { useFacets } from "@/components/search/advancedSearch/useFacets";
 
 export function AdvancedSearchResult({
   pageNo,
@@ -23,6 +25,7 @@ export function AdvancedSearchResult({
   results,
   error = null,
   isLoading,
+  facets,
 }) {
   const hitcount = results?.hitcount;
   const numPages = Math.ceil(hitcount / 10);
@@ -34,21 +37,37 @@ export function AdvancedSearchResult({
     return null;
   }
 
+  const TitleComponent = () => {
+    return (
+      <div className={styles.flex}>
+        {/*<div className={styles.countstyle}> {hitcount} </div>*/}
+        <Title type="title5" className={styles.countstyle}>
+          {hitcount}
+        </Title>
+        <Title type="title6">Resultater</Title>
+      </div>
+    );
+  };
+
   return (
     <>
       <TopBar isLoading={isLoading} />
 
       <Section
         divider={false}
-        colSize={{ lg: { offset: 1, span: true } }}
+        colSize={{
+          lg: { offset: 0, span: true },
+          titel: { lg: { offset: 3, span: true } },
+        }}
         id="search-result-section"
-        title="Resultater"
+        title={<TitleComponent />}
         subtitle={
           hitcount > 0 &&
           !isLoading && (
-            <Title type="title5" className={styles.titleStyle}>
-              {hitcount}
-            </Title>
+            <>
+              <Title type="title6">Afgræns din søgning</Title>
+              <AdvancedFacets facets={facets} />
+            </>
           )
         }
         sectionContentClass={isMobile ? styles.sectionContentStyle : ""}
@@ -57,6 +76,7 @@ export function AdvancedSearchResult({
         {/* Reuse result page from simplesearch - we skip the wrap .. @TODO should we set
         some mark .. that we are doing advanced search .. ?? */}
         {!isLoading && hitcount === 0 && <NoHitSearch />}
+        {/*<AdvancedFacets facets={facets} />*/}
         <>
           <AdvancedSearchSort className={cx(styles.sort_container)} />
           <div>
@@ -86,11 +106,13 @@ export function AdvancedSearchResult({
 }
 
 function parseResponse(bigResponse) {
+  console.log(bigResponse, "FASTRESPONSE");
   return {
     works: bigResponse?.data?.complexSearch?.works || null,
     hitcount: bigResponse?.data?.complexSearch?.hitcount || 0,
     errorMessage: bigResponse?.data?.complexSearch?.errorMessage || null,
     isLoading: bigResponse?.isLoading,
+    facets: bigResponse?.data?.complexSearch?.facets,
   };
 }
 
@@ -107,6 +129,8 @@ export default function Wrap({ onWorkClick, onPageChange }) {
     setShowPopover,
   } = useAdvancedSearchContext();
 
+  const { facetsFromEnum } = useFacets();
+
   // @TODO what to do  with dataCollect ???
   onWorkClick = null;
   // get setter for advanced search history
@@ -119,9 +143,15 @@ export default function Wrap({ onWorkClick, onPageChange }) {
   const fastResponse = useData(
     hitcount({
       cql: cqlQuery,
+      facets: {
+        facetLimit: 5,
+        facets: facetsFromEnum,
+      },
     })
   );
   const parsedResponse = parseResponse(fastResponse);
+
+  console.log(parsedResponse, "PARSEDRESPONSE");
 
   //update searchhistory
   if (!parsedResponse?.errorMessage && !parsedResponse.isLoading) {
@@ -147,6 +177,7 @@ export default function Wrap({ onWorkClick, onPageChange }) {
       error={parsedResponse.errorMessage}
       setShowPopover={setShowPopover}
       isLoading={parsedResponse.isLoading}
+      facets={parsedResponse.facets}
     />
   );
 }
