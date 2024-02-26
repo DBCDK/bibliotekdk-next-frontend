@@ -119,7 +119,7 @@ export default function Section({
           {title && !rightSideTitle && (
             <Col
               xs={12}
-              lg={2}
+              lg={colSize?.titel?.lg?.offset || 2}
               data-cy={cyKey({ name: "title", prefix: "section" })}
               className={`section-title ${styles.title} ${titleDividerClass} ${sectionTitleClass}`}
             >

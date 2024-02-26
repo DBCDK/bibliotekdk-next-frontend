@@ -17,7 +17,7 @@ import isEmpty from "lodash/isEmpty";
  * @param {Object} props
  * See propTypes for specific props and types
  */
-export function ResultPage({ rows, onWorkClick, isLoading }) {
+export function ResultPage({ rows, onWorkClick, isLoading, facets }) {
   const resultRows = rows?.map((row, index) => (
     <Fragment key={row.workId + ":" + index}>
       <ResultRow
@@ -45,6 +45,7 @@ ResultPage.propTypes = {
 function parseResponse(bigResponse) {
   return {
     works: bigResponse?.data?.complexSearch?.works || null,
+    facets: bigResponse?.data?.complexSearch?.facets || [],
     isLoading: bigResponse?.isLoading,
   };
 }
@@ -72,15 +73,25 @@ export default function Wrap({ onWorkClick, page }) {
 
   const showResult = !isEmpty(fieldSearch) || !isEmpty(cql);
 
+  // const facets = {
+  //   facetLimit: 5,
+  //   facets: ["specificmaterialtype", "subject"],
+  // };
   // fetch data for the specific page
   const bigResponse = useData(
     doComplexSearchAll({
       cql: cqlQuery,
       offset: offset,
       limit: limit,
+      facets: {
+        facetLimit: 5,
+        facets: ["specificmaterialtype", "subject"],
+      },
       ...(!isEmpty(sort) && { sort: sort }),
     })
   );
+
+  console.log(bigResponse, "BIGRESPONSE");
   const parsedResponse = parseResponse(bigResponse);
 
   if (parsedResponse.isLoading) {

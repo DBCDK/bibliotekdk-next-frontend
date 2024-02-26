@@ -10,10 +10,10 @@ export const SuggestTypeEnum = Object.freeze({
 export const AdvFacetsTypeEnum = Object.freeze({
   MATERIAL_TYPES: "specificmaterialtype",
   SUBJECT: "subject",
-  CREATORS: "creators",
+  // CREATORS: "creators",
   MAIN_LANGUAGE: "mainlanguage",
-  GENRE_AND_FORM: "genreAndForm",
-  CHILDREN_OR_ADULTS: "childrenOrAdults",
+  // GENRE_AND_FORM: "genreAndForm",
+  // CHILDREN_OR_ADULTS: "childrenOrAdults",
 });
 
 export const FilterTypeEnum = Object.freeze({

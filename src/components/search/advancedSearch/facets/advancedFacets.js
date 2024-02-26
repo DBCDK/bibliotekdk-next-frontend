@@ -22,7 +22,6 @@ export function AdvancedFacets({ facets }) {
 
   const { addFacet, removeFacet, selectedFacets } = useFacets();
 
-  // @TODO - use query -> setQuery when checked or unchecked and do a live search
   const onItemClick = (checked, name, facetName) => {
     if (checked) {
       // selected -> add to list
@@ -34,7 +33,7 @@ export function AdvancedFacets({ facets }) {
   };
 
   return (
-    <Accordion className={styles.fisk}>
+    <Accordion className={styles.accordionContainer}>
       {filteredFacets.map((facetName, index) => (
         <AccordianItem
           facetName={facetName}
@@ -62,29 +61,33 @@ function AccordianItem({
 
   const titleElement = () => {
     return (
-      <>
+      <div className={styles.countContainer}>
         <span>{facetName}</span>
-        <span>{current?.values?.length || ""}</span>
-      </>
+        {current?.values?.length && (
+          <span className={styles.count}>{current?.values?.length || ""}</span>
+        )}
+      </div>
     );
   };
 
   return (
-    <Item
-      title={titleElement()}
-      eventKey={index.toString()}
-      key={`${index}-${facetName}`}
-      id={`${index}-${facetName}`}
-    >
-      <ListItem
-        facet={facets.find((facet) => {
-          return facet.name.includes(facetName);
-        })}
-        facetName={facetName}
-        selectedFacets={selectedFacets}
-        onItemClick={onItemClick}
-      />
-    </Item>
+    <div className={styles.itemborder}>
+      <Item
+        title={titleElement()}
+        eventKey={index.toString()}
+        key={`${index}-${facetName}`}
+        id={`${index}-${facetName}`}
+      >
+        <ListItem
+          facet={facets.find((facet) => {
+            return facet.name.includes(facetName);
+          })}
+          facetName={facetName}
+          selectedFacets={selectedFacets}
+          onItemClick={onItemClick}
+        />
+      </Item>
+    </div>
   );
 }
 
@@ -93,10 +96,19 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
     sel?.searchIndex?.includes(facetName)
   );
 
+  // sort - we want selected items first
+  const sorter = (a) => {
+    const selected = !!current?.values?.find((val) => {
+      return val.name === a.key;
+    });
+
+    return selected ? -1 : 1;
+  };
+
   let initialcheck;
   return (
     <ul data-cy={`${facetName}`}>
-      {facet.values.map((facet, index) => (
+      {facet.values.sort(sorter).map((facet, index) => (
         <li
           key={`${index}-${facet.key}`}
           className={styles.item}
