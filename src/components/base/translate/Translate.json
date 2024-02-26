@@ -1690,6 +1690,10 @@
         "da": "Du er ved at bestille %s materialer",
         "en": "You are about to order %s materials"
       },
+      "multiorder-subheading-singular": {
+        "da": "Du er ved at bestille %s materiale",
+        "en": "You are about to order %s material"
+      },
       "multiorder-digital-copy-singular": {
         "da": "%s materiale bliver leveret som digital kopi til din mail",
         "en": "%s material will be deliveret to you as a digital copy in your mail"

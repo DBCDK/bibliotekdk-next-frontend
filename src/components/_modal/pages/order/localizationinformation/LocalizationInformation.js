@@ -127,7 +127,7 @@ LocalizationInformation.propTypes = {
   onClick: PropTypes.func,
 };
 
-export default function Wrap({ pids, orders }) {
+export default function Wrap({ orders }) {
   const modal = useModal();
 
   const {
