@@ -36,6 +36,9 @@ export function ris(pids) {
 }
 
 export function manifestationFullManifestation({ pid }) {
+  if (!pid) {
+    return null;
+  }
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `query manifestation($pid: String!) {
@@ -166,6 +169,9 @@ export function reservationButtonManifestations({ pid }) {
 }
 
 export function manifestationParts({ pid }) {
+  if (!pid) {
+    return null;
+  }
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
@@ -216,6 +222,9 @@ export function manifestationsForAccessFactory({ pid }) {
 }
 
 export function manifestationForLectorReview({ pid }) {
+  if (!pid) {
+    return null;
+  }
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `

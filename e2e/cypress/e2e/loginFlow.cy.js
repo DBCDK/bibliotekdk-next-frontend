@@ -104,4 +104,10 @@ describe(`Different ways to open login modal with a (FFU) library that does NOT 
     cy.get("[data-cy=button-tilbage]").should("be.visible").click();
     cy.get("[data-cy=pickup-search-input]").should("be.visible");
   });
+
+  it.only("FFU login should not have acces to profile button in header", () => {
+    cy.visit("/iframe.html?id=layout-header--nav-header-ffu&viewMode=story");
+
+    cy.get("[data-cy=header-link-logout] p").should("have.text", "Log ud");
+  });
 });

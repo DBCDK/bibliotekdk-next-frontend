@@ -135,7 +135,7 @@ function FormatDropdowns({ dropdowns, showAndOperator }) {
   });
 }
 
-export default function TopBar() {
+export default function TopBar({ isLoading = false }) {
   const { setShowPopover } = useAdvancedSearchContext();
   return (
     <Link
@@ -148,7 +148,7 @@ export default function TopBar() {
       <Container fluid>
         <Row>
           <Col xs={12} lg={2} className={styles.your_search}>
-            <Text type="text1">
+            <Text type="text1" skeleton={isLoading}>
               {Translate({ context: "search", label: "yourSearch" })}
             </Text>
           </Col>
@@ -157,7 +157,7 @@ export default function TopBar() {
           </Col>
 
           <Col xs={12} lg={2} className={styles.edit_search}>
-            <Text type="text3" tag="span">
+            <Text type="text3" tag="span" skeleton={isLoading}>
               <Link
                 onClick={() => {
                   setShowPopover(true);

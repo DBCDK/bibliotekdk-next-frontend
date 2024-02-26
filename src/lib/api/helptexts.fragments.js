@@ -6,6 +6,9 @@ import { getLangcode } from "@/components/base/translate/Translate";
  */
 export function publishedHelptexts({ language }) {
   const langcode = getLangcode(language);
+  if (!language) {
+    return null;
+  }
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `query ($language: LanguageId! $langcode: [String]){
