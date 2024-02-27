@@ -13,7 +13,7 @@ import { useFacets } from "@/components/search/advancedSearch/useFacets";
  * @constructor
  */
 export function AdvancedFacets({ facets }) {
-  // filter out facets NOT found in response
+  // filter out emtpyt facets AND facets NOT found in response
   const filteredFacets = Object.values(AdvFacetsTypeEnum).filter((val) =>
     facets.find((facet) => {
       return facet.name.includes(val);
@@ -108,26 +108,26 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
   let initialcheck;
   return (
     <ul data-cy={`${facetName}`}>
-      {facet.values.sort(sorter).map((facet, index) => (
+      {facet.values.sort(sorter).map((value, index) => (
         <li
-          key={`${index}-${facet.key}`}
+          key={`${index}-${value.key}`}
           className={styles.item}
-          data-cy={`li-${facetName}-${facet.key}`}
+          data-cy={`li-${facetName}-${value.key}`}
         >
           {
             (initialcheck = !!current?.values?.find((val) => {
-              return val.name === facet.key;
+              return val.name === value.key;
             }))
           }
           <Checkbox
-            id={`${facet.key}-${index}`}
-            ariaLabel={facet.key}
+            id={`${value.key}-${index}`}
+            ariaLabel={value.key}
             className={styles.checkbox}
-            onChange={(checked) => onItemClick(checked, facet.key, facetName)}
+            onChange={(checked) => onItemClick(checked, value.key, facetName)}
             checked={initialcheck}
           />
-          <span>{facet.key}</span>
-          <span className={styles.score}>{facet.score}</span>
+          <span>{value.key}</span>
+          <span className={styles.score}>{value.score}</span>
         </li>
       ))}
     </ul>

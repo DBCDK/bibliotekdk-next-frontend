@@ -7,7 +7,9 @@ export function useFacets() {
   const router = useRouter();
   const [selectedFacets, setSelectedFacets] = useState(facetsFromUrl());
 
-  const facetsFromEnum = Object.values(AdvFacetsTypeEnum);
+  const facetsFromEnum = Object.values(AdvFacetsTypeEnum).map((fac) =>
+    fac.toUpperCase()
+  );
 
   /**
    * Add an extra facet and push facets to query - we keep facets in a state for
@@ -84,5 +86,7 @@ export function useFacets() {
     return facets || [];
   }
 
-  return { selectedFacets, addFacet, removeFacet, facetsFromEnum };
+  const facetLimit = 10;
+
+  return { selectedFacets, addFacet, removeFacet, facetLimit, facetsFromEnum };
 }

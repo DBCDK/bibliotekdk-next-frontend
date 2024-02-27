@@ -67,7 +67,7 @@ export default function Wrap({ onWorkClick, page }) {
     facets,
   } = useAdvancedSearchContext();
 
-  const { facetsFromEnum } = useFacets();
+  const { facetsFromEnum, facetLimit } = useFacets();
 
   onWorkClick = null;
 
@@ -88,7 +88,7 @@ export default function Wrap({ onWorkClick, page }) {
       offset: offset,
       limit: limit,
       facets: {
-        facetLimit: 5,
+        facetLimit: facetLimit,
         facets: facetsFromEnum,
       },
       ...(!isEmpty(sort) && { sort: sort }),
