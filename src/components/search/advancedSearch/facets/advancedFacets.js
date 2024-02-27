@@ -14,10 +14,12 @@ import { useState } from "react";
  * @constructor
  */
 export function AdvancedFacets({ facets }) {
+  console.log(facets, "FACETS");
+
   // filter out emtpyt facets AND facets NOT found in response
   const filteredFacets = Object.values(AdvFacetsTypeEnum).filter((val) =>
     facets.find((facet) => {
-      return facet.name.includes(val);
+      return facet.name.split(".")[1] === val;
     })
   );
 
@@ -56,9 +58,7 @@ function AccordianItem({
   selectedFacets,
   onItemClick,
 }) {
-  const current = selectedFacets?.find((sel) =>
-    sel.searchIndex.includes(facetName)
-  );
+  const current = selectedFacets?.find((sel) => sel.searchIndex === facetName);
 
   const titleElement = () => {
     return (
@@ -71,6 +71,10 @@ function AccordianItem({
     );
   };
 
+  const facet = facets.find((fac) => {
+    return fac.name.split(".")[1] === facetName;
+  });
+
   return (
     <div className={styles.itemborder}>
       <Item
@@ -80,9 +84,7 @@ function AccordianItem({
         id={`${index}-${facetName}`}
       >
         <ListItem
-          facet={facets.find((facet) => {
-            return facet.name.split(".")[1] === facetName;
-          })}
+          facet={facet}
           facetName={facetName}
           selectedFacets={selectedFacets}
           onItemClick={onItemClick}
@@ -114,12 +116,12 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
 
   return (
     <ul data-cy={`${facetName}`}>
-      {facet.values
+      {facet?.values
         .sort(sorter)
         .slice(0, numToShow)
         .map((value, index) => (
           <li
-            key={`${index}-${value.key}`}
+            key={`${facetName}-${value.key}`}
             className={styles.item}
             data-cy={`li-${facetName}-${value.key}`}
           >
@@ -133,7 +135,7 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
               }))
             }
             <Checkbox
-              id={`${value.key}-${index}`}
+              id={`${facetName}-${value.key}-${index}`}
               ariaLabel={value.key}
               className={styles.checkbox}
               onChange={(checked) => onItemClick(checked, value.key, facetName)}
@@ -143,7 +145,7 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
             <span className={styles.score}>{value.score}</span>
           </li>
         ))}
-      {facet.values.length > numToShow && (
+      {facet?.values?.length > numToShow && (
         <div onClick={() => setNumToShow(numToShow + numberToShowMore)}>
           fisk
         </div>
