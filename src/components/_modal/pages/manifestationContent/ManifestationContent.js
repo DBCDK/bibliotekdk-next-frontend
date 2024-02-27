@@ -12,7 +12,7 @@ import styles from "./ManifestationContent.module.css";
 import Translate from "@/components/base/translate";
 
 export default function ManifestationContent(props) {
-  const { pid, showOrderTxt, singleManifestation, parts } = props.context;
+  const { pid, showOrderTxt, parts } = props.context;
 
   return (
     <div>
