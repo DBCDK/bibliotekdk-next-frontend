@@ -2,8 +2,6 @@ import { makeExecutableSchema } from "@graphql-tools/schema";
 import { graphql, getIntrospectionQuery, buildClientSchema } from "graphql";
 import { APIMockContext } from "./api";
 import { useEffect, useMemo, useState } from "react";
-import { SWRConfig } from "swr";
-import { UseManyProvider } from "@/components/hooks/useMany";
 
 const LOGGER_PREFIX = "GMOCKER:";
 const SCALAR_TYPES = ["Int", "Float", "String", "Boolean", "ID"];
