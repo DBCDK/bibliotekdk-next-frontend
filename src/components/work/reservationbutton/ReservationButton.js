@@ -57,7 +57,7 @@ function ReservationButtonWrapper({
   handleOrderFinished = undefined,
 }) {
   const { data: workData, isLoadingWorkData } = useData(
-    overviewWork({ workId })
+    workId && overviewWork({ workId })
   );
 
   const {
