@@ -17,6 +17,7 @@ import ResultPage from "./ResultPage/ResultPage";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { AdvancedFacets } from "@/components/search/advancedSearch/facets/advancedFacets";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
+import translate from "@/components/base/translate";
 
 export function AdvancedSearchResult({
   pageNo,
@@ -39,12 +40,13 @@ export function AdvancedSearchResult({
 
   const TitleComponent = () => {
     return (
-      <div className={styles.flex}>
-        {/*<div className={styles.countstyle}> {hitcount} </div>*/}
+      <div className={styles.titleflex}>
         <Title type="title5" className={styles.countstyle}>
           {hitcount}
         </Title>
-        <Title type="title6">Resultater</Title>
+        <Title type="title6">
+          {translate({ context: "search", label: "title" })}
+        </Title>
       </div>
     );
   };
@@ -65,7 +67,11 @@ export function AdvancedSearchResult({
           hitcount > 0 &&
           !isLoading && (
             <>
-              <Title type="title6">Afgræns din søgning</Title>
+              <div className={styles.subtitleStyle}>
+                <Title type="title6">
+                  {translate({ context: "search", label: "narrow-search" })}
+                </Title>
+              </div>
               <AdvancedFacets facets={facets} />
             </>
           )

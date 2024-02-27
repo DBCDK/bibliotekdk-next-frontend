@@ -11,10 +11,27 @@
   font-family: var(--body-font-semibold);
 }
 
+.subtitleStyle {
+  border-bottom: 1px solid var(--blue);
+  margin: var(--pt4) 0 var(--pt2) 0;
+}
+
 .sectionTitleClass h2 {
   margin-top: var(--pt2);
   font-size: 17px;
   font-family: var(--body-font-semibold);
+}
+
+.titleflex {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: var(--pt2);
+  margin-top: var(--pt2);
+}
+
+.countstyle {
+  color: var(--blue);
+  margin-right: var(--pt05);
 }
 
 .sectionContentStyle {
