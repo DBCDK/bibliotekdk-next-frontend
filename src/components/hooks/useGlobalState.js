@@ -1,4 +1,4 @@
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 let globalState = {};
 
 /**
@@ -18,4 +18,9 @@ export function useGlobalState({ key, initial }) {
   }
 
   return [data, setState];
+}
+
+export function setGlobalState(key, value) {
+  globalState[key] = value;
+  mutate(key, value);
 }

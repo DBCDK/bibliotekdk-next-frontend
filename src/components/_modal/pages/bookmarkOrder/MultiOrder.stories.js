@@ -72,13 +72,12 @@ MitIdNoAgencies.story = createStoryParameters({
 function MultiOrderStory() {
   const modal = useModal();
 
-  const { start, renderMe } = useOrderFlow();
+  const { start } = useOrderFlow();
   useMemo(() => {
     modal.setStack([]);
   }, []);
   return (
     <>
-      {renderMe}
       <Button
         onClick={() => {
           start({
@@ -181,14 +180,21 @@ function createStoryParameters({ user, submitOrdersDelay = 500 }) {
   const WORKS = {};
 
   function getManifestation(pid) {
-    console.log("manimani", pid, MANIFESTATIONS[pid]);
     return MANIFESTATIONS[pid] || null;
   }
   function getWork(id) {
     return PID_TO_WORK[id] || WORKS[id] || null;
   }
 
-  function createMockedWork({ name, access, workTypes, materialTypeSpecific }) {
+  function createMockedWork({
+    name,
+    access,
+    workTypes,
+    materialTypeSpecific = {
+      code: "BOOK",
+      display: "bog",
+    },
+  }) {
     const pid = `PID_${name}`;
     const manifestation = {
       pid,
@@ -436,8 +442,6 @@ function createStoryParameters({ user, submitOrdersDelay = 500 }) {
           },
           Branch: {
             orderPolicy: (args) => {
-              console.log("whattup", args.variables.pids);
-
               return {
                 orderPossible:
                   args.variables.branchId !== "BRANCH_CHECKORDER_FAILS",

@@ -1,5 +1,5 @@
 .pincode {
-  padding: 0 var(--pt2) var(--pt2) var(--pt2);
+  /* padding: 0 var(--pt2) var(--pt2) var(--pt2); */
 }
 
 .divider {
@@ -14,6 +14,6 @@
 
 @media (min-width: 576px) {
   .pincode {
-    padding: 0 var(--pt6) var(--pt3) var(--pt6);
+    /* padding: 0 var(--pt6) var(--pt3) var(--pt6); */
   }
 }

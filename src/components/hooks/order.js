@@ -472,7 +472,11 @@ function useSingleMaterialValidation(order) {
   };
 }
 export function useMultiOrderValidation({ orders }) {
-  const { renderMe, result } = useMany(orders, useSingleMaterialValidation);
+  const { result } = useMany(
+    "multiOrderValidation",
+    orders,
+    useSingleMaterialValidation
+  );
 
   const validation = useMemo(() => {
     return {
@@ -518,7 +522,6 @@ export function useMultiOrderValidation({ orders }) {
   );
 
   return {
-    renderMe,
     ...validation,
     isLoading,
   };
@@ -540,8 +543,9 @@ const formatArticleForm = (formData, pid) => {
 };
 
 export function useSubmitOrders({ orders }) {
+  const ordersKey = useMemo(() => JSON.stringify(orders), [orders]);
   const [receipt, setReceipt] = useGlobalState({
-    key: `receipt:${JSON.stringify(orders)}`,
+    key: `receipt:${ordersKey}`,
     initial: {},
   });
 
@@ -633,7 +637,6 @@ export function useSubmitOrders({ orders }) {
 
   return {
     isReady,
-    renderMe: validation.renderMe,
     ...receipt,
     submitOrders,
   };
@@ -645,8 +648,10 @@ export function useOrderFlow() {
   const { isAuthenticated } = useAuthentication();
 
   const storedOrders = useMemo(() => {
+    // return [];
     return JSON.parse(getSessionStorageItem("storedOrders") || "[]");
   }, []);
+
   const [initialOrders, setInitialOrders] = useGlobalState({
     key: "initialMultiOrderList",
     initial: storedOrders,

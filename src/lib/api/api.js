@@ -2,7 +2,7 @@
  * @file
  * In this file we have functions related to data fetching.
  */
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import fetch from "isomorphic-unfetch";
 import storybookConfig from "@/config";
 import getConfig from "next/config";
@@ -168,6 +168,8 @@ export function useMutate() {
   };
 }
 
+let fetching = {};
+
 /**
  * A custom React hook for fetching data from the GraphQL API
  * https://reactjs.org/docs/hooks-custom.html
@@ -178,6 +180,12 @@ export function useData(query) {
   const keyGenerator = useKeyGenerator();
   const fetcherImpl = useFetcherImpl();
   const key = keyGenerator(query);
+  const revalidateOptions = !!query?.revalidate
+    ? { revalidateOnFocus: true, revalidateOnMount: true }
+    : {
+        revalidateOnFocus: false,
+        revalidateOnMount: false,
+      };
 
   // isSlow is set to true, when query is slow
   const [isSlow, setIsSlow] = useState(false);
@@ -186,7 +194,20 @@ export function useData(query) {
   const { data, error, mutate, isValidating } = useSWR(key, fetcherImpl, {
     loadingTimeout: query?.slowThreshold || 5000,
     onLoadingSlow: () => setIsSlow(true),
+    ...revalidateOptions,
   });
+  useEffect(() => {
+    if (!query?.revalidate && data) {
+      delete fetching[key];
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (!query?.revalidate && key && !data && !fetching[key]) {
+      fetching[key] = true;
+      mutate();
+    }
+  }, [key]);
 
   return {
     data: data?.data,

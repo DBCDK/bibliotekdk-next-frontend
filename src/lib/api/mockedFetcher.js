@@ -3,6 +3,7 @@ import { graphql, getIntrospectionQuery, buildClientSchema } from "graphql";
 import { APIMockContext } from "./api";
 import { useEffect, useMemo, useState } from "react";
 import { SWRConfig } from "swr";
+import { UseManyProvider } from "@/components/hooks/useMany";
 
 const LOGGER_PREFIX = "GMOCKER:";
 const SCALAR_TYPES = ["Int", "Float", "String", "Boolean", "ID"];
@@ -39,9 +40,7 @@ export function GraphQLMocker({
   debug,
 }) {
   const [error, setError] = useState();
-  const [swrCache, setSwrCache] = useState(new Map());
   const fetcher = useMemo(() => {
-    setSwrCache(new Map());
     return createMockedFetcher({
       url,
       resolvers,
@@ -98,7 +97,7 @@ export function GraphQLMocker({
         fetcher,
       }}
     >
-      <SWRConfig value={{ provider: () => swrCache }}>{children}</SWRConfig>
+      {children}
     </APIMockContext.Provider>
   );
 }

@@ -131,7 +131,6 @@ export default function Wrap({ orders }) {
   const modal = useModal();
 
   const {
-    renderMe,
     digitalMaterialsCount,
     physicalMaterialsCount,
     isLoading: isLoadingValidation,
@@ -145,7 +144,6 @@ export default function Wrap({ orders }) {
 
   return (
     <>
-      {renderMe}
       <LocalizationInformation
         branchId={branchId}
         isDigitalCopy={digitalMaterialsCount > 0}

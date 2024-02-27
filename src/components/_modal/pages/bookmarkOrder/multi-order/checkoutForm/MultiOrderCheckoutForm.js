@@ -23,7 +23,6 @@ const CheckoutForm = () => {
 
   const modal = useModal();
   const {
-    renderMe,
     materialsMissingActionCount,
     materialsNotAllowedCount,
     materialsToOrderCount,
@@ -40,11 +39,7 @@ const CheckoutForm = () => {
   const disabled = !isValid;
   const { branchId } = usePickupBranchId();
   const pickupBranch = useBranchInfo({ branchId });
-  const {
-    renderMe: renderMeSubmitOrders,
-    submitOrders,
-    isSubmitting,
-  } = useSubmitOrders({
+  const { submitOrders, isSubmitting } = useSubmitOrders({
     orders,
   });
 
@@ -67,8 +62,6 @@ const CheckoutForm = () => {
 
   return (
     <div className={styles.container}>
-      {renderMe}
-      {renderMeSubmitOrders}
       <LocalizationInformation orders={orders} />
       <OrdererInformation />
       {physicalMaterialsCount > 0 && <Pincode />}
@@ -182,7 +175,7 @@ const CheckoutForm = () => {
           onClick={async () => {
             const receipt = await submitOrders();
             modal.push("multireceipt", {
-              failedMaterials: receipt?.failedAtCreation || [],
+              failedMaterials: receipt?.failedMaterialsPids || [],
               successMaterials: receipt?.successfullyCreated || [],
               branchName: pickupBranch?.name,
               digitalMaterialsCount,

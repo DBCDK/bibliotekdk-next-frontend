@@ -104,7 +104,6 @@ function ReservationButtonWrapper({
     );
   }
 
-  console.log("access", access);
   return (
     <ReservationButton
       {...{

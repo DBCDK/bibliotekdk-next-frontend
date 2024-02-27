@@ -17,10 +17,12 @@ const CONTEXT = "bookmark-order";
 
 const MultiOrder = () => {
   const { orders } = useOrderFlow();
+
   const { identityProviderUsed, isLoading: isLoadingAuthentication } =
     useAuthentication();
+
   const { loanerInfo, isLoading: isLoadingLoanerInfo } = useLoanerInfo();
-  const { physicalMaterialsCount, renderMe } = useMultiOrderValidation({
+  const { physicalMaterialsCount } = useMultiOrderValidation({
     orders,
   });
 
@@ -37,7 +39,6 @@ const MultiOrder = () => {
 
   return (
     <div className={styles.multiOrder}>
-      {renderMe}
       <Top
         title={Translate({
           context: CONTEXT,
@@ -66,8 +67,8 @@ const MultiOrder = () => {
       {orders?.length > 0 && (
         <>
           <div className={styles.materialList}>
-            {orders?.map(({ pids }) => (
-              <Material key={JSON.stringify(pids)} material={{}} pids={pids} />
+            {orders?.map(({ pids }, i) => (
+              <Material key={i} material={{}} pids={pids} />
             ))}
           </div>
           <section className={styles.checkoutContainer}>

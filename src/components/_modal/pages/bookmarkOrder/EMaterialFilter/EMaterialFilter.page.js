@@ -18,12 +18,13 @@ const SKELETON_ROW_AMOUNT = 3;
  * Shows all the materials that are available online and therefor cannot be ordered
  * Skips this step if nothing to filter
  */
-const EMaterialFilter = ({ context }) => {
+const EMaterialFilter = () => {
   const { initialOrders, setOrders } = useOrderFlow();
 
-  const { renderMe, validatedOrders } = useMultiOrderValidation({
+  const { validatedOrders } = useMultiOrderValidation({
     orders: initialOrders,
   });
+
   const loadedOrders = validatedOrders?.filter(
     (entry) =>
       entry?.manifestationAccess?.isLoading === false &&
@@ -55,11 +56,10 @@ const EMaterialFilter = ({ context }) => {
   };
 
   if (!isLoading && materialUnsupportedCount === 0) {
-    return <MultiOrder context={context} />;
+    return <MultiOrder />;
   }
   return (
     <div className={styles.eMaterialFilter}>
-      {renderMe}
       <Top
         skeleton={isLoading}
         title={Translate({
