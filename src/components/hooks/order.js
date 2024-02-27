@@ -309,11 +309,15 @@ export function useMail() {
     (agency) => agency.id === pickupAgencyId
   )?.user?.mail;
 
+  const mailFromSession = loanerInfo?.userParameters?.userMail;
+
   const isLoading =
     isLoadingBranchId || isLoadingBranchInfo || isLoadingLoanerInfo;
 
   const mailInUse =
-    mail === null || typeof mail === "undefined" ? mailFromPickupAgency : mail;
+    mail === null || typeof mail === "undefined"
+      ? mailFromPickupAgency || mailFromSession
+      : mail;
   const isValid = validateEmail(mailInUse);
   const message = !isValid && {
     context: "form",

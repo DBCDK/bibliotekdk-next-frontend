@@ -26,6 +26,7 @@ import { getMaterialTypeForPresentation } from "@/lib/manifestationFactoryUtils"
 import { getSessionStorageItem, setSessionStorageItem } from "@/lib/utils";
 import { useAnalyzeMaterial } from "@/components/hooks/useAnalyzeMaterial";
 import { useOrderFlow } from "@/components/hooks/order";
+import { useModal } from "@/components/_modal";
 
 const CONTEXT = "bookmark";
 const ORDER_TRESHHOLD = 25;
@@ -93,6 +94,7 @@ const AnalyseItemAvailability = forwardRef(function AnalyseItemAvailability(
 });
 
 const BookmarkPage = () => {
+  const modal = useModal();
   const itemsRef = useRef([]);
   const {
     bookmarks: allBookmarks,
