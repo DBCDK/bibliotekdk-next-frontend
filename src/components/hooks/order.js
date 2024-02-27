@@ -420,7 +420,7 @@ export function useOrderValidation({ pids }) {
       checkBeforeConfirm: false,
     },
     isBlocked: {
-      isValid: orderService !== "ILL" || pickupBranch?.borrowerStatus?.allowed,
+      isValid: orderService !== "ILL" || !pickupBranch?.isBlocked,
     },
   };
 
