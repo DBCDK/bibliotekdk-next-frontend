@@ -28,7 +28,7 @@ describe("Multi Order", () => {
       cy.contains("Gå til bestilling").click();
 
       cy.contains("Du mangler at udfylde din e-mail");
-      cy.get('[data-cy="input"]').type("test@dbc.dk");
+      cy.get('[data-cy="input"]').clear().type("test@dbc.dk");
       cy.contains("Godkend").click();
 
       cy.contains("Bestillingen blev gennemført");
