@@ -44,7 +44,7 @@ export function AdvancedSearchResult({
         <Title type="title5" className={styles.countstyle}>
           {hitcount}
         </Title>
-        <Title type="title6">
+        <Title type="title6" className={styles.titleStyle}>
           {translate({ context: "search", label: "title" })}
         </Title>
       </div>
