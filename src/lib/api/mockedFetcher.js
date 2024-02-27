@@ -222,7 +222,10 @@ function defaultMockResolver(parent, _args, context, info) {
 
   // The field was mocked with some value
   // so we return that, instead of using a default mock
-  if (typeof parent?.[fieldName] !== "undefined") {
+  if (
+    parent?.hasOwnProperty(fieldName) &&
+    typeof parent?.[fieldName] !== "undefined"
+  ) {
     // If return type is interface or union, there MUST be a __typename
     // If the mock does not provide it, we attach one
     if (implementations) {
