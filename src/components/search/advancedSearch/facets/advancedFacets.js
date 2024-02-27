@@ -5,6 +5,7 @@ import styles from "./advancedFacets.module.css";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
 
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
+import { useState } from "react";
 
 /**
  *
@@ -74,13 +75,13 @@ function AccordianItem({
     <div className={styles.itemborder}>
       <Item
         title={titleElement()}
-        eventKey={index.toString()}
-        key={`${index}-${facetName}`}
+        eventKey={`${facetName}`}
+        key={`${facetName}`}
         id={`${index}-${facetName}`}
       >
         <ListItem
           facet={facets.find((facet) => {
-            return facet.name.includes(facetName);
+            return facet.name.split(".")[1] === facetName;
           })}
           facetName={facetName}
           selectedFacets={selectedFacets}
@@ -92,9 +93,12 @@ function AccordianItem({
 }
 
 function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
-  const current = selectedFacets?.find((sel) =>
-    sel?.searchIndex?.includes(facetName)
-  );
+  const [numToShow, setNumToShow] = useState(5);
+  const numberToShowMore = 20;
+
+  const current = selectedFacets?.find((sel) => {
+    return sel?.searchIndex === facetName;
+  });
 
   // sort - we want selected items first
   const sorter = (a) => {
@@ -106,30 +110,44 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
   };
 
   let initialcheck;
+  // @TODO fold list - show 5 at first - showmore link to display 20 more :)
+
   return (
     <ul data-cy={`${facetName}`}>
-      {facet.values.sort(sorter).map((value, index) => (
-        <li
-          key={`${index}-${value.key}`}
-          className={styles.item}
-          data-cy={`li-${facetName}-${value.key}`}
-        >
-          {
-            (initialcheck = !!current?.values?.find((val) => {
-              return val.name === value.key;
-            }))
-          }
-          <Checkbox
-            id={`${value.key}-${index}`}
-            ariaLabel={value.key}
-            className={styles.checkbox}
-            onChange={(checked) => onItemClick(checked, value.key, facetName)}
-            checked={initialcheck}
-          />
-          <span>{value.key}</span>
-          <span className={styles.score}>{value.score}</span>
-        </li>
-      ))}
+      {facet.values
+        .sort(sorter)
+        .slice(0, numToShow)
+        .map((value, index) => (
+          <li
+            key={`${index}-${value.key}`}
+            className={styles.item}
+            data-cy={`li-${facetName}-${value.key}`}
+          >
+            {
+              (initialcheck = !!current?.values?.find((val) => {
+                return (
+                  current &&
+                  val.name === value.key &&
+                  facet.name === `phrase.${current.searchIndex}`
+                );
+              }))
+            }
+            <Checkbox
+              id={`${value.key}-${index}`}
+              ariaLabel={value.key}
+              className={styles.checkbox}
+              onChange={(checked) => onItemClick(checked, value.key, facetName)}
+              checked={initialcheck}
+            />
+            <span>{value.key}</span>
+            <span className={styles.score}>{value.score}</span>
+          </li>
+        ))}
+      {facet.values.length > numToShow && (
+        <div onClick={() => setNumToShow(numToShow + numberToShowMore)}>
+          fisk
+        </div>
+      )}
     </ul>
   );
 }

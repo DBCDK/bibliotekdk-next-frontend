@@ -17,7 +17,7 @@ export function useFacets() {
   function addFacet(value, searchindex) {
     // check if searchindex is already in facets
     const addToIndex = selectedFacets.find((facet) => {
-      return facet.searchIndex.includes(searchindex);
+      return facet.searchIndex === searchindex;
     });
 
     // @TODO translate name :)
@@ -85,7 +85,7 @@ export function useFacets() {
     return facets || [];
   }
 
-  const facetLimit = 10;
+  const facetLimit = 50;
 
   return { selectedFacets, addFacet, removeFacet, facetLimit, facetsFromEnum };
 }
