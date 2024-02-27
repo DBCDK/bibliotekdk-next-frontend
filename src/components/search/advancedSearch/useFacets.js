@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { AdvFacetsTypeEnum } from "@/lib/enums";
-import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
 export function useFacets() {
   const router = useRouter();

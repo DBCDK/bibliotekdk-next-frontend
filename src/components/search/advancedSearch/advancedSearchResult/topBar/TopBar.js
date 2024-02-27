@@ -8,7 +8,6 @@ import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import isEmpty from "lodash/isEmpty";
 import { formattersAndComparitors } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
-import { useFacets } from "@/components/search/advancedSearch/useFacets";
 
 /**
  *

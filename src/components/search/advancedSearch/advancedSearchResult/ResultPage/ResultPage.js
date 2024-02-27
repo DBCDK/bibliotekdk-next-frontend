@@ -18,7 +18,7 @@ import { useFacets } from "@/components/search/advancedSearch/useFacets";
  * @param {Object} props
  * See propTypes for specific props and types
  */
-export function ResultPage({ rows, onWorkClick, isLoading, facets }) {
+export function ResultPage({ rows, onWorkClick, isLoading }) {
   const resultRows = rows?.map((row, index) => (
     <Fragment key={row.workId + ":" + index}>
       <ResultRow

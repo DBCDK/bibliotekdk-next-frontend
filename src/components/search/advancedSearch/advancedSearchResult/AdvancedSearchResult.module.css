@@ -7,11 +7,11 @@
 }
 
 .titleStyle {
-  color: var(--blue);
   font-family: var(--body-font-semibold);
 }
 
 .subtitleStyle {
+  font-family: var(--body-font-semibold);
   border-bottom: 1px solid var(--blue);
   margin: var(--pt4) 0 var(--pt2) 0;
 }
