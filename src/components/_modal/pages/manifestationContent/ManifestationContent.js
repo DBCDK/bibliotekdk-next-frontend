@@ -23,11 +23,7 @@ export default function ManifestationContent(props) {
           label: "contents",
         })}
       />
-      <Edition
-        showOrderTxt={showOrderTxt}
-        singleManifestation={singleManifestation}
-        context={{ orderPids: [pid] }}
-      />
+      <Edition showOrderTxt={showOrderTxt} pids={[pid]} />
 
       <ManifestationParts
         pid={pid}
