@@ -2278,6 +2278,10 @@
         "da": "Tilpasses efter materialetype",
         "en": "Adjusted according to material type"
       },
+      "narrow-search": {
+        "da": "Afgræns din søgning",
+        "en": "Narrow your search"
+      },
       "narrow-search-more": {
         "da": "Afgræns yderligere",
         "en": "narrow-search-more"

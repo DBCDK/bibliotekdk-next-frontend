@@ -77,10 +77,6 @@ export default function Wrap({ onWorkClick, page }) {
 
   const showResult = !isEmpty(fieldSearch) || !isEmpty(cql);
 
-  // const facets = {
-  //   facetLimit: 5,
-  //   facets: ["specificmaterialtype", "subject"],
-  // };
   // fetch data for the specific page
   const bigResponse = useData(
     doComplexSearchAll({

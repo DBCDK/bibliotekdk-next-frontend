@@ -1,5 +1,4 @@
 .item {
-  /*border: 1px solid green;*/
   display: grid;
   grid-template-columns: 1fr 100fr 100fr;
   align-items: center;
@@ -27,7 +26,6 @@
 }
 
 .accordionContainer {
-  /*border: 2px solid blue;*/
   width: 100%;
 }
 
