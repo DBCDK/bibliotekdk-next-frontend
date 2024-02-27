@@ -3,7 +3,7 @@ describe("Facets", () => {
     cy.visit("/iframe.html?id=advancedsearch-facets--facets-in-url");
 
     // there should be 3 accordions in this story
-    cy.get("[data-cy=accordion-item]").should("have.length", 3);
+    cy.get("[data-cy=accordion-item]").should("have.length", 4);
 
     cy.get("[data-cy=router-query]").then((el) => {
       const fisk = JSON.parse(el.text());
@@ -24,14 +24,15 @@ describe("Facets", () => {
 
     // two of them should be selected from url params
     cy.get("[data-cy=accordion-item]")
-      .first()
+      .eq(2)
+      .click()
       .find("li")
       .find("[checked]")
       .should("have.length", 2);
 
     // uncheck one
     cy.get("[data-cy=accordion-item]")
-      .first()
+      .eq(2)
       .find("li")
       .find("[checked]")
       .first()
