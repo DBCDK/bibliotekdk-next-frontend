@@ -30,8 +30,7 @@ export function LocalizationInformation({
   if (availableAsDigitalCopy) {
     return null;
   }
-  if (!branchId) {
-  }
+
   return (
     <>
       <div className={styles.pickup}>

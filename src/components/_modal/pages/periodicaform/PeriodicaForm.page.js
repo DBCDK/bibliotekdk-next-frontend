@@ -96,12 +96,6 @@ export function PeriodicaForm({ modal, context, active }) {
   }, [periodicaForm]);
 
   useEffect(() => {
-    if (articleIsSpecified) {
-      // setExpanded(true);
-    }
-  }, [workId, articleIsSpecified, active]);
-
-  useEffect(() => {
     if (active) {
       setHasTry(false);
     }
