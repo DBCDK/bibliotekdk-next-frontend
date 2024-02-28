@@ -242,6 +242,12 @@ export function usePickupBranchId() {
   const branchId =
     loanerInfo?.pickupBranch ||
     extendedUserData?.user?.lastUsedPickUpBranch ||
+    (
+      loanerInfo?.municipalityAgencyId &&
+      loanerInfo?.agencies?.find(
+        (agency) => agency?.id === loanerInfo?.municipalityAgencyId
+      )
+    )?.id ||
     loanerInfo?.agencies?.[0]?.id;
 
   return {
