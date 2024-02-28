@@ -23,5 +23,6 @@ export function orderHistory({ offset, limit }) {
     }`,
     variables: { offset, limit },
     slowThreshold: 3000,
+    revalidate: true,
   };
 }
