@@ -14,8 +14,6 @@ import { useState } from "react";
  * @constructor
  */
 export function AdvancedFacets({ facets }) {
-  console.log(facets, "FACETS");
-
   // filter out emtpyt facets AND facets NOT found in response
   const filteredFacets = Object.values(AdvFacetsTypeEnum).filter((val) =>
     facets.find((facet) => {
