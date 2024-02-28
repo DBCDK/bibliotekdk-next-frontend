@@ -645,23 +645,17 @@ export function templateImageToLeft({
   isLoading,
 }) {
   const fullTitle =
-    singleManifestation === true
-      ? material?.titles?.full?.join(": ")
-      : material?.ownerWork?.titles?.full?.join(": ");
-  const creators =
-    singleManifestation === true
-      ? material?.creators
-      : material?.ownerWork?.creators;
+    material?.titles?.full?.join(": ") ||
+    material?.ownerWork?.titles?.full?.join(": ");
+  const creators = material?.creators || material?.ownerWork?.creators;
   const creatorsString = extractCreatorsPrioritiseCorporation(creators)
     ?.flatMap((c) => c?.display)
     .filter((pre) => !isEmpty(pre))
     ?.join(", ");
 
-  const formattedMaterialTypes = Boolean(
-    singleManifestation && material?.materialType
-  ) //@TODO we get that from bookmarks if specific edition is marked --> would be better to retrieve manifestations directly inside of multiorder --> material
-    ? material?.materialType
-    : formatMaterialTypesToPresentation(material?.materialTypesArray);
+  const formattedMaterialTypes = material?.materialTypes
+    ?.map((materialType) => materialType?.materialTypeSpecific?.display)
+    ?.join(" / ");
   const edition = [
     material?.edition?.publicationYear?.display,
     material?.publisher,
@@ -710,7 +704,7 @@ export function templateImageToLeft({
             title={formattedMaterialTypes}
             skeleton={isLoading}
           >
-            {singleManifestation
+            {singleManifestation && !isDeliveredByDigitalArticleService
               ? edition
               : Translate({
                   context: "materialcard",

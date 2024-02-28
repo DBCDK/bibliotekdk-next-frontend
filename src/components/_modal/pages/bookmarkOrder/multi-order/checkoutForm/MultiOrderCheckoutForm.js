@@ -2,188 +2,74 @@ import Text from "@/components/base/text";
 import styles from "./MultiOrderCheckoutForm.module.css";
 import Translate from "@/components/base/translate";
 import OrdererInformation from "../../../order/ordererinformation/OrdererInformation";
-import {
-  onMailChange,
-  shouldRequirePincode,
-} from "@/components/_modal/pages/order/utils/order.utils";
-import { useEffect, useMemo, useState } from "react";
-import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
 import Button from "@/components/base/button";
-import { useModal } from "@/components/_modal/Modal";
-import { LOGIN_MODE } from "../../../login/utils";
-import { LocalizationInformation } from "@/components/_modal/pages/order/localizationinformation/LocalizationInformation"; // Import without wrapper
+import LocalizationInformation from "@/components/_modal/pages/order/localizationinformation/LocalizationInformation"; // Import without wrapper
 import Spinner from "react-bootstrap/Spinner";
 import Link from "@/components/base/link";
-import { validateEmail } from "@/utils/validateEmail";
-import { getLabel } from "@/components/base/forms/email/Email";
 import Pincode from "../../../order/pincode";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 
-const CheckoutForm = ({
-  context,
-  materialCounts,
-  onSubmit,
-  isLoading,
-  duplicateBookmarkIds,
-}) => {
-  const {
-    digitalMaterials,
-    materialsNotAllowedCount,
-    materialsMissingActionCount,
-    isAnalyzed,
-    materialsToOrderCount,
-  } = materialCounts;
+import {
+  useMultiOrderValidation,
+  useOrderFlow,
+  usePickupBranchId,
+  useSubmitOrders,
+} from "@/components/hooks/order";
+import { useBranchInfo } from "@/components/hooks/useBranchInfo";
+import { useModal } from "@/components/_modal/Modal";
+
+const CheckoutForm = () => {
+  const { orders } = useOrderFlow();
+
   const modal = useModal();
-  const { hasCulrUniqueId } = useAuthentication();
-
-  const [disabled, setDisabled] = useState(true);
-  const [mail, setMail] = useState(null);
-  const [pincode, setPincode] = useState(null);
-  const { userInfo, pickupBranchInfo, accessTypeInfo } =
-    useOrderPageInformation({
-      workId: "",
-      periodicaForm: context?.periodicaForm,
-      pids: [],
-    });
-
-  const { pickupBranch, pickupBranchUser, isLoadingBranches } =
-    pickupBranchInfo;
-
-  // materialsToOrderCount contains all orders: physical and digital orders,
-  // if materialsToOrderCount is greater than digitalMaterials, we also have physical orders
-  const hasPhysicalOrders = materialsToOrderCount > digitalMaterials;
-
-  const pincodeIsRequired =
-    hasPhysicalOrders && shouldRequirePincode(pickupBranch);
-
-  useEffect(() => {
-    const hasPincode = pincodeIsRequired ? !!pincode : true;
-
-    setDisabled(
-      !isAnalyzed ||
-        materialsMissingActionCount > 0 ||
-        materialsNotAllowedCount > 0 ||
-        duplicateBookmarkIds?.length > 0 ||
-        !mail?.valid?.status ||
-        materialsToOrderCount < 1 ||
-        !hasPincode ||
-        pickupBranchInfo?.borrowerStatus?.allowed === false
-    );
-  }, [
-    isAnalyzed,
+  const {
     materialsMissingActionCount,
     materialsNotAllowedCount,
-    duplicateBookmarkIds?.length,
-    mail?.valid?.status,
     materialsToOrderCount,
-    pincodeIsRequired,
-    pincode,
-  ]);
+    digitalMaterialsCount,
+    physicalMaterialsCount,
+    isLoading: isLoadingValidation,
+    isValid,
+    missingPincode,
+    missingMail,
+    alreadyOrdered,
+  } = useMultiOrderValidation({ orders });
 
-  const { updateLoanerInfo } = userInfo;
+  const { hasCulrUniqueId } = useAuthentication();
+  const disabled = !isValid;
+  const { branchId } = usePickupBranchId();
+  const pickupBranch = useBranchInfo({ branchId });
+  const { submitOrders, isSubmitting } = useSubmitOrders({
+    orders,
+  });
 
-  const validated = useMemo(() => {
-    const hasMail = !!mail?.valid?.status;
-    const hasBranchId = !!pickupBranch?.branchId;
-    const hasPincode = pincodeIsRequired ? !!pincode : true;
-
-    const status = hasMail && hasBranchId && hasPincode;
-
-    const details = {
-      hasMail: {
-        status: hasMail,
-        value: mail?.value,
-        message: mail?.valid?.message,
-      },
-      hasPincode: {
-        status: hasPincode,
-        message: !hasPincode && { label: "missing-pincode" },
-      },
-      hasBranchId: { status: hasBranchId },
-    };
-    return { status, hasTry: false, details };
-  }, [
-    mail,
-    pincode,
-    pickupBranch,
-    context?.periodicaForm?.publicationDateOfComponent,
-  ]);
-
-  const onSubmitForm = () => {
-    if (onSubmit) onSubmit(pickupBranch, pincode);
-  };
+  const hasPhysicalOrders = physicalMaterialsCount > 0;
 
   const scrollToWorkId = () => {
+    const elements = document.getElementsByClassName("has-been-ordered");
     const container = document.getElementById("modal_dialog");
-
     const scrollContainer = container.querySelectorAll(
       ".modal_page.page-current .page_content"
     )[0];
 
-    const scrollToId = context?.bookmarksToOrder?.find(
-      (mat) => mat.bookmarkId === duplicateBookmarkIds?.[0]
-    )?.materialId;
-    const el = document.getElementById(scrollToId);
-
-    scrollContainer.scrollTo({
-      top: el?.offsetTop,
-      behavior: "smooth",
-    });
+    if (elements?.[0]?.parentNode) {
+      scrollContainer.scrollTo({
+        top: elements?.[0]?.parentNode.offsetTop,
+        behavior: "smooth",
+      });
+    }
   };
 
   return (
     <div className={styles.container}>
-      <LocalizationInformation
-        pickupBranch={pickupBranch}
-        pickupBranchUser={pickupBranchUser}
-        accessTypeInfo={accessTypeInfo}
-        isLoadingBranches={isLoadingBranches}
-        isAuthenticated // always true here - we check before we enter this flow
-        isDigitalCopy={false}
-        availableAsPhysicalCopy={true}
-        onClick={() => {
-          !isLoadingBranches &&
-            modal.push("pickup", {
-              initial: {
-                agencies: pickupBranchUser?.agencies,
-              },
-              requireDigitalAccess: false,
-              mode: LOGIN_MODE.ORDER_PHYSICAL,
-              pid: context?.materials?.[0].pid,
-              showAllBranches: true,
-            });
-        }}
-      />
-      <OrdererInformation
-        context={context}
-        validated={validated}
-        hasValidationErrors={false}
-        onMailChange={(e) => {
-          const value = e?.target?.value;
-          onMailChange(
-            value,
-            {
-              status: validateEmail(value),
-              message: getLabel(value),
-            },
-            updateLoanerInfo,
-            setMail
-          );
-        }}
-        setMail={setMail}
-        email={mail}
-      />
-
-      <Pincode
-        validated={validated}
-        onChange={(val) => setPincode(val)}
-        hide={!hasPhysicalOrders}
-      />
+      <LocalizationInformation orders={orders} />
+      <OrdererInformation />
+      {physicalMaterialsCount > 0 && <Pincode />}
 
       <div>
         {/* Errors and messages */}
 
-        {materialsNotAllowedCount > 0 && (
+        {!isLoadingValidation && materialsNotAllowedCount > 0 && (
           <Text type="text3" className={styles.errorLabel}>
             <Translate
               context="bookmark-order"
@@ -197,7 +83,7 @@ const CheckoutForm = ({
           </Text>
         )}
 
-        {materialsMissingActionCount > 0 && (
+        {!isLoadingValidation && materialsMissingActionCount > 0 && (
           <Text type="text3" className={styles.errorLabel}>
             <Translate
               context="bookmark-order"
@@ -211,28 +97,28 @@ const CheckoutForm = ({
           </Text>
         )}
 
-        {!mail?.valid?.status && (
+        {!isLoadingValidation && missingMail && (
           <Text type="text3" className={styles.errorLabel}>
             <Translate context="order" label="action-empty-email-field" />
           </Text>
         )}
 
-        {!validated?.details?.hasPincode?.status && (
+        {!isLoadingValidation && missingPincode && (
           <Text type="text3" className={styles.errorLabel}>
             <Translate context="order" label="action-missing-pincode" />
           </Text>
         )}
 
-        {duplicateBookmarkIds?.length > 0 && (
+        {!isLoadingValidation && alreadyOrdered?.length > 0 && (
           <Text type="text3" className={styles.errorLabel}>
             <Translate
               context="bookmark-order"
               label={
-                duplicateBookmarkIds === 1
+                alreadyOrdered?.length === 1
                   ? "multiorder-duplicate-order-singular"
                   : "multiorder-duplicate-order"
               }
-              vars={[duplicateBookmarkIds?.length]}
+              vars={[alreadyOrdered?.length]}
             />{" "}
             <Link
               onClick={scrollToWorkId}
@@ -244,7 +130,7 @@ const CheckoutForm = ({
               <Translate
                 context="order"
                 label={
-                  duplicateBookmarkIds === 1
+                  alreadyOrdered?.length === 1
                     ? "choose-order-again"
                     : "choose-order-again-plural"
                 }
@@ -253,21 +139,21 @@ const CheckoutForm = ({
           </Text>
         )}
 
-        {digitalMaterials > 0 && (
+        {!isLoadingValidation && digitalMaterialsCount > 0 && (
           <Text type="text3" className={styles.formLabel}>
             <Translate
               context="bookmark-order"
               label={
-                digitalMaterials === 1
+                digitalMaterialsCount === 1
                   ? "multiorder-digital-copy-singular"
                   : "multiorder-digital-copy"
               }
-              vars={[digitalMaterials]}
+              vars={[digitalMaterialsCount]}
             />
           </Text>
         )}
 
-        {hasPhysicalOrders && (
+        {!isLoadingValidation && hasPhysicalOrders && (
           <Text type="text3" className={styles.formLabel}>
             <Translate
               context="order"
@@ -281,19 +167,29 @@ const CheckoutForm = ({
         )}
 
         <Button
+          dataCy="submit-button"
           type="primary"
           size="large"
           className={styles.formSubmit}
-          disabled={disabled}
-          onClick={onSubmitForm}
+          disabled={disabled || isSubmitting}
+          onClick={async () => {
+            const receipt = await submitOrders();
+            modal.push("multireceipt", {
+              failedMaterials: receipt?.failedMaterialsPids || [],
+              successMaterials: receipt?.successfullyCreated || [],
+              branchName: pickupBranch?.name,
+              digitalMaterialsCount,
+              physicalMaterialsCount,
+            });
+          }}
         >
-          {isLoading ? (
+          {isLoadingValidation || isSubmitting ? (
             <Spinner />
           ) : (
             Translate({ context: "general", label: "accept" })
           )}
         </Button>
-        {hasCulrUniqueId && duplicateBookmarkIds?.length > 0 && (
+        {hasCulrUniqueId && alreadyOrdered?.length > 0 && (
           <Text type="text2" className={styles.goToOrderHistory}>
             {Translate({
               context: "order",

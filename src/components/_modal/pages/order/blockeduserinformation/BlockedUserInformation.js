@@ -4,6 +4,8 @@ import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import cx from "classnames";
+import { useBranchInfo } from "@/components/hooks/useBranchInfo";
+import { usePickupBranchId } from "@/components/hooks/order";
 
 export const BlockedUserInformation = memo(function BlockedUserInformation({
   agencyName,
@@ -73,21 +75,28 @@ function translateStatusCode(statusCode) {
   });
 }
 
-export default function Wrap({ statusCode, branches, className }) {
-  if (!branches) {
+export default function Wrap({ className }) {
+  const { branchId } = usePickupBranchId();
+  const {
+    agencyName,
+    branchWebsiteUrl,
+    agencyUrl,
+    isBlocked,
+    borrowerStatus,
+    isLoading,
+  } = useBranchInfo({ branchId });
+
+  if (isLoading || !isBlocked) {
     return null;
   }
 
-  let explanation;
-  explanation = translateStatusCode(statusCode);
+  const explanation = translateStatusCode(borrowerStatus?.statusCode);
 
   return (
     <BlockedUserInformation
       className={className}
-      agencyName={branches?.result?.[0]?.agencyName}
-      branchOrAgencyUrl={
-        branches?.result?.[0]?.branchWebsiteUrl || branches?.agencyUrl
-      }
+      agencyName={agencyName}
+      branchOrAgencyUrl={branchWebsiteUrl || agencyUrl}
       explanation={explanation}
     />
   );

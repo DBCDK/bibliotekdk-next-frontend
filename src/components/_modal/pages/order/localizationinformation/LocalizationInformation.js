@@ -3,25 +3,34 @@ import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import * as PropTypes from "prop-types";
-import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
 import { useModal } from "@/components/_modal";
 import { LOGIN_MODE } from "@/components/_modal/pages/login/utils";
 import { IconLink } from "@/components/base/iconlink/IconLink";
 import ChevronRight from "@/public/icons/chevron_right.svg";
 import cx from "classnames";
+import {
+  useMultiOrderValidation,
+  usePickupBranchId,
+} from "@/components/hooks/order";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
+import { useBranchInfo } from "@/components/hooks/useBranchInfo";
 
 export function LocalizationInformation({
   availableAsDigitalCopy = false,
   isAuthenticated,
   isDigitalCopy,
   isLoadingBranches,
+  isLoadingPolicy,
   pickupBranch,
   onClick,
   availableAsPhysicalCopy,
+  branchId,
 }) {
   if (availableAsDigitalCopy) {
     return null;
   }
+
   return (
     <>
       <div className={styles.pickup}>
@@ -89,19 +98,20 @@ export function LocalizationInformation({
           </div>
         )}
         {/* maybe move warning together with warning in order-modal. see bibdk2021-1927 */}
-        {!isLoadingBranches &&
-          pickupBranch &&
-          !availableAsPhysicalCopy &&
-          !availableAsDigitalCopy && (
-            <div className={`${styles["invalid-pickup"]} ${styles.invalid}`}>
-              <Text type="text3">
-                {Translate({
-                  context: "order",
-                  label: "check-policy-fail",
-                })}
-              </Text>
-            </div>
-          )}
+        {!availableAsPhysicalCopy && !availableAsDigitalCopy && (
+          <div className={`${styles["invalid-pickup"]} ${styles.invalid}`}>
+            <Text
+              type="text3"
+              skeleton={isLoadingPolicy || !pickupBranch?.name}
+              lines={1}
+            >
+              {Translate({
+                context: "order",
+                label: "check-policy-fail",
+              })}
+            </Text>
+          </div>
+        )}
       </div>
     </>
   );
@@ -116,53 +126,46 @@ LocalizationInformation.propTypes = {
   onClick: PropTypes.func,
 };
 
-export default function Wrap({ context }) {
+export default function Wrap({ orders }) {
   const modal = useModal();
-  const { workId, pid, periodicaForm, pids } = context;
-
-  const { pickupBranchInfo, accessTypeInfo } = useOrderPageInformation({
-    workId: workId,
-    periodicaForm: periodicaForm,
-    pids: pids ?? [pid],
-  });
 
   const {
-    pickupBranch,
-    isLoadingBranches,
-    isAuthenticatedForPickupBranch: isAuthenticated,
-    pickupBranchUser,
-  } = pickupBranchInfo;
+    digitalMaterialsCount,
+    physicalMaterialsCount,
+    isLoading: isLoadingValidation,
+  } = useMultiOrderValidation({ orders });
 
-  const {
-    isDigitalCopy,
-    availableAsDigitalCopy,
-    availableAsPhysicalCopy,
-    requireDigitalAccess,
-  } = accessTypeInfo;
+  const { isAuthenticated } = useAuthentication();
+  const { loanerInfo } = useLoanerInfo();
+
+  const { branchId } = usePickupBranchId();
+  const pickupBranch = useBranchInfo({ branchId });
 
   return (
-    <LocalizationInformation
-      isDigitalCopy={isDigitalCopy}
-      availableAsDigitalCopy={availableAsDigitalCopy}
-      availableAsPhysicalCopy={availableAsPhysicalCopy}
-      pickupBranch={pickupBranch}
-      isAuthenticated={isAuthenticated}
-      isLoadingBranches={isLoadingBranches}
-      onClick={() => {
-        !isLoadingBranches &&
-          modal.push("pickup", {
-            pid,
-            pids,
-            initial: {
-              agencies: pickupBranchUser?.agencies,
-            },
-            showAllBranches: false,
-            requireDigitalAccess,
-            mode: isDigitalCopy
-              ? LOGIN_MODE.SUBSCRIPTION
-              : LOGIN_MODE.ORDER_PHYSICAL,
-          });
-      }}
-    />
+    <>
+      <LocalizationInformation
+        branchId={branchId}
+        isDigitalCopy={digitalMaterialsCount > 0}
+        availableAsDigitalCopy={
+          !physicalMaterialsCount && digitalMaterialsCount > 0
+        }
+        availableAsPhysicalCopy={physicalMaterialsCount > 0}
+        pickupBranch={pickupBranch}
+        isAuthenticated={isAuthenticated}
+        isLoadingPolicy={isLoadingValidation}
+        isLoadingBranches={pickupBranch?.isLoading}
+        onClick={() => {
+          !pickupBranch?.isLoading &&
+            modal.push("pickup", {
+              initial: {
+                agencies: loanerInfo?.agencies,
+              },
+              requireDigitalAccess: false,
+              mode: LOGIN_MODE.ORDER_PHYSICAL,
+              showAllBranches: true,
+            });
+        }}
+      />
+    </>
   );
 }

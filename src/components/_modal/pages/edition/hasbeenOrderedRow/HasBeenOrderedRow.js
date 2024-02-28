@@ -5,7 +5,7 @@ import Text from "@/components/base/text";
 
 const HasBeenOrderedRow = ({ removeOrder, acceptOrder }) => {
   return (
-    <div className={styles.container}>
+    <div className={`has-been-ordered ${styles.container}`}>
       <Text type="text4">
         {Translate({
           context: "bookmark",
