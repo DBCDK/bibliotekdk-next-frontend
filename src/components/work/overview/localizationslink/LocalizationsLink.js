@@ -12,6 +12,7 @@ import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import { accessFactory } from "@/lib/accessFactoryUtils";
 import { AccessEnum } from "@/lib/enums";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
+import { useManifestationAccess } from "@/components/hooks/useManifestationAccess";
 
 export function LocalizationsLink({
   localizationsCount,
@@ -77,31 +78,25 @@ export default function Wrap({
   const { loanerInfo } = useLoanerInfo();
   const modal = useModal();
 
-  const manifestationResponse = useData(
-    selectedPids &&
-      manifestationFragments.manifestationsForAccessFactory({
-        pid: selectedPids,
-      })
-  );
-
-  const manifestations = manifestationResponse?.data?.manifestations;
-  const { allEnrichedAccesses } = accessFactory(manifestations);
+  const { access } = useManifestationAccess({ pids: selectedPids });
 
   const preferredOnline =
-    allEnrichedAccesses?.[0]?.__typename !== AccessEnum.INTER_LIBRARY_LOAN;
+    access?.[0]?.__typename !== AccessEnum.INTER_LIBRARY_LOAN;
+
+  const unitPids = access?.[0]?.pids;
 
   const { data, isLoading, isSlow } = useData(
     !preferredOnline &&
       selectedPids?.length > 0 &&
       typeof selectedPids?.[0] !== "undefined" &&
-      localizationsFragments.localizationsQuery({ pids: selectedPids })
+      localizationsFragments.localizationsQuery({ pids: unitPids })
   );
 
   if (preferredOnline) {
     return null;
   }
 
-  if (isLoading || !data || manifestationResponse?.isLoading) {
+  if (isLoading || !data) {
     return (
       <Skeleton lines={1} className={styles.skeletonstyle} isSlow={isSlow} />
     );
