@@ -131,6 +131,7 @@ export function basic() {
     ${materialTypesFragment}`,
     variables: {},
     slowThreshold: 3000,
+    revalidate: true,
   };
 }
 
@@ -159,6 +160,7 @@ export function branchesForUser() {
      }`,
     variables: { language: lang },
     slowThreshold: 3000,
+    revalidate: true,
   };
 }
 
@@ -200,6 +202,7 @@ export function orderPolicy({ pids }) {
      }`,
     variables: { language: lang, pids },
     slowThreshold: 3000,
+    revalidate: true,
   };
 }
 
@@ -219,6 +222,7 @@ export function borrowerStatus() {
        }
      }`,
     slowThreshold: 3000,
+    revalidate: true,
   };
 }
 
@@ -239,5 +243,6 @@ export function extendedData() {
       }
      }`,
     slowThreshold: 3000,
+    revalidate: true,
   };
 }

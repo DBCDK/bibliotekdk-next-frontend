@@ -5,16 +5,9 @@ import Col from "react-bootstrap/Col";
 import styles from "./OrderButtonTextBelow.module.css";
 import isEmpty from "lodash/isEmpty";
 import Skeleton from "@/components/base/skeleton";
-import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAndSelectedPids";
-import {
-  accessFactory,
-  checkDigitalCopy,
-  checkPhysicalCopy,
-  getAreAccessesPeriodicaLike,
-} from "@/lib/accessFactoryUtils";
 import { AccessEnum } from "@/lib/enums";
-import { useMemo } from "react";
-import useUser from "@/components/hooks/useUser";
+import { useManifestationAccess } from "@/components/hooks/useManifestationAccess";
+import { usePeriodica } from "@/components/hooks/order";
 
 /**
  * Set texts BELOW reservation button - also sets the text IN the button
@@ -23,16 +16,18 @@ import useUser from "@/components/hooks/useUser";
  * @param skeleton
  * @returns {React.ReactElement|null}
  */
-function OrderButtonTextBelow({ access, skeleton }) {
-  const physicalCopy = checkPhysicalCopy([access?.[0]])?.[0];
-  const digitalCopy = checkDigitalCopy([access?.[0]])?.[0];
-  const isPeriodicaLike = getAreAccessesPeriodicaLike([access?.[0]])?.[0];
-
+function OrderButtonTextBelow({
+  access,
+  skeleton,
+  hasPhysicalCopy,
+  hasDigitalCopy,
+  isPeriodica,
+}) {
   const caseScenarioMap = [
     Boolean(access?.[0]?.url),
-    Boolean(isPeriodicaLike),
-    Boolean(digitalCopy),
-    Boolean(physicalCopy),
+    Boolean(isPeriodica),
+    hasDigitalCopy,
+    hasPhysicalCopy,
   ];
 
   const translationForButtonText = [
@@ -71,23 +66,23 @@ function OrderButtonTextBelow({ access, skeleton }) {
   );
 }
 
-export default function Wrap({ workId, selectedPids, skeleton }) {
-  const { workResponse, manifestations, manifestationsResponse } =
-    useGetManifestationsForOrderButton(workId, selectedPids);
+export default function Wrap({ selectedPids, skeleton }) {
+  const {
+    access,
+    hasPhysicalCopy,
+    hasDigitalCopy,
+    isLoading: isLoadingAccess,
+  } = useManifestationAccess({
+    pids: selectedPids,
+  });
 
-  const { authUser: user, isLoading: userIsLoading } = useUser();
+  const { isPeriodica, isLoading: isLoadingPeriodica } = usePeriodica({
+    pids: selectedPids,
+  });
 
-  const hasDigitalAccess = user?.rights?.digitalArticleService;
-
-  const { getAllAllowedEnrichedAccessSorted } = useMemo(
-    () => accessFactory(manifestations),
-    [manifestations]
-  );
-
-  const access = useMemo(
-    () => getAllAllowedEnrichedAccessSorted(hasDigitalAccess),
-    [workResponse?.data?.work, manifestations, hasDigitalAccess]
-  );
+  if (isLoadingAccess || isLoadingPeriodica) {
+    return <Skeleton lines={1} className={styles.skeletonstyle} />;
+  }
 
   if (
     isEmpty(access) ||
@@ -96,15 +91,13 @@ export default function Wrap({ workId, selectedPids, skeleton }) {
     return null;
   }
 
-  if (manifestationsResponse?.isLoading || userIsLoading) {
-    return (
-      <Skeleton
-        lines={1}
-        className={styles.skeletonstyle}
-        isSlow={manifestationsResponse?.isSlow}
-      />
-    );
-  }
-
-  return <OrderButtonTextBelow access={access} skeleton={skeleton} />;
+  return (
+    <OrderButtonTextBelow
+      access={access}
+      skeleton={skeleton}
+      hasPhysicalCopy={hasPhysicalCopy}
+      hasDigitalCopy={hasDigitalCopy}
+      isPeriodica={isPeriodica}
+    />
+  );
 }

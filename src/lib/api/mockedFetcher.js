@@ -2,7 +2,6 @@ import { makeExecutableSchema } from "@graphql-tools/schema";
 import { graphql, getIntrospectionQuery, buildClientSchema } from "graphql";
 import { APIMockContext } from "./api";
 import { useEffect, useMemo, useState } from "react";
-import { SWRConfig } from "swr";
 
 const LOGGER_PREFIX = "GMOCKER:";
 const SCALAR_TYPES = ["Int", "Float", "String", "Boolean", "ID"];
@@ -39,9 +38,7 @@ export function GraphQLMocker({
   debug,
 }) {
   const [error, setError] = useState();
-  const [swrCache, setSwrCache] = useState(new Map());
   const fetcher = useMemo(() => {
-    setSwrCache(new Map());
     return createMockedFetcher({
       url,
       resolvers,
@@ -98,7 +95,7 @@ export function GraphQLMocker({
         fetcher,
       }}
     >
-      <SWRConfig value={{ provider: () => swrCache }}>{children}</SWRConfig>
+      {children}
     </APIMockContext.Provider>
   );
 }
@@ -225,7 +222,10 @@ function defaultMockResolver(parent, _args, context, info) {
 
   // The field was mocked with some value
   // so we return that, instead of using a default mock
-  if (typeof parent?.[fieldName] !== "undefined") {
+  if (
+    parent?.hasOwnProperty(fieldName) &&
+    typeof parent?.[fieldName] !== "undefined"
+  ) {
     // If return type is interface or union, there MUST be a __typename
     // If the mock does not provide it, we attach one
     if (implementations) {

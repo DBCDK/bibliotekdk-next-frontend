@@ -1,29 +1,25 @@
-import { accessFactory } from "@/lib/accessFactoryUtils";
-import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
-import isEmpty from "lodash/isEmpty";
 import MaterialCard from "@/components/base/materialcard/MaterialCard";
 import { templateImageToLeft } from "@/components/base/materialcard/templates/templates";
 import ChoosePeriodicaCopyRow from "@/components/_modal/pages/edition/choosePeriodicaCopyRow/ChoosePeriodicaCopyRow.js";
-import { translateArticleType } from "@/components/_modal/pages/edition/utils.js";
-import { inferAccessTypes } from "@/components/_modal/pages/edition/utils.js";
 import { useModal } from "@/components/_modal/Modal";
-import { AccessEnum } from "@/lib/enums";
 import {
   BackgroundColorEnum,
-  StatusEnum,
   findBackgroundColor,
 } from "@/components/base/materialcard/materialCard.utils";
-import { useData } from "@/lib/api/api";
-import * as branchesFragments from "@/lib/api/branches.fragments";
-import { useEffect, useState } from "react";
 import styles from "./Material.module.css";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import IconButton from "@/components/base/iconButton";
-import { getManifestationWithoutDefaultCover } from "@/components/work/overview/covercarousel/utils";
-import { workHasAlreadyBeenOrdered } from "../../../order/utils/order.utils";
 import HasBeenOrderedRow from "../../../edition/hasbeenOrderedRow/HasBeenOrderedRow";
-import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
+import {
+  useOrderFlow,
+  useOrderService,
+  usePeriodica,
+  usePeriodicaForm,
+  useShowAlreadyOrdered,
+} from "@/components/hooks/order";
+import { useData } from "@/lib/api/api";
+import { editionManifestations } from "@/lib/api/manifestation.fragments";
 
 /**
  * Is missing article implementation
@@ -38,113 +34,80 @@ import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
  * @returns {React.JSX.Element}
  */
 const Material = ({
-  material,
-  numberOfMaterialsToOrder = 0,
-  setMaterialsToOrder,
-  periodicaForms,
+  pids,
   backgroundColorOverride = BackgroundColorEnum.NEUTRAL,
-  setDuplicateBookmarkIds,
   showActions = true,
-  setMaterialStatusChanged,
 }) => {
-  //@TODO get manifestations in same manner for both edition and works via useData
-  const isSpecificEdition = !!material?.pid;
+  const isSpecificEdition = pids?.length === 1;
   const modal = useModal();
-  const [orderPossible, setOrderPossible] = useState(true);
-  const [backgroundColor, setBackgroundColor] = useState(
-    backgroundColorOverride
-  );
 
-  const { loanerInfo } = useLoanerInfo();
-
-  const periodicaForm = periodicaForms?.[material.key];
-  const workId = material.workId;
-  const hasAlreadyBeenOrdered = workHasAlreadyBeenOrdered(workId);
-  const [showAlreadyOrderedWarning, setShowAlreadyOrderedWarning] = useState(
-    hasAlreadyBeenOrdered
-  );
-  const manifestations = material?.manifestations || [];
-
-  const pids = manifestations.map((m) => m.pid) || [];
-  const { data: orderPolicyData, isLoading: orderPolicyIsLoading } = useData(
-    pids &&
-      loanerInfo?.pickupBranch &&
-      pids.length > 0 &&
-      branchesFragments.checkOrderPolicy({
-        pids: pids,
-        branchId: loanerInfo.pickupBranch,
-      })
-  );
-
-  /**
-   * there is a timing issue, when we listen to analyzeRef.current in MultiOrder.page,
-   * which leads to occasionally wrong error messages in checkout form
-   * therefore we listen to background color changes (which determine the error state of the material card)
-   * and thus we trigger a reevaluation of the error state in the checkout form
-   * perfomes a bit slow.
-   */
-  useEffect(() => {
-    if (setMaterialStatusChanged) {
-      setMaterialStatusChanged(Date.now());
-    }
-  }, [backgroundColor]);
-
-  useEffect(() => {
-    if (orderPolicyData && orderPolicyData.branches) {
-      setOrderPossible(
-        orderPolicyData.branches.result[0].orderPolicy.orderPossible
-      );
-    }
-    if (backgroundColorOverride !== BackgroundColorEnum.NEUTRAL) return; // If we override, dont reset background
-
-    setBackgroundColor(
-      findBackgroundColor({
-        hasAlreadyBeenOrdered: showAlreadyOrderedWarning,
-        isPeriodicaLike,
-        hasPeriodicaForm: !!periodicaForm,
-        notAvailableAtLibrary: orderPolicyIsLoading
-          ? false //if we dont have data yet, we dont want red background
-          : !orderPolicyData?.branches?.result?.[0]?.orderPolicy?.orderPossible,
-      })
-    );
-  }, [orderPolicyData, orderPolicyIsLoading, periodicaForm]);
-
-  const { allEnrichedAccesses: accesses } = accessFactory(manifestations);
-
-  const inferredAccessTypes = inferAccessTypes(
-    periodicaForm,
-    loanerInfo.pickupBranch,
-    manifestations,
-    loanerInfo
-  );
-
+  const { deleteOrder } = useOrderFlow();
   const {
-    availableAsDigitalCopy,
-    isArticleRequest,
-    isDigitalCopy,
-    isPeriodicaLike,
-  } = inferredAccessTypes;
-
-  const deleteBookmarkFromOrderList = (bookmarkKey) => {
-    setMaterialsToOrder((prev) => prev.filter((m) => m.key !== bookmarkKey));
-  };
-
-  const articleTypeTranslation = translateArticleType({
-    isDigitalCopy,
-    availableAsDigitalCopy,
-    selectedAccesses: accesses[0], //take first access, since it has highest priority
-    isArticleRequest,
-    hasPeriodicaForm: !!periodicaForm,
+    workId,
+    showAlreadyOrderedWarning,
+    setAcceptedAlreadyOrdered,
+    isLoading: isLoadingAlreadyOrdered,
+  } = useShowAlreadyOrdered({ pids });
+  const { periodicaForm, articleIsSpecified } = usePeriodicaForm(workId);
+  const { isPeriodica } = usePeriodica({ pids });
+  const { service, isLoading: isLoadingOrderService } = useOrderService({
+    pids,
   });
+  const { data: manifestationsData, isLoading: isLoadingManifestations } =
+    useData(
+      pids?.length > 0 &&
+        editionManifestations({
+          pid: pids,
+        })
+    );
+
+  const isLoading = isLoadingManifestations || isLoadingAlreadyOrdered;
+
+  const material = manifestationsData?.manifestations?.[0];
+
+  const orderPossible = service === "ILL" || service === "DIGITAL_ARTICLE";
+
+  const backgroundColor = findBackgroundColor({
+    hasAlreadyBeenOrdered: showAlreadyOrderedWarning,
+    isPeriodicaLike: isPeriodica,
+    hasPeriodicaForm: !!periodicaForm,
+    notAvailableAtLibrary: isLoadingOrderService
+      ? false //if we dont have data yet, we dont want red background
+      : !orderPossible,
+  });
+
+  const showOrderedWarning =
+    orderPossible && showAlreadyOrderedWarning && !isPeriodica && showActions;
+
+  let articleTypeTranslation = null;
+  if (service === "ILL") {
+    if (isPeriodica && periodicaForm) {
+      if (articleIsSpecified) {
+        articleTypeTranslation = {
+          context: "general",
+          label: "article",
+        };
+      } else {
+        articleTypeTranslation = {
+          context: "general",
+          label: "volume",
+        };
+      }
+    }
+  } else if (service === "DIGITAL_ARICLE") {
+    articleTypeTranslation = {
+      context: "order",
+      label: "will-order-digital-copy",
+    };
+  }
 
   const children = [];
 
-  if (orderPossible && isPeriodicaLike && showActions) {
+  if (orderPossible && isPeriodica && showActions) {
     children.push(
       <ChoosePeriodicaCopyRow
-        key={material.key}
-        multiOrderPeriodicaForms={periodicaForms}
-        materialKey={material.key}
+        key={workId}
+        workId={workId}
         modal={modal}
         articleTypeTranslation={articleTypeTranslation}
       />
@@ -159,35 +122,20 @@ const Material = ({
     );
   }
 
-  if (
-    orderPossible &&
-    showAlreadyOrderedWarning &&
-    !isPeriodicaLike &&
-    showActions
-  ) {
-    //TODO currently we only check for non-periodica orders
+  if (showOrderedWarning) {
     children.push(
       <HasBeenOrderedRow
+        pids={pids}
         orderDate={new Date()}
-        removeOrder={() => {
-          deleteBookmarkFromOrderList(material.key);
-          //remove all modals, if we remove last material from order list
-          if (numberOfMaterialsToOrder === 1) modal.setStack([]);
-          else modal.update({});
-        }}
+        removeOrder={() => deleteOrder({ pids })}
         acceptOrder={() => {
-          setDuplicateBookmarkIds((prev) =>
-            prev.filter((m) => m !== material.bookmarkId)
-          );
-          setShowAlreadyOrderedWarning(false),
-            setBackgroundColor(BackgroundColorEnum.NEUTRAL),
-            modal.update({});
+          setAcceptedAlreadyOrdered(true);
         }}
       />
     );
   }
 
-  if (!orderPossible) {
+  if (!isLoadingOrderService && !orderPossible) {
     children.push(
       <>
         <Text className={styles.orderNotPossible} type="text4">
@@ -196,7 +144,7 @@ const Material = ({
             label: "order-not-possible",
           })}
         </Text>
-        <IconButton onClick={() => deleteBookmarkFromOrderList(material.key)}>
+        <IconButton onClick={() => deleteOrder({ pids })}>
           {Translate({
             context: "bookmark",
             label: "remove",
@@ -206,67 +154,26 @@ const Material = ({
     );
   }
 
-  const isDeliveredByDigitalArticleService =
-    availableAsDigitalCopy &&
-    accesses[0]?.__typename === AccessEnum.DIGITAL_ARTICLE_SERVICE; //take first access, since it has highest priority
+  const isDeliveredByDigitalArticleService = service === "DIGITAL_ARTICLE";
 
-  const { flattenedGroupedSortedManifestations } =
-    manifestationMaterialTypeFactory(manifestations);
-
-  const materialCardTemplate = (/** @type {Object} */ material) =>
+  const materialCardTemplate = () =>
     templateImageToLeft({
+      isLoading,
       material,
       singleManifestation: isSpecificEdition,
       children,
-      isPeriodicaLike,
-      isDigitalCopy,
+      isPeriodicaLike: isPeriodica,
       isDeliveredByDigitalArticleService,
       backgroundColor,
       hideEditionText: backgroundColorOverride === BackgroundColorEnum.RED,
     });
 
-  // If we have manifestations with cover, take the first one
-  const manifestationsWithCover = getManifestationWithoutDefaultCover(
-    flattenedGroupedSortedManifestations
-  );
-
-  // If no cover found, take the first manifestation in the array
-  const firstManifestation = !isEmpty(manifestationsWithCover)
-    ? manifestationsWithCover[0]
-    : flattenedGroupedSortedManifestations[0];
-
-  const getStatus = () => {
-    switch (backgroundColor) {
-      case BackgroundColorEnum.RED:
-        return StatusEnum.NOT_AVAILABLE;
-      case BackgroundColorEnum.YELLOW:
-        if (showAlreadyOrderedWarning && !isPeriodicaLike)
-          //TODO currently we only check for non-periodica orders
-          return StatusEnum.HAS_BEEN_ORDERED;
-        else return StatusEnum.NEEDS_EDITION;
-      case BackgroundColorEnum.NEUTRAL:
-        if (isDeliveredByDigitalArticleService) return StatusEnum.DIGITAL;
-        else return StatusEnum.NONE;
-      default:
-        return StatusEnum.NONE;
-    }
-  };
-
-  const rootProps = {
-    "data-status": getStatus(),
-    "data-material-key": material.key,
-  };
-
   return (
-    flattenedGroupedSortedManifestations &&
-    !isEmpty(flattenedGroupedSortedManifestations) && (
-      <MaterialCard
-        propAndChildrenTemplate={materialCardTemplate}
-        propAndChildrenInput={firstManifestation}
-        colSizing={{ xs: 12 }}
-        rootProps={rootProps}
-      />
-    )
+    <MaterialCard
+      isLoading={isLoading}
+      propAndChildrenTemplate={materialCardTemplate}
+      colSizing={{ xs: 12 }}
+    />
   );
 };
 

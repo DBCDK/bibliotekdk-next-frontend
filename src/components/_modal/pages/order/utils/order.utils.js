@@ -17,13 +17,8 @@ export function onMailChange(value, valid, updateLoanerInfo, setMail) {
   valid?.status &&
     updateLoanerInfo &&
     updateLoanerInfo({ userParameters: { userMail: value } });
-  // update mail in state
-  const isValid = {
-    status: valid?.status,
-    message: valid ? null : "wrong-email-field",
-  };
 
-  setMail({ value, valid: isValid });
+  setMail(value);
 }
 
 /**
@@ -37,7 +32,7 @@ export function onMailChange(value, valid, updateLoanerInfo, setMail) {
  * @param {Boolean} hasValidationErrors
  * @returns
  */
-export function getStylingAndErrorMessage(validated, hasValidationErrors) {
+export function getStylingAndErrorMessage(validated) {
   // Get email messages
   const emailStatus = validated?.details?.hasMail?.status;
   const errorMessage = validated?.details?.hasMail?.message;
@@ -48,17 +43,16 @@ export function getStylingAndErrorMessage(validated, hasValidationErrors) {
   // Email validation class
   const validClass =
     // eslint-disable-next-line css-modules/no-undef-class
-    hasValidationErrors && !emailStatus ? styles.invalid : styles.valid;
+    !emailStatus ? styles.invalid : styles.valid;
 
   // Set email input message if any
-  const message = hasValidationErrors && errorMessage;
+  const message = errorMessage;
 
   const actionMessage =
-    hasValidationErrors &&
-    (validated?.details?.requireYear?.message ||
-      (!hasEmail && errorMessage) ||
-      validated?.details?.firstOrder?.message ||
-      validated?.details?.hasPincode?.message);
+    validated?.details?.requireYear?.message ||
+    !hasEmail ||
+    validated?.details?.firstOrder?.message ||
+    validated?.details?.hasPincode?.message;
 
   // eslint-disable-next-line css-modules/no-undef-class
   const invalidClass = actionMessage ? styles.invalid : "";

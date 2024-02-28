@@ -60,5 +60,6 @@ export function session() {
     }`,
     variables: {},
     slowThreshold: 3000,
+    revalidate: true,
   };
 }

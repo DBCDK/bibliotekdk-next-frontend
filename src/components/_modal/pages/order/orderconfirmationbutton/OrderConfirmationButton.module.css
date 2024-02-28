@@ -13,10 +13,6 @@
   padding: 0 0 var(--pt2) 0;
 }
 
-.action .message.invalid {
-  color: var(--error);
-}
-
 .goToOrderHistory {
   padding-top: var(--pt6);
 }

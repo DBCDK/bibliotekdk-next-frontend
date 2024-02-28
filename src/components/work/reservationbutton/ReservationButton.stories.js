@@ -242,6 +242,14 @@ ReservationButtonDisabled.story = {
           {
             pid: "some-pid-disabled" + time,
             access: [],
+            unit: {
+              manifestations: [
+                {
+                  pid: "some-pid-disabled" + time,
+                  access: [],
+                },
+              ],
+            },
           },
         ];
       },
@@ -261,6 +269,14 @@ ReservationButtonDisabled.story = {
               {
                 pid: "some-pid-disabled" + time,
                 access: [],
+                unit: {
+                  manifestations: [
+                    {
+                      pid: "some-pid-disabled" + time,
+                      access: [],
+                    },
+                  ],
+                },
               },
             ],
           },
@@ -327,6 +343,14 @@ ReservationButtonPhysicalBookLoanNotPossible.story = {
                 pid: "some-pid-bog-loan-not-possible" + time,
               },
             ],
+            unit: {
+              manifestations: [
+                {
+                  pid: "some-pid-disabled" + time,
+                  access: [],
+                },
+              ],
+            },
           },
         };
       },
@@ -342,6 +366,14 @@ ReservationButtonPhysicalBookLoanNotPossible.story = {
             ],
             access: [],
             workTypes: ["LITERATURE"],
+            unit: {
+              manifestations: [
+                {
+                  pid: "some-pid-bog-loan-not-possible" + time,
+                  access: [],
+                },
+              ],
+            },
           },
         ];
       },
@@ -388,7 +420,18 @@ ReservationButtonSlowResponse.story = {
           setTimeout(r, 5000);
         });
 
-        return [{ access: {} }];
+        return [
+          {
+            access: {},
+            unit: {
+              manifestations: [
+                {
+                  access: [],
+                },
+              ],
+            },
+          },
+        ];
       },
     },
   }),

@@ -31,5 +31,6 @@ export function authentication() {
     }
     `,
     slowThreshold: 3000,
+    revalidate: true,
   };
 }

@@ -13,7 +13,7 @@ import useOrderPageInformation from "@/components/hooks/useOrderPageInformations
 
 import { handleOnSelect } from "@/components/_modal/utils";
 import { useModal } from "@/components/_modal";
-import { openOrderModal } from "@/components/work/utils";
+import { useOrderFlow } from "./order";
 
 /**
  * useGoToOrderWithBranch provides a function called handleOnSelectEnriched. handleOnSelectEnriched uses handleOnSelect
@@ -32,7 +32,6 @@ export function useGoToOrderWithBranch({
   workId,
 }) {
   const modal = useModal();
-  const { singleManifestation } = context;
 
   // Manifestations used to get access
   const { manifestations } = useGetManifestationsForOrderButton(
@@ -73,19 +72,13 @@ export function useGoToOrderWithBranch({
     pids: pids,
   });
 
+  const { start } = useOrderFlow();
+
   // updateLoanerInfo (from userInfo) is used by handleOnSelect to change pickupBranch
   const { updateLoanerInfo } = userInfo;
 
   // pickupBranchUserAgencies (from pickupBranchInfo) is used by updateLoanerInfo in handleOnSelect to change pickupBranch
   const pickupBranchUserAgencies = pickupBranchInfo?.pickupBranchUser?.agencies;
-
-  // Used by callbackUID and overrideOrderModalPush
-  const orderModalProps = {
-    pids: pids,
-    selectedAccesses: allEnrichedAccesses,
-    workId: workId,
-    singleManifestation: singleManifestation,
-  };
 
   // handleOnSelectEnriched enriches handleOnSelect with all its arguments:
   //   branch, modal, context, updateLoanerInfo, callbackUID, overrideOrderModalPush
@@ -93,11 +86,7 @@ export function useGoToOrderWithBranch({
     // overrideOrderModalPush is a callbackFunction used in handleOnSelect to open order modal,
     //   when previous modal was not order modal
     function overrideOrderModalPush() {
-      openOrderModal({
-        modal: modal,
-        ...orderModalProps,
-        storeLoanerInfo: false,
-      });
+      start({ orders: [{ pids }] });
     }
 
     // handleOnSelect sends user to one of 3 modals based on selected branch and loaner info:

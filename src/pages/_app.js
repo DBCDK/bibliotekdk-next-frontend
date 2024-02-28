@@ -51,6 +51,7 @@ import { enableDebug } from "@/lib/api/api";
 import ErrorPage from "./500";
 import { BookmarkSyncProvider } from "@/components/hooks/useBookmarks";
 import useIsOnline from "@/components/hooks/useIsOnline";
+import { UseManyProvider } from "@/components/hooks/useMany";
 
 // kick off the polyfill!
 if (typeof window !== "undefined") {
@@ -231,6 +232,7 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
             <Listener.FFU />
             <Listener.Create />
             <Listener.HasProfile />
+            <UseManyProvider />
           </Modal.Provider>
 
           {/* SetPickupBranch listens for users just logged in via adgangsplatformen */}

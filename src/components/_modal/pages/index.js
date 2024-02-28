@@ -1,6 +1,5 @@
 import Menu from "./menu";
 import Options from "./options";
-import Order from "./order";
 import PeriodicaForm from "./periodicaform";
 import Pickup from "./pickup";
 import Loanerform from "./loanerform";
@@ -33,7 +32,6 @@ import AccountHasProfile from "./accountHasProfile";
 const _modal = {
   Menu,
   Options,
-  Order,
   PeriodicaForm,
   Pickup,
   Loanerform,

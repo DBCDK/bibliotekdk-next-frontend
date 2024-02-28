@@ -10,6 +10,8 @@ import { useEffect, useState } from "react";
 
 import styles from "./PeriodicaForm.module.css";
 import cx from "classnames";
+import { usePeriodicaForm } from "@/components/hooks/order";
+import { useGlobalState } from "@/components/hooks/useGlobalState";
 
 /**
  *
@@ -74,26 +76,19 @@ export function PeriodicaForm({ modal, context, active }) {
     { key: "pagination" },
   ];
 
-  const {
-    periodicaForms,
-    periodicaForm: newPeriodicaForm,
-    materialKey,
-  } = context;
+  const { workId } = context;
 
-  const [state, setState] = useState(newPeriodicaForm || {});
+  const [state, setState] = useGlobalState({
+    key: "tempPeriodicaForm" + workId,
+    initial: {},
+  });
   const [hasTry, setHasTry] = useState(false);
-  const [expanded, setExpanded] = useState(false);
+  const { periodicaForm, updatePeriodicaForm, expanded, setExpanded } =
+    usePeriodicaForm(workId);
 
-  //If we dont force update of state on materialKey change, state shows values of previous periodicaForm in multiOrder
   useEffect(() => {
-    if (!materialKey) return; //dont set key for single order
-    if (!newPeriodicaForm) {
-      // Generate a unique key to trigger a re-render and reset the state
-      setState({ key: materialKey });
-    } else {
-      setState(newPeriodicaForm);
-    }
-  }, [materialKey]);
+    setState(periodicaForm || {});
+  }, [periodicaForm]);
 
   useEffect(() => {
     if (active) {
@@ -157,30 +152,16 @@ export function PeriodicaForm({ modal, context, active }) {
                 periodicaForm[key] = val;
               }
             });
-            if (expanded) {
-              articleFields.forEach(({ key }) => {
-                const val = state?.[key]?.trim?.();
-                if (val) {
-                  periodicaForm[key] = val;
-                }
-              });
-            }
-            //update multiorder periodicaForm if we came from multiorder
-            const multiorderModalId = "multiorder";
-            if (modal.stack.some((m) => m.id === multiorderModalId)) {
-              modal.update(modal.index(multiorderModalId), {
-                periodicaForms: {
-                  ...periodicaForms,
-                  [materialKey]: periodicaForm,
-                },
-              });
-              modal.prev(multiorderModalId);
-            } else {
-              //else update periodicaForm for single order
-              const orderModalId = "order";
-              modal.update(modal.index(orderModalId), { periodicaForm });
-              modal.prev(orderModalId);
-            }
+
+            articleFields.forEach(({ key }) => {
+              const val = state?.[key]?.trim?.();
+              if (val) {
+                periodicaForm[key] = val;
+              }
+            });
+
+            updatePeriodicaForm(periodicaForm);
+            modal.prev();
           }
         }}
       >
@@ -201,7 +182,7 @@ export function PeriodicaForm({ modal, context, active }) {
             />
           );
         })}
-        <Accordion className={styles.accordion}>
+        <Accordion className={styles.accordion} defaultActiveKey={null}>
           <Item
             title={Translate({
               context: "order-periodica",

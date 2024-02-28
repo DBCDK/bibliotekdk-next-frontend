@@ -410,6 +410,10 @@ const unprioritisedLanguages = [
     key: "rus",
   },
   {
+    term: "rumænsk",
+    key: "ru",
+  },
+  {
     term: "tyrkisk",
     key: "tur",
   },

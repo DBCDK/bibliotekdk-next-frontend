@@ -3,6 +3,7 @@ import { accessForManifestations } from "@/lib/api/access.fragments";
 import { AccessEnum } from "@/lib/enums";
 import { useMemo } from "react";
 import useLoanerInfo from "./user/useLoanerInfo";
+import { encodeTitleCreator, infomediaUrl } from "@/lib/utils";
 
 /**
  * Sorting entries of the access array
@@ -98,6 +99,18 @@ function flattenAccess(manifestations) {
         // If this access is not seen before, we create it
         if (!accessMap[keyArr]) {
           accessMap[keyArr] = { ...accessEntry, pids: [] };
+
+          // If infomedia, we generate URL based on id
+          if (accessEntry?.id) {
+            accessMap[keyArr].url = infomediaUrl(
+              encodeTitleCreator(
+                manifestionInUnit?.titles?.main?.[0],
+                manifestionInUnit?.creators
+              ),
+              `work-of:${manifestionInUnit?.pid}`,
+              accessEntry?.id
+            );
+          }
         }
 
         // Push this pid into the pids array in the access
@@ -153,14 +166,17 @@ export function useManifestationAccess({ pids, filter }) {
     };
   }, [data, loanerInfo]);
 
+  const hasDigitalCopy = !!res?.accessMap?.[AccessEnum.DIGITAL_ARTICLE_SERVICE];
+  const hasPhysicalCopy = !!res?.accessMap?.[AccessEnum.INTER_LIBRARY_LOAN];
   return {
     ...res,
-    hasDigitalCopy: !!res?.accessMap?.[AccessEnum.DIGITAL_ARTICLE_SERVICE],
-    hasPhysicalCopy: !!res?.accessMap?.[AccessEnum.INTER_LIBRARY_LOAN],
+    hasDigitalCopy,
+    hasPhysicalCopy,
     digitalCopyPids:
       res?.accessMap?.[AccessEnum.DIGITAL_ARTICLE_SERVICE]?.pids || [],
     physicalCopyPids:
       res?.accessMap?.[AccessEnum.INTER_LIBRARY_LOAN]?.pids || [],
+    supportsOrderFlow: hasDigitalCopy || hasPhysicalCopy,
     isLoading: loanerInfoIsLoading || accessIsLoading,
   };
 }

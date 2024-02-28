@@ -14,9 +14,16 @@ import useAuthentication from "@/components/hooks/user/useAuthentication";
 const MultiOrderReceipt = ({ context }) => {
   const modal = useModal();
   const { hasCulrUniqueId } = useAuthentication();
-  const { successMaterials, failedMaterials, branchName } = context;
+  const {
+    successMaterials,
+    failedMaterials,
+    digitalMaterialsCount,
+    physicalMaterialsCount,
+    branchName,
+  } = context;
   const hasErrors = failedMaterials.length > 0;
   const hasSuccess = successMaterials.length > 0;
+
   const router = useRouter();
 
   return (
@@ -39,7 +46,7 @@ const MultiOrderReceipt = ({ context }) => {
         src={"ornament1.svg"}
       />
 
-      {hasErrors && hasSuccess && (
+      {hasSuccess && (
         <Text type="text2" className={styles.successMessage}>
           {successMaterials.length === 1 ? (
             <Translate
@@ -57,12 +64,26 @@ const MultiOrderReceipt = ({ context }) => {
         </Text>
       )}
 
-      {hasSuccess && (
+      {hasSuccess && physicalMaterialsCount > 0 && (
         <Text type="text2" className={cx({ [styles.message]: !hasErrors })}>
           <Translate
             context="order"
-            label="order-success-message"
-            vars={[`<br/> ${branchName}`]}
+            label="order-success-message-ill-multi"
+            vars={[`${branchName}`]}
+            renderAsHtml
+          />
+        </Text>
+      )}
+
+      {hasSuccess && digitalMaterialsCount > 0 && (
+        <Text
+          type="text2"
+          className={cx({ [styles.message]: !hasErrors })}
+          style={{ marginTop: 8 }}
+        >
+          <Translate
+            context="order"
+            label="order-success-message-digital-copy-multi"
             renderAsHtml
           />
         </Text>
@@ -90,7 +111,7 @@ const MultiOrderReceipt = ({ context }) => {
             {failedMaterials?.map((material) => (
               <Material
                 key={material.key}
-                material={material}
+                pids={material.pids}
                 backgroundColorOverride={BackgroundColorEnum.RED}
                 showActions={false}
               />

@@ -1682,9 +1682,17 @@
         "da": "Bestil",
         "en": "Order"
       },
+      "multiorder-no-materials": {
+        "da": "Der er ingen materialer i din bestillingsliste",
+        "en": "There are no materials in your order list"
+      },
       "multiorder-subheading": {
         "da": "Du er ved at bestille %s materialer",
         "en": "You are about to order %s materials"
+      },
+      "multiorder-subheading-singular": {
+        "da": "Du er ved at bestille %s materiale",
+        "en": "You are about to order %s material"
       },
       "multiorder-digital-copy-singular": {
         "da": "%s materiale bliver leveret som digital kopi til din mail",
@@ -3167,6 +3175,14 @@
       "order-success-message": {
         "da": "Du vil få besked når materialet er klar til afhentning på %s",
         "en": "You will be notified when the material is ready for collection at %s"
+      },
+      "order-success-message-ill-multi": {
+        "da": "Du vil få besked når dine materialer er klar til afhentning på %s",
+        "en": "You will be notified when your materials are ready for pickup at %s"
+      },
+      "order-success-message-digital-copy-multi": {
+        "da": "Digitale artikler bliver leveret til din mail fra det Det Kgl. Bibliotek",
+        "en": "Digital articles will be delivered to your email from Det Kgl. Bibliotek"
       },
       "order-success-message-digital-copy": {
         "da": "Du vil modtage en email fra Det Kgl. Bibliotek med artiklen",

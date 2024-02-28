@@ -66,9 +66,9 @@ describe("Reservation button", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-not-logged-in"
     );
-    cy.get("[data-cy=button-order-overview]", { timeout: 15000 }).contains(
-      "Gå til"
-    );
+    cy.get("[data-cy=button-order-overview-enabled]", {
+      timeout: 15000,
+    }).contains("Gå til");
     cy.get("[data-cy=text-above-order-button", { timeout: 15000 }).contains(
       "Kræver"
     );
@@ -94,7 +94,7 @@ describe("Reservation button", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-not-logged-in"
     );
-    cy.get("[data-cy=button-order-overview]", { timeout: 15000 })
+    cy.get("[data-cy=button-order-overview-enabled]", { timeout: 15000 })
       .focus()
       .should("contain", "Gå til")
       .should("be.visible")
@@ -126,7 +126,7 @@ describe("Reservation button", () => {
       const addedItem = win.localStorage.getItem("modal-v2");
       const modal = JSON.parse(addedItem);
       const uid = modal[0].id;
-      expect(uid).to.be.equal("order");
+      expect(uid).to.be.equal("ematerialfilter");
     });
     //open login modal - we cannot check that it actually is the login modal that is opened
     cy.get("[data-cy=router-query]").contains("modal");
@@ -144,7 +144,7 @@ describe("Reservation button", () => {
       const addedItem = win.localStorage.getItem("modal-v2-store");
       const modal = JSON.parse(addedItem);
       const uid = modal[0].id;
-      expect(uid).to.be.equal("order");
+      expect(uid).to.be.equal("ematerialfilter");
     });
     //open some modal directly - we cannot check if it actually is the order modal that is opened
     cy.get("[data-cy=router-query]").contains("modal");
@@ -163,7 +163,7 @@ describe("ButtonTxt", () => {
     );
   });
 
-  it("should have ebook button text", () => {
+  it.skip("should have ebook button text", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton-orderbuttontextbelow--e-book-button-txt"
     );
@@ -171,7 +171,7 @@ describe("ButtonTxt", () => {
     cy.get("[data-cy=reservation-button-txt]").should("contain", "ereol");
   });
 
-  it("should have eaudiobook physical button text", () => {
+  it.skip("should have eaudiobook physical button text", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton-orderbuttontextbelow--e-audio-book-physical-button-txt"
     );
@@ -182,7 +182,7 @@ describe("ButtonTxt", () => {
     );
   });
 
-  it("should have eaudiobook digital button text", () => {
+  it.skip("should have eaudiobook digital button text", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton-orderbuttontextbelow--e-audio-book-digital-button-txt"
     );

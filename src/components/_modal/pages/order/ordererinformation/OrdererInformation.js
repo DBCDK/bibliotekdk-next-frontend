@@ -6,10 +6,11 @@ import Text from "@/components/base/text";
 import Tooltip from "@/components/base/tooltip";
 import Email from "@/components/base/forms/email";
 import * as PropTypes from "prop-types";
-import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
 import { getStylingAndErrorMessage } from "@/components/_modal/pages/order/utils/order.utils";
-import { validateEmail } from "@/utils/validateEmail";
-import { useEffect } from "react";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
+import { useMail, usePickupBranchId } from "@/components/hooks/order";
+import { useBranchInfo } from "@/components/hooks/useBranchInfo";
+import { onMailChange } from "@/components/_modal/pages/order/utils/order.utils";
 
 export function OrdererInformation({
   isLoadingBranches,
@@ -111,46 +112,31 @@ OrdererInformation.propTypes = {
   showMailMessage: PropTypes.bool,
 };
 
-export default function Wrap({
-  context,
-  validated,
-  hasValidationErrors,
-  onMailChange,
-  setMail,
-  email,
-}) {
-  const { workId, pid, periodicaForm, pids } = context;
-
-  const { validClass, invalidClass, message } = getStylingAndErrorMessage(
-    validated,
-    hasValidationErrors
-  );
-
-  const { userInfo, pickupBranchInfo, workResponse } = useOrderPageInformation({
-    workId: workId,
-    periodicaForm: periodicaForm,
-    pids: pids ?? [pid],
-  });
-
-  const { authUser, userIsLoading } = userInfo;
+export default function Wrap() {
+  const { validClass, invalidClass } = getStylingAndErrorMessage();
+  const {
+    loanerInfo,
+    updateLoanerInfo,
+    isLoading: isLoadingLoanerInfo,
+  } = useLoanerInfo();
 
   const {
-    isLoadingBranches,
-    pickupBranch,
-    pickupBranchUser,
-    isPickupBranchLoading,
-  } = pickupBranchInfo;
+    mail,
+    mailFromPickupAgency,
+    setMail,
+    message,
+    isLoading: isLoadingMail,
+  } = useMail();
 
-  const isWorkLoading = workResponse.isLoading;
-  const hasBorchk = pickupBranch?.borrowerCheck;
+  const { branchId } = usePickupBranchId();
+  const pickupBranch = useBranchInfo({ branchId });
 
   // user props
-  const { agency } = pickupBranchUser;
-  const { userName, userMail, userId, cpr, barcode, cardno, customId } =
-    pickupBranchUser?.userParameters || {};
-  const actualUserName = hasBorchk
-    ? authUser?.name
-    : userName || customId || userId || cpr || cardno || barcode;
+  const { userName, userId, cpr, barcode, cardno, customId } =
+    loanerInfo?.userParameters || {};
+
+  const actualUserName =
+    userName || customId || userId || cpr || cardno || barcode;
 
   const libraryFallback = Translate({
     context: "general",
@@ -161,53 +147,30 @@ export default function Wrap({
   const lockedMessage = {
     context: "order",
     label: "info-email-message",
-    vars: [agency?.result?.[0]?.agencyName || libraryFallback],
+    vars: [pickupBranch?.agencyName || libraryFallback],
   };
 
-  const isLoading = isWorkLoading || isPickupBranchLoading || userIsLoading;
-
-  const map = {};
-  authUser?.agencies?.forEach((a) => (map[a.id] = a.user?.mail));
-
-  const pickupAuthMail = map?.[pickupBranch?.agencyId];
-
-  // Email according to agency borrowerCheck (map[pickupBranch?.agencyId] is from cicero and can not be changed)
-  let initialmail = hasBorchk ? pickupAuthMail || userMail : userMail;
-
-  useEffect(() => {
-    function updateEmail() {
-      const status = validateEmail(initialmail);
-      const message = !status && {
-        context: "form",
-        label: "wrong-email-field",
-      };
-      setMail?.({ value: initialmail, valid: { status, message } });
-    }
-
-    if (initialmail) {
-      updateEmail();
-    }
-  }, [pickupAuthMail, initialmail]);
-
-  const userMailIsEqual = pickupAuthMail && pickupAuthMail === email?.value;
+  const isLoading =
+    pickupBranch?.isLoading || isLoadingLoanerInfo || isLoadingMail;
 
   const showMailMessage =
-    isLoadingBranches ||
-    (pickupAuthMail && userMailIsEqual && lockedMessage && hasBorchk);
+    !isLoading && mailFromPickupAgency && mailFromPickupAgency === mail;
 
   return (
     <OrdererInformation
-      isLoadingBranches={isLoadingBranches}
+      isLoadingBranches={pickupBranch?.isLoading}
       name={actualUserName}
-      hasAuthMail={!!pickupAuthMail}
-      email={email?.value || initialmail}
+      hasAuthMail={!!mailFromPickupAgency}
+      email={mail}
       lockedMessage={lockedMessage}
       pickupBranch={pickupBranch}
       invalidClass={invalidClass}
       isLoading={isLoading}
       showMailMessage={showMailMessage}
-      onMailChange={onMailChange}
-      message={message}
+      onMailChange={(e, valid) => {
+        onMailChange(e?.target?.value, valid, updateLoanerInfo, setMail);
+      }}
+      message={!isLoading && message}
       validClass={validClass}
     />
   );

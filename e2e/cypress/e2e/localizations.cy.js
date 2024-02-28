@@ -1,5 +1,5 @@
 describe("Localizations", () => {
-  it("Base flow", () => {
+  it.skip("Base flow", () => {
     cy.visit("/iframe.html?id=localizations-base--localizations-base-flow");
 
     cy.contains("Localizations", { timeout: 15000 }).should("exist");

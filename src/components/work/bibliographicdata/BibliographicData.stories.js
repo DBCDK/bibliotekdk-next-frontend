@@ -109,21 +109,6 @@ export function Article() {
 }
 
 /**
- * NOTE
- * <ManifestationFull
- *       manifestation={manifestation}
- *       work={work}
- *       workId={workId}
- *       localizations={localizations}
- *       localizationsLoading={localizationsLoading}
- *       opener={openLocalizationsModal}
- *       openOrderModal={openOrderModal}
- *       user={user}
- *     />
- *
- */
-
-/**
  * Return a full manifestation
  * @returns {React.JSX.Element}
  */

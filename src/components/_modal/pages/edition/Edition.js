@@ -8,7 +8,10 @@ import Cover from "@/components/base/cover";
 import { useModal } from "@/components/_modal";
 import { useData } from "@/lib/api/api";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
-import usePickupBranch from "@/components/hooks/usePickupBranch";
+import {
+  usePickupBranchId,
+  useShowAlreadyOrdered,
+} from "@/components/hooks/order";
 import {
   inferAccessTypes,
   translateArticleType,
@@ -25,9 +28,11 @@ import ChevronRight from "@/public/icons/chevron_right.svg";
 import MaterialCard from "@/components/base/materialcard/MaterialCard";
 import { templateImageToLeft } from "@/components/base/materialcard/templates/templates";
 import ChoosePeriodicaCopyRow from "./choosePeriodicaCopyRow/ChoosePeriodicaCopyRow.js";
-import { AccessEnum } from "@/lib/enums";
 import HasBeenOrderedRow from "./hasbeenOrderedRow/HasBeenOrderedRow";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
+import { useBranchInfo } from "@/components/hooks/useBranchInfo";
+import { useManifestationAccess } from "@/components/hooks/useManifestationAccess";
+import { useOrderService, usePeriodicaForm } from "@/components/hooks/order";
 
 /**
  * Shows grey box with text if no manifestation is found.
@@ -49,14 +54,13 @@ export function Edition({
   singleManifestation = false,
   coverImage = null,
   inferredAccessTypes = {},
-  context,
   manifestation,
   showOrderTxt = true,
   modal = {},
   showChangeManifestation = true,
   articleTypeTranslation,
+  periodicaForm,
 }) {
-  const { periodicaForm } = context;
   const { isArticle, isPeriodicaLike } = inferredAccessTypes;
   if (!manifestation) {
     return <NoManifestationFound />;
@@ -206,17 +210,20 @@ export function Edition({
 
 //TODO Edition bliver brugt 3 steder, skal den kun skiftes her?
 export default function Wrap({
-  context,
+  pids: orderPidsBeforeFilter,
   singleManifestation = false,
   showOrderTxt = true,
   showChangeManifestation,
   isMaterialCard = false,
-  showAlreadyOrdered,
-  setShowArealdyOrdered,
 }) {
   const modal = useModal();
+  const { setAcceptedAlreadyOrdered, showAlreadyOrderedWarning } =
+    useShowAlreadyOrdered({ pids: orderPidsBeforeFilter });
+
   const { loanerInfo, isLoading: isLoadingUserInfo } = useLoanerInfo();
-  let { orderPids: orderPidsBeforeFilter, periodicaForm } = context;
+  // TODO what about periodicaform?
+
+  const { periodicaForm } = usePeriodicaForm();
 
   if (!Array.isArray(orderPidsBeforeFilter)) {
     orderPidsBeforeFilter = [orderPidsBeforeFilter];
@@ -235,13 +242,15 @@ export default function Wrap({
           pid: orderPids,
         })
     );
-  const manifestations = useMemo(() => {
-    return manifestationsData?.manifestations;
-  }, [manifestationsData?.manifestations]);
+  const manifestations = manifestationsData?.manifestations;
+  const { branchId } = usePickupBranchId();
+  const pickupBranch = useBranchInfo({ branchId });
 
-  const { pickupBranch } = usePickupBranch(
-    orderPids && !isEmpty(orderPids) && { pids: orderPids }
-  );
+  const { service } = useOrderService({ pids: orderPids });
+  const { access, hasDigitalCopy } = useManifestationAccess({
+    pids: orderPids,
+  });
+  const isDeliveredByDigitalArticleService = service === "DIGITAL_ARTICLE";
 
   const inferredAccessTypes = inferAccessTypes(
     periodicaForm,
@@ -249,18 +258,14 @@ export default function Wrap({
     manifestations,
     loanerInfo
   );
-  const {
-    isPeriodicaLike,
-    isDigitalCopy,
-    availableAsDigitalCopy,
-    isArticleRequest,
-  } = inferredAccessTypes;
+  const { isPeriodicaLike, isDigitalCopy, isArticleRequest } =
+    inferredAccessTypes;
   const coverImage = getCoverImage(manifestations);
 
   const articleTypeTranslation = translateArticleType({
-    isDigitalCopy,
-    availableAsDigitalCopy,
-    selectedAccesses: context?.selectedAccesses,
+    isDigitalCopy: hasDigitalCopy,
+    availableAsDigitalCopy: isDeliveredByDigitalArticleService,
+    selectedAccesses: access,
     isArticleRequest,
     hasPeriodicaForm: !!periodicaForm,
   });
@@ -286,24 +291,18 @@ export default function Wrap({
       );
     }
 
-    if (showAlreadyOrdered && !isPeriodicaLike) {
+    if (showAlreadyOrderedWarning && !isPeriodicaLike) {
       //TODO currently we only check for non-periodica orders
       children.push(
         <HasBeenOrderedRow
           orderDate={new Date()}
           removeOrder={() => modal.clear()}
           acceptOrder={() => {
-            setShowArealdyOrdered(false), modal.update({});
+            setAcceptedAlreadyOrdered(true), modal.update({});
           }}
         />
       );
     }
-
-    const isDeliveredByDigitalArticleService =
-      isDigitalCopy &&
-      availableAsDigitalCopy &&
-      context?.selectedAccesses?.[0]?.__typename !==
-        AccessEnum.INTER_LIBRARY_LOAN;
 
     const materialCardTemplate = (material) =>
       templateImageToLeft({
@@ -337,12 +336,12 @@ export default function Wrap({
       singleManifestation={singleManifestation}
       coverImage={coverImage}
       inferredAccessTypes={inferredAccessTypes}
-      context={context}
       manifestation={manifestations?.[0]}
-      showOrderTxt={context?.showOrderTxt || showOrderTxt}
+      showOrderTxt={showOrderTxt}
       modal={modal}
       showChangeManifestation={showChangeManifestation}
       articleTypeTranslation={articleTypeTranslation}
+      periodicaForm={periodicaForm}
     />
   );
 }

@@ -1,6 +1,5 @@
 import Input from "@/components/base/forms/input";
 import Label from "@/components/base/forms/label";
-import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import { useData } from "@/lib/api/api";
 import { isFFUAgency } from "@/lib/api/branches.fragments";
 import Translate from "@/components/base/translate/Translate";
@@ -8,8 +7,13 @@ import Text from "@/components/base/text";
 import Divider from "@/components/base/divider/Divider";
 
 import styles from "./Pincode.module.css";
+import {
+  useConfirmButtonClicked,
+  usePickupBranchId,
+  usePincode,
+} from "@/components/hooks/order";
 
-function Pincode({ isLoading, onChange, error }) {
+function Pincode({ isLoading, onChange, error, value }) {
   return (
     <div className={styles.pincode}>
       <Divider className={styles.divider} />
@@ -37,26 +41,33 @@ function Pincode({ isLoading, onChange, error }) {
           context: "order",
           label: "pincode-placeholder",
         })}
+        value={value}
       />
     </div>
   );
 }
 
-export default function Wrap({ onChange, validated, hide }) {
-  const { loanerInfo } = useLoanerInfo();
-
-  const branchId = loanerInfo.pickupBranch;
-
-  const { data, isLoading } = useData(branchId && isFFUAgency({ branchId }));
+export default function Wrap() {
+  const {
+    pincode,
+    setPincode,
+    pincodeIsRequired,
+    isLoading: isLoadingPincode,
+  } = usePincode();
+  const { confirmButtonClicked } = useConfirmButtonClicked();
+  const { branchId, isLoading: isLoadingPickupBranchId } = usePickupBranchId();
+  const { data, isLoading: isLoadingBranch } = useData(
+    branchId && isFFUAgency({ branchId })
+  );
 
   const isFFU = !!data?.branches?.hitcount;
-  const hasBorchk = !!data?.branches?.result?.[0]?.borrowerCheck;
-  const hasDataSync = !!data?.branches?.result?.[0]?.culrDataSync;
 
-  const hasError = !validated?.details?.hasPincode?.status;
-  const hasTry = validated.hasTry;
+  const hasError = pincodeIsRequired && pincode;
 
-  if (hide || !isFFU || hasDataSync || (isFFU && !hasBorchk)) {
+  const isLoading =
+    isLoadingPincode || isLoadingPickupBranchId || isLoadingBranch;
+
+  if (!isLoadingBranch && !pincodeIsRequired) {
     return null;
   }
 
@@ -64,8 +75,9 @@ export default function Wrap({ onChange, validated, hide }) {
     <Pincode
       isLoading={isLoading}
       isFFUAgency={isFFU}
-      error={hasTry && hasError}
-      onChange={onChange}
+      error={confirmButtonClicked && hasError}
+      onChange={(val) => setPincode(val)}
+      value={pincode}
     />
   );
 }

@@ -16,7 +16,6 @@ import { useData } from "@/lib/api/api";
 import useUser from "@/components/hooks/useUser";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 import { useModal } from "@/components/_modal";
-import { openOrderModal } from "@/components/work/utils";
 import { validateEmail } from "@/utils/validateEmail";
 import { getLabel } from "@/components/base/forms/email/Email";
 import Tooltip from "@/components/base/tooltip/Tooltip";
@@ -291,11 +290,6 @@ export default function Wrap(props) {
   const modal = useModal();
   const {
     branchId,
-    //order modal props
-    pids,
-    selectedAccesses,
-    workId,
-    singleManifestation,
     //check if we open order new modal or we we go back to order modal
     changePickupBranch = false,
   } = props.context;
@@ -351,13 +345,7 @@ export default function Wrap(props) {
     if (changePickupBranch) {
       goToPreviousModal(props.modal);
     } else {
-      openOrderModal({
-        modal,
-        pids,
-        selectedAccesses,
-        workId,
-        singleManifestation,
-      });
+      modal.push("ematerialfilter", {});
     }
   }
 

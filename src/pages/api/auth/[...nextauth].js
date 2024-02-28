@@ -22,6 +22,7 @@ export const options = {
         sameSite: "Lax",
         secure: true,
         path: "/",
+        secure: !process.env.CYPRESS, //set secure to false when running Cypress tests
         expires: null,
       },
     },

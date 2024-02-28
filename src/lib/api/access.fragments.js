@@ -9,6 +9,12 @@ export function accessForManifestations({ pids }) {
         unit {
           manifestations {
             pid
+            titles {
+              main
+            }
+            creators {
+              display
+            }
             access {
               __typename
               ... on AccessUrl {

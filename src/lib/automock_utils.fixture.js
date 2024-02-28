@@ -39,6 +39,20 @@ const MANIFESTATION_BASE = {
       loanIsPossible: true,
     },
   ],
+  unit: {
+    manifestations: [
+      {
+        pid: "some-pid-1",
+        access: [
+          {
+            __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
+            __typename: "InterLibraryLoan",
+            loanIsPossible: true,
+          },
+        ],
+      },
+    ],
+  },
   cover: {
     detail:
       "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=53588697&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=06bb715d932ba34098b2",
@@ -87,6 +101,20 @@ const MANIFESTATION_2 = {
       "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=21678783&attachment_type=forside_lille&bibliotek=870970&source_id=870970&key=54646db03d538703e6c1",
     origin: "moreinfo",
   },
+  unit: {
+    manifestations: [
+      {
+        pid: "some-pid-2",
+        access: [
+          {
+            __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
+            __typename: "InterLibraryLoan",
+            loanIsPossible: true,
+          },
+        ],
+      },
+    ],
+  },
 };
 // A manifestation that may not be ordered via ILL
 const MANIFESTATION_3 = {
@@ -108,6 +136,20 @@ const MANIFESTATION_3 = {
       loanIsPossible: false,
     },
   ],
+  unit: {
+    manifestations: [
+      {
+        pid: "some-pid-3",
+        access: [
+          {
+            __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
+            __typename: "InterLibraryLoan",
+            loanIsPossible: false,
+          },
+        ],
+      },
+    ],
+  },
   cover: {
     detail:
       "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=24777057&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=4d9e99b14209aef2a5d6",
@@ -153,6 +195,25 @@ const MANIFESTATION_4 = {
       loanIsPossible: true,
     },
   ],
+  unit: {
+    manifestations: [
+      {
+        pid: "some-pid-4",
+        access: [
+          {
+            __resolveType: AccessEnum.DIGITAL_ARTICLE_SERVICE,
+            __typename: "DigitalArticleService",
+            issn: "some-issn",
+          },
+          {
+            __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
+            __typename: "InterLibraryLoan",
+            loanIsPossible: true,
+          },
+        ],
+      },
+    ],
+  },
   workTypes: ["ARTICLE"],
   cover: {
     detail:
@@ -197,6 +258,25 @@ const MANIFESTATION_4_1 = {
       loanIsPossible: true,
     },
   ],
+  unit: {
+    manifestations: [
+      {
+        pid: "some-pid-4-1",
+        access: [
+          {
+            __resolveType: AccessEnum.DIGITAL_ARTICLE_SERVICE,
+            __typename: "DigitalArticleService",
+            issn: "some-issn",
+          },
+          {
+            __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
+            __typename: "InterLibraryLoan",
+            loanIsPossible: true,
+          },
+        ],
+      },
+    ],
+  },
   workTypes: ["ARTICLE"],
   cover: {
     detail:
@@ -241,6 +321,23 @@ const MANIFESTATION_5 = {
       loanIsPossible: true,
     },
   ],
+  unit: {
+    manifestations: [
+      {
+        pid: "some-pid-5",
+        access: [
+          {
+            __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE,
+            issn: "some-issn",
+          },
+          {
+            __typename: AccessEnum.INTER_LIBRARY_LOAN,
+            loanIsPossible: true,
+          },
+        ],
+      },
+    ],
+  },
   workTypes: ["PERIODICA"],
   cover: {
     detail:
@@ -314,6 +411,26 @@ const MANIFESTATION_7 = {
       pid: "321321",
     },
   ],
+  unit: {
+    manifestations: [
+      {
+        pid: "some-pid-7",
+        access: [
+          {
+            __typename: AccessEnum.ACCESS_URL,
+            url: "https://ereol.combo/langurl",
+            origin: "https://ereol.combo",
+            type: "RESOURCE",
+          },
+          {
+            __typename: AccessEnum.INFOMEDIA_SERVICE,
+            id: "123123",
+            pid: "321321",
+          },
+        ],
+      },
+    ],
+  },
   workTypes: ["LITERATURE"],
   cover: {
     detail:
@@ -691,6 +808,7 @@ const BRANCH_2 = {
 };
 const BRANCH_3 = {
   agencyName: "Agency 2",
+  agencyId: "2",
   name: "Test Bib - ILL and digital copy service",
   branchId: "1235",
   branchType: BranchTypeEnum.MAIN_LIBRARY,
@@ -1090,21 +1208,34 @@ const USER_1 = {
   rights: { digitalArticleService: false },
   agencies: [
     {
+      id: "1",
       borrowerStatus: BORROWER_STATUS_TRUE,
       result: [BRANCH_1, BRANCH_2],
+      user: { mail: "some@mail.dk" },
     },
   ],
+  lastUsedPickUpBranch: null,
 };
 
 const USER_2 = {
-  agencies: [{ borrowerStatus: BORROWER_STATUS_TRUE, result: [BRANCH_2] }],
+  agencies: [
+    { id: "1", borrowerStatus: BORROWER_STATUS_TRUE, result: [BRANCH_2] },
+  ],
 };
 
 const USER_3 = {
   name: "Some Name",
   mail: "some@mail.dk",
-  agencies: [{ borrowerStatus: BORROWER_STATUS_TRUE, result: [BRANCH_3] }],
+  agencies: [
+    {
+      id: "2",
+      borrowerStatus: BORROWER_STATUS_TRUE,
+      result: [BRANCH_3],
+      user: { mail: "some@mail.dk" },
+    },
+  ],
   rights: { digitalArticleService: true },
+  lastUsedPickUpBranch: "2",
 };
 
 const USER_4 = {
@@ -1135,6 +1266,7 @@ const USER_8 = {
   name: "Some Name",
   mail: "some@mail.dk",
   agencies: [],
+  identityProviderUsed: "nemlogin",
 };
 
 const USER_10 = {
@@ -1145,8 +1277,11 @@ const USER_10 = {
     {
       borrowerStatus: BORROWER_STATUS_TRUE,
       result: [BRANCH_7],
+      user: { mail: null },
     },
   ],
+
+  lastUsedPickUpBranch: "800014",
 };
 
 const REVIEW_1 = {
@@ -1220,19 +1355,30 @@ const REVIEW_1 = {
 };
 
 // Holding the current mocked session
-let currentSession = { pickupBranch: "190101" };
+// let currentSession = { pickupBranch: "190101" };
+let currentSession = {};
 
 const DEFAULT_STORY_PARAMETERS = {
   parameters: {
     graphql: {
       debug: true,
       resolvers: {
+        Unit: {
+          manifestations: (args) => {
+            const pids = args?.variables?.pid || args?.variables?.pids;
+            return pids?.map((pid) =>
+              ALL_MANIFESTATIONS.find((m) => m.pid === pid)
+            );
+          },
+        },
         Query: {
           user: () => {
             return USER_1;
           },
           manifestations: (args) => {
-            return args?.variables?.pid?.map((pid) =>
+            const pids = args?.variables?.pid || args?.variables?.pids;
+
+            return pids?.map((pid) =>
               ALL_MANIFESTATIONS.find((m) => m.pid === pid)
             );
           },

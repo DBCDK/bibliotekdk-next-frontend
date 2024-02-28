@@ -1,6 +1,5 @@
 import styles from "./Options.module.css";
 import Top from "../base/top";
-import { openOrderModal } from "@/components/work/utils";
 import { getTemplateProps } from "@/components/_modal/pages/options/Options.helper";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
@@ -8,9 +7,9 @@ import { useData } from "@/lib/api/api";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import { useMemo } from "react";
 import { accessFactory } from "@/lib/accessFactoryUtils";
-import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
+import { useOrderFlow } from "@/components/hooks/order";
 
 /**
  * Component helper for link and description in options
@@ -34,21 +33,6 @@ export function OptionsLinkAndDescription({ props, templateProps }) {
   );
 }
 
-async function handleOpenLoginAndOrderModal(modal, modalprops) {
-  const uid = await modal.saveToStore("order", {
-    ...modalprops,
-    storeLoanerInfo: true,
-  });
-  //open actual loginmodal
-  openLoginModal({
-    modal,
-    //data used for FFU without adgangsplatform to open order modal directly
-    ...modalprops,
-    //callback used for adgangsplatform/mitid login to open order modal on redirect
-    callbackUID: uid,
-  });
-}
-
 /**
  * OptionsListPrototyper is used for injecting modal and workId
  * before used inside main code
@@ -59,33 +43,15 @@ async function handleOpenLoginAndOrderModal(modal, modalprops) {
  * @param accessesArray
  * @returns {React.JSX.Element}
  */
-function optionsListAllArgs(
-  modal,
-  workId,
-  access,
-  index,
-  accessesArray,
-  isGuestUser,
-  isAuthenticated
-) {
+function optionsListAllArgs({ access, index, accessesArray, startOrderFlow }) {
   //add order modal to store, to be able to access when coming back from adgangsplatform/mitid?
-  const orderModalProps = {
-    pids: accessesArray?.map((singleAccess) => singleAccess.pid),
-    selectedAccesses: [access],
-    workId: workId,
-    singleManifestation: true,
-  };
+  const pids = accessesArray?.map((singleAccess) => singleAccess.pid);
 
   const props = {
     ...access,
     className: styles.item,
     onOrder: () => {
-      isAuthenticated || isGuestUser
-        ? openOrderModal({
-            modal: modal,
-            ...orderModalProps,
-          })
-        : handleOpenLoginAndOrderModal(modal, orderModalProps);
+      startOrderFlow({ orders: [{ pids }] });
     },
   };
   return (
@@ -97,14 +63,9 @@ function optionsListAllArgs(
   );
 }
 
-export function Options({
-  modal,
-  context,
-  loanerInfo,
-  isAuthenticated,
-  isGuestUser,
-}) {
-  const { title, selectedPids, workId } = { ...context };
+export function Options({ context, loanerInfo, isAuthenticated }) {
+  const { title, selectedPids } = { ...context };
+  const { start } = useOrderFlow();
 
   const manifestationResponse = useData(
     selectedPids &&
@@ -135,15 +96,12 @@ export function Options({
   const specialAccesses = allowedAccessessByType.specialAccesses;
 
   const optionsList = (access, index, accessesArray) =>
-    optionsListAllArgs(
-      modal,
-      workId,
+    optionsListAllArgs({
       access,
       index,
       accessesArray,
-      isGuestUser,
-      isAuthenticated
-    );
+      startOrderFlow: start,
+    });
 
   return (
     allowedAccessessByType && (
