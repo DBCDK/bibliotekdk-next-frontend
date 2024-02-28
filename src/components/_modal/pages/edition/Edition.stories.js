@@ -31,7 +31,7 @@ function EditionComponentBuilder({
         The Edition on the type: {descriptionName}
       </StoryDescription>
       <Edition
-        context={editionProps.context}
+        {...editionProps.context}
         singleManifestation={editionProps.singleManifestation}
         showOrderTxt={editionProps.showOrderTxt}
         isMaterialCard={isMaterialCard}

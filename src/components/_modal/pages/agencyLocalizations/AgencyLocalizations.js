@@ -81,15 +81,14 @@ export default function AgencyLocalizations({ context, modal }) {
     isLoading: agenciesWithHoldingsIsLoading,
   } = useData(
     pids &&
-      localizationsFragments.localizationsWithHoldings({
+      localizationsFragments.localizationsQuery({
         pids: pids,
-        availabilityTypes: ["NOW", "LATER", "UNKNOWN"],
       })
   );
 
   const agencyIds = !isEmpty(query)
     ? agencyIdsFromQuery
-    : agenciesWithHoldings?.localizationsWithHoldings?.agencies?.map(
+    : agenciesWithHoldings?.localizations?.agencies?.map(
         (agency) => agency?.agencyId
       );
 

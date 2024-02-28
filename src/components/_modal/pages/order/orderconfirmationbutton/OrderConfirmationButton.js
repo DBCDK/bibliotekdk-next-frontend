@@ -1,14 +1,19 @@
 // eslint-disable-next-line css-modules/no-unused-class
+import orderStyles from "../Order.module.css";
+
 import styles from "./OrderConfirmationButton.module.css";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import Button from "@/components/base/button";
 import * as PropTypes from "prop-types";
-import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
-import { getStylingAndErrorMessage } from "@/components/_modal/pages/order/utils/order.utils";
-import { validateEmail } from "@/utils/validateEmail";
-import useAuthentication from "@/components/hooks/user/useAuthentication";
+
+import {
+  useConfirmButtonClicked,
+  useOrderService,
+  useOrderValidation,
+  useShowAlreadyOrdered,
+} from "@/components/hooks/order";
 
 function OrderConfirmationButton({
   invalidClass,
@@ -91,56 +96,35 @@ OrderConfirmationButton.propTypes = {
   showOrderDigitalCopy: PropTypes.bool,
   disabled: PropTypes.bool,
 };
-export default function Wrap({
-  email,
-  context,
-  validated,
-  hasValidationErrors,
-  onClick,
-  blockedForBranch,
-  isLoadingUser = false,
-}) {
-  const { hasCulrUniqueId } = useAuthentication();
-  const { workId, pid, periodicaForm, pids } = context;
-  const { invalidClass, actionMessage } = getStylingAndErrorMessage(
-    validated,
-    hasValidationErrors
-  );
+export default function Wrap({ pids, onClick }) {
+  const { setConfirmButtonClicked } = useConfirmButtonClicked();
 
-  const { accessTypeInfo, pickupBranchInfo, workResponse } =
-    useOrderPageInformation({
-      workId: workId,
-      periodicaForm: periodicaForm,
-      pids: pids ?? [pid],
-    });
+  const { showAlreadyOrderedWarning } = useShowAlreadyOrdered({ pids });
 
-  const { isLoading: isWorkLoading } = workResponse;
-  const { isLoading: isPickupBranchLoading } = pickupBranchInfo;
-  const { isDigitalCopy, availableAsDigitalCopy, availableAsPhysicalCopy } =
-    accessTypeInfo;
+  const {
+    confirmButtonDisabled,
+    actionMessages,
+    isLoading: isLoadingValidation,
+  } = useOrderValidation({ pids });
 
-  const isLoading = isWorkLoading || isPickupBranchLoading || isLoadingUser;
+  const { service, isLoading: isLoadingOrderService } = useOrderService({
+    pids,
+  });
 
-  // TODO: save this check for now
-  // has pincode if required
-  // const hasPincode = !validated?.details?.hasPincode?.status;
-
-  const firstOrder = validated?.details?.firstOrder?.status;
+  const actionMessage = actionMessages?.[0];
 
   return (
     <OrderConfirmationButton
-      invalidClass={invalidClass}
+      invalidClass={actionMessage && orderStyles.invalid}
       actionMessage={actionMessage}
-      isLoading={isLoading}
-      onClick={onClick}
-      showOrderDigitalCopy={isDigitalCopy && availableAsDigitalCopy}
-      showOrderHistory={hasCulrUniqueId && !firstOrder}
-      disabled={
-        (!availableAsDigitalCopy && !availableAsPhysicalCopy) ||
-        isLoading ||
-        blockedForBranch ||
-        !validateEmail(email?.value)
-      }
+      isLoading={isLoadingValidation || isLoadingOrderService}
+      onClick={(...args) => {
+        setConfirmButtonClicked(true);
+        onClick(...args);
+      }}
+      showOrderDigitalCopy={service === "DIGITAL_ARTICLE"}
+      showOrderHistory={showAlreadyOrderedWarning}
+      disabled={confirmButtonDisabled}
     />
   );
 }

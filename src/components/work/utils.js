@@ -23,27 +23,6 @@ export function openAgencyLocalizationsModal({
   });
 }
 
-export function openOrderModal({
-  modal,
-  pids,
-  selectedAccesses,
-  workId,
-  singleManifestation,
-  storeLoanerInfo = false,
-  handleOrderFinished = undefined,
-}) {
-  modal.push("order", {
-    title: Translate({ context: "modal", label: "title-order" }),
-    pids: pids,
-    selectedAccesses: selectedAccesses,
-    workId: workId,
-    ...(singleManifestation && { orderType: "singleManifestation" }),
-    singleManifestation: singleManifestation,
-    storeLoanerInfo: storeLoanerInfo,
-    handleOrderFinished: handleOrderFinished,
-  });
-}
-
 export function openReferencesModal(modal, pids, workId, work, manifestation) {
   modal.push("references", {
     title: Translate({
