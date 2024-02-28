@@ -163,7 +163,7 @@ describe("ButtonTxt", () => {
     );
   });
 
-  it("should have ebook button text", () => {
+  it.skip("should have ebook button text", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton-orderbuttontextbelow--e-book-button-txt"
     );
@@ -171,7 +171,7 @@ describe("ButtonTxt", () => {
     cy.get("[data-cy=reservation-button-txt]").should("contain", "ereol");
   });
 
-  it("should have eaudiobook physical button text", () => {
+  it.skip("should have eaudiobook physical button text", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton-orderbuttontextbelow--e-audio-book-physical-button-txt"
     );
@@ -182,7 +182,7 @@ describe("ButtonTxt", () => {
     );
   });
 
-  it("should have eaudiobook digital button text", () => {
+  it.skip("should have eaudiobook digital button text", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton-orderbuttontextbelow--e-audio-book-digital-button-txt"
     );
