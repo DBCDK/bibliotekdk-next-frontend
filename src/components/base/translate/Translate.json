@@ -1228,6 +1228,10 @@
         "da": "Findes på %s biblioteker",
         "en": "Located at %s libraries"
       },
+      "label_library_holdings-singular": {
+        "da": "Findes på %s bibliotek",
+        "en": "Located at %s library"
+      },
       "url_login_required": {
         "da": "Kræver login",
         "en": "Login required"

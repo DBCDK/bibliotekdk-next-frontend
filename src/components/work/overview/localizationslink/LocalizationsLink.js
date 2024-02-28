@@ -39,7 +39,10 @@ export function LocalizationsLink({
       <Text type="text3" className={styles.linkstyle} tag="span">
         {Translate({
           context: "overview",
-          label: "label_library_holdings",
+          label:
+            localizationsCount === 1
+              ? "label_library_holdings-singular"
+              : "label_library_holdings",
           vars: [localizationsCount],
         })}
         &nbsp;-&nbsp;
