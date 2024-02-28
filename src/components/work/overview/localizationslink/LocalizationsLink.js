@@ -8,8 +8,6 @@ import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
 import styles from "./LocalizationsLink.module.css";
 import { openAgencyLocalizationsModal } from "@/components/work/utils";
-import * as manifestationFragments from "@/lib/api/manifestation.fragments";
-import { accessFactory } from "@/lib/accessFactoryUtils";
 import { AccessEnum } from "@/lib/enums";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import { useManifestationAccess } from "@/components/hooks/useManifestationAccess";
@@ -63,17 +61,7 @@ export function LocalizationsLink({
   );
 }
 
-export default function Wrap({
-  selectedPids,
-  singleManifestation = false,
-  modalOpener = (modal, agency) =>
-    openAgencyLocalizationsModal({
-      modal: modal,
-      pids: selectedPids,
-      agency: agency,
-      singleManifestation: singleManifestation,
-    }),
-}) {
+export default function Wrap({ selectedPids, singleManifestation = false }) {
   // @TODO if user is logged in - do a holdingsitems request on user agency
   const { loanerInfo } = useLoanerInfo();
   const modal = useModal();
@@ -105,7 +93,14 @@ export default function Wrap({
   return (
     <LocalizationsLink
       localizationsCount={data?.localizations?.count || 0}
-      openLocalizationsModal={() => modalOpener(modal, loanerInfo?.agency)}
+      openLocalizationsModal={() =>
+        openAgencyLocalizationsModal({
+          modal: modal,
+          pids: unitPids,
+          agency: loanerInfo?.agency,
+          singleManifestation: singleManifestation,
+        })
+      }
     />
   );
 }
