@@ -83,13 +83,8 @@ export function PeriodicaForm({ modal, context, active }) {
     initial: {},
   });
   const [hasTry, setHasTry] = useState(false);
-  const {
-    periodicaForm,
-    updatePeriodicaForm,
-    articleIsSpecified,
-    expanded,
-    setExpanded,
-  } = usePeriodicaForm(workId);
+  const { periodicaForm, updatePeriodicaForm, expanded, setExpanded } =
+    usePeriodicaForm(workId);
 
   useEffect(() => {
     setState(periodicaForm || {});

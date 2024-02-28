@@ -25,7 +25,6 @@ export function LocalizationInformation({
   pickupBranch,
   onClick,
   availableAsPhysicalCopy,
-  branchId,
 }) {
   if (availableAsDigitalCopy) {
     return null;
