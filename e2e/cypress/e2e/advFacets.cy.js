@@ -3,7 +3,7 @@ describe("Facets", () => {
     cy.visit("/iframe.html?id=advancedsearch-facets--facets-in-url");
 
     // there should be 3 accordions in this story
-    cy.get("[data-cy=accordion-item]").should("have.length", 4);
+    cy.get("[data-cy=accordion-item]").should("have.length", 5);
 
     cy.get("[data-cy=router-query]").then((el) => {
       const fisk = JSON.parse(el.text());
@@ -20,11 +20,11 @@ describe("Facets", () => {
     cy.get("[data-cy=accordion-item]")
       .first()
       .find("li")
-      .should("have.length", 10);
+      .should("have.length", 5);
 
     // two of them should be selected from url params
     cy.get("[data-cy=accordion-item]")
-      .eq(2)
+      .eq(3)
       .click()
       .find("li")
       .find("[checked]")
@@ -32,7 +32,7 @@ describe("Facets", () => {
 
     // uncheck one
     cy.get("[data-cy=accordion-item]")
-      .eq(2)
+      .eq(4)
       .find("li")
       .find("[checked]")
       .first()
@@ -53,7 +53,7 @@ describe("Facets", () => {
     });
 
     // and again
-    cy.get("[data-cy=li-specificmaterialtype-aarbog]")
+    cy.get("[data-cy=li-specificmaterialtype-bog]")
       .find("input")
       .click({ force: true });
 
@@ -61,7 +61,7 @@ describe("Facets", () => {
       const fisk = JSON.parse(el.text());
       const facets = fisk.facets;
 
-      assert(facets.includes("aarbog"));
+      assert(facets.includes("bog"));
     });
   });
 });

@@ -125,11 +125,7 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
           >
             {
               (initialcheck = !!current?.values?.find((val) => {
-                return (
-                  current &&
-                  val.name === value.key &&
-                  facet.name === `phrase.${current.searchIndex}`
-                );
+                return val.name === value.key;
               }))
             }
             <Checkbox

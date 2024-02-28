@@ -47,7 +47,7 @@ FacetsInUrl.story = {
       pathname: "/avanceret",
       query: {
         facets:
-          '[{"searchIndex": "phrase.specificmaterialtype", "values": [{ "value": "e-bog", "name": "e-bog" },{ "value": "node", "name": "node" } ]},{ "searchIndex": "phrase.subject", "values": [{ "value": "fisk", "name": "fisk" }]}]',
+          '[{"searchIndex": "specificmaterialtype", "values": [{ "value": "e-bog", "name": "e-bog" },{ "value": "node", "name": "node" } ]},{ "searchIndex": "subject", "values": [{ "value": "fisk", "name": "fisk" }]}]',
       },
     },
   },
