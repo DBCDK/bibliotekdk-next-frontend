@@ -49,6 +49,7 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
   }, [cqlFromUrl, router?.query?.mode]);
 
   //add raw cql query in url if showCqlEditor. Add state to url if fieldInputs
+  // @TODO add facets here - they can be taken from context :)
   const doAdvancedSearch = () => {
     if (showCqlEditor) {
       const cqlParsedFromUrl = fieldSearchFromUrl

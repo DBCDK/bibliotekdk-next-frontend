@@ -15,6 +15,10 @@ import Title from "@/components/base/title";
 import { NoHitSearch } from "@/components/search/advancedSearch/advancedSearchResult/noHitSearch/NoHitSearch";
 import ResultPage from "./ResultPage/ResultPage";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import { AdvancedFacets } from "@/components/search/advancedSearch/facets/advancedFacets";
+import { useFacets } from "@/components/search/advancedSearch/useFacets";
+import translate from "@/components/base/translate";
+import { FacetTags } from "@/components/search/advancedSearch/facets/facetTags/facetTags";
 
 export function AdvancedSearchResult({
   pageNo,
@@ -23,6 +27,7 @@ export function AdvancedSearchResult({
   results,
   error = null,
   isLoading,
+  facets,
 }) {
   const hitcount = results?.hitcount;
   const numPages = Math.ceil(hitcount / 10);
@@ -34,21 +39,44 @@ export function AdvancedSearchResult({
     return null;
   }
 
+  const TitleComponent = () => {
+    return (
+      <div className={styles.titleflex}>
+        <Title type="title5" className={styles.countstyle}>
+          {hitcount}
+        </Title>
+        <Title type="title6" className={styles.titleStyle}>
+          {translate({ context: "search", label: "title" })}
+        </Title>
+      </div>
+    );
+  };
+
   return (
     <>
       <TopBar isLoading={isLoading} />
 
       <Section
         divider={false}
-        colSize={{ lg: { offset: 1, span: true } }}
+        colSize={{
+          lg: { offset: 0, span: true },
+          titel: { lg: { offset: 3, span: true } },
+        }}
         id="search-result-section"
-        title="Resultater"
+        title={<TitleComponent />}
         subtitle={
           hitcount > 0 &&
           !isLoading && (
-            <Title type="title5" className={styles.titleStyle}>
-              {hitcount}
-            </Title>
+            <>
+              <FacetTags />
+              <div className={styles.subtitleStyle}>
+                <Title type="title6">
+                  {translate({ context: "search", label: "narrow-search" })}
+                </Title>
+              </div>
+
+              <AdvancedFacets facets={facets} />
+            </>
           )
         }
         sectionContentClass={isMobile ? styles.sectionContentStyle : ""}
@@ -57,6 +85,7 @@ export function AdvancedSearchResult({
         {/* Reuse result page from simplesearch - we skip the wrap .. @TODO should we set
         some mark .. that we are doing advanced search .. ?? */}
         {!isLoading && hitcount === 0 && <NoHitSearch />}
+        {/*<AdvancedFacets facets={facets} />*/}
         <>
           <AdvancedSearchSort className={cx(styles.sort_container)} />
           <div>
@@ -85,12 +114,54 @@ export function AdvancedSearchResult({
   );
 }
 
+/**
+ * Complex search returns empty valued facets - values with a score of 0.
+ * Here we filter out all the empty facet values - and if a facet has none
+ * values we filter out the entire facet :)
+ *
+ * @TODO - should complexsearch filter out the empty values ??
+ *
+ * eg.
+ * [
+ *     {
+ *         "key": "brætspil",
+ *         "score": 1
+ *     },
+ *     {
+ *         "key": "aarbog",
+ *         "score": 0
+ *     },
+ *     {
+ *         "key": "aarbog (cd)",
+ *         "score": 0
+ *     }
+ * ]
+ *
+ * @param facets
+ * @returns {*}
+ */
+function parseOutFacets(facets) {
+  // find the facet values with a score higher than 0
+  const sanitizedFacets = facets
+    ?.map((facet) => {
+      return {
+        name: facet.name,
+        values: facet.values.filter((value) => value?.score > 0),
+      };
+    })
+    // filter out entire facet if there are no values
+    .filter((facet) => facet.values.length > 0);
+
+  return sanitizedFacets;
+}
+
 function parseResponse(bigResponse) {
   return {
     works: bigResponse?.data?.complexSearch?.works || null,
     hitcount: bigResponse?.data?.complexSearch?.hitcount || 0,
     errorMessage: bigResponse?.data?.complexSearch?.errorMessage || null,
     isLoading: bigResponse?.isLoading,
+    facets: parseOutFacets(bigResponse?.data?.complexSearch?.facets),
   };
 }
 
@@ -105,13 +176,16 @@ export default function Wrap({ onWorkClick, onPageChange }) {
     fieldSearchFromUrl: fieldSearch,
     pageNoFromUrl: pageNo,
     setShowPopover,
+    facets,
   } = useAdvancedSearchContext();
+
+  const { facetsFromEnum, facetLimit } = useFacets();
 
   // @TODO what to do  with dataCollect ???
   onWorkClick = null;
   // get setter for advanced search history
   const { setValue } = useAdvancedSearchHistory();
-  const cqlQuery = cql || convertStateToCql(fieldSearch);
+  const cqlQuery = cql || convertStateToCql({ ...fieldSearch, facets: facets });
 
   const showResult = !isEmpty(fieldSearch) || !isEmpty(cql);
 
@@ -119,6 +193,10 @@ export default function Wrap({ onWorkClick, onPageChange }) {
   const fastResponse = useData(
     hitcount({
       cql: cqlQuery,
+      facets: {
+        facetLimit: facetLimit,
+        facets: facetsFromEnum,
+      },
     })
   );
   const parsedResponse = parseResponse(fastResponse);
@@ -147,6 +225,7 @@ export default function Wrap({ onWorkClick, onPageChange }) {
       error={parsedResponse.errorMessage}
       setShowPopover={setShowPopover}
       isLoading={parsedResponse.isLoading}
+      facets={parsedResponse.facets}
     />
   );
 }

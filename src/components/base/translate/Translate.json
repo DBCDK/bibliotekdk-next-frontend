@@ -2290,6 +2290,10 @@
         "da": "Tilpasses efter materialetype",
         "en": "Adjusted according to material type"
       },
+      "narrow-search": {
+        "da": "Afgræns din søgning",
+        "en": "Narrow your search"
+      },
       "narrow-search-more": {
         "da": "Afgræns yderligere",
         "en": "narrow-search-more"
@@ -2366,6 +2370,14 @@
       }
     },
     "facets": {
+      "label-selected-filters": {
+        "da": "Valgte filtre",
+        "en": "Selected filters"
+      },
+      "label-clear-filters": {
+        "da": "Nulstil",
+        "en": "Clear"
+      },
       "label-sortorder-numerical": {
         "da": "Sorter alfabetisk",
         "en": "Sort alphabetically"

@@ -1,0 +1,40 @@
+.item {
+  display: grid;
+  grid-template-columns: 1fr 100fr 100fr;
+  align-items: center;
+  padding: 0 var(--pt1) 0 var(--pt1);
+}
+
+.checkbox {
+  margin-right: var(--pt2);
+}
+
+.score {
+  text-align: right;
+}
+
+.countContainer {
+  display: flex;
+  padding: 0 var(--pt1) 0 var(--pt1);
+}
+.count {
+  color: var(--white);
+  background-color: var(--blue);
+  padding: 0 var(--pt1) 0 var(--pt1);
+  margin-left: var(--pt2);
+  align-items: center;
+}
+
+.showmorelink {
+  padding: var(--pt1) 0 var(--pt2) var(--pt1);
+}
+
+.accordionContainer {
+  width: 100%;
+}
+
+.itemborder {
+  border: 1px solid var(--concrete);
+  border-top: 0;
+  border-bottom: 0;
+}
