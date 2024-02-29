@@ -36,8 +36,19 @@ export async function fetchAll(queries, context, customQueryVariables) {
     (
       await Promise.all(
         queries.map(async (queryFunc) => {
+          const queryFuncRes = queryFunc({
+            ...context.query,
+            ...customQueryVariables,
+          });
+
+          // The queryFunc can return null, if this happens, we should just
+          // return immediately, instead of making a GraphQL call that will fail
+          if (!queryFuncRes) {
+            return null;
+          }
+
           const queryKey = generateKey({
-            ...queryFunc({ ...context.query, ...customQueryVariables }),
+            ...queryFuncRes,
             accessToken: session?.accessToken,
           });
           try {

@@ -11,6 +11,7 @@ import { openAgencyLocalizationsModal } from "@/components/work/utils";
 import { AccessEnum } from "@/lib/enums";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import { useManifestationAccess } from "@/components/hooks/useManifestationAccess";
+import { useManifestationData } from "@/components/hooks/order";
 
 export function LocalizationsLink({
   localizationsCount,
@@ -38,7 +39,10 @@ export function LocalizationsLink({
       <Text type="text3" className={styles.linkstyle} tag="span">
         {Translate({
           context: "overview",
-          label: "label_library_holdings",
+          label:
+            localizationsCount === 1
+              ? "label_library_holdings-singular"
+              : "label_library_holdings",
           vars: [localizationsCount],
         })}
         &nbsp;-&nbsp;
@@ -68,23 +72,24 @@ export default function Wrap({ selectedPids, singleManifestation = false }) {
 
   const { access } = useManifestationAccess({ pids: selectedPids });
 
+  const { physicalPids, isLoading: isLoadingManifestationData } =
+    useManifestationData({ pids: selectedPids });
+
   const preferredOnline =
     access?.[0]?.__typename !== AccessEnum.INTER_LIBRARY_LOAN;
 
-  const unitPids = access?.[0]?.pids;
-
   const { data, isLoading, isSlow } = useData(
     !preferredOnline &&
-      selectedPids?.length > 0 &&
-      typeof selectedPids?.[0] !== "undefined" &&
-      localizationsFragments.localizationsQuery({ pids: unitPids })
+      physicalPids?.length > 0 &&
+      typeof physicalPids?.[0] !== "undefined" &&
+      localizationsFragments.localizationsQuery({ pids: physicalPids })
   );
 
   if (preferredOnline) {
     return null;
   }
 
-  if (isLoading || !data) {
+  if (isLoading || isLoadingManifestationData || !data) {
     return (
       <Skeleton lines={1} className={styles.skeletonstyle} isSlow={isSlow} />
     );
@@ -96,7 +101,7 @@ export default function Wrap({ selectedPids, singleManifestation = false }) {
       openLocalizationsModal={() =>
         openAgencyLocalizationsModal({
           modal: modal,
-          pids: unitPids,
+          pids: physicalPids,
           agency: loanerInfo?.agency,
           singleManifestation: singleManifestation,
         })

@@ -121,7 +121,7 @@ export function useOrderService({ pids }) {
   };
 }
 
-function useManifestationData({ pids }) {
+export function useManifestationData({ pids }) {
   const { data, isLoading } = useData(
     pids?.length > 0 &&
       editionManifestations({
@@ -129,9 +129,23 @@ function useManifestationData({ pids }) {
       })
   );
 
+  const physicalPids = {};
+  data?.manifestations?.forEach((m) => {
+    const isPhysical = !!m?.accessTypes?.find((t) => t?.code === "PHYSICAL");
+    if (isPhysical) {
+      m?.unit?.manifestations?.forEach(({ pid }) => (physicalPids[pid] = true));
+    }
+  });
+
   const workId = data?.manifestations?.[0]?.ownerWork?.workId;
   const ownerWork = data?.manifestations?.[0]?.ownerWork;
-  return { workId, ownerWork, manifestations: data?.manifestations, isLoading };
+  return {
+    workId,
+    ownerWork,
+    manifestations: data?.manifestations,
+    physicalPids: Object.keys(physicalPids),
+    isLoading,
+  };
 }
 
 /**
