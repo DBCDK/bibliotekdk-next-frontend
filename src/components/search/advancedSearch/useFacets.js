@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { AdvFacetsTypeEnum } from "@/lib/enums";
 
 export function useFacets() {
   const router = useRouter();
   const [selectedFacets, setSelectedFacets] = useState(facetsFromUrl());
+
+  useEffect(() => {
+    setSelectedFacets(facetsFromUrl());
+  }, [router?.query?.facets]);
 
   const facetsFromEnum = Object.values(AdvFacetsTypeEnum).map((fac) =>
     fac.toUpperCase()
@@ -22,10 +26,16 @@ export function useFacets() {
 
     // @TODO translate name :)
     if (addToIndex !== undefined) {
-      addToIndex.values.push({ value: value, name: value });
-      setSelectedFacets((prev) => {
-        return [...prev];
-      });
+      // avoid duplicates
+      const alreadythere = !!addToIndex.values.find(
+        (val) => val.value === value && val.name === value
+      );
+      if (!alreadythere) {
+        addToIndex.values.push({ value: value, name: value });
+        setSelectedFacets((prev) => {
+          return [...prev];
+        });
+      }
     } else {
       const newFacet = {
         searchIndex: searchindex,
@@ -47,6 +57,18 @@ export function useFacets() {
   function pushFacetUrl() {
     const query = router?.query;
     query["facets"] = JSON.stringify(selectedFacets);
+    router.push({
+      pathname: router.pathname,
+      query: query,
+    });
+  }
+
+  /**
+   * Push empty facet query to url
+   */
+  function clearFacetsUrl() {
+    const query = router?.query;
+    delete query["facets"];
     router.push({
       pathname: router.pathname,
       query: query,
@@ -87,5 +109,12 @@ export function useFacets() {
 
   const facetLimit = 50;
 
-  return { selectedFacets, addFacet, removeFacet, facetLimit, facetsFromEnum };
+  return {
+    selectedFacets,
+    addFacet,
+    removeFacet,
+    facetLimit,
+    facetsFromEnum,
+    clearFacetsUrl,
+  };
 }

@@ -25,6 +25,10 @@
   align-items: center;
 }
 
+.showmorelink {
+  padding: var(--pt1) 0 var(--pt2) var(--pt1);
+}
+
 .accordionContainer {
   width: 100%;
 }

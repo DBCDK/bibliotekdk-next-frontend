@@ -18,6 +18,7 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { AdvancedFacets } from "@/components/search/advancedSearch/facets/advancedFacets";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import translate from "@/components/base/translate";
+import { FacetTags } from "@/components/search/advancedSearch/facets/facetTags/facetTags";
 
 export function AdvancedSearchResult({
   pageNo,
@@ -67,11 +68,13 @@ export function AdvancedSearchResult({
           hitcount > 0 &&
           !isLoading && (
             <>
+              <FacetTags />
               <div className={styles.subtitleStyle}>
                 <Title type="title6">
                   {translate({ context: "search", label: "narrow-search" })}
                 </Title>
               </div>
+
               <AdvancedFacets facets={facets} />
             </>
           )

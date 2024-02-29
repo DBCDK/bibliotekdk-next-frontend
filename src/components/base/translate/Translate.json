@@ -2370,6 +2370,14 @@
       }
     },
     "facets": {
+      "label-selected-filters": {
+        "da": "Valgte filtre",
+        "en": "Selected filters"
+      },
+      "label-clear-filters": {
+        "da": "Nulstil",
+        "en" : "Clear"
+      },
       "label-sortorder-numerical": {
         "da": "Sorter alfabetisk",
         "en": "Sort alphabetically"

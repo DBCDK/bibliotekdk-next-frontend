@@ -3,9 +3,12 @@ import Accordion, { Item } from "@/components/base/accordion/Accordion";
 
 import styles from "./advancedFacets.module.css";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
+import Link from "@/components/base/link/Link";
 
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import { useState } from "react";
+import Translate from "@/components/base/translate";
+import Text from "@/components/base/text/Text";
 
 /**
  *
@@ -110,8 +113,6 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
   };
 
   let initialcheck;
-  // @TODO fold list - show 5 at first - showmore link to display 20 more :)
-
   return (
     <ul data-cy={`${facetName}`}>
       {facet?.values
@@ -119,7 +120,7 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
         .slice(0, numToShow)
         .map((value, index) => (
           <li
-            key={`${facetName}-${value.key}`}
+            key={`${facetName}-${value.key}-${index}`}
             className={styles.item}
             data-cy={`li-${facetName}-${value.key}`}
           >
@@ -132,7 +133,9 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
               id={`${facetName}-${value.key}-${index}`}
               ariaLabel={value.key}
               className={styles.checkbox}
-              onChange={(checked) => onItemClick(checked, value.key, facetName)}
+              onChange={(checked) => {
+                onItemClick(checked, value.key, facetName);
+              }}
               checked={initialcheck}
             />
             <span>{value.key}</span>
@@ -140,8 +143,24 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
           </li>
         ))}
       {facet?.values?.length > numToShow && (
-        <div onClick={() => setNumToShow(numToShow + numberToShowMore)}>
-          fisk
+        <div
+          onClick={() => {
+            setNumToShow(numToShow + numberToShowMore);
+          }}
+          className={styles.showmorelink}
+        >
+          <Link
+            border={{
+              top: false,
+              bottom: {
+                keepVisible: true,
+              },
+            }}
+          >
+            <Text tag="span" type="text3" dataCy={`${facetName}-showmore-link`}>
+              {Translate({ context: "profile", label: "showMore" })}
+            </Text>
+          </Link>
         </div>
       )}
     </ul>
