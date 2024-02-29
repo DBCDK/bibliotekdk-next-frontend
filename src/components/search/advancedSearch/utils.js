@@ -48,15 +48,49 @@ function getDropdownQuery(dropdownSearchIndices) {
   );
 }
 
-export function convertStateToCql({ inputFields, dropdownSearchIndices } = {}) {
+export function getFacetsQuery(facets) {
+  const OR = LogicalOperatorsEnum.OR;
+  const AND = LogicalOperatorsEnum.AND;
+  const INDEXPREFIX = "phrase.";
+
+  if (isEmpty(facets)) {
+    return "";
+  }
+
+  return (
+    facets
+      ?.filter((facet) => !isEmpty(facet.values))
+      .map((facet) => {
+        const searchindex = `${INDEXPREFIX}${facet.searchIndex}`;
+        // Each dropdownSearchIndex needs to be joined together.
+        //  For now we use AND with a variable
+        return facet.values
+          .map((singleValue) => {
+            return `${searchindex}="${singleValue?.value}"`;
+          })
+          .join(` ${OR} `);
+      })
+      // Items are wrapped inside parenthesis to ensure precedence
+      .map((item) => `(${item})`)
+      .join(` ${AND} `)
+  );
+}
+
+export function convertStateToCql({
+  inputFields,
+  dropdownSearchIndices,
+  facets,
+} = {}) {
   const inputFieldsQuery = getInputFieldsQueryToCql(inputFields);
   const dropdownQuery = getDropdownQuery(dropdownSearchIndices);
+  const facetQuery = getFacetsQuery(facets);
 
   const AND = LogicalOperatorsEnum.AND;
 
   const result = [
     ...(!isEmpty(inputFieldsQuery) ? [inputFieldsQuery.join(" ")] : []),
     ...(!isEmpty(dropdownQuery) ? [dropdownQuery] : []),
+    ...(!isEmpty(facetQuery) ? [facetQuery] : []),
   ].join(`) ${AND} (`);
 
   return !isEmpty(result) ? "(" + result + ")" : "";
