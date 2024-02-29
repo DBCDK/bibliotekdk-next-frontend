@@ -14,6 +14,7 @@ import Router from "next/router";
 import { SessionProvider } from "next-auth/react";
 import { createMemoryRouter, useMemoryRouter } from "./nextMemoryRouter";
 import AdvancedSearchProvider from "@/components/search/advancedSearch/advancedSearchContext";
+import { UseManyProvider } from "@/components/hooks/useMany";
 
 const memoryRouter = createMemoryRouter();
 Router.router = memoryRouter;
@@ -30,6 +31,7 @@ export const decorators = [
       <>
         {showInfo && <StoryRouter router={memoryRouter} />}
         <Story />
+        <UseManyProvider />
       </>
     );
   },

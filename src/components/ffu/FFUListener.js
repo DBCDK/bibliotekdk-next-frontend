@@ -34,7 +34,7 @@ export default function Listener() {
   const modal = useModal();
 
   const hasOmittedCulrData =
-    !!loanerInfo.omittedCulrData?.hasOmittedCulrUniqueId;
+    !!loanerInfo?.omittedCulrData?.hasOmittedCulrUniqueId;
 
   const hasBlockedFFuListener = storage.read("BlockFFUCreateListener");
 

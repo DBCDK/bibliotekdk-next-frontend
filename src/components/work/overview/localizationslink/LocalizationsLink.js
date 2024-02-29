@@ -8,10 +8,10 @@ import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
 import styles from "./LocalizationsLink.module.css";
 import { openAgencyLocalizationsModal } from "@/components/work/utils";
-import * as manifestationFragments from "@/lib/api/manifestation.fragments";
-import { accessFactory } from "@/lib/accessFactoryUtils";
 import { AccessEnum } from "@/lib/enums";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
+import { useManifestationAccess } from "@/components/hooks/useManifestationAccess";
+import { useManifestationData } from "@/components/hooks/order";
 
 export function LocalizationsLink({
   localizationsCount,
@@ -39,7 +39,10 @@ export function LocalizationsLink({
       <Text type="text3" className={styles.linkstyle} tag="span">
         {Translate({
           context: "overview",
-          label: "label_library_holdings",
+          label:
+            localizationsCount === 1
+              ? "label_library_holdings-singular"
+              : "label_library_holdings",
           vars: [localizationsCount],
         })}
         &nbsp;-&nbsp;
@@ -62,46 +65,31 @@ export function LocalizationsLink({
   );
 }
 
-export default function Wrap({
-  selectedPids,
-  singleManifestation = false,
-  modalOpener = (modal, agency) =>
-    openAgencyLocalizationsModal({
-      modal: modal,
-      pids: selectedPids,
-      agency: agency,
-      singleManifestation: singleManifestation,
-    }),
-}) {
+export default function Wrap({ selectedPids, singleManifestation = false }) {
   // @TODO if user is logged in - do a holdingsitems request on user agency
   const { loanerInfo } = useLoanerInfo();
   const modal = useModal();
 
-  const manifestationResponse = useData(
-    selectedPids &&
-      manifestationFragments.manifestationsForAccessFactory({
-        pid: selectedPids,
-      })
-  );
+  const { access } = useManifestationAccess({ pids: selectedPids });
 
-  const manifestations = manifestationResponse?.data?.manifestations;
-  const { allEnrichedAccesses } = accessFactory(manifestations);
+  const { physicalPids, isLoading: isLoadingManifestationData } =
+    useManifestationData({ pids: selectedPids });
 
   const preferredOnline =
-    allEnrichedAccesses?.[0]?.__typename !== AccessEnum.INTER_LIBRARY_LOAN;
+    access?.[0]?.__typename !== AccessEnum.INTER_LIBRARY_LOAN;
 
   const { data, isLoading, isSlow } = useData(
     !preferredOnline &&
-      selectedPids?.length > 0 &&
-      typeof selectedPids?.[0] !== "undefined" &&
-      localizationsFragments.localizationsQuery({ pids: selectedPids })
+      physicalPids?.length > 0 &&
+      typeof physicalPids?.[0] !== "undefined" &&
+      localizationsFragments.localizationsQuery({ pids: physicalPids })
   );
 
   if (preferredOnline) {
     return null;
   }
 
-  if (isLoading || !data || manifestationResponse?.isLoading) {
+  if (isLoading || isLoadingManifestationData || !data) {
     return (
       <Skeleton lines={1} className={styles.skeletonstyle} isSlow={isSlow} />
     );
@@ -110,7 +98,14 @@ export default function Wrap({
   return (
     <LocalizationsLink
       localizationsCount={data?.localizations?.count || 0}
-      openLocalizationsModal={() => modalOpener(modal, loanerInfo?.agency)}
+      openLocalizationsModal={() =>
+        openAgencyLocalizationsModal({
+          modal: modal,
+          pids: physicalPids,
+          agency: loanerInfo?.agency,
+          singleManifestation: singleManifestation,
+        })
+      }
     />
   );
 }

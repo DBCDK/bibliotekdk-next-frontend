@@ -55,8 +55,7 @@ export function References({ context }) {
       />
       <div className={styles.item}>
         <Edition
-          context={context}
-          singleManifestation={true}
+          pids={context?.pids}
           showOrderTxt={false}
           showChangeManifestation={false}
         />
