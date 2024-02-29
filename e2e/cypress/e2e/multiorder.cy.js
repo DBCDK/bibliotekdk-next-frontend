@@ -290,12 +290,18 @@ describe("Multi Order", () => {
             {
               key: "WORK_PERIODICA_1BOOK",
               pids: ["PID_PERIODICA_1"],
-              publicationDateOfComponent: "1999",
+              periodicaForm: {
+                pid: "PID_PERIODICA_1",
+                publicationDateOfComponent: "1999",
+              },
             },
             {
               key: "WORK_PERIODICA_2BOOK",
               pids: ["PID_PERIODICA_2"],
-              publicationDateOfComponent: "2000",
+              periodicaForm: {
+                pid: "PID_PERIODICA_2",
+                publicationDateOfComponent: "2000",
+              },
             },
           ],
           pickUpBranch: "BRANCH_ACCEPT_ILL",
@@ -351,14 +357,20 @@ describe("Multi Order", () => {
             {
               key: "WORK_PERIODICA_1BOOK",
               pids: ["PID_PERIODICA_1"],
-              authorOfComponent: "author",
-              publicationDateOfComponent: "1999",
+              periodicaForm: {
+                pid: "PID_PERIODICA_1",
+                authorOfComponent: "author",
+                publicationDateOfComponent: "1999",
+              },
             },
             {
               key: "WORK_PERIODICA_2BOOK",
               pids: ["PID_PERIODICA_2"],
-              authorOfComponent: "another author",
-              publicationDateOfComponent: "2000",
+              periodicaForm: {
+                pid: "PID_PERIODICA_2",
+                authorOfComponent: "another author",
+                publicationDateOfComponent: "2000",
+              },
             },
           ],
           pickUpBranch: "BRANCH_ACCEPT_ILL",
