@@ -1,13 +1,21 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { AdvFacetsTypeEnum } from "@/lib/enums";
+import { useGlobalState } from "@/components/hooks/useGlobalState";
 
 export function useFacets() {
   const router = useRouter();
-  const [selectedFacets, setSelectedFacets] = useState(facetsFromUrl());
+
+  const [facetsQuery, setState] = useGlobalState({
+    key: "GLOBALFACETS",
+    initial: facetsFromUrl(),
+  });
+
+  const [selectedFacets, setSelectedFacets] = useState(JSON.parse(facetsQuery));
 
   useEffect(() => {
-    setSelectedFacets(facetsFromUrl());
+    setSelectedFacets(JSON.parse(facetsQuery));
+    // pushQuery();
   }, [router?.query?.facets]);
 
   const facetsFromEnum = Object.values(AdvFacetsTypeEnum).map((fac) =>
@@ -48,15 +56,24 @@ export function useFacets() {
       });
     }
 
-    pushFacetUrl();
+    //pushFacetUrl();
   }
 
   /**
    * Push to query when a facet is added/removed
    */
   function pushFacetUrl() {
+    console.log(facetsQuery, "FACETSQUERY");
     const query = router?.query;
     query["facets"] = JSON.stringify(selectedFacets);
+
+    setState(query?.facets);
+  }
+
+  function pushQuery() {
+    const query = router?.query;
+    console.log(query, "QUERY");
+    query["facets"] = facetsQuery;
     router.push({
       pathname: router.pathname,
       query: query,
@@ -67,12 +84,9 @@ export function useFacets() {
    * Push empty facet query to url
    */
   function clearFacetsUrl() {
-    const query = router?.query;
-    delete query["facets"];
-    router.push({
-      pathname: router.pathname,
-      query: query,
-    });
+    // const query = router?.query;
+    // delete query["facets"];
+    setState("[]");
   }
 
   /**
@@ -98,23 +112,25 @@ export function useFacets() {
       return [...prev];
     });
 
-    pushFacetUrl();
+    // pushFacetUrl();
   }
 
   function facetsFromUrl() {
     const query = router?.query;
-    const facets = query?.facets && JSON.parse(query?.facets);
-    return facets || [];
+    const facets = query?.facets;
+    return facets || "[]";
   }
 
   const facetLimit = 50;
 
   return {
-    selectedFacets,
+    selectedFacets: selectedFacets,
     addFacet,
     removeFacet,
     facetLimit,
     facetsFromEnum,
     clearFacetsUrl,
+    pushFacetUrl,
+    pushQuery,
   };
 }

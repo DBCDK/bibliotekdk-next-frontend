@@ -2,8 +2,11 @@ import { hitcount } from "@/lib/api/complexSearch.fragments";
 import { useData } from "@/lib/api/api";
 import Section from "@/components/base/section";
 import Pagination from "@/components/search/pagination/Pagination";
-import PropTypes, { symbol } from "prop-types";
-import { convertStateToCql } from "@/components/search/advancedSearch/utils";
+import PropTypes from "prop-types";
+import {
+  convertStateToCql,
+  parseOutFacets,
+} from "@/components/search/advancedSearch/utils";
 import useAdvancedSearchHistory from "@/components/hooks/useAdvancedSearchHistory";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import isEmpty from "lodash/isEmpty";
@@ -16,7 +19,7 @@ import { NoHitSearch } from "@/components/search/advancedSearch/advancedSearchRe
 import ResultPage from "./ResultPage/ResultPage";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import AdvancedFacets from "@/components/search/advancedSearch/facets/advancedFacets";
-import { useFacets } from "@/components/search/advancedSearch/useFacets";
+
 import translate from "@/components/base/translate";
 import { FacetTags } from "@/components/search/advancedSearch/facets/facetTags/facetTags";
 import Button from "@/components/base/button/Button";
@@ -29,7 +32,7 @@ export function AdvancedSearchResult({
   results,
   error = null,
   isLoading,
-  facets,
+  cql,
 }) {
   const hitcount = results?.hitcount;
   const numPages = Math.ceil(hitcount / 10);
@@ -91,7 +94,7 @@ export function AdvancedSearchResult({
                   </Title>
                 </div>
 
-                <AdvancedFacets facets={facets} />
+                <AdvancedFacets cql={cql} />
               </div>
             </>
           )
@@ -131,47 +134,6 @@ export function AdvancedSearchResult({
   );
 }
 
-/**
- * Complex search returns empty valued facets - values with a score of 0.
- * Here we filter out all the empty facet values - and if a facet has none
- * values we filter out the entire facet :)
- *
- * @TODO - should complexsearch filter out the empty values ??
- *
- * eg.
- * [
- *     {
- *         "key": "brætspil",
- *         "score": 1
- *     },
- *     {
- *         "key": "aarbog",
- *         "score": 0
- *     },
- *     {
- *         "key": "aarbog (cd)",
- *         "score": 0
- *     }
- * ]
- *
- * @param facets
- * @returns {*}
- */
-function parseOutFacets(facets) {
-  // find the facet values with a score higher than 0
-  const sanitizedFacets = facets
-    ?.map((facet) => {
-      return {
-        name: facet.name,
-        values: facet.values.filter((value) => value?.score > 0),
-      };
-    })
-    // filter out entire facet if there are no values
-    .filter((facet) => facet.values.length > 0);
-
-  return sanitizedFacets;
-}
-
 function parseResponse(bigResponse) {
   return {
     works: bigResponse?.data?.complexSearch?.works || null,
@@ -196,11 +158,10 @@ export default function Wrap({ onWorkClick, onPageChange }) {
     facets,
   } = useAdvancedSearchContext();
 
-  const { facetsFromEnum, facetLimit } = useFacets();
-
   // @TODO what to do  with dataCollect ???
   onWorkClick = null;
   // get setter for advanced search history
+  // @TODO add facets
   const { setValue } = useAdvancedSearchHistory();
   const cqlQuery = cql || convertStateToCql({ ...fieldSearch, facets: facets });
 
@@ -210,10 +171,6 @@ export default function Wrap({ onWorkClick, onPageChange }) {
   const fastResponse = useData(
     hitcount({
       cql: cqlQuery,
-      facets: {
-        facetLimit: facetLimit,
-        facets: facetsFromEnum,
-      },
     })
   );
   const parsedResponse = parseResponse(fastResponse);
@@ -242,7 +199,7 @@ export default function Wrap({ onWorkClick, onPageChange }) {
       error={parsedResponse.errorMessage}
       setShowPopover={setShowPopover}
       isLoading={parsedResponse.isLoading}
-      facets={parsedResponse.facets}
+      cql={cqlQuery}
     />
   );
 }

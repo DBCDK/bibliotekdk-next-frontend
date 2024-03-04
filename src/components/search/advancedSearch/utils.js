@@ -76,6 +76,47 @@ export function getFacetsQuery(facets) {
   );
 }
 
+/**
+ * Complex search returns empty valued facets - values with a score of 0.
+ * Here we filter out all the empty facet values - and if a facet has none
+ * values we filter out the entire facet :)
+ *
+ * @TODO - should complexsearch filter out the empty values ??
+ *
+ * eg.
+ * [
+ *     {
+ *         "key": "brætspil",
+ *         "score": 1
+ *     },
+ *     {
+ *         "key": "aarbog",
+ *         "score": 0
+ *     },
+ *     {
+ *         "key": "aarbog (cd)",
+ *         "score": 0
+ *     }
+ * ]
+ *
+ * @param facets
+ * @returns {*}
+ */
+export function parseOutFacets(facets) {
+  // find the facet values with a score higher than 0
+  const sanitizedFacets = facets
+    ?.map((facet) => {
+      return {
+        name: facet.name,
+        values: facet.values.filter((value) => value?.score > 0),
+      };
+    })
+    // filter out entire facet if there are no values
+    .filter((facet) => facet.values.length > 0);
+
+  return sanitizedFacets;
+}
+
 export function convertStateToCql({
   inputFields,
   dropdownSearchIndices,

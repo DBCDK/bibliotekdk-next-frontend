@@ -6,7 +6,10 @@ import Translate from "@/components/base/translate";
 import Link from "@/components/base/link/Link";
 
 export function FacetTags() {
-  const { selectedFacets, removeFacet, clearFacetsUrl } = useFacets();
+  const { selectedFacets, removeFacet, clearFacetsUrl, pushFacetUrl } =
+    useFacets();
+
+  console.log(selectedFacets, "SELECTED FACETS");
 
   if (selectedFacets?.length < 1) {
     return null;
@@ -47,6 +50,7 @@ export function FacetTags() {
                   <Icon
                     onClick={() => {
                       removeFacet(val?.name, tag?.searchIndex);
+                      pushFacetUrl();
                     }}
                     src="close_white.svg"
                     size={2}
