@@ -177,6 +177,10 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
               <Modal.Page id="verify" component={Pages.Verify} />
               <Modal.Page id="statusMessage" component={Pages.StatusMessage} />
               <Modal.Page id="removeLibrary" component={Pages.RemoveLibrary} />
+              <Modal.Page
+                id="advancedFacets"
+                component={Pages.AdvancedFacets}
+              />
 
               <Modal.Page
                 id="orderHistoryDataConsent"

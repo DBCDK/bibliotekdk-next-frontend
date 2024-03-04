@@ -39,11 +39,26 @@
   top: -55px;
 }
 
+.facetsContainer {
+}
+
+.facetbutton {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .sort_container {
     display: flex;
     position: relative;
-    top: -32px;
+    top: -34px;
     justify-content: end;
+    margin-bottom: -32px;
+  }
+  .facetsContainer {
+    display: none;
+  }
+  .facetbutton {
+    width: 100%;
+    display: block;
   }
 }

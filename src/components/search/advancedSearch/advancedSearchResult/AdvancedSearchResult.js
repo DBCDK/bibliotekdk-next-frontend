@@ -2,7 +2,7 @@ import { hitcount } from "@/lib/api/complexSearch.fragments";
 import { useData } from "@/lib/api/api";
 import Section from "@/components/base/section";
 import Pagination from "@/components/search/pagination/Pagination";
-import PropTypes from "prop-types";
+import PropTypes, { symbol } from "prop-types";
 import { convertStateToCql } from "@/components/search/advancedSearch/utils";
 import useAdvancedSearchHistory from "@/components/hooks/useAdvancedSearchHistory";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
@@ -15,10 +15,12 @@ import Title from "@/components/base/title";
 import { NoHitSearch } from "@/components/search/advancedSearch/advancedSearchResult/noHitSearch/NoHitSearch";
 import ResultPage from "./ResultPage/ResultPage";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
-import { AdvancedFacets } from "@/components/search/advancedSearch/facets/advancedFacets";
+import AdvancedFacets from "@/components/search/advancedSearch/facets/advancedFacets";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import translate from "@/components/base/translate";
 import { FacetTags } from "@/components/search/advancedSearch/facets/facetTags/facetTags";
+import Button from "@/components/base/button/Button";
+import { useModal } from "@/components/_modal";
 
 export function AdvancedSearchResult({
   pageNo,
@@ -34,6 +36,7 @@ export function AdvancedSearchResult({
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs" || breakpoint === "sm" || false;
   const page = parseInt(pageNo, 10) || 1;
+  const modal = useModal();
 
   if (error) {
     return null;
@@ -41,13 +44,25 @@ export function AdvancedSearchResult({
 
   const TitleComponent = () => {
     return (
-      <div className={styles.titleflex}>
-        <Title type="title5" className={styles.countstyle}>
-          {hitcount}
-        </Title>
-        <Title type="title6" className={styles.titleStyle}>
-          {translate({ context: "search", label: "title" })}
-        </Title>
+      <div>
+        <Button
+          type="secondary"
+          size="medium"
+          className={styles.facetbutton}
+          onClick={() =>
+            modal.push("advancedFacets", { facets: facets, modal: modal })
+          }
+        >
+          Filtrer din søgning
+        </Button>
+        <div className={styles.titleflex}>
+          <Title type="title5" className={styles.countstyle}>
+            {hitcount}
+          </Title>
+          <Title type="title6" className={styles.titleStyle}>
+            {translate({ context: "search", label: "title" })}
+          </Title>
+        </div>
       </div>
     );
   };
@@ -68,14 +83,16 @@ export function AdvancedSearchResult({
           hitcount > 0 &&
           !isLoading && (
             <>
-              <FacetTags />
-              <div className={styles.subtitleStyle}>
-                <Title type="title6">
-                  {translate({ context: "search", label: "narrow-search" })}
-                </Title>
-              </div>
+              <div className={styles.facetsContainer}>
+                <FacetTags />
+                <div className={styles.subtitleStyle}>
+                  <Title type="title6">
+                    {translate({ context: "search", label: "narrow-search" })}
+                  </Title>
+                </div>
 
-              <AdvancedFacets facets={facets} />
+                <AdvancedFacets facets={facets} />
+              </div>
             </>
           )
         }
