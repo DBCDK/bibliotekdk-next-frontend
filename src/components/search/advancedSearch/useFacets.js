@@ -14,6 +14,8 @@ export function useFacets() {
 
   const [selectedFacets, setSelectedFacets] = useState(facetsFromUrl());
 
+  console.log(selectedFacets, "USEFACETS SELECTED FACETS INITI");
+
   // we need a useEffect to sync state (selectedFacets) with facets from the query
   useEffect(() => {
     setSelectedFacets(facetsFromUrl());
@@ -49,9 +51,6 @@ export function useFacets() {
 
       if (!alreadythere) {
         addToIndex.values.push({ value: value, name: value });
-        // setSelectedFacets((prev) => {
-        //   return [...prev];
-        // });
       }
     } else {
       const newFacet = {
@@ -59,42 +58,25 @@ export function useFacets() {
         values: [{ value: value, name: value }],
       };
       selectedFacets.push(newFacet);
-
-      // setSelectedFacets((prev) => {
-      //   return [...prev];
-      // });
     }
 
     pushQuery(replace);
   }
 
   /**
-   * Push to query when a facet is added/removed
+   * Push query
+   * @param replace
+   *  replace or push
+   * @global
+   *  globel or local facets
+   *
    */
-  // function pushFacetUrl() {
-  //   const query = router?.query;
-  //   query["facets"] = JSON.stringify(selectedFacets);
-  //
-  //   setFacetsQuery(query?.facets);
-  // }
-
-  function pushQuery(replace) {
+  function pushQuery(replace = false, global = false) {
     const query = router?.query;
-
-    // the 'global' query always wins - synchronize
-
     const facets = JSON.stringify(selectedFacets);
-    // JSON.parse(facetsQuery).length > selectedFacets.length
-    //   ? facetsQuery
-    //   : JSON.stringify(selectedFacets);
 
-    // console.log(facetsQuery, "FACETSQUERY");
-    // console.log(selectedFacets, "SELECTED FACETS");
-    // console.log(facets, "FACETS IN SYNC");
-    // query["facets"] = facetsQuery;
-    //query["facets"] = JSON.stringify(selectedFacets);
-    query["facets"] = facets;
-
+    query["facets"] = global ? facetsQuery : facets;
+    // start from scratch - reset global query
     setFacetsQuery("[]");
 
     // replace/push to router
@@ -127,8 +109,6 @@ export function useFacets() {
    * @param searchindex
    */
   function removeFacet(value, searchindex, replace = false) {
-    // const selectedFacets = JSON.parse(facetsQuery);
-
     // find the overall facet to handle
     const indexedFacet = selectedFacets?.find((facet) => {
       return facet.searchIndex.includes(searchindex);
@@ -146,10 +126,7 @@ export function useFacets() {
       return [...prev];
     });
 
-    // setFacetsQuery(JSON.stringify(selectedFacets));
-
     pushQuery(replace);
-    // pushFacetUrl();
   }
 
   function facetsFromUrl() {
@@ -168,5 +145,6 @@ export function useFacets() {
     facetLimit,
     facetsFromEnum,
     clearFacetsUrl,
+    pushQuery,
   };
 }

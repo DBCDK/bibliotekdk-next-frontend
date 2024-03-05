@@ -46,6 +46,10 @@
   display: none;
 }
 
+.mobileTags {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .sort_container {
     display: flex;
@@ -58,6 +62,10 @@
     display: none;
   }
   .facetbutton {
+    width: 100%;
+    display: block;
+  }
+  .mobileTags {
     width: 100%;
     display: block;
   }

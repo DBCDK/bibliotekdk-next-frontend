@@ -4,9 +4,12 @@ import Icon from "@/components/base/icon/Icon";
 import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link/Link";
+import { useEffect } from "react";
 
-export function FacetTags() {
+export function FacetTags({ selectedFacets, removeFacet, clearFacetsUrl }) {
   const { selectedFacets, removeFacet, clearFacetsUrl } = useFacets();
+
+  console.log(selectedFacets, "FACETTAGS SELECTED");
 
   if (selectedFacets?.length < 1) {
     return null;
@@ -60,4 +63,13 @@ export function FacetTags() {
       </div>
     </div>
   );
+}
+
+export default function Wrap() {
+  const { selectedFacets, removeFacet, clearFacetsUrl } = useFacets();
+  return FacetTags({
+    selectedFacets: selectedFacets,
+    removeFacet: removeFacet,
+    clearFacetsUrl: clearFacetsUrl,
+  });
 }

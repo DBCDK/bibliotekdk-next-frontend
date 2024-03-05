@@ -61,6 +61,9 @@ export function AdvancedSearchResult({
         >
           Filtrer din søgning
         </Button>
+        {/*<div className={styles.mobileTags}>*/}
+        {/*  <FacetTags />*/}
+        {/*</div>*/}
         <div className={styles.titleflex}>
           <Title type="title5" className={styles.countstyle}>
             {hitcount}
