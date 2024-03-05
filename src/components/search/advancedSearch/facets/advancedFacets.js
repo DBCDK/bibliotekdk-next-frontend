@@ -20,7 +20,12 @@ import Skeleton from "@/components/base/skeleton";
  * @returns {JSX.Element}
  * @constructor
  */
-export function AdvancedFacets({ facets, isLoading }) {
+export function AdvancedFacets({
+  facets,
+  isLoading,
+  hitcount,
+  replace = false,
+}) {
   const { addFacet, removeFacet, selectedFacets } = useFacets();
 
   const filteredFacets = Object.values(AdvFacetsTypeEnum).filter((val) =>
@@ -32,17 +37,18 @@ export function AdvancedFacets({ facets, isLoading }) {
   const onItemClick = (checked, name, facetName) => {
     if (checked) {
       // selected -> add to list
-      addFacet(name, facetName);
+      addFacet(name, facetName, replace);
       // pushFacetUrl();
     } else {
       // deselected - remove from list
-      removeFacet(name, facetName);
+      removeFacet(name, facetName, replace);
       // pushFacetUrl();
     }
   };
 
   return (
     <Accordion className={styles.accordionContainer}>
+      <div>{hitcount}</div>
       {filteredFacets.map((facetName, index) => (
         <AccordianItem
           facetName={facetName}
@@ -185,11 +191,8 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
   );
 }
 
-export default function Wrap({ cql }) {
+export default function Wrap({ cql, replace }) {
   const { facetsFromEnum, facetLimit } = useFacets();
-
-  console.log(cql, "CQL");
-
   // use the useData hook to fetch data
   const { data: facetResponse, isLoading } = useData(
     hitcount({
@@ -200,14 +203,14 @@ export default function Wrap({ cql }) {
       },
     })
   );
-
-  console.log(facetResponse, "FASTRESPNSE");
-
   // @TODO parse out empty facets (score=0)
   const facets = parseOutFacets(facetResponse?.complexSearch?.facets);
+  console.log(facetResponse?.complexSearch, "RESPONSE");
 
   return AdvancedFacets({
+    hitcount: facetResponse?.complexSearch?.hitcount,
     facets: facets,
     isLoading: isLoading,
+    replace: replace,
   });
 }
