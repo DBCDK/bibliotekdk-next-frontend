@@ -53,7 +53,7 @@ export function AdvancedSearchResult({
           size="medium"
           className={styles.facetbutton}
           onClick={() =>
-            modal.push("advancedFacets", { facets: facets, modal: modal })
+            modal.push("advancedFacets", { cql: cql, modal: modal })
           }
         >
           Filtrer din søgning

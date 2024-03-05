@@ -118,7 +118,7 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
     return sel?.searchIndex === facetName;
   });
 
-  console.log(current, "CURRENT");
+  // console.log(current, "CURRENT");
 
   // sort - we want selected items first
   const sorter = (a) => {
@@ -146,7 +146,7 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
                 return val.name === value.key;
               }))
             }
-            {initialcheck && console.log(initialcheck, value, "INITIAL ??")}
+            {/*{initialcheck && console.log(initialcheck, value, "INITIAL ??")}*/}
             <Checkbox
               id={`${facetName}-${value.key}-${index}`}
               ariaLabel={value.key}
@@ -188,6 +188,8 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
 export default function Wrap({ cql }) {
   const { facetsFromEnum, facetLimit } = useFacets();
 
+  console.log(cql, "CQL");
+
   // use the useData hook to fetch data
   const { data: facetResponse, isLoading } = useData(
     hitcount({
@@ -198,6 +200,8 @@ export default function Wrap({ cql }) {
       },
     })
   );
+
+  console.log(facetResponse, "FASTRESPNSE");
 
   // @TODO parse out empty facets (score=0)
   const facets = parseOutFacets(facetResponse?.complexSearch?.facets);
