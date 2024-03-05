@@ -17,21 +17,11 @@ export function useFacets() {
   // we need a useEffect to sync state (selectedFacets) with facets from the query
   useEffect(() => {
     setSelectedFacets(facetsFromUrl());
-    // set the 'global' facets also to make sure they are in sync
-    //setFacetsQuery(JSON.stringify(selectedFacets));
-    //
-    // console.log("USEEFFECT");
-    // console.log(JSON.stringify(selectedFacets), "SELECTED FACETS");
-    // console.log(facetsQuery, "FACETSQUERY");
   }, [router?.query?.facets]);
 
   // we also need a useEffect to syncronize the global facets with the selected facets
   useEffect(() => {
     setFacetsQuery(JSON.stringify(selectedFacets));
-
-    console.log("USEEFFECT");
-    console.log(JSON.stringify(selectedFacets), "SELECTED FACETS");
-    console.log(facetsQuery, "FACETSQUERY");
   }, [selectedFacets]);
 
   const facetsFromEnum = Object.values(AdvFacetsTypeEnum).map((fac) =>

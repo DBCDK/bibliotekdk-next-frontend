@@ -55,7 +55,6 @@ export function AdvancedSearchResult({
           onClick={() =>
             modal.push("advancedFacets", {
               cql: cql,
-              modal: modal,
               replace: true,
             })
           }

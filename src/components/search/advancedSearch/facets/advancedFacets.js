@@ -123,9 +123,6 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
   const current = selectedFacets?.find((sel) => {
     return sel?.searchIndex === facetName;
   });
-
-  // console.log(current, "CURRENT");
-
   // sort - we want selected items first
   const sorter = (a) => {
     const selected = !!current?.values?.find((val) => {
@@ -152,7 +149,6 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
                 return val.name === value.key;
               }))
             }
-            {/*{initialcheck && console.log(initialcheck, value, "INITIAL ??")}*/}
             <Checkbox
               id={`${facetName}-${value.key}-${index}`}
               ariaLabel={value.key}
@@ -205,7 +201,6 @@ export default function Wrap({ cql, replace }) {
   );
   // @TODO parse out empty facets (score=0)
   const facets = parseOutFacets(facetResponse?.complexSearch?.facets);
-  console.log(facetResponse?.complexSearch, "RESPONSE");
 
   return AdvancedFacets({
     hitcount: facetResponse?.complexSearch?.hitcount,
