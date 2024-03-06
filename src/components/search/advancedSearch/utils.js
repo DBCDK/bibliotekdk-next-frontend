@@ -117,6 +117,13 @@ export function parseOutFacets(facets) {
   return sanitizedFacets;
 }
 
+export function facetsFromUrl(router) {
+  const query = router?.query;
+  const facets = query?.facets;
+  // return [];
+  return facets ? JSON.parse(facets) : [];
+}
+
 export function convertStateToCql({
   inputFields,
   dropdownSearchIndices,

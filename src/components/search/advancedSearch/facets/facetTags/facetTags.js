@@ -4,9 +4,8 @@ import Icon from "@/components/base/icon/Icon";
 import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link/Link";
-import { useEffect } from "react";
 
-export function FacetTags({ selectedFacets, removeFacet, clearFacetsUrl }) {
+export function FacetTags() {
   const { selectedFacets, removeFacet, clearFacetsUrl } = useFacets();
 
   console.log(selectedFacets, "FACETTAGS SELECTED");

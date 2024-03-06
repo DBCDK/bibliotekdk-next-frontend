@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { AdvFacetsTypeEnum } from "@/lib/enums";
 import { useGlobalState } from "@/components/hooks/useGlobalState";
 import { useEffect, useState } from "react";
+import { facetsFromUrl } from "@/components/search/advancedSearch/utils";
 
 export function useFacets() {
   const router = useRouter();
@@ -12,13 +13,11 @@ export function useFacets() {
     initial: facetsFromUrl(),
   });
 
-  const [selectedFacets, setSelectedFacets] = useState(facetsFromUrl());
-
-  console.log(selectedFacets, "USEFACETS SELECTED FACETS INITI");
+  const [selectedFacets, setSelectedFacets] = useState(facetsFromUrl(router));
 
   // we need a useEffect to sync state (selectedFacets) with facets from the query
   useEffect(() => {
-    setSelectedFacets(facetsFromUrl());
+    setSelectedFacets(facetsFromUrl(router));
   }, [router?.query?.facets]);
 
   // we also need a useEffect to syncronize the global facets with the selected facets
@@ -127,13 +126,6 @@ export function useFacets() {
     });
 
     pushQuery(replace);
-  }
-
-  function facetsFromUrl() {
-    const query = router?.query;
-    const facets = query?.facets;
-    // return [];
-    return facets ? JSON.parse(facets) : [];
   }
 
   const facetLimit = 50;

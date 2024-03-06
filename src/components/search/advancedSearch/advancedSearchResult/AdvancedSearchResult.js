@@ -33,6 +33,7 @@ export function AdvancedSearchResult({
   error = null,
   isLoading,
   cql,
+  selectedFacets,
 }) {
   const hitcount = results?.hitcount;
   const numPages = Math.ceil(hitcount / 10);
@@ -61,9 +62,9 @@ export function AdvancedSearchResult({
         >
           Filtrer din søgning
         </Button>
-        {/*<div className={styles.mobileTags}>*/}
-        {/*  <FacetTags />*/}
-        {/*</div>*/}
+        <div className={styles.mobileTags}>
+          <FacetTags selectedFacets={selectedFacets} />
+        </div>
         <div className={styles.titleflex}>
           <Title type="title5" className={styles.countstyle}>
             {hitcount}
@@ -93,7 +94,7 @@ export function AdvancedSearchResult({
           !isLoading && (
             <>
               <div className={styles.facetsContainer}>
-                <FacetTags />
+                <FacetTags selectedFacets={selectedFacets} />
                 <div className={styles.subtitleStyle}>
                   <Title type="title6">
                     {translate({ context: "search", label: "narrow-search" })}
@@ -162,6 +163,7 @@ export default function Wrap({ onWorkClick, onPageChange }) {
     pageNoFromUrl: pageNo,
     setShowPopover,
     facets,
+    selectedFacets,
   } = useAdvancedSearchContext();
 
   // @TODO what to do  with dataCollect ???
@@ -196,6 +198,8 @@ export default function Wrap({ onWorkClick, onPageChange }) {
     return null;
   }
 
+  console.log(selectedFacets, "SELECTED FACET PAGE");
+
   return (
     <AdvancedSearchResult
       pageNo={pageNo}
@@ -206,6 +210,7 @@ export default function Wrap({ onWorkClick, onPageChange }) {
       setShowPopover={setShowPopover}
       isLoading={parsedResponse.isLoading}
       cql={cqlQuery}
+      selectedFacets={selectedFacets}
     />
   );
 }
