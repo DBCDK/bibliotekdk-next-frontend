@@ -21,15 +21,16 @@ export function useFacets() {
     // console.log(router?.query?.facets, "ROUTER FACETS");
     if (!initialized) {
       setFacetsQuery(facetsFromUrl(router));
-      console.log(facetsQuery, "FACETSQUERY");
       initialized = true;
     }
   }, [router?.query?.facets]);
   //
   // // we also need a useEffect to syncronize the global facets with the selected facets
-  // useEffect(() => {
-  //   setFacetsQuery(JSON.stringify(selectedFacets));
-  // }, [selectedFacets]);
+  useEffect(() => {
+    if (initialized && !router?.pathname?.includes("/avanceret")) {
+      resetFacets();
+    }
+  }, []);
 
   const facetsFromEnum = Object.values(AdvFacetsTypeEnum).map((fac) =>
     fac.toUpperCase()
@@ -64,11 +65,9 @@ export function useFacets() {
       selectedFacets.push(newFacet);
     }
 
-    console.log(selectedFacets, "ADD SELECTED FACETS");
-
     setFacetsQuery(JSON.stringify(selectedFacets));
 
-    pushQuery(replace);
+    pushQuery(replace, selectedFacets);
   }
 
   /**
@@ -79,17 +78,9 @@ export function useFacets() {
    *  globel or local facets
    *
    */
-  function pushQuery(replace = false, global = false) {
+  function pushQuery(replace = false, selectedFacets) {
     const query = router?.query;
-    // const facets = JSON.stringify(selectedFacets);
-    // const facets = facetsFromUrl(router);
-
-    console.log(facetsQuery, "PUSHQUERY");
-
-    query["facets"] = facetsQuery;
-    // start from scratch - reset global query
-    // setFacetsQuery("[]");
-
+    query["facets"] = JSON.stringify(selectedFacets);
     // replace/push to router
     replace
       ? router.replace({
@@ -113,7 +104,12 @@ export function useFacets() {
       query: query,
     });
 
-    // setFacetsQuery(facetsFromUrl());
+    initialized = false;
+  }
+
+  function resetFacets() {
+    setFacetsQuery("[]");
+    initialized = false;
   }
 
   /**
@@ -143,7 +139,7 @@ export function useFacets() {
 
     setFacetsQuery(JSON.stringify(selectedFacets));
     // setFacetsQuery(selectedFacets);
-    pushQuery(replace);
+    pushQuery(replace, selectedFacets);
   }
 
   const facetLimit = 50;
@@ -155,6 +151,7 @@ export function useFacets() {
     facetLimit,
     facetsFromEnum,
     clearFacetsUrl,
+    resetFacets,
     pushQuery,
   };
 }

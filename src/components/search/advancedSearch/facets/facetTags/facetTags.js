@@ -8,8 +8,6 @@ import Link from "@/components/base/link/Link";
 export function FacetTags() {
   const { selectedFacets, removeFacet, clearFacetsUrl } = useFacets();
 
-  console.log(selectedFacets, "FACETTAGS SELECTED");
-
   if (selectedFacets?.length < 1) {
     return null;
   }

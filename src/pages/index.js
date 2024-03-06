@@ -18,10 +18,13 @@ import { InspirationSlider } from "@/components/inspiration";
 
 import { useData } from "@/lib/api/api";
 import { parseHero } from "@/components/hero/Hero";
+// import { useFacets } from "@/components/search/advancedSearch/useFacets";
 
 const Index = () => {
   const { data } = useData(frontpageHero());
   const ogImage = parseHero(data);
+
+  // useFacets();
 
   return (
     <>
