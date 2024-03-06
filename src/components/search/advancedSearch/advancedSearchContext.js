@@ -55,11 +55,9 @@ export default function AdvancedSearchProvider({ children, router }) {
     cql: cqlFromUrl = null,
     fieldSearch = "",
     sort: sortFromUrl = "",
-    facets: facetsFromUrl = "[]",
   } = router.query;
   const fieldSearchFromUrl = fieldSearch && JSON.parse(fieldSearch);
   const sort = sortFromUrl && JSON.parse(sortFromUrl);
-  const facets = facetsFromUrl && JSON.parse(facetsFromUrl);
 
   const { selectedFacets } = useFacets();
 
@@ -121,11 +119,11 @@ export default function AdvancedSearchProvider({ children, router }) {
     const updatedCql = convertStateToCql({
       inputFields,
       dropdownSearchIndices,
-      facets,
+      selectedFacets,
     });
 
     setParsedCQL(cqlFromUrl || updatedCql);
-  }, [inputFields, dropdownSearchIndices, cqlFromUrl, facetsFromUrl]);
+  }, [inputFields, dropdownSearchIndices, cqlFromUrl, selectedFacets]);
 
   //// ---- DONE: parsedCQL ----
 
@@ -174,8 +172,8 @@ export default function AdvancedSearchProvider({ children, router }) {
     resetObjectState,
     parsedCQL,
     setParsedCQL,
-    facets,
-    selectedFacets,
+    facets: selectedFacets,
+
     fieldSearchFromUrl,
     cqlFromUrl,
     pageNoFromUrl: page,

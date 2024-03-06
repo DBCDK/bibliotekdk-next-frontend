@@ -24,6 +24,7 @@ import translate from "@/components/base/translate";
 import { FacetTags } from "@/components/search/advancedSearch/facets/facetTags/facetTags";
 import Button from "@/components/base/button/Button";
 import { useModal } from "@/components/_modal";
+import { useFacets } from "@/components/search/advancedSearch/useFacets";
 
 export function AdvancedSearchResult({
   pageNo,
@@ -63,7 +64,7 @@ export function AdvancedSearchResult({
           Filtrer din søgning
         </Button>
         <div className={styles.mobileTags}>
-          <FacetTags selectedFacets={selectedFacets} />
+          <FacetTags />
         </div>
         <div className={styles.titleflex}>
           <Title type="title5" className={styles.countstyle}>
@@ -163,8 +164,9 @@ export default function Wrap({ onWorkClick, onPageChange }) {
     pageNoFromUrl: pageNo,
     setShowPopover,
     facets,
-    selectedFacets,
   } = useAdvancedSearchContext();
+
+  const { selectedFacets } = useFacets();
 
   // @TODO what to do  with dataCollect ???
   onWorkClick = null;

@@ -120,8 +120,11 @@ export function parseOutFacets(facets) {
 export function facetsFromUrl(router) {
   const query = router?.query;
   const facets = query?.facets;
+
+  // console.log(facets, typeof facets, "QUERY FACETS");
+
   // return [];
-  return facets ? JSON.parse(facets) : [];
+  return facets ? facets : "[]";
 }
 
 export function convertStateToCql({
