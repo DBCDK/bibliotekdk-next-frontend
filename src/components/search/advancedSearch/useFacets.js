@@ -18,7 +18,6 @@ export function useFacets() {
 
   // we need a useEffect to sync state (selectedFacets) with facets from the query
   useEffect(() => {
-    // console.log(router?.query?.facets, "ROUTER FACETS");
     if (!initialized) {
       setFacetsQuery(facetsFromUrl(router));
       initialized = true;
@@ -35,7 +34,6 @@ export function useFacets() {
   // // we also need a useEffect to syncronize the global facets with the selected facets
   useEffect(() => {
     if (initialized && router && !router?.pathname?.includes("/avanceret")) {
-      console.log(router, "RESET ROUTER");
       resetFacets();
     }
   }, []);
@@ -117,7 +115,6 @@ export function useFacets() {
 
   function resetFacets() {
     setFacetsQuery("[]");
-    initialized = false;
   }
 
   /**

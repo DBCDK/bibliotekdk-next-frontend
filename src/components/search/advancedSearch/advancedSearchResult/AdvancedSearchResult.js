@@ -39,9 +39,9 @@ export function AdvancedSearchResult({
   const hitcount = results?.hitcount;
   const numPages = Math.ceil(hitcount / 10);
   const breakpoint = useBreakpoint();
-  const isMobile = breakpoint === "xs" || breakpoint === "sm" || false;
+  const isMobile =
+    breakpoint === "md" || breakpoint === "xs" || breakpoint === "sm" || false;
   const page = parseInt(pageNo, 10) || 1;
-  const modal = useModal();
 
   if (error) {
     return null;
@@ -50,7 +50,7 @@ export function AdvancedSearchResult({
   const TitleComponent = ({ cql }) => {
     return (
       <div>
-        <FacetButton cql={cql} />
+        <FacetButton cql={cql} isLoading={isLoading} />
         <div className={styles.mobileTags}>
           <FacetTags />
         </div>
