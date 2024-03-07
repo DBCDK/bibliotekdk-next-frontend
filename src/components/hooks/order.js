@@ -599,15 +599,22 @@ export function useSubmitOrders({ orders }) {
           entry?.periodicaForm?.periodicaForm,
           entry?.pids?.[0]
         );
-      return {
+
+      const materialToOrder = {
         key: `${
           entry?.materialData?.workId
         }${entry?.materialData?.ownerWork?.materialTypes
           ?.map?.((type) => type?.materialTypeSpecific?.code)
           ?.join(" / ")}`,
         pids: entry?.pids,
-        ...(periodicaForm || {}),
       };
+      if (periodicaForm) {
+        materialToOrder.periodicaForm = {
+          pid: entry?.pids?.[0],
+          ...periodicaForm,
+        };
+      }
+      return materialToOrder;
     });
     const materialsToOrderInfo = validation?.validatedOrders?.map((entry) => {
       return {
