@@ -42,10 +42,6 @@
 .facetsContainer {
 }
 
-.facetbutton {
-  display: none;
-}
-
 .mobileTags {
   display: none;
 }
@@ -60,10 +56,6 @@
   }
   .facetsContainer {
     display: none;
-  }
-  .facetbutton {
-    width: 100%;
-    display: block;
   }
   .mobileTags {
     width: 100%;

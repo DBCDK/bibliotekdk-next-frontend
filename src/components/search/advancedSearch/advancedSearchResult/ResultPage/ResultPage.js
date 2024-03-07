@@ -10,7 +10,6 @@ import { useAdvancedSearchContext } from "@/components/search/advancedSearch/adv
 
 import { convertStateToCql } from "@/components/search/advancedSearch/utils";
 import isEmpty from "lodash/isEmpty";
-import { useFacets } from "@/components/search/advancedSearch/useFacets";
 
 /**
  * Row representation of a search result entry

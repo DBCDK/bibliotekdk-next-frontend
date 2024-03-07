@@ -22,7 +22,6 @@ import AdvancedFacets from "@/components/search/advancedSearch/facets/advancedFa
 
 import translate from "@/components/base/translate";
 import { FacetTags } from "@/components/search/advancedSearch/facets/facetTags/facetTags";
-import { useModal } from "@/components/_modal";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import { FacetButton } from "@/components/search/advancedSearch/facets/facetButton/facetButton";
 
