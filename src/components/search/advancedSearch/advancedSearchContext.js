@@ -119,11 +119,10 @@ export default function AdvancedSearchProvider({ children, router }) {
     const updatedCql = convertStateToCql({
       inputFields,
       dropdownSearchIndices,
-      selectedFacets,
     });
 
     setParsedCQL(cqlFromUrl || updatedCql);
-  }, [inputFields, dropdownSearchIndices, cqlFromUrl, selectedFacets]);
+  }, [inputFields, dropdownSearchIndices, cqlFromUrl]);
 
   //// ---- DONE: parsedCQL ----
 
