@@ -1,4 +1,3 @@
-// import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { AdvFacetsTypeEnum } from "@/lib/enums";
 import { useGlobalState } from "@/components/hooks/useGlobalState";
@@ -13,8 +12,6 @@ export function useFacets() {
     key: "GLOBALFACETS",
     initial: facetsFromUrl(router),
   });
-
-  // const [selectedFacets, setSelectedFacets] = useState(facetsFromUrl(router));
 
   // we need a useEffect to sync state (selectedFacets) with facets from the query
   useEffect(() => {
@@ -31,7 +28,7 @@ export function useFacets() {
     // }
   }, [router?.query?.facets]);
   //
-  // // we also need a useEffect to syncronize the global facets with the selected facets
+  // // we also need a useEffect to reset facets when we leave the page (/avanceret)
   useEffect(() => {
     if (initialized && router && !router?.pathname?.includes("/avanceret")) {
       resetFacets();

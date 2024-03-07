@@ -61,12 +61,3 @@ export function FacetTags() {
     </div>
   );
 }
-
-// export default function Wrap() {
-//   const { selectedFacets, removeFacet, clearFacetsUrl } = useFacets();
-//   return FacetTags({
-//     selectedFacets: selectedFacets,
-//     removeFacet: removeFacet,
-//     clearFacetsUrl: clearFacetsUrl,
-//   });
-// }
