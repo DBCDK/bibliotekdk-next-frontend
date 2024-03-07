@@ -2,7 +2,7 @@
 import { useRouter } from "next/router";
 import { AdvFacetsTypeEnum } from "@/lib/enums";
 import { useGlobalState } from "@/components/hooks/useGlobalState";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { facetsFromUrl } from "@/components/search/advancedSearch/utils";
 
 let initialized = false;
@@ -23,11 +23,19 @@ export function useFacets() {
       setFacetsQuery(facetsFromUrl(router));
       initialized = true;
     }
+    // @TODO - this might be a way to reset facets ?
+    // return () => {
+    //   // This line only evaluates to true after the componentWillUnmount happens
+    //   if (componentWillUnmount.current) {
+    //     console.log(params)
+    //   }
+    // }
   }, [router?.query?.facets]);
   //
   // // we also need a useEffect to syncronize the global facets with the selected facets
   useEffect(() => {
-    if (initialized && !router?.pathname?.includes("/avanceret")) {
+    if (initialized && router && !router?.pathname?.includes("/avanceret")) {
+      console.log(router, "RESET ROUTER");
       resetFacets();
     }
   }, []);
@@ -66,7 +74,6 @@ export function useFacets() {
     }
 
     setFacetsQuery(JSON.stringify(selectedFacets));
-
     pushQuery(replace, selectedFacets);
   }
 
@@ -81,6 +88,7 @@ export function useFacets() {
   function pushQuery(replace = false, selectedFacets) {
     const query = router?.query;
     query["facets"] = JSON.stringify(selectedFacets);
+
     // replace/push to router
     replace
       ? router.replace({
@@ -133,12 +141,8 @@ export function useFacets() {
       });
       selectedFacets.splice(indexToDelete, 1);
     }
-    // setSelectedFacets((prev) => {
-    //   return [...prev];
-    // });
 
     setFacetsQuery(JSON.stringify(selectedFacets));
-    // setFacetsQuery(selectedFacets);
     pushQuery(replace, selectedFacets);
   }
 

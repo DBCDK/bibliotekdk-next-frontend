@@ -22,9 +22,9 @@ import AdvancedFacets from "@/components/search/advancedSearch/facets/advancedFa
 
 import translate from "@/components/base/translate";
 import { FacetTags } from "@/components/search/advancedSearch/facets/facetTags/facetTags";
-import Button from "@/components/base/button/Button";
 import { useModal } from "@/components/_modal";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
+import { FacetButton } from "@/components/search/advancedSearch/facets/facetButton/facetButton";
 
 export function AdvancedSearchResult({
   pageNo,
@@ -47,22 +47,10 @@ export function AdvancedSearchResult({
     return null;
   }
 
-  const TitleComponent = () => {
+  const TitleComponent = ({ cql }) => {
     return (
       <div>
-        <Button
-          type="secondary"
-          size="medium"
-          className={styles.facetbutton}
-          onClick={() =>
-            modal.push("advancedFacets", {
-              cql: cql,
-              replace: true,
-            })
-          }
-        >
-          Filtrer din søgning
-        </Button>
+        <FacetButton cql={cql} />
         <div className={styles.mobileTags}>
           <FacetTags />
         </div>
@@ -89,7 +77,7 @@ export function AdvancedSearchResult({
           titel: { lg: { offset: 3, span: true } },
         }}
         id="search-result-section"
-        title={<TitleComponent />}
+        title={<TitleComponent cql={cql} />}
         subtitle={
           hitcount > 0 &&
           !isLoading && (
@@ -199,8 +187,6 @@ export default function Wrap({ onWorkClick, onPageChange }) {
   if (!showResult) {
     return null;
   }
-
-  console.log(selectedFacets, "SELECTED FACET PAGE");
 
   return (
     <AdvancedSearchResult

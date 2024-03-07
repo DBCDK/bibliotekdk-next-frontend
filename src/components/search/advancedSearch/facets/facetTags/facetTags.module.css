@@ -30,3 +30,9 @@
   margin-left: var(--pt1);
   cursor: pointer;
 }
+
+@media (max-width: 992px) {
+  .actions {
+    display: none;
+  }
+}
