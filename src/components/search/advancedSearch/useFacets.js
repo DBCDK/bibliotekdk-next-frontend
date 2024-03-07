@@ -11,7 +11,7 @@ export function useFacets() {
 
   const [facetsQuery, setFacetsQuery] = useGlobalState({
     key: "GLOBALFACETS",
-    initial: facetsFromUrl(),
+    initial: facetsFromUrl(router),
   });
 
   // const [selectedFacets, setSelectedFacets] = useState(facetsFromUrl(router));

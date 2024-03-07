@@ -121,10 +121,9 @@ export function facetsFromUrl(router) {
   const query = router?.query;
   const facets = query?.facets;
 
-  // console.log(facets, typeof facets, "QUERY FACETS");
-
-  // return [];
-  return facets ? facets : "[]";
+  // check the facets
+  const verifiedFacets = JSON.parse(facets);
+  return Array.isArray(verifiedFacets) ? JSON.stringify(verifiedFacets) : "[]";
 }
 
 export function convertStateToCql({
