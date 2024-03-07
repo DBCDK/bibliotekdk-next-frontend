@@ -122,7 +122,7 @@ export function facetsFromUrl(router) {
   const facets = query?.facets;
 
   // check the facets
-  const verifiedFacets = JSON.parse(facets);
+  const verifiedFacets = facets && JSON.parse(facets);
   return Array.isArray(verifiedFacets) ? JSON.stringify(verifiedFacets) : "[]";
 }
 
