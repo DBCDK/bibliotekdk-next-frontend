@@ -1900,6 +1900,10 @@
         "da": "Se flere",
         "en": "More"
       },
+      "filter-your-search": {
+        "da": "Filtrer din søgning",
+        "en": "Filter your search"
+      },
       "filtersResultText": {
         "da": "Mest relevante resultater",
         "en": "LABEL: mangler oversættelse"

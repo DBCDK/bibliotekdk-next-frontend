@@ -1,14 +1,39 @@
-import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { AdvFacetsTypeEnum } from "@/lib/enums";
+import { useGlobalState } from "@/components/hooks/useGlobalState";
+import { useEffect } from "react";
+import { facetsFromUrl } from "@/components/search/advancedSearch/utils";
 
+let initialized = false;
 export function useFacets() {
   const router = useRouter();
-  const [selectedFacets, setSelectedFacets] = useState(facetsFromUrl());
 
+  const [facetsQuery, setFacetsQuery] = useGlobalState({
+    key: "GLOBALFACETS",
+    initial: facetsFromUrl(router),
+  });
+
+  // we need a useEffect to sync state (selectedFacets) with facets from the query
   useEffect(() => {
-    setSelectedFacets(facetsFromUrl());
+    if (!initialized) {
+      setFacetsQuery(facetsFromUrl(router));
+      initialized = true;
+    }
+    // @TODO - this might be a way to reset facets ?
+    // return () => {
+    //   // This line only evaluates to true after the componentWillUnmount happens
+    //   if (componentWillUnmount.current) {
+    //     console.log(params)
+    //   }
+    // }
   }, [router?.query?.facets]);
+  //
+  // // we also need a useEffect to reset facets when we leave the page (/avanceret)
+  useEffect(() => {
+    if (initialized && router && !router?.pathname?.includes("/avanceret")) {
+      resetFacets();
+    }
+  }, []);
 
   const facetsFromEnum = Object.values(AdvFacetsTypeEnum).map((fac) =>
     fac.toUpperCase()
@@ -18,7 +43,8 @@ export function useFacets() {
    * Add an extra facet and push facets to query - we keep facets in a state for
    * advanced search context to understand
    */
-  function addFacet(value, searchindex) {
+  function addFacet(value, searchindex, replace = false) {
+    const selectedFacets = JSON.parse(facetsQuery);
     // check if searchindex is already in facets
     const addToIndex = selectedFacets.find((facet) => {
       return facet.searchIndex === searchindex;
@@ -30,11 +56,9 @@ export function useFacets() {
       const alreadythere = !!addToIndex.values.find(
         (val) => val.value === value && val.name === value
       );
+
       if (!alreadythere) {
         addToIndex.values.push({ value: value, name: value });
-        setSelectedFacets((prev) => {
-          return [...prev];
-        });
       }
     } else {
       const newFacet = {
@@ -42,25 +66,34 @@ export function useFacets() {
         values: [{ value: value, name: value }],
       };
       selectedFacets.push(newFacet);
-
-      setSelectedFacets((prev) => {
-        return [...prev];
-      });
     }
 
-    pushFacetUrl();
+    setFacetsQuery(JSON.stringify(selectedFacets));
+    pushQuery(replace, selectedFacets);
   }
 
   /**
-   * Push to query when a facet is added/removed
+   * Push query
+   * @param replace
+   *  replace or push
+   * @global
+   *  globel or local facets
+   *
    */
-  function pushFacetUrl() {
+  function pushQuery(replace = false, selectedFacets) {
     const query = router?.query;
     query["facets"] = JSON.stringify(selectedFacets);
-    router.push({
-      pathname: router.pathname,
-      query: query,
-    });
+
+    // replace/push to router
+    replace
+      ? router.replace({
+          pathname: router.pathname,
+          query: query,
+        })
+      : router.push({
+          pathname: router.pathname,
+          query: query,
+        });
   }
 
   /**
@@ -73,6 +106,12 @@ export function useFacets() {
       pathname: router.pathname,
       query: query,
     });
+
+    initialized = false;
+  }
+
+  function resetFacets() {
+    setFacetsQuery("[]");
   }
 
   /**
@@ -80,7 +119,9 @@ export function useFacets() {
    * @param value
    * @param searchindex
    */
-  function removeFacet(value, searchindex) {
+  function removeFacet(value, searchindex, replace = false) {
+    const selectedFacets = JSON.parse(facetsQuery);
+
     // find the overall facet to handle
     const indexedFacet = selectedFacets?.find((facet) => {
       return facet.searchIndex.includes(searchindex);
@@ -94,27 +135,21 @@ export function useFacets() {
       });
       selectedFacets.splice(indexToDelete, 1);
     }
-    setSelectedFacets((prev) => {
-      return [...prev];
-    });
 
-    pushFacetUrl();
-  }
-
-  function facetsFromUrl() {
-    const query = router?.query;
-    const facets = query?.facets && JSON.parse(query?.facets);
-    return facets || [];
+    setFacetsQuery(JSON.stringify(selectedFacets));
+    pushQuery(replace, selectedFacets);
   }
 
   const facetLimit = 50;
 
   return {
-    selectedFacets,
+    selectedFacets: JSON.parse(facetsQuery),
     addFacet,
     removeFacet,
     facetLimit,
     facetsFromEnum,
     clearFacetsUrl,
+    resetFacets,
+    pushQuery,
   };
 }

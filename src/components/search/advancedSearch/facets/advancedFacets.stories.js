@@ -30,6 +30,18 @@ Default.story = {
   },
 };
 
+export function FacetsLoading() {
+  return (
+    <div>
+      <StoryTitle>Advanced search facets</StoryTitle>
+      <StoryDescription>
+        Facets for filtering advanced search result
+      </StoryDescription>
+      <AdvancedFacets facets={mockedFacets.facets} isLoading={true} />
+    </div>
+  );
+}
+
 export function FacetsInUrl() {
   return (
     <div>

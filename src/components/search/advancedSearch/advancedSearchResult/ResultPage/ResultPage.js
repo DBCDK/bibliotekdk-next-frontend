@@ -10,7 +10,6 @@ import { useAdvancedSearchContext } from "@/components/search/advancedSearch/adv
 
 import { convertStateToCql } from "@/components/search/advancedSearch/utils";
 import isEmpty from "lodash/isEmpty";
-import { useFacets } from "@/components/search/advancedSearch/useFacets";
 
 /**
  * Row representation of a search result entry
@@ -67,8 +66,6 @@ export default function Wrap({ onWorkClick, page }) {
     facets,
   } = useAdvancedSearchContext();
 
-  const { facetsFromEnum, facetLimit } = useFacets();
-
   onWorkClick = null;
 
   const limit = 10;
@@ -83,10 +80,6 @@ export default function Wrap({ onWorkClick, page }) {
       cql: cqlQuery,
       offset: offset,
       limit: limit,
-      facets: {
-        facetLimit: facetLimit,
-        facets: facetsFromEnum,
-      },
       ...(!isEmpty(sort) && { sort: sort }),
     })
   );

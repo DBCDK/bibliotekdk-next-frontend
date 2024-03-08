@@ -1,7 +1,8 @@
 .item {
   display: grid;
-  grid-template-columns: 1fr 100fr 100fr;
+  grid-template-columns: 1fr 100fr 1fr;
   align-items: center;
+  gap: var(--pt05);
   padding: 0 var(--pt1) 0 var(--pt1);
 }
 
@@ -27,6 +28,12 @@
 
 .showmorelink {
   padding: var(--pt1) 0 var(--pt2) var(--pt1);
+}
+
+.skeleton {
+  position: relative;
+  height: var(--pt4);
+  margin-bottom: var(--pt05);
 }
 
 .accordionContainer {

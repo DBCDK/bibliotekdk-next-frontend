@@ -9,6 +9,10 @@ import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import { useState } from "react";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
+import { useData } from "@/lib/api/api";
+import { hitcount } from "@/lib/api/complexSearch.fragments";
+import { parseOutFacets } from "@/components/search/advancedSearch/utils";
+import Skeleton from "@/components/base/skeleton";
 
 /**
  *
@@ -16,28 +20,35 @@ import Text from "@/components/base/text/Text";
  * @returns {JSX.Element}
  * @constructor
  */
-export function AdvancedFacets({ facets }) {
-  // filter out emtpyt facets AND facets NOT found in response
+export function AdvancedFacets({
+  facets,
+  isLoading,
+  hitcount,
+  replace = false,
+}) {
+  const { addFacet, removeFacet, selectedFacets } = useFacets();
+
   const filteredFacets = Object.values(AdvFacetsTypeEnum).filter((val) =>
-    facets.find((facet) => {
+    facets?.find((facet) => {
       return facet.name.split(".")[1] === val;
     })
   );
 
-  const { addFacet, removeFacet, selectedFacets } = useFacets();
-
   const onItemClick = (checked, name, facetName) => {
     if (checked) {
       // selected -> add to list
-      addFacet(name, facetName);
+      addFacet(name, facetName, replace);
+      // pushFacetUrl();
     } else {
       // deselected - remove from list
-      removeFacet(name, facetName);
+      removeFacet(name, facetName, replace);
+      // pushFacetUrl();
     }
   };
 
   return (
     <Accordion className={styles.accordionContainer}>
+      <div>{hitcount}</div>
       {filteredFacets.map((facetName, index) => (
         <AccordianItem
           facetName={facetName}
@@ -46,6 +57,7 @@ export function AdvancedFacets({ facets }) {
           key={`${facetName}-${index}`}
           selectedFacets={selectedFacets}
           onItemClick={onItemClick}
+          isLoading={isLoading}
         />
       ))}
     </Accordion>
@@ -58,6 +70,7 @@ function AccordianItem({
   index,
   selectedFacets,
   onItemClick,
+  isLoading,
 }) {
   const current = selectedFacets?.find((sel) => sel.searchIndex === facetName);
 
@@ -75,6 +88,14 @@ function AccordianItem({
   const facet = facets.find((fac) => {
     return fac.name.split(".")[1] === facetName;
   });
+
+  if (isLoading) {
+    return (
+      <div className={styles.itemborder}>
+        <Skeleton className={styles.skeleton} />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.itemborder}>
@@ -102,7 +123,6 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
   const current = selectedFacets?.find((sel) => {
     return sel?.searchIndex === facetName;
   });
-
   // sort - we want selected items first
   const sorter = (a) => {
     const selected = !!current?.values?.find((val) => {
@@ -167,7 +187,25 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
   );
 }
 
-export default function wrap() {
-  // @TODO useData to get REAL data
-  return AdvancedFacets({});
+export default function Wrap({ cql, replace }) {
+  const { facetsFromEnum, facetLimit } = useFacets();
+  // use the useData hook to fetch data
+  const { data: facetResponse, isLoading } = useData(
+    hitcount({
+      cql: cql,
+      facets: {
+        facetLimit: facetLimit,
+        facets: facetsFromEnum,
+      },
+    })
+  );
+  // @TODO parse out empty facets (score=0)
+  const facets = parseOutFacets(facetResponse?.complexSearch?.facets);
+
+  return AdvancedFacets({
+    hitcount: facetResponse?.complexSearch?.hitcount,
+    facets: facets,
+    isLoading: isLoading,
+    replace: replace,
+  });
 }
