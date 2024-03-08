@@ -168,14 +168,14 @@ export default function Wrap({ onWorkClick, onPageChange }) {
     })
   );
   const parsedResponse = parseResponse(fastResponse);
-
   //update searchhistory
   if (!parsedResponse?.errorMessage && !parsedResponse.isLoading) {
-    // make an object for searchhistory @TODO .. the right object please
+    // make an object for searchhistory
     const searchHistoryObj = {
       hitcount: parsedResponse?.hitcount,
       fieldSearch: fieldSearch || "",
       cql: cqlQuery,
+      selectedFacets: selectedFacets || [],
     };
     setValue(searchHistoryObj);
   }
