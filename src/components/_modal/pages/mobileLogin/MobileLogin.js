@@ -23,7 +23,7 @@ export default function MobileLogin({ context }) {
   const [query, setQuery] = useState("");
 
   const { data, isLoading } = useData(
-    libraryFragments.search({ q: query || "" })
+    libraryFragments.search({ q: query || "", limit: 50 })
   );
 
   const includeArrows = !!query;
