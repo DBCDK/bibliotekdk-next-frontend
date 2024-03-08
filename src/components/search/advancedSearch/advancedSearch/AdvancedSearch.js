@@ -54,7 +54,7 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
   //add raw cql query in url if showCqlEditor. Add state to url if fieldInputs
   const doAdvancedSearch = () => {
     // this is a new search - clear the facets
-    // clearFacetsUrl();
+    clearFacetsUrl();
     if (showCqlEditor) {
       const cqlParsedFromUrl = fieldSearchFromUrl
         ? convertStateToCql(fieldSearchFromUrl)
