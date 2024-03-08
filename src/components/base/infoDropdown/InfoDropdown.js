@@ -9,7 +9,7 @@ import Text from "@/components/base/text";
 import Button from "@/components/base/button";
 import Icon from "@/components/base/icon";
 import styles from "./InfoDropdown.module.css";
-import animations from "css/animations";
+import animations from "@/components/base/animation/animations.module.css";
 import cx from "classnames";
 import PropTypes from "prop-types";
 
