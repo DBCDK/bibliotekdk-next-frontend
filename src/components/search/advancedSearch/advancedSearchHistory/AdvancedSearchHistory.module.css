@@ -29,6 +29,11 @@
   text-decoration: underline;
 }
 
+.itemsheader {
+  border-bottom: 1px solid var(--iron);
+  margin-bottom: var(--pt2);
+}
+
 @media (min-width: 576px) {
   .table_grid > *:first-child {
     border-top: none;

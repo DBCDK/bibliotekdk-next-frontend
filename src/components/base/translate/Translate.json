@@ -2306,6 +2306,14 @@
         "da": "Søgehistorik",
         "en": "Search history"
       },
+      "history-yesterday": {
+        "da": "Igår",
+        "en": "Yesterday"
+      },
+      "history-today": {
+        "da": "Idag",
+        "en": "Today"
+      },
       "clearSearch": {
         "da": "Ryd søgning",
         "en": "Clear search"
