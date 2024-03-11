@@ -1,6 +1,6 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
 
-import animations from "css/animations";
+import animations from "@/components/base/animation/animations.module.css";
 
 const exportedObject = {
   title: "base/Animation",

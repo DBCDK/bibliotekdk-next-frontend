@@ -21,7 +21,7 @@ import response from "./dummy.data";
 import { useData } from "@/lib/api/api";
 import * as searchFragments from "@/lib/api/search.fragments";
 
-import animations from "css/animations";
+import animations from "@/components/base/animation/animations.module.css";
 import styles from "./Filter.module.css";
 import { FilterTypeEnum } from "@/lib/enums";
 

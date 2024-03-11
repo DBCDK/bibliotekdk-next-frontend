@@ -1,6 +1,6 @@
 import Link, { LinkOnlyInternalAnimations } from "@/components/base/link";
 import styles from "./IconLink.module.css";
-import animations from "css/animations";
+import animations from "@/components/base/animation/animations.module.css";
 import Icon from "@/components/base/icon";
 import Text from "@/components/base/text";
 import PropTypes from "prop-types";
