@@ -16,7 +16,7 @@ function FacetsPage({ cql, replace }) {
 
 export default function Wrap({ context, modal }) {
   const { replace } = context;
-  const { pushQuery } = useFacets();
+  const { pushQuery, selectedFacets } = useFacets();
 
   /** update cql query **/
   const {
@@ -28,7 +28,7 @@ export default function Wrap({ context, modal }) {
   /**  update resultpage when modal is closed **/
   useEffect(() => {
     if (!modal.isVisible && modal.hasBeenVisible) {
-      pushQuery(false, true);
+      pushQuery(false, selectedFacets);
     }
   }, [modal.isVisible]);
 

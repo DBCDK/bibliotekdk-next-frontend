@@ -38,11 +38,9 @@ export function AdvancedFacets({
     if (checked) {
       // selected -> add to list
       addFacet(name, facetName, replace);
-      // pushFacetUrl();
     } else {
       // deselected - remove from list
       removeFacet(name, facetName, replace);
-      // pushFacetUrl();
     }
   };
 

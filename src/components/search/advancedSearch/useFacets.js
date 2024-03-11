@@ -110,6 +110,11 @@ export function useFacets() {
     initialized = false;
   }
 
+  function restartFacetsHook() {
+    setFacetsQuery("[]");
+    initialized = false;
+  }
+
   function resetFacets() {
     setFacetsQuery("[]");
   }
@@ -150,6 +155,7 @@ export function useFacets() {
     facetsFromEnum,
     clearFacetsUrl,
     resetFacets,
+    restartFacetsHook,
     pushQuery,
   };
 }
