@@ -423,7 +423,7 @@ export function useOrderValidation({ pids }) {
     },
     manifestations: {
       isValid: !!workId,
-      checkBeforeConfirm: true,
+      checkBeforeConfirm: false,
     },
     branch: { isValid: !!pickupBranch?.branchId, checkBeforeConfirm: true },
     orderService: {
