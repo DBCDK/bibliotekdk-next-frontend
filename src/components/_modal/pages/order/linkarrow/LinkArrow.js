@@ -1,5 +1,5 @@
 import styles from "./LinkArrow.module.css";
-import animations from "css/animations";
+import animations from "@/components/base/animation/animations.module.css";
 import Link from "@/components/base/link";
 import Arrow from "@/components/base/animation/arrow";
 

@@ -10,7 +10,7 @@ import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 
 import styles from "./Accordion.module.css";
-import animations from "css/animations";
+import animations from "@/components/base/animation/animations.module.css";
 
 import BodyParser from "@/components/base/bodyparser";
 import React, { useEffect, useState } from "react";

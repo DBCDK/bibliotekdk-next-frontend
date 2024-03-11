@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { default as NextLink } from "next/link";
 import styles from "./Link.module.css";
-import animations from "css/animations";
+import animations from "@/components/base/animation/animations.module.css";
 import cx from "classnames";
 import React, { useEffect, useState } from "react";
 import Skeleton from "@/components/base/skeleton";
@@ -220,7 +220,7 @@ function Link({
 
   // Return the component
   return (
-    <NextLink href={href} shallow={true} scroll={scroll}>
+    <NextLink href={href} shallow={true} scroll={scroll} legacyBehavior>
       {children}
     </NextLink>
   );

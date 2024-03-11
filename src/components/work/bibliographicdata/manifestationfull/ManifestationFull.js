@@ -4,7 +4,7 @@
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import React, { useId, useMemo, useState } from "react";
-import animations from "css/animations";
+import animations from "@/components/base/animation/animations.module.css";
 import styles from "./ManifestationFull.module.css";
 
 import Text from "@/components/base/text";

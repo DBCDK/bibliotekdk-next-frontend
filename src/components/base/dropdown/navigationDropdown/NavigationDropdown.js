@@ -6,7 +6,7 @@ import cx from "classnames";
 import styles from "./NavigationDropdown.module.css";
 import Translate from "@/components/base/translate";
 import { encodeString } from "@/lib/utils";
-import animations from "css/animations";
+import animations from "@/components/base/animation/animations.module.css";
 import Text from "@/components/base/text";
 
 /**
@@ -200,6 +200,7 @@ function LinkDropdown({ context, menuItems }) {
                   role="menuitem"
                   href={link}
                   ref={itemRefs[index]}
+                  legacyBehavior
                 >
                   <a
                     onClick={() => onLinkClick(index)}
