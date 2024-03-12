@@ -335,12 +335,12 @@ export function AdvancedSearchHistory() {
 
   const splittedValues = splitHistoryItems(storedValue);
 
-  const HistoryItemPerDay = ({ Title, items }) => {
+  const HistoryItemPerDay = ({ title, items }) => {
     return (
       <>
-        {Title && items.length > 0 && (
+        {title && items.length > 0 && (
           <Text type="text4" className={styles.itemsheader}>
-            {Title}
+            {title}
           </Text>
         )}
         {items.length > 0 &&
@@ -390,12 +390,12 @@ export function AdvancedSearchHistory() {
             <HistoryItemPerDay
               key="search-history-today"
               items={splittedValues.today}
-              Title={Translate({ context: "search", label: "history-today" })}
+              title={Translate({ context: "search", label: "history-today" })}
             />
             <HistoryItemPerDay
               key="search-history-yesterday"
               items={splittedValues.yesterday}
-              Title={Translate({
+              title={Translate({
                 context: "search",
                 label: "history-yesterday",
               })}
