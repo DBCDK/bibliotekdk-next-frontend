@@ -147,7 +147,6 @@ export default function Wrap({ onWorkClick, onPageChange }) {
     fieldSearchFromUrl: fieldSearch,
     pageNoFromUrl: pageNo,
     setShowPopover,
-    facets,
   } = useAdvancedSearchContext();
 
   const { selectedFacets } = useFacets();
@@ -157,7 +156,8 @@ export default function Wrap({ onWorkClick, onPageChange }) {
   // get setter for advanced search history
   // @TODO add facets
   const { setValue } = useAdvancedSearchHistory();
-  const cqlQuery = cql || convertStateToCql({ ...fieldSearch, facets: facets });
+  const cqlQuery =
+    cql || convertStateToCql({ ...fieldSearch, facets: selectedFacets });
 
   const showResult = !isEmpty(fieldSearch) || !isEmpty(cql);
 

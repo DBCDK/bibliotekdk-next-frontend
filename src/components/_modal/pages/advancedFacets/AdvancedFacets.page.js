@@ -19,11 +19,8 @@ export default function Wrap({ context, modal }) {
   const { pushQuery, selectedFacets } = useFacets();
 
   /** update cql query **/
-  const {
-    cqlFromUrl: cql,
-    fieldSearchFromUrl: fieldSearch,
-    facets,
-  } = useAdvancedSearchContext();
+  const { cqlFromUrl: cql, fieldSearchFromUrl: fieldSearch } =
+    useAdvancedSearchContext();
 
   /**  update resultpage when modal is closed **/
   useEffect(() => {
@@ -32,7 +29,8 @@ export default function Wrap({ context, modal }) {
     }
   }, [modal.isVisible]);
 
-  const cqlQuery = cql || convertStateToCql({ ...fieldSearch, facets: facets });
+  const cqlQuery =
+    cql || convertStateToCql({ ...fieldSearch, facets: selectedFacets });
   return (
     <>
       <FacetsPage cql={cqlQuery} replace={replace} />
