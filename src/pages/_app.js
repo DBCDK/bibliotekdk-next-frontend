@@ -195,6 +195,8 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
                   component={Pages.AdvancedFacets}
                 />
 
+                <Modal.Page id="mobileFacets" component={Pages.MobileFacets} />
+
                 <Modal.Page
                   id="orderHistoryDataConsent"
                   component={Pages.OrderHistoryDataConsent}

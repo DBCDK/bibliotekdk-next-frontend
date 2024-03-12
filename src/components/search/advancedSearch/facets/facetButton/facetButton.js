@@ -24,10 +24,11 @@ export function FacetButton({ cql, isLoading }) {
         size="medium"
         className={styles.facetbutton}
         onClick={() =>
-          modal.push("advancedFacets", {
-            cql: cql,
-            replace: true,
-          })
+          // modal.push("advancedFacets", {
+          //   cql: cql,
+          //   replace: true,
+          // })
+          modal.push("mobileFacets", { cql: cql })
         }
       >
         <Text
