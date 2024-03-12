@@ -61,6 +61,14 @@ function HistoryItem({ item, index, checked, onSelect }) {
     )
   );
 
+  const itemText = () => {
+    return Translate({
+      context: "search",
+      label: "timestamp",
+      vars: [timestamp],
+    });
+  };
+
   return (
     <div
       className={cx(styles.row, styles.grid)}
@@ -85,11 +93,7 @@ function HistoryItem({ item, index, checked, onSelect }) {
         type="text2"
         title={getDateTime(item.unixtimestamp)}
       >
-        {Translate({
-          context: "search",
-          label: "timestamp",
-          vars: [timestamp],
-        })}
+        {itemText()}
       </Text>
       <div className={styles.link}>
         <Link
@@ -251,6 +255,29 @@ function EmptySearchHistory() {
   );
 }
 
+/**
+ * split stored history in 3 - Today, Yesterday and older :)
+ * @param storedValues
+ */
+function splitHistoryItems(storedValues) {
+  const oneday = 24 * 60 * 60 * 1000;
+  const today = [];
+  const yesterday = [];
+  const older = [];
+
+  storedValues?.map((val) => {
+    if (Date.now() - val.unixtimestamp < oneday) {
+      today.push(val);
+    } else if (Date.now() - val.unixtimestamp < oneday * 2) {
+      yesterday.push(val);
+    } else {
+      older.push(val);
+    }
+  });
+
+  return { today: today, yesterday: yesterday, older: older };
+}
+
 export function AdvancedSearchHistory() {
   const { storedValue, deleteValue } = useAdvancedSearchHistory();
   const [checkboxList, setCheckboxList] = useState([]);
@@ -306,6 +333,33 @@ export function AdvancedSearchHistory() {
     setCheckboxList(newCheckList);
   };
 
+  const splittedValues = splitHistoryItems(storedValue);
+
+  const HistoryItemPerDay = ({ title, items }) => {
+    return (
+      <>
+        {title && items.length > 0 && (
+          <Text type="text4" className={styles.itemsheader}>
+            {title}
+          </Text>
+        )}
+        {items.length > 0 &&
+          items.map((item, index) => (
+            <HistoryItem
+              key={item.cql}
+              item={item}
+              index={index}
+              checked={
+                checkboxList.findIndex((check) => check === item.cql) !== -1
+              }
+              deleteSelected={onDeleteSelected}
+              onSelect={onSelect}
+            />
+          ))}
+      </>
+    );
+  };
+
   return (
     <div className={styles.container}>
       <Title
@@ -331,20 +385,26 @@ export function AdvancedSearchHistory() {
         {isEmpty(storedValue) || storedValue?.length < 1 ? (
           <EmptySearchHistory />
         ) : (
-          storedValue?.map((item, index) => {
-            return (
-              <HistoryItem
-                key={item.cql}
-                item={item}
-                index={index}
-                checked={
-                  checkboxList.findIndex((check) => check === item.cql) !== -1
-                }
-                deleteSelected={onDeleteSelected}
-                onSelect={onSelect}
-              />
-            );
-          })
+          // today
+          <>
+            <HistoryItemPerDay
+              key="search-history-today"
+              items={splittedValues.today}
+              title={Translate({ context: "search", label: "history-today" })}
+            />
+            <HistoryItemPerDay
+              key="search-history-yesterday"
+              items={splittedValues.yesterday}
+              title={Translate({
+                context: "search",
+                label: "history-yesterday",
+              })}
+            />
+            <HistoryItemPerDay
+              key="search-history-older"
+              items={splittedValues.older}
+            />
+          </>
         )}
       </div>
     </div>
