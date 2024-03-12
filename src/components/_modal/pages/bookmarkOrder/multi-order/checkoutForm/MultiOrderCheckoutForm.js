@@ -174,7 +174,9 @@ const CheckoutForm = () => {
           disabled={disabled || isSubmitting}
           onClick={async () => {
             const receipt = await submitOrders();
+
             modal.push("multireceipt", {
+              error: receipt?.error || "",
               failedMaterials: receipt?.failedMaterialsPids || [],
               successMaterials: receipt?.successfullyCreated || [],
               branchName: pickupBranch?.name,
