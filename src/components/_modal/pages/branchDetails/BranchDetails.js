@@ -9,7 +9,7 @@ import Text from "@/components/base/text/Text";
 import Title from "@/components/base/title/Title";
 import { IconLink } from "@/components/base/iconlink/IconLink";
 import ExternalSvg from "@/public/icons/external_small.svg";
-import animations from "css/animations";
+import animations from "@/components/base/animation/animations.module.css";
 import styles from "./BranchDetails.module.css";
 import cx from "classnames";
 import BranchDetailsStatus from "@/components/_modal/pages/branchDetails/branchDetailsStatus/BranchDetailsStatus";

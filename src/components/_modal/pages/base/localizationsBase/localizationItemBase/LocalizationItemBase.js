@@ -3,7 +3,7 @@ import styles from "./LocalizationItemBase.module.css";
 import Link from "@/components/base/link/Link";
 import ArrowSvg from "@/public/icons/arrowright.svg";
 import Icon from "@/components/base/icon";
-import animations from "css/animations";
+import animations from "@/components/base/animation/animations.module.css";
 import { AvailabilityLight } from "@/components/_modal/pages/base/localizationsBase/localizationItemBase/AvailabilityLight";
 import Text from "@/components/base/text/Text";
 

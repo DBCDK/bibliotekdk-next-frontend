@@ -4,7 +4,7 @@ import isEmpty from "lodash/isEmpty";
 import { IconLink } from "@/components/base/iconlink/IconLink";
 import styles from "./LinkForBranch.module.css";
 import ExternalSvg from "@/public/icons/external_small.svg";
-import animations from "css/animations";
+import animations from "@/components/base/animation/animations.module.css";
 import Translate from "@/components/base/translate";
 import uniq from "lodash/uniq";
 

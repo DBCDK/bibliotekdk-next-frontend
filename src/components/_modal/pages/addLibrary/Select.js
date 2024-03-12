@@ -3,7 +3,7 @@
  * Branch name with highlights that triggers onSelect when clicked
  */
 
-import animations from "css/animations";
+import animations from "@/components/base/animation/animations.module.css";
 import find from "lodash/find";
 import List from "@/components/base/forms/list";
 import Text from "@/components/base/text";

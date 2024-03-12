@@ -5,7 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Text from "@/components/base/text";
 
 import styles from "./BodyParser.module.css";
-import animations from "css/animations";
+import animations from "@/components/base/animation/animations.module.css";
 import { signIn } from "@dbcdk/login-nextjs/client";
 
 function underlineOnAnchorElements(htmlString) {

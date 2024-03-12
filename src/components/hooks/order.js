@@ -179,6 +179,8 @@ export function useShowAlreadyOrdered({ pids }) {
   });
   const isInOrderModal = useIsInOrderModal();
 
+  const { isPeriodica, isLoading: periodicaIsLoading } = usePeriodica({ pids });
+
   // Reset acceptance, when user leaves order flow
   useEffect(() => {
     if (!isInOrderModal) {
@@ -191,8 +193,9 @@ export function useShowAlreadyOrdered({ pids }) {
     hasAlreadyBeenOrdered,
     acceptedAlreadyOrdered,
     setAcceptedAlreadyOrdered,
-    showAlreadyOrderedWarning: hasAlreadyBeenOrdered && !acceptedAlreadyOrdered,
-    isLoading: manifestationIsLoading,
+    showAlreadyOrderedWarning:
+      hasAlreadyBeenOrdered && !acceptedAlreadyOrdered && !isPeriodica,
+    isLoading: manifestationIsLoading || periodicaIsLoading,
   };
 }
 
@@ -420,7 +423,6 @@ export function useOrderValidation({ pids }) {
     },
     manifestations: {
       isValid: !!workId,
-      checkBeforeConfirm: true,
       checkBeforeConfirm: false,
     },
     branch: { isValid: !!pickupBranch?.branchId, checkBeforeConfirm: true },
@@ -508,9 +510,6 @@ export function useMultiOrderValidation({ orders }) {
         (entry) => !entry?.validation?.details?.periodica?.isValid
       )?.length,
 
-      materialsNotAllowedCount: result?.filter(
-        (entry) => !entry?.validation?.details?.orderService?.isValid
-      )?.length,
       materialsNotAllowedCount: result?.filter(
         (entry) => !entry?.validation?.details?.orderService?.isValid
       )?.length,

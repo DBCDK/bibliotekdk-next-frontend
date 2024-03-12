@@ -2,7 +2,7 @@ import Translate from "@/components/base/translate/Translate";
 import Text from "@/components/base/text";
 import Suggester from "@/components/base/suggester/Suggester";
 import styles from "./TextInputs.module.css";
-import animations from "css/animations";
+import animations from "@/components/base/animation/animations.module.css";
 import SearchIndexDropdown from "@/components/search/advancedSearch/fieldInput/searchIndexDropdown/SearchIndexDropdown";
 import Button from "@/components/base/button";
 import { useEffect, useState } from "react";

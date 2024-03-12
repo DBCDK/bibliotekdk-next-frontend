@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import styles from "./iconButton.module.css";
 import Text from "@/components/base/text";
 import Icon from "@/components/base/icon";
-import animations from "css/animations";
+import animations from "@/components/base/animation/animations.module.css";
 import Link from "@/components/base/link";
 import cx from "classnames";
 

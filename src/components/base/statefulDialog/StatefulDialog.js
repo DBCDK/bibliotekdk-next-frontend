@@ -13,7 +13,7 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./StatefulDialog.module.css";
 import Link from "@/components/base/link";
-import animations from "css/animations";
+import animations from "@/components/base/animation/animations.module.css";
 import cx from "classnames";
 
 export default function StatefulDialog({ children, title }) {
