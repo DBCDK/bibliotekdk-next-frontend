@@ -194,7 +194,7 @@ export default function Wrap(props) {
 
   const [query, setQuery] = useState("");
   const { data, isLoading } = useData(
-    libraryFragments.search({ q: query || "", agencyTypes, limit: 20 })
+    libraryFragments.search({ q: query || "", agencyTypes, limit: 50 })
   );
 
   const dummyData = {

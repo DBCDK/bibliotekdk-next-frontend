@@ -15,13 +15,14 @@ const MultiOrderReceipt = ({ context }) => {
   const modal = useModal();
   const { hasCulrUniqueId } = useAuthentication();
   const {
+    error,
     successMaterials,
     failedMaterials,
     digitalMaterialsCount,
     physicalMaterialsCount,
     branchName,
   } = context;
-  const hasErrors = failedMaterials.length > 0;
+  const hasErrors = failedMaterials.length > 0 || error;
   const hasSuccess = successMaterials.length > 0;
 
   const router = useRouter();
@@ -89,36 +90,45 @@ const MultiOrderReceipt = ({ context }) => {
         </Text>
       )}
 
-      {hasErrors && (
-        <>
+      {hasErrors &&
+        (error ? (
           <Text type="text1" className={styles.errorMessage}>
-            {failedMaterials?.length === 1 ? (
-              <Translate
-                context="bookmark-order"
-                label="multiorder-couldnt-order-singular"
-                vars={[failedMaterials.length]}
-              />
-            ) : (
-              <Translate
-                context="bookmark-order"
-                label="multiorder-couldnt-order"
-                vars={[failedMaterials.length]}
-              />
-            )}
+            <Translate
+              context="bookmark-order"
+              label="multiorder-failed-with-error"
+            />
           </Text>
+        ) : (
+          <>
+            <Text type="text1" className={styles.errorMessage}>
+              {failedMaterials?.length === 1 ? (
+                <Translate
+                  context="bookmark-order"
+                  label="multiorder-couldnt-order-singular"
+                  vars={[failedMaterials.length]}
+                />
+              ) : (
+                <Translate
+                  context="bookmark-order"
+                  label="multiorder-couldnt-order"
+                  vars={[failedMaterials.length]}
+                />
+              )}
+            </Text>
 
-          <div className={styles.materialList}>
-            {failedMaterials?.map((material) => (
-              <Material
-                key={material.key}
-                pids={material.pids}
-                backgroundColorOverride={BackgroundColorEnum.RED}
-                showActions={false}
-              />
-            ))}
-          </div>
-        </>
-      )}
+            <div className={styles.materialList}>
+              {failedMaterials?.map((material) => (
+                <Material
+                  key={material.key}
+                  pids={material.pids}
+                  backgroundColorOverride={BackgroundColorEnum.RED}
+                  showActions={false}
+                />
+              ))}
+            </div>
+            {error && error}
+          </>
+        ))}
 
       {hasCulrUniqueId && (
         <Button
