@@ -16,6 +16,19 @@
   background-color: var(--concrete);
 }
 
+.historyFilters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: var(--pt1) var(--pt1) 0 0;
+}
+
+.filteritem {
+  margin-left: var(--pt1);
+  color: var(--blue);
+  text-decoration: underline;
+}
+
 @media (min-width: 576px) {
   .table_grid > *:first-child {
     border-top: none;

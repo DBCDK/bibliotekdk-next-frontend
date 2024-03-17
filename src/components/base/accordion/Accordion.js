@@ -140,7 +140,12 @@ export function Item({
             </div>
           )}
           <div className={styles.expandIcon}>
-            <ExpandIcon open={isCurrentEventKey} size={4} />
+            <ExpandIcon
+              open={isCurrentEventKey}
+              size={4}
+              src="smallplus.svg"
+              bgColor="transparent"
+            />
           </div>
         </div>
       </Card.Header>

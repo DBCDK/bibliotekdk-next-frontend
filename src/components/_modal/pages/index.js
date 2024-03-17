@@ -28,6 +28,7 @@ import MultiReceipt from "./bookmarkOrder/receipt/MultiOrderReceipt.page";
 import MultiReferences from "./references/multiReferences/MultiReferences";
 import EditionPicker from "./references/editionPicker/EditionPicker";
 import AccountHasProfile from "./accountHasProfile";
+import AdvancedFacets from "./advancedFacets/AdvancedFacets.page";
 
 const _modal = {
   Menu,
@@ -60,6 +61,7 @@ const _modal = {
   MultiOrder,
   MultiReceipt,
   AccountHasProfile,
+  AdvancedFacets,
 };
 
 export default _modal;

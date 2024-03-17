@@ -45,6 +45,7 @@ ResultPage.propTypes = {
 function parseResponse(bigResponse) {
   return {
     works: bigResponse?.data?.complexSearch?.works || null,
+    facets: bigResponse?.data?.complexSearch?.facets || [],
     isLoading: bigResponse?.isLoading,
   };
 }
@@ -62,13 +63,14 @@ export default function Wrap({ onWorkClick, page }) {
     cqlFromUrl: cql,
     fieldSearchFromUrl: fieldSearch,
     sort,
+    facets,
   } = useAdvancedSearchContext();
 
   onWorkClick = null;
 
   const limit = 10;
   let offset = limit * (page - 1);
-  const cqlQuery = cql || convertStateToCql(fieldSearch);
+  const cqlQuery = cql || convertStateToCql({ ...fieldSearch, facets: facets });
 
   const showResult = !isEmpty(fieldSearch) || !isEmpty(cql);
 
@@ -81,6 +83,7 @@ export default function Wrap({ onWorkClick, page }) {
       ...(!isEmpty(sort) && { sort: sort }),
     })
   );
+
   const parsedResponse = parseResponse(bigResponse);
 
   if (parsedResponse.isLoading) {

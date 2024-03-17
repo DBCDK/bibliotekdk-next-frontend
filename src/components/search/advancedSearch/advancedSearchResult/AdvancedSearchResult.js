@@ -3,7 +3,10 @@ import { useData } from "@/lib/api/api";
 import Section from "@/components/base/section";
 import Pagination from "@/components/search/pagination/Pagination";
 import PropTypes from "prop-types";
-import { convertStateToCql } from "@/components/search/advancedSearch/utils";
+import {
+  convertStateToCql,
+  parseOutFacets,
+} from "@/components/search/advancedSearch/utils";
 import useAdvancedSearchHistory from "@/components/hooks/useAdvancedSearchHistory";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import isEmpty from "lodash/isEmpty";
@@ -15,6 +18,12 @@ import Title from "@/components/base/title";
 import { NoHitSearch } from "@/components/search/advancedSearch/advancedSearchResult/noHitSearch/NoHitSearch";
 import ResultPage from "./ResultPage/ResultPage";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import AdvancedFacets from "@/components/search/advancedSearch/facets/advancedFacets";
+
+import translate from "@/components/base/translate";
+import { FacetTags } from "@/components/search/advancedSearch/facets/facetTags/facetTags";
+import { useFacets } from "@/components/search/advancedSearch/useFacets";
+import { FacetButton } from "@/components/search/advancedSearch/facets/facetButton/facetButton";
 
 export function AdvancedSearchResult({
   pageNo,
@@ -23,16 +32,38 @@ export function AdvancedSearchResult({
   results,
   error = null,
   isLoading,
+  cql,
+  selectedFacets,
 }) {
   const hitcount = results?.hitcount;
   const numPages = Math.ceil(hitcount / 10);
   const breakpoint = useBreakpoint();
-  const isMobile = breakpoint === "xs" || breakpoint === "sm" || false;
+  const isMobile =
+    breakpoint === "md" || breakpoint === "xs" || breakpoint === "sm" || false;
   const page = parseInt(pageNo, 10) || 1;
 
   if (error) {
     return null;
   }
+
+  const TitleComponent = ({ cql }) => {
+    return (
+      <div>
+        <FacetButton cql={cql} isLoading={isLoading} />
+        <div className={styles.mobileTags}>
+          <FacetTags />
+        </div>
+        <div className={styles.titleflex}>
+          <Title type="title5" className={styles.countstyle}>
+            {hitcount}
+          </Title>
+          <Title type="title6" className={styles.titleStyle}>
+            {translate({ context: "search", label: "title" })}
+          </Title>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <>
@@ -40,16 +71,25 @@ export function AdvancedSearchResult({
 
       <Section
         divider={false}
-        colSize={{ lg: { offset: 1, span: true } }}
+        colSize={{
+          lg: { offset: 0, span: true },
+          titel: { lg: { offset: 3, span: true } },
+        }}
         id="search-result-section"
-        title="Resultater"
+        title={<TitleComponent cql={cql} />}
         subtitle={
-          hitcount > 0 &&
-          !isLoading && (
-            <Title type="title5" className={styles.titleStyle}>
-              {hitcount}
-            </Title>
-          )
+          <>
+            <div className={styles.facetsContainer}>
+              <FacetTags selectedFacets={selectedFacets} />
+              <div className={styles.subtitleStyle}>
+                <Title type="title6">
+                  {translate({ context: "search", label: "narrow-search" })}
+                </Title>
+              </div>
+
+              <AdvancedFacets cql={cql} />
+            </div>
+          </>
         }
         sectionContentClass={isMobile ? styles.sectionContentStyle : ""}
         sectionTitleClass={styles.sectionTitleClass}
@@ -57,6 +97,7 @@ export function AdvancedSearchResult({
         {/* Reuse result page from simplesearch - we skip the wrap .. @TODO should we set
         some mark .. that we are doing advanced search .. ?? */}
         {!isLoading && hitcount === 0 && <NoHitSearch />}
+        {/*<AdvancedFacets facets={facets} />*/}
         <>
           <AdvancedSearchSort className={cx(styles.sort_container)} />
           <div>
@@ -91,6 +132,7 @@ function parseResponse(bigResponse) {
     hitcount: bigResponse?.data?.complexSearch?.hitcount || 0,
     errorMessage: bigResponse?.data?.complexSearch?.errorMessage || null,
     isLoading: bigResponse?.isLoading,
+    facets: parseOutFacets(bigResponse?.data?.complexSearch?.facets),
   };
 }
 
@@ -105,13 +147,17 @@ export default function Wrap({ onWorkClick, onPageChange }) {
     fieldSearchFromUrl: fieldSearch,
     pageNoFromUrl: pageNo,
     setShowPopover,
+    facets,
   } = useAdvancedSearchContext();
+
+  const { selectedFacets } = useFacets();
 
   // @TODO what to do  with dataCollect ???
   onWorkClick = null;
   // get setter for advanced search history
+  // @TODO add facets
   const { setValue } = useAdvancedSearchHistory();
-  const cqlQuery = cql || convertStateToCql(fieldSearch);
+  const cqlQuery = cql || convertStateToCql({ ...fieldSearch, facets: facets });
 
   const showResult = !isEmpty(fieldSearch) || !isEmpty(cql);
 
@@ -122,14 +168,14 @@ export default function Wrap({ onWorkClick, onPageChange }) {
     })
   );
   const parsedResponse = parseResponse(fastResponse);
-
   //update searchhistory
   if (!parsedResponse?.errorMessage && !parsedResponse.isLoading) {
-    // make an object for searchhistory @TODO .. the right object please
+    // make an object for searchhistory
     const searchHistoryObj = {
       hitcount: parsedResponse?.hitcount,
       fieldSearch: fieldSearch || "",
       cql: cqlQuery,
+      selectedFacets: selectedFacets || [],
     };
     setValue(searchHistoryObj);
   }
@@ -147,6 +193,8 @@ export default function Wrap({ onWorkClick, onPageChange }) {
       error={parsedResponse.errorMessage}
       setShowPopover={setShowPopover}
       isLoading={parsedResponse.isLoading}
+      cql={cqlQuery}
+      selectedFacets={selectedFacets}
     />
   );
 }

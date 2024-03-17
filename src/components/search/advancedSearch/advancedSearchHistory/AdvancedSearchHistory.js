@@ -17,28 +17,49 @@ import { cyKey } from "@/utils/trim";
 import Icon from "@/components/base/icon/Icon";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import MenuDropdown from "@/components/base/dropdown/menuDropdown/MenuDropdown";
+import { useFacets } from "@/components/search/advancedSearch/useFacets";
 
 function HistoryItem({ item, index, checked, onSelect }) {
   const router = useRouter();
   const breakpoint = useBreakpoint();
 
+  const { restartFacetsHook } = useFacets();
+
   const goToItemUrl = (item) => {
+    // restart the useFacets hook - this is a 'new' search
+    restartFacetsHook();
     if (item.fieldSearch) {
       const query = {
         fieldSearch: JSON.stringify(item.fieldSearch),
+        facets: JSON.stringify(item.selectedFacets || "[]"),
       };
       router.push({
         pathname: "/avanceret/",
         query: query,
       });
     } else if (item.cql) {
-      router.push({ pathname: "/avanceret/", query: { cql: item.cql } });
+      router.push({
+        pathname: "/avanceret/",
+        query: {
+          cql: item.cql,
+          facets: JSON.stringify(item.selectedFacets || "[]"),
+        },
+      });
     }
   };
 
   const timestamp = item.unixtimestamp
     ? getTimeStamp(item.unixtimestamp)
     : item.timestamp;
+
+  const flatfilters = [];
+  item?.selectedFacets?.forEach((facet) =>
+    facet.values.map((val) =>
+      flatfilters.push({
+        name: val.name,
+      })
+    )
+  );
 
   return (
     <div
@@ -64,13 +85,11 @@ function HistoryItem({ item, index, checked, onSelect }) {
         type="text2"
         title={getDateTime(item.unixtimestamp)}
       >
-        {breakpoint === "xs"
-          ? Translate({
-              context: "search",
-              label: "timestamp",
-              vars: [timestamp],
-            })
-          : timestamp}
+        {Translate({
+          context: "search",
+          label: "timestamp",
+          vars: [timestamp],
+        })}
       </Text>
       <div className={styles.link}>
         <Link
@@ -85,6 +104,23 @@ function HistoryItem({ item, index, checked, onSelect }) {
             <FormatCql item={item} />
           )}
         </Link>
+        {!isEmpty(item.selectedFacets) && (
+          <div className={styles.historyFilters}>
+            <Text tag="span" type="text1">
+              {Translate({ context: "search", label: "filters" })} :
+            </Text>
+            {flatfilters.map((val, index) => (
+              <Text
+                tag="span"
+                type="text2"
+                key={`${val.name}-${index}`}
+                className={styles.filteritem}
+              >
+                {`${val.name} ${flatfilters.length > index + 1 ? "," : ""}`}
+              </Text>
+            ))}
+          </div>
+        )}
       </div>
       <Text type="text2" className={styles.hitcount}>
         {item.hitcount}{" "}
@@ -188,7 +224,6 @@ function HistoryHeader() {
     <div className={cx(styles.header, styles.grid)}>
       <div className={styles.checkbox}> </div>
       <Text type="text4" className={styles.timestamp}>
-        {/*{@TODO translations}*/}
         {Translate({ context: "search", label: "timeForSearch" })}
       </Text>
       <Text type="text4" className={styles.link}>
