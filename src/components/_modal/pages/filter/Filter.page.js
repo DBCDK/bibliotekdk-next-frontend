@@ -240,12 +240,19 @@ function SelectedFilter({
  * @returns {React.JSX.Element}
  */
 export function Filter(props) {
-  const { data, selected, onSubmit, onClear, isLoading, modal, context } =
-    props;
-
+  const {
+    data,
+    selected,
+    onSubmit,
+    onClear,
+    isLoading,
+    modal,
+    context,
+    origin,
+    cql,
+  } = props;
   // facet data
   const facets = data?.search?.facets || [];
-
   // Facet will contain a specific selected facet/category, if any selected
   const { facet } = context;
 
@@ -311,7 +318,6 @@ export function Filter(props) {
                 if (facet.values.length === 0) {
                   return null;
                 }
-
                 // selected terms in this category
                 const selectedTerms = selected?.[facet.name];
 
@@ -326,7 +332,9 @@ export function Filter(props) {
                 return (
                   <List.FormLink
                     key={`${facet.name}-${idx}`}
-                    onSelect={() => modal.push("filter", { facet })}
+                    onSelect={() =>
+                      modal.push(origin, { facet: facet, cql: cql })
+                    }
                     label={facet.name}
                     className={`${styles.item} ${animations["on-hover"]}`}
                     includeArrows={true}
@@ -467,6 +475,7 @@ export default function Wrap(props) {
       }}
       onClear={() => setFilters({ ...excludeOnClear })}
       {...props}
+      origin="filter"
     />
   );
 }
