@@ -1,3 +1,8 @@
+/**
+ * @file - reuse the filter page from simple search to do facet filters with complex search.
+ * this file is a wrapper for filter.page - @see _modal/pages/filter/Filter.page.js
+ */
+
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import { Filter } from "@/components/_modal/pages/filter/Filter.page";
 import { parseOutFacets } from "@/components/search/advancedSearch/utils";
@@ -5,17 +10,17 @@ import { useData } from "@/lib/api/api";
 import { hitcount } from "@/lib/api/complexSearch.fragments";
 
 export default function Wrap(props) {
-  const { context } = props;
+  const { context, modal } = props;
   const { cql } = context;
 
   const {
     facetsFromEnum,
     facetLimit,
     selectedFacets,
-    pushQuery,
-    setFacetsQuery,
     resetFacets,
+    replaceFacetValue,
   } = useFacets();
+
   // use the useData hook to fetch data
   const { data: facetResponse, isLoading } = useData(
     hitcount({
@@ -27,26 +32,25 @@ export default function Wrap(props) {
     })
   );
 
+  /**
+   * A facet is selected - filter page passes ALL the SELECTED values in the onSelect event.
+   * .. so we replace the whole value section of the selected facets :)
+   *
+   * @param selected
+   */
   const onSelect = (selected) => {
-    console.log(JSON.stringify(selected, null, 4), "SELECTED");
-    console.log(JSON.stringify(selectedFacets, null, 4), "SELECTED FACETS");
-    alert("SELECT");
+    const searchIndexName = Object.keys(selected)[0];
+    const values = Object.values(selected)[0];
 
-    // is facet already selected ?
-    const isSelected = selectedFacets.find((facet) => -1);
-
-    // Updates selected filter in useFilters
-
-    // setFacetsQuery(selected);
+    replaceFacetValue(values, searchIndexName, true);
   };
+
   const onSubmit = () => {
-    pushQuery(false, selectedFacets);
+    modal.clear();
   };
   const onClear = () => {
     resetFacets();
   };
-
-  // console.log(facetResponse, "RESPONSE");
 
   // @TODO parse out empty facets (score=0)
   const facets = parseOutFacets(facetResponse?.complexSearch?.facets);
@@ -71,6 +75,7 @@ export default function Wrap(props) {
       }
     });
   });
+  // make a data object for the filter page to handle
   const data = { search: { facets: enrichedFacets } };
   return (
     <Filter
