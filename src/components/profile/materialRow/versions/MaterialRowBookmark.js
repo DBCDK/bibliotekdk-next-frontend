@@ -38,6 +38,7 @@ const BookmarkColumn = ({
   showFailedAtCreation,
   showSuccessfullyOrdered,
   handleOrderFinished,
+  bookmarkKey
 }) => {
   // If there is a pid we have singleManifestation
   const singleManifestation = !!pid;
@@ -68,6 +69,7 @@ const BookmarkColumn = ({
             size="small"
             shortText
             handleOrderFinished={handleOrderFinished}
+            bookmarkKey={bookmarkKey}
           />
         )}
         {showFailedAtCreation && (
@@ -111,6 +113,7 @@ const MaterialRowBookmark = ({
   showSuccessfullyOrdered = false,
   showFailedAtCreation = false,
   handleOrderFinished,
+  bookmarkKey
 }) => {
   const onCheckboxClick = (e) => {
     if (
@@ -230,6 +233,7 @@ const MaterialRowBookmark = ({
       <div>
         <BookmarkColumn
           workId={workId}
+          bookmarkKey={bookmarkKey}
           pid={pid}
           flatMaterialTypes={flatMaterialTypes}
           onBookmarkDelete={onBookmarkDelete}

@@ -55,7 +55,9 @@ function ReservationButtonWrapper({
   overrideButtonText = null,
   className,
   handleOrderFinished = undefined,
+  bookmarkKey,
 }) {
+  console.log("bookmarkKey", bookmarkKey);
   const { data: workData, isLoadingWorkData } = useData(
     workId && overviewWork({ workId })
   );
@@ -123,6 +125,7 @@ function ReservationButtonWrapper({
         materialTypes,
         hasPhysicalCopy,
         hasDigitalCopy,
+        bookmarkKey,
       }}
     />
   );
@@ -156,6 +159,7 @@ export const ReservationButton = ({
   workTypes,
   materialTypes,
   hasPhysicalCopy,
+  bookmarkKey,
 }) => {
   const { start } = useOrderFlow();
   const noSelectedManifestations = Boolean(isEmpty(access));
@@ -183,7 +187,7 @@ export const ReservationButton = ({
     skeleton: isEmpty(access),
     dataCy: `button-order-overview-enabled`,
     onClick: () => {
-      start({ orders: [{ pids }] });
+      start({ orders: [{ pids, key: bookmarkKey }] });
     },
   };
 

@@ -25,6 +25,7 @@ import { LOGIN_MODE, openLoginModal } from "../_modal/pages/login/utils";
 import * as orderMutations from "@/lib/api/order.mutations";
 import isEqual from "lodash/isEqual";
 import { getSessionStorageItem, setSessionStorageItem } from "@/lib/utils";
+import { getBookmarkKey } from "@/components/work/overview/bookmarkDropdown/BookmarkDropdown";
 
 /**
  * Retrieves periodica information for a list of pids
@@ -599,14 +600,37 @@ export function useSubmitOrders({ orders }) {
           entry?.pids?.[0]
         );
 
+      console.log("materialsToOrder.entry", entry);
+      const materialTypes = entry?.materialData?.ownerWork?.materialTypes?.map(
+        (mat) => mat?.materialTypeSpecific?.code
+      );
+      console.log(
+        "materialsToOrderInfo.key",
+        getBookmarkKey({
+          materialId: entry?.materialData?.workId,
+          materialTypes: materialTypes,
+        })
+      );
+
+      console.log("materialsToOrder.materialTypes", materialTypes);
+      console.log("materialsToOrder.entry?.order?.key", entry?.order?.key);
+const ordrKey = `${
+  entry?.materialData?.workId
+}${entry?.materialData?.ownerWork?.materialTypes
+  ?.map?.((type) => type?.materialTypeSpecific?.code)
+  ?.join(" / ")}`;
       const materialToOrder = {
-        key: `${
-          entry?.materialData?.workId
-        }${entry?.materialData?.ownerWork?.materialTypes
-          ?.map?.((type) => type?.materialTypeSpecific?.code)
-          ?.join(" / ")}`,
+        // key: `${
+        //   entry?.materialData?.workId
+        // }${entry?.materialData?.ownerWork?.materialTypes
+        //   ?.map?.((type) => type?.materialTypeSpecific?.code)
+        //   ?.join(" / ")}`,
+        key: entry?.order?.key || ordrKey,
+
         pids: entry?.pids,
       };
+
+      console.log("🚨🚨materialsToOrder.materialToOrder", materialToOrder);
       if (periodicaForm) {
         materialToOrder.periodicaForm = {
           pid: entry?.pids?.[0],
@@ -616,12 +640,19 @@ export function useSubmitOrders({ orders }) {
       return materialToOrder;
     });
     const materialsToOrderInfo = validation?.validatedOrders?.map((entry) => {
+      console.log("materialsToOrderInfo.entry", entry);
+      console.log(
+        "materialsToOrderInfo.key",
+        getBookmarkKey({
+          materialId: entry?.materialData?.workId,
+          materialTypes: entry?.materialData?.ownerWork?.materialTypes,
+        })
+      );
+      const materialTypes = entry?.materialData?.ownerWork?.materialTypes?.map(
+        (mat) => mat?.materialTypeSpecific?.code
+      );
       return {
-        key: `${
-          entry?.materialData?.workId
-        }${entry?.materialData?.ownerWork?.materialTypes
-          ?.map?.((type) => type?.materialTypeSpecific?.code)
-          ?.join(" / ")}`,
+        key: entry?.order?.key, //getBookmarkKey({materialId:  entry?.materialData?.workId,materialTypes:materialTypes }),
         ...entry,
       };
     });
@@ -645,6 +676,12 @@ export function useSubmitOrders({ orders }) {
       res?.data?.submitMultipleOrders?.successfullyCreated?.map((key) =>
         materialsToOrderInfo?.find((entry) => entry?.key === key)
       );
+    console.log(
+      "res?.data?.submitMultipleOrders?.successfullyCreated",
+      res?.data?.submitMultipleOrders?.successfullyCreated
+    );
+    console.log("failedMaterialsPids", failedMaterialsPids);
+    console.log("successfullyCreatedPids", failedMaterialsPids);
 
     const receipt = {
       isSubmitting: false,
@@ -653,6 +690,8 @@ export function useSubmitOrders({ orders }) {
       successfullyCreatedPids,
       error: res?.error,
     };
+    console.log("failedMaterialsPids", failedMaterialsPids);
+
     setReceipt(receipt);
     setTimeout(() => {
       receipt?.successfullyCreatedPids?.forEach((entry) => {
@@ -699,6 +738,8 @@ export function useOrderFlow() {
     setSessionStorageItem("storedOrders", JSON.stringify(orders));
     setInitialOrders(orders);
     setOrders(orders);
+    console.log("start.orders", orders);
+
     if (isAuthenticated || branchId) {
       modal.push("ematerialfilter", {});
     } else {
