@@ -653,12 +653,7 @@ export function useSubmitOrders({ orders }) {
       res?.data?.submitMultipleOrders?.successfullyCreated?.map((key) =>
         materialsToOrderInfo?.find((entry) => entry?.key === key)
       );
-    console.log(
-      "res?.data?.submitMultipleOrders?.successfullyCreated",
-      res?.data?.submitMultipleOrders?.successfullyCreated
-    );
-    console.log("failedMaterialsPids", failedMaterialsPids);
-    console.log("successfullyCreatedPids", failedMaterialsPids);
+
 
     const receipt = {
       isSubmitting: false,
@@ -667,7 +662,6 @@ export function useSubmitOrders({ orders }) {
       successfullyCreatedPids,
       error: res?.error,
     };
-    console.log("failedMaterialsPids", failedMaterialsPids);
 
     setReceipt(receipt);
     setTimeout(() => {
