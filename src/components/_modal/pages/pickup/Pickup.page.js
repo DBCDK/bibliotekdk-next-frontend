@@ -140,7 +140,7 @@ export default function Wrap(props) {
   const { updateLoanerInfo } = useLoanerInfo();
 
   const { data, isLoading } = useData(
-    libraryFragments.search({ q: query || "" })
+    libraryFragments.search({ q: query || "", limit: 50 })
   );
 
   const dummyData = {

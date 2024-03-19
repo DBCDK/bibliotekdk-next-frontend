@@ -1650,6 +1650,11 @@
       }
     },
     "bookmark-order": {
+      "multiorder-failed-with-error": {
+        "da": "Der skete en fejl - kontakt venligst DBC kundeservice.dbc.dk",
+        "en": "An error occured - please contact Customer service - kunderservice.dbc.dk"
+      },
+
       "efilter-title": {
         "da": "Bemærk",
         "en": "Please notice"

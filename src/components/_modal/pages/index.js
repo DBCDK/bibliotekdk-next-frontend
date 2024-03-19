@@ -29,6 +29,7 @@ import MultiReferences from "./references/multiReferences/MultiReferences";
 import EditionPicker from "./references/editionPicker/EditionPicker";
 import AccountHasProfile from "./accountHasProfile";
 import AdvancedFacets from "./advancedFacets/AdvancedFacets.page";
+import MobileFacets from "./advancedFacets/mobileFacets/mobileFacets.page";
 
 const _modal = {
   Menu,
@@ -62,6 +63,7 @@ const _modal = {
   MultiReceipt,
   AccountHasProfile,
   AdvancedFacets,
+  MobileFacets,
 };
 
 export default _modal;

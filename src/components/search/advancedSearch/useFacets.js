@@ -40,6 +40,38 @@ export function useFacets() {
   );
 
   /**
+   * Insert a facet OR replace the values in a facet.
+   * @param values
+   * @param searchindex
+   * @param replace
+   */
+  function replaceFacetValue(values, searchindex, replace) {
+    const selectedFacets = JSON.parse(facetsQuery);
+    const currentFacet = selectedFacets.find((facet) => {
+      return facet.searchIndex === searchindex;
+    });
+
+    if (currentFacet) {
+      currentFacet.values = values.map((value) => ({
+        value: value,
+        name: value,
+      }));
+    } else {
+      const newFacet = {
+        searchIndex: searchindex,
+        values: values.map((value) => ({
+          value: value,
+          name: value,
+        })),
+      };
+      selectedFacets.push(newFacet);
+    }
+
+    setFacetsQuery(JSON.stringify(selectedFacets));
+    pushQuery(replace, selectedFacets);
+  }
+
+  /**
    * Add an extra facet and push facets to query - we keep facets in a state for
    * advanced search context to understand
    */
@@ -151,6 +183,7 @@ export function useFacets() {
     selectedFacets: JSON.parse(facetsQuery),
     addFacet,
     removeFacet,
+    replaceFacetValue,
     facetLimit,
     facetsFromEnum,
     clearFacetsUrl,
