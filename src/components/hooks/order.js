@@ -25,7 +25,6 @@ import { LOGIN_MODE, openLoginModal } from "../_modal/pages/login/utils";
 import * as orderMutations from "@/lib/api/order.mutations";
 import isEqual from "lodash/isEqual";
 import { getSessionStorageItem, setSessionStorageItem } from "@/lib/utils";
-import { getBookmarkKey } from "@/components/work/overview/bookmarkDropdown/BookmarkDropdown";
 
 /**
  * Retrieves periodica information for a list of pids
@@ -629,7 +628,7 @@ export function useSubmitOrders({ orders }) {
         ?.map?.((type) => type?.materialTypeSpecific?.code)
         ?.join(" / ")}`;
       return {
-        key: entry?.order?.key || orderKey, //getBookmarkKey({materialId:  entry?.materialData?.workId,materialTypes:materialTypes }),
+        key: entry?.order?.key || orderKey,
         ...entry,
       };
     });
