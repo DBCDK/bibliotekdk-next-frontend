@@ -38,7 +38,7 @@ const BookmarkColumn = ({
   showFailedAtCreation,
   showSuccessfullyOrdered,
   handleOrderFinished,
-  bookmarkKey
+  bookmarkKey,
 }) => {
   // If there is a pid we have singleManifestation
   const singleManifestation = !!pid;
@@ -113,7 +113,7 @@ const MaterialRowBookmark = ({
   showSuccessfullyOrdered = false,
   showFailedAtCreation = false,
   handleOrderFinished,
-  bookmarkKey
+  bookmarkKey,
 }) => {
   const onCheckboxClick = (e) => {
     if (

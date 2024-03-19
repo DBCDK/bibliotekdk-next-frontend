@@ -57,7 +57,6 @@ function ReservationButtonWrapper({
   handleOrderFinished = undefined,
   bookmarkKey,
 }) {
-  console.log("bookmarkKey", bookmarkKey);
   const { data: workData, isLoadingWorkData } = useData(
     workId && overviewWork({ workId })
   );
@@ -187,7 +186,7 @@ export const ReservationButton = ({
     skeleton: isEmpty(access),
     dataCy: `button-order-overview-enabled`,
     onClick: () => {
-      start({ orders: [{ pids, key: bookmarkKey }] });
+      start({ orders: [{ pids, bookmarkKey: bookmarkKey }] });
     },
   };
 

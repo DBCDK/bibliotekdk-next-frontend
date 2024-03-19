@@ -599,6 +599,7 @@ export function useSubmitOrders({ orders }) {
           entry?.pids?.[0]
         );
 
+      //default key to use if bookmarkKey is not provided
       const orderKey = `${
         entry?.materialData?.workId
       }${entry?.materialData?.ownerWork?.materialTypes
@@ -606,9 +607,7 @@ export function useSubmitOrders({ orders }) {
         ?.join(" / ")}`;
 
       const materialToOrder = {
-        //todo rename key to bookmarkkey
-        key: entry?.order?.key || orderKey,
-
+        key: entry?.order?.bookmarkKey || orderKey,
         pids: entry?.pids,
       };
 
@@ -621,14 +620,15 @@ export function useSubmitOrders({ orders }) {
       return materialToOrder;
     });
     const materialsToOrderInfo = validation?.validatedOrders?.map((entry) => {
-
+      //default key to use if bookmarkKey is not provided
       const orderKey = `${
         entry?.materialData?.workId
       }${entry?.materialData?.ownerWork?.materialTypes
         ?.map?.((type) => type?.materialTypeSpecific?.code)
         ?.join(" / ")}`;
+
       return {
-        key: entry?.order?.key || orderKey,
+        key: entry?.order?.bookmarkKey || orderKey,
         ...entry,
       };
     });
@@ -652,7 +652,6 @@ export function useSubmitOrders({ orders }) {
       res?.data?.submitMultipleOrders?.successfullyCreated?.map((key) =>
         materialsToOrderInfo?.find((entry) => entry?.key === key)
       );
-
 
     const receipt = {
       isSubmitting: false,

@@ -109,7 +109,7 @@ const BookmarkPage = () => {
   } = useBookmarks();
 
   const receipt =
-    modal?.stack?.find((item) => item.id === "multireceipt")?.context || {}; 
+    modal?.stack?.find((item) => item.id === "multireceipt")?.context || {};
   const { successMaterials, failedMaterials } = receipt;
 
   const { data: populatedBookmarks, isLoading: isPopulateLoading } =
@@ -197,7 +197,7 @@ const BookmarkPage = () => {
   const onOrderManyClick = () => {
     const orders = checkboxList?.map((order) => ({
       pids: order?.manifestations?.map((manifestation) => manifestation?.pid),
-      key: order?.key,
+      bookmarkKey: order?.key,
     }));
     if (orders?.length > 0) {
       start({ orders });
