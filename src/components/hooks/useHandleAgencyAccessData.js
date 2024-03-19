@@ -33,12 +33,14 @@ export const BranchTypeEnum = Object.freeze({
   MAIN_LIBRARY: "hovedbibliotek",
   BRANCH: "filial",
   BOOK_BUS: "bogbus",
+  PRIVAT: "privat",
 });
 
 export const AllowedBranchTypes = new Set([
   BranchTypeEnum.MAIN_LIBRARY,
   BranchTypeEnum.BRANCH,
   BranchTypeEnum.BOOK_BUS,
+  BranchTypeEnum.PRIVAT,
 ]);
 
 /**

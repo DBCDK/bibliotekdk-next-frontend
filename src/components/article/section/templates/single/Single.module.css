@@ -44,3 +44,9 @@
     grid-auto-columns: 5fr 7fr;
   }
 }
+
+.imagewrapper {
+  position: relative;
+  padding-bottom: 62%;
+  margin-bottom: var(--pt2);
+}
