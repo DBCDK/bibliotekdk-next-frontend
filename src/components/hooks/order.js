@@ -600,37 +600,19 @@ export function useSubmitOrders({ orders }) {
           entry?.pids?.[0]
         );
 
-      console.log("materialsToOrder.entry", entry);
-      const materialTypes = entry?.materialData?.ownerWork?.materialTypes?.map(
-        (mat) => mat?.materialTypeSpecific?.code
-      );
-      console.log(
-        "materialsToOrderInfo.key",
-        getBookmarkKey({
-          materialId: entry?.materialData?.workId,
-          materialTypes: materialTypes,
-        })
-      );
+      const orderKey = `${
+        entry?.materialData?.workId
+      }${entry?.materialData?.ownerWork?.materialTypes
+        ?.map?.((type) => type?.materialTypeSpecific?.code)
+        ?.join(" / ")}`;
 
-      console.log("materialsToOrder.materialTypes", materialTypes);
-      console.log("materialsToOrder.entry?.order?.key", entry?.order?.key);
-const ordrKey = `${
-  entry?.materialData?.workId
-}${entry?.materialData?.ownerWork?.materialTypes
-  ?.map?.((type) => type?.materialTypeSpecific?.code)
-  ?.join(" / ")}`;
       const materialToOrder = {
-        // key: `${
-        //   entry?.materialData?.workId
-        // }${entry?.materialData?.ownerWork?.materialTypes
-        //   ?.map?.((type) => type?.materialTypeSpecific?.code)
-        //   ?.join(" / ")}`,
-        key: entry?.order?.key || ordrKey,
+        //todo rename key to bookmarkkey
+        key: entry?.order?.key || orderKey,
 
         pids: entry?.pids,
       };
 
-      console.log("🚨🚨materialsToOrder.materialToOrder", materialToOrder);
       if (periodicaForm) {
         materialToOrder.periodicaForm = {
           pid: entry?.pids?.[0],
@@ -640,19 +622,14 @@ const ordrKey = `${
       return materialToOrder;
     });
     const materialsToOrderInfo = validation?.validatedOrders?.map((entry) => {
-      console.log("materialsToOrderInfo.entry", entry);
-      console.log(
-        "materialsToOrderInfo.key",
-        getBookmarkKey({
-          materialId: entry?.materialData?.workId,
-          materialTypes: entry?.materialData?.ownerWork?.materialTypes,
-        })
-      );
-      const materialTypes = entry?.materialData?.ownerWork?.materialTypes?.map(
-        (mat) => mat?.materialTypeSpecific?.code
-      );
+
+      const orderKey = `${
+        entry?.materialData?.workId
+      }${entry?.materialData?.ownerWork?.materialTypes
+        ?.map?.((type) => type?.materialTypeSpecific?.code)
+        ?.join(" / ")}`;
       return {
-        key: entry?.order?.key, //getBookmarkKey({materialId:  entry?.materialData?.workId,materialTypes:materialTypes }),
+        key: entry?.order?.key || orderKey, //getBookmarkKey({materialId:  entry?.materialData?.workId,materialTypes:materialTypes }),
         ...entry,
       };
     });
@@ -738,7 +715,6 @@ export function useOrderFlow() {
     setSessionStorageItem("storedOrders", JSON.stringify(orders));
     setInitialOrders(orders);
     setOrders(orders);
-    console.log("start.orders", orders);
 
     if (isAuthenticated || branchId) {
       modal.push("ematerialfilter", {});
