@@ -4,7 +4,10 @@
  */
 
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
-import { Filter } from "@/components/_modal/pages/filter/Filter.page";
+import {
+  Filter,
+  FilterSkeleton,
+} from "@/components/_modal/pages/filter/Filter.page";
 import { parseOutFacets } from "@/components/search/advancedSearch/utils";
 import { useData } from "@/lib/api/api";
 import { hitcount } from "@/lib/api/complexSearch.fragments";
@@ -75,6 +78,11 @@ export default function Wrap(props) {
       }
     });
   });
+
+  if (isLoading) {
+    return <FilterSkeleton {...props} />;
+  }
+
   // make a data object for the filter page to handle
   const data = { search: { facets: enrichedFacets } };
   return (
