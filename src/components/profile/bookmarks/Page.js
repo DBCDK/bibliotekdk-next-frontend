@@ -108,6 +108,10 @@ const BookmarkPage = () => {
     isLoading: bookmarsDataLoading,
   } = useBookmarks();
 
+  const receipt =
+    modal?.stack?.find((item) => item.id === "multireceipt")?.context || {};
+  const { successMaterials, failedMaterials } = receipt;
+
   const { data: populatedBookmarks, isLoading: isPopulateLoading } =
     usePopulateBookmarks(bookmarksData);
   const [activeStickyButton, setActiveStickyButton] = useState(null);
@@ -130,6 +134,12 @@ const BookmarkPage = () => {
     setSuccessfullyCreatedIds((prev) => [...prev, ...successfullyCreated]);
     setFailureAtCreationIds((prev) => [...prev, ...failedAtCreation]);
   }
+
+  useEffect(() => {
+    if (successMaterials && failedMaterials) {
+      handleOrderFinished(successMaterials, failedMaterials);
+    }
+  }, [successMaterials, failedMaterials]);
 
   useEffect(() => {
     setSortBy(sortByValue);
@@ -180,6 +190,7 @@ const BookmarkPage = () => {
   const onOrderManyClick = () => {
     const orders = checkboxList?.map((order) => ({
       pids: order?.manifestations?.map((manifestation) => manifestation?.pid),
+      bookmarkKey: order?.key,
     }));
     if (orders?.length > 0) {
       start({ orders });

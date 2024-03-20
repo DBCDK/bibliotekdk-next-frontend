@@ -599,14 +599,18 @@ export function useSubmitOrders({ orders }) {
           entry?.pids?.[0]
         );
 
+      //default key to use if bookmarkKey is not provided
+      const orderKey = `${
+        entry?.materialData?.workId
+      }${entry?.materialData?.ownerWork?.materialTypes
+        ?.map?.((type) => type?.materialTypeSpecific?.code)
+        ?.join(" / ")}`;
+
       const materialToOrder = {
-        key: `${
-          entry?.materialData?.workId
-        }${entry?.materialData?.ownerWork?.materialTypes
-          ?.map?.((type) => type?.materialTypeSpecific?.code)
-          ?.join(" / ")}`,
+        key: entry?.order?.bookmarkKey || orderKey,
         pids: entry?.pids,
       };
+
       if (periodicaForm) {
         materialToOrder.periodicaForm = {
           pid: entry?.pids?.[0],
@@ -616,12 +620,15 @@ export function useSubmitOrders({ orders }) {
       return materialToOrder;
     });
     const materialsToOrderInfo = validation?.validatedOrders?.map((entry) => {
+      //default key to use if bookmarkKey is not provided
+      const orderKey = `${
+        entry?.materialData?.workId
+      }${entry?.materialData?.ownerWork?.materialTypes
+        ?.map?.((type) => type?.materialTypeSpecific?.code)
+        ?.join(" / ")}`;
+
       return {
-        key: `${
-          entry?.materialData?.workId
-        }${entry?.materialData?.ownerWork?.materialTypes
-          ?.map?.((type) => type?.materialTypeSpecific?.code)
-          ?.join(" / ")}`,
+        key: entry?.order?.bookmarkKey || orderKey,
         ...entry,
       };
     });
@@ -653,6 +660,7 @@ export function useSubmitOrders({ orders }) {
       successfullyCreatedPids,
       error: res?.error,
     };
+
     setReceipt(receipt);
     setTimeout(() => {
       receipt?.successfullyCreatedPids?.forEach((entry) => {
@@ -699,6 +707,7 @@ export function useOrderFlow() {
     setSessionStorageItem("storedOrders", JSON.stringify(orders));
     setInitialOrders(orders);
     setOrders(orders);
+
     if (isAuthenticated || branchId) {
       modal.push("ematerialfilter", {});
     } else {
