@@ -49,11 +49,15 @@ function Details({ className = "", manifestation = {}, work = {} }) {
   const materialType = formatMaterialTypesToPresentation(
     flattenMaterialType(manifestation)
   );
-  const subtitle = Translate({
-    ...context,
-    label: "subtitle",
-    vars: [materialType],
-  });
+  const subtitle = (
+    <Text type="text2">
+      {Translate({
+        ...context,
+        label: "subtitle",
+        vars: [materialType],
+      })}
+    </Text>
+  );
 
   const fieldsToShow = useMemo(() => {
     return fieldsForRows(manifestation, work, context);
@@ -127,7 +131,6 @@ export function DetailsSkeleton() {
     <Section
       title={Translate({ context: "details", label: "title" })}
       space={{ top: "var(--pt8)", bottom: "var(--pt4)" }}
-      subtitle=" ... "
     >
       <Row className={`${styles.details}`}>
         {texts.map((txt) => (
