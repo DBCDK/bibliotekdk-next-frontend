@@ -21,12 +21,7 @@ import translate from "@/components/base/translate";
  * @returns {JSX.Element}
  * @constructor
  */
-export function AdvancedFacets({
-  facets,
-  isLoading,
-  hitcount,
-  replace = false,
-}) {
+export function AdvancedFacets({ facets, isLoading, replace = false }) {
   const { addFacet, removeFacet, selectedFacets } = useFacets();
 
   const filteredFacets = Object.values(AdvFacetsTypeEnum).filter((val) =>
