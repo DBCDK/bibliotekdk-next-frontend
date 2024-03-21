@@ -4,7 +4,6 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 
 import Title from "@/components/base/title";
-import Text from "@/components/base/text";
 
 import { cyKey } from "@/utils/trim";
 
