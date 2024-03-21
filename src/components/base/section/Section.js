@@ -125,7 +125,7 @@ export default function Section({
             >
               {divider?.title}
               {title}
-              {subtitle && <Text type="text2">{subtitle}</Text>}
+              {subtitle && subtitle}
             </Col>
           )}
 
@@ -152,7 +152,7 @@ export default function Section({
             >
               {divider?.title}
               {title}
-              {subtitle && <Text type="text2">{subtitle}</Text>}
+              {subtitle && subtitle}
             </Col>
           )}
         </Row>
@@ -183,4 +183,5 @@ Section.propTypes = {
   sectionTitleClass: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   headerTag: PropTypes.string,
   sectionTag: PropTypes.string,
+  subTitle: PropTypes.object,
 };
