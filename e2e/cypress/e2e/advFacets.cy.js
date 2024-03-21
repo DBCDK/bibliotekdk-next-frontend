@@ -24,7 +24,7 @@ describe("Facets", () => {
 
     // two of them should be selected from url params
     cy.get("[data-cy=accordion-item]")
-      .eq(3)
+      .eq(0)
       .click()
       .find("li")
       .find("[checked]")
@@ -32,7 +32,7 @@ describe("Facets", () => {
 
     // uncheck one
     cy.get("[data-cy=accordion-item]")
-      .eq(4)
+      .eq(0)
       .find("li")
       .find("[checked]")
       .first()
