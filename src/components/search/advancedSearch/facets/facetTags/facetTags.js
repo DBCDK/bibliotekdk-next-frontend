@@ -42,7 +42,9 @@ export function FacetTags() {
                 className={styles.tag}
                 key={`${tag.searchIndex}-${val.name}-${index}`}
               >
-                <span>{val.name}</span>
+                <Text tag="span" type="text3" className={styles.tagtext}>
+                  {val.name}
+                </Text>
                 <span>
                   <Icon
                     onClick={() => {

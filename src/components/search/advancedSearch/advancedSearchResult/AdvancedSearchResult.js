@@ -15,6 +15,7 @@ import cx from "classnames";
 import AdvancedSearchSort from "@/components/search/advancedSearch/advancedSearchSort/AdvancedSearchSort";
 import TopBar from "@/components/search/advancedSearch/advancedSearchResult/topBar/TopBar";
 import Title from "@/components/base/title";
+import Text from "@/components/base/text";
 import { NoHitSearch } from "@/components/search/advancedSearch/advancedSearchResult/noHitSearch/NoHitSearch";
 import ResultPage from "./ResultPage/ResultPage";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
@@ -57,9 +58,9 @@ export function AdvancedSearchResult({
           <Title type="title5" className={styles.countstyle}>
             {hitcount}
           </Title>
-          <Title type="title6" className={styles.titleStyle}>
+          <Text type="text3" className={styles.titleStyle}>
             {translate({ context: "search", label: "title" })}
-          </Title>
+          </Text>
         </div>
       </div>
     );
@@ -82,7 +83,7 @@ export function AdvancedSearchResult({
             <div className={styles.facetsContainer}>
               <FacetTags selectedFacets={selectedFacets} />
               <div className={styles.subtitleStyle}>
-                <Title type="title6">
+                <Title type="title6" className={styles.titleStyle}>
                   {translate({ context: "search", label: "narrow-search" })}
                 </Title>
               </div>

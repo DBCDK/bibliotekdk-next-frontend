@@ -6,6 +6,10 @@
   margin: 0 var(--pt1) var(--pt1) 0;
 }
 
+.tagtext {
+  font-family: var(--body-font-semibold);
+}
+
 .container {
   background-color: var(--concrete);
   padding: var(--pt1);

@@ -10,6 +10,10 @@
   margin-right: var(--pt2);
 }
 
+.facettitle {
+  font-family: var(--body-font-semibold);
+}
+
 .score {
   text-align: right;
 }
@@ -27,7 +31,10 @@
 }
 
 .showmorelink {
-  padding: var(--pt1) 0 var(--pt2) var(--pt1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--pt1) 0 var(--pt2) 0;
 }
 
 .skeleton {

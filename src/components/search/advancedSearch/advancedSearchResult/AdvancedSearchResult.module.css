@@ -7,7 +7,7 @@
 }
 
 .titleStyle {
-  font-family: var(--body-font-semibold);
+  /*font-family: var(--body-font-semibold);*/
 }
 
 .subtitleStyle {
@@ -25,8 +25,8 @@
 .titleflex {
   display: flex;
   align-items: baseline;
-  margin-bottom: var(--pt2);
-  margin-top: var(--pt2);
+  margin-bottom: var(--pt3);
+  /*margin-top: var(--pt2);*/
 }
 
 .countstyle {

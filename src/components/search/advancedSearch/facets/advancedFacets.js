@@ -47,7 +47,6 @@ export function AdvancedFacets({
 
   return (
     <Accordion className={styles.accordionContainer}>
-      <div>{hitcount}</div>
       {isLoading && <AccordianItem isLoading={isLoading} />}
       {filteredFacets?.map((facetName, index) => (
         <AccordianItem
@@ -85,12 +84,12 @@ function AccordianItem({
   const titleElement = () => {
     return (
       <div className={styles.countContainer}>
-        <span>
+        <Text tag="span" type="text3" className={styles.facettitle}>
           {translate({
             context: "complex-search-facets",
             label: `label-${facetName}`,
           })}
-        </span>
+        </Text>
         {current?.values?.length && (
           <span className={styles.count}>{current?.values?.length || ""}</span>
         )}
@@ -163,8 +162,12 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
               }}
               checked={initialcheck}
             />
-            <span>{value.key}</span>
-            <span className={styles.score}>{value.score}</span>
+            <Text tag="span" type="text3">
+              {value.key}
+            </Text>
+            <Text tag="span" type="text3" className={styles.score}>
+              {value.score}
+            </Text>
           </li>
         ))}
       {facet?.values?.length > numToShow && (
