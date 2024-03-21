@@ -330,7 +330,7 @@ export function getElementByCustomSorting(
  * @returns {string}
  */
 export function jsonify(stringArray) {
-  return JSON.stringify(stringArray).slice(1, -1).replaceAll(`"`, "");
+  return JSON.stringify(stringArray)?.slice(1, -1)?.replace(/"/g, "");
 }
 
 export function getComparisonBySort(aBySort, bBySort) {

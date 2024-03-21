@@ -157,7 +157,7 @@ export function contentParser({ content, manifestations }) {
   const chunks = [];
 
   if (manifestations?.length === 0) {
-    chunks.push(content?.replaceAll("\\", ""));
+    chunks.push(content?.replace(/\\/g, ""));
   } else {
     manifestations
       ?.filter((manifestation) => !!manifestation)
