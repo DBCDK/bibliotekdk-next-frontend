@@ -13,6 +13,7 @@ import { useData } from "@/lib/api/api";
 import { hitcount } from "@/lib/api/complexSearch.fragments";
 import { parseOutFacets } from "@/components/search/advancedSearch/utils";
 import Skeleton from "@/components/base/skeleton";
+import translate from "@/components/base/translate";
 
 /**
  *
@@ -74,7 +75,7 @@ function AccordianItem({
   if (isLoading) {
     return (
       <div className={styles.itemborder}>
-        <Skeleton className={styles.skeleton} />
+        <Skeleton className={styles.skeleton} lines={10} />
       </div>
     );
   }
@@ -84,7 +85,12 @@ function AccordianItem({
   const titleElement = () => {
     return (
       <div className={styles.countContainer}>
-        <span>{facetName}</span>
+        <span>
+          {translate({
+            context: "complex-search-facets",
+            label: `label-${facetName}`,
+          })}
+        </span>
         {current?.values?.length && (
           <span className={styles.count}>{current?.values?.length || ""}</span>
         )}

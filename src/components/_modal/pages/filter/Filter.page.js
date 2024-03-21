@@ -33,6 +33,7 @@ function SelectedFilter({
   onSelect,
   modal,
   active,
+  translateContext = "facets",
 }) {
   const name = data?.name;
   const values = data?.values || [];
@@ -126,7 +127,7 @@ function SelectedFilter({
 
   // Get workType specific title if set, else fallback to title
   const category = Translate({
-    context: "facets",
+    context: translateContext,
     label: workType ? `label-${workType}-${name}` : `label-${name}`,
   });
 
@@ -250,6 +251,7 @@ export function Filter(props) {
     context,
     origin,
     cql,
+    translateContext = "facets",
   } = props;
   // facet data
   const facets = data?.search?.facets || [];
@@ -273,6 +275,7 @@ export function Filter(props) {
           terms={selected?.[facet.name] || []}
           workType={workType}
           data={selectedFacet}
+          translateContext={translateContext}
         />
       ) : (
         <>
@@ -303,7 +306,7 @@ export function Filter(props) {
             data-cy="list-facets"
             className={styles.group}
             label={Translate({
-              context: "facets",
+              context: translateContext,
               label: "facets-group-label",
             })}
             disableGroupOutline
@@ -323,7 +326,7 @@ export function Filter(props) {
 
                 // Get workType specific title if set, else fallback title
                 const title = Translate({
-                  context: "facets",
+                  context: translateContext,
                   label: workType
                     ? `label-${workType}-${facet.name}`
                     : `label-${facet.name}`,

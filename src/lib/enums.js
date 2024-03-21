@@ -10,6 +10,7 @@ export const SuggestTypeEnum = Object.freeze({
 export const AdvFacetsTypeEnum = Object.freeze({
   SPECIFICMATERIALTYPE: "specificmaterialtype",
   CREATOR: "creator",
+  CONTRIBUTOR: "contributor",
   SUBJECT: "subject",
   MAINLANGUAGE: "mainlanguage",
   GENERALAUDIENCE: "generalaudience",
@@ -18,7 +19,6 @@ export const AdvFacetsTypeEnum = Object.freeze({
   AGES: "ages",
   PRIMARYTARGET: "primarytarget",
   // CATALOGUECODE: "cataloguecode",
-  // CONTRIBUTOR: "contributor",
   // CONTRIBUTORFUNCTION: "contributorfunction",
   // CREATORCONTRIBUTOR: "creatorcontributor",
   // CREATORCONTRIBUTORFUNCTION: "creatorcontributorfunction",

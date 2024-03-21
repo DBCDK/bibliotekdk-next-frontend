@@ -96,6 +96,7 @@ export default function Wrap(props) {
       origin="mobileFacets"
       cql={cql}
       {...props}
+      translateContext="complex-search-facets"
     />
   );
 }
