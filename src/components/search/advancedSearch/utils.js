@@ -13,7 +13,7 @@ function getInputFieldsQueryToCql(inputFields) {
           : [];
       const searchIndexWithValue = `${
         item.searchIndex
-      }="${item.value.replaceAll(`"`, `\\\"`)}"`;
+      }="${item?.value?.replaceAll(`"`, `\\\"`)}"`;
 
       // We spread prefix, in case it is empty, and ensure no weird spaces
       return [...prefix, searchIndexWithValue].join(" ");
