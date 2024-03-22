@@ -9,28 +9,37 @@
 
 module.exports = {
   distDir: "dist/next",
-  // headers: async () => {
-  //   return [
-  //     {
-  //       source: "/_next/image:slug*",
-  //       headers: [
-  //         {
-  //           key: "Cache-Control",
-  //           value: "public, s-maxage=600",
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       source: "/img:slug*",
-  //       headers: [
-  //         {
-  //           key: "Cache-Control",
-  //           value: "public, s-maxage=600",
-  //         },
-  //       ],
-  //     },
-  //   ];
-  // },
+  headers: async () => {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          {
+            key: "X-Content-Type-Options",
+            value: "nosniff",
+          },
+          // {
+          //   source: "/_next/image:slug*",
+          //   headers: [
+          //     {
+          //       key: "Cache-Control",
+          //       value: "public, s-maxage=600",
+          //     },
+          //   ],
+          // },
+          // {
+          //   source: "/img:slug*",
+          //   headers: [
+          //     {
+          //       key: "Cache-Control",
+          //       value: "public, s-maxage=600",
+          //     },
+          //   ],
+          // },
+        ],
+      },
+    ];
+  },
   i18n: {
     locales: ["da", "en"],
     defaultLocale: "da",
