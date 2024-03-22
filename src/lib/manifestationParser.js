@@ -90,6 +90,14 @@ const fields = () => [
       ),
   },
   {
+    dataField: "contributorsFromDescription",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "contributorsFromDescription",
+    }),
+    valueParser: (values) => values?.join(", ") || "",
+  },
+  {
     dataField: "publisher",
     label: Translate({
       context: "bibliographic-data",

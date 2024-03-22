@@ -710,6 +710,11 @@
       }
     },
     "bibliographic-data": {
+      "contributorsFromDescription": {
+        "da": "Beskrivelse fra materialet",
+        "en": "Description from material"
+      },
+
       "requirements": {
         "da": "Nødvendigt udstyr",
         "en": "Required gear"
