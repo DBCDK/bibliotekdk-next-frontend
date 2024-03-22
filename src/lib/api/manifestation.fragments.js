@@ -411,6 +411,8 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
       }
     }
   }
+  creatorsFromDescription
+  contributorsFromDescription
   publisher
   edition {
     publicationYear {

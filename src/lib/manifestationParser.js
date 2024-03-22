@@ -106,6 +106,22 @@ const fields = () => [
     valueParser: (value) => value.publicationYear?.display || "",
   },
   {
+    dataField: "contributorsFromDescription",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "contributorsFromDescription",
+    }),
+    valueParser: (values) => values?.join(", ") || "",
+  },
+  {
+    dataField: "creatorsFromDescription",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "creatorsFromDescription",
+    }),
+    valueParser: (values) => values?.join(", ") || "",
+  },
+  {
     dataField: "hostPublication",
     label: Translate({
       context: "bibliographic-data",
