@@ -410,8 +410,7 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
         singular
       }
     }
-  }
-  creatorsFromDescription
+  }  
   contributorsFromDescription
   publisher
   edition {
