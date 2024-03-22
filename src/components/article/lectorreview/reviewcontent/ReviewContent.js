@@ -45,7 +45,7 @@ function substituteContentSubstitute(single) {
     );
   });
 
-  return <BodyParser body={placeholder.replaceAll("\\", '"')} Tag={"p"} />;
+  return <BodyParser body={placeholder?.replaceAll("\\", '"')} Tag={"p"} />;
 }
 
 /**
@@ -76,7 +76,7 @@ export function ReviewContent({ lectorReviews }) {
                 tag={"div"}
                 type="title5"
               >
-                {single.content.replaceAll("\\", '"')}
+                {single.content?.replace(/\\/g, '"')}
               </Title>
             );
           }
