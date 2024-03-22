@@ -39,7 +39,6 @@
 
 .skeleton {
   position: relative;
-  height: var(--pt4);
   margin-bottom: var(--pt05);
 }
 

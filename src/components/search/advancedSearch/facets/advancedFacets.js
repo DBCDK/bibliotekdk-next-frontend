@@ -68,9 +68,9 @@ function AccordianItem({
 }) {
   if (isLoading) {
     return (
-      <div className={styles.itemborder}>
-        <Skeleton className={styles.skeleton} lines={10} />
-      </div>
+      <Skeleton className={styles.skeleton}>
+        <div>fisk</div>
+      </Skeleton>
     );
   }
 
