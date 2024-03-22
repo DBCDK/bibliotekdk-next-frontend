@@ -63,7 +63,9 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
         const query = { fieldSearch: stateToString };
         router.push({ pathname: "/avanceret", query });
       } else {
-        const query = { cql: parsedCQL };
+        const query = {
+          cql: parsedCQL,
+        };
         router.push({ pathname: "/avanceret", query });
       }
     } else {

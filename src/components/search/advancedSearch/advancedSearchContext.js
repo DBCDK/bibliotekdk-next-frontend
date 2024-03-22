@@ -165,7 +165,6 @@ export default function AdvancedSearchProvider({ children, router }) {
     dropdownUnits,
     dropdownSearchIndices,
     updateDropdownSearchIndices,
-    resetObjectState,
     parsedCQL,
     setParsedCQL,
     fieldSearchFromUrl,
