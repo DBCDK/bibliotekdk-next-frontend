@@ -5,6 +5,7 @@ import Pagination from "@/components/search/pagination/Pagination";
 import PropTypes from "prop-types";
 import {
   convertStateToCql,
+  getCqlAndFacetsQuery,
   parseOutFacets,
 } from "@/components/search/advancedSearch/utils";
 import useAdvancedSearchHistory from "@/components/hooks/useAdvancedSearchHistory";
@@ -152,13 +153,15 @@ export default function Wrap({ onWorkClick, onPageChange }) {
 
   const { selectedFacets } = useFacets();
 
+  // if facets are set we need them for the cql
+  const cqlAndFacetsQuery = getCqlAndFacetsQuery(cql, selectedFacets);
   // @TODO what to do  with dataCollect ???
   onWorkClick = null;
   // get setter for advanced search history
-  // @TODO add facets
   const { setValue } = useAdvancedSearchHistory();
   const cqlQuery =
-    cql || convertStateToCql({ ...fieldSearch, facets: selectedFacets });
+    cqlAndFacetsQuery ||
+    convertStateToCql({ ...fieldSearch, facets: selectedFacets });
 
   const showResult = !isEmpty(fieldSearch) || !isEmpty(cql);
 
@@ -172,10 +175,11 @@ export default function Wrap({ onWorkClick, onPageChange }) {
   //update searchhistory
   if (!parsedResponse?.errorMessage && !parsedResponse.isLoading) {
     // make an object for searchhistory
+    // the cql part .. we use the raw cql for now - facets are handled independently
     const searchHistoryObj = {
       hitcount: parsedResponse?.hitcount,
       fieldSearch: fieldSearch || "",
-      cql: cqlQuery,
+      cql: cqlAndFacetsQuery ? cql : "",
       selectedFacets: selectedFacets || [],
     };
     setValue(searchHistoryObj);

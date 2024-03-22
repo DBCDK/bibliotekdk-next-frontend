@@ -62,7 +62,6 @@ export function getFacetsQuery(facets) {
       ?.filter((facet) => !isEmpty(facet.values))
       .map((facet) => {
         const searchindex = `${INDEXPREFIX}${facet.searchIndex}`;
-        // Each dropdownSearchIndex needs to be joined together.
         //  For now we use AND with a variable
         return facet.values
           .map((singleValue) => {
@@ -124,6 +123,25 @@ export function facetsFromUrl(router) {
   // check the facets
   const verifiedFacets = facets && JSON.parse(facets);
   return Array.isArray(verifiedFacets) ? JSON.stringify(verifiedFacets) : "[]";
+}
+
+/**
+ * Combine given query with query generated from selected facets
+ * @param cql
+ * @param selectedFacets
+ * @returns {string|*}
+ */
+export function getCqlAndFacetsQuery(cql, selectedFacets) {
+  if (!cql) {
+    return null;
+  }
+  let cqlAndFacetsQuery;
+  const facetCql = getFacetsQuery(selectedFacets);
+  if (cql) {
+    cqlAndFacetsQuery = facetCql ? cql + " AND " + facetCql : cql;
+  }
+
+  return cqlAndFacetsQuery;
 }
 
 export function convertStateToCql({
