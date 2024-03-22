@@ -1,4 +1,8 @@
-import { context, getBaseUrl,sortEreolFirst } from "@/components/work/reservationbutton/utils";
+import {
+  context,
+  getBaseUrl,
+  sortEreolFirst,
+} from "@/components/work/reservationbutton/utils";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import Col from "react-bootstrap/Col";
@@ -91,10 +95,8 @@ export default function Wrap({ selectedPids, skeleton }) {
     return null;
   }
 
-  console.log(JSON.stringify(access));
-
   const sortedAccess = sortEreolFirst(access);
-  console.log("sortedAccess", sortedAccess);
+
   return (
     <OrderButtonTextBelow
       access={sortedAccess}

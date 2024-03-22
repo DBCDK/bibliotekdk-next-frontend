@@ -7,7 +7,7 @@ import {
   constructButtonText,
   context,
   handleGoToLogin,
-  sortEreolFirst
+  sortEreolFirst,
 } from "@/components/work/reservationbutton/utils";
 import isEmpty from "lodash/isEmpty";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
@@ -161,9 +161,7 @@ export const ReservationButton = ({
   hasPhysicalCopy,
   bookmarkKey,
 }) => {
-
-access = sortEreolFirst(access)
-
+  access = sortEreolFirst(access);
   const { start } = useOrderFlow();
   const noSelectedManifestations = Boolean(isEmpty(access));
 
@@ -214,7 +212,6 @@ access = sortEreolFirst(access)
 
     //ACCESS_URL,INFOMEDIA,EREOL
     if (onlineMaterialWithoutLoginOrLoginAtUrl) {
-      console.log(' onlineMaterialWithoutLoginOrLoginAtUrl',onlineMaterialWithoutLoginOrLoginAtUrl)
       return {
         props: accessibleOnlineAndNoLoginProps,
         text: constructButtonText(workTypes, materialTypes, shortText),
@@ -231,7 +228,7 @@ access = sortEreolFirst(access)
   };
 
   const { props, text, preferSecondary } = getProps();
-console.log('props',props)
+  console.log("props", props);
 
   return (
     <>
