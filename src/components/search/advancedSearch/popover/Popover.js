@@ -97,7 +97,7 @@ const Popover = ({ className, simpleSearchRef }) => {
           show={!showPopover && showInfoTooltip}
           labelToTranslate="advanced-search-tooltip"
           placement="bottom"
-          tabIndex="0"
+          tabIndex="-1"
         >
           <SearchIcon
             className={`${styles.triggercontainer} ${className} ${
