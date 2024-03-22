@@ -216,6 +216,6 @@ export const constructButtonText = (
  */
 export const sortEreolFirst = (access) => {
   return access?.sort((a, b) =>
-    a.origin === "eReolen" ? -1 : b.origin === "eReolen" ? 1 : 0
+    a?.origin === "eReolen" ? -1 : b?.origin === "eReolen" ? 1 : 0
   );
 };
