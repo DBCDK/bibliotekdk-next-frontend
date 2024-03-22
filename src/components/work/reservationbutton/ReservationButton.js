@@ -228,7 +228,6 @@ export const ReservationButton = ({
   };
 
   const { props, text, preferSecondary } = getProps();
-  console.log("props", props);
 
   return (
     <>
