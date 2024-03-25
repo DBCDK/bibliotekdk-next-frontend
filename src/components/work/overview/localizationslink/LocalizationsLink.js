@@ -8,9 +8,7 @@ import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
 import styles from "./LocalizationsLink.module.css";
 import { openAgencyLocalizationsModal } from "@/components/work/utils";
-import { AccessEnum } from "@/lib/enums";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
-import { useManifestationAccess } from "@/components/hooks/useManifestationAccess";
 import { useManifestationData } from "@/components/hooks/order";
 
 export function LocalizationsLink({
@@ -69,8 +67,6 @@ export default function Wrap({ selectedPids, singleManifestation = false }) {
   // @TODO if user is logged in - do a holdingsitems request on user agency
   const { loanerInfo } = useLoanerInfo();
   const modal = useModal();
-
-  const { access } = useManifestationAccess({ pids: selectedPids });
 
   const { physicalPids, isLoading: isLoadingManifestationData } =
     useManifestationData({ pids: selectedPids });
