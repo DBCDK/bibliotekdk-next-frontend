@@ -1272,6 +1272,10 @@
         "da": "Bestil (deaktiveret)",
         "en": "Order (disabled)"
       },
+      "Order-disabled-but-owned": {
+        "da": "Kan ikke bestilles til hjemlån",
+        "en": "Not available for home loan"
+      },
       "all-options-link": {
         "da": "Alle bestillingsmuligheder (%s)",
         "en": "All order options (%s)"

@@ -75,12 +75,10 @@ export default function Wrap({ selectedPids, singleManifestation = false }) {
   const { physicalPids, isLoading: isLoadingManifestationData } =
     useManifestationData({ pids: selectedPids });
 
-  const preferredOnline =
-    access?.[0]?.__typename !== AccessEnum.INTER_LIBRARY_LOAN;
+  const preferredOnline = !physicalPids.length;
 
   const { data, isLoading, isSlow } = useData(
-    !preferredOnline &&
-      physicalPids?.length > 0 &&
+    physicalPids?.length > 0 &&
       typeof physicalPids?.[0] !== "undefined" &&
       localizationsFragments.localizationsQuery({ pids: physicalPids })
   );

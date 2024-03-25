@@ -28,6 +28,14 @@ describe("Reservation button", () => {
     cy.get("[data-cy=router-query]").contains("modal");
   });
 
+  it("physical material shows now for loan message, when no ILL, but is owned by agency", () => {
+    cy.visit(
+      "/iframe.html?args=&id=work-reservationbutton--reservation-button-physical-book-no-ill-but-is-owned-by-agency"
+    );
+
+    cy.contains("Kan ikke bestilles til hjemlån");
+  });
+
   it("digital material", () => {
     const urla =
       "/iframe.html?id=work-reservationbutton--reservation-button-e-book";
