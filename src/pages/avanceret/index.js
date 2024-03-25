@@ -2,8 +2,10 @@ import Header from "@/components/header/Header";
 import { useRouter } from "next/router";
 import { fetchAll } from "@/lib/api/apiServerOnly";
 import useDataCollect from "@/lib/useDataCollect";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import AdvancedSearchResult from "@/components/search/advancedSearch/advancedSearchResult/AdvancedSearchResult";
+import { useSearchParams } from "next/navigation";
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
 /**
  * Renders AdvancedSearch page
@@ -12,6 +14,15 @@ export default function AdvancedSearchPage() {
   const router = useRouter();
   const dataCollect = useDataCollect();
   const scrollRef = useRef();
+  const searchParams = useSearchParams();
+
+  const { setShowPopover } = useAdvancedSearchContext();
+  useEffect(() => {
+    //on page load. If there are no parameters in the query, open the advanced search popover
+    if (searchParams.size === 0) {
+      setShowPopover(true);
+    }
+  }, []);
 
   /**
    * Updates URL query params
