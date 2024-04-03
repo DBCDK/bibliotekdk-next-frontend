@@ -312,7 +312,7 @@ describe("Multi Order", () => {
         });
       });
     });
-    it("Should order specific article from periodica via Digital Article Service and ILL (prefer digital)", () => {
+    it.only("Should order specific article from periodica via Digital Article Service and ILL (prefer digital)", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"
       );
@@ -380,6 +380,12 @@ describe("Multi Order", () => {
           },
         });
       });
+
+      // close the form
+      cy.get('[data-cy="multiorder-button-close"]').click();
+      // click order one more time to verify reset of periodica form
+      cy.contains("Bestil tidsskrifter").click();
+      cy.contains("2 materialer mangler at få udfyldt informationer");
     });
     it("Should warn about already ordered material, order material anyway", () => {
       cy.visit(
