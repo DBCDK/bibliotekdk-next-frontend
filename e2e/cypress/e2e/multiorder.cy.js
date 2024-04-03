@@ -312,7 +312,7 @@ describe("Multi Order", () => {
         });
       });
     });
-    it.only("Should order specific article from periodica via Digital Article Service and ILL (prefer digital)", () => {
+    it("Should order specific article from periodica via Digital Article Service and ILL (prefer digital)", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"
       );
