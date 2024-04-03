@@ -149,8 +149,13 @@ export function useManifestationAccess({ pids, filter }) {
       }
     );
 
-    // sort
-    const access = sortAccessArray(flattenedAccess);
+    // sort & filter - we only want access of type RESOURCE
+    const access = sortAccessArray(flattenedAccess)?.filter(
+      (singleAccess) =>
+        singleAccess?.__typename !== AccessEnum.ACCESS_URL ||
+        (singleAccess?.__typename === AccessEnum.ACCESS_URL &&
+          singleAccess?.type === "RESOURCE")
+    );
 
     const accessMap = {};
     access.forEach((entry) => (accessMap[entry.__typename] = entry));
