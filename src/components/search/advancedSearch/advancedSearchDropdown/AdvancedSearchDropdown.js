@@ -135,10 +135,17 @@ export default function AdvancedSearchDropdown({
       payload: menuItems,
     });
   }, [JSON.stringify(fieldSearchFromUrl.dropdownSearchIndices)]);
-
+  console.log("menuItemsState", menuItemsState);
+  //item.name.toLowerCase().includes(dropdownQuery.toLowerCase())
+  const filteredItems = menuItemsState?.filter((item) =>
+    item?.name?.includes(dropdownQuery?.toLowerCase())
+  );
+  console.log("filteredItems", filteredItems);
   const sortedMenuItemsState = [
     ...(!isEmpty(dropdownQuery)
       ? [...menuItemsState]
+          //   .filter((item)=>item.name.toLowerCase().includes(dropdownQuery.toLowerCase()))
+          ?.filter((item) => item?.name?.includes(dropdownQuery?.toLowerCase()))
           .sort((a, b) => sorterForMenuItems(a, b, dropdownQuery))
           .filter((item) => ![FormTypeEnum.DIVIDER].includes(item.formType))
       : [...menuItemsState]),
@@ -147,7 +154,7 @@ export default function AdvancedSearchDropdown({
   const hasSpecialFormTypes = menuItemsState.some((item) =>
     specialFormTypes.has(item.formType)
   );
-
+  console.log("dropdownQuery", dropdownQuery);
   return (
     <Dropdown
       className={styles.nav_element}
