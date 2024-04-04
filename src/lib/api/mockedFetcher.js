@@ -220,6 +220,31 @@ function defaultMockResolver(parent, _args, context, info) {
     }
   }
 
+  const { path } = getFieldPath(info.path);
+
+  // helper for adding Mock examples
+  // to the field spy object
+  function addFieldExample(example) {
+    if (!fieldSpy[parentTypeName]) {
+      fieldSpy[parentTypeName] = {};
+    }
+    fieldSpy[parentTypeName][fieldName] = example;
+  }
+
+  // Check if a resolver function is provided for this field
+  if (typeof resolvers?.[parentTypeName]?.[fieldName] === "function") {
+    const resolved = resolvers[parentTypeName][fieldName]({
+      variables,
+      path,
+      getNext,
+      parent,
+    });
+    if (implementations) {
+      attachTypename(resolved);
+    }
+    return resolved;
+  }
+
   // The field was mocked with some value
   // so we return that, instead of using a default mock
   if (
@@ -233,30 +258,6 @@ function defaultMockResolver(parent, _args, context, info) {
     }
 
     return parent?.[fieldName];
-  }
-  const { path } = getFieldPath(info.path);
-
-  // helper for adding Mock examples
-  // to the field spy object
-  function addFieldExample(example) {
-    if (!fieldSpy[parentTypeName]) {
-      fieldSpy[parentTypeName] = {};
-    }
-    fieldSpy[parentTypeName][fieldName] = example;
-  }
-
-  // Check if a resolver function is provided for this field
-  if (resolvers?.[parentTypeName]?.[fieldName]) {
-    const resolved = resolvers[parentTypeName][fieldName]({
-      variables,
-      path,
-      getNext,
-      parent,
-    });
-    if (implementations) {
-      attachTypename(resolved);
-    }
-    return resolved;
   }
 
   // No mock resolver was provided for the field

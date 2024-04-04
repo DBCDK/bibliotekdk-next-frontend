@@ -380,6 +380,12 @@ describe("Multi Order", () => {
           },
         });
       });
+
+      // close the form
+      cy.get('[data-cy="multiorder-button-close"]').click();
+      // click order one more time to verify reset of periodica form
+      cy.contains("Bestil tidsskrifter").click();
+      cy.contains("2 materialer mangler at få udfyldt informationer");
     });
     it("Should warn about already ordered material, order material anyway", () => {
       cy.visit(

@@ -8,9 +8,7 @@ import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
 import styles from "./LocalizationsLink.module.css";
 import { openAgencyLocalizationsModal } from "@/components/work/utils";
-import { AccessEnum } from "@/lib/enums";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
-import { useManifestationAccess } from "@/components/hooks/useManifestationAccess";
 import { useManifestationData } from "@/components/hooks/order";
 
 export function LocalizationsLink({
@@ -70,17 +68,13 @@ export default function Wrap({ selectedPids, singleManifestation = false }) {
   const { loanerInfo } = useLoanerInfo();
   const modal = useModal();
 
-  const { access } = useManifestationAccess({ pids: selectedPids });
-
   const { physicalPids, isLoading: isLoadingManifestationData } =
     useManifestationData({ pids: selectedPids });
 
-  const preferredOnline =
-    access?.[0]?.__typename !== AccessEnum.INTER_LIBRARY_LOAN;
+  const preferredOnline = !physicalPids.length;
 
   const { data, isLoading, isSlow } = useData(
-    !preferredOnline &&
-      physicalPids?.length > 0 &&
+    physicalPids?.length > 0 &&
       typeof physicalPids?.[0] !== "undefined" &&
       localizationsFragments.localizationsQuery({ pids: physicalPids })
   );

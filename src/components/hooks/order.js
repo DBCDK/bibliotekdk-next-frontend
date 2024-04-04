@@ -10,7 +10,7 @@ import {
   setAlreadyOrdered,
   workHasAlreadyBeenOrdered,
 } from "../_modal/pages/order/utils/order.utils";
-import { useGlobalState } from "./useGlobalState";
+import { setGlobalState, useGlobalState } from "./useGlobalState";
 import { useManifestationAccess } from "./useManifestationAccess";
 
 import { useData, useMutate } from "@/lib/api/api";
@@ -216,13 +216,12 @@ export function useIsInOrderModal() {
  * when ordering a periodica or article within a periodica
  */
 export function usePeriodicaForm(periodicaFormKey = "default") {
-  const key = JSON.stringify(periodicaFormKey);
   const [periodicaForm, updatePeriodicaForm] = useGlobalState({
-    key: `periodicaForm-${key}`,
+    key: periodicaFormCacheKey(periodicaFormKey),
     initial: null,
   });
   const [expanded, setExpanded] = useGlobalState({
-    key: `periodicaForm-expanded-${key}`,
+    key: `periodicaForm-expanded-${periodicaFormKey}`,
     initial: false,
   });
 
@@ -232,12 +231,31 @@ export function usePeriodicaForm(periodicaFormKey = "default") {
     periodicaForm?.pagination
   );
 
+  /**
+   * generate a cache key for global state
+   * @param periodicaKey
+   * @returns {string}
+   */
+  function periodicaFormCacheKey(key) {
+    return `periodicaForm-${key}`;
+  }
+
+  /**
+   * reset a specific entry in global state
+   * @param periodicaKey
+   */
+  function resetPeriodicaForm(periodicaKey) {
+    const cacheKey = periodicaFormCacheKey(periodicaKey);
+    setGlobalState(cacheKey, {});
+  }
+
   return {
     expanded,
     setExpanded,
     periodicaForm,
     articleIsSpecified,
     updatePeriodicaForm,
+    resetPeriodicaForm,
   };
 }
 
@@ -572,6 +590,8 @@ export function useSubmitOrders({ orders }) {
     initial: {},
   });
 
+  const { resetPeriodicaForm } = usePeriodicaForm();
+
   const orderMutation = useMutate();
 
   const validation = useMultiOrderValidation({ orders });
@@ -666,6 +686,7 @@ export function useSubmitOrders({ orders }) {
       receipt?.successfullyCreatedPids?.forEach((entry) => {
         const workId = entry?.materialData?.workId;
         setAlreadyOrdered(workId);
+        resetPeriodicaForm(workId);
       });
       setOrderCompleted[1](Date.now());
     }, 1000);

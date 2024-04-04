@@ -106,6 +106,40 @@ LocalizationsLinkAvailableAtLibraries.story = merge(
   }
 );
 
+export function LocalizationsLinkNoIllButAvailableAtLibraries() {
+  const localizationLinkProps = {
+    selectedPids: ["some-pid-1"],
+  };
+
+  return (
+    <LocalizationsLinkComponentBuilder
+      storyNameOverride={"No ILL but material is owned by a library"}
+      localizationsLinkProps={localizationLinkProps}
+    />
+  );
+}
+LocalizationsLinkNoIllButAvailableAtLibraries.story = merge(
+  {},
+  DEFAULT_STORY_PARAMETERS,
+  {
+    parameters: {
+      graphql: {
+        resolvers: {
+          Query: {
+            localizations: () => {
+              return { count: 1 };
+            },
+          },
+          Manifestation: {
+            accessTypes: [{ code: "PHYSICAL" }],
+            access: () => [],
+          },
+        },
+      },
+    },
+  }
+);
+
 export function LocalizationsLinkSlowResponse() {
   const localizationLinkProps = {
     selectedPids: ["some-pid-1"],
