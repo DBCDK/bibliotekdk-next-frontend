@@ -126,6 +126,18 @@ function MessageWhenMaterialsAvailableUnknown() {
 }
 
 /**
+ * {@link MessageWhenMaterialsAvailableUnknown} shows a possible message in {@link BranchLocalizationItemStatus}
+ * @returns {JSX.Element}
+ */
+function MessageWhenMaterialsAvailableNotForLoan() {
+  return (
+    <Text type="text2">
+      {Translate({ context: "localizations", label: "available_not_for_loan" })}
+    </Text>
+  );
+}
+
+/**
  * {@link BranchStatusMessage} presents messages for branches possible status:
  *   {@link MessageWhenPickupNotAllowed}, {@link MessageWhenMaterialsAvailableNow},
  *   {@link MessageWhenMaterialsAvailableLater}, {@link MessageWhenMaterialsAvailableNever},
@@ -137,6 +149,10 @@ function MessageWhenMaterialsAvailableUnknown() {
  */
 function BranchStatusMessage({ library, manifestations }) {
   if (
+    library?.availabilityAccumulated === AvailabilityEnum.AVAILABLE_NOT_FOR_LOAN
+  ) {
+    return <MessageWhenMaterialsAvailableNotForLoan library={library} />;
+  } else if (
     typeof library?.pickupAllowed !== "undefined" &&
     library?.pickupAllowed === false
   ) {
@@ -185,7 +201,6 @@ export default function BranchDetailsStatus({ library, manifestations, pids }) {
   const availabilityOnAgencyAccumulated =
     library?.availabilityOnAgencyAccumulated;
   const pickupAllowed = library?.pickupAllowed;
-
   return (
     <div className={cx(styles.row_wrapper)}>
       <AvailabilityLight

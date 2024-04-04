@@ -928,6 +928,10 @@
         "da": "Udlånes ikke",
         "en": "Not for loan"
       },
+      "available_not_for_loan": {
+        "da": "På hylden, men udlånes ikke",
+        "en": "On shelf, but not loanable"
+      },
       "does_not_own_material": {
         "da": "Har ikke materialet",
         "en": "Does not own the material"
@@ -935,6 +939,10 @@
       "status_is_unknown": {
         "da": "Status kendes ikke",
         "en": "Status is unknown"
+      },
+      "available_not_for_loan_alt": {
+        "da": "Grønt lys som viser at materialet kun kan benyttes på stedet",
+        "en": "Green light showing the material can only be used at location"
       },
       "status_is_unknown_alt": {
         "da": "Gråt lys som viser at status for materialet ikke kendes her",

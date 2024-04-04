@@ -18,7 +18,10 @@ import { getLibraryType, LibraryTypeEnum } from "@/lib/utils";
  */
 function DefaultShowingOfAgencyBranches({ agency }) {
   const numberOfBranchesWithAvailable = agency?.branches?.filter(
-    (branch) => branch?.availabilityAccumulated === AvailabilityEnum.NOW
+    (branch) =>
+      branch?.availabilityAccumulated === AvailabilityEnum.NOW ||
+      branch?.availabilityAccumulated ===
+        AvailabilityEnum.AVAILABLE_NOT_FOR_LOAN
   ).length;
 
   const availabilityOnAgencyAccumulated =
@@ -26,7 +29,10 @@ function DefaultShowingOfAgencyBranches({ agency }) {
 
   const libraryType = getLibraryType(agency?.agencyId);
 
-  if (availabilityOnAgencyAccumulated === AvailabilityEnum.NOW) {
+  if (
+    availabilityOnAgencyAccumulated === AvailabilityEnum.NOW ||
+    availabilityOnAgencyAccumulated === AvailabilityEnum.AVAILABLE_NOT_FOR_LOAN
+  ) {
     return (
       <>
         <Text clamp={true}>
