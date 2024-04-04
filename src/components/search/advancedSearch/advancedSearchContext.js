@@ -55,8 +55,10 @@ export default function AdvancedSearchProvider({ children, router }) {
     fieldSearch = "{}",
     sort: sortFromUrl = "{}",
   } = router.query;
-  const fieldSearchFromUrl = fieldSearch && JSON.parse(fieldSearch);
-  const sort = sortFromUrl && JSON.parse(sortFromUrl);
+
+  const fieldSearchFromUrl =
+    fieldSearch && JSON.parse(decodeURIComponent(fieldSearch));
+  const sort = sortFromUrl && JSON.parse(decodeURIComponent(sortFromUrl));
 
   //// ----  Popup Trigger ----
   const popoverRef = useRef(null);
