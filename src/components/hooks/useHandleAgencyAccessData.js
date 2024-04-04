@@ -269,6 +269,7 @@ function checkAvailabilityOnAgencyLevel(item) {
   return getFirstMatch(true, AvailabilityEnum.UNKNOWN, [
     [dateIsToday(item?.expectedDelivery), AvailabilityEnum.NOW],
     [dateIsLater(item?.expectedDelivery), AvailabilityEnum.LATER],
+    [checkAvailableNotForLoan(item), AvailabilityEnum.AVAILABLE_NOT_FOR_LOAN],
     [dateIsNever(item?.expectedDelivery), AvailabilityEnum.NEVER],
     [publicLibraryDoesNotOwn(item), AvailabilityEnum.NOT_OWNED],
     [nonPublicLibraryDoesNotOwn(item), AvailabilityEnum.NOT_OWNED_FFU],
@@ -477,8 +478,10 @@ export function enrichBranches(branch) {
     availabilityAccumulated: availabilityAccumulated,
     // Below elements might be overridden if agency has better information
     availabilityOnAgencyAccumulated: getAvailabilityAccumulated(
-      getAvailability(expectedDeliveryOnHoldingsOrAgency, (item) =>
-        checkAvailabilityOnAgencyLevel(item)
+      getAvailability(
+        expectedDeliveryOnHoldingsOrAgency,
+        (item, branch) => checkAvailabilityOnAgencyLevel(item, branch),
+        branch
       )
     ),
     expectedDelivery: branch?.holdingStatus?.expectedDelivery,
@@ -513,6 +516,7 @@ function getExpectedDeliveryOnHoldingsOrAgency(
     ? allHoldingsAcrossBranchesInAgency
     : entry?.map((e) => {
         return {
+          agencyHoldings: e.agencyHoldings,
           expectedDelivery: e.expectedDelivery,
           pickupAllowed: e.pickupAllowed,
           agencyName: e.agencyName,
