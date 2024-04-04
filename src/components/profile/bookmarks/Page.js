@@ -518,6 +518,7 @@ const BookmarkPage = () => {
 
       <div className={styles.listContainer}>
         {populatedBookmarks?.map((bookmark, idx) => {
+          //find first corporation group. 
           const corporationCreator =
             bookmark?.manifestations?.[0]?.ownerWork.creators?.filter(
               (creator) => creator?.__typename === "Corporation"
