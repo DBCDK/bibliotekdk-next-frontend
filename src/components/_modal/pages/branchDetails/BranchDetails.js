@@ -239,8 +239,6 @@ export default function BranchDetails({ context }) {
 
   const buttonSize = "medium";
 
-  console.log(orderPolicyForBranches, "FISK");
-
   if (!branchDetailsLoading && orderPolicyForBranches?.length > 1) {
     throw new Error(`Error: Der burde være præcis 1 branchId, men der er flere 
         ${orderPolicyForBranches

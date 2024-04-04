@@ -168,8 +168,6 @@ export default function AgencyLocalizationItem({
       }
   );
 
-  console.log(agenciesFlatSortedNoHighlights, agencyId, "KO");
-
   const {
     branchesWithHighlights,
     agencyHighlight,
