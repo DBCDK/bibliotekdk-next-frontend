@@ -58,7 +58,9 @@ export function AdvancedSearchResult({
         some mark .. that we are doing advanced search .. ?? */}
         {!isLoading && hitcount === 0 && <NoHitSearch />}
         <>
-          <AdvancedSearchSort className={cx(styles.sort_container)} />
+          {hitcount > 0 && (
+            <AdvancedSearchSort className={cx(styles.sort_container)} />
+          )}
           <div>
             {Array(isMobile ? page : 1)
               .fill({})
