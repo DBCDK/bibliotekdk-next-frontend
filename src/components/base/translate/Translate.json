@@ -710,6 +710,10 @@
       }
     },
     "bibliographic-data": {
+      "id": {
+        "da": "Id",
+        "en": "Id"
+      },
       "requirements": {
         "da": "Nødvendigt udstyr",
         "en": "Required gear"
