@@ -1,9 +1,13 @@
 .item {
   display: grid;
   grid-template-columns: 1fr 100fr 1fr;
-  align-items: center;
   gap: var(--pt05);
-  padding: 0 var(--pt1) 0 var(--pt1);
+  padding: 0 var(--pt2) var(--pt1) var(--pt2);
+}
+
+.item .checkbox {
+  position: relative;
+  top: var(--pt05);
 }
 
 .checkbox {
@@ -20,14 +24,17 @@
 
 .countContainer {
   display: flex;
-  padding: 0 var(--pt1) 0 var(--pt1);
+  padding: 0 var(--pt1) 0 var(--pt2);
+  font-family: var(--body-font-semibold);
 }
+
 .count {
   color: var(--white);
   background-color: var(--blue);
   padding: 0 var(--pt1) 0 var(--pt1);
-  margin-left: var(--pt2);
-  align-items: center;
+  margin-left: var(--pt1);
+  max-height: 22px;
+  font-family: var(--body-font-semibold);
 }
 
 .showmorelink {
@@ -44,6 +51,11 @@
 
 .accordionContainer {
   width: 100%;
+  border: 1px solid var(--iron);
+}
+
+.accordionContainer li:last-child {
+  margin-bottom: var(--pt2);
 }
 
 .itemborder {

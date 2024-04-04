@@ -61,7 +61,7 @@
 }
 
 .expandIcon {
-  padding-inline: var(--pt2);
+  padding-inline: var(--pt1);
 }
 
 .skeleton {
@@ -74,6 +74,7 @@
 
 .content {
   padding-top: var(--pt2);
+  /*max-height: 0;*/
 }
 
 @media (min-width: 992px) {

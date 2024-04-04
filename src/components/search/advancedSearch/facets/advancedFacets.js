@@ -6,7 +6,7 @@ import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
 import Link from "@/components/base/link/Link";
 
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
 import { useData } from "@/lib/api/api";
@@ -24,24 +24,33 @@ import translate from "@/components/base/translate";
 export function AdvancedFacets({ facets, isLoading, replace = false }) {
   const { addFacet, removeFacet, selectedFacets } = useFacets();
 
+  const scrollRef = useRef();
+
   const filteredFacets = Object.values(AdvFacetsTypeEnum).filter((val) =>
     facets?.find((facet) => {
       return facet.name.split(".")[1] === val;
     })
   );
 
+  function scrollToRef(ref) {
+    ref.current.scrollIntoView({ behavior: "smooth", block: "end" });
+  }
+
   const onItemClick = (checked, name, facetName) => {
     if (checked) {
       // selected -> add to list
       addFacet(name, facetName, replace);
+      scrollToRef(scrollRef);
     } else {
       // deselected - remove from list
       removeFacet(name, facetName, replace);
+      scrollToRef(scrollRef);
     }
   };
 
   return (
     <Accordion className={styles.accordionContainer}>
+      <div ref={scrollRef} />
       {isLoading && <AccordianItem isLoading={isLoading} />}
       {filteredFacets?.map((facetName, index) => (
         <AccordianItem
@@ -86,7 +95,9 @@ function AccordianItem({
           })}
         </Text>
         {current?.values?.length && (
-          <span className={styles.count}>{current?.values?.length || ""}</span>
+          <Text tag="span" type="text3" className={styles.count}>
+            {current?.values?.length || ""}
+          </Text>
         )}
       </div>
     );

@@ -31,7 +31,7 @@ export function useFacets() {
   // // we also need a useEffect to reset facets when we leave the page (/avanceret)
   useEffect(() => {
     if (initialized && router && !router?.pathname?.includes("/avanceret")) {
-      resetFacets();
+      restartFacetsHook();
     }
   }, []);
 
@@ -114,6 +114,12 @@ export function useFacets() {
    */
   function pushQuery(replace = false, selectedFacets) {
     const query = router?.query;
+
+    // remove paging if set
+    if (query?.page) {
+      delete query.page;
+    }
+
     query["facets"] = JSON.stringify(selectedFacets);
 
     // replace/push to router
@@ -122,10 +128,14 @@ export function useFacets() {
           pathname: router.pathname,
           query: query,
         })
-      : router.push({
-          pathname: router.pathname,
-          query: query,
-        });
+      : router.push(
+          {
+            pathname: router.pathname,
+            query: query,
+          },
+          {},
+          { shallow: true, scroll: false }
+        );
   }
 
   /**

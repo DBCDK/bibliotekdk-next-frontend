@@ -84,9 +84,9 @@ export function AdvancedSearchResult({
             <div className={styles.facetsContainer}>
               <FacetTags selectedFacets={selectedFacets} />
               <div className={styles.subtitleStyle}>
-                <Title type="title6" className={styles.titleStyle}>
+                <Text type="text1" className={styles.titleStyle}>
                   {translate({ context: "search", label: "narrow-search" })}
-                </Title>
+                </Text>
               </div>
 
               <AdvancedFacets cql={cql} />
