@@ -517,43 +517,51 @@ const BookmarkPage = () => {
       )}
 
       <div className={styles.listContainer}>
-        {populatedBookmarks?.map((bookmark, idx) => (
-          <MaterialRow
-            key={`bookmark-list-${idx}`}
-            bookmarkKey={bookmark?.key}
-            hasCheckbox={!isMobile || activeStickyButton !== null}
-            title={bookmark?.manifestations?.[0]?.titles?.full?.[0] || ""}
-            titles={bookmark?.manifestations?.[0]?.titles}
-            creator={
-              bookmark?.manifestations?.[0]?.ownerWork.creators[0]?.display
-            }
-            creators={bookmark?.manifestations?.[0]?.ownerWork.creators}
-            materialType={getMaterialTypeForPresentation(
-              bookmark.manifestations?.[0]?.materialTypes
-            )}
-            image={bookmark?.manifestations?.[0]?.cover?.thumbnail}
-            id={bookmark?.materialId}
-            edition={constructEditionText(bookmark)}
-            workId={bookmark?.workId}
-            pid={bookmark?.pid}
-            allManifestations={bookmark?.manifestations}
-            type="BOOKMARK"
-            isSelected={
-              checkboxList.findIndex((item) => item.key === bookmark.key) > -1
-            }
-            onBookmarkDelete={() => onDeleteBookmark(bookmark)}
-            onSelect={() => onToggleCheckbox(bookmark.key)}
-            showFailedAtCreation={containsIds(
-              failureAtCreationIds,
-              bookmark.key
-            )}
-            showSuccessfullyOrdered={containsIds(
-              successfullyCreatedIds,
-              bookmark.key
-            )}
-            handleOrderFinished={handleOrderFinished}
-          />
-        ))}
+        {populatedBookmarks?.map((bookmark, idx) => {
+          const corporationCreator =
+            bookmark?.manifestations?.[0]?.ownerWork.creators?.filter(
+              (creator) => creator?.__typename === "Corporation"
+            )[0]?.display;
+
+          return (
+            <MaterialRow
+              key={`bookmark-list-${idx}`}
+              bookmarkKey={bookmark?.key}
+              hasCheckbox={!isMobile || activeStickyButton !== null}
+              title={bookmark?.manifestations?.[0]?.titles?.full?.[0] || ""}
+              titles={bookmark?.manifestations?.[0]?.titles}
+              creator={
+                corporationCreator ||
+                bookmark?.manifestations?.[0]?.ownerWork.creators[0]?.display
+              }
+              creators={bookmark?.manifestations?.[0]?.ownerWork.creators}
+              materialType={getMaterialTypeForPresentation(
+                bookmark.manifestations?.[0]?.materialTypes
+              )}
+              image={bookmark?.manifestations?.[0]?.cover?.thumbnail}
+              id={bookmark?.materialId}
+              edition={constructEditionText(bookmark)}
+              workId={bookmark?.workId}
+              pid={bookmark?.pid}
+              allManifestations={bookmark?.manifestations}
+              type="BOOKMARK"
+              isSelected={
+                checkboxList.findIndex((item) => item.key === bookmark.key) > -1
+              }
+              onBookmarkDelete={() => onDeleteBookmark(bookmark)}
+              onSelect={() => onToggleCheckbox(bookmark.key)}
+              showFailedAtCreation={containsIds(
+                failureAtCreationIds,
+                bookmark.key
+              )}
+              showSuccessfullyOrdered={containsIds(
+                successfullyCreatedIds,
+                bookmark.key
+              )}
+              handleOrderFinished={handleOrderFinished}
+            />
+          );
+        })}
       </div>
       {totalPages > 1 && (
         <Pagination
