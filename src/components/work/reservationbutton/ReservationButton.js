@@ -7,6 +7,7 @@ import {
   constructButtonText,
   context,
   handleGoToLogin,
+  sortEreolFirst,
 } from "@/components/work/reservationbutton/utils";
 import isEmpty from "lodash/isEmpty";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
@@ -180,6 +181,7 @@ export const ReservationButton = ({
   bookmarkKey,
   localizationsCount,
 }) => {
+  access = sortEreolFirst(access);
   const { start } = useOrderFlow();
   const noSelectedManifestations = Boolean(isEmpty(access));
 
