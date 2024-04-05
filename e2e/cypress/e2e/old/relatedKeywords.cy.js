@@ -4,7 +4,7 @@
  */
 
 describe("Related Keywords", () => {
-  it.only(`Can tab through related keywords`, async () => {
+  it(`Can tab through related keywords`, async () => {
     await cy.visit("/iframe.html?id=work-relatedsubjects--default");
     cy.get("body")
       .tab()
@@ -35,9 +35,17 @@ describe("Related Keywords", () => {
 
     cy.get("[data-cy=related-subject-savn]", {
       timeout: 10000,
-    }).should("have.attr", "href", "/find?q.subject=savn");
+    }).should(
+      "have.attr",
+      "href",
+      "/avanceret?fieldSearch=%7B%22inputFields%22%3A%5B%7B%22value%22%3A%22savn%22%2C%22prefixLogicalOperator%22%3Anull%2C%22searchIndex%22%3A%22term.subject%22%7D%5D%7D"
+    );
     cy.get("[data-cy=related-subject-melankoli]", {
       timeout: 10000,
-    }).should("have.attr", "href", "/find?q.subject=melankoli");
+    }).should(
+      "have.attr",
+      "href",
+      "/avanceret?fieldSearch=%7B%22inputFields%22%3A%5B%7B%22value%22%3A%22melankoli%22%2C%22prefixLogicalOperator%22%3Anull%2C%22searchIndex%22%3A%22term.subject%22%7D%5D%7D"
+    );
   });
 });
