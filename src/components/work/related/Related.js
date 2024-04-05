@@ -28,7 +28,7 @@ function Word({ word, isLoading }) {
         border={{ bottom: { keepVisible: true } }}
       >
         <Text type="text2" skeleton={isLoading} lines={1} tag="span">
-          {word}
+          {word}hest
         </Text>
       </Link>
     </span>
@@ -83,8 +83,11 @@ export function Related({ data, isLoading }) {
 /**
  *
  * Wrap for fetching data for the subject Related component
+ * update - 05/04/24 - only handle selected worktypes
  */
 export default function Wrap({ workId }) {
+  const worktypesToHandle = ["LITERATURE", "ARTICLE", "MOVIE", "PODCAST"];
+
   // fetch work subjects
   const { data: workData, isLoading: workIsLoading } = useData(
     workFragments.subjects({ workId })
@@ -101,7 +104,13 @@ export default function Wrap({ workId }) {
     keywords?.length && subjects({ q: keywords })
   );
 
-  if (!keywords || keywords.length === 0) {
+  const worktype = workData?.work?.workTypes[0];
+
+  if (
+    !keywords ||
+    keywords.length === 0 ||
+    !worktypesToHandle.includes(worktype)
+  ) {
     return null;
   }
 
