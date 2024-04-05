@@ -46,17 +46,13 @@ export function BibliographicData({ manifestations, workId }) {
     >
       <Accordion>
         {sliced.map((manifestation, index) => {
-          const volume = manifestation.volume
-            ? " (" + manifestation.volume + ")"
-            : "";
-
           const formattedMaterialTypes = formatMaterialTypesToPresentation(
             flattenMaterialType(manifestation)
           );
 
           // Pass an array of additional text (s) for the folded accordion
           // show the materialtype
-          const shortMaterialType = [formattedMaterialTypes, volume].join("");
+          const shortMaterialType = [formattedMaterialTypes].join("");
 
           // show a person involved - prioritized
           // 1. contributor (dkind) - indlæser
