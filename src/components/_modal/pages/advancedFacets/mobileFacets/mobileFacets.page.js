@@ -11,6 +11,7 @@ import {
 import { parseOutFacets } from "@/components/search/advancedSearch/utils";
 import { useData } from "@/lib/api/api";
 import { hitcount } from "@/lib/api/complexSearch.fragments";
+import { useEffect } from "react";
 
 export default function Wrap(props) {
   const { context, modal } = props;
@@ -22,7 +23,14 @@ export default function Wrap(props) {
     selectedFacets,
     resetFacets,
     replaceFacetValue,
+    pushQuery,
   } = useFacets();
+
+  useEffect(() => {
+    if (!modal.isVisible && modal.hasBeenVisible) {
+      pushQuery(true, selectedFacets);
+    }
+  }, [modal.isVisible]);
 
   // use the useData hook to fetch data
   const { data: facetResponse, isLoading } = useData(

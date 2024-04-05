@@ -153,8 +153,10 @@ export function useFacets() {
   }
 
   function restartFacetsHook() {
-    setFacetsQuery("[]");
-    initialized = false;
+    if (initialized) {
+      // setFacetsQuery("[]");
+      initialized = false;
+    }
   }
 
   function resetFacets() {
