@@ -30,7 +30,9 @@
     width: 100%;
     display: block;
     background-color: var(--concrete);
-    margin-right: var(--pt2);
+    margin: var(--pt3) var(--pt2) var(--pt3) 0;
+    outline: 2px solid var(--iron);
+    color: var(--black);
   }
 
   .mobileclear {

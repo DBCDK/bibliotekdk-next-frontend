@@ -42,11 +42,13 @@
   }
   .container {
     background-color: var(--white);
+    padding: 0;
   }
   .tagscontainer {
     flex-wrap: nowrap;
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
+    margin: 0;
   }
 }
