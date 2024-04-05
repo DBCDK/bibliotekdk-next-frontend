@@ -151,6 +151,7 @@ export default function AdvancedSearchDropdown({
 
   return (
     <Dropdown
+      align={{ sm: "center" }}
       className={styles.nav_element}
       data-cy={`advanced-search-dropdown-${indexName}`}
     >
