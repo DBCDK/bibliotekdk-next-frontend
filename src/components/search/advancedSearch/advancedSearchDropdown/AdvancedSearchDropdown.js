@@ -139,6 +139,7 @@ export default function AdvancedSearchDropdown({
   const sortedMenuItemsState = [
     ...(!isEmpty(dropdownQuery)
       ? [...menuItemsState]
+          ?.filter((item) => item?.name?.includes(dropdownQuery?.toLowerCase()))
           .sort((a, b) => sorterForMenuItems(a, b, dropdownQuery))
           .filter((item) => ![FormTypeEnum.DIVIDER].includes(item.formType))
       : [...menuItemsState]),
