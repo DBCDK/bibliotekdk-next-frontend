@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useAdvancedSearchHistory, {
   getDateTime,
   getTimeStamp,
@@ -17,6 +17,8 @@ import { cyKey } from "@/utils/trim";
 import Icon from "@/components/base/icon/Icon";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import MenuDropdown from "@/components/base/dropdown/menuDropdown/MenuDropdown";
+import Button from "@/components/base/button";
+import CombinedSearch from "@/components/search/advancedSearch/combinedSearch/CombinedSearch";
 
 function HistoryItem({ item, index, checked, onSelect }) {
   const router = useRouter();
@@ -114,6 +116,7 @@ function HistoryHeaderActions({
   checked,
   partiallyChecked,
   disabled,
+  onCombineSearch,
 }) {
   const breakpoint = useBreakpoint();
 
@@ -158,6 +161,9 @@ function HistoryHeaderActions({
         </Text>
       </label>
 
+      <Button type="secondary" size="small" onClick={onCombineSearch}>
+        Kombiner søgninger
+      </Button>
       <Link
         className={cx(styles.flex, {
           [styles.disabled_link]: !partiallyChecked || disabled,
@@ -219,6 +225,7 @@ function EmptySearchHistory() {
 export function AdvancedSearchHistory() {
   const { storedValue, deleteValue } = useAdvancedSearchHistory();
   const [checkboxList, setCheckboxList] = useState([]);
+  const [showCombinedSearch, setShowCombinedSearch] = useState(false);
 
   const breakpoint = useBreakpoint();
 
@@ -283,13 +290,22 @@ export function AdvancedSearchHistory() {
           label: "advanced-search-history-latest",
         })}
       </Title>
-      <HistoryHeaderActions
-        deleteSelected={onDeleteSelected}
-        setAllChecked={setAllChecked}
-        checked={storedValue?.length === checkboxList?.length}
-        partiallyChecked={checkboxList?.length > 0}
-        disabled={storedValue?.length === 0}
-      />
+      {showCombinedSearch ? (
+        <CombinedSearch
+          cancelCombinedSearch={() => setShowCombinedSearch(false)}
+          queries={checkboxList}
+        />
+      ) : (
+        <HistoryHeaderActions
+          deleteSelected={onDeleteSelected}
+          setAllChecked={setAllChecked}
+          checked={storedValue?.length === checkboxList?.length}
+          partiallyChecked={checkboxList?.length > 0}
+          disabled={storedValue?.length === 0}
+          onCombineSearch={() => setShowCombinedSearch(true)}
+        />
+      )}
+
       <div className={styles.table_grid}>
         {breakpoint !== "xs" && <HistoryHeader />}
         {/*// if there is no search history*/}

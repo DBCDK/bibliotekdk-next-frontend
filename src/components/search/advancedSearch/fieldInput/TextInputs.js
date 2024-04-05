@@ -133,7 +133,7 @@ const options = Object.keys(LogicalOperatorsEnum); //["AND", "OR", "NOT"];
  * @param {*} param0
  * @returns
  */
-function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
+export function LogicalOperatorDropDown({ onSelect, selected = "AND", className }) {
   const [expanded, setExpanded] = useState(false);
 
   function toggleCollapse() {
