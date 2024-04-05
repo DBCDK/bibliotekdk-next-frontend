@@ -21,16 +21,16 @@
 .searchButton:disabled {
   outline-color: var(--dove);
 }
-.searchItemContainer{
-    
+.searchItemContainer {
 }
-.searchItem{
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
+.searchItem {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
 }
-.searchItemNumber{
-    background-color: var(--blue);
-    color: var(--white);
-    padding: 0 6px;
+.searchItemNumber {
+  background-color: var(--blue);
+  color: var(--white);
+  padding: 0 var(--pt075);
+  height: fit-content;
 }

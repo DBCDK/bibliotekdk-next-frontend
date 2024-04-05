@@ -43,7 +43,7 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
   const [showCqlEditor, setShowCqlEditor] = useState(false);
   const textAreaRef = useRef(null);
   const isMobile = useBreakpoint() === "xs";
-
+  console.log("fieldSearchFromUrl", fieldSearchFromUrl);
   useEffect(() => {
     setShowCqlEditor(router?.query?.mode === "cql" || !!cqlFromUrl);
   }, [cqlFromUrl, router?.query?.mode]);

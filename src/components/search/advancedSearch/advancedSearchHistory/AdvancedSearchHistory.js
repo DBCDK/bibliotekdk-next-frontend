@@ -226,6 +226,8 @@ export function AdvancedSearchHistory() {
   const { storedValue, deleteValue } = useAdvancedSearchHistory();
   const [checkboxList, setCheckboxList] = useState([]);
   const [showCombinedSearch, setShowCombinedSearch] = useState(false);
+  console.log("checkboxList", checkboxList);
+  console.log("storedValue", storedValue);
 
   const breakpoint = useBreakpoint();
 
@@ -278,6 +280,10 @@ export function AdvancedSearchHistory() {
     setCheckboxList(newCheckList);
   };
 
+  const filteredObjects = storedValue?.filter((obj) =>
+    checkboxList.includes(obj.cql)
+  );
+
   return (
     <div className={styles.container}>
       <Title
@@ -293,7 +299,7 @@ export function AdvancedSearchHistory() {
       {showCombinedSearch ? (
         <CombinedSearch
           cancelCombinedSearch={() => setShowCombinedSearch(false)}
-          queries={checkboxList}
+          queries={filteredObjects}
         />
       ) : (
         <HistoryHeaderActions
