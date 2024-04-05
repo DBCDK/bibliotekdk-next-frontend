@@ -104,7 +104,7 @@ export default function Wrap({ workId }) {
     keywords?.length && subjects({ q: keywords })
   );
 
-  const worktype = workData?.work?.workTypes[0];
+  const worktype = workData?.work?.workTypes?.[0];
 
   if (
     !keywords ||
