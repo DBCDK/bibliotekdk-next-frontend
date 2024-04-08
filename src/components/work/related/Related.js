@@ -13,7 +13,6 @@ import Section from "@/components/base/section";
 import styles from "./Related.module.css";
 import * as workFragments from "@/lib/api/work.fragments";
 import { subjectUrl } from "@/components/work/keywords/Keywords";
-import React from "react";
 
 /**
  *
