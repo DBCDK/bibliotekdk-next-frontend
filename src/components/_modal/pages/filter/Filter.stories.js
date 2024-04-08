@@ -14,6 +14,43 @@ const exportedObject = {
 
 export default exportedObject;
 
+export function MobileFilter() {
+  const { setStack } = useModal();
+
+  const { filters, setFilters, setQuery } = useFilters();
+
+  // data
+  const data = response.data;
+
+  // dummy context for filter
+  const context = {};
+
+  // simulate order submit and callback
+  useEffect(() => {
+    setStack([{ id: "filter", context, active: true }]);
+  }, []);
+
+  return (
+    <Modal.Container
+      mock={{
+        clear: () => alert("Luk"),
+      }}
+    >
+      <Modal.Page
+        id="filter"
+        component={Filter}
+        // custom props
+        data={data}
+        selected={filters}
+        onSelect={(selected) => setFilters({ ...filters, ...selected })}
+        onSubmit={() => setQuery({ exclude: ["modal"] })}
+        onClear={() => setFilters({})}
+        origin="mobileFacets"
+      />
+    </Modal.Container>
+  );
+}
+
 export function Connected() {
   const modal = useModal();
   return (
