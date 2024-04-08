@@ -141,7 +141,7 @@ describe("Server Side Rendering", () => {
       });
     });
 
-    it.only(`has json-ld for movie`, () => {
+    it(`has json-ld for movie`, () => {
       getPageHead(
         "/materiale/junglebogen_jon-favreau/work-of:870970-basis:52331080"
       ).then((res) => {
