@@ -36,7 +36,7 @@
 }
 
 /* @TODO 991 px :) */
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .actions {
     display: none;
   }

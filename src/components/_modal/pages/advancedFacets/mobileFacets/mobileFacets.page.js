@@ -8,7 +8,10 @@ import {
   Filter,
   FilterSkeleton,
 } from "@/components/_modal/pages/filter/Filter.page";
-import { parseOutFacets } from "@/components/search/advancedSearch/utils";
+import {
+  getCqlAndFacetsQuery,
+  parseOutFacets,
+} from "@/components/search/advancedSearch/utils";
 import { useData } from "@/lib/api/api";
 import { hitcount } from "@/lib/api/complexSearch.fragments";
 import { useEffect } from "react";
@@ -26,6 +29,8 @@ export default function Wrap(props) {
     pushQuery,
   } = useFacets();
 
+  const cqlAndFacetsQuery = getCqlAndFacetsQuery(cql, selectedFacets);
+
   useEffect(() => {
     if (!modal.isVisible && modal.hasBeenVisible) {
       pushQuery(true, selectedFacets);
@@ -35,7 +40,7 @@ export default function Wrap(props) {
   // use the useData hook to fetch data
   const { data: facetResponse, isLoading } = useData(
     hitcount({
-      cql: cql,
+      cql: cqlAndFacetsQuery,
       facets: {
         facetLimit: facetLimit,
         facets: facetsFromEnum,
@@ -92,7 +97,12 @@ export default function Wrap(props) {
   }
 
   // make a data object for the filter page to handle
-  const data = { search: { facets: enrichedFacets } };
+  const data = {
+    search: {
+      facets: enrichedFacets,
+      hitcount: facetResponse?.complexSearch?.hitcount,
+    },
+  };
   return (
     <Filter
       data={data}
