@@ -9,7 +9,6 @@ import Link from "@/components/base/link/Link";
 export function FacetButton({ cql, isLoading }) {
   const modal = useModal();
   const { selectedFacets, resetFacets } = useFacets();
-
   // find number of filters
   let count = 0;
   selectedFacets?.map((sel) => {

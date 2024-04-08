@@ -33,6 +33,7 @@ function SelectedFilter({
   onSelect,
   modal,
   active,
+  origin,
   translateContext = "facets",
 }) {
   const name = data?.name;
@@ -174,6 +175,7 @@ function SelectedFilter({
           ?.map((term, idx) => {
             const title = term.term;
             const key = term.key;
+            const score = term.score;
 
             const isCheked = terms.includes(title);
 
@@ -213,16 +215,18 @@ function SelectedFilter({
                   >
                     {title}
                   </Text>
-                  {/* outcommented for now - let's see ..
-                <Text
-                  lines={1}
-                  skeleton={isLoading}
-                  type="text3"
-                  dataCy={`text-${score}`}
-                  className={styles.score}
-                >
-                  {score}
-                </Text>*/}
+                  {/* show facet count for mobileFacets (complex search) only */}
+                  {origin === "mobileFacets" && (
+                    <Text
+                      lines={1}
+                      skeleton={isLoading}
+                      type="text3"
+                      dataCy={`text-${score}`}
+                      className={styles.score}
+                    >
+                      {score}
+                    </Text>
+                  )}
                 </div>
               </List.Select>
             );
@@ -253,6 +257,7 @@ export function Filter(props) {
     cql,
     translateContext = "facets",
   } = props;
+
   // facet data
   const facets = data?.search?.facets || [];
   // Facet will contain a specific selected facet/category, if any selected
@@ -377,7 +382,7 @@ export function Filter(props) {
             {Translate({
               context: "search",
               label: "showXResults",
-              vars: [null],
+              vars: [data?.search?.hitcount],
             })}
           </Button>
         </>
