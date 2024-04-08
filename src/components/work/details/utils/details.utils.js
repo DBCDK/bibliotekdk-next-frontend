@@ -435,6 +435,36 @@ function RenderMovieLanguages({ values }) {
  */
 
 function RenderGenre({ values }) {
+  const genreForm = [];
+  const regexp = /^spil for /;
+
+  values?.map((value) => {
+    if (!value.match(regexp)) {
+      genreForm.push(value);
+    }
+  });
+
+  return (
+    <div>
+      <Text type="text4" lines={1} tag="span">
+        {genreForm?.join(", ")}
+      </Text>
+    </div>
+  );
+}
+
+function getParticipantsValues({ values }) {
+  const regexp = /^spil for /;
+  const participants = [];
+  values?.map((value) => {
+    if (value.match(regexp)) {
+      participants.push(value);
+    }
+  });
+  return participants;
+}
+
+function RenderParicipants({ values }) {
   return (
     <div>
       <Text type="text4" lines={1} tag="span">
@@ -442,6 +472,7 @@ function RenderGenre({ values }) {
       </Text>
     </div>
   );
+  return null;
 }
 
 function RenderMovieAudience({ values }) {
@@ -683,6 +714,13 @@ export function fieldsForRows(manifestation, work, context) {
           label: Translate({ ...context, label: "language" }),
           value: getLanguageValues(manifestation),
           jsxParser: RenderGameLanguages,
+        },
+      },
+      {
+        participants: {
+          label: Translate({ ...context, label: "participants" }),
+          value: getParticipantsValues({ values: work?.genreAndForm || [] }),
+          jsxParser: RenderParicipants,
         },
       },
       {

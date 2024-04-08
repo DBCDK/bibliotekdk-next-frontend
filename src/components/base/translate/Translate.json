@@ -1374,6 +1374,10 @@
       }
     },
     "details": {
+      "participants": {
+        "da": "Deltagere",
+        "en": "Players"
+      },
       "title": {
         "da": "Detaljer",
         "en": "Details"
