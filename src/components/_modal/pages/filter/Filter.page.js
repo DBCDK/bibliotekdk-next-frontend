@@ -382,7 +382,8 @@ export function Filter(props) {
             {Translate({
               context: "search",
               label: "showXResults",
-              vars: [data?.search?.hitcount],
+              vars:
+                origin === "mobileFacets" ? [data?.search?.hitcount] : [null],
             })}
           </Button>
         </>
