@@ -464,7 +464,7 @@ function getParticipantsValues({ values }) {
   return participants;
 }
 
-function RenderParicipants({ values }) {
+function RenderParticipants({ values }) {
   return (
     <div>
       <Text type="text4" lines={1} tag="span">
@@ -472,7 +472,6 @@ function RenderParicipants({ values }) {
       </Text>
     </div>
   );
-  return null;
 }
 
 function RenderMovieAudience({ values }) {
@@ -720,7 +719,7 @@ export function fieldsForRows(manifestation, work, context) {
         participants: {
           label: Translate({ ...context, label: "participants" }),
           value: getParticipantsValues({ values: work?.genreAndForm || [] }),
-          jsxParser: RenderParicipants,
+          jsxParser: RenderParticipants,
         },
       },
       {
