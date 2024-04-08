@@ -288,7 +288,6 @@ function Wrap({ children }) {
   }, []);
 
   return children.map((child, idx) => {
-    console.log(child, "CHILD");
     if (!child.props["anchor-label"]) {
       // Only allow the component Menu to not have anchor-label
       if (child.type === Menu) {
