@@ -13,6 +13,7 @@ import Section from "@/components/base/section";
 import styles from "./Related.module.css";
 import * as workFragments from "@/lib/api/work.fragments";
 import { subjectUrl } from "@/components/work/keywords/Keywords";
+import React from "react";
 
 /**
  *
@@ -55,28 +56,31 @@ export function Words({ data, isLoading }) {
  */
 export function Related({ data, isLoading }) {
   return (
-    <Section
-      title={
-        <Title type="text1" tag="h3">
-          {Translate({ context: "relatedKeywords", label: "title" })}
-        </Title>
-      }
-      className={styles.section}
-      divider={false}
-      sectionTag="div" // Section sat in parent
-    >
-      <div>
-        <Skip
-          id="view-all-filters"
-          className={styles.skip}
-          label={Translate({
-            context: "search",
-            label: "skipRelatedSubjects",
-          })}
-        />
-        <Words data={data} isLoading={isLoading} />
-      </div>
-    </Section>
+    <>
+      <Section
+        title={
+          <Title type="text1" tag="h3">
+            {Translate({ context: "relatedKeywords", label: "title" })}
+          </Title>
+        }
+        className={styles.section}
+        divider={false}
+        sectionTag="div" // Section sat in parent
+      >
+        <div>
+          <Skip
+            id="view-all-filters"
+            className={styles.skip}
+            label={Translate({
+              context: "search",
+              label: "skipRelatedSubjects",
+            })}
+          />
+          <Words data={data} isLoading={isLoading} />
+        </div>
+      </Section>
+      <div style={{ height: "var(--pt8)" }} aria-hidden={true}></div>
+    </>
   );
 }
 

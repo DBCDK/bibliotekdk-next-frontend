@@ -287,8 +287,9 @@ function Wrap({ children }) {
     return () => window.removeEventListener("scroll", onChange);
   }, []);
 
-  return children.flatMap((child, idx) => {
-    if (!isArray(child) && !child.props["anchor-label"]) {
+  return children.map((child, idx) => {
+    console.log(child, "CHILD");
+    if (!child.props["anchor-label"]) {
       // Only allow the component Menu to not have anchor-label
       if (child.type === Menu) {
         return (
