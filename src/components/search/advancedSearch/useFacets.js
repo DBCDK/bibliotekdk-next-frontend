@@ -128,14 +128,10 @@ export function useFacets() {
           pathname: router.pathname,
           query: query,
         })
-      : router.push(
-          {
-            pathname: router.pathname,
-            query: query,
-          },
-          {},
-          { shallow: true, scroll: false }
-        );
+      : router.push({
+          pathname: router.pathname,
+          query: query,
+        });
   }
 
   /**
