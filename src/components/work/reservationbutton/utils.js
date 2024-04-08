@@ -208,3 +208,14 @@ export const constructButtonText = (
     : getMaterialText(workType, materialType);
   return actionText + " " + materialText;
 };
+
+/**
+ * sorts a list of access so eReolen comes first in the list.
+ * @param {*} access list of access objects [{origin}]
+ * @returns
+ */
+export const sortEreolFirst = (access) => {
+  return access?.sort((a, b) =>
+    a?.origin === "eReolen" ? -1 : b?.origin === "eReolen" ? 1 : 0
+  );
+};

@@ -189,7 +189,7 @@ export function branchesActiveInAgency({ agencyId, pids, limit = 50, q = "" }) {
     apiUrl: ApiEnums.FBI_API,
     query: `
     query branchesActiveInAgency($agencyId: String!, $q: String, $pids: [String!]!, $limit: PaginationLimit!, $language: LanguageCode!) {
-      branches(agencyid: $agencyId, q: $q, bibdkExcludeBranches: true, limit: $limit, status: AKTIVE, language: $language) {
+      branches(agencyid: $agencyId, q: $q, bibdkExcludeBranches: false, limit: $limit, status: AKTIVE, language: $language) {
         hitcount
         agencyUrl
         result {

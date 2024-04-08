@@ -101,7 +101,9 @@ export function AdvancedSearchResult({
         {!isLoading && hitcount === 0 && <NoHitSearch />}
         {/*<AdvancedFacets facets={facets} />*/}
         <>
-          <AdvancedSearchSort className={cx(styles.sort_container)} />
+          {hitcount > 0 && (
+            <AdvancedSearchSort className={cx(styles.sort_container)} />
+          )}
           <div>
             {Array(isMobile ? page : 1)
               .fill({})

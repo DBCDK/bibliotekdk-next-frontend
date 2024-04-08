@@ -135,6 +135,12 @@ describe("Overview", () => {
       cy.get(`${this.localizations}`).should("not.exist");
       cy.get(`${this.skeleton}`).should("not.exist");
     });
+    it("is visible when material is physical, even though ILL is not supported", () => {
+      cy.visit(
+        "/iframe.html?args=&id=work-overview-localizationslink--localizations-link-no-ill-but-available-at-libraries"
+      );
+      cy.contains("Findes på 1 bibliotek ");
+    });
     it("Not available for loan at any library", function () {
       cy.visit(
         "/iframe.html?id=work-overview-localizationslink--localizations-link-no-available"

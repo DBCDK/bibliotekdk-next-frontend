@@ -17,6 +17,7 @@ export const AvailabilityEnum = Object.freeze({
   NOT_OWNED: "AVAILABLE_NOT_OWNED",
   NOT_OWNED_FFU: "AVAILABLE_NOT_OWNED_ON_FFU",
   UNKNOWN: "AVAILABILITY_UNKNOWN",
+  AVAILABLE_NOT_FOR_LOAN: "AVAILABLE_NOT_FOR_LOAN",
 });
 
 /**
@@ -78,6 +79,15 @@ export function checkAvailableNow(item) {
     dateIsToday(expectedDelivery) &&
     (getSpecialFFUStatus(item) || status === HoldingStatusEnum.ON_SHELF)
   );
+}
+
+/**
+ * {@link checkAvailableNow} checks if the item is on the shelf, but not for loan
+ * @param {Object} item
+ * @returns {boolean}
+ */
+export function checkAvailableNotForLoan(branch) {
+  return branch?.agencyHoldings?.length > 0 && !branch?.expectedDelivery;
 }
 
 /**
@@ -239,6 +249,8 @@ export function getAvailabilityAccumulated(availability) {
     ? AvailabilityEnum.LATER
     : availability[AvailabilityEnum.NEVER] > 0
     ? AvailabilityEnum.NEVER
+    : availability[AvailabilityEnum.AVAILABLE_NOT_FOR_LOAN] > 0
+    ? AvailabilityEnum.AVAILABLE_NOT_FOR_LOAN
     : availability[AvailabilityEnum.NOT_OWNED] > 0
     ? AvailabilityEnum.NOT_OWNED
     : availability[AvailabilityEnum.NOT_OWNED_FFU] > 0
@@ -257,6 +269,7 @@ function checkAvailabilityOnAgencyLevel(item) {
   return getFirstMatch(true, AvailabilityEnum.UNKNOWN, [
     [dateIsToday(item?.expectedDelivery), AvailabilityEnum.NOW],
     [dateIsLater(item?.expectedDelivery), AvailabilityEnum.LATER],
+    [checkAvailableNotForLoan(item), AvailabilityEnum.AVAILABLE_NOT_FOR_LOAN],
     [dateIsNever(item?.expectedDelivery), AvailabilityEnum.NEVER],
     [publicLibraryDoesNotOwn(item), AvailabilityEnum.NOT_OWNED],
     [nonPublicLibraryDoesNotOwn(item), AvailabilityEnum.NOT_OWNED_FFU],
@@ -269,10 +282,11 @@ function checkAvailabilityOnAgencyLevel(item) {
  * @param {Object} item
  * @returns {string}
  */
-function checkAvailabilityOnBranchLevel(item) {
+function checkAvailabilityOnBranchLevel(item, branch) {
   return getFirstMatch(true, AvailabilityEnum.UNKNOWN, [
     [checkAvailableNow(item), AvailabilityEnum.NOW],
     [checkAvailableLater(item), AvailabilityEnum.LATER],
+    [checkAvailableNotForLoan(branch), AvailabilityEnum.AVAILABLE_NOT_FOR_LOAN],
     [checkAvailableNever(item), AvailabilityEnum.NEVER],
     [publicLibraryDoesNotOwn(item), AvailabilityEnum.NOT_OWNED],
     [nonPublicLibraryDoesNotOwn(item), AvailabilityEnum.NOT_OWNED_FFU],
@@ -288,7 +302,9 @@ function checkAvailabilityOnBranchLevel(item) {
  */
 export function getAvailability(
   items,
-  checkerFunction = (item) => checkAvailabilityOnBranchLevel(item)
+  checkerFunction = (item, branch) =>
+    checkAvailabilityOnBranchLevel(item, branch),
+  branch
 ) {
   const availabilityObject = {
     [AvailabilityEnum.NOW]: 0,
@@ -297,6 +313,7 @@ export function getAvailability(
     [AvailabilityEnum.NOT_OWNED]: 0,
     [AvailabilityEnum.NOT_OWNED_FFU]: 0,
     [AvailabilityEnum.UNKNOWN]: 0,
+    [AvailabilityEnum.AVAILABLE_NOT_FOR_LOAN]: 0,
   };
 
   if (typeof checkerFunction !== "function") {
@@ -304,11 +321,10 @@ export function getAvailability(
   }
 
   for (const item of items) {
-    const key = checkerFunction(item);
+    const key = checkerFunction(item, branch);
 
     availabilityObject[key] += 1;
   }
-
   return availabilityObject;
 }
 
@@ -351,9 +367,11 @@ export function sortByAvailability(a, b) {
   const bAvail = b?.availabilityAccumulated;
 
   return (
-    Number(b?.pickupAllowed) - Number(a?.pickupAllowed) ||
     Number(bAvail === AvailabilityEnum.NOW) -
       Number(aAvail === AvailabilityEnum.NOW) ||
+    Number(bAvail === AvailabilityEnum.AVAILABLE_NOT_FOR_LOAN) -
+      Number(aAvail === AvailabilityEnum.AVAILABLE_NOT_FOR_LOAN) ||
+    Number(b?.pickupAllowed) - Number(a?.pickupAllowed) ||
     Number(bAvail === AvailabilityEnum.LATER) -
       Number(aAvail === AvailabilityEnum.LATER) ||
     Number(bAvail === AvailabilityEnum.NEVER) -
@@ -434,7 +452,9 @@ export function enrichBranches(branch) {
               pickupAllowed: branch?.pickupAllowed,
               noHoldingsFlag: true,
             },
-          ]
+          ],
+      undefined,
+      branch
     )
   );
 
@@ -458,8 +478,10 @@ export function enrichBranches(branch) {
     availabilityAccumulated: availabilityAccumulated,
     // Below elements might be overridden if agency has better information
     availabilityOnAgencyAccumulated: getAvailabilityAccumulated(
-      getAvailability(expectedDeliveryOnHoldingsOrAgency, (item) =>
-        checkAvailabilityOnAgencyLevel(item)
+      getAvailability(
+        expectedDeliveryOnHoldingsOrAgency,
+        (item, branch) => checkAvailabilityOnAgencyLevel(item, branch),
+        branch
       )
     ),
     expectedDelivery: branch?.holdingStatus?.expectedDelivery,
@@ -494,6 +516,7 @@ function getExpectedDeliveryOnHoldingsOrAgency(
     ? allHoldingsAcrossBranchesInAgency
     : entry?.map((e) => {
         return {
+          agencyHoldings: e.agencyHoldings,
           expectedDelivery: e.expectedDelivery,
           pickupAllowed: e.pickupAllowed,
           agencyName: e.agencyName,
@@ -519,6 +542,7 @@ export function handleAgencyAccessData(agencies) {
       ?.map((res) => {
         return {
           ...res,
+          agencyHoldings: res.holdingStatus.agencyHoldings,
           holdingItems: res.holdingStatus.holdingItems,
           expectedDelivery: res.holdingStatus.expectedDelivery,
         };
@@ -671,7 +695,7 @@ export function useSingleAgency({ pids, agencyId, limit = 50 }) {
       branchesFragments.branchesActiveInAgency({
         agencyId: agencyId,
         pids: pids,
-        limit: limit,
+        limit,
       })
   );
 
@@ -721,5 +745,6 @@ export function isKnownStatus(branch) {
     AvailabilityEnum.NOW,
     AvailabilityEnum.LATER,
     AvailabilityEnum.NOT_OWNED,
+    AvailabilityEnum.AVAILABLE_NOT_FOR_LOAN,
   ].includes(branch.availabilityAccumulated);
 }

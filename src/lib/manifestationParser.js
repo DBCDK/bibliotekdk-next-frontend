@@ -184,6 +184,7 @@ const fields = () => [
   //   }),
   //   valueParser: (value) => value[0]?.extent || "",
   // },
+  // ISBN
   {
     dataField: "identifiers",
     label: Translate({
@@ -193,6 +194,19 @@ const fields = () => [
     valueParser: (values) =>
       values
         .filter((value) => value.type === "ISBN")
+        .map((value) => value.value)
+        .join(", "),
+  },
+  // ID for musik
+  {
+    dataField: "identifiers",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "id",
+    }),
+    valueParser: (values) =>
+      values
+        .filter((value) => value.type === "MUSIC")
         .map((value) => value.value)
         .join(", "),
   },
