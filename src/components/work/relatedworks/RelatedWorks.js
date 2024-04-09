@@ -7,6 +7,7 @@ import { workRelationsWorkTypeFactory } from "@/lib/workRelationsWorkTypeFactory
 import ScrollSnapSlider from "@/components/base/scrollsnapslider/ScrollSnapSlider";
 import uniq from "lodash/uniq";
 import { WorkTypeEnum } from "@/lib/enums";
+import Text from "@/components/base/text/Text";
 const CONTEXT = "relatedworks";
 
 function RelatedWorks({ relations, className, subtitleLabel }) {
@@ -25,7 +26,11 @@ function RelatedWorks({ relations, className, subtitleLabel }) {
       title={Translate({ context: CONTEXT, label: "title" })}
       space={{ top: false, bottom: "var(--pt4)" }}
       className={`${className}`}
-      subtitle={Translate({ context: CONTEXT, label: subtitleLabel })}
+      subtitle={
+        <Text type="text2">
+          {Translate({ context: CONTEXT, label: subtitleLabel })}
+        </Text>
+      }
     >
       <ScrollSnapSlider sliderId={sliderId}>{relatedWorks}</ScrollSnapSlider>
     </Section>

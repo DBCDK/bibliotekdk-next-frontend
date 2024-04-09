@@ -1,0 +1,54 @@
+.tag {
+  background-color: var(--blue);
+  padding: var(--pt05) var(--pt1) var(--pt05) var(--pt1);
+  color: var(--white);
+  display: flex;
+  margin: 0 var(--pt1) var(--pt1) 0;
+}
+
+.tagtext {
+  font-family: var(--body-font-semibold);
+}
+
+.container {
+  background-color: var(--concrete);
+  padding: var(--pt1);
+}
+
+.headline {
+  display: block;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tagscontainer {
+  margin-top: var(--pt2);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tagicon {
+  margin-left: var(--pt1);
+  cursor: pointer;
+}
+
+/* @TODO 991 px :) */
+@media (max-width: 991px) {
+  .actions {
+    display: none;
+  }
+  .container {
+    background-color: var(--white);
+    padding: 0;
+  }
+  .tagscontainer {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    margin: 0;
+  }
+}

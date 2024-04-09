@@ -8,15 +8,22 @@ import { ApiEnums } from "@/lib/api/api";
  * @param limit
  * @param sort
  */
-export function doComplexSearchAll({ cql, offset, limit, sort }) {
+export function doComplexSearchAll({ cql, offset, limit, sort, facets }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `
-    query ComplexSearchAll($cql: String!, $offset: Int!, $limit: PaginationLimit!, $sort: [Sort!]) {
-			complexSearch(cql: $cql) {
+    query ComplexSearchAll($cql: String!, $offset: Int!, $limit: PaginationLimit!, $sort: [Sort!], $facets: complexSearchFacets) {
+			complexSearch(cql: $cql, facets: $facets) {
 				hitcount
 				errorMessage
+        facets {
+          name
+          values {
+            key
+            score
+          }
+        }				
 				works(offset: $offset, limit: $limit, sort: $sort) {
 					workId
           mainLanguages {
@@ -103,7 +110,7 @@ export function doComplexSearchAll({ cql, offset, limit, sort }) {
         }
 			}
 		}`,
-    variables: { cql, offset, limit, sort },
+    variables: { cql, offset, limit, sort, facets },
     slowThreshold: 3000,
   };
 }
@@ -143,17 +150,24 @@ export function complexSearchOnlyWorkIds({ cql, offset, limit, sort }) {
  * @param limit
  * @param sort
  */
-export function hitcount({ cql, offset, limit, sort }) {
+export function hitcount({ cql, offset, limit, sort, facets }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
-    query hitcount($cql: String!) {
-			complexSearch(cql: $cql) {
+    query hitcount($cql: String!, $facets: complexSearchFacets) {
+			complexSearch(cql: $cql, facets: $facets) {
 				hitcount
 				errorMessage
+				facets {
+          name
+          values {
+            key
+            score
+          }
+        }			
 			}
 		}`,
-    variables: { cql, offset, limit, sort },
+    variables: { cql, offset, limit, sort, facets },
     slowThreshold: 3000,
   };
 }

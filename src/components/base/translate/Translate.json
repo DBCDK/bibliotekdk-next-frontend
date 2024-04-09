@@ -218,6 +218,48 @@
         "en": "Age"
       }
     },
+    "complex-search-facets": {
+      "label-specificmaterialtype": {
+        "da": "Format",
+        "en": "Format"
+      },
+      "label-creator": {
+        "da": "Forfatter / ophav",
+        "en": "Creator"
+      },
+      "label-contributor": {
+        "da": "Oplæser / oversætter / bidrag",
+        "en": "Contributor"
+      },
+      "label-subject": {
+        "da": "Emne",
+        "en": "Subject"
+      },
+      "label-mainlanguage": {
+        "da": "Sprog",
+        "en": "Language"
+      },
+      "label-generalaudience": {
+        "da": "Målgruppe",
+        "en": "Audience"
+      },
+      "label-fictionalcharacter": {
+        "da": "Fiktiv hovedperson",
+        "en": "Fictive person"
+      },
+      "label-genreandform": {
+        "da": "Genre og form",
+        "en": "Genre og form"
+      },
+      "label-ages": {
+        "da": "Aldersgruppe",
+        "en": "Ages"
+      },
+      "label-primarytarget": {
+        "da": "Fagligt niveau",
+        "en": "Level"
+      }
+    },
     "logo": {
       "default_logo_text": {
         "da": "Bibliotek dk",
@@ -1921,6 +1963,10 @@
         "da": "Se flere",
         "en": "More"
       },
+      "filter-your-search": {
+        "da": "Filtrer din søgning",
+        "en": "Filter your search"
+      },
       "filtersResultText": {
         "da": "Mest relevante resultater",
         "en": "LABEL: mangler oversættelse"
@@ -2311,6 +2357,10 @@
         "da": "Tilpasses efter materialetype",
         "en": "Adjusted according to material type"
       },
+      "narrow-search": {
+        "da": "Afgræns din søgning",
+        "en": "Narrow your search"
+      },
       "narrow-search-more": {
         "da": "Afgræns yderligere",
         "en": "narrow-search-more"
@@ -2318,6 +2368,14 @@
       "searchHistory": {
         "da": "Søgehistorik",
         "en": "Search history"
+      },
+      "history-yesterday": {
+        "da": "Igår",
+        "en": "Yesterday"
+      },
+      "history-today": {
+        "da": "Idag",
+        "en": "Today"
       },
       "clearSearch": {
         "da": "Ryd søgning",
@@ -2387,6 +2445,14 @@
       }
     },
     "facets": {
+      "label-selected-filters": {
+        "da": "Valgte filtre",
+        "en": "Selected filters"
+      },
+      "label-clear-filters": {
+        "da": "Nulstil",
+        "en": "Clear"
+      },
       "label-sortorder-numerical": {
         "da": "Sorter alfabetisk",
         "en": "Sort alphabetically"

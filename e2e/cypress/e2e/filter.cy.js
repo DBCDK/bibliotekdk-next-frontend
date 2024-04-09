@@ -107,6 +107,11 @@ describe("Filter", () => {
     });
   });
 
+  it(`Show hitcount for mobile facets ","`, () => {
+    cy.visit("/iframe.html?id=modal-filter--mobile-filter");
+    cy.contains("Vis 1111 resultater");
+  });
+
   it.skip(`Restore filters when browser's back button is used`, () => {
     cy.visit(
       `${nextjsBaseUrl}/find?q.all=katte&workType=article&materialTypes=avisartikel`

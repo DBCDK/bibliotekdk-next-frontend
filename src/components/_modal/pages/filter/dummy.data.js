@@ -1,6 +1,7 @@
 const data = {
   data: {
     search: {
+      hitcount: "1111",
       facets: [
         {
           name: "workTypes",

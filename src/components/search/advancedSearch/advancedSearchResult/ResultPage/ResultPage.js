@@ -8,8 +8,12 @@ import { doComplexSearchAll } from "@/lib/api/complexSearch.fragments";
 
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
-import { convertStateToCql } from "@/components/search/advancedSearch/utils";
+import {
+  convertStateToCql,
+  getCqlAndFacetsQuery,
+} from "@/components/search/advancedSearch/utils";
 import isEmpty from "lodash/isEmpty";
+import { useFacets } from "@/components/search/advancedSearch/useFacets";
 
 /**
  * Row representation of a search result entry
@@ -45,6 +49,7 @@ ResultPage.propTypes = {
 function parseResponse(bigResponse) {
   return {
     works: bigResponse?.data?.complexSearch?.works || null,
+    facets: bigResponse?.data?.complexSearch?.facets || [],
     isLoading: bigResponse?.isLoading,
   };
 }
@@ -64,13 +69,20 @@ export default function Wrap({ onWorkClick, page }) {
     sort,
   } = useAdvancedSearchContext();
 
+  const { selectedFacets } = useFacets();
+
   onWorkClick = null;
+
+  // if facets are set we need them for the cql
+  const cqlAndFacetsQuery = getCqlAndFacetsQuery(cql, selectedFacets);
 
   const limit = 10;
   let offset = limit * (page - 1);
-  const cqlQuery = cql || convertStateToCql(fieldSearch);
+  const cqlQuery =
+    cqlAndFacetsQuery ||
+    convertStateToCql({ ...fieldSearch, facets: selectedFacets });
 
-  const showResult = !isEmpty(fieldSearch) || !isEmpty(cql);
+  const showResult = !isEmpty(fieldSearch) || !isEmpty(cqlAndFacetsQuery);
 
   // fetch data for the specific page
   const bigResponse = useData(
@@ -81,6 +93,7 @@ export default function Wrap({ onWorkClick, page }) {
       ...(!isEmpty(sort) && { sort: sort }),
     })
   );
+
   const parsedResponse = parseResponse(bigResponse);
 
   if (parsedResponse.isLoading) {

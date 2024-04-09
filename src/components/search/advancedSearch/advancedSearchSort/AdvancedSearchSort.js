@@ -102,7 +102,11 @@ export default function AdvancedSearchSort({ className }) {
 
   return (
     <nav className={cx(className)}>
-      <Text tag="span" type="text3" className={cx(styles.upper_first)}>
+      <Text
+        tag="span"
+        type="text3"
+        className={cx(styles.upper_first, styles.sort_label)}
+      >
         {Translate({ context: "advanced_search_sort", label: "sort_button" })}:
       </Text>
       <Dropdown className={cx(styles.nav_element)}>

@@ -21,11 +21,15 @@ import Text from "@/components/base/text/Text";
 import { useModal } from "@/components/_modal";
 
 export function Parts({ parts, type, modalOpen }) {
-  const subtitle = Translate({
-    context: "details",
-    label: "subtitle",
-    vars: [type],
-  });
+  const subtitle = (
+    <Text type="text2">
+      {Translate({
+        context: "details",
+        label: "subtitle",
+        vars: [type],
+      })}
+    </Text>
+  );
 
   if (isEmpty(parts)) {
     return null;
