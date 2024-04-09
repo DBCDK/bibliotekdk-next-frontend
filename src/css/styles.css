@@ -16,7 +16,7 @@
 
 :root {
   --bounce-effect: cubic-bezier(0.38, 1.95, 0.4, 0.4);
-  --shadow-effect: 0px 6px 12px rgba(0, 0, 0, 0.1);
+  --shadow-effect: 0px 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 .relative {
