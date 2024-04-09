@@ -1,8 +1,7 @@
 .container {
   border-bottom: 1px solid var(--iron);
   background: var(--concrete);
-  /*box-shadow: 0 6px 15px 0 rgba(0, 0, 0, 0.06);*/
-  box-shadow: -1px 1px 4px 1px var(--gray);
+  box-shadow: 0 6px 15px 0 rgba(0, 0, 0, 0.06);
   display: flex;
   align-items: center;
   padding: var(--pt2) 0;
