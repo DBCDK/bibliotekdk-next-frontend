@@ -151,10 +151,22 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
     return aselected ? -1 : 1;
   };
 
+  const numericsort = (a, b) => {
+    const aselected = !!current?.values?.find((val) => {
+      return val.name === a.key;
+    });
+    // if a i selected we leave as is
+    if (aselected) {
+      return 0;
+    }
+    return a.score > b.score ? 1 : -1;
+  };
+
   let initialcheck;
   return (
     <ul data-cy={`${facetName}`}>
       {facet?.values
+        .sort(numericsort)
         .sort(sorter)
         .slice(0, numToShow)
         .map((value, index) => (
