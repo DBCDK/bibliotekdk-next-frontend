@@ -96,6 +96,7 @@ Checkbox.propTypes = {
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
   onChange: PropTypes.func,
+  onClick: PropTypes.func,
   skeleton: PropTypes.bool,
   dataCy: PropTypes.string,
 };

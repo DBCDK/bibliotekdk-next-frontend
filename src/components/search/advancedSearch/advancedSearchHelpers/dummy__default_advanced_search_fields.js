@@ -374,6 +374,14 @@ const unprioritisedLanguages = [
     key: "ar",
   },
   {
+    term: "persisk",
+    key: "per",
+  },
+  {
+    term: "japansk",
+    key: "ja",
+  },
+  {
     term: "tjekkisk",
     key: "cze",
   },

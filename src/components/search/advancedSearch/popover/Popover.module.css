@@ -23,10 +23,13 @@
   display: grid;
   grid-template-rows: 0fr;
   transition: grid-template-rows 300ms ease-out;
+  visibility: hidden;
+  transition: 300ms;
 }
 
 .popoverAnimation[aria-expanded="true"] {
   grid-template-rows: 1fr;
+  visibility: visible;
 }
 
 .popoverAnimation_advancedSearch {

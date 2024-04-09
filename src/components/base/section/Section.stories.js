@@ -31,7 +31,7 @@ export function Subtitle() {
       <StoryTitle>Section</StoryTitle>
       <StoryDescription>Section component with a subtitle.</StoryDescription>
       <StorySpace direction="v" space="8" />
-      <Section title="Some Title" subtitle="Some Subtitle">
+      <Section title="Some Title" subtitle={<div>Some Subtitle</div>}>
         Some section content
       </Section>
     </div>

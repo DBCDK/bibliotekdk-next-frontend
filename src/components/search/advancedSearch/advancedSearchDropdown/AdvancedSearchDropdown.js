@@ -139,6 +139,7 @@ export default function AdvancedSearchDropdown({
   const sortedMenuItemsState = [
     ...(!isEmpty(dropdownQuery)
       ? [...menuItemsState]
+          ?.filter((item) => item?.name?.includes(dropdownQuery?.toLowerCase()))
           .sort((a, b) => sorterForMenuItems(a, b, dropdownQuery))
           .filter((item) => ![FormTypeEnum.DIVIDER].includes(item.formType))
       : [...menuItemsState]),
@@ -150,6 +151,8 @@ export default function AdvancedSearchDropdown({
 
   return (
     <Dropdown
+      //hack to disable popper.js dynamic positioning of the dropdown
+      align={{ sm: "center" }}
       className={styles.nav_element}
       data-cy={`advanced-search-dropdown-${indexName}`}
     >

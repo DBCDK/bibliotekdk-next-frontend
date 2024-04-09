@@ -118,12 +118,12 @@ export function handleScroll(container, section, offset = 0, callback = null) {
  */
 function debouncedAlignMenuItem(container, item, offset = 0, callback = null) {
   // Check that menu wrap exist
-  if (!container.current) {
+  if (!container?.current) {
     return null;
   }
 
   // If item exist
-  if (!item.current) {
+  if (!item?.current) {
     return null;
   }
 

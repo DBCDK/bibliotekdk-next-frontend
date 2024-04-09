@@ -13,6 +13,7 @@ import CloseSvg from "@/public/icons/close_grey.svg";
 import RedSvg from "@/public/icons/status__not_for_loan.svg";
 import GreenSvg from "@/public/icons/status__on_shelf.svg";
 import Translate, { hasTranslation } from "@/components/base/translate";
+import { useFacets } from "@/components/search/advancedSearch/useFacets";
 
 function parseErrorMessage(errorMessage) {
   // first sentence of errormessage is (kind of) explanation
@@ -126,7 +127,18 @@ export function CqlErrorMessage(errormessage) {
 }
 
 export default function Wrap({ cql = "" }) {
-  const bigResponse = useData(doComplexSearchAll({ cql, offset: 0, limit: 1 }));
+  const { facetsFromEnum } = useFacets();
+  const bigResponse = useData(
+    doComplexSearchAll({
+      cql,
+      offset: 0,
+      limit: 1,
+      facets: {
+        facetLimit: 5,
+        facets: facetsFromEnum,
+      },
+    })
+  );
 
   return CqlErrorMessage(bigResponse?.data?.complexSearch?.errorMessage);
 }

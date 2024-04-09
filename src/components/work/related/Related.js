@@ -55,36 +55,42 @@ export function Words({ data, isLoading }) {
  */
 export function Related({ data, isLoading }) {
   return (
-    <Section
-      title={
-        <Title type="text1" tag="h3">
-          {Translate({ context: "relatedKeywords", label: "title" })}
-        </Title>
-      }
-      className={styles.section}
-      divider={false}
-      sectionTag="div" // Section sat in parent
-    >
-      <div>
-        <Skip
-          id="view-all-filters"
-          className={styles.skip}
-          label={Translate({
-            context: "search",
-            label: "skipRelatedSubjects",
-          })}
-        />
-        <Words data={data} isLoading={isLoading} />
-      </div>
-    </Section>
+    <>
+      <Section
+        title={
+          <Title type="text1" tag="h3">
+            {Translate({ context: "relatedKeywords", label: "title" })}
+          </Title>
+        }
+        className={styles.section}
+        divider={false}
+        sectionTag="div" // Section sat in parent
+      >
+        <div>
+          <Skip
+            id="view-all-filters"
+            className={styles.skip}
+            label={Translate({
+              context: "search",
+              label: "skipRelatedSubjects",
+            })}
+          />
+          <Words data={data} isLoading={isLoading} />
+        </div>
+      </Section>
+      <div style={{ height: "var(--pt8)" }} aria-hidden={true}></div>
+    </>
   );
 }
 
 /**
  *
  * Wrap for fetching data for the subject Related component
+ * update - 05/04/24 - only handle selected worktypes
  */
 export default function Wrap({ workId }) {
+  const worktypesToHandle = ["LITERATURE", "ARTICLE", "MOVIE", "PODCAST"];
+
   // fetch work subjects
   const { data: workData, isLoading: workIsLoading } = useData(
     workFragments.subjects({ workId })
@@ -101,7 +107,13 @@ export default function Wrap({ workId }) {
     keywords?.length && subjects({ q: keywords })
   );
 
-  if (!keywords || keywords.length === 0) {
+  const worktype = workData?.work?.workTypes?.[0];
+
+  if (
+    !keywords ||
+    keywords.length === 0 ||
+    !worktypesToHandle.includes(worktype)
+  ) {
     return null;
   }
 

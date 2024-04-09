@@ -366,6 +366,7 @@ export function subjects({ workId }) {
     query: `
     query subjects($workId: String!) {
       work(id: $workId) {
+        workTypes
         subjects {
           selectedSubjects: dbcVerified {
             type

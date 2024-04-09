@@ -218,6 +218,48 @@
         "en": "Age"
       }
     },
+    "complex-search-facets": {
+      "label-specificmaterialtype": {
+        "da": "Format",
+        "en": "Format"
+      },
+      "label-creator": {
+        "da": "Forfatter / ophav",
+        "en": "Creator"
+      },
+      "label-contributor": {
+        "da": "Oplæser / oversætter / bidrag",
+        "en": "Contributor"
+      },
+      "label-subject": {
+        "da": "Emne",
+        "en": "Subject"
+      },
+      "label-mainlanguage": {
+        "da": "Sprog",
+        "en": "Language"
+      },
+      "label-generalaudience": {
+        "da": "Målgruppe",
+        "en": "Audience"
+      },
+      "label-fictionalcharacter": {
+        "da": "Fiktiv hovedperson",
+        "en": "Fictive person"
+      },
+      "label-genreandform": {
+        "da": "Genre og form",
+        "en": "Genre og form"
+      },
+      "label-ages": {
+        "da": "Aldersgruppe",
+        "en": "Ages"
+      },
+      "label-primarytarget": {
+        "da": "Fagligt niveau",
+        "en": "Level"
+      }
+    },
     "logo": {
       "default_logo_text": {
         "da": "Bibliotek dk",
@@ -710,6 +752,10 @@
       }
     },
     "bibliographic-data": {
+      "id": {
+        "da": "Id",
+        "en": "Id"
+      },
       "requirements": {
         "da": "Nødvendigt udstyr",
         "en": "Required gear"
@@ -928,6 +974,10 @@
         "da": "Udlånes ikke",
         "en": "Not for loan"
       },
+      "available_not_for_loan": {
+        "da": "På hylden, men udlånes ikke",
+        "en": "On shelf, but not loanable"
+      },
       "does_not_own_material": {
         "da": "Har ikke materialet",
         "en": "Does not own the material"
@@ -935,6 +985,10 @@
       "status_is_unknown": {
         "da": "Status kendes ikke",
         "en": "Status is unknown"
+      },
+      "available_not_for_loan_alt": {
+        "da": "Grønt lys som viser at materialet kun kan benyttes på stedet",
+        "en": "Green light showing the material can only be used at location"
       },
       "status_is_unknown_alt": {
         "da": "Gråt lys som viser at status for materialet ikke kendes her",
@@ -1272,6 +1326,10 @@
         "da": "Bestil (deaktiveret)",
         "en": "Order (disabled)"
       },
+      "Order-disabled-but-owned": {
+        "da": "Kan ikke bestilles til hjemlån",
+        "en": "Not available for home loan"
+      },
       "all-options-link": {
         "da": "Alle bestillingsmuligheder (%s)",
         "en": "All order options (%s)"
@@ -1358,6 +1416,10 @@
       }
     },
     "details": {
+      "participants": {
+        "da": "Deltagere",
+        "en": "Players"
+      },
       "title": {
         "da": "Detaljer",
         "en": "Details"
@@ -1905,6 +1967,10 @@
         "da": "Se flere",
         "en": "More"
       },
+      "filter-your-search": {
+        "da": "Filtrer din søgning",
+        "en": "Filter your search"
+      },
       "filtersResultText": {
         "da": "Mest relevante resultater",
         "en": "LABEL: mangler oversættelse"
@@ -2295,6 +2361,10 @@
         "da": "Tilpasses efter materialetype",
         "en": "Adjusted according to material type"
       },
+      "narrow-search": {
+        "da": "Afgræns din søgning",
+        "en": "Narrow your search"
+      },
       "narrow-search-more": {
         "da": "Afgræns yderligere",
         "en": "narrow-search-more"
@@ -2302,6 +2372,14 @@
       "searchHistory": {
         "da": "Søgehistorik",
         "en": "Search history"
+      },
+      "history-yesterday": {
+        "da": "Igår",
+        "en": "Yesterday"
+      },
+      "history-today": {
+        "da": "Idag",
+        "en": "Today"
       },
       "clearSearch": {
         "da": "Ryd søgning",
@@ -2371,6 +2449,14 @@
       }
     },
     "facets": {
+      "label-selected-filters": {
+        "da": "Valgte filtre",
+        "en": "Selected filters"
+      },
+      "label-clear-filters": {
+        "da": "Nulstil",
+        "en": "Clear"
+      },
       "label-sortorder-numerical": {
         "da": "Sorter alfabetisk",
         "en": "Sort alphabetically"

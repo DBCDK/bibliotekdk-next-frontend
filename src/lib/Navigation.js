@@ -18,7 +18,7 @@ export const actions = [
     href: "/hjaelp/kontakt-os/25",
     // target: "_blank",
   },
-  { label: "becomeLoaner", href: "/artikel/bliv-laaner/43" },
+  { label: "becomeLoaner", href: "/hjaelp/ny-bruger/45" },
   { label: "digitalOffers", href: "/artikel/digitale-bibliotekstilbud/5" },
   { label: "useTheLibraries", href: "/#!", hidden: true },
   { label: "mySearches", href: "/#!", hidden: true },

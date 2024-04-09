@@ -18,6 +18,7 @@ import IconButton from "@/components/base/iconButton/IconButton";
 import { getHelpUrl } from "@/lib/utils";
 import cx from "classnames";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import { useFacets } from "@/components/search/advancedSearch/useFacets";
 
 /**
  * Contains advanced search fields
@@ -48,8 +49,12 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
     setShowCqlEditor(router?.query?.mode === "cql" || !!cqlFromUrl);
   }, [cqlFromUrl, router?.query?.mode]);
 
+  // we need to clear the global facets
+  const { clearFacetsUrl } = useFacets();
   //add raw cql query in url if showCqlEditor. Add state to url if fieldInputs
   const doAdvancedSearch = () => {
+    // this is a new search - clear the facets
+    clearFacetsUrl();
     if (showCqlEditor) {
       const cqlParsedFromUrl = fieldSearchFromUrl
         ? convertStateToCql(fieldSearchFromUrl)
@@ -58,7 +63,9 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
         const query = { fieldSearch: stateToString };
         router.push({ pathname: "/avanceret", query });
       } else {
-        const query = { cql: parsedCQL };
+        const query = {
+          cql: parsedCQL,
+        };
         router.push({ pathname: "/avanceret", query });
       }
     } else {

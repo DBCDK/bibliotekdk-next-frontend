@@ -239,7 +239,7 @@ export default function BranchDetails({ context }) {
 
   const buttonSize = "medium";
 
-  if (!branchDetailsLoading && orderPolicyForBranches?.length !== 1) {
+  if (!branchDetailsLoading && orderPolicyForBranches?.length > 1) {
     throw new Error(`Error: Der burde være præcis 1 branchId, men der er flere 
         ${orderPolicyForBranches
           ?.map((branch) => branch?.branchId)
