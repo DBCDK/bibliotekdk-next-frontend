@@ -139,83 +139,107 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
           // Re-fetches session when window is focused
           refetchOnWindowFocus={isOnline}
         >
-          <Modal.Provider
-            router={{
-              pathname: router.pathname,
-              query: router.query,
-              push: (obj) => router.push(obj),
-              replace: (obj) => router.replace(obj),
-              go: (index) => window.history.go(index),
-            }}
-          >
-            <Modal.Container>
-              <Modal.Page id="menu" component={Pages.Menu} />
-              <Modal.Page id="options" component={Pages.Options} />
-              <Modal.Page id="order" component={Pages.Order} />
-              <Modal.Page id="periodicaform" component={Pages.PeriodicaForm} />
-              <Modal.Page id="pickup" component={Pages.Pickup} />
-              <Modal.Page id="loanerform" component={Pages.Loanerform} />
-              <Modal.Page id="receipt" component={Pages.Receipt} />
-              <Modal.Page id="login" component={Pages.Login} />
-              <Modal.Page id="mobileLogin" component={Pages.MobileLogin} />
-              <Modal.Page id="filter" component={Pages.Filter} />
-              <Modal.Page id="references" component={Pages.References} />
-              <Modal.Page
-                id="multiReferences"
-                component={Pages.MultiReferences}
-              />
-              <Modal.Page id="editionPicker" component={Pages.EditionPicker} />
-              <Modal.Page id="material" component={Pages.Material} />
-              <Modal.Page
-                id="ematerialfilter"
-                component={Pages.EMaterialFilter}
-              />
-              <Modal.Page id="multiorder" component={Pages.MultiOrder} />
-              <Modal.Page id="multireceipt" component={Pages.MultiReceipt} />
-              <Modal.Page id="deleteOrder" component={Pages.DeleteOrder} />
-              <Modal.Page id="addLibrary" component={Pages.AddLibrary} />
-              <Modal.Page id="verify" component={Pages.Verify} />
-              <Modal.Page id="statusMessage" component={Pages.StatusMessage} />
-              <Modal.Page id="removeLibrary" component={Pages.RemoveLibrary} />
+          <AdvancedSearchProvider router={router}>
+            <Modal.Provider
+              router={{
+                pathname: router.pathname,
+                query: router.query,
+                push: (obj) => router.push(obj),
+                replace: (obj) => router.replace(obj),
+                go: (index) => window.history.go(index),
+              }}
+            >
+              <Modal.Container>
+                <Modal.Page id="menu" component={Pages.Menu} />
+                <Modal.Page id="options" component={Pages.Options} />
+                <Modal.Page id="order" component={Pages.Order} />
+                <Modal.Page
+                  id="periodicaform"
+                  component={Pages.PeriodicaForm}
+                />
+                <Modal.Page id="pickup" component={Pages.Pickup} />
+                <Modal.Page id="loanerform" component={Pages.Loanerform} />
+                <Modal.Page id="receipt" component={Pages.Receipt} />
+                <Modal.Page id="login" component={Pages.Login} />
+                <Modal.Page id="mobileLogin" component={Pages.MobileLogin} />
+                <Modal.Page id="filter" component={Pages.Filter} />
+                <Modal.Page id="references" component={Pages.References} />
+                <Modal.Page
+                  id="multiReferences"
+                  component={Pages.MultiReferences}
+                />
+                <Modal.Page
+                  id="editionPicker"
+                  component={Pages.EditionPicker}
+                />
+                <Modal.Page id="material" component={Pages.Material} />
+                <Modal.Page
+                  id="ematerialfilter"
+                  component={Pages.EMaterialFilter}
+                />
+                <Modal.Page id="multiorder" component={Pages.MultiOrder} />
+                <Modal.Page id="multireceipt" component={Pages.MultiReceipt} />
+                <Modal.Page id="deleteOrder" component={Pages.DeleteOrder} />
+                <Modal.Page id="addLibrary" component={Pages.AddLibrary} />
+                <Modal.Page id="verify" component={Pages.Verify} />
+                <Modal.Page
+                  id="statusMessage"
+                  component={Pages.StatusMessage}
+                />
+                <Modal.Page
+                  id="removeLibrary"
+                  component={Pages.RemoveLibrary}
+                />
+                <Modal.Page
+                  id="advancedFacets"
+                  component={Pages.AdvancedFacets}
+                />
 
-              <Modal.Page
-                id="orderHistoryDataConsent"
-                component={Pages.OrderHistoryDataConsent}
-              />
+                <Modal.Page id="mobileFacets" component={Pages.MobileFacets} />
 
-              <Modal.Page id="deleteProfile" component={Pages.DeleteProfile} />
+                <Modal.Page
+                  id="orderHistoryDataConsent"
+                  component={Pages.OrderHistoryDataConsent}
+                />
 
-              <Modal.Page
-                id="openAdgangsplatform"
-                component={Pages.OpenAdgangsplatform}
-              />
-              <Modal.Page
-                id="loginNotSupported"
-                component={Pages.LoginNotSupported}
-              />
-              <Modal.Page
-                id="manifestationContent"
-                component={Pages.ManifestationContent}
-              />
-              <Modal.Page
-                id="agencyLocalizations"
-                component={Pages.AgencyLocalizations}
-              />
-              <Modal.Page
-                id="branchLocalizations"
-                component={Pages.BranchLocalizations}
-              />
-              <Modal.Page id="branchDetails" component={Pages.BranchDetails} />
-              <Modal.Page
-                id="accountHasProfile"
-                component={Pages.AccountHasProfile}
-              />
-            </Modal.Container>
-            <Head />
-            <Matomo />
-            <BodyScrollLock router={router} />
-            <div id="layout">
-              <AdvancedSearchProvider router={router}>
+                <Modal.Page
+                  id="deleteProfile"
+                  component={Pages.DeleteProfile}
+                />
+
+                <Modal.Page
+                  id="openAdgangsplatform"
+                  component={Pages.OpenAdgangsplatform}
+                />
+                <Modal.Page
+                  id="loginNotSupported"
+                  component={Pages.LoginNotSupported}
+                />
+                <Modal.Page
+                  id="manifestationContent"
+                  component={Pages.ManifestationContent}
+                />
+                <Modal.Page
+                  id="agencyLocalizations"
+                  component={Pages.AgencyLocalizations}
+                />
+                <Modal.Page
+                  id="branchLocalizations"
+                  component={Pages.BranchLocalizations}
+                />
+                <Modal.Page
+                  id="branchDetails"
+                  component={Pages.BranchDetails}
+                />
+                <Modal.Page
+                  id="accountHasProfile"
+                  component={Pages.AccountHasProfile}
+                />
+              </Modal.Container>
+              <Head />
+              <Matomo />
+              <BodyScrollLock router={router} />
+              <div id="layout">
                 <SkipToMainLink />
                 <Banner />
                 <Notifications />
@@ -225,20 +249,20 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
 
                 <FeedBackLink />
                 <Footer />
-              </AdvancedSearchProvider>
-            </div>
+              </div>
 
-            {/* watch for FFU user logins - propt the users to create an bibdk account */}
-            <Listener.FFU />
-            <Listener.Create />
-            <Listener.HasProfile />
-            <UseManyProvider />
-          </Modal.Provider>
+              {/* watch for FFU user logins - propt the users to create an bibdk account */}
+              <Listener.FFU />
+              <Listener.Create />
+              <Listener.HasProfile />
+              <UseManyProvider />
+            </Modal.Provider>
 
-          {/* SetPickupBranch listens for users just logged in via adgangsplatformen */}
-          <SetPickupBranch router={router} />
+            {/* SetPickupBranch listens for users just logged in via adgangsplatformen */}
+            <SetPickupBranch router={router} />
 
-          <BookmarkSyncProvider />
+            <BookmarkSyncProvider />
+          </AdvancedSearchProvider>
         </SessionProvider>
       </SWRConfig>
     </ErrorBoundary>

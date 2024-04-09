@@ -46,6 +46,13 @@ export function BibliographicData({ manifestations, workId }) {
     >
       <Accordion>
         {sliced.map((manifestation, index) => {
+          // very 1. priority
+          let volume = manifestation?.titles?.identifyingAddition
+            ? manifestation?.titles?.identifyingAddition
+            : "";
+          volume +=
+            volume && manifestation?.volume ? ", " + manifestation.volume : "";
+
           const formattedMaterialTypes = formatMaterialTypesToPresentation(
             flattenMaterialType(manifestation)
           );
@@ -54,12 +61,13 @@ export function BibliographicData({ manifestations, workId }) {
           // show the materialtype
           const shortMaterialType = [formattedMaterialTypes].join("");
 
-          // show a person involved - prioritized
-          // 1. contributor (dkind) - indlæser
-          // 2. illustrator
-          // 3. titles.identifyingAddition - text describing contribution
-          // 4. creator
-          // 5. .. nothing
+          // show additional info - prioritized
+          // 1. volume
+          // 2. contributor (dkind) - indlæser
+          // 3. illustrator
+          // 4. titles.identifyingAddition - text describing contribution
+          // 5. creator
+          // 6. .. nothing
 
           // priority 1
           const personsReading = manifestation?.contributors?.filter((con) => {
@@ -75,7 +83,8 @@ export function BibliographicData({ manifestations, workId }) {
               );
             }
           );
-          const shortPerson =
+          const shortAddit =
+            (volume && volume) ||
             (personsReading.length > 0 &&
               personsReading
                 ?.map(
@@ -115,7 +124,7 @@ export function BibliographicData({ manifestations, workId }) {
           // the list to pass to accordion
           const additinalText = [
             shortMaterialType,
-            shortPerson,
+            shortAddit,
             shortPublishing,
           ];
 

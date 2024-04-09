@@ -17,6 +17,7 @@ import { cyKey } from "@/utils/trim";
 import Icon from "@/components/base/icon/Icon";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import MenuDropdown from "@/components/base/dropdown/menuDropdown/MenuDropdown";
+import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import Button from "@/components/base/button";
 import CombinedSearch from "@/components/search/advancedSearch/combinedSearch/CombinedSearch";
 
@@ -24,23 +25,51 @@ function HistoryItem({ item, index, checked, onSelect }) {
   const router = useRouter();
   const breakpoint = useBreakpoint();
 
+  const { restartFacetsHook } = useFacets();
+
   const goToItemUrl = (item) => {
+    // restart the useFacets hook - this is a 'new' search
+    restartFacetsHook();
     if (item.fieldSearch) {
       const query = {
         fieldSearch: JSON.stringify(item.fieldSearch),
+        facets: JSON.stringify(item.selectedFacets || "[]"),
       };
       router.push({
         pathname: "/avanceret/",
         query: query,
       });
     } else if (item.cql) {
-      router.push({ pathname: "/avanceret/", query: { cql: item.cql } });
+      router.push({
+        pathname: "/avanceret/",
+        query: {
+          cql: item.cql,
+          facets: JSON.stringify(item.selectedFacets || "[]"),
+        },
+      });
     }
   };
 
   const timestamp = item.unixtimestamp
     ? getTimeStamp(item.unixtimestamp)
     : item.timestamp;
+
+  const flatfilters = [];
+  item?.selectedFacets?.forEach((facet) =>
+    facet.values.map((val) =>
+      flatfilters.push({
+        name: val.name,
+      })
+    )
+  );
+
+  const itemText = () => {
+    return Translate({
+      context: "search",
+      label: "timestamp",
+      vars: [timestamp],
+    });
+  };
 
   return (
     <div
@@ -66,13 +95,7 @@ function HistoryItem({ item, index, checked, onSelect }) {
         type="text2"
         title={getDateTime(item.unixtimestamp)}
       >
-        {breakpoint === "xs"
-          ? Translate({
-              context: "search",
-              label: "timestamp",
-              vars: [timestamp],
-            })
-          : timestamp}
+        {itemText()}
       </Text>
       <div className={styles.link}>
         <Link
@@ -87,6 +110,23 @@ function HistoryItem({ item, index, checked, onSelect }) {
             <FormatCql item={item} />
           )}
         </Link>
+        {!isEmpty(item.selectedFacets) && (
+          <div className={styles.historyFilters}>
+            <Text tag="span" type="text1">
+              {Translate({ context: "search", label: "filters" })} :
+            </Text>
+            {flatfilters.map((val, index) => (
+              <Text
+                tag="span"
+                type="text2"
+                key={`${val.name}-${index}`}
+                className={styles.filteritem}
+              >
+                {`${val.name} ${flatfilters.length > index + 1 ? "," : ""}`}
+              </Text>
+            ))}
+          </div>
+        )}
       </div>
       <Text type="text2" className={styles.hitcount}>
         {item.hitcount}{" "}
@@ -194,7 +234,6 @@ function HistoryHeader() {
     <div className={cx(styles.header, styles.grid)}>
       <div className={styles.checkbox}> </div>
       <Text type="text4" className={styles.timestamp}>
-        {/*{@TODO translations}*/}
         {Translate({ context: "search", label: "timeForSearch" })}
       </Text>
       <Text type="text4" className={styles.link}>
@@ -220,6 +259,29 @@ function EmptySearchHistory() {
       </div>
     </div>
   );
+}
+
+/**
+ * split stored history in 3 - Today, Yesterday and older :)
+ * @param storedValues
+ */
+function splitHistoryItems(storedValues) {
+  const oneday = 24 * 60 * 60 * 1000;
+  const today = [];
+  const yesterday = [];
+  const older = [];
+
+  storedValues?.map((val) => {
+    if (Date.now() - val.unixtimestamp < oneday) {
+      today.push(val);
+    } else if (Date.now() - val.unixtimestamp < oneday * 2) {
+      yesterday.push(val);
+    } else {
+      older.push(val);
+    }
+  });
+
+  return { today: today, yesterday: yesterday, older: older };
 }
 
 export function AdvancedSearchHistory() {
@@ -280,7 +342,34 @@ export function AdvancedSearchHistory() {
     setCheckboxList(newCheckList);
   };
 
-  const filteredObjects = storedValue?.filter((obj) =>
+  const splittedValues = splitHistoryItems(storedValue);
+
+  const HistoryItemPerDay = ({ title, items }) => {
+    return (
+      <>
+        {title && items.length > 0 && (
+          <Text type="text4" className={styles.itemsheader}>
+            {title}
+          </Text>
+        )}
+        {items.length > 0 &&
+          items.map((item, index) => (
+            <HistoryItem
+              key={item.cql}
+              item={item}
+              index={index}
+              checked={
+                checkboxList.findIndex((check) => check === item.cql) !== -1
+              }
+              deleteSelected={onDeleteSelected}
+              onSelect={onSelect}
+            />
+          ))}
+      </>
+    );
+  };
+
+  const checkedObjects = storedValue?.filter((obj) =>
     checkboxList.includes(obj.cql)
   );
 
@@ -299,7 +388,7 @@ export function AdvancedSearchHistory() {
       {showCombinedSearch ? (
         <CombinedSearch
           cancelCombinedSearch={() => setShowCombinedSearch(false)}
-          queries={filteredObjects}
+          queries={checkedObjects}
         />
       ) : (
         <HistoryHeaderActions
@@ -318,20 +407,26 @@ export function AdvancedSearchHistory() {
         {isEmpty(storedValue) || storedValue?.length < 1 ? (
           <EmptySearchHistory />
         ) : (
-          storedValue?.map((item, index) => {
-            return (
-              <HistoryItem
-                key={item.cql}
-                item={item}
-                index={index}
-                checked={
-                  checkboxList.findIndex((check) => check === item.cql) !== -1
-                }
-                deleteSelected={onDeleteSelected}
-                onSelect={onSelect}
-              />
-            );
-          })
+          // today
+          <>
+            <HistoryItemPerDay
+              key="search-history-today"
+              items={splittedValues.today}
+              title={Translate({ context: "search", label: "history-today" })}
+            />
+            <HistoryItemPerDay
+              key="search-history-yesterday"
+              items={splittedValues.yesterday}
+              title={Translate({
+                context: "search",
+                label: "history-yesterday",
+              })}
+            />
+            <HistoryItemPerDay
+              key="search-history-older"
+              items={splittedValues.older}
+            />
+          </>
         )}
       </div>
     </div>

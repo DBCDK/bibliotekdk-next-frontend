@@ -1,0 +1,13 @@
+.wrap {
+  border: 1px solid red;
+  background-color: green;
+  color: red;
+}
+
+.clear {
+  background-color: blue;
+}
+
+.group {
+  color: purple;
+}

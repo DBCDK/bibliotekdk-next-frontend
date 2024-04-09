@@ -33,6 +33,8 @@ function SelectedFilter({
   onSelect,
   modal,
   active,
+  origin,
+  translateContext = "facets",
 }) {
   const name = data?.name;
   const values = data?.values || [];
@@ -126,7 +128,7 @@ function SelectedFilter({
 
   // Get workType specific title if set, else fallback to title
   const category = Translate({
-    context: "facets",
+    context: translateContext,
     label: workType ? `label-${workType}-${name}` : `label-${name}`,
   });
 
@@ -173,6 +175,7 @@ function SelectedFilter({
           ?.map((term, idx) => {
             const title = term.term;
             const key = term.key;
+            const score = term.score;
 
             const isCheked = terms.includes(title);
 
@@ -212,16 +215,18 @@ function SelectedFilter({
                   >
                     {title}
                   </Text>
-                  {/* outcommented for now - let's see ..
-                <Text
-                  lines={1}
-                  skeleton={isLoading}
-                  type="text3"
-                  dataCy={`text-${score}`}
-                  className={styles.score}
-                >
-                  {score}
-                </Text>*/}
+                  {/* show facet count for mobileFacets (complex search) only */}
+                  {origin === "mobileFacets" && (
+                    <Text
+                      lines={1}
+                      skeleton={isLoading}
+                      type="text3"
+                      dataCy={`text-${score}`}
+                      className={styles.score}
+                    >
+                      {score}
+                    </Text>
+                  )}
                 </div>
               </List.Select>
             );
@@ -240,12 +245,21 @@ function SelectedFilter({
  * @returns {React.JSX.Element}
  */
 export function Filter(props) {
-  const { data, selected, onSubmit, onClear, isLoading, modal, context } =
-    props;
+  const {
+    data,
+    selected,
+    onSubmit,
+    onClear,
+    isLoading,
+    modal,
+    context,
+    origin,
+    cql,
+    translateContext = "facets",
+  } = props;
 
   // facet data
   const facets = data?.search?.facets || [];
-
   // Facet will contain a specific selected facet/category, if any selected
   const { facet } = context;
 
@@ -266,6 +280,7 @@ export function Filter(props) {
           terms={selected?.[facet.name] || []}
           workType={workType}
           data={selectedFacet}
+          translateContext={translateContext}
         />
       ) : (
         <>
@@ -296,7 +311,7 @@ export function Filter(props) {
             data-cy="list-facets"
             className={styles.group}
             label={Translate({
-              context: "facets",
+              context: translateContext,
               label: "facets-group-label",
             })}
             disableGroupOutline
@@ -311,13 +326,12 @@ export function Filter(props) {
                 if (facet.values.length === 0) {
                   return null;
                 }
-
                 // selected terms in this category
                 const selectedTerms = selected?.[facet.name];
 
                 // Get workType specific title if set, else fallback title
                 const title = Translate({
-                  context: "facets",
+                  context: translateContext,
                   label: workType
                     ? `label-${workType}-${facet.name}`
                     : `label-${facet.name}`,
@@ -326,7 +340,9 @@ export function Filter(props) {
                 return (
                   <List.FormLink
                     key={`${facet.name}-${idx}`}
-                    onSelect={() => modal.push("filter", { facet })}
+                    onSelect={() =>
+                      modal.push(origin, { facet: facet, cql: cql })
+                    }
                     label={facet.name}
                     className={`${styles.item} ${animations["on-hover"]}`}
                     includeArrows={true}
@@ -366,7 +382,8 @@ export function Filter(props) {
             {Translate({
               context: "search",
               label: "showXResults",
-              vars: [null],
+              vars:
+                origin === "mobileFacets" ? [data?.search?.hitcount] : [null],
             })}
           </Button>
         </>
@@ -467,6 +484,7 @@ export default function Wrap(props) {
       }}
       onClear={() => setFilters({ ...excludeOnClear })}
       {...props}
+      origin="filter"
     />
   );
 }
