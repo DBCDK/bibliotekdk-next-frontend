@@ -205,7 +205,7 @@ function HistoryHeaderActions({
         Kombiner søgninger
       </Button>
       <Link
-        className={cx(styles.flex, {
+        className={cx(styles.removeItems, {
           [styles.disabled_link]: !partiallyChecked || disabled,
         })}
         border={{
