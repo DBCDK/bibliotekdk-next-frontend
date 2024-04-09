@@ -34,3 +34,12 @@
   padding: 0 var(--pt075);
   height: fit-content;
 }
+.errorBox {
+  display: flex;
+  padding: var(--pt1) var(--pt2);
+  align-items: flex-start;
+  color: var(--error_temp);
+  background-color: var(--chardon);
+  border: 1px solid var(--error_temp);
+  margin-top: var(--pt2);
+}

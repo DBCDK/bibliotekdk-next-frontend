@@ -120,6 +120,12 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
           ))}
         </div>
       )}
+
+      {queries.length > MAX_ITEMS && (
+        <div className={styles.errorBox}>
+          <Text type="text2">Du kan maksimalt kombinere 4 søgninger</Text>
+        </div>
+      )}
       <div className={styles.buttonContainer}>
         <Button
           className={styles.searchButton}
