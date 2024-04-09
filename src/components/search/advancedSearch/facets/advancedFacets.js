@@ -134,12 +134,21 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
     return sel?.searchIndex === facetName;
   });
   // sort - we want selected items first
-  const sorter = (a) => {
-    const selected = !!current?.values?.find((val) => {
+  const sorter = (a, b) => {
+    const aselected = !!current?.values?.find((val) => {
       return val.name === a.key;
     });
 
-    return selected ? -1 : 1;
+    const bselected = !!current?.values?.find((val) => {
+      return val.name === b.key;
+    });
+
+    // if both a and b are selected we leave the order as is
+    if (bselected && aselected) {
+      return 0;
+    }
+    // if only a is selected we put it on top
+    return aselected ? -1 : 1;
   };
 
   let initialcheck;

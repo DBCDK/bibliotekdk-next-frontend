@@ -30,7 +30,7 @@ function HistoryItem({ item, index, checked, onSelect }) {
   const goToItemUrl = (item) => {
     // restart the useFacets hook - this is a 'new' search
     restartFacetsHook();
-    if (item.fieldSearch) {
+    if (!isEmpty(item.fieldSearch)) {
       const query = {
         fieldSearch: JSON.stringify(item.fieldSearch),
         facets: JSON.stringify(item.selectedFacets || "[]"),
