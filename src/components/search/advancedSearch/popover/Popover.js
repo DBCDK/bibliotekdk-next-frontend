@@ -118,19 +118,18 @@ const Popover = ({ className, simpleSearchRef }) => {
         />
       </div>
       <FocusScope contain autoFocus>
-
-      <div
-        data-cy="advanced-search-popover"
-        aria-expanded={showPopover}
-        tabIndex="-1"
-        className={cx(styles.popoverContainer, styles.popoverAnimation)}
-        ref={popoverRef}
-      >
-        <AdvancedSearch
-          ariaExpanded={showPopover}
-          className={cx(styles.popoverAnimation_advancedSearch)}
-        />
-      </div>
+        <div
+          data-cy="advanced-search-popover"
+          aria-expanded={showPopover}
+          tabIndex="-1"
+          className={cx(styles.popoverContainer, styles.popoverAnimation)}
+          ref={popoverRef}
+        >
+          <AdvancedSearch
+            ariaExpanded={showPopover}
+            className={cx(styles.popoverAnimation_advancedSearch)}
+          />
+        </div>
       </FocusScope>
     </>
   );
