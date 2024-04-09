@@ -157,6 +157,9 @@ export default function Wrap({ onWorkClick, onPageChange }) {
 
   // if facets are set we need them for the cql
   const cqlAndFacetsQuery = getCqlAndFacetsQuery(cql, selectedFacets);
+  // if facets are not set we need the raw (without facets) fieldsearch query
+  const fieldSearchQuery = convertStateToCql({ ...fieldSearch });
+
   // @TODO what to do  with dataCollect ???
   onWorkClick = null;
   // get setter for advanced search history
@@ -181,7 +184,7 @@ export default function Wrap({ onWorkClick, onPageChange }) {
     const searchHistoryObj = {
       hitcount: parsedResponse?.hitcount,
       fieldSearch: fieldSearch || "",
-      cql: cqlAndFacetsQuery ? cql : "",
+      cql: cqlAndFacetsQuery ? cql : fieldSearchQuery,
       selectedFacets: selectedFacets || [],
     };
     setValue(searchHistoryObj);
