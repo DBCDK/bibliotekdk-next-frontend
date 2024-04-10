@@ -3,7 +3,11 @@ import { useData } from "@/lib/api/api";
 import Section from "@/components/base/section";
 import Pagination from "@/components/search/pagination/Pagination";
 import PropTypes from "prop-types";
-import { convertStateToCql } from "@/components/search/advancedSearch/utils";
+import {
+  convertStateToCql,
+  getCqlAndFacetsQuery,
+  parseOutFacets,
+} from "@/components/search/advancedSearch/utils";
 import useAdvancedSearchHistory from "@/components/hooks/useAdvancedSearchHistory";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import isEmpty from "lodash/isEmpty";
@@ -12,9 +16,16 @@ import cx from "classnames";
 import AdvancedSearchSort from "@/components/search/advancedSearch/advancedSearchSort/AdvancedSearchSort";
 import TopBar from "@/components/search/advancedSearch/advancedSearchResult/topBar/TopBar";
 import Title from "@/components/base/title";
+import Text from "@/components/base/text";
 import { NoHitSearch } from "@/components/search/advancedSearch/advancedSearchResult/noHitSearch/NoHitSearch";
 import ResultPage from "./ResultPage/ResultPage";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import AdvancedFacets from "@/components/search/advancedSearch/facets/advancedFacets";
+
+import translate from "@/components/base/translate";
+import { FacetTags } from "@/components/search/advancedSearch/facets/facetTags/facetTags";
+import { useFacets } from "@/components/search/advancedSearch/useFacets";
+import { FacetButton } from "@/components/search/advancedSearch/facets/facetButton/facetButton";
 
 export function AdvancedSearchResult({
   pageNo,
@@ -23,16 +34,38 @@ export function AdvancedSearchResult({
   results,
   error = null,
   isLoading,
+  cql,
+  selectedFacets,
 }) {
   const hitcount = results?.hitcount;
   const numPages = Math.ceil(hitcount / 10);
   const breakpoint = useBreakpoint();
-  const isMobile = breakpoint === "xs" || breakpoint === "sm" || false;
+  const isMobile =
+    breakpoint === "md" || breakpoint === "xs" || breakpoint === "sm" || false;
   const page = parseInt(pageNo, 10) || 1;
 
   if (error) {
     return null;
   }
+
+  const TitleComponent = ({ cql }) => {
+    return (
+      <div>
+        <FacetButton cql={cql} isLoading={isLoading} />
+        <div className={styles.mobileTags}>
+          <FacetTags />
+        </div>
+        <div className={styles.titleflex}>
+          <Title type="title5" className={styles.countstyle}>
+            {hitcount}
+          </Title>
+          <Text type="text3" className={styles.titleStyle}>
+            {translate({ context: "search", label: "title" })}
+          </Text>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <>
@@ -40,16 +73,25 @@ export function AdvancedSearchResult({
 
       <Section
         divider={false}
-        colSize={{ lg: { offset: 1, span: true } }}
+        colSize={{
+          lg: { offset: 0, span: true },
+          titel: { lg: { offset: 3, span: true } },
+        }}
         id="search-result-section"
-        title="Resultater"
+        title={<TitleComponent cql={cql} />}
         subtitle={
-          hitcount > 0 &&
-          !isLoading && (
-            <Title type="title5" className={styles.titleStyle}>
-              {hitcount}
-            </Title>
-          )
+          <>
+            <div className={styles.facetsContainer}>
+              <FacetTags selectedFacets={selectedFacets} />
+              <div className={styles.subtitleStyle}>
+                <Text type="text1" className={styles.titleStyle}>
+                  {translate({ context: "search", label: "narrow-search" })}
+                </Text>
+              </div>
+
+              <AdvancedFacets cql={cql} />
+            </div>
+          </>
         }
         sectionContentClass={isMobile ? styles.sectionContentStyle : ""}
         sectionTitleClass={styles.sectionTitleClass}
@@ -57,8 +99,11 @@ export function AdvancedSearchResult({
         {/* Reuse result page from simplesearch - we skip the wrap .. @TODO should we set
         some mark .. that we are doing advanced search .. ?? */}
         {!isLoading && hitcount === 0 && <NoHitSearch />}
+        {/*<AdvancedFacets facets={facets} />*/}
         <>
-          <AdvancedSearchSort className={cx(styles.sort_container)} />
+          {hitcount > 0 && (
+            <AdvancedSearchSort className={cx(styles.sort_container)} />
+          )}
           <div>
             {Array(isMobile ? page : 1)
               .fill({})
@@ -91,6 +136,7 @@ function parseResponse(bigResponse) {
     hitcount: bigResponse?.data?.complexSearch?.hitcount || 0,
     errorMessage: bigResponse?.data?.complexSearch?.errorMessage || null,
     isLoading: bigResponse?.isLoading,
+    facets: parseOutFacets(bigResponse?.data?.complexSearch?.facets),
   };
 }
 
@@ -107,11 +153,20 @@ export default function Wrap({ onWorkClick, onPageChange }) {
     setShowPopover,
   } = useAdvancedSearchContext();
 
+  const { selectedFacets } = useFacets();
+
+  // if facets are set we need them for the cql
+  const cqlAndFacetsQuery = getCqlAndFacetsQuery(cql, selectedFacets);
+  // if facets are not set we need the raw (without facets) fieldsearch query
+  const fieldSearchQuery = convertStateToCql({ ...fieldSearch });
+
   // @TODO what to do  with dataCollect ???
   onWorkClick = null;
   // get setter for advanced search history
   const { setValue } = useAdvancedSearchHistory();
-  const cqlQuery = cql || convertStateToCql(fieldSearch);
+  const cqlQuery =
+    cqlAndFacetsQuery ||
+    convertStateToCql({ ...fieldSearch, facets: selectedFacets });
 
   const showResult = !isEmpty(fieldSearch) || !isEmpty(cql);
 
@@ -122,14 +177,16 @@ export default function Wrap({ onWorkClick, onPageChange }) {
     })
   );
   const parsedResponse = parseResponse(fastResponse);
-
   //update searchhistory
   if (!parsedResponse?.errorMessage && !parsedResponse.isLoading) {
-    // make an object for searchhistory @TODO .. the right object please
+    // make an object for searchhistory
+    // the cql part .. we use the raw cql for now - facets are handled independently
     const searchHistoryObj = {
+      key: cqlQuery,
       hitcount: parsedResponse?.hitcount,
       fieldSearch: fieldSearch || "",
-      cql: cqlQuery,
+      cql: cqlAndFacetsQuery ? cql : fieldSearchQuery,
+      selectedFacets: selectedFacets || [],
     };
     setValue(searchHistoryObj);
   }
@@ -147,6 +204,8 @@ export default function Wrap({ onWorkClick, onPageChange }) {
       error={parsedResponse.errorMessage}
       setShowPopover={setShowPopover}
       isLoading={parsedResponse.isLoading}
+      cql={cqlQuery}
+      selectedFacets={selectedFacets}
     />
   );
 }

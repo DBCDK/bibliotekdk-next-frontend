@@ -140,23 +140,32 @@ export function Item({
             </div>
           )}
           <div className={styles.expandIcon}>
-            <ExpandIcon open={isCurrentEventKey} size={4} />
+            <ExpandIcon
+              open={isCurrentEventKey}
+              size={4}
+              src="smallplus.svg"
+              bgColor="transparent"
+            />
           </div>
         </div>
       </Card.Header>
-      <BootstrapAccordion.Collapse
-        className={styles.content}
-        eventKey={eventKey}
-        role="region"
-        id={`accordion-unique-${eventKey}-${title}`}
-        aria-labelledby={`accordion-unique-toggle-${eventKey}-${title}`}
-      >
-        <Card.Body>
-          {typeof children === "function"
-            ? children(typeof window !== "undefined" ? hasBeenSeen : true)
-            : children}
-        </Card.Body>
-      </BootstrapAccordion.Collapse>
+      <div>
+        <BootstrapAccordion.Collapse
+          eventKey={eventKey}
+          role="region"
+          id={`accordion-unique-${eventKey}-${title}`}
+          aria-labelledby={`accordion-unique-toggle-${eventKey}-${title}`}
+        >
+          {/* avoid choppy animation on collapse */}
+          <div className={styles.content}>
+            <Card.Body>
+              {typeof children === "function"
+                ? children(typeof window !== "undefined" ? hasBeenSeen : true)
+                : children}
+            </Card.Body>
+          </div>
+        </BootstrapAccordion.Collapse>
+      </div>
     </Card>
   );
 }

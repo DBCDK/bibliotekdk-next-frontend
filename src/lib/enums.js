@@ -7,6 +7,35 @@ export const SuggestTypeEnum = Object.freeze({
   ALL: "all",
 });
 
+export const AdvFacetsTypeEnum = Object.freeze({
+  SPECIFICMATERIALTYPE: "specificmaterialtype",
+  CREATOR: "creator",
+  CONTRIBUTOR: "contributor",
+  SUBJECT: "subject",
+  MAINLANGUAGE: "mainlanguage",
+  GENERALAUDIENCE: "generalaudience",
+  FICTIONALCHARACTER: "fictionalcharacter",
+  GENREANDFORM: "genreandform",
+  AGES: "ages",
+  PRIMARYTARGET: "primarytarget",
+  // CATALOGUECODE: "cataloguecode",
+  // CONTRIBUTORFUNCTION: "contributorfunction",
+  // CREATORCONTRIBUTOR: "creatorcontributor",
+  // CREATORCONTRIBUTORFUNCTION: "creatorcontributorfunction",
+  // CREATORFUNCTION: "creatorfunction",
+  // FILMNATIONALITY: "filmnationality",
+  // GAMEPLATFORM: "gameplatform",
+  // GENERALMATERIALTYPE: "generalmaterialtype",
+  // ISSUE: "issue",
+  // LANGUAGE: "language",
+  // LIBRARYRECOMMENDATION: "libraryrecommendation",
+  // MUSICALENSEMBLEORCAST: "musicalensembleorcast",
+  // PLAYERS: "players",
+  // SPOKENLANGUAGE: "spokenlanguage",
+  // SUBTITLELANGUAGE: "subtitlelanguage",
+  // TYPEOFSCORE: "typeofscore",
+});
+
 export const FilterTypeEnum = Object.freeze({
   MATERIAL_TYPES: "materialTypesSpecific",
   ACCESS_TYPES: "accessTypes",

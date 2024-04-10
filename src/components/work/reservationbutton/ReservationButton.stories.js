@@ -79,6 +79,38 @@ ReservationButtonPhysicalBook.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   },
 });
 
+export function ReservationButtonPhysicalBookNoILLButIsOwnedByAgency() {
+  return (
+    <ReservationButtonComponentBuilder
+      type={["bog"]}
+      workId={"some-work-id-1"}
+      selectedPids={["some-pid-1"]}
+    />
+  );
+}
+
+ReservationButtonPhysicalBookNoILLButIsOwnedByAgency.story = merge(
+  {},
+  DEFAULT_STORY_PARAMETERS,
+  {
+    parameters: {
+      graphql: {
+        resolvers: {
+          Query: {
+            localizations: () => {
+              return { count: 1 };
+            },
+          },
+          Manifestation: {
+            accessTypes: [{ code: "PHYSICAL" }],
+            access: () => [],
+          },
+        },
+      },
+    },
+  }
+);
+
 export function ReservationButtonEBook() {
   useMockLoanerInfo({});
   return (

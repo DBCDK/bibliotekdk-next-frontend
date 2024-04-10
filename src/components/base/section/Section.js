@@ -4,7 +4,6 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 
 import Title from "@/components/base/title";
-import Text from "@/components/base/text";
 
 import { cyKey } from "@/utils/trim";
 
@@ -119,13 +118,13 @@ export default function Section({
           {title && !rightSideTitle && (
             <Col
               xs={12}
-              lg={2}
+              lg={colSize?.titel?.lg?.offset || 2}
               data-cy={cyKey({ name: "title", prefix: "section" })}
               className={`section-title ${styles.title} ${titleDividerClass} ${sectionTitleClass}`}
             >
               {divider?.title}
               {title}
-              {subtitle && <Text type="text2">{subtitle}</Text>}
+              {subtitle && subtitle}
             </Col>
           )}
 
@@ -152,7 +151,7 @@ export default function Section({
             >
               {divider?.title}
               {title}
-              {subtitle && <Text type="text2">{subtitle}</Text>}
+              {subtitle && subtitle}
             </Col>
           )}
         </Row>
@@ -183,4 +182,5 @@ Section.propTypes = {
   sectionTitleClass: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   headerTag: PropTypes.string,
   sectionTag: PropTypes.string,
+  subTitle: PropTypes.object,
 };

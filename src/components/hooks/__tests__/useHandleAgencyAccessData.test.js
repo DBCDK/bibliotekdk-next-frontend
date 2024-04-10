@@ -427,6 +427,7 @@ describe("getAvailability", () => {
       [AvailabilityEnum.NOW]: 1,
       [AvailabilityEnum.LATER]: 1,
       [AvailabilityEnum.NEVER]: 1,
+      [AvailabilityEnum.AVAILABLE_NOT_FOR_LOAN]: 0,
       [AvailabilityEnum.NOT_OWNED]: 1,
       [AvailabilityEnum.NOT_OWNED_FFU]: 0,
       [AvailabilityEnum.UNKNOWN]: 1,

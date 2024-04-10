@@ -7,13 +7,15 @@ import {
   constructButtonText,
   context,
   handleGoToLogin,
+  sortEreolFirst,
 } from "@/components/work/reservationbutton/utils";
 import isEmpty from "lodash/isEmpty";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import { useManifestationAccess } from "@/components/hooks/useManifestationAccess";
 import { useData } from "@/lib/api/api";
 import { overviewWork } from "@/lib/api/work.fragments";
-import { useOrderFlow } from "@/components/hooks/order";
+import { useManifestationData, useOrderFlow } from "@/components/hooks/order";
+import * as localizationsFragments from "@/lib/api/localizations.fragments";
 
 function TextAboveButton({ access, isAuthenticated }) {
   return (
@@ -70,6 +72,21 @@ function ReservationButtonWrapper({
     pids: selectedPids,
   });
 
+  const illSupported = hasPhysicalCopy;
+
+  const { physicalPids, isLoading: isLoadingManifestationData } =
+    useManifestationData({ pids: selectedPids });
+
+  const requireLocalizations = !illSupported && physicalPids?.length > 0;
+
+  const { data: localizationsData, isLoading: isLoadingLocalizations } =
+    useData(
+      requireLocalizations &&
+        localizationsFragments.localizationsQuery({ pids: physicalPids })
+    );
+
+  const localizationsCount = localizationsData?.localizations?.count;
+
   const workTypes = workData?.work?.workTypes;
   const materialTypes = workData?.work?.materialTypes?.map(
     (type) => type?.materialTypeGeneral?.code
@@ -88,7 +105,9 @@ function ReservationButtonWrapper({
     selectedPids?.length === 0 ||
     isLoadingAuthentication ||
     isLoadingWorkData ||
-    isLoadingAccess
+    isLoadingAccess ||
+    (requireLocalizations &&
+      (isLoadingLocalizations || isLoadingManifestationData))
   ) {
     return (
       <div className={styles.wrapper}>
@@ -125,6 +144,7 @@ function ReservationButtonWrapper({
         hasPhysicalCopy,
         hasDigitalCopy,
         bookmarkKey,
+        localizationsCount,
       }}
     />
   );
@@ -159,7 +179,9 @@ export const ReservationButton = ({
   materialTypes,
   hasPhysicalCopy,
   bookmarkKey,
+  localizationsCount,
 }) => {
+  access = sortEreolFirst(access);
   const { start } = useOrderFlow();
   const noSelectedManifestations = Boolean(isEmpty(access));
 
@@ -171,9 +193,18 @@ export const ReservationButton = ({
     dataCy: "button-order-overview-disabled",
     disabled: true,
   };
+
+  let noSelectedManifestationsLabel;
+  if (!hasPhysicalCopy && localizationsCount > 0) {
+    noSelectedManifestationsLabel = "Order-disabled-but-owned";
+  } else if (hasPhysicalCopy) {
+    noSelectedManifestationsLabel = "Order-disabled";
+  } else {
+    noSelectedManifestationsLabel = "Order-online-disabled";
+  }
   const noSelectedManifestationsTxt = Translate({
     context: "overview",
-    label: !hasPhysicalCopy ? "Order-online-disabled" : "Order-disabled",
+    label: noSelectedManifestationsLabel,
   });
 
   const accessibleOnlineAndNoLoginProps = {

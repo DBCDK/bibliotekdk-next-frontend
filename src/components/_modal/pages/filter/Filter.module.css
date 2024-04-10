@@ -10,6 +10,10 @@
   padding: 0 0 var(--pt3) 0;
 }
 
+.wrap .score {
+  margin-left: auto;
+}
+
 .clear {
   margin-left: var(--pt2);
 }

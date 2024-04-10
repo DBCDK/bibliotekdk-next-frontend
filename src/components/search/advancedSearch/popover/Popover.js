@@ -6,6 +6,7 @@ import Tooltip from "@/components/base/tooltip/Tooltip";
 import SearchIcon from "@/components/header/icons/search/search";
 import Translate from "@/components/base/translate/Translate";
 import cx from "classnames";
+import { FocusScope } from "react-aria";
 
 /**
  * Popover where advanced search can be performed from
@@ -116,19 +117,20 @@ const Popover = ({ className, simpleSearchRef }) => {
           })}
         />
       </div>
-
-      <div
-        data-cy="advanced-search-popover"
-        aria-expanded={showPopover}
-        tabIndex="-1"
-        className={cx(styles.popoverContainer, styles.popoverAnimation)}
-        ref={popoverRef}
-      >
-        <AdvancedSearch
-          ariaExpanded={showPopover}
-          className={cx(styles.popoverAnimation_advancedSearch)}
-        />
-      </div>
+      <FocusScope contain autoFocus>
+        <div
+          data-cy="advanced-search-popover"
+          aria-expanded={showPopover}
+          tabIndex="-1"
+          className={cx(styles.popoverContainer, styles.popoverAnimation)}
+          ref={popoverRef}
+        >
+          <AdvancedSearch
+            ariaExpanded={showPopover}
+            className={cx(styles.popoverAnimation_advancedSearch)}
+          />
+        </div>
+      </FocusScope>
     </>
   );
 };

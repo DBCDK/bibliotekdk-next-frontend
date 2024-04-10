@@ -34,6 +34,59 @@ export function Default() {
   );
 }
 
+export function MusicNoTags() {
+  return (
+    <div>
+      <StoryTitle>No tags for music</StoryTitle>
+      <StoryDescription>Uses mocked GraphQL provider</StoryDescription>
+      <div style={{ maxWidth: "1200px", margin: "auto", marginTop: "100px" }}>
+        <WrappedRelated workId="work-of:870970-basis:51701763" />
+      </div>
+    </div>
+  );
+}
+
+MusicNoTags.story = {
+  parameters: {
+    graphql: {
+      debug: true,
+      resolvers: {
+        Query: {
+          relatedSubjects: () => ["savn", "melankoli"],
+        },
+        Work: {
+          workTypes: () => ["MUSIC"],
+        },
+        SubjectContainer: {
+          dbcVerified: () => [
+            {
+              display: "savn",
+              __typename: "SubjectText",
+              language: {
+                display: "dansk",
+                isoCode: "dan",
+              },
+            },
+            {
+              display: "melankoli",
+              __typename: "SubjectText",
+              language: {
+                display: "dansk",
+                isoCode: "dan",
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  nextRouter: {
+    showInfo: true,
+    pathname: "/",
+    query: {},
+  },
+};
+
 export function Connected() {
   return (
     <div>
@@ -53,6 +106,9 @@ Connected.story = {
       resolvers: {
         Query: {
           relatedSubjects: () => ["savn", "melankoli"],
+        },
+        Work: {
+          workTypes: () => ["LITERATURE"],
         },
         SubjectContainer: {
           dbcVerified: () => [

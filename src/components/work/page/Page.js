@@ -117,7 +117,6 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
           >
             <Keywords workId={workId} />
             <Related workId={workId} />
-            <div style={{ height: "var(--pt8)" }} aria-hidden={true}></div>
           </section>
           {/* TODO: WorkGroupingsOverview.js refererer til dennes oversættelse */}
           <section anchor-label={Translate(AnchorsEnum.SERIES)}>

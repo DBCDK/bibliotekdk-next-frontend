@@ -31,6 +31,16 @@ export function AvailabilityLight({
     },
     [
       [
+        availabilityAccumulated === AvailabilityEnum.AVAILABLE_NOT_FOR_LOAN,
+        {
+          src: "status__on_shelf.svg",
+          alt: Translate({
+            context: "localizations",
+            label: "available_not_for_loan_alt",
+          }),
+        },
+      ],
+      [
         pickupAllowed === false,
         {
           src: "status__not_for_loan.svg",

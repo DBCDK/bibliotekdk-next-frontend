@@ -143,14 +143,14 @@ describe("Server Side Rendering", () => {
 
     it(`has json-ld for movie`, () => {
       getPageHead(
-        "/materiale/the-jungle-book_jon-favreau/work-of%3A870970-basis%3A52331080"
+        "/materiale/junglebogen_jon-favreau/work-of:870970-basis:52331080"
       ).then((res) => {
         expect(res.jsonld.mainEntity.url).to.equal(
-          "http://localhost:3000/materiale/the-jungle-book_jon-favreau/work-of:870970-basis:52331080"
+          "http://localhost:3000/materiale/junglebogen_jon-favreau/work-of:870970-basis:52331080"
         );
 
         expect(res.jsonld.mainEntity["@type"]).to.equal("Movie");
-        expect(res.jsonld.mainEntity.name).to.equal("The jungle book");
+        expect(res.jsonld.mainEntity.name).to.equal("Junglebogen");
         expect(res.jsonld.mainEntity.image).to.exist;
         expect(res.jsonld.mainEntity.director).to.deep.equal([
           {

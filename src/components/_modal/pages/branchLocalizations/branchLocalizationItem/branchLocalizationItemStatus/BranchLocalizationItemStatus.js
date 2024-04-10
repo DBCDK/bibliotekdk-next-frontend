@@ -99,12 +99,28 @@ function MessageWhenMaterialsAvailableUnknown() {
 }
 
 /**
+ * {@link MessageWhenMaterialsAvailableUnknown} shows a possible message in {@link BranchLocalizationItemStatus}
+ * @returns {JSX.Element}
+ */
+function MessageWhenMaterialsAvailableNotForLoan() {
+  return (
+    <Text>
+      {Translate({ context: "localizations", label: "available_not_for_loan" })}
+    </Text>
+  );
+}
+
+/**
  * {@link BranchLocalizationItemStatus} presents the status message for {@link BranchLocalizationItem}
  * @param {Object} library
  * @returns {JSX.Element}
  */
 export default function BranchLocalizationItemStatus({ library }) {
   if (
+    library?.availabilityAccumulated === AvailabilityEnum.AVAILABLE_NOT_FOR_LOAN
+  ) {
+    return <MessageWhenMaterialsAvailableNotForLoan library={library} />;
+  } else if (
     typeof library?.pickupAllowed !== "undefined" &&
     library?.pickupAllowed === false
   ) {
