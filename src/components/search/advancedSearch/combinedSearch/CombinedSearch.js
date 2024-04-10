@@ -74,18 +74,33 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
   const [queriesItems, setQueriesItems] = useState([]);
 
   useEffect(() => {
-    const newQueriesItems = queries.slice(0, MAX_ITEMS).map((item, index) => {
-      return {
-        cql: item.cql,
-        fieldSearch:
-          Object.keys(item.fieldSearch).length === 0 ? null : item.fieldSearch,
-        prefixlogicalopreator: index === 0 ? null : "AND",
-        selectedFacets: item?.selectedFacets,
-      };
+    const filteredQueriesItems = queriesItems.filter((item) =>
+      queries.some((query) => query.key === item.key)
+    );
+    let newQueriesItems = [...filteredQueriesItems];
+
+    const arrayOfkeys = queriesItems.map((item) => item.key);
+    queries.forEach((item, index) => {
+      //can only combine MAX_ITEMS elements
+      if (filteredQueriesItems.length >= MAX_ITEMS) {
+        return;
+      }
+      //add to list of queries to be combined
+      if (!arrayOfkeys.includes(item.key)) {
+        newQueriesItems.push({
+          key: item.key,
+          cql: item.cql,
+          fieldSearch:
+            Object.keys(item.fieldSearch).length === 0
+              ? null
+              : item.fieldSearch,
+          prefixlogicalopreator: index === 0 ? null : "AND",
+          selectedFacets: item?.selectedFacets,
+        });
+      }
     });
 
-    setQueriesItems([...newQueriesItems]);
-    //if queriesItems length is  dont do anything
+    setQueriesItems(newQueriesItems);
   }, [queries]);
 
   const router = useRouter();
