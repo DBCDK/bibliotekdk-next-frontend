@@ -182,6 +182,7 @@ export default function Wrap({ onWorkClick, onPageChange }) {
     // make an object for searchhistory
     // the cql part .. we use the raw cql for now - facets are handled independently
     const searchHistoryObj = {
+      key: cqlQuery,
       hitcount: parsedResponse?.hitcount,
       fieldSearch: fieldSearch || "",
       cql: cqlAndFacetsQuery ? cql : fieldSearchQuery,
