@@ -45,6 +45,7 @@ Default.loaders = [
             ],
           },
           cql: '(term.function="Sissel-Jo Gazan")',
+          key: '(term.function="Sissel-Jo Gazan")',
           timestamp: "11:45",
         },
         {
@@ -74,6 +75,7 @@ Default.loaders = [
             ],
           },
           cql: '(term.function="Jesper Tolstrup" AND term.subject="heste")',
+          key: '(term.function="Jesper Tolstrup" AND term.subject="heste")',
           timestamp: "10.36",
         },
         {
@@ -98,6 +100,7 @@ Default.loaders = [
             ],
           },
           cql: '(term.contributor="Tammi Øst")',
+          key: '(term.contributor="Tammi Øst")',
           timestamp: "11:44",
         },
       ])
