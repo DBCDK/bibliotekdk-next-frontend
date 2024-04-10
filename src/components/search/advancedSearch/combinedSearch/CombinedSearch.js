@@ -90,7 +90,7 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
     const keys = newQueriesItems.map((item) => item.key);
 
     //add queries to queriesItems if they are not already added and there are 4 or less queries in the queriesItems
-    queries.forEach((item, index) => {
+    queries.forEach((item) => {
       //can only combine MAX_ITEMS elements
       if (newQueriesItems.length >= MAX_ITEMS) {
         return;
