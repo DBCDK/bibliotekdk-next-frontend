@@ -20,23 +20,21 @@ import MenuDropdown from "@/components/base/dropdown/menuDropdown/MenuDropdown";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import Button from "@/components/base/button";
 import CombinedSearch from "@/components/search/advancedSearch/combinedSearch/CombinedSearch";
+
+//Component to render facets
 export function FormatedFacets({ facets }) {
-  console.log("FormatedFacets.facets", facets);
   if (isEmpty(facets)) {
     return null;
   }
 
   const flatfilters = [];
   facets?.forEach((facet) => {
-    console.log("FormatedFacets.FOREACHfacet", facet);
     facet.values.map((val) => {
-      console.log("FormatedFacets.val", val);
       flatfilters.push({
         name: val.name,
       });
     });
   });
-  console.log("FormatedFacets.flatfilters", flatfilters);
 
   return (
     <div className={styles.historyFilters}>
@@ -96,7 +94,7 @@ function HistoryItem({ item, index, checked, onSelect }) {
       vars: [timestamp],
     });
   };
-  console.log("render item", item);
+
   return (
     <div
       className={cx(styles.row, styles.grid)}
@@ -299,8 +297,6 @@ export function AdvancedSearchHistory() {
   const { storedValue, deleteValue } = useAdvancedSearchHistory();
   const [checkboxList, setCheckboxList] = useState([]);
   const [showCombinedSearch, setShowCombinedSearch] = useState(false);
-  console.log("checkboxList", checkboxList);
-  console.log("storedValue", storedValue);
 
   const breakpoint = useBreakpoint();
 
