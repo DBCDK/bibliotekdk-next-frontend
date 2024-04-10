@@ -20,7 +20,42 @@ import MenuDropdown from "@/components/base/dropdown/menuDropdown/MenuDropdown";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import Button from "@/components/base/button";
 import CombinedSearch from "@/components/search/advancedSearch/combinedSearch/CombinedSearch";
+export function FormatedFacets({ facets }) {
+  console.log("FormatedFacets.facets", facets);
+  if (isEmpty(facets)) {
+    return null;
+  }
 
+  const flatfilters = [];
+  facets?.forEach((facet) => {
+    console.log("FormatedFacets.FOREACHfacet", facet);
+    facet.values.map((val) => {
+      console.log("FormatedFacets.val", val);
+      flatfilters.push({
+        name: val.name,
+      });
+    });
+  });
+  console.log("FormatedFacets.flatfilters", flatfilters);
+
+  return (
+    <div className={styles.historyFilters}>
+      <Text tag="span" type="text1">
+        {Translate({ context: "search", label: "filters" })} :
+      </Text>
+      {flatfilters.map((val, index) => (
+        <Text
+          tag="span"
+          type="text2"
+          key={`${val.name}-${index}`}
+          className={styles.filteritem}
+        >
+          {`${val.name} ${flatfilters.length > index + 1 ? "," : ""}`}
+        </Text>
+      ))}
+    </div>
+  );
+}
 function HistoryItem({ item, index, checked, onSelect }) {
   const router = useRouter();
   const breakpoint = useBreakpoint();
@@ -54,15 +89,6 @@ function HistoryItem({ item, index, checked, onSelect }) {
     ? getTimeStamp(item.unixtimestamp)
     : item.timestamp;
 
-  const flatfilters = [];
-  item?.selectedFacets?.forEach((facet) =>
-    facet.values.map((val) =>
-      flatfilters.push({
-        name: val.name,
-      })
-    )
-  );
-
   const itemText = () => {
     return Translate({
       context: "search",
@@ -70,7 +96,7 @@ function HistoryItem({ item, index, checked, onSelect }) {
       vars: [timestamp],
     });
   };
-
+  console.log("render item", item);
   return (
     <div
       className={cx(styles.row, styles.grid)}
@@ -110,23 +136,8 @@ function HistoryItem({ item, index, checked, onSelect }) {
             <FormatCql item={item} />
           )}
         </Link>
-        {!isEmpty(item.selectedFacets) && (
-          <div className={styles.historyFilters}>
-            <Text tag="span" type="text1">
-              {Translate({ context: "search", label: "filters" })} :
-            </Text>
-            {flatfilters.map((val, index) => (
-              <Text
-                tag="span"
-                type="text2"
-                key={`${val.name}-${index}`}
-                className={styles.filteritem}
-              >
-                {`${val.name} ${flatfilters.length > index + 1 ? "," : ""}`}
-              </Text>
-            ))}
-          </div>
-        )}
+        {/* move this to seperate component and reuse in combined search */}
+        <FormatedFacets facets={item?.selectedFacets} />
       </div>
       <Text type="text2" className={styles.hitcount}>
         {item.hitcount}{" "}
@@ -202,7 +213,7 @@ function HistoryHeaderActions({
       </label>
 
       <Button type="secondary" size="small" onClick={onCombineSearch}>
-        Kombiner søgninger
+        {Translate({ context: "search", label: "combineSearch" })}
       </Button>
       <Link
         className={cx(styles.removeItems, {

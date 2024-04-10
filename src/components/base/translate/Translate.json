@@ -2400,6 +2400,10 @@
       "get-search-codes": {
         "da": "Søgekoder",
         "en": "Search codes"
+      },
+      "combineSearch": {
+        "da": "Kombiner søgninger",
+        "en": "Combine search"
       }
     },
     "suggester": {
