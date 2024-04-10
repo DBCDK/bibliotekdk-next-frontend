@@ -42,7 +42,7 @@ function mergeFieldSearchObjects(fieldSearchObjects) {
 
   return mergedObject;
 }
-function SearchItem({ item, index, isLastItem, updatePrefixLogicalOperator }) {
+function SearchItem({ item, index, updatePrefixLogicalOperator }) {
   return (
     <div className={styles.searchItemContainer}>
       {item?.prefixlogicalopreator && (
@@ -80,11 +80,11 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
     );
     let newQueriesItems = [...filteredQueriesItems];
 
-    const arrayOfkeys = queriesItems.map((item) => item.key);
+    const arrayOfkeys = filteredQueriesItems.map((item) => item.key);
     //add queries to queriesItems if they are not already added and there are 4 or less queries in the queriesItems
     queries.forEach((item, index) => {
       //can only combine MAX_ITEMS elements
-      if (filteredQueriesItems.length >= MAX_ITEMS) {
+      if (newQueriesItems.length >= MAX_ITEMS) {
         return;
       }
       //add to list of queries to be combined
