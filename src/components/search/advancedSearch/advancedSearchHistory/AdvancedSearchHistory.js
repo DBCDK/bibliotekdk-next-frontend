@@ -226,8 +226,7 @@ function HistoryHeaderActions({
 function HistoryHeader() {
   return (
     <div className={cx(styles.header, styles.grid)}>
-      <div className={styles.checkbox}> </div>
-      <Text type="text4" className={styles.timestamp}>
+      <Text type="text4">
         {Translate({ context: "search", label: "timeForSearch" })}
       </Text>
       <Text type="text4" className={styles.link}>
