@@ -133,6 +133,7 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
   const current = selectedFacets?.find((sel) => {
     return sel?.searchIndex === facetName;
   });
+
   // sort - we want selected items first other items sorted by score
   const sorter = (a, b) => {
     const aselected = !!current?.values?.find((val) => {
