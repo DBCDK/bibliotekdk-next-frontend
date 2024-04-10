@@ -70,17 +70,25 @@ function SearchItem({ item, index, updatePrefixLogicalOperator }) {
   );
 }
 export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
-  //queries are all the selected/checked queries. queriesItems are only the first 4 queries. They are shown in the combnination box.
+  //queries are all the selected/checked queries.
+  //queriesItems are the queries selected for combination and shown in the combine queries overview.
   const [queriesItems, setQueriesItems] = useState([]);
 
   useEffect(() => {
     //Remove the unchecked queries from queriesItems
-    const filteredQueriesItems = queriesItems.filter((item) =>
-      queries.some((query) => query.key === item.key)
-    );
-    let newQueriesItems = [...filteredQueriesItems];
+    let newQueriesItems = [
+      ...queriesItems.filter((item) =>
+        queries.some((query) => query.key === item.key)
+      ),
+    ];
 
-    const arrayOfkeys = filteredQueriesItems.map((item) => item.key);
+    //first element should not have prefixLogicalOperator
+    if (newQueriesItems[0]?.prefixlogicalopreator) {
+      newQueriesItems[0].prefixlogicalopreator = null;
+    }
+    //array of keys of the selected quries to be combined
+    const keys = newQueriesItems.map((item) => item.key);
+
     //add queries to queriesItems if they are not already added and there are 4 or less queries in the queriesItems
     queries.forEach((item, index) => {
       //can only combine MAX_ITEMS elements
@@ -88,7 +96,7 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
         return;
       }
       //add to list of queries to be combined
-      if (!arrayOfkeys.includes(item.key)) {
+      if (!keys.includes(item.key)) {
         newQueriesItems.push({
           key: item.key,
           cql: item.cql,
@@ -96,7 +104,7 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
             Object.keys(item.fieldSearch).length === 0
               ? null
               : item.fieldSearch,
-          prefixlogicalopreator: index === 0 ? null : "AND",
+          prefixlogicalopreator: newQueriesItems.length === 0 ? null : "AND",
           selectedFacets: item?.selectedFacets,
         });
       }

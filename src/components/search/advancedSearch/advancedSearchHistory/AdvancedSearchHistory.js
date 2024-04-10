@@ -377,7 +377,7 @@ export function AdvancedSearchHistory() {
   };
 
   const checkedObjects = storedValue?.filter((obj) =>
-    checkboxList.includes(obj.cql)
+    checkboxList.includes(obj.key)
   );
 
   return (
