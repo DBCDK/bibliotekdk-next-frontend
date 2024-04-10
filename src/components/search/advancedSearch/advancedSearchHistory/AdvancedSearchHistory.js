@@ -345,19 +345,11 @@ export function AdvancedSearchHistory() {
         {items.length > 0 &&
           items.map((item, index) => (
             <HistoryItem
-<<<<<<< HEAD
               key={item.key}
               item={item}
               index={index}
               checked={
                 checkboxList.findIndex((check) => check === item.key) !== -1
-=======
-              key={item.cql}
-              item={item}
-              index={index}
-              checked={
-                checkboxList.findIndex((check) => check === item.cql) !== -1
->>>>>>> prod
               }
               deleteSelected={onDeleteSelected}
               onSelect={onSelect}
