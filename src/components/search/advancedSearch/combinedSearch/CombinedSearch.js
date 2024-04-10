@@ -23,20 +23,30 @@ function mergeFieldSearchObjects(fieldSearchObjects) {
     inputFields: [],
     dropdownSearchIndices: [],
   };
-
+  let alreadyAddedDropdownIndexes = [];
   fieldSearchObjects.forEach((item) => {
     if (item.fieldSearch?.inputFields?.length > 0) {
-      //Make sure that AND is added in the end of the new query to connect the it to the previous queries
       let inputFieldsToAdd = item.fieldSearch.inputFields;
-      inputFieldsToAdd[0].prefixLogicalOperator = item.prefixlogicalopreator; //"AND";
+      inputFieldsToAdd[0].prefixLogicalOperator = item.prefixlogicalopreator;
       mergedObject.inputFields =
         mergedObject.inputFields.concat(inputFieldsToAdd);
     }
     if (item.fieldSearch?.dropdownSearchIndices?.length > 0) {
-      mergedObject.dropdownSearchIndices =
-        mergedObject.dropdownSearchIndices.concat(
-          item.fieldSearch.dropdownSearchIndices
+      item.fieldSearch.dropdownSearchIndices.forEach((dropdownItem) => {
+        let index = mergedObject.dropdownSearchIndices.findIndex(
+          (i) => i.searchIndex === dropdownItem.searchIndex
         );
+        if (index === -1) {
+          // if searchIndex not already added to mergedObject, add a new object with the searchIndex and value
+          mergedObject.dropdownSearchIndices.push(dropdownItem);
+        } else {
+          // else merge with the already existing objectthe values
+          mergedObject.dropdownSearchIndices[index].value =
+            mergedObject.dropdownSearchIndices[index].value.concat(
+              dropdownItem.value
+            );
+        }
+      });
     }
   });
 
@@ -172,7 +182,9 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
               const cql = queriesItems
                 .map(
                   (item) =>
-                    (item?.prefixlogicalopreator || "") + `(${item.cql})`
+                    (item?.prefixlogicalopreator
+                      ? item?.prefixlogicalopreator + " "
+                      : "") + ` (${item.cql})`
                 )
                 .join(" ");
               query = {
