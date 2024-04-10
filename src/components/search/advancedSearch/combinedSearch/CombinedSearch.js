@@ -137,7 +137,7 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
         {Translate({ context: "search", label: "combineSearch" })}
       </Text>
       {queriesItems?.length === 0 && (
-        <Text>
+        <Text dataCy="combined-search-no-queries-selected">
           {Translate({ context: "search", label: "combineSearchInfoText" })}
         </Text>
       )}
@@ -157,7 +157,7 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
       )}
 
       {queries.length > MAX_ITEMS && (
-        <div className={styles.errorBox}>
+        <div className={styles.errorBox} data-cy="combine-search-error-box">
           <Text type="text2">
             {Translate({
               context: "search",
