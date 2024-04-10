@@ -74,12 +74,14 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
   const [queriesItems, setQueriesItems] = useState([]);
 
   useEffect(() => {
+    //Remove the unchecked queries from queriesItems
     const filteredQueriesItems = queriesItems.filter((item) =>
       queries.some((query) => query.key === item.key)
     );
     let newQueriesItems = [...filteredQueriesItems];
 
     const arrayOfkeys = queriesItems.map((item) => item.key);
+    //add queries to queriesItems if they are not already added and there are 4 or less queries in the queriesItems
     queries.forEach((item, index) => {
       //can only combine MAX_ITEMS elements
       if (filteredQueriesItems.length >= MAX_ITEMS) {
