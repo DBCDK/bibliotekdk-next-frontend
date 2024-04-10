@@ -1,18 +1,10 @@
-import { useData } from "@/lib/api/api";
-import { doComplexSearchAll } from "@/lib/api/complexSearch.fragments";
 import styles from "./CombinedSearch.module.css";
 import { useEffect, useState } from "react";
-import isEmpty from "lodash/isEmpty";
 import Text from "@/components/base/text";
-import isEqual from "lodash/isEqual";
-import cx from "classnames";
-import { IconLink } from "@/components/base/iconlink/IconLink";
-import animations from "@/components/base/animation/animations.module.css";
 import Link from "@/components/base/link";
 import { useRouter } from "next/router";
+import Translate from "@/components/base/translate";
 
-import Translate, { hasTranslation } from "@/components/base/translate";
-import IconButton from "@/components/base/iconButton/IconButton";
 import Button from "@/components/base/button/Button";
 import { LogicalOperatorDropDown } from "@/components/search/advancedSearch/fieldInput/TextInputs";
 import { FormatFieldSearchIndexes } from "../advancedSearchResult/topBar/TopBar";
@@ -33,7 +25,6 @@ function mergeFieldSearchObjects(fieldSearchObjects) {
   };
 
   fieldSearchObjects.forEach((item) => {
-    console.log(item.fieldSearch);
     if (item.fieldSearch?.inputFields?.length > 0) {
       //Make sure that AND is added in the end of the new query to connect the it to the previous queries
       let inputFieldsToAdd = item.fieldSearch.inputFields;
@@ -52,7 +43,6 @@ function mergeFieldSearchObjects(fieldSearchObjects) {
   return mergedObject;
 }
 function SearchItem({ item, index, isLastItem, updatePrefixLogicalOperator }) {
-  console.log("item", JSON.stringify(item.fieldSearch));
   return (
     <div className={styles.searchItemContainer}>
       {item?.prefixlogicalopreator && (
@@ -60,7 +50,6 @@ function SearchItem({ item, index, isLastItem, updatePrefixLogicalOperator }) {
           selected={item?.prefixlogicalopreator}
           onSelect={(newOperator) => {
             updatePrefixLogicalOperator({ index, newOperator });
-            console.log("hej", newOperator);
           }}
         />
       )}
@@ -82,19 +71,10 @@ function SearchItem({ item, index, isLastItem, updatePrefixLogicalOperator }) {
 }
 export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
   //queries are all the selected/checked queries. queriesItems are only the first 4 queries. They are shown in the combnination box.
-  const [queriesItems, setQueriesItems] = useState([]); /* useState(() => {
-    //User can only combine MAX_ITEMS of queries.
-    return queries.slice(0, MAX_ITEMS).map((item) => ({
-      cql: item.cql,
-      fieldSearch:
-        Object.keys(item.fieldSearch).length === 0 ? null : item.fieldSearch,
-      prefixlogicalopreator: "AND",
-    }));
-  });
-*/
+  const [queriesItems, setQueriesItems] = useState([]);
+
   useEffect(() => {
     const newQueriesItems = queries.slice(0, MAX_ITEMS).map((item, index) => {
-      console.log(index, "item", item);
       return {
         cql: item.cql,
         fieldSearch:
@@ -108,9 +88,6 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
     //if queriesItems length is  dont do anything
   }, [queries]);
 
-  console.log("CombinedSearch.queriesItems", queriesItems);
-
-  console.log("CombinedSearch.queries", queries);
   const router = useRouter();
   const updatePrefixLogicalOperator = ({ index, newOperator }) => {
     let newQueriesItems = [...queriesItems];
@@ -122,12 +99,11 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
   return (
     <div className={styles.container}>
       <Text type="text1" className={styles.title}>
-        Kombiner søgninger
+        {Translate({ context: "search", label: "combineSearch" })}
       </Text>
       {queriesItems?.length === 0 && (
         <Text>
-          Vælg en eller flere søgninger i listen for at sammensætte dem til en
-          ny søgning
+          {Translate({ context: "search", label: "combineSearchInfoText" })}
         </Text>
       )}
 
@@ -146,7 +122,13 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
 
       {queries.length > MAX_ITEMS && (
         <div className={styles.errorBox}>
-          <Text type="text2">Du kan maksimalt kombinere 4 søgninger</Text>
+          <Text type="text2">
+            {Translate({
+              context: "search",
+              label: "maxCombinationsMessage",
+              vars: [MAX_ITEMS],
+            })}
+          </Text>
         </div>
       )}
       <div className={styles.buttonContainer}>
@@ -155,13 +137,11 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
           size="small"
           disabled={queries.length === 0}
           onClick={() => {
-            console.log("queriesItems", queriesItems);
             //check if there is queries that does not have fieldsearch. If so make cql otherwise make fieldsearch
             const queriesHasCql = queriesItems.some(
               (item) => item.fieldSearch === null
             );
             let query;
-            console.log("queriesHasCql", queriesHasCql);
             if (queriesHasCql) {
               const cql = queriesItems
                 .map(
@@ -175,15 +155,13 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
             } else {
               //TODO check if all 4 fields has fieldsearch
               const mergedFieldSearch = mergeFieldSearchObjects(queriesItems);
-              console.log("mergedFieldSearch", mergedFieldSearch);
               const stateToString = JSON.stringify(mergedFieldSearch);
               query = { fieldSearch: stateToString };
             }
-            console.log("query", query);
             router.push({ pathname: "/avanceret", query });
           }}
         >
-          Søg
+          {Translate({ context: "general", label: "searchButton" })}
         </Button>
         <Text>
           <Link
@@ -195,7 +173,7 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
             }}
             onClick={cancelCombinedSearch}
           >
-            Fortryd
+            {Translate({ context: "general", label: "cancel" })}
           </Link>
         </Text>
       </div>
