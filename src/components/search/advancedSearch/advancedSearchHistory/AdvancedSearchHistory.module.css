@@ -32,6 +32,7 @@
 .itemsheader {
   border-bottom: 1px solid var(--iron);
   margin-bottom: var(--pt2);
+  padding-left: var(--pt1);
 }
 
 @media (min-width: 576px) {

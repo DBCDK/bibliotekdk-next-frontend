@@ -226,8 +226,7 @@ function HistoryHeaderActions({
 function HistoryHeader() {
   return (
     <div className={cx(styles.header, styles.grid)}>
-      <div className={styles.checkbox}> </div>
-      <Text type="text4" className={styles.timestamp}>
+      <Text type="text4">
         {Translate({ context: "search", label: "timeForSearch" })}
       </Text>
       <Text type="text4" className={styles.link}>
@@ -291,7 +290,7 @@ export function AdvancedSearchHistory() {
     if (storedValue.length === checkboxList.length) {
       setCheckboxList([]);
     } else {
-      setCheckboxList(storedValue.map((stored) => stored.cql));
+      setCheckboxList(storedValue.map((stored) => stored.key));
     }
   };
 
@@ -300,7 +299,7 @@ export function AdvancedSearchHistory() {
    */
   const onDeleteSelected = () => {
     checkboxList.forEach((check) => {
-      const historyItem = storedValue.find((stored) => stored.cql === check);
+      const historyItem = storedValue.find((stored) => stored.key === check);
       historyItem && deleteValue(historyItem);
       //remove item from checklist too
       onSelect(historyItem, false);
@@ -319,7 +318,7 @@ export function AdvancedSearchHistory() {
     // if select is FALSE it has been deselected on gui
     const newCheckList = [...checkboxList];
     // if item is already in checkboxlist -> remove
-    const checkindex = checkboxList.findIndex((check) => check === item.cql);
+    const checkindex = checkboxList.findIndex((check) => check === item.key);
     if (checkindex !== -1) {
       // item found in list - if deselected remove it
       if (!selected) {
@@ -328,7 +327,7 @@ export function AdvancedSearchHistory() {
     }
     // if not -> add it to list .. if selected
     else if (selected) {
-      newCheckList.push(item.cql);
+      newCheckList.push(item.key);
     }
     setCheckboxList(newCheckList);
   };
@@ -346,11 +345,11 @@ export function AdvancedSearchHistory() {
         {items.length > 0 &&
           items.map((item, index) => (
             <HistoryItem
-              key={item.cql}
+              key={item.key}
               item={item}
               index={index}
               checked={
-                checkboxList.findIndex((check) => check === item.cql) !== -1
+                checkboxList.findIndex((check) => check === item.key) !== -1
               }
               deleteSelected={onDeleteSelected}
               onSelect={onSelect}
