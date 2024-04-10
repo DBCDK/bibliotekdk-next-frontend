@@ -752,6 +752,10 @@
       }
     },
     "bibliographic-data": {
+      "contributorsFromDescription": {
+        "da": "Beskrivelse fra materialet",
+        "en": "Description from material"
+      },
       "id": {
         "da": "Id",
         "en": "Id"

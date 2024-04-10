@@ -133,7 +133,7 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
   const current = selectedFacets?.find((sel) => {
     return sel?.searchIndex === facetName;
   });
-  // sort - we want selected items first
+  // sort - we want selected items first other items sorted by score
   const sorter = (a, b) => {
     const aselected = !!current?.values?.find((val) => {
       return val.name === a.key;
@@ -143,12 +143,12 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
       return val.name === b.key;
     });
 
-    // if both a and b are selected we leave the order as is
-    if (bselected && aselected) {
-      return 0;
+    // check selected values - if both are selected we leave as is - if first is selected we put it on top .. etc
+    if (aselected || bselected) {
+      return bselected && aselected ? 0 : bselected ? 1 : aselected ? -1 : 0;
     }
-    // if only a is selected we put it on top
-    return aselected ? -1 : 1;
+
+    return a?.score > b?.score ? -1 : 1;
   };
 
   let initialcheck;
