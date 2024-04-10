@@ -128,6 +128,7 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
         <div>
           {queriesItems.map((item, index) => (
             <SearchItem
+              key={item.key}
               item={item}
               index={index}
               isLastItem={queriesItems.length - 1 === index}
