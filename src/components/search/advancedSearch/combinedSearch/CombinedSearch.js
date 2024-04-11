@@ -231,7 +231,7 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
           size="small"
           disabled={queries.length === 0}
           onClick={() => {
-            //check if there is queries that does not have fieldsearch. If so make cql otherwise make fieldsearch
+            //check if there are queries that does not have fieldsearch. If so make cql otherwise make fieldsearch
             const queriesHasCql = queriesItems.some(
               (item) => item.fieldSearch === null
             );
@@ -252,7 +252,6 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
               //convert multiple field search queries into one query
               query = fieldSearchObjectsToQuery(queriesItems);
             }
-            console.log("query", query);
             router.push({ pathname: "/avanceret", query });
           }}
         >
