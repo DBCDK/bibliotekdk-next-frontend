@@ -129,11 +129,17 @@ function SearchItem({ item, index, updatePrefixLogicalOperator }) {
     </div>
   );
 }
+
+/**
+ * renders component to combine multipe advanced search queries
+ * @param {Array} [queries=[]] - An array containing the selected/checked queries.
+ * @param {function} cancelCombinedSearch - A function to cancel the combined search.
+ */
 export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
-  //queries are all the selected/checked queries.
   //queriesItems are the queries selected for combination and shown in the combine queries overview.
   const [queriesItems, setQueriesItems] = useState([]);
 
+  //this useeffect will run when queries are updated. It will update the state of queriesItems according to the changes in queries
   useEffect(() => {
     //Remove the unchecked queries from queriesItems
     let newQueriesItems = [
