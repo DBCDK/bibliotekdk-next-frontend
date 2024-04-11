@@ -247,6 +247,7 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
                 .join(" ");
               query = {
                 cql,
+                facets: JSON.stringify(facets),
               };
             } else {
               //convert multiple field search queries into one query
