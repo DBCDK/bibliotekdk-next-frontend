@@ -23,7 +23,7 @@ function mergeFieldSearchObjects(fieldSearchObjects) {
     inputFields: [],
     dropdownSearchIndices: [],
   };
-  let alreadyAddedDropdownIndexes = [];
+
   fieldSearchObjects.forEach((item) => {
     if (item.fieldSearch?.inputFields?.length > 0) {
       let inputFieldsToAdd = item.fieldSearch.inputFields;
