@@ -22,7 +22,7 @@ import Button from "@/components/base/button";
 import CombinedSearch from "@/components/search/advancedSearch/combinedSearch/CombinedSearch";
 
 //Component to render facets
-export function FormatedFacets({ facets }) {
+export function FormatedFacets({ facets, className }) {
   if (isEmpty(facets)) {
     return null;
   }
@@ -37,7 +37,7 @@ export function FormatedFacets({ facets }) {
   });
 
   return (
-    <div className={styles.historyFilters}>
+    <div className={cx(styles.historyFilters, className)}>
       <Text tag="span" type="text1">
         {Translate({ context: "search", label: "filters" })} :
       </Text>

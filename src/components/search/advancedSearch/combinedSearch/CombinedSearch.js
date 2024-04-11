@@ -14,55 +14,81 @@ import { FormatedFacets } from "@/components/search/advancedSearch/advancedSearc
 const MAX_ITEMS = 4;
 
 /**
- * Combines mutiple fieldsearch queries into one
+ * Combines mutiple fieldsearch queries into one search query (search object)
  * @param {*} fieldSearchObjects
  * @returns
  */
-function mergeFieldSearchObjects(fieldSearchObjects) {
-  let mergedObject = {
+function fieldSearchObjectsToQuery(fieldSearchObjects) {
+  let fieldSearch = {
     inputFields: [],
     dropdownSearchIndices: [],
   };
+  let facets = [];
 
   fieldSearchObjects.forEach((item) => {
+    //add text fieldinputs
     if (item.fieldSearch?.inputFields?.length > 0) {
       let inputFieldsToAdd = item.fieldSearch.inputFields;
       inputFieldsToAdd[0].prefixLogicalOperator = item.prefixlogicalopreator;
-      mergedObject.inputFields =
-        mergedObject.inputFields.concat(inputFieldsToAdd);
+      fieldSearch.inputFields =
+        fieldSearch.inputFields.concat(inputFieldsToAdd);
     }
+    //merge dropdownSearchIndices
     if (item.fieldSearch?.dropdownSearchIndices?.length > 0) {
       item.fieldSearch.dropdownSearchIndices.forEach((dropdownItem) => {
-        let index = mergedObject.dropdownSearchIndices.findIndex(
+        let index = fieldSearch.dropdownSearchIndices.findIndex(
           (i) => i.searchIndex === dropdownItem.searchIndex
         );
         if (index === -1) {
-          // if searchIndex not already added to mergedObject, add a new object with the searchIndex and value
-          mergedObject.dropdownSearchIndices.push(dropdownItem);
+          // if searchIndex not already added to fieldSearch, add a new object with the searchIndex and value
+          fieldSearch.dropdownSearchIndices.push(dropdownItem);
         } else {
           // else merge with the already existing objectthe values
-          mergedObject.dropdownSearchIndices[index].value =
-            mergedObject.dropdownSearchIndices[index].value.concat(
+          fieldSearch.dropdownSearchIndices[index].value =
+            fieldSearch.dropdownSearchIndices[index].value.concat(
               dropdownItem.value
             );
         }
       });
     }
+    if (item.selectedFacets?.length > 0) {
+      item.selectedFacets?.forEach((facet) => {
+        let index = facets.findIndex(
+          (i) => i.searchIndex === facet.searchIndex
+        );
+        if (index === -1) {
+          // if searchIndex not already added, add a new object with the searchIndex and value
+          facets.push(facet);
+        } else {
+          // else merge with the already existing objects
+          facets[index].value = facets[index].value.concat(facet.value);
+        }
+      });
+    }
   });
-
-  return mergedObject;
+  const query = {
+    fieldSearch: JSON.stringify(fieldSearch),
+    facets: JSON.stringify(facets),
+  };
+  return query;
 }
+
 function SearchItem({ item, index, updatePrefixLogicalOperator }) {
   return (
     <div className={styles.searchItemContainer}>
       {item?.prefixlogicalopreator && (
-        <LogicalOperatorDropDown
-          selected={item?.prefixlogicalopreator}
-          onSelect={(newOperator) => {
-            updatePrefixLogicalOperator({ index, newOperator });
-          }}
-        />
+        <div className={styles.prefixLogicalOperator}>
+          <div />
+
+          <LogicalOperatorDropDown
+            selected={item?.prefixlogicalopreator}
+            onSelect={(newOperator) => {
+              updatePrefixLogicalOperator({ index, newOperator });
+            }}
+          />
+        </div>
       )}
+
       <div key={item.cql} className={styles.searchItem}>
         <div className={styles.searchItemNumber}>
           <Text>{index + 1}</Text>
@@ -75,7 +101,8 @@ function SearchItem({ item, index, updatePrefixLogicalOperator }) {
           <Text type="text2">{item?.cql}</Text>
         )}
       </div>
-      <FormatedFacets facets={item.selectedFacets} />
+
+      <FormatedFacets facets={item.selectedFacets} className={styles.facets} />
     </div>
   );
 }
@@ -191,11 +218,10 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
                 cql,
               };
             } else {
-              //TODO check if all 4 fields has fieldsearch
-              const mergedFieldSearch = mergeFieldSearchObjects(queriesItems);
-              const stateToString = JSON.stringify(mergedFieldSearch);
-              query = { fieldSearch: stateToString };
+              //convert multiple field search queries into one query
+              query = fieldSearchObjectsToQuery(queriesItems);
             }
+            console.log("query", query);
             router.push({ pathname: "/avanceret", query });
           }}
         >

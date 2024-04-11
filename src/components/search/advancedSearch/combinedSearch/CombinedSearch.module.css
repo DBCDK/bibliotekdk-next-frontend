@@ -22,17 +22,26 @@
   outline-color: var(--dove);
 }
 .searchItemContainer {
+  margin-bottom: var(--pt2);
 }
 .searchItem {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--pt2);
 }
 .searchItemNumber {
   background-color: var(--blue);
   color: var(--white);
   padding: 0 var(--pt075);
   height: fit-content;
+}
+.prefixLogicalOperator {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  padding-left: 22px;
+}
+.facets {
+  /* margin-top: var(--pt1); */
 }
 .errorBox {
   display: flex;
