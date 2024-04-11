@@ -86,12 +86,9 @@ function mergeFacets(fieldSearchObjects) {
           (i) => i.searchIndex === facet.searchIndex
         );
         if (index === -1) {
-          //TODO check if it already exists
           // if searchIndex not already added, add a new object with the searchIndex and value
           facets.push(facet);
         } else {
-          //TODO check if it already exists
-
           // else merge with the already existing objects
           facets[index].value = facets[index]?.value?.concat(facet.value);
         }
