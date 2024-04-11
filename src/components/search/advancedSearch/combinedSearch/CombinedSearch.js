@@ -1,5 +1,5 @@
 import styles from "./CombinedSearch.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import { useRouter } from "next/router";
@@ -24,7 +24,6 @@ function fieldSearchObjectsToQuery(fieldSearchObjects) {
     dropdownSearchIndices: [],
   };
   let facets = [];
-
   fieldSearchObjects.forEach((item) => {
     //add text fieldinputs
     if (item.fieldSearch?.inputFields?.length > 0) {
@@ -73,6 +72,35 @@ function fieldSearchObjectsToQuery(fieldSearchObjects) {
   return query;
 }
 
+/**
+ * Merges facets form multiple
+ * @param {*} fieldSearchObjects
+ * @returns
+ */
+function mergeFacets(fieldSearchObjects) {
+  let facets = [];
+  fieldSearchObjects.forEach((item) => {
+    if (item.selectedFacets?.length > 0) {
+      item.selectedFacets?.forEach((facet) => {
+        let index = facets.findIndex(
+          (i) => i.searchIndex === facet.searchIndex
+        );
+        if (index === -1) {
+          //TODO check if it already exists
+          // if searchIndex not already added, add a new object with the searchIndex and value
+          facets.push(facet);
+        } else {
+          //TODO check if it already exists
+
+          // else merge with the already existing objects
+          facets[index].value = facets[index]?.value?.concat(facet.value);
+        }
+      });
+    }
+  });
+  return facets;
+}
+
 function SearchItem({ item, index, updatePrefixLogicalOperator }) {
   return (
     <div className={styles.searchItemContainer}>
@@ -101,8 +129,6 @@ function SearchItem({ item, index, updatePrefixLogicalOperator }) {
           <Text type="text2">{item?.cql}</Text>
         )}
       </div>
-
-      <FormatedFacets facets={item.selectedFacets} className={styles.facets} />
     </div>
   );
 }
@@ -157,7 +183,7 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
 
     setQueriesItems(newQueriesItems);
   };
-
+  const facets = useMemo(() => mergeFacets(queriesItems), [queriesItems]);
   return (
     <div className={styles.container}>
       <Text type="text1" className={styles.title}>
@@ -182,6 +208,8 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
           ))}
         </div>
       )}
+
+      <FormatedFacets facets={facets} className={styles.facets} />
 
       {queries.length > MAX_ITEMS && (
         <div className={styles.errorBox} data-cy="combine-search-error-box">
