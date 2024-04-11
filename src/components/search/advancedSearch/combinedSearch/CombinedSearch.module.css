@@ -1,0 +1,54 @@
+.container {
+  background: var(--concrete);
+  display: flex;
+  padding: var(--pt2);
+  flex-direction: column;
+  align-items: flex-start;
+  margin: var(--pt4) 0;
+}
+.title {
+  margin-bottom: var(--pt1);
+}
+.buttonContainer {
+  margin-top: var(--pt3);
+  display: flex;
+  align-items: baseline;
+}
+.searchButton {
+  margin-right: var(--pt3);
+  min-width: 120px;
+}
+.searchButton:disabled {
+  outline-color: var(--dove);
+}
+.searchItemContainer {
+  margin-bottom: var(--pt2);
+}
+.searchItem {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--pt2);
+}
+.searchItemNumber {
+  background-color: var(--blue);
+  color: var(--white);
+  padding: 0 var(--pt075);
+  height: fit-content;
+}
+.prefixLogicalOperator {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  padding-left: 22px;
+}
+.facets {
+  /* margin-top: var(--pt1); */
+}
+.errorBox {
+  display: flex;
+  padding: var(--pt1) var(--pt2);
+  align-items: flex-start;
+  color: var(--error_temp);
+  background-color: var(--chardon);
+  border: 1px solid var(--error_temp);
+  margin-top: var(--pt2);
+}
