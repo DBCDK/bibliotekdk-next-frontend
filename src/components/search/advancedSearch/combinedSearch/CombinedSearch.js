@@ -9,6 +9,7 @@ import Button from "@/components/base/button/Button";
 import { LogicalOperatorDropDown } from "@/components/search/advancedSearch/fieldInput/TextInputs";
 import { FormatFieldSearchIndexes } from "../advancedSearchResult/topBar/TopBar";
 import { FormatedFacets } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
+import { useFacets } from "@/components/search/advancedSearch/useFacets";
 
 //max number of search queries to be combined
 const MAX_ITEMS = 4;
@@ -23,7 +24,7 @@ function fieldSearchObjectsToQuery(fieldSearchObjects) {
     inputFields: [],
     dropdownSearchIndices: [],
   };
-  let facets = [];
+
   fieldSearchObjects.forEach((item) => {
     //add text fieldinputs
     if (item.fieldSearch?.inputFields?.length > 0) {
@@ -50,25 +51,14 @@ function fieldSearchObjectsToQuery(fieldSearchObjects) {
         }
       });
     }
-    if (item.selectedFacets?.length > 0) {
-      item.selectedFacets?.forEach((facet) => {
-        let index = facets.findIndex(
-          (i) => i.searchIndex === facet.searchIndex
-        );
-        if (index === -1) {
-          // if searchIndex not already added, add a new object with the searchIndex and value
-          facets.push(facet);
-        } else {
-          // else merge with the already existing objects
-          facets[index].value = facets[index].value.concat(facet.value);
-        }
-      });
-    }
   });
+
+  const facets = mergeFacets(fieldSearchObjects);
   const query = {
     fieldSearch: JSON.stringify(fieldSearch),
     facets: JSON.stringify(facets),
   };
+
   return query;
 }
 
@@ -89,8 +79,12 @@ function mergeFacets(fieldSearchObjects) {
           // if searchIndex not already added, add a new object with the searchIndex and value
           facets.push(facet);
         } else {
-          // else merge with the already existing objects
-          facets[index].value = facets[index]?.value?.concat(facet.value);
+          // else merge with the already existing objects (and filter for duplicates)
+          facets[index].values = facets[index]?.values?.concat(
+            facet.values.filter(
+              (value) => !facets[index]?.values?.includes(value)
+            )
+          );
         }
       });
     }
@@ -138,6 +132,7 @@ function SearchItem({ item, index, updatePrefixLogicalOperator }) {
 export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
   //queriesItems are the queries selected for combination and shown in the combine queries overview.
   const [queriesItems, setQueriesItems] = useState([]);
+  const { restartFacetsHook } = useFacets();
 
   //this useeffect will run when queries are updated. It will update the state of queriesItems according to the changes in queries
   useEffect(() => {
@@ -187,6 +182,7 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
     setQueriesItems(newQueriesItems);
   };
   const facets = useMemo(() => mergeFacets(queriesItems), [queriesItems]);
+
   return (
     <div className={styles.container}>
       <Text type="text1" className={styles.title}>
@@ -253,6 +249,7 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
               //convert multiple field search queries into one query
               query = fieldSearchObjectsToQuery(queriesItems);
             }
+            restartFacetsHook();
             router.push({ pathname: "/avanceret", query });
           }}
         >
