@@ -16,7 +16,7 @@ import { useData } from "@/lib/api/api";
  * @returns
  */
 export function OpenAdgangsplatform({ context, isLoading = false }) {
-  const { agencyName, title, text, agencyId, branchId, callbackUID } = context;
+  const { agencyName, title, text, branchId, callbackUID } = context;
 
   const onLogin = () => {
     const callbackUrl = getCallbackUrl(branchId, callbackUID);
@@ -24,7 +24,7 @@ export function OpenAdgangsplatform({ context, isLoading = false }) {
     signIn(
       "adgangsplatformen",
       { callbackUrl },
-      { agency: agencyId, force_login: 1 }
+      { agency: branchId, force_login: 1 }
     );
   };
 
@@ -78,20 +78,4 @@ export function OpenAdgangsplatform({ context, isLoading = false }) {
 
 export default function Wrap({ context }) {
   return <OpenAdgangsplatform context={context} />;
-
-  // *** FFU CHECK IS DISABLED FOR NOW
-
-  const { branchId, agencyId } = context;
-  const { data, isLoading } = useData(branchId && isFFUAgency({ branchId }));
-
-  // Override agencyId with branchId if an FFU library was selected
-  // BorrowerCheck and borrowerCheckSystem is set on branchId level for FFU libraries.
-  const isFFU = !!data?.branches?.hitcount;
-
-  return (
-    <OpenAdgangsplatform
-      context={{ ...context, agencyId: isFFU ? branchId : agencyId }}
-      isLoading={isLoading}
-    />
-  );
 }
