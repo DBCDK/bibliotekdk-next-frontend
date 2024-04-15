@@ -7,8 +7,6 @@ import Button from "@/components/base/button";
 import { signIn } from "@dbcdk/login-nextjs/client";
 import Icon from "@/components/base/icon";
 import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
-import { isFFUAgency } from "@/lib/api/branches.fragments";
-import { useData } from "@/lib/api/api";
 
 /**
  * Modal page for that contains a button to Adgangsplatform login
