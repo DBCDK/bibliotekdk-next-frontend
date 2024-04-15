@@ -133,8 +133,9 @@
   border-bottom: 1px solid var(--iron);
 }
 
-.flex {
+.removeItems {
   display: flex;
+  height: fit-content;
 }
 
 .icon {

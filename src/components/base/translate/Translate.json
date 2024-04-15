@@ -2404,6 +2404,18 @@
       "get-search-codes": {
         "da": "Søgekoder",
         "en": "Search codes"
+      },
+      "combineSearch": {
+        "da": "Kombiner søgninger",
+        "en": "Combine search"
+      },
+      "combineSearchInfoText": {
+        "da": "Vælg en eller flere søgninger i listen for at sammensætte dem til en ny søgning.",
+        "en": "Select one or more searches in the list to combine them into a new search."
+      },
+      "maxCombinationsMessage": {
+        "da": "Du kan maksimalt kombinere %s søgninger.",
+        "en": "You can combine a maximum of %s searches"
       }
     },
     "suggester": {
