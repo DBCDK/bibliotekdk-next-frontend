@@ -1,5 +1,5 @@
 import styles from "./CombinedSearch.module.css";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import { useRouter } from "next/router";
@@ -94,7 +94,7 @@ function mergeFacets(fieldSearchObjects) {
 
 function SearchItem({ item, index, updatePrefixLogicalOperator }) {
   return (
-    <div className={styles.searchItemContainer}>
+    <div className={`${styles.searchItemContainer}`}>
       {item?.prefixlogicalopreator && (
         <div className={styles.prefixLogicalOperator}>
           <div />
@@ -133,6 +133,23 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
   //queriesItems are the queries selected for combination and shown in the combine queries overview.
   const [queriesItems, setQueriesItems] = useState([]);
   const { restartFacetsHook } = useFacets();
+  const containerRef = useRef(null);
+  const [isFirstRender, setFirstRender] = useState(true);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      const currentHeight = containerRef.current.scrollHeight; // Get the natural height based on content
+      console.log("currentHeight", currentHeight);
+
+      if (isFirstRender) {
+        setFirstRender(false); // After setting, update the first render state
+      } else {
+        //   containerRef.current.style.transition = 'max-height 0.3s ease-out';
+        containerRef.current.style.maxHeight = `${currentHeight}px`;
+
+      }
+    }
+  }, [queriesItems]); // This effect runs every time queriesItems changes
 
   //this useeffect will run when queries are updated. It will update the state of queriesItems according to the changes in queries
   useEffect(() => {
@@ -182,9 +199,13 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
     setQueriesItems(newQueriesItems);
   };
   const facets = useMemo(() => mergeFacets(queriesItems), [queriesItems]);
-
+  // ${!isFirstRender ? styles.show : ""}
   return (
-    <div className={styles.container}>
+    <div
+      className={`${styles.container} ${
+        !isFirstRender ? styles.showContainer : ""
+      }`}
+    >
       <Text type="text1" className={styles.title}>
         {Translate({ context: "search", label: "combineSearch" })}
       </Text>
@@ -194,19 +215,23 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
         </Text>
       )}
 
-      {queriesItems?.length > 0 && (
-        <div>
-          {queriesItems.map((item, index) => (
-            <SearchItem
-              key={item.key}
-              item={item}
-              index={index}
-              isLastItem={queriesItems.length - 1 === index}
-              updatePrefixLogicalOperator={updatePrefixLogicalOperator}
-            />
-          ))}
-        </div>
-      )}
+      <div
+        className={`${styles.searchItemsWrap} ${
+          !isFirstRender ? styles.show : ""
+        }`}
+        ref={containerRef}
+      >
+        {queriesItems.map((item, index) => (
+          <SearchItem
+            className={styles.searchItemContainer}
+            key={item.key}
+            item={item}
+            index={index}
+            isLastItem={queriesItems.length - 1 === index}
+            updatePrefixLogicalOperator={updatePrefixLogicalOperator}
+          />
+        ))}
+      </div>
 
       <FormatedFacets facets={facets} className={styles.facets} />
 
@@ -228,27 +253,18 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
           disabled={queries.length === 0}
           onClick={() => {
             //check if there are queries that does not have fieldsearch. If so make cql otherwise make fieldsearch
-            const queriesHasCql = queriesItems.some(
-              (item) => item.fieldSearch === null
-            );
-            let query;
-            if (queriesHasCql) {
-              const cql = queriesItems
-                .map(
-                  (item) =>
-                    (item?.prefixlogicalopreator
-                      ? item?.prefixlogicalopreator + " "
-                      : "") + ` (${item.cql})`
-                )
-                .join(" ");
-              query = {
-                cql,
-                facets: JSON.stringify(facets),
-              };
-            } else {
-              //convert multiple field search queries into one query
-              query = fieldSearchObjectsToQuery(queriesItems);
-            }
+            const cql = queriesItems
+              .map(
+                (item) =>
+                  (item?.prefixlogicalopreator
+                    ? item?.prefixlogicalopreator + " "
+                    : "") + `${item.cql}`
+              )
+              .join(" ");
+            const query = {
+              cql,
+              facets: JSON.stringify(facets),
+            };
             restartFacetsHook();
             router.push({ pathname: "/avanceret", query });
           }}
