@@ -16,7 +16,7 @@ describe("Facets", () => {
     // get the first accordion
     cy.get("[data-cy=accordion-item]").first().click();
 
-    // there should be 10
+    // there should be 5
     cy.get("[data-cy=accordion-item]")
       .first()
       .find("li")
