@@ -20,6 +20,8 @@ import MenuDropdown from "@/components/base/dropdown/menuDropdown/MenuDropdown";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import Button from "@/components/base/button";
 import CombinedSearch from "@/components/search/advancedSearch/combinedSearch/CombinedSearch";
+import useSavedSearches from "../../../hooks/useSavedSearches";
+import IconButton from "../../../base/iconButton/IconButton";
 
 //Component to render facets
 export function FormatedFacets({ facets, className }) {
@@ -57,9 +59,9 @@ export function FormatedFacets({ facets, className }) {
 function HistoryItem({ item, index, checked, onSelect }) {
   const router = useRouter();
   const breakpoint = useBreakpoint();
-
+  const { saveSerach, deleteSearch, savedSearchKeys } = useSavedSearches();
   const { restartFacetsHook } = useFacets();
-
+  const isSaved = savedSearchKeys?.includes(item.key);
   const goToItemUrl = (item) => {
     // restart the useFacets hook - this is a 'new' search
     restartFacetsHook();
@@ -142,6 +144,21 @@ function HistoryItem({ item, index, checked, onSelect }) {
         {breakpoint === "xs" &&
           Translate({ context: "search", label: "title" }).toLowerCase()}
       </Text>
+
+      <Icon
+        style={{ cursor: "pointer" }}
+        size={3}
+        src={`${isSaved ? "heart_filled" : "heart"}.svg`}
+        onClick={() => {
+          if (isSaved) {
+            //remove search
+            deleteSearch(item)
+          } else {
+            saveSerach(item);
+          }
+          isSaved;
+        }}
+      />
     </div>
   );
 }
@@ -294,10 +311,13 @@ function splitHistoryItems(storedValues) {
 
 export function AdvancedSearchHistory() {
   const { storedValue, deleteValue } = useAdvancedSearchHistory();
+  const { savedSearches, saveSerach } = useSavedSearches();
+  console.log("savedSearches", savedSearches);
   const [checkboxList, setCheckboxList] = useState([]);
   const [showCombinedSearch, setShowCombinedSearch] = useState(false);
 
   const breakpoint = useBreakpoint();
+  const router = useRouter();
 
   /**
    * Set or unset ALL checkboxes in search history
@@ -378,6 +398,8 @@ export function AdvancedSearchHistory() {
   const checkedObjects = storedValue?.filter((obj) =>
     checkboxList.includes(obj.key)
   );
+  // Check if the current path matches any button path
+  const isButtonVisible = (path) => router.pathname === path;
 
   return (
     <div className={styles.container}>
@@ -391,6 +413,38 @@ export function AdvancedSearchHistory() {
           label: "advanced-search-history-latest",
         })}
       </Title>
+      <div className={styles.navigationButtons}>
+        <Link
+          onClick={() => router.push("/avanceret/soegehistorik")}
+          // href="/avanceret/soegehistorik"
+          border={{
+            top: false,
+            bottom: {
+              keepVisible: isButtonVisible("/avanceret/soegehistorik"),
+            },
+          }}
+        >
+          <Text type="text3" tag="span">
+            Seneste søgninger
+          </Text>
+        </Link>
+
+        <Link
+          onClick={() => router.push("/avanceret/gemte-soegninger")}
+          // href="/avanceret/gemte-soegninger"
+          border={{
+            top: false,
+            bottom: {
+              keepVisible: isButtonVisible("/avanceret/gemte-soegninger"),
+            },
+          }}
+        >
+          <Text type="text3" tag="span">
+            Gemte søgninger{" "}
+          </Text>
+        </Link>
+      </div>
+
       {showCombinedSearch ? (
         <CombinedSearch
           cancelCombinedSearch={() => setShowCombinedSearch(false)}

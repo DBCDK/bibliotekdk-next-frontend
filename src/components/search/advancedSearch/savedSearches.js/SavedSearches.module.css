@@ -1,0 +1,30 @@
+
+@media (min-width: 576px) {
+    .container {
+      padding-inline: var(--pt2);
+    }
+  }
+  
+ .navigationButtons{
+    display: flex;
+    gap: var(--pt1);
+    margin-bottom: var(--pt3);
+  }
+
+.title {
+    padding-top: var(--pt2);
+    margin-bottom: var(--pt3);
+    padding-left: var(--pt2);
+  }
+
+  @media (min-width: 576px) {
+    .title {
+      padding-left: 0;
+    }
+  }
+  
+  .tableContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
