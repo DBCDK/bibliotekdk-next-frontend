@@ -11,11 +11,15 @@
 }
 
 .checkbox {
-  margin-right: var(--pt2);
+  margin-right: var(--pt1);
 }
 
 .facettitle {
   font-family: var(--body-font-semibold);
+}
+
+.facettext {
+  cursor: pointer;
 }
 
 .score {
@@ -24,7 +28,7 @@
 
 .countContainer {
   display: flex;
-  padding: 0 var(--pt1) 0 var(--pt2);
+  padding: 0 0 0 var(--pt2);
   font-family: var(--body-font-semibold);
 }
 

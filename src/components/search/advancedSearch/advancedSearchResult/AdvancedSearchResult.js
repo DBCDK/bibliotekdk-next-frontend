@@ -56,6 +56,7 @@ export function AdvancedSearchResult({
           <FacetTags />
         </div>
         <div className={styles.titleflex}>
+          <div className={styles.borderTitleTop}></div>
           <Title type="title5" className={styles.countstyle}>
             {hitcount}
           </Title>
@@ -83,11 +84,13 @@ export function AdvancedSearchResult({
           <>
             <div className={styles.facetsContainer}>
               <FacetTags selectedFacets={selectedFacets} />
-              <div className={styles.subtitleStyle}>
-                <Text type="text1" className={styles.titleStyle}>
-                  {translate({ context: "search", label: "narrow-search" })}
-                </Text>
-              </div>
+              {hitcount && (
+                <div className={styles.subtitleStyle}>
+                  <Text type="text1" className={styles.titleStyle}>
+                    {translate({ context: "search", label: "narrow-search" })}
+                  </Text>
+                </div>
+              )}
 
               <AdvancedFacets cql={cql} />
             </div>
