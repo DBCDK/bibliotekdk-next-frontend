@@ -53,8 +53,8 @@ export function SavedSearches() {
             },
           }}
         >
-          <Text type="text3" tag="span">
-            seneste søgninger
+          <Text type="text1" tag="span">
+            Seneste søgninger
           </Text>
         </Link>
 
@@ -68,7 +68,7 @@ export function SavedSearches() {
             },
           }}
         >
-          <Text type="text3" tag="span">
+          <Text type="text1" tag="span">
             Gemte søgninger
           </Text>
         </Link>

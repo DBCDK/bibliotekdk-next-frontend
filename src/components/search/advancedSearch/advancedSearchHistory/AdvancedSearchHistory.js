@@ -424,7 +424,7 @@ export function AdvancedSearchHistory() {
             },
           }}
         >
-          <Text type="text3" tag="span">
+          <Text type="text1" tag="span">
             Seneste søgninger
           </Text>
         </Link>
@@ -439,7 +439,7 @@ export function AdvancedSearchHistory() {
             },
           }}
         >
-          <Text type="text3" tag="span">
+          <Text type="text1" tag="span">
             Gemte søgninger{" "}
           </Text>
         </Link>
