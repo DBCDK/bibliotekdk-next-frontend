@@ -28,7 +28,6 @@
 .header_content {
   display: flex;
   align-items: center;
-  /*gap: var(--pt2);*/
   justify-content: space-between;
   padding: var(--pt2);
 }
