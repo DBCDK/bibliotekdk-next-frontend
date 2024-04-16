@@ -14,7 +14,6 @@ import { hitcount } from "@/lib/api/complexSearch.fragments";
 import { parseOutFacets } from "@/components/search/advancedSearch/utils";
 import Skeleton from "@/components/base/skeleton";
 import translate from "@/components/base/translate";
-import { getElementById } from "@/lib/utils";
 
 /**
  *
