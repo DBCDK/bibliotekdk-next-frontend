@@ -38,8 +38,13 @@ export default function _Head() {
       <meta name="referrer" content="strict-origin-when-cross-origin" />
 
       <link rel="preconnect" href="https://moreinfo.addi.dk"></link>
-      <link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" />
-      <link rel="alternate icon" href="/favicon.ico" />
+      <link
+        rel="icon"
+        href="/favicon.svg?v=2"
+        sizes="any"
+        type="image/svg+xml"
+      />
+      <link rel="alternate icon" href="/favicon.ico?v=2" />
       {alternate.map(({ locale, url }) => (
         <link key={locale} rel="alternate" hreflang={locale} href={url} />
       ))}
