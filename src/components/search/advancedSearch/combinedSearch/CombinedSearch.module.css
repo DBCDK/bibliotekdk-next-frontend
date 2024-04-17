@@ -16,17 +16,11 @@
 }
 
 .searchItemsWrap {
-  /* overflow: hidden; */
-  /* height: 0; */
-  /* transition: max-height 0.4s ease;  */
   transition: all 0.2s ease-in-out;
-  /* max-height: 0;  */
   overflow: hidden;
 }
 .showItemsWrap {
   max-height: 1000px;
-  /* transition: max-height 0.4s ease;  */
-  /* overflow: hidden; */
   transition: all 0.3s ease-out;
 }
 .title {
