@@ -46,11 +46,9 @@ function mergeFacets(fieldSearchObjects) {
 
 function SearchItem({ item, index, updatePrefixLogicalOperator }) {
   return (
-    <div className={`${styles.searchItemContainer}`}>
+    <div className={styles.searchItemContainer}>
       {item?.prefixlogicalopreator && (
         <div className={styles.prefixLogicalOperator}>
-          <div />
-
           <LogicalOperatorDropDown
             selected={item?.prefixlogicalopreator}
             onSelect={(newOperator) => {
@@ -92,17 +90,14 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
 
   useEffect(() => {
     if (containerRef.current) {
-      const currentHeight = containerRef.current.scrollHeight; // Get the natural height based on content
-      console.log("currentHeight", currentHeight);
-
+      const currentHeight = containerRef.current.scrollHeight; // get the element height based on content
       if (showContent) {
         containerRef.current.style.maxHeight = `${currentHeight}px`;
       } else {
-        //   containerRef.current.style.transition = 'max-height 0.3s ease-out';
-        setShowContent(true); // After setting, update the first render state
+        setShowContent(true); // adds animation after first render
       }
     }
-  }, [queriesItems]); // This effect runs every time queriesItems changes
+  }, [queriesItems]);
 
   //this useeffect will run when queries are updated. It will update the state of queriesItems according to the changes in queries
   useEffect(() => {
@@ -140,8 +135,7 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
         });
       }
     });
-    //animate then remove
-
+    //todo animate then remove
     setQueriesItems(newQueriesItems);
   }, [queries]);
 
