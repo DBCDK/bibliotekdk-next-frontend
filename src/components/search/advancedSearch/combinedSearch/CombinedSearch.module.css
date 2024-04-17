@@ -6,24 +6,21 @@
   align-items: flex-start;
   margin: var(--pt4) 0;
   margin-top: 0;
-  transition: max-height 1s ease-in;
   overflow: hidden;
-  max-height: 0;
-}
-.showContainer {
-  max-height: 1000px;
-  transition: all 1.2s ease-out;
-  overflow: visible;
+  max-height: 0px;
+  transition: max-height 1.2s ease-out;
+  animation: containerAnimation 1s forwards;
 }
 
-.searchItemsWrap {
-  transition: all 0.2s ease-in-out;
-  overflow: hidden;
-}
-.showItemsWrap {
+@keyframes containerAnimation {
+to{
   max-height: 1000px;
+}
+}
+.searchItemsWrap {
   transition: max-height 0.3s ease-out;
 }
+
 .title {
   margin-bottom: var(--pt1);
 }

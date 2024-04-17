@@ -4,7 +4,6 @@ import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import { useRouter } from "next/router";
 import Translate from "@/components/base/translate";
-import cx from "classnames";
 
 import Button from "@/components/base/button/Button";
 import { LogicalOperatorDropDown } from "@/components/search/advancedSearch/fieldInput/TextInputs";
@@ -85,22 +84,26 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
   const [queriesItems, setQueriesItems] = useState([]);
   const { restartFacetsHook } = useFacets();
   const containerRef = useRef(null);
+  const searchItemsWrapper = useRef(null);
 
-  //used only for animation
-  const [showContent, setShowContent] = useState(false);
+//   useEffect(() => {
+//     if (containerRef.current) {
+//         containerRef.current.style.maxHeight = `${1000}px`;
 
+//       setTimeout(() => {
+//         containerRef.current.style.maxHeight = `${1000}px`;
+
+//       }, 0);
+//     }
+//   }, []);
   useEffect(() => {
-    if (containerRef.current) {
-      if (showContent) {
-        const currentHeight = containerRef.current.scrollHeight; // get the element height based on content
-        containerRef.current.style.overflow = `hidden`;
-        containerRef.current.style.maxHeight = `${currentHeight}px`;
-        setTimeout(() => {
-          containerRef.current.style.overflow = `visible`;
-        }, 300);
-      } else {
-        setShowContent(true); // adds animation after first render
-      }
+    if (searchItemsWrapper.current) {
+      const currentHeight = searchItemsWrapper.current.scrollHeight; // get the element height based on content
+      searchItemsWrapper.current.style.overflow = `hidden`;
+      searchItemsWrapper.current.style.maxHeight = `${currentHeight}px`;
+      setTimeout(() => {
+        searchItemsWrapper.current.style.overflow = `visible`;
+      }, 300);
     }
   }, [queriesItems]);
 
@@ -154,11 +157,7 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
   const facets = useMemo(() => mergeFacets(queriesItems), [queriesItems]);
 
   return (
-    <div
-      className={cx(styles.container, {
-        [styles.showContainer]: showContent,
-      })}
-    >
+    <div ref={containerRef} className={styles.container}>
       <Text type="text1" className={styles.title}>
         {Translate({ context: "search", label: "combineSearch" })}
       </Text>
@@ -168,12 +167,7 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
         </Text>
       )}
 
-      <div
-        className={cx(styles.searchItemsWrap, {
-          [styles.showItemsWrap]: showContent,
-        })}
-        ref={containerRef}
-      >
+      <div className={styles.searchItemsWrap} ref={searchItemsWrapper}>
         {queriesItems.map((item, index) => (
           <SearchItem
             key={item.key}
