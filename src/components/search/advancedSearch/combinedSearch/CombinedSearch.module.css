@@ -8,14 +8,13 @@
   margin-top: 0;
   overflow: hidden;
   max-height: 0px;
-  transition: max-height 1.2s ease-out;
-  animation: containerAnimation 1s forwards;
+  animation: revealAnimation 1.1s forwards;
 }
 
-@keyframes containerAnimation {
-to{
-  max-height: 1000px;
-}
+@keyframes revealAnimation {
+  to {
+    max-height: 1000px;
+  }
 }
 .searchItemsWrap {
   transition: max-height 0.3s ease-out;

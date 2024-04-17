@@ -83,19 +83,8 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
   //queriesItems are the queries selected for combination and shown in the combine queries overview.
   const [queriesItems, setQueriesItems] = useState([]);
   const { restartFacetsHook } = useFacets();
-  const containerRef = useRef(null);
   const searchItemsWrapper = useRef(null);
 
-//   useEffect(() => {
-//     if (containerRef.current) {
-//         containerRef.current.style.maxHeight = `${1000}px`;
-
-//       setTimeout(() => {
-//         containerRef.current.style.maxHeight = `${1000}px`;
-
-//       }, 0);
-//     }
-//   }, []);
   useEffect(() => {
     if (searchItemsWrapper.current) {
       const currentHeight = searchItemsWrapper.current.scrollHeight; // get the element height based on content
@@ -157,7 +146,7 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
   const facets = useMemo(() => mergeFacets(queriesItems), [queriesItems]);
 
   return (
-    <div ref={containerRef} className={styles.container}>
+    <div className={styles.container}>
       <Text type="text1" className={styles.title}>
         {Translate({ context: "search", label: "combineSearch" })}
       </Text>
