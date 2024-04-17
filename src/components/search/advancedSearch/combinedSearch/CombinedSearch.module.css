@@ -22,8 +22,7 @@
 }
 .showItemsWrap {
   max-height: 1000px;
-  transition: all 0.3s ease-out;
-  overflow: visible;
+  transition: max-height 0.3s ease-out;
 }
 .title {
   margin-bottom: var(--pt1);

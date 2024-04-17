@@ -4,6 +4,7 @@ import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import { useRouter } from "next/router";
 import Translate from "@/components/base/translate";
+import cx from "classnames";
 
 import Button from "@/components/base/button/Button";
 import { LogicalOperatorDropDown } from "@/components/search/advancedSearch/fieldInput/TextInputs";
@@ -92,7 +93,11 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
     if (containerRef.current) {
       if (showContent) {
         const currentHeight = containerRef.current.scrollHeight; // get the element height based on content
+        containerRef.current.style.overflow = `hidden`;
         containerRef.current.style.maxHeight = `${currentHeight}px`;
+        setTimeout(() => {
+          containerRef.current.style.overflow = `visible`;
+        }, 300);
       } else {
         setShowContent(true); // adds animation after first render
       }
@@ -150,9 +155,9 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
 
   return (
     <div
-      className={`${styles.container} ${
-        showContent ? styles.showContainer : ""
-      }`}
+      className={cx(styles.container, {
+        [styles.showContainer]: showContent,
+      })}
     >
       <Text type="text1" className={styles.title}>
         {Translate({ context: "search", label: "combineSearch" })}
@@ -164,9 +169,9 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
       )}
 
       <div
-        className={`${styles.searchItemsWrap} ${
-          showContent ? styles.showItemsWrap : ""
-        }`}
+        className={cx(styles.searchItemsWrap, {
+          [styles.showItemsWrap]: showContent,
+        })}
         ref={containerRef}
       >
         {queriesItems.map((item, index) => (
