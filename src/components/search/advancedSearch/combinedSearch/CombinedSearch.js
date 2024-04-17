@@ -90,8 +90,8 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
 
   useEffect(() => {
     if (containerRef.current) {
-      const currentHeight = containerRef.current.scrollHeight; // get the element height based on content
       if (showContent) {
+        const currentHeight = containerRef.current.scrollHeight; // get the element height based on content
         containerRef.current.style.maxHeight = `${currentHeight}px`;
       } else {
         setShowContent(true); // adds animation after first render
