@@ -15,54 +15,6 @@ import { useFacets } from "@/components/search/advancedSearch/useFacets";
 const MAX_ITEMS = 4;
 
 /**
- * Combines mutiple fieldsearch queries into one search query (search object)
- * @param {*} fieldSearchObjects
- * @returns
- */
-function fieldSearchObjectsToQuery(fieldSearchObjects) {
-  let fieldSearch = {
-    inputFields: [],
-    dropdownSearchIndices: [],
-  };
-
-  fieldSearchObjects.forEach((item) => {
-    //add text fieldinputs
-    if (item.fieldSearch?.inputFields?.length > 0) {
-      let inputFieldsToAdd = item.fieldSearch.inputFields;
-      inputFieldsToAdd[0].prefixLogicalOperator = item.prefixlogicalopreator;
-      fieldSearch.inputFields =
-        fieldSearch.inputFields.concat(inputFieldsToAdd);
-    }
-    //merge dropdownSearchIndices
-    if (item.fieldSearch?.dropdownSearchIndices?.length > 0) {
-      item.fieldSearch.dropdownSearchIndices.forEach((dropdownItem) => {
-        let index = fieldSearch.dropdownSearchIndices.findIndex(
-          (i) => i.searchIndex === dropdownItem.searchIndex
-        );
-        if (index === -1) {
-          // if searchIndex not already added to fieldSearch, add a new object with the searchIndex and value
-          fieldSearch.dropdownSearchIndices.push(dropdownItem);
-        } else {
-          // else merge with the already existing objectthe values
-          fieldSearch.dropdownSearchIndices[index].value =
-            fieldSearch.dropdownSearchIndices[index].value.concat(
-              dropdownItem.value
-            );
-        }
-      });
-    }
-  });
-
-  const facets = mergeFacets(fieldSearchObjects);
-  const query = {
-    fieldSearch: JSON.stringify(fieldSearch),
-    facets: JSON.stringify(facets),
-  };
-
-  return query;
-}
-
-/**
  * Merges facets form multiple
  * @param {*} fieldSearchObjects
  * @returns
@@ -134,19 +86,20 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
   const [queriesItems, setQueriesItems] = useState([]);
   const { restartFacetsHook } = useFacets();
   const containerRef = useRef(null);
-  const [isFirstRender, setFirstRender] = useState(true);
+
+  //used only for animation
+  const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
     if (containerRef.current) {
       const currentHeight = containerRef.current.scrollHeight; // Get the natural height based on content
       console.log("currentHeight", currentHeight);
 
-      if (isFirstRender) {
-        setFirstRender(false); // After setting, update the first render state
+      if (showContent) {
+        containerRef.current.style.maxHeight = `${currentHeight}px`;
       } else {
         //   containerRef.current.style.transition = 'max-height 0.3s ease-out';
-        containerRef.current.style.maxHeight = `${currentHeight}px`;
-
+        setShowContent(true); // After setting, update the first render state
       }
     }
   }, [queriesItems]); // This effect runs every time queriesItems changes
@@ -187,9 +140,72 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
         });
       }
     });
+    //animate then remove
 
     setQueriesItems(newQueriesItems);
   }, [queries]);
+
+  //   useEffect(() => {
+  //     const currentKeys = queriesItems.map((item) => item.key);
+  //     const newKeys = queries.map((query) => query.key);
+
+  //     // Find items that are in queriesItems but not in the new queries (these are to be removed)
+  //     const keysToRemove = currentKeys.filter(key => !newKeys.includes(key));
+
+  //     // Set these items to be exiting
+  //     if (keysToRemove.length > 0) {
+  //       setExitingItems(prev => {
+  //         const newExiting = { ...prev };
+  //         keysToRemove.forEach(key => newExiting[key] = true);
+  //         return newExiting;
+  //       });
+
+  //       // Set a timeout to remove the items after the animation
+  //       setTimeout(() => {
+  //         setQueriesItems(current =>
+  //           current.filter(item => !keysToRemove.includes(item.key))
+  //         );
+  //         setExitingItems(prev => {
+  //           const newExiting = { ...prev };
+  //           keysToRemove.forEach(key => delete newExiting[key]);
+  //           return newExiting;
+  //         });
+  //       }, 300); // This should match the duration of the CSS transition
+  //     }
+
+  //     // Add or update items based on new queries
+  //     let newQueriesItems = [
+  //       ...queriesItems.filter(item => newKeys.includes(item.key))
+  //     ];
+
+  //     // Handling the addition of new items or updating existing ones
+  //     queries.forEach(query => {
+  //       if (newQueriesItems.length >= MAX_ITEMS) return;  // Prevent adding more than MAX_ITEMS
+  //       const existingItem = newQueriesItems.find(item => item.key === query.key);
+  //       if (existingItem) {
+  //         // Update existing item
+  //         existingItem.cql = query.cql;
+  //         existingItem.fieldSearch = Object.keys(query.fieldSearch).length === 0 ? null : query.fieldSearch;
+  //         existingItem.selectedFacets = query.selectedFacets;
+  //       } else {
+  //         // Add new item if it does not exist
+  //         newQueriesItems.push({
+  //           key: query.key,
+  //           cql: query.cql,
+  //           fieldSearch: Object.keys(query.fieldSearch).length === 0 ? null : query.fieldSearch,
+  //           prefixLogicalOperator: newQueriesItems.length === 0 ? null : "AND",
+  //           selectedFacets: query.selectedFacets,
+  //         });
+  //       }
+  //     });
+
+  //     // Ensure the first element does not have a prefixLogicalOperator
+  //     if (newQueriesItems[0]?.prefixLogicalOperator) {
+  //       newQueriesItems[0].prefixLogicalOperator = null;
+  //     }
+
+  //     setQueriesItems(newQueriesItems);
+  //   }, [queries]);
 
   const router = useRouter();
   const updatePrefixLogicalOperator = ({ index, newOperator }) => {
@@ -200,10 +216,11 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
   };
   const facets = useMemo(() => mergeFacets(queriesItems), [queriesItems]);
   // ${!isFirstRender ? styles.show : ""}
+
   return (
     <div
       className={`${styles.container} ${
-        !isFirstRender ? styles.showContainer : ""
+        showContent ? styles.showContainer : ""
       }`}
     >
       <Text type="text1" className={styles.title}>
@@ -217,13 +234,13 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
 
       <div
         className={`${styles.searchItemsWrap} ${
-          !isFirstRender ? styles.show : ""
+          showContent ? styles.showItemsWrap : ""
         }`}
         ref={containerRef}
       >
         {queriesItems.map((item, index) => (
           <SearchItem
-            className={styles.searchItemContainer}
+            //   className={exitingItems[item.key] ? styles.exiting : ''}
             key={item.key}
             item={item}
             index={index}
