@@ -205,7 +205,7 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
                 (item) =>
                   (item?.prefixlogicalopreator
                     ? item?.prefixlogicalopreator + " "
-                    : "") + `${item.cql}`
+                    : "") + `(${item.cql})`
               )
               .join(" ");
             const query = {

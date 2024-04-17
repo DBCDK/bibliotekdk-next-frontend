@@ -44,7 +44,7 @@ function getDropdownQuery(dropdownSearchIndices) {
           .join(` ${OR} `);
       })
       // Items are wrapped inside parenthesis to ensure precedence
-      .map((item) => `${item}`)
+      .map((item) => `(${item})`)
       .join(` ${AND} `)
   );
 }
