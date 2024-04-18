@@ -1,5 +1,5 @@
 import styles from "./CombinedSearch.module.css";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import { useRouter } from "next/router";
@@ -13,54 +13,6 @@ import { useFacets } from "@/components/search/advancedSearch/useFacets";
 
 //max number of search queries to be combined
 const MAX_ITEMS = 4;
-
-/**
- * Combines mutiple fieldsearch queries into one search query (search object)
- * @param {*} fieldSearchObjects
- * @returns
- */
-function fieldSearchObjectsToQuery(fieldSearchObjects) {
-  let fieldSearch = {
-    inputFields: [],
-    dropdownSearchIndices: [],
-  };
-
-  fieldSearchObjects.forEach((item) => {
-    //add text fieldinputs
-    if (item.fieldSearch?.inputFields?.length > 0) {
-      let inputFieldsToAdd = item.fieldSearch.inputFields;
-      inputFieldsToAdd[0].prefixLogicalOperator = item.prefixlogicalopreator;
-      fieldSearch.inputFields =
-        fieldSearch.inputFields.concat(inputFieldsToAdd);
-    }
-    //merge dropdownSearchIndices
-    if (item.fieldSearch?.dropdownSearchIndices?.length > 0) {
-      item.fieldSearch.dropdownSearchIndices.forEach((dropdownItem) => {
-        let index = fieldSearch.dropdownSearchIndices.findIndex(
-          (i) => i.searchIndex === dropdownItem.searchIndex
-        );
-        if (index === -1) {
-          // if searchIndex not already added to fieldSearch, add a new object with the searchIndex and value
-          fieldSearch.dropdownSearchIndices.push(dropdownItem);
-        } else {
-          // else merge with the already existing objectthe values
-          fieldSearch.dropdownSearchIndices[index].value =
-            fieldSearch.dropdownSearchIndices[index].value.concat(
-              dropdownItem.value
-            );
-        }
-      });
-    }
-  });
-
-  const facets = mergeFacets(fieldSearchObjects);
-  const query = {
-    fieldSearch: JSON.stringify(fieldSearch),
-    facets: JSON.stringify(facets),
-  };
-
-  return query;
-}
 
 /**
  * Merges facets form multiple
@@ -97,8 +49,6 @@ function SearchItem({ item, index, updatePrefixLogicalOperator }) {
     <div className={styles.searchItemContainer}>
       {item?.prefixlogicalopreator && (
         <div className={styles.prefixLogicalOperator}>
-          <div />
-
           <LogicalOperatorDropDown
             selected={item?.prefixlogicalopreator}
             onSelect={(newOperator) => {
@@ -133,6 +83,18 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
   //queriesItems are the queries selected for combination and shown in the combine queries overview.
   const [queriesItems, setQueriesItems] = useState([]);
   const { restartFacetsHook } = useFacets();
+  const searchItemsWrapper = useRef(null);
+
+  useEffect(() => {
+    if (searchItemsWrapper.current) {
+      const currentHeight = searchItemsWrapper.current.scrollHeight; // get the element height based on content
+      searchItemsWrapper.current.style.overflow = `hidden`;
+      searchItemsWrapper.current.style.maxHeight = `${currentHeight}px`;
+      setTimeout(() => {
+        searchItemsWrapper.current.style.overflow = `visible`;
+      }, 300);
+    }
+  }, [queriesItems]);
 
   //this useeffect will run when queries are updated. It will update the state of queriesItems according to the changes in queries
   useEffect(() => {
@@ -170,7 +132,7 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
         });
       }
     });
-
+    //todo animate then remove
     setQueriesItems(newQueriesItems);
   }, [queries]);
 
@@ -194,19 +156,17 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
         </Text>
       )}
 
-      {queriesItems?.length > 0 && (
-        <div>
-          {queriesItems.map((item, index) => (
-            <SearchItem
-              key={item.key}
-              item={item}
-              index={index}
-              isLastItem={queriesItems.length - 1 === index}
-              updatePrefixLogicalOperator={updatePrefixLogicalOperator}
-            />
-          ))}
-        </div>
-      )}
+      <div className={styles.searchItemsWrap} ref={searchItemsWrapper}>
+        {queriesItems.map((item, index) => (
+          <SearchItem
+            key={item.key}
+            item={item}
+            index={index}
+            isLastItem={queriesItems.length - 1 === index}
+            updatePrefixLogicalOperator={updatePrefixLogicalOperator}
+          />
+        ))}
+      </div>
 
       <FormatedFacets facets={facets} className={styles.facets} />
 
@@ -228,27 +188,18 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
           disabled={queries.length === 0}
           onClick={() => {
             //check if there are queries that does not have fieldsearch. If so make cql otherwise make fieldsearch
-            const queriesHasCql = queriesItems.some(
-              (item) => item.fieldSearch === null
-            );
-            let query;
-            if (queriesHasCql) {
-              const cql = queriesItems
-                .map(
-                  (item) =>
-                    (item?.prefixlogicalopreator
-                      ? item?.prefixlogicalopreator + " "
-                      : "") + ` (${item.cql})`
-                )
-                .join(" ");
-              query = {
-                cql,
-                facets: JSON.stringify(facets),
-              };
-            } else {
-              //convert multiple field search queries into one query
-              query = fieldSearchObjectsToQuery(queriesItems);
-            }
+            const cql = queriesItems
+              .map(
+                (item) =>
+                  (item?.prefixlogicalopreator
+                    ? item?.prefixlogicalopreator + " "
+                    : "") + `(${item.cql})`
+              )
+              .join(" ");
+            const query = {
+              cql,
+              facets: JSON.stringify(facets),
+            };
             restartFacetsHook();
             router.push({ pathname: "/avanceret", query });
           }}
