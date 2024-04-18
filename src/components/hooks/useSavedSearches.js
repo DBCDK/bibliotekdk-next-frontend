@@ -52,13 +52,12 @@ export const useSavedSearches = () => {
   );
 
   const saveSerach = (value) => {
-    console.log('setValue.value',value)
+    console.log("setValue.value", value);
     try {
       if (typeof window !== "undefined") {
         // check if cql (and facets) is already stored
         const alreadyStored = savedSearches.find(
-          (stor) =>
-            stor?.key?.trim() === value?.key?.trim()
+          (stor) => stor?.key?.trim() === value?.key?.trim()
         );
 
         value["timestamp"] = getTimeStamp(getUnixTimeStamp());
@@ -109,11 +108,18 @@ export const useSavedSearches = () => {
     }
   };
 
+  const savedSearchKeys = useMemo(
+    () => savedSearches?.map((search) => search?.key),
+    [savedSearches]
+  );
 
-  const savedSearchKeys = useMemo(() => savedSearches?.map(search => search?.key), [savedSearches]);
-
-
-  return { savedSearches,savedSearchKeys, saveSerach, deleteSearch, clearValues };
+  return {
+    savedSearches,
+    savedSearchKeys,
+    saveSerach,
+    deleteSearch,
+    clearValues,
+  };
 };
 
 export default useSavedSearches;

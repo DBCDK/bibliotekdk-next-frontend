@@ -1,7 +1,7 @@
 import Header from "@/components/header/Header";
 import { useRouter } from "next/router";
 import { fetchAll } from "@/lib/api/apiServerOnly";
-import {SavedSearches} from "../../components/search/advancedSearch/savedSearches.js/SavedSearches";
+import { SavedSearches } from "../../components/search/advancedSearch/savedSearches.js/SavedSearches";
 
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";

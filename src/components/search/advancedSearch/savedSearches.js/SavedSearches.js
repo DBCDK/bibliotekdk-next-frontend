@@ -21,17 +21,55 @@ import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import Button from "@/components/base/button";
 import CombinedSearch from "@/components/search/advancedSearch/combinedSearch/CombinedSearch";
 import useSavedSearches from "../../../hooks/useSavedSearches";
+import { FormatedFacets } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
+import Accordion, { Item } from "@/components/base/accordion";
 
+const formatDate = (unixtimestamp) => {
+  const date = new Date(unixtimestamp);
 
+  const monthNames = [
+    "jan",
+    "feb",
+    "mar",
+    "apr",
+    "may",
+    "jun",
+    "jul",
+    "aug",
+    "sep",
+    "oct",
+    "nov",
+    "dec",
+  ];
+
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = monthNames[date.getMonth()];
+  const year = date.getFullYear();
+
+  return `${day}. ${month} ${year}`;
+};
+function SavedItemRow({ item, index, checked, onSelect, ...props }) {
+  console.log("item", item);
+  const formatedDate = formatDate(item.unixtimestamp);
+  console.log("formatedDate", formatedDate);
+
+  return (
+    <div className={styles.savedItemRow} {...props}>
+      <Checkbox />
+      <Text>{formatedDate}</Text>
+      <Text className={styles.searchPreview}>{item?.cql} </Text>
+      <Text>{item.hitcount} </Text>
+    </div>
+  );
+}
 
 export function SavedSearches() {
-
   const breakpoint = useBreakpoint();
   const router = useRouter();
-  const { saveSerach, deleteSearch, savedSearchKeys, savedSearches } = useSavedSearches();
+  const { saveSerach, deleteSearch, savedSearchKeys, savedSearches } =
+    useSavedSearches();
 
   const isButtonVisible = (path) => router.pathname === path;
-
 
   return (
     <div className={styles.container}>
@@ -74,10 +112,21 @@ export function SavedSearches() {
         </Link>
       </div>
       <div className={styles.tableContainer}>
-
-      {savedSearches?.map(search=><p>{search.key}</p>)}
+        <div className={styles.tableHeader}></div>
+        <Accordion>
+          {savedSearches?.map((item, index) => (
+            <Item
+              CustomHeaderCompnent={(props) => (
+                <SavedItemRow {...props} item={item} />
+              )}
+              key={item.key}
+              eventKey={item.key}
+            >
+              {item.key}
+            </Item>
+          ))}
+        </Accordion>
       </div>
-
     </div>
   );
 }

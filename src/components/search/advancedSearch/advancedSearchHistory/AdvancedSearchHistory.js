@@ -21,7 +21,6 @@ import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import Button from "@/components/base/button";
 import CombinedSearch from "@/components/search/advancedSearch/combinedSearch/CombinedSearch";
 import useSavedSearches from "../../../hooks/useSavedSearches";
-import IconButton from "../../../base/iconButton/IconButton";
 
 //Component to render facets
 export function FormatedFacets({ facets, className }) {
@@ -152,7 +151,7 @@ function HistoryItem({ item, index, checked, onSelect }) {
         onClick={() => {
           if (isSaved) {
             //remove search
-            deleteSearch(item)
+            deleteSearch(item);
           } else {
             saveSerach(item);
           }

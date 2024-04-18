@@ -39,9 +39,10 @@ export function Item({
   onChange,
   id,
   isLoading,
+  CustomHeaderCompnent,
 }) {
   const [scrolledToHash, setScrolledToHash] = useState(false);
-
+  console.log("CustomHeaderCompnent", CustomHeaderCompnent);
   const router = useRouter();
   const context = React.useContext(AccordionContext);
 
@@ -93,62 +94,66 @@ export function Item({
 
   return (
     <Card className={styles.element} data-cy="accordion-item" ref={elementRef}>
-      <Card.Header
-        as={Link}
-        border={{ top: { keepVisible: true }, bottom: { keepVisible: true } }}
-        // Card.Header
-        tabIndex="0"
-        className={[
-          styles.wrapper,
-          isCurrentEventKey && styles.open,
-          animations.underlineContainer__only_internal_animations,
-        ].join(" ")}
-        onClick={onClick}
-        onKeyDown={handleKeypress}
-        role="button"
-        id={`accordion-unique-toggle-${eventKey}-${title}`}
-        aria-controls={`accordion-unique-${eventKey}-${title}`}
-        aria-expanded={isCurrentEventKey}
-      >
-        <div className={styles.header_content}>
-          <div
-            className={[
-              animations["f-translate-right"],
-              // if additional text is to be shown we need to set a wwidth (.firstelement)
-              // of first element in accordion header
-              additionalTxt && styles.firstelement,
-            ].join(" ")}
-          >
-            <Link tag="span" className={styles.link_on_year} tabIndex={-1}>
-              <Title type="text2" skeleton={isLoading} lines={1} tag="h3">
-                {title}
-              </Title>
-            </Link>
-            {subTitle && (
-              <Text tag={"span"} type="text4">
-                {subTitle}
-              </Text>
-            )}
-          </div>
-          {additionalTxt && (
-            <div className={styles.textbox}>
-              {additionalTxt?.map((txt, index) => (
-                <Text tag={"span"} type="text2" key={`addition-${index}`}>
-                  {txt}
+      {CustomHeaderCompnent ? (
+        <CustomHeaderCompnent onClick={onClick} onKeyDown={handleKeypress} />
+      ) : (
+        <Card.Header
+          as={Link}
+          border={{ top: { keepVisible: true }, bottom: { keepVisible: true } }}
+          // Card.Header
+          tabIndex="0"
+          className={[
+            styles.wrapper,
+            isCurrentEventKey && styles.open,
+            animations.underlineContainer__only_internal_animations,
+          ].join(" ")}
+          onClick={onClick}
+          onKeyDown={handleKeypress}
+          role="button"
+          id={`accordion-unique-toggle-${eventKey}-${title}`}
+          aria-controls={`accordion-unique-${eventKey}-${title}`}
+          aria-expanded={isCurrentEventKey}
+        >
+          <div className={styles.header_content}>
+            <div
+              className={[
+                animations["f-translate-right"],
+                // if additional text is to be shown we need to set a wwidth (.firstelement)
+                // of first element in accordion header
+                additionalTxt && styles.firstelement,
+              ].join(" ")}
+            >
+              <Link tag="span" className={styles.link_on_year} tabIndex={-1}>
+                <Title type="text2" skeleton={isLoading} lines={1} tag="h3">
+                  {title}
+                </Title>
+              </Link>
+              {subTitle && (
+                <Text tag={"span"} type="text4">
+                  {subTitle}
                 </Text>
-              ))}
+              )}
             </div>
-          )}
-          <div className={styles.expandIcon}>
-            <ExpandIcon
-              open={isCurrentEventKey}
-              size={4}
-              src="smallplus.svg"
-              bgColor="transparent"
-            />
+            {additionalTxt && (
+              <div className={styles.textbox}>
+                {additionalTxt?.map((txt, index) => (
+                  <Text tag={"span"} type="text2" key={`addition-${index}`}>
+                    {txt}
+                  </Text>
+                ))}
+              </div>
+            )}
+            <div className={styles.expandIcon}>
+              <ExpandIcon
+                open={isCurrentEventKey}
+                size={4}
+                src="smallplus.svg"
+                bgColor="transparent"
+              />
+            </div>
           </div>
-        </div>
-      </Card.Header>
+        </Card.Header>
+      )}
       <div>
         <BootstrapAccordion.Collapse
           eventKey={eventKey}

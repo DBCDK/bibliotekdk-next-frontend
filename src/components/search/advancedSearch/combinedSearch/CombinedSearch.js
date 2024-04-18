@@ -94,7 +94,7 @@ function mergeFacets(fieldSearchObjects) {
 
 function SearchItem({ item, index, updatePrefixLogicalOperator }) {
   return (
-    <div className={styles.searchItemContainer} > 
+    <div className={styles.searchItemContainer}>
       {item?.prefixlogicalopreator && (
         <div className={styles.prefixLogicalOperator}>
           <div />
