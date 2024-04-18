@@ -2003,6 +2003,10 @@
         "da": "Vis %s resultater",
         "en": "Show %s results"
       },
+      "showXResult": {
+        "da": "Vis %s resultat",
+        "en": "Show %s result"
+      },
       "noResults": {
         "da": "Din søgning giver ingen resultater",
         "en": "Your search returned no results"

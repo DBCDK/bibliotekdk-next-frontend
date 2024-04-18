@@ -114,6 +114,8 @@ function AccordianItem({
         eventKey={`${facetName}`}
         key={`${facetName}`}
         id={`${index}-${facetName}`}
+        // avoid scrolling to open accordion
+        useScroll={false}
       >
         <ListItem
           facet={facet}
@@ -178,7 +180,19 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
               }}
               checked={initialcheck}
             />
-            <Text tag="span" type="text3">
+
+            <Text
+              tag="span"
+              type="text3"
+              onClick={() => {
+                let element = document.getElementById(
+                  `${facetName}-${value.key}-${index}`
+                );
+                const checked = element["checked"];
+                onItemClick(!checked, value.key, facetName);
+              }}
+              className={styles.facettext}
+            >
               {value.key}
             </Text>
             <Text tag="span" type="text3" className={styles.score}>

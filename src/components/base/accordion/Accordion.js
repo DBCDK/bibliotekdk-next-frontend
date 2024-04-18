@@ -40,6 +40,7 @@ export function Item({
   id,
   isLoading,
   CustomHeaderCompnent,
+  useScroll = true,
 }) {
   const [scrolledToHash, setScrolledToHash] = useState(false);
   console.log("CustomHeaderCompnent", CustomHeaderCompnent);
@@ -76,13 +77,14 @@ export function Item({
     if (!scrolledToHash && id && `#${id}` === window.location.hash) {
       setTimeout(() => {
         onClick();
-        window.scrollTo({
-          behavior: "smooth",
-          top:
-            elementRef?.current?.getBoundingClientRect()?.top -
-            document.body.getBoundingClientRect().top -
-            80,
-        });
+        useScroll &&
+          window.scrollTo({
+            behavior: "smooth",
+            top:
+              elementRef?.current?.getBoundingClientRect()?.top -
+              document.body.getBoundingClientRect().top -
+              80,
+          });
       }, 500);
     }
     setScrolledToHash(true);

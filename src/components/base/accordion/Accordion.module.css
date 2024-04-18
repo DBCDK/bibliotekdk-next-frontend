@@ -28,7 +28,6 @@
 .header_content {
   display: flex;
   align-items: center;
-  gap: var(--pt2);
   justify-content: space-between;
   padding: var(--pt2);
 }
@@ -61,7 +60,7 @@
 }
 
 .expandIcon {
-  padding-inline: var(--pt1);
+  padding-inline: 0 var(--pt1) 0 0;
 }
 
 .skeleton {
@@ -94,7 +93,7 @@
   }
 
   .header_content {
-    padding: var(--pt1) 0 var(--pt1) 0;
+    padding: var(--pt1) var(--pt1) var(--pt1) 0;
   }
 
   .wrapper {

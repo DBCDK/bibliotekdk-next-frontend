@@ -272,6 +272,8 @@ export function Filter(props) {
   // currently
   const selectedFacet = facet && facets.find((obj) => obj.name === facet?.name);
 
+  const hitcount = data?.search?.hitcount;
+
   return (
     <div className={`${styles.filter}`} data-cy="filter-modal">
       {facet ? (
@@ -381,9 +383,8 @@ export function Filter(props) {
           >
             {Translate({
               context: "search",
-              label: "showXResults",
-              vars:
-                origin === "mobileFacets" ? [data?.search?.hitcount] : [null],
+              label: hitcount > 1 ? "showXResults" : "showXResult",
+              vars: origin === "mobileFacets" ? [hitcount] : [null],
             })}
           </Button>
         </>
