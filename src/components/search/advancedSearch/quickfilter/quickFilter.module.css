@@ -1,0 +1,12 @@
+.group {
+  display: flex;
+  border: none;
+}
+
+.radio {
+  border: none;
+}
+
+.filterContainer {
+  border: 2px solid red;
+}
