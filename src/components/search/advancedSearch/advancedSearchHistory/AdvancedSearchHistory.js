@@ -155,7 +155,6 @@ function HistoryItem({ item, index, checked, onSelect }) {
           } else {
             saveSerach(item);
           }
-          isSaved;
         }}
       />
     </div>
@@ -407,10 +406,7 @@ export function AdvancedSearchHistory() {
         data-cy="advanced-search-search-history"
         className={styles.title}
       >
-        {Translate({
-          context: "search",
-          label: "advanced-search-history-latest",
-        })}
+        Søgehistorik
       </Title>
       <div className={styles.navigationButtons}>
         <Link
@@ -424,7 +420,10 @@ export function AdvancedSearchHistory() {
           }}
         >
           <Text type="text1" tag="span">
-            Seneste søgninger
+            {Translate({
+              context: "search",
+              label: "advanced-search-history-latest",
+            })}{" "}
           </Text>
         </Link>
 

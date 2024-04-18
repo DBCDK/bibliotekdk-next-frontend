@@ -168,6 +168,6 @@
 
 .navigationButtons {
   display: flex;
-  gap: var(--pt1);
+  gap: var(--pt5);
   margin-bottom: var(--pt3);
 }

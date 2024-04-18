@@ -94,26 +94,30 @@ export function Item({
 
   return (
     <Card className={styles.element} data-cy="accordion-item" ref={elementRef}>
-      {CustomHeaderCompnent ? (
-        <CustomHeaderCompnent onClick={onClick} onKeyDown={handleKeypress} />
-      ) : (
-        <Card.Header
-          as={Link}
-          border={{ top: { keepVisible: true }, bottom: { keepVisible: true } }}
-          // Card.Header
-          tabIndex="0"
-          className={[
-            styles.wrapper,
-            isCurrentEventKey && styles.open,
-            animations.underlineContainer__only_internal_animations,
-          ].join(" ")}
-          onClick={onClick}
-          onKeyDown={handleKeypress}
-          role="button"
-          id={`accordion-unique-toggle-${eventKey}-${title}`}
-          aria-controls={`accordion-unique-${eventKey}-${title}`}
-          aria-expanded={isCurrentEventKey}
-        >
+      <Card.Header
+        as={Link}
+        border={{ top: { keepVisible: true }, bottom: { keepVisible: true } }}
+        // Card.Header
+        tabIndex="0"
+        className={[
+          styles.wrapper,
+          isCurrentEventKey && styles.open,
+          animations.underlineContainer__only_internal_animations,
+        ].join(" ")}
+        onClick={onClick}
+        onKeyDown={handleKeypress}
+        role="button"
+        id={`accordion-unique-toggle-${eventKey}-${title}`}
+        aria-controls={`accordion-unique-${eventKey}-${title}`}
+        aria-expanded={isCurrentEventKey}
+      >
+        {CustomHeaderCompnent ? (
+          <CustomHeaderCompnent
+            onClick={onClick}
+            onKeyDown={handleKeypress}
+            expanded={isCurrentEventKey}
+          />
+        ) : (
           <div className={styles.header_content}>
             <div
               className={[
@@ -152,8 +156,9 @@ export function Item({
               />
             </div>
           </div>
-        </Card.Header>
-      )}
+        )}
+      </Card.Header>
+
       <div>
         <BootstrapAccordion.Collapse
           eventKey={eventKey}

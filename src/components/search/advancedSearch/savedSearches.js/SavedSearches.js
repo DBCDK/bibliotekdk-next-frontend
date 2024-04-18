@@ -23,6 +23,7 @@ import CombinedSearch from "@/components/search/advancedSearch/combinedSearch/Co
 import useSavedSearches from "../../../hooks/useSavedSearches";
 import { FormatedFacets } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
 import Accordion, { Item } from "@/components/base/accordion";
+import ExpandIcon from "@/components/base/animation/expand";
 
 const formatDate = (unixtimestamp) => {
   const date = new Date(unixtimestamp);
@@ -48,17 +49,50 @@ const formatDate = (unixtimestamp) => {
 
   return `${day}. ${month} ${year}`;
 };
-function SavedItemRow({ item, index, checked, onSelect, ...props }) {
+function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   console.log("item", item);
   const formatedDate = formatDate(item.unixtimestamp);
   console.log("formatedDate", formatedDate);
-
+  const { saveSerach, deleteSearch, savedSearchKeys } = useSavedSearches();
+  const { restartFacetsHook } = useFacets();
+  const isSaved = true; //if an element is shown here it means it is saved//savedSearchKeys?.includes(item.key);
   return (
     <div className={styles.savedItemRow} {...props}>
       <Checkbox />
       <Text>{formatedDate}</Text>
-      <Text className={styles.searchPreview}>{item?.cql} </Text>
+      <Text className={styles.searchPreview}>
+        {!isEmpty(item?.fieldSearch) ? (
+          <div>
+            <FormatFieldSearchIndexes fieldsearch={item.fieldSearch} />
+          </div>
+        ) : (
+          <Text type="text2">{item?.cql}</Text>
+        )}{" "}
+      </Text>
       <Text>{item.hitcount} </Text>
+      <Icon
+        style={{ cursor: "pointer" }}
+        size={3}
+        src={`${isSaved ? "heart_filled" : "heart"}.svg`}
+        onClick={() => {
+          if (isSaved) {
+            //remove search
+            deleteSearch(item);
+          } else {
+            saveSerach(item);
+          }
+        }}
+      />
+      <Icon
+        className={`${styles.accordionIcon} ${
+          expanded ? styles.accordionExpanded : styles.accordionCollapsed
+        }`}
+        //   style={{
+        //     transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
+        //   }}
+        size={3}
+        src={`${expanded ? "collapseCircle" : "expand"}.svg`}
+      />
     </div>
   );
 }
@@ -78,7 +112,7 @@ export function SavedSearches() {
         data-cy="advanced-search-search-history"
         className={styles.title}
       >
-        Gemte søgninger
+        Søgehistorik
       </Title>
       <div className={styles.navigationButtons}>
         {/**TODO: export this to a seperate component? reuse from search history */}
