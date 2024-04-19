@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import {
   convertStateToCql,
   getCqlAndFacetsQuery,
+  getQuickFiltersQuery,
   parseOutFacets,
 } from "@/components/search/advancedSearch/utils";
 import useAdvancedSearchHistory from "@/components/hooks/useAdvancedSearchHistory";
@@ -26,6 +27,8 @@ import translate from "@/components/base/translate";
 import { FacetTags } from "@/components/search/advancedSearch/facets/facetTags/facetTags";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import { FacetButton } from "@/components/search/advancedSearch/facets/facetButton/facetButton";
+import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
+import QuickFilter from "@/components/search/advancedSearch/quickfilter/quickFilter";
 
 export function AdvancedSearchResult({
   pageNo,
@@ -92,6 +95,7 @@ export function AdvancedSearchResult({
                 </div>
               )}
 
+              <QuickFilter />
               <AdvancedFacets cql={cql} />
             </div>
           </>
@@ -157,9 +161,15 @@ export default function Wrap({ onWorkClick, onPageChange }) {
   } = useAdvancedSearchContext();
 
   const { selectedFacets } = useFacets();
-
   // if facets are set we need them for the cql
-  const cqlAndFacetsQuery = getCqlAndFacetsQuery(cql, selectedFacets);
+  // we also need the quickfilters
+  const { selectedQuickFilters } = useQuickFilters();
+  const cqlAndFacetsQuery = getCqlAndFacetsQuery(
+    cql,
+    selectedFacets,
+    selectedQuickFilters
+  );
+
   // if facets are not set we need the raw (without facets) fieldsearch query
   const fieldSearchQuery = convertStateToCql({ ...fieldSearch });
 
@@ -169,7 +179,11 @@ export default function Wrap({ onWorkClick, onPageChange }) {
   const { setValue } = useAdvancedSearchHistory();
   const cqlQuery =
     cqlAndFacetsQuery ||
-    convertStateToCql({ ...fieldSearch, facets: selectedFacets });
+    convertStateToCql({
+      ...fieldSearch,
+      facets: selectedFacets,
+      quickFilters: selectedQuickFilters,
+    });
 
   const showResult = !isEmpty(fieldSearch) || !isEmpty(cql);
 

@@ -15,7 +15,7 @@ function ListGroup({ filter }) {
       <List.Group className={styles.group} label={filter.label}>
         {filter.values.map((value) => (
           <List.Radio
-            key={value}
+            key={value.label}
             selected={
               (currentFilter && currentFilter.value === value.cql) ||
               (!currentFilter && !value.cql)

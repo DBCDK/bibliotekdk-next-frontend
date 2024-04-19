@@ -31,6 +31,11 @@ export function useQuickFilters() {
     },
   ];
 
+  // we need a useEffect to sync state (selectedQuickFilter)) with quickfiltess from the query
+  useEffect(() => {
+    setSelectedQuickFilters(quickFiltersFromUrl());
+  }, [router?.query?.quickfilters]);
+
   /**
    * Parse quickfilters in url -
    * @returns Array
@@ -45,28 +50,29 @@ export function useQuickFilters() {
   }
 
   function addQuickFilter(filter, value) {
+    const copy = [...selectedQuickFilters];
     // there can only be one active selection pr. filter
-    const filterIndex = selectedQuickFilters?.findIndex(
+    const filterIndex = copy?.findIndex(
       (filt) => filt.searchIndex === filter.searchIndex
     );
 
     // if found and value.cql is null we remove from query (Alle)
     if (filterIndex !== -1 && !value?.cql) {
-      selectedQuickFilters.splice(filterIndex, 1);
+      copy.splice(filterIndex, 1);
     }
     // if found replace cql value
     else if (filterIndex !== -1) {
-      selectedQuickFilters[filterIndex].value = value.cql;
+      copy[filterIndex].value = value.cql;
     }
     // if quickfilter is NOT set -> set if value.cql is given
     else if (value.cql) {
-      selectedQuickFilters.push({
+      copy.push({
         searchIndex: filter.searchIndex,
         value: value.cql,
       });
     }
-    setSelectedQuickFilters(selectedQuickFilters);
-    pushQuery({});
+    setSelectedQuickFilters(copy);
+    pushQuery({ selectedQuick: copy });
   }
 
   /**
@@ -77,7 +83,7 @@ export function useQuickFilters() {
    *  globel or local facets
    *
    */
-  function pushQuery({ replace = false }) {
+  function pushQuery({ replace = false, selectedQuick }) {
     const query = router?.query;
 
     // remove paging if set
@@ -85,8 +91,8 @@ export function useQuickFilters() {
       delete query.page;
     }
 
-    if (selectedQuickFilters.length > 0) {
-      query["quickfilters"] = JSON.stringify(selectedQuickFilters);
+    if (selectedQuick.length > 0) {
+      query["quickfilters"] = JSON.stringify(selectedQuick);
     } else {
       delete query["quickfilters"];
     }

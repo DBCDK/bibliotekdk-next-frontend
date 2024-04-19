@@ -1,6 +1,7 @@
 import isEmpty from "lodash/isEmpty";
 import { LogicalOperatorsEnum } from "@/components/search/enums";
 import { formattersAndComparitors } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
+import get from "lodash/get";
 
 function getInputFieldsQueryToCql(inputFields) {
   return inputFields
@@ -47,6 +48,15 @@ function getDropdownQuery(dropdownSearchIndices) {
       .map((item) => `(${item})`)
       .join(` ${AND} `)
   );
+}
+
+export function getQuickFiltersQuery(quickFilters) {
+  const AND = LogicalOperatorsEnum.AND;
+  const cqlArray = quickFilters?.map(
+    (filter) => `(${filter.searchIndex}="${filter.value}")`
+  );
+
+  return cqlArray?.join(` ${AND} `);
 }
 
 export function getFacetsQuery(facets) {
@@ -132,14 +142,21 @@ export function facetsFromUrl(router) {
  * @param selectedFacets
  * @returns {string|*}
  */
-export function getCqlAndFacetsQuery(cql, selectedFacets) {
+export function getCqlAndFacetsQuery(cql, selectedFacets, quickFilters) {
   if (!cql) {
     return null;
   }
   let cqlAndFacetsQuery;
   const facetCql = getFacetsQuery(selectedFacets);
+  const quickFilterCql = getQuickFiltersQuery(quickFilters);
   if (cql) {
     cqlAndFacetsQuery = facetCql ? cql + " AND " + facetCql : cql;
+  }
+
+  if (cqlAndFacetsQuery) {
+    cqlAndFacetsQuery = quickFilterCql
+      ? cqlAndFacetsQuery + " AND " + quickFilterCql
+      : cqlAndFacetsQuery;
   }
 
   return cqlAndFacetsQuery;
@@ -149,10 +166,12 @@ export function convertStateToCql({
   inputFields,
   dropdownSearchIndices,
   facets,
+  quickFilters,
 } = {}) {
   const inputFieldsQuery = getInputFieldsQueryToCql(inputFields);
   const dropdownQuery = getDropdownQuery(dropdownSearchIndices);
   const facetQuery = getFacetsQuery(facets);
+  const quickFilterQuery = getQuickFiltersQuery(quickFilters);
 
   const AND = LogicalOperatorsEnum.AND;
 
@@ -160,6 +179,7 @@ export function convertStateToCql({
     ...(!isEmpty(inputFieldsQuery) ? [inputFieldsQuery.join(" ")] : []),
     ...(!isEmpty(dropdownQuery) ? [dropdownQuery] : []),
     ...(!isEmpty(facetQuery) ? [facetQuery] : []),
+    ...(!isEmpty(quickFilterQuery) ? [quickFilterQuery] : []),
   ].join(`) ${AND} (`);
 
   return !isEmpty(result) ? "(" + result + ")" : "";

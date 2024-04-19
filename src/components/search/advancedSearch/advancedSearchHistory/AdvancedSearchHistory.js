@@ -29,7 +29,7 @@ export function FormatedFacets({ facets, className }) {
 
   const flatfilters = [];
   facets?.forEach((facet) => {
-    facet.values.map((val) => {
+    facet?.values?.map((val) => {
       flatfilters.push({
         name: val.name,
       });
