@@ -21,7 +21,10 @@ import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import Button from "@/components/base/button";
 import CombinedSearch from "@/components/search/advancedSearch/combinedSearch/CombinedSearch";
 import useSavedSearches from "../../../hooks/useSavedSearches";
-import { FormatedFacets } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
+import {
+  FormatedFacets,
+  HistoryHeaderActions,
+} from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
 import Accordion, { Item } from "@/components/base/accordion";
 import ExpandIcon from "@/components/base/animation/expand";
 
@@ -67,7 +70,7 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
           </div>
         ) : (
           <Text type="text2">{item?.cql}</Text>
-        )}{" "}
+        )}
       </Text>
       <Text>{item.hitcount} </Text>
       <Icon
@@ -87,9 +90,6 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
         className={`${styles.accordionIcon} ${
           expanded ? styles.accordionExpanded : styles.accordionCollapsed
         }`}
-        //   style={{
-        //     transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
-        //   }}
         size={3}
         src={`${expanded ? "collapseCircle" : "expand"}.svg`}
       />
@@ -102,6 +102,7 @@ export function SavedSearches() {
   const router = useRouter();
   const { saveSerach, deleteSearch, savedSearchKeys, savedSearches } =
     useSavedSearches();
+  const [showCombinedSearch, setShowCombinedSearch] = useState(false);
 
   const isButtonVisible = (path) => router.pathname === path;
 
@@ -145,8 +146,19 @@ export function SavedSearches() {
           </Text>
         </Link>
       </div>
+      <HistoryHeaderActions
+        onCombineSearch={() => setShowCombinedSearch(true)}
+      />
       <div className={styles.tableContainer}>
-        <div className={styles.tableHeader}></div>
+        <div className={styles.tableHeader}>
+          <Text>Dato</Text>
+          <Text type="text4" className={styles.link}>
+            {Translate({ context: "search", label: "yourSearch" })}
+          </Text>
+          <Text type="text4" className={styles.hitcount}>
+            {Translate({ context: "search", label: "title" })}
+          </Text>
+        </div>
         <Accordion>
           {savedSearches?.map((item, index) => (
             <Item
@@ -156,7 +168,15 @@ export function SavedSearches() {
               key={item.key}
               eventKey={item.key}
             >
-              {item.key}
+              <div className={styles.accordionContentContainer}>
+                <div className={styles.accordionContent}>
+                  {!isEmpty(item?.fieldSearch) ? (
+                    <FormatFieldSearchIndexes fieldsearch={item.fieldSearch} />
+                  ) : (
+                    <Text type="text2">{item?.cql}</Text>
+                  )}
+                </div>
+              </div>
             </Item>
           ))}
         </Accordion>

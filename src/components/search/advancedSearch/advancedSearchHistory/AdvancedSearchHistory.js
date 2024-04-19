@@ -145,6 +145,7 @@ function HistoryItem({ item, index, checked, onSelect }) {
       </Text>
 
       <Icon
+        //TODO make class instead of direct style
         style={{ cursor: "pointer" }}
         size={3}
         src={`${isSaved ? "heart_filled" : "heart"}.svg`}
@@ -174,7 +175,7 @@ function FormatCql({ item }) {
   );
 }
 
-function HistoryHeaderActions({
+export function HistoryHeaderActions({
   setAllChecked,
   deleteSelected,
   checked,
