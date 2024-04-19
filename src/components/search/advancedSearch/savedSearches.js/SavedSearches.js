@@ -212,7 +212,6 @@ export function SavedSearches() {
 
         <Link
           onClick={() => router.push("/avanceret/gemte-soegninger")}
-          // href="/avanceret/gemte-soegninger"
           border={{
             top: false,
             bottom: {
@@ -228,13 +227,20 @@ export function SavedSearches() {
       <HistoryHeaderActions
         checkedObjects={checkedObjects}
         deleteSelected={onDeleteSelected}
-        checked={savedSearches?.length === checkboxList?.length}
+        checked={
+          savedSearches?.length === checkboxList?.length &&
+          checkboxList?.length > 0
+        }
         partiallyChecked={checkboxList?.length > 0}
         disabled={savedSearches?.length === 0}
         setAllChecked={setAllChecked}
       />
       <div className={styles.tableContainer}>
-        <div className={styles.tableHeader}>
+        <div
+          className={cx(styles.tableHeader, {
+            [styles.tableHeaderBorder]: savedSearches.length === 0,
+          })}
+        >
           <Text>Dato</Text>
           <Text type="text4" className={styles.link}>
             {Translate({ context: "search", label: "yourSearch" })}
@@ -243,34 +249,77 @@ export function SavedSearches() {
             {Translate({ context: "search", label: "title" })}
           </Text>
         </div>
-        <Accordion>
-          {savedSearches?.map((item, index) => (
-            <Item
-              CustomHeaderCompnent={(props) => (
-                <SavedItemRow
-                  {...props}
-                  onSelect={onSelect}
-                  item={item}
-                  checked={
-                    checkboxList.findIndex((check) => check === item.key) !== -1
-                  }
-                />
-              )}
-              key={item.key}
-              eventKey={item.key}
-            >
-              <div className={styles.accordionContentContainer}>
-                <div className={styles.accordionContent}>
-                  {!isEmpty(item?.fieldSearch) ? (
-                    <FormatFieldSearchIndexes fieldsearch={item.fieldSearch} />
-                  ) : (
-                    <Text type="text2">{item?.cql}</Text>
-                  )}
+        {savedSearches?.length > 0 ? (
+          <Accordion>
+            {savedSearches?.map((item, index) => (
+              <Item
+                CustomHeaderCompnent={(props) => (
+                  <SavedItemRow
+                    {...props}
+                    onSelect={onSelect}
+                    item={item}
+                    checked={
+                      checkboxList.findIndex((check) => check === item.key) !==
+                      -1
+                    }
+                  />
+                )}
+                key={item.key}
+                eventKey={item.key}
+              >
+                <div className={styles.accordionContentContainer}>
+                  <div className={styles.accordionContent}>
+                    {!isEmpty(item?.fieldSearch) ? (
+                      <FormatFieldSearchIndexes
+                        fieldsearch={item.fieldSearch}
+                      />
+                    ) : (
+                      <Text type="text2">{item?.cql}</Text>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </Item>
-          ))}
-        </Accordion>
+              </Item>
+            ))}
+          </Accordion>
+        ) : (
+          <div className={styles.emptyListMessage}>
+            {
+              <Text type="text2">
+                {Translate({
+                  context: "advanced_search_savedSearch",
+                  label: "emptyListMessage1",
+                })}
+              </Text>
+            }
+            {
+              <Text type="text1" className={styles.empyListTitle}>
+                {Translate({
+                  context: "advanced_search_savedSearch",
+                  label: "emptyListMessage2",
+                })}
+              </Text>
+            }
+            {
+              <Text type="text2">
+                {Translate({
+                  context: "advanced_search_savedSearch",
+                  label: "emptyListMessage3",
+                })}
+              </Text>
+            }
+            {
+              <Text type="text2">
+                {Translate({
+                  context: "advanced_search_savedSearch",
+                  label: "emptyListMessage4",
+                })}
+              </Text>
+            }
+
+            <p></p>
+            <p></p>
+          </div>
+        )}
       </div>
     </div>
   );

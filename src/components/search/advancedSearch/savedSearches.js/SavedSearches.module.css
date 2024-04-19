@@ -53,7 +53,8 @@
   overflow: hidden;
 }
 
-.tableHeader {
+.tableHeaderBorder {
+  border-bottom: 1px solid var(--iron);
 }
 
 .accordionIcon {
@@ -109,4 +110,14 @@
 }
 .checkbox {
   top: var(--pt05);
+}
+.emptyListMessage {
+  white-space: pre-wrap;
+  display: flex;
+  flex-direction: column;
+  max-width: 700px;
+  padding: var(--pt2);
+}
+.empyListTitle {
+  margin-top: var(--pt5);
 }

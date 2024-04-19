@@ -240,6 +240,7 @@ export function HistoryHeaderActions({
         type="secondary"
         size="small"
         onClick={() => setShowCombinedSearch(true)}
+        disabled={disabled}
       >
         {Translate({ context: "search", label: "combineSearch" })}
       </Button>
