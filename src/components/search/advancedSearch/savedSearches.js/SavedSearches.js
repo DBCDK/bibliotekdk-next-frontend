@@ -53,15 +53,39 @@ const formatDate = (unixtimestamp) => {
   return `${day}. ${month} ${year}`;
 };
 function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
-  console.log("item", item);
   const formatedDate = formatDate(item.unixtimestamp);
-  console.log("formatedDate", formatedDate);
   const { saveSerach, deleteSearch, savedSearchKeys } = useSavedSearches();
   const { restartFacetsHook } = useFacets();
   const isSaved = true; //if an element is shown here it means it is saved//savedSearchKeys?.includes(item.key);
   return (
     <div className={styles.savedItemRow} {...props}>
-      <Checkbox />
+      <div
+        onClick={(e) => {
+          console.log("checkbox on change!!!!");
+          e.stopPropagation(); // Prevent the accordion from expanding
+          e.preventDefault();
+          onSelect(item, !checked);
+        }}
+      >
+        <Checkbox
+          id={`select-item-${index}`}
+          tabIndex="-1"
+          ariaLabelledBy={`select-item-${index}`}
+          ariaLabel={`select-item-${index}`}
+          checked={checked}
+          //   onChange={(e) => {
+          //     console.log("checkbox on change!!!!");
+          //     e.stopPropagation(); // Prevent the accordion from expanding
+          //     e.preventDefault();
+          //     onSelect(item, e);
+          //   }}
+          onMouseDown={(e) => {
+            e.stopPropagation(); // Stop the mouse down event from propagating
+          }}
+          className={styles.checkbox}
+        />
+      </div>
+
       <Text>{formatedDate}</Text>
       <Text className={styles.searchPreview}>
         {!isEmpty(item?.fieldSearch) ? (
@@ -78,11 +102,12 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
         size={3}
         src={`${isSaved ? "heart_filled" : "heart"}.svg`}
         onClick={() => {
+          console.log("on click!!");
           if (isSaved) {
             //remove search
-            deleteSearch(item);
+            //  deleteSearch(item);
           } else {
-            saveSerach(item);
+            // saveSerach(item);
           }
         }}
       />
@@ -102,10 +127,64 @@ export function SavedSearches() {
   const router = useRouter();
   const { saveSerach, deleteSearch, savedSearchKeys, savedSearches } =
     useSavedSearches();
-  const [showCombinedSearch, setShowCombinedSearch] = useState(false);
+  const [checkboxList, setCheckboxList] = useState([]);
+  /**
+   * Set or unset ALL checkboxes in search history
+   */
+  const setAllChecked = () => {
+    if (savedSearches.length === checkboxList.length) {
+      setCheckboxList([]);
+    } else {
+      setCheckboxList(savedSearches.map((stored) => stored.key));
+    }
+  };
 
+  /**
+   * Delete selected entries in search history
+   */
+  const onDeleteSelected = () => {
+    checkboxList.forEach((check) => {
+      const savedItem = savedSearches.find((stored) => stored.key === check);
+      savedItem && deleteSearch(savedItem);
+      //remove item from checklist too
+      onSelect(savedItem, false);
+    });
+  };
   const isButtonVisible = (path) => router.pathname === path;
 
+  const checkedObjects = savedSearches?.filter((obj) =>
+    checkboxList.includes(obj.key)
+  );
+  console.log("checkedObjects", checkedObjects);
+  console.log("savedSearches", savedSearches);
+  /**
+   * Add/remove item in list when selected/deselected
+   * * @param item
+   * @param item
+   * @param selected
+   *  The checkbox component (components/base/forms/checkbox) returns if it has been
+   *  selected or not
+   */
+  const onSelect = (item, selected = false) => {
+    console.log("inside onSelect", item);
+    // if select is FALSE it has been deselected on gui
+    const newCheckList = [...checkboxList];
+    // if item is already in checkboxlist -> remove
+    const checkindex = checkboxList.findIndex((check) => check === item.key);
+    if (checkindex !== -1) {
+      // item found in list - if deselected remove it
+      if (!selected) {
+        newCheckList.splice(checkindex, 1);
+      }
+    }
+    // if not -> add it to list .. if selected
+    else if (selected) {
+      newCheckList.push(item.key);
+    }
+    console.log("newCheckList", newCheckList);
+    setCheckboxList(newCheckList);
+  };
+  console.log("checkboxList", checkboxList);
   return (
     <div className={styles.container}>
       <Title
@@ -147,7 +226,12 @@ export function SavedSearches() {
         </Link>
       </div>
       <HistoryHeaderActions
-        onCombineSearch={() => setShowCombinedSearch(true)}
+        checkedObjects={checkedObjects}
+        deleteSelected={onDeleteSelected}
+        checked={savedSearches?.length === checkboxList?.length}
+        partiallyChecked={checkboxList?.length > 0}
+        disabled={savedSearches?.length === 0}
+        setAllChecked={setAllChecked}
       />
       <div className={styles.tableContainer}>
         <div className={styles.tableHeader}>
@@ -163,7 +247,14 @@ export function SavedSearches() {
           {savedSearches?.map((item, index) => (
             <Item
               CustomHeaderCompnent={(props) => (
-                <SavedItemRow {...props} item={item} />
+                <SavedItemRow
+                  {...props}
+                  onSelect={onSelect}
+                  item={item}
+                  checked={
+                    checkboxList.findIndex((check) => check === item.key) !== -1
+                  }
+                />
               )}
               key={item.key}
               eventKey={item.key}

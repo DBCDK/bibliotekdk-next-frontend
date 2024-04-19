@@ -107,3 +107,6 @@
     /* grid-template-columns: var(--pt2) 2fr 15fr 3fr 1fr; */
   }
 }
+.checkbox {
+  top: var(--pt05);
+}

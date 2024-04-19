@@ -181,9 +181,10 @@ export function HistoryHeaderActions({
   checked,
   partiallyChecked,
   disabled,
-  onCombineSearch,
+  checkedObjects = [],
 }) {
   const breakpoint = useBreakpoint();
+  const [showCombinedSearch, setShowCombinedSearch] = useState(false);
 
   const selectAllLabel = Translate({
     context: "bookmark",
@@ -198,6 +199,15 @@ export function HistoryHeaderActions({
     { child: selectAllLabel, callback: setAllChecked },
     { child: deleteSelectedLabel, callback: deleteSelected },
   ];
+
+  if (showCombinedSearch) {
+    return (
+      <CombinedSearch
+        cancelCombinedSearch={() => setShowCombinedSearch(false)}
+        queries={checkedObjects}
+      />
+    );
+  }
 
   if (breakpoint === "xs") {
     return (
@@ -226,7 +236,11 @@ export function HistoryHeaderActions({
         </Text>
       </label>
 
-      <Button type="secondary" size="small" onClick={onCombineSearch}>
+      <Button
+        type="secondary"
+        size="small"
+        onClick={() => setShowCombinedSearch(true)}
+      >
         {Translate({ context: "search", label: "combineSearch" })}
       </Button>
       <Link
@@ -313,7 +327,6 @@ export function AdvancedSearchHistory() {
   const { savedSearches, saveSerach } = useSavedSearches();
   console.log("savedSearches", savedSearches);
   const [checkboxList, setCheckboxList] = useState([]);
-  const [showCombinedSearch, setShowCombinedSearch] = useState(false);
 
   const breakpoint = useBreakpoint();
   const router = useRouter();
@@ -444,21 +457,14 @@ export function AdvancedSearchHistory() {
         </Link>
       </div>
 
-      {showCombinedSearch ? (
-        <CombinedSearch
-          cancelCombinedSearch={() => setShowCombinedSearch(false)}
-          queries={checkedObjects}
-        />
-      ) : (
-        <HistoryHeaderActions
-          deleteSelected={onDeleteSelected}
-          setAllChecked={setAllChecked}
-          checked={storedValue?.length === checkboxList?.length}
-          partiallyChecked={checkboxList?.length > 0}
-          disabled={storedValue?.length === 0}
-          onCombineSearch={() => setShowCombinedSearch(true)}
-        />
-      )}
+      <HistoryHeaderActions
+        deleteSelected={onDeleteSelected}
+        setAllChecked={setAllChecked}
+        checked={storedValue?.length === checkboxList?.length}
+        partiallyChecked={checkboxList?.length > 0}
+        disabled={storedValue?.length === 0}
+        checkedObjects={checkedObjects}
+      />
 
       <div className={styles.table_grid}>
         {breakpoint !== "xs" && <HistoryHeader />}
