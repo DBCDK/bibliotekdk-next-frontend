@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import useAdvancedSearchHistory, {
   getDateTime,
   getTimeStamp,
@@ -105,9 +105,9 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
           console.log("on click!!");
           if (isSaved) {
             //remove search
-            //  deleteSearch(item);
+            deleteSearch(item);
           } else {
-            // saveSerach(item);
+            saveSerach(item);
           }
         }}
       />
