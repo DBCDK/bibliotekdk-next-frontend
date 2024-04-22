@@ -10,7 +10,7 @@ export function useQuickFilters() {
   // );
 
   const [selectedQuickFilters, setSelectedQuickFilters] = useGlobalState({
-    key: "GLOBALFACETS",
+    key: "GLOBALQUCKFILTERS",
     initial: quickFiltersFromUrl(),
   });
 
