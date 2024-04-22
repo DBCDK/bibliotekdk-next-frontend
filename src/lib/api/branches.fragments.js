@@ -305,8 +305,6 @@ export function holdingsForAgency({ agencyId, pids }) {
           branchId
           branchType
           pickupAllowed
-          branchWebsiteUrl
-          lookupUrl
           holdings(pids: $pids) {
             status
             expectedAgencyReturnDate
@@ -316,6 +314,7 @@ export function holdingsForAgency({ agencyId, pids }) {
               location
               subLocation
             }
+            lookupUrl
           }
           temporarilyClosed
           temporarilyClosedReason
