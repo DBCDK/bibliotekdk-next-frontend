@@ -161,7 +161,6 @@ function HistoryItem({ item, index, checked, onSelect }) {
       </Text>
 
       <Icon
-        //TODO make class instead of direct style
         className={styles.saveSearchIcon}
         size={3}
         src={`${isSaved ? "heart_filled" : "heart"}.svg`}
@@ -422,11 +421,6 @@ export function AdvancedSearchHistory() {
 
   /**
    * Add/remove item in list when selected/deselected
-   * * @param item
-   * @param item
-   * @param selected
-   *  The checkbox component (components/base/forms/checkbox) returns if it has been
-   *  selected or not
    */
   const onSelect = (item, selected = false) => {
     // if select is FALSE it has been deselected on gui

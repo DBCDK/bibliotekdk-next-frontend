@@ -19,15 +19,12 @@
 .tableContainer {
   display: flex;
   flex-direction: column;
-  /* gap: 20px; */
 }
 
 .savedItemRow {
   display: grid;
-  /* grid-template-columns: auto auto 1fr; */
   grid-template-columns: var(--pt2) 3fr 14fr 2fr 1fr 1fr;
 
-  /* grid-template-areas: var(--grid_template_areas); */
   padding-left: var(--pt1);
   column-gap: var(--pt2);
   padding: var(--pt1_5) var(--pt2);
@@ -37,10 +34,7 @@
 
 @media (max-width: 576px) {
   .savedItemRow {
-    /* --grid_template_areas: "checkbox timestamp search_query hitcount favIcon expandIcon";
-    grid-template-columns: var(--pt2) 3fr 14fr 2fr 1fr 1fr; */
     padding: 0px 22px !important;
-
     grid-template-columns: 1fr 2fr 20fr 2fr 1fr 1fr;
   }
 }
@@ -69,33 +63,21 @@
 .accordionContentContainer {
   display: grid;
   grid-template-columns: var(--pt2) 3fr 14fr 2fr 1fr 1fr;
-
-  /* grid-template-columns: auto auto 1fr; */
-
   grid-template-areas: var(--grid_template_areas);
 
   cursor: pointer;
   align-items: center;
 }
 .accordionContent {
-  grid-column: 3; /* This will place the content in the 14fr column */
+  grid-column: 3;
 }
 
 .tableHeader {
   display: grid;
-
-  /* grid-template-columns: auto auto 1fr;
-  grid-template-columns: 1fr 4fr 2fr; */
   grid-template-columns: 4fr 14fr 6fr;
-
-  /* grid-template-areas: var(--grid_template_areas); */
-  /* column-gap: var(--pt2); */
   padding-left: var(--pt5);
-
   cursor: pointer;
   align-items: center;
-
-  /* border-bottom: 1px solid var(--iron); */
   margin-bottom: var(--pt05);
   padding-left: var(--pt1);
 }
