@@ -43,7 +43,7 @@ function IconButton({
         className
       )}
       tabIndex={disabled ? "-1" : "0"}
-      onClick={() => onClick && onClick()}
+      onClick={(e) => onClick && onClick(e)}
       data-cy={dataCy}
       disabled={disabled}
       {...props}

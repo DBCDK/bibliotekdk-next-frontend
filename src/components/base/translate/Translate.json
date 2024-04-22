@@ -2392,10 +2392,13 @@
         "da": "Resultater",
         "en": "Results"
       },
-
+      "saveSearch": {
+        "da": "Gem søgning",
+        "en": "Save search"
+      },
       "editSearch": {
-        "da": "Rediger søgning",
-        "en": "Edit search"
+        "da": "Rediger",
+        "en": "Edit"
       },
       "construct-your-search": {
         "da": "Sammensæt din søgning",
