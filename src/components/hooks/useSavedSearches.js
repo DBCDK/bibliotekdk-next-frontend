@@ -114,6 +114,7 @@ export const useSavedSearches = () => {
   );
 
   return {
+    //return [] if empty
     savedSearches,
     savedSearchKeys,
     saveSerach,

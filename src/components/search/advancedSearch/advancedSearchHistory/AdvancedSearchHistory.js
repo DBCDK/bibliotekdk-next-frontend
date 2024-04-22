@@ -269,6 +269,50 @@ export function HistoryHeaderActions({
   );
 }
 
+export function SearchHistoryNavigation() {
+  const router = useRouter();
+  // Check if the current path matches any button url
+  const isButtonVisible = (path) => router.pathname === path;
+
+  return (
+    <div className={styles.navigationButtons}>
+      {/**TODO: export this to a seperate component? reuse from search history */}
+      <Link
+        onClick={() => router.push("/avanceret/soegehistorik")}
+        border={{
+          top: false,
+          bottom: {
+            keepVisible: isButtonVisible("/avanceret/soegehistorik"),
+          },
+        }}
+      >
+        <Text type="text1" tag="span">
+          {Translate({
+            context: "search",
+            label: "advanced-search-history-latest",
+          })}
+        </Text>
+      </Link>
+
+      <Link
+        onClick={() => router.push("/avanceret/gemte-soegninger")}
+        border={{
+          top: false,
+          bottom: {
+            keepVisible: isButtonVisible("/avanceret/gemte-soegninger"),
+          },
+        }}
+      >
+        <Text type="text1" tag="span">
+          {Translate({
+            context: "search",
+            label: "advanced-search-saved-search",
+          })}{" "}
+        </Text>
+      </Link>
+    </div>
+  );
+}
 function HistoryHeader() {
   return (
     <div className={cx(styles.header, styles.grid)}>
@@ -325,12 +369,9 @@ function splitHistoryItems(storedValues) {
 
 export function AdvancedSearchHistory() {
   const { storedValue, deleteValue } = useAdvancedSearchHistory();
-  const { savedSearches, saveSerach } = useSavedSearches();
-  console.log("savedSearches", savedSearches);
   const [checkboxList, setCheckboxList] = useState([]);
 
   const breakpoint = useBreakpoint();
-  const router = useRouter();
 
   /**
    * Set or unset ALL checkboxes in search history
@@ -411,8 +452,6 @@ export function AdvancedSearchHistory() {
   const checkedObjects = storedValue?.filter((obj) =>
     checkboxList.includes(obj.key)
   );
-  // Check if the current path matches any button path
-  const isButtonVisible = (path) => router.pathname === path;
 
   return (
     <div className={styles.container}>
@@ -421,43 +460,10 @@ export function AdvancedSearchHistory() {
         data-cy="advanced-search-search-history"
         className={styles.title}
       >
-        Søgehistorik
+        {Translate({ context: "suggester", label: "historyTitle" })}
       </Title>
-      <div className={styles.navigationButtons}>
-        <Link
-          onClick={() => router.push("/avanceret/soegehistorik")}
-          // href="/avanceret/soegehistorik"
-          border={{
-            top: false,
-            bottom: {
-              keepVisible: isButtonVisible("/avanceret/soegehistorik"),
-            },
-          }}
-        >
-          <Text type="text1" tag="span">
-            {Translate({
-              context: "search",
-              label: "advanced-search-history-latest",
-            })}{" "}
-          </Text>
-        </Link>
 
-        <Link
-          onClick={() => router.push("/avanceret/gemte-soegninger")}
-          // href="/avanceret/gemte-soegninger"
-          border={{
-            top: false,
-            bottom: {
-              keepVisible: isButtonVisible("/avanceret/gemte-soegninger"),
-            },
-          }}
-        >
-          <Text type="text1" tag="span">
-            Gemte søgninger{" "}
-          </Text>
-        </Link>
-      </div>
-
+      <SearchHistoryNavigation />
       <HistoryHeaderActions
         deleteSelected={onDeleteSelected}
         setAllChecked={setAllChecked}

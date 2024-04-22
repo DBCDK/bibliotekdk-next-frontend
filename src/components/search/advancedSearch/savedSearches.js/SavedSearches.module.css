@@ -4,12 +4,6 @@
   }
 }
 
-.navigationButtons {
-  display: flex;
-  gap: var(--pt5);
-  margin-bottom: var(--pt3);
-}
-
 .title {
   padding-top: var(--pt2);
   margin-bottom: var(--pt3);

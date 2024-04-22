@@ -1,32 +1,21 @@
-import React, { useEffect, useRef, useState } from "react";
-import useAdvancedSearchHistory, {
-  getDateTime,
-  getTimeStamp,
-} from "@/components/hooks/useAdvancedSearchHistory";
+import React, { useState } from "react";
+
 import styles from "./SavedSearches.module.css";
 import Text from "@/components/base/text";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
 import { FormatFieldSearchIndexes } from "@/components/search/advancedSearch/advancedSearchResult/topBar/TopBar";
-import Link from "@/components/base/link/Link";
-import { useRouter } from "next/router";
 import isEmpty from "lodash/isEmpty";
 import Translate from "@/components/base/translate";
 import Title from "@/components/base/title/Title";
 import cx from "classnames";
-import { cyKey } from "@/utils/trim";
 import Icon from "@/components/base/icon/Icon";
-import useBreakpoint from "@/components/hooks/useBreakpoint";
-import MenuDropdown from "@/components/base/dropdown/menuDropdown/MenuDropdown";
-import { useFacets } from "@/components/search/advancedSearch/useFacets";
-import Button from "@/components/base/button";
-import CombinedSearch from "@/components/search/advancedSearch/combinedSearch/CombinedSearch";
+// import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import useSavedSearches from "../../../hooks/useSavedSearches";
 import {
-  FormatedFacets,
+  SearchHistoryNavigation,
   HistoryHeaderActions,
 } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
 import Accordion, { Item } from "@/components/base/accordion";
-import ExpandIcon from "@/components/base/animation/expand";
 
 const formatDate = (unixtimestamp) => {
   const date = new Date(unixtimestamp);
@@ -54,14 +43,13 @@ const formatDate = (unixtimestamp) => {
 };
 function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   const formatedDate = formatDate(item.unixtimestamp);
-  const { saveSerach, deleteSearch, savedSearchKeys } = useSavedSearches();
-  const { restartFacetsHook } = useFacets();
+  const { saveSerach, deleteSearch } = useSavedSearches();
+  //   const { restartFacetsHook } = useFacets();
   const isSaved = true; //if an element is shown here it means it is saved//savedSearchKeys?.includes(item.key);
   return (
     <div className={styles.savedItemRow} {...props}>
       <div
         onClick={(e) => {
-          console.log("checkbox on change!!!!");
           e.stopPropagation(); // Prevent the accordion from expanding
           e.preventDefault();
           onSelect(item, !checked);
@@ -123,16 +111,13 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
 }
 
 export function SavedSearches() {
-  const breakpoint = useBreakpoint();
-  const router = useRouter();
-  const { saveSerach, deleteSearch, savedSearchKeys, savedSearches } =
-    useSavedSearches();
+  const { deleteSearch, savedSearches } = useSavedSearches();
   const [checkboxList, setCheckboxList] = useState([]);
   /**
    * Set or unset ALL checkboxes in search history
    */
   const setAllChecked = () => {
-    if (savedSearches.length === checkboxList.length) {
+    if (savedSearches?.length === checkboxList.length) {
       setCheckboxList([]);
     } else {
       setCheckboxList(savedSearches.map((stored) => stored.key));
@@ -150,7 +135,6 @@ export function SavedSearches() {
       onSelect(savedItem, false);
     });
   };
-  const isButtonVisible = (path) => router.pathname === path;
 
   const checkedObjects = savedSearches?.filter((obj) =>
     checkboxList.includes(obj.key)
@@ -192,10 +176,9 @@ export function SavedSearches() {
         data-cy="advanced-search-search-history"
         className={styles.title}
       >
-        Søgehistorik
+        {Translate({ context: "suggester", label: "historyTitle" })}
       </Title>
-      <div className={styles.navigationButtons}>
-        {/**TODO: export this to a seperate component? reuse from search history */}
+      {/* <div className={styles.navigationButtons}>
         <Link
           onClick={() => router.push("/avanceret/soegehistorik")}
           border={{
@@ -206,7 +189,10 @@ export function SavedSearches() {
           }}
         >
           <Text type="text1" tag="span">
-            Seneste søgninger
+            {Translate({
+              context: "search",
+              label: "advanced-search-history-latest",
+            })}
           </Text>
         </Link>
 
@@ -220,10 +206,14 @@ export function SavedSearches() {
           }}
         >
           <Text type="text1" tag="span">
-            Gemte søgninger
+            {Translate({
+              context: "search",
+              label: "advanced-search-saved-search",
+            })}{" "}
           </Text>
         </Link>
-      </div>
+      </div> */}
+      <SearchHistoryNavigation />
       <HistoryHeaderActions
         checkedObjects={checkedObjects}
         deleteSelected={onDeleteSelected}
@@ -238,20 +228,20 @@ export function SavedSearches() {
       <div className={styles.tableContainer}>
         <div
           className={cx(styles.tableHeader, {
-            [styles.tableHeaderBorder]: savedSearches.length === 0,
+            [styles.tableHeaderBorder]: savedSearches?.length === 0,
           })}
         >
-          <Text>Dato</Text>
+          <Text> {Translate({ context: "search", label: "yourSearch" })}</Text>
           <Text type="text4" className={styles.link}>
             {Translate({ context: "search", label: "yourSearch" })}
           </Text>
           <Text type="text4" className={styles.hitcount}>
-            {Translate({ context: "search", label: "title" })}
+            {Translate({ context: "search", label: "date" })}
           </Text>
         </div>
         {savedSearches?.length > 0 ? (
           <Accordion>
-            {savedSearches?.map((item, index) => (
+            {savedSearches?.map((item) => (
               <Item
                 CustomHeaderCompnent={(props) => (
                   <SavedItemRow
