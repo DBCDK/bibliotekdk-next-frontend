@@ -9,40 +9,17 @@ import Translate from "@/components/base/translate";
 import Title from "@/components/base/title/Title";
 import cx from "classnames";
 import Icon from "@/components/base/icon/Icon";
-import useSavedSearches from "../../../hooks/useSavedSearches";
+import useSavedSearches from "@/components/hooks/useSavedSearches";
 import {
   SearchHistoryNavigation,
   HistoryHeaderActions,
   SearchQueryDisplay,
 } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
 import Accordion, { Item } from "@/components/base/accordion";
+import { unixToFormatedDate } from "@/lib/utils";
 
-const formatDate = (unixtimestamp) => {
-  const date = new Date(unixtimestamp);
-
-  const monthNames = [
-    "jan",
-    "feb",
-    "mar",
-    "apr",
-    "may",
-    "jun",
-    "jul",
-    "aug",
-    "sep",
-    "oct",
-    "nov",
-    "dec",
-  ];
-
-  const day = date.getDate().toString().padStart(2, "0");
-  const month = monthNames[date.getMonth()];
-  const year = date.getFullYear();
-
-  return `${day}. ${month} ${year}`;
-};
 function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
-  const formatedDate = formatDate(item.unixtimestamp);
+  const formatedDate = unixToFormatedDate(item.unixtimestamp);
   const { saveSerach, deleteSearch } = useSavedSearches();
   const isSaved = true; //if an element is shown here it means it is saved//savedSearchKeys?.includes(item.key);
   return (
@@ -63,11 +40,11 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
           onMouseDown={(e) => {
             e.stopPropagation(); // Stop the mouse down event from propagating
           }}
-          className={styles.checkbox}
+          //   className={styles.checkbox}
         />
       </div>
 
-      <Text>{formatedDate}</Text>
+      <Text className={styles.date}>{formatedDate}</Text>
       <Text className={styles.searchPreview}>
         {!isEmpty(item?.fieldSearch) ? (
           <div>
@@ -102,7 +79,7 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   );
 }
 
-export function SavedSearches() {
+export default function SavedSearches() {
   const { deleteSearch, savedSearches } = useSavedSearches();
   const [checkboxList, setCheckboxList] = useState([]);
   /**
@@ -180,17 +157,18 @@ export function SavedSearches() {
       />
       <div className={styles.tableContainer}>
         <div
-          className={cx(styles.tableHeader, {
+          className={cx(styles.newTableHeader, {
             [styles.tableHeaderBorder]: savedSearches?.length === 0,
           })}
         >
-          <Text type="text4" className={styles.hitcount}>
+          <div />
+          <Text type="text4" className={styles.date}>
             {Translate({ context: "search", label: "date" })}
           </Text>
           <Text type="text4">
             {Translate({ context: "search", label: "search" })}
           </Text>
-          <Text type="text4" className={styles.link}>
+          <Text type="text4">
             {Translate({ context: "search", label: "results" })}
           </Text>
         </div>
@@ -214,7 +192,15 @@ export function SavedSearches() {
               >
                 <div className={styles.accordionContentContainer}>
                   <div className={styles.accordionContent}>
-                    <SearchQueryDisplay item={item} />
+                    <div />
+                    <div />
+                    <div>
+                      <SearchQueryDisplay item={item} />
+                    </div>
+                    <div />
+                    <div />
+
+                    <div />
                   </div>
                 </div>
               </Item>

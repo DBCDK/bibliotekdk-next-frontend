@@ -20,7 +20,7 @@ import MenuDropdown from "@/components/base/dropdown/menuDropdown/MenuDropdown";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import Button from "@/components/base/button";
 import CombinedSearch from "@/components/search/advancedSearch/combinedSearch/CombinedSearch";
-import useSavedSearches from "../../../hooks/useSavedSearches";
+import useSavedSearches from "@/components/hooks/useSavedSearches";
 
 //Component to render facets
 export function FormatedFacets({ facets, className }) {
@@ -296,7 +296,7 @@ export function SearchHistoryNavigation() {
 
   // Check if the current path matches any button url
   const isButtonVisible = (path) => router.pathname === path;
-  console.log(savedSearchKeys?.length);
+
   return (
     <div className={styles.navigationButtons}>
       <Link
