@@ -1,10 +1,9 @@
 /**
- * @file - Hook for advanced search history - localstorage
+ * @file - Hook for advanced search saved searches. functions to get, save and delete searches from userdata db
  */
 
 import { getLocalStorageItem, setLocalStorageItem } from "@/lib/utils";
 import useSWR from "swr";
-import { getLanguage } from "@/components/base/translate";
 import { useMemo } from "react";
 
 const KEY = "saved-advanced-search-items";
@@ -18,26 +17,6 @@ export function getTimeStamp(now) {
     minute: "2-digit",
   };
   const stamp = new Date(now).toLocaleTimeString("en-GB", options);
-  // remove the " AM/PM" part
-  return stamp.replace("AM", "").replace("PM", "").replace(":", ".").trim();
-}
-
-/**
- * Get a date on a stored search history object
- */
-export function getDateTime(now) {
-  const options = {
-    hourCycle: "h24",
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  };
-  const stamp = new Date(now).toLocaleTimeString(
-    getLanguage() === "EN_GB" ? "en-GB" : "da-DK",
-    options
-  );
   // remove the " AM/PM" part
   return stamp.replace("AM", "").replace("PM", "").replace(":", ".").trim();
 }
@@ -59,11 +38,10 @@ export const useSavedSearches = () => {
         const alreadyStored = savedSearches.find(
           (stor) => stor?.key?.trim() === value?.key?.trim()
         );
-
         value["timestamp"] = getTimeStamp(getUnixTimeStamp());
         value["unixtimestamp"] = getUnixTimeStamp();
         if (!alreadyStored) {
-          // Add to beginning of history array
+          // Add to beginning of saved items array
           savedSearches.unshift(value);
           // maintain localstorage
           setLocalStorageItem(KEY, JSON.stringify(savedSearches));
@@ -84,24 +62,12 @@ export const useSavedSearches = () => {
           (stor) => stor.key === value?.key
         );
         if (valueIndex > -1) {
-          // Add to beginning of history array
+          // remove from array
           savedSearches.splice(valueIndex, 1);
           // update localstorage
           setLocalStorageItem(KEY, JSON.stringify(savedSearches));
           mutate();
         }
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const clearValues = () => {
-    try {
-      if (typeof window !== "undefined") {
-        savedSearches = [];
-        setLocalStorageItem(KEY, JSON.stringify(savedSearches));
-        mutate();
       }
     } catch (err) {
       console.error(err);
@@ -119,7 +85,6 @@ export const useSavedSearches = () => {
     savedSearchKeys,
     saveSerach,
     deleteSearch,
-    clearValues,
   };
 };
 

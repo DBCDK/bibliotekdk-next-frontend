@@ -43,7 +43,6 @@ export function Item({
   useScroll = true,
 }) {
   const [scrolledToHash, setScrolledToHash] = useState(false);
-  console.log("CustomHeaderCompnent", CustomHeaderCompnent);
   const router = useRouter();
   const context = React.useContext(AccordionContext);
 
