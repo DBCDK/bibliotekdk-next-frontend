@@ -61,12 +61,6 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
           ariaLabelledBy={`select-item-${index}`}
           ariaLabel={`select-item-${index}`}
           checked={checked}
-          //   onChange={(e) => {
-          //     console.log("checkbox on change!!!!");
-          //     e.stopPropagation(); // Prevent the accordion from expanding
-          //     e.preventDefault();
-          //     onSelect(item, e);
-          //   }}
           onMouseDown={(e) => {
             e.stopPropagation(); // Stop the mouse down event from propagating
           }}
@@ -90,7 +84,6 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
         size={3}
         src={`${isSaved ? "heart_filled" : "heart"}.svg`}
         onClick={() => {
-          console.log("on click!!");
           if (isSaved) {
             //remove search
             deleteSearch(item);
@@ -139,8 +132,7 @@ export function SavedSearches() {
   const checkedObjects = savedSearches?.filter((obj) =>
     checkboxList.includes(obj.key)
   );
-  console.log("checkedObjects", checkedObjects);
-  console.log("savedSearches", savedSearches);
+
   /**
    * Add/remove item in list when selected/deselected
    * * @param item
@@ -150,8 +142,6 @@ export function SavedSearches() {
    *  selected or not
    */
   const onSelect = (item, selected = false) => {
-    console.log("inside onSelect", item);
-    // if select is FALSE it has been deselected on gui
     const newCheckList = [...checkboxList];
     // if item is already in checkboxlist -> remove
     const checkindex = checkboxList.findIndex((check) => check === item.key);
@@ -165,10 +155,9 @@ export function SavedSearches() {
     else if (selected) {
       newCheckList.push(item.key);
     }
-    console.log("newCheckList", newCheckList);
     setCheckboxList(newCheckList);
   };
-  console.log("checkboxList", checkboxList);
+
   return (
     <div className={styles.container}>
       <Title
@@ -178,41 +167,6 @@ export function SavedSearches() {
       >
         {Translate({ context: "suggester", label: "historyTitle" })}
       </Title>
-      {/* <div className={styles.navigationButtons}>
-        <Link
-          onClick={() => router.push("/avanceret/soegehistorik")}
-          border={{
-            top: false,
-            bottom: {
-              keepVisible: isButtonVisible("/avanceret/soegehistorik"),
-            },
-          }}
-        >
-          <Text type="text1" tag="span">
-            {Translate({
-              context: "search",
-              label: "advanced-search-history-latest",
-            })}
-          </Text>
-        </Link>
-
-        <Link
-          onClick={() => router.push("/avanceret/gemte-soegninger")}
-          border={{
-            top: false,
-            bottom: {
-              keepVisible: isButtonVisible("/avanceret/gemte-soegninger"),
-            },
-          }}
-        >
-          <Text type="text1" tag="span">
-            {Translate({
-              context: "search",
-              label: "advanced-search-saved-search",
-            })}{" "}
-          </Text>
-        </Link>
-      </div> */}
       <SearchHistoryNavigation />
       <HistoryHeaderActions
         checkedObjects={checkedObjects}
@@ -305,9 +259,6 @@ export function SavedSearches() {
                 })}
               </Text>
             }
-
-            <p></p>
-            <p></p>
           </div>
         )}
       </div>

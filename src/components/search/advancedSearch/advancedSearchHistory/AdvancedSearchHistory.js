@@ -60,6 +60,7 @@ function HistoryItem({ item, index, checked, onSelect }) {
   const breakpoint = useBreakpoint();
   const { saveSerach, deleteSearch, savedSearchKeys } = useSavedSearches();
   const { restartFacetsHook } = useFacets();
+  //check user has saved the search item
   const isSaved = savedSearchKeys?.includes(item.key);
   const goToItemUrl = (item) => {
     // restart the useFacets hook - this is a 'new' search
@@ -276,7 +277,6 @@ export function SearchHistoryNavigation() {
 
   return (
     <div className={styles.navigationButtons}>
-      {/**TODO: export this to a seperate component? reuse from search history */}
       <Link
         onClick={() => router.push("/avanceret/soegehistorik")}
         border={{
@@ -307,7 +307,7 @@ export function SearchHistoryNavigation() {
           {Translate({
             context: "search",
             label: "advanced-search-saved-search",
-          })}{" "}
+          })}
         </Text>
       </Link>
     </div>
