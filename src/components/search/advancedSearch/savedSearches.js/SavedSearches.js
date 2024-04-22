@@ -9,11 +9,11 @@ import Translate from "@/components/base/translate";
 import Title from "@/components/base/title/Title";
 import cx from "classnames";
 import Icon from "@/components/base/icon/Icon";
-// import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import useSavedSearches from "../../../hooks/useSavedSearches";
 import {
   SearchHistoryNavigation,
   HistoryHeaderActions,
+  SearchQueryDisplay,
 } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
 import Accordion, { Item } from "@/components/base/accordion";
 
@@ -44,7 +44,6 @@ const formatDate = (unixtimestamp) => {
 function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   const formatedDate = formatDate(item.unixtimestamp);
   const { saveSerach, deleteSearch } = useSavedSearches();
-  //   const { restartFacetsHook } = useFacets();
   const isSaved = true; //if an element is shown here it means it is saved//savedSearchKeys?.includes(item.key);
   return (
     <div className={styles.savedItemRow} {...props}>
@@ -107,7 +106,7 @@ export function SavedSearches() {
   const { deleteSearch, savedSearches } = useSavedSearches();
   const [checkboxList, setCheckboxList] = useState([]);
   /**
-   * Set or unset ALL checkboxes in search history
+   * Set or unset ALL checkboxes in saved search table
    */
   const setAllChecked = () => {
     if (savedSearches?.length === checkboxList.length) {
@@ -118,7 +117,7 @@ export function SavedSearches() {
   };
 
   /**
-   * Delete selected entries in search history
+   * Delete selected entries in saved search table
    */
   const onDeleteSelected = () => {
     checkboxList.forEach((check) => {
@@ -185,12 +184,14 @@ export function SavedSearches() {
             [styles.tableHeaderBorder]: savedSearches?.length === 0,
           })}
         >
-          <Text> {Translate({ context: "search", label: "yourSearch" })}</Text>
-          <Text type="text4" className={styles.link}>
-            {Translate({ context: "search", label: "yourSearch" })}
-          </Text>
           <Text type="text4" className={styles.hitcount}>
             {Translate({ context: "search", label: "date" })}
+          </Text>
+          <Text type="text4">
+            {Translate({ context: "search", label: "search" })}
+          </Text>
+          <Text type="text4" className={styles.link}>
+            {Translate({ context: "search", label: "results" })}
           </Text>
         </div>
         {savedSearches?.length > 0 ? (
@@ -213,13 +214,7 @@ export function SavedSearches() {
               >
                 <div className={styles.accordionContentContainer}>
                   <div className={styles.accordionContent}>
-                    {!isEmpty(item?.fieldSearch) ? (
-                      <FormatFieldSearchIndexes
-                        fieldsearch={item.fieldSearch}
-                      />
-                    ) : (
-                      <Text type="text2">{item?.cql}</Text>
-                    )}
+                    <SearchQueryDisplay item={item} />
                   </div>
                 </div>
               </Item>

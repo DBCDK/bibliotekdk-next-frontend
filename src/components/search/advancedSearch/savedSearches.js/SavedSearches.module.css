@@ -35,10 +35,13 @@
   align-items: center;
 }
 
-@media (min-width: 576px) {
+@media (max-width: 576px) {
   .savedItemRow {
     /* --grid_template_areas: "checkbox timestamp search_query hitcount favIcon expandIcon";
     grid-template-columns: var(--pt2) 3fr 14fr 2fr 1fr 1fr; */
+    padding: 0px 22px !important;
+
+    grid-template-columns: 1fr 2fr 20fr 2fr 1fr 1fr;
   }
 }
 

@@ -2384,6 +2384,15 @@
         "da": "Din søgning",
         "en": "Your search"
       },
+      "search": {
+        "da": "Søgning",
+        "en": "search"
+      },
+      "results": {
+        "da": "Resultater",
+        "en": "Results"
+      },
+
       "editSearch": {
         "da": "Rediger søgning",
         "en": "Edit search"

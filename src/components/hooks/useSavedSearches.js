@@ -9,7 +9,7 @@ import { useMemo } from "react";
 const KEY = "saved-advanced-search-items";
 
 /**
- * Get a date on a stored search history object
+ * Get a date on a stored saved search object
  */
 export function getTimeStamp(now) {
   const options = {
@@ -31,7 +31,6 @@ export const useSavedSearches = () => {
   );
 
   const saveSerach = (value) => {
-
     try {
       if (typeof window !== "undefined") {
         // check if cql (and facets) is already stored

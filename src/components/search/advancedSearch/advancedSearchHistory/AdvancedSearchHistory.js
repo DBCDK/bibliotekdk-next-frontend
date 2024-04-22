@@ -55,13 +55,18 @@ export function FormatedFacets({ facets, className }) {
     </div>
   );
 }
-function HistoryItem({ item, index, checked, onSelect }) {
+
+/**
+ * Renders a clickable link based on search item details.
+ * search history item
+ * @param {object} item
+ * @returns  {JSX.Element}
+ */
+export function SearchQueryDisplay({ item }) {
   const router = useRouter();
-  const breakpoint = useBreakpoint();
-  const { saveSerach, deleteSearch, savedSearchKeys } = useSavedSearches();
+
   const { restartFacetsHook } = useFacets();
-  //check user has saved the search item
-  const isSaved = savedSearchKeys?.includes(item.key);
+
   const goToItemUrl = (item) => {
     // restart the useFacets hook - this is a 'new' search
     restartFacetsHook();
@@ -84,6 +89,31 @@ function HistoryItem({ item, index, checked, onSelect }) {
       });
     }
   };
+
+  return (
+    <div className={styles.link}>
+      <Link
+        onClick={(e) => {
+          e.preventDefault();
+          goToItemUrl(item);
+        }}
+      >
+        {!isEmpty(item.fieldSearch) ? (
+          <FormatFieldSearchIndexes fieldsearch={item.fieldSearch} />
+        ) : (
+          <FormatCql item={item} />
+        )}
+      </Link>
+      {/* move this to seperate component and reuse in combined search */}
+      <FormatedFacets facets={item?.selectedFacets} />
+    </div>
+  );
+}
+function HistoryItem({ item, index, checked, onSelect }) {
+  const breakpoint = useBreakpoint();
+  const { saveSerach, deleteSearch, savedSearchKeys } = useSavedSearches();
+  //check user has saved the search item
+  const isSaved = savedSearchKeys?.includes(item.key);
 
   const timestamp = item.unixtimestamp
     ? getTimeStamp(item.unixtimestamp)
@@ -123,22 +153,7 @@ function HistoryItem({ item, index, checked, onSelect }) {
       >
         {itemText()}
       </Text>
-      <div className={styles.link}>
-        <Link
-          onClick={(e) => {
-            e.preventDefault();
-            goToItemUrl(item);
-          }}
-        >
-          {!isEmpty(item.fieldSearch) ? (
-            <FormatFieldSearchIndexes fieldsearch={item.fieldSearch} />
-          ) : (
-            <FormatCql item={item} />
-          )}
-        </Link>
-        {/* move this to seperate component and reuse in combined search */}
-        <FormatedFacets facets={item?.selectedFacets} />
-      </div>
+      <SearchQueryDisplay item={item} />
       <Text type="text2" className={styles.hitcount}>
         {item.hitcount}{" "}
         {breakpoint === "xs" &&
@@ -175,6 +190,12 @@ function FormatCql({ item }) {
     </>
   );
 }
+
+/**
+ * Action header for advanced search history.
+ * Has functionaluty to show combined search view + trigger the select all/remove buttons,
+ * @returns
+ */
 
 export function HistoryHeaderActions({
   setAllChecked,
