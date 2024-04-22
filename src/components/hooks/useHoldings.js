@@ -3,7 +3,7 @@ import { holdingsForAgency } from "@/lib/api/branches.fragments";
 import { dateToShortDate } from "@/utils/datetimeConverter";
 import uniq from "lodash/uniq";
 import { useMemo } from "react";
-import Translate from "../base/translate/Translate";
+import Translate from "@/components/base/translate";
 
 export const HoldingStatusEnum = Object.freeze({
   ON_SHELF: "ON_SHELF",
