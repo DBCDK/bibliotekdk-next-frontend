@@ -2468,6 +2468,16 @@
         "en": "Search suggestions"
       }
     },
+    "quickfilters": {
+      "label-fiction-nonfiction": {
+        "da": "Fiktion og non-fiktion",
+        "en": "Fiction and non-fiction"
+      },
+      "label-children-adults": {
+        "da": "Til børn og voksne",
+        "en": "Children and adults"
+      }
+    },
     "facets": {
       "label-selected-filters": {
         "da": "Valgte filtre",

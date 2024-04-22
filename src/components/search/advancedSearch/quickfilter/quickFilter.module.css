@@ -1,12 +1,42 @@
 .group {
   display: flex;
-  border: none;
 }
 
 .radio {
   border: none;
+  padding: var(--pt1) var(--pt2) var(--pt2) 0;
+}
+
+.boldtext {
+  font-family: var(--body-font-semibold);
+}
+
+.text {
+  margin-left: var(--pt05);
+}
+
+.radio:first-child {
+  border: none;
+  /*background-color: red;*/
+}
+
+.groupcontent {
+  padding-left: var(--pt2);
 }
 
 .filterContainer {
-  border: 2px solid red;
+  /*background-color: blue;*/
+  margin-bottom: var(--pt2);
+  /*padding: 0 0 0 var(--pt2);*/
+  /*margin: 0 0 var(--pt2) var(--pt2);*/
+}
+
+.filterContainer .groupcontainer {
+  border-bottom: 1px solid var(--iron);
+  margin-bottom: var(--pt2);
+}
+
+.filterContainer .groupcontainer:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
 }

@@ -1,18 +1,24 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useGlobalState } from "@/components/hooks/useGlobalState";
 
 export function useQuickFilters() {
   const router = useRouter();
 
-  const [selectedQuickFilters, setSelectedQuickFilters] = useState(
-    quickFiltersFromUrl()
-  );
+  // const [selectedQuickFilters, setSelectedQuickFilters] = useState(
+  //   quickFiltersFromUrl()
+  // );
+
+  const [selectedQuickFilters, setSelectedQuickFilters] = useGlobalState({
+    key: "GLOBALFACETS",
+    initial: quickFiltersFromUrl(),
+  });
 
   // The quicfilters to display
   const quickfilters = [
     // { label: "fisk", searchIndex: "term.accesstype", values: ["online"] },
     {
-      label: "Fiktion og non-fiktion",
+      label: "label-fiction-nonfiction",
       searchIndex: "term.fictionnonfiction",
       values: [
         { label: "Alle", cql: null },
@@ -21,7 +27,7 @@ export function useQuickFilters() {
       ],
     },
     {
-      label: "Til børn og voksne",
+      label: "label-children-adults",
       searchIndex: "term.childrenoradults",
       values: [
         { label: "Alle", cql: "" },
@@ -46,11 +52,13 @@ export function useQuickFilters() {
 
     // check the quickfilters
     const verifiedFilters = quickfilters && JSON.parse(quickfilters);
-    return Array.isArray(verifiedFilters) ? verifiedFilters : [];
+    return Array.isArray(verifiedFilters)
+      ? JSON.stringify(verifiedFilters)
+      : "[]";
   }
 
   function addQuickFilter(filter, value) {
-    const copy = [...selectedQuickFilters];
+    const copy = [...JSON.parse(selectedQuickFilters)];
     // there can only be one active selection pr. filter
     const filterIndex = copy?.findIndex(
       (filt) => filt.searchIndex === filter.searchIndex
@@ -71,10 +79,13 @@ export function useQuickFilters() {
         value: value.cql,
       });
     }
-    setSelectedQuickFilters(copy);
+    setSelectedQuickFilters(JSON.stringify(copy));
     pushQuery({ selectedQuick: copy });
   }
 
+  function resetQuickFilters() {
+    setSelectedQuickFilters(quickFiltersFromUrl());
+  }
   /**
    * Push query
    * @param replace
@@ -83,7 +94,7 @@ export function useQuickFilters() {
    *  globel or local facets
    *
    */
-  function pushQuery({ replace = false, selectedQuick }) {
+  function pushQuery({ replace = true, selectedQuick }) {
     const query = router?.query;
 
     // remove paging if set
@@ -117,6 +128,8 @@ export function useQuickFilters() {
     pushQuery,
     quickFilters: quickfilters,
     addQuickFilter,
-    selectedQuickFilters,
+    selectedQuickFilters: JSON.parse(selectedQuickFilters),
+    resetQuickFilters,
+    quickFiltersFromUrl,
   };
 }
