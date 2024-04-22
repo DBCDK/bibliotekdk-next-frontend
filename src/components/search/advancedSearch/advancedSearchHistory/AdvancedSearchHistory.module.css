@@ -171,3 +171,7 @@
   gap: var(--pt5);
   margin-bottom: var(--pt3);
 }
+
+.saveSearchIcon {
+  cursor: pointer;
+}

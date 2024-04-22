@@ -162,7 +162,7 @@ function HistoryItem({ item, index, checked, onSelect }) {
 
       <Icon
         //TODO make class instead of direct style
-        style={{ cursor: "pointer" }}
+        className={styles.saveSearchIcon}
         size={3}
         src={`${isSaved ? "heart_filled" : "heart"}.svg`}
         onClick={() => {
@@ -297,7 +297,7 @@ export function SearchHistoryNavigation() {
 
   // Check if the current path matches any button url
   const isButtonVisible = (path) => router.pathname === path;
-
+  console.log(savedSearchKeys?.length);
   return (
     <div className={styles.navigationButtons}>
       <Link
@@ -330,7 +330,7 @@ export function SearchHistoryNavigation() {
           {Translate({
             context: "search",
             label: "advanced-search-saved-search",
-            vars: [savedSearchKeys.length],
+            vars: [String(savedSearchKeys?.length)],
           })}
         </Text>
       </Link>
