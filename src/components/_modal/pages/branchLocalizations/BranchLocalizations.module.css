@@ -28,6 +28,6 @@
   padding-top: var(--pt1);
 }
 
-.supplementary_status {
-  padding-top: var(--pt4);
+.expectedAgencyReturnDate p  {
+  padding-top: var(--pt1);
 }

@@ -1,8 +1,5 @@
 import Translate from "@/components/base/translate";
-import {
-  AvailabilityEnum,
-  useAgencyIdsConformingToQuery,
-} from "@/components/hooks/useHandleAgencyAccessData";
+import { useAgencyIdsConformingToQuery } from "@/components/hooks/useHandleAgencyAccessData";
 import { useData } from "@/lib/api/api";
 import * as localizationsFragments from "@/lib/api/localizations.fragments";
 import LocalizationsBase from "@/components/_modal/pages/base/localizationsBase/LocalizationsBase";
@@ -14,6 +11,7 @@ import Text from "@/components/base/text/Text";
 import Pagination from "@/components/search/pagination/Pagination";
 import { AvailabilityLight } from "@/components/_modal/pages/base/localizationsBase/localizationItemBase/AvailabilityLight";
 import cx from "classnames";
+import { HoldingStatusEnum } from "@/components/hooks/useHoldings";
 
 const PAGE_SIZE = 25;
 
@@ -27,8 +25,16 @@ function NoMaterialsHomeAtLocalizations({
     >
       {availabilityLight && (
         <AvailabilityLight
-          availabilityLightProps={{
-            availabilityAccumulated: AvailabilityEnum.LATER,
+          branch={{
+            holdings: {
+              holdingsLamp: {
+                src: "status__red.svg",
+                alt: Translate({
+                  context: "holdings",
+                  label: `lamp_alt_${HoldingStatusEnum.NOT_ON_SHELF}`,
+                }),
+              },
+            },
           }}
         />
       )}

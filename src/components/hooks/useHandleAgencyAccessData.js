@@ -647,21 +647,23 @@ function getAgencyIds(branches) {
  * @param limit
  * @returns {{isLoading: boolean, agencyIds: Array.<Object>}}
  */
-export function useAgencyIdsConformingToQuery({ pids, q, limit = 50 }) {
+export function useAgencyIdsConformingToQuery({ q, limit = 50 }) {
   const agencies = useData(
     q &&
       q !== "" &&
-      pids &&
       branchesFragments.branchesByQuery({
         q: q,
-        pids: pids,
         limit: limit,
       })
   );
 
+  const branches = agencies?.data?.branches?.result?.filter(
+    (branch) => branch?.branchType !== "servicepunkt"
+  );
+
   const highlightsOnAgency = uniq(
     getAgencyIds(
-      agencies?.data?.branches?.result.filter((branch) =>
+      branches?.filter((branch) =>
         branch.highlights.some((highlight) => highlight.key === "agencyName")
       )
     )
@@ -669,7 +671,7 @@ export function useAgencyIdsConformingToQuery({ pids, q, limit = 50 }) {
 
   const highlightsNotOnAgency = uniq(
     getAgencyIds(
-      agencies?.data?.branches?.result.filter(
+      branches?.filter(
         (branch) =>
           !branch.highlights.some((highlight) => highlight.key === "agencyName")
       )
@@ -679,31 +681,6 @@ export function useAgencyIdsConformingToQuery({ pids, q, limit = 50 }) {
   const agencyIds = uniq([...highlightsOnAgency, ...highlightsNotOnAgency]);
 
   return { agencyIds: agencyIds, isLoading: agencies.isLoading };
-}
-
-/**
- * {@link useSingleAgency} finds an agency by its agencyId
- * @param {Array.<string>=} pids
- * @param {string=} agencyId
- * @param {number} limit
- * @returns {{agenciesIsLoading: boolean, count: number, agenciesFlatSorted: Array.<Object>}}
- */
-export function useSingleAgency({ pids, agencyId, limit = 50 }) {
-  const agencyNoHighlights = useData(
-    agencyId &&
-      pids &&
-      branchesFragments.branchesActiveInAgency({
-        agencyId: agencyId,
-        pids: pids,
-        limit,
-      })
-  );
-
-  if (!pids || !agencyId) {
-    return { count: 0, agenciesFlatSorted: [], agenciesIsLoading: true };
-  }
-
-  return handleAgencyAccessData(agencyNoHighlights);
 }
 
 /**
