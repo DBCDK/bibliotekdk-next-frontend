@@ -2353,8 +2353,8 @@
         "en": "Latest searches"
       },
       "advanced-search-saved-search": {
-        "da": "Gemte søgninger",
-        "en": "Saved searches"
+        "da": "Gemte søgninger (%s)",
+        "en": "Saved searches (%s)"
       },
       "advanced-empty-search-history": {
         "da": "Her vil du kunne se en liste over de seneste søgninger, hvor der har været brugt avanceret søgning. Listen er midlertidig og nulstilles automatisk, når du lukker enten vinduet eller din browser. Hvis du vil gemme en søgning til senere, så tryk “Gem” ud for søgningen og den vil lægge sig på listen “Gemte søgninger”.\\n Du har ikke lavet nogen avancerede søgninger endnu.",
