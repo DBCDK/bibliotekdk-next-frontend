@@ -31,7 +31,7 @@ export const useSavedSearches = () => {
   );
 
   const saveSerach = (value) => {
-    console.log("setValue.value", value);
+
     try {
       if (typeof window !== "undefined") {
         // check if cql (and facets) is already stored
