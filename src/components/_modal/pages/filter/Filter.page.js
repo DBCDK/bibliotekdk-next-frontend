@@ -24,6 +24,7 @@ import * as searchFragments from "@/lib/api/search.fragments";
 import animations from "@/components/base/animation/animations.module.css";
 import styles from "./Filter.module.css";
 import { FilterTypeEnum } from "@/lib/enums";
+import QuickFilter from "@/components/search/advancedSearch/quickfilter/quickFilter";
 
 function SelectedFilter({
   isLoading,
@@ -308,6 +309,7 @@ export function Filter(props) {
               </Text>
             </Link>
           </span>
+          {origin === "mobileFacets" && <QuickFilter />}
           <List.Group
             enabled={!isLoading}
             data-cy="list-facets"

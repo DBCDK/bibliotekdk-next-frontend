@@ -77,11 +77,11 @@ export default function Wrap({ onWorkClick, page }) {
   // we also need the quickfilters
   const { selectedQuickFilters } = useQuickFilters();
   // if facets are set we need them for the cql
-  const cqlAndFacetsQuery = getCqlAndFacetsQuery(
+  const cqlAndFacetsQuery = getCqlAndFacetsQuery({
     cql,
     selectedFacets,
-    selectedQuickFilters
-  );
+    quickFilters: selectedQuickFilters,
+  });
 
   const limit = 10;
   let offset = limit * (page - 1);

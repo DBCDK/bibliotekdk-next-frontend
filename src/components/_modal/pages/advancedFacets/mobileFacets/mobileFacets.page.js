@@ -29,7 +29,7 @@ export default function Wrap(props) {
     pushQuery,
   } = useFacets();
 
-  const cqlAndFacetsQuery = getCqlAndFacetsQuery(cql, selectedFacets);
+  const cqlAndFacetsQuery = getCqlAndFacetsQuery({ cql, selectedFacets });
 
   useEffect(() => {
     if (!modal.isVisible && modal.hasBeenVisible) {
@@ -103,6 +103,7 @@ export default function Wrap(props) {
       hitcount: facetResponse?.complexSearch?.hitcount,
     },
   };
+
   return (
     <Filter
       data={data}

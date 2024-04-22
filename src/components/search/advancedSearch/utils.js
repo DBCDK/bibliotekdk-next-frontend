@@ -142,7 +142,7 @@ export function facetsFromUrl(router) {
  * @param selectedFacets
  * @returns {string|*}
  */
-export function getCqlAndFacetsQuery(cql, selectedFacets, quickFilters) {
+export function getCqlAndFacetsQuery({ cql, selectedFacets, quickFilters }) {
   if (!cql) {
     return null;
   }

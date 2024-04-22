@@ -164,11 +164,11 @@ export default function Wrap({ onWorkClick, onPageChange }) {
   // if facets are set we need them for the cql
   // we also need the quickfilters
   const { selectedQuickFilters } = useQuickFilters();
-  const cqlAndFacetsQuery = getCqlAndFacetsQuery(
+  const cqlAndFacetsQuery = getCqlAndFacetsQuery({
     cql,
     selectedFacets,
-    selectedQuickFilters
-  );
+    quickFilters: selectedQuickFilters,
+  });
 
   // if facets are not set we need the raw (without facets) fieldsearch query
   const fieldSearchQuery = convertStateToCql({ ...fieldSearch });
