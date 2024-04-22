@@ -25,7 +25,7 @@ export default function LocalizationItemBase({
   children,
   modalPush,
   itemLoading,
-  availabilityLightProps,
+  branch,
 }) {
   return (
     <div className={cx(styles.container)}>
@@ -39,9 +39,8 @@ export default function LocalizationItemBase({
           <Text skeleton={true} clamp={true} lines={2} />
         ) : (
           <div className={cx(styles.row_wrapper)}>
-            <AvailabilityLight
-              availabilityLightProps={availabilityLightProps}
-            />
+            <AvailabilityLight branch={branch} />
+
             <div className={styles.result}>{children}</div>
             <Icon
               size={{ w: "auto", h: 3 }}

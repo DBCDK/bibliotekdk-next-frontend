@@ -181,32 +181,6 @@ export function checkBlockedUser({ branchId }) {
   };
 }
 
-/**
- * Branches in agencies
- */
-export function branchesActiveInAgency({ agencyId, pids, limit = 50, q = "" }) {
-  return {
-    apiUrl: ApiEnums.FBI_API,
-    query: `
-    query branchesActiveInAgency($agencyId: String!, $q: String, $pids: [String!]!, $limit: PaginationLimit!, $language: LanguageCode!) {
-      branches(agencyid: $agencyId, q: $q, bibdkExcludeBranches: false, limit: $limit, status: AKTIVE, language: $language) {
-        hitcount
-        agencyUrl
-        result {
-          ...branchFastFragment
-          holdingStatus(pids: $pids) {
-            ...holdingStatusFragment
-          }
-        }
-      }
-    }
-    ${branchFastFragment}
-    ${holdingStatusFragment}`,
-    variables: { agencyId, q, pids, limit, language: lang },
-    slowThreshold: 3000,
-  };
-}
-
 export function branchesHighlightsByAgency({ agencyId, q, limit = 50 }) {
   return {
     apiUrl: ApiEnums.FBI_API,
@@ -255,25 +229,21 @@ export function branchByBranchId({ branchId, pids, limit = 50, q = "" }) {
 /**
  * Branches in agencies
  */
-export function branchesByQuery({ q, pids, limit = 50 }) {
+export function branchesByQuery({ q, limit = 50 }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
-    query branchesActiveInAgency($q: String!, $pids: [String!]!, $limit: PaginationLimit!, $language: LanguageCode!) {
+    query branchesActiveInAgency($q: String!, $limit: PaginationLimit!, $language: LanguageCode!) {
       branches(q: $q, bibdkExcludeBranches: true,  limit: $limit, status: AKTIVE, language: $language) {
         hitcount
         agencyUrl
         result {
           ...branchFastFragment
-          holdingStatus(pids: $pids) {
-            ...holdingStatusFragment
-          }
         }
       }
     }
-    ${branchFastFragment}
-    ${holdingStatusFragment}`,
-    variables: { q, pids, limit, language: lang },
+    ${branchFastFragment}`,
+    variables: { q, limit, language: lang },
     slowThreshold: 3000,
   };
 }
@@ -318,6 +288,43 @@ export function borrowerCheck({ branchId }) {
     }
     ${borrowerCheckFragment}`,
     variables: { branchId, language: lang },
+    slowThreshold: 3000,
+  };
+}
+
+export function holdingsForAgency({ agencyId, pids }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query holdingsForAgency($agencyId: String!, $pids: [String!]!, $limit: PaginationLimit!) {
+      branches(agencyid: $agencyId, limit: $limit, status: AKTIVE) {
+        result {
+          agencyName
+          name
+          agencyId
+          branchId
+          branchType
+          pickupAllowed
+          holdings(pids: $pids) {
+            status
+            expectedAgencyReturnDate
+            expectedBranchReturnDate
+            items {
+              department
+              location
+              subLocation
+            }
+            lookupUrl
+          }
+          temporarilyClosed
+          temporarilyClosedReason
+          openingHours
+          postalAddress
+          postalCode
+        }
+      }
+    }`,
+    variables: { agencyId, pids, limit: 50 },
     slowThreshold: 3000,
   };
 }

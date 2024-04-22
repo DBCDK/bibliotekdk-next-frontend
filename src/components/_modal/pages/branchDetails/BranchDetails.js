@@ -13,14 +13,14 @@ import animations from "@/components/base/animation/animations.module.css";
 import styles from "./BranchDetails.module.css";
 import cx from "classnames";
 import BranchDetailsStatus from "@/components/_modal/pages/branchDetails/branchDetailsStatus/BranchDetailsStatus";
-import {
-  AvailabilityEnum,
-  useSingleAgency,
-} from "@/components/hooks/useHandleAgencyAccessData";
 import isEmpty from "lodash/isEmpty";
 import Button from "@/components/base/button/Button";
 import * as PropTypes from "prop-types";
 import { useGoToOrderWithBranch } from "@/components/hooks/useGoToOrderWithBranch";
+import {
+  HoldingStatusEnum,
+  useHoldingsForAgency,
+} from "@/components/hooks/useHoldings";
 
 /**
  * {@link OpeningHours} for {@link BranchDetails}
@@ -159,10 +159,11 @@ function ContactInformation({ singleBranch }) {
 export default function BranchDetails({ context }) {
   const { pids, branchId, agencyId } = context;
 
-  const { agenciesFlatSorted, agenciesIsLoading } = useSingleAgency({
+  const { branches, holdingsIsLoading } = useHoldingsForAgency({
     pids: pids,
     agencyId: agencyId,
   });
+  const branch = branches?.find((branch) => branch?.branchId === branchId);
 
   const { data: orderPolicyData, isLoading: orderPolicyIsLoading } = useData(
     pids &&
@@ -182,10 +183,6 @@ export default function BranchDetails({ context }) {
 
   const orderPolicyForBranch = orderPolicyForBranches?.[0];
 
-  const singleBranch = agenciesFlatSorted?.[0]?.branches?.find(
-    (branch) => branch.branchId === branchId
-  );
-
   const { data: manifestationsData, isLoading: manifestationsIsLoading } =
     useData(
       pids &&
@@ -199,23 +196,8 @@ export default function BranchDetails({ context }) {
   } = manifestationMaterialTypeFactory(manifestationsData?.manifestations);
 
   const manifestations = manifestationsBeforeEnriching.map((manifestation) => {
-    const itemsWithPid = singleBranch?.holdingItems?.filter((item) =>
-      manifestation?.pid?.includes(item?.localHoldingsId)
-    );
-
     return {
       ...manifestation,
-      locationInBranch: uniq(
-        [
-          itemsWithPid?.[0]?.department,
-          itemsWithPid?.[0]?.location,
-          itemsWithPid?.[0]?.subLocation,
-        ].filter((e) => !!e)
-      ).join(" > "),
-      availability: singleBranch?.availability,
-      availabilityById: singleBranch?.availabilityById?.find((ids) =>
-        manifestation?.pid.includes(ids.localHoldingsId)
-      ),
     };
   });
 
@@ -231,11 +213,11 @@ export default function BranchDetails({ context }) {
       context: context,
       selectedPids: pids,
       workId: workId,
-      branchWithoutBorrowerCheck: singleBranch,
+      branchWithoutBorrowerCheck: branch,
     });
 
   const branchDetailsLoading =
-    agenciesIsLoading || manifestationsIsLoading || orderPolicyIsLoading;
+    holdingsIsLoading || manifestationsIsLoading || orderPolicyIsLoading;
 
   const buttonSize = "medium";
 
@@ -259,17 +241,12 @@ export default function BranchDetails({ context }) {
           Status
         </Title>
         <div aria-hidden={true} className={styles.padding_element_pt_two} />
-        <BranchDetailsStatus
-          library={singleBranch}
-          pickupAllowed={singleBranch?.pickupAllowed}
-          manifestations={manifestations}
-          pids={pids}
-        />
+        <BranchDetailsStatus branch={branch} pids={pids} />
       </LocalizationsBase.Information>
       {!branchDetailsLoading &&
-      (!singleBranch?.pickupAllowed ||
+      (!branch?.pickupAllowed ||
         !orderPolicyForBranch?.orderPossible ||
-        singleBranch?.temporarilyClosed === true) ? (
+        branch?.temporarilyClosed === true) ? (
         <LocalizationsBase.HighlightedArea>
           <Text type={"text2"}>
             {Translate({
@@ -277,8 +254,8 @@ export default function BranchDetails({ context }) {
               label: "obs_not_orders_to_here",
             })}
           </Text>
-          {!!singleBranch?.temporarilyClosedReason && (
-            <Text type={"text2"}>{singleBranch?.temporarilyClosedReason}</Text>
+          {!!branch?.temporarilyClosedReason && (
+            <Text type={"text2"}>{branch?.temporarilyClosedReason}</Text>
           )}
         </LocalizationsBase.HighlightedArea>
       ) : (
@@ -307,7 +284,7 @@ export default function BranchDetails({ context }) {
             )}
           </LocalizationsBase.Information>
           {!branchDetailsLoading &&
-            singleBranch?.availabilityAccumulated !== AvailabilityEnum.NOW && (
+            branch?.holdings?.status !== HoldingStatusEnum.ON_SHELF && (
               <LocalizationsBase.Subheader>
                 {Translate({
                   context: "localizations",
@@ -321,9 +298,9 @@ export default function BranchDetails({ context }) {
         <Title type={"title6"} className={cx(styles.about_the_branch)}>
           {Translate({ context: "localizations", label: "about_the_branch" })}
         </Title>
-        <OpeningHours singleBranch={singleBranch} />
-        <Address singleBranch={singleBranch} />
-        <ContactInformation singleBranch={singleBranch} />
+        <OpeningHours singleBranch={branch} />
+        <Address singleBranch={branch} />
+        <ContactInformation singleBranch={branch} />
       </LocalizationsBase.Information>
     </LocalizationsBase>
   );

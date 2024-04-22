@@ -74,8 +74,10 @@ function ReservationButtonWrapper({
 
   const illSupported = hasPhysicalCopy;
 
-  const { physicalPids, isLoading: isLoadingManifestationData } =
-    useManifestationData({ pids: selectedPids });
+  const {
+    physicalUnitPids: physicalPids,
+    isLoading: isLoadingManifestationData,
+  } = useManifestationData({ pids: selectedPids });
 
   const requireLocalizations = !illSupported && physicalPids?.length > 0;
 

@@ -130,10 +130,14 @@ export function useManifestationData({ pids }) {
   );
 
   const physicalPids = {};
+  const physicalUnitPids = {};
   data?.manifestations?.forEach((m) => {
     const isPhysical = !!m?.accessTypes?.find((t) => t?.code === "PHYSICAL");
+    physicalPids[m?.pid] = true;
     if (isPhysical) {
-      m?.unit?.manifestations?.forEach(({ pid }) => (physicalPids[pid] = true));
+      m?.unit?.manifestations?.forEach(
+        ({ pid }) => (physicalUnitPids[pid] = true)
+      );
     }
   });
 
@@ -143,6 +147,7 @@ export function useManifestationData({ pids }) {
     workId,
     ownerWork,
     manifestations: data?.manifestations,
+    physicalUnitPids: Object.keys(physicalUnitPids),
     physicalPids: Object.keys(physicalPids),
     isLoading,
   };
