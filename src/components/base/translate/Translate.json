@@ -218,6 +218,25 @@
         "en": "Age"
       }
     },
+    "advanced_search_savedSearch": {
+      "emptyListMessage1": {
+        "da": "Du har ikke nogen gemte søgninger endnu.",
+        "en": "You do not have any saved searches yet."
+      },
+      "emptyListMessage2": {
+        "da": "Sådan gemmer du en søgning",
+        "en": "How to save a search"
+      },
+      "emptyListMessage3": {
+        "da": "Du har ikke nogen gemte søgninger endnu.",
+        "en": "You do not have any saved searches yet."
+      },
+
+      "emptyListMessage4": {
+        "da": "Når du bruger “Avanceret søgning” kan du trykke på knappen  “Gem søgning” i toppen af søgeresultatet, og søgningen vil lægge sig her på listen.\n\nDu kan også gemme en søgning fra listen “Seneste søgninger” ved at klikke på hjerte-ikonet ud for den ønskede søgning.",
+        "en": "You do not have any saved searches yet."
+      }
+    },
     "complex-search-facets": {
       "label-specificmaterialtype": {
         "da": "Format",
@@ -1271,6 +1290,62 @@
       "label_no_holdings": {
         "da": "Biblioteket har ikke materialet \\n Men du kan bestille materialet til afhentning på biblioteket",
         "en": "Library does not have the material, But you can still order for pickup at this library"
+      },
+      "message_ON_SHELF": {
+        "da": "På hylden",
+        "en": "On the shelf"
+      },
+      "message_ON_SHELF_NOT_FOR_LOAN": {
+        "da": "På hylden, men udlånes ikke",
+        "en": "On the shelf, not available for loan"
+      },
+      "message_NOT_ON_SHELF": {
+        "da": "Ikke på hylden",
+        "en": "Not on shelf"
+      },
+      "message_NOT_ON_SHELF_HAS_RETURN_DATE": {
+        "da": "Forventes udlånt til d. %s",
+        "en": "Expected on loan until %s"
+      },
+      "message_NOT_OWNED": {
+        "da": "Har ikke materialet",
+        "en": "Does not have the material"
+      },
+      "message_UNKNOWN_MATERIAL": {
+        "da": "Status kendes ikke",
+        "en": "Status is unknown"
+      },
+      "message_UNKNOWN_STATUS": {
+        "da": "Status kendes ikke",
+        "en": "Status is unknown"
+      },
+      "message_expectedAgencyReturnDate": {
+        "da": "Materialet er i øjeblikket ikke på hylden. Vi forventer at det vil være tilbage på én af afdelingerne %s.",
+        "en": "The material is currently not on the shelf at these libraries. We expect it to be back at one of the libraries <br/> <b>%s</b>."
+      },
+      "lamp_alt_ON_SHELF": {
+        "da": "Grønt lys viser at materialet findes på hylden her",
+        "en": "Green light shows that the materiale in on shelf here"
+      },
+      "lamp_alt_ON_SHELF_NOT_FOR_LOAN": {
+        "da": "Grønt lys som viser at materialet kun kan benyttes på stedet",
+        "en": "Green light showing the material can only be used at location"
+      },
+      "lamp_alt_UNKNOWN_MATERIAL": {
+        "da": "Gråt lys som viser at status for materialet ikke kendes her",
+        "en": "Grey light shows that status for the material is unknown here"
+      },
+      "lamp_alt_UNKNOWN_STATUS": {
+        "da": "Gråt lys som viser at status for materialet ikke kendes her",
+        "en": "Grey light shows that status for the material is unknown here"
+      },
+      "lamp_alt_NOT_OWNED": {
+        "da": "Rødt lys viser at materialet ikke kan hentes her",
+        "en": "Red light shows that the material can't be picked up here"
+      },
+      "lamp_alt_NOT_ON_SHELF": {
+        "da": "Gult lys viser at materialet er udlånt herfra",
+        "en": "Yellow light shows that the material is on loan from here"
       }
     },
     "overview": {
@@ -2333,9 +2408,17 @@
         "da": "Seneste søgninger",
         "en": "Latest searches"
       },
+      "advanced-search-saved-search": {
+        "da": "Gemte søgninger (%s)",
+        "en": "Saved searches (%s)"
+      },
       "advanced-empty-search-history": {
         "da": "Her vil du kunne se en liste over de seneste søgninger, hvor der har været brugt avanceret søgning. Listen er midlertidig og nulstilles automatisk, når du lukker enten vinduet eller din browser. Hvis du vil gemme en søgning til senere, så tryk “Gem” ud for søgningen og den vil lægge sig på listen “Gemte søgninger”.\\n Du har ikke lavet nogen avancerede søgninger endnu.",
         "en": "List of recent advanced searches :) - List is temporary and will be emptied automagically"
+      },
+      "date": {
+        "da": "Dato",
+        "en": "Date"
       },
       "remove": {
         "da": "Fjern",
@@ -2357,9 +2440,21 @@
         "da": "Din søgning",
         "en": "Your search"
       },
+      "search": {
+        "da": "Søgning",
+        "en": "search"
+      },
+      "results": {
+        "da": "Resultater",
+        "en": "Results"
+      },
+      "saveSearch": {
+        "da": "Gem søgning",
+        "en": "Save search"
+      },
       "editSearch": {
-        "da": "Rediger søgning",
-        "en": "Edit search"
+        "da": "Rediger",
+        "en": "Edit"
       },
       "construct-your-search": {
         "da": "Sammensæt din søgning",
