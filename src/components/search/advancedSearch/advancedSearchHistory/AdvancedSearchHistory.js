@@ -104,7 +104,7 @@ function HistoryItem({ item, index, checked, onSelect }) {
       })}
     >
       <Checkbox
-        id={`select-item-${index}`}
+        id={`select-item-${item.key}`}
         tabIndex="-1"
         onChange={(e) => {
           onSelect(item, e);
