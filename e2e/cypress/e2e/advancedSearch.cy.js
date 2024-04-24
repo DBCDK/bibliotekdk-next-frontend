@@ -28,10 +28,11 @@ describe("Popover elements", () => {
       .find("input")
       .type(`Hej med dig `)
       .blur();
-    //type something in the second inputfield
 
+    //type something in the second inputfield
     cy.get('[datacy="advanced-search-inputfield-1"]')
       .find("input")
+      .focus()
       .type(`Jeg hedder kaj`)
       .blur();
     //clear the fields
