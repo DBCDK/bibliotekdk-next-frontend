@@ -1,16 +1,11 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import { useGlobalState } from "@/components/hooks/useGlobalState";
 
 export function useQuickFilters() {
   const router = useRouter();
 
-  // const [selectedQuickFilters, setSelectedQuickFilters] = useState(
-  //   quickFiltersFromUrl()
-  // );
-
   const [selectedQuickFilters, setSelectedQuickFilters] = useGlobalState({
-    key: "GLOBALQUCKFILTERS",
+    key: "GLOBALQUICKFILTERS",
     initial: quickFiltersFromUrl(),
   });
 
@@ -36,11 +31,6 @@ export function useQuickFilters() {
       ],
     },
   ];
-
-  // we need a useEffect to sync state (selectedQuickFilter)) with quickfiltess from the query
-  useEffect(() => {
-    setSelectedQuickFilters(quickFiltersFromUrl());
-  }, [router?.query?.quickfilters]);
 
   /**
    * Parse quickfilters in url -
@@ -84,7 +74,7 @@ export function useQuickFilters() {
   }
 
   function resetQuickFilters() {
-    setSelectedQuickFilters(quickFiltersFromUrl());
+    setSelectedQuickFilters("[]");
   }
   /**
    * Push query
@@ -130,6 +120,5 @@ export function useQuickFilters() {
     addQuickFilter,
     selectedQuickFilters: JSON.parse(selectedQuickFilters),
     resetQuickFilters,
-    quickFiltersFromUrl,
   };
 }

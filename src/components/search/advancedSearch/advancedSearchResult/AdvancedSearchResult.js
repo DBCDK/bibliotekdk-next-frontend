@@ -39,6 +39,7 @@ export function AdvancedSearchResult({
   isLoading,
   cql,
   selectedFacets,
+  rawcql,
 }) {
   const hitcount = results?.hitcount;
   const numPages = Math.ceil(hitcount / 10);
@@ -82,7 +83,7 @@ export function AdvancedSearchResult({
           titel: { lg: { offset: 3, span: true } },
         }}
         id="search-result-section"
-        title={<TitleComponent cql={cql} />}
+        title={<TitleComponent cql={rawcql} />}
         subtitle={
           <>
             <div className={styles.facetsContainer}>
@@ -222,6 +223,8 @@ export default function Wrap({ onWorkClick, onPageChange }) {
       setShowPopover={setShowPopover}
       isLoading={parsedResponse.isLoading}
       cql={cqlQuery}
+      // we need the raw cql (without facets and quickfilters) for the facetButton
+      rawcql={cqlAndFacetsQuery ? cql : fieldSearchQuery}
       selectedFacets={selectedFacets}
     />
   );

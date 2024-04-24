@@ -3,7 +3,6 @@ import styles from "./quickFilter.module.css";
 import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
-import { useEffect } from "react";
 
 function ListGroup({ filter }) {
   const { addQuickFilter, selectedQuickFilters } = useQuickFilters();

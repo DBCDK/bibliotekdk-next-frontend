@@ -40,38 +40,6 @@ export function useFacets() {
   );
 
   /**
-   * Insert a facet OR replace the values in a facet.
-   * @param values
-   * @param searchindex
-   * @param replace
-   */
-  function replaceFacetValue(values, searchindex, replace) {
-    const selectedFacets = JSON.parse(facetsQuery);
-    const currentFacet = selectedFacets.find((facet) => {
-      return facet.searchIndex === searchindex;
-    });
-
-    if (currentFacet) {
-      currentFacet.values = values.map((value) => ({
-        value: value,
-        name: value,
-      }));
-    } else {
-      const newFacet = {
-        searchIndex: searchindex,
-        values: values.map((value) => ({
-          value: value,
-          name: value,
-        })),
-      };
-      selectedFacets.push(newFacet);
-    }
-
-    setFacetsQuery(JSON.stringify(selectedFacets));
-    pushQuery(replace, selectedFacets);
-  }
-
-  /**
    * Add an extra facet and push facets to query - we keep facets in a state for
    * advanced search context to understand
    */
@@ -100,6 +68,73 @@ export function useFacets() {
       selectedFacets.push(newFacet);
     }
 
+    setFacetsQuery(JSON.stringify(selectedFacets));
+    pushQuery(replace, selectedFacets);
+  }
+
+  /**
+   * Remove a facet value from selection and push facets to query
+   * @param value
+   * @param searchindex
+   */
+  function removeFacet(value, searchindex, replace = false) {
+    const selectedFacets = JSON.parse(facetsQuery);
+
+    // find the overall facet to handle
+    const indexedFacet = selectedFacets?.find((facet) => {
+      return facet.searchIndex.includes(searchindex);
+    });
+    // find facet(value) in values
+    const indx = indexedFacet?.values?.findIndex((val) => val.value === value);
+    indexedFacet?.values?.splice(indx, 1);
+    if (indexedFacet?.values?.length < 1) {
+      const indexToDelete = selectedFacets?.findIndex((facet) => {
+        return facet.searchIndex.includes(searchindex);
+      });
+      selectedFacets.splice(indexToDelete, 1);
+    }
+
+    setFacetsQuery(JSON.stringify(selectedFacets));
+    pushQuery(replace, selectedFacets);
+  }
+
+  /**
+   * Insert a facet OR replace the values in a facet.
+   * @param values
+   * @param searchindex
+   * @param replace
+   */
+  function replaceFacetValue(values, searchindex, replace) {
+    const selectedFacets = JSON.parse(facetsQuery);
+    const currentFacet = selectedFacets.find((facet) => {
+      return facet.searchIndex === searchindex;
+    });
+
+    if (currentFacet) {
+      // if values are empty we want to remove entire facet
+      if (values.length < 1) {
+        const indexToDelete = selectedFacets?.findIndex((facet) => {
+          return facet.searchIndex.includes(searchindex);
+        });
+        selectedFacets.splice(indexToDelete, 1);
+      } else {
+        currentFacet.values = values.map((value) => ({
+          value: value,
+          name: value,
+        }));
+      }
+    } else {
+      const newFacet = {
+        searchIndex: searchindex,
+        values: values.map((value) => ({
+          value: value,
+          name: value,
+        })),
+      };
+      selectedFacets.push(newFacet);
+    }
+
+    console.log(selectedFacets, "SELECTED");
     setFacetsQuery(JSON.stringify(selectedFacets));
     pushQuery(replace, selectedFacets);
   }
@@ -161,32 +196,6 @@ export function useFacets() {
 
   function resetFacets() {
     setFacetsQuery("[]");
-  }
-
-  /**
-   * Remove a facet value from selection and push facets to query
-   * @param value
-   * @param searchindex
-   */
-  function removeFacet(value, searchindex, replace = false) {
-    const selectedFacets = JSON.parse(facetsQuery);
-
-    // find the overall facet to handle
-    const indexedFacet = selectedFacets?.find((facet) => {
-      return facet.searchIndex.includes(searchindex);
-    });
-    // find facet(value) in values
-    const indx = indexedFacet?.values?.findIndex((val) => val.value === value);
-    indexedFacet?.values?.splice(indx, 1);
-    if (indexedFacet?.values?.length < 1) {
-      const indexToDelete = selectedFacets?.findIndex((facet) => {
-        return facet.searchIndex.includes(searchindex);
-      });
-      selectedFacets.splice(indexToDelete, 1);
-    }
-
-    setFacetsQuery(JSON.stringify(selectedFacets));
-    pushQuery(replace, selectedFacets);
   }
 
   const facetLimit = 50;

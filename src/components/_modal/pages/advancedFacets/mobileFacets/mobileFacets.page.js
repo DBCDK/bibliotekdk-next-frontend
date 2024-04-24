@@ -15,6 +15,7 @@ import {
 import { useData } from "@/lib/api/api";
 import { hitcount } from "@/lib/api/complexSearch.fragments";
 import { useEffect } from "react";
+import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
 
 export default function Wrap(props) {
   const { context, modal } = props;
@@ -29,7 +30,13 @@ export default function Wrap(props) {
     pushQuery,
   } = useFacets();
 
-  const cqlAndFacetsQuery = getCqlAndFacetsQuery({ cql, selectedFacets });
+  const { selectedQuickFilters, resetQuickFilters } = useQuickFilters();
+
+  const cqlAndFacetsQuery = getCqlAndFacetsQuery({
+    cql,
+    selectedFacets,
+    quickFilters: selectedQuickFilters,
+  });
 
   useEffect(() => {
     if (!modal.isVisible && modal.hasBeenVisible) {
@@ -66,6 +73,7 @@ export default function Wrap(props) {
   };
   const onClear = () => {
     resetFacets();
+    resetQuickFilters();
   };
 
   // @TODO parse out empty facets (score=0)
