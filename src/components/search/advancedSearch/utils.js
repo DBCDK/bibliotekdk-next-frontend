@@ -1,7 +1,6 @@
 import isEmpty from "lodash/isEmpty";
 import { LogicalOperatorsEnum } from "@/components/search/enums";
 import { formattersAndComparitors } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
-import get from "lodash/get";
 
 function getInputFieldsQueryToCql(inputFields) {
   return inputFields

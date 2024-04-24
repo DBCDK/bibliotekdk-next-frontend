@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 import {
   convertStateToCql,
   getCqlAndFacetsQuery,
-  getQuickFiltersQuery,
   parseOutFacets,
 } from "@/components/search/advancedSearch/utils";
 import useAdvancedSearchHistory from "@/components/hooks/useAdvancedSearchHistory";
