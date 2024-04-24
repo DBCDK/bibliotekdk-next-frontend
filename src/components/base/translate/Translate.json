@@ -2525,6 +2525,10 @@
       }
     },
     "quickfilters": {
+      "label-physical-online": {
+        "da": "Online og fysisk",
+        "en": "Online and physical"
+      },
       "label-fiction-nonfiction": {
         "da": "Fiktion og non-fiktion",
         "en": "Fiction and non-fiction"
