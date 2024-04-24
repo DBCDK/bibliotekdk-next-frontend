@@ -2437,6 +2437,10 @@
         "da": "Søgehistorik",
         "en": "Search history"
       },
+      "history-filter-label": {
+        "da": "filtre",
+        "en": "filters"
+      },
       "history-yesterday": {
         "da": "Igår",
         "en": "Yesterday"
