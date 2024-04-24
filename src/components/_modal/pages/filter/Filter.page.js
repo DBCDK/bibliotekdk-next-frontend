@@ -24,7 +24,7 @@ import * as searchFragments from "@/lib/api/search.fragments";
 import animations from "@/components/base/animation/animations.module.css";
 import styles from "./Filter.module.css";
 import { FilterTypeEnum } from "@/lib/enums";
-import QuickFilter from "@/components/search/advancedSearch/quickfilter/quickFilter";
+import QuickFilter from "@/components/search/advancedSearch/quickfilter/QuickFilter";
 
 function SelectedFilter({
   isLoading,

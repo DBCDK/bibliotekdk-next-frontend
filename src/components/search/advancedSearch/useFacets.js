@@ -134,7 +134,6 @@ export function useFacets() {
       selectedFacets.push(newFacet);
     }
 
-    console.log(selectedFacets, "SELECTED");
     setFacetsQuery(JSON.stringify(selectedFacets));
     pushQuery(replace, selectedFacets);
   }
