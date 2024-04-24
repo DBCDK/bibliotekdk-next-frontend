@@ -10,8 +10,8 @@ import { IconLink } from "@/components/base/iconlink/IconLink";
 import animations from "@/components/base/animation/animations.module.css";
 import Link from "@/components/base/link";
 import CloseSvg from "@/public/icons/close_grey.svg";
-import RedSvg from "@/public/icons/status__not_for_loan.svg";
-import GreenSvg from "@/public/icons/status__on_shelf.svg";
+import RedSvg from "@/public/icons/status__red.svg";
+import GreenSvg from "@/public/icons/status__green.svg";
 import Translate, { hasTranslation } from "@/components/base/translate";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
 
