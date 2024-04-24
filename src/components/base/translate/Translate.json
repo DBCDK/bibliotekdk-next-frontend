@@ -1271,6 +1271,62 @@
       "label_no_holdings": {
         "da": "Biblioteket har ikke materialet \\n Men du kan bestille materialet til afhentning på biblioteket",
         "en": "Library does not have the material, But you can still order for pickup at this library"
+      },
+      "message_ON_SHELF": {
+        "da": "På hylden",
+        "en": "On the shelf"
+      },
+      "message_ON_SHELF_NOT_FOR_LOAN": {
+        "da": "På hylden, men udlånes ikke",
+        "en": "On the shelf, not available for loan"
+      },
+      "message_NOT_ON_SHELF": {
+        "da": "Ikke på hylden",
+        "en": "Not on shelf"
+      },
+      "message_NOT_ON_SHELF_HAS_RETURN_DATE": {
+        "da": "Forventes udlånt til d. %s",
+        "en": "Expected on loan until %s"
+      },
+      "message_NOT_OWNED": {
+        "da": "Har ikke materialet",
+        "en": "Does not have the material"
+      },
+      "message_UNKNOWN_MATERIAL": {
+        "da": "Status kendes ikke",
+        "en": "Status is unknown"
+      },
+      "message_UNKNOWN_STATUS": {
+        "da": "Status kendes ikke",
+        "en": "Status is unknown"
+      },
+      "message_expectedAgencyReturnDate": {
+        "da": "Materialet er i øjeblikket ikke på hylden. Vi forventer at det vil være tilbage på én af afdelingerne %s.",
+        "en": "The material is currently not on the shelf at these libraries. We expect it to be back at one of the libraries <br/> <b>%s</b>."
+      },
+      "lamp_alt_ON_SHELF": {
+        "da": "Grønt lys viser at materialet findes på hylden her",
+        "en": "Green light shows that the materiale in on shelf here"
+      },
+      "lamp_alt_ON_SHELF_NOT_FOR_LOAN": {
+        "da": "Grønt lys som viser at materialet kun kan benyttes på stedet",
+        "en": "Green light showing the material can only be used at location"
+      },
+      "lamp_alt_UNKNOWN_MATERIAL": {
+        "da": "Gråt lys som viser at status for materialet ikke kendes her",
+        "en": "Grey light shows that status for the material is unknown here"
+      },
+      "lamp_alt_UNKNOWN_STATUS": {
+        "da": "Gråt lys som viser at status for materialet ikke kendes her",
+        "en": "Grey light shows that status for the material is unknown here"
+      },
+      "lamp_alt_NOT_OWNED": {
+        "da": "Rødt lys viser at materialet ikke kan hentes her",
+        "en": "Red light shows that the material can't be picked up here"
+      },
+      "lamp_alt_NOT_ON_SHELF": {
+        "da": "Gult lys viser at materialet er udlånt herfra",
+        "en": "Yellow light shows that the material is on loan from here"
       }
     },
     "overview": {
@@ -2002,6 +2058,10 @@
       "showXResults": {
         "da": "Vis %s resultater",
         "en": "Show %s results"
+      },
+      "showXResult": {
+        "da": "Vis %s resultat",
+        "en": "Show %s result"
       },
       "noResults": {
         "da": "Din søgning giver ingen resultater",

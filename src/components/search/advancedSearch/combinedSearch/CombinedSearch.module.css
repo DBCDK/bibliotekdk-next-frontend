@@ -5,7 +5,21 @@
   flex-direction: column;
   align-items: flex-start;
   margin: var(--pt4) 0;
+  margin-top: 0;
+  overflow: hidden;
+  max-height: 0px;
+  animation: revealAnimation 1.1s forwards;
 }
+
+@keyframes revealAnimation {
+  to {
+    max-height: 1000px;
+  }
+}
+.searchItemsWrap {
+  transition: max-height 0.3s ease-out;
+}
+
 .title {
   margin-bottom: var(--pt1);
 }

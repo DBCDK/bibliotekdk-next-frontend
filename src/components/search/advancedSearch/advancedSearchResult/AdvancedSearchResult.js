@@ -36,6 +36,7 @@ export function AdvancedSearchResult({
   isLoading,
   cql,
   selectedFacets,
+  rawcql,
 }) {
   const hitcount = results?.hitcount;
   const numPages = Math.ceil(hitcount / 10);
@@ -56,6 +57,7 @@ export function AdvancedSearchResult({
           <FacetTags />
         </div>
         <div className={styles.titleflex}>
+          <div className={styles.borderTitleTop}></div>
           <Title type="title5" className={styles.countstyle}>
             {hitcount}
           </Title>
@@ -78,16 +80,18 @@ export function AdvancedSearchResult({
           titel: { lg: { offset: 3, span: true } },
         }}
         id="search-result-section"
-        title={<TitleComponent cql={cql} />}
+        title={<TitleComponent cql={rawcql} />}
         subtitle={
           <>
             <div className={styles.facetsContainer}>
               <FacetTags selectedFacets={selectedFacets} />
-              <div className={styles.subtitleStyle}>
-                <Text type="text1" className={styles.titleStyle}>
-                  {translate({ context: "search", label: "narrow-search" })}
-                </Text>
-              </div>
+              {hitcount && (
+                <div className={styles.subtitleStyle}>
+                  <Text type="text1" className={styles.titleStyle}>
+                    {translate({ context: "search", label: "narrow-search" })}
+                  </Text>
+                </div>
+              )}
 
               <AdvancedFacets cql={cql} />
             </div>
@@ -205,6 +209,7 @@ export default function Wrap({ onWorkClick, onPageChange }) {
       setShowPopover={setShowPopover}
       isLoading={parsedResponse.isLoading}
       cql={cqlQuery}
+      rawcql={cqlAndFacetsQuery ? cql : fieldSearchQuery}
       selectedFacets={selectedFacets}
     />
   );

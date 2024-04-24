@@ -1,14 +1,15 @@
 import Text from "@/components/base/text/Text";
 import LocalizationItemBase from "@/components/_modal/pages/base/localizationsBase/localizationItemBase/LocalizationItemBase";
-import {
-  useSingleAgency,
-  AvailabilityEnum,
-  useHighlightsForSingleAgency,
-} from "@/components/hooks/useHandleAgencyAccessData";
+import { useHighlightsForSingleAgency } from "@/components/hooks/useHandleAgencyAccessData";
 import isEmpty from "lodash/isEmpty";
 import { highlightMarkedWords } from "@/components/_modal/utils";
 import Translate from "@/components/base/translate";
 import { getLibraryType, LibraryTypeEnum } from "@/lib/utils";
+import {
+  HoldingStatusEnum,
+  useHoldingsForAgency,
+} from "@/components/hooks/useHoldings";
+import { useInView } from "react-intersection-observer";
 
 /**
  * When there is no query, show this default agencyBranches, which are branches that have holdings
@@ -16,23 +17,23 @@ import { getLibraryType, LibraryTypeEnum } from "@/lib/utils";
  * @param {Object.<string, any>} props.agency
  * @returns {React.ReactElement | null}
  */
-function DefaultShowingOfAgencyBranches({ agency }) {
-  const numberOfBranchesWithAvailable = agency?.branches?.filter(
-    (branch) =>
-      branch?.availabilityAccumulated === AvailabilityEnum.NOW ||
-      branch?.availabilityAccumulated ===
-        AvailabilityEnum.AVAILABLE_NOT_FOR_LOAN
-  ).length;
+function DefaultShowingOfAgencyBranches({ agencyId, pids }) {
+  const { branchesKnownStatus, branchesByAvailability } = useHoldingsForAgency({
+    agencyId,
+    pids,
+  });
+  const mostAvailableStatus = branchesByAvailability?.[0]?.holdings?.status;
 
-  const availabilityOnAgencyAccumulated =
-    agency?.availabilityOnAgencyAccumulated;
+  const numberOfBranchesWithAvailable = branchesKnownStatus?.filter((branch) =>
+    [
+      HoldingStatusEnum.ON_SHELF,
+      HoldingStatusEnum.ON_SHELF_NOT_FOR_LOAN,
+    ].includes(branch?.holdings?.status)
+  )?.length;
 
-  const libraryType = getLibraryType(agency?.agencyId);
+  const libraryType = getLibraryType(agencyId);
 
-  if (
-    availabilityOnAgencyAccumulated === AvailabilityEnum.NOW ||
-    availabilityOnAgencyAccumulated === AvailabilityEnum.AVAILABLE_NOT_FOR_LOAN
-  ) {
+  if (numberOfBranchesWithAvailable > 0) {
     return (
       <>
         <Text clamp={true}>
@@ -62,7 +63,7 @@ function DefaultShowingOfAgencyBranches({ agency }) {
     );
   }
 
-  if (availabilityOnAgencyAccumulated === AvailabilityEnum.LATER) {
+  if (mostAvailableStatus === HoldingStatusEnum.NOT_ON_SHELF) {
     return (
       <Text clamp={true}>
         {Translate({
@@ -159,20 +160,18 @@ export default function AgencyLocalizationItem({
   context,
   modal,
   agencyId,
-  localizationsIsLoading,
   pids,
   query,
+  localizationsIsLoading,
 }) {
-  const {
-    agenciesFlatSorted: agenciesFlatSortedNoHighlights,
-    agenciesIsLoading: singleAgencyIsLoading,
-  } = useSingleAgency(
-    agencyId &&
-      pids && {
-        pids: pids,
-        agencyId: agencyId,
-      }
-  );
+  const { ref, inView } = useInView({
+    threshold: 0,
+    triggerOnce: true,
+  });
+  const { branchesByAvailability, isLoading: branchesIsLoading } =
+    useHoldingsForAgency({ agencyId: inView && agencyId, pids });
+
+  const branch = branchesByAvailability?.[0];
 
   const {
     branchesWithHighlights,
@@ -181,52 +180,55 @@ export default function AgencyLocalizationItem({
   } = useHighlightsForSingleAgency(
     !isEmpty(agencyId) &&
       !isEmpty(query) && {
-        agencyId: agencyId,
+        agencyId: inView && agencyId,
         query: query,
       }
   );
 
-  const agency = agenciesFlatSortedNoHighlights?.[0];
-
   const isLoading =
+    !agencyId ||
+    !pids ||
+    branchesIsLoading ||
+    branchesWithHighlightsIsLoading ||
     localizationsIsLoading ||
-    singleAgencyIsLoading ||
-    branchesWithHighlightsIsLoading;
+    !inView;
 
   return (
-    <LocalizationItemBase
-      library={agency}
-      query={query}
-      itemLoading={isLoading}
-      modalPush={() =>
-        modal.push("branchLocalizations", {
-          ...context,
-          title: agency?.agencyName,
-          pids: pids,
-          agencyId: agencyId,
-        })
-      }
-      availabilityLightProps={{
-        availabilityAccumulated: agency?.availabilityOnAgencyAccumulated,
-      }}
-    >
-      {agencyHighlight ? (
-        <Text type={"text2"}>
-          {highlightMarkedWords(agencyHighlight, "text2", "text1")}
-        </Text>
-      ) : (
-        <Text type="text2">{agency?.agencyName}</Text>
-      )}
-      {
-        <>
-          {isEmpty(query) && <DefaultShowingOfAgencyBranches agency={agency} />}
-          {!isEmpty(query) && !agencyHighlight && (
-            <FormattedBranchesWithHighlights
-              branchesWithHighlights={branchesWithHighlights}
-            />
-          )}
-        </>
-      }
-    </LocalizationItemBase>
+    <div ref={ref} style={{ minHeight: 80 }}>
+      <LocalizationItemBase
+        library={branch}
+        branch={branch}
+        query={query}
+        itemLoading={isLoading}
+        modalPush={() =>
+          modal.push("branchLocalizations", {
+            ...context,
+            title: branch?.agencyName,
+            pids: pids,
+            agencyId: agencyId,
+          })
+        }
+      >
+        {agencyHighlight ? (
+          <Text type={"text2"}>
+            {highlightMarkedWords(agencyHighlight, "text2", "text1")}
+          </Text>
+        ) : (
+          <Text type="text2">{branch?.agencyName}</Text>
+        )}
+        {inView && (
+          <>
+            {isEmpty(query) && (
+              <DefaultShowingOfAgencyBranches agencyId={agencyId} pids={pids} />
+            )}
+            {!isEmpty(query) && !agencyHighlight && (
+              <FormattedBranchesWithHighlights
+                branchesWithHighlights={branchesWithHighlights}
+              />
+            )}
+          </>
+        )}
+      </LocalizationItemBase>
+    </div>
   );
 }
