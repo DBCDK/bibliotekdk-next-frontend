@@ -17,11 +17,15 @@ import {
 } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
 import Accordion, { Item } from "@/components/base/accordion";
 import { unixToFormatedDate } from "@/lib/utils";
+import Link from "@/components/base/link";
+import { useModal } from "@/components/_modal";
 
 function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   const formatedDate = unixToFormatedDate(item.unixtimestamp);
-  const { saveSerach, deleteSearch } = useSavedSearches();
+  const { saveSerach, deleteSearch, savedSearchKeys } = useSavedSearches();
   const isSaved = true; //if an element is shown here it means it is saved//savedSearchKeys?.includes(item.key);
+  console.log(index, "item", item);
+
   return (
     <div className={styles.savedItemRow} {...props}>
       <div
@@ -46,7 +50,9 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
 
       <Text className={styles.date}>{formatedDate}</Text>
       <Text className={styles.searchPreview}>
-        {!isEmpty(item?.fieldSearch) ? (
+        {item?.name ? (
+          <Text type="text2">{item?.name}</Text>
+        ) : !isEmpty(item?.fieldSearch) ? (
           <div>
             <FormatFieldSearchIndexes fieldsearch={item.fieldSearch} />
           </div>
@@ -62,9 +68,12 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
         onClick={() => {
           if (isSaved) {
             //remove search
-            deleteSearch(item);
+            deleteSearch(newItem);
           } else {
-            saveSerach(item);
+            //open save search modal
+            modal.push("saveSearch", {
+              item: item,
+            });
           }
         }}
       />
@@ -82,6 +91,8 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
 export default function SavedSearches() {
   const { deleteSearch, savedSearches } = useSavedSearches();
   const [checkboxList, setCheckboxList] = useState([]);
+  const modal = useModal();
+
   /**
    * Set or unset ALL checkboxes in saved search table
    */
@@ -174,11 +185,12 @@ export default function SavedSearches() {
         </div>
         {savedSearches?.length > 0 ? (
           <Accordion>
-            {savedSearches?.map((item) => (
+            {savedSearches?.map((item, index) => (
               <Item
                 CustomHeaderCompnent={(props) => (
                   <SavedItemRow
                     {...props}
+                    index={index}
                     onSelect={onSelect}
                     item={item}
                     checked={
@@ -197,9 +209,27 @@ export default function SavedSearches() {
                     <div>
                       <SearchQueryDisplay item={item} />
                     </div>
+                    <Text type="text3" tag="span">
+                      <Link
+                        onClick={() => {
+                          console.log("element to send to modal: ", item);
+                          //show edit name modal
+                          modal.push("saveSearch", {
+                            item: item,
+                            fromEditSearch: true,
+                          });
+                        }}
+                        border={{
+                          top: false,
+                          bottom: {
+                            keepVisible: true,
+                          },
+                        }}
+                      >
+                        {Translate({ context: "search", label: "editSearch" })}
+                      </Link>
+                    </Text>{" "}
                     <div />
-                    <div />
-
                     <div />
                   </div>
                 </div>

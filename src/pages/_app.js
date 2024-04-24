@@ -235,6 +235,7 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
                   id="accountHasProfile"
                   component={Pages.AccountHasProfile}
                 />
+                <Modal.Page id="saveSearch" component={Pages.SaveSearch} />
               </Modal.Container>
               <Head />
               <Matomo />
