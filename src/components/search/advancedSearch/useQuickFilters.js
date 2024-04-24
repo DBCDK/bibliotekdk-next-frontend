@@ -12,6 +12,15 @@ export function useQuickFilters() {
   // The quicfilters to display
   const quickfilters = [
     {
+      label: "label-physical-online",
+      searchIndex: "term.accesstype",
+      values: [
+        { label: "Alle", cql: null },
+        { label: "Online", cql: "online" },
+        { label: "Fysisk", cql: "fysisk" },
+      ],
+    },
+    {
       label: "label-fiction-nonfiction",
       searchIndex: "term.fictionnonfiction",
       values: [
