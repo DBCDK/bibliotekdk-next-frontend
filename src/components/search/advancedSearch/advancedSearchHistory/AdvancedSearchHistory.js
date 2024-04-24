@@ -54,7 +54,7 @@ export function FormatedFacets({ facets, className }) {
     </div>
   );
 }
-function HistoryItem({ item, index, checked, onSelect }) {
+function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
   const router = useRouter();
   const breakpoint = useBreakpoint();
 
@@ -104,7 +104,7 @@ function HistoryItem({ item, index, checked, onSelect }) {
       })}
     >
       <Checkbox
-        id={`select-item-${index}`}
+        id={`select-item-${checkboxKey}`}
         tabIndex="-1"
         onChange={(e) => {
           onSelect(item, e);
@@ -350,7 +350,7 @@ export function AdvancedSearchHistory() {
 
   const splittedValues = splitHistoryItems(storedValue);
 
-  const HistoryItemPerDay = ({ title, items }) => {
+  const HistoryItemPerDay = ({ title, items, itemKey }) => {
     return (
       <>
         {title && items.length > 0 && (
@@ -361,6 +361,7 @@ export function AdvancedSearchHistory() {
         {items.length > 0 &&
           items.map((item, index) => (
             <HistoryItem
+              checkboxKey={`${itemKey}-${index}`}
               key={item.key}
               item={item}
               index={index}
@@ -416,12 +417,12 @@ export function AdvancedSearchHistory() {
           // today
           <>
             <HistoryItemPerDay
-              key="search-history-today"
+              itemKey="search-history-today"
               items={splittedValues.today}
               title={Translate({ context: "search", label: "history-today" })}
             />
             <HistoryItemPerDay
-              key="search-history-yesterday"
+              itemKey="search-history-yesterday"
               items={splittedValues.yesterday}
               title={Translate({
                 context: "search",
@@ -429,7 +430,7 @@ export function AdvancedSearchHistory() {
               })}
             />
             <HistoryItemPerDay
-              key="search-history-older"
+              itemKey="search-history-older"
               items={splittedValues.older}
             />
           </>
