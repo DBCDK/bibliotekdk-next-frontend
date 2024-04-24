@@ -1,5 +1,5 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
-import QuickFilter from "@/components/search/advancedSearch/quickfilter/quickFilter";
+import QuickFilter from "@/components/search/advancedSearch/quickfilter/QuickFilter";
 
 const exportedObject = {
   title: "advancedsearch/quickfilter",

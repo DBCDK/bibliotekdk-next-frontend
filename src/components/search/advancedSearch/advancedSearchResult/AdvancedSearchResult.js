@@ -27,7 +27,7 @@ import { FacetTags } from "@/components/search/advancedSearch/facets/facetTags/f
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import { FacetButton } from "@/components/search/advancedSearch/facets/facetButton/facetButton";
 import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
-import QuickFilter from "@/components/search/advancedSearch/quickfilter/quickFilter";
+import QuickFilter from "@/components/search/advancedSearch/quickfilter/QuickFilter";
 
 export function AdvancedSearchResult({
   pageNo,

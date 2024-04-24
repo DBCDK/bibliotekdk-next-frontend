@@ -34,7 +34,6 @@ function ListGroup({ filter }) {
               <Text type="text3" className={styles.text}>
                 {value.label}
               </Text>
-              {/*<p>{row.description}</p>*/}
             </List.Radio>
           ))}
         </List.Group>

@@ -11,7 +11,6 @@ export function useQuickFilters() {
 
   // The quicfilters to display
   const quickfilters = [
-    // { label: "fisk", searchIndex: "term.accesstype", values: ["online"] },
     {
       label: "label-fiction-nonfiction",
       searchIndex: "term.fictionnonfiction",
