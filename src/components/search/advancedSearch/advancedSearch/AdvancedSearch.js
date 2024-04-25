@@ -19,6 +19,7 @@ import { getHelpUrl } from "@/lib/utils";
 import cx from "classnames";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
+import MaterialTypeMenu from "@/components/search/advancedSearch/materialTypeMenu/MaterialTypeMenu";
 
 /**
  * Contains advanced search fields
@@ -152,9 +153,6 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
           </Col>
         </Row>
         <Row>
-          {/*<Col lg={{ offset: 3, span: 4 }} md={6}>*/}
-          {/*  /!**Insert material type select here *!/*/}
-          {/*</Col>*/}
           {showCqlEditor ? (
             <Col lg={{ offset: 3, span: 6 }} md={9} xs={12}>
               <CqlTextArea
@@ -163,12 +161,17 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
               />
             </Col>
           ) : (
-            <Col lg={{ offset: 3, span: 9 }} md={12}>
-              <>
-                <TextInputs doAdvancedSearch={doAdvancedSearch} />
-                <DropdownInputs />
-              </>
-            </Col>
+            <>
+              <Col lg={{ offset: 1, span: 2 }} md={6}>
+                <MaterialTypeMenu />
+              </Col>
+              <Col lg={{ offset: 0, span: 9 }} md={12}>
+                <>
+                  <TextInputs doAdvancedSearch={doAdvancedSearch} />
+                  <DropdownInputs />
+                </>
+              </Col>
+            </>
           )}
         </Row>
         <Row className={styles.buttonRow}>

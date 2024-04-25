@@ -47,6 +47,7 @@ export function useAdvancedSearchContext() {
 }
 
 export default function AdvancedSearchProvider({ children, router }) {
+  //TODO change this to state
   const workType = "all";
 
   const {

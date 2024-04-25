@@ -11,6 +11,7 @@ const ButtonRow = ({ onClick, onDeleteClick, hideDelete = false }) => (
   <div className={styles.buttonRowContainer}>
     {!hideDelete && (
       <IconButton
+        icon="close"
         keepUnderline={true}
         className={styles.removeButton}
         onClick={onDeleteClick}
