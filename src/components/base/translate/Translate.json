@@ -246,6 +246,10 @@
       "sheetmusic": {
         "da": "Noder",
         "en": "Sheetmusic"
+      },
+      "category": {
+        "da": "Kategori",
+        "en": "Category"
       }
     },
     "complex-search-facets": {

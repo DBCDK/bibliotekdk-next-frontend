@@ -81,12 +81,11 @@ export function getWorkTypeQuery(workType) {
   const AND = LogicalOperatorsEnum.AND;
   const INDEXPREFIX = "phrase.";
 
-  if (isEmpty(workType) || workType==="all") {
+  if (isEmpty(workType) || workType === "all") {
     return "";
   }
 
-  return `(worktype=${workType})`
- 
+  return `(worktype=${workType})`;
 }
 
 /**
@@ -162,7 +161,7 @@ export function convertStateToCql({
   inputFields,
   dropdownSearchIndices,
   facets,
-  workType
+  workType,
 } = {}) {
   const inputFieldsQuery = getInputFieldsQueryToCql(inputFields);
   const dropdownQuery = getDropdownQuery(dropdownSearchIndices);
@@ -176,7 +175,6 @@ export function convertStateToCql({
     ...(!isEmpty(inputFieldsQuery) ? [inputFieldsQuery.join(" ")] : []),
     ...(!isEmpty(dropdownQuery) ? [dropdownQuery] : []),
     ...(!isEmpty(facetQuery) ? [facetQuery] : []),
-
   ].join(`) ${AND} (`);
 
   return !isEmpty(result) ? "(" + result + ")" : "";

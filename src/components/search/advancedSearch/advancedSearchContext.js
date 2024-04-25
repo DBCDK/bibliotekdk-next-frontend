@@ -139,7 +139,6 @@ export default function AdvancedSearchProvider({ children, router }) {
     resetDropdownIndices();
     dispatchResetMenuItemsEvent();
     setWorkType("all");
-
   }
 
   /** @typedef {{

@@ -25,7 +25,6 @@ export default function MaterialTypeMenu() {
       <ul className={styles.dropdownMenu}>
         {workTypes.map((type, index) => {
           const isSelected = type === workType; //dummy index for selected
-          console.log(isSelected);
           return (
             <IconButton
               className={styles.menuItem}
@@ -40,7 +39,7 @@ export default function MaterialTypeMenu() {
                 {Translate({
                   context: "advanced_search_worktypes",
                   label: type,
-                })}{" "}
+                })}
               </Text>
             </IconButton>
           );

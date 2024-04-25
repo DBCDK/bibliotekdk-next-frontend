@@ -16,7 +16,7 @@ import { formattersAndComparitors } from "@/components/search/advancedSearch/use
 export function FormattedQuery() {
   const { cqlFromUrl, fieldSearchFromUrl } = useAdvancedSearchContext();
 
-  const { inputFields, dropdownSearchIndices } = fieldSearchFromUrl;
+  const { inputFields, dropdownSearchIndices, workType } = fieldSearchFromUrl;
 
   if (!!cqlFromUrl) {
     return <Text type="text2">{cqlFromUrl}</Text>;
@@ -25,6 +25,7 @@ export function FormattedQuery() {
   const fieldsearch = {
     inputFields,
     dropdownSearchIndices,
+    workType: workType,
   };
 
   return FormatFieldSearchIndexes({ fieldsearch });
@@ -39,13 +40,11 @@ export function FormatFieldSearchIndexes({ fieldsearch }) {
   const filteredInputFields = fieldsearch?.inputFields?.filter(
     (field) => !isEmpty(field.value)
   );
-
+  console.log("fieldsearch", fieldsearch);
   return (
     <div className={styles.formatedQueryContainer}>
-      <FormatFieldInput
-        inputFields={filteredInputFields}
-        showAndOperator={filteredDropdownSearchIndices?.length > 0}
-      />
+      <FormatWorkType workType={fieldsearch?.workType} />
+      <FormatFieldInput inputFields={filteredInputFields} />
       <FormatDropdowns
         dropdowns={filteredDropdownSearchIndices}
         showAndOperator={filteredInputFields?.length > 0}
@@ -60,6 +59,7 @@ function FormatFieldInput({ inputFields }) {
     if (isEmpty) {
       return null;
     }
+
     return (
       <>
         {field.prefixLogicalOperator && index !== 0 && (
@@ -84,6 +84,36 @@ function FormatFieldInput({ inputFields }) {
   });
 }
 
+function FormatWorkType({ workType }) {
+  if (!workType) {
+    return null;
+  }
+  return (
+    <>
+      <Text type="text1">
+        {Translate({
+          context: "advanced_search_worktypes",
+          label: "category",
+        })}
+        :
+      </Text>
+      <Text type="text2">
+        "
+        {Translate({
+          context: "advanced_search_worktypes",
+          label: workType,
+        })}
+        "
+      </Text>
+      <Text type="text2" className={styles.operator_color}>
+        {Translate({
+          context: "search",
+          label: `advanced-dropdown-AND`,
+        })}
+      </Text>
+    </>
+  );
+}
 function FormatDropdowns({ dropdowns, showAndOperator }) {
   return dropdowns?.map((dropdownItem, index) => {
     const { getSelectedPresentation } = formattersAndComparitors(
