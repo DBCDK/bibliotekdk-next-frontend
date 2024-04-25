@@ -40,6 +40,7 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
     showPopover,
     stateToString,
     resetObjectState,
+    workType
   } = useAdvancedSearchContext();
 
   const [showCqlEditor, setShowCqlEditor] = useState(false);
@@ -73,7 +74,11 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
       const query = { fieldSearch: stateToString };
       router.push({ pathname: "/avanceret", query });
       //save in state
-      const cql = convertStateToCql({ inputFields, dropdownSearchIndices });
+      const cql = convertStateToCql({ inputFields, dropdownSearchIndices, workType });
+      console.log('doAdvancedSearch.cql',cql)
+      console.log('doAdvancedSearch.workType',workType)
+      console.log('doAdvancedSearch.stateToString',stateToString)
+
       setParsedCQL(cql);
     }
     setShowPopover(false);

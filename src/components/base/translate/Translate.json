@@ -223,19 +223,19 @@
         "da": "Alle materialer",
         "en": "All materials"
       },
-      "bøger": {
+      "literature": {
         "da": "Bøger",
         "en": "Books"
       },
-      "artikler": {
+      "articles": {
         "da": "Artikler",
         "en": "Articles"
       },
-      "film": {
+      "movie": {
         "da": "Film",
         "en": "Movies"
       },
-      "musik": {
+      "music": {
         "da": "Musik",
         "en": "Music"
       },
@@ -243,9 +243,9 @@
         "da": "Spil",
         "en": "Games"
       },
-      "noder": {
+      "sheetmusic": {
         "da": "Noder",
-        "en": "Scores"
+        "en": "Sheetmusic"
       }
     },
     "complex-search-facets": {

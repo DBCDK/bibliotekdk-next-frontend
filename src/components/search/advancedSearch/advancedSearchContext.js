@@ -47,10 +47,6 @@ export function useAdvancedSearchContext() {
 }
 
 export default function AdvancedSearchProvider({ children, router }) {
-  //TODO change this to state
-  //  const workType = "all";
-  const [workType, setWorkType] = useState("all");
-
   const {
     page = "1",
     cql: cqlFromUrl = null,
@@ -67,6 +63,11 @@ export default function AdvancedSearchProvider({ children, router }) {
   const [showPopover, setShowPopover] = useState(false);
   //if advanced search popover is open, and the user clicks on simple search, a tooltip with info will be shown.
   const [showInfoTooltip, setShowInfoTooltip] = useState(false);
+
+  // worktypes state.
+  const [workType, setWorkType] = useState(
+    fieldSearchFromUrl.workType || "all"
+  );
 
   useEffect(() => {
     if (showPopover && popoverRef.current) {
@@ -109,8 +110,13 @@ export default function AdvancedSearchProvider({ children, router }) {
   const state = {
     ...(cleanInputFields.length > 0 && { inputFields: cleanInputFields }),
     ...(cleanDropdowns.length > 0 && { dropdownSearchIndices: cleanDropdowns }),
+    //TODO check if we need to add all
+    ...(workType && { workType }),
+
+    //  ...(workType && workType !== "all" && { workType }),
   };
 
+  console.log("state", state);
   //if object is empty, return empty string. Otherwise stringify state.
   const stateToString = !isEmpty(state) ? JSON.stringify(state) : "";
 
@@ -120,8 +126,9 @@ export default function AdvancedSearchProvider({ children, router }) {
     const updatedCql = convertStateToCql({
       inputFields,
       dropdownSearchIndices,
+      workType,
     });
-
+    console.log("updatedCql", updatedCql);
     setParsedCQL(cqlFromUrl || updatedCql);
   }, [inputFields, dropdownSearchIndices, cqlFromUrl]);
 

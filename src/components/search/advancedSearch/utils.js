@@ -76,6 +76,19 @@ export function getFacetsQuery(facets) {
   );
 }
 
+export function getWorkTypeQuery(workType) {
+  const OR = LogicalOperatorsEnum.OR;
+  const AND = LogicalOperatorsEnum.AND;
+  const INDEXPREFIX = "phrase.";
+
+  if (isEmpty(workType) || workType==="all") {
+    return "";
+  }
+
+  return `(worktype=${workType})`
+ 
+}
+
 /**
  * Complex search returns empty valued facets - values with a score of 0.
  * Here we filter out all the empty facet values - and if a facet has none
@@ -149,10 +162,12 @@ export function convertStateToCql({
   inputFields,
   dropdownSearchIndices,
   facets,
+  workType
 } = {}) {
   const inputFieldsQuery = getInputFieldsQueryToCql(inputFields);
   const dropdownQuery = getDropdownQuery(dropdownSearchIndices);
   const facetQuery = getFacetsQuery(facets);
+  const workTypeQuery = getWorkTypeQuery(workType);
 
   const AND = LogicalOperatorsEnum.AND;
 
@@ -160,6 +175,8 @@ export function convertStateToCql({
     ...(!isEmpty(inputFieldsQuery) ? [inputFieldsQuery.join(" ")] : []),
     ...(!isEmpty(dropdownQuery) ? [dropdownQuery] : []),
     ...(!isEmpty(facetQuery) ? [facetQuery] : []),
+    ...(!isEmpty(workTypeQuery) ? [workTypeQuery] : []),
+
   ].join(`) ${AND} (`);
 
   return !isEmpty(result) ? "(" + result + ")" : "";
