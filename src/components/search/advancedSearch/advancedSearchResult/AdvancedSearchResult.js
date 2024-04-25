@@ -182,7 +182,11 @@ export default function Wrap({ onWorkClick, onPageChange }) {
   );
   const parsedResponse = parseResponse(fastResponse);
   //update searchhistory
-  if (!parsedResponse?.errorMessage && !parsedResponse.isLoading) {
+  if (
+    !parsedResponse?.errorMessage &&
+    !parsedResponse.isLoading &&
+    (cqlAndFacetsQuery || fieldSearchQuery)
+  ) {
     // make an object for searchhistory
     // the cql part .. we use the raw cql for now - facets are handled independently
     const searchHistoryObj = {
