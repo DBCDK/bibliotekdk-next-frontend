@@ -79,10 +79,6 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
         dropdownSearchIndices,
         workType,
       });
-      console.log("doAdvancedSearch.cql", cql);
-      console.log("doAdvancedSearch.workType", workType);
-      console.log("doAdvancedSearch.stateToString", stateToString);
-
       setParsedCQL(cql);
     }
     setShowPopover(false);

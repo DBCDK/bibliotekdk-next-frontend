@@ -24,7 +24,7 @@ function IconButton({
   onClick,
   alt = "",
   children,
-  icon, //= "close",
+  icon,
   iconSize = 2,
   textType = "text3",
   keepUnderline,

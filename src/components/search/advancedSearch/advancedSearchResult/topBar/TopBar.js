@@ -44,16 +44,21 @@ export function FormatFieldSearchIndexes({ fieldsearch }) {
   return (
     <div className={styles.formatedQueryContainer}>
       <FormatWorkType workType={fieldsearch?.workType} />
-      <FormatFieldInput inputFields={filteredInputFields} />
+      <FormatFieldInput
+        inputFields={filteredInputFields}
+        showAndOperator={fieldsearch?.workType}
+      />
       <FormatDropdowns
         dropdowns={filteredDropdownSearchIndices}
-        showAndOperator={filteredInputFields?.length > 0}
+        showAndOperator={
+          filteredInputFields?.length > 0 || fieldsearch?.workType
+        }
       />
     </div>
   );
 }
 
-function FormatFieldInput({ inputFields }) {
+function FormatFieldInput({ inputFields, showAndOperator }) {
   return inputFields?.map((field, index) => {
     const isEmpty = field?.value?.length === 0;
     if (isEmpty) {
@@ -62,6 +67,14 @@ function FormatFieldInput({ inputFields }) {
 
     return (
       <>
+        {index === 0 && showAndOperator && (
+          <Text type="text2" className={styles.operator_color}>
+            {Translate({
+              context: "search",
+              label: `advanced-dropdown-AND`,
+            })}
+          </Text>
+        )}
         {field.prefixLogicalOperator && index !== 0 && (
           <Text type="text2" className={styles.operator_color}>
             {Translate({
@@ -105,12 +118,12 @@ function FormatWorkType({ workType }) {
         })}
         "
       </Text>
-      <Text type="text2" className={styles.operator_color}>
+      {/* {showAndOperator&&<Text type="text2" className={styles.operator_color}>
         {Translate({
           context: "search",
           label: `advanced-dropdown-AND`,
         })}
-      </Text>
+      </Text>} */}
     </>
   );
 }

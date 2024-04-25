@@ -111,9 +111,9 @@ export default function AdvancedSearchProvider({ children, router }) {
     ...(cleanInputFields.length > 0 && { inputFields: cleanInputFields }),
     ...(cleanDropdowns.length > 0 && { dropdownSearchIndices: cleanDropdowns }),
     //TODO check if we need to add all
-    ...(workType && { workType }),
+    // ...(workType && { workType }),
 
-    //  ...(workType && workType !== "all" && { workType }),
+    ...(workType && workType !== "all" && { workType }),
   };
 
   console.log("state", state);
