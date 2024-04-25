@@ -24,7 +24,7 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   const formatedDate = unixToFormatedDate(item.unixtimestamp);
   const { saveSerach, deleteSearch, savedSearchKeys } = useSavedSearches();
   const isSaved = true; //if an element is shown here it means it is saved//savedSearchKeys?.includes(item.key);
-  console.log(index, "item", item);
+  console.log(JSON.stringify(item));
 
   return (
     <div className={styles.savedItemRow} {...props}>
@@ -68,7 +68,7 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
         onClick={() => {
           if (isSaved) {
             //remove search
-            deleteSearch(newItem);
+            deleteSearch(item);
           } else {
             //open save search modal
             modal.push("saveSearch", {
