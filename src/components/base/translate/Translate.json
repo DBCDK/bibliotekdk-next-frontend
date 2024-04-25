@@ -218,6 +218,36 @@
         "en": "Age"
       }
     },
+    "advanced_search_worktypes": {
+      "all": {
+        "da": "Alle materialer",
+        "en": "All materials"
+      },
+      "bøger": {
+        "da": "Bøger",
+        "en": "Books"
+      },
+      "artikler": {
+        "da": "Artikler",
+        "en": "Articles"
+      },
+      "film": {
+        "da": "Film",
+        "en": "Movies"
+      },
+      "musik": {
+        "da": "Musik",
+        "en": "Music"
+      },
+      "game": {
+        "da": "Spil",
+        "en": "Games"
+      },
+      "noder": {
+        "da": "Noder",
+        "en": "Scores"
+      }
+    },
     "complex-search-facets": {
       "label-specificmaterialtype": {
         "da": "Format",
@@ -260,6 +290,7 @@
         "en": "Level"
       }
     },
+
     "logo": {
       "default_logo_text": {
         "da": "Bibliotek dk",

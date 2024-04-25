@@ -48,7 +48,8 @@ export function useAdvancedSearchContext() {
 
 export default function AdvancedSearchProvider({ children, router }) {
   //TODO change this to state
-  const workType = "all";
+  //  const workType = "all";
+  const [workType, setWorkType] = useState("all");
 
   const {
     page = "1",
@@ -180,6 +181,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     setShowInfoTooltip,
     sort: sort,
     workType: workType,
+    setWorkType,
     stateToString,
     popoverRef,
     resetMenuItemsEvent,

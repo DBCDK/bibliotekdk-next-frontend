@@ -10,16 +10,21 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
+
 import IconButton from "@/components/base/iconButton/IconButton";
 import Text from "@/components/base/text";
-import materialTypes from "./materialTypes.json";
+import workTypes from "./workTypes.json";
 import styles from "./MaterialTypeMenu.module.css";
+import Translate from "@/components/base/translate/Translate";
 export default function MaterialTypeMenu() {
+  //[workType, setWorkType]
+  const { workType, setWorkType } = useAdvancedSearchContext();
   return (
     <div className={styles.container}>
       <ul className={styles.dropdownMenu}>
-        {materialTypes.map((materialType, index) => {
-          const isSelected = 1 === index; //dummy index for selected
+        {workTypes.map((type, index) => {
+          const isSelected = type === workType; //dummy index for selected
           console.log(isSelected);
           return (
             <IconButton
@@ -28,15 +33,15 @@ export default function MaterialTypeMenu() {
               keepUnderline={isSelected}
               iconSize={1}
               onClick={() => {
-                if (materialType === "all") {
-                  //reset state
-                  //Cql worktype=""
-                } else {
-                  //add to state
-                }
+                setWorkType(type);
               }}
             >
-              <Text type="text2">{materialType} </Text>
+              <Text type={isSelected ? "text4" : "text3"}>
+                {Translate({
+                  context: "advanced_search_worktypes",
+                  label: type,
+                })}{" "}
+              </Text>
             </IconButton>
           );
         })}
