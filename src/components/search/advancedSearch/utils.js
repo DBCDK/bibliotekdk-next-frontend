@@ -172,10 +172,10 @@ export function convertStateToCql({
   const AND = LogicalOperatorsEnum.AND;
 
   const result = [
+    ...(!isEmpty(workTypeQuery) ? [workTypeQuery] : []),
     ...(!isEmpty(inputFieldsQuery) ? [inputFieldsQuery.join(" ")] : []),
     ...(!isEmpty(dropdownQuery) ? [dropdownQuery] : []),
     ...(!isEmpty(facetQuery) ? [facetQuery] : []),
-    ...(!isEmpty(workTypeQuery) ? [workTypeQuery] : []),
 
   ].join(`) ${AND} (`);
 
