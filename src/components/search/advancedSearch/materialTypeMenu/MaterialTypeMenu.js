@@ -15,30 +15,29 @@ export default function MaterialTypeMenu() {
   //[workType, setWorkType]
   const { workType, setWorkType } = useAdvancedSearchContext();
   return (
-    <div className={styles.container}>
-      <ul className={styles.dropdownMenu}>
-        {workTypes.map((type, index) => {
-          const isSelected = type === workType; //dummy index for selected
-          return (
-            <IconButton
-              className={styles.menuItem}
-              icon={isSelected ? "arrowrightblue" : null}
-              keepUnderline={isSelected}
-              iconSize={1}
-              onClick={() => {
-                setWorkType(type);
-              }}
-            >
-              <Text type={isSelected ? "text4" : "text3"}>
-                {Translate({
-                  context: "advanced_search_worktypes",
-                  label: type,
-                })}
-              </Text>
-            </IconButton>
-          );
-        })}
-      </ul>
+    <div className={styles.dropdownMenu}>
+      {workTypes.map((type) => {
+        const isSelected = type === workType;
+        return (
+          <IconButton
+            key={type}
+            className={styles.menuItem}
+            icon={isSelected ? "arrowrightblue" : null}
+            keepUnderline={isSelected}
+            iconSize={1}
+            onClick={() => {
+              setWorkType(type);
+            }}
+          >
+            <Text type={isSelected ? "text4" : "text3"}>
+              {Translate({
+                context: "advanced_search_worktypes",
+                label: type,
+              })}
+            </Text>
+          </IconButton>
+        );
+      })}
     </div>
   );
 }

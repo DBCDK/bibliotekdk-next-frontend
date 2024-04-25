@@ -111,12 +111,10 @@ function FormatWorkType({ workType }) {
         :
       </Text>
       <Text type="text2">
-        "
-        {Translate({
+        {`"${Translate({
           context: "advanced_search_worktypes",
           label: workType,
-        })}
-        "
+        })}"`}
       </Text>
       {/* {showAndOperator&&<Text type="text2" className={styles.operator_color}>
         {Translate({
