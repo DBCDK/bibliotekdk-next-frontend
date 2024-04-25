@@ -110,13 +110,9 @@ export default function AdvancedSearchProvider({ children, router }) {
   const state = {
     ...(cleanInputFields.length > 0 && { inputFields: cleanInputFields }),
     ...(cleanDropdowns.length > 0 && { dropdownSearchIndices: cleanDropdowns }),
-    //TODO check if we need to add all
-    // ...(workType && { workType }),
-
     ...(workType && workType !== "all" && { workType }),
   };
 
-  console.log("state", state);
   //if object is empty, return empty string. Otherwise stringify state.
   const stateToString = !isEmpty(state) ? JSON.stringify(state) : "";
 
@@ -128,7 +124,6 @@ export default function AdvancedSearchProvider({ children, router }) {
       dropdownSearchIndices,
       workType,
     });
-    console.log("updatedCql", updatedCql);
     setParsedCQL(cqlFromUrl || updatedCql);
   }, [inputFields, dropdownSearchIndices, cqlFromUrl]);
 

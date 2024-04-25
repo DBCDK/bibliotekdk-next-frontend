@@ -3,13 +3,7 @@
  * This file render a menu for selection of material type in advanced search popover.
  */
 
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React from "react";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
 import IconButton from "@/components/base/iconButton/IconButton";

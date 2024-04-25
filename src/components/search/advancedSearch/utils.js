@@ -77,10 +77,6 @@ export function getFacetsQuery(facets) {
 }
 
 export function getWorkTypeQuery(workType) {
-  const OR = LogicalOperatorsEnum.OR;
-  const AND = LogicalOperatorsEnum.AND;
-  const INDEXPREFIX = "phrase.";
-
   if (isEmpty(workType) || workType === "all") {
     return "";
   }
