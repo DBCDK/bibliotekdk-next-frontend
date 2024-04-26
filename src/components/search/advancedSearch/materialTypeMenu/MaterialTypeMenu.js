@@ -12,7 +12,6 @@ import workTypes from "./workTypes.json";
 import styles from "./MaterialTypeMenu.module.css";
 import Translate from "@/components/base/translate/Translate";
 export default function MaterialTypeMenu() {
-  //[workType, setWorkType]
   const { workType, setWorkType } = useAdvancedSearchContext();
   return (
     <div className={styles.dropdownMenu}>
