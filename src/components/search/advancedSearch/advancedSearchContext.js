@@ -47,8 +47,6 @@ export function useAdvancedSearchContext() {
 }
 
 export default function AdvancedSearchProvider({ children, router }) {
-  const workType = "all";
-
   const {
     page = "1",
     cql: cqlFromUrl = null,
@@ -65,6 +63,11 @@ export default function AdvancedSearchProvider({ children, router }) {
   const [showPopover, setShowPopover] = useState(false);
   //if advanced search popover is open, and the user clicks on simple search, a tooltip with info will be shown.
   const [showInfoTooltip, setShowInfoTooltip] = useState(false);
+
+  // worktypes state.
+  const [workType, setWorkType] = useState(
+    fieldSearchFromUrl.workType || "all"
+  );
 
   useEffect(() => {
     if (showPopover && popoverRef.current) {
@@ -107,6 +110,7 @@ export default function AdvancedSearchProvider({ children, router }) {
   const state = {
     ...(cleanInputFields.length > 0 && { inputFields: cleanInputFields }),
     ...(cleanDropdowns.length > 0 && { dropdownSearchIndices: cleanDropdowns }),
+    ...(workType && workType !== "all" && { workType }),
   };
 
   //if object is empty, return empty string. Otherwise stringify state.
@@ -118,8 +122,8 @@ export default function AdvancedSearchProvider({ children, router }) {
     const updatedCql = convertStateToCql({
       inputFields,
       dropdownSearchIndices,
+      workType,
     });
-
     setParsedCQL(cqlFromUrl || updatedCql);
   }, [inputFields, dropdownSearchIndices, cqlFromUrl]);
 
@@ -129,6 +133,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     resetInputFields();
     resetDropdownIndices();
     dispatchResetMenuItemsEvent();
+    setWorkType("all");
   }
 
   /** @typedef {{
@@ -179,6 +184,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     setShowInfoTooltip,
     sort: sort,
     workType: workType,
+    setWorkType,
     stateToString,
     popoverRef,
     resetMenuItemsEvent,

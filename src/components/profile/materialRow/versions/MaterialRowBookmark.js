@@ -82,6 +82,7 @@ const BookmarkColumn = ({
         )}
       </div>
       <IconButton
+        icon="close"
         onClick={onBookmarkDelete}
         className={cx({ [styles.bookmarkRemoveButton]: showFailedAtCreation })}
       >
