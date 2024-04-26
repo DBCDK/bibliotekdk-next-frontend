@@ -2,6 +2,7 @@ import {
   agesFormatterAndComparitor,
   agesIndices,
   dummy__generalmaterialTypes,
+  dummy__genreAndForm,
   dummy__languages,
   publicationYearFormatterAndComparitor,
   publicationYearIndices,
@@ -16,6 +17,7 @@ export const DropdownIndicesEnum = {
   MATERIAL_TYPES_GENERAL: "phrase.generalmaterialtype",
   PUBLICATION_YEAR: "publicationyear",
   AGES: "ages",
+  GENRE: "phrase.genreandform",
 };
 
 const specialIndices = new Set([
@@ -115,26 +117,32 @@ export function formattersAndComparitors(indexName) {
  * @param initDropdowns
  * @returns {Array.<DropdownUnit>}
  */
-export function useDefaultItemsForDropdownUnits({ initDropdowns }) {
-  const res = [
-    {
-      items: dummy__generalmaterialTypes(),
-      indexName: DropdownIndicesEnum.MATERIAL_TYPES_GENERAL,
+export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
+  // these are general - for all materialtypes - there are two - publicationyear and genre/form
+
+  // @TODO  genre/form
+  /*const res = [
+     {
+      items: publicationYearIndices(),
+      indexName: DropdownIndicesEnum.PUBLICATION_YEAR,
     },
     {
-      items: dummy__languages(),
-      indexName: DropdownIndicesEnum.LANGUAGES,
+      items: dummy__genreAndForm(),
+      indexName: DropdownIndicesEnum.GENRE,
     },
   ].map((dropdownUnit) => {
     return {
       items: convertToDropdownInput(dropdownUnit.items),
       indexName: dropdownUnit.indexName,
     };
-  });
-
-  const publicationYears = {
-    items: publicationYearIndices(),
-    indexName: DropdownIndicesEnum.PUBLICATION_YEAR,
+  });*/
+  const generalMaterialTypes = {
+    items: dummy__generalmaterialTypes(),
+    indexName: DropdownIndicesEnum.MATERIAL_TYPES_GENERAL,
+  };
+  const languages = {
+    items: dummy__languages(),
+    indexName: DropdownIndicesEnum.LANGUAGES,
   };
 
   const ages = {
@@ -142,10 +150,59 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }) {
     indexName: DropdownIndicesEnum.AGES,
   };
 
-  return [...res, publicationYears, ages].map((dropdownUnit) =>
-    getDropdownFromUrl({
-      initDropdowns: initDropdowns,
-      dropdownUnit: dropdownUnit,
-    })
-  );
+  const types = {
+    // @TODO genre/form
+    //all: [languages, ...res, ages].map((dropdownUnit) =>
+    all: [languages].map((dropdownUnit) =>
+      getDropdownFromUrl({
+        initDropdowns: initDropdowns,
+        dropdownUnit: dropdownUnit,
+      })
+    ),
+    // @TODO: materialTypeSpecific, genre/form,
+    /*literature: [generalMaterialTypes, ...res, languages, ages].map(
+      (dropdownUnit) =>
+        getDropdownFromUrl({
+          initDropdowns: initDropdowns,
+          dropdownUnit: dropdownUnit,
+        })
+    ),
+    // @TODO: genre/form -- and whatabout hostpublication ?
+    article: [...res, generalMaterialTypes, languages].map((dropdownUnit) =>
+      getDropdownFromUrl({
+        initDropdowns: initDropdowns,
+        dropdownUnit: dropdownUnit,
+      })
+    ),
+    // @TODO: filmnationality, genre/form
+    movie: [generalMaterialTypes, ...res, ages].map((dropdownUnit) =>
+      getDropdownFromUrl({
+        initDropdowns: initDropdowns,
+        dropdownUnit: dropdownUnit,
+      })
+    ),
+    // @TODO: genre/form
+    music: [generalMaterialTypes, ...res].map((dropdownUnit) =>
+      getDropdownFromUrl({
+        initDropdowns: initDropdowns,
+        dropdownUnit: dropdownUnit,
+      })
+    ),
+    //@TODO :gameplatform,genre/form,players,pegi
+    game: [...res, ages].map((dropdownUnit) =>
+      getDropdownFromUrl({
+        initDropdowns: initDropdowns,
+        dropdownUnit: dropdownUnit,
+      })
+    ),
+    // @TODO .. sheetmusic same as music - it that so ??
+    sheetmusic: [generalMaterialTypes, ...res].map((dropdownUnit) =>
+      getDropdownFromUrl({
+        initDropdowns: initDropdowns,
+        dropdownUnit: dropdownUnit,
+      })
+    ),*/
+  };
+
+  return types[workType] || types["all"];
 }

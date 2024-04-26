@@ -47,7 +47,7 @@ export function useAdvancedSearchContext() {
 }
 
 export default function AdvancedSearchProvider({ children, router }) {
-  const workType = "all";
+  const workType = "books";
 
   const {
     page = "1",
@@ -93,7 +93,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     resetDropdownIndices,
     resetMenuItemsEvent,
     dispatchResetMenuItemsEvent,
-  } = useDropdownSearchIndices({ ...fieldSearchFromUrl });
+  } = useDropdownSearchIndices({ ...fieldSearchFromUrl }, workType);
 
   //// ---- parsedCQL ----
   //only add inputFields to object if there are values

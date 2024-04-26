@@ -33,6 +33,16 @@ export function dummy__generalmaterialTypes() {
   };
 }
 
+export function dummy__genreAndForm() {
+  return {
+    prioritisedItems: prioritisedGenre,
+    prioritisedFormType: FormTypeEnum.CHECKBOX,
+    unprioritisedItems: unprioritisedGenre,
+    unprioritisedFormType: FormTypeEnum.CHECKBOX,
+    overrideValueAs: "name",
+  };
+}
+
 export function nameForActionLinkContainer(formType, searchIndex) {
   return `${formType}__${searchIndex}`;
 }
@@ -506,6 +516,36 @@ const unprioritisedMaterialTypeSpecific = [
   {
     code: "COMIC",
     display: "tegneserie",
+  },
+];
+
+const unprioritisedGenre = [];
+
+const prioritisedGenre = [
+  /**
+   * roman
+   * 11
+   *
+   * romaner
+   * 9
+   *
+   * lydret
+   * 2
+   *
+   * sjove bøger
+   */
+
+  {
+    code: "11",
+    display: "roman",
+  },
+  {
+    code: "9",
+    display: "sjove bøger",
+  },
+  {
+    code: "2",
+    display: "lydret",
   },
 ];
 
