@@ -24,7 +24,7 @@ export default function WorkTypeMenu() {
           <Tag
             key={type}
             className={styles.menuItem}
-            icon={isSelected ? "arrowrightblue" : null}
+            icon="arrowrightblue"
             keepUnderline={isSelected}
             iconSize={1}
             onClick={() => {
