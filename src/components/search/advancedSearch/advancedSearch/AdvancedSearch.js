@@ -19,7 +19,7 @@ import { getHelpUrl } from "@/lib/utils";
 import cx from "classnames";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
-import MaterialTypeMenu from "@/components/search/advancedSearch/materialTypeMenu/MaterialTypeMenu";
+import WorkTypeMenu from "@/components/search/advancedSearch/workTypeMenu/WorkTypeMenu";
 
 /**
  * Contains advanced search fields
@@ -168,7 +168,7 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
           ) : (
             <>
               <Col lg={{ offset: 1, span: 2 }} md={6}>
-                <MaterialTypeMenu />
+                <WorkTypeMenu />
               </Col>
               <Col lg={{ offset: 0, span: 9 }} md={12}>
                 <>
