@@ -48,15 +48,17 @@ function dropdownReducer(state, action) {
 export function useDropdownSearchIndices(fieldSearchFromUrl, workType) {
   //// ---- DropdownSearchIndices ----
   /** @typedef {{indexName: string, items: DropdownInputArray, comparator?: string, formatValue?: function}} DropdownUnit */
-  const /** @type {Array.<DropdownUnit>} */ dropdownUnits =
-      useDefaultItemsForDropdownUnits(
-        {
-          initDropdowns:
-            fieldSearchFromUrl.dropdownSearchIndices ||
-            getDefaultDropdownIndices(),
-        },
-        workType
-      );
+  const /** @type {Array.<DropdownUnit>} */ {
+      dropdownUnits,
+      dropdownsToRemove,
+    } = useDefaultItemsForDropdownUnits(
+      {
+        initDropdowns:
+          fieldSearchFromUrl.dropdownSearchIndices ||
+          getDefaultDropdownIndices(),
+      },
+      workType
+    );
 
   const [dropdownInitState, setDropdownInitState] = useState([]);
 
@@ -84,5 +86,6 @@ export function useDropdownSearchIndices(fieldSearchFromUrl, workType) {
     resetDropdownIndices: resetDropdownIndices,
     resetMenuItemsEvent: "resetMenuItemsEvent",
     dispatchResetMenuItemsEvent: () => dispatchEvent(resetMenuItemsEvent),
+    dropdownsToRemove: dropdownsToRemove,
   };
 }

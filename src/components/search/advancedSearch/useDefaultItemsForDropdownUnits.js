@@ -2,9 +2,12 @@ import {
   agesFormatterAndComparitor,
   agesIndices,
   dummy__filmNationality,
+  dummy__gamePlatform,
   dummy__generalmaterialTypes,
   dummy__genreAndForm,
   dummy__languages,
+  dummy__pegi,
+  dummy__players,
   dummy__specificmaterialTypes,
   publicationYearFormatterAndComparitor,
   publicationYearIndices,
@@ -21,6 +24,9 @@ export const DropdownIndicesEnum = {
   AGES: "ages",
   GENRE: "phrase.genreandform",
   FILM_NATIONALITY: "phrase.filmnationality",
+  GAME_PLATFORM: "phrase.gameplatform",
+  PLAYERS: "phrase.players",
+  PEGI: "phrase.pegi",
 };
 
 const specialIndices = new Set([
@@ -121,26 +127,6 @@ export function formattersAndComparitors(indexName) {
  * @returns {Array.<DropdownUnit>}
  */
 export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
-  // these are general - for all materialtypes - there are two - publicationyear and genre/form
-
-  console.log(workType, "WORKTYPE");
-
-  // @TODO  genre/form
-  /*const res = [
-     {
-      items: publicationYearIndices(),
-      indexName: DropdownIndicesEnum.PUBLICATION_YEAR,
-    },
-    {
-      items: dummy__genreAndForm(),
-      indexName: DropdownIndicesEnum.GENRE,
-    },
-  ].map((dropdownUnit) => {
-    return {
-      items: convertToDropdownInput(dropdownUnit.items),
-      indexName: dropdownUnit.indexName,
-    };
-  });*/
   const filmnationality = {
     items: convertToDropdownInput(dummy__filmNationality()),
     indexName: DropdownIndicesEnum.FILM_NATIONALITY,
@@ -161,10 +147,11 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
     indexName: DropdownIndicesEnum.MATERIAL_TYPES_SPECIFIC,
   };
 
-  const generalMaterialTypes = {
-    items: convertToDropdownInput(dummy__generalmaterialTypes()),
-    indexName: DropdownIndicesEnum.MATERIAL_TYPES_GENERAL,
-  };
+  // const generalMaterialTypes = {
+  //   items: convertToDropdownInput(dummy__generalmaterialTypes()),
+  //   indexName: DropdownIndicesEnum.MATERIAL_TYPES_GENERAL,
+  // };
+
   const languages = {
     items: convertToDropdownInput(dummy__languages()),
     indexName: DropdownIndicesEnum.LANGUAGES,
@@ -173,6 +160,21 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
   const ages = {
     items: agesIndices(),
     indexName: DropdownIndicesEnum.AGES,
+  };
+
+  const gamePlatform = {
+    items: convertToDropdownInput(dummy__gamePlatform()),
+    indexName: DropdownIndicesEnum.GAME_PLATFORM,
+  };
+
+  const players = {
+    items: convertToDropdownInput(dummy__players()),
+    indexName: DropdownIndicesEnum.PLAYERS,
+  };
+
+  const pegi = {
+    items: convertToDropdownInput(dummy__pegi()),
+    indexName: DropdownIndicesEnum.PEGI,
   };
 
   const types = {
@@ -190,12 +192,12 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
       languages,
       publicationYear,
       ages,
-    ].map((dropdownUnit) =>
-      getDropdownFromUrl({
+    ].map((dropdownUnit) => {
+      return getDropdownFromUrl({
         initDropdowns: initDropdowns,
         dropdownUnit: dropdownUnit,
-      })
-    ),
+      });
+    }),
     // @TODO: issue.date ? - there is no such index :)
     article: [
       specificMaterialTypes,
@@ -221,28 +223,41 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
         dropdownUnit: dropdownUnit,
       })
     ),
-    // @TODO: genre/form
-    music: [generalMaterialTypes].map((dropdownUnit) =>
-      getDropdownFromUrl({
-        initDropdowns: initDropdowns,
-        dropdownUnit: dropdownUnit,
-      })
+    // music: DONE
+    music: [specificMaterialTypes, genreAndForm, publicationYear].map(
+      (dropdownUnit) =>
+        getDropdownFromUrl({
+          initDropdowns: initDropdowns,
+          dropdownUnit: dropdownUnit,
+        })
     ),
-    //@TODO :gameplatform,genre/form,players,pegi
-    game: [ages].map((dropdownUnit) =>
-      getDropdownFromUrl({
-        initDropdowns: initDropdowns,
-        dropdownUnit: dropdownUnit,
-      })
+    //@TODO .. something is not right - players always makes a zero search ??
+    game: [gamePlatform, genreAndForm, players, ages, pegi].map(
+      (dropdownUnit) =>
+        getDropdownFromUrl({
+          initDropdowns: initDropdowns,
+          dropdownUnit: dropdownUnit,
+        })
     ),
     // @TODO .. sheetmusic same as music - it that so ??
-    sheetmusic: [generalMaterialTypes].map((dropdownUnit) =>
-      getDropdownFromUrl({
-        initDropdowns: initDropdowns,
-        dropdownUnit: dropdownUnit,
-      })
+    sheetmusic: [specificMaterialTypes, genreAndForm, publicationYear].map(
+      (dropdownUnit) =>
+        getDropdownFromUrl({
+          initDropdowns: initDropdowns,
+          dropdownUnit: dropdownUnit,
+        })
     ),
   };
 
-  return types[workType] || types["all"];
+  // The init dropdown holds the dropdowns configured (selected) - if a selected dropdown is NOT
+  // in types we return it to be deleted from url :)
+  const toRemove = initDropdowns.filter(
+    (drop) =>
+      !!!types[workType].find((type) => type.indexName === drop.searchIndex)
+  );
+
+  return {
+    dropdownUnits: types[workType] || types["all"],
+    dropdownsToRemove: toRemove,
+  };
 }

@@ -125,6 +125,46 @@
         "da": "Materialetype",
         "en": "Materialtype"
       },
+      "phrase.gameplatform": {
+        "da": "Platform",
+        "en": "Platform"
+      },
+      "all_phrase.pegi" : {
+        "da": "PEGI mærkning",
+        "en": "PEGI mark"
+      },
+      "phrase.pegi" : {
+        "da": "PEGI mærkning",
+        "en": "PEGI mark"
+      },
+      "all_phrase.players" : {
+        "da": "Spillere",
+        "en": "Players"
+      },
+      "phrase.players" : {
+        "da": "Antal spillere",
+        "en": "Players"
+      },
+      "all_phrase.gameplatform": {
+        "da": "Alle platforme",
+        "en": "All Platforms"
+      },
+      "all_phrase.genreandform": {
+        "da": "Alle genrer",
+        "en": "All genres"
+      },
+      "phrase.genreandform": {
+        "da": "Genre og form",
+        "en": "Genre and form"
+      },
+      "all_phrase.filmnationality": {
+        "da": "Alle nationaliteter",
+        "en": "All nationalities"
+      },
+      "phrase.filmnationality": {
+        "da": "Nationalitet",
+        "en": "Nationality"
+      },
       "all_phrase.specificmaterialtype": {
         "da": "Alle materialer",
         "en": "All materials"
