@@ -156,14 +156,12 @@ export default function Wrap({ onWorkClick, onPageChange }) {
     pageNoFromUrl: pageNo,
     setShowPopover,
   } = useAdvancedSearchContext();
-
   const { selectedFacets } = useFacets();
 
   // if facets are set we need them for the cql
   const cqlAndFacetsQuery = getCqlAndFacetsQuery(cql, selectedFacets);
   // if facets are not set we need the raw (without facets) fieldsearch query
   const fieldSearchQuery = convertStateToCql({ ...fieldSearch });
-
   // @TODO what to do  with dataCollect ???
   onWorkClick = null;
   // get setter for advanced search history

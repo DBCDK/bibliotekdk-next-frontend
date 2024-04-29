@@ -23,6 +23,7 @@ export function getDefaultDropdownIndices() {
     { searchIndex: DropdownIndicesEnum.MATERIAL_TYPES_GENERAL, value: [] },
     { searchIndex: DropdownIndicesEnum.PUBLICATION_YEAR, value: [] },
     { searchIndex: DropdownIndicesEnum.AGES, value: [] },
+    { searchIndex: DropdownIndicesEnum.GENRE, value: [] },
   ];
 }
 
