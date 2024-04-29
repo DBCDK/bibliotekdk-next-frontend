@@ -120,6 +120,8 @@ export function formattersAndComparitors(indexName) {
 export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
   // these are general - for all materialtypes - there are two - publicationyear and genre/form
 
+  console.log(workType, "WORKTYPE");
+
   // @TODO  genre/form
   /*const res = [
      {
@@ -158,7 +160,7 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
   const types = {
     // @TODO genre/form
     //all: [languages, ...res, ages].map((dropdownUnit) =>
-    all: [generalMaterialTypes, genreAndForm, ages, languages].map(
+    all: [generalMaterialTypes, ages, genreAndForm, languages].map(
       (dropdownUnit) =>
         getDropdownFromUrl({
           initDropdowns: initDropdowns,
@@ -166,48 +168,47 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
         })
     ),
     // @TODO: materialTypeSpecific, genre/form,
-    /*literature: [generalMaterialTypes, ...res, languages, ages].map(
-      (dropdownUnit) =>
-        getDropdownFromUrl({
-          initDropdowns: initDropdowns,
-          dropdownUnit: dropdownUnit,
-        })
+    literature: [generalMaterialTypes, languages, ages].map((dropdownUnit) =>
+      getDropdownFromUrl({
+        initDropdowns: initDropdowns,
+        dropdownUnit: dropdownUnit,
+      })
     ),
     // @TODO: genre/form -- and whatabout hostpublication ?
-    article: [...res, generalMaterialTypes, languages].map((dropdownUnit) =>
+    article: [generalMaterialTypes, languages].map((dropdownUnit) =>
       getDropdownFromUrl({
         initDropdowns: initDropdowns,
         dropdownUnit: dropdownUnit,
       })
     ),
     // @TODO: filmnationality, genre/form
-    movie: [generalMaterialTypes, ...res, ages].map((dropdownUnit) =>
+    movie: [generalMaterialTypes, ages].map((dropdownUnit) =>
       getDropdownFromUrl({
         initDropdowns: initDropdowns,
         dropdownUnit: dropdownUnit,
       })
     ),
     // @TODO: genre/form
-    music: [generalMaterialTypes, ...res].map((dropdownUnit) =>
+    music: [generalMaterialTypes].map((dropdownUnit) =>
       getDropdownFromUrl({
         initDropdowns: initDropdowns,
         dropdownUnit: dropdownUnit,
       })
     ),
     //@TODO :gameplatform,genre/form,players,pegi
-    game: [...res, ages].map((dropdownUnit) =>
+    game: [ages].map((dropdownUnit) =>
       getDropdownFromUrl({
         initDropdowns: initDropdowns,
         dropdownUnit: dropdownUnit,
       })
     ),
     // @TODO .. sheetmusic same as music - it that so ??
-    sheetmusic: [generalMaterialTypes, ...res].map((dropdownUnit) =>
+    sheetmusic: [generalMaterialTypes].map((dropdownUnit) =>
       getDropdownFromUrl({
         initDropdowns: initDropdowns,
         dropdownUnit: dropdownUnit,
       })
-    ),*/
+    ),
   };
 
   return types[workType] || types["all"];

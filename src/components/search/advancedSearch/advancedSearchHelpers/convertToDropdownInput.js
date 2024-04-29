@@ -41,18 +41,11 @@ export function convertToDropdownInput({
   unprioritisedFormType,
   overrideValueAs,
 }) {
-  const convertedPrioritisedItems =
-    unprioritisedItems.length > 0
-      ? uniqueDropdownInput(
-          prioritisedItems.map((item) =>
-            convertSingleToDropdownInput(
-              item,
-              prioritisedFormType,
-              overrideValueAs
-            )
-          )
-        )
-      : [];
+  const convertedPrioritisedItems = uniqueDropdownInput(
+    prioritisedItems.map((item) =>
+      convertSingleToDropdownInput(item, prioritisedFormType, overrideValueAs)
+    )
+  );
   const convertedUnprioritisedItems = uniqueDropdownInput(
     unprioritisedItems.map((item) =>
       convertSingleToDropdownInput(item, unprioritisedFormType, overrideValueAs)

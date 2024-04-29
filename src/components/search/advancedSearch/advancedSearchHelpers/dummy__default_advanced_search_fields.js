@@ -519,7 +519,16 @@ const unprioritisedMaterialTypeSpecific = [
   },
 ];
 
-const unprioritisedGenre = [];
+const unprioritisedGenre = [
+  {
+    code: "110",
+    display: "HEST",
+  },
+  {
+    code: "1100",
+    display: "HUND",
+  },
+];
 
 const prioritisedGenre = [
   /**
