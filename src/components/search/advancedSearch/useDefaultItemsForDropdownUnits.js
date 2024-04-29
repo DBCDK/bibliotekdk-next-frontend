@@ -136,12 +136,17 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
       indexName: dropdownUnit.indexName,
     };
   });*/
+  const genreAndForm = {
+    items: convertToDropdownInput(dummy__genreAndForm()),
+    indexName: DropdownIndicesEnum.GENRE,
+  };
+
   const generalMaterialTypes = {
-    items: dummy__generalmaterialTypes(),
+    items: convertToDropdownInput(dummy__generalmaterialTypes()),
     indexName: DropdownIndicesEnum.MATERIAL_TYPES_GENERAL,
   };
   const languages = {
-    items: dummy__languages(),
+    items: convertToDropdownInput(dummy__languages()),
     indexName: DropdownIndicesEnum.LANGUAGES,
   };
 
@@ -153,11 +158,12 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
   const types = {
     // @TODO genre/form
     //all: [languages, ...res, ages].map((dropdownUnit) =>
-    all: [languages].map((dropdownUnit) =>
-      getDropdownFromUrl({
-        initDropdowns: initDropdowns,
-        dropdownUnit: dropdownUnit,
-      })
+    all: [generalMaterialTypes, genreAndForm, ages, languages].map(
+      (dropdownUnit) =>
+        getDropdownFromUrl({
+          initDropdowns: initDropdowns,
+          dropdownUnit: dropdownUnit,
+        })
     ),
     // @TODO: materialTypeSpecific, genre/form,
     /*literature: [generalMaterialTypes, ...res, languages, ages].map(
