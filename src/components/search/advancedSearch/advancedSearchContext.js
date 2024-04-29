@@ -24,6 +24,8 @@ export function getDefaultDropdownIndices() {
     { searchIndex: DropdownIndicesEnum.PUBLICATION_YEAR, value: [] },
     { searchIndex: DropdownIndicesEnum.AGES, value: [] },
     { searchIndex: DropdownIndicesEnum.GENRE, value: [] },
+    { searchIndex: DropdownIndicesEnum.MATERIAL_TYPES_SPECIFIC, value: [] },
+    { searchIndex: DropdownIndicesEnum.FILM_NATIONALITY, value: [] },
   ];
 }
 

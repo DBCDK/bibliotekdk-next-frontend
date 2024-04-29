@@ -1,9 +1,11 @@
 import {
   agesFormatterAndComparitor,
   agesIndices,
+  dummy__filmNationality,
   dummy__generalmaterialTypes,
   dummy__genreAndForm,
   dummy__languages,
+  dummy__specificmaterialTypes,
   publicationYearFormatterAndComparitor,
   publicationYearIndices,
 } from "@/components/search/advancedSearch/advancedSearchHelpers/dummy__default_advanced_search_fields";
@@ -18,6 +20,7 @@ export const DropdownIndicesEnum = {
   PUBLICATION_YEAR: "publicationyear",
   AGES: "ages",
   GENRE: "phrase.genreandform",
+  FILM_NATIONALITY: "phrase.filmnationality",
 };
 
 const specialIndices = new Set([
@@ -138,9 +141,24 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
       indexName: dropdownUnit.indexName,
     };
   });*/
+  const filmnationality = {
+    items: convertToDropdownInput(dummy__filmNationality()),
+    indexName: DropdownIndicesEnum.FILM_NATIONALITY,
+  };
+
+  const publicationYear = {
+    items: publicationYearIndices(),
+    indexName: DropdownIndicesEnum.PUBLICATION_YEAR,
+  };
+
   const genreAndForm = {
     items: convertToDropdownInput(dummy__genreAndForm()),
     indexName: DropdownIndicesEnum.GENRE,
+  };
+
+  const specificMaterialTypes = {
+    items: convertToDropdownInput(dummy__specificmaterialTypes()),
+    indexName: DropdownIndicesEnum.MATERIAL_TYPES_SPECIFIC,
   };
 
   const generalMaterialTypes = {
@@ -158,31 +176,46 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
   };
 
   const types = {
-    // @TODO genre/form
-    //all: [languages, ...res, ages].map((dropdownUnit) =>
-    all: [generalMaterialTypes, ages, genreAndForm, languages].map(
-      (dropdownUnit) =>
-        getDropdownFromUrl({
-          initDropdowns: initDropdowns,
-          dropdownUnit: dropdownUnit,
-        })
-    ),
-    // @TODO: materialTypeSpecific, genre/form,
-    literature: [generalMaterialTypes, languages, ages].map((dropdownUnit) =>
+    //all: DONE
+    all: [genreAndForm, languages, publicationYear, ages].map((dropdownUnit) =>
       getDropdownFromUrl({
         initDropdowns: initDropdowns,
         dropdownUnit: dropdownUnit,
       })
     ),
-    // @TODO: genre/form -- and whatabout hostpublication ?
-    article: [generalMaterialTypes, languages].map((dropdownUnit) =>
+    // literature: DONE
+    literature: [
+      specificMaterialTypes,
+      genreAndForm,
+      languages,
+      publicationYear,
+      ages,
+    ].map((dropdownUnit) =>
       getDropdownFromUrl({
         initDropdowns: initDropdowns,
         dropdownUnit: dropdownUnit,
       })
     ),
-    // @TODO: filmnationality, genre/form
-    movie: [generalMaterialTypes, ages].map((dropdownUnit) =>
+    // @TODO: issue.date ? - there is no such index :)
+    article: [
+      specificMaterialTypes,
+      genreAndForm,
+      languages,
+      publicationYear,
+    ].map((dropdownUnit) =>
+      getDropdownFromUrl({
+        initDropdowns: initDropdowns,
+        dropdownUnit: dropdownUnit,
+      })
+    ),
+    // movie: DONE
+    movie: [
+      specificMaterialTypes,
+      genreAndForm,
+      filmnationality,
+      publicationYear,
+      ages,
+    ].map((dropdownUnit) =>
       getDropdownFromUrl({
         initDropdowns: initDropdowns,
         dropdownUnit: dropdownUnit,

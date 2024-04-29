@@ -43,6 +43,16 @@ export function dummy__genreAndForm() {
   };
 }
 
+export function dummy__filmNationality() {
+  return {
+    prioritisedItems: prioritisedFilmNationality,
+    prioritisedFormType: FormTypeEnum.CHECKBOX,
+    unprioritisedItems: unprioritisedFilmNationality,
+    unprioritisedFormType: FormTypeEnum.CHECKBOX,
+    overrideValueAs: "name",
+  };
+}
+
 export function nameForActionLinkContainer(formType, searchIndex) {
   return `${formType}__${searchIndex}`;
 }
@@ -516,6 +526,33 @@ const unprioritisedMaterialTypeSpecific = [
   {
     code: "COMIC",
     display: "tegneserie",
+  },
+];
+
+const prioritisedFilmNationality = [
+  {
+    key: "engelske film",
+    score: 442,
+  },
+  {
+    key: "biografiske film",
+    score: 49,
+  },
+
+  {
+    key: "franske film",
+    score: 11,
+  },
+  {
+    key: "danske film",
+    score: 9,
+  },
+];
+
+const unprioritisedFilmNationality = [
+  {
+    key: "amerikanske film",
+    score: 31,
   },
 ];
 

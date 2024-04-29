@@ -7,7 +7,7 @@ import isEqual from "lodash/isEqual";
 
 export function convertSingleToDropdownInput(item, formType, overrideValueAs) {
   const key = item?.code || item?.key;
-  const name = item?.display || item?.term;
+  const name = item?.display || item?.term || item?.key;
 
   return {
     key: key,
