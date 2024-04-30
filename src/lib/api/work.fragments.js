@@ -517,6 +517,11 @@ export function fbiOverviewDetail({ workId }) {
                   display
                 }                
               }
+              classifications {
+                system
+                display
+                code
+              }
               creatorsFromDescription
               physicalDescriptions {
                 summary
@@ -749,6 +754,7 @@ export function listOfAllManifestations({ workId }) {
               display
               roles{functionCode function{plural singular}}
             }
+            
             publisher
           }
         }

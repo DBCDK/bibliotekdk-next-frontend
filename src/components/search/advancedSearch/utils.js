@@ -183,6 +183,8 @@ export function convertStateToCql({
  */
 function typeToFieldindex(type) {
   switch (type) {
+    case "dk5":
+      return "dk5";
     case "creator":
       return "term.creatorcontributor";
     case "subject":
