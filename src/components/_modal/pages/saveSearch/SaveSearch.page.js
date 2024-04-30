@@ -1,5 +1,5 @@
 /**
- * @file This modal page handles the CPR verification process before creating FFU users in CULR
+ * @file This modal page handles saving a search from advanced search. The search will be saved in userdata
  */
 
 import Text from "@/components/base/text";
@@ -19,11 +19,6 @@ import Input from "@/components/base/forms/input";
 import { useEffect, useState } from "react";
 import useSavedSearches from "@/components/hooks/useSavedSearches";
 
-/**
- * Modal page for that contains a button to Adgangsplatform login
- * @param {context} context
- * @returns
- */
 export default function SaveSearch({ modal, context }) {
   const { title, item, back } = context;
   const [searchName, onSearchNameChange] = useState("");
@@ -41,10 +36,16 @@ export default function SaveSearch({ modal, context }) {
     <div className={styles.container}>
       <Top back={back} />
       <Title type="title5" tag="h2">
-        Gem din søgning
+        {Translate({
+          context: "advanced_search_savedSearch",
+          label: "saveYourSearch",
+        })}
       </Title>
       <Text type="text2" tag="label">
-        Navngiv din søgning
+        {Translate({
+          context: "advanced_search_savedSearch",
+          label: "addSavedSearchName",
+        })}
       </Text>
       <Input
         type="text"
@@ -66,7 +67,7 @@ export default function SaveSearch({ modal, context }) {
           //todo close modal
         }}
       >
-        Gem
+        {Translate({ context: "advanced_search_savedSearch", label: "save" })}
       </Button>
     </div>
   );

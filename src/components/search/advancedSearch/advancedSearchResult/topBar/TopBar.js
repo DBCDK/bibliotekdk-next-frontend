@@ -150,7 +150,7 @@ export default function TopBar({ isLoading = false, searchHistoryObj }) {
     e.stopPropagation(); // Prevent the accordion from expanding
     if (isSaved) {
       //remove search
-      deleteSearch(item);
+      deleteSearch(searchHistoryObj);
     } else {
       //open save search modal
       modal.push("saveSearch", {

@@ -23,8 +23,7 @@ import { useModal } from "@/components/_modal";
 function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   const formatedDate = unixToFormatedDate(item.unixtimestamp);
   const { saveSerach, deleteSearch, savedSearchKeys } = useSavedSearches();
-  const isSaved = true; //if an element is shown here it means it is saved//savedSearchKeys?.includes(item.key);
-  console.log(JSON.stringify(item));
+  const isSaved = true; //if an element is shown here it means it is saved
 
   return (
     <div className={styles.savedItemRow} {...props}>
@@ -64,17 +63,9 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
       <Icon
         style={{ cursor: "pointer" }}
         size={3}
-        src={`${isSaved ? "heart_filled" : "heart"}.svg`}
+        src={`heart_filled.svg`}
         onClick={() => {
-          if (isSaved) {
-            //remove search
-            deleteSearch(item);
-          } else {
-            //open save search modal
-            modal.push("saveSearch", {
-              item: item,
-            });
-          }
+          deleteSearch(item);
         }}
       />
       <Icon
@@ -92,7 +83,7 @@ export default function SavedSearches() {
   const { deleteSearch, savedSearches } = useSavedSearches();
   const [checkboxList, setCheckboxList] = useState([]);
   const modal = useModal();
-
+  console.log("savedSearches", savedSearches);
   /**
    * Set or unset ALL checkboxes in saved search table
    */
