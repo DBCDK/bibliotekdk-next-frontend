@@ -56,6 +56,7 @@ export function AdvancedSearchResult({
         <div className={styles.mobileTags}>
           <FacetTags />
         </div>
+
         <div className={styles.titleflex}>
           <div className={styles.borderTitleTop}></div>
           <Title type="title5" className={styles.countstyle}>
@@ -83,18 +84,19 @@ export function AdvancedSearchResult({
         title={<TitleComponent cql={rawcql} />}
         subtitle={
           <>
-            <div className={styles.facetsContainer}>
-              <FacetTags selectedFacets={selectedFacets} />
-              {hitcount && (
+            {hitcount > 0 && (
+              <div className={styles.facetsContainer}>
+                <FacetTags selectedFacets={selectedFacets} />
+
                 <div className={styles.subtitleStyle}>
                   <Text type="text1" className={styles.titleStyle}>
                     {translate({ context: "search", label: "narrow-search" })}
                   </Text>
                 </div>
-              )}
 
-              <AdvancedFacets cql={cql} />
-            </div>
+                <AdvancedFacets cql={cql} />
+              </div>
+            )}
           </>
         }
         sectionContentClass={isMobile ? styles.sectionContentStyle : ""}
