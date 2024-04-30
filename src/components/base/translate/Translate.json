@@ -129,19 +129,19 @@
         "da": "Platform",
         "en": "Platform"
       },
-      "all_phrase.pegi" : {
+      "all_phrase.pegi": {
         "da": "PEGI mærkning",
         "en": "PEGI mark"
       },
-      "phrase.pegi" : {
+      "phrase.pegi": {
         "da": "PEGI mærkning",
         "en": "PEGI mark"
       },
-      "all_phrase.players" : {
+      "all_phrase.players": {
         "da": "Spillere",
         "en": "Players"
       },
-      "phrase.players" : {
+      "phrase.players": {
         "da": "Antal spillere",
         "en": "Players"
       },
