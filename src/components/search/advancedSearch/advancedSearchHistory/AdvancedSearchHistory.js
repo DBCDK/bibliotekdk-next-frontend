@@ -177,10 +177,15 @@ function HistoryHeaderActions({
     context: "bookmark",
     label: "remove-selected",
   });
+  const combineSearchLabel = Translate({
+    context: "search",
+    label: "combineSearch",
+  });
 
   const MENUITEMS = [
     { child: selectAllLabel, callback: setAllChecked },
     { child: deleteSelectedLabel, callback: deleteSelected },
+    { child: combineSearchLabel, callback: onCombineSearch },
   ];
 
   if (breakpoint === "xs") {
