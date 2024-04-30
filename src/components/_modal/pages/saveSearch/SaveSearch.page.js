@@ -28,9 +28,7 @@ export default function SaveSearch({ modal, context }) {
   }, [item]);
   const { saveSerach, deleteSearch, savedSearchKeys } = useSavedSearches();
   //check user has saved the search item
-  console.log("modal item", item);
 
-  console.log("modal context", context);
 
   return (
     <div className={styles.container}>
@@ -61,10 +59,9 @@ export default function SaveSearch({ modal, context }) {
         onClick={() => {
           //todo check if empty
           const newItem = { ...item, name: searchName };
-          console.log("saving newItem", newItem);
-          //save item with name
           saveSerach(newItem);
-          //todo close modal
+          //todo close when save search is done
+          modal.clear()
         }}
       >
         {Translate({ context: "advanced_search_savedSearch", label: "save" })}
