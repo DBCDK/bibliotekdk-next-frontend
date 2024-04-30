@@ -3,7 +3,6 @@ import {
   agesIndices,
   dummy__filmNationality,
   dummy__gamePlatform,
-  dummy__generalmaterialTypes,
   dummy__genreAndForm,
   dummy__languages,
   dummy__pegi,
