@@ -20,7 +20,7 @@ export default function SaveSearch({ modal, context }) {
   useEffect(() => {
     onSearchNameChange(item?.name || item?.cql || "");
   }, [item]);
-  const { saveSerach } = useSavedSearches();
+  const { saveSearch } = useSavedSearches();
   //check user has saved the search item
 
   return (
@@ -44,15 +44,17 @@ export default function SaveSearch({ modal, context }) {
         dataCy="save-search-input"
         onChange={(e) => onSearchNameChange(e.target.value)}
         autocomplete="off"
-        placeholder={"hej medd sig"}
+        placeholder={Translate({
+          context: "advanced_search_savedSearch",
+          label: "addSavedSearcInputPlaceholder",
+        })}
         value={searchName}
       />
       <Button
         disabled={searchName.length === 0}
         onClick={() => {
-          //todo check if empty
           const newItem = { ...item, name: searchName };
-          saveSerach(newItem);
+          saveSearch(newItem);
           //todo close when save search is done
           modal.clear();
         }}

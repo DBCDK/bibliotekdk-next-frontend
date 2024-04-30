@@ -32,7 +32,7 @@ export const useSavedSearches = () => {
 
   //todo rename to saveSearch
 
-  const saveSerach = (value) => {
+  const saveSearch = (value) => {
     try {
       if (typeof window !== "undefined") {
         // Check if cql (and facets) is already stored
@@ -88,7 +88,7 @@ export const useSavedSearches = () => {
   return {
     savedSearches,
     savedSearchKeys,
-    saveSerach,
+    saveSearch,
     deleteSearch,
   };
 };

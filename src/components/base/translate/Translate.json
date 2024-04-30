@@ -244,6 +244,10 @@
         "da": "Navngiv din søgning",
         "en": "Name your search"
       },
+      "addSavedSearcInputPlaceholder": {
+        "da": "Angiv et navn for din søgning.",
+        "en": "Type a name for your search."
+      },
       "save": {
         "da": "Gem",
         "en": "Save"

@@ -81,7 +81,7 @@ export default function SavedSearches() {
   const { deleteSearch, savedSearches } = useSavedSearches();
   const [checkboxList, setCheckboxList] = useState([]);
   const modal = useModal();
-  console.log("savedSearches", savedSearches);
+
   /**
    * Set or unset ALL checkboxes in saved search table
    */
@@ -201,7 +201,6 @@ export default function SavedSearches() {
                     <Text type="text3" tag="span">
                       <Link
                         onClick={() => {
-                          console.log("element to send to modal: ", item);
                           //show edit name modal
                           modal.push("saveSearch", {
                             item: item,
