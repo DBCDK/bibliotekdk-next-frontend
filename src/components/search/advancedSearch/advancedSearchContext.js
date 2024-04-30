@@ -23,6 +23,12 @@ export function getDefaultDropdownIndices() {
     { searchIndex: DropdownIndicesEnum.MATERIAL_TYPES_GENERAL, value: [] },
     { searchIndex: DropdownIndicesEnum.PUBLICATION_YEAR, value: [] },
     { searchIndex: DropdownIndicesEnum.AGES, value: [] },
+    { searchIndex: DropdownIndicesEnum.GENRE, value: [] },
+    { searchIndex: DropdownIndicesEnum.MATERIAL_TYPES_SPECIFIC, value: [] },
+    { searchIndex: DropdownIndicesEnum.FILM_NATIONALITY, value: [] },
+    { searchIndex: DropdownIndicesEnum.GAME_PLATFORM, value: [] },
+    { searchIndex: DropdownIndicesEnum.PLAYERS, value: [] },
+    { searchIndex: DropdownIndicesEnum.PEGI, value: [] },
   ];
 }
 
@@ -96,16 +102,24 @@ export default function AdvancedSearchProvider({ children, router }) {
     resetDropdownIndices,
     resetMenuItemsEvent,
     dispatchResetMenuItemsEvent,
-  } = useDropdownSearchIndices({ ...fieldSearchFromUrl });
+    dropdownsToRemove,
+  } = useDropdownSearchIndices({ ...fieldSearchFromUrl }, workType);
 
   //// ---- parsedCQL ----
   //only add inputFields to object if there are values
   const cleanInputFields =
     inputFields?.filter((el) => !isEmpty(el.value)) || [];
 
+  // filter out dropdowns to be removed (they are in url but NOT in on this page)
+  const filteredDropDowns = dropdownSearchIndices.filter(function (el) {
+    return !!!dropdownsToRemove.find(
+      (drop) => drop.searchIndex === el.searchIndex
+    );
+  });
+
   //only add dropdownSearchIndices to object if there are values
   const cleanDropdowns =
-    dropdownSearchIndices?.filter((el) => !isEmpty(el.value)) || [];
+    filteredDropDowns?.filter((el) => !isEmpty(el.value)) || [];
 
   const state = {
     ...(cleanInputFields.length > 0 && { inputFields: cleanInputFields }),
