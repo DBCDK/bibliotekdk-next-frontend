@@ -57,11 +57,13 @@ export function convertToDropdownInput({
 
   return [
     ...convertedPrioritisedItems,
-    ...(convertedUnprioritisedItems.length > 0 && [
-      {
-        formType: FormTypeEnum.DIVIDER,
-      },
-    ]),
+    ...(convertedUnprioritisedItems.length > 0
+      ? [
+          {
+            formType: FormTypeEnum.DIVIDER,
+          },
+        ]
+      : []),
     ...convertedUnprioritisedItems,
   ];
 }
