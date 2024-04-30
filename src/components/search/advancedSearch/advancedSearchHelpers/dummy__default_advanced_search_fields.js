@@ -680,19 +680,6 @@ const unprioritisedGenre = [
 ];
 
 const prioritisedGenre = [
-  /**
-   * roman
-   * 11
-   *
-   * romaner
-   * 9
-   *
-   * lydret
-   * 2
-   *
-   * sjove bøger
-   */
-
   {
     code: "11",
     display: "roman",
