@@ -113,7 +113,7 @@ export function SearchQueryDisplay({ item }) {
 function HistoryItem({ item, index, checked, onSelect }) {
   const modal = useModal();
   const breakpoint = useBreakpoint();
-  const { saveSerach, deleteSearch, savedSearchKeys } = useSavedSearches();
+  const { deleteSearch, savedSearchKeys } = useSavedSearches();
   //check user has saved the search item
   const isSaved = savedSearchKeys?.includes(item.key);
 

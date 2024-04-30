@@ -7,12 +7,6 @@ import Title from "@/components/base/title";
 import Top from "@/components/_modal/pages/base/top";
 import Translate from "@/components/base/translate";
 import Button from "@/components/base/button";
-import { signIn } from "@dbcdk/login-nextjs/client";
-import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
-import useVerification from "@/components/hooks/useVerification";
-import useAccessToken from "@/components/hooks/user/useAccessToken";
-
-import useStorage from "@/components/hooks/useStorage";
 
 import styles from "./SaveSearch.module.css";
 import Input from "@/components/base/forms/input";
@@ -20,15 +14,14 @@ import { useEffect, useState } from "react";
 import useSavedSearches from "@/components/hooks/useSavedSearches";
 
 export default function SaveSearch({ modal, context }) {
-  const { title, item, back } = context;
+  const { item, back } = context;
   const [searchName, onSearchNameChange] = useState("");
 
   useEffect(() => {
     onSearchNameChange(item?.name || item?.cql || "");
   }, [item]);
-  const { saveSerach, deleteSearch, savedSearchKeys } = useSavedSearches();
+  const { saveSerach } = useSavedSearches();
   //check user has saved the search item
-
 
   return (
     <div className={styles.container}>
@@ -61,7 +54,7 @@ export default function SaveSearch({ modal, context }) {
           const newItem = { ...item, name: searchName };
           saveSerach(newItem);
           //todo close when save search is done
-          modal.clear()
+          modal.clear();
         }}
       >
         {Translate({ context: "advanced_search_savedSearch", label: "save" })}

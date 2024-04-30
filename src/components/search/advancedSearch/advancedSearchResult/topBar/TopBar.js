@@ -143,7 +143,7 @@ export default function TopBar({ isLoading = false, searchHistoryObj }) {
   const modal = useModal();
 
   const { setShowPopover } = useAdvancedSearchContext();
-  const { saveSerach, deleteSearch, savedSearchKeys } = useSavedSearches();
+  const { deleteSearch, savedSearchKeys } = useSavedSearches();
   //check user has saved the search item
   const isSaved = savedSearchKeys?.includes(searchHistoryObj.key);
   const onSaveSearchClick = (e) => {

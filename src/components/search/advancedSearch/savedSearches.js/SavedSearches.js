@@ -22,8 +22,7 @@ import { useModal } from "@/components/_modal";
 
 function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   const formatedDate = unixToFormatedDate(item.unixtimestamp);
-  const { saveSerach, deleteSearch, savedSearchKeys } = useSavedSearches();
-  const isSaved = true; //if an element is shown here it means it is saved
+  const { deleteSearch } = useSavedSearches();
 
   return (
     <div className={styles.savedItemRow} {...props}>
@@ -43,7 +42,6 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
           onMouseDown={(e) => {
             e.stopPropagation(); // Stop the mouse down event from propagating
           }}
-          //   className={styles.checkbox}
         />
       </div>
 
