@@ -8,7 +8,7 @@
 }
 .tagContainer {
   display: flex;
-  gap: var(--pt1);
+  gap: var(--pt1_5);
   margin-bottom: var(--pt2);
   overflow-x: scroll;
   white-space: nowrap;
