@@ -167,7 +167,7 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
             </Col>
           ) : (
             <>
-              <Col lg={{ offset: 1, span: 2 }} md={6}>
+              <Col lg={{ offset: 1, span: 2 }} md={12}>
                 <WorkTypeMenu />
               </Col>
               <Col lg={{ offset: 0, span: 9 }} md={12}>
