@@ -188,6 +188,18 @@ WrappedDetailsSectionMovie.story = {
               display: "2011",
             },
           }),
+          classifications: () => [
+            {
+              code: "86-06",
+              system: "DK5",
+              display: "86-06 Dansk skønlitteratur",
+            },
+            {
+              code: "sk",
+              system: "DK5",
+              display: "Skønlitteratur",
+            },
+          ],
         },
       },
     },
