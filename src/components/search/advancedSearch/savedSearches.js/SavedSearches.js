@@ -17,11 +17,13 @@ import {
 } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
 import Accordion, { Item } from "@/components/base/accordion";
 import { unixToFormatedDate } from "@/lib/utils";
+import Link from "@/components/base/link";
+import { useModal } from "@/components/_modal";
 
 function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   const formatedDate = unixToFormatedDate(item.unixtimestamp);
-  const { saveSerach, deleteSearch } = useSavedSearches();
-  const isSaved = true; //if an element is shown here it means it is saved//savedSearchKeys?.includes(item.key);
+  const { deleteSearch } = useSavedSearches();
+
   return (
     <div className={styles.savedItemRow} {...props}>
       <div
@@ -40,13 +42,14 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
           onMouseDown={(e) => {
             e.stopPropagation(); // Stop the mouse down event from propagating
           }}
-          //   className={styles.checkbox}
         />
       </div>
 
       <Text className={styles.date}>{formatedDate}</Text>
       <Text className={styles.searchPreview}>
-        {!isEmpty(item?.fieldSearch) ? (
+        {item?.name ? (
+          <Text type="text2">{item?.name}</Text>
+        ) : !isEmpty(item?.fieldSearch) ? (
           <div>
             <FormatFieldSearchIndexes fieldsearch={item.fieldSearch} />
           </div>
@@ -58,14 +61,9 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
       <Icon
         style={{ cursor: "pointer" }}
         size={3}
-        src={`${isSaved ? "heart_filled" : "heart"}.svg`}
+        src={`heart_filled.svg`}
         onClick={() => {
-          if (isSaved) {
-            //remove search
-            deleteSearch(item);
-          } else {
-            saveSerach(item);
-          }
+          deleteSearch(item);
         }}
       />
       <Icon
@@ -82,6 +80,8 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
 export default function SavedSearches() {
   const { deleteSearch, savedSearches } = useSavedSearches();
   const [checkboxList, setCheckboxList] = useState([]);
+  const modal = useModal();
+
   /**
    * Set or unset ALL checkboxes in saved search table
    */
@@ -174,11 +174,12 @@ export default function SavedSearches() {
         </div>
         {savedSearches?.length > 0 ? (
           <Accordion>
-            {savedSearches?.map((item) => (
+            {savedSearches?.map((item, index) => (
               <Item
                 CustomHeaderCompnent={(props) => (
                   <SavedItemRow
                     {...props}
+                    index={index}
                     onSelect={onSelect}
                     item={item}
                     checked={
@@ -197,9 +198,26 @@ export default function SavedSearches() {
                     <div>
                       <SearchQueryDisplay item={item} />
                     </div>
+                    <Text type="text3" tag="span">
+                      <Link
+                        onClick={() => {
+                          //show edit name modal
+                          modal.push("saveSearch", {
+                            item: item,
+                            fromEditSearch: true,
+                          });
+                        }}
+                        border={{
+                          top: false,
+                          bottom: {
+                            keepVisible: true,
+                          },
+                        }}
+                      >
+                        {Translate({ context: "search", label: "editSearch" })}
+                      </Link>
+                    </Text>{" "}
                     <div />
-                    <div />
-
                     <div />
                   </div>
                 </div>

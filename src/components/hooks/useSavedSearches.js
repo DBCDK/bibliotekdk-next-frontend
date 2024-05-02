@@ -30,23 +30,30 @@ export const useSavedSearches = () => {
     JSON.parse(getLocalStorageItem(key) || "[]")
   );
 
-  const saveSerach = (value) => {
+  //todo rename to saveSearch
+
+  const saveSearch = (value) => {
     try {
       if (typeof window !== "undefined") {
-        // check if cql (and facets) is already stored
-        const alreadyStored = savedSearches.find(
+        // Check if cql (and facets) is already stored
+        const index = savedSearches.findIndex(
           (stor) => stor?.key?.trim() === value?.key?.trim()
         );
+
         value["timestamp"] = getTimeStamp(getUnixTimeStamp());
         value["unixtimestamp"] = getUnixTimeStamp();
-        if (!alreadyStored) {
-          // Add to beginning of saved items array
+
+        if (index !== -1) {
+          // Update the existing entry if found
+          savedSearches[index] = value;
+        } else {
+          // Add to the beginning of saved items array if not found
           savedSearches.unshift(value);
-          // maintain localstorage
-          setLocalStorageItem(KEY, JSON.stringify(savedSearches));
-          // maintain state
-          mutate();
         }
+
+        // Update localstorage and state
+        setLocalStorageItem(KEY, JSON.stringify(savedSearches));
+        mutate();
       }
     } catch (err) {
       console.error(err);
@@ -81,7 +88,7 @@ export const useSavedSearches = () => {
   return {
     savedSearches,
     savedSearchKeys,
-    saveSerach,
+    saveSearch,
     deleteSearch,
   };
 };

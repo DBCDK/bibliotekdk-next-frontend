@@ -10,6 +10,7 @@ import isEmpty from "lodash/isEmpty";
 import { formattersAndComparitors } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
 import useSavedSearches from "@/components/hooks/useSavedSearches";
 import IconButton from "@/components/base/iconButton";
+import { useModal } from "@/components/_modal";
 
 /**
  *
@@ -139,18 +140,22 @@ function FormatDropdowns({ dropdowns, showAndOperator }) {
 }
 
 export default function TopBar({ isLoading = false, searchHistoryObj }) {
+  const modal = useModal();
+
   const { setShowPopover } = useAdvancedSearchContext();
-  const { saveSerach, deleteSearch, savedSearchKeys } = useSavedSearches();
+  const { deleteSearch, savedSearchKeys } = useSavedSearches();
   //check user has saved the search item
   const isSaved = savedSearchKeys?.includes(searchHistoryObj.key);
   const onSaveSearchClick = (e) => {
     e.stopPropagation(); // Prevent the accordion from expanding
-
     if (isSaved) {
       //remove search
       deleteSearch(searchHistoryObj);
     } else {
-      saveSerach(searchHistoryObj);
+      //open save search modal
+      modal.push("saveSearch", {
+        item: searchHistoryObj,
+      });
     }
   };
   return (

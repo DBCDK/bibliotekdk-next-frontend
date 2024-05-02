@@ -235,6 +235,22 @@
       "emptyListMessage4": {
         "da": "Når du bruger “Avanceret søgning” kan du trykke på knappen  “Gem søgning” i toppen af søgeresultatet, og søgningen vil lægge sig her på listen.\n\nDu kan også gemme en søgning fra listen “Seneste søgninger” ved at klikke på hjerte-ikonet ud for den ønskede søgning.",
         "en": "You do not have any saved searches yet."
+      },
+      "saveYourSearch": {
+        "da": "Gem din søgning",
+        "en": "Save your search"
+      },
+      "addSavedSearchName": {
+        "da": "Navngiv din søgning",
+        "en": "Name your search"
+      },
+      "addSavedSearcInputPlaceholder": {
+        "da": "Angiv et navn for din søgning.",
+        "en": "Type a name for your search."
+      },
+      "save": {
+        "da": "Gem",
+        "en": "Save"
       }
     },
     "complex-search-facets": {

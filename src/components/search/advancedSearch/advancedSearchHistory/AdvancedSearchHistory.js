@@ -21,6 +21,7 @@ import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import Button from "@/components/base/button";
 import CombinedSearch from "@/components/search/advancedSearch/combinedSearch/CombinedSearch";
 import useSavedSearches from "@/components/hooks/useSavedSearches";
+import { useModal } from "@/components/_modal";
 
 //Component to render facets
 export function FormatedFacets({ facets, className }) {
@@ -110,8 +111,9 @@ export function SearchQueryDisplay({ item }) {
   );
 }
 function HistoryItem({ item, index, checked, onSelect }) {
+  const modal = useModal();
   const breakpoint = useBreakpoint();
-  const { saveSerach, deleteSearch, savedSearchKeys } = useSavedSearches();
+  const { deleteSearch, savedSearchKeys } = useSavedSearches();
   //check user has saved the search item
   const isSaved = savedSearchKeys?.includes(item.key);
 
@@ -169,7 +171,10 @@ function HistoryItem({ item, index, checked, onSelect }) {
             //remove search
             deleteSearch(item);
           } else {
-            saveSerach(item);
+            //open save search modal
+            modal.push("saveSearch", {
+              item: item,
+            });
           }
         }}
       />
