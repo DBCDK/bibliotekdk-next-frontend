@@ -2952,6 +2952,10 @@
         "da": "Noder",
         "en": "Sheet music"
       },
+      "label-map": {
+        "da": "Kort",
+        "en": "Map"
+      },
       "label-portrait": {
         "da": "Potrætter",
         "en": "Portraits"
