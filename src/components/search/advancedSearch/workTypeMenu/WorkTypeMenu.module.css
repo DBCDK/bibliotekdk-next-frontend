@@ -6,3 +6,18 @@
 .menuItem {
   width: fit-content;
 }
+.tagContainer {
+  display: flex;
+  gap: var(--pt1_5);
+  margin-bottom: var(--pt2);
+  overflow-x: scroll;
+  white-space: nowrap;
+  overflow-y: hidden;
+  padding: var(--pt2) 0;
+  margin-left: -15px;
+  padding-left: var(--pt2);
+}
+
+.tagWrapper {
+  display: grid;
+}
