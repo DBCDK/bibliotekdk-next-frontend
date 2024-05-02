@@ -9,15 +9,19 @@
 .tagContainer {
   display: flex;
   gap: var(--pt1_5);
-  margin-bottom: var(--pt2);
   overflow-x: scroll;
   white-space: nowrap;
   overflow-y: hidden;
-  padding: var(--pt2) 0;
-  margin-left: -15px;
-  padding-left: var(--pt2);
+  margin: 0 -16px var(--pt2);
+  padding: var(--pt1) var(--pt2);
+  padding-top: var(--pt2);
+  border-bottom: 1px solid var(--Primary-Grey---D6D6D7, #d6d6d7);
 }
 
 .tagWrapper {
   display: grid;
+}
+
+.tagItem {
+  box-shadow: none !important;
 }

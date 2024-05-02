@@ -30,6 +30,7 @@ export default function WorkTypeMenu() {
 
             return (
               <Tag
+                className={styles.tagItem}
                 key={type}
                 selected={isSelected}
                 onClick={() => {
