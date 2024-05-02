@@ -135,11 +135,7 @@ const fields = () => [
       context: "bibliographic-data",
       label: "dk5",
     }),
-    valueParser: (values) =>
-      values
-        .filter((classification) => classification.system === "DK5")
-        .map((classification) => classification.display)
-        .join(", ") || "",
+    valueParser: renderDk5,
   },
   // {
   //   dataField: "originals",
@@ -471,6 +467,23 @@ export function parseManifestation(manifestation) {
         return !!value;
       })
   );
+}
+
+function renderDk5(classifications = []) {
+  const dk5Mark = classifications
+    .filter((clas) => clas.system === "DK5")
+    .map((dk) => ({ display: dk.display, code: dk.code }));
+
+  return dk5Mark.map((dk, index) => (
+    <Text tag={"div"} key={`${dk?.display}${index}`}>
+      <Link
+        href={getAdvancedUrl({ type: "dk5", value: dk.code })}
+        border={{ top: false, bottom: { keepVisible: true } }}
+      >
+        {dk.display}
+      </Link>
+    </Text>
+  ));
 }
 
 export function RenderContributors({ contributors = [] }) {
