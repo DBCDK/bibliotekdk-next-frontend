@@ -94,7 +94,7 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
         searchItemsWrapper.current.style.overflow = `visible`;
       }, 300);
     }
-  }, [queriesItems]);
+  }, [queriesItems, queries]);
 
   //this useeffect will run when queries are updated. It will update the state of queriesItems according to the changes in queries
   useEffect(() => {
