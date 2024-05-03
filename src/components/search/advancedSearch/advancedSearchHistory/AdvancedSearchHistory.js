@@ -40,7 +40,7 @@ export function FormatedFacets({ facets, className }) {
 
   return (
     <div className={cx(styles.historyFilters, className)}>
-      <Text tag="span" type="text1">
+      <Text tag="span" type="text1" className={styles.filterLabel}>
         {Translate({ context: "search", label: "history-filter-label" })}:
       </Text>
       {flatfilters.map((val, index) => (

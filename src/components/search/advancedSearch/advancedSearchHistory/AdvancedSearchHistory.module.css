@@ -18,10 +18,14 @@
   align-items: center;
   padding: var(--pt1) var(--pt1) 0 0;
 }
+.filterLabel{
+  margin-right: var(--pt1); 
+}
 
 .filteritem {
-  margin-left: var(--pt1);
+  margin-right: var(--pt1);
   color: var(--blue);
+  
 }
 
 .itemsheader {
