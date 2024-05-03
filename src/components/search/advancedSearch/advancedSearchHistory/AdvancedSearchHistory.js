@@ -110,7 +110,7 @@ export function SearchQueryDisplay({ item }) {
     </div>
   );
 }
-function HistoryItem({ item, index, checked, onSelect,checkboxKey }) {
+function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
   const modal = useModal();
   const breakpoint = useBreakpoint();
   const { deleteSearch, savedSearchKeys } = useSavedSearches();
@@ -228,8 +228,7 @@ export function HistoryHeaderActions({
   const MENUITEMS = [
     { child: selectAllLabel, callback: setAllChecked },
     { child: deleteSelectedLabel, callback: deleteSelected },
-//  { child: combineSearchLabel, callback: onCombineSearch },
-
+    { child: combineSearchLabel, callback: () => setShowCombinedSearch(true) },
   ];
 
   if (showCombinedSearch) {
