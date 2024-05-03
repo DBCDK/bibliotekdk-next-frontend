@@ -41,7 +41,7 @@ export function FormatedFacets({ facets, className }) {
   return (
     <div className={cx(styles.historyFilters, className)}>
       <Text tag="span" type="text1">
-        {Translate({ context: "search", label: "filters" })} :
+        {Translate({ context: "search", label: "history-filter-label" })}:
       </Text>
       {flatfilters.map((val, index) => (
         <Text
@@ -63,7 +63,7 @@ export function FormatedFacets({ facets, className }) {
  * @param {object} item
  * @returns  {JSX.Element}
  */
-export function SearchQueryDisplay({ item }) {
+export function SearchQueryDisplay({ item, checkboxKey }) {
   const router = useRouter();
 
   const { restartFacetsHook } = useFacets();
@@ -138,7 +138,7 @@ function HistoryItem({ item, index, checked, onSelect }) {
       })}
     >
       <Checkbox
-        id={`select-item-${index}`}
+        id={`select-item-${checkboxKey}`}
         tabIndex="-1"
         onChange={(e) => {
           onSelect(item, e);
@@ -220,10 +220,16 @@ export function HistoryHeaderActions({
     context: "bookmark",
     label: "remove-selected",
   });
+  const combineSearchLabel = Translate({
+    context: "search",
+    label: "combineSearch",
+  });
 
   const MENUITEMS = [
     { child: selectAllLabel, callback: setAllChecked },
     { child: deleteSelectedLabel, callback: deleteSelected },
+    { child: combineSearchLabel, callback: onCombineSearch },
+
   ];
 
   if (showCombinedSearch) {
@@ -447,7 +453,7 @@ export function AdvancedSearchHistory() {
 
   const splittedValues = splitHistoryItems(storedValue);
 
-  const HistoryItemPerDay = ({ title, items }) => {
+  const HistoryItemPerDay = ({ title, items, itemKey }) => {
     return (
       <>
         {title && items.length > 0 && (
@@ -458,6 +464,7 @@ export function AdvancedSearchHistory() {
         {items.length > 0 &&
           items.map((item, index) => (
             <HistoryItem
+              checkboxKey={`${itemKey}-${index}`}
               key={item.key}
               item={item}
               index={index}
@@ -505,12 +512,12 @@ export function AdvancedSearchHistory() {
           // today
           <>
             <HistoryItemPerDay
-              key="search-history-today"
+              itemKey="search-history-today"
               items={splittedValues.today}
               title={Translate({ context: "search", label: "history-today" })}
             />
             <HistoryItemPerDay
-              key="search-history-yesterday"
+              itemKey="search-history-yesterday"
               items={splittedValues.yesterday}
               title={Translate({
                 context: "search",
@@ -518,7 +525,7 @@ export function AdvancedSearchHistory() {
               })}
             />
             <HistoryItemPerDay
-              key="search-history-older"
+              itemKey="search-history-older"
               items={splittedValues.older}
             />
           </>

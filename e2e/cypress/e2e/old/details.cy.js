@@ -41,6 +41,14 @@ describe("Details", () => {
     cy.get("[data-cy=text-længde]").should("have.text", "Længde");
     cy.get("[data-cy=text-udgivet]").should("have.text", "Udgivet");
     cy.get("[data-cy=text-skuespillere]").should("have.text", "Skuespillere");
+    cy.get("[data-cy=text-dk5]").should("have.text", "dk5");
+
+    // dk5 is now a link :)
+    cy.get("[data-cy=text-dk5]")
+      .next("div")
+      .find("a")
+      .should("have.attr", "href")
+      .should("include", "/avanceret?fieldSearch");
 
     cy.contains("Nikolaj Lie Kaas");
     cy.contains("William Steig (instruktør)");

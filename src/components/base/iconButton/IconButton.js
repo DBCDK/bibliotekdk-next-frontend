@@ -24,7 +24,8 @@ function IconButton({
   onClick,
   alt = "",
   children,
-  icon = "close",
+  icon,
+  iconSize = 2,
   textType = "text3",
   keepUnderline,
   dataCy,
@@ -60,7 +61,7 @@ function IconButton({
         </Text>
       </Link>
       <Icon
-        size={{ w: 2, h: "auto" }}
+        size={{ w: iconSize, h: "auto" }}
         className={`${animations["h-elastic"]} ${animations["f-elastic"]}`}
         alt={alt}
         src={iconSrc}

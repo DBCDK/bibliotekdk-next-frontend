@@ -14,6 +14,7 @@ const HasBeenOrderedRow = ({ removeOrder, acceptOrder }) => {
       </Text>
       <div className={styles.buttonContainer}>
         <IconButton
+          icon="close"
           onClick={removeOrder}
           keepUnderline={true}
           className={styles.icon}

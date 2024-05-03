@@ -46,7 +46,7 @@ function DropdownUnit({ items, indexName, updateDropdownSearchIndices }) {
   );
 }
 
-export default function DropdownInputs({}) {
+export default function DropdownInputs() {
   const { dropdownUnits, updateDropdownSearchIndices } =
     useAdvancedSearchContext();
 

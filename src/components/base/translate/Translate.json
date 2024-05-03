@@ -125,6 +125,46 @@
         "da": "Materialetype",
         "en": "Materialtype"
       },
+      "phrase.gameplatform": {
+        "da": "Platform",
+        "en": "Platform"
+      },
+      "all_phrase.pegi": {
+        "da": "PEGI mærkning",
+        "en": "PEGI mark"
+      },
+      "phrase.pegi": {
+        "da": "PEGI mærkning",
+        "en": "PEGI mark"
+      },
+      "all_phrase.players": {
+        "da": "Spillere",
+        "en": "Players"
+      },
+      "phrase.players": {
+        "da": "Antal spillere",
+        "en": "Players"
+      },
+      "all_phrase.gameplatform": {
+        "da": "Alle platforme",
+        "en": "All Platforms"
+      },
+      "all_phrase.genreandform": {
+        "da": "Alle genrer",
+        "en": "All genres"
+      },
+      "phrase.genreandform": {
+        "da": "Genre og form",
+        "en": "Genre and form"
+      },
+      "all_phrase.filmnationality": {
+        "da": "Alle nationaliteter",
+        "en": "All nationalities"
+      },
+      "phrase.filmnationality": {
+        "da": "Nationalitet",
+        "en": "Nationality"
+      },
       "all_phrase.specificmaterialtype": {
         "da": "Alle materialer",
         "en": "All materials"
@@ -218,6 +258,40 @@
         "en": "Age"
       }
     },
+    "advanced_search_worktypes": {
+      "all": {
+        "da": "Alle materialer",
+        "en": "All materials"
+      },
+      "literature": {
+        "da": "Bøger",
+        "en": "Books"
+      },
+      "article": {
+        "da": "Artikler",
+        "en": "Articles"
+      },
+      "movie": {
+        "da": "Film",
+        "en": "Movies"
+      },
+      "music": {
+        "da": "Musik",
+        "en": "Music"
+      },
+      "game": {
+        "da": "Spil",
+        "en": "Games"
+      },
+      "sheetmusic": {
+        "da": "Noder",
+        "en": "Sheetmusic"
+      },
+      "category": {
+        "da": "Kategori",
+        "en": "Category"
+      }
+    },
     "advanced_search_savedSearch": {
       "emptyListMessage1": {
         "da": "Du har ikke nogen gemte søgninger endnu.",
@@ -295,6 +369,7 @@
         "en": "Level"
       }
     },
+
     "logo": {
       "default_logo_text": {
         "da": "Bibliotek dk",
@@ -1515,6 +1590,10 @@
         "da": "Deltagere",
         "en": "Players"
       },
+      "dk5": {
+        "da": "dk5",
+        "en": "dk5"
+      },
       "title": {
         "da": "Detaljer",
         "en": "Details"
@@ -2492,6 +2571,10 @@
         "da": "Søgehistorik",
         "en": "Search history"
       },
+      "history-filter-label": {
+        "da": "filtre",
+        "en": "filters"
+      },
       "history-yesterday": {
         "da": "Igår",
         "en": "Yesterday"
@@ -2923,6 +3006,10 @@
       "label-sheetmusic": {
         "da": "Noder",
         "en": "Sheet music"
+      },
+      "label-map": {
+        "da": "Kort",
+        "en": "Map"
       },
       "label-portrait": {
         "da": "Potrætter",

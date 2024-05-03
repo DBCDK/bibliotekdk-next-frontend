@@ -37,6 +37,7 @@ export function AdvancedSearchResult({
   cql,
   selectedFacets,
   searchHistoryObj,
+  rawcql,
 }) {
   const hitcount = results?.hitcount;
   const numPages = Math.ceil(hitcount / 10);
@@ -56,6 +57,7 @@ export function AdvancedSearchResult({
         <div className={styles.mobileTags}>
           <FacetTags />
         </div>
+
         <div className={styles.titleflex}>
           <div className={styles.borderTitleTop}></div>
           <Title type="title5" className={styles.countstyle}>
@@ -80,21 +82,22 @@ export function AdvancedSearchResult({
           titel: { lg: { offset: 3, span: true } },
         }}
         id="search-result-section"
-        title={<TitleComponent cql={cql} />}
+        title={<TitleComponent cql={rawcql} />}
         subtitle={
           <>
-            <div className={styles.facetsContainer}>
-              <FacetTags selectedFacets={selectedFacets} />
-              {hitcount && (
+            {hitcount > 0 && (
+              <div className={styles.facetsContainer}>
+                <FacetTags selectedFacets={selectedFacets} />
+
                 <div className={styles.subtitleStyle}>
                   <Text type="text1" className={styles.titleStyle}>
                     {translate({ context: "search", label: "narrow-search" })}
                   </Text>
                 </div>
-              )}
 
-              <AdvancedFacets cql={cql} />
-            </div>
+                <AdvancedFacets cql={cql} />
+              </div>
+            )}
           </>
         }
         sectionContentClass={isMobile ? styles.sectionContentStyle : ""}
@@ -156,14 +159,12 @@ export default function Wrap({ onWorkClick, onPageChange }) {
     pageNoFromUrl: pageNo,
     setShowPopover,
   } = useAdvancedSearchContext();
-
   const { selectedFacets } = useFacets();
 
   // if facets are set we need them for the cql
   const cqlAndFacetsQuery = getCqlAndFacetsQuery(cql, selectedFacets);
   // if facets are not set we need the raw (without facets) fieldsearch query
   const fieldSearchQuery = convertStateToCql({ ...fieldSearch });
-
   // @TODO what to do  with dataCollect ???
   onWorkClick = null;
   // get setter for advanced search history
@@ -183,7 +184,11 @@ export default function Wrap({ onWorkClick, onPageChange }) {
   const parsedResponse = parseResponse(fastResponse);
   //update searchhistory
   let searchHistoryObj = {};
-  if (!parsedResponse?.errorMessage && !parsedResponse.isLoading) {
+  if (
+    !parsedResponse?.errorMessage &&
+    !parsedResponse.isLoading &&
+    (cqlAndFacetsQuery || fieldSearchQuery)
+  ) {
     // make an object for searchhistory
     // the cql part .. we use the raw cql for now - facets are handled independently
     searchHistoryObj = {
@@ -210,6 +215,7 @@ export default function Wrap({ onWorkClick, onPageChange }) {
       setShowPopover={setShowPopover}
       isLoading={parsedResponse.isLoading}
       cql={cqlQuery}
+      rawcql={cqlAndFacetsQuery ? cql : fieldSearchQuery}
       selectedFacets={selectedFacets}
       searchHistoryObj={searchHistoryObj}
     />

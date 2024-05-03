@@ -16,7 +16,9 @@ describe("Advanced search history", () => {
 
   it(`should delete a search history item`, () => {
     // test delete function
-    cy.get("#select-item-0").should("exist").click({ force: true });
+    cy.get(`#select-item-search-history-older-0`)
+      .should("exist")
+      .click({ force: true });
 
     cy.get("[data-cy=text-fjern-valgte]").should("exist").click();
     cy.get("[data-cy=advanced-search-history-item]")
@@ -26,9 +28,15 @@ describe("Advanced search history", () => {
 
   it("should check select all checkbox when all items are checked", () => {
     // Check all checkboxes
-    cy.get("#select-item-0").should("exist").click({ force: true });
-    cy.get("#select-item-1").should("exist").click({ force: true });
-    cy.get("#select-item-2").should("exist").click({ force: true });
+    cy.get("#select-item-search-history-older-0")
+      .should("exist")
+      .click({ force: true });
+    cy.get("#select-item-search-history-older-1")
+      .should("exist")
+      .click({ force: true });
+    cy.get("#select-item-search-history-older-2")
+      .should("exist")
+      .click({ force: true });
 
     // Verify 'select all' checkbox is selected
     cy.get("[data-cy=advanced-search-history-selectall-checkbox]").should(
@@ -47,9 +55,9 @@ describe("Advanced search history", () => {
     );
 
     // verify all individual checkboxes are checked
-    cy.get("#select-item-0").should("be.checked");
-    cy.get("#select-item-1").should("be.checked");
-    cy.get("#select-item-2").should("be.checked");
+    cy.get("#select-item-search-history-older-0").should("be.checked");
+    cy.get("#select-item-search-history-older-1").should("be.checked");
+    cy.get("#select-item-search-history-older-2").should("be.checked");
 
     //click on select all to uncheck
     cy.get("[data-cy=advanced-search-history-selectall-checkbox]")
@@ -62,8 +70,8 @@ describe("Advanced search history", () => {
     );
 
     // verify all individual checkboxes are unchecked
-    cy.get("#select-item-0").should("not.be.checked");
-    cy.get("#select-item-1").should("not.be.checked");
-    cy.get("#select-item-2").should("not.be.checked");
+    cy.get("#select-item-search-history-older-0").should("not.be.checked");
+    cy.get("#select-item-search-history-older-1").should("not.be.checked");
+    cy.get("#select-item-search-history-older-2").should("not.be.checked");
   });
 });

@@ -15,6 +15,7 @@ import { parseFunction } from "@/lib/centralParsers.utils";
 import { getAudienceValues } from "./export.utils";
 import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
 import { getSeriesUrl, getUniverseUrl } from "@/lib/utils";
+import React from "react";
 
 /**
  * Parse languages in given manifestation.
@@ -598,6 +599,19 @@ function RenderInSeriesOrUniverse({ values }) {
   });
 }
 
+function RenderDk5({ values }) {
+  return values.map((dk, index) => (
+    <Text type="text4" tag={"div"} key={`${dk?.display}${index}`}>
+      <Link
+        href={getAdvancedUrl({ type: "dk5", value: dk.code })}
+        border={{ top: false, bottom: { keepVisible: true } }}
+      >
+        {dk.display}
+      </Link>
+    </Text>
+  ));
+}
+
 /**
  * Main method for retrieving fields to show in details section on workpage.
  * Configurable arrays for different materialtypes - the fieldsMap holds array of
@@ -691,6 +705,15 @@ export function fieldsForRows(manifestation, work, context) {
           label: Translate({ ...context, label: "in_series_and_universes" }),
           value: getSeriesAndUniverseTitles(work),
           jsxParser: RenderInSeriesOrUniverse,
+        },
+      },
+      {
+        dk5: {
+          label: Translate({ ...context, label: "dk5" }),
+          value: manifestation?.classifications
+            ?.filter((clas) => clas.system === "DK5")
+            .map((dk) => ({ display: dk.display, code: dk.code })),
+          jsxParser: RenderDk5,
         },
       },
       {
