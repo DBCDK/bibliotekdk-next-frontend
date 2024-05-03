@@ -39,7 +39,7 @@ export function FormatedFacets({ facets, className }) {
   return (
     <div className={cx(styles.historyFilters, className)}>
       <Text tag="span" type="text1">
-        {Translate({ context: "search", label: "history-filter-label" })} :
+        {Translate({ context: "search", label: "history-filter-label" })}:
       </Text>
       {flatfilters.map((val, index) => (
         <Text
