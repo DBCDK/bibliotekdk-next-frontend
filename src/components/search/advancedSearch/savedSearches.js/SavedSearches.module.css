@@ -65,7 +65,7 @@
 }
 .accordionContent {
   display: grid;
- /* grid-template-columns: var(--pt2) 3fr 14fr 2fr 1fr 1fr;*/
+  /* grid-template-columns: var(--pt2) 3fr 14fr 2fr 1fr 1fr;*/
   grid-template-columns: var(--pt2) 3fr 14fr 2.5fr 1fr 1fr;
 
   padding-left: var(--pt2);
