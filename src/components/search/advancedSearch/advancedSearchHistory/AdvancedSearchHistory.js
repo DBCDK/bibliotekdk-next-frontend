@@ -212,6 +212,8 @@ export function HistoryHeaderActions({
   const breakpoint = useBreakpoint();
   const [showCombinedSearch, setShowCombinedSearch] = useState(false);
 
+  const showCombineSearch = () => setShowCombinedSearch(true);
+
   const selectAllLabel = Translate({
     context: "bookmark",
     label: "select-all",
@@ -228,7 +230,7 @@ export function HistoryHeaderActions({
   const MENUITEMS = [
     { child: selectAllLabel, callback: setAllChecked },
     { child: deleteSelectedLabel, callback: deleteSelected },
-    { child: combineSearchLabel, callback: () => setShowCombinedSearch(true) },
+    { child: combineSearchLabel, callback: showCombineSearch },
   ];
 
   if (showCombinedSearch) {
@@ -270,7 +272,7 @@ export function HistoryHeaderActions({
       <Button
         type="secondary"
         size="small"
-        onClick={() => setShowCombinedSearch(true)}
+        onClick={showCombineSearch}
         disabled={disabled}
       >
         {Translate({ context: "search", label: "combineSearch" })}
