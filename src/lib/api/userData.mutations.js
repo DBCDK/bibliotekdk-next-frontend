@@ -67,3 +67,31 @@ export function addUserToUserData({ userDataMutation }) {
 
   return userDataMutation.post(q);
 }
+
+/**
+ * add an advanced search search in userdata
+ *
+ */
+
+export async function addSavedSearch({ searchObject, userDataMutation }) {
+  console.log("searchObject", searchObject);
+  const q = {
+    query: `
+      mutation addSavedSearch($searchObject:  String!) {
+        users{
+          addSavedSearch(searchObject: $searchObject) {
+            searchObject
+            id
+            createdAt
+        }
+      }
+      } 
+      `,
+    variables: {
+      searchObject: JSON.stringify(searchObject),
+    },
+  };
+
+  const res = await userDataMutation.post(q);
+  console.log("res", res);
+}

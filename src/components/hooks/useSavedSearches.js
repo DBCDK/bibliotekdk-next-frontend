@@ -5,6 +5,7 @@
 import { getLocalStorageItem, setLocalStorageItem } from "@/lib/utils";
 import useSWR from "swr";
 import { useMemo } from "react";
+import { addSavedSearch } from "@/lib/api/userData.mutations";
 
 const KEY = "saved-advanced-search-items";
 
@@ -32,29 +33,31 @@ export const useSavedSearches = () => {
 
   //todo rename to saveSearch
 
-  const saveSearch = (value) => {
+  const saveSearch = async ({ value, userDataMutation }) => {
     try {
-      if (typeof window !== "undefined") {
-        // Check if cql (and facets) is already stored
-        const index = savedSearches.findIndex(
-          (stor) => stor?.key?.trim() === value?.key?.trim()
-        );
+      await addSavedSearch({ searchObject: value, userDataMutation });
 
-        value["timestamp"] = getTimeStamp(getUnixTimeStamp());
-        value["unixtimestamp"] = getUnixTimeStamp();
+      //   if (typeof window !== "undefined") {
+      //     // Check if cql (and facets) is already stored
+      //     const index = savedSearches.findIndex(
+      //       (stor) => stor?.key?.trim() === value?.key?.trim()
+      //     );
 
-        if (index !== -1) {
-          // Update the existing entry if found
-          savedSearches[index] = value;
-        } else {
-          // Add to the beginning of saved items array if not found
-          savedSearches.unshift(value);
-        }
+      //     value["timestamp"] = getTimeStamp(getUnixTimeStamp());
+      //     value["unixtimestamp"] = getUnixTimeStamp();
 
-        // Update localstorage and state
-        setLocalStorageItem(KEY, JSON.stringify(savedSearches));
-        mutate();
-      }
+      //     if (index !== -1) {
+      //       // Update the existing entry if found
+      //       savedSearches[index] = value;
+      //     } else {
+      //       // Add to the beginning of saved items array if not found
+      //       savedSearches.unshift(value);
+      //     }
+
+      //     // Update localstorage and state
+      //     setLocalStorageItem(KEY, JSON.stringify(savedSearches));
+      //     mutate();
+      //   }
     } catch (err) {
       console.error(err);
     }
