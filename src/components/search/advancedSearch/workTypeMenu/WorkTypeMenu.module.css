@@ -15,7 +15,7 @@
   margin: 0 -16px var(--pt2);
   padding: var(--pt1) var(--pt2);
   padding-top: var(--pt2);
-  border-bottom: 1px solid var(  --iron);
+  border-bottom: 1px solid var(--iron);
 }
 
 .tagWrapper {
