@@ -63,7 +63,7 @@ export function FormatedFacets({ facets, className }) {
  * @param {object} item
  * @returns  {JSX.Element}
  */
-export function SearchQueryDisplay({ item, checkboxKey }) {
+export function SearchQueryDisplay({ item }) {
   const router = useRouter();
 
   const { restartFacetsHook } = useFacets();
@@ -110,7 +110,7 @@ export function SearchQueryDisplay({ item, checkboxKey }) {
     </div>
   );
 }
-function HistoryItem({ item, index, checked, onSelect }) {
+function HistoryItem({ item, index, checked, onSelect,checkboxKey }) {
   const modal = useModal();
   const breakpoint = useBreakpoint();
   const { deleteSearch, savedSearchKeys } = useSavedSearches();
@@ -228,7 +228,7 @@ export function HistoryHeaderActions({
   const MENUITEMS = [
     { child: selectAllLabel, callback: setAllChecked },
     { child: deleteSelectedLabel, callback: deleteSelected },
-    { child: combineSearchLabel, callback: onCombineSearch },
+//  { child: combineSearchLabel, callback: onCombineSearch },
 
   ];
 
