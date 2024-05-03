@@ -388,3 +388,33 @@ export function removeLocalStorageItem(key) {
     console.error("Failed to remove item from localStorage:", e);
   }
 }
+
+/**
+ * Converts unixtimestamp to 'dd. mmm yyyy' format
+ * @param {*} unixtimestamp
+ * @returns
+ */
+export function unixToFormatedDate(unixtimestamp) {
+  const date = new Date(unixtimestamp);
+
+  const monthNames = [
+    "jan",
+    "feb",
+    "mar",
+    "apr",
+    "may",
+    "jun",
+    "jul",
+    "aug",
+    "sep",
+    "oct",
+    "nov",
+    "dec",
+  ];
+
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = monthNames[date.getMonth()];
+  const year = date.getFullYear();
+
+  return `${day}. ${month} ${year}`;
+}

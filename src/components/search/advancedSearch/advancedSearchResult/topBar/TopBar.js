@@ -8,12 +8,15 @@ import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import isEmpty from "lodash/isEmpty";
 import { formattersAndComparitors } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
+import useSavedSearches from "@/components/hooks/useSavedSearches";
+import IconButton from "@/components/base/iconButton";
+import { useModal } from "@/components/_modal";
 
 /**
  *
  * Returns query in a human readable way.
  */
-export function FormattedQuery() {
+function FormattedQuery({ children }) {
   const { cqlFromUrl, fieldSearchFromUrl } = useAdvancedSearchContext();
 
   const { inputFields, dropdownSearchIndices, workType } = fieldSearchFromUrl;
@@ -28,10 +31,15 @@ export function FormattedQuery() {
     workType: workType,
   };
 
-  return FormatFieldSearchIndexes({ fieldsearch });
+  return (
+    <FormatFieldSearchIndexes fieldsearch={fieldsearch}>
+      {children}
+    </FormatFieldSearchIndexes>
+  );
+  // return FormatFieldSearchIndexes({ fieldsearch });
 }
 
-export function FormatFieldSearchIndexes({ fieldsearch }) {
+export function FormatFieldSearchIndexes({ fieldsearch, children }) {
   //TODO: do this in context instead
   const filteredDropdownSearchIndices =
     fieldsearch?.dropdownSearchIndices?.filter(
@@ -54,6 +62,7 @@ export function FormatFieldSearchIndexes({ fieldsearch }) {
           filteredInputFields?.length > 0 || fieldsearch?.workType
         }
       />
+      {children}
     </div>
   );
 }
@@ -171,8 +180,25 @@ function FormatDropdowns({ dropdowns, showAndOperator }) {
   });
 }
 
-export default function TopBar({ isLoading = false }) {
+export default function TopBar({ isLoading = false, searchHistoryObj }) {
+  const modal = useModal();
+
   const { setShowPopover } = useAdvancedSearchContext();
+  const { deleteSearch, savedSearchKeys } = useSavedSearches();
+  //check user has saved the search item
+  const isSaved = savedSearchKeys?.includes(searchHistoryObj.key);
+  const onSaveSearchClick = (e) => {
+    e.stopPropagation(); // Prevent the accordion from expanding
+    if (isSaved) {
+      //remove search
+      deleteSearch(searchHistoryObj);
+    } else {
+      //open save search modal
+      modal.push("saveSearch", {
+        item: searchHistoryObj,
+      });
+    }
+  };
   return (
     <Link
       className={styles.container}
@@ -188,26 +214,38 @@ export default function TopBar({ isLoading = false }) {
               {Translate({ context: "search", label: "yourSearch" })}
             </Text>
           </Col>
-          <Col xs={12} lg={{ offset: 1, span: true }}>
-            <FormattedQuery />
+          <Col
+            xs={12}
+            lg={{ offset: 1, span: true }}
+            className={styles.edit_search}
+          >
+            <FormattedQuery>
+              <Text type="text3" tag="span" skeleton={isLoading}>
+                <Link
+                  onClick={() => {
+                    setShowPopover(true);
+                  }}
+                  border={{
+                    top: false,
+                    bottom: {
+                      keepVisible: true,
+                    },
+                  }}
+                >
+                  {Translate({ context: "search", label: "editSearch" })}
+                </Link>
+              </Text>
+            </FormattedQuery>
           </Col>
 
-          <Col xs={12} lg={2} className={styles.edit_search}>
-            <Text type="text3" tag="span" skeleton={isLoading}>
-              <Link
-                onClick={() => {
-                  setShowPopover(true);
-                }}
-                border={{
-                  top: false,
-                  bottom: {
-                    keepVisible: true,
-                  },
-                }}
-              >
-                {Translate({ context: "search", label: "editSearch" })}
-              </Link>
-            </Text>
+          <Col xs={12} lg={2} className={styles.saveSearchButton}>
+            <IconButton
+              onClick={onSaveSearchClick}
+              icon={`${isSaved ? "heart_filled" : "heart"}`}
+              keepUnderline
+            >
+              {Translate({ context: "search", label: "saveSearch" })}
+            </IconButton>
           </Col>
         </Row>
       </Container>

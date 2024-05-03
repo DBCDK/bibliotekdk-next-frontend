@@ -36,6 +36,7 @@ export function AdvancedSearchResult({
   isLoading,
   cql,
   selectedFacets,
+  searchHistoryObj,
   rawcql,
 }) {
   const hitcount = results?.hitcount;
@@ -72,7 +73,7 @@ export function AdvancedSearchResult({
 
   return (
     <>
-      <TopBar isLoading={isLoading} />
+      <TopBar isLoading={isLoading} searchHistoryObj={searchHistoryObj} />
 
       <Section
         divider={false}
@@ -182,6 +183,7 @@ export default function Wrap({ onWorkClick, onPageChange }) {
   );
   const parsedResponse = parseResponse(fastResponse);
   //update searchhistory
+  let searchHistoryObj = {};
   if (
     !parsedResponse?.errorMessage &&
     !parsedResponse.isLoading &&
@@ -189,7 +191,7 @@ export default function Wrap({ onWorkClick, onPageChange }) {
   ) {
     // make an object for searchhistory
     // the cql part .. we use the raw cql for now - facets are handled independently
-    const searchHistoryObj = {
+    searchHistoryObj = {
       key: cqlQuery,
       hitcount: parsedResponse?.hitcount,
       fieldSearch: fieldSearch || "",
@@ -215,6 +217,7 @@ export default function Wrap({ onWorkClick, onPageChange }) {
       cql={cqlQuery}
       rawcql={cqlAndFacetsQuery ? cql : fieldSearchQuery}
       selectedFacets={selectedFacets}
+      searchHistoryObj={searchHistoryObj}
     />
   );
 }

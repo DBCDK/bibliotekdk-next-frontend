@@ -52,7 +52,7 @@
 @media (min-width: 576px) {
   .grid {
     --grid_template_areas: "checkbox timestamp search_query hitcount";
-    grid-template-columns: var(--pt2) 2fr 15fr 3fr;
+    grid-template-columns: var(--pt2) 2fr 15fr 3fr 1fr;
   }
 }
 
@@ -160,5 +160,15 @@
 }
 
 .action {
+  cursor: pointer;
+}
+
+.navigationButtons {
+  display: flex;
+  gap: var(--pt5);
+  margin-bottom: var(--pt3);
+}
+
+.saveSearchIcon {
   cursor: pointer;
 }
