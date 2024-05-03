@@ -19,6 +19,9 @@ import Accordion, { Item } from "@/components/base/accordion";
 import { unixToFormatedDate } from "@/lib/utils";
 import Link from "@/components/base/link";
 import { useModal } from "@/components/_modal";
+import { useData } from "@/lib/api/api";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
+import { savedSearchesQuery } from "@/lib/api/user.fragments";
 
 function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   const formatedDate = unixToFormatedDate(item.unixtimestamp);
@@ -34,7 +37,7 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
         }}
       >
         <Checkbox
-          id={`select-item-${index}`}
+          id={`select-item-${item.id}`}
           tabIndex="-1"
           ariaLabelledBy={`select-item-${index}`}
           ariaLabel={`select-item-${index}`}
@@ -118,9 +121,10 @@ export default function SavedSearches() {
    *  selected or not
    */
   const onSelect = (item, selected = false) => {
+    console.log("onSelect.item", item);
     const newCheckList = [...checkboxList];
     // if item is already in checkboxlist -> remove
-    const checkindex = checkboxList.findIndex((check) => check === item.key);
+    const checkindex = checkboxList.findIndex((check) => check === item.id);
     if (checkindex !== -1) {
       // item found in list - if deselected remove it
       if (!selected) {
@@ -129,7 +133,7 @@ export default function SavedSearches() {
     }
     // if not -> add it to list .. if selected
     else if (selected) {
-      newCheckList.push(item.key);
+      newCheckList.push(item.id);
     }
     setCheckboxList(newCheckList);
   };
@@ -183,13 +187,13 @@ export default function SavedSearches() {
                     onSelect={onSelect}
                     item={item}
                     checked={
-                      checkboxList.findIndex((check) => check === item.key) !==
+                      checkboxList.findIndex((check) => check === item.id) !==
                       -1
                     }
                   />
                 )}
-                key={item.key}
-                eventKey={item.key}
+                key={item.id}
+                eventKey={item.id}
               >
                 <div className={styles.accordionContentContainer}>
                   <div className={styles.accordionContent}>

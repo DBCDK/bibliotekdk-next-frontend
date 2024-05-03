@@ -6,6 +6,9 @@ import { getLocalStorageItem, setLocalStorageItem } from "@/lib/utils";
 import useSWR from "swr";
 import { useMemo } from "react";
 import { addSavedSearch } from "@/lib/api/userData.mutations";
+import { savedSearchesQuery } from "@/lib/api/user.fragments";
+import { useData } from "@/lib/api/api";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 const KEY = "saved-advanced-search-items";
 
@@ -27,9 +30,36 @@ function getUnixTimeStamp() {
 }
 
 export const useSavedSearches = () => {
-  let { data: savedSearches, mutate } = useSWR(KEY, (key) =>
-    JSON.parse(getLocalStorageItem(key) || "[]")
+  //   let { data: savedSearches, mutate } = useSWR(KEY, (key) =>
+  //     JSON.parse(getLocalStorageItem(key) || "[]")
+  //   );
+
+  const { hasCulrUniqueId } = useAuthentication();
+
+  const { data, isLoading } = useData(
+    hasCulrUniqueId &&
+      savedSearchesQuery({
+        limit: 10,
+        offset: 0,
+      })
   );
+  //const {result, hitcount} = data?.user?.savedSearches
+  // console.log('hitcount',hitcount)
+  //   console.log('result',result)
+  const savedSearches = useMemo(
+    () =>
+      data?.user?.savedSearches?.result?.map((search) => {
+        const searchObject = JSON.parse(search.searchObject);
+        console.log("searchObject", searchObject);
+        return {
+          ...searchObject,
+          id: search.id,
+          createdAt: search.createdAt,
+        };
+      }),
+    [data]
+  );
+  console.log("**savedSearches", savedSearches);
 
   //todo rename to saveSearch
 
@@ -75,7 +105,7 @@ export const useSavedSearches = () => {
           savedSearches.splice(valueIndex, 1);
           // update localstorage
           setLocalStorageItem(KEY, JSON.stringify(savedSearches));
-          mutate();
+          //  mutate();
         }
       }
     } catch (err) {
