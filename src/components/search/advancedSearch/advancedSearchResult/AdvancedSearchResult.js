@@ -87,19 +87,21 @@ export function AdvancedSearchResult({
         title={<TitleComponent cql={rawcql} />}
         subtitle={
           <>
-            {hitcount > 0 && (
-              <div className={styles.facetsContainer}>
-                <FacetTags selectedFacets={selectedFacets} />
+            <div className={styles.facetsContainer}>
+              {hitcount > 0 && (
+                <>
+                  <FacetTags selectedFacets={selectedFacets} />
 
-                <div className={styles.subtitleStyle}>
-                  <Text type="text1" className={styles.titleStyle}>
-                    {translate({ context: "search", label: "narrow-search" })}
-                  </Text>
-                </div>
-                <QuickFilter />
-                <AdvancedFacets cql={cql} />
-              </div>
-            )}
+                  <div className={styles.subtitleStyle}>
+                    <Text type="text1" className={styles.titleStyle}>
+                      {translate({ context: "search", label: "narrow-search" })}
+                    </Text>
+                  </div>
+                </>
+              )}
+              <QuickFilter />
+              {hitcount > 0 && <AdvancedFacets cql={cql} />}
+            </div>
           </>
         }
         sectionContentClass={isMobile ? styles.sectionContentStyle : ""}
