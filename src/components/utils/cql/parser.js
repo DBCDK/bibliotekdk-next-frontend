@@ -85,7 +85,6 @@ export function tokenize(input) {
   let tokens = [];
   let currentToken = "";
   let inQuotes = false;
-  let isEscaped = false; // Flag to track if the current character is escaped
 
   function pushToken(raw) {
     const normalized = raw.trim();
@@ -103,23 +102,10 @@ export function tokenize(input) {
   for (let i = 0; i < input.length; i++) {
     const char = input[i];
     const nextChar = input[i + 1];
+    const prevChar = input[i - 1];
 
-    // Check if current character is a quote and the previous character was an escape character
-    if (char === '"' && !isEscaped) {
+    if (char === '"' && prevChar !== "\\") {
       inQuotes = !inQuotes; // Toggle quote status for string literals
-      currentToken += char;
-      continue; // Skip further processing to include the quote in the token
-    } else if (char === "\\" && inQuotes) {
-      if (isEscaped) {
-        // Handle cases of escaped escape character (e.g., "\\")
-        currentToken += char;
-        isEscaped = false; // Reset the escape state since it's consumed
-      } else {
-        isEscaped = true; // Next character is escaped
-        continue; // Skip further processing to check the next character
-      }
-    } else {
-      isEscaped = false; // Reset escape status if current character is not a backslash
     }
 
     if (!inQuotes) {
