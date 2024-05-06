@@ -48,29 +48,26 @@
   text-underline-offset: 5px;
 }
 .formatted :global(.token-type_FIELD) {
-  color: #27AE60;
+  color: #27ae60;
 }
 .formatted :global(.token-type_ASSIGNMENT) {
-  color: #3333FF;
+  color: #3333ff;
 }
 .formatted :global(.token-type_WITHIN) {
-  color: #3333FF;
+  color: #3333ff;
 }
 .formatted :global(.token-type_PARENTHESIS_BEGIN) {
-  color: #3333FF;
+  color: #3333ff;
 }
 .formatted :global(.token-type_PARENTHESIS_END) {
-  color: #3333FF;
+  color: #3333ff;
 }
 .formatted :global(.token-type_RANGE_OPERATOR) {
-  color: #3333FF;
+  color: #3333ff;
 }
 .formatted :global(.token-type_LITERAL) {
   color: #212121;
 }
 .formatted :global(.token-type_OPERATOR) {
-  color: #3333FF;
+  color: #3333ff;
 }
-
-
-

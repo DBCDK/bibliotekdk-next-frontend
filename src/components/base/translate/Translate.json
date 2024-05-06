@@ -333,14 +333,16 @@
       "MISSING_CLOSING_PARANTHESIS": {
         "da": "Ups, du mangler en slutparantes.",
         "en": "You're missing a closing paranthesis."
-      },"UNCLOSED_STRING_LITERAL": {
+      },
+      "UNCLOSED_STRING_LITERAL": {
         "da": "Du mangler et afsluttende anførselstegn.",
         "en": "You're missing a closing quotation mark."
-      },"UNKNOWN_FIELD": {
+      },
+      "UNKNOWN_FIELD": {
         "da": "Du benytter et ukendt indeks.",
         "en": "You're using an unknown index."
       },
-      "UNEXPECTED_ENDING":{
+      "UNEXPECTED_ENDING": {
         "da": "Uventet afslutning på forespørgslen.",
         "en": "Unexpected end of query."
       },

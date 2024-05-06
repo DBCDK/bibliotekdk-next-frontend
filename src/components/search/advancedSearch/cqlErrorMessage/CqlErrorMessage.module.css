@@ -46,8 +46,6 @@
   grid-area: explanation;
 }
 
-
-
 .link {
   grid-area: link;
   padding-top: var(--pt1);
