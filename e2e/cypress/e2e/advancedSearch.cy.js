@@ -141,28 +141,25 @@ describe("Dropdowns test", () => {
 
   it("should select items from a checkbox dropdown", () => {
     //click on materialtype dropdown
-    cy.get(
-      '[data-cy="advanced-search-dropdown-phrase.generalmaterialtype"]'
-    ).click();
+    cy.get('[data-cy="advanced-search-dropdown-phrase.mainlanguage"]').click();
     //select books,movies and music
     cy.get('[data-cy="list-button-0"]').click();
     cy.get('[data-cy="list-button-1"]').click();
     cy.get('[data-cy="list-button-2"]').click();
 
     //expect dropdown label should have value 3
-    cy.get(
-      '[data-cy="dropdown-selected-count-phrase.generalmaterialtype"]'
-    ).should("have.text", "3");
+    cy.get('[data-cy="dropdown-selected-count-phrase.mainlanguage"]').should(
+      "have.text",
+      "3"
+    );
   });
   it("search inside a dropdown", () => {
-    cy.get(
-      '[data-cy="advanced-search-dropdown-phrase.generalmaterialtype"]'
-    ).click();
+    cy.get('[data-cy="advanced-search-dropdown-phrase.mainlanguage"]').click();
 
-    cy.get('[data-cy="dropdown-searchbar-Materialetype"]').type("tegneserier");
-    cy.get('[data-cy="list-button-0"] [data-cy="text-tegneserier"]').should(
+    cy.get('[data-cy="dropdown-searchbar-Sprog"]').type("dansk");
+    cy.get('[data-cy="list-button-0"] [data-cy="text-dansk"]').should(
       "have.text",
-      "tegneserier"
+      "dansk"
     );
   });
 

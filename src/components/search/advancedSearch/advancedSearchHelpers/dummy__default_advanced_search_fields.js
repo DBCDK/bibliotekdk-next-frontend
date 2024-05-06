@@ -23,11 +23,61 @@ export function dummy__specificmaterialTypes() {
     overrideValueAs: "name",
   };
 }
-export function dummy__generalmaterialTypes() {
+// export function dummy__generalmaterialTypes() {
+//   return {
+//     prioritisedItems: prioritisedMaterialTypeGeneral,
+//     prioritisedFormType: FormTypeEnum.CHECKBOX,
+//     unprioritisedItems: unprioritisedMaterialTypeGeneral,
+//     unprioritisedFormType: FormTypeEnum.CHECKBOX,
+//     overrideValueAs: "name",
+//   };
+// }
+
+export function dummy__players() {
   return {
-    prioritisedItems: prioritisedMaterialTypeGeneral,
+    prioritisedItems: prioritisedPlayers,
     prioritisedFormType: FormTypeEnum.CHECKBOX,
-    unprioritisedItems: unprioritisedMaterialTypeGeneral,
+    unprioritisedItems: unprioritisedPlayers,
+    unprioritisedFormType: FormTypeEnum.CHECKBOX,
+    overrideValueAs: "name",
+  };
+}
+
+export function dummy__pegi() {
+  return {
+    prioritisedItems: prioritisedPegi,
+    prioritisedFormType: FormTypeEnum.CHECKBOX,
+    unprioritisedItems: unprioritisedPegi,
+    unprioritisedFormType: FormTypeEnum.CHECKBOX,
+    overrideValueAs: "name",
+  };
+}
+
+export function dummy__genreAndForm() {
+  return {
+    prioritisedItems: prioritisedGenre,
+    prioritisedFormType: FormTypeEnum.CHECKBOX,
+    unprioritisedItems: unprioritisedGenre,
+    unprioritisedFormType: FormTypeEnum.CHECKBOX,
+    overrideValueAs: "name",
+  };
+}
+
+export function dummy__gamePlatform() {
+  return {
+    prioritisedItems: prioritisedGame,
+    prioritisedFormType: FormTypeEnum.CHECKBOX,
+    unprioritisedItems: unprioritisedGame,
+    unprioritisedFormType: FormTypeEnum.CHECKBOX,
+    overrideValueAs: "name",
+  };
+}
+
+export function dummy__filmNationality() {
+  return {
+    prioritisedItems: prioritisedFilmNationality,
+    prioritisedFormType: FormTypeEnum.CHECKBOX,
+    unprioritisedItems: unprioritisedFilmNationality,
     unprioritisedFormType: FormTypeEnum.CHECKBOX,
     overrideValueAs: "name",
   };
@@ -509,88 +559,223 @@ const unprioritisedMaterialTypeSpecific = [
   },
 ];
 
-const prioritisedMaterialTypeGeneral = [
+const prioritisedFilmNationality = [
   {
-    code: "BOOKS",
-    display: "bøger",
+    key: "engelske film",
+    score: 442,
   },
   {
-    code: "EBOOKS",
-    display: "e-bøger",
+    key: "biografiske film",
+    score: 49,
+  },
+
+  {
+    key: "franske film",
+    score: 11,
   },
   {
-    code: "AUDIO_BOOKS",
-    display: "lydbøger",
-  },
-  {
-    code: "FILMS",
-    display: "film",
-  },
-  {
-    code: "MUSIC",
-    display: "musik",
+    key: "danske film",
+    score: 9,
   },
 ];
 
-const unprioritisedMaterialTypeGeneral = [
+const unprioritisedFilmNationality = [
   {
-    code: "ARTICLES",
-    display: "artikler",
-  },
-  {
-    code: "NEWSPAPER_JOURNALS",
-    display: "aviser og tidsskrifter",
-  },
-  {
-    code: "IMAGE_MATERIALS",
-    display: "billedmaterialer",
-  },
-  {
-    code: "BOARD_GAMES",
-    display: "brætspil",
-  },
-  {
-    code: "BOOKS",
-    display: "bøger",
-  },
-  {
-    code: "EBOOKS",
-    display: "e-bøger",
-  },
-  {
-    code: "COMPUTER_GAMES",
-    display: "computerspil",
-  },
-  {
-    code: "FILMS",
-    display: "film",
-  },
-  {
-    code: "TV_SERIES",
-    display: "tv-serier",
-  },
-  {
-    code: "AUDIO_BOOKS",
-    display: "lydbøger",
-  },
-  {
-    code: "MUSIC",
-    display: "musik",
-  },
-  {
-    code: "SHEET_MUSIC",
-    display: "noder",
-  },
-  {
-    code: "PODCASTS",
-    display: "podcasts",
-  },
-  {
-    code: "COMICS",
-    display: "tegneserier",
-  },
-  {
-    code: "OTHER",
-    display: "øvrige",
+    key: "amerikanske film",
+    score: 31,
   },
 ];
+
+const prioritisedPegi = [
+  {
+    key: "pegi: 12",
+    score: 15,
+  },
+  {
+    key: "pegi: 3",
+    score: 13,
+  },
+  {
+    key: "pegi: 7",
+    score: 6,
+  },
+  {
+    key: "pegi: 18",
+    score: 3,
+  },
+];
+
+const unprioritisedPegi = [
+  {
+    key: "pegi: 16",
+    score: 2,
+  },
+];
+
+const prioritisedPlayers = [
+  {
+    key: "for 2 spillere",
+    score: 31,
+  },
+  {
+    key: "for 3 spillere",
+    score: 30,
+  },
+  {
+    key: "for 4 spillere",
+    score: 30,
+  },
+  {
+    key: "for 5 spillere",
+    score: 28,
+  },
+];
+
+const unprioritisedPlayers = [
+  {
+    key: "for 6 spillere",
+    score: 27,
+  },
+];
+
+const prioritisedGame = [
+  {
+    key: "computerspil (online)",
+    score: 50,
+  },
+  {
+    key: "playstation 3",
+    score: 14,
+  },
+  {
+    key: "playstation 5",
+    score: 6,
+  },
+  {
+    key: "wii",
+    score: 6,
+  },
+];
+
+const unprioritisedGame = [
+  {
+    key: "computerspil (online)",
+    score: 50,
+  },
+  {
+    key: "computerspil (cd-rom)",
+    score: 5,
+  },
+];
+
+const unprioritisedGenre = [
+  {
+    code: "110",
+    display: "HEST",
+  },
+  {
+    code: "1100",
+    display: "HUND",
+  },
+];
+
+const prioritisedGenre = [
+  {
+    code: "11",
+    display: "roman",
+  },
+  {
+    code: "9",
+    display: "sjove bøger",
+  },
+  {
+    code: "2",
+    display: "lydret",
+  },
+];
+
+// const prioritisedMaterialTypeGeneral = [
+//   {
+//     code: "BOOKS",
+//     display: "bøger",
+//   },
+//   {
+//     code: "EBOOKS",
+//     display: "e-bøger",
+//   },
+//   {
+//     code: "AUDIO_BOOKS",
+//     display: "lydbøger",
+//   },
+//   {
+//     code: "FILMS",
+//     display: "film",
+//   },
+//   {
+//     code: "MUSIC",
+//     display: "musik",
+//   },
+// ];
+//
+// const unprioritisedMaterialTypeGeneral = [
+//   {
+//     code: "ARTICLES",
+//     display: "artikler",
+//   },
+//   {
+//     code: "NEWSPAPER_JOURNALS",
+//     display: "aviser og tidsskrifter",
+//   },
+//   {
+//     code: "IMAGE_MATERIALS",
+//     display: "billedmaterialer",
+//   },
+//   {
+//     code: "BOARD_GAMES",
+//     display: "brætspil",
+//   },
+//   {
+//     code: "BOOKS",
+//     display: "bøger",
+//   },
+//   {
+//     code: "EBOOKS",
+//     display: "e-bøger",
+//   },
+//   {
+//     code: "COMPUTER_GAMES",
+//     display: "computerspil",
+//   },
+//   {
+//     code: "FILMS",
+//     display: "film",
+//   },
+//   {
+//     code: "TV_SERIES",
+//     display: "tv-serier",
+//   },
+//   {
+//     code: "AUDIO_BOOKS",
+//     display: "lydbøger",
+//   },
+//   {
+//     code: "MUSIC",
+//     display: "musik",
+//   },
+//   {
+//     code: "SHEET_MUSIC",
+//     display: "noder",
+//   },
+//   {
+//     code: "PODCASTS",
+//     display: "podcasts",
+//   },
+//   {
+//     code: "COMICS",
+//     display: "tegneserier",
+//   },
+//   {
+//     code: "OTHER",
+//     display: "øvrige",
+//   },
+// ];

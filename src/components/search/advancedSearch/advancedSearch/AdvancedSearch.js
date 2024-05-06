@@ -19,6 +19,7 @@ import { getHelpUrl } from "@/lib/utils";
 import cx from "classnames";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
+import WorkTypeMenu from "@/components/search/advancedSearch/workTypeMenu/WorkTypeMenu";
 
 /**
  * Contains advanced search fields
@@ -39,6 +40,7 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
     showPopover,
     stateToString,
     resetObjectState,
+    workType,
   } = useAdvancedSearchContext();
 
   const [showCqlEditor, setShowCqlEditor] = useState(false);
@@ -72,7 +74,11 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
       const query = { fieldSearch: stateToString };
       router.push({ pathname: "/avanceret", query });
       //save in state
-      const cql = convertStateToCql({ inputFields, dropdownSearchIndices });
+      const cql = convertStateToCql({
+        inputFields,
+        dropdownSearchIndices,
+        workType,
+      });
       setParsedCQL(cql);
     }
     setShowPopover(false);
@@ -152,9 +158,6 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
           </Col>
         </Row>
         <Row>
-          {/*<Col lg={{ offset: 3, span: 4 }} md={6}>*/}
-          {/*  /!**Insert material type select here *!/*/}
-          {/*</Col>*/}
           {showCqlEditor ? (
             <Col lg={{ offset: 3, span: 6 }} md={9} xs={12}>
               <CqlTextArea
@@ -163,12 +166,17 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
               />
             </Col>
           ) : (
-            <Col lg={{ offset: 3, span: 9 }} md={12}>
-              <>
-                <TextInputs doAdvancedSearch={doAdvancedSearch} />
-                <DropdownInputs />
-              </>
-            </Col>
+            <>
+              <Col lg={{ offset: 1, span: 2 }} md={12}>
+                <WorkTypeMenu />
+              </Col>
+              <Col lg={{ offset: 0, span: 9 }} md={12}>
+                <>
+                  <TextInputs doAdvancedSearch={doAdvancedSearch} />
+                  <DropdownInputs />
+                </>
+              </Col>
+            </>
           )}
         </Row>
         <Row className={styles.buttonRow}>
