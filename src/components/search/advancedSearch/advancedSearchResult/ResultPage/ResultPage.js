@@ -14,6 +14,7 @@ import {
 } from "@/components/search/advancedSearch/utils";
 import isEmpty from "lodash/isEmpty";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
+import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
 
 /**
  * Row representation of a search result entry
@@ -73,14 +74,24 @@ export default function Wrap({ onWorkClick, page }) {
 
   onWorkClick = null;
 
+  // we also need the quickfilters
+  const { selectedQuickFilters } = useQuickFilters();
   // if facets are set we need them for the cql
-  const cqlAndFacetsQuery = getCqlAndFacetsQuery(cql, selectedFacets);
+  const cqlAndFacetsQuery = getCqlAndFacetsQuery({
+    cql,
+    selectedFacets,
+    quickFilters: selectedQuickFilters,
+  });
 
   const limit = 10;
   let offset = limit * (page - 1);
   const cqlQuery =
     cqlAndFacetsQuery ||
-    convertStateToCql({ ...fieldSearch, facets: selectedFacets });
+    convertStateToCql({
+      ...fieldSearch,
+      facets: selectedFacets,
+      quickFilters: selectedQuickFilters,
+    });
 
   const showResult = !isEmpty(fieldSearch) || !isEmpty(cqlAndFacetsQuery);
 

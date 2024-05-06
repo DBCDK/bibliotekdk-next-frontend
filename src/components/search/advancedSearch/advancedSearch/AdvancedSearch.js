@@ -20,6 +20,7 @@ import cx from "classnames";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import WorkTypeMenu from "@/components/search/advancedSearch/workTypeMenu/WorkTypeMenu";
+import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
 
 /**
  * Contains advanced search fields
@@ -53,10 +54,12 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
 
   // we need to clear the global facets
   const { clearFacetsUrl } = useFacets();
+  const { clearQuickFiltersUrl } = useQuickFilters();
   //add raw cql query in url if showCqlEditor. Add state to url if fieldInputs
   const doAdvancedSearch = () => {
     // this is a new search - clear the facets
     clearFacetsUrl();
+    clearQuickFiltersUrl();
     if (showCqlEditor) {
       const cqlParsedFromUrl = fieldSearchFromUrl
         ? convertStateToCql(fieldSearchFromUrl)
