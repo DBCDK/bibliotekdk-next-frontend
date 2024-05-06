@@ -156,6 +156,17 @@
   font-style: normal;
 } */
 
+@font-face {
+  font-family: "ibm_plex_mono";
+  src: url("../../public/fonts/IBM-Plex-Mono/woff2/IBMPlexMono-Regular.woff2")
+      format("woff2"),
+    url("../../public/fonts/IBM-Plex-Mono/woff/IBMPlexMono-Regular.woff")
+      format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 :root {
   /*
 *  Fonts

@@ -324,7 +324,37 @@
       },
       "save": {
         "da": "Gem",
-        "en": "Save"
+        "en": "Save"},
+    "advanced_search_parse_errors": {
+      "MISSING_OPENING_PARANTHESIS": {
+        "da": "Hov, du mangler en startparantes.",
+        "en": "You're missing an opening paranthesis."
+      },
+      "MISSING_CLOSING_PARANTHESIS": {
+        "da": "Ups, du mangler en slutparantes.",
+        "en": "You're missing a closing paranthesis."
+      },"UNCLOSED_STRING_LITERAL": {
+        "da": "Du mangler et afsluttende anførselstegn.",
+        "en": "You're missing a closing quotation mark."
+      },"UNKNOWN_FIELD": {
+        "da": "Du benytter et ukendt indeks.",
+        "en": "You're using an unknown index."
+      },
+      "UNEXPECTED_ENDING":{
+        "da": "Uventet afslutning på forespørgslen.",
+        "en": "Unexpected end of query."
+      },
+      "UNEXPECTED_TOKEN": {
+        "da": "Uventet symbol fundet.",
+        "en": "Unexpected symbol found."
+      },
+      "EMPTY_QUERY": {
+        "da": "Vi tror på dig!",
+        "en": "We believe in you!"
+      },
+      "didUMean": {
+        "da": "Mente du %s ?",
+        "en": "Did you mean %s ?"
       }
     },
     "complex-search-facets": {

@@ -1,10 +1,6 @@
-import { useData } from "@/lib/api/api";
-import { doComplexSearchAll } from "@/lib/api/complexSearch.fragments";
 import styles from "./CqlErrorMessage.module.css";
-import { useState } from "react";
-import isEmpty from "lodash/isEmpty";
+import { useEffect, useState } from "react";
 import Text from "@/components/base/text";
-import isEqual from "lodash/isEqual";
 import cx from "classnames";
 import { IconLink } from "@/components/base/iconlink/IconLink";
 import animations from "@/components/base/animation/animations.module.css";
@@ -13,44 +9,23 @@ import CloseSvg from "@/public/icons/close_grey.svg";
 import RedSvg from "@/public/icons/status__red.svg";
 import GreenSvg from "@/public/icons/status__green.svg";
 import Translate, { hasTranslation } from "@/components/base/translate";
-import { useFacets } from "@/components/search/advancedSearch/useFacets";
 
-function parseErrorMessage(errorMessage) {
-  // first sentence of errormessage is (kind of) explanation
-  const explanation = errorMessage?.split(",")[0];
-  // last part is location of error - starts with at: ---> .. and then the rest
-  const locationIndex = errorMessage?.indexOf("at:");
-  const location = errorMessage?.substring(locationIndex);
-
-  if (isEmpty(errorMessage)) {
-    return {
-      explanation: "Nice work",
-      location: location,
-      full: "Well done",
-    };
-  }
-
-  return {
-    explanation: explanation,
-    location: location,
-    full: errorMessage,
-  };
-}
-
-export function CqlErrorMessage(errormessage) {
+export function CqlErrorMessage({ message }) {
   const [svg, setSvg] = useState("red");
   const [showError, setShowError] = useState(false);
-  if (errormessage) {
-    setTimeout(() => {
-      setSvg("red");
-    }, 300);
-  } else {
-    setTimeout(() => {
-      setSvg("green");
-    }, 300);
-  }
 
-  const message = parseErrorMessage(errormessage);
+  useEffect(() => {
+    let timeoutId;
+    if (message) {
+      timeoutId = setTimeout(() => {
+        setSvg("red");
+      }, 300);
+    } else {
+      setSvg("green");
+    }
+
+    return () => timeoutId && clearTimeout(timeoutId);
+  }, [message]);
 
   const link_translation = {
     context: "advanced_search_cql",
@@ -79,7 +54,7 @@ export function CqlErrorMessage(errormessage) {
         <Text
           type={"text3"}
           className={cx(styles.errorMessage, {
-            [styles.noError]: !errormessage,
+            [styles.noError]: !message,
           })}
         >
           <Link
@@ -101,10 +76,11 @@ export function CqlErrorMessage(errormessage) {
           )}
           {svg === "red" && (
             <>
-              <div className={styles.explanation}>{message.explanation}</div>
-              {!isEqual(message.location, message.explanation) && (
-                <div className={styles.location}>{message.location}</div>
-              )}
+              <div
+                className={styles.explanation}
+                dangerouslySetInnerHTML={{ __html: message }}
+              ></div>
+
               <IconLink
                 className={styles.link}
                 iconPlacement={"right"}
@@ -124,21 +100,4 @@ export function CqlErrorMessage(errormessage) {
       )}
     </div>
   );
-}
-
-export default function Wrap({ cql = "" }) {
-  const { facetsFromEnum } = useFacets();
-  const bigResponse = useData(
-    doComplexSearchAll({
-      cql,
-      offset: 0,
-      limit: 1,
-      facets: {
-        facetLimit: 5,
-        facets: facetsFromEnum,
-      },
-    })
-  );
-
-  return CqlErrorMessage(bigResponse?.data?.complexSearch?.errorMessage);
 }
