@@ -38,10 +38,7 @@ export function AdvancedSearchResult({
   isLoading,
   cql,
   selectedFacets,
-<<<<<<< HEAD
-=======
   searchHistoryObj,
->>>>>>> main
   rawcql,
 }) {
   const hitcount = results?.hitcount;
@@ -99,9 +96,9 @@ export function AdvancedSearchResult({
                     {translate({ context: "search", label: "narrow-search" })}
                   </Text>
                 </div>
-              <QuickFilter />
-              <AdvancedFacets cql={cql} />
-            </div>
+                <QuickFilter />
+                <AdvancedFacets cql={cql} />
+              </div>
             )}
           </>
         }
