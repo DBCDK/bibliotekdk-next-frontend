@@ -102,7 +102,6 @@ export function tokenize(input) {
 
   for (let i = 0; i < input.length; i++) {
     const char = input[i];
-    const prevChar = input[i - 1];
     const nextChar = input[i + 1];
 
     // Check if current character is a quote and the previous character was an escape character

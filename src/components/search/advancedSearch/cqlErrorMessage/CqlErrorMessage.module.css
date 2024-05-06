@@ -24,7 +24,7 @@
 
   display: grid;
 
-  grid-template-areas: "explanation close" "location close" "link close";
+  grid-template-areas: "explanation close" "close" "link close";
   grid-auto-columns: 1fr auto;
 
   gap: var(--pt05);
@@ -46,9 +46,7 @@
   grid-area: explanation;
 }
 
-.location {
-  grid-area: location;
-}
+
 
 .link {
   grid-area: link;
