@@ -1,3 +1,4 @@
+// eslint-disable-next-line css-modules/no-unused-class
 import styles from "./CqlErrorMessage.module.css";
 import { useEffect, useState } from "react";
 import Text from "@/components/base/text";
