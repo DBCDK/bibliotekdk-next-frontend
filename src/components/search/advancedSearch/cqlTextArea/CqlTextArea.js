@@ -31,14 +31,16 @@ export function CqlTextArea({ doAdvancedSearch }) {
           {translate({ context: "search", label: "cqlsearchlabel" })}
         </Text>
       </label>
-      <div className={`${styles.formatted} ${focused ? styles.focused : ""}`}>
+      <div
+        className={`${styles.formatted} ${focused ? styles.focused : ""}`}
+        data-cy={cyKey({
+          name: "cqlTxt",
+          prefix: "advanced-search",
+        })}
+      >
         <Editor
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
-          data-cy={cyKey({
-            name: "cqlTxt",
-            prefix: "advanced-search",
-          })}
           placeholder={translate({
             context: "search",
             label: "cqlsearchPlaceholder",

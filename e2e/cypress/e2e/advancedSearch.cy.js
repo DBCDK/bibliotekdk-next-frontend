@@ -69,7 +69,7 @@ describe("Popover elements", () => {
     //swith to cql editor and assert that it has the correct paresd value
     cy.get('[data-cy="edit-in-cql"]').click();
 
-    cy.get('[data-cy="advanced-search-cqltxt"]').should(
+    cy.get('[data-cy="advanced-search-cqltxt"] textarea').should(
       "have.value",
       expectedParsedString
     );
@@ -88,15 +88,18 @@ describe("Popover elements", () => {
 
     //type something in cql text area
     const testString = "Hej med dig jeg hedder kaj";
-    cy.get('[data-cy="advanced-search-cqltxt"]').type(testString);
-    cy.get('[data-cy="advanced-search-cqltxt"]').should(
+    cy.get('[data-cy="advanced-search-cqltxt"] textarea').type(testString);
+    cy.get('[data-cy="advanced-search-cqltxt"] textarea').should(
       "have.value",
       testString
     );
     //clear textarea
     cy.get('[data-cy="advanced-search-clear-search"]').click();
     // assert that the textara has been cleared
-    cy.get('[data-cy="advanced-search-cqltxt"]').should("have.value", "");
+    cy.get('[data-cy="advanced-search-cqltxt"] textarea').should(
+      "have.value",
+      ""
+    );
   });
 });
 
