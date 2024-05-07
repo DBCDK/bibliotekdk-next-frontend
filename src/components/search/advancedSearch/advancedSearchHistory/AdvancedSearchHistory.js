@@ -168,8 +168,10 @@ function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
         src={`${isSaved ? "heart_filled" : "heart"}.svg`}
         onClick={() => {
           if (isSaved) {
+            console.log("item", item);
             //remove search
-            deleteSearch(item);
+            //  deleteSearch(item);
+            deleteSearch({ idsToDelete: [item.id] });
           } else {
             //open save search modal
             modal.push("saveSearch", {
@@ -244,7 +246,7 @@ export function HistoryHeaderActions({
 
   if (breakpoint === "xs") {
     return (
-      <div className={cx(styles.menuDropdownContainer)}>
+      <div className={cx(styles.menuDropdown)}>
         <MenuDropdown options={MENUITEMS} isLeftAlligned={true} />
       </div>
     );

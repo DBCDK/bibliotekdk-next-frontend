@@ -4,9 +4,13 @@
 
 import { setLocalStorageItem } from "@/lib/utils";
 import { useMemo } from "react";
-import { addSavedSearch } from "@/lib/api/userData.mutations";
+import {
+  addSavedSearch,
+  deleteSavedSearches,
+  updateSavedSearch,
+} from "@/lib/api/userData.mutations";
 import { savedSearchesQuery } from "@/lib/api/user.fragments";
-import { useData } from "@/lib/api/api";
+import { useData, useMutate } from "@/lib/api/api";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 const KEY = "saved-advanced-search-items";
@@ -26,8 +30,9 @@ export function getTimeStamp(now) {
 
 export const useSavedSearches = () => {
   const { hasCulrUniqueId } = useAuthentication();
+  const userDataMutation = useMutate();
 
-  const { data } = useData(
+  const { data, mutate } = useData(
     hasCulrUniqueId &&
       savedSearchesQuery({
         limit: 10,
@@ -35,6 +40,11 @@ export const useSavedSearches = () => {
       })
   );
 
+  const mutateData = ()=>{
+    setTimeout(()=>{
+        mutate()
+    },100)
+  }
   const savedSearches = useMemo(
     () =>
       data?.user?.savedSearches?.result?.map((search) => {
@@ -50,28 +60,37 @@ export const useSavedSearches = () => {
 
   const hitcount = useMemo(() => data?.user?.savedSearches?.hitcount, [data]);
 
-  const saveSearch = async ({ value, userDataMutation }) => {
+  const saveSearch = async ({ searchObject }) => {
     try {
-      await addSavedSearch({ searchObject: value, userDataMutation });
+        console.log('addSavedSearch({ searchObject })',addSavedSearch({ searchObject }))
+
+      const res = await userDataMutation.post(addSavedSearch({ searchObject }));
+      console.log('res',res)
+      mutateData();
     } catch (err) {
       console.error(err);
     }
   };
 
-  const deleteSearch = (value) => {
+  const updateSearch = async ({ searchObject }) => {
     try {
-      if (typeof window !== "undefined") {
-        // get index of value to delete
-        const valueIndex = savedSearches.findIndex(
-          (stor) => stor.key === value?.key
-        );
-        if (valueIndex > -1) {
-          // remove from array
-          savedSearches.splice(valueIndex, 1);
-          // update localstorage
-          setLocalStorageItem(KEY, JSON.stringify(savedSearches));
-        }
-      }
+      const res = await userDataMutation.post(
+        updateSavedSearch({ searchObject })
+      );
+      mutateData();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  /**
+   * deletes one or multiple saved searches. Provide with array of ids to be deleted.
+   * ids to delete
+   * @param {*} idsToDelete
+   */
+  const deleteSearch = async ({ idsToDelete }) => {
+    try {
+      await userDataMutation.post(deleteSavedSearches({ idsToDelete }));
+      mutateData();
     } catch (err) {
       console.error(err);
     }
@@ -88,6 +107,7 @@ export const useSavedSearches = () => {
     saveSearch,
     deleteSearch,
     hitcount,
+    updateSearch,
   };
 };
 

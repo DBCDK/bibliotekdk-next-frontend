@@ -27,7 +27,7 @@ import { openLoginModal } from "@/components/_modal/pages/login/utils";
 
 function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   const formatedDate = unixToFormatedDate(item.unixtimestamp);
-  const userDataMutation = useMutate();
+  const { deleteSearch } = useSavedSearches();
 
   return (
     <div className={styles.savedItemRow} {...props}>
@@ -39,7 +39,7 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
         }}
       >
         <Checkbox
-          id={`select-item-${item.id}`}
+          id={`select-item-${item.key}`}
           tabIndex="-1"
           ariaLabelledBy={`select-item-${index}`}
           ariaLabel={`select-item-${index}`}
@@ -70,7 +70,9 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
         onClick={(e) => {
           e.stopPropagation();
           if (item?.id) {
-            deleteSavedSearches({ idsToDelete: [item.id], userDataMutation });
+            console.log("item?.id", item?.id);
+            //deleteSavedSearches({ idsToDelete: [item.id], userDataMutation });
+            deleteSearch({ idsToDelete: [item.id] });
             //todo mutate refresh
           }
         }}
@@ -91,6 +93,7 @@ export default function SavedSearches() {
   const [checkboxList, setCheckboxList] = useState([]);
   const modal = useModal();
   const { isAuthenticated } = useAuthentication();
+  const userDataMutation = useMutate();
 
   /**
    * Set or unset ALL checkboxes in saved search table
@@ -107,12 +110,20 @@ export default function SavedSearches() {
    * Delete selected entries in saved search table
    */
   const onDeleteSelected = () => {
-    checkboxList.forEach((check) => {
-      const savedItem = savedSearches.find((stored) => stored.key === check);
-      savedItem && deleteSearch(savedItem);
-      //remove item from checklist too
-      onSelect(savedItem, false);
-    });
+    //filter for checked items and map for ids to delete
+    const idsToDelete = savedSearches
+      ?.filter((item) => checkboxList.includes(item.key) && item.id)
+      .map((item) => item.id);
+    console.log("idsToDelete", idsToDelete);
+    //find ids to delete
+    deleteSavedSearches({ idsToDelete, userDataMutation });
+
+    // checkboxList.forEach((check) => {
+    //   const savedItem = savedSearches.find((stored) => stored.key === check);
+    //  // savedItem && deleteSearch(savedItem);
+    //   //remove item from checklist too
+    //   //onSelect(savedItem, false);
+    // });
   };
 
   const checkedObjects = savedSearches?.filter((obj) =>
@@ -130,7 +141,7 @@ export default function SavedSearches() {
   const onSelect = (item, selected = false) => {
     const newCheckList = [...checkboxList];
     // if item is already in checkboxlist -> remove
-    const checkindex = checkboxList.findIndex((check) => check === item.id);
+    const checkindex = checkboxList.findIndex((check) => check === item.key);
     if (checkindex !== -1) {
       // item found in list - if deselected remove it
       if (!selected) {
@@ -139,10 +150,16 @@ export default function SavedSearches() {
     }
     // if not -> add it to list .. if selected
     else if (selected) {
-      newCheckList.push(item.id);
+      newCheckList.push(item.key);
     }
     setCheckboxList(newCheckList);
   };
+
+  console.log("savedSearches", savedSearches);
+
+  console.log("checkedObjects", checkedObjects);
+
+  console.log("checkboxList", checkboxList);
 
   return (
     <div className={styles.container}>
@@ -220,13 +237,13 @@ export default function SavedSearches() {
                     onSelect={onSelect}
                     item={item}
                     checked={
-                      checkboxList.findIndex((check) => check === item.id) !==
+                      checkboxList.findIndex((check) => check === item.key) !==
                       -1
                     }
                   />
                 )}
-                key={item.id}
-                eventKey={item.id}
+                key={item.key}
+                eventKey={item.key}
               >
                 <div className={styles.accordionContentContainer}>
                   <div className={styles.accordionContent}>
