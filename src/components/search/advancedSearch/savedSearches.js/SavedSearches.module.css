@@ -97,3 +97,22 @@
 .empyListTitle {
   margin-top: var(--pt5);
 }
+.loginButton {
+  margin-top: var(--pt5);
+  padding-left: var(--pt5);
+  padding-right: var(--pt5);
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  max-width: 400px;
+}
+.loginText {
+  margin-top: var(--pt2);
+  white-space: pre-wrap;
+}
+
+@media screen and (min-width: 576px) {
+  .loginButton {
+    width: fit-content;
+  }
+}

@@ -325,6 +325,10 @@
       "save": {
         "da": "Gem",
         "en": "Save"
+      },
+      "loginText": {
+        "da": "Her vil du kunne se en liste over dine gemte søgninger.\nListen er en del af din profil, og du skal derfor være logget ind for at se den.",
+        "en": "You will be able to see a list of your saved searches here.\nThe list is part of your profile, and you must therefore be logged in to see it."
       }
     },
     "complex-search-facets": {
