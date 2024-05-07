@@ -44,30 +44,20 @@
 }
 
 .formatted :global(.cql-error) {
-  text-decoration: red wavy underline;
+  text-decoration: #BA4D57 wavy underline;
   text-underline-offset: 5px;
 }
 .formatted :global(.token-type_FIELD) {
-  color: #27ae60;
+  color: #1E874B;
 }
-.formatted :global(.token-type_ASSIGNMENT) {
-  color: #3333ff;
-}
-.formatted :global(.token-type_WITHIN) {
-  color: #3333ff;
-}
-.formatted :global(.token-type_PARENTHESIS_BEGIN) {
-  color: #3333ff;
-}
-.formatted :global(.token-type_PARENTHESIS_END) {
-  color: #3333ff;
-}
-.formatted :global(.token-type_RANGE_OPERATOR) {
+.formatted :global(.token-type_ASSIGNMENT),
+.formatted :global(.token-type_WITHIN),
+.formatted :global(.token-type_PARENTHESIS_BEGIN),
+.formatted :global(.token-type_PARENTHESIS_END),
+.formatted :global(.token-type_RANGE_OPERATOR),
+.formatted :global(.token-type_OPERATOR)  {
   color: #3333ff;
 }
 .formatted :global(.token-type_LITERAL) {
   color: #212121;
-}
-.formatted :global(.token-type_OPERATOR) {
-  color: #3333ff;
 }
