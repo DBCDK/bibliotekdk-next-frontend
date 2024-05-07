@@ -20,14 +20,13 @@ import { unixToFormatedDate } from "@/lib/utils";
 import Link from "@/components/base/link";
 import { useModal } from "@/components/_modal";
 import { useMutate } from "@/lib/api/api";
-import { deleteSavedSearches } from "@/lib/api/userData.mutations";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import Button from "@/components/base/button";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 
 function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   const formatedDate = unixToFormatedDate(item.unixtimestamp);
-  const { deleteSearch } = useSavedSearches();
+  const { deleteSearches } = useSavedSearches();
 
   return (
     <div className={styles.savedItemRow} {...props}>
@@ -72,7 +71,7 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
           if (item?.id) {
             console.log("item?.id", item?.id);
             //deleteSavedSearches({ idsToDelete: [item.id], userDataMutation });
-            deleteSearch({ idsToDelete: [item.id] });
+            deleteSearches({ idsToDelete: [item.id] });
             //todo mutate refresh
           }
         }}
@@ -89,7 +88,7 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
 }
 
 export default function SavedSearches() {
-  const { deleteSearch, savedSearches } = useSavedSearches();
+  const { deleteSearches, savedSearches } = useSavedSearches();
   const [checkboxList, setCheckboxList] = useState([]);
   const modal = useModal();
   const { isAuthenticated } = useAuthentication();
@@ -114,16 +113,7 @@ export default function SavedSearches() {
     const idsToDelete = savedSearches
       ?.filter((item) => checkboxList.includes(item.key) && item.id)
       .map((item) => item.id);
-    console.log("idsToDelete", idsToDelete);
-    //find ids to delete
-    deleteSavedSearches({ idsToDelete, userDataMutation });
-
-    // checkboxList.forEach((check) => {
-    //   const savedItem = savedSearches.find((stored) => stored.key === check);
-    //  // savedItem && deleteSearch(savedItem);
-    //   //remove item from checklist too
-    //   //onSelect(savedItem, false);
-    // });
+    deleteSearches({ idsToDelete });
   };
 
   const checkedObjects = savedSearches?.filter((obj) =>
@@ -154,12 +144,6 @@ export default function SavedSearches() {
     }
     setCheckboxList(newCheckList);
   };
-
-  console.log("savedSearches", savedSearches);
-
-  console.log("checkedObjects", checkedObjects);
-
-  console.log("checkboxList", checkboxList);
 
   return (
     <div className={styles.container}>

@@ -22,6 +22,7 @@ import Button from "@/components/base/button";
 import CombinedSearch from "@/components/search/advancedSearch/combinedSearch/CombinedSearch";
 import useSavedSearches from "@/components/hooks/useSavedSearches";
 import { useModal } from "@/components/_modal";
+import { deleteSavedSearches } from "@/lib/api/userData.mutations";
 
 //Component to render facets
 export function FormatedFacets({ facets, className }) {
@@ -113,7 +114,7 @@ export function SearchQueryDisplay({ item }) {
 function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
   const modal = useModal();
   const breakpoint = useBreakpoint();
-  const { deleteSearch, savedSearchKeys } = useSavedSearches();
+  const { deleteSearches, savedSearchKeys } = useSavedSearches();
   //check user has saved the search item
   const isSaved = savedSearchKeys?.includes(item.key);
 
@@ -168,10 +169,8 @@ function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
         src={`${isSaved ? "heart_filled" : "heart"}.svg`}
         onClick={() => {
           if (isSaved) {
-            console.log("item", item);
             //remove search
-            //  deleteSearch(item);
-            deleteSearch({ idsToDelete: [item.id] });
+            deleteSearches({ idsToDelete: [item.id] });
           } else {
             //open save search modal
             modal.push("saveSearch", {

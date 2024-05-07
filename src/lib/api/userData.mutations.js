@@ -73,7 +73,7 @@ export function addUserToUserData({ userDataMutation }) {
  *
  */
 
-export  function addSavedSearch({ searchObject }) {
+export function addSavedSearch({ searchObject }) {
   const q = {
     query: `
       mutation addSavedSearch($searchObject:  String!) {
@@ -129,8 +129,7 @@ export function updateSavedSearch({ searchObject }) {
  *
  */
 
-export function deleteSavedSearches({ idsToDelete, userDataMutation }) {
-  console.log("deleteSavedSearches.idsToDelete", idsToDelete);
+export function deleteSavedSearches({ idsToDelete }) {
   if (!Array.isArray(idsToDelete)) {
     return null;
   }

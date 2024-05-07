@@ -40,11 +40,11 @@ export const useSavedSearches = () => {
       })
   );
 
-  const mutateData = ()=>{
-    setTimeout(()=>{
-        mutate()
-    },100)
-  }
+  const mutateData = () => {
+    setTimeout(() => {
+      mutate();
+    }, 100);
+  };
   const savedSearches = useMemo(
     () =>
       data?.user?.savedSearches?.result?.map((search) => {
@@ -62,10 +62,7 @@ export const useSavedSearches = () => {
 
   const saveSearch = async ({ searchObject }) => {
     try {
-        console.log('addSavedSearch({ searchObject })',addSavedSearch({ searchObject }))
-
-      const res = await userDataMutation.post(addSavedSearch({ searchObject }));
-      console.log('res',res)
+      await userDataMutation.post(addSavedSearch({ searchObject }));
       mutateData();
     } catch (err) {
       console.error(err);
@@ -74,9 +71,7 @@ export const useSavedSearches = () => {
 
   const updateSearch = async ({ searchObject }) => {
     try {
-      const res = await userDataMutation.post(
-        updateSavedSearch({ searchObject })
-      );
+      await userDataMutation.post(updateSavedSearch({ searchObject }));
       mutateData();
     } catch (err) {
       console.error(err);
@@ -87,7 +82,7 @@ export const useSavedSearches = () => {
    * ids to delete
    * @param {*} idsToDelete
    */
-  const deleteSearch = async ({ idsToDelete }) => {
+  const deleteSearches = async ({ idsToDelete }) => {
     try {
       await userDataMutation.post(deleteSavedSearches({ idsToDelete }));
       mutateData();
@@ -105,7 +100,7 @@ export const useSavedSearches = () => {
     savedSearches,
     savedSearchKeys,
     saveSearch,
-    deleteSearch,
+    deleteSearches,
     hitcount,
     updateSearch,
   };

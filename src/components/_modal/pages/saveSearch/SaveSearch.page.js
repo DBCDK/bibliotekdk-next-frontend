@@ -21,8 +21,7 @@ import useSavedSearches from "@/components/hooks/useSavedSearches";
 export default function SaveSearch({ modal, context }) {
   const { item, back } = context;
   const [searchName, onSearchNameChange] = useState("");
-  const userDataMutation = useMutate();
-  const { updateSearch, saveSearch} = useSavedSearches();
+  const { updateSearch, saveSearch } = useSavedSearches();
   useEffect(() => {
     onSearchNameChange(item?.name || item?.cql || "");
   }, [item]);
@@ -65,11 +64,10 @@ export default function SaveSearch({ modal, context }) {
           }
           //otherwise add new item
           else {
-            saveSearch({searchObject: newItem})
-            //  await addSavedSearch({ searchObject: newItem, userDataMutation });
+            saveSearch({ searchObject: newItem });
           }
 
-         modal.clear();
+          modal.clear();
         }}
       >
         {Translate({ context: "advanced_search_savedSearch", label: "save" })}
