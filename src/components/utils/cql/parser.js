@@ -244,8 +244,8 @@ function validateRangeLiterals(tokens) {
       token?.type === TOKEN_TYPES.LITERAL;
 
     if (isRangeLiteral) {
-      const regexYear = /^"[0-9]+\s+[0-9]+"$/;
-      const regexYearWithAsterisk = /^"[0-9*]+\s+[0-9*]+"$/;
+      const regexYear = /^"-?[0-9]+\s+-?[0-9]+"$/;
+      const regexYearWithAsterisk = /^"-?[0-9*]+\s+-?[0-9*]+"$/;
       const regexDate = /^"\d{4}-\d{2}-\d{2}\s+\d{4}-\d{2}-\d{2}"$/;
 
       if (regexYearWithAsterisk.test(token.normalized)) {
