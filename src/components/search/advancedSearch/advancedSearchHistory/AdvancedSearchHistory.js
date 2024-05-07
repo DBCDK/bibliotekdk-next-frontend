@@ -22,7 +22,6 @@ import Button from "@/components/base/button";
 import CombinedSearch from "@/components/search/advancedSearch/combinedSearch/CombinedSearch";
 import useSavedSearches from "@/components/hooks/useSavedSearches";
 import { useModal } from "@/components/_modal";
-import { deleteSavedSearches } from "@/lib/api/userData.mutations";
 
 //Component to render facets
 export function FormatedFacets({ facets, className }) {

@@ -7,15 +7,10 @@ import Title from "@/components/base/title";
 import Top from "@/components/_modal/pages/base/top";
 import Translate from "@/components/base/translate";
 import Button from "@/components/base/button";
-import {
-  addSavedSearch,
-  updateSavedSearch,
-} from "@/lib/api/userData.mutations";
 
 import styles from "./SaveSearch.module.css";
 import Input from "@/components/base/forms/input";
 import { useEffect, useState } from "react";
-import { useMutate } from "@/lib/api/api";
 import useSavedSearches from "@/components/hooks/useSavedSearches";
 
 export default function SaveSearch({ modal, context }) {

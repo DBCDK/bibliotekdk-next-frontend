@@ -19,7 +19,6 @@ import Accordion, { Item } from "@/components/base/accordion";
 import { unixToFormatedDate } from "@/lib/utils";
 import Link from "@/components/base/link";
 import { useModal } from "@/components/_modal";
-import { useMutate } from "@/lib/api/api";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import Button from "@/components/base/button";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
@@ -92,7 +91,6 @@ export default function SavedSearches() {
   const [checkboxList, setCheckboxList] = useState([]);
   const modal = useModal();
   const { isAuthenticated } = useAuthentication();
-  const userDataMutation = useMutate();
 
   /**
    * Set or unset ALL checkboxes in saved search table

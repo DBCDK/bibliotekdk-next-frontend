@@ -187,12 +187,6 @@
     justify-content: flex-end;
     margin-bottom: var(--pt2);
   }
-  .menuDropdownContainer {
-    padding-right: var(--pt2);
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: var(--pt2);
-  }
 }
 
 .saveSearchIcon {

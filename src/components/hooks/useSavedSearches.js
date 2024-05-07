@@ -2,7 +2,6 @@
  * @file - Hook for advanced search saved searches. functions to get, save and delete searches from userdata db
  */
 
-import { setLocalStorageItem } from "@/lib/utils";
 import { useMemo } from "react";
 import {
   addSavedSearch,
@@ -12,8 +11,6 @@ import {
 import { savedSearchesQuery } from "@/lib/api/user.fragments";
 import { useData, useMutate } from "@/lib/api/api";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
-
-const KEY = "saved-advanced-search-items";
 
 /**
  * Get a date on a stored saved search object
