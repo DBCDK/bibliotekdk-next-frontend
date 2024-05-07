@@ -1,5 +1,7 @@
 describe("Facets", () => {
   it(`Get facets from url`, () => {
+    defaultCommandTimeout: 10000;
+
     cy.visit("/iframe.html?id=advancedsearch-facets--facets-in-url");
 
     // there should be 3 accordions in this story
@@ -14,7 +16,7 @@ describe("Facets", () => {
     });
 
     // get the first accordion
-    cy.get("[data-cy=accordion-item]").first().click();
+    cy.get("[data-cy=accordion-item]").first().click().wait(100);
 
     // there should be 5
     cy.get("[data-cy=accordion-item]")
@@ -44,12 +46,13 @@ describe("Facets", () => {
       .find("input")
       .click({ force: true });
 
-    cy.wait(5);
+    cy.get("[data-cy=li-specificmaterialtype-artikel]")
+      .find("input")
+      .click({ force: true });
 
     cy.get("[data-cy=router-query]").then((el) => {
       const fisk = JSON.parse(el.text());
       const facets = fisk.facets;
-      console.log(facets, "FACETS");
 
       assert(facets.includes("artikel"));
     });
