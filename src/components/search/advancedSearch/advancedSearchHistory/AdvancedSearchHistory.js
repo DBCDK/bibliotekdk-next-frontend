@@ -304,7 +304,7 @@ export function HistoryHeaderActions({
 
 export function SearchHistoryNavigation() {
   const router = useRouter();
-  const { savedSearchKeys } = useSavedSearches();
+  const { hitcount } = useSavedSearches();
 
   // Check if the current path matches any button url
   const isButtonVisible = (path) => router.pathname === path;
@@ -341,7 +341,7 @@ export function SearchHistoryNavigation() {
           {Translate({
             context: "search",
             label: "advanced-search-saved-search",
-            vars: [String(savedSearchKeys?.length)],
+            vars: [String(hitcount)],
           })}
         </Text>
       </Link>

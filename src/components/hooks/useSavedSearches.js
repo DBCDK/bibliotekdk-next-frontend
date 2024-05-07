@@ -2,8 +2,7 @@
  * @file - Hook for advanced search saved searches. functions to get, save and delete searches from userdata db
  */
 
-import { getLocalStorageItem, setLocalStorageItem } from "@/lib/utils";
-import useSWR from "swr";
+import { setLocalStorageItem } from "@/lib/utils";
 import { useMemo } from "react";
 import { addSavedSearch } from "@/lib/api/userData.mutations";
 import { savedSearchesQuery } from "@/lib/api/user.fragments";
@@ -25,10 +24,6 @@ export function getTimeStamp(now) {
   return stamp.replace("AM", "").replace("PM", "").replace(":", ".").trim();
 }
 
-function getUnixTimeStamp() {
-  return new Date().getTime();
-}
-
 export const useSavedSearches = () => {
   //   let { data: savedSearches, mutate } = useSWR(KEY, (key) =>
   //     JSON.parse(getLocalStorageItem(key) || "[]")
@@ -36,21 +31,18 @@ export const useSavedSearches = () => {
 
   const { hasCulrUniqueId } = useAuthentication();
 
-  const { data, isLoading } = useData(
+  const { data } = useData(
     hasCulrUniqueId &&
       savedSearchesQuery({
         limit: 10,
         offset: 0,
       })
   );
-  //const {result, hitcount} = data?.user?.savedSearches
-  // console.log('hitcount',hitcount)
-  //   console.log('result',result)
+
   const savedSearches = useMemo(
     () =>
       data?.user?.savedSearches?.result?.map((search) => {
         const searchObject = JSON.parse(search.searchObject);
-        console.log("searchObject", searchObject);
         return {
           ...searchObject,
           id: search.id,
@@ -59,9 +51,8 @@ export const useSavedSearches = () => {
       }),
     [data]
   );
-  console.log("**savedSearches", savedSearches);
 
-  //todo rename to saveSearch
+  const hitcount = useMemo(() => data?.user?.savedSearches?.hitcount, [data]);
 
   const saveSearch = async ({ value, userDataMutation }) => {
     try {
@@ -123,6 +114,7 @@ export const useSavedSearches = () => {
     savedSearchKeys,
     saveSearch,
     deleteSearch,
+    hitcount,
   };
 };
 

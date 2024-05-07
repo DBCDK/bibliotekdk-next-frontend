@@ -19,13 +19,12 @@ import Accordion, { Item } from "@/components/base/accordion";
 import { unixToFormatedDate } from "@/lib/utils";
 import Link from "@/components/base/link";
 import { useModal } from "@/components/_modal";
-import { useData } from "@/lib/api/api";
-import useAuthentication from "@/components/hooks/user/useAuthentication";
-import { savedSearchesQuery } from "@/lib/api/user.fragments";
+import { useMutate } from "@/lib/api/api";
+import { deleteSavedSearches } from "@/lib/api/userData.mutations";
 
 function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   const formatedDate = unixToFormatedDate(item.unixtimestamp);
-  const { deleteSearch } = useSavedSearches();
+  const userDataMutation = useMutate();
 
   return (
     <div className={styles.savedItemRow} {...props}>
@@ -65,8 +64,12 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
         style={{ cursor: "pointer" }}
         size={3}
         src={`heart_filled.svg`}
-        onClick={() => {
-          deleteSearch(item);
+        onClick={(e) => {
+          e.stopPropagation();
+          if (item?.id) {
+            deleteSavedSearches({ idsToDelete: [item.id], userDataMutation });
+            //todo mutate refresh
+          }
         }}
       />
       <Icon
@@ -121,7 +124,6 @@ export default function SavedSearches() {
    *  selected or not
    */
   const onSelect = (item, selected = false) => {
-    console.log("onSelect.item", item);
     const newCheckList = [...checkboxList];
     // if item is already in checkboxlist -> remove
     const checkindex = checkboxList.findIndex((check) => check === item.id);
