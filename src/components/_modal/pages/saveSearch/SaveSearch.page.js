@@ -25,7 +25,6 @@ export default function SaveSearch({ modal, context }) {
   useEffect(() => {
     onSearchNameChange(item?.name || item?.cql || "");
   }, [item]);
-  // const { saveSearch } = useSavedSearches();
   //check user has saved the search item
 
   return (

@@ -25,10 +25,6 @@ export function getTimeStamp(now) {
 }
 
 export const useSavedSearches = () => {
-  //   let { data: savedSearches, mutate } = useSWR(KEY, (key) =>
-  //     JSON.parse(getLocalStorageItem(key) || "[]")
-  //   );
-
   const { hasCulrUniqueId } = useAuthentication();
 
   const { data } = useData(
@@ -57,28 +53,6 @@ export const useSavedSearches = () => {
   const saveSearch = async ({ value, userDataMutation }) => {
     try {
       await addSavedSearch({ searchObject: value, userDataMutation });
-
-      //   if (typeof window !== "undefined") {
-      //     // Check if cql (and facets) is already stored
-      //     const index = savedSearches.findIndex(
-      //       (stor) => stor?.key?.trim() === value?.key?.trim()
-      //     );
-
-      //     value["timestamp"] = getTimeStamp(getUnixTimeStamp());
-      //     value["unixtimestamp"] = getUnixTimeStamp();
-
-      //     if (index !== -1) {
-      //       // Update the existing entry if found
-      //       savedSearches[index] = value;
-      //     } else {
-      //       // Add to the beginning of saved items array if not found
-      //       savedSearches.unshift(value);
-      //     }
-
-      //     // Update localstorage and state
-      //     setLocalStorageItem(KEY, JSON.stringify(savedSearches));
-      //     mutate();
-      //   }
     } catch (err) {
       console.error(err);
     }
@@ -96,7 +70,6 @@ export const useSavedSearches = () => {
           savedSearches.splice(valueIndex, 1);
           // update localstorage
           setLocalStorageItem(KEY, JSON.stringify(savedSearches));
-          //  mutate();
         }
       }
     } catch (err) {
