@@ -36,6 +36,7 @@ function Radio({
   _ref,
   className,
   moveItemRightOnFocus,
+  checkBoxStyle = false,
   ...props
 }) {
   return (
@@ -67,6 +68,7 @@ function Radio({
           [animations["f-translate-right"]]: moveItemRightOnFocus,
         })}
       />
+      {checkBoxStyle && <div className={styles.checkmark}>&#10003;</div>}
       <div
         className={cx(styles.content, {
           [animations["f-translate-right"]]: moveItemRightOnFocus,
@@ -77,6 +79,7 @@ function Radio({
     </div>
   );
 }
+
 Radio.propTypes = {
   disabled: PropTypes.bool,
   className: PropTypes.string,

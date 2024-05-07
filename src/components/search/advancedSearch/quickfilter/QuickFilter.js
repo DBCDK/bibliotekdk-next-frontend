@@ -1,7 +1,6 @@
 import List from "@/components/base/forms/list";
 import styles from "./quickFilter.module.css";
 import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
-import Translate from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
 
 function ListGroup({ filter }) {
@@ -14,28 +13,30 @@ function ListGroup({ filter }) {
   return (
     <div className={styles.groupcontainer}>
       <div className={styles.groupcontent}>
-        <Text type="text2" className={styles.boldtext}>
-          {Translate({ context: "quickfilters", label: filter.label })}
-        </Text>
-        <List.Group label={filter.label} className={styles.group}>
-          {filter.values.map((value) => (
-            <List.Radio
-              key={value.label}
-              selected={
-                (currentFilter && currentFilter.value === value.cql) ||
-                (!currentFilter && !value.cql)
-              }
-              onSelect={() => {
-                addQuickFilter(filter, value);
-              }}
-              label={value.label}
-              className={styles.radio}
-            >
-              <Text type="text3" className={styles.text}>
-                {value.label}
-              </Text>
-            </List.Radio>
-          ))}
+        <List.Group
+          label={filter.label}
+          className={styles.group}
+          disableGroupOutline={true}
+        >
+          {filter.values.map((value) => {
+            const selected = currentFilter && currentFilter.value === value.cql;
+            return (
+              <List.Radio
+                key={value.label}
+                selected={selected}
+                onSelect={() => {
+                  addQuickFilter(filter, value, !selected);
+                }}
+                label={value.label}
+                className={styles.radio}
+                checkBoxStyle={true}
+              >
+                <Text type="text3" className={styles.text}>
+                  {value.label}
+                </Text>
+              </List.Radio>
+            );
+          })}
         </List.Group>
       </div>
     </div>

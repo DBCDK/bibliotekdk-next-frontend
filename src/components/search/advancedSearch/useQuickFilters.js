@@ -1,6 +1,8 @@
 import { useRouter } from "next/router";
 import { useGlobalState } from "@/components/hooks/useGlobalState";
+import { useEffect } from "react";
 
+let initialized = false;
 export function useQuickFilters() {
   const router = useRouter();
 
@@ -15,7 +17,6 @@ export function useQuickFilters() {
       label: "label-physical-online",
       searchIndex: "term.accesstype",
       values: [
-        { label: "Alle", cql: null },
         { label: "Online", cql: "online" },
         { label: "Fysisk", cql: "fysisk" },
       ],
@@ -24,7 +25,6 @@ export function useQuickFilters() {
       label: "label-fiction-nonfiction",
       searchIndex: "term.fictionnonfiction",
       values: [
-        { label: "Alle", cql: null },
         { label: "Fiktion", cql: "fiction" },
         { label: "Non-fiktion", cql: "nonfiction" },
       ],
@@ -33,12 +33,26 @@ export function useQuickFilters() {
       label: "label-children-adults",
       searchIndex: "term.childrenoradults",
       values: [
-        { label: "Alle", cql: "" },
         { label: "Voksne", cql: "til voksne" },
         { label: "Børn", cql: "til børn" },
       ],
     },
   ];
+
+  // we need a useEffect to sync state (selectedFacets) with facets from the query
+  useEffect(() => {
+    if (!initialized) {
+      setSelectedQuickFilters(quickFiltersFromUrl());
+      initialized = true;
+    }
+  }, [router?.query?.quickfilters]);
+
+  // // we need a useEffect to reset quickfilters when we leave the page (/avanceret)
+  useEffect(() => {
+    if (initialized && router && !router?.pathname?.includes("/avanceret")) {
+      clearQuickFiltersUrl();
+    }
+  }, []);
 
   /**
    * Parse quickfilters in url -
@@ -55,15 +69,15 @@ export function useQuickFilters() {
       : "[]";
   }
 
-  function addQuickFilter(filter, value) {
+  function addQuickFilter(filter, value, selected) {
     const copy = [...JSON.parse(selectedQuickFilters)];
     // there can only be one active selection pr. filter
     const filterIndex = copy?.findIndex(
       (filt) => filt.searchIndex === filter.searchIndex
     );
 
-    // if found and value.cql is null we remove from query (Alle)
-    if (filterIndex !== -1 && !value?.cql) {
+    // if found and value.cql is null OR it has been deselected we remove from query (Alle)
+    if ((filterIndex !== -1 && !value?.cql) || !selected) {
       copy.splice(filterIndex, 1);
     }
     // if found replace cql value
@@ -84,6 +98,20 @@ export function useQuickFilters() {
   function resetQuickFilters() {
     setSelectedQuickFilters("[]");
   }
+
+  /**
+   * Push empty facet query to url
+   */
+  function clearQuickFiltersUrl() {
+    setSelectedQuickFilters("[]");
+    const query = router?.query;
+    delete query["quickfilters"];
+    router.push({
+      pathname: router.pathname,
+      query: query,
+    });
+  }
+
   /**
    * Push query
    * @param replace
@@ -128,5 +156,6 @@ export function useQuickFilters() {
     addQuickFilter,
     selectedQuickFilters: JSON.parse(selectedQuickFilters),
     resetQuickFilters,
+    clearQuickFiltersUrl,
   };
 }

@@ -50,6 +50,8 @@ describe("Facets", () => {
       .find("input")
       .click({ force: true });
 
+    cy.wait(20);
+
     cy.get("[data-cy=router-query]").then((el) => {
       const fisk = JSON.parse(el.text());
       const facets = fisk.facets;

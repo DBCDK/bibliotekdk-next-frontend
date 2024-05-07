@@ -7,10 +7,6 @@
   padding: var(--pt1) var(--pt2) var(--pt2) 0;
 }
 
-.boldtext {
-  font-family: var(--body-font-semibold);
-}
-
 .text {
   margin-left: var(--pt05);
 }
