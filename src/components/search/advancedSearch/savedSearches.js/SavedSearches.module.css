@@ -35,6 +35,9 @@
     padding: 0px 22px !important;
     grid-template-columns: 1fr 2fr 20fr 2fr 1fr 1fr;
   }
+  .tableContainer {
+    padding-left: var(--pt1);
+  }
 }
 
 .searchPreview {
@@ -114,5 +117,11 @@
 @media screen and (min-width: 576px) {
   .loginButton {
     width: fit-content;
+  }
+}
+
+@media (max-width: 576px) {
+  .newTableHeader {
+    margin-right: var(--pt1);
   }
 }

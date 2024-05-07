@@ -244,7 +244,7 @@ export function HistoryHeaderActions({
 
   if (breakpoint === "xs") {
     return (
-      <div className={cx(styles.actionheader)}>
+      <div className={cx(styles.menuDropdownContainer)}>
         <MenuDropdown options={MENUITEMS} isLeftAlligned={true} />
       </div>
     );
@@ -341,7 +341,7 @@ export function SearchHistoryNavigation() {
           {Translate({
             context: "search",
             label: "advanced-search-saved-search",
-            vars: [String(hitcount)],
+            vars: [hitcount ? String(hitcount) : "0"],
           })}
         </Text>
       </Link>
