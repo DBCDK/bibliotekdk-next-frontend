@@ -391,6 +391,7 @@ const BookmarkPage = () => {
 
       {activeStickyButton ? (
         <IconButton
+          icon="close"
           textType="text1"
           className={styles.closeStickySituation}
           onClick={() => setActiveStickyButton(null)}
@@ -497,6 +498,7 @@ const BookmarkPage = () => {
           })}
         </Button>
         <IconButton
+          icon="close"
           disabled={isNothingSelected}
           onClick={onDeleteSelected}
           dataCy="bookmarks-remove-from-list"

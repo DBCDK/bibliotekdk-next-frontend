@@ -8,10 +8,6 @@
   display: grid;
 }
 
-.table_grid > *:first-child {
-  border-top: 1px solid var(--iron);
-}
-
 .table_grid > *:nth-child(2n) {
   background-color: var(--concrete);
 }
@@ -26,12 +22,10 @@
 .filteritem {
   margin-left: var(--pt1);
   color: var(--blue);
-  text-decoration: underline;
 }
 
 .itemsheader {
   border-bottom: 1px solid var(--iron);
-  margin-bottom: var(--pt2);
   padding-left: var(--pt1);
 }
 
@@ -58,7 +52,7 @@
 @media (min-width: 576px) {
   .grid {
     --grid_template_areas: "checkbox timestamp search_query hitcount";
-    grid-template-columns: var(--pt2) 2fr 15fr 3fr;
+    grid-template-columns: var(--pt2) 2fr 15fr 3fr 1fr;
   }
 }
 
@@ -68,12 +62,13 @@
 
 .checkbox {
   grid-area: checkbox;
-  top: var(--pt05);
+  top: 5px;
 }
 
 .timestamp {
   grid-area: timestamp;
   padding-right: var(--pt4);
+  white-space: nowrap;
 }
 
 @media (min-width: 576px) {
@@ -84,6 +79,7 @@
 
 .link {
   grid-area: search_query;
+  margin-bottom: var(--pt1);
 }
 
 .hitcount {
@@ -92,6 +88,7 @@
 
 .actionheader {
   padding-left: var(--pt2);
+  margin-bottom: var(--pt4);
   display: flex;
   gap: var(--pt3);
   justify-content: flex-start;
@@ -129,8 +126,8 @@
 }
 
 .header {
-  margin-bottom: var(--pt2);
   border-bottom: 1px solid var(--iron);
+  margin-bottom: var(--pt4);
 }
 
 .removeItems {
@@ -143,7 +140,7 @@
 }
 
 .row {
-  padding: var(--pt1) 0 var(--pt1) var(--pt2);
+  padding: var(--pt2) 0 var(--pt1) var(--pt2);
   border-bottom: 1px solid var(--iron);
 }
 
@@ -163,5 +160,15 @@
 }
 
 .action {
+  cursor: pointer;
+}
+
+.navigationButtons {
+  display: flex;
+  gap: var(--pt5);
+  margin-bottom: var(--pt3);
+}
+
+.saveSearchIcon {
   cursor: pointer;
 }

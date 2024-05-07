@@ -23,6 +23,12 @@ export function getDefaultDropdownIndices() {
     { searchIndex: DropdownIndicesEnum.MATERIAL_TYPES_GENERAL, value: [] },
     { searchIndex: DropdownIndicesEnum.PUBLICATION_YEAR, value: [] },
     { searchIndex: DropdownIndicesEnum.AGES, value: [] },
+    { searchIndex: DropdownIndicesEnum.GENRE, value: [] },
+    { searchIndex: DropdownIndicesEnum.MATERIAL_TYPES_SPECIFIC, value: [] },
+    { searchIndex: DropdownIndicesEnum.FILM_NATIONALITY, value: [] },
+    { searchIndex: DropdownIndicesEnum.GAME_PLATFORM, value: [] },
+    { searchIndex: DropdownIndicesEnum.PLAYERS, value: [] },
+    { searchIndex: DropdownIndicesEnum.PEGI, value: [] },
   ];
 }
 
@@ -47,8 +53,6 @@ export function useAdvancedSearchContext() {
 }
 
 export default function AdvancedSearchProvider({ children, router }) {
-  const workType = "all";
-
   const {
     page = "1",
     cql: cqlFromUrl = null,
@@ -65,6 +69,11 @@ export default function AdvancedSearchProvider({ children, router }) {
   const [showPopover, setShowPopover] = useState(false);
   //if advanced search popover is open, and the user clicks on simple search, a tooltip with info will be shown.
   const [showInfoTooltip, setShowInfoTooltip] = useState(false);
+
+  // worktypes state.
+  const [workType, setWorkType] = useState(
+    fieldSearchFromUrl.workType || "all"
+  );
 
   useEffect(() => {
     if (showPopover && popoverRef.current) {
@@ -93,20 +102,29 @@ export default function AdvancedSearchProvider({ children, router }) {
     resetDropdownIndices,
     resetMenuItemsEvent,
     dispatchResetMenuItemsEvent,
-  } = useDropdownSearchIndices({ ...fieldSearchFromUrl });
+    dropdownsToRemove,
+  } = useDropdownSearchIndices({ ...fieldSearchFromUrl }, workType);
 
   //// ---- parsedCQL ----
   //only add inputFields to object if there are values
   const cleanInputFields =
     inputFields?.filter((el) => !isEmpty(el.value)) || [];
 
+  // filter out dropdowns to be removed (they are in url but NOT in on this page)
+  const filteredDropDowns = dropdownSearchIndices.filter(function (el) {
+    return !!!dropdownsToRemove.find(
+      (drop) => drop.searchIndex === el.searchIndex
+    );
+  });
+
   //only add dropdownSearchIndices to object if there are values
   const cleanDropdowns =
-    dropdownSearchIndices?.filter((el) => !isEmpty(el.value)) || [];
+    filteredDropDowns?.filter((el) => !isEmpty(el.value)) || [];
 
   const state = {
     ...(cleanInputFields.length > 0 && { inputFields: cleanInputFields }),
     ...(cleanDropdowns.length > 0 && { dropdownSearchIndices: cleanDropdowns }),
+    ...(workType && workType !== "all" && { workType }),
   };
 
   //if object is empty, return empty string. Otherwise stringify state.
@@ -118,8 +136,8 @@ export default function AdvancedSearchProvider({ children, router }) {
     const updatedCql = convertStateToCql({
       inputFields,
       dropdownSearchIndices,
+      workType,
     });
-
     setParsedCQL(cqlFromUrl || updatedCql);
   }, [inputFields, dropdownSearchIndices, cqlFromUrl]);
 
@@ -129,6 +147,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     resetInputFields();
     resetDropdownIndices();
     dispatchResetMenuItemsEvent();
+    setWorkType("all");
   }
 
   /** @typedef {{
@@ -179,6 +198,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     setShowInfoTooltip,
     sort: sort,
     workType: workType,
+    setWorkType,
     stateToString,
     popoverRef,
     resetMenuItemsEvent,

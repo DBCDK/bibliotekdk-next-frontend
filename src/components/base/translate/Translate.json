@@ -125,6 +125,46 @@
         "da": "Materialetype",
         "en": "Materialtype"
       },
+      "phrase.gameplatform": {
+        "da": "Platform",
+        "en": "Platform"
+      },
+      "all_phrase.pegi": {
+        "da": "PEGI mærkning",
+        "en": "PEGI mark"
+      },
+      "phrase.pegi": {
+        "da": "PEGI mærkning",
+        "en": "PEGI mark"
+      },
+      "all_phrase.players": {
+        "da": "Spillere",
+        "en": "Players"
+      },
+      "phrase.players": {
+        "da": "Antal spillere",
+        "en": "Players"
+      },
+      "all_phrase.gameplatform": {
+        "da": "Alle platforme",
+        "en": "All Platforms"
+      },
+      "all_phrase.genreandform": {
+        "da": "Alle genrer",
+        "en": "All genres"
+      },
+      "phrase.genreandform": {
+        "da": "Genre og form",
+        "en": "Genre and form"
+      },
+      "all_phrase.filmnationality": {
+        "da": "Alle nationaliteter",
+        "en": "All nationalities"
+      },
+      "phrase.filmnationality": {
+        "da": "Nationalitet",
+        "en": "Nationality"
+      },
       "all_phrase.specificmaterialtype": {
         "da": "Alle materialer",
         "en": "All materials"
@@ -218,6 +258,75 @@
         "en": "Age"
       }
     },
+    "advanced_search_worktypes": {
+      "all": {
+        "da": "Alle materialer",
+        "en": "All materials"
+      },
+      "literature": {
+        "da": "Bøger",
+        "en": "Books"
+      },
+      "article": {
+        "da": "Artikler",
+        "en": "Articles"
+      },
+      "movie": {
+        "da": "Film",
+        "en": "Movies"
+      },
+      "music": {
+        "da": "Musik",
+        "en": "Music"
+      },
+      "game": {
+        "da": "Spil",
+        "en": "Games"
+      },
+      "sheetmusic": {
+        "da": "Noder",
+        "en": "Sheetmusic"
+      },
+      "category": {
+        "da": "Kategori",
+        "en": "Category"
+      }
+    },
+    "advanced_search_savedSearch": {
+      "emptyListMessage1": {
+        "da": "Du har ikke nogen gemte søgninger endnu.",
+        "en": "You do not have any saved searches yet."
+      },
+      "emptyListMessage2": {
+        "da": "Sådan gemmer du en søgning",
+        "en": "How to save a search"
+      },
+      "emptyListMessage3": {
+        "da": "Du har ikke nogen gemte søgninger endnu.",
+        "en": "You do not have any saved searches yet."
+      },
+
+      "emptyListMessage4": {
+        "da": "Når du bruger “Avanceret søgning” kan du trykke på knappen  “Gem søgning” i toppen af søgeresultatet, og søgningen vil lægge sig her på listen.\n\nDu kan også gemme en søgning fra listen “Seneste søgninger” ved at klikke på hjerte-ikonet ud for den ønskede søgning.",
+        "en": "You do not have any saved searches yet."
+      },
+      "saveYourSearch": {
+        "da": "Gem din søgning",
+        "en": "Save your search"
+      },
+      "addSavedSearchName": {
+        "da": "Navngiv din søgning",
+        "en": "Name your search"
+      },
+      "addSavedSearcInputPlaceholder": {
+        "da": "Angiv et navn for din søgning.",
+        "en": "Type a name for your search."
+      },
+      "save": {
+        "da": "Gem",
+        "en": "Save"
+      }
+    },
     "complex-search-facets": {
       "label-specificmaterialtype": {
         "da": "Format",
@@ -260,6 +369,7 @@
         "en": "Level"
       }
     },
+
     "logo": {
       "default_logo_text": {
         "da": "Bibliotek dk",
@@ -1480,6 +1590,10 @@
         "da": "Deltagere",
         "en": "Players"
       },
+      "dk5": {
+        "da": "dk5",
+        "en": "dk5"
+      },
       "title": {
         "da": "Detaljer",
         "en": "Details"
@@ -2389,9 +2503,17 @@
         "da": "Seneste søgninger",
         "en": "Latest searches"
       },
+      "advanced-search-saved-search": {
+        "da": "Gemte søgninger (%s)",
+        "en": "Saved searches (%s)"
+      },
       "advanced-empty-search-history": {
         "da": "Her vil du kunne se en liste over de seneste søgninger, hvor der har været brugt avanceret søgning. Listen er midlertidig og nulstilles automatisk, når du lukker enten vinduet eller din browser. Hvis du vil gemme en søgning til senere, så tryk “Gem” ud for søgningen og den vil lægge sig på listen “Gemte søgninger”.\\n Du har ikke lavet nogen avancerede søgninger endnu.",
         "en": "List of recent advanced searches :) - List is temporary and will be emptied automagically"
+      },
+      "date": {
+        "da": "Dato",
+        "en": "Date"
       },
       "remove": {
         "da": "Fjern",
@@ -2413,9 +2535,21 @@
         "da": "Din søgning",
         "en": "Your search"
       },
+      "search": {
+        "da": "Søgning",
+        "en": "search"
+      },
+      "results": {
+        "da": "Resultater",
+        "en": "Results"
+      },
+      "saveSearch": {
+        "da": "Gem søgning",
+        "en": "Save search"
+      },
       "editSearch": {
-        "da": "Rediger søgning",
-        "en": "Edit search"
+        "da": "Rediger",
+        "en": "Edit"
       },
       "construct-your-search": {
         "da": "Sammensæt din søgning",
@@ -2436,6 +2570,10 @@
       "searchHistory": {
         "da": "Søgehistorik",
         "en": "Search history"
+      },
+      "history-filter-label": {
+        "da": "filtre",
+        "en": "filters"
       },
       "history-yesterday": {
         "da": "Igår",
@@ -2882,6 +3020,10 @@
       "label-sheetmusic": {
         "da": "Noder",
         "en": "Sheet music"
+      },
+      "label-map": {
+        "da": "Kort",
+        "en": "Map"
       },
       "label-portrait": {
         "da": "Potrætter",

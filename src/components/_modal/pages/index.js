@@ -30,6 +30,7 @@ import EditionPicker from "./references/editionPicker/EditionPicker";
 import AccountHasProfile from "./accountHasProfile";
 import AdvancedFacets from "./advancedFacets/AdvancedFacets.page";
 import MobileFacets from "./advancedFacets/mobileFacets/mobileFacets.page";
+import SaveSearch from "./saveSearch";
 
 const _modal = {
   Menu,
@@ -64,6 +65,7 @@ const _modal = {
   AccountHasProfile,
   AdvancedFacets,
   MobileFacets,
+  SaveSearch,
 };
 
 export default _modal;

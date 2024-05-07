@@ -20,6 +20,8 @@ import MenuDropdown from "@/components/base/dropdown/menuDropdown/MenuDropdown";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import Button from "@/components/base/button";
 import CombinedSearch from "@/components/search/advancedSearch/combinedSearch/CombinedSearch";
+import useSavedSearches from "@/components/hooks/useSavedSearches";
+import { useModal } from "@/components/_modal";
 
 //Component to render facets
 export function FormatedFacets({ facets, className }) {
@@ -39,7 +41,7 @@ export function FormatedFacets({ facets, className }) {
   return (
     <div className={cx(styles.historyFilters, className)}>
       <Text tag="span" type="text1">
-        {Translate({ context: "search", label: "filters" })} :
+        {Translate({ context: "search", label: "history-filter-label" })}:
       </Text>
       {flatfilters.map((val, index) => (
         <Text
@@ -54,9 +56,15 @@ export function FormatedFacets({ facets, className }) {
     </div>
   );
 }
-function HistoryItem({ item, index, checked, onSelect }) {
+
+/**
+ * Renders a clickable link based on search item details.
+ * search history item
+ * @param {object} item
+ * @returns  {JSX.Element}
+ */
+export function SearchQueryDisplay({ item }) {
   const router = useRouter();
-  const breakpoint = useBreakpoint();
 
   const { restartFacetsHook } = useFacets();
 
@@ -83,6 +91,32 @@ function HistoryItem({ item, index, checked, onSelect }) {
     }
   };
 
+  return (
+    <div className={styles.link}>
+      <Link
+        onClick={(e) => {
+          e.preventDefault();
+          goToItemUrl(item);
+        }}
+      >
+        {!isEmpty(item.fieldSearch) ? (
+          <FormatFieldSearchIndexes fieldsearch={item.fieldSearch} />
+        ) : (
+          <FormatCql item={item} />
+        )}
+      </Link>
+      {/* move this to seperate component and reuse in combined search */}
+      <FormatedFacets facets={item?.selectedFacets} />
+    </div>
+  );
+}
+function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
+  const modal = useModal();
+  const breakpoint = useBreakpoint();
+  const { deleteSearch, savedSearchKeys } = useSavedSearches();
+  //check user has saved the search item
+  const isSaved = savedSearchKeys?.includes(item.key);
+
   const timestamp = item.unixtimestamp
     ? getTimeStamp(item.unixtimestamp)
     : item.timestamp;
@@ -104,7 +138,7 @@ function HistoryItem({ item, index, checked, onSelect }) {
       })}
     >
       <Checkbox
-        id={`select-item-${index}`}
+        id={`select-item-${checkboxKey}`}
         tabIndex="-1"
         onChange={(e) => {
           onSelect(item, e);
@@ -121,27 +155,29 @@ function HistoryItem({ item, index, checked, onSelect }) {
       >
         {itemText()}
       </Text>
-      <div className={styles.link}>
-        <Link
-          onClick={(e) => {
-            e.preventDefault();
-            goToItemUrl(item);
-          }}
-        >
-          {!isEmpty(item.fieldSearch) ? (
-            <FormatFieldSearchIndexes fieldsearch={item.fieldSearch} />
-          ) : (
-            <FormatCql item={item} />
-          )}
-        </Link>
-        {/* move this to seperate component and reuse in combined search */}
-        <FormatedFacets facets={item?.selectedFacets} />
-      </div>
+      <SearchQueryDisplay item={item} />
       <Text type="text2" className={styles.hitcount}>
         {item.hitcount}{" "}
         {breakpoint === "xs" &&
           Translate({ context: "search", label: "title" }).toLowerCase()}
       </Text>
+
+      <Icon
+        className={styles.saveSearchIcon}
+        size={3}
+        src={`${isSaved ? "heart_filled" : "heart"}.svg`}
+        onClick={() => {
+          if (isSaved) {
+            //remove search
+            deleteSearch(item);
+          } else {
+            //open save search modal
+            modal.push("saveSearch", {
+              item: item,
+            });
+          }
+        }}
+      />
     </div>
   );
 }
@@ -159,15 +195,24 @@ function FormatCql({ item }) {
   );
 }
 
-function HistoryHeaderActions({
+/**
+ * Action header for advanced search history.
+ * Has functionaluty to show combined search view + trigger the select all/remove buttons,
+ * @returns
+ */
+
+export function HistoryHeaderActions({
   setAllChecked,
   deleteSelected,
   checked,
   partiallyChecked,
   disabled,
-  onCombineSearch,
+  checkedObjects = [],
 }) {
   const breakpoint = useBreakpoint();
+  const [showCombinedSearch, setShowCombinedSearch] = useState(false);
+
+  const showCombineSearch = () => setShowCombinedSearch(true);
 
   const selectAllLabel = Translate({
     context: "bookmark",
@@ -177,11 +222,25 @@ function HistoryHeaderActions({
     context: "bookmark",
     label: "remove-selected",
   });
+  const combineSearchLabel = Translate({
+    context: "search",
+    label: "combineSearch",
+  });
 
   const MENUITEMS = [
     { child: selectAllLabel, callback: setAllChecked },
     { child: deleteSelectedLabel, callback: deleteSelected },
+    { child: combineSearchLabel, callback: showCombineSearch },
   ];
+
+  if (showCombinedSearch) {
+    return (
+      <CombinedSearch
+        cancelCombinedSearch={() => setShowCombinedSearch(false)}
+        queries={checkedObjects}
+      />
+    );
+  }
 
   if (breakpoint === "xs") {
     return (
@@ -210,7 +269,12 @@ function HistoryHeaderActions({
         </Text>
       </label>
 
-      <Button type="secondary" size="small" onClick={onCombineSearch}>
+      <Button
+        type="secondary"
+        size="small"
+        onClick={showCombineSearch}
+        disabled={disabled}
+      >
         {Translate({ context: "search", label: "combineSearch" })}
       </Button>
       <Link
@@ -238,6 +302,52 @@ function HistoryHeaderActions({
   );
 }
 
+export function SearchHistoryNavigation() {
+  const router = useRouter();
+  const { savedSearchKeys } = useSavedSearches();
+
+  // Check if the current path matches any button url
+  const isButtonVisible = (path) => router.pathname === path;
+
+  return (
+    <div className={styles.navigationButtons}>
+      <Link
+        onClick={() => router.push("/avanceret/soegehistorik")}
+        border={{
+          top: false,
+          bottom: {
+            keepVisible: isButtonVisible("/avanceret/soegehistorik"),
+          },
+        }}
+      >
+        <Text type="text1" tag="span">
+          {Translate({
+            context: "search",
+            label: "advanced-search-history-latest",
+          })}
+        </Text>
+      </Link>
+
+      <Link
+        onClick={() => router.push("/avanceret/gemte-soegninger")}
+        border={{
+          top: false,
+          bottom: {
+            keepVisible: isButtonVisible("/avanceret/gemte-soegninger"),
+          },
+        }}
+      >
+        <Text type="text1" tag="span">
+          {Translate({
+            context: "search",
+            label: "advanced-search-saved-search",
+            vars: [String(savedSearchKeys?.length)],
+          })}
+        </Text>
+      </Link>
+    </div>
+  );
+}
 function HistoryHeader() {
   return (
     <div className={cx(styles.header, styles.grid)}>
@@ -295,7 +405,6 @@ function splitHistoryItems(storedValues) {
 export function AdvancedSearchHistory() {
   const { storedValue, deleteValue } = useAdvancedSearchHistory();
   const [checkboxList, setCheckboxList] = useState([]);
-  const [showCombinedSearch, setShowCombinedSearch] = useState(false);
 
   const breakpoint = useBreakpoint();
 
@@ -324,11 +433,6 @@ export function AdvancedSearchHistory() {
 
   /**
    * Add/remove item in list when selected/deselected
-   * * @param item
-   * @param item
-   * @param selected
-   *  The checkbox component (components/base/forms/checkbox) returns if it has been
-   *  selected or not
    */
   const onSelect = (item, selected = false) => {
     // if select is FALSE it has been deselected on gui
@@ -350,7 +454,7 @@ export function AdvancedSearchHistory() {
 
   const splittedValues = splitHistoryItems(storedValue);
 
-  const HistoryItemPerDay = ({ title, items }) => {
+  const HistoryItemPerDay = ({ title, items, itemKey }) => {
     return (
       <>
         {title && items.length > 0 && (
@@ -361,6 +465,7 @@ export function AdvancedSearchHistory() {
         {items.length > 0 &&
           items.map((item, index) => (
             <HistoryItem
+              checkboxKey={`${itemKey}-${index}`}
               key={item.key}
               item={item}
               index={index}
@@ -386,26 +491,18 @@ export function AdvancedSearchHistory() {
         data-cy="advanced-search-search-history"
         className={styles.title}
       >
-        {Translate({
-          context: "search",
-          label: "advanced-search-history-latest",
-        })}
+        {Translate({ context: "suggester", label: "historyTitle" })}
       </Title>
-      {showCombinedSearch ? (
-        <CombinedSearch
-          cancelCombinedSearch={() => setShowCombinedSearch(false)}
-          queries={checkedObjects}
-        />
-      ) : (
-        <HistoryHeaderActions
-          deleteSelected={onDeleteSelected}
-          setAllChecked={setAllChecked}
-          checked={storedValue?.length === checkboxList?.length}
-          partiallyChecked={checkboxList?.length > 0}
-          disabled={storedValue?.length === 0}
-          onCombineSearch={() => setShowCombinedSearch(true)}
-        />
-      )}
+
+      <SearchHistoryNavigation />
+      <HistoryHeaderActions
+        deleteSelected={onDeleteSelected}
+        setAllChecked={setAllChecked}
+        checked={storedValue?.length === checkboxList?.length}
+        partiallyChecked={checkboxList?.length > 0}
+        disabled={storedValue?.length === 0}
+        checkedObjects={checkedObjects}
+      />
 
       <div className={styles.table_grid}>
         {breakpoint !== "xs" && <HistoryHeader />}
@@ -416,12 +513,12 @@ export function AdvancedSearchHistory() {
           // today
           <>
             <HistoryItemPerDay
-              key="search-history-today"
+              itemKey="search-history-today"
               items={splittedValues.today}
               title={Translate({ context: "search", label: "history-today" })}
             />
             <HistoryItemPerDay
-              key="search-history-yesterday"
+              itemKey="search-history-yesterday"
               items={splittedValues.yesterday}
               title={Translate({
                 context: "search",
@@ -429,7 +526,7 @@ export function AdvancedSearchHistory() {
               })}
             />
             <HistoryItemPerDay
-              key="search-history-older"
+              itemKey="search-history-older"
               items={splittedValues.older}
             />
           </>

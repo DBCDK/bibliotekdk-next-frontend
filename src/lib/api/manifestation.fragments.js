@@ -430,6 +430,7 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
   classifications {
     system
     display
+    code
   }
   subjects {
     dbcVerified {
