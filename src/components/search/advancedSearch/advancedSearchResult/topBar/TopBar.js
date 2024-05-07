@@ -184,14 +184,14 @@ export default function TopBar({ isLoading = false, searchHistoryObj }) {
   const modal = useModal();
 
   const { setShowPopover } = useAdvancedSearchContext();
-  const { deleteSearch, savedSearchKeys } = useSavedSearches();
+  const { deleteSearches, savedSearchKeys } = useSavedSearches();
   //check user has saved the search item
   const isSaved = savedSearchKeys?.includes(searchHistoryObj.key);
   const onSaveSearchClick = (e) => {
     e.stopPropagation(); // Prevent the accordion from expanding
     if (isSaved) {
       //remove search
-      deleteSearch(searchHistoryObj);
+      deleteSearches({ idsToDelete: [searchHistoryObj.id] });
     } else {
       //open save search modal
       modal.push("saveSearch", {

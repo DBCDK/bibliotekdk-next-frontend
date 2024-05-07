@@ -73,7 +73,7 @@ export function addUserToUserData({ userDataMutation }) {
  *
  */
 
-export async function addSavedSearch({ searchObject, userDataMutation }) {
+export function addSavedSearch({ searchObject }) {
   const q = {
     query: `
       mutation addSavedSearch($searchObject:  String!) {
@@ -91,7 +91,7 @@ export async function addSavedSearch({ searchObject, userDataMutation }) {
     },
   };
 
-  await userDataMutation.post(q);
+  return q;
 }
 
 /**
@@ -99,7 +99,8 @@ export async function addSavedSearch({ searchObject, userDataMutation }) {
  *
  */
 
-export async function updateSavedSearch({ searchObject, userDataMutation }) {
+export function updateSavedSearch({ searchObject }) {
+  console.log("updateSavedSearch.searchObject", searchObject);
   if (!searchObject.id) {
     return null;
   }
@@ -119,7 +120,8 @@ export async function updateSavedSearch({ searchObject, userDataMutation }) {
     },
   };
 
-  await userDataMutation.post(q);
+  return q;
+  // await userDataMutation.post(q);
 }
 
 /**
@@ -127,7 +129,7 @@ export async function updateSavedSearch({ searchObject, userDataMutation }) {
  *
  */
 
-export async function deleteSavedSearches({ idsToDelete, userDataMutation }) {
+export function deleteSavedSearches({ idsToDelete }) {
   if (!Array.isArray(idsToDelete)) {
     return null;
   }
@@ -147,5 +149,6 @@ export async function deleteSavedSearches({ idsToDelete, userDataMutation }) {
     },
   };
 
-  await userDataMutation.post(q);
+  // const res = await userDataMutation.post(q);
+  return q;
 }

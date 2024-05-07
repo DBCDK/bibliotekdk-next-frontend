@@ -113,7 +113,7 @@ export function SearchQueryDisplay({ item }) {
 function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
   const modal = useModal();
   const breakpoint = useBreakpoint();
-  const { deleteSearch, savedSearchKeys } = useSavedSearches();
+  const { deleteSearches, savedSearchKeys } = useSavedSearches();
   //check user has saved the search item
   const isSaved = savedSearchKeys?.includes(item.key);
 
@@ -169,7 +169,7 @@ function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
         onClick={() => {
           if (isSaved) {
             //remove search
-            deleteSearch(item);
+            deleteSearches({ idsToDelete: [item.id] });
           } else {
             //open save search modal
             modal.push("saveSearch", {
@@ -244,7 +244,7 @@ export function HistoryHeaderActions({
 
   if (breakpoint === "xs") {
     return (
-      <div className={cx(styles.menuDropdownContainer)}>
+      <div className={cx(styles.menuDropdown)}>
         <MenuDropdown options={MENUITEMS} isLeftAlligned={true} />
       </div>
     );

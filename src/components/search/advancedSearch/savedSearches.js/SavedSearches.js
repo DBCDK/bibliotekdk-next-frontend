@@ -19,15 +19,13 @@ import Accordion, { Item } from "@/components/base/accordion";
 import { unixToFormatedDate } from "@/lib/utils";
 import Link from "@/components/base/link";
 import { useModal } from "@/components/_modal";
-import { useMutate } from "@/lib/api/api";
-import { deleteSavedSearches } from "@/lib/api/userData.mutations";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import Button from "@/components/base/button";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 
 function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   const formatedDate = unixToFormatedDate(item.unixtimestamp);
-  const userDataMutation = useMutate();
+  const { deleteSearches } = useSavedSearches();
 
   return (
     <div className={styles.savedItemRow} {...props}>
@@ -39,7 +37,7 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
         }}
       >
         <Checkbox
-          id={`select-item-${item.id}`}
+          id={`select-item-${item.key}`}
           tabIndex="-1"
           ariaLabelledBy={`select-item-${index}`}
           ariaLabel={`select-item-${index}`}
@@ -70,7 +68,9 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
         onClick={(e) => {
           e.stopPropagation();
           if (item?.id) {
-            deleteSavedSearches({ idsToDelete: [item.id], userDataMutation });
+            console.log("item?.id", item?.id);
+            //deleteSavedSearches({ idsToDelete: [item.id], userDataMutation });
+            deleteSearches({ idsToDelete: [item.id] });
             //todo mutate refresh
           }
         }}
@@ -87,7 +87,7 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
 }
 
 export default function SavedSearches() {
-  const { deleteSearch, savedSearches } = useSavedSearches();
+  const { deleteSearches, savedSearches } = useSavedSearches();
   const [checkboxList, setCheckboxList] = useState([]);
   const modal = useModal();
   const { isAuthenticated } = useAuthentication();
@@ -107,12 +107,11 @@ export default function SavedSearches() {
    * Delete selected entries in saved search table
    */
   const onDeleteSelected = () => {
-    checkboxList.forEach((check) => {
-      const savedItem = savedSearches.find((stored) => stored.key === check);
-      savedItem && deleteSearch(savedItem);
-      //remove item from checklist too
-      onSelect(savedItem, false);
-    });
+    //filter for checked items and map for ids to delete
+    const idsToDelete = savedSearches
+      ?.filter((item) => checkboxList.includes(item.key) && item.id)
+      .map((item) => item.id);
+    deleteSearches({ idsToDelete });
   };
 
   const checkedObjects = savedSearches?.filter((obj) =>
@@ -130,7 +129,7 @@ export default function SavedSearches() {
   const onSelect = (item, selected = false) => {
     const newCheckList = [...checkboxList];
     // if item is already in checkboxlist -> remove
-    const checkindex = checkboxList.findIndex((check) => check === item.id);
+    const checkindex = checkboxList.findIndex((check) => check === item.key);
     if (checkindex !== -1) {
       // item found in list - if deselected remove it
       if (!selected) {
@@ -139,7 +138,7 @@ export default function SavedSearches() {
     }
     // if not -> add it to list .. if selected
     else if (selected) {
-      newCheckList.push(item.id);
+      newCheckList.push(item.key);
     }
     setCheckboxList(newCheckList);
   };
@@ -220,13 +219,13 @@ export default function SavedSearches() {
                     onSelect={onSelect}
                     item={item}
                     checked={
-                      checkboxList.findIndex((check) => check === item.id) !==
+                      checkboxList.findIndex((check) => check === item.key) !==
                       -1
                     }
                   />
                 )}
-                key={item.id}
-                eventKey={item.id}
+                key={item.key}
+                eventKey={item.key}
               >
                 <div className={styles.accordionContentContainer}>
                   <div className={styles.accordionContent}>
