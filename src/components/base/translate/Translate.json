@@ -356,6 +356,10 @@
         "da": "Uventet symbol fundet.",
         "en": "Unexpected symbol found."
       },
+      "UNEXPECTED_WITHIN_LITERAL": {
+        "da": "Forkert tidsintervals-format. Brug fx \"2010 2015\" eller \"2010-01-01 2015-06-28\".<br/>Bemærk at venstre side skal være mindre eller lig højre side.",
+        "en": "Incorrect format for time interval. Use for instance, \"2010 2015\" or \"2010-01-01 2015-06-28\".<br/>Note that the left-hand value must be less than or equal to the right-hand value"
+      },
       "EMPTY_QUERY": {
         "da": "Vi tror på dig!",
         "en": "We believe in you!"

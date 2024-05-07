@@ -234,12 +234,52 @@ function validateFields(tokens) {
 }
 
 /**
+ * Ensures range literals are in a valid format
+ */
+function validateRangeLiterals(tokens) {
+  tokens.forEach((token, index) => {
+    const prevToken = tokens[index - 1];
+    const isRangeLiteral =
+      prevToken?.type === TOKEN_TYPES.WITHIN &&
+      token?.type === TOKEN_TYPES.LITERAL;
+
+    if (isRangeLiteral) {
+      const regexYear = /^"[0-9]+\s+[0-9]+"$/;
+      const regexYearWithAsterisk = /^"[0-9*]+\s+[0-9*]+"$/;
+      const regexDate = /^"\d{4}-\d{2}-\d{2}\s+\d{4}-\d{2}-\d{2}"$/;
+
+      if (regexYearWithAsterisk.test(token.normalized)) {
+        if (regexYear.test(token.normalized)) {
+          const [left, right] = token.normalized
+            .substring(1, token.normalized.length - 1)
+            .split(/\s+/);
+          if (parseInt(left, 10) > parseInt(right, 10)) {
+            token.error = ERRORS.UNEXPECTED_WITHIN_LITERAL;
+          }
+        }
+      } else if (regexDate.test(token.normalized)) {
+        // OK
+        const [left, right] = token.normalized
+          .substring(1, token.normalized.length - 1)
+          .split(/\s+/);
+        if (new Date(left) > new Date(right)) {
+          token.error = ERRORS.UNEXPECTED_WITHIN_LITERAL;
+        }
+      } else {
+        token.error = ERRORS.UNEXPECTED_WITHIN_LITERAL;
+      }
+    }
+  });
+}
+
+/**
  * Validate all tokens
  */
 export function validateTokens(tokens) {
   validateUnclosed(tokens);
   validateGrammar(tokens);
   validateFields(tokens);
+  validateRangeLiterals(tokens);
 
   return tokens;
 }
