@@ -1,24 +1,63 @@
-.input {
-  border: 1px solid var(--gray);
-  padding: var(--pt2);
-  font-size: 17px;
-  line-height: 26px;
-  font-family: var(--body-font);
-  width: 100%;
-  /* remove border-radius on iphone */
-  border-radius: 0;
-  -webkit-appearance: none;
-  /*So it has height of two rows*/
-  min-height: 84px;
-  resize: none;
-}
-
-.input:focus {
-  border: 1px solid var(--blue);
-  outline: 1px solid var(--blue);
-}
-
 .label {
   display: block;
   margin-bottom: var(--pt2);
+}
+/* .formatted {
+  caret-color: #e4e4e4;
+  
+  background-color: #1e1e1e; 
+}
+
+.formatted :global(.cql-error) {
+  text-decoration: red wavy underline;
+  text-underline-offset: 5px;
+}
+.formatted :global(.token-type_FIELD) {
+  color: #9cd9fe;
+}
+.formatted :global(.token-type_ASSIGNMENT) {
+  color: #d4d4d4;
+}
+.formatted :global(.token-type_WITHIN) {
+  color: #d4d4d4;
+}
+.formatted :global(.token-type_PARENTHESIS_BEGIN) {
+  color: #f09516;
+}
+.formatted :global(.token-type_PARENTHESIS_END) {
+  color: #f09516;
+}
+.formatted :global(.token-type_LITERAL) {
+  color: #f09516;
+}
+.formatted :global(.token-type_OPERATOR) {
+  color: #d4d4d4;
+} */
+
+.formatted {
+  border: 1px rgb(130, 130, 130) solid !important;
+  margin-bottom: var(--pt05);
+}
+.formatted.focused {
+  border: 1px solid var(--blue) !important;
+  outline: 1px solid var(--blue) !important;
+}
+
+.formatted :global(.cql-error) {
+  text-decoration: #BA4D57 wavy underline;
+  text-underline-offset: 5px;
+}
+.formatted :global(.token-type_FIELD) {
+  color: #1E874B;
+}
+.formatted :global(.token-type_ASSIGNMENT),
+.formatted :global(.token-type_WITHIN),
+.formatted :global(.token-type_PARENTHESIS_BEGIN),
+.formatted :global(.token-type_PARENTHESIS_END),
+.formatted :global(.token-type_RANGE_OPERATOR),
+.formatted :global(.token-type_OPERATOR)  {
+  color: #3333ff;
+}
+.formatted :global(.token-type_LITERAL) {
+  color: #212121;
 }
