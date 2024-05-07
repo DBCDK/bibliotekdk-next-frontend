@@ -476,29 +476,28 @@ function RenderParticipants({ values }) {
 }
 
 function RenderMovieAudience({ values }) {
-  const agerecommendation = values?.[0];
   let image = null;
-  // regexp to extract age eg 15 år .. or 7 år
-  const regex = / ([0-9]?[0-9]) (år)/;
-  const age = agerecommendation?.match(regex);
+  const age = values?.minimumAge || null;
+
   if (!age) {
-    if (agerecommendation.indexOf("Tilladt for alle") !== -1) {
+    if (values.display.indexOf("Tilladt for alle") !== -1) {
       image = "/img/ageany.png";
     }
   }
-  const txt =
-    agerecommendation.indexOf("Mærkning:") !== -1
-      ? agerecommendation.replace("Mærkning: ", "")
-      : agerecommendation;
+
+  const txt = values?.display || "";
   if (age) {
-    switch (age[1]) {
-      case "7":
+    switch (age) {
+      case 3:
+        image = "/img/age3.png";
+        break;
+      case 7:
         image = "/img/age7.png";
         break;
-      case "11":
+      case 11:
         image = "/img/age11.png";
         break;
-      case "15":
+      case 15:
         image = "/img/age15.png";
         break;
       default:
@@ -508,18 +507,18 @@ function RenderMovieAudience({ values }) {
 
   return (
     <div>
-      {image && (
-        <div className={styles.pegiimage}>
+      <div className={styles.pegiimage}>
+        {image && (
           <div className={styles.spacemaker}>
             <Image src={image} width={40} height={40} alt={txt ?? ""} />
           </div>
-          {txt && (
-            <Text type="text3" lines={1} tag="span" className={styles.imgtext}>
-              {txt}
-            </Text>
-          )}
-        </div>
-      )}
+        )}
+        {txt && (
+          <Text type="text3" lines={1} tag="span" className={styles.imgtext}>
+            {txt}
+          </Text>
+        )}
+      </div>
     </div>
   );
 }
@@ -754,12 +753,6 @@ export function fieldsForRows(manifestation, work, context) {
         },
       },
       {
-        audience: {
-          label: Translate({ ...context, label: "game-audience" }),
-          value: manifestation?.audience?.generalAudience || "",
-        },
-      },
-      {
         audienceage: {
           label: Translate({ ...context, label: "audience" }),
           value: getAudienceValues,
@@ -769,6 +762,13 @@ export function fieldsForRows(manifestation, work, context) {
         requirements: {
           label: Translate({ ...context, label: "game-requirements" }),
           value: getRequirementsFromPhysicalDesc(manifestation) || "",
+        },
+      },
+      {
+        audience: {
+          label: Translate({ ...context, label: "game-audience" }),
+          value: manifestation?.audience?.PEGI || "",
+          jsxParser: RenderMovieAudience,
         },
       },
     ],
@@ -818,6 +818,12 @@ export function fieldsForRows(manifestation, work, context) {
                   manifestation?.physicalDescriptions?.[0]?.numberOfUnits || ""
                 }  ${manifestation?.physicalDescriptions?.[0]?.size || ""}`
               : null,
+        },
+      },
+      {
+        players: {
+          label: Translate({ ...context, label: "participants" }),
+          value: manifestation?.audience?.players?.display,
         },
       },
       {
@@ -978,7 +984,7 @@ export function fieldsForRows(manifestation, work, context) {
       {
         audience: {
           label: "",
-          value: manifestation?.audience?.generalAudience || "",
+          value: manifestation?.audience?.mediaCouncilAgeRestriction || "",
           jsxParser: RenderMovieAudience,
         },
       },
