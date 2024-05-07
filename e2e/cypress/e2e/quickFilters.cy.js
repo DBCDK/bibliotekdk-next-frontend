@@ -12,16 +12,23 @@ describe("Quickfilters", () => {
     // check that filter is set from url
     cy.get("div [role=group]")
       .eq(1)
-      .find("[data-cy=list-button-2]")
+      .find("[data-cy=list-button-1]")
       .should("have.attr", "aria-checked", "true");
 
     // another element should be unchecked
     cy.get("div [role=group]")
       .eq(1)
       .find("[data-cy=list-button-1]")
-      .should("have.attr", "aria-checked", "false");
+      .should("have.attr", "aria-checked", "true");
 
     // select another filter
+    cy.get("div [role=group]").eq(1).find("[data-cy=list-button-1]").click();
+
+    cy.get("div [role=group]")
+      .eq(1)
+      .find("[data-cy=list-button-1]")
+      .should("not.have.attr", "aria-checked");
+
     cy.get("div [role=group]").eq(1).find("[data-cy=list-button-1]").click();
 
     cy.get("div [role=group]")
@@ -39,7 +46,7 @@ describe("Quickfilters", () => {
     });
 
     // clear the url
-    cy.get("div [role=group]").eq(1).find("[data-cy=list-button-0]").click();
+    cy.get("div [role=group]").eq(1).find("[data-cy=list-button-1]").click();
     // assert that filters are empty
     cy.get("[data-cy=router-query]").then((el) => {
       const fisk = JSON.parse(el.text());
