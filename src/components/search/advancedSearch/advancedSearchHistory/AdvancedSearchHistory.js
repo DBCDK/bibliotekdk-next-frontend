@@ -40,7 +40,7 @@ export function FormatedFacets({ facets, className }) {
 
   return (
     <div className={cx(styles.historyFilters, className)}>
-      <Text tag="span" type="text1">
+      <Text tag="span" type="text1" className={styles.filterLabel}>
         {Translate({ context: "search", label: "history-filter-label" })}:
       </Text>
       {flatfilters.map((val, index) => (
@@ -244,7 +244,7 @@ export function HistoryHeaderActions({
 
   if (breakpoint === "xs") {
     return (
-      <div className={cx(styles.actionheader)}>
+      <div className={cx(styles.menuDropdownContainer)}>
         <MenuDropdown options={MENUITEMS} isLeftAlligned={true} />
       </div>
     );
@@ -304,7 +304,7 @@ export function HistoryHeaderActions({
 
 export function SearchHistoryNavigation() {
   const router = useRouter();
-  const { savedSearchKeys } = useSavedSearches();
+  const { hitcount } = useSavedSearches();
 
   // Check if the current path matches any button url
   const isButtonVisible = (path) => router.pathname === path;
@@ -341,7 +341,7 @@ export function SearchHistoryNavigation() {
           {Translate({
             context: "search",
             label: "advanced-search-saved-search",
-            vars: [String(savedSearchKeys?.length)],
+            vars: [hitcount ? String(hitcount) : "0"],
           })}
         </Text>
       </Link>

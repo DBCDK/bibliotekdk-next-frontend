@@ -18,9 +18,12 @@
   align-items: center;
   padding: var(--pt1) var(--pt1) 0 0;
 }
+.filterLabel {
+  margin-right: var(--pt1);
+}
 
 .filteritem {
-  margin-left: var(--pt1);
+  margin-right: var(--pt1);
   color: var(--blue);
 }
 
@@ -87,7 +90,6 @@
 }
 
 .actionheader {
-  padding-left: var(--pt2);
   margin-bottom: var(--pt4);
   display: flex;
   gap: var(--pt3);
@@ -165,8 +167,32 @@
 
 .navigationButtons {
   display: flex;
-  gap: var(--pt5);
+  gap: var(--pt3);
   margin-bottom: var(--pt3);
+}
+
+@media (max-width: 576px) {
+  .navigationButtons {
+    padding-left: var(--pt1);
+
+    border-bottom: 1px solid var(--iron);
+    margin-left: var(--pt2);
+    margin-right: var(--pt2);
+  }
+  .navigationButtons a {
+    padding-bottom: var(--pt2);
+  }
+  .actionheader {
+    padding-left: var(--pt2);
+    justify-content: flex-end;
+    margin-bottom: var(--pt2);
+  }
+  .menuDropdownContainer {
+    padding-right: var(--pt2);
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: var(--pt2);
+  }
 }
 
 .saveSearchIcon {

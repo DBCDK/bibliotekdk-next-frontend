@@ -7,20 +7,24 @@ import Title from "@/components/base/title";
 import Top from "@/components/_modal/pages/base/top";
 import Translate from "@/components/base/translate";
 import Button from "@/components/base/button";
+import {
+  addSavedSearch,
+  updateSavedSearch,
+} from "@/lib/api/userData.mutations";
 
 import styles from "./SaveSearch.module.css";
 import Input from "@/components/base/forms/input";
 import { useEffect, useState } from "react";
-import useSavedSearches from "@/components/hooks/useSavedSearches";
+import { useMutate } from "@/lib/api/api";
 
 export default function SaveSearch({ modal, context }) {
   const { item, back } = context;
   const [searchName, onSearchNameChange] = useState("");
+  const userDataMutation = useMutate();
 
   useEffect(() => {
     onSearchNameChange(item?.name || item?.cql || "");
   }, [item]);
-  const { saveSearch } = useSavedSearches();
   //check user has saved the search item
 
   return (
@@ -52,10 +56,21 @@ export default function SaveSearch({ modal, context }) {
       />
       <Button
         disabled={searchName.length === 0}
-        onClick={() => {
+        onClick={async () => {
           const newItem = { ...item, name: searchName };
-          saveSearch(newItem);
-          //todo close when save search is done
+          //TODO: maybe better to handle this in fbi-api instead.
+          if (newItem.id) {
+            //if new item has id, it means it already exists. Update.
+            await updateSavedSearch({
+              searchObject: newItem,
+              userDataMutation,
+            });
+          }
+          //otherwise add new item
+          else {
+            await addSavedSearch({ searchObject: newItem, userDataMutation });
+          }
+
           modal.clear();
         }}
       >

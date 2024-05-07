@@ -35,6 +35,9 @@
     padding: 0px 22px !important;
     grid-template-columns: 1fr 2fr 20fr 2fr 1fr 1fr;
   }
+  .tableContainer {
+    padding-left: var(--pt1);
+  }
 }
 
 .searchPreview {
@@ -65,7 +68,9 @@
 }
 .accordionContent {
   display: grid;
-  grid-template-columns: var(--pt2) 3fr 14fr 2fr 1fr 1fr;
+  /* grid-template-columns: var(--pt2) 3fr 14fr 2fr 1fr 1fr;*/
+  grid-template-columns: var(--pt2) 3fr 14fr 2.5fr 1fr 1fr;
+
   padding-left: var(--pt2);
 }
 
@@ -94,4 +99,29 @@
 }
 .empyListTitle {
   margin-top: var(--pt5);
+}
+.loginButton {
+  margin-top: var(--pt5);
+  padding-left: var(--pt5);
+  padding-right: var(--pt5);
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  max-width: 400px;
+}
+.loginText {
+  margin-top: var(--pt2);
+  white-space: pre-wrap;
+}
+
+@media screen and (min-width: 576px) {
+  .loginButton {
+    width: fit-content;
+  }
+}
+
+@media (max-width: 576px) {
+  .newTableHeader {
+    margin-right: var(--pt1);
+  }
 }

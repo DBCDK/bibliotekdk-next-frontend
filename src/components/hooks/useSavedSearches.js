@@ -2,9 +2,12 @@
  * @file - Hook for advanced search saved searches. functions to get, save and delete searches from userdata db
  */
 
-import { getLocalStorageItem, setLocalStorageItem } from "@/lib/utils";
-import useSWR from "swr";
+import { setLocalStorageItem } from "@/lib/utils";
 import { useMemo } from "react";
+import { addSavedSearch } from "@/lib/api/userData.mutations";
+import { savedSearchesQuery } from "@/lib/api/user.fragments";
+import { useData } from "@/lib/api/api";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 const KEY = "saved-advanced-search-items";
 
@@ -21,40 +24,35 @@ export function getTimeStamp(now) {
   return stamp.replace("AM", "").replace("PM", "").replace(":", ".").trim();
 }
 
-function getUnixTimeStamp() {
-  return new Date().getTime();
-}
-
 export const useSavedSearches = () => {
-  let { data: savedSearches, mutate } = useSWR(KEY, (key) =>
-    JSON.parse(getLocalStorageItem(key) || "[]")
+  const { hasCulrUniqueId } = useAuthentication();
+
+  const { data } = useData(
+    hasCulrUniqueId &&
+      savedSearchesQuery({
+        limit: 10,
+        offset: 0,
+      })
   );
 
-  //todo rename to saveSearch
+  const savedSearches = useMemo(
+    () =>
+      data?.user?.savedSearches?.result?.map((search) => {
+        const searchObject = JSON.parse(search.searchObject);
+        return {
+          ...searchObject,
+          id: search.id,
+          createdAt: search.createdAt,
+        };
+      }),
+    [data]
+  );
 
-  const saveSearch = (value) => {
+  const hitcount = useMemo(() => data?.user?.savedSearches?.hitcount, [data]);
+
+  const saveSearch = async ({ value, userDataMutation }) => {
     try {
-      if (typeof window !== "undefined") {
-        // Check if cql (and facets) is already stored
-        const index = savedSearches.findIndex(
-          (stor) => stor?.key?.trim() === value?.key?.trim()
-        );
-
-        value["timestamp"] = getTimeStamp(getUnixTimeStamp());
-        value["unixtimestamp"] = getUnixTimeStamp();
-
-        if (index !== -1) {
-          // Update the existing entry if found
-          savedSearches[index] = value;
-        } else {
-          // Add to the beginning of saved items array if not found
-          savedSearches.unshift(value);
-        }
-
-        // Update localstorage and state
-        setLocalStorageItem(KEY, JSON.stringify(savedSearches));
-        mutate();
-      }
+      await addSavedSearch({ searchObject: value, userDataMutation });
     } catch (err) {
       console.error(err);
     }
@@ -72,7 +70,6 @@ export const useSavedSearches = () => {
           savedSearches.splice(valueIndex, 1);
           // update localstorage
           setLocalStorageItem(KEY, JSON.stringify(savedSearches));
-          mutate();
         }
       }
     } catch (err) {
@@ -90,6 +87,7 @@ export const useSavedSearches = () => {
     savedSearchKeys,
     saveSearch,
     deleteSearch,
+    hitcount,
   };
 };
 
