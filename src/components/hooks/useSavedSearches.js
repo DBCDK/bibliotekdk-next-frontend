@@ -91,7 +91,11 @@ export const useSavedSearches = () => {
       console.error(err);
     }
   };
-
+/**
+ * Fetches a saved search from userdata given a cql search. The cql has to be a full cql including facetts, filters etc.
+ * @param {String} cql Cql strint
+ * @returns 
+ */
   const useSavedSearchByCql = ({ cql }) => {
     const { hasCulrUniqueId } = useAuthentication();
 
