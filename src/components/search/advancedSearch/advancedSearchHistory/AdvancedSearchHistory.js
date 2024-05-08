@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import useAdvancedSearchHistory, {
   getDateTime,
   getTimeStamp,
@@ -111,12 +111,10 @@ export function SearchQueryDisplay({ item }) {
   );
 }
 function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
-  //todo
   const modal = useModal();
   const breakpoint = useBreakpoint();
-  const { deleteSearches, savedSearchKeys, useSavedSearchByCql } =
-    useSavedSearches();
-
+  const { deleteSearches, useSavedSearchByCql } = useSavedSearches();
+  //check if search has already been saved in userdata
   const { savedObject, mutate } = useSavedSearchByCql({ cql: item.key });
   //check user has saved the search item
   const isSaved = !!savedObject?.id;

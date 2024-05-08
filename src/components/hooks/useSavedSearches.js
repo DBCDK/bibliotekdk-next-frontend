@@ -91,11 +91,11 @@ export const useSavedSearches = () => {
       console.error(err);
     }
   };
-/**
- * Fetches a saved search from userdata given a cql search. The cql has to be a full cql including facetts, filters etc.
- * @param {String} cql Cql strint
- * @returns 
- */
+  /**
+   * Fetches a saved search from userdata given a cql search. The cql has to be a full cql including facetts, filters etc.
+   * @param {String} .cql Cql strint
+   * @returns
+   */
   const useSavedSearchByCql = ({ cql }) => {
     const { hasCulrUniqueId } = useAuthentication();
 
@@ -109,7 +109,7 @@ export const useSavedSearches = () => {
 
     return useMemo(() => {
       if (!data?.user?.savedSearchByCql) {
-        return { savedObject: null, mutate }; // or an empty object {}, depending on your handling of empty states
+        return { savedObject: null, mutate };
       }
 
       const jsonSearchObject = data.user.savedSearchByCql.searchObject;
@@ -121,7 +121,7 @@ export const useSavedSearches = () => {
         },
         mutate,
       };
-    }, [data]); // useMemo depends on `data`, recalculates if `data` changes
+    }, [data]);
   };
 
   const savedSearchKeys = useMemo(

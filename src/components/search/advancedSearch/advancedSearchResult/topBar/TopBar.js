@@ -11,12 +11,6 @@ import { formattersAndComparitors } from "@/components/search/advancedSearch/use
 import useSavedSearches from "@/components/hooks/useSavedSearches";
 import IconButton from "@/components/base/iconButton";
 import { useModal } from "@/components/_modal";
-import useAuthentication from "@/components/hooks/user/useAuthentication";
-import { useData } from "@/lib/api/api";
-import {
-  getSavedSearchByCql,
-  savedSearchesQuery,
-} from "@/lib/api/user.fragments";
 
 /**
  *
@@ -190,11 +184,10 @@ export default function TopBar({ isLoading = false, searchHistoryObj }) {
   const modal = useModal();
 
   const { setShowPopover } = useAdvancedSearchContext();
-  const { hasCulrUniqueId } = useAuthentication();
 
   const { deleteSearches, useSavedSearchByCql } = useSavedSearches();
-  //check user has saved the search item
 
+  //check if search has already been saved in userdata
   const { savedObject, mutate } = useSavedSearchByCql({
     cql: searchHistoryObj.key,
   });
