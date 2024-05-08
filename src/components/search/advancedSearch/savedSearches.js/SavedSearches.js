@@ -250,7 +250,7 @@ export default function SavedSearches() {
                           },
                         }}
                       >
-                        {Translate({ context: "search", label: "editSearch" })}
+                        {Translate({ context: "search", label: "editName" })}
                       </Link>
                     </Text>{" "}
                     <div />

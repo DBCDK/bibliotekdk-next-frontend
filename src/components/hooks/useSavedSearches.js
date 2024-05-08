@@ -8,7 +8,10 @@ import {
   deleteSavedSearches,
   updateSavedSearch,
 } from "@/lib/api/userData.mutations";
-import { savedSearchesQuery } from "@/lib/api/user.fragments";
+import {
+  getSavedSearchByCql,
+  savedSearchesQuery,
+} from "@/lib/api/user.fragments";
 import { useData, useMutate } from "@/lib/api/api";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 
@@ -42,6 +45,7 @@ export const useSavedSearches = () => {
       mutate();
     }, 100);
   };
+
   const savedSearches = useMemo(
     () =>
       data?.user?.savedSearches?.result?.map((search) => {
@@ -87,6 +91,38 @@ export const useSavedSearches = () => {
       console.error(err);
     }
   };
+  /**
+   * Fetches a saved search from userdata given a cql search. The cql has to be a full cql including facetts, filters etc.
+   * @param {String} .cql Cql strint
+   * @returns
+   */
+  const useSavedSearchByCql = ({ cql }) => {
+    const { hasCulrUniqueId } = useAuthentication();
+
+    const { data, mutate } = useData(
+      cql &&
+        hasCulrUniqueId &&
+        getSavedSearchByCql({
+          cql,
+        })
+    );
+
+    return useMemo(() => {
+      if (!data?.user?.savedSearchByCql) {
+        return { savedObject: null, mutate };
+      }
+
+      const jsonSearchObject = data.user.savedSearchByCql.searchObject;
+      return {
+        savedObject: {
+          ...JSON.parse(jsonSearchObject || "{}"),
+          id: data.user.savedSearchByCql.id,
+          createdAt: data.user.savedSearchByCql.createdAt,
+        },
+        mutate,
+      };
+    }, [data]);
+  };
 
   const savedSearchKeys = useMemo(
     () => savedSearches?.map((search) => search?.key),
@@ -100,6 +136,7 @@ export const useSavedSearches = () => {
     deleteSearches,
     hitcount,
     updateSearch,
+    useSavedSearchByCql,
   };
 };
 

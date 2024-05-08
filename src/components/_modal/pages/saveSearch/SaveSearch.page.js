@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import useSavedSearches from "@/components/hooks/useSavedSearches";
 
 export default function SaveSearch({ modal, context }) {
-  const { item, back } = context;
+  const { item, back, onSaveDone } = context;
   const [searchName, onSearchNameChange] = useState("");
   const { updateSearch, saveSearch } = useSavedSearches();
   useEffect(() => {
@@ -59,7 +59,8 @@ export default function SaveSearch({ modal, context }) {
           }
           //otherwise add new item
           else {
-            saveSearch({ searchObject: newItem });
+            await saveSearch({ searchObject: newItem });
+            onSaveDone && onSaveDone();
           }
 
           modal.clear();
