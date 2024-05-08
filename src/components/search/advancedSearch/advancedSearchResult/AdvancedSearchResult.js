@@ -91,7 +91,6 @@ export function AdvancedSearchResult({
               {hitcount > 0 && (
                 <>
                   <FacetTags selectedFacets={selectedFacets} />
-
                   <div className={styles.subtitleStyle}>
                     <Text type="text1" className={styles.titleStyle}>
                       {translate({ context: "search", label: "narrow-search" })}
@@ -211,6 +210,7 @@ export default function Wrap({ onWorkClick, onPageChange }) {
       fieldSearch: fieldSearch || "",
       cql: cqlAndFacetsQuery ? cql : fieldSearchQuery,
       selectedFacets: selectedFacets || [],
+      selectedQuickFilters: selectedQuickFilters || [],
     };
     setValue(searchHistoryObj);
   }
