@@ -8,7 +8,10 @@ import {
   deleteSavedSearches,
   updateSavedSearch,
 } from "@/lib/api/userData.mutations";
-import { savedSearchesQuery } from "@/lib/api/user.fragments";
+import {
+  getSavedSearchByCql,
+  savedSearchesQuery,
+} from "@/lib/api/user.fragments";
 import { useData, useMutate } from "@/lib/api/api";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 
@@ -42,6 +45,7 @@ export const useSavedSearches = () => {
       mutate();
     }, 100);
   };
+
   const savedSearches = useMemo(
     () =>
       data?.user?.savedSearches?.result?.map((search) => {
@@ -88,6 +92,34 @@ export const useSavedSearches = () => {
     }
   };
 
+  const useSavedSearchByCql = ({ cql }) => {
+    const { hasCulrUniqueId } = useAuthentication();
+
+    const { data, mutate } = useData(
+      cql &&
+        hasCulrUniqueId &&
+        getSavedSearchByCql({
+          cql,
+        })
+    );
+
+    return useMemo(() => {
+      if (!data?.user?.savedSearchByCql) {
+        return { savedObject: null, mutate }; // or an empty object {}, depending on your handling of empty states
+      }
+
+      const jsonSearchObject = data.user.savedSearchByCql.searchObject;
+      return {
+        savedObject: {
+          ...JSON.parse(jsonSearchObject || "{}"),
+          id: data.user.savedSearchByCql.id,
+          createdAt: data.user.savedSearchByCql.createdAt,
+        },
+        mutate,
+      };
+    }, [data]); // useMemo depends on `data`, recalculates if `data` changes
+  };
+
   const savedSearchKeys = useMemo(
     () => savedSearches?.map((search) => search?.key),
     [savedSearches]
@@ -100,6 +132,7 @@ export const useSavedSearches = () => {
     deleteSearches,
     hitcount,
     updateSearch,
+    useSavedSearchByCql,
   };
 };
 

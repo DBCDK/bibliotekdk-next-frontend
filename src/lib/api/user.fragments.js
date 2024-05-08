@@ -271,3 +271,25 @@ export function savedSearchesQuery({ offset, limit }) {
     revalidate: true,
   };
 }
+
+/**
+ * get saved search info from a cql.
+ */
+export function getSavedSearchByCql({ cql }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `query savedSearchByCql($cql: String! ) { 
+        user {
+          savedSearchByCql(cql: $cql) {
+            id
+            searchObject
+            createdAt
+          }
+        }
+      
+    }`,
+    variables: { cql },
+    slowThreshold: 3000,
+    revalidate: true,
+  };
+}

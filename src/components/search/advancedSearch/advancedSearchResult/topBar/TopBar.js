@@ -11,6 +11,12 @@ import { formattersAndComparitors } from "@/components/search/advancedSearch/use
 import useSavedSearches from "@/components/hooks/useSavedSearches";
 import IconButton from "@/components/base/iconButton";
 import { useModal } from "@/components/_modal";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
+import { useData } from "@/lib/api/api";
+import {
+  getSavedSearchByCql,
+  savedSearchesQuery,
+} from "@/lib/api/user.fragments";
 
 /**
  *
@@ -184,18 +190,27 @@ export default function TopBar({ isLoading = false, searchHistoryObj }) {
   const modal = useModal();
 
   const { setShowPopover } = useAdvancedSearchContext();
-  const { deleteSearches, savedSearchKeys } = useSavedSearches();
+  const { hasCulrUniqueId } = useAuthentication();
+
+  const { deleteSearches, useSavedSearchByCql } = useSavedSearches();
   //check user has saved the search item
-  const isSaved = savedSearchKeys?.includes(searchHistoryObj.key);
-  const onSaveSearchClick = (e) => {
+
+  const { savedObject, mutate } = useSavedSearchByCql({
+    cql: searchHistoryObj.key,
+  });
+  const isSaved = !!savedObject?.id;
+
+  const onSaveSearchClick = async (e) => {
     e.stopPropagation(); // Prevent the accordion from expanding
     if (isSaved) {
       //remove search
-      deleteSearches({ idsToDelete: [searchHistoryObj.id] });
+      deleteSearches({ idsToDelete: [savedObject?.id] });
+      mutate();
     } else {
       //open save search modal
       modal.push("saveSearch", {
         item: searchHistoryObj,
+        onSaveDone: mutate,
       });
     }
   };

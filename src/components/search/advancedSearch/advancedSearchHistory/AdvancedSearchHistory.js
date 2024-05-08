@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useAdvancedSearchHistory, {
   getDateTime,
   getTimeStamp,
@@ -111,12 +111,15 @@ export function SearchQueryDisplay({ item }) {
   );
 }
 function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
+  //todo
   const modal = useModal();
   const breakpoint = useBreakpoint();
-  const { deleteSearches, savedSearchKeys } = useSavedSearches();
-  //check user has saved the search item
-  const isSaved = savedSearchKeys?.includes(item.key);
+  const { deleteSearches, savedSearchKeys, useSavedSearchByCql } =
+    useSavedSearches();
 
+  const { savedObject, mutate } = useSavedSearchByCql({ cql: item.key });
+  //check user has saved the search item
+  const isSaved = !!savedObject?.id;
   const timestamp = item.unixtimestamp
     ? getTimeStamp(item.unixtimestamp)
     : item.timestamp;
@@ -169,11 +172,13 @@ function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
         onClick={() => {
           if (isSaved) {
             //remove search
-            deleteSearches({ idsToDelete: [item.id] });
+            deleteSearches({ idsToDelete: [savedObject?.id] });
+            mutate();
           } else {
             //open save search modal
             modal.push("saveSearch", {
               item: item,
+              onSaveDone: mutate,
             });
           }
         }}

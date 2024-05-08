@@ -2590,6 +2590,10 @@
         "en": "Save search"
       },
       "editSearch": {
+        "da": "Rediger",
+        "en": "Edit"
+      },
+      "editName": {
         "da": "Rediger navn",
         "en": "Edit name"
       },
