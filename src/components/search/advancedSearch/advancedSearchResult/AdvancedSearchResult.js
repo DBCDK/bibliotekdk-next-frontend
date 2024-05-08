@@ -210,6 +210,7 @@ export default function Wrap({ onWorkClick, onPageChange }) {
       fieldSearch: fieldSearch || "",
       cql: cqlAndFacetsQuery ? cql : fieldSearchQuery,
       selectedFacets: selectedFacets || [],
+      selectedQuickFilters: selectedQuickFilters || [],
     };
     setValue(searchHistoryObj);
   }

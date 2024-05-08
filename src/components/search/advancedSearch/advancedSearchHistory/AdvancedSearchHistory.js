@@ -22,21 +22,25 @@ import Button from "@/components/base/button";
 import CombinedSearch from "@/components/search/advancedSearch/combinedSearch/CombinedSearch";
 import useSavedSearches from "@/components/hooks/useSavedSearches";
 import { useModal } from "@/components/_modal";
+import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
 
 //Component to render facets
-export function FormatedFacets({ facets, className }) {
-  if (isEmpty(facets)) {
+export function FormatedFilters({ facets, quickFilters = [], className }) {
+  if (isEmpty(facets) && isEmpty(quickFilters)) {
     return null;
   }
-
   const flatfilters = [];
-  facets?.forEach((facet) => {
-    facet?.values?.map((val) => {
-      flatfilters.push({
-        name: val.name,
+  !isEmpty(facets) &&
+    facets?.forEach((facet) => {
+      facet?.values?.map((val) => {
+        flatfilters.push({
+          name: val.name,
+        });
       });
     });
-  });
+
+  !isEmpty(quickFilters) &&
+    quickFilters?.forEach((quick) => flatfilters.push({ name: quick.value }));
 
   return (
     <div className={cx(styles.historyFilters, className)}>
@@ -67,14 +71,17 @@ export function SearchQueryDisplay({ item }) {
   const router = useRouter();
 
   const { restartFacetsHook } = useFacets();
+  const { resetQuickFilters } = useQuickFilters();
 
   const goToItemUrl = (item) => {
     // restart the useFacets hook - this is a 'new' search
     restartFacetsHook();
+    resetQuickFilters();
     if (!isEmpty(item.fieldSearch)) {
       const query = {
         fieldSearch: JSON.stringify(item.fieldSearch),
         facets: JSON.stringify(item.selectedFacets || "[]"),
+        quickfilters: JSON.stringify(item.selectedQuickFilters || "[]"),
       };
       router.push({
         pathname: "/avanceret/",
@@ -86,6 +93,7 @@ export function SearchQueryDisplay({ item }) {
         query: {
           cql: item.cql,
           facets: JSON.stringify(item.selectedFacets || "[]"),
+          quickfilters: JSON.stringify(item.quickfilters || "[]"),
         },
       });
     }
@@ -106,7 +114,10 @@ export function SearchQueryDisplay({ item }) {
         )}
       </Link>
       {/* move this to seperate component and reuse in combined search */}
-      <FormatedFacets facets={item?.selectedFacets} />
+      <FormatedFilters
+        facets={item?.selectedFacets}
+        quickFilters={item.selectedQuickFilters}
+      />
     </div>
   );
 }

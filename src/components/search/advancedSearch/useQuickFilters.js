@@ -96,6 +96,7 @@ export function useQuickFilters() {
   }
 
   function resetQuickFilters() {
+    initialized = false;
     setSelectedQuickFilters("[]");
   }
 
