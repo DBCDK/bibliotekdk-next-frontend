@@ -129,33 +129,6 @@ Default.story = {
           searchObject: () => "{}",
           createdAt: () => "hello world",
         },
-        SavedSearches: [
-          {
-            hitcount: 88,
-            fieldSearch: {
-              inputFields: [
-                {
-                  value: "Tammi Øst",
-                  prefixLogicalOperator: null,
-                  searchIndex: "term.contributor",
-                },
-              ],
-              dropdownSearchIndices: [
-                {
-                  searchIndex: "phrase.mainlanguage",
-                  value: [],
-                },
-                {
-                  searchIndex: "phrase.generalmaterialtype",
-                  value: [],
-                },
-              ],
-            },
-            cql: '(term.contributor="Tammi Øst")',
-            key: '(term.contributor="Tammi Øst")',
-            timestamp: "11:44",
-          },
-        ],
       },
     },
   },

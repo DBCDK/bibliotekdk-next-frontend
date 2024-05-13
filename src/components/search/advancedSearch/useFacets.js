@@ -30,7 +30,12 @@ export function useFacets() {
   //
   // // we also need a useEffect to reset facets when we leave the page (/avanceret)
   useEffect(() => {
-    if (initialized && router && !router?.pathname?.includes("/avanceret")) {
+    if (
+      initialized &&
+      router &&
+      !router?.pathname?.includes("/avanceret") &&
+      !process.env.STORYBOOK_ACTIVE
+    ) {
       restartFacetsHook();
     }
   }, []);

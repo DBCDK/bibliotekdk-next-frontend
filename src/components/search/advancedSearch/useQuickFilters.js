@@ -49,7 +49,12 @@ export function useQuickFilters() {
 
   // // we need a useEffect to reset quickfilters when we leave the page (/avanceret)
   useEffect(() => {
-    if (initialized && router && !router?.pathname?.includes("/avanceret")) {
+    if (
+      initialized &&
+      router &&
+      !router?.pathname?.includes("/avanceret") &&
+      !process.env.STORYBOOK_ACTIVE
+    ) {
       clearQuickFiltersUrl();
     }
   }, []);
