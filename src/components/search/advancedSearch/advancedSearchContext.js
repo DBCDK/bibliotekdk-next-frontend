@@ -50,9 +50,35 @@ export function getInitialInputFields(workType = "all") {
         prefixLogicalOperator: LogicalOperatorsEnum.AND,
         searchIndex: "term.title",
       },
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.creatorcontributor",
+      },
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.subject",
+      },
+    ],
+    article: [
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.title",
+      },
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.creatorcontributor",
+      },
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.hostpublication",
+      },
     ],
     sheetmusic: [],
-    article: [],
     game: [],
     music: [],
     movie: [],
