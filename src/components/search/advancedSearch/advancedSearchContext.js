@@ -32,15 +32,33 @@ export function getDefaultDropdownIndices() {
   ];
 }
 
-export function getInitialInputFields() {
-  return [
-    { value: "", prefixLogicalOperator: null, searchIndex: "term.default" },
-    {
-      value: "",
-      prefixLogicalOperator: LogicalOperatorsEnum.AND,
-      searchIndex: "term.title",
-    },
-  ];
+export function getInitialInputFields(worktype = "all") {
+  console.log(worktype, "INTITIAL WORKTYPE");
+
+  const inputFieldsByMaterialType = {
+    all: [
+      { value: "", prefixLogicalOperator: null, searchIndex: "term.default" },
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.title",
+      },
+    ],
+    literature: [
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.title",
+      },
+    ],
+    sheetmusic: [],
+    article: [],
+    game: [],
+    music: [],
+    movie: [],
+  };
+
+  return inputFieldsByMaterialType[worktype];
 }
 
 const AdvancedSearchContext = createContext(undefined);
@@ -92,6 +110,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     resetInputFields,
   } = useInputFields({
     fieldSearchFromUrl: { ...fieldSearchFromUrl },
+    workType: workType,
   });
 
   //// ---- DropdownSearchIndices ----
@@ -197,7 +216,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     showInfoTooltip,
     setShowInfoTooltip,
     sort: sort,
-    workType: workType,
+    workType,
     setWorkType,
     stateToString,
     popoverRef,
