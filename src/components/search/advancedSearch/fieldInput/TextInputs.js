@@ -27,14 +27,14 @@ function FieldInput({ index, fieldValue, doAdvancedSearch }) {
     handleInputFieldChange,
     removeInputField,
     handleLogicalOperatorChange,
-    // workType, TODO add later
+    workType,
     showPopover,
   } = useAdvancedSearchContext();
   //labels to show in SearchIndexDropdown
   //TODO: change to use workType instead of hardcoded. workTypesLabels does not have data for all worktypes. We use only "all" only for now for now.
   //  const labels = workTypesLabels[workType].map((el) => el.index);
 
-  const labels = workTypesLabels["all"].map((el) => el.index);
+  const labels = workTypesLabels[workType].map((el) => el.index);
   const placeholder = Translate({
     context: "search",
     label: `advanced-placeholder-${fieldValue?.searchIndex}`,
@@ -46,7 +46,7 @@ function FieldInput({ index, fieldValue, doAdvancedSearch }) {
   // from advancedSearchContext
   const csTypeMap = { function: "creator" };
   const indexType = fieldValue.searchIndex;
-  const csType = indexType.split(".")[1];
+  const csType = indexType?.split(".")[1];
   const mappedCsType = csTypeMap[csType] || csType;
 
   /** @TODO csSuggest supports 4 indexer for now .. whatabout the NOT supported ? **/
