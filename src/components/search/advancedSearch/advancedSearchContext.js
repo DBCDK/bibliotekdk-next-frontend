@@ -32,8 +32,8 @@ export function getDefaultDropdownIndices() {
   ];
 }
 
-export function getInitialInputFields(worktype = "all") {
-  console.log(worktype, "INTITIAL WORKTYPE");
+export function getInitialInputFields(workType = "all") {
+  console.log(workType, "INTITIAL WORKTYPE");
 
   const inputFieldsByMaterialType = {
     all: [
@@ -58,7 +58,7 @@ export function getInitialInputFields(worktype = "all") {
     movie: [],
   };
 
-  return inputFieldsByMaterialType[worktype];
+  return inputFieldsByMaterialType[workType];
 }
 
 const AdvancedSearchContext = createContext(undefined);
@@ -108,10 +108,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     handleInputFieldChange,
     handleIndexChange,
     resetInputFields,
-  } = useInputFields({
-    fieldSearchFromUrl: { ...fieldSearchFromUrl },
-    workType: workType,
-  });
+  } = useInputFields({ ...fieldSearchFromUrl }, workType);
 
   //// ---- DropdownSearchIndices ----
   const {
