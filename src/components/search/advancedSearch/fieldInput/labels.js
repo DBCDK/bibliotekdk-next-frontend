@@ -37,17 +37,33 @@ const all = [
   },
 ];
 
-//input indexes for materialtype "books"
-const books = [];
+//input indexes for materialtype "literature"
+const literature = [];
 
 //input indexes for materialtype "articles"
-const articles = [];
+const article = [];
+
+//input indexes for materialtype "sheetmusic"
+const sheetmusic = [];
+
+//input indexes for materialtype "game"
+const game = [];
+
+//input indexes for materialtype "music"
+const music = [];
+
+//input indexes for materialtype "movie"
+const movie = [];
 
 //TODO: add the other material types
 const labels = {
   all,
-  books,
-  articles,
+  sheetmusic,
+  literature,
+  article,
+  game,
+  music,
+  movie,
 };
 
 export default labels;
