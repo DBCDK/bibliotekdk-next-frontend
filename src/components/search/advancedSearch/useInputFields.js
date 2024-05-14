@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { LogicalOperatorsEnum } from "@/components/search/enums";
 import { getInitialInputFields } from "@/components/search/advancedSearch/advancedSearchContext";
 
-export function useInputFields({ fieldSearchFromUrl }) {
+export function useInputFields({ fieldSearchFromUrl, workType = "all" }) {
   //prefixLogicalOperator is an enum of AND, OR , NOT
   /** @typedef {("AND"|"OR"|"NOT"|null)} PrefixLogicalOperator */
   /** @typedef {{value: string, prefixLogicalOperator: PrefixLogicalOperator, searchIndex: string}} InputField */
@@ -10,7 +10,9 @@ export function useInputFields({ fieldSearchFromUrl }) {
     useState([]);
 
   useEffect(() => {
-    setInputFields(fieldSearchFromUrl.inputFields || getInitialInputFields());
+    setInputFields(
+      fieldSearchFromUrl.inputFields || getInitialInputFields(workType)
+    );
   }, [JSON.stringify(fieldSearchFromUrl)]);
 
   /**
