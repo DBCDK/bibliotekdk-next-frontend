@@ -45,7 +45,11 @@ const literature = [
     index: "term.creatorcontributor",
     placeholder: "creatorcontributor placeholder",
   },
-  { index: "term.contributor", placeholder: "contributor placeholder" },
+  {
+    index: "term.contributor",
+    placeholder: "contributor_books placeholder",
+    label: "literature_term.contributor",
+  },
   { index: "term.subject", placeholder: "subject placeholder" },
   { index: "term.publisher", placeholder: "publisher placeholder" },
   { index: "dk5", placeholder: "dk5 placeholder" },
@@ -73,17 +77,42 @@ const article = [
   { index: "issn", placeholder: "issn placeholder" },
 ];
 
+//input indexes for materialtype "movie"
+const movie = [
+  { index: "term.default", placeholder: "all placeholder" },
+  { index: "term.title", placeholder: "title placeholder" },
+  {
+    index: "term.creatorcontributor",
+    placeholder: "creatorcontributor placeholder",
+  },
+  { index: "term.subject", placeholder: "subject placeholder" },
+  {
+    index: "term.fictionalcharacter",
+    placeholder: "fictionalcharacter placeholder",
+  },
+  { index: "term.publisher", placeholder: "publisher placeholder" },
+  { index: "dk5", placeholder: "dk5 placeholder" },
+];
+
+//input indexes for materialtype "music"
+const music = [
+  { index: "term.default", placeholder: "all placeholder" },
+  { index: "term.title", placeholder: "title placeholder" },
+  {
+    index: "term.titleManifestationPart",
+    placeholder: "titleManifestationPart placeholder",
+  },
+  { index: "term.creator", placeholder: "creator placeholder" },
+  { index: "term.contributor", placeholder: "contributor placeholder" },
+  { index: "term.publisher", placeholder: "publisher placeholder" },
+  { index: "term.identifiers(?)", placeholder: "identifiers placeholder" },
+];
+
 //input indexes for materialtype "sheetmusic"
 const sheetmusic = [];
 
 //input indexes for materialtype "game"
 const game = [];
-
-//input indexes for materialtype "music"
-const music = [];
-
-//input indexes for materialtype "movie"
-const movie = [];
 
 //TODO: add the other material types
 const labels = {

@@ -78,10 +78,47 @@ export function getInitialInputFields(workType = "all") {
         searchIndex: "term.hostpublication",
       },
     ],
+    movie: [
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.title",
+      },
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.subject",
+      },
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.creatorcontributor",
+      },
+    ],
+    music: [
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.title",
+      },
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.creator",
+      },
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.contributor",
+      },
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.publisher",
+      },
+    ],
     sheetmusic: [],
     game: [],
-    music: [],
-    movie: [],
   };
 
   return inputFieldsByMaterialType[workType];
