@@ -209,7 +209,6 @@ export default function SavedSearches() {
           <Accordion dataCy="saved-searches-accordion">
             {savedSearches?.map((item, index) => (
               <Item
-                //              dataCy="accordion-item"
                 dataCy={`accordion-item-${index}`}
                 CustomHeaderCompnent={(props) => (
                   <SavedItemRow

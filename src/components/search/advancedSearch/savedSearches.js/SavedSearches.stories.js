@@ -69,10 +69,7 @@ NoAuthenticated.story = merge(
   {},
   {
     parameters: {
-      session: {
-        // accessToken: "dummy-token",
-        // user: { uniqueId: null, userId: "mocked-uniqueId" },
-      },
+      session: {},
       graphql: {
         debug: true,
         resolvers: {

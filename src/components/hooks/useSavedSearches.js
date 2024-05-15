@@ -59,10 +59,7 @@ export const useSavedSearches = () => {
     [data]
   );
 
-  const hitcount = useMemo(
-    () => data?.user?.savedSearches?.hitcount || 0,
-    [data]
-  );
+  const hitcount = useMemo(() => data?.user?.savedSearches?.hitcount, [data]);
 
   const saveSearch = async ({ searchObject }) => {
     try {
