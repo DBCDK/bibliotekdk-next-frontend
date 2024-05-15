@@ -340,7 +340,11 @@ export function SearchHistoryNavigation() {
           },
         }}
       >
-        <Text type="text1" tag="span">
+        <Text
+          type="text1"
+          tag="span"
+          dataCy="searchHistory-navigation-saved-search"
+        >
           {Translate({
             context: "search",
             label: "advanced-search-saved-search",

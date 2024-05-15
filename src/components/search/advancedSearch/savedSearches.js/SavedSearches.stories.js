@@ -49,3 +49,45 @@ Default.story = merge(
     },
   }
 );
+
+export function NoAuthenticated() {
+  return (
+    <div>
+      <StoryTitle>
+        Advanced Search - Saved search for not logged in user
+      </StoryTitle>
+      <StoryDescription>
+        Display login button if user is not logged in
+      </StoryDescription>
+
+      <SavedSearches />
+    </div>
+  );
+}
+
+NoAuthenticated.story = merge(
+  {},
+  {
+    parameters: {
+      session: {
+        // accessToken: "dummy-token",
+        // user: { uniqueId: null, userId: "mocked-uniqueId" },
+      },
+      graphql: {
+        debug: true,
+        resolvers: {
+          Query: {
+            user: () => ({
+              savedSearches: { hitcount: 0, result: [] },
+            }),
+          },
+        },
+      },
+      nextRouter: {
+        showInfo: true,
+        pathname: "/avanceret/gemte-soegninger",
+        query: {},
+      },
+    },
+  }
+);
