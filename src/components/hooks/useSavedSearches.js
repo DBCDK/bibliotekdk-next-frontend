@@ -124,14 +124,8 @@ export const useSavedSearches = () => {
     }, [data]);
   };
 
-  const savedSearchKeys = useMemo(
-    () => savedSearches?.map((search) => search?.key),
-    [savedSearches]
-  );
-
   return {
     savedSearches,
-    savedSearchKeys,
     saveSearch,
     deleteSearches,
     hitcount,
