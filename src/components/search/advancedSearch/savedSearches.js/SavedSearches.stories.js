@@ -8,8 +8,7 @@ const exportedObject = {
   title: "AdvancedSearch/savedSearches",
 };
 
-const { SAVED_SEARCHES, DEFAULT_STORY_PARAMETERS, USER_1, USER_7 } =
-  automock_utils();
+const { SAVED_SEARCHES } = automock_utils();
 
 export default exportedObject;
 
