@@ -1792,6 +1792,36 @@ const USER_9 = {
   rights: { digitalArticleService: true },
 };
 
+const SAVED_SEARCHES = {
+  result: [
+    {
+      id: 75,
+      searchObject:
+        '{"key":"(term.default=\\"Jacques Lacan\\") AND ((phrase.specificmaterialtype=\\"artikel\\") AND (phrase.creator=\\"françois sauvagnat\\"))","hitcount":6,"fieldSearch":{"inputFields":[{"value":"Jacques Lacan","prefixLogicalOperator":null,"searchIndex":"term.default"}]},"cql":"(term.default=\\"Jacques Lacan\\")","selectedFacets":[{"searchIndex":"specificmaterialtype","values":[{"value":"artikel","name":"artikel"}]},{"searchIndex":"creator","values":[{"value":"françois sauvagnat","name":"françois sauvagnat"}]}],"timestamp":"15.51","unixtimestamp":1715608317564,"name":"Jacques Lacan","id":75,"createdAt":"2024-05-13T13:52:03.790Z"}',
+      createdAt: "2024-05-13T13:52:03.790Z",
+    },
+    {
+      id: 50,
+      searchObject:
+        '{"key":"(term.default=\\"palmer\\") AND ((phrase.mainlanguage=\\"engelsk\\"))","hitcount":4458,"fieldSearch":{"inputFields":[{"value":"palmer","prefixLogicalOperator":null,"searchIndex":"term.default"}]},"cql":"(term.default=\\"palmer\\")","selectedFacets":[{"searchIndex":"mainlanguage","values":[{"value":"engelsk","name":"engelsk"}]}],"timestamp":"10.09","unixtimestamp":1715155755681,"name":"palmer12","id":50,"createdAt":"2024-05-08T08:09:25.497Z"}',
+      createdAt: "2024-05-08T08:09:25.497Z",
+    },
+    {
+      id: 49,
+      searchObject:
+        '{"key":"(term.default=\\"teori\\") AND ((phrase.contributor=\\"handelshøjskolen i københavn\\") AND (phrase.mainlanguage=\\"dansk\\"))","hitcount":110,"fieldSearch":{"inputFields":[{"value":"teori","prefixLogicalOperator":null,"searchIndex":"term.default"}]},"cql":"(term.default=\\"teori\\")","selectedFacets":[{"searchIndex":"contributor","values":[{"value":"handelshøjskolen i københavn","name":"handelshøjskolen i københavn"}]},{"searchIndex":"mainlanguage","values":[{"value":"dansk","name":"dansk"}]}],"timestamp":"10.08","unixtimestamp":1715155713764,"name":"teori"}',
+      createdAt: "2024-05-08T08:08:38.990Z",
+    },
+    {
+      id: 35,
+      searchObject:
+        '{"fullCql":"(term.default=\\"Canada\\") AND ((publicationyear within \\"2022 2024\\") AND (phrase.genreandform=\\"roman\\")) AND ((phrase.subject=\\"realistisk\\"))","key":"(term.default=\\"Canada\\") AND ((publicationyear within \\"2022 2024\\") AND (phrase.genreandform=\\"roman\\")) AND ((phrase.subject=\\"realistisk\\"))","hitcount":25,"fieldSearch":{"inputFields":[{"value":"Canada","prefixLogicalOperator":null,"searchIndex":"term.default"}],"dropdownSearchIndices":[{"searchIndex":"publicationyear","value":[{"value":{"lower":"2022","upper":"2024"},"name":"ACTION_LINK_CONTAINER__publicationyear"}]},{"searchIndex":"phrase.genreandform","value":[{"value":"roman","name":"roman"}]}]},"cql":"(term.default=\\"Canada\\") AND ((publicationyear within \\"2022 2024\\") AND (phrase.genreandform=\\"roman\\"))","selectedFacets":[{"searchIndex":"subject","values":[{"value":"realistisk","name":"realistisk"}]}],"timestamp":"19.45","unixtimestamp":1715103945298,"name":"Canada2","id":35,"createdAt":"2024-05-07T17:46:21.003Z"}',
+      createdAt: "2024-05-07T17:46:21.003Z",
+    },
+  ],
+  hitcount: 4,
+};
+
 export default function automock_utils() {
   return {
     MANIFESTATION_1,
@@ -1862,5 +1892,6 @@ export default function automock_utils() {
     TODAY,
     TOMORROW,
     NEVER,
+    SAVED_SEARCHES,
   };
 }

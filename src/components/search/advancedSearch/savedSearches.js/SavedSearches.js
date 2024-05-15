@@ -37,7 +37,7 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
         }}
       >
         <Checkbox
-          id={`select-item-${item.key}`}
+          id={`select-item-${item.id}`}
           tabIndex="-1"
           ariaLabelledBy={`select-item-${index}`}
           ariaLabel={`select-item-${index}`}
@@ -99,7 +99,7 @@ export default function SavedSearches() {
     if (savedSearches?.length === checkboxList.length) {
       setCheckboxList([]);
     } else {
-      setCheckboxList(savedSearches.map((stored) => stored.key));
+      setCheckboxList(savedSearches.map((stored) => stored.id));
     }
   };
 
@@ -109,13 +109,13 @@ export default function SavedSearches() {
   const onDeleteSelected = () => {
     //filter for checked items and map for ids to delete
     const idsToDelete = savedSearches
-      ?.filter((item) => checkboxList.includes(item.key) && item.id)
+      ?.filter((item) => checkboxList.includes(item.id) && item.id)
       .map((item) => item.id);
     deleteSearches({ idsToDelete });
   };
 
   const checkedObjects = savedSearches?.filter((obj) =>
-    checkboxList.includes(obj.key)
+    checkboxList.includes(obj.id)
   );
 
   /**
@@ -129,7 +129,7 @@ export default function SavedSearches() {
   const onSelect = (item, selected = false) => {
     const newCheckList = [...checkboxList];
     // if item is already in checkboxlist -> remove
-    const checkindex = checkboxList.findIndex((check) => check === item.key);
+    const checkindex = checkboxList.findIndex((check) => check === item.id);
     if (checkindex !== -1) {
       // item found in list - if deselected remove it
       if (!selected) {
@@ -138,7 +138,7 @@ export default function SavedSearches() {
     }
     // if not -> add it to list .. if selected
     else if (selected) {
-      newCheckList.push(item.key);
+      newCheckList.push(item.id);
     }
     setCheckboxList(newCheckList);
   };
@@ -219,13 +219,13 @@ export default function SavedSearches() {
                     onSelect={onSelect}
                     item={item}
                     checked={
-                      checkboxList.findIndex((check) => check === item.key) !==
+                      checkboxList.findIndex((check) => check === item.id) !==
                       -1
                     }
                   />
                 )}
-                key={item.key}
-                eventKey={item.key}
+                key={item.id}
+                eventKey={item.id}
               >
                 <div className={styles.accordionContentContainer}>
                   <div className={styles.accordionContent}>

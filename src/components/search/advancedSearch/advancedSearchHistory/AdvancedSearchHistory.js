@@ -117,6 +117,7 @@ function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
   //check if search has already been saved in userdata
   const { savedObject, mutate } = useSavedSearchByCql({ cql: item.key });
   //check user has saved the search item
+  console.log("savedObject", savedObject);
   const isSaved = !!savedObject?.id;
   const timestamp = item.unixtimestamp
     ? getTimeStamp(item.unixtimestamp)
