@@ -14,8 +14,6 @@ const { SAVED_SEARCHES, DEFAULT_STORY_PARAMETERS, USER_1, USER_7 } =
 export default exportedObject;
 
 export function Default() {
-  console.log("SAVED_SEARCHES", SAVED_SEARCHES.result);
-  // useMockLoanerInfo()
   return (
     <div>
       <StoryTitle>Advanced Search - Saved search</StoryTitle>
@@ -46,35 +44,9 @@ Default.story = merge(
       },
       nextRouter: {
         showInfo: true,
-        pathname: "/",
+        pathname: "/avanceret/gemte-soegninger",
         query: {},
       },
     },
   }
 );
-
-// Default.story =  merge({}, DEFAULT_STORY_PARAMETERS, {
-//   parameters: {
-//     graphql: {
-//       debug: true,
-//       resolvers: {
-//         Query: {
-//           savedSearches: () => ({
-//             user: {
-//               savedSearches: SAVED_SEARCHES,
-//             },
-//           }),
-//           user: () => {
-//             return USER_1
-//           }
-//         },
-
-//       },
-//     },
-//     nextRouter: {
-//       showInfo: true,
-//       pathname: "/",
-//       query: {},
-//     },
-//   },
-// });
