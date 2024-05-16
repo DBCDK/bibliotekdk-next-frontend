@@ -1,16 +1,9 @@
-import { getLocalStorageItem, setLocalStorageItem } from "@/lib/utils";
-import { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { useEffect, useMemo, useState } from "react";
 import getConfig from "next/config";
 const config = getConfig();
 const useFixedSessionId = config?.publicRuntimeConfig?.useFixedSessionId;
 
-const UNIQUE_VISITOR_KEY = "uniqueVisitorId";
 const isClient = typeof window !== "undefined";
-
-// This uniqueVisitorId is completely anonymous
-// And therefore can be safely sent to FBI-API
-let uniqueVisitorId = isClient ? getLocalStorageItem(UNIQUE_VISITOR_KEY) : null;
 
 export default function useCookieConsent() {
   // eslint-disable-next-line no-unused-vars
@@ -20,23 +13,25 @@ export default function useCookieConsent() {
   // hence Cookiebot should be available on first render
   const consent = isClient ? window.Cookiebot?.consent : null;
 
-  // Create id, if it does not exist
-  if (!uniqueVisitorId && isClient) {
-    uniqueVisitorId =
-      uuidv4() + "_" + (consent?.statistics ? "CONSENT" : "NOCONSENT");
-    setLocalStorageItem(UNIQUE_VISITOR_KEY, uniqueVisitorId);
-  }
-
-  useEffect(() => {
-    // Check if we need to create new unique visitor id
-    // If user withdraws or gievs consent, we need a new ID
-    if (
-      (consent?.statistics && !uniqueVisitorId?.includes("_CONSENT")) ||
-      (!consent?.statistics && !uniqueVisitorId?.includes("_NOCONSENT"))
-    ) {
-      uniqueVisitorId = null;
-      forceRender({});
+  // Extract matomo visitor id from cookie
+  // It only exists of user has given statistics consent
+  const uniqueVisitorId = useMemo(() => {
+    if (typeof window === "undefined") {
+      return "";
     }
+    if (consent?.statistics) {
+      if (useFixedSessionId) {
+        return "test";
+      }
+      const cookies = document.cookie.split("; ");
+      return (
+        cookies
+          .find((cookie) => cookie.startsWith("_pk_id"))
+          ?.split("=")?.[1]
+          ?.split(".")?.[0] || ""
+      );
+    }
+    return "";
   }, [consent?.statistics]);
 
   useEffect(() => {
@@ -56,8 +51,6 @@ export default function useCookieConsent() {
     preferences: consent?.preferences || false,
     statistics: consent?.statistics || false,
     marketing: consent?.marketing || false,
-    uniqueVisitorId: useFixedSessionId
-      ? "test"
-      : uniqueVisitorId?.split("_")?.[0],
+    uniqueVisitorId,
   };
 }

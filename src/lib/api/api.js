@@ -67,7 +67,7 @@ export async function fetcher(
 
   const headers = {
     "Content-Type": "application/json",
-    "X-Unique-Visitor-ID": uniqueVisitorId || "unknown",
+    "X-Unique-Visitor-ID": uniqueVisitorId || "",
     "X-Tracking-Consent": !!statistics,
   };
   if (accessToken) {
