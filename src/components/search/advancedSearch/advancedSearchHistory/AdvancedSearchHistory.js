@@ -167,10 +167,10 @@ function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
         className={styles.saveSearchIcon}
         size={3}
         src={`${isSaved ? "heart_filled" : "heart"}.svg`}
-        onClick={() => {
+        onClick={async () => {
           if (isSaved) {
             //remove search
-            deleteSearches({ idsToDelete: [savedObject?.id] });
+            await deleteSearches({ idsToDelete: [savedObject?.id] });
             mutate();
           } else {
             //open save search modal

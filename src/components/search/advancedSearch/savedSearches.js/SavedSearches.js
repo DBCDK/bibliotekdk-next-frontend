@@ -68,10 +68,7 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
         onClick={(e) => {
           e.stopPropagation();
           if (item?.id) {
-            console.log("item?.id", item?.id);
-            //deleteSavedSearches({ idsToDelete: [item.id], userDataMutation });
             deleteSearches({ idsToDelete: [item.id] });
-            //todo mutate refresh
           }
         }}
       />
@@ -112,6 +109,7 @@ export default function SavedSearches() {
       ?.filter((item) => checkboxList.includes(item.id) && item.id)
       .map((item) => item.id);
     deleteSearches({ idsToDelete });
+    //todo mutate?
   };
 
   const checkedObjects = savedSearches?.filter((obj) =>
