@@ -109,7 +109,8 @@ export default function SavedSearches() {
       ?.filter((item) => checkboxList.includes(item.id) && item.id)
       .map((item) => item.id);
     deleteSearches({ idsToDelete });
-    //todo mutate?
+    //uncheck deleted items
+    setCheckboxList(checkboxList.filter((id) => !idsToDelete.includes(id)));
   };
 
   const checkedObjects = savedSearches?.filter((obj) =>
