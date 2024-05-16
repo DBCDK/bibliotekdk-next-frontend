@@ -43,6 +43,7 @@
 .searchPreview {
   white-space: nowrap;
   overflow: hidden;
+  margin-right: var(--pt1);
 }
 
 .tableHeaderBorder {
