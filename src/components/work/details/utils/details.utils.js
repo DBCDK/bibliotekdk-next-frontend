@@ -767,8 +767,7 @@ export function fieldsForRows(manifestation, work, context) {
       {
         audience: {
           label: Translate({ ...context, label: "game-audience" }),
-          value: manifestation?.audience?.PEGI || "",
-          jsxParser: RenderMovieAudience,
+          value: manifestation?.audience?.PEGI?.display || "",
         },
       },
     ],
