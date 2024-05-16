@@ -14,13 +14,12 @@ import { useEffect, useState } from "react";
 import useSavedSearches from "@/components/hooks/useSavedSearches";
 
 export default function SaveSearch({ modal, context }) {
-  const { item, back } = context;
+  const { item, back, onSaveDone } = context;
   const [searchName, onSearchNameChange] = useState("");
-
+  const { updateSearch, saveSearch } = useSavedSearches();
   useEffect(() => {
     onSearchNameChange(item?.name || item?.cql || "");
   }, [item]);
-  const { saveSearch } = useSavedSearches();
   //check user has saved the search item
 
   return (
@@ -52,10 +51,18 @@ export default function SaveSearch({ modal, context }) {
       />
       <Button
         disabled={searchName.length === 0}
-        onClick={() => {
+        onClick={async () => {
           const newItem = { ...item, name: searchName };
-          saveSearch(newItem);
-          //todo close when save search is done
+          //TODO: maybe better to handle this in fbi-api instead.
+          if (newItem.id) {
+            await updateSearch({ searchObject: newItem });
+          }
+          //otherwise add new item
+          else {
+            await saveSearch({ searchObject: newItem });
+          }
+          onSaveDone && onSaveDone();
+
           modal.clear();
         }}
       >

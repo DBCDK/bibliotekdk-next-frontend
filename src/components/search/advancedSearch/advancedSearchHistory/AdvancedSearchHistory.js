@@ -44,7 +44,7 @@ export function FormatedFilters({ facets, quickFilters = [], className }) {
 
   return (
     <div className={cx(styles.historyFilters, className)}>
-      <Text tag="span" type="text1">
+      <Text tag="span" type="text1" className={styles.filterLabel}>
         {Translate({ context: "search", label: "history-filter-label" })}:
       </Text>
       {flatfilters.map((val, index) => (
@@ -124,10 +124,11 @@ export function SearchQueryDisplay({ item }) {
 function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
   const modal = useModal();
   const breakpoint = useBreakpoint();
-  const { deleteSearch, savedSearchKeys } = useSavedSearches();
+  const { deleteSearches, useSavedSearchByCql } = useSavedSearches();
+  //check if search has already been saved in userdata
+  const { savedObject, mutate } = useSavedSearchByCql({ cql: item.key });
   //check user has saved the search item
-  const isSaved = savedSearchKeys?.includes(item.key);
-
+  const isSaved = !!savedObject?.id;
   const timestamp = item.unixtimestamp
     ? getTimeStamp(item.unixtimestamp)
     : item.timestamp;
@@ -177,14 +178,16 @@ function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
         className={styles.saveSearchIcon}
         size={3}
         src={`${isSaved ? "heart_filled" : "heart"}.svg`}
-        onClick={() => {
+        onClick={async () => {
           if (isSaved) {
             //remove search
-            deleteSearch(item);
+            await deleteSearches({ idsToDelete: [savedObject?.id] });
+            mutate();
           } else {
             //open save search modal
             modal.push("saveSearch", {
               item: item,
+              onSaveDone: mutate,
             });
           }
         }}
@@ -255,7 +258,7 @@ export function HistoryHeaderActions({
 
   if (breakpoint === "xs") {
     return (
-      <div className={cx(styles.actionheader)}>
+      <div className={cx(styles.menuDropdown)}>
         <MenuDropdown options={MENUITEMS} isLeftAlligned={true} />
       </div>
     );
@@ -315,7 +318,7 @@ export function HistoryHeaderActions({
 
 export function SearchHistoryNavigation() {
   const router = useRouter();
-  const { savedSearchKeys } = useSavedSearches();
+  const { hitcount } = useSavedSearches();
 
   // Check if the current path matches any button url
   const isButtonVisible = (path) => router.pathname === path;
@@ -348,11 +351,15 @@ export function SearchHistoryNavigation() {
           },
         }}
       >
-        <Text type="text1" tag="span">
+        <Text
+          type="text1"
+          tag="span"
+          dataCy="searchHistory-navigation-saved-search"
+        >
           {Translate({
             context: "search",
             label: "advanced-search-saved-search",
-            vars: [String(savedSearchKeys?.length)],
+            vars: [hitcount ? String(hitcount) : "0"],
           })}
         </Text>
       </Link>

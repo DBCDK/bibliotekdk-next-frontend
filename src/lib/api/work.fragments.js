@@ -496,6 +496,17 @@ export function fbiOverviewDetail({ workId }) {
                 }                
                 ages {
                   display
+                }
+                mediaCouncilAgeRestriction {
+                  display
+                  minimumAge
+                }
+                PEGI {
+                  display
+                  minimumAge                
+                }
+                players {
+                  display
                 }                
                 lix
                 let

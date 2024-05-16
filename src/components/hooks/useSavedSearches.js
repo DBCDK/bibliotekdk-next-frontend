@@ -2,11 +2,18 @@
  * @file - Hook for advanced search saved searches. functions to get, save and delete searches from userdata db
  */
 
-import { getLocalStorageItem, setLocalStorageItem } from "@/lib/utils";
-import useSWR from "swr";
 import { useMemo } from "react";
-
-const KEY = "saved-advanced-search-items";
+import {
+  addSavedSearch,
+  deleteSavedSearches,
+  updateSavedSearch,
+} from "@/lib/api/userData.mutations";
+import {
+  getSavedSearchByCql,
+  savedSearchesQuery,
+} from "@/lib/api/user.fragments";
+import { useData, useMutate } from "@/lib/api/api";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 /**
  * Get a date on a stored saved search object
@@ -21,75 +28,109 @@ export function getTimeStamp(now) {
   return stamp.replace("AM", "").replace("PM", "").replace(":", ".").trim();
 }
 
-function getUnixTimeStamp() {
-  return new Date().getTime();
-}
-
 export const useSavedSearches = () => {
-  let { data: savedSearches, mutate } = useSWR(KEY, (key) =>
-    JSON.parse(getLocalStorageItem(key) || "[]")
+  const { hasCulrUniqueId } = useAuthentication();
+  const userDataMutation = useMutate();
+
+  const { data, mutate } = useData(
+    hasCulrUniqueId &&
+      savedSearchesQuery({
+        limit: 10,
+        offset: 0,
+      })
   );
 
-  //todo rename to saveSearch
+  const mutateData = () => {
+    setTimeout(() => {
+      mutate();
+    }, 100);
+  };
 
-  const saveSearch = (value) => {
+  const savedSearches = useMemo(
+    () =>
+      data?.user?.savedSearches?.result?.map((search) => {
+        const searchObject = JSON.parse(search.searchObject);
+        return {
+          ...searchObject,
+          id: search.id,
+          createdAt: search.createdAt,
+        };
+      }),
+    [data]
+  );
+
+  const hitcount = useMemo(() => data?.user?.savedSearches?.hitcount, [data]);
+
+  const saveSearch = async ({ searchObject }) => {
     try {
-      if (typeof window !== "undefined") {
-        // Check if cql (and facets) is already stored
-        const index = savedSearches.findIndex(
-          (stor) => stor?.key?.trim() === value?.key?.trim()
-        );
-
-        value["timestamp"] = getTimeStamp(getUnixTimeStamp());
-        value["unixtimestamp"] = getUnixTimeStamp();
-
-        if (index !== -1) {
-          // Update the existing entry if found
-          savedSearches[index] = value;
-        } else {
-          // Add to the beginning of saved items array if not found
-          savedSearches.unshift(value);
-        }
-
-        // Update localstorage and state
-        setLocalStorageItem(KEY, JSON.stringify(savedSearches));
-        mutate();
-      }
+      await userDataMutation.post(addSavedSearch({ searchObject }));
+      mutateData();
     } catch (err) {
       console.error(err);
     }
   };
 
-  const deleteSearch = (value) => {
+  const updateSearch = async ({ searchObject }) => {
     try {
-      if (typeof window !== "undefined") {
-        // get index of value to delete
-        const valueIndex = savedSearches.findIndex(
-          (stor) => stor.key === value?.key
-        );
-        if (valueIndex > -1) {
-          // remove from array
-          savedSearches.splice(valueIndex, 1);
-          // update localstorage
-          setLocalStorageItem(KEY, JSON.stringify(savedSearches));
-          mutate();
-        }
-      }
+      await userDataMutation.post(updateSavedSearch({ searchObject }));
+      mutateData();
     } catch (err) {
       console.error(err);
     }
   };
+  /**
+   * deletes one or multiple saved searches. Provide with array of ids to be deleted.
+   * ids to delete
+   * @param {*} idsToDelete
+   */
+  const deleteSearches = async ({ idsToDelete }) => {
+    try {
+      await userDataMutation.post(deleteSavedSearches({ idsToDelete }));
+      mutateData();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  /**
+   * Fetches a saved search from userdata given a cql search. The cql has to be a full cql including facetts, filters etc.
+   * @param {String} .cql Cql strint
+   * @returns
+   */
+  const useSavedSearchByCql = ({ cql }) => {
+    const { hasCulrUniqueId } = useAuthentication();
 
-  const savedSearchKeys = useMemo(
-    () => savedSearches?.map((search) => search?.key),
-    [savedSearches]
-  );
+    const { data, mutate } = useData(
+      cql &&
+        hasCulrUniqueId &&
+        getSavedSearchByCql({
+          cql,
+        })
+    );
+
+    return useMemo(() => {
+      if (!data?.user?.savedSearchByCql) {
+        return { savedObject: null, mutate };
+      }
+
+      const jsonSearchObject = data.user.savedSearchByCql.searchObject;
+      return {
+        savedObject: {
+          ...JSON.parse(jsonSearchObject || "{}"),
+          id: data.user.savedSearchByCql.id,
+          createdAt: data.user.savedSearchByCql.createdAt,
+        },
+        mutate,
+      };
+    }, [data]);
+  };
 
   return {
     savedSearches,
-    savedSearchKeys,
     saveSearch,
-    deleteSearch,
+    deleteSearches,
+    hitcount,
+    updateSearch,
+    useSavedSearchByCql,
   };
 };
 

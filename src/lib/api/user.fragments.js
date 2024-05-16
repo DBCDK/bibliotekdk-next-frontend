@@ -246,3 +246,50 @@ export function extendedData() {
     revalidate: true,
   };
 }
+
+/**
+ * saved advanced search history
+ */
+export function savedSearchesQuery({ offset, limit }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `query savedSearches($offset: Int!, $limit: PaginationLimit! ) { 
+        user {
+          savedSearches(offset: $offset, limit: $limit, ) {
+            result {
+              id
+              searchObject
+              createdAt
+            }
+            hitcount
+          }
+        }
+      
+    }`,
+    variables: { offset, limit },
+    slowThreshold: 3000,
+    revalidate: true,
+  };
+}
+
+/**
+ * get saved search info from a cql.
+ */
+export function getSavedSearchByCql({ cql }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `query savedSearchByCql($cql: String! ) { 
+        user {
+          savedSearchByCql(cql: $cql) {
+            id
+            searchObject
+            createdAt
+          }
+        }
+      
+    }`,
+    variables: { cql },
+    slowThreshold: 3000,
+    revalidate: true,
+  };
+}

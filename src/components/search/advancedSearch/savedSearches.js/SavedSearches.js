@@ -19,10 +19,13 @@ import Accordion, { Item } from "@/components/base/accordion";
 import { unixToFormatedDate } from "@/lib/utils";
 import Link from "@/components/base/link";
 import { useModal } from "@/components/_modal";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
+import Button from "@/components/base/button";
+import { openLoginModal } from "@/components/_modal/pages/login/utils";
 
 function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   const formatedDate = unixToFormatedDate(item.unixtimestamp);
-  const { deleteSearch } = useSavedSearches();
+  const { deleteSearches } = useSavedSearches();
 
   return (
     <div className={styles.savedItemRow} {...props}>
@@ -34,7 +37,7 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
         }}
       >
         <Checkbox
-          id={`select-item-${index}`}
+          id={`select-item-${item.id}`}
           tabIndex="-1"
           ariaLabelledBy={`select-item-${index}`}
           ariaLabel={`select-item-${index}`}
@@ -62,8 +65,11 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
         style={{ cursor: "pointer" }}
         size={3}
         src={`heart_filled.svg`}
-        onClick={() => {
-          deleteSearch(item);
+        onClick={(e) => {
+          e.stopPropagation();
+          if (item?.id) {
+            deleteSearches({ idsToDelete: [item.id] });
+          }
         }}
       />
       <Icon
@@ -78,9 +84,10 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
 }
 
 export default function SavedSearches() {
-  const { deleteSearch, savedSearches } = useSavedSearches();
+  const { deleteSearches, savedSearches } = useSavedSearches();
   const [checkboxList, setCheckboxList] = useState([]);
   const modal = useModal();
+  const { isAuthenticated } = useAuthentication();
 
   /**
    * Set or unset ALL checkboxes in saved search table
@@ -89,7 +96,7 @@ export default function SavedSearches() {
     if (savedSearches?.length === checkboxList.length) {
       setCheckboxList([]);
     } else {
-      setCheckboxList(savedSearches.map((stored) => stored.key));
+      setCheckboxList(savedSearches.map((stored) => stored.id));
     }
   };
 
@@ -97,16 +104,17 @@ export default function SavedSearches() {
    * Delete selected entries in saved search table
    */
   const onDeleteSelected = () => {
-    checkboxList.forEach((check) => {
-      const savedItem = savedSearches.find((stored) => stored.key === check);
-      savedItem && deleteSearch(savedItem);
-      //remove item from checklist too
-      onSelect(savedItem, false);
-    });
+    //filter for checked items and map for ids to delete
+    const idsToDelete = savedSearches
+      ?.filter((item) => checkboxList.includes(item.id) && item.id)
+      .map((item) => item.id);
+    deleteSearches({ idsToDelete });
+    //uncheck deleted items
+    setCheckboxList(checkboxList.filter((id) => !idsToDelete.includes(id)));
   };
 
   const checkedObjects = savedSearches?.filter((obj) =>
-    checkboxList.includes(obj.key)
+    checkboxList.includes(obj.id)
   );
 
   /**
@@ -120,7 +128,7 @@ export default function SavedSearches() {
   const onSelect = (item, selected = false) => {
     const newCheckList = [...checkboxList];
     // if item is already in checkboxlist -> remove
-    const checkindex = checkboxList.findIndex((check) => check === item.key);
+    const checkindex = checkboxList.findIndex((check) => check === item.id);
     if (checkindex !== -1) {
       // item found in list - if deselected remove it
       if (!selected) {
@@ -129,18 +137,14 @@ export default function SavedSearches() {
     }
     // if not -> add it to list .. if selected
     else if (selected) {
-      newCheckList.push(item.key);
+      newCheckList.push(item.id);
     }
     setCheckboxList(newCheckList);
   };
 
   return (
     <div className={styles.container}>
-      <Title
-        type="title3"
-        data-cy="advanced-search-search-history"
-        className={styles.title}
-      >
+      <Title type="title3" className={styles.title}>
         {Translate({ context: "suggester", label: "historyTitle" })}
       </Title>
       <SearchHistoryNavigation />
@@ -152,13 +156,14 @@ export default function SavedSearches() {
           checkboxList?.length > 0
         }
         partiallyChecked={checkboxList?.length > 0}
-        disabled={savedSearches?.length === 0}
+        disabled={!isAuthenticated || savedSearches?.length === 0}
         setAllChecked={setAllChecked}
       />
       <div className={styles.tableContainer}>
         <div
           className={cx(styles.newTableHeader, {
-            [styles.tableHeaderBorder]: savedSearches?.length === 0,
+            [styles.tableHeaderBorder]:
+              !isAuthenticated || savedSearches?.length === 0,
           })}
         >
           <div />
@@ -172,10 +177,38 @@ export default function SavedSearches() {
             {Translate({ context: "search", label: "results" })}
           </Text>
         </div>
-        {savedSearches?.length > 0 ? (
-          <Accordion>
+        {!isAuthenticated && (
+          <div>
+            <Text type="text2" className={styles.loginText}>
+              {Translate({
+                context: "advanced_search_savedSearch",
+                label: "loginText",
+              })}
+            </Text>
+
+            <Button
+              className={styles.loginButton}
+              dataCy="saved-search-login-button"
+              size="large"
+              type="primary"
+              onClick={() => openLoginModal({ modal })}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.keyCode === 13)
+                  openLoginModal({ modal });
+              }}
+            >
+              {Translate({
+                context: "header",
+                label: "login",
+              })}
+            </Button>
+          </div>
+        )}
+        {savedSearches?.length > 0 && isAuthenticated ? (
+          <Accordion dataCy="saved-searches-accordion">
             {savedSearches?.map((item, index) => (
               <Item
+                dataCy={`accordion-item-${index}`}
                 CustomHeaderCompnent={(props) => (
                   <SavedItemRow
                     {...props}
@@ -183,15 +216,18 @@ export default function SavedSearches() {
                     onSelect={onSelect}
                     item={item}
                     checked={
-                      checkboxList.findIndex((check) => check === item.key) !==
+                      checkboxList.findIndex((check) => check === item.id) !==
                       -1
                     }
                   />
                 )}
-                key={item.key}
-                eventKey={item.key}
+                key={item.id}
+                eventKey={item.id}
               >
-                <div className={styles.accordionContentContainer}>
+                <div
+                  className={styles.accordionContentContainer}
+                  data-cy={`accordion-expanded-content-${index + 1}`}
+                >
                   <div className={styles.accordionContent}>
                     <div />
                     <div />
@@ -214,9 +250,9 @@ export default function SavedSearches() {
                           },
                         }}
                       >
-                        {Translate({ context: "search", label: "editSearch" })}
+                        {Translate({ context: "search", label: "editName" })}
                       </Link>
-                    </Text>{" "}
+                    </Text>
                     <div />
                     <div />
                   </div>
@@ -225,40 +261,42 @@ export default function SavedSearches() {
             ))}
           </Accordion>
         ) : (
-          <div className={styles.emptyListMessage}>
-            {
-              <Text type="text2">
-                {Translate({
-                  context: "advanced_search_savedSearch",
-                  label: "emptyListMessage1",
-                })}
-              </Text>
-            }
-            {
-              <Text type="text1" className={styles.empyListTitle}>
-                {Translate({
-                  context: "advanced_search_savedSearch",
-                  label: "emptyListMessage2",
-                })}
-              </Text>
-            }
-            {
-              <Text type="text2">
-                {Translate({
-                  context: "advanced_search_savedSearch",
-                  label: "emptyListMessage3",
-                })}
-              </Text>
-            }
-            {
-              <Text type="text2">
-                {Translate({
-                  context: "advanced_search_savedSearch",
-                  label: "emptyListMessage4",
-                })}
-              </Text>
-            }
-          </div>
+          isAuthenticated && (
+            <div className={styles.emptyListMessage}>
+              {
+                <Text type="text2">
+                  {Translate({
+                    context: "advanced_search_savedSearch",
+                    label: "emptyListMessage1",
+                  })}
+                </Text>
+              }
+              {
+                <Text type="text1" className={styles.empyListTitle}>
+                  {Translate({
+                    context: "advanced_search_savedSearch",
+                    label: "emptyListMessage2",
+                  })}
+                </Text>
+              }
+              {
+                <Text type="text2">
+                  {Translate({
+                    context: "advanced_search_savedSearch",
+                    label: "emptyListMessage3",
+                  })}
+                </Text>
+              }
+              {
+                <Text type="text2">
+                  {Translate({
+                    context: "advanced_search_savedSearch",
+                    label: "emptyListMessage4",
+                  })}
+                </Text>
+              }
+            </div>
+          )
         )}
       </div>
     </div>
