@@ -16,7 +16,7 @@ export default function useDataCollect() {
     collectSearch: (obj) => fetcher(collectSearch(obj)),
     collectSearchWorkClick: (obj) => fetcher(collectSearchWorkClick(obj)),
     collectSuggestPresented: (obj) => fetcher(collectSuggestPresented(obj)),
-    collectSuggestClick: (obj) => enabled && fetcher(collectSuggestClick(obj)),
+    collectSuggestClick: (obj) => fetcher(collectSuggestClick(obj)),
     collectRecommenderClick: (obj) => fetcher(collectRecommenderClick(obj)),
     collectSearchFeedback: (obj) => fetcher(collectSearchFeedback(obj)),
   };
