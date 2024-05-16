@@ -952,7 +952,7 @@
         "da": "Beskrivelse",
         "en": "Description"
       },
-      "hostPublication": {
+      "hostpublication": {
         "da": "Findes i",
         "en": "Available in"
       },
@@ -2451,6 +2451,10 @@
         "da": "ISBN",
         "en": "ISBN"
       },
+      "advanced-dropdown-issn": {
+        "da": "ISSN",
+        "en": "ISSN"
+      },
       "advanced-dropdown-term.subject": {
         "da": "Emne",
         "en": "subject"
@@ -2463,6 +2467,10 @@
         "da": "Fiktiv karakter",
         "en": "Fictional character"
       },
+      "advanced-dropdown-literature_term.fictionalcharacter": {
+        "da": "Fiktiv karakter",
+        "en": "Fictional character"
+      },
       "advanced-dropdown-term.hostpublication": {
         "da": "Værtspublikation",
         "en": "Hostpublication"
@@ -2470,6 +2478,14 @@
       "advanced-dropdown-term.contributor": {
         "da": "Medvirkende",
         "en": "contributor"
+      },
+      "advanced-dropdown-literature_term.contributor": {
+        "da": "Bidrag af",
+        "en": "Contributions by"
+      },
+      "advanced-dropdown-literature_term.series": {
+        "da": "Serietitel",
+        "en": "Series title"
       },
       "advanced-dropdown-term.series": {
         "da": "Serietitel",
@@ -2479,18 +2495,149 @@
         "da": "Forfatter/ophav",
         "en": "function"
       },
-
       "advanced-dropdown-term.creatorcontributor": {
         "da": "Forfatter/ophav",
         "en": "Creator"
       },
+      "advanced-dropdown-literature_term.creatorcontributor": {
+        "da": "Forfatter/ophav",
+        "en": "Creator"
+      },
+      "advanced-dropdown-literature_term.publisher": {
+        "da": "Udgiver",
+        "en": "Publisher"
+      },
+      "advanced-dropdown-article_term.publisher": {
+        "da": "Udgiver",
+        "en": "Publisher"
+      },
+      "advanced-dropdown-article_term.hostpublication": {
+        "da": "Udgivet i",
+        "en": "Published in"
+      },
+      "advanced-dropdown-movie_term.creatorcontributor": {
+        "da": "Skuespillere",
+        "en": "Actors"
+      },
+      "advanced-dropdown-movie_term.fictionalcharacter": {
+        "da": "Fiktiv karakter",
+        "en": "Fictional character"
+      },
+      "advanced-dropdown-movie_term.publisher": {
+        "da": "Udgiver",
+        "en": "Publisher"
+      },
+      "advanced-dropdown-music_term.creator": {
+        "da": "Kunstner",
+        "en": "Artist"
+      },
+      "advanced-dropdown-music_term.contributor": {
+        "da": "Medvirkende",
+        "en": "Artist"
+      },
+      "advanced-dropdown-music_term.publisher": {
+        "da": "Pladeselskab",
+        "en": "Publisher"
+      },
+      "advanced-placeholder-music_term.publisher": {
+        "da": "Søg på pladeselskab, udgiver mv.",
+        "en": "Search by publisher"
+      },
+      "advanced-placeholder-music_term.creator": {
+        "da": "Søg på kunstner, band, komponist mv.",
+        "en": "Search by artist, composer, band etc."
+      },
+      "advanced-placeholder-music_term.contributor": {
+        "da": "Søg på musiker, dirigent mv.",
+        "en": "Search by musician, conductor etc."
+      },
+      "advanced-placeholder-term.creator": {
+        "da": "Søg på filmselskab, distributør mv",
+        "en": "Search by publisher, distributor etc."
+      },
+      "advanced-placeholder-movie_term.publisher": {
+        "da": "Søg på filmselskab, distributør mv",
+        "en": "Search by publisher, distributor etc."
+      },
+      "advanced-placeholder-movie_term.fictionalcharacter": {
+        "da": "Søg på hovedperson fra film, tv-serier mv. ",
+        "en": "Search characters"
+      },
+      "advanced-placeholder-movie_term.creatorcontributor": {
+        "da": "Søg på instruktør, skuespiller mv.",
+        "en": "Search by director, actors etc."
+      },
+      "advanced-placeholder-issn": {
+        "da": "Søg på tidsskriftets ISSN",
+        "en": "Search by journals ISSN"
+      },
+      "advanced-placeholder-article_term.publisher": {
+        "da": "Søg på forlag, udgiver mv. ",
+        "en": "Search by publisher"
+      },
+      "advanced-placeholder-literature_term.series": {
+        "da": "Søg på en bogseries navn",
+        "en": "Search by book series"
+      },
+      "advanced-placeholder-article_term.hostpublication": {
+        "da": "Søg på en tidsskrift, avis mv.",
+        "en": "Search by journal, newspaper etc."
+      },
+      "advanced-placeholder-literature_term.publisher": {
+        "da": "Søg på forlag, udgiver mv. ",
+        "en": "Search by publisher"
+      },
       "advanced-dropdown-dk5": {
         "da": "DK5",
+        "en": "DK5"
+      },
+      "advanced-dropdown-term.titlemanifestationpart": {
+        "da": "Tracktitel",
+        "en": "Tracktitle"
+      },
+      "advanced-dropdown-movie_term.title": {
+        "da": "Titel",
+        "en": "Title"
+      },
+      "advanced-dropdown-game_term.publisher": {
+        "da": "Udgiver",
+        "en": "Publisher"
+      },
+      "advanced-dropdown-game_term.creatorcontributor": {
+        "da": "Ophav",
         "en": "Creator"
+      },
+      "advanced-placeholder-term.contributor": {
+        "da": "Søg på medvirkende",
+        "en": "Search by contributors"
+      },
+      "advanced-placeholder-game_term.creatorcontributor": {
+        "da": "Søg på spiludvikler, spilfirma",
+        "en": "Search by creator"
+      },
+      "advanced-placeholder-game_term.publisher": {
+        "da": "Søg på udgiver, distributør",
+        "en": "Search by publisher"
+      },
+      "advanced-placeholder-movie_term.title": {
+        "da": "Søg på spillets titel",
+        "en": "Search by name of game"
       },
       "advanced-placeholder-term.default": {
         "da": "Søg på titel, ophav, emne, noter mv.",
         "en": "All fields"
+      },
+      "advanced-placeholder-term.titlemanifestationpart": {
+        "da": "Søg på titel på tracks fra udgivelser",
+        "en": "Search by track titles"
+      },
+      "advanced-placeholder-literature_term.creatorcontributor": {
+        "da": "Søg på forfatter og alle andre ophav",
+        "en": "Search by creator and all other contributors"
+      },
+      "advanced-placeholder-literature_term.contributor": {
+        "da": "Søg på oversætter, oplæser, illustrator mv. ",
+        "en": "Search by translator, recitor, illustrator etc."
       },
       "advanced-placeholder-term.creatorcontributor": {
         "da": "Søg på forfatter, komponist, instruktør mv.",
@@ -2520,6 +2667,10 @@
       "advanced-placeholder-term.series": {
         "da": "Søg på bogserie, tv-serie mv.",
         "en": "Series title"
+      },
+      "advanced-placeholder-literature_term.fictionalcharacter": {
+        "da": "Søg på hovedperson fra bøger mv.",
+        "en": "Search by character from books etc."
       },
       "advanced-placeholder-term.fictionalcharacter": {
         "da": "Søg på hovedpersoner fra bøger, film og spil",
@@ -2894,8 +3045,8 @@
         "en": "Subject"
       },
       "label-movie-creators": {
-        "da": "Instruktør/medvirkende",
-        "en": "Director/contributor"
+        "da": "Instruktør",
+        "en": "Director"
       },
       "label-game-workTypes": {
         "da": "Materialekategori",

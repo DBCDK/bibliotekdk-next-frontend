@@ -32,15 +32,119 @@ export function getDefaultDropdownIndices() {
   ];
 }
 
-export function getInitialInputFields() {
-  return [
-    { value: "", prefixLogicalOperator: null, searchIndex: "term.default" },
-    {
-      value: "",
-      prefixLogicalOperator: LogicalOperatorsEnum.AND,
-      searchIndex: "term.title",
-    },
-  ];
+/**
+ * Default input fields by materialtype. By default the searchindex is translated into
+ * something readable - if desired a label can be added in which case the label and NOT the searchindex is translated
+ * @param workType
+ * @returns {[{prefixLogicalOperator: null, searchIndex: string, value: string},{prefixLogicalOperator: string, searchIndex: string, value: string}]}
+ */
+export function getInitialInputFields(workType = "all") {
+  const inputFieldsByMaterialType = {
+    all: [
+      { value: "", prefixLogicalOperator: null, searchIndex: "term.default" },
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.title",
+      },
+    ],
+    literature: [
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.title",
+      },
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.creatorcontributor",
+        label: "literature_term.creatorcontributor",
+      },
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.subject",
+      },
+    ],
+    article: [
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.title",
+      },
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.creatorcontributor",
+        label: "literature_term.creatorcontributor",
+      },
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.hostpublication",
+      },
+    ],
+    movie: [
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.title",
+      },
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.subject",
+      },
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.creatorcontributor",
+        label: "movie_term.creatorcontributor",
+      },
+    ],
+    music: [
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.title",
+      },
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.creator",
+        label: "music_term.creator",
+      },
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.contributor",
+        label: "music_term.contributor",
+      },
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.publisher",
+        label: "music_term.publisher",
+      },
+    ],
+    sheetmusic: [],
+    game: [
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.title",
+        label: "movie_term.title",
+      },
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.publisher",
+        label: "game_term.publisher",
+      },
+    ],
+  };
+
+  return inputFieldsByMaterialType[workType];
 }
 
 const AdvancedSearchContext = createContext(undefined);
@@ -90,9 +194,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     handleInputFieldChange,
     handleIndexChange,
     resetInputFields,
-  } = useInputFields({
-    fieldSearchFromUrl: { ...fieldSearchFromUrl },
-  });
+  } = useInputFields({ ...fieldSearchFromUrl }, workType);
 
   //// ---- DropdownSearchIndices ----
   const {
@@ -197,7 +299,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     showInfoTooltip,
     setShowInfoTooltip,
     sort: sort,
-    workType: workType,
+    workType,
     setWorkType,
     stateToString,
     popoverRef,
