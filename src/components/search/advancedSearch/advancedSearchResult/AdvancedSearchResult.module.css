@@ -31,7 +31,6 @@
 .countstyle {
   color: var(--blue);
   margin-right: var(--pt05);
-  padding-left: var(--pt1);
 }
 
 .sectionContentStyle {
@@ -65,5 +64,8 @@
     margin-top: var(--pt2);
     border-top: 1px solid var(--iron);
     padding-top: var(--pt1);
+  }
+  .countstyle {
+    padding-left: var(--pt1);
   }
 }
