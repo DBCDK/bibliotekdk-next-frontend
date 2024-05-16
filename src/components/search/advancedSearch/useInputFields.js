@@ -66,6 +66,7 @@ export function useInputFields(fieldSearchFromUrl, workType) {
     setInputFields((prevFields) => {
       const newFields = [...prevFields];
       newFields[index].value = newValue;
+
       return newFields;
     });
   }
@@ -75,10 +76,16 @@ export function useInputFields(fieldSearchFromUrl, workType) {
    * @param {*} index
    * @param {*} newOperator
    */
-  function handleIndexChange(index, newOperator) {
+  function handleIndexChange(index, elem) {
     setInputFields((prevFields) => {
       const newFields = [...prevFields];
-      newFields[index].searchIndex = newOperator;
+      newFields[index].searchIndex = elem.index;
+      if (elem?.label) {
+        newFields[index].label = elem.label;
+      } else {
+        delete newFields[index].label;
+      }
+
       return newFields;
     });
   }

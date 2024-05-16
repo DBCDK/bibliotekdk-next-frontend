@@ -32,9 +32,13 @@ export function getDefaultDropdownIndices() {
   ];
 }
 
+/**
+ * Default input fields by materialtype. By default the searchindex is translated into
+ * something readable - if desired a label can be added in which case the label and NOT the searchindex is translated
+ * @param workType
+ * @returns {[{prefixLogicalOperator: null, searchIndex: string, value: string},{prefixLogicalOperator: string, searchIndex: string, value: string}]}
+ */
 export function getInitialInputFields(workType = "all") {
-  console.log(workType, "INTITIAL WORKTYPE");
-
   const inputFieldsByMaterialType = {
     all: [
       { value: "", prefixLogicalOperator: null, searchIndex: "term.default" },
@@ -54,6 +58,7 @@ export function getInitialInputFields(workType = "all") {
         value: "",
         prefixLogicalOperator: LogicalOperatorsEnum.AND,
         searchIndex: "term.creatorcontributor",
+        label: "literature_term.creatorcontributor",
       },
       {
         value: "",
@@ -71,6 +76,7 @@ export function getInitialInputFields(workType = "all") {
         value: "",
         prefixLogicalOperator: LogicalOperatorsEnum.AND,
         searchIndex: "term.creatorcontributor",
+        label: "literature_term.creatorcontributor",
       },
       {
         value: "",
@@ -93,6 +99,7 @@ export function getInitialInputFields(workType = "all") {
         value: "",
         prefixLogicalOperator: LogicalOperatorsEnum.AND,
         searchIndex: "term.creatorcontributor",
+        label: "movie_term.creatorcontributor",
       },
     ],
     music: [
@@ -105,20 +112,36 @@ export function getInitialInputFields(workType = "all") {
         value: "",
         prefixLogicalOperator: LogicalOperatorsEnum.AND,
         searchIndex: "term.creator",
+        label: "music_term.creator",
       },
       {
         value: "",
         prefixLogicalOperator: LogicalOperatorsEnum.AND,
         searchIndex: "term.contributor",
+        label: "music_term.contributor",
       },
       {
         value: "",
         prefixLogicalOperator: LogicalOperatorsEnum.AND,
         searchIndex: "term.publisher",
+        label: "music_term.publisher",
       },
     ],
     sheetmusic: [],
-    game: [],
+    game: [
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.title",
+        label: "movie_term.title",
+      },
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.publisher",
+        label: "game_term.publisher",
+      },
+    ],
   };
 
   return inputFieldsByMaterialType[workType];

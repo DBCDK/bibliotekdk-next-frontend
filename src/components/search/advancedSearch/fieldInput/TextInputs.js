@@ -34,10 +34,15 @@ function FieldInput({ index, fieldValue, doAdvancedSearch }) {
   //TODO: change to use workType instead of hardcoded. workTypesLabels does not have data for all worktypes. We use only "all" only for now for now.
   //  const labels = workTypesLabels[workType].map((el) => el.index);
 
-  const labels = workTypesLabels[workType].map((el) => el.index);
+  // we need the full object for mapping
+  // const labels = workTypesLabels[workType].map((el) => el.index);
+  const labels = workTypesLabels[workType];
+
   const placeholder = Translate({
     context: "search",
-    label: `advanced-placeholder-${fieldValue?.searchIndex}`,
+    label: `advanced-placeholder-${
+      fieldValue?.label || fieldValue?.searchIndex
+    }`,
   });
 
   const isFirstItem = index === 0;
