@@ -15,6 +15,7 @@ export function useInputFields(fieldSearchFromUrl, workType) {
     );
   }, [JSON.stringify(fieldSearchFromUrl)]);
 
+  // we need a useeffect to reset when worktype changes
   useEffect(() => {
     resetInputFields();
     setInputFields(getInitialInputFields(workType));

@@ -35,7 +35,6 @@ function FieldInput({ index, fieldValue, doAdvancedSearch }) {
   //  const labels = workTypesLabels[workType].map((el) => el.index);
 
   // we need the full object for mapping
-  // const labels = workTypesLabels[workType].map((el) => el.index);
   const labels = workTypesLabels[workType];
 
   const placeholder = Translate({

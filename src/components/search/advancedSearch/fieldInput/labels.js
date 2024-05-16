@@ -1,6 +1,4 @@
 //input indexes for materialtype "all"
-import { LogicalOperatorsEnum } from "@/components/search/enums";
-
 const all = [
   { index: "term.default", placeholder: "all placeholder" },
   {
