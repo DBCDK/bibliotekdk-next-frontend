@@ -55,13 +55,13 @@ export default function SaveSearch({ modal, context }) {
           const newItem = { ...item, name: searchName };
           //TODO: maybe better to handle this in fbi-api instead.
           if (newItem.id) {
-            updateSearch({ searchObject: newItem });
+            await updateSearch({ searchObject: newItem });
           }
           //otherwise add new item
           else {
             await saveSearch({ searchObject: newItem });
-            onSaveDone && onSaveDone();
           }
+          onSaveDone && onSaveDone();
 
           modal.clear();
         }}

@@ -68,10 +68,7 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
         onClick={(e) => {
           e.stopPropagation();
           if (item?.id) {
-            console.log("item?.id", item?.id);
-            //deleteSavedSearches({ idsToDelete: [item.id], userDataMutation });
             deleteSearches({ idsToDelete: [item.id] });
-            //todo mutate refresh
           }
         }}
       />
@@ -112,6 +109,8 @@ export default function SavedSearches() {
       ?.filter((item) => checkboxList.includes(item.id) && item.id)
       .map((item) => item.id);
     deleteSearches({ idsToDelete });
+    //uncheck deleted items
+    setCheckboxList(checkboxList.filter((id) => !idsToDelete.includes(id)));
   };
 
   const checkedObjects = savedSearches?.filter((obj) =>
@@ -145,11 +144,7 @@ export default function SavedSearches() {
 
   return (
     <div className={styles.container}>
-      <Title
-        type="title3"
-        data-cy="advanced-search-search-history"
-        className={styles.title}
-      >
+      <Title type="title3" className={styles.title}>
         {Translate({ context: "suggester", label: "historyTitle" })}
       </Title>
       <SearchHistoryNavigation />
@@ -193,6 +188,7 @@ export default function SavedSearches() {
 
             <Button
               className={styles.loginButton}
+              dataCy="saved-search-login-button"
               size="large"
               type="primary"
               onClick={() => openLoginModal({ modal })}
@@ -209,9 +205,10 @@ export default function SavedSearches() {
           </div>
         )}
         {savedSearches?.length > 0 && isAuthenticated ? (
-          <Accordion>
+          <Accordion dataCy="saved-searches-accordion">
             {savedSearches?.map((item, index) => (
               <Item
+                dataCy={`accordion-item-${index}`}
                 CustomHeaderCompnent={(props) => (
                   <SavedItemRow
                     {...props}
@@ -227,7 +224,10 @@ export default function SavedSearches() {
                 key={item.id}
                 eventKey={item.id}
               >
-                <div className={styles.accordionContentContainer}>
+                <div
+                  className={styles.accordionContentContainer}
+                  data-cy={`accordion-expanded-content-${index + 1}`}
+                >
                   <div className={styles.accordionContent}>
                     <div />
                     <div />
@@ -252,7 +252,7 @@ export default function SavedSearches() {
                       >
                         {Translate({ context: "search", label: "editName" })}
                       </Link>
-                    </Text>{" "}
+                    </Text>
                     <div />
                     <div />
                   </div>
