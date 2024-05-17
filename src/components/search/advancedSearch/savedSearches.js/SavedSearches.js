@@ -62,7 +62,7 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
       </Text>
       <Text>{item.hitcount} </Text>
       <Icon
-        style={{ cursor: "pointer" }}
+        className={styles.removeItemIcon}
         size={3}
         src={`heart_filled.svg`}
         onClick={(e) => {

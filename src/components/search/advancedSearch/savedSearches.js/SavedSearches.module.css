@@ -49,10 +49,14 @@
 .tableHeaderBorder {
   border-bottom: 1px solid var(--iron);
 }
-
+.removeItemIcon {
+  cursor: pointer;
+  justify-self: flex-end;
+}
 .accordionIcon {
   transition: transform 0.35s;
   cursor: pointer;
+  justify-self: flex-end;
 }
 .accordionExpanded {
   transform: rotate(180deg);

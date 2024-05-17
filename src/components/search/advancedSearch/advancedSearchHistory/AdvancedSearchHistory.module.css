@@ -167,7 +167,7 @@
 
 .navigationButtons {
   display: flex;
-  gap: var(--pt3);
+  gap: var(--pt5);
   margin-bottom: var(--pt3);
 }
 
