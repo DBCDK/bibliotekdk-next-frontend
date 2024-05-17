@@ -33,15 +33,15 @@ export function dummy__specificmaterialTypes() {
 //   };
 // }
 
-export function dummy__players() {
-  return {
-    prioritisedItems: prioritisedPlayers,
-    prioritisedFormType: FormTypeEnum.CHECKBOX,
-    unprioritisedItems: unprioritisedPlayers,
-    unprioritisedFormType: FormTypeEnum.CHECKBOX,
-    overrideValueAs: "name",
-  };
-}
+// export function dummy__players() {
+//   return {
+//     prioritisedItems: prioritisedPlayers,
+//     prioritisedFormType: FormTypeEnum.CHECKBOX,
+//     unprioritisedItems: unprioritisedPlayers,
+//     unprioritisedFormType: FormTypeEnum.CHECKBOX,
+//     overrideValueAs: "name",
+//   };
+// }
 
 export function dummy__pegi() {
   return {

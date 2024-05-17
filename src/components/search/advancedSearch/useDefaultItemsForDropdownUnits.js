@@ -6,7 +6,7 @@ import {
   dummy__genreAndForm,
   dummy__languages,
   dummy__pegi,
-  dummy__players,
+  // dummy__players,
   dummy__specificmaterialTypes,
   publicationYearFormatterAndComparitor,
   publicationYearIndices,
