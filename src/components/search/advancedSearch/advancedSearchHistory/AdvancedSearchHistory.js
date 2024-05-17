@@ -22,6 +22,7 @@ import Button from "@/components/base/button";
 import CombinedSearch from "@/components/search/advancedSearch/combinedSearch/CombinedSearch";
 import useSavedSearches from "@/components/hooks/useSavedSearches";
 import { useModal } from "@/components/_modal";
+import ListWithAnimation from "@/components/base/listWithAnimation/ListWithAnimation";
 
 //Component to render facets
 export function FormatedFacets({ facets, className }) {
@@ -469,20 +470,20 @@ export function AdvancedSearchHistory() {
             {title}
           </Text>
         )}
-        {items.length > 0 &&
-          items.map((item, index) => (
-            <HistoryItem
-              checkboxKey={`${itemKey}-${index}`}
-              key={item.key}
-              item={item}
-              index={index}
-              checked={
-                checkboxList.findIndex((check) => check === item.key) !== -1
-              }
-              deleteSelected={onDeleteSelected}
-              onSelect={onSelect}
-            />
-          ))}
+          {items.length > 0 &&
+            items.map((item, index) => (
+              <HistoryItem
+                checkboxKey={`${itemKey}-${index}`}
+                key={item.key}
+                item={item}
+                index={index}
+                checked={
+                  checkboxList.findIndex((check) => check === item.key) !== -1
+                }
+                deleteSelected={onDeleteSelected}
+                onSelect={onSelect}
+              />
+            ))}
       </>
     );
   };
@@ -518,7 +519,8 @@ export function AdvancedSearchHistory() {
           <EmptySearchHistory />
         ) : (
           // today
-          <>
+          <ListWithAnimation>
+
             <HistoryItemPerDay
               itemKey="search-history-today"
               items={splittedValues.today}
@@ -536,7 +538,7 @@ export function AdvancedSearchHistory() {
               itemKey="search-history-older"
               items={splittedValues.older}
             />
-          </>
+          </ListWithAnimation>
         )}
       </div>
     </div>

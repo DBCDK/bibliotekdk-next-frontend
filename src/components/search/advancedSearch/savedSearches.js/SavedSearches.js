@@ -22,6 +22,7 @@ import { useModal } from "@/components/_modal";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import Button from "@/components/base/button";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
+import ListWithAnimation from "@/components/base/listWithAnimation/ListWithAnimation";
 
 function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   const formatedDate = unixToFormatedDate(item.unixtimestamp);
@@ -205,7 +206,11 @@ export default function SavedSearches() {
           </div>
         )}
         {savedSearches?.length > 0 && isAuthenticated ? (
-          <Accordion dataCy="saved-searches-accordion">
+                    <Accordion dataCy="saved-searches-accordion">
+
+                      <ListWithAnimation>
+
+
             {savedSearches?.map((item, index) => (
               <Item
                 dataCy={`accordion-item-${index}`}
@@ -259,7 +264,10 @@ export default function SavedSearches() {
                 </div>
               </Item>
             ))}
+          </ListWithAnimation>
+
           </Accordion>
+
         ) : (
           isAuthenticated && (
             <div className={styles.emptyListMessage}>

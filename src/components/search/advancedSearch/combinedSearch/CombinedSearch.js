@@ -10,6 +10,7 @@ import { LogicalOperatorDropDown } from "@/components/search/advancedSearch/fiel
 import { FormatFieldSearchIndexes } from "../advancedSearchResult/topBar/TopBar";
 import { FormatedFacets } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
+import ListWithAnimation from "@/components/base/listWithAnimation/ListWithAnimation";
 
 //max number of search queries to be combined
 const MAX_ITEMS = 4;
@@ -156,7 +157,8 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
         </Text>
       )}
 
-      <div className={styles.searchItemsWrap} ref={searchItemsWrapper}>
+      <ListWithAnimation className={styles.searchItemsWrap} ref={searchItemsWrapper}>
+
         {queriesItems.map((item, index) => (
           <SearchItem
             key={item.key}
@@ -166,7 +168,8 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
             updatePrefixLogicalOperator={updatePrefixLogicalOperator}
           />
         ))}
-      </div>
+
+      </ListWithAnimation>
 
       <FormatedFacets facets={facets} className={styles.facets} />
 
