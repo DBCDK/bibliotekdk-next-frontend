@@ -32,7 +32,7 @@
 
 @media (max-width: 576px) {
   .savedItemRow {
-    padding: 0px 22px !important;
+    /* padding: 0px 22px !important; */
     grid-template-columns: 1fr 2fr 20fr 2fr 1fr 1fr;
   }
   .tableContainer {
@@ -78,7 +78,7 @@
   padding-left: var(--pt2);
 }
 
-.newTableHeader {
+.tableHeader {
   display: grid;
   align-items: center;
   margin-bottom: var(--pt05);
@@ -87,7 +87,7 @@
 }
 
 @media (max-width: 993px) {
-  .newTableHeader {
+  .tableHeader {
     grid-template-columns: var(--pt1) 3fr 14fr 3fr 1fr;
   }
 }
@@ -127,7 +127,7 @@
 }
 
 @media (max-width: 576px) {
-  .newTableHeader {
-    margin-right: var(--pt1);
+  .tableHeader {
+    display: none;
   }
 }

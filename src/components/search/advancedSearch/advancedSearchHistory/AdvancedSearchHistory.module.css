@@ -192,3 +192,10 @@
 .saveSearchIcon {
   cursor: pointer;
 }
+
+.menuDropdown {
+  /* padding-right:  var(--pt2); */
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: var(--pt2);
+}

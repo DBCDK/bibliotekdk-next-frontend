@@ -105,12 +105,12 @@ export default function SavedSearches() {
   /**
    * Delete selected entries in saved search table
    */
-  const onDeleteSelected = () => {
+  const onDeleteSelected = async () => {
     //filter for checked items and map for ids to delete
     const idsToDelete = savedSearches
       ?.filter((item) => checkboxList.includes(item.id) && item.id)
       .map((item) => item.id);
-    deleteSearches({ idsToDelete });
+    await deleteSearches({ idsToDelete });
     //uncheck deleted items
     setCheckboxList(checkboxList.filter((id) => !idsToDelete.includes(id)));
   };
@@ -163,7 +163,7 @@ export default function SavedSearches() {
       />
       <div className={styles.tableContainer}>
         <div
-          className={cx(styles.newTableHeader, {
+          className={cx(styles.tableHeader, {
             [styles.tableHeaderBorder]:
               !isAuthenticated || savedSearches?.length === 0,
           })}
