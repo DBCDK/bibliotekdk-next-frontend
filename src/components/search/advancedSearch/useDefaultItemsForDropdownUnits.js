@@ -231,18 +231,12 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
         })
     ),
     //@TODO .. something is not right - players always makes a zero search ??
-    game: [
-      gamePlatform,
-      genreAndForm,
-      players,
-      ages,
-      pegi,
-      publicationYear,
-    ].map((dropdownUnit) =>
-      getDropdownFromUrl({
-        initDropdowns: initDropdowns,
-        dropdownUnit: dropdownUnit,
-      })
+    game: [gamePlatform, genreAndForm, ages, pegi, publicationYear].map(
+      (dropdownUnit) =>
+        getDropdownFromUrl({
+          initDropdowns: initDropdowns,
+          dropdownUnit: dropdownUnit,
+        })
     ),
     // @TODO .. sheetmusic same as music - it that so ??
     sheetmusic: [specificMaterialTypes, genreAndForm, publicationYear].map(
