@@ -166,10 +166,11 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
     indexName: DropdownIndicesEnum.GAME_PLATFORM,
   };
 
-  const players = {
-    items: convertToDropdownInput(dummy__players()),
-    indexName: DropdownIndicesEnum.PLAYERS,
-  };
+  // will be used at a later time
+  // const players = {
+  //   items: convertToDropdownInput(dummy__players()),
+  //   indexName: DropdownIndicesEnum.PLAYERS,
+  // };
 
   const pegi = {
     items: convertToDropdownInput(dummy__pegi()),
