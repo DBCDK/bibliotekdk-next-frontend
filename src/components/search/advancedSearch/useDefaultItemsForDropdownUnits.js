@@ -6,7 +6,7 @@ import {
   dummy__genreAndForm,
   dummy__languages,
   dummy__pegi,
-  dummy__players,
+  // dummy__players,
   dummy__specificmaterialTypes,
   publicationYearFormatterAndComparitor,
   publicationYearIndices,
@@ -166,10 +166,11 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
     indexName: DropdownIndicesEnum.GAME_PLATFORM,
   };
 
-  const players = {
-    items: convertToDropdownInput(dummy__players()),
-    indexName: DropdownIndicesEnum.PLAYERS,
-  };
+  // will be used at a later time
+  // const players = {
+  //   items: convertToDropdownInput(dummy__players()),
+  //   indexName: DropdownIndicesEnum.PLAYERS,
+  // };
 
   const pegi = {
     items: convertToDropdownInput(dummy__pegi()),
@@ -231,7 +232,7 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
         })
     ),
     //@TODO .. something is not right - players always makes a zero search ??
-    game: [gamePlatform, genreAndForm, players, ages, pegi].map(
+    game: [gamePlatform, genreAndForm, ages, pegi, publicationYear].map(
       (dropdownUnit) =>
         getDropdownFromUrl({
           initDropdowns: initDropdowns,

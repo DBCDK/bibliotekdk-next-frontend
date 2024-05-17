@@ -33,15 +33,15 @@ export function dummy__specificmaterialTypes() {
 //   };
 // }
 
-export function dummy__players() {
-  return {
-    prioritisedItems: prioritisedPlayers,
-    prioritisedFormType: FormTypeEnum.CHECKBOX,
-    unprioritisedItems: unprioritisedPlayers,
-    unprioritisedFormType: FormTypeEnum.CHECKBOX,
-    overrideValueAs: "name",
-  };
-}
+// export function dummy__players() {
+//   return {
+//     prioritisedItems: prioritisedPlayers,
+//     prioritisedFormType: FormTypeEnum.CHECKBOX,
+//     unprioritisedItems: unprioritisedPlayers,
+//     unprioritisedFormType: FormTypeEnum.CHECKBOX,
+//     overrideValueAs: "name",
+//   };
+// }
 
 export function dummy__pegi() {
   return {
@@ -612,31 +612,31 @@ const unprioritisedPegi = [
   },
 ];
 
-const prioritisedPlayers = [
-  {
-    key: "for 2 spillere",
-    score: 31,
-  },
-  {
-    key: "for 3 spillere",
-    score: 30,
-  },
-  {
-    key: "for 4 spillere",
-    score: 30,
-  },
-  {
-    key: "for 5 spillere",
-    score: 28,
-  },
-];
+// const prioritisedPlayers = [
+//   {
+//     key: "for 2 spillere",
+//     score: 31,
+//   },
+//   {
+//     key: "for 3 spillere",
+//     score: 30,
+//   },
+//   {
+//     key: "for 4 spillere",
+//     score: 30,
+//   },
+//   {
+//     key: "for 5 spillere",
+//     score: 28,
+//   },
+// ];
 
-const unprioritisedPlayers = [
-  {
-    key: "for 6 spillere",
-    score: 27,
-  },
-];
+// const unprioritisedPlayers = [
+//   {
+//     key: "for 6 spillere",
+//     score: 27,
+//   },
+// ];
 
 const prioritisedGame = [
   {

@@ -4,6 +4,7 @@
  */
 
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
+const fbiApiPath = Cypress.env("fbiApiPath");
 
 describe("CookieBot", () => {
   beforeEach(function () {
@@ -64,5 +65,34 @@ describe("CookieBot", () => {
     cy.get("#CybotCookiebotDialog")
       .should("exist")
       .should("contain.text", "Hjemmesiden bruger cookies");
+  });
+
+  it(`Set correct FBI-API headers that corresponds to consent`, () => {
+    cy.intercept("POST", `${fbiApiPath}`).as("fbiApiRequestNoConsent");
+
+    cy.get("#CybotCookiebotDialog")
+      .should("exist")
+      .should("contain.text", "Hjemmesiden bruger cookies");
+
+    cy.getCookies().should("have.length", 1);
+    cy.getCookie("next-auth.anon-session").should("exist");
+
+    cy.wait("@fbiApiRequestNoConsent")
+      .its("request.headers")
+      .should((headers) => {
+        expect(headers).to.have.property("x-tracking-consent", "false");
+        expect(headers).to.have.property("x-unique-visitor-id", "");
+      });
+
+    cy.get("#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll").click();
+
+    cy.reload();
+    cy.intercept("POST", `${fbiApiPath}`).as("fbiApiRequestConsent");
+    cy.wait("@fbiApiRequestConsent")
+      .its("request.headers")
+      .should((headers) => {
+        expect(headers).to.have.property("x-tracking-consent", "true");
+        expect(headers).to.have.property("x-unique-visitor-id", "test");
+      });
   });
 });
