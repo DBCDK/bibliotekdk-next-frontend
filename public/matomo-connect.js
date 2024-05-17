@@ -13,6 +13,7 @@ function matomoWaitForTracker() {
     window.addEventListener("CookiebotOnDecline", function (e) {
       consentSet();
     });
+    consentSet();
   }
 }
 
