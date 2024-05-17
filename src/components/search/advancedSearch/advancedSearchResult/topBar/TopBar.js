@@ -218,7 +218,7 @@ export default function TopBar({ isLoading = false, searchHistoryObj }) {
       <Container fluid>
         <Row>
           <Col xs={12} lg={2} className={styles.your_search}>
-            <Text type="text1" skeleton={isLoading}>
+            <Text type="text1">
               {Translate({ context: "search", label: "yourSearch" })}
             </Text>
           </Col>

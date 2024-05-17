@@ -28,6 +28,10 @@
   margin-bottom: var(--pt4);
 }
 
+.skeleton {
+  width: var(--pt2);
+}
+
 .countstyle {
   color: var(--blue);
   margin-right: var(--pt05);

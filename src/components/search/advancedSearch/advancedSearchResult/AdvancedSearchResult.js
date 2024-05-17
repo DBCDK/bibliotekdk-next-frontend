@@ -62,7 +62,12 @@ export function AdvancedSearchResult({
 
         <div className={styles.titleflex}>
           <div className={styles.borderTitleTop}></div>
-          <Title type="title5" className={styles.countstyle}>
+          <Title
+            type="title5"
+            className={isLoading ? styles.skeleton : styles.countstyle}
+            lines={1}
+            skeleton={isLoading}
+          >
             {hitcount}
           </Title>
           <Text type="text3" className={styles.titleStyle}>
@@ -88,18 +93,17 @@ export function AdvancedSearchResult({
         subtitle={
           <>
             <div className={styles.facetsContainer}>
-              {hitcount > 0 && (
-                <>
-                  <FacetTags selectedFacets={selectedFacets} />
-                  <div className={styles.subtitleStyle}>
-                    <Text type="text1" className={styles.titleStyle}>
-                      {translate({ context: "search", label: "narrow-search" })}
-                    </Text>
-                  </div>
-                </>
-              )}
+              <>
+                <FacetTags selectedFacets={selectedFacets} />
+                <div className={styles.subtitleStyle}>
+                  <Text type="text1" className={styles.titleStyle}>
+                    {translate({ context: "search", label: "narrow-search" })}
+                  </Text>
+                </div>
+              </>
+
               <QuickFilter />
-              {hitcount > 0 && <AdvancedFacets cql={cql} />}
+              <AdvancedFacets cql={cql} />
             </div>
           </>
         }
