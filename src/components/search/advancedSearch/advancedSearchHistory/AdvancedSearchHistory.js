@@ -358,6 +358,7 @@ export function SearchHistoryNavigation() {
 function HistoryHeader() {
   return (
     <div className={cx(styles.header, styles.grid)}>
+      <div />
       <Text type="text4">
         {Translate({ context: "search", label: "timeForSearch" })}
       </Text>
@@ -465,7 +466,7 @@ export function AdvancedSearchHistory() {
     return (
       <>
         {title && items.length > 0 && (
-          <Text type="text4" className={styles.itemsheader}>
+          <Text type="text3" className={styles.itemsheader}>
             {title}
           </Text>
         )}

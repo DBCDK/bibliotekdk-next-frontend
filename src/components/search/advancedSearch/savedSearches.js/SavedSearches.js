@@ -48,8 +48,10 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
         />
       </div>
 
-      <Text className={styles.date}>{formatedDate}</Text>
-      <Text className={styles.searchPreview}>
+      <Text className={styles.date} type="text2">
+        {formatedDate}
+      </Text>
+      <Text className={styles.searchPreview} type="text2">
         {item?.name ? (
           <Text type="text2">{item?.name}</Text>
         ) : !isEmpty(item?.fieldSearch) ? (
@@ -60,11 +62,11 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
           <Text type="text2">{item?.cql}</Text>
         )}
       </Text>
-      <Text>{item.hitcount} </Text>
+      <Text type="text2">{item.hitcount} </Text>
       <Icon
         className={styles.removeItemIcon}
         size={3}
-        src={`heart_filled.svg`}
+        src={`trash-2.svg`}
         onClick={(e) => {
           e.stopPropagation();
           if (item?.id) {
