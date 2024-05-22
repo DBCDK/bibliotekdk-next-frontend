@@ -3,7 +3,7 @@ import {
   agesIndices,
   dummy__filmNationality,
   dummy__gamePlatform,
-  dummy__genreAndForm,
+  //dummy__genreAndForm,
   dummy__languages,
   dummy__pegi,
   // dummy__players,
@@ -14,6 +14,7 @@ import {
 import { convertToDropdownInput } from "@/components/search/advancedSearch/advancedSearchHelpers/convertToDropdownInput";
 import { FormTypeEnum } from "@/components/search/advancedSearch/advancedSearchHelpers/helperComponents/HelperComponents";
 import isEmpty from "lodash/isEmpty";
+import { useComplexSearchFacets } from "@/components/search/advancedSearch/useComplexSearchFacets";
 
 export const DropdownIndicesEnum = {
   LANGUAGES: "phrase.mainlanguage",
@@ -120,12 +121,32 @@ export function formattersAndComparitors(indexName) {
   };
 }
 
+function getFacetsForIndex(data, index) {
+  const facets = data?.complexSearch?.facets?.find((dat) => dat.name === index);
+  return facets?.values || [];
+}
+
+function parseForFacets({ data, isLoading, error, index }) {
+  const itemForDropDowns = {
+    prioritisedItems:
+      isLoading || error ? [] : getFacetsForIndex(data, index)?.slice(0, 3),
+    prioritisedFormType: FormTypeEnum.CHECKBOX,
+    unprioritisedItems:
+      isLoading || error ? [] : getFacetsForIndex(data, index),
+    unprioritisedFormType: FormTypeEnum.CHECKBOX,
+    overrideValueAs: "name",
+  };
+
+  return itemForDropDowns;
+}
 /**
  *
  * @param initDropdowns
  * @returns {Array.<DropdownUnit>}
  */
 export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
+  const { facetResponse, isLoading, error } = useComplexSearchFacets(workType);
+
   const filmnationality = {
     items: convertToDropdownInput(dummy__filmNationality()),
     indexName: DropdownIndicesEnum.FILM_NATIONALITY,
@@ -136,8 +157,20 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
     indexName: DropdownIndicesEnum.PUBLICATION_YEAR,
   };
 
+  // const genreAndForm = {
+  //   items: convertToDropdownInput(dummy__genreAndForm()),
+  //   indexName: DropdownIndicesEnum.FILM_NATIONALITY,
+  // };
+
   const genreAndForm = {
-    items: convertToDropdownInput(dummy__genreAndForm()),
+    items: convertToDropdownInput(
+      parseForFacets({
+        data: facetResponse,
+        isLoading,
+        error,
+        index: DropdownIndicesEnum.GENRE,
+      })
+    ),
     indexName: DropdownIndicesEnum.GENRE,
   };
 
@@ -187,11 +220,11 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
     ),
     // literature: DONE
     literature: [
-      specificMaterialTypes,
+      // specificMaterialTypes,
       genreAndForm,
-      languages,
-      publicationYear,
-      ages,
+      // languages,
+      // publicationYear,
+      // ages,
     ].map((dropdownUnit) => {
       return getDropdownFromUrl({
         initDropdowns: initDropdowns,
@@ -248,7 +281,6 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
         })
     ),
   };
-
   // The init dropdown holds the dropdowns configured (selected) - if a selected dropdown is NOT
   // in types we return it to be deleted from url :)
   const toRemove = initDropdowns.filter(
