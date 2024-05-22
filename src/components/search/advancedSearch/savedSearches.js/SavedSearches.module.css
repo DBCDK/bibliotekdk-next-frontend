@@ -20,30 +20,20 @@
   display: flex;
   flex-direction: column;
 }
-.savedItemRowNew {
-  display: grid;
-  grid-template-columns: var(--pt2) var(--pt16) 14fr var(--pt4) 1fr 1fr;
-  cursor: pointer;
-  padding: var(--pt1_5) var(--pt2);
-  column-gap: var(--pt2);
-}
-
-.tableHeaderNew {
-  display: grid;
-  grid-template-columns: var(--pt2) var(--pt16) 14fr var(--pt4) 1fr 1fr;
-  padding: var(--pt1_5) var(--pt2);
-  column-gap: var(--pt2);
-}
 .savedItemRow {
   display: grid;
-  grid-template-columns: var(--pt2) 156px 14fr var(--pt4) 1fr 1fr;
-  padding-left: var(--pt1);
-  padding: var(--pt1_5) var(--pt2);
+  grid-template-columns: var(--pt2) var(--pt16) 14fr var(--pt4) 1fr 1fr;
   cursor: pointer;
-  /* align-items: center; */
-  /* column-gap: var(--pt3);  */
+  padding: var(--pt1_5) var(--pt2);
+  column-gap: var(--pt2);
 }
 
+.tableHeader {
+  display: grid;
+  grid-template-columns: var(--pt2) var(--pt16) 14fr var(--pt4) 1fr 1fr;
+  padding: var(--pt1_5) var(--pt2);
+  column-gap: var(--pt2);
+}
 .searchPreview {
   white-space: nowrap;
   overflow: hidden;
@@ -81,30 +71,6 @@
   padding-bottom: var(--pt2);
 }
 
-.tableHeader {
-  display: grid;
-  align-items: center;
-  margin-bottom: var(--pt05);
-  /* grid-template-columns: var(--pt2) 3fr 14fr 2fr 1fr 1fr; */
-  grid-template-columns: var(--pt2) 156px 14fr var(--pt4) 2fr 2fr;
-
-  padding: 0 var(--pt2);
-}
-
-@media (max-width: 993px) {
-  .tableHeader {
-    grid-template-columns: var(--pt1) 3fr 14fr 3fr 1fr;
-  }
-  .savedItemRow {
-    /* grid-template-columns: var(--pt2) 3fr 14fr 3fr 1.2fr 1.2fr; */
-    column-gap: var(--pt2);
-  }
-}
-.date {
-  padding-left: var(--pt3);
-  /* padding-right: var(--pt4); */
-  white-space: nowrap;
-}
 .emptyListMessage {
   white-space: pre-wrap;
   display: flex;
@@ -135,19 +101,6 @@
   }
 }
 
-@media (max-width: 576px) {
-  .tableHeader {
-    display: none;
-  }
-}
-
-@media (max-width: 768px) {
-  .savedItemRow {
-    /* grid-template-columns: var(--pt2) 3fr 14fr 3fr 1.2fr 1.2fr; */
-    column-gap: var(--pt2);
-  }
-}
-
 .testGrid {
   display: grid;
   grid-template-columns: var(--pt2) var(--pt10) 14fr 2fr 1fr 1fr;
@@ -165,7 +118,7 @@
   /* padding-left: var(--pt2); */
 }
 
-.searchPreviewNew,
+.searchPreview,
 .formatFieldSearchIndexesWrapper,
 .mobilePreview {
   white-space: nowrap;
@@ -179,7 +132,7 @@
   display: flex;
 }
 
-.savedItemRowNew {
+.savedItemRow {
   display: grid;
   grid-template-columns: var(--pt2) var(--pt16) 14fr var(--pt4) 1fr 1fr;
   cursor: pointer;
@@ -187,7 +140,7 @@
   column-gap: var(--pt2);
 }
 
-.tableHeaderNew {
+.tableHeader {
   display: grid;
   grid-template-columns: var(--pt2) var(--pt16) 14fr var(--pt4) 1fr 1fr;
   padding: var(--pt1_5) var(--pt2);
@@ -199,19 +152,10 @@
 
 @media (max-width: 576px) {
   .savedItemRow {
-    /*TODO: change to     grid-template-columns: 20fr 4fr; when checbox ins not checked
-*/
-    grid-template-columns: 1fr 20fr 4fr;
-    padding-left: var(--pt2);
-    column-gap: var(--pt1);
-    justify-content: center;
-  }
-
-  .savedItemRowNew {
     grid-template-columns: 12fr 1fr;
     column-gap: var(--pt1);
   }
-  .tableHeaderNew {
+  .tableHeader {
     display: none;
   }
   .accordionIcon {

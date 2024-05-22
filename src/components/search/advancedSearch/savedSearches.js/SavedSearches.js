@@ -32,10 +32,10 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
 
   if (isMobile) {
     return (
-      <div className={styles.savedItemRowNew} {...props}>
+      <div className={styles.savedItemRow} {...props}>
         <div className={styles.mobilePreview}>
           {item?.name ? (
-            <Text className={styles.searchPreviewNew} type="text2">
+            <Text className={styles.searchPreview} type="text2">
               {item?.name}
             </Text>
           ) : !isEmpty(item?.fieldSearch) ? (
@@ -43,7 +43,7 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
               <FormatFieldSearchIndexes fieldsearch={item.fieldSearch} />
             </div>
           ) : (
-            <Text className={styles.searchPreviewNew} type="text2">
+            <Text className={styles.searchPreview} type="text2">
               {item?.cql}
             </Text>
           )}
@@ -55,7 +55,7 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
           </Text>
         </div>
         <Icon
-          className={`${styles.accordionIconNew} ${
+          className={`${
             expanded ? styles.accordionExpanded : styles.accordionCollapsed
           }`}
           size={3}
@@ -66,7 +66,7 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   }
 
   return (
-    <div className={styles.savedItemRowNew} {...props}>
+    <div className={styles.savedItemRow} {...props}>
       <div
         onClick={(e) => {
           e.stopPropagation(); // Prevent the accordion from expanding
@@ -86,11 +86,9 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
         />
       </div>
 
-      <Text className={styles.dateNew} type="text2">
-        {formatedDate}
-      </Text>
+      <Text type="text2">{formatedDate}</Text>
       {item?.name ? (
-        <Text className={styles.searchPreviewNew} type="text2">
+        <Text className={styles.searchPreview} type="text2">
           {item?.name}
         </Text>
       ) : !isEmpty(item?.fieldSearch) ? (
@@ -98,7 +96,7 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
           <FormatFieldSearchIndexes fieldsearch={item.fieldSearch} />
         </div>
       ) : (
-        <Text className={styles.searchPreviewNew} type="text2">
+        <Text className={styles.searchPreview} type="text2">
           {item?.cql}
         </Text>
       )}
@@ -115,7 +113,7 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
         }}
       />
       <Icon
-        className={`${styles.accordionIconNew} ${
+        className={`${
           expanded ? styles.accordionExpanded : styles.accordionCollapsed
         }`}
         size={3}
@@ -228,13 +226,13 @@ export default function SavedSearches() {
       )}
       <div className={styles.tableContainer}>
         <div
-          className={cx(styles.tableHeaderNew, {
+          className={cx(styles.tableHeader, {
             [styles.tableHeaderBorder]:
               !isAuthenticated || savedSearches?.length === 0,
           })}
         >
           <div />
-          <Text type="text4" className={styles.dateNew}>
+          <Text type="text4">
             {Translate({ context: "search", label: "date" })}
           </Text>
           <Text type="text4">
