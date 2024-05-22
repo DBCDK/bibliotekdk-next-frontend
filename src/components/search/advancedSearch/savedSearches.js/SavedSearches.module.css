@@ -173,6 +173,11 @@
   text-overflow: ellipsis;
   max-width: 100%; /* Adjust this value as needed */
 }
+.mobilePreview {
+  flex-direction: column;
+  gap: var(--pt1);
+  display: flex;
+}
 
 .savedItemRowNew {
   display: grid;
@@ -215,4 +220,11 @@
   .tableContainer {
     padding-left: var(--pt1);
   }
+}
+
+.titleAndActionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--pt2);
 }

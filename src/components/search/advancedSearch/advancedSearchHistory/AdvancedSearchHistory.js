@@ -415,7 +415,7 @@ export function AdvancedSearchHistory() {
   const [checkboxList, setCheckboxList] = useState([]);
 
   const breakpoint = useBreakpoint();
-
+  const isMobile = breakpoint === "xs";
   /**
    * Set or unset ALL checkboxes in search history
    */
@@ -494,23 +494,44 @@ export function AdvancedSearchHistory() {
 
   return (
     <div className={styles.container}>
-      <Title
-        type="title3"
-        data-cy="advanced-search-search-history"
-        className={styles.title}
-      >
-        {Translate({ context: "suggester", label: "historyTitle" })}
-      </Title>
+      {isMobile ? (
+        <>
+          <div className={styles.titleAndActionHeader}>
+            <Title type="title3" className={styles.title}>
+              {Translate({ context: "suggester", label: "historyTitle" })}
+            </Title>
+            <HistoryHeaderActions
+              deleteSelected={onDeleteSelected}
+              setAllChecked={setAllChecked}
+              checked={storedValue?.length === checkboxList?.length}
+              partiallyChecked={checkboxList?.length > 0}
+              disabled={storedValue?.length === 0}
+              checkedObjects={checkedObjects}
+            />
+          </div>
+          <SearchHistoryNavigation />
+        </>
+      ) : (
+        <>
+          <Title
+            type="title3"
+            data-cy="advanced-search-search-history"
+            className={styles.title}
+          >
+            {Translate({ context: "suggester", label: "historyTitle" })}
+          </Title>
 
-      <SearchHistoryNavigation />
-      <HistoryHeaderActions
-        deleteSelected={onDeleteSelected}
-        setAllChecked={setAllChecked}
-        checked={storedValue?.length === checkboxList?.length}
-        partiallyChecked={checkboxList?.length > 0}
-        disabled={storedValue?.length === 0}
-        checkedObjects={checkedObjects}
-      />
+          <SearchHistoryNavigation />
+          <HistoryHeaderActions
+            deleteSelected={onDeleteSelected}
+            setAllChecked={setAllChecked}
+            checked={storedValue?.length === checkboxList?.length}
+            partiallyChecked={checkboxList?.length > 0}
+            disabled={storedValue?.length === 0}
+            checkedObjects={checkedObjects}
+          />
+        </>
+      )}
 
       <div className={styles.table_grid}>
         {breakpoint !== "xs" && <HistoryHeader />}

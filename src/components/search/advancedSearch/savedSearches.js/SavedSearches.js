@@ -30,63 +30,6 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs";
 
-  // if (isMobile) {
-  //   const showCheckbox = true;
-  //   return (
-  //     <div className={styles.savedItemRowNew} {...props}>
-  //       {showCheckbox && (
-  //         <div
-  //           onClick={(e) => {
-  //             e.stopPropagation(); // Prevent the accordion from expanding
-  //             e.preventDefault();
-  //             onSelect(item, !checked);
-  //           }}
-  //         >
-  //           <Checkbox
-  //             id={`select-item-${item.id}`}
-  //             tabIndex="-1"
-  //             ariaLabelledBy={`select-item-${index}`}
-  //             ariaLabel={`select-item-${index}`}
-  //             checked={checked}
-  //             onMouseDown={(e) => {
-  //               e.stopPropagation(); // Stop the mouse down event from propagating
-  //             }}
-  //           />
-  //         </div>
-  //       )}
-  //       <div className={styles.searchPreviewContainer}>
-  //         <Text className={styles.searchPreview} type="text2">
-  //           {/**show name if exists, otherwise show fieldsearch if exists otherwise just show cql */}
-  //           {item?.name ? (
-  //             <Text type="text2">{item?.name}</Text>
-  //           ) : !isEmpty(item?.fieldSearch) ? (
-  //             <div>
-  //               <FormatFieldSearchIndexes fieldsearch={item.fieldSearch} />
-  //             </div>
-  //           ) : (
-  //             <Text type="text2">{item?.cql}</Text>
-  //           )}
-  //         </Text>
-  //         <Text type="text2">
-  //           {item.hitcount}{" "}
-  //           {Translate({
-  //             context: "search",
-  //             label: "results",
-  //           }).toLocaleLowerCase()}
-  //         </Text>
-  //       </div>
-
-  //       <Icon
-  //         className={`${styles.accordionIcon} ${
-  //           expanded ? styles.accordionExpanded : styles.accordionCollapsed
-  //         }`}
-  //         size={3}
-  //         src={`${expanded ? "collapseCircle" : "expand"}.svg`}
-  //       />
-  //     </div>
-  //   );
-  // }
-
   if (isMobile) {
     return (
       <div className={styles.savedItemRowNew} {...props}>
@@ -104,7 +47,12 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
               {item?.cql}
             </Text>
           )}
-          <Text type="text2">{item.hitcount} </Text>
+          <Text type="text2">
+            {`${item.hitcount} ${Translate({
+              context: "search",
+              label: "results",
+            }).toLowerCase()}`}{" "}
+          </Text>
         </div>
         <Icon
           className={`${styles.accordionIconNew} ${
@@ -182,7 +130,8 @@ export default function SavedSearches() {
   const [checkboxList, setCheckboxList] = useState([]);
   const modal = useModal();
   const { isAuthenticated } = useAuthentication();
-
+  const breakpoint = useBreakpoint();
+  const isMobile = breakpoint === "xs";
   /**
    * Set or unset ALL checkboxes in saved search table
    */
@@ -238,21 +187,45 @@ export default function SavedSearches() {
 
   return (
     <div className={styles.container}>
-      <Title type="title3" className={styles.title}>
-        {Translate({ context: "suggester", label: "historyTitle" })}
-      </Title>
-      <SearchHistoryNavigation />
-      <HistoryHeaderActions
-        checkedObjects={checkedObjects}
-        deleteSelected={onDeleteSelected}
-        checked={
-          savedSearches?.length === checkboxList?.length &&
-          checkboxList?.length > 0
-        }
-        partiallyChecked={checkboxList?.length > 0}
-        disabled={!isAuthenticated || savedSearches?.length === 0}
-        setAllChecked={setAllChecked}
-      />
+      {isMobile ? (
+        <>
+          <div className={styles.titleAndActionHeader}>
+            <Title type="title3" className={styles.title}>
+              {Translate({ context: "suggester", label: "historyTitle" })}
+            </Title>
+            <HistoryHeaderActions
+              checkedObjects={checkedObjects}
+              deleteSelected={onDeleteSelected}
+              checked={
+                savedSearches?.length === checkboxList?.length &&
+                checkboxList?.length > 0
+              }
+              partiallyChecked={checkboxList?.length > 0}
+              disabled={!isAuthenticated || savedSearches?.length === 0}
+              setAllChecked={setAllChecked}
+            />
+          </div>
+          <SearchHistoryNavigation />
+        </>
+      ) : (
+        <>
+          <Title type="title3" className={styles.title}>
+            {Translate({ context: "suggester", label: "historyTitle" })}
+          </Title>
+          <SearchHistoryNavigation />
+          <HistoryHeaderActions
+            checkedObjects={checkedObjects}
+            deleteSelected={onDeleteSelected}
+            checked={
+              savedSearches?.length === checkboxList?.length &&
+              checkboxList?.length > 0
+            }
+            partiallyChecked={checkboxList?.length > 0}
+            disabled={!isAuthenticated || savedSearches?.length === 0}
+            setAllChecked={setAllChecked}
+          />
+        </>
+      )}
       <div className={styles.tableContainer}>
         <div
           className={cx(styles.tableHeaderNew, {
@@ -298,15 +271,6 @@ export default function SavedSearches() {
             </Button>
           </div>
         )}
-        {/* <div className={`${styles.testGrid} ${styles.savedItemRow}`}>
-<div style={{width:"100%", height:'10px', backgroundColor:'firebrick'}}/>
-<div style={{width:"100%", height:'10px', backgroundColor:'firebrick'}}/>
-<div style={{width:"100%", height:'10px', backgroundColor:'firebrick'}}/>
-<div style={{width:"100%", height:'10px', backgroundColor:'firebrick'}}/>
-<div style={{width:"100%", height:'10px', backgroundColor:'firebrick'}}/>
-<div style={{width:"100%", height:'10px', backgroundColor:'firebrick'}}/>
-
-        </div> */}
         {savedSearches?.length > 0 && isAuthenticated ? (
           <Accordion dataCy="saved-searches-accordion">
             {savedSearches?.map((item, index) => (

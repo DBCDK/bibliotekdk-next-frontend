@@ -44,9 +44,9 @@
 
 .grid {
   display: grid;
-  grid-template-columns: auto auto 1fr;
-  --grid_template_areas: "checkbox search_query search_query"
-    "checkbox timestamp hitcount";
+  grid-template-columns: auto auto 1fr 1fr;
+  --grid_template_areas: "checkbox search_query search_query null"
+    "checkbox timestamp hitcount save_search";
   grid-template-areas: var(--grid_template_areas);
   padding-left: var(--pt1);
   column-gap: var(--pt2);
@@ -54,8 +54,8 @@
 
 @media (min-width: 576px) {
   .grid {
-    --grid_template_areas: "checkbox timestamp search_query hitcount";
-    grid-template-columns: var(--pt2) 2fr 15fr 3fr 1fr;
+    --grid_template_areas: "checkbox timestamp search_query hitcount save_search";
+    grid-template-columns: var(--pt2) 2fr 15fr 3fr 1fr 1fr;
   }
 }
 
@@ -178,6 +178,7 @@
     border-bottom: 1px solid var(--iron);
     margin-left: var(--pt2);
     margin-right: var(--pt2);
+    margin-bottom: 0;
   }
   .navigationButtons a {
     padding-bottom: var(--pt2);
@@ -191,11 +192,21 @@
 
 .saveSearchIcon {
   cursor: pointer;
+  grid-area: save_search;
+  justify-self: end;
+  margin-right: var(--pt2);
 }
 
 .menuDropdown {
   padding-right: var(--pt2);
   display: flex;
   justify-content: flex-end;
+  margin-bottom: var(--pt2);
+}
+
+.titleAndActionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: var(--pt2);
 }
