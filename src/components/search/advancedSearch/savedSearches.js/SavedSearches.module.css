@@ -20,20 +20,41 @@
   display: flex;
   flex-direction: column;
 }
+.savedItemRowNew {
+  display: grid;
+  grid-template-columns: var(--pt2) var(--pt16) 14fr var(--pt4) 1fr 1fr;
+  cursor: pointer;
+  padding: var(--pt1_5) var(--pt2);
+  column-gap: var(--pt2);
+}
 
+.tableHeaderNew {
+  display: grid;
+  grid-template-columns: var(--pt2) var(--pt16) 14fr var(--pt4) 1fr 1fr;
+  padding: var(--pt1_5) var(--pt2);
+  column-gap: var(--pt2);
+}
 .savedItemRow {
   display: grid;
-  grid-template-columns: var(--pt2) 3fr 14fr 2fr 1fr 1fr;
+  grid-template-columns: var(--pt2) 156px 14fr var(--pt4) 1fr 1fr;
   padding-left: var(--pt1);
   padding: var(--pt1_5) var(--pt2);
   cursor: pointer;
-  align-items: center;
+  /* align-items: center; */
+  /* column-gap: var(--pt3);  */
 }
 
 @media (max-width: 576px) {
   .savedItemRow {
-    /* padding: 0px 22px !important; */
-    grid-template-columns: 1fr 2fr 20fr 2fr 1fr 1fr;
+    /*TODO: change to     grid-template-columns: 20fr 4fr; when checbox ins not checked
+*/
+    grid-template-columns: 1fr 20fr 4fr;
+    padding-left: var(--pt2);
+    column-gap: var(--pt1);
+    justify-content: center;
+  }
+  .accordionIcon {
+    justify-self: auto !important;
   }
   .tableContainer {
     padding-left: var(--pt1);
@@ -43,7 +64,12 @@
 .searchPreview {
   white-space: nowrap;
   overflow: hidden;
-  margin-right: var(--pt1);
+  margin-right: var(--pt3);
+}
+.searchPreviewContainer {
+  white-space: nowrap;
+  overflow: hidden;
+  /* margin-right: var(--pt1); */
 }
 
 .tableHeaderBorder {
@@ -51,6 +77,7 @@
 }
 .removeItemIcon {
   cursor: pointer;
+  justify-self: flex-end;
 }
 .accordionIcon {
   transition: transform 0.35s;
@@ -71,24 +98,32 @@
   padding-bottom: var(--pt2);
 }
 .accordionContent {
-  display: grid;
   /* grid-template-columns: var(--pt2) 3fr 14fr 2fr 1fr 1fr;*/
-  grid-template-columns: var(--pt2) 3fr 14fr 2.5fr 1fr 1fr;
-
-  padding-left: var(--pt2);
+  /* grid-template-columns: var(--pt2) 3fr 14fr 2.5fr 1fr 1fr; */
+  display: grid;
+  grid-template-columns: var(--pt2) var(--pt16) 14fr auto;
+  padding: var(--pt1_5) var(--pt2);
+  column-gap: var(--pt2);
+  /* padding-left: var(--pt2); */
 }
 
 .tableHeader {
   display: grid;
   align-items: center;
   margin-bottom: var(--pt05);
-  grid-template-columns: var(--pt2) 3fr 14fr 2fr 1fr 1fr;
+  /* grid-template-columns: var(--pt2) 3fr 14fr 2fr 1fr 1fr; */
+  grid-template-columns: var(--pt2) 156px 14fr var(--pt4) 2fr 2fr;
+
   padding: 0 var(--pt2);
 }
 
 @media (max-width: 993px) {
   .tableHeader {
     grid-template-columns: var(--pt1) 3fr 14fr 3fr 1fr;
+  }
+  .savedItemRow {
+    /* grid-template-columns: var(--pt2) 3fr 14fr 3fr 1.2fr 1.2fr; */
+    column-gap: var(--pt2);
   }
 }
 .date {
@@ -130,4 +165,26 @@
   .tableHeader {
     display: none;
   }
+}
+
+@media (max-width: 768px) {
+  .savedItemRow {
+    /* grid-template-columns: var(--pt2) 3fr 14fr 3fr 1.2fr 1.2fr; */
+    column-gap: var(--pt2);
+  }
+}
+
+.testGrid {
+  display: grid;
+  grid-template-columns: var(--pt2) var(--pt10) 14fr 2fr 1fr 1fr;
+
+  column-gap: 10px;
+}
+
+.searchPreviewNew,
+.formatFieldSearchIndexesWrapper {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%; /* Adjust this value as needed */
 }

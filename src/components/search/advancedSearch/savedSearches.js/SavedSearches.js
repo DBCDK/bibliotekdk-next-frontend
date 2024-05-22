@@ -22,13 +22,73 @@ import { useModal } from "@/components/_modal";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import Button from "@/components/base/button";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   const formatedDate = unixToFormatedDate(item.unixtimestamp);
   const { deleteSearches } = useSavedSearches();
+  const breakpoint = useBreakpoint();
+  const isMobile = breakpoint === "xs";
+
+  // if (isMobile) {
+  //   const showCheckbox = true;
+  //   return (
+  //     <div className={styles.savedItemRowNew} {...props}>
+  //       {showCheckbox && (
+  //         <div
+  //           onClick={(e) => {
+  //             e.stopPropagation(); // Prevent the accordion from expanding
+  //             e.preventDefault();
+  //             onSelect(item, !checked);
+  //           }}
+  //         >
+  //           <Checkbox
+  //             id={`select-item-${item.id}`}
+  //             tabIndex="-1"
+  //             ariaLabelledBy={`select-item-${index}`}
+  //             ariaLabel={`select-item-${index}`}
+  //             checked={checked}
+  //             onMouseDown={(e) => {
+  //               e.stopPropagation(); // Stop the mouse down event from propagating
+  //             }}
+  //           />
+  //         </div>
+  //       )}
+  //       <div className={styles.searchPreviewContainer}>
+  //         <Text className={styles.searchPreview} type="text2">
+  //           {/**show name if exists, otherwise show fieldsearch if exists otherwise just show cql */}
+  //           {item?.name ? (
+  //             <Text type="text2">{item?.name}</Text>
+  //           ) : !isEmpty(item?.fieldSearch) ? (
+  //             <div>
+  //               <FormatFieldSearchIndexes fieldsearch={item.fieldSearch} />
+  //             </div>
+  //           ) : (
+  //             <Text type="text2">{item?.cql}</Text>
+  //           )}
+  //         </Text>
+  //         <Text type="text2">
+  //           {item.hitcount}{" "}
+  //           {Translate({
+  //             context: "search",
+  //             label: "results",
+  //           }).toLocaleLowerCase()}
+  //         </Text>
+  //       </div>
+
+  //       <Icon
+  //         className={`${styles.accordionIcon} ${
+  //           expanded ? styles.accordionExpanded : styles.accordionCollapsed
+  //         }`}
+  //         size={3}
+  //         src={`${expanded ? "collapseCircle" : "expand"}.svg`}
+  //       />
+  //     </div>
+  //   );
+  // }
 
   return (
-    <div className={styles.savedItemRow} {...props}>
+    <div className={styles.savedItemRowNew} {...props}>
       <div
         onClick={(e) => {
           e.stopPropagation(); // Prevent the accordion from expanding
@@ -48,20 +108,24 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
         />
       </div>
 
-      <Text className={styles.date} type="text2">
+      <Text className={styles.dateNew} type="text2">
         {formatedDate}
       </Text>
-      <Text className={styles.searchPreview} type="text2">
-        {item?.name ? (
-          <Text type="text2">{item?.name}</Text>
-        ) : !isEmpty(item?.fieldSearch) ? (
-          <div>
-            <FormatFieldSearchIndexes fieldsearch={item.fieldSearch} />
-          </div>
-        ) : (
-          <Text type="text2">{item?.cql}</Text>
-        )}
-      </Text>
+      {/* <Text className={styles.searchPreviewNew} type="text2"> */}
+      {item?.name ? (
+        <Text className={styles.searchPreviewNew} type="text2">
+          {item?.name}
+        </Text>
+      ) : !isEmpty(item?.fieldSearch) ? (
+        <div>
+          <FormatFieldSearchIndexes fieldsearch={item.fieldSearch} />
+        </div>
+      ) : (
+        <Text className={styles.searchPreviewNew} type="text2">
+          {item?.cql}
+        </Text>
+      )}
+      {/* </Text> */}
       <Text type="text2">{item.hitcount} </Text>
       <Icon
         className={styles.removeItemIcon}
@@ -75,7 +139,7 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
         }}
       />
       <Icon
-        className={`${styles.accordionIcon} ${
+        className={`${styles.accordionIconNew} ${
           expanded ? styles.accordionExpanded : styles.accordionCollapsed
         }`}
         size={3}
@@ -163,13 +227,13 @@ export default function SavedSearches() {
       />
       <div className={styles.tableContainer}>
         <div
-          className={cx(styles.tableHeader, {
+          className={cx(styles.tableHeaderNew, {
             [styles.tableHeaderBorder]:
               !isAuthenticated || savedSearches?.length === 0,
           })}
         >
           <div />
-          <Text type="text4" className={styles.date}>
+          <Text type="text4" className={styles.dateNew}>
             {Translate({ context: "search", label: "date" })}
           </Text>
           <Text type="text4">
@@ -206,6 +270,15 @@ export default function SavedSearches() {
             </Button>
           </div>
         )}
+        {/* <div className={`${styles.testGrid} ${styles.savedItemRow}`}>
+<div style={{width:"100%", height:'10px', backgroundColor:'firebrick'}}/>
+<div style={{width:"100%", height:'10px', backgroundColor:'firebrick'}}/>
+<div style={{width:"100%", height:'10px', backgroundColor:'firebrick'}}/>
+<div style={{width:"100%", height:'10px', backgroundColor:'firebrick'}}/>
+<div style={{width:"100%", height:'10px', backgroundColor:'firebrick'}}/>
+<div style={{width:"100%", height:'10px', backgroundColor:'firebrick'}}/>
+
+        </div> */}
         {savedSearches?.length > 0 && isAuthenticated ? (
           <Accordion dataCy="saved-searches-accordion">
             {savedSearches?.map((item, index) => (
