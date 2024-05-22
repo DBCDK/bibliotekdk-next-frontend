@@ -284,6 +284,7 @@ export default function SavedSearches() {
             {savedSearches?.map((item, index) => (
               <Item
                 dataCy={`accordion-item-${index}`}
+                className={styles.accordionContainer}
                 CustomHeaderCompnent={(props) => (
                   <SavedItemRow
                     {...props}
