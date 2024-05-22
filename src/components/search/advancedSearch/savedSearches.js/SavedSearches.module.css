@@ -44,23 +44,6 @@
   /* column-gap: var(--pt3);  */
 }
 
-@media (max-width: 576px) {
-  .savedItemRow {
-    /*TODO: change to     grid-template-columns: 20fr 4fr; when checbox ins not checked
-*/
-    grid-template-columns: 1fr 20fr 4fr;
-    padding-left: var(--pt2);
-    column-gap: var(--pt1);
-    justify-content: center;
-  }
-  .accordionIcon {
-    justify-self: auto !important;
-  }
-  .tableContainer {
-    padding-left: var(--pt1);
-  }
-}
-
 .searchPreview {
   white-space: nowrap;
   overflow: hidden;
@@ -183,7 +166,8 @@
 }
 
 .searchPreviewNew,
-.formatFieldSearchIndexesWrapper {
+.formatFieldSearchIndexesWrapper,
+.mobilePreview {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -206,4 +190,29 @@
 }
 .accordionContainer a {
   margin: 0;
+}
+
+@media (max-width: 576px) {
+  .savedItemRow {
+    /*TODO: change to     grid-template-columns: 20fr 4fr; when checbox ins not checked
+*/
+    grid-template-columns: 1fr 20fr 4fr;
+    padding-left: var(--pt2);
+    column-gap: var(--pt1);
+    justify-content: center;
+  }
+
+  .savedItemRowNew {
+    grid-template-columns: 12fr 1fr;
+    column-gap: var(--pt1);
+  }
+  .tableHeaderNew {
+    display: none;
+  }
+  .accordionIcon {
+    justify-self: auto !important;
+  }
+  .tableContainer {
+    padding-left: var(--pt1);
+  }
 }

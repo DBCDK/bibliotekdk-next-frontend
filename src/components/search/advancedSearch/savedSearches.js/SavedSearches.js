@@ -87,6 +87,36 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   //   );
   // }
 
+  if (isMobile) {
+    return (
+      <div className={styles.savedItemRowNew} {...props}>
+        <div className={styles.mobilePreview}>
+          {item?.name ? (
+            <Text className={styles.searchPreviewNew} type="text2">
+              {item?.name}
+            </Text>
+          ) : !isEmpty(item?.fieldSearch) ? (
+            <div>
+              <FormatFieldSearchIndexes fieldsearch={item.fieldSearch} />
+            </div>
+          ) : (
+            <Text className={styles.searchPreviewNew} type="text2">
+              {item?.cql}
+            </Text>
+          )}
+          <Text type="text2">{item.hitcount} </Text>
+        </div>
+        <Icon
+          className={`${styles.accordionIconNew} ${
+            expanded ? styles.accordionExpanded : styles.accordionCollapsed
+          }`}
+          size={3}
+          src={`${expanded ? "collapseCircle" : "expand"}.svg`}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.savedItemRowNew} {...props}>
       <div
@@ -111,7 +141,6 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
       <Text className={styles.dateNew} type="text2">
         {formatedDate}
       </Text>
-      {/* <Text className={styles.searchPreviewNew} type="text2"> */}
       {item?.name ? (
         <Text className={styles.searchPreviewNew} type="text2">
           {item?.name}
@@ -125,7 +154,6 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
           {item?.cql}
         </Text>
       )}
-      {/* </Text> */}
       <Text type="text2">{item.hitcount} </Text>
       <Icon
         className={styles.removeItemIcon}
