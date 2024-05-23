@@ -43,7 +43,7 @@ export const useSavedSearches = () => {
   const mutateData = () => {
     setTimeout(() => {
       mutate();
-    }, 500);
+    }, 100);
   };
 
   const savedSearches = useMemo(
