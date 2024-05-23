@@ -154,7 +154,7 @@ describe("Multi Order", () => {
 
       cy.get('[data-cy="submit-button"]').should("be.disabled");
 
-      cy.contains("Biblioteket kræver en pinkode ved bestilling");
+      cy.contains("kræver en pinkode ved bestilling");
       cy.contains("Du mangler at angive en pinkode");
 
       cy.get('[data-cy="pincode-input"]').type("1234");

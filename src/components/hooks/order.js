@@ -414,6 +414,7 @@ export function useOrderValidation({ pids }) {
     pincodeIsRequired,
     isLoading: isLoadingPincode,
   } = usePincode();
+
   const { showAlreadyOrderedWarning, isLoading: isLoadingAlreadyOrdered } =
     useShowAlreadyOrdered({ pids });
 
@@ -429,8 +430,7 @@ export function useOrderValidation({ pids }) {
     isLoadingAlreadyOrdered ||
     isLoadingPeriodica;
 
-  const isValidPincode =
-    orderService === "ILL" && pincodeIsRequired ? !!pincode : true;
+  const isValidPincode = pincodeIsRequired ? !!pincode : true;
   const details = {
     pincode: {
       isValid: isValidPincode,
