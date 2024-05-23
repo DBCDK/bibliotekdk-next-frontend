@@ -341,7 +341,7 @@ export default function SavedSearches() {
                     <div>
                       <SearchQueryDisplay item={item} />
                     </div>
-                    <Text type="text3" tag="span">
+                    <Text type="text2" tag="span">
                       <Link
                         onClick={() => {
                           //show edit name modal
