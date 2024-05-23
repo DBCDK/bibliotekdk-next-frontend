@@ -3830,6 +3830,10 @@
         "da": "Biblioteket kræver en pinkode ved bestilling",
         "en": "LABEL: Mangler oversættelse!"
       },
+      "pincode-heading-2": {
+        "da": "%s kræver en pinkode ved bestilling",
+        "en": "%s requires a PIN code for placing an order"
+      },
       "pincode-input-label": {
         "da": "Pinkode",
         "en": "Pincode"
