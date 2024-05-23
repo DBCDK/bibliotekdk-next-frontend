@@ -113,6 +113,10 @@
         "da": "Aldersgruppe",
         "en": "Age groups"
       },
+      "phrase.generalaudience" : {
+        "da": "Målgruppe",
+        "en": "Audience"
+      },
       "phrase.mainlanguage": {
         "da": "Sprog",
         "en": "Languages"
@@ -144,6 +148,10 @@
       "phrase.players": {
         "da": "Antal spillere",
         "en": "Players"
+      },
+      "all_phrase.generalaudience": {
+        "da": "Målgruppe",
+        "en": "Audience"
       },
       "all_phrase.gameplatform": {
         "da": "Alle platforme",
@@ -2539,6 +2547,32 @@
         "da": "Pladeselskab",
         "en": "Publisher"
       },
+
+      "advanced-dropdown-sheetmusic_term.creator": {
+        "da": "Komponist",
+        "en": "Conductor"
+      },
+      "advanced-dropdown-sheetmusic_term.title": {
+        "da": "Titel",
+        "en": "Title"
+      },
+      "advanced-dropdown-sheetmusic_term.titlemanifestationpart": {
+        "da": "Sangtitel",
+        "en": "Songtitle"
+      },
+      "advanced-placeholder-sheetmusic_term.titlemanifestationpart": {
+        "da": "Søg på titel på sang eller musikstykke",
+        "en": "Search by title of song or sheetmusic"
+      },
+      "advanced-placeholder-sheetmusic_term.title": {
+        "da": "Søg på titel for nodehæfte eller album",
+        "en": "Search by title of sheetmusic or album"
+      },
+      "advanced-placeholder-sheetmusic_term.creator": {
+        "da": "Søg på komponist og andre hovedophav",
+        "en": "Search by conductor and other creators"
+      },
+
       "advanced-placeholder-music_term.publisher": {
         "da": "Søg på pladeselskab, udgiver mv.",
         "en": "Search by publisher"

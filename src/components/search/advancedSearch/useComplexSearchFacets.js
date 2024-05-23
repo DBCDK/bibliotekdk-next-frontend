@@ -1,8 +1,15 @@
 import { useData } from "@/lib/api/api";
 import { hitcount } from "@/lib/api/complexSearch.fragments";
 
+// "all", "literature", "article", "movie", "music", "game", "sheetmusic"
 const facetByMaterialType = {
-  LITERATURE: ["SPECIFICMATERIALTYPE", "GENREANDFORM", "LANGUAGE"],
+  ALL: ["GENREANDFORM", "MAINLANGUAGE"],
+  LITERATURE: ["SPECIFICMATERIALTYPE", "GENREANDFORM", "MAINLANGUAGE"],
+  ARTICLE: ["SPECIFICMATERIALTYPE", "GENREANDFORM", "MAINLANGUAGE"],
+  MOVIE: ["SPECIFICMATERIALTYPE", "GENREANDFORM", "FILMNATIONALITY"],
+  MUSIC: ["SPECIFICMATERIALTYPE", "GENREANDFORM"],
+  GAME: ["GAMEPLATFORM", "GENREANDFORM", "PEGI"],
+  SHEETMUSIC: ["MAINLANGUAGE", "GENERALAUDIENCE"],
 };
 
 /**
@@ -14,7 +21,12 @@ const facetByMaterialType = {
  */
 export function useComplexSearchFacets(workType) {
   // @TODO use workType:)
-  const cqlQuery = `worktype="LITERATURE"`;
+  let cqlQuery;
+  if (workType === "all") {
+    cqlQuery = `workId=*`;
+  } else {
+    cqlQuery = `worktype="${workType.toUpperCase()}"`;
+  }
 
   // use the useData hook to fetch data
   const {
@@ -26,7 +38,7 @@ export function useComplexSearchFacets(workType) {
       cql: cqlQuery,
       facets: {
         facetLimit: 50,
-        facets: facetByMaterialType.LITERATURE,
+        facets: facetByMaterialType[workType.toUpperCase()],
       },
     })
   );

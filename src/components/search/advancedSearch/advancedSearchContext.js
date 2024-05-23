@@ -127,7 +127,26 @@ export function getInitialInputFields(workType = "all") {
         label: "music_term.publisher",
       },
     ],
-    sheetmusic: [],
+    sheetmusic: [
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.creator",
+        label: "sheetmusic_term.creator",
+      },
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.title",
+        label: "sheetmusic_term.title",
+      },
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.titlemanifestationpart",
+        label: "sheetmusic_term.titlemanifestationpart",
+      },
+    ],
     game: [
       {
         value: "",

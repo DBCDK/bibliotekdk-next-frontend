@@ -2,6 +2,7 @@ import { FormTypeEnum } from "@/components/search/advancedSearch/advancedSearchH
 import isEmpty from "lodash/isEmpty";
 import { useEffect, useReducer } from "react";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
+import { DropdownReducerEnum } from "@/components/search/advancedSearch/useDropdownSearchIndices";
 
 export function resetMenuItem(menuItem) {
   return {
@@ -106,6 +107,7 @@ export function reducerForToggleMenuItemsState({ currentMenuItems, action }) {
 export function useMenuItemsState(menuItems, updateIndex) {
   const { resetMenuItemsEvent } = useAdvancedSearchContext();
 
+  // console.log(menuItems, "MENU ITEMS");
   const [menuItemsState, toggleMenuItemsState] = useReducer(
     (currentMenuItems, action) =>
       reducerForToggleMenuItemsState({
@@ -115,6 +117,13 @@ export function useMenuItemsState(menuItems, updateIndex) {
     menuItems,
     undefined
   );
+
+  useEffect(() => {
+    toggleMenuItemsState({
+      type: ToggleMenuItemsEnum.RESET,
+      payload: menuItems,
+    });
+  }, [menuItems.length]);
 
   useEffect(() => {
     function resetOnResetSearch() {

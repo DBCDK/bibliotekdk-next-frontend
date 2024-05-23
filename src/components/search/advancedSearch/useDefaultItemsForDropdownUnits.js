@@ -17,16 +17,17 @@ import isEmpty from "lodash/isEmpty";
 import { useComplexSearchFacets } from "@/components/search/advancedSearch/useComplexSearchFacets";
 
 export const DropdownIndicesEnum = {
-  LANGUAGES: "phrase.mainlanguage",
+  MAINLANGUAGES: "phrase.mainlanguage",
   MATERIAL_TYPES_SPECIFIC: "phrase.specificmaterialtype",
   MATERIAL_TYPES_GENERAL: "phrase.generalmaterialtype",
   PUBLICATION_YEAR: "publicationyear",
   AGES: "ages",
   GENRE: "phrase.genreandform",
-  FILM_NATIONALITY: "phrase.filmnationality",
-  GAME_PLATFORM: "phrase.gameplatform",
+  FILMNATIONALITY: "phrase.filmnationality",
+  GAMEPLATFORM: "phrase.gameplatform",
   PLAYERS: "phrase.players",
   PEGI: "phrase.pegi",
+  GENERALAUDIENCE: "phrase.generalaudience",
 };
 
 const specialIndices = new Set([
@@ -148,8 +149,15 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
   const { facetResponse, isLoading, error } = useComplexSearchFacets(workType);
 
   const filmnationality = {
-    items: convertToDropdownInput(dummy__filmNationality()),
-    indexName: DropdownIndicesEnum.FILM_NATIONALITY,
+    items: convertToDropdownInput(
+      parseForFacets({
+        data: facetResponse,
+        isLoading,
+        error,
+        index: DropdownIndicesEnum.FILMNATIONALITY,
+      })
+    ),
+    indexName: DropdownIndicesEnum.FILMNATIONALITY,
   };
 
   const publicationYear = {
@@ -175,7 +183,14 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
   };
 
   const specificMaterialTypes = {
-    items: convertToDropdownInput(dummy__specificmaterialTypes()),
+    items: convertToDropdownInput(
+      parseForFacets({
+        data: facetResponse,
+        isLoading,
+        error,
+        index: DropdownIndicesEnum.MATERIAL_TYPES_SPECIFIC,
+      })
+    ),
     indexName: DropdownIndicesEnum.MATERIAL_TYPES_SPECIFIC,
   };
 
@@ -185,8 +200,15 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
   // };
 
   const languages = {
-    items: convertToDropdownInput(dummy__languages()),
-    indexName: DropdownIndicesEnum.LANGUAGES,
+    items: convertToDropdownInput(
+      parseForFacets({
+        data: facetResponse,
+        isLoading,
+        error,
+        index: DropdownIndicesEnum.MAINLANGUAGES,
+      })
+    ),
+    indexName: DropdownIndicesEnum.MAINLANGUAGES,
   };
 
   const ages = {
@@ -195,8 +217,27 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
   };
 
   const gamePlatform = {
-    items: convertToDropdownInput(dummy__gamePlatform()),
-    indexName: DropdownIndicesEnum.GAME_PLATFORM,
+    items: convertToDropdownInput(
+      parseForFacets({
+        data: facetResponse,
+        isLoading,
+        error,
+        index: DropdownIndicesEnum.GAMEPLATFORM,
+      })
+    ),
+    indexName: DropdownIndicesEnum.GAMEPLATFORM,
+  };
+
+  const generalAudience = {
+    items: convertToDropdownInput(
+      parseForFacets({
+        data: facetResponse,
+        isLoading,
+        error,
+        index: DropdownIndicesEnum.GENERALAUDIENCE,
+      })
+    ),
+    indexName: DropdownIndicesEnum.GENERALAUDIENCE,
   };
 
   // will be used at a later time
@@ -220,11 +261,11 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
     ),
     // literature: DONE
     literature: [
-      // specificMaterialTypes,
+      specificMaterialTypes,
       genreAndForm,
-      // languages,
-      // publicationYear,
-      // ages,
+      languages,
+      publicationYear,
+      ages,
     ].map((dropdownUnit) => {
       return getDropdownFromUrl({
         initDropdowns: initDropdowns,
@@ -273,12 +314,11 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
         })
     ),
     // @TODO .. sheetmusic same as music - it that so ??
-    sheetmusic: [specificMaterialTypes, genreAndForm, publicationYear].map(
-      (dropdownUnit) =>
-        getDropdownFromUrl({
-          initDropdowns: initDropdowns,
-          dropdownUnit: dropdownUnit,
-        })
+    sheetmusic: [languages, generalAudience].map((dropdownUnit) =>
+      getDropdownFromUrl({
+        initDropdowns: initDropdowns,
+        dropdownUnit: dropdownUnit,
+      })
     ),
   };
   // The init dropdown holds the dropdowns configured (selected) - if a selected dropdown is NOT
