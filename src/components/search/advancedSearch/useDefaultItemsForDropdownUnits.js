@@ -1,13 +1,6 @@
 import {
   agesFormatterAndComparitor,
   agesIndices,
-  dummy__filmNationality,
-  dummy__gamePlatform,
-  //dummy__genreAndForm,
-  dummy__languages,
-  dummy__pegi,
-  // dummy__players,
-  dummy__specificmaterialTypes,
   publicationYearFormatterAndComparitor,
   publicationYearIndices,
 } from "@/components/search/advancedSearch/advancedSearchHelpers/dummy__default_advanced_search_fields";
@@ -247,7 +240,14 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
   // };
 
   const pegi = {
-    items: convertToDropdownInput(dummy__pegi()),
+    items: convertToDropdownInput(
+      parseForFacets({
+        data: facetResponse,
+        isLoading,
+        error,
+        index: DropdownIndicesEnum.PEGI,
+      })
+    ),
     indexName: DropdownIndicesEnum.PEGI,
   };
 
@@ -313,7 +313,6 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
           dropdownUnit: dropdownUnit,
         })
     ),
-    // @TODO .. sheetmusic same as music - it that so ??
     sheetmusic: [languages, generalAudience].map((dropdownUnit) =>
       getDropdownFromUrl({
         initDropdowns: initDropdowns,
