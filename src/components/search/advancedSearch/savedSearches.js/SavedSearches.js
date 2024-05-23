@@ -15,6 +15,8 @@ import {
   HistoryHeaderActions,
   SearchQueryDisplay,
 } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
+import CombinedSearch from "@/components/search/advancedSearch/combinedSearch/CombinedSearch";
+
 import Accordion, { Item } from "@/components/base/accordion";
 import { unixToFormatedDate } from "@/lib/utils";
 import Link from "@/components/base/link";
@@ -33,6 +35,25 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   if (isMobile) {
     return (
       <div className={styles.savedItemRow} {...props}>
+        <div
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent the accordion from expanding
+            e.preventDefault();
+            onSelect(item, !checked);
+          }}
+        >
+          <Checkbox
+            id={`select-item-${item.id}`}
+            tabIndex="-1"
+            ariaLabelledBy={`select-item-${index}`}
+            ariaLabel={`select-item-${index}`}
+            checked={checked}
+            onMouseDown={(e) => {
+              e.stopPropagation(); // Stop the mouse down event from propagating
+            }}
+          />
+        </div>
+
         <div className={styles.mobilePreview}>
           {item?.name ? (
             <Text className={styles.searchPreview} type="text2">
@@ -114,9 +135,10 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
         }}
       />
       <Icon
-        className={`${
-          expanded ? styles.accordionExpanded : styles.accordionCollapsed
-        }`}
+        className={cx(styles.accordionIcon, {
+          [styles.accordionExpanded]: expanded,
+          [styles.accordionCollapsed]: !expanded,
+        })}
         size={3}
         src={`${expanded ? "collapseCircle" : "expand"}.svg`}
       />
@@ -131,6 +153,9 @@ export default function SavedSearches() {
   const { isAuthenticated } = useAuthentication();
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs";
+
+  const [showCombinedSearch, setShowCombinedSearch] = useState(false);
+
   /**
    * Set or unset ALL checkboxes in saved search table
    */
@@ -193,6 +218,39 @@ export default function SavedSearches() {
               {Translate({ context: "suggester", label: "historyTitle" })}
             </Title>
             <HistoryHeaderActions
+              checkedObjects={checkedObjects} //TODO REMOVE??
+              deleteSelected={onDeleteSelected}
+              checked={
+                savedSearches?.length === checkboxList?.length &&
+                checkboxList?.length > 0
+              }
+              partiallyChecked={checkboxList?.length > 0}
+              disabled={!isAuthenticated || savedSearches?.length === 0}
+              setAllChecked={setAllChecked}
+              setShowCombinedSearch={setShowCombinedSearch}
+            />
+          </div>
+          <SearchHistoryNavigation />
+          {showCombinedSearch && (
+            <CombinedSearch
+              cancelCombinedSearch={() => setShowCombinedSearch(false)}
+              queries={checkedObjects}
+            />
+          )}
+        </>
+      ) : (
+        <>
+          <Title type="title3" className={styles.title}>
+            {Translate({ context: "suggester", label: "historyTitle" })}
+          </Title>
+          <SearchHistoryNavigation />
+          {showCombinedSearch ? (
+            <CombinedSearch
+              cancelCombinedSearch={() => setShowCombinedSearch(false)}
+              queries={checkedObjects}
+            />
+          ) : (
+            <HistoryHeaderActions
               checkedObjects={checkedObjects}
               deleteSelected={onDeleteSelected}
               checked={
@@ -202,27 +260,9 @@ export default function SavedSearches() {
               partiallyChecked={checkboxList?.length > 0}
               disabled={!isAuthenticated || savedSearches?.length === 0}
               setAllChecked={setAllChecked}
+              setShowCombinedSearch={setShowCombinedSearch}
             />
-          </div>
-          <SearchHistoryNavigation />
-        </>
-      ) : (
-        <>
-          <Title type="title3" className={styles.title}>
-            {Translate({ context: "suggester", label: "historyTitle" })}
-          </Title>
-          <SearchHistoryNavigation />
-          <HistoryHeaderActions
-            checkedObjects={checkedObjects}
-            deleteSelected={onDeleteSelected}
-            checked={
-              savedSearches?.length === checkboxList?.length &&
-              checkboxList?.length > 0
-            }
-            partiallyChecked={checkboxList?.length > 0}
-            disabled={!isAuthenticated || savedSearches?.length === 0}
-            setAllChecked={setAllChecked}
-          />
+          )}
         </>
       )}
       <div className={styles.tableContainer}>

@@ -15,19 +15,6 @@ import {
 import { useData, useMutate } from "@/lib/api/api";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 
-/**
- * Get a date on a stored saved search object
- */
-export function getTimeStamp(now) {
-  const options = {
-    hour: "2-digit",
-    minute: "2-digit",
-  };
-  const stamp = new Date(now).toLocaleTimeString("en-GB", options);
-  // remove the " AM/PM" part
-  return stamp.replace("AM", "").replace("PM", "").replace(":", ".").trim();
-}
-
 export const useSavedSearches = () => {
   const { hasCulrUniqueId } = useAuthentication();
   const userDataMutation = useMutate();

@@ -6,6 +6,7 @@
 
 .table_grid {
   display: grid;
+  margin-top: var(--pt6);
 }
 
 .table_grid > *:nth-child(2n) {
@@ -39,6 +40,9 @@
 
   .table_grid > *:nth-child(2n) {
     background-color: var(--white);
+  }
+  .table_grid {
+    margin-top: 0;
   }
 }
 
@@ -87,20 +91,6 @@
 
 .hitcount {
   grid-area: hitcount;
-}
-
-.actionheader {
-  margin-bottom: var(--pt4);
-  display: flex;
-  gap: var(--pt3);
-  justify-content: flex-start;
-  margin-bottom: var(--pt4);
-}
-
-@media (min-width: 576px) {
-  .actionheader {
-    padding-left: var(--pt1);
-  }
 }
 
 .emptysearchpage {
@@ -164,13 +154,26 @@
 .action {
   cursor: pointer;
 }
-
+/* 
 .navigationButtons {
   display: flex;
   gap: var(--pt5);
   margin-bottom: var(--pt3);
 }
 
+.actionheader {
+  margin-bottom: var(--pt4);
+  display: flex;
+  gap: var(--pt3);
+  justify-content: flex-start;
+  margin-bottom: var(--pt4);
+}
+
+@media (min-width: 576px) {
+  .actionheader {
+    padding-left: var(--pt1);
+  }
+}
 @media (max-width: 576px) {
   .navigationButtons {
     padding-left: var(--pt1);
@@ -187,6 +190,61 @@
     padding-left: var(--pt2);
     justify-content: flex-end;
     margin-bottom: var(--pt2);
+  }
+} */
+
+.navigationButtons {
+  display: flex;
+  gap: var(--pt5);
+  margin-bottom: var(--pt3);
+}
+
+.actionheader {
+  margin-bottom: var(--pt4);
+  display: flex;
+  gap: var(--pt3);
+  justify-content: flex-start;
+  margin-bottom: var(--pt4);
+}
+
+@media (min-width: 576px) {
+  .actionheader {
+    padding-left: var(--pt1);
+  }
+}
+
+.navigationButtons {
+  padding-left: var(--pt1);
+
+  border-bottom: 1px solid var(--iron);
+  margin-left: var(--pt2);
+  margin-right: var(--pt2);
+  margin-bottom: 0;
+}
+.navigationButtons a {
+  padding-bottom: var(--pt2);
+}
+.actionheader {
+  padding-left: var(--pt2);
+  justify-content: flex-end;
+  margin-bottom: var(--pt2);
+}
+
+@media (min-width: 576px) {
+  .navigationButtons {
+    padding-left: initial;
+    border-bottom: none;
+    margin-left: initial;
+    margin-right: initial;
+    margin-bottom: var(--pt3);
+  }
+  .navigationButtons a {
+    padding-bottom: initial;
+  }
+  .actionheader {
+    padding-left: var(--pt1);
+    justify-content: flex-start;
+    margin-bottom: var(--pt4);
   }
 }
 

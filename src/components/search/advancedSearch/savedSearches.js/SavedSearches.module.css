@@ -61,7 +61,7 @@
   align-items: center;
   justify-content: center;
   display: flex;
-  max-width: 400px;
+  max-width: 200px;
 }
 .loginText {
   margin-top: var(--pt2);
@@ -114,15 +114,16 @@
 .savedItemRow {
   display: grid;
   cursor: pointer;
-  grid-template-columns: 12fr 1fr;
+  grid-template-columns: 1fr 12fr 1fr;
   column-gap: var(--pt1);
   padding: var(--pt1_5) var(--pt2);
+  align-items: center;
 }
 .tableHeader {
   display: none;
 }
 .accordionIcon {
-  justify-self: auto !important;
+  justify-self: auto;
   transition: transform 0.35s;
   cursor: pointer;
 }

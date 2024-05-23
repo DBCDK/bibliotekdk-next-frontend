@@ -2741,6 +2741,10 @@
         "en": "Save search"
       },
       "editSearch": {
+        "da": "Rediger Søgning",
+        "en": "Edit search"
+      },
+      "edit": {
         "da": "Rediger",
         "en": "Edit"
       },
