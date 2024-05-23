@@ -1,7 +1,5 @@
 import Input from "@/components/base/forms/input";
 import Label from "@/components/base/forms/label";
-import { useData } from "@/lib/api/api";
-import { isFFUAgency } from "@/lib/api/branches.fragments";
 import Translate from "@/components/base/translate/Translate";
 import Text from "@/components/base/text";
 import Divider from "@/components/base/divider/Divider";
@@ -12,15 +10,17 @@ import {
   usePickupBranchId,
   usePincode,
 } from "@/components/hooks/order";
+import { useBranchInfo } from "@/components/hooks/useBranchInfo";
 
-function Pincode({ isLoading, onChange, error, value }) {
+function Pincode({ isLoading, onChange, error, value, agencyName }) {
   return (
     <div className={styles.pincode}>
       <Divider className={styles.divider} />
       <Text type="text1">
         {Translate({
           context: "order",
-          label: "pincode-heading",
+          label: "pincode-heading-2",
+          vars: [agencyName],
         })}
       </Text>
       <Label for="pincode" className={styles.label}>
@@ -54,13 +54,12 @@ export default function Wrap() {
     pincodeIsRequired,
     isLoading: isLoadingPincode,
   } = usePincode();
+
   const { confirmButtonClicked } = useConfirmButtonClicked();
   const { branchId, isLoading: isLoadingPickupBranchId } = usePickupBranchId();
-  const { data, isLoading: isLoadingBranch } = useData(
-    branchId && isFFUAgency({ branchId })
-  );
-
-  const isFFU = !!data?.branches?.hitcount;
+  const { agencyName, isLoading: isLoadingBranch } = useBranchInfo({
+    branchId,
+  });
 
   const hasError = pincodeIsRequired && pincode;
 
@@ -73,8 +72,8 @@ export default function Wrap() {
 
   return (
     <Pincode
+      agencyName={agencyName}
       isLoading={isLoading}
-      isFFUAgency={isFFU}
       error={confirmButtonClicked && hasError}
       onChange={(val) => setPincode(val)}
       value={pincode}

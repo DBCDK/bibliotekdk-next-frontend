@@ -64,7 +64,7 @@ const CheckoutForm = () => {
     <div className={styles.container}>
       <LocalizationInformation orders={orders} />
       <OrdererInformation />
-      {physicalMaterialsCount > 0 && <Pincode />}
+      <Pincode />
 
       <div>
         {/* Errors and messages */}
