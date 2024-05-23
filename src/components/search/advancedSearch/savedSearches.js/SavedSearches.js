@@ -55,9 +55,10 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
           </Text>
         </div>
         <Icon
-          className={`${
-            expanded ? styles.accordionExpanded : styles.accordionCollapsed
-          }`}
+          className={cx(styles.accordionIcon, {
+            [styles.accordionExpanded]: expanded,
+            [styles.accordionCollapsed]: !expanded,
+          })}
           size={3}
           src={`${expanded ? "collapseCircle" : "expand"}.svg`}
         />
