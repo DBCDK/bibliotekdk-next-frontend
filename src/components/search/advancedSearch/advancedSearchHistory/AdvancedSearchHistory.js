@@ -22,6 +22,7 @@ import Button from "@/components/base/button";
 import CombinedSearch from "@/components/search/advancedSearch/combinedSearch/CombinedSearch";
 import useSavedSearches from "@/components/hooks/useSavedSearches";
 import { useModal } from "@/components/_modal";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 //Component to render facets
 export function FormatedFacets({ facets, className }) {
@@ -113,6 +114,8 @@ export function SearchQueryDisplay({ item }) {
 function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
   const modal = useModal();
   const breakpoint = useBreakpoint();
+  const { isAuthenticated } = useAuthentication();
+
   const { deleteSearches, useSavedSearchByCql } = useSavedSearches();
   //check if search has already been saved in userdata
   const { savedObject, mutate } = useSavedSearchByCql({ cql: item.key });
@@ -163,24 +166,26 @@ function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
           Translate({ context: "search", label: "title" }).toLowerCase()}
       </Text>
 
-      <Icon
-        className={styles.saveSearchIcon}
-        size={3}
-        src={`${isSaved ? "heart_filled" : "heart"}.svg`}
-        onClick={async () => {
-          if (isSaved) {
-            //remove search
-            await deleteSearches({ idsToDelete: [savedObject?.id] });
-            mutate();
-          } else {
-            //open save search modal
-            modal.push("saveSearch", {
-              item: item,
-              onSaveDone: mutate,
-            });
-          }
-        }}
-      />
+      {isAuthenticated && (
+        <Icon
+          className={styles.saveSearchIcon}
+          size={3}
+          src={`${isSaved ? "heart_filled" : "heart"}.svg`}
+          onClick={async () => {
+            if (isSaved) {
+              //remove search
+              await deleteSearches({ idsToDelete: [savedObject?.id] });
+              mutate();
+            } else {
+              //open save search modal
+              modal.push("saveSearch", {
+                item: item,
+                onSaveDone: mutate,
+              });
+            }
+          }}
+        />
+      )}
     </div>
   );
 }
@@ -210,10 +215,9 @@ export function HistoryHeaderActions({
   checked,
   partiallyChecked,
   disabled,
-  checkedObjects = [],
+  setShowCombinedSearch,
 }) {
   const breakpoint = useBreakpoint();
-  const [showCombinedSearch, setShowCombinedSearch] = useState(false);
 
   const showCombineSearch = () => setShowCombinedSearch(true);
 
@@ -236,19 +240,10 @@ export function HistoryHeaderActions({
     { child: combineSearchLabel, callback: showCombineSearch },
   ];
 
-  if (showCombinedSearch) {
-    return (
-      <CombinedSearch
-        cancelCombinedSearch={() => setShowCombinedSearch(false)}
-        queries={checkedObjects}
-      />
-    );
-  }
-
   if (breakpoint === "xs") {
     return (
       <div className={cx(styles.menuDropdown)}>
-        <MenuDropdown options={MENUITEMS} isLeftAlligned={true} />
+        <MenuDropdown options={MENUITEMS} />
       </div>
     );
   }
@@ -358,6 +353,7 @@ export function SearchHistoryNavigation() {
 function HistoryHeader() {
   return (
     <div className={cx(styles.header, styles.grid)}>
+      <div />
       <Text type="text4">
         {Translate({ context: "search", label: "timeForSearch" })}
       </Text>
@@ -412,9 +408,9 @@ function splitHistoryItems(storedValues) {
 export function AdvancedSearchHistory() {
   const { storedValue, deleteValue } = useAdvancedSearchHistory();
   const [checkboxList, setCheckboxList] = useState([]);
-
+  const [showCombinedSearch, setShowCombinedSearch] = useState(false);
   const breakpoint = useBreakpoint();
-
+  const isMobile = breakpoint === "xs";
   /**
    * Set or unset ALL checkboxes in search history
    */
@@ -465,7 +461,7 @@ export function AdvancedSearchHistory() {
     return (
       <>
         {title && items.length > 0 && (
-          <Text type="text4" className={styles.itemsheader}>
+          <Text type="text3" className={styles.itemsheader}>
             {title}
           </Text>
         )}
@@ -493,23 +489,61 @@ export function AdvancedSearchHistory() {
 
   return (
     <div className={styles.container}>
-      <Title
-        type="title3"
-        data-cy="advanced-search-search-history"
-        className={styles.title}
-      >
-        {Translate({ context: "suggester", label: "historyTitle" })}
-      </Title>
+      {isMobile ? (
+        <>
+          <div className={styles.titleAndActionHeader}>
+            <Title type="title3" className={styles.title}>
+              {Translate({ context: "suggester", label: "historyTitle" })}
+            </Title>
+            <HistoryHeaderActions
+              deleteSelected={onDeleteSelected}
+              setAllChecked={setAllChecked}
+              checked={storedValue?.length === checkboxList?.length}
+              partiallyChecked={checkboxList?.length > 0}
+              disabled={storedValue?.length === 0}
+              checkedObjects={checkedObjects}
+              showCombinedSearch={showCombinedSearch}
+              setShowCombinedSearch={setShowCombinedSearch}
+            />
+          </div>
+          <SearchHistoryNavigation />
+          {showCombinedSearch && (
+            <CombinedSearch
+              cancelCombinedSearch={() => setShowCombinedSearch(false)}
+              queries={checkedObjects}
+            />
+          )}
+        </>
+      ) : (
+        <>
+          <Title
+            type="title3"
+            data-cy="advanced-search-search-history"
+            className={styles.title}
+          >
+            {Translate({ context: "suggester", label: "historyTitle" })}
+          </Title>
 
-      <SearchHistoryNavigation />
-      <HistoryHeaderActions
-        deleteSelected={onDeleteSelected}
-        setAllChecked={setAllChecked}
-        checked={storedValue?.length === checkboxList?.length}
-        partiallyChecked={checkboxList?.length > 0}
-        disabled={storedValue?.length === 0}
-        checkedObjects={checkedObjects}
-      />
+          <SearchHistoryNavigation />
+          {showCombinedSearch ? (
+            <CombinedSearch
+              cancelCombinedSearch={() => setShowCombinedSearch(false)}
+              queries={checkedObjects}
+            />
+          ) : (
+            <HistoryHeaderActions
+              deleteSelected={onDeleteSelected}
+              setAllChecked={setAllChecked}
+              checked={storedValue?.length === checkboxList?.length}
+              partiallyChecked={checkboxList?.length > 0}
+              disabled={storedValue?.length === 0}
+              checkedObjects={checkedObjects}
+              showCombinedSearch={showCombinedSearch}
+              setShowCombinedSearch={setShowCombinedSearch}
+            />
+          )}
+        </>
+      )}
 
       <div className={styles.table_grid}>
         {breakpoint !== "xs" && <HistoryHeader />}

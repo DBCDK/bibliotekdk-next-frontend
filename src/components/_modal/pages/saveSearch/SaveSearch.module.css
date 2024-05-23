@@ -1,7 +1,7 @@
 .container {
   max-width: 600px;
   padding: 0 var(--pt2);
-  padding: var(--pt2) var(--pt6) var(--pt4) var(--pt6);
+  padding: var(--pt2) var(--pt2) var(--pt4) var(--pt2);
 }
 
 .container h2 {

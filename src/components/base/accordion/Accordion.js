@@ -41,6 +41,7 @@ export function Item({
   isLoading,
   CustomHeaderCompnent,
   useScroll = true,
+  className,
 }) {
   const [scrolledToHash, setScrolledToHash] = useState(false);
   const router = useRouter();
@@ -94,7 +95,11 @@ export function Item({
   }
 
   return (
-    <Card className={styles.element} data-cy="accordion-item" ref={elementRef}>
+    <Card
+      className={[styles.element, className].join(" ")}
+      data-cy="accordion-item"
+      ref={elementRef}
+    >
       <Card.Header
         as={Link}
         border={{ top: { keepVisible: true }, bottom: { keepVisible: true } }}
