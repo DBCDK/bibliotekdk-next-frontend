@@ -159,7 +159,21 @@ const game = [
 ];
 
 //input indexes for materialtype "sheetmusic"
-const sheetmusic = [];
+const sheetmusic = [
+  { index: "term.default", placeholder: "default placeholder" },
+  {
+    searchIndex: "term.creator",
+    label: "sheetmusic_term.creator",
+  },
+  {
+    searchIndex: "term.title",
+    label: "sheetmusic_term.title",
+  },
+  {
+    searchIndex: "term.titlemanifestationpart",
+    label: "sheetmusic_term.titlemanifestationpart",
+  },
+];
 
 /**
  * The indexes to be shown in dropdowns by materialtype. An index comes in the form:

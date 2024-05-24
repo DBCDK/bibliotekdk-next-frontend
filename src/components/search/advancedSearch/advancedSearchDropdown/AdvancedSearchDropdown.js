@@ -214,6 +214,7 @@ export default function AdvancedSearchDropdown({
                     key={`${item.name}-${index}`}
                     onSelect={toggler}
                     label={item.name}
+                    className={styles.dropdownpadding}
                   >
                     <CheckboxItem
                       item={item}

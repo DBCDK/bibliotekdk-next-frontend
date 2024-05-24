@@ -1,31 +1,26 @@
 import {
   agesFormatterAndComparitor,
   agesIndices,
-  dummy__filmNationality,
-  dummy__gamePlatform,
-  dummy__genreAndForm,
-  dummy__languages,
-  dummy__pegi,
-  // dummy__players,
-  dummy__specificmaterialTypes,
   publicationYearFormatterAndComparitor,
   publicationYearIndices,
 } from "@/components/search/advancedSearch/advancedSearchHelpers/dummy__default_advanced_search_fields";
 import { convertToDropdownInput } from "@/components/search/advancedSearch/advancedSearchHelpers/convertToDropdownInput";
 import { FormTypeEnum } from "@/components/search/advancedSearch/advancedSearchHelpers/helperComponents/HelperComponents";
 import isEmpty from "lodash/isEmpty";
+import { useComplexSearchFacets } from "@/components/search/advancedSearch/useComplexSearchFacets";
 
 export const DropdownIndicesEnum = {
-  LANGUAGES: "phrase.mainlanguage",
+  MAINLANGUAGES: "phrase.mainlanguage",
   MATERIAL_TYPES_SPECIFIC: "phrase.specificmaterialtype",
   MATERIAL_TYPES_GENERAL: "phrase.generalmaterialtype",
   PUBLICATION_YEAR: "publicationyear",
   AGES: "ages",
   GENRE: "phrase.genreandform",
-  FILM_NATIONALITY: "phrase.filmnationality",
-  GAME_PLATFORM: "phrase.gameplatform",
+  FILMNATIONALITY: "phrase.filmnationality",
+  GAMEPLATFORM: "phrase.gameplatform",
   PLAYERS: "phrase.players",
   PEGI: "phrase.pegi",
+  GENERALAUDIENCE: "phrase.generalaudience",
 };
 
 const specialIndices = new Set([
@@ -120,15 +115,42 @@ export function formattersAndComparitors(indexName) {
   };
 }
 
+function getFacetsForIndex(data, index) {
+  const facets = data?.complexSearch?.facets?.find((dat) => dat.name === index);
+  return facets?.values || [];
+}
+
+function parseForFacets({ data, isLoading, error, index }) {
+  const itemForDropDowns = {
+    prioritisedItems:
+      isLoading || error ? [] : getFacetsForIndex(data, index)?.slice(0, 3),
+    prioritisedFormType: FormTypeEnum.CHECKBOX,
+    unprioritisedItems:
+      isLoading || error ? [] : getFacetsForIndex(data, index),
+    unprioritisedFormType: FormTypeEnum.CHECKBOX,
+    overrideValueAs: "name",
+  };
+
+  return itemForDropDowns;
+}
 /**
  *
  * @param initDropdowns
  * @returns {Array.<DropdownUnit>}
  */
 export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
+  const { facetResponse, isLoading, error } = useComplexSearchFacets(workType);
+
   const filmnationality = {
-    items: convertToDropdownInput(dummy__filmNationality()),
-    indexName: DropdownIndicesEnum.FILM_NATIONALITY,
+    items: convertToDropdownInput(
+      parseForFacets({
+        data: facetResponse,
+        isLoading,
+        error,
+        index: DropdownIndicesEnum.FILMNATIONALITY,
+      })
+    ),
+    indexName: DropdownIndicesEnum.FILMNATIONALITY,
   };
 
   const publicationYear = {
@@ -137,23 +159,39 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
   };
 
   const genreAndForm = {
-    items: convertToDropdownInput(dummy__genreAndForm()),
+    items: convertToDropdownInput(
+      parseForFacets({
+        data: facetResponse,
+        isLoading,
+        error,
+        index: DropdownIndicesEnum.GENRE,
+      })
+    ),
     indexName: DropdownIndicesEnum.GENRE,
   };
 
   const specificMaterialTypes = {
-    items: convertToDropdownInput(dummy__specificmaterialTypes()),
+    items: convertToDropdownInput(
+      parseForFacets({
+        data: facetResponse,
+        isLoading,
+        error,
+        index: DropdownIndicesEnum.MATERIAL_TYPES_SPECIFIC,
+      })
+    ),
     indexName: DropdownIndicesEnum.MATERIAL_TYPES_SPECIFIC,
   };
 
-  // const generalMaterialTypes = {
-  //   items: convertToDropdownInput(dummy__generalmaterialTypes()),
-  //   indexName: DropdownIndicesEnum.MATERIAL_TYPES_GENERAL,
-  // };
-
   const languages = {
-    items: convertToDropdownInput(dummy__languages()),
-    indexName: DropdownIndicesEnum.LANGUAGES,
+    items: convertToDropdownInput(
+      parseForFacets({
+        data: facetResponse,
+        isLoading,
+        error,
+        index: DropdownIndicesEnum.MAINLANGUAGES,
+      })
+    ),
+    indexName: DropdownIndicesEnum.MAINLANGUAGES,
   };
 
   const ages = {
@@ -162,8 +200,27 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
   };
 
   const gamePlatform = {
-    items: convertToDropdownInput(dummy__gamePlatform()),
-    indexName: DropdownIndicesEnum.GAME_PLATFORM,
+    items: convertToDropdownInput(
+      parseForFacets({
+        data: facetResponse,
+        isLoading,
+        error,
+        index: DropdownIndicesEnum.GAMEPLATFORM,
+      })
+    ),
+    indexName: DropdownIndicesEnum.GAMEPLATFORM,
+  };
+
+  const generalAudience = {
+    items: convertToDropdownInput(
+      parseForFacets({
+        data: facetResponse,
+        isLoading,
+        error,
+        index: DropdownIndicesEnum.GENERALAUDIENCE,
+      })
+    ),
+    indexName: DropdownIndicesEnum.GENERALAUDIENCE,
   };
 
   // will be used at a later time
@@ -173,7 +230,14 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
   // };
 
   const pegi = {
-    items: convertToDropdownInput(dummy__pegi()),
+    items: convertToDropdownInput(
+      parseForFacets({
+        data: facetResponse,
+        isLoading,
+        error,
+        index: DropdownIndicesEnum.PEGI,
+      })
+    ),
     indexName: DropdownIndicesEnum.PEGI,
   };
 
@@ -239,16 +303,13 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
           dropdownUnit: dropdownUnit,
         })
     ),
-    // @TODO .. sheetmusic same as music - it that so ??
-    sheetmusic: [specificMaterialTypes, genreAndForm, publicationYear].map(
-      (dropdownUnit) =>
-        getDropdownFromUrl({
-          initDropdowns: initDropdowns,
-          dropdownUnit: dropdownUnit,
-        })
+    sheetmusic: [languages, generalAudience].map((dropdownUnit) =>
+      getDropdownFromUrl({
+        initDropdowns: initDropdowns,
+        dropdownUnit: dropdownUnit,
+      })
     ),
   };
-
   // The init dropdown holds the dropdowns configured (selected) - if a selected dropdown is NOT
   // in types we return it to be deleted from url :)
   const toRemove = initDropdowns.filter(
