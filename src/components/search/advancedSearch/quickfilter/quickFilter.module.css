@@ -1,0 +1,34 @@
+.group {
+  display: flex;
+}
+
+.radio {
+  border: none;
+  padding: var(--pt1) var(--pt2) var(--pt2) 0;
+}
+
+.text {
+  margin-left: var(--pt05);
+}
+
+.radio:first-child {
+  border: none;
+}
+
+.groupcontent {
+  padding-left: var(--pt2);
+}
+
+.filterContainer {
+  margin-bottom: var(--pt2);
+}
+
+.filterContainer .groupcontainer {
+  border-bottom: 1px solid var(--iron);
+  margin-bottom: var(--pt2);
+}
+
+.filterContainer .groupcontainer:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}

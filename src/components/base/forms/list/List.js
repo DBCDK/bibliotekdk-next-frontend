@@ -13,6 +13,7 @@ import styles from "./List.module.css";
 import cx from "classnames";
 import animations from "@/components/base/animation/animations.module.css";
 import { getFirstMatch } from "@/lib/utils";
+import Icon from "@/components/base/icon/Icon";
 
 /**
  * A custom Radio Button displayed as a row
@@ -36,6 +37,7 @@ function Radio({
   _ref,
   className,
   moveItemRightOnFocus,
+  checkBoxStyle = false,
   ...props
 }) {
   return (
@@ -67,6 +69,12 @@ function Radio({
           [animations["f-translate-right"]]: moveItemRightOnFocus,
         })}
       />
+      {/*{checkBoxStyle && <div className={styles.checkmark}>&#10003;</div>}*/}
+      {checkBoxStyle && (
+        // <div className={styles.checkmark}>
+        <Icon className={styles.checkmark} size={2} src="checkmark.svg"></Icon>
+        // </div>
+      )}
       <div
         className={cx(styles.content, {
           [animations["f-translate-right"]]: moveItemRightOnFocus,
@@ -77,6 +85,7 @@ function Radio({
     </div>
   );
 }
+
 Radio.propTypes = {
   disabled: PropTypes.bool,
   className: PropTypes.string,

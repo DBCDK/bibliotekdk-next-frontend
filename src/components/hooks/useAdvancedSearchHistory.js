@@ -58,7 +58,9 @@ export const useAdvancedSearchHistory = () => {
           (stor) =>
             stor?.cql?.trim() === value?.cql?.trim() &&
             JSON.stringify(stor?.selectedFacets) ===
-              JSON.stringify(value?.selectedFacets)
+              JSON.stringify(value?.selectedFacets) &&
+            JSON.stringify(stor?.selectedQuickFilters) ===
+              JSON.stringify(value?.selectedQuickFilters)
         );
 
         value["timestamp"] = getTimeStamp(getUnixTimeStamp());

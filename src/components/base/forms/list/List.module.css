@@ -28,6 +28,19 @@
   border-color: var(--blue);
 }
 
+.checkmark {
+  display: none;
+}
+
+.row.selected > .checkmark {
+  color: white;
+  display: block;
+  position: absolute;
+  left: 1px;
+  transform: scale(0.7);
+  font-weight: bolder;
+}
+
 .row .content {
   width: 100%;
 }
@@ -52,7 +65,7 @@
   transition: transform 0.4s;
 }
 .row.selected > .dot::before {
-  transform: scale(0.7);
+  transform: scale(0.9);
 }
 .row > .dot::after {
   border: 1px solid var(--gray);
