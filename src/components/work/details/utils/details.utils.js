@@ -611,6 +611,14 @@ function RenderDk5({ values }) {
   ));
 }
 
+function RenderPlayers({ values }) {
+  return (
+    <Text type="text4" tag={"div"}>
+      For {values} spillere
+    </Text>
+  );
+}
+
 /**
  * Main method for retrieving fields to show in details section on workpage.
  * Configurable arrays for different materialtypes - the fieldsMap holds array of
@@ -823,6 +831,7 @@ export function fieldsForRows(manifestation, work, context) {
         players: {
           label: Translate({ ...context, label: "participants" }),
           value: manifestation?.audience?.players?.display,
+          jsxParser: RenderPlayers,
         },
       },
       {

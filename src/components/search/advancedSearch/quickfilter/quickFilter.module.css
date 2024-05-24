@@ -4,7 +4,7 @@
 
 .radio {
   border: none;
-  padding: var(--pt1) var(--pt2) var(--pt2) 0;
+  padding: var(--pt1) var(--pt2) var(--pt1) 0;
 }
 
 .text {
@@ -25,7 +25,7 @@
 
 .filterContainer .groupcontainer {
   border-bottom: 1px solid var(--iron);
-  margin-bottom: var(--pt2);
+  margin-bottom: var(--pt1);
 }
 
 .filterContainer .groupcontainer:last-child {
