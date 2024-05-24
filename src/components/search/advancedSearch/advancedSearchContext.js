@@ -81,6 +81,11 @@ export function getInitialInputFields(workType = "all") {
       {
         value: "",
         prefixLogicalOperator: LogicalOperatorsEnum.AND,
+        searchIndex: "term.subject",
+      },
+      {
+        value: "",
+        prefixLogicalOperator: LogicalOperatorsEnum.AND,
         searchIndex: "term.hostpublication",
       },
     ],
@@ -93,13 +98,13 @@ export function getInitialInputFields(workType = "all") {
       {
         value: "",
         prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.subject",
+        searchIndex: "term.creatorcontributor",
+        label: "movie_term.creatorcontributor",
       },
       {
         value: "",
         prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.creatorcontributor",
-        label: "movie_term.creatorcontributor",
+        searchIndex: "term.subject",
       },
     ],
     music: [

@@ -2524,8 +2524,8 @@
         "en": "Published in"
       },
       "advanced-dropdown-movie_term.creatorcontributor": {
-        "da": "Skuespillere",
-        "en": "Actors"
+        "da": "Instruktør/ophav",
+        "en": "Director/creators"
       },
       "advanced-dropdown-movie_term.fictionalcharacter": {
         "da": "Fiktiv karakter",
@@ -2560,9 +2560,25 @@
         "da": "Sangtitel",
         "en": "Songtitle"
       },
+      "advanced-dropdown-game_term.fictionalcharacter": {
+        "da": "Fiktiv karakter",
+        "en": "Fictive character"
+      },
+      "advanced-dropdown-game_term.series": {
+        "da": "Serietitel",
+        "en": "Seriestitle"
+      },
+      "advanced-placeholder-game_term.series": {
+        "da": "Søg på en spilseries navn",
+        "en": "Search by title of game series"
+      },
       "advanced-placeholder-sheetmusic_term.titlemanifestationpart": {
         "da": "Søg på titel på sang eller musikstykke",
         "en": "Search by title of song or sheetmusic"
+      },
+      "advanced-placeholder-game_term.fictionalcharacter": {
+        "da": "Søg på spillets hovedperson mv.",
+        "en": "Search by fictive characters in game"
       },
       "advanced-placeholder-sheetmusic_term.title": {
         "da": "Søg på titel for nodehæfte eller album",

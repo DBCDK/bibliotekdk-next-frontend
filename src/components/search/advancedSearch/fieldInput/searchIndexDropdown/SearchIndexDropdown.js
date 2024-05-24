@@ -14,7 +14,8 @@ import cx from "classnames";
 export default function IndexDropdown({ options = [], className, index }) {
   const { handleIndexChange, inputFields } = useAdvancedSearchContext();
 
-  const selected = inputFields[index].label || inputFields[index].searchIndex;
+  const selected = inputFields[index].searchIndex;
+  const label = inputFields[index].label || inputFields[index].searchIndex;
 
   return (
     <Dropdown className={`${styles.dropdownwrap} ${className}`}>
@@ -31,7 +32,7 @@ export default function IndexDropdown({ options = [], className, index }) {
         >
           {Translate({
             context: "search",
-            label: `advanced-dropdown-${selected}`,
+            label: `advanced-dropdown-${label}`,
           })}
           <Icon
             size={{ w: 1, h: 1 }}

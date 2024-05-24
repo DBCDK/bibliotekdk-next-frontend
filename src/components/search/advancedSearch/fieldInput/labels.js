@@ -152,8 +152,18 @@ const game = [
   { index: "term.contributor", placeholder: "contributor placeholder" },
   { index: "term.subject", placeholder: "subject placeholder" },
   {
+    index: "term.fictionalcharacter",
+    placeholder: "fictionalcharacter placeholder",
+    label: "game_term.fictionalcharacter",
+  },
+  {
     index: "term.publisher",
     label: "game_term.publisher",
+  },
+  {
+    index: "term.series",
+    placeholder: "series placeholder",
+    label: "game_term.series",
   },
   { index: "dk5", placeholder: "dk5 placeholder" },
 ];
