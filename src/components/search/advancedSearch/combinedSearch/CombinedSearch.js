@@ -86,7 +86,7 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
   const searchItemsWrapper = useRef(null);
 
   useEffect(() => {
-    if (searchItemsWrapper.current) {
+    if (searchItemsWrapper.current?.style) {
       const currentHeight = searchItemsWrapper.current.scrollHeight; // get the element height based on content
       searchItemsWrapper.current.style.overflow = `hidden`;
       searchItemsWrapper.current.style.maxHeight = `${currentHeight}px`;

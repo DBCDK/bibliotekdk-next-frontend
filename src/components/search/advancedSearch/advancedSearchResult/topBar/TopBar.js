@@ -11,6 +11,7 @@ import { formattersAndComparitors } from "@/components/search/advancedSearch/use
 import useSavedSearches from "@/components/hooks/useSavedSearches";
 import IconButton from "@/components/base/iconButton";
 import { useModal } from "@/components/_modal";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 /**
  *
@@ -182,6 +183,7 @@ function FormatDropdowns({ dropdowns, showAndOperator }) {
 
 export default function TopBar({ isLoading = false, searchHistoryObj }) {
   const modal = useModal();
+  const { isAuthenticated } = useAuthentication();
 
   const { setShowPopover } = useAdvancedSearchContext();
 
@@ -228,6 +230,36 @@ export default function TopBar({ isLoading = false, searchHistoryObj }) {
             className={styles.edit_search}
           >
             <FormattedQuery>
+              {isAuthenticated && (
+                <Text type="text3" tag="span" skeleton={isLoading}>
+                  <Link
+                    onClick={() => {
+                      setShowPopover(true);
+                    }}
+                    border={{
+                      top: false,
+                      bottom: {
+                        keepVisible: true,
+                      },
+                    }}
+                  >
+                    {Translate({ context: "search", label: "edit" })}
+                  </Link>
+                </Text>
+              )}
+            </FormattedQuery>
+          </Col>
+
+          <Col xs={12} lg={2} className={styles.saveSearchButton}>
+            {isAuthenticated ? (
+              <IconButton
+                onClick={onSaveSearchClick}
+                icon={`${isSaved ? "heart_filled" : "heart"}`}
+                keepUnderline
+              >
+                {Translate({ context: "search", label: "saveSearch" })}
+              </IconButton>
+            ) : (
               <Text type="text3" tag="span" skeleton={isLoading}>
                 <Link
                   onClick={() => {
@@ -243,17 +275,7 @@ export default function TopBar({ isLoading = false, searchHistoryObj }) {
                   {Translate({ context: "search", label: "editSearch" })}
                 </Link>
               </Text>
-            </FormattedQuery>
-          </Col>
-
-          <Col xs={12} lg={2} className={styles.saveSearchButton}>
-            <IconButton
-              onClick={onSaveSearchClick}
-              icon={`${isSaved ? "heart_filled" : "heart"}`}
-              keepUnderline
-            >
-              {Translate({ context: "search", label: "saveSearch" })}
-            </IconButton>
+            )}
           </Col>
         </Row>
       </Container>

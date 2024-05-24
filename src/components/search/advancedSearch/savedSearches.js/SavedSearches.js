@@ -15,6 +15,8 @@ import {
   HistoryHeaderActions,
   SearchQueryDisplay,
 } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
+import CombinedSearch from "@/components/search/advancedSearch/combinedSearch/CombinedSearch";
+
 import Accordion, { Item } from "@/components/base/accordion";
 import { unixToFormatedDate } from "@/lib/utils";
 import Link from "@/components/base/link";
@@ -22,10 +24,68 @@ import { useModal } from "@/components/_modal";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import Button from "@/components/base/button";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   const formatedDate = unixToFormatedDate(item.unixtimestamp);
   const { deleteSearches } = useSavedSearches();
+  const breakpoint = useBreakpoint();
+  const isMobile = breakpoint === "xs";
+
+  if (isMobile) {
+    return (
+      <div className={styles.savedItemRow} {...props}>
+        <div
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent the accordion from expanding
+            e.preventDefault();
+            onSelect(item, !checked);
+          }}
+        >
+          <Checkbox
+            id={`select-item-${item.id}`}
+            tabIndex="-1"
+            ariaLabelledBy={`select-item-${index}`}
+            ariaLabel={`select-item-${index}`}
+            checked={checked}
+            onMouseDown={(e) => {
+              e.stopPropagation(); // Stop the mouse down event from propagating
+            }}
+          />
+        </div>
+
+        <div className={styles.mobilePreview}>
+          {item?.name ? (
+            <Text className={styles.searchPreview} type="text2">
+              {item?.name}
+            </Text>
+          ) : !isEmpty(item?.fieldSearch) ? (
+            <div>
+              <FormatFieldSearchIndexes fieldsearch={item.fieldSearch} />
+            </div>
+          ) : (
+            <Text className={styles.searchPreview} type="text2">
+              {item?.cql}
+            </Text>
+          )}
+          <Text type="text2">
+            {`${item.hitcount} ${Translate({
+              context: "search",
+              label: "results",
+            }).toLowerCase()}`}{" "}
+          </Text>
+        </div>
+        <Icon
+          className={cx(styles.accordionIcon, {
+            [styles.accordionExpanded]: expanded,
+            [styles.accordionCollapsed]: !expanded,
+          })}
+          size={3}
+          src={`${expanded ? "collapseCircle" : "expand"}.svg`}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.savedItemRow} {...props}>
@@ -48,23 +108,25 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
         />
       </div>
 
-      <Text className={styles.date}>{formatedDate}</Text>
-      <Text className={styles.searchPreview}>
-        {item?.name ? (
-          <Text type="text2">{item?.name}</Text>
-        ) : !isEmpty(item?.fieldSearch) ? (
-          <div>
-            <FormatFieldSearchIndexes fieldsearch={item.fieldSearch} />
-          </div>
-        ) : (
-          <Text type="text2">{item?.cql}</Text>
-        )}
-      </Text>
-      <Text>{item.hitcount} </Text>
+      <Text type="text2">{formatedDate}</Text>
+      {item?.name ? (
+        <Text className={styles.searchPreview} type="text2">
+          {item?.name}
+        </Text>
+      ) : !isEmpty(item?.fieldSearch) ? (
+        <div>
+          <FormatFieldSearchIndexes fieldsearch={item.fieldSearch} />
+        </div>
+      ) : (
+        <Text className={styles.searchPreview} type="text2">
+          {item?.cql}
+        </Text>
+      )}
+      <Text type="text2">{item.hitcount} </Text>
       <Icon
-        style={{ cursor: "pointer" }}
+        className={styles.removeItemIcon}
         size={3}
-        src={`heart_filled.svg`}
+        src={`trash-2.svg`}
         onClick={(e) => {
           e.stopPropagation();
           if (item?.id) {
@@ -73,9 +135,10 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
         }}
       />
       <Icon
-        className={`${styles.accordionIcon} ${
-          expanded ? styles.accordionExpanded : styles.accordionCollapsed
-        }`}
+        className={cx(styles.accordionIcon, {
+          [styles.accordionExpanded]: expanded,
+          [styles.accordionCollapsed]: !expanded,
+        })}
         size={3}
         src={`${expanded ? "collapseCircle" : "expand"}.svg`}
       />
@@ -88,6 +151,10 @@ export default function SavedSearches() {
   const [checkboxList, setCheckboxList] = useState([]);
   const modal = useModal();
   const { isAuthenticated } = useAuthentication();
+  const breakpoint = useBreakpoint();
+  const isMobile = breakpoint === "xs";
+
+  const [showCombinedSearch, setShowCombinedSearch] = useState(false);
 
   /**
    * Set or unset ALL checkboxes in saved search table
@@ -103,12 +170,12 @@ export default function SavedSearches() {
   /**
    * Delete selected entries in saved search table
    */
-  const onDeleteSelected = () => {
+  const onDeleteSelected = async () => {
     //filter for checked items and map for ids to delete
     const idsToDelete = savedSearches
       ?.filter((item) => checkboxList.includes(item.id) && item.id)
       .map((item) => item.id);
-    deleteSearches({ idsToDelete });
+    await deleteSearches({ idsToDelete });
     //uncheck deleted items
     setCheckboxList(checkboxList.filter((id) => !idsToDelete.includes(id)));
   };
@@ -144,30 +211,69 @@ export default function SavedSearches() {
 
   return (
     <div className={styles.container}>
-      <Title type="title3" className={styles.title}>
-        {Translate({ context: "suggester", label: "historyTitle" })}
-      </Title>
-      <SearchHistoryNavigation />
-      <HistoryHeaderActions
-        checkedObjects={checkedObjects}
-        deleteSelected={onDeleteSelected}
-        checked={
-          savedSearches?.length === checkboxList?.length &&
-          checkboxList?.length > 0
-        }
-        partiallyChecked={checkboxList?.length > 0}
-        disabled={!isAuthenticated || savedSearches?.length === 0}
-        setAllChecked={setAllChecked}
-      />
+      {isMobile ? (
+        <>
+          <div className={styles.titleAndActionHeader}>
+            <Title type="title3" className={styles.title}>
+              {Translate({ context: "suggester", label: "historyTitle" })}
+            </Title>
+            <HistoryHeaderActions
+              checkedObjects={checkedObjects} //TODO REMOVE??
+              deleteSelected={onDeleteSelected}
+              checked={
+                savedSearches?.length === checkboxList?.length &&
+                checkboxList?.length > 0
+              }
+              partiallyChecked={checkboxList?.length > 0}
+              disabled={!isAuthenticated || savedSearches?.length === 0}
+              setAllChecked={setAllChecked}
+              setShowCombinedSearch={setShowCombinedSearch}
+            />
+          </div>
+          <SearchHistoryNavigation />
+          {showCombinedSearch && (
+            <CombinedSearch
+              cancelCombinedSearch={() => setShowCombinedSearch(false)}
+              queries={checkedObjects}
+            />
+          )}
+        </>
+      ) : (
+        <>
+          <Title type="title3" className={styles.title}>
+            {Translate({ context: "suggester", label: "historyTitle" })}
+          </Title>
+          <SearchHistoryNavigation />
+          {showCombinedSearch ? (
+            <CombinedSearch
+              cancelCombinedSearch={() => setShowCombinedSearch(false)}
+              queries={checkedObjects}
+            />
+          ) : (
+            <HistoryHeaderActions
+              checkedObjects={checkedObjects}
+              deleteSelected={onDeleteSelected}
+              checked={
+                savedSearches?.length === checkboxList?.length &&
+                checkboxList?.length > 0
+              }
+              partiallyChecked={checkboxList?.length > 0}
+              disabled={!isAuthenticated || savedSearches?.length === 0}
+              setAllChecked={setAllChecked}
+              setShowCombinedSearch={setShowCombinedSearch}
+            />
+          )}
+        </>
+      )}
       <div className={styles.tableContainer}>
         <div
-          className={cx(styles.newTableHeader, {
+          className={cx(styles.tableHeader, {
             [styles.tableHeaderBorder]:
               !isAuthenticated || savedSearches?.length === 0,
           })}
         >
           <div />
-          <Text type="text4" className={styles.date}>
+          <Text type="text4">
             {Translate({ context: "search", label: "date" })}
           </Text>
           <Text type="text4">
@@ -209,6 +315,7 @@ export default function SavedSearches() {
             {savedSearches?.map((item, index) => (
               <Item
                 dataCy={`accordion-item-${index}`}
+                className={styles.accordionContainer}
                 CustomHeaderCompnent={(props) => (
                   <SavedItemRow
                     {...props}
@@ -234,7 +341,7 @@ export default function SavedSearches() {
                     <div>
                       <SearchQueryDisplay item={item} />
                     </div>
-                    <Text type="text3" tag="span">
+                    <Text type="text2" tag="span">
                       <Link
                         onClick={() => {
                           //show edit name modal
