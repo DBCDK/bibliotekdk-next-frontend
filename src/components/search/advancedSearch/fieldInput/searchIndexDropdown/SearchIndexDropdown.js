@@ -13,7 +13,6 @@ import cx from "classnames";
  */
 export default function IndexDropdown({ options = [], className, index }) {
   const { handleIndexChange, inputFields } = useAdvancedSearchContext();
-
   const selected = inputFields[index].searchIndex;
   const label = inputFields[index].label || inputFields[index].searchIndex;
 
