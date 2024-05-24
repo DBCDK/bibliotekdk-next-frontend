@@ -25,6 +25,10 @@
   padding: 0;
 }
 
+.dropdownpadding {
+  padding: var(--pt1) var(--pt2) var(--pt1) 0;
+}
+
 .sticky_base_class {
   position: sticky;
   opacity: 100%;
@@ -78,7 +82,7 @@
 
 .list_group > *:not(hr) {
   padding-left: var(--pt1);
-  height: var(--pt5);
+
   align-items: center;
 }
 
