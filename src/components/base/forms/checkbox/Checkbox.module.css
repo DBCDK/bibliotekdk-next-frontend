@@ -1,7 +1,7 @@
 .wrap {
   position: relative;
   display: inline-block;
-  width: var(--pt2);
+  min-width: var(--pt2);
   height: var(--pt2);
   background-color: white;
   cursor: pointer;
