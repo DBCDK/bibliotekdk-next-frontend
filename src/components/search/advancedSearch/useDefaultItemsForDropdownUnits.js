@@ -158,11 +158,6 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
     indexName: DropdownIndicesEnum.PUBLICATION_YEAR,
   };
 
-  // const genreAndForm = {
-  //   items: convertToDropdownInput(dummy__genreAndForm()),
-  //   indexName: DropdownIndicesEnum.FILM_NATIONALITY,
-  // };
-
   const genreAndForm = {
     items: convertToDropdownInput(
       parseForFacets({
@@ -186,11 +181,6 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
     ),
     indexName: DropdownIndicesEnum.MATERIAL_TYPES_SPECIFIC,
   };
-
-  // const generalMaterialTypes = {
-  //   items: convertToDropdownInput(dummy__generalmaterialTypes()),
-  //   indexName: DropdownIndicesEnum.MATERIAL_TYPES_GENERAL,
-  // };
 
   const languages = {
     items: convertToDropdownInput(
