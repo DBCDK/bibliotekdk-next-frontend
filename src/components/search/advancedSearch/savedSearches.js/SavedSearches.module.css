@@ -101,7 +101,7 @@
 
 .savedItemRow {
   display: grid;
-  grid-template-columns: var(--pt2) var(--pt16) 14fr var(--pt6) 1fr 1fr;
+  grid-template-columns: var(--pt2) var(--pt16) 14fr var(--pt6) 1.5fr 2fr;
   cursor: pointer;
   padding: var(--pt1_5) var(--pt2);
   column-gap: var(--pt2);
@@ -123,7 +123,7 @@
   display: none;
 }
 .accordionIcon {
-  justify-self: auto;
+  justify-self: flex-end;
   transition: transform 0.35s;
   cursor: pointer;
 }
@@ -133,13 +133,14 @@
 
 @media (min-width: 576px) {
   .savedItemRow {
-    grid-template-columns: var(--pt2) var(--pt16) 14fr var(--pt6) 1fr 1fr;
+    grid-template-columns: var(--pt2) var(--pt16) 14fr var(--pt6) 1.5fr 2fr;
+
     column-gap: var(--pt2);
   }
 
   .tableHeader {
     display: grid;
-    grid-template-columns: var(--pt2) var(--pt16) 14fr var(--pt4) 1fr 1fr;
+    grid-template-columns: var(--pt2) var(--pt16) 14fr var(--pt6) 1.5fr 2fr;
     padding: var(--pt1_5) var(--pt2);
     column-gap: var(--pt2);
   }
