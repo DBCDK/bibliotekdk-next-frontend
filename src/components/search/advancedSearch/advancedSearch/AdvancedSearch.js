@@ -65,7 +65,7 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
         ? convertStateToCql(fieldSearchFromUrl)
         : cqlFromUrl;
       if (!cqlFromUrl && parsedCQL === cqlParsedFromUrl) {
-        const query = { fieldSearch: stateToString };
+        const query = { fieldSearch: encodeURIComponent(stateToString) };
         router.push({ pathname: "/avanceret", query });
       } else {
         const query = {
@@ -74,7 +74,7 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
         router.push({ pathname: "/avanceret", query });
       }
     } else {
-      const query = { fieldSearch: stateToString };
+      const query = { fieldSearch: encodeURIComponent(stateToString) };
       router.push({ pathname: "/avanceret", query });
       //save in state
       const cql = convertStateToCql({
