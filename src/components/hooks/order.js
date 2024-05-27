@@ -25,6 +25,7 @@ import { LOGIN_MODE, openLoginModal } from "../_modal/pages/login/utils";
 import * as orderMutations from "@/lib/api/order.mutations";
 import isEqual from "lodash/isEqual";
 import { getSessionStorageItem, setSessionStorageItem } from "@/lib/utils";
+import useDataCollect from "@/lib/useDataCollect";
 
 /**
  * Retrieves periodica information for a list of pids
@@ -589,6 +590,7 @@ const formatArticleForm = (formData, pid) => {
 };
 
 export function useSubmitOrders({ orders }) {
+  const collect = useDataCollect();
   const ordersKey = useMemo(() => JSON.stringify(orders), [orders]);
   const [receipt, setReceipt] = useGlobalState({
     key: `receipt:${ordersKey}`,
@@ -696,6 +698,14 @@ export function useSubmitOrders({ orders }) {
       setOrderCompleted[1](Date.now());
     }, 1000);
 
+    const summary = validation?.validatedOrders?.map((order) => ({
+      title: order?.materialData?.manifestations?.[0]?.titles?.full,
+      materialTypes: order?.materialData?.manifestations?.[0]?.materialTypes
+        ?.map((type) => type?.materialTypeSpecific?.code)
+        ?.join(", "),
+    }));
+    collect.collectSubmitOrder(summary);
+
     return receipt;
   }
 
@@ -710,6 +720,7 @@ export function useOrderFlow() {
   const modal = useModal();
   const { branchId } = usePickupBranchId();
   const { isAuthenticated } = useAuthentication();
+  const collect = useDataCollect();
 
   const storedOrders = useMemo(() => {
     // return [];
@@ -733,6 +744,7 @@ export function useOrderFlow() {
     setSessionStorageItem("storedOrders", JSON.stringify(orders));
     setInitialOrders(orders);
     setOrders(orders);
+    collect.collectStartOrderFlow({ count: orders?.length });
 
     if (isAuthenticated || branchId) {
       modal.push("ematerialfilter", {});
