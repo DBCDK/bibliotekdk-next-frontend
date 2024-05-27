@@ -48,14 +48,10 @@ Cypress.Commands.add("visitWithConsoleSpy", (url) => {
 });
 
 Cypress.Commands.add("verifyMatomoEvent", (event) => {
-  cy.window()
-    .its("document")
-    .then((document) => {
-      expect(document?._paq?.[0], "Verifying matomo event").to.deep.equal(
-        event
-      );
-      document._paq = [];
-    });
+  cy.window().then((window) => {
+    expect(window?._paq?.[0], "Verifying matomo event").to.deep.equal(event);
+    window._paq = [];
+  });
 });
 
 Cypress.Commands.add("getConsoleEntry", (match) => {

@@ -11,10 +11,10 @@ import {
 
 // Push event to matomo queue
 function matomoPushEvent(event) {
-  if (!document?._paq) {
-    document._paq = [];
+  if (!window?._paq) {
+    window._paq = [];
   }
-  document?._paq?.push(["trackEvent", ...event]);
+  window?._paq?.push(["trackEvent", ...event]);
 }
 
 export default function useDataCollect() {
