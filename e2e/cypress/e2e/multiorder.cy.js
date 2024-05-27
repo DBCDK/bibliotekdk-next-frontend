@@ -76,9 +76,19 @@ describe("Multi Order", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"
       );
+
+      cy.verifyMatomoEvent(undefined);
+
       cy.contains("Bestil single").click();
 
       cy.get('[data-cy="submit-button"]').click();
+
+      cy.verifyMatomoEvent([
+        "trackEvent",
+        "Bestil",
+        "Start bestil flow",
+        "Antal: 1",
+      ]);
 
       // submit button disabled, while submitting order
       cy.get('[data-cy="submit-button"]').should("be.disabled");
@@ -103,6 +113,13 @@ describe("Multi Order", () => {
           },
         });
       });
+
+      cy.verifyMatomoEvent([
+        "trackEvent",
+        "Bestil",
+        "Godkend",
+        "PID_ILL_ACCESS - full (BOOK)",
+      ]);
     });
 
     it("Should show failed material in receipt", () => {
@@ -246,6 +263,13 @@ describe("Multi Order", () => {
 
       cy.contains("Bestil tidsskrifter").click();
 
+      cy.verifyMatomoEvent([
+        "trackEvent",
+        "Bestil",
+        "Start bestil flow",
+        "Antal: 2",
+      ]);
+
       cy.contains("PID_PERIODICA_1 - full");
       cy.contains("PID_PERIODICA_2 - full");
 
@@ -311,6 +335,13 @@ describe("Multi Order", () => {
           },
         });
       });
+
+      cy.verifyMatomoEvent([
+        "trackEvent",
+        "Bestil",
+        "Godkend Multi",
+        "Antal: 2",
+      ]);
     });
     it("Should order specific article from periodica via Digital Article Service and ILL (prefer digital)", () => {
       cy.visitWithConsoleSpy(

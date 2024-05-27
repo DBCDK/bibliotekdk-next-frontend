@@ -47,6 +47,17 @@ Cypress.Commands.add("visitWithConsoleSpy", (url) => {
     });
 });
 
+Cypress.Commands.add("verifyMatomoEvent", (event) => {
+  cy.window()
+    .its("document")
+    .then((document) => {
+      expect(document?._paq?.[0], "Verifying matomo event").to.deep.equal(
+        event
+      );
+      document._paq = [];
+    });
+});
+
 Cypress.Commands.add("getConsoleEntry", (match) => {
   return cy
     .get("@log")
