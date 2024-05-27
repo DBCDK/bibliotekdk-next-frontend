@@ -312,60 +312,80 @@ export default function SavedSearches() {
         )}
         {savedSearches?.length > 0 && isAuthenticated ? (
           <Accordion dataCy="saved-searches-accordion">
-            {savedSearches?.map((item, index) => (
-              <Item
-                dataCy={`accordion-item-${index}`}
-                className={styles.accordionContainer}
-                CustomHeaderCompnent={(props) => (
-                  <SavedItemRow
-                    {...props}
-                    index={index}
-                    onSelect={onSelect}
-                    item={item}
-                    checked={
-                      checkboxList.findIndex((check) => check === item.id) !==
-                      -1
-                    }
-                  />
-                )}
-                key={item.id}
-                eventKey={item.id}
-              >
-                <div
-                  className={styles.accordionContentContainer}
-                  data-cy={`accordion-expanded-content-${index + 1}`}
+            {savedSearches?.map((item, index) => {
+              const formatedDate = unixToFormatedDate(item.unixtimestamp);
+              return (
+                <Item
+                  dataCy={`accordion-item-${index}`}
+                  className={styles.accordionContainer}
+                  CustomHeaderCompnent={(props) => (
+                    <SavedItemRow
+                      {...props}
+                      index={index}
+                      onSelect={onSelect}
+                      item={item}
+                      checked={
+                        checkboxList.findIndex((check) => check === item.id) !==
+                        -1
+                      }
+                    />
+                  )}
+                  key={item.id}
+                  eventKey={item.id}
                 >
-                  <div className={styles.accordionContent}>
-                    <div />
-                    <div />
-                    <div>
-                      <SearchQueryDisplay item={item} />
+                  <div
+                    className={styles.accordionContentContainer}
+                    data-cy={`accordion-expanded-content-${index + 1}`}
+                  >
+                    <div className={styles.accordionContent}>
+                      <div />
+                      <div />
+                      <div>
+                        <SearchQueryDisplay item={item} />
+                      </div>
+                      <Text type="text2" tag="span">
+                        <Link
+                          onClick={() => {
+                            //show edit name modal
+                            modal.push("saveSearch", {
+                              item: item,
+                              fromEditSearch: true,
+                            });
+                          }}
+                          border={{
+                            top: false,
+                            bottom: {
+                              keepVisible: true,
+                            },
+                          }}
+                        >
+                          {Translate({ context: "search", label: "editName" })}
+                        </Link>
+                      </Text>
+                      <div />
+                      <div />
                     </div>
-                    <Text type="text2" tag="span">
-                      <Link
-                        onClick={() => {
-                          //show edit name modal
-                          modal.push("saveSearch", {
-                            item: item,
-                            fromEditSearch: true,
-                          });
-                        }}
-                        border={{
-                          top: false,
-                          bottom: {
-                            keepVisible: true,
-                          },
-                        }}
-                      >
-                        {Translate({ context: "search", label: "editName" })}
-                      </Link>
-                    </Text>
-                    <div />
-                    <div />
+                    {isMobile && (
+                      <div className={styles.mobileContent}>
+                        <Text type="text2">{formatedDate}</Text>
+
+                        <Icon
+                          className={styles.removeItemIcon}
+                          size={3}
+                          src={`trash-2.svg`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (item?.id) {
+                              deleteSearches({ idsToDelete: [item.id] });
+                            }
+                          }}
+                        />
+                      </div>
+                    )}
                   </div>
-                </div>
-              </Item>
-            ))}
+                </Item>
+              );
+            })}
           </Accordion>
         ) : (
           isAuthenticated && (

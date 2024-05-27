@@ -168,3 +168,11 @@
   align-items: center;
   margin-bottom: var(--pt2);
 }
+
+.mobileContent {
+  display: grid;
+  grid-template-columns: 8fr 2fr;
+  margin-top: var(--pt3);
+  padding: 0 var(--pt2);
+  grid-column-gap: var(--pt2);
+}
