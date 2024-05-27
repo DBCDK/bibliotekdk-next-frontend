@@ -14,7 +14,7 @@ function matomoPushEvent(event) {
   if (!document?._paq) {
     document._paq = [];
   }
-  document?._paq?.push(event);
+  document?._paq?.push(["trackEvent", ...event]);
 }
 
 export default function useDataCollect() {
@@ -28,48 +28,26 @@ export default function useDataCollect() {
     collectRecommenderClick: (obj) => fetcher(collectRecommenderClick(obj)),
     collectSearchFeedback: (obj) => fetcher(collectSearchFeedback(obj)),
     collectAddBookmark: async ({ title, materialType }) => {
-      matomoPushEvent([
-        "trackEvent",
-        "Huskeliste",
-        "Tilføj",
-        `${title} (${materialType})`,
-      ]);
+      matomoPushEvent(["Huskeliste", "Tilføj", `${title} (${materialType})`]);
     },
     collectDelBookmark: async ({ title, materialType }) => {
-      matomoPushEvent([
-        "trackEvent",
-        "Huskeliste",
-        "Fjern",
-        `${title} (${materialType})`,
-      ]);
+      matomoPushEvent(["Huskeliste", "Fjern", `${title} (${materialType})`]);
     },
     collectDelMultipleBookmarks: async ({ count }) => {
-      matomoPushEvent([
-        "trackEvent",
-        "Huskeliste",
-        "Fjern Multi",
-        `Antal: ${count}`,
-      ]);
+      matomoPushEvent(["Huskeliste", "Fjern Multi", `Antal: ${count}`]);
     },
     collectStartOrderFlow: async ({ count }) => {
-      matomoPushEvent([
-        "trackEvent",
-        "Bestil",
-        "Start bestil flow",
-        `Antal: ${count}`,
-      ]);
+      matomoPushEvent(["Bestil", "Start bestil flow", `Antal: ${count}`]);
     },
     collectSubmitOrder: async (materials) => {
       if (materials?.length > 1) {
         matomoPushEvent([
-          "trackEvent",
           "Bestil",
           "Godkend Multi",
           `Antal: ${materials?.length}`,
         ]);
       } else {
         matomoPushEvent([
-          "trackEvent",
           "Bestil",
           "Godkend",
           `${materials?.[0]?.title} (${materials?.[0]?.materialTypes})`,
