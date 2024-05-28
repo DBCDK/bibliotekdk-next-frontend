@@ -94,9 +94,15 @@ export const useSavedSearches = () => {
         })
     );
 
+    const mutateData = () => {
+      setTimeout(() => {
+        mutate();
+      }, 400);
+    };
+
     return useMemo(() => {
       if (!data?.user?.savedSearchByCql) {
-        return { savedObject: null, mutate };
+        return { savedObject: null, mutate: mutateData };
       }
 
       const jsonSearchObject = data.user.savedSearchByCql.searchObject;
@@ -106,7 +112,7 @@ export const useSavedSearches = () => {
           id: data.user.savedSearchByCql.id,
           createdAt: data.user.savedSearchByCql.createdAt,
         },
-        mutate,
+        mutate: mutateData,
       };
     }, [data]);
   };
