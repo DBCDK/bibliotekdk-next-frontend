@@ -52,7 +52,7 @@
   --grid_template_areas: "checkbox search_query search_query null"
     "checkbox timestamp hitcount save_search";
   grid-template-areas: var(--grid_template_areas);
-  padding-left: var(--pt1);
+  padding-left: var(--pt2);
   column-gap: var(--pt2);
 }
 
@@ -138,7 +138,7 @@
 
 @media (min-width: 576px) {
   .row {
-    padding-left: var(--pt1);
+    padding-left: var(--pt2);
   }
 }
 
@@ -209,7 +209,7 @@
 
 @media (min-width: 576px) {
   .actionheader {
-    padding-left: var(--pt1);
+    padding-left: var(--pt2);
   }
 }
 
