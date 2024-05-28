@@ -19,14 +19,14 @@ import isEmpty from "lodash/isEmpty";
 
 export function getDefaultDropdownIndices() {
   return [
-    { searchIndex: DropdownIndicesEnum.LANGUAGES, value: [] },
+    { searchIndex: DropdownIndicesEnum.MAINLANGUAGES, value: [] },
     { searchIndex: DropdownIndicesEnum.MATERIAL_TYPES_GENERAL, value: [] },
     { searchIndex: DropdownIndicesEnum.PUBLICATION_YEAR, value: [] },
     { searchIndex: DropdownIndicesEnum.AGES, value: [] },
     { searchIndex: DropdownIndicesEnum.GENRE, value: [] },
     { searchIndex: DropdownIndicesEnum.MATERIAL_TYPES_SPECIFIC, value: [] },
-    { searchIndex: DropdownIndicesEnum.FILM_NATIONALITY, value: [] },
-    { searchIndex: DropdownIndicesEnum.GAME_PLATFORM, value: [] },
+    { searchIndex: DropdownIndicesEnum.FILMNATIONALITY, value: [] },
+    { searchIndex: DropdownIndicesEnum.GAMEPLATFORM, value: [] },
     { searchIndex: DropdownIndicesEnum.PLAYERS, value: [] },
     { searchIndex: DropdownIndicesEnum.PEGI, value: [] },
   ];
