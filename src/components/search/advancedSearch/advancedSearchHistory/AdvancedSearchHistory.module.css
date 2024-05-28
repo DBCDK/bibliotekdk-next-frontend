@@ -236,7 +236,7 @@
     border-bottom: none;
     margin-left: initial;
     margin-right: initial;
-    margin-bottom: var(--pt3);
+    margin-bottom: var(--pt5);
   }
   .navigationButtons a {
     padding-bottom: initial;
