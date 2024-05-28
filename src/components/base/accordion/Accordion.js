@@ -39,7 +39,7 @@ export function Item({
   onChange,
   id,
   isLoading,
-  CustomHeaderCompnent,
+  CustomHeaderComponent,
   useScroll = true,
   className,
 }) {
@@ -117,8 +117,8 @@ export function Item({
         aria-controls={`accordion-unique-${eventKey}-${title}`}
         aria-expanded={isCurrentEventKey}
       >
-        {CustomHeaderCompnent ? (
-          <CustomHeaderCompnent
+        {CustomHeaderComponent ? (
+          <CustomHeaderComponent
             onClick={onClick}
             onKeyDown={handleKeypress}
             expanded={isCurrentEventKey}

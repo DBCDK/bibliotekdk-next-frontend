@@ -1,3 +1,7 @@
+.container {
+  margin-top: var(--pt3);
+}
+
 @media (min-width: 576px) {
   .container {
     padding-inline: var(--pt2);
@@ -138,7 +142,7 @@
   .tableHeader {
     display: grid;
     grid-template-columns: var(--pt2) var(--pt16) 14fr var(--pt6) 1.5fr 2fr;
-    padding: 0 var(--pt2) var(--pt1_5) var(--pt2);
+    padding: 0 var(--pt2) var(--pt1) var(--pt2);
     column-gap: var(--pt2);
   }
 
@@ -172,4 +176,11 @@
   margin-top: var(--pt3);
   padding: 0 var(--pt2);
   grid-column-gap: var(--pt2);
+}
+
+@media (max-width: 370px) {
+  .titleAndActionHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
