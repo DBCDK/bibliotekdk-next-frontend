@@ -52,14 +52,14 @@
   --grid_template_areas: "checkbox search_query search_query null"
     "checkbox timestamp hitcount save_search";
   grid-template-areas: var(--grid_template_areas);
-  padding-left: var(--pt1);
+  padding-left: var(--pt2);
   column-gap: var(--pt2);
 }
 
 @media (min-width: 576px) {
   .grid {
     --grid_template_areas: "checkbox timestamp search_query hitcount save_search";
-    grid-template-columns: var(--pt2) 2fr 15fr 3fr 1fr 1fr;
+    grid-template-columns: var(--pt2) var(--pt16) 15fr 3fr 1fr 1fr;
   }
 }
 
@@ -138,7 +138,7 @@
 
 @media (min-width: 576px) {
   .row {
-    padding-left: var(--pt1);
+    padding-left: var(--pt2);
   }
 }
 
@@ -209,7 +209,7 @@
 
 @media (min-width: 576px) {
   .actionheader {
-    padding-left: var(--pt1);
+    padding-left: var(--pt2);
   }
 }
 
