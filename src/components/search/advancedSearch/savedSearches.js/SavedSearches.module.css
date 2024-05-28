@@ -1,3 +1,7 @@
+.container {
+  margin-top: var(--pt3);
+}
+
 @media (min-width: 576px) {
   .container {
     padding-inline: var(--pt2);
@@ -172,4 +176,11 @@
   margin-top: var(--pt3);
   padding: 0 var(--pt2);
   grid-column-gap: var(--pt2);
+}
+
+@media (max-width: 370px) {
+  .titleAndActionHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
