@@ -142,7 +142,7 @@
   .tableHeader {
     display: grid;
     grid-template-columns: var(--pt2) var(--pt16) 14fr var(--pt6) 1.5fr 2fr;
-    padding: 0 var(--pt2) var(--pt1_5) var(--pt2);
+    padding: 0 var(--pt2) var(--pt1) var(--pt2);
     column-gap: var(--pt2);
   }
 
