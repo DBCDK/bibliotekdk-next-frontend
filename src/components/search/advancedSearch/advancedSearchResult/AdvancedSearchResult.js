@@ -101,7 +101,6 @@ export function AdvancedSearchResult({
                   </Text>
                 </div>
               </>
-
               <QuickFilter />
               <AdvancedFacets cql={cql} />
             </div>

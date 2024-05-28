@@ -39,7 +39,7 @@ export function useQuickFilters() {
     },
   ];
 
-  // we need a useEffect to sync state (selectedFacets) with facets from the query
+  // we need a useEffect to sync state (selectedQuickfilters) with facets from the query
   useEffect(() => {
     if (!initialized) {
       setSelectedQuickFilters(quickFiltersFromUrl());
@@ -48,16 +48,16 @@ export function useQuickFilters() {
   }, [router?.query?.quickfilters]);
 
   // // we need a useEffect to reset quickfilters when we leave the page (/avanceret)
-  useEffect(() => {
-    if (
-      initialized &&
-      router &&
-      !router?.pathname?.includes("/avanceret") &&
-      !process.env.STORYBOOK_ACTIVE
-    ) {
-      clearQuickFiltersUrl();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (
+  //     initialized &&
+  //     router &&
+  //     !router?.pathname?.includes("/avanceret") &&
+  //     !process.env.STORYBOOK_ACTIVE
+  //   ) {
+  //     clearQuickFiltersUrl();
+  //   }
+  // }, []);
 
   /**
    * Parse quickfilters in url -
