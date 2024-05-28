@@ -372,7 +372,7 @@ export default function SavedSearches() {
                         <Icon
                           className={styles.removeItemIcon}
                           size={3}
-                          src={`trash-2.svg`}
+                          src={`trash_blue.svg`}
                           onClick={(e) => {
                             e.stopPropagation();
                             if (item?.id) {
