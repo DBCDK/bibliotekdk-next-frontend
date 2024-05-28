@@ -35,6 +35,10 @@
   cursor: pointer;
 }
 
+i.tagicon:focus-visible {
+  transform: scale(1.2);
+}
+
 /* @TODO 991 px :) */
 @media (max-width: 991px) {
   .actions {

@@ -50,6 +50,12 @@ export function FacetTags() {
                     onClick={() => {
                       removeFacet(val?.name, tag?.searchIndex);
                     }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        removeFacet(val?.name, tag?.searchIndex);
+                      }
+                    }}
+                    tabIndex={0}
                     src="close_white.svg"
                     size={2}
                     className={styles.tagicon}
