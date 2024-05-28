@@ -127,9 +127,6 @@
   transition: transform 0.35s;
   cursor: pointer;
 }
-.tableContainer {
-  padding-left: var(--pt1);
-}
 
 @media (min-width: 576px) {
   .savedItemRow {
