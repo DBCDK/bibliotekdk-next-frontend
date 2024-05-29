@@ -1,10 +1,16 @@
 .container {
   margin-top: var(--pt3);
 }
+.pagination {
+  margin-top: var(--pt4);
+}
 
 @media (min-width: 576px) {
   .container {
     padding-inline: var(--pt2);
+  }
+  .pagination {
+    margin-top: var(--pt9);
   }
 }
 
