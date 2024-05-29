@@ -131,7 +131,7 @@ export const useSavedSearches = () => {
     totalPages,
     setCurrentPage,
     useSavedSearchByCql,
-    isLoading
+    isLoading,
   };
 };
 
