@@ -26,7 +26,7 @@ export const useSavedSearches = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [savedSearches, setSavedSearches] = useState([]);
 
-  const { data, mutate } = useData(
+  const { data, isLoading, mutate } = useData(
     hasCulrUniqueId &&
       savedSearchesQuery({
         limit: ITEMS_PER_PAGE,
@@ -131,6 +131,7 @@ export const useSavedSearches = () => {
     totalPages,
     setCurrentPage,
     useSavedSearchByCql,
+    isLoading
   };
 };
 

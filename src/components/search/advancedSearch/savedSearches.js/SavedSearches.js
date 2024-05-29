@@ -154,6 +154,7 @@ export default function SavedSearches() {
     currentPage,
     totalPages,
     setCurrentPage,
+    isLoading,
   } = useSavedSearches();
   const [checkboxList, setCheckboxList] = useState([]);
   const modal = useModal();
@@ -339,7 +340,7 @@ export default function SavedSearches() {
         )}
         {savedSearches?.length > 0 && isAuthenticated ? (
           <>
-            <Accordion dataCy="saved-searches-accordion">
+            <Accordion dataCy="saved-searches-accordion" isLoading={isLoading}>
               {savedSearches?.map((item, index) => {
                 const formatedDate = unixToFormatedDate(item.unixtimestamp);
                 return (
