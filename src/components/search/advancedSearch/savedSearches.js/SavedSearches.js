@@ -16,6 +16,7 @@ import {
   SearchQueryDisplay,
 } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
 import CombinedSearch from "@/components/search/advancedSearch/combinedSearch/CombinedSearch";
+import Pagination from "@/components/search/pagination/Pagination";
 
 import Accordion, { Item } from "@/components/base/accordion";
 import { unixToFormatedDate } from "@/lib/utils";
@@ -147,7 +148,13 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
 }
 
 export default function SavedSearches() {
-  const { deleteSearches, savedSearches } = useSavedSearches();
+  const {
+    deleteSearches,
+    savedSearches,
+    currentPage,
+    totalPages,
+    setCurrentPage,
+  } = useSavedSearches();
   const [checkboxList, setCheckboxList] = useState([]);
   const modal = useModal();
   const { isAuthenticated } = useAuthentication();
@@ -207,6 +214,21 @@ export default function SavedSearches() {
       newCheckList.push(item.id);
     }
     setCheckboxList(newCheckList);
+  };
+
+  const onPageChange = async (newPage) => {
+    // if(isMobile){
+    //   loadMoreItems()
+    // }
+    // else{
+    if (newPage > totalPages) {
+      newPage = totalPages;
+    }
+    // if (!isMobile) {
+    //     scrollToTop();
+    // }
+    setCurrentPage(newPage);
+    //  }
   };
 
   return (
@@ -311,82 +333,97 @@ export default function SavedSearches() {
           </div>
         )}
         {savedSearches?.length > 0 && isAuthenticated ? (
-          <Accordion dataCy="saved-searches-accordion">
-            {savedSearches?.map((item, index) => {
-              const formatedDate = unixToFormatedDate(item.unixtimestamp);
-              return (
-                <Item
-                  dataCy={`accordion-item-${index}`}
-                  className={styles.accordionContainer}
-                  CustomHeaderComponent={(props) => (
-                    <SavedItemRow
-                      {...props}
-                      index={index}
-                      onSelect={onSelect}
-                      item={item}
-                      checked={
-                        checkboxList.findIndex((check) => check === item.id) !==
-                        -1
-                      }
-                    />
-                  )}
-                  key={item.id}
-                  eventKey={item.id}
-                >
-                  <div
-                    className={styles.accordionContentContainer}
-                    data-cy={`accordion-expanded-content-${index + 1}`}
-                  >
-                    <div className={styles.accordionContent}>
-                      <div />
-                      <div />
-                      <div>
-                        <SearchQueryDisplay item={item} />
-                      </div>
-                      <Text type="text2" tag="span">
-                        <Link
-                          onClick={() => {
-                            //show edit name modal
-                            modal.push("saveSearch", {
-                              item: item,
-                              fromEditSearch: true,
-                            });
-                          }}
-                          border={{
-                            top: false,
-                            bottom: {
-                              keepVisible: true,
-                            },
-                          }}
-                        >
-                          {Translate({ context: "search", label: "editName" })}
-                        </Link>
-                      </Text>
-                      <div />
-                      <div />
-                    </div>
-                    {isMobile && (
-                      <div className={styles.mobileContent}>
-                        <Text type="text2">{formatedDate}</Text>
-
-                        <Icon
-                          className={styles.removeItemIcon}
-                          size={3}
-                          src={`trash_blue.svg`}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            if (item?.id) {
-                              deleteSearches({ idsToDelete: [item.id] });
-                            }
-                          }}
-                        />
-                      </div>
+          <>
+            <Accordion dataCy="saved-searches-accordion">
+              {savedSearches?.map((item, index) => {
+                const formatedDate = unixToFormatedDate(item.unixtimestamp);
+                return (
+                  <Item
+                    dataCy={`accordion-item-${index}`}
+                    className={styles.accordionContainer}
+                    CustomHeaderComponent={(props) => (
+                      <SavedItemRow
+                        {...props}
+                        index={index}
+                        onSelect={onSelect}
+                        item={item}
+                        checked={
+                          checkboxList.findIndex(
+                            (check) => check === item.id
+                          ) !== -1
+                        }
+                      />
                     )}
-                  </div>
-                </Item>
-              );
-            })}
-          </Accordion>
+                    key={item.id}
+                    eventKey={item.id}
+                  >
+                    <div
+                      className={styles.accordionContentContainer}
+                      data-cy={`accordion-expanded-content-${index + 1}`}
+                    >
+                      <div className={styles.accordionContent}>
+                        <div />
+                        <div />
+                        <div>
+                          <SearchQueryDisplay item={item} />
+                        </div>
+                        <Text type="text2" tag="span">
+                          <Link
+                            onClick={() => {
+                              //show edit name modal
+                              modal.push("saveSearch", {
+                                item: item,
+                                fromEditSearch: true,
+                              });
+                            }}
+                            border={{
+                              top: false,
+                              bottom: {
+                                keepVisible: true,
+                              },
+                            }}
+                          >
+                            {Translate({
+                              context: "search",
+                              label: "editName",
+                            })}
+                          </Link>
+                        </Text>
+                        <div />
+                        <div />
+                      </div>
+                      {isMobile && (
+                        <div className={styles.mobileContent}>
+                          <Text type="text2">{formatedDate}</Text>
+
+                          <Icon
+                            className={styles.removeItemIcon}
+                            size={3}
+                            src={`trash_blue.svg`}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (item?.id) {
+                                deleteSearches({ idsToDelete: [item.id] });
+                              }
+                            }}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </Item>
+                );
+              })}
+            </Accordion>
+
+            {totalPages > 1 && (
+              <Pagination
+                className={styles.pagination}
+                numPages={totalPages}
+                currentPage={currentPage}
+                onChange={onPageChange}
+              />
+            )}
+          </>
         ) : (
           isAuthenticated && (
             <div className={styles.emptyListMessage}>

@@ -2,7 +2,7 @@
  * @file - Hook for advanced search saved searches. functions to get, save and delete searches from userdata db
  */
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   addSavedSearch,
   deleteSavedSearches,
@@ -14,18 +14,54 @@ import {
 } from "@/lib/api/user.fragments";
 import { useData, useMutate } from "@/lib/api/api";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
+
+const ITEMS_PER_PAGE = 10;
 
 export const useSavedSearches = () => {
   const { hasCulrUniqueId } = useAuthentication();
   const userDataMutation = useMutate();
+  const breakpoint = useBreakpoint();
+  const isMobile = breakpoint === "xs";
+  const [currentPage, setCurrentPage] = useState(1);
+  const [savedSearches, setSavedSearches] = useState([]);
 
   const { data, mutate } = useData(
     hasCulrUniqueId &&
       savedSearchesQuery({
-        limit: 10,
-        offset: 0,
+        limit: ITEMS_PER_PAGE,
+        offset: (currentPage - 1) * ITEMS_PER_PAGE,
       })
   );
+
+  useEffect(() => {
+    if (data?.user?.savedSearches?.result) {
+      if (isMobile) {
+        setSavedSearches((prev) => [
+          ...prev,
+          ...data.user.savedSearches.result.map((search) => {
+            const searchObject = JSON.parse(search.searchObject);
+            return {
+              ...searchObject,
+              id: search.id,
+              createdAt: search.createdAt,
+            };
+          }),
+        ]);
+      } else {
+        setSavedSearches(
+          data.user.savedSearches.result.map((search) => {
+            const searchObject = JSON.parse(search.searchObject);
+            return {
+              ...searchObject,
+              id: search.id,
+              createdAt: search.createdAt,
+            };
+          })
+        );
+      }
+    }
+  }, [data]);
 
   const mutateData = () => {
     setTimeout(() => {
@@ -33,20 +69,11 @@ export const useSavedSearches = () => {
     }, 100);
   };
 
-  const savedSearches = useMemo(
-    () =>
-      data?.user?.savedSearches?.result?.map((search) => {
-        const searchObject = JSON.parse(search.searchObject);
-        return {
-          ...searchObject,
-          id: search.id,
-          createdAt: search.createdAt,
-        };
-      }),
-    [data]
-  );
-
   const hitcount = useMemo(() => data?.user?.savedSearches?.hitcount, [data]);
+  const totalPages = useMemo(
+    () => Math.ceil(hitcount / ITEMS_PER_PAGE),
+    [hitcount]
+  );
 
   const saveSearch = async ({ searchObject }) => {
     try {
@@ -65,11 +92,7 @@ export const useSavedSearches = () => {
       console.error(err);
     }
   };
-  /**
-   * deletes one or multiple saved searches. Provide with array of ids to be deleted.
-   * ids to delete
-   * @param {*} idsToDelete
-   */
+
   const deleteSearches = async ({ idsToDelete }) => {
     try {
       await userDataMutation.post(deleteSavedSearches({ idsToDelete }));
@@ -78,11 +101,11 @@ export const useSavedSearches = () => {
       console.error(err);
     }
   };
-  /**
-   * Fetches a saved search from userdata given a cql search. The cql has to be a full cql including facetts, filters etc.
-   * @param {String} .cql Cql strint
-   * @returns
-   */
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
   const useSavedSearchByCql = ({ cql }) => {
     const { hasCulrUniqueId } = useAuthentication();
 
@@ -117,6 +140,9 @@ export const useSavedSearches = () => {
     deleteSearches,
     hitcount,
     updateSearch,
+    currentPage,
+    totalPages,
+    setCurrentPage: handlePageChange,
     useSavedSearchByCql,
   };
 };
