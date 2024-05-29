@@ -93,10 +93,6 @@ export const useSavedSearches = () => {
     }
   };
 
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-  };
-
   const useSavedSearchByCql = ({ cql }) => {
     const { hasCulrUniqueId } = useAuthentication();
 
@@ -133,7 +129,7 @@ export const useSavedSearches = () => {
     updateSearch,
     currentPage,
     totalPages,
-    setCurrentPage: handlePageChange,
+    setCurrentPage,
     useSavedSearchByCql,
   };
 };

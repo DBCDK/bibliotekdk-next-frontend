@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import styles from "./SavedSearches.module.css";
 import Text from "@/components/base/text";
@@ -160,8 +160,16 @@ export default function SavedSearches() {
   const { isAuthenticated } = useAuthentication();
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs";
+  const scrollToElement = useRef(null);
 
   const [showCombinedSearch, setShowCombinedSearch] = useState(false);
+
+  /**
+   * scrolls to the top of the page
+   */
+  const scrollToTop = () => {
+    scrollToElement?.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   /**
    * Set or unset ALL checkboxes in saved search table
@@ -217,22 +225,19 @@ export default function SavedSearches() {
   };
 
   const onPageChange = async (newPage) => {
-    // if(isMobile){
-    //   loadMoreItems()
-    // }
-    // else{
     if (newPage > totalPages) {
       newPage = totalPages;
     }
-    // if (!isMobile) {
-    //     scrollToTop();
-    // }
+    if (!isMobile) {
+      scrollToTop();
+    }
     setCurrentPage(newPage);
-    //  }
   };
 
   return (
     <div className={styles.container}>
+      <div ref={scrollToElement} />
+
       {isMobile ? (
         <>
           <div className={styles.titleAndActionHeader}>
