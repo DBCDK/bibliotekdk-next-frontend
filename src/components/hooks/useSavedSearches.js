@@ -36,9 +36,11 @@ export const useSavedSearches = () => {
 
   useEffect(() => {
     if (data?.user?.savedSearches?.result) {
-      if (isMobile) {
-        setSavedSearches((prev) => [
-          ...prev,
+      setSavedSearches((prev) => {
+        //if mobile, dont replace previous page. It should keep it and extend it with data from new page.
+        const prevPage = isMobile ? prev : [];
+        return [
+          ...prevPage,
           ...data.user.savedSearches.result.map((search) => {
             const searchObject = JSON.parse(search.searchObject);
             return {
@@ -47,19 +49,8 @@ export const useSavedSearches = () => {
               createdAt: search.createdAt,
             };
           }),
-        ]);
-      } else {
-        setSavedSearches(
-          data.user.savedSearches.result.map((search) => {
-            const searchObject = JSON.parse(search.searchObject);
-            return {
-              ...searchObject,
-              id: search.id,
-              createdAt: search.createdAt,
-            };
-          })
-        );
-      }
+        ];
+      });
     }
   }, [data]);
 
