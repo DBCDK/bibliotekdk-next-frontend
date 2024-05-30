@@ -67,6 +67,7 @@ function Radio({
       <div
         className={cx(styles.dot, {
           [animations["f-translate-right"]]: moveItemRightOnFocus,
+          [styles.checkdot]: checkBoxStyle,
         })}
       />
       {/*{checkBoxStyle && <div className={styles.checkmark}>&#10003;</div>}*/}

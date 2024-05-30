@@ -66,6 +66,10 @@
   transition: transform 0.4s;
 }
 .row.selected > .dot::before {
+  transform: scale(0.7);
+}
+
+.row.selected > .checkdot::before {
   transform: scale(0.9);
 }
 .row > .dot::after {
