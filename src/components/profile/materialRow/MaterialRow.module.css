@@ -24,8 +24,8 @@
   display: flex;
   cursor: pointer;
   grid-column-gap: unset;
-  padding-left: 0;
-  padding-right: 0;
+  padding-left: var(--pt1);
+  padding-right: var(--pt1);
 }
 
 .materialRow_withGridCheckbox:focus-visible,
