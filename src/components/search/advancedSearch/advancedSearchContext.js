@@ -235,13 +235,15 @@ export default function AdvancedSearchProvider({ children, router }) {
   //only add inputFields to object if there are values
   const cleanInputFields =
     inputFields?.filter((el) => !isEmpty(el.value)) || [];
-
+console.log('context.dropdownSearchIndices',dropdownSearchIndices)
   // filter out dropdowns to be removed (they are in url but NOT in on this page)
   const filteredDropDowns = dropdownSearchIndices.filter(function (el) {
     return !!!dropdownsToRemove.find(
       (drop) => drop.searchIndex === el.searchIndex
     );
   });
+console.log('context..fieldSearchFromUrl',fieldSearchFromUrl)
+
 
   //only add dropdownSearchIndices to object if there are values
   const cleanDropdowns =
@@ -249,9 +251,10 @@ export default function AdvancedSearchProvider({ children, router }) {
 
   const state = {
     ...(cleanInputFields.length > 0 && { inputFields: cleanInputFields }),
-    ...(cleanDropdowns.length > 0 && { dropdownSearchIndices: cleanDropdowns }),
+    ...(cleanDropdowns.length > 0 && { dropdownSearchIndices: dropdownSearchIndices }),
     ...(workType && workType !== "all" && { workType }),
   };
+  console.log('context..state',state)
 
   //if object is empty, return empty string. Otherwise stringify state.
   const stateToString = !isEmpty(state) ? JSON.stringify(state) : "";

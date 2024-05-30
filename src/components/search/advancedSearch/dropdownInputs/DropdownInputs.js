@@ -33,13 +33,15 @@ function DropdownUnit({ items, indexName, updateDropdownSearchIndices }) {
         indexPlaceholder={indexPlaceholder}
         menuItems={items}
         updateIndex={(menuItemsState) =>
-          updateDropdownSearchIndices({
+       {
+        console.log('IN UPDATE INDEX!!updateIndex ',menuItemsState)
+        updateDropdownSearchIndices({
             type: DropdownReducerEnum.UPDATE,
             payload: {
               indexName: indexName,
               menuItemsState: menuItemsState,
             },
-          })
+          })}
         }
       />
     </div>

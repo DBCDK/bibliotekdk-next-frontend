@@ -8,79 +8,63 @@ export const DropdownReducerEnum = Object.freeze({
   RESET: "RESET",
 });
 
-/**
- *
- * @param state
- * @param action
- * @returns {*|[{searchIndex: string, value: []},{searchIndex: string, value: []}]}
- */
-function dropdownReducer(state, action) {
-  const { type, payload } = action;
 
-  switch (type) {
-    case DropdownReducerEnum.RESET:
-      return getDefaultDropdownIndices();
-    case DropdownReducerEnum.UPDATE:
-      return state?.map((singleDropdownIndex) => {
-        if (payload.indexName === singleDropdownIndex.searchIndex) {
-          return {
-            searchIndex: payload.indexName,
-            value: payload.menuItemsState
-              .filter((item) => item.isSelected === true)
-              .map((item) => {
-                return { value: item.value, name: item.name };
-              }),
-          };
-        } else {
-          return singleDropdownIndex;
-        }
-      });
-    default:
-      return state;
-  }
-}
-
-/**
- *
- * @param fieldSearchFromUrl
- * @returns {{dropdownUnits: Array.<DropdownUnit>, dropdownSearchIndices: Array.<DropdownSearchIndex>, setDropdownInitState: function, updateDropdownSearchIndices: <A>(value: A) => void, resetMenuItemsEvent: string, dispatchResetMenuItemsEvent: function}}
- */
 export function useDropdownSearchIndices(fieldSearchFromUrl, workType) {
+  console.log(
+    "useDropdownSearchIndices.fieldSearchFromUrl",
+    fieldSearchFromUrl
+  );
   //// ---- DropdownSearchIndices ----
-  /** @typedef {{indexName: string, items: DropdownInputArray, comparator?: string, formatValue?: function}} DropdownUnit */
-  const /** @type {Array.<DropdownUnit>} */ {
-      dropdownUnits,
-      dropdownsToRemove,
-    } = useDefaultItemsForDropdownUnits(
-      {
-        initDropdowns:
-          fieldSearchFromUrl.dropdownSearchIndices ||
-          getDefaultDropdownIndices(),
-      },
-      workType
-    );
+  const { dropdownUnits, dropdownsToRemove } = useDefaultItemsForDropdownUnits(
+    {
+      initDropdowns:
+        fieldSearchFromUrl.dropdownSearchIndices || getDefaultDropdownIndices(),
+    },
+    workType
+  );
+  console.log("initDropdowns", dropdownUnits);
+  console.log("indexes hook. dropdownsToRemove", dropdownsToRemove);
 
   const [dropdownInitState, setDropdownInitState] = useState([]);
 
-  /** @typedef {({ type?: string, payload: DropdownSearchIndex}) => void} UpdateDropdownSearchIndices */
-  /** @typedef {{value: (Array.<string>|Array.<Object<>>), searchIndex: string}} DropdownSearchIndex */
-  const /** @type {[Array.<DropdownSearchIndex>, UpdateDropdownSearchIndices]} */ [
-      dropdownSearchIndices,
-      updateDropdownSearchIndices,
-    ] = useReducer(dropdownReducer, getDefaultDropdownIndices(), (initState) =>
-      !isEmpty(dropdownInitState) ? dropdownInitState : initState
-    );
+  const [dropdownSearchIndices, setDropdownSearchIndices] = useState(
+    getDefaultDropdownIndices()
+  );
 
   const resetMenuItemsEvent = new Event("resetMenuItemsEvent");
 
+  const updateDropdownSearchIndices = ({ payload, type }) => {
+    console.log(
+      " IN !!! IN UPDATE updateDropdownSearchIndices update state",
+      payload
+    );
+    const newDropDowns = dropdownSearchIndices?.map((singleDropdownIndex) => {
+      if (payload.indexName === singleDropdownIndex.searchIndex) {
+        return {
+          searchIndex: payload.indexName,
+          value: payload.menuItemsState
+            .filter((item) => item.isSelected === true)
+            .map((item) => {
+              console.log("updateDropdownSearchIndices item", item);
+              return { value: item.value, name: item.name };
+            }),
+        };
+      } else {
+        return singleDropdownIndex;
+      }
+    });
+    setDropdownSearchIndices(newDropDowns);
+  };
   function resetDropdownIndices() {
-    setDropdownInitState([]);
-    updateDropdownSearchIndices({ type: DropdownReducerEnum.RESET });
+    // setDropdownInitState([]);
+    //  updateDropdownSearchIndices({ type: DropdownReducerEnum.RESET });
+
+    setDropdownSearchIndices([]);
   }
 
   return {
     dropdownUnits: dropdownUnits,
-    setDropdownInitState: setDropdownInitState,
+    //  setDropdownInitState: setDropdownInitState,
     dropdownSearchIndices: dropdownSearchIndices,
     updateDropdownSearchIndices: updateDropdownSearchIndices,
     resetDropdownIndices: resetDropdownIndices,

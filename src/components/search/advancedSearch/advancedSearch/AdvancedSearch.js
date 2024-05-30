@@ -74,6 +74,7 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
         router.push({ pathname: "/avanceret", query });
       }
     } else {
+      console.log('stateToString',stateToString)
       const query = { fieldSearch: encodeURIComponent(stateToString) };
       router.push({ pathname: "/avanceret", query });
       //save in state
