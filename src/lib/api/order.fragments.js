@@ -10,15 +10,9 @@ export function orderHistory({ offset, limit }) {
         user {
           bibliotekDkOrders(offset: $offset, limit: $limit, ) {
             result {
-              work {
-                creators{
-                  display
-                }
-                titles {
-                  main
-                }
-              }
               orderId
+              title
+              author
               pidOfPrimaryObject
               creationDate
             }

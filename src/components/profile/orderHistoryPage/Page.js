@@ -210,9 +210,7 @@ function TableItem({ order, key }) {
     return null;
   }
   const isMobile = breakpoint === "xs";
-  const { orderId, creationDate, work } = order;
-  const title = work?.titles?.main[0];
-  const creator = work?.creators[0]?.display;
+  const { author, title, pidOfPrimaryObject, orderId, creationDate } = order;
   const { day, monthName, isToday, hours, minutes } = parseDate(creationDate);
 
   const time = `Kl. ${hours}.${minutes}`;
@@ -232,8 +230,8 @@ function TableItem({ order, key }) {
           </Text>
           <WorkInfo
             title={title}
-            creator={creator}
-            workId={work?.workId}
+            author={author}
+            pidOfPrimaryObject={pidOfPrimaryObject}
             date={dateString}
           />
         </div>
@@ -261,8 +259,8 @@ function TableItem({ order, key }) {
       <td className={styles.activity}>
         <WorkInfo
           title={title}
-          creator={creator}
-          workId={work?.workId}
+          author={author}
+          pidOfPrimaryObject={pidOfPrimaryObject}
           date={dateString}
         />
       </td>
@@ -282,7 +280,7 @@ function TableItem({ order, key }) {
  * Used in TableItem. Shows info (like title, author, link to work) for a given order
  * @returns
  */
-function WorkInfo({ title, creator, workId }) {
+function WorkInfo({ title, author, pidOfPrimaryObject }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs";
 
@@ -296,7 +294,8 @@ function WorkInfo({ title, creator, workId }) {
       <Text type="text2" className={styles.orderWorkInfo}>
         {Translate({ context: "profile", label: "youHaveOrdered" }) + " "}
         <Link
-          href={getWorkUrlForProfile({ workId })}
+          //pidOfPrimaryObject is the primary bibliographic object id (work id).
+          href={getWorkUrlForProfile({ workId: pidOfPrimaryObject })}
           border={{
             top: false,
             bottom: {
@@ -306,8 +305,8 @@ function WorkInfo({ title, creator, workId }) {
         >
           {title}
         </Link>
-        {creator &&
-          ` ${Translate({ context: "general", label: "by" })} ${creator}`}
+        {author &&
+          ` ${Translate({ context: "general", label: "by" })} ${author}`}
       </Text>
     </>
   );
