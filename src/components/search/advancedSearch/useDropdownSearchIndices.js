@@ -60,27 +60,25 @@ export function useDropdownSearchIndices(fieldSearchFromUrl, workType) {
       workType
     );
 
-  const [dropdownInitState, setDropdownInitState] = useState([]);
-
   /** @typedef {({ type?: string, payload: DropdownSearchIndex}) => void} UpdateDropdownSearchIndices */
   /** @typedef {{value: (Array.<string>|Array.<Object<>>), searchIndex: string}} DropdownSearchIndex */
   const /** @type {[Array.<DropdownSearchIndex>, UpdateDropdownSearchIndices]} */ [
       dropdownSearchIndices,
       updateDropdownSearchIndices,
-    ] = useReducer(dropdownReducer, getDefaultDropdownIndices(), (initState) =>
-      !isEmpty(dropdownInitState) ? dropdownInitState : initState
+    ] = useReducer(
+      dropdownReducer,
+      getDefaultDropdownIndices(),
+      () => fieldSearchFromUrl.dropdownSearchIndices || []
     );
 
   const resetMenuItemsEvent = new Event("resetMenuItemsEvent");
 
   function resetDropdownIndices() {
-    setDropdownInitState([]);
     updateDropdownSearchIndices({ type: DropdownReducerEnum.RESET });
   }
 
   return {
     dropdownUnits: dropdownUnits,
-    setDropdownInitState: setDropdownInitState,
     dropdownSearchIndices: dropdownSearchIndices,
     updateDropdownSearchIndices: updateDropdownSearchIndices,
     resetDropdownIndices: resetDropdownIndices,
