@@ -503,15 +503,8 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
       })
     ),
   };
-  // The init dropdown holds the dropdowns configured (selected) - if a selected dropdown is NOT
-  // in types we return it to be deleted from url :)
-  const toRemove = initDropdowns.filter(
-    (drop) =>
-      !!!types[workType].find((type) => type.indexName === drop.searchIndex)
-  );
 
   return {
     dropdownUnits: types[workType] || types["all"],
-    dropdownsToRemove: toRemove,
   };
 }
