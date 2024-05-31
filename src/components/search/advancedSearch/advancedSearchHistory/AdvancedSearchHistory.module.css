@@ -1,6 +1,11 @@
+.container {
+  margin-top: var(--pt3);
+}
+
 @media (min-width: 576px) {
   .container {
     padding-inline: var(--pt2);
+    margin-top: var(--pt3);
   }
 }
 
@@ -260,6 +265,7 @@
   display: flex;
   justify-content: flex-end;
   margin-bottom: var(--pt2);
+  padding-left: var(--pt2);
 }
 
 .titleAndActionHeader {
@@ -267,4 +273,11 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: var(--pt2);
+}
+
+@media (max-width: 370px) {
+  .titleAndActionHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }

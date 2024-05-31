@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import styles from "./SavedSearches.module.css";
 import Text from "@/components/base/text";
@@ -16,6 +16,7 @@ import {
   SearchQueryDisplay,
 } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
 import CombinedSearch from "@/components/search/advancedSearch/combinedSearch/CombinedSearch";
+import Pagination from "@/components/search/pagination/Pagination";
 
 import Accordion, { Item } from "@/components/base/accordion";
 import { unixToFormatedDate } from "@/lib/utils";
@@ -147,14 +148,29 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
 }
 
 export default function SavedSearches() {
-  const { deleteSearches, savedSearches } = useSavedSearches();
+  const {
+    deleteSearches,
+    savedSearches,
+    currentPage,
+    totalPages,
+    setCurrentPage,
+    isLoading,
+  } = useSavedSearches();
   const [checkboxList, setCheckboxList] = useState([]);
   const modal = useModal();
   const { isAuthenticated } = useAuthentication();
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs";
+  const scrollToElement = useRef(null);
 
   const [showCombinedSearch, setShowCombinedSearch] = useState(false);
+
+  /**
+   * scrolls to the top of the page
+   */
+  const scrollToTop = () => {
+    scrollToElement?.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   /**
    * Set or unset ALL checkboxes in saved search table
@@ -209,8 +225,20 @@ export default function SavedSearches() {
     setCheckboxList(newCheckList);
   };
 
+  const onPageChange = async (newPage) => {
+    if (newPage > totalPages) {
+      newPage = totalPages;
+    }
+    if (!isMobile) {
+      scrollToTop();
+    }
+    setCurrentPage(newPage);
+  };
+
   return (
     <div className={styles.container}>
+      <div ref={scrollToElement} />
+
       {isMobile ? (
         <>
           <div className={styles.titleAndActionHeader}>
@@ -311,82 +339,97 @@ export default function SavedSearches() {
           </div>
         )}
         {savedSearches?.length > 0 && isAuthenticated ? (
-          <Accordion dataCy="saved-searches-accordion">
-            {savedSearches?.map((item, index) => {
-              const formatedDate = unixToFormatedDate(item.unixtimestamp);
-              return (
-                <Item
-                  dataCy={`accordion-item-${index}`}
-                  className={styles.accordionContainer}
-                  CustomHeaderCompnent={(props) => (
-                    <SavedItemRow
-                      {...props}
-                      index={index}
-                      onSelect={onSelect}
-                      item={item}
-                      checked={
-                        checkboxList.findIndex((check) => check === item.id) !==
-                        -1
-                      }
-                    />
-                  )}
-                  key={item.id}
-                  eventKey={item.id}
-                >
-                  <div
-                    className={styles.accordionContentContainer}
-                    data-cy={`accordion-expanded-content-${index + 1}`}
-                  >
-                    <div className={styles.accordionContent}>
-                      <div />
-                      <div />
-                      <div>
-                        <SearchQueryDisplay item={item} />
-                      </div>
-                      <Text type="text2" tag="span">
-                        <Link
-                          onClick={() => {
-                            //show edit name modal
-                            modal.push("saveSearch", {
-                              item: item,
-                              fromEditSearch: true,
-                            });
-                          }}
-                          border={{
-                            top: false,
-                            bottom: {
-                              keepVisible: true,
-                            },
-                          }}
-                        >
-                          {Translate({ context: "search", label: "editName" })}
-                        </Link>
-                      </Text>
-                      <div />
-                      <div />
-                    </div>
-                    {isMobile && (
-                      <div className={styles.mobileContent}>
-                        <Text type="text2">{formatedDate}</Text>
-
-                        <Icon
-                          className={styles.removeItemIcon}
-                          size={3}
-                          src={`trash_blue.svg`}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            if (item?.id) {
-                              deleteSearches({ idsToDelete: [item.id] });
-                            }
-                          }}
-                        />
-                      </div>
+          <>
+            <Accordion dataCy="saved-searches-accordion" isLoading={isLoading}>
+              {savedSearches?.map((item, index) => {
+                const formatedDate = unixToFormatedDate(item.unixtimestamp);
+                return (
+                  <Item
+                    dataCy={`accordion-item-${index}`}
+                    className={styles.accordionContainer}
+                    CustomHeaderComponent={(props) => (
+                      <SavedItemRow
+                        {...props}
+                        index={index}
+                        onSelect={onSelect}
+                        item={item}
+                        checked={
+                          checkboxList.findIndex(
+                            (check) => check === item.id
+                          ) !== -1
+                        }
+                      />
                     )}
-                  </div>
-                </Item>
-              );
-            })}
-          </Accordion>
+                    key={item.id}
+                    eventKey={item.id}
+                  >
+                    <div
+                      className={styles.accordionContentContainer}
+                      data-cy={`accordion-expanded-content-${index + 1}`}
+                    >
+                      <div className={styles.accordionContent}>
+                        <div />
+                        <div />
+                        <div>
+                          <SearchQueryDisplay item={item} />
+                        </div>
+                        <Text type="text2" tag="span">
+                          <Link
+                            onClick={() => {
+                              //show edit name modal
+                              modal.push("saveSearch", {
+                                item: item,
+                                fromEditSearch: true,
+                              });
+                            }}
+                            border={{
+                              top: false,
+                              bottom: {
+                                keepVisible: true,
+                              },
+                            }}
+                          >
+                            {Translate({
+                              context: "search",
+                              label: "editName",
+                            })}
+                          </Link>
+                        </Text>
+                        <div />
+                        <div />
+                      </div>
+                      {isMobile && (
+                        <div className={styles.mobileContent}>
+                          <Text type="text2">{formatedDate}</Text>
+
+                          <Icon
+                            className={styles.removeItemIcon}
+                            size={3}
+                            src={`trash_blue.svg`}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (item?.id) {
+                                deleteSearches({ idsToDelete: [item.id] });
+                              }
+                            }}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </Item>
+                );
+              })}
+            </Accordion>
+
+            {totalPages > 1 && (
+              <Pagination
+                className={styles.pagination}
+                numPages={totalPages}
+                currentPage={currentPage}
+                onChange={onPageChange}
+              />
+            )}
+          </>
         ) : (
           isAuthenticated && (
             <div className={styles.emptyListMessage}>
