@@ -3,6 +3,69 @@ import Translate, { getLanguage } from "@/components/base/translate";
 import { getFirstMatch } from "@/lib/utils";
 import { DropdownIndicesEnum } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
 
+// players are outcommented - will be used later - we wait for jed :)
+// export function dummy__players() {
+//   return {
+//     prioritisedItems: prioritisedPlayers,
+//     prioritisedFormType: FormTypeEnum.CHECKBOX,
+//     unprioritisedItems: [],
+//     unprioritisedFormType: FormTypeEnum.CHECKBOX,
+//     overrideValueAs: "name",
+//   };
+// }
+//
+// const prioritisedPlayers = [
+//   {
+//     term: "For 1 spiller",
+//     key: "For 1 spiller",
+//   },
+//   {
+//     term: "For 2 spillere",
+//     key: "For 2 spillere",
+//   },
+//   {
+//     term: "For 3-5 spillere",
+//     key: "For 3-5 spillere",
+//   },
+//   {
+//     term: "For 6+ spillere",
+//     key: "For 6+ spillere",
+//   },
+// ];
+
+export function dummy__pegi() {
+  return {
+    prioritisedItems: prioritisedPegi,
+    prioritisedFormType: FormTypeEnum.CHECKBOX,
+    unprioritisedItems: [],
+    unprioritisedFormType: FormTypeEnum.CHECKBOX,
+    overrideValueAs: "name",
+  };
+}
+
+const prioritisedPegi = [
+  {
+    term: "Pegi: 3",
+    key: "Pegi: 3",
+  },
+  {
+    term: "Pegi: 7",
+    key: "Pegi: 7",
+  },
+  {
+    term: "Pegi: 12",
+    key: "Pegi: 12",
+  },
+  {
+    term: "Pegi: 16",
+    key: "Pegi: 16",
+  },
+  {
+    term: "Pegi: 18",
+    key: "Pegi: 18",
+  },
+];
+
 export function nameForActionLinkContainer(formType, searchIndex) {
   return `${formType}__${searchIndex}`;
 }
