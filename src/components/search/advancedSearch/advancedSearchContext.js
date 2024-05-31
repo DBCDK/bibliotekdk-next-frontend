@@ -228,7 +228,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     resetDropdownIndices,
     resetMenuItemsEvent,
     dispatchResetMenuItemsEvent,
-    dropdownsToRemove,
+    // dropdownsToRemove,
   } = useDropdownSearchIndices({ ...fieldSearchFromUrl }, workType);
 
   //// ---- parsedCQL ----
