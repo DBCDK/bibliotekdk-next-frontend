@@ -307,7 +307,9 @@ function parseForFacets({ data, isLoading, error, index, workType = "all" }) {
   const key = Object.keys(DropdownIndicesEnum).find(
     (dropdown) => DropdownIndicesEnum[dropdown] === index
   );
-  const ontop = prioritized[workType]?.[key]?.toReversed() || [];
+  const prio = prioritized[workType]?.[key] || [];
+  // reverse array .. without modifying original
+  const ontop = [...prio].reverse();
 
   let facets = [];
   if (ontop) {

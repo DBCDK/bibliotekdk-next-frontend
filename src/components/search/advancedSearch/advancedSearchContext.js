@@ -29,6 +29,7 @@ export function getDefaultDropdownIndices() {
     { searchIndex: DropdownIndicesEnum.GAMEPLATFORM, value: [] },
     { searchIndex: DropdownIndicesEnum.PLAYERS, value: [] },
     { searchIndex: DropdownIndicesEnum.PEGI, value: [] },
+    { searchIndex: DropdownIndicesEnum.GENERALAUDIENCE, value: [] },
   ];
 }
 
