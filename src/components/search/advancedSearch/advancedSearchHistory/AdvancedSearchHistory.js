@@ -24,6 +24,7 @@ import useSavedSearches from "@/components/hooks/useSavedSearches";
 import { useModal } from "@/components/_modal";
 import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
 //Component to render facets
 export function FormatedFilters({ facets, quickFilters = [], className }) {
@@ -73,11 +74,15 @@ export function SearchQueryDisplay({ item }) {
 
   const { restartFacetsHook } = useFacets();
   const { resetQuickFilters } = useQuickFilters();
+  const { setWorkType } = useAdvancedSearchContext();
 
   const goToItemUrl = (item) => {
     // restart the useFacets hook - this is a 'new' search
     restartFacetsHook();
     resetQuickFilters();
+
+    // set worktype from item
+    setWorkType(item.fieldSearch?.workType || "all");
     if (!isEmpty(item.fieldSearch)) {
       const query = {
         fieldSearch: JSON.stringify(item.fieldSearch),
