@@ -8,7 +8,7 @@ import Translate from "@/components/base/translate";
 import Button from "@/components/base/button/Button";
 import { LogicalOperatorDropDown } from "@/components/search/advancedSearch/fieldInput/TextInputs";
 import { FormatFieldSearchIndexes } from "../advancedSearchResult/topBar/TopBar";
-import { FormatedFacets } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
+import { FormatedFilters } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
 
 //max number of search queries to be combined
@@ -86,7 +86,7 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
   const searchItemsWrapper = useRef(null);
 
   useEffect(() => {
-    if (searchItemsWrapper.current) {
+    if (searchItemsWrapper.current?.style) {
       const currentHeight = searchItemsWrapper.current.scrollHeight; // get the element height based on content
       searchItemsWrapper.current.style.overflow = `hidden`;
       searchItemsWrapper.current.style.maxHeight = `${currentHeight}px`;
@@ -94,7 +94,7 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
         searchItemsWrapper.current.style.overflow = `visible`;
       }, 300);
     }
-  }, [queriesItems]);
+  }, [queriesItems, queries]);
 
   //this useeffect will run when queries are updated. It will update the state of queriesItems according to the changes in queries
   useEffect(() => {
@@ -168,7 +168,7 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
         ))}
       </div>
 
-      <FormatedFacets facets={facets} className={styles.facets} />
+      <FormatedFilters facets={facets} className={styles.facets} />
 
       {queries.length > MAX_ITEMS && (
         <div className={styles.errorBox} data-cy="combine-search-error-box">

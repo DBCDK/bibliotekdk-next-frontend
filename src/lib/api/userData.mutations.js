@@ -67,3 +67,88 @@ export function addUserToUserData({ userDataMutation }) {
 
   return userDataMutation.post(q);
 }
+
+/**
+ * add an advanced search search in userdata
+ *
+ */
+
+export function addSavedSearch({ searchObject }) {
+  const q = {
+    query: `
+      mutation addSavedSearch($searchObject:  String!) {
+        users{
+          addSavedSearch(searchObject: $searchObject) {
+            searchObject
+            id
+            createdAt
+        }
+      }
+      } 
+      `,
+    variables: {
+      searchObject: JSON.stringify(searchObject),
+    },
+  };
+
+  return q;
+}
+
+/**
+ * update an advanced search search in userdata.
+ *
+ */
+
+export function updateSavedSearch({ searchObject }) {
+  console.log("updateSavedSearch.searchObject", searchObject);
+  if (!searchObject.id) {
+    return null;
+  }
+  const q = {
+    query: `
+      mutation updateSavedSearch($searchObject: String!, $savedSearchId: Int!) {
+        users{
+          updateSavedSearch(searchObject: $searchObject, savedSearchId: $savedSearchId) {
+            message
+        }
+      }
+      } 
+      `,
+    variables: {
+      searchObject: JSON.stringify(searchObject),
+      savedSearchId: searchObject.id,
+    },
+  };
+
+  return q;
+  // await userDataMutation.post(q);
+}
+
+/**
+ * Delete multiple advanced searches from userdata. Deletes by savedSearch id
+ *
+ */
+
+export function deleteSavedSearches({ idsToDelete }) {
+  if (!Array.isArray(idsToDelete)) {
+    return null;
+  }
+  const q = {
+    query: `
+      mutation deleteSavedSearches($savedSearchIds:  [Int!]!) {
+        users{
+          deleteSavedSearches(savedSearchIds: $savedSearchIds) {
+            idsDeletedCount
+            message
+        }
+      }
+      } 
+      `,
+    variables: {
+      savedSearchIds: idsToDelete,
+    },
+  };
+
+  // const res = await userDataMutation.post(q);
+  return q;
+}

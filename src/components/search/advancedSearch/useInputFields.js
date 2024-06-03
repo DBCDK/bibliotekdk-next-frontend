@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { LogicalOperatorsEnum } from "@/components/search/enums";
 import { getInitialInputFields } from "@/components/search/advancedSearch/advancedSearchContext";
 
-export function useInputFields({ fieldSearchFromUrl }) {
+export function useInputFields(fieldSearchFromUrl, workType) {
   //prefixLogicalOperator is an enum of AND, OR , NOT
   /** @typedef {("AND"|"OR"|"NOT"|null)} PrefixLogicalOperator */
   /** @typedef {{value: string, prefixLogicalOperator: PrefixLogicalOperator, searchIndex: string}} InputField */
@@ -10,8 +10,16 @@ export function useInputFields({ fieldSearchFromUrl }) {
     useState([]);
 
   useEffect(() => {
-    setInputFields(fieldSearchFromUrl.inputFields || getInitialInputFields());
+    setInputFields(
+      fieldSearchFromUrl.inputFields || getInitialInputFields(workType)
+    );
   }, [JSON.stringify(fieldSearchFromUrl)]);
+
+  // we need a useeffect to reset when worktype changes
+  useEffect(() => {
+    resetInputFields();
+    setInputFields(getInitialInputFields(workType));
+  }, [workType]);
 
   /**
    * Add an extra input field
@@ -59,6 +67,7 @@ export function useInputFields({ fieldSearchFromUrl }) {
     setInputFields((prevFields) => {
       const newFields = [...prevFields];
       newFields[index].value = newValue;
+
       return newFields;
     });
   }
@@ -68,10 +77,16 @@ export function useInputFields({ fieldSearchFromUrl }) {
    * @param {*} index
    * @param {*} newOperator
    */
-  function handleIndexChange(index, newOperator) {
+  function handleIndexChange(index, elem) {
     setInputFields((prevFields) => {
       const newFields = [...prevFields];
-      newFields[index].searchIndex = newOperator;
+      newFields[index].searchIndex = elem.index;
+      if (elem?.label) {
+        newFields[index].label = elem.label;
+      } else {
+        delete newFields[index].label;
+      }
+
       return newFields;
     });
   }

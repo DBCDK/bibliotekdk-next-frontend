@@ -13,7 +13,7 @@ export default function AdvancedSearchPage() {
 
   return (
     <main>
-      <Header router={router} hideShadow={true} />
+      <Header router={router} />
 
       <Container fluid>
         <Row>

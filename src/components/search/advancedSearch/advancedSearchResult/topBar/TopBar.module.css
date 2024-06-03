@@ -13,8 +13,15 @@
 
 .edit_search {
   display: flex;
+  /* Link */
+  --underline-bottom-color: var(--blue);
+  --underline-bottom-hover-color: var(--blue);
+}
+.saveSearchButton {
   justify-content: end;
-
+  align-items: center;
+  display: flex;
+  gap: var(--pt05);
   /* Link */
   --underline-bottom-color: var(--blue);
   --underline-bottom-hover-color: var(--blue);
@@ -43,7 +50,7 @@
     flex-flow: wrap;
   }
 
-  .edit_search {
+  .saveSearchButton {
     margin-top: var(--pt1);
     justify-content: start;
   }

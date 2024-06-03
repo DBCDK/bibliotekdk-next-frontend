@@ -29,6 +29,13 @@ describe("Bookmark page", () => {
     cy.get("article").first().should("exist").click();
     cy.get("[data-cy=bookmarks-remove-from-list]").should("exist").click();
     cy.get("article").should("exist").should("have.length", 1);
+
+    cy.verifyMatomoEvent([
+      "trackEvent",
+      "Huskeliste",
+      "Fjern Multi",
+      "Antal: 1",
+    ]);
   });
 
   it(`test delete all`, () => {
@@ -41,5 +48,12 @@ describe("Bookmark page", () => {
     cy.get("[data-cy=bookmarks-select-all-checkbox]")
       .should("exist")
       .should("have.attr", "aria-checked", "false");
+
+    cy.verifyMatomoEvent([
+      "trackEvent",
+      "Huskeliste",
+      "Fjern Multi",
+      "Antal: 2",
+    ]);
   });
 });

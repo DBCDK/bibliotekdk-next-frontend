@@ -24,7 +24,8 @@ function IconButton({
   onClick,
   alt = "",
   children,
-  icon = "close",
+  icon,
+  iconSize = 2,
   textType = "text3",
   keepUnderline,
   dataCy,
@@ -43,7 +44,7 @@ function IconButton({
         className
       )}
       tabIndex={disabled ? "-1" : "0"}
-      onClick={() => onClick && onClick()}
+      onClick={(e) => onClick && onClick(e)}
       data-cy={dataCy}
       disabled={disabled}
       {...props}
@@ -60,7 +61,7 @@ function IconButton({
         </Text>
       </Link>
       <Icon
-        size={{ w: 2, h: "auto" }}
+        size={{ w: iconSize, h: "auto" }}
         className={`${animations["h-elastic"]} ${animations["f-elastic"]}`}
         alt={alt}
         src={iconSrc}

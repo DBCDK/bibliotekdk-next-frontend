@@ -1,0 +1,40 @@
+.group {
+  display: flex;
+}
+
+.radio {
+  border: none;
+  padding: var(--pt1) var(--pt2) var(--pt1) 0;
+}
+
+.radio:focus-visible,
+.radio:first-child:focus-visible {
+  border: 1px solid var(--blue);
+}
+
+.text {
+  margin-left: var(--pt05);
+}
+
+.radio:first-child {
+  border: none;
+}
+
+.groupcontent {
+  padding-left: var(--pt2);
+  margin-bottom: var(--pt1);
+}
+
+.filterContainer {
+  margin-bottom: var(--pt2);
+}
+
+.filterContainer .groupcontainer {
+  border-bottom: 1px solid var(--iron);
+  margin-bottom: var(--pt1);
+}
+
+.filterContainer .groupcontainer:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}

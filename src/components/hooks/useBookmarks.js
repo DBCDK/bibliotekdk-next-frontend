@@ -14,6 +14,7 @@ import {
   formatMaterialTypesToCode,
 } from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
+import useDataCollect from "@/lib/useDataCollect";
 
 const KEY_NAME = "bookmarks";
 const ITEMS_PER_PAGE = 25;
@@ -36,6 +37,7 @@ export const BookmarkSyncProvider = () => {
 };
 
 const useBookmarksCore = ({ hasCulrUniqueId, isMock = false } = {}) => {
+  const collect = useDataCollect();
   hasCulrUniqueId = isMock ? false : hasCulrUniqueId;
 
   const [sortBy, setSortBy] = useState("createdAt");
@@ -131,6 +133,7 @@ const useBookmarksCore = ({ hasCulrUniqueId, isMock = false } = {}) => {
             ],
           })
         );
+        collect.collectAddBookmark(value);
       } else {
         // Exists - Delete
         const idToDelete = globalBookmarks[existingIndex].bookmarkId;
@@ -139,6 +142,7 @@ const useBookmarksCore = ({ hasCulrUniqueId, isMock = false } = {}) => {
             bookmarkIds: [idToDelete],
           })
         );
+        collect.collectDelBookmark(value);
       }
 
       await mutateGlobalBookmarks();
@@ -154,9 +158,11 @@ const useBookmarksCore = ({ hasCulrUniqueId, isMock = false } = {}) => {
       if (existingIndex === -1) {
         // push if not there
         localBookmarks?.push({ ...value, createdAt: new Date() });
+        collect.collectAddBookmark(value);
       } else {
         // remove if already there
         localBookmarks?.splice(existingIndex, 1);
+        collect.collectDelBookmark(value);
       }
 
       // store
@@ -185,6 +191,7 @@ const useBookmarksCore = ({ hasCulrUniqueId, isMock = false } = {}) => {
           bookmarkIds: ids,
         })
       );
+
       mutateGlobalBookmarks();
     } else {
       const keysToDelete = bookmarksToDelete.map((i) => i.key);
@@ -195,6 +202,7 @@ const useBookmarksCore = ({ hasCulrUniqueId, isMock = false } = {}) => {
       setLocalStorageItem(KEY_NAME, stringified);
       mutateLocalBookmarks(updated);
     }
+    collect.collectDelMultipleBookmarks({ count: bookmarksToDelete?.length });
   };
 
   /**

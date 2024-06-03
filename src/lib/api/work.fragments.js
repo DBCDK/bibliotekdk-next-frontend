@@ -496,6 +496,17 @@ export function fbiOverviewDetail({ workId }) {
                 }                
                 ages {
                   display
+                }
+                mediaCouncilAgeRestriction {
+                  display
+                  minimumAge
+                }
+                PEGI {
+                  display
+                  minimumAge                
+                }
+                players {
+                  display
                 }                
                 lix
                 let
@@ -516,6 +527,11 @@ export function fbiOverviewDetail({ workId }) {
                 original {
                   display
                 }                
+              }
+              classifications {
+                system
+                display
+                code
               }
               creatorsFromDescription
               physicalDescriptions {
@@ -749,6 +765,7 @@ export function listOfAllManifestations({ workId }) {
               display
               roles{functionCode function{plural singular}}
             }
+            
             publisher
           }
         }

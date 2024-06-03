@@ -26,6 +26,8 @@ import translate from "@/components/base/translate";
 import { FacetTags } from "@/components/search/advancedSearch/facets/facetTags/facetTags";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import { FacetButton } from "@/components/search/advancedSearch/facets/facetButton/facetButton";
+import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
+import QuickFilter from "@/components/search/advancedSearch/quickfilter/QuickFilter";
 
 export function AdvancedSearchResult({
   pageNo,
@@ -36,6 +38,7 @@ export function AdvancedSearchResult({
   isLoading,
   cql,
   selectedFacets,
+  searchHistoryObj,
   rawcql,
 }) {
   const hitcount = results?.hitcount;
@@ -56,9 +59,15 @@ export function AdvancedSearchResult({
         <div className={styles.mobileTags}>
           <FacetTags />
         </div>
+
         <div className={styles.titleflex}>
           <div className={styles.borderTitleTop}></div>
-          <Title type="title5" className={styles.countstyle}>
+          <Title
+            type="title5"
+            className={isLoading ? styles.skeleton : styles.countstyle}
+            lines={1}
+            skeleton={isLoading}
+          >
             {hitcount}
           </Title>
           <Text type="text3" className={styles.titleStyle}>
@@ -71,7 +80,7 @@ export function AdvancedSearchResult({
 
   return (
     <>
-      <TopBar isLoading={isLoading} />
+      <TopBar isLoading={isLoading} searchHistoryObj={searchHistoryObj} />
 
       <Section
         divider={false}
@@ -84,15 +93,16 @@ export function AdvancedSearchResult({
         subtitle={
           <>
             <div className={styles.facetsContainer}>
-              <FacetTags selectedFacets={selectedFacets} />
-              {hitcount && (
+              <>
+                <FacetTags selectedFacets={selectedFacets} />
                 <div className={styles.subtitleStyle}>
                   <Text type="text1" className={styles.titleStyle}>
                     {translate({ context: "search", label: "narrow-search" })}
                   </Text>
                 </div>
-              )}
+              </>
 
+              <QuickFilter />
               <AdvancedFacets cql={cql} />
             </div>
           </>
@@ -156,21 +166,29 @@ export default function Wrap({ onWorkClick, onPageChange }) {
     pageNoFromUrl: pageNo,
     setShowPopover,
   } = useAdvancedSearchContext();
-
   const { selectedFacets } = useFacets();
-
   // if facets are set we need them for the cql
-  const cqlAndFacetsQuery = getCqlAndFacetsQuery(cql, selectedFacets);
+  // we also need the quickfilters
+  const { selectedQuickFilters } = useQuickFilters();
+  const cqlAndFacetsQuery = getCqlAndFacetsQuery({
+    cql,
+    selectedFacets,
+    quickFilters: selectedQuickFilters,
+  });
+
   // if facets are not set we need the raw (without facets) fieldsearch query
   const fieldSearchQuery = convertStateToCql({ ...fieldSearch });
-
   // @TODO what to do  with dataCollect ???
   onWorkClick = null;
   // get setter for advanced search history
   const { setValue } = useAdvancedSearchHistory();
   const cqlQuery =
     cqlAndFacetsQuery ||
-    convertStateToCql({ ...fieldSearch, facets: selectedFacets });
+    convertStateToCql({
+      ...fieldSearch,
+      facets: selectedFacets,
+      quickFilters: selectedQuickFilters,
+    });
 
   const showResult = !isEmpty(fieldSearch) || !isEmpty(cql);
 
@@ -182,15 +200,22 @@ export default function Wrap({ onWorkClick, onPageChange }) {
   );
   const parsedResponse = parseResponse(fastResponse);
   //update searchhistory
-  if (!parsedResponse?.errorMessage && !parsedResponse.isLoading) {
+  let searchHistoryObj = {};
+  if (
+    !parsedResponse?.errorMessage &&
+    !parsedResponse.isLoading &&
+    (cqlAndFacetsQuery || fieldSearchQuery)
+  ) {
     // make an object for searchhistory
     // the cql part .. we use the raw cql for now - facets are handled independently
-    const searchHistoryObj = {
+    //key is a the full parsed cql search
+    searchHistoryObj = {
       key: cqlQuery,
       hitcount: parsedResponse?.hitcount,
       fieldSearch: fieldSearch || "",
       cql: cqlAndFacetsQuery ? cql : fieldSearchQuery,
       selectedFacets: selectedFacets || [],
+      selectedQuickFilters: selectedQuickFilters || [],
     };
     setValue(searchHistoryObj);
   }
@@ -209,8 +234,10 @@ export default function Wrap({ onWorkClick, onPageChange }) {
       setShowPopover={setShowPopover}
       isLoading={parsedResponse.isLoading}
       cql={cqlQuery}
+      // we need the raw cql (without facets and quickfilters) for the facetButton
       rawcql={cqlAndFacetsQuery ? cql : fieldSearchQuery}
       selectedFacets={selectedFacets}
+      searchHistoryObj={searchHistoryObj}
     />
   );
 }

@@ -296,6 +296,7 @@ const MaterialRowReservation = (props) => {
 
         <div className={sharedStyles.buttonContainer}>
           <IconButton
+            icon="close"
             dataCy="order-button"
             onClick={() =>
               onClickDelete({

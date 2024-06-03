@@ -5,7 +5,7 @@ describe("Advanced search history", () => {
   it(`should display Cql history with recent searches`, () => {
     cy.get("[data-cy=advanced-search-search-history]")
       .should("exist")
-      .contains("Seneste søgninger");
+      .contains("Søgehistorik");
 
     cy.get("[data-cy=advanced-search-history-item]").should("exist");
 

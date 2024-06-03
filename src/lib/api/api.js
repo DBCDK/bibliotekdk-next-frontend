@@ -8,6 +8,7 @@ import storybookConfig from "@/config";
 import getConfig from "next/config";
 import useSWR from "swr";
 import useAccessToken from "@/components/hooks/user/useAccessToken";
+import useCookieConsent from "@/components/hooks/useCookieConsent";
 
 // TODO handle config better
 const nextJsConfig = getConfig();
@@ -45,7 +46,8 @@ export function enableDebug() {
 export async function fetcher(
   queryStr,
   userAgent = null,
-  xForwardedFor = null
+  xForwardedFor = null,
+  extra = {}
 ) {
   const {
     apiUrl: apiUrlFromQuery,
@@ -55,6 +57,8 @@ export async function fetcher(
     accessToken,
   } = typeof queryStr === "string" ? JSON.parse(queryStr) : queryStr;
 
+  const { uniqueVisitorId, statistics } = extra;
+
   // Calculate apiUrl
   const apiUrl =
     apiUrlFromQuery && config[apiUrlFromQuery]?.url
@@ -63,6 +67,8 @@ export async function fetcher(
 
   const headers = {
     "Content-Type": "application/json",
+    "X-Unique-Visitor-ID": uniqueVisitorId || "",
+    "X-Tracking-Consent": !!statistics,
   };
   if (accessToken) {
     headers.Authorization = `Bearer ${accessToken}`;
@@ -73,6 +79,7 @@ export async function fetcher(
   if (xForwardedFor) {
     headers["x-forwarded-for"] = xForwardedFor;
   }
+
   const start = Date.now();
   const res = await fetch(apiUrl, {
     method: "POST",
@@ -250,14 +257,14 @@ function getStackTrace() {
  * either a mocked one, or the real deal
  */
 function useFetcherImpl() {
+  const consent = useCookieConsent();
   const { fetcher: mockedFetcher } = useContext(APIMockContext) || {};
-
   if (mockedFetcher) {
     const stackTrace = getStackTrace();
     return (queryStr) => mockedFetcher(queryStr, stackTrace);
   }
 
-  return fetcher;
+  return (key) => fetcher(key, null, null, consent);
 }
 
 /**

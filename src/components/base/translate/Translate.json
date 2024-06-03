@@ -113,6 +113,10 @@
         "da": "Aldersgruppe",
         "en": "Age groups"
       },
+      "phrase.generalaudience": {
+        "da": "Målgruppe",
+        "en": "Audience"
+      },
       "phrase.mainlanguage": {
         "da": "Sprog",
         "en": "Languages"
@@ -124,6 +128,50 @@
       "phrase.specificmaterialtype": {
         "da": "Materialetype",
         "en": "Materialtype"
+      },
+      "phrase.gameplatform": {
+        "da": "Platform",
+        "en": "Platform"
+      },
+      "all_phrase.pegi": {
+        "da": "PEGI mærkning",
+        "en": "PEGI mark"
+      },
+      "phrase.pegi": {
+        "da": "PEGI mærkning",
+        "en": "PEGI mark"
+      },
+      "all_phrase.players": {
+        "da": "Spillere",
+        "en": "Players"
+      },
+      "phrase.players": {
+        "da": "Antal spillere",
+        "en": "Players"
+      },
+      "all_phrase.generalaudience": {
+        "da": "Målgruppe",
+        "en": "Audience"
+      },
+      "all_phrase.gameplatform": {
+        "da": "Alle platforme",
+        "en": "All Platforms"
+      },
+      "all_phrase.genreandform": {
+        "da": "Alle genrer",
+        "en": "All genres"
+      },
+      "phrase.genreandform": {
+        "da": "Genre og form",
+        "en": "Genre and form"
+      },
+      "all_phrase.filmnationality": {
+        "da": "Alle nationaliteter",
+        "en": "All nationalities"
+      },
+      "phrase.filmnationality": {
+        "da": "Nationalitet",
+        "en": "Nationality"
       },
       "all_phrase.specificmaterialtype": {
         "da": "Alle materialer",
@@ -218,6 +266,117 @@
         "en": "Age"
       }
     },
+    "advanced_search_worktypes": {
+      "all": {
+        "da": "Alle materialer",
+        "en": "All materials"
+      },
+      "literature": {
+        "da": "Bøger",
+        "en": "Books"
+      },
+      "article": {
+        "da": "Artikler",
+        "en": "Articles"
+      },
+      "movie": {
+        "da": "Film",
+        "en": "Movies"
+      },
+      "music": {
+        "da": "Musik",
+        "en": "Music"
+      },
+      "game": {
+        "da": "Spil",
+        "en": "Games"
+      },
+      "sheetmusic": {
+        "da": "Noder",
+        "en": "Sheetmusic"
+      },
+      "category": {
+        "da": "Kategori",
+        "en": "Category"
+      }
+    },
+    "advanced_search_savedSearch": {
+      "emptyListMessage1": {
+        "da": "Du har ikke nogen gemte søgninger endnu.",
+        "en": "You do not have any saved searches yet."
+      },
+      "emptyListMessage2": {
+        "da": "Sådan gemmer du en søgning",
+        "en": "How to save a search"
+      },
+      "emptyListMessage3": {
+        "da": "Du har ikke nogen gemte søgninger endnu.",
+        "en": "You do not have any saved searches yet."
+      },
+
+      "emptyListMessage4": {
+        "da": "Når du bruger “Avanceret søgning” kan du trykke på knappen  “Gem søgning” i toppen af søgeresultatet, og søgningen vil lægge sig her på listen.\n\nDu kan også gemme en søgning fra listen “Seneste søgninger” ved at klikke på hjerte-ikonet ud for den ønskede søgning.",
+        "en": "You do not have any saved searches yet."
+      },
+      "saveYourSearch": {
+        "da": "Gem din søgning",
+        "en": "Save your search"
+      },
+      "addSavedSearchName": {
+        "da": "Navngiv din søgning",
+        "en": "Name your search"
+      },
+      "addSavedSearcInputPlaceholder": {
+        "da": "Angiv et navn for din søgning.",
+        "en": "Type a name for your search."
+      },
+      "save": {
+        "da": "Gem",
+        "en": "Save"
+      },
+      "loginText": {
+        "da": "Her vil du kunne se en liste over dine gemte søgninger.\nListen er en del af din profil, og du skal derfor være logget ind for at se den.",
+        "en": "You will be able to see a list of your saved searches here.\nThe list is part of your profile, and you must therefore be logged in to see it."
+      }
+    },
+    "advanced_search_parse_errors": {
+      "MISSING_OPENING_PARANTHESIS": {
+        "da": "Hov, du mangler en startparantes.",
+        "en": "You're missing an opening paranthesis."
+      },
+      "MISSING_CLOSING_PARANTHESIS": {
+        "da": "Ups, du mangler en slutparantes.",
+        "en": "You're missing a closing paranthesis."
+      },
+      "UNCLOSED_STRING_LITERAL": {
+        "da": "Du mangler et afsluttende anførselstegn.",
+        "en": "You're missing a closing quotation mark."
+      },
+      "UNKNOWN_FIELD": {
+        "da": "Du benytter et ukendt indeks.",
+        "en": "You're using an unknown index."
+      },
+      "UNEXPECTED_ENDING": {
+        "da": "Uventet afslutning på forespørgslen.",
+        "en": "Unexpected end of query."
+      },
+      "UNEXPECTED_TOKEN": {
+        "da": "Uventet symbol fundet.",
+        "en": "Unexpected symbol found."
+      },
+      "UNEXPECTED_WITHIN_LITERAL": {
+        "da": "Forkert tidsintervals-format. Brug fx \"2010 2015\" eller \"2010-01-01 2015-06-28\".<br/>Bemærk at venstre side skal være mindre eller lig højre side.",
+        "en": "Incorrect format for time interval. Use for instance, \"2010 2015\" or \"2010-01-01 2015-06-28\".<br/>Note that the left-hand value must be less than or equal to the right-hand value"
+      },
+      "EMPTY_QUERY": {
+        "da": "Vi tror på dig!",
+        "en": "We believe in you!"
+      },
+      "didUMean": {
+        "da": "Mente du %s ?",
+        "en": "Did you mean %s ?"
+      }
+    },
     "complex-search-facets": {
       "label-specificmaterialtype": {
         "da": "Format",
@@ -260,6 +419,7 @@
         "en": "Level"
       }
     },
+
     "logo": {
       "default_logo_text": {
         "da": "Bibliotek dk",
@@ -800,7 +960,7 @@
         "da": "Beskrivelse",
         "en": "Description"
       },
-      "hostPublication": {
+      "hostpublication": {
         "da": "Findes i",
         "en": "Available in"
       },
@@ -1479,6 +1639,10 @@
       "participants": {
         "da": "Deltagere",
         "en": "Players"
+      },
+      "dk5": {
+        "da": "dk5",
+        "en": "dk5"
       },
       "title": {
         "da": "Detaljer",
@@ -2295,6 +2459,10 @@
         "da": "ISBN",
         "en": "ISBN"
       },
+      "advanced-dropdown-issn": {
+        "da": "ISSN",
+        "en": "ISSN"
+      },
       "advanced-dropdown-term.subject": {
         "da": "Emne",
         "en": "subject"
@@ -2307,6 +2475,10 @@
         "da": "Fiktiv karakter",
         "en": "Fictional character"
       },
+      "advanced-dropdown-literature_term.fictionalcharacter": {
+        "da": "Fiktiv karakter",
+        "en": "Fictional character"
+      },
       "advanced-dropdown-term.hostpublication": {
         "da": "Værtspublikation",
         "en": "Hostpublication"
@@ -2314,6 +2486,14 @@
       "advanced-dropdown-term.contributor": {
         "da": "Medvirkende",
         "en": "contributor"
+      },
+      "advanced-dropdown-literature_term.contributor": {
+        "da": "Bidrag af",
+        "en": "Contributions by"
+      },
+      "advanced-dropdown-literature_term.series": {
+        "da": "Serietitel",
+        "en": "Series title"
       },
       "advanced-dropdown-term.series": {
         "da": "Serietitel",
@@ -2323,18 +2503,191 @@
         "da": "Forfatter/ophav",
         "en": "function"
       },
-
       "advanced-dropdown-term.creatorcontributor": {
         "da": "Forfatter/ophav",
         "en": "Creator"
       },
+      "advanced-dropdown-literature_term.creatorcontributor": {
+        "da": "Forfatter/ophav",
+        "en": "Creator"
+      },
+      "advanced-dropdown-literature_term.publisher": {
+        "da": "Udgiver",
+        "en": "Publisher"
+      },
+      "advanced-dropdown-article_term.publisher": {
+        "da": "Udgiver",
+        "en": "Publisher"
+      },
+      "advanced-dropdown-article_term.hostpublication": {
+        "da": "Udgivet i",
+        "en": "Published in"
+      },
+      "advanced-dropdown-movie_term.creatorcontributor": {
+        "da": "Instruktør/ophav",
+        "en": "Director/creators"
+      },
+      "advanced-dropdown-movie_term.fictionalcharacter": {
+        "da": "Fiktiv karakter",
+        "en": "Fictional character"
+      },
+      "advanced-dropdown-movie_term.publisher": {
+        "da": "Udgiver",
+        "en": "Publisher"
+      },
+      "advanced-dropdown-music_term.creator": {
+        "da": "Kunstner",
+        "en": "Artist"
+      },
+      "advanced-dropdown-music_term.contributor": {
+        "da": "Medvirkende",
+        "en": "Artist"
+      },
+      "advanced-dropdown-music_term.publisher": {
+        "da": "Pladeselskab",
+        "en": "Publisher"
+      },
+
+      "advanced-dropdown-sheetmusic_term.creator": {
+        "da": "Komponist",
+        "en": "Conductor"
+      },
+      "advanced-dropdown-sheetmusic_term.title": {
+        "da": "Titel",
+        "en": "Title"
+      },
+      "advanced-dropdown-sheetmusic_term.titlemanifestationpart": {
+        "da": "Sangtitel",
+        "en": "Songtitle"
+      },
+      "advanced-dropdown-game_term.fictionalcharacter": {
+        "da": "Fiktiv karakter",
+        "en": "Fictive character"
+      },
+      "advanced-dropdown-game_term.series": {
+        "da": "Serietitel",
+        "en": "Seriestitle"
+      },
+      "advanced-placeholder-game_term.series": {
+        "da": "Søg på en spilseries navn",
+        "en": "Search by title of game series"
+      },
+      "advanced-placeholder-sheetmusic_term.titlemanifestationpart": {
+        "da": "Søg på titel på sang eller musikstykke",
+        "en": "Search by title of song or sheetmusic"
+      },
+      "advanced-placeholder-game_term.fictionalcharacter": {
+        "da": "Søg på spillets hovedperson mv.",
+        "en": "Search by fictive characters in game"
+      },
+      "advanced-placeholder-sheetmusic_term.title": {
+        "da": "Søg på titel for nodehæfte eller album",
+        "en": "Search by title of sheetmusic or album"
+      },
+      "advanced-placeholder-sheetmusic_term.creator": {
+        "da": "Søg på komponist og andre hovedophav",
+        "en": "Search by conductor and other creators"
+      },
+
+      "advanced-placeholder-music_term.publisher": {
+        "da": "Søg på pladeselskab, udgiver mv.",
+        "en": "Search by publisher"
+      },
+      "advanced-placeholder-music_term.creator": {
+        "da": "Søg på kunstner, band, komponist mv.",
+        "en": "Search by artist, composer, band etc."
+      },
+      "advanced-placeholder-music_term.contributor": {
+        "da": "Søg på musiker, dirigent mv.",
+        "en": "Search by musician, conductor etc."
+      },
+      "advanced-placeholder-term.creator": {
+        "da": "Søg på filmselskab, distributør mv",
+        "en": "Search by publisher, distributor etc."
+      },
+      "advanced-placeholder-movie_term.publisher": {
+        "da": "Søg på filmselskab, distributør mv",
+        "en": "Search by publisher, distributor etc."
+      },
+      "advanced-placeholder-movie_term.fictionalcharacter": {
+        "da": "Søg på hovedperson fra film, tv-serier mv. ",
+        "en": "Search characters"
+      },
+      "advanced-placeholder-movie_term.creatorcontributor": {
+        "da": "Søg på instruktør, skuespiller mv.",
+        "en": "Search by director, actors etc."
+      },
+      "advanced-placeholder-issn": {
+        "da": "Søg på tidsskriftets ISSN",
+        "en": "Search by journals ISSN"
+      },
+      "advanced-placeholder-article_term.publisher": {
+        "da": "Søg på forlag, udgiver mv. ",
+        "en": "Search by publisher"
+      },
+      "advanced-placeholder-literature_term.series": {
+        "da": "Søg på en bogseries navn",
+        "en": "Search by book series"
+      },
+      "advanced-placeholder-article_term.hostpublication": {
+        "da": "Søg på en tidsskrift, avis mv.",
+        "en": "Search by journal, newspaper etc."
+      },
+      "advanced-placeholder-literature_term.publisher": {
+        "da": "Søg på forlag, udgiver mv. ",
+        "en": "Search by publisher"
+      },
       "advanced-dropdown-dk5": {
         "da": "DK5",
+        "en": "DK5"
+      },
+      "advanced-dropdown-term.titlemanifestationpart": {
+        "da": "Tracktitel",
+        "en": "Tracktitle"
+      },
+      "advanced-dropdown-movie_term.title": {
+        "da": "Titel",
+        "en": "Title"
+      },
+      "advanced-dropdown-game_term.publisher": {
+        "da": "Udgiver",
+        "en": "Publisher"
+      },
+      "advanced-dropdown-game_term.creatorcontributor": {
+        "da": "Ophav",
         "en": "Creator"
+      },
+      "advanced-placeholder-term.contributor": {
+        "da": "Søg på medvirkende",
+        "en": "Search by contributors"
+      },
+      "advanced-placeholder-game_term.creatorcontributor": {
+        "da": "Søg på spiludvikler, spilfirma",
+        "en": "Search by creator"
+      },
+      "advanced-placeholder-game_term.publisher": {
+        "da": "Søg på udgiver, distributør",
+        "en": "Search by publisher"
+      },
+      "advanced-placeholder-movie_term.title": {
+        "da": "Søg på spillets titel",
+        "en": "Search by name of game"
       },
       "advanced-placeholder-term.default": {
         "da": "Søg på titel, ophav, emne, noter mv.",
         "en": "All fields"
+      },
+      "advanced-placeholder-term.titlemanifestationpart": {
+        "da": "Søg på titel på tracks fra udgivelser",
+        "en": "Search by track titles"
+      },
+      "advanced-placeholder-literature_term.creatorcontributor": {
+        "da": "Søg på forfatter og alle andre ophav",
+        "en": "Search by creator and all other contributors"
+      },
+      "advanced-placeholder-literature_term.contributor": {
+        "da": "Søg på oversætter, oplæser, illustrator mv. ",
+        "en": "Search by translator, recitor, illustrator etc."
       },
       "advanced-placeholder-term.creatorcontributor": {
         "da": "Søg på forfatter, komponist, instruktør mv.",
@@ -2365,6 +2718,10 @@
         "da": "Søg på bogserie, tv-serie mv.",
         "en": "Series title"
       },
+      "advanced-placeholder-literature_term.fictionalcharacter": {
+        "da": "Søg på hovedperson fra bøger mv.",
+        "en": "Search by character from books etc."
+      },
       "advanced-placeholder-term.fictionalcharacter": {
         "da": "Søg på hovedpersoner fra bøger, film og spil",
         "en": "Fictional character"
@@ -2389,9 +2746,17 @@
         "da": "Seneste søgninger",
         "en": "Latest searches"
       },
+      "advanced-search-saved-search": {
+        "da": "Gemte søgninger (%s)",
+        "en": "Saved searches (%s)"
+      },
       "advanced-empty-search-history": {
         "da": "Her vil du kunne se en liste over de seneste søgninger, hvor der har været brugt avanceret søgning. Listen er midlertidig og nulstilles automatisk, når du lukker enten vinduet eller din browser. Hvis du vil gemme en søgning til senere, så tryk “Gem” ud for søgningen og den vil lægge sig på listen “Gemte søgninger”.\\n Du har ikke lavet nogen avancerede søgninger endnu.",
         "en": "List of recent advanced searches :) - List is temporary and will be emptied automagically"
+      },
+      "date": {
+        "da": "Dato",
+        "en": "Date"
       },
       "remove": {
         "da": "Fjern",
@@ -2413,9 +2778,29 @@
         "da": "Din søgning",
         "en": "Your search"
       },
+      "search": {
+        "da": "Søgning",
+        "en": "search"
+      },
+      "results": {
+        "da": "Resultater",
+        "en": "Results"
+      },
+      "saveSearch": {
+        "da": "Gem søgning",
+        "en": "Save search"
+      },
       "editSearch": {
-        "da": "Rediger søgning",
+        "da": "Rediger Søgning",
         "en": "Edit search"
+      },
+      "edit": {
+        "da": "Rediger",
+        "en": "Edit"
+      },
+      "editName": {
+        "da": "Rediger navn",
+        "en": "Edit name"
       },
       "construct-your-search": {
         "da": "Sammensæt din søgning",
@@ -2436,6 +2821,10 @@
       "searchHistory": {
         "da": "Søgehistorik",
         "en": "Search history"
+      },
+      "history-filter-label": {
+        "da": "Filtre",
+        "en": "Filters"
       },
       "history-yesterday": {
         "da": "Igår",
@@ -2522,6 +2911,20 @@
       "suggestions": {
         "da": "Søgeforslag",
         "en": "Search suggestions"
+      }
+    },
+    "quickfilters": {
+      "label-physical-online": {
+        "da": "Online og fysisk",
+        "en": "Online and physical"
+      },
+      "label-fiction-nonfiction": {
+        "da": "Fiktion og non-fiktion",
+        "en": "Fiction and non-fiction"
+      },
+      "label-children-adults": {
+        "da": "Til børn og voksne",
+        "en": "Children and adults"
       }
     },
     "facets": {
@@ -2710,8 +3113,8 @@
         "en": "Subject"
       },
       "label-movie-creators": {
-        "da": "Instruktør/medvirkende",
-        "en": "Director/contributor"
+        "da": "Instruktør",
+        "en": "Director"
       },
       "label-game-workTypes": {
         "da": "Materialekategori",
@@ -2868,6 +3271,10 @@
       "label-sheetmusic": {
         "da": "Noder",
         "en": "Sheet music"
+      },
+      "label-map": {
+        "da": "Kort",
+        "en": "Map"
       },
       "label-portrait": {
         "da": "Potrætter",
@@ -3490,6 +3897,10 @@
       "pincode-heading": {
         "da": "Biblioteket kræver en pinkode ved bestilling",
         "en": "LABEL: Mangler oversættelse!"
+      },
+      "pincode-heading-2": {
+        "da": "%s kræver en pinkode ved bestilling",
+        "en": "%s requires a PIN code for placing an order"
       },
       "pincode-input-label": {
         "da": "Pinkode",

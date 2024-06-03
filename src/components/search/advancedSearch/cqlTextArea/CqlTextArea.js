@@ -1,19 +1,27 @@
 import styles from "./CqlTextArea.module.css";
-import React, { useEffect } from "react";
+import React, { useMemo, useState } from "react";
 import { cyKey } from "@/utils/trim";
 import Text from "@/components/base/text";
 import translate from "@/components/base/translate";
-import CqlErrorMessage from "@/components/search/advancedSearch/cqlErrorMessage/CqlErrorMessage";
+import { CqlErrorMessage } from "@/components/search/advancedSearch/cqlErrorMessage/CqlErrorMessage";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
+import {
+  createErrorMessage,
+  tokenize,
+  validateTokens,
+  highlight,
+} from "@/components/utils/cql/parser";
+import Editor from "react-simple-code-editor";
 
-export function CqlTextArea({ textAreaRef, doAdvancedSearch }) {
+export function CqlTextArea({ doAdvancedSearch }) {
   const { parsedCQL, setParsedCQL } = useAdvancedSearchContext();
+  const [focused, setFocused] = useState(false);
 
-  useEffect(() => {
-    if (textAreaRef?.current) {
-      textAreaRef.current.style.height = 0;
-      textAreaRef.current.style.height = `${textAreaRef?.current?.scrollHeight}px`;
-    }
+  const message = useMemo(() => {
+    const tokens = tokenize(parsedCQL);
+    const validatedTokens = validateTokens(tokens);
+    const { message } = createErrorMessage(validatedTokens);
+    return message;
   }, [parsedCQL]);
 
   return (
@@ -23,30 +31,47 @@ export function CqlTextArea({ textAreaRef, doAdvancedSearch }) {
           {translate({ context: "search", label: "cqlsearchlabel" })}
         </Text>
       </label>
-      <textarea
-        className={styles.input}
-        ref={textAreaRef}
+      <div
+        className={`${styles.formatted} ${focused ? styles.focused : ""}`}
         data-cy={cyKey({
           name: "cqlTxt",
           prefix: "advanced-search",
         })}
-        id="cqlTextArea"
-        value={parsedCQL}
-        onChange={(event) => {
-          setParsedCQL(event.target.value);
-        }}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" && e.ctrlKey === true) {
-            e.preventDefault();
-            doAdvancedSearch();
-          }
-        }}
-        placeholder={translate({
-          context: "search",
-          label: "cqlsearchPlaceholder",
-        })}
-      />
-      <CqlErrorMessage cql={textAreaRef?.current?.value} />
+      >
+        <Editor
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+          placeholder={translate({
+            context: "search",
+            label: "cqlsearchPlaceholder",
+          })}
+          id="cqlTextArea"
+          value={parsedCQL}
+          onValueChange={(code) => setParsedCQL(code)}
+          highlight={(code) => {
+            const tokens = tokenize(code);
+            const validatedTokens = validateTokens(tokens);
+            return highlight(validatedTokens);
+          }}
+          padding={16}
+          style={{
+            background: "white",
+            fontFamily:
+              "ibm_plex_mono,Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New",
+            fontSize: 17,
+            lineHeight: 1.5,
+            minHeight: 84,
+          }}
+          insertSpaces={true}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && e.ctrlKey === true) {
+              e.preventDefault();
+              doAdvancedSearch();
+            }
+          }}
+        />
+      </div>
+      <CqlErrorMessage message={message} />
     </div>
   );
 }

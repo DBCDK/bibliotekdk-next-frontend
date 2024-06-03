@@ -19,6 +19,8 @@ import { getHelpUrl } from "@/lib/utils";
 import cx from "classnames";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
+import WorkTypeMenu from "@/components/search/advancedSearch/workTypeMenu/WorkTypeMenu";
+import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
 
 /**
  * Contains advanced search fields
@@ -39,6 +41,7 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
     showPopover,
     stateToString,
     resetObjectState,
+    workType,
   } = useAdvancedSearchContext();
 
   const [showCqlEditor, setShowCqlEditor] = useState(false);
@@ -51,16 +54,18 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
 
   // we need to clear the global facets
   const { clearFacetsUrl } = useFacets();
+  const { clearQuickFiltersUrl } = useQuickFilters();
   //add raw cql query in url if showCqlEditor. Add state to url if fieldInputs
   const doAdvancedSearch = () => {
     // this is a new search - clear the facets
     clearFacetsUrl();
+    clearQuickFiltersUrl();
     if (showCqlEditor) {
       const cqlParsedFromUrl = fieldSearchFromUrl
         ? convertStateToCql(fieldSearchFromUrl)
         : cqlFromUrl;
       if (!cqlFromUrl && parsedCQL === cqlParsedFromUrl) {
-        const query = { fieldSearch: stateToString };
+        const query = { fieldSearch: encodeURIComponent(stateToString) };
         router.push({ pathname: "/avanceret", query });
       } else {
         const query = {
@@ -69,10 +74,14 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
         router.push({ pathname: "/avanceret", query });
       }
     } else {
-      const query = { fieldSearch: stateToString };
+      const query = { fieldSearch: encodeURIComponent(stateToString) };
       router.push({ pathname: "/avanceret", query });
       //save in state
-      const cql = convertStateToCql({ inputFields, dropdownSearchIndices });
+      const cql = convertStateToCql({
+        inputFields,
+        dropdownSearchIndices,
+        workType,
+      });
       setParsedCQL(cql);
     }
     setShowPopover(false);
@@ -152,9 +161,6 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
           </Col>
         </Row>
         <Row>
-          {/*<Col lg={{ offset: 3, span: 4 }} md={6}>*/}
-          {/*  /!**Insert material type select here *!/*/}
-          {/*</Col>*/}
           {showCqlEditor ? (
             <Col lg={{ offset: 3, span: 6 }} md={9} xs={12}>
               <CqlTextArea
@@ -163,12 +169,17 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
               />
             </Col>
           ) : (
-            <Col lg={{ offset: 3, span: 9 }} md={12}>
-              <>
-                <TextInputs doAdvancedSearch={doAdvancedSearch} />
-                <DropdownInputs />
-              </>
-            </Col>
+            <>
+              <Col lg={{ offset: 1, span: 2 }} md={12}>
+                <WorkTypeMenu />
+              </Col>
+              <Col lg={{ offset: 0, span: 9 }} md={12}>
+                <>
+                  <TextInputs doAdvancedSearch={doAdvancedSearch} />
+                  <DropdownInputs />
+                </>
+              </Col>
+            </>
           )}
         </Row>
         <Row className={styles.buttonRow}>

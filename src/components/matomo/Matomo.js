@@ -11,11 +11,11 @@ export default function Matomo() {
       // routeChangeComplete occurs..
       // Got to add delay until its fixed in nextjs
       setTimeout(() => {
-        window._paq.push(["setReferrerUrl", url]);
-        window._paq.push(["setCustomUrl", url]);
-        window._paq.push(["setDocumentTitle", document.title]);
-        window._paq.push(["trackPageView"]);
-        window._paq.push(["enableLinkTracking"]);
+        window._paq?.push(["setReferrerUrl", url]);
+        window._paq?.push(["setCustomUrl", url]);
+        window._paq?.push(["setDocumentTitle", document.title]);
+        window._paq?.push(["trackPageView"]);
+        window._paq?.push(["enableLinkTracking"]);
       }, 500);
     };
 

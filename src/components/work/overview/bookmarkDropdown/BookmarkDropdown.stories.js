@@ -19,6 +19,7 @@ export function BookmarkWithDropdown() {
       <div style={{ width: "10%" }}>
         <BookMarkMaterialSelector
           workId="some-work-id"
+          title="Some title"
           materialTypes={materialtypes}
         />
       </div>
@@ -38,6 +39,7 @@ export function BookmarkWithDropdownOneMaterial() {
       <div style={{ width: "10%" }}>
         <BookMarkMaterialSelector
           workId="some-work-id"
+          title="Some title"
           materialTypes={materialtypes}
         />
       </div>

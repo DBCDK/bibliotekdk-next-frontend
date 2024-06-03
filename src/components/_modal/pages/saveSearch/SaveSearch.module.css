@@ -1,0 +1,18 @@
+.container {
+  max-width: 600px;
+  padding: 0 var(--pt2);
+  padding: var(--pt2) var(--pt2) var(--pt4) var(--pt2);
+}
+
+.container h2 {
+  margin-bottom: var(--pt5);
+}
+.container button {
+  margin-top: var(--pt7);
+}
+
+@media (min-width: 576px) {
+  .container {
+    padding: var(--pt2) var(--pt6) var(--pt4) var(--pt6);
+  }
+}

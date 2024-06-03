@@ -28,6 +28,20 @@
   border-color: var(--blue);
 }
 
+.checkmark {
+  display: none;
+}
+
+.row.selected > .checkmark {
+  color: white;
+  display: block;
+  position: absolute;
+  left: 2px;
+  top: 10px;
+  transform: scale(0.8);
+  font-weight: bolder;
+}
+
 .row .content {
   width: 100%;
 }
@@ -43,8 +57,8 @@
   bottom: 0;
   left: 0;
   border-radius: 50%;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
 }
 .row > .dot::before {
   background: var(--blue);
@@ -52,7 +66,7 @@
   transition: transform 0.4s;
 }
 .row.selected > .dot::before {
-  transform: scale(0.7);
+  transform: scale(0.9);
 }
 .row > .dot::after {
   border: 1px solid var(--gray);

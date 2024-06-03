@@ -144,7 +144,7 @@ const Material = ({
             label: "order-not-possible",
           })}
         </Text>
-        <IconButton onClick={() => deleteOrder({ pids })}>
+        <IconButton onClick={() => deleteOrder({ pids })} icon="close">
           {Translate({
             context: "bookmark",
             label: "remove",

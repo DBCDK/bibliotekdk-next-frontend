@@ -20,26 +20,34 @@ import MenuDropdown from "@/components/base/dropdown/menuDropdown/MenuDropdown";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import Button from "@/components/base/button";
 import CombinedSearch from "@/components/search/advancedSearch/combinedSearch/CombinedSearch";
+import useSavedSearches from "@/components/hooks/useSavedSearches";
+import { useModal } from "@/components/_modal";
+import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
 //Component to render facets
-export function FormatedFacets({ facets, className }) {
-  if (isEmpty(facets)) {
+export function FormatedFilters({ facets, quickFilters = [], className }) {
+  if (isEmpty(facets) && isEmpty(quickFilters)) {
     return null;
   }
-
   const flatfilters = [];
-  facets?.forEach((facet) => {
-    facet.values.map((val) => {
-      flatfilters.push({
-        name: val.name,
+  !isEmpty(facets) &&
+    facets?.forEach((facet) => {
+      facet?.values?.map((val) => {
+        flatfilters.push({
+          name: val.name,
+        });
       });
     });
-  });
+
+  !isEmpty(quickFilters) &&
+    quickFilters?.forEach((quick) => flatfilters.push({ name: quick.value }));
 
   return (
     <div className={cx(styles.historyFilters, className)}>
-      <Text tag="span" type="text1">
-        {Translate({ context: "search", label: "filters" })} :
+      <Text tag="span" type="text1" className={styles.filterLabel}>
+        {Translate({ context: "search", label: "history-filter-label" })}:
       </Text>
       {flatfilters.map((val, index) => (
         <Text
@@ -54,19 +62,32 @@ export function FormatedFacets({ facets, className }) {
     </div>
   );
 }
-function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
+
+/**
+ * Renders a clickable link based on search item details.
+ * search history item
+ * @param {object} item
+ * @returns  {JSX.Element}
+ */
+export function SearchQueryDisplay({ item }) {
   const router = useRouter();
-  const breakpoint = useBreakpoint();
 
   const { restartFacetsHook } = useFacets();
+  const { resetQuickFilters } = useQuickFilters();
+  const { setWorkType } = useAdvancedSearchContext();
 
   const goToItemUrl = (item) => {
     // restart the useFacets hook - this is a 'new' search
     restartFacetsHook();
+    resetQuickFilters();
+
+    // set worktype from item
+    setWorkType(item.fieldSearch?.workType || "all");
     if (!isEmpty(item.fieldSearch)) {
       const query = {
         fieldSearch: JSON.stringify(item.fieldSearch),
         facets: JSON.stringify(item.selectedFacets || "[]"),
+        quickfilters: JSON.stringify(item.selectedQuickFilters || "[]"),
       };
       router.push({
         pathname: "/avanceret/",
@@ -78,11 +99,44 @@ function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
         query: {
           cql: item.cql,
           facets: JSON.stringify(item.selectedFacets || "[]"),
+          quickfilters: JSON.stringify(item.quickfilters || "[]"),
         },
       });
     }
   };
 
+  return (
+    <div className={styles.link}>
+      <Link
+        onClick={(e) => {
+          e.preventDefault();
+          goToItemUrl(item);
+        }}
+      >
+        {!isEmpty(item.fieldSearch) ? (
+          <FormatFieldSearchIndexes fieldsearch={item.fieldSearch} />
+        ) : (
+          <FormatCql item={item} />
+        )}
+      </Link>
+      {/* move this to seperate component and reuse in combined search */}
+      <FormatedFilters
+        facets={item?.selectedFacets}
+        quickFilters={item.selectedQuickFilters}
+      />
+    </div>
+  );
+}
+function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
+  const modal = useModal();
+  const breakpoint = useBreakpoint();
+  const { isAuthenticated } = useAuthentication();
+
+  const { deleteSearches, useSavedSearchByCql } = useSavedSearches();
+  //check if search has already been saved in userdata
+  const { savedObject, mutate } = useSavedSearchByCql({ cql: item.key });
+  //check user has saved the search item
+  const isSaved = !!savedObject?.id;
   const timestamp = item.unixtimestamp
     ? getTimeStamp(item.unixtimestamp)
     : item.timestamp;
@@ -121,27 +175,33 @@ function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
       >
         {itemText()}
       </Text>
-      <div className={styles.link}>
-        <Link
-          onClick={(e) => {
-            e.preventDefault();
-            goToItemUrl(item);
-          }}
-        >
-          {!isEmpty(item.fieldSearch) ? (
-            <FormatFieldSearchIndexes fieldsearch={item.fieldSearch} />
-          ) : (
-            <FormatCql item={item} />
-          )}
-        </Link>
-        {/* move this to seperate component and reuse in combined search */}
-        <FormatedFacets facets={item?.selectedFacets} />
-      </div>
+      <SearchQueryDisplay item={item} />
       <Text type="text2" className={styles.hitcount}>
         {item.hitcount}{" "}
         {breakpoint === "xs" &&
           Translate({ context: "search", label: "title" }).toLowerCase()}
       </Text>
+
+      {isAuthenticated && (
+        <Icon
+          className={styles.saveSearchIcon}
+          size={3}
+          src={`${isSaved ? "heart_filled" : "heart"}.svg`}
+          onClick={async () => {
+            if (isSaved) {
+              //remove search
+              await deleteSearches({ idsToDelete: [savedObject?.id] });
+              mutate();
+            } else {
+              //open save search modal
+              modal.push("saveSearch", {
+                item: item,
+                onSaveDone: mutate,
+              });
+            }
+          }}
+        />
+      )}
     </div>
   );
 }
@@ -159,15 +219,23 @@ function FormatCql({ item }) {
   );
 }
 
-function HistoryHeaderActions({
+/**
+ * Action header for advanced search history.
+ * Has functionaluty to show combined search view + trigger the select all/remove buttons,
+ * @returns
+ */
+
+export function HistoryHeaderActions({
   setAllChecked,
   deleteSelected,
   checked,
   partiallyChecked,
   disabled,
-  onCombineSearch,
+  setShowCombinedSearch,
 }) {
   const breakpoint = useBreakpoint();
+
+  const showCombineSearch = () => setShowCombinedSearch(true);
 
   const selectAllLabel = Translate({
     context: "bookmark",
@@ -177,16 +245,21 @@ function HistoryHeaderActions({
     context: "bookmark",
     label: "remove-selected",
   });
+  const combineSearchLabel = Translate({
+    context: "search",
+    label: "combineSearch",
+  });
 
   const MENUITEMS = [
     { child: selectAllLabel, callback: setAllChecked },
     { child: deleteSelectedLabel, callback: deleteSelected },
+    { child: combineSearchLabel, callback: showCombineSearch },
   ];
 
   if (breakpoint === "xs") {
     return (
-      <div className={cx(styles.actionheader)}>
-        <MenuDropdown options={MENUITEMS} isLeftAlligned={true} />
+      <div className={cx(styles.menuDropdown)}>
+        <MenuDropdown options={MENUITEMS} />
       </div>
     );
   }
@@ -210,7 +283,12 @@ function HistoryHeaderActions({
         </Text>
       </label>
 
-      <Button type="secondary" size="small" onClick={onCombineSearch}>
+      <Button
+        type="secondary"
+        size="small"
+        onClick={showCombineSearch}
+        disabled={disabled}
+      >
         {Translate({ context: "search", label: "combineSearch" })}
       </Button>
       <Link
@@ -238,9 +316,60 @@ function HistoryHeaderActions({
   );
 }
 
+export function SearchHistoryNavigation() {
+  const router = useRouter();
+  const { hitcount } = useSavedSearches();
+
+  // Check if the current path matches any button url
+  const isButtonVisible = (path) => router.pathname === path;
+
+  return (
+    <div className={styles.navigationButtons}>
+      <Link
+        onClick={() => router.push("/avanceret/soegehistorik")}
+        border={{
+          top: false,
+          bottom: {
+            keepVisible: isButtonVisible("/avanceret/soegehistorik"),
+          },
+        }}
+      >
+        <Text type="text1" tag="span">
+          {Translate({
+            context: "search",
+            label: "advanced-search-history-latest",
+          })}
+        </Text>
+      </Link>
+
+      <Link
+        onClick={() => router.push("/avanceret/gemte-soegninger")}
+        border={{
+          top: false,
+          bottom: {
+            keepVisible: isButtonVisible("/avanceret/gemte-soegninger"),
+          },
+        }}
+      >
+        <Text
+          type="text1"
+          tag="span"
+          dataCy="searchHistory-navigation-saved-search"
+        >
+          {Translate({
+            context: "search",
+            label: "advanced-search-saved-search",
+            vars: [hitcount ? String(hitcount) : "0"],
+          })}
+        </Text>
+      </Link>
+    </div>
+  );
+}
 function HistoryHeader() {
   return (
     <div className={cx(styles.header, styles.grid)}>
+      <div />
       <Text type="text4">
         {Translate({ context: "search", label: "timeForSearch" })}
       </Text>
@@ -296,9 +425,8 @@ export function AdvancedSearchHistory() {
   const { storedValue, deleteValue } = useAdvancedSearchHistory();
   const [checkboxList, setCheckboxList] = useState([]);
   const [showCombinedSearch, setShowCombinedSearch] = useState(false);
-
   const breakpoint = useBreakpoint();
-
+  const isMobile = breakpoint === "xs";
   /**
    * Set or unset ALL checkboxes in search history
    */
@@ -324,11 +452,6 @@ export function AdvancedSearchHistory() {
 
   /**
    * Add/remove item in list when selected/deselected
-   * * @param item
-   * @param item
-   * @param selected
-   *  The checkbox component (components/base/forms/checkbox) returns if it has been
-   *  selected or not
    */
   const onSelect = (item, selected = false) => {
     // if select is FALSE it has been deselected on gui
@@ -354,7 +477,7 @@ export function AdvancedSearchHistory() {
     return (
       <>
         {title && items.length > 0 && (
-          <Text type="text4" className={styles.itemsheader}>
+          <Text type="text3" className={styles.itemsheader}>
             {title}
           </Text>
         )}
@@ -382,30 +505,60 @@ export function AdvancedSearchHistory() {
 
   return (
     <div className={styles.container}>
-      <Title
-        type="title3"
-        data-cy="advanced-search-search-history"
-        className={styles.title}
-      >
-        {Translate({
-          context: "search",
-          label: "advanced-search-history-latest",
-        })}
-      </Title>
-      {showCombinedSearch ? (
-        <CombinedSearch
-          cancelCombinedSearch={() => setShowCombinedSearch(false)}
-          queries={checkedObjects}
-        />
+      {isMobile ? (
+        <>
+          <div className={styles.titleAndActionHeader}>
+            <Title type="title3" className={styles.title}>
+              {Translate({ context: "suggester", label: "historyTitle" })}
+            </Title>
+            <HistoryHeaderActions
+              deleteSelected={onDeleteSelected}
+              setAllChecked={setAllChecked}
+              checked={storedValue?.length === checkboxList?.length}
+              partiallyChecked={checkboxList?.length > 0}
+              disabled={storedValue?.length === 0}
+              checkedObjects={checkedObjects}
+              showCombinedSearch={showCombinedSearch}
+              setShowCombinedSearch={setShowCombinedSearch}
+            />
+          </div>
+          <SearchHistoryNavigation />
+          {showCombinedSearch && (
+            <CombinedSearch
+              cancelCombinedSearch={() => setShowCombinedSearch(false)}
+              queries={checkedObjects}
+            />
+          )}
+        </>
       ) : (
-        <HistoryHeaderActions
-          deleteSelected={onDeleteSelected}
-          setAllChecked={setAllChecked}
-          checked={storedValue?.length === checkboxList?.length}
-          partiallyChecked={checkboxList?.length > 0}
-          disabled={storedValue?.length === 0}
-          onCombineSearch={() => setShowCombinedSearch(true)}
-        />
+        <>
+          <Title
+            type="title3"
+            data-cy="advanced-search-search-history"
+            className={styles.title}
+          >
+            {Translate({ context: "suggester", label: "historyTitle" })}
+          </Title>
+
+          <SearchHistoryNavigation />
+          {showCombinedSearch ? (
+            <CombinedSearch
+              cancelCombinedSearch={() => setShowCombinedSearch(false)}
+              queries={checkedObjects}
+            />
+          ) : (
+            <HistoryHeaderActions
+              deleteSelected={onDeleteSelected}
+              setAllChecked={setAllChecked}
+              checked={storedValue?.length === checkboxList?.length}
+              partiallyChecked={checkboxList?.length > 0}
+              disabled={storedValue?.length === 0}
+              checkedObjects={checkedObjects}
+              showCombinedSearch={showCombinedSearch}
+              setShowCombinedSearch={setShowCombinedSearch}
+            />
+          )}
+        </>
       )}
 
       <div className={styles.table_grid}>

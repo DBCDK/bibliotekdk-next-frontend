@@ -90,7 +90,7 @@ export default function AdvancedSearchDropdown({
   menuItems = [],
   updateIndex,
 }) {
-  const { fieldSearchFromUrl } = useAdvancedSearchContext();
+  const { fieldSearchFromUrl, workType } = useAdvancedSearchContext();
 
   const [dropdownQuery, setDropdownQuery] = useState("");
 
@@ -134,7 +134,11 @@ export default function AdvancedSearchDropdown({
       type: ToggleMenuItemsEnum.RESET,
       payload: menuItems,
     });
-  }, [JSON.stringify(fieldSearchFromUrl.dropdownSearchIndices)]);
+  }, [
+    JSON.stringify(fieldSearchFromUrl.dropdownSearchIndices),
+    workType,
+    menuItems.length,
+  ]);
 
   const sortedMenuItemsState = [
     ...(!isEmpty(dropdownQuery)
@@ -214,6 +218,7 @@ export default function AdvancedSearchDropdown({
                     key={`${item.name}-${index}`}
                     onSelect={toggler}
                     label={item.name}
+                    className={styles.dropdownpadding}
                   >
                     <CheckboxItem
                       item={item}

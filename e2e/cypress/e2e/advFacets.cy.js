@@ -1,5 +1,7 @@
 describe("Facets", () => {
   it(`Get facets from url`, () => {
+    defaultCommandTimeout: 10000;
+
     cy.visit("/iframe.html?id=advancedsearch-facets--facets-in-url");
 
     // there should be 3 accordions in this story
@@ -14,7 +16,7 @@ describe("Facets", () => {
     });
 
     // get the first accordion
-    cy.get("[data-cy=accordion-item]").first().click();
+    cy.get("[data-cy=accordion-item]").first().click().wait(100);
 
     // there should be 5
     cy.get("[data-cy=accordion-item]")
@@ -22,10 +24,9 @@ describe("Facets", () => {
       .find("li")
       .should("have.length", 5);
 
-    // two of them should be selected from url params
+    // node and e-bog should be selected from url params
     cy.get("[data-cy=accordion-item]")
       .eq(0)
-      .click()
       .find("li")
       .find("[checked]")
       .should("have.length", 2);
@@ -44,24 +45,39 @@ describe("Facets", () => {
       .find("input")
       .click({ force: true });
 
-    cy.get("[data-cy=router-query]").then((el) => {
-      const fisk = JSON.parse(el.text());
-      const facets = fisk.facets;
-      console.log(facets, "FACETS");
-
-      assert(facets.includes("artikel"));
-    });
-
-    // and again
-    cy.get("[data-cy=li-specificmaterialtype-bog]")
+    cy.get("[data-cy=li-specificmaterialtype-artikel]")
       .find("input")
       .click({ force: true });
 
+    cy.wait(20);
+
+    // uncheck ebog
+    cy.get("[data-cy=accordion-item]").contains("e-bog").click();
+
     cy.get("[data-cy=router-query]").then((el) => {
       const fisk = JSON.parse(el.text());
       const facets = fisk.facets;
 
-      assert(facets.includes("bog"));
+      assert(!facets.includes("e-bog"), "E-bog is removed from url");
+      assert(!facets.includes("artikel"), "Artikel is not in url");
+    });
+
+    // click an artikel item and verify url is updated
+    cy.get("[data-cy=accordion-item]").contains("artikel").click();
+
+    cy.get("[data-cy=router-query]").then((el) => {
+      const fisk = JSON.parse(el.text());
+      const facets = fisk.facets;
+      assert(facets.includes("artikel"), "Url includes artikel");
+    });
+
+    // and again
+    cy.get("[data-cy=accordion-item]").contains("bog").click();
+
+    cy.get("[data-cy=router-query]").then((el) => {
+      const fisk = JSON.parse(el.text());
+      const facets = fisk.facets;
+      assert(facets.includes("bog"), "Url includes bog");
     });
   });
 });

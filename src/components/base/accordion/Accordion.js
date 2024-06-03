@@ -39,10 +39,11 @@ export function Item({
   onChange,
   id,
   isLoading,
+  CustomHeaderComponent,
   useScroll = true,
+  className,
 }) {
   const [scrolledToHash, setScrolledToHash] = useState(false);
-
   const router = useRouter();
   const context = React.useContext(AccordionContext);
 
@@ -94,7 +95,11 @@ export function Item({
   }
 
   return (
-    <Card className={styles.element} data-cy="accordion-item" ref={elementRef}>
+    <Card
+      className={[styles.element, className].join(" ")}
+      data-cy="accordion-item"
+      ref={elementRef}
+    >
       <Card.Header
         as={Link}
         border={{ top: { keepVisible: true }, bottom: { keepVisible: true } }}
@@ -112,45 +117,54 @@ export function Item({
         aria-controls={`accordion-unique-${eventKey}-${title}`}
         aria-expanded={isCurrentEventKey}
       >
-        <div className={styles.header_content}>
-          <div
-            className={[
-              animations["f-translate-right"],
-              // if additional text is to be shown we need to set a wwidth (.firstelement)
-              // of first element in accordion header
-              additionalTxt && styles.firstelement,
-            ].join(" ")}
-          >
-            <Link tag="span" className={styles.link_on_year} tabIndex={-1}>
-              <Title type="text2" skeleton={isLoading} lines={1} tag="h3">
-                {title}
-              </Title>
-            </Link>
-            {subTitle && (
-              <Text tag={"span"} type="text4">
-                {subTitle}
-              </Text>
-            )}
-          </div>
-          {additionalTxt && (
-            <div className={styles.textbox}>
-              {additionalTxt?.map((txt, index) => (
-                <Text tag={"span"} type="text2" key={`addition-${index}`}>
-                  {txt}
+        {CustomHeaderComponent ? (
+          <CustomHeaderComponent
+            onClick={onClick}
+            onKeyDown={handleKeypress}
+            expanded={isCurrentEventKey}
+          />
+        ) : (
+          <div className={styles.header_content}>
+            <div
+              className={[
+                animations["f-translate-right"],
+                // if additional text is to be shown we need to set a wwidth (.firstelement)
+                // of first element in accordion header
+                additionalTxt && styles.firstelement,
+              ].join(" ")}
+            >
+              <Link tag="span" className={styles.link_on_year} tabIndex={-1}>
+                <Title type="text2" skeleton={isLoading} lines={1} tag="h3">
+                  {title}
+                </Title>
+              </Link>
+              {subTitle && (
+                <Text tag={"span"} type="text4">
+                  {subTitle}
                 </Text>
-              ))}
+              )}
             </div>
-          )}
-          <div className={styles.expandIcon}>
-            <ExpandIcon
-              open={isCurrentEventKey}
-              size={4}
-              src="smallplus.svg"
-              bgColor="transparent"
-            />
+            {additionalTxt && (
+              <div className={styles.textbox}>
+                {additionalTxt?.map((txt, index) => (
+                  <Text tag={"span"} type="text2" key={`addition-${index}`}>
+                    {txt}
+                  </Text>
+                ))}
+              </div>
+            )}
+            <div className={styles.expandIcon}>
+              <ExpandIcon
+                open={isCurrentEventKey}
+                size={4}
+                src="smallplus.svg"
+                bgColor="transparent"
+              />
+            </div>
           </div>
-        </div>
+        )}
       </Card.Header>
+
       <div>
         <BootstrapAccordion.Collapse
           eventKey={eventKey}

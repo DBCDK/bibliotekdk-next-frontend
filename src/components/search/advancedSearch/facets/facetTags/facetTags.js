@@ -36,7 +36,7 @@ export function FacetTags() {
       </div>
       <div className={styles.tagscontainer}>
         {selectedFacets?.map((tag) =>
-          tag.values.map((val, index) => {
+          tag?.values?.map((val, index) => {
             return (
               <span
                 className={styles.tag}
@@ -50,6 +50,12 @@ export function FacetTags() {
                     onClick={() => {
                       removeFacet(val?.name, tag?.searchIndex);
                     }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        removeFacet(val?.name, tag?.searchIndex);
+                      }
+                    }}
+                    tabIndex={0}
                     src="close_white.svg"
                     size={2}
                     className={styles.tagicon}

@@ -32,7 +32,7 @@ describe("prioritiseByWorkType", () => {
     const expected = 0;
     expect(actual).toEqual(expected);
   });
-  it("should promote order by workType if workType is given (GAME: computerspil vs tegneserie; expect negative number)", () => {
+  it("should promote order by workType if workType is given (GAME_PLATFORM: computerspil vs tegneserie; expect negative number)", () => {
     const workTypes = ["GAME"];
     const actual = prioritiseByWorkType(
       ["GAME", { COMPUTERSPIL: { display: "computerspil", code: "123" } }],
@@ -42,7 +42,7 @@ describe("prioritiseByWorkType", () => {
     const expected = 0;
     expect(actual).toBeLessThan(expected);
   });
-  it("should promote order by workType if workType is given (GAME: tegneserie vs computerspil; expect positive number)", () => {
+  it("should promote order by workType if workType is given (GAME_PLATFORM: tegneserie vs computerspil; expect positive number)", () => {
     const workTypes = ["GAME"];
     const actual = prioritiseByWorkType(
       ["LITERATURE", { TEGNESERIE: { display: "tegneserie", code: "123" } }],
@@ -63,7 +63,7 @@ describe("getOrderedFlatMaterialTypes", () => {
     );
     expect(actual).toEqual(expected);
   });
-  it("should return ordered properly if workType is given (GAME; expect 'playstation 5' first)", () => {
+  it("should return ordered properly if workType is given (GAME_PLATFORM; expect 'playstation 5' first)", () => {
     const workTypes = ["GAME"];
     const actual = getOrderedFlatMaterialTypes(workTypes);
     const expected = { display: "playstation 5", code: "PLAYSTATION_5" };

@@ -12,8 +12,8 @@ export function FacetButton({ cql, isLoading }) {
   // find number of filters
   let count = 0;
   selectedFacets?.map((sel) => {
-    count += sel.values.length;
-    return sel.values;
+    count += sel?.values?.length;
+    return sel?.values;
   });
 
   return (

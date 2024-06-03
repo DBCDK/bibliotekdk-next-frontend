@@ -1,0 +1,12 @@
+[
+  "ages within 2017",
+  "ages within \"2019 2014\"",
+  "publicationyear within \"2004-2004\"",
+  "workyear within 2004-2004",
+  "publicationyear within \"200? 200?\"",
+  "publicationyear within \"2005 stringhere\"",
+  "firstaccessiondate within \"1988 1991-08-01\"",
+  "firstaccessiondate within \"1988-08-01 1991\"",
+  "datefirstedition within \"2000005 2006\"",
+  "firstaccessiondate within \"1990-08-01 1988-08-01\""
+]

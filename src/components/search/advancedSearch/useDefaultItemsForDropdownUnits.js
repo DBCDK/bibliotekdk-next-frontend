@@ -1,21 +1,27 @@
 import {
   agesFormatterAndComparitor,
   agesIndices,
-  dummy__generalmaterialTypes,
-  dummy__languages,
+  dummy__pegi,
   publicationYearFormatterAndComparitor,
   publicationYearIndices,
 } from "@/components/search/advancedSearch/advancedSearchHelpers/dummy__default_advanced_search_fields";
 import { convertToDropdownInput } from "@/components/search/advancedSearch/advancedSearchHelpers/convertToDropdownInput";
 import { FormTypeEnum } from "@/components/search/advancedSearch/advancedSearchHelpers/helperComponents/HelperComponents";
 import isEmpty from "lodash/isEmpty";
+import { useComplexSearchFacets } from "@/components/search/advancedSearch/useComplexSearchFacets";
 
 export const DropdownIndicesEnum = {
-  LANGUAGES: "phrase.mainlanguage",
+  MAINLANGUAGES: "phrase.mainlanguage",
   MATERIAL_TYPES_SPECIFIC: "phrase.specificmaterialtype",
   MATERIAL_TYPES_GENERAL: "phrase.generalmaterialtype",
   PUBLICATION_YEAR: "publicationyear",
   AGES: "ages",
+  GENRE: "phrase.genreandform",
+  FILMNATIONALITY: "phrase.filmnationality",
+  GAMEPLATFORM: "phrase.gameplatform",
+  PLAYERS: "phrase.players",
+  PEGI: "phrase.pegi",
+  GENERALAUDIENCE: "phrase.generalaudience",
 };
 
 const specialIndices = new Set([
@@ -24,6 +30,188 @@ const specialIndices = new Set([
 ]);
 const specialFormTypes = new Set([FormTypeEnum.ACTION_LINK_CONTAINER]);
 
+const prioritized = {
+  all: {
+    MAINLANGUAGES: [
+      "dansk",
+      "engelsk",
+      "tysk",
+      "fransk",
+      "svensk",
+      "norsk",
+      "færøsk",
+      "grønlandsk",
+      "arabisk",
+      "ukrainsk",
+    ],
+  },
+  literature: {
+    MAINLANGUAGES: [
+      "dansk",
+      "engelsk",
+      "tysk",
+      "fransk",
+      "svensk",
+      "norsk",
+      "færøsk",
+      "grønlandsk",
+      "arabisk",
+      "ukrainsk",
+    ],
+    MATERIAL_TYPES_SPECIFIC: [
+      "bog",
+      "e-bog",
+      "lydbog (online)",
+      "lydbog (cd)",
+      "lydbog (cd-mp3)",
+      "billedbog",
+      "tegneserie",
+      "graphic novel",
+      "bog stor skrift",
+    ],
+    GENRE: [
+      "roman",
+      "noveller",
+      "digte",
+      "biografier",
+      "krimi",
+      "fantasy",
+      "spænding",
+      "romantik",
+      "humor",
+      "strikning",
+      "opskrifter",
+      "rejseguides",
+    ],
+  },
+  article: {
+    MATERIAL_TYPES_SPECIFIC: ["artikel", "artikel (online)"],
+    MAINLANGUAGES: [
+      "dansk",
+      "engelsk",
+      "tysk",
+      "fransk",
+      "svensk",
+      "norsk",
+      "færøsk",
+      "grønlandsk",
+      "arabisk",
+      "ukrainsk",
+    ],
+    GENRE: [
+      "kronikker (incl kronik)",
+      "interviews (incl. interview)",
+      "essays",
+      "rejsebeskrivelser",
+      "erindringer",
+      "nekrologer (incl. nekrolog)",
+      "noveller",
+      "digte (incl. digt(e))",
+      "tests",
+      "opskrifter",
+    ],
+  },
+  movie: {
+    MATERIAL_TYPES_SPECIFIC: [
+      "film (online)",
+      "film (dvd)",
+      "film (blu-ray)",
+      "film (blu-ray 3d)",
+      "film (blu-ray 4k)",
+      "tv-serie (online)",
+      "tv-serie (dvd)",
+      "tv-serie (blu-ray)",
+      "tv-serie (blu-ray 4k)",
+      "musik (dvd)",
+      "musik (blu-ray)",
+    ],
+    GENRE: [
+      "tV-serier",
+      "dokumentarfilm",
+      "børnefilm",
+      "tegnefilm",
+      "drama",
+      "komedier",
+      "krimi",
+      "science fiction",
+      "actionfilm",
+      "thriller",
+    ],
+    FILMNATIONALITY: [
+      "danske film",
+      "amerikanske film",
+      "engelske film",
+      "franske film",
+      "tyske film",
+      "italienske film",
+      "svenske film",
+      "norske film",
+      "japanske film",
+    ],
+  },
+  music: {
+    MATERIAL_TYPES_SPECIFIC: [
+      "musik (cd)",
+      "musik (grammofonplade)",
+      "musik (dvd)",
+      "film (dvd)",
+    ],
+    GENRE: [
+      "rock",
+      "jazz",
+      "pop",
+      "klassisk musik 1950 ->",
+      "folk",
+      "hiphop",
+      "electronica",
+      "metal",
+      "folkemusik",
+      "country",
+      "singer/songwriter",
+    ],
+  },
+  game: {
+    GAMEPLATFORM: [
+      "brætspil",
+      "playstation 5",
+      "playstation 4",
+      "xbox series X",
+      "xbox one",
+      "nintendo switch",
+    ],
+    GENRE: [
+      "shooters",
+      "actionspil",
+      "sdventurespil",
+      "rollespil",
+      "simulationsspil",
+      "strategispil",
+      "racerspil",
+      "platformsspil",
+    ],
+  },
+  sheetmusic: {
+    MAINLANGUAGES: [
+      "dansk",
+      "engelsk",
+      "tysk",
+      "fransk",
+      "svensk",
+      "norsk",
+      "færøsk",
+      "grønlandsk",
+      "arabisk",
+      "ukrainsk",
+    ],
+    GENERALAUDIENCE: [
+      "for begyndere",
+      "for let ævede",
+      "for øvede",
+      "for musikskoler",
+      "for folkeskolen",
+    ],
+  },
+};
 /**
  * If there is a fieldSearch.dropdownSearchIndices, this function
  *   enriches the dropdownUnit with its isSelected
@@ -110,31 +298,111 @@ export function formattersAndComparitors(indexName) {
   };
 }
 
+function getFacetsForIndex(data, index, ontop) {
+  const facets = data?.complexSearch?.facets?.find((dat) => dat.name === index);
+
+  const enrichedFacetValues = facets?.values ? [...facets?.values] : [];
+  ontop.forEach((prio) => {
+    if (!!!facets?.values?.find((fac) => fac.key === prio)) {
+      // insert missing item .. whereever in array .. it is sorted later
+      enrichedFacetValues?.splice(0, 0, { key: prio });
+    }
+  });
+  return enrichedFacetValues || [];
+}
+
+function parseForFacets({ data, isLoading, error, index, workType = "all" }) {
+  const key = Object.keys(DropdownIndicesEnum).find(
+    (dropdown) => DropdownIndicesEnum[dropdown] === index
+  );
+  // proritized items to put in top of list
+  const prio = prioritized[workType]?.[key] || [];
+  // reverse array .. without modifying original
+  const ontop = [...prio].reverse();
+
+  let facets = [];
+  if (ontop) {
+    facets = getFacetsForIndex(data, index, ontop)?.sort(
+      (a, b) => ontop.indexOf(b.key) - ontop.indexOf(a.key)
+    );
+  }
+  const itemForDropDowns = {
+    prioritisedItems:
+      isLoading || error ? [] : facets?.slice(0, ontop?.length || 3),
+    prioritisedFormType: FormTypeEnum.CHECKBOX,
+    unprioritisedItems:
+      isLoading || error
+        ? []
+        : facets
+            ?.slice(ontop?.length || 3, facets?.length)
+            .sort((a, b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0)),
+    unprioritisedFormType: FormTypeEnum.CHECKBOX,
+    overrideValueAs: "name",
+  };
+
+  return itemForDropDowns;
+}
 /**
  *
  * @param initDropdowns
  * @returns {Array.<DropdownUnit>}
  */
-export function useDefaultItemsForDropdownUnits({ initDropdowns }) {
-  const res = [
-    {
-      items: dummy__generalmaterialTypes(),
-      indexName: DropdownIndicesEnum.MATERIAL_TYPES_GENERAL,
-    },
-    {
-      items: dummy__languages(),
-      indexName: DropdownIndicesEnum.LANGUAGES,
-    },
-  ].map((dropdownUnit) => {
-    return {
-      items: convertToDropdownInput(dropdownUnit.items),
-      indexName: dropdownUnit.indexName,
-    };
-  });
+export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
+  const { facetResponse, isLoading, error } = useComplexSearchFacets(workType);
 
-  const publicationYears = {
+  const filmnationality = {
+    items: convertToDropdownInput(
+      parseForFacets({
+        data: facetResponse,
+        isLoading,
+        error,
+        index: DropdownIndicesEnum.FILMNATIONALITY,
+      })
+    ),
+    indexName: DropdownIndicesEnum.FILMNATIONALITY,
+  };
+
+  const publicationYear = {
     items: publicationYearIndices(),
     indexName: DropdownIndicesEnum.PUBLICATION_YEAR,
+  };
+
+  const genreAndForm = {
+    items: convertToDropdownInput(
+      parseForFacets({
+        data: facetResponse,
+        isLoading,
+        error,
+        index: DropdownIndicesEnum.GENRE,
+        workType,
+      })
+    ),
+    indexName: DropdownIndicesEnum.GENRE,
+  };
+
+  const specificMaterialTypes = {
+    items: convertToDropdownInput(
+      parseForFacets({
+        data: facetResponse,
+        isLoading,
+        error,
+        index: DropdownIndicesEnum.MATERIAL_TYPES_SPECIFIC,
+        workType: workType,
+      })
+    ),
+    indexName: DropdownIndicesEnum.MATERIAL_TYPES_SPECIFIC,
+  };
+
+  const languages = {
+    items: convertToDropdownInput(
+      parseForFacets({
+        data: facetResponse,
+        isLoading,
+        error,
+        index: DropdownIndicesEnum.MAINLANGUAGES,
+      })
+    ),
+    indexName: DropdownIndicesEnum.MAINLANGUAGES,
   };
 
   const ages = {
@@ -142,10 +410,112 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }) {
     indexName: DropdownIndicesEnum.AGES,
   };
 
-  return [...res, publicationYears, ages].map((dropdownUnit) =>
-    getDropdownFromUrl({
-      initDropdowns: initDropdowns,
-      dropdownUnit: dropdownUnit,
-    })
-  );
+  const gamePlatform = {
+    items: convertToDropdownInput(
+      parseForFacets({
+        data: facetResponse,
+        isLoading,
+        error,
+        index: DropdownIndicesEnum.GAMEPLATFORM,
+      })
+    ),
+    indexName: DropdownIndicesEnum.GAMEPLATFORM,
+  };
+
+  const generalAudience = {
+    items: convertToDropdownInput(
+      parseForFacets({
+        data: facetResponse,
+        isLoading,
+        error,
+        index: DropdownIndicesEnum.GENERALAUDIENCE,
+      })
+    ),
+    indexName: DropdownIndicesEnum.GENERALAUDIENCE,
+  };
+
+  // will be used at a later time
+  // const players = {
+  //   items: convertToDropdownInput(dummy__players()),
+  //   indexName: DropdownIndicesEnum.PLAYERS,
+  // };
+
+  const pegi = {
+    items: convertToDropdownInput(dummy__pegi()),
+    indexName: DropdownIndicesEnum.PEGI,
+  };
+
+  const types = {
+    //all: DONE
+    all: [genreAndForm, languages, publicationYear, ages].map((dropdownUnit) =>
+      getDropdownFromUrl({
+        initDropdowns: initDropdowns,
+        dropdownUnit: dropdownUnit,
+      })
+    ),
+    // literature: DONE
+    literature: [
+      specificMaterialTypes,
+      genreAndForm,
+      languages,
+      publicationYear,
+      ages,
+    ].map((dropdownUnit) => {
+      return getDropdownFromUrl({
+        initDropdowns: initDropdowns,
+        dropdownUnit: dropdownUnit,
+      });
+    }),
+    // @TODO: issue.date ? - there is no such index :)
+    article: [
+      specificMaterialTypes,
+      genreAndForm,
+      languages,
+      publicationYear,
+    ].map((dropdownUnit) =>
+      getDropdownFromUrl({
+        initDropdowns: initDropdowns,
+        dropdownUnit: dropdownUnit,
+      })
+    ),
+    // movie: DONE
+    movie: [
+      specificMaterialTypes,
+      genreAndForm,
+      filmnationality,
+      publicationYear,
+      ages,
+    ].map((dropdownUnit) =>
+      getDropdownFromUrl({
+        initDropdowns: initDropdowns,
+        dropdownUnit: dropdownUnit,
+      })
+    ),
+    // music: DONE
+    music: [specificMaterialTypes, genreAndForm, publicationYear].map(
+      (dropdownUnit) =>
+        getDropdownFromUrl({
+          initDropdowns: initDropdowns,
+          dropdownUnit: dropdownUnit,
+        })
+    ),
+    //@TODO .. something is not right - players always makes a zero search ??
+    game: [gamePlatform, genreAndForm, ages, pegi, publicationYear].map(
+      (dropdownUnit) =>
+        getDropdownFromUrl({
+          initDropdowns: initDropdowns,
+          dropdownUnit: dropdownUnit,
+        })
+    ),
+    sheetmusic: [languages, generalAudience].map((dropdownUnit) =>
+      getDropdownFromUrl({
+        initDropdowns: initDropdowns,
+        dropdownUnit: dropdownUnit,
+      })
+    ),
+  };
+
+  return {
+    dropdownUnits: types[workType] || types["all"],
+  };
 }

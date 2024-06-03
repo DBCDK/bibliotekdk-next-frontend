@@ -31,10 +31,17 @@ function FieldInput({ index, fieldValue, doAdvancedSearch }) {
     showPopover,
   } = useAdvancedSearchContext();
   //labels to show in SearchIndexDropdown
-  const labels = workTypesLabels[workType].map((el) => el.index);
+  //TODO: change to use workType instead of hardcoded. workTypesLabels does not have data for all worktypes. We use only "all" only for now for now.
+  //  const labels = workTypesLabels[workType].map((el) => el.index);
+
+  // we need the full object for mapping
+  const labels = workTypesLabels[workType];
+
   const placeholder = Translate({
     context: "search",
-    label: `advanced-placeholder-${fieldValue?.searchIndex}`,
+    label: `advanced-placeholder-${
+      fieldValue?.label || fieldValue?.searchIndex
+    }`,
   });
 
   const isFirstItem = index === 0;
@@ -43,7 +50,7 @@ function FieldInput({ index, fieldValue, doAdvancedSearch }) {
   // from advancedSearchContext
   const csTypeMap = { function: "creator" };
   const indexType = fieldValue.searchIndex;
-  const csType = indexType.split(".")[1];
+  const csType = indexType?.split(".")[1];
   const mappedCsType = csTypeMap[csType] || csType;
 
   /** @TODO csSuggest supports 4 indexer for now .. whatabout the NOT supported ? **/

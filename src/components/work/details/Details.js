@@ -63,7 +63,6 @@ function Details({ className = "", manifestation = {}, work = {} }) {
     return fieldsForRows(manifestation, work, context);
   }, [manifestation, materialType, work, context]);
 
-  //const fieldsToShow = fieldsForRows(manifestation, work, context);
   return (
     <Section
       title={Translate({ ...context, label: "title" })}

@@ -28,10 +28,11 @@ describe("Popover elements", () => {
       .find("input")
       .type(`Hej med dig `)
       .blur();
-    //type something in the second inputfield
 
+    //type something in the second inputfield
     cy.get('[datacy="advanced-search-inputfield-1"]')
       .find("input")
+      .focus()
       .type(`Jeg hedder kaj`)
       .blur();
     //clear the fields
@@ -68,7 +69,7 @@ describe("Popover elements", () => {
     //swith to cql editor and assert that it has the correct paresd value
     cy.get('[data-cy="edit-in-cql"]').click();
 
-    cy.get('[data-cy="advanced-search-cqltxt"]').should(
+    cy.get('[data-cy="advanced-search-cqltxt"] textarea').should(
       "have.value",
       expectedParsedString
     );
@@ -87,15 +88,18 @@ describe("Popover elements", () => {
 
     //type something in cql text area
     const testString = "Hej med dig jeg hedder kaj";
-    cy.get('[data-cy="advanced-search-cqltxt"]').type(testString);
-    cy.get('[data-cy="advanced-search-cqltxt"]').should(
+    cy.get('[data-cy="advanced-search-cqltxt"] textarea').type(testString);
+    cy.get('[data-cy="advanced-search-cqltxt"] textarea').should(
       "have.value",
       testString
     );
     //clear textarea
     cy.get('[data-cy="advanced-search-clear-search"]').click();
     // assert that the textara has been cleared
-    cy.get('[data-cy="advanced-search-cqltxt"]').should("have.value", "");
+    cy.get('[data-cy="advanced-search-cqltxt"] textarea').should(
+      "have.value",
+      ""
+    );
   });
 });
 
@@ -140,28 +144,25 @@ describe("Dropdowns test", () => {
 
   it("should select items from a checkbox dropdown", () => {
     //click on materialtype dropdown
-    cy.get(
-      '[data-cy="advanced-search-dropdown-phrase.generalmaterialtype"]'
-    ).click();
+    cy.get('[data-cy="advanced-search-dropdown-phrase.mainlanguage"]').click();
     //select books,movies and music
     cy.get('[data-cy="list-button-0"]').click();
     cy.get('[data-cy="list-button-1"]').click();
     cy.get('[data-cy="list-button-2"]').click();
 
     //expect dropdown label should have value 3
-    cy.get(
-      '[data-cy="dropdown-selected-count-phrase.generalmaterialtype"]'
-    ).should("have.text", "3");
+    cy.get('[data-cy="dropdown-selected-count-phrase.mainlanguage"]').should(
+      "have.text",
+      "3"
+    );
   });
   it("search inside a dropdown", () => {
-    cy.get(
-      '[data-cy="advanced-search-dropdown-phrase.generalmaterialtype"]'
-    ).click();
+    cy.get('[data-cy="advanced-search-dropdown-phrase.mainlanguage"]').click();
 
-    cy.get('[data-cy="dropdown-searchbar-Materialetype"]').type("tegneserier");
-    cy.get('[data-cy="list-button-0"] [data-cy="text-tegneserier"]').should(
+    cy.get('[data-cy="dropdown-searchbar-Sprog"]').type("dansk");
+    cy.get('[data-cy="list-button-0"] [data-cy="text-dansk"]').should(
       "have.text",
-      "tegneserier"
+      "dansk"
     );
   });
 

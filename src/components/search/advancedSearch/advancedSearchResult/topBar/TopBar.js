@@ -8,15 +8,19 @@ import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import isEmpty from "lodash/isEmpty";
 import { formattersAndComparitors } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
+import useSavedSearches from "@/components/hooks/useSavedSearches";
+import IconButton from "@/components/base/iconButton";
+import { useModal } from "@/components/_modal";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 /**
  *
  * Returns query in a human readable way.
  */
-export function FormattedQuery() {
+function FormattedQuery({ children }) {
   const { cqlFromUrl, fieldSearchFromUrl } = useAdvancedSearchContext();
 
-  const { inputFields, dropdownSearchIndices } = fieldSearchFromUrl;
+  const { inputFields, dropdownSearchIndices, workType } = fieldSearchFromUrl;
 
   if (!!cqlFromUrl) {
     return <Text type="text2">{cqlFromUrl}</Text>;
@@ -25,12 +29,18 @@ export function FormattedQuery() {
   const fieldsearch = {
     inputFields,
     dropdownSearchIndices,
+    workType: workType,
   };
 
-  return FormatFieldSearchIndexes({ fieldsearch });
+  return (
+    <FormatFieldSearchIndexes fieldsearch={fieldsearch}>
+      {children}
+    </FormatFieldSearchIndexes>
+  );
+  // return FormatFieldSearchIndexes({ fieldsearch });
 }
 
-export function FormatFieldSearchIndexes({ fieldsearch }) {
+export function FormatFieldSearchIndexes({ fieldsearch, children }) {
   //TODO: do this in context instead
   const filteredDropdownSearchIndices =
     fieldsearch?.dropdownSearchIndices?.filter(
@@ -42,26 +52,39 @@ export function FormatFieldSearchIndexes({ fieldsearch }) {
 
   return (
     <div className={styles.formatedQueryContainer}>
+      <FormatWorkType workType={fieldsearch?.workType} />
       <FormatFieldInput
         inputFields={filteredInputFields}
-        showAndOperator={filteredDropdownSearchIndices?.length > 0}
+        showAndOperator={fieldsearch?.workType}
       />
       <FormatDropdowns
         dropdowns={filteredDropdownSearchIndices}
-        showAndOperator={filteredInputFields?.length > 0}
+        showAndOperator={
+          filteredInputFields?.length > 0 || fieldsearch?.workType
+        }
       />
+      {children}
     </div>
   );
 }
 
-function FormatFieldInput({ inputFields }) {
+function FormatFieldInput({ inputFields, showAndOperator }) {
   return inputFields?.map((field, index) => {
     const isEmpty = field?.value?.length === 0;
     if (isEmpty) {
       return null;
     }
+
     return (
       <>
+        {index === 0 && showAndOperator && (
+          <Text type="text2" className={styles.operator_color}>
+            {Translate({
+              context: "search",
+              label: `advanced-dropdown-AND`,
+            })}
+          </Text>
+        )}
         {field.prefixLogicalOperator && index !== 0 && (
           <Text type="text2" className={styles.operator_color}>
             {Translate({
@@ -84,6 +107,34 @@ function FormatFieldInput({ inputFields }) {
   });
 }
 
+function FormatWorkType({ workType }) {
+  if (!workType) {
+    return null;
+  }
+  return (
+    <>
+      <Text type="text1">
+        {Translate({
+          context: "advanced_search_worktypes",
+          label: "category",
+        })}
+        :
+      </Text>
+      <Text type="text2">
+        {`"${Translate({
+          context: "advanced_search_worktypes",
+          label: workType,
+        })}"`}
+      </Text>
+      {/* {showAndOperator&&<Text type="text2" className={styles.operator_color}>
+        {Translate({
+          context: "search",
+          label: `advanced-dropdown-AND`,
+        })}
+      </Text>} */}
+    </>
+  );
+}
 function FormatDropdowns({ dropdowns, showAndOperator }) {
   return dropdowns?.map((dropdownItem, index) => {
     const { getSelectedPresentation } = formattersAndComparitors(
@@ -130,8 +181,34 @@ function FormatDropdowns({ dropdowns, showAndOperator }) {
   });
 }
 
-export default function TopBar({ isLoading = false }) {
+export default function TopBar({ isLoading = false, searchHistoryObj }) {
+  const modal = useModal();
+  const { isAuthenticated } = useAuthentication();
+
   const { setShowPopover } = useAdvancedSearchContext();
+
+  const { deleteSearches, useSavedSearchByCql } = useSavedSearches();
+
+  //check if search has already been saved in userdata
+  const { savedObject, mutate } = useSavedSearchByCql({
+    cql: searchHistoryObj.key,
+  });
+  const isSaved = !!savedObject?.id;
+
+  const onSaveSearchClick = async (e) => {
+    e.stopPropagation(); // Prevent the accordion from expanding
+    if (isSaved) {
+      //remove search
+      await deleteSearches({ idsToDelete: [savedObject?.id] });
+      mutate();
+    } else {
+      //open save search modal
+      modal.push("saveSearch", {
+        item: searchHistoryObj,
+        onSaveDone: mutate,
+      });
+    }
+  };
   return (
     <Link
       className={styles.container}
@@ -143,30 +220,62 @@ export default function TopBar({ isLoading = false }) {
       <Container fluid>
         <Row>
           <Col xs={12} lg={2} className={styles.your_search}>
-            <Text type="text1" skeleton={isLoading}>
+            <Text type="text1">
               {Translate({ context: "search", label: "yourSearch" })}
             </Text>
           </Col>
-          <Col xs={12} lg={{ offset: 1, span: true }}>
-            <FormattedQuery />
+          <Col
+            xs={12}
+            lg={{ offset: 1, span: true }}
+            className={styles.edit_search}
+          >
+            <FormattedQuery>
+              {isAuthenticated && (
+                <Text type="text3" tag="span" skeleton={isLoading}>
+                  <Link
+                    onClick={() => {
+                      setShowPopover(true);
+                    }}
+                    border={{
+                      top: false,
+                      bottom: {
+                        keepVisible: true,
+                      },
+                    }}
+                  >
+                    {Translate({ context: "search", label: "edit" })}
+                  </Link>
+                </Text>
+              )}
+            </FormattedQuery>
           </Col>
 
-          <Col xs={12} lg={2} className={styles.edit_search}>
-            <Text type="text3" tag="span" skeleton={isLoading}>
-              <Link
-                onClick={() => {
-                  setShowPopover(true);
-                }}
-                border={{
-                  top: false,
-                  bottom: {
-                    keepVisible: true,
-                  },
-                }}
+          <Col xs={12} lg={2} className={styles.saveSearchButton}>
+            {isAuthenticated ? (
+              <IconButton
+                onClick={onSaveSearchClick}
+                icon={`${isSaved ? "heart_filled" : "heart"}`}
+                keepUnderline
               >
-                {Translate({ context: "search", label: "editSearch" })}
-              </Link>
-            </Text>
+                {Translate({ context: "search", label: "saveSearch" })}
+              </IconButton>
+            ) : (
+              <Text type="text3" tag="span" skeleton={isLoading}>
+                <Link
+                  onClick={() => {
+                    setShowPopover(true);
+                  }}
+                  border={{
+                    top: false,
+                    bottom: {
+                      keepVisible: true,
+                    },
+                  }}
+                >
+                  {Translate({ context: "search", label: "editSearch" })}
+                </Link>
+              </Text>
+            )}
           </Col>
         </Row>
       </Container>

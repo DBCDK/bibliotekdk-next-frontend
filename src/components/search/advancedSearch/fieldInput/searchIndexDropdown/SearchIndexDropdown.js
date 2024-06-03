@@ -13,8 +13,8 @@ import cx from "classnames";
  */
 export default function IndexDropdown({ options = [], className, index }) {
   const { handleIndexChange, inputFields } = useAdvancedSearchContext();
-
   const selected = inputFields[index].searchIndex;
+  const label = inputFields[index].label || inputFields[index].searchIndex;
 
   return (
     <Dropdown className={`${styles.dropdownwrap} ${className}`}>
@@ -31,7 +31,7 @@ export default function IndexDropdown({ options = [], className, index }) {
         >
           {Translate({
             context: "search",
-            label: `advanced-dropdown-${selected}`,
+            label: `advanced-dropdown-${label}`,
           })}
           <Icon
             size={{ w: 1, h: 1 }}
@@ -43,14 +43,14 @@ export default function IndexDropdown({ options = [], className, index }) {
       </Dropdown.Toggle>
 
       <Dropdown.Menu className={styles.dropdownmenu}>
-        {options.map((elem) => {
+        {options.map((elem, ind) => {
           return (
             <Dropdown.Item
               tabIndex="-1"
-              data-cy={`item-${elem}`}
-              key={`indexDropdown-${elem}`}
+              data-cy={`item-${elem.index}`}
+              key={`indexDropdown-${elem.index}-${ind}`}
               className={cx(styles.dropdownitem, {
-                [styles.selectedItem]: selected === elem,
+                [styles.selectedItem]: selected === elem.index,
               })}
               onClick={() => {
                 handleIndexChange(index, elem);
@@ -59,12 +59,12 @@ export default function IndexDropdown({ options = [], className, index }) {
               <Text
                 tag="span"
                 type="text3"
-                dataCy={`advanced-search-index-dropdown-${elem}`}
+                dataCy={`advanced-search-index-dropdown-${elem.index}`}
                 className={styles.bigFont}
               >
                 {Translate({
                   context: "search",
-                  label: `advanced-dropdown-${elem}`,
+                  label: `advanced-dropdown-${elem.label || elem.index}`,
                 })}
               </Text>
             </Dropdown.Item>
