@@ -82,7 +82,7 @@
 
 .list_group > *:not(hr) {
   padding-left: var(--pt1);
-
+  height: var(--pt5);
   align-items: center;
 }
 
