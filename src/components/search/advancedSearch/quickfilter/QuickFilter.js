@@ -24,7 +24,8 @@ function ListGroup({ filter }) {
               <List.Radio
                 key={value.label}
                 selected={selected}
-                onSelect={() => {
+                onSelect={(e) => {
+                  e.preventDefault();
                   addQuickFilter(filter, value, !selected);
                 }}
                 label={value.label}
