@@ -13,7 +13,7 @@
 .subtitleStyle {
   font-family: var(--body-font-semibold);
   border-bottom: 1px solid var(--blue);
-  margin: var(--pt4) 0 var(--pt2) 0;
+  margin: var(--pt4) 0 var(--pt1) 0;
 }
 
 .sectionTitleClass h2 {
