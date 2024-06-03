@@ -298,22 +298,31 @@ export function formattersAndComparitors(indexName) {
   };
 }
 
-function getFacetsForIndex(data, index) {
+function getFacetsForIndex(data, index, ontop) {
   const facets = data?.complexSearch?.facets?.find((dat) => dat.name === index);
-  return facets?.values || [];
+
+  const enrichedFacetValues = facets?.values ? [...facets?.values] : [];
+  ontop.forEach((prio) => {
+    if (!!!facets?.values?.find((fac) => fac.key === prio)) {
+      // insert missing item .. whereever in array .. it is sorted later
+      enrichedFacetValues?.splice(0, 0, { key: prio });
+    }
+  });
+  return enrichedFacetValues || [];
 }
 
 function parseForFacets({ data, isLoading, error, index, workType = "all" }) {
   const key = Object.keys(DropdownIndicesEnum).find(
     (dropdown) => DropdownIndicesEnum[dropdown] === index
   );
+  // proritized items to put in top of list
   const prio = prioritized[workType]?.[key] || [];
   // reverse array .. without modifying original
   const ontop = [...prio].reverse();
 
   let facets = [];
   if (ontop) {
-    facets = getFacetsForIndex(data, index)?.sort(
+    facets = getFacetsForIndex(data, index, ontop)?.sort(
       (a, b) => ontop.indexOf(b.key) - ontop.indexOf(a.key)
     );
   }
