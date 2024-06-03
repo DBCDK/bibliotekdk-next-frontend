@@ -25,7 +25,9 @@ function ListGroup({ filter }) {
                 key={value.label}
                 selected={selected}
                 onSelect={(e) => {
-                  e.preventDefault();
+                  if (e) {
+                    e.preventDefault();
+                  }
                   addQuickFilter(filter, value, !selected);
                 }}
                 label={value.label}
