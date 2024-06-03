@@ -29,6 +29,7 @@ export function getDefaultDropdownIndices() {
     { searchIndex: DropdownIndicesEnum.GAMEPLATFORM, value: [] },
     { searchIndex: DropdownIndicesEnum.PLAYERS, value: [] },
     { searchIndex: DropdownIndicesEnum.PEGI, value: [] },
+    { searchIndex: DropdownIndicesEnum.GENERALAUDIENCE, value: [] },
   ];
 }
 
@@ -228,7 +229,6 @@ export default function AdvancedSearchProvider({ children, router }) {
     resetDropdownIndices,
     resetMenuItemsEvent,
     dispatchResetMenuItemsEvent,
-    // dropdownsToRemove,
   } = useDropdownSearchIndices({ ...fieldSearchFromUrl }, workType);
 
   //// ---- parsedCQL ----
@@ -241,9 +241,6 @@ export default function AdvancedSearchProvider({ children, router }) {
       return true;
     }
     return false;
-    // return !!!dropdownsToRemove.find(
-    //   (drop) => drop.searchIndex === el.searchIndex
-    // );
   });
 
   //only add dropdownSearchIndices to object if there are values

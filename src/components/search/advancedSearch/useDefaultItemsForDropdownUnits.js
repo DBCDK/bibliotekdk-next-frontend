@@ -1,6 +1,7 @@
 import {
   agesFormatterAndComparitor,
   agesIndices,
+  dummy__pegi,
   publicationYearFormatterAndComparitor,
   publicationYearIndices,
 } from "@/components/search/advancedSearch/advancedSearchHelpers/dummy__default_advanced_search_fields";
@@ -29,6 +30,188 @@ const specialIndices = new Set([
 ]);
 const specialFormTypes = new Set([FormTypeEnum.ACTION_LINK_CONTAINER]);
 
+const prioritized = {
+  all: {
+    MAINLANGUAGES: [
+      "dansk",
+      "engelsk",
+      "tysk",
+      "fransk",
+      "svensk",
+      "norsk",
+      "færøsk",
+      "grønlandsk",
+      "arabisk",
+      "ukrainsk",
+    ],
+  },
+  literature: {
+    MAINLANGUAGES: [
+      "dansk",
+      "engelsk",
+      "tysk",
+      "fransk",
+      "svensk",
+      "norsk",
+      "færøsk",
+      "grønlandsk",
+      "arabisk",
+      "ukrainsk",
+    ],
+    MATERIAL_TYPES_SPECIFIC: [
+      "bog",
+      "e-bog",
+      "lydbog (online)",
+      "lydbog (cd)",
+      "lydbog (cd-mp3)",
+      "billedbog",
+      "tegneserie",
+      "graphic novel",
+      "bog stor skrift",
+    ],
+    GENRE: [
+      "roman",
+      "noveller",
+      "digte",
+      "biografier",
+      "krimi",
+      "fantasy",
+      "spænding",
+      "romantik",
+      "humor",
+      "strikning",
+      "opskrifter",
+      "rejseguides",
+    ],
+  },
+  article: {
+    MATERIAL_TYPES_SPECIFIC: ["artikel", "artikel (online)"],
+    MAINLANGUAGES: [
+      "dansk",
+      "engelsk",
+      "tysk",
+      "fransk",
+      "svensk",
+      "norsk",
+      "færøsk",
+      "grønlandsk",
+      "arabisk",
+      "ukrainsk",
+    ],
+    GENRE: [
+      "kronikker (incl kronik)",
+      "interviews (incl. interview)",
+      "essays",
+      "rejsebeskrivelser",
+      "erindringer",
+      "nekrologer (incl. nekrolog)",
+      "noveller",
+      "digte (incl. digt(e))",
+      "tests",
+      "opskrifter",
+    ],
+  },
+  movie: {
+    MATERIAL_TYPES_SPECIFIC: [
+      "film (online)",
+      "film (dvd)",
+      "film (blu-ray)",
+      "film (blu-ray 3d)",
+      "film (blu-ray 4k)",
+      "tv-serie (online)",
+      "tv-serie (dvd)",
+      "tv-serie (blu-ray)",
+      "tv-serie (blu-ray 4k)",
+      "musik (dvd)",
+      "musik (blu-ray)",
+    ],
+    GENRE: [
+      "tV-serier",
+      "dokumentarfilm",
+      "børnefilm",
+      "tegnefilm",
+      "drama",
+      "komedier",
+      "krimi",
+      "science fiction",
+      "actionfilm",
+      "thriller",
+    ],
+    FILMNATIONALITY: [
+      "danske film",
+      "amerikanske film",
+      "engelske film",
+      "franske film",
+      "tyske film",
+      "italienske film",
+      "svenske film",
+      "norske film",
+      "japanske film",
+    ],
+  },
+  music: {
+    MATERIAL_TYPES_SPECIFIC: [
+      "musik (cd)",
+      "musik (grammofonplade)",
+      "musik (dvd)",
+      "film (dvd)",
+    ],
+    GENRE: [
+      "rock",
+      "jazz",
+      "pop",
+      "klassisk musik 1950 ->",
+      "folk",
+      "hiphop",
+      "electronica",
+      "metal",
+      "folkemusik",
+      "country",
+      "singer/songwriter",
+    ],
+  },
+  game: {
+    GAMEPLATFORM: [
+      "brætspil",
+      "playstation 5",
+      "playstation 4",
+      "xbox series X",
+      "xbox one",
+      "nintendo switch",
+    ],
+    GENRE: [
+      "shooters",
+      "actionspil",
+      "sdventurespil",
+      "rollespil",
+      "simulationsspil",
+      "strategispil",
+      "racerspil",
+      "platformsspil",
+    ],
+  },
+  sheetmusic: {
+    MAINLANGUAGES: [
+      "dansk",
+      "engelsk",
+      "tysk",
+      "fransk",
+      "svensk",
+      "norsk",
+      "færøsk",
+      "grønlandsk",
+      "arabisk",
+      "ukrainsk",
+    ],
+    GENERALAUDIENCE: [
+      "for begyndere",
+      "for let ævede",
+      "for øvede",
+      "for musikskoler",
+      "for folkeskolen",
+    ],
+  },
+};
 /**
  * If there is a fieldSearch.dropdownSearchIndices, this function
  *   enriches the dropdownUnit with its isSelected
@@ -120,13 +303,30 @@ function getFacetsForIndex(data, index) {
   return facets?.values || [];
 }
 
-function parseForFacets({ data, isLoading, error, index }) {
+function parseForFacets({ data, isLoading, error, index, workType = "all" }) {
+  const key = Object.keys(DropdownIndicesEnum).find(
+    (dropdown) => DropdownIndicesEnum[dropdown] === index
+  );
+  const prio = prioritized[workType]?.[key] || [];
+  // reverse array .. without modifying original
+  const ontop = [...prio].reverse();
+
+  let facets = [];
+  if (ontop) {
+    facets = getFacetsForIndex(data, index)?.sort(
+      (a, b) => ontop.indexOf(b.key) - ontop.indexOf(a.key)
+    );
+  }
   const itemForDropDowns = {
     prioritisedItems:
-      isLoading || error ? [] : getFacetsForIndex(data, index)?.slice(0, 3),
+      isLoading || error ? [] : facets?.slice(0, ontop?.length || 3),
     prioritisedFormType: FormTypeEnum.CHECKBOX,
     unprioritisedItems:
-      isLoading || error ? [] : getFacetsForIndex(data, index),
+      isLoading || error
+        ? []
+        : facets
+            ?.slice(ontop?.length || 3, facets?.length)
+            .sort((a, b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0)),
     unprioritisedFormType: FormTypeEnum.CHECKBOX,
     overrideValueAs: "name",
   };
@@ -165,6 +365,7 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
         isLoading,
         error,
         index: DropdownIndicesEnum.GENRE,
+        workType,
       })
     ),
     indexName: DropdownIndicesEnum.GENRE,
@@ -177,6 +378,7 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
         isLoading,
         error,
         index: DropdownIndicesEnum.MATERIAL_TYPES_SPECIFIC,
+        workType: workType,
       })
     ),
     indexName: DropdownIndicesEnum.MATERIAL_TYPES_SPECIFIC,
@@ -230,14 +432,7 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
   // };
 
   const pegi = {
-    items: convertToDropdownInput(
-      parseForFacets({
-        data: facetResponse,
-        isLoading,
-        error,
-        index: DropdownIndicesEnum.PEGI,
-      })
-    ),
+    items: convertToDropdownInput(dummy__pegi()),
     indexName: DropdownIndicesEnum.PEGI,
   };
 
@@ -310,15 +505,8 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
       })
     ),
   };
-  // The init dropdown holds the dropdowns configured (selected) - if a selected dropdown is NOT
-  // in types we return it to be deleted from url :)
-  const toRemove = initDropdowns.filter(
-    (drop) =>
-      !!!types[workType].find((type) => type.indexName === drop.searchIndex)
-  );
 
   return {
     dropdownUnits: types[workType] || types["all"],
-    dropdownsToRemove: toRemove,
   };
 }

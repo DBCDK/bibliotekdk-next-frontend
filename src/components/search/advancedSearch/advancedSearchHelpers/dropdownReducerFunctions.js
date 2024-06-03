@@ -117,13 +117,6 @@ export function useMenuItemsState(menuItems, updateIndex) {
   );
 
   useEffect(() => {
-    toggleMenuItemsState({
-      type: ToggleMenuItemsEnum.RESET,
-      payload: menuItems,
-    });
-  }, [menuItems.length]);
-
-  useEffect(() => {
     function resetOnResetSearch() {
       toggleMenuItemsState({
         type: ToggleMenuItemsEnum.RESET,
