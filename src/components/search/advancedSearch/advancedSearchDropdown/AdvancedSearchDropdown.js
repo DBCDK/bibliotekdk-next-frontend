@@ -89,6 +89,7 @@ export default function AdvancedSearchDropdown({
   indexPlaceholder,
   menuItems = [],
   updateIndex,
+  showSearchBar,
 }) {
   const { fieldSearchFromUrl, workType } = useAdvancedSearchContext();
 
@@ -177,8 +178,8 @@ export default function AdvancedSearchDropdown({
         className={styles.dropdown_items}
         tabIndex="-1"
       >
-        {/* Search Bar - don't show if there is an ACTION_LINK_CONTAINER */}
-        {!hasSpecialFormTypes && (
+        {/* Search Bar - don't show if there is an ACTION_LINK_CONTAINER  OR dropdownunit says to disable it*/}
+        {!hasSpecialFormTypes && showSearchBar && (
           <SearchBar
             id={inputId}
             value={dropdownQuery}

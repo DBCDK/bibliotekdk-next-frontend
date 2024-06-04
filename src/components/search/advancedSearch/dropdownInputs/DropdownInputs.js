@@ -14,7 +14,12 @@ const advancedSearchDropdownContext = "advanced_search_dropdown";
  * @param {UpdateDropdownSearchIndices} updateDropdownSearchIndices
  * @returns {JSX.Element}
  */
-function DropdownUnit({ items, indexName, updateDropdownSearchIndices }) {
+function DropdownUnit({
+  items,
+  indexName,
+  updateDropdownSearchIndices,
+  showSearchBar,
+}) {
   const indexTitle = Translate({
     context: advancedSearchDropdownContext,
     label: indexName,
@@ -41,6 +46,7 @@ function DropdownUnit({ items, indexName, updateDropdownSearchIndices }) {
             },
           })
         }
+        showSearchBar={showSearchBar}
       />
     </div>
   );
@@ -74,6 +80,7 @@ export default function DropdownInputs() {
                 items={unit.items}
                 indexName={unit.indexName}
                 updateDropdownSearchIndices={updateDropdownSearchIndices}
+                showSearchBar={unit?.showSearchBar !== false}
               />
             );
           })}
