@@ -10,6 +10,7 @@ import { accessFactory } from "@/lib/accessFactoryUtils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import { useOrderFlow } from "@/components/hooks/order";
+import { AccessEnum } from "@/lib/enums";
 
 /**
  * Component helper for link and description in options
@@ -102,6 +103,15 @@ export function Options({ context, loanerInfo, isAuthenticated }) {
       accessesArray,
       startOrderFlow: start,
     });
+
+  // put infomedia articles on top - they are easiest access
+  onlineAccesses?.sort((a, b) =>
+    a?.__typename === AccessEnum.INFOMEDIA_SERVICE
+      ? -1
+      : b?.__typename === AccessEnum.INFOMEDIA_SERVICE
+      ? 1
+      : 0
+  );
 
   return (
     allowedAccessessByType && (
