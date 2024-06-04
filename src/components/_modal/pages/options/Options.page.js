@@ -104,13 +104,9 @@ export function Options({ context, loanerInfo, isAuthenticated }) {
       startOrderFlow: start,
     });
 
-  // put infomedia articles on top - they are easiest access
+  // put online access from  "www.zetland.dk"  last in array
   onlineAccesses?.sort((a, b) =>
-    a?.__typename === AccessEnum.INFOMEDIA_SERVICE
-      ? -1
-      : b?.__typename === AccessEnum.INFOMEDIA_SERVICE
-      ? 1
-      : 0
+    a?.origin === "www.zetland.dk" ? 1 : b?.origin === "www.zetland.dk" ? -1 : 0
   );
 
   return (
