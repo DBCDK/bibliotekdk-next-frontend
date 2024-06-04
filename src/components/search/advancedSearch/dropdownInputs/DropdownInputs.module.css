@@ -19,6 +19,7 @@
   padding-top: var(--pt2);
   flex-direction: row;
   flex-wrap: wrap;
+  row-gap: var(--pt3);
 }
 
 .dropdown_with_title {

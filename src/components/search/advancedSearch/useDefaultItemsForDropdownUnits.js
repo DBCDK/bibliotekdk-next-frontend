@@ -79,7 +79,7 @@ const prioritized = {
       "spænding",
       "romantik",
       "humor",
-      "strikning",
+      "strikkeopskrifter",
       "opskrifter",
       "rejseguides",
     ],
@@ -99,14 +99,14 @@ const prioritized = {
       "ukrainsk",
     ],
     GENRE: [
-      "kronikker (incl kronik)",
-      "interviews (incl. interview)",
+      "kronikker",
+      "interviews",
       "essays",
       "rejsebeskrivelser",
       "erindringer",
-      "nekrologer (incl. nekrolog)",
+      "nekrologer",
       "noveller",
-      "digte (incl. digt(e))",
+      "digte",
       "tests",
       "opskrifter",
     ],
@@ -125,6 +125,17 @@ const prioritized = {
       "musik (dvd)",
       "musik (blu-ray)",
     ],
+    FILMNATIONALITY: [
+      "danske film",
+      "amerikanske film",
+      "engelske film",
+      "franske film",
+      "tyske film",
+      "italienske film",
+      "svenske film",
+      "norske film",
+      "japanske film",
+    ],
     GENRE: [
       "tV-serier",
       "dokumentarfilm",
@@ -136,17 +147,6 @@ const prioritized = {
       "science fiction",
       "actionfilm",
       "thriller",
-    ],
-    FILMNATIONALITY: [
-      "danske film",
-      "amerikanske film",
-      "engelske film",
-      "franske film",
-      "tyske film",
-      "italienske film",
-      "svenske film",
-      "norske film",
-      "japanske film",
     ],
   },
   music: {
@@ -182,7 +182,7 @@ const prioritized = {
     GENRE: [
       "shooters",
       "actionspil",
-      "sdventurespil",
+      "adventurespil",
       "rollespil",
       "simulationsspil",
       "strategispil",
@@ -311,10 +311,11 @@ function getFacetsForIndex(data, index, ontop) {
   return enrichedFacetValues || [];
 }
 
-function parseForFacets({ data, isLoading, error, index, workType = "all" }) {
+function parseForFacets({ data, isLoading, error, index, workType }) {
   const key = Object.keys(DropdownIndicesEnum).find(
     (dropdown) => DropdownIndicesEnum[dropdown] === index
   );
+
   // proritized items to put in top of list
   const prio = prioritized[workType]?.[key] || [];
   // reverse array .. without modifying original
@@ -357,6 +358,7 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
         isLoading,
         error,
         index: DropdownIndicesEnum.FILMNATIONALITY,
+        workType,
       })
     ),
     indexName: DropdownIndicesEnum.FILMNATIONALITY,
@@ -387,7 +389,7 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
         isLoading,
         error,
         index: DropdownIndicesEnum.MATERIAL_TYPES_SPECIFIC,
-        workType: workType,
+        workType,
       })
     ),
     indexName: DropdownIndicesEnum.MATERIAL_TYPES_SPECIFIC,
@@ -400,6 +402,7 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
         isLoading,
         error,
         index: DropdownIndicesEnum.MAINLANGUAGES,
+        workType,
       })
     ),
     indexName: DropdownIndicesEnum.MAINLANGUAGES,
@@ -417,6 +420,7 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
         isLoading,
         error,
         index: DropdownIndicesEnum.GAMEPLATFORM,
+        workType,
       })
     ),
     indexName: DropdownIndicesEnum.GAMEPLATFORM,
@@ -429,6 +433,7 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
         isLoading,
         error,
         index: DropdownIndicesEnum.GENERALAUDIENCE,
+        workType,
       })
     ),
     indexName: DropdownIndicesEnum.GENERALAUDIENCE,
@@ -443,6 +448,7 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
   const pegi = {
     items: convertToDropdownInput(dummy__pegi()),
     indexName: DropdownIndicesEnum.PEGI,
+    showSearchBar: false,
   };
 
   const types = {
@@ -514,7 +520,6 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
       })
     ),
   };
-
   return {
     dropdownUnits: types[workType] || types["all"],
   };
