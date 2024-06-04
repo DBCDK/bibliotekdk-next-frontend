@@ -10,7 +10,6 @@ import { accessFactory } from "@/lib/accessFactoryUtils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import { useOrderFlow } from "@/components/hooks/order";
-import { AccessEnum } from "@/lib/enums";
 
 /**
  * Component helper for link and description in options
