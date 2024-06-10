@@ -44,6 +44,23 @@ const prioritized = {
       "arabisk",
       "ukrainsk",
     ],
+    GENRE: [
+      "roman",
+      "noveller",
+      "digte",
+      "biografier",
+      "tv-serier",
+      "dokumentarfilm",
+      "børnefilm",
+      "drama",
+      "actionfilm",
+      "rock",
+      "jazz",
+      "pop",
+      "shooters",
+      "actionspil",
+      "adventurespil",
+    ],
   },
   literature: {
     MAINLANGUAGES: [
@@ -172,7 +189,6 @@ const prioritized = {
   },
   game: {
     GAMEPLATFORM: [
-      "brætspil",
       "playstation 5",
       "playstation 4",
       "xbox series X",
@@ -205,7 +221,7 @@ const prioritized = {
     ],
     GENERALAUDIENCE: [
       "for begyndere",
-      "for let ævede",
+      "for let øvede",
       "for øvede",
       "for musikskoler",
       "for folkeskolen",
