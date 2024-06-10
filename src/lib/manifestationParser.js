@@ -117,7 +117,7 @@ const fields = () => [
     dataField: "hostPublication",
     label: Translate({
       context: "bibliographic-data",
-      label: "hostPublication",
+      label: "hostpublication",
     }),
     valueParser: (value) => value.summary || "",
   },
