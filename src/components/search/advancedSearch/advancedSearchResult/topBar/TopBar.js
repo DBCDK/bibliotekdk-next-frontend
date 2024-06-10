@@ -96,7 +96,7 @@ function FormatFieldInput({ inputFields, showAndOperator }) {
         <Text type="text1">
           {Translate({
             context: "search",
-            label: `advanced-dropdown-${field.searchIndex}`,
+            label: `advanced-dropdown-${field?.label || field.searchIndex}`,
           })}
           :
         </Text>
