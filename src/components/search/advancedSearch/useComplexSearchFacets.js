@@ -1,5 +1,5 @@
 import { useData } from "@/lib/api/api";
-import { hitcount } from "@/lib/api/complexSearch.fragments";
+import { complexFacetsOnly } from "@/lib/api/complexSearch.fragments";
 
 // "all", "literature", "article", "movie", "music", "game", "sheetmusic"
 const facetByMaterialType = {
@@ -34,10 +34,10 @@ export function useComplexSearchFacets(workType) {
     isLoading,
     error,
   } = useData(
-    hitcount({
+    complexFacetsOnly({
       cql: cqlQuery,
       facets: {
-        facetLimit: 50,
+        facetLimit: 100,
         facets: facetByMaterialType[workType.toUpperCase()],
       },
     })
