@@ -171,3 +171,23 @@ export function hitcount({ cql, offset, limit, sort, facets }) {
     slowThreshold: 3000,
   };
 }
+
+export function complexFacetsOnly({ cql, facets }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query facetsOnly($cql: String!, $facets: complexSearchFacets) {
+			complexFacets(cql: $cql, facets: $facets) {
+				facets {
+          name
+          values {
+            key
+            score
+          }
+        }			
+			}
+		}`,
+    variables: { cql, facets },
+    slowThreshold: 3000,
+  };
+}

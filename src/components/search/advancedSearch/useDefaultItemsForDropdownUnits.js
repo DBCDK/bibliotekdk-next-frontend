@@ -317,7 +317,7 @@ export function formattersAndComparitors(indexName) {
 function getFacetsForIndex(data, index, ontop) {
   // we look for an index - facets comes with the name facet.<index> .. dropdown enums comes like phrase.<index>
   // split and look .. hopefully no fuckups
-  const facets = data?.complexSearch?.facets?.find((dat) => {
+  const facets = data?.complexFacets?.facets?.find((dat) => {
     return dat.name.split(".")[1] === index.split(".")[1];
   });
 
