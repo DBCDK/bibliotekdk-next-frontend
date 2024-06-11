@@ -34,6 +34,11 @@ function sortAccessArray(accessArr) {
       priority -= 1;
     }
 
+    // though zetland is an accessurl (+5000) we prioritize it lower than infomedia (+4000)
+    if (access.origin === "www.zetland.dk") {
+      priority -= 1001;
+    }
+
     if (access.origin === "DBC Webarkiv") {
       priority += 1;
     }
