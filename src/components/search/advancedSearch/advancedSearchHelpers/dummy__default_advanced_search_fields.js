@@ -44,9 +44,9 @@ export function dummy__nota() {
 }
 
 export const NOTA_ENUM = {
-  ALL: "alle", //maybe not neccesary
-  NOT_NOTA: "ikke nota",
-  ONLY_NOTA: "kun nota",
+  ALL: "Alle", //maybe not neccesary
+  NOT_NOTA: "Ikke nota",
+  ONLY_NOTA: "Kun nota",
 };
 const prioritisedNota = [
   {
