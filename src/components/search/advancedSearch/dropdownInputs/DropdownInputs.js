@@ -24,14 +24,10 @@ function DropdownUnit({
   showSearchBar,
   infoBarLabel,
 }) {
-  console.log("indexName", indexName);
-  console.log("advancedSearchDropdownContext", advancedSearchDropdownContext);
-
   const indexTitle = Translate({
     context: advancedSearchDropdownContext,
     label: indexName,
   });
-  console.log("indexTitle", indexTitle);
 
   const indexPlaceholder = Translate({
     context: advancedSearchDropdownContext,
@@ -104,7 +100,6 @@ export default function DropdownInputs() {
 
         <div className={styles.flex_wrapper}>
           {dropdownUnits.map((unit) => {
-            console.log("unit", unit);
             return (
               <DropdownUnit
                 key={unit.indexName}

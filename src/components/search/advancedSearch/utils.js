@@ -4,6 +4,7 @@ import {
   DropdownIndicesEnum,
   formattersAndComparitors,
 } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
+import { NOTA_ENUM } from "@/components/search/advancedSearch/advancedSearchHelpers/dummy__default_advanced_search_fields";
 
 function getInputFieldsQueryToCql(inputFields) {
   return inputFields
@@ -35,22 +36,11 @@ function getDropdownQuery(dropdownSearchIndices) {
         searchIndex.searchIndex
       );
 
-      //if index.indexsearch == NOTA
-      //switch searchIndex.searchIndex.value[0].value
-      //case all
-      //case NOTA
-      //case NOTNOTA
-      //  if (searchIndex.searchIndex === DropdownIndicesEnum.NOTA) {
-      // return 'term.source = "NOTA"';
       if (searchIndex.searchIndex === DropdownIndicesEnum.NOTA) {
-        console.log(
-          "is nota dropdownSearchIndices. filter searchIndex",
-          searchIndex
-        );
-        const value = searchIndex.value[0].value;
-        if (value === "KUN NOTA") {
+        const value = searchIndex.value[0]?.value;
+        if (value === NOTA_ENUM.ONLY_NOTA) {
           return 'term.source = "nota"';
-        } else if (value === "IKKE NOTA") {
+        } else if (value === NOTA_ENUM.NOT_NOTA) {
           return 'workid=* not term.source="nota"';
         } else {
           return;

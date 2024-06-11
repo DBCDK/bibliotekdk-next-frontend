@@ -43,21 +43,26 @@ export function dummy__nota() {
   };
 }
 
+export const NOTA_ENUM = {
+  ALL: "alle", //maybe not neccesary
+  NOT_NOTA: "ikke nota",
+  ONLY_NOTA: "kun nota",
+};
 const prioritisedNota = [
   {
     term: "Søg i alle materialer", //remove nota
     key: "Søg i alle materialer",
-    value: "Alle",
+    value: NOTA_ENUM.ALL, //"Alle",
   },
   {
     term: "Søg kun i materialer fra Nota",
     key: "nota",
-    value: "KUN NOTA",
+    value: NOTA_ENUM.ONLY_NOTA, //"KUN NOTA",
   },
   {
     term: "Søg ikke i materialer fra Nota", //NOT term.source=nota
     key: "Søg ikke i materialer fra Nota",
-    value: "IKKE NOTA",
+    value: NOTA_ENUM.NOT_NOTA, //"IKKE NOTA",
   },
 ];
 

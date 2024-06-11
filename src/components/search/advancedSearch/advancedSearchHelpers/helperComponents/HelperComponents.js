@@ -254,8 +254,6 @@ export function TogglerContent({
       );
     }
   }
-  console.log("indexPlaceholder", indexPlaceholder);
-  console.log("indexName", indexName);
 
   // When nothing is selected, we show the placeholder or indexName
   return (

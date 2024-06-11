@@ -23,7 +23,7 @@ export const DropdownIndicesEnum = {
   PLAYERS: "phrase.players",
   PEGI: "phrase.pegi",
   GENERALAUDIENCE: "phrase.generalaudience",
-  NOTA: "nota", //this is not an index in complex search. It will be converted to an index when state is converted to cql. the index term.source i used
+  NOTA: "nota", //this is not an index in complex search. It will be converted to an index when state is converted to cql. The index used is term.source.
 };
 
 const specialIndices = new Set([
