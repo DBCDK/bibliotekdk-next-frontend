@@ -5,6 +5,8 @@ import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import { useOrderFlow } from "@/components/hooks/order";
 import { useManifestationAccess } from "@/components/hooks/useManifestationAccess";
+import { useData } from "@/lib/api/api";
+import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 
 /**
  * Component helper for link and description in options
@@ -38,11 +40,33 @@ export function OptionsLinkAndDescription({ props, templateProps }) {
  * @param accessesArray
  * @returns {React.JSX.Element}
  */
-function optionsListAllArgs({ access, index, selectedPids, startOrderFlow }) {
+function optionsListAllArgs({
+  access,
+  index,
+  selectedPids,
+  manifestations,
+  startOrderFlow,
+}) {
   //add order modal to store, to be able to access when coming back from adgangsplatform/mitid?
 
+  // console.log(access, "ACCESS");
+  // console.log(manifestations, "MANIFESTATIONS");
+  // TODO get materialtypes for given access
+
+  const currentManifestation = manifestations?.find(
+    (mani) => mani.pid === access.pids[0]
+  );
+
+  console.log(currentManifestation, "CURRENT");
+
+  const materialTypeArray = currentManifestation?.materialTypes.map(
+    (type) => type.materialTypeSpecific.display
+  );
+
+  // console.log(materialTypeArray, "TYPE ARRAY");
+
   const props = {
-    ...access,
+    ...{ ...access, materialTypesArray: materialTypeArray },
     className: styles.item,
     onOrder: () => {
       startOrderFlow({ orders: [{ pids: selectedPids }] });
@@ -65,11 +89,19 @@ export function Options({ context }) {
     pids: selectedPids,
   });
 
+  const manifestationResponse = useData(
+    selectedPids &&
+      manifestationFragments.alternativesManifestations({ pid: selectedPids })
+  );
+
+  const manifestations = manifestationResponse?.data?.manifestations;
+
   const optionsList = (access, index) =>
     optionsListAllArgs({
       access,
       index,
       selectedPids,
+      manifestations,
       startOrderFlow: start,
     });
 
