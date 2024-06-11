@@ -23,7 +23,7 @@ export const FormTypeEnum = Object.freeze({
   DIVIDER: "DIVIDER",
   ACTION_LINK: "ACTION_LINK",
   ACTION_LINK_CONTAINER: "ACTION_LINK_CONTAINER",
-  DEFAULT: "DEFAULT",//will behave like default dropdown. Can only select one value at a time. 
+  DEFAULT: "DEFAULT", //will behave like default dropdown. Can only select one value at a time.
 });
 
 export function RadioLinkItem({

@@ -41,11 +41,8 @@ function DropdownUnit({
   return (
     <div className={styles.dropdown_with_title}>
       {infoBarLabel ? (
-        <div               className={styles.dropdownTitleContainer}
-        >
-
+        <div className={styles.dropdownTitleContainer}>
           <Tooltip
-          
             placement="right"
             labelToTranslate={infoBarLabel}
             childClassName={styles.tooltip}
@@ -60,7 +57,7 @@ function DropdownUnit({
               className={styles.tooltipCursor}
             ></Icon>
           </Tooltip>
-          </div>
+        </div>
       ) : (
         <Text type="text3">{indexTitle}</Text>
       )}
