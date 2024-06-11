@@ -36,14 +36,16 @@ function getDropdownQuery(dropdownSearchIndices) {
         const { getComparator, getFormatValue } = formattersAndComparitors(
           searchIndex.searchIndex
         );
-
+        //nota is a special case. We handle it seperatly
         if (searchIndex.searchIndex === DropdownIndicesEnum.NOTA) {
           const value = searchIndex.value[0]?.value;
           if (value === NOTA_ENUM.ONLY_NOTA) {
             return 'term.source = "nota"';
           } else if (value === NOTA_ENUM.NOT_NOTA) {
+            //we cant send 'not term.source="nota"'. Therefore we add a star search before 'not term.source="nota"'
             return 'workid=* not term.source="nota"';
           } else {
+            //if all is selected we do nothing
             return;
           }
         } else {
