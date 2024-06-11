@@ -57,7 +57,8 @@ function optionsListAllArgs({
   );
 
   const props = {
-    ...{ ...access, materialTypesArray: materialTypeArray },
+    ...access,
+    materialTypesArray: materialTypeArray,
     className: styles.item,
     onOrder: () => {
       startOrderFlow({ orders: [{ pids: selectedPids }] });
