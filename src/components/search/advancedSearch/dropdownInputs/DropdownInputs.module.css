@@ -51,3 +51,14 @@
   align-items: flex-start !important;
   cursor: pointer;
 }
+.showMoreButtonContainer {
+  height: var(--pt5);
+  align-self: flex-end;
+  display: flex;
+  align-items: center;
+}
+.showMoreButton {
+  padding: 0 var(--pt2);
+  gap: var(--pt1);
+  display: flex;
+}

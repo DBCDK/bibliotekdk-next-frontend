@@ -272,6 +272,10 @@
       "range_placeholder_ages": {
         "da": "Alder",
         "en": "Age"
+      },
+      "more_filters": {
+        "da": "Flere filtre",
+        "en": "More filters"
       }
     },
     "advanced_search_worktypes": {
