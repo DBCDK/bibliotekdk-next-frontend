@@ -30,6 +30,7 @@ export function getDefaultDropdownIndices() {
     { searchIndex: DropdownIndicesEnum.PLAYERS, value: [] },
     { searchIndex: DropdownIndicesEnum.PEGI, value: [] },
     { searchIndex: DropdownIndicesEnum.GENERALAUDIENCE, value: [] },
+    { searchIndex: DropdownIndicesEnum.NOTA, value: [] },
   ];
 }
 

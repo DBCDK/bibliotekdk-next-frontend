@@ -1,6 +1,10 @@
 import isEmpty from "lodash/isEmpty";
 import { LogicalOperatorsEnum } from "@/components/search/enums";
-import { formattersAndComparitors } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
+import {
+  DropdownIndicesEnum,
+  formattersAndComparitors,
+} from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
+import { NOTA_ENUM } from "@/components/search/advancedSearch/advancedSearchHelpers/dummy__default_advanced_search_fields";
 
 function getInputFieldsQueryToCql(inputFields) {
   return inputFields
@@ -32,18 +36,30 @@ function getDropdownQuery(dropdownSearchIndices) {
         const { getComparator, getFormatValue } = formattersAndComparitors(
           searchIndex.searchIndex
         );
-
-        // Each dropdownSearchIndex needs to be joined together.
-        //  For now we use AND with a variable
-        return searchIndex.value
-          .map((singleValue) => {
-            return `${searchIndex.searchIndex}${getComparator?.(
-              singleValue?.value
-            )}"${getFormatValue?.(singleValue?.value)}"`;
-          })
-          .join(` ${OR} `);
+        //nota is a special case. We handle it seperatly
+        if (searchIndex.searchIndex === DropdownIndicesEnum.NOTA) {
+          const value = searchIndex.value[0]?.value;
+          if (value === NOTA_ENUM.ONLY_NOTA) {
+            return 'term.source = "nota"';
+          } else if (value === NOTA_ENUM.NOT_NOTA) {
+            //we cant send 'not term.source="nota"'. Therefore we add a star search before 'not term.source="nota"'
+            return 'workid=* not term.source="nota"';
+          } else {
+            //if all is selected we do nothing
+            return;
+          }
+        } else {
+          return searchIndex.value
+            .map((singleValue) => {
+              return `${searchIndex.searchIndex}${getComparator?.(
+                singleValue?.value
+              )}"${getFormatValue?.(singleValue?.value)}"`;
+            })
+            .join(` ${OR} `);
+        }
       })
       // Items are wrapped inside parenthesis to ensure precedence
+      .filter((item) => !!item)
       .map((item) => `(${item})`)
       .join(` ${AND} `)
   );

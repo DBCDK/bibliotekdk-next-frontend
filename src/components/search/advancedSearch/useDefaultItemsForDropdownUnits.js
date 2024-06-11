@@ -1,6 +1,7 @@
 import {
   agesFormatterAndComparitor,
   agesIndices,
+  dummy__nota,
   dummy__pegi,
   publicationYearFormatterAndComparitor,
   publicationYearIndices,
@@ -22,6 +23,7 @@ export const DropdownIndicesEnum = {
   PLAYERS: "phrase.players",
   PEGI: "phrase.pegi",
   GENERALAUDIENCE: "phrase.generalaudience",
+  NOTA: "nota", //this is not an index in complex search. It will be converted to an index when state is converted to cql. The index used is term.source.
 };
 
 const specialIndices = new Set([
@@ -471,13 +473,21 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
     showSearchBar: false,
   };
 
+  const nota = {
+    items: convertToDropdownInput(dummy__nota()),
+    indexName: DropdownIndicesEnum.NOTA,
+    showSearchBar: false,
+    infoBarLabel: "tooltip_nota_info",
+  };
+
   const types = {
     //all: DONE
-    all: [genreAndForm, languages, publicationYear, ages].map((dropdownUnit) =>
-      getDropdownFromUrl({
-        initDropdowns: initDropdowns,
-        dropdownUnit: dropdownUnit,
-      })
+    all: [genreAndForm, languages, publicationYear, ages, nota].map(
+      (dropdownUnit) =>
+        getDropdownFromUrl({
+          initDropdowns: initDropdowns,
+          dropdownUnit: dropdownUnit,
+        })
     ),
     // literature: DONE
     literature: [
@@ -486,6 +496,7 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
       languages,
       publicationYear,
       ages,
+      nota,
     ].map((dropdownUnit) => {
       return getDropdownFromUrl({
         initDropdowns: initDropdowns,
@@ -498,6 +509,7 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
       genreAndForm,
       languages,
       publicationYear,
+      nota,
     ].map((dropdownUnit) =>
       getDropdownFromUrl({
         initDropdowns: initDropdowns,
