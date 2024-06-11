@@ -44,7 +44,7 @@ export function dummy__nota() {
 }
 
 export const NOTA_ENUM = {
-  ALL: "Alle", //maybe not neccesary
+  ALL: "Alle", //maybe not necessary
   NOT_NOTA: "Ikke nota",
   ONLY_NOTA: "Kun nota",
 };
