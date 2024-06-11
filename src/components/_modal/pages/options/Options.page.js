@@ -3,13 +3,10 @@ import Top from "../base/top";
 import { getTemplateProps } from "@/components/_modal/pages/options/Options.helper";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
+import { useOrderFlow } from "@/components/hooks/order";
+import { useManifestationAccess } from "@/components/hooks/useManifestationAccess";
 import { useData } from "@/lib/api/api";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
-import { useMemo } from "react";
-import { accessFactory } from "@/lib/accessFactoryUtils";
-import useAuthentication from "@/components/hooks/user/useAuthentication";
-import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
-import { useOrderFlow } from "@/components/hooks/order";
 
 /**
  * Component helper for link and description in options
@@ -43,15 +40,28 @@ export function OptionsLinkAndDescription({ props, templateProps }) {
  * @param accessesArray
  * @returns {React.JSX.Element}
  */
-function optionsListAllArgs({ access, index, accessesArray, startOrderFlow }) {
+function optionsListAllArgs({
+  access,
+  index,
+  selectedPids,
+  manifestations,
+  startOrderFlow,
+}) {
   //add order modal to store, to be able to access when coming back from adgangsplatform/mitid?
-  const pids = accessesArray?.map((singleAccess) => singleAccess.pid);
+  const currentManifestation = manifestations?.find(
+    (mani) => mani.pid === access.pids[0]
+  );
+
+  const materialTypeArray = currentManifestation?.materialTypes.map(
+    (type) => type.materialTypeSpecific.display
+  );
 
   const props = {
     ...access,
+    materialTypesArray: materialTypeArray,
     className: styles.item,
     onOrder: () => {
-      startOrderFlow({ orders: [{ pids }] });
+      startOrderFlow({ orders: [{ pids: selectedPids }] });
     },
   };
   return (
@@ -63,9 +73,13 @@ function optionsListAllArgs({ access, index, accessesArray, startOrderFlow }) {
   );
 }
 
-export function Options({ context, loanerInfo, isAuthenticated }) {
+export function Options({ context }) {
   const { title, selectedPids } = { ...context };
   const { start } = useOrderFlow();
+
+  const { access } = useManifestationAccess({
+    pids: selectedPids,
+  });
 
   const manifestationResponse = useData(
     selectedPids &&
@@ -74,54 +88,27 @@ export function Options({ context, loanerInfo, isAuthenticated }) {
 
   const manifestations = manifestationResponse?.data?.manifestations;
 
-  // the next one checks for digital access .. for users already logged in :)
-  // it is false if user is not logged in
-  const hasDigitalAccess = loanerInfo?.rights?.digitalArticleService;
-
-  const { getAllowedAccessesByTypeName } = useMemo(() => {
-    return accessFactory(manifestations);
-  }, [manifestations]);
-
-  const allowedAccessessByType = getAllowedAccessesByTypeName(
-    hasDigitalAccess || !isAuthenticated
-  );
-
-  const onlineAccesses = allowedAccessessByType.onlineAccesses;
-  const digitalArticleServiceAccesses =
-    allowedAccessessByType.digitalArticleServiceAccesses;
-  const interLibraryLoanAccesses =
-    digitalArticleServiceAccesses.length > 0
-      ? []
-      : allowedAccessessByType.interLibraryLoanAccesses;
-  const specialAccesses = allowedAccessessByType.specialAccesses;
-
-  const optionsList = (access, index, accessesArray) =>
+  const optionsList = (access, index) =>
     optionsListAllArgs({
       access,
       index,
-      accessesArray,
+      selectedPids,
+      manifestations,
       startOrderFlow: start,
     });
 
   return (
-    allowedAccessessByType && (
-      <div className={styles.options}>
-        <Top title={title} />
-        <ul className={styles.list} key="options-ul">
-          {onlineAccesses.map(optionsList)}
-          {digitalArticleServiceAccesses.slice(0, 1).map(optionsList)[0]}
-          {interLibraryLoanAccesses.map(optionsList)[0]}
-          {specialAccesses.map(optionsList)}
-        </ul>
-      </div>
-    )
+    // allowedAccessessByType && (
+    <div className={styles.options}>
+      <Top title={title} />
+      <ul className={styles.list} key="options-ul">
+        {access?.map(optionsList)}
+      </ul>
+    </div>
+    // )
   );
 }
 
 export default function Wrap(props) {
-  const { isAuthenticated, isGuestUser } = useAuthentication();
-  const { loanerInfo } = useLoanerInfo();
-  return (
-    <Options {...{ ...props, loanerInfo, isAuthenticated, isGuestUser }} />
-  );
+  return <Options {...props} />;
 }

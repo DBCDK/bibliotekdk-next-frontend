@@ -34,6 +34,11 @@ function sortAccessArray(accessArr) {
       priority -= 1;
     }
 
+    // though zetland is an accessurl (+5000) we prioritize it lower than infomedia (+4000)
+    if (access.origin === "www.zetland.dk") {
+      priority -= 1001;
+    }
+
     if (access.origin === "DBC Webarkiv") {
       priority += 1;
     }
@@ -150,7 +155,7 @@ export function useManifestationAccess({ pids, filter }) {
     );
 
     // sort & filter - we only want access of type RESOURCE
-    const access = sortAccessArray(flattenedAccess)?.filter(
+    let access = sortAccessArray(flattenedAccess)?.filter(
       (singleAccess) =>
         singleAccess?.__typename !== AccessEnum.ACCESS_URL ||
         (singleAccess?.__typename === AccessEnum.ACCESS_URL &&
@@ -159,6 +164,24 @@ export function useManifestationAccess({ pids, filter }) {
 
     const accessMap = {};
     access.forEach((entry) => (accessMap[entry.__typename] = entry));
+
+    const userHasDigitalAccess = loanerInfo?.rights?.["digitalArticleService"];
+    // we filter out digital access if user has no right
+    if (!userHasDigitalAccess) {
+      access = access?.filter(
+        (acc) => acc.__typename !== AccessEnum.DIGITAL_ARTICLE_SERVICE
+      );
+    }
+    // if there is both digital AND physical access AND user has digital access we filter out the physical
+    if (
+      accessMap?.[AccessEnum.DIGITAL_ARTICLE_SERVICE] &&
+      accessMap?.[AccessEnum.INTER_LIBRARY_LOAN] &&
+      userHasDigitalAccess
+    ) {
+      access = access?.filter(
+        (acc) => acc.__typename !== AccessEnum.INTER_LIBRARY_LOAN
+      );
+    }
 
     let workTypesMap = {};
     data?.manifestations?.forEach((m) =>
