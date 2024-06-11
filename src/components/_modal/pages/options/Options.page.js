@@ -3,12 +3,6 @@ import Top from "../base/top";
 import { getTemplateProps } from "@/components/_modal/pages/options/Options.helper";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
-import { useData } from "@/lib/api/api";
-import * as manifestationFragments from "@/lib/api/manifestation.fragments";
-import { useMemo } from "react";
-import { accessFactory } from "@/lib/accessFactoryUtils";
-import useAuthentication from "@/components/hooks/user/useAuthentication";
-import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import { useOrderFlow } from "@/components/hooks/order";
 import { useManifestationAccess } from "@/components/hooks/useManifestationAccess";
 
