@@ -165,7 +165,7 @@ export function useManifestationAccess({ pids, filter }) {
     const accessMap = {};
     access.forEach((entry) => (accessMap[entry.__typename] = entry));
 
-    const userHasDigitalAccess = loanerInfo.rights["digitalArticleService"];
+    const userHasDigitalAccess = loanerInfo?.rights?.["digitalArticleService"];
     // we filter out digital access if user has no right
     if (!userHasDigitalAccess) {
       access = access?.filter(
