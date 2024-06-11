@@ -1,12 +1,14 @@
 import AdvancedSearchDropdown from "@/components/search/advancedSearch/advancedSearchDropdown/AdvancedSearchDropdown";
 import styles from "./DropdownInputs.module.css";
 import Text from "@/components/base/text";
+import Link from "@/components/base/link";
 import Translate from "@/components/base/translate";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import { DropdownReducerEnum } from "@/components/search/advancedSearch/useDropdownSearchIndices";
 import Icon from "@/components/base/icon";
 
 import Tooltip from "@/components/base/tooltip/Tooltip";
+import { useEffect, useState } from "react";
 
 const advancedSearchDropdownContext = "advanced_search_dropdown";
 
@@ -77,10 +79,20 @@ function DropdownUnit({
     </div>
   );
 }
+const MAX_VISIBLE_DROPDOWNS = 3;
 
 export default function DropdownInputs() {
-  const { dropdownUnits, updateDropdownSearchIndices } =
+  const { dropdownUnits, updateDropdownSearchIndices, workType } =
     useAdvancedSearchContext();
+  //show all dropdowns or "show more"-button
+  const [showAll, setShowAll] = useState(false);
+  useEffect(() => {
+    setShowAll(dropdownUnits.length <= MAX_VISIBLE_DROPDOWNS + 1);
+  }, [workType]);
+
+  const dropdownUnitsToRender = showAll
+    ? dropdownUnits
+    : dropdownUnits.slice(0, MAX_VISIBLE_DROPDOWNS);
 
   return (
     <>
@@ -99,7 +111,7 @@ export default function DropdownInputs() {
         </div>
 
         <div className={styles.flex_wrapper}>
-          {dropdownUnits.map((unit) => {
+          {dropdownUnitsToRender.map((unit) => {
             return (
               <DropdownUnit
                 key={unit.indexName}
@@ -111,6 +123,25 @@ export default function DropdownInputs() {
               />
             );
           })}
+          {!showAll && (
+            <div className={styles.showMoreButtonContainer}>
+              <Text
+                type="text3"
+                className={styles.showMoreButton}
+                onClick={() => {
+                  setShowAll(true);
+                }}
+              >
+                <Link border={{ bottom: { keepVisible: true } }}>
+                  {Translate({
+                    context: advancedSearchDropdownContext,
+                    label: "more_filters",
+                  })}
+                </Link>
+                <Icon src="settings.svg" size={2} />
+              </Text>
+            </div>
+          )}
         </div>
       </div>
     </>
