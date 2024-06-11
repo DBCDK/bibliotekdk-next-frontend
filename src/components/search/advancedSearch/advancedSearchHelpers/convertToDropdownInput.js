@@ -14,6 +14,7 @@ export function convertSingleToDropdownInput(item, formType, overrideValueAs) {
     name: name,
     value: !overrideValueAs || overrideValueAs === "key" ? key : name,
     formType: formType,
+    ...item
   };
 }
 

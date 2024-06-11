@@ -33,6 +33,39 @@ import { DropdownIndicesEnum } from "@/components/search/advancedSearch/useDefau
 //   },
 // ];
 
+export function dummy__nota() {
+  return {
+    prioritisedItems: prioritisedNota,
+    prioritisedFormType: FormTypeEnum.RADIO_BUTTON,
+    unprioritisedItems: [],
+    unprioritisedFormType: FormTypeEnum.RADIO_BUTTON,
+    overrideValueAs: "name",
+  };
+}
+
+const prioritisedNota = [
+  {
+    name: "Søg i alle materialer",
+    term: "Søg i alle materialer", //remove nota
+    key: "Søg i alle materialer",
+    value: "Alle",
+  },
+  {
+    name: "Søg kun i materialer fra Nota",
+
+    term: "Søg kun i materialer fra Nota",
+    key: "nota",
+    value: "KUN NOTA",
+  },
+  {
+    name: "Søg ikke i materialer fra Nota",
+
+    term: "Søg ikke i materialer fra Nota", //NOT term.source=nota
+    key: "Søg ikke i materialer fra Nota",
+    value: "IKKE NOTA",
+  },
+];
+
 export function dummy__pegi() {
   return {
     prioritisedItems: prioritisedPegi,

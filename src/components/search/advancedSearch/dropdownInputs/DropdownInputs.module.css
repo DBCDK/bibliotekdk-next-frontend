@@ -39,3 +39,15 @@
     width: 48%;
   }
 }
+
+.dropdownTitleContainer {
+  display: flex;
+}
+
+.tooltip {
+  border-bottom: none !important;
+  display: flex;
+  gap: var(--pt1);
+  align-items: flex-start !important;
+  cursor: pointer;
+}

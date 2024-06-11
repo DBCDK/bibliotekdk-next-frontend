@@ -28,7 +28,7 @@ function dropdownReducer(state, action) {
             value: payload.menuItemsState
               .filter((item) => item.isSelected === true)
               .map((item) => {
-                return { value: item.value, name: item.name };
+                return { value: item.value, name: item.name , ...item};
               }),
           };
         } else {
@@ -47,8 +47,7 @@ function dropdownReducer(state, action) {
  */
 export function useDropdownSearchIndices(fieldSearchFromUrl, workType) {
   //// ---- DropdownSearchIndices ----
-  /** @typedef {{indexName: string, items: DropdownInputArray, comparator?: string, formatValue?: function}} DropdownUnit */
-  const /** @type {Array.<DropdownUnit>} */ {
+  const {
       dropdownUnits,
       dropdownsToRemove,
     } = useDefaultItemsForDropdownUnits(

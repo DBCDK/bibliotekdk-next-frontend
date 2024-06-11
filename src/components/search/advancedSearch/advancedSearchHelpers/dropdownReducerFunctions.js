@@ -115,6 +115,8 @@ export function useMenuItemsState(menuItems, updateIndex) {
     menuItems,
     undefined
   );
+  console.log('menuItemsState',menuItemsState)
+  console.log('menuItems',menuItems)
 
   useEffect(() => {
     function resetOnResetSearch() {

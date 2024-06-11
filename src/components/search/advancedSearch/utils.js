@@ -1,6 +1,9 @@
 import isEmpty from "lodash/isEmpty";
 import { LogicalOperatorsEnum } from "@/components/search/enums";
-import { formattersAndComparitors } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
+import {
+  DropdownIndicesEnum,
+  formattersAndComparitors,
+} from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
 
 function getInputFieldsQueryToCql(inputFields) {
   return inputFields
@@ -25,16 +28,34 @@ function getDropdownQuery(dropdownSearchIndices) {
   const OR = LogicalOperatorsEnum.OR;
   const AND = LogicalOperatorsEnum.AND;
 
-  return (
-    dropdownSearchIndices
-      ?.filter((searchIndex) => !isEmpty(searchIndex.value))
-      .map((searchIndex) => {
-        const { getComparator, getFormatValue } = formattersAndComparitors(
-          searchIndex.searchIndex
-        );
+  const res = dropdownSearchIndices
+    ?.filter((searchIndex) => !isEmpty(searchIndex.value))
+    .map((searchIndex) => {
+      const { getComparator, getFormatValue } = formattersAndComparitors(
+        searchIndex.searchIndex
+      );
 
-        // Each dropdownSearchIndex needs to be joined together.
-        //  For now we use AND with a variable
+      //if index.indexsearch == NOTA
+      //switch searchIndex.searchIndex.value[0].value
+      //case all
+      //case NOTA
+      //case NOTNOTA
+      //  if (searchIndex.searchIndex === DropdownIndicesEnum.NOTA) {
+      // return 'term.source = "NOTA"';
+      if (searchIndex.searchIndex === DropdownIndicesEnum.NOTA) {
+        console.log(
+          "is nota dropdownSearchIndices. filter searchIndex",
+          searchIndex
+        );
+        const value = searchIndex.value[0].value;
+        if (value === "KUN NOTA") {
+          return 'term.source = "nota"';
+        } else if (value === "IKKE NOTA") {
+          return 'workid=* not term.source="nota"';
+        } else {
+          return;
+        }
+      } else {
         return searchIndex.value
           .map((singleValue) => {
             return `${searchIndex.searchIndex}${getComparator?.(
@@ -42,11 +63,14 @@ function getDropdownQuery(dropdownSearchIndices) {
             )}"${getFormatValue?.(singleValue?.value)}"`;
           })
           .join(` ${OR} `);
-      })
-      // Items are wrapped inside parenthesis to ensure precedence
-      .map((item) => `(${item})`)
-      .join(` ${AND} `)
-  );
+      }
+    })
+    // Items are wrapped inside parenthesis to ensure precedence
+    .filter((item) => !!item)
+
+    .map((item) => `(${item})`)
+    .join(` ${AND} `);
+  return res;
 }
 
 export function getQuickFiltersQuery(quickFilters) {

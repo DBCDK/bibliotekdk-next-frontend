@@ -133,6 +133,14 @@
         "da": "Platform",
         "en": "Platform"
       },
+      "all_nota": {
+        "da": "Alle",
+        "en": "All"
+      },
+      "nota": {
+        "da": "Nota",
+        "en": "Nota"
+      },
       "all_phrase.pegi": {
         "da": "PEGI mærkning",
         "en": "PEGI mark"
@@ -514,6 +522,10 @@
       "advanced-search-tooltip": {
         "da": "Den avancerede søgning blev lukket. Åbn og fortsæt hvor du slap.",
         "en": "Oversætelse mangler"
+      },
+      "tooltip_nota_info":{
+        "da":"Her kan du vælge om du vil søge i Notas materialer til folk med syns- og læsehandicap. Materialerne kan kun lånes af medlemmer af Nota. Du kan blive medlem, hvis du har et dokumenteret læsehandicap. Se mere på nota.dk",
+        "en":"Here you can choose whether you want to search Nota's materials for people with visual and reading disabilities. The materials can only be borrowed by members of Nota. You can become a member if you have a documented reading disability. See more at nota.dk"
       }
     },
     "general": {

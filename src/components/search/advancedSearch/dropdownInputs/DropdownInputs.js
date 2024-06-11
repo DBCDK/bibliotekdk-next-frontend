@@ -4,6 +4,9 @@ import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import { DropdownReducerEnum } from "@/components/search/advancedSearch/useDropdownSearchIndices";
+import Icon from "@/components/base/icon";
+
+import Tooltip from "@/components/base/tooltip/Tooltip";
 
 const advancedSearchDropdownContext = "advanced_search_dropdown";
 
@@ -19,11 +22,17 @@ function DropdownUnit({
   indexName,
   updateDropdownSearchIndices,
   showSearchBar,
+  infoBarLabel,
 }) {
+  console.log("indexName", indexName);
+  console.log("advancedSearchDropdownContext", advancedSearchDropdownContext);
+
   const indexTitle = Translate({
     context: advancedSearchDropdownContext,
     label: indexName,
   });
+  console.log("indexTitle", indexTitle);
+
   const indexPlaceholder = Translate({
     context: advancedSearchDropdownContext,
     label: `all_${indexName}`,
@@ -31,7 +40,31 @@ function DropdownUnit({
 
   return (
     <div className={styles.dropdown_with_title}>
-      <Text type="text3">{indexTitle}</Text>
+      {infoBarLabel ? (
+        <div               className={styles.dropdownTitleContainer}
+        >
+
+          <Tooltip
+          
+            placement="right"
+            labelToTranslate={infoBarLabel}
+            childClassName={styles.tooltip}
+            trigger={["hover", "focus"]}
+          >
+            <Text type="text3">{indexTitle}</Text>
+            <Icon
+              src="questionmark.svg"
+              alt="info"
+              data-cy="tooltip-icon"
+              size={2}
+              className={styles.tooltipCursor}
+            ></Icon>
+          </Tooltip>
+          </div>
+      ) : (
+        <Text type="text3">{indexTitle}</Text>
+      )}
+
       <AdvancedSearchDropdown
         indexTitle={indexTitle}
         indexName={indexName}
@@ -74,6 +107,7 @@ export default function DropdownInputs() {
 
         <div className={styles.flex_wrapper}>
           {dropdownUnits.map((unit) => {
+            console.log("unit", unit);
             return (
               <DropdownUnit
                 key={unit.indexName}
@@ -81,6 +115,7 @@ export default function DropdownInputs() {
                 indexName={unit.indexName}
                 updateDropdownSearchIndices={updateDropdownSearchIndices}
                 showSearchBar={unit?.showSearchBar !== false}
+                infoBarText={unit.infoBarText}
               />
             );
           })}
