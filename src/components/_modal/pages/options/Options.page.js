@@ -103,6 +103,11 @@ export function Options({ context, loanerInfo, isAuthenticated }) {
       startOrderFlow: start,
     });
 
+  // put online access from  "www.zetland.dk"  last in array
+  onlineAccesses?.sort((a, b) =>
+    a?.origin === "www.zetland.dk" ? 1 : b?.origin === "www.zetland.dk" ? -1 : 0
+  );
+
   return (
     allowedAccessessByType && (
       <div className={styles.options}>
