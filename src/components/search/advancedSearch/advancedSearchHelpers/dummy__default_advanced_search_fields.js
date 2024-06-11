@@ -45,21 +45,16 @@ export function dummy__nota() {
 
 const prioritisedNota = [
   {
-    name: "Søg i alle materialer",
     term: "Søg i alle materialer", //remove nota
     key: "Søg i alle materialer",
     value: "Alle",
   },
   {
-    name: "Søg kun i materialer fra Nota",
-
     term: "Søg kun i materialer fra Nota",
     key: "nota",
     value: "KUN NOTA",
   },
   {
-    name: "Søg ikke i materialer fra Nota",
-
     term: "Søg ikke i materialer fra Nota", //NOT term.source=nota
     key: "Søg ikke i materialer fra Nota",
     value: "IKKE NOTA",

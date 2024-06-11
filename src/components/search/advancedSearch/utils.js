@@ -67,7 +67,6 @@ function getDropdownQuery(dropdownSearchIndices) {
     })
     // Items are wrapped inside parenthesis to ensure precedence
     .filter((item) => !!item)
-
     .map((item) => `(${item})`)
     .join(` ${AND} `);
   return res;

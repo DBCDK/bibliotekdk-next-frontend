@@ -23,6 +23,7 @@ export const FormTypeEnum = Object.freeze({
   DIVIDER: "DIVIDER",
   ACTION_LINK: "ACTION_LINK",
   ACTION_LINK_CONTAINER: "ACTION_LINK_CONTAINER",
+  DEFAULT: "DEFAULT",//will behave like default dropdown. Can only select one value at a time. 
 });
 
 export function RadioLinkItem({
@@ -253,8 +254,8 @@ export function TogglerContent({
       );
     }
   }
-  console.log('indexPlaceholder',indexPlaceholder)
-  console.log('indexName',indexName)
+  console.log("indexPlaceholder", indexPlaceholder);
+  console.log("indexName", indexName);
 
   // When nothing is selected, we show the placeholder or indexName
   return (

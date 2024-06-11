@@ -31,8 +31,6 @@ export function getDefaultDropdownIndices() {
     { searchIndex: DropdownIndicesEnum.PEGI, value: [] },
     { searchIndex: DropdownIndicesEnum.GENERALAUDIENCE, value: [] },
     { searchIndex: DropdownIndicesEnum.NOTA, value: [] },
-
-
   ];
 }
 
@@ -239,7 +237,7 @@ export default function AdvancedSearchProvider({ children, router }) {
   const cleanInputFields =
     inputFields?.filter((el) => !isEmpty(el.value)) || [];
 
-    console.log('dropdownSearchIndices',dropdownSearchIndices)
+  console.log("dropdownSearchIndices", dropdownSearchIndices);
   const filteredDropDowns = dropdownSearchIndices.filter(function (el) {
     if (dropdownUnits.find((unit) => unit.indexName === el.searchIndex)) {
       return true;
@@ -247,7 +245,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     return false;
   });
 
-  console.log('filteredDropDowns',filteredDropDowns)
+  console.log("filteredDropDowns", filteredDropDowns);
 
   //only add dropdownSearchIndices to object if there are values
   const cleanDropdowns =
@@ -259,7 +257,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     ...(workType && workType !== "all" && { workType }),
   };
 
-  console.log('cleanDropdowns',cleanDropdowns)
+  console.log("cleanDropdowns", cleanDropdowns);
   //if object is empty, return empty string. Otherwise stringify state.
   const stateToString = !isEmpty(state) ? JSON.stringify(state) : "";
 

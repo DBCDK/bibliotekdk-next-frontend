@@ -24,7 +24,6 @@ export const DropdownIndicesEnum = {
   PEGI: "phrase.pegi",
   GENERALAUDIENCE: "phrase.generalaudience",
   NOTA: "nota", //this is not an index in complex search. It will be converted to an index when state is converted to cql. the index term.source i used
-
 };
 
 const specialIndices = new Set([
@@ -458,17 +457,17 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
     items: convertToDropdownInput(dummy__nota()),
     indexName: DropdownIndicesEnum.NOTA,
     showSearchBar: false,
-    infoBarLabel: "tooltip_nota_info"
+    infoBarLabel: "tooltip_nota_info",
   };
-
 
   const types = {
     //all: DONE
-    all: [genreAndForm, languages, publicationYear, ages,nota].map((dropdownUnit) =>
-      getDropdownFromUrl({
-        initDropdowns: initDropdowns,
-        dropdownUnit: dropdownUnit,
-      })
+    all: [genreAndForm, languages, publicationYear, ages, nota].map(
+      (dropdownUnit) =>
+        getDropdownFromUrl({
+          initDropdowns: initDropdowns,
+          dropdownUnit: dropdownUnit,
+        })
     ),
     // literature: DONE
     literature: [
@@ -477,7 +476,7 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
       languages,
       publicationYear,
       ages,
-      nota
+      nota,
     ].map((dropdownUnit) => {
       return getDropdownFromUrl({
         initDropdowns: initDropdowns,
@@ -490,7 +489,7 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
       genreAndForm,
       languages,
       publicationYear,
-      nota
+      nota,
     ].map((dropdownUnit) =>
       getDropdownFromUrl({
         initDropdowns: initDropdowns,

@@ -227,7 +227,21 @@ export default function AdvancedSearchDropdown({
                     />
                   </List.Select>
                 );
-              } else if (item?.formType === FormTypeEnum.RADIO_BUTTON) {
+              } 
+              else if (item?.formType === FormTypeEnum.DEFAULT) {
+                return (
+                  <List.Default
+                    key={`${item.name}-${index}`}
+                    selected={item?.isSelected}
+                    moveItemRightOnFocus={true}
+                    onSelect={toggler}
+                    label={item.name}
+                  >
+           <Text>{item.name}</Text>
+                  </List.Default>
+                );
+              }
+              else if (item?.formType === FormTypeEnum.RADIO_BUTTON) {
                 return (
                   <List.Radio
                     key={`${item.name}-${index}`}
