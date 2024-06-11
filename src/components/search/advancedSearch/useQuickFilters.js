@@ -55,7 +55,7 @@ export function useQuickFilters() {
       !router?.pathname?.includes("/avanceret") &&
       !process.env.STORYBOOK_ACTIVE
     ) {
-      clearQuickFiltersUrl();
+      resetQuickFilters();
     }
   }, []);
 
@@ -106,7 +106,7 @@ export function useQuickFilters() {
   }
 
   /**
-   * Push empty facet query to url
+   * Push empty quickfilters  url
    */
   function clearQuickFiltersUrl() {
     setSelectedQuickFilters("[]");
