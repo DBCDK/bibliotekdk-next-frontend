@@ -493,8 +493,8 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
     literature: [
       specificMaterialTypes,
       genreAndForm,
-      languages,
       publicationYear,
+      languages,
       ages,
       nota,
     ].map((dropdownUnit) => {
@@ -507,8 +507,8 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
     article: [
       specificMaterialTypes,
       genreAndForm,
-      languages,
       publicationYear,
+      languages,
       nota,
     ].map((dropdownUnit) =>
       getDropdownFromUrl({
@@ -520,8 +520,8 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
     movie: [
       specificMaterialTypes,
       genreAndForm,
-      filmnationality,
       publicationYear,
+      filmnationality,
       ages,
     ].map((dropdownUnit) =>
       getDropdownFromUrl({
@@ -538,7 +538,7 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
         })
     ),
     //@TODO .. something is not right - players always makes a zero search ??
-    game: [gamePlatform, genreAndForm, ages, pegi, publicationYear].map(
+    game: [gamePlatform, genreAndForm, publicationYear, ages, pegi].map(
       (dropdownUnit) =>
         getDropdownFromUrl({
           initDropdowns: initDropdowns,
