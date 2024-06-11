@@ -126,6 +126,7 @@ export default function DropdownInputs() {
           {!showAll && (
             <div className={styles.showMoreButtonContainer}>
               <Text
+                dataCy="advanced-search-dropdowns-show-more"
                 type="text3"
                 className={styles.showMoreButton}
                 onClick={() => {

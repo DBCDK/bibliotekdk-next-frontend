@@ -181,6 +181,8 @@ describe("Dropdowns test", () => {
     );
   });
   it("should reset dropdown", () => {
+    //show all dropdowns:
+    cy.get('[data-cy="advanced-search-dropdowns-show-more"]').click();
     //open ages modal
     cy.get('[data-cy="advanced-search-dropdown-ages"]').click();
     //click on 3-6 years option
