@@ -48,7 +48,7 @@ function DropdownUnit({
           >
             <Text type="text3">{indexTitle}</Text>
             <Icon
-              src="questionmark.svg"
+              src="exclamationmark.svg"
               alt="info"
               data-cy="tooltip-icon"
               size={2}
