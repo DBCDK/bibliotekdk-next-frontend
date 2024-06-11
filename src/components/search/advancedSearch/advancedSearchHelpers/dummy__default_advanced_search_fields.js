@@ -44,25 +44,25 @@ export function dummy__nota() {
 }
 
 export const NOTA_ENUM = {
-  ALL: "Alle", //maybe not necessary
+  ALL: "Alle",
   NOT_NOTA: "Ikke nota",
   ONLY_NOTA: "Kun nota",
 };
 const prioritisedNota = [
   {
-    term: "Søg i alle materialer", //remove nota
+    term: "Søg i alle materialer",
     key: NOTA_ENUM.ALL,
-    value: NOTA_ENUM.ALL, //"Alle",
+    value: NOTA_ENUM.ALL,
   },
   {
     term: "Søg kun i materialer fra Nota",
     key: NOTA_ENUM.ONLY_NOTA,
-    value: NOTA_ENUM.ONLY_NOTA, //"KUN NOTA",
+    value: NOTA_ENUM.ONLY_NOTA,
   },
   {
-    term: "Søg ikke i materialer fra Nota", //NOT term.source=nota
+    term: "Søg ikke i materialer fra Nota",
     key: NOTA_ENUM.NOT_NOTA,
-    value: NOTA_ENUM.NOT_NOTA, //"IKKE NOTA",
+    value: NOTA_ENUM.NOT_NOTA,
   },
 ];
 
