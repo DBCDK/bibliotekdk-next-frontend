@@ -29,37 +29,38 @@ function getDropdownQuery(dropdownSearchIndices) {
   const OR = LogicalOperatorsEnum.OR;
   const AND = LogicalOperatorsEnum.AND;
 
-  const res = dropdownSearchIndices
-    ?.filter((searchIndex) => !isEmpty(searchIndex.value))
-    .map((searchIndex) => {
-      const { getComparator, getFormatValue } = formattersAndComparitors(
-        searchIndex.searchIndex
-      );
+  return (
+    dropdownSearchIndices
+      ?.filter((searchIndex) => !isEmpty(searchIndex.value))
+      .map((searchIndex) => {
+        const { getComparator, getFormatValue } = formattersAndComparitors(
+          searchIndex.searchIndex
+        );
 
-      if (searchIndex.searchIndex === DropdownIndicesEnum.NOTA) {
-        const value = searchIndex.value[0]?.value;
-        if (value === NOTA_ENUM.ONLY_NOTA) {
-          return 'term.source = "nota"';
-        } else if (value === NOTA_ENUM.NOT_NOTA) {
-          return 'workid=* not term.source="nota"';
+        if (searchIndex.searchIndex === DropdownIndicesEnum.NOTA) {
+          const value = searchIndex.value[0]?.value;
+          if (value === NOTA_ENUM.ONLY_NOTA) {
+            return 'term.source = "nota"';
+          } else if (value === NOTA_ENUM.NOT_NOTA) {
+            return 'workid=* not term.source="nota"';
+          } else {
+            return;
+          }
         } else {
-          return;
+          return searchIndex.value
+            .map((singleValue) => {
+              return `${searchIndex.searchIndex}${getComparator?.(
+                singleValue?.value
+              )}"${getFormatValue?.(singleValue?.value)}"`;
+            })
+            .join(` ${OR} `);
         }
-      } else {
-        return searchIndex.value
-          .map((singleValue) => {
-            return `${searchIndex.searchIndex}${getComparator?.(
-              singleValue?.value
-            )}"${getFormatValue?.(singleValue?.value)}"`;
-          })
-          .join(` ${OR} `);
-      }
-    })
-    // Items are wrapped inside parenthesis to ensure precedence
-    .filter((item) => !!item)
-    .map((item) => `(${item})`)
-    .join(` ${AND} `);
-  return res;
+      })
+      // Items are wrapped inside parenthesis to ensure precedence
+      .filter((item) => !!item)
+      .map((item) => `(${item})`)
+      .join(` ${AND} `)
+  );
 }
 
 export function getQuickFiltersQuery(quickFilters) {
