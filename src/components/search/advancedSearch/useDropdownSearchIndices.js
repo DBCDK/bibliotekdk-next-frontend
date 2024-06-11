@@ -28,7 +28,7 @@ function dropdownReducer(state, action) {
             value: payload.menuItemsState
               .filter((item) => item.isSelected === true)
               .map((item) => {
-                return { value: item.value, name: item.name, ...item };
+                return { value: item.value, name: item.name };
               }),
           };
         } else {

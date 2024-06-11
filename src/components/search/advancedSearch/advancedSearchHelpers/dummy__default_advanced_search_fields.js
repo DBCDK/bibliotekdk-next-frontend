@@ -39,7 +39,7 @@ export function dummy__nota() {
     prioritisedFormType: FormTypeEnum.RADIO_BUTTON,
     unprioritisedItems: [],
     unprioritisedFormType: FormTypeEnum.RADIO_BUTTON,
-    overrideValueAs: "name",
+    overrideValueAs: "key",
   };
 }
 
@@ -52,17 +52,14 @@ const prioritisedNota = [
   {
     term: "Søg i alle materialer",
     key: NOTA_ENUM.ALL,
-    value: NOTA_ENUM.ALL,
   },
   {
     term: "Søg kun i materialer fra Nota",
     key: NOTA_ENUM.ONLY_NOTA,
-    value: NOTA_ENUM.ONLY_NOTA,
   },
   {
     term: "Søg ikke i materialer fra Nota",
     key: NOTA_ENUM.NOT_NOTA,
-    value: NOTA_ENUM.NOT_NOTA,
   },
 ];
 
