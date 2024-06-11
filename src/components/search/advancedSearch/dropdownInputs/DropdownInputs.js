@@ -119,7 +119,7 @@ export default function DropdownInputs() {
                 indexName={unit.indexName}
                 updateDropdownSearchIndices={updateDropdownSearchIndices}
                 showSearchBar={unit?.showSearchBar !== false}
-                infoBarText={unit.infoBarText}
+                infoBarLabel={unit.infoBarLabel}
               />
             );
           })}
