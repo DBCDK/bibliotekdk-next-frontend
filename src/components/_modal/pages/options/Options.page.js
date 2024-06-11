@@ -48,22 +48,13 @@ function optionsListAllArgs({
   startOrderFlow,
 }) {
   //add order modal to store, to be able to access when coming back from adgangsplatform/mitid?
-
-  // console.log(access, "ACCESS");
-  // console.log(manifestations, "MANIFESTATIONS");
-  // TODO get materialtypes for given access
-
   const currentManifestation = manifestations?.find(
     (mani) => mani.pid === access.pids[0]
   );
 
-  console.log(currentManifestation, "CURRENT");
-
   const materialTypeArray = currentManifestation?.materialTypes.map(
     (type) => type.materialTypeSpecific.display
   );
-
-  // console.log(materialTypeArray, "TYPE ARRAY");
 
   const props = {
     ...{ ...access, materialTypesArray: materialTypeArray },

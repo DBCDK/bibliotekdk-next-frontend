@@ -22,8 +22,6 @@ export const getTemplateProps = {
 
 const templateProps = {
   propsForOnline(props) {
-    // console.log(props, "TEMPLATE PROPS");
-
     return {
       linkProps: { href: props?.url, target: "_blank" },
       linkText: Translate({
