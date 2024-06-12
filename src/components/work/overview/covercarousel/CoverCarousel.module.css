@@ -84,6 +84,7 @@
 }
 
 .cover_element {
+  min-height: 300px;
   flex-shrink: 0;
 
   z-index: 2;

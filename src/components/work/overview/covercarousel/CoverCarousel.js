@@ -196,10 +196,6 @@ export default function Wrap({ allPids, selectedPids, workTitles }) {
     return <Custom404 />;
   }
 
-  if (manifestationsIsLoading) {
-    return <Skeleton className={styles.carousel_skeleton} />;
-  }
-
   return (
     <CoverCarousel
       manifestations={manifestationsWithCover}
