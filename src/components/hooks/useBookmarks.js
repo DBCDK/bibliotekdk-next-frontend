@@ -233,8 +233,8 @@ const useBookmarksCore = ({ hasCulrUniqueId, isMock = false } = {}) => {
    */
   const titleSort = (bookmarkList = [], sortDirection = "asc") => {
     return bookmarkList.sort((a, b) => {
-      const aTitle = a.titles?.full?.[0];
-      const bTitle = b.titles?.full?.[0];
+      const aTitle = a.titles?.full?.[0] || a?.title;
+      const bTitle = b.titles?.full?.[0] || b?.title;
       if (aTitle < bTitle) {
         return sortDirection === "asc" ? -1 : 1;
       }
