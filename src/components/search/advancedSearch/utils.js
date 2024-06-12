@@ -74,10 +74,19 @@ export function getQuickFiltersQuery(quickFilters) {
   return cqlArray?.join(` ${AND} `);
 }
 
+function mapFacetIndex(facetIndex) {
+  const INDEXPREFIX = "phrase.";
+  const NO_PREFIX = ["lix", "let"];
+  if (NO_PREFIX.includes(facetIndex)) {
+    return facetIndex;
+  }
+
+  return `${INDEXPREFIX}${facetIndex}`;
+}
+
 export function getFacetsQuery(facets) {
   const OR = LogicalOperatorsEnum.OR;
   const AND = LogicalOperatorsEnum.AND;
-  const INDEXPREFIX = "phrase.";
 
   if (isEmpty(facets)) {
     return "";
@@ -87,7 +96,7 @@ export function getFacetsQuery(facets) {
     facets
       ?.filter((facet) => !isEmpty(facet.values))
       .map((facet) => {
-        const searchindex = `${INDEXPREFIX}${facet.searchIndex}`;
+        const searchindex = mapFacetIndex(facet.searchIndex);
         //  For now we use AND with a variable
         return facet.values
           .map((singleValue) => {
