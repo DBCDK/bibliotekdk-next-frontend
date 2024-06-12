@@ -140,7 +140,7 @@ export default function AdvancedSearchDropdown({
     workType,
     menuItems.length,
   ]);
-
+  console.log("dropdownQuery", dropdownQuery);
   const sortedMenuItemsState = [
     ...(!isEmpty(dropdownQuery)
       ? [...menuItemsState]
@@ -149,6 +149,7 @@ export default function AdvancedSearchDropdown({
           .filter((item) => ![FormTypeEnum.DIVIDER].includes(item.formType))
       : [...menuItemsState]),
   ];
+  console.log("sortedMenuItemsState", sortedMenuItemsState.length);
 
   const hasSpecialFormTypes = menuItemsState.some((item) =>
     specialFormTypes.has(item.formType)
@@ -207,6 +208,7 @@ export default function AdvancedSearchDropdown({
             )
             .map((item, index) => {
               function toggler() {
+                console.log("tofler dunction: toggleMenuItemsState", item);
                 toggleMenuItemsState({
                   type: ToggleMenuItemsEnum.UPDATE,
                   payload: item,
@@ -225,6 +227,21 @@ export default function AdvancedSearchDropdown({
                       item={item}
                       {...getTextType(dropdownQuery, item)}
                     />
+                  </List.Select>
+                );
+              } else if (item?.formType === FormTypeEnum.RADIO_SELECT) {
+                return (
+                  <List.Select
+                    className={cx(styles.dropdownitem, {
+                      [styles.selectedItem]: item?.isSelected,
+                    })}
+                    key={`${item.name}-${index}`}
+                    selected={item?.isSelected}
+                    moveItemRightOnFocus={true}
+                    onSelect={toggler}
+                    label={item.name}
+                  >
+                    <Text type="text3">{item.name}</Text>
                   </List.Select>
                 );
               } else if (item?.formType === FormTypeEnum.RADIO_BUTTON) {

@@ -23,6 +23,7 @@ export const FormTypeEnum = Object.freeze({
   DIVIDER: "DIVIDER",
   ACTION_LINK: "ACTION_LINK",
   ACTION_LINK_CONTAINER: "ACTION_LINK_CONTAINER",
+  RADIO_SELECT: "RADIO_DEFAULT", // acts like radio, but there is no round icon
 });
 
 export function RadioLinkItem({
@@ -222,7 +223,10 @@ export function TogglerContent({
   const menuItemsFormType = menuItemsState.map((item) => item.formType);
 
   if (selectedItems.length > 0) {
-    if (menuItemsFormType.includes(FormTypeEnum.ACTION_LINK_CONTAINER)) {
+    if (
+      menuItemsFormType.includes(FormTypeEnum.RADIO_SELECT) ||
+      menuItemsFormType.includes(FormTypeEnum.RADIO_SELECT)
+    ) {
       // If we have ACTION_LINK_CONTAINER, we show only this
       return (
         <Text tag="span" className={styles.toggler_content}>

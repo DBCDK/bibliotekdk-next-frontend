@@ -36,9 +36,9 @@ import { DropdownIndicesEnum } from "@/components/search/advancedSearch/useDefau
 export function dummy__nota() {
   return {
     prioritisedItems: prioritisedNota,
-    prioritisedFormType: FormTypeEnum.RADIO_BUTTON,
+    prioritisedFormType: FormTypeEnum.RADIO_SELECT,
     unprioritisedItems: [],
-    unprioritisedFormType: FormTypeEnum.RADIO_BUTTON,
+    unprioritisedFormType: FormTypeEnum.RADIO_SELECT,
     overrideValueAs: "key",
   };
 }

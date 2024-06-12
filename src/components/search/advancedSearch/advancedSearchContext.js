@@ -277,32 +277,6 @@ export default function AdvancedSearchProvider({ children, router }) {
     setWorkType("all");
   }
 
-  /** @typedef {{
-        inputFields: Array.<InputField>,
-        removeInputField: (indexToRemove: number) => void,
-        addInputField: () => void,
-        handleLogicalOperatorChange: (index: number, newOperator: string) => void,
-        handleInputFieldChange: (index: number, newValue: string) => void,
-        handleIndexChange: (index: number, newOperator: string) => void,
-        dropdownUnits: Array.<DropdownUnit>,
-        dropdownSearchIndices: Array.<DropdownSearchIndex>,
-        updateDropdownSearchIndices: UpdateDropdownSearchIndices,
-        resetObjectState: () => void,
-        parsedCQL: string,
-        setParsedCQL: (value: string) => void,
-        fieldSearchFromUrl: { inputFields: Array.<InputField>, dropdownSearchIndices: Array.<DropdownSearchIndex> },
-        cqlFromUrl: string,
-        pageNoFromUrl: number,
-        showPopover: boolean,
-        setShowPopover: function,
-        showInfoTooltip: boolean,
-        setShowInfoTooltip: function,
-        sort: Array.<{ index: string, order: string }>,
-        workType: string
-        stateToString: string
-        popoverRef: any
-        resetMenuItemsEvent: string
-   }} AdvancedSearchContextType */
   const value = {
     inputFields,
     addInputField,
