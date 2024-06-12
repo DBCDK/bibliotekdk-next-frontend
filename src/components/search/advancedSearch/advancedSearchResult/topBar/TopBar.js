@@ -291,7 +291,6 @@ export default function TopBar({ isLoading = false, searchHistoryObj }) {
                 type="text3"
                 tag="span"
                 skeleton={isLoading}
-                className={styles.editSearchMobile}
               >
                 <Link
                   onClick={() => {
