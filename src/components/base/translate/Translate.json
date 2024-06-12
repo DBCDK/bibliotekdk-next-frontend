@@ -390,6 +390,14 @@
       }
     },
     "complex-search-facets": {
+      "label-lix": {
+        "da": "Lix",
+        "en": "Lix"
+      },
+      "label-let": {
+        "da": "Let",
+        "en": "Let"
+      },
       "label-specificmaterialtype": {
         "da": "Format",
         "en": "Format"
