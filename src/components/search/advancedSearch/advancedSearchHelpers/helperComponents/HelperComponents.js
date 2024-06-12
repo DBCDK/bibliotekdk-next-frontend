@@ -225,7 +225,7 @@ export function TogglerContent({
   if (selectedItems.length > 0) {
     if (
       menuItemsFormType.includes(FormTypeEnum.RADIO_SELECT) ||
-      menuItemsFormType.includes(FormTypeEnum.RADIO_SELECT)
+      menuItemsFormType.includes(FormTypeEnum.ACTION_LINK_CONTAINER)
     ) {
       // If we have ACTION_LINK_CONTAINER, we show only this
       return (
