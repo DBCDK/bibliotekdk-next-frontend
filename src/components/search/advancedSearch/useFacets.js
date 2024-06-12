@@ -181,7 +181,7 @@ export function useFacets() {
    * Push empty facet query to url
    */
   function clearFacetsUrl() {
-    const query = router?.query;
+    const query = { ...router?.query };
     delete query["facets"];
     router.push({
       pathname: router.pathname,

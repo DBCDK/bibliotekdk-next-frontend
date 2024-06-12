@@ -110,7 +110,7 @@ export function useQuickFilters() {
    */
   function clearQuickFiltersUrl() {
     setSelectedQuickFilters("[]");
-    const query = router?.query;
+    const query = { ...router?.query };
     delete query["quickfilters"];
     router.push({
       pathname: router.pathname,

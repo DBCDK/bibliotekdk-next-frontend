@@ -53,13 +53,15 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
   }, [cqlFromUrl, router?.query?.mode]);
 
   // we need to clear the global facets
-  const { clearFacetsUrl } = useFacets();
-  const { clearQuickFiltersUrl } = useQuickFilters();
+  const { resetFacets } = useFacets();
+  const { resetQuickFilters } = useQuickFilters();
   //add raw cql query in url if showCqlEditor. Add state to url if fieldInputs
   const doAdvancedSearch = () => {
     // this is a new search - clear the facets
-    clearFacetsUrl();
-    clearQuickFiltersUrl();
+    // However, do not push to URL at this point as this is done in just a moment
+    // when the search query is pushed (with no facets or quickfilters set)
+    resetFacets();
+    resetQuickFilters();
     if (showCqlEditor) {
       const cqlParsedFromUrl = fieldSearchFromUrl
         ? convertStateToCql(fieldSearchFromUrl)
