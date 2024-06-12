@@ -107,19 +107,6 @@
   box-shadow: var(--basic_big_box_shadow);
 }
 
-.carousel_skeleton {
-  display: block;
-
-  width: calc(var(--carousel-width));
-  height: calc(var(--carousel-height));
-  margin-left: auto;
-  margin-right: auto;
-
-  border: 0;
-  outline: 0;
-  background-image: linear-gradient(var(--black-squeeze), var(--black-squeeze));
-}
-
 .cover_image_skeleton {
   display: block;
   width: 200px;
