@@ -140,7 +140,6 @@ export default function AdvancedSearchDropdown({
     workType,
     menuItems.length,
   ]);
-
   const sortedMenuItemsState = [
     ...(!isEmpty(dropdownQuery)
       ? [...menuItemsState]
@@ -225,6 +224,21 @@ export default function AdvancedSearchDropdown({
                       item={item}
                       {...getTextType(dropdownQuery, item)}
                     />
+                  </List.Select>
+                );
+              } else if (item?.formType === FormTypeEnum.RADIO_SELECT) {
+                return (
+                  <List.Select
+                    className={cx(styles.dropdownitem, {
+                      [styles.selectedItem]: item?.isSelected,
+                    })}
+                    key={`${item.name}-${index}`}
+                    selected={item?.isSelected}
+                    moveItemRightOnFocus={true}
+                    onSelect={toggler}
+                    label={item.name}
+                  >
+                    <Text type="text3">{item.name}</Text>
                   </List.Select>
                 );
               } else if (item?.formType === FormTypeEnum.RADIO_BUTTON) {

@@ -12,6 +12,9 @@ export function resetMenuItem(menuItem) {
     ...(FormTypeEnum.RADIO_BUTTON === menuItem?.formType && {
       isSelected: false,
     }),
+    ...(FormTypeEnum.RADIO_SELECT === menuItem?.formType && {
+      isSelected: false,
+    }),
     ...(FormTypeEnum.RADIO_LINK === menuItem?.formType && {
       isSelected: false,
       value: {},
@@ -30,6 +33,9 @@ export function initializeMenuItem(menuItem) {
       isSelected: menuItem?.isSelected || false,
     }),
     ...(FormTypeEnum.RADIO_BUTTON === menuItem?.formType && {
+      isSelected: menuItem?.isSelected || false,
+    }),
+    ...(FormTypeEnum.RADIO_SELECT === menuItem?.formType && {
       isSelected: menuItem?.isSelected || false,
     }),
     ...(FormTypeEnum.RADIO_LINK === menuItem?.formType && {
@@ -56,6 +62,9 @@ function toggleMenuItem(itemUpdate, currentMenuItem) {
       isSelected: !itemUpdate?.isSelected,
     }),
     ...(FormTypeEnum.RADIO_BUTTON === itemUpdate?.formType && {
+      isSelected: true,
+    }),
+    ...(FormTypeEnum.RADIO_SELECT === itemUpdate?.formType && {
       isSelected: true,
     }),
     ...(FormTypeEnum.RADIO_LINK === itemUpdate?.formType && {
@@ -89,12 +98,16 @@ export function reducerForToggleMenuItemsState({ currentMenuItems, action }) {
       return currentMenuItems?.map((currentItem) => {
         return currentItem.name === nextItem.name
           ? nextItem
-          : [FormTypeEnum.RADIO_BUTTON, FormTypeEnum.RADIO_LINK].includes(
-              currentItem?.formType
-            ) &&
-            [FormTypeEnum.RADIO_BUTTON, FormTypeEnum.RADIO_LINK].includes(
-              nextItem?.formType
-            )
+          : [
+              FormTypeEnum.RADIO_BUTTON,
+              FormTypeEnum.RADIO_LINK,
+              FormTypeEnum.RADIO_SELECT,
+            ].includes(currentItem?.formType) &&
+            [
+              FormTypeEnum.RADIO_BUTTON,
+              FormTypeEnum.RADIO_LINK,
+              FormTypeEnum.RADIO_SELECT,
+            ].includes(nextItem?.formType)
           ? resetMenuItem(currentItem)
           : currentItem;
       });
@@ -134,6 +147,5 @@ export function useMenuItemsState(menuItems, updateIndex) {
   useEffect(() => {
     updateIndex(menuItemsState);
   }, [JSON.stringify(menuItemsState)]);
-
   return { menuItemsState, toggleMenuItemsState };
 }
