@@ -323,7 +323,10 @@ function getFacetsForIndex(data, index, ontop) {
     return dat.name.split(".")[1] === index.split(".")[1];
   });
 
-  const enrichedFacetValues = facets?.values ? [...facets?.values] : [];
+  const facetValues = facets?.values ? [...facets?.values] : [];
+  // we filter out facet values with a score lower than 3
+  const enrichedFacetValues = facetValues.filter((fac) => fac.score > 3);
+
   ontop.forEach((prio) => {
     if (!!!facets?.values?.find((fac) => fac.key === prio)) {
       // insert missing item .. whereever in array .. it is sorted later

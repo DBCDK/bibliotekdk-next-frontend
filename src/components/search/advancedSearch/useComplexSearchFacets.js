@@ -20,7 +20,6 @@ const facetByMaterialType = {
  * @returns {{isLoading, facetResponse, error}}
  */
 export function useComplexSearchFacets(workType) {
-  // @TODO use workType:)
   let cqlQuery;
   if (workType === "all") {
     cqlQuery = `workId=*`;
@@ -37,7 +36,7 @@ export function useComplexSearchFacets(workType) {
     complexFacetsOnly({
       cql: cqlQuery,
       facets: {
-        facetLimit: 100,
+        facetLimit: 200,
         facets: facetByMaterialType[workType.toUpperCase()],
       },
     })
