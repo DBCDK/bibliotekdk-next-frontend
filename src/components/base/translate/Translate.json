@@ -391,12 +391,12 @@
     },
     "complex-search-facets": {
       "label-lix": {
-        "da": "Lix",
-        "en": "Lix"
+        "da": "Lix-tal",
+        "en": "Lix-number"
       },
       "label-let": {
-        "da": "Let",
-        "en": "Let"
+        "da": "Let-tal",
+        "en": "Let-number"
       },
       "label-specificmaterialtype": {
         "da": "Format",
