@@ -17,6 +17,8 @@ export const AdvFacetsTypeEnum = Object.freeze({
   FICTIONALCHARACTER: "fictionalcharacter",
   GENREANDFORM: "genreandform",
   AGES: "ages",
+  LIX: "lix",
+  LET: "let",
   PRIMARYTARGET: "primarytarget",
   // CATALOGUECODE: "cataloguecode",
   // CONTRIBUTORFUNCTION: "contributorfunction",

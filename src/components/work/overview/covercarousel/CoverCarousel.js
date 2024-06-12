@@ -8,7 +8,6 @@ import React, {
 } from "react";
 import { useData } from "@/lib/api/api";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
-import Skeleton from "@/components/base/skeleton";
 import Text from "@/components/base/text";
 import styles from "./CoverCarousel.module.css";
 import {
@@ -173,11 +172,7 @@ export function CoverCarousel({
 }
 
 export default function Wrap({ allPids, selectedPids, workTitles }) {
-  const {
-    data: manifestationsData,
-    isLoading: manifestationsIsLoading,
-    error: manifestationsError,
-  } = useData(
+  const { data: manifestationsData, error: manifestationsError } = useData(
     selectedPids?.length > 0 &&
       manifestationFragments.editionManifestations({
         pid: allPids,
@@ -194,10 +189,6 @@ export default function Wrap({ allPids, selectedPids, workTitles }) {
 
   if (manifestationsError) {
     return <Custom404 />;
-  }
-
-  if (manifestationsIsLoading) {
-    return <Skeleton className={styles.carousel_skeleton} />;
   }
 
   return (
