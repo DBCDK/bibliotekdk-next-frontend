@@ -4,6 +4,7 @@ import { AccessEnum } from "@/lib/enums";
 import { useMemo } from "react";
 import useLoanerInfo from "./user/useLoanerInfo";
 import { encodeTitleCreator, infomediaUrl } from "@/lib/utils";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 /**
  * Sorting entries of the access array
@@ -139,6 +140,8 @@ function flattenAccess(manifestations) {
  */
 export function useManifestationAccess({ pids, filter }) {
   const { loanerInfo, isLoading: loanerInfoIsLoading } = useLoanerInfo();
+  const { isAuthenticated } = useAuthentication();
+
   // Fetch data for the pids needed to generate the access array
   const { data, isLoading: accessIsLoading } = useData(
     pids?.length > 0 && accessForManifestations({ pids })
@@ -171,8 +174,9 @@ export function useManifestationAccess({ pids, filter }) {
     access.forEach((entry) => (accessMap[entry.__typename] = entry));
 
     const userHasDigitalAccess = loanerInfo?.rights?.["digitalArticleService"];
-    // we filter out digital access if user has no right
-    if (!userHasDigitalAccess) {
+
+    // we filter out digital access if user is authenticated AND has no right
+    if (isAuthenticated && !userHasDigitalAccess) {
       access = access?.filter(
         (acc) => acc.__typename !== AccessEnum.DIGITAL_ARTICLE_SERVICE
       );
