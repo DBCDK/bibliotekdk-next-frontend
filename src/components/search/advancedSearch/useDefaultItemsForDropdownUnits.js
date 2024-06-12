@@ -273,9 +273,11 @@ function getDropdownFromUrl({ initDropdowns, dropdownUnit }) {
     return {
       ...singleItem,
       isSelected:
-        ([FormTypeEnum.CHECKBOX, FormTypeEnum.RADIO_BUTTON].includes(
-          singleItem.formType
-        ) ||
+        ([
+          FormTypeEnum.CHECKBOX,
+          FormTypeEnum.RADIO_BUTTON,
+          FormTypeEnum.RADIO_SELECT,
+        ].includes(singleItem.formType) ||
           ([FormTypeEnum.RADIO_LINK].includes(singleItem.formType) &&
             !isEmpty(singleItem.value))) &&
         actualSearchIndex.value
