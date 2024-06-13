@@ -61,5 +61,5 @@
   padding: 0 var(--pt2);
   gap: var(--pt1);
   display: flex;
-  align-items: flex-end;
+  align-items: center
 }

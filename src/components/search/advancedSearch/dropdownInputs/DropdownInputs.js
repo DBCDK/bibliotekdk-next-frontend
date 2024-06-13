@@ -8,7 +8,7 @@ import { DropdownReducerEnum } from "@/components/search/advancedSearch/useDropd
 import Icon from "@/components/base/icon";
 
 import Tooltip from "@/components/base/tooltip/Tooltip";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const advancedSearchDropdownContext = "advanced_search_dropdown";
 
@@ -51,7 +51,8 @@ function DropdownUnit({
               src="exclamationmark.svg"
               alt="info"
               data-cy="tooltip-icon"
-              size={2}
+              size="2_5"
+
               className={styles.tooltipCursor}
             ></Icon>
           </Tooltip>
@@ -87,10 +88,27 @@ export default function DropdownInputs() {
   //show all dropdowns or "show more"-button
   const [showAll, setShowAll] = useState(false);
   useEffect(() => {
-    setShowAll(dropdownUnits.length <= MAX_VISIBLE_DROPDOWNS + 1);
+
+  const anySelected =  dropdownUnits
+    .slice(MAX_VISIBLE_DROPDOWNS)
+    .some((unit) => unit.items.some((item) => item.isSelected))
+
+
+    setShowAll(dropdownUnits.length <= MAX_VISIBLE_DROPDOWNS + 1 || anySelected);
   }, [workType]);
 
-  const dropdownUnitsToRender = showAll
+  // //checks if any of the hidden dropdowns has a valye
+  // const hiddenDropdownsHasValues = useMemo(
+  //   () =>
+  //     dropdownUnits
+  //       .slice(MAX_VISIBLE_DROPDOWNS)
+  //       .some((unit) => unit.items.some((item) => item.isSelected)),
+  //   [dropdownUnits]
+  // );
+  const hiddenDropdownsHasValues = false;
+
+  const showAllDropdowns = showAll || hiddenDropdownsHasValues;
+  const dropdownUnitsToRender = showAllDropdowns
     ? dropdownUnits
     : dropdownUnits.slice(0, MAX_VISIBLE_DROPDOWNS);
 
@@ -123,7 +141,7 @@ export default function DropdownInputs() {
               />
             );
           })}
-          {!showAll && (
+          {!showAllDropdowns && (
             <div className={styles.showMoreButtonContainer}>
               <Text
                 dataCy="advanced-search-dropdowns-show-more"
