@@ -30,6 +30,7 @@
 .formatedQueryContainer {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .formatedQueryContainer p {
@@ -41,13 +42,34 @@
   color: var(--blue);
 }
 
+.editSearchMobile {
+  display: none;
+}
+
+.flexSwitchMobile {
+}
+
 @media (max-width: 768px) {
   .your_search {
     margin-bottom: var(--pt1);
   }
 
+  .editSearchDesktop {
+    display: none;
+  }
+
   .formatedQueryContainer {
     flex-flow: wrap;
+  }
+
+  .editSearchMobile {
+    display: block;
+  }
+
+  .flexSwitchMobile {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
   }
 
   .saveSearchButton {
