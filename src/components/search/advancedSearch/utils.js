@@ -42,7 +42,7 @@ function getDropdownQuery(dropdownSearchIndices) {
           if (value === NOTA_ENUM.ONLY_NOTA) {
             return 'term.source = "nota"';
           } else if (value === NOTA_ENUM.NOT_NOTA) {
-            return "term.source=(* AND nota)";
+            return "term.source=(* NOT nota)";
           } else {
             //if all is selected we do nothing
             return;
