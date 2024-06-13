@@ -33,7 +33,7 @@ export function useGoToOrderWithBranch({
   const { access } = useManifestationAccess({ pids: selectedPids });
 
   // pids from allEnrichedAccesses is used to open Order modal
-  const pids = uniq(access.pids);
+  const pids = uniq(access?.pids);
 
   // BranchId is used to get borrowerCheck for branch
   const branchId = branchWithoutBorrowerCheck?.branchId;
