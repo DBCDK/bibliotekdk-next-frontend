@@ -14,6 +14,7 @@ import useOrderPageInformation from "@/components/hooks/useOrderPageInformations
 import { handleOnSelect } from "@/components/_modal/utils";
 import { useModal } from "@/components/_modal";
 import { useOrderFlow } from "./order";
+import { useManifestationAccess } from "@/components/hooks/useManifestationAccess";
 
 /**
  * useGoToOrderWithBranch provides a function called handleOnSelectEnriched. handleOnSelectEnriched uses handleOnSelect
@@ -33,22 +34,10 @@ export function useGoToOrderWithBranch({
 }) {
   const modal = useModal();
 
-  // Manifestations used to get access
-  const { manifestations } = useGetManifestationsForOrderButton(
-    workId,
-    selectedPids
-  );
-
-  // Access (allEnrichedAccesses) is used to open Order modal
-  const { allEnrichedAccesses } = useMemo(
-    () => accessFactory(manifestations),
-    [manifestations]
-  );
+  const { access } = useManifestationAccess({ pids: selectedPids });
 
   // pids from allEnrichedAccesses is used to open Order modal
-  const pids = uniq(
-    allEnrichedAccesses?.map((singleAccess) => singleAccess?.pid)
-  );
+  const pids = uniq(access.pids);
 
   // BranchId is used to get borrowerCheck for branch
   const branchId = branchWithoutBorrowerCheck?.branchId;
