@@ -2,12 +2,8 @@
  * @file
  * This file provides the hook useGoToOrderWithBranch that helps to go to Order modal with a given branch
  */
-
-import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAndSelectedPids";
 import { useData } from "@/lib/api/api";
 import * as branchesFragments from "@/lib/api/branches.fragments";
-import { useMemo } from "react";
-import { accessFactory } from "@/lib/accessFactoryUtils";
 import uniq from "lodash/uniq";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
 
