@@ -42,8 +42,7 @@ function getDropdownQuery(dropdownSearchIndices) {
           if (value === NOTA_ENUM.ONLY_NOTA) {
             return 'term.source = "nota"';
           } else if (value === NOTA_ENUM.NOT_NOTA) {
-            //we cant send 'not term.source="nota"'. Therefore we add a star search before 'not term.source="nota"'
-            return 'workid=* not term.source="nota"';
+            return "term.source=(* NOT nota)";
           } else {
             //if all is selected we do nothing
             return;
