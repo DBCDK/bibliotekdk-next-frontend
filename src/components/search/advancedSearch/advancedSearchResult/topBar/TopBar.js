@@ -287,11 +287,7 @@ export default function TopBar({ isLoading = false, searchHistoryObj }) {
                 </IconButton>
               </div>
             ) : (
-              <Text
-                type="text3"
-                tag="span"
-                skeleton={isLoading}
-              >
+              <Text type="text3" tag="span" skeleton={isLoading}>
                 <Link
                   onClick={() => {
                     setShowPopover(true);
