@@ -11,6 +11,7 @@ export function orderHistory({ offset, limit }) {
           bibliotekDkOrders(offset: $offset, limit: $limit, ) {
             result {
               work {
+                workId
                 creators{
                   display
                 }
