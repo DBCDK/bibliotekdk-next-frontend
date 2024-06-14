@@ -8,7 +8,7 @@ import { DropdownReducerEnum } from "@/components/search/advancedSearch/useDropd
 import Icon from "@/components/base/icon";
 
 import Tooltip from "@/components/base/tooltip/Tooltip";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const advancedSearchDropdownContext = "advanced_search_dropdown";
 
@@ -51,9 +51,9 @@ function DropdownUnit({
               src="exclamationmark.svg"
               alt="info"
               data-cy="tooltip-icon"
-              size={2}
+              size="2_5"
               className={styles.tooltipCursor}
-            ></Icon>
+            />
           </Tooltip>
         </div>
       ) : (
@@ -84,13 +84,26 @@ const MAX_VISIBLE_DROPDOWNS = 3;
 export default function DropdownInputs() {
   const { dropdownUnits, updateDropdownSearchIndices, workType } =
     useAdvancedSearchContext();
-  //show all dropdowns or "show more"-button
-  const [showAll, setShowAll] = useState(false);
+  //true if number of dropdownunits are bigger than MAX_VISIBLE_DROPDOWNS
+  const [showAll, setShowAll] = useState(
+    dropdownUnits.length < MAX_VISIBLE_DROPDOWNS
+  );
   useEffect(() => {
-    setShowAll(dropdownUnits.length <= MAX_VISIBLE_DROPDOWNS + 1);
+    setShowAll(dropdownUnits.length < MAX_VISIBLE_DROPDOWNS);
   }, [workType]);
 
-  const dropdownUnitsToRender = showAll
+  //checks if any of the hidden dropdowns has a value
+  const hiddenDropdownsHasValues = useMemo(
+    () =>
+      dropdownUnits
+        .slice(MAX_VISIBLE_DROPDOWNS)
+        .some((unit) => unit.items.some((item) => item.isSelected)),
+    [dropdownUnits]
+  );
+
+  //show all dropdowns if any of the hidden dropdowns has a value or if showAll is true
+  const showAllDropdowns = showAll || hiddenDropdownsHasValues;
+  const dropdownUnitsToRender = showAllDropdowns
     ? dropdownUnits
     : dropdownUnits.slice(0, MAX_VISIBLE_DROPDOWNS);
 
@@ -123,7 +136,7 @@ export default function DropdownInputs() {
               />
             );
           })}
-          {!showAll && (
+          {!showAllDropdowns && (
             <div className={styles.showMoreButtonContainer}>
               <Text
                 dataCy="advanced-search-dropdowns-show-more"
