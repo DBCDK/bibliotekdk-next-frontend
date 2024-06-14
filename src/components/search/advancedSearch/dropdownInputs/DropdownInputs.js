@@ -52,9 +52,8 @@ function DropdownUnit({
               alt="info"
               data-cy="tooltip-icon"
               size="2_5"
-
               className={styles.tooltipCursor}
-            ></Icon>
+            />
           </Tooltip>
         </div>
       ) : (
@@ -85,28 +84,24 @@ const MAX_VISIBLE_DROPDOWNS = 3;
 export default function DropdownInputs() {
   const { dropdownUnits, updateDropdownSearchIndices, workType } =
     useAdvancedSearchContext();
-  //show all dropdowns or "show more"-button
-  const [showAll, setShowAll] = useState(false);
+  //true if number of dropdownunits are bigger than MAX_VISIBLE_DROPDOWNS
+  const [showAll, setShowAll] = useState(
+    dropdownUnits.length < MAX_VISIBLE_DROPDOWNS
+  );
   useEffect(() => {
-
-  const anySelected =  dropdownUnits
-    .slice(MAX_VISIBLE_DROPDOWNS)
-    .some((unit) => unit.items.some((item) => item.isSelected))
-
-
-    setShowAll(dropdownUnits.length <= MAX_VISIBLE_DROPDOWNS + 1 || anySelected);
+    setShowAll(dropdownUnits.length < MAX_VISIBLE_DROPDOWNS);
   }, [workType]);
 
-  // //checks if any of the hidden dropdowns has a valye
-  // const hiddenDropdownsHasValues = useMemo(
-  //   () =>
-  //     dropdownUnits
-  //       .slice(MAX_VISIBLE_DROPDOWNS)
-  //       .some((unit) => unit.items.some((item) => item.isSelected)),
-  //   [dropdownUnits]
-  // );
-  const hiddenDropdownsHasValues = false;
+  //checks if any of the hidden dropdowns has a value
+  const hiddenDropdownsHasValues = useMemo(
+    () =>
+      dropdownUnits
+        .slice(MAX_VISIBLE_DROPDOWNS)
+        .some((unit) => unit.items.some((item) => item.isSelected)),
+    [dropdownUnits]
+  );
 
+  //show all dropdowns as default if any of the hidden dropdowns has a value or if the length is less than MAX_VISIBLE_DROPDOWNS
   const showAllDropdowns = showAll || hiddenDropdownsHasValues;
   const dropdownUnitsToRender = showAllDropdowns
     ? dropdownUnits
