@@ -404,6 +404,7 @@ const MANIFESTATION_7 = {
       url: "https://ereol.combo/langurl",
       origin: "https://ereol.combo",
       type: "RESOURCE",
+      status: "OK",
     },
     {
       __typename: AccessEnum.INFOMEDIA_SERVICE,
@@ -421,6 +422,7 @@ const MANIFESTATION_7 = {
             url: "https://ereol.combo/langurl",
             origin: "https://ereol.combo",
             type: "RESOURCE",
+            status: "OK",
           },
           {
             __typename: AccessEnum.INFOMEDIA_SERVICE,
