@@ -101,7 +101,7 @@ export default function DropdownInputs() {
     [dropdownUnits]
   );
 
-  //show all dropdowns as default if any of the hidden dropdowns has a value or if the length is less than MAX_VISIBLE_DROPDOWNS
+  //show all dropdowns if any of the hidden dropdowns has a value or if showAll is true
   const showAllDropdowns = showAll || hiddenDropdownsHasValues;
   const dropdownUnitsToRender = showAllDropdowns
     ? dropdownUnits
