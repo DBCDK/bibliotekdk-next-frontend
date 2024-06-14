@@ -12,8 +12,7 @@ import { orderHistory } from "@/lib/api/order.fragments";
 import { useEffect, useState } from "react";
 import * as userFragments from "@/lib/api/user.fragments";
 import Skeleton from "@/components/base/skeleton/Skeleton";
-import { getWorkUrlForProfile } from "@/components/profile/utils";
-import { parseDate } from "@/lib/utils";
+import { getWorkUrl, parseDate } from "@/lib/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 const ITEMS_PER_PAGE = 20;
@@ -212,7 +211,6 @@ function TableItem({ order, key }) {
   const isMobile = breakpoint === "xs";
   const { orderId, creationDate, work } = order;
   const title = work?.titles?.main[0];
-  const creator = work?.creators[0]?.display;
   const { day, monthName, isToday, hours, minutes } = parseDate(creationDate);
 
   const time = `Kl. ${hours}.${minutes}`;
@@ -232,7 +230,7 @@ function TableItem({ order, key }) {
           </Text>
           <WorkInfo
             title={title}
-            creator={creator}
+            creators={work?.creators}
             workId={work?.workId}
             date={dateString}
           />
@@ -261,7 +259,7 @@ function TableItem({ order, key }) {
       <td className={styles.activity}>
         <WorkInfo
           title={title}
-          creator={creator}
+          creators={work?.creators}
           workId={work?.workId}
           date={dateString}
         />
@@ -282,9 +280,10 @@ function TableItem({ order, key }) {
  * Used in TableItem. Shows info (like title, author, link to work) for a given order
  * @returns
  */
-function WorkInfo({ title, creator, workId }) {
+function WorkInfo({ title, creators, workId }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs";
+  const creator = creators[0]?.display;
 
   return (
     <>
@@ -296,7 +295,7 @@ function WorkInfo({ title, creator, workId }) {
       <Text type="text2" className={styles.orderWorkInfo}>
         {Translate({ context: "profile", label: "youHaveOrdered" }) + " "}
         <Link
-          href={getWorkUrlForProfile({ workId })}
+          href={getWorkUrl(title, creators, workId)}
           border={{
             top: false,
             bottom: {
