@@ -162,12 +162,13 @@ export function useManifestationAccess({ pids, filter }) {
       }
     );
 
-    // sort & filter - we only want access of type RESOURCE
+    // sort & filter - we only want access of type RESOURCE AND we do not want broken links
     let access = sortAccessArray(flattenedAccess)?.filter(
       (singleAccess) =>
         singleAccess?.__typename !== AccessEnum.ACCESS_URL ||
         (singleAccess?.__typename === AccessEnum.ACCESS_URL &&
-          singleAccess?.type === "RESOURCE")
+          singleAccess?.type === "RESOURCE" &&
+          singleAccess?.status === "OK")
     );
 
     const accessMap = {};
