@@ -390,6 +390,10 @@
       }
     },
     "complex-search-facets": {
+      "label-publicationyear": {
+        "da": "Udgivelsesår",
+        "en": "Publicationyear"
+      },
       "label-lix": {
         "da": "Lix-tal",
         "en": "Lix-number"

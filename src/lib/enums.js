@@ -20,6 +20,7 @@ export const AdvFacetsTypeEnum = Object.freeze({
   LIX: "lix",
   LET: "let",
   PRIMARYTARGET: "primarytarget",
+  PUBLICATIONYEAR: "publicationyear",
   // CATALOGUECODE: "cataloguecode",
   // CONTRIBUTORFUNCTION: "contributorfunction",
   // CREATORCONTRIBUTOR: "creatorcontributor",

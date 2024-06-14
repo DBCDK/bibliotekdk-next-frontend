@@ -75,7 +75,7 @@ export function getQuickFiltersQuery(quickFilters) {
 
 function mapFacetIndex(facetIndex) {
   const INDEXPREFIX = "phrase.";
-  const NO_PREFIX = ["lix", "let"];
+  const NO_PREFIX = ["lix", "let", "publicationyear"];
   if (NO_PREFIX.includes(facetIndex)) {
     return facetIndex;
   }
