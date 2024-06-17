@@ -33,10 +33,14 @@ export default function useLoanerInfo() {
       userName: user?.name,
       userMail: user?.mail,
     };
-
     // Merge user parameters from the session data.
     Object.entries(session?.userParameters || {}).forEach(
-      ([key, val]) => (userParameters[key] = val)
+      // do not overwrite with empty values
+      ([key, val]) => {
+        if (val) {
+          userParameters[key] = val;
+        }
+      }
     );
 
     // Remove user parameters with no value
