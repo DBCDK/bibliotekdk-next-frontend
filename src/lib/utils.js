@@ -23,6 +23,10 @@ export function isbnFromQuery(ccl) {
   return groups?.[1] || null;
 }
 
+export function parseLinkme(linkme) {
+  return linkme;
+}
+
 /**
  * Encode string
  * Get rid of diacritics and stuff
