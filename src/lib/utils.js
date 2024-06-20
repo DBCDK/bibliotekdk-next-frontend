@@ -2,11 +2,8 @@ import getConfig from "next/config";
 import Translate from "@/components/base/translate";
 import uniq from "lodash/uniq";
 import animations from "@/components/base/animation/animations.module.css";
-import { matchHas } from "next/dist/shared/lib/router/utils/prepare-destination";
-import {
-  fieldsToAdvancedUrl,
-  getAdvancedSearchField,
-} from "@/components/search/advancedSearch/utils";
+
+import { getAdvancedSearchField } from "@/components/search/advancedSearch/utils";
 import { LogicalOperatorsEnum } from "@/components/search/enums";
 
 const APP_URL =
