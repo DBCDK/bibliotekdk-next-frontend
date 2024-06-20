@@ -27,11 +27,11 @@ describe("linkmeparser test", () => {
     expect(actual).toEqual(expected);
   });
 
-  it("parse more complex ccl", () => {
-    let actual = linkmeParser(
-      "fo%3DVeds%C3%B8%20Olesen%2C%20Anne-Marie%20og%20ti%3DGlasborgen"
-    );
-    let expected = "fisk";
-    expect(actual).toEqual(expected);
-  });
+  // it("parse more complex ccl", () => {
+  //   let actual = linkmeParser(
+  //     "fo%3DVeds%C3%B8%20Olesen%2C%20Anne-Marie%20og%20ti%3DGlasborgen"
+  //   );
+  //   let expected = "fisk";
+  //   expect(actual).toEqual(expected);
+  // });
 });

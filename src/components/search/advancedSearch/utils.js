@@ -7,8 +7,6 @@ import {
 import { NOTA_ENUM } from "@/components/search/advancedSearch/advancedSearchHelpers/dummy__default_advanced_search_fields";
 
 function getInputFieldsQueryToCql(inputFields) {
-  console.log(inputFields, "INNNPPPPPPPPPPUUUUUUUUUUUUUUUUUUUUUUTFIELD");
-
   return inputFields
     ?.filter((item) => !isEmpty(item.value) && !isEmpty(item.searchIndex))
     .map((item, index) => {

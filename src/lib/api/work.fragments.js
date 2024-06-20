@@ -876,8 +876,6 @@ export function overviewWork({ workId }) {
 }
 
 export function pidToWorkId({ pid }) {
-  console.log(pid, "FRAGMENTSSSSS PIIIIIIIIIIIIIIIIIIIIIIIIID");
-
   if (!pid) {
     return null;
   }
@@ -927,8 +925,6 @@ export function faustToWork({ faust }) {
 }
 
 export function oclcToWorkId({ oclc }) {
-  console.log(oclc, "OCLCCCC");
-
   if (!oclc) {
     return null;
   }
