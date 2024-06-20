@@ -10,10 +10,7 @@ function getInputFieldsQueryToCql(inputFields) {
   console.log(inputFields, "INNNPPPPPPPPPPUUUUUUUUUUUUUUUUUUUUUUTFIELD");
 
   return inputFields
-    ?.filter(
-      (item) =>
-        item.length > 0 && !isEmpty(item.value) && !isEmpty(item.searchIndex)
-    )
+    ?.filter((item) => !isEmpty(item.value) && !isEmpty(item.searchIndex))
     .map((item, index) => {
       //first item should not have a prefixLogicalOperator
       const prefix =
