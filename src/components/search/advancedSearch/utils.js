@@ -7,8 +7,13 @@ import {
 import { NOTA_ENUM } from "@/components/search/advancedSearch/advancedSearchHelpers/dummy__default_advanced_search_fields";
 
 function getInputFieldsQueryToCql(inputFields) {
+  console.log(inputFields, "INNNPPPPPPPPPPUUUUUUUUUUUUUUUUUUUUUUTFIELD");
+
   return inputFields
-    ?.filter((item) => !isEmpty(item.value) && !isEmpty(item.searchIndex))
+    ?.filter(
+      (item) =>
+        item.length > 0 && !isEmpty(item.value) && !isEmpty(item.searchIndex)
+    )
     .map((item, index) => {
       //first item should not have a prefixLogicalOperator
       const prefix =
@@ -234,9 +239,39 @@ function typeToFieldindex(type) {
       return "term.subject";
     case "isbn":
       return "term.isbn";
+    case "title":
+      return "term.title";
     default:
       return "term.default";
   }
+}
+
+/**
+ * Get a single input field
+ * @param type
+ * @param value
+ * @returns {{prefixLogicalOperator: null, searchIndex: string, value}}
+ */
+export function getAdvancedSearchField({ type, value, operator = null }) {
+  return {
+    value: value,
+    prefixLogicalOperator: operator,
+    searchIndex: typeToFieldindex(type),
+  };
+}
+
+/**
+ * Convert one or more inputfields to a query string
+ * @param inputfields
+ */
+export function fieldsToAdvancedUrl({ inputFields }) {
+  const urlObject = {
+    inputFields: Array.isArray(inputFields) ? inputFields : [inputFields],
+  };
+
+  return `/avanceret?fieldSearch=${encodeURIComponent(
+    JSON.stringify(urlObject)
+  )}`;
 }
 
 /**
@@ -246,17 +281,6 @@ function typeToFieldindex(type) {
  * @returns {string}
  */
 export function getAdvancedUrl({ type, value }) {
-  const inputField = {
-    value: value,
-    prefixLogicalOperator: null,
-    searchIndex: typeToFieldindex(type),
-  };
-
-  const urlObject = {
-    inputFields: [inputField],
-  };
-
-  return `/avanceret?fieldSearch=${encodeURIComponent(
-    JSON.stringify(urlObject)
-  )}`;
+  const inputField = getAdvancedSearchField({ type, value });
+  return fieldsToAdvancedUrl({ inputFields: inputField });
 }

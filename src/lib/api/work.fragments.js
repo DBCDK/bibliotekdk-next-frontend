@@ -876,6 +876,8 @@ export function overviewWork({ workId }) {
 }
 
 export function pidToWorkId({ pid }) {
+  console.log(pid, "FRAGMENTSSSSS PIIIIIIIIIIIIIIIIIIIIIIIIID");
+
   if (!pid) {
     return null;
   }
@@ -925,6 +927,8 @@ export function faustToWork({ faust }) {
 }
 
 export function oclcToWorkId({ oclc }) {
+  console.log(oclc, "OCLCCCC");
+
   if (!oclc) {
     return null;
   }
@@ -936,13 +940,15 @@ export function oclcToWorkId({ oclc }) {
         titles {
           main
         }
-        creators{
-          display
+        creators {
+          ...creatorsFragment
         }
         workId
       }
       monitor(name: "bibdknext_oclc_to_workid")
-    }`,
+    }
+    ${creatorsFragment}
+    `,
     variables: { oclc },
     slowThreshold: 3000,
   };

@@ -9,7 +9,12 @@ import { getServerSession } from "@dbcdk/login-nextjs/server";
  * @param {*} customQueryVariables
  * @returns
  */
-export async function fetchAll(queries, context, customQueryVariables) {
+export async function fetchAll(
+  queries,
+  context,
+  customQueryVariables,
+  force = false
+) {
   // If we are in a browser, we return immidiately
   // This prevents a roundtrip to the server
   // and will make page changes feel faster
@@ -32,7 +37,7 @@ export async function fetchAll(queries, context, customQueryVariables) {
 
   // If user is a bot, we care about SSR, and fetch data now
   // Otherwise, we show the page as fast as we can with skeleton elements
-  if (isBot) {
+  if (isBot || force) {
     (
       await Promise.all(
         queries.map(async (queryFunc) => {
