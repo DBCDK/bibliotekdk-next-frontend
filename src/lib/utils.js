@@ -2,6 +2,12 @@ import getConfig from "next/config";
 import Translate from "@/components/base/translate";
 import uniq from "lodash/uniq";
 import animations from "@/components/base/animation/animations.module.css";
+import { matchHas } from "next/dist/shared/lib/router/utils/prepare-destination";
+import {
+  fieldsToAdvancedUrl,
+  getAdvancedSearchField,
+} from "@/components/search/advancedSearch/utils";
+import { LogicalOperatorsEnum } from "@/components/search/enums";
 
 const APP_URL =
   getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
@@ -17,10 +23,70 @@ const APP_URL =
  * @returns {isbn|null}
  */
 export function isbnFromQuery(ccl) {
+  if (!ccl) {
+    return null;
+  }
   // ccl should start with ccl=is - and end with a number (or -)
   const regexp = /^is=([0-9\-\/]*)$/;
   const groups = ccl.match(regexp);
   return groups?.[1] || null;
+}
+
+export function oclcFromQuery(ccl) {
+  if (!ccl) {
+    return null;
+  }
+  if (ccl?.startsWith("wcx=")) {
+    return ccl.replace("wcx=", "");
+  }
+  return null;
+}
+
+/**
+ * Parse the query from linkme page - the query is a mix: ti, fo, em, tekst.
+ * We only handle logical operator AND ..
+ * @param query {}
+ *  query object from ctx.query (see pages/linkme.js)
+ */
+export function parseLinkmeQuery(query) {
+  const mappings = {
+    fo: "creator",
+    em: "subject",
+    ti: "title",
+    tekst: "tekst",
+  };
+  const inputFields = [];
+
+  let operator;
+  for (const [key, val] of Object.entries(query)) {
+    // only handle known keys
+    if (Object.keys(mappings).includes(key)) {
+      operator = inputFields.length < 1 ? null : LogicalOperatorsEnum.AND;
+      // val may be an array in ctx.query
+      if (Array.isArray(val)) {
+        val.forEach((v) => {
+          operator = inputFields.length < 1 ? null : LogicalOperatorsEnum.AND;
+          inputFields.push(
+            getAdvancedSearchField({
+              type: mappings[key],
+              value: v,
+              operator: operator,
+            })
+          );
+        });
+      } else {
+        inputFields.push(
+          getAdvancedSearchField({
+            type: mappings[key],
+            value: val,
+            operator: operator,
+          })
+        );
+      }
+    }
+  }
+
+  return inputFields;
 }
 
 /**
