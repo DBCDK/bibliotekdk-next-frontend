@@ -15,11 +15,7 @@ import {
   oclcToWorkId,
   faustToWork,
 } from "@/lib/api/work.fragments";
-import {
-  encodeTitleCreator,
-  getCanonicalWorkUrl,
-  parseLinkmeQuery,
-} from "@/lib/utils";
+import { encodeTitleCreator, getCanonicalWorkUrl } from "@/lib/utils";
 import { useData } from "@/lib/api/api";
 import Custom404 from "@/pages/404";
 import { isbnFromQuery } from "@/lib/utils";
@@ -55,7 +51,6 @@ function LinkmePhp() {
   const router = useRouter();
   const isOclc = router?.query?.["ref"] === "worldcat";
 
-  // handle rec.id, faust, oclc
   const { data, isLoading } = useData(
     router?.query?.["rec.id"]
       ? pidToWorkId({ pid: router.query["rec.id"] })
@@ -116,71 +111,56 @@ export default LinkmePhp;
  *
  */
 LinkmePhp.getInitialProps = async (ctx) => {
-  // this is the old linkme page - queries comes in the form linkme.php? ...
-  // the new linkme page handles a given set of parameters in query - we need to preparse
-  // the old queries and pass them to the new linkme page
-  // throw "fisk";
+  const pid = ctx.query["rec.id"];
+  const serverQueries = await fetchAll([pidToWorkId], ctx, {
+    pid: pid,
+  });
 
-  const newQuery = parseLinkmeQuery(ctx.query);
+  const workId = Object.values(serverQueries.initialData)?.[0]?.data?.work
+    ?.workId;
 
-  ctx.res.writeHead(301, { location: "/linkme", query: newQuery });
-  ctx.res.end();
-  return;
+  const title = Object.values(serverQueries.initialData)?.[0]?.data?.work
+    ?.titles?.main?.[0];
 
-  // const pid = ctx.query["rec.id"];
-  // // @TODO add some server queries (and variables) ?? oclcToWorkId, faustToWork
-  // const serverQueries = await fetchAll([pidToWorkId], ctx, {
-  //   pid: pid,
-  // });
-  //
-  // const workId = Object.values(serverQueries.initialData)?.[0]?.data?.work
-  //   ?.workId;
-  //
-  // const title = Object.values(serverQueries.initialData)?.[0]?.data?.work
-  //   ?.titles?.main?.[0];
-  //
-  // const creators = Object.values(serverQueries.initialData)?.[0]?.data?.work
-  //   ?.creators;
-  //
-  // const title_author = encodeTitleCreator(title, creators);
-  //
-  // console.log(serverQueries.initialData, "SERVERQUERIS");
-  //
-  // // redirect serverside
-  // // if this is a bot title and author and workid has been fetched - redirect
-  // // to appropiate page. We use 301 (moved permanently) status code
-  // if (title_author && workId && ctx.res) {
-  //   const path = `/materiale/${title_author}/${workId}#${ctx.query["rec.id"]}`;
-  //   ctx.res.writeHead(301, { Location: path });
-  //   ctx.res.end();
-  //   return;
-  // } else {
-  //   // we do some redirects here - check for cql, ccl, ccl=is (isbn), worldcat links and handle some of it - if
-  //   // we give up we redirect to old.bibliotek.dk
-  //   const hasCql = !!ctx.query["cql"];
-  //   const hasCcl = !!ctx.query["ccl"];
-  //   const isOclc = ctx.query["ref"] === "worldcat";
-  //   const isIsbn = ctx.query["ccl"]?.includes("is=");
-  //
-  //   if (isIsbn) {
-  //     const isbnnumber = isbnFromQuery(ctx.query["ccl"]);
-  //     if (isbnnumber) {
-  //       const path = getAdvancedUrl({ type: "isbn", value: isbnnumber });
-  //       ctx.res.writeHead(301, { Location: path });
-  //       ctx.res.end();
-  //       return;
-  //     }
-  //   }
-  //
-  //   const basePath = "https://old.bibliotek.dk/";
-  //   if (!isOclc && (hasCql || hasCcl)) {
-  //     // we have no data - if ccl or cql is given we throw it back at old.bibliotek
-  //     const path = `${basePath}${ctx.req["url"]}`;
-  //     ctx.res.writeHead(301, { Location: path });
-  //     ctx.res.end();
-  //     return;
-  //   }
-  // }
-  //
-  // return serverQueries;
+  const creators = Object.values(serverQueries.initialData)?.[0]?.data?.work
+    ?.creators;
+
+  const title_author = encodeTitleCreator(title, creators);
+  // redirect serverside
+  // if this is a bot title and author and workid has been fetched - redirect
+  // to appropiate page. We use 301 (moved permanently) status code
+  if (title_author && workId && ctx.res) {
+    const path = `/materiale/${title_author}/${workId}#${ctx.query["rec.id"]}`;
+    ctx.res.writeHead(301, { Location: path });
+    ctx.res.end();
+    return;
+  } else {
+    // we do some redirects here - check for cql, ccl, ccl=is (isbn), worldcat links and handle some of it - if
+    // we give up we redirect to old.bibliotek.dk
+    const hasCql = !!ctx.query["cql"];
+    const hasCcl = !!ctx.query["ccl"];
+    const isOclc = ctx.query["ref"] === "worldcat";
+    const isIsbn = ctx.query["ccl"]?.includes("is=");
+
+    if (isIsbn) {
+      const isbnnumber = isbnFromQuery(ctx.query["ccl"]);
+      if (isbnnumber) {
+        const path = getAdvancedUrl({ type: "isbn", value: isbnnumber });
+        ctx.res.writeHead(301, { Location: path });
+        ctx.res.end();
+        return;
+      }
+    }
+
+    const basePath = "https://old.bibliotek.dk/";
+    if (!isOclc && (hasCql || hasCcl)) {
+      // we have no data - if ccl or cql is given we throw it back at old.bibliotek
+      const path = `${basePath}${ctx.req["url"]}`;
+      ctx.res.writeHead(301, { Location: path });
+      ctx.res.end();
+      return;
+    }
+  }
+
+  return serverQueries;
 };

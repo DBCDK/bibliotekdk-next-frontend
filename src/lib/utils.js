@@ -43,54 +43,22 @@ export function oclcFromQuery(ccl) {
 }
 
 /**
- * forfatter,titel,emne og fritekst - can be combined :)
- * @param ccl
- */
-// export function (ccl) {}
-
-/**
- * Find out what kind of linkme syntax we are handling
- * cql={} OR ccl = {} OR rec.id={} OR srollToEdition - take out the part to parse
- * and pass it to parseLinkme function
- * @param linkme
- */
-export function preParsLinkme(linkme) {
-  // @TODO .. should we return a type ? like type:cql ?
-
-  let regexp = /^ccl=|^cql=/;
-  if (linkme.match(regexp)) {
-    return { type: "ccl", linkme: decodeURIComponent(linkme.substring(4)) };
-  }
-  regexp = /^rec.id=/;
-  if (linkme.match(regexp)) {
-    return { type: "recid", linkme: decodeURIComponent(linkme.substring(7)) };
-  }
-
-  return { type: "straight", linkme: decodeURIComponent(linkme) };
-}
-
-/**
  * Parse the query from linkme page - the query is a mix: ti, fo, em, tekst.
  * We only handle logical operator AND ..
  * @param query {}
- *  query object from ctx.query
+ *  query object from ctx.query (see pages/linkme.js)
  */
 export function parseLinkmeQuery(query) {
-  console.log(query, "QUERY");
-
   const mappings = {
     fo: "creator",
     em: "subject",
     ti: "title",
     tekst: "tekst",
   };
-  // const parts = query.split("&");
-
-  // console.log(parts, "PPPPPAAAAAAAAAAAAAAAAAAAAAAAAAAARTS");
   const inputFields = [];
-  // let single;
   let operator;
   for (const [key, val] of Object.entries(query)) {
+    // only handle known keys
     if (Object.keys(mappings).includes(key)) {
       operator = inputFields.length < 1 ? null : LogicalOperatorsEnum.AND;
       inputFields.push(
@@ -104,44 +72,6 @@ export function parseLinkmeQuery(query) {
   }
 
   return inputFields;
-}
-
-/**
- * Kind of preparser .. there are a bunch of links around the world and we want to convert them
- * to the syntax we accept.
- * eg. linkme.php?
- * @param linkme
- *  comes in the form cql={} OR ccl = {} OR rec.id={} OR srollToEdition
- * @returns {*}
- */
-export function parseLinkme(fullLinkme) {
-  const { type, linkme } = preParsLinkme(fullLinkme);
-
-  console.log(linkme, "LIIIIIIIIIIIIIIIIINKKKKKKKKKKKKKME");
-  // Faust-nr. is 8 or 9 digits - this one handles numbers with no key .. like: ?12345678:
-  let regexp = /^(\d{8}|\d{9})$/;
-  if (linkme.match(regexp)) {
-    return `faust=${linkme}`;
-  }
-  // isbn numbers - 10 or 13 digits
-  regexp = /^(\d{10}|\d{13})$/;
-  if (linkme.match(regexp)) {
-    return `isbn=${linkme}`;
-  }
-
-  // @TODO howabout urlencoded strings ??
-
-  // rec.id (pid) .. eg 870970-basis:12345678
-  regexp = /^([0-9]+-[A-Za-z]+:[0-9]+)$/i;
-  if (linkme.match(regexp)) {
-    return `rec.id=${linkme}`;
-  }
-
-  // @TODO scrollToEdition ??
-
-  // @TODO linkme.php?scrollToEdition=true&rec.id=870970-basis%3A25657365 -- handle 'scrollToEdition' :)
-
-  return parseLinkmeQuery(linkme);
 }
 
 /**
