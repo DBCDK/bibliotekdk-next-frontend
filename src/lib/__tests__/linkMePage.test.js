@@ -51,4 +51,21 @@ test("parseLinkmeQuery", () => {
 
   let actual = parseLinkmeQuery(query);
   expect(actual).toEqual(expected);
+
+  // test an array of query values
+  query = { tekst: ["hest", "fisk"] };
+  expected = [
+    {
+      value: "hest",
+      prefixLogicalOperator: null,
+      searchIndex: "term.default",
+    },
+    {
+      value: "fisk",
+      prefixLogicalOperator: "AND",
+      searchIndex: "term.default",
+    },
+  ];
+  actual = parseLinkmeQuery(query);
+  expect(actual).toEqual(expected);
 });

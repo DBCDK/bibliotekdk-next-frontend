@@ -56,18 +56,33 @@ export function parseLinkmeQuery(query) {
     tekst: "tekst",
   };
   const inputFields = [];
+
   let operator;
   for (const [key, val] of Object.entries(query)) {
     // only handle known keys
     if (Object.keys(mappings).includes(key)) {
       operator = inputFields.length < 1 ? null : LogicalOperatorsEnum.AND;
-      inputFields.push(
-        getAdvancedSearchField({
-          type: mappings[key],
-          value: val,
-          operator: operator,
-        })
-      );
+      // val may be an array in ctx.query
+      if (Array.isArray(val)) {
+        val.forEach((v) => {
+          operator = inputFields.length < 1 ? null : LogicalOperatorsEnum.AND;
+          inputFields.push(
+            getAdvancedSearchField({
+              type: mappings[key],
+              value: v,
+              operator: operator,
+            })
+          );
+        });
+      } else {
+        inputFields.push(
+          getAdvancedSearchField({
+            type: mappings[key],
+            value: val,
+            operator: operator,
+          })
+        );
+      }
     }
   }
 
