@@ -2076,6 +2076,10 @@
       "is-ordered": {
         "da": "%s materialer er bestilt.",
         "en": "%s materials are ordered"
+      },
+      "placeholder-select-mobile-library": {
+        "da": "Vælg busholdeplads",
+        "en": "Select bus stop"
       }
     },
     "reviews": {
@@ -3845,6 +3849,10 @@
       "action-missing-pincode": {
         "da": "Du mangler at angive en pinkode",
         "en": "LABEL: Mangler oversættelse!"
+      },
+      "action-missing-mobile-library": {
+        "da": "Du mangler at angive en busholdeplads",
+        "en": "You need to specify a bus stop"
       },
       "approve-loaner-info": {
         "da": "Godkend låneroplysninger",

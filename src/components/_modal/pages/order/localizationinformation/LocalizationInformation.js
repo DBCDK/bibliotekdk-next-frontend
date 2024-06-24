@@ -1,3 +1,4 @@
+import Dropdown from "react-bootstrap/Dropdown";
 import styles from "./LocalizationInformation.module.css";
 import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
@@ -9,12 +10,14 @@ import { IconLink } from "@/components/base/iconlink/IconLink";
 import ChevronRight from "@/public/icons/chevron_right.svg";
 import cx from "classnames";
 import {
+  useMobileLibraryLocations,
   useMultiOrderValidation,
   usePickupBranchId,
 } from "@/components/hooks/order";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import { useBranchInfo } from "@/components/hooks/useBranchInfo";
+import SimpleDropdown from "@/components/base/simpledropdown/SimpleDropdown";
 
 export function LocalizationInformation({
   availableAsDigitalCopy = false,
@@ -25,6 +28,9 @@ export function LocalizationInformation({
   pickupBranch,
   onClick,
   availableAsPhysicalCopy,
+  mobileLibraryLocations,
+  mobileLibrary,
+  setMobileLibrary,
 }) {
   if (availableAsDigitalCopy) {
     return null;
@@ -111,6 +117,18 @@ export function LocalizationInformation({
             </Text>
           </div>
         )}
+        {mobileLibraryLocations?.length > 0 && (
+          <SimpleDropdown
+            placeholder={Translate({
+              context: "bookmark-order",
+              label: "placeholder-select-mobile-library",
+            })}
+            options={pickupBranch?.mobileLibraryLocations}
+            selected={mobileLibrary}
+            onSelect={setMobileLibrary}
+            className={styles.mobilelocations}
+          />
+        )}
       </div>
     </>
   );
@@ -140,6 +158,9 @@ export default function Wrap({ orders }) {
   const { branchId } = usePickupBranchId();
   const pickupBranch = useBranchInfo({ branchId });
 
+  const { mobileLibraryLocations, setMobileLibrary, mobileLibrary } =
+    useMobileLibraryLocations();
+
   return (
     <>
       <LocalizationInformation
@@ -153,6 +174,9 @@ export default function Wrap({ orders }) {
         isAuthenticated={isAuthenticated}
         isLoadingPolicy={isLoadingValidation}
         isLoadingBranches={pickupBranch?.isLoading}
+        mobileLibraryLocations={mobileLibraryLocations}
+        setMobileLibrary={setMobileLibrary}
+        mobileLibrary={mobileLibrary}
         onClick={() => {
           !pickupBranch?.isLoading &&
             modal.push("pickup", {
