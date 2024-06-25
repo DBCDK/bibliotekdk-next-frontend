@@ -44,7 +44,6 @@ export default function SimpleDropdown({
               })}
               onClick={() => {
                 onSelect?.(elem);
-                // setIsOpen(false); // Close the dropdown when an item is selected
               }}
             >
               <Text tag="span" type="text3">
