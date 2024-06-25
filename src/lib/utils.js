@@ -3,7 +3,10 @@ import Translate from "@/components/base/translate";
 import uniq from "lodash/uniq";
 import animations from "@/components/base/animation/animations.module.css";
 
-import { getAdvancedSearchField } from "@/components/search/advancedSearch/utils";
+import {
+  fieldsToAdvancedUrl,
+  getAdvancedSearchField,
+} from "@/components/search/advancedSearch/utils";
 import { LogicalOperatorsEnum } from "@/components/search/enums";
 
 const APP_URL =
@@ -29,6 +32,22 @@ export function isbnFromQuery(ccl) {
   return groups?.[1] || null;
 }
 
+/**
+ * check if given ccl (or cql) is a 'hidden' rec.id - if so return it as is
+ * @param ccl
+ * @returns {*|null}
+ */
+export function recIdFromQuery(ccl) {
+  // look for a hidden rec.id eg. rec.id=123456-basis:12345678
+  const regexp = /^rec.id=([0-9]+-[A-Za-z]+:[0-9]+)$/i;
+  return ccl.trim().match(regexp) ? ccl : null;
+}
+
+/**
+ * Get oclc number. Query comes in the form ccl=wcx=474942501
+ * @param ccl
+ * @returns {*|null}
+ */
 export function oclcFromQuery(ccl) {
   if (!ccl) {
     return null;
@@ -40,6 +59,90 @@ export function oclcFromQuery(ccl) {
 }
 
 /**
+ * Recognize a faustnumber. Some linkme queries comes in the form /linkme.php?cql=8787345331 - that is
+ * we do NOT know what to look for .. so we check if it might be a faust
+ * @param ccl
+ */
+export function faustFromQuery(ccl) {
+  // look for 8 or 9 digits - probably a faust
+  const regexp = /^(\d{8}|\d{9})$/;
+  return ccl.match(regexp) ? ccl : null;
+}
+
+/**
+ * Some of the linkme queries comes with an OR clause. - like: dkcclterm.is=9788726510478 OR dkcclterm.is=8726510472
+ * if so - grab the first, skip the rest
+ *
+ * also if query is cql we only use the first part - skip part AFTER operator
+ *
+ * @param value
+ */
+export function checkQueryValue(value) {
+  const parts = value.split(/ OR | or | eller | ELLER | and | AND /);
+  // we also need to replace eg. escapecharacters, quotes .. and probably more
+  return parts[0].replace(/\\|/g, "").replace(/"/g, "");
+}
+
+/**
+ * Parse the ccl OR cql part of the query to linkme.php into something
+ * that new linkme page can understand
+ *
+ * this one is dumb -> /linkme.php?cql=rec.id=%2803205215%20or%20810015-katalog%3A00194810%29 .. todo handle rec.id with logical operator
+ *
+ * @param cclOrCql
+ * @returns null|string
+ *   hopefully a path for the linkme page to understand OR a path to advanced search
+ *   if it fail
+ */
+export function parseLinkme(cclOrCql) {
+  if (!cclOrCql) {
+    return null;
+  }
+  const decoded = decodeURIComponent(cclOrCql);
+  // check for a faust
+  const faust = faustFromQuery(cclOrCql);
+  if (faust) {
+    return `/linkme?faust=${faust}`;
+  }
+  // sometimes rec.id is behind the cclOrCql parameter
+  // like /linkme.php?cql=rec.id=810015-katalog%3A00194810%29
+  const params = recIdFromQuery(cclOrCql);
+  if (params) {
+    return `/linkme?${params}`;
+  }
+
+  // rest are searches - make an url to advanced search :)
+  // split string on ' og '
+  const parts = decoded.split(" og ");
+  // query comes like (.*)=(.*) - that is a key (any character) and a value (any character)
+  const reqexp = /(.*)=(.*)/iu;
+  // we collect the queries in an array
+  const queries = [];
+  let matches;
+  const query = {};
+  // make an object to parse
+  parts.forEach((part) => {
+    matches = checkQueryValue(part).match(reqexp);
+    if (matches) {
+      let fisk = matches[1];
+      let val = matches[2];
+      query[fisk] = val;
+
+      queries.push({ query });
+    }
+  });
+  // the parseLinkmeQuery function sorts away all not supported fields
+  const queryFields = parseLinkmeQuery(query);
+  if (queryFields.length < 1) {
+    return null;
+  }
+  // get a path to redirect to
+  const path = fieldsToAdvancedUrl({ inputFields: queryFields });
+
+  return path;
+}
+
+/**
  * Parse the query from linkme page - the query is a mix: ti, fo, em, tekst.
  * We only handle logical operator AND ..
  * @param query {}
@@ -48,9 +151,17 @@ export function oclcFromQuery(ccl) {
 export function parseLinkmeQuery(query) {
   const mappings = {
     fo: "creator",
+    forfatter: "creator",
     em: "subject",
+    emne: "subject",
+    "dkcclterm.ht": "subject",
     ti: "title",
+    titel: "title",
     tekst: "tekst",
+    fritekst: "tekst",
+    is: "isbn",
+    isbn: "isbn",
+    "dkcclterm.is": "isbn",
   };
   const inputFields = [];
 
@@ -59,7 +170,7 @@ export function parseLinkmeQuery(query) {
     // only handle known keys
     if (Object.keys(mappings).includes(key)) {
       operator = inputFields.length < 1 ? null : LogicalOperatorsEnum.AND;
-      // val may be an array in ctx.query
+      // val may be an array in ctx.query ({fisk:[hest,hund]})
       if (Array.isArray(val)) {
         val.forEach((v) => {
           operator = inputFields.length < 1 ? null : LogicalOperatorsEnum.AND;
