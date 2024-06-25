@@ -1,5 +1,5 @@
 import { checkQuery } from "@/pages/linkme.php";
-import { oclcFromQuery, parseLinkmeQuery } from "@/lib/utils";
+import { oclcFromQuery, parseLinkme, parseLinkmeQuery } from "@/lib/utils";
 
 test("checkQuery", () => {
   let query = { "rec.id": "123" };
@@ -31,6 +31,12 @@ test("test oclc parse", () => {
   query = "1234";
   expected = null;
   actual = oclcFromQuery(query);
+  expect(actual).toEqual(expected);
+});
+
+test("parseLinkme", () => {
+  let actual = parseLinkme("rec.id=810015-katalog:00194810");
+  let expected = "/linkme?rec.id=810015-katalog:00194810";
   expect(actual).toEqual(expected);
 });
 

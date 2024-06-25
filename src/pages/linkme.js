@@ -81,7 +81,8 @@ Linkme.getInitialProps = async (ctx) => {
   /**************** END WORKS ****************/
 
   // ISBN is a search
-  const isbn = isbnFromQuery(ctx.query["ccl"]) || ctx.query["isbn"];
+  const isbn =
+    isbnFromQuery(ctx.query["ccl"]) || ctx.query["isbn"] || ctx.query["is"];
   if (isbn) {
     const path = getAdvancedUrl({ type: "isbn", value: isbn });
     ctx.res.writeHead(301, { Location: path });
