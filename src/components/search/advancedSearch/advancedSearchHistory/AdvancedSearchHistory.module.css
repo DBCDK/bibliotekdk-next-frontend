@@ -24,6 +24,7 @@
   align-items: center;
   padding: var(--pt1) var(--pt1) 0 0;
 }
+
 .filterLabel {
   margin-right: var(--pt1);
 }
@@ -69,12 +70,17 @@
 }
 
 @media (min-width: 992px) {
-  grid-template-columns: var(--pt2) 1fr 10fr 1fr;
+  .grid {
+    grid-template-columns: var(--pt2) 1fr 10fr 1fr;
+  }
 }
 
 .checkbox {
   grid-area: checkbox;
   top: 5px;
+}
+.selectAllCheckbox {
+  position: initial;
 }
 
 .timestamp {
@@ -159,44 +165,6 @@
 .action {
   cursor: pointer;
 }
-/* 
-.navigationButtons {
-  display: flex;
-  gap: var(--pt5);
-  margin-bottom: var(--pt3);
-}
-
-.actionheader {
-  margin-bottom: var(--pt4);
-  display: flex;
-  gap: var(--pt3);
-  justify-content: flex-start;
-  margin-bottom: var(--pt4);
-}
-
-@media (min-width: 576px) {
-  .actionheader {
-    padding-left: var(--pt1);
-  }
-}
-@media (max-width: 576px) {
-  .navigationButtons {
-    padding-left: var(--pt1);
-
-    border-bottom: 1px solid var(--iron);
-    margin-left: var(--pt2);
-    margin-right: var(--pt2);
-    margin-bottom: 0;
-  }
-  .navigationButtons a {
-    padding-bottom: var(--pt2);
-  }
-  .actionheader {
-    padding-left: var(--pt2);
-    justify-content: flex-end;
-    margin-bottom: var(--pt2);
-  }
-} */
 
 .navigationButtons {
   display: flex;
@@ -209,7 +177,7 @@
   display: flex;
   gap: var(--pt3);
   justify-content: flex-start;
-  margin-bottom: var(--pt4);
+  align-items: center;
 }
 
 @media (min-width: 576px) {
@@ -220,19 +188,14 @@
 
 .navigationButtons {
   padding-left: var(--pt1);
-
   border-bottom: 1px solid var(--iron);
   margin-left: var(--pt2);
   margin-right: var(--pt2);
   margin-bottom: 0;
 }
+
 .navigationButtons a {
   padding-bottom: var(--pt2);
-}
-.actionheader {
-  padding-left: var(--pt2);
-  justify-content: flex-end;
-  margin-bottom: var(--pt2);
 }
 
 @media (min-width: 576px) {
@@ -243,9 +206,11 @@
     margin-right: initial;
     margin-bottom: var(--pt5);
   }
+
   .navigationButtons a {
     padding-bottom: initial;
   }
+
   .actionheader {
     padding-left: var(--pt1);
     justify-content: flex-start;
@@ -253,6 +218,14 @@
   }
 }
 
+.saveSearchContainer {
+  display: flex;
+  gap: var(--pt05);
+  cursor: pointer;
+  grid-area: save_search;
+  justify-self: end;
+  margin-right: var(--pt2);
+}
 .saveSearchIcon {
   cursor: pointer;
   grid-area: save_search;

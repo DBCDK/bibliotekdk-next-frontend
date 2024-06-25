@@ -117,10 +117,6 @@
   column-gap: var(--pt2);
 }
 
-.accordionContainer a {
-  margin: 0;
-}
-
 .savedItemRow {
   display: grid;
   cursor: pointer;
