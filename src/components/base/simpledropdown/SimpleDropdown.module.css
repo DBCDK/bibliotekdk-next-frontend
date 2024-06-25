@@ -13,6 +13,9 @@
   white-space: nowrap;
 }
 
+.dropdownitem:last-child {
+  border-bottom: 0px;
+}
 .dropdownitem a {
   text-decoration: none;
 }
@@ -38,6 +41,9 @@
   /* bootstrap default styles override */
   border-radius: 0;
   padding: 0;
+  max-height: 313px;
+  overflow-y: auto; /* Makes the dropdown scrollable */
+  overflow-x: hidden; /* Hides any horizontal overflow */
 }
 
 .dropdowntoggle:focus {
