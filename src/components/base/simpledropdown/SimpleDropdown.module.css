@@ -6,7 +6,7 @@
   width: 100%;
   display: block;
   border-bottom: 1px solid var(--mine-shaft);
-  padding: var(--pt1) var(--pt2) var(--pt1) var(--pt2);
+  padding: var(--pt2) var(--pt2) var(--pt2) var(--pt2);
   text-decoration: none;
   color: var(--mine-shaft);
   text-align: inherit;
@@ -36,6 +36,7 @@
 .dropdownmenu {
   width: 100%;
   border: 1px solid var(--blue);
+  border-bottom: 2px solid var(--blue);
   background-color: var(--white);
   z-index: 1;
   /* bootstrap default styles override */

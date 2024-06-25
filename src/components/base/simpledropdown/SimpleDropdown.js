@@ -46,7 +46,7 @@ export default function SimpleDropdown({
                 onSelect?.(elem);
               }}
             >
-              <Text tag="span" type="text3">
+              <Text tag="span" type="text2">
                 {elem}
               </Text>
             </Dropdown.Item>
