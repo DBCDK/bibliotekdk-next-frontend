@@ -1,4 +1,3 @@
-import Dropdown from "react-bootstrap/Dropdown";
 import styles from "./LocalizationInformation.module.css";
 import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
