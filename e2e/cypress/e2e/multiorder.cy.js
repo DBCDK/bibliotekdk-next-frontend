@@ -122,6 +122,44 @@ describe("Multi Order", () => {
       ]);
     });
 
+    it("Should show mobile bus stop, when bogbus is selected", () => {
+      cy.visitWithConsoleSpy(
+        "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"
+      );
+
+      cy.contains("Bestil single").click();
+
+      cy.contains("Skift afhentning").click();
+      cy.contains("Agency - has mobile").click();
+      cy.contains("Branch - has mobile").click();
+
+      cy.contains("Du mangler at angive en busholdeplads");
+      cy.get('[data-cy="submit-button"]').should("be.disabled");
+
+      cy.contains("Vælg busholdeplads").click();
+      cy.contains("Kiosken").click();
+
+      cy.get('[data-cy="submit-button"]').click();
+
+      cy.contains(
+        "Du vil få besked når dine materialer er klar til afhentning på Branch - has mobile"
+      );
+
+      cy.getConsoleEntry("submitMultipleOrders").then((entry) => {
+        expect(entry[1]).to.deep.equal({
+          materialsToOrder: [
+            { key: "WORK_ILL_ACCESSBOOK", pids: ["PID_ILL_ACCESS"] },
+          ],
+          pickUpBranch: "BRANCH_MOBILE_LOCATIONS",
+          pickUpBranchSubdivision: "Kiosken",
+          userParameters: {
+            userName: "Indlogget bruger - navn",
+            userMail: "test@test.dk",
+          },
+        });
+      });
+    });
+
     it("Should show failed material in receipt", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"

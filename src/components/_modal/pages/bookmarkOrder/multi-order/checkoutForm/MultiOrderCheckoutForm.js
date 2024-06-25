@@ -31,6 +31,7 @@ const CheckoutForm = () => {
     isLoading: isLoadingValidation,
     isValid,
     missingPincode,
+    missingMobileLibrary,
     missingMail,
     alreadyOrdered,
   } = useMultiOrderValidation({ orders });
@@ -106,6 +107,12 @@ const CheckoutForm = () => {
         {!isLoadingValidation && missingPincode && (
           <Text type="text3" className={styles.errorLabel}>
             <Translate context="order" label="action-missing-pincode" />
+          </Text>
+        )}
+
+        {!isLoadingValidation && missingMobileLibrary && (
+          <Text type="text3" className={styles.errorLabel}>
+            <Translate context="order" label="action-missing-mobile-library" />
           </Text>
         )}
 

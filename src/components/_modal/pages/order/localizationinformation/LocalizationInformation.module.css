@@ -2,6 +2,10 @@
   /* padding: var(--pt2); */
 }
 
+.mobilelocations {
+  margin-top: var(--pt2);
+}
+
 .pickup .title {
   padding: 0 var(--pt2) 0 0;
 }

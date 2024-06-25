@@ -341,6 +341,27 @@ export function usePincode() {
   return { pincode, setPincode, pincodeIsRequired, isLoading };
 }
 
+export function useMobileLibraryLocations() {
+  const { branchId, isLoadingBranchId } = usePickupBranchId();
+  const { mobileLibraryLocations, isLoading: isLoadingBranchInfo } =
+    useBranchInfo({ branchId });
+
+  const [mobileLibrary, setMobileLibrary] = useGlobalState({
+    key: "mobileLibrarySelection",
+    initial: "",
+  });
+  const isLoading = isLoadingBranchId || isLoadingBranchInfo;
+  const mobileLibraryIsRequired = mobileLibraryLocations?.length > 0;
+
+  return {
+    mobileLibraryLocations,
+    mobileLibraryIsRequired,
+    mobileLibrary,
+    setMobileLibrary,
+    isLoading,
+  };
+}
+
 /**
  * Hook for getting and setting mail
  */
@@ -415,6 +436,11 @@ export function useOrderValidation({ pids }) {
     pincodeIsRequired,
     isLoading: isLoadingPincode,
   } = usePincode();
+  const {
+    mobileLibrary,
+    mobileLibraryIsRequired,
+    isLoading: mobileLibraryIsLoading,
+  } = useMobileLibraryLocations();
 
   const { showAlreadyOrderedWarning, isLoading: isLoadingAlreadyOrdered } =
     useShowAlreadyOrdered({ pids });
@@ -429,7 +455,8 @@ export function useOrderValidation({ pids }) {
     isLoadingMail ||
     isLoadingPincode ||
     isLoadingAlreadyOrdered ||
-    isLoadingPeriodica;
+    isLoadingPeriodica ||
+    mobileLibraryIsLoading;
 
   const isValidPincode = pincodeIsRequired ? !!pincode : true;
   const details = {
@@ -467,6 +494,11 @@ export function useOrderValidation({ pids }) {
     },
     isBlocked: {
       isValid: orderService !== "ILL" || !pickupBranch?.isBlocked,
+    },
+    mobileLibrary: {
+      isValid: !!(!mobileLibraryIsRequired || mobileLibrary),
+      message: { label: "missing-mobile-library" },
+      checkBeforeConfirm: true,
     },
   };
 
@@ -558,7 +590,11 @@ export function useMultiOrderValidation({ orders }) {
       alreadyOrdered: result?.filter(
         (entry) => entry?.alreadyOrdered?.showAlreadyOrderedWarning
       ),
+      missingMobileLibrary: !!result?.find(
+        (entry) => !entry?.validation?.details?.mobileLibrary?.isValid
+      ),
       validatedOrders: result,
+
       isValid: result?.every((entry) => entry?.validation?.isValid),
     };
   }, [result]);
@@ -605,6 +641,7 @@ export function useSubmitOrders({ orders }) {
   const { loanerInfo } = useLoanerInfo();
   const { mail } = useMail();
   const { branchId } = usePickupBranchId();
+  const { mobileLibrary } = useMobileLibraryLocations();
 
   const setOrderCompleted = useGlobalState({
     key: "orderCompleted",
@@ -664,6 +701,7 @@ export function useSubmitOrders({ orders }) {
       orderMutations.submitMultipleOrders({
         materialsToOrder,
         branchId,
+        mobileLibrary: mobileLibrary ? mobileLibrary : undefined,
         userParameters: {
           ...userParameters,
           userMail: mail,

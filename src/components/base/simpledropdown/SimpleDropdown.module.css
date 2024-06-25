@@ -1,0 +1,86 @@
+.dropdownwrap {
+  width: 100%;
+}
+
+.dropdownitem {
+  width: 100%;
+  display: block;
+  border-bottom: 1px solid var(--mine-shaft);
+  padding: var(--pt1) var(--pt2) var(--pt1) var(--pt2);
+  text-decoration: none;
+  color: var(--mine-shaft);
+  text-align: inherit;
+  white-space: nowrap;
+}
+
+.dropdownitem:last-child {
+  border-bottom: 0px;
+}
+.dropdownitem a {
+  text-decoration: none;
+}
+
+.dropdownitem:hover,
+.dropdownitem:focus {
+  background: linear-gradient(
+    to right,
+    var(--blue) var(--pt05),
+    var(--concrete) var(--pt05)
+  );
+}
+
+.dropdownwrap :global(.dropdown-toggle::after) {
+  display: none;
+}
+
+.dropdownmenu {
+  width: 100%;
+  border: 1px solid var(--blue);
+  background-color: var(--white);
+  z-index: 1;
+  /* bootstrap default styles override */
+  border-radius: 0;
+  padding: 0;
+  max-height: 313px;
+  overflow-y: auto; /* Makes the dropdown scrollable */
+  overflow-x: hidden; /* Hides any horizontal overflow */
+}
+
+.dropdowntoggle:focus {
+  border: 1px solid var(--blue);
+  outline: 1px solid var(--blue);
+}
+
+.dropdowntoggle {
+  width: 100%;
+  position: relative;
+  padding: var(--pt2) var(--pt5) var(--pt2) var(--pt2);
+  border: 1px solid var(--gray);
+  background-color: var(--white);
+  min-width: 125px;
+  height: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dropdowntoggle[aria-expanded="true"] .dropdownicon img {
+  transform: rotate(180deg);
+}
+
+.dropdownicon {
+  transform: rotate(90deg);
+  position: absolute;
+  right: var(--pt2);
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.dropdownicon img {
+  transition: transform 0.2s linear;
+}
+
+.selectedItem {
+  background-color: var(--blue);
+  color: var(--white);
+}

@@ -9,6 +9,7 @@ import { ApiEnums } from "@/lib/api/api";
 export function submitMultipleOrders({
   materialsToOrder,
   branchId,
+  mobileLibrary,
   userParameters,
   pagination,
 }) {
@@ -27,6 +28,7 @@ export function submitMultipleOrders({
       input: {
         materialsToOrder,
         pickUpBranch: branchId,
+        pickUpBranchSubdivision: mobileLibrary,
         userParameters,
         pagination,
       },
