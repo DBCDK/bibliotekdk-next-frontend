@@ -2727,7 +2727,7 @@
       },
       "advanced-placeholder-term.title": {
         "da": "Søg på hovedtitel og titler fra indholdet",
-        "en": ""
+        "en": "Search by maintitle and titles in content"
       },
       "advanced-placeholder-term.subject": {
         "da": "Søg på emne, sted, tidsperiode mv.",
@@ -4074,19 +4074,19 @@
       },
       "title-error-not-registered": {
         "da": "Du er ikke registreret som låner på %s",
-        "en": ""
+        "en": "You at not registered at %s"
       },
       "text-error-not-registered": {
         "da": "For at bestille og låne materialer skal du være registreret på det bibliotek, hvor du vil hente materialet. </br></br> <strong>Hvordan registrerer du dig?</strong> </br> Du registrerer dig på et folkebibliotek via bibliotekets hjemmeside eller ved at henvende dig til personalet på biblioteket. Herefter knyttes biblioteket automatisk til din profil på bibliotek.dk. </br> </br> %s",
-        "en": ""
+        "en": "To order and borrow materials you must register at the library, where you want to pickup the material. </br></br> <strong>How to register?</strong> </br> You register at a public library via the librarys homepage or with the help of staff at the library. After registration your library is automatically attached to your profile at bibliotek.dk. </br> </br> %s"
       },
       "title-error-not-associated": {
         "da": "Du skal være låner hos %s for at bestille.",
-        "en": ""
+        "en": "You must be registered at %s to order"
       },
       "text-error-not-associated": {
         "da": "<strong>Er du registreret som låner hos %s?</strong> </br> Så skal du først tilføje biblioteket til din profil, før du kan bestille. Det gør du under %s. </br> </br> <strong>Vil du gerne være låner hos %s?</strong> </br> Så skal du registrere dig hos biblioteket. Find flere oplysniger om hvordan på deres %s.",
-        "en": ""
+        "en": "<strong>Are you registred at %s?</strong> </br> If so you must add your library to your profile. You do that here: %s. </br> </br> <strong>You wish to register at %s?</strong> </br> Then you must register at the library. Find information on how to do it at %s."
       },
       "system-error": {
         "da": "Der opstod en fejl i systemet i forbindelse med login. Prøv igen om lidt.",
@@ -5124,11 +5124,11 @@
       },
       "deleteProfileText": {
         "da": "Dette vil slette følgende data på bibliotek.dk: Din huskeliste, bestillingshistorik, søgehistorik og evt. tilføjede uddannelsesbiblioteker.\n\n<strong>Bemærk</strong>: Du vil stadig være registreret som låner på de biblioteker, hvor du er oprettet. Ligesom at dine lån, reserveringer og mellemværende ved bibliotekerne heller ikke vil blive slettet.\n\nKontakt biblioteket direkte, hvis du ikke længere ønsker at være låner der.",
-        "en": ""
+        "en": "You are about to delete followin data on bibliotek.dk: Your bookmarks, orderhistory, searchhistory and manually added university libraries.\n\n<strong>Bemærk</strong>: You will still be loaner on the libraries, where you are registred. your loans, reservations and matters at the library will not be deleted.\n\nContact the library directly if you no longer wish to be registred."
       },
       "deleteProfileTitle": {
         "da": "Vil du slette din brugerprofil på bibliotek.dk?",
-        "en": ""
+        "en": "Do you wish to delete your profile?"
       },
       "delete-order": {
         "da": "Slet reservering",
@@ -5352,7 +5352,7 @@
       },
       "infoBoxTitle": {
         "da": "Om din bibliotek.dk profil",
-        "en": ""
+        "en": "About your library.dk profile"
       },
       "noLibrariesMessage": {
         "da": "Du har ingen tilknyttede biblioteker",
