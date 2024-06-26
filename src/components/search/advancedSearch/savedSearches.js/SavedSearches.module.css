@@ -186,3 +186,7 @@
     align-items: flex-start;
   }
 }
+
+.accordioItem a {
+  margin: 0;
+}

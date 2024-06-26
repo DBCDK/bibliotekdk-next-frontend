@@ -346,6 +346,7 @@ export default function SavedSearches() {
                 return (
                   <Item
                     dataCy={`accordion-item-${index}`}
+                    className={styles.accordioItem}
                     CustomHeaderComponent={(props) => (
                       <SavedItemRow
                         {...props}
