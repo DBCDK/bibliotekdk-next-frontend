@@ -815,6 +815,22 @@ export function overviewWork({ workId }) {
           full
           parallel
           sort
+          tvSeries {
+              title
+              episode {
+                display
+              }
+              season {
+                display
+              }
+              episodeTitles
+              disc {
+                display
+              }
+              episode {
+                display
+              }
+            }
         }
         creators {
           ...creatorsFragment

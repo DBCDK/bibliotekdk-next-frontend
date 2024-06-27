@@ -68,3 +68,32 @@ export function RenderTitlesWithoutLanguage({ titles }) {
 RenderTitlesWithoutLanguage.propTypes = {
   titles: PropTypes.arrayOf(PropTypes.string),
 };
+
+export function RenderTvSeries({ work, type = "title6" }) {
+  /** season, disc, episode, episodeTitles .... if present **/
+  console.log(work, "WORK");
+  // @TODO if there are episodeTitles .. episode should have a ':' in the end :)
+  const tvtitles = work?.titles?.tvSeries;
+  const subtitles = [
+    ...(tvtitles?.season?.display ? [tvtitles?.season?.display] : []),
+    ...(tvtitles?.disc?.display ? [tvtitles?.disc?.display] : []),
+    ...(tvtitles?.episode?.display ? [tvtitles?.episode?.display] : []),
+    ...[tvtitles?.episodeTitles?.map((dis) => dis.display)?.join(" ,")],
+  ];
+
+  console.log(subtitles, "SUBTITLES");
+
+  return (
+    <Title
+      type={type}
+      tag="h2"
+      lines={4}
+      clamp={true}
+      title={subtitles.join(", ")}
+      dataCy={"ResultRow-subtitles"}
+      className={`${styles.display_inline}`}
+    >
+      {subtitles.join(", ")}
+    </Title>
+  );
+}
