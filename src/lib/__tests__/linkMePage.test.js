@@ -74,4 +74,17 @@ test("parseLinkmeQuery", () => {
   ];
   actual = parseLinkmeQuery(query);
   expect(actual).toEqual(expected);
+
+  // test that '?' is removed from end of search string
+  // test an array of query values
+  query = { tekst: "hest?" };
+  expected = [
+    {
+      value: "hest",
+      prefixLogicalOperator: null,
+      searchIndex: "term.default",
+    },
+  ];
+  actual = parseLinkmeQuery(query);
+  expect(actual).toEqual(expected);
 });
