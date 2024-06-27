@@ -132,6 +132,22 @@ export const workSliderFragment = `fragment workSliderFragment on Work {
   titles {
     main
     full
+		tvSeries {
+      title
+      episode {
+        display
+      }
+      season {
+        display
+      }
+      episodeTitles
+      disc {
+        display
+      }
+      episode {
+        display
+      }
+    }    
   }
   materialTypes {
     materialTypeGeneral {

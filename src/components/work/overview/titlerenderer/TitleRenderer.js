@@ -59,7 +59,7 @@ RenderLanguageAddition.propTypes = {
   type: PropTypes.string,
 };
 
-export function RenderTitlesWithoutLanguage({ work, subtitleType, className }) {
+export function getTitlesAndType({ work }) {
   const isTvSerie = work?.titles?.tvSeries?.title;
   const titles = isTvSerie
     ? [work?.titles?.tvSeries?.title]
@@ -70,12 +70,17 @@ export function RenderTitlesWithoutLanguage({ work, subtitleType, className }) {
           : []),
       ];
 
+  return { titles: titles, type: isTvSerie ? "tvSerie" : "other" };
+}
+
+export function RenderTitlesWithoutLanguage({ work, subtitleType, className }) {
+  const { titles, type } = getTitlesAndType({ work: work });
   return titles?.map((title, index, titlesArray) => (
     <>
       <Fragment key={`${title}-${index}`}>
         {title} {index < titlesArray.length - 1 && <br />}
       </Fragment>
-      {isTvSerie && (
+      {type === "tvSerie" && (
         <div className={className}>
           <RenderTvSeries work={work} type={subtitleType} />
         </div>
@@ -89,7 +94,6 @@ RenderTitlesWithoutLanguage.propTypes = {
 
 export function RenderTvSeries({ work, type = "title5", className }) {
   /** season, disc, episode, episodeTitles .... if present **/
-  console.log(work, "WORK");
   // @TODO if there are episodeTitles .. episode should have a ':' in the end :)
   const tvtitles = work?.titles?.tvSeries;
   const subtitles = [

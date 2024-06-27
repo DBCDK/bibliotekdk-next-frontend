@@ -17,6 +17,10 @@ import cx from "classnames";
 import Translate from "@/components/base/translate";
 import { BackgroundColorEnum } from "../materialCard.utils";
 import { useState } from "react";
+import {
+  getTitlesAndType,
+  RenderTvSeries,
+} from "@/components/work/overview/titlerenderer/TitleRenderer";
 
 function ReadThisFirst({ className, isLoading }) {
   return (
@@ -346,7 +350,10 @@ export function templateForUniverseSeriesBase({ material, classNameAddition }) {
 
 /**Used in Slider */
 export function templateForSeriesSlider({ material, series }) {
+  const { type } = getTitlesAndType({ work: material });
+
   const fullTitle = material?.titles?.full?.join(": ");
+  const isTvSerie = type === "tvSerie";
   const creators = material?.creators;
   const firstCreator =
     extractCreatorsPrioritiseCorporation(creators)?.[0]?.display;
@@ -366,11 +373,15 @@ export function templateForSeriesSlider({ material, series }) {
     workId: material?.workId,
     children: (
       <>
-        {fullTitle && (
-          <Text {...propFunc("text1", 2)} title={fullTitle}>
-            {numberInSeries ? `${numberInSeries} - ` : ""}
-            {fullTitle}
-          </Text>
+        {isTvSerie ? (
+          <RenderTvSeries work={material} type="title6" />
+        ) : (
+          fullTitle && (
+            <Text {...propFunc("text1", 2)} title={fullTitle}>
+              {numberInSeries && !isTvSerie ? `${numberInSeries} - ` : ""}
+              {fullTitle}
+            </Text>
+          )
         )}
         {firstCreator && (
           <Text {...propFunc("text2", 2)} title={firstCreator}>
