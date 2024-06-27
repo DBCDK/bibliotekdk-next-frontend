@@ -15,6 +15,7 @@ import {
 import isEmpty from "lodash/isEmpty";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
+import styles from "./ResultPage.module.css";
 
 /**
  * Row representation of a search result entry
@@ -31,7 +32,11 @@ export function ResultPage({ rows, onWorkClick, isLoading }) {
         key={`${row?.titles?.main}_${index}`}
         onClick={onWorkClick && (() => onWorkClick(index, row))}
       />
-      {index === 0 && <SearchFeedBack />}
+      {index === 0 && (
+        <div className={styles["feedback-wrap"]}>
+          <SearchFeedBack />
+        </div>
+      )}
     </Fragment>
   ));
 
@@ -111,12 +116,15 @@ export default function Wrap({ onWorkClick, page }) {
     return Array(10)
       .fill({})
       .map((row, index) => (
-        <ResultRow
-          isLoading={true}
-          work={row}
-          key={`${row?.titles?.main}_${index}`}
-          onClick={onWorkClick && (() => onWorkClick(index, row))}
-        />
+        <>
+          <ResultRow
+            isLoading={true}
+            work={row}
+            key={`${row?.titles?.main}_${index}`}
+            onClick={onWorkClick && (() => onWorkClick(index, row))}
+          />
+          {index === 0 && <div className={styles["feedback-wrap"]} />}
+        </>
       ));
   }
 

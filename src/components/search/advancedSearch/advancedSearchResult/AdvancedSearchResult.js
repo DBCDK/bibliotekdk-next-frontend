@@ -70,7 +70,7 @@ export function AdvancedSearchResult({
           >
             {hitcount}
           </Title>
-          <Text type="text3" className={styles.titleStyle}>
+          <Text type="text3" className={styles.titleStyle} skeleton={isLoading}>
             {translate({ context: "search", label: "title" })}
           </Text>
         </div>
@@ -101,7 +101,6 @@ export function AdvancedSearchResult({
                   </Text>
                 </div>
               </>
-
               <QuickFilter />
               <AdvancedFacets cql={cql} />
             </div>
@@ -115,9 +114,11 @@ export function AdvancedSearchResult({
         {!isLoading && hitcount === 0 && <NoHitSearch />}
         {/*<AdvancedFacets facets={facets} />*/}
         <>
-          {hitcount > 0 && (
-            <AdvancedSearchSort className={cx(styles.sort_container)} />
-          )}
+          <div className={cx(styles.sort_wrapper)}>
+            {hitcount > 0 && (
+              <AdvancedSearchSort className={cx(styles.sort_container)} />
+            )}
+          </div>
           <div>
             {Array(isMobile ? page : 1)
               .fill({})

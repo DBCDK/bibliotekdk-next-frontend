@@ -49,6 +49,11 @@
   display: none;
 }
 
+@media (min-width: 992px) {
+  .sort_wrapper {
+    min-height: 70px;
+  }
+}
 @media (max-width: 991px) {
   .sort_container {
     display: flex;
