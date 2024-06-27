@@ -1,4 +1,7 @@
-export function getCoverImage(manifestations) {
+export function getCoverImage(manifestations = []) {
+  // Create copy, so we don't mutate the original list,
+  // which leads to all sorts of fun bugs
+  manifestations = [...manifestations];
   const manifestationWithCover =
     manifestations
       ?.sort(sortByMaterialtype)
