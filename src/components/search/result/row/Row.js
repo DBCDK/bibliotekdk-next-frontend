@@ -30,6 +30,8 @@ import isEqual from "lodash/isEqual";
 import useFilters from "@/components/hooks/useFilters";
 
 function TitlesForSearch({ work, isLoading }) {
+  // we need the titles here for the lineclamp - other than that title are no longer used in
+  // RenderTitlesWithoutLanguage component
   const titles = [
     ...(Array.isArray(work?.titles?.full) ? work?.titles?.full : []),
     ...(Array.isArray(work?.titles?.parallel) ? work?.titles?.parallel : []),
@@ -59,7 +61,7 @@ function TitlesForSearch({ work, isLoading }) {
       className={`${styles.display_inline}`}
     >
       <div id={titlesElementId} className={`${styles.wrap_3_lines}`}>
-        <RenderTitlesWithoutLanguage titles={titles} />
+        <RenderTitlesWithoutLanguage work={work} subtitleType="title6" />
         {!titleClamped && titles?.length < 2 && (
           <RenderLanguageAddition work={work} type={"title6"} />
         )}

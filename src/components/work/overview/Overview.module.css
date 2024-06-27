@@ -77,6 +77,10 @@
   text-transform: uppercase;
 }
 
+.subtitle {
+  padding: 0 0 var(--pt1) 0;
+}
+
 .skeleton {
   background-color: white;
 }

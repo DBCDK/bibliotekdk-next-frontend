@@ -10,6 +10,7 @@ import { Fragment } from "react";
 import PropTypes from "prop-types";
 import styles from "./TitleRenderer.module.css";
 import Translate from "@/components/base/translate";
+import upperFirst from "lodash/upperFirst";
 
 export function parseLanguage(mainLanguages, nonDanishLanguages) {
   return mainLanguages?.length > 1
@@ -58,18 +59,35 @@ RenderLanguageAddition.propTypes = {
   type: PropTypes.string,
 };
 
-export function RenderTitlesWithoutLanguage({ titles }) {
+export function RenderTitlesWithoutLanguage({ work, subtitleType, className }) {
+  const isTvSerie = work?.titles?.tvSeries?.title;
+  const titles = isTvSerie
+    ? [work?.titles?.tvSeries?.title]
+    : [
+        ...(Array.isArray(work?.titles?.full) ? work?.titles?.full : []),
+        ...(Array.isArray(work?.titles?.parallel)
+          ? work?.titles?.parallel
+          : []),
+      ];
+
   return titles?.map((title, index, titlesArray) => (
-    <Fragment key={`${title}-${index}`}>
-      {title} {index < titlesArray.length - 1 && <br />}
-    </Fragment>
+    <>
+      <Fragment key={`${title}-${index}`}>
+        {title} {index < titlesArray.length - 1 && <br />}
+      </Fragment>
+      {isTvSerie && (
+        <div className={className}>
+          <RenderTvSeries work={work} type={subtitleType} />
+        </div>
+      )}
+    </>
   ));
 }
 RenderTitlesWithoutLanguage.propTypes = {
   titles: PropTypes.arrayOf(PropTypes.string),
 };
 
-export function RenderTvSeries({ work, type = "title6" }) {
+export function RenderTvSeries({ work, type = "title5", className }) {
   /** season, disc, episode, episodeTitles .... if present **/
   console.log(work, "WORK");
   // @TODO if there are episodeTitles .. episode should have a ':' in the end :)
@@ -78,7 +96,9 @@ export function RenderTvSeries({ work, type = "title6" }) {
     ...(tvtitles?.season?.display ? [tvtitles?.season?.display] : []),
     ...(tvtitles?.disc?.display ? [tvtitles?.disc?.display] : []),
     ...(tvtitles?.episode?.display ? [tvtitles?.episode?.display] : []),
-    ...[tvtitles?.episodeTitles?.map((dis) => dis.display)?.join(" ,")],
+    ...(tvtitles?.episodeTitles?.length > 0
+      ? [tvtitles?.episodeTitles?.map((dis) => dis.display)?.join(" ,")]
+      : []),
   ];
 
   console.log(subtitles, "SUBTITLES");
@@ -91,9 +111,9 @@ export function RenderTvSeries({ work, type = "title6" }) {
       clamp={true}
       title={subtitles.join(", ")}
       dataCy={"ResultRow-subtitles"}
-      className={`${styles.display_inline}`}
+      className={className || ""}
     >
-      {subtitles.join(", ")}
+      {upperFirst(subtitles.join(", "))}
     </Title>
   );
 }

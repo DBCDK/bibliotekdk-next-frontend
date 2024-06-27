@@ -125,7 +125,11 @@ export function Overview({
                   skeleton={skeleton}
                   dataCy="title-overview"
                 >
-                  <RenderTitlesWithoutLanguage titles={titles} />
+                  <RenderTitlesWithoutLanguage
+                    work={work}
+                    subtitleType="title5"
+                    className={styles.subtitle}
+                  />
                   <RenderLanguageAddition work={work} />
                 </Title>
               </Col>
