@@ -29,6 +29,7 @@
 }
 
 .skeleton {
+  min-height: 39px;
   width: var(--pt2);
 }
 

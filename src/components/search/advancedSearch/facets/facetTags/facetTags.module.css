@@ -12,7 +12,7 @@
 
 .container {
   background-color: var(--concrete);
-  padding: var(--pt1);
+  padding: var(--pt1) var(--pt2);
 }
 
 .headline {
