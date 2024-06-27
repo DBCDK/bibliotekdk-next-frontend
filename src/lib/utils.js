@@ -177,7 +177,7 @@ export function parseLinkmeQuery(query) {
           inputFields.push(
             getAdvancedSearchField({
               type: mappings[key],
-              value: v,
+              value: removeReserved(v),
               operator: operator,
             })
           );
@@ -186,7 +186,7 @@ export function parseLinkmeQuery(query) {
         inputFields.push(
           getAdvancedSearchField({
             type: mappings[key],
-            value: val,
+            value: removeReserved(val),
             operator: operator,
           })
         );
@@ -195,6 +195,19 @@ export function parseLinkmeQuery(query) {
   }
 
   return inputFields;
+}
+
+/**
+ * Remove some characters from a string - for now we only remove '?' at the END of the string, but there are probably more
+ *
+ * @param str
+ * @returns {*}
+ */
+function removeReserved(str) {
+  // '?' is a masking character - that is it can replace a letter in a string
+  // .. but if it is in the end of the word it fucks up complex search (for titles at least)
+  // remove '?' from the end of the string
+  return str.replace(/[?]$/, "");
 }
 
 /**
