@@ -4,16 +4,7 @@ import { getInitialInputFields } from "@/components/search/advancedSearch/advanc
 
 export function useInputFields(fieldSearchFromUrl, workType) {
   //prefixLogicalOperator is an enum of AND, OR , NOT
-  /** @typedef {("AND"|"OR"|"NOT"|null)} PrefixLogicalOperator */
-  /** @typedef {{value: string, prefixLogicalOperator: PrefixLogicalOperator, searchIndex: string}} InputField */
-  const [/** @type Array.<InputField> */ inputFields, setInputFields] =
-    useState([]);
-
-  useEffect(() => {
-    setInputFields(
-      fieldSearchFromUrl.inputFields || getInitialInputFields(workType)
-    );
-  }, [JSON.stringify(fieldSearchFromUrl)]);
+  const [inputFields, setInputFields] = useState([]);
 
   // we need a useeffect to reset when worktype changes
   useEffect(() => {
@@ -21,6 +12,11 @@ export function useInputFields(fieldSearchFromUrl, workType) {
     setInputFields(getInitialInputFields(workType));
   }, [workType]);
 
+  useEffect(() => {
+    setInputFields(
+      fieldSearchFromUrl.inputFields || getInitialInputFields(workType)
+    );
+  }, [JSON.stringify(fieldSearchFromUrl)]);
   /**
    * Add an extra input field
    */

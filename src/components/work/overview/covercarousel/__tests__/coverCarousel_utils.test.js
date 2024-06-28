@@ -145,7 +145,7 @@ describe("getManifestationsWithCorrectCover", () => {
     const expected = {
       manifestationsWithCover: [
         {
-          pid: 2,
+          pid: 1,
           materialTypes: [
             {
               materialTypeSpecific: { display: "bog", code: "BOOK" },
@@ -155,7 +155,7 @@ describe("getManifestationsWithCorrectCover", () => {
           cover: { origin: "moreinfo" },
         },
         {
-          pid: 1,
+          pid: 2,
           materialTypes: [
             {
               materialTypeSpecific: { display: "bog", code: "BOOK" },
@@ -215,7 +215,7 @@ describe("getManifestationsWithCorrectCover", () => {
     const expected = {
       manifestationsWithCover: [
         {
-          pid: 4,
+          pid: 3,
           materialTypes: [
             {
               materialTypeSpecific: { display: "bog", code: "BOOK" },

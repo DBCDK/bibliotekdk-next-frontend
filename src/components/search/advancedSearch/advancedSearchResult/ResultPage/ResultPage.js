@@ -15,6 +15,7 @@ import {
 import isEmpty from "lodash/isEmpty";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
+import styles from "./ResultPage.module.css";
 
 /**
  * Row representation of a search result entry
@@ -22,7 +23,7 @@ import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilt
  * @param {Object} props
  * See propTypes for specific props and types
  */
-export function ResultPage({ rows, onWorkClick, isLoading }) {
+export function ResultPage({ rows, onWorkClick, isLoading, showFeedback }) {
   const resultRows = rows?.map((row, index) => (
     <Fragment key={row.workId + ":" + index}>
       <ResultRow
@@ -31,7 +32,11 @@ export function ResultPage({ rows, onWorkClick, isLoading }) {
         key={`${row?.titles?.main}_${index}`}
         onClick={onWorkClick && (() => onWorkClick(index, row))}
       />
-      {index === 0 && <SearchFeedBack />}
+      {index === 0 && showFeedback && (
+        <div className={styles["feedback-wrap"]}>
+          <SearchFeedBack />
+        </div>
+      )}
     </Fragment>
   ));
 
@@ -71,7 +76,7 @@ export default function Wrap({ onWorkClick, page }) {
   } = useAdvancedSearchContext();
 
   const { selectedFacets } = useFacets();
-
+  const showFeedback = page === 1;
   onWorkClick = null;
 
   // we also need the quickfilters
@@ -104,19 +109,23 @@ export default function Wrap({ onWorkClick, page }) {
       ...(!isEmpty(sort) && { sort: sort }),
     })
   );
-
   const parsedResponse = parseResponse(bigResponse);
 
   if (parsedResponse.isLoading) {
     return Array(10)
       .fill({})
       .map((row, index) => (
-        <ResultRow
-          isLoading={true}
-          work={row}
-          key={`${row?.titles?.main}_${index}`}
-          onClick={onWorkClick && (() => onWorkClick(index, row))}
-        />
+        <>
+          <ResultRow
+            isLoading={true}
+            work={row}
+            key={`${row?.titles?.main}_${index}`}
+            onClick={onWorkClick && (() => onWorkClick(index, row))}
+          />
+          {index === 0 && showFeedback && (
+            <div className={styles["feedback-wrap"]} />
+          )}
+        </>
       ));
   }
 
@@ -126,6 +135,7 @@ export default function Wrap({ onWorkClick, page }) {
 
   return (
     <ResultPage
+      showFeedback={showFeedback}
       rows={parsedResponse?.works}
       onWorkClick={onWorkClick}
       isLoading={parsedResponse?.isLoading}
