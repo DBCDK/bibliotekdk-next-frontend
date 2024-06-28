@@ -78,8 +78,11 @@ export function SearchFeedBackWrapper({ datacollect, router, ForceshowMe }) {
     datacollect({ thumbs: "down", reason: input });
   };
 
+  const hasMinHeight =
+    (router?.query?.page === "1" || !router?.query?.page) && !entered;
+
   return (
-    <div style={{ minHeight: entered ? 0 : 100 }}>
+    <div style={{ minHeight: hasMinHeight ? 96 : 0 }}>
       <Collapse
         in={showContainer}
         appear={true}
