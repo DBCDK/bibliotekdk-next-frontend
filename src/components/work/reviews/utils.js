@@ -145,7 +145,9 @@ export function getUrls(data, work) {
   }
 
   return data.access
-    .filter((d) => d.__typename === "AccessUrl" && d.url !== "")
+    .filter(
+      (d) => d.__typename === "AccessUrl" && d.url !== "" && d.status === "OK"
+    )
     .map((a) => a.url);
 }
 
