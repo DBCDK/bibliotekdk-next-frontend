@@ -374,7 +374,7 @@ export function templateForSeriesSlider({ material, series }) {
     children: (
       <>
         {isTvSerie ? (
-          <RenderTvSeries work={material} type="title6" />
+          <RenderTvSeries work={material} type="text1" />
         ) : (
           fullTitle && (
             <Text {...propFunc("text1", 2)} title={fullTitle}>

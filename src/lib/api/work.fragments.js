@@ -744,6 +744,26 @@ export function listOfAllManifestations({ workId }) {
             titles {
               main
               identifyingAddition
+              tvSeries {
+                title
+                episode {
+                  display
+                }
+                season {
+                  display
+                }
+                volume {
+                  display
+                }
+                episodeTitles
+                disc {
+                  display
+                }
+                episode {
+                  display
+                }
+                danishLaunchTitle
+              }
             }
             hostPublication {
               title
