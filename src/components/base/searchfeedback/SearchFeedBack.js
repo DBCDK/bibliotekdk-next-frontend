@@ -22,6 +22,7 @@ export function SearchFeedBackWrapper({ datacollect, router, ForceshowMe }) {
   const [showForm, setShowForm] = useState(false);
   const [showThankyou, setShowThankyou] = useState(false);
   const [showImprove, setShowImprove] = useState(false);
+  const [entered, setEntered] = useState(false);
 
   // useEffect depends on query parameters .. but not paging or modal ..
   const excludeFromQuery = ["modal"];
@@ -77,31 +78,37 @@ export function SearchFeedBackWrapper({ datacollect, router, ForceshowMe }) {
     datacollect({ thumbs: "down", reason: input });
   };
 
+  const hasMinHeight =
+    (router?.query?.page === "1" || !router?.query?.page) && !entered;
+
   return (
-    <Collapse
-      in={showContainer}
-      appear={true}
-      onExited={() => {
-        setShowImprove(false);
-        setShowThankyou(false);
-      }}
-    >
-      <aside>
-        {/* initial state - show thumbs up and down */}
-        {showThumbs && (
-          <SearchFeedBack
-            onThumbsUp={onThumbsUpClick}
-            onThumbsDown={onThumbsDownClick}
-          />
-        )}
-        {/* thumbsup has been clicked - nice - thankyou */}
-        {showThankyou && <SearchFeedBackThankyou />}
-        {/* thumbsdown has been clicked - show suggest form*/}
-        {showForm && <SearchFeedBackForm onSubmitClick={onSubmitClick} />}
-        {/* Feedback from has been posted */}
-        {showImprove && <SearchFeedBackImprove />}
-      </aside>
-    </Collapse>
+    <div style={{ minHeight: hasMinHeight ? 96 : 0 }}>
+      <Collapse
+        in={showContainer}
+        appear={true}
+        onExited={() => {
+          setShowImprove(false);
+          setShowThankyou(false);
+        }}
+        onEntered={() => setEntered(true)}
+      >
+        <aside>
+          {/* initial state - show thumbs up and down */}
+          {showThumbs && (
+            <SearchFeedBack
+              onThumbsUp={onThumbsUpClick}
+              onThumbsDown={onThumbsDownClick}
+            />
+          )}
+          {/* thumbsup has been clicked - nice - thankyou */}
+          {showThankyou && <SearchFeedBackThankyou />}
+          {/* thumbsdown has been clicked - show suggest form*/}
+          {showForm && <SearchFeedBackForm onSubmitClick={onSubmitClick} />}
+          {/* Feedback from has been posted */}
+          {showImprove && <SearchFeedBackImprove />}
+        </aside>
+      </Collapse>
+    </div>
   );
 }
 

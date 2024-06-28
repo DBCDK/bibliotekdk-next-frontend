@@ -325,6 +325,7 @@ function createStoryParameters({ user, submitOrdersDelay = 500 }) {
       postalCode: "2020",
       city: "Sjov by",
       borrowerCheck: true,
+      mobileLibraryLocations: null,
     },
     BRANCH_CHECKORDER_FAILS: {
       agencyId: "BRANCH_CHECKORDER_FAILS",
@@ -335,6 +336,7 @@ function createStoryParameters({ user, submitOrdersDelay = 500 }) {
       postalCode: "2020",
       city: "Sjov by",
       borrowerCheck: true,
+      mobileLibraryLocations: null,
     },
     BRANCH_BlOCKS_USERS: {
       agencyId: "BRANCH_BlOCKS_USERS",
@@ -345,6 +347,7 @@ function createStoryParameters({ user, submitOrdersDelay = 500 }) {
       postalCode: "2020",
       city: "Sjov by",
       borrowerCheck: true,
+      mobileLibraryLocations: null,
     },
     BRANCH_NO_BORROWERCHECK: {
       agencyId: "BRANCH_NO_BORROWERCHECK",
@@ -356,6 +359,7 @@ function createStoryParameters({ user, submitOrdersDelay = 500 }) {
       city: "Sjov by",
       borrowerCheck: false,
       userParameters: [{ description: "brugerId" }],
+      mobileLibraryLocations: null,
     },
     BRANCH_REQUIRES_PINCODE: {
       agencyId: "BRANCH_REQUIRES_PINCODE",
@@ -368,6 +372,18 @@ function createStoryParameters({ user, submitOrdersDelay = 500 }) {
       borrowerCheck: true,
       culrDataSync: false,
       agencyType: "FORSKNINGSBIBLIOTEK",
+      mobileLibraryLocations: null,
+    },
+    BRANCH_MOBILE_LOCATIONS: {
+      agencyId: "BRANCH_MOBILE_LOCATIONS",
+      branchId: "BRANCH_MOBILE_LOCATIONS",
+      agencyName: "Agency - has mobile library locations",
+      name: "Branch - has mobile library locations",
+      postalAddress: "Sjov Gade 11",
+      postalCode: "2020",
+      city: "Sjov by",
+      borrowerCheck: true,
+      mobileLibraryLocations: ["Brugsen", "På hjørnet", "Kiosken"],
     },
   };
 
@@ -403,6 +419,14 @@ function createStoryParameters({ user, submitOrdersDelay = 500 }) {
           id: "BRANCH_REQUIRES_PINCODE",
           branches: [BRANCHES.BRANCH_REQUIRES_PINCODE],
           result: [BRANCHES.BRANCH_REQUIRES_PINCODE],
+          user: {
+            mail: "test@test.dk",
+          },
+        },
+        {
+          id: "BRANCH_MOBILE_LOCATIONS",
+          branches: [BRANCHES.BRANCH_MOBILE_LOCATIONS],
+          result: [BRANCHES.BRANCH_MOBILE_LOCATIONS],
           user: {
             mail: "test@test.dk",
           },

@@ -1,25 +1,19 @@
 /**
- * @file - handle permalink from the old bibliotek.dk. Permalinks come in the forms:
- *  rec.id=[pid]
- *  ccl=[ccl]
- *  cql=[cql]
- *  ref=worldcat&ccl=[ccl]
+ * @file linkme.php.js - handle permalink from the old bibliotek.dk. Permalinks come in the forms:
  *
- *  for now handle rec.id only - ccl & cql are searches - .. TODO - should we
- *  handle searches ?? - some cql should be handled by complex search - check it out
+ *  linkme.php?rec.id=[pid]
+ *  linkme.php?ref=worldcat&ccl=[ccl]
+ *  linkme.php?ccl=[ccl]
+ *  linkme.php?cql=[cql]
+ *
+ *  we now have a page with a defined api @see linkme.js .. so we convert
+ *  given query to a query applicable to the api :) and redirect to linkme page
+ *
+ *
  */
-import { fetchAll } from "@/lib/api/apiServerOnly";
-import { useRouter } from "next/router";
-import {
-  pidToWorkId,
-  oclcToWorkId,
-  faustToWork,
-} from "@/lib/api/work.fragments";
-import { encodeTitleCreator, getCanonicalWorkUrl } from "@/lib/utils";
-import { useData } from "@/lib/api/api";
+
+import { parseLinkme } from "@/lib/utils";
 import Custom404 from "@/pages/404";
-import { isbnFromQuery } from "@/lib/utils";
-import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
 
 /**
  * check if query is ok - for now we only check on rec.id.
@@ -31,136 +25,43 @@ export function checkQuery(query) {
   return !!query["rec.id"];
 }
 
-/**
- * Strip query parameter to get id from worldcat.org
- * ccl is of the form: wcx=1317822460
- * @param ccl
- * @returns {string}
- */
-function getOclcId(ccl) {
-  if (!ccl) {
-    return null;
-  }
-  if (ccl.startsWith("wcx=")) {
-    return ccl.replace("wcx=", "");
-  }
-  return null;
-}
-
 function LinkmePhp() {
-  const router = useRouter();
-  const isOclc = router?.query?.["ref"] === "worldcat";
-
-  const { data, isLoading } = useData(
-    router?.query?.["rec.id"]
-      ? pidToWorkId({ pid: router.query["rec.id"] })
-      : isOclc
-      ? oclcToWorkId({ oclc: getOclcId(router.query["ccl"]) })
-      : router?.query?.["faust"]
-      ? faustToWork({ faust: router.query["faust"] })
-      : null
-  );
-
-  // check if data fetching is done
-  if (isLoading) {
-    return <div>Redirecting ... </div>;
-  }
-
-  // client side - no data .. no error .. -> not found
-  if (!data || data?.error) {
-    return <Custom404 />;
-  }
-
-  // we have ccl and recognize it as something we can handle :)
-  // make a path to redirect to
-  const workId = data?.work?.workId;
-  const title = data?.work?.titles?.main?.[0];
-  const creators = data?.work?.creators;
-  const pathname = getCanonicalWorkUrl({ title, creators, id: workId });
-
-  // do we scroll to edition ? - this one is for loans on profile page where we do NOT want
-  // to scroll to specific edition - see @components/profile/utils.js::getWorkUrlForProfile
-  const scrollToEdition =
-    router?.query?.["scrollToEdition"] === "true" || false;
-  // if all is well - redirect to work page
-  if (workId && data?.work) {
-    const routerPath = {
-      pathname: pathname,
-      ...(scrollToEdition && { hash: router.query["rec.id"] }),
-    };
-    router.replace(routerPath);
-  } else {
-    // something is wrong - we did not find title/author - goto  404 (not found) page
-    // check if clientside
-    return <Custom404 />;
-  }
+  return <Custom404 />;
 }
 
 export default LinkmePhp;
 
-/**
- * NOTE:
- *  link to material page
- *  query: {
- *           title_author: encodeTitleCreator(
- *             work?.titles?.main?.[0],
- *             work?.creators?.[0]?.display
- *           ),
- *           workId: work?.workId,
- *         }
- *
- */
 LinkmePhp.getInitialProps = async (ctx) => {
+  // pids
   const pid = ctx.query["rec.id"];
-  const serverQueries = await fetchAll([pidToWorkId], ctx, {
-    pid: pid,
-  });
-
-  const workId = Object.values(serverQueries.initialData)?.[0]?.data?.work
-    ?.workId;
-
-  const title = Object.values(serverQueries.initialData)?.[0]?.data?.work
-    ?.titles?.main?.[0];
-
-  const creators = Object.values(serverQueries.initialData)?.[0]?.data?.work
-    ?.creators;
-
-  const title_author = encodeTitleCreator(title, creators);
-  // redirect serverside
-  // if this is a bot title and author and workid has been fetched - redirect
-  // to appropiate page. We use 301 (moved permanently) status code
-  if (title_author && workId && ctx.res) {
-    const path = `/materiale/${title_author}/${workId}#${ctx.query["rec.id"]}`;
+  if (pid) {
+    const path = `/linkme?rec.id=${pid}`;
     ctx.res.writeHead(301, { Location: path });
     ctx.res.end();
     return;
-  } else {
-    // we do some redirects here - check for cql, ccl, ccl=is (isbn), worldcat links and handle some of it - if
-    // we give up we redirect to old.bibliotek.dk
-    const hasCql = !!ctx.query["cql"];
-    const hasCcl = !!ctx.query["ccl"];
-    const isOclc = ctx.query["ref"] === "worldcat";
-    const isIsbn = ctx.query["ccl"]?.includes("is=");
-
-    if (isIsbn) {
-      const isbnnumber = isbnFromQuery(ctx.query["ccl"]);
-      if (isbnnumber) {
-        const path = getAdvancedUrl({ type: "isbn", value: isbnnumber });
-        ctx.res.writeHead(301, { Location: path });
-        ctx.res.end();
-        return;
-      }
-    }
-
-    const basePath = "https://old.bibliotek.dk/";
-    if (!isOclc && (hasCql || hasCcl)) {
-      // we have no data - if ccl or cql is given we throw it back at old.bibliotek
-      const path = `${basePath}${ctx.req["url"]}`;
-      ctx.res.writeHead(301, { Location: path });
-      ctx.res.end();
-      return;
-    }
+  }
+  // oclc - we check the ref param and pass ccl if verified
+  // there are a lot of oclc numbers that does NOT find a work
+  // you can get a list from ha-proxy in kibana - look for linkme.php :)
+  const isOclc = ctx.query["ref"] === "worldcat";
+  if (isOclc) {
+    const path = `/linkme?ccl=${ctx.query["ccl"]}`;
+    ctx.res.writeHead(301, { Location: path });
+    ctx.res.end();
+    return;
   }
 
-  return serverQueries;
+  // the rest are searches defined by either ccl OR cql
+  const queryToParse = ctx.query["ccl"] || ctx.query["cql"] || null;
+  const path = parseLinkme(queryToParse);
+
+  if (path) {
+    ctx.res.writeHead(301, { Location: path });
+    ctx.res.end();
+    return;
+  }
+
+  // we give up - @TODO should we keep linkme.php url ?? and show 404 .. OR go to linkme page to show 404 ???
+
+  return {};
 };

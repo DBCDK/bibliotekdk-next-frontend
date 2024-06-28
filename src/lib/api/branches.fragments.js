@@ -41,6 +41,7 @@ export function branchUserParameters({ branchId }) {
           pickupAllowed
           digitalCopyAccess
           branchWebsiteUrl
+          mobileLibraryLocations
         }
       }
       monitor(name: "bibdknext_branch_user_parameters")

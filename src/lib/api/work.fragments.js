@@ -134,6 +134,7 @@ export function reviews({ workId }) {
                         note
                         loginRequired
                         type
+                        status
                       }
                       ... on DigitalArticleService {
                         issn
@@ -936,13 +937,15 @@ export function oclcToWorkId({ oclc }) {
         titles {
           main
         }
-        creators{
-          display
+        creators {
+          ...creatorsFragment
         }
         workId
       }
       monitor(name: "bibdknext_oclc_to_workid")
-    }`,
+    }
+    ${creatorsFragment}
+    `,
     variables: { oclc },
     slowThreshold: 3000,
   };
