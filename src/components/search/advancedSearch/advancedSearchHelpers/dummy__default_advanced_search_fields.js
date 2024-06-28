@@ -50,10 +50,6 @@ export const NOTA_ENUM = {
 };
 const prioritisedNota = [
   {
-    term: "Søg i alle materialer",
-    key: NOTA_ENUM.ALL,
-  },
-  {
     term: "Søg kun i materialer fra Nota",
     key: NOTA_ENUM.ONLY_NOTA,
   },

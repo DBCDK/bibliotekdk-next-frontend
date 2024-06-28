@@ -134,6 +134,7 @@ export function reviews({ workId }) {
                         note
                         loginRequired
                         type
+                        status
                       }
                       ... on DigitalArticleService {
                         issn
