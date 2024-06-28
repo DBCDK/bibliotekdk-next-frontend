@@ -23,7 +23,7 @@ import styles from "./ResultPage.module.css";
  * @param {Object} props
  * See propTypes for specific props and types
  */
-export function ResultPage({ rows, onWorkClick, isLoading, showFeedback }) {
+export function ResultPage({ rows, onWorkClick, isLoading }) {
   const resultRows = rows?.map((row, index) => (
     <Fragment key={row.workId + ":" + index}>
       <ResultRow
@@ -32,11 +32,7 @@ export function ResultPage({ rows, onWorkClick, isLoading, showFeedback }) {
         key={`${row?.titles?.main}_${index}`}
         onClick={onWorkClick && (() => onWorkClick(index, row))}
       />
-      {index === 0 && showFeedback && (
-        <div className={styles["feedback-wrap"]}>
-          <SearchFeedBack />
-        </div>
-      )}
+      {index === 0 && <SearchFeedBack />}
     </Fragment>
   ));
 
@@ -135,7 +131,6 @@ export default function Wrap({ onWorkClick, page }) {
 
   return (
     <ResultPage
-      showFeedback={showFeedback}
       rows={parsedResponse?.works}
       onWorkClick={onWorkClick}
       isLoading={parsedResponse?.isLoading}
