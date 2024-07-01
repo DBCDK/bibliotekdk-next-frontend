@@ -30,7 +30,7 @@ function TitleRendererComponentBuilder({
         TitleRenderer with description: {descriptionName}
       </StoryDescription>
       <Title type={"title3"} skeleton={false} dataCy={"title-overview"}>
-        <RenderTitlesWithoutLanguage titles={titleRendererProps?.titles} />
+        <RenderTitlesWithoutLanguage work={titleRendererProps} />
         <RenderLanguageAddition work={titleRendererProps} />
       </Title>
     </div>
@@ -39,7 +39,10 @@ function TitleRendererComponentBuilder({
 
 export function TitleRendererMultipleLanguages() {
   const titleRendererProps = {
-    titles: ["Hugo i Sølvskoven", "Hugo og Rita fra Sølvskoven"],
+    titles: {
+      full: ["Hugo i Sølvskoven", "Hugo og Rita fra Sølvskoven"],
+      tvSeries: null,
+    },
     mainLanguages: [
       { isoCode: "dan", display: "dansk" },
       { isoCode: "eng", display: "engelsk" },
@@ -56,7 +59,10 @@ export function TitleRendererMultipleLanguages() {
 }
 export function TitleRendererOnlyDanish() {
   const titleRendererProps = {
-    titles: ["Hugo i Sølvskoven", "Hugo og Rita fra Sølvskoven"],
+    titles: {
+      full: ["Hugo i Sølvskoven", "Hugo og Rita fra Sølvskoven"],
+      tvSeries: null,
+    },
     mainLanguages: [{ isoCode: "dan", display: "dansk" }],
     workTypes: ["LITERATURE"],
   };
@@ -70,7 +76,10 @@ export function TitleRendererOnlyDanish() {
 }
 export function TitleRenderer1NonDanish() {
   const titleRendererProps = {
-    titles: ["Hugo i Sølvskoven", "Hugo og Rita fra Sølvskoven"],
+    titles: {
+      full: ["Hugo i Sølvskoven", "Hugo og Rita fra Sølvskoven"],
+      tvSeries: null,
+    },
     mainLanguages: [{ isoCode: "eng", display: "engelsk" }],
     workTypes: ["LITERATURE"],
   };
@@ -84,7 +93,10 @@ export function TitleRenderer1NonDanish() {
 }
 export function TitleRendererNonLiterature() {
   const titleRendererProps = {
-    titles: ["Hugo i Sølvskoven", "Hugo og Rita fra Sølvskoven"],
+    titles: {
+      full: ["Hugo i Sølvskoven", "Hugo og Rita fra Sølvskoven"],
+      tvSeries: null,
+    },
     mainLanguages: [{ isoCode: "eng", display: "engelsk" }],
     workTypes: ["ARTICLE"],
   };
