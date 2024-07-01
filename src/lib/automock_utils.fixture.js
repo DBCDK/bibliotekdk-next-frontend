@@ -552,6 +552,7 @@ const WORK_1 = {
   workTypes: ["LITERATURE"],
   titles: {
     full: ["Hugo i Sølvskoven", "Begyndelsen"],
+    tvSeries: null,
   },
   creators: [{ display: "Børge 'Linoleum' Skovgulv Gummigulv" }],
   materialTypes: [
@@ -619,6 +620,7 @@ const WORK_4 = {
       "Hugo i Sølvskoven 3½",
       "Ritas mellemværende i Gulvskoven med Grullerne",
     ],
+    tvSeries: null,
   },
   creators: [{ display: "Børge 'Linoleum' Skovgulv Gummigulv" }],
   materialTypes: [
@@ -677,7 +679,8 @@ const WORK_6 = {
 
 const WORK_7 = {
   workId: "some-work-id-7",
-  titles: { full: ["Lær at læse med Hugo og Rita 2"] },
+  titles: { full: ["Lær at læse med Hugo og Rita 2"], tvSeries: null },
+
   creators: [{ display: "Linoleum Gummigulv" }],
   manifestations: {
     mostRelevant: [MANIFESTATION_9],
