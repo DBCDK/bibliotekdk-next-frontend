@@ -87,11 +87,6 @@ export function Overview({
   );
   const selectedPids = useMemo(() => flatPidsByType(type), [type]);
 
-  const titles = [
-    ...(Array.isArray(work?.titles?.full) ? work?.titles?.full : []),
-    ...(Array.isArray(work?.titles?.parallel) ? work?.titles?.parallel : []),
-  ];
-
   return (
     <section className={`${styles.background} ${className}`}>
       <Container fluid>
