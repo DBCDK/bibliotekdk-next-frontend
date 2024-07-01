@@ -225,6 +225,27 @@ export function series({ workId, seriesLimit = null }) {
     // delay: 4000, // for debugging
     query: `query Series($workId: String!, $seriesLimit: Int ) {
       work(id: $workId) {
+        titles {
+          main
+          full
+          tvSeries {
+            title
+            episode {
+              display
+            }
+            season {
+              display
+            }
+            episodeTitles
+            disc {
+              display
+            }
+            episode {
+              display
+            }
+            
+          }    
+        }
         series {
           ...seriesFragment
           members(limit:$seriesLimit) {
@@ -851,6 +872,7 @@ export function overviewWork({ workId }) {
               episode {
                 display
               }
+              danishLaunchTitle
             }
         }
         creators {

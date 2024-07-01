@@ -274,7 +274,14 @@ export function templateForUniversePageSeries({ material }) {
 
 /**Used in Universe Page for Series */
 export function templateForUniverseSeriesBase({ material, classNameAddition }) {
-  const fullTitle = material?.title;
+  const title = material?.title;
+  const identifyingAddition = material?.identifyingAddition;
+  const fullTitle = [
+    title,
+    ...(identifyingAddition ? [identifyingAddition] : []),
+  ].join(", ");
+
+  // const fullTitle = material?.title;
   const firstWork = material?.members?.[0]?.work;
   const creators = firstWork?.creators;
   const firstCreator =
@@ -411,6 +418,8 @@ export function templateForBigWorkCard({
   isLoading,
 }) {
   const fullTitle = material?.titles?.full?.join(": ");
+  const episodeTitles = material?.titles?.tvSeries?.episodeTitles?.join(" ,");
+  const episodeMainTitle = material?.titles?.tvSeries?.title;
   const creators = material?.creators;
   const abstract = material?.abstract;
 
@@ -419,6 +428,15 @@ export function templateForBigWorkCard({
   const readThisFirst = material?.series?.[0]?.readThisFirst;
   const numberInSeries = material?.series?.[0]?.numberInSeries?.display;
 
+  const episodeNumberInseries = [
+    ...(material?.titles?.tvSeries?.season?.display
+      ? [material?.titles?.tvSeries?.season?.display]
+      : []),
+    ...(material?.titles?.tvSeries?.disc?.display
+      ? [material?.titles?.tvSeries?.disc?.display]
+      : []),
+  ].join(", ");
+
   return {
     link_href: getWorkUrl(fullTitle, creators, material?.workId),
     fullTitle: fullTitle,
@@ -426,28 +444,36 @@ export function templateForBigWorkCard({
     workId: material?.workId,
     children: (
       <>
-        {(numberInSeries || readThisFirst) && (
+        {(numberInSeries || episodeNumberInseries || readThisFirst) && (
           <div className={styles.begin_with_this_and_number_in_series}>
-            {numberInSeries && (
+            {episodeNumberInseries ? (
               <Text tag="span" type="text4" skeleton={isLoading} lines={1}>
-                {Translate({
-                  context: "series_page",
-                  label: "number_in_series",
-                  vars: [numberInSeries],
-                })}
+                {episodeNumberInseries}
               </Text>
+            ) : (
+              numberInSeries && (
+                <Text tag="span" type="text4" skeleton={isLoading} lines={1}>
+                  {Translate({
+                    context: "series_page",
+                    label: "number_in_series",
+                    vars: [numberInSeries],
+                  })}
+                </Text>
+              )
             )}
             {readThisFirst && <ReadThisFirst isLoading={isLoading} />}
           </div>
         )}
-        {(fullTitle || isLoading) && (
-          <Text
-            {...propFunc("title4", 2)}
-            title={fullTitle}
-            skeleton={isLoading}
-          >
-            {fullTitle}
-          </Text>
+        {(episodeTitles || episodeMainTitle || fullTitle || isLoading) && (
+          <>
+            <Text
+              {...propFunc("title4", 2)}
+              title={fullTitle}
+              skeleton={isLoading}
+            >
+              {episodeTitles || episodeMainTitle || fullTitle}
+            </Text>
+          </>
         )}
         {((includeCreators && creators && !isEmpty(creators)) || isLoading) && (
           <Text {...propFunc("text2", 8)} title={abstract} skeleton={isLoading}>
