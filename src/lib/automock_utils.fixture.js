@@ -643,6 +643,7 @@ const WORK_5 = {
   workId: "some-work-id-5",
   titles: {
     full: ["Hugo i Sølvskoven"],
+    tvSeries: null,
   },
   creators: [{ display: "Linoleum Gummigulv" }],
   manifestations: {
