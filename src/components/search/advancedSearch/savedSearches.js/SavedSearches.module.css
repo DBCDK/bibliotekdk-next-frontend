@@ -117,10 +117,6 @@
   column-gap: var(--pt2);
 }
 
-.accordionContainer a {
-  margin: 0;
-}
-
 .savedItemRow {
   display: grid;
   cursor: pointer;
@@ -189,4 +185,8 @@
     flex-direction: column;
     align-items: flex-start;
   }
+}
+
+.accordioItem a {
+  margin: 0;
 }

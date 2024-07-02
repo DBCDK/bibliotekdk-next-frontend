@@ -18,8 +18,8 @@ export default function AdvancedSearchPage() {
       <Container fluid>
         <Row>
           <Col
-            md={{ offset: 3, span: 9 }}
-            sm={{ span: 12 }}
+            lg={{ offset: 3, span: 9 }}
+            md={{ span: 12 }}
             style={{ paddingInline: "0px" }}
           >
             <AdvancedSearchHistory />
