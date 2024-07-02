@@ -106,6 +106,22 @@ export function doComplexSearchAll({ cql, offset, limit, sort, facets }) {
             full
             parallel
             sort
+            tvSeries {
+              title
+              episode {
+                display
+              }
+              season {
+                display
+              }
+              episodeTitles
+              disc {
+                display
+              }
+              episode {
+                display
+              }
+            }
           }
         }
 			}

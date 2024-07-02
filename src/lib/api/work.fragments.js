@@ -225,6 +225,27 @@ export function series({ workId, seriesLimit = null }) {
     // delay: 4000, // for debugging
     query: `query Series($workId: String!, $seriesLimit: Int ) {
       work(id: $workId) {
+        titles {
+          main
+          full
+          tvSeries {
+            title
+            episode {
+              display
+            }
+            season {
+              display
+            }
+            episodeTitles
+            disc {
+              display
+            }
+            episode {
+              display
+            }
+            
+          }    
+        }
         series {
           ...seriesFragment
           members(limit:$seriesLimit) {
@@ -745,6 +766,26 @@ export function listOfAllManifestations({ workId }) {
             titles {
               main
               identifyingAddition
+              tvSeries {
+                title
+                episode {
+                  display
+                }
+                season {
+                  display
+                }
+                volume {
+                  display
+                }
+                episodeTitles
+                disc {
+                  display
+                }
+                episode {
+                  display
+                }
+                danishLaunchTitle
+              }
             }
             hostPublication {
               title
@@ -816,6 +857,23 @@ export function overviewWork({ workId }) {
           full
           parallel
           sort
+          tvSeries {
+              title
+              episode {
+                display
+              }
+              season {
+                display
+              }
+              episodeTitles
+              disc {
+                display
+              }
+              episode {
+                display
+              }
+              danishLaunchTitle
+            }
         }
         creators {
           ...creatorsFragment

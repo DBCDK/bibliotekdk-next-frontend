@@ -98,6 +98,7 @@ export const manifestationDetailsForAccessFactory = `fragment manifestationDetai
 ${creatorsFragmentForAccessFactory}`;
 export const seriesFragment = `fragment seriesFragment on Series {
   title
+  identifyingAddition
   readThisFirst
   readThisWhenever
   description
@@ -132,6 +133,23 @@ export const workSliderFragment = `fragment workSliderFragment on Work {
   titles {
     main
     full
+		tvSeries {
+      title
+      episode {
+        display
+      }
+      season {
+        display
+      }
+      episodeTitles
+      disc {
+        display
+      }
+      episode {
+        display
+      }
+      danishLaunchTitle
+    }    
   }
   materialTypes {
     materialTypeGeneral {

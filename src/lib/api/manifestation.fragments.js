@@ -402,6 +402,26 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
     alternative
     parallel
     sort
+    tvSeries {
+      title
+      episode {
+        display
+      }
+      season {
+        display
+      }
+      volume {
+        display
+      }
+      episodeTitles
+      disc {
+        display
+      }
+      episode {
+        display
+      }
+      danishLaunchTitle
+    }
   }
   contributors {
     display

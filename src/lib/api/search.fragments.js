@@ -100,6 +100,22 @@ export function all({
             full
             parallel
             sort
+            tvSeries {
+              title
+              episode {
+                display
+              }
+              season {
+                display
+              }
+              episodeTitles
+              disc {
+                display
+              }
+              episode {
+                display
+              }
+            }
           }
         }
         hitcount

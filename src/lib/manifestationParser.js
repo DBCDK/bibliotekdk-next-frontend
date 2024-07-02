@@ -57,6 +57,15 @@ const fields = () => [
     valueParser: renderTranslatedTitle,
   },
   {
+    // translated titles
+    dataField: "titles",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "danishLaunchTitle",
+    }),
+    valueParser: (value) => value?.tvSeries?.danishLaunchTitle,
+  },
+  {
     dataField: "creators",
     label: Translate({
       context: "bibliographic-data",

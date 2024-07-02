@@ -87,11 +87,6 @@ export function Overview({
   );
   const selectedPids = useMemo(() => flatPidsByType(type), [type]);
 
-  const titles = [
-    ...(Array.isArray(work?.titles?.full) ? work?.titles?.full : []),
-    ...(Array.isArray(work?.titles?.parallel) ? work?.titles?.parallel : []),
-  ];
-
   return (
     <section className={`${styles.background} ${className}`}>
       <Container fluid>
@@ -125,7 +120,11 @@ export function Overview({
                   skeleton={skeleton}
                   dataCy="title-overview"
                 >
-                  <RenderTitlesWithoutLanguage titles={titles} />
+                  <RenderTitlesWithoutLanguage
+                    work={work}
+                    subtitleType="title5"
+                    className={styles.subtitle}
+                  />
                   <RenderLanguageAddition work={work} />
                 </Title>
               </Col>

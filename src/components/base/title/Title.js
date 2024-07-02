@@ -36,7 +36,7 @@ Container.propTypes = {
     PropTypes.node,
   ]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  tag: PropTypes.oneOf(["h1", "h2", "h3", "h4", "h5", "h6"]).isRequired, // If not one of these - use Text
+  tag: PropTypes.oneOf(["h1", "h2", "h3", "h4", "h5", "h6"]), // If not one of these - use Text
   type: PropTypes.oneOf(allTextTypes),
   skeleton: PropTypes.bool,
 };

@@ -940,6 +940,10 @@
       }
     },
     "bibliographic-data": {
+      "danishLaunchTitle": {
+        "da": "Dansk udgivelsestitel",
+        "en": "Danish launchtitle"
+      },
       "contributorsFromDescription": {
         "da": "Beskrivelse fra materialet",
         "en": "Description from material"
