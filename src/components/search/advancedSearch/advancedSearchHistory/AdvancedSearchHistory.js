@@ -177,7 +177,7 @@ function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
       </Text>
       <SearchQueryDisplay item={item} />
       <Text type="text2" className={styles.hitcount}>
-        {item.hitcount}{" "}
+        {item.hitcount}
         {breakpoint === "xs" &&
           Translate({ context: "search", label: "title" }).toLowerCase()}
       </Text>
@@ -200,7 +200,7 @@ function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
             }
           }}
         >
-          Gem
+         {Translate({ context: "advanced_search_savedSearch", label: "save" })}
           <Icon
             className={styles.saveSearchIcon}
             size={3}
