@@ -37,6 +37,36 @@ function TitleRendererComponentBuilder({
   );
 }
 
+export function TitleRendererTvSeries() {
+  const titleRendererProps = {
+    titles: {
+      full: ["Hugo i Sølvskoven", "Hugo og Rita fra Sølvskoven"],
+      tvSeries: {
+        title: "Seinfeld",
+        episodeTitles: ["Episodes 1-5"],
+        season: {
+          display: "sæson 3",
+        },
+        disc: {
+          display: "disc 1",
+        },
+      },
+    },
+    mainLanguages: [
+      { isoCode: "dan", display: "dansk" },
+      { isoCode: "eng", display: "engelsk" },
+    ],
+    workTypes: ["LITERATURE"],
+  };
+
+  return (
+    <TitleRendererComponentBuilder
+      titleRendererProps={titleRendererProps}
+      storyNameOverride={"TitleRendererMultipleLanguages"}
+    />
+  );
+}
+
 export function TitleRendererMultipleLanguages() {
   const titleRendererProps = {
     titles: {

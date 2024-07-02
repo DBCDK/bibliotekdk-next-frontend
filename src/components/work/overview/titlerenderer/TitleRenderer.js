@@ -96,12 +96,13 @@ export function RenderTvSeries({ work, type = "title6", className }) {
   /** season, disc, episode, episodeTitles .... if present **/
   // @TODO if there are episodeTitles .. episode should have a ':' in the end :)
   const tvtitles = work?.titles?.tvSeries;
+
   const subtitles = [
     ...(tvtitles?.season?.display ? [tvtitles?.season?.display] : []),
     ...(tvtitles?.disc?.display ? [tvtitles?.disc?.display] : []),
     ...(tvtitles?.episode?.display ? [tvtitles?.episode?.display] : []),
     ...(tvtitles?.episodeTitles?.length > 0
-      ? [tvtitles?.episodeTitles?.map((dis) => dis.display)?.join(" ,")]
+      ? [tvtitles?.episodeTitles?.map((dis) => dis).join(" ,")]
       : []),
   ];
 
