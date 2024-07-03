@@ -177,16 +177,15 @@ function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
       </Text>
       <SearchQueryDisplay item={item} />
       <Text type="text2" className={styles.hitcount}>
-        {item.hitcount}{" "}
+        {item.hitcount}
         {breakpoint === "xs" &&
           Translate({ context: "search", label: "title" }).toLowerCase()}
       </Text>
 
       {isAuthenticated && (
-        <Icon
-          className={styles.saveSearchIcon}
-          size={3}
-          src={`${isSaved ? "heart_filled" : "heart"}.svg`}
+        <Text
+          type="text3"
+          className={styles.saveSearchContainer}
           onClick={async () => {
             if (isSaved) {
               //remove search
@@ -200,7 +199,14 @@ function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
               });
             }
           }}
-        />
+        >
+          {Translate({ context: "advanced_search_savedSearch", label: "save" })}
+          <Icon
+            className={styles.saveSearchIcon}
+            size={3}
+            src={`${isSaved ? "heart_filled" : "heart"}.svg`}
+          />
+        </Text>
       )}
     </div>
   );
@@ -272,7 +278,7 @@ export function HistoryHeaderActions({
         tabIndex="-1"
         onClick={setAllChecked}
         id="selectall"
-        className={styles.checkbox}
+        className={cx(styles.checkbox, styles.selectAllCheckbox)}
         checked={checked}
         disabled={disabled}
         dataCy="advanced-search-history-selectall-checkbox"
