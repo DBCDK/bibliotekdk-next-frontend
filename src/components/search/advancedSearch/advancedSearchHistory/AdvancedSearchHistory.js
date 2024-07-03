@@ -200,7 +200,7 @@ function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
             }
           }}
         >
-         {Translate({ context: "advanced_search_savedSearch", label: "save" })}
+          {Translate({ context: "advanced_search_savedSearch", label: "save" })}
           <Icon
             className={styles.saveSearchIcon}
             size={3}

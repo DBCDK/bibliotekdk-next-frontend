@@ -65,14 +65,12 @@
 @media (min-width: 576px) {
   .grid {
     --grid_template_areas: "checkbox timestamp search_query hitcount save_search";
-    grid-template-columns: var(--pt2) var(--pt16) 15fr 3fr 1fr 1fr;
+    grid-template-columns: var(--pt2) var(--pt16) 15fr 3fr 75px 1fr;
   }
 }
 
 @media (min-width: 992px) {
-  .grid {
-    grid-template-columns: var(--pt2) 1fr 10fr 1fr;
-  }
+  grid-template-columns: var(--pt2) 1fr 10fr 1fr;
 }
 
 .checkbox {
