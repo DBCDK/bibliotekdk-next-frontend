@@ -181,7 +181,7 @@ const prioritized = {
       "pop",
       "klassisk musik 1950 ->",
       "folk",
-      "hiphop",
+      "hip hop",
       "electronica",
       "metal",
       "folkemusik",
