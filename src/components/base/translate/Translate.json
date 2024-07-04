@@ -4420,6 +4420,10 @@
         "da": "Beskrivende tekst om sidens indhold ...",
         "en": "Label: mangler oversættelse"
       },
+      "category-articles-pub_newest_politiken" : {
+        "da": "Nyeste artikler fra Politiken",
+        "en": "Latest articles from Politiken"
+      },
       "category-articles-(30,-39]": {
         "da": "category-articles-(30,-39]",
         "en": "category-articles-(30,-39]"
