@@ -75,10 +75,6 @@ export function getTitlesAndType({ work }) {
 
 export function RenderTitlesWithoutLanguage({ work, subtitleType, className }) {
   const { titles, type } = getTitlesAndType({ work: work });
-
-  console.log(work, "WORK");
-  console.log(titles, type, "TITLES");
-
   return titles?.map((title, index, titlesArray) => (
     <>
       <Fragment key={`${title}-${index}`}>
@@ -96,32 +92,61 @@ RenderTitlesWithoutLanguage.propTypes = {
   titles: PropTypes.arrayOf(PropTypes.string),
 };
 
-export function RenderTvSeries({ work, type = "title6", className }) {
+export function RenderTvSeries({
+  work,
+  type = "title6",
+  className,
+  clamp = false,
+  lines = 4,
+}) {
   /** season, disc, episode, episodeTitles .... if present **/
+  /** we have decided NOT to use the display field .. there are too many oddities ..**/
+  /** we prefix instead : "episode”, “disc”, “volume”, “sæson" **/
   // @TODO if there are episodeTitles .. episode should have a ':' in the end :)
   const tvtitles = work?.titles?.tvSeries;
+  // ..hmm sometimes we have numbers in seasen, disc, episode, volume
+  // if so - use the number BEFORE the display - there are too many errors in the display field
+  const searson = tvtitles?.season?.numbers
+    ? `sæson ${tvtitles?.season?.numbers[0]}`
+    : tvtitles?.season?.display || null;
+  const disc = tvtitles?.disc?.numbers
+    ? `disc ${tvtitles?.disc?.numbers[0]}`
+    : tvtitles?.disc?.display || null;
+  const volume = tvtitles?.volume?.numbers
+    ? `volume ${tvtitles?.volume?.numbers[0]}`
+    : tvtitles?.volume?.display || null;
 
-  const subtitles = [
-    ...(tvtitles?.season?.display ? [tvtitles?.season?.display] : []),
-    ...(tvtitles?.disc?.display ? [tvtitles?.disc?.display] : []),
-    ...(tvtitles?.episode?.display ? [tvtitles?.episode?.display] : []),
-    ...(tvtitles?.episodeTitles?.length > 0
-      ? [tvtitles?.episodeTitles?.map((dis) => dis).join(" ,")]
-      : []),
-  ];
+  const pretitles =
+    [
+      ...(searson ? [searson] : []),
+      ...(disc ? [disc] : []),
+      ...(volume ? [volume] : []),
+      ...(tvtitles?.episode?.display ? [tvtitles?.episode?.display] : []),
+    ].join(", ") || null;
 
-  // console.log(subtitles, "SUBTITLES");
+  // and now the episode titles :)
+  const epsisodetitles =
+    tvtitles?.episodeTitles?.map((dis) => dis).join(", ") || null;
 
+  const subTitles =
+    pretitles && epsisodetitles
+      ? pretitles + ": " + epsisodetitles
+      : pretitles || epsisodetitles || null;
+
+  if (!subTitles) {
+    return null;
+  }
   return (
     <Title
       type={type}
       tag="h2"
-      lines={4}
-      title={subtitles.join(", ")}
+      clamp={clamp}
+      lines={lines}
+      title={subTitles}
       dataCy={"ResultRow-subtitles"}
       className={className || ""}
     >
-      {upperFirst(subtitles.join(", "))}
+      {upperFirst(subTitles)}
     </Title>
   );
 }

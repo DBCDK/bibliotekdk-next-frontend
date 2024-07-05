@@ -381,7 +381,7 @@ export function templateForSeriesSlider({ material, series }) {
     children: (
       <>
         {isTvSerie ? (
-          <RenderTvSeries work={material} type="text1" />
+          <RenderTvSeries work={material} type="text1" clamp={true} lines={2} />
         ) : (
           fullTitle && (
             <Text {...propFunc("text1", 2)} title={fullTitle}>
@@ -417,25 +417,16 @@ export function templateForBigWorkCard({
   includeCreators,
   isLoading,
 }) {
-  const fullTitle = material?.titles?.full?.join(": ");
-  const episodeTitles = material?.titles?.tvSeries?.episodeTitles?.join(" ,");
-  const episodeMainTitle = material?.titles?.tvSeries?.title;
+  const { titles, type } = getTitlesAndType({ work: material });
+
+  const fullTitle = titles?.join(": ");
   const creators = material?.creators;
   const abstract = material?.abstract;
-
+  const tvSeriesTitle = material?.titles?.tvSeries?.title;
   const coverSrc = getCoverImage(material?.manifestations?.mostRelevant);
 
   const readThisFirst = material?.series?.[0]?.readThisFirst;
   const numberInSeries = material?.series?.[0]?.numberInSeries?.display;
-
-  const episodeNumberInseries = [
-    ...(material?.titles?.tvSeries?.season?.display
-      ? [material?.titles?.tvSeries?.season?.display]
-      : []),
-    ...(material?.titles?.tvSeries?.disc?.display
-      ? [material?.titles?.tvSeries?.disc?.display]
-      : []),
-  ].join(", ");
 
   return {
     link_href: getWorkUrl(fullTitle, creators, material?.workId),
@@ -444,37 +435,46 @@ export function templateForBigWorkCard({
     workId: material?.workId,
     children: (
       <>
-        {(numberInSeries || episodeNumberInseries || readThisFirst) && (
+        {tvSeriesTitle && (
+          <Text tag="span" type="text4" skeleton={isLoading} lines={1}>
+            {Translate({
+              context: "series_page",
+              label: "part_of_tv_serie",
+              vars: [tvSeriesTitle],
+            })}
+          </Text>
+        )}
+        {(numberInSeries || readThisFirst) && (
           <div className={styles.begin_with_this_and_number_in_series}>
-            {episodeNumberInseries ? (
+            {numberInSeries && (
               <Text tag="span" type="text4" skeleton={isLoading} lines={1}>
-                {episodeNumberInseries}
+                {Translate({
+                  context: "series_page",
+                  label: "number_in_series",
+                  vars: [numberInSeries],
+                })}
               </Text>
-            ) : (
-              numberInSeries && (
-                <Text tag="span" type="text4" skeleton={isLoading} lines={1}>
-                  {Translate({
-                    context: "series_page",
-                    label: "number_in_series",
-                    vars: [numberInSeries],
-                  })}
-                </Text>
-              )
             )}
             {readThisFirst && <ReadThisFirst isLoading={isLoading} />}
           </div>
         )}
-        {(episodeTitles || episodeMainTitle || fullTitle || isLoading) && (
-          <>
+        {(titles || isLoading) &&
+          (type === "tvSerie" ? (
+            <RenderTvSeries
+              work={material}
+              type="title4"
+              clamp={true}
+              lines={2}
+            />
+          ) : (
             <Text
-              {...propFunc("title4", 2)}
-              title={fullTitle}
+              {...propFunc("title4", 4)}
+              title={titles.join(" ,")}
               skeleton={isLoading}
             >
-              {episodeTitles || episodeMainTitle || fullTitle}
+              {titles.join(" ,")}
             </Text>
-          </>
-        )}
+          ))}
         {((includeCreators && creators && !isEmpty(creators)) || isLoading) && (
           <Text {...propFunc("text2", 8)} title={abstract} skeleton={isLoading}>
             {Translate({ context: "general", label: "by" })}{" "}
