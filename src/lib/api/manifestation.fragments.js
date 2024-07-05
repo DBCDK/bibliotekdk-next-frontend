@@ -8,6 +8,7 @@ import {
   creatorsFragment,
   manifestationDetailsForAccessFactory,
   materialTypesFragment,
+  tvSeriesFragment,
 } from "@/lib/api/fragments.utils";
 
 export function refWorks({ pids }) {
@@ -403,24 +404,7 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
     parallel
     sort
     tvSeries {
-      title
-      episode {
-        display
-      }
-      season {
-        display
-      }
-      volume {
-        display
-      }
-      episodeTitles
-      disc {
-        display
-      }
-      episode {
-        display
-      }
-      danishLaunchTitle
+      ...tvSeriesFragment
     }
   }
   contributors {
@@ -516,4 +500,5 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
         title
      }
   }  
-}`;
+}
+${tvSeriesFragment}`;

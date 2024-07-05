@@ -75,6 +75,10 @@ export function getTitlesAndType({ work }) {
 
 export function RenderTitlesWithoutLanguage({ work, subtitleType, className }) {
   const { titles, type } = getTitlesAndType({ work: work });
+
+  console.log(work, "WORK");
+  console.log(titles, type, "TITLES");
+
   return titles?.map((title, index, titlesArray) => (
     <>
       <Fragment key={`${title}-${index}`}>
@@ -106,12 +110,13 @@ export function RenderTvSeries({ work, type = "title6", className }) {
       : []),
   ];
 
+  // console.log(subtitles, "SUBTITLES");
+
   return (
     <Title
       type={type}
       tag="h2"
       lines={4}
-      clamp={true}
       title={subtitles.join(", ")}
       dataCy={"ResultRow-subtitles"}
       className={className || ""}

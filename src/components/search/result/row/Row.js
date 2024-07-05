@@ -54,7 +54,6 @@ function TitlesForSearch({ work, isLoading }) {
       type="title5"
       tag="h2"
       lines={4}
-      clamp={true}
       title={titles?.join(" ")}
       dataCy={"ResultRow-title"}
       skeleton={isLoading}

@@ -9,6 +9,7 @@ import { ApiEnums } from "@/lib/api/api";
 import {
   creatorsFragment,
   materialTypesFragment,
+  tvSeriesFragment,
 } from "@/lib/api/fragments.utils";
 
 /**
@@ -101,20 +102,7 @@ export function all({
             parallel
             sort
             tvSeries {
-              title
-              episode {
-                display
-              }
-              season {
-                display
-              }
-              episodeTitles
-              disc {
-                display
-              }
-              episode {
-                display
-              }
+            ...tvSeriesFragment
             }
           }
         }
@@ -123,7 +111,8 @@ export function all({
       monitor(name: "bibdknext_search_all")
     }
     ${creatorsFragment}
-    ${materialTypesFragment}`,
+    ${materialTypesFragment}
+    ${tvSeriesFragment}`,
     variables: {
       q,
       limit,
