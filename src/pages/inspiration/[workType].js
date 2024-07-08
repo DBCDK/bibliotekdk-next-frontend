@@ -50,6 +50,20 @@ const MAP = {
         { title: "pub_newest_politiken" },
         { title: "pub_newest_berlingske_tidende" },
         { title: "pub_newest_jyllands_posten" },
+        { title: "pub_newest_information" },
+        { title: "pub_newest_kristeligt_dagblad" },
+        { title: "sub_newest_politics" },
+        { title: "sub_newest_technology" },
+        { title: "sub_newest_climate" },
+        { title: "sub_newest_health" },
+        { title: "sub_newest_nutrition" },
+        { title: "sub_newest_fashion" },
+        { title: "sub_newest_housing" },
+        { title: "sub_newest_movie" },
+        { title: "sub_newest_music" },
+        { title: "sub_newest_theater" },
+        { title: "sub_newest_astronomy" },
+        { title: "sub_newest_psychology" },
       ],
     },
   ],
@@ -201,9 +215,6 @@ export function Page({ data, isLoading }) {
       },
     ];
   }
-
-  console.log(data, isLoading, "DATA");
-
   const context = "inspiration";
 
   // use first element in the categories array as label key (for transltations)

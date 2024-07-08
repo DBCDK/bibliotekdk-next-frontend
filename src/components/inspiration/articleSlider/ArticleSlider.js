@@ -3,7 +3,7 @@ import * as complexSearchFragments from "@/lib/api/complexSearch.fragments";
 import { Slider } from "@/components/inspiration/slider/Slider";
 
 /**
- * MAP - a key to a slider and a value for the cql to get the data
+ * MAP - a key to a slider and a value for the cql to get the data from complex search
  * @type {{politiken: string}}
  */
 const MAP = {
@@ -13,6 +13,25 @@ const MAP = {
     '((worktype=article)) AND (term.hostpublication="berlingske tidende")',
   pub_newest_jyllands_posten:
     '((worktype=article)) AND (term.hostpublication="jyllands-posten")',
+  pub_newest_information:
+    '((worktype=article)) AND (term.hostpublication="information")',
+  pub_newest_kristeligt_dagblad:
+    '((worktype=article)) AND (term.hostpublication="kristeligt dagblad")',
+  sub_newest_politics:
+    '((worktype=article)) AND ((term.subject="politiske forhold"))',
+  sub_newest_technology:
+    '((worktype=article)) AND ((term.subject="teknologi"))',
+  sub_newest_climate: '((worktype=article)) AND ((term.subject="klima"))',
+  sub_newest_health: '((worktype=article)) AND ((term.subject="sundhed"))',
+  sub_newest_nutrition: '((worktype=article)) AND ((term.subject="ernæring"))',
+  sub_newest_fashion: '((worktype=article)) AND ((term.subject="mode"))',
+  sub_newest_housing: '((worktype=article)) AND ((term.subject="bolig"))',
+  sub_newest_movie: '((worktype=article)) AND ((term.subject="film"))',
+  sub_newest_music: '((worktype=article)) AND ((term.subject="musik"))',
+  sub_newest_theater: '((worktype=article)) AND ((term.subject="teater"))',
+  sub_newest_astronomy: '((worktype=article)) AND ((term.subject="astronomi"))',
+  sub_newest_psychology:
+    '((worktype=article)) AND ((term.subject="psykologi"))',
 };
 
 /**
