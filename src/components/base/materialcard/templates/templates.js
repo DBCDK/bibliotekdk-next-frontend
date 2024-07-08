@@ -435,18 +435,19 @@ export function templateForBigWorkCard({
     workId: material?.workId,
     children: (
       <>
-        {tvSeriesTitle && (
-          <Text tag="span" type="text4" skeleton={isLoading} lines={1}>
-            {Translate({
-              context: "series_page",
-              label: "part_of_tv_serie",
-              vars: [tvSeriesTitle],
-            })}
-          </Text>
-        )}
+        {/* .. NOT sure if this one should be there - outcommented for now :) */}
+        {/*{tvSeriesTitle && (*/}
+        {/*  <Text tag="span" type="text4" skeleton={isLoading} lines={1}>*/}
+        {/*    {Translate({*/}
+        {/*      context: "series_page",*/}
+        {/*      label: "part_of_tv_serie",*/}
+        {/*      vars: [tvSeriesTitle],*/}
+        {/*    })}*/}
+        {/*  </Text>*/}
+        {/*)}*/}
         {(numberInSeries || readThisFirst) && (
           <div className={styles.begin_with_this_and_number_in_series}>
-            {numberInSeries && (
+            {numberInSeries && !tvSeriesTitle && (
               <Text tag="span" type="text4" skeleton={isLoading} lines={1}>
                 {Translate({
                   context: "series_page",

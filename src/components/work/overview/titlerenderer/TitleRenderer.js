@@ -81,7 +81,7 @@ export function RenderTitlesWithoutLanguage({ work, subtitleType, className }) {
         {title} {index < titlesArray.length - 1 && <br />}
       </Fragment>
       {type === "tvSerie" && (
-        <div className={className}>
+        <div className={className} key={`${title}-${type}-${index}`}>
           <RenderTvSeries work={work} type={subtitleType} />
         </div>
       )}

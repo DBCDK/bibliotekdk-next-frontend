@@ -8,6 +8,7 @@ import { FlatSubjectsForFullManifestation } from "@/components/work/keywords/Key
 import { parseFunction } from "@/lib/centralParsers.utils";
 import { getAudienceValues } from "@/components/work/details/utils/export.utils";
 import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
+import upperFirst from "lodash/upperFirst";
 
 // fields to handle - add to handle a field eg. subjects or lix or let or ...
 const fields = () => [
@@ -57,7 +58,7 @@ const fields = () => [
     valueParser: renderTranslatedTitle,
   },
   {
-    // translated titles
+    // launch titles
     dataField: "titles",
     label: Translate({
       context: "bibliographic-data",
@@ -297,6 +298,9 @@ const fields = () => [
  *
  * From designer (thank you anders friis brødsgaard) - how to show titles :
  *
+ * Tvseries
+ * Hvis tv series titles findes skal de vises istedet for Titel
+ *
  * Titel:
  * Alle titles.full med linjeskift mellem hver titel
  * Herefter på ny linje alle titles.parallel med linjeskift mellem hver titel
@@ -320,20 +324,29 @@ const fields = () => [
 
 /**
  * Render full and parallel titles as one block to show.
+ * If tvseries titles are found they overrule standard titles from jed
  * @param value
  * @returns {React.JSX.Element}
  */
 function renderFullAndParallelTitles(value) {
+  const tvSeriesTitle = getTvSeriesTitle(value);
+
   return (
     <>
-      {value?.full?.map((val, index) => {
-        // collect for comparison
-        return (
-          <div key={`full-${index}`}>
-            <Text type="text3">{val}</Text>
-          </div>
-        );
-      })}
+      {tvSeriesTitle ? (
+        <div key={`tvseriestitel`}>
+          <Text type="text3">{tvSeriesTitle}</Text>
+        </div>
+      ) : (
+        value?.full?.map((val, index) => {
+          // collect for comparison
+          return (
+            <div key={`full-${index}`}>
+              <Text type="text3">{val}</Text>
+            </div>
+          );
+        })
+      )}
       {value?.parallel?.map((val, index) => {
         // collect for comparison
         return (
@@ -344,6 +357,35 @@ function renderFullAndParallelTitles(value) {
       })}
     </>
   );
+}
+
+function getTvSeriesTitle(Titles) {
+  const tvtitles = Titles?.tvSeries;
+  const title = tvtitles?.title;
+  // ..hmm sometimes we have numbers in seasen, disc, episode, volume
+  // if so - use the number BEFORE the display - there are too many errors in the display field
+  const season =
+    tvtitles?.season?.numbers || tvtitles?.season?.display
+      ? `sæson ${tvtitles?.season?.numbers[0]}`
+      : tvtitles?.season?.display || null;
+  const disc = tvtitles?.disc?.numbers
+    ? `disc ${tvtitles?.disc?.numbers[0]}`
+    : tvtitles?.disc?.display || null;
+  const volume = tvtitles?.volume?.numbers
+    ? `volume ${tvtitles?.volume?.numbers[0]}`
+    : tvtitles?.volume?.display || null;
+
+  // subtitle eg. (Sæson 3, volume 1, disc 2)
+  const subtitleArray = [
+    ...((season && [season]) || []),
+    ...((volume && [volume]) || []),
+    ...((disc && [disc]) || []),
+  ];
+  const subtitle =
+    subtitleArray.length > 0 &&
+    "(" + upperFirst(subtitleArray.join(", ")) + ")";
+
+  return title ? `${title} ${subtitle && subtitle}` : null;
 }
 
 function renderAlternativeTitles(value) {
