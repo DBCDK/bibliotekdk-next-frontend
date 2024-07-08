@@ -264,8 +264,6 @@ export function Page({ data, isLoading }) {
           </Text>
         </div>
       </Section>
-      {/* this is where we map category, subcategory */}
-      {/* @TODO special case for articles*/}
       {data?.map(({ category, subCategories }) =>
         subCategories.map(({ title }, idx) => {
           const backgroundColor =

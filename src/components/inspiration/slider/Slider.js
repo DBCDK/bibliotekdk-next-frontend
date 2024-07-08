@@ -68,8 +68,6 @@ export default function Wrap({ filters = [], limit = 30, ...props }) {
     return null;
   }
 
-  console.log(works, "WOOOOOOOOOOOOOORKS");
-
   return <Slider data={works || []} isLoading={isLoading} {...props} />;
 }
 
