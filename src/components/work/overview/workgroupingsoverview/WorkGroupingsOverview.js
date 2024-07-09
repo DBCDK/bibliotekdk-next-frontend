@@ -117,7 +117,7 @@ function getContinuationMap(groupedByRelationWorkTypes) {
   );
 }
 
-function RenderHostPublication({ hostPublication }) {
+export function RenderHostPublication({ hostPublication }) {
   return (
     hostPublication && (
       <Text className={styles.display_inline}>

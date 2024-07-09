@@ -28,6 +28,8 @@ import {
 } from "@/components/work/overview/titlerenderer/TitleRenderer";
 import isEqual from "lodash/isEqual";
 import useFilters from "@/components/hooks/useFilters";
+import { dateToShortDate } from "@/utils/datetimeConverter";
+import { RenderHostPublication } from "@/components/work/overview/workgroupingsoverview/WorkGroupingsOverview";
 
 function TitlesForSearch({ work, isLoading }) {
   // we need the titles here for the lineclamp - other than that title are no longer used in
@@ -92,6 +94,26 @@ function sortMaterialTypesByFilter(materialTypesInFilter) {
 
     return indexA - indexB;
   };
+}
+
+function SubTitlesByMaterialType({ work }) {
+  const materialType =
+    work?.manifestations?.mostRelevant?.[0]?.materialTypes?.[0]
+      ?.materialTypeSpecific?.code;
+  if (!materialType) {
+    return null;
+  }
+
+  const manifestation = work?.manifestations?.mostRelevant?.[0];
+
+  console.log(manifestation, "MANIFESTATION");
+  if (materialType === "ARTICLE") {
+    const hospub = manifestation?.hostPublication;
+    return <RenderHostPublication hostPublication={hospub} />;
+  }
+
+  console.log(materialType, "MATTYPE");
+  return <div>HEST</div>;
 }
 
 /**
@@ -162,6 +184,7 @@ export default function ResultRow({
             >
               {creatorsNames?.join(", ") || " "}
             </Text>
+            <SubTitlesByMaterialType work={work} />
             <div className={styles.materials}>
               <Text
                 tag="span"
