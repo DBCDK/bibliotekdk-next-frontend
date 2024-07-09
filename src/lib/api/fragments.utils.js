@@ -52,6 +52,32 @@ const creatorsFragmentForAccessFactory = `fragment creatorsFragmentForAccessFact
   }
 }`;
 
+export const tvSeriesFragment = `fragment tvSeriesFragment on TvSeries{
+              title
+              episode {
+                display
+                numbers
+              }
+              volume {
+								numbers
+								display
+							}
+              season {
+                display
+                numbers
+              }
+              episodeTitles
+              disc {
+                display
+                numbers
+              }
+              episode {
+                display
+                numbers
+              }
+              danishLaunchTitle            
+}`;
+
 export const materialTypesFragment = `fragment materialTypesFragment on MaterialType {
   materialTypeGeneral {
     code
@@ -106,6 +132,7 @@ export const seriesFragment = `fragment seriesFragment on Series {
   seriesWorkTypes: workTypes
   numberInSeries {
     display
+    number
   }
 }`;
 export const universeFragment = `fragment universeFragment on Universe {
@@ -134,22 +161,8 @@ export const workSliderFragment = `fragment workSliderFragment on Work {
     main
     full
 		tvSeries {
-      title
-      episode {
-        display
-      }
-      season {
-        display
-      }
-      episodeTitles
-      disc {
-        display
-      }
-      episode {
-        display
-      }
-      danishLaunchTitle
-    }    
+      ...tvSeriesFragment
+    }   
   }
   materialTypes {
     materialTypeGeneral {
@@ -179,7 +192,7 @@ export const workSliderFragment = `fragment workSliderFragment on Work {
       }
     }
   }
-}`;
+}${tvSeriesFragment}`;
 
 export const workTitleFragment = `fragment workTitleFragment on Work {
   titles {

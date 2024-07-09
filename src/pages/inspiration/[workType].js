@@ -31,6 +31,7 @@ import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
 
 import Slider from "@/components/inspiration/slider";
+import { ArticleSlider } from "@/components/inspiration/articleSlider/ArticleSlider";
 
 /**
  * Custom map, settings object
@@ -46,20 +47,45 @@ const MAP = {
     {
       category: "articles",
       subCategories: [
-        "nyeste",
-        "(30, 39]",
-        "(60, 69]",
-        "(90, 99]",
-        "(70, 79]",
-        "(10, 19]",
-        "(80, 89]",
-        "(50, 59]",
-        "(20, 29]",
-        "(40, 49]",
-        "(0, 9]",
+        { title: "pub_newest_politiken" },
+        { title: "pub_newest_berlingske_tidende" },
+        { title: "pub_newest_jyllands_posten" },
+        { title: "pub_newest_information" },
+        { title: "pub_newest_kristeligt_dagblad" },
+        { title: "sub_newest_politics" },
+        { title: "sub_newest_technology" },
+        { title: "sub_newest_climate" },
+        { title: "sub_newest_health" },
+        { title: "sub_newest_nutrition" },
+        { title: "sub_newest_fashion" },
+        { title: "sub_newest_housing" },
+        { title: "sub_newest_movie" },
+        { title: "sub_newest_music" },
+        { title: "sub_newest_theater" },
+        { title: "sub_newest_astronomy" },
+        { title: "sub_newest_psychology" },
       ],
     },
   ],
+  /** the outcommented part is what was used for catinspire **/
+  // artikler: [
+  //   {
+  //     category: "articles",
+  //     subCategories: [
+  //       "nyeste",
+  //       "fisk",
+  //       "(60, 69]",
+  //       "(90, 99]",
+  //       "(70, 79]",
+  //       "(10, 19]",
+  //       "(80, 89]",
+  //       "(50, 59]",
+  //       "(20, 29]",
+  //       "(40, 49]",
+  //       "(0, 9]",
+  //     ],
+  //   },
+  // ],
   spil: [
     {
       category: "games",
@@ -189,7 +215,6 @@ export function Page({ data, isLoading }) {
       },
     ];
   }
-
   const context = "inspiration";
 
   // use first element in the categories array as label key (for transltations)
@@ -239,7 +264,6 @@ export function Page({ data, isLoading }) {
           </Text>
         </div>
       </Section>
-
       {data?.map(({ category, subCategories }) =>
         subCategories.map(({ title }, idx) => {
           const backgroundColor =
@@ -249,21 +273,24 @@ export function Page({ data, isLoading }) {
 
           count++;
 
-          return (
-            <Slider
-              key={`inspiration-${title}-${idx}`}
-              title={
-                title &&
-                Translate({
-                  context,
-                  label: trim(`category-${category}-${title}`),
-                })
-              }
-              category={category}
-              filters={[{ category, subCategories: [title] }]}
-              backgroundColor={backgroundColor}
-              divider={{ content: false }}
-            />
+          let props = {
+            key: `inspiration-${title}-${idx}`,
+            title: `${
+              title &&
+              Translate({
+                context,
+                label: trim(`category-${category}-${title}`),
+              })
+            }`,
+            category: category,
+            filters: [{ category, subCategories: [title] }],
+            backgroundColor: backgroundColor,
+            divider: { content: false },
+          };
+          return label === "articles" ? (
+            <ArticleSlider props={props} />
+          ) : (
+            <Slider {...props} />
           );
         })
       )}
@@ -276,12 +303,18 @@ export default function Wrap() {
   const { workType } = router.query;
 
   const filters = MAP[workType];
-
   const { data, isLoading } = useData(
-    inspirationFragments.categories({
-      filters,
-    })
+    // avoid faulty queries
+    workType !== "artikler" &&
+      inspirationFragments.categories({
+        filters,
+      })
   );
+
+  if (workType === "artikler") {
+    // article slider loads its own data :)
+    return <Page data={MAP["artikler"]} isLoading={false} />;
+  }
 
   return <Page data={data?.inspiration?.categories} isLoading={isLoading} />;
 }
@@ -313,14 +346,16 @@ Wrap.getInitialProps = async (ctx) => {
   // Resolve all belt queries
   const arr = [];
   categories?.forEach(({ category, subCategories }) =>
-    subCategories.forEach(({ title }) =>
-      arr.push(
-        fetchAll([inspirationFragments.inspiration], ctx, {
-          limit: 30,
-          filters: [{ category, subCategories: [title] }],
-        })
-      )
-    )
+    subCategories.forEach(({ title }) => {
+      if (category !== "articles") {
+        arr.push(
+          fetchAll([inspirationFragments.inspiration], ctx, {
+            limit: 30,
+            filters: [{ category, subCategories: [title] }],
+          })
+        );
+      }
+    })
   );
 
   const beltData = await Promise.all(arr);

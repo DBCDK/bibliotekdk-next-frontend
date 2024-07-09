@@ -24,6 +24,8 @@
 
 .score {
   text-align: right;
+  position: relative;
+  top: 2px;
 }
 
 .countContainer {

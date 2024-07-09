@@ -14,6 +14,7 @@ import {
   universeFragment,
   workSliderFragment,
   manifestationTitleFragment,
+  tvSeriesFragment,
 } from "@/lib/api/fragments.utils";
 
 export function tableOfContents({ workId }) {
@@ -229,22 +230,8 @@ export function series({ workId, seriesLimit = null }) {
           main
           full
           tvSeries {
-            title
-            episode {
-              display
-            }
-            season {
-              display
-            }
-            episodeTitles
-            disc {
-              display
-            }
-            episode {
-              display
-            }
-            
-          }    
+            ...tvSeriesFragment
+          } 
         }
         series {
           ...seriesFragment
@@ -274,7 +261,7 @@ export function series({ workId, seriesLimit = null }) {
     ${creatorsFragment}
     ${seriesFragment}
     ${universeFragment}
-    ${coverFragment}
+    ${coverFragment}    
   `,
     variables: { workId, seriesLimit },
     slowThreshold: 3000,
@@ -767,24 +754,7 @@ export function listOfAllManifestations({ workId }) {
               main
               identifyingAddition
               tvSeries {
-                title
-                episode {
-                  display
-                }
-                season {
-                  display
-                }
-                volume {
-                  display
-                }
-                episodeTitles
-                disc {
-                  display
-                }
-                episode {
-                  display
-                }
-                danishLaunchTitle
+                ...tvSeriesFragment
               }
             }
             hostPublication {
@@ -815,7 +785,8 @@ export function listOfAllManifestations({ workId }) {
       monitor(name: "bibdknext_list_of_all_manifestations")
     }
     ${creatorsFragment}
-    ${materialTypesFragment}`,
+    ${materialTypesFragment}
+    ${tvSeriesFragment}`,
     variables: { workId },
     slowThreshold: 3000,
   };
@@ -858,22 +829,8 @@ export function overviewWork({ workId }) {
           parallel
           sort
           tvSeries {
-              title
-              episode {
-                display
-              }
-              season {
-                display
-              }
-              episodeTitles
-              disc {
-                display
-              }
-              episode {
-                display
-              }
-              danishLaunchTitle
-            }
+            ...tvSeriesFragment
+          }
         }
         creators {
           ...creatorsFragment
@@ -928,6 +885,7 @@ export function overviewWork({ workId }) {
     ${genreAndFormAndWorkTypesFragment}
     ${creatorsFragment}
     ${materialTypesFragment}
+    ${tvSeriesFragment}
     `,
     variables: { workId },
     slowThreshold: 3000,

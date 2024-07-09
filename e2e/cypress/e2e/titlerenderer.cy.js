@@ -30,7 +30,7 @@ describe("TitleRenderer", () => {
     cy.get("[data-cy=title-overview]").should("exist");
 
     cy.contains("Seinfeld").should("exist");
-    cy.contains("Sæson 3, disc 1, Episodes 1-5").should("exist");
+    cy.contains("Sæson 3, disc 1: Episodes 1-5").should("exist");
   });
   it(`TitleRenderer 1 non danish should have 1 language`, () => {
     cy.visit(
