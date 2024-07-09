@@ -4424,6 +4424,74 @@
         "da": "Beskrivende tekst om sidens indhold ...",
         "en": "Label: mangler oversættelse"
       },
+      "category-articles-pub_newest_politiken": {
+        "da": "Nyeste artikler fra Politiken",
+        "en": "Latest articles from Politiken"
+      },
+      "category-articles-pub_newest_berlingske_tidende": {
+        "da": "Nyeste artikler fra Berlingske tidende",
+        "en": "Latest articles from Berlingske tidende"
+      },
+      "category-articles-pub_newest_jyllands_posten": {
+        "da": "Nyeste artikler fra Jyllands-posten",
+        "en": "Latest articles from Jyllands-posten"
+      },
+      "category-articles-pub_newest_information": {
+        "da": "Nyeste artikler fra Information",
+        "en": "Latest articles from Information"
+      },
+      "category-articles-pub_newest_kristeligt_dagblad": {
+        "da": "Nyeste artikler fra Kristeligt dagblad",
+        "en": "Latest articles from Kristeligt dagblad"
+      },
+      "category-articles-sub_newest_politics": {
+        "da": "Nyeste artikler om politiske forhold",
+        "en": "Latest articles about politics"
+      },
+      "category-articles-sub_newest_technology": {
+        "da": "Nyeste artikler om teknologi",
+        "en": "Latest articles about technology"
+      },
+      "category-articles-sub_newest_climate": {
+        "da": "Nyeste artikler om klima",
+        "en": "Latest articles about climate"
+      },
+      "category-articles-sub_newest_health": {
+        "da": "Nyeste artikler om sundhed",
+        "en": "Latest articles about health"
+      },
+      "category-articles-sub_newest_nutrition": {
+        "da": "Nyeste artikler om ernæring",
+        "en": "Latest articles about nutrition"
+      },
+      "category-articles-sub_newest_fashion": {
+        "da": "Nyeste artikler om mode",
+        "en": "Latest articles about fashion"
+      },
+      "category-articles-sub_newest_housing": {
+        "da": "Nyeste artikler om bolig",
+        "en": "Latest articles about housing"
+      },
+      "category-articles-sub_newest_movie": {
+        "da": "Nyeste artikler om film",
+        "en": "Latest articles about movies"
+      },
+      "category-articles-sub_newest_music": {
+        "da": "Nyeste artikler om musik",
+        "en": "Latest articles about music"
+      },
+      "category-articles-sub_newest_theater": {
+        "da": "Nyeste artikler om teater",
+        "en": "Latest articles about theater"
+      },
+      "category-articles-sub_newest_astronomy": {
+        "da": "Nyeste artikler om astronomi",
+        "en": "Latest articles about astronomy"
+      },
+      "category-articles-sub_newest_psychology": {
+        "da": "Nyeste artikler om psykologi",
+        "en": "Latest articles about psychology"
+      },
       "category-articles-(30,-39]": {
         "da": "category-articles-(30,-39]",
         "en": "category-articles-(30,-39]"

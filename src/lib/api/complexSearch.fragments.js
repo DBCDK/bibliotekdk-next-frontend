@@ -1,4 +1,8 @@
 import { ApiEnums } from "@/lib/api/api";
+import {
+  creatorsFragment,
+  materialTypesFragment,
+} from "@/lib/api/fragments.utils";
 
 /**
  * Hitcount
@@ -153,6 +157,45 @@ export function complexSearchOnlyWorkIds({ cql, offset, limit, sort }) {
         }
 			}
 		}`,
+    variables: { cql, offset, limit, sort },
+    slowThreshold: 3000,
+  };
+}
+
+export function ComplexArticleSlider({ cql, offset, limit, sort }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 1000, // for debugging
+    query: `
+    query ComplexArticleSlider($cql: String!, $offset: Int!, $limit: PaginationLimit!, $sort: [Sort!]) {
+			complexSearch(cql: $cql) {
+				hitcount
+				errorMessage        
+				works(offset: $offset, limit: $limit, sort: $sort) {
+          workId
+          titles {
+            main
+            full
+          }
+          creators {
+            ...creatorsFragment
+          }
+          
+          manifestations {mostRelevant {
+            materialTypes {
+              ...materialTypesFragment
+            }
+            cover {
+              detail
+              origin
+            }
+          }}
+        }
+      }
+    }
+    ${creatorsFragment}
+    ${materialTypesFragment}
+    `,
     variables: { cql, offset, limit, sort },
     slowThreshold: 3000,
   };
