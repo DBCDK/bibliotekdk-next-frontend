@@ -1832,6 +1832,10 @@
         "da": "Serie af",
         "en": "Series by"
       },
+      "part_of_tv_serie": {
+        "da": "Del af tv-serien %s",
+        "en": "Part of tv-serie %s"
+      },
       "series": {
         "da": "serier",
         "en": "series"

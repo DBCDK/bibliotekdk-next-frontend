@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 import styles from "./WorkGroupingsOverview.module.css";
 import { dateToShortDate } from "@/utils/datetimeConverter";
 import { getElementById, getSeriesUrl } from "@/lib/utils";
+import { getTitlesAndType } from "@/components/work/overview/titlerenderer/TitleRenderer";
 
 function getAnchor(anchorReference) {
   const seriesAnchorIndex = getIndexForAnchor(Translate(anchorReference));
@@ -86,16 +87,25 @@ WorkGroupingsOverview.propTypes = {
 
 function getSeriesMap({ series, members, workId }) {
   const numberInSeries = series?.numberInSeries?.display || "";
+  const { type, titles } = getTitlesAndType({ work: members[0] });
 
   return (
     members?.length > 0 && {
-      partNumber: series?.numberInSeries?.display,
-      description: Translate({
-        context: "overview",
-        label: "work_groupings_overview_description",
-        vars: [numberInSeries + " "],
-      }),
-      title: series?.title,
+      partNumber: type !== "tvSerie" ? series?.numberInSeries?.display : null,
+      description:
+        type !== "tvSerie"
+          ? Translate({
+              context: "overview",
+              label: "work_groupings_overview_description",
+              vars: [numberInSeries + " "],
+            })
+          : Translate({
+              context: "series_page",
+              label: "part_of_tv_serie",
+              vars: [""],
+            }),
+      title: type === "tvSerie" ? titles.join(" ,") : series?.title,
+      // title: series?.title,
       anchorId: getAnchor(AnchorsEnum.SERIES),
       link: getSeriesUrl(series?.title, workId),
     }
@@ -153,6 +163,8 @@ export default function Wrap({ workId }) {
     current?.manifestations?.mostRelevant?.[0]?.hostPublication;
 
   const allSeries = work_response?.data?.work?.series || [];
+
+  // TODO .. alter title if this is a tvserie
   const allSeriesMap = allSeries?.map((singleSeries) =>
     getSeriesMap({
       series: singleSeries,
