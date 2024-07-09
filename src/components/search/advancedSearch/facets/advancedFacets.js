@@ -157,7 +157,7 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
   let initialcheck;
   return (
     <ul data-cy={`${facetName}`}>
-      {facet?.values
+      {[...facet?.values]
         .sort(sorter)
         .slice(0, numToShow)
         .map((value, index) => (
@@ -179,22 +179,12 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
                 onItemClick(checked, value.key, facetName);
               }}
               checked={initialcheck}
-            />
-
-            <Text
-              tag="span"
-              type="text3"
-              onClick={() => {
-                let element = document.getElementById(
-                  `${facetName}-${value.key}-${index}`
-                );
-                const checked = element["checked"];
-                onItemClick(!checked, value.key, facetName);
-              }}
-              className={styles.facettext}
-            >
-              {value.key}
-            </Text>
+            ></Checkbox>
+            <label htmlFor={`${facetName}-${value.key}-${index}`}>
+              <Text tag="span" type="text3" className={styles.facettext}>
+                {value.key}
+              </Text>
+            </label>
             <Text tag="span" type="text3" className={styles.score}>
               {value.score}
             </Text>
