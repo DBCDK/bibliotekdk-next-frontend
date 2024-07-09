@@ -11,6 +11,7 @@ import Cover from "@/components/base/cover";
 import {
   encodeTitleCreator,
   extractCreatorsPrioritiseCorporation,
+  getSeriesUrl,
 } from "@/lib/utils";
 import Link from "@/components/base/link";
 
@@ -28,7 +29,6 @@ import {
 } from "@/components/work/overview/titlerenderer/TitleRenderer";
 import isEqual from "lodash/isEqual";
 import useFilters from "@/components/hooks/useFilters";
-import { dateToShortDate } from "@/utils/datetimeConverter";
 import { RenderHostPublication } from "@/components/work/overview/workgroupingsoverview/WorkGroupingsOverview";
 
 function TitlesForSearch({ work, isLoading }) {
@@ -95,24 +95,60 @@ function sortMaterialTypesByFilter(materialTypesInFilter) {
   };
 }
 
+/**
+ *
+ * @param work
+ * @returns {*}
+ * @constructor
+ */
+function RenderSeriesSubTitle({ work }) {
+  return work.series.map((serie, index) => {
+    const title = serie.title;
+    const url = getSeriesUrl(title, work.workId);
+
+    return (
+      <Link
+        className={styles.fisk}
+        border={{ top: false, bottom: { keepVisible: true } }}
+        href={url}
+        key={`serie-searchresult-${index}`}
+      >
+        <Text type="text3" lines={1}>
+          Del af {title}
+        </Text>
+      </Link>
+    );
+  });
+}
+
+/**
+ * Render various variations of subtitles .. article, serie, tvserie .. etc.
+ * @param work
+ * @returns {JSX.Element|null}
+ * @constructor
+ */
 function SubTitlesByMaterialType({ work }) {
   const materialType =
     work?.manifestations?.mostRelevant?.[0]?.materialTypes?.[0]
-      ?.materialTypeSpecific?.code;
+      ?.materialTypeGeneral?.code;
   if (!materialType) {
     return null;
   }
 
+  console.log(work, "WORK");
   const manifestation = work?.manifestations?.mostRelevant?.[0];
-
-  console.log(manifestation, "MANIFESTATION");
-  if (materialType === "ARTICLE") {
-    const hospub = manifestation?.hostPublication;
-    return <RenderHostPublication hostPublication={hospub} />;
+  // check if this in an ARTICLES
+  if (materialType === "ARTICLES") {
+    const hostpub = manifestation?.hostPublication;
+    return <RenderHostPublication hostPublication={hostpub} />;
+  }
+  // check if work is part of a serie
+  if (work?.series?.length > 0) {
+    return <RenderSeriesSubTitle work={work} />;
   }
 
-  console.log(materialType, "MATTYPE");
-  return <div>HEST</div>;
+  // we found nothing to handle :)
+  return null;
 }
 
 /**
@@ -175,6 +211,7 @@ export default function ResultRow({
           />
           <div className={styles.col_wrapper}>
             <TitlesForSearch work={work} isLoading={isLoading} />
+            <SubTitlesByMaterialType work={work} />
             <Text
               type="text3"
               className={styles.creator}
@@ -183,7 +220,7 @@ export default function ResultRow({
             >
               {creatorsNames?.join(", ") || " "}
             </Text>
-            <SubTitlesByMaterialType work={work} />
+
             <div className={styles.materials}>
               <Text
                 tag="span"

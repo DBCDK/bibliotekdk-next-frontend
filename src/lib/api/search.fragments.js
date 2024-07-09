@@ -59,6 +59,9 @@ export function all({
         works(limit: $limit, offset: $offset) {
           workId
           latestPublicationDate
+          series {
+            title
+          }
           mainLanguages {
             isoCode
             display

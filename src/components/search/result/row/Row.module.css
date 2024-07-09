@@ -21,6 +21,11 @@
   margin-bottom: calc(var(--underline-height) * -1);
 }
 
+.fisk {
+  width: fit-content;
+  text-decoration-color: blue;
+}
+
 .row_wrapper {
   width: auto;
   display: grid;
