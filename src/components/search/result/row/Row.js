@@ -96,24 +96,25 @@ function sortMaterialTypesByFilter(materialTypesInFilter) {
 }
 
 /**
- *
+ * Subtitle for series in search result - like: "Del af game of thrones"
  * @param work
  * @returns {*}
  * @constructor
  */
 function RenderSeriesSubTitle({ work }) {
+  // there may be more than one serie - the most i've seen is three
   return work.series.map((serie, index) => {
     const title = serie.title;
     const url = getSeriesUrl(title, work.workId);
 
     return (
       <Link
-        className={styles.fisk}
+        className={styles.subtitles}
         border={{ top: false, bottom: { keepVisible: true } }}
         href={url}
         key={`serie-searchresult-${index}`}
       >
-        <Text type="text3" lines={1}>
+        <Text type="text3" lines={1} tag="span">
           Del af {title}
         </Text>
       </Link>
@@ -127,18 +128,14 @@ function RenderSeriesSubTitle({ work }) {
  * @returns {JSX.Element|null}
  * @constructor
  */
-function SubTitlesByMaterialType({ work }) {
+function SubTitlesByMaterial({ work }) {
   const materialType =
     work?.manifestations?.mostRelevant?.[0]?.materialTypes?.[0]
       ?.materialTypeGeneral?.code;
-  if (!materialType) {
-    return null;
-  }
 
-  console.log(work, "WORK");
-  const manifestation = work?.manifestations?.mostRelevant?.[0];
-  // check if this in an ARTICLES
+  // check if this is an ARTICLES
   if (materialType === "ARTICLES") {
+    const manifestation = work?.manifestations?.mostRelevant?.[0];
     const hostpub = manifestation?.hostPublication;
     return <RenderHostPublication hostPublication={hostpub} />;
   }
@@ -146,8 +143,9 @@ function SubTitlesByMaterialType({ work }) {
   if (work?.series?.length > 0) {
     return <RenderSeriesSubTitle work={work} />;
   }
+  // @TODO .. there are probably more :)
 
-  // we found nothing to handle :)
+  // we found nothing to handle
   return null;
 }
 
@@ -211,7 +209,7 @@ export default function ResultRow({
           />
           <div className={styles.col_wrapper}>
             <TitlesForSearch work={work} isLoading={isLoading} />
-            <SubTitlesByMaterialType work={work} />
+            <SubTitlesByMaterial work={work} />
             <Text
               type="text3"
               className={styles.creator}
