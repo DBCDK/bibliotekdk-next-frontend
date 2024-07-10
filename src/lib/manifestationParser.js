@@ -382,8 +382,9 @@ function getTvSeriesTitle(Titles) {
     ...((disc && [disc]) || []),
   ];
   const subtitle =
-    subtitleArray.length > 0 &&
-    "(" + upperFirst(subtitleArray.join(", ")) + ")";
+    subtitleArray.length > 0
+      ? "(" + upperFirst(subtitleArray.join(", ")) + ")"
+      : "";
 
   return title ? `${title} ${subtitle && subtitle}` : null;
 }

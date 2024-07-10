@@ -11,6 +11,7 @@ import Cover from "@/components/base/cover";
 import {
   encodeTitleCreator,
   extractCreatorsPrioritiseCorporation,
+  getSeriesUrl,
 } from "@/lib/utils";
 import Link from "@/components/base/link";
 
@@ -28,6 +29,7 @@ import {
 } from "@/components/work/overview/titlerenderer/TitleRenderer";
 import isEqual from "lodash/isEqual";
 import useFilters from "@/components/hooks/useFilters";
+import { RenderHostPublication } from "@/components/work/overview/workgroupingsoverview/WorkGroupingsOverview";
 
 function TitlesForSearch({ work, isLoading }) {
   // we need the titles here for the lineclamp - other than that title are no longer used in
@@ -94,6 +96,60 @@ function sortMaterialTypesByFilter(materialTypesInFilter) {
 }
 
 /**
+ * Subtitle for series in search result - like: "Del af game of thrones"
+ * @param work
+ * @returns {*}
+ * @constructor
+ */
+function RenderSeriesSubTitle({ work }) {
+  // there may be more than one serie - the most i've seen is three
+  return work.series.map((serie, index) => {
+    const title = serie.title;
+    const url = getSeriesUrl(title, work.workId);
+
+    return (
+      <Link
+        className={styles.subtitles}
+        border={{ top: false, bottom: { keepVisible: true } }}
+        href={url}
+        key={`serie-searchresult-${index}`}
+      >
+        <Text type="text3" lines={1} tag="span">
+          Del af {title}
+        </Text>
+      </Link>
+    );
+  });
+}
+
+/**
+ * Render various variations of subtitles .. article, serie, tvserie .. etc.
+ * @param work
+ * @returns {JSX.Element|null}
+ * @constructor
+ */
+function SubTitlesByMaterial({ work }) {
+  const materialType =
+    work?.manifestations?.mostRelevant?.[0]?.materialTypes?.[0]
+      ?.materialTypeGeneral?.code;
+
+  // check if this is an ARTICLES
+  if (materialType === "ARTICLES") {
+    const manifestation = work?.manifestations?.mostRelevant?.[0];
+    const hostpub = manifestation?.hostPublication;
+    return <RenderHostPublication hostPublication={hostpub} />;
+  }
+  // check if work is part of a serie
+  if (work?.series?.length > 0) {
+    return <RenderSeriesSubTitle work={work} />;
+  }
+  // @TODO .. there are probably more :)
+
+  // we found nothing to handle
+  return null;
+}
+
+/**
  * Row representation of a search result entry
  *
  * @param {Object} work
@@ -153,6 +209,7 @@ export default function ResultRow({
           />
           <div className={styles.col_wrapper}>
             <TitlesForSearch work={work} isLoading={isLoading} />
+            <SubTitlesByMaterial work={work} />
             <Text
               type="text3"
               className={styles.creator}
@@ -161,6 +218,7 @@ export default function ResultRow({
             >
               {creatorsNames?.join(", ") || " "}
             </Text>
+
             <div className={styles.materials}>
               <Text
                 tag="span"

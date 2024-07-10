@@ -58,6 +58,10 @@ export function all({
       search(q: $q, filters: $filters, search_exact: $search_exact) {
         works(limit: $limit, offset: $offset) {
           workId
+          latestPublicationDate
+          series {
+            title
+          }
           mainLanguages {
             isoCode
             display
@@ -78,6 +82,7 @@ export function all({
               }
               hostPublication {
                 title
+                issue
               }
               publisher
               edition {
