@@ -11,7 +11,6 @@ import Cover from "@/components/base/cover";
 import {
   encodeTitleCreator,
   extractCreatorsPrioritiseCorporation,
-  getSeriesUrl,
 } from "@/lib/utils";
 import Link from "@/components/base/link";
 
