@@ -322,6 +322,7 @@ export function holdingsForAgency({ agencyId, pids }) {
           openingHours
           postalAddress
           postalCode
+          city
         }
       }
     }`,
