@@ -824,6 +824,9 @@ export function overviewWork({ workId }) {
     query: `
     query overviewWork($workId: String!) {
       work(id: $workId) {
+        series {
+          ...seriesFragment
+        }
         titles {
           full
           parallel
@@ -885,7 +888,8 @@ export function overviewWork({ workId }) {
     ${genreAndFormAndWorkTypesFragment}
     ${creatorsFragment}
     ${materialTypesFragment}
-    ${tvSeriesFragment}
+    ${tvSeriesFragment},
+    ${seriesFragment}
     `,
     variables: { workId },
     slowThreshold: 3000,
