@@ -194,8 +194,6 @@ export default function ManifestationFull({ workId, pid, hasBeenSeen }) {
     return parseManifestation(data?.manifestation);
   }, [data?.manifestation]);
 
-  console.log(data?.manifestation);
-
   if (!data?.manifestation || !data?.manifestation?.pid) {
     return <></>;
   }
