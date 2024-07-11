@@ -94,7 +94,10 @@ function Address({ singleBranch }) {
             iconSrc={ExternalSvg}
             iconAnimation={[animations["h-elastic"], animations["f-elastic"]]}
             textType="type2"
-            href={`https://www.google.com/maps/place/${singleBranch?.postalAddress}+${singleBranch?.postalCode}+${singleBranch?.city}`}
+            href={`https://www.google.com/maps/place/${singleBranch?.postalAddress?.replace(
+              "\r\n",
+              "+"
+            )}+${singleBranch?.postalCode}+${singleBranch?.city}`}
             target="_blank"
           >
             {Translate({
