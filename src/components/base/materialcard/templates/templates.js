@@ -426,7 +426,9 @@ export function templateForBigWorkCard({
   const coverSrc = getCoverImage(material?.manifestations?.mostRelevant);
 
   const readThisFirst = material?.series?.[0]?.readThisFirst;
-  const numberInSeries = material?.series?.[0]?.numberInSeries?.display;
+  const numberInSeries =
+    material?.series?.[0]?.numberInSeries?.number?.[0] ||
+    material?.series?.[0]?.numberInSeries?.display;
 
   return {
     link_href: getWorkUrl(fullTitle, creators, material?.workId),
@@ -435,16 +437,16 @@ export function templateForBigWorkCard({
     workId: material?.workId,
     children: (
       <>
-        {/* .. NOT sure if this one should be there - outcommented for now :) */}
-        {/*{tvSeriesTitle && (*/}
-        {/*  <Text tag="span" type="text4" skeleton={isLoading} lines={1}>*/}
-        {/*    {Translate({*/}
-        {/*      context: "series_page",*/}
-        {/*      label: "part_of_tv_serie",*/}
-        {/*      vars: [tvSeriesTitle],*/}
-        {/*    })}*/}
-        {/*  </Text>*/}
-        {/*)}*/}
+        {/* Render tvseries as first priority */}
+        {tvSeriesTitle && (
+          <Text tag="span" type="text4" skeleton={isLoading} lines={1}>
+            {Translate({
+              context: "series_page",
+              label: "part_of_tv_serie",
+              vars: [tvSeriesTitle],
+            })}
+          </Text>
+        )}
         {(numberInSeries || readThisFirst) && (
           <div className={styles.begin_with_this_and_number_in_series}>
             {numberInSeries && !tvSeriesTitle && (

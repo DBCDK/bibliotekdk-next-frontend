@@ -102,22 +102,22 @@ function sortMaterialTypesByFilter(materialTypesInFilter) {
  * @constructor
  */
 function RenderSeriesSubTitle({ work }) {
+  // check if work is part of a serie
+  if (work?.series?.length < 1) {
+    return null;
+  }
   // there may be more than one serie - the most i've seen is three
-  return work.series.map((serie, index) => {
+  return work?.series?.map((serie, index) => {
     const title = serie.title;
-    const url = getSeriesUrl(title, work.workId);
-
     return (
-      <Link
-        className={styles.subtitles}
-        border={{ top: false, bottom: { keepVisible: true } }}
-        href={url}
+      <Text
+        type="text3"
+        lines={1}
+        tag="span"
         key={`serie-searchresult-${index}`}
       >
-        <Text type="text3" lines={1} tag="span">
-          Del af {title}
-        </Text>
-      </Link>
+        Del af: {title}
+      </Text>
     );
   });
 }
@@ -139,10 +139,7 @@ function SubTitlesByMaterial({ work }) {
     const hostpub = manifestation?.hostPublication;
     return <RenderHostPublication hostPublication={hostpub} />;
   }
-  // check if work is part of a serie
-  if (work?.series?.length > 0) {
-    return <RenderSeriesSubTitle work={work} />;
-  }
+
   // @TODO .. there are probably more :)
 
   // we found nothing to handle
@@ -210,6 +207,7 @@ export default function ResultRow({
           <div className={styles.col_wrapper}>
             <TitlesForSearch work={work} isLoading={isLoading} />
             <SubTitlesByMaterial work={work} />
+            <RenderSeriesSubTitle work={work} />
             <Text
               type="text3"
               className={styles.creator}
