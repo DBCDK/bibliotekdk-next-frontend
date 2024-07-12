@@ -630,23 +630,6 @@ function RenderPlayers({ values }) {
 }
 
 /**
- *
- * @param values
- *  Notes - always an array, might be empty
- * @returns {*}
- */
-function getPlayingTime({ values }) {
-  console.log(values, "VALUES");
-
-  if (isEmpty(values)) {
-    return null;
-  }
-  const playingTimes = values?.map((val) => val);
-  console.log(playingTimes, "PLAYINGTIMES");
-  return playingTimes;
-}
-
-/**
  * Main method for retrieving fields to show in details section on workpage.
  * Configurable arrays for different materialtypes - the fieldsMap holds array of
  * configured objects to be shown - the DEFAULT is the base and may be overwritten if desired.
