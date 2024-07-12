@@ -466,6 +466,7 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
   }
   notes {
     display
+    type
   }
   materialTypes {
     materialTypeGeneral {

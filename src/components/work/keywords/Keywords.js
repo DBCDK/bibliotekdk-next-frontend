@@ -125,7 +125,11 @@ function groupSubjects(subjects) {
 export function FlatSubjectsForFullManifestation({ subjects }) {
   // const grouped = groupSubjects(subjects?.dbcVerified);
   // @TODO .. should we use this group shit for anything in full manifestation ?
+  console.log(subjects, "SUBJECT");
 
+  if (subjects.length < 1) {
+    return null;
+  }
   return (
     <div className={styles.words}>
       {subjects?.map((subject, index) => {
