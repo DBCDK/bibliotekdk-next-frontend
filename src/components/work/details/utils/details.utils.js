@@ -108,9 +108,19 @@ function parsePhysicalDescriptions(manifestation) {
   );
 }
 
+/**
+ * Requirements has been moved to notes :)
+ * eg.
+ *  type": "TECHNICAL_REQUIREMENTS"
+ * "display": ["Systemkrav: Windows 95 styresystemet, cd-rom drev, lydkort"]
+ *
+ * @param manifestation
+ * @returns {string | undefined}
+ */
 function getRequirementsFromPhysicalDesc(manifestation) {
-  return manifestation?.physicalDescriptions
-    ?.map((description) => description.requirements)
+  return manifestation?.notes
+    ?.filter((note) => note.type === "TECHNICAL_REQUIREMENTS")
+    ?.map((note) => note?.display[0])
     .join(", ");
 }
 
@@ -673,6 +683,7 @@ function RenderPlayers({ values }) {
  */
 export function fieldsForRows(manifestation, work, context) {
   const materialType = work?.workTypes?.[0] || null;
+
   const fieldsMap = {
     DEFAULT: [
       {
@@ -773,6 +784,19 @@ export function fieldsForRows(manifestation, work, context) {
         },
       },
       {
+        playingtime: {
+          label: Translate({ ...context, label: "playingtime" }),
+          value:
+            manifestation?.notes?.length > 0 &&
+            manifestation.notes
+              ?.filter(
+                (note) => note?.type === "ESTIMATED_PLAYING_TIME_FOR_GAMES"
+              )
+              .map((note) => note.display[0])
+              .join(", "),
+        },
+      },
+      {
         audience: {
           label: Translate({ ...context, label: "game-audience" }),
           value: manifestation?.audience?.PEGI?.display || "",
@@ -807,12 +831,6 @@ export function fieldsForRows(manifestation, work, context) {
         physicalDescriptions: {
           label: "",
           value: null,
-        },
-      },
-      {
-        playingtime: {
-          label: Translate({ ...context, label: "playingtime" }),
-          value: manifestation?.physicalDescriptions?.[0]?.playingTime,
         },
       },
       {

@@ -948,6 +948,10 @@
         "da": "Beskrivelse fra materialet",
         "en": "Description from material"
       },
+      "playingtime": {
+        "da": "Estimeret spilletid",
+        "en": "Estimated playingtime"
+      },
       "id": {
         "da": "Id",
         "en": "Id"

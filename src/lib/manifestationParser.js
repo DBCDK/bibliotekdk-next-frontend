@@ -184,11 +184,13 @@ const fields = () => [
       context: "bibliographic-data",
       label: "subject",
     }),
-    valueParser: (value) => (
-      <FlatSubjectsForFullManifestation
-        subjects={value.dbcVerified.map((val) => val.display)}
-      />
-    ),
+    valueParser: (value) => {
+      const subjects = value?.dbcVerified?.map((val) => val.display);
+      if (subjects.length < 1) {
+        return null;
+      }
+      return <FlatSubjectsForFullManifestation subjects={subjects} />;
+    },
   },
   // {
   //   dataField: "physicalDescriptions",
@@ -238,15 +240,37 @@ const fields = () => [
       context: "bibliographic-data",
       label: "notes",
     }),
+    // playingtime AND technical requirements has been moved to notes - they
+    // are displayed independent -> filter them away from notes field
     valueParser: (values) =>
-      values?.map((note, idx) => (
-        <div key={`${note?.display?.join(", ")}${idx}`}>
-          {note?.display?.map((display, idx2) => (
-            <div key={`${display}${idx2}`}>{display}</div>
-          ))}
-          {values?.length > idx + 1 && <div>&nbsp;</div>}
-        </div>
-      )),
+      values
+        ?.filter(
+          (note) =>
+            note?.type !== "ESTIMATED_PLAYING_TIME_FOR_GAMES" &&
+            note?.type !== "TECHNICAL_REQUIREMENTS"
+        )
+        .map((note, idx) => (
+          <div key={`${note?.display?.join(", ")}${idx}`}>
+            {note?.display?.map((display, idx2) => (
+              <div key={`${display}${idx2}`}>{display}</div>
+            ))}
+            {values?.length > idx + 1 && <div>&nbsp;</div>}
+          </div>
+        )),
+  },
+  {
+    dataField: "notes",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "playingtime",
+    }),
+    valueParser: (values) => {
+      console.log(values, "VALUES");
+      return values
+        ?.filter((note) => note?.type === "ESTIMATED_PLAYING_TIME_FOR_GAMES")
+        .map((note) => note.display[0])
+        .join(", ");
+    },
   },
   {
     // TODO: Prefer use of the language comment (JED 0.8)
