@@ -10,6 +10,7 @@ import { LogicalOperatorDropDown } from "@/components/search/advancedSearch/fiel
 import { FormatFieldSearchIndexes } from "../advancedSearchResult/topBar/TopBar";
 import { FormatedFilters } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
+import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
 
 //max number of search queries to be combined
 const MAX_ITEMS = 4;
@@ -42,6 +43,31 @@ function mergeFacets(fieldSearchObjects) {
     }
   });
   return facets;
+}
+
+function mergeQuickFilters(fieldSearchObjects) {
+  let quickFilters = [];
+  fieldSearchObjects.forEach((item) => {
+    if (item.quickfilters?.length > 0) {
+      item.quickfilters?.forEach((filter) => {
+        let index = quickFilters.findIndex(
+          (i) => i.searchIndex === filter.searchIndex
+        );
+        if (index === -1) {
+          // if searchIndex not already added, add a new object with the searchIndex and value
+          quickFilters.push(filter);
+        } else {
+          // else merge with the already existing objects (and filter for duplicates)
+          quickFilters[index].values = quickFilters[index]?.values?.concat(
+            filter.values.filter(
+              (value) => !quickFilters[index]?.values?.includes(value)
+            )
+          );
+        }
+      });
+    }
+  });
+  return quickFilters;
 }
 
 function SearchItem({ item, index, updatePrefixLogicalOperator }) {
@@ -83,6 +109,7 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
   //queriesItems are the queries selected for combination and shown in the combine queries overview.
   const [queriesItems, setQueriesItems] = useState([]);
   const { restartFacetsHook } = useFacets();
+  const { resetQuickFilters } = useQuickFilters();
   const searchItemsWrapper = useRef(null);
 
   useEffect(() => {
@@ -129,6 +156,7 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
               : item.fieldSearch,
           prefixlogicalopreator: newQueriesItems.length === 0 ? null : "AND",
           selectedFacets: item?.selectedFacets,
+          quickfilters: item?.selectedQuickFilters,
         });
       }
     });
@@ -144,6 +172,7 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
     setQueriesItems(newQueriesItems);
   };
   const facets = useMemo(() => mergeFacets(queriesItems), [queriesItems]);
+  const quickFilters = mergeQuickFilters(queriesItems);
 
   return (
     <div className={styles.container}>
@@ -168,7 +197,11 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
         ))}
       </div>
 
-      <FormatedFilters facets={facets} className={styles.facets} />
+      <FormatedFilters
+        facets={facets}
+        quickFilters={quickFilters}
+        className={styles.facets}
+      />
 
       {queries.length > MAX_ITEMS && (
         <div className={styles.errorBox} data-cy="combine-search-error-box">
@@ -199,8 +232,10 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
             const query = {
               cql,
               facets: JSON.stringify(facets),
+              quickfilters: JSON.stringify(quickFilters),
             };
             restartFacetsHook();
+            resetQuickFilters();
             router.push({ pathname: "/avanceret", query });
           }}
         >
