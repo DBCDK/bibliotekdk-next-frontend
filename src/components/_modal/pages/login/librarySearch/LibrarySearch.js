@@ -11,7 +11,6 @@ import styles from "./LibrarySearch.module.css";
 import PropTypes from "prop-types";
 import cx from "classnames";
 import { useLastLoginBranch } from "@/components/hooks/useLastLoginBranch";
-//import Select from "../Select";
 import Select from "@/components/_modal/pages/login/Select";
 import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
 import { signIn } from "@dbcdk/login-nextjs/client";
@@ -25,29 +24,19 @@ import { useState } from "react";
  * @returns {React.JSX.Element}
  */
 export default function LibrarySearch(props) {
-  const { onChange, desktop, onLibrarySelect } = props;
-  console.log("LibrarySearch.props", props);
+  const { onChange, desktop } = props;
   const [isSearchInputEmpty, setIsSearchInputEmpty] = useState(true);
   const { lastLoginBranch } = useLastLoginBranch();
-  console.log("lastLoginBranch", lastLoginBranch);
   const branchId = lastLoginBranch?.branchId;
 
   const onLogin = () => {
-    const callbackUID = null;
-
-    const callbackUrl = getCallbackUrl(branchId, callbackUID);
+    const callbackUrl = getCallbackUrl(branchId);
 
     signIn(
       "adgangsplatformen",
       { callbackUrl },
       { agency: branchId, force_login: 1 }
     );
-  };
-
-  const onInputChange = (value) => {
-    console.log("onInputChange", value);
-    setIsSearchInputEmpty(value?.length === 0);
-    debounce((value) => onChange(value), 100);
   };
 
   return (
@@ -64,7 +53,6 @@ export default function LibrarySearch(props) {
             className={styles.select}
             branch={lastLoginBranch}
             onSelect={onLogin}
-            //isLoading={isLoading}
             includeArrows={true}
           />
 
@@ -85,7 +73,10 @@ export default function LibrarySearch(props) {
           label: "search-for-library",
         })}
         className={styles.search}
-        onChange={onInputChange}
+        onChange={debounce((value) => {
+          setIsSearchInputEmpty(value?.length === 0);
+          onChange(value);
+        }, 100)}
       />
       <Text type="text3">
         {desktop

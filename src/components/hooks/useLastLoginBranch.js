@@ -12,7 +12,6 @@ export const useLastLoginBranch = () => {
 
   useEffect(() => {
     const branch = getLocalStorageItem(LAST_LOGIN_BRANCH_KEY);
-    //todo json parse?
     setLastLoginBranch(JSON.parse(branch));
   }, []);
 

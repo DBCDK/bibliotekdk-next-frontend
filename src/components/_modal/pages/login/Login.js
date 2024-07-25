@@ -64,12 +64,11 @@ export function Login({
   } = context || {};
   const windowWidth = useWindowSize().width;
   const isMobile = windowWidth <= 414;
-  console.log("context", context);
+
   const showResultsList = hasQuery && allBranches?.length > 0 && !isMobile;
   const showMitIDLogin =
     !hasQuery || !allBranches || allBranches.length < 1 || isMobile;
-  const { lastLoginBranch, removeLastLoginBranch, setLastLoginBranch } =
-    useLastLoginBranch();
+  const { setLastLoginBranch } = useLastLoginBranch();
   const onSelect = (branch) => {
     //spørg morten om alle har branch id
     if (branch.branchId) {
@@ -113,7 +112,7 @@ export function Login({
     <div className={styles.login}>
       <Top onClose={removeModalsFromStore} />
       <div>
-        <Title type="title4" className={styles.title + "messi"} tag="h2">
+        <Title type="title4" className={styles.title} tag="h2">
           {title}
         </Title>
       </div>
