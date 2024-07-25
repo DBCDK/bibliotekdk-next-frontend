@@ -48,7 +48,9 @@ export default function LibrarySearch(props) {
     >
       {lastLoginBranch && isSearchInputEmpty && (
         <>
-          <Text type="text1">Seneste login</Text>
+          <Text type="text1">
+            {Translate({ context: "login", label: "latest-login" })}
+          </Text>
           <Select
             className={styles.select}
             branch={lastLoginBranch}
@@ -57,7 +59,7 @@ export default function LibrarySearch(props) {
           />
 
           <Text className={styles.otherOptions} type="text1">
-            Andre muligheder
+            {Translate({ context: "login", label: "other-options" })}
           </Text>
         </>
       )}
