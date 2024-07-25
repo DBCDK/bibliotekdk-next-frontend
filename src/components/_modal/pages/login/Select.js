@@ -26,6 +26,7 @@ export default function Select({
   disabled,
   includeArrows,
   _ref,
+  className,
 }) {
   // Check for a highlight key matching on "name" prop
   const matchName = find(branch.highlights, {
@@ -43,7 +44,7 @@ export default function Select({
       onSelect={() => onSelect(branch)}
       label={branch.name}
       disabled={disabled}
-      className={[animations["on-hover"]].join(" ")}
+      className={[animations["on-hover"], className].join(" ")}
       includeArrows={includeArrows}
       _ref={_ref}
     >

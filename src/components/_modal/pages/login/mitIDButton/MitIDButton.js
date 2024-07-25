@@ -11,6 +11,7 @@ import styles from "./MitIDButton.module.css";
 import Translate from "@/components/base/translate";
 import { signIn } from "@dbcdk/login-nextjs/client";
 import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
+import { useLastLoginBranch } from "@/components/hooks/useLastLoginBranch";
 
 /**
  * Shows MitID login button and opens MitID login
@@ -19,7 +20,10 @@ import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
  */
 export default function MitIDButton({ callBackUUID }) {
   const callBackUrl = getCallbackUrl(null, callBackUUID);
+  const { removeLastLoginBranch } = useLastLoginBranch();
+
   const onMitIdLogin = () => {
+    removeLastLoginBranch();
     signIn(
       "adgangsplatformen",
       { callbackUrl: callBackUrl },
