@@ -27,6 +27,7 @@ import { useLastLoginBranch } from "@/components/hooks/useLastLoginBranch";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import LastLoginLibrary from "@/components/_modal/pages/login/lastLoginLibrary/LastLoginLibrary";
+import useDataCollect from "@/lib/useDataCollect";
 
 /**
  * contains the login page for login modal - both for desktop and mobile
@@ -71,8 +72,16 @@ export function Login({
   const showResultsList = hasQuery && allBranches?.length > 0 && !isMobile;
   const showMitIDLogin =
     !hasQuery || !allBranches || allBranches.length < 1 || isMobile;
-  const { setLastLoginBranch } = useLastLoginBranch();
+  const { lastLoginBranch, setLastLoginBranch } = useLastLoginBranch();
+  const collect = useDataCollect();
   const onSelect = (branch) => {
+    //Matomo track
+    if (lastLoginBranch) {
+      collect.collectSearchLibraryWithLastUsed();
+    } else {
+      collect.collectSearchLibrary();
+    }
+
     if (branch?.branchId) {
       setLastLoginBranch(branch);
     }

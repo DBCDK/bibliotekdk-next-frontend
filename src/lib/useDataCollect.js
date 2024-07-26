@@ -54,5 +54,21 @@ export default function useDataCollect() {
         ]);
       }
     },
+    //todo matomo korrekt variables?
+    collectChooseLastUsedLibrary: async () => {
+      matomoPushEvent(["Login", "Klik på sidst anvendte bibliotek"]);
+    },
+    collectSearchLibrary: async () => {
+      matomoPushEvent(["Login", "Søg bibliotek frem"]);
+    },
+    collectSearchLibraryWithLastUsed: async () => {
+      matomoPushEvent(["Login", "Søg bibliotek frem med sidst anvendte"]);
+    },
+    collectUseMitID: async () => {
+      matomoPushEvent(["Login", "Klik på MitID knap"]);
+    },
+    collectCreateLibraryUser: async () => {
+      matomoPushEvent(["Login", "Opret dig som låner på et bibliotek"]);
+    },
   };
 }
