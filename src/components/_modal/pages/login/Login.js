@@ -70,8 +70,7 @@ export function Login({
     !hasQuery || !allBranches || allBranches.length < 1 || isMobile;
   const { setLastLoginBranch } = useLastLoginBranch();
   const onSelect = (branch) => {
-    //spørg morten om alle har branch id
-    if (branch.branchId) {
+    if (branch?.branchId) {
       setLastLoginBranch(branch);
     }
     //save last login branch id

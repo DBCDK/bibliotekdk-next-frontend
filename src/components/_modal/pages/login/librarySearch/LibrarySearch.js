@@ -25,6 +25,7 @@ import { useState } from "react";
  */
 export default function LibrarySearch(props) {
   const { onChange, desktop } = props;
+  //is true when search input is empty
   const [isSearchInputEmpty, setIsSearchInputEmpty] = useState(true);
   const { lastLoginBranch } = useLastLoginBranch();
   const branchId = lastLoginBranch?.branchId;
