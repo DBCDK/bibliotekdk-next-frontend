@@ -23,6 +23,7 @@ import styles from "./Login.module.css";
 import SearchResultList from "./searchResultList/SearchResultList";
 import MobileLoginButton from "./mobileLoginButton/MobileLoginButton";
 import useWindowSize from "@/components/hooks/useWindowSize";
+import { useLastLoginBranch } from "@/components/hooks/useLastLoginBranch";
 
 /**
  * contains the login page for login modal - both for desktop and mobile
@@ -67,8 +68,12 @@ export function Login({
   const showResultsList = hasQuery && allBranches?.length > 0 && !isMobile;
   const showMitIDLogin =
     !hasQuery || !allBranches || allBranches.length < 1 || isMobile;
-
+  const { setLastLoginBranch } = useLastLoginBranch();
   const onSelect = (branch) => {
+    if (branch?.branchId) {
+      setLastLoginBranch(branch);
+    }
+    //save last login branch id
     if (branch?.borrowerCheck) {
       modal.push("openAdgangsplatform", {
         agencyId: branch.agencyId,
@@ -111,7 +116,11 @@ export function Login({
         </Title>
       </div>
       {/* shown above 414px /> */}
-      <LibrarySearch onChange={onChange} desktop={true} />
+      <LibrarySearch
+        onChange={onChange}
+        desktop={true}
+        onLibrarySelect={onSelect}
+      />
       {/* shown up to 414px /> */}
       <MobileLoginButton
         title={title}

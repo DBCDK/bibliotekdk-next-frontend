@@ -10,6 +10,11 @@ import Translate from "@/components/base/translate";
 import styles from "./LibrarySearch.module.css";
 import PropTypes from "prop-types";
 import cx from "classnames";
+import { useLastLoginBranch } from "@/components/hooks/useLastLoginBranch";
+import Select from "@/components/_modal/pages/login/Select";
+import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
+import { signIn } from "@dbcdk/login-nextjs/client";
+import { useState } from "react";
 
 /**
  * search field for pickup locations with different texts for desktop and mobile
@@ -20,6 +25,21 @@ import cx from "classnames";
  */
 export default function LibrarySearch(props) {
   const { onChange, desktop } = props;
+  //is true when search input is empty
+  const [isSearchInputEmpty, setIsSearchInputEmpty] = useState(true);
+  const { lastLoginBranch } = useLastLoginBranch();
+  const branchId = lastLoginBranch?.branchId;
+
+  const onLogin = () => {
+    const callbackUrl = getCallbackUrl(branchId);
+
+    signIn(
+      "adgangsplatformen",
+      { callbackUrl },
+      { agency: branchId, force_login: 1 }
+    );
+  };
+
   return (
     <section
       className={cx({
@@ -27,6 +47,23 @@ export default function LibrarySearch(props) {
         [styles.hide]: desktop,
       })}
     >
+      {lastLoginBranch && isSearchInputEmpty && (
+        <>
+          <Text type="text1">
+            {Translate({ context: "login", label: "latest-login" })}
+          </Text>
+          <Select
+            className={styles.select}
+            branch={lastLoginBranch}
+            onSelect={onLogin}
+            includeArrows={true}
+          />
+
+          <Text className={styles.otherOptions} type="text1">
+            {Translate({ context: "login", label: "other-options" })}
+          </Text>
+        </>
+      )}
       <Text type="text2">
         {desktop
           ? Translate({ context: "login", label: "login-via-library" })
@@ -39,7 +76,10 @@ export default function LibrarySearch(props) {
           label: "search-for-library",
         })}
         className={styles.search}
-        onChange={debounce((value) => onChange(value), 100)}
+        onChange={debounce((value) => {
+          setIsSearchInputEmpty(value?.length === 0);
+          onChange(value);
+        }, 100)}
       />
       <Text type="text3">
         {desktop

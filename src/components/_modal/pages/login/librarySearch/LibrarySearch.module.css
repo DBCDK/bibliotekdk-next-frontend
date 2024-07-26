@@ -16,3 +16,15 @@
     padding-top: 0;
   }
 }
+
+.otherOptions {
+  margin-top: var(--pt4);
+  margin-bottom: var(--pt2);
+}
+.select {
+  border-top: 1px solid var(--iron);
+  margin-top: var(--pt1);
+}
+.select div {
+  margin-left: 0;
+}
