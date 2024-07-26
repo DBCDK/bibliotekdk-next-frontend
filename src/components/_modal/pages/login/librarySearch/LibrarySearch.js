@@ -11,11 +11,8 @@ import styles from "./LibrarySearch.module.css";
 import PropTypes from "prop-types";
 import cx from "classnames";
 import { useLastLoginBranch } from "@/components/hooks/useLastLoginBranch";
-import Select from "@/components/_modal/pages/login/Select";
-import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
-import { signIn } from "@dbcdk/login-nextjs/client";
 import { useState } from "react";
-
+import LastLoginLibrary from "@/components/_modal/pages/login/lastLoginLibrary/LastLoginLibrary";
 /**
  * search field for pickup locations with different texts for desktop and mobile
  * for desktop, its shown in login modal
@@ -28,17 +25,6 @@ export default function LibrarySearch(props) {
   //is true when search input is empty
   const [isSearchInputEmpty, setIsSearchInputEmpty] = useState(true);
   const { lastLoginBranch } = useLastLoginBranch();
-  const branchId = lastLoginBranch?.branchId;
-
-  const onLogin = () => {
-    const callbackUrl = getCallbackUrl(branchId);
-
-    signIn(
-      "adgangsplatformen",
-      { callbackUrl },
-      { agency: branchId, force_login: 1 }
-    );
-  };
 
   return (
     <section
@@ -47,23 +33,7 @@ export default function LibrarySearch(props) {
         [styles.hide]: desktop,
       })}
     >
-      {lastLoginBranch && isSearchInputEmpty && (
-        <>
-          <Text type="text1">
-            {Translate({ context: "login", label: "latest-login" })}
-          </Text>
-          <Select
-            className={styles.select}
-            branch={lastLoginBranch}
-            onSelect={onLogin}
-            includeArrows={true}
-          />
-
-          <Text className={styles.otherOptions} type="text1">
-            {Translate({ context: "login", label: "other-options" })}
-          </Text>
-        </>
-      )}
+      {lastLoginBranch && isSearchInputEmpty && <LastLoginLibrary />}
       <Text type="text2">
         {desktop
           ? Translate({ context: "login", label: "login-via-library" })

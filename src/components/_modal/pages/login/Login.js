@@ -24,6 +24,9 @@ import SearchResultList from "./searchResultList/SearchResultList";
 import MobileLoginButton from "./mobileLoginButton/MobileLoginButton";
 import useWindowSize from "@/components/hooks/useWindowSize";
 import { useLastLoginBranch } from "@/components/hooks/useLastLoginBranch";
+import Translate from "@/components/base/translate";
+import Text from "@/components/base/text";
+import LastLoginLibrary from "@/components/_modal/pages/login/lastLoginLibrary/LastLoginLibrary";
 
 /**
  * contains the login page for login modal - both for desktop and mobile
@@ -106,7 +109,6 @@ export function Login({
   function removeModalsFromStore() {
     modal.setStore([]);
   }
-
   return (
     <div className={styles.login}>
       <Top onClose={removeModalsFromStore} />
@@ -114,6 +116,9 @@ export function Login({
         <Title type="title4" className={styles.title} tag="h2">
           {title}
         </Title>
+        <Text type="text3" className={styles.chooseLoginType}>
+          {Translate({ context: "login", label: "login-type" })}
+        </Text>
       </div>
       {/* shown above 414px /> */}
       <LibrarySearch
@@ -121,6 +126,7 @@ export function Login({
         desktop={true}
         onLibrarySelect={onSelect}
       />
+      {isMobile && <LastLoginLibrary />}
       {/* shown up to 414px /> */}
       <MobileLoginButton
         title={title}

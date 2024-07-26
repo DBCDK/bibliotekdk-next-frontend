@@ -4,7 +4,6 @@
  */
 
 import Button from "@/components/base/button";
-import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import { useModal } from "@/components/_modal/Modal";
 import styles from "./MobileLoginButton.module.css";
@@ -18,9 +17,6 @@ export default function MobileLoginButton(props) {
 
   return (
     <>
-      <Text type="text3" className={styles.chooseLoginType}>
-        {Translate({ context: "login", label: "login-type" })}
-      </Text>
       <Button
         type="secondary"
         className={styles.withLoanerInfoButton}
