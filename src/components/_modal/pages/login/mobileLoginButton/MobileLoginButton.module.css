@@ -4,8 +4,7 @@
 }
 
 @media (min-width: 415px) {
-  .withLoanerInfoButton,
-  .chooseLoginType {
+  .withLoanerInfoButton {
     display: none;
   }
 }
