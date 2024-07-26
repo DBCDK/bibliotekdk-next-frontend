@@ -18,9 +18,6 @@ export default function MobileLoginButton(props) {
 
   return (
     <>
-      <Text type="text3" className={styles.chooseLoginType}>
-        {Translate({ context: "login", label: "login-type" })}
-      </Text>
       <Button
         type="secondary"
         className={styles.withLoanerInfoButton}

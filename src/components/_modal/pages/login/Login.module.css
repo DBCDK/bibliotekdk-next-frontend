@@ -16,3 +16,7 @@
     padding: 0 var(--pt6) var(--pt3) var(--pt6);
   }
 }
+
+.chooseLoginType {
+  padding-bottom: var(--pt4);
+}
