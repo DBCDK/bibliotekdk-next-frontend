@@ -4,7 +4,6 @@ import Button from "@/components/base/button";
 import { useModal } from "@/components/_modal";
 import Modal from "@/components/_modal/Modal";
 import Pages from "@/components/_modal/pages";
-import { name } from "lodash/upperFirst";
 
 const exportedObject = {
   title: "modal/OpenAdgangsplatform",
