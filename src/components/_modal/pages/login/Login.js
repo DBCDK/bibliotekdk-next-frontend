@@ -71,7 +71,7 @@ export function Login({
   const showResultsList = hasQuery && allBranches?.length > 0 && !isMobile;
   const showMitIDLogin =
     !hasQuery || !allBranches || allBranches.length < 1 || isMobile;
-  const { lastLoginBranch, setLastLoginBranch } = useLastLoginBranch();
+  const { setLastLoginBranch } = useLastLoginBranch();
   const onSelect = (branch) => {
     if (branch?.branchId) {
       setLastLoginBranch(branch);
@@ -116,11 +116,9 @@ export function Login({
         <Title type="title4" className={styles.title} tag="h2">
           {title}
         </Title>
-        {isMobile && (
-          <Text type="text3" className={styles.chooseLoginType}>
-            {Translate({ context: "login", label: "login-type" })}
-          </Text>
-        )}
+        <Text type="text3" className={styles.chooseLoginType}>
+          {Translate({ context: "login", label: "login-type" })}
+        </Text>
       </div>
       {/* shown above 414px /> */}
       <LibrarySearch

@@ -6,9 +6,8 @@ import styles from "./LastLoginLibrary.module.css";
 import Select from "@/components/_modal/pages/login/Select";
 import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
 
-export default function LastLoginLibrary(props) {
+export default function LastLoginLibrary() {
   const { lastLoginBranch } = useLastLoginBranch();
-  //const branchId = lastLoginBranch?.branchId;
 
   const onLogin = () => {
     const callbackUrl = getCallbackUrl(lastLoginBranch?.branchId);

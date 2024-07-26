@@ -20,3 +20,8 @@
 .chooseLoginType {
   padding-bottom: var(--pt4);
 }
+@media (min-width: 415px) {
+  .chooseLoginType {
+    display: none;
+  }
+}

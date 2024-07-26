@@ -4,7 +4,6 @@
  */
 
 import Button from "@/components/base/button";
-import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import { useModal } from "@/components/_modal/Modal";
 import styles from "./MobileLoginButton.module.css";
