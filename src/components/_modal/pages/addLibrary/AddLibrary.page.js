@@ -125,6 +125,7 @@ export function AddLibrary({
         text: adgangsplatformText,
         agencyId: branch.agencyId,
         branchId: branch.branchId,
+        name: branch.name,
         agencyName: branch.agencyName,
         callbackUID: UID,
       });

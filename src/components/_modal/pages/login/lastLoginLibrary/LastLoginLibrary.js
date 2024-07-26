@@ -10,10 +10,10 @@ import useDataCollect from "@/lib/useDataCollect";
 export default function LastLoginLibrary() {
   const { lastLoginBranch } = useLastLoginBranch();
   const collect = useDataCollect();
-
+  console.log("lastLoginBranch", lastLoginBranch);
   const onLogin = () => {
     const callbackUrl = getCallbackUrl(lastLoginBranch?.branchId);
-   
+
     collect.collectChooseLastUsedLibrary();
 
     signIn(

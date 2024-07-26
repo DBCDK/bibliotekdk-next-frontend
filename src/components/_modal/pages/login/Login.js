@@ -72,7 +72,7 @@ export function Login({
   const showResultsList = hasQuery && allBranches?.length > 0 && !isMobile;
   const showMitIDLogin =
     !hasQuery || !allBranches || allBranches.length < 1 || isMobile;
-  const { lastLoginBranch, setLastLoginBranch } = useLastLoginBranch();
+  const { lastLoginBranch } = useLastLoginBranch();
   const collect = useDataCollect();
   const onSelect = (branch) => {
     //Matomo track
@@ -82,14 +82,12 @@ export function Login({
       collect.collectSearchLibrary();
     }
 
-    if (branch?.branchId) {
-      setLastLoginBranch(branch);
-    }
     //save last login branch id
     if (branch?.borrowerCheck) {
       modal.push("openAdgangsplatform", {
         agencyId: branch.agencyId,
         branchId: branch.branchId,
+        name: branch.name,
         agencyName: originUrl ? originUrl : branch.agencyName, //TODO do we have originUrl and how does it look like?
         callbackUID: callbackUID,
       });

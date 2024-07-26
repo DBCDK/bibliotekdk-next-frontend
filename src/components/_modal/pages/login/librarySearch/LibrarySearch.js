@@ -13,6 +13,8 @@ import cx from "classnames";
 import { useLastLoginBranch } from "@/components/hooks/useLastLoginBranch";
 import { useState } from "react";
 import LastLoginLibrary from "@/components/_modal/pages/login/lastLoginLibrary/LastLoginLibrary";
+import useWindowSize from "@/components/hooks/useWindowSize";
+
 /**
  * search field for pickup locations with different texts for desktop and mobile
  * for desktop, its shown in login modal
@@ -24,7 +26,9 @@ export default function LibrarySearch(props) {
   const { onChange, desktop } = props;
   //is true when search input is empty
   const [isSearchInputEmpty, setIsSearchInputEmpty] = useState(true);
+  const windowWidth = useWindowSize().width;
   const { lastLoginBranch } = useLastLoginBranch();
+  const isMobile = windowWidth <= 414;
 
   return (
     <section
@@ -33,7 +37,9 @@ export default function LibrarySearch(props) {
         [styles.hide]: desktop,
       })}
     >
-      {lastLoginBranch && isSearchInputEmpty && <LastLoginLibrary />}
+      {lastLoginBranch && isSearchInputEmpty && !isMobile && (
+        <LastLoginLibrary />
+      )}
       <Text type="text2">
         {desktop
           ? Translate({ context: "login", label: "login-via-library" })
@@ -51,11 +57,6 @@ export default function LibrarySearch(props) {
           onChange(value);
         }, 100)}
       />
-      <Text type="text3">
-        {desktop
-          ? Translate({ context: "login", label: "use-loan-info" })
-          : Translate({ context: "order", label: "pickup-search-description" })}
-      </Text>
     </section>
   );
 }
