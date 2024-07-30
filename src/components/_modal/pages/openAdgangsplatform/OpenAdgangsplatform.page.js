@@ -79,6 +79,5 @@ export function OpenAdgangsplatform({ context, isLoading = false }) {
 }
 
 export default function Wrap({ context }) {
-  console.log("OpenAdgangsplatform.context", context);
   return <OpenAdgangsplatform context={context} />;
 }
