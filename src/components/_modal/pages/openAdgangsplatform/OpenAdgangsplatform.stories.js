@@ -36,6 +36,7 @@ export function ShowModal() {
             branchId: "790900",
             agencyId: "790900",
             agencyName: "Test Agency",
+            name: "Test Branch",
           })
         }
       >

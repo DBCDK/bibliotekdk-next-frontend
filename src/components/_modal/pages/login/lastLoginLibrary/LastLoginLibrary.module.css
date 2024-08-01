@@ -1,6 +1,6 @@
 .otherOptions {
-  margin-top: var(--pt4);
-  margin-bottom: var(--pt3);
+  margin-top: var(--pt6);
+  margin-bottom: var(--pt2);
 }
 .select {
   border-top: 1px solid var(--iron);

@@ -12,6 +12,7 @@ import Translate from "@/components/base/translate";
 import { signIn } from "@dbcdk/login-nextjs/client";
 import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
 import { useLastLoginBranch } from "@/components/hooks/useLastLoginBranch";
+import useDataCollect from "@/lib/useDataCollect";
 
 /**
  * Shows MitID login button and opens MitID login
@@ -21,8 +22,9 @@ import { useLastLoginBranch } from "@/components/hooks/useLastLoginBranch";
 export default function MitIDButton({ callBackUUID }) {
   const callBackUrl = getCallbackUrl(null, callBackUUID);
   const { removeLastLoginBranch } = useLastLoginBranch();
-
+  const collect = useDataCollect();
   const onMitIdLogin = () => {
+    collect.collectUseMitID();
     removeLastLoginBranch();
     signIn(
       "adgangsplatformen",
@@ -58,6 +60,9 @@ export default function MitIDButton({ callBackUUID }) {
       </Button>
       {/**dont show on mobile */}
       <Link
+        onClick={() => {
+          collect.collectCreateLibraryUser();
+        }}
         href="/artikel/bliv-laaner/43"
         className={styles.createLibraryUserLink}
         border={{ bottom: { keepVisible: true } }}

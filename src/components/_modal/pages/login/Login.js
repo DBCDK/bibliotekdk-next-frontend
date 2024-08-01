@@ -27,6 +27,7 @@ import { useLastLoginBranch } from "@/components/hooks/useLastLoginBranch";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import LastLoginLibrary from "@/components/_modal/pages/login/lastLoginLibrary/LastLoginLibrary";
+import useDataCollect from "@/lib/useDataCollect";
 
 /**
  * contains the login page for login modal - both for desktop and mobile
@@ -71,16 +72,22 @@ export function Login({
   const showResultsList = hasQuery && allBranches?.length > 0 && !isMobile;
   const showMitIDLogin =
     !hasQuery || !allBranches || allBranches.length < 1 || isMobile;
-  const { setLastLoginBranch } = useLastLoginBranch();
+  const { lastLoginBranch } = useLastLoginBranch();
+  const collect = useDataCollect();
   const onSelect = (branch) => {
-    if (branch?.branchId) {
-      setLastLoginBranch(branch);
+    //Matomo track
+    if (lastLoginBranch) {
+      collect.collectSearchLibraryWithLastUsed();
+    } else {
+      collect.collectSearchLibrary();
     }
+
     //save last login branch id
     if (branch?.borrowerCheck) {
       modal.push("openAdgangsplatform", {
         agencyId: branch.agencyId,
         branchId: branch.branchId,
+        name: branch.name,
         agencyName: originUrl ? originUrl : branch.agencyName, //TODO do we have originUrl and how does it look like?
         callbackUID: callbackUID,
       });

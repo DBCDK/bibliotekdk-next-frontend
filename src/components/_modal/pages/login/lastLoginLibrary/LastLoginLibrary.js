@@ -5,13 +5,16 @@ import { useLastLoginBranch } from "@/components/hooks/useLastLoginBranch";
 import styles from "./LastLoginLibrary.module.css";
 import Select from "@/components/_modal/pages/login/Select";
 import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
+import useDataCollect from "@/lib/useDataCollect";
 
 export default function LastLoginLibrary() {
   const { lastLoginBranch } = useLastLoginBranch();
+  const collect = useDataCollect();
 
   const onLogin = () => {
-    const callbackUrl = getCallbackUrl(lastLoginBranch?.branchId);
+    collect.collectChooseLastUsedLibrary();
 
+    const callbackUrl = getCallbackUrl(lastLoginBranch?.branchId);
     signIn(
       "adgangsplatformen",
       { callbackUrl },

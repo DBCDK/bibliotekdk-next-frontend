@@ -7,6 +7,7 @@ import Button from "@/components/base/button";
 import { signIn } from "@dbcdk/login-nextjs/client";
 import Icon from "@/components/base/icon";
 import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
+import { useLastLoginBranch } from "@/components/hooks/useLastLoginBranch";
 
 /**
  * Modal page for that contains a button to Adgangsplatform login
@@ -14,11 +15,14 @@ import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
  * @returns
  */
 export function OpenAdgangsplatform({ context, isLoading = false }) {
-  const { agencyName, title, text, branchId, callbackUID } = context;
+  const { agencyName, name, title, text, branchId, callbackUID } = context;
+  const { setLastLoginBranch } = useLastLoginBranch();
 
   const onLogin = () => {
     const callbackUrl = getCallbackUrl(branchId, callbackUID);
-
+    if (branchId && name) {
+      setLastLoginBranch({ branchId, name });
+    }
     signIn(
       "adgangsplatformen",
       { callbackUrl },
