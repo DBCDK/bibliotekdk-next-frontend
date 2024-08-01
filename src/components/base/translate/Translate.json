@@ -5112,6 +5112,10 @@
         "da": "Min profil",
         "en": "My profile"
       },
+      "savedSearches": {
+        "da": "Gemte søgninger",
+        "en": "saved searches"
+      },
       "profileMenu": {
         "da": "Profilmenu",
         "en": "Profile menu"

@@ -20,7 +20,11 @@ import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 const CONTEXT = "profile";
 
-function getProfileUrl(wordToTranslate) {
+export function getProfileUrl(wordToTranslate) {
+  //savedSearches has different path than the rest of the profile urls
+  if (wordToTranslate === "savedSearches") {
+    return "/avanceret/gemte-soegninger";
+  }
   return `/profil/${translateAndEncode(CONTEXT, wordToTranslate, "da")}`;
 }
 
@@ -170,6 +174,7 @@ const menuItems = [
   "orderHistory",
   "myLibraries",
   "myProfile",
+  "savedSearches",
 ];
 
 const initialLoansAndReservations = {

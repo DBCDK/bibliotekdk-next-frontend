@@ -8,6 +8,7 @@ import Translate from "@/components/base/translate";
 import { encodeString } from "@/lib/utils";
 import animations from "@/components/base/animation/animations.module.css";
 import Text from "@/components/base/text";
+import { getProfileUrl } from "@/components/profile/profilemenu/desktop/ProfileMenu";
 
 /**
  * Navigation dropdown. Use this menu for a menu with redirects - not actions
@@ -187,16 +188,10 @@ function LinkDropdown({ context, menuItems }) {
         {expandMenu && (
           <ul className={styles.menu} data-cy="mobile-menu">
             {menuItems.map((item, index) => {
-              const link = encodeString(
-                Translate({
-                  context: context,
-                  label: menuItems[index],
-                  requestedLang: "da",
-                })
-              );
+              const link = getProfileUrl(item);
               return (
                 <Link
-                  key={`/profil/${link}`}
+                  key={link}
                   role="menuitem"
                   href={link}
                   ref={itemRefs[index]}
