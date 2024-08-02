@@ -94,11 +94,13 @@ function getSeriesMap({ series, members, workId }) {
       partNumber: type !== "tvSerie" ? series?.numberInSeries?.display : null,
       description:
         type !== "tvSerie"
-          ? Translate({
-              context: "overview",
-              label: "work_groupings_overview_description",
-              vars: [numberInSeries + " "],
-            })
+          ? !numberInSeries
+            ? ""
+            : Translate({
+                context: "overview",
+                label: "work_groupings_overview_description",
+                vars: [numberInSeries + " "],
+              })
           : Translate({
               context: "series_page",
               label: "part_of_tv_serie",

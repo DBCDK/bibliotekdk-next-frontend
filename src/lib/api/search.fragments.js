@@ -61,6 +61,12 @@ export function all({
           latestPublicationDate
           series {
             title
+            members{
+              numberInSeries
+              work{
+                workId
+              }
+        }
           }
           mainLanguages {
             isoCode

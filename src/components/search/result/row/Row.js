@@ -23,6 +23,7 @@ import {
   manifestationMaterialTypeFactory,
 } from "@/lib/manifestationFactoryUtils";
 import {
+  getTitlesAndType,
   RenderLanguageAddition,
   RenderTitlesWithoutLanguage,
 } from "@/components/work/overview/titlerenderer/TitleRenderer";
@@ -108,6 +109,25 @@ function RenderSeriesSubTitle({ work }) {
   // there may be more than one serie - the most i've seen is three
   return work?.series?.map((serie, index) => {
     const title = serie.title;
+    const { type } = getTitlesAndType({ work });
+    const numberInSeries = serie?.members?.find(
+      (member) => member.work?.workId === work.workId
+    )?.numberInSeries;
+
+    const description = !numberInSeries
+      ? ""
+      : type !== "tvSerie"
+      ? Translate({
+          context: "overview",
+          label: "work_groupings_overview_description",
+          vars: [numberInSeries + " "],
+        })
+      : Translate({
+          context: "series_page",
+          label: "part_of_tv_serie",
+          vars: [""],
+        });
+
     return (
       <Text
         type="text3"
@@ -115,7 +135,7 @@ function RenderSeriesSubTitle({ work }) {
         tag="span"
         key={`serie-searchresult-${index}`}
       >
-        Del af: {title}
+        {description} {title}
       </Text>
     );
   });
