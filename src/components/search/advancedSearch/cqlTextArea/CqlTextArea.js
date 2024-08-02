@@ -69,6 +69,7 @@ export function CqlTextArea({ doAdvancedSearch }) {
               doAdvancedSearch();
             }
           }}
+          ignoreTabKey={true}
         />
       </div>
       <CqlErrorMessage message={message} />
