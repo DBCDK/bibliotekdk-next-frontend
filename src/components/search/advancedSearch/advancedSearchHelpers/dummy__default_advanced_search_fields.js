@@ -4,34 +4,34 @@ import { getFirstMatch } from "@/lib/utils";
 import { DropdownIndicesEnum } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
 
 // players are outcommented - will be used later - we wait for jed :)
-// export function dummy__players() {
-//   return {
-//     prioritisedItems: prioritisedPlayers,
-//     prioritisedFormType: FormTypeEnum.CHECKBOX,
-//     unprioritisedItems: [],
-//     unprioritisedFormType: FormTypeEnum.CHECKBOX,
-//     overrideValueAs: "name",
-//   };
-// }
-//
-// const prioritisedPlayers = [
-//   {
-//     term: "For 1 spiller",
-//     key: "For 1 spiller",
-//   },
-//   {
-//     term: "For 2 spillere",
-//     key: "For 2 spillere",
-//   },
-//   {
-//     term: "For 3-5 spillere",
-//     key: "For 3-5 spillere",
-//   },
-//   {
-//     term: "For 6+ spillere",
-//     key: "For 6+ spillere",
-//   },
-// ];
+export function dummy__players() {
+  return {
+    prioritisedItems: prioritisedPlayers,
+    prioritisedFormType: FormTypeEnum.CHECKBOX,
+    unprioritisedItems: [],
+    unprioritisedFormType: FormTypeEnum.CHECKBOX,
+    overrideValueAs: "name",
+  };
+}
+
+const prioritisedPlayers = [
+  {
+    term: "For 1 spiller",
+    key: "For 1 spiller",
+  },
+  {
+    term: "For 2 spillere",
+    key: "For 2 spillere",
+  },
+  {
+    term: "For 3-5 spillere",
+    key: "For 3-5 spillere",
+  },
+  {
+    term: "For 6+ spillere",
+    key: "For 6+ spillere",
+  },
+];
 
 export function dummy__nota() {
   return {
