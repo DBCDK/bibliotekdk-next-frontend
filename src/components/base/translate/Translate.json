@@ -1667,8 +1667,8 @@
         "en": "all editions"
       },
       "work_groupings_overview_description": {
-        "da": "Del %s af ",
-        "en": "Part %s of "
+        "da": "%s af ",
+        "en": "%s of "
       }
     },
     "details": {
