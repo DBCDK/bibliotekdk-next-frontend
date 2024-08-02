@@ -114,7 +114,7 @@ function RenderSeriesSubTitle({ work }) {
       (member) => member.work?.workId === work.workId
     )?.numberInSeries;
 
-    const description = !numberInSeries
+    const partOfSeriesText = !numberInSeries
       ? ""
       : type !== "tvSerie"
       ? Translate({
@@ -135,7 +135,7 @@ function RenderSeriesSubTitle({ work }) {
         tag="span"
         key={`serie-searchresult-${index}`}
       >
-        {description} {title}
+        {partOfSeriesText} {title}
       </Text>
     );
   });
