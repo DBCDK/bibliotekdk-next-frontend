@@ -167,13 +167,9 @@ WrappedDetailsSectionMovie.story = {
               },
             ],
           }),
-
-          physicalDescriptions: () => [
-            {
-              summary: "1 dvd-video ca. 50 min.",
-            },
-          ],
-
+          physicalDescription: () => ({
+            summaryFull: "1 dvd-video ca. 50 min.",
+          }),
           materialTypes: () => [
             {
               materialTypeSpecific: {

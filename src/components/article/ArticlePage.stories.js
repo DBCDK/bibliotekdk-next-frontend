@@ -77,11 +77,16 @@ WrappedInfomediaReviewPage.story = {
                           },
                         ],
 
-                        physicalDescriptions: [
-                          {
-                            summary: "Some page number",
-                          },
-                        ],
+                        physicalDescription: {
+                          summaryFull: "Some page number",
+                          materialUnits: [
+                            {
+                              extent: "Some extent",
+                              summary: "Some summary",
+                            },
+                          ],
+                        },
+
                         hostPublication: {
                           title: "Infomedia publication",
                           issue: "2005-06-24",

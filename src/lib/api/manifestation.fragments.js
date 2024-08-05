@@ -426,10 +426,11 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
   hostPublication {
     summary
   }
-  physicalDescriptions {
-    summary
-    extent
-    requirements
+  physicalDescription {
+    summaryFull
+    materialUnits {
+      extent
+    }
   }
   classifications {
     system

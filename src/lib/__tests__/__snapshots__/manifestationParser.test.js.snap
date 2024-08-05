@@ -171,7 +171,7 @@ Array [
     "value": "2017",
   },
   Object {
-    "dataField": "physicalDescriptions",
+    "dataField": "physicalDescription",
     "label": "Omfang",
     "value": "1 blu-ray disc, blu-ray ; ca. 2 t., 3 min.",
   },

@@ -102,10 +102,8 @@ export function getLanguageValues(manifestation) {
  * @returns {string | undefined}
  *  description summary (ies) seperated by space
  */
-function parsePhysicalDescriptions(manifestation) {
-  return manifestation?.physicalDescriptions?.map(
-    (description) => description.summary
-  );
+function parsePhysicalDescription(manifestation) {
+  return manifestation?.physicalDescription?.summaryFull;
 }
 
 /**
@@ -693,9 +691,9 @@ export function fieldsForRows(manifestation, work, context) {
         },
       },
       {
-        physicalDescriptions: {
+        physicalDescription: {
           label: Translate({ ...context, label: "physicalDescription" }),
-          value: parsePhysicalDescriptions(manifestation),
+          value: parsePhysicalDescription(manifestation),
         },
       },
       {
@@ -828,7 +826,7 @@ export function fieldsForRows(manifestation, work, context) {
       },
       // remove physicaldescription - we want it in seperate fields (@xee playingtime & extent)
       {
-        physicalDescriptions: {
+        physicalDescription: {
           label: "",
           value: null,
         },
@@ -837,11 +835,16 @@ export function fieldsForRows(manifestation, work, context) {
         extent: {
           label: Translate({ ...context, label: "extent" }),
           value:
-            manifestation?.physicalDescriptions?.[0]?.numberOfUnits ||
-            manifestation?.physicalDescriptions?.[0]?.size
+            manifestation?.physicalDescription?.materialUnits?.[0]
+              ?.numberAndType ||
+            manifestation?.physicalDescription?.materialUnits?.[0]?.size
               ? `${
-                  manifestation?.physicalDescriptions?.[0]?.numberOfUnits || ""
-                }  ${manifestation?.physicalDescriptions?.[0]?.size || ""}`
+                  manifestation?.physicalDescription?.materialUnits?.[0]
+                    ?.numberAndType || ""
+                }  ${
+                  manifestation?.physicalDescription?.materialUnits?.[0]
+                    ?.size || ""
+                }`
               : null,
         },
       },
