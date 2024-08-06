@@ -132,12 +132,13 @@ const fields = () => [
     valueParser: (value) => value.summary || "",
   },
   {
-    dataField: "physicalDescriptions",
+    dataField: "physicalDescription",
     label: Translate({
       context: "bibliographic-data",
       label: "physicalDescriptionArticlesAlternative",
     }),
-    valueParser: (value) => value[0]?.summary || value[0]?.extent || "",
+    valueParser: (value) =>
+      value?.summaryFull || value?.materialUnits?.[0]?.extent || "",
   },
   {
     dataField: "classifications",
@@ -299,12 +300,16 @@ const fields = () => [
     valueParser: getAudienceValues,
   },
   {
-    dataField: "physicalDescriptions",
+    dataField: "notes",
     label: Translate({
       context: "bibliographic-data",
       label: "requirements",
     }),
-    valueParser: (value) => value?.[0]?.requirements || "",
+    valueParser: (value) =>
+      value
+        ?.filter((note) => note?.type === "TECHNICAL_REQUIREMENTS")
+        .map((note) => note.display[0])
+        .join(", "),
   },
 
   /*{

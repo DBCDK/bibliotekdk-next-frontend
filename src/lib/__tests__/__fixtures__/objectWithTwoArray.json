@@ -146,12 +146,14 @@
     "edition": ""
   },
   "hostPublication": null,
-  "physicalDescriptions": [
-    {
-      "summary": "1 blu-ray disc, blu-ray ; ca. 2 t., 3 min.",
-      "extent": "ca. 2 t., 3 min."
-    }
-  ],
+  "physicalDescription": {
+    "summaryFull": "1 blu-ray disc, blu-ray ; ca. 2 t., 3 min.",
+    "materialUnits": [
+      {
+        "extent": "3 t., 9 min."
+      }
+    ]
+  },
   "classifications": [
     {
       "system": "DK5",

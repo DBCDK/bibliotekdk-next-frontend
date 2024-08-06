@@ -70,9 +70,7 @@ function parseInfomediaArticle(work, infomediaArticle = {}) {
       logo: "/infomedia_logo.svg",
       text: infomediaArticle?.logo?.match(/<p>(.*?)<\/p>/)?.[1],
     },
-    pages: manifestation?.physicalDescriptions
-      ?.map((d) => d.summary)
-      ?.join(", "),
+    pages: manifestation?.physicalDescription?.summaryFull,
   };
 }
 

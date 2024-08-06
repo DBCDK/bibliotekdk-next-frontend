@@ -87,9 +87,7 @@ function parseInfomediaArticle(publicReviewData, work, infomediaArticle) {
       logo: "/infomedia_logo.svg",
       text: infomediaArticle?.logo?.match(/<p>(.*?)<\/p>/)?.[1],
     },
-    pages: publicReviewData?.physicalDescriptions
-      ?.map((d) => d.summary)
-      ?.join(", "),
+    pages: publicReviewData?.physicalDescription?.summaryFull,
     rating: publicReviewData?.review?.rating,
   };
 }

@@ -145,8 +145,8 @@ export function reviews({ workId }) {
                       title
                       issue
                     }
-                    physicalDescriptions {
-                      summary
+                    physicalDescription {
+                      summaryFull
                     }
                     edition {
                       publicationYear {
@@ -343,8 +343,8 @@ export function infomediaArticlePublicInfo({ workId }) {
         }
         manifestations {
           latest {
-            physicalDescriptions {
-              summary
+            physicalDescription {
+              summaryFull
             }
             hostPublication {
               issue
@@ -543,19 +543,18 @@ export function fbiOverviewDetail({ workId }) {
                 code
               }
               creatorsFromDescription
-              physicalDescriptions {
-                summary
+              physicalDescription {
+                summaryFull
                 accompanyingMaterial
-                additionalDescription
-                extent
                 numberOfPages
-                numberOfUnits
-                playingTime
-                requirements
-                size
-                technicalInformation
-                textVsIllustrations
-              }
+                materialUnits {
+                  extent
+                  summary
+                  numberAndType
+                  technicalInformation
+                  additionalDescription 
+                }
+              }              
               edition {
                 publicationYear {
                   display
@@ -630,8 +629,8 @@ export function workJsonLd({ workId }) {
                       display
                     }
                   }
-                  physicalDescriptions {
-                    summary
+                  physicalDescription {
+                    summaryFull
                   }
                   edition {
                     publicationYear {
