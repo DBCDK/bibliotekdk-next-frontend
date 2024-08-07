@@ -15,7 +15,7 @@ describe("Dropdown navigation on small screens", () => {
     cy.get('[data-cy="mobile-link-myLibraries"]').should(
       "have.attr",
       "href",
-      "/mine-biblioteker"
+      "/profil/mine-biblioteker"
     );
   });
 
