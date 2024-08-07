@@ -1840,6 +1840,10 @@
         "da": "Del af tv-serien %s",
         "en": "Part of tv-serie %s"
       },
+      "part_of": {
+        "da": "Del af ",
+        "en": "Del af "
+      },
       "series": {
         "da": "serier",
         "en": "series"

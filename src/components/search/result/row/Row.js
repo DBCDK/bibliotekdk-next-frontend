@@ -29,7 +29,10 @@ import {
 } from "@/components/work/overview/titlerenderer/TitleRenderer";
 import isEqual from "lodash/isEqual";
 import useFilters from "@/components/hooks/useFilters";
-import { RenderHostPublication } from "@/components/work/overview/workgroupingsoverview/WorkGroupingsOverview";
+import {
+  getPartOfSeriesText,
+  RenderHostPublication,
+} from "@/components/work/overview/workgroupingsoverview/WorkGroupingsOverview";
 
 function TitlesForSearch({ work, isLoading }) {
   // we need the titles here for the lineclamp - other than that title are no longer used in
@@ -114,19 +117,7 @@ function RenderSeriesSubTitle({ work }) {
       (member) => member.work?.workId === work.workId
     )?.numberInSeries;
 
-    const partOfSeriesText = !numberInSeries
-      ? ""
-      : type !== "tvSerie"
-      ? Translate({
-          context: "overview",
-          label: "work_groupings_overview_description",
-          vars: [numberInSeries + " "],
-        })
-      : Translate({
-          context: "series_page",
-          label: "part_of_tv_serie",
-          vars: [""],
-        });
+    const partOfSeriesText = getPartOfSeriesText(type, numberInSeries);
 
     return (
       <Text
