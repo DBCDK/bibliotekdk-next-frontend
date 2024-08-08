@@ -37,7 +37,6 @@ export function DidYouMean({ didyoumean, isLoading }) {
 
   return (
     <Section
-      // className={`${styles.section} `}
       divider={false}
       space={{
         bottom: "var(--pt4)",
