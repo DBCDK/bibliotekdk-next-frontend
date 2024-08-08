@@ -1,0 +1,7 @@
+.result {
+  margin-left: var(--pt1);
+}
+
+.highlight {
+  font-family: var(--body-font-semibold);
+}

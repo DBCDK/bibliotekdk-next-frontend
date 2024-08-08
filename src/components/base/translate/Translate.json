@@ -2215,6 +2215,10 @@
         "da": "Resultater",
         "en": "Result"
       },
+      "didyoumean": {
+        "da": "Mente du",
+        "en": "Did you mean"
+      },
       "cqlsearchlabel": {
         "da": "CQL-søgning",
         "en": "CQL-search"
