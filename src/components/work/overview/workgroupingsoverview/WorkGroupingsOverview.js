@@ -85,6 +85,33 @@ WorkGroupingsOverview.propTypes = {
   seriesLink: PropTypes.string,
 };
 
+// Function to generate the partOfSeriesText based on series status and number in Series
+//will generate one "Del 4 af Harry Potter-serien" if there is numberInSeries , "Del af Villads fra Valby" if there is not numberInSeries. And "Del af TV-serien blah blah" if type is "tvSerie"
+export function getPartOfSeriesText(type, numberInSeries) {
+  const isSeries = type === "tvSerie";
+  if (!isSeries) {
+    if (numberInSeries) {
+      return Translate({
+        context: "overview",
+        label: "work_groupings_overview_description",
+        vars: [numberInSeries + " "],
+      });
+    } else {
+      return Translate({
+        context: "series_page",
+        label: "part_of",
+        vars: [""],
+      });
+    }
+  } else {
+    return Translate({
+      context: "series_page",
+      label: "part_of_tv_serie",
+      vars: [""],
+    });
+  }
+}
+
 function getSeriesMap({ series, members, workId }) {
   const numberInSeries = series?.numberInSeries?.display || "";
   const { type, titles } = getTitlesAndType({ work: members[0] });
@@ -92,18 +119,7 @@ function getSeriesMap({ series, members, workId }) {
   return (
     members?.length > 0 && {
       partNumber: type !== "tvSerie" ? series?.numberInSeries?.display : null,
-      description:
-        type !== "tvSerie"
-          ? Translate({
-              context: "overview",
-              label: "work_groupings_overview_description",
-              vars: [numberInSeries + " "],
-            })
-          : Translate({
-              context: "series_page",
-              label: "part_of_tv_serie",
-              vars: [""],
-            }),
+      description: getPartOfSeriesText(type, numberInSeries),
       title: type === "tvSerie" ? titles.join(" ,") : series?.title,
       // title: series?.title,
       anchorId: getAnchor(AnchorsEnum.SERIES),

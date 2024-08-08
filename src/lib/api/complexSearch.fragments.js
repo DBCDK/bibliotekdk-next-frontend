@@ -34,6 +34,15 @@ export function doComplexSearchAll({ cql, offset, limit, sort, facets }) {
             isoCode
             display
           }
+          series {
+            title
+            members{
+              numberInSeries
+              work{
+                workId
+              }
+            }
+          }
           workTypes
           manifestations {
             mostRelevant{

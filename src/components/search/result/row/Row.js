@@ -23,12 +23,16 @@ import {
   manifestationMaterialTypeFactory,
 } from "@/lib/manifestationFactoryUtils";
 import {
+  getTitlesAndType,
   RenderLanguageAddition,
   RenderTitlesWithoutLanguage,
 } from "@/components/work/overview/titlerenderer/TitleRenderer";
 import isEqual from "lodash/isEqual";
 import useFilters from "@/components/hooks/useFilters";
-import { RenderHostPublication } from "@/components/work/overview/workgroupingsoverview/WorkGroupingsOverview";
+import {
+  getPartOfSeriesText,
+  RenderHostPublication,
+} from "@/components/work/overview/workgroupingsoverview/WorkGroupingsOverview";
 
 function TitlesForSearch({ work, isLoading }) {
   // we need the titles here for the lineclamp - other than that title are no longer used in
@@ -108,6 +112,13 @@ function RenderSeriesSubTitle({ work }) {
   // there may be more than one serie - the most i've seen is three
   return work?.series?.map((serie, index) => {
     const title = serie.title;
+    const { type } = getTitlesAndType({ work });
+    const numberInSeries = serie?.members?.find(
+      (member) => member.work?.workId === work.workId
+    )?.numberInSeries;
+
+    const partOfSeriesText = getPartOfSeriesText(type, numberInSeries);
+
     return (
       <Text
         type="text3"
@@ -115,7 +126,7 @@ function RenderSeriesSubTitle({ work }) {
         tag="span"
         key={`serie-searchresult-${index}`}
       >
-        Del af: {title}
+        {partOfSeriesText} {title}
       </Text>
     );
   });
