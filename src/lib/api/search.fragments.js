@@ -35,6 +35,29 @@ export function hitcount({ q, filters = {} }) {
 }
 
 /**
+ * Suggestions for alternative spellings
+ * @param q
+ * @param limit
+ * @returns {{variables: {q, limit: number}, apiUrl: string, slowThreshold: number, query: string}}
+ */
+export function didYouMean({ q, limit = 5 }) {
+  return {
+    apiUrl: ApiEnums.FBI_API_SIMPLESEARCH,
+    query: `
+      query didyoumean ($q: SearchQuery!, $limit: Int!) {
+        search(q: $q) {
+        didYouMean(limit: $limit) {
+          query
+          score
+        }
+      }      
+    }`,
+    variables: { q, limit },
+    slowThreshold: 3000,
+  };
+}
+
+/**
  * Detailed search response
  *
  * @param {string} q the query
