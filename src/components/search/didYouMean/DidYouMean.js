@@ -81,11 +81,11 @@ export function DidYouMean({ didyoumean, isLoading }) {
  */
 function HiglightChanges({ q, suggestion }) {
   const suggestionparts = suggestion?.split(" ");
-  const queryparts = q.all.split(" ");
+  const queryparts = q?.all?.split(" ");
   return (
     <span>
       {suggestionparts?.map((part, index) => {
-        if (!queryparts.includes(part)) {
+        if (!queryparts?.includes(part)) {
           return (
             <span key={index} className={styles.highlight}>
               {`${part} `}
