@@ -10,7 +10,7 @@ import { useRef, useState } from "react";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
 import { useData } from "@/lib/api/api";
-import { hitcount } from "@/lib/api/complexSearch.fragments";
+import { complexFacetsOnly } from "@/lib/api/complexSearch.fragments";
 import { parseOutFacets } from "@/components/search/advancedSearch/utils";
 import Skeleton from "@/components/base/skeleton";
 import translate from "@/components/base/translate";
@@ -219,7 +219,7 @@ export default function Wrap({ cql, replace }) {
   const { facetsFromEnum, facetLimit } = useFacets();
   // use the useData hook to fetch data
   const { data: facetResponse, isLoading } = useData(
-    hitcount({
+    complexFacetsOnly({
       cql: cql,
       facets: {
         facetLimit: facetLimit,
@@ -227,11 +227,10 @@ export default function Wrap({ cql, replace }) {
       },
     })
   );
-  // @TODO parse out empty facets (score=0)
-  const facets = parseOutFacets(facetResponse?.complexSearch?.facets);
+
+  const facets = parseOutFacets(facetResponse?.complexFacets?.facets);
 
   return AdvancedFacets({
-    hitcount: facetResponse?.complexSearch?.hitcount,
     facets: facets,
     isLoading: isLoading,
     replace: replace,

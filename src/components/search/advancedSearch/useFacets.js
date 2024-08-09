@@ -147,6 +147,7 @@ export function useFacets() {
    * Push query
    * @param replace
    *  replace or push
+   * @param selectedFacets
    * @global
    *  globel or local facets
    *

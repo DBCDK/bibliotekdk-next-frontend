@@ -13,7 +13,7 @@ import {
   parseOutFacets,
 } from "@/components/search/advancedSearch/utils";
 import { useData } from "@/lib/api/api";
-import { hitcount } from "@/lib/api/complexSearch.fragments";
+import { complexFacetsOnly } from "@/lib/api/complexSearch.fragments";
 import { useEffect } from "react";
 import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
 
@@ -46,7 +46,7 @@ export default function Wrap(props) {
 
   // use the useData hook to fetch data
   const { data: facetResponse, isLoading } = useData(
-    hitcount({
+    complexFacetsOnly({
       cql: cqlAndFacetsQuery,
       facets: {
         facetLimit: facetLimit,
@@ -77,7 +77,8 @@ export default function Wrap(props) {
   };
 
   // @TODO parse out empty facets (score=0)
-  const facets = parseOutFacets(facetResponse?.complexSearch?.facets);
+  // facetResponse?.complexFacets?.facets
+  const facets = parseOutFacets(facetResponse?.complexFacets?.facets);
 
   // we need to enrich facet values with 'term' .. the filter page expects that
   const enrichedFacets = facets?.map((facet) => ({
@@ -108,7 +109,7 @@ export default function Wrap(props) {
   const data = {
     search: {
       facets: enrichedFacets,
-      hitcount: facetResponse?.complexSearch?.hitcount,
+      hitcount: facetResponse?.complexFacets?.hitcount,
     },
   };
 

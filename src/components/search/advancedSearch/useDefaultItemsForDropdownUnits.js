@@ -339,6 +339,24 @@ function getFacetsForIndex(data, index, ontop) {
   return enrichedFacetValues || [];
 }
 
+/**
+ * Parse given data for facets.
+ * @param data
+ * @param isLoading
+ * @param error
+ * @param index
+ * @param workType
+ * @returns Object
+ *  To be passed to convertToDropdownInput function @see /search/advancedSearch/acvancedSearchHelpers/convertToDropdownInput.js
+ *  eg.
+ * {
+ *     prioritisedItems: [],
+ *     prioritisedFormType: FormTypeEnum.CHECKBOX,
+ *     unprioritisedItems: [],
+ *     unprioritisedFormType: FormTypeEnum.CHECKBOX,
+ *     overrideValueAs: "name",
+ *   }
+ */
 function parseForFacets({ data, isLoading, error, index, workType }) {
   const key = Object.keys(DropdownIndicesEnum).find(
     (dropdown) => DropdownIndicesEnum[dropdown] === index
@@ -346,7 +364,7 @@ function parseForFacets({ data, isLoading, error, index, workType }) {
 
   // proritized items to put in top of list
   const prio = prioritized[workType]?.[key] || [];
-  // reverse array .. without modifying original
+  // reverse array .. without modifying original - for sorting :)
   const ontop = [...prio].reverse();
 
   let facets = [];
