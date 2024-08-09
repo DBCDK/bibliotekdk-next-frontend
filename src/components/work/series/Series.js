@@ -31,13 +31,16 @@ export function Series({ isLoading, series = {}, workId = "" }) {
     }) || [];
 
   const link = getSeriesUrl(series?.title, workId);
+  const identifyingAddition = series?.identifyingAddition
+    ? "(" + series?.identifyingAddition + ")"
+    : "";
 
   return (
     <Section
       title={
         <Title tag="h3" type="title4" skeleton={isLoading}>
           <Link border={{ bottom: true }} href={link}>
-            {series.title}
+            {`${series.title} ${identifyingAddition}`}
           </Link>
         </Title>
       }
