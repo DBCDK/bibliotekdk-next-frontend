@@ -425,6 +425,7 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
   }
   hostPublication {
     summary
+    issn
   }
   physicalDescription {
     summaryFull

@@ -940,6 +940,10 @@
       }
     },
     "bibliographic-data": {
+      "issn": {
+        "da": "Issn",
+        "en": "Issn"
+      },
       "danishLaunchTitle": {
         "da": "Dansk udgivelsestitel",
         "en": "Danish launchtitle"

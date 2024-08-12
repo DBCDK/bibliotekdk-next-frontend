@@ -131,6 +131,7 @@ const fields = () => [
     }),
     valueParser: (value) => value.summary || "",
   },
+
   {
     dataField: "physicalDescription",
     label: Translate({
@@ -148,6 +149,7 @@ const fields = () => [
     }),
     valueParser: renderDk5,
   },
+
   // {
   //   dataField: "originals",
   //   label: Translate({
@@ -236,6 +238,16 @@ const fields = () => [
     valueParser: (values) => values.shelfmark,
   },
   {
+    dataField: "hostPublication",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "issn",
+    }),
+    valueParser: (value) => {
+      return value.issn || "";
+    },
+  },
+  {
     dataField: "notes",
     label: Translate({
       context: "bibliographic-data",
@@ -266,7 +278,6 @@ const fields = () => [
       label: "playingtime",
     }),
     valueParser: (values) => {
-      console.log(values, "VALUES");
       return values
         ?.filter((note) => note?.type === "ESTIMATED_PLAYING_TIME_FOR_GAMES")
         .map((note) => note.display[0])
