@@ -248,6 +248,19 @@ const fields = () => [
     },
   },
   {
+    dataField: "identifiers",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "issn",
+    }),
+    valueParser: (values) => {
+      return values
+        .filter((value) => value.type === "ISSN")
+        .map((value) => value.value)
+        .join(", ");
+    },
+  },
+  {
     dataField: "notes",
     label: Translate({
       context: "bibliographic-data",
