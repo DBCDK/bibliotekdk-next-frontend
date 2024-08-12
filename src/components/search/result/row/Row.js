@@ -61,8 +61,8 @@ function TitlesForSearch({ work, isLoading }) {
       lines={4}
       title={titles?.join(" ")}
       dataCy={"ResultRow-title"}
+      className={`${!isLoading ? styles.display_inline : ""}`}
       skeleton={isLoading}
-      className={`${styles.display_inline}`}
     >
       <div id={titlesElementId} className={`${styles.wrap_3_lines}`}>
         <RenderTitlesWithoutLanguage work={work} subtitleType="title6" />
