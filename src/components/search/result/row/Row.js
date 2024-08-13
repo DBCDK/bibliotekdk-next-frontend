@@ -113,6 +113,11 @@ function RenderSeriesSubTitle({ work }) {
   return work?.series?.map((serie, index) => {
     const title = serie.title;
     const { type } = getTitlesAndType({ work });
+
+    if (type === "tvSerie") {
+      return null;
+    }
+
     const numberInSeries = serie?.members?.find(
       (member) => member.work?.workId === work.workId
     )?.numberInSeries;
