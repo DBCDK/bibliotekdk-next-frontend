@@ -16,7 +16,7 @@ export function CreatorsArray({ creators: creatorsBeforeFilter, skeleton }) {
             href={url}
             border={{ top: false, bottom: { keepVisible: true } }}
           >
-            <Text type="text3" tag="span" skeleton={skeleton} lines={1}>
+            <Text type="text2" tag="span" skeleton={skeleton} lines={1}>
               {creator.display}
             </Text>
           </Link>

@@ -130,6 +130,7 @@ function RenderSeriesSubTitle({ work }) {
         lines={1}
         tag="span"
         key={`serie-searchresult-${index}`}
+        className={styles.subtitle}
       >
         {partOfSeriesText} {title}
       </Text>
@@ -224,7 +225,7 @@ export default function ResultRow({
             <SubTitlesByMaterial work={work} />
             <RenderSeriesSubTitle work={work} />
             <Text
-              type="text3"
+              type="text2"
               className={styles.creator}
               skeleton={(!work?.creators && isLoading) || !work?.creators}
               lines={1}
