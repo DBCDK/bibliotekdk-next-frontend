@@ -228,17 +228,6 @@ export default function ResultRow({
             </Text>
 
             <div className={styles.materials}>
-              <Text
-                tag="span"
-                type="text3"
-                skeleton={
-                  (!uniqueMaterialTypes && isLoading) || !uniqueMaterialTypes
-                }
-                dataCy={"result-row-laanemuligheder-wrap"}
-              >
-                {uniqueMaterialTypes?.length > 0 &&
-                  Translate({ context: "search", label: "loanOptions" })}
-              </Text>
               {uniqueMaterialTypes?.length > 0 &&
                 uniqueMaterialTypes?.map((materialTypeArray) => {
                   const typeString =
