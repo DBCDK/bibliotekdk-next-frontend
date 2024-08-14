@@ -1,8 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
-
-import Translate from "@/components/base/translate";
-
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import BookmarkDropdown from "@/components/work/overview/bookmarkDropdown/BookmarkDropdown";
