@@ -204,7 +204,7 @@ export function useFacets() {
     setFacetsQuery("[]");
   }
 
-  const facetLimit = 200;
+  const facetLimit = 50;
   const sortChronological = ["let", "lix", "publicationyear"];
 
   return {
