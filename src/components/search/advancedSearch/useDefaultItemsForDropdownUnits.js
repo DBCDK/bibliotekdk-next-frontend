@@ -5,6 +5,7 @@ import {
   dummy__pegi,
   publicationYearFormatterAndComparitor,
   publicationYearIndices,
+  dummy__players,
 } from "@/components/search/advancedSearch/advancedSearchHelpers/dummy__default_advanced_search_fields";
 import { convertToDropdownInput } from "@/components/search/advancedSearch/advancedSearchHelpers/convertToDropdownInput";
 import { FormTypeEnum } from "@/components/search/advancedSearch/advancedSearchHelpers/helperComponents/HelperComponents";
@@ -485,6 +486,12 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
     infoBarLabel: "tooltip_nota_info",
   };
 
+  const players = {
+    items: convertToDropdownInput(dummy__players()),
+    indexName: DropdownIndicesEnum.PLAYERS,
+    showSearchBar: false,
+  };
+
   const types = {
     //all: DONE
     all: [genreAndForm, languages, publicationYear, ages, nota].map(
@@ -543,12 +550,18 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
         })
     ),
     //@TODO .. something is not right - players always makes a zero search ??
-    game: [gamePlatform, genreAndForm, publicationYear, ages, pegi].map(
-      (dropdownUnit) =>
-        getDropdownFromUrl({
-          initDropdowns: initDropdowns,
-          dropdownUnit: dropdownUnit,
-        })
+    game: [
+      gamePlatform,
+      genreAndForm,
+      publicationYear,
+      ages,
+      pegi,
+      players,
+    ].map((dropdownUnit) =>
+      getDropdownFromUrl({
+        initDropdowns: initDropdowns,
+        dropdownUnit: dropdownUnit,
+      })
     ),
     sheetmusic: [languages, generalAudience].map((dropdownUnit) =>
       getDropdownFromUrl({

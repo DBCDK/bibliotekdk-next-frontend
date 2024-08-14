@@ -26,6 +26,7 @@ const MENUITEMS = [
   "myLibraries",
   "orderHistory",
   "myProfile",
+  "savedSearches",
 ];
 
 /* Whitelist menuitems accessable without login */

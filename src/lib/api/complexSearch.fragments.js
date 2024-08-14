@@ -2,6 +2,7 @@ import { ApiEnums } from "@/lib/api/api";
 import {
   creatorsFragment,
   materialTypesFragment,
+  tvSeriesFragment,
 } from "@/lib/api/fragments.utils";
 
 /**
@@ -28,8 +29,18 @@ export function doComplexSearchAll({ cql, offset, limit, sort, facets }) {
             score
           }
         }				
-				works(offset: $offset, limit: $limit, sort: $sort) {
-					workId
+				works(limit: $limit, offset: $offset, sort: $sort) {
+          workId
+          latestPublicationDate
+          series {
+            title            
+            members{
+              numberInSeries
+              work{
+                workId
+              }
+        }
+          }
           mainLanguages {
             isoCode
             display
@@ -46,17 +57,11 @@ export function doComplexSearchAll({ cql, offset, limit, sort, facets }) {
                 origin
               }
               materialTypes {
-                materialTypeGeneral {
-                  code
-                  display
-                }
-                materialTypeSpecific {
-                  code
-                  display
-                }
+                ...materialTypesFragment
               }
               hostPublication {
                 title
+                issue
               }
               publisher
               edition {
@@ -66,40 +71,10 @@ export function doComplexSearchAll({ cql, offset, limit, sort, facets }) {
             }            
           }
           creators {
-            ... on Corporation {
-              __typename
-              display
-              nameSort
-              roles {
-                function {
-                  plural
-                  singular
-                }
-                functionCode
-              }
-            }
-            ... on Person {
-              __typename
-              display
-              nameSort
-              roles {
-                function {
-                  plural
-                  singular
-                }
-                functionCode
-              }
-            }
+            ...creatorsFragment
           }
           materialTypes {
-            materialTypeGeneral {
-              code
-              display
-            }
-            materialTypeSpecific {
-              code
-              display
-            }
+            ...materialTypesFragment
           }
           fictionNonfiction {
             display
@@ -111,25 +86,15 @@ export function doComplexSearchAll({ cql, offset, limit, sort, facets }) {
             parallel
             sort
             tvSeries {
-              title
-              episode {
-                display
-              }
-              season {
-                display
-              }
-              episodeTitles
-              disc {
-                display
-              }
-              episode {
-                display
-              }
+            ...tvSeriesFragment
             }
           }
         }
 			}
-		}`,
+		},
+    ${creatorsFragment}
+    ${materialTypesFragment}
+    ${tvSeriesFragment}`,
     variables: { cql, offset, limit, sort, facets },
     slowThreshold: 3000,
   };

@@ -940,6 +940,10 @@
       }
     },
     "bibliographic-data": {
+      "issn": {
+        "da": "Issn",
+        "en": "Issn"
+      },
       "danishLaunchTitle": {
         "da": "Dansk udgivelsestitel",
         "en": "Danish launchtitle"
@@ -1667,8 +1671,8 @@
         "en": "all editions"
       },
       "work_groupings_overview_description": {
-        "da": "Del %s af ",
-        "en": "Part %s of "
+        "da": "%s af ",
+        "en": "%s of "
       }
     },
     "details": {
@@ -1839,6 +1843,10 @@
       "part_of_tv_serie": {
         "da": "Del af tv-serien %s",
         "en": "Part of tv-serie %s"
+      },
+      "part_of": {
+        "da": "Del af ",
+        "en": "Del af "
       },
       "series": {
         "da": "serier",
@@ -5115,6 +5123,10 @@
       "myProfile": {
         "da": "Min profil",
         "en": "My profile"
+      },
+      "savedSearches": {
+        "da": "Gemte søgninger",
+        "en": "saved searches"
       },
       "profileMenu": {
         "da": "Profilmenu",

@@ -122,6 +122,7 @@ export const manifestationDetailsForAccessFactory = `fragment manifestationDetai
   workTypes
 }
 ${creatorsFragmentForAccessFactory}`;
+
 export const seriesFragment = `fragment seriesFragment on Series {
   title
   identifyingAddition

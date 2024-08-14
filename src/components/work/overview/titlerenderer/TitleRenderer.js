@@ -102,7 +102,6 @@ export function RenderTvSeries({
   /** season, disc, episode, episodeTitles .... if present **/
   /** we have decided NOT to use the display field .. there are too many oddities ..**/
   /** we prefix instead : "episode”, “disc”, “volume”, “sæson" **/
-  // @TODO if there are episodeTitles .. episode should have a ':' in the end :)
   const tvtitles = work?.titles?.tvSeries;
   // ..hmm sometimes we have numbers in seasen, disc, episode, volume
   // if so - use the number BEFORE the display - there are too many errors in the display field
