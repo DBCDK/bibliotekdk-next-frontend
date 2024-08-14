@@ -94,7 +94,7 @@ RenderTitlesWithoutLanguage.propTypes = {
 
 export function RenderTvSeries({
   work,
-  type = "title6",
+  type = "title7",
   className,
   clamp = false,
   lines = 4,

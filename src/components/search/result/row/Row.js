@@ -113,6 +113,11 @@ function RenderSeriesSubTitle({ work }) {
   return work?.series?.map((serie, index) => {
     const title = serie.title;
     const { type } = getTitlesAndType({ work });
+
+    if (type === "tvSerie") {
+      return null;
+    }
+
     const numberInSeries = serie?.members?.find(
       (member) => member.work?.workId === work.workId
     )?.numberInSeries;
@@ -125,6 +130,7 @@ function RenderSeriesSubTitle({ work }) {
         lines={1}
         tag="span"
         key={`serie-searchresult-${index}`}
+        className={styles.subtitle}
       >
         {partOfSeriesText} {title}
       </Text>
@@ -219,7 +225,7 @@ export default function ResultRow({
             <SubTitlesByMaterial work={work} />
             <RenderSeriesSubTitle work={work} />
             <Text
-              type="text3"
+              type="text2"
               className={styles.creator}
               skeleton={(!work?.creators && isLoading) || !work?.creators}
               lines={1}
@@ -228,17 +234,6 @@ export default function ResultRow({
             </Text>
 
             <div className={styles.materials}>
-              <Text
-                tag="span"
-                type="text3"
-                skeleton={
-                  (!uniqueMaterialTypes && isLoading) || !uniqueMaterialTypes
-                }
-                dataCy={"result-row-laanemuligheder-wrap"}
-              >
-                {uniqueMaterialTypes?.length > 0 &&
-                  Translate({ context: "search", label: "loanOptions" })}
-              </Text>
               {uniqueMaterialTypes?.length > 0 &&
                 uniqueMaterialTypes?.map((materialTypeArray) => {
                   const typeString =

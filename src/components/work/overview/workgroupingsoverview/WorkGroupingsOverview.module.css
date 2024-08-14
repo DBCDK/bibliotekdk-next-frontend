@@ -1,5 +1,6 @@
 .display_inline {
   display: inline;
+  margin-top: var(--pt1);
 }
 
 .workgroupings_flex {

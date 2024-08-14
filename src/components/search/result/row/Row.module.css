@@ -45,6 +45,10 @@
   margin-right: var(--pt3);
 }
 
+.subtitle {
+  margin-top: var(--pt1);
+}
+
 .wrap_3_lines {
   overflow: hidden;
   text-overflow: ellipsis;
