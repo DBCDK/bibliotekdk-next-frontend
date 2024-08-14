@@ -202,6 +202,7 @@ export function complexFacetsOnly({ cql, facets }) {
     query: `
     query facetsOnly($cql: String!, $facets: complexSearchFacets) {
 			complexFacets(cql: $cql, facets: $facets) {
+			  hitcount
 				facets {
           name
           values {

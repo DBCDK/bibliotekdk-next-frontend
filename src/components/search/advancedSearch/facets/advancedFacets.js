@@ -10,7 +10,7 @@ import { useRef, useState } from "react";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
 import { useData } from "@/lib/api/api";
-import { hitcount } from "@/lib/api/complexSearch.fragments";
+import { complexFacetsOnly } from "@/lib/api/complexSearch.fragments";
 import { parseOutFacets } from "@/components/search/advancedSearch/utils";
 import Skeleton from "@/components/base/skeleton";
 import translate from "@/components/base/translate";
@@ -132,11 +132,15 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
   const [numToShow, setNumToShow] = useState(5);
   const numberToShowMore = 20;
 
+  const { sortChronological } = useFacets();
+
   const current = selectedFacets?.find((sel) => {
     return sel?.searchIndex === facetName;
   });
 
-  // sort - we want selected items first other items sorted by score
+  // sort - we want selected items first other items sorted by score .. or key if numerical
+  // should we sort chronological?
+  const sortByKey = sortChronological?.includes(facetName);
   const sorter = (a, b) => {
     const aselected = !!current?.values?.find((val) => {
       return val.name === a.key;
@@ -151,6 +155,10 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
       return bselected && aselected ? 0 : bselected ? 1 : aselected ? -1 : 0;
     }
 
+    if (sortByKey) {
+      return Number(a?.key) > Number(b?.key) ? -1 : 1;
+    }
+    // other items by score  :)
     return a?.score > b?.score ? -1 : 1;
   };
 
@@ -180,6 +188,7 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
               }}
               checked={initialcheck}
             ></Checkbox>
+            {/* Set a label for the checkbox - in that way the checkbox's selected value will be set when clicking the label */}
             <label htmlFor={`${facetName}-${value.key}-${index}`}>
               <Text tag="span" type="text3" className={styles.facettext}>
                 {value.key}
@@ -219,7 +228,7 @@ export default function Wrap({ cql, replace }) {
   const { facetsFromEnum, facetLimit } = useFacets();
   // use the useData hook to fetch data
   const { data: facetResponse, isLoading } = useData(
-    hitcount({
+    complexFacetsOnly({
       cql: cql,
       facets: {
         facetLimit: facetLimit,
@@ -227,11 +236,10 @@ export default function Wrap({ cql, replace }) {
       },
     })
   );
-  // @TODO parse out empty facets (score=0)
-  const facets = parseOutFacets(facetResponse?.complexSearch?.facets);
+
+  const facets = parseOutFacets(facetResponse?.complexFacets?.facets);
 
   return AdvancedFacets({
-    hitcount: facetResponse?.complexSearch?.hitcount,
     facets: facets,
     isLoading: isLoading,
     replace: replace,
