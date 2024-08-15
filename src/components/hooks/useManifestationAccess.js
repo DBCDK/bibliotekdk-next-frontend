@@ -35,6 +35,11 @@ function sortAccessArray(accessArr) {
       priority -= 1;
     }
 
+    // dfi.dk is not a 'real' access url - there is no online access - we prioritize lowest (priority:0) - after interlibrary loans
+    if (access.origin === "www.dfi.dk") {
+      priority -= 5000;
+    }
+
     // though zetland is an accessurl (+5000) we prioritize it lower than infomedia (+4000)
     if (access.origin === "www.zetland.dk") {
       priority -= 1001;

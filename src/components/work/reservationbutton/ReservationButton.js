@@ -184,11 +184,14 @@ export const ReservationButton = ({
   localizationsCount,
 }) => {
   access = sortEreolFirst(access);
+
   const { start } = useOrderFlow();
   const noSelectedManifestations = Boolean(isEmpty(access));
 
+  // pjo 15/08/24 - added filter for dfi.dk - it is not a real accessUrl
   const onlineMaterialWithoutLoginOrLoginAtUrl = Boolean(
-    access?.filter((entry) => entry?.url).length > 0
+    access?.filter((entry) => entry?.url && entry?.origin !== "www.dfi.dk")
+      .length > 0
   );
 
   const noSelectedManifestationsProps = {
