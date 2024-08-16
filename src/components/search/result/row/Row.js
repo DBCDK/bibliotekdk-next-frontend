@@ -30,6 +30,7 @@ import {
   getPartOfSeriesText,
   RenderHostPublication,
 } from "@/components/work/overview/workgroupingsoverview/WorkGroupingsOverview";
+import capitalize from "lodash/capitalize";
 
 function TitlesForSearch({ work, isLoading }) {
   // we need the titles here for the lineclamp - other than that title are no longer used in
@@ -119,7 +120,9 @@ function RenderSeriesSubTitle({ work }) {
       (member) => member.work?.workId === work.workId
     )?.numberInSeries;
 
-    const partOfSeriesText = getPartOfSeriesText(type, numberInSeries);
+    const partOfSeriesText = capitalize(
+      getPartOfSeriesText(type, numberInSeries)
+    );
 
     return (
       <Text
