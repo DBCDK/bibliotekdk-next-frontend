@@ -1,0 +1,4 @@
+.path_blue,
+.path_blue * {
+  stroke: var(--blue);
+}

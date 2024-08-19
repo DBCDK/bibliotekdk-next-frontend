@@ -21,6 +21,7 @@ import {
   HoldingStatusEnum,
   useHoldingsForAgency,
 } from "@/components/hooks/useHoldings";
+import { useOrderPolicyMessage } from "@/components/hooks/order";
 
 /**
  * {@link OpeningHours} for {@link BranchDetails}
@@ -174,6 +175,8 @@ export default function BranchDetails({ context }) {
       branchesFragments.checkOrderPolicy({ pids: pids, branchId: branchId })
   );
 
+  const orderPolicyMessage = useOrderPolicyMessage({ pids });
+
   const orderPolicyForBranches = orderPolicyData?.branches?.result?.map(
     (branch) => {
       return {
@@ -252,37 +255,12 @@ export default function BranchDetails({ context }) {
         branch?.temporarilyClosed === true) ? (
         <LocalizationsBase.HighlightedArea>
           <Text type={"text2"}>
-            {orderPolicyForBranch?.orderPossibleReason ===
-            "OWNED_OWN_CATALOGUE" ? (
-              <div className={cx(styles.path_blue)}>
-                {Translate({
+            {orderPolicyMessage
+              ? orderPolicyMessage
+              : Translate({
                   context: "localizations",
-                  label: "no_pickup_allowed_for_material",
-                  vars: [branch?.name],
+                  label: "obs_not_orders_to_here",
                 })}
-                <IconLink
-                  iconPlacement="right"
-                  iconSrc={ExternalSvg}
-                  iconAnimation={[
-                    animations["h-elastic"],
-                    animations["f-elastic"],
-                  ]}
-                  textType="type2"
-                  href={branch?.holdings?.lookupUrl}
-                  target="_blank"
-                >
-                  {Translate({
-                    context: "localizations",
-                    label: "order_locally",
-                  })}
-                </IconLink>
-              </div>
-            ) : (
-              Translate({
-                context: "localizations",
-                label: "obs_not_orders_to_here",
-              })
-            )}
           </Text>
           {!!branch?.temporarilyClosedReason && (
             <Text type={"text2"}>{branch?.temporarilyClosedReason}</Text>
