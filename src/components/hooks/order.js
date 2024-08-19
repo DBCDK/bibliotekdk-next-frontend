@@ -804,8 +804,7 @@ export function useOrderFlow() {
 /**
  * Shows a message, when order policy is false
  */
-export function useOrderPolicyMessage({ pids, textType = "type2" }) {
-  const { branchId } = usePickupBranchId();
+export function useOrderPolicyMessage({ pids, branchId, textType = "type2" }) {
   const branch = useBranchInfo({ branchId });
   const policy = useOrderPolicy({ branchId, pids });
   const { branches } = useHoldingsForAgency({

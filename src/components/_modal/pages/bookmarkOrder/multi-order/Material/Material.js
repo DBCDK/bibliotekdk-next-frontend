@@ -17,6 +17,7 @@ import {
   useOrderService,
   usePeriodica,
   usePeriodicaForm,
+  usePickupBranchId,
   useShowAlreadyOrdered,
 } from "@/components/hooks/order";
 import { useData } from "@/lib/api/api";
@@ -62,8 +63,13 @@ const Material = ({
           pid: pids,
         })
     );
+  const { branchId } = usePickupBranchId();
 
-  const orderPolicyMessage = useOrderPolicyMessage({ pids, textType: "text4" });
+  const orderPolicyMessage = useOrderPolicyMessage({
+    pids,
+    branchId,
+    textType: "text4",
+  });
 
   const isLoading = isLoadingManifestations || isLoadingAlreadyOrdered;
 

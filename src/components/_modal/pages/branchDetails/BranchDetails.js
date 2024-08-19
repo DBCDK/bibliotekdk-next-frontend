@@ -175,7 +175,7 @@ export default function BranchDetails({ context }) {
       branchesFragments.checkOrderPolicy({ pids: pids, branchId: branchId })
   );
 
-  const orderPolicyMessage = useOrderPolicyMessage({ pids });
+  const orderPolicyMessage = useOrderPolicyMessage({ pids, branchId });
 
   const orderPolicyForBranches = orderPolicyData?.branches?.result?.map(
     (branch) => {
