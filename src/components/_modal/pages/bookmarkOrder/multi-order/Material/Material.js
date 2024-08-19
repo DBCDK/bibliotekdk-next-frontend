@@ -13,6 +13,7 @@ import IconButton from "@/components/base/iconButton";
 import HasBeenOrderedRow from "../../../edition/hasbeenOrderedRow/HasBeenOrderedRow";
 import {
   useOrderFlow,
+  useOrderPolicyMessage,
   useOrderService,
   usePeriodica,
   usePeriodicaForm,
@@ -53,6 +54,7 @@ const Material = ({
   const { service, isLoading: isLoadingOrderService } = useOrderService({
     pids,
   });
+
   const { data: manifestationsData, isLoading: isLoadingManifestations } =
     useData(
       pids?.length > 0 &&
@@ -60,6 +62,8 @@ const Material = ({
           pid: pids,
         })
     );
+
+  const orderPolicyMessage = useOrderPolicyMessage({ pids, textType: "text4" });
 
   const isLoading = isLoadingManifestations || isLoadingAlreadyOrdered;
 
@@ -139,11 +143,14 @@ const Material = ({
     children.push(
       <>
         <Text className={styles.orderNotPossible} type="text4">
-          {Translate({
-            context: "materialcard",
-            label: "order-not-possible",
-          })}
+          {orderPolicyMessage
+            ? orderPolicyMessage
+            : Translate({
+                context: "materialcard",
+                label: "order-not-possible",
+              })}
         </Text>
+
         <IconButton onClick={() => deleteOrder({ pids })} icon="close">
           {Translate({
             context: "bookmark",

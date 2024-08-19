@@ -21,6 +21,7 @@ import {
   HoldingStatusEnum,
   useHoldingsForAgency,
 } from "@/components/hooks/useHoldings";
+import { useOrderPolicyMessage } from "@/components/hooks/order";
 
 /**
  * {@link OpeningHours} for {@link BranchDetails}
@@ -174,6 +175,8 @@ export default function BranchDetails({ context }) {
       branchesFragments.checkOrderPolicy({ pids: pids, branchId: branchId })
   );
 
+  const orderPolicyMessage = useOrderPolicyMessage({ pids });
+
   const orderPolicyForBranches = orderPolicyData?.branches?.result?.map(
     (branch) => {
       return {
@@ -252,10 +255,12 @@ export default function BranchDetails({ context }) {
         branch?.temporarilyClosed === true) ? (
         <LocalizationsBase.HighlightedArea>
           <Text type={"text2"}>
-            {Translate({
-              context: "localizations",
-              label: "obs_not_orders_to_here",
-            })}
+            {orderPolicyMessage
+              ? orderPolicyMessage
+              : Translate({
+                  context: "localizations",
+                  label: "obs_not_orders_to_here",
+                })}
           </Text>
           {!!branch?.temporarilyClosedReason && (
             <Text type={"text2"}>{branch?.temporarilyClosedReason}</Text>
