@@ -21,7 +21,7 @@ import styles from "./WorkGroupingsOverview.module.css";
 import { dateToShortDate } from "@/utils/datetimeConverter";
 import { getElementById, getSeriesUrl } from "@/lib/utils";
 import { getTitlesAndType } from "@/components/work/overview/titlerenderer/TitleRenderer";
-
+import capitalize from "lodash/capitalize";
 function getAnchor(anchorReference) {
   const seriesAnchorIndex = getIndexForAnchor(Translate(anchorReference));
 
@@ -115,7 +115,8 @@ export function getPartOfSeriesText(type, numberInSeries) {
 function getSeriesMap({ series, members, workId }) {
   // some series has additional info (identifyingAddition) to be shown with title
   const identifyingAddition = series?.identifyingAddition;
-  const numberInSeries = series?.numberInSeries?.display || "";
+  const numberInSeries = capitalize(series?.numberInSeries?.display) || "";
+
   const { type, titles } = getTitlesAndType({ work: members[0] });
 
   return (
