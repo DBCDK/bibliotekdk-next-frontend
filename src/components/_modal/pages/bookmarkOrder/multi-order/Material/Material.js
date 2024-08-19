@@ -13,13 +13,20 @@ import IconButton from "@/components/base/iconButton";
 import HasBeenOrderedRow from "../../../edition/hasbeenOrderedRow/HasBeenOrderedRow";
 import {
   useOrderFlow,
+  useOrderPolicy,
   useOrderService,
   usePeriodica,
   usePeriodicaForm,
+  usePickupBranchId,
   useShowAlreadyOrdered,
 } from "@/components/hooks/order";
 import { useData } from "@/lib/api/api";
 import { editionManifestations } from "@/lib/api/manifestation.fragments";
+import { useBranchInfo } from "@/components/hooks/useBranchInfo";
+import { IconLink } from "@/components/base/iconlink/IconLink";
+import ExternalSvg from "@/public/icons/external_small.svg";
+import animations from "@/components/base/animation/animations.module.css";
+import { useHoldingsForAgency } from "@/components/hooks/useHoldings";
 
 /**
  * Is missing article implementation
@@ -53,6 +60,15 @@ const Material = ({
   const { service, isLoading: isLoadingOrderService } = useOrderService({
     pids,
   });
+  const { branchId } = usePickupBranchId();
+  const branch = useBranchInfo({ branchId });
+  const policy = useOrderPolicy({ branchId, pids });
+  const { branches } = useHoldingsForAgency({
+    pids,
+    agencyId: branch?.agencyId,
+  });
+  const lookupUrl = branches?.[0]?.holdings?.lookupUrl;
+
   const { data: manifestationsData, isLoading: isLoadingManifestations } =
     useData(
       pids?.length > 0 &&
@@ -139,11 +155,39 @@ const Material = ({
     children.push(
       <>
         <Text className={styles.orderNotPossible} type="text4">
-          {Translate({
-            context: "materialcard",
-            label: "order-not-possible",
-          })}
+          {policy?.physicalCopyAllowedReason === "OWNED_OWN_CATALOGUE" ? (
+            <div className={styles.path_blue}>
+              {Translate({
+                context: "localizations",
+                label: "no_pickup_allowed_for_material",
+                vars: [branch?.name],
+              })}
+              <IconLink
+                iconPlacement="right"
+                iconSrc={ExternalSvg}
+                iconAnimation={[
+                  animations["h-elastic"],
+                  animations["f-elastic"],
+                ]}
+                textType="text4"
+                href={lookupUrl}
+                target="_blank"
+              >
+                {Translate({
+                  context: "localizations",
+                  label: "order_locally",
+                })}
+              </IconLink>
+              .
+            </div>
+          ) : (
+            Translate({
+              context: "materialcard",
+              label: "order-not-possible",
+            })
+          )}
         </Text>
+
         <IconButton onClick={() => deleteOrder({ pids })} icon="close">
           {Translate({
             context: "bookmark",

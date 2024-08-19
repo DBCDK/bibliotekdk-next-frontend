@@ -7,3 +7,9 @@
 .errorLabel {
   color: var(--error_temp);
 }
+
+.path_blue,
+.path_blue * {
+  color: var(--error);
+  stroke: var(--blue);
+}
