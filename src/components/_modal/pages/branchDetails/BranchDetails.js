@@ -252,10 +252,37 @@ export default function BranchDetails({ context }) {
         branch?.temporarilyClosed === true) ? (
         <LocalizationsBase.HighlightedArea>
           <Text type={"text2"}>
-            {Translate({
-              context: "localizations",
-              label: "obs_not_orders_to_here",
-            })}
+            {orderPolicyForBranch?.orderPossibleReason ===
+            "OWNED_OWN_CATALOGUE" ? (
+              <div className={cx(styles.path_blue)}>
+                {Translate({
+                  context: "localizations",
+                  label: "no_pickup_allowed_for_material",
+                  vars: [branch?.name],
+                })}
+                <IconLink
+                  iconPlacement="right"
+                  iconSrc={ExternalSvg}
+                  iconAnimation={[
+                    animations["h-elastic"],
+                    animations["f-elastic"],
+                  ]}
+                  textType="type2"
+                  href={branch?.holdings?.lookupUrl}
+                  target="_blank"
+                >
+                  {Translate({
+                    context: "localizations",
+                    label: "order_locally",
+                  })}
+                </IconLink>
+              </div>
+            ) : (
+              Translate({
+                context: "localizations",
+                label: "obs_not_orders_to_here",
+              })
+            )}
           </Text>
           {!!branch?.temporarilyClosedReason && (
             <Text type={"text2"}>{branch?.temporarilyClosedReason}</Text>
