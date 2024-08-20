@@ -1,3 +1,4 @@
+import getBrowserFingerprint from "get-browser-fingerprint";
 import { useEffect, useMemo, useState } from "react";
 import getConfig from "next/config";
 const config = getConfig();
@@ -19,10 +20,14 @@ export default function useCookieConsent() {
     if (typeof window === "undefined") {
       return "";
     }
+
+    // We are in a test environment, so set visitorId accordingly
+    if (useFixedSessionId) {
+      return "test";
+    }
+
+    // User has accepted statistics cookies
     if (consent?.statistics) {
-      if (useFixedSessionId) {
-        return "test";
-      }
       const cookies = document.cookie.split("; ");
       return (
         cookies
@@ -31,7 +36,14 @@ export default function useCookieConsent() {
           ?.split(".")?.[0] || ""
       );
     }
-    return "";
+
+    // If user has not given consent to statistics, we use browser fingerprinting
+    try {
+      const fingerprint = getBrowserFingerprint();
+      return "fp_" + fingerprint;
+    } catch (e) {
+      return "";
+    }
   }, [consent?.statistics]);
 
   useEffect(() => {
