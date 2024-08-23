@@ -77,12 +77,12 @@ describe("CookieBot", () => {
     cy.getCookies().should("have.length", 1);
     cy.getCookie("next-auth.anon-session").should("exist");
 
-    // cy.wait("@fbiApiRequestNoConsent")
-    //   .its("request.headers")
-    //   .should((headers) => {
-    //     expect(headers).to.have.property("x-tracking-consent", "false");
-    //     expect(headers).to.have.property("x-unique-visitor-id", "");
-    //   });
+    cy.wait("@fbiApiRequestNoConsent")
+      .its("request.headers")
+      .should((headers) => {
+        expect(headers).to.have.property("x-tracking-consent", "false");
+        expect(headers).to.have.property("x-unique-visitor-id", "test");
+      });
 
     cy.get("#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll").click();
 
