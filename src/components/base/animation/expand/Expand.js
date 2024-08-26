@@ -1,4 +1,5 @@
 import Icon from "@/components/base/icon/Icon";
+import cx from "classnames";
 
 import styles from "./Expand.module.css";
 
@@ -7,7 +8,20 @@ export default function Expand({
   size = 3,
   src = "expand.svg",
   bgColor = "var(--blue)",
+  circledIcon = false,
 }) {
+  if (circledIcon) {
+    return (
+      <Icon
+        className={cx(styles.circledIcon, {
+          [styles.circledIconExpanded]: open,
+          [styles.circledIconnCollapsed]: !open,
+        })}
+        size={size}
+        src={`${open ? "collapseCircle" : "expand"}.svg`}
+      />
+    );
+  }
   return (
     <Icon
       size={size}

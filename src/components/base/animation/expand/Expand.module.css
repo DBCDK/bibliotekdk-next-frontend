@@ -39,3 +39,16 @@
   transform: rotate(90deg);
   color: var(--blue);
 }
+
+.circledIcon {
+  justify-self: flex-end;
+  transition: transform 0.35s;
+  cursor: pointer;
+}
+.circledIconExpanded {
+  transform: rotate(180deg);
+}
+
+.circledIconnCollapsed {
+  transform: rotate(0deg);
+}
