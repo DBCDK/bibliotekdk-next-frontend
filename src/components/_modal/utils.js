@@ -192,6 +192,8 @@ export function handleOnSelect({
   context,
   updateLoanerInfo,
   overrideOrderModalPush = null,
+  pids,
+  setOrders,
 }) {
   // Selected branch belongs to one of the user's agencies where the user is logged in
   const alreadyLoggedin = context.initial?.agencies?.find(
@@ -219,20 +221,19 @@ export function handleOnSelect({
     return;
   }
 
-  // @TODO .. user is already logged in ... + borchk ..
   // missing case - user is NOT logged in and branch has borrowercheck (pressed the buttton 'order at this library' from branchdetails)
-  // if (!alreadyLoggedin && hasBorchk) {
-  //   setOrders([{ pids }]);
-  //   const callbackUID = modal.saveToStore("multiorder", {});
-  //   modal.push("openAdgangsplatform", {
-  //     agencyId: branch.agencyId,
-  //     branchId: branch.branchId,
-  //     name: branch.name,
-  //     agencyName: branch.agencyName, //TODO do we have originUrl and how does it look like?
-  //     callbackUID: callbackUID,
-  //   });
-  //   return;
-  // }
+  if (!alreadyLoggedin && hasBorchk) {
+    setOrders([{ pids }]);
+    const callbackUID = modal.saveToStore("multiorder", {});
+    modal.push("openAdgangsplatform", {
+      agencyId: branch.agencyId,
+      branchId: branch.branchId,
+      name: branch.name,
+      agencyName: branch.agencyName, //TODO do we have originUrl and how does it look like?
+      callbackUID: callbackUID,
+    });
+    return;
+  }
 
   //  Show form if selected library doesn't support borchk
   if (!branch?.borrowerCheck) {

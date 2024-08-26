@@ -56,7 +56,7 @@ export function useGoToOrderWithBranch({
     pids: pids,
   });
 
-  const { start } = useOrderFlow();
+  const { start, setOrders } = useOrderFlow();
 
   // updateLoanerInfo (from userInfo) is used by handleOnSelect to change pickupBranch
   const { updateLoanerInfo } = userInfo;
@@ -88,6 +88,8 @@ export function useGoToOrderWithBranch({
       },
       updateLoanerInfo: updateLoanerInfo,
       overrideOrderModalPush: overrideOrderModalPush,
+      pids: pids,
+      setOrders: setOrders,
     });
   }
 
