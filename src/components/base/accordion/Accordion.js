@@ -42,7 +42,7 @@ export function Item({
   CustomHeaderComponent,
   useScroll = true,
   className,
-  // if true, the will be a circled expand icon
+  // if true, the expand icon will have a circle around it
   circledIcon = false,
   iconSize = 4,
 }) {
