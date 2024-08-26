@@ -784,11 +784,23 @@ export function useOrderFlow() {
     setOrders(newOrders);
   }
 
-  function start({ orders }) {
+  function start({ orders, initialBranch = null }) {
     setSessionStorageItem("storedOrders", JSON.stringify(orders));
     setInitialOrders(orders);
     setOrders(orders);
     collect.collectStartOrderFlow({ count: orders?.length });
+
+    if (initialBranch) {
+      const callbackUID = modal.saveToStore("ematerialfilter", {});
+      modal.push("openAdgangsplatform", {
+        agencyId: initialBranch.agencyId,
+        branchId: initialBranch.branchId,
+        name: initialBranch.name,
+        agencyName: initialBranch.agencyName, //TODO do we have originUrl and how does it look like?
+        callbackUID: callbackUID,
+      });
+      return;
+    }
 
     if (isAuthenticated || branchId) {
       modal.push("ematerialfilter", {});
