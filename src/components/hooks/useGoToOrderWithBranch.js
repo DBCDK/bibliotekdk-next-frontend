@@ -31,9 +31,8 @@ export function useGoToOrderWithBranch({
   const modal = useModal();
 
   const { access } = useManifestationAccess({ pids: selectedPids });
-
   // pids from allEnrichedAccesses is used to open Order modal
-  const pids = uniq(access?.pids);
+  const pids = uniq(access?.map((acc) => acc?.pids).flat());
 
   // BranchId is used to get borrowerCheck for branch
   const branchId = branchWithoutBorrowerCheck?.branchId;
@@ -57,7 +56,7 @@ export function useGoToOrderWithBranch({
     pids: pids,
   });
 
-  const { start } = useOrderFlow();
+  const { start, setOrders } = useOrderFlow();
 
   // updateLoanerInfo (from userInfo) is used by handleOnSelect to change pickupBranch
   const { updateLoanerInfo } = userInfo;
@@ -89,6 +88,8 @@ export function useGoToOrderWithBranch({
       },
       updateLoanerInfo: updateLoanerInfo,
       overrideOrderModalPush: overrideOrderModalPush,
+      pids: pids,
+      setOrders: setOrders,
     });
   }
 
