@@ -785,6 +785,8 @@ export function useOrderFlow() {
   }
 
   function start({ orders }) {
+    console.log(orders, "START ORDERS");
+
     setSessionStorageItem("storedOrders", JSON.stringify(orders));
     setInitialOrders(orders);
     setOrders(orders);
