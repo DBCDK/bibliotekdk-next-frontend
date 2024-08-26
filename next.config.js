@@ -52,6 +52,14 @@ module.exports = {
     });
     return config;
   },
+  async rewrites() {
+    return [
+      {
+        source: "/robots.txt",
+        destination: "/api/robots",
+      },
+    ];
+  },
   async redirects() {
     return [
       {
@@ -106,6 +114,7 @@ module.exports = {
     jwtSecret: process.env.NEXTAUTH_SECRET,
     disableDrupalTranslate: process.env.DISABLE_DRUPAL_TRANSLATE || false,
     maxError500Count: process.env.MAX_ERROR_COUNT || 2,
+    allowRobots: process.env.ALLOW_ROBOTS === "true" ? true : false,
   },
   publicRuntimeConfig: {
     cookiebot: {
