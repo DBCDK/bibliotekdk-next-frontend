@@ -40,7 +40,7 @@ export function csSuggest({ q, type }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
-    query CS_suggester ($q:String!, $type:ComplexSuggestionType! ){
+    query CS_suggester ($q:String!, $type:ComplexSuggestionTypeEnum! ){
         complexSuggest(q: $q, type: $type) {
        result {
           type
@@ -48,7 +48,7 @@ export function csSuggest({ q, type }) {
         }
       }
     }`,
-    variables: { q, type },
+    variables: { q, type: type?.toUpperCase() },
     slowThreshold: 3000,
   };
 }
@@ -67,7 +67,7 @@ export function all({ q, workType, suggestType = "", limit = 100000 }) {
     apiUrl: ApiEnums.FBI_API_SIMPLESEARCH,
     // delay: 1000, // for debugging
     query: `
-    query SuggestFragmentsAll($q: String!, $workType: WorkType, $limit: Int) {
+    query SuggestFragmentsAll($q: String!, $workType: WorkTypeEnum, $limit: Int) {
       suggest(q: $q, workType: $workType, limit: $limit) {
           ...suggestResponseFragment
       }
@@ -97,7 +97,7 @@ export function typedSuggest({
     apiUrl: ApiEnums.FBI_API_SIMPLESEARCH,
     // delay: 1000, // for debugging
     query: `
-    query SuggestFragmentsTyped($q: String!, $workType: WorkType, $suggestType: SuggestionType, $limit: Int) {
+    query SuggestFragmentsTyped($q: String!, $workType: WorkTypeEnum, $suggestType: SuggestionType, $limit: Int) {
       suggest(q: $q, workType: $workType, suggestType: $suggestType, limit: $limit) {
         ...suggestResponseFragment
       }

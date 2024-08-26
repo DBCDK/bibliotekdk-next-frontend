@@ -22,8 +22,8 @@ export function search({
     apiUrl: ApiEnums.FBI_API,
     delay: 200, // for debugging
     query: `
-    query LibraryFragmentsSearch($q: String, $limit: PaginationLimit, $offset: Int, $language: LanguageCode, $agencyId: String, $agencyTypes: [AgencyType!]) {
-      branches(q: $q, agencyid: $agencyId, language: $language, limit: $limit, offset: $offset, bibdkExcludeBranches:true, status:AKTIVE, agencyTypes: $agencyTypes) {
+    query LibraryFragmentsSearch($q: String, $limit: PaginationLimitScalar, $offset: Int, $language: LanguageCodeEnum, $agencyId: String, $agencyTypes: [AgencyTypeEnum!]) {
+      branches(q: $q, agencyid: $agencyId, language: $language, limit: $limit, offset: $offset, bibdkExcludeBranches:true, statuses:AKTIVE, agencyTypes: $agencyTypes) {
         hitcount
         agencyUrl
         result {
@@ -48,7 +48,14 @@ export function search({
       }
       monitor(name: "bibdknext_library_search")
     }`,
-    variables: { q, agencyId, agencyTypes, language, limit, offset },
+    variables: {
+      q,
+      agencyId,
+      agencyTypes,
+      language: language?.toUpperCase(),
+      limit,
+      offset,
+    },
     slowThreshold: 3000,
   };
 }

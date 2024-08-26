@@ -82,7 +82,7 @@ export function helpTextSearch({ q }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     delay: 100, // add small delay to avoid flicker when query is fast
-    query: `query ($q: String!, $language: LanguageCode) {
+    query: `query ($q: String!, $language: LanguageCodeEnum) {
               help(q: $q, language: $language) {
                 result {
                   body
@@ -94,7 +94,7 @@ export function helpTextSearch({ q }) {
               }
           monitor(name: "helptext_search")
         }`,
-    variables: { q, language: lang },
+    variables: { q, language: lang?.toUpperCase() },
     slowThreshold: 3000,
   };
 }

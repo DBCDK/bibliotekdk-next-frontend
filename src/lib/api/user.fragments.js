@@ -158,7 +158,7 @@ export function branchesForUser() {
       }
       monitor(name: "bibdknext_user_branches")
      }`,
-    variables: { language: lang },
+    variables: { language: lang?.toUpperCase() },
     slowThreshold: 3000,
     revalidate: true,
   };
@@ -168,7 +168,7 @@ export function orderPolicy({ pids }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
-    query: `query orderPolicy ($language: LanguageCode!, $pids: [String!]! ) {
+    query: `query orderPolicy ($language: LanguageCodeEnum!, $pids: [String!]! ) {
       user {
         agencies (language: $language){
           agencyUrl
@@ -200,7 +200,7 @@ export function orderPolicy({ pids }) {
       }
       monitor(name: "bibdknext_orderpolicy")
      }`,
-    variables: { language: lang, pids },
+    variables: { language: lang?.toUpperCase(), pids },
     slowThreshold: 3000,
     revalidate: true,
   };
@@ -253,7 +253,7 @@ export function extendedData() {
 export function savedSearchesQuery({ offset, limit }) {
   return {
     apiUrl: ApiEnums.FBI_API,
-    query: `query savedSearches($offset: Int!, $limit: PaginationLimit! ) { 
+    query: `query savedSearches($offset: Int!, $limit: PaginationLimitScalar! ) { 
         user {
           savedSearches(offset: $offset, limit: $limit, ) {
             result {

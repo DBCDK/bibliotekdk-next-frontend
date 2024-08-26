@@ -14,11 +14,14 @@ import {
  * @param sort
  */
 export function doComplexSearchAll({ cql, offset, limit, sort, facets }) {
+  if (sort?.order) {
+    sort = { ...sort, order: sort.order.toUpperCase() };
+  }
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `
-    query ComplexSearchAll($cql: String!, $offset: Int!, $limit: PaginationLimit!, $sort: [Sort!], $facets: complexSearchFacets) {
+    query ComplexSearchAll($cql: String!, $offset: Int!, $limit: PaginationLimitScalar!, $sort: [SortInput!], $facets: ComplexSearchFacetsInput) {
 			complexSearch(cql: $cql, facets: $facets) {
 				hitcount
 				errorMessage
@@ -109,11 +112,14 @@ export function doComplexSearchAll({ cql, offset, limit, sort, facets }) {
  * @param sort
  */
 export function complexSearchOnlyWorkIds({ cql, offset, limit, sort }) {
+  if (sort?.order) {
+    sort = { ...sort, order: sort.order.toUpperCase() };
+  }
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `
-    query ComplexSearchOnlyWorkIds($cql: String!, $offset: Int!, $limit: PaginationLimit!, $sort: [Sort!]) {
+    query ComplexSearchOnlyWorkIds($cql: String!, $offset: Int!, $limit: PaginationLimitScalar!, $sort: [SortInput!]) {
 			complexSearch(cql: $cql) {
 				hitcount
 				errorMessage
@@ -128,11 +134,14 @@ export function complexSearchOnlyWorkIds({ cql, offset, limit, sort }) {
 }
 
 export function ComplexArticleSlider({ cql, offset, limit, sort }) {
+  if (sort?.order) {
+    sort = { ...sort, order: sort.order.toUpperCase() };
+  }
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `
-    query ComplexArticleSlider($cql: String!, $offset: Int!, $limit: PaginationLimit!, $sort: [Sort!]) {
+    query ComplexArticleSlider($cql: String!, $offset: Int!, $limit: PaginationLimitScalar!, $sort: [SortInput!]) {
 			complexSearch(cql: $cql) {
 				hitcount
 				errorMessage        
@@ -175,10 +184,13 @@ export function ComplexArticleSlider({ cql, offset, limit, sort }) {
  * @param sort
  */
 export function hitcount({ cql, offset, limit, sort, facets }) {
+  if (sort?.order) {
+    sort = { ...sort, order: sort.order.toUpperCase() };
+  }
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
-    query hitcount($cql: String!, $facets: complexSearchFacets) {
+    query hitcount($cql: String!, $facets: ComplexSearchFacetsInput) {
 			complexSearch(cql: $cql, facets: $facets) {
 				hitcount
 				errorMessage
@@ -200,9 +212,8 @@ export function complexFacetsOnly({ cql, facets }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
-    query facetsOnly($cql: String!, $facets: complexSearchFacets) {
+    query facetsOnly($cql: String!, $facets: ComplexSearchFacetsInput) {
 			complexFacets(cql: $cql, facets: $facets) {
-			  hitcount
 				facets {
           name
           values {

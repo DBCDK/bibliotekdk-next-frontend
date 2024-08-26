@@ -1,7 +1,7 @@
 export const fetchAll = ({ sortBy }) => {
   return {
     query: `
-    query userBookmarks($sortBy: BookMarkOrderBy) {
+    query userBookmarks($sortBy: BookMarkOrderByEnum) {
       user {
         bookmarks(orderBy:$sortBy) {
           hitcount
@@ -17,7 +17,7 @@ export const fetchAll = ({ sortBy }) => {
     }
     `,
     variables: {
-      sortBy,
+      sortBy: sortBy?.toUpperCase(),
     },
   };
 };
