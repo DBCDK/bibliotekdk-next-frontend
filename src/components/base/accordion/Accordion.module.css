@@ -61,6 +61,8 @@
 
 .expandIcon {
   padding-inline: 0 var(--pt1) 0 0;
+  display: flex;
+  align-items: center;
 }
 
 .skeleton {
