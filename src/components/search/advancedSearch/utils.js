@@ -15,10 +15,9 @@ function getInputFieldsQueryToCql(inputFields) {
         !isEmpty(item.prefixLogicalOperator) && index !== 0
           ? [item.prefixLogicalOperator]
           : [];
-      const searchIndexWithValue = `${item.searchIndex}="${item?.value?.replace(
-        /"/g,
-        '\\"'
-      )}"`;
+      const searchIndexWithValue = `${item.searchIndex}="${item?.value
+        ?.replace(/"/g, '\\"')
+        .replace(/[?*\\]/g, "\\$&")}"`;
 
       // We spread prefix, in case it is empty, and ensure no weird spaces
       return [...prefix, searchIndexWithValue].join(" ");
