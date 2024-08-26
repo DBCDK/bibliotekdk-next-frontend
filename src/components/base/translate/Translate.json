@@ -952,6 +952,10 @@
         "da": "Beskrivelse fra materialet",
         "en": "Description from material"
       },
+      "creatorsFromDescription": {
+        "da": "Bidrag",
+        "en": "Contributions"
+      },
       "playingtime": {
         "da": "Estimeret spilletid",
         "en": "Estimated playingtime"

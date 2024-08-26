@@ -94,10 +94,25 @@ const fields = () => [
       context: "bibliographic-data",
       label: "contributors",
     }),
-    valueParser: (contributors) =>
-      contributors?.length > 0 && (
-        <RenderContributors contributors={contributors} />
+    // only show for non MUSIC - for MUSIC we show contributorsFromDescription
+    valueParser: (contributors, materialTypes) =>
+      contributors?.length > 0 &&
+      !materialTypes?.includes("MUSIC") && (
+        <RenderContributors
+          contributors={contributors}
+          materialTypes={materialTypes}
+        />
       ),
+  },
+  {
+    dataField: "creatorsFromDescription",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "creatorsFromDescription",
+    }),
+    // only show for MUSIC - for other materialtypes we show creators.corporations or creators.persons
+    valueParser: (values, materialTypes) =>
+      (materialTypes?.includes("MUSIC") && values?.join(", ")) || "",
   },
   {
     dataField: "contributorsFromDescription",
@@ -105,7 +120,9 @@ const fields = () => [
       context: "bibliographic-data",
       label: "contributorsFromDescription",
     }),
-    valueParser: (values) => values?.join(", ") || "",
+    // only show for MUSIC - for other materialtypes we show contributors.corporations or contributors.persons
+    valueParser: (values, materialTypes) =>
+      (materialTypes?.includes("MUSIC") && values?.join(", ")) || "",
   },
   {
     dataField: "publisher",
@@ -546,6 +563,10 @@ function renderOriginalTitle(value) {
  * @returns {Array}
  */
 export function parseManifestation(manifestation) {
+  console.log(manifestation, "MANIFESTATION");
+  const materialTypes = manifestation?.materialTypes?.map(
+    (mat) => mat?.materialTypeGeneral?.code
+  );
   return (
     fields()
       // Remove fields that are not in the manifestation
@@ -555,7 +576,7 @@ export function parseManifestation(manifestation) {
         // if special parser exist, use that to parse value
         // otherwise use value as is
         const value = field?.valueParser
-          ? field?.valueParser(manifestation?.[field?.dataField])
+          ? field?.valueParser(manifestation?.[field?.dataField], materialTypes)
           : manifestation?.[field?.dataField];
         return {
           dataField: field.dataField,
@@ -591,7 +612,10 @@ function renderDk5(classifications = []) {
   ));
 }
 
-export function RenderContributors({ contributors = [] }) {
+export function RenderContributors({ contributors = [], materialTypes = [] }) {
+  console.log(materialTypes, "MATERIALTYPES");
+  console.log(contributors, "CONTRIBUTORS");
+  // we want to show contributors.corporations first - else contributors.persons
   return contributors?.map((cont, idx) => (
     <Text tag={"div"} key={`${cont?.display}${idx}`}>
       <Link
