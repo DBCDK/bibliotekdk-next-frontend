@@ -168,11 +168,14 @@ export function facets({
   filters = {},
   facets = Object.values(FilterTypeEnum),
 }) {
+  if (facets) {
+    facets = facets.map((f) => f.toUpperCase());
+  }
   return {
     apiUrl: ApiEnums.FBI_API_SIMPLESEARCH,
     // delay: 1000, // for debugging
     query: `
-    query ($q: SearchQueryInput!, $filters: SearchFiltersInput, $facets: [FacetField!]!) {
+    query ($q: SearchQueryInput!, $filters: SearchFiltersInput, $facets: [FacetFieldEnum!]!) {
       search(q: $q, filters: $filters) {
         facets(facets: $facets) {
           name
