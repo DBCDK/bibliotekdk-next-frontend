@@ -69,7 +69,7 @@ export function useMany(useManyKey, parametersArray, useCustomHook) {
         }
       });
     };
-  }, [parametersArray]);
+  }, [didChange, parametersArray]);
 
   const result = useMemo(() => {
     return parametersArray?.map(
