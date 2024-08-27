@@ -157,7 +157,7 @@ const prioritized = {
       "japanske film",
     ],
     GENRE: [
-      "tV-serier",
+      "TV-serier",
       "dokumentarfilm",
       "børnefilm",
       "tegnefilm",

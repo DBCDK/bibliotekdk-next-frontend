@@ -121,10 +121,10 @@ function FormatWorkType({ workType }) {
         :
       </Text>
       <Text type="text2">
-        {`"${Translate({
+        {`${Translate({
           context: "advanced_search_worktypes",
           label: workType,
-        })}"`}
+        })}`}
       </Text>
       {/* {showAndOperator&&<Text type="text2" className={styles.operator_color}>
         {Translate({
@@ -165,7 +165,13 @@ function FormatDropdowns({ dropdowns, showAndOperator }) {
         </Text>
         <Text type="text2">
           {dropdownItem?.value
-            ?.map((val) => getSelectedPresentation(val.value))
+            ?.map((val, i) => {
+              //if first item capitalize
+              const presentation = getSelectedPresentation(val.value);
+              return i === 0
+                ? presentation.charAt(0).toUpperCase() + presentation.slice(1)
+                : presentation;
+            })
             .join(", ")}
         </Text>
         {!isLastItem && (
