@@ -34,7 +34,7 @@
 }
 
 .formatedQueryContainer p {
-  margin-right: var(--pt1);
+  margin-right: var(--pt2);
   display: inline;
 }
 
@@ -44,12 +44,6 @@
 
 .editSearchMobile {
   display: none;
-}
-
-.editSearchDesktop {
-  position: relative;
-  top: 1px;
-  left: 8px;
 }
 
 .flexSwitchMobile {
