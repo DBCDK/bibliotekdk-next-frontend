@@ -190,8 +190,6 @@ export function handleOnSelect({
   branch,
   modal,
   context,
-  // updateLoanerInfo,
-  // overrideOrderModalPush = null,
   pids = null,
   start = null,
 }) {
@@ -218,7 +216,7 @@ export function handleOnSelect({
   }
 
   //  Show form if selected library doesn't support borchk
-  if (!branch?.borrowerCheck) {
+  if (!hasBorchk) {
     modal.push("loanerform", {
       branchId: branch.branchId,
       changePickupBranch: true,

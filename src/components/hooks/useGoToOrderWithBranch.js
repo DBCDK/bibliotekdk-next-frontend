@@ -77,8 +77,6 @@ export function useGoToOrderWithBranch({
           agencies: pickupBranchUserAgencies,
         },
       },
-      // updateLoanerInfo: updateLoanerInfo,
-      // overrideOrderModalPush: overrideOrderModalPush,
       pids: pids,
       start: start,
     });
