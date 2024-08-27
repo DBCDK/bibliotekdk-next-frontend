@@ -50,16 +50,13 @@ export function useGoToOrderWithBranch({
   };
 
   // useOrderPageInformation is used to get userInfo and pickupBranchInfo
-  const { userInfo, pickupBranchInfo } = useOrderPageInformation({
+  const { pickupBranchInfo } = useOrderPageInformation({
     workId: workId,
     periodicaForm: {},
     pids: pids,
   });
 
-  const { start, setOrders } = useOrderFlow();
-
-  // updateLoanerInfo (from userInfo) is used by handleOnSelect to change pickupBranch
-  const { updateLoanerInfo } = userInfo;
+  const { start } = useOrderFlow();
 
   // pickupBranchUserAgencies (from pickupBranchInfo) is used by updateLoanerInfo in handleOnSelect to change pickupBranch
   const pickupBranchUserAgencies = pickupBranchInfo?.pickupBranchUser?.agencies;
@@ -67,12 +64,6 @@ export function useGoToOrderWithBranch({
   // handleOnSelectEnriched enriches handleOnSelect with all its arguments:
   //   branch, modal, context, updateLoanerInfo, callbackUID, overrideOrderModalPush
   function handleOnSelectEnriched() {
-    // overrideOrderModalPush is a callbackFunction used in handleOnSelect to open order modal,
-    //   when previous modal was not order modal
-    function overrideOrderModalPush() {
-      start({ orders: [{ pids }] });
-    }
-
     // handleOnSelect sends user to one of 3 modals based on selected branch and loaner info:
     //  - User is logged on is on selected agency borrowerCheck -> Order modal
     //  - User not logged in and agency has borrowerCheck -> adgangsplatformen modal
@@ -86,10 +77,8 @@ export function useGoToOrderWithBranch({
           agencies: pickupBranchUserAgencies,
         },
       },
-      updateLoanerInfo: updateLoanerInfo,
-      overrideOrderModalPush: overrideOrderModalPush,
       pids: pids,
-      setOrders: setOrders,
+      start: start,
     });
   }
 
