@@ -50,7 +50,7 @@ export function useGoToOrderWithBranch({
   };
 
   // useOrderPageInformation is used to get userInfo and pickupBranchInfo
-  const { pickupBranchInfo } = useOrderPageInformation({
+  const { pickupBranchInfo, userInfo } = useOrderPageInformation({
     workId: workId,
     periodicaForm: {},
     pids: pids,
@@ -79,6 +79,7 @@ export function useGoToOrderWithBranch({
       },
       pids: pids,
       start: start,
+      updateLoanerInfo: userInfo.updateLoanerInfo,
     });
   }
 

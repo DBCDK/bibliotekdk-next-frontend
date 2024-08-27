@@ -190,6 +190,7 @@ export function handleOnSelect({
   branch,
   modal,
   context,
+  updateLoanerInfo,
   pids = null,
   start = null,
 }) {
@@ -197,14 +198,22 @@ export function handleOnSelect({
   const alreadyLoggedin = context.initial?.agencies?.find(
     (agency) => agency.result?.[0].agencyId === branch.agencyId
   );
-
   // New selected branch has borrowercheck
   const hasBorchk = branch.borrowerCheck;
 
   // next two cases comes from branchDetails - user selects a library (branch) to order from.
   // user is already logged in
-  if (alreadyLoggedin && hasBorchk && pids && typeof start === "function") {
-    start({ orders: [{ pids }] });
+  if (alreadyLoggedin && hasBorchk) {
+    // this one comes from branchdetails
+    if (pids && typeof start === "function") {
+      start({ orders: [{ pids }] });
+    } else {
+      // this one comes from pickup selection
+      // Set new branch without new log-in
+      updateLoanerInfo({ pickupBranch: branch.branchId });
+      // update context at previous modal
+      modal.prev();
+    }
     return;
   }
 
