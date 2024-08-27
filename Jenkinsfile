@@ -41,9 +41,9 @@ pipeline {
                 script {
                     // @TODO cypress:latest from docker-dbc.artifacts.dbccloud.dk
                     ansiColor("xterm") {
-                        sh "docker pull docker-dbc.artifacts.dbccloud.dk/cypress:latest"
+                        sh "docker pull docker-dbc.artifacts.dbccloud.dk/cypress:v13-3"
                         sh "docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} build"
-                        sh "IMAGE=${IMAGE_NAME} docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} run --rm e2e"
+                        sh "IMAGE=${IMAGE_NAME} docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} run --rm e2e"//cypress
                     }
                 }
             }
