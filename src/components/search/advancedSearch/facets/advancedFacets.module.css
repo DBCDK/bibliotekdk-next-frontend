@@ -57,7 +57,7 @@
 
 .accordionContainer {
   width: 100%;
-  border: 1px solid var(--iron);
+  border-bottom: 1px solid var(--iron);
 }
 
 .accordionContainer li:last-child {
@@ -65,7 +65,7 @@
 }
 
 .itemborder {
-  border: 1px solid var(--concrete);
+  border: 1px solid var(--iron);
   border-top: 0;
   border-bottom: 0;
 }
