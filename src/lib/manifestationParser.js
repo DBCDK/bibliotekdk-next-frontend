@@ -9,6 +9,7 @@ import { parseFunction } from "@/lib/centralParsers.utils";
 import { getAudienceValues } from "@/components/work/details/utils/export.utils";
 import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
 import upperFirst from "lodash/upperFirst";
+import isEmpty from "lodash/isEmpty";
 
 // fields to handle - add to handle a field eg. subjects or lix or let or ...
 const fields = () => [
@@ -68,10 +69,11 @@ const fields = () => [
   },
   {
     dataField: "creators",
-    label: Translate({
-      context: "bibliographic-data",
-      label: "creators",
-    }),
+    label:
+      Translate({
+        context: "bibliographic-data",
+        label: "creators",
+      }) + "CREATORS",
     valueParser: (creators) =>
       creators?.length === 1 && (
         <ParsedAndRenderedCreators creatorsOrContributors={creators} />
@@ -79,10 +81,11 @@ const fields = () => [
   },
   {
     dataField: "creators",
-    label: Translate({
-      context: "bibliographic-data",
-      label: "co-creators",
-    }),
+    label:
+      Translate({
+        context: "bibliographic-data",
+        label: "co-creators",
+      }) + "CO-CREATORS",
     valueParser: (creators) =>
       creators?.length > 1 && (
         <ParsedAndRenderedCreators creatorsOrContributors={creators} />
@@ -90,10 +93,11 @@ const fields = () => [
   },
   {
     dataField: "contributors",
-    label: Translate({
-      context: "bibliographic-data",
-      label: "contributors",
-    }),
+    label:
+      Translate({
+        context: "bibliographic-data",
+        label: "contributors",
+      }) + "CONTRIB NOT MUSIC",
     // only show for non MUSIC - for MUSIC we show contributorsFromDescription
     valueParser: (contributors, materialTypes) =>
       contributors?.length > 0 &&
@@ -106,20 +110,22 @@ const fields = () => [
   },
   {
     dataField: "creatorsFromDescription",
-    label: Translate({
-      context: "bibliographic-data",
-      label: "creatorsFromDescription",
-    }),
+    label:
+      Translate({
+        context: "bibliographic-data",
+        label: "creatorsFromDescription",
+      }) + "CREATORS MUSIC",
     // only show for MUSIC - for other materialtypes we show creators.corporations or creators.persons
     valueParser: (values, materialTypes) =>
       (materialTypes?.includes("MUSIC") && values?.join(", ")) || "",
   },
   {
     dataField: "contributorsFromDescription",
-    label: Translate({
-      context: "bibliographic-data",
-      label: "contributorsFromDescription",
-    }),
+    label:
+      Translate({
+        context: "bibliographic-data",
+        label: "contributorsFromDescription",
+      }) + "CONTRIB MUSIC",
     // only show for MUSIC - for other materialtypes we show contributors.corporations or contributors.persons
     valueParser: (values, materialTypes) =>
       (materialTypes?.includes("MUSIC") && values?.join(", ")) || "",
@@ -612,11 +618,17 @@ function renderDk5(classifications = []) {
   ));
 }
 
-export function RenderContributors({ contributors = [], materialTypes = [] }) {
-  console.log(materialTypes, "MATERIALTYPES");
-  console.log(contributors, "CONTRIBUTORS");
+export function RenderContributors({ contributors = [] }) {
   // we want to show contributors.corporations first - else contributors.persons
-  return contributors?.map((cont, idx) => (
+  const corporations = contributors?.filter(
+    (cont) => cont?.__typename === "Corporation"
+  );
+  const persons = contributors?.filter((cont) => cont?.__typename === "Person");
+
+  // show corporations or persons
+  const contribToRender = corporations.length > 1 ? corporations : persons;
+
+  return contribToRender?.map((cont, idx) => (
     <Text tag={"div"} key={`${cont?.display}${idx}`}>
       <Link
         href={getAdvancedUrl({ type: "creator", value: cont.display })}
