@@ -539,4 +539,16 @@ describe("Multi Order", () => {
       cy.contains("Vi kan se at du ikke er registreret på et bibliotek?");
     });
   });
+
+  describe("Order to branch", () => {
+    it("should go to openadgangsplatform when a branch is selected", () => {
+      cy.visit(
+        "/iframe.html?args=&id=order-multiorder--unauthenticated-user&viewMode=story"
+      );
+      cy.contains("Bestil direkte til branch").click();
+      cy.contains(
+        "Du skal bruge dine låneroplysninger fra Agency - Modtager ILL"
+      );
+    });
+  });
 });
