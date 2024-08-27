@@ -784,6 +784,12 @@ export function useOrderFlow() {
     setOrders(newOrders);
   }
 
+  /**
+   * Strart order flow - if initialbracnch is set we open adgangsplatform, if user is authenticated we go to orderpage
+   * if user is NOT authenticated we start the login flow.
+   * @param orders
+   * @param initialBranch
+   */
   function start({ orders, initialBranch = null }) {
     setSessionStorageItem("storedOrders", JSON.stringify(orders));
     setInitialOrders(orders);
