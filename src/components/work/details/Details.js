@@ -205,10 +205,28 @@ export default function Wrap(props) {
 
   const manifestations = data?.work?.manifestations?.mostRelevant;
 
+  // sort by edition year - newest first
+  const sortbyeditionyear = (a, b) => {
+    if (
+      Number(a?.edition?.publicationYear?.display) >
+      Number(b?.edition?.publicationYear?.display)
+    ) {
+      return -1;
+    }
+    if (
+      Number(a?.edition?.publicationYear?.display) <
+      Number(b?.edition?.publicationYear?.display)
+    ) {
+      return 1;
+    }
+    return 0;
+  };
   // find the selected materialType (manifestation), use first manifestation as fallback
-  const manifestationByMaterialType = manifestations?.find((manifestation) => {
-    return inFlatMaterialTypes(type, flattenMaterialType(manifestation));
-  });
+  const manifestationByMaterialType = manifestations
+    ?.sort(sortbyeditionyear)
+    .find((manifestation) => {
+      return inFlatMaterialTypes(type, flattenMaterialType(manifestation));
+    });
 
   const work = {
     ...data?.work,
