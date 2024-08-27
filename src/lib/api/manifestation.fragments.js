@@ -408,6 +408,7 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
     }
   }
   contributors {
+    __typename
     display
     roles {
       function {
