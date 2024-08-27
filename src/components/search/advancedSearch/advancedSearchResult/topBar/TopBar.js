@@ -167,10 +167,10 @@ function FormatDropdowns({ dropdowns, showAndOperator }) {
           {dropdownItem?.value
             ?.map((val, i) => {
               //if first item capitalize
-              const presentation = getSelectedPresentation(val.value);
+              const value = getSelectedPresentation(val.value);
               return i === 0
-                ? presentation.charAt(0).toUpperCase() + presentation.slice(1)
-                : presentation;
+                ? value.charAt(0).toUpperCase() + value.slice(1)
+                : value;
             })
             .join(", ")}
         </Text>
