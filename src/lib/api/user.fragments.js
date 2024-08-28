@@ -190,6 +190,7 @@ export function orderPolicy({ pids }) {
             }
             userParameters {
               userParameterType
+              userParameterName
               parameterRequired
             }
             pickupAllowed

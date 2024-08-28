@@ -35,6 +35,7 @@ export function branchUserParameters({ branchId }) {
           postalCode
           userParameters {
             userParameterType
+            userParameterName
             parameterRequired
             description
           }

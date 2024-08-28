@@ -43,7 +43,7 @@ describe("help", () => {
     cy.get("#help-suggester-input").type("a");
     cy.wait("@apiHelpRequest").then((interception) => {
       const variables = interception.request.body.variables;
-      expect(variables).to.deep.equal({ q: "a", language: "da" });
+      expect(variables).to.deep.equal({ q: "a", language: "DA" });
     });
 
     // Change language to english
@@ -52,7 +52,7 @@ describe("help", () => {
     cy.get("[data-cy=menu-link-language]").click();
     cy.wait("@apiHelpRequest").then((interception) => {
       const variables = interception.request.body.variables;
-      expect(variables).to.deep.equal({ q: "a", language: "en" });
+      expect(variables).to.deep.equal({ q: "a", language: "EN" });
     });
   });
 });
