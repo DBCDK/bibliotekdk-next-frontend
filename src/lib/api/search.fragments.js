@@ -43,7 +43,7 @@ export function didYouMean({ q, limit = 5 }) {
   return {
     apiUrl: ApiEnums.FBI_API_SIMPLESEARCH,
     query: `
-      query didyoumean ($q: SearchQuery!, $limit: Int!) {
+      query didyoumean ($q: SearchQueryInput!, $limit: Int!) {
         search(q: $q) {
         didYouMean(limit: $limit) {
           query
