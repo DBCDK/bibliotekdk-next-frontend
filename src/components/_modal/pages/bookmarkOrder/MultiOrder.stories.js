@@ -60,7 +60,13 @@ const BRANCHES = {
     postalCode: "2020",
     city: "Sjov by",
     borrowerCheck: false,
-    userParameters: [{ description: "brugerId" }],
+    userParameters: [
+      {
+        description: "brugerId",
+        userParameterType: "CPR",
+        userParameterName: "cpr",
+      },
+    ],
     mobileLibraryLocations: null,
   },
   BRANCH_REQUIRES_PINCODE: {

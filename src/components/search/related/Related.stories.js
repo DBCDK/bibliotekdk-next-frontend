@@ -80,7 +80,7 @@ Empty.story = {
   parameters: {
     graphql: {
       debug: true,
-      url: "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",
+      // url: "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",
       resolvers: {
         Query: {
           search: () => {

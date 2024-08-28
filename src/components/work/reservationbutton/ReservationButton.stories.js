@@ -50,7 +50,7 @@ function ReservationButtonStoryBuilder(storyname, resolvers = {}, query = {}) {
       graphql: {
         debug: true,
         resolvers: resolvers,
-        url: "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",
+        // url: "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",
       },
       nextRouter: {
         showInfo: true,

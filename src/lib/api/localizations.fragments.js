@@ -33,7 +33,7 @@ export function localizationsWithHoldings({
     apiUrl: ApiEnums.FBI_API,
     query: `
     query LocalizationsWithHoldings($pids: [String!]!, $limit: Int, $offset: Int, $availabilityTypes: [AvailabilityEnum!]) {
-      localizationsWithHoldings(pids: $pids, limit: $limit, offset: $offset, bibdkExcludeBranches: true, status: AKTIVE, availabilityTypes: $availabilityTypes) {
+      localizationsWithHoldings(pids: $pids, limit: $limit, offset: $offset, bibdkExcludeBranches: true, statuses: AKTIVE, availabilityTypes: $availabilityTypes) {
         count
         agencies {
           agencyId

@@ -29,7 +29,8 @@ const context = {
     },
     userParameters: [
       {
-        userParameterType: "userId",
+        userParameterType: "USERID",
+        userParameterName: "userId",
         parameterRequired: true,
       },
     ],

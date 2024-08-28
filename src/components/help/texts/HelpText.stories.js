@@ -60,7 +60,7 @@ WrappedStoryHelpText.story = {
           __resolveType: () => "NodeHelpText",
         },
       },
-      url: "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",
+      // url: "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",
     },
     nextRouter: {
       showInfo: true,

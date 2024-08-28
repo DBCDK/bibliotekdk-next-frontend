@@ -43,13 +43,13 @@ export function UserParamsForm({
   );
 
   const emailRequired =
-    requiredParameters.filter((p) => p.userParameterType === "userMail")
+    requiredParameters.filter((p) => p.userParameterName === "userMail")
       .length > 0;
 
   function validateState() {
     for (let i = 0; i < requiredParameters.length; i++) {
-      const { userParameterType } = requiredParameters[i];
-      if (!state[userParameterType]) {
+      const { userParameterName } = requiredParameters[i];
+      if (!state[userParameterName]) {
         return ERRORS.MISSING_INPUT;
       }
     }
@@ -84,19 +84,19 @@ export function UserParamsForm({
         })}
       </Text>
       <div className={styles.fields}>
-        {requiredParameters?.map(({ userParameterType, description }, idx) => {
-          const labelKey = `${userParameterType}-label`;
+        {requiredParameters?.map(({ userParameterName, description }, idx) => {
+          const labelKey = `${userParameterName}-label`;
           const labelTranslation = {
             context: "form",
             label: labelKey,
           };
           const placeholderTranslation = {
             context: "form",
-            label: `${userParameterType}-placeholder`,
+            label: `${userParameterName}-placeholder`,
           };
           const explainTranslation = {
             context: "form",
-            label: `${userParameterType}-explain`,
+            label: `${userParameterName}-explain`,
           };
 
           return (
@@ -105,19 +105,19 @@ export function UserParamsForm({
                 {description ||
                   (hasTranslation(labelTranslation)
                     ? Translate(labelTranslation)
-                    : userParameterType)}
+                    : userParameterName)}
               </Text>
-              {userParameterType === "userMail" ? (
+              {userParameterName === "userMail" ? (
                 <Email
                   valid={validMail}
                   value={state.userMail || ""}
                   onChange={(e) =>
                     setState({
                       ...state,
-                      [userParameterType]: e?.target?.value,
+                      [userParameterName]: e?.target?.value,
                     })
                   }
-                  dataCy={`input-${userParameterType}`}
+                  dataCy={`input-${userParameterName}`}
                   placeholder={
                     hasTranslation(placeholderTranslation)
                       ? Translate(placeholderTranslation)
@@ -127,18 +127,18 @@ export function UserParamsForm({
                 />
               ) : (
                 <Input
-                  value={state[userParameterType]}
+                  value={state[userParameterName]}
                   type={
-                    ((userParameterType === "userId" ||
-                      userParameterType === "cpr") &&
+                    ((userParameterName === "userId" ||
+                      userParameterName === "cpr") &&
                       "password") ||
                     "text"
                   }
-                  dataCy={`input-${userParameterType}`}
+                  dataCy={`input-${userParameterName}`}
                   onChange={(e) =>
                     setState({
                       ...state,
-                      [userParameterType]: e?.target?.value,
+                      [userParameterName]: e?.target?.value,
                     })
                   }
                   placeholder={
