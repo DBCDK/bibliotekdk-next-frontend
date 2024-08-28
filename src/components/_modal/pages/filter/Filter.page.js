@@ -25,6 +25,7 @@ import animations from "@/components/base/animation/animations.module.css";
 import styles from "./Filter.module.css";
 import { FilterTypeEnum } from "@/lib/enums";
 import QuickFilter from "@/components/search/advancedSearch/quickfilter/QuickFilter";
+import { useFacets } from "@/components/search/advancedSearch/useFacets";
 
 function SelectedFilter({
   isLoading,
@@ -42,6 +43,8 @@ function SelectedFilter({
 
   const [sortOrder, setSortOrder] = useState("numerical");
 
+  const { sortChronological } = useFacets();
+  const sortByTerm = sortChronological?.includes(name);
   /**
    * Sort alphabetically by term OR numerical by count - depending on sortOrder chosen
    * @param a
@@ -56,6 +59,9 @@ function SelectedFilter({
     if (sortOrder === "numerical") {
       return a.score < b.score ? 1 : -1;
     } else {
+      if (sortByTerm) {
+        return Number(a.term) > Number(b.term) ? -1 : +1;
+      }
       return a.term.toLowerCase() > b.term.toLowerCase() ? 1 : -1;
     }
   };

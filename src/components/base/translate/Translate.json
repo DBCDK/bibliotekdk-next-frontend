@@ -1134,6 +1134,14 @@
         "da": "OBS: Biblioteket modtager ikke bestillinger fra bibliotek.dk.",
         "en": "Note that the library does not accept orders from bibliotek.dk "
       },
+      "no_pickup_allowed_for_material": {
+        "da": "%s modtager ikke bestillinger fra bibliotek.dk på dette materiale. Bestil det i stedet via ",
+        "en": "%s does not accept requests from bibliotek.dk for this material. Please order it through "
+      },
+      "order_locally": {
+        "da": "bibliotekets egen hjemmeside",
+        "en": "the library's own website"
+      },
       "additional_branches_available": {
         "da": "+ %s afdelinger mere",
         "en": "+ %s additional branches"

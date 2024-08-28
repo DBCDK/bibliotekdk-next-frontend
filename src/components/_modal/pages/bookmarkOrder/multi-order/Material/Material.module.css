@@ -3,6 +3,9 @@
   padding-top: var(--pt1);
   padding-bottom: var(--pt05);
 }
+.orderNotPossible * {
+  color: var(--error);
+}
 
 .errorLabel {
   color: var(--error_temp);

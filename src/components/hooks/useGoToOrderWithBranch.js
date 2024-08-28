@@ -31,9 +31,8 @@ export function useGoToOrderWithBranch({
   const modal = useModal();
 
   const { access } = useManifestationAccess({ pids: selectedPids });
-
   // pids from allEnrichedAccesses is used to open Order modal
-  const pids = uniq(access?.pids);
+  const pids = uniq(access?.map((acc) => acc?.pids).flat());
 
   // BranchId is used to get borrowerCheck for branch
   const branchId = branchWithoutBorrowerCheck?.branchId;
@@ -51,7 +50,7 @@ export function useGoToOrderWithBranch({
   };
 
   // useOrderPageInformation is used to get userInfo and pickupBranchInfo
-  const { userInfo, pickupBranchInfo } = useOrderPageInformation({
+  const { pickupBranchInfo, userInfo } = useOrderPageInformation({
     workId: workId,
     periodicaForm: {},
     pids: pids,
@@ -59,21 +58,12 @@ export function useGoToOrderWithBranch({
 
   const { start } = useOrderFlow();
 
-  // updateLoanerInfo (from userInfo) is used by handleOnSelect to change pickupBranch
-  const { updateLoanerInfo } = userInfo;
-
   // pickupBranchUserAgencies (from pickupBranchInfo) is used by updateLoanerInfo in handleOnSelect to change pickupBranch
   const pickupBranchUserAgencies = pickupBranchInfo?.pickupBranchUser?.agencies;
 
   // handleOnSelectEnriched enriches handleOnSelect with all its arguments:
   //   branch, modal, context, updateLoanerInfo, callbackUID, overrideOrderModalPush
   function handleOnSelectEnriched() {
-    // overrideOrderModalPush is a callbackFunction used in handleOnSelect to open order modal,
-    //   when previous modal was not order modal
-    function overrideOrderModalPush() {
-      start({ orders: [{ pids }] });
-    }
-
     // handleOnSelect sends user to one of 3 modals based on selected branch and loaner info:
     //  - User is logged on is on selected agency borrowerCheck -> Order modal
     //  - User not logged in and agency has borrowerCheck -> adgangsplatformen modal
@@ -87,8 +77,9 @@ export function useGoToOrderWithBranch({
           agencies: pickupBranchUserAgencies,
         },
       },
-      updateLoanerInfo: updateLoanerInfo,
-      overrideOrderModalPush: overrideOrderModalPush,
+      pids: pids,
+      start: start,
+      updateLoanerInfo: userInfo.updateLoanerInfo,
     });
   }
 

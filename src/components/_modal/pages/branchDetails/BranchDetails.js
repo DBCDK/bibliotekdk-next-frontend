@@ -21,6 +21,7 @@ import {
   HoldingStatusEnum,
   useHoldingsForAgency,
 } from "@/components/hooks/useHoldings";
+import { useOrderPolicyMessage } from "@/components/hooks/order";
 
 /**
  * {@link OpeningHours} for {@link BranchDetails}
@@ -32,17 +33,13 @@ function OpeningHours({ singleBranch }) {
   return (
     <div className={cx(styles.fit_content, styles.path_blue)}>
       <Text type="text1">Åbningstider</Text>
-      {!isEmpty(singleBranch?.openingHours) ? (
-        <Text type="text2" className={styles.break_word}>
-          {singleBranch.openingHours}
-        </Text>
-      ) : !isEmpty(singleBranch?.branchWebsiteUrl) ? (
+      {!isEmpty(singleBranch?.openingHoursUrl) ? (
         <IconLink
           iconPlacement="right"
           iconSrc={ExternalSvg}
           iconAnimation={[animations["h-elastic"], animations["f-elastic"]]}
           textType="type2"
-          href={`${singleBranch?.branchWebsiteUrl}/biblioteker`}
+          href={`${singleBranch?.openingHoursUrl}`}
           target="_blank"
         >
           {Translate({
@@ -50,6 +47,10 @@ function OpeningHours({ singleBranch }) {
             label: "see_opening_hours_of_the_library",
           })}
         </IconLink>
+      ) : !isEmpty(singleBranch?.openingHours) ? (
+        <Text type="text2" className={styles.break_word}>
+          {singleBranch.openingHours}
+        </Text>
       ) : (
         <Text type="text2">
           {Translate({
@@ -174,6 +175,8 @@ export default function BranchDetails({ context }) {
       branchesFragments.checkOrderPolicy({ pids: pids, branchId: branchId })
   );
 
+  const orderPolicyMessage = useOrderPolicyMessage({ pids, branchId });
+
   const orderPolicyForBranches = orderPolicyData?.branches?.result?.map(
     (branch) => {
       return {
@@ -252,10 +255,12 @@ export default function BranchDetails({ context }) {
         branch?.temporarilyClosed === true) ? (
         <LocalizationsBase.HighlightedArea>
           <Text type={"text2"}>
-            {Translate({
-              context: "localizations",
-              label: "obs_not_orders_to_here",
-            })}
+            {orderPolicyMessage
+              ? orderPolicyMessage
+              : Translate({
+                  context: "localizations",
+                  label: "obs_not_orders_to_here",
+                })}
           </Text>
           {!!branch?.temporarilyClosedReason && (
             <Text type={"text2"}>{branch?.temporarilyClosedReason}</Text>

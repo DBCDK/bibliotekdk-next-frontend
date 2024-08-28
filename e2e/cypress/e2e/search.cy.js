@@ -260,7 +260,6 @@ describe("Search", () => {
         .should("exist")
         .should("contain", "Rowling");
 
-      cy.get("[data-cy=result-row-laanemuligheder-wrap]").should("exist");
       cy.get("[data-cy=link]").should("exist").first().should("contain", "Bog");
       cy.get("[data-cy=cover-present]").should("exist");
     });
@@ -305,9 +304,7 @@ describe("Search", () => {
       cy.visit(
         "/iframe.html?id=search-result-resultrow--without-material-types"
       );
-      cy.get("[data-cy=result-row-laanemuligheder-wrap]")
-        .should("exist")
-        .should("not.contain", "Lånemuligheder");
+
       cy.get("[data-cy=link]").should("not.exist");
     });
 

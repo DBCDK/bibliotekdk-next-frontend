@@ -14,7 +14,7 @@ const customJestConfig = {
     "<rootDir>/node_modules/",
   ],
   testMatch: ["**/__test?(s)__/**/*.test.[jt]s?(x)", "!**/__fixtures__/**"],
-  // setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
   moduleNameMapper: {
     "css/animations": "identity-obj-proxy",
     "css/clamp": "identity-obj-proxy",

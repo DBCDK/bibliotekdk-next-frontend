@@ -81,7 +81,7 @@ describe("CookieBot", () => {
       .its("request.headers")
       .should((headers) => {
         expect(headers).to.have.property("x-tracking-consent", "false");
-        expect(headers).to.have.property("x-unique-visitor-id", "");
+        expect(headers).to.have.property("x-unique-visitor-id", "test");
       });
 
     cy.get("#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll").click();

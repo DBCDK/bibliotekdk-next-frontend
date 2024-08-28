@@ -26,6 +26,12 @@ import * as orderMutations from "@/lib/api/order.mutations";
 import isEqual from "lodash/isEqual";
 import { getSessionStorageItem, setSessionStorageItem } from "@/lib/utils";
 import useDataCollect from "@/lib/useDataCollect";
+import { IconLink } from "../base/iconlink/IconLink";
+import { useHoldingsForAgency } from "./useHoldings";
+import Translate from "../base/translate/Translate";
+import ExternalSvg from "@/public/icons/external_small.svg";
+import animations from "@/components/base/animation/animations.module.css";
+import styles from "./order.module.css";
 
 /**
  * Retrieves periodica information for a list of pids
@@ -778,11 +784,29 @@ export function useOrderFlow() {
     setOrders(newOrders);
   }
 
-  function start({ orders }) {
+  /**
+   * Strart order flow - if initialbracnch is set we open adgangsplatform, if user is authenticated we go to orderpage
+   * if user is NOT authenticated we start the login flow.
+   * @param orders
+   * @param initialBranch
+   */
+  function start({ orders, initialBranch = null }) {
     setSessionStorageItem("storedOrders", JSON.stringify(orders));
     setInitialOrders(orders);
     setOrders(orders);
     collect.collectStartOrderFlow({ count: orders?.length });
+
+    if (initialBranch) {
+      const callbackUID = modal.saveToStore("ematerialfilter", {});
+      modal.push("openAdgangsplatform", {
+        agencyId: initialBranch.agencyId,
+        branchId: initialBranch.branchId,
+        name: initialBranch.name,
+        agencyName: initialBranch.agencyName, //TODO do we have originUrl and how does it look like?
+        callbackUID: callbackUID,
+      });
+      return;
+    }
 
     if (isAuthenticated || branchId) {
       modal.push("ematerialfilter", {});
@@ -793,4 +817,46 @@ export function useOrderFlow() {
   }
 
   return { start, initialOrders, orders, setOrders, deleteOrder };
+}
+
+/**
+ * Shows a message, when order policy is false
+ */
+export function useOrderPolicyMessage({ pids, branchId, textType = "type2" }) {
+  const branch = useBranchInfo({ branchId });
+  const policy = useOrderPolicy({ branchId, pids });
+  const { branches } = useHoldingsForAgency({
+    pids,
+    agencyId: branch?.agencyId,
+  });
+  const lookupUrl = branches?.[0]?.holdings?.lookupUrl;
+
+  const showMessage =
+    policy?.physicalCopyAllowedReason === "OWNED_OWN_CATALOGUE";
+
+  if (showMessage) {
+    return (
+      <div className={styles.path_blue}>
+        {Translate({
+          context: "localizations",
+          label: "no_pickup_allowed_for_material",
+          vars: [branch?.name],
+        })}
+        <IconLink
+          iconPlacement="right"
+          iconSrc={ExternalSvg}
+          iconAnimation={[animations["h-elastic"], animations["f-elastic"]]}
+          textType={textType}
+          href={lookupUrl}
+          target="_blank"
+          iconStyle={{ stroke: "blue" }}
+        >
+          {Translate({
+            context: "localizations",
+            label: "order_locally",
+          })}
+        </IconLink>
+      </div>
+    );
+  }
 }

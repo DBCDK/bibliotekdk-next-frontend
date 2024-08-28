@@ -17,6 +17,78 @@ const FFU_USER = "FFU_USER";
 const UNAUTHENTICATED_USER = "UNAUTHENTICATED_USER";
 const MITID_NO_AGENCIES_USER = "MITID_NO_AGENCIES_USER";
 
+const BRANCHES = {
+  BRANCH_ACCEPT_ILL: {
+    agencyId: "BRANCH_ACCEPT_ILL",
+    branchId: "BRANCH_ACCEPT_ILL",
+    agencyName: "Agency - Modtager ILL",
+    name: "Branch - Modtager ILL",
+    postalAddress: "Sjov Gade 11",
+    postalCode: "2020",
+    city: "Sjov by",
+    borrowerCheck: true,
+    mobileLibraryLocations: null,
+  },
+  BRANCH_CHECKORDER_FAILS: {
+    agencyId: "BRANCH_CHECKORDER_FAILS",
+    branchId: "BRANCH_CHECKORDER_FAILS",
+    agencyName: "Agency - Checkorder fejler",
+    name: "Branch - Checkorder fejler",
+    postalAddress: "Sjov Gade 11",
+    postalCode: "2020",
+    city: "Sjov by",
+    borrowerCheck: true,
+    mobileLibraryLocations: null,
+  },
+  BRANCH_BlOCKS_USERS: {
+    agencyId: "BRANCH_BlOCKS_USERS",
+    branchId: "BRANCH_BlOCKS_USERS",
+    agencyName: "Agency - Blocks users",
+    name: "Branch - Blocks users",
+    postalAddress: "Sjov Gade 11",
+    postalCode: "2020",
+    city: "Sjov by",
+    borrowerCheck: true,
+    mobileLibraryLocations: null,
+  },
+  BRANCH_NO_BORROWERCHECK: {
+    agencyId: "BRANCH_NO_BORROWERCHECK",
+    branchId: "BRANCH_NO_BORROWERCHECK",
+    agencyName: "Agency - No borrowercheck",
+    name: "Branch - No borrowercheck",
+    postalAddress: "Sjov Gade 11",
+    postalCode: "2020",
+    city: "Sjov by",
+    borrowerCheck: false,
+    userParameters: [{ description: "brugerId" }],
+    mobileLibraryLocations: null,
+  },
+  BRANCH_REQUIRES_PINCODE: {
+    agencyId: "BRANCH_REQUIRES_PINCODE",
+    branchId: "BRANCH_REQUIRES_PINCODE",
+    agencyName: "Agency - Requires pincode",
+    name: "Branch - Requires pincode",
+    postalAddress: "Sjov Gade 11",
+    postalCode: "2020",
+    city: "Sjov by",
+    borrowerCheck: true,
+    culrDataSync: false,
+    agencyType: "FORSKNINGSBIBLIOTEK",
+    mobileLibraryLocations: null,
+  },
+  BRANCH_MOBILE_LOCATIONS: {
+    agencyId: "BRANCH_MOBILE_LOCATIONS",
+    branchId: "BRANCH_MOBILE_LOCATIONS",
+    agencyName: "Agency - has mobile library locations",
+    name: "Branch - has mobile library locations",
+    postalAddress: "Sjov Gade 11",
+    postalCode: "2020",
+    city: "Sjov by",
+    borrowerCheck: true,
+    mobileLibraryLocations: ["Brugsen", "På hjørnet", "Kiosken"],
+  },
+};
+
 export function AuthenticatedUser() {
   return (
     <>
@@ -146,6 +218,16 @@ function MultiOrderStory() {
         }}
       >
         Bestil e-bog og fysisk
+      </Button>
+      <Button
+        onClick={() => {
+          start({
+            orders: [{ pids: ["PID_ILL_ACCESS"] }],
+            initialBranch: BRANCHES.BRANCH_ACCEPT_ILL,
+          });
+        }}
+      >
+        Bestil direkte til branch
       </Button>
       <Modal.Container>
         <Modal.Page id="multiorder" component={Pages.MultiOrder} />
@@ -314,78 +396,6 @@ function createStoryParameters({ user, submitOrdersDelay = 500 }) {
       },
     ],
   });
-
-  const BRANCHES = {
-    BRANCH_ACCEPT_ILL: {
-      agencyId: "BRANCH_ACCEPT_ILL",
-      branchId: "BRANCH_ACCEPT_ILL",
-      agencyName: "Agency - Modtager ILL",
-      name: "Branch - Modtager ILL",
-      postalAddress: "Sjov Gade 11",
-      postalCode: "2020",
-      city: "Sjov by",
-      borrowerCheck: true,
-      mobileLibraryLocations: null,
-    },
-    BRANCH_CHECKORDER_FAILS: {
-      agencyId: "BRANCH_CHECKORDER_FAILS",
-      branchId: "BRANCH_CHECKORDER_FAILS",
-      agencyName: "Agency - Checkorder fejler",
-      name: "Branch - Checkorder fejler",
-      postalAddress: "Sjov Gade 11",
-      postalCode: "2020",
-      city: "Sjov by",
-      borrowerCheck: true,
-      mobileLibraryLocations: null,
-    },
-    BRANCH_BlOCKS_USERS: {
-      agencyId: "BRANCH_BlOCKS_USERS",
-      branchId: "BRANCH_BlOCKS_USERS",
-      agencyName: "Agency - Blocks users",
-      name: "Branch - Blocks users",
-      postalAddress: "Sjov Gade 11",
-      postalCode: "2020",
-      city: "Sjov by",
-      borrowerCheck: true,
-      mobileLibraryLocations: null,
-    },
-    BRANCH_NO_BORROWERCHECK: {
-      agencyId: "BRANCH_NO_BORROWERCHECK",
-      branchId: "BRANCH_NO_BORROWERCHECK",
-      agencyName: "Agency - No borrowercheck",
-      name: "Branch - No borrowercheck",
-      postalAddress: "Sjov Gade 11",
-      postalCode: "2020",
-      city: "Sjov by",
-      borrowerCheck: false,
-      userParameters: [{ description: "brugerId" }],
-      mobileLibraryLocations: null,
-    },
-    BRANCH_REQUIRES_PINCODE: {
-      agencyId: "BRANCH_REQUIRES_PINCODE",
-      branchId: "BRANCH_REQUIRES_PINCODE",
-      agencyName: "Agency - Requires pincode",
-      name: "Branch - Requires pincode",
-      postalAddress: "Sjov Gade 11",
-      postalCode: "2020",
-      city: "Sjov by",
-      borrowerCheck: true,
-      culrDataSync: false,
-      agencyType: "FORSKNINGSBIBLIOTEK",
-      mobileLibraryLocations: null,
-    },
-    BRANCH_MOBILE_LOCATIONS: {
-      agencyId: "BRANCH_MOBILE_LOCATIONS",
-      branchId: "BRANCH_MOBILE_LOCATIONS",
-      agencyName: "Agency - has mobile library locations",
-      name: "Branch - has mobile library locations",
-      postalAddress: "Sjov Gade 11",
-      postalCode: "2020",
-      city: "Sjov by",
-      borrowerCheck: true,
-      mobileLibraryLocations: ["Brugsen", "På hjørnet", "Kiosken"],
-    },
-  };
 
   const USERS = {
     AUTHENTICATED_USER: {

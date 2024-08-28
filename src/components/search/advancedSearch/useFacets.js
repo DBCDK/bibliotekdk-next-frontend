@@ -93,6 +93,7 @@ export function useFacets() {
     const indx = indexedFacet?.values?.findIndex((val) => val.value === value);
     indexedFacet?.values?.splice(indx, 1);
     if (indexedFacet?.values?.length < 1) {
+      // we removed the last value in the facet -> remove entire facet
       const indexToDelete = selectedFacets?.findIndex((facet) => {
         return facet.searchIndex.includes(searchindex);
       });
@@ -147,6 +148,7 @@ export function useFacets() {
    * Push query
    * @param replace
    *  replace or push
+   * @param selectedFacets
    * @global
    *  globel or local facets
    *
@@ -203,6 +205,7 @@ export function useFacets() {
   }
 
   const facetLimit = 50;
+  const sortChronological = ["let", "lix", "publicationyear"];
 
   return {
     selectedFacets: JSON.parse(facetsQuery),
@@ -215,5 +218,6 @@ export function useFacets() {
     resetFacets,
     restartFacetsHook,
     pushQuery,
+    sortChronological,
   };
 }
