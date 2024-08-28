@@ -26,7 +26,7 @@ export function universeBasicInfo({ key }) {
 export function universeContent({ key, workType, offset, limit }) {
   return {
     apiUrl: ApiEnums.FBI_API,
-    query: `query UniverseContent($key: String!, $workType: WorkType, $offset: Int!, $limit: Int!) {
+    query: `query UniverseContent($key: String!, $workType: WorkTypeEnum, $offset: Int!, $limit: Int!) {
         universe(key: $key) {
           content(workType: $workType, offset: $offset, limit: $limit) {
             hitcount
