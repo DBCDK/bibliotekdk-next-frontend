@@ -25,6 +25,7 @@ import Header from "@/components/header/Header";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 import { SuggestTypeEnum } from "@/lib/enums";
 import { useRef } from "react";
+import DidYouMean from "@/components/search/didYouMean/DidYouMean";
 
 /**
  * @file
@@ -121,6 +122,7 @@ function Find() {
       <main>
         <Searchbar q={q} />
         <Related q={q} />
+        <DidYouMean q={q} />
 
         {q && (
           <Result
