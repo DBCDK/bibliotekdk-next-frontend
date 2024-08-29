@@ -10,7 +10,7 @@ import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilt
 export function FacetButton({ cql, isLoading }) {
   const modal = useModal();
   const { selectedFacets, resetFacets } = useFacets();
-  const { selectedQuickFilters } = useQuickFilters();
+  const { selectedQuickFilters, resetQuickFilters } = useQuickFilters();
   // find number of filters
   let count = 0;
   selectedFacets?.map((sel) => {
@@ -60,7 +60,10 @@ export function FacetButton({ cql, isLoading }) {
       </Button>
       {count > 0 && (
         <Link
-          onClick={() => resetFacets()}
+          onClick={() => {
+            resetFacets();
+            resetQuickFilters();
+          }}
           border={{
             top: false,
             bottom: {
