@@ -11,8 +11,8 @@ import Link from "@/components/base/link";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
 export const SortOrderEnum = Object.freeze({
-  ASC: "asc",
-  DESC: "desc",
+  ASC: "ASC",
+  DESC: "DESC",
 });
 
 export const SortIndexEnum = Object.freeze({
