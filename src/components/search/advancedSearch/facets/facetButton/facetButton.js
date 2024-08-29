@@ -5,16 +5,20 @@ import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
 import Link from "@/components/base/link/Link";
+import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
 
 export function FacetButton({ cql, isLoading }) {
   const modal = useModal();
   const { selectedFacets, resetFacets } = useFacets();
+  const { selectedQuickFilters } = useQuickFilters();
   // find number of filters
   let count = 0;
   selectedFacets?.map((sel) => {
     count += sel?.values?.length;
     return sel?.values;
   });
+
+  count += selectedQuickFilters?.length;
 
   return (
     <div className={count > 0 ? styles.buttonWrap : styles.counterwrap}>
