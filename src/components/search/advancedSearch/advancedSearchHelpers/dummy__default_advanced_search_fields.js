@@ -33,6 +33,32 @@ const prioritisedPlayers = [
   },
 ];
 
+const prioritisedDatabases = [
+  { term: "Besættelsestidsbibliografien", key: "Besættelsestidsbibliografien" },
+  { term: "Sportline", key: "Sportline" },
+  { term: "Bibliografi over Dansk Kunst", key: "Bibliografi over Dansk Kunst" },
+  { term: "Dansk Historisk Bibliografi", key: "Dansk Historisk Bibliografi" },
+  { term: "Dania Polyglotta", key: "Dania Polyglotta" },
+  {
+    term: "Dansk Musiklitterær Bibliografi",
+    key: "Dansk Musiklitterær Bibliografi",
+  },
+  {
+    term: "Dansk Litteraturhistorisk Bibliografi",
+    key: "Dansk Litteraturhistorisk Bibliografi",
+  },
+];
+
+export function dummy__databases() {
+  return {
+    prioritisedItems: prioritisedDatabases,
+    prioritisedFormType: FormTypeEnum.CHECKBOX,
+    unprioritisedItems: [],
+    unprioritisedFormType: FormTypeEnum.RADIO_SELECT,
+    overrideValueAs: "name",
+  };
+}
+
 export function dummy__nota() {
   return {
     prioritisedItems: prioritisedNota,

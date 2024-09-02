@@ -177,6 +177,14 @@
         "da": "Alle nationaliteter",
         "en": "All nationalities"
       },
+      "all_term.source": {
+        "da": "Alle",
+        "en": "All"
+      },
+      "term.source": {
+        "da": "Databaser",
+        "en": "Databases"
+      },
       "phrase.filmnationality": {
         "da": "Nationalitet",
         "en": "Nationality"
