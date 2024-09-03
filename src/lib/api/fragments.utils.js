@@ -97,6 +97,7 @@ export const manifestationDetailsForAccessFactory = `fragment manifestationDetai
   titles {
     main
     full
+    original
   }
   edition {
     publicationYear {
