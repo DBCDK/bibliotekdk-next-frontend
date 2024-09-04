@@ -1696,6 +1696,10 @@
         "da": "Detaljer",
         "en": "Details"
       },
+      "originalTitle": {
+        "da": "Original titel",
+        "en": "Original title"
+      },
       "playingtime": {
         "da": "Spilletid",
         "en": "Playing time"
