@@ -35,11 +35,11 @@ function ContentPage({ universeId, workType, offset, limit, isScrolling }) {
   });
 
   // fetch data
-  const { data } = useData(
+  const { data, error } = useData(
     universeId &&
       inView &&
       universeContent({
-        key: universeId,
+        universeId: universeId,
         workType,
         offset,
         limit,
@@ -100,15 +100,17 @@ function WorkTypesSection({
   );
 
   // We need the hitcount
-  const { data, isLoading } = useData(
+  const { data, error, isLoading } = useData(
     universeId &&
       universeContent({
-        key: universeId,
+        universeId: universeId,
         workType,
         offset: 0,
         limit: PAGE_SIZE,
       })
   );
+  console.log("universeContent.data", data);
+  console.log("universeContent.error", error);
 
   const hitcount = data?.universe?.content.hitcount || PAGE_SIZE;
 
@@ -162,7 +164,7 @@ function WorkTypesSection({
  */
 export default function UniverseMembers({ universeId }) {
   const { data, isLoading } = useData(
-    universeId && universeBasicInfo({ key: universeId })
+    universeId && universeBasicInfo({ universeId: universeId })
   );
   const [isScrolling, setIsScrolling] = useState(false);
   const worksInUniverse = workTypesOrder.filter((workType) =>

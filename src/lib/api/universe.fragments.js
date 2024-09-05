@@ -6,28 +6,28 @@ import {
   workSliderFragment,
 } from "@/lib/api/fragments.utils";
 
-export function universeBasicInfo({ key }) {
+export function universeBasicInfo({ universeId }) {
   return {
     apiUrl: ApiEnums.FBI_API,
-    query: `query UniverseBasic($key: String!) {
-      universe(key: $key) {
-        key
+    query: `query UniverseBasic($universeId: String!) {
+      universe(universeId: $universeId) {
+        universeId
         title
         description
         workTypes
       }
     }
   `,
-    variables: { key },
+    variables: { universeId },
     slowThreshold: 3000,
   };
 }
 
-export function universeContent({ key, workType, offset, limit }) {
+export function universeContent({ universeId, workType, offset, limit }) {
   return {
     apiUrl: ApiEnums.FBI_API,
-    query: `query UniverseContent($key: String!, $workType: WorkTypeEnum, $offset: Int!, $limit: Int!) {
-        universe(key: $key) {
+    query: `query UniverseContent($universeId: String!, $workType: WorkTypeEnum, $offset: Int!, $limit: Int!) {
+        universe(universeId: $universeId) {
           content(workType: $workType, offset: $offset, limit: $limit) {
             hitcount
             entries {
@@ -71,7 +71,7 @@ export function universeContent({ key, workType, offset, limit }) {
     ${seriesFragment}
     ${coverFragment}
   `,
-    variables: { key, workType: workType?.toUpperCase(), offset, limit },
+    variables: { universeId, workType: workType?.toUpperCase(), offset, limit },
     slowThreshold: 3000,
   };
 }

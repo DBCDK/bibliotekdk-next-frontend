@@ -132,12 +132,14 @@ export const seriesFragment = `fragment seriesFragment on Series {
   mainLanguages
   seriesWorkTypes: workTypes
   numberInSeries
+  seriesId
 }`;
 export const universeFragment = `fragment universeFragment on Universe {
   title
   alternativeTitles
   description
   key
+  universeId
 }`;
 export const coverFragment = `fragment coverFragment on Manifestation {
   cover {

@@ -15,40 +15,46 @@ export default function SeriesPage() {
   const router = useRouter();
   const { canonical, alternate } = useCanonicalUrl();
 
-  const { workId, seriesTitle } = router.query;
+  const { workId, seriesTitle, seriesId } = router.query;
+  console.log("router.query", router.query);
 
   const {
     data: seriesData,
     isLoading: seriesIsLoading,
     error: seriesError,
   } = useData(
-    workId && workFragments.series({ workId: workId, seriesLimit: 200 })
+    seriesId &&
+      workFragments.seriesById({ seriesId: seriesId, seriesLimit: 200 })
   );
+  console.log("seriesData", seriesData);
 
-  const series = seriesData?.work?.series;
-  const specificSeries = series?.find(
-    (singleSeries) => encodeString(singleSeries.title) === seriesTitle
-  );
+  console.log("seriesError", seriesError);
 
-  useEffect(() => {
-    if (series?.length === 0) {
-      router?.replace(`/work/${workId}`);
-    }
+  const specificSeries = seriesData?.series;
+  //const series = seriesData?.work?.series;
+  // const specificSeries = series?.find(
+  //   (singleSeries) => encodeString(singleSeries.title) === seriesTitle
+  // );
 
-    if (
-      !seriesIsLoading &&
-      series?.length > 0 &&
-      (!specificSeries || specificSeries?.length === 0)
-    ) {
-      router?.replace({
-        pathname: router.pathname,
-        query: {
-          ...router.query,
-          seriesTitle: encodeString(series?.[0]?.title),
-        },
-      });
-    }
-  }, [seriesIsLoading, seriesTitle, JSON.stringify(series)]);
+  // useEffect(() => {
+  //   if (series?.length === 0) {
+  //     router?.replace(`/work/${workId}`);
+  //   }
+
+  //   if (
+  //     !seriesIsLoading &&
+  //     series?.length > 0 &&
+  //     (!specificSeries || specificSeries?.length === 0)
+  //   ) {
+  //     router?.replace({
+  //       pathname: router.pathname,
+  //       query: {
+  //         ...router.query,
+  //         seriesTitle: encodeString(series?.[0]?.title),
+  //       },
+  //     });
+  //   }
+  // }, [seriesIsLoading, seriesTitle, JSON.stringify(series)]);
 
   if (seriesError) {
     return <Custom404 />;

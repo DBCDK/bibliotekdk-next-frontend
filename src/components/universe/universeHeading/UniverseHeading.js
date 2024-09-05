@@ -20,7 +20,7 @@ export function UniverseBreadcrumb({ universeIsLoading }) {
 
 export default function UniverseHeading({ universeId }) {
   const { data, isLoading } = useData(
-    universeId && universeBasicInfo({ key: universeId })
+    universeId && universeBasicInfo({ universeId: universeId })
   );
   const universe = data?.universe;
 

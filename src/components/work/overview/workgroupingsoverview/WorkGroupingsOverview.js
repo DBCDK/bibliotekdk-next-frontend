@@ -43,6 +43,7 @@ function WorkGroupingsOverview({
   anchorId,
   scrollOffset,
   link = null,
+  seriesId,
 }) {
   const [element, setElement] = useState("");
   const [clickFunction, setClickFunction] = useState(() => {});
@@ -133,7 +134,7 @@ function getSeriesMap({ series, members, workId }) {
           : series?.title,
       // title: series?.title,
       anchorId: getAnchor(AnchorsEnum.SERIES),
-      link: getSeriesUrl(series?.title, workId),
+      link: `/serie/${series.seriesId}`, //getSeriesUrl(series?.title, workId),
     }
   );
 }
@@ -189,7 +190,7 @@ export default function Wrap({ workId }) {
     current?.manifestations?.mostRelevant?.[0]?.hostPublication;
 
   const allSeries = work_response?.data?.work?.series || [];
-
+  console.log("allSeries", allSeries);
   // TODO .. alter title if this is a tvserie
   const allSeriesMap = allSeries?.map((singleSeries) =>
     getSeriesMap({

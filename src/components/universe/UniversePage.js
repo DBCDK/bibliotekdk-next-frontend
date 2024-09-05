@@ -11,15 +11,16 @@ import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 export default function UniversePage() {
   const router = useRouter();
 
-  const { key } = router.query;
-
+  const { universeId, key } = router.query;
+  console.log("universeId", universeId);
   const { data, error } = useData(
-    key && universeFragments.universeBasicInfo({ key })
+    universeId && universeFragments.universeBasicInfo({ universeId })
   );
   const { canonical, alternate } = useCanonicalUrl();
   const title = data?.universe?.title;
   const description = data?.universe?.description;
-
+  console.log("data", data);
+  console.log("error", error);
   if (error || (data && !data?.universe)) {
     return <Custom404 />;
   }
@@ -43,8 +44,8 @@ export default function UniversePage() {
       </Head>
       <Header router={router} />
       <main>
-        <UniverseHeading universeId={key} />
-        <UniverseMembers universeId={key} />
+        <UniverseHeading universeId={universeId} />
+        <UniverseMembers universeId={universeId} />
       </main>
     </>
   );
