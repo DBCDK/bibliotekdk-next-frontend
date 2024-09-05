@@ -29,8 +29,8 @@ export function Series({ isLoading, series = {}, workId = "" }) {
     series?.members?.map((member) => {
       return { material: member?.work, series: member };
     }) || [];
-
-  const link = getSeriesUrl(series?.title, workId);
+console.log("Series.series", series);
+  const link = getSeriesUrl(series?.seriesId);
   const identifyingAddition = series?.identifyingAddition
     ? "(" + series?.identifyingAddition + ")"
     : "";
@@ -40,7 +40,7 @@ export function Series({ isLoading, series = {}, workId = "" }) {
       title={
         <Title tag="h3" type="title4" skeleton={isLoading}>
           <Link border={{ bottom: true }} href={link}>
-            {`${series.title} ${identifyingAddition}`}
+            {` HEJ MED DIG KAJ${series.title} ${identifyingAddition}`}
           </Link>
         </Title>
       }

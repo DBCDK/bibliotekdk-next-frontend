@@ -273,6 +273,7 @@ export function templateForUniversePageSeries({ material }) {
 
 /**Used in Universe Page for Series */
 export function templateForUniverseSeriesBase({ material, classNameAddition }) {
+  console.log('templateForUniverseSeriesBase.material',material)
   const title = material?.title;
   const identifyingAddition = material?.identifyingAddition;
   const fullTitle = [
@@ -301,9 +302,9 @@ export function templateForUniverseSeriesBase({ material, classNameAddition }) {
     .slice(0, 3);
 
   const coverSrc = getCoverImage(firstWork?.manifestations?.mostRelevant);
-
+console.log('firstWork',firstWork)
   // TODO: We need to change this if we get ids on Series. A SeriesId if you will
-  const urlToFirstWork = getSeriesUrl(fullTitle, firstWork?.workId);
+  const urlToFirstWork = getSeriesUrl(material.seriesId);
 
   const coverImageClassName = cx(
     styles.cover,
