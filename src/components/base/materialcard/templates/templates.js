@@ -145,8 +145,7 @@ export function templateForUniverseInfoCard({ material }) {
     styles.cover,
     styles.cover__universe_info_card
   );
-
-  const href = getUniverseUrl(material?.title, material?.key);
+  const href = getUniverseUrl(material?.universeId);
 
   return {
     link_href: href,

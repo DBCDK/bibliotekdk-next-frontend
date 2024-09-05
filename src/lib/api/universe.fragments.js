@@ -86,6 +86,7 @@ export function universesBasicInfoByWork({ workId }) {
           title
           description
           workTypes
+          universeId
         }
       }
     }
@@ -103,6 +104,7 @@ export function universesByWork({ workId, offset, limit }) {
         universes {
           title
           key
+          universeId
           content(offset: $offset, limit: $limit) {
             hitcount
             entries {

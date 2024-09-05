@@ -11,16 +11,15 @@ import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 export default function UniversePage() {
   const router = useRouter();
 
-  const { universeId, key } = router.query;
-  console.log("universeId", universeId);
+  const { universeId } = router.query;
+
   const { data, error } = useData(
     universeId && universeFragments.universeBasicInfo({ universeId })
   );
   const { canonical, alternate } = useCanonicalUrl();
   const title = data?.universe?.title;
   const description = data?.universe?.description;
-  console.log("data", data);
-  console.log("error", error);
+
   if (error || (data && !data?.universe)) {
     return <Custom404 />;
   }

@@ -15,8 +15,7 @@ export default function SeriesPage() {
   const router = useRouter();
   const { canonical, alternate } = useCanonicalUrl();
 
-  const { workId, seriesTitle, seriesId } = router.query;
-  console.log("router.query", router.query);
+  const { seriesId } = router.query;
 
   const {
     data: seriesData,
@@ -26,35 +25,8 @@ export default function SeriesPage() {
     seriesId &&
       workFragments.seriesById({ seriesId: seriesId, seriesLimit: 200 })
   );
-  console.log("seriesData", seriesData);
-
-  console.log("seriesError", seriesError);
 
   const specificSeries = seriesData?.series;
-  //const series = seriesData?.work?.series;
-  // const specificSeries = series?.find(
-  //   (singleSeries) => encodeString(singleSeries.title) === seriesTitle
-  // );
-
-  // useEffect(() => {
-  //   if (series?.length === 0) {
-  //     router?.replace(`/work/${workId}`);
-  //   }
-
-  //   if (
-  //     !seriesIsLoading &&
-  //     series?.length > 0 &&
-  //     (!specificSeries || specificSeries?.length === 0)
-  //   ) {
-  //     router?.replace({
-  //       pathname: router.pathname,
-  //       query: {
-  //         ...router.query,
-  //         seriesTitle: encodeString(series?.[0]?.title),
-  //       },
-  //     });
-  //   }
-  // }, [seriesIsLoading, seriesTitle, JSON.stringify(series)]);
 
   if (seriesError) {
     return <Custom404 />;

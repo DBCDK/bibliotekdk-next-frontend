@@ -62,7 +62,7 @@ function Details({ className = "", manifestation = {}, work = {} }) {
   const fieldsToShow = useMemo(() => {
     return fieldsForRows(manifestation, work, context);
   }, [manifestation, materialType, work, context]);
-
+  console.log(fieldsToShow);
   return (
     <Section
       title={Translate({ ...context, label: "title" })}

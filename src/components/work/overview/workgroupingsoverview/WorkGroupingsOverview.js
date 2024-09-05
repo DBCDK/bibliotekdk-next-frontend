@@ -134,7 +134,7 @@ function getSeriesMap({ series, members, workId }) {
           : series?.title,
       // title: series?.title,
       anchorId: getAnchor(AnchorsEnum.SERIES),
-      link: `/serie/${series.seriesId}`, //getSeriesUrl(series?.title, workId),
+      link: getSeriesUrl(series.seriesId),
     }
   );
 }

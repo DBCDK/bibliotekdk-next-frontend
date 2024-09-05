@@ -116,6 +116,7 @@ export default function WorkSlider({
         childContainerClassName={styles.SlideChildren}
       >
         {inputList?.map((input, idx) => {
+          console.log("input", input);
           return (
             <MaterialCard
               key={idx}

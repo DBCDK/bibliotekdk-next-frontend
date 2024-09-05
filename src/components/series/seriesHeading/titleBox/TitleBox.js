@@ -8,7 +8,6 @@ import cx from "classnames";
 import ThumbnailParade from "@/components/series/seriesHeading/titleBox/thumbnailParade/ThumbnailParade";
 
 import { getUniqueCreatorsDisplay } from "@/components/series/utils";
-import { getUniverseUrl } from "@/lib/utils";
 import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
 
 export function LinkToCreator({ creator, isLoading }) {
@@ -98,7 +97,6 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
                 renderAsHtml: true,
               })}
               <Link
-                //       href={getUniverseUrl(universe?.title, universe?.key)}
                 href={`/univers/${universe?.universeId}`}
                 border={{ bottom: { keepVisible: true } }}
               >

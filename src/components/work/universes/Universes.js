@@ -43,16 +43,20 @@ function Universes({ isLoading, universe = {}, workId = "" }) {
   });
 
   const universeCard = {
-    material: { title: universe?.title, workId: workId, key: universe?.key },
+    material: {
+      title: universe?.title,
+      workId: workId,
+      key: universe?.key,
+      universeId: universe?.universeId,
+    },
     propsAndChildrenTemplate: templateForUniverseInfoCard,
   };
 
   const propsAndChildrenInputList = [...seriesAndWorks, universeCard];
 
   const link =
-    universe?.title &&
-    universe?.key &&
-    getUniverseUrl(universe?.title, universe?.key);
+    universe?.title && universe?.key && getUniverseUrl(universe?.universeId);
+  console.log("universeuniverse", universe);
 
   return (
     <Section

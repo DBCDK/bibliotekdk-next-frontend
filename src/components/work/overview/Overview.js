@@ -250,7 +250,6 @@ export default function Wrap({ workId, type, onTypeChange, login }) {
     return <OverviewError />;
   }
 
-  console.log("fbi work", fbiWork.data.work);
   return (
     <Overview
       work={fbiWork.data.work}

@@ -35,7 +35,7 @@ function ContentPage({ universeId, workType, offset, limit, isScrolling }) {
   });
 
   // fetch data
-  const { data, error } = useData(
+  const { data } = useData(
     universeId &&
       inView &&
       universeContent({
@@ -100,7 +100,7 @@ function WorkTypesSection({
   );
 
   // We need the hitcount
-  const { data, error, isLoading } = useData(
+  const { data, isLoading } = useData(
     universeId &&
       universeContent({
         universeId: universeId,
@@ -109,8 +109,6 @@ function WorkTypesSection({
         limit: PAGE_SIZE,
       })
   );
-  console.log("universeContent.data", data);
-  console.log("universeContent.error", error);
 
   const hitcount = data?.universe?.content.hitcount || PAGE_SIZE;
 
