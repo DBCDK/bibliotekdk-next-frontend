@@ -9,6 +9,7 @@ import ThumbnailParade from "@/components/series/seriesHeading/titleBox/thumbnai
 
 import { getUniqueCreatorsDisplay } from "@/components/series/utils";
 import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
+import { getUniverseUrl } from "@/lib/utils";
 
 export function LinkToCreator({ creator, isLoading }) {
   // @TODO .. do we need some refactoring ?? - this inputfield is
@@ -97,7 +98,7 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
                 renderAsHtml: true,
               })}
               <Link
-                href={`/univers/${universe?.universeId}`}
+                href={getUniverseUrl(universe?.universeId)}
                 border={{ bottom: { keepVisible: true } }}
               >
                 {universe?.title}

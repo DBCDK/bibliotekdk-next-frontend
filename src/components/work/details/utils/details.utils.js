@@ -567,7 +567,6 @@ function RenderLitteratureAudience({ values }) {
 
 function getSeriesAndUniverseTitles(work) {
   const seriesTitle = work?.series?.map((singleSeries) => {
-    console.log("singleSeries", singleSeries);
     return {
       title: `${singleSeries.title} (serie)`,
       url: getSeriesUrl(singleSeries.seriesId),
@@ -575,7 +574,6 @@ function getSeriesAndUniverseTitles(work) {
     };
   });
   const universesTitle = work?.universes?.map((singleUniverses) => {
-    console.log("singleUniverses", singleUniverses);
     return {
       title: singleUniverses.title,
       url: getUniverseUrl(singleUniverses.universeId),
@@ -683,7 +681,6 @@ function RenderPlayers({ values }) {
  */
 export function fieldsForRows(manifestation, work, context) {
   const materialType = work?.workTypes?.[0] || null;
-  console.log("materialType", materialType);
   const fieldsMap = {
     DEFAULT: [
       {

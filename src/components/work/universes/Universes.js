@@ -56,7 +56,6 @@ function Universes({ isLoading, universe = {}, workId = "" }) {
 
   const link =
     universe?.title && universe?.key && getUniverseUrl(universe?.universeId);
-  console.log("universeuniverse", universe);
 
   return (
     <Section

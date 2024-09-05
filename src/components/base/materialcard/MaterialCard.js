@@ -41,7 +41,6 @@ const MaterialCard = forwardRef(
     },
     ref
   ) {
-    console.log("propAndChildrenInput", propAndChildrenInput);
     const renderProps = propAndChildrenTemplate?.(propAndChildrenInput);
     const {
       link_href,
@@ -60,7 +59,7 @@ const MaterialCard = forwardRef(
       imageLeft,
       border,
     } = renderProps;
-    console.log("link_href", link_href);
+
     const [loaded, setLoaded] = useState(false);
 
     if (imageLeft) {

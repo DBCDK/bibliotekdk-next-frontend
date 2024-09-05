@@ -190,7 +190,6 @@ export default function Wrap({ workId }) {
     current?.manifestations?.mostRelevant?.[0]?.hostPublication;
 
   const allSeries = work_response?.data?.work?.series || [];
-  console.log("allSeries", allSeries);
   // TODO .. alter title if this is a tvserie
   const allSeriesMap = allSeries?.map((singleSeries) =>
     getSeriesMap({
