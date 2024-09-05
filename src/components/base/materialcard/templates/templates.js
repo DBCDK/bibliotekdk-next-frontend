@@ -273,7 +273,6 @@ export function templateForUniversePageSeries({ material }) {
 
 /**Used in Universe Page for Series */
 export function templateForUniverseSeriesBase({ material, classNameAddition }) {
-  console.log("templateForUniverseSeriesBase.material", material);
   const title = material?.title;
   const identifyingAddition = material?.identifyingAddition;
   const fullTitle = [
