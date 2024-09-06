@@ -18,6 +18,7 @@ export default function Document() {
           id="crazyegg"
           type="text/javascript"
           src="/crazyegg.js"
+          strategy="beforeInteractive"
           async="async"
         />
         <Script
