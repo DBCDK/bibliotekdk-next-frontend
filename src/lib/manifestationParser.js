@@ -91,11 +91,10 @@ const fields = () => [
   },
   {
     dataField: "contributors",
-    label:
-      Translate({
-        context: "bibliographic-data",
-        label: "contributors",
-      }) + "CONTRIB NOT MUSIC",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "contributors",
+    }),
     // only show for non MUSIC - for MUSIC we show contributorsFromDescription
     valueParser: (contributors, materialTypes) =>
       contributors?.length > 0 &&
