@@ -73,6 +73,7 @@ export const decorators = [
       <GraphQLMocker
         url={
           context?.parameters?.graphql?.url ||
+          "https://temp.fbi-api.dbc.dk/bibdk21/graphql" ||
           "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql" ||
           "https://alfa-api.stg.bibliotek.dk/190101/default/graphql"
         }

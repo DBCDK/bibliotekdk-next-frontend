@@ -23,15 +23,16 @@ export function openAgencyLocalizationsModal({
   });
 }
 
-export function openReferencesModal(modal, pids, workId, work, manifestation) {
-  modal.push("references", {
-    title: Translate({
-      context: "references",
-      label: "label_references_title",
-    }),
-    pids: pids,
+export function openReferencesModal(modal, pids, workId, manifestation) {
+  // fake a bookmarked material for multi references page
+  const material = {
+    manifestations: [manifestation],
+    materialId: manifestation?.pid,
+    materialType: manifestation?.materialTypes?.[0]?.materialTypeSpecific?.code,
     workId: workId,
-    manifestation: manifestation,
+  };
+  modal.push("multiReferences", {
+    materials: [material],
   });
 }
 

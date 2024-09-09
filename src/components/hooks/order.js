@@ -784,11 +784,29 @@ export function useOrderFlow() {
     setOrders(newOrders);
   }
 
-  function start({ orders }) {
+  /**
+   * Strart order flow - if initialbracnch is set we open adgangsplatform, if user is authenticated we go to orderpage
+   * if user is NOT authenticated we start the login flow.
+   * @param orders
+   * @param initialBranch
+   */
+  function start({ orders, initialBranch = null }) {
     setSessionStorageItem("storedOrders", JSON.stringify(orders));
     setInitialOrders(orders);
     setOrders(orders);
     collect.collectStartOrderFlow({ count: orders?.length });
+
+    if (initialBranch) {
+      const callbackUID = modal.saveToStore("ematerialfilter", {});
+      modal.push("openAdgangsplatform", {
+        agencyId: initialBranch.agencyId,
+        branchId: initialBranch.branchId,
+        name: initialBranch.name,
+        agencyName: initialBranch.agencyName, //TODO do we have originUrl and how does it look like?
+        callbackUID: callbackUID,
+      });
+      return;
+    }
 
     if (isAuthenticated || branchId) {
       modal.push("ematerialfilter", {});

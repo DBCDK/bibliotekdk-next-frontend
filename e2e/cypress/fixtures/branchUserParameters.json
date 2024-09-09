@@ -20,20 +20,24 @@
           },
           "userParameters": [
             {
-              "userParameterType": "customId",
+              "userParameterType": "CUSTOMID",
+              "userParameterName": "customId",
               "parameterRequired": true,
               "description": "Klasse"
             },
             {
-              "userParameterType": "userName",
+              "userParameterType": "USERNAME",
+              "userParameterName": "userName",
               "parameterRequired": true
             },
             {
-              "userParameterType": "userMail",
+              "userParameterType": "USERMAIL",
+              "userParameterName": "userMail",
               "parameterRequired": true
             },
             {
-              "userParameterType": "userDateOfBirth",
+              "userParameterType": "USERDATEOFBIRTH",
+              "userParameterName": "userDateOfBirth",
               "parameterRequired": false
             }
           ]

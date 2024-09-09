@@ -68,10 +68,13 @@ export default function Wrap({ selectedPids, singleManifestation = false }) {
   const { loanerInfo } = useLoanerInfo();
   const modal = useModal();
 
-  const { physicalPids, isLoading: isLoadingManifestationData } =
-    useManifestationData({ pids: selectedPids });
+  const {
+    physicalPids,
+    physicalUnitPids,
+    isLoading: isLoadingManifestationData,
+  } = useManifestationData({ pids: selectedPids });
 
-  const preferredOnline = !physicalPids.length;
+  const preferredOnline = !physicalUnitPids?.length;
 
   const { data, isLoading, isSlow } = useData(
     physicalPids?.length > 0 &&

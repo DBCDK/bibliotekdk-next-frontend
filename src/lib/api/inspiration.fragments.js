@@ -27,7 +27,9 @@ const CATEGORY_ENUMS = [
 
 export function inspiration({ filters = [], limit = 10 } = {}) {
   // Remove unknown categories
-  filters = filters.filter((f) => CATEGORY_ENUMS.includes(f.category));
+  filters = filters
+    .filter((f) => CATEGORY_ENUMS.includes(f.category))
+    ?.map((f) => ({ ...f, category: f.category.toUpperCase() }));
   if (filters.length === 0) {
     return null;
   }
@@ -35,10 +37,10 @@ export function inspiration({ filters = [], limit = 10 } = {}) {
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
-    query: `query ($limit: Int!, $filters: [CategoryFilter!]) {
+    query: `query ($limit: Int!, $filters: [CategoryFilterInput!]) {
         inspiration {
           categories(filter: $filters) {
-            category
+            category: title
             subCategories {
               title
               result(limit: $limit) {
@@ -85,7 +87,9 @@ export function inspiration({ filters = [], limit = 10 } = {}) {
 
 export function categories({ filters = [] } = {}) {
   // Remove unknown categories
-  filters = filters.filter((f) => CATEGORY_ENUMS.includes(f.category));
+  filters = filters
+    .filter((f) => CATEGORY_ENUMS.includes(f.category))
+    ?.map((f) => ({ ...f, category: f.category.toUpperCase() }));
   if (filters.length === 0) {
     return null;
   }
@@ -93,10 +97,10 @@ export function categories({ filters = [] } = {}) {
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
-    query: `query ($filters: [CategoryFilter!]) {
+    query: `query ($filters: [CategoryFilterInput!]) {
         inspiration {
           categories(filter: $filters) {
-            category
+            category: title
             subCategories {
               title
             }

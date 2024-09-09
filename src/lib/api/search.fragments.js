@@ -23,13 +23,35 @@ export function hitcount({ q, filters = {} }) {
     apiUrl: ApiEnums.FBI_API_SIMPLESEARCH,
     // delay: 1000, // for debugging
     query: `
-    query ($q: SearchQuery!, $filters: SearchFilters) {
+    query ($q: SearchQueryInput!, $filters: SearchFiltersInput) {
       search(q: $q, filters: $filters) {
         hitcount
       }
-      monitor(name: "bibdknext_search_hitcount")
     }`,
     variables: { q, filters },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * Suggestions for alternative spellings
+ * @param q
+ * @param limit
+ * @returns {{variables: {q, limit: number}, apiUrl: string, slowThreshold: number, query: string}}
+ */
+export function didYouMean({ q, limit = 5 }) {
+  return {
+    apiUrl: ApiEnums.FBI_API_SIMPLESEARCH,
+    query: `
+      query didyoumean ($q: SearchQueryInput!, $limit: Int!) {
+        search(q: $q) {
+        didYouMean(limit: $limit) {
+          query
+          score
+        }
+      }      
+    }`,
+    variables: { q, limit },
     slowThreshold: 3000,
   };
 }
@@ -54,7 +76,7 @@ export function all({
     apiUrl: ApiEnums.FBI_API_SIMPLESEARCH,
     // delay: 1000, // for debugging
     query: `
-    query all ($q: SearchQuery!, $filters: SearchFilters, $offset: Int!, $limit: PaginationLimit!, $search_exact: Boolean) {
+    query all ($q: SearchQueryInput!, $filters: SearchFiltersInput, $offset: Int!, $limit: PaginationLimitScalar!, $search_exact: Boolean) {
       search(q: $q, filters: $filters, search_exact: $search_exact) {
         works(limit: $limit, offset: $offset) {
           workId
@@ -119,7 +141,6 @@ export function all({
         }
         hitcount
       }
-      monitor(name: "bibdknext_search_all")
     }
     ${creatorsFragment}
     ${materialTypesFragment}
@@ -147,11 +168,14 @@ export function facets({
   filters = {},
   facets = Object.values(FilterTypeEnum),
 }) {
+  if (facets) {
+    facets = facets.map((f) => f.toUpperCase());
+  }
   return {
     apiUrl: ApiEnums.FBI_API_SIMPLESEARCH,
     // delay: 1000, // for debugging
     query: `
-    query ($q: SearchQuery!, $filters: SearchFilters, $facets: [FacetField!]!) {
+    query ($q: SearchQueryInput!, $filters: SearchFiltersInput, $facets: [FacetFieldEnum!]!) {
       search(q: $q, filters: $filters) {
         facets(facets: $facets) {
           name
@@ -162,7 +186,6 @@ export function facets({
           }
         }
       }
-      monitor(name: "bibdknext_search_facets")
     }`,
     variables: {
       q,

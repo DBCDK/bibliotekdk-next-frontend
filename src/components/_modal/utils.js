@@ -191,52 +191,41 @@ export function handleOnSelect({
   modal,
   context,
   updateLoanerInfo,
-  overrideOrderModalPush = null,
-  pids,
-  setOrders,
+  pids = null,
+  start = null,
 }) {
   // Selected branch belongs to one of the user's agencies where the user is logged in
   const alreadyLoggedin = context.initial?.agencies?.find(
     (agency) => agency.result?.[0].agencyId === branch.agencyId
   );
-
   // New selected branch has borrowercheck
   const hasBorchk = branch.borrowerCheck;
-  // if selected branch has same origin as user agency
+
+  // next two cases comes from branchDetails - user selects a library (branch) to order from.
+  // user is already logged in
   if (alreadyLoggedin && hasBorchk) {
-    if (
-      overrideOrderModalPush &&
-      typeof overrideOrderModalPush === "function"
-    ) {
-      updateLoanerInfo({ pickupBranch: branch.branchId }).then(() =>
-        overrideOrderModalPush()
-      );
+    // this one comes from branchdetails
+    if (pids && typeof start === "function") {
+      start({ orders: [{ pids }] });
     } else {
+      // this one comes from pickup selection
       // Set new branch without new log-in
       updateLoanerInfo({ pickupBranch: branch.branchId });
       // update context at previous modal
       modal.prev();
     }
-
     return;
   }
 
   // missing case - user is NOT logged in and branch has borrowercheck (pressed the buttton 'order at this library' from branchdetails)
-  if (!alreadyLoggedin && hasBorchk) {
-    setOrders([{ pids }]);
-    const callbackUID = modal.saveToStore("multiorder", {});
-    modal.push("openAdgangsplatform", {
-      agencyId: branch.agencyId,
-      branchId: branch.branchId,
-      name: branch.name,
-      agencyName: branch.agencyName, //TODO do we have originUrl and how does it look like?
-      callbackUID: callbackUID,
-    });
+  // we pass the selected branch to start method - to open adgangsplatform modal
+  if (!alreadyLoggedin && hasBorchk && branch && typeof start === "function") {
+    start({ orders: [{ pids }], initialBranch: branch });
     return;
   }
 
   //  Show form if selected library doesn't support borchk
-  if (!branch?.borrowerCheck) {
+  if (!hasBorchk) {
     modal.push("loanerform", {
       branchId: branch.branchId,
       changePickupBranch: true,

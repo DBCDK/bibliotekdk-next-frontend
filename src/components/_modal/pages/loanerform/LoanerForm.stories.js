@@ -28,47 +28,58 @@ export function ShowLoanerFormAllFields() {
           },
           userParameters: [
             {
-              userParameterType: "cpr",
+              userParameterType: "CPR",
+              userParameterName: "cpr",
               parameterRequired: true,
             },
             {
-              userParameterType: "userId",
+              userParameterType: "USERID",
+              userParameterName: "userId",
               parameterRequired: true,
             },
             {
-              userParameterType: "barcode",
+              userParameterType: "BARCODE",
+              userParameterName: "barcode",
               parameterRequired: true,
             },
             {
-              userParameterType: "cardno",
+              userParameterType: "CARDNO",
+              userParameterName: "cardno",
               parameterRequired: true,
             },
             {
-              userParameterType: "pincode",
+              userParameterType: "PINCODE",
+              userParameterName: "pincode",
               parameterRequired: true,
             },
             {
-              userParameterType: "customId",
+              userParameterType: "CUSTOMID",
+              userParameterName: "customId",
               parameterRequired: true,
             },
             {
-              userParameterType: "userDateOfBirth",
+              userParameterType: "USERDATEOFBIRTH",
+              userParameterName: "userDateOfBirth",
               parameterRequired: true,
             },
             {
-              userParameterType: "userName",
+              userParameterType: "USERNAME",
+              userParameterName: "userName",
               parameterRequired: true,
             },
             {
-              userParameterType: "userAddress",
+              userParameterType: "USERADDRESS",
+              userParameterName: "userAddress",
               parameterRequired: true,
             },
             {
-              userParameterType: "userMail",
+              userParameterType: "USERMAIL",
+              userParameterName: "userMail",
               parameterRequired: true,
             },
             {
-              userParameterType: "userTelephone",
+              userParameterType: "USERTELEPHONE",
+              userParameterName: "userTelephone",
               parameterRequired: true,
             },
           ],
@@ -105,15 +116,18 @@ export function ShowLoanerFormShort() {
           },
           userParameters: [
             {
-              userParameterType: "userId",
+              userParameterType: "USERID",
+              userParameterName: "userId",
               parameterRequired: true,
             },
             {
-              userParameterType: "userName",
+              userParameterType: "USERNAME",
+              userParameterName: "userName",
               parameterRequired: true,
             },
             {
-              userParameterType: "userMail",
+              userParameterType: "USERMAIL",
+              userParameterName: "userMail",
               parameterRequired: true,
             },
           ],
@@ -150,15 +164,18 @@ export function ShowLoanerFormShortNoMail() {
           },
           userParameters: [
             {
-              userParameterType: "userId",
+              userParameterType: "USERID",
+              userParameterName: "userId",
               parameterRequired: true,
             },
             {
-              userParameterType: "userName",
+              userParameterType: "USERNAME",
+              userParameterName: "userName",
               parameterRequired: true,
             },
             {
-              userParameterType: "userAddress",
+              userParameterType: "USERADDRESS",
+              userParameterName: "userAddress",
               parameterRequired: true,
             },
           ],

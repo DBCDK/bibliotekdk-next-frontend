@@ -1439,7 +1439,7 @@ const DEFAULT_STORY_PARAMETERS = {
           },
         },
       },
-      url: "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",
+      // url: "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",
     },
     nextRouter: {
       showInfo: true,

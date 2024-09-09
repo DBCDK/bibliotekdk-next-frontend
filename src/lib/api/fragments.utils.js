@@ -1,4 +1,4 @@
-export const creatorsFragment = `fragment creatorsFragment on Creator {
+export const creatorsFragment = `fragment creatorsFragment on CreatorInterface {
   ... on Corporation {
     __typename
     display
@@ -25,7 +25,7 @@ export const creatorsFragment = `fragment creatorsFragment on Creator {
   }
 }`;
 
-const creatorsFragmentForAccessFactory = `fragment creatorsFragmentForAccessFactory on Creator {
+const creatorsFragmentForAccessFactory = `fragment creatorsFragmentForAccessFactory on CreatorInterface {
   ... on Corporation {
     __typename
     display
@@ -97,6 +97,7 @@ export const manifestationDetailsForAccessFactory = `fragment manifestationDetai
   titles {
     main
     full
+    original
   }
   edition {
     publicationYear {
@@ -131,10 +132,7 @@ export const seriesFragment = `fragment seriesFragment on Series {
   description
   mainLanguages
   seriesWorkTypes: workTypes
-  numberInSeries {
-    display
-    number
-  }
+  numberInSeries
 }`;
 export const universeFragment = `fragment universeFragment on Universe {
   title

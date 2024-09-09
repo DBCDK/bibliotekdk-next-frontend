@@ -194,7 +194,7 @@ export default function AgencyLocalizationItem({
     !inView;
 
   return (
-    <div ref={ref} style={{ minHeight: 80 }}>
+    <div ref={ref}>
       <LocalizationItemBase
         library={branch}
         branch={branch}

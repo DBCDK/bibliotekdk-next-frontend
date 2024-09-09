@@ -15,7 +15,7 @@ export function branchUserParameters({ branchId }) {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `
-    query BranchUserParameters($branchId: String!, $language: LanguageCode!) {
+    query BranchUserParameters($branchId: String!, $language: LanguageCodeEnum!) {
       branches(branchId: $branchId, language: $language) {
         agencyUrl
         borrowerStatus {
@@ -35,6 +35,7 @@ export function branchUserParameters({ branchId }) {
           postalCode
           userParameters {
             userParameterType
+            userParameterName
             parameterRequired
             description
           }
@@ -46,7 +47,7 @@ export function branchUserParameters({ branchId }) {
       }
       monitor(name: "bibdknext_branch_user_parameters")
      }`,
-    variables: { branchId, language: lang },
+    variables: { branchId, language: lang?.toUpperCase() },
     slowThreshold: 3000,
   };
 }
@@ -116,7 +117,7 @@ export function branchOrderPolicy({ branchId, pids }) {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `
-    query BranchesOrderPolicy($branchId: String!, $language: LanguageCode!, $pids: [String!]!) {
+    query BranchesOrderPolicy($branchId: String!, $language: LanguageCodeEnum!, $pids: [String!]!) {
       branches(branchId: $branchId, language: $language) {
         result {
           orderPolicy(pids: $pids) {
@@ -130,7 +131,7 @@ export function branchOrderPolicy({ branchId, pids }) {
       }
       monitor(name: "bibdknext_branch_orderPolicy")
      }`,
-    variables: { branchId, language: lang, pids },
+    variables: { branchId, language: lang?.toUpperCase(), pids },
     slowThreshold: 3000,
   };
 }
@@ -162,7 +163,7 @@ export function checkBlockedUser({ branchId }) {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `
-    query checkBlockedUser($branchId: String!, $language: LanguageCode!) {
+    query checkBlockedUser($branchId: String!, $language: LanguageCodeEnum!) {
       branches(branchId: $branchId, language: $language) {
         agencyUrl
         borrowerStatus {
@@ -177,7 +178,7 @@ export function checkBlockedUser({ branchId }) {
       }
       monitor(name: "bibdknext_CheckBlockedUser")
     }`,
-    variables: { branchId, language: lang },
+    variables: { branchId, language: lang?.toUpperCase() },
     slowThreshold: 3000,
   };
 }
@@ -186,8 +187,8 @@ export function branchesHighlightsByAgency({ agencyId, q, limit = 50 }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
-    query branchesHighlightsByAgency($agencyId: String!, $q: String, $limit: PaginationLimit!, $language: LanguageCode!) {
-      branches(agencyid: $agencyId, q: $q, bibdkExcludeBranches: true, limit: $limit, status: AKTIVE, language: $language) {
+    query branchesHighlightsByAgency($agencyId: String!, $q: String, $limit: PaginationLimitScalar!, $language: LanguageCodeEnum!) {
+      branches(agencyid: $agencyId, q: $q, bibdkExcludeBranches: true, limit: $limit, statuses: AKTIVE, language: $language) {
         hitcount
         agencyUrl
         result {
@@ -196,7 +197,7 @@ export function branchesHighlightsByAgency({ agencyId, q, limit = 50 }) {
       }
     }
     ${branchFastFragment}`,
-    variables: { agencyId, q, limit, language: lang },
+    variables: { agencyId, q, limit, language: lang?.toUpperCase() },
     slowThreshold: 3000,
   };
 }
@@ -208,8 +209,8 @@ export function branchByBranchId({ branchId, pids, limit = 50, q = "" }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
-    query branchByBranchId($branchId: String!, $q: String, $pids: [String!]!, $limit: PaginationLimit!, $language: LanguageCode!) {
-      branches(branchId: $branchId, q: $q, bibdkExcludeBranches: true, limit: $limit, status: AKTIVE, language: $language) {
+    query branchByBranchId($branchId: String!, $q: String, $pids: [String!]!, $limit: PaginationLimitScalar!, $language: LanguageCodeEnum!) {
+      branches(branchId: $branchId, q: $q, bibdkExcludeBranches: true, limit: $limit, statuses: AKTIVE, language: $language) {
         hitcount
         agencyUrl
         result {
@@ -222,7 +223,7 @@ export function branchByBranchId({ branchId, pids, limit = 50, q = "" }) {
     }
     ${branchFastFragment}
     ${holdingStatusFragment}`,
-    variables: { branchId, q, pids, limit, language: lang },
+    variables: { branchId, q, pids, limit, language: lang?.toUpperCase() },
     slowThreshold: 3000,
   };
 }
@@ -234,8 +235,8 @@ export function branchesByQuery({ q, limit = 50 }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
-    query branchesActiveInAgency($q: String!, $limit: PaginationLimit!, $language: LanguageCode!) {
-      branches(q: $q, bibdkExcludeBranches: true,  limit: $limit, status: AKTIVE, language: $language) {
+    query branchesActiveInAgency($q: String!, $limit: PaginationLimitScalar!, $language: LanguageCodeEnum!) {
+      branches(q: $q, bibdkExcludeBranches: true,  limit: $limit, statuses: AKTIVE, language: $language) {
         hitcount
         agencyUrl
         result {
@@ -244,7 +245,7 @@ export function branchesByQuery({ q, limit = 50 }) {
       }
     }
     ${branchFastFragment}`,
-    variables: { q, limit, language: lang },
+    variables: { q, limit, language: lang?.toUpperCase() },
     slowThreshold: 3000,
   };
 }
@@ -256,8 +257,8 @@ export function checkOrderPolicy({ pids, branchId, limit = 10 }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
-    query checkOrderPolicy($branchId: String!, $pids: [String!]!, $limit: PaginationLimit!, $language: LanguageCode!) {
-      branches(branchId: $branchId, limit: $limit, bibdkExcludeBranches: true, status: AKTIVE, language: $language) {
+    query checkOrderPolicy($branchId: String!, $pids: [String!]!, $limit: PaginationLimitScalar!, $language: LanguageCodeEnum!) {
+      branches(branchId: $branchId, limit: $limit, bibdkExcludeBranches: true, statuses: AKTIVE, language: $language) {
         result {
           branchId
           orderPolicy(pids: $pids) {
@@ -267,7 +268,7 @@ export function checkOrderPolicy({ pids, branchId, limit = 10 }) {
       }
     }
     ${orderPolicyFragment}`,
-    variables: { branchId, pids, limit, language: lang },
+    variables: { branchId, pids, limit, language: lang?.toUpperCase() },
     slowThreshold: 3000,
   };
 }
@@ -279,8 +280,8 @@ export function borrowerCheck({ branchId }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
-    query borrowerCheck($branchId: String!, $language: LanguageCode!) {
-      branches(branchId: $branchId, bibdkExcludeBranches: true, status: AKTIVE, language: $language) {
+    query borrowerCheck($branchId: String!, $language: LanguageCodeEnum!) {
+      branches(branchId: $branchId, bibdkExcludeBranches: true, statuses: AKTIVE, language: $language) {
         result {
           branchId
           ...borrowerCheckFragment
@@ -288,7 +289,7 @@ export function borrowerCheck({ branchId }) {
       }
     }
     ${borrowerCheckFragment}`,
-    variables: { branchId, language: lang },
+    variables: { branchId, language: lang?.toUpperCase() },
     slowThreshold: 3000,
   };
 }
@@ -297,8 +298,8 @@ export function holdingsForAgency({ agencyId, pids }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
-    query holdingsForAgency($agencyId: String!, $pids: [String!]!, $limit: PaginationLimit!) {
-      branches(agencyid: $agencyId, limit: $limit, status: AKTIVE) {
+    query holdingsForAgency($agencyId: String!, $pids: [String!]!, $limit: PaginationLimitScalar!) {
+      branches(agencyid: $agencyId, limit: $limit, statuses: AKTIVE) {
         result {
           agencyName
           name
@@ -320,7 +321,6 @@ export function holdingsForAgency({ agencyId, pids }) {
           temporarilyClosed
           temporarilyClosedReason
           openingHours
-          openingHoursUrl
           postalAddress
           postalCode
           city
