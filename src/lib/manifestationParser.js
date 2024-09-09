@@ -69,11 +69,10 @@ const fields = () => [
   },
   {
     dataField: "creators",
-    label:
-      Translate({
-        context: "bibliographic-data",
-        label: "creators",
-      }) + "CREATORS",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "creators",
+    }),
     valueParser: (creators) =>
       creators?.length === 1 && (
         <ParsedAndRenderedCreators creatorsOrContributors={creators} />
@@ -81,11 +80,10 @@ const fields = () => [
   },
   {
     dataField: "creators",
-    label:
-      Translate({
-        context: "bibliographic-data",
-        label: "co-creators",
-      }) + "CO-CREATORS",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "co-creators",
+    }),
     valueParser: (creators) =>
       creators?.length > 1 && (
         <ParsedAndRenderedCreators creatorsOrContributors={creators} />
@@ -110,22 +108,20 @@ const fields = () => [
   },
   {
     dataField: "creatorsFromDescription",
-    label:
-      Translate({
-        context: "bibliographic-data",
-        label: "creatorsFromDescription",
-      }) + "CREATORS MUSIC",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "creatorsFromDescription",
+    }),
     // only show for MUSIC - for other materialtypes we show creators.corporations or creators.persons
     valueParser: (values, materialTypes) =>
       (materialTypes?.includes("MUSIC") && values?.join(", ")) || "",
   },
   {
     dataField: "contributorsFromDescription",
-    label:
-      Translate({
-        context: "bibliographic-data",
-        label: "contributorsFromDescription",
-      }) + "CONTRIB MUSIC",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "contributorsFromDescription",
+    }),
     // only show for MUSIC - for other materialtypes we show contributors.corporations or contributors.persons
     valueParser: (values, materialTypes) =>
       (materialTypes?.includes("MUSIC") && values?.join(", ")) || "",
@@ -569,7 +565,6 @@ function renderOriginalTitle(value) {
  * @returns {Array}
  */
 export function parseManifestation(manifestation) {
-  console.log(manifestation, "MANIFESTATION");
   const materialTypes = manifestation?.materialTypes?.map(
     (mat) => mat?.materialTypeGeneral?.code
   );
