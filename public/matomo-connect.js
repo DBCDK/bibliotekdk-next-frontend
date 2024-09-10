@@ -12,6 +12,7 @@ function matomoWaitForTracker() {
     });
     window.addEventListener("CookiebotOnDecline", function (e) {
       consentSet();
+      document.location.reload();
     });
     consentSet();
   }
