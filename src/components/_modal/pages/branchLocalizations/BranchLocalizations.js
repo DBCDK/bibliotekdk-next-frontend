@@ -63,12 +63,15 @@ export default function BranchLocalizations({ context, modal }) {
     branchesUnknownStatus,
     branchesByAvailability,
     expectedAgencyReturnDate,
+    ownedByAgency,
   } = useHoldingsForAgency({
     agencyId,
     pids,
   });
 
   const agency = branchesByAvailability?.[0];
+
+  //@TODO pass holdingstxt to localizationsbase
 
   return (
     <LocalizationsBase
@@ -80,6 +83,7 @@ export default function BranchLocalizations({ context, modal }) {
         context: "localizations",
         label: "reminder_can_be_ordered_from_anywhere",
       })}
+      ownedByAgency={ownedByAgency}
     >
       {expectedAgencyReturnDate && (
         <LocalizationsBase.Information

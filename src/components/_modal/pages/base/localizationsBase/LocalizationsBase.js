@@ -30,6 +30,7 @@ import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtil
 function LocalizationsBase({
   children,
   context,
+  ownedByAgency = 0,
   subtitle,
   pids = [],
   materialCardTemplate = (/** @type {Object} */ material) =>
@@ -92,6 +93,16 @@ function LocalizationsBase({
             />
           ))}
       </div>
+
+      {ownedByAgency > 0 && (
+        <Text className={cx(styles.padding_inline, styles.subheader_text)}>
+          {Translate({
+            context: "order",
+            label: "owned_by_agency",
+            vars: [ownedByAgency],
+          })}
+        </Text>
+      )}
 
       {subheader && <Subheader>{subheader}</Subheader>}
 
