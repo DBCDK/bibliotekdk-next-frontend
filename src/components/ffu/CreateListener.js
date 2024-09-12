@@ -38,7 +38,7 @@ export default function Listener() {
 
   // Mutate createAccount response from API
   useEffect(() => {
-    const status = mutate?.culr?.createAccount?.status;
+    const status = mutate?.culr?.bibdk?.createAccount?.status;
 
     if (status || error) {
       if (status === "OK") {
