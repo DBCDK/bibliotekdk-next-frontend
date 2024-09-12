@@ -71,8 +71,6 @@ export default function BranchLocalizations({ context, modal }) {
 
   const agency = branchesByAvailability?.[0];
 
-  //@TODO pass holdingstxt to localizationsbase
-
   return (
     <LocalizationsBase
       modal={modal}
