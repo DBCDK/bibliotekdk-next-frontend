@@ -1,8 +1,8 @@
 export function createAccount({ tokens }) {
   return {
     query: `mutation CulrCreateAccount($input: CreateAccountInput!) {
-        culr {
-          bibdk {
+        bibdk {
+          culr {
             createAccount(input: $input, dryRun: false) {
               status
             }
@@ -20,8 +20,8 @@ export function createAccount({ tokens }) {
 export function deleteAccount({ agencyId }) {
   return {
     query: `mutation CulrDeleteAccount($input: DeleteAccountInput!) {
-        culr {
-          bibdk {
+        bibdk {
+          culr {
             deleteAccount(input: $input, dryRun: false) {
               status
             }
