@@ -98,7 +98,8 @@ function LocalizationsBase({
         <Text className={cx(styles.padding_inline, styles.subheader_text)}>
           {Translate({
             context: "order",
-            label: "owned_by_agency",
+            label:
+              ownedByAgency > 1 ? "owned_by_agency" : "owned_by_agency_single",
             vars: [ownedByAgency],
           })}
         </Text>

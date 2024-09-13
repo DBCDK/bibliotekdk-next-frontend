@@ -3706,6 +3706,10 @@
         "da": "Biblioteket har indkøbt %s eksemplarer",
         "en": "Library bought %s copies"
       },
+      "owned_by_agency_single": {
+        "da": "Biblioteket har indkøbt %s eksemplar",
+        "en": "Library bought %s copy"
+      },
       "specific-edition": {
         "da": "Bestil udgave",
         "en": "Order edition"
