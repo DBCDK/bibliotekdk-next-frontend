@@ -1,8 +1,8 @@
 export function getAccounts() {
   return {
     query: `query CulrGetAccounts {
-        culr {
-          bibdk {
+        bibdk {
+          culr {
             getAccounts {
               accounts {
                 agencyId
