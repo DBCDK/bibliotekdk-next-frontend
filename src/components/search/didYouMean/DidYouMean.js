@@ -18,6 +18,11 @@ export function DidYouMean({ didyoumean, isLoading }) {
   if (isLoading) {
     return null;
   }
+
+  if (!didyoumean) {
+    return null;
+  }
+
   // we show limited results (one for now), and only if the score is high
   // definition of high score
   const highscore = 0.9;
@@ -25,14 +30,14 @@ export function DidYouMean({ didyoumean, isLoading }) {
   const numberToShow = 1;
 
   // filter out result with low score
-  let results = didyoumean.filter((did) => Number(did.score) > highscore);
-  if (results.length < 1) {
+  let results = didyoumean?.filter((did) => Number(did.score) > highscore);
+  if (results?.length < 1) {
     return null;
   }
 
   // slice to wanted limit
-  if (results.length > numberToShow) {
-    results = results.slice(0, numberToShow);
+  if (results?.length > numberToShow) {
+    results = results?.slice(0, numberToShow);
   }
 
   return (
@@ -47,7 +52,7 @@ export function DidYouMean({ didyoumean, isLoading }) {
       <Text skeleton={isLoading} lines={1} tag="span">
         {translate({ context: "search", label: "didyoumean" })}:
       </Text>
-      {results.map((res, index) => (
+      {results?.map((res, index) => (
         <span className={styles.result} key={index}>
           <Link
             onClick={(e) => {

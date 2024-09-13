@@ -962,6 +962,13 @@ export function fieldsForRows(manifestation, work, context) {
       },
     ],
     MOVIE: [
+      {
+        originalTitle: {
+          label: Translate({ ...context, label: "originalTitle" }),
+          value: manifestation?.titles?.original?.join("; ") || [],
+          index: 0,
+        },
+      },
       // overwrite contributors from base array - add a new one (moviecontributors) for correct order
       {
         contributors: {

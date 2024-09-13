@@ -15,6 +15,13 @@ export default function Document() {
         <Main />
         <NextScript />
         <Script
+          id="crazyegg"
+          type="text/javascript"
+          src="/crazyegg.js"
+          strategy="beforeInteractive"
+          async="async"
+        />
+        <Script
           id="Cookiebot"
           src="https://consent.cookiebot.eu/uc.js"
           data-cbid={COOKIEBOT.id}

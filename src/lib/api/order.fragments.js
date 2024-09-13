@@ -20,7 +20,6 @@ export function orderHistory({ offset, limit }) {
                 }
               }
               orderId
-              pidOfPrimaryObject
               creationDate
             }
             hitcount

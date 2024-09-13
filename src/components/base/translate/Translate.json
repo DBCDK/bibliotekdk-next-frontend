@@ -1704,6 +1704,10 @@
         "da": "Detaljer",
         "en": "Details"
       },
+      "originalTitle": {
+        "da": "Original titel",
+        "en": "Original title"
+      },
       "playingtime": {
         "da": "Spilletid",
         "en": "Playing time"
@@ -3706,6 +3710,14 @@
       }
     },
     "order": {
+      "owned_by_agency": {
+        "da": "Biblioteket har indkøbt %s eksemplarer",
+        "en": "Library bought %s copies"
+      },
+      "owned_by_agency_single": {
+        "da": "Biblioteket har indkøbt %s eksemplar",
+        "en": "Library bought %s copy"
+      },
       "specific-edition": {
         "da": "Bestil udgave",
         "en": "Order edition"
