@@ -131,6 +131,9 @@ export function useHoldingsForAgency({ agencyId, pids }) {
       renderAsHtml: true,
     });
 
+  const ownedByAgency =
+    branchesByAvailability?.[0]?.holdings?.ownedByAgency || 0;
+
   return {
     agencyHoldingsLamp,
     branches,
@@ -139,5 +142,6 @@ export function useHoldingsForAgency({ agencyId, pids }) {
     branchesByAvailability,
     expectedAgencyReturnDate,
     isLoading,
+    ownedByAgency,
   };
 }

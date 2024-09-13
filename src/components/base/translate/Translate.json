@@ -3702,6 +3702,10 @@
       }
     },
     "order": {
+      "owned_by_agency": {
+        "da": "Biblioteket har indkøbt %s eksemplarer",
+        "en": "Library bought %s copies"
+      },
       "specific-edition": {
         "da": "Bestil udgave",
         "en": "Order edition"
