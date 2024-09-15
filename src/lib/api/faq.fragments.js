@@ -1,6 +1,9 @@
 import { ApiEnums } from "@/lib/api/api";
 import { getLangcode } from "@/components/base/translate/Translate";
 export function promotedFaqs(language) {
+  if (!language) {
+    return null;
+  }
   const langcode = getLangcode(language);
   return {
     apiUrl: ApiEnums.FBI_API,
@@ -47,6 +50,10 @@ export function promotedFaqs(language) {
  * @returns {{variables: {}, slowThreshold: number, query: string}}
  */
 export function publishedFaqs(language) {
+  if (!language) {
+    return null;
+  }
+
   const langcode = getLangcode(language);
   return {
     apiUrl: ApiEnums.FBI_API,
