@@ -289,7 +289,9 @@ function getDropdownFromUrl({ initDropdowns, dropdownUnit }) {
     };
   });
 
+  /** make sure additional settings are passed on (...dropdownunit) :) **/
   return {
+    ...dropdownUnit,
     indexName: dropdownUnit.indexName,
     items: /** @type DropdownInputArray */ enrichedDropdownUnit,
   };
@@ -511,7 +513,10 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
     indexName: DropdownIndicesEnum.DATABASES,
     showSearchBar: false,
     // @TODO add a link to helptext here
-    helpTxtLink: "FISK",
+    helpTxtLink: {
+      label: "Fagbibliografier",
+      href: "/hjaelp/Fagbibliografier/666",
+    },
   };
 
   const players = {

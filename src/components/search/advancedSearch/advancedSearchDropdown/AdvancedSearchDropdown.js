@@ -36,6 +36,10 @@ import cx from "classnames";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
+import Link from "@/components/base/link/Link";
+import { cyKey } from "@/utils/trim";
+import Title from "@/components/base/title/Title";
+import translate from "@/components/base/translate";
 
 const specialFormTypes = new Set([FormTypeEnum.ACTION_LINK_CONTAINER]);
 
@@ -81,6 +85,29 @@ function toggleYearRange(toggleMenuItemsState, targetItem, valueItem) {
     type: ToggleMenuItemsEnum.UPDATE,
     payload: payload,
   });
+}
+
+function LinkToHelpTxt({ helptxtLink }) {
+  return (
+    <Text type="text3" className={styles.helptxtlink}>
+      <Link
+        // className={`${styles.link}`}
+        title={helptxtLink.label}
+        href={helptxtLink.href}
+        target="_blank"
+        dataCy={cyKey({
+          name: helptxtLink.label,
+          prefix: "menu-link",
+        })}
+        border={{ top: false, bottom: { keepVisible: true } }}
+      >
+        {translate({
+          context: "advanced_search_dropdown",
+          label: helptxtLink.label,
+        })}
+      </Link>
+    </Text>
+  );
 }
 
 export default function AdvancedSearchDropdown({
@@ -312,6 +339,10 @@ export default function AdvancedSearchDropdown({
           />
         )}
 
+        {/* @TODO render link for helptext here - if given
+         we probably need a title and an id for the helptext */}
+        {helpTxtLink && <LinkToHelpTxt helptxtLink={helpTxtLink} />}
+
         <ClearBar
           onClick={() =>
             toggleMenuItemsState({
@@ -321,9 +352,6 @@ export default function AdvancedSearchDropdown({
           }
           className={cx(styles.sticky_base_class, styles.clear_content_bar)}
         />
-        {/* @TODO render link for helptext here - if given
-         we probably need a title and an id for the helptext */}
-        {helpTxtLink && <div>FISK</div>}
       </Dropdown.Menu>
     </Dropdown>
   );

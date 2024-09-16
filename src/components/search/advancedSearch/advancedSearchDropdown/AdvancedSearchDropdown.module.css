@@ -54,6 +54,12 @@
   stroke: var(--blue);
 }
 
+.helptxtlink {
+  color: red;
+  background-color: var(--iron);
+  padding: var(--pt1);
+}
+
 .range_bar {
   display: flex;
   gap: var(--pt2);

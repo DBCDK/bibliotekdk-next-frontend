@@ -105,6 +105,10 @@
       }
     },
     "advanced_search_dropdown": {
+      "Fagbibliografier": {
+        "da": "Se hvad databaserne indeholder",
+        "en" : "See whats in it"
+      },
       "choose_publication_year": {
         "da": "Vælg udgivelsesår",
         "en": "Choose publication year"
