@@ -57,7 +57,8 @@
 .helptxtlink {
   color: red;
   background-color: var(--iron);
-  padding: var(--pt1);
+  /*padding: var(--pt1);*/
+  padding: var(--pt1) var(--pt1) var(--pt2) var(--pt1);
 }
 
 .range_bar {

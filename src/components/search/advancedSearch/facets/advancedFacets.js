@@ -192,6 +192,10 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
       {/* we want to show a link to a helptext for term.source (fagbibliografier) */}
       {facetName === "source" && (
         <LinkToHelpTxt
+          introTxt={translate({
+            context: "complex-search-facets",
+            label: "fagbib_introtext",
+          })}
           helptxtLink={{
             label: "Fagbibliografier",
             href: "/hjaelp/Fagbibliografier/666",

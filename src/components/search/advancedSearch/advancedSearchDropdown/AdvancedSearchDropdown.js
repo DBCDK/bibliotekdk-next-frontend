@@ -87,26 +87,29 @@ function toggleYearRange(toggleMenuItemsState, targetItem, valueItem) {
   });
 }
 
-export function LinkToHelpTxt({ helptxtLink, className }) {
+export function LinkToHelpTxt({ introTxt, helptxtLink, className }) {
   return (
-    <Text type="text3" className={className || styles.helptxtlink}>
-      <Link
-        // className={`${styles.link}`}
-        title={helptxtLink.label}
-        href={helptxtLink.href}
-        target="_blank"
-        dataCy={cyKey({
-          name: helptxtLink.label,
-          prefix: "menu-link",
-        })}
-        border={{ top: false, bottom: { keepVisible: true } }}
-      >
-        {translate({
-          context: "advanced_search_dropdown",
-          label: helptxtLink.label,
-        })}
-      </Link>
-    </Text>
+    <>
+      <Text type="text3" className={className || styles.helptxtlink}>
+        {introTxt && <div>{introTxt}</div>}
+        <Link
+          // className={`${styles.link}`}
+          title={helptxtLink.label}
+          href={helptxtLink.href}
+          target="_blank"
+          dataCy={cyKey({
+            name: helptxtLink.label,
+            prefix: "menu-link",
+          })}
+          border={{ top: false, bottom: { keepVisible: true } }}
+        >
+          {translate({
+            context: "advanced_search_dropdown",
+            label: helptxtLink.label,
+          })}
+        </Link>
+      </Text>
+    </>
   );
 }
 
