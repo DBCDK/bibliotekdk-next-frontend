@@ -14,6 +14,7 @@ import { complexFacetsOnly } from "@/lib/api/complexSearch.fragments";
 import { parseOutFacets } from "@/components/search/advancedSearch/utils";
 import Skeleton from "@/components/base/skeleton";
 import translate from "@/components/base/translate";
+import { LinkToHelpTxt } from "@/components/search/advancedSearch/advancedSearchDropdown/AdvancedSearchDropdown";
 
 /**
  *
@@ -27,10 +28,12 @@ export function AdvancedFacets({ facets, isLoading, replace = false }) {
   const scrollRef = useRef();
 
   // special handling of the facet.source
+  // the sources we wish to handle
   const validSource = Object.values(FacetValidDatabases).map((val) =>
     val.toLowerCase()
   );
 
+  // filter out unwanted sources
   facets = facets?.filter((fac) => {
     if (fac.name !== "facet.source") {
       return true;
@@ -185,63 +188,79 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
 
   let initialcheck;
   return (
-    <ul data-cy={`${facetName}`}>
-      {[...facet?.values]
-        .sort(sorter)
-        .slice(0, numToShow)
-        .map((value, index) => (
-          <li
-            key={`${facetName}-${value.key}-${index}`}
-            className={styles.item}
-            data-cy={`li-${facetName}-${value.key}`}
-          >
-            {
-              (initialcheck = !!current?.values?.find((val) => {
-                return val.name === value.key;
-              }))
-            }
-            <Checkbox
-              id={`${facetName}-${value.key}-${index}`}
-              ariaLabel={value.key}
-              className={styles.checkbox}
-              onChange={(checked) => {
-                onItemClick(checked, value.key, facetName);
-              }}
-              checked={initialcheck}
-            ></Checkbox>
-            {/* Set a label for the checkbox - in that way the checkbox's selected value will be set when clicking the label */}
-            <label htmlFor={`${facetName}-${value.key}-${index}`}>
-              <Text tag="span" type="text3" className={styles.facettext}>
-                {value.key}
-              </Text>
-            </label>
-            <Text tag="span" type="text3" className={styles.score}>
-              {value.score}
-            </Text>
-          </li>
-        ))}
-      {facet?.values?.length > numToShow && (
-        <div
-          onClick={() => {
-            setNumToShow(numToShow + numberToShowMore);
+    <>
+      {/* we want to show a link to a helptext for term.source (fagbibliografier) */}
+      {facetName === "source" && (
+        <LinkToHelpTxt
+          helptxtLink={{
+            label: "Fagbibliografier",
+            href: "/hjaelp/Fagbibliografier/666",
           }}
-          className={styles.showmorelink}
-        >
-          <Link
-            border={{
-              top: false,
-              bottom: {
-                keepVisible: true,
-              },
-            }}
-          >
-            <Text tag="span" type="text3" dataCy={`${facetName}-showmore-link`}>
-              {Translate({ context: "profile", label: "showMore" })}
-            </Text>
-          </Link>
-        </div>
+          className={styles.helptxtlink}
+        />
       )}
-    </ul>
+      <ul data-cy={`${facetName}`}>
+        {[...facet?.values]
+          .sort(sorter)
+          .slice(0, numToShow)
+          .map((value, index) => (
+            <li
+              key={`${facetName}-${value.key}-${index}`}
+              className={styles.item}
+              data-cy={`li-${facetName}-${value.key}`}
+            >
+              {
+                (initialcheck = !!current?.values?.find((val) => {
+                  return val.name === value.key;
+                }))
+              }
+              <Checkbox
+                id={`${facetName}-${value.key}-${index}`}
+                ariaLabel={value.key}
+                className={styles.checkbox}
+                onChange={(checked) => {
+                  onItemClick(checked, value.key, facetName);
+                }}
+                checked={initialcheck}
+              ></Checkbox>
+              {/* Set a label for the checkbox - in that way the checkbox's selected value will be set when clicking the label */}
+              <label htmlFor={`${facetName}-${value.key}-${index}`}>
+                <Text tag="span" type="text3" className={styles.facettext}>
+                  {value.key}
+                </Text>
+              </label>
+              <Text tag="span" type="text3" className={styles.score}>
+                {value.score}
+              </Text>
+            </li>
+          ))}
+        {facet?.values?.length > numToShow && (
+          <div
+            onClick={() => {
+              setNumToShow(numToShow + numberToShowMore);
+            }}
+            className={styles.showmorelink}
+          >
+            <Link
+              border={{
+                top: false,
+                bottom: {
+                  keepVisible: true,
+                },
+              }}
+            >
+              <Text
+                tag="span"
+                type="text3"
+                dataCy={`${facetName}-showmore-link`}
+              >
+                {Translate({ context: "profile", label: "showMore" })}
+              </Text>
+            </Link>
+          </div>
+        )}
+      </ul>
+    </>
   );
 }
 

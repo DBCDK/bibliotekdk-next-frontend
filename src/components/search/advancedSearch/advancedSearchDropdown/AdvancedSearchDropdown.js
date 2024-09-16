@@ -87,9 +87,9 @@ function toggleYearRange(toggleMenuItemsState, targetItem, valueItem) {
   });
 }
 
-function LinkToHelpTxt({ helptxtLink }) {
+export function LinkToHelpTxt({ helptxtLink, className }) {
   return (
-    <Text type="text3" className={styles.helptxtlink}>
+    <Text type="text3" className={className || styles.helptxtlink}>
       <Link
         // className={`${styles.link}`}
         title={helptxtLink.label}
@@ -339,8 +339,7 @@ export default function AdvancedSearchDropdown({
           />
         )}
 
-        {/* @TODO render link for helptext here - if given
-         we probably need a title and an id for the helptext */}
+        {/* we show a link if a helptext object is given */}
         {helpTxtLink && <LinkToHelpTxt helptxtLink={helpTxtLink} />}
 
         <ClearBar
