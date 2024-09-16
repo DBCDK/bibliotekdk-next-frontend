@@ -47,6 +47,7 @@ const prioritisedDatabases = [
     term: "Dansk Litteraturhistorisk Bibliografi",
     key: "Dansk Litteraturhistorisk Bibliografi",
   },
+  // { term: "Teaterprogrammer", key: "Teaterprogrammer" },
 ];
 
 export function dummy__databases() {
