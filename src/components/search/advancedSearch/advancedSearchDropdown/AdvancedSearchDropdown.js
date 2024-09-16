@@ -90,6 +90,7 @@ export default function AdvancedSearchDropdown({
   menuItems = [],
   updateIndex,
   showSearchBar,
+  helpTxtLink,
 }) {
   const { fieldSearchFromUrl, workType } = useAdvancedSearchContext();
 
@@ -320,6 +321,9 @@ export default function AdvancedSearchDropdown({
           }
           className={cx(styles.sticky_base_class, styles.clear_content_bar)}
         />
+        {/* @TODO render link for helptext here - if given
+         we probably need a title and an id for the helptext */}
+        {helpTxtLink && <div>FISK</div>}
       </Dropdown.Menu>
     </Dropdown>
   );

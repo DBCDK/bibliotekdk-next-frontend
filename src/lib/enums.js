@@ -7,6 +7,18 @@ export const SuggestTypeEnum = Object.freeze({
   ALL: "all",
 });
 
+// Enum defining what databases to handle from facet.source
+export const FacetValidDatabases = Object.freeze({
+  BESÆTTELSESTIDSBIBLIOGRAFIEN: "Besættelsestidsbibliografien",
+  SPORTLINE: "Sportline",
+  BIBLIOGRAFI_OVER_DANSK_KUNST: "Bibliografi over Dansk Kunst",
+  DANSK_HISTORISK_BIBLIOGRAFI: "Dansk Historisk Bibliografi",
+  DANIA_POLYGLOTTA: "Dania Polyglotta",
+  DANSK_MUSIKLITTERÆR_BIBLIOGRAFI: "Dansk Musiklitterær Bibliografi",
+  DANSK_LITTERATURHISTORISK_BIBLIOGRAFI:
+    "Dansk Litteraturhistorisk Bibliografi",
+});
+
 export const AdvFacetsTypeEnum = Object.freeze({
   SPECIFICMATERIALTYPE: "specificmaterialtype",
   CREATOR: "creator",
@@ -21,6 +33,7 @@ export const AdvFacetsTypeEnum = Object.freeze({
   LET: "let",
   PRIMARYTARGET: "primarytarget",
   PUBLICATIONYEAR: "publicationyear",
+  SOURCE: "source",
   // CATALOGUECODE: "cataloguecode",
   // CONTRIBUTORFUNCTION: "contributorfunction",
   // CREATORCONTRIBUTOR: "creatorcontributor",

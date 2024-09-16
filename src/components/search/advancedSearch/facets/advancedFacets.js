@@ -1,4 +1,4 @@
-import { AdvFacetsTypeEnum } from "@/lib/enums";
+import { AdvFacetsTypeEnum, FacetValidDatabases } from "@/lib/enums";
 import Accordion, { Item } from "@/components/base/accordion/Accordion";
 
 import styles from "./advancedFacets.module.css";
@@ -25,6 +25,27 @@ export function AdvancedFacets({ facets, isLoading, replace = false }) {
   const { addFacet, removeFacet, selectedFacets } = useFacets();
 
   const scrollRef = useRef();
+
+  // special handling of the facet.source
+  const validSource = Object.values(FacetValidDatabases).map((val) =>
+    val.toLowerCase()
+  );
+
+  facets = facets?.filter((fac) => {
+    if (fac.name !== "facet.source") {
+      return true;
+    } else {
+      const validValuse = fac.values.filter((fac) =>
+        validSource.includes(fac.key)
+      );
+      if (validValuse.length > 0) {
+        fac.values = validValuse;
+        return true;
+      }
+    }
+    return false;
+  });
+  // end special handling of facet.source
 
   const filteredFacets = Object.values(AdvFacetsTypeEnum).filter((val) =>
     facets?.find((facet) => {

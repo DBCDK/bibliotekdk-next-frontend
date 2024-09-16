@@ -510,6 +510,8 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
     items: convertToDropdownInput(dummy__databases()),
     indexName: DropdownIndicesEnum.DATABASES,
     showSearchBar: false,
+    // @TODO add a link to helptext here
+    helpTxtLink: "FISK",
   };
 
   const players = {

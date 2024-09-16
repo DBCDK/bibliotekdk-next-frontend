@@ -402,6 +402,10 @@
         "da": "Udgivelsesår",
         "en": "Publicationyear"
       },
+      "label-source": {
+        "da": "Databaser",
+        "en": "Databases"
+      },
       "label-lix": {
         "da": "Lix-tal",
         "en": "Lix-number"
