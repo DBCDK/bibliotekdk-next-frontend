@@ -1,0 +1,48 @@
+{
+  "data": {
+    "branches": {
+      "result": [
+        {
+          "agencyName": "Testbiblioteker",
+          "agencyId": "999999",
+          "name": "BranchWithNoBorchk",
+          "city": "Vsn-testby",
+          "borrowerCheck": false,
+          "postalAddress": "Vsn-B.adresse",
+          "postalCode": "1234",
+          "branchId": "790904",
+          "openingHours": null,
+          "pickupAllowed": true,
+          "orderPolicy": {
+            "orderPossible": true,
+            "orderPossibleReason": "OWNED_ACCEPTED",
+            "lookUpUrl": "https://some-lookup-url"
+          },
+          "userParameters": [
+            {
+              "userParameterType": "CUSTOMID",
+              "userParameterName": "customId",
+              "parameterRequired": true,
+              "description": "Klasse"
+            },
+            {
+              "userParameterType": "USERNAME",
+              "userParameterName": "userName",
+              "parameterRequired": true
+            },
+            {
+              "userParameterType": "USERMAIL",
+              "userParameterName": "userMail",
+              "parameterRequired": true
+            },
+            {
+              "userParameterType": "USERDATEOFBIRTH",
+              "userParameterName": "userDateOfBirth",
+              "parameterRequired": false
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
