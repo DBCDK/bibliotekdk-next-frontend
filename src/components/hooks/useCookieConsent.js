@@ -49,6 +49,7 @@ export default function useCookieConsent() {
   useEffect(() => {
     function update() {
       forceRender({});
+      window?.location?.reload();
     }
     window.addEventListener("CookiebotOnAccept", update);
     window.addEventListener("CookiebotOnDecline", update);
