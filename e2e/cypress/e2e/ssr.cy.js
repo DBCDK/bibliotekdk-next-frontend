@@ -373,7 +373,7 @@ describe("Server Side Rendering", () => {
   });
 
   describe(`universe page`, () => {
-    it.only(`has correct metadata`, () => {
+    it(`has correct metadata`, () => {
       getPageHead("/univers/870979:134975679").then((res) => {
         expect(res.title?.toLowerCase()).to.contain("marvel");
         expect(res.description).to.exist;
@@ -384,7 +384,7 @@ describe("Server Side Rendering", () => {
         expect(res["og:description"]).to.exist;
       });
     });
-    it.only(`has correct alternate links`, () => {
+    it(`has correct alternate links`, () => {
       getPageHead("/univers/870979:134975679").then((res) => {
         expect(res.alternate).to.deep.equal([
           '<link rel="alternate" hreflang="da" href="http://localhost:3000/univers/870979:134975679"/>',
