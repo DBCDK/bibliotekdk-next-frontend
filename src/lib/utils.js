@@ -284,22 +284,19 @@ export function getHelpUrl(title, helpTextId) {
 
 /**
  *
- * @param {string} fullTitle
- * @param {string} workId
- * @returns {{query: {seriesTitle: string, workId: string, seriesNumber?: string}, pathname: string}}
+ * @param {string} seriesId
  */
-export function getSeriesUrl(fullTitle, workId) {
-  return `/serie/${encodeString(fullTitle)}/${workId}`;
+export function getSeriesUrl(seriesId) {
+  return `/serie/${seriesId}`;
 }
 
 /**
  *
- * @param {string} fullTitle
- * @param {string} workId
+ * @param {string} universeId
  * @returns {{query: {universeTitle: string, workId: string, universeNumber?: string}, pathname: string}}
  */
-export function getUniverseUrl(fullTitle, key) {
-  return `/univers/${encodeString(fullTitle)}/${key}`;
+export function getUniverseUrl(universeId) {
+  return `/univers/${universeId}`;
 }
 
 /**

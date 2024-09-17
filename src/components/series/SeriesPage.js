@@ -15,40 +15,18 @@ export default function SeriesPage() {
   const router = useRouter();
   const { canonical, alternate } = useCanonicalUrl();
 
-  const { workId, seriesTitle } = router.query;
+  const { seriesId } = router.query;
 
   const {
     data: seriesData,
     isLoading: seriesIsLoading,
     error: seriesError,
   } = useData(
-    workId && workFragments.series({ workId: workId, seriesLimit: 200 })
+    seriesId &&
+      workFragments.seriesById({ seriesId: seriesId, seriesLimit: 200 })
   );
 
-  const series = seriesData?.work?.series;
-  const specificSeries = series?.find(
-    (singleSeries) => encodeString(singleSeries.title) === seriesTitle
-  );
-
-  useEffect(() => {
-    if (series?.length === 0) {
-      router?.replace(`/work/${workId}`);
-    }
-
-    if (
-      !seriesIsLoading &&
-      series?.length > 0 &&
-      (!specificSeries || specificSeries?.length === 0)
-    ) {
-      router?.replace({
-        pathname: router.pathname,
-        query: {
-          ...router.query,
-          seriesTitle: encodeString(series?.[0]?.title),
-        },
-      });
-    }
-  }, [seriesIsLoading, seriesTitle, JSON.stringify(series)]);
+  const specificSeries = seriesData?.series;
 
   if (seriesError) {
     return <Custom404 />;

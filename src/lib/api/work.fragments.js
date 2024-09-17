@@ -269,6 +269,54 @@ export function series({ workId, seriesLimit = null }) {
 }
 
 /**
+ * Series for a work
+ *
+ * @param {Object} variables
+ * @param {string} variables.workId
+ *
+ * @returns {Object} a query object
+ */
+export function seriesById({ seriesId, seriesLimit = null }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 4000, // for debugging
+    query: `query seriesById($seriesId: String!) {
+  series(seriesId:$seriesId){
+          ...seriesFragment
+          members{
+            work {
+              ...workSliderFragment
+              manifestations {
+                mostRelevant {
+                  ...coverFragment
+                }
+              }
+              creators {
+                ...creatorsFragment
+              }
+              universes {
+                ...universeFragment
+              }
+            }
+            numberInSeries
+            readThisFirst
+            readThisWhenever
+          }
+        
+      }
+    }
+    ${workSliderFragment}
+    ${creatorsFragment}
+    ${seriesFragment}
+    ${universeFragment}
+    ${coverFragment}    
+  `,
+    variables: { seriesId },
+    slowThreshold: 3000,
+  };
+}
+
+/**
  * Works in Series
  *
  * @param {Object} variables

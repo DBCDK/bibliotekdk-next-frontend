@@ -39,7 +39,7 @@ function ContentPage({ universeId, workType, offset, limit, isScrolling }) {
     universeId &&
       inView &&
       universeContent({
-        key: universeId,
+        universeId: universeId,
         workType,
         offset,
         limit,
@@ -103,7 +103,7 @@ function WorkTypesSection({
   const { data, isLoading } = useData(
     universeId &&
       universeContent({
-        key: universeId,
+        universeId: universeId,
         workType,
         offset: 0,
         limit: PAGE_SIZE,
@@ -162,7 +162,7 @@ function WorkTypesSection({
  */
 export default function UniverseMembers({ universeId }) {
   const { data, isLoading } = useData(
-    universeId && universeBasicInfo({ key: universeId })
+    universeId && universeBasicInfo({ universeId: universeId })
   );
   const [isScrolling, setIsScrolling] = useState(false);
   const worksInUniverse = workTypesOrder.filter((workType) =>
