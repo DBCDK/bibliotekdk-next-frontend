@@ -17,6 +17,7 @@ import {
 } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
 import CombinedSearch from "@/components/search/advancedSearch/combinedSearch/CombinedSearch";
 import Pagination from "@/components/search/pagination/Pagination";
+import ExpandIcon from "@/components/base/animation/expand";
 
 import Accordion, { Item } from "@/components/base/accordion";
 import { unixToFormatedDate } from "@/lib/utils";
@@ -70,20 +71,17 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
             </Text>
           )}
           <Text type="text2">
+            hej hej
             {`${item.hitcount} ${Translate({
               context: "search",
               label: "results",
             }).toLowerCase()}`}{" "}
           </Text>
         </div>
-        <Icon
-          className={cx(styles.accordionIcon, {
-            [styles.accordionExpanded]: expanded,
-            [styles.accordionCollapsed]: !expanded,
-          })}
-          size={3}
-          src={`${expanded ? "collapseCircle" : "expand"}.svg`}
-        />
+
+        <div className={styles.accordionIcon}>
+          <ExpandIcon open={expanded} size={3} src="smallplus.svg" />
+        </div>
       </div>
     );
   }
@@ -135,14 +133,9 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
           }
         }}
       />
-      <Icon
-        className={cx(styles.accordionIcon, {
-          [styles.accordionExpanded]: expanded,
-          [styles.accordionCollapsed]: !expanded,
-        })}
-        size={3}
-        src={`${expanded ? "collapseCircle" : "expand"}.svg`}
-      />
+      <div className={styles.accordionIcon}>
+        <ExpandIcon open={expanded} size={3} src="smallplus.svg" />
+      </div>
     </div>
   );
 }

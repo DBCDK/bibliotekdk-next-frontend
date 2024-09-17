@@ -46,6 +46,7 @@ export function Item({
   iconSize = 4,
   bgColor,
   iconColor,
+  headerContentClassName,
 }) {
   const [scrolledToHash, setScrolledToHash] = useState(false);
   const router = useRouter();
@@ -128,7 +129,7 @@ export function Item({
             expanded={isCurrentEventKey}
           />
         ) : (
-          <div className={styles.header_content}>
+          <div className={cx(styles.header_content, headerContentClassName)}>
             <div
               className={[
                 animations["f-translate-right"],
