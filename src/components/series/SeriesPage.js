@@ -6,8 +6,6 @@ import SeriesHeading from "@/components/series/seriesHeading/SeriesHeading";
 import OtherWorksByTheAuthor from "@/components/series/otherWorksByTheAuthor/OtherWorksByTheAuthor";
 import SeriesMembers from "@/components/series/seriesMembers/SeriesMembers";
 import Custom404 from "@/pages/404";
-import { useEffect } from "react";
-import { encodeString } from "@/lib/utils";
 import Head from "next/head";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 

@@ -24,7 +24,7 @@ import { getSeriesUrl } from "@/lib/utils";
  * @param {string} workId
  * @param {number} index
  */
-export function Series({ isLoading, series = {}, workId = "" }) {
+export function Series({ isLoading, series = {} }) {
   const propsAndChildrenInputList =
     series?.members?.map((member) => {
       return { material: member?.work, series: member };
