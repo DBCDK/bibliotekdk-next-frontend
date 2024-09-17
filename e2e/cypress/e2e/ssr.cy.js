@@ -374,25 +374,21 @@ describe("Server Side Rendering", () => {
 
   describe(`universe page`, () => {
     it(`has correct metadata`, () => {
-      getPageHead(
-        "/univers/marvel-universet/d29yay1vZjo4NzA5NzAtYmFzaXM6MjU0NzQ5Mjl8MA"
-      ).then((res) => {
+      getPageHead("/univers/870979:134975679").then((res) => {
         expect(res.title?.toLowerCase()).to.contain("marvel");
         expect(res.description).to.exist;
         expect(res["og:url"]).to.equal(
-          "http://localhost:3000/univers/marvel-universet/d29yay1vZjo4NzA5NzAtYmFzaXM6MjU0NzQ5Mjl8MA"
+          "http://localhost:3000/univers/870979:134975679"
         );
         expect(res["og:title"]?.toLowerCase()).to.contain("marvel");
         expect(res["og:description"]).to.exist;
       });
     });
     it(`has correct alternate links`, () => {
-      getPageHead(
-        "/univers/marvel-universet/d29yay1vZjo4NzA5NzAtYmFzaXM6MjU0NzQ5Mjl8MA"
-      ).then((res) => {
+      getPageHead("/univers/870979:134975679").then((res) => {
         expect(res.alternate).to.deep.equal([
-          '<link rel="alternate" hreflang="da" href="http://localhost:3000/univers/marvel-universet/d29yay1vZjo4NzA5NzAtYmFzaXM6MjU0NzQ5Mjl8MA"/>',
-          '<link rel="alternate" hreflang="en" href="http://localhost:3000/en/univers/marvel-universet/d29yay1vZjo4NzA5NzAtYmFzaXM6MjU0NzQ5Mjl8MA"/>',
+          '<link rel="alternate" hreflang="da" href="http://localhost:3000/univers/870979:134975679"/>',
+          '<link rel="alternate" hreflang="en" href="http://localhost:3000/en/univers/870979:134975679"/>',
         ]);
       });
     });

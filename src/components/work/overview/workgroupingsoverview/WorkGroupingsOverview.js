@@ -43,7 +43,6 @@ function WorkGroupingsOverview({
   anchorId,
   scrollOffset,
   link = null,
-  seriesId,
 }) {
   const [element, setElement] = useState("");
   const [clickFunction, setClickFunction] = useState(() => {});
@@ -113,7 +112,7 @@ export function getPartOfSeriesText(type, numberInSeries) {
   }
 }
 
-function getSeriesMap({ series, members, workId }) {
+function getSeriesMap({ series, members }) {
   // some series has additional info (identifyingAddition) to be shown with title
   const identifyingAddition = series?.identifyingAddition;
   const numberInSeries = capitalize(series?.numberInSeries?.display) || "";
