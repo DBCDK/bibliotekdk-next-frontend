@@ -43,8 +43,9 @@ export function Item({
   useScroll = true,
   className,
   // if true, the expand icon will have a circle around it
-  circledIcon = false,
   iconSize = 4,
+  bgColor,
+  iconColor,
 }) {
   const [scrolledToHash, setScrolledToHash] = useState(false);
   const router = useRouter();
@@ -159,10 +160,10 @@ export function Item({
             <div className={styles.expandIcon}>
               <ExpandIcon
                 open={isCurrentEventKey}
-                circledIcon={circledIcon}
                 size={iconSize}
                 src="smallplus.svg"
-                bgColor="transparent"
+                bgColor={bgColor}
+                iconColor={iconColor}
               />
             </div>
           </div>

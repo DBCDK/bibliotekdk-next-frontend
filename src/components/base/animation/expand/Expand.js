@@ -8,20 +8,8 @@ export default function Expand({
   size = 3,
   src = "expand.svg",
   bgColor = "var(--blue)",
-  circledIcon = false,
+  iconColor = "white",
 }) {
-  if (circledIcon) {
-    return (
-      <Icon
-        className={cx(styles.circledIcon, {
-          [styles.circledIconExpanded]: open,
-          [styles.circledIconnCollapsed]: !open,
-        })}
-        size={size}
-        src={`${open ? "collapseCircle" : "expand"}.svg`}
-      />
-    );
-  }
   return (
     <Icon
       size={size}
@@ -33,8 +21,8 @@ export default function Expand({
     >
       {/* Lines to be animated */}
       <div>
-        <span />
-        <span />
+        <span style={{ background: iconColor }} />
+        <span style={{ background: iconColor }} />
       </div>
     </Icon>
   );
