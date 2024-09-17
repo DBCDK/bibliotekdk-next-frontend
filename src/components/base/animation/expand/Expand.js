@@ -1,5 +1,4 @@
 import Icon from "@/components/base/icon/Icon";
-import cx from "classnames";
 
 import styles from "./Expand.module.css";
 
