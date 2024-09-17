@@ -71,7 +71,6 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
             </Text>
           )}
           <Text type="text2">
-            hej hej
             {`${item.hitcount} ${Translate({
               context: "search",
               label: "results",
