@@ -43,8 +43,10 @@ export function Item({
   useScroll = true,
   className,
   // if true, the expand icon will have a circle around it
-  circledIcon = false,
   iconSize = 4,
+  bgColor,
+  iconColor,
+  headerContentClassName,
 }) {
   const [scrolledToHash, setScrolledToHash] = useState(false);
   const router = useRouter();
@@ -127,7 +129,7 @@ export function Item({
             expanded={isCurrentEventKey}
           />
         ) : (
-          <div className={styles.header_content}>
+          <div className={cx(styles.header_content, headerContentClassName)}>
             <div
               className={[
                 animations["f-translate-right"],
@@ -159,10 +161,10 @@ export function Item({
             <div className={styles.expandIcon}>
               <ExpandIcon
                 open={isCurrentEventKey}
-                circledIcon={circledIcon}
                 size={iconSize}
                 src="smallplus.svg"
-                bgColor="transparent"
+                bgColor={bgColor}
+                iconColor={iconColor}
               />
             </div>
           </div>
