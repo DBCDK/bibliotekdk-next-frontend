@@ -46,7 +46,7 @@ test("parseLinkmeQuery", () => {
     {
       value: "holm",
       prefixLogicalOperator: null,
-      searchIndex: "term.creatorcontributor",
+      searchIndex: "phrase.creatorcontributor",
     },
     {
       value: "kina fra kejserdømme",
