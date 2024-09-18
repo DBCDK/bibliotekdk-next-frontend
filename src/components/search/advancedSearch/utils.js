@@ -228,9 +228,9 @@ function typeToFieldindex(type) {
     case "dk5":
       return "dk5";
     case "creator":
-      return "term.creatorcontributor";
+      return "phrase.creatorcontributor";
     case "subject":
-      return "term.subject";
+      return "phrase.subject";
     case "isbn":
       return "term.isbn";
     case "title":
