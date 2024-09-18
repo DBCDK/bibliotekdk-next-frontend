@@ -136,7 +136,7 @@ export function BibliographicData({ manifestations, workId }) {
               key={`${manifestation?.titles?.main?.[0]}_${index}`}
               eventKey={index.toString()}
               id={manifestation?.pid}
-              iconSize={3}
+              iconSize={4}
               headerContentClassName={styles.headerContent}
             >
               {(hasBeenSeen) => (
