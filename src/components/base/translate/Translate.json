@@ -106,7 +106,7 @@
     },
     "advanced_search_dropdown": {
       "Fagbibliografier": {
-        "da": "Se hvad databaserne indeholder",
+        "da": "Læs om fagbibliografier",
         "en" : "See whats in it"
       },
       "choose_publication_year": {
@@ -186,8 +186,8 @@
         "en": "All"
       },
       "term.source": {
-        "da": "Databaser",
-        "en": "Databases"
+        "da": "Fagbibliografier",
+        "en": "Subject bibliography"
       },
       "phrase.filmnationality": {
         "da": "Nationalitet",

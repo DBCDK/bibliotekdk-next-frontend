@@ -342,18 +342,25 @@ export default function AdvancedSearchDropdown({
           />
         )}
 
-        {/* we show a link if a helptext object is given */}
-        {helpTxtLink && <LinkToHelpTxt helptxtLink={helpTxtLink} />}
+        {/* we show a link if a helptext object is given - we show it INSTEAD of the clearbar */}
+        {helpTxtLink && (
+          <LinkToHelpTxt
+            helptxtLink={helpTxtLink}
+            className={cx(styles.sticky_base_class, styles.clear_content_bar)}
+          />
+        )}
 
-        <ClearBar
-          onClick={() =>
-            toggleMenuItemsState({
-              type: ToggleMenuItemsEnum.RESET,
-              payload: [...menuItems.map((item) => resetMenuItem(item))],
-            })
-          }
-          className={cx(styles.sticky_base_class, styles.clear_content_bar)}
-        />
+        {!helpTxtLink && (
+          <ClearBar
+            onClick={() =>
+              toggleMenuItemsState({
+                type: ToggleMenuItemsEnum.RESET,
+                payload: [...menuItems.map((item) => resetMenuItem(item))],
+              })
+            }
+            className={cx(styles.sticky_base_class, styles.clear_content_bar)}
+          />
+        )}
       </Dropdown.Menu>
     </Dropdown>
   );
