@@ -63,7 +63,7 @@ describe("Multi Order", () => {
         win.localStorage.clear();
       });
     });
-    it.only("Should return to order page when changing pickup to agency with no borrowercheck", () => {
+    it("Should return to order page when changing pickup to agency with no borrowercheck", () => {
       cy.visit(
         "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"
       );
