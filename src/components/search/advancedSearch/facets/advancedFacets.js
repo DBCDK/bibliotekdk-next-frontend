@@ -140,6 +140,8 @@ function AccordianItem({
         id={`${index}-${facetName}`}
         // avoid scrolling to open accordion
         useScroll={false}
+        bgColor="transparent"
+        iconColor="var(--blue)"
       >
         <ListItem
           facet={facet}

@@ -40,14 +40,6 @@
   justify-self: flex-end;
 }
 
-.accordionExpanded {
-  transform: rotate(180deg);
-}
-
-.accordionCollapsed {
-  transform: rotate(0deg);
-}
-
 .accordionContentContainer {
   cursor: pointer;
   align-items: center;
