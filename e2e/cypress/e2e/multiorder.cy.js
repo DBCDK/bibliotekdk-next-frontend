@@ -63,6 +63,20 @@ describe("Multi Order", () => {
         win.localStorage.clear();
       });
     });
+    it.only("Should return to order page when changing pickup to agency with no borrowercheck", () => {
+      cy.visit(
+        "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"
+      );
+      cy.contains("Bestil single", { timeout: 10000 }).click();
+      cy.contains("Skift afhentning", { timeout: 10000 }).click();
+      cy.contains("Agency - No borrowercheck", { timeout: 10000 }).click();
+      cy.contains("Branch - No borrowercheck", { timeout: 10000 }).click();
+
+      cy.get('[data-cy="input-cpr"]').type("1234");
+      cy.contains("Gå til bestilling", { timeout: 10000 }).click();
+      cy.contains("Du er ved at bestille 1 materiale");
+    });
+
     it("Show mail from agency as default", () => {
       cy.visit(
         "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"

@@ -7,7 +7,8 @@
 export const goToPreviousModal = (modal) => {
   if (!modal) return;
   const modalIdx = modal.stack.findIndex(
-    (m) => m.id === "multiorder" || m.id === "order"
+    (m) =>
+      m.id === "multiorder" || m.id === "order" || m.id === "ematerialfilter"
   );
   if (modalIdx > -1) modal.select(modalIdx);
 };

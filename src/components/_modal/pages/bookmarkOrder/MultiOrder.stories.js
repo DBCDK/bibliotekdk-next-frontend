@@ -447,6 +447,14 @@ function createStoryParameters({ user, submitOrdersDelay = 500 }) {
             mail: "test@test.dk",
           },
         },
+        {
+          id: "BRANCH_NO_BORCHK",
+          branches: [BRANCHES.BRANCH_NO_BORROWERCHECK],
+          result: [BRANCHES.BRANCH_NO_BORROWERCHECK],
+          user: {
+            mail: "test@test.dk",
+          },
+        },
       ],
       lastUsedPickUpBranch: null,
       favoritePickUpBranch: null,
