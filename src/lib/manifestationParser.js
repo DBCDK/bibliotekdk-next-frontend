@@ -9,7 +9,6 @@ import { parseFunction } from "@/lib/centralParsers.utils";
 import { getAudienceValues } from "@/components/work/details/utils/export.utils";
 import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
 import upperFirst from "lodash/upperFirst";
-import isEmpty from "lodash/isEmpty";
 
 // fields to handle - add to handle a field eg. subjects or lix or let or ...
 const fields = () => [
