@@ -18,6 +18,7 @@ import {
 import isEmpty from "lodash/isEmpty";
 import capitalize from "lodash/capitalize";
 import { createEditionText } from "../details/utils/details.utils";
+import styles from "./BibliographicData.module.css";
 
 /**
  * Export function of the Component
@@ -135,8 +136,8 @@ export function BibliographicData({ manifestations, workId }) {
               key={`${manifestation?.titles?.main?.[0]}_${index}`}
               eventKey={index.toString()}
               id={manifestation?.pid}
-              circledIcon
-              iconSize={3}
+              iconSize={4}
+              headerContentClassName={styles.headerContent}
             >
               {(hasBeenSeen) => (
                 <ManifestationFull

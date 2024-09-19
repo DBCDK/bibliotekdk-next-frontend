@@ -145,8 +145,7 @@ export function templateForUniverseInfoCard({ material }) {
     styles.cover,
     styles.cover__universe_info_card
   );
-
-  const href = getUniverseUrl(material?.title, material?.key);
+  const href = getUniverseUrl(material?.universeId);
 
   return {
     link_href: href,
@@ -302,9 +301,8 @@ export function templateForUniverseSeriesBase({ material, classNameAddition }) {
     .slice(0, 3);
 
   const coverSrc = getCoverImage(firstWork?.manifestations?.mostRelevant);
-
   // TODO: We need to change this if we get ids on Series. A SeriesId if you will
-  const urlToFirstWork = getSeriesUrl(fullTitle, firstWork?.workId);
+  const urlToFirstWork = getSeriesUrl(material.seriesId);
 
   const coverImageClassName = cx(
     styles.cover,

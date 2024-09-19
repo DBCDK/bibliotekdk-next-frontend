@@ -98,7 +98,7 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
                 renderAsHtml: true,
               })}
               <Link
-                href={getUniverseUrl(universe?.title, universe?.key)}
+                href={getUniverseUrl(universe?.universeId)}
                 border={{ bottom: { keepVisible: true } }}
               >
                 {universe?.title}

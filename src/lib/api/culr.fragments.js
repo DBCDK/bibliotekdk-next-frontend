@@ -1,10 +1,12 @@
 export function getAccounts() {
   return {
     query: `query CulrGetAccounts {
-        culr {
-          getAccounts {
-            accounts {
-              agencyId
+        bibdk {
+          culr {
+            getAccounts {
+              accounts {
+                agencyId
+              }
             }
           }
         }

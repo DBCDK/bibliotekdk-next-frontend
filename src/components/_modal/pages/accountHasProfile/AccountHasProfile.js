@@ -45,7 +45,7 @@ export default function AccountHasProfile({ modal, context }) {
 
   // Mutate deleteAccount response from API
   useEffect(() => {
-    const status = data?.culr?.deleteAccount?.status;
+    const status = data?.bibdk?.culr?.deleteAccount?.status;
 
     if (status === "OK") {
       // mutate user data

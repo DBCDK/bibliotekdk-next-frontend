@@ -112,7 +112,7 @@ export function getPartOfSeriesText(type, numberInSeries) {
   }
 }
 
-function getSeriesMap({ series, members, workId }) {
+function getSeriesMap({ series, members }) {
   // some series has additional info (identifyingAddition) to be shown with title
   const identifyingAddition = series?.identifyingAddition;
   const numberInSeries = capitalize(series?.numberInSeries?.display) || "";
@@ -133,7 +133,7 @@ function getSeriesMap({ series, members, workId }) {
           : series?.title,
       // title: series?.title,
       anchorId: getAnchor(AnchorsEnum.SERIES),
-      link: getSeriesUrl(series?.title, workId),
+      link: getSeriesUrl(series.seriesId),
     }
   );
 }
@@ -189,7 +189,6 @@ export default function Wrap({ workId }) {
     current?.manifestations?.mostRelevant?.[0]?.hostPublication;
 
   const allSeries = work_response?.data?.work?.series || [];
-
   // TODO .. alter title if this is a tvserie
   const allSeriesMap = allSeries?.map((singleSeries) =>
     getSeriesMap({

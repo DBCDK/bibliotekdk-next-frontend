@@ -15,14 +15,14 @@ services:
       - CLIENT_ID=${CLIENT_ID}
       - CLIENT_SECRET=${CLIENT_SECRET}
       - CYPRESS=true
-      - NEXT_PUBLIC_FBI_API_URL=https://temp.fbi-api.dbc.dk/bibdk21/graphql
-      - NEXT_PUBLIC_FBI_API_SIMPLESEARCH_URL=https://temp.fbi-api.dbc.dk/SimpleSearch/graphql
+      - NEXT_PUBLIC_FBI_API_URL=https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql
+      - NEXT_PUBLIC_FBI_API_SIMPLESEARCH_URL=https://fbi-api-staging.k8s.dbc.dk/SimpleSearch/graphql
     command: npm run start
     shm_size: "2gb"
   e2e:
     ipc: host ## Prevent Docker Crash in Cypress (https://github.com/cypress-io/cypress/issues/350)
     shm_size: "2gb"
-    image: docker-dbc.artifacts.dbccloud.dk/cypress:latest
+    image: docker-dbc.artifacts.dbccloud.dk/cypress:old-202409
     volumes:
       - "./e2e:/app/e2e"
     depends_on:
