@@ -25,6 +25,7 @@ function DropdownUnit({
   updateDropdownSearchIndices,
   showSearchBar,
   infoBarLabel,
+  helpTxtLink,
 }) {
   const indexTitle = Translate({
     context: advancedSearchDropdownContext,
@@ -75,6 +76,7 @@ function DropdownUnit({
           })
         }
         showSearchBar={showSearchBar}
+        helpTxtLink={helpTxtLink}
       />
     </div>
   );
@@ -133,6 +135,7 @@ export default function DropdownInputs() {
                 updateDropdownSearchIndices={updateDropdownSearchIndices}
                 showSearchBar={unit?.showSearchBar !== false}
                 infoBarLabel={unit.infoBarLabel}
+                helpTxtLink={unit.helpTxtLink}
               />
             );
           })}

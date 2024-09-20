@@ -36,6 +36,10 @@ import cx from "classnames";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
+import Link from "@/components/base/link/Link";
+import { cyKey } from "@/utils/trim";
+import Title from "@/components/base/title/Title";
+import translate from "@/components/base/translate";
 
 const specialFormTypes = new Set([FormTypeEnum.ACTION_LINK_CONTAINER]);
 
@@ -83,6 +87,32 @@ function toggleYearRange(toggleMenuItemsState, targetItem, valueItem) {
   });
 }
 
+export function LinkToHelpTxt({ introTxt, helptxtLink, className }) {
+  return (
+    <>
+      <Text type="text3" className={className || styles.helptxtlink}>
+        {introTxt && <div>{introTxt}</div>}
+        <Link
+          // className={`${styles.link}`}
+          title={helptxtLink.label}
+          href={helptxtLink.href}
+          target="_blank"
+          dataCy={cyKey({
+            name: helptxtLink.label,
+            prefix: "menu-link",
+          })}
+          border={{ top: false, bottom: { keepVisible: true } }}
+        >
+          {translate({
+            context: "advanced_search_dropdown",
+            label: helptxtLink.label,
+          })}
+        </Link>
+      </Text>
+    </>
+  );
+}
+
 export default function AdvancedSearchDropdown({
   indexTitle,
   indexName,
@@ -90,6 +120,7 @@ export default function AdvancedSearchDropdown({
   menuItems = [],
   updateIndex,
   showSearchBar,
+  helpTxtLink,
 }) {
   const { fieldSearchFromUrl, workType } = useAdvancedSearchContext();
 
@@ -311,15 +342,25 @@ export default function AdvancedSearchDropdown({
           />
         )}
 
-        <ClearBar
-          onClick={() =>
-            toggleMenuItemsState({
-              type: ToggleMenuItemsEnum.RESET,
-              payload: [...menuItems.map((item) => resetMenuItem(item))],
-            })
-          }
-          className={cx(styles.sticky_base_class, styles.clear_content_bar)}
-        />
+        {/* we show a link if a helptext object is given - we show it INSTEAD of the clearbar */}
+        {helpTxtLink && (
+          <LinkToHelpTxt
+            helptxtLink={helpTxtLink}
+            className={cx(styles.sticky_base_class, styles.clear_content_bar)}
+          />
+        )}
+
+        {!helpTxtLink && (
+          <ClearBar
+            onClick={() =>
+              toggleMenuItemsState({
+                type: ToggleMenuItemsEnum.RESET,
+                payload: [...menuItems.map((item) => resetMenuItem(item))],
+              })
+            }
+            className={cx(styles.sticky_base_class, styles.clear_content_bar)}
+          />
+        )}
       </Dropdown.Menu>
     </Dropdown>
   );
