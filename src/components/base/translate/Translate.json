@@ -1688,6 +1688,10 @@
       }
     },
     "details": {
+      "danishLaunchTitle": {
+        "da": "Dansk titel",
+        "en": "Danish title"
+      },
       "participants": {
         "da": "Deltagere",
         "en": "Players"

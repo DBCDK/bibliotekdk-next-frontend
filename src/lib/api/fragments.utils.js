@@ -98,6 +98,9 @@ export const manifestationDetailsForAccessFactory = `fragment manifestationDetai
     main
     full
     original
+    tvSeries {
+      ...tvSeriesFragment
+    }   
   }
   edition {
     publicationYear {
@@ -122,6 +125,7 @@ export const manifestationDetailsForAccessFactory = `fragment manifestationDetai
   }
   workTypes
 }
+${tvSeriesFragment}
 ${creatorsFragmentForAccessFactory}`;
 
 export const seriesFragment = `fragment seriesFragment on Series {
