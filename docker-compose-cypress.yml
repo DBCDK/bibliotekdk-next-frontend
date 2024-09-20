@@ -19,15 +19,16 @@ services:
       - NEXT_PUBLIC_FBI_API_SIMPLESEARCH_URL=https://fbi-api-staging.k8s.dbc.dk/SimpleSearch/graphql
     command: npm run start
     shm_size: "2gb"
-  e2e:
+  cypress:
     ipc: host ## Prevent Docker Crash in Cypress (https://github.com/cypress-io/cypress/issues/350)
     shm_size: "2gb"
     image: docker-dbc.artifacts.dbccloud.dk/cypress:latest
-    volumes:
-      - "./e2e:/app/e2e"
     depends_on:
       - web
     environment:
-      - CYPRESS_baseUrl=http://web:4000
-      - CYPRESS_nextjsBaseUrl=http://web:3000
+      CYPRESS_baseUrl: http://web:4000
+      CYPRESS_nextjsBaseUrl: http://web:3000
+      BROWSER: electron
+      CONFIG_FILE: cypress.config.js
+      CYPRESS_FOLDER: /cypress
     command: bash -c "npm i cypress-plugin-tab && npm run cy"
