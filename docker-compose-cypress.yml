@@ -22,9 +22,9 @@ services:
   e2e:
     ipc: host ## Prevent Docker Crash in Cypress (https://github.com/cypress-io/cypress/issues/350)
     shm_size: "2gb"
-    image: docker-dbc.artifacts.dbccloud.dk/cypress:old-202409
+    image: docker-dbc.artifacts.dbccloud.dk/cypress:latest
     volumes:
-      - "./e2e:/app/e2e"
+      - "./:/app"
     depends_on:
       - web
     environment:
