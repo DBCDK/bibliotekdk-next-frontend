@@ -1,5 +1,5 @@
 describe("Overview", () => {
-  before(function () {
+  beforeEach(function () {
     cy.visit("/iframe.html?id=layout-footer--footer-story");
   });
 

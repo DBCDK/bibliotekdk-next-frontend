@@ -3,7 +3,7 @@ const fbiApiPath = Cypress.env("fbiApiPath");
 
 describe("ArticlePage", () => {
   describe("News article (from drupal)", () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit("/iframe.html?id=articles-page--article-page&viewMode=story");
     });
     it(`Check if article has parsed body image`, () => {

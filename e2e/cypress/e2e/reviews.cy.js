@@ -44,7 +44,7 @@ describe("Overview", () => {
     });
   });
   describe("Review Slider", () => {
-    before(function () {
+    beforeEach(function () {
       cy.visit(
         "/iframe.html?id=work-reviews--wrapped-reviews-slider&viewMode=story"
       );

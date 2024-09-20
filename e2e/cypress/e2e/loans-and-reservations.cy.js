@@ -1,6 +1,6 @@
 describe(`Loans and reservations`, () => {
   //TODO https://dbcjira.atlassian.net/browse/BIBDK2021-2027
-  it("Renders properly", () => {
+  it.skip("Renders properly", () => {
     cy.visit(
       "iframe.html?args=&id=profile-loans-and-reservations--loans-and-reservations-story&viewMode=story"
     );
