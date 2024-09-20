@@ -191,7 +191,8 @@ export function handleOnSelect({
   modal,
   context,
   updateLoanerInfo,
-  pids = null,
+  /** hmmm .. we should pass orders object - NOT pids **/
+  orders = null,
   start = null,
 }) {
   // Selected branch belongs to one of the user's agencies where the user is logged in
@@ -204,9 +205,10 @@ export function handleOnSelect({
   // next two cases comes from branchDetails - user selects a library (branch) to order from.
   // user is already logged in
   if (alreadyLoggedin && hasBorchk) {
+    console.log(orders, "ORDERS");
     // this one comes from branchdetails
-    if (pids && typeof start === "function") {
-      start({ orders: [{ pids }] });
+    if (orders && typeof start === "function") {
+      start({ orders: orders });
     } else {
       // this one comes from pickup selection
       // Set new branch without new log-in
@@ -220,7 +222,7 @@ export function handleOnSelect({
   // missing case - user is NOT logged in and branch has borrowercheck (pressed the buttton 'order at this library' from branchdetails)
   // we pass the selected branch to start method - to open adgangsplatform modal
   if (!alreadyLoggedin && hasBorchk && branch && typeof start === "function") {
-    start({ orders: [{ pids }], initialBranch: branch });
+    start({ orders: orders, initialBranch: branch });
     return;
   }
 

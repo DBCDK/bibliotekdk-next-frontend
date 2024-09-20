@@ -10,6 +10,7 @@ import * as branchesFragments from "@/lib/api/branches.fragments";
 import find from "lodash/find";
 import cx from "classnames";
 import { handleOnSelect } from "@/components/_modal/utils";
+import { useOrderFlow } from "@/components/hooks/order";
 
 /**
  * Special component responsible for loading order policy
@@ -126,7 +127,10 @@ export default function PickupSelection(props) {
     modal,
   } = { ...props };
   // Get pid from modal context
-  const { pid, requireDigitalAccess, showAllBranches, pids } = context;
+  const { pid, requireDigitalAccess, showAllBranches, orders } = context;
+
+  /** we need the start method from orderflow when changing library **/
+  const { start } = useOrderFlow();
 
   const loadedOrderPolicies = useRef({});
   const render = useState()[1];
@@ -231,6 +235,8 @@ export default function PickupSelection(props) {
                     modal: modal,
                     context: context,
                     updateLoanerInfo: updateLoanerInfo,
+                    start: start,
+                    orders: orders,
                   })
                 }
                 modal={modal}

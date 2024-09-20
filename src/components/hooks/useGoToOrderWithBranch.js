@@ -24,12 +24,14 @@ import { useManifestationAccess } from "@/components/hooks/useManifestationAcces
  */
 export function useGoToOrderWithBranch({
   context,
-  selectedPids,
+  // selectedPids,
+  orders,
   branchWithoutBorrowerCheck,
   workId,
 }) {
   const modal = useModal();
 
+  const selectedPids = orders?.map((order) => [...order?.pids]);
   const { access } = useManifestationAccess({ pids: selectedPids });
   // pids from allEnrichedAccesses is used to open Order modal
   const pids = uniq(access?.map((acc) => acc?.pids).flat());
@@ -77,7 +79,7 @@ export function useGoToOrderWithBranch({
           agencies: pickupBranchUserAgencies,
         },
       },
-      pids: pids,
+      orders: orders,
       start: start,
       updateLoanerInfo: userInfo.updateLoanerInfo,
     });
