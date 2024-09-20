@@ -30,4 +30,7 @@ services:
     environment:
       - CYPRESS_baseUrl=http://web:4000
       - CYPRESS_nextjsBaseUrl=http://web:3000
+      - CONFIG_FILE=cypress.config.js.config.ts
+      - CYPRESS_FOLDER=/app/cypress
+
     command: bash -c "npm i cypress-plugin-tab && npm run cy"
