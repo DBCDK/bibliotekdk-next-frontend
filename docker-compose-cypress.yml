@@ -26,8 +26,8 @@ services:
     depends_on:
       - web
     environment:
-      CYPRESS_baseUrl: http://web:3000
-      BROWSER: electron
-      CONFIG_FILE: cypress.config.ts
-      CYPRESS_FOLDER: /app/cypress
+      - CYPRESS_baseUrl=http://web:4000
+      - CYPRESS_nextjsBaseUrl=http://web:3000
+      - CYPRESS_FOLDER=/cypress
+      - CONFIG_FILE=cypress.config.js
     command: bash -c "npm i cypress-plugin-tab && npm run cy"
