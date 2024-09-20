@@ -38,7 +38,6 @@ import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link/Link";
 import { cyKey } from "@/utils/trim";
-import Title from "@/components/base/title/Title";
 import translate from "@/components/base/translate";
 
 const specialFormTypes = new Set([FormTypeEnum.ACTION_LINK_CONTAINER]);
