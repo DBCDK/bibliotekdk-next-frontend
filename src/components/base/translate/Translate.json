@@ -107,7 +107,7 @@
     "advanced_search_dropdown": {
       "Fagbibliografier": {
         "da": "Læs om fagbibliografier",
-        "en" : "See whats in it"
+        "en": "See whats in it"
       },
       "choose_publication_year": {
         "da": "Vælg udgivelsesår",
@@ -407,8 +407,8 @@
         "en": "Publicationyear"
       },
       "fagbib_introtext": {
-        "da" : "Fagbibliografierne er en række samlinger fra Det kgl. Bibliotek.",
-        "en" : "Subject Bibliographies is a collection from royal library."
+        "da": "Fagbibliografierne er en række samlinger fra Det kgl. Bibliotek.",
+        "en": "Subject Bibliographies is a collection from royal library."
       },
       "label-source": {
         "da": "Fagbibliografier",
