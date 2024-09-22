@@ -107,6 +107,7 @@ describe("Suggester", () => {
 
   it(`Mobile: Clear history on mobile version of suggester`, () => {
     cy.viewport(411, 731);
+    cy.get("[data-cy=button-mobile]").click();
 
     cy.get("[data-cy=suggester-clear-history]").should("be.visible");
     cy.get("[data-cy=suggester-clear-history]").click();

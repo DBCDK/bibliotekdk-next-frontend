@@ -35,5 +35,4 @@ services:
       - CONFIG_FILE=cypress.config.js
       - CYPRESS_FOLDER=/app/cypress
 
-    command: bash -c "npm install && npm run cy"
-    
+    command: bash -c "npm i cypress-plugin-tab && npm run cy"
