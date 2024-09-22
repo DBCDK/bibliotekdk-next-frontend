@@ -36,6 +36,10 @@ pipeline {
                 }
             }
         }
+        //docker-compose -f docker-compose-cypress.yml -p docker-compose-name1 build
+
+        //docker-compose -f docker-compose-cypress.yml -p docker-compose-name1 run --rm e2e
+ 
         stage('Integration test') {
             steps {
                 script {
