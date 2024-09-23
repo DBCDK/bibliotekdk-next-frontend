@@ -22,7 +22,7 @@
     "lint:f": "run-s -l lint",
     "lint:cacheclearing": "next lint --no-cache",
     "find:unused": "next-unused",
-    "cy:run": "npx cypressrun --project ./",
+    "cy:run": "npx cypress run --project ./",
     "cy:open": "npx cypress open --project ./",
     "test": "jest src/",
     "test:f": "run-s -l test",
