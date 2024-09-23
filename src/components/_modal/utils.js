@@ -194,20 +194,20 @@ export function handleOnSelect({
   /** hmmm .. we should pass orders object - NOT pids **/
   orders = null,
   start = null,
+  origin = null,
 }) {
   // Selected branch belongs to one of the user's agencies where the user is logged in
   const alreadyLoggedin = context.initial?.agencies?.find(
     (agency) => agency.result?.[0].agencyId === branch.agencyId
   );
+
   // New selected branch has borrowercheck
   const hasBorchk = branch.borrowerCheck;
 
   // next two cases comes from branchDetails - user selects a library (branch) to order from.
-  // user is already logged in
   if (alreadyLoggedin && hasBorchk) {
-    console.log(orders, "ORDERS");
     // this one comes from branchdetails
-    if (orders && typeof start === "function") {
+    if (orders && typeof start === "function" && origin === "branchDetails") {
       start({ orders: orders });
     } else {
       // this one comes from pickup selection

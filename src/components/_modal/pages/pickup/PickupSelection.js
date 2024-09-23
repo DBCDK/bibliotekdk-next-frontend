@@ -127,10 +127,10 @@ export default function PickupSelection(props) {
     modal,
   } = { ...props };
   // Get pid from modal context
-  const { pid, requireDigitalAccess, showAllBranches, orders } = context;
+  const { pid, requireDigitalAccess, showAllBranches } = context;
 
-  /** we need the start method from orderflow when changing library **/
-  const { start } = useOrderFlow();
+  /** we need the start method (and orders) from orderflow when changing library **/
+  const { start, orders } = useOrderFlow();
 
   const loadedOrderPolicies = useRef({});
   const render = useState()[1];
@@ -236,6 +236,8 @@ export default function PickupSelection(props) {
                     context: context,
                     updateLoanerInfo: updateLoanerInfo,
                     start: start,
+                    // @TODO pass orders .. but we need to be able to differ if this
+                    // is a simple pickupchange OR a new login
                     orders: orders,
                   })
                 }

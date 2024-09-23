@@ -1,6 +1,6 @@
 /**
  * @file
- * This file provides the hook useGoToOrderWithBranch that helps to go to Order modal with a given branch
+ * This file provides the hook useGoToOrderWithBranch that helps to go to Order modal with a given branch.
  */
 import { useData } from "@/lib/api/api";
 import * as branchesFragments from "@/lib/api/branches.fragments";
@@ -24,7 +24,6 @@ import { useManifestationAccess } from "@/components/hooks/useManifestationAcces
  */
 export function useGoToOrderWithBranch({
   context,
-  // selectedPids,
   orders,
   branchWithoutBorrowerCheck,
   workId,
@@ -82,6 +81,10 @@ export function useGoToOrderWithBranch({
       orders: orders,
       start: start,
       updateLoanerInfo: userInfo.updateLoanerInfo,
+      // we pass origin to differ between branchDetails and other uses
+      // for now this hook is only used from branch details modal - that is a user
+      // orders to a specific branch
+      origin: "branchDetails",
     });
   }
 
