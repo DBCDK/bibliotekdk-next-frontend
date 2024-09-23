@@ -35,7 +35,7 @@ describe(`Loans and reservations`, () => {
   });
 
   it.only("Mobile renders properly", () => {
-   // cy.viewport("iphone-6");
+    cy.viewport("iphone-6");
 
     cy.get("[data-cy=articleRow-debt-0]").should("exist");
     cy.get("[data-cy=articleRow-debt-0]").within(() => {
