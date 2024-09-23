@@ -8,5 +8,7 @@
   "firstaccessiondate within \"1988 1991-08-01\"",
   "firstaccessiondate within \"1988-08-01 1991\"",
   "datefirstedition within \"2000005 2006\"",
+  "datefirstedition within \"now 2005\"",
+  "datefirstedition within \"2030 now\"",
   "firstaccessiondate within \"1990-08-01 1988-08-01\""
 ]
