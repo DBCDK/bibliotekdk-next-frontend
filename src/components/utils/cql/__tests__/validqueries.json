@@ -478,6 +478,8 @@
   "datefirstedition within \"* *\"",
   "datefirstedition within \"2004 2004\"",
   "datefirstedition within \"2001 now\"",
+  "datefirstedition within \"2030 now\"",
+
   "datefirstedition > 2004",
   "datefirstedition >= 2005",
   "datefirstedition < 2006",
