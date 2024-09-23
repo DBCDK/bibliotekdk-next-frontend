@@ -236,8 +236,6 @@ export default function PickupSelection(props) {
                     context: context,
                     updateLoanerInfo: updateLoanerInfo,
                     start: start,
-                    // @TODO pass orders .. but we need to be able to differ if this
-                    // is a simple pickupchange OR a new login
                     orders: orders,
                   })
                 }
