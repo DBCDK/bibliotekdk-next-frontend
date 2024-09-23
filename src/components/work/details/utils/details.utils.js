@@ -16,6 +16,7 @@ import { getAudienceValues } from "./export.utils";
 import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
 import { getSeriesUrl, getUniverseUrl } from "@/lib/utils";
 import React from "react";
+import translate from "@/components/base/translate";
 
 /**
  * Parse languages in given manifestation.
@@ -388,6 +389,36 @@ function RenderGameLanguages({ values }) {
       </Text>
     )
   );
+}
+
+/**
+ * Get titles for worktype movie - a part of the worktype is the materialtype tvSeries whitch differs a bit.
+ * We prioritize: tvseries title -> originalTitle -> titles.main :)
+ * @param manifestation
+ * @returns {{original: (string|{jsxParser: function({values: *}): *, index: number, label: string, value: {original: *, tvSerie: *, main: *}}|*), tvSerie: *, main: *}}
+ */
+function getMovieTitles(manifestation) {
+  const tvSeriesTitle = manifestation?.titles?.tvSeries?.danishLaunchTitle;
+  const originalTitle = manifestation?.titles?.originalTitle;
+  const mainTitle = manifestation?.titles?.main?.join(", ");
+
+  return { tvSerie: tvSeriesTitle, original: originalTitle, main: mainTitle };
+}
+
+function RenderMovieTitles({ values }) {
+  const label = values?.tvSerie ? "danishLaunchTitle" : "originalTitle";
+
+  return (
+    <>
+      <Text type="text3" className={styles.title} lines={2}>
+        {translate({ context: "details", label: label })}
+      </Text>
+      <Text type="text4" lines={2}>
+        {values?.tvSerie || values?.original || values?.main}
+      </Text>
+    </>
+  );
+  // return <div>{values}</div>;
 }
 
 /**
@@ -963,8 +994,10 @@ export function fieldsForRows(manifestation, work, context) {
     MOVIE: [
       {
         originalTitle: {
-          label: Translate({ ...context, label: "originalTitle" }),
-          value: manifestation?.titles?.original?.join("; ") || [],
+          label: "",
+          // value: manifestation?.titles?.original?.join("; ") || [],
+          value: getMovieTitles(manifestation),
+          jsxParser: RenderMovieTitles,
           index: 0,
         },
       },

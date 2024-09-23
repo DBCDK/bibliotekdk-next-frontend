@@ -18,10 +18,9 @@ export default function Document() {
           id="Cookiebot"
           src="https://consent.cookiebot.eu/uc.js"
           data-cbid={COOKIEBOT.id}
-          data-blockingmode={COOKIEBOT.mode}
           type="text/javascript"
           strategy="beforeInteractive"
-          async={!COOKIEBOT.mode === "auto"}
+          async
         />
       </body>
     </Html>

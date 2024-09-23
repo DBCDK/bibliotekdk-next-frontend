@@ -62,7 +62,10 @@ RenderLanguageAddition.propTypes = {
 export function getTitlesAndType({ work }) {
   const isTvSerie = work?.titles?.tvSeries?.title;
   const titles = isTvSerie
-    ? [work?.titles?.tvSeries?.title]
+    ? [
+        work?.titles?.tvSeries?.danishLaunchTitle ||
+          work?.titles?.tvSeries?.title,
+      ]
     : [
         ...(Array.isArray(work?.titles?.full) ? work?.titles?.full : []),
         ...(Array.isArray(work?.titles?.parallel)
