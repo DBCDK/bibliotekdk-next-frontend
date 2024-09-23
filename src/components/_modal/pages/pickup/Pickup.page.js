@@ -36,8 +36,6 @@ export function Pickup(props) {
   const [expandedAgency, setExpandedAgency] = useState(-1);
   const userHasMultipleAgencies = branchesFromLogin?.length > 1;
 
-  console.log("PICKUP PROPS", props);
-
   return branchesFromSearch ? (
     <PickupSelection {...props} includeArrows={nonEmptyQuery} />
   ) : (
@@ -133,7 +131,7 @@ Pickup.propTypes = {
  * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
-  const { initial, orders } = props.context;
+  const { initial } = props.context;
   const { label, mode = LOGIN_MODE.PLAIN_LOGIN } = { ...props };
   const isMobile = useBreakpoint() === "xs";
 
