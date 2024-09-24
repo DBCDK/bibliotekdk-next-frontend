@@ -41,7 +41,7 @@ pipeline {
                 script {
                     // @TODO cypress:latest from docker-dbc.artifacts.dbccloud.dk
                     ansiColor("xterm") {
-                        sh "docker pull docker-dbc.artifacts.dbccloud.dk/cypress:latest"
+                        sh "docker pull docker-dbc.artifacts.dbccloud.dk/cypress:old-202409"
                         sh "docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} build"
                         sh "IMAGE=${IMAGE_NAME} docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} run --rm e2e"
                     }
@@ -119,8 +119,8 @@ pipeline {
                 docker rmi ${IMAGE_NAME}
             '''
 
-            junit skipPublishingChecks: true, testResults: 'e2e/app/e2e/reports/*.xml'
-            archiveArtifacts 'e2e/cypress/screenshots/*, e2e/cypress/videos/*, logs/*'
+            junit skipPublishingChecks: true, testResults: 'app/e2e/reports/*.xml'
+            archiveArtifacts 'cypress/screenshots/*, cypress/videos/*, logs/*'
         }
         failure {
             script {
