@@ -133,8 +133,8 @@ LocalizationsBaseFlow.story = merge({}, DEFAULT_STORY_PARAMETERS, {
               });
 
             return {
-              // count: res.length,
-              count: 5,
+              count: res.length,
+              // count: 5,
               result: res,
             };
           },
