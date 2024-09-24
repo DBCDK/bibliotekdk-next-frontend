@@ -18,6 +18,19 @@ const UNAUTHENTICATED_USER = "UNAUTHENTICATED_USER";
 const MITID_NO_AGENCIES_USER = "MITID_NO_AGENCIES_USER";
 
 const BRANCHES = {
+  BRANCH_TEMPORARILY_CLOSED: {
+    agencyId: "BRANCH_TEMPORARILY_CLOSED",
+    branchId: "BRANCH_TEMPORARILY_CLOSED",
+    agencyName: "Agency - Temporarily closed",
+    name: "Branch - Modtager ILL - but closed",
+    postalAddress: "Sjov Gade 11",
+    postalCode: "2020",
+    city: "Sjov by",
+    borrowerCheck: true,
+    mobileLibraryLocations: null,
+    temporarilyClosed: true,
+    temporarilyClosedReason: "SOME GOOD REASON",
+  },
   BRANCH_ACCEPT_ILL: {
     agencyId: "BRANCH_ACCEPT_ILL",
     branchId: "BRANCH_ACCEPT_ILL",
@@ -28,6 +41,7 @@ const BRANCHES = {
     city: "Sjov by",
     borrowerCheck: true,
     mobileLibraryLocations: null,
+    temporarilyClosed: false,
   },
   BRANCH_CHECKORDER_FAILS: {
     agencyId: "BRANCH_CHECKORDER_FAILS",
@@ -39,6 +53,7 @@ const BRANCHES = {
     city: "Sjov by",
     borrowerCheck: true,
     mobileLibraryLocations: null,
+    temporarilyClosed: false,
   },
   BRANCH_BlOCKS_USERS: {
     agencyId: "BRANCH_BlOCKS_USERS",
@@ -50,6 +65,7 @@ const BRANCHES = {
     city: "Sjov by",
     borrowerCheck: true,
     mobileLibraryLocations: null,
+    temporarilyClosed: false,
   },
   BRANCH_NO_BORROWERCHECK: {
     agencyId: "BRANCH_NO_BORROWERCHECK",
@@ -68,6 +84,7 @@ const BRANCHES = {
       },
     ],
     mobileLibraryLocations: null,
+    temporarilyClosed: false,
   },
   BRANCH_REQUIRES_PINCODE: {
     agencyId: "BRANCH_REQUIRES_PINCODE",
@@ -81,6 +98,7 @@ const BRANCHES = {
     culrDataSync: false,
     agencyType: "FORSKNINGSBIBLIOTEK",
     mobileLibraryLocations: null,
+    temporarilyClosed: false,
   },
   BRANCH_MOBILE_LOCATIONS: {
     agencyId: "BRANCH_MOBILE_LOCATIONS",
@@ -92,6 +110,7 @@ const BRANCHES = {
     city: "Sjov by",
     borrowerCheck: true,
     mobileLibraryLocations: ["Brugsen", "På hjørnet", "Kiosken"],
+    temporarilyClosed: false,
   },
 };
 
@@ -451,6 +470,14 @@ function createStoryParameters({ user, submitOrdersDelay = 500 }) {
           id: "BRANCH_NO_BORCHK",
           branches: [BRANCHES.BRANCH_NO_BORROWERCHECK],
           result: [BRANCHES.BRANCH_NO_BORROWERCHECK],
+          user: {
+            mail: "test@test.dk",
+          },
+        },
+        {
+          id: "BRANCH_TEMPORARILY_CLOSED",
+          branches: [BRANCHES.BRANCH_TEMPORARILY_CLOSED],
+          result: [BRANCHES.BRANCH_TEMPORARILY_CLOSED],
           user: {
             mail: "test@test.dk",
           },
