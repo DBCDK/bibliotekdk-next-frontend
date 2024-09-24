@@ -15,6 +15,12 @@
   margin-bottom: var(--pt1);
 }
 
+.closedreason {
+  padding: var(--pt3);
+  margin: -48px;
+  background-color: var(--warning);
+}
+
 .errorLabel {
   color: var(--error_temp);
 }
