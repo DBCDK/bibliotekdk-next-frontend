@@ -244,8 +244,8 @@ function validateRangeLiterals(tokens) {
       token?.type === TOKEN_TYPES.LITERAL;
 
     if (isRangeLiteral) {
-      const regexYear = /^"-?[0-9]+\s+(now|-?[0-9]+)"$/;
-      const regexYearWithAsterisk = /^"-?[0-9*]+\s+(now|-?[0-9*]+)"$/;
+      const regexYear = /^"-?[0-9]+\s+(now|-?[0-9]+)"$/i;
+      const regexYearWithAsterisk = /^"-?[0-9*]+\s+(now|-?[0-9*]+)"$/i;
       const regexDate = /^"\d{4}-\d{2}-\d{2}\s+\d{4}-\d{2}-\d{2}"$/;
 
       if (regexYearWithAsterisk.test(token.normalized)) {
@@ -254,8 +254,7 @@ function validateRangeLiterals(tokens) {
             .substring(1, token.normalized.length - 1)
             .split(/\s+/);
 
-          if (right === "now") {
-            // Handle comparison where right side is "now"
+          if (right?.toLowerCase() === "now") {
             const now = new Date().getFullYear();
             if (parseInt(left, 10) > now) {
               token.error = ERRORS.UNEXPECTED_WITHIN_LITERAL;
