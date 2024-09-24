@@ -6,7 +6,7 @@ const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 const fbiApiPath = Cypress.env("fbiApiSimpleSearchPath");
 
 describe("Suggester", () => {
-  before(function () {
+  beforeEach(function () {
     cy.visit("/iframe.html?id=search-suggester--header-suggester");
   });
 
@@ -107,6 +107,7 @@ describe("Suggester", () => {
 
   it(`Mobile: Clear history on mobile version of suggester`, () => {
     cy.viewport(411, 731);
+    cy.get("[data-cy=button-mobile]").click();
 
     cy.get("[data-cy=suggester-clear-history]").should("be.visible");
     cy.get("[data-cy=suggester-clear-history]").click();

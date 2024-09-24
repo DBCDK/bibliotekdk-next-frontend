@@ -3,7 +3,7 @@
  * Test banner
  */
 describe("TopBanner", () => {
-  before(function () {
+  beforeEach(function () {
     cy.visit("/iframe.html?id=layout-banner--top-banner");
   });
 

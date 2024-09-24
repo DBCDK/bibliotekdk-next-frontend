@@ -1,10 +1,11 @@
 describe(`Loans and reservations`, () => {
   //TODO https://dbcjira.atlassian.net/browse/BIBDK2021-2027
-  it("Renders properly", () => {
+  beforeEach(() => {
     cy.visit(
       "iframe.html?args=&id=profile-loans-and-reservations--loans-and-reservations-story&viewMode=story"
     );
-
+  });
+  it("Renders properly", () => {
     cy.get("[data-cy=articleRow-debt-0]").should("exist");
     cy.get("[data-cy=articleRow-debt-0]").within(() => {
       cy.get("h3").should("exist");
@@ -31,6 +32,7 @@ describe(`Loans and reservations`, () => {
   });
 
   it("Mobile renders properly", () => {
+    cy.get("[data-cy=articleRow-debt-0]").should("exist");
     cy.viewport("iphone-6");
 
     cy.get("[data-cy=articleRow-debt-0]").should("exist");
