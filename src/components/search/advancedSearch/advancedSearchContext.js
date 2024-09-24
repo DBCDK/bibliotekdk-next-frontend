@@ -275,6 +275,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     resetInputFields();
     resetDropdownIndices();
     dispatchResetMenuItemsEvent();
+    setParsedCQL("");
     setWorkType("all");
   }
 
