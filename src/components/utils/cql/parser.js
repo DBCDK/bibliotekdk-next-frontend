@@ -255,6 +255,7 @@ function validateRangeLiterals(tokens) {
             .split(/\s+/);
 
           if (right?.toLowerCase() === "now") {
+            // Handle comparison where right side is "now"
             const now = new Date().getFullYear();
             if (parseInt(left, 10) > now) {
               token.error = ERRORS.UNEXPECTED_WITHIN_LITERAL;
