@@ -77,7 +77,7 @@ describe("Multi Order", () => {
       cy.contains("Du er ved at bestille 1 materiale");
     });
 
-    it.only("Should show temporarily closed reason when library is closed", () => {
+    it("Should show temporarily closed reason when library is closed", () => {
       cy.visit(
         "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"
       );
