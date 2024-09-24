@@ -502,7 +502,7 @@ const MANIFESTATION_9 = {
 
 const MANIFESTATION_10 = {
   ...MANIFESTATION_BASE,
-  pid: "some-pid-10",
+  pid: "work-of:some-pid-10",
   materialTypes: [
     {
       materialTypeSpecific: { display: "bog", code: "BOOK" },
@@ -868,7 +868,8 @@ const BRANCH_5 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "balleripraprup.dekaa",
-  temporarilyClosed: false,
+  temporarilyClosed: true,
+  temporarilyClosedReason: "SOME GOOD REASON",
 };
 
 const BRANCH_5_1 = {

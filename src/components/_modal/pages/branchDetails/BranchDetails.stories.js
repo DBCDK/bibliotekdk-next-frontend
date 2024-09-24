@@ -104,7 +104,7 @@ export function LocalizationsBaseFlow() {
       title="Localizations"
       description="Localizations story including AgencyLocalizations, BranchLocalizations, and BranchDetails"
       workId={"some-work-id-8"}
-      selectedPids={["some-pid-10"]}
+      selectedPids={["work-of:some-pid-10"]}
     />
   );
 }
@@ -133,12 +133,14 @@ LocalizationsBaseFlow.story = merge({}, DEFAULT_STORY_PARAMETERS, {
               });
 
             return {
-              count: res.length,
+              // count: res.length,
+              count: 5,
               result: res,
             };
           },
           manifestations: (args) => {
-            return args?.variables?.pid?.map((pid) =>
+            const pids = args?.variables?.pid || args?.variables?.pids;
+            return pids?.map((pid) =>
               ALL_MANIFESTATIONS.find((m) => m.pid === pid)
             );
           },
