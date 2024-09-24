@@ -322,6 +322,7 @@ export function holdingsForAgency({ agencyId, pids }) {
           temporarilyClosed
           temporarilyClosedReason
           openingHours
+          openingHoursUrl
           postalAddress
           postalCode
           city
