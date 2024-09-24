@@ -802,7 +802,7 @@ export function useOrderFlow() {
         agencyId: initialBranch.agencyId,
         branchId: initialBranch.branchId,
         name: initialBranch.name,
-        agencyName: initialBranch.agencyName, //TODO do we have originUrl and how does it look like?
+        agencyName: initialBranch.agencyName,
         callbackUID: callbackUID,
       });
       return;

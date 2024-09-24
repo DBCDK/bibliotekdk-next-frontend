@@ -214,10 +214,12 @@ export default function BranchDetails({ context }) {
   );
   const workId = workIds?.[0];
 
+  // we pass an orderobject instead of pids
+  const orders = [{ pids: pids }];
   const { handleOnSelectEnriched, borrowerCheckIsLoading } =
     useGoToOrderWithBranch({
       context: context,
-      selectedPids: pids,
+      orders: orders,
       workId: workId,
       branchWithoutBorrowerCheck: branch,
     });
