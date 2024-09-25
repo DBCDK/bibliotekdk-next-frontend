@@ -66,7 +66,6 @@ const CheckoutForm = () => {
       <LocalizationInformation orders={orders} />
       <OrdererInformation />
       <Pincode />
-
       <div>
         {/* Errors and messages */}
 
@@ -173,31 +172,36 @@ const CheckoutForm = () => {
           </Text>
         )}
 
-        <Button
-          dataCy="submit-button"
-          type="primary"
-          size="large"
-          className={styles.formSubmit}
-          disabled={disabled || isSubmitting}
-          onClick={async () => {
-            const receipt = await submitOrders();
-
-            modal.push("multireceipt", {
-              error: receipt?.error || "",
-              failedMaterials: receipt?.failedMaterialsPids || [],
-              successMaterials: receipt?.successfullyCreated || [],
-              branchName: pickupBranch?.name,
-              digitalMaterialsCount,
-              physicalMaterialsCount,
-            });
-          }}
-        >
-          {isLoadingValidation || isSubmitting ? (
-            <Spinner />
-          ) : (
-            Translate({ context: "general", label: "accept" })
-          )}
-        </Button>
+        {!pickupBranch?.temporarilyClosed ? (
+          <Button
+            dataCy="submit-button"
+            type="primary"
+            size="large"
+            className={styles.formSubmit}
+            disabled={disabled || isSubmitting}
+            onClick={async () => {
+              const receipt = await submitOrders();
+              modal.push("multireceipt", {
+                error: receipt?.error || "",
+                failedMaterials: receipt?.failedMaterialsPids || [],
+                successMaterials: receipt?.successfullyCreated || [],
+                branchName: pickupBranch?.name,
+                digitalMaterialsCount,
+                physicalMaterialsCount,
+              });
+            }}
+          >
+            {isLoadingValidation || isSubmitting ? (
+              <Spinner />
+            ) : (
+              Translate({ context: "general", label: "accept" })
+            )}
+          </Button>
+        ) : (
+          <Text type="text3" className={styles.closedreason}>
+            {pickupBranch?.temporarilyClosedReason}
+          </Text>
+        )}
         {hasCulrUniqueId && alreadyOrdered?.length > 0 && (
           <Text type="text2" className={styles.goToOrderHistory}>
             {Translate({
@@ -205,7 +209,7 @@ const CheckoutForm = () => {
               label: "get-overview",
             })}{" "}
             <Link
-              href={"/profil/bestillingshistorik"}
+              href="/profil/bestillingshistorik"
               border={{ top: false, bottom: { keepVisible: true } }}
               dataCy="open-order-history"
               ariaLabel="open order history"

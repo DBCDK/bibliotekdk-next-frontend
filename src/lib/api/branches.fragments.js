@@ -40,6 +40,8 @@ export function branchUserParameters({ branchId }) {
             description
           }
           pickupAllowed
+          temporarilyClosed
+          temporarilyClosedReason          
           digitalCopyAccess
           branchWebsiteUrl
           mobileLibraryLocations

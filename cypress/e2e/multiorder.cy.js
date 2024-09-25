@@ -77,6 +77,20 @@ describe("Multi Order", () => {
       cy.contains("Du er ved at bestille 1 materiale");
     });
 
+    it("Should show temporarily closed reason when library is closed", () => {
+      cy.visit(
+        "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"
+      );
+      cy.contains("Bestil single", { timeout: 10000 }).click();
+      cy.contains("Skift afhentning", { timeout: 10000 }).click();
+      cy.contains("Agency - Temporarily closed", { timeout: 10000 }).click();
+      cy.contains("Branch - Modtager ILL - but closed", {
+        timeout: 10000,
+      }).click();
+
+      cy.contains("SOME GOOD REASON");
+    });
+
     it("Show mail from agency as default", () => {
       cy.visit(
         "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"
