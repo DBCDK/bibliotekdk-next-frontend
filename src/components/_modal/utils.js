@@ -198,7 +198,7 @@ export function handleOnSelect({
   isAuthenticated = false,
 }) {
   // Selected branch belongs to one of the user's agencies where the user is logged in
-  const alreadyLoggedin = context.initial?.agencies?.find(
+  const alreadyLoggedin = !!context.initial?.agencies?.find(
     (agency) => agency.result?.[0].agencyId === branch.agencyId
   );
 
@@ -226,6 +226,7 @@ export function handleOnSelect({
     start({ orders: orders, initialBranch: branch });
     return;
   }
+
   // Show form if selected library doesn't support borchk. If user is authenticated - that is logged in with borchk
   // we move on to errormessages
   if (!hasBorchk && !alreadyLoggedin && !isAuthenticated) {

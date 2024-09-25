@@ -264,6 +264,7 @@ function MultiOrderStory() {
         <Modal.Page id="receipt" component={Pages.Receipt} />
         <Modal.Page id="login" component={Pages.Login} />
         <Modal.Page id="ematerialfilter" component={Pages.EMaterialFilter} />
+        <Modal.Page id="statusMessage" component={Pages.StatusMessage} />
         <Modal.Page
           id="openAdgangsplatform"
           component={Pages.OpenAdgangsplatform}

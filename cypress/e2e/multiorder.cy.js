@@ -63,7 +63,7 @@ describe("Multi Order", () => {
         win.localStorage.clear();
       });
     });
-    it("Should return to order page when changing pickup to agency with no borrowercheck", () => {
+    it("Should go to status message when selecting agency with no borchk", () => {
       cy.visit(
         "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"
       );
@@ -72,9 +72,12 @@ describe("Multi Order", () => {
       cy.contains("Agency - No borrowercheck", { timeout: 10000 }).click();
       cy.contains("Branch - No borrowercheck", { timeout: 10000 }).click();
 
-      cy.get('[data-cy="input-cpr"]').type("1234");
-      cy.contains("Gå til bestilling", { timeout: 10000 }).click();
-      cy.contains("Du er ved at bestille 1 materiale");
+      // cy.get('[data-cy="input-cpr"]').type("1234");
+      cy.contains(
+        "Du er ikke registreret som låner på Agency - No borrowercheck",
+        { timeout: 10000 }
+      ).click();
+      // cy.contains("Du er ved at bestille 1 materiale");
     });
 
     it("Should show temporarily closed reason when library is closed", () => {
