@@ -11,6 +11,7 @@ import find from "lodash/find";
 import cx from "classnames";
 import { handleOnSelect } from "@/components/_modal/utils";
 import { useOrderFlow } from "@/components/hooks/order";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 /**
  * Special component responsible for loading order policy
@@ -132,6 +133,7 @@ export default function PickupSelection(props) {
   /** we need the start method (and orders) from orderflow when changing library **/
   const { start, orders } = useOrderFlow();
 
+  const { isAuthenticated } = useAuthentication();
   const loadedOrderPolicies = useRef({});
   const render = useState()[1];
   // Incrementally creates a list of allowed branches as policies load one by one,
@@ -237,6 +239,7 @@ export default function PickupSelection(props) {
                     updateLoanerInfo: updateLoanerInfo,
                     start: start,
                     orders: orders,
+                    isAuthenticated: isAuthenticated,
                   })
                 }
                 modal={modal}
