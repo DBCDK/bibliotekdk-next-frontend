@@ -72,8 +72,6 @@ OpeningHours.propTypes = { singleBranch: PropTypes.any };
  * @returns {React.ReactElement | null}
  */
 function Address({ singleBranch }) {
-  console.log("singleBranch", singleBranch);
-  console.log("singleBranch?.postalAddress", singleBranch?.postalAddress);
   return (
     <div className={cx(styles.fit_content, styles.path_blue)}>
       <Text type="text1">Adresse</Text>
@@ -89,7 +87,7 @@ function Address({ singleBranch }) {
       ) : (
         <>
           <Text className={styles.postalAddress} type="text2">
-            {singleBranch?.postalAddress}{" "}
+            {singleBranch?.postalAddress}
           </Text>
           <Text type="text2">
             {singleBranch?.postalCode} {singleBranch?.city}
