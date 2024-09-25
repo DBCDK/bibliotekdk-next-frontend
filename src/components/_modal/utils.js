@@ -195,6 +195,7 @@ export function handleOnSelect({
   orders = null,
   start = null,
   origin = null,
+  isAuthenticated = false,
 }) {
   // Selected branch belongs to one of the user's agencies where the user is logged in
   const alreadyLoggedin = context.initial?.agencies?.find(
@@ -225,9 +226,9 @@ export function handleOnSelect({
     start({ orders: orders, initialBranch: branch });
     return;
   }
-
-  //  Show form if selected library doesn't support borchk
-  if (!hasBorchk) {
+  // Show form if selected library doesn't support borchk. If user is authenticated - that is logged in with borchk
+  // we move on to errormessages
+  if (!hasBorchk && !alreadyLoggedin && !isAuthenticated) {
     modal.push("loanerform", {
       branchId: branch.branchId,
       changePickupBranch: true,
@@ -239,6 +240,8 @@ export function handleOnSelect({
   let title;
   let text;
 
+  // @TODO if user is authenticated we should show some other message here - like
+  // "you need to log out to order at this library ..."
   //  FFU library selected
   if (isFFUAgency(branch)) {
     // if branch has a website url - include it as a variabel
