@@ -200,7 +200,7 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
           })}
           helptxtLink={{
             label: "Fagbibliografier",
-            href: "/hjaelp/Fagbibliografier/666",
+            href: "/hjaelp/fagbibliografier/234",
           }}
           className={styles.helptxtlink}
         />
