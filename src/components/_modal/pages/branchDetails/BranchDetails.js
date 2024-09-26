@@ -86,7 +86,9 @@ function Address({ singleBranch }) {
         </Text>
       ) : (
         <>
-          <Text type="text2">{singleBranch?.postalAddress}</Text>
+          <Text className={styles.postalAddress} type="text2">
+            {singleBranch?.postalAddress}
+          </Text>
           <Text type="text2">
             {singleBranch?.postalCode} {singleBranch?.city}
           </Text>

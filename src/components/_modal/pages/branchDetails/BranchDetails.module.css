@@ -34,3 +34,7 @@
 .path_blue * {
   stroke: var(--blue);
 }
+
+.postalAddress {
+  white-space: pre-line;
+}
