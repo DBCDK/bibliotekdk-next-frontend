@@ -84,8 +84,10 @@ function getPageDescription(work) {
     types.push("sammensat materiale");
 
   const typesString =
-    types.length > 0
+    types.length > 1
       ? "som " + types.slice(0, -1).join(", ") + " eller " + types.slice(-1)
+      : types.length === 1
+      ? " som " + types[0]
       : "";
 
   return `Lån ${title}${
