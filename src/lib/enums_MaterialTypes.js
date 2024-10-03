@@ -15,21 +15,6 @@ export const MaterialTypeEnum = Object.freeze({
   "LYDBOG (BÅND)": "lydbog (bånd)",
 });
 
-/**
- * Used for the few places in the code where we need to check on MaterialTypeGeneral.
-     This should be extended whenever we need to know new general MaterialTypes
- * @type {Readonly<{EBOOKS: {code: string, display: string}, AUDIO_BOOKS: {code: string, display: string}, BOOKS: {code: string, display: string}}>}
- */
-export const MaterialTypeGeneralEnum = Object.freeze({
-  BOOKS: { display: "bøger", code: "BOOKS" },
-  EBOOKS: { display: "e-bøger", code: "EBOOKS" },
-  AUDIO_BOOKS: { display: "lydbøger", code: "AUDIO_BOOKS" },
-  // NODE: { display: "node", code: "SHEET_MUSIC" },
-  // COMPUTER_GAMES: { display: "computerspil", code: "COMPUTER_GAMES" },
-  // FILMS: { display: "film", code: "FILMS" },
-  // TV_SERIES: { display: "tv-serie", code: "TV_SERIES" },
-});
-
 /* This */
 export const MaterialTypeOrderEnum = Object.freeze({
   LITERATURE: {
