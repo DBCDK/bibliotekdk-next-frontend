@@ -534,6 +534,10 @@ export function fbiOverviewDetail({ workId }) {
           }
           titles {
             full
+            tvSeries {
+              title
+              danishLaunchTitle
+            }
           }                                  
           manifestations {
             mostRelevant {

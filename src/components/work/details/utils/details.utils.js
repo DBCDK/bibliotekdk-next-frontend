@@ -397,17 +397,40 @@ function RenderGameLanguages({ values }) {
  * @param manifestation
  * @returns {{original: (string|{jsxParser: function({values: *}): *, index: number, label: string, value: {original: *, tvSerie: *, main: *}}|*), tvSerie: *, main: *}}
  */
-function getMovieTitles(manifestation) {
-  const tvSeriesTitle = manifestation?.titles?.tvSeries?.danishLaunchTitle;
+function getMovieTitles(manifestation, work) {
+  console.log("getMovieTitles.manifestation", manifestation);
+  console.log("getMovieTitles.work", work);
+
+  const tvSeriesTitle =
+    work?.titles?.tvSeries?.danishLaunchTitle ||
+    work?.titles?.tvSeries?.title ||
+    manifestation?.titles?.tvSeries?.title;
   const originalTitle = manifestation?.titles?.originalTitle;
   const mainTitle = manifestation?.titles?.main?.join(", ");
+  //if original title is the same as danishLaunchTitle, then the series is danish
 
-  return { tvSerie: tvSeriesTitle, original: originalTitle, main: mainTitle };
+  const title = work?.titles?.tvSeries?.title;
+  const danishLaunchTitle = work?.titles?.tvSeries?.danishLaunchTitle;
+  const titleIsDanish =  title?.includes(danishLaunchTitle)
+  //const
+  console.log("\n\ntitle", title);
+  console.log("danishLaunchTitle", danishLaunchTitle);
+  console.log("titleIsDanish", titleIsDanish, "\n\n");
+  return {
+    tvSerie: tvSeriesTitle,
+    original: originalTitle,
+    main: mainTitle,
+    titleIsDanish: !titleIsDanish,
+    danishLaunchTitle,
+  };
 }
 
 function RenderMovieTitles({ values }) {
-  const label = values?.tvSerie ? "danishLaunchTitle" : "originalTitle";
-
+  console.log("RenderMovieTitles.values", values);
+  const label = values.titleIsDanish ? "danishLaunchTitle" : "originalTitle";
+  if (!values.titleIsDanish) {
+    //  return;
+  }
   return (
     <>
       <Text type="text3" className={styles.title} lines={2}>
@@ -996,7 +1019,7 @@ export function fieldsForRows(manifestation, work, context) {
         originalTitle: {
           label: "",
           // value: manifestation?.titles?.original?.join("; ") || [],
-          value: getMovieTitles(manifestation),
+          value: getMovieTitles(manifestation, work),
           jsxParser: RenderMovieTitles,
           index: 0,
         },

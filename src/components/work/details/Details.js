@@ -60,6 +60,7 @@ function Details({ className = "", manifestation = {}, work = {} }) {
   );
 
   const fieldsToShow = useMemo(() => {
+    console.log("useMemo.manifestation", {manifestation, work, context});
     return fieldsForRows(manifestation, work, context);
   }, [manifestation, materialType, work, context]);
 
@@ -204,7 +205,7 @@ export default function Wrap(props) {
   );
 
   const manifestations = data?.work?.manifestations?.mostRelevant;
-
+console.log('data?.work',data?.work)
   // sort by edition year - newest first
   const sortbyeditionyear = (a, b) => {
     if (
@@ -228,6 +229,7 @@ export default function Wrap(props) {
       return inFlatMaterialTypes(type, flattenMaterialType(manifestation));
     });
 
+    console.log('manifestationByMaterialType.manifestations',manifestations)
   const work = {
     ...data?.work,
     series: seriesData?.work?.series || [],
@@ -235,6 +237,7 @@ export default function Wrap(props) {
     universes: universesData?.work?.universes || [],
     universesIsLoading: universesIsLoading,
   };
+  console.log('work',work)
 
   // attach relations for manifestation to display
   if (manifestationByMaterialType) {

@@ -40,6 +40,9 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
     ? " (" + series?.identifyingAddition + ")"
     : "";
   const { creators, creatorsToShow } = getUniqueCreatorsDisplay(series);
+console.log('TitleBox.firstSeriesFirstWork',firstSeriesFirstWork)
+console.log('TitleBox.series',series)
+const originalTitle =firstSeriesFirstWork?.titles?.tvSeries?.title
 
   return (
     <div
@@ -73,7 +76,7 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
         tag={"h1"}
         className={styles.series_title}
       >
-        {series?.title + identifyingAddition}
+        { originalTitle || series?.title + identifyingAddition}
       </Title>
       <div className={styles.series_images}>
         <ThumbnailParade series={series} isLoading={seriesIsLoading} />
