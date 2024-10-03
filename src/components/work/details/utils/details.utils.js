@@ -411,24 +411,25 @@ function getMovieTitles(manifestation, work) {
 
   const title = work?.titles?.tvSeries?.title;
   const danishLaunchTitle = work?.titles?.tvSeries?.danishLaunchTitle;
-  const titleIsDanish =  title?.includes(danishLaunchTitle)
+  const showDanishTitle =
+    danishLaunchTitle && !title?.includes(danishLaunchTitle);
   //const
   console.log("\n\ntitle", title);
   console.log("danishLaunchTitle", danishLaunchTitle);
-  console.log("titleIsDanish", titleIsDanish, "\n\n");
+  console.log("titleIsDanish", showDanishTitle, "\n\n");
   return {
     tvSerie: tvSeriesTitle,
     original: originalTitle,
     main: mainTitle,
-    titleIsDanish: !titleIsDanish,
+    showDanishTitle: showDanishTitle,
     danishLaunchTitle,
   };
 }
 
 function RenderMovieTitles({ values }) {
   console.log("RenderMovieTitles.values", values);
-  const label = values.titleIsDanish ? "danishLaunchTitle" : "originalTitle";
-  if (!values.titleIsDanish) {
+  const label = values.showDanishTitle ? "danishLaunchTitle" : "originalTitle";
+  if (!values.showDanishTitle) {
     //  return;
   }
   return (
@@ -437,7 +438,9 @@ function RenderMovieTitles({ values }) {
         {translate({ context: "details", label: label })}
       </Text>
       <Text type="text4" lines={2}>
-        {values?.tvSerie || values?.original || values?.main}
+        {values.showDanishTitle
+          ? values.danishLaunchTitle
+          : values?.tvSerie || values?.original || values?.main}
       </Text>
     </>
   );
