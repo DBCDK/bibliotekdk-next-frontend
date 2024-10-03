@@ -159,18 +159,20 @@ const CheckoutForm = () => {
           </Text>
         )}
 
-        {!isLoadingValidation && hasPhysicalOrders && (
-          <Text type="text3" className={styles.formLabel}>
-            <Translate
-              context="order"
-              label={
-                materialsToOrderCount === 1
-                  ? "order-message-library"
-                  : "order-message-library-plural"
-              }
-            />
-          </Text>
-        )}
+        {!isLoadingValidation &&
+          hasPhysicalOrders &&
+          !pickupBranch?.temporarilyClosed && (
+            <Text type="text3" className={styles.formLabel}>
+              <Translate
+                context="order"
+                label={
+                  materialsToOrderCount === 1
+                    ? "order-message-library"
+                    : "order-message-library-plural"
+                }
+              />
+            </Text>
+          )}
 
         {!pickupBranch?.temporarilyClosed ? (
           <Button
