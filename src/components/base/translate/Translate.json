@@ -960,6 +960,14 @@
       }
     },
     "bibliographic-data": {
+      "audience": {
+        "da": "Målgruppe",
+        "en": "Audience"
+      },
+      "audience-age": {
+        "da": "For %s-årige",
+        "en": "For ages %s"
+      },
       "issn": {
         "da": "Issn",
         "en": "Issn"

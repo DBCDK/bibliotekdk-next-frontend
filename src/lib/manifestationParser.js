@@ -335,10 +335,13 @@ const fields = () => [
   {
     dataField: "audience",
     label: Translate({
-      context: "details",
+      context: "bibliographic-data",
       label: "audience",
     }),
-    valueParser: getAudienceValues,
+    valueParser: (audience) =>
+      getAudienceValues(audience, {
+        context: "bibliographic-data",
+      }),
   },
   {
     dataField: "notes",
