@@ -78,7 +78,7 @@ function getPageDescription(work) {
   const typesString =
     types?.length > 1
       ? "som " + types.slice(0, -1).join(", ") + " eller " + types.slice(-1)
-      : types.length === 1
+      : types?.length === 1
       ? "som " + types[0]
       : "";
 
