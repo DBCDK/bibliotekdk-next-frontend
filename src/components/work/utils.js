@@ -73,25 +73,31 @@ function getPageDescription(work) {
     manifestationMaterialTypeFactory(work?.manifestations?.all);
 
   // We check for "bog", "e-bog", "lydbog ..."-something, and combined material (= "sammensat materiale")
-  let types = [];
-  inUniqueMaterialTypes([MaterialTypeGeneralEnum.BOOKS.code]) &&
-    types.push("bog");
-  inUniqueMaterialTypes([MaterialTypeGeneralEnum.EBOOKS.code]) &&
-    types.push("e-bog");
-  inUniqueMaterialTypes([MaterialTypeGeneralEnum.AUDIO_BOOKS.code]) &&
-    types.push("lydbog");
-  inUniqueMaterialTypes([MaterialTypeGeneralEnum.NODE.code]) &&
-    types.push("node");
-  inUniqueMaterialTypes([MaterialTypeGeneralEnum.COMPUTER_GAMES.code]) &&
-    types.push("computerspil");
-  inUniqueMaterialTypes([MaterialTypeGeneralEnum.FILMS.code]) &&
-    types.push("film");
-  inUniqueMaterialTypes([MaterialTypeGeneralEnum.TV_SERIES.code]) &&
-    types.push("serie");
-  materialTypesArray?.filter((matArray) => matArray.length > 1).length > 1 &&
-    types.push("sammensat materiale");
+  //let types = [];
+  // inUniqueMaterialTypes([MaterialTypeGeneralEnum.BOOKS.code]) &&
+  //   types.push("bog");
+  // inUniqueMaterialTypes([MaterialTypeGeneralEnum.EBOOKS.code]) &&
+  //   types.push("e-bog");
+  // inUniqueMaterialTypes([MaterialTypeGeneralEnum.AUDIO_BOOKS.code]) &&
+  //   types.push("lydbog");
+  // inUniqueMaterialTypes([MaterialTypeGeneralEnum.NODE.code]) &&
+  //   types.push("node");
+  // inUniqueMaterialTypes([MaterialTypeGeneralEnum.COMPUTER_GAMES.code]) &&
+  //   types.push("computerspil");
+  // inUniqueMaterialTypes([MaterialTypeGeneralEnum.FILMS.code]) &&
+  //   types.push("film");
+  // inUniqueMaterialTypes([MaterialTypeGeneralEnum.TV_SERIES.code]) &&
+  //   types.push("serie");
+
+  // materialTypesArray?.filter((matArray) => matArray.length > 1).length > 1 &&
+  //   types.push("sammensat materiale");
+
+const types = materialTypesArray?.map((matArray) => matArray[0]?.specificDisplay);
+    console.log('getPageDescription.materialTypesArray',materialTypesArray)
+    console.log('getPageDescription.workTypes',types)
+
   const typesString =
-    types.length > 1
+  types?.length > 1
       ? "som " + types.slice(0, -1).join(", ") + " eller " + types.slice(-1)
       : types.length === 1
       ? "som " + types[0]

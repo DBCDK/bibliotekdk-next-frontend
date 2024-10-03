@@ -24,10 +24,10 @@ export const MaterialTypeGeneralEnum = Object.freeze({
   BOOKS: { display: "bøger", code: "BOOKS" },
   EBOOKS: { display: "e-bøger", code: "EBOOKS" },
   AUDIO_BOOKS: { display: "lydbøger", code: "AUDIO_BOOKS" },
-  NODE: { display: "node", code: "SHEET_MUSIC" },
-  COMPUTER_GAMES: { display: "computerspil", code: "COMPUTER_GAMES" },
-  FILMS: { display: "film", code: "FILMS" },
-  TV_SERIES: { display: "tv-serie", code: "TV_SERIES" },
+  // NODE: { display: "node", code: "SHEET_MUSIC" },
+  // COMPUTER_GAMES: { display: "computerspil", code: "COMPUTER_GAMES" },
+  // FILMS: { display: "film", code: "FILMS" },
+  // TV_SERIES: { display: "tv-serie", code: "TV_SERIES" },
 });
 
 /* This */
