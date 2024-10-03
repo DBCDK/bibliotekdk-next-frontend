@@ -17,7 +17,7 @@ export const FacetValidDatabases = Object.freeze({
   DANSK_MUSIKLITTERÆR_BIBLIOGRAFI: "Dansk Musiklitterær Bibliografi",
   DANSK_LITTERATURHISTORISK_BIBLIOGRAFI:
     "Dansk Litteraturhistorisk Bibliografi",
-  // TEATERPROGRAMMER: "Teaterprogrammer",
+  KONGELIGE_TEATER_PROGRAMARTIKLER: "Kongelige Teater programartikler",
 });
 
 export const AdvFacetsTypeEnum = Object.freeze({

@@ -47,7 +47,10 @@ const prioritisedDatabases = [
     term: "Dansk Litteraturhistorisk Bibliografi",
     key: "Dansk Litteraturhistorisk Bibliografi",
   },
-  // { term: "Teaterprogrammer", key: "Teaterprogrammer" },
+  {
+    term: "Kongelige Teater programartikler",
+    key: "Kongelige Teater programartikler",
+  },
 ];
 
 export function dummy__databases() {
