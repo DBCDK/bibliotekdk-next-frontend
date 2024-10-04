@@ -44,7 +44,7 @@ function DefaultDetailValues({ values }) {
 function Details({ className = "", manifestation = {}, work = {} }) {
   // Translate Context
   const context = { context: "details" };
-
+  console.log("Details.work", work);
   // this materialtype is for displaying subtitle in section (seneste udgave)
   const materialType = formatMaterialTypesToPresentation(
     flattenMaterialType(manifestation)
@@ -190,7 +190,7 @@ export default function Wrap(props) {
         seriesLimit: 1,
       })
   );
-
+  console.log("Wrap.seriesData", seriesData);
   //  = useData(workId && workFragments.seriesLight({ workId: workId }));
 
   const {

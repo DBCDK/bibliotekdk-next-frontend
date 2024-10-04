@@ -17,6 +17,7 @@ import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
 import { getSeriesUrl, getUniverseUrl } from "@/lib/utils";
 import React from "react";
 import translate from "@/components/base/translate";
+import { getTitlesAndType } from "../../overview/titlerenderer/TitleRenderer";
 
 /**
  * Parse languages in given manifestation.
@@ -623,9 +624,31 @@ function RenderLitteratureAudience({ values }) {
 }
 
 function getSeriesAndUniverseTitles(work) {
+  console.log("getSeriesAndUniverseTitles.work", work);
+
   const seriesTitle = work?.series?.map((singleSeries) => {
+    const { titles, type } = getTitlesAndType({
+      work: singleSeries.members[0].work,
+    });
+    console.log("getSeriesAndUniverseTitles.titles", titles);
+    console.log("getSeriesAndUniverseTitles.type", type);
+
+    const identifyingAddition = singleSeries?.identifyingAddition;
+
+    let formattedTitle;
+    if (type === "tvSerie" && titles.length > 0) {
+      formattedTitle = identifyingAddition
+        ? `${titles.join(" ,")} (${identifyingAddition}) (serie)`
+        : `${titles.join(" ,")} (serie)`;
+    } else {
+      formattedTitle = identifyingAddition
+        ? `${singleSeries.title} (${identifyingAddition}) (serie)`
+        : `${singleSeries.title} (serie)`;
+    }
+    console.log("getSeriesAndUniverseTitles.formattedTitle", formattedTitle);
+
     return {
-      title: `${singleSeries.title} (serie)`,
+      title: formattedTitle, //`${singleSeries.title} (serie)`,
       url: getSeriesUrl(singleSeries.seriesId),
       skeleton: work?.seriesIsLoading,
     };
