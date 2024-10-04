@@ -399,9 +399,6 @@ function RenderGameLanguages({ values }) {
  * @returns {{original: (string|{jsxParser: function({values: *}): *, index: number, label: string, value: {original: *, tvSerie: *, main: *}}|*), tvSerie: *, main: *}}
  */
 function getMovieTitles(manifestation, work) {
-  console.log("getMovieTitles.manifestation", manifestation);
-  console.log("getMovieTitles.work", work);
-
   const tvSeriesTitle =
     work?.titles?.tvSeries?.danishLaunchTitle ||
     work?.titles?.tvSeries?.title ||
@@ -412,8 +409,6 @@ function getMovieTitles(manifestation, work) {
 
   const title = work?.titles?.tvSeries?.title;
   const danishLaunchTitle = work?.titles?.tvSeries?.danishLaunchTitle;
-  // const showDanishTitle =
-  //   danishLaunchTitle && !title?.includes(danishLaunchTitle);
 
   return {
     tvSerie: tvSeriesTitle,
@@ -425,11 +420,8 @@ function getMovieTitles(manifestation, work) {
 }
 
 function RenderMovieTitles({ values }) {
-  console.log("RenderMovieTitles.values", values);
   const label = values.showDanishTitle ? "danishLaunchTitle" : "originalTitle";
-  if (!values.showDanishTitle) {
-    //   return;
-  }
+
   return (
     <>
       <Text type="text3" className={styles.title} lines={2}>
@@ -621,14 +613,10 @@ function RenderLitteratureAudience({ values }) {
 }
 
 function getSeriesAndUniverseTitles(work) {
-  console.log("getSeriesAndUniverseTitles.work", work);
-
   const seriesTitle = work?.series?.map((singleSeries) => {
     const { titles, type } = getTitlesAndType({
       work: singleSeries.members[0].work,
     });
-    console.log("getSeriesAndUniverseTitles.titles", titles);
-    console.log("getSeriesAndUniverseTitles.type", type);
 
     const identifyingAddition = singleSeries?.identifyingAddition;
 
@@ -642,7 +630,6 @@ function getSeriesAndUniverseTitles(work) {
         ? `${singleSeries.title} (${identifyingAddition}) (serie)`
         : `${singleSeries.title} (serie)`;
     }
-    console.log("getSeriesAndUniverseTitles.formattedTitle", formattedTitle);
 
     return {
       title: formattedTitle, //`${singleSeries.title} (serie)`,
@@ -1044,7 +1031,7 @@ export function fieldsForRows(manifestation, work, context) {
           label: "",
           // value: manifestation?.titles?.original?.join("; ") || [],
           hideField: !moviveTitles.showDanishTitle,
-          value: moviveTitles, //getMovieTitles(manifestation, work),
+          value: moviveTitles,
           jsxParser: RenderMovieTitles,
           index: 0,
         },

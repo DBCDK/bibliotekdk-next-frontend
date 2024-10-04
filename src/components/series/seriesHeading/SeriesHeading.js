@@ -56,7 +56,6 @@ export function SeriesBreadcrumb({ firstWork, seriesIsLoading }) {
 }
 
 export default function SeriesHeading({ series, seriesIsLoading }) {
-  console.log("SeriesHeading.series", series);
   const firstWork = series?.members?.[0]?.work;
 
   return (

@@ -40,8 +40,7 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
     ? " (" + series?.identifyingAddition + ")"
     : "";
   const { creators, creatorsToShow } = getUniqueCreatorsDisplay(series);
-  console.log("TitleBox.firstSeriesFirstWork", firstSeriesFirstWork);
-  console.log("TitleBox.series", series);
+
   const originalTitle = firstSeriesFirstWork?.titles?.tvSeries?.title;
 
   return (

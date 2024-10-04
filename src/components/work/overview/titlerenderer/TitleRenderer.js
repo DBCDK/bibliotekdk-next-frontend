@@ -60,7 +60,6 @@ RenderLanguageAddition.propTypes = {
 };
 
 export function getTitlesAndType({ work }) {
-  console.log("getTitlesAndType.work", work);
   const isTvSerie = work?.titles?.tvSeries?.title;
 
   const titles = isTvSerie
@@ -80,7 +79,6 @@ export function getTitlesAndType({ work }) {
 
 export function RenderTitlesWithoutLanguage({ work, subtitleType, className }) {
   const { titles, type } = getTitlesAndType({ work: work });
-  console.log("RenderTitlesWithoutLanguage.", { titles, type });
   return titles?.map((title, index, titlesArray) => (
     <>
       <Fragment key={`${title}-${index}`}>

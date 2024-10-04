@@ -44,7 +44,6 @@ function DefaultDetailValues({ values }) {
 function Details({ className = "", manifestation = {}, work = {} }) {
   // Translate Context
   const context = { context: "details" };
-  console.log("Details.work", work);
   // this materialtype is for displaying subtitle in section (seneste udgave)
   const materialType = formatMaterialTypesToPresentation(
     flattenMaterialType(manifestation)
@@ -60,10 +59,8 @@ function Details({ className = "", manifestation = {}, work = {} }) {
   );
 
   const fieldsToShow = useMemo(() => {
-    console.log("useMemo.manifestation", { manifestation, work, context });
     return fieldsForRows(manifestation, work, context);
   }, [manifestation, materialType, work, context]);
-  console.log("fieldsToShow", fieldsToShow);
   return (
     <Section
       title={Translate({ ...context, label: "title" })}
@@ -77,10 +74,6 @@ function Details({ className = "", manifestation = {}, work = {} }) {
             {fieldsToShow &&
               fieldsToShow.map((field, index) => {
                 const fieldName = Object.keys(field)[0];
-                console.log("\n\n" + index, ": fieldName", fieldName);
-                console.log("fieldName", fieldName);
-                console.log("field", field);
-                console.log("field[fieldName]", field[fieldName]);
                 //if there is a value, but we still want to hide the field. Eg. if danish title is the same as main title. Then we hide the danish title field.
                 if (field[fieldName].hideField) {
                   return null;
@@ -197,8 +190,6 @@ export default function Wrap(props) {
         seriesLimit: 1,
       })
   );
-  console.log("Wrap.seriesData", seriesData);
-  //  = useData(workId && workFragments.seriesLight({ workId: workId }));
 
   const {
     data: universesData,
@@ -212,7 +203,6 @@ export default function Wrap(props) {
   );
 
   const manifestations = data?.work?.manifestations?.mostRelevant;
-  console.log("data?.work", data?.work);
   // sort by edition year - newest first
   const sortbyeditionyear = (a, b) => {
     if (
@@ -236,7 +226,6 @@ export default function Wrap(props) {
       return inFlatMaterialTypes(type, flattenMaterialType(manifestation));
     });
 
-  console.log("manifestationByMaterialType.manifestations", manifestations);
   const work = {
     ...data?.work,
     series: seriesData?.work?.series || [],
@@ -244,7 +233,6 @@ export default function Wrap(props) {
     universes: universesData?.work?.universes || [],
     universesIsLoading: universesIsLoading,
   };
-  console.log("work", work);
 
   // attach relations for manifestation to display
   if (manifestationByMaterialType) {
