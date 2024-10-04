@@ -412,17 +412,14 @@ function getMovieTitles(manifestation, work) {
 
   const title = work?.titles?.tvSeries?.title;
   const danishLaunchTitle = work?.titles?.tvSeries?.danishLaunchTitle;
-  const showDanishTitle =
-    danishLaunchTitle && !title?.includes(danishLaunchTitle);
-  //const
-  console.log("\n\ntitle", title);
-  console.log("danishLaunchTitle", danishLaunchTitle);
-  console.log("titleIsDanish", showDanishTitle, "\n\n");
+  // const showDanishTitle =
+  //   danishLaunchTitle && !title?.includes(danishLaunchTitle);
+
   return {
     tvSerie: tvSeriesTitle,
     original: originalTitle,
     main: mainTitle,
-    showDanishTitle: showDanishTitle,
+    showDanishTitle: danishLaunchTitle && !title?.includes(danishLaunchTitle),
     danishLaunchTitle,
   };
 }
@@ -431,7 +428,7 @@ function RenderMovieTitles({ values }) {
   console.log("RenderMovieTitles.values", values);
   const label = values.showDanishTitle ? "danishLaunchTitle" : "originalTitle";
   if (!values.showDanishTitle) {
-    //  return;
+    //   return;
   }
   return (
     <>
@@ -761,6 +758,7 @@ function RenderPlayers({ values }) {
  */
 export function fieldsForRows(manifestation, work, context) {
   const materialType = work?.workTypes?.[0] || null;
+  const moviveTitles = getMovieTitles(manifestation, work);
   const fieldsMap = {
     DEFAULT: [
       {
@@ -1045,7 +1043,8 @@ export function fieldsForRows(manifestation, work, context) {
         originalTitle: {
           label: "",
           // value: manifestation?.titles?.original?.join("; ") || [],
-          value: getMovieTitles(manifestation, work),
+          hideField: !moviveTitles.showDanishTitle,
+          value: moviveTitles, //getMovieTitles(manifestation, work),
           jsxParser: RenderMovieTitles,
           index: 0,
         },

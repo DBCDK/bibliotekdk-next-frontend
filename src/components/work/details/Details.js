@@ -63,7 +63,7 @@ function Details({ className = "", manifestation = {}, work = {} }) {
     console.log("useMemo.manifestation", { manifestation, work, context });
     return fieldsForRows(manifestation, work, context);
   }, [manifestation, materialType, work, context]);
-
+  console.log("fieldsToShow", fieldsToShow);
   return (
     <Section
       title={Translate({ ...context, label: "title" })}
@@ -77,7 +77,14 @@ function Details({ className = "", manifestation = {}, work = {} }) {
             {fieldsToShow &&
               fieldsToShow.map((field, index) => {
                 const fieldName = Object.keys(field)[0];
-
+                console.log("\n\n" + index, ": fieldName", fieldName);
+                console.log("fieldName", fieldName);
+                console.log("field", field);
+                console.log("field[fieldName]", field[fieldName]);
+                //if there is a value, but we still want to hide the field. Eg. if danish title is the same as main title. Then we hide the danish title field.
+                if (field[fieldName].hideField) {
+                  return null;
+                }
                 return (
                   !isEmpty(field[fieldName].value) && (
                     // this is the label
