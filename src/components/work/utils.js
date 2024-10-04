@@ -6,7 +6,6 @@ import { useMemo } from "react";
 import { accessFactory } from "@/lib/accessFactoryUtils";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import { extractCreatorsPrioritiseCorporation } from "@/lib/utils";
-import { MaterialTypeGeneralEnum } from "@/lib/enums_MaterialTypes";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 export function openAgencyLocalizationsModal({
@@ -69,30 +68,23 @@ function getPageDescription(work) {
   const title = work?.titles?.main[0];
   const creator = work?.creators?.[0]?.display || "";
 
-  const { uniqueMaterialTypes: materialTypesArray, inUniqueMaterialTypes } =
+  const { uniqueMaterialTypes: materialTypesArray } =
     manifestationMaterialTypeFactory(work?.manifestations?.all);
 
-  // We check for "bog", "e-bog", "lydbog ..."-something, and combined material (= "sammensat materiale")
-  let types = [];
-  inUniqueMaterialTypes([MaterialTypeGeneralEnum.BOOKS.code]) &&
-    types.push("bog");
-  inUniqueMaterialTypes([MaterialTypeGeneralEnum.EBOOKS.code]) &&
-    types.push("e-bog");
-  inUniqueMaterialTypes([MaterialTypeGeneralEnum.AUDIO_BOOKS.code]) &&
-    types.push("lydbog");
-  materialTypesArray?.filter((matArray) => matArray.length > 1).length > 1 &&
-    types.push("sammensat materiale");
+  const types = materialTypesArray?.map(
+    (matArray) => matArray[0]?.specificDisplay
+  );
 
   const typesString =
-    types.length > 1
+    types?.length > 1
       ? "som " + types.slice(0, -1).join(", ") + " eller " + types.slice(-1)
-      : types.length === 1
-      ? " som " + types[0]
+      : types?.length === 1
+      ? "som " + types[0]
       : "";
 
-  return `Lån ${title}${
-    creator && ` af ${creator} `
-  }${typesString}. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online.`;
+  return `Lån ${title}${creator && ` af ${creator}`}${
+    typesString && ` ${typesString}`
+  }. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online.`;
 }
 
 /**
