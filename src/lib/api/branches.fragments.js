@@ -321,6 +321,8 @@ export function holdingsForAgency({ agencyId, pids }) {
             }
             lookupUrl
           }
+          branchPhone
+          branchEmail
           temporarilyClosed
           temporarilyClosedReason
           openingHours
