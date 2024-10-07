@@ -41,6 +41,8 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
     : "";
   const { creators, creatorsToShow } = getUniqueCreatorsDisplay(series);
 
+  const originalTitle = firstSeriesFirstWork?.titles?.tvSeries?.title;
+
   return (
     <div
       className={cx(className, styles.box, {
@@ -73,7 +75,7 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
         tag={"h1"}
         className={styles.series_title}
       >
-        {series?.title + identifyingAddition}
+        {originalTitle || series?.title + identifyingAddition}
       </Title>
       <div className={styles.series_images}>
         <ThumbnailParade series={series} isLoading={seriesIsLoading} />

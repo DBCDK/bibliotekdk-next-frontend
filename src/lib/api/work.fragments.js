@@ -193,6 +193,13 @@ export function seriesLight({ workId, seriesLimit = null }) {
           ...seriesFragment
           members(limit:$seriesLimit) {
             work {
+              titles {
+                full
+                tvSeries {
+                  title
+                  danishLaunchTitle
+                }
+              }
               universes {
                 ...universeFragment
               }
@@ -534,6 +541,10 @@ export function fbiOverviewDetail({ workId }) {
           }
           titles {
             full
+            tvSeries {
+              title
+              danishLaunchTitle
+            }
           }                                  
           manifestations {
             mostRelevant {

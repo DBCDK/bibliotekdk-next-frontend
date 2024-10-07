@@ -64,7 +64,7 @@ const fields = () => [
       context: "bibliographic-data",
       label: "danishLaunchTitle",
     }),
-    valueParser: (value) => value?.tvSeries?.danishLaunchTitle,
+    valueParser: (value) => value?.tvSeries?.title,
   },
   {
     dataField: "creators",

@@ -17,6 +17,7 @@ import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
 import { getSeriesUrl, getUniverseUrl } from "@/lib/utils";
 import React from "react";
 import translate from "@/components/base/translate";
+import { getTitlesAndType } from "../../overview/titlerenderer/TitleRenderer";
 
 /**
  * Parse languages in given manifestation.
@@ -397,16 +398,29 @@ function RenderGameLanguages({ values }) {
  * @param manifestation
  * @returns {{original: (string|{jsxParser: function({values: *}): *, index: number, label: string, value: {original: *, tvSerie: *, main: *}}|*), tvSerie: *, main: *}}
  */
-function getMovieTitles(manifestation) {
-  const tvSeriesTitle = manifestation?.titles?.tvSeries?.danishLaunchTitle;
+function getMovieTitles(manifestation, work) {
+  const tvSeriesTitle =
+    work?.titles?.tvSeries?.danishLaunchTitle ||
+    work?.titles?.tvSeries?.title ||
+    manifestation?.titles?.tvSeries?.title;
   const originalTitle = manifestation?.titles?.originalTitle;
   const mainTitle = manifestation?.titles?.main?.join(", ");
+  //if original title is the same as danishLaunchTitle, then the series is danish
 
-  return { tvSerie: tvSeriesTitle, original: originalTitle, main: mainTitle };
+  const title = work?.titles?.tvSeries?.title;
+  const danishLaunchTitle = work?.titles?.tvSeries?.danishLaunchTitle;
+
+  return {
+    tvSerie: tvSeriesTitle,
+    original: originalTitle,
+    main: mainTitle,
+    showDanishTitle: danishLaunchTitle && !title?.includes(danishLaunchTitle),
+    danishLaunchTitle,
+  };
 }
 
 function RenderMovieTitles({ values }) {
-  const label = values?.tvSerie ? "danishLaunchTitle" : "originalTitle";
+  const label = values.showDanishTitle ? "danishLaunchTitle" : "originalTitle";
 
   return (
     <>
@@ -414,7 +428,9 @@ function RenderMovieTitles({ values }) {
         {translate({ context: "details", label: label })}
       </Text>
       <Text type="text4" lines={2}>
-        {values?.tvSerie || values?.original || values?.main}
+        {values.showDanishTitle
+          ? values.danishLaunchTitle
+          : values?.tvSerie || values?.original || values?.main}
       </Text>
     </>
   );
@@ -598,8 +614,25 @@ function RenderLitteratureAudience({ values }) {
 
 function getSeriesAndUniverseTitles(work) {
   const seriesTitle = work?.series?.map((singleSeries) => {
+    const { titles, type } = getTitlesAndType({
+      work: singleSeries.members[0].work,
+    });
+
+    const identifyingAddition = singleSeries?.identifyingAddition;
+
+    let formattedTitle;
+    if (type === "tvSerie" && titles.length > 0) {
+      formattedTitle = identifyingAddition
+        ? `${titles.join(" ,")} (${identifyingAddition}) (serie)`
+        : `${titles.join(" ,")} (serie)`;
+    } else {
+      formattedTitle = identifyingAddition
+        ? `${singleSeries.title} (${identifyingAddition}) (serie)`
+        : `${singleSeries.title} (serie)`;
+    }
+
     return {
-      title: `${singleSeries.title} (serie)`,
+      title: formattedTitle, //`${singleSeries.title} (serie)`,
       url: getSeriesUrl(singleSeries.seriesId),
       skeleton: work?.seriesIsLoading,
     };
@@ -712,6 +745,7 @@ function RenderPlayers({ values }) {
  */
 export function fieldsForRows(manifestation, work, context) {
   const materialType = work?.workTypes?.[0] || null;
+  const moviveTitles = getMovieTitles(manifestation, work);
   const fieldsMap = {
     DEFAULT: [
       {
@@ -996,7 +1030,8 @@ export function fieldsForRows(manifestation, work, context) {
         originalTitle: {
           label: "",
           // value: manifestation?.titles?.original?.join("; ") || [],
-          value: getMovieTitles(manifestation),
+          hideField: !moviveTitles.showDanishTitle,
+          value: moviveTitles,
           jsxParser: RenderMovieTitles,
           index: 0,
         },

@@ -44,7 +44,6 @@ function DefaultDetailValues({ values }) {
 function Details({ className = "", manifestation = {}, work = {} }) {
   // Translate Context
   const context = { context: "details" };
-
   // this materialtype is for displaying subtitle in section (seneste udgave)
   const materialType = formatMaterialTypesToPresentation(
     flattenMaterialType(manifestation)
@@ -62,7 +61,6 @@ function Details({ className = "", manifestation = {}, work = {} }) {
   const fieldsToShow = useMemo(() => {
     return fieldsForRows(manifestation, work, context);
   }, [manifestation, materialType, work, context]);
-
   return (
     <Section
       title={Translate({ ...context, label: "title" })}
@@ -76,7 +74,10 @@ function Details({ className = "", manifestation = {}, work = {} }) {
             {fieldsToShow &&
               fieldsToShow.map((field, index) => {
                 const fieldName = Object.keys(field)[0];
-
+                //if there is a value, but we still want to hide the field. Eg. if danish title is the same as main title. Then we hide the danish title field.
+                if (field[fieldName].hideField) {
+                  return null;
+                }
                 return (
                   !isEmpty(field[fieldName].value) && (
                     // this is the label
@@ -190,8 +191,6 @@ export default function Wrap(props) {
       })
   );
 
-  //  = useData(workId && workFragments.seriesLight({ workId: workId }));
-
   const {
     data: universesData,
     isLoading: universesIsLoading,
@@ -204,7 +203,6 @@ export default function Wrap(props) {
   );
 
   const manifestations = data?.work?.manifestations?.mostRelevant;
-
   // sort by edition year - newest first
   const sortbyeditionyear = (a, b) => {
     if (
