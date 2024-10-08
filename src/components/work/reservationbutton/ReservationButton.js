@@ -72,14 +72,18 @@ function ReservationButtonWrapper({
     pids: selectedPids,
   });
 
-  const illSupported = hasPhysicalCopy;
-
   const {
     physicalUnitPids: physicalPids,
     isLoading: isLoadingManifestationData,
   } = useManifestationData({ pids: selectedPids });
 
-  const requireLocalizations = !illSupported && physicalPids?.length > 0;
+  // pjo 08/10/24 - we keep these two lines - i'm pretty sure this will be undone
+  // at a later time :)
+  // const illSupported = hasPhysicalCopy;
+  // const requireLocalizations = !illSupported && physicalPids?.length > 0;
+
+  // set to true to ALWAYS check if there are localizations and disable reservationbutton if not
+  const requireLocalizations = true;
 
   const { data: localizationsData, isLoading: isLoadingLocalizations } =
     useData(
@@ -188,6 +192,8 @@ export const ReservationButton = ({
   const { start } = useOrderFlow();
   const noSelectedManifestations = Boolean(isEmpty(access));
 
+  const noLocalizations = !noSelectedManifestations && localizationsCount < 1;
+
   // pjo 15/08/24 - added filter for dfi.dk - it is not a real accessUrl
   const onlineMaterialWithoutLoginOrLoginAtUrl = Boolean(
     access?.filter((entry) => entry?.url && entry?.origin !== "www.dfi.dk")
@@ -210,6 +216,11 @@ export const ReservationButton = ({
   const noSelectedManifestationsTxt = Translate({
     context: "overview",
     label: noSelectedManifestationsLabel,
+  });
+
+  const noLocalizationsTxt = Translate({
+    context: "overview",
+    label: "button-order-no-localizations-disabled",
   });
 
   const accessibleOnlineAndNoLoginProps = {
@@ -250,6 +261,18 @@ export const ReservationButton = ({
         props: accessibleOnlineAndNoLoginProps,
         text: constructButtonText(workTypes, materialTypes, shortText),
         preferSecondary: shortText, // Becomes secondary button if button links to material (not ordering)
+      };
+    }
+
+    // NO LOCALIZATIONS
+    if (noLocalizations) {
+      return {
+        props: {
+          dataCy: "button-order-overview-disabled",
+          disabled: true,
+        },
+        text: noLocalizationsTxt,
+        preferSecondary: false,
       };
     }
 
