@@ -46,6 +46,13 @@ Linkme.getInitialProps = async (ctx) => {
   const faust = ctx.query["faust"] || null;
 
   /************ START works *******************/
+  // work.id given in query
+  if (ctx.query["work.id"]) {
+    const path = `/work/${ctx.query["work.id"]}`;
+    ctx.res.writeHead(301, { Location: path });
+    ctx.res.end();
+    return;
+  }
   // pid, faust and oclc can be changed for a work
   const serverQueries = await fetchAll(
     [pidToWorkId, faustToWork, oclcToWorkId],
@@ -91,7 +98,7 @@ Linkme.getInitialProps = async (ctx) => {
   }
 
   // @TODO handle all the rest :) fo, ti, em, tekst - links from faktalink and forfatterweb are already formatted
-  // if we get to here (no rec.id .. no isbn .. no faust .. no oclc) the rest is just parameters - luckily we know exactly
+  // if we get to here (no work.id .. no rec.id .. no isbn .. no faust .. no oclc) the rest is just parameters - luckily we know exactly
   // what we recieve from faktalink and for fatterweb :) (hopefully)
   const queryFields = parseLinkmeQuery(ctx.query);
   if (queryFields?.length > 0) {
