@@ -26,8 +26,9 @@ export function findBackgroundColor({
   isPeriodicaLike,
   hasPeriodicaForm,
   notAvailableAtLibrary,
+  noLocalizations,
 }) {
-  if (notAvailableAtLibrary) {
+  if (notAvailableAtLibrary || noLocalizations) {
     return BackgroundColorEnum.RED;
   }
   if (
