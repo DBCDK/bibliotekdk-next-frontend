@@ -1574,6 +1574,10 @@
         "da": "Se om den er hjemme på dit bibliotek",
         "en": "Check your library"
       },
+      "button-order-no-localizations-disabled" : {
+        "da": "Kan ikke bestilles",
+        "en": "No holdings - disabled"
+      },
       "label_library_no_holdings": {
         "da": "Ingen biblioteker har pt. materialet.",
         "en": "No localizations in libraries."
@@ -3738,6 +3742,10 @@
       }
     },
     "order": {
+      "no-locations-disable": {
+        "da": "Kan ikke bestilles - ingen biblioteker har materialet",
+        "en": "Order not possible - no library holdings"
+      },
       "owned_by_agency": {
         "da": "Biblioteket har indkøbt %s eksemplarer",
         "en": "Library bought %s copies"

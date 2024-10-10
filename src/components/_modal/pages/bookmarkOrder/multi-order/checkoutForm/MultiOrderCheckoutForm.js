@@ -34,6 +34,7 @@ const CheckoutForm = () => {
     missingMobileLibrary,
     missingMail,
     alreadyOrdered,
+    noLocation,
   } = useMultiOrderValidation({ orders });
 
   const { hasCulrUniqueId } = useAuthentication();
@@ -94,6 +95,12 @@ const CheckoutForm = () => {
               }
               vars={[materialsMissingActionCount]}
             />
+          </Text>
+        )}
+
+        {!isLoadingValidation && noLocation && (
+          <Text type="text3" className={styles.errorLabel}>
+            <Translate context="order" label="no-locations-disable" />
           </Text>
         )}
 
