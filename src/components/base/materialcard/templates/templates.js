@@ -100,7 +100,8 @@ function propFunc(textType, lines) {
 
 /**Used in Slider */
 export function templateForVerticalWorkCard({ material }) {
-  const fullTitle = material?.titles?.full?.join(": ");
+  const fullTitle =
+    material?.titles?.tvSeries?.title || material?.titles?.full?.join(": ");
   const creators = material?.creators;
   const firstCreator =
     extractCreatorsPrioritiseCorporation(creators)?.[0]?.display;
@@ -273,7 +274,10 @@ export function templateForUniversePageSeries({ material }) {
 
 /**Used in Universe Page for Series */
 export function templateForUniverseSeriesBase({ material, classNameAddition }) {
-  const title = material?.title;
+  const firstWork = material?.members?.[0]?.work;
+  const { titles } = getTitlesAndType({ work: firstWork });
+
+  const title = titles[0] || material?.title;
   const identifyingAddition = material?.identifyingAddition;
   const fullTitle = [
     title,
@@ -281,7 +285,7 @@ export function templateForUniverseSeriesBase({ material, classNameAddition }) {
   ].join(", ");
 
   // const fullTitle = material?.title;
-  const firstWork = material?.members?.[0]?.work;
+
   const creators = firstWork?.creators;
   const firstCreator =
     extractCreatorsPrioritiseCorporation(creators)?.[0]?.display;

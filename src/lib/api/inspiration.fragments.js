@@ -49,6 +49,10 @@ export function inspiration({ filters = [], limit = 10 } = {}) {
                   titles {
                     main
                     full
+                    tvSeries {
+                      title
+                      danishLaunchTitle
+                    }
                   }
                   creators {
                     ...creatorsFragment
