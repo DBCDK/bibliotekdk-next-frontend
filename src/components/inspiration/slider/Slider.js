@@ -31,6 +31,8 @@ export function Slider({ data, isLoading, lazyLoad = true, ...props }) {
         <Col>
           <WorkSlider
             propsAndChildrenInputList={data?.map((work) => {
+              console.log("Slider.work", work);
+
               return {
                 material: work,
               };
