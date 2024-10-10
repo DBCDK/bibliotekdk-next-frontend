@@ -79,7 +79,7 @@ describe("Server Side Rendering", () => {
   describe(`material`, () => {
     it(`has correct metadata`, () => {
       const descriptionExpectation =
-        "Lån Hest, hest, tiger, tiger af Mette E. Neerlin som bog, e-bog, lydbog (online) eller lydbog (cd-mp3). Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online.";
+        "Lån Hest, hest, tiger, tiger af Mette E. Neerlin som bog, e-bog, lydbog (online) eller lydbog (cd-mp3). Lån fra alle Danmarks biblioteker. Afhent på dit lokale bibliotek eller find online.";
       getPageHead(
         "/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763?type=bog"
       ).then((res) => {
