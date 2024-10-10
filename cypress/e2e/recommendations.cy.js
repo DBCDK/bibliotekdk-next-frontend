@@ -29,7 +29,7 @@ describe("Series", () => {
 
   it(`Should collect data for recommender`, () => {
     // Click first element
-    cy.contains("recommend.result[0].work.titles.tvSeries.title").click();
+    cy.contains("recommend.result[19].work.titles.tvSeries.title").click();
 
     cy.getConsoleEntry("data_collect").then((entry) => {
       const actual = entry[1]?.recommender_click;
@@ -57,7 +57,7 @@ describe("Series", () => {
   it(`Should collect all shown recommendations, when slider is scrolled`, () => {
     // Wait for recommendations to be loaded
     // We test the scrolling functionaility in scrollsnapslider.cy.js, så here we emulate it
-    const title = 'recommend.result[0].work.titles.tvSeries.title';
+    const title = 'recommend.result[19].work.titles.tvSeries.title';
     cy.contains(title)
 
     // Emulate the scroll using cy.scrollTo
@@ -79,9 +79,9 @@ describe("Series", () => {
       const expected = {
         recommender_click: {
           recommender_based_on: "work-of:870970-basis:07276346",
-          recommender_click_hit: 1,
-          recommender_click_work: "recommend.result[0].work.workId",
-          recommender_click_reader: "recommend.result[0].reader[0]",
+          recommender_click_hit: 20,
+          recommender_click_work: "recommend.result[19].work.workId",
+          recommender_click_reader: "recommend.result[19].reader[0]",
           recommender_shown_recommendations: [
             "recommend.result[0].work.workId",
             "recommend.result[1].work.workId",
@@ -102,6 +102,7 @@ describe("Series", () => {
             "recommend.result[16].work.workId",
             "recommend.result[17].work.workId",
             "recommend.result[18].work.workId",
+            "recommend.result[19].work.workId",
           ],
         },
       };
