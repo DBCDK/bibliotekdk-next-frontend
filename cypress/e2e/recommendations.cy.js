@@ -10,10 +10,14 @@ describe("Series", () => {
     cy.contains("Minder om");
     cy.get("a").should("have.length", 20, { timeout: 10000 });
 
-   cy.get("a").eq(0).contains("recommend.result[0].work.titles.tvSeries.title");
+    cy.get("a")
+      .eq(0)
+      .contains("recommend.result[0].work.titles.tvSeries.title");
     cy.get("a").eq(0).contains("recommend.result[0].work.creators[");
 
-    cy.get("a").eq(1).contains("recommend.result[1].work.titles.tvSeries.title");
+    cy.get("a")
+      .eq(1)
+      .contains("recommend.result[1].work.titles.tvSeries.title");
     cy.get("a").eq(1).contains("recommend.result[1].work.creators[");
 
     cy.get("a")
@@ -24,19 +28,18 @@ describe("Series", () => {
         "contain",
         "/materiale/recommend-result-0-work-titles-tvseries-title_recommend-result-0-work-creators-1-display/recommend.result[0].work.workId"
       )
-       .and("contain", "-display/recommend.result[0].work.workId");
+      .and("contain", "-display/recommend.result[0].work.workId");
   });
 
   it(`Should collect data for recommender`, () => {
     // Click first element
-    cy.contains("recommend.result[19].work.titles.tvSeries.title").click();
+    cy.contains("recommend.result[0].work.titles.tvSeries.title").click();
 
     cy.getConsoleEntry("data_collect").then((entry) => {
       const actual = entry[1]?.recommender_click;
       expect(actual.session_id).to.exist;
 
       delete actual.session_id;
-
       expect(entry[1]).to.deep.equal({
         recommender_click: {
           recommender_based_on: "work-of:870970-basis:07276346",
@@ -57,8 +60,8 @@ describe("Series", () => {
   it(`Should collect all shown recommendations, when slider is scrolled`, () => {
     // Wait for recommendations to be loaded
     // We test the scrolling functionaility in scrollsnapslider.cy.js, så here we emulate it
-    const title = 'recommend.result[19].work.titles.tvSeries.title';
-    cy.contains(title)
+    const title = "recommend.result[19].work.titles.tvSeries.title";
+    cy.contains(title);
 
     // Emulate the scroll using cy.scrollTo
     // The id :r0: is deterministic as we are using reacts useId
