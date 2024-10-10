@@ -632,7 +632,7 @@ function getSeriesAndUniverseTitles(work) {
     }
 
     return {
-      title: formattedTitle, //`${singleSeries.title} (serie)`,
+      title: formattedTitle,
       url: getSeriesUrl(singleSeries.seriesId),
       skeleton: work?.seriesIsLoading,
     };
