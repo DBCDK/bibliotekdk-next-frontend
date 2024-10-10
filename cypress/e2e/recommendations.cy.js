@@ -10,10 +10,10 @@ describe("Series", () => {
     cy.contains("Minder om");
     cy.get("a").should("have.length", 20, { timeout: 10000 });
 
-    cy.get("a").eq(0).contains("recommend.result[0].work.titles.full[0]");
+   cy.get("a").eq(0).contains("recommend.result[0].work.titles.tvSeries.title");
     cy.get("a").eq(0).contains("recommend.result[0].work.creators[");
 
-    cy.get("a").eq(1).contains("recommend.result[1].work.titles.full[0]");
+    cy.get("a").eq(1).contains("recommend.result[1].work.titles.tvSeries.title");
     cy.get("a").eq(1).contains("recommend.result[1].work.creators[");
 
     cy.get("a")
@@ -22,14 +22,14 @@ describe("Series", () => {
       // We are unaware of which creator this will use, so we just check that the rest of the href is correct
       .and(
         "contain",
-        "/materiale/recommend-result-0-work-titles-full-0-recommend-result-0-work-titles-full-1-_recommend-result-0-work-creators"
+        "/materiale/recommend-result-0-work-titles-tvseries-title_recommend-result-0-work-creators-1-display/recommend.result[0].work.workId"
       )
-      .and("contain", "-display/recommend.result[0].work.workId");
+       .and("contain", "-display/recommend.result[0].work.workId");
   });
 
   it(`Should collect data for recommender`, () => {
     // Click first element
-    cy.contains("recommend.result[0].work.titles.full[0]").click();
+    cy.contains("recommend.result[0].work.titles.tvSeries.title").click();
 
     cy.getConsoleEntry("data_collect").then((entry) => {
       const actual = entry[1]?.recommender_click;
@@ -57,13 +57,14 @@ describe("Series", () => {
   it(`Should collect all shown recommendations, when slider is scrolled`, () => {
     // Wait for recommendations to be loaded
     // We test the scrolling functionaility in scrollsnapslider.cy.js, så here we emulate it
-    cy.contains("recommend.result[0].work.titles.full[0]");
+    const title = 'recommend.result[0].work.titles.tvSeries.title';
+    cy.contains(title)
 
     // Emulate the scroll using cy.scrollTo
     // The id :r0: is deterministic as we are using reacts useId
     cy.get(`#${CSS.escape(":r0:")}`).scrollTo("right", { duration: 200 });
 
-    cy.contains("recommend.result[19].work.titles.full[0]", { timeout: 10000 })
+    cy.contains(title, { timeout: 10000 })
       .focus()
       .should("be.visible", { timeout: 10000 })
       .click();
@@ -78,9 +79,9 @@ describe("Series", () => {
       const expected = {
         recommender_click: {
           recommender_based_on: "work-of:870970-basis:07276346",
-          recommender_click_hit: 20,
-          recommender_click_work: "recommend.result[19].work.workId",
-          recommender_click_reader: "recommend.result[19].reader[0]",
+          recommender_click_hit: 1,
+          recommender_click_work: "recommend.result[0].work.workId",
+          recommender_click_reader: "recommend.result[0].reader[0]",
           recommender_shown_recommendations: [
             "recommend.result[0].work.workId",
             "recommend.result[1].work.workId",
@@ -101,7 +102,6 @@ describe("Series", () => {
             "recommend.result[16].work.workId",
             "recommend.result[17].work.workId",
             "recommend.result[18].work.workId",
-            "recommend.result[19].work.workId",
           ],
         },
       };
