@@ -17,7 +17,7 @@
 
 .closedreason {
   padding: var(--pt3);
-  margin: 0 -48px 0 -48px;
+  margin: var(--pt2) -48px 0 -48px;
   background-color: var(--warning);
 }
 
