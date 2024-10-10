@@ -15,7 +15,6 @@ import { useManifestationAccess } from "@/components/hooks/useManifestationAcces
 import { useData } from "@/lib/api/api";
 import { overviewWork } from "@/lib/api/work.fragments";
 import { useManifestationData, useOrderFlow } from "@/components/hooks/order";
-import * as localizationsFragments from "@/lib/api/localizations.fragments";
 
 function TextAboveButton({ access, isAuthenticated }) {
   return (

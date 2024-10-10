@@ -17,8 +17,6 @@ import {
 } from "@/components/hooks/order";
 import { useBranchInfo } from "@/components/hooks/useBranchInfo";
 import { useModal } from "@/components/_modal/Modal";
-import { useData } from "@/lib/api/api";
-import * as localizationsFragments from "@/lib/api/localizations.fragments";
 
 const CheckoutForm = () => {
   const { orders } = useOrderFlow();
