@@ -98,8 +98,7 @@ function ReservationButtonWrapper({
     isLoadingAuthentication ||
     isLoadingWorkData ||
     isLoadingAccess ||
-    (requireLocalizations &&
-      (isLoadingLocalizations || isLoadingManifestationData))
+    (requireLocalizations && isLoadingManifestationData)
   ) {
     return (
       <div className={styles.wrapper}>
