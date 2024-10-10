@@ -22,6 +22,7 @@ import {
 } from "@/components/hooks/order";
 import { useData } from "@/lib/api/api";
 import { editionManifestations } from "@/lib/api/manifestation.fragments";
+import * as localizationsFragments from "@/lib/api/localizations.fragments";
 
 /**
  * Is missing article implementation
@@ -71,7 +72,16 @@ const Material = ({
     textType: "text4",
   });
 
-  const isLoading = isLoadingManifestations || isLoadingAlreadyOrdered;
+  // pjo 08/10/24 bug BIBDK2021-2781
+  // we need localizations since we do NOT allow order of materials with no localizations
+  const { data: localizationsData, isLoading: isLoadingLocalizations } =
+    useData(localizationsFragments.localizationsQuery({ pids: pids }));
+  const localizationsCount = localizationsData?.localizations?.count;
+
+  const isLoading =
+    isLoadingManifestations ||
+    isLoadingAlreadyOrdered ||
+    isLoadingLocalizations;
 
   const material = manifestationsData?.manifestations?.[0];
 
@@ -84,6 +94,7 @@ const Material = ({
     notAvailableAtLibrary: isLoadingOrderService
       ? false //if we dont have data yet, we dont want red background
       : !orderPossible,
+    noLocalizations: isLoadingLocalizations ? true : localizationsCount < 1,
   });
 
   const showOrderedWarning =
@@ -145,7 +156,11 @@ const Material = ({
     );
   }
 
-  if (!isLoadingOrderService && !orderPossible) {
+  if (
+    !isLoadingOrderService &&
+    !isLoadingLocalizations &&
+    (!orderPossible || localizationsCount < 1)
+  ) {
     children.push(
       <>
         <Text className={styles.orderNotPossible} type="text4">
