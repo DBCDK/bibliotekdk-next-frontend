@@ -10,7 +10,7 @@ pipeline {
         githubPush()
     }
     environment {
-        IMAGE_NAME = "bibliotekdk-next-frontend-${env.BRANCH_NAME.toLowerCase()}:${BUILD_NUMBER}"
+        IMAGE_NAME = "bibliotekdk-next-frontend-studiesog-${env.BRANCH_NAME.toLowerCase()}:${BUILD_NUMBER}"
         DOCKER_COMPOSE_NAME = "compose-${IMAGE_NAME}-${BRANCH_NAME.toLowerCase()}"
         GITLAB_PRIVATE_TOKEN = credentials("metascrum-gitlab-api-token")
         GITLAB_ID = "704"
@@ -52,9 +52,6 @@ pipeline {
             when {
                 anyOf {
                     branch 'main';
-                    branch 'alfa-0'
-                    branch 'prod'
-                    expression{env.BRANCH_NAME.startsWith('feature')}
                 }
             }
             steps {
@@ -80,31 +77,19 @@ pipeline {
             when {
                 anyOf {
                     branch 'main';
-                    branch 'alfa-0'
-                    branch 'prod'
                 }
             }
             steps {
                 dir("deploy") {
-                    script {
-                        if (env.BRANCH_NAME == 'main') {
-                            sh '''
-                                #!/usr/bin/env bash                        
-                                set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b staging
-                            '''
-                        } else if (env.BRANCH_NAME == 'alfa-0') {
-                            sh '''
-                                #!/usr/bin/env bash                        
-                                set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b alfa-0
-                            '''
-                        }
-                        else if (env.BRANCH_NAME == 'prod') {
-                            sh '''
-                                #!/usr/bin/env bash
-                                set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b prod
-                            '''
-                        }
-                    }
+                    // script {
+                    //     if (env.BRANCH_NAME == 'main') {
+                    //         sh '''
+                    //             #!/usr/bin/env bash                        
+                    //             set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b studiesoeg-staging
+                    //         '''
+                    //     } 
+                      
+                    // }
                 }
             }
         }
