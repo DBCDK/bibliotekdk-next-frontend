@@ -81,15 +81,15 @@ pipeline {
             }
             steps {
                 dir("deploy") {
-                    // script {
-                    //     if (env.BRANCH_NAME == 'main') {
-                    //         sh '''
-                    //             #!/usr/bin/env bash                        
-                    //             set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b studiesoeg-staging
-                    //         '''
-                    //     } 
+                    script {
+                        if (env.BRANCH_NAME == 'main') {
+                            sh '''
+                                #!/usr/bin/env bash                        
+                                set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b studiesoeg-staging
+                            '''
+                        } 
                       
-                    // }
+                    }
                 }
             }
         }
