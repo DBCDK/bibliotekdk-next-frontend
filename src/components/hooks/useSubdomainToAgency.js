@@ -5,8 +5,8 @@ import gymAgencies from "@/components/utils/gymAgencies.json";
 //TODO: get exact subdomain names from current urls https://odense.gym.bib.dk/
 const agencyNames = [
   "roskilde",
-  "soro", //missing in json file
-  "odense", //missing in json file
+  "soro",
+  "odense",
   "greve",
   "slagelse",
   "stenhus",

@@ -74,5 +74,33 @@
     "lookupUrl": "https://surf.cicero-suite.com/institution/DK-8751400/record/_IDNR_/875140-katalog:_IDNR_",
     "temporarilyClosed": false
   },
-  "localhost": {}
+  "odense": {
+    "branchId": "872960",
+    "agencyNames": ["OKS", "Odense Katedralskole, Biblioteket"],
+    "agencyId": "872960",
+    "agencyType": "Forskningsbibliotek",
+    "name": "Odense Katedralskole, Biblioteket",
+    "openingHours": "Mandag - fredag 08:30-14:30",
+    "status": "active",
+    "agencyName": "Odense Katedralskole, Biblioteket",
+    "city": "Odense C",
+    "postalCode": "5000",
+    "postalAddress": "Jernbanegade 34",
+    "pickupAllowed": false,
+    "temporarilyClosed": true
+  },
+  "soro": {
+    "branchId": "861640",
+    "agencyNames": ["SAkS", "Sorø Akademis Skole, Biblioteket"],
+    "agencyId": "861640",
+    "agencyType": "Forskningsbibliotek",
+    "name": "Sorø Akademis Skole, Biblioteket",
+    "status": "active",
+    "agencyName": "Sorø Akademis Skole, Biblioteket",
+    "city": "Sorø",
+    "postalCode": "4180",
+    "postalAddress": "Akademigrunden 8",
+    "pickupAllowed": false,
+    "temporarilyClosed": true
+  }
 }
