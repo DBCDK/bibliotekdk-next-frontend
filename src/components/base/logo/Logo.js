@@ -1,4 +1,4 @@
-import PropTypes, { func } from "prop-types";
+import PropTypes from "prop-types";
 import styles from "./Logo.module.css";
 import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
@@ -35,7 +35,7 @@ function TestUserActive() {
  *  Color of text and svg logo
  * @returns {React.JSX.Element}
  */
-export default function Logo({ href = "/", type = "BLUE", ...props }) {
+export default function Logo({ href = "/", ...props }) {
   const { logoPath } = useAgencyFromSubdomain();
 
   if (props.skeleton) {
@@ -60,6 +60,5 @@ export default function Logo({ href = "/", type = "BLUE", ...props }) {
 
 // PropTypes for Button component
 Logo.propTypes = {
-  type: PropTypes.oneOf(["BLUE", "WHITE"]),
   href: PropTypes.string,
 };

@@ -9,14 +9,13 @@ import Icon from "@/components/base/icon";
 import FakeSearchInput from "@/components/header/suggester/FakeSearchInput";
 import Translate from "@/components/base/translate";
 import Image from "@/components/base/image";
-import { useData } from "@/lib/api/api";
-import { frontpageHero } from "@/lib/api/hero.fragments";
+
 import Text from "@/components/base/text/Text";
 import useAgencyFromSubdomain from "@/components/hooks/useSubdomainToAgency";
 
 //@TODO switch backclass for mobile
 // @TODO image scale on resize
-export function Hero({ image }) {
+export function Hero() {
   const { agency, heroPath } = useAgencyFromSubdomain();
   console.log("heroPath", heroPath);
 
@@ -106,7 +105,5 @@ export function parseHero(data) {
 }
 
 export default function Wrap() {
-  const { data } = useData(frontpageHero());
-  const heroImage = parseHero(data);
-  return <Hero image={heroImage} />;
+  return <Hero />;
 }

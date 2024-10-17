@@ -5,14 +5,11 @@ import Row from "react-bootstrap/Row";
 import React, { useRef } from "react";
 import cx from "classnames";
 
-import useHistory from "@/components/hooks/useHistory";
 import useFilters from "@/components/hooks/useFilters";
-import useQ from "@/components/hooks/useQ";
-import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
 import { cyKey } from "@/utils/trim";
 
-import Suggester, { focusInput, blurInput } from "./suggester/";
+import { focusInput } from "./suggester/";
 
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
@@ -27,16 +24,11 @@ import BookmarkIcon from "./icons/bookmark";
 
 import Logo from "@/components/base/logo/Logo";
 
-import { SkipToMainAnchor } from "@/components/base/skiptomain/SkipToMain";
-
-import { DesktopMaterialSelect } from "@/components/search/select";
 import { openMobileSuggester } from "@/components/header/suggester/Suggester";
 
 import styles from "./Header.module.css";
 import Router, { useRouter } from "next/router";
-import { SuggestTypeEnum } from "@/lib/enums";
-import isEmpty from "lodash/isEmpty";
-import useBreakpoint from "@/components/hooks/useBreakpoint";
+
 import { openLoginModal } from "../_modal/pages/login/utils";
 import { signOut } from "@dbcdk/login-nextjs/client";
 import useAuthentication from "../hooks/user/useAuthentication";
@@ -79,30 +71,12 @@ export function Header({
   story = null,
   user,
   modal,
-  filters,
   hideShadow,
 }) {
   const context = { context: "header" };
-  const breakpoint = useBreakpoint();
-  const isMobileSize =
-    breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
-
-  const { q, setQ, setQuery } = useQ();
-
-  const query = q[SuggestTypeEnum.ALL];
-
-  // Search history in suggester
-  const [history, setHistory, clearHistory] = useHistory();
-
-  // workType filter param
-  const { workTypes } = filters.getQuery();
-
-  // specific material workType selected
-  const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
 
   const simpleSearchRef = useRef(null);
-  const { showInfoTooltip, showPopover, setShowInfoTooltip } =
-    useAdvancedSearchContext();
+
   const getLoginLabel = () => {
     if (user.hasCulrUniqueId) {
       return "profile";
@@ -163,53 +137,6 @@ export function Header({
     },
   ];
 
-  // Search modal suggester is visible
-  const suggesterVisibleMobile =
-    (story && story.suggesterVisibleMobile) ||
-    (isMobileSize && router && router.query.suggester);
-
-  // suggester visible class
-  const suggesterVisibleMobileClass = suggesterVisibleMobile
-    ? styles.suggester__visible
-    : "";
-
-  const doSearch = (value) => {
-    // If we are on mobile we replace
-    // since we don't want to suggest modal to open if user goes back
-    const method = suggesterVisibleMobile ? "replace" : "push";
-
-    const type = {
-      workTypes:
-        selectedMaterial !== SuggestTypeEnum.ALL ? selectedMaterial : null,
-    };
-
-    const newQ = isEmpty(value) ? { ...q, all: "" } : { ...q, all: value };
-
-    setQuery({
-      include: newQ,
-      exclude: ["page"],
-      pathname: "/find",
-      query: type,
-      method,
-    });
-
-    document.activeElement.blur();
-
-    // Delay history update in list
-    setTimeout(() => {
-      setHistory(value);
-    }, 300);
-  };
-
-  // function to force search onKeyDown
-  const keyPressed = (e) => {
-    if (e.key === "Enter") {
-      doSearch(e.target.value);
-      if (showInfoTooltip) {
-        setShowInfoTooltip(false);
-      }
-    }
-  };
   return (
     <header
       className={cx({
@@ -224,16 +151,7 @@ export function Header({
             <Col xs={3}>
               <Logo />
             </Col>
-            <Col xs={{ span: 7 }} className={styles.mobileHeader}>
-              <div className={styles.bottom}>
-                <div className={styles.popoverTriggerContainer}>
-                  {/* <AdvancedSearchPopover
-                    className={styles.advancedSearchTrigger}
-                    simpleSearchRef={simpleSearchRef}
-                  /> */}
-                </div>
-              </div>
-            </Col>
+            <Col xs={{ span: 7 }} className={styles.mobileHeader}></Col>
             <Col xs={{ span: 2 }} className={styles.iconActionsContainer}>
               <div
                 className={styles.iconActions}

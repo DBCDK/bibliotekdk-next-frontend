@@ -7,8 +7,6 @@ import Translate from "@/components/base/translate";
 import Language from "@/components/base/language";
 import Link from "@/components/base/link";
 import styles from "./Footer.module.css";
-import Logo from "@/components/base/logo/Logo";
-import { MATERIAL_PAGES } from "@/components/header";
 import useAgencyFromSubdomain from "@/components/hooks/useSubdomainToAgency";
 
 /** @file
@@ -16,14 +14,6 @@ import useAgencyFromSubdomain from "@/components/hooks/useSubdomainToAgency";
  * holds a section with logo and three columns with description and links
  * well section .. rather a copy paste from the Section component
  */
-
-/**
- * The logo @see icons/logowhite.svg
- * @returns {React.JSX.Element}
- */
-const FooterLogo = () => {
-  return <Logo type="WHITE" />;
-};
 
 /**
  * First column holds a description of bibliotek.dk and a link to administer
@@ -151,50 +141,6 @@ const ContactLinks = () => {
 };
 
 /**
- * Third column holds links to different material types
- * (don't know why it is called branches - see design)
- * @returns {React.JSX.Element}
- */
-const ThirdColumn = () => {
-  let label = Translate({ context: "footer", label: "branches" });
-  return (
-    <React.Fragment>
-      <Text type="text4" lines={1}>
-        {label}
-      </Text>
-      <div className={styles.spacer}></div>
-      <BranchLinks className={styles.padder} />
-    </React.Fragment>
-  );
-};
-
-/**
- * Generate links for materialtypes
- * Object holding info to generate links to materialtypes
- * NOTICE Keys are translated
- * @returns {React.JSX.Element}
- */
-const BranchLinks = () => {
-  return MATERIAL_PAGES.map(({ path, label }) => (
-    <div key={`link-${path}-${label}`}>
-      <Link
-        href={`/inspiration/${path}?workTypes=${label}`}
-        className={styles.footerlink}
-        border={{ bottom: { keepVisible: true } }}
-        dataCy="branchlink"
-      >
-        <Text type="text3" tag="span">
-          {Translate({
-            context: "facets",
-            label: `label-${label}`,
-          })}
-        </Text>
-      </Link>
-    </div>
-  ));
-};
-
-/**
  * Defines the footer section - one row with four columns
  * @returns {React.JSX.Element}
  */
@@ -227,9 +173,7 @@ const FooterSection = () => {
             md={{ span: 3, order: 2 }}
             xs={{ span: 6, order: 2 }}
             data-cy="footer-column"
-          >
-            {/* <ThirdColumn /> */}
-          </Col>
+          ></Col>
         </Row>
       </Container>
     </footer>
