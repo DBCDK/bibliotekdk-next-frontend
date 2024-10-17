@@ -48,3 +48,7 @@
     display: none;
   }
 }
+
+.contactContainer {
+  margin-top: var(--pt1);
+}

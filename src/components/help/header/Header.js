@@ -7,8 +7,8 @@ import Translate from "@/components/base/translate";
 import SearchInput from "@/components/help/search/input";
 
 import { useModal } from "@/components/_modal";
-
-import BurgerIcon from "@/components/header/icons/burger";
+//TODO: CHECK WHERE THIS COMPONENT IS USED
+import GlobeIcon from "@/components/header/icons/globe";
 
 import styles from "./Header.module.css";
 import Title from "@/components/base/title";
@@ -61,7 +61,7 @@ export function Header({
         </Col>
         <Col className={styles.right} xs={{ order: 3 }}>
           <span>
-            <BurgerIcon
+            <GlobeIcon
               className={styles.menu}
               title={Translate({ context: "header", label: "menu" })}
               onClick={() => onMenuClick()}

@@ -42,22 +42,19 @@ const useAgencyFromSubdomain = () => {
       } else if (extractedAgencyName === "localhost") {
         //TODO: remove later. For localhost testing
         setAgencyName("soroeakademi");
-   
+
         // "roskilde",
         // "soroeakademi",
         // "odense",
         // "greve",
         // "slagelse",
         // "stenhus",
-    
       }
     }
-
   }, []);
-console.log('agencyName',agencyName)
-console.log('logoPaths["roskilde"]',logoPaths["roskilde"])
-console.log('logoPaths[agencyName]',logoPaths[agencyName])
-
+  console.log("agencyName", agencyName);
+  console.log('logoPaths["roskilde"]', logoPaths["roskilde"]);
+  console.log("logoPaths[agencyName]", logoPaths[agencyName]);
 
   return {
     agency: gymAgencies[agencyName],

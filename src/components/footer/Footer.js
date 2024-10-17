@@ -9,6 +9,7 @@ import Link from "@/components/base/link";
 import styles from "./Footer.module.css";
 import Logo from "@/components/base/logo/Logo";
 import { MATERIAL_PAGES } from "@/components/header";
+import useAgencyFromSubdomain from "@/components/hooks/useSubdomainToAgency";
 
 /** @file
  * Footer
@@ -58,11 +59,19 @@ const FirstColumn = () => {
  * @returns {React.JSX.Element}
  */
 const SecondColumn = () => {
+  const { agency } = useAgencyFromSubdomain();
   let label = Translate({ context: "footer", label: "contact" });
   return (
     <React.Fragment>
       <Text type="text4">{label}</Text>
       <div className={styles.spacer}></div>
+      <div className={styles.contactContainer}>
+        <Text type="text3">{agency?.agencyName}</Text>
+        <Text type="text3">{agency?.postalAddress}</Text>
+        <Text type="text3">
+          {agency?.city} {agency?.postalCode}
+        </Text>
+      </div>
       <ContactLinks />
     </React.Fragment>
   );
@@ -76,19 +85,19 @@ const ContactLinks = () => {
   // Object holding info to generate contact links * NOTICE Keys of objects are translated.
   const contact_links = {
     // find_library: { pathname: "/", query: {} },
-    about: { pathname: "/hjaelp/om-bibliotek-dk/24", query: {} },
-    help: { pathname: "/hjaelp", query: {} },
+    // about: { pathname: "/hjaelp/om-bibliotek-dk/24", query: {} },
+    // help: { pathname: "/hjaelp", query: {} },
     // press: { pathname: "/", query: {} },
-    contact: { pathname: "/hjaelp/kontakt-os/25", query: {} },
+    //  contact: { pathname: "/hjaelp/kontakt-os/25", query: {} },
     privacy: {
       pathname: "/hjaelp/privatlivspolitik-saadan-haandterer-vi-dine-data-/26",
       query: {},
     },
-    suppliers: {
-      pathname: "/artikel/leverandører/59",
-      query: {},
-    },
-    English: { pathname: "/", query: {} },
+    // suppliers: {
+    //   pathname: "/artikel/leverandører/59",
+    //   query: {},
+    // },
+    // English: { pathname: "/", query: {} },
     accessibility: {
       pathname: "https://www.was.digst.dk/bibliotek-dk",
       query: {},
@@ -199,14 +208,6 @@ const FooterSection = () => {
           data-cy="footer-section"
         >
           <Col
-            md={{ span: 2 }}
-            xs="12"
-            className={styles.padder}
-            data-cy="footer-column"
-          >
-            <FooterLogo />
-          </Col>
-          <Col
             md={{ span: 3, order: 1, offset: 1 }}
             xs={{ span: 12, order: 3 }}
             className={styles.padder}
@@ -215,7 +216,7 @@ const FooterSection = () => {
             <FirstColumn />
           </Col>
           <Col
-            md={{ span: 2, order: 2, offset: 1 }}
+            md={{ span: 3, order: 3, offset: 1 }}
             xs={{ span: 6, order: 1 }}
             className={styles.padder}
             data-cy="footer-column"
@@ -223,11 +224,11 @@ const FooterSection = () => {
             <SecondColumn />
           </Col>
           <Col
-            md={{ span: 3, order: 3 }}
+            md={{ span: 3, order: 2 }}
             xs={{ span: 6, order: 2 }}
             data-cy="footer-column"
           >
-            <ThirdColumn />
+            {/* <ThirdColumn /> */}
           </Col>
         </Row>
       </Container>

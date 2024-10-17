@@ -17,7 +17,7 @@ import useAgencyFromSubdomain from "@/components/hooks/useSubdomainToAgency";
 //@TODO switch backclass for mobile
 // @TODO image scale on resize
 export function Hero({ image }) {
-  const { agency,heroPath } = useAgencyFromSubdomain();
+  const { agency, heroPath } = useAgencyFromSubdomain();
   console.log("heroPath", heroPath);
 
   return (

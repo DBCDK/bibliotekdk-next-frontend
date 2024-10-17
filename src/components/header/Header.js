@@ -21,7 +21,7 @@ import Link from "@/components/base/link";
 import { useModal } from "@/components/_modal";
 
 import LoginIcon from "./icons/login";
-import BurgerIcon from "./icons/burger";
+import GlobeIcon from "./icons/globe";
 import SearchIcon from "./icons/search";
 import BookmarkIcon from "./icons/bookmark";
 
@@ -33,7 +33,7 @@ import { DesktopMaterialSelect } from "@/components/search/select";
 import { openMobileSuggester } from "@/components/header/suggester/Suggester";
 
 import styles from "./Header.module.css";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import { SuggestTypeEnum } from "@/lib/enums";
 import isEmpty from "lodash/isEmpty";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
@@ -145,9 +145,21 @@ export function Header({
       onClick: () => router.push("/profil/huskeliste"),
     },
     {
-      label: "menu",
-      icon: BurgerIcon,
-      onClick: () => modal.push("menu"),
+      label: "english-danish",
+      icon: GlobeIcon,
+      onClick: () => {
+        const locale = Router.locale === "da" ? "en" : "da";
+        const pathname = Router.pathname;
+        const query = { ...Router.query };
+
+        // remove modal key from query
+        // this will close the modal after language change
+        delete query.modal;
+
+        Router.push({ pathname, query }, null, { locale });
+
+        //   modal.push("menu");
+      },
     },
   ];
 
@@ -215,10 +227,10 @@ export function Header({
             <Col xs={{ span: 7 }} className={styles.mobileHeader}>
               <div className={styles.bottom}>
                 <div className={styles.popoverTriggerContainer}>
-                  <AdvancedSearchPopover
+                  {/* <AdvancedSearchPopover
                     className={styles.advancedSearchTrigger}
                     simpleSearchRef={simpleSearchRef}
-                  />
+                  /> */}
                 </div>
               </div>
             </Col>
@@ -230,6 +242,12 @@ export function Header({
                   prefix: "header-bottom",
                 })}
               >
+                <div className={styles.popoverTriggerContainer}>
+                  <AdvancedSearchPopover
+                    className={styles.advancedSearchTrigger}
+                    simpleSearchRef={simpleSearchRef}
+                  />
+                </div>
                 {menu.map((m) => {
                   const ActionIcon = m.icon;
 
