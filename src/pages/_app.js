@@ -242,7 +242,6 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
               <BodyScrollLock router={router} />
               <div id="layout">
                 <SkipToMainLink />
-                <Banner />
                 <Notifications />
                 <HelpHeader />
 

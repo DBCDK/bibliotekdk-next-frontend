@@ -1,11 +1,10 @@
-import LogoWithText from "./logo_text.svg";
-import PropTypes from "prop-types";
+import PropTypes, { func } from "prop-types";
 import styles from "./Logo.module.css";
 import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
-import Translate from "@/components/base/translate";
-import cx from "classnames";
 import useTestUser from "@/components/hooks/useTestUser";
+import Image from "next/image";
+import useAgencyFromSubdomain from "@/components/hooks/useSubdomainToAgency";
 
 /**
  * Mark when test user mode is active
@@ -37,6 +36,8 @@ function TestUserActive() {
  * @returns {React.JSX.Element}
  */
 export default function Logo({ href = "/", type = "BLUE", ...props }) {
+  const { logoPath } = useAgencyFromSubdomain();
+
   if (props.skeleton) {
     return <Logo {...props} />;
   }
@@ -50,14 +51,7 @@ export default function Logo({ href = "/", type = "BLUE", ...props }) {
       })}
     >
       <div className={styles.display_flex}>
-        <LogoWithText
-          style={{ color: type === "BLUE" ? "var(--blue)" : "var(--white)" }}
-          className={cx({
-            [styles.defaultLogo_Blue]: type === "BLUE",
-            [styles.defaultLogo_White]: type === "WHITE",
-          })}
-          alt={Translate({ context: "logo", label: "default_logo_text" })}
-        />
+        <Image src={logoPath} alt="logo" width={200} height={50} />
       </div>
       <TestUserActive />
     </Link>

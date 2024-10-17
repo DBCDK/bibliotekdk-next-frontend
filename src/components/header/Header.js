@@ -209,67 +209,11 @@ export function Header({
       <div className={styles.headerWrap}>
         <Container className={styles.header} fluid>
           <Row>
-            <StaticHeader router={router} context={context} />
-            <Col xs={{ span: 7, offset: 3 }} className={styles.mobileHeader}>
-              <SkipToMainAnchor />
+            <Col xs={3}>
+              <Logo />
+            </Col>
+            <Col xs={{ span: 7 }} className={styles.mobileHeader}>
               <div className={styles.bottom}>
-                <div
-                  ref={simpleSearchRef}
-                  className={`${styles.search}`}
-                  data-cy={cyKey({ name: "search", prefix: "header" })}
-                >
-                  <DesktopMaterialSelect className={styles.select} />
-
-                  <div
-                    className={`${styles.suggester__wrap} ${suggesterVisibleMobileClass}`}
-                  >
-                    <Suggester
-                      className={`${styles.suggester}`}
-                      history={history}
-                      clearHistory={clearHistory}
-                      isMobile={suggesterVisibleMobile}
-                      onSelect={(val) => doSearch(val)}
-                      onChange={(val) => setQ({ ...q, all: val })}
-                      dataCy={`simple-search-input`}
-                      onClose={() => {
-                        if (router) {
-                          // remove suggester prop from query obj
-                          router.back();
-                        }
-                        // Remove suggester in storybook
-                        story && story.setSuggesterVisibleMobile(false);
-                      }}
-                      onKeyDown={keyPressed}
-                    />
-                  </div>
-
-                  <button
-                    className={`${styles.button}`}
-                    onClick={(e) => {
-                      if (showInfoTooltip || showPopover) {
-                        return;
-                      }
-                      e?.preventDefault();
-                      doSearch(query);
-
-                      // view query in storybook
-                      story && alert(`/find?q.all=${query}`);
-
-                      // Remove suggester in storybook
-                      story && story.setSuggesterVisibleMobile(false);
-
-                      // remove keyboard/unfocus
-                      blurInput();
-                    }}
-                    data-cy={cyKey({
-                      name: "searchbutton",
-                      prefix: "header",
-                    })}
-                  >
-                    <span>{Translate({ ...context, label: "search" })}</span>
-                    <div className={styles.fill} />
-                  </button>
-                </div>
                 <div className={styles.popoverTriggerContainer}>
                   <AdvancedSearchPopover
                     className={styles.advancedSearchTrigger}

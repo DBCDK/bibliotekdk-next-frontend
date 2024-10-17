@@ -12,19 +12,23 @@ import Image from "@/components/base/image";
 import { useData } from "@/lib/api/api";
 import { frontpageHero } from "@/lib/api/hero.fragments";
 import Text from "@/components/base/text/Text";
+import useAgencyFromSubdomain from "@/components/hooks/useSubdomainToAgency";
 
 //@TODO switch backclass for mobile
 // @TODO image scale on resize
 export function Hero({ image }) {
+  const { agency,heroPath } = useAgencyFromSubdomain();
+  console.log("heroPath", heroPath);
+
   return (
     <Container className={styles.containerback} fluid>
-      {image?.image?.url && (
+      {heroPath && (
         <Image
-          src={`${image?.image?.url}`}
+          src={`${heroPath}`}
           layout="fill"
           priority={true}
           objectFit="cover"
-          alt=""
+          alt={agency?.name}
         />
       )}
       <div className={styles.gradient} />
@@ -69,9 +73,9 @@ export function Hero({ image }) {
             })}
           </Text>
         </div>
-        {image?.description && (
+        {agency?.name && (
           <Text type="text2" className={styles.herodescription}>
-            {`${image?.description}`}
+            {`${agency.name}`}
           </Text>
         )}
       </Row>
