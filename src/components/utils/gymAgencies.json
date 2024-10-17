@@ -1,0 +1,78 @@
+{
+  "roskilde": {
+    "branchId": "872600",
+    "agencyNames": [
+      "Roskilde Gymnasium, Biblioteket",
+      "Amtet",
+      "RG",
+      "Roskilde gym"
+    ],
+    "agencyId": "872600",
+    "agencyType": "Forskningsbibliotek",
+    "name": "Roskilde Gymnasium, Biblioteket",
+    "openingHours": "Biblioteket er åbent i skolens åbningstider. Der er betjening mandag til torsdag mellem 8 og 13.",
+    "status": "active",
+    "agencyName": "Roskilde Gymnasium, Biblioteket",
+    "city": "Roskilde",
+    "postalCode": "4000",
+    "postalAddress": "Domkirkepladsen 1",
+    "pickupAllowed": true,
+    "branchCatalogueUrl": "https://surf.cicero-suite.com/institution/DK-872600",
+    "lookupUrl": "https://surf.cicero-suite.com/institution/DK-872600/record/_IDNR_/872600-katalog:_IDNR_",
+    "temporarilyClosed": false
+  },
+  "greve": {
+    "branchId": "874260",
+    "agencyNames": ["GG", "Greve gym bib", "Greve Gymnasium, Biblioteket"],
+    "agencyId": "874260",
+    "agencyType": "Forskningsbibliotek",
+    "name": "Greve Gymnasium, Biblioteket",
+    "openingHours": "Hver dag kl. 9-15",
+    "status": "active",
+    "agencyName": "Greve Gymnasium, Biblioteket",
+    "city": "Greve Strand",
+    "postalCode": "2670",
+    "postalAddress": "Rådhusholmen 12",
+    "pickupAllowed": true,
+    "branchWebsiteUrl": "http://www.greve-gym.dk/Undervisning/Biblioteket",
+    "branchCatalogueUrl": "https://greve.gym.bib.dk/",
+    "lookupUrl": "https://greve.gym.bib.dk/",
+    "temporarilyClosed": false
+  },
+  "slagelse": {
+    "branchId": "872320",
+    "agencyNames": ["Slagelse Gymnasium", "Slagelse Gymnasium, biblioteket"],
+    "agencyId": "872320",
+    "agencyType": "Forskningsbibliotek",
+    "name": "Slagelse Gymnasium, biblioteket",
+    "status": "active",
+    "agencyName": "Slagelse Gymnasium, biblioteket",
+    "city": "Slagelse",
+    "postalCode": "4200",
+    "postalAddress": "Willemoesvej 2A",
+    "pickupAllowed": false,
+    "temporarilyClosed": true
+  },
+  "stenhus": {
+    "branchId": "875140",
+    "agencyNames": [
+      "Stenhus Library",
+      "Stenhus",
+      "Stenhus Bibliotek",
+      "Stenhus Gymnasium"
+    ],
+    "agencyId": "875140",
+    "agencyType": "Forskningsbibliotek",
+    "name": "Stenhus Gymnasium",
+    "status": "active",
+    "agencyName": "Stenhus Gymnasium",
+    "city": "Holbæk",
+    "postalCode": "4300",
+    "postalAddress": "Stenhusvej 20",
+    "pickupAllowed": true,
+    "branchCatalogueUrl": "https://surf.cicero-suite.com/institution/DK-8751400/record/_IDNR_/8751400-katalog:_IDNR_",
+    "lookupUrl": "https://surf.cicero-suite.com/institution/DK-8751400/record/_IDNR_/875140-katalog:_IDNR_",
+    "temporarilyClosed": false
+  },
+  "localhost": {}
+}
