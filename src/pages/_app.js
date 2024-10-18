@@ -36,7 +36,6 @@ import Modal from "@/components/_modal";
 import Pages from "@/components/_modal/pages";
 import Notifications from "@/components/base/notifications/Notifications";
 import HelpHeader from "@/components/help/header";
-import FeedBackLink from "@/components/feedbacklink";
 import { SkipToMainLink } from "@/components/base/skiptomain/SkipToMain";
 import Listener from "@/components/ffu";
 
@@ -246,7 +245,6 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
 
                 <Component {...pageProps} />
 
-                <FeedBackLink />
                 <Footer />
               </div>
 

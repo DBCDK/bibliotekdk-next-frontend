@@ -17,7 +17,6 @@ import useAgencyFromSubdomain from "@/components/hooks/useSubdomainToAgency";
 // @TODO image scale on resize
 export function Hero() {
   const { agency, heroPath } = useAgencyFromSubdomain();
-  console.log("heroPath", heroPath);
 
   return (
     <Container className={styles.containerback} fluid>

@@ -52,9 +52,6 @@ const useAgencyFromSubdomain = () => {
       }
     }
   }, []);
-  console.log("agencyName", agencyName);
-  console.log('logoPaths["roskilde"]', logoPaths["roskilde"]);
-  console.log("logoPaths[agencyName]", logoPaths[agencyName]);
 
   return {
     agency: gymAgencies[agencyName],
