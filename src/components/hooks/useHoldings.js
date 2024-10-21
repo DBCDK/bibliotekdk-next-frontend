@@ -16,7 +16,7 @@ export const HoldingStatusEnum = Object.freeze({
 
 const LAMP_SRC = {
   [HoldingStatusEnum.ON_SHELF]: "status__green.svg",
-  [HoldingStatusEnum.ON_SHELF_NOT_FOR_LOAN]: "status__green.svg",
+  [HoldingStatusEnum.ON_SHELF_NOT_FOR_LOAN]: "status__red.svg",
   [HoldingStatusEnum.NOT_ON_SHELF]: "status__yellow.svg",
   [HoldingStatusEnum.NOT_OWNED]: "status__red.svg",
   [HoldingStatusEnum.UNKNOWN_MATERIAL]: "status__grey.svg",
