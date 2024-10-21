@@ -7,22 +7,13 @@ import Translate from "@/components/base/translate";
 import Language from "@/components/base/language";
 import Link from "@/components/base/link";
 import styles from "./Footer.module.css";
-import Logo from "@/components/base/logo/Logo";
-import { MATERIAL_PAGES } from "@/components/header";
+import useAgencyFromSubdomain from "@/components/hooks/useSubdomainToAgency";
 
 /** @file
  * Footer
  * holds a section with logo and three columns with description and links
  * well section .. rather a copy paste from the Section component
  */
-
-/**
- * The logo @see icons/logowhite.svg
- * @returns {React.JSX.Element}
- */
-const FooterLogo = () => {
-  return <Logo type="WHITE" />;
-};
 
 /**
  * First column holds a description of bibliotek.dk and a link to administer
@@ -58,11 +49,19 @@ const FirstColumn = () => {
  * @returns {React.JSX.Element}
  */
 const SecondColumn = () => {
+  const { agency } = useAgencyFromSubdomain();
   let label = Translate({ context: "footer", label: "contact" });
   return (
     <React.Fragment>
       <Text type="text4">{label}</Text>
       <div className={styles.spacer}></div>
+      <div className={styles.contactContainer}>
+        <Text type="text3">{agency?.agencyName}</Text>
+        <Text type="text3">{agency?.postalAddress}</Text>
+        <Text type="text3">
+          {agency?.city} {agency?.postalCode}
+        </Text>
+      </div>
       <ContactLinks />
     </React.Fragment>
   );
@@ -76,19 +75,19 @@ const ContactLinks = () => {
   // Object holding info to generate contact links * NOTICE Keys of objects are translated.
   const contact_links = {
     // find_library: { pathname: "/", query: {} },
-    about: { pathname: "/hjaelp/om-bibliotek-dk/24", query: {} },
-    help: { pathname: "/hjaelp", query: {} },
+    // about: { pathname: "/hjaelp/om-bibliotek-dk/24", query: {} },
+    // help: { pathname: "/hjaelp", query: {} },
     // press: { pathname: "/", query: {} },
-    contact: { pathname: "/hjaelp/kontakt-os/25", query: {} },
+    //  contact: { pathname: "/hjaelp/kontakt-os/25", query: {} },
     privacy: {
       pathname: "/hjaelp/privatlivspolitik-saadan-haandterer-vi-dine-data-/26",
       query: {},
     },
-    suppliers: {
-      pathname: "/artikel/leverandører/59",
-      query: {},
-    },
-    English: { pathname: "/", query: {} },
+    // suppliers: {
+    //   pathname: "/artikel/leverandører/59",
+    //   query: {},
+    // },
+    // English: { pathname: "/", query: {} },
     accessibility: {
       pathname: "https://www.was.digst.dk/bibliotek-dk",
       query: {},
@@ -142,50 +141,6 @@ const ContactLinks = () => {
 };
 
 /**
- * Third column holds links to different material types
- * (don't know why it is called branches - see design)
- * @returns {React.JSX.Element}
- */
-const ThirdColumn = () => {
-  let label = Translate({ context: "footer", label: "branches" });
-  return (
-    <React.Fragment>
-      <Text type="text4" lines={1}>
-        {label}
-      </Text>
-      <div className={styles.spacer}></div>
-      <BranchLinks className={styles.padder} />
-    </React.Fragment>
-  );
-};
-
-/**
- * Generate links for materialtypes
- * Object holding info to generate links to materialtypes
- * NOTICE Keys are translated
- * @returns {React.JSX.Element}
- */
-const BranchLinks = () => {
-  return MATERIAL_PAGES.map(({ path, label }) => (
-    <div key={`link-${path}-${label}`}>
-      <Link
-        href={`/inspiration/${path}?workTypes=${label}`}
-        className={styles.footerlink}
-        border={{ bottom: { keepVisible: true } }}
-        dataCy="branchlink"
-      >
-        <Text type="text3" tag="span">
-          {Translate({
-            context: "facets",
-            label: `label-${label}`,
-          })}
-        </Text>
-      </Link>
-    </div>
-  ));
-};
-
-/**
  * Defines the footer section - one row with four columns
  * @returns {React.JSX.Element}
  */
@@ -199,14 +154,6 @@ const FooterSection = () => {
           data-cy="footer-section"
         >
           <Col
-            md={{ span: 2 }}
-            xs="12"
-            className={styles.padder}
-            data-cy="footer-column"
-          >
-            <FooterLogo />
-          </Col>
-          <Col
             md={{ span: 3, order: 1, offset: 1 }}
             xs={{ span: 12, order: 3 }}
             className={styles.padder}
@@ -215,7 +162,7 @@ const FooterSection = () => {
             <FirstColumn />
           </Col>
           <Col
-            md={{ span: 2, order: 2, offset: 1 }}
+            md={{ span: 3, order: 3, offset: 1 }}
             xs={{ span: 6, order: 1 }}
             className={styles.padder}
             data-cy="footer-column"
@@ -223,12 +170,10 @@ const FooterSection = () => {
             <SecondColumn />
           </Col>
           <Col
-            md={{ span: 3, order: 3 }}
+            md={{ span: 3, order: 2 }}
             xs={{ span: 6, order: 2 }}
             data-cy="footer-column"
-          >
-            <ThirdColumn />
-          </Col>
+          ></Col>
         </Row>
       </Container>
     </footer>

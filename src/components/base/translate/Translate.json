@@ -570,12 +570,12 @@
         "en": "Skip to content"
       },
       "heroTxt": {
-        "da": "Søg, find, lån",
-        "en": "Search, find, borrow"
+        "da": "Let søgning for elever og lærere",
+        "en": "Easy search for students and teachers"
       },
       "readMore": {
-        "da": "Bibliotek.dk viser materialer fra alle danske biblioteker, som du nemt kan låne og aflevere på dit bibliotek.",
-        "en": "Materials from all danish libraries, easy to pickup and deliver at your local library"
+        "da": "GymnasieSøg er en enkel grænseflade, der gør det let at søge efter bøger, artikler og gymnasierelevante kilder ét sted.",
+        "en": "GymnasieSøg is a simple interface that makes it easy to search for books, articles and sources relevant to high school students in one place."
       },
       "searchButton": {
         "da": "Søg",
@@ -915,8 +915,8 @@
     },
     "footer": {
       "hvad_er_bibliotek_dk": {
-        "da": "Bibliotek.dk er en samlet indgang til alle danske bibliotekers materialer og til hvad der udgives i Danmark. Du kan bestille materialer og så hente og låne på dit eget bibliotek. \n Du kan bruge Bibliotek.dk til at søge frem, hvad der er udgivet af bøger, musik, tidsskrifter, artikler, e-bøger, lydbøger osv. Bibliotek.dk er altså ikke et fysisk bibliotek, men en database og service over hvad der findes på danske offentlige biblioteker, som du kan bestille og få leveret til dit lokale bibliotek.",
-        "en": "What is bibliotek.dk"
+        "da": "StudieSøg er en enkel søgeflade designet til gymnasieelever og lærere, som gør det nemt at søge efter bøger og artikler. Med funktioner som filtrering på sprog og emne samt adgang til artikler via Infomedia, hvis abonnement er tilgængeligt, hjælper GymnasieSøg med at finde relevant materiale hurtigt. ",
+        "en": "StudieSøg is a simple search interface designed for high school students and teachers, making it easy to search for books and articles. With features such as filtering by language and subject, as well as access to articles via Infomedia, if available, GymnasieSøg helps find relevant material quickly."
       },
       "contact": {
         "da": "Kontakt",
@@ -2264,6 +2264,10 @@
       "menu": {
         "da": "Menu",
         "en": "Menu"
+      },
+      "english-danish": {
+        "da": "English",
+        "en": "Dansk"
       }
     },
     "search": {

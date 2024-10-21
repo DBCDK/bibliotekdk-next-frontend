@@ -11,15 +11,3 @@
     padding-top: var(--pt1);
   }
 }
-
-.defaultLogo_Blue {
-  color: var(--blue);
-}
-
-.defaultLogo_White {
-  color: var(--white);
-}
-
-.defaultLogo_Blue *[data-text="true"] {
-  color: var(--mine-shaft);
-}
