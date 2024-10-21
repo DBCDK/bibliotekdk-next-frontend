@@ -198,7 +198,7 @@ export function collectSearchFeedback({ thumbs, query, reason }) {
     variables: {
       input: {
         search_feedback: {
-          thumbs,
+          thumbs: thumbs?.toUpperCase?.(),
           query,
           reason,
         },
