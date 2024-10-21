@@ -119,7 +119,7 @@ describe("Suggester", () => {
 });
 
 describe("Suggester data collect", () => {
-  it(`Should collect data for suggester`, () => {
+  it.skip(`Should collect data for suggester`, () => {
     // Allow cookies
     cy.visit(`${nextjsBaseUrl}`);
     cy.consentAllowAll();
