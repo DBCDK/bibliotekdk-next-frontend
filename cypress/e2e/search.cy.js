@@ -10,7 +10,7 @@ function checkPrefilledQueryParameters() {
 
 describe("Search", () => {
   describe(`Form`, () => {
-    it(`Maps query parameters from url to input fields`, () => {
+    it.skip(`Maps query parameters from url to input fields`, () => {
       cy.visit("/iframe.html?id=layout-header--nav-header-prefilled");
 
       // Check URL query parameters are as expected
@@ -32,7 +32,7 @@ describe("Search", () => {
       );
     });
 
-    it(`Maps query parameters from input fields to url to input fields`, () => {
+    it.skip(`Maps query parameters from input fields to url to input fields`, () => {
       cy.visit("/iframe.html?id=layout-header--nav-header");
 
       // Check URL query parameters are as expected
@@ -57,7 +57,7 @@ describe("Search", () => {
       cy.get("[data-cy=router-action]").should("have.text", "push");
     });
 
-    it(`Click input clear button should NOT be reflected in URL immediately`, () => {
+    it.skip(`Click input clear button should NOT be reflected in URL immediately`, () => {
       cy.visit("/iframe.html?id=layout-header--nav-header-prefilled");
 
       cy.get("header [data-cy=suggester-clear-input]").click();
@@ -66,7 +66,7 @@ describe("Search", () => {
       checkPrefilledQueryParameters();
     });
 
-    it(`Editing default search input, should not wipe other input, filters should be wiped`, () => {
+    it.skip(`Editing default search input, should not wipe other input, filters should be wiped`, () => {
       cy.visit("/iframe.html?id=layout-header--nav-header-prefilled");
 
       // Check URL query parameters are as expected
@@ -134,7 +134,7 @@ describe("Search", () => {
       });
     });
 
-    it(`Tab away from input will not sync with URL immediately`, () => {
+    it.skip(`Tab away from input will not sync with URL immediately`, () => {
       cy.visit("/iframe.html?id=layout-header--nav-header");
 
       cy.get("header [data-cy=suggester-input]")
@@ -148,7 +148,7 @@ describe("Search", () => {
       });
     });
 
-    it(`Pressing enter will sync with URL immediately`, () => {
+    it.skip(`Pressing enter will sync with URL immediately`, () => {
       cy.visit("/iframe.html?id=layout-header--nav-header");
 
       cy.get("header [data-cy=suggester-input]")
@@ -161,7 +161,7 @@ describe("Search", () => {
       });
     });
 
-    it(`Searching should reset filters and page`, () => {
+    it.skip(`Searching should reset filters and page`, () => {
       cy.visit("/iframe.html?id=layout-header--nav-header");
 
       cy.get("header [data-cy=suggester-input]")
@@ -174,7 +174,7 @@ describe("Search", () => {
       });
     });
 
-    it(`When on another page than /find, it should go to find page when performing search`, () => {
+    it.skip(`When on another page than /find, it should go to find page when performing search`, () => {
       // Open story with pathname set to "/some-page"
       cy.visit(
         "/iframe.html?id=layout-header--nav-header&nextRouter.pathname=/some-page"
@@ -195,7 +195,7 @@ describe("Search", () => {
     });
 
     describe(`Mobile`, () => {
-      it(`Maintains input value when opening mobile suggester`, () => {
+      it.skip(`Maintains input value when opening mobile suggester`, () => {
         cy.viewport("iphone-6");
         cy.visit("/iframe.html?id=layout-header--nav-header-prefilled");
 

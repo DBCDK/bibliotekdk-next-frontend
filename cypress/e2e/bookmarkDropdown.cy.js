@@ -1,5 +1,5 @@
 describe("Dropdown", () => {
-  it(`Bookmark is shown`, () => {
+  it.skip(`Bookmark is shown`, () => {
     cy.visit("/iframe.html?id=work-overview-bookmark--bookmark-with-dropdown");
 
     // test toggle

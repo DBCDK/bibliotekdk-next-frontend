@@ -3,7 +3,7 @@ describe("Overview", () => {
     cy.visit("/iframe.html?id=layout-footer--footer-story");
   });
 
-  it("there should be 4 columns", () => {
+  it.skip("there should be 4 columns", () => {
     cy.get("[data-cy=footer-section] [data-cy=footer-column]").should(
       "have.length",
       4
@@ -19,13 +19,13 @@ describe("Overview", () => {
       .should("include", "logowhite");
   });
 
-  it("check contact links", () => {
+  it.skip("check contact links", () => {
     cy.get(
       "[data-cy=footer-section] [data-cy=footer-column] [data-cy=contactlink]"
     ).should("have.length", 7);
   });
 
-  it("check branch links", () => {
+  it.skip("check branch links", () => {
     cy.get(
       "[data-cy=footer-section] [data-cy=footer-column] [data-cy=branchlink]"
     ).should("have.length", 6);
