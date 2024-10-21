@@ -25,6 +25,9 @@ import { useRouter } from "next/router";
 import Breadcrumbs from "@/components/work/overview/breadcrumbs/Breadcrumbs";
 import BookmarkDropdown from "@/components/work/overview/bookmarkDropdown/BookmarkDropdown";
 import isEmpty from "lodash/isEmpty";
+import BranchDetailsStatus from "@/components/_modal/pages/branchDetails/branchDetailsStatus/BranchDetailsStatus";
+import useAgencyFromSubdomain from "@/components/hooks/useSubdomainToAgency";
+import { useHoldingsForAgency } from "@/components/hooks/useHoldings";
 
 function useInitMaterialType(
   uniqueMaterialTypes,
@@ -65,7 +68,8 @@ export function Overview({
 }) {
   const manifestations = work?.manifestations?.mostRelevant;
   const router = useRouter();
-
+  const { agency } = useAgencyFromSubdomain();
+  console.log("overview.agency", agency);
   const { uniqueMaterialTypes, inUniqueMaterialTypes, flatPidsByType } =
     useMemo(() => {
       return manifestationMaterialTypeFactory(manifestations);
@@ -86,6 +90,14 @@ export function Overview({
     [manifestations]
   );
   const selectedPids = useMemo(() => flatPidsByType(type), [type]);
+
+  const { branches, holdingsIsLoading } = useHoldingsForAgency({
+    pids: allPids,
+    agencyId: agency?.agencyId,
+  });
+  const branch = branches?.find(
+    (branch) => branch?.branchId === agency?.branchId
+  );
 
   return (
     <section className={`${styles.background} ${className}`}>
@@ -165,13 +177,11 @@ export function Overview({
                 />
               </Col>
 
-              <OrderButtonTextBelow
-                selectedPids={selectedPids}
-                skeleton={skeleton}
-              />
-              <AlternativeOptions workId={workId} selectedPids={selectedPids} />
+              {/* <AlternativeOptions workId={workId} selectedPids={selectedPids} /> */}
               <Col xs={12} className={styles.info}>
-                <LocalizationsLink selectedPids={selectedPids} />
+                <BranchDetailsStatus branch={branch} pids={allPids} />
+
+                {/* <LocalizationsLink selectedPids={selectedPids} /> */}
               </Col>
             </Col>
           </Col>

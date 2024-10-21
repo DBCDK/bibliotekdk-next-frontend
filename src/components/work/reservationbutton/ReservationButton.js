@@ -15,6 +15,7 @@ import { useManifestationAccess } from "@/components/hooks/useManifestationAcces
 import { useData } from "@/lib/api/api";
 import { overviewWork } from "@/lib/api/work.fragments";
 import { useManifestationData, useOrderFlow } from "@/components/hooks/order";
+import useAgencyFromSubdomain from "@/components/hooks/useSubdomainToAgency";
 
 function TextAboveButton({ access, isAuthenticated }) {
   return (
@@ -171,6 +172,7 @@ export const ReservationButton = ({
   bookmarkKey,
 }) => {
   access = sortEreolFirst(access);
+  const { agency } = useAgencyFromSubdomain();
 
   const { start } = useOrderFlow();
   const noSelectedManifestations = Boolean(isEmpty(access));
@@ -217,37 +219,61 @@ export const ReservationButton = ({
     context: "general",
     label: "bestil",
   });
+  console.log("TEXTS: ", { noSelectedManifestationsTxt, loginRequiredText });
+  console.log("loginRequiredProps", loginRequiredProps);
 
+  console.log(
+    "accessibleOnlineAndNoLoginProps",
+    accessibleOnlineAndNoLoginProps
+  );
   /**
    * Get props for the button based on the case scenario
    * @returns {Object} props and text for button
    */
+  // const getProps = () => {
+  //   if (noSelectedManifestations) {
+  //     return {
+  //       props: noSelectedManifestationsProps,
+  //       text: noSelectedManifestationsTxt,
+  //       preferSecondary: false,
+  //     };
+  //   }
+
+  //   //ACCESS_URL,INFOMEDIA,EREOL
+  //   if (onlineMaterialWithoutLoginOrLoginAtUrl) {
+  //     return {
+  //       props: accessibleOnlineAndNoLoginProps,
+  //       text: constructButtonText(workTypes, materialTypes, shortText),
+  //       preferSecondary: shortText, // Becomes secondary button if button links to material (not ordering)
+  //     };
+  //   }
+
+  //   //DIGITAL_ARTICLE_SERVICE, INTER_LIBRARY_LOAN
+  //   return {
+  //     props: loginRequiredProps,
+  //     text: loginRequiredText,
+  //     preferSecondary: false,
+  //   };
+  // };
+
   const getProps = () => {
-    if (noSelectedManifestations) {
-      return {
-        props: noSelectedManifestationsProps,
-        text: noSelectedManifestationsTxt,
-        preferSecondary: false,
-      };
-    }
-
-    //ACCESS_URL,INFOMEDIA,EREOL
-    if (onlineMaterialWithoutLoginOrLoginAtUrl) {
-      return {
-        props: accessibleOnlineAndNoLoginProps,
-        text: constructButtonText(workTypes, materialTypes, shortText),
-        preferSecondary: shortText, // Becomes secondary button if button links to material (not ordering)
-      };
-    }
-
-    //DIGITAL_ARTICLE_SERVICE, INTER_LIBRARY_LOAN
     return {
-      props: loginRequiredProps,
-      text: loginRequiredText,
+      props: {
+        dataCy: "button-order-overview-enabled",
+        onClick: () => {
+          modal.push("branchDetails", {
+            ...context,
+            title: agency?.name,
+            pids: pids,
+            branchId: agency?.branchId,
+            agencyId: agency?.agencyId,
+          });
+        },
+      },
+      text: Translate({ context: "overview", label: "see_location" }),
       preferSecondary: false,
     };
   };
-
   const { props, text, preferSecondary } = getProps();
 
   return (

@@ -474,7 +474,7 @@ const BookmarkPage = () => {
             })}
           </Text>
         </div>
-        <Button
+        {/* <Button
           size="small"
           disabled={isNothingSelected || checkboxList.length > ORDER_TRESHHOLD}
           className={styles.orderButton}
@@ -496,7 +496,7 @@ const BookmarkPage = () => {
             context: CONTEXT,
             label: "select-action",
           })}
-        </Button>
+        </Button> */}
         <IconButton
           icon="close"
           disabled={isNothingSelected}

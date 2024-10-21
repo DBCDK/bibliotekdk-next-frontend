@@ -119,14 +119,14 @@ function ColumnOne({ workId, manifestation }) {
         />
       </div>
 
-      <div className={styles.localizations_link}>
+      {/* <div className={styles.localizations_link}>
         <LocalizationsLink
           selectedPids={[manifestation?.pid]}
           singleManifestation={true}
         />
-      </div>
+      </div> */}
 
-      <div className={styles.reference_downloads}>
+      {/* <div className={styles.reference_downloads}>
         <Link
           dataCy="link-references"
           border={{ bottom: { keepVisible: true } }}
@@ -146,7 +146,7 @@ function ColumnOne({ workId, manifestation }) {
             })}
           </Text>
         </Link>
-      </div>
+      </div> */}
 
       <div className={styles.copy_link}>
         <OverlayTrigger
