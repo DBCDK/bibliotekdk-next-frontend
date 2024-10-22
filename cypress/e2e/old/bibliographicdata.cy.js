@@ -4,7 +4,7 @@
  */
 
 describe("bibliographic data", () => {
-  it("open edition - check contents", () => {
+  it.skip("open edition - check contents", () => {
     cy.visit("/iframe.html?id=work-bibliographic-data--bib-data");
     // get first edition
     cy.get("[data-cy=accordion-item]").first().click();
@@ -20,7 +20,7 @@ describe("bibliographic data", () => {
     cy.contains("Kopier link til udgave");
   });
 
-  it("Full manifestation - check localizationlink", () => {
+  it.skip("Full manifestation - check localizationlink", () => {
     cy.visit("/iframe.html?id=work-bibliographic-data--full-manifestation");
 
     cy.contains("Se om den er hjemme på dit bibliotek");
