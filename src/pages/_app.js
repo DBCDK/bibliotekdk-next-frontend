@@ -279,7 +279,6 @@ MyApp.getInitialProps = async (ctx) => {
   return {
     pageProps: {
       ...appProps?.pageProps,
-      translations: await fetchTranslations(),
     },
   };
 };
