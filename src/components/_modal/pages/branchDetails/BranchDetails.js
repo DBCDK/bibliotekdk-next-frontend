@@ -256,6 +256,7 @@ export default function BranchDetails({ context }) {
       {!branchDetailsLoading &&
       (!branch?.pickupAllowed ||
         !orderPolicyForBranch?.orderPossible ||
+        branch?.holdings?.status === "ON_SHELF_NOT_FOR_LOAN" ||
         branch?.temporarilyClosed === true) ? (
         <LocalizationsBase.HighlightedArea>
           <Text type={"text2"}>
