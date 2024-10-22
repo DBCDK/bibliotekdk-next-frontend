@@ -58,6 +58,7 @@ function ReservationButtonWrapper({
   className,
   handleOrderFinished = undefined,
   bookmarkKey,
+  branch,
 }) {
   const { data: workData, isLoadingWorkData } = useData(
     workId && overviewWork({ workId })
@@ -136,6 +137,7 @@ function ReservationButtonWrapper({
         hasPhysicalCopy,
         hasDigitalCopy,
         bookmarkKey,
+        branch,
       }}
     />
   );
@@ -170,6 +172,7 @@ export const ReservationButton = ({
   materialTypes,
   hasPhysicalCopy,
   bookmarkKey,
+  branch,
 }) => {
   access = sortEreolFirst(access);
   const { agency } = useAgencyFromSubdomain();
@@ -257,23 +260,32 @@ export const ReservationButton = ({
   // };
 
   const getProps = () => {
+    const lookupUrl = branch?.holdings?.lookupUrl;
+    if (lookupUrl) {
+      return {
+        props: {
+          dataCy: "button-order-overview-enabled",
+          onClick: () => {
+            window.open(lookupUrl, "_blank");
+          },
+        },
+        text: Translate({ context: "overview", label: "see_location" }),
+        preferSecondary: false,
+      };
+    }
     return {
       props: {
-        dataCy: "button-order-overview-enabled",
-        onClick: () => {
-          modal.push("branchDetails", {
-            ...context,
-            title: agency?.name,
-            pids: pids,
-            branchId: agency?.branchId,
-            agencyId: agency?.agencyId,
-          });
-        },
+        dataCy: "button-order-no-localizations-disabled",
+        disabled: true,
       },
-      text: Translate({ context: "overview", label: "see_location" }),
+      text: Translate({
+        context: "overview",
+        label: "button-order-no-localizations-disabled",
+      }),
       preferSecondary: false,
     };
   };
+
   const { props, text, preferSecondary } = getProps();
 
   return (

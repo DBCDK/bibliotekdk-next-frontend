@@ -166,6 +166,7 @@ export function Overview({
                 <ReservationButtonWrapper
                   workId={workId}
                   selectedPids={selectedPids}
+                  branch={branch}
                 />
                 <BookmarkDropdown
                   materialId={workId}
@@ -175,13 +176,6 @@ export function Overview({
                   className={styles.svgscale}
                   editions={work?.manifestations?.mostRelevant}
                 />
-              </Col>
-
-              {/* <AlternativeOptions workId={workId} selectedPids={selectedPids} /> */}
-              <Col xs={12} className={styles.info}>
-                <BranchDetailsStatus branch={branch} pids={allPids} />
-
-                {/* <LocalizationsLink selectedPids={selectedPids} /> */}
               </Col>
             </Col>
           </Col>
