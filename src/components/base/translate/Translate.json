@@ -1570,13 +1570,17 @@
       }
     },
     "overview": {
+      "see_location": {
+        "da": "Se placering",
+        "en": "See location"
+      },
       "check_branch_holding": {
         "da": "Se om den er hjemme på dit bibliotek",
         "en": "Check your library"
       },
       "button-order-no-localizations-disabled": {
-        "da": "Kan ikke bestilles",
-        "en": "No holdings - disabled"
+        "da": "Findes ikke på biblioteket",
+        "en": "Not available"
       },
       "label_library_no_holdings": {
         "da": "Ingen biblioteker har pt. materialet.",

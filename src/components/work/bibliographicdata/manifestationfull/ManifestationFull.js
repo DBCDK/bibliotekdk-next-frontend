@@ -10,15 +10,11 @@ import styles from "./ManifestationFull.module.css";
 import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 import Cover from "@/components/base/cover";
-import Link from "@/components/base/link";
 import Translate from "@/components/base/translate";
 
 import { parseManifestation } from "@/lib/manifestationParser";
 import { cyKey } from "@/utils/trim";
-import LocalizationsLink from "@/components/work/overview/localizationslink/LocalizationsLink";
-import { useModal } from "@/components/_modal";
 import ReservationButtonWrapper from "@/components/work/reservationbutton/ReservationButton";
-import { openReferencesModal } from "@/components/work/utils";
 import { useData } from "@/lib/api/api";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import ManifestationParts from "@/components/manifestationparts/ManifestationParts";
@@ -39,7 +35,6 @@ import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtil
  * @returns {React.JSX.Element}
  */
 function ColumnOne({ workId, manifestation }) {
-  const modal = useModal();
   const copyLinkId = useId();
   const [checkMarkActive, setCheckMarkActive] = useState(false);
 
@@ -117,35 +112,6 @@ function ColumnOne({ workId, manifestation }) {
           workId={workId}
           selectedPids={[manifestation?.pid]}
         />
-      </div>
-
-      <div className={styles.localizations_link}>
-        <LocalizationsLink
-          selectedPids={[manifestation?.pid]}
-          singleManifestation={true}
-        />
-      </div>
-
-      <div className={styles.reference_downloads}>
-        <Link
-          dataCy="link-references"
-          border={{ bottom: { keepVisible: true } }}
-          onClick={() =>
-            openReferencesModal(
-              modal,
-              [manifestation?.pid],
-              workId,
-              manifestation
-            )
-          }
-        >
-          <Text type="text3" tag="span">
-            {Translate({
-              context: "references",
-              label: "label_references_title",
-            })}
-          </Text>
-        </Link>
       </div>
 
       <div className={styles.copy_link}>

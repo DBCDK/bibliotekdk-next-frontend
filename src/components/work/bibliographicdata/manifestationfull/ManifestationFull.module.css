@@ -10,15 +10,6 @@
   margin-bottom: var(--pt2);
 }
 
-.fullmanifestation .localizations_link {
-  margin-bottom: var(--pt3);
-}
-
-.fullmanifestation .reference_downloads {
-  width: fit-content;
-  margin-bottom: var(--pt1);
-}
-
 .fullmanifestation .copy_link {
   margin-bottom: var(--pt5);
 }
