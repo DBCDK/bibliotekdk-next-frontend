@@ -41,7 +41,6 @@ import Listener from "@/components/ffu";
 
 import Head from "@/components/head";
 
-import fetchTranslations from "@/lib/api/backend";
 import App from "next/app";
 import SetPickupBranch from "@/components/utils/SetPickupBranch";
 import { enableDebug } from "@/lib/api/api";
