@@ -266,3 +266,19 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
   );
 }
 
+/**
+ * We get translation on the App - to make sure eg. custom errorpages also get them
+ * @see https://nextjs.org/docs/api-reference/data-fetching/get-initial-props
+ */
+MyApp.getInitialProps = async (ctx) => {
+  if (typeof window !== "undefined") {
+    return { pageProps: {} };
+  }
+
+  const appProps = await App.getInitialProps(ctx);
+  return {
+    pageProps: {
+      ...appProps?.pageProps,
+    },
+  };
+};
