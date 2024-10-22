@@ -69,7 +69,6 @@ export function Overview({
   const manifestations = work?.manifestations?.mostRelevant;
   const router = useRouter();
   const { agency } = useAgencyFromSubdomain();
-  console.log("overview.agency", agency);
   const { uniqueMaterialTypes, inUniqueMaterialTypes, flatPidsByType } =
     useMemo(() => {
       return manifestationMaterialTypeFactory(manifestations);

@@ -243,7 +243,7 @@ export default function BranchDetails({ context }) {
       `Error: Der burde være præcis 1 workId, men der er ${workIds.length}`
     );
   }
-  console.log("branchDetails.branch", branch);
+
   return (
     <LocalizationsBase context={context} pids={pids}>
       <LocalizationsBase.Information>

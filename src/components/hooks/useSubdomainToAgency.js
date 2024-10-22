@@ -41,7 +41,7 @@ const useAgencyFromSubdomain = () => {
         setAgencyName(extractedAgencyName);
       } else if (extractedAgencyName === "localhost") {
         //TODO: remove later. For localhost testing
-        setAgencyName("roskilde");
+        setAgencyName("soroeakademi");
 
         // "roskilde",
         // "soroeakademi",

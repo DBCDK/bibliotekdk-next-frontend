@@ -119,35 +119,6 @@ function ColumnOne({ workId, manifestation }) {
         />
       </div>
 
-      {/* <div className={styles.localizations_link}>
-        <LocalizationsLink
-          selectedPids={[manifestation?.pid]}
-          singleManifestation={true}
-        />
-      </div> */}
-
-      {/* <div className={styles.reference_downloads}>
-        <Link
-          dataCy="link-references"
-          border={{ bottom: { keepVisible: true } }}
-          onClick={() =>
-            openReferencesModal(
-              modal,
-              [manifestation?.pid],
-              workId,
-              manifestation
-            )
-          }
-        >
-          <Text type="text3" tag="span">
-            {Translate({
-              context: "references",
-              label: "label_references_title",
-            })}
-          </Text>
-        </Link>
-      </div> */}
-
       <div className={styles.copy_link}>
         <OverlayTrigger
           overlay={tooltip}

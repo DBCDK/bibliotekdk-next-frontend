@@ -474,29 +474,7 @@ const BookmarkPage = () => {
             })}
           </Text>
         </div>
-        {/* <Button
-          size="small"
-          disabled={isNothingSelected || checkboxList.length > ORDER_TRESHHOLD}
-          className={styles.orderButton}
-          onClick={onOrderManyClick}
-        >
-          {Translate({
-            context: CONTEXT,
-            label: "order",
-          })}
-        </Button>
-        <Button
-          size="small"
-          type="secondary"
-          disabled={isNothingSelected}
-          className={styles.referenceButton}
-          onClick={onGetReferencesClick}
-        >
-          {Translate({
-            context: CONTEXT,
-            label: "select-action",
-          })}
-        </Button> */}
+    
         <IconButton
           icon="close"
           disabled={isNothingSelected}
