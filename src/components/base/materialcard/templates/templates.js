@@ -100,8 +100,16 @@ function propFunc(textType, lines) {
 
 /**Used in Slider */
 export function templateForVerticalWorkCard({ material }) {
-  const fullTitle =
-    material?.titles?.tvSeries?.title || material?.titles?.full?.join(": ");
+  const tvSeries = material?.titles?.tvSeries;
+  let tvSeriesTitle = tvSeries?.title;
+
+  if (tvSeries?.season && tvSeries?.season?.display) {
+    tvSeriesTitle += ` (${
+      tvSeries.season.display.charAt(0).toUpperCase() +
+      tvSeries.season.display.slice(1)
+    })`;
+  }
+  const fullTitle = tvSeriesTitle || material?.titles?.full?.join(": ");
   const creators = material?.creators;
   const firstCreator =
     extractCreatorsPrioritiseCorporation(creators)?.[0]?.display;
