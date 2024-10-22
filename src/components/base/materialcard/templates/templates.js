@@ -101,14 +101,14 @@ function propFunc(textType, lines) {
 /**Used in Slider */
 export function templateForVerticalWorkCard({ material }) {
   const tvSeries = material?.titles?.tvSeries;
-  let tvSeriesTitle = tvSeries?.title;
+  //construct tvTitle. Name + season display. e.g. "The Office (Season 1)"
+  let tvSeriesTitle = tvSeries?.season?.display
+    ? `${tvSeries?.title} (${
+        tvSeries.season.display.charAt(0).toUpperCase() +
+        tvSeries.season.display.slice(1)
+      })`
+    : tvSeries?.title;
 
-  if (tvSeries?.season && tvSeries?.season?.display) {
-    tvSeriesTitle += ` (${
-      tvSeries.season.display.charAt(0).toUpperCase() +
-      tvSeries.season.display.slice(1)
-    })`;
-  }
   const fullTitle = tvSeriesTitle || material?.titles?.full?.join(": ");
   const creators = material?.creators;
   const firstCreator =
