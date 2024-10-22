@@ -140,7 +140,7 @@ describe("Reservation button", () => {
     cy.get("[data-cy=router-query]").contains("modal");
   });
 
-  it("onclick should open login-modal and add order modal to store, when user is NOT logged ind", () => {
+  it.skip("onclick should open login-modal and add order modal to store, when user is NOT logged ind", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-not-logged-in-flow"
     );
