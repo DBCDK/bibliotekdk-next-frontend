@@ -3,14 +3,11 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import PropTypes from "prop-types";
 import Icon from "@/components/base/icon";
-import AlternativeOptions from "./alternatives";
-import LocalizationsLink from "./localizationslink";
 import WorkGroupingsOverview from "./workgroupingsoverview";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import ReservationButtonWrapper from "@/components/work/reservationbutton/ReservationButton";
 import styles from "./Overview.module.css";
-import OrderButtonTextBelow from "@/components/work/reservationbutton/orderbuttontextbelow/OrderButtonTextBelow";
 import { useEffect, useMemo } from "react";
 import { MaterialTypeSwitcher } from "@/components/work/overview/materialtypeswitcher/MaterialTypeSwitcher";
 import { CreatorsArray } from "@/components/work/overview/creatorsarray/CreatorsArray";
@@ -25,7 +22,6 @@ import { useRouter } from "next/router";
 import Breadcrumbs from "@/components/work/overview/breadcrumbs/Breadcrumbs";
 import BookmarkDropdown from "@/components/work/overview/bookmarkDropdown/BookmarkDropdown";
 import isEmpty from "lodash/isEmpty";
-import BranchDetailsStatus from "@/components/_modal/pages/branchDetails/branchDetailsStatus/BranchDetailsStatus";
 import useAgencyFromSubdomain from "@/components/hooks/useSubdomainToAgency";
 import { useHoldingsForAgency } from "@/components/hooks/useHoldings";
 
@@ -90,7 +86,7 @@ export function Overview({
   );
   const selectedPids = useMemo(() => flatPidsByType(type), [type]);
 
-  const { branches, holdingsIsLoading } = useHoldingsForAgency({
+  const { branches } = useHoldingsForAgency({
     pids: allPids,
     agencyId: agency?.agencyId,
   });

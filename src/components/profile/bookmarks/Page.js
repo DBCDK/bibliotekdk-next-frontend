@@ -474,7 +474,7 @@ const BookmarkPage = () => {
             })}
           </Text>
         </div>
-    
+
         <IconButton
           icon="close"
           disabled={isNothingSelected}

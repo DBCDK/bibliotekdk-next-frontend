@@ -4,18 +4,14 @@ import Text from "@/components/base/text/Text";
 import styles from "./ReservationButton.module.css";
 import { useModal } from "@/components/_modal";
 import {
-  constructButtonText,
   context,
-  handleGoToLogin,
   sortEreolFirst,
 } from "@/components/work/reservationbutton/utils";
-import isEmpty from "lodash/isEmpty";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import { useManifestationAccess } from "@/components/hooks/useManifestationAccess";
 import { useData } from "@/lib/api/api";
 import { overviewWork } from "@/lib/api/work.fragments";
-import { useManifestationData, useOrderFlow } from "@/components/hooks/order";
-import useAgencyFromSubdomain from "@/components/hooks/useSubdomainToAgency";
+import { useManifestationData } from "@/components/hooks/order";
 
 function TextAboveButton({ access, isAuthenticated }) {
   return (
@@ -164,65 +160,10 @@ export const ReservationButton = ({
   isAuthenticated,
   buttonType,
   size,
-  pids,
-  shortText = false, // Shorten material text
   overrideButtonText = null,
-  modal,
-  workTypes,
-  materialTypes,
-  hasPhysicalCopy,
-  bookmarkKey,
   branch,
 }) => {
   access = sortEreolFirst(access);
-  const { agency } = useAgencyFromSubdomain();
-
-  const { start } = useOrderFlow();
-  const noSelectedManifestations = Boolean(isEmpty(access));
-
-  // pjo 15/08/24 - added filter for dfi.dk - it is not a real accessUrl
-  const onlineMaterialWithoutLoginOrLoginAtUrl = Boolean(
-    access?.filter((entry) => entry?.url && entry?.origin !== "www.dfi.dk")
-      .length > 0
-  );
-
-  const noSelectedManifestationsProps = {
-    dataCy: "button-order-overview-disabled",
-    disabled: true,
-  };
-
-  let noSelectedManifestationsLabel;
-  if (!hasPhysicalCopy) {
-    noSelectedManifestationsLabel = "Order-disabled-but-owned";
-  } else if (hasPhysicalCopy) {
-    noSelectedManifestationsLabel = "Order-disabled";
-  } else {
-    noSelectedManifestationsLabel = "Order-online-disabled";
-  }
-  const noSelectedManifestationsTxt = Translate({
-    context: "overview",
-    label: noSelectedManifestationsLabel,
-  });
-
-  const accessibleOnlineAndNoLoginProps = {
-    skeleton: !access,
-    dataCy: "button-order-overview",
-    onClick: () => handleGoToLogin(modal, access, isAuthenticated),
-  };
-
-  const loginRequiredProps = {
-    skeleton: isEmpty(access),
-    dataCy: `button-order-overview-enabled`,
-    onClick: () => {
-      start({ orders: [{ pids, bookmarkKey: bookmarkKey }] });
-    },
-  };
-
-  const loginRequiredText = Translate({
-    context: "general",
-    label: "bestil",
-  });
-
 
   const getProps = () => {
     const lookupUrl = branch?.holdings?.lookupUrl;
