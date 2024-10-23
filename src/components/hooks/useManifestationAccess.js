@@ -168,19 +168,28 @@ export function useManifestationAccess({ pids, filter }) {
     );
 
     // sort & filter - we only want access of type RESOURCE AND we do not want broken links
-    let access = sortAccessArray(flattenedAccess)?.filter((singleAccess) => {
-      return (
-        singleAccess?.__typename !== AccessEnum.ACCESS_URL ||
-        (singleAccess?.__typename === AccessEnum.ACCESS_URL &&
-          singleAccess?.type === "RESOURCE" &&
-          singleAccess?.status === "OK")
+    let access = sortAccessArray(flattenedAccess)
+      ?.filter((singleAccess) => {
+        return (
+          singleAccess?.__typename !== AccessEnum.ACCESS_URL ||
+          (singleAccess?.__typename === AccessEnum.ACCESS_URL &&
+            singleAccess?.type === "RESOURCE" &&
+            singleAccess?.status === "OK")
+        );
+      })
+      // we also filter out the ill option - this page does not support inter library loans
+      .filter(
+        (singleAccess) =>
+          singleAccess.__typename !== AccessEnum.INTER_LIBRARY_LOAN
       );
-    });
 
     const accessMap = {};
     access.forEach((entry) => (accessMap[entry.__typename] = entry));
 
-    const userHasDigitalAccess = loanerInfo?.rights?.["digitalArticleService"];
+    const userHasDigitalAccess =
+      !!loanerInfo?.rights?.["digitalArticleService"];
+
+    console.log(userHasDigitalAccess, "DIGITAL ACCESS USER ??");
 
     // we filter out digital access if user is authenticated AND has no right
     if (isAuthenticated && !userHasDigitalAccess) {
@@ -209,6 +218,8 @@ export function useManifestationAccess({ pids, filter }) {
       accessMap,
     };
   }, [data, loanerInfo]);
+
+  console.log(res?.accessMap, "MAPP");
 
   const hasDigitalCopy = !!res?.accessMap?.[AccessEnum.DIGITAL_ARTICLE_SERVICE];
   const hasPhysicalCopy = !!res?.accessMap?.[AccessEnum.INTER_LIBRARY_LOAN];
