@@ -174,8 +174,6 @@ export const ReservationButton = ({
   access = sortEreolFirst(access);
   const { start } = useOrderFlow();
 
-  console.log(access, "ACCESSES");
-
   const getProps = () => {
     const lookupUrl = branch?.holdings?.lookupUrl;
     if (lookupUrl) {
