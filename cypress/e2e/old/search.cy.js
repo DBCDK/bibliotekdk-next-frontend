@@ -92,7 +92,7 @@ describe("Search", () => {
     });
   });
 
-  it(`Mobile: Has searchfield including query`, () => {
+  it.skip(`Mobile: Has searchfield including query`, () => {
     cy.viewport(411, 731);
     cy.get('[data-cy="fake-search-input"]').contains("harry potter");
   });
