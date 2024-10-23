@@ -13,7 +13,9 @@ import useAuthentication from "@/components/hooks/user/useAuthentication";
 import { useManifestationAccess } from "@/components/hooks/useManifestationAccess";
 import { useData } from "@/lib/api/api";
 import { overviewWork } from "@/lib/api/work.fragments";
-import { useManifestationData } from "@/components/hooks/order";
+import { useManifestationData, useOrderFlow } from "@/components/hooks/order";
+import isEmpty from "lodash/isEmpty";
+import { AccessEnum } from "@/lib/enums";
 
 function TextAboveButton({ access, isAuthenticated }) {
   return (
@@ -167,8 +169,10 @@ export const ReservationButton = ({
   workTypes,
   materialTypes,
   modal,
+  pids,
 }) => {
   access = sortEreolFirst(access);
+  const { start } = useOrderFlow();
 
   const getProps = () => {
     const lookupUrl = branch?.holdings?.lookupUrl;
@@ -185,13 +189,17 @@ export const ReservationButton = ({
       };
     }
 
+    const hasDigitalCopy = access.find(
+      (acc) => acc.__typename === AccessEnum.DIGITAL_ARTICLE_SERVICE
+    );
+
     // is this an access url ?
     const onlineAccessUrl = Boolean(
       access?.filter((entry) => entry?.url && entry?.origin !== "www.dfi.dk")
         .length > 0
     );
     // props for button - online access with login options
-    const onlineAccessWithLogin = {
+    const onlineAccessProps = {
       skeleton: !access,
       dataCy: "button-order-overview",
       onClick: () => handleGoToLogin(modal, access, isAuthenticated),
@@ -199,8 +207,25 @@ export const ReservationButton = ({
     //ACCESS_URL,INFOMEDIA,EREOL
     if (onlineAccessUrl) {
       return {
-        props: onlineAccessWithLogin,
+        props: onlineAccessProps,
         text: constructButtonText(workTypes, materialTypes),
+      };
+    }
+    // order digital copy ?
+    const digitalCopyProps = {
+      skeleton: isEmpty(access),
+      dataCy: `button-order-overview-enabled`,
+      onClick: () => {
+        start({ orders: [{ pids }] });
+      },
+    };
+    if (hasDigitalCopy) {
+      return {
+        props: digitalCopyProps,
+        text: Translate({
+          context: "overview",
+          label: "button-order-digital-copy",
+        }),
       };
     }
     return {

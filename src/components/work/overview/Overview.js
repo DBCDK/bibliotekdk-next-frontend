@@ -24,6 +24,7 @@ import BookmarkDropdown from "@/components/work/overview/bookmarkDropdown/Bookma
 import isEmpty from "lodash/isEmpty";
 import useAgencyFromSubdomain from "@/components/hooks/useSubdomainToAgency";
 import { useHoldingsForAgency } from "@/components/hooks/useHoldings";
+import AlternativeOptions from "./alternatives";
 
 function useInitMaterialType(
   uniqueMaterialTypes,
@@ -170,6 +171,10 @@ export function Overview({
                   title={work?.titles?.sort}
                   className={styles.svgscale}
                   editions={work?.manifestations?.mostRelevant}
+                />
+                <AlternativeOptions
+                  workId={workId}
+                  selectedPids={selectedPids}
                 />
               </Col>
             </Col>
