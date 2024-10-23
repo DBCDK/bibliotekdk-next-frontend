@@ -35,7 +35,7 @@ function TestUserActive() {
  *  Color of text and svg logo
  * @returns {React.JSX.Element}
  */
-export default function Logo({ href = "/", ...props }) {
+export default function Logo({ href = "/" }) {
   const { logoPath } = useAgencyFromSubdomain();
 
   if (!logoPath) {
