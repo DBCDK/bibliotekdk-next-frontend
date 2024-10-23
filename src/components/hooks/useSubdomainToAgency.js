@@ -1,9 +1,12 @@
 //Given a subdomain, returns agency data. e.g. odense.gym.bib.dk -> returns odense agency data
-import { useEffect, useState } from "react";
 import { signIn } from "@dbcdk/login-nextjs/client";
 
 //TODO: should we fetch from fbi-api instead?
 import gymAgencies from "@/components/utils/gymAgencies.json";
+
+import { createContext, useContext } from "react";
+export const PagePropsContext = createContext(null);
+
 //TODO: get exact subdomain names from current urls https://odense.gym.bib.dk/
 const agencyNames = [
   "roskilde",
@@ -31,42 +34,33 @@ const heroPath = {
   odense: "/schools/hero/odense.webp",
   soroeakademi: "/schools/hero/soroeakademi.webp",
 };
-const useAgencyFromSubdomain = () => {
-  const [agencyName, setAgencyName] = useState(null);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const subdomains = window.location?.hostname?.split(".");
-      const extractedAgencyName = subdomains[0];
+export function hostToAgency(host) {
+  const agencyName = host?.split?.(".")?.[0];
 
-      if (agencyNames.includes(extractedAgencyName)) {
-        setAgencyName(extractedAgencyName);
-      } else if (extractedAgencyName === "localhost") {
-        //TODO: remove later. For localhost testing
-        setAgencyName("soroeakademi");
-
-        // "roskilde",
-        // "soroeakademi",
-        // "odense",
-        // "greve",
-        // "slagelse",
-        // "stenhus",
-      }
-    }
-  }, []);
+  const validAgencyName = agencyNames.includes(agencyName)
+    ? agencyName
+    : "roskilde";
 
   const agency = gymAgencies[agencyName];
 
   return {
+    agency,
+    logoPath: logoPaths[validAgencyName],
+    heroPath: heroPath[validAgencyName],
+  };
+}
+const useAgencyFromSubdomain = () => {
+  const { host } = useContext(PagePropsContext);
+
+  return {
+    ...hostToAgency(host),
     signIn: () =>
       signIn(
         "adgangsplatformen",
         {},
         { agency: agency?.agencyId, force_login: 1 }
       ),
-    agency,
-    logoPath: logoPaths[agencyName],
-    heroPath: heroPath[agencyName],
   };
 };
 
