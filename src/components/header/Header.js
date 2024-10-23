@@ -71,7 +71,6 @@ export function Header({
   router = null,
   story = null,
   user,
-  modal,
   hideShadow,
 }) {
   const { signIn } = useAgencyFromSubdomain();
