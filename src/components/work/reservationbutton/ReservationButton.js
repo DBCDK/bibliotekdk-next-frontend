@@ -15,6 +15,7 @@ import { useData } from "@/lib/api/api";
 import { overviewWork } from "@/lib/api/work.fragments";
 import { useManifestationData, useOrderFlow } from "@/components/hooks/order";
 import isEmpty from "lodash/isEmpty";
+import { AccessEnum } from "@/lib/enums";
 
 function TextAboveButton({ access, isAuthenticated }) {
   return (
@@ -168,7 +169,6 @@ export const ReservationButton = ({
   workTypes,
   materialTypes,
   modal,
-  hasDigitalCopy,
   pids,
 }) => {
   access = sortEreolFirst(access);
@@ -191,8 +191,9 @@ export const ReservationButton = ({
       };
     }
 
-    // order digital copy ?
-    console.log(hasDigitalCopy, "DIGITAL KOPI ???");
+    const hasDigitalCopy = access.find(
+      (acc) => acc.__typename === AccessEnum.DIGITAL_ARTICLE_SERVICE
+    );
 
     // is this an access url ?
     const onlineAccessUrl = Boolean(
@@ -212,7 +213,7 @@ export const ReservationButton = ({
         text: constructButtonText(workTypes, materialTypes),
       };
     }
-
+    // order digital copy ?
     const digitalCopyProps = {
       skeleton: isEmpty(access),
       dataCy: `button-order-overview-enabled`,

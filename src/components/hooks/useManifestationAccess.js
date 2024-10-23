@@ -189,8 +189,6 @@ export function useManifestationAccess({ pids, filter }) {
     const userHasDigitalAccess =
       !!loanerInfo?.rights?.["digitalArticleService"];
 
-    console.log(userHasDigitalAccess, "DIGITAL ACCESS USER ??");
-
     // we filter out digital access if user is authenticated AND has no right
     if (isAuthenticated && !userHasDigitalAccess) {
       access = access?.filter(
@@ -218,8 +216,6 @@ export function useManifestationAccess({ pids, filter }) {
       accessMap,
     };
   }, [data, loanerInfo]);
-
-  console.log(res?.accessMap, "MAPP");
 
   const hasDigitalCopy = !!res?.accessMap?.[AccessEnum.DIGITAL_ARTICLE_SERVICE];
   const hasPhysicalCopy = !!res?.accessMap?.[AccessEnum.INTER_LIBRARY_LOAN];
