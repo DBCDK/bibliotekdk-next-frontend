@@ -34,24 +34,6 @@
   margin-right: var(--pt1);
 }
 
-.orderButton {
-  width: 100px;
-  margin-right: var(--pt2);
-}
-
-.orderButton:not(disabled) {
-  outline: 2px solid var(--blue);
-}
-
-.orderButton:not(disabled):hover,
-.orderButton:not(disabled):focus-visible {
-  outline: 2px solid var(--mine-shaft);
-}
-
-.referenceButton {
-  margin-right: var(--pt3);
-}
-
 .listContainer {
   border-top: 1px solid var(--iron);
 }

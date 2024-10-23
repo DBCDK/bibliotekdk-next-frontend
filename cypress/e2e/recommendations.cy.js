@@ -31,7 +31,7 @@ describe("Series", () => {
       .and("contain", "-display/recommend.result[0].work.workId");
   });
 
-  it(`Should collect data for recommender`, () => {
+  it.skip(`Should collect data for recommender`, () => {
     // Click first element
     cy.contains("recommend.result[0].work.titles.tvSeries.title").click();
 

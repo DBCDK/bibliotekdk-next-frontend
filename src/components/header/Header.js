@@ -5,14 +5,11 @@ import Row from "react-bootstrap/Row";
 import React, { useRef } from "react";
 import cx from "classnames";
 
-import useHistory from "@/components/hooks/useHistory";
 import useFilters from "@/components/hooks/useFilters";
-import useQ from "@/components/hooks/useQ";
-import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
 import { cyKey } from "@/utils/trim";
 
-import Suggester, { focusInput, blurInput } from "./suggester/";
+import { focusInput } from "./suggester/";
 
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
@@ -21,22 +18,17 @@ import Link from "@/components/base/link";
 import { useModal } from "@/components/_modal";
 
 import LoginIcon from "./icons/login";
-import BurgerIcon from "./icons/burger";
+import GlobeIcon from "./icons/globe";
 import SearchIcon from "./icons/search";
 import BookmarkIcon from "./icons/bookmark";
 
 import Logo from "@/components/base/logo/Logo";
 
-import { SkipToMainAnchor } from "@/components/base/skiptomain/SkipToMain";
-
-import { DesktopMaterialSelect } from "@/components/search/select";
 import { openMobileSuggester } from "@/components/header/suggester/Suggester";
 
 import styles from "./Header.module.css";
-import { useRouter } from "next/router";
-import { SuggestTypeEnum } from "@/lib/enums";
-import isEmpty from "lodash/isEmpty";
-import useBreakpoint from "@/components/hooks/useBreakpoint";
+import Router, { useRouter } from "next/router";
+
 import { openLoginModal } from "../_modal/pages/login/utils";
 import { signOut } from "@dbcdk/login-nextjs/client";
 import useAuthentication from "../hooks/user/useAuthentication";
@@ -79,30 +71,12 @@ export function Header({
   story = null,
   user,
   modal,
-  filters,
   hideShadow,
 }) {
   const context = { context: "header" };
-  const breakpoint = useBreakpoint();
-  const isMobileSize =
-    breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
-
-  const { q, setQ, setQuery } = useQ();
-
-  const query = q[SuggestTypeEnum.ALL];
-
-  // Search history in suggester
-  const [history, setHistory, clearHistory] = useHistory();
-
-  // workType filter param
-  const { workTypes } = filters.getQuery();
-
-  // specific material workType selected
-  const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
 
   const simpleSearchRef = useRef(null);
-  const { showInfoTooltip, showPopover, setShowInfoTooltip } =
-    useAdvancedSearchContext();
+
   const getLoginLabel = () => {
     if (user.hasCulrUniqueId) {
       return "profile";
@@ -145,59 +119,24 @@ export function Header({
       onClick: () => router.push("/profil/huskeliste"),
     },
     {
-      label: "menu",
-      icon: BurgerIcon,
-      onClick: () => modal.push("menu"),
+      label: "english-danish",
+      icon: GlobeIcon,
+      onClick: () => {
+        const locale = Router.locale === "da" ? "en" : "da";
+        const pathname = Router.pathname;
+        const query = { ...Router.query };
+
+        // remove modal key from query
+        // this will close the modal after language change
+        delete query.modal;
+
+        Router.push({ pathname, query }, null, { locale });
+
+        //   modal.push("menu");
+      },
     },
   ];
 
-  // Search modal suggester is visible
-  const suggesterVisibleMobile =
-    (story && story.suggesterVisibleMobile) ||
-    (isMobileSize && router && router.query.suggester);
-
-  // suggester visible class
-  const suggesterVisibleMobileClass = suggesterVisibleMobile
-    ? styles.suggester__visible
-    : "";
-
-  const doSearch = (value) => {
-    // If we are on mobile we replace
-    // since we don't want to suggest modal to open if user goes back
-    const method = suggesterVisibleMobile ? "replace" : "push";
-
-    const type = {
-      workTypes:
-        selectedMaterial !== SuggestTypeEnum.ALL ? selectedMaterial : null,
-    };
-
-    const newQ = isEmpty(value) ? { ...q, all: "" } : { ...q, all: value };
-
-    setQuery({
-      include: newQ,
-      exclude: ["page"],
-      pathname: "/find",
-      query: type,
-      method,
-    });
-
-    document.activeElement.blur();
-
-    // Delay history update in list
-    setTimeout(() => {
-      setHistory(value);
-    }, 300);
-  };
-
-  // function to force search onKeyDown
-  const keyPressed = (e) => {
-    if (e.key === "Enter") {
-      doSearch(e.target.value);
-      if (showInfoTooltip) {
-        setShowInfoTooltip(false);
-      }
-    }
-  };
   return (
     <header
       className={cx({
@@ -209,75 +148,10 @@ export function Header({
       <div className={styles.headerWrap}>
         <Container className={styles.header} fluid>
           <Row>
-            <StaticHeader router={router} context={context} />
-            <Col xs={{ span: 7, offset: 3 }} className={styles.mobileHeader}>
-              <SkipToMainAnchor />
-              <div className={styles.bottom}>
-                <div
-                  ref={simpleSearchRef}
-                  className={`${styles.search}`}
-                  data-cy={cyKey({ name: "search", prefix: "header" })}
-                >
-                  <DesktopMaterialSelect className={styles.select} />
-
-                  <div
-                    className={`${styles.suggester__wrap} ${suggesterVisibleMobileClass}`}
-                  >
-                    <Suggester
-                      className={`${styles.suggester}`}
-                      history={history}
-                      clearHistory={clearHistory}
-                      isMobile={suggesterVisibleMobile}
-                      onSelect={(val) => doSearch(val)}
-                      onChange={(val) => setQ({ ...q, all: val })}
-                      dataCy={`simple-search-input`}
-                      onClose={() => {
-                        if (router) {
-                          // remove suggester prop from query obj
-                          router.back();
-                        }
-                        // Remove suggester in storybook
-                        story && story.setSuggesterVisibleMobile(false);
-                      }}
-                      onKeyDown={keyPressed}
-                    />
-                  </div>
-
-                  <button
-                    className={`${styles.button}`}
-                    onClick={(e) => {
-                      if (showInfoTooltip || showPopover) {
-                        return;
-                      }
-                      e?.preventDefault();
-                      doSearch(query);
-
-                      // view query in storybook
-                      story && alert(`/find?q.all=${query}`);
-
-                      // Remove suggester in storybook
-                      story && story.setSuggesterVisibleMobile(false);
-
-                      // remove keyboard/unfocus
-                      blurInput();
-                    }}
-                    data-cy={cyKey({
-                      name: "searchbutton",
-                      prefix: "header",
-                    })}
-                  >
-                    <span>{Translate({ ...context, label: "search" })}</span>
-                    <div className={styles.fill} />
-                  </button>
-                </div>
-                <div className={styles.popoverTriggerContainer}>
-                  <AdvancedSearchPopover
-                    className={styles.advancedSearchTrigger}
-                    simpleSearchRef={simpleSearchRef}
-                  />
-                </div>
-              </div>
+            <Col xs={3}>
+              <Logo />
             </Col>
+            <Col xs={{ span: 7 }} className={styles.mobileHeader}></Col>
             <Col xs={{ span: 2 }} className={styles.iconActionsContainer}>
               <div
                 className={styles.iconActions}
@@ -286,6 +160,12 @@ export function Header({
                   prefix: "header-bottom",
                 })}
               >
+                <div className={styles.popoverTriggerContainer}>
+                  <AdvancedSearchPopover
+                    className={styles.advancedSearchTrigger}
+                    simpleSearchRef={simpleSearchRef}
+                  />
+                </div>
                 {menu.map((m) => {
                   const ActionIcon = m.icon;
 

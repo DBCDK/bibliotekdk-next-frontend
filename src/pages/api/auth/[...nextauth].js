@@ -103,4 +103,13 @@ export const options = {
   },
 };
 
-export default NextAuth(options);
+export default async function auth(req, res) {
+  // Instead of using a static env variable NEXTAUTH_URL, we generate
+  // it dynamically. This is because we have multiple subdomains pointing to
+  // same NextJS instance.
+  const host = req.headers.host;
+  const protocol = req.headers["x-forwarded-proto"] || "http";
+  const baseUrl = protocol + "://" + host;
+
+  return NextAuth(req, res, { ...options, baseUrl });
+}

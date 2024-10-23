@@ -9,7 +9,7 @@
   width: 100vw;
   background-color: var(--white);
   z-index: 3;
-  margin-top: 150px;
+  margin-top: 88px;
   box-shadow: -1px 20px 20px -10px rgba(0, 0, 0, 0.06);
   border-bottom: 1px solid var(--iron);
   background: var(--concrete);
@@ -74,7 +74,7 @@
 
 .triangle {
   position: relative;
-  bottom: -15px;
+  bottom: -10px;
   left: 15%;
   width: 75px;
   height: 30px;

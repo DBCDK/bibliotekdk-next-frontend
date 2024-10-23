@@ -5,16 +5,14 @@ import styles from "./ReservationButton.module.css";
 import { useModal } from "@/components/_modal";
 import {
   constructButtonText,
-  context,
-  handleGoToLogin,
+  context, handleGoToLogin,
   sortEreolFirst,
 } from "@/components/work/reservationbutton/utils";
-import isEmpty from "lodash/isEmpty";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import { useManifestationAccess } from "@/components/hooks/useManifestationAccess";
 import { useData } from "@/lib/api/api";
 import { overviewWork } from "@/lib/api/work.fragments";
-import { useManifestationData, useOrderFlow } from "@/components/hooks/order";
+import { useManifestationData } from "@/components/hooks/order";
 
 function TextAboveButton({ access, isAuthenticated }) {
   return (
@@ -57,6 +55,7 @@ function ReservationButtonWrapper({
   className,
   handleOrderFinished = undefined,
   bookmarkKey,
+  branch,
 }) {
   const { data: workData, isLoadingWorkData } = useData(
     workId && overviewWork({ workId })
@@ -135,6 +134,7 @@ function ReservationButtonWrapper({
         hasPhysicalCopy,
         hasDigitalCopy,
         bookmarkKey,
+        branch,
       }}
     />
   );
@@ -161,89 +161,57 @@ export const ReservationButton = ({
   isAuthenticated,
   buttonType,
   size,
-  pids,
-  shortText = false, // Shorten material text
   overrideButtonText = null,
-  modal,
+  branch,
   workTypes,
   materialTypes,
-  hasPhysicalCopy,
-  bookmarkKey,
+  modal
 }) => {
   access = sortEreolFirst(access);
 
-  const { start } = useOrderFlow();
-  const noSelectedManifestations = Boolean(isEmpty(access));
-
-  // pjo 15/08/24 - added filter for dfi.dk - it is not a real accessUrl
-  const onlineMaterialWithoutLoginOrLoginAtUrl = Boolean(
-    access?.filter((entry) => entry?.url && entry?.origin !== "www.dfi.dk")
-      .length > 0
-  );
-
-  const noSelectedManifestationsProps = {
-    dataCy: "button-order-overview-disabled",
-    disabled: true,
-  };
-
-  let noSelectedManifestationsLabel;
-  if (!hasPhysicalCopy) {
-    noSelectedManifestationsLabel = "Order-disabled-but-owned";
-  } else if (hasPhysicalCopy) {
-    noSelectedManifestationsLabel = "Order-disabled";
-  } else {
-    noSelectedManifestationsLabel = "Order-online-disabled";
-  }
-  const noSelectedManifestationsTxt = Translate({
-    context: "overview",
-    label: noSelectedManifestationsLabel,
-  });
-
-  const accessibleOnlineAndNoLoginProps = {
-    skeleton: !access,
-    dataCy: "button-order-overview",
-    onClick: () => handleGoToLogin(modal, access, isAuthenticated),
-  };
-
-  const loginRequiredProps = {
-    skeleton: isEmpty(access),
-    dataCy: `button-order-overview-enabled`,
-    onClick: () => {
-      start({ orders: [{ pids, bookmarkKey: bookmarkKey }] });
-    },
-  };
-
-  const loginRequiredText = Translate({
-    context: "general",
-    label: "bestil",
-  });
-
-  /**
-   * Get props for the button based on the case scenario
-   * @returns {Object} props and text for button
-   */
   const getProps = () => {
-    if (noSelectedManifestations) {
+    const lookupUrl = branch?.holdings?.lookupUrl;
+    if (lookupUrl) {
       return {
-        props: noSelectedManifestationsProps,
-        text: noSelectedManifestationsTxt,
+        props: {
+          dataCy: "button-order-overview-enabled",
+          onClick: () => {
+            window.open(lookupUrl, "_blank");
+          },
+        },
+        text: Translate({ context: "overview", label: "see_location" }),
         preferSecondary: false,
       };
     }
 
+    // is this an access url ?
+    const onlineAccessUrl = Boolean(
+      access?.filter((entry) => entry?.url && entry?.origin !== "www.dfi.dk")
+        .length > 0
+    );
+    // props for button - online access with login options
+    const onlineAccessWithLogin = {
+      skeleton: !access,
+      dataCy: "button-order-overview",
+      onClick: () => handleGoToLogin(modal, access, isAuthenticated),
+    };
     //ACCESS_URL,INFOMEDIA,EREOL
-    if (onlineMaterialWithoutLoginOrLoginAtUrl) {
+    if (onlineAccessUrl) {
       return {
-        props: accessibleOnlineAndNoLoginProps,
-        text: constructButtonText(workTypes, materialTypes, shortText),
-        preferSecondary: shortText, // Becomes secondary button if button links to material (not ordering)
+        props: onlineAccessWithLogin,
+        text: constructButtonText(workTypes, materialTypes),
+
       };
     }
-
-    //DIGITAL_ARTICLE_SERVICE, INTER_LIBRARY_LOAN
     return {
-      props: loginRequiredProps,
-      text: loginRequiredText,
+      props: {
+        dataCy: "button-order-no-localizations-disabled",
+        disabled: true,
+      },
+      text: Translate({
+        context: "overview",
+        label: "button-order-no-localizations-disabled",
+      }),
       preferSecondary: false,
     };
   };

@@ -29,14 +29,6 @@ export function useQuickFilters() {
         { label: "Non-fiktion", cql: "nonfiction" },
       ],
     },
-    {
-      label: "label-children-adults",
-      searchIndex: "term.childrenoradults",
-      values: [
-        { label: "Voksne", cql: "til voksne" },
-        { label: "Børn", cql: "til børn" },
-      ],
-    },
   ];
 
   // we need a useEffect to sync state (selectedFacets) with facets from the query

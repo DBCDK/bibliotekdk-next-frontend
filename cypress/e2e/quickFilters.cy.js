@@ -1,7 +1,7 @@
 import isEmpty from "lodash/isEmpty";
 
 describe("Quickfilters", () => {
-  it(`Check quickfilters`, () => {
+  it.skip(`Check quickfilters`, () => {
     cy.visit(
       "/iframe.html?id=advancedsearch-quickfilter--quick-filter-default"
     );

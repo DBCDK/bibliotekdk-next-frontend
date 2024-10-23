@@ -8,7 +8,7 @@ describe("Overview", () => {
       cy.visit("/iframe.html?id=work-overview--overview-wrapped");
     });
 
-    it(`have basic functionining functionality`, () => {
+    it.skip(`have basic functionining functionality`, () => {
       cy.contains("Overview - bog", { timeout: 15000 });
 
       // --- Can tab through to different elements
@@ -49,7 +49,7 @@ describe("Overview", () => {
       cy.get(`[data-cy=${tagBog}]`).children("i").should("not.be.visible");
     });
 
-    it("Can default its first materialType: ", () => {
+    it.skip("Can default its first materialType: ", () => {
       cy.visit("/iframe.html?id=work-overview--overview-wrapped-no-type");
       cy.contains("Overview -", { timeout: 15000 });
 

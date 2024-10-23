@@ -29,7 +29,6 @@ import {
   setTranslations,
 } from "@/components/base/translate/Translate";
 
-import Banner from "@/components/banner/Banner";
 import Footer from "@/components/footer";
 import Matomo from "@/components/matomo";
 import BodyScrollLock from "@/components/scroll/lock";
@@ -37,13 +36,11 @@ import Modal from "@/components/_modal";
 import Pages from "@/components/_modal/pages";
 import Notifications from "@/components/base/notifications/Notifications";
 import HelpHeader from "@/components/help/header";
-import FeedBackLink from "@/components/feedbacklink";
 import { SkipToMainLink } from "@/components/base/skiptomain/SkipToMain";
 import Listener from "@/components/ffu";
 
 import Head from "@/components/head";
 
-import fetchTranslations from "@/lib/api/backend";
 import App from "next/app";
 import SetPickupBranch from "@/components/utils/SetPickupBranch";
 import { enableDebug } from "@/lib/api/api";
@@ -242,13 +239,11 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
               <BodyScrollLock router={router} />
               <div id="layout">
                 <SkipToMainLink />
-                <Banner />
                 <Notifications />
                 <HelpHeader />
 
                 <Component {...pageProps} />
 
-                <FeedBackLink />
                 <Footer />
               </div>
 
@@ -283,7 +278,6 @@ MyApp.getInitialProps = async (ctx) => {
   return {
     pageProps: {
       ...appProps?.pageProps,
-      translations: await fetchTranslations(),
     },
   };
 };

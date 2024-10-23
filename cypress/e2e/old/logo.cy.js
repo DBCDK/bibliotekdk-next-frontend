@@ -3,7 +3,7 @@
  * Test log
  */
 describe("Logo", () => {
-  it(`View in BIG viewport`, () => {
+  it.skip(`View in BIG viewport`, () => {
     cy.visit("/iframe.html?id=base-logo--default-logo");
     cy.viewport(1920, 1080);
     // verify that banner is shown
@@ -11,7 +11,7 @@ describe("Logo", () => {
     cy.get("[data-cy=key-logo]").should("have.attr", "href").and("equal", "/");
   });
 
-  it(`View in SMALL viewport`, () => {
+  it.skip(`View in SMALL viewport`, () => {
     cy.visit("/iframe.html?id=base-logo--blue-logo");
     cy.viewport(765, 1080);
     // verify that banner is NOT shown

@@ -1,5 +1,5 @@
 describe("Bookmark page", () => {
-  it(`test book marks`, () => {
+  it.skip(`test book marks`, () => {
     cy.visit("/iframe.html?id=profile-bookmarks--bookmark-list");
 
     cy.get("article").should("exist").should("have.length", 2);

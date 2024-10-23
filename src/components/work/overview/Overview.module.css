@@ -70,13 +70,6 @@
   flex-wrap: wrap;
 }
 
-.info {
-  padding-top: var(--pt1);
-}
-.info p:first-letter {
-  text-transform: uppercase;
-}
-
 .subtitle {
   padding: 0 0 var(--pt1) 0;
 }

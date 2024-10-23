@@ -3,14 +3,11 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import PropTypes from "prop-types";
 import Icon from "@/components/base/icon";
-import AlternativeOptions from "./alternatives";
-import LocalizationsLink from "./localizationslink";
 import WorkGroupingsOverview from "./workgroupingsoverview";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import ReservationButtonWrapper from "@/components/work/reservationbutton/ReservationButton";
 import styles from "./Overview.module.css";
-import OrderButtonTextBelow from "@/components/work/reservationbutton/orderbuttontextbelow/OrderButtonTextBelow";
 import { useEffect, useMemo } from "react";
 import { MaterialTypeSwitcher } from "@/components/work/overview/materialtypeswitcher/MaterialTypeSwitcher";
 import { CreatorsArray } from "@/components/work/overview/creatorsarray/CreatorsArray";
@@ -25,6 +22,8 @@ import { useRouter } from "next/router";
 import Breadcrumbs from "@/components/work/overview/breadcrumbs/Breadcrumbs";
 import BookmarkDropdown from "@/components/work/overview/bookmarkDropdown/BookmarkDropdown";
 import isEmpty from "lodash/isEmpty";
+import useAgencyFromSubdomain from "@/components/hooks/useSubdomainToAgency";
+import { useHoldingsForAgency } from "@/components/hooks/useHoldings";
 
 function useInitMaterialType(
   uniqueMaterialTypes,
@@ -65,7 +64,7 @@ export function Overview({
 }) {
   const manifestations = work?.manifestations?.mostRelevant;
   const router = useRouter();
-
+  const { agency } = useAgencyFromSubdomain();
   const { uniqueMaterialTypes, inUniqueMaterialTypes, flatPidsByType } =
     useMemo(() => {
       return manifestationMaterialTypeFactory(manifestations);
@@ -86,6 +85,14 @@ export function Overview({
     [manifestations]
   );
   const selectedPids = useMemo(() => flatPidsByType(type), [type]);
+
+  const { branches } = useHoldingsForAgency({
+    pids: allPids,
+    agencyId: agency?.agencyId,
+  });
+  const branch = branches?.find(
+    (branch) => branch?.branchId === agency?.branchId
+  );
 
   return (
     <section className={`${styles.background} ${className}`}>
@@ -154,6 +161,7 @@ export function Overview({
                 <ReservationButtonWrapper
                   workId={workId}
                   selectedPids={selectedPids}
+                  branch={branch}
                 />
                 <BookmarkDropdown
                   materialId={workId}
@@ -163,15 +171,6 @@ export function Overview({
                   className={styles.svgscale}
                   editions={work?.manifestations?.mostRelevant}
                 />
-              </Col>
-
-              <OrderButtonTextBelow
-                selectedPids={selectedPids}
-                skeleton={skeleton}
-              />
-              <AlternativeOptions workId={workId} selectedPids={selectedPids} />
-              <Col xs={12} className={styles.info}>
-                <LocalizationsLink selectedPids={selectedPids} />
               </Col>
             </Col>
           </Col>
