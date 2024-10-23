@@ -18,7 +18,7 @@ const logoPaths = {
   roskilde: "/schools/logo/roskilde.jpg",
   slagelse: "/schools/logo/slagelse.png",
   stenhus: "/schools/logo/stenhus.png",
-  soroeakademi: "/schools/logo/soroeakademi.jpeg",
+  soroeakademi: "/schools/logo/soroeakademi.jpg",
 };
 
 const heroPath = {

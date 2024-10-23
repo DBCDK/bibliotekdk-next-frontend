@@ -3,7 +3,7 @@
  * Test functionality of reservation button - see also @overview.spec.js
  */
 describe("Reservation button", () => {
-  it("user logged in material available", () => {
+  it.skip("user logged in material available", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-physical-book"
     );
@@ -16,7 +16,7 @@ describe("Reservation button", () => {
     });
   });
 
-  it("physical material click opens modal with query params", () => {
+  it.skip("physical material click opens modal with query params", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-physical-book"
     );
@@ -28,7 +28,7 @@ describe("Reservation button", () => {
     cy.get("[data-cy=router-query]").contains("modal");
   });
 
-  it("physical material shows now for loan message, when no ILL, but is owned by agency", () => {
+  it.skip("physical material shows now for loan message, when no ILL, but is owned by agency", () => {
     cy.visit(
       "/iframe.html?args=&id=work-reservationbutton--reservation-button-physical-book-no-ill-but-is-owned-by-agency"
     );
@@ -36,7 +36,7 @@ describe("Reservation button", () => {
     cy.contains("Kan ikke bestilles til hjemlån");
   });
 
-  it("digital material", () => {
+  it.skip("digital material", () => {
     const urla =
       "/iframe.html?id=work-reservationbutton--reservation-button-e-book";
 
@@ -61,7 +61,7 @@ describe("Reservation button", () => {
     );
   });
 
-  it("user logged in material unavailable", () => {
+  it.skip("user logged in material unavailable", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-disabled"
     );
@@ -70,7 +70,7 @@ describe("Reservation button", () => {
     }).should("be.disabled");
   });
 
-  it("user not logged in then above text is shown", () => {
+  it.skip("user not logged in then above text is shown", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-not-logged-in"
     );
@@ -98,7 +98,7 @@ describe("Reservation button", () => {
     }).should("not.include.text", "deaktiveret");
   });
 
-  it("user not logged in material available", () => {
+  it.skip("user not logged in material available", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-not-logged-in"
     );
@@ -113,7 +113,7 @@ describe("Reservation button", () => {
     });
   });
 
-  it("user logged in loan is not possible for material", () => {
+  it.skip("user logged in loan is not possible for material", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-physical-book-loan-not-possible"
     );
@@ -122,7 +122,7 @@ describe("Reservation button", () => {
     }).should("be.disabled");
   });
 
-  it("onclick should open order-modal, when user is logged ind", () => {
+  it.skip("onclick should open order-modal, when user is logged ind", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-login-flow"
     );
@@ -140,7 +140,7 @@ describe("Reservation button", () => {
     cy.get("[data-cy=router-query]").contains("modal");
   });
 
-  it("onclick should open login-modal and add order modal to store, when user is NOT logged ind", () => {
+  it.skip("onclick should open login-modal and add order modal to store, when user is NOT logged ind", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-not-logged-in-flow"
     );

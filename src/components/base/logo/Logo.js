@@ -38,8 +38,8 @@ function TestUserActive() {
 export default function Logo({ href = "/", ...props }) {
   const { logoPath } = useAgencyFromSubdomain();
 
-  if (props.skeleton) {
-    return <Logo {...props} />;
+  if (!logoPath) {
+    return null;
   }
 
   return (
