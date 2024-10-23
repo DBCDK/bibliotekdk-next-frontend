@@ -915,8 +915,8 @@
     },
     "footer": {
       "hvad_er_bibliotek_dk": {
-        "da": "StudieSøg er en enkel søgeflade designet til gymnasieelever og lærere, som gør det nemt at søge efter bøger og artikler. Med funktioner som filtrering på sprog og emne samt adgang til artikler via Infomedia, hvis abonnement er tilgængeligt, hjælper GymnasieSøg med at finde relevant materiale hurtigt. ",
-        "en": "StudieSøg is a simple search interface designed for high school students and teachers, making it easy to search for books and articles. With features such as filtering by language and subject, as well as access to articles via Infomedia, if available, GymnasieSøg helps find relevant material quickly."
+        "da": "StudieSøg er en enkel søgeflade designet til gymnasieelever og lærere, som gør det nemt at søge efter bøger og artikler. Med funktioner som filtrering på sprog og emne samt adgang til artikler via Infomedia, hvis abonnement er tilgængeligt, hjælper StudieSøg med at finde relevant materiale hurtigt. ",
+        "en": "StudieSøg is a simple search interface designed for high school students and teachers, making it easy to search for books and articles. With features such as filtering by language and subject, as well as access to articles via Infomedia, if available, StudieSøg helps find relevant material quickly."
       },
       "contact": {
         "da": "Kontakt",
@@ -2548,12 +2548,12 @@
         "en": "Label: mangler oversættelse"
       },
       "advancedSearch": {
-        "da": "Avanceret søgning",
-        "en": "Advanced Search"
+        "da": "Søgning",
+        "en": "Search"
       },
       "advancedSearch_button": {
-        "da": "Søg avanceret",
-        "en": "Search advanced"
+        "da": "Søg",
+        "en": "Search"
       },
       "advanced": {
         "da": "Avanceret",
@@ -2852,7 +2852,7 @@
       },
       "advanced-dropdown-OR": {
         "da": "ELLER",
-        "en": "NOROT"
+        "en": "OR"
       },
       "advanced-dropdown-NOT": {
         "da": "IKKE",
@@ -2932,7 +2932,7 @@
       },
       "narrow-search-more": {
         "da": "Afgræns yderligere",
-        "en": "narrow-search-more"
+        "en": "Narrow search"
       },
       "searchHistory": {
         "da": "Søgehistorik",

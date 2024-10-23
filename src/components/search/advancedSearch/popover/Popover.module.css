@@ -53,7 +53,7 @@
   width: fit-content;
   align-items: center;
   cursor: pointer;
-  overflow: hidden;
+  /* overflow: hidden; */
   margin-top: 7px;
 }
 .triggerActive {
