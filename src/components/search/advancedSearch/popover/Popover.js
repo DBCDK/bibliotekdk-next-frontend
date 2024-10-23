@@ -107,7 +107,10 @@ const Popover = ({ className, simpleSearchRef }) => {
             onClick={() => {
               setShowPopover(!showPopover);
             }}
-            title={Translate({ context: "search", label: "advanced" })}
+            title={Translate({
+              context: "search",
+              label: "advancedSearch_button",
+            })}
           />
         </Tooltip>
 

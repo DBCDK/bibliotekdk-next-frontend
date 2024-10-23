@@ -6,7 +6,6 @@ import {
   publicationYearFormatterAndComparitor,
   publicationYearIndices,
   dummy__players,
-  dummy__databases,
 } from "@/components/search/advancedSearch/advancedSearchHelpers/dummy__default_advanced_search_fields";
 import { convertToDropdownInput } from "@/components/search/advancedSearch/advancedSearchHelpers/convertToDropdownInput";
 import { FormTypeEnum } from "@/components/search/advancedSearch/advancedSearchHelpers/helperComponents/HelperComponents";
@@ -508,17 +507,6 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
     infoBarLabel: "tooltip_nota_info",
   };
 
-  const databases = {
-    items: convertToDropdownInput(dummy__databases()),
-    indexName: DropdownIndicesEnum.DATABASES,
-    showSearchBar: false,
-    // @TODO add a link to helptext here
-    helpTxtLink: {
-      label: "Fagbibliografier",
-      href: "/hjaelp/Fagbibliografier/234",
-    },
-  };
-
   const players = {
     items: convertToDropdownInput(dummy__players()),
     indexName: DropdownIndicesEnum.PLAYERS,
@@ -527,7 +515,7 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
 
   const types = {
     //all: DONE
-    all: [genreAndForm, languages, publicationYear, ages, nota, databases].map(
+    all: [genreAndForm, languages, publicationYear, ages, nota].map(
       (dropdownUnit) =>
         getDropdownFromUrl({
           initDropdowns: initDropdowns,
