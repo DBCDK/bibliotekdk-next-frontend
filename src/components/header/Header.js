@@ -29,11 +29,12 @@ import { openMobileSuggester } from "@/components/header/suggester/Suggester";
 import styles from "./Header.module.css";
 import Router, { useRouter } from "next/router";
 
-import { openLoginModal } from "../_modal/pages/login/utils";
 import { signOut } from "@dbcdk/login-nextjs/client";
 import useAuthentication from "../hooks/user/useAuthentication";
 
 import AdvancedSearchPopover from "@/components/search/advancedSearch/popover/Popover";
+
+import useAgencyFromSubdomain from "../hooks/useSubdomainToAgency";
 
 // material Pages
 export const MATERIAL_PAGES = [
@@ -73,6 +74,8 @@ export function Header({
   modal,
   hideShadow,
 }) {
+  const { signIn } = useAgencyFromSubdomain();
+
   const context = { context: "header" };
 
   const simpleSearchRef = useRef(null);
@@ -109,7 +112,7 @@ export function Header({
           const redirectUrl = window?.location?.origin;
           signOut(redirectUrl);
         } else {
-          openLoginModal({ modal });
+          signIn();
         }
       },
     },
