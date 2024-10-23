@@ -13,21 +13,21 @@ const agencyNames = [
 ];
 //path to logo images
 const logoPaths = {
-  greve: "/schools/logo/greve.jpg",
+  greve: "/schools/logo/greve.webp",
   odense: "/schools/logo/odense.svg",
-  roskilde: "/schools/logo/roskilde.jpg",
-  slagelse: "/schools/logo/slagelse.png",
-  stenhus: "/schools/logo/stenhus.png",
-  soroeakademi: "/schools/logo/soroeakademi.jpg",
+  roskilde: "/schools/logo/roskilde.webp",
+  slagelse: "/schools/logo/slagelse.webp",
+  stenhus: "/schools/logo/stenhus.webp",
+  soroeakademi: "/schools/logo/soroeakademi.webp",
 };
 
 const heroPath = {
-  roskilde: "/schools/hero/roskilde.jpg",
-  greve: "/schools/hero/greve.jpg",
-  slagelse: "/schools/hero/slagelse.jpg",
-  stenhus: "/schools/hero/stenhus.jpg",
-  odense: "/schools/hero/odense.jpg",
-  soroeakademi: "/schools/hero/soroeakademi.jpg",
+  roskilde: "/schools/hero/roskilde.webp",
+  greve: "/schools/hero/greve.webp",
+  slagelse: "/schools/hero/slagelse.webp",
+  stenhus: "/schools/hero/stenhus.webp",
+  odense: "/schools/hero/odense.webp",
+  soroeakademi: "/schools/hero/soroeakademi.webp",
 };
 const useAgencyFromSubdomain = () => {
   const [agencyName, setAgencyName] = useState(null);

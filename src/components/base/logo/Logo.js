@@ -51,7 +51,13 @@ export default function Logo({ href = "/" }) {
       })}
     >
       <div className={styles.display_flex}>
-        <Image src={logoPath} alt="logo" width={200} height={50} />
+        <Image
+          style={{ width: "auto" }}
+          src={logoPath}
+          alt="logo"
+          width={200}
+          height={50}
+        />
       </div>
       <TestUserActive />
     </Link>
