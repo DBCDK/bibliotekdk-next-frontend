@@ -4,7 +4,8 @@ import Text from "@/components/base/text/Text";
 import styles from "./ReservationButton.module.css";
 import { useModal } from "@/components/_modal";
 import {
-  context,
+  constructButtonText,
+  context, handleGoToLogin,
   sortEreolFirst,
 } from "@/components/work/reservationbutton/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
@@ -162,6 +163,9 @@ export const ReservationButton = ({
   size,
   overrideButtonText = null,
   branch,
+  workTypes,
+  materialTypes,
+  modal
 }) => {
   access = sortEreolFirst(access);
 
@@ -177,6 +181,26 @@ export const ReservationButton = ({
         },
         text: Translate({ context: "overview", label: "see_location" }),
         preferSecondary: false,
+      };
+    }
+
+    // is this an access url ?
+    const onlineAccessUrl = Boolean(
+      access?.filter((entry) => entry?.url && entry?.origin !== "www.dfi.dk")
+        .length > 0
+    );
+    // props for button - online access with login options
+    const onlineAccessWithLogin = {
+      skeleton: !access,
+      dataCy: "button-order-overview",
+      onClick: () => handleGoToLogin(modal, access, isAuthenticated),
+    };
+    //ACCESS_URL,INFOMEDIA,EREOL
+    if (onlineAccessUrl) {
+      return {
+        props: onlineAccessWithLogin,
+        text: constructButtonText(workTypes, materialTypes),
+
       };
     }
     return {
