@@ -5,7 +5,8 @@ import styles from "./ReservationButton.module.css";
 import { useModal } from "@/components/_modal";
 import {
   constructButtonText,
-  context, handleGoToLogin,
+  context,
+  handleGoToLogin,
   sortEreolFirst,
 } from "@/components/work/reservationbutton/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
@@ -165,7 +166,7 @@ export const ReservationButton = ({
   branch,
   workTypes,
   materialTypes,
-  modal
+  modal,
 }) => {
   access = sortEreolFirst(access);
 
@@ -200,7 +201,6 @@ export const ReservationButton = ({
       return {
         props: onlineAccessWithLogin,
         text: constructButtonText(workTypes, materialTypes),
-
       };
     }
     return {
