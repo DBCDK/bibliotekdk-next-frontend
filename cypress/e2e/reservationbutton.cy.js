@@ -36,7 +36,7 @@ describe("Reservation button", () => {
     cy.contains("Kan ikke bestilles til hjemlån");
   });
 
-  it.skip("digital material", () => {
+  it("digital material", () => {
     const urla =
       "/iframe.html?id=work-reservationbutton--reservation-button-e-book";
 
@@ -160,7 +160,7 @@ describe("Reservation button", () => {
 });
 
 describe("ButtonTxt", () => {
-  it("should have book button text", () => {
+  it.skip("should have book button text", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton-orderbuttontextbelow--book-button-txt"
     );
