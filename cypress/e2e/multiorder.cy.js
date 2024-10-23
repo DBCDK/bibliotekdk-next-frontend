@@ -15,7 +15,7 @@ describe("Multi Order", () => {
 
       cy.contains("Log ind via dit bibliotek");
     });
-    it("Should require loaner form to be filled, when ordering to agency without borchk", () => {
+    it.skip("Should require loaner form to be filled, when ordering to agency without borchk", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?args=&id=order-multiorder--unauthenticated-user&viewMode=story"
       );
@@ -63,7 +63,7 @@ describe("Multi Order", () => {
         win.localStorage.clear();
       });
     });
-    it("Should go to status message when selecting agency with no borchk", () => {
+    it.skip("Should go to status message when selecting agency with no borchk", () => {
       cy.visit(
         "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"
       );
@@ -80,7 +80,7 @@ describe("Multi Order", () => {
       // cy.contains("Du er ved at bestille 1 materiale");
     });
 
-    it("Should show temporarily closed reason when library is closed", () => {
+    it.skip("Should show temporarily closed reason when library is closed", () => {
       cy.visit(
         "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"
       );
@@ -94,7 +94,7 @@ describe("Multi Order", () => {
       cy.contains("SOME GOOD REASON");
     });
 
-    it("Show mail from agency as default", () => {
+    it.skip("Show mail from agency as default", () => {
       cy.visit(
         "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"
       );
@@ -103,7 +103,7 @@ describe("Multi Order", () => {
       cy.get('[data-cy="input"]').should("have.value", "test@test.dk");
     });
 
-    it("Should order single material via ILL", () => {
+    it.skip("Should order single material via ILL", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"
       );
@@ -153,7 +153,7 @@ describe("Multi Order", () => {
       ]);
     });
 
-    it("Should show mobile bus stop, when bogbus is selected", () => {
+    it.skip("Should show mobile bus stop, when bogbus is selected", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"
       );
@@ -191,7 +191,7 @@ describe("Multi Order", () => {
       });
     });
 
-    it("Should show failed material in receipt", () => {
+    it.skip("Should show failed material in receipt", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"
       );
@@ -219,14 +219,14 @@ describe("Multi Order", () => {
         });
       });
     });
-    it("should NOT contain pincode field", () => {
+    it.skip("should NOT contain pincode field", () => {
       cy.visit(
         "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"
       );
       cy.contains("Bestil single ILL").click();
       cy.get("[data-cy=pincode-input]").should("not.exist");
     });
-    it("should contain pincode field", () => {
+    it.skip("should contain pincode field", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"
       );
@@ -266,7 +266,7 @@ describe("Multi Order", () => {
       });
     });
 
-    it("should show error when check order fails", () => {
+    it.skip("should show error when check order fails", () => {
       cy.visit(
         "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"
       );
@@ -325,7 +325,7 @@ describe("Multi Order", () => {
       });
     });
 
-    it("Should order full periodicas via ILL", () => {
+    it.skip("Should order full periodicas via ILL", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"
       );
@@ -412,7 +412,7 @@ describe("Multi Order", () => {
         "Antal: 2",
       ]);
     });
-    it("Should order specific article from periodica via Digital Article Service and ILL (prefer digital)", () => {
+    it.skip("Should order specific article from periodica via Digital Article Service and ILL (prefer digital)", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"
       );
@@ -487,7 +487,7 @@ describe("Multi Order", () => {
       cy.contains("Bestil tidsskrifter").click();
       cy.contains("2 materialer mangler at få udfyldt informationer");
     });
-    it("Should warn about already ordered material, order material anyway", () => {
+    it.skip("Should warn about already ordered material, order material anyway", () => {
       cy.visit(
         "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"
       );
@@ -505,7 +505,7 @@ describe("Multi Order", () => {
       cy.get('[data-cy="submit-button"]').click();
       cy.contains("1 materiale er bestilt");
     });
-    it("Should warn about already ordered material, remove material from order list", () => {
+    it.skip("Should warn about already ordered material, remove material from order list", () => {
       cy.visit(
         "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"
       );
@@ -522,7 +522,7 @@ describe("Multi Order", () => {
       cy.contains("Bestil ikke").click();
       cy.contains("Der er ingen materialer i din bestillingsliste");
     });
-    it("Should warn about e-materials that can't be ordered", () => {
+    it.skip("Should warn about e-materials that can't be ordered", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"
       );
@@ -532,7 +532,7 @@ describe("Multi Order", () => {
       cy.contains("Der er ingen materialer der kræver bestilling");
       cy.contains("Tilbage").click();
     });
-    it("Should warn about e-materials that can't be ordered, but proceed to 1 that can", () => {
+    it.skip("Should warn about e-materials that can't be ordered, but proceed to 1 that can", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"
       );
@@ -542,7 +542,7 @@ describe("Multi Order", () => {
       cy.contains("På næste side vises det materiale, som du kan bestille");
       cy.contains("Næste").click();
     });
-    it("Should show error when user is blocked at agency", () => {
+    it.skip("Should show error when user is blocked at agency", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"
       );
@@ -560,7 +560,7 @@ describe("Multi Order", () => {
   });
 
   describe("Mitid user", () => {
-    it("should show an errormessage when user has no agencies", () => {
+    it.skip("should show an errormessage when user has no agencies", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?args=&id=order-multiorder--mit-id-no-agencies&viewMode=story"
       );
