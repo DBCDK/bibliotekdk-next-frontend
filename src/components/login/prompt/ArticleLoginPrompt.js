@@ -1,13 +1,12 @@
 import PropTypes from "prop-types";
 import Translate from "@/components/base/translate";
-import { useModal } from "@/components/_modal";
-import { LOGIN_MODE } from "@/components/_modal/pages/login/utils";
 import { useData } from "@/lib/api/api";
 import { infomediaArticle } from "@/lib/api/infomedia.fragments";
 import LoginPrompt from "./Prompt";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import useAgencyFromSubdomain from "@/components/hooks/useSubdomainToAgency";
 
 /**
  * Prompt the user for log in when not authenticated or
@@ -16,9 +15,9 @@ import useAuthentication from "@/components/hooks/user/useAuthentication";
  *
  */
 export default function ArticleLoginPrompt({ articleId }) {
+  const { signIn } = useAgencyFromSubdomain();
   const { loanerInfo } = useLoanerInfo();
   const { isAuthenticated } = useAuthentication();
-  const modal = useModal();
   const hasInfomediaAccess = loanerInfo?.rights?.infomedia;
 
   const { data, isLoading } = useData(
@@ -34,7 +33,7 @@ export default function ArticleLoginPrompt({ articleId }) {
           context: "articles",
           label: "accessWarning",
         })}
-        signIn={() => openLoginModal({ modal, mode: LOGIN_MODE.INFOMEDIA })}
+        signIn={signIn}
         isAuthenticated={isAuthenticated}
       />
     );

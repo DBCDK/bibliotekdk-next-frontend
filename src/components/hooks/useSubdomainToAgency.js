@@ -1,5 +1,7 @@
 //Given a subdomain, returns agency data. e.g. odense.gym.bib.dk -> returns odense agency data
 import { useEffect, useState } from "react";
+import { signIn } from "@dbcdk/login-nextjs/client";
+
 //TODO: should we fetch from fbi-api instead?
 import gymAgencies from "@/components/utils/gymAgencies.json";
 //TODO: get exact subdomain names from current urls https://odense.gym.bib.dk/
@@ -53,8 +55,16 @@ const useAgencyFromSubdomain = () => {
     }
   }, []);
 
+  const agency = gymAgencies[agencyName];
+
   return {
-    agency: gymAgencies[agencyName],
+    signIn: () =>
+      signIn(
+        "adgangsplatformen",
+        {},
+        { agency: agency?.agencyId, force_login: 1 }
+      ),
+    agency,
     logoPath: logoPaths[agencyName],
     heroPath: heroPath[agencyName],
   };
