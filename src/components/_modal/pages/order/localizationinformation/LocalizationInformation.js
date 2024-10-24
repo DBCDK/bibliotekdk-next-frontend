@@ -30,6 +30,7 @@ export function LocalizationInformation({
   mobileLibraryLocations,
   mobileLibrary,
   setMobileLibrary,
+  libraryClosed,
 }) {
   if (availableAsDigitalCopy) {
     return null;
@@ -102,20 +103,22 @@ export function LocalizationInformation({
           </div>
         )}
         {/* maybe move warning together with warning in order-modal. see bibdk2021-1927 */}
-        {!availableAsPhysicalCopy && !availableAsDigitalCopy && (
-          <div className={`${styles["invalid-pickup"]} ${styles.invalid}`}>
-            <Text
-              type="text3"
-              skeleton={isLoadingPolicy || !pickupBranch?.name}
-              lines={1}
-            >
-              {Translate({
-                context: "order",
-                label: "check-policy-fail",
-              })}
-            </Text>
-          </div>
-        )}
+        {!availableAsPhysicalCopy &&
+          !availableAsDigitalCopy &&
+          !libraryClosed && (
+            <div className={`${styles["invalid-pickup"]} ${styles.invalid}`}>
+              <Text
+                type="text3"
+                skeleton={isLoadingPolicy || !pickupBranch?.name}
+                lines={1}
+              >
+                {Translate({
+                  context: "order",
+                  label: "check-policy-fail",
+                })}
+              </Text>
+            </div>
+          )}
         {mobileLibraryLocations?.length > 0 && (
           <SimpleDropdown
             placeholder={Translate({
@@ -142,7 +145,7 @@ LocalizationInformation.propTypes = {
   onClick: PropTypes.func,
 };
 
-export default function Wrap({ orders }) {
+export default function Wrap({ orders, libraryClosed }) {
   const modal = useModal();
 
   const {
@@ -173,6 +176,7 @@ export default function Wrap({ orders }) {
         isAuthenticated={isAuthenticated}
         isLoadingPolicy={isLoadingValidation}
         isLoadingBranches={pickupBranch?.isLoading}
+        libraryClosed={libraryClosed}
         mobileLibraryLocations={mobileLibraryLocations}
         setMobileLibrary={setMobileLibrary}
         mobileLibrary={mobileLibrary}
