@@ -16,6 +16,8 @@ import { overviewWork } from "@/lib/api/work.fragments";
 import { useManifestationData, useOrderFlow } from "@/components/hooks/order";
 import isEmpty from "lodash/isEmpty";
 import { AccessEnum } from "@/lib/enums";
+import { useHoldingsForAgency } from "@/components/hooks/useHoldings";
+import useAgencyFromSubdomain from "@/components/hooks/useSubdomainToAgency";
 
 function TextAboveButton({ access, isAuthenticated }) {
   return (
@@ -58,12 +60,13 @@ function ReservationButtonWrapper({
   className,
   handleOrderFinished = undefined,
   bookmarkKey,
-  branch,
+  //branch,
 }) {
   const { data: workData, isLoadingWorkData } = useData(
     workId && overviewWork({ workId })
   );
 
+  const { agency } = useAgencyFromSubdomain();
   const {
     access,
     hasPhysicalCopy,
@@ -77,6 +80,14 @@ function ReservationButtonWrapper({
     physicalUnitPids: physicalPids,
     isLoading: isLoadingManifestationData,
   } = useManifestationData({ pids: selectedPids });
+
+  const { branches } = useHoldingsForAgency({
+    pids: selectedPids,
+    agencyId: agency?.agencyId,
+  });
+  const branch = branches?.find(
+    (branch) => branch?.branchId === agency?.branchId
+  );
 
   const illSupported = hasPhysicalCopy;
   const requireLocalizations = !illSupported && physicalPids?.length > 0;

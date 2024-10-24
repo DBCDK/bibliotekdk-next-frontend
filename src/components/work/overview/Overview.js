@@ -22,8 +22,7 @@ import { useRouter } from "next/router";
 import Breadcrumbs from "@/components/work/overview/breadcrumbs/Breadcrumbs";
 import BookmarkDropdown from "@/components/work/overview/bookmarkDropdown/BookmarkDropdown";
 import isEmpty from "lodash/isEmpty";
-import useAgencyFromSubdomain from "@/components/hooks/useSubdomainToAgency";
-import { useHoldingsForAgency } from "@/components/hooks/useHoldings";
+
 import AlternativeOptions from "./alternatives";
 
 function useInitMaterialType(
@@ -65,7 +64,6 @@ export function Overview({
 }) {
   const manifestations = work?.manifestations?.mostRelevant;
   const router = useRouter();
-  const { agency } = useAgencyFromSubdomain();
   const { uniqueMaterialTypes, inUniqueMaterialTypes, flatPidsByType } =
     useMemo(() => {
       return manifestationMaterialTypeFactory(manifestations);
@@ -86,14 +84,6 @@ export function Overview({
     [manifestations]
   );
   const selectedPids = useMemo(() => flatPidsByType(type), [type]);
-
-  const { branches } = useHoldingsForAgency({
-    pids: allPids,
-    agencyId: agency?.agencyId,
-  });
-  const branch = branches?.find(
-    (branch) => branch?.branchId === agency?.branchId
-  );
 
   return (
     <section className={`${styles.background} ${className}`}>
@@ -162,7 +152,6 @@ export function Overview({
                 <ReservationButtonWrapper
                   workId={workId}
                   selectedPids={selectedPids}
-                  branch={branch}
                 />
                 <BookmarkDropdown
                   materialId={workId}
