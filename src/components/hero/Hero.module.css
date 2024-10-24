@@ -49,14 +49,13 @@
   position: absolute;
   left: var(--pt4);
   bottom: var(--pt4);
-  padding: var(--pt3) 0 var(--pt4) 0;
+  padding: var(--pt3) 0 var(--pt4) var(--pt3);
   display: none;
 }
 
 .herotitle {
   color: var(--white);
   display: inline;
-  padding: 0 0 0 var(--pt3);
 }
 
 .heromobiletxt {
@@ -65,10 +64,6 @@
 
 .herotopmargin {
   margin-top: var(--pt3);
-}
-
-.herobluetxt {
-  padding: var(--pt2) var(--pt10) 0 var(--pt11);
 }
 
 /* Small devices */

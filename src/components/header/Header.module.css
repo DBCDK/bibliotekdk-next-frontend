@@ -169,3 +169,6 @@
   align-items: center;
   height: var(--pt7);
 }
+.logoContainer {
+  align-self: center;
+}

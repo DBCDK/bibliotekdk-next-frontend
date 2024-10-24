@@ -49,21 +49,12 @@ export function Hero() {
         </Col>
         <Col md={2} xs={1} />
         <div className={styles.bluebox}>
-          <div className={styles.iconandtxt}>
-            <Icon
-              src={"ornament1white.svg"}
-              size={{ w: 8, h: "auto" }}
-              alt=""
-              className={styles.heroicon}
-            />
-
-            <Title type="title2" className={styles.herotitle} tag="h1">
-              {Translate({
-                context: "general",
-                label: "heroTxt",
-              })}
-            </Title>
-          </div>
+          <Title type="title2" className={styles.herotitle} tag="h1">
+            {Translate({
+              context: "general",
+              label: "heroTxt",
+            })}
+          </Title>
           <Text type="text2" className={styles.herobluetxt}>
             {Translate({
               context: "general",

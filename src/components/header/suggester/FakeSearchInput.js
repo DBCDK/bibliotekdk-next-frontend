@@ -6,6 +6,7 @@ import ClearSvg from "@/public/icons/close.svg";
 import { useRouter } from "next/router";
 import Icon from "@/components/base/icon";
 import useQ from "@/components/hooks/useQ";
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
 /**
  * A Fake Search Input Field
@@ -19,55 +20,33 @@ import useQ from "@/components/hooks/useQ";
  * @returns {React.JSX.Element}
  */
 export default function FakeSearchInput({ className, showButton = true }) {
-  const router = useRouter();
-  const { q, setQ } = useQ();
-  const hasQuery = !!q?.all;
-  const hasQueryClass = hasQuery ? styles.hasQuery : "";
-
-  const qAll = q?.all;
-
-  // Class for clear/cross button
-  const clearVisibleClass = hasQuery ? styles.visible : "";
+  const { showPopover, setShowPopover } = useAdvancedSearchContext();
 
   return (
     <div
-      className={`${styles.container} ${className} ${hasQueryClass}`}
+      className={`${styles.container} ${className}`}
       tabIndex="0"
+      onClick={() => setShowPopover(true)}
+      onKeyDown={(event) => {
+        if (event.key === "Enter") {
+          setShowPopover(true);
+        }
+      }}
     >
-      <div
-        className={styles.fakeinput}
-        data-cy="fake-search-input"
-        onClick={() => openMobileSuggester(router)}
-        onKeyDown={(event) => {
-          if (event.key === "Enter") {
-            openMobileSuggester(router);
-          }
-        }}
-      >
+      <div className={styles.fakeinput} data-cy="fake-search-input">
         <Text type="text2" className={styles.placeholder}>
-          {hasQuery
-            ? qAll
-            : Translate({
-                context: "suggester",
-                label: "placeholder",
-              })}
+          {Translate({
+            context: "suggester",
+            label: "placeholder",
+          })}
         </Text>
         <Text type="text2" className={styles.placeholderxs}>
-          {hasQuery
-            ? qAll
-            : Translate({
-                context: "suggester",
-                label: "placeholderMobile",
-              })}
+          {Translate({
+            context: "suggester",
+            label: "placeholderMobile",
+          })}
         </Text>
-        <span
-          data-cy="fake-search-input-clear"
-          className={`${styles.clear} ${clearVisibleClass}`}
-          onClick={(e) => {
-            e.stopPropagation();
-            setQ({ ...q, all: "" });
-          }}
-        >
+        <span data-cy="fake-search-input-clear" className={`${styles.clear}`}>
           <Icon size={{ w: "auto", h: 2 }} alt="">
             <ClearSvg />
           </Icon>

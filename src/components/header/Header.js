@@ -4,6 +4,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import React, { useRef } from "react";
 import cx from "classnames";
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
 import useFilters from "@/components/hooks/useFilters";
 
@@ -75,6 +76,8 @@ export function Header({
 }) {
   const { signIn } = useAgencyFromSubdomain();
 
+  const { setShowPopover } = useAdvancedSearchContext();
+
   const context = { context: "header" };
 
   const simpleSearchRef = useRef(null);
@@ -92,11 +95,7 @@ export function Header({
       icon: SearchIcon,
       className: styles.mobileSearch,
       onClick: () => {
-        !story && openMobileSuggester();
-        story && story.setSuggesterVisibleMobile(true);
-        setTimeout(() => {
-          focusInput();
-        }, 100);
+        setShowPopover(true);
       },
     },
     {
@@ -150,11 +149,11 @@ export function Header({
       <div className={styles.headerWrap}>
         <Container className={styles.header} fluid>
           <Row>
-            <Col xs={3}>
+            <Col xs={3} className={styles.logoContainer}>
               <Logo />
             </Col>
             <Col xs={{ span: 7 }} className={styles.mobileHeader}></Col>
-            <Col xs={{ span: 2 }} className={styles.iconActionsContainer}>
+            <Col xs={{ span: 2 }}>
               <div
                 className={styles.iconActions}
                 data-cy={cyKey({
