@@ -16,6 +16,7 @@ import styles from "./Series.module.css";
 import { templateForSeriesSlider } from "@/components/base/materialcard/templates/templates";
 import { getSeriesUrl } from "@/lib/utils";
 
+import { getTitlesAndType } from "@/components/work/overview/titlerenderer/TitleRenderer";
 /**
  * Series React component
  *
@@ -24,7 +25,7 @@ import { getSeriesUrl } from "@/lib/utils";
  * @param {string} workId
  * @param {number} index
  */
-export function Series({ isLoading, series = {} }) {
+export function Series({ isLoading, series = {}, work }) {
   const propsAndChildrenInputList =
     series?.members?.map((member) => {
       return { material: member?.work, series: member };
@@ -34,12 +35,14 @@ export function Series({ isLoading, series = {} }) {
     ? "(" + series?.identifyingAddition + ")"
     : "";
 
+  const { titles } = getTitlesAndType({ work });
+
   return (
     <Section
       title={
         <Title tag="h3" type="title4" skeleton={isLoading}>
           <Link border={{ bottom: true }} href={link}>
-            {`${series.title} ${identifyingAddition}`}
+            {`${titles[0] || series.title} ${identifyingAddition}`}
           </Link>
         </Title>
       }
@@ -110,6 +113,7 @@ export default function Container({ workId }) {
             isLoading={isLoading}
             series={singleSeries}
             workId={workId}
+            work={data?.work}
           />
         );
       })}
