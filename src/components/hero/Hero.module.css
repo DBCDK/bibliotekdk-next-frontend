@@ -27,11 +27,6 @@
   margin-top: var(--pt2);
 }
 
-.iconandtxt {
-  display: flex;
-  align-items: center;
-}
-
 .herodescription {
   color: white;
   padding: var(--pt2);

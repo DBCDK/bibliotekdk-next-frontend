@@ -1,11 +1,8 @@
 import Text from "@/components/base/text";
 import styles from "./FakeSearchInput.module.css";
-import { openMobileSuggester } from "@/components/header/suggester/Suggester";
 import Translate from "@/components/base/translate";
 import ClearSvg from "@/public/icons/close.svg";
-import { useRouter } from "next/router";
 import Icon from "@/components/base/icon";
-import useQ from "@/components/hooks/useQ";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
 /**
@@ -20,7 +17,7 @@ import { useAdvancedSearchContext } from "@/components/search/advancedSearch/adv
  * @returns {React.JSX.Element}
  */
 export default function FakeSearchInput({ className, showButton = true }) {
-  const { showPopover, setShowPopover } = useAdvancedSearchContext();
+  const { setShowPopover } = useAdvancedSearchContext();
 
   return (
     <div

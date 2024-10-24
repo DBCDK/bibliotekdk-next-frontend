@@ -10,8 +10,6 @@ import useFilters from "@/components/hooks/useFilters";
 
 import { cyKey } from "@/utils/trim";
 
-import { focusInput } from "./suggester/";
-
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
@@ -24,8 +22,6 @@ import SearchIcon from "./icons/search";
 import BookmarkIcon from "./icons/bookmark";
 
 import Logo from "@/components/base/logo/Logo";
-
-import { openMobileSuggester } from "@/components/header/suggester/Suggester";
 
 import styles from "./Header.module.css";
 import Router, { useRouter } from "next/router";
@@ -67,13 +63,7 @@ const actions = [
  *
  * @returns {React.JSX.Element}
  */
-export function Header({
-  className = "",
-  router = null,
-  story = null,
-  user,
-  hideShadow,
-}) {
+export function Header({ className = "", router = null, user, hideShadow }) {
   const { signIn } = useAgencyFromSubdomain();
 
   const { setShowPopover } = useAdvancedSearchContext();
