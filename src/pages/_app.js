@@ -100,7 +100,7 @@ let pageProps;
 export default function MyApp({ Component, pageProps: _pageProps, router }) {
   // sync pageProps
   pageProps = { ...pageProps, ..._pageProps };
-  setAppUrl(_pageProps.appUrl);
+  setAppUrl(pageProps.appUrl);
 
   const isOnline = useIsOnline();
   setLocale(router.locale);
@@ -128,7 +128,7 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
 
   return (
     <ErrorBoundary>
-      <PagePropsContext.Provider value={_pageProps}>
+      <PagePropsContext.Provider value={pageProps}>
         <SWRConfig value={swrConfigValue}>
           <SessionProvider
             session={

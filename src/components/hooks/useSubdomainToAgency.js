@@ -52,14 +52,14 @@ export function hostToAgency(host) {
 }
 const useAgencyFromSubdomain = () => {
   const { host } = useContext(PagePropsContext);
-
+  const options = hostToAgency(host);
   return {
-    ...hostToAgency(host),
+    ...options,
     signIn: () =>
       signIn(
         "adgangsplatformen",
         {},
-        { agency: agency?.agencyId, force_login: 1 }
+        { agency: options?.agency?.agencyId, force_login: 1 }
       ),
   };
 };
