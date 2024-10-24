@@ -207,9 +207,10 @@ const txtBody =
   "\n" +
   "              <p>\n" +
   "                Du kan læse mere om dine rettigheder i Datatilsynets vejledning\n" +
-  '                om de registreredes rettigheder, som du finder på{" "}\n' +
+  "                om de registreredes rettigheder, som du finder på\n" +
   "                <a\n" +
   '                  href="https://www.datatilsynet.dk"\n' +
+  "target=_blank\n" +
   '                  className="animations_top_line_keep_false__eIwX_ animations_top_line_false__YkyKD animations_underlineContainer__ojbVD"\n' +
   "                >\n" +
   "                  datatilsynet.dk\n" +
@@ -221,9 +222,10 @@ const txtBody =
   "                <br />\n" +
   "                Du har ret til at indgive en klage til Datatilsynet, hvis du er\n" +
   "                utilfreds med den måde, vi behandler dine personoplysninger på.\n" +
-  '                Du finder Datatilsynets kontaktoplysninger på{" "}\n' +
+  "                Du finder Datatilsynets kontaktoplysninger på\n" +
   "                <a\n" +
   '                  href="https://www.datatilsynet.dk"\n' +
+  "target=_blank\n" +
   '                  className="animations_top_line_keep_false__eIwX_ animations_top_line_false__YkyKD animations_underlineContainer__ojbVD"\n' +
   "                >\n" +
   "                  datatilsynet.dk\n" +
@@ -232,9 +234,10 @@ const txtBody =
   "\n" +
   "              <p>\n" +
   "                Hvis du har spørgsmål til dine rettigheder, er du velkommen til\n" +
-  '                at kontakte os:{" "}\n' +
+  "                at kontakte os:\n" +
   "                <a\n" +
   '                  href="https://kundeservice.dbc.dk/bibdk"\n' +
+  "target=_blank\n" +
   '                  className="animations_top_line_keep_false__eIwX_ animations_top_line_false__YkyKD animations_underlineContainer__ojbVD"\n' +
   "                >\n" +
   "                  Kundeservice\n" +
