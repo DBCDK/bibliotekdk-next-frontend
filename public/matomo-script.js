@@ -12,7 +12,7 @@ _paq.push(["enableLinkTracking"]);
 (function () {
   var u = "https://stats.dbc.dk/";
   _paq.push(["setTrackerUrl", u + "matomo.php"]);
-  _paq.push(["setSiteId", "33"]);
+  _paq.push(["setSiteId", "45"]);
   var d = document,
     g = d.createElement("script"),
     s = d.getElementsByTagName("script")[0];
