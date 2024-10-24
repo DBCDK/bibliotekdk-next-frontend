@@ -50,6 +50,7 @@ import { BookmarkSyncProvider } from "@/components/hooks/useBookmarks";
 import useIsOnline from "@/components/hooks/useIsOnline";
 import { UseManyProvider } from "@/components/hooks/useMany";
 import { PagePropsContext } from "@/components/hooks/useSubdomainToAgency";
+import { setAppUrl } from "@/lib/utils";
 
 // kick off the polyfill!
 if (typeof window !== "undefined") {
@@ -99,6 +100,7 @@ let pageProps;
 export default function MyApp({ Component, pageProps: _pageProps, router }) {
   // sync pageProps
   pageProps = { ...pageProps, ..._pageProps };
+  setAppUrl(_pageProps.appUrl);
 
   const isOnline = useIsOnline();
   setLocale(router.locale);
@@ -287,11 +289,13 @@ MyApp.getInitialProps = async (ctx) => {
 
   // The real hostname forwarded by the proxy
   const host = ctx?.ctx?.req?.headers?.["x-forwarded-host"];
+  const proto = ctx?.ctx?.req?.headers?.["x-forwarded-proto"];
   const appProps = await App.getInitialProps(ctx);
   return {
     pageProps: {
       ...appProps?.pageProps,
       host,
+      appUrl: `${proto}://${host}`,
     },
   };
 };

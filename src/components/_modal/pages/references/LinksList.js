@@ -6,14 +6,14 @@ import cx from "classnames";
 
 // eslint-disable-next-line css-modules/no-unused-class
 import styles from "./References.module.css";
+import { getAppUrl } from "@/lib/utils";
 
 /**
  * @param {Array<String>} pids
  * @returns
  */
 const onlinelinks = (pids) => {
-  const APP_URL =
-    getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
+  const APP_URL = getAppUrl();
 
   return {
     refworks: `http://www.refworks.com/express/ExpressImport.asp?vendor=bibliotek.dk&filter=RefWorks Tagged Format&encoding=28591&url=${APP_URL}/api/refworks?pids=${pids.join(

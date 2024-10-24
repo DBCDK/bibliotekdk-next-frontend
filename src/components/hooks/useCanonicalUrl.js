@@ -1,8 +1,5 @@
 import { useRouter } from "next/router";
-import getConfig from "next/config";
-
-const APP_URL =
-  getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
+import { getAppUrl } from "@/lib/utils";
 
 /**
  * Use this hook to generate canonical URLS, and alternate 
@@ -16,6 +13,7 @@ const APP_URL =
  * @returns {Object}
  */
 export default function useCanonicalUrl({ preserveParams = [] } = {}) {
+  const APP_URL = getAppUrl();
   const router = useRouter();
   const preserved = preserveParams
     .filter((param) => router.query[param])
