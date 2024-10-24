@@ -8,7 +8,7 @@ import {
 } from "@/components/search/advancedSearch/utils";
 import { LogicalOperatorsEnum } from "@/components/search/enums";
 
-let appUrl;
+let appUrl = "http://localhost:3000";
 export function setAppUrl(url) {
   appUrl = url;
 }
