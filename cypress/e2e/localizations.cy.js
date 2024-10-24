@@ -32,7 +32,7 @@ describe("Localizations", () => {
     cy.contains("h2", "BalleRipRapRup");
     cy.contains("Rapper Bib - Branch with holdings on loan").click();
     cy.contains("h2", "Rapper");
-    cy.contains("Bestil til afhentning på denne afdeling");
+    cy.contains("2 på hylden, men udlånes ikke");
     cy.contains(
       "Husk at du kan bestille online og hente på dit foretrukne bibliotek, uanset hvor materialet befinder sig."
     );

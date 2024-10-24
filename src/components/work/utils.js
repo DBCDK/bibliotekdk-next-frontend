@@ -84,7 +84,7 @@ function getPageDescription(work) {
 
   return `Lån ${title}${creator && ` af ${creator}`}${
     typesString && ` ${typesString}`
-  }. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online.`;
+  }. Lån fra alle Danmarks biblioteker. Afhent på dit lokale bibliotek eller find online.`;
 }
 
 /**

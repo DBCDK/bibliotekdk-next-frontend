@@ -34,6 +34,7 @@ const CheckoutForm = () => {
     missingMobileLibrary,
     missingMail,
     alreadyOrdered,
+    noLocation,
   } = useMultiOrderValidation({ orders });
 
   const { hasCulrUniqueId } = useAuthentication();
@@ -43,6 +44,8 @@ const CheckoutForm = () => {
   const { submitOrders, isSubmitting } = useSubmitOrders({
     orders,
   });
+
+  const libraryClosed = pickupBranch?.temporarilyClosed;
 
   const hasPhysicalOrders = physicalMaterialsCount > 0;
 
@@ -65,6 +68,11 @@ const CheckoutForm = () => {
     <div className={styles.container}>
       <LocalizationInformation orders={orders} />
       <OrdererInformation />
+      {libraryClosed && (
+        <Text type="text3" className={styles.closedreason}>
+          {pickupBranch?.temporarilyClosedReason}
+        </Text>
+      )}
       <Pincode />
       <div>
         {/* Errors and messages */}
@@ -94,6 +102,12 @@ const CheckoutForm = () => {
               }
               vars={[materialsMissingActionCount]}
             />
+          </Text>
+        )}
+
+        {!isLoadingValidation && noLocation && (
+          <Text type="text3" className={styles.errorLabel}>
+            <Translate context="order" label="no-locations-disable" />
           </Text>
         )}
 
@@ -159,51 +173,44 @@ const CheckoutForm = () => {
           </Text>
         )}
 
-        {!isLoadingValidation &&
-          hasPhysicalOrders &&
-          !pickupBranch?.temporarilyClosed && (
-            <Text type="text3" className={styles.formLabel}>
-              <Translate
-                context="order"
-                label={
-                  materialsToOrderCount === 1
-                    ? "order-message-library"
-                    : "order-message-library-plural"
-                }
-              />
-            </Text>
-          )}
-
-        {!pickupBranch?.temporarilyClosed ? (
-          <Button
-            dataCy="submit-button"
-            type="primary"
-            size="large"
-            className={styles.formSubmit}
-            disabled={disabled || isSubmitting}
-            onClick={async () => {
-              const receipt = await submitOrders();
-              modal.push("multireceipt", {
-                error: receipt?.error || "",
-                failedMaterials: receipt?.failedMaterialsPids || [],
-                successMaterials: receipt?.successfullyCreated || [],
-                branchName: pickupBranch?.name,
-                digitalMaterialsCount,
-                physicalMaterialsCount,
-              });
-            }}
-          >
-            {isLoadingValidation || isSubmitting ? (
-              <Spinner />
-            ) : (
-              Translate({ context: "general", label: "accept" })
-            )}
-          </Button>
-        ) : (
-          <Text type="text3" className={styles.closedreason}>
-            {pickupBranch?.temporarilyClosedReason}
+        {!isLoadingValidation && hasPhysicalOrders && !libraryClosed && (
+          <Text type="text3" className={styles.formLabel}>
+            <Translate
+              context="order"
+              label={
+                materialsToOrderCount === 1
+                  ? "order-message-library"
+                  : "order-message-library-plural"
+              }
+            />
           </Text>
         )}
+
+        <Button
+          dataCy="submit-button"
+          type="primary"
+          size="large"
+          className={styles.formSubmit}
+          disabled={disabled || libraryClosed || isSubmitting}
+          onClick={async () => {
+            const receipt = await submitOrders();
+            modal.push("multireceipt", {
+              error: receipt?.error || "",
+              failedMaterials: receipt?.failedMaterialsPids || [],
+              successMaterials: receipt?.successfullyCreated || [],
+              branchName: pickupBranch?.name,
+              digitalMaterialsCount,
+              physicalMaterialsCount,
+            });
+          }}
+        >
+          {isLoadingValidation || isSubmitting ? (
+            <Spinner />
+          ) : (
+            Translate({ context: "general", label: "accept" })
+          )}
+        </Button>
+
         {hasCulrUniqueId && alreadyOrdered?.length > 0 && (
           <Text type="text2" className={styles.goToOrderHistory}>
             {Translate({
