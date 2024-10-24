@@ -96,6 +96,41 @@ RenderTitlesWithoutLanguage.propTypes = {
   titles: PropTypes.arrayOf(PropTypes.string),
 };
 
+export function getTvSeriesEpisodesTitle(tvSeries) {
+  /** season, disc, episode, episodeTitles .... if present **/
+  /** we have decided NOT to use the display field .. there are too many oddities ..**/
+  /** we prefix instead : "episode”, “disc”, “volume”, “sæson" **/
+
+  // ..hmm sometimes we have numbers in seasen, disc, episode, volume
+  // if so - use the number BEFORE the display - there are too many errors in the display field
+  const searson = tvSeries?.season?.numbers
+    ? `sæson ${tvSeries?.season?.numbers[0]}`
+    : tvSeries?.season?.display || null;
+  const disc = tvSeries?.disc?.numbers
+    ? `disc ${tvSeries?.disc?.numbers[0]}`
+    : tvSeries?.disc?.display || null;
+  const volume = tvSeries?.volume?.numbers
+    ? `volume ${tvSeries?.volume?.numbers[0]}`
+    : tvSeries?.volume?.display || null;
+
+  const pretitles =
+    [
+      ...(searson ? [searson] : []),
+      ...(disc ? [disc] : []),
+      ...(volume ? [volume] : []),
+      ...(tvSeries?.episode?.display ? [tvSeries?.episode?.display] : []),
+    ].join(", ") || null;
+
+  // and now the episode titles :)
+  const epsisodetitles =
+    tvSeries?.episodeTitles?.map((dis) => dis).join(", ") || null;
+
+  const subTitles =
+    pretitles && epsisodetitles
+      ? pretitles + ": " + epsisodetitles
+      : pretitles || epsisodetitles || null;
+  return subTitles;
+}
 export function RenderTvSeries({
   work,
   type = "title7",
@@ -103,38 +138,7 @@ export function RenderTvSeries({
   clamp = false,
   lines = 4,
 }) {
-  /** season, disc, episode, episodeTitles .... if present **/
-  /** we have decided NOT to use the display field .. there are too many oddities ..**/
-  /** we prefix instead : "episode”, “disc”, “volume”, “sæson" **/
-  const tvtitles = work?.titles?.tvSeries;
-  // ..hmm sometimes we have numbers in seasen, disc, episode, volume
-  // if so - use the number BEFORE the display - there are too many errors in the display field
-  const searson = tvtitles?.season?.numbers
-    ? `sæson ${tvtitles?.season?.numbers[0]}`
-    : tvtitles?.season?.display || null;
-  const disc = tvtitles?.disc?.numbers
-    ? `disc ${tvtitles?.disc?.numbers[0]}`
-    : tvtitles?.disc?.display || null;
-  const volume = tvtitles?.volume?.numbers
-    ? `volume ${tvtitles?.volume?.numbers[0]}`
-    : tvtitles?.volume?.display || null;
-
-  const pretitles =
-    [
-      ...(searson ? [searson] : []),
-      ...(disc ? [disc] : []),
-      ...(volume ? [volume] : []),
-      ...(tvtitles?.episode?.display ? [tvtitles?.episode?.display] : []),
-    ].join(", ") || null;
-
-  // and now the episode titles :)
-  const epsisodetitles =
-    tvtitles?.episodeTitles?.map((dis) => dis).join(", ") || null;
-
-  const subTitles =
-    pretitles && epsisodetitles
-      ? pretitles + ": " + epsisodetitles
-      : pretitles || epsisodetitles || null;
+  const subTitles = getTvSeriesEpisodesTitle(work?.titles?.tvSeries);
 
   if (!subTitles) {
     return null;

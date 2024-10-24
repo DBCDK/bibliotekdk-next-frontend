@@ -19,6 +19,7 @@ import { BackgroundColorEnum } from "../materialCard.utils";
 import { useState } from "react";
 import {
   getTitlesAndType,
+  getTvSeriesEpisodesTitle,
   RenderTvSeries,
 } from "@/components/work/overview/titlerenderer/TitleRenderer";
 
@@ -101,18 +102,18 @@ function propFunc(textType, lines) {
 /**Used in Slider */
 export function templateForVerticalWorkCard({ material }) {
   const tvSeries = material?.titles?.tvSeries;
-  const disc = tvSeries?.disc?.display;
-  const episode = tvSeries?.episode?.display;
-  const volume = tvSeries?.volume?.display;
-
-console.log('tvSeries', tvSeries)
+  //episodesTitle  is "season 1, disc 1, e1-e4"
+  const episodesTitle = getTvSeriesEpisodesTitle(tvSeries);
   //construct tvTitle. Name + season display. e.g. "The Office (Season 1, e1, disc 1)"
-  let tvSeriesTitle = tvSeries?.season?.display
-    ? `${tvSeries?.title} (${
-        tvSeries.season.display.charAt(0).toUpperCase() +
-        tvSeries.season.display.slice(1)
-      }${episode ? `, ${episode}` : ""}${disc ? `, ${disc}` : ""}${volume ? `, ${volume}` : ""})`
-    : tvSeries?.title;
+  let tvSeriesTitle = tvSeries?.title
+    ? `${tvSeries?.title}${
+        episodesTitle
+          ? ` (${
+              episodesTitle?.charAt(0).toUpperCase() + episodesTitle?.slice(1)
+            })`
+          : ""
+      }`
+    : null;
 
   const fullTitle = tvSeriesTitle || material?.titles?.full?.join(": ");
   const creators = material?.creators;
