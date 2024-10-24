@@ -247,7 +247,7 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
                   <Modal.Page id="saveSearch" component={Pages.SaveSearch} />
                 </Modal.Container>
                 <Head />
-                <Matomo />
+                {/* <Matomo /> */}
                 <BodyScrollLock router={router} />
                 <div id="layout">
                   <SkipToMainLink />
