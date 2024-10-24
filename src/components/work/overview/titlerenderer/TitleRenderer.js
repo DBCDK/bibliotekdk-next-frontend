@@ -103,7 +103,7 @@ export function getTvSeriesEpisodesTitle(tvSeries) {
 
   // ..hmm sometimes we have numbers in seasen, disc, episode, volume
   // if so - use the number BEFORE the display - there are too many errors in the display field
-  const searson = tvSeries?.season?.numbers
+  const season = tvSeries?.season?.numbers
     ? `sæson ${tvSeries?.season?.numbers[0]}`
     : tvSeries?.season?.display || null;
   const disc = tvSeries?.disc?.numbers
@@ -115,7 +115,7 @@ export function getTvSeriesEpisodesTitle(tvSeries) {
 
   const pretitles =
     [
-      ...(searson ? [searson] : []),
+      ...(season ? [season] : []),
       ...(disc ? [disc] : []),
       ...(volume ? [volume] : []),
       ...(tvSeries?.episode?.display ? [tvSeries?.episode?.display] : []),
