@@ -1,7 +1,6 @@
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text/Text";
-import getConfig from "next/config";
 import cx from "classnames";
 
 // eslint-disable-next-line css-modules/no-unused-class
