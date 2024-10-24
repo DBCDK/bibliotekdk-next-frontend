@@ -60,7 +60,6 @@ function ReservationButtonWrapper({
   className,
   handleOrderFinished = undefined,
   bookmarkKey,
-  //branch,
 }) {
   const { data: workData, isLoadingWorkData } = useData(
     workId && overviewWork({ workId })
