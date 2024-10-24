@@ -520,7 +520,8 @@ function createStoryParameters({ user, submitOrdersDelay = 500 }) {
             orderPolicy: (args) => {
               return {
                 orderPossible:
-                  args.variables.branchId !== "BRANCH_CHECKORDER_FAILS",
+                  args.variables.branchId !== "BRANCH_CHECKORDER_FAILS" &&
+                  args.variables.branchId !== "BRANCH_TEMPORARILY_CLOSED",
               };
             },
           },

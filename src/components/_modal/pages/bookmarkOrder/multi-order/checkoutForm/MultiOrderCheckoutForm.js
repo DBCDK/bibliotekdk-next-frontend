@@ -66,30 +66,33 @@ const CheckoutForm = () => {
 
   return (
     <div className={styles.container}>
-      <LocalizationInformation orders={orders} />
-      <OrdererInformation />
+      <LocalizationInformation orders={orders} libraryClosed={libraryClosed} />
       {libraryClosed && (
         <Text type="text3" className={styles.closedreason}>
           {pickupBranch?.temporarilyClosedReason}
         </Text>
       )}
+
+      <OrdererInformation />
       <Pincode />
       <div>
         {/* Errors and messages */}
 
-        {!isLoadingValidation && materialsNotAllowedCount > 0 && (
-          <Text type="text3" className={styles.errorLabel}>
-            <Translate
-              context="bookmark-order"
-              label={
-                materialsNotAllowedCount === 1
-                  ? "multiorder-cant-order-singular"
-                  : "multiorder-cant-order"
-              }
-              vars={[materialsNotAllowedCount]}
-            />
-          </Text>
-        )}
+        {!isLoadingValidation &&
+          materialsNotAllowedCount > 0 &&
+          !libraryClosed && (
+            <Text type="text3" className={styles.errorLabel}>
+              <Translate
+                context="bookmark-order"
+                label={
+                  materialsNotAllowedCount === 1
+                    ? "multiorder-cant-order-singular"
+                    : "multiorder-cant-order"
+                }
+                vars={[materialsNotAllowedCount]}
+              />
+            </Text>
+          )}
 
         {!isLoadingValidation && materialsMissingActionCount > 0 && (
           <Text type="text3" className={styles.errorLabel}>
