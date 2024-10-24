@@ -170,9 +170,11 @@ export function Overview({
                 skeleton={skeleton}
               />
               <AlternativeOptions workId={workId} selectedPids={selectedPids} />
-              <Col xs={12} className={styles.info}>
-                <LocalizationsLink selectedPids={selectedPids} />
-              </Col>
+              {type?.[0] !== "tidsskrift" && (
+                <Col xs={12} className={styles.info}>
+                  <LocalizationsLink selectedPids={selectedPids} />
+                </Col>
+              )}
             </Col>
           </Col>
         </Row>
