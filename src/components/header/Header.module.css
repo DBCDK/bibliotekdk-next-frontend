@@ -33,10 +33,6 @@
   padding: var(--pt1) 0 var(--pt1) 0;
 }
 
-.iconActionsContainer {
-  padding-top: var(--pt1);
-}
-
 .iconActions {
   display: flex;
   justify-content: flex-end;
@@ -81,17 +77,6 @@
     /* Downsize icon on mobile */
     transform: scale(calc(35 / 48)); /* Desired height 35, default height 48 */
     transform-origin: left;
-  }
-
-  .iconActionsContainer {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    width: auto;
-    position: absolute;
-    right: 0;
-    top: -4px; /* Magical alignment because of svg whitespace */
-    bottom: 0;
   }
 
   a.action + a.action {
@@ -168,4 +153,7 @@
   justify-content: flex-end;
   align-items: center;
   height: var(--pt7);
+}
+.logoContainer {
+  align-self: center;
 }

@@ -30,7 +30,7 @@ import {
 } from "@/components/base/translate/Translate";
 
 import Footer from "@/components/footer";
-//import Matomo from "@/components/matomo";
+import Matomo from "@/components/matomo";
 import BodyScrollLock from "@/components/scroll/lock";
 import Modal from "@/components/_modal";
 import Pages from "@/components/_modal/pages";
@@ -247,7 +247,7 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
                   <Modal.Page id="saveSearch" component={Pages.SaveSearch} />
                 </Modal.Container>
                 <Head />
-                {/* <Matomo /> */}
+                <Matomo />
                 <BodyScrollLock router={router} />
                 <div id="layout">
                   <SkipToMainLink />
