@@ -51,7 +51,7 @@ export function hostToAgency(host) {
   };
 }
 const useAgencyFromSubdomain = () => {
-  const { host } = useContext(PagePropsContext);
+  const { host } = useContext(PagePropsContext) || {};
   const options = hostToAgency(host);
   return {
     ...options,
