@@ -9,6 +9,7 @@ import getConfig from "next/config";
 import useSWR from "swr";
 import useAccessToken from "@/components/hooks/user/useAccessToken";
 import useCookieConsent from "@/components/hooks/useCookieConsent";
+import useAgencyFromSubdomain from "@/components/hooks/useSubdomainToAgency";
 
 // TODO handle config better
 const nextJsConfig = getConfig();
@@ -57,13 +58,17 @@ export async function fetcher(
     accessToken,
   } = typeof queryStr === "string" ? JSON.parse(queryStr) : queryStr;
 
-  const { uniqueVisitorId, statistics } = extra;
+  const { uniqueVisitorId, statistics, agencyId } = extra;
 
   // Calculate apiUrl
   const apiUrl =
     apiUrlFromQuery && config[apiUrlFromQuery]?.url
       ? config[apiUrlFromQuery]?.url
       : config.fbi_api.url;
+
+  const parsedUrl = new URL(apiUrl);
+
+  const rootUrl = `${parsedUrl.protocol}//${parsedUrl.hostname}`;
 
   const headers = {
     "Content-Type": "application/json",
@@ -81,14 +86,17 @@ export async function fetcher(
   }
 
   const start = Date.now();
-  const res = await fetch(apiUrl, {
-    method: "POST",
-    headers,
-    body: JSON.stringify({
-      query,
-      variables,
-    }),
-  });
+  const res = await fetch(
+    `${rootUrl}/${agencyId ? `${agencyId}/` : ""}opac/graphql`,
+    {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        query,
+        variables,
+      }),
+    }
+  );
 
   if (debug && typeof window !== "undefined") {
     const normalStyle = "text-decoration: none;font-weight:normal;";
@@ -258,13 +266,14 @@ function getStackTrace() {
  */
 function useFetcherImpl() {
   const consent = useCookieConsent();
+  const { agency } = useAgencyFromSubdomain();
   const { fetcher: mockedFetcher } = useContext(APIMockContext) || {};
   if (mockedFetcher) {
     const stackTrace = getStackTrace();
     return (queryStr) => mockedFetcher(queryStr, stackTrace);
   }
 
-  return (key) => fetcher(key, null, null, consent);
+  return (key) => fetcher(key, null, null, { ...consent, ...agency });
 }
 
 /**

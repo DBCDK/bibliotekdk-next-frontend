@@ -6,9 +6,9 @@ module.exports = {
   },
   env: {
     nextjsBaseUrl: "http://localhost:3000",
-    graphqlPath: "/190101/bibdk21/graphql",
-    fbiApiPath: "/bibdk21/graphql",
-    fbiApiSimpleSearchPath: "/SimpleSearch/graphql",
+    graphqlPath: "/190101/opac/graphql",
+    fbiApiPath: "/opac/graphql",
+    fbiApiSimpleSearchPath: "/opac/graphql",
   },
   retries: {
     runMode: 3,

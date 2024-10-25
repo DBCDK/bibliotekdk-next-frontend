@@ -1,4 +1,3 @@
-import getConfig from "next/config";
 import Translate from "@/components/base/translate";
 import uniq from "lodash/uniq";
 import animations from "@/components/base/animation/animations.module.css";
@@ -9,8 +8,13 @@ import {
 } from "@/components/search/advancedSearch/utils";
 import { LogicalOperatorsEnum } from "@/components/search/enums";
 
-const APP_URL =
-  getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
+let appUrl = "http://localhost:3000";
+export function setAppUrl(url) {
+  appUrl = url;
+}
+export function getAppUrl() {
+  return appUrl;
+}
 
 /**
  * @file
@@ -338,7 +342,7 @@ export function getMaterialReviewUrl(title, workId, pid) {
  * @returns {string} The canonical work URL
  */
 export function getCanonicalWorkUrl({ title, creators, id }) {
-  return `${APP_URL}/materiale/${encodeTitleCreator(
+  return `${getAppUrl()}/materiale/${encodeTitleCreator(
     title,
     extractCreatorsPrioritiseCorporation(creators) || [{ display: "" }]
   )}/${id}`;
@@ -362,7 +366,7 @@ export function getArticlePath({ title, nid }) {
  * @returns {string} The canonical article URL
  */
 export function getCanonicalArticleUrl(props) {
-  return `${APP_URL}/${getArticlePath(props)}`;
+  return `${getAppUrl()}/${getArticlePath(props)}`;
 }
 
 /**

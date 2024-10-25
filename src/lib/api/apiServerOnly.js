@@ -1,3 +1,4 @@
+import { hostToAgency } from "@/components/hooks/useSubdomainToAgency";
 import { generateKey, fetcher } from "@/lib/api/api";
 import { getServerSession } from "@dbcdk/login-nextjs/server";
 
@@ -21,6 +22,8 @@ export async function fetchAll(
   if (typeof window !== "undefined") {
     return {};
   }
+
+  const { agency } = hostToAgency(context?.req?.headers?.["x-forwarded-host"]);
 
   // Detect if requester is a bot
   const userAgent = context.req.headers["user-agent"];
@@ -57,7 +60,7 @@ export async function fetchAll(
             accessToken: session?.accessToken,
           });
           try {
-            const queryRes = await fetcher(queryKey, userAgent, ip);
+            const queryRes = await fetcher(queryKey, userAgent, ip, agency);
             return { queryKey, queryRes };
           } catch (e) {
             return null;

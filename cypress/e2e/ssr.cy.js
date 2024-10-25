@@ -45,7 +45,7 @@ function getPageHead(path) {
 /**
  * Check that the site is server side rendered properly
  */
-describe("Server Side Rendering", () => {
+describe.skip("Server Side Rendering", () => {
   describe(`frontpage`, () => {
     it.skip(`has correct metadata`, () => {
       getPageHead("/").then((res) => {

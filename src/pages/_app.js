@@ -49,6 +49,8 @@ import ErrorPage from "./500";
 import { BookmarkSyncProvider } from "@/components/hooks/useBookmarks";
 import useIsOnline from "@/components/hooks/useIsOnline";
 import { UseManyProvider } from "@/components/hooks/useMany";
+import { PagePropsContext } from "@/components/hooks/useSubdomainToAgency";
+import { setAppUrl } from "@/lib/utils";
 
 // kick off the polyfill!
 if (typeof window !== "undefined") {
@@ -98,6 +100,7 @@ let pageProps;
 export default function MyApp({ Component, pageProps: _pageProps, router }) {
   // sync pageProps
   pageProps = { ...pageProps, ..._pageProps };
+  setAppUrl(pageProps.appUrl);
 
   const isOnline = useIsOnline();
   setLocale(router.locale);
@@ -125,142 +128,152 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
 
   return (
     <ErrorBoundary>
-      <SWRConfig value={swrConfigValue}>
-        <SessionProvider
-          session={
-            router.query.disablePagePropsSession ? undefined : pageProps.session
-          }
-          refetchWhenOffline={false}
-          // Re-fetch session every 5 minutes
-          refetchInterval={5 * 60}
-          // Re-fetches session when window is focused
-          refetchOnWindowFocus={isOnline}
-        >
-          <AdvancedSearchProvider router={router}>
-            <Modal.Provider
-              router={{
-                pathname: router.pathname,
-                query: router.query,
-                push: (obj) => router.push(obj),
-                replace: (obj) => router.replace(obj),
-                go: (index) => window.history.go(index),
-              }}
-            >
-              <Modal.Container>
-                <Modal.Page id="menu" component={Pages.Menu} />
-                <Modal.Page id="options" component={Pages.Options} />
-                <Modal.Page id="order" component={Pages.Order} />
-                <Modal.Page
-                  id="periodicaform"
-                  component={Pages.PeriodicaForm}
-                />
-                <Modal.Page id="pickup" component={Pages.Pickup} />
-                <Modal.Page id="loanerform" component={Pages.Loanerform} />
-                <Modal.Page id="receipt" component={Pages.Receipt} />
-                <Modal.Page id="login" component={Pages.Login} />
-                <Modal.Page id="mobileLogin" component={Pages.MobileLogin} />
-                <Modal.Page id="filter" component={Pages.Filter} />
-                <Modal.Page id="references" component={Pages.References} />
-                <Modal.Page
-                  id="multiReferences"
-                  component={Pages.MultiReferences}
-                />
-                <Modal.Page
-                  id="editionPicker"
-                  component={Pages.EditionPicker}
-                />
-                <Modal.Page id="material" component={Pages.Material} />
-                <Modal.Page
-                  id="ematerialfilter"
-                  component={Pages.EMaterialFilter}
-                />
-                <Modal.Page id="multiorder" component={Pages.MultiOrder} />
-                <Modal.Page id="multireceipt" component={Pages.MultiReceipt} />
-                <Modal.Page id="deleteOrder" component={Pages.DeleteOrder} />
-                <Modal.Page id="addLibrary" component={Pages.AddLibrary} />
-                <Modal.Page id="verify" component={Pages.Verify} />
-                <Modal.Page
-                  id="statusMessage"
-                  component={Pages.StatusMessage}
-                />
-                <Modal.Page
-                  id="removeLibrary"
-                  component={Pages.RemoveLibrary}
-                />
-                <Modal.Page
-                  id="advancedFacets"
-                  component={Pages.AdvancedFacets}
-                />
+      <PagePropsContext.Provider value={pageProps}>
+        <SWRConfig value={swrConfigValue}>
+          <SessionProvider
+            session={
+              router.query.disablePagePropsSession
+                ? undefined
+                : pageProps.session
+            }
+            refetchWhenOffline={false}
+            // Re-fetch session every 5 minutes
+            refetchInterval={5 * 60}
+            // Re-fetches session when window is focused
+            refetchOnWindowFocus={isOnline}
+          >
+            <AdvancedSearchProvider router={router}>
+              <Modal.Provider
+                router={{
+                  pathname: router.pathname,
+                  query: router.query,
+                  push: (obj) => router.push(obj),
+                  replace: (obj) => router.replace(obj),
+                  go: (index) => window.history.go(index),
+                }}
+              >
+                <Modal.Container>
+                  <Modal.Page id="menu" component={Pages.Menu} />
+                  <Modal.Page id="options" component={Pages.Options} />
+                  <Modal.Page id="order" component={Pages.Order} />
+                  <Modal.Page
+                    id="periodicaform"
+                    component={Pages.PeriodicaForm}
+                  />
+                  <Modal.Page id="pickup" component={Pages.Pickup} />
+                  <Modal.Page id="loanerform" component={Pages.Loanerform} />
+                  <Modal.Page id="receipt" component={Pages.Receipt} />
+                  <Modal.Page id="login" component={Pages.Login} />
+                  <Modal.Page id="mobileLogin" component={Pages.MobileLogin} />
+                  <Modal.Page id="filter" component={Pages.Filter} />
+                  <Modal.Page id="references" component={Pages.References} />
+                  <Modal.Page
+                    id="multiReferences"
+                    component={Pages.MultiReferences}
+                  />
+                  <Modal.Page
+                    id="editionPicker"
+                    component={Pages.EditionPicker}
+                  />
+                  <Modal.Page id="material" component={Pages.Material} />
+                  <Modal.Page
+                    id="ematerialfilter"
+                    component={Pages.EMaterialFilter}
+                  />
+                  <Modal.Page id="multiorder" component={Pages.MultiOrder} />
+                  <Modal.Page
+                    id="multireceipt"
+                    component={Pages.MultiReceipt}
+                  />
+                  <Modal.Page id="deleteOrder" component={Pages.DeleteOrder} />
+                  <Modal.Page id="addLibrary" component={Pages.AddLibrary} />
+                  <Modal.Page id="verify" component={Pages.Verify} />
+                  <Modal.Page
+                    id="statusMessage"
+                    component={Pages.StatusMessage}
+                  />
+                  <Modal.Page
+                    id="removeLibrary"
+                    component={Pages.RemoveLibrary}
+                  />
+                  <Modal.Page
+                    id="advancedFacets"
+                    component={Pages.AdvancedFacets}
+                  />
 
-                <Modal.Page id="mobileFacets" component={Pages.MobileFacets} />
+                  <Modal.Page
+                    id="mobileFacets"
+                    component={Pages.MobileFacets}
+                  />
 
-                <Modal.Page
-                  id="orderHistoryDataConsent"
-                  component={Pages.OrderHistoryDataConsent}
-                />
+                  <Modal.Page
+                    id="orderHistoryDataConsent"
+                    component={Pages.OrderHistoryDataConsent}
+                  />
 
-                <Modal.Page
-                  id="deleteProfile"
-                  component={Pages.DeleteProfile}
-                />
+                  <Modal.Page
+                    id="deleteProfile"
+                    component={Pages.DeleteProfile}
+                  />
 
-                <Modal.Page
-                  id="openAdgangsplatform"
-                  component={Pages.OpenAdgangsplatform}
-                />
-                <Modal.Page
-                  id="loginNotSupported"
-                  component={Pages.LoginNotSupported}
-                />
-                <Modal.Page
-                  id="manifestationContent"
-                  component={Pages.ManifestationContent}
-                />
-                <Modal.Page
-                  id="agencyLocalizations"
-                  component={Pages.AgencyLocalizations}
-                />
-                <Modal.Page
-                  id="branchLocalizations"
-                  component={Pages.BranchLocalizations}
-                />
-                <Modal.Page
-                  id="branchDetails"
-                  component={Pages.BranchDetails}
-                />
-                <Modal.Page
-                  id="accountHasProfile"
-                  component={Pages.AccountHasProfile}
-                />
-                <Modal.Page id="saveSearch" component={Pages.SaveSearch} />
-              </Modal.Container>
-              <Head />
-              <Matomo />
-              <BodyScrollLock router={router} />
-              <div id="layout">
-                <SkipToMainLink />
-                <Notifications />
-                <HelpHeader />
+                  <Modal.Page
+                    id="openAdgangsplatform"
+                    component={Pages.OpenAdgangsplatform}
+                  />
+                  <Modal.Page
+                    id="loginNotSupported"
+                    component={Pages.LoginNotSupported}
+                  />
+                  <Modal.Page
+                    id="manifestationContent"
+                    component={Pages.ManifestationContent}
+                  />
+                  <Modal.Page
+                    id="agencyLocalizations"
+                    component={Pages.AgencyLocalizations}
+                  />
+                  <Modal.Page
+                    id="branchLocalizations"
+                    component={Pages.BranchLocalizations}
+                  />
+                  <Modal.Page
+                    id="branchDetails"
+                    component={Pages.BranchDetails}
+                  />
+                  <Modal.Page
+                    id="accountHasProfile"
+                    component={Pages.AccountHasProfile}
+                  />
+                  <Modal.Page id="saveSearch" component={Pages.SaveSearch} />
+                </Modal.Container>
+                <Head />
+                <Matomo />
+                <BodyScrollLock router={router} />
+                <div id="layout">
+                  <SkipToMainLink />
+                  <Notifications />
+                  <HelpHeader />
 
-                <Component {...pageProps} />
+                  <Component {...pageProps} />
 
-                <Footer />
-              </div>
+                  <Footer />
+                </div>
 
-              {/* watch for FFU user logins - propt the users to create an bibdk account */}
-              <Listener.FFU />
-              <Listener.Create />
-              <Listener.HasProfile />
-              <UseManyProvider />
-            </Modal.Provider>
+                {/* watch for FFU user logins - propt the users to create an bibdk account */}
+                <Listener.FFU />
+                <Listener.Create />
+                <Listener.HasProfile />
+                <UseManyProvider />
+              </Modal.Provider>
 
-            {/* SetPickupBranch listens for users just logged in via adgangsplatformen */}
-            <SetPickupBranch router={router} />
+              {/* SetPickupBranch listens for users just logged in via adgangsplatformen */}
+              <SetPickupBranch router={router} />
 
-            <BookmarkSyncProvider />
-          </AdvancedSearchProvider>
-        </SessionProvider>
-      </SWRConfig>
+              <BookmarkSyncProvider />
+            </AdvancedSearchProvider>
+          </SessionProvider>
+        </SWRConfig>
+      </PagePropsContext.Provider>
     </ErrorBoundary>
   );
 }
@@ -274,10 +287,15 @@ MyApp.getInitialProps = async (ctx) => {
     return { pageProps: {} };
   }
 
+  // The real hostname forwarded by the proxy
+  const host = ctx?.ctx?.req?.headers?.["x-forwarded-host"];
+  const proto = ctx?.ctx?.req?.headers?.["x-forwarded-proto"];
   const appProps = await App.getInitialProps(ctx);
   return {
     pageProps: {
       ...appProps?.pageProps,
+      host,
+      appUrl: `${proto}://${host}`,
     },
   };
 };

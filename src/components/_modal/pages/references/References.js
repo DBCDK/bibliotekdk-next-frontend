@@ -2,14 +2,13 @@ import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text/Text";
 import Top from "@/components/_modal/pages/base/top";
-import getConfig from "next/config";
 import Edition from "@/components/_modal/pages/edition/Edition";
 // eslint-disable-next-line css-modules/no-unused-class
 import styles from "./References.module.css";
+import { getAppUrl } from "@/lib/utils";
 
 const onlinelinks = (pid) => {
-  const APP_URL =
-    getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
+  const APP_URL = getAppUrl();
 
   return {
     refworks: `http://www.refworks.com/express/ExpressImport.asp?vendor=bibliotek.dk&filter=RefWorks Tagged Format&encoding=28591&url=${APP_URL}/api/refworks?pids=${pid}`,
