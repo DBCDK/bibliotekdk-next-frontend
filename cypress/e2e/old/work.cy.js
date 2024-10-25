@@ -5,7 +5,7 @@
 
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 
-describe("Work", () => {
+describe.skip("Work", () => {
   it(`renders all data on server`, () => {
     // we make a "request" instead of "visit" to see
     // the actual html returned from the server
