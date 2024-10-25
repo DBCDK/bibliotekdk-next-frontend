@@ -210,24 +210,6 @@ describe("Search", () => {
 
         cy.get("[data-cy=fake-search-input-button]").should("exist");
       });
-
-      it(`Click input clear on mobile should NOT be reflected in URL immediately`, () => {
-        cy.viewport("iphone-6");
-        cy.visit("/iframe.html?id=layout-header--nav-header-prefilled");
-        cy.get("[data-cy=fake-search-input]").should("contain", "some all");
-        cy.get("[data-cy=fake-search-input-clear]").should("be.visible");
-        cy.get("[data-cy=fake-search-input-clear]").click();
-        cy.get("[data-cy=fake-search-input-clear]").should("not.be.visible");
-        cy.get("[data-cy=fake-search-input]").should("not.contain", "some all");
-
-        // Check URL query parameters are as expected
-        cy.get("[data-cy=router-query]").then((el) => {
-          expect(JSON.parse(el.text())).to.deep.equal({
-            "q.all": "some all",
-            workTypes: "movie",
-          });
-        });
-      });
     });
   });
 

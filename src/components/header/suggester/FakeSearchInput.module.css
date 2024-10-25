@@ -26,10 +26,6 @@
   margin-left: var(--pt2);
 }
 
-.hasQuery .fakeinput p {
-  color: var(--mine-shaft);
-}
-
 .fakebutton {
   background: var(--blue);
   width: 68px;
@@ -61,11 +57,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.clear.visible {
-  transform: scale(1);
-  transition-timing-function: cubic-bezier(0.38, 1.95, 0.4, 0.4);
 }
 
 .clear path {
