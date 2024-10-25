@@ -8,7 +8,7 @@ module.exports = {
     nextjsBaseUrl: "http://localhost:3000",
     graphqlPath: "/190101/opac/graphql",
     fbiApiPath: "/opac/graphql",
-    fbiApiSimpleSearchPath: "/SimpleSearch/graphql",
+    fbiApiSimpleSearchPath: "/opac/graphql",
   },
   retries: {
     runMode: 3,
