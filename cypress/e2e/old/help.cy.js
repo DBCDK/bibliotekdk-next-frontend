@@ -37,7 +37,7 @@ describe("help", () => {
 
     cy.visit(`${nextjsBaseUrl}/hjaelp`);
 
-    cy.consentAllowAll();
+    // cy.consentAllowAll();
 
     // Default should be danish
     cy.get("#help-suggester-input").type("a");

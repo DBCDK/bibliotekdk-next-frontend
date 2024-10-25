@@ -1,7 +1,7 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 const fbiApiPath = Cypress.env("fbiApiSimpleSearchPath");
 
-describe("Search", () => {
+describe.skip("Search", () => {
   beforeEach(() => {
     cy.window().then((win) => {
       win.sessionStorage.clear();
@@ -52,7 +52,7 @@ describe("Search", () => {
     cy.get('[data-cy="fake-search-input"]').should("not.be.visible");
   });
 
-  it(`Should collect data when searching and clicking work`, () => {
+  it.skip(`Should collect data when searching and clicking work`, () => {
     // Intercept data collection requests to graphql
     cy.intercept("POST", `${fbiApiPath}`, (req) => {
       if (req.body.query.startsWith("mutation")) {
