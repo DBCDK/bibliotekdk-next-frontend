@@ -87,7 +87,7 @@ export async function fetcher(
 
   const start = Date.now();
   const res = await fetch(
-    `${rootUrl}/${agencyId && `${agencyId}/`}opac/graphql`,
+    `${rootUrl}/${agencyId ? `${agencyId}/` : ""}opac/graphql`,
     {
       method: "POST",
       headers,
