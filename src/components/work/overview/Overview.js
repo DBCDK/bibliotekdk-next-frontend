@@ -68,9 +68,6 @@ export function Overview({
     useMemo(() => {
       return manifestationMaterialTypeFactory(manifestations);
     }, [work, manifestations]);
-  console.log("uniqueMaterialTypes", uniqueMaterialTypes);
-  console.log("work", work);
-  console.log("manifestations", manifestations);
 
   useInitMaterialType(
     uniqueMaterialTypes,
