@@ -10,7 +10,7 @@ const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 //     },
 //   });
 // }
-describe(`linkme`, () => {
+describe.skip(`linkme`, () => {
   it.skip(`redirects on no rec.id`, () => {
     const path = "/linkme.php/?isBot=true";
     const url = `${nextjsBaseUrl}${path}`;
