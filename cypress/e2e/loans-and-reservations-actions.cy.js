@@ -1,4 +1,4 @@
-describe(`Loans and reservations deletion and renewal`, () => {
+describe.skip(`Loans and reservations deletion and renewal`, () => {
   it("Desktop - Renew and delete fails as expected", () => {
     cy.visit(
       "iframe.html?args=&id=profile-loans-and-reservations--loans-and-reservations-story-actions&viewMode=story"

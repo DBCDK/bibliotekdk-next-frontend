@@ -168,14 +168,7 @@ function MenuGroup({ menus, categoryUrl, name, className }) {
 /**
  * Profile menu main items
  */
-const menuItems = [
-  "loansAndReservations",
-  "bookmarks",
-  "orderHistory",
-  "myLibraries",
-  "myProfile",
-  "savedSearches",
-];
+const menuItems = ["loansAndReservations", "bookmarks", "savedSearches"];
 
 const initialLoansAndReservations = {
   loansAndReservations: [

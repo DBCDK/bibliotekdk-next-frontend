@@ -5180,6 +5180,14 @@
       }
     },
     "profile": {
+      "profileNotFoundTitle": {
+        "da": "Bruger blev ikke fundet",
+        "en": "User not found"
+      },
+      "profileNotFoundText": {
+        "da": "Vi kunne ikke finde dig som bruger i vores system. Kontakt dit bibliotek og få hjælp til oprettelse af en brugerprofil.",
+        "en": "We couldn’t find you as a user in our system. Please contact your library for assistance with creating a user profile."
+      },
       "administer": {
         "da": "Administrer",
         "en": "Administer"
@@ -5351,8 +5359,8 @@
         "en": "Today"
       },
       "loans-subtext": {
-        "da": "Du ser lån og reserveringer for",
-        "en": "You are looking at loans and reservations for"
+        "da": "Her har du et overblik over dine aktuelle lån og reservationer.",
+        "en": "Here's an overview of your current loans and reservations."
       },
       "your-libraries": {
         "da": "dine biblioteker",

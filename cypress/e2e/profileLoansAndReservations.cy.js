@@ -7,8 +7,8 @@ describe("Loans and reservations in profile", () => {
     cy.visit(
       "/iframe.html?id=profile-loans-and-reservations--loans-and-reservations-story"
     );
-    cy.contains("Du ser lån og reserveringer for dine biblioteker").should(
-      "exist"
-    );
+    cy.contains(
+      "Her har du et overblik over dine aktuelle lån og reservationer."
+    ).should("exist");
   });
 });

@@ -10,7 +10,6 @@ import {
 } from "@/lib/utils";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { arangeLoanerInfo } from "@/lib/userdataFactoryUtils";
-import Link from "@/components/base/link";
 import { useEffect, useState } from "react";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import {
@@ -93,6 +92,7 @@ const LoansAndReservations = () => {
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
   const { loanerInfo, isLoading } = useLoanerInfo();
   const { debt, agencies, orders, loans } = arangeLoanerInfo(loanerInfo);
+
   const [removedOrderId, setRemovedOrderId] = useState("");
   const [orderList, setOrderList] = useState([]);
 
@@ -110,7 +110,7 @@ const LoansAndReservations = () => {
     if (Array.isArray(orders)) {
       setOrderList(orders);
     }
-  }, [orders]);
+  }, [JSON.stringify(orders)]);
 
   function getAgencyString(agencyId) {
     if (!agencies) return "";
@@ -125,20 +125,8 @@ const LoansAndReservations = () => {
       title={Translate({ context: "profile", label: "loansAndReservations" })}
     >
       <Text type="text3" className={styles.subHeading}>
-        {Translate({ context: "profile", label: "loans-subtext" })}{" "}
-        <Link
-          href="/profil/mine-biblioteker"
-          border={{
-            top: false,
-            bottom: {
-              keepVisible: true,
-            },
-          }}
-        >
-          {Translate({ context: "profile", label: "your-libraries" })}
-        </Link>
+        {Translate({ context: "profile", label: "loans-subtext" })}
       </Text>
-
       {debt && debt.length !== 0 && (
         <section className={styles.section}>
           <div className={styles.titleRow}>
@@ -191,7 +179,6 @@ const LoansAndReservations = () => {
           ))}
         </section>
       )}
-
       <section className={styles.section}>
         <div className={styles.titleRow}>
           {isMobileSize ? (
@@ -260,7 +247,6 @@ const LoansAndReservations = () => {
           </Text>
         )}
       </section>
-
       <section className={styles.section}>
         <div className={styles.titleRow}>
           {isMobileSize ? (

@@ -2,6 +2,12 @@ import * as loanMutations from "@/lib/api/loans.mutations";
 import isEmpty from "lodash/isEmpty";
 import isString from "lodash/isString";
 import { getCanonicalWorkUrl } from "@/lib/utils";
+import useLoanerInfo from "../hooks/user/useLoanerInfo";
+import { useEffect, useState } from "react";
+import { useModal } from "../_modal";
+import Translate from "../base/translate";
+import { signOut } from "@dbcdk/login-nextjs/client";
+import useAuthentication from "../hooks/user/useAuthentication";
 
 export async function handleRenewLoan({ loanId, agencyId, loanMutation }) {
   await loanMutation.post(
@@ -156,4 +162,33 @@ export async function handleOrderMutationUpdates(
   if (data.deleteOrder?.deleted === false) {
     setHasDeleteError(true);
   }
+}
+
+/**
+ * Checks if the logged in user is registered on the current studiesøg library
+ */
+export function StudiesoegListener() {
+  const modal = useModal();
+  const [didShow, setDidShow] = useState();
+  const { loanerInfo, isLoading } = useLoanerInfo();
+
+  const isRegistered = loanerInfo?.agencies?.length > 0;
+  const { isAuthenticated } = useAuthentication();
+
+  useEffect(() => {
+    if (isAuthenticated && !didShow && !isLoading && !isRegistered) {
+      modal.push("statusMessage", {
+        back: false,
+        title: Translate({ context: "profile", label: "profileNotFoundTitle" }),
+        text: Translate({ context: "profile", label: "profileNotFoundText" }),
+      });
+      setDidShow(true);
+    }
+  }, [isAuthenticated, didShow, isLoading, isRegistered]);
+
+  useEffect(() => {
+    if (didShow && !modal.isVisible) {
+      signOut();
+    }
+  }, [modal.isVisible, didShow]);
 }

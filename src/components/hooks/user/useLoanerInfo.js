@@ -4,12 +4,14 @@ import useAuthentication from "./useAuthentication";
 import * as userFragments from "@/lib/api/user.fragments";
 import { useMemo } from "react";
 import merge from "lodash/merge";
+import useAgencyFromSubdomain from "../useSubdomainToAgency";
 
 /**
  * Custom hook for retrieving loaner info from FBI-API.
  * Combines user and session data into a single result object.
  */
 export default function useLoanerInfo() {
+  const { agency } = useAgencyFromSubdomain();
   const { isAuthenticated } = useAuthentication();
 
   // Used for sending mutate requests to FBI-API
@@ -52,10 +54,12 @@ export default function useLoanerInfo() {
 
     return {
       loanerInfo: userRes && {
-        agencies: user?.agencies,
-        loans: user?.loans,
-        orders: user?.orders,
-        debt: user?.debt,
+        agencies: user?.agencies?.filter((a) => a.id === agency?.agencyId),
+        loans: user?.loans.filter((l) => l?.agencyId === agency?.agencyId),
+        orders: user?.orders?.filter(
+          (o) => o?.pickUpBranch?.agencyId === agency?.agencyId
+        ),
+        debt: user?.debt?.filter((d) => d.agencyId === agency?.agencyId),
         mail: user?.mail,
         municipalityAgencyId: user?.municipalityAgencyId,
         name: user?.name,

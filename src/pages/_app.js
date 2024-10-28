@@ -51,6 +51,7 @@ import useIsOnline from "@/components/hooks/useIsOnline";
 import { UseManyProvider } from "@/components/hooks/useMany";
 import { PagePropsContext } from "@/components/hooks/useSubdomainToAgency";
 import { setAppUrl } from "@/lib/utils";
+import { StudiesoegListener } from "@/components/profile/utils";
 
 // kick off the polyfill!
 if (typeof window !== "undefined") {
@@ -264,6 +265,7 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
                 <Listener.Create />
                 <Listener.HasProfile />
                 <UseManyProvider />
+                <StudiesoegListener />
               </Modal.Provider>
 
               {/* SetPickupBranch listens for users just logged in via adgangsplatformen */}

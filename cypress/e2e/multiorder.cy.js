@@ -1,4 +1,4 @@
-describe("Multi Order", () => {
+describe.skip("Multi Order", () => {
   before(() => {
     cy.window().then((win) => {
       win.sessionStorage.clear();

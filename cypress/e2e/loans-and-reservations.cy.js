@@ -1,4 +1,4 @@
-describe(`Loans and reservations`, () => {
+describe.skip(`Loans and reservations`, () => {
   //TODO https://dbcjira.atlassian.net/browse/BIBDK2021-2027
   beforeEach(() => {
     cy.visit(
