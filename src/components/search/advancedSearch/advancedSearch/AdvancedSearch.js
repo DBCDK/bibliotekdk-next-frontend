@@ -15,7 +15,6 @@ import Button from "@/components/base/button";
 import DropdownInputs from "@/components/search/advancedSearch/dropdownInputs/DropdownInputs";
 import { convertStateToCql } from "@/components/search/advancedSearch/utils";
 import IconButton from "@/components/base/iconButton/IconButton";
-import { getHelpUrl } from "@/lib/utils";
 import cx from "classnames";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
