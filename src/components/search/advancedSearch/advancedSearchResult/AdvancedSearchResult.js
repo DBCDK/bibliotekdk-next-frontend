@@ -48,9 +48,18 @@ export function AdvancedSearchResult({
     breakpoint === "md" || breakpoint === "xs" || breakpoint === "sm" || false;
   const page = parseInt(pageNo, 10) || 1;
 
-  if (error) {
-    return null;
-  }
+  console.log("searchHistoryObj", {
+    pageNo,
+    onWorkClick,
+    onPageChange,
+    results,
+    error,
+    isLoading,
+    cql,
+    selectedFacets,
+    searchHistoryObj,
+    rawcql,
+  });
 
   const TitleComponent = ({ cql }) => {
     return (
@@ -111,7 +120,7 @@ export function AdvancedSearchResult({
       >
         {/* Reuse result page from simplesearch - we skip the wrap .. @TODO should we set
         some mark .. that we are doing advanced search .. ?? */}
-        {!isLoading && hitcount === 0 && <NoHitSearch />}
+        {((!isLoading && hitcount === 0) || !!error) && <NoHitSearch />}
         {/*<AdvancedFacets facets={facets} />*/}
         <>
           <div className={cx(styles.sort_wrapper)}>
