@@ -48,19 +48,6 @@ export function AdvancedSearchResult({
     breakpoint === "md" || breakpoint === "xs" || breakpoint === "sm" || false;
   const page = parseInt(pageNo, 10) || 1;
 
-  console.log("searchHistoryObj", {
-    pageNo,
-    onWorkClick,
-    onPageChange,
-    results,
-    error,
-    isLoading,
-    cql,
-    selectedFacets,
-    searchHistoryObj,
-    rawcql,
-  });
-
   const TitleComponent = ({ cql }) => {
     return (
       <div>
