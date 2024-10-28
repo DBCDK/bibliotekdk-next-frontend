@@ -11,6 +11,7 @@ export function authentication() {
       user {
         isCPRValidated
         loggedInAgencyId
+        loggedInBranchId
         identityProviderUsed
         hasCulrUniqueId
       }

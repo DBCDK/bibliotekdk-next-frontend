@@ -24,6 +24,9 @@ export default function useAuthentication() {
   // The agency that the user used for logging in
   const loggedInAgencyId = data?.user?.loggedInAgencyId;
 
+  // The agency that the user used for logging in
+  const loggedInBranchId = data?.user?.loggedInBranchId;
+
   // Check if fbi-api session contains user parameters
   const isGuestUser =
     !isAuthenticated &&
@@ -37,6 +40,7 @@ export default function useAuthentication() {
     isGuestUser,
     isCPRValidated,
     loggedInAgencyId,
+    loggedInBranchId,
     identityProviderUsed,
     isLoading,
   };
