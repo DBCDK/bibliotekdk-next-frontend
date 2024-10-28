@@ -7,14 +7,18 @@ import Select from "@/components/_modal/pages/login/Select";
 import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
 import useDataCollect from "@/lib/useDataCollect";
 
-export default function LastLoginLibrary() {
+export default function LastLoginLibrary({ context }) {
   const { lastLoginBranch } = useLastLoginBranch();
   const collect = useDataCollect();
 
   const onLogin = () => {
     collect.collectChooseLastUsedLibrary();
 
-    const callbackUrl = getCallbackUrl(lastLoginBranch?.branchId);
+    // @PJO 28/10/24 we need a callback uuid here
+    const callbackUrl = getCallbackUrl(
+      lastLoginBranch?.branchId,
+      context?.callbackUID
+    );
     signIn(
       "adgangsplatformen",
       { callbackUrl },

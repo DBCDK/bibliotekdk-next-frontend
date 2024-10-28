@@ -38,7 +38,7 @@ export default function LibrarySearch(props) {
       })}
     >
       {lastLoginBranch && isSearchInputEmpty && !isMobile && (
-        <LastLoginLibrary />
+        <LastLoginLibrary context={props?.context} />
       )}
       <Text type="text2">
         {desktop
