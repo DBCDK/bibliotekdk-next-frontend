@@ -132,6 +132,7 @@ export function Login({
         onChange={onChange}
         desktop={true}
         onLibrarySelect={onSelect}
+        context={context}
       />
       {isMobile && <LastLoginLibrary />}
       {/* shown up to 414px /> */}
