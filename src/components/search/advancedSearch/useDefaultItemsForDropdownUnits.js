@@ -542,6 +542,7 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
       languages,
       ages,
       nota,
+      databases,
     ].map((dropdownUnit) => {
       return getDropdownFromUrl({
         initDropdowns: initDropdowns,
@@ -555,6 +556,7 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
       publicationYear,
       languages,
       nota,
+      databases,
     ].map((dropdownUnit) =>
       getDropdownFromUrl({
         initDropdowns: initDropdowns,
