@@ -244,7 +244,7 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
               )}
               <Text type="text3" tag="span">
                 <Link
-                  href={getHelpUrl("soegning-baade-enkel-og-avanceret", "179")}
+                  href={"/soegning-hjaelp"}
                   border={{
                     top: false,
                     bottom: {
