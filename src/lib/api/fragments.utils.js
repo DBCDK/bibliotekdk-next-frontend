@@ -136,7 +136,6 @@ export const seriesFragment = `fragment seriesFragment on Series {
   description
   mainLanguages
   seriesWorkTypes: workTypes
-  numberInSeries
   seriesId
 }`;
 export const universeFragment = `fragment universeFragment on Universe {
