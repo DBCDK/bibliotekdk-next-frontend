@@ -183,6 +183,8 @@ export const ReservationButton = ({
 }) => {
   access = sortEreolFirst(access);
   const { start } = useOrderFlow();
+  // this is studiesøg - we always have an agency :)
+  const { agency } = useAgencyFromSubdomain();
 
   const getProps = () => {
     const lookupUrl = branch?.holdings?.lookupUrl;
@@ -226,7 +228,7 @@ export const ReservationButton = ({
       skeleton: isEmpty(access),
       dataCy: `button-order-overview-enabled`,
       onClick: () => {
-        start({ orders: [{ pids }] });
+        start({ orders: [{ pids }], initialBranch: agency });
       },
     };
     if (hasDigitalCopy) {

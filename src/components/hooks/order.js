@@ -33,6 +33,7 @@ import ExternalSvg from "@/public/icons/external_small.svg";
 import animations from "@/components/base/animation/animations.module.css";
 import styles from "./order.module.css";
 import * as localizationsFragments from "@/lib/api/localizations.fragments";
+import useAgencyFromSubdomain from "@/components/hooks/useSubdomainToAgency";
 
 /**
  * Retrieves periodica information for a list of pids
@@ -814,7 +815,9 @@ export function useOrderFlow() {
     setOrders(orders);
     collect.collectStartOrderFlow({ count: orders?.length });
 
-    if (initialBranch) {
+    if (isAuthenticated || branchId) {
+      modal.push("ematerialfilter", {});
+    } else if (initialBranch) {
       const callbackUID = modal.saveToStore("ematerialfilter", {});
       modal.push("openAdgangsplatform", {
         agencyId: initialBranch.agencyId,
@@ -823,11 +826,6 @@ export function useOrderFlow() {
         agencyName: initialBranch.agencyName,
         callbackUID: callbackUID,
       });
-      return;
-    }
-
-    if (isAuthenticated || branchId) {
-      modal.push("ematerialfilter", {});
     } else {
       const callbackUID = modal.saveToStore("ematerialfilter", {});
       openLoginModal({ modal, mode: LOGIN_MODE.ORDER_PHYSICAL, callbackUID });
