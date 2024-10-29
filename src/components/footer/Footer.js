@@ -80,7 +80,7 @@ const ContactLinks = () => {
     // press: { pathname: "/", query: {} },
     //  contact: { pathname: "/hjaelp/kontakt-os/25", query: {} },
     privacy: {
-      pathname: "/hjaelp/privatlivspolitik-saadan-haandterer-vi-dine-data-/26",
+      pathname: "/privatlivspolitik",
       query: {},
     },
     // suppliers: {
