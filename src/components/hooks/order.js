@@ -81,7 +81,7 @@ export function usePeriodica({ pids }) {
  * and also checks how the manifestations may be accessed.
  */
 export function useOrderService({ pids }) {
-  const { branchId, isLoading: pickupBranchIsLoading } = usePickupBranchId();
+  // const { branchId, isLoading: pickupBranchIsLoading } = usePickupBranchId();
   const {
     digitalCopyPids,
     physicalCopyPids,
@@ -91,10 +91,13 @@ export function useOrderService({ pids }) {
     filter: [AccessEnum.INTER_LIBRARY_LOAN, AccessEnum.DIGITAL_ARTICLE_SERVICE],
   });
 
-  const policy = useOrderPolicy({
-    branchId,
-    pids,
-  });
+  // const policy = useOrderPolicy({
+  //   branchId,
+  //   pids,
+  // });
+  const { loanerInfo } = useLoanerInfo();
+  const policy = loanerInfo?.rights;
+
   const {
     isPeriodica,
     workId,
@@ -106,7 +109,7 @@ export function useOrderService({ pids }) {
   let pidsToUse = [];
   if (
     digitalCopyPids?.length > 0 &&
-    policy?.digitalCopyAllowed &&
+    policy?.digitalArticleService &&
     (!isPeriodica || (isPeriodica && articleIsSpecified))
   ) {
     service = "DIGITAL_ARTICLE";
@@ -117,10 +120,8 @@ export function useOrderService({ pids }) {
   }
 
   const isLoading =
-    pickupBranchIsLoading ||
-    accessIsLoading ||
-    policy?.isLoading ||
-    isLoadingPeriodica;
+    // pickupBranchIsLoading ||
+    accessIsLoading || policy?.isLoading || isLoadingPeriodica;
 
   return {
     service: !isLoading && service,
@@ -543,6 +544,7 @@ export function useOrderPolicy({ branchId, pids }) {
   const { data, isLoading } = useData(
     branchId && pids?.length && branchOrderPolicy({ pids, branchId })
   );
+
   return {
     isLoading: !data || isLoading,
     digitalCopyAllowed: !!data?.branches?.result?.[0]?.digitalCopyAccess,

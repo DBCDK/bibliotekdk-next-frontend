@@ -42,7 +42,7 @@ export function hostToAgency(host) {
     ? agencyName
     : "roskilde";
 
-  const agency = gymAgencies[agencyName];
+  const agency = gymAgencies[validAgencyName];
 
   return {
     agency,
