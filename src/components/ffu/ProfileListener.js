@@ -12,13 +12,14 @@ import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import useStorage from "../hooks/useStorage";
 
 export default function Listener() {
-  const { isAuthenticated, loggedInAgencyId } = useAuthentication();
+  const { isAuthenticated, loggedInAgencyId, loggedInBranchId } =
+    useAuthentication();
   const { loanerInfo } = useLoanerInfo();
 
   const storage = useStorage();
 
   const agencyId = loggedInAgencyId;
-  const branchId = loanerInfo?.pickupBranch;
+  const branchId = loggedInBranchId;
   const agencies = loanerInfo?.agencies;
 
   // Select the loggedInBranch from users agencies list

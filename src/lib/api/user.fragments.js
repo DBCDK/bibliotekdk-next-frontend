@@ -29,6 +29,7 @@ export function basic() {
         postalCode
         isCPRValidated
         loggedInAgencyId
+        loggedInBranchId
         municipalityAgencyId
         omittedCulrData {
           hasOmittedCulrUniqueId

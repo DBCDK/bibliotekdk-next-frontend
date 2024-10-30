@@ -14,13 +14,17 @@ import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import useStorage from "@/components/hooks/useStorage";
 
 export default function Listener() {
-  const { isAuthenticated, hasCulrUniqueId, loggedInAgencyId } =
-    useAuthentication();
+  const {
+    isAuthenticated,
+    hasCulrUniqueId,
+    loggedInAgencyId,
+    loggedInBranchId,
+  } = useAuthentication();
 
   const { loanerInfo, isLoading } = useLoanerInfo();
 
   const agencyId = loggedInAgencyId;
-  const branchId = loanerInfo?.pickupBranch;
+  const branchId = loggedInBranchId;
   const agencies = loanerInfo?.agencies;
 
   // Select the loggedInBranch from users agencies list
