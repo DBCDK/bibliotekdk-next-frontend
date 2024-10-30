@@ -33,6 +33,7 @@ import ExternalSvg from "@/public/icons/external_small.svg";
 import animations from "@/components/base/animation/animations.module.css";
 import styles from "./order.module.css";
 import * as localizationsFragments from "@/lib/api/localizations.fragments";
+import useAgencyFromSubdomain from "@/components/hooks/useSubdomainToAgency";
 
 /**
  * Retrieves periodica information for a list of pids
@@ -81,7 +82,6 @@ export function usePeriodica({ pids }) {
  * and also checks how the manifestations may be accessed.
  */
 export function useOrderService({ pids }) {
-  const { branchId, isLoading: pickupBranchIsLoading } = usePickupBranchId();
   const {
     digitalCopyPids,
     physicalCopyPids,
@@ -91,10 +91,9 @@ export function useOrderService({ pids }) {
     filter: [AccessEnum.INTER_LIBRARY_LOAN, AccessEnum.DIGITAL_ARTICLE_SERVICE],
   });
 
-  const policy = useOrderPolicy({
-    branchId,
-    pids,
-  });
+  const { loanerInfo } = useLoanerInfo();
+  const policy = loanerInfo?.rights;
+
   const {
     isPeriodica,
     workId,
@@ -106,7 +105,7 @@ export function useOrderService({ pids }) {
   let pidsToUse = [];
   if (
     digitalCopyPids?.length > 0 &&
-    policy?.digitalCopyAllowed &&
+    policy?.digitalArticleService &&
     (!isPeriodica || (isPeriodica && articleIsSpecified))
   ) {
     service = "DIGITAL_ARTICLE";
@@ -116,11 +115,7 @@ export function useOrderService({ pids }) {
     pidsToUse = physicalCopyPids;
   }
 
-  const isLoading =
-    pickupBranchIsLoading ||
-    accessIsLoading ||
-    policy?.isLoading ||
-    isLoadingPeriodica;
+  const isLoading = accessIsLoading || policy?.isLoading || isLoadingPeriodica;
 
   return {
     service: !isLoading && service,
@@ -543,6 +538,7 @@ export function useOrderPolicy({ branchId, pids }) {
   const { data, isLoading } = useData(
     branchId && pids?.length && branchOrderPolicy({ pids, branchId })
   );
+
   return {
     isLoading: !data || isLoading,
     digitalCopyAllowed: !!data?.branches?.result?.[0]?.digitalCopyAccess,
@@ -812,7 +808,9 @@ export function useOrderFlow() {
     setOrders(orders);
     collect.collectStartOrderFlow({ count: orders?.length });
 
-    if (initialBranch) {
+    if (isAuthenticated || branchId) {
+      modal.push("ematerialfilter", {});
+    } else if (initialBranch) {
       const callbackUID = modal.saveToStore("ematerialfilter", {});
       modal.push("openAdgangsplatform", {
         agencyId: initialBranch.agencyId,
@@ -821,11 +819,6 @@ export function useOrderFlow() {
         agencyName: initialBranch.agencyName,
         callbackUID: callbackUID,
       });
-      return;
-    }
-
-    if (isAuthenticated || branchId) {
-      modal.push("ematerialfilter", {});
     } else {
       const callbackUID = modal.saveToStore("ematerialfilter", {});
       openLoginModal({ modal, mode: LOGIN_MODE.ORDER_PHYSICAL, callbackUID });
