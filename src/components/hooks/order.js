@@ -82,7 +82,6 @@ export function usePeriodica({ pids }) {
  * and also checks how the manifestations may be accessed.
  */
 export function useOrderService({ pids }) {
-  // const { branchId, isLoading: pickupBranchIsLoading } = usePickupBranchId();
   const {
     digitalCopyPids,
     physicalCopyPids,
@@ -92,10 +91,6 @@ export function useOrderService({ pids }) {
     filter: [AccessEnum.INTER_LIBRARY_LOAN, AccessEnum.DIGITAL_ARTICLE_SERVICE],
   });
 
-  // const policy = useOrderPolicy({
-  //   branchId,
-  //   pids,
-  // });
   const { loanerInfo } = useLoanerInfo();
   const policy = loanerInfo?.rights;
 
@@ -120,9 +115,7 @@ export function useOrderService({ pids }) {
     pidsToUse = physicalCopyPids;
   }
 
-  const isLoading =
-    // pickupBranchIsLoading ||
-    accessIsLoading || policy?.isLoading || isLoadingPeriodica;
+  const isLoading = accessIsLoading || policy?.isLoading || isLoadingPeriodica;
 
   return {
     service: !isLoading && service,
