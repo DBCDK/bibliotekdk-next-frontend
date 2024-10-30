@@ -33,7 +33,6 @@ import ExternalSvg from "@/public/icons/external_small.svg";
 import animations from "@/components/base/animation/animations.module.css";
 import styles from "./order.module.css";
 import * as localizationsFragments from "@/lib/api/localizations.fragments";
-import useAgencyFromSubdomain from "@/components/hooks/useSubdomainToAgency";
 
 /**
  * Retrieves periodica information for a list of pids
