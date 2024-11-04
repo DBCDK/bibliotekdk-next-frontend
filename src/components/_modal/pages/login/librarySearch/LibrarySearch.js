@@ -46,6 +46,7 @@ export default function LibrarySearch(props) {
           : Translate({ context: "order", label: "pickup-search-title-2" })}
       </Text>
       <Search
+        id="login_library_search"
         dataCy="pickup-search-input"
         placeholder={Translate({
           context: "login",

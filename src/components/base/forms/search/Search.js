@@ -48,7 +48,6 @@ function Search(props) {
         onChange={(e) => onChange && onChange(e.target.value)}
         aria-label={props.placeholder}
         value={value}
-        id="login_library_search"
       />
       <Icon
         className={styles.icon}
