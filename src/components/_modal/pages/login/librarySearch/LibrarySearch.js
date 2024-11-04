@@ -51,6 +51,7 @@ export default function LibrarySearch(props) {
           context: "login",
           label: "search-for-library",
         })}
+        clearMe={true}
         className={styles.search}
         onChange={debounce((value) => {
           setIsSearchInputEmpty(value?.length === 0);
