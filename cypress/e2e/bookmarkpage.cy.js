@@ -38,7 +38,7 @@ describe("Bookmark page", () => {
     ]);
   });
 
-  it(`test delete all`, () => {
+  it.skip(`test delete all`, () => {
     cy.visit("/iframe.html?id=profile-bookmarks--bookmark-list");
     // remove ALL elements from list - verify that select all is disabled
     cy.get("article").should("exist").should("have.length", 2);

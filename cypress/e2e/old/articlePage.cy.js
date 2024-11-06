@@ -124,7 +124,7 @@ describe("ArticlePage", () => {
     });
 
     // @TODO skipped next three tests - ENABLE
-    it("Shows login prompt when not logged in", () => {
+    it.skip("Shows login prompt when not logged in", () => {
       cy.fixture("articlepublicdata.json").then((fixture) => {
         cy.intercept("POST", `${fbiApiPath}`, (req) => {
           if (

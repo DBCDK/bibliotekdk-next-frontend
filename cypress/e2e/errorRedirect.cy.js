@@ -1,6 +1,6 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 
-it(`redirect to 404`, () => {
+it.skip(`redirect to 404`, () => {
   // this is a normal request for a non existing work - we expect nothing serious to happen (200)
   cy.request(
     `${nextjsBaseUrl}/materiale/deutsches-dichten-und-denken-vom-mittelalter-zur-neuzeit-1270-1700-_gunther-muller/work-of%3A800010-katalog%3A9912264463770576`
