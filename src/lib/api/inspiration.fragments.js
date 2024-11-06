@@ -3,6 +3,7 @@ import { ApiEnums } from "@/lib/api/api";
 import {
   creatorsFragment,
   materialTypesFragment,
+  tvSeriesFragment,
 } from "@/lib/api/fragments.utils";
 
 const CATEGORY_ENUMS = [
@@ -50,8 +51,7 @@ export function inspiration({ filters = [], limit = 10 } = {}) {
                     main
                     full
                     tvSeries {
-                      title
-                      danishLaunchTitle
+                    ...tvSeriesFragment
                     }
                   }
                   creators {
@@ -73,7 +73,9 @@ export function inspiration({ filters = [], limit = 10 } = {}) {
         }
       }
       ${creatorsFragment}
-      ${materialTypesFragment}`,
+      ${materialTypesFragment}
+      ${tvSeriesFragment}`,
+
     variables: {
       limit,
       filters,

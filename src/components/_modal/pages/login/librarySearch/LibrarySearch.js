@@ -38,7 +38,7 @@ export default function LibrarySearch(props) {
       })}
     >
       {lastLoginBranch && isSearchInputEmpty && !isMobile && (
-        <LastLoginLibrary />
+        <LastLoginLibrary context={props?.context} />
       )}
       <Text type="text2">
         {desktop
@@ -46,11 +46,13 @@ export default function LibrarySearch(props) {
           : Translate({ context: "order", label: "pickup-search-title-2" })}
       </Text>
       <Search
+        id="login_library_search"
         dataCy="pickup-search-input"
         placeholder={Translate({
           context: "login",
           label: "search-for-library",
         })}
+        clearMe={true}
         className={styles.search}
         onChange={debounce((value) => {
           setIsSearchInputEmpty(value?.length === 0);

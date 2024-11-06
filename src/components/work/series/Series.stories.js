@@ -44,6 +44,10 @@ WrappedSeriesSlider.story = merge({}, DEFAULT_STORY_PARAMETERS, {
                   ],
                 },
               ],
+              titles: {
+                ...work.titles,
+                tvSeries: { title: "Sagaen om Sølvskoven" },
+              },
             };
           },
         },

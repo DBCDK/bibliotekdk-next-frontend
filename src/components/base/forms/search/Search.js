@@ -17,7 +17,14 @@ import styles from "./Search.module.css";
  * @returns {React.JSX.Element}
  */
 function Search(props) {
-  const { className, onChange, onBlur, value = "", onMount } = props;
+  const {
+    className,
+    onChange,
+    onBlur,
+    value = "",
+    onMount,
+    clearMe = false,
+  } = props;
 
   // Validation onMount
   useEffect(
@@ -26,6 +33,11 @@ function Search(props) {
     }, // Updates if value changes (initial value)
     [value]
   );
+
+  const clearInput = () => {
+    onChange("");
+    document.getElementById("login_library_search").value = "";
+  };
 
   return (
     <div className={`${styles.search} ${className}`}>
@@ -37,7 +49,14 @@ function Search(props) {
         aria-label={props.placeholder}
         value={value}
       />
-      <Icon className={styles.icon} size={{ w: 2, h: 2 }} src="search.svg" />
+      <Icon
+        className={styles.icon}
+        size={{ w: 2, h: 2 }}
+        src={clearMe ? "close.svg" : "search.svg"}
+        onClick={() => {
+          clearMe && clearInput();
+        }}
+      />
     </div>
   );
 }

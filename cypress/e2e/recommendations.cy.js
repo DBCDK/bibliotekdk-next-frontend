@@ -26,7 +26,7 @@ describe("Series", () => {
       // We are unaware of which creator this will use, so we just check that the rest of the href is correct
       .and(
         "contain",
-        "/materiale/recommend-result-0-work-titles-tvseries-title-recommend-result-0-work-titles-tvseries-season-display-_recommend-result-0-work-creators-1-display/recommend.result[0].work.workId"
+        "/materiale/recommend-result-0-work-titles-tvseries-title-saeson-10-disc-10-volume-10-recommend-result-0-work-titles-tvseries-episode-display-recommend-result-0-work-titles-tvseries-episodetitles-0-recommend-result-0-work-titles-tvseries-episodetitles-1-_recommend-result-0-work-creators-1-display/recommend.result[0].work.workId"
       )
       .and("contain", "-display/recommend.result[0].work.workId");
   });

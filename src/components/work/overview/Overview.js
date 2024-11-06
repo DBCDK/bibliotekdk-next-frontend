@@ -87,6 +87,18 @@ export function Overview({
   );
   const selectedPids = useMemo(() => flatPidsByType(type), [type]);
 
+  const checkForPeriodicaArticle = (pids) => {
+    // restrict to óne pid only (this is an article)
+    if (pids?.length !== 1) {
+      return false;
+    }
+
+    // check if pid contains "tsart" -> it is an article from a periodica
+    return pids?.[0]?.includes("tsart");
+  };
+
+  const isPeriodicaArticle = checkForPeriodicaArticle(selectedPids);
+
   return (
     <section className={`${styles.background} ${className}`}>
       <Container fluid>
@@ -170,9 +182,11 @@ export function Overview({
                 skeleton={skeleton}
               />
               <AlternativeOptions workId={workId} selectedPids={selectedPids} />
-              <Col xs={12} className={styles.info}>
-                <LocalizationsLink selectedPids={selectedPids} />
-              </Col>
+              {!isPeriodicaArticle && (
+                <Col xs={12} className={styles.info}>
+                  <LocalizationsLink selectedPids={selectedPids} />
+                </Col>
+              )}
             </Col>
           </Col>
         </Row>

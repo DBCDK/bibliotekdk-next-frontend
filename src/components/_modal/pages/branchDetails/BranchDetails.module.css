@@ -1,5 +1,6 @@
 .break_word {
   word-break: break-word;
+  white-space: pre-line;
 }
 
 .branch_status {
