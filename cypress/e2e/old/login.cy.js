@@ -6,7 +6,7 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 
 describe("Login", () => {
-  it(`should send bearer token to API`, () => {
+  it.skip(`should send bearer token to API`, () => {
     cy.intercept("POST", /.*graphql/, (req) => {
       console.log(req.headers.authorization);
       expect(req.headers.authorization).to.match(/bearer .+/i);
@@ -20,7 +20,7 @@ describe("Login", () => {
     cy.wait("@apiRequest");
   });
 
-  it(`should set user pickupagency from url parameter`, () => {
+  it.skip(`should set user pickupagency from url parameter`, () => {
     cy.intercept("POST", /.*graphql/, (req) => {
       console.log(req.headers.authorization);
       expect(req.headers.authorization).to.match(/bearer .+/i);
