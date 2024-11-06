@@ -6,7 +6,7 @@ import Translate from "@/components/base/translate";
 import useAgencyFromSubdomain from "@/components/hooks/useSubdomainToAgency";
 
 export default function _Head() {
-  const { agency } = useAgencyFromSubdomain();
+  const { agency, favIconPath } = useAgencyFromSubdomain();
   const context = { context: "metadata" };
   const pageTitle = agency?.name || "Studiesøg";
   const pageDescription = Translate({
@@ -40,8 +40,8 @@ export default function _Head() {
       <meta name="referrer" content="strict-origin-when-cross-origin" />
 
       <link rel="preconnect" href="https://moreinfo.addi.dk"></link>
-      <link rel="icon" href="/favicon.ico" sizes="any" type="image/x-icon" />
-      <link rel="alternate icon" href="/favicon.ico" />
+      <link rel="icon" href={favIconPath} sizes="any" type="image/x-icon" />
+      <link rel="alternate icon" href={favIconPath} />
       {alternate.map(({ locale, url }) => (
         <link key={locale} rel="alternate" hreflang={locale} href={url} />
       ))}

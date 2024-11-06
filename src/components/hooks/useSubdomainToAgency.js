@@ -35,6 +35,15 @@ const heroPath = {
   soroeakademi: "/schools/hero/soroeakademi.webp",
 };
 
+const faviconpaths = {
+  roskilde: "/schools/favicon/roskilde.ico",
+  greve: "/schools/favicon/greve.ico",
+  slagelse: "/schools/favicon/slagelse.ico",
+  stenhus: "/schools/favicon/stenhus.ico",
+  odense: "/schools/favicon/odense.ico",
+  soroeakademi: "/schools/favicon/soroeakademi.ico",
+};
+
 export function hostToAgency(host) {
   const agencyName = host?.split?.(".")?.[0];
 
@@ -48,6 +57,7 @@ export function hostToAgency(host) {
     agency,
     logoPath: logoPaths[validAgencyName],
     heroPath: heroPath[validAgencyName],
+    favIconPath: faviconpaths[validAgencyName] || "/favicon.ico",
   };
 }
 const useAgencyFromSubdomain = () => {
