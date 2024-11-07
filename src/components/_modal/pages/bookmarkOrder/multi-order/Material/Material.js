@@ -22,7 +22,6 @@ import {
 } from "@/components/hooks/order";
 import { useData } from "@/lib/api/api";
 import { editionManifestations } from "@/lib/api/manifestation.fragments";
-import * as localizationsFragments from "@/lib/api/localizations.fragments";
 
 /**
  * Is missing article implementation
