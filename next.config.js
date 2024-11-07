@@ -118,7 +118,7 @@ module.exports = {
   },
   publicRuntimeConfig: {
     cookiebot: {
-      id: process.env.COOKIEBOT_ID || "0945225b-6b16-4166-82dd-ea5947b897b3",
+      id: process.env.COOKIEBOT_ID || "23672b99-380a-4179-99ce-12e0fdd759cb",
       mode: process.env.COOKIEBOT_MODE || "auto",
     },
     elbaDryRun:
