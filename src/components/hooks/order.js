@@ -90,7 +90,7 @@ export function useOrderService({ pids }) {
     filter: [AccessEnum.INTER_LIBRARY_LOAN, AccessEnum.DIGITAL_ARTICLE_SERVICE],
   });
 
-  const { loanerInfo } = useLoanerInfo();
+  const { loanerInfo, isLoading: userIsLoading } = useLoanerInfo();
   const policy = loanerInfo?.rights;
 
   const {
@@ -114,7 +114,7 @@ export function useOrderService({ pids }) {
     pidsToUse = physicalCopyPids;
   }
 
-  const isLoading = accessIsLoading || policy?.isLoading || isLoadingPeriodica;
+  const isLoading = accessIsLoading || userIsLoading || isLoadingPeriodica;
 
   return {
     service: !isLoading && service,
@@ -448,15 +448,15 @@ export function useOrderValidation({ pids }) {
 
   // pjo 08/10/24 bug BIBDK2021-2781
   // we need localizations since we do NOT allow order of materials with no localizations
-  const { data: localizationsData, isLoading: isLoadingLocalizations } =
-    useData(localizationsFragments.localizationsQuery({ pids: pids }));
-  const localizationsCount = localizationsData?.localizations?.count;
+  // const { data: localizationsData, isLoading: isLoadingLocalizations } =
+  //   useData(localizationsFragments.localizationsQuery({ pids: pids }));
+  // const localizationsCount = localizationsData?.localizations?.count;
 
   const { confirmButtonClicked } = useConfirmButtonClicked();
 
   // Can only be validated when all data is loaded
   const isLoading =
-    isLoadingLocalizations ||
+    // isLoadingLocalizations ||
     isLoadingPickupBranchId ||
     pickupBranch?.isLoading ||
     isLoadingOrderService ||
@@ -469,7 +469,7 @@ export function useOrderValidation({ pids }) {
   const isValidPincode = pincodeIsRequired ? !!pincode : true;
   const details = {
     noLocation: {
-      isValid: localizationsCount > 0,
+      isValid: true,
       checkBeforeConfirm: true,
     },
     pincode: {
