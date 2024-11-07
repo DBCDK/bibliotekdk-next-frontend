@@ -57,7 +57,7 @@ export function hostToAgency(host) {
     agency,
     logoPath: logoPaths[validAgencyName],
     heroPath: heroPath[validAgencyName],
-    favIconPath: faviconpaths[validAgencyName] || "/favicon.ico",
+    favIconPath: faviconpaths[validAgencyName],
   };
 }
 const useAgencyFromSubdomain = () => {
