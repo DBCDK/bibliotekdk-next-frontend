@@ -321,46 +321,6 @@ export const isMaterialTypesMatch = (
   return isEqual(new Set(workTypesOfBookmark), new Set(materialTypeCodes));
 };
 
-/**
- * Find the work index where one pid in mostRelevant matches the given materialId
- * OBS: we cannot simply look for matching workIds, since workIds might be changing
- * @returns {number} index of work
- */
-export function findRelevantWorkIdx(
-  workByIdsDataRemovedDuplicates,
-  materialId,
-  pid,
-  materialType,
-  workId
-) {
-  if (
-    !workByIdsDataRemovedDuplicates ||
-    !materialId ||
-    (!pid && !materialType)
-  ) {
-    return -1;
-  }
-
-  return workByIdsDataRemovedDuplicates?.findIndex((w) => {
-    if (!w?.workId || w?.workId !== workId) {
-      return false;
-    }
-    if (pid) {
-      return w?.manifestations?.mostRelevant?.some(
-        (mostRelevant) => mostRelevant.pid === pid
-      );
-    }
-    if (materialType) {
-      return w?.manifestations?.mostRelevant?.some((mostRelevant) => {
-        return isEqual(
-          formatMaterialTypesToCode(flattenMaterialType(mostRelevant)),
-          materialType
-        );
-      });
-    }
-  });
-}
-
 const useBookmarks = process.env.STORYBOOK_ACTIVE
   ? useBookmarkMock
   : useBookmarkImpl;
@@ -377,6 +337,7 @@ export default useBookmarks;
 export const usePopulateBookmarks = (bookmarks) => {
   //all works both for specific edition and entire work
   const workIds = bookmarks?.map((work) => work.workId);
+
   const { data: workByIdsData, isLoading: idsToWorksLoading } = useData(
     workIds &&
       workFragments.idsToWorks({
@@ -388,6 +349,12 @@ export const usePopulateBookmarks = (bookmarks) => {
     (value, idx) => workByIdsData?.works?.indexOf(value) === idx
   );
 
+  // @TODO .. is this ok .. can the order change .. what if length of work and bookmarks are different .. ????
+  //enrich with bookmarkid
+  const enrichedWitBookmarkId = workByIdsDataRemovedDuplicates?.map(
+    (work, index) => ({ ...work, bookmarkId: bookmarks[index]?.bookmarkId })
+  );
+
   const data = useMemo(() => {
     if (!bookmarks) return [];
 
@@ -396,15 +363,9 @@ export const usePopulateBookmarks = (bookmarks) => {
         bookmark?.materialType
       );
 
-      const workIdx = findRelevantWorkIdx(
-        workByIdsDataRemovedDuplicates,
-        bookmark?.materialId,
-        bookmark?.pid,
-        bookmark?.materialType,
-        bookmark?.workId
+      const work = enrichedWitBookmarkId?.find(
+        (work) => work.bookmarkId === bookmark.bookmarkId
       );
-      const work =
-        workIdx > -1 ? workByIdsDataRemovedDuplicates[workIdx] : null;
 
       const manifestationWithCorrectMaterialTypes =
         work?.manifestations?.mostRelevant.filter((m) =>
@@ -417,7 +378,10 @@ export const usePopulateBookmarks = (bookmarks) => {
         );
       const isSpecificEdition = !isEmpty(specificManifestation);
 
-      if (!work) return;
+      // we did not find a work - make a null - @TODO make sure user can delete in gui :)
+      if (!work) {
+        return null;
+      }
       return {
         ...work,
         bookmarkId: bookmark?.bookmarkId,
