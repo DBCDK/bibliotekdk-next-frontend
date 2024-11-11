@@ -206,11 +206,6 @@ export default function AdvancedSearchProvider({ children, router }) {
     fieldSearchFromUrl.workType || "all"
   );
 
-  //reset worktype on url change
-  useEffect(() => {
-    setWorkType(fieldSearchFromUrl?.workType || "all");
-  }, [JSON.stringify(fieldSearchFromUrl.workType)]);
-
   useEffect(() => {
     if (showPopover && popoverRef.current) {
       popoverRef?.current?.focus();
@@ -273,6 +268,11 @@ export default function AdvancedSearchProvider({ children, router }) {
     });
     setParsedCQL(cqlFromUrl || updatedCql);
   }, [inputFields, dropdownSearchIndices, cqlFromUrl]);
+
+  //reset worktype on url change
+  useEffect(() => {
+    setWorkType(fieldSearchFromUrl?.workType || "all");
+  }, [JSON.stringify(fieldSearchFromUrl.workType)]);
 
   function resetObjectState() {
     resetInputFields();
