@@ -271,7 +271,7 @@ export default function AdvancedSearchProvider({ children, router }) {
 
   //reset worktype on url change
   useEffect(() => {
-    setWorkType(fieldSearchFromUrl?.workType || "all");
+    setWorkType(fieldSearchFromUrl.workType || "all");
   }, [JSON.stringify(fieldSearchFromUrl.workType)]);
 
   function resetObjectState() {
