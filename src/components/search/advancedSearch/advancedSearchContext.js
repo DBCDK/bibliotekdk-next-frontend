@@ -200,12 +200,12 @@ export default function AdvancedSearchProvider({ children, router }) {
   const [showPopover, setShowPopover] = useState(false);
   //if advanced search popover is open, and the user clicks on simple search, a tooltip with info will be shown.
   const [showInfoTooltip, setShowInfoTooltip] = useState(false);
-  //console.log('fieldSearchFromUrl', fieldSearchFromUrl);
+
   // worktypes state.
   const [workType, setWorkType] = useState(
     fieldSearchFromUrl.workType || "all"
   );
-  console.log("advancedsearchcontext.workType", workType);
+
   useEffect(() => {
     if (showPopover && popoverRef.current) {
       popoverRef?.current?.focus();
