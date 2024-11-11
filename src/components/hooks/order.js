@@ -32,6 +32,7 @@ import Translate from "../base/translate/Translate";
 import ExternalSvg from "@/public/icons/external_small.svg";
 import animations from "@/components/base/animation/animations.module.css";
 import styles from "./order.module.css";
+import useSubdomainToAgency from "@/components/hooks/useSubdomainToAgency";
 
 /**
  * Retrieves periodica information for a list of pids
@@ -80,6 +81,9 @@ export function usePeriodica({ pids }) {
  * and also checks how the manifestations may be accessed.
  */
 export function useOrderService({ pids }) {
+  const { agency } = useSubdomainToAgency();
+  const branchId = agency.branchId;
+
   const {
     digitalCopyPids,
     physicalCopyPids,
@@ -89,8 +93,13 @@ export function useOrderService({ pids }) {
     filter: [AccessEnum.INTER_LIBRARY_LOAN, AccessEnum.DIGITAL_ARTICLE_SERVICE],
   });
 
+  // @TODO .. is this necessary .. maybe agency.pickupAllowed is enough
+  const policy = useOrderPolicy({
+    branchId,
+    pids,
+  });
+
   const { loanerInfo, isLoading: userIsLoading } = useLoanerInfo();
-  const policy = loanerInfo?.rights;
 
   const {
     isPeriodica,
@@ -103,7 +112,7 @@ export function useOrderService({ pids }) {
   let pidsToUse = [];
   if (
     digitalCopyPids?.length > 0 &&
-    policy?.digitalArticleService &&
+    loanerInfo?.rights?.digitalArticleService &&
     (!isPeriodica || (isPeriodica && articleIsSpecified))
   ) {
     service = "DIGITAL_ARTICLE";

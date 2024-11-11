@@ -179,6 +179,7 @@ export const ReservationButton = ({
   workTypes,
   materialTypes,
   modal,
+  bookmarkKey,
   pids,
 }) => {
   access = sortEreolFirst(access);
@@ -242,17 +243,36 @@ export const ReservationButton = ({
         }),
       };
     }
-    return {
-      props: {
-        dataCy: "button-order-no-localizations-disabled",
-        disabled: true,
+
+    const loginRequiredProps = {
+      skeleton: isEmpty(access),
+      dataCy: `button-order-overview-enabled`,
+      onClick: () => {
+        start({ orders: [{ pids, bookmarkKey: bookmarkKey }] });
       },
-      text: Translate({
-        context: "overview",
-        label: "button-order-no-localizations-disabled",
-      }),
+    };
+
+    const loginRequiredText = Translate({
+      context: "general",
+      label: "bestil",
+    });
+
+    return {
+      props: loginRequiredProps,
+      text: loginRequiredText,
       preferSecondary: false,
     };
+    // return {
+    //   props: {
+    //     dataCy: "button-order-no-localizations-disabled",
+    //     disabled: true,
+    //   },
+    //   text: Translate({
+    //     context: "overview",
+    //     label: "button-order-no-localizations-disabled",
+    //   }),
+    //   preferSecondary: false,
+    // };
   };
 
   const { props, text, preferSecondary } = getProps();
