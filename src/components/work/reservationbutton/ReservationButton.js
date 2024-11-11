@@ -186,6 +186,8 @@ export const ReservationButton = ({
   // this is studiesøg - we always have an agency :)
   const { agency } = useAgencyFromSubdomain();
 
+  console.log(access, "ACCESS");
+
   const getProps = () => {
     const lookupUrl = branch?.holdings?.lookupUrl;
     if (lookupUrl) {
