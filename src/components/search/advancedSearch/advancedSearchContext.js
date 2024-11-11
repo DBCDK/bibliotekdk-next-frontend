@@ -208,11 +208,7 @@ export default function AdvancedSearchProvider({ children, router }) {
 
   //reset worktype on url change
   useEffect(() => {
-    const newWorkType = fieldSearchFromUrl?.workType || "all";
-    if (newWorkType !== workType) {
-      setWorkType(newWorkType);
-    }
-
+    setWorkType(fieldSearchFromUrl?.workType || "all");
   }, [JSON.stringify(fieldSearchFromUrl.workType)]);
 
   useEffect(() => {
@@ -286,6 +282,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     setWorkType("all");
   }
 
+  //sets worktype and resets the advanced search state
   const changeWorkType = (newWorkType) => {
     resetObjectState();
     setWorkType(newWorkType);
