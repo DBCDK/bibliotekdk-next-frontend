@@ -187,8 +187,6 @@ export const ReservationButton = ({
   // this is studiesøg - we always have an agency :)
   const { agency } = useAgencyFromSubdomain();
 
-  console.log(access, "ACCESS");
-
   const getProps = () => {
     const lookupUrl = branch?.holdings?.lookupUrl;
     if (lookupUrl) {
@@ -244,6 +242,7 @@ export const ReservationButton = ({
       };
     }
 
+    // props for ill
     const loginRequiredProps = {
       skeleton: isEmpty(access),
       dataCy: `button-order-overview-enabled`,
@@ -256,23 +255,27 @@ export const ReservationButton = ({
       context: "general",
       label: "bestil",
     });
+    // if pickup is allowed (ill)
+    if (agency.pickupAllowed) {
+      return {
+        props: loginRequiredProps,
+        text: loginRequiredText,
+        preferSecondary: false,
+      };
+    }
 
+    // if pickup is NOT allowed - default
     return {
-      props: loginRequiredProps,
-      text: loginRequiredText,
+      props: {
+        dataCy: "button-order-no-localizations-disabled",
+        disabled: true,
+      },
+      text: Translate({
+        context: "overview",
+        label: "button-order-no-localizations-disabled",
+      }),
       preferSecondary: false,
     };
-    // return {
-    //   props: {
-    //     dataCy: "button-order-no-localizations-disabled",
-    //     disabled: true,
-    //   },
-    //   text: Translate({
-    //     context: "overview",
-    //     label: "button-order-no-localizations-disabled",
-    //   }),
-    //   preferSecondary: false,
-    // };
   };
 
   const { props, text, preferSecondary } = getProps();
