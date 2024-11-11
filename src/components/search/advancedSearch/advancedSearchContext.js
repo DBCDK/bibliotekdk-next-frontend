@@ -269,7 +269,10 @@ export default function AdvancedSearchProvider({ children, router }) {
     setParsedCQL(cqlFromUrl || updatedCql);
   }, [inputFields, dropdownSearchIndices, cqlFromUrl]);
 
-  //// ---- DONE: parsedCQL ----
+  //reset worktype on url change
+  useEffect(() => {
+    setWorkType(fieldSearchFromUrl.workType || "all");
+  }, [JSON.stringify(fieldSearchFromUrl)]);
 
   function resetObjectState() {
     resetInputFields();
