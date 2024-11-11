@@ -8,11 +8,7 @@ import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { getLocalStorageItem, setLocalStorageItem } from "@/lib/utils";
 import isEqual from "lodash/isEqual";
-import {
-  flattenMaterialType,
-  formatMaterialTypesFromCode,
-  formatMaterialTypesToCode,
-} from "@/lib/manifestationFactoryUtils";
+import { formatMaterialTypesFromCode } from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
 import useDataCollect from "@/lib/useDataCollect";
 
