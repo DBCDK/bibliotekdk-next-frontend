@@ -206,6 +206,15 @@ export default function AdvancedSearchProvider({ children, router }) {
     fieldSearchFromUrl.workType || "all"
   );
 
+  //reset worktype on url change
+  useEffect(() => {
+    const newWorkType = fieldSearchFromUrl?.workType || "all";
+    if (newWorkType !== workType) {
+      setWorkType(newWorkType);
+    }
+
+  }, [JSON.stringify(fieldSearchFromUrl.workType)]);
+
   useEffect(() => {
     if (showPopover && popoverRef.current) {
       popoverRef?.current?.focus();
@@ -269,11 +278,6 @@ export default function AdvancedSearchProvider({ children, router }) {
     setParsedCQL(cqlFromUrl || updatedCql);
   }, [inputFields, dropdownSearchIndices, cqlFromUrl]);
 
-  //reset worktype on url change
-  useEffect(() => {
-    setWorkType(fieldSearchFromUrl.workType || "all");
-  }, [JSON.stringify(fieldSearchFromUrl)]);
-
   function resetObjectState() {
     resetInputFields();
     resetDropdownIndices();
@@ -281,6 +285,11 @@ export default function AdvancedSearchProvider({ children, router }) {
     setParsedCQL("");
     setWorkType("all");
   }
+
+  const changeWorkType = (newWorkType) => {
+    resetObjectState();
+    setWorkType(newWorkType);
+  };
 
   const value = {
     inputFields,
@@ -304,7 +313,7 @@ export default function AdvancedSearchProvider({ children, router }) {
     setShowInfoTooltip,
     sort: sort,
     workType,
-    setWorkType,
+    changeWorkType, //sets worktype and resets the advanced search state
     stateToString,
     popoverRef,
     resetMenuItemsEvent,

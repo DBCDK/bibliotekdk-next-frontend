@@ -17,7 +17,7 @@ import Tag from "@/components/base/forms/tag";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 export default function WorkTypeMenu() {
-  const { workType, setWorkType } = useAdvancedSearchContext();
+  const { workType, changeWorkType } = useAdvancedSearchContext();
   const breakpoint = useBreakpoint();
   const isSmallScreen =
     breakpoint === "md" || breakpoint === "xs" || breakpoint === "sm";
@@ -34,7 +34,7 @@ export default function WorkTypeMenu() {
                 key={type}
                 selected={isSelected}
                 onClick={() => {
-                  setWorkType(type);
+                  changeWorkType(type);
                 }}
               >
                 <Text type={isSelected ? "text4" : "text3"}>
@@ -63,7 +63,7 @@ export default function WorkTypeMenu() {
             keepUnderline={isSelected}
             iconSize={1}
             onClick={() => {
-              setWorkType(type);
+              changeWorkType(type);
             }}
           >
             <Text type={isSelected ? "text4" : "text3"}>

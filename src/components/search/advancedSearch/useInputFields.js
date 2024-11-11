@@ -6,12 +6,6 @@ export function useInputFields(fieldSearchFromUrl, workType) {
   //prefixLogicalOperator is an enum of AND, OR , NOT
   const [inputFields, setInputFields] = useState([]);
 
-  // we need a useeffect to reset when worktype changes
-  useEffect(() => {
-    resetInputFields();
-    setInputFields(getInitialInputFields(workType));
-  }, [workType]);
-
   useEffect(() => {
     setInputFields(
       fieldSearchFromUrl.inputFields || getInitialInputFields(workType)
