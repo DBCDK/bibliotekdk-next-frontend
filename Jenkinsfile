@@ -10,10 +10,10 @@ pipeline {
         githubPush()
     }
     environment {
-        IMAGE_NAME = "bibliotekdk-next-frontend-studiesog-${env.BRANCH_NAME.toLowerCase()}:${BUILD_NUMBER}"
+        IMAGE_NAME = "studiesog-${env.BRANCH_NAME.toLowerCase()}:${BUILD_NUMBER}"
         DOCKER_COMPOSE_NAME = "compose-${IMAGE_NAME}-${BRANCH_NAME.toLowerCase()}"
         GITLAB_PRIVATE_TOKEN = credentials("metascrum-gitlab-api-token")
-        GITLAB_ID = "704"
+        GITLAB_ID = "1806"
         CLIENT_ID = credentials("bibdk_client_id")
         CLIENT_SECRET = credentials("bibdk_client_secret")
     }
@@ -85,7 +85,7 @@ pipeline {
                         if (env.BRANCH_NAME == 'main') {
                             sh '''
                                 #!/usr/bin/env bash                        
-                                set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b studiesoeg-staging
+                                set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b staging
                             '''
                         } 
                       
