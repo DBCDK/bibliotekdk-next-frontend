@@ -230,20 +230,6 @@ export const ReservationButton = ({
       };
     }
 
-    const lookupUrl = branch?.holdings?.lookupUrl;
-    if (lookupUrl) {
-      return {
-        props: {
-          dataCy: "button-order-overview-enabled",
-          onClick: () => {
-            window.open(lookupUrl, "_blank");
-          },
-        },
-        text: Translate({ context: "overview", label: "see_location" }),
-        preferSecondary: false,
-      };
-    }
-
     // props for ill
     const loginRequiredProps = {
       skeleton: isEmpty(access),
@@ -262,6 +248,20 @@ export const ReservationButton = ({
       return {
         props: loginRequiredProps,
         text: loginRequiredText,
+        preferSecondary: false,
+      };
+    }
+
+    const lookupUrl = branch?.holdings?.lookupUrl;
+    if (lookupUrl) {
+      return {
+        props: {
+          dataCy: "button-order-overview-enabled",
+          onClick: () => {
+            window.open(lookupUrl, "_blank");
+          },
+        },
+        text: Translate({ context: "overview", label: "see_location" }),
         preferSecondary: false,
       };
     }

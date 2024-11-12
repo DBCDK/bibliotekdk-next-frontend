@@ -161,10 +161,10 @@ export function Overview({
                   className={styles.svgscale}
                   editions={work?.manifestations?.mostRelevant}
                 />
-                <AlternativeOptions
-                  workId={workId}
-                  selectedPids={selectedPids}
-                />
+                {/*<AlternativeOptions*/}
+                {/*  workId={workId}*/}
+                {/*  selectedPids={selectedPids}*/}
+                {/*/>*/}
               </Col>
             </Col>
           </Col>
