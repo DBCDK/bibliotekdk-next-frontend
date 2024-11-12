@@ -187,21 +187,9 @@ export const ReservationButton = ({
   // this is studiesøg - we always have an agency :)
   const { agency } = useAgencyFromSubdomain();
 
-  const getProps = () => {
-    const lookupUrl = branch?.holdings?.lookupUrl;
-    if (lookupUrl) {
-      return {
-        props: {
-          dataCy: "button-order-overview-enabled",
-          onClick: () => {
-            window.open(lookupUrl, "_blank");
-          },
-        },
-        text: Translate({ context: "overview", label: "see_location" }),
-        preferSecondary: false,
-      };
-    }
+  console.log(access, "ACCESS");
 
+  const getProps = () => {
     const hasDigitalCopy = access.find(
       (acc) => acc.__typename === AccessEnum.DIGITAL_ARTICLE_SERVICE
     );
@@ -242,6 +230,20 @@ export const ReservationButton = ({
       };
     }
 
+    const lookupUrl = branch?.holdings?.lookupUrl;
+    if (lookupUrl) {
+      return {
+        props: {
+          dataCy: "button-order-overview-enabled",
+          onClick: () => {
+            window.open(lookupUrl, "_blank");
+          },
+        },
+        text: Translate({ context: "overview", label: "see_location" }),
+        preferSecondary: false,
+      };
+    }
+
     // props for ill
     const loginRequiredProps = {
       skeleton: isEmpty(access),
@@ -255,8 +257,8 @@ export const ReservationButton = ({
       context: "general",
       label: "bestil",
     });
-    // if pickup is allowed (ill)
-    if (agency.pickupAllowed) {
+    // if pickup is allowed (ill)  AND access is digital
+    if (agency.pickupAllowed && hasDigitalCopy) {
       return {
         props: loginRequiredProps,
         text: loginRequiredText,
