@@ -23,8 +23,6 @@ import Breadcrumbs from "@/components/work/overview/breadcrumbs/Breadcrumbs";
 import BookmarkDropdown from "@/components/work/overview/bookmarkDropdown/BookmarkDropdown";
 import isEmpty from "lodash/isEmpty";
 
-import AlternativeOptions from "./alternatives";
-
 function useInitMaterialType(
   uniqueMaterialTypes,
   inUniqueMaterialTypes,
