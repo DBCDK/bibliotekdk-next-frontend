@@ -241,8 +241,8 @@ export const ReservationButton = ({
       context: "general",
       label: "bestil",
     });
-    // if pickup is allowed (ill)  AND access is digital
-    if (agency.pickupAllowed && hasDigitalCopy) {
+    // if pickup is allowed (ill)
+    if (agency.pickupAllowed) {
       return {
         props: loginRequiredProps,
         text: loginRequiredText,
