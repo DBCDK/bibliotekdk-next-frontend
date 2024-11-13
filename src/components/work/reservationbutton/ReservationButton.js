@@ -187,8 +187,6 @@ export const ReservationButton = ({
   // this is studiesøg - we always have an agency :)
   const { agency } = useAgencyFromSubdomain();
 
-  console.log(access, "ACCESS");
-
   const getProps = () => {
     const hasDigitalCopy = access.find(
       (acc) => acc.__typename === AccessEnum.DIGITAL_ARTICLE_SERVICE

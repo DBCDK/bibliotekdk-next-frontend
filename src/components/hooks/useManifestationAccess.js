@@ -204,8 +204,7 @@ export function useManifestationAccess({ pids, filter }) {
     if (
       accessMap?.[AccessEnum.DIGITAL_ARTICLE_SERVICE] &&
       accessMap?.[AccessEnum.INTER_LIBRARY_LOAN] &&
-      false
-      // userHasDigitalAccess
+      userHasDigitalAccess
     ) {
       access = access?.filter(
         (acc) => acc.__typename !== AccessEnum.INTER_LIBRARY_LOAN

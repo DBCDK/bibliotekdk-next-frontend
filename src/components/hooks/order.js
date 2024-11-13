@@ -810,8 +810,6 @@ export function useOrderFlow() {
    * @param initialBranch
    */
   function start({ orders, initialBranch = null }) {
-    console.log(orders, "ORDERS");
-
     setSessionStorageItem("storedOrders", JSON.stringify(orders));
     setInitialOrders(orders);
     setOrders(orders);
