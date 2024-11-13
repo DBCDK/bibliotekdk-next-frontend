@@ -179,6 +179,7 @@ export const ReservationButton = ({
   workTypes,
   materialTypes,
   modal,
+  bookmarkKey,
   pids,
 }) => {
   access = sortEreolFirst(access);
@@ -187,20 +188,6 @@ export const ReservationButton = ({
   const { agency } = useAgencyFromSubdomain();
 
   const getProps = () => {
-    const lookupUrl = branch?.holdings?.lookupUrl;
-    if (lookupUrl) {
-      return {
-        props: {
-          dataCy: "button-order-overview-enabled",
-          onClick: () => {
-            window.open(lookupUrl, "_blank");
-          },
-        },
-        text: Translate({ context: "overview", label: "see_location" }),
-        preferSecondary: false,
-      };
-    }
-
     const hasDigitalCopy = access.find(
       (acc) => acc.__typename === AccessEnum.DIGITAL_ARTICLE_SERVICE
     );
@@ -240,6 +227,44 @@ export const ReservationButton = ({
         }),
       };
     }
+
+    // props for ill
+    const loginRequiredProps = {
+      skeleton: isEmpty(access),
+      dataCy: `button-order-overview-enabled`,
+      onClick: () => {
+        start({ orders: [{ pids, bookmarkKey: bookmarkKey }] });
+      },
+    };
+
+    const loginRequiredText = Translate({
+      context: "general",
+      label: "bestil",
+    });
+    // if pickup is allowed (ill)  AND access is digital
+    if (agency.pickupAllowed && hasDigitalCopy) {
+      return {
+        props: loginRequiredProps,
+        text: loginRequiredText,
+        preferSecondary: false,
+      };
+    }
+
+    const lookupUrl = branch?.holdings?.lookupUrl;
+    if (lookupUrl) {
+      return {
+        props: {
+          dataCy: "button-order-overview-enabled",
+          onClick: () => {
+            window.open(lookupUrl, "_blank");
+          },
+        },
+        text: Translate({ context: "overview", label: "see_location" }),
+        preferSecondary: false,
+      };
+    }
+
+    // if pickup is NOT allowed - default
     return {
       props: {
         dataCy: "button-order-no-localizations-disabled",

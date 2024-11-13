@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import useLoanerInfo from "./user/useLoanerInfo";
 import { encodeTitleCreator, infomediaUrl } from "@/lib/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import useSubdomainToAgency from "@/components/hooks/useSubdomainToAgency";
 
 /**
  * Sorting entries of the access array
@@ -146,6 +147,8 @@ function flattenAccess(manifestations) {
 export function useManifestationAccess({ pids, filter }) {
   const { loanerInfo, isLoading: loanerInfoIsLoading } = useLoanerInfo();
   const { isAuthenticated } = useAuthentication();
+  // we need the agency to check if pickup is allowed (ill)
+  const { agency } = useSubdomainToAgency();
 
   // Fetch data for the pids needed to generate the access array
   const { data, isLoading: accessIsLoading } = useData(
@@ -168,20 +171,22 @@ export function useManifestationAccess({ pids, filter }) {
     );
 
     // sort & filter - we only want access of type RESOURCE AND we do not want broken links
-    let access = sortAccessArray(flattenedAccess)
-      ?.filter((singleAccess) => {
-        return (
-          singleAccess?.__typename !== AccessEnum.ACCESS_URL ||
-          (singleAccess?.__typename === AccessEnum.ACCESS_URL &&
-            singleAccess?.type === "RESOURCE" &&
-            singleAccess?.status === "OK")
-        );
-      })
-      // we also filter out the ill option - this page does not support inter library loans
-      .filter(
+    let access = sortAccessArray(flattenedAccess)?.filter((singleAccess) => {
+      return (
+        singleAccess?.__typename !== AccessEnum.ACCESS_URL ||
+        (singleAccess?.__typename === AccessEnum.ACCESS_URL &&
+          singleAccess?.type === "RESOURCE" &&
+          singleAccess?.status === "OK")
+      );
+    });
+    // we also filter out the ill option - this page does not support inter library loans
+    // well .. some libraries does
+    if (!agency.pickupAllowed) {
+      access = access.filter(
         (singleAccess) =>
           singleAccess.__typename !== AccessEnum.INTER_LIBRARY_LOAN
       );
+    }
 
     const accessMap = {};
     access.forEach((entry) => (accessMap[entry.__typename] = entry));
