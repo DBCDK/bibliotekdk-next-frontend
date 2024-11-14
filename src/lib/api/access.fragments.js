@@ -39,6 +39,7 @@ export function accessForManifestations({ pids }) {
               }
               ... on InterLibraryLoan {
                 loanIsPossible
+                accessNew
               }
             }
           }

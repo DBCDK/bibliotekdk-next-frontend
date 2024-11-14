@@ -135,7 +135,6 @@ function flattenAccess(manifestations) {
       });
     });
   });
-
   // Convert to array
   return Object.values(accessMap);
 }
@@ -166,7 +165,6 @@ export function useManifestationAccess({ pids, filter }) {
         return filter.includes(entry.__typename);
       }
     );
-
     // sort & filter - we only want access of type RESOURCE AND we do not want broken links
     let access = sortAccessArray(flattenedAccess)?.filter((singleAccess) => {
       return (
@@ -212,8 +210,11 @@ export function useManifestationAccess({ pids, filter }) {
 
   const hasDigitalCopy = !!res?.accessMap?.[AccessEnum.DIGITAL_ARTICLE_SERVICE];
   const hasPhysicalCopy = !!res?.accessMap?.[AccessEnum.INTER_LIBRARY_LOAN];
+  const accessNew = res?.accessMap?.[AccessEnum.INTER_LIBRARY_LOAN]?.accessNew;
+
   return {
     ...res,
+    accessNew: accessNew,
     hasDigitalCopy,
     hasPhysicalCopy,
     digitalCopyPids:

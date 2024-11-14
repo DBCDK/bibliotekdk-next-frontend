@@ -23,6 +23,7 @@ import {
 import { useData } from "@/lib/api/api";
 import { editionManifestations } from "@/lib/api/manifestation.fragments";
 import * as localizationsFragments from "@/lib/api/localizations.fragments";
+import { useManifestationAccess } from "@/components/hooks/useManifestationAccess";
 
 /**
  * Is missing article implementation
@@ -72,6 +73,8 @@ const Material = ({
     textType: "text4",
   });
 
+  const { accessNew } = useManifestationAccess({ pids: pids, filter: false });
+
   // pjo 08/10/24 bug BIBDK2021-2781
   // we need localizations since we do NOT allow order of materials with no localizations
   const { data: localizationsData, isLoading: isLoadingLocalizations } =
@@ -94,7 +97,11 @@ const Material = ({
     notAvailableAtLibrary: isLoadingOrderService
       ? false //if we dont have data yet, we dont want red background
       : !orderPossible,
-    noLocalizations: isLoadingLocalizations ? true : localizationsCount < 1,
+    noLocalizations: accessNew
+      ? false
+      : isLoadingLocalizations
+      ? true
+      : localizationsCount < 1,
   });
 
   const showOrderedWarning =
@@ -159,7 +166,7 @@ const Material = ({
   if (
     !isLoadingOrderService &&
     !isLoadingLocalizations &&
-    (!orderPossible || localizationsCount < 1)
+    (!orderPossible || (!accessNew && localizationsCount < 1))
   ) {
     children.push(
       <>
