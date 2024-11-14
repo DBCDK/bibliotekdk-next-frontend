@@ -122,7 +122,8 @@ export function useOrderService({ pids }) {
     pidsToUse = physicalCopyPids;
   }
 
-  const isLoading = accessIsLoading || userIsLoading || isLoadingPeriodica;
+  const isLoading =
+    accessIsLoading || userIsLoading || isLoadingPeriodica || policy.isLoading;
 
   return {
     service: !isLoading && service,
