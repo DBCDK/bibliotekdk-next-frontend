@@ -285,6 +285,7 @@ const accessFragment = `fragment accessFragment on Manifestation {
     }
     ... on InterLibraryLoan {
       loanIsPossible
+      accessNew
     }
   }
 }`;
