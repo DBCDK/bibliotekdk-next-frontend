@@ -89,7 +89,7 @@ export function Overview({
         <Row className={`${styles.overview}`}>
           {/* Breadcrumbs */}
           <Col xs={12} xl={3} className={styles.breadcrumbs}>
-            <Breadcrumbs workId={workId} />
+            {/*  <Breadcrumbs workId={workId} />*/}
           </Col>
 
           {/* Cover and MaterialInformation */}
