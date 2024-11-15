@@ -1,0 +1,16 @@
+.tableexamples{
+    border: 1px solid black;
+    width: 100%;
+    text-align: left;
+    border-spacing: 0;
+}
+
+.tableexamples th{
+    border: 1px solid black;
+    padding: 8px 0 8px 12px;
+}
+
+.tableexamples td{
+    border: 1px solid black;
+    padding: 8px 0 8px 12px;
+}
