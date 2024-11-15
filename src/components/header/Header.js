@@ -73,10 +73,10 @@ export function Header({ className = "", router = null, user, hideShadow }) {
   const simpleSearchRef = useRef(null);
 
   const getLoginLabel = () => {
-    if (user.hasCulrUniqueId) {
+    if (user?.hasCulrUniqueId) {
       return "profile";
     }
-    return user.isAuthenticated ? "logout" : "login";
+    return user?.isAuthenticated ? "logout" : "login";
   };
 
   const menu = [
