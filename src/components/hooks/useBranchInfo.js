@@ -12,15 +12,26 @@ export function useBranchInfo({ branchId }) {
       })
   );
 
-  const isBlocked =
-    userParams?.branches?.result?.[0]?.borrowerCheck !== false &&
-    !userParams?.branches?.borrowerStatus?.allowed;
+  // @TODO if agency is ffu .. and borrowerstatus is UNKNOWN_USER .. we simple need the pincode - no block please
+  const isBlocked = () => {
+    if (
+      userParams?.branches?.borrowerStatus?.statusCode === "UNKNOWN_USER" &&
+      userParams?.branches?.result?.[0]?.agencyType === "FORSKNINGSBIBLIOTEK"
+    ) {
+      return false;
+    } else {
+      return (
+        userParams?.branches?.result?.[0]?.borrowerCheck !== false &&
+        !userParams?.branches?.borrowerStatus?.allowed
+      );
+    }
+  };
 
   return {
     ...(userParams?.branches?.result?.[0] || {}),
     agencyUrl: userParams?.branches?.agencyUrl,
     branchId,
-    isBlocked,
+    isBlocked: isBlocked(),
     borrowerStatus: userParams?.branches?.borrowerStatus,
     isLoading,
   };
