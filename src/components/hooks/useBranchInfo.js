@@ -1,5 +1,6 @@
 import { useData } from "@/lib/api/api";
 import { branchUserParameters } from "@/lib/api/branches.fragments";
+import { shouldRequirePincode } from "./order";
 
 /**
  *
@@ -12,27 +13,23 @@ export function useBranchInfo({ branchId }) {
       })
   );
 
-  // @TODO if agency is ffu .. and borrowerstatus is UNKNOWN_USER .. we simple need the pincode - no block please
-  const isBlocked = () => {
-    if (
-      userParams?.branches?.borrowerStatus?.statusCode === "UNKNOWN_USER" &&
-      userParams?.branches?.result?.[0]?.agencyType === "FORSKNINGSBIBLIOTEK"
-    ) {
-      return false;
-    } else {
-      return (
-        userParams?.branches?.result?.[0]?.borrowerCheck !== false &&
-        !userParams?.branches?.borrowerStatus?.allowed
-      );
-    }
-  };
+  const branch = userParams?.branches?.result?.[0];
+
+  // True if branch requires a pincode for borchk validation
+  const pincodeRequired = shouldRequirePincode(branch);
+
+  const isBlocked =
+    !pincodeRequired &&
+    branch?.borrowerCheck !== false &&
+    !userParams?.branches?.borrowerStatus?.allowed;
 
   return {
-    ...(userParams?.branches?.result?.[0] || {}),
+    ...(branch || {}),
     agencyUrl: userParams?.branches?.agencyUrl,
     branchId,
-    isBlocked: isBlocked(),
+    isBlocked,
     borrowerStatus: userParams?.branches?.borrowerStatus,
+    pincodeRequired,
     isLoading,
   };
 }
