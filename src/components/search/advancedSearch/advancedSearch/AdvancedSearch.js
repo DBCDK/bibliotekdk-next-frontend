@@ -243,7 +243,7 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
               )}
               <Text type="text3" tag="span">
                 <Link
-                  href={"/soegning-hjaelp"}
+                  href={"/soegninghjaelp"}
                   border={{
                     top: false,
                     bottom: {
