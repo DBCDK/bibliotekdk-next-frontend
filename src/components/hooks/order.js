@@ -304,7 +304,7 @@ export function usePickupBranchId() {
   };
 }
 
-function shouldRequirePincode(branch) {
+export function shouldRequirePincode(branch) {
   const isFFU = !!(branch?.agencyType === "FORSKNINGSBIBLIOTEK");
   const hasBorchk = branch?.borrowerCheck;
   const hasDataSync = branch?.culrDataSync;
