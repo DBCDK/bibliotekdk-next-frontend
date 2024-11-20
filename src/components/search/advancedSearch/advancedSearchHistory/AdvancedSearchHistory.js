@@ -74,7 +74,7 @@ export function SearchQueryDisplay({ item }) {
 
   const { restartFacetsHook } = useFacets();
   const { resetQuickFilters } = useQuickFilters();
-  const { setWorkType } = useAdvancedSearchContext();
+  const { changeWorkType } = useAdvancedSearchContext();
 
   const goToItemUrl = (item) => {
     // restart the useFacets hook - this is a 'new' search
@@ -82,7 +82,7 @@ export function SearchQueryDisplay({ item }) {
     resetQuickFilters();
 
     // set worktype from item
-    setWorkType(item.fieldSearch?.workType || "all");
+    changeWorkType(item.fieldSearch?.workType || "all");
     if (!isEmpty(item.fieldSearch)) {
       const query = {
         fieldSearch: JSON.stringify(item.fieldSearch),

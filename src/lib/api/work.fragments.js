@@ -1106,6 +1106,7 @@ const manifestationAccess = `fragment manifestationAccess on Manifestation {
     }
     ... on InterLibraryLoan {
       loanIsPossible
+      accessNew
     }
   }
 }`;

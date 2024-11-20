@@ -304,7 +304,7 @@ export function usePickupBranchId() {
   };
 }
 
-function shouldRequirePincode(branch) {
+export function shouldRequirePincode(branch) {
   const isFFU = !!(branch?.agencyType === "FORSKNINGSBIBLIOTEK");
   const hasBorchk = branch?.borrowerCheck;
   const hasDataSync = branch?.culrDataSync;
@@ -458,8 +458,10 @@ export function useOrderValidation({ pids }) {
     useData(localizationsFragments.localizationsQuery({ pids: pids }));
   const localizationsCount = localizationsData?.localizations?.count;
 
-  const { confirmButtonClicked } = useConfirmButtonClicked();
+  // well .. we also need access ..
+  const accessNew = useManifestationAccess({ pids: pids, filter: false });
 
+  const { confirmButtonClicked } = useConfirmButtonClicked();
   // Can only be validated when all data is loaded
   const isLoading =
     isLoadingLocalizations ||
@@ -475,7 +477,7 @@ export function useOrderValidation({ pids }) {
   const isValidPincode = pincodeIsRequired ? !!pincode : true;
   const details = {
     noLocation: {
-      isValid: localizationsCount > 0,
+      isValid: accessNew ? true : localizationsCount > 0,
       checkBeforeConfirm: true,
     },
     pincode: {
