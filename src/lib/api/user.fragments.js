@@ -7,6 +7,26 @@ import {
   materialTypesFragment,
 } from "@/lib/api/fragments.utils";
 
+export function userRights() {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 1000, // for debugging
+    query: `
+    query UserRights {
+      user {
+        rights {
+          infomedia 
+          digitalArticleService 
+          demandDrivenAcquisition
+       }
+      }
+       }`,
+    variables: {},
+    slowThreshold: 3000,
+    revalidate: true,
+  };
+}
+
 /**
  * @file Contains GraphQL queries all taking a workId as variable
  *
