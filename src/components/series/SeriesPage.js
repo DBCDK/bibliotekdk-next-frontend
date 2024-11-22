@@ -25,7 +25,7 @@ export default function SeriesPage() {
   );
 
   const specificSeries = seriesData?.series;
-console.log('specificSeries',specificSeries)
+  console.log("specificSeries", specificSeries);
   if (seriesError) {
     return <Custom404 />;
   }

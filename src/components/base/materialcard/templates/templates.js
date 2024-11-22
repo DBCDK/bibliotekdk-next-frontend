@@ -432,9 +432,9 @@ export function templateForBigWorkCard({
   //material,
   includeCreators,
   isLoading,
-  member
+  member,
 }) {
-console.log("templateForBigWorkCard.member", member);
+  console.log("templateForBigWorkCard.member", member);
   const material = member?.work;
   console.log("templateForBigWorkCard.material", material);
   const { titles, type } = getTitlesAndType({ work: material });
