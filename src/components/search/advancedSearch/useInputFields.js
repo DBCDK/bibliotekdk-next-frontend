@@ -10,13 +10,11 @@ export function useInputFields(fieldSearchFromUrl, workType) {
     setInputFields(getInitialInputFields(workType));
   }, [workType]);
 
-  
   useEffect(() => {
     setInputFields(
       fieldSearchFromUrl.inputFields || getInitialInputFields(workType)
     );
   }, [JSON.stringify(fieldSearchFromUrl)]);
-
 
   /**
    * Add an extra input field
