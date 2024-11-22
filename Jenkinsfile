@@ -17,6 +17,9 @@ pipeline {
         CLIENT_ID = credentials("bibdk_client_id")
         CLIENT_SECRET = credentials("bibdk_client_secret")
     }
+    options {
+        disableConcurrentBuilds()
+	}
     stages {
         stage('clean workspace') {
             steps {
