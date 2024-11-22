@@ -40,17 +40,18 @@ export default function SeriesMembers({ series, seriesIsLoading }) {
 
   const { creators: allCreators } = getUniqueCreatorsDisplay(series);
 
-  const memberWorkIds = getMemberWorkIds(firstSeriesMembers);
+  //const memberWorkIds = getMemberWorkIds(firstSeriesMembers);
 
-  const { data: worksInSeriesData, isLoading: worksInSeriesIsLoading } =
-    useData(
-      // TODO: Lazy load instead of this. Temporary fix
-      memberWorkIds &&
-        workFragments.worksInSeries({ workIds: memberWorkIds.slice(0, 200) })
-    );
-
-  const data = seriesIsLoading ? dummy : worksInSeriesData;
-
+  // const { data: worksInSeriesData, isLoading: worksInSeriesIsLoading } =
+  //   useData(
+  //     // TODO: Lazy load instead of this. Temporary fix
+  //     memberWorkIds &&
+  //       workFragments.worksInSeries({ workIds: memberWorkIds.slice(0, 200) })
+  //   );
+//console.log('worksInSeriesData,worksInSeriesData',worksInSeriesData)
+  const data = seriesIsLoading ? dummy : series;
+console.log('DATA:: \n\n\n.data',data)
+console.log('series',series)
   return (
     <Section
       title={`${Translate({
@@ -60,20 +61,25 @@ export default function SeriesMembers({ series, seriesIsLoading }) {
       })}`}
       space={{ bottom: "var(--pt0)", top: "var(--pt5)" }}
       divider={{ content: false }}
-      isLoading={seriesIsLoading || worksInSeriesIsLoading}
+      isLoading={seriesIsLoading}
     >
       <article className={styles.series_members_results}>
-        {data?.works?.map((work) => {
+        {series?.members?.map((member) => {
+          const work = member?.work;
+          console.log('work',work)
+
           return (
             <MaterialCard
               key={work?.workId}
               propAndChildrenTemplate={templateForBigWorkCard}
               propAndChildrenInput={{
-                material: work,
+            //    material: work,
+                member: member,
                 includeCreators: allCreators.length > 1,
-                isLoading: seriesIsLoading || worksInSeriesIsLoading,
+                isLoading: seriesIsLoading,
+
               }}
-              isLoading={seriesIsLoading || worksInSeriesIsLoading}
+              isLoading={seriesIsLoading}
             />
           );
         })}

@@ -112,10 +112,13 @@ export function getPartOfSeriesText(type, numberInSeries) {
   }
 }
 
-function getSeriesMap({ series, members }) {
+function getSeriesMap({ series, members, workId }) {
   // some series has additional info (identifyingAddition) to be shown with title
   const identifyingAddition = series?.identifyingAddition;
-  const numberInSeries = capitalize(series?.numberInSeries?.display) || "";
+
+  const numberInSeries = series?.members?.find(
+    (member) => member.work?.workId === workId
+  )?.numberInSeries;
 
   const { type, titles } = getTitlesAndType({ work: members[0] });
 
@@ -190,13 +193,15 @@ export default function Wrap({ workId }) {
 
   const allSeries = work_response?.data?.work?.series || [];
   // TODO .. alter title if this is a tvserie
-  const allSeriesMap = allSeries?.map((singleSeries) =>
-    getSeriesMap({
+  const allSeriesMap = allSeries?.map((singleSeries) => {
+    console.log("allSeriesMap.singleSeries", singleSeries);
+
+    return getSeriesMap({
       series: singleSeries,
       members: singleSeries.members?.map((member) => member?.work),
       workId: workId,
-    })
-  );
+    });
+  });
 
   const continuationMap = getContinuationMap(groupedByRelationWorkTypes);
 
