@@ -205,15 +205,6 @@ export function Header({
     }, 300);
   };
 
-  // function to force search onKeyDown
-  const keyPressed = (e) => {
-    if (e.key === "Enter") {
-      doSearch(e.target.value);
-      if (showInfoTooltip) {
-        setShowInfoTooltip(false);
-      }
-    }
-  };
   return (
     <header
       className={cx({
@@ -245,11 +236,9 @@ export function Header({
                       clearHistory={clearHistory}
                       isMobile={suggesterVisibleMobile}
                       onSelect={(suggestionValue, suggestion) => {
-                        console.log(suggestionValue, suggestion);
                         doSearch(suggestionValue, suggestion);
                       }}
                       onChange={(val) => {
-                        console.log(val, "ONCHANGE");
                         setQ({ ...q, all: val });
                       }}
                       dataCy={`simple-search-input`}
@@ -260,13 +249,6 @@ export function Header({
                         }
                         // Remove suggester in storybook
                         story && story.setSuggesterVisibleMobile(false);
-                      }}
-                      onKeyDown={(suggestion, suggestionValue) => {
-                        console.log(suggestion, "HEST");
-                        doSearch(suggestionValue, suggestion);
-                        if (showInfoTooltip) {
-                          setShowInfoTooltip(false);
-                        }
                       }}
                     />
                   </div>

@@ -385,7 +385,6 @@ export function Suggester({
       }}
       onSuggestionSelected={(_, entry) => {
         const { suggestionValue, suggestion } = entry;
-
         // Blur input onselect
         blurInput();
         // Action
@@ -482,12 +481,6 @@ export default function Wrap(props) {
           suggestion,
           suggest_query_hit: suggestionIndex + 1,
         });
-      }}
-      onKeyDown={(e) => {
-        if (e.key === "Enter") {
-          console.log("FISK", suggestion);
-          props.onKeyDown(suggestion, e.target.value);
-        }
       }}
       className={className}
       skeleton={isLoading}
