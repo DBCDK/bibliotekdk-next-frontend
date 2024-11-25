@@ -385,7 +385,6 @@ export function Suggester({
       }}
       onSuggestionSelected={(_, entry) => {
         const { suggestionValue, suggestion } = entry;
-
         // Blur input onselect
         blurInput();
         // Action
@@ -476,7 +475,7 @@ export default function Wrap(props) {
       onChange={(q) => onChange && onChange(q)}
       onSelect={(suggestionValue, suggestion, suggestionIndex) => {
         setSelected(suggestionValue);
-        props.onSelect(suggestionValue);
+        props.onSelect(suggestionValue, suggestion);
         dataCollect.collectSuggestClick({
           query,
           suggestion,

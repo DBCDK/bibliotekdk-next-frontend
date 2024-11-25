@@ -42,6 +42,7 @@ import { signOut } from "@dbcdk/login-nextjs/client";
 import useAuthentication from "../hooks/user/useAuthentication";
 
 import AdvancedSearchPopover from "@/components/search/advancedSearch/popover/Popover";
+import upperCase from "lodash/upperCase";
 
 // material Pages
 export const MATERIAL_PAGES = [
@@ -161,7 +162,14 @@ export function Header({
     ? styles.suggester__visible
     : "";
 
-  const doSearch = (value) => {
+  const doSearch = (value, suggestion) => {
+    let querykey;
+    if (suggestion?.type === upperCase(SuggestTypeEnum.CREATOR)) {
+      querykey = "creator";
+    } else {
+      querykey = "all";
+    }
+
     // If we are on mobile we replace
     // since we don't want to suggest modal to open if user goes back
     const method = suggesterVisibleMobile ? "replace" : "push";
@@ -171,8 +179,7 @@ export function Header({
         selectedMaterial !== SuggestTypeEnum.ALL ? selectedMaterial : null,
     };
 
-    const newQ = isEmpty(value) ? { ...q, all: "" } : { ...q, all: value };
-
+    const newQ = isEmpty(value) ? { ...q, all: "" } : { [querykey]: value };
     setQuery({
       include: newQ,
       exclude: ["page"],
@@ -189,15 +196,6 @@ export function Header({
     }, 300);
   };
 
-  // function to force search onKeyDown
-  const keyPressed = (e) => {
-    if (e.key === "Enter") {
-      doSearch(e.target.value);
-      if (showInfoTooltip) {
-        setShowInfoTooltip(false);
-      }
-    }
-  };
   return (
     <header
       className={cx({
@@ -228,8 +226,12 @@ export function Header({
                       history={history}
                       clearHistory={clearHistory}
                       isMobile={suggesterVisibleMobile}
-                      onSelect={(val) => doSearch(val)}
-                      onChange={(val) => setQ({ ...q, all: val })}
+                      onSelect={(suggestionValue, suggestion) => {
+                        doSearch(suggestionValue, suggestion);
+                      }}
+                      onChange={(val) => {
+                        setQ({ ...q, all: val });
+                      }}
                       dataCy={`simple-search-input`}
                       onClose={() => {
                         if (router) {
@@ -239,7 +241,6 @@ export function Header({
                         // Remove suggester in storybook
                         story && story.setSuggesterVisibleMobile(false);
                       }}
-                      onKeyDown={keyPressed}
                     />
                   </div>
 
