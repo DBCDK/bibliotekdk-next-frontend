@@ -428,11 +428,8 @@ export function templateForSeriesSlider({ material, series }) {
 }
 
 /**Used in Series page */
-export function templateForBigWorkCard({
-  material,
-  includeCreators,
-  isLoading,
-}) {
+export function templateForBigWorkCard({ includeCreators, isLoading, member }) {
+  const material = member?.work;
   const { titles, type } = getTitlesAndType({ work: material });
 
   const fullTitle = titles?.join(": ");
@@ -441,10 +438,8 @@ export function templateForBigWorkCard({
   const tvSeriesTitle = material?.titles?.tvSeries?.title;
   const coverSrc = getCoverImage(material?.manifestations?.mostRelevant);
 
-  const readThisFirst = material?.series?.[0]?.readThisFirst;
-  const numberInSeries =
-    material?.series?.[0]?.numberInSeries?.number?.[0] ||
-    material?.series?.[0]?.numberInSeries?.display;
+  const readThisFirst = member?.readThisFirst;
+  const numberInSeries = member?.numberInSeries;
 
   return {
     link_href: getWorkUrl(fullTitle, creators, material?.workId),
@@ -467,11 +462,7 @@ export function templateForBigWorkCard({
           <div className={styles.begin_with_this_and_number_in_series}>
             {numberInSeries && !tvSeriesTitle && (
               <Text tag="span" type="text4" skeleton={isLoading} lines={1}>
-                {Translate({
-                  context: "series_page",
-                  label: "number_in_series",
-                  vars: [numberInSeries],
-                })}
+                {numberInSeries}
               </Text>
             )}
             {readThisFirst && <ReadThisFirst isLoading={isLoading} />}

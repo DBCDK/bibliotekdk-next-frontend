@@ -21,7 +21,7 @@ import styles from "./WorkGroupingsOverview.module.css";
 import { dateToShortDate } from "@/utils/datetimeConverter";
 import { getElementById, getSeriesUrl } from "@/lib/utils";
 import { getTitlesAndType } from "@/components/work/overview/titlerenderer/TitleRenderer";
-import capitalize from "lodash/capitalize";
+
 function getAnchor(anchorReference) {
   const seriesAnchorIndex = getIndexForAnchor(Translate(anchorReference));
 
@@ -112,10 +112,13 @@ export function getPartOfSeriesText(type, numberInSeries) {
   }
 }
 
-function getSeriesMap({ series, members }) {
+function getSeriesMap({ series, members, workId }) {
   // some series has additional info (identifyingAddition) to be shown with title
   const identifyingAddition = series?.identifyingAddition;
-  const numberInSeries = capitalize(series?.numberInSeries?.display) || "";
+
+  const numberInSeries = series?.members?.find(
+    (member) => member.work?.workId === workId
+  )?.numberInSeries;
 
   const { type, titles } = getTitlesAndType({ work: members[0] });
 
@@ -190,13 +193,13 @@ export default function Wrap({ workId }) {
 
   const allSeries = work_response?.data?.work?.series || [];
   // TODO .. alter title if this is a tvserie
-  const allSeriesMap = allSeries?.map((singleSeries) =>
-    getSeriesMap({
+  const allSeriesMap = allSeries?.map((singleSeries) => {
+    return getSeriesMap({
       series: singleSeries,
       members: singleSeries.members?.map((member) => member?.work),
       workId: workId,
-    })
-  );
+    });
+  });
 
   const continuationMap = getContinuationMap(groupedByRelationWorkTypes);
 

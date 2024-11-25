@@ -115,7 +115,6 @@ function RenderSeriesSubTitle({ work }) {
     if (type === "tvSerie") {
       return null;
     }
-
     const numberInSeries = serie?.members?.find(
       (member) => member.work?.workId === work.workId
     )?.numberInSeries;

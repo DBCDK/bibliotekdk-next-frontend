@@ -231,7 +231,7 @@ export function series({ workId, seriesLimit = null }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 4000, // for debugging
-    query: `query Series($workId: String!, $seriesLimit: Int ) {
+    query: `query Series($workId: String! ) {
       work(id: $workId) {
         titles {
           main
@@ -242,7 +242,7 @@ export function series({ workId, seriesLimit = null }) {
         }
         series {
           ...seriesFragment
-          members(limit:$seriesLimit) {
+          members {
             work {
               ...workSliderFragment
               manifestations {
@@ -270,7 +270,7 @@ export function series({ workId, seriesLimit = null }) {
     ${universeFragment}
     ${coverFragment}    
   `,
-    variables: { workId, seriesLimit },
+    variables: { workId },
     slowThreshold: 3000,
   };
 }
