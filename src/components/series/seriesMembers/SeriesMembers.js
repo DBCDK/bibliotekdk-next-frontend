@@ -27,7 +27,7 @@ export function getMemberWorkIds(firstSeriesMembers) {
 
 export default function SeriesMembers({ series, seriesIsLoading }) {
   // skeleton dummy elements
-  const dummy = { works: [...new Array(10).fill({})] };
+  const dummy = { members: [...new Array(10).fill({})] };
 
   const firstSeriesMembers = series?.members;
   const firstSeriesFirstWork = firstSeriesMembers?.[0]?.work;
@@ -53,7 +53,7 @@ export default function SeriesMembers({ series, seriesIsLoading }) {
       isLoading={seriesIsLoading}
     >
       <article className={styles.series_members_results}>
-        {series?.members?.map((member) => {
+        {data?.members?.map((member) => {
           const work = member?.work;
           return (
             <MaterialCard
