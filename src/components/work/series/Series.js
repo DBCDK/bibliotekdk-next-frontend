@@ -17,6 +17,8 @@ import { templateForSeriesSlider } from "@/components/base/materialcard/template
 import { getSeriesUrl } from "@/lib/utils";
 
 import { getTitlesAndType } from "@/components/work/overview/titlerenderer/TitleRenderer";
+import { constructSeriesTitle } from "@/components/work/overview/workgroupingsoverview/WorkGroupingsOverview";
+
 /**
  * Series React component
  *
@@ -35,14 +37,18 @@ export function Series({ isLoading, series = {}, work }) {
     ? "(" + series?.identifyingAddition + ")"
     : "";
 
-  const { titles } = getTitlesAndType({ work });
+  const { titles, type } = getTitlesAndType({ work });
+
+  const seriesTitle = constructSeriesTitle({ type, series, titles });
 
   return (
     <Section
       title={
         <Title tag="h3" type="title4" skeleton={isLoading}>
           <Link border={{ bottom: true }} href={link}>
-            {`${series.title || titles[0]} ${identifyingAddition}`}
+            {`${
+              seriesTitle || titles[0] || series.title
+            } ${identifyingAddition}`}
           </Link>
         </Title>
       }
