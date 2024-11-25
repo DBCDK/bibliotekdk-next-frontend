@@ -42,7 +42,7 @@ export function Series({ isLoading, series = {}, work }) {
       title={
         <Title tag="h3" type="title4" skeleton={isLoading}>
           <Link border={{ bottom: true }} href={link}>
-            {`${titles[0] || series.title} ${identifyingAddition}`}
+            {`${series.title || titles[0]} ${identifyingAddition}`}
           </Link>
         </Title>
       }
