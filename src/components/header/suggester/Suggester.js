@@ -476,12 +476,18 @@ export default function Wrap(props) {
       onChange={(q) => onChange && onChange(q)}
       onSelect={(suggestionValue, suggestion, suggestionIndex) => {
         setSelected(suggestionValue);
-        props.onSelect(suggestionValue);
+        props.onSelect(suggestionValue, suggestion);
         dataCollect.collectSuggestClick({
           query,
           suggestion,
           suggest_query_hit: suggestionIndex + 1,
         });
+      }}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          console.log("FISK", suggestion);
+          props.onKeyDown(suggestion, e.target.value);
+        }
       }}
       className={className}
       skeleton={isLoading}
@@ -497,5 +503,6 @@ Wrap.propTypes = {
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   onChange: PropTypes.func,
   onSelect: PropTypes.func,
+  onKeyDown: PropTypes.func,
   skeleton: PropTypes.bool,
 };
