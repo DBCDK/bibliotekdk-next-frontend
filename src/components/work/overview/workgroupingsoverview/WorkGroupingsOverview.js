@@ -113,9 +113,6 @@ export function getPartOfSeriesText(type, numberInSeries) {
 }
 
 function getSeriesMap({ series, members, workId }) {
-  // some series has additional info (identifyingAddition) to be shown with title
-  const identifyingAddition = series?.identifyingAddition;
-
   const numberInSeries = series?.members?.find(
     (member) => member.work?.workId === workId
   )?.numberInSeries;
@@ -126,19 +123,26 @@ function getSeriesMap({ series, members, workId }) {
     members?.length > 0 && {
       partNumber: type !== "tvSerie" ? series?.numberInSeries?.display : null,
       description: getPartOfSeriesText(type, numberInSeries),
-      title:
-        type === "tvSerie"
-          ? identifyingAddition
-            ? titles.join(" ,") + ` (${identifyingAddition})`
-            : titles.join(" ,")
-          : identifyingAddition
-          ? `${series?.title} (${identifyingAddition}`
-          : series?.title,
-      // title: series?.title,
+      title: constructSeriesTitle({ type, series, titles }),
       anchorId: getAnchor(AnchorsEnum.SERIES),
       link: getSeriesUrl(series.seriesId),
     }
   );
+}
+
+export function constructSeriesTitle({ type, series, titles }) {
+  // some series has additional info (identifyingAddition) to be shown with title
+  const identifyingAddition = series?.identifyingAddition;
+
+  if (type === "tvSerie") {
+    return identifyingAddition
+      ? `${titles.join(", ")} (${identifyingAddition})`
+      : titles.join(", ");
+  }
+
+  return identifyingAddition
+    ? `${series?.title} (${identifyingAddition})`
+    : series?.title;
 }
 
 function getContinuationMap(groupedByRelationWorkTypes) {
