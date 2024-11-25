@@ -228,7 +228,6 @@ export function seriesLight({ workId, seriesLimit = null }) {
  * @returns {Object} a query object
  */
 export function series({ workId, seriesLimit = null }) {
-  console.log("series", { workId, seriesLimit });
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 4000, // for debugging

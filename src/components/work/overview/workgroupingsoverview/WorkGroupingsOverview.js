@@ -21,7 +21,7 @@ import styles from "./WorkGroupingsOverview.module.css";
 import { dateToShortDate } from "@/utils/datetimeConverter";
 import { getElementById, getSeriesUrl } from "@/lib/utils";
 import { getTitlesAndType } from "@/components/work/overview/titlerenderer/TitleRenderer";
-//import capitalize from "lodash/capitalize";
+
 function getAnchor(anchorReference) {
   const seriesAnchorIndex = getIndexForAnchor(Translate(anchorReference));
 

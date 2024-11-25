@@ -428,12 +428,7 @@ export function templateForSeriesSlider({ material, series }) {
 }
 
 /**Used in Series page */
-export function templateForBigWorkCard({
-  //material,
-  includeCreators,
-  isLoading,
-  member,
-}) {
+export function templateForBigWorkCard({ includeCreators, isLoading, member }) {
   const material = member?.work;
   const { titles, type } = getTitlesAndType({ work: material });
 
