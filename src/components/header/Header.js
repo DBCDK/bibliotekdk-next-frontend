@@ -163,16 +163,12 @@ export function Header({
     : "";
 
   const doSearch = (value, suggestion) => {
-    console.log(suggestion, "SUGGESTION");
-
     let querykey;
     if (suggestion?.type === upperCase(SuggestTypeEnum.CREATOR)) {
       querykey = "creator";
     } else {
       querykey = "all";
     }
-
-    console.log(querykey, "QUERYKEY");
 
     // If we are on mobile we replace
     // since we don't want to suggest modal to open if user goes back
@@ -183,12 +179,7 @@ export function Header({
         selectedMaterial !== SuggestTypeEnum.ALL ? selectedMaterial : null,
     };
 
-    console.log(value, "VAL");
-
     const newQ = isEmpty(value) ? { ...q, all: "" } : { [querykey]: value };
-
-    console.log(newQ, "NEWQ");
-
     setQuery({
       include: newQ,
       exclude: ["page"],
