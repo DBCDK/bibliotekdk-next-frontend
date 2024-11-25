@@ -112,7 +112,6 @@ export function getPartOfSeriesText(type, numberInSeries) {
   }
 }
 
-
 function getSeriesMap({ series, members, workId }) {
   const numberInSeries = series?.members?.find(
     (member) => member.work?.workId === workId
