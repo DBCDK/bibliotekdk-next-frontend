@@ -854,11 +854,12 @@ export function useOrderPolicyMessage({ pids, branchId, textType = "type2" }) {
     policy?.physicalCopyAllowedReason === "ON_SHELF_NOT_FOR_LOAN";
 
   if (showMessage) {
+    const labelKey = `message_${policy?.physicalCopyAllowedReason}`;
     return (
       <div className={styles.path_blue}>
         {Translate({
           context: "holdings",
-          label: policy?.physicalCopyAllowedReason,
+          label: labelKey,
           vars: [branch?.name],
         })}
         <IconLink
