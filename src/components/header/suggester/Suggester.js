@@ -496,6 +496,5 @@ Wrap.propTypes = {
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   onChange: PropTypes.func,
   onSelect: PropTypes.func,
-  onKeyDown: PropTypes.func,
   skeleton: PropTypes.bool,
 };
