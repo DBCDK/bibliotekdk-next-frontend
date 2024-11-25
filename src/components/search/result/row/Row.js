@@ -115,12 +115,10 @@ function RenderSeriesSubTitle({ work }) {
     if (type === "tvSerie") {
       return null;
     }
-    console.log("RenderSeriesSubTitle{}", { serie, work });
     const numberInSeries = serie?.members?.find(
       (member) => member.work?.workId === work.workId
     )?.numberInSeries;
 
-    console.log("RenderSeriesSubTitle.numberInSeries", numberInSeries);
     const partOfSeriesText = capitalize(
       getPartOfSeriesText(type, numberInSeries)
     );

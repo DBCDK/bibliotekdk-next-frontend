@@ -194,8 +194,6 @@ export default function Wrap({ workId }) {
   const allSeries = work_response?.data?.work?.series || [];
   // TODO .. alter title if this is a tvserie
   const allSeriesMap = allSeries?.map((singleSeries) => {
-    console.log("allSeriesMap.singleSeries", singleSeries);
-
     return getSeriesMap({
       series: singleSeries,
       members: singleSeries.members?.map((member) => member?.work),

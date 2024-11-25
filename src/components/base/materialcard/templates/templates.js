@@ -434,9 +434,7 @@ export function templateForBigWorkCard({
   isLoading,
   member,
 }) {
-  console.log("templateForBigWorkCard.member", member);
   const material = member?.work;
-  console.log("templateForBigWorkCard.material", material);
   const { titles, type } = getTitlesAndType({ work: material });
 
   const fullTitle = titles?.join(": ");
@@ -447,9 +445,6 @@ export function templateForBigWorkCard({
 
   const readThisFirst = member?.readThisFirst;
   const numberInSeries = member?.numberInSeries;
-  // const numberInSeries =
-  //   material?.series?.[0]?.numberInSeries?.number?.[0] ||
-  //   material?.series?.[0]?.numberInSeries?.display;
 
   return {
     link_href: getWorkUrl(fullTitle, creators, material?.workId),

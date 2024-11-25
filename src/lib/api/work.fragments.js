@@ -232,7 +232,7 @@ export function series({ workId, seriesLimit = null }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 4000, // for debugging
-    query: `query SeriesSSSS($workId: String! ) {
+    query: `query Series($workId: String! ) {
       work(id: $workId) {
         titles {
           main

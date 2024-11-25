@@ -2,8 +2,7 @@ import Section from "@/components/base/section";
 import Translate from "@/components/base/translate";
 import MaterialCard from "@/components/base/materialcard/MaterialCard";
 import { templateForBigWorkCard } from "@/components/base/materialcard/templates/templates";
-//import { useData } from "@/lib/api/api";
-//import * as workFragments from "@/lib/api/work.fragments";
+
 import styles from "./SeriesMembers.module.css";
 
 import { getUniqueCreatorsDisplay } from "@/components/series/utils";
@@ -40,18 +39,8 @@ export default function SeriesMembers({ series, seriesIsLoading }) {
 
   const { creators: allCreators } = getUniqueCreatorsDisplay(series);
 
-  //const memberWorkIds = getMemberWorkIds(firstSeriesMembers);
-
-  // const { data: worksInSeriesData, isLoading: worksInSeriesIsLoading } =
-  //   useData(
-  //     // TODO: Lazy load instead of this. Temporary fix
-  //     memberWorkIds &&
-  //       workFragments.worksInSeries({ workIds: memberWorkIds.slice(0, 200) })
-  //   );
-  //console.log('worksInSeriesData,worksInSeriesData',worksInSeriesData)
   const data = seriesIsLoading ? dummy : series;
-  console.log("DATA:: \n\n\n.data", data);
-  console.log("series", series);
+
   return (
     <Section
       title={`${Translate({
@@ -66,14 +55,11 @@ export default function SeriesMembers({ series, seriesIsLoading }) {
       <article className={styles.series_members_results}>
         {series?.members?.map((member) => {
           const work = member?.work;
-          console.log("work", work);
-
           return (
             <MaterialCard
               key={work?.workId}
               propAndChildrenTemplate={templateForBigWorkCard}
               propAndChildrenInput={{
-                //    material: work,
                 member: member,
                 includeCreators: allCreators.length > 1,
                 isLoading: seriesIsLoading,
