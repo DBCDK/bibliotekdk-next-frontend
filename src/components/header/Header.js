@@ -102,8 +102,7 @@ export function Header({
   const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
 
   const simpleSearchRef = useRef(null);
-  const { showInfoTooltip, showPopover, setShowInfoTooltip } =
-    useAdvancedSearchContext();
+  const { showInfoTooltip, showPopover } = useAdvancedSearchContext();
   const getLoginLabel = () => {
     if (user.hasCulrUniqueId) {
       return "profile";
