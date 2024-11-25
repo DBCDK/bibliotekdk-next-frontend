@@ -1512,6 +1512,10 @@
         "da": "Biblioteket har ikke materialet \\n Men du kan bestille materialet til afhentning på biblioteket",
         "en": "Library does not have the material, But you can still order for pickup at this library"
       },
+      "message_OWNED_OWN_CATALOGUE": {
+        "da": "Materialet kan bestilles direkte hos biblioteket",
+        "en": "Item available at pickupAgency, item may be ordered through the library's catalogue"
+      },
       "message_ON_SHELF": {
         "da": "På hylden",
         "en": "On the shelf"
