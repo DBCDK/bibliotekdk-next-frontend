@@ -2,9 +2,9 @@ import { useData } from "@/lib/api/api";
 import { accessForManifestations } from "@/lib/api/access.fragments";
 import { AccessEnum } from "@/lib/enums";
 import { useMemo } from "react";
-import useLoanerInfo from "./user/useLoanerInfo";
 import { encodeTitleCreator, infomediaUrl } from "@/lib/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import useRights from "@/components/hooks/user/useRights";
 
 /**
  * Sorting entries of the access array
@@ -143,8 +143,8 @@ function flattenAccess(manifestations) {
  * a list of objects of how they can be accessed
  */
 export function useManifestationAccess({ pids, filter }) {
-  const { loanerInfo, isLoading: loanerInfoIsLoading } = useLoanerInfo();
   const { isAuthenticated } = useAuthentication();
+  const { rights, isLoading: rigthsIsLoading } = useRights();
 
   // Fetch data for the pids needed to generate the access array
   const { data, isLoading: accessIsLoading } = useData(
@@ -153,7 +153,7 @@ export function useManifestationAccess({ pids, filter }) {
 
   // Generate the result only when data changes
   const res = useMemo(() => {
-    if (accessIsLoading || loanerInfoIsLoading || !data) {
+    if (accessIsLoading || rigthsIsLoading || !data) {
       return {};
     }
 
@@ -178,7 +178,7 @@ export function useManifestationAccess({ pids, filter }) {
     const accessMap = {};
     access.forEach((entry) => (accessMap[entry.__typename] = entry));
 
-    const userHasDigitalAccess = loanerInfo?.rights?.["digitalArticleService"];
+    const userHasDigitalAccess = rights?.["digitalArticleService"];
 
     // we filter out digital access if user is authenticated AND has no right
     if (isAuthenticated && !userHasDigitalAccess) {
@@ -206,7 +206,7 @@ export function useManifestationAccess({ pids, filter }) {
       access,
       accessMap,
     };
-  }, [data, loanerInfo]);
+  }, [data, isAuthenticated]);
 
   const hasDigitalCopy = !!res?.accessMap?.[AccessEnum.DIGITAL_ARTICLE_SERVICE];
   const hasPhysicalCopy = !!res?.accessMap?.[AccessEnum.INTER_LIBRARY_LOAN];
@@ -222,6 +222,6 @@ export function useManifestationAccess({ pids, filter }) {
     physicalCopyPids:
       res?.accessMap?.[AccessEnum.INTER_LIBRARY_LOAN]?.pids || [],
     supportsOrderFlow: hasDigitalCopy || hasPhysicalCopy,
-    isLoading: loanerInfoIsLoading || accessIsLoading,
+    isLoading: rigthsIsLoading || accessIsLoading,
   };
 }

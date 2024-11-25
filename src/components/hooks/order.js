@@ -850,14 +850,15 @@ export function useOrderPolicyMessage({ pids, branchId, textType = "type2" }) {
   const lookupUrl = branches?.[0]?.holdings?.lookupUrl;
 
   const showMessage =
-    policy?.physicalCopyAllowedReason === "OWNED_OWN_CATALOGUE";
+    policy?.physicalCopyAllowedReason === "OWNED_OWN_CATALOGUE" ||
+    policy?.physicalCopyAllowedReason === "ON_SHELF_NOT_FOR_LOAN";
 
   if (showMessage) {
     return (
       <div className={styles.path_blue}>
         {Translate({
-          context: "localizations",
-          label: "no_pickup_allowed_for_material",
+          context: "holdings",
+          label: policy?.physicalCopyAllowedReason,
           vars: [branch?.name],
         })}
         <IconLink
