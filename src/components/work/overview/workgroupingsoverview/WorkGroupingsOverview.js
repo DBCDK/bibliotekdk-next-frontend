@@ -112,20 +112,7 @@ export function getPartOfSeriesText(type, numberInSeries) {
   }
 }
 
-export function constructSeriesTitle({ type, series, titles }) {
-  // some series has additional info (identifyingAddition) to be shown with title
-  const identifyingAddition = series?.identifyingAddition;
 
-  if (type === "tvSerie") {
-    return identifyingAddition
-      ? `${titles.join(", ")} (${identifyingAddition})`
-      : titles.join(", ");
-  }
-
-  return identifyingAddition
-    ? `${series?.title} (${identifyingAddition})`
-    : series?.title;
-}
 function getSeriesMap({ series, members, workId }) {
   const numberInSeries = series?.members?.find(
     (member) => member.work?.workId === workId
@@ -142,6 +129,21 @@ function getSeriesMap({ series, members, workId }) {
       link: getSeriesUrl(series.seriesId),
     }
   );
+}
+
+export function constructSeriesTitle({ type, series, titles }) {
+  // some series has additional info (identifyingAddition) to be shown with title
+  const identifyingAddition = series?.identifyingAddition;
+
+  if (type === "tvSerie") {
+    return identifyingAddition
+      ? `${titles.join(", ")} (${identifyingAddition})`
+      : titles.join(", ");
+  }
+
+  return identifyingAddition
+    ? `${series?.title} (${identifyingAddition})`
+    : series?.title;
 }
 
 function getContinuationMap(groupedByRelationWorkTypes) {
