@@ -21,7 +21,7 @@ import styles from "./WorkGroupingsOverview.module.css";
 import { dateToShortDate } from "@/utils/datetimeConverter";
 import { getElementById, getSeriesUrl } from "@/lib/utils";
 import { getTitlesAndType } from "@/components/work/overview/titlerenderer/TitleRenderer";
-import capitalize from "lodash/capitalize";
+
 function getAnchor(anchorReference) {
   const seriesAnchorIndex = getIndexForAnchor(Translate(anchorReference));
 
@@ -112,10 +112,10 @@ export function getPartOfSeriesText(type, numberInSeries) {
   }
 }
 
-function getSeriesMap({ series, members }) {
-  // some series has additional info (identifyingAddition) to be shown with title
-  const identifyingAddition = series?.identifyingAddition;
-  const numberInSeries = capitalize(series?.numberInSeries?.display) || "";
+function getSeriesMap({ series, members, workId }) {
+  const numberInSeries = series?.members?.find(
+    (member) => member.work?.workId === workId
+  )?.numberInSeries;
 
   const { type, titles } = getTitlesAndType({ work: members[0] });
 
@@ -123,19 +123,26 @@ function getSeriesMap({ series, members }) {
     members?.length > 0 && {
       partNumber: type !== "tvSerie" ? series?.numberInSeries?.display : null,
       description: getPartOfSeriesText(type, numberInSeries),
-      title:
-        type === "tvSerie"
-          ? identifyingAddition
-            ? titles.join(" ,") + ` (${identifyingAddition})`
-            : titles.join(" ,")
-          : identifyingAddition
-          ? `${series?.title} (${identifyingAddition}`
-          : series?.title,
-      // title: series?.title,
+      title: constructSeriesTitle({ type, series, titles }),
       anchorId: getAnchor(AnchorsEnum.SERIES),
       link: getSeriesUrl(series.seriesId),
     }
   );
+}
+
+export function constructSeriesTitle({ type, series, titles }) {
+  // some series has additional info (identifyingAddition) to be shown with title
+  const identifyingAddition = series?.identifyingAddition;
+
+  if (type === "tvSerie") {
+    return identifyingAddition
+      ? `${titles.join(", ")} (${identifyingAddition})`
+      : titles.join(", ");
+  }
+
+  return identifyingAddition
+    ? `${series?.title} (${identifyingAddition})`
+    : series?.title;
 }
 
 function getContinuationMap(groupedByRelationWorkTypes) {
@@ -190,13 +197,13 @@ export default function Wrap({ workId }) {
 
   const allSeries = work_response?.data?.work?.series || [];
   // TODO .. alter title if this is a tvserie
-  const allSeriesMap = allSeries?.map((singleSeries) =>
-    getSeriesMap({
+  const allSeriesMap = allSeries?.map((singleSeries) => {
+    return getSeriesMap({
       series: singleSeries,
       members: singleSeries.members?.map((member) => member?.work),
       workId: workId,
-    })
-  );
+    });
+  });
 
   const continuationMap = getContinuationMap(groupedByRelationWorkTypes);
 

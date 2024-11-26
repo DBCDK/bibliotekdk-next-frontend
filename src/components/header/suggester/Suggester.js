@@ -383,9 +383,12 @@ export function Suggester({
       onSuggestionsClearRequested={() => {
         // func is required
       }}
+      // this one handles a selected suggestion .. click, keydown etc. - but we also have a keydown on the input
+      // field that handles custom (when NO suggestion is selected)
       onSuggestionSelected={(_, entry) => {
+        // stop propagation doesn't work here - we pass a custom variable (preventBubbleHack) to the next on onKeyDown event
+        _.preventBubbleHack = true;
         const { suggestionValue, suggestion } = entry;
-
         // Blur input onselect
         blurInput();
         // Action
@@ -476,7 +479,7 @@ export default function Wrap(props) {
       onChange={(q) => onChange && onChange(q)}
       onSelect={(suggestionValue, suggestion, suggestionIndex) => {
         setSelected(suggestionValue);
-        props.onSelect(suggestionValue);
+        props.onSelect(suggestionValue, suggestion);
         dataCollect.collectSuggestClick({
           query,
           suggestion,

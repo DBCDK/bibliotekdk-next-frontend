@@ -25,7 +25,6 @@ export default function SeriesPage() {
   );
 
   const specificSeries = seriesData?.series;
-
   if (seriesError) {
     return <Custom404 />;
   }
