@@ -9,8 +9,26 @@
 
 module.exports = {
   distDir: "dist/next",
-  // headers: async () => {
-  //   return [
+   headers: async () => {
+     return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-src 'self';",
+          },
+          {
+            key: "X-Content-Type-Options",
+            value: "nosniff",
+          },
+          {
+            key: "X-Frame-Options",
+            value: "SAMEORIGIN",
+          },
+        ],
+      },
+      
   //     {
   //       source: "/_next/image:slug*",
   //       headers: [
@@ -29,8 +47,8 @@ module.exports = {
   //         },
   //       ],
   //     },
-  //   ];
-  // },
+     ];
+   },
   i18n: {
     locales: ["da", "en"],
     defaultLocale: "da",
