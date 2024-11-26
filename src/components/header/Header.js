@@ -195,6 +195,16 @@ export function Header({
     }, 300);
   };
 
+  const keyPressed = (e) => {
+    // the e.preventBubbleHack comes from the autosuggester - see Suggester.js/AutoSuggest
+    if (e.key === "Enter" && !e.preventBubbleHack) {
+      doSearch(e.target.value);
+      if (showInfoTooltip) {
+        setShowInfoTooltip(false);
+      }
+    }
+  };
+
   return (
     <header
       className={cx({
@@ -240,6 +250,7 @@ export function Header({
                         // Remove suggester in storybook
                         story && story.setSuggesterVisibleMobile(false);
                       }}
+                      onKeyDown={keyPressed}
                     />
                   </div>
 
