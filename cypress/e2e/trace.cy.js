@@ -24,11 +24,11 @@ describe("Trace", () => {
       });
   });
   it(`URL parameter on material page is sent to FBI-API as x-parent-trace-id header`, () => {
+    cy.intercept("POST", fbiApiPath).as("apiRequest");
     cy.visit(
       `${nextjsBaseUrl}/materiale/elselskaber-dumper-paa-stribe-i-ny-stor-test_morten-zahle/work-of%3A870971-avis%3A139667638?type=artikel+%2F+artikel+%28online%29&tid=test`
     );
     cy.consentAllowAll(); //allow cookies
-    cy.intercept("POST", fbiApiPath).as("apiRequest");
 
     // Check header on request to fbi-api
     cy.wait("@apiRequest").then((interception) => {
