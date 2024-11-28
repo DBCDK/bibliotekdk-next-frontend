@@ -23,7 +23,7 @@ describe("Trace", () => {
         expect(tid).to.have.length(27);
       });
   });
-  it.only(`URL parameter on material page is sent to FBI-API as x-parent-trace-id header`, () => {
+  it(`URL parameter on material page is sent to FBI-API as x-parent-trace-id header`, () => {
     cy.visit(
       `${nextjsBaseUrl}/materiale/elselskaber-dumper-paa-stribe-i-ny-stor-test_morten-zahle/work-of%3A870971-avis%3A139667638?type=artikel+%2F+artikel+%28online%29&tid=test`
     );
