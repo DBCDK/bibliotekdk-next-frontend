@@ -257,12 +257,13 @@ function getStackTrace() {
   return obj.stack;
 }
 
+const useRouterImpl = process.env.STORYBOOK_ACTIVE ? () => ({}) : useRouter;
 /**
  * Will return specific implementation of fetcher
  * either a mocked one, or the real deal
  */
 function useFetcherImpl() {
-  const router = useRouter();
+  const router = useRouterImpl();
   const tid = router?.query?.tid;
   const consent = useCookieConsent();
   const { fetcher: mockedFetcher } = useContext(APIMockContext) || {};

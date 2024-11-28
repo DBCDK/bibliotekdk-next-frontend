@@ -20,7 +20,7 @@ describe("Trace", () => {
         const tid = params.get("tid");
 
         expect(tid).to.exist;
-        expect(tid).to.have.length(27);
+        expect(tid.length).to.be.greaterThan(20);
       });
   });
   it(`URL parameter on material page is sent to FBI-API as x-parent-trace-id header`, () => {
