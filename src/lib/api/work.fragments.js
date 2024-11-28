@@ -284,6 +284,9 @@ export function series({ workId }) {
  * @returns {Object} a query object
  */
 export function seriesById({ seriesId }) {
+  if (!seriesId) {
+    return null;
+  }
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 4000, // for debugging
