@@ -289,7 +289,7 @@ export function templateForUniversePageSeries({ material }) {
 /**Used in Universe Page for Series */
 export function templateForUniverseSeriesBase({ material, classNameAddition }) {
   const firstWork = material?.members?.[0]?.work;
-  const { titles } = getTitlesAndType({ work: firstWork });
+  const { titles } = getTitlesAndType({ work: material });
 
   const title = titles[0] || material?.title;
   const identifyingAddition = material?.identifyingAddition;
