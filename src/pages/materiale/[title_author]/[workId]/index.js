@@ -63,10 +63,15 @@ export default function WorkPage() {
    * @param {Object} queryInput
    */
   function handleOnTypeChange(queryInput) {
-    setQuery({
+    let newQuery = {
       ...queryInput,
       type: formatMaterialTypesToUrl(queryInput?.type),
-    });
+    };
+    // Keep tid when changing URL
+    if (router?.query?.tid) {
+      newQuery.tid = router?.query?.tid;
+    }
+    setQuery(newQuery);
   }
 
   return (
