@@ -7,6 +7,7 @@ import {
 } from "@/lib/api/fragments.utils";
 
 export function universeBasicInfo({ universeId }) {
+  console.log("universeBasicInfo.universeId",universeId);
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `query UniverseBasic($universeId: String!) {
