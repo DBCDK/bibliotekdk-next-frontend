@@ -111,6 +111,7 @@ export function typedSuggest({
 
 const suggestResponseFragment = `fragment suggestResponseFragment on SuggestResponse {
   result {
+    traceId
     type
     term
   }

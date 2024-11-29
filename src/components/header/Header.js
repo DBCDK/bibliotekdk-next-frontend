@@ -174,6 +174,7 @@ export function Header({
     const method = suggesterVisibleMobile ? "replace" : "push";
 
     const type = {
+      tid: suggestion?.traceId,
       workTypes:
         selectedMaterial !== SuggestTypeEnum.ALL ? selectedMaterial : null,
     };
