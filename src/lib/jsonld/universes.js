@@ -1,37 +1,25 @@
-import { getCanonicalArticleUrl } from "@/lib/utils";
-
 /**
  * Creates JSON-LD representation of the article
  * - https://developers.google.com/search/docs/data-types/article
  *
  *
- * @param {Object} article
+ * @param {Object} universe
  *
  * @returns {Object} JSON-LD representation of article
  */
-export function getJSONLD({
-  nid,
-  title,
-  fieldRubrik,
-  fieldImage,
-  body,
-  entityCreated,
-  entityModified,
-}) {
-  const url = getCanonicalArticleUrl({ title, nid });
+export function getJSONLD({ universe }) {
+  const url = `https://bibliotek.dk/univers/${universe.universeId}`;
   const res = {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": "CreativeWork",
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": url,
     },
-    headline: title,
-    image: [fieldImage],
-    datePublished: entityCreated,
-    dateModified: entityModified,
-    description: fieldRubrik,
-    articleBody: body && body.value,
+    name: universe.title,
+    description: universe.description,
+    url: url,
+    genre: universe.workTypes,
     author: {
       "@type": "Organization",
       name: "Bibliotek.dk",

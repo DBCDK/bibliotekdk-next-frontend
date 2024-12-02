@@ -392,5 +392,111 @@ describe("Server Side Rendering", () => {
         ]);
       });
     });
+
+    it("has json-ld for universe", () => {
+      const expectedUniverse = {
+        universeId: "870979:134975679",
+        title: "Marvel-universet",
+        description: "Sammenhængende univers for det amerikanske tegneserieforlag Marvels superhelte som Spider-Man, X-Men og Avengers",
+        url: "https://bibliotek.dk/univers/870979:134975679",
+        genre: ["MOVIE", "LITERATURE", "OTHER", "GAME"],
+      };
+    
+      getPageHead(`/univers/${expectedUniverse.universeId}`).then((res) => {
+    
+        expect(res.jsonld["@context"]).to.equal("https://schema.org");
+        expect(res.jsonld["@type"]).to.equal("CreativeWork");
+        expect(res.jsonld.mainEntityOfPage["@type"]).to.equal("WebPage");
+        expect(res.jsonld.mainEntityOfPage["@id"]).to.equal(expectedUniverse.url);
+    
+        // jsonld properties
+        expect(res.jsonld.name).to.equal(expectedUniverse.title);
+        expect(res.jsonld.description).to.equal(expectedUniverse.description);
+        expect(res.jsonld.url).to.equal(expectedUniverse.url);
+        expect(res.jsonld.genre).to.deep.equal(expectedUniverse.genre);
+        expect(res.jsonld.author["@type"]).to.equal("Organization");
+        expect(res.jsonld.author.name).to.equal("Bibliotek.dk");    
+        expect(res.jsonld.publisher["@type"]).to.equal("Organization");
+        expect(res.jsonld.publisher.name).to.equal("Bibliotek.dk");
+        expect(res.jsonld.publisher.logo["@type"]).to.equal("ImageObject");
+        expect(res.jsonld.publisher.logo.url).to.equal("https://bibliotek.dk/img/logo.png");
+      });
+    });
   });
+
+describe(`series page`, () => {  
+
+  it(`has correct metadata`, () => {
+    const seriesId = "799aeecf1684f4857554b70ba62793519ae6f43a01e5c21aad5e66f904af86de";
+    const expectedTitle = "Avengers";
+    const expectedUrl = `http://localhost:3000/serie/${seriesId}`;
+  
+    getPageHead(`/serie/${seriesId}`).then((res) => {
+      //metadata
+      expect(res.title?.toLowerCase()).to.contain(expectedTitle.toLowerCase());  
+      expect(res.description).to.exist;
+      expect(res.description).to.contain("Avengers");
+  
+      //open Graph (og) metadata
+      expect(res["og:url"]).to.equal(expectedUrl);
+      expect(res["og:title"]?.toLowerCase()).to.contain(expectedTitle.toLowerCase());
+      expect(res["og:description"]).to.exist;
+      expect(res["og:description"]).to.contain("Avengers-superhelte");
+        expect(res["og:image"]).to.exist; 
+    });
+  });
+
+
+  it("has json-ld for series", () => {
+    const expectedSeries = {
+      seriesId: "799aeecf1684f4857554b70ba62793519ae6f43a01e5c21aad5e66f904af86de",
+      title: "Avengers",
+      description: "Historier om de fantastiske Avengers-superhelte. Fra ca. 4 år",
+      url: "https://bibliotek.dk/serie/799aeecf1684f4857554b70ba62793519ae6f43a01e5c21aad5e66f904af86de",
+      genre: ["LITERATURE"],
+      members: [
+        {
+          title: "De sejeste superhelte",
+          url: "https://bibliotek.dk/work/work-of:870970-basis:61911669",
+          description: "Historier om Captain America, Spider-Man og Iron Man.",
+          image: {
+            url: "https://moreinfo.addi.dk/cover1.jpg",
+            thumbnail: "https://moreinfo.addi.dk/thumb1.jpg",
+          },
+        },
+      ],
+    };
+
+    getPageHead(`/serie/${expectedSeries.seriesId}`).then((res) => {
+  
+      //json-ld structure
+      expect(res.jsonld["@context"]).to.equal("https://schema.org");
+      expect(res.jsonld["@type"]).to.equal("CreativeWorkSeries");
+      expect(res.jsonld.mainEntityOfPage["@type"]).to.equal("WebPage");
+      expect(res.jsonld.mainEntityOfPage["@id"]).to.equal(expectedSeries.url);
+      expect(res.jsonld.name).to.equal(expectedSeries.title);
+      expect(res.jsonld.description).to.equal(expectedSeries.description);
+      expect(res.jsonld.url).to.equal(expectedSeries.url);
+      expect(res.jsonld.genre).to.deep.equal(expectedSeries.genre);
+      expect(res.jsonld.author["@type"]).to.equal("Organization");
+      expect(res.jsonld.author.name).to.equal("Bibliotek.dk");
+      expect(res.jsonld.publisher["@type"]).to.equal("Organization");
+      expect(res.jsonld.publisher.name).to.equal("Bibliotek.dk");
+      expect(res.jsonld.publisher.logo["@type"]).to.equal("ImageObject");
+      expect(res.jsonld.publisher.logo.url).to.equal("https://bibliotek.dk/img/logo.png");
+  
+      const expectedMember = expectedSeries.members[0];
+      const jsonldMember = res.jsonld.hasPart[0];
+  
+        expect(jsonldMember["@type"]).to.equal("CreativeWork");
+        expect(jsonldMember.name).to.equal(expectedMember.title);
+        expect(jsonldMember.url).to.equal(expectedMember.url);
+        expect(jsonldMember.description).to.equal(expectedMember.description);
+  
+    });
+  });
+
+
+
+});
 });
