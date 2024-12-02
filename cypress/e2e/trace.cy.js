@@ -23,7 +23,7 @@ describe("Trace", () => {
         expect(tid.length).to.be.greaterThan(20);
       });
   });
-  it(`URL parameter on material page is sent to FBI-API as x-parent-trace-id header`, () => {
+  it(`URL parameter on material page is sent to FBI-API as x-caused-by header`, () => {
     cy.intercept("POST", fbiApiPath).as("apiRequest");
     cy.visit(
       `${nextjsBaseUrl}/materiale/elselskaber-dumper-paa-stribe-i-ny-stor-test_morten-zahle/work-of%3A870971-avis%3A139667638?type=artikel+%2F+artikel+%28online%29&tid=test`
@@ -32,8 +32,29 @@ describe("Trace", () => {
 
     // Check header on request to fbi-api
     cy.wait("@apiRequest").then((interception) => {
-      const traceIdHeader = interception.request.headers["x-parent-trace-id"];
+      const traceIdHeader = interception.request.headers["x-caused-by"];
       expect(traceIdHeader).to.equal("test");
     });
+  });
+  it(`TraceId from suggest response is available as URL parameter when clicking`, () => {
+    cy.visit(nextjsBaseUrl);
+    cy.consentAllowAll(); //allow cookies
+
+    // List suggestions
+    cy.get('[data-cy="suggester-input"]').type("hest");
+
+    // Click on first suggestion
+    cy.get('ul[role="listbox"] li[data-suggestion-index="0"]').click();
+
+    // Check that tid is set as URL param
+    cy.url()
+      .should("include", "tid=")
+      .then((url) => {
+        const params = new URLSearchParams(url.split("?")[1]);
+        const tid = params.get("tid");
+
+        expect(tid).to.exist;
+        expect(tid.length).to.be.greaterThan(20);
+      });
   });
 });

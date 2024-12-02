@@ -69,11 +69,11 @@ export async function fetcher(
   const headers = {
     "Content-Type": "application/json",
     "X-Unique-Visitor-ID": uniqueVisitorId || "", // Remove this when no longer used in FBI-API
-    "X-Visitor-ID": uniqueVisitorId || "", // X-Unique-Visistor-ID has been renamed to this
+    "X-Session-Token": uniqueVisitorId || "", // X-Unique-Visistor-ID has been renamed to this
     "X-Tracking-Consent": !!statistics,
   };
   if (parentTraceId) {
-    headers["X-Parent-Trace-ID"] = parentTraceId;
+    headers["X-Caused-By"] = parentTraceId;
   }
   if (accessToken) {
     headers.Authorization = `Bearer ${accessToken}`;
