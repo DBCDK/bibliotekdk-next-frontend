@@ -426,7 +426,7 @@ describe("Server Side Rendering", () => {
 
 describe(`series page`, () => {  
 
-  it.only(`has correct metadata`, () => {
+  it(`has correct metadata`, () => {
     const seriesId = "799aeecf1684f4857554b70ba62793519ae6f43a01e5c21aad5e66f904af86de";
     const expectedTitle = "Avengers";
     const expectedUrl = `http://localhost:3000/serie/${seriesId}`;
