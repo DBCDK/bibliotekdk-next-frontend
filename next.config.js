@@ -35,7 +35,7 @@ module.exports = {
         headers: [
           {
             key: "Content-Security-Policy",
-            value: "default-src 'self'; script-src 'self' https://consent.cookiebot.eu https://stats.dbc.dk 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://consent.cookiebot.eu https://stats.dbc.dk; frame-src 'self';",
+            value: "default-src 'self'; script-src 'self' *.dbc.dk https://consent.cookiebot.eu https://consentcdn.cookiebot.eu 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' https://moreinfo.addi.dk img.sct.eu1.usercentrics.eu data: *.dbc.dk; connect-src 'self' https://consentcdn.cookiebot.eu https://consent.cookiebot.eu https://stats.dbc.dk *.dbc.dk; frame-src 'self' *.dbc.dk; font-src 'self' data:; ",
           },
           {
             key: "X-Content-Type-Options",
