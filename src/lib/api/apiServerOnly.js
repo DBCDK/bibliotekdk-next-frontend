@@ -70,6 +70,10 @@ export async function fetchAll(
         initialData[queryKey] = queryRes;
       });
   }
+  console.log("\n\n\n APU SERVERSIDE ", {
+    initialData,
+    session,
+  });
 
   return {
     initialData,

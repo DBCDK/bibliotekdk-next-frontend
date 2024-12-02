@@ -45,7 +45,7 @@ export function getJSONLD({
       name: "Bibliotek.dk",
       logo: {
         "@type": "ImageObject",
-        url: "https://beta.bibliotek.dk/img/logo.png",
+        url: "https://bibliotek.dk/img/logo.png",
       },
     },
   };

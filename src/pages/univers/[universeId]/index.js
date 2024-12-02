@@ -13,13 +13,14 @@ export default function Wrap() {
  * https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
  */
 Wrap.getInitialProps = async (ctx) => {
-  const res = await fetchAll(
-    [universeBasicInfo],
-    ctx,
-    { universeId: ctx.query.universeId },
-    true
-  );
+  return fetchAll([universeBasicInfo], ctx, {
+    universeId: ctx.query.universeId,
+  });
+  const res = await fetchAll([universeBasicInfo], ctx, {
+    universeId: ctx.query.universeId,
+  });
   const queries = Object.values(res.initialData);
   const initialData = queries[0]?.data;
+  console.log("\n\n\n{ initialData }", initialData);
   return { initialData };
 };

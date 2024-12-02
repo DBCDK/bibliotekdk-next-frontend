@@ -7,6 +7,7 @@ import UniverseHeading from "@/components/universe/universeHeading/UniverseHeadi
 import UniverseMembers from "@/components/universe/universeMembers/UniverseMembers";
 import Head from "next/head";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
+import { getJSONLD } from "@/lib/jsonld/universes";
 
 export default function UniversePage() {
   const router = useRouter();
@@ -19,6 +20,7 @@ export default function UniversePage() {
   const { canonical, alternate } = useCanonicalUrl();
   const title = data?.universe?.title;
   const description = data?.universe?.description;
+  const jsonld = data && getJSONLD(data);
 
   if (error || (data && !data?.universe)) {
     return <Custom404 />;
@@ -40,6 +42,12 @@ export default function UniversePage() {
         {alternate.map(({ locale, url }) => (
           <link key={locale} rel="alternate" hreflang={locale} href={url} />
         ))}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonld),
+          }}
+        />
       </Head>
       <Header router={router} />
       <main>

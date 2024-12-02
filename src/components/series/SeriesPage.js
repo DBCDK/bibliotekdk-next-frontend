@@ -8,6 +8,7 @@ import SeriesMembers from "@/components/series/seriesMembers/SeriesMembers";
 import Custom404 from "@/pages/404";
 import Head from "next/head";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
+import { getJSONLD } from "@/lib/jsonld/series";
 
 export default function SeriesPage() {
   const router = useRouter();
@@ -23,14 +24,17 @@ export default function SeriesPage() {
     seriesId &&
       workFragments.seriesById({ seriesId: seriesId, seriesLimit: 200 })
   );
-
+  const jsonld = seriesData && getJSONLD(seriesData);
   const specificSeries = seriesData?.series;
   if (seriesError) {
     return <Custom404 />;
   }
 
-  const description = seriesData?.work?.series?.[0]?.description;
-  const title = seriesData?.work?.series?.[0]?.title;
+  const description =
+    seriesData?.series?.description ||
+    seriesData?.work?.series?.[0]?.description;
+  const title =
+    seriesData?.series?.title || seriesData?.work?.series?.[0]?.title;
 
   return (
     <>
@@ -48,6 +52,13 @@ export default function SeriesPage() {
         {alternate.map(({ locale, url }) => (
           <link key={locale} rel="alternate" hreflang={locale} href={url} />
         ))}
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonld),
+          }}
+        />
       </Head>
 
       <Header router={router} />
