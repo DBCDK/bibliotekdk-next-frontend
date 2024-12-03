@@ -7,30 +7,63 @@
  * We set distDir, such that the build folder is located next to the storybook build
  */
 
+//     {
+//       source: "/_next/image:slug*",
+//       headers: [
+//         {
+//           key: "Cache-Control",
+//           value: "public, s-maxage=600",
+//         },
+//       ],
+//     },
+//     {
+//       source: "/img:slug*",
+//       headers: [
+//         {
+//           key: "Cache-Control",
+//           value: "public, s-maxage=600",
+//         },
+//       ],
+//     },
+
+const headers = [
+  {
+    key: "Content-Security-Policy", // prevents XSS attacks. Allow only whitelisted sources
+    value:
+      "default-src 'self'; script-src 'self' *.dbc.dk https://consent.cookiebot.eu https://consentcdn.cookiebot.eu 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' https://moreinfo.addi.dk img.sct.eu1.usercentrics.eu data: *.dbc.dk; connect-src 'self' https://consentcdn.cookiebot.eu https://consent.cookiebot.eu https://stats.dbc.dk *.dbc.dk; frame-src 'self' *.dbc.dk; font-src 'self' data:; ",
+  },
+  {
+    key: "X-Content-Type-Options",// prevents the browser from guessing the content type. This will prevent MIME sniffing
+    value: "nosniff",
+  },
+  {
+    key: "X-Frame-Options",// prevents the page from being rendered in an iframe
+    value: "SAMEORIGIN",
+  },
+  {
+    key: "Strict-Transport-Security", // forces the browser to use https
+    value: "max-age=31536000; includeSubDomains",
+  },
+  {
+    key: "Referrer-Policy", // will include full url in referrer for requests from same origin. But only the origin(bibliotek.dk) for requests from other origins
+    value: "origin-when-cross-origin",
+  },
+];
+
 module.exports = {
   distDir: "dist/next",
-  // headers: async () => {
-  //   return [
-  //     {
-  //       source: "/_next/image:slug*",
-  //       headers: [
-  //         {
-  //           key: "Cache-Control",
-  //           value: "public, s-maxage=600",
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       source: "/img:slug*",
-  //       headers: [
-  //         {
-  //           key: "Cache-Control",
-  //           value: "public, s-maxage=600",
-  //         },
-  //       ],
-  //     },
-  //   ];
-  // },
+  headers: async () => {
+    return [
+      {
+        source: "/(.*)", //all pages
+        headers,
+      },
+      {
+        source: "/", //frontpage. For some reason frontpage is not included in the above path
+        headers,
+      },
+    ];
+  },
   i18n: {
     locales: ["da", "en"],
     defaultLocale: "da",
