@@ -10,7 +10,7 @@
   "phrase.creatorfunction=\"Jakob Martin Strid (forfatter)\" AND phrase.creatorfunction=\"Jakob Martin Strid (kunstner)\"",
   "phrase.creatorfunction=\"Danmarks Evalueringsinstitut (forfatter)\"",
   "phrase.creatorfunction=\"Danmarks Evalueringsinstitut (forfatter)\" AND phrase.creatorfunction=\"Lucy Dillon (forfatter)\"",
-  "id=\"721010-danbib\"",
+  "localid=\"721010-danbib\"",
   "*",
   "*",
   "*",
