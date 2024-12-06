@@ -633,7 +633,7 @@ function getSeriesAndUniverseTitles(work) {
 
     return {
       title: formattedTitle,
-      url: getSeriesUrl(singleSeries.seriesId),
+      url: getSeriesUrl(singleSeries.seriesId, work?.traceId),
       skeleton: work?.seriesIsLoading,
     };
   });

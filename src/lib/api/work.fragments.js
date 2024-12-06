@@ -536,6 +536,7 @@ export function fbiOverviewDetail({ workId }) {
         work(id: $workId) {
           workId
           workTypes
+          traceId
           genreAndForm 
           creators {
             ...creatorsFragment
