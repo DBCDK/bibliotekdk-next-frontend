@@ -233,6 +233,7 @@ export function series({ workId }) {
     // delay: 4000, // for debugging
     query: `query Series($workId: String! ) {
       work(id: $workId) {
+        traceId
         titles {
           main
           full

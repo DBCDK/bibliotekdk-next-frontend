@@ -286,8 +286,13 @@ export function getHelpUrl(title, helpTextId) {
  *
  * @param {string} seriesId
  */
-export function getSeriesUrl(seriesId) {
-  return `/serie/${seriesId}`;
+export function getSeriesUrl(seriesId, traceId) {
+  return {
+    pathname: `/serie/${seriesId}`,
+    query: {
+      tid: traceId, // Use traceId as URL parameter
+    },
+  };
 }
 
 /**
