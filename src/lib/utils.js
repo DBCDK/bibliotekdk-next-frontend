@@ -266,10 +266,16 @@ export function encodeTitleCreator(title = "", creators = []) {
  * @param {string} fullTitle
  * @param {Array<Object>} creators
  * @param {string} workId
+ * @param traceId
  * @returns {{query: {title_author: string, workId}, pathname: string}}
  */
-export function getWorkUrl(fullTitle, creators, workId) {
-  return `/materiale/${encodeTitleCreator(fullTitle, creators)}/${workId}`;
+export function getWorkUrl(fullTitle, creators, workId, traceId) {
+  return {
+    pathname: `/materiale/${encodeTitleCreator(fullTitle, creators)}/${workId}`,
+    query: {
+      tid: traceId, // Use traceId as URL parameter
+    },
+  };
 }
 
 /**
