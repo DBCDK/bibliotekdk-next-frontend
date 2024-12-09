@@ -387,7 +387,12 @@ export function templateForSeriesSlider({ material, series }) {
   const numberInSeries = series?.numberInSeries;
 
   return {
-    link_href: getWorkUrl(fullTitle, creators, material?.workId),
+    link_href: getWorkUrl(
+      fullTitle,
+      creators,
+      material?.workId,
+      material?.traceId
+    ),
     fullTitle: fullTitle,
     image_src: coverSrc?.detail,
     ImageOverlay: beginWithThis
