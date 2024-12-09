@@ -207,6 +207,7 @@ export default function ResultRow({
               work?.creators
             ),
             workId: work?.workId,
+            tid: encodeURIComponent(work?.traceId), // Use traceId as URL parameter
           },
         }}
         dataCy={`result-row${work?.workId ? "" : "-skeleton"}`}

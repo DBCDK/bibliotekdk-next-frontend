@@ -79,6 +79,7 @@ export function all({
     query all ($q: SearchQueryInput!, $filters: SearchFiltersInput, $offset: Int!, $limit: PaginationLimitScalar!, $search_exact: Boolean) {
       search(q: $q, filters: $filters, search_exact: $search_exact) {
         works(limit: $limit, offset: $offset) {
+          traceId
           workId
           latestPublicationDate
           series {

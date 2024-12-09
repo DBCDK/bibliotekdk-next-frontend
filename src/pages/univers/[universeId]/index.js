@@ -12,6 +12,8 @@ export default function Wrap() {
  *
  * https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
  */
-Wrap.getInitialProps = (ctx) => {
-  return fetchAll([universeBasicInfo], ctx);
+Wrap.getInitialProps = async (ctx) => {
+  return fetchAll([universeBasicInfo], ctx, {
+    universeId: ctx.query.universeId,
+  });
 };

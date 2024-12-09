@@ -9,6 +9,7 @@ import getConfig from "next/config";
 import useSWR from "swr";
 import useAccessToken from "@/components/hooks/user/useAccessToken";
 import useCookieConsent from "@/components/hooks/useCookieConsent";
+import { useRouter } from "next/router";
 
 // TODO handle config better
 const nextJsConfig = getConfig();
@@ -57,7 +58,7 @@ export async function fetcher(
     accessToken,
   } = typeof queryStr === "string" ? JSON.parse(queryStr) : queryStr;
 
-  const { uniqueVisitorId, statistics } = extra;
+  const { uniqueVisitorId, statistics, parentTraceId } = extra;
 
   // Calculate apiUrl
   const apiUrl =
@@ -67,9 +68,13 @@ export async function fetcher(
 
   const headers = {
     "Content-Type": "application/json",
-    "X-Unique-Visitor-ID": uniqueVisitorId || "",
+    "X-Unique-Visitor-ID": uniqueVisitorId || "", // Remove this when no longer used in FBI-API
+    "X-Session-Token": uniqueVisitorId || "", // X-Unique-Visistor-ID has been renamed to this
     "X-Tracking-Consent": !!statistics,
   };
+  if (parentTraceId) {
+    headers["X-Caused-By"] = parentTraceId;
+  }
   if (accessToken) {
     headers.Authorization = `Bearer ${accessToken}`;
   }
@@ -252,11 +257,14 @@ function getStackTrace() {
   return obj.stack;
 }
 
+const useRouterImpl = process.env.STORYBOOK_ACTIVE ? () => ({}) : useRouter;
 /**
  * Will return specific implementation of fetcher
  * either a mocked one, or the real deal
  */
 function useFetcherImpl() {
+  const router = useRouterImpl();
+  const tid = router?.query?.tid;
   const consent = useCookieConsent();
   const { fetcher: mockedFetcher } = useContext(APIMockContext) || {};
   if (mockedFetcher) {
@@ -264,7 +272,7 @@ function useFetcherImpl() {
     return (queryStr) => mockedFetcher(queryStr, stackTrace);
   }
 
-  return (key) => fetcher(key, null, null, consent);
+  return (key) => fetcher(key, null, null, { ...consent, parentTraceId: tid });
 }
 
 /**
