@@ -233,6 +233,7 @@ export function series({ workId }) {
     // delay: 4000, // for debugging
     query: `query Series($workId: String! ) {
       work(id: $workId) {
+        traceId
         titles {
           main
           full
@@ -535,6 +536,7 @@ export function fbiOverviewDetail({ workId }) {
         work(id: $workId) {
           workId
           workTypes
+          traceId
           genreAndForm 
           creators {
             ...creatorsFragment

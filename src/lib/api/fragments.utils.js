@@ -157,6 +157,7 @@ export const workSliderFragment = `fragment workSliderFragment on Work {
   workId
   workTypes
   abstract
+  traceId
   fictionNonfiction {
     display
     code
