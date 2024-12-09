@@ -45,6 +45,7 @@ export function csSuggest({ q, type }) {
        result {
           type
           term
+          traceId
         }
       }
     }`,
