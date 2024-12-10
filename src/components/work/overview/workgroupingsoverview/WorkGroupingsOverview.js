@@ -61,6 +61,7 @@ function WorkGroupingsOverview({
       <Text tag={"div"} className={styles.display_inline}>
         {description}
         <Link
+          data-cy="groupings-overview-link"
           border={{ top: false, bottom: { keepVisible: true } }}
           disabled={!element}
           {...(link && { href: link })}
