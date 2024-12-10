@@ -111,6 +111,7 @@ function FieldInput({ index, fieldValue, doAdvancedSearch }) {
                 value={fieldValue?.value}
                 onChange={(e) => {
                   handleInputFieldChange(index, e.target.value);
+                  //reset suggesterTid when user types
                   setSuggesterTid("");
                 }}
                 placeholder={placeholder}
