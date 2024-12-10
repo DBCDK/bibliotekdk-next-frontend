@@ -42,7 +42,7 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
     stateToString,
     resetObjectState,
     workType,
-    suggesterTid
+    suggesterTid,
   } = useAdvancedSearchContext();
 
   const [showCqlEditor, setShowCqlEditor] = useState(false);
@@ -77,15 +77,11 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
         router.push({ pathname: "/avanceret", query });
       }
     } else {
-      //const tid=suggestObject.suggesterTid;
-      //const query = { fieldSearch: stateToString};
-
       const query = {
         fieldSearch: stateToString,
-        ...(suggesterTid?.length>0 && { tid:suggesterTid }) 
+        ...(suggesterTid?.length > 0 && { tid: suggesterTid }),
       };
 
-      
       router.push({ pathname: "/avanceret", query });
       //save in state
       const cql = convertStateToCql({

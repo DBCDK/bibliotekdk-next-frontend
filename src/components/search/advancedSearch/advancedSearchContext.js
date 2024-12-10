@@ -317,8 +317,8 @@ export default function AdvancedSearchProvider({ children, router }) {
     stateToString,
     popoverRef,
     resetMenuItemsEvent,
-    suggesterTid, 
-    setSuggesterTid
+    suggesterTid,
+    setSuggesterTid,
   };
 
   return (
