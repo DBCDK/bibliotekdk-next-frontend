@@ -14,6 +14,7 @@ import { useData } from "@/lib/api/api";
 import * as suggestFragments from "@/lib/api/suggest.fragments";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import { LogicalOperatorsEnum } from "@/components/search/enums";
+import useQ from "@/components/hooks/useQ";
 
 /**
  * Returns a textinput component and a dropdown to choose which advanced search index to search in
@@ -21,7 +22,10 @@ import { LogicalOperatorsEnum } from "@/components/search/enums";
  * @returns {React.JSX.Element}
  */
 function FieldInput({ index, fieldValue, doAdvancedSearch }) {
+  console.log("FieldInput.fieldValue", fieldValue);
   const [suggestions, setSuggestions] = useState([]);
+
+
   const inputId = `input-field-${index}`;
   const {
     handleInputFieldChange,
@@ -29,6 +33,8 @@ function FieldInput({ index, fieldValue, doAdvancedSearch }) {
     handleLogicalOperatorChange,
     workType,
     showPopover,
+    suggesterTid, 
+    setSuggesterTid
   } = useAdvancedSearchContext();
   //labels to show in SearchIndexDropdown
   //TODO: change to use workType instead of hardcoded. workTypesLabels does not have data for all worktypes. We use only "all" only for now for now.
@@ -62,7 +68,7 @@ function FieldInput({ index, fieldValue, doAdvancedSearch }) {
   useEffect(() => {
     setSuggestions(
       data?.complexSuggest?.result?.map((res) => {
-        return { value: res.term };
+        return { value: res.term, traceId: res.traceId };
       })
     );
   }, [data]);
@@ -87,10 +93,17 @@ function FieldInput({ index, fieldValue, doAdvancedSearch }) {
             <Suggester
               id={inputId}
               data={suggestions}
-              onSelect={(selectValue) => {
+              onSelect={(selectValue, suggestionObject) => {
+                const traceId = suggestionObject?.traceId;
+                // console.log("onSelect.traceId", traceId);
+                // console.log("onSelect.suggestionObject", suggestionObject);
+
                 setTimeout(() => {
                   // onSelect should be called after onChange. Otherwise onChange wil overrite the selected value
                   handleInputFieldChange(index, selectValue);
+                  //TODO: add traceId to the url here. it should be tid=traceId1
+                  setSuggesterTid(traceId);
+  
                 }, 0);
                 document?.getElementById(inputId).blur();
               }}

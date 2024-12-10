@@ -212,6 +212,9 @@ export default function AdvancedSearchProvider({ children, router }) {
     }
   }, [showPopover, popoverRef.current]);
 
+  //tracking id for the selected suggestion from inputfield. For now we only save one tid.
+  const [suggesterTid, setSuggesterTid] = useState("");
+
   //// ---- Inputfields ----
   const {
     inputFields,
@@ -314,6 +317,8 @@ export default function AdvancedSearchProvider({ children, router }) {
     stateToString,
     popoverRef,
     resetMenuItemsEvent,
+    suggesterTid, 
+    setSuggesterTid
   };
 
   return (

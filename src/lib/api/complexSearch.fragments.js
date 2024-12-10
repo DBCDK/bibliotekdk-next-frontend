@@ -33,6 +33,7 @@ export function doComplexSearchAll({ cql, offset, limit, sort, facets }) {
           }
         }				
 				works(limit: $limit, offset: $offset, sort: $sort) {
+          traceId
           workId
           latestPublicationDate
           series {
