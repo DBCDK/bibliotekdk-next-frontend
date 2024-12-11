@@ -22,6 +22,7 @@ import { LogicalOperatorsEnum } from "@/components/search/enums";
  */
 function FieldInput({ index, fieldValue, doAdvancedSearch }) {
   const [suggestions, setSuggestions] = useState([]);
+
   const inputId = `input-field-${index}`;
   const {
     handleInputFieldChange,
@@ -29,6 +30,7 @@ function FieldInput({ index, fieldValue, doAdvancedSearch }) {
     handleLogicalOperatorChange,
     workType,
     showPopover,
+    setSuggesterTid,
   } = useAdvancedSearchContext();
   //labels to show in SearchIndexDropdown
   //TODO: change to use workType instead of hardcoded. workTypesLabels does not have data for all worktypes. We use only "all" only for now for now.
@@ -62,7 +64,7 @@ function FieldInput({ index, fieldValue, doAdvancedSearch }) {
   useEffect(() => {
     setSuggestions(
       data?.complexSuggest?.result?.map((res) => {
-        return { value: res.term };
+        return { value: res.term, traceId: res.traceId };
       })
     );
   }, [data]);
@@ -87,14 +89,19 @@ function FieldInput({ index, fieldValue, doAdvancedSearch }) {
             <Suggester
               id={inputId}
               data={suggestions}
-              onSelect={(selectValue) => {
+              onSelect={(selectValue, suggestionObject) => {
+                const traceId = suggestionObject?.traceId;
                 setTimeout(() => {
                   // onSelect should be called after onChange. Otherwise onChange wil overrite the selected value
                   handleInputFieldChange(index, selectValue);
+                  setSuggesterTid(traceId);
                 }, 0);
                 document?.getElementById(inputId).blur();
               }}
-              onClear={() => handleInputFieldChange(index, "")}
+              onClear={() => {
+                handleInputFieldChange(index, "");
+                setSuggesterTid("");
+              }}
               className={styles.suggester}
               initialValue={`${fieldValue.value}`}
             >
@@ -102,7 +109,11 @@ function FieldInput({ index, fieldValue, doAdvancedSearch }) {
                 id={inputId}
                 className={styles.suggesterInput}
                 value={fieldValue?.value}
-                onChange={(e) => handleInputFieldChange(index, e.target.value)}
+                onChange={(e) => {
+                  handleInputFieldChange(index, e.target.value);
+                  //reset suggesterTid when user types
+                  setSuggesterTid("");
+                }}
                 placeholder={placeholder}
                 overrideValueControl={true}
                 tabIndex={showPopover ? "0" : "-1"}
