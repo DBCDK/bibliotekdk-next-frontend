@@ -640,7 +640,7 @@ function getSeriesAndUniverseTitles(work) {
   const universesTitle = work?.universes?.map((singleUniverses) => {
     return {
       title: singleUniverses.title,
-      url: getUniverseUrl(singleUniverses.universeId),
+      url: getUniverseUrl(singleUniverses.universeId, work?.traceId),
       skeleton: work?.universesIsLoading,
     };
   });

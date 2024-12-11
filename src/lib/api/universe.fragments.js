@@ -86,7 +86,7 @@ export function universesBasicInfoByWork({ workId }) {
           title
           description
           workTypes
-          universeId
+          universeId          
         }
       }
     }
