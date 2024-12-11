@@ -46,6 +46,7 @@ export function didYouMean({ q, limit = 5 }) {
       query didyoumean ($q: SearchQueryInput!, $limit: Int!) {
         search(q: $q) {
         didYouMean(limit: $limit) {
+          traceId
           query
           score
         }
