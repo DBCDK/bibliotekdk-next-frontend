@@ -336,10 +336,16 @@ export function getInfomediaReviewUrl(title, workId, id) {
  * @param {string} title
  * @param {string} workId
  * @param {string} pid
- * @returns {string}
+ * @param {traceId}
+ * @returns {url object}
  */
-export function getMaterialReviewUrl(title, workId, pid) {
-  return `/anmeldelse/${title}/${workId}/${pid}`;
+export function getMaterialReviewUrl(title, workId, pid, traceId) {
+  return {
+    pathname: `/anmeldelse/${title}/${workId}/${pid}`,
+    query: {
+      tid: traceId, // Use traceId as URL parameter
+    },
+  };
 }
 
 /**

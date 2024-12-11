@@ -99,6 +99,7 @@ export function reviews({ workId }) {
     query: `query Reviews($workId: String!) {
               work(id: $workId) {
                 workId
+                traceId
                 titles {
                   main                  
                 }
