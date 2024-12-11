@@ -101,6 +101,7 @@ export function universesByWork({ workId, offset, limit }) {
     apiUrl: ApiEnums.FBI_API,
     query: `query UniversesByWork($workId: String!, $offset: Int, $limit: Int) {
       work(id: $workId) {
+        traceId
         universes {
           title
           key

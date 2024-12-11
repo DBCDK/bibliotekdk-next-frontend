@@ -28,7 +28,7 @@ import { getUniverseUrl } from "@/lib/utils";
  * @param {string} workId
  * @param {number} index
  */
-function Universes({ isLoading, universe = {}, workId = "" }) {
+function Universes({ isLoading, universe = {}, workId = "", traceId = "" }) {
   const seriesAndWorks = universe?.content?.entries?.map((entry) => {
     if (entry.__typename === "Series") {
       return {
@@ -57,7 +57,7 @@ function Universes({ isLoading, universe = {}, workId = "" }) {
   const link =
     universe?.title &&
     universe?.key &&
-    getUniverseUrl(universe?.universeId, universe?.traceId);
+    getUniverseUrl(universe?.universeId, traceId);
 
   return (
     <Section
@@ -112,6 +112,8 @@ export default function Container({ workId }) {
     workId && universesByWork({ workId, offset: 0, limit: 19 })
   );
 
+  const traceId = data?.work?.traceId;
+
   const allUniverses = data?.work?.universes;
 
   // if work is not part of universe, we wont show universe section
@@ -128,6 +130,7 @@ export default function Container({ workId }) {
             isLoading={isLoading}
             universe={singleUniverse}
             workId={workId}
+            traceId={traceId}
           />
         );
       })}
