@@ -60,7 +60,7 @@ describe("Overview", () => {
       cy.contains("Some book title").should(
         "have.attr",
         "href",
-        "/materiale/some-book-title_some-creator/some-work-id"
+        "/materiale/some-book-title_some-creator/some-work-id?tid="
       );
     });
 

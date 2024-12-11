@@ -146,7 +146,8 @@ function Item({ data, work, isLoading }) {
           <div className={styles.links}>
             {urls.map((url) => {
               // general link text
-              const shouldUseAlternateText = url?.includes("https://moreinfo");
+              const shouldUseAlternateText =
+                url?.pathname?.includes("https://moreinfo");
               const reviewLinkLabel = Translate({
                 context: "reviews",
                 label: shouldUseAlternateText

@@ -32,7 +32,7 @@ export function Series({ isLoading, series = {}, work }) {
     series?.members?.map((member) => {
       return { material: member?.work, series: member };
     }) || [];
-  const link = getSeriesUrl(series?.seriesId);
+  const link = getSeriesUrl(series?.seriesId, work?.traceId);
   const identifyingAddition = series?.identifyingAddition
     ? "(" + series?.identifyingAddition + ")"
     : "";

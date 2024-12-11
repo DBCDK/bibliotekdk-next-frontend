@@ -132,7 +132,11 @@ export function getUrls(data, work) {
   const urlTxt = title && encodeString(title);
 
   if (isMaterialReview) {
-    return data.pid && [getMaterialReviewUrl(urlTxt, workId, data.pid)];
+    return (
+      data.pid && [
+        getMaterialReviewUrl(urlTxt, workId, data.pid, work?.traceId),
+      ]
+    );
   }
 
   if (isInfomediaReview) {

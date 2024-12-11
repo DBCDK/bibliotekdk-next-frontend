@@ -61,6 +61,7 @@ function WorkGroupingsOverview({
       <Text tag={"div"} className={styles.display_inline}>
         {description}
         <Link
+          data-cy="groupings-overview-link"
           border={{ top: false, bottom: { keepVisible: true } }}
           disabled={!element}
           {...(link && { href: link })}
@@ -112,7 +113,7 @@ export function getPartOfSeriesText(type, numberInSeries) {
   }
 }
 
-function getSeriesMap({ series, members, workId }) {
+function getSeriesMap({ series, members, workId, traceId }) {
   const numberInSeries = series?.members?.find(
     (member) => member.work?.workId === workId
   )?.numberInSeries;
@@ -125,7 +126,7 @@ function getSeriesMap({ series, members, workId }) {
       description: getPartOfSeriesText(type, numberInSeries),
       title: constructSeriesTitle({ type, series, titles }),
       anchorId: getAnchor(AnchorsEnum.SERIES),
-      link: getSeriesUrl(series.seriesId),
+      link: getSeriesUrl(series.seriesId, traceId),
     }
   );
 }
@@ -195,6 +196,7 @@ export default function Wrap({ workId }) {
   const hostPublication =
     current?.manifestations?.mostRelevant?.[0]?.hostPublication;
 
+  const traceId = work_response?.data?.work?.traceId;
   const allSeries = work_response?.data?.work?.series || [];
   // TODO .. alter title if this is a tvserie
   const allSeriesMap = allSeries?.map((singleSeries) => {
@@ -202,6 +204,7 @@ export default function Wrap({ workId }) {
       series: singleSeries,
       members: singleSeries.members?.map((member) => member?.work),
       workId: workId,
+      traceId: traceId,
     });
   });
 

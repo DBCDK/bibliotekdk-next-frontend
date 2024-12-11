@@ -266,10 +266,16 @@ export function encodeTitleCreator(title = "", creators = []) {
  * @param {string} fullTitle
  * @param {Array<Object>} creators
  * @param {string} workId
+ * @param traceId
  * @returns {{query: {title_author: string, workId}, pathname: string}}
  */
-export function getWorkUrl(fullTitle, creators, workId) {
-  return `/materiale/${encodeTitleCreator(fullTitle, creators)}/${workId}`;
+export function getWorkUrl(fullTitle, creators, workId, traceId) {
+  return {
+    pathname: `/materiale/${encodeTitleCreator(fullTitle, creators)}/${workId}`,
+    query: {
+      tid: traceId, // Use traceId as URL parameter
+    },
+  };
 }
 
 /**
@@ -286,8 +292,13 @@ export function getHelpUrl(title, helpTextId) {
  *
  * @param {string} seriesId
  */
-export function getSeriesUrl(seriesId) {
-  return `/serie/${seriesId}`;
+export function getSeriesUrl(seriesId, traceId) {
+  return {
+    pathname: `/serie/${seriesId}`,
+    query: {
+      tid: traceId, // Use traceId as URL parameter
+    },
+  };
 }
 
 /**
@@ -325,10 +336,16 @@ export function getInfomediaReviewUrl(title, workId, id) {
  * @param {string} title
  * @param {string} workId
  * @param {string} pid
- * @returns {string}
+ * @param {traceId}
+ * @returns {url object}
  */
-export function getMaterialReviewUrl(title, workId, pid) {
-  return `/anmeldelse/${title}/${workId}/${pid}`;
+export function getMaterialReviewUrl(title, workId, pid, traceId) {
+  return {
+    pathname: `/anmeldelse/${title}/${workId}/${pid}`,
+    query: {
+      tid: traceId, // Use traceId as URL parameter
+    },
+  };
 }
 
 /**
