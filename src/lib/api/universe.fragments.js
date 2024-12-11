@@ -105,6 +105,7 @@ export function universesByWork({ workId, offset, limit }) {
           title
           key
           universeId
+          traceId
           content(offset: $offset, limit: $limit) {
             hitcount
             entries {

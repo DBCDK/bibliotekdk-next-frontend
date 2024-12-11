@@ -55,7 +55,9 @@ function Universes({ isLoading, universe = {}, workId = "" }) {
   const propsAndChildrenInputList = [...seriesAndWorks, universeCard];
 
   const link =
-    universe?.title && universe?.key && getUniverseUrl(universe?.universeId);
+    universe?.title &&
+    universe?.key &&
+    getUniverseUrl(universe?.universeId, universe?.traceId);
 
   return (
     <Section
