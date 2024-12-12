@@ -125,6 +125,7 @@ export function complexSearchOnlyWorkIds({ cql, offset, limit, sort }) {
 				hitcount
 				errorMessage
 				works(offset: $offset, limit: $limit, sort: $sort) {
+				  traceId
 					workId
         }
 			}
