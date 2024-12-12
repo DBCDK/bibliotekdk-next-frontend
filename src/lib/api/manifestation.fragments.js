@@ -347,6 +347,7 @@ ${creatorsFragment}`;
 const reviewOfFragment = `fragment reviewOfFragment on Manifestation {
    relations {
      isReviewOf {
+       traceId
        pid
        creators {
          ...creatorsFragment
