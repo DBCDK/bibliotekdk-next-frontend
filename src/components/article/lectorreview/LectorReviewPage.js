@@ -30,7 +30,6 @@ export function LectorReviewPage({ review }) {
     review?.relations?.isReviewOf?.find(
       (manifestation) => manifestation?.cover?.origin !== "default"
     ) || review?.relations?.isReviewOf?.[0];
-
   const similarMaterials = lectorReviews.flatMap(
     (reviewParts) => reviewParts?.manifestations
   );

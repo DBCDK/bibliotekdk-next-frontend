@@ -298,6 +298,7 @@ const lectorReviewFragment = `fragment lectorReviewFragment on Manifestation {
        contentSubstitute
        heading
        manifestations {
+         traceId
          cover {
            detail
          }

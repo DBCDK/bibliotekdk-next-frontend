@@ -592,7 +592,12 @@ export function templateForRelatedWorks(material) {
   );
 
   return {
-    link_href: getWorkUrl(fullTitle, creators, material?.workId),
+    link_href: getWorkUrl(
+      fullTitle,
+      creators,
+      material?.workId,
+      material?.traceId
+    ),
     fullTitle: fullTitle,
     image_src: material?.cover?.detail,
     workId: material?.workId,
@@ -734,7 +739,12 @@ export function templateImageToLeft({
 
   return {
     link_href: linkToWork
-      ? getWorkUrl(fullTitle, creators, material?.ownerWork?.workId)
+      ? getWorkUrl(
+          fullTitle,
+          creators,
+          material?.ownerWork?.workId,
+          material?.traceId
+        )
       : null,
     fullTitle: fullTitle,
     image_src: material?.cover?.detail,
