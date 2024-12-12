@@ -655,7 +655,11 @@ function getSeriesAndUniverseTitles(work) {
 function RenderInSeriesOrUniverse({ values }) {
   return values.map(({ title, url, skeleton }, index) => {
     return (
-      <div key={`seriesOrUniverse-${index}`} className={styles.link_list}>
+      <div
+        key={`seriesOrUniverse-${index}`}
+        data-cy="series-or-universes"
+        className={styles.link_list}
+      >
         <Link
           href={url}
           disabled={skeleton}
