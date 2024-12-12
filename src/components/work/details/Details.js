@@ -178,7 +178,6 @@ export default function Wrap(props) {
 
   // TODO: Use when jed data is ready and better
   // const { groupedRelations } = workRelationsWorkTypeFactory(relationData?.work);
-
   const {
     data: seriesData,
     isLoading: seriesIsLoading,

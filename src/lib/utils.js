@@ -306,8 +306,13 @@ export function getSeriesUrl(seriesId, traceId) {
  * @param {string} universeId
  * @returns {{query: {universeTitle: string, workId: string, universeNumber?: string}, pathname: string}}
  */
-export function getUniverseUrl(universeId) {
-  return `/univers/${universeId}`;
+export function getUniverseUrl(universeId, traceId) {
+  return {
+    pathname: `/univers/${universeId}`,
+    query: {
+      tid: traceId, // Use traceId as URL parameter
+    },
+  };
 }
 
 /**
