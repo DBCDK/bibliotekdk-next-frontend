@@ -46,6 +46,7 @@ export function inspiration({ filters = [], limit = 10 } = {}) {
               title
               result(limit: $limit) {
                 work {
+                  traceId
                   workId
                   titles {
                     main
