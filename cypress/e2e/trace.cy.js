@@ -2,7 +2,7 @@ const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 const fbiApiPath = Cypress.env("fbiApiPath");
 
 describe("Trace", () => {
-  it.only("traceid on materialtypes in searchresult", () => {
+  it("traceid on materialtypes in searchresult", () => {
     cy.visit(`${nextjsBaseUrl}/find?q.all=hest`);
     cy.consentAllowAll(); //allow cookies
 
