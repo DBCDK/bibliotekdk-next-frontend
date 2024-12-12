@@ -123,7 +123,12 @@ export function templateForVerticalWorkCard({ material }) {
   const coverSrc = getCoverImage(material?.manifestations?.mostRelevant);
 
   return {
-    link_href: getWorkUrl(fullTitle, creators, material?.workId),
+    link_href: getWorkUrl(
+      fullTitle,
+      creators,
+      material?.workId,
+      material?.traceId
+    ),
     fullTitle: fullTitle,
     image_src: coverSrc?.detail,
     workId: material?.workId,
