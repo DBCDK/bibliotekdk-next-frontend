@@ -2,6 +2,23 @@ const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 const fbiApiPath = Cypress.env("fbiApiPath");
 
 describe("Trace", () => {
+  it.only("traceid on materialtypes in searchresult", () => {
+    cy.visit(`${nextjsBaseUrl}/find?q.all=hest`);
+    cy.consentAllowAll(); //allow cookies
+
+    // get all the searchresults
+    cy.get('[data-cy="search-result-materialtype"] a').first().click();
+    cy.url()
+      .should("include", "tid=")
+      .then((url) => {
+        const params = new URLSearchParams(url.split("?")[1]);
+        const tid = params.get("tid");
+
+        expect(tid).to.exist;
+        expect(tid.length).to.be.greaterThan(20);
+      });
+  });
+
   it("traceid universes in details", () => {
     cy.intercept("POST", fbiApiPath).as("apiRequest");
     cy.visit(
@@ -34,10 +51,17 @@ describe("Trace", () => {
     );
     cy.consentAllowAll(); //allow cookies
     // get the recommender
-    cy.get('[data-cy="recommender"] article a')
-      .first()
-      .should("have.attr", "href")
-      .and("include", "tid");
+    cy.get('[data-cy="recommender"] article a').first().click();
+
+    cy.url()
+      .should("include", "tid=")
+      .then((url) => {
+        const params = new URLSearchParams(url.split("?")[1]);
+        const tid = params.get("tid");
+
+        expect(tid).to.exist;
+        expect(tid.length).to.be.greaterThan(20);
+      });
   });
 
   it(`traceid on series when clicked`, () => {
