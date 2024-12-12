@@ -254,6 +254,7 @@ export default function ResultRow({
                             ),
                             type: typeString,
                             workId: work?.workId,
+                            traceId: work?.traceId,
                           },
                         }}
                         key={materialTypeArray}
