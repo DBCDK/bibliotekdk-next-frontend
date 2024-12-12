@@ -65,6 +65,7 @@ export function recommendations({ workId }) {
       result {
         reader
         work {
+          traceId
           ...workSliderFragment
           creators {
             ...creatorsFragment
