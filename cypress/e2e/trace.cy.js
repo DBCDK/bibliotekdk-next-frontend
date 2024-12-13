@@ -63,7 +63,69 @@ describe("Trace", () => {
         expect(traceIdHeader).to.equal("test");
       });
     });
+    it("traceid on materialtypes in searchresult", () => {
+      cy.visit(`${nextjsBaseUrl}/find?q.all=hest`);
+      cy.consentAllowAll(); //allow cookies
+
+      // get all the searchresults
+      cy.get('[data-cy="search-result-materialtype"] a').first().click();
+      cy.url()
+        .should("include", "tid=")
+        .then((url) => {
+          const params = new URLSearchParams(url.split("?")[1]);
+          const tid = params.get("tid");
+
+          expect(tid).to.exist;
+          expect(tid.length).to.be.greaterThan(20);
+        });
+    });
   });
+
+  it("traceid universes in details", () => {
+    cy.intercept("POST", fbiApiPath).as("apiRequest");
+    cy.visit(
+      `${nextjsBaseUrl}/materiale/aquaman_james-wan/work-of:870970-basis:46000242`
+    );
+    cy.consentAllowAll(); //allow cookies
+    // get the recommender
+
+    cy.get('[data-cy="series-or-universes"] a').each(($link) =>
+      cy.wrap($link).should("have.attr", "href").and("include", "tid")
+    );
+
+    // goto a universe from details
+    cy.get('[data-cy="series-or-universes"] a').first().click();
+
+    cy.url()
+      .should("include", "tid=")
+      .then((url) => {
+        const params = new URLSearchParams(url.split("?")[1]);
+        const tid = params.get("tid");
+
+        expect(tid).to.exist;
+        expect(tid.length).to.be.greaterThan(20);
+      });
+  });
+
+  it("traceid on links in recommender", () => {
+    cy.visit(
+      `${nextjsBaseUrl}/materiale/lille-hvide-fisk-holder-jul_guido-van-genechten/work-of%3A870970-basis%3A139056647`
+    );
+    cy.consentAllowAll(); //allow cookies
+    // get the recommender
+    cy.get('[data-cy="recommender"] article a').first().click();
+
+    cy.url()
+      .should("include", "tid=")
+      .then((url) => {
+        const params = new URLSearchParams(url.split("?")[1]);
+        const tid = params.get("tid");
+
+        expect(tid).to.exist;
+        expect(tid.length).to.be.greaterThan(20);
+      });
+  });
+
   it(`traceid on series when clicked`, () => {
     cy.intercept("POST", fbiApiPath).as("apiRequest");
     cy.visit(

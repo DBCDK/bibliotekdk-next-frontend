@@ -137,6 +137,7 @@ export const seriesFragment = `fragment seriesFragment on Series {
   mainLanguages
   seriesWorkTypes: workTypes
   seriesId
+  traceId
 }`;
 export const universeFragment = `fragment universeFragment on Universe {
   title
@@ -144,6 +145,7 @@ export const universeFragment = `fragment universeFragment on Universe {
   description
   key
   universeId
+  traceId
 }`;
 export const coverFragment = `fragment coverFragment on Manifestation {
   cover {
