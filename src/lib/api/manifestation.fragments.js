@@ -298,6 +298,7 @@ const lectorReviewFragment = `fragment lectorReviewFragment on Manifestation {
        contentSubstitute
        heading
        manifestations {
+         traceId
          cover {
            detail
          }
@@ -346,6 +347,7 @@ ${creatorsFragment}`;
 const reviewOfFragment = `fragment reviewOfFragment on Manifestation {
    relations {
      isReviewOf {
+       traceId
        pid
        creators {
          ...creatorsFragment

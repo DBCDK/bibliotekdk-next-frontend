@@ -31,7 +31,9 @@ function substituteContentSubstitute(single) {
       link: getWorkUrl(
         manifestation?.titles?.full?.join(": "),
         manifestation?.creators,
-        manifestation?.ownerWork?.workId
+        manifestation?.ownerWork?.workId,
+        manifestation?.traceId,
+        true
       ),
     };
   });
