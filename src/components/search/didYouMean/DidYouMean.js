@@ -55,12 +55,14 @@ export function DidYouMean({ didyoumean, isLoading }) {
       {results?.map((res, index) => (
         <span className={styles.result} key={index}>
           <Link
+            dataCy="did-you-mean-result"
             onClick={(e) => {
               e.preventDefault();
               setQuery({
                 include: { all: res.query },
                 query: {
                   workTypes: null,
+                  tid: res.traceId,
                 },
                 method: "push",
               });
