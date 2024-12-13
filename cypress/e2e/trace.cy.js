@@ -133,7 +133,7 @@ describe("Trace", () => {
     });
   });
 
-  it.only("traceid in inspiration belts", () => {
+  it("traceid in inspiration belts", () => {
     cy.visit(`${nextjsBaseUrl}/inspiration/boeger?workTypes=literature`);
     cy.consentAllowAll(); //allow cookies
 
