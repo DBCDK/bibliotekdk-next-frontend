@@ -560,6 +560,12 @@ export function fbiOverviewDetail({ workId }) {
               cover {
                 detail
                 origin
+              }
+              sheetMusicCategories {
+                instruments
+                choirTypes
+                chamberMusicTypes
+                orchestraTypes                
               }    
               audience {
                 generalAudience
