@@ -114,7 +114,8 @@ export function getPartOfSeriesText(type, numberInSeries) {
 }
 
 function getSeriesMap({ series, members, workId, traceId }) {
-  const numberInSeries = series?.members?.find(
+  console.log("series", series);
+  const numberInSeries = series.numberInSeries || series?.members?.find(
     (member) => member.work?.workId === workId
   )?.numberInSeries;
 
@@ -180,7 +181,7 @@ export default function Wrap({ workId }) {
   const work_response = useData(
     workId && workFragments.series({ workId: workId, seriesLimit: 1 })
   );
-
+console.log("work_response", work_response);
   const { workRelationsWorkTypeFactory, data: workData } =
     useDataForWorkRelationsWorkTypeFactory({
       workId: workId,
@@ -198,6 +199,7 @@ export default function Wrap({ workId }) {
 
   const traceId = work_response?.data?.work?.traceId;
   const allSeries = work_response?.data?.work?.series || [];
+  console.log("work_response", work_response.data);
   // TODO .. alter title if this is a tvserie
   const allSeriesMap = allSeries?.map((singleSeries) => {
     return getSeriesMap({

@@ -37,7 +37,8 @@ export function doComplexSearchAll({ cql, offset, limit, sort, facets }) {
           workId
           latestPublicationDate
           series {
-            title            
+            title   
+            numberInSeries
             members{
               numberInSeries
               work{

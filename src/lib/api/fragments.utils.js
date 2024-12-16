@@ -138,6 +138,7 @@ export const seriesFragment = `fragment seriesFragment on Series {
   seriesWorkTypes: workTypes
   seriesId
   traceId
+  numberInSeries
 }`;
 export const universeFragment = `fragment universeFragment on Universe {
   title
