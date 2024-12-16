@@ -233,7 +233,7 @@ export function series({ workId }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 4000, // for debugging
-    query: `query SeriesZ($workId: String! ) {
+    query: `query Series($workId: String! ) {
       work(id: $workId) {
         traceId
         titles {
