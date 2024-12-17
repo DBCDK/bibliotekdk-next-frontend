@@ -65,7 +65,6 @@ export function AdvancedFacets({ facets, isLoading, replace = false }) {
     if (checked) {
       // selected -> add to list
       addFacet(name, facetName, replace, value?.traceId);
-      //setTraceId(value?.traceId);
       scrollToRef(scrollRef);
     } else {
       // deselected - remove from list

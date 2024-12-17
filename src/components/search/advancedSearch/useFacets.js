@@ -154,7 +154,7 @@ export function useFacets() {
    *
    */
   function pushQuery(replace = false, selectedFacets, traceId) {
-    let query = { ...router.query };
+    let query = { ...router?.query };
 
     // remove paging if set
     if (query?.page) {
