@@ -179,6 +179,9 @@ export function useFacets() {
         );
   }
 
+  /**
+   * Sets traceId in url. Will always set it in the end of the url
+   */
   const setTraceId = (traceId) => {
     if (!traceId) {
       return;
