@@ -165,13 +165,20 @@ export function useManifestationAccess({ pids, filter }) {
         return filter.includes(entry.__typename);
       }
     );
+
     // sort & filter - we only want access of type RESOURCE AND we do not want broken links
+    // we do an exception for demandDrivenAcquisition where url leads to ebookcentral OR ebscohost
     let access = sortAccessArray(flattenedAccess)?.filter((singleAccess) => {
       return (
         singleAccess?.__typename !== AccessEnum.ACCESS_URL ||
         (singleAccess?.__typename === AccessEnum.ACCESS_URL &&
           singleAccess?.type === "RESOURCE" &&
-          singleAccess?.status === "OK")
+          singleAccess?.status === "OK") ||
+        (singleAccess?.__typename === AccessEnum.ACCESS_URL &&
+          singleAccess?.type === "RESOURCE" &&
+          rights?.demandDrivenAcquisition &&
+          (singleAccess?.origin?.includes("ebookcentral") ||
+            singleAccess?.origin?.includes("ebscohost")))
       );
     });
 
