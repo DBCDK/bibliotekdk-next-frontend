@@ -28,6 +28,7 @@ export function doComplexSearchAll({ cql, offset, limit, sort, facets }) {
         facets {
           name
           values {
+            traceId
             key
             score
           }
@@ -220,6 +221,7 @@ export function complexFacetsOnly({ cql, facets }) {
 				facets {
           name
           values {
+            traceId
             key
             score
           }
