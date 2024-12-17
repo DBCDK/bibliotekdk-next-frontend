@@ -23,7 +23,7 @@ import { LinkToHelpTxt } from "@/components/search/advancedSearch/advancedSearch
  * @constructor
  */
 export function AdvancedFacets({ facets, isLoading, replace = false }) {
-  const { addFacet, removeFacet, selectedFacets } = useFacets();
+  const { addFacet, removeFacet, selectedFacets,setTraceId } = useFacets();
 
   const scrollRef = useRef();
 
@@ -49,21 +49,30 @@ export function AdvancedFacets({ facets, isLoading, replace = false }) {
     return false;
   });
   // end special handling of facet.source
-
+ // console.log("facetsfacetsfacetsfacetsfacets", facets);
   const filteredFacets = Object.values(AdvFacetsTypeEnum).filter((val) =>
     facets?.find((facet) => {
       return facet.name.split(".")[1] === val;
     })
   );
 
+  // console.log("\n\nfacets", JSON.stringify(facets));
+
+  // console.log("\n\n\nfilteredFacets", JSON.stringify(filteredFacets));
+
   function scrollToRef(ref) {
     ref.current.scrollIntoView({ behavior: "smooth", block: "end" });
   }
 
-  const onItemClick = (checked, name, facetName) => {
+  const onItemClick = ({ checked, value, facetName }) => {
+    const name = value?.key;
+
+    console.log("!!onItemClick", { name, value,facetName });
+    console.log('value.traceId', value?.traceId);
     if (checked) {
       // selected -> add to list
       addFacet(name, facetName, replace);
+      setTraceId(value?.traceId);
       scrollToRef(scrollRef);
     } else {
       // deselected - remove from list
@@ -71,6 +80,7 @@ export function AdvancedFacets({ facets, isLoading, replace = false }) {
       scrollToRef(scrollRef);
     }
   };
+  //console.log("filteredFacets", filteredFacets);
 
   return (
     <Accordion className={styles.accordionContainer}>
@@ -189,6 +199,8 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
   };
 
   let initialcheck;
+
+  //console.log("ListItem.facet", facet);
   return (
     <>
       {/* we want to show a link to a helptext for term.source (fagbibliografier) */}
@@ -225,7 +237,12 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
                 ariaLabel={value.key}
                 className={styles.checkbox}
                 onChange={(checked) => {
-                  onItemClick(checked, value.key, facetName);
+                  if (checked) {
+                    //add pid
+                  }
+                  console.log("ON ITEM CLICK!!! value", value);
+                  console.log("ON ITEM CLICK!! checked", checked);
+                  onItemClick({ checked, name: value.key, facetName, value });
                 }}
                 checked={initialcheck}
               ></Checkbox>

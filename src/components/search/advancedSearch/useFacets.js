@@ -178,6 +178,41 @@ export function useFacets() {
           { shallow: true, scroll: false }
         );
   }
+  // const setTraceId = (traceId) => {
+  //   console.log("setTraceId.traceId", traceId);
+  //   if (!traceId) return;
+  //   const query = { ...router.query };
+  //   query["tid"] = traceId;
+
+  //   router.push(
+  //     {
+  //       pathname: router.pathname,
+  //       query: query,
+  //     },
+  //     undefined,
+  //     { shallow: true, scroll: false }
+  //   );
+  // };
+
+
+  const setTraceId = (traceId) => {
+    if (!traceId) {
+      return;
+    }
+
+    const query = { ...router.query, tid: traceId };
+
+    router.push(
+      {
+        pathname: router.pathname,
+        query: query,
+      },
+      undefined,
+      { shallow: true, scroll: false }
+    );
+  };
+
+
 
   /**
    * Push empty facet query to url
@@ -219,5 +254,6 @@ export function useFacets() {
     restartFacetsHook,
     pushQuery,
     sortChronological,
+    setTraceId,
   };
 }
