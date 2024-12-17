@@ -228,7 +228,7 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
                 ariaLabel={value.key}
                 className={styles.checkbox}
                 onChange={(checked) => {
-                  onItemClick({ checked, name: value.key, facetName, value });
+                  onItemClick({ checked, value, facetName });
                 }}
                 checked={initialcheck}
               ></Checkbox>
