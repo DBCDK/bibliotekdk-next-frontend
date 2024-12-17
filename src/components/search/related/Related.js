@@ -44,7 +44,7 @@ export function Words({ data, isLoading }) {
   return (
     <>
       {data.map((w) => (
-        <Word key={w} word={w} isLoading={isLoading} />
+        <Word key={w.subject} word={w} isLoading={isLoading} />
       ))}
     </>
   );

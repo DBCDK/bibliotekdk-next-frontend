@@ -10,16 +10,16 @@ export default exportedObject;
 
 export function Default() {
   const data = [
-    "heste",
-    "børnebøger",
-    "ridning",
-    "hestesygdomme",
-    "vokal",
-    "sygdomme",
-    "hestesport",
-    "træning",
-    "skolebøger",
-    "hesteavl",
+    { subject: "heste" },
+    { subject: "børnebøger" },
+    { subject: "ridning" },
+    { subject: "hestesygdomme" },
+    { subject: "vokal" },
+    { subject: "sygdomme" },
+    { subject: "hestesport" },
+    { subject: "træning" },
+    { subject: "skolebøger" },
+    { subject: "hesteavl" },
   ];
 
   return (
