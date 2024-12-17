@@ -23,7 +23,7 @@ import { LinkToHelpTxt } from "@/components/search/advancedSearch/advancedSearch
  * @constructor
  */
 export function AdvancedFacets({ facets, isLoading, replace = false }) {
-  const { addFacet, removeFacet, selectedFacets, setTraceId } = useFacets();
+  const { addFacet, removeFacet, selectedFacets } = useFacets();
 
   const scrollRef = useRef();
 
@@ -64,8 +64,8 @@ export function AdvancedFacets({ facets, isLoading, replace = false }) {
 
     if (checked) {
       // selected -> add to list
-      addFacet(name, facetName, replace);
-      setTraceId(value?.traceId);
+      addFacet(name, facetName, replace, value?.traceId);
+      //setTraceId(value?.traceId);
       scrollToRef(scrollRef);
     } else {
       // deselected - remove from list

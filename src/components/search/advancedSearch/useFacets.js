@@ -48,7 +48,7 @@ export function useFacets() {
    * Add an extra facet and push facets to query - we keep facets in a state for
    * advanced search context to understand
    */
-  function addFacet(value, searchindex, replace = false) {
+  function addFacet(value, searchindex, replace = false, traceId) {
     const selectedFacets = JSON.parse(facetsQuery);
     // check if searchindex is already in facets
     const addToIndex = selectedFacets.find((facet) => {
@@ -74,7 +74,7 @@ export function useFacets() {
     }
 
     setFacetsQuery(JSON.stringify(selectedFacets));
-    pushQuery(replace, selectedFacets);
+    pushQuery(replace, selectedFacets, traceId);
   }
 
   /**
@@ -153,8 +153,8 @@ export function useFacets() {
    *  globel or local facets
    *
    */
-  function pushQuery(replace = false, selectedFacets) {
-    const query = router?.query;
+  function pushQuery(replace = false, selectedFacets, traceId) {
+    let query = { ...router.query };
 
     // remove paging if set
     if (query?.page) {
@@ -162,6 +162,10 @@ export function useFacets() {
     }
 
     query["facets"] = JSON.stringify(selectedFacets);
+
+    if (!!traceId) {
+      query["tid"] = traceId;
+    }
 
     // replace/push to router
     replace
@@ -178,26 +182,6 @@ export function useFacets() {
           { shallow: true, scroll: false }
         );
   }
-
-  /**
-   * Sets traceId in url. Will always set it in the end of the url
-   */
-  const setTraceId = (traceId) => {
-    if (!traceId) {
-      return;
-    }
-
-    const query = { ...router.query, tid: traceId };
-
-    router.push(
-      {
-        pathname: router.pathname,
-        query: query,
-      },
-      undefined,
-      { shallow: true, scroll: false }
-    );
-  };
 
   /**
    * Push empty facet query to url
@@ -239,6 +223,5 @@ export function useFacets() {
     restartFacetsHook,
     pushQuery,
     sortChronological,
-    setTraceId,
   };
 }
