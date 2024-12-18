@@ -164,7 +164,7 @@ export function useFacets() {
     query["facets"] = JSON.stringify(selectedFacets);
 
     if (!!traceId) {
-      delete query.tid;
+      delete query.tid; //remove old tid first, to make sure that the new value is added in the end of the url
       query["tid"] = traceId;
     }
 
