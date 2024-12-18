@@ -85,6 +85,7 @@ export function all({
           latestPublicationDate
           series {
             title
+            numberInSeries  
             members{
               numberInSeries
               work{
