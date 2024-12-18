@@ -640,7 +640,7 @@ function getSeriesAndUniverseTitles(work) {
   const universesTitle = work?.universes?.map((singleUniverses) => {
     return {
       title: singleUniverses.title,
-      url: getUniverseUrl(singleUniverses.universeId),
+      url: getUniverseUrl(singleUniverses.universeId, work?.traceId),
       skeleton: work?.universesIsLoading,
     };
   });
@@ -655,7 +655,11 @@ function getSeriesAndUniverseTitles(work) {
 function RenderInSeriesOrUniverse({ values }) {
   return values.map(({ title, url, skeleton }, index) => {
     return (
-      <div key={`seriesOrUniverse-${index}`} className={styles.link_list}>
+      <div
+        key={`seriesOrUniverse-${index}`}
+        data-cy="series-or-universes"
+        className={styles.link_list}
+      >
         <Link
           href={url}
           disabled={skeleton}
@@ -746,6 +750,7 @@ function RenderPlayers({ values }) {
 export function fieldsForRows(manifestation, work, context) {
   const materialType = work?.workTypes?.[0] || null;
   const moviveTitles = getMovieTitles(manifestation, work);
+
   const fieldsMap = {
     DEFAULT: [
       {
@@ -997,6 +1002,38 @@ export function fieldsForRows(manifestation, work, context) {
           value: manifestation?.notes
             ?.filter((note) => note.type === "MUSICAL_ENSEMBLE_OR_CAST")
             .map((note) => note.display)
+            .join(", "),
+        },
+      },
+      {
+        instruments: {
+          label: Translate({ ...context, label: "instruments" }),
+          value: manifestation?.sheetMusicCategories?.instruments
+            .map((instrument) => instrument)
+            .join(", "),
+        },
+      },
+      {
+        choirtype: {
+          label: Translate({ ...context, label: "choirtypes" }),
+          value: manifestation?.sheetMusicCategories?.choirTypes
+            .map((choir) => choir)
+            .join(", "),
+        },
+      },
+      {
+        chamberMusicTypes: {
+          label: Translate({ ...context, label: "chamberMusicTypes" }),
+          value: manifestation?.sheetMusicCategories?.chamberMusicTypes
+            .map((chamber) => chamber)
+            .join(", "),
+        },
+      },
+      {
+        orchestraTypes: {
+          label: Translate({ ...context, label: "orchestraTypes" }),
+          value: manifestation?.sheetMusicCategories?.orchestraTypes
+            .map((orchester) => orchester)
             .join(", "),
         },
       },

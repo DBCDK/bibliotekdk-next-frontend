@@ -1724,6 +1724,22 @@
       }
     },
     "details": {
+      "instruments": {
+        "da": "Instrumenter",
+        "en": "Instruments"
+      },
+      "choirtypes": {
+        "da": "Kortyper",
+        "en": "Choirtypes"
+      },
+      "chamberMusicTypes": {
+        "da": "Kammermusik",
+        "en": "Chambermusic"
+      },
+      "orchestraTypes": {
+        "da": "Orkester",
+        "en": "Orchestra"
+      },
       "danishLaunchTitle": {
         "da": "Dansk titel",
         "en": "Danish title"

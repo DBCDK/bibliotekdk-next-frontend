@@ -24,9 +24,9 @@ import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
  *
  * @returns {string}
  */
-export function subjectUrl(keyword) {
+export function subjectUrl(keyword, traceId) {
   // we now search subjects in advanced search
-  return getAdvancedUrl({ type: "subject", value: keyword });
+  return getAdvancedUrl({ type: "subject", value: keyword, traceId });
 }
 
 /**

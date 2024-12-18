@@ -65,6 +65,7 @@ export function recommendations({ workId }) {
       result {
         reader
         work {
+          traceId
           ...workSliderFragment
           creators {
             ...creatorsFragment
@@ -559,6 +560,12 @@ export function fbiOverviewDetail({ workId }) {
               cover {
                 detail
                 origin
+              }
+              sheetMusicCategories {
+                instruments
+                choirTypes
+                chamberMusicTypes
+                orchestraTypes                
               }    
               audience {
                 generalAudience

@@ -123,7 +123,12 @@ export function templateForVerticalWorkCard({ material }) {
   const coverSrc = getCoverImage(material?.manifestations?.mostRelevant);
 
   return {
-    link_href: getWorkUrl(fullTitle, creators, material?.workId),
+    link_href: getWorkUrl(
+      fullTitle,
+      creators,
+      material?.workId,
+      material?.traceId
+    ),
     fullTitle: fullTitle,
     image_src: coverSrc?.detail,
     workId: material?.workId,
@@ -160,7 +165,7 @@ export function templateForUniverseInfoCard({ material }) {
     styles.cover,
     styles.cover__universe_info_card
   );
-  const href = getUniverseUrl(material?.universeId);
+  const href = getUniverseUrl(material?.universeId, material?.traceId);
 
   return {
     link_href: href,
@@ -227,7 +232,12 @@ export function templateForUniverseWorkBase({ material, classNameAddition }) {
   const coverSrc = getCoverImage(material?.manifestations?.mostRelevant);
 
   return {
-    link_href: getWorkUrl(fullTitle, creators, material?.workId),
+    link_href: getWorkUrl(
+      fullTitle,
+      creators,
+      material?.workId,
+      material?.traceId
+    ),
     fullTitle: fullTitle,
     image_src: coverSrc?.detail,
     workId: material?.workId,
@@ -320,7 +330,7 @@ export function templateForUniverseSeriesBase({ material, classNameAddition }) {
 
   const coverSrc = getCoverImage(firstWork?.manifestations?.mostRelevant);
   // TODO: We need to change this if we get ids on Series. A SeriesId if you will
-  const urlToFirstWork = getSeriesUrl(material.seriesId);
+  const urlToFirstWork = getSeriesUrl(material.seriesId, material?.traceId);
 
   const coverImageClassName = cx(
     styles.cover,
@@ -582,7 +592,12 @@ export function templateForRelatedWorks(material) {
   );
 
   return {
-    link_href: getWorkUrl(fullTitle, creators, material?.workId),
+    link_href: getWorkUrl(
+      fullTitle,
+      creators,
+      material?.workId,
+      material?.traceId
+    ),
     fullTitle: fullTitle,
     image_src: material?.cover?.detail,
     workId: material?.workId,
@@ -724,7 +739,12 @@ export function templateImageToLeft({
 
   return {
     link_href: linkToWork
-      ? getWorkUrl(fullTitle, creators, material?.ownerWork?.workId)
+      ? getWorkUrl(
+          fullTitle,
+          creators,
+          material?.ownerWork?.workId,
+          material?.traceId
+        )
       : null,
     fullTitle: fullTitle,
     image_src: material?.cover?.detail,

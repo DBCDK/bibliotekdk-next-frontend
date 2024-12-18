@@ -8,6 +8,7 @@ import {
   getAdvancedSearchField,
 } from "@/components/search/advancedSearch/utils";
 import { LogicalOperatorsEnum } from "@/components/search/enums";
+import { resolveHref } from "next/dist/client/resolve-href";
 
 const APP_URL =
   getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
@@ -267,15 +268,25 @@ export function encodeTitleCreator(title = "", creators = []) {
  * @param {Array<Object>} creators
  * @param {string} workId
  * @param traceId
+ * @param {boolean} asString
  * @returns {{query: {title_author: string, workId}, pathname: string}}
  */
-export function getWorkUrl(fullTitle, creators, workId, traceId) {
-  return {
+export function getWorkUrl(
+  fullTitle,
+  creators,
+  workId,
+  traceId,
+  asString = false
+) {
+  const urlObject = {
     pathname: `/materiale/${encodeTitleCreator(fullTitle, creators)}/${workId}`,
     query: {
       tid: traceId, // Use traceId as URL parameter
     },
   };
+  const urlAsString = resolveHref("/", urlObject, false);
+
+  return asString ? urlAsString : urlObject;
 }
 
 /**
@@ -306,8 +317,13 @@ export function getSeriesUrl(seriesId, traceId) {
  * @param {string} universeId
  * @returns {{query: {universeTitle: string, workId: string, universeNumber?: string}, pathname: string}}
  */
-export function getUniverseUrl(universeId) {
-  return `/univers/${universeId}`;
+export function getUniverseUrl(universeId, traceId) {
+  return {
+    pathname: `/univers/${universeId}`,
+    query: {
+      tid: traceId, // Use traceId as URL parameter
+    },
+  };
 }
 
 /**

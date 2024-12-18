@@ -242,6 +242,7 @@ export default function ResultRow({
                     <span
                       key={`${work?.workId}-${typeString}`}
                       className={styles.material}
+                      data-cy="search-result-materialtype"
                     >
                       <Link
                         border={{ top: false, bottom: { keepVisible: true } }}
@@ -254,6 +255,7 @@ export default function ResultRow({
                             ),
                             type: typeString,
                             workId: work?.workId,
+                            tid: work?.traceId,
                           },
                         }}
                         key={materialTypeArray}

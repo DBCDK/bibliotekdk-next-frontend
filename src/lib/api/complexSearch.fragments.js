@@ -28,6 +28,7 @@ export function doComplexSearchAll({ cql, offset, limit, sort, facets }) {
         facets {
           name
           values {
+            traceId
             key
             score
           }
@@ -125,6 +126,7 @@ export function complexSearchOnlyWorkIds({ cql, offset, limit, sort }) {
 				hitcount
 				errorMessage
 				works(offset: $offset, limit: $limit, sort: $sort) {
+				  traceId
 					workId
         }
 			}
@@ -219,6 +221,7 @@ export function complexFacetsOnly({ cql, facets }) {
 				facets {
           name
           values {
+            traceId
             key
             score
           }
