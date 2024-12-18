@@ -3,6 +3,29 @@ const fbiApiPath = Cypress.env("fbiApiPath");
 
 describe("Trace", () => {
   describe("simple search", () => {
+    it(`TraceId from related subject is available as URL parameter when clicking`, () => {
+      cy.visit(nextjsBaseUrl);
+      cy.consentAllowAll(); //allow cookies
+
+      // Search
+      cy.get('[data-cy="suggester-input"]').type("heste").type("{enter}");
+
+      cy.contains("Lignende søgninger");
+
+      // Click first related subject
+      cy.get('[data-cy^="related-subject"]').first().click();
+
+      // Check that tid is set as URL param
+      cy.url()
+        .should("include", "tid=")
+        .then((url) => {
+          const params = new URLSearchParams(url.split("?")[1]);
+          const tid = params.get("tid");
+
+          expect(tid).to.exist;
+          expect(tid.length).to.be.greaterThan(20);
+        });
+    });
     it(`TraceId from search response is available as URL parameter when clicking`, () => {
       cy.visit(nextjsBaseUrl);
       cy.consentAllowAll(); //allow cookies
