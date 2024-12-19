@@ -12,6 +12,7 @@ import useSavedSearches from "@/components/hooks/useSavedSearches";
 import IconButton from "@/components/base/iconButton";
 import { useModal } from "@/components/_modal";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import { openLoginModal } from "@/components/_modal/pages/login/utils";
 
 /**
  *
@@ -215,6 +216,15 @@ export default function TopBar({ isLoading = false, searchHistoryObj }) {
       });
     }
   };
+
+  /**
+   * When unauthenticated user clicks the 'save search' link we go to login page.
+   */
+  const onSaveSearchLogin = (e) => {
+    // Prevent the accordion from expanding
+    e.stopPropagation();
+    openLoginModal({ modal });
+  };
   return (
     <Link
       className={styles.container}
@@ -236,64 +246,37 @@ export default function TopBar({ isLoading = false, searchHistoryObj }) {
             className={styles.edit_search}
           >
             <FormattedQuery>
-              {isAuthenticated && (
-                <Text
-                  type="text3"
-                  tag="span"
-                  skeleton={isLoading}
-                  className={styles.editSearchDesktop}
+              <Text
+                type="text3"
+                tag="span"
+                skeleton={isLoading}
+                className={styles.editSearchDesktop}
+              >
+                <Link
+                  onClick={() => {
+                    setShowPopover(true);
+                  }}
+                  border={{
+                    top: false,
+                    bottom: {
+                      keepVisible: true,
+                    },
+                  }}
                 >
-                  <Link
-                    onClick={() => {
-                      setShowPopover(true);
-                    }}
-                    border={{
-                      top: false,
-                      bottom: {
-                        keepVisible: true,
-                      },
-                    }}
-                  >
-                    {Translate({ context: "search", label: "edit" })}
-                  </Link>
-                </Text>
-              )}
+                  {Translate({ context: "search", label: "edit" })}
+                </Link>
+              </Text>
             </FormattedQuery>
           </Col>
 
           <Col xs={12} lg={2} className={styles.saveSearchButton}>
-            {isAuthenticated ? (
-              <div className={styles.flexSwitchMobile}>
-                <Text
-                  type="text3"
-                  tag="span"
-                  skeleton={isLoading}
-                  className={styles.editSearchMobile}
-                >
-                  <Link
-                    onClick={() => {
-                      setShowPopover(true);
-                    }}
-                    border={{
-                      top: false,
-                      bottom: {
-                        keepVisible: true,
-                      },
-                    }}
-                  >
-                    {Translate({ context: "search", label: "editSearch" })}
-                  </Link>
-                </Text>
-                <IconButton
-                  onClick={onSaveSearchClick}
-                  icon={`${isSaved ? "heart_filled" : "heart"}`}
-                  keepUnderline
-                >
-                  {Translate({ context: "search", label: "saveSearch" })}
-                </IconButton>
-              </div>
-            ) : (
-              <Text type="text3" tag="span" skeleton={isLoading}>
+            <div className={styles.flexSwitchMobile}>
+              <Text
+                type="text3"
+                tag="span"
+                skeleton={isLoading}
+                className={styles.editSearchMobile}
+              >
                 <Link
                   onClick={() => {
                     setShowPopover(true);
@@ -308,7 +291,16 @@ export default function TopBar({ isLoading = false, searchHistoryObj }) {
                   {Translate({ context: "search", label: "editSearch" })}
                 </Link>
               </Text>
-            )}
+              <IconButton
+                onClick={
+                  isAuthenticated ? onSaveSearchClick : onSaveSearchLogin
+                }
+                icon={`${isSaved ? "heart_filled" : "heart"}`}
+                keepUnderline
+              >
+                {Translate({ context: "search", label: "saveSearch" })}
+              </IconButton>
+            </div>
           </Col>
         </Row>
       </Container>
