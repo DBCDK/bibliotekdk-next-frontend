@@ -26,7 +26,8 @@
 }
 
 .addLine {
-  outline: 1px solid var(--dove);
+  box-shadow: inset 0 0 0 1px var(--dove);
+  outline: 0;
   color: unset;
   display: flex;
   align-items: center;
@@ -36,7 +37,8 @@
 
 .addLine:hover,
 .addLine:focus {
-  outline: 2px solid var(--blue);
+  outline: 0;
+  box-shadow: inset 0 0 0 2px var(--blue);
 }
 .expandIcon {
   margin-left: var(--pt1);
