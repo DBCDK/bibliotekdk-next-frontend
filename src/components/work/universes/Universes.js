@@ -48,6 +48,7 @@ function Universes({ isLoading, universe = {}, workId = "", traceId = "" }) {
       workId: workId,
       key: universe?.key,
       universeId: universe?.universeId,
+      traceId: universe?.traceId,
     },
     propsAndChildrenTemplate: templateForUniverseInfoCard,
   };
