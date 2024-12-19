@@ -203,4 +203,34 @@ describe("Trace", () => {
         expect(tid.length).to.be.greaterThan(20);
       });
   });
+
+  it(`TraceId from suggest response is available as URL parameter when clicking`, () => {
+    cy.visit(
+      `${nextjsBaseUrl}/avanceret?fieldSearch=%7B"inputFields"%3A%5B%7B"value"%3A"hest"%2C"prefixLogicalOperator"%3Anull%2C"searchIndex"%3A"term.default"%7D%5D%7D#0-specificmaterialtype`
+    );    
+
+    //we check that tid is not set as URL param
+    cy.url().then((url) => {
+      const params = new URLSearchParams(url.split("?")[1]); 
+      const tid = params.get("tid"); 
+      expect(tid).to.not.exist; 
+    });
+    
+    cy.consentAllowAll(); //allow cookies
+
+    //click on a facet
+    cy.get('[data-cy="li-specificmaterialtype-bog"]').click();
+
+  
+    // Check that tid is set as URL param
+    cy.url()
+      .should("include", "tid=")
+      .then((url) => {
+        const params = new URLSearchParams(url.split("?")[1]);
+        const tid = params.get("tid");
+
+        expect(tid).to.exist;
+        expect(tid.length).to.be.greaterThan(20);
+      });
+  });
 });
