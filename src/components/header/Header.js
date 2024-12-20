@@ -47,11 +47,11 @@ import upperCase from "lodash/upperCase";
 // material Pages
 export const MATERIAL_PAGES = [
   { path: "boeger", label: "literature" },
+  { path: "artikler", label: "article" },
   { path: "film", label: "movie" },
   { path: "musik", label: "music" },
   { path: "spil", label: "game" },
   { path: "noder", label: "sheetmusic" },
-  { path: "artikler", label: "article" },
 ];
 
 const actions = [
