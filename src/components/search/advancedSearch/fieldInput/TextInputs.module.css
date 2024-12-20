@@ -94,14 +94,18 @@
   outline: 2px solid var(--blue);
 }
 
+.suggesterInput:is(:focus-visible, :hover) {
+  outline: 0;
+  box-shadow: inset 0 0 0 2px var(--blue);
+}
+
 .suggesterInput {
   /* The right padding has to be pt2 (for base) + 2 times pt2 for the icon */
   padding: var(--pt2) calc(var(--pt2) * 3) var(--pt2) var(--pt2);
   height: var(--pt5);
-
   border: none;
-  outline: 1px solid var(--dove);
-
+  outline: 0;
+  box-shadow: inset 0 0 0 1px var(--dove);
   /* Text 3*/
   font-size: 14px;
   line-height: 22px;
