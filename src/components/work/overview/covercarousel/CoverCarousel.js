@@ -36,8 +36,6 @@ const CoverElement = forwardRef(function CoverElement(
     threshold: 0.9,
   });
 
-  const [loaded, setLoaded] = useState(false);
-
   useEffect(() => {
     if (isVisible) {
       setVisibleElement((prev) => prev !== thisIndex && thisIndex);
@@ -56,10 +54,7 @@ const CoverElement = forwardRef(function CoverElement(
     >
       <img
         src={src}
-        className={`${styles.cover_image} ${
-          !loaded && styles.cover_image_skeleton
-        }`}
-        onLoad={() => setLoaded(true)}
+        className={styles.cover_image}
         alt={getTextDescription(
           flattenMaterialType(manifestation),
           manifestation
@@ -171,21 +166,28 @@ export function CoverCarousel({
   );
 }
 
-export default function Wrap({ allPids, selectedPids, workTitles }) {
-  const { data: manifestationsData, error: manifestationsError } = useData(
-    selectedPids?.length > 0 &&
+export default function Wrap({
+  allPids,
+  selectedPids,
+  workTitles,
+  manifestations,
+}) {
+  const { data, error: manifestationsError } = useData(
+    !manifestations &&
+      selectedPids?.length > 0 &&
       manifestationFragments.editionManifestations({
         pid: allPids,
       })
   );
+  const manifestationsData = manifestations || data?.manifestations;
 
   const { manifestationsWithCover } = useMemo(() => {
     return getManifestationsWithCorrectCover(
-      manifestationsData?.manifestations?.filter((manifestation) =>
+      manifestationsData?.filter((manifestation) =>
         selectedPids?.includes(manifestation?.pid)
       )
     );
-  }, [manifestationsData?.manifestations, selectedPids]);
+  }, [manifestationsData, selectedPids]);
 
   if (manifestationsError) {
     return <Custom404 />;

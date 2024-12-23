@@ -1,9 +1,11 @@
 import { ApiEnums } from "@/lib/api/api";
 import {
+  cacheWorkFragment,
   creatorsFragment,
   materialTypesFragment,
   tvSeriesFragment,
 } from "@/lib/api/fragments.utils";
+import { cacheWork } from "./work.fragments";
 
 /**
  * Hitcount
@@ -34,6 +36,7 @@ export function doComplexSearchAll({ cql, offset, limit, sort, facets }) {
           }
         }				
 				works(limit: $limit, offset: $offset, sort: $sort) {
+          ...cacheWorkFragment
           traceId
           workId
           latestPublicationDate
@@ -98,11 +101,21 @@ export function doComplexSearchAll({ cql, offset, limit, sort, facets }) {
         }
 			}
 		},
+    ${cacheWorkFragment}
     ${creatorsFragment}
     ${materialTypesFragment}
     ${tvSeriesFragment}`,
     variables: { cql, offset, limit, sort, facets },
     slowThreshold: 3000,
+    onLoad: ({ data, keyGenerator, cache }) => {
+      data?.complexSearch?.works?.forEach((work) => {
+        cache(
+          keyGenerator(cacheWork({ workId: work.workId })),
+          { data: { work } },
+          false
+        );
+      });
+    },
   };
 }
 
@@ -151,6 +164,7 @@ export function ComplexArticleSlider({ cql, offset, limit, sort }) {
 				errorMessage        
 				works(offset: $offset, limit: $limit, sort: $sort) {
           workId
+          ...cacheWorkFragment
           titles {
             main
             full
@@ -171,11 +185,21 @@ export function ComplexArticleSlider({ cql, offset, limit, sort }) {
         }
       }
     }
+    ${cacheWorkFragment}
     ${creatorsFragment}
     ${materialTypesFragment}
     `,
     variables: { cql, offset, limit, sort },
     slowThreshold: 3000,
+    onLoad: ({ data, keyGenerator, cache }) => {
+      data?.complexSearch?.works?.forEach((work) => {
+        cache(
+          keyGenerator(cacheWork({ workId: work.workId })),
+          { data: { work } },
+          false
+        );
+      });
+    },
   };
 }
 

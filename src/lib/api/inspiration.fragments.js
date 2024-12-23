@@ -1,10 +1,12 @@
 import { ApiEnums } from "@/lib/api/api";
 
 import {
+  cacheWorkFragment,
   creatorsFragment,
   materialTypesFragment,
   tvSeriesFragment,
 } from "@/lib/api/fragments.utils";
+import { cacheWork } from "./work.fragments";
 
 const CATEGORY_ENUMS = [
   "childrenBooksNonfiction",
@@ -48,6 +50,7 @@ export function inspiration({ filters = [], limit = 10 } = {}) {
                 work {
                   traceId
                   workId
+                  ...cacheWorkFragment
                   titles {
                     main
                     full
@@ -74,6 +77,7 @@ export function inspiration({ filters = [], limit = 10 } = {}) {
           }
         }
       }
+      ${cacheWorkFragment}
       ${creatorsFragment}
       ${materialTypesFragment}
       ${tvSeriesFragment}`,
@@ -83,6 +87,19 @@ export function inspiration({ filters = [], limit = 10 } = {}) {
       filters,
     },
     slowThreshold: 3000,
+    onLoad: ({ data, keyGenerator, cache }) => {
+      data?.inspiration?.categories?.forEach((c) => {
+        c?.subCategories?.forEach((sub) => {
+          sub?.result?.forEach((entry) => {
+            cache(
+              keyGenerator(cacheWork({ workId: entry?.work?.workId })),
+              { data: { work: entry?.work } },
+              false
+            );
+          });
+        });
+      });
+    },
   };
 }
 

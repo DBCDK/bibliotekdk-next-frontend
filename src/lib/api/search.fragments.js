@@ -7,10 +7,12 @@ import { FilterTypeEnum } from "@/lib/enums";
 import { ApiEnums } from "@/lib/api/api";
 
 import {
+  cacheWorkFragment,
   creatorsFragment,
   materialTypesFragment,
   tvSeriesFragment,
 } from "@/lib/api/fragments.utils";
+import { cacheWork } from "./work.fragments";
 
 /**
  * Hitcount
@@ -82,28 +84,17 @@ export function all({
         works(limit: $limit, offset: $offset) {
           traceId
           workId
-          latestPublicationDate
           series {
             title
             numberInSeries  
-            members{
-              numberInSeries
-              work{
-                workId
-              }
-        }
           }
           mainLanguages {
             isoCode
             display
           }
-          workTypes
           manifestations {
             mostRelevant{
               pid
-              ownerWork {
-                workTypes
-              }
               cover {
                 detail
                 origin
@@ -111,27 +102,11 @@ export function all({
               materialTypes {
                 ...materialTypesFragment
               }
-              hostPublication {
-                title
-                issue
-              }
-              publisher
-              edition {
-                summary
-                edition
-              }
             }            
           }
           creators {
             ...creatorsFragment
           }
-          materialTypes {
-            ...materialTypesFragment
-          }
-          fictionNonfiction {
-            display
-          }
-          genreAndForm
           titles {
             main
             full
@@ -141,10 +116,12 @@ export function all({
             ...tvSeriesFragment
             }
           }
+          ... cacheWorkFragment
         }
         hitcount
       }
     }
+    ${cacheWorkFragment}
     ${creatorsFragment}
     ${materialTypesFragment}
     ${tvSeriesFragment}`,
@@ -156,6 +133,15 @@ export function all({
       search_exact,
     },
     slowThreshold: 3000,
+    onLoad: ({ data, keyGenerator, cache }) => {
+      data?.search?.works?.forEach((work) => {
+        cache(
+          keyGenerator(cacheWork({ workId: work.workId })),
+          { data: { work } },
+          false
+        );
+      });
+    },
   };
 }
 

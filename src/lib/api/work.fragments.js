@@ -15,6 +15,7 @@ import {
   workSliderFragment,
   manifestationTitleFragment,
   tvSeriesFragment,
+  cacheWorkFragment,
 } from "@/lib/api/fragments.utils";
 
 export function tableOfContents({ workId }) {
@@ -48,6 +49,23 @@ export function tableOfContents({ workId }) {
   };
 }
 
+export function cacheWork({ workId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 4000, // for debugging
+    query: `query CacheWork($workId: String!) {
+  work(id: $workId) {
+    ... cacheWorkFragment
+  }
+  
+}
+  ${cacheWorkFragment}
+  `,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
 /**
  * Recommendations for a work
  *
@@ -66,6 +84,7 @@ export function recommendations({ workId }) {
         reader
         work {
           traceId
+          ...cacheWorkFragment
           ...workSliderFragment
           creators {
             ...creatorsFragment
@@ -74,11 +93,21 @@ export function recommendations({ workId }) {
       }
     }
   }
+  ${cacheWorkFragment}
   ${workSliderFragment}
   ${creatorsFragment}
   `,
     variables: { workId },
     slowThreshold: 3000,
+    onLoad: ({ data, keyGenerator, cache }) => {
+      data?.recommend?.result?.forEach?.((entry) => {
+        cache(
+          keyGenerator(cacheWork({ workId: entry?.work?.workId })),
+          { data: { work: entry?.work } },
+          false
+        );
+      });
+    },
   };
 }
 
@@ -195,6 +224,7 @@ export function seriesLight({ workId, seriesLimit = null }) {
           ...seriesFragment
           members(limit:$seriesLimit) {
             work {
+              ...cacheWorkFragment
               titles {
                 full
                 tvSeries {
@@ -213,6 +243,7 @@ export function seriesLight({ workId, seriesLimit = null }) {
         }
       }
     }
+    ${cacheWorkFragment}
     ${seriesFragment}
     ${universeFragment}
   `,
@@ -247,6 +278,7 @@ export function series({ workId }) {
           ...seriesFragment
           members {
             work {
+              ...cacheWorkFragment
               ...workSliderFragment
               manifestations {
                 mostRelevant {
@@ -267,6 +299,7 @@ export function series({ workId }) {
         }
       }
     }
+    ${cacheWorkFragment}
     ${workSliderFragment}
     ${creatorsFragment}
     ${seriesFragment}
@@ -275,6 +308,17 @@ export function series({ workId }) {
   `,
     variables: { workId },
     slowThreshold: 3000,
+    onLoad: ({ data, keyGenerator, cache }) => {
+      data?.work?.series?.forEach((serie) => {
+        serie?.members?.forEach?.((entry) => {
+          cache(
+            keyGenerator(cacheWork({ workId: entry?.work?.workId })),
+            { data: { work: entry?.work } },
+            false
+          );
+        });
+      });
+    },
   };
 }
 
@@ -298,6 +342,7 @@ export function seriesById({ seriesId }) {
           ...seriesFragment
           members{
             work {
+              ...cacheWorkFragment
               ...workSliderFragment
               manifestations {
                 mostRelevant {
@@ -318,6 +363,7 @@ export function seriesById({ seriesId }) {
         
       }
     }
+    ${cacheWorkFragment}
     ${workSliderFragment}
     ${creatorsFragment}
     ${seriesFragment}
