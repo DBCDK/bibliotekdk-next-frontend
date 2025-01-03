@@ -80,6 +80,11 @@ export function Overview({
     router
   );
 
+  // If no type has been selected, use default
+  if (!type?.[0] && uniqueMaterialTypes?.[0]?.[0]?.specificDisplay) {
+    type = [uniqueMaterialTypes[0][0].specificDisplay];
+  }
+
   // OBS: We load allPids for CoverCarousel, to ensure smooth change of MaterialType
   const allPids = useMemo(
     () => manifestations?.map((manifestation) => manifestation?.pid),
@@ -113,6 +118,7 @@ export function Overview({
             {/* Cover */}
             <Col xs={{ order: 1 }} md={{ order: 2 }} className={styles.cover}>
               <CoverCarousel
+                manifestations={manifestations}
                 allPids={allPids}
                 selectedPids={selectedPids}
                 workTitles={work?.titles}
@@ -254,19 +260,19 @@ export function OverviewError() {
  * @returns {React.JSX.Element}
  */
 export default function Wrap({ workId, type, onTypeChange, login }) {
-  const fbiWork = useData(workFragments.overviewWork({ workId }));
+  const cWork = useData(workFragments.cacheWork({ workId }));
 
-  if (fbiWork.isLoading) {
-    return <OverviewSkeleton isSlow={fbiWork.isSlow} />;
+  if (cWork.isLoading) {
+    return <OverviewSkeleton isSlow={cWork.isSlow} />;
   }
 
-  if (fbiWork.error) {
+  if (cWork.error) {
     return <OverviewError />;
   }
 
   return (
     <Overview
-      work={fbiWork.data.work}
+      work={cWork.data.work}
       workId={workId}
       type={type}
       onTypeChange={onTypeChange}

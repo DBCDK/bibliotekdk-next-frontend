@@ -2,9 +2,9 @@
   border-bottom: 1px solid var(--iron);
   background: var(--concrete);
   box-shadow: var(--shadow-effect);
-  display: flex;
-  align-items: center;
-  padding: var(--pt2) 0;
+  /*display: flex;*/
+  /*align-items: center;*/
+  padding: var(--pt2);
   cursor: pointer;
 
   /* Link */
@@ -19,7 +19,7 @@
 }
 .saveSearchButton {
   justify-content: end;
-  align-items: center;
+
   display: flex;
   gap: var(--pt05);
   /* Link */

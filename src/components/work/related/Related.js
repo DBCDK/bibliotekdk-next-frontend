@@ -19,16 +19,18 @@ import { subjectUrl } from "@/components/work/keywords/Keywords";
  * Returns a item/word for the items/words component
  */
 function Word({ word, isLoading }) {
+  const subject = word?.subject;
+  const traceId = word?.traceId;
   return (
     <span className={styles.word}>
       <Link
-        href={subjectUrl(word)}
-        dataCy={cyKey({ name: word, prefix: "related-subject" })}
+        href={subjectUrl(subject, traceId)}
+        dataCy={cyKey({ name: subject, prefix: "related-subject" })}
         disabled={isLoading}
         border={{ bottom: { keepVisible: true } }}
       >
         <Text type="text2" skeleton={isLoading} lines={1} tag="span">
-          {word}
+          {subject}
         </Text>
       </Link>
     </span>
@@ -43,7 +45,7 @@ export function Words({ data, isLoading }) {
   return (
     <div className={styles.words} data-cy="words-container">
       {data.map((w) => (
-        <Word key={w} word={w} isLoading={isLoading} />
+        <Word key={w.subject} word={w} isLoading={isLoading} />
       ))}
     </div>
   );
@@ -118,27 +120,27 @@ export default function Wrap({ workId }) {
   }
 
   // Remove section if work contains no keywords
-  if ((!data || data?.relatedSubjects?.length === 0) && !isLoading) {
+  if ((!data || data?.recommendations?.subjects?.length === 0) && !isLoading) {
     return null;
   }
 
   // dummy data will be returned on isLoading - skeleton view
   const dummy = [
-    "heste",
-    "børnebøger",
-    "ridning",
-    "hestesygdomme",
-    "vokal",
-    "sygdomme",
-    "hestesport",
-    "træning",
-    "skolebøger",
-    "hesteavl",
+    { subject: "heste" },
+    { subject: "børnebøger" },
+    { subject: "ridning" },
+    { subject: "hestesygdomme" },
+    { subject: "vokal" },
+    { subject: "sygdomme" },
+    { subject: "hestesport" },
+    { subject: "træning" },
+    { subject: "skolebøger" },
+    { subject: "hesteavl" },
   ];
 
   return (
     <Related
-      data={data?.relatedSubjects || (isLoading && dummy) || []}
+      data={data?.recommendations?.subjects || (isLoading && dummy) || []}
       isLoading={workIsLoading || isLoading}
     />
   );

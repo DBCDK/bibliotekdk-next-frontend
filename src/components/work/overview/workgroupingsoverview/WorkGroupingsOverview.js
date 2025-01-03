@@ -114,9 +114,10 @@ export function getPartOfSeriesText(type, numberInSeries) {
 }
 
 function getSeriesMap({ series, members, workId, traceId }) {
-  const numberInSeries = series?.members?.find(
-    (member) => member.work?.workId === workId
-  )?.numberInSeries;
+  const numberInSeries =
+    series.numberInSeries ||
+    series?.members?.find((member) => member.work?.workId === workId)
+      ?.numberInSeries;
 
   const { type, titles } = getTitlesAndType({ work: members[0] });
 
@@ -198,6 +199,7 @@ export default function Wrap({ workId }) {
 
   const traceId = work_response?.data?.work?.traceId;
   const allSeries = work_response?.data?.work?.series || [];
+
   // TODO .. alter title if this is a tvserie
   const allSeriesMap = allSeries?.map((singleSeries) => {
     return getSeriesMap({

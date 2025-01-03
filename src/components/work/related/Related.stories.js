@@ -8,16 +8,16 @@ const exportedObject = {
 export default exportedObject;
 
 const dummy = [
-  "heste",
-  "børnebøger",
-  "ridning",
-  "hestesygdomme",
-  "vokal",
-  "sygdomme",
-  "hestesport",
-  "træning",
-  "skolebøger",
-  "hesteavl",
+  { subject: "heste" },
+  { subject: "børnebøger" },
+  { subject: "ridning" },
+  { subject: "hestesygdomme" },
+  { subject: "vokal" },
+  { subject: "sygdomme" },
+  { subject: "hestesport" },
+  { subject: "træning" },
+  { subject: "skolebøger" },
+  { subject: "hesteavl" },
 ];
 
 export function Default() {
@@ -52,7 +52,12 @@ MusicNoTags.story = {
       debug: true,
       resolvers: {
         Query: {
-          relatedSubjects: () => ["savn", "melankoli"],
+          recommendations: () => ({
+            subjects: [
+              { subject: "savn", traceId: "t1" },
+              { subject: "melankoli", traceId: "t2" },
+            ],
+          }),
         },
         Work: {
           workTypes: () => ["MUSIC"],
@@ -105,7 +110,12 @@ Connected.story = {
       debug: true,
       resolvers: {
         Query: {
-          relatedSubjects: () => ["savn", "melankoli"],
+          recommendations: () => ({
+            subjects: [
+              { subject: "savn", traceId: "t1" },
+              { subject: "melankoli", traceId: "t2" },
+            ],
+          }),
         },
         Work: {
           workTypes: () => ["LITERATURE"],

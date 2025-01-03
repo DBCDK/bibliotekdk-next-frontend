@@ -14,6 +14,8 @@
 
 .text {
   margin-left: var(--pt05);
+  position: relative;
+  top: 2px;
 }
 
 .radio:first-child {

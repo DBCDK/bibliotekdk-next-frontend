@@ -10,6 +10,7 @@ import useSWR from "swr";
 import useAccessToken from "@/components/hooks/user/useAccessToken";
 import useCookieConsent from "@/components/hooks/useCookieConsent";
 import { useRouter } from "next/router";
+import { mutate as globalMutate } from "swr";
 
 // TODO handle config better
 const nextJsConfig = getConfig();
@@ -192,6 +193,7 @@ export function useData(query) {
   const keyGenerator = useKeyGenerator();
   const fetcherImpl = useFetcherImpl();
   const key = keyGenerator(query);
+  const onLoad = query?.onLoad;
   const revalidateOptions = !!query?.revalidate
     ? { revalidateOnFocus: true, revalidateOnMount: true }
     : {
@@ -211,6 +213,14 @@ export function useData(query) {
   useEffect(() => {
     if (!query?.revalidate && data) {
       delete fetching[key];
+    }
+
+    if (data) {
+      onLoad?.({
+        data: data?.data,
+        keyGenerator,
+        cache: (key, val) => globalMutate(key, val, false),
+      });
     }
   }, [data]);
 

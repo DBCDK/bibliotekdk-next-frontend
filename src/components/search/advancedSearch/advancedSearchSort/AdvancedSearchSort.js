@@ -116,17 +116,18 @@ export default function AdvancedSearchSort({ className }) {
           id="dropdown-basic"
           className={cx(styles.menuButton)}
         >
-          <Text tag="span" type="text3" className={cx(styles.upper_first)}>
-            <Link
-              border={{ bottom: { keepVisible: true } }}
-              href={false}
-              onClick={() => {}}
-            >
+          <Link
+            border={{ bottom: { keepVisible: true } }}
+            href={false}
+            onClick={() => {}}
+          >
+            <Text tag="span" type="text3" className={cx(styles.upper_first)}>
               {!isEmpty(sort)
                 ? getSortTranslation(sort?.[0]?.index, sort?.[0]?.order)
                 : bestMatch.sortTranslation}
-            </Link>
-          </Text>
+            </Text>
+          </Link>
+
           <span className={styles.icon_area}>
             <Icon
               size={{ w: 2, h: 2 }}

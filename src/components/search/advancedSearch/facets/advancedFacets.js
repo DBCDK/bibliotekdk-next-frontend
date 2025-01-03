@@ -49,7 +49,6 @@ export function AdvancedFacets({ facets, isLoading, replace = false }) {
     return false;
   });
   // end special handling of facet.source
-
   const filteredFacets = Object.values(AdvFacetsTypeEnum).filter((val) =>
     facets?.find((facet) => {
       return facet.name.split(".")[1] === val;
@@ -60,10 +59,12 @@ export function AdvancedFacets({ facets, isLoading, replace = false }) {
     ref.current.scrollIntoView({ behavior: "smooth", block: "end" });
   }
 
-  const onItemClick = (checked, name, facetName) => {
+  const onItemClick = ({ checked, value, facetName }) => {
+    const name = value?.key;
+
     if (checked) {
       // selected -> add to list
-      addFacet(name, facetName, replace);
+      addFacet(name, facetName, replace, value?.traceId);
       scrollToRef(scrollRef);
     } else {
       // deselected - remove from list
@@ -189,6 +190,7 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
   };
 
   let initialcheck;
+
   return (
     <>
       {/* we want to show a link to a helptext for term.source (fagbibliografier) */}
@@ -225,7 +227,7 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
                 ariaLabel={value.key}
                 className={styles.checkbox}
                 onChange={(checked) => {
-                  onItemClick(checked, value.key, facetName);
+                  onItemClick({ checked, value, facetName });
                 }}
                 checked={initialcheck}
               ></Checkbox>

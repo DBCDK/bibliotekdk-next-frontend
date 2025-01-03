@@ -228,6 +228,7 @@ const prioritized = {
       "for begyndere",
       "for let øvede",
       "for øvede",
+      "for børn",
       "for musikskoler",
       "for folkeskolen",
     ],

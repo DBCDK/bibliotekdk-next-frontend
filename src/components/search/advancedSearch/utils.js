@@ -258,14 +258,20 @@ export function getAdvancedSearchField({ type, value, operator = null }) {
  * Convert one or more inputfields to a query string
  * @param inputfields
  */
-export function fieldsToAdvancedUrl({ inputFields }) {
+export function fieldsToAdvancedUrl({ inputFields, traceId }) {
   const urlObject = {
     inputFields: Array.isArray(inputFields) ? inputFields : [inputFields],
   };
 
-  return `/avanceret?fieldSearch=${encodeURIComponent(
+  let res = `/avanceret?fieldSearch=${encodeURIComponent(
     JSON.stringify(urlObject)
   )}`;
+
+  if (traceId) {
+    res += `&tid=${encodeURIComponent(traceId)}`;
+  }
+
+  return res;
 }
 
 /**
@@ -274,7 +280,7 @@ export function fieldsToAdvancedUrl({ inputFields }) {
  * @param value - the value to search for
  * @returns {string}
  */
-export function getAdvancedUrl({ type, value }) {
+export function getAdvancedUrl({ type, value, traceId }) {
   const inputField = getAdvancedSearchField({ type, value });
-  return fieldsToAdvancedUrl({ inputFields: inputField });
+  return fieldsToAdvancedUrl({ inputFields: inputField, traceId });
 }
