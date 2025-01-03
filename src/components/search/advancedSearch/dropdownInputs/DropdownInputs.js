@@ -88,10 +88,10 @@ export default function DropdownInputs() {
     useAdvancedSearchContext();
   //true if number of dropdownunits are bigger than MAX_VISIBLE_DROPDOWNS
   const [showAll, setShowAll] = useState(
-    dropdownUnits.length < MAX_VISIBLE_DROPDOWNS
+    dropdownUnits.length <= MAX_VISIBLE_DROPDOWNS
   );
   useEffect(() => {
-    setShowAll(dropdownUnits.length < MAX_VISIBLE_DROPDOWNS);
+    setShowAll(dropdownUnits.length <= MAX_VISIBLE_DROPDOWNS);
   }, [workType]);
 
   //checks if any of the hidden dropdowns has a value
