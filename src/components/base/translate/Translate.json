@@ -426,6 +426,18 @@
       }
     },
     "complex-search-facets": {
+      "label-instrument": {
+        "da": "Instrument",
+        "en": "Instrument"
+      },
+      "label-choirtype": {
+        "da": "Kortype",
+        "en": "Choirtype"
+      },
+      "label-chambermusictype": {
+        "da": "Kammermusik",
+        "en": "Chambermusic"
+      },
       "label-publicationyear": {
         "da": "Udgivelsesår",
         "en": "Publicationyear"
