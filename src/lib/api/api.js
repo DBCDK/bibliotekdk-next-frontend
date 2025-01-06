@@ -3,7 +3,6 @@
  * In this file we have functions related to data fetching.
  */
 import { createContext, useContext, useEffect, useState } from "react";
-import fetch from "isomorphic-unfetch";
 import storybookConfig from "@/config";
 import getConfig from "next/config";
 import useSWR from "swr";
