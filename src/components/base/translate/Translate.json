@@ -117,6 +117,30 @@
         "da": "Aldersgruppe",
         "en": "Age groups"
       },
+      "phrase.instrument": {
+        "da": "Instrument",
+        "en": "Instrument"
+      },
+      "all_phrase.instrument": {
+        "da": "Alle instrumenter",
+        "en": "All instruments"
+      },
+      "phrase.choirtype": {
+        "da": "Noder til kor",
+        "en": "For choirs"
+      },
+      "all_phrase.choirtype": {
+        "da": "Alle kor",
+        "en": "All choirs"
+      },
+      "phrase.chambermusictype": {
+        "da": "Noder til kammermusik",
+        "en": "Chambermusic"
+      },
+      "all_phrase.chambermusictype": {
+        "da": "Alle",
+        "en": "All"
+      },
       "phrase.generalaudience": {
         "da": "Målgruppe",
         "en": "Audience"
@@ -402,6 +426,18 @@
       }
     },
     "complex-search-facets": {
+      "label-instrument": {
+        "da": "Instrument",
+        "en": "Instrument"
+      },
+      "label-choirtype": {
+        "da": "Kortype",
+        "en": "Choirtype"
+      },
+      "label-chambermusictype": {
+        "da": "Kammermusik",
+        "en": "Chambermusic"
+      },
       "label-publicationyear": {
         "da": "Udgivelsesår",
         "en": "Publicationyear"
