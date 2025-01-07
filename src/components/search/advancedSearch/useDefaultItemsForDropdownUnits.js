@@ -519,19 +519,6 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
     indexName: DropdownIndicesEnum.GAMEPLATFORM,
   };
 
-  const generalAudience = {
-    items: convertToDropdownInput(
-      parseForFacets({
-        data: facetResponse,
-        isLoading,
-        error,
-        index: DropdownIndicesEnum.GENERALAUDIENCE,
-        workType,
-      })
-    ),
-    indexName: DropdownIndicesEnum.GENERALAUDIENCE,
-  };
-
   // will be used at a later time
   // const players = {
   //   items: convertToDropdownInput(dummy__players()),
