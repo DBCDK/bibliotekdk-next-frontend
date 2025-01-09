@@ -31,6 +31,9 @@ export function getDefaultDropdownIndices() {
     { searchIndex: DropdownIndicesEnum.PEGI, value: [] },
     { searchIndex: DropdownIndicesEnum.GENERALAUDIENCE, value: [] },
     { searchIndex: DropdownIndicesEnum.NOTA, value: [] },
+    { searchIndex: DropdownIndicesEnum.INSTRUMENT, value: [] },
+    { searchIndex: DropdownIndicesEnum.CHOIRTYPE, value: [] },
+    { searchIndex: DropdownIndicesEnum.CHAMBERMUSICTYPE, value: [] },
     { searchIndex: DropdownIndicesEnum.DATABASES, value: [] },
   ];
 }

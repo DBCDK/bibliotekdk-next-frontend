@@ -138,6 +138,7 @@ export const seriesFragment = `fragment seriesFragment on Series {
   seriesWorkTypes: workTypes
   seriesId
   traceId
+  numberInSeries
 }`;
 export const universeFragment = `fragment universeFragment on Universe {
   title
@@ -200,6 +201,52 @@ export const workSliderFragment = `fragment workSliderFragment on Work {
     }
   }
 }${tvSeriesFragment}`;
+
+// This should be FAST to fetch, used for caching basic work data
+// Retrieve this in search/recommend etc results, and reuse on material page
+export const cacheWorkFragment = `fragment cacheWorkFragment on Work {
+  traceId
+  workId
+  series {
+    title
+    numberInSeries  
+  }
+  mainLanguages {
+    isoCode
+    display
+  }
+  manifestations {
+    mostRelevant{
+      pid
+      cover {
+        detail
+        origin
+      }
+      materialTypes {
+        materialTypeGeneral {
+          code
+          display
+        }
+        materialTypeSpecific {
+          code
+          display
+        }
+      }
+      edition {
+        publicationYear {
+          display
+        }
+        edition
+      }
+    }            
+  }
+  titles {
+    main
+    full
+    parallel
+    sort
+  }
+}`;
 
 export const workTitleFragment = `fragment workTitleFragment on Work {
   titles {

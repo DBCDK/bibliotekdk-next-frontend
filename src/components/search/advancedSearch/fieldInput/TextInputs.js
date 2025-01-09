@@ -107,6 +107,7 @@ function FieldInput({ index, fieldValue, doAdvancedSearch }) {
             >
               <Input
                 id={inputId}
+                dataCy={`advanced-search-inputfield-${index}`}
                 className={styles.suggesterInput}
                 value={fieldValue?.value}
                 onChange={(e) => {

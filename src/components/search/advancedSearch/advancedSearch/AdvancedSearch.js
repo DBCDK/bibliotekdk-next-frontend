@@ -112,19 +112,19 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
             </Title>
           </Col>
           <Col lg={5} md={6} className={styles.buttonContainer}>
-            <Text type="text3" tag="span">
-              <Link
-                dataCy="edit-in-cql"
-                onClick={() => {
-                  setShowCqlEditor(!showCqlEditor);
-                }}
-                border={{
-                  top: false,
-                  bottom: {
-                    keepVisible: true,
-                  },
-                }}
-              >
+            <Link
+              dataCy="edit-in-cql"
+              onClick={() => {
+                setShowCqlEditor(!showCqlEditor);
+              }}
+              border={{
+                top: false,
+                bottom: {
+                  keepVisible: true,
+                },
+              }}
+            >
+              <Text type="text3" tag="span">
                 {Translate({
                   context: "search",
                   label: showCqlEditor
@@ -133,26 +133,26 @@ export default function AdvancedSearch({ ariaExpanded, className }) {
                       : "newFieldsSearch"
                     : "editInCqlEditor",
                 })}
-              </Link>
-            </Text>
+              </Text>
+            </Link>
 
-            <Text type="text3" tag="span">
-              <Link
-                onClick={() => setTimeout(() => setShowPopover(false), 100)}
-                href="/avanceret/soegehistorik"
-                border={{
-                  top: false,
-                  bottom: {
-                    keepVisible: true,
-                  },
-                }}
-              >
+            <Link
+              onClick={() => setTimeout(() => setShowPopover(false), 100)}
+              href="/avanceret/soegehistorik"
+              border={{
+                top: false,
+                bottom: {
+                  keepVisible: true,
+                },
+              }}
+            >
+              <Text type="text3" tag="span">
                 {Translate({
                   context: "search",
                   label: "searchHistory",
                 })}
-              </Link>
-            </Text>
+              </Text>
+            </Link>
 
             <IconButton
               className={cx(styles.closeContainer, {

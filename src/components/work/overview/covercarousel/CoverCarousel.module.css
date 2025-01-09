@@ -107,16 +107,6 @@
   box-shadow: var(--basic_big_box_shadow);
 }
 
-.cover_image_skeleton {
-  display: block;
-  width: 200px;
-  height: 300px;
-  margin-left: auto;
-  margin-right: auto;
-
-  border: 0;
-  outline: 0;
-}
 /* END COVER */
 
 /* START OVERRIDING STYLE OF ARROWS */

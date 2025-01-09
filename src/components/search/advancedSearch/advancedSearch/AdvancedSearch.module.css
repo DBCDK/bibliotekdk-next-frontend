@@ -41,6 +41,8 @@
   align-items: center;
   justify-content: end;
   transition: 250ms;
+  position: relative;
+  top: 2px;
 }
 
 .helpLink {

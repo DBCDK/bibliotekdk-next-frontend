@@ -3,7 +3,7 @@
 }
 .dropdownwrap:hover,
 .dropdownwrap:focus {
-  outline: 1px solid var(--blue);
+  outline: 0;
   cursor: pointer;
 }
 
@@ -47,14 +47,14 @@
 }
 
 .dropdowntoggle:is(:focus-visible, :hover) {
-  outline: 2px solid var(--blue);
+  box-shadow: inset 0 0 0 2px var(--blue);
 }
 
 .dropdowntoggle {
   position: relative;
   height: var(--pt5);
   padding-left: var(--pt2);
-  outline: 1px solid var(--dove);
+  box-shadow: inset 0 0 0 1px var(--dove);
   background-color: var(--white);
   min-width: 164px;
   text-align: left;

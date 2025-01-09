@@ -26,6 +26,9 @@ export const DropdownIndicesEnum = {
   PEGI: "phrase.pegi",
   GENERALAUDIENCE: "phrase.generalaudience",
   DATABASES: "term.source",
+  INSTRUMENT: "phrase.instrument",
+  CHOIRTYPE: "phrase.choirtype",
+  CHAMBERMUSICTYPE: "phrase.chambermusictype",
   NOTA: "nota", //this is not an index in complex search. It will be converted to an index when state is converted to cql. The index used is term.source.
 };
 
@@ -446,6 +449,45 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
     indexName: DropdownIndicesEnum.MATERIAL_TYPES_SPECIFIC,
   };
 
+  const chambermusictype = {
+    items: convertToDropdownInput(
+      parseForFacets({
+        data: facetResponse,
+        isLoading,
+        error,
+        index: DropdownIndicesEnum.CHAMBERMUSICTYPE,
+        workType,
+      })
+    ),
+    indexName: DropdownIndicesEnum.CHAMBERMUSICTYPE,
+  };
+
+  const choirtype = {
+    items: convertToDropdownInput(
+      parseForFacets({
+        data: facetResponse,
+        isLoading,
+        error,
+        index: DropdownIndicesEnum.CHOIRTYPE,
+        workType,
+      })
+    ),
+    indexName: DropdownIndicesEnum.CHOIRTYPE,
+  };
+
+  const instrument = {
+    items: convertToDropdownInput(
+      parseForFacets({
+        data: facetResponse,
+        isLoading,
+        error,
+        index: DropdownIndicesEnum.INSTRUMENT,
+        workType,
+      })
+    ),
+    indexName: DropdownIndicesEnum.INSTRUMENT,
+  };
+
   const languages = {
     items: convertToDropdownInput(
       parseForFacets({
@@ -475,19 +517,6 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
       })
     ),
     indexName: DropdownIndicesEnum.GAMEPLATFORM,
-  };
-
-  const generalAudience = {
-    items: convertToDropdownInput(
-      parseForFacets({
-        data: facetResponse,
-        isLoading,
-        error,
-        index: DropdownIndicesEnum.GENERALAUDIENCE,
-        workType,
-      })
-    ),
-    indexName: DropdownIndicesEnum.GENERALAUDIENCE,
   };
 
   // will be used at a later time
@@ -599,7 +628,7 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
         dropdownUnit: dropdownUnit,
       })
     ),
-    sheetmusic: [languages, generalAudience].map((dropdownUnit) =>
+    sheetmusic: [instrument, choirtype, chambermusictype].map((dropdownUnit) =>
       getDropdownFromUrl({
         initDropdowns: initDropdowns,
         dropdownUnit: dropdownUnit,

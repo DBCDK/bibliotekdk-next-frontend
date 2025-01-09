@@ -55,8 +55,7 @@ describe("Overview", () => {
 
       cy.get("[data-cy=icon-Bog]")
         .children()
-        .should("have.attr", "src", "/icons/checkmark.svg")
-        .should("have.attr", "alt", "ikke valgt");
+        .should("have.attr", "src", "/icons/checkmark.svg");
 
       cy.on("url:change", (url) => {
         expect(url).to.contain("type=Bog");

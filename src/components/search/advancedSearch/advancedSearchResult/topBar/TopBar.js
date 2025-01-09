@@ -12,6 +12,7 @@ import useSavedSearches from "@/components/hooks/useSavedSearches";
 import IconButton from "@/components/base/iconButton";
 import { useModal } from "@/components/_modal";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import { openLoginModal } from "@/components/_modal/pages/login/utils";
 
 /**
  *
@@ -215,103 +216,91 @@ export default function TopBar({ isLoading = false, searchHistoryObj }) {
       });
     }
   };
+
+  /**
+   * When unauthenticated user clicks the 'save search' link we go to login page.
+   */
+  const onSaveSearchLogin = (e) => {
+    // Prevent the accordion from expanding
+    e.stopPropagation();
+    openLoginModal({ modal });
+  };
   return (
-    <Link
+    <Container
+      fluid
       className={styles.container}
       onClick={() => {
         setShowPopover(true);
       }}
-      border={false}
     >
-      <Container fluid>
-        <Row>
-          <Col xs={12} lg={2} className={styles.your_search}>
-            <Text type="text1">
-              {Translate({ context: "search", label: "yourSearch" })}
-            </Text>
-          </Col>
-          <Col
-            xs={12}
-            lg={{ offset: 1, span: true }}
-            className={styles.edit_search}
-          >
-            <FormattedQuery>
-              {isAuthenticated && (
-                <Text
-                  type="text3"
-                  tag="span"
-                  skeleton={isLoading}
-                  className={styles.editSearchDesktop}
-                >
-                  <Link
-                    onClick={() => {
-                      setShowPopover(true);
-                    }}
-                    border={{
-                      top: false,
-                      bottom: {
-                        keepVisible: true,
-                      },
-                    }}
-                  >
-                    {Translate({ context: "search", label: "edit" })}
-                  </Link>
-                </Text>
-              )}
-            </FormattedQuery>
-          </Col>
-
-          <Col xs={12} lg={2} className={styles.saveSearchButton}>
-            {isAuthenticated ? (
-              <div className={styles.flexSwitchMobile}>
-                <Text
-                  type="text3"
-                  tag="span"
-                  skeleton={isLoading}
-                  className={styles.editSearchMobile}
-                >
-                  <Link
-                    onClick={() => {
-                      setShowPopover(true);
-                    }}
-                    border={{
-                      top: false,
-                      bottom: {
-                        keepVisible: true,
-                      },
-                    }}
-                  >
-                    {Translate({ context: "search", label: "editSearch" })}
-                  </Link>
-                </Text>
-                <IconButton
-                  onClick={onSaveSearchClick}
-                  icon={`${isSaved ? "heart_filled" : "heart"}`}
-                  keepUnderline
-                >
-                  {Translate({ context: "search", label: "saveSearch" })}
-                </IconButton>
-              </div>
-            ) : (
-              <Text type="text3" tag="span" skeleton={isLoading}>
-                <Link
-                  onClick={() => {
-                    setShowPopover(true);
-                  }}
-                  border={{
-                    top: false,
-                    bottom: {
-                      keepVisible: true,
-                    },
-                  }}
-                >
-                  {Translate({ context: "search", label: "editSearch" })}
-                </Link>
+      <Row>
+        <Col xs={12} lg={2} className={styles.your_search}>
+          <Text type="text1">
+            {Translate({ context: "search", label: "yourSearch" })}
+          </Text>
+        </Col>
+        <Col
+          xs={12}
+          lg={{ offset: 1, span: true }}
+          className={styles.edit_search}
+        >
+          <FormattedQuery>
+            <Link
+              onClick={() => {
+                setShowPopover(true);
+              }}
+              border={{
+                top: false,
+                bottom: {
+                  keepVisible: true,
+                },
+              }}
+            >
+              <Text
+                type="text3"
+                tag="span"
+                skeleton={isLoading}
+                className={styles.editSearchDesktop}
+              >
+                {Translate({ context: "search", label: "edit" })}
               </Text>
-            )}
-          </Col>
-        </Row>
-      </Container>
-    </Link>
+            </Link>
+          </FormattedQuery>
+        </Col>
+
+        <Col xs={12} lg={2} className={styles.saveSearchButton}>
+          <div className={styles.flexSwitchMobile}>
+            <Link
+              onClick={() => {
+                setShowPopover(true);
+              }}
+              border={{
+                top: false,
+                bottom: {
+                  keepVisible: true,
+                },
+              }}
+            >
+              <Text
+                type="text3"
+                tag="span"
+                skeleton={isLoading}
+                className={styles.editSearchMobile}
+              >
+                {Translate({ context: "search", label: "editSearch" })}
+              </Text>
+            </Link>
+
+            <IconButton
+              onClick={isAuthenticated ? onSaveSearchClick : onSaveSearchLogin}
+              icon={`${isSaved ? "heart_filled" : "heart"}`}
+              keepUnderline
+            >
+              {Translate({ context: "search", label: "saveSearch" })}
+            </IconButton>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }

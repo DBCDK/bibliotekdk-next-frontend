@@ -103,6 +103,83 @@ describe("Trace", () => {
         });
     });
   });
+  describe("complex search", () => {
+    it(`TraceId on suggestion click`, () => {
+      cy.visit(nextjsBaseUrl);
+      cy.consentAllowAll(); //allow cookies
+
+      //open advanced search
+      cy.get('[data-cy="advanced-search-trigger"]').click();
+
+      //type something and select first suggestion
+      cy.get('[data-cy="advanced-search-inputfield-0"]').type("hest");
+      cy.get('ul[role="listbox"] > li').first().click();
+      //search
+      cy.get('[data-cy="button-søg-avanceret"]').click();
+
+      // Check that tid is set as URL param
+      cy.url()
+        .should("include", "tid=")
+        .then((url) => {
+          const params = new URLSearchParams(url.split("?")[1]);
+          const tid = params.get("tid");
+
+          expect(tid).to.exist;
+          expect(tid.length).to.be.greaterThan(20);
+        });
+    });
+    it(`TraceId when clicking on an item in complex search result`, () => {
+      cy.visit(nextjsBaseUrl);
+      cy.consentAllowAll(); //allow cookies
+
+      cy.get('[data-cy="advanced-search-trigger"]').click();
+
+      //type something and select first suggestion
+      cy.get('[data-cy="advanced-search-inputfield-0"]').type("hest");
+      cy.get('ul[role="listbox"] > li').first().click();
+      //search
+      cy.get('[data-cy="button-søg-avanceret"]').click();
+
+      // Click on first result
+      cy.get(':nth-child(1) > [data-cy="result-row"]').click();
+
+      // Check that tid is set as URL param
+      cy.url()
+        .should("include", "tid=")
+        .then((url) => {
+          const params = new URLSearchParams(url.split("?")[1]);
+          const tid = params.get("tid");
+
+          expect(tid).to.exist;
+          expect(tid.length).to.be.greaterThan(20);
+        });
+    });
+  });
+
+  it("traceid in inspiration belts", () => {
+    cy.visit(`${nextjsBaseUrl}/inspiration/boeger?workTypes=literature`);
+    cy.consentAllowAll(); //allow cookies
+
+
+    //click on fist element in inspiration belt
+    cy.get('[data-cy="inspiration-slider"]')
+    .find('[data-cy="link"]') 
+    .first() 
+    .click();
+
+
+    cy.url()
+    .should("include", "tid=")
+    .then((url) => {
+      const params = new URLSearchParams(url.split("?")[1]);
+      const tid = params.get("tid");
+
+      expect(tid).to.exist;
+      expect(tid.length).to.be.greaterThan(20);
+    });
+
+
+  });
 
   it("traceid universes in details", () => {
     cy.intercept("POST", fbiApiPath).as("apiRequest");
@@ -192,6 +269,36 @@ describe("Trace", () => {
     // Click on first suggestion
     cy.get('ul[role="listbox"] li[data-suggestion-index="0"]').click();
 
+    // Check that tid is set as URL param
+    cy.url()
+      .should("include", "tid=")
+      .then((url) => {
+        const params = new URLSearchParams(url.split("?")[1]);
+        const tid = params.get("tid");
+
+        expect(tid).to.exist;
+        expect(tid.length).to.be.greaterThan(20);
+      });
+  });
+
+  it(`TraceId from suggest response is available as URL parameter when clicking`, () => {
+    cy.visit(
+      `${nextjsBaseUrl}/avanceret?fieldSearch=%7B"inputFields"%3A%5B%7B"value"%3A"hest"%2C"prefixLogicalOperator"%3Anull%2C"searchIndex"%3A"term.default"%7D%5D%7D#0-specificmaterialtype`
+    );    
+
+    //we check that tid is not set as URL param
+    cy.url().then((url) => {
+      const params = new URLSearchParams(url.split("?")[1]); 
+      const tid = params.get("tid"); 
+      expect(tid).to.not.exist; 
+    });
+    
+    cy.consentAllowAll(); //allow cookies
+
+    //click on a facet
+    cy.get('[data-cy="li-specificmaterialtype-bog"]').click();
+
+  
     // Check that tid is set as URL param
     cy.url()
       .should("include", "tid=")
