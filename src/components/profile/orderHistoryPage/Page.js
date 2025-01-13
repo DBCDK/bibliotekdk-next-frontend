@@ -275,7 +275,7 @@ function TableItem({ order, key }) {
         />
       </td>
       <td className={styles.orderNumber}>
-        {breakpoint === "xs" && !isDigitalOrder && (
+        {breakpoint === "xs" && orderId && (
           <Text className={styles.orderNumberText} type="text4">
             {`${Translate({ context: "profile", label: "orderNumber" })}:`}
           </Text>
