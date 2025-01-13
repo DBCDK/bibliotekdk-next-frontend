@@ -5490,6 +5490,10 @@
         "da": "Du har bestilt",
         "en": "You have ordered"
       },
+      "youHaveOrderedDigitalOrder": {
+        "da": "Du vil modtage en email fra Det Kgl. Bibliotek med artiklen",
+        "en": "You will receive an email from The Royal Library with the article"
+      },
       "orderNumber": {
         "da": "Bestillingsnummer",
         "en": "Order number"
@@ -5497,6 +5501,10 @@
       "orderRegistered": {
         "da": "Bestilling registreret",
         "en": "Order registered"
+      },
+      "digitalOrderRegistered": {
+        "da": "Digital kopi bestilt",
+        "en": "Digital copy ordered"
       },
       "date": {
         "da": "Dato",

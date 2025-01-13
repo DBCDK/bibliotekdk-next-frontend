@@ -154,7 +154,7 @@ export default function OrderHistoryPage() {
             </Text>
           ) : (
             orderHistoryData?.map((order) => {
-              return <TableItem order={order} key={order?.orderId} />;
+              return <TableItem order={order} key={order?.creationDate} />;
             })
           )}
         </>
@@ -180,7 +180,7 @@ export default function OrderHistoryPage() {
           ) : (
             <tbody>
               {orderHistoryData?.map((order) => (
-                <TableItem order={order} key={order?.orderId} />
+                <TableItem order={order} key={order?.creationDate} />
               ))}
             </tbody>
           )}
@@ -211,10 +211,11 @@ function TableItem({ order, key }) {
   }
   const isMobile = breakpoint === "xs";
   const { orderId, creationDate, work } = order;
+  const isDigitalOrder = !orderId; //digital acrticle service orders do not have orderId
+
   const title = work?.titles?.main[0];
   const creator = work?.creators[0]?.display;
   const { day, monthName, isToday, hours, minutes } = parseDate(creationDate);
-
   const time = `Kl. ${hours}.${minutes}`;
   const dateString = isToday
     ? Translate({ context: "profile", label: "last-day" })
@@ -225,7 +226,12 @@ function TableItem({ order, key }) {
       <div className={styles.tableItem} key={key}>
         <div>
           <Text type="text1">
-            {Translate({ context: "profile", label: "orderRegistered" })}
+            {Translate({
+              context: "profile",
+              label: isDigitalOrder
+                ? "digitalOrderRegistered"
+                : "orderRegistered",
+            })}
           </Text>
           <Text className={styles.mobileDate} type="text3">
             {dateString}
@@ -235,6 +241,7 @@ function TableItem({ order, key }) {
             creator={creator}
             workId={work?.workId}
             date={dateString}
+            isDigitalOrder={isDigitalOrder}
           />
         </div>
         <div className={styles.orderNumber}>
@@ -243,7 +250,7 @@ function TableItem({ order, key }) {
               {`${Translate({ context: "profile", label: "orderNumber" })}:`}
             </Text>
           )}
-          <Text type="text3">{orderId} </Text>
+          {orderId && <Text type="text3">{orderId} </Text>}
         </div>
       </div>
     );
@@ -264,15 +271,16 @@ function TableItem({ order, key }) {
           creator={creator}
           workId={work?.workId}
           date={dateString}
+          isDigitalOrder={isDigitalOrder}
         />
       </td>
       <td className={styles.orderNumber}>
-        {breakpoint === "xs" && (
+        {breakpoint === "xs" && !isDigitalOrder && (
           <Text className={styles.orderNumberText} type="text4">
             {`${Translate({ context: "profile", label: "orderNumber" })}:`}
           </Text>
         )}
-        <Text type="text3">{orderId}</Text>
+        {orderId && <Text type="text3">{orderId}</Text>}
       </td>
     </tr>
   );
@@ -282,7 +290,7 @@ function TableItem({ order, key }) {
  * Used in TableItem. Shows info (like title, author, link to work) for a given order
  * @returns
  */
-function WorkInfo({ title, creator, workId }) {
+function WorkInfo({ title, creator, workId, isDigitalOrder }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs";
 
@@ -290,11 +298,21 @@ function WorkInfo({ title, creator, workId }) {
     <>
       {!isMobile && (
         <Text type="text1">
-          {Translate({ context: "profile", label: "orderRegistered" })}
+          {Translate({
+            context: "profile",
+            label: isDigitalOrder
+              ? "digitalOrderRegistered"
+              : "orderRegistered",
+          })}
         </Text>
       )}
       <Text type="text2" className={styles.orderWorkInfo}>
-        {Translate({ context: "profile", label: "youHaveOrdered" }) + " "}
+        {Translate({
+          context: "profile",
+          label: isDigitalOrder
+            ? "youHaveOrderedDigitalOrder"
+            : "youHaveOrdered",
+        }) + " "}
         <Link
           href={getWorkUrlForProfile({ workId })}
           border={{
@@ -307,6 +325,7 @@ function WorkInfo({ title, creator, workId }) {
           {title}
         </Link>
         {creator &&
+          !isDigitalOrder &&
           ` ${Translate({ context: "general", label: "by" })} ${creator}`}
       </Text>
     </>
