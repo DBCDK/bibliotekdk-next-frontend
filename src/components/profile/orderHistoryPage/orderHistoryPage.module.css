@@ -19,7 +19,7 @@
   margin-right: var(--pt05);
 }
 .date {
-align-self: flex-start;
+  align-self: flex-start;
 }
 
 @media (max-width: 575px) {
