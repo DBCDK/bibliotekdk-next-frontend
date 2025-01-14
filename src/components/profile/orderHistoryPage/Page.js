@@ -297,7 +297,7 @@ function WorkInfo({ title, creator, workId, isDigitalOrder }) {
   return (
     <>
       {!isMobile && (
-        <Text type="text1">
+        <Text type="text3">
           {Translate({
             context: "profile",
             label: isDigitalOrder
@@ -322,7 +322,9 @@ function WorkInfo({ title, creator, workId, isDigitalOrder }) {
             },
           }}
         >
-          {title}
+          <Text type="text1" tag="span">
+            {title}
+          </Text>
         </Link>
         {creator &&
           !isDigitalOrder &&
