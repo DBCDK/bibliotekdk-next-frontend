@@ -18,6 +18,9 @@
   display: none;
   margin-right: var(--pt05);
 }
+.date {
+  align-self: flex-start;
+}
 
 @media (max-width: 575px) {
   .tableItem {
