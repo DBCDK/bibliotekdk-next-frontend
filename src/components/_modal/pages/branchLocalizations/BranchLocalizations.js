@@ -62,7 +62,6 @@ export default function BranchLocalizations({ context, modal }) {
     branchesKnownStatus,
     branchesUnknownStatus,
     branchesByAvailability,
-    expectedAgencyReturnDate,
     ownedByAgency,
   } = useHoldingsForAgency({
     agencyId,
