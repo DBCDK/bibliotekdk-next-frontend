@@ -7,6 +7,24 @@ import Translate from "@/components/base/translate";
 import { useRouter } from "next/router";
 import Head from "next/head";
 
+export function CustomNotFound() {
+  return (
+    <Section
+      title={Translate({
+        context: "errorpages",
+        label: "404_not_found_title",
+      })}
+    >
+      <Text type="text3">
+        {Translate({
+          context: "errorpages",
+          label: "404_not_found_description",
+        })}
+      </Text>
+    </Section>
+  );
+}
+
 export function Custom() {
   const router = useRouter();
 
@@ -21,19 +39,7 @@ export function Custom() {
         </title>
       </Head>
       <Header router={router} />
-      <Section
-        title={Translate({
-          context: "errorpages",
-          label: "404_not_found_title",
-        })}
-      >
-        <Text type="text3">
-          {Translate({
-            context: "errorpages",
-            label: "404_not_found_description",
-          })}
-        </Text>
-      </Section>
+      <CustomNotFound />
       {/* @TODO add translatable here */}
     </>
   );
