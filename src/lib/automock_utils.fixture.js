@@ -851,19 +851,9 @@ const BRANCH_5 = {
   orderPolicy: {
     orderPossible: true,
   },
-  holdingStatus: {
-    branchId: "789123",
-    expectedDelivery: TODAY,
-    holdingItems: [
-      {
-        expectedDelivery: TODAY,
-        status: HoldingStatusEnum.ON_SHELF,
-      },
-      {
-        expectedDelivery: TODAY,
-        status: HoldingStatusEnum.ON_SHELF,
-      },
-    ],
+  holdings: {
+    status: "ON_SHELF",
+    items: [{ loanRestriction: null }, { loanRestriction: null }],
   },
   pickupAllowed: true,
   digitalCopyAccess: true,
@@ -881,15 +871,11 @@ const BRANCH_5_1 = {
   orderPolicy: {
     orderPossible: true,
   },
-  holdingStatus: {
-    branchId: "789124",
-    expectedDelivery: TODAY,
-    holdingItems: [
-      {
-        expectedDelivery: TODAY,
-        status: HoldingStatusEnum.ON_LOAN,
-      },
-    ],
+  holdings: {
+    status: "NOT_ON_SHELF",
+    expectedAgencyReturnDate: "2025-02-20",
+    expectedBranchReturnDate: "2025-02-20",
+    items: [{ loanRestriction: null }],
   },
   pickupAllowed: true,
   digitalCopyAccess: true,
@@ -902,13 +888,75 @@ const BRANCH_5_2 = {
   agencyId: "789120",
   branchId: "789125",
   branchType: BranchTypeEnum.BRANCH,
+  holdings: {
+    status: "NOT_ON_SHELF",
+    expectedAgencyReturnDate: null,
+    expectedBranchReturnDate: null,
+    items: [],
+  },
   orderPolicy: {
     orderPossible: true,
   },
-  holdingStatus: {
-    branchId: "789125",
-    expectedDelivery: TODAY,
-    holdingItems: [],
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "balleripraprup.dekaa",
+  temporarilyClosed: false,
+};
+const BRANCH_5_3 = {
+  name: "Bubber Bib - Branch with holdings on shelf, but only for consuming at library",
+  agencyName: "BalleRipRapRup",
+  agencyId: "789120",
+  branchId: "789135",
+  branchType: BranchTypeEnum.BRANCH,
+  holdings: {
+    status: "ON_SHELF_NOT_FOR_LOAN",
+    expectedAgencyReturnDate: null,
+    expectedBranchReturnDate: null,
+    items: [],
+  },
+  orderPolicy: {
+    orderPossible: true,
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "balleripraprup.dekaa",
+  temporarilyClosed: false,
+};
+const BRANCH_5_4 = {
+  name: "Bobber Bib - Branch with holdings on shelf, but loan restricted (they are bot part of ILL)",
+  agencyName: "BalleRipRapRup",
+  agencyId: "789120",
+  branchId: "789145",
+  branchType: BranchTypeEnum.BRANCH,
+  holdings: {
+    status: "ON_SHELF",
+    expectedAgencyReturnDate: null,
+    expectedBranchReturnDate: null,
+    items: [{ loanRestriction: "G" }],
+  },
+  orderPolicy: {
+    orderPossible: true,
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "balleripraprup.dekaa",
+  temporarilyClosed: false,
+};
+
+const BRANCH_5_5 = {
+  name: "Bybber Bib - Branch with unknown status",
+  agencyName: "BalleRipRapRup",
+  agencyId: "789120",
+  branchId: "789155",
+  branchType: BranchTypeEnum.BRANCH,
+  holdings: {
+    status: "UNKNOWN_STATUS",
+    expectedAgencyReturnDate: null,
+    expectedBranchReturnDate: null,
+    items: [],
+  },
+  orderPolicy: {
+    orderPossible: true,
   },
   pickupAllowed: true,
   digitalCopyAccess: true,
@@ -1865,6 +1913,9 @@ export default function automock_utils() {
     BRANCH_5,
     BRANCH_5_1,
     BRANCH_5_2,
+    BRANCH_5_3,
+    BRANCH_5_4,
+    BRANCH_5_5,
     BRANCH_6,
     BRANCH_6_1,
     BRANCH_6_2,
