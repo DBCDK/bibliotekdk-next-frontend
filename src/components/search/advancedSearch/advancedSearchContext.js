@@ -194,9 +194,22 @@ export default function AdvancedSearchProvider({ children, router }) {
     sort: sortFromUrl = "{}",
   } = router.query;
 
-  const fieldSearchFromUrl =
-    fieldSearch && JSON.parse(decodeURIComponent(fieldSearch));
-  const sort = sortFromUrl && JSON.parse(decodeURIComponent(sortFromUrl));
+  let error = null;
+  let fieldSearchFromUrl = {};
+  let sort = {};
+  try {
+    fieldSearchFromUrl =
+      fieldSearch && JSON.parse(decodeURIComponent(fieldSearch));
+  } catch (e) {
+    console.error(e, "ERROR");
+    error = e.message;
+  }
+  try {
+    sort = sortFromUrl && JSON.parse(decodeURIComponent(sortFromUrl));
+  } catch (e) {
+    console.error(e, "ERROR");
+    error = e.message;
+  }
 
   //// ----  Popup Trigger ----
   const popoverRef = useRef(null);
@@ -295,6 +308,7 @@ export default function AdvancedSearchProvider({ children, router }) {
   };
 
   const value = {
+    error,
     inputFields,
     addInputField,
     removeInputField,

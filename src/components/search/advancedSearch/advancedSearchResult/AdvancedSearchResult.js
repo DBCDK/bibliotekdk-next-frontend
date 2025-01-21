@@ -28,6 +28,7 @@ import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import { FacetButton } from "@/components/search/advancedSearch/facets/facetButton/facetButton";
 import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
 import QuickFilter from "@/components/search/advancedSearch/quickfilter/QuickFilter";
+import { CustomNotFound } from "@/pages/404";
 
 export function AdvancedSearchResult({
   pageNo,
@@ -162,6 +163,7 @@ export default function Wrap({ onWorkClick, onPageChange }) {
     fieldSearchFromUrl: fieldSearch,
     pageNoFromUrl: pageNo,
     setShowPopover,
+    error,
   } = useAdvancedSearchContext();
   const { selectedFacets } = useFacets();
   // if facets are set we need them for the cql
@@ -215,6 +217,9 @@ export default function Wrap({ onWorkClick, onPageChange }) {
       selectedQuickFilters: selectedQuickFilters || [],
     };
     setValue(searchHistoryObj);
+  }
+  if (error) {
+    return <CustomNotFound />;
   }
 
   if (!showResult) {
