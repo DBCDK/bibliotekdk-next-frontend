@@ -6,8 +6,6 @@ import uniqWith from "lodash/uniqWith";
 import isEqual from "lodash/isEqual";
 
 export function convertSingleToDropdownInput(item, formType, overrideValueAs) {
-  console.log(item, "ITTTTTTTTTTTTTTEMEMEEMEM");
-
   const key = item?.code || item?.key;
   const name = item?.display || item?.term || item?.key;
 

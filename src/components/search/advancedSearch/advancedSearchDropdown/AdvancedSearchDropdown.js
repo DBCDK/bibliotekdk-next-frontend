@@ -235,8 +235,6 @@ export default function AdvancedSearchDropdown({
                 ![FormTypeEnum.ACTION_LINK_CONTAINER].includes(item.formType)
             )
             .map((item, index) => {
-              console.log(item, "MPA ITEM");
-
               function toggler() {
                 toggleMenuItemsState({
                   type: ToggleMenuItemsEnum.UPDATE,
@@ -259,7 +257,6 @@ export default function AdvancedSearchDropdown({
                   </List.Select>
                 );
               } else if (item?.formType === FormTypeEnum.RADIO_SELECT) {
-                console.log(item, "ITEM");
                 return (
                   <List.Select
                     className={cx(styles.dropdownitem, {
