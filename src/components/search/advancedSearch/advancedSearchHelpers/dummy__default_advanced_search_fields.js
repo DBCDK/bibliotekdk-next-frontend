@@ -75,17 +75,15 @@ export function dummy__nota() {
 
 export const MUSICALEXERCISE_ENUM = {
   ALL: "Alle",
-  NO_EXCERSIZE: "false",
-  ONLY_EXCERSIZE: "true",
+  NO_EXCERSIZE: "Noder uden øvelser",
+  ONLY_EXCERSIZE: "Noder med øvelser",
 };
 
 const prioritisedMusicalExercise = [
   {
-    term: "Noder med øvelser",
     key: MUSICALEXERCISE_ENUM.ONLY_EXCERSIZE,
   },
   {
-    term: "Noder uden øvelser",
     key: MUSICALEXERCISE_ENUM.NO_EXCERSIZE,
   },
 ];

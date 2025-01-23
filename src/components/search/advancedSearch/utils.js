@@ -4,7 +4,10 @@ import {
   DropdownIndicesEnum,
   formattersAndComparitors,
 } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
-import { NOTA_ENUM } from "@/components/search/advancedSearch/advancedSearchHelpers/dummy__default_advanced_search_fields";
+import {
+  MUSICALEXERCISE_ENUM,
+  NOTA_ENUM,
+} from "@/components/search/advancedSearch/advancedSearchHelpers/dummy__default_advanced_search_fields";
 
 function getInputFieldsQueryToCql(inputFields) {
   return inputFields
@@ -42,6 +45,21 @@ function getDropdownQuery(dropdownSearchIndices) {
             return 'term.source = "nota"';
           } else if (value === NOTA_ENUM.NOT_NOTA) {
             return "term.source=(* NOT nota)";
+          } else {
+            //if all is selected we do nothing
+            return;
+          }
+        }
+        // so is musicalexercises - that is a special case .. like NOTA :)
+        else if (
+          searchIndex.searchIndex === DropdownIndicesEnum.MUSICALEXERCISE
+        ) {
+          const value = searchIndex.value[0]?.value;
+          console.log(value, "VALUES");
+          if (value === MUSICALEXERCISE_ENUM.ONLY_EXCERSIZE) {
+            return 'musicalexercise = "true"';
+          } else if (value === MUSICALEXERCISE_ENUM.NO_EXCERSIZE) {
+            return 'musicalexercise = "false"';
           } else {
             //if all is selected we do nothing
             return;
