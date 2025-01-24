@@ -34,6 +34,7 @@ export function getDefaultDropdownIndices() {
     { searchIndex: DropdownIndicesEnum.INSTRUMENT, value: [] },
     { searchIndex: DropdownIndicesEnum.CHOIRTYPE, value: [] },
     { searchIndex: DropdownIndicesEnum.CHAMBERMUSICTYPE, value: [] },
+    { searchIndex: DropdownIndicesEnum.MUSICALEXERCISE, value: [] },
     { searchIndex: DropdownIndicesEnum.DATABASES, value: [] },
   ];
 }

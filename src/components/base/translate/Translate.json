@@ -105,6 +105,14 @@
       }
     },
     "advanced_search_dropdown": {
+      "musicalexercise": {
+        "da": "Noder med øvelser",
+        "en": "With excersizes"
+      },
+      "all_musicalexercise": {
+        "da": "Alle",
+        "en": "All"
+      },
       "Fagbibliografier": {
         "da": "Læs om fagbibliografier",
         "en": "See whats in it"
