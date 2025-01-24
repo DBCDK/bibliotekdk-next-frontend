@@ -55,7 +55,6 @@ function getDropdownQuery(dropdownSearchIndices) {
           searchIndex.searchIndex === DropdownIndicesEnum.MUSICALEXERCISE
         ) {
           const value = searchIndex.value[0]?.value;
-          console.log(value, "VALUES");
           if (value === MUSICALEXERCISE_ENUM.ONLY_EXCERSIZE) {
             return 'musicalexercise = "true"';
           } else if (value === MUSICALEXERCISE_ENUM.NO_EXCERSIZE) {
