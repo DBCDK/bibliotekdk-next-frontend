@@ -318,6 +318,7 @@ export function holdingsForAgency({ agencyId, pids }) {
               department
               location
               subLocation
+              loanRestriction
             }
             lookupUrl
           }

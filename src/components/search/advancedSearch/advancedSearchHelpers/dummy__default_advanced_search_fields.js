@@ -73,6 +73,30 @@ export function dummy__nota() {
   };
 }
 
+export const MUSICALEXERCISE_ENUM = {
+  ALL: "Alle",
+  NO_EXCERSIZE: "Noder uden øvelser",
+  ONLY_EXCERSIZE: "Noder med øvelser",
+};
+
+const prioritisedMusicalExercise = [
+  {
+    key: MUSICALEXERCISE_ENUM.ONLY_EXCERSIZE,
+  },
+  {
+    key: MUSICALEXERCISE_ENUM.NO_EXCERSIZE,
+  },
+];
+export function dummy_musicalExercise() {
+  return {
+    prioritisedItems: prioritisedMusicalExercise,
+    prioritisedFormType: FormTypeEnum.RADIO_SELECT,
+    unprioritisedItems: [],
+    unprioritisedFormType: FormTypeEnum.RADIO_SELECT,
+    overrideValueAs: "value",
+  };
+}
+
 export const NOTA_ENUM = {
   ALL: "Alle",
   NOT_NOTA: "Ikke nota",

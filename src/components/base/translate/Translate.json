@@ -105,6 +105,14 @@
       }
     },
     "advanced_search_dropdown": {
+      "musicalexercise": {
+        "da": "Noder med øvelser",
+        "en": "With excersizes"
+      },
+      "all_musicalexercise": {
+        "da": "Alle",
+        "en": "All"
+      },
       "Fagbibliografier": {
         "da": "Læs om fagbibliografier",
         "en": "See whats in it"
@@ -1556,6 +1564,10 @@
         "da": "På hylden",
         "en": "On the shelf"
       },
+      "message_ON_SHELF_IS_LOAN_RESTRICTED": {
+        "da": "På hylden, men udlånes kun til egne brugere",
+        "en": "On the shelf"
+      },
       "message_ON_SHELF_NOT_FOR_LOAN": {
         "da": "På hylden, men udlånes ikke",
         "en": "On the shelf, not available for loan"
@@ -1565,7 +1577,7 @@
         "en": "Not on shelf"
       },
       "message_NOT_ON_SHELF_HAS_RETURN_DATE": {
-        "da": "Forventes udlånt til d. %s",
+        "da": "Forventes hjemme d. %s",
         "en": "Expected on loan until %s"
       },
       "message_NOT_OWNED": {

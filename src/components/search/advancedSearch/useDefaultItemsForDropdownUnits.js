@@ -7,6 +7,7 @@ import {
   publicationYearIndices,
   dummy__players,
   dummy__databases,
+  dummy_musicalExercise,
 } from "@/components/search/advancedSearch/advancedSearchHelpers/dummy__default_advanced_search_fields";
 import { convertToDropdownInput } from "@/components/search/advancedSearch/advancedSearchHelpers/convertToDropdownInput";
 import { FormTypeEnum } from "@/components/search/advancedSearch/advancedSearchHelpers/helperComponents/HelperComponents";
@@ -30,6 +31,7 @@ export const DropdownIndicesEnum = {
   CHOIRTYPE: "phrase.choirtype",
   CHAMBERMUSICTYPE: "phrase.chambermusictype",
   NOTA: "nota", //this is not an index in complex search. It will be converted to an index when state is converted to cql. The index used is term.source.
+  MUSICALEXERCISE: "musicalexercise",
 };
 
 const specialIndices = new Set([
@@ -538,6 +540,12 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
     infoBarLabel: "tooltip_nota_info",
   };
 
+  const musicalexercise = {
+    items: convertToDropdownInput(dummy_musicalExercise()),
+    indexName: DropdownIndicesEnum.MUSICALEXERCISE,
+    showSearchBar: false,
+  };
+
   const databases = {
     items: convertToDropdownInput(dummy__databases()),
     indexName: DropdownIndicesEnum.DATABASES,
@@ -628,11 +636,12 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
         dropdownUnit: dropdownUnit,
       })
     ),
-    sheetmusic: [instrument, choirtype, chambermusictype].map((dropdownUnit) =>
-      getDropdownFromUrl({
-        initDropdowns: initDropdowns,
-        dropdownUnit: dropdownUnit,
-      })
+    sheetmusic: [instrument, choirtype, chambermusictype, musicalexercise].map(
+      (dropdownUnit) =>
+        getDropdownFromUrl({
+          initDropdowns: initDropdowns,
+          dropdownUnit: dropdownUnit,
+        })
     ),
   };
   return {

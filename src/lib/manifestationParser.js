@@ -600,7 +600,11 @@ export function parseManifestation(manifestation) {
 function renderDk5(classifications = []) {
   const dk5Mark = classifications
     .filter((clas) => clas.system === "DK5")
-    .map((dk) => ({ display: dk.display, code: dk.code }));
+    .map((dk) => ({
+      heading: dk?.dk5Heading,
+      display: dk.display,
+      code: dk.code,
+    }));
 
   return dk5Mark.map((dk, index) => (
     <Text tag={"div"} key={`${dk?.display}${index}`}>
@@ -608,7 +612,7 @@ function renderDk5(classifications = []) {
         href={getAdvancedUrl({ type: "dk5", value: dk.code })}
         border={{ top: false, bottom: { keepVisible: true } }}
       >
-        {dk.display}
+        {`${dk.code}, ${dk.heading}`}
       </Link>
     </Text>
   ));
