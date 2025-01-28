@@ -439,6 +439,7 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
     }
   }
   classifications {
+    dk5Heading
     system
     display
     code
