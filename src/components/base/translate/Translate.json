@@ -1573,12 +1573,12 @@
         "en": "On the shelf, not available for loan"
       },
       "message_NOT_ON_SHELF": {
-        "da": "Ikke på hylden",
-        "en": "Not on shelf"
+        "da": "Afdelingen har ikke materialet",
+        "en": "This department does not own the material"
       },
       "message_NOT_ON_SHELF_HAS_RETURN_DATE": {
-        "da": "Forventes hjemme d. %s",
-        "en": "Expected on loan until %s"
+        "da": "Ikke på hylden",
+        "en": "Not on shelf"
       },
       "message_NOT_OWNED": {
         "da": "Har ikke materialet",
