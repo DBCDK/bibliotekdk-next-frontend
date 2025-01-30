@@ -22,7 +22,7 @@ function getAvailabilityScore(holdings) {
     return 2;
   }
   if (holdings?.status === HoldingStatusEnum.NOT_ON_SHELF) {
-    if (holdings?.expectedBranchReturnDate) {
+    if (holdings?.expectedBranchReturnDate || holdings?.items?.length > 0) {
       return 3;
     }
     return 4;
@@ -54,7 +54,7 @@ function getLampSrc(holdings) {
     return "status__red.svg";
   }
   if (holdings?.status === HoldingStatusEnum.NOT_ON_SHELF) {
-    if (holdings?.expectedBranchReturnDate) {
+    if (holdings?.expectedBranchReturnDate || holdings?.items?.length > 0) {
       return "status__yellow.svg";
     }
     return "status__red.svg";
@@ -90,7 +90,8 @@ function getBranchHoldingsMessage(branch) {
         : ""
     }${
       branch?.holdings?.status === HoldingStatusEnum.NOT_ON_SHELF &&
-      branch?.holdings?.expectedBranchReturnDate
+      (branch?.holdings?.expectedBranchReturnDate ||
+        branch?.holdings?.items?.length > 0)
         ? "_HAS_RETURN_DATE"
         : ""
     }`,
