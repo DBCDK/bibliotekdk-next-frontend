@@ -90,7 +90,7 @@ export default function BranchLocalizations({ context, modal }) {
           <Title type={"title6"} className={styles.status}>
             {Translate({
               context: "holdings",
-              label: "message_NOT_ON_SHELF_HAS_RETURN_DATE",
+              label: "heading_NOT_ON_SHELF_HAS_RETURN_DATE",
             })}
           </Title>
           <Text type="text2">{expectedAgencyReturnDate}</Text>

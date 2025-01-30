@@ -1556,6 +1556,10 @@
         "da": "Biblioteket har ikke materialet \\n Men du kan bestille materialet til afhentning på biblioteket",
         "en": "Library does not have the material, But you can still order for pickup at this library"
       },
+      "heading_NOT_ON_SHELF_HAS_RETURN_DATE": {
+        "da": "Ikke på hylden",
+        "en": "Not on shelf"
+      },
       "message_OWNED_OWN_CATALOGUE": {
         "da": "Materialet kan bestilles direkte hos biblioteket",
         "en": "Item available at pickupAgency, item may be ordered through the library's catalogue"
