@@ -30,8 +30,8 @@ describe("Localizations", () => {
 
     const branches = [
       { name: "Ripper Bib", holdings: "2 på hylden" },
-      { name: "Rapper Bib", holdings: "Forventes hjemme d. 20. feb. 2025" },
-      { name: "Rupper Bib", holdings: "Ikke på hylden" },
+      { name: "Rapper Bib", holdings: "Ikke på hylden" },
+      { name: "Rupper Bib", holdings: "Afdelingen har ikke materialet" },
       { name: "Bubber Bib", holdings: "På hylden, men udlånes ikke" },
       {
         name: "Bobber Bib",
