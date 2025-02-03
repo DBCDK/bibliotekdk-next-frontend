@@ -63,7 +63,7 @@ export default function BranchLocalizations({ context, modal }) {
     branchesUnknownStatus,
     branchesByAvailability,
     ownedByAgency,
-    expectedAgencyReturnDate,
+    agencyMessage,
   } = useHoldingsForAgency({
     agencyId,
     pids,
@@ -83,7 +83,7 @@ export default function BranchLocalizations({ context, modal }) {
       })}
       ownedByAgency={ownedByAgency}
     >
-      {expectedAgencyReturnDate && (
+      {agencyMessage && (
         <LocalizationsBase.Information
           className={styles.expectedAgencyReturnDate}
         >
@@ -93,7 +93,7 @@ export default function BranchLocalizations({ context, modal }) {
               label: "heading_NOT_ON_SHELF_HAS_RETURN_DATE",
             })}
           </Title>
-          <Text type="text2">{expectedAgencyReturnDate}</Text>
+          <Text type="text2">{agencyMessage}</Text>
         </LocalizationsBase.Information>
       )}
       <LocalizationsBase.Information>
