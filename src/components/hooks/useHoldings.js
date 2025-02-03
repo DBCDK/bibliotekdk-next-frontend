@@ -75,11 +75,16 @@ function getBranchHoldingsMessage(branch) {
   const isLoanRestricted =
     branch?.holdings?.items?.length > 0 &&
     branch?.holdings?.items?.every?.((item) => item.loanRestriction === "G");
-  const numItems =
-    [
-      HoldingStatusEnum.ON_SHELF,
-      HoldingStatusEnum.ON_SHELF_NOT_FOR_LOAN,
-    ].includes(branch?.holdings?.status) && branch?.holdings?.items?.length;
+
+  const numItemsOnShelf = branch?.holdings?.items?.filter?.(
+    (item) => item.status === "ONSHELF"
+  )?.length;
+
+  const numItemsNotForLoan = branch?.holdings?.items?.filter?.(
+    (item) => item.status === "NOTFORLOAN"
+  )?.length;
+
+  const numItems = numItemsOnShelf || numItemsNotForLoan;
 
   let holdingsMessage = Translate({
     context: "holdings",

@@ -315,6 +315,7 @@ export function holdingsForAgency({ agencyId, pids }) {
             expectedBranchReturnDate
             ownedByAgency
             items {
+              status
               department
               location
               subLocation

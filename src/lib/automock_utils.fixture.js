@@ -853,7 +853,10 @@ const BRANCH_5 = {
   },
   holdings: {
     status: "ON_SHELF",
-    items: [{ loanRestriction: null }, { loanRestriction: null }],
+    items: [
+      { status: "ONSHELF", loanRestriction: null },
+      { status: "ONSHELF", loanRestriction: null },
+    ],
   },
   pickupAllowed: true,
   digitalCopyAccess: true,
@@ -875,7 +878,7 @@ const BRANCH_5_1 = {
     status: "NOT_ON_SHELF",
     expectedAgencyReturnDate: "2025-02-20",
     expectedBranchReturnDate: "2025-02-20",
-    items: [{ loanRestriction: null }],
+    items: [{ status: "ONLOAN", loanRestriction: null }],
   },
   pickupAllowed: true,
   digitalCopyAccess: true,
