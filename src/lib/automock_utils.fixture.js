@@ -935,7 +935,7 @@ const BRANCH_5_4 = {
     status: "ON_SHELF",
     expectedAgencyReturnDate: null,
     expectedBranchReturnDate: null,
-    items: [{ loanRestriction: "G" }],
+    items: [{ status: "ONSHELF", loanRestriction: "G" }],
   },
   orderPolicy: {
     orderPossible: true,
