@@ -76,13 +76,15 @@ function getBranchHoldingsMessage(branch) {
     branch?.holdings?.items?.length > 0 &&
     branch?.holdings?.items?.every?.((item) => item.loanRestriction === "G");
 
-  const numItemsOnShelf = branch?.holdings?.items?.filter?.(
-    (item) => item.status === "ONSHELF"
-  )?.length;
+  const numItemsOnShelf =
+    branch?.holdings?.status === HoldingStatusEnum.ON_SHELF &&
+    branch?.holdings?.items?.filter?.((item) => item.status === "ONSHELF")
+      ?.length;
 
-  const numItemsNotForLoan = branch?.holdings?.items?.filter?.(
-    (item) => item.status === "NOTFORLOAN"
-  )?.length;
+  const numItemsNotForLoan =
+    branch?.holdings?.status === HoldingStatusEnum.ON_SHELF_NOT_FOR_LOAN &&
+    branch?.holdings?.items?.filter?.((item) => item.status === "NOTFORLOAN")
+      ?.length;
 
   const numItems = numItemsOnShelf || numItemsNotForLoan;
 
