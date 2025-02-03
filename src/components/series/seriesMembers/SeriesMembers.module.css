@@ -12,3 +12,13 @@
   margin: auto;
   margin-top: var(--pt5);
 }
+
+.loadMoreContainer {
+  display: flex;
+  justify-content: center;
+}
+@media (min-width: 992px) {
+  .loadMoreContainer {
+    width: 77%;
+  }
+}

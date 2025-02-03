@@ -108,21 +108,23 @@ export default function SeriesMembers({ series, seriesIsLoading }) {
         ))}
 
         {hasMore && (
-          <Button
-            className={styles.loadMore}
-            type="secondary"
-            size="medium"
-            tabIndex="0"
-            skeleton={seriesIsLoading}
-            onClick={loadMore}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                loadMore();
-              }
-            }}
-          >
-            {Translate({ context: "search", label: "more" })}
-          </Button>
+          <div className={styles.loadMoreContainer}>
+            <Button
+              className={styles.loadMore}
+              type="secondary"
+              size="medium"
+              tabIndex="0"
+              skeleton={seriesIsLoading}
+              onClick={loadMore}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  loadMore();
+                }
+              }}
+            >
+              {Translate({ context: "search", label: "more" })}
+            </Button>
+          </div>
         )}
       </article>
     </Section>
