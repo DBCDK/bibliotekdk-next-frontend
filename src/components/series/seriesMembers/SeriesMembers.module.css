@@ -6,3 +6,9 @@
 .series_members_results > * {
   margin-bottom: -1px;
 }
+
+.loadMore {
+  max-width: 300px;
+  margin: auto;
+  margin-top: var(--pt5);
+}

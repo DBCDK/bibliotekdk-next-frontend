@@ -2,10 +2,15 @@ import Section from "@/components/base/section";
 import Translate from "@/components/base/translate";
 import MaterialCard from "@/components/base/materialcard/MaterialCard";
 import { templateForBigWorkCard } from "@/components/base/materialcard/templates/templates";
+import * as workFragments from "@/lib/api/work.fragments";
+import { useData } from "@/lib/api/api";
+import Button from "@/components/base/button";
 
 import styles from "./SeriesMembers.module.css";
 
 import { getUniqueCreatorsDisplay } from "@/components/series/utils";
+import { useState } from "react";
+const ITEMS_PER_PAGE = 50;
 
 // List for removing specific materialTypes if relevant
 //  Empty for now
@@ -25,10 +30,41 @@ export function getMemberWorkIds(firstSeriesMembers) {
     ?.map((member) => member?.work?.workId);
 }
 
-export default function SeriesMembers({ series, seriesIsLoading }) {
-  // skeleton dummy elements
-  const dummy = { members: [...new Array(10).fill({})] };
+const MembersPage = ({ pageNumber, seriesId, allCreators }) => {
+  const offset = pageNumber * ITEMS_PER_PAGE;
+  const dummy = { series: { members: [...new Array(10).fill({})] } };
 
+  const { data, isLoading } = useData(
+    seriesId &&
+      workFragments.membersBySeriesId({
+        seriesId: seriesId,
+        membersOffset: offset,
+        membersLimit: ITEMS_PER_PAGE,
+      })
+  );
+
+  const seriesData = isLoading ? dummy : data;
+
+  return seriesData?.series?.members?.map((member) => {
+    const work = member?.work;
+    return (
+      <MaterialCard
+        key={work?.workId}
+        propAndChildrenTemplate={templateForBigWorkCard}
+        propAndChildrenInput={{
+          member: member,
+          includeCreators: allCreators.length > 1,
+          isLoading: isLoading,
+        }}
+        isLoading={isLoading}
+      />
+    );
+  });
+};
+
+export default function SeriesMembers({ series, seriesIsLoading }) {
+  const [visiblePages, setVisiblePages] = useState(1);
+  const hitcount = series?.hitcount || 0;
   const firstSeriesMembers = series?.members;
   const firstSeriesFirstWork = firstSeriesMembers?.[0]?.work;
   const firstWorkType = firstSeriesFirstWork?.workTypes?.[0]?.toLowerCase();
@@ -37,10 +73,16 @@ export default function SeriesMembers({ series, seriesIsLoading }) {
     label: `label-${firstWorkType}`,
   });
 
+  // true if there are more pages to load
+  const hasMore = visiblePages * ITEMS_PER_PAGE < hitcount;
+
   const { creators: allCreators } = getUniqueCreatorsDisplay(series);
-
-  const data = seriesIsLoading ? dummy : series;
-
+  const loadMore = () => {
+    setVisiblePages((prev) => prev + 1);
+  };
+console.log("seriesIsLoading", seriesIsLoading);
+console.log("series", series);  
+console.log("visiblePages", visiblePages);
   return (
     <Section
       title={`${Translate({
@@ -53,21 +95,32 @@ export default function SeriesMembers({ series, seriesIsLoading }) {
       isLoading={seriesIsLoading}
     >
       <article className={styles.series_members_results}>
-        {data?.members?.map((member) => {
-          const work = member?.work;
-          return (
-            <MaterialCard
-              key={work?.workId}
-              propAndChildrenTemplate={templateForBigWorkCard}
-              propAndChildrenInput={{
-                member: member,
-                includeCreators: allCreators.length > 1,
-                isLoading: seriesIsLoading,
-              }}
-              isLoading={seriesIsLoading}
-            />
-          );
-        })}
+        {[...Array(visiblePages)].map((_, index) => (
+          <MembersPage
+            key={index}
+            pageNumber={index}
+            seriesId={series?.seriesId}
+            allCreators={allCreators}
+          />
+        ))}
+
+        {hasMore && (
+          <Button
+            className={styles.loadMore}
+            type="secondary"
+            size="medium"
+            tabIndex="0"
+            skeleton={seriesIsLoading}
+            onClick={loadMore}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                loadMore();
+              }
+            }}
+          >
+            {Translate({ context: "search", label: "more" })}
+          </Button>
+        )}
       </article>
     </Section>
   );
