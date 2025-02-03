@@ -330,7 +330,7 @@ export function series({ workId }) {
  *
  * @returns {Object} a query object
  */
-export function seriesById({ seriesId, membersLimit, membersOffset }) {
+export function seriesById({ seriesId }) {
   //todo add seriesLimit and offset
   if (!seriesId) {
     return null;
@@ -378,11 +378,6 @@ export function seriesById({ seriesId, membersLimit, membersOffset }) {
 }
 
 export function membersBySeriesId({ seriesId, membersLimit, membersOffset }) {
-  console.log("\n\n\nmembersBySeriesId", {
-    seriesId,
-    membersLimit,
-    membersOffset,
-  });
   if (!seriesId) {
     return null;
   }

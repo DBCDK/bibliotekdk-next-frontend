@@ -30,6 +30,9 @@ export function getMemberWorkIds(firstSeriesMembers) {
     ?.map((member) => member?.work?.workId);
 }
 
+/**
+ * Component for displaying a subset of series members.(one page of members)
+ */
 const MembersPage = ({ pageNumber, seriesId, allCreators }) => {
   const offset = pageNumber * ITEMS_PER_PAGE;
   const dummy = { series: { members: [...new Array(10).fill({})] } };
@@ -62,6 +65,9 @@ const MembersPage = ({ pageNumber, seriesId, allCreators }) => {
   });
 };
 
+/**
+ * Component for displaying a paginated list of series members.
+ */
 export default function SeriesMembers({ series, seriesIsLoading }) {
   const [visiblePages, setVisiblePages] = useState(1);
   const hitcount = series?.hitcount || 0;
@@ -80,9 +86,6 @@ export default function SeriesMembers({ series, seriesIsLoading }) {
   const loadMore = () => {
     setVisiblePages((prev) => prev + 1);
   };
-console.log("seriesIsLoading", seriesIsLoading);
-console.log("series", series);  
-console.log("visiblePages", visiblePages);
   return (
     <Section
       title={`${Translate({
