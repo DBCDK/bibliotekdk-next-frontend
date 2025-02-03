@@ -320,6 +320,10 @@ export function holdingsForAgency({ agencyId, pids }) {
               subLocation
               loanRestriction
             }
+            unlistedBranchItems {
+              branchName
+              status
+            }
             lookupUrl
           }
           branchPhone

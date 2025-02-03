@@ -19,11 +19,11 @@ function getAvailabilityScore(holdings) {
     return 1;
   }
   if (holdings?.status === HoldingStatusEnum.ON_SHELF_NOT_FOR_LOAN) {
-    return 2;
+    return 3;
   }
   if (holdings?.status === HoldingStatusEnum.NOT_ON_SHELF) {
     if (holdings?.expectedBranchReturnDate || holdings?.items?.length > 0) {
-      return 3;
+      return 2;
     }
     return 4;
   }
@@ -166,6 +166,7 @@ export function useHoldingsForAgency({ agencyId, pids }) {
     );
   }, [branches]);
 
+  let agencyMessage;
   const expectedAgencyReturnDate =
     branchesByAvailability?.[0]?.holdings?.expectedAgencyReturnDate &&
     branchesByAvailability?.[0]?.holdings?.expectedAgencyReturnDate !==
@@ -181,9 +182,28 @@ export function useHoldingsForAgency({ agencyId, pids }) {
       renderAsHtml: true,
     });
 
+  agencyMessage = expectedAgencyReturnDate;
+
+  const unlistedWithHoldings =
+    branchesByAvailability?.[0]?.holdings?.unlistedBranchItems?.filter?.(
+      (item) => item.status === "ONSHELF"
+    );
+  if (
+    branchesByAvailability?.[0]?.holdings?.status !==
+      HoldingStatusEnum.ON_SHELF &&
+    !expectedAgencyReturnDate &&
+    unlistedWithHoldings?.length > 0
+  ) {
+    agencyMessage = Translate({
+      context: "holdings",
+      label: "message_unlistedBranchItem",
+      vars: [unlistedWithHoldings?.[0]?.branchName],
+      renderAsHtml: true,
+    });
+  }
+
   const ownedByAgency =
     branchesByAvailability?.[0]?.holdings?.ownedByAgency || 0;
-
   return {
     agencyHoldingsLamp,
     branches,
@@ -191,6 +211,7 @@ export function useHoldingsForAgency({ agencyId, pids }) {
     branchesUnknownStatus,
     branchesByAvailability,
     expectedAgencyReturnDate,
+    agencyMessage,
     isLoading,
     ownedByAgency,
   };

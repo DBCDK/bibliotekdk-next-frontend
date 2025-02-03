@@ -1256,6 +1256,28 @@ const BRANCH_10_1 = {
   temporarilyClosed: false,
 };
 
+const BRANCH_11 = {
+  name: "Test Agency - with holdings on unlisted branch",
+  agencyName: "Test Agency - with holdings on unlisted branch",
+  agencyId: "898860",
+  branchId: "898860",
+  branchType: BranchTypeEnum.BRANCH,
+  holdings: {
+    status: "NOT_ON_SHELF",
+    expectedAgencyReturnDate: null,
+    expectedBranchReturnDate: null,
+    items: [],
+    unlistedBranchItems: [{ branchName: "Materiale hotel", status: "ONSHELF" }],
+  },
+  orderPolicy: {
+    orderPossible: true,
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "balleripraprup.dekaa",
+  temporarilyClosed: false,
+};
+
 // A user with some agencies
 const USER_1 = {
   name: "Some Name",
@@ -1930,6 +1952,7 @@ export default function automock_utils() {
     BRANCH_9_3,
     BRANCH_10,
     BRANCH_10_1,
+    BRANCH_11,
     USER_1,
     USER_2,
     USER_3,
