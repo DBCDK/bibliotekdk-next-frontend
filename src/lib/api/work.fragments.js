@@ -331,6 +331,7 @@ export function series({ workId }) {
  * @returns {Object} a query object
  */
 export function seriesById({ seriesId }) {
+  //todo add seriesLimit and offset
   if (!seriesId) {
     return null;
   }
@@ -340,6 +341,7 @@ export function seriesById({ seriesId }) {
     query: `query seriesById($seriesId: String!) {
   series(seriesId:$seriesId){
           ...seriesFragment
+          hitcount
           members{
             work {
               ...cacheWorkFragment
@@ -371,6 +373,31 @@ export function seriesById({ seriesId }) {
     ${coverFragment}    
   `,
     variables: { seriesId },
+    slowThreshold: 3000,
+  };
+}
+
+export function membersBySeriesId({ seriesId, membersLimit, membersOffset }) {
+  if (!seriesId) {
+    return null;
+  }
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `query membersBySeriesId($seriesId: String!, $membersLimit: Int, $membersOffset: Int) {
+      series(seriesId: $seriesId) {
+        members(limit: $membersLimit, offset: $membersOffset) {
+          work {
+            ...cacheWorkFragment
+          }
+          numberInSeries
+          readThisFirst
+          readThisWhenever
+        }
+      }
+    }
+    ${cacheWorkFragment}
+  `,
+    variables: { seriesId, membersLimit, membersOffset },
     slowThreshold: 3000,
   };
 }
