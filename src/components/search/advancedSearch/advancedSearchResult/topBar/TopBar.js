@@ -136,6 +136,7 @@ function FormatWorkType({ workType }) {
     </>
   );
 }
+
 function FormatDropdowns({ dropdowns, showAndOperator }) {
   return dropdowns?.map((dropdownItem, index) => {
     const { getSelectedPresentation } = formattersAndComparitors(
@@ -292,6 +293,7 @@ export default function TopBar({ isLoading = false, searchHistoryObj }) {
             </Link>
 
             <IconButton
+              className={styles.saveSearchPaddingTop}
               onClick={isAuthenticated ? onSaveSearchClick : onSaveSearchLogin}
               icon={`${isSaved ? "heart_filled" : "heart"}`}
               keepUnderline
