@@ -21,8 +21,7 @@ export default function SeriesPage() {
     isLoading: seriesIsLoading,
     error: seriesError,
   } = useData(
-    seriesId &&
-      workFragments.seriesById({ seriesId: seriesId, seriesLimit: 200 })
+    seriesId && workFragments.seriesById({ seriesId: seriesId, seriesLimit: 0 })
   );
   const jsonld = seriesData && getJSONLD(seriesData);
   const specificSeries = seriesData?.series;

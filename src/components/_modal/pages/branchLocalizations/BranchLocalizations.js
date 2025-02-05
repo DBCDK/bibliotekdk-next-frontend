@@ -63,6 +63,7 @@ export default function BranchLocalizations({ context, modal }) {
     branchesUnknownStatus,
     branchesByAvailability,
     ownedByAgency,
+    agencyMessage,
   } = useHoldingsForAgency({
     agencyId,
     pids,
@@ -82,6 +83,19 @@ export default function BranchLocalizations({ context, modal }) {
       })}
       ownedByAgency={ownedByAgency}
     >
+      {agencyMessage && (
+        <LocalizationsBase.Information
+          className={styles.expectedAgencyReturnDate}
+        >
+          <Title type={"title6"} className={styles.status}>
+            {Translate({
+              context: "holdings",
+              label: "heading_NOT_ON_SHELF_HAS_RETURN_DATE",
+            })}
+          </Title>
+          <Text type="text2">{agencyMessage}</Text>
+        </LocalizationsBase.Information>
+      )}
       <LocalizationsBase.Information>
         <Title type={"title6"} className={styles.status}>
           Status

@@ -6,3 +6,19 @@
 .series_members_results > * {
   margin-bottom: -1px;
 }
+
+.loadMore {
+  max-width: 300px;
+  margin: auto;
+  margin-top: var(--pt5);
+}
+
+.loadMoreContainer {
+  display: flex;
+  justify-content: center;
+}
+@media (min-width: 992px) {
+  .loadMoreContainer {
+    width: 77%;
+  }
+}

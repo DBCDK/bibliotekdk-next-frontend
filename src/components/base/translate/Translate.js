@@ -232,7 +232,7 @@ function DoTranslate({
   if (text.includes("%s")) {
     const aText = text.split("%s");
 
-    if (aText.length - 1 !== vars.length) {
+    if (aText.length - 1 !== vars?.length) {
       return `{! vars does not match %s in label: ${label}}`;
     }
 

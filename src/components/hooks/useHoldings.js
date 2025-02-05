@@ -19,11 +19,11 @@ function getAvailabilityScore(holdings) {
     return 1;
   }
   if (holdings?.status === HoldingStatusEnum.ON_SHELF_NOT_FOR_LOAN) {
-    return 2;
+    return 3;
   }
   if (holdings?.status === HoldingStatusEnum.NOT_ON_SHELF) {
-    if (holdings?.expectedBranchReturnDate) {
-      return 3;
+    if (holdings?.expectedBranchReturnDate || holdings?.items?.length > 0) {
+      return 2;
     }
     return 4;
   }
@@ -54,7 +54,7 @@ function getLampSrc(holdings) {
     return "status__red.svg";
   }
   if (holdings?.status === HoldingStatusEnum.NOT_ON_SHELF) {
-    if (holdings?.expectedBranchReturnDate) {
+    if (holdings?.expectedBranchReturnDate || holdings?.items?.length > 0) {
       return "status__yellow.svg";
     }
     return "status__red.svg";
@@ -75,11 +75,18 @@ function getBranchHoldingsMessage(branch) {
   const isLoanRestricted =
     branch?.holdings?.items?.length > 0 &&
     branch?.holdings?.items?.every?.((item) => item.loanRestriction === "G");
-  const numItems =
-    [
-      HoldingStatusEnum.ON_SHELF,
-      HoldingStatusEnum.ON_SHELF_NOT_FOR_LOAN,
-    ].includes(branch?.holdings?.status) && branch?.holdings?.items?.length;
+
+  const numItemsOnShelf =
+    branch?.holdings?.status === HoldingStatusEnum.ON_SHELF &&
+    branch?.holdings?.items?.filter?.((item) => item.status === "ONSHELF")
+      ?.length;
+
+  const numItemsNotForLoan =
+    branch?.holdings?.status === HoldingStatusEnum.ON_SHELF_NOT_FOR_LOAN &&
+    branch?.holdings?.items?.filter?.((item) => item.status === "NOTFORLOAN")
+      ?.length;
+
+  const numItems = numItemsOnShelf || numItemsNotForLoan;
 
   let holdingsMessage = Translate({
     context: "holdings",
@@ -90,7 +97,8 @@ function getBranchHoldingsMessage(branch) {
         : ""
     }${
       branch?.holdings?.status === HoldingStatusEnum.NOT_ON_SHELF &&
-      branch?.holdings?.expectedBranchReturnDate
+      (branch?.holdings?.expectedBranchReturnDate ||
+        branch?.holdings?.items?.length > 0)
         ? "_HAS_RETURN_DATE"
         : ""
     }`,
@@ -165,6 +173,7 @@ export function useHoldingsForAgency({ agencyId, pids }) {
     );
   }, [branches]);
 
+  let agencyMessage;
   const expectedAgencyReturnDate =
     branchesByAvailability?.[0]?.holdings?.expectedAgencyReturnDate &&
     branchesByAvailability?.[0]?.holdings?.expectedAgencyReturnDate !==
@@ -180,9 +189,28 @@ export function useHoldingsForAgency({ agencyId, pids }) {
       renderAsHtml: true,
     });
 
+  agencyMessage = expectedAgencyReturnDate;
+
+  const unlistedWithHoldings =
+    branchesByAvailability?.[0]?.holdings?.unlistedBranchItems?.filter?.(
+      (item) => item.status === "ONSHELF"
+    );
+  if (
+    branchesByAvailability?.[0]?.holdings?.status !==
+      HoldingStatusEnum.ON_SHELF &&
+    !expectedAgencyReturnDate &&
+    unlistedWithHoldings?.length > 0
+  ) {
+    agencyMessage = Translate({
+      context: "holdings",
+      label: "message_unlistedBranchItem",
+      vars: [unlistedWithHoldings?.[0]?.branchName],
+      renderAsHtml: true,
+    });
+  }
+
   const ownedByAgency =
     branchesByAvailability?.[0]?.holdings?.ownedByAgency || 0;
-
   return {
     agencyHoldingsLamp,
     branches,
@@ -190,6 +218,7 @@ export function useHoldingsForAgency({ agencyId, pids }) {
     branchesUnknownStatus,
     branchesByAvailability,
     expectedAgencyReturnDate,
+    agencyMessage,
     isLoading,
     ownedByAgency,
   };

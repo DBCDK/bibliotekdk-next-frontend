@@ -18,7 +18,7 @@ describe("Localizations", () => {
     cy.contains("Se bibliotekets åbningstider");
   });
 
-  it.only("Show holdings with different statuses", () => {
+  it("Show holdings with different statuses", () => {
     cy.visit("/iframe.html?id=localizations-base--localizations-base-flow");
     cy.contains("Localizations", { timeout: 15000 }).should("exist");
     cy.get("a", { timeout: 10000 }).first().should("exist").click();
@@ -30,8 +30,8 @@ describe("Localizations", () => {
 
     const branches = [
       { name: "Ripper Bib", holdings: "2 på hylden" },
-      { name: "Rapper Bib", holdings: "Forventes hjemme d. 20. feb. 2025" },
-      { name: "Rupper Bib", holdings: "Ikke på hylden" },
+      { name: "Rapper Bib", holdings: "Ikke på hylden" },
+      { name: "Rupper Bib", holdings: "Afdelingen har ikke materialet" },
       { name: "Bubber Bib", holdings: "På hylden, men udlånes ikke" },
       {
         name: "Bobber Bib",
@@ -45,5 +45,21 @@ describe("Localizations", () => {
         .parent() // Find parent container
         .contains(branch.holdings); // Check that holdings status is correct
     });
+  });
+
+  it("Show unlisted branch message", () => {
+    cy.visit("/iframe.html?id=localizations-base--localizations-base-flow");
+    cy.contains("Localizations", { timeout: 15000 }).should("exist");
+    cy.get("a", { timeout: 10000 }).first().should("exist").click();
+
+    cy.contains("Se hvor materialet er på hylden");
+
+    cy.get("[id=LocalizationsBase__search]").type("test");
+    cy.contains("Test Agency", { timeout: 10000 }).click();
+
+    cy.contains("Ikke på hylden");
+    cy.contains(
+      "Materialet findes på Materiale hotel, hvor der ikke er publikumsadgang, og skal derfor bestilles."
+    );
   });
 });

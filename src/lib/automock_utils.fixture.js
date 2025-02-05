@@ -853,7 +853,10 @@ const BRANCH_5 = {
   },
   holdings: {
     status: "ON_SHELF",
-    items: [{ loanRestriction: null }, { loanRestriction: null }],
+    items: [
+      { status: "ONSHELF", loanRestriction: null },
+      { status: "ONSHELF", loanRestriction: null },
+    ],
   },
   pickupAllowed: true,
   digitalCopyAccess: true,
@@ -875,7 +878,7 @@ const BRANCH_5_1 = {
     status: "NOT_ON_SHELF",
     expectedAgencyReturnDate: "2025-02-20",
     expectedBranchReturnDate: "2025-02-20",
-    items: [{ loanRestriction: null }],
+    items: [{ status: "ONLOAN", loanRestriction: null }],
   },
   pickupAllowed: true,
   digitalCopyAccess: true,
@@ -932,7 +935,7 @@ const BRANCH_5_4 = {
     status: "ON_SHELF",
     expectedAgencyReturnDate: null,
     expectedBranchReturnDate: null,
-    items: [{ loanRestriction: "G" }],
+    items: [{ status: "ONSHELF", loanRestriction: "G" }],
   },
   orderPolicy: {
     orderPossible: true,
@@ -1253,6 +1256,28 @@ const BRANCH_10_1 = {
   pickupAllowed: true,
   digitalCopyAccess: true,
   branchWebsiteUrl: "yang.dekaa",
+  temporarilyClosed: false,
+};
+
+const BRANCH_11 = {
+  name: "Test Agency - with holdings on unlisted branch",
+  agencyName: "Test Agency - with holdings on unlisted branch",
+  agencyId: "898860",
+  branchId: "898860",
+  branchType: BranchTypeEnum.BRANCH,
+  holdings: {
+    status: "NOT_ON_SHELF",
+    expectedAgencyReturnDate: null,
+    expectedBranchReturnDate: null,
+    items: [],
+    unlistedBranchItems: [{ branchName: "Materiale hotel", status: "ONSHELF" }],
+  },
+  orderPolicy: {
+    orderPossible: true,
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+  branchWebsiteUrl: "balleripraprup.dekaa",
   temporarilyClosed: false,
 };
 
@@ -1930,6 +1955,7 @@ export default function automock_utils() {
     BRANCH_9_3,
     BRANCH_10,
     BRANCH_10_1,
+    BRANCH_11,
     USER_1,
     USER_2,
     USER_3,

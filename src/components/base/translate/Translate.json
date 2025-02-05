@@ -1556,6 +1556,10 @@
         "da": "Biblioteket har ikke materialet \\n Men du kan bestille materialet til afhentning på biblioteket",
         "en": "Library does not have the material, But you can still order for pickup at this library"
       },
+      "heading_NOT_ON_SHELF_HAS_RETURN_DATE": {
+        "da": "Ikke på hylden",
+        "en": "Not on shelf"
+      },
       "message_OWNED_OWN_CATALOGUE": {
         "da": "Materialet kan bestilles direkte hos biblioteket",
         "en": "Item available at pickupAgency, item may be ordered through the library's catalogue"
@@ -1573,12 +1577,12 @@
         "en": "On the shelf, not available for loan"
       },
       "message_NOT_ON_SHELF": {
-        "da": "Ikke på hylden",
-        "en": "Not on shelf"
+        "da": "Afdelingen har ikke materialet",
+        "en": "This department does not own the material"
       },
       "message_NOT_ON_SHELF_HAS_RETURN_DATE": {
-        "da": "Forventes hjemme d. %s",
-        "en": "Expected on loan until %s"
+        "da": "Ikke på hylden",
+        "en": "Not on shelf"
       },
       "message_NOT_OWNED": {
         "da": "Har ikke materialet",
@@ -1595,6 +1599,10 @@
       "message_expectedAgencyReturnDate": {
         "da": "Materialet er i øjeblikket ikke på hylden. Vi forventer at det vil være tilbage på én af afdelingerne %s.",
         "en": "The material is currently not on the shelf at these libraries. We expect it to be back at one of the libraries <br/> <b>%s</b>."
+      },
+      "message_unlistedBranchItem": {
+        "da": "Materialet findes på <b>%s</b>, hvor der ikke er publikumsadgang, og skal derfor bestilles.",
+        "en": "The material is located at <b>%s</b>, which is not accessible to the public and must therefore be ordered."
       },
       "lamp_alt_ON_SHELF": {
         "da": "Grønt lys viser at materialet findes på hylden her",

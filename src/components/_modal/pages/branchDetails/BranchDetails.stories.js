@@ -33,6 +33,7 @@ const {
   BRANCH_9_3,
   BRANCH_10,
   BRANCH_10_1,
+  BRANCH_11,
   DEFAULT_STORY_PARAMETERS,
   ALL_WORKS,
   ALL_MANIFESTATIONS,
@@ -58,6 +59,7 @@ const branches = [
   BRANCH_9_3,
   BRANCH_10,
   BRANCH_10_1,
+  BRANCH_11,
 ];
 
 function LocalizationsComponentBuilder({
