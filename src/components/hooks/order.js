@@ -33,6 +33,7 @@ import ExternalSvg from "@/public/icons/external_small.svg";
 import animations from "@/components/base/animation/animations.module.css";
 import styles from "./order.module.css";
 import * as localizationsFragments from "@/lib/api/localizations.fragments";
+import useRights from "./user/useRights";
 
 /**
  * Retrieves periodica information for a list of pids
@@ -82,6 +83,7 @@ export function usePeriodica({ pids }) {
  */
 export function useOrderService({ pids }) {
   const { branchId, isLoading: pickupBranchIsLoading } = usePickupBranchId();
+  const { rights, isLoading: rightsIsLoading } = useRights();
   const {
     digitalCopyPids,
     physicalCopyPids,
@@ -91,10 +93,15 @@ export function useOrderService({ pids }) {
     filter: [AccessEnum.INTER_LIBRARY_LOAN, AccessEnum.DIGITAL_ARTICLE_SERVICE],
   });
 
+  // The selected branch order policy
   const policy = useOrderPolicy({
     branchId,
     pids,
   });
+
+  // We use the user.rights object to check if the users municipalityAgencyId gives access to this service
+  const hasDigitalCopyAccess = rights?.digitalArticleService;
+
   const {
     isPeriodica,
     workId,
@@ -106,7 +113,7 @@ export function useOrderService({ pids }) {
   let pidsToUse = [];
   if (
     digitalCopyPids?.length > 0 &&
-    policy?.digitalCopyAllowed &&
+    hasDigitalCopyAccess &&
     (!isPeriodica || (isPeriodica && articleIsSpecified))
   ) {
     service = "DIGITAL_ARTICLE";
@@ -119,6 +126,7 @@ export function useOrderService({ pids }) {
   const isLoading =
     pickupBranchIsLoading ||
     accessIsLoading ||
+    rightsIsLoading ||
     policy?.isLoading ||
     isLoadingPeriodica;
 
