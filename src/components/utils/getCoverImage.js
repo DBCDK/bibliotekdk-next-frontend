@@ -23,7 +23,7 @@ export function getCoverImage(manifestations = []) {
 
 */
 function sortByMaterialtype(a, b) {
-  // returns true if the manifistation has materialtype BOOK or EBOOK
+  // determine if a manifestation has a priority material type (BOOK or EBOOK)
   const hasPriority = (item) => {
     const hasPriority = item?.materialTypes?.some(
       (mat) =>
