@@ -238,9 +238,10 @@ export function Header({
                       isMobile={suggesterVisibleMobile}
                       onSelect={(suggestionValue, suggestion) => {
                         //on suggester select add quotes. If term is in history, don't add quotes
-                        const formatedValue =
-                        history?.some((t) => t.term === suggestionValue) 
-                          ? suggestionValue 
+                        const formatedValue = history?.some(
+                          (t) => t.term === suggestionValue
+                        )
+                          ? suggestionValue
                           : `"${suggestionValue}"`;
 
                         doSearch(formatedValue, suggestion);
