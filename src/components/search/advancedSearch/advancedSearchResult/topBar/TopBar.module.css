@@ -11,12 +11,17 @@
   --underline-font-hover-color: var(--mine-shaft);
 }
 
+.saveSearchPaddingTop {
+  padding-top: 3px;
+}
+
 .edit_search {
   display: flex;
   /* Link */
   --underline-bottom-color: var(--blue);
   --underline-bottom-hover-color: var(--blue);
 }
+
 .saveSearchButton {
   justify-content: end;
 

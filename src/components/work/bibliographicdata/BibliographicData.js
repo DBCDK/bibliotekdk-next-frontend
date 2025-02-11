@@ -92,7 +92,13 @@ export function BibliographicData({ manifestations, workId }) {
                   (person, index) =>
                     `${
                       index < 1
-                        ? person.roles?.[0]?.function?.singular + ":"
+                        ? personsReading.length > 1
+                          ? person.roles?.find(
+                              (rol) => rol.functionCode === "dkind"
+                            ).function?.plural + ":"
+                          : person.roles?.find(
+                              (rol) => rol.functionCode === "dkind"
+                            ).function?.singular + ":"
                         : ""
                     } ${person.display}`
                 )
