@@ -23,12 +23,16 @@ export function getCoverImage(manifestations = []) {
 
 */
 function sortByMaterialtype(a, b) {
-  const hasPriority = (item) =>
-    item?.materialTypes?.some(
+  // returns true if the manifistation has materialtype BOOK or EBOOK
+  const hasPriority = (item) => {
+    const hasPriority = item?.materialTypes?.some(
       (mat) =>
         mat.materialTypeSpecific?.code === "BOOK" ||
         mat.materialTypeSpecific?.code === "EBOOK"
     );
+    return hasPriority ? 1 : 0;
+  };
 
-  return (hasPriority(a) ? -1 : 1) - (hasPriority(b) ? -1 : 1);
+  // items with priority material types (BOOK, EBOOK) are moved to the front
+  return hasPriority(b) - hasPriority(a);
 }
