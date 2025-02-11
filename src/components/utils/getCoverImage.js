@@ -21,17 +21,18 @@ export function getCoverImage(manifestations = []) {
  * We want coverimages for BOOK or EBOOK first in list
  * @param a
 
- */
-function sortByMaterialtype(a) {
-  if (
-    !!a?.materialTypes?.find(
+*/
+function sortByMaterialtype(a, b) {
+  // determine if a manifestation has a priority material type (BOOK or EBOOK)
+  const hasPriority = (item) => {
+    const hasPriority = item?.materialTypes?.some(
       (mat) =>
         mat.materialTypeSpecific?.code === "BOOK" ||
         mat.materialTypeSpecific?.code === "EBOOK"
-    )
-  ) {
-    return -1;
-  }
+    );
+    return hasPriority ? 1 : 0;
+  };
 
-  return 0;
+  // items with priority material types (BOOK, EBOOK) are moved to the front
+  return hasPriority(b) - hasPriority(a);
 }
