@@ -27,12 +27,11 @@ import isEqual from "lodash/isEqual";
 import { getSessionStorageItem, setSessionStorageItem } from "@/lib/utils";
 import useDataCollect from "@/lib/useDataCollect";
 import { IconLink } from "../base/iconlink/IconLink";
-import { useHoldingsForAgency } from "./useHoldings";
+import { useCheckInterLibraryLoan, useHoldingsForAgency } from "./useHoldings";
 import Translate from "../base/translate/Translate";
 import ExternalSvg from "@/public/icons/external_small.svg";
 import animations from "@/components/base/animation/animations.module.css";
 import styles from "./order.module.css";
-import * as localizationsFragments from "@/lib/api/localizations.fragments";
 import useRights from "./user/useRights";
 
 /**
@@ -460,19 +459,15 @@ export function useOrderValidation({ pids }) {
   const { showAlreadyOrderedWarning, isLoading: isLoadingAlreadyOrdered } =
     useShowAlreadyOrdered({ pids });
 
-  // pjo 08/10/24 bug BIBDK2021-2781
-  // we need localizations since we do NOT allow order of materials with no localizations
-  const { data: localizationsData, isLoading: isLoadingLocalizations } =
-    useData(localizationsFragments.localizationsQuery({ pids: pids }));
-  const localizationsCount = localizationsData?.localizations?.count;
-
   // well .. we also need access ..
-  const accessNew = useManifestationAccess({ pids: pids, filter: false });
+  const { accessNew } = useManifestationAccess({ pids: pids, filter: false });
+
+  const { allowIll, isLoading: isLoadingCheckLocalizations } =
+    useCheckInterLibraryLoan({ pids: orderService === "ILL" ? pids : [] });
 
   const { confirmButtonClicked } = useConfirmButtonClicked();
   // Can only be validated when all data is loaded
   const isLoading =
-    isLoadingLocalizations ||
     isLoadingPickupBranchId ||
     pickupBranch?.isLoading ||
     isLoadingOrderService ||
@@ -480,12 +475,13 @@ export function useOrderValidation({ pids }) {
     isLoadingPincode ||
     isLoadingAlreadyOrdered ||
     isLoadingPeriodica ||
-    mobileLibraryIsLoading;
+    mobileLibraryIsLoading ||
+    isLoadingCheckLocalizations;
 
   const isValidPincode = pincodeIsRequired ? !!pincode : true;
   const details = {
     noLocation: {
-      isValid: accessNew ? true : localizationsCount > 0,
+      isValid: orderService !== "ILL" || accessNew ? true : allowIll,
       checkBeforeConfirm: true,
     },
     pincode: {

@@ -558,6 +558,17 @@ describe("Multi Order", () => {
       cy.get('[data-cy="submit-button"]').should("be.disabled");
     });
   });
+  it("Should show error, when no library accepts ILL for given material", () => {
+    cy.visitWithConsoleSpy(
+      "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"
+    );
+
+    cy.contains("ingen biblioteker understøtter ILL").click();
+
+    cy.contains("Kan ikke bestilles - ingen biblioteker har materialet");
+
+    cy.get('[data-cy="submit-button"]').should("be.disabled");
+  });
 
   describe("Mitid user", () => {
     it("should show an errormessage when user has no agencies", () => {
