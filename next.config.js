@@ -57,6 +57,7 @@ const headers = [
 ];
 
 module.exports = {
+  productionBrowserSourceMaps: true, // will be removed again when we have found and fixed bugs
   distDir: "dist/next",
   headers: async () => {
     return [
