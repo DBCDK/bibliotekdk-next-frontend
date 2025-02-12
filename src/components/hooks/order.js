@@ -32,7 +32,6 @@ import Translate from "../base/translate/Translate";
 import ExternalSvg from "@/public/icons/external_small.svg";
 import animations from "@/components/base/animation/animations.module.css";
 import styles from "./order.module.css";
-import * as localizationsFragments from "@/lib/api/localizations.fragments";
 import useRights from "./user/useRights";
 
 /**
