@@ -1185,7 +1185,9 @@ export const createEditionText = (manifestation) => {
   return (
     manifestation?.hostPublication?.title ||
     [
-      ...manifestation?.publisher,
+      ...(Array.isArray(manifestation?.publisher)
+        ? manifestation.publisher
+        : []), // publisher can be undefiend
       ...(!isEmpty(manifestation?.edition?.edition)
         ? [manifestation?.edition?.edition]
         : []),
