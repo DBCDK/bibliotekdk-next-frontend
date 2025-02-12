@@ -464,13 +464,14 @@ export function useOrderValidation({ pids }) {
   // we need localizations since we do NOT allow order of materials with no localizations
   const { data: localizationsData, isLoading: isLoadingLocalizations } =
     useData(localizationsFragments.localizationsQuery({ pids: pids }));
-  const localizationsCount = localizationsData?.localizations?.count;
 
+  console.log("orderService", orderService);
   // well .. we also need access ..
   const { accessNew } = useManifestationAccess({ pids: pids, filter: false });
 
   const { allowIll, isLoading: isLoadingCheckLocalizations } =
-    useCheckInterLibraryLoan({ pids });
+    useCheckInterLibraryLoan({ pids: orderService === "ILL" ? pids : [] });
+  console.log("allowIll", allowIll, accessNew);
 
   const { confirmButtonClicked } = useConfirmButtonClicked();
   // Can only be validated when all data is loaded
@@ -489,7 +490,7 @@ export function useOrderValidation({ pids }) {
   const isValidPincode = pincodeIsRequired ? !!pincode : true;
   const details = {
     noLocation: {
-      isValid: accessNew ? true : allowIll,
+      isValid: orderService !== "ILL" || accessNew ? true : allowIll,
       checkBeforeConfirm: true,
     },
     pincode: {

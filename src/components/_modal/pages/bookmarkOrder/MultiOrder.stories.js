@@ -187,6 +187,15 @@ function MultiOrderStory() {
       <Button
         onClick={() => {
           start({
+            orders: [{ pids: ["PID_ILL_ACCESS_NO_HOLDINGS"] }],
+          });
+        }}
+      >
+        Bestil single ILL - ingen biblioteker understøtter ILL for materiale
+      </Button>
+      <Button
+        onClick={() => {
+          start({
             orders: [{ pids: ["PID_ILL_ACCESS_FAILS"] }],
           });
         }}
@@ -376,6 +385,16 @@ function createStoryParameters({ user, submitOrdersDelay = 500 }) {
     ],
   });
   createMockedWork({
+    name: "ILL_ACCESS_NO_HOLDINGS",
+    access: [
+      {
+        __typename: "InterLibraryLoan",
+        loanIsPossible: true,
+        accessNew: false,
+      },
+    ],
+  });
+  createMockedWork({
     name: "ILL_CHECKORDER_FAILS",
     access: [
       {
@@ -526,13 +545,36 @@ function createStoryParameters({ user, submitOrdersDelay = 500 }) {
             },
           },
           Query: {
+            localizations: (args) => {
+              return {
+                count: 1,
+                agencies: [{ agencyId: "BRANCH_ACCEPT_ILL" }],
+              };
+            },
             branches: (args) => {
-              const branch = BRANCHES[args?.variables?.branchId] && [
-                BRANCHES[args?.variables?.branchId],
+              const branch = BRANCHES[
+                args?.variables?.branchId || args?.variables?.agencyId
+              ] && [
+                BRANCHES[
+                  args?.variables?.branchId || args?.variables?.agencyId
+                ],
               ];
               const branches = args?.variables?.q && Object.values(BRANCHES);
               return {
-                result: branch || branches || [],
+                result: (branch || branches || []).map((branch) => {
+                  return {
+                    ...branch,
+                    holdings:
+                      args?.variables?.pids?.[0] ===
+                      "PID_ILL_ACCESS_NO_HOLDINGS"
+                        ? {
+                            status: "ON_SHELF_NOT_FOR_LOAN",
+                          }
+                        : {
+                            status: "ON_SHELF",
+                          },
+                  };
+                }),
               };
             },
             user: () => {
