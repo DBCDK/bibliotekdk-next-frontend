@@ -465,7 +465,6 @@ export function useOrderValidation({ pids }) {
 
   const { allowIll, isLoading: isLoadingCheckLocalizations } =
     useCheckInterLibraryLoan({ pids: orderService === "ILL" ? pids : [] });
-  console.log("allowIll", allowIll, accessNew);
 
   const { confirmButtonClicked } = useConfirmButtonClicked();
   // Can only be validated when all data is loaded
