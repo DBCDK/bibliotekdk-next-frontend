@@ -27,7 +27,7 @@ import isEqual from "lodash/isEqual";
 import { getSessionStorageItem, setSessionStorageItem } from "@/lib/utils";
 import useDataCollect from "@/lib/useDataCollect";
 import { IconLink } from "../base/iconlink/IconLink";
-import { useHoldingsForAgency } from "./useHoldings";
+import { useCheckInterLibraryLoan, useHoldingsForAgency } from "./useHoldings";
 import Translate from "../base/translate/Translate";
 import ExternalSvg from "@/public/icons/external_small.svg";
 import animations from "@/components/base/animation/animations.module.css";
@@ -467,7 +467,10 @@ export function useOrderValidation({ pids }) {
   const localizationsCount = localizationsData?.localizations?.count;
 
   // well .. we also need access ..
-  const accessNew = useManifestationAccess({ pids: pids, filter: false });
+  const { accessNew } = useManifestationAccess({ pids: pids, filter: false });
+
+  const { allowIll, isLoading: isLoadingCheckLocalizations } =
+    useCheckInterLibraryLoan({ pids });
 
   const { confirmButtonClicked } = useConfirmButtonClicked();
   // Can only be validated when all data is loaded
@@ -480,12 +483,13 @@ export function useOrderValidation({ pids }) {
     isLoadingPincode ||
     isLoadingAlreadyOrdered ||
     isLoadingPeriodica ||
-    mobileLibraryIsLoading;
+    mobileLibraryIsLoading ||
+    isLoadingCheckLocalizations;
 
   const isValidPincode = pincodeIsRequired ? !!pincode : true;
   const details = {
     noLocation: {
-      isValid: accessNew ? true : localizationsCount > 0,
+      isValid: accessNew ? true : allowIll,
       checkBeforeConfirm: true,
     },
     pincode: {

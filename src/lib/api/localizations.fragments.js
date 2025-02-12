@@ -1,5 +1,22 @@
 import { ApiEnums } from "@/lib/api/api";
 
+export function localizationsAgencies({ pids }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query GetLocalizationAgencies($pids: [String!]!) {
+      localizations(pids: $pids) {
+        count
+        agencies {
+          agencyId
+        }
+      }
+    }`,
+    variables: { pids },
+    slowThreshold: 3000,
+  };
+}
+
 export function localizationsQuery({ pids }) {
   return {
     apiUrl: ApiEnums.FBI_API,
