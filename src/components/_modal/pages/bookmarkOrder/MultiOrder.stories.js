@@ -545,7 +545,7 @@ function createStoryParameters({ user, submitOrdersDelay = 500 }) {
             },
           },
           Query: {
-            localizations: (args) => {
+            localizations: () => {
               return {
                 count: 1,
                 agencies: [{ agencyId: "BRANCH_ACCEPT_ILL" }],

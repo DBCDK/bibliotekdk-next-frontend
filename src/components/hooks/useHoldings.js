@@ -1,12 +1,11 @@
-import { useData, useFetcher, useFetcherWithCache } from "@/lib/api/api";
+import { useData, useFetcherWithCache } from "@/lib/api/api";
 import { holdingsForAgency } from "@/lib/api/branches.fragments";
 import { dateToShortDate } from "@/utils/datetimeConverter";
 import uniq from "lodash/uniq";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Translate from "@/components/base/translate";
 
 import * as localizationsFragments from "@/lib/api/localizations.fragments";
-import { useMany } from "./useMany";
 
 export const HoldingStatusEnum = Object.freeze({
   ON_SHELF: "ON_SHELF",

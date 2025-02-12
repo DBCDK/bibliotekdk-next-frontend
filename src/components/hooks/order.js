@@ -460,12 +460,6 @@ export function useOrderValidation({ pids }) {
   const { showAlreadyOrderedWarning, isLoading: isLoadingAlreadyOrdered } =
     useShowAlreadyOrdered({ pids });
 
-  // pjo 08/10/24 bug BIBDK2021-2781
-  // we need localizations since we do NOT allow order of materials with no localizations
-  const { data: localizationsData, isLoading: isLoadingLocalizations } =
-    useData(localizationsFragments.localizationsQuery({ pids: pids }));
-
-  console.log("orderService", orderService);
   // well .. we also need access ..
   const { accessNew } = useManifestationAccess({ pids: pids, filter: false });
 
@@ -476,7 +470,6 @@ export function useOrderValidation({ pids }) {
   const { confirmButtonClicked } = useConfirmButtonClicked();
   // Can only be validated when all data is loaded
   const isLoading =
-    isLoadingLocalizations ||
     isLoadingPickupBranchId ||
     pickupBranch?.isLoading ||
     isLoadingOrderService ||
