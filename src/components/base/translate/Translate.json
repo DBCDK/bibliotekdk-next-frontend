@@ -1570,11 +1570,11 @@
       },
       "message_ON_SHELF_IS_LOAN_RESTRICTED": {
         "da": "På hylden, men udlånes kun til egne brugere",
-        "en": "On the shelf, but only for the library's own users"
+        "en": "On the shelf, but only for local users"
       },
       "message_ON_SHELF_NOT_FOR_LOAN_IS_LOAN_RESTRICTED": {
         "da": "På hylden, men udlånes kun til egne brugere",
-        "en": "On the shelf, but only for the library's own users"
+        "en": "On the shelf, but only for local users"
       },
       "message_ON_SHELF_NOT_FOR_LOAN": {
         "da": "På hylden, men udlånes ikke",
