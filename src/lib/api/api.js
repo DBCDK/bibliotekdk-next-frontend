@@ -256,6 +256,20 @@ export function useFetcher() {
   return doFetch;
 }
 
+export const useFetcherWithCache = () => {
+  const fetcherImpl = useFetcherImpl();
+  const keyGenerator = useKeyGenerator();
+
+  async function doFetch(query) {
+    // The key for this query
+    const key = keyGenerator(query);
+
+    return await globalMutate(key, fetcherImpl(key), true);
+  }
+
+  return doFetch;
+};
+
 function getStackTrace() {
   const obj = {};
   try {

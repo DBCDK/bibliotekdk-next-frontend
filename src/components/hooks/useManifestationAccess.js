@@ -175,9 +175,6 @@ export function useManifestationAccess({ pids, filter }) {
       );
     });
 
-    const accessMap = {};
-    access.forEach((entry) => (accessMap[entry.__typename] = entry));
-
     const userHasDigitalAccess = rights?.["digitalArticleService"];
 
     // we filter out digital access if user is authenticated AND has no right
@@ -186,6 +183,10 @@ export function useManifestationAccess({ pids, filter }) {
         (acc) => acc.__typename !== AccessEnum.DIGITAL_ARTICLE_SERVICE
       );
     }
+
+    const accessMap = {};
+    access.forEach((entry) => (accessMap[entry.__typename] = entry));
+
     // if there is both digital AND physical access AND user has digital access we filter out the physical
     if (
       accessMap?.[AccessEnum.DIGITAL_ARTICLE_SERVICE] &&

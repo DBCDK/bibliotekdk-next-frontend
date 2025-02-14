@@ -79,7 +79,7 @@ export default function Wrap({ selectedPids, singleManifestation = false }) {
   const { data, isLoading, isSlow } = useData(
     physicalPids?.length > 0 &&
       typeof physicalPids?.[0] !== "undefined" &&
-      localizationsFragments.localizationsQuery({ pids: physicalPids })
+      localizationsFragments.localizationsAgencies({ pids: physicalPids })
   );
 
   if (preferredOnline) {
