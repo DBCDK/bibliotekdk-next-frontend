@@ -22,7 +22,8 @@ function DefaultShowingOfAgencyBranches({ agencyId, pids }) {
     agencyId,
     pids,
   });
-  const mostAvailableStatus = branchesByAvailability?.[0]?.holdings?.status;
+  const mostAvailableBranch = branchesByAvailability?.[0];
+  const mostAvailableStatus = mostAvailableBranch?.holdings?.status;
 
   const numberOfBranchesWithAvailable = branchesKnownStatus?.filter((branch) =>
     [
@@ -47,6 +48,7 @@ function DefaultShowingOfAgencyBranches({ agencyId, pids }) {
                 : "home_at_1_branch",
             vars: [numberOfBranchesWithAvailable],
           })}
+
           {numberOfBranchesWithAvailable > 0 &&
             " " +
               Translate({
@@ -58,6 +60,17 @@ function DefaultShowingOfAgencyBranches({ agencyId, pids }) {
                     ? "branches"
                     : "branch",
               })}
+          {mostAvailableBranch?.isLoanRestricted
+            ? Translate({
+                context: "localizations",
+                label: "home_loan_restricted",
+              })
+            : mostAvailableStatus === HoldingStatusEnum.ON_SHELF_NOT_FOR_LOAN
+            ? Translate({
+                context: "localizations",
+                label: "home_not_for_loan",
+              })
+            : null}
         </Text>
       </>
     );

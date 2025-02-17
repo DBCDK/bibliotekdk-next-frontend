@@ -1234,6 +1234,14 @@
         "da": "Hjemme på én",
         "en": "Available at one"
       },
+      "home_loan_restricted": {
+        "da": ", men udlånes kun til egne brugere",
+        "en": ", but only for local users"
+      },
+      "home_not_for_loan": {
+        "da": ", men udlånes ikke",
+        "en": ", but not for loan"
+      },
       "home_at_branches": {
         "da": "Hjemme på %s",
         "en": "Available at %s"
