@@ -35,6 +35,7 @@ const CheckoutForm = () => {
     missingMail,
     alreadyOrdered,
     noLocation,
+    warnings,
   } = useMultiOrderValidation({ orders });
 
   const { hasCulrUniqueId } = useAuthentication();
@@ -111,6 +112,12 @@ const CheckoutForm = () => {
         {!isLoadingValidation && noLocation && (
           <Text type="text3" className={styles.errorLabel}>
             <Translate context="order" label="no-locations-disable" />
+          </Text>
+        )}
+
+        {!isLoadingValidation && warnings?.restrictedOwnUsers && (
+          <Text type="text3" className={styles.errorLabel}>
+            <Translate context="order" label="own-users-only" />
           </Text>
         )}
 

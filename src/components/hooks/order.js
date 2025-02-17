@@ -462,8 +462,11 @@ export function useOrderValidation({ pids }) {
   // well .. we also need access ..
   const { accessNew } = useManifestationAccess({ pids: pids, filter: false });
 
-  const { allowIll, isLoading: isLoadingCheckLocalizations } =
-    useCheckInterLibraryLoan({ pids: orderService === "ILL" ? pids : [] });
+  const {
+    allowIll,
+    allowOwnUsers,
+    isLoading: isLoadingCheckLocalizations,
+  } = useCheckInterLibraryLoan({ pids: orderService === "ILL" ? pids : [] });
 
   const { confirmButtonClicked } = useConfirmButtonClicked();
   // Can only be validated when all data is loaded
@@ -479,9 +482,18 @@ export function useOrderValidation({ pids }) {
     isLoadingCheckLocalizations;
 
   const isValidPincode = pincodeIsRequired ? !!pincode : true;
+
+  const warnings = {
+    restrictedOwnUsers: {
+      isValid:
+        orderService !== "ILL" || accessNew || allowIll ? true : !allowOwnUsers,
+      checkBeforeConfirm: true,
+    },
+  };
   const details = {
     noLocation: {
-      isValid: orderService !== "ILL" || accessNew ? true : allowIll,
+      isValid:
+        orderService !== "ILL" || accessNew ? true : allowIll || allowOwnUsers,
       checkBeforeConfirm: true,
     },
     pincode: {
@@ -542,7 +554,14 @@ export function useOrderValidation({ pids }) {
     .filter((entry) => entry.message)
     .map((entry) => entry.message);
 
-  return { isValid, confirmButtonDisabled, actionMessages, details, isLoading };
+  return {
+    isValid,
+    confirmButtonDisabled,
+    actionMessages,
+    details,
+    warnings,
+    isLoading,
+  };
 }
 
 export function useOrderPolicy({ branchId, pids }) {
@@ -587,6 +606,11 @@ export function useMultiOrderValidation({ orders }) {
 
   const validation = useMemo(() => {
     return {
+      warnings: {
+        restrictedOwnUsers: !!result?.find(
+          (entry) => !entry?.validation?.warnings?.restrictedOwnUsers?.isValid
+        ),
+      },
       noLocation: !!result?.find(
         (entry) => !entry?.validation?.details?.noLocation?.isValid
       ),

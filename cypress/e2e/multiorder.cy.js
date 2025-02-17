@@ -570,6 +570,20 @@ describe("Multi Order", () => {
     cy.get('[data-cy="submit-button"]').should("be.disabled");
   });
 
+  it("Should show warning, when no library accepts ILL, but at least one library accept orders for own users", () => {
+    cy.visitWithConsoleSpy(
+      "/iframe.html?args=&id=order-multiorder--authenticated-user&viewMode=story"
+    );
+
+    cy.contains(
+      "Bestil single ILL - ingen biblioteker understøtter ILL - udlånes til egne brugere"
+    ).click();
+
+    cy.contains("Der er begrænset adgang til dette materiale");
+
+    cy.get('[data-cy="submit-button"]').should("be.enabled");
+  });
+
   describe("Mitid user", () => {
     it("should show an errormessage when user has no agencies", () => {
       cy.visitWithConsoleSpy(
