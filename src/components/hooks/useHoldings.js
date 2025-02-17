@@ -297,6 +297,7 @@ export function useHoldingsForAgency({ agencyId, pids }) {
           },
           locations: getLocations(branch),
           sortScore: getAvailabilityScore(branch?.holdings),
+          isLoanRestricted: getIsLoanRestricted(branch?.holdings),
         };
       });
   }, [data?.branches?.result]);
