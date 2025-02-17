@@ -196,6 +196,16 @@ function MultiOrderStory() {
       <Button
         onClick={() => {
           start({
+            orders: [{ pids: ["PID_ILL_ACCESS_NO_HOLDINGS_OWN_USERS"] }],
+          });
+        }}
+      >
+        Bestil single ILL - ingen biblioteker understøtter ILL - udlånes til
+        egne brugere
+      </Button>
+      <Button
+        onClick={() => {
+          start({
             orders: [{ pids: ["PID_ILL_ACCESS_FAILS"] }],
           });
         }}
@@ -395,6 +405,16 @@ function createStoryParameters({ user, submitOrdersDelay = 500 }) {
     ],
   });
   createMockedWork({
+    name: "ILL_ACCESS_NO_HOLDINGS_OWN_USERS",
+    access: [
+      {
+        __typename: "InterLibraryLoan",
+        loanIsPossible: true,
+        accessNew: false,
+      },
+    ],
+  });
+  createMockedWork({
     name: "ILL_CHECKORDER_FAILS",
     access: [
       {
@@ -560,19 +580,32 @@ function createStoryParameters({ user, submitOrdersDelay = 500 }) {
                 ],
               ];
               const branches = args?.variables?.q && Object.values(BRANCHES);
+
+              let holdings = { status: "ON_SHELF" };
+
+              if (
+                args?.variables?.pids?.[0] ===
+                "PID_ILL_ACCESS_NO_HOLDINGS_OWN_USERS"
+              ) {
+                holdings = {
+                  status: "ON_SHELF_NOT_FOR_LOAN",
+                  items: [{ status: "ONSHELF", loanRestriction: "G" }],
+                };
+              } else if (
+                args?.variables?.pids?.[0] === "PID_ILL_ACCESS_NO_HOLDINGS"
+              ) {
+                holdings = {
+                  status: "NOT_ON_SHELF",
+                  expectedAgencyReturnDate: null,
+                  expectedBranchReturnDate: null,
+                };
+              }
+
               return {
                 result: (branch || branches || []).map((branch) => {
                   return {
                     ...branch,
-                    holdings:
-                      args?.variables?.pids?.[0] ===
-                      "PID_ILL_ACCESS_NO_HOLDINGS"
-                        ? {
-                            status: "ON_SHELF_NOT_FOR_LOAN",
-                          }
-                        : {
-                            status: "ON_SHELF",
-                          },
+                    holdings,
                   };
                 }),
               };

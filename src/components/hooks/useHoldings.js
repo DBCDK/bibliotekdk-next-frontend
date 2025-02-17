@@ -134,7 +134,7 @@ function getLocations(branch) {
 // The initial state for checking inter library loan
 const initialCheckInterLibraryState = {
   allowIll: false,
-  allowNonIll: false,
+  allowOwnUsers: false,
   numChecked: 0,
   illConfirmed: false,
   loanRestrictedAgencies: [],
@@ -179,7 +179,7 @@ export function useCheckInterLibraryLoan({ pids }) {
     // ILL support has been verified, or there are no more agencies to fetch holdings for
     const fetchInChunks = async () => {
       let allowIll = state.allowIll;
-      let allowNonIll = state.allowNonIll;
+      let allowOwnUsers = state.allowOwnUsers;
       let numChecked = state.numChecked;
       let loanRestrictedAgencies = [];
 
@@ -197,7 +197,7 @@ export function useCheckInterLibraryLoan({ pids }) {
                 holdingsForAgency({ agencyId, pids: filteredPids })
               );
               let chunkAllowIll = false;
-              let chunkAllowNonIll = false;
+              let chunkAllowOwnUsers = false;
 
               // Check if the agency allow for ILL, based on its holdings
               data?.branches?.result?.forEach((branch) => {
@@ -205,7 +205,7 @@ export function useCheckInterLibraryLoan({ pids }) {
                 const isLoanRestricted = getIsLoanRestricted(branch?.holdings);
 
                 if (isLoanRestricted) {
-                  chunkAllowNonIll = true;
+                  chunkAllowOwnUsers = true;
                 } else if (
                   branch?.holdings?.status === HoldingStatusEnum.ON_SHELF ||
                   (branch?.holdings?.status ===
@@ -217,12 +217,12 @@ export function useCheckInterLibraryLoan({ pids }) {
               });
 
               return {
-                agency: data?.branches?.[0],
+                agency: data?.branches?.result?.[0],
                 chunkAllowIll,
-                chunkAllowNonIll,
+                chunkAllowOwnUsers,
               };
             } catch {
-              return { chunkAllowIll: false, chunkAllowNonIll: false };
+              return { chunkAllowIll: false, chunkAllowOwnUsers: false };
             }
           })
         );
@@ -233,8 +233,8 @@ export function useCheckInterLibraryLoan({ pids }) {
             return;
           }
           allowIll = allowIll || res.chunkAllowIll;
-          allowNonIll = allowNonIll || res.chunkAllowNonIll;
-          if (!res.chunkAllowIll && res.chunkAllowNonIll) {
+          allowOwnUsers = allowOwnUsers || res.chunkAllowOwnUsers;
+          if (!res.chunkAllowIll && res.chunkAllowOwnUsers) {
             loanRestrictedAgencies.push(res.agency);
           }
         });
@@ -247,7 +247,7 @@ export function useCheckInterLibraryLoan({ pids }) {
       if (!aborted) {
         setState({
           allowIll,
-          allowNonIll,
+          allowOwnUsers,
           numChecked,
           loanRestrictedAgencies,
         });
@@ -261,7 +261,7 @@ export function useCheckInterLibraryLoan({ pids }) {
 
   return {
     allowIll: state.allowIll,
-    allowNonIll: state.allowNonIll,
+    allowOwnUsers: state.allowOwnUsers,
     numCheckedAgencies: state.numChecked,
     totalAgencies: data?.localizations?.agencies?.length || 0,
     loanRestrictedAgencies: state?.loanRestrictedAgencies,

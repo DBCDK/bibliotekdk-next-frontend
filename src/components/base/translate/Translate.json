@@ -3826,6 +3826,10 @@
         "da": "Kan ikke bestilles - ingen biblioteker har materialet",
         "en": "Order not possible - no library holdings"
       },
+      "own-users-only": {
+        "da": "Der er begrænset adgang til dette materiale",
+        "en": "There is limited access to this material"
+      },
       "owned_by_agency": {
         "da": "Biblioteket har indkøbt %s eksemplarer",
         "en": "Library bought %s copies"
