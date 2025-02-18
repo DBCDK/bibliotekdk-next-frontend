@@ -94,6 +94,7 @@ export function all({
           }
           manifestations {
             mostRelevant{
+            publisher
               pid
               cover {
                 detail

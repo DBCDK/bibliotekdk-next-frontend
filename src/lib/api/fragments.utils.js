@@ -217,6 +217,7 @@ export const cacheWorkFragment = `fragment cacheWorkFragment on Work {
   }
   manifestations {
     mostRelevant{
+      publisher
       pid
       cover {
         detail
