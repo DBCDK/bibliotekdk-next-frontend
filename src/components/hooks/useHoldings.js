@@ -207,6 +207,8 @@ export function useCheckInterLibraryLoan({ pids }) {
                 if (isLoanRestricted) {
                   chunkAllowOwnUsers = true;
                 } else if (
+                  branch?.holdings?.status ===
+                    HoldingStatusEnum.UNKNOWN_STATUS ||
                   branch?.holdings?.status === HoldingStatusEnum.ON_SHELF ||
                   (branch?.holdings?.status ===
                     HoldingStatusEnum.NOT_ON_SHELF &&
