@@ -205,8 +205,6 @@ export default function ProfileMenu() {
       })),
   };
 
-  console.log(menus, "MENUS");
-
   if (!menus || !menus.loansAndReservations) return <></>;
 
   return (
