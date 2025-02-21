@@ -4,7 +4,7 @@
   "description": "The frontend for bibliotek.dk",
   "main": "index.js",
   "scripts": {
-    "dev:next": "NODE_OPTIONS='--require ./logger' next -p ${PORT:-3000}",
+    "dev:next": "NODE_OPTIONS='--require ./logger' next -p ${PORT:-5000}",
     "build:next": "next build",
     "build:next:no:lint": "next build --no-lint",
     "build:next:no:lint:f": "run-s -l build:next:no:lint",

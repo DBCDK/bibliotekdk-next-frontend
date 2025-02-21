@@ -20,7 +20,6 @@ export default function useLoanerInfo() {
   const mutateFbiApi = useMutate();
 
   // Fetch user data from fbi-api
-  //const userRes = useData(isAuthenticated && userFragments.basic());
   const userRes = useData(isAuthenticated && userFragments.userBasic());
 
   const userLoans = useLoans();

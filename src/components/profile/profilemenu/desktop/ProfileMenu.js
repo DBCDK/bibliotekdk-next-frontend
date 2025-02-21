@@ -193,8 +193,6 @@ const initialLoansAndReservations = {
 export default function ProfileMenu() {
   const { loanerInfo } = useLoanerInfo();
 
-  console.log(loanerInfo, "LOANERINFO");
-
   const menus = {
     ...initialLoansAndReservations,
     loansAndReservations: initialLoansAndReservations.loansAndReservations

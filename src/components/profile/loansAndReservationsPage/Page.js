@@ -103,7 +103,6 @@ const LoansAndReservations = () => {
 
   const isLoading = loansIsLoading || debtsIsLoading || ordersIsLoading;
 
-  // @TODO - fix this one - debts etc are another structure
   const { debt, agencies, loans } = arangeLoanerInfo(loanerInfo);
 
   // handle orders for themselves
@@ -153,7 +152,6 @@ const LoansAndReservations = () => {
           {Translate({ context: "profile", label: "your-libraries" })}
         </Link>
       </Text>
-      {isLoading && <div>FISK</div>}
       {debt && debt?.debt?.length !== 0 && (
         <section className={styles.section}>
           <div className={styles.titleRow}>
