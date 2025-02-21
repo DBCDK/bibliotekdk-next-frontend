@@ -300,7 +300,7 @@ const lectorReviewFragment = `fragment lectorReviewFragment on Manifestation {
        manifestations {
          traceId
          cover {
-           detail
+           detail: detail_207
          }
         access {
           __typename
@@ -375,7 +375,7 @@ const reviewOfFragment = `fragment reviewOfFragment on Manifestation {
          workId
        }
        cover {
-         detail
+         detail: detail_207
          origin
        }
        edition {
@@ -391,7 +391,7 @@ const reviewOfFragment = `fragment reviewOfFragment on Manifestation {
 
 const manifestationCoverFragment = `fragment manifestationCoverFragment on Manifestation {
   cover {
-    detail
+    detail: detail_207
     thumbnail
     origin
   }

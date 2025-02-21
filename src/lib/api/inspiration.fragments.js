@@ -68,7 +68,7 @@ export function inspiration({ filters = [], limit = 10 } = {}) {
                     ...materialTypesFragment
                   }
                   cover {
-                    detail
+                    detail: detail_207
                     origin
                   }
                 }

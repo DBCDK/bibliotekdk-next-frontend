@@ -150,7 +150,7 @@ export const universeFragment = `fragment universeFragment on Universe {
 }`;
 export const coverFragment = `fragment coverFragment on Manifestation {
   cover {
-    detail
+    detail: detail_207
     thumbnail
     origin
   }
@@ -195,7 +195,7 @@ export const workSliderFragment = `fragment workSliderFragment on Work {
         }
       }
       cover {
-        detail
+        detail: detail_207
         origin
       }
     }
@@ -220,7 +220,7 @@ export const cacheWorkFragment = `fragment cacheWorkFragment on Work {
       publisher
       pid
       cover {
-        detail
+        detail: detail_207
         origin
       }
       materialTypes {
