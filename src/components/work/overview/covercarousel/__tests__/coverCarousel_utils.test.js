@@ -38,7 +38,7 @@ describe("getTextDescription", () => {
         edition: "9. udgave",
         publicationYear: { display: "2009" },
       },
-      cover: { origin: "moreinfo" },
+      cover: { origin: "fbiinfo" },
     });
     const expected = "Bog, 9. udgave, 2009";
     expect(actual).toEqual(expected);
@@ -60,7 +60,7 @@ describe("getTextDescription", () => {
         edition: "9. udgave",
         publicationYear: { display: "2009" },
       },
-      cover: { origin: "moreinfo" },
+      cover: { origin: "fbiinfo" },
     });
     const expected = "9. udgave, 2009";
     expect(actual).toEqual(expected);
@@ -68,7 +68,7 @@ describe("getTextDescription", () => {
   it(`no materialtype, no edition, pubYear (expect: "2009")`, () => {
     const actual = getTextDescription([], {
       edition: { edition: null, publicationYear: { display: "2009" } },
-      cover: { origin: "moreinfo" },
+      cover: { origin: "fbiinfo" },
     });
     const expected = "2009";
     expect(actual).toEqual(expected);
@@ -76,7 +76,7 @@ describe("getTextDescription", () => {
   it(`no materialtype, no edition, no pubYear (expect: "")`, () => {
     const actual = getTextDescription([], {
       edition: null,
-      cover: { origin: "moreinfo" },
+      cover: { origin: "fbiinfo" },
     });
     const expected = "";
     expect(actual).toEqual(expected);
@@ -85,7 +85,7 @@ describe("getTextDescription", () => {
   it(`materialtype, no edition, no pubYear (expect: "Bog")`, () => {
     const actual = getTextDescription(["Bog"], {
       edition: null,
-      cover: { origin: "moreinfo" },
+      cover: { origin: "fbiinfo" },
     });
     const expected = "Bog";
     expect(actual).toEqual(expected);
@@ -101,7 +101,7 @@ const manifestations = [
         materialTypeGeneral: { display: "bøger", code: "BOOKS" },
       },
     ],
-    cover: { origin: "moreinfo" },
+    cover: { origin: "fbiinfo" },
   },
   {
     pid: 2,
@@ -111,7 +111,7 @@ const manifestations = [
         materialTypeGeneral: { display: "bøger", code: "BOOKS" },
       },
     ],
-    cover: { origin: "moreinfo" },
+    cover: { origin: "fbiinfo" },
   },
   {
     pid: 3,
@@ -152,7 +152,7 @@ describe("getManifestationsWithCorrectCover", () => {
               materialTypeGeneral: { display: "bøger", code: "BOOKS" },
             },
           ],
-          cover: { origin: "moreinfo" },
+          cover: { origin: "fbiinfo" },
         },
         {
           pid: 2,
@@ -162,7 +162,7 @@ describe("getManifestationsWithCorrectCover", () => {
               materialTypeGeneral: { display: "bøger", code: "BOOKS" },
             },
           ],
-          cover: { origin: "moreinfo" },
+          cover: { origin: "fbiinfo" },
         },
       ],
       materialType: [
@@ -192,7 +192,7 @@ describe("getManifestationsWithCorrectCover", () => {
               materialTypeGeneral: { display: "bøger", code: "BOOKS" },
             },
           ],
-          cover: { origin: "moreinfo" },
+          cover: { origin: "fbiinfo" },
         },
       ],
       materialType: [

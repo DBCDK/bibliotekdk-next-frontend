@@ -9,7 +9,7 @@ export default function ThumbnailParade({ series, isLoading }) {
 
   const thumbnails = series?.members
     ?.map((member) => getCoverImage(member?.work?.manifestations?.mostRelevant))
-    ?.filter((cover) => cover?.origin === "moreinfo")
+    ?.filter((cover) => cover?.origin === "fbiinfo")
     ?.map((cover) => cover?.thumbnail)
     .slice(0, 5);
 

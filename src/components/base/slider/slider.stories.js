@@ -20,7 +20,7 @@ const works = [
       mostRelevant: [
         {
           cover: {
-            origin: "moreinfo",
+            origin: "fbiinfo",
             detail:
               "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=25007417&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=f989094a854e9cc93f9a",
           },
@@ -42,7 +42,7 @@ const works = [
       mostRelevant: [
         {
           cover: {
-            origin: "moreinfo",
+            origin: "fbiinfo",
             detail:
               "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=22359169&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=74709a0239f1341d3263",
           },
@@ -66,7 +66,7 @@ const works = [
       mostRelevant: [
         {
           cover: {
-            origin: "moreinfo",
+            origin: "fbiinfo",
             detail:
               "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=26940273&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=5b5151942b69ab39d1cf",
           },
@@ -90,7 +90,7 @@ const works = [
       mostRelevant: [
         {
           cover: {
-            origin: "moreinfo",
+            origin: "fbiinfo",
             detail:
               "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=24465845&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=907185d317b0fdca65a1",
           },
@@ -114,7 +114,7 @@ const works = [
       mostRelevant: [
         {
           cover: {
-            origin: "moreinfo",
+            origin: "fbiinfo",
             detail:
               "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=27717861&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=d5f48b42fd7228a6d3a4",
           },
@@ -140,7 +140,7 @@ const works = [
       mostRelevant: [
         {
           cover: {
-            origin: "moreinfo",
+            origin: "fbiinfo",
             detail:
               "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=28756674&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=4d36c639cc28e6f7da2c",
           },
@@ -166,7 +166,7 @@ const works = [
       mostRelevant: [
         {
           cover: {
-            origin: "moreinfo",
+            origin: "fbiinfo",
             detail:
               "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=52088690&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=1c54ebf3c73fb3d55dd1",
           },
@@ -188,7 +188,7 @@ const works = [
       mostRelevant: [
         {
           cover: {
-            origin: "moreinfo",
+            origin: "fbiinfo",
             detail:
               "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=26887585&attachment_type=forside_stor&bibliotek=870970&source_id=150074&key=960fee64ca411d446958",
           },
@@ -211,7 +211,7 @@ const works = [
       mostRelevant: [
         {
           cover: {
-            origin: "moreinfo",
+            origin: "fbiinfo",
             detail:
               "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=23945134&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=3ece3c4a79566833de77",
           },
@@ -234,7 +234,7 @@ const works = [
       mostRelevant: [
         {
           cover: {
-            origin: "moreinfo",
+            origin: "fbiinfo",
             detail:
               "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=26455162&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=b3441d536acd944b1f38",
           },

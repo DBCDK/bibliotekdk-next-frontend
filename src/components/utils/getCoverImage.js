@@ -5,7 +5,7 @@ export function getCoverImage(manifestations = []) {
   const manifestationWithCover =
     manifestations
       ?.sort(sortByMaterialtype)
-      ?.find((manifestation) => manifestation?.cover?.origin === "moreinfo") ||
+      ?.find((manifestation) => manifestation?.cover?.origin === "fbiinfo") ||
     manifestations?.find((manifestation) => manifestation?.cover?.detail);
 
   return manifestationWithCover

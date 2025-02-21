@@ -16,7 +16,7 @@ function getManifestations(pids) {
     { pid: "default_cover__0", cover: { origin: "default" } },
     {
       pid: "moreinfo_cover__0",
-      cover: { origin: "moreinfo" },
+      cover: { origin: "fbiinfo" },
       relations: [{ hej: 123 }],
       ownerWork: { hej: 123 },
     },
@@ -126,7 +126,7 @@ function getWork(workIds) {
       manifestations: {
         mostRelevant: [
           {
-            cover: { detail: "moreinfo.dk", origin: "moreinfo" },
+            cover: { detail: "moreinfo.dk", origin: "fbiinfo" },
             hostPublication: { issue: "2000-01-20" },
           },
         ],
@@ -165,7 +165,7 @@ function getWork(workIds) {
         [RelationTypeEnum.CONTINUEDIN.key]: [
           {
             pid: "continued_in__0",
-            cover: { detail: "moreinfo.dk", origin: "moreinfo" },
+            cover: { detail: "moreinfo.dk", origin: "fbiinfo" },
             materialTypes: [
               {
                 materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
@@ -179,7 +179,7 @@ function getWork(workIds) {
           },
           {
             pid: "continued_in__1",
-            cover: { detail: "moreinfo.dk", origin: "moreinfo" },
+            cover: { detail: "moreinfo.dk", origin: "fbiinfo" },
             materialTypes: [
               {
                 materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
@@ -208,7 +208,7 @@ function getWork(workIds) {
           },
           {
             pid: "has_adaptation__1",
-            cover: { detail: "moreinfo.dk", origin: "moreinfo" },
+            cover: { detail: "moreinfo.dk", origin: "fbiinfo" },
             materialTypes: [
               {
                 materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
@@ -223,7 +223,7 @@ function getWork(workIds) {
         [RelationTypeEnum.ISADAPTATIONOF.key]: [
           {
             pid: "is_adaptation_of__0",
-            cover: { detail: "moreinfo.dk", origin: "moreinfo" },
+            cover: { detail: "moreinfo.dk", origin: "fbiinfo" },
             materialTypes: [
               {
                 materialTypeSpecific: { display: "artikel", code: "ARTICLE" },
@@ -302,7 +302,7 @@ function getFlatRelations() {
       hostPublication: { issue: "2000-01-11" },
     },
     {
-      cover: { detail: "moreinfo.dk", origin: "moreinfo" },
+      cover: { detail: "moreinfo.dk", origin: "fbiinfo" },
       materialTypesArray: [
         {
           specificDisplay: "artikel",
@@ -332,7 +332,7 @@ function getFlatRelations() {
       manifestations: {
         mostRelevant: [
           {
-            cover: { detail: "moreinfo.dk", origin: "moreinfo" },
+            cover: { detail: "moreinfo.dk", origin: "fbiinfo" },
             hostPublication: { issue: "2000-01-20" },
           },
         ],
@@ -340,7 +340,7 @@ function getFlatRelations() {
     },
     {
       pid: "continued_in__0",
-      cover: { detail: "moreinfo.dk", origin: "moreinfo" },
+      cover: { detail: "moreinfo.dk", origin: "fbiinfo" },
       generation: 1,
       materialTypes: [
         {
@@ -362,7 +362,7 @@ function getFlatRelations() {
     },
     {
       pid: "continued_in__1",
-      cover: { detail: "moreinfo.dk", origin: "moreinfo" },
+      cover: { detail: "moreinfo.dk", origin: "fbiinfo" },
       generation: 1,
       materialTypes: [
         {
@@ -405,7 +405,7 @@ function getFlatRelations() {
     },
     {
       pid: "has_adaptation__1",
-      cover: { detail: "moreinfo.dk", origin: "moreinfo" },
+      cover: { detail: "moreinfo.dk", origin: "fbiinfo" },
       generation: 1,
       materialTypes: [
         {
@@ -426,7 +426,7 @@ function getFlatRelations() {
     },
     {
       pid: "is_adaptation_of__0",
-      cover: { detail: "moreinfo.dk", origin: "moreinfo" },
+      cover: { detail: "moreinfo.dk", origin: "fbiinfo" },
       generation: 1,
       materialTypes: [
         {
@@ -535,7 +535,7 @@ describe("getParentRelationInput", () => {
         mostRelevant: [
           {
             hostPublication: { issue: "2000-01-10" },
-            cover: { origin: "moreinfo", detail: "moreinfo.dk" },
+            cover: { origin: "fbiinfo", detail: "moreinfo.dk" },
           },
         ],
       },

@@ -42,7 +42,7 @@ WrappedRecommendationsSlider.story = {
           mostRelevant: () => [...new Array(1).fill({})],
         },
         Cover: {
-          origin: () => "moreinfo",
+          origin: () => "fbiinfo",
           detail: ({ path }) => `https://picsum.photos/seed/${path}/200/300`,
         },
       },
