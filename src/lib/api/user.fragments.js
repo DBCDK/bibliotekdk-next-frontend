@@ -27,6 +27,187 @@ export function userRights() {
   };
 }
 
+export function userDebts() {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 1000, // for debugging
+    query: `
+    query Example_UserDebts {
+        user {
+          name
+          debt {
+            status
+            statusCode
+            result {
+              amount
+              agencyId
+              creator
+              currency
+              date
+              title
+            }
+          }
+        }
+      }
+    `,
+  };
+}
+
+export function userOrders() {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 1000, // for debugging
+    query: `
+    query Example_UserOrders {
+      user {
+        name
+        orders {
+          status
+          statusCode
+          result {
+            orderId
+              status
+              pickUpBranch {
+                agencyName
+                agencyId
+              }
+              pickUpExpiryDate
+              holdQueuePosition
+              creator
+              orderType
+              orderDate
+              title
+              manifestation {
+                pid
+                ...manifestationTitleFragment
+                ownerWork {
+                  workId
+                }
+                creators {
+                  ...creatorsFragment
+                }
+                materialTypes {
+                  ...materialTypesFragment
+                }
+                cover {
+                  thumbnail
+                }
+                recordCreationDate
+              }
+            }
+          }
+        }
+      }
+      ${creatorsFragment}
+      ${manifestationTitleFragment}
+      ${materialTypesFragment}`,
+    variables: {},
+    slowThreshold: 3000,
+    revalidate: true,
+  };
+}
+
+export function userLoans() {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 1000, // for debugging
+    query: `
+    query UserLoans {
+        user {
+          loans {
+            status
+            statusCode
+            result {            
+              agencyId
+              loanId
+              dueDate
+              title
+              creator
+            
+              manifestation {
+                pid
+                ...manifestationTitleFragment
+                ownerWork {
+                  workId
+                }
+                creators {
+                  ...creatorsFragment
+                }
+                materialTypes {
+                  ...materialTypesFragment
+                }
+                cover {
+                  thumbnail
+                }
+                recordCreationDate
+              }
+            }
+          }
+        }
+       }
+      ${creatorsFragment}
+      ${manifestationTitleFragment}
+      ${materialTypesFragment}`,
+    variables: {},
+    slowThreshold: 3000,
+    revalidate: true,
+  };
+}
+
+export function userBasic() {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 1000, // for debugging
+    query: `
+    query BasicUser {
+      user {
+        name
+        mail
+        address
+        postalCode
+        isCPRValidated
+        loggedInAgencyId
+        loggedInBranchId
+        municipalityAgencyId
+        omittedCulrData {
+          hasOmittedCulrUniqueId
+          hasOmittedCulrMunicipality
+          hasOmittedCulrMunicipalityAgencyId
+          hasOmittedCulrAccounts
+        }
+        rights {
+          infomedia 
+          digitalArticleService 
+          demandDrivenAcquisition
+        }
+        agencies {
+          id
+          name
+          type
+          hitcount
+          user {
+            mail
+          }
+          result {
+            branchId
+            agencyId
+            agencyName
+            agencyType
+            name
+            branchWebsiteUrl
+            pickupAllowed
+            borrowerCheck
+            culrDataSync
+          }
+        }
+      }
+     }`,
+    variables: {},
+    slowThreshold: 3000,
+    revalidate: true,
+  };
+}
+
 /**
  * @file Contains GraphQL queries all taking a workId as variable
  *

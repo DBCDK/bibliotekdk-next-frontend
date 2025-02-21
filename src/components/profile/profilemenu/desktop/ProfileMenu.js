@@ -193,17 +193,21 @@ const initialLoansAndReservations = {
 export default function ProfileMenu() {
   const { loanerInfo } = useLoanerInfo();
 
+  console.log(loanerInfo, "LOANERINFO");
+
   const menus = {
     ...initialLoansAndReservations,
     loansAndReservations: initialLoansAndReservations.loansAndReservations
       .filter(
-        (item) => item.title !== "debt" || loanerInfo[item.title]?.length > 0
+        (item) => item.title !== "debt" || loanerInfo?.debt?.debt?.length > 0
       )
       .map((item) => ({
         ...item,
-        itemLength: loanerInfo[item.title]?.length || 0,
+        itemLength: loanerInfo[item.title][item.title]?.length || 0,
       })),
   };
+
+  console.log(menus, "MENUS");
 
   if (!menus || !menus.loansAndReservations) return <></>;
 

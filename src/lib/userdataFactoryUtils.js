@@ -1,9 +1,9 @@
 /**
  * Sorts orders based on their status
  * @param orders
- * @returns orders
+ * @returns []
  */
-const sortOrders = (orders) => {
+export const sortOrders = (orders) => {
   let sortedOrders = orders;
   if (!sortedOrders) {
     return orders;
@@ -33,9 +33,9 @@ const sortOrders = (orders) => {
 /**
  * Sorts loans based on their due dates
  * @param loans
- * @returns loans
+ * @returns []
  */
-const sortLoans = (loans) => {
+export const sortLoans = (loans) => {
   let sortedLoans = loans;
   if (!sortedLoans) {
     return loans;
@@ -55,10 +55,10 @@ const sortLoans = (loans) => {
  * @param loanerInfo
  * @returns loanerInfo sorted
  */
-export const arangeLoanerInfo = ({ loans, orders, ...data }) => {
+export const arangeLoanerInfo = ({ ...data }) => {
+  // "TODO fisk
+
   return {
-    loans: sortLoans(loans),
-    orders: sortOrders(orders),
     ...data,
   };
 };
