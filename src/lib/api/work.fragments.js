@@ -655,7 +655,7 @@ export function fbiOverviewDetail({ workId }) {
                   display
                   minimumAge
                 }
-                PEGI {
+                pegi {
                   display
                   minimumAge                
                 }
