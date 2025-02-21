@@ -24,7 +24,12 @@ function FormattedQuery({ children }) {
   const { inputFields, dropdownSearchIndices, workType } = fieldSearchFromUrl;
 
   if (!!cqlFromUrl) {
-    return <Text type="text2">{cqlFromUrl}</Text>;
+    return (
+      <div className={styles.formatedQueryContainer}>
+        <Text type="text2">{cqlFromUrl}</Text>
+        {children}
+      </div>
+    );
   }
 
   const fieldsearch = {
