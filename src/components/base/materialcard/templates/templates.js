@@ -319,7 +319,7 @@ export function templateForUniverseSeriesBase({ material, classNameAddition }) {
   );
 
   const coversWithMoreinfo = coversBeforeSlice?.filter(
-    (cover) => cover?.origin === "moreinfo"
+    (cover) => cover?.origin === "fbiinfo"
   );
 
   const covers = (

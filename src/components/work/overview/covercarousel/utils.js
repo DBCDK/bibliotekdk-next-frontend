@@ -40,7 +40,7 @@ export function getManifestationsWithCorrectCover(manifestations) {
 
 export function getTextDescription(materialType, manifestation) {
   // we only show a description if cover origins from moreinfo webservice
-  if (manifestation?.cover?.origin !== "moreinfo") {
+  if (manifestation?.cover?.origin !== "fbiinfo") {
     return "";
   }
   return [

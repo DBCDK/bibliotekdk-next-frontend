@@ -62,7 +62,7 @@ export function doComplexSearchAll({ cql, offset, limit, sort, facets }) {
                 workTypes
               }
               cover {
-                detail
+                detail: detail_207
                 origin
               }
               materialTypes {
@@ -178,7 +178,7 @@ export function ComplexArticleSlider({ cql, offset, limit, sort }) {
               ...materialTypesFragment
             }
             cover {
-              detail
+              detail: detail_207
               origin
             }
           }}
