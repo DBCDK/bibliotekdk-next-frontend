@@ -222,11 +222,11 @@ function validateGrammar(tokens) {
  * Ensures that all field tokens correspond to known and allowed fields as
  * defined in ALLOWED_FIELDS_SET.
  */
-function validateFields(tokens) {
+function validateFields(tokens, allowedFieldsSet) {
   tokens.forEach((token) => {
     if (
       token.type === TOKEN_TYPES.FIELD &&
-      !ALLOWED_FIELDS_SET.has(token.normalized?.toLowerCase())
+      !allowedFieldsSet.has(token.normalized?.toLowerCase())
     ) {
       token.error = ERRORS.UNKNOWN_FIELD;
     }
@@ -282,10 +282,11 @@ function validateRangeLiterals(tokens) {
 /**
  * Validate all tokens
  */
-export function validateTokens(tokens) {
+export function validateTokens(tokens, allowedFieldsSet = ALLOWED_FIELDS_SET) {
+  console.log("allowedFieldsSet", allowedFieldsSet);
   validateUnclosed(tokens);
   validateGrammar(tokens);
-  validateFields(tokens);
+  validateFields(tokens, allowedFieldsSet);
   validateRangeLiterals(tokens);
 
   return tokens;
@@ -328,7 +329,10 @@ export function highlight(tokens) {
  * Converts an array of token objects into a string with HTML markup for
  * displaying error message.
  */
-export function createErrorMessage(validatedTokens) {
+export function createErrorMessage(
+  validatedTokens,
+  allowedFieldsSet = ALLOWED_FIELDS_SET
+) {
   const errors = validatedTokens.filter((token) => token.error);
   let message;
   // Only begin and end token found
@@ -344,7 +348,7 @@ export function createErrorMessage(validatedTokens) {
     });
 
     if (errors[0]?.error === ERRORS.UNKNOWN_FIELD) {
-      const fields = didYouMean(errors[0].normalized, ALLOWED_FIELDS_SET);
+      const fields = didYouMean(errors[0].normalized, allowedFieldsSet);
       if (fields.length > 0) {
         message +=
           "<br/>" +

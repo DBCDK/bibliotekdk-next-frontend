@@ -257,3 +257,16 @@ export function complexFacetsOnly({ cql, facets }) {
     slowThreshold: 3000,
   };
 }
+
+export function complexSearchIndexes() {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `query ComplexSearchIndexes {
+			complexSearchIndexes {
+				index	
+			}
+		}`,
+    variables: {},
+    slowThreshold: 3000,
+  };
+}
