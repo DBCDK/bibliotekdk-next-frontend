@@ -12,17 +12,29 @@ import {
   highlight,
 } from "@/components/utils/cql/parser";
 import Editor from "react-simple-code-editor";
+import { useData } from "@/lib/api/api";
+import { complexSearchIndexes } from "@/lib/api/complexSearch.fragments";
 
 export function CqlTextArea({ doAdvancedSearch }) {
+  const { data } = useData(complexSearchIndexes());
+
   const { parsedCQL, setParsedCQL } = useAdvancedSearchContext();
   const [focused, setFocused] = useState(false);
 
+  const indexes = useMemo(() => {
+    if (!data?.complexSearchIndexes?.length) {
+      return;
+    }
+
+    return new Set(data?.complexSearchIndexes?.map((entry) => entry?.index));
+  }, [data]);
+
   const message = useMemo(() => {
     const tokens = tokenize(parsedCQL);
-    const validatedTokens = validateTokens(tokens);
-    const { message } = createErrorMessage(validatedTokens);
+    const validatedTokens = validateTokens(tokens, indexes);
+    const { message } = createErrorMessage(validatedTokens, indexes);
     return message;
-  }, [parsedCQL]);
+  }, [parsedCQL, indexes]);
 
   return (
     <div>
@@ -50,7 +62,7 @@ export function CqlTextArea({ doAdvancedSearch }) {
           onValueChange={(code) => setParsedCQL(code)}
           highlight={(code) => {
             const tokens = tokenize(code);
-            const validatedTokens = validateTokens(tokens);
+            const validatedTokens = validateTokens(tokens, indexes);
             return highlight(validatedTokens);
           }}
           padding={16}

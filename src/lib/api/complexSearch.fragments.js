@@ -62,7 +62,7 @@ export function doComplexSearchAll({ cql, offset, limit, sort, facets }) {
                 workTypes
               }
               cover {
-                detail
+                detail: detail_207
                 origin
               }
               materialTypes {
@@ -178,7 +178,7 @@ export function ComplexArticleSlider({ cql, offset, limit, sort }) {
               ...materialTypesFragment
             }
             cover {
-              detail
+              detail: detail_207
               origin
             }
           }}
@@ -254,6 +254,19 @@ export function complexFacetsOnly({ cql, facets }) {
 			}
 		}`,
     variables: { cql, facets },
+    slowThreshold: 3000,
+  };
+}
+
+export function complexSearchIndexes() {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `query ComplexSearchIndexes {
+			complexSearchIndexes {
+				index	
+			}
+		}`,
+    variables: {},
     slowThreshold: 3000,
   };
 }

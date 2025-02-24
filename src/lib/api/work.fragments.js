@@ -631,7 +631,7 @@ export function fbiOverviewDetail({ workId }) {
               ...manifestationDetailsForAccessFactory
               ...manifestationAccess
               cover {
-                detail
+                detail: detail_207
                 origin
               }
               sheetMusicCategories {
@@ -655,7 +655,7 @@ export function fbiOverviewDetail({ workId }) {
                   display
                   minimumAge
                 }
-                PEGI {
+                pegi {
                   display
                   minimumAge                
                 }
@@ -762,7 +762,7 @@ export function workJsonLd({ workId }) {
                 all {
                   ...manifestationDetailsForAccessFactory
                   cover {
-                    detail
+                    detail: detail_207
                     origin
                   }
                   identifiers {
@@ -832,7 +832,7 @@ export function idsToWorks({ ids }) {
             }
             workTypes
             cover {
-              detail
+              detail: detail_207
               origin
               thumbnail
             }
@@ -865,7 +865,7 @@ export function idsToWorks({ ids }) {
           }
           bestRepresentation {
             cover {
-              detail
+              detail: detail_207
               thumbnail
             }
             materialTypes {
@@ -1009,7 +1009,7 @@ export function overviewWork({ workId }) {
               ...materialTypesFragment
             }
             cover {
-              detail
+              detail: detail_207
               origin
             }
             hostPublication {
@@ -1201,7 +1201,7 @@ const workRelationsWorkTypeFactory = `fragment workRelationsWorkTypeFactory on W
   manifestations {
     mostRelevant {
       cover {
-        detail
+        detail: detail_207
         origin
       }
       hostPublication {

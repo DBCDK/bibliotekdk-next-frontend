@@ -34,7 +34,7 @@ export function deleteBookmarks({ bookmarkIds }) {
     mutation deleteBookmarks($bookmarkIds: [Int!]!) {
       users {
         deleteBookmarks(bookmarkIds: $bookmarkIds) {
-          IdsDeletedCount
+          idsDeletedCount
         }
       }
     }

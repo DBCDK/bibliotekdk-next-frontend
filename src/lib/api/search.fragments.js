@@ -97,7 +97,7 @@ export function all({
             publisher
               pid
               cover {
-                detail
+                detail: detail_207
                 origin
               }
               materialTypes {

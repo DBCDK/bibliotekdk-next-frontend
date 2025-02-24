@@ -4,7 +4,7 @@ test("details from moreinfo and default", () => {
   const manifestationsMoreinfo = [
     {
       cover: {
-        origin: "moreinfo",
+        origin: "fbiinfo",
         detail: "moreinfourl",
       },
     },
