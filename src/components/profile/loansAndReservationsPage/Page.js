@@ -21,6 +21,7 @@ import {
   formatMaterialTypesToPresentation,
   manifestationMaterialTypeFactory,
 } from "@/lib/manifestationFactoryUtils";
+import translate from "@/components/base/translate";
 
 const SKELETON_ROW_AMOUNT = 2;
 
@@ -101,8 +102,6 @@ const LoansAndReservations = () => {
   const debtsIsLoading = basicUserIsLoading || loanerInfo?.debts?.isLoading;
   const ordersIsLoading = basicUserIsLoading || loanerInfo?.orders?.isLoading;
 
-  const isLoading = loansIsLoading || debtsIsLoading || ordersIsLoading;
-
   const { debt, agencies, loans } = arangeLoanerInfo(loanerInfo);
 
   // handle orders for themselves
@@ -152,6 +151,7 @@ const LoansAndReservations = () => {
           {Translate({ context: "profile", label: "your-libraries" })}
         </Link>
       </Text>
+      {/*DEBTS*/}
       {debt && debt?.debt?.length !== 0 && (
         <section className={styles.section}>
           <div className={styles.titleRow}>
@@ -214,6 +214,7 @@ const LoansAndReservations = () => {
               ))}
         </section>
       )}
+      {/*LOANS*/}
       <section className={styles.section}>
         <div className={styles.titleRow}>
           {isMobileSize ? (
@@ -273,6 +274,11 @@ const LoansAndReservations = () => {
               dataCy={`loan-${i}`}
             />
           ))
+        ) : //     ERROR HANDLING: userstatus times out if user has many loans or orders
+        !loans?.status ? (
+          <div className={styles.errorMessage}>
+            {translate({ context: "profile", label: loans?.statusCode })}
+          </div>
         ) : (
           <Text className={styles.emptyMessage} type="text2">
             {Translate({
@@ -282,6 +288,7 @@ const LoansAndReservations = () => {
           </Text>
         )}
       </section>
+      {/*ORDERS*/}
       <section className={styles.section}>
         <div className={styles.titleRow}>
           {isMobileSize ? (
@@ -331,6 +338,14 @@ const LoansAndReservations = () => {
               library=""
             />
           ))
+        ) : //ERROR HANDLING userstatus times out if user has many loans or orders
+        !loanerInfo?.orders?.status ? (
+          <div className={styles.errorMessage}>
+            {translate({
+              context: "profile",
+              label: loanerInfo?.orders?.statusCode,
+            })}
+          </div>
         ) : orderList && orderList.length !== 0 ? (
           orderList.map((order, i) => {
             // Log the agencyId before passing it to the MaterialRow component

@@ -18,6 +18,13 @@ p.subHeading {
   padding-left: var(--pt1);
 }
 
+.errorMessage {
+  margin: var(--pt5) 0 var(--pt7);
+  padding: var(--pt1);
+  background-color: var(--error);
+  color: var(--white);
+}
+
 @media screen and (max-width: 992px) {
   .titleRow {
     padding-left: var(--pt2);

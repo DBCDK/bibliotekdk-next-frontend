@@ -369,7 +369,6 @@
         "da": "Du har ikke nogen gemte søgninger endnu.",
         "en": "You do not have any saved searches yet."
       },
-
       "emptyListMessage4": {
         "da": "Når du bruger “Avanceret søgning” kan du trykke på knappen  “Gem søgning” i toppen af søgeresultatet, og søgningen vil lægge sig her på listen.\n\nDu kan også gemme en søgning fra listen “Seneste søgninger” ved at klikke på hjerte-ikonet ud for den ønskede søgning.",
         "en": "You do not have any saved searches yet."
@@ -507,7 +506,6 @@
         "en": "Level"
       }
     },
-
     "logo": {
       "default_logo_text": {
         "da": "Bibliotek dk",
@@ -898,7 +896,6 @@
         "en": "Year"
       }
     },
-
     "articles": {
       "deliveredBy": {
         "da": "Artiklen er leveret af %s",
@@ -2128,7 +2125,6 @@
         "da": "Der skete en fejl - kontakt venligst DBC kundeservice.dbc.dk",
         "en": "An error occured - please contact Customer service - kunderservice.dbc.dk"
       },
-
       "efilter-title": {
         "da": "Bemærk",
         "en": "Please notice"
@@ -2743,7 +2739,6 @@
         "da": "Pladeselskab",
         "en": "Publisher"
       },
-
       "advanced-dropdown-sheetmusic_term.creator": {
         "da": "Komponist",
         "en": "Conductor"
@@ -2784,7 +2779,6 @@
         "da": "Søg på komponist og andre hovedophav",
         "en": "Search by conductor and other creators"
       },
-
       "advanced-placeholder-music_term.publisher": {
         "da": "Søg på pladeselskab, udgiver mv.",
         "en": "Search by publisher"
@@ -2905,7 +2899,6 @@
         "da": "Søg på DK5-nummer",
         "en": "Creator"
       },
-
       "advanced-placeholder-term.isbn": {
         "da": "Søg på ISBN",
         "en": "ISBN"
@@ -5260,6 +5253,14 @@
       }
     },
     "profile": {
+      "UNKNOWN_ERROR": {
+        "da": "Der skete en fejl. Prøv at genindlæse siden. Hvis problemet fortsætter kan du kontakte dbc kundeservice.",
+        "en": "An error occured. Try to refresh the page. If problem persists you can contact dbc customer support."
+      },
+      "UND_ERR_HEADERS_TIMEOUT": {
+        "da": "Forespørgslen timede ud, det kan ske hvis du har mange lån eller reserveringer. Prøv at genindlæse siden. Hvis problemet fortsætter kan du kontakte dbc kundeservice.",
+        "en": "The request timed out, it can happen if you have many loans or reservations. Try to refresh the page. If problem persists you can contact dbc customer support."
+      },
       "administer": {
         "da": "Administrer",
         "en": "Administer"
@@ -5332,8 +5333,14 @@
         "da": "Andet",
         "en": "Other"
       },
-      "showMore": { "da": "Vis mere", "en": "Show more" },
-      "showLess": { "da": "Vis mindre", "en": "Show less" },
+      "showMore": {
+        "da": "Vis mere",
+        "en": "Show more"
+      },
+      "showLess": {
+        "da": "Vis mindre",
+        "en": "Show less"
+      },
       "remove": {
         "da": "Fjern",
         "en": "Remove"

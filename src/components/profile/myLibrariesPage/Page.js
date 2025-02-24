@@ -2,12 +2,12 @@ import Translate from "@/components/base/translate/Translate";
 import Layout from "../profileLayout";
 import LibrariesTable from "../librariesTable/LibrariesTable";
 import styles from "./myLibrariesPage.module.css";
-import useUser from "@/components/hooks/useUser";
 import Text from "@/components/base/text";
 import IconButton from "@/components/base/iconButton/IconButton";
 
 import { useState } from "react";
 import AddLibraryButton from "./addLibraryButton/AddLibraryButton";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 /**
  * Shows the users libraries and makes it possible to add a new library
@@ -17,11 +17,11 @@ import AddLibraryButton from "./addLibraryButton/AddLibraryButton";
  */
 
 export default function MyLibrariesPage() {
-  const { authUser } = useUser();
+  const authUser = useLoanerInfo();
   const [showMore, setShowMore] = useState(false);
 
   //An array of user agencies.
-  const agencies = authUser?.agencies
+  const agencies = authUser?.loanerInfo?.agencies
     ?.map((agency) => ({
       agencyId: agency?.result[0]?.agencyId,
       agencyName: agency?.result[0]?.agencyName,

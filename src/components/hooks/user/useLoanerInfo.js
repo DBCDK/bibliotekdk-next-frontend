@@ -5,7 +5,6 @@ import * as userFragments from "@/lib/api/user.fragments";
 import { useMemo } from "react";
 import merge from "lodash/merge";
 import useLoans from "@/components/hooks/user/useLoans";
-import { userDebts, userOrders } from "@/lib/api/user.fragments";
 import useDebts from "@/components/hooks/user/useDebts";
 import useOrders from "@/components/hooks/user/useOrders";
 
