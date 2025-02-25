@@ -12,7 +12,6 @@ import IconButton from "@/components/base/iconButton";
 import ErrorRow from "../../errorRow/ErrorRow";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { useModal } from "@/components/_modal";
-import useUser from "@/components/hooks/useUser";
 import Translate from "@/components/base/translate";
 import { dateToDayInMonth } from "@/utils/datetimeConverter";
 import { getWorkUrlForProfile, handleOrderMutationUpdates } from "../../utils";
