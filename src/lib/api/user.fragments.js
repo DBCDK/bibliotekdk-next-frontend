@@ -263,74 +263,10 @@ export function basic() {
             culrDataSync
           }
         }
-        debt {
-            title
-            amount
-            creator
-            date
-            currency
-            agencyId
-        }
-        loans {
-          agencyId
-          loanId
-          dueDate
-          title
-          creator
-          manifestation {
-            pid
-            ...manifestationTitleFragment
-            ownerWork {
-              workId
-            }
-            creators {
-              ...creatorsFragment
-            }
-            materialTypes {
-              ...materialTypesFragment
-            }
-            cover {
-              thumbnail
-            }
-            recordCreationDate
-          }
-        }
-        orders {
-          orderId
-          status
-          pickUpBranch {
-            agencyName
-            agencyId
-          }
-          pickUpExpiryDate
-          holdQueuePosition
-          creator
-          orderType
-          orderDate
-          title
-          manifestation {
-            pid
-            ...manifestationTitleFragment
-            ownerWork {
-              workId
-            }
-            creators {
-              ...creatorsFragment
-            }
-            materialTypes {
-              ...materialTypesFragment
-            }
-            cover {
-              thumbnail
-            }
-            recordCreationDate
-          }
-        }   
+          
       }
     }
-    ${creatorsFragment}
-    ${manifestationTitleFragment}
-    ${materialTypesFragment}`,
+  `,
     variables: {},
     slowThreshold: 3000,
     revalidate: true,
