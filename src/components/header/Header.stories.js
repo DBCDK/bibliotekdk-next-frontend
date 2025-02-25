@@ -20,10 +20,14 @@ const graphql = {
   debug: true,
   resolvers: {
     SuggestResponse: {
-      result: ({ variables }) =>
-        variables?.q === "hest" || "suggest.".startsWith(variables?.q)
+      result: ({ variables }) => {
+        if (variables?.q === "rowling") {
+          return [{ type: "CREATOR", term: "Anna Rowling" }];
+        }
+        return variables?.q === "hest" || "suggest.".startsWith(variables?.q)
           ? [...new Array(3).fill({ type: "CREATOR" })]
-          : [],
+          : [];
+      },
     },
   },
 };
