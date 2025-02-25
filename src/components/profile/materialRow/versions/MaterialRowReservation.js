@@ -23,6 +23,7 @@ import {
   formatMaterialTypesToUrl,
 } from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
+import useOrders from "@/components/hooks/user/useOrders";
 
 const OrderColumn = ({ pickUpExpiryDate, holdQueuePosition }) => {
   const breakpoint = useBreakpoint();
@@ -108,14 +109,14 @@ const MaterialRowReservation = (props) => {
   const modal = useModal();
   const orderMutation = useMutate();
   const [hasDeleteError, setHasDeleteError] = useState(false);
-  const { updateUserStatusInfo } = useUser();
+  const { updateOrders } = useOrders();
 
   useEffect(() => {
     handleOrderMutationUpdates(
       orderMutation,
       setHasDeleteError,
       () => setRemovedOrderId(materialId),
-      updateUserStatusInfo
+      updateOrders
     );
   }, [orderMutation.error, orderMutation.data]);
 

@@ -128,13 +128,13 @@ export function isPid(pid) {
  * @param {Object} orderMutation
  * @param {function} setHasDeleteError
  * @param {function} setRemovedOrderId
- * @param {function} updateUserStatusInfo
+ * @param {function} updateOrders
  */
 export async function handleOrderMutationUpdates(
   orderMutation,
   setHasDeleteError,
   setRemovedOrderId,
-  updateUserStatusInfo
+  updateOrders
 ) {
   const { error, data, isLoading } = orderMutation;
 
@@ -149,7 +149,7 @@ export async function handleOrderMutationUpdates(
   //order was successfully deleted
   if (data.deleteOrder?.deleted) {
     setRemovedOrderId();
-    await updateUserStatusInfo("ORDER");
+    await updateOrders();
     return;
   }
   //error deleting order inside fbi-api

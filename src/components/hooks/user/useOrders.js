@@ -7,10 +7,18 @@ import { useData } from "@/lib/api/api";
 import { userOrders } from "@/lib/api/user.fragments";
 
 export default function useOrders() {
-  const { data, isLoading } = useData(userOrders());
+  const { data, isLoading, mutate: mutateOrder } = useData(userOrders());
   const status = data?.user?.orders?.status;
   const statusCode = data?.user?.orders?.statusCode;
   const orders = data?.user?.orders?.result || [];
 
-  return { orders, status, statusCode, isLoading };
+  return {
+    updateOrders: async () => {
+      await mutateOrder();
+    },
+    orders,
+    status,
+    statusCode,
+    isLoading,
+  };
 }
