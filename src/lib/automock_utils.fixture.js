@@ -1560,108 +1560,116 @@ const LOAN_1 = {
   },
 };
 
-const USER_LOANS = [
-  LOAN_1,
-  {
-    loanId: "120200589",
-    dueDate: createDateXDaysFromNow(0),
-    manifestation: {
-      pid: "870970-basis:23424916",
-      titles: {
-        main: ["Krigen med salamandrene"],
-      },
-      ownerWork: {
-        workId: "work-of:870970-basis:23424916",
-      },
-      creators: [
-        {
-          display: "Karel Čapek",
+const USER_LOANS = {
+  status: true,
+  statusCode: "OK",
+  result: [
+    LOAN_1,
+    {
+      loanId: "120200589",
+      dueDate: createDateXDaysFromNow(0),
+      manifestation: {
+        pid: "870970-basis:23424916",
+        titles: {
+          main: ["Krigen med salamandrene"],
         },
-      ],
-      materialTypes: [
-        {
-          materialTypeSpecific: { display: "bog", code: "BOOK" },
-          materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+        ownerWork: {
+          workId: "work-of:870970-basis:23424916",
         },
-      ],
-      cover: {
-        thumbnail:
-          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=46068912&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=ccebcb7dc87e39614aa1",
+        creators: [
+          {
+            display: "Karel Čapek",
+          },
+        ],
+        materialTypes: [
+          {
+            materialTypeSpecific: { display: "bog", code: "BOOK" },
+            materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+          },
+        ],
+        cover: {
+          thumbnail:
+            "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=46068912&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=ccebcb7dc87e39614aa1",
+        },
+        recordCreationDate: "20010323",
       },
-      recordCreationDate: "20010323",
     },
-  },
-  {
-    loanId: "120204379",
-    dueDate: createDateXDaysFromNow(2),
-    manifestation: {
-      pid: "3A870970-basis:3A50752224",
-      titles: {
-        main: ["Dig og mig ved daggry"],
-      },
-      ownerWork: {
-        workId: "work-of:3A870970-basis:3A50752224",
-      },
-      creators: [
-        {
-          display: "Sanne Munk Jensen",
+    {
+      loanId: "120204379",
+      dueDate: createDateXDaysFromNow(2),
+      manifestation: {
+        pid: "3A870970-basis:3A50752224",
+        titles: {
+          main: ["Dig og mig ved daggry"],
         },
-      ],
-      materialTypes: [
-        {
-          materialTypeSpecific: { display: "bog", code: "BOOK" },
-          materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+        ownerWork: {
+          workId: "work-of:3A870970-basis:3A50752224",
         },
-      ],
-      cover: {
-        thumbnail:
-          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=52102782&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=08dd127a70a7b84c5d5f",
+        creators: [
+          {
+            display: "Sanne Munk Jensen",
+          },
+        ],
+        materialTypes: [
+          {
+            materialTypeSpecific: { display: "bog", code: "BOOK" },
+            materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+          },
+        ],
+        cover: {
+          thumbnail:
+            "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=52102782&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=08dd127a70a7b84c5d5f",
+        },
+        recordCreationDate: "20150323",
       },
-      recordCreationDate: "20150323",
     },
-  },
 
-  {
-    loanId: "120200553",
-    dueDate: createDateXDaysFromNow(-2),
-    manifestation: {
-      pid: "870970-basis:51098838",
-      titles: {
-        main: ["Ildkamp"],
-      },
-      ownerWork: {
-        workId: "work-of:870970-basis:51098838",
-      },
-      creators: [
-        {
-          display: "Brandon Sanderson",
+    {
+      loanId: "120200553",
+      dueDate: createDateXDaysFromNow(-2),
+      manifestation: {
+        pid: "870970-basis:51098838",
+        titles: {
+          main: ["Ildkamp"],
         },
-      ],
-      materialTypes: [
-        {
-          materialTypeSpecific: { display: "bog", code: "BOOK" },
-          materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+        ownerWork: {
+          workId: "work-of:870970-basis:51098838",
         },
-      ],
-      cover: {
-        thumbnail:
-          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=135272809&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=355a65c276690f5dd12f",
+        creators: [
+          {
+            display: "Brandon Sanderson",
+          },
+        ],
+        materialTypes: [
+          {
+            materialTypeSpecific: { display: "bog", code: "BOOK" },
+            materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+          },
+        ],
+        cover: {
+          thumbnail:
+            "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=135272809&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=355a65c276690f5dd12f",
+        },
+        recordCreationDate: "20220508",
       },
-      recordCreationDate: "20220508",
     },
-  },
-];
+  ],
+};
 
-const USER_LOANS_2 = [
-  LOAN_1,
-  {
-    loanId: "120204379",
-    dueDate: createDateXDaysFromNow(2),
-    title: "Jeg er et fjernlaan 1",
-    creator: "Munk Jensen, Sanne",
-    manifestation: null,
-  },
-];
+const USER_LOANS_2 = {
+  status: true,
+  statusCode: "OK",
+  result: [
+    LOAN_1,
+    {
+      loanId: "120204379",
+      dueDate: createDateXDaysFromNow(2),
+      title: "Jeg er et fjernlaan 1",
+      creator: "Munk Jensen, Sanne",
+      manifestation: null,
+    },
+  ],
+};
 
 const ORDER_1 = {
   orderId: "2982910",
@@ -1698,119 +1706,131 @@ const ORDER_1 = {
   },
 };
 
-const USER_ORDERS = [
-  ORDER_1,
-  {
-    orderId: "2982912",
-    status: "UNKNOWN",
-    pickUpBranch: {
-      agencyName: "Husum Bibliotek",
-    },
-    pickUpExpiryDate: null,
-    holdQueuePosition: "3",
-    manifestation: {
-      pid: "870970-basis:23424916",
-      titles: {
-        main: ["Efter uvejret"],
+const USER_ORDERS = {
+  status: true,
+  statusCode: "OK",
+  result: [
+    ORDER_1,
+    {
+      orderId: "2982912",
+      status: "UNKNOWN",
+      pickUpBranch: {
+        agencyName: "Husum Bibliotek",
       },
-      ownerWork: {
-        workId: "work-of:870970-basis:23424916",
-      },
-      creators: [
-        {
-          display: "Lauren Brooke",
+      pickUpExpiryDate: null,
+      holdQueuePosition: "3",
+      manifestation: {
+        pid: "870970-basis:23424916",
+        titles: {
+          main: ["Efter uvejret"],
         },
-      ],
-      materialTypes: [
-        {
-          materialTypeSpecific: { display: "bog", code: "BOOK" },
-          materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+        ownerWork: {
+          workId: "work-of:870970-basis:23424916",
         },
-      ],
-      cover: {
-        thumbnail:
-          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=23424916&attachment_type=forside_lille&bibliotek=870970&source_id=870970&key=72fda7f507bed4f70854",
-      },
-      recordCreationDate: "20010323",
-    },
-  },
-  {
-    orderId: "2982913",
-    status: "UNKNOWN",
-    pickUpBranch: {
-      agencyName: "Husum Bibliotek",
-    },
-    pickUpExpiryDate: createDateXDaysFromNow(10),
-    manifestation: {
-      pid: "870970-basis:23518260",
-      titles: {
-        main: ["Inferno"],
-      },
-      ownerWork: {
-        workId: "work-of:870970-basis:23518260",
-      },
-      creators: [
-        {
-          display: "Dan Brown",
+        creators: [
+          {
+            display: "Lauren Brooke",
+          },
+        ],
+        materialTypes: [
+          {
+            materialTypeSpecific: { display: "bog", code: "BOOK" },
+            materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+          },
+        ],
+        cover: {
+          thumbnail:
+            "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=23424916&attachment_type=forside_lille&bibliotek=870970&source_id=870970&key=72fda7f507bed4f70854",
         },
-      ],
-      materialTypes: [
-        {
-          materialTypeSpecific: { display: "bog", code: "BOOK" },
-          materialTypeGeneral: { display: "bøger", code: "BOOKS" },
-        },
-      ],
-      cover: {
-        thumbnail:
-          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=53552315&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=56c69012754540b94e24",
+        recordCreationDate: "20010323",
       },
-      recordCreationDate: "20170529",
     },
-  },
-  {
-    orderId: "2982913",
-    status: "UNKNOWN",
-    pickUpBranch: {
-      agencyName: "Husum Bibliotek",
+    {
+      orderId: "2982913",
+      status: "UNKNOWN",
+      pickUpBranch: {
+        agencyName: "Husum Bibliotek",
+      },
+      pickUpExpiryDate: createDateXDaysFromNow(10),
+      manifestation: {
+        pid: "870970-basis:23518260",
+        titles: {
+          main: ["Inferno"],
+        },
+        ownerWork: {
+          workId: "work-of:870970-basis:23518260",
+        },
+        creators: [
+          {
+            display: "Dan Brown",
+          },
+        ],
+        materialTypes: [
+          {
+            materialTypeSpecific: { display: "bog", code: "BOOK" },
+            materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+          },
+        ],
+        cover: {
+          thumbnail:
+            "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=53552315&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=56c69012754540b94e24",
+        },
+        recordCreationDate: "20170529",
+      },
     },
-    pickUpExpiryDate: null,
-    title: "Ko og Kylling",
-    holdQueuePosition: "8",
-  },
-];
+    {
+      orderId: "2982913",
+      status: "UNKNOWN",
+      pickUpBranch: {
+        agencyName: "Husum Bibliotek",
+      },
+      pickUpExpiryDate: null,
+      title: "Ko og Kylling",
+      holdQueuePosition: "8",
+    },
+  ],
+};
 
-const USER_ORDERS_2 = [
-  ORDER_1,
-  {
-    orderId: "2982912",
-    status: "UNKNOWN",
-    title: "Jeg er et fjernlaan 2",
-    creator: "Carlander, Troels B.",
-    pickUpBranch: {
-      agencyName: "Husum Bibliotek",
+const USER_ORDERS_2 = {
+  status: true,
+  statusCode: "OK",
+  result: [
+    ORDER_1,
+    {
+      orderId: "2982912",
+      status: "UNKNOWN",
+      title: "Jeg er et fjernlaan 2",
+      creator: "Carlander, Troels B.",
+      pickUpBranch: {
+        agencyName: "Husum Bibliotek",
+      },
+      pickUpExpiryDate: null,
+      holdQueuePosition: "3",
+      manifestation: null,
     },
-    pickUpExpiryDate: null,
-    holdQueuePosition: "3",
-    manifestation: null,
-  },
-];
+  ],
+};
 
-const USER_DEBT = [
-  {
-    title: "Den store danske møbelguide",
-    amount: "224",
-    creator: null,
-    date: "1969-12-31T23:00:00.000Z",
-    currency: "DKK",
-  },
-  {
-    title: "Den store Gatsby",
-    amount: "50",
-    creator: null,
-    date: "1969-12-31T23:00:00.000Z",
-    currency: "DKK",
-  },
-];
+const USER_DEBT = {
+  status: true,
+  statusCode: "OK",
+  result: [
+    {
+      title: "Den store danske møbelguide",
+      amount: "224",
+      creator: null,
+      date: "1969-12-31T23:00:00.000Z",
+      currency: "DKK",
+    },
+    {
+      title: "Den store Gatsby",
+      amount: "50",
+      creator: null,
+      date: "1969-12-31T23:00:00.000Z",
+      currency: "DKK",
+    },
+  ],
+};
 
 const USER_AGENCY = {
   borrowerStatus: BORROWER_STATUS_TRUE,
@@ -1867,7 +1887,7 @@ const USER_7 = {
 const USER_9 = {
   loans: USER_LOANS_2,
   orders: USER_ORDERS_2,
-  debt: [],
+  debt: { result: [] },
   agencies: [USER_AGENCY],
   rights: { digitalArticleService: true },
 };

@@ -9,7 +9,11 @@ import {
   extractCreatorsPrioritiseCorporation,
 } from "@/lib/utils";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
-import { arangeLoanerInfo } from "@/lib/userdataFactoryUtils";
+import {
+  arangeLoanerInfo,
+  sortLoans,
+  sortOrders,
+} from "@/lib/userdataFactoryUtils";
 import Link from "@/components/base/link";
 import { useEffect, useState } from "react";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
@@ -17,6 +21,7 @@ import {
   formatMaterialTypesToPresentation,
   manifestationMaterialTypeFactory,
 } from "@/lib/manifestationFactoryUtils";
+import translate from "@/components/base/translate";
 
 const SKELETON_ROW_AMOUNT = 2;
 
@@ -91,8 +96,16 @@ const LoansAndReservations = () => {
   const breakpoint = useBreakpoint();
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
-  const { loanerInfo, isLoading } = useLoanerInfo();
-  const { debt, agencies, orders, loans } = arangeLoanerInfo(loanerInfo);
+  const { loanerInfo, isLoading: basicUserIsLoading } = useLoanerInfo();
+
+  const loansIsLoading = basicUserIsLoading || loanerInfo?.loans?.isLoading;
+  const debtsIsLoading = basicUserIsLoading || loanerInfo?.debts?.isLoading;
+  const ordersIsLoading = basicUserIsLoading || loanerInfo?.orders?.isLoading;
+
+  const { debt, agencies, loans } = arangeLoanerInfo(loanerInfo);
+
+  // handle orders for themselves
+  const orders = loanerInfo?.orders?.orders;
   const [removedOrderId, setRemovedOrderId] = useState("");
   const [orderList, setOrderList] = useState([]);
 
@@ -102,7 +115,7 @@ const LoansAndReservations = () => {
     const updatedOrderList = orderList.filter(
       (order) => order.orderId !== orderid
     );
-    setOrderList(updatedOrderList);
+    setOrderList(sortOrders(updatedOrderList));
   };
 
   useEffect(() => {
@@ -138,8 +151,8 @@ const LoansAndReservations = () => {
           {Translate({ context: "profile", label: "your-libraries" })}
         </Link>
       </Text>
-
-      {debt && debt.length !== 0 && (
+      {/*DEBTS*/}
+      {debt && debt?.debt?.length !== 0 && (
         <section className={styles.section}>
           <div className={styles.titleRow}>
             {isMobileSize ? (
@@ -155,7 +168,7 @@ const LoansAndReservations = () => {
                 )}`}
               >
                 {Translate({ context: "profile", label: "debt" })} (
-                {debt?.length})
+                {debt?.debt?.length})
               </Title>
             ) : (
               <Title
@@ -180,18 +193,28 @@ const LoansAndReservations = () => {
             column3={Translate({ context: "profile", label: "material" })}
           />
 
-          {debt.map((claim, i) => (
-            <MaterialRow
-              {...dataReducer("DEBT", claim)}
-              key={`debt-${claim.title}-#${i}`}
-              library={getAgencyString(claim.agencyId)}
-              id={`debt-${i}`}
-              dataCy={`debt-${i}`}
-            />
-          ))}
+          {debtsIsLoading
+            ? [...Array(SKELETON_ROW_AMOUNT).keys()].map((_, i) => (
+                <MaterialRow
+                  skeleton
+                  key={`loan-#${i}`}
+                  id={`loan-#${i}`}
+                  title=""
+                  library=""
+                />
+              ))
+            : debt?.debt?.map((claim, i) => (
+                <MaterialRow
+                  {...dataReducer("DEBT", claim)}
+                  key={`debt-${claim.title}-#${i}`}
+                  library={getAgencyString(claim.agencyId)}
+                  id={`debt-${i}`}
+                  dataCy={`debt-${i}`}
+                />
+              ))}
         </section>
       )}
-
+      {/*LOANS*/}
       <section className={styles.section}>
         <div className={styles.titleRow}>
           {isMobileSize ? (
@@ -207,7 +230,7 @@ const LoansAndReservations = () => {
               )}`}
             >
               {Translate({ context: "profile", label: "loans" })} (
-              {loans?.length})
+              {loans?.loans?.length})
             </Title>
           ) : (
             <Title
@@ -231,7 +254,7 @@ const LoansAndReservations = () => {
           column2={Translate({ context: "profile", label: "return-deadline" })}
           column3={Translate({ context: "profile", label: "loaner-library" })}
         />
-        {isLoading ? (
+        {loansIsLoading ? (
           [...Array(SKELETON_ROW_AMOUNT).keys()].map((_, i) => (
             <MaterialRow
               skeleton
@@ -241,8 +264,8 @@ const LoansAndReservations = () => {
               library=""
             />
           ))
-        ) : loans && loans.length !== 0 ? (
-          loans.map((loan, i) => (
+        ) : loans?.loans && loans?.loans?.length !== 0 ? (
+          sortLoans(loans.loans).map((loan, i) => (
             <MaterialRow
               {...dataReducer("LOAN", loan)}
               key={`loan-${loan.loanId}-#${i}`}
@@ -251,6 +274,11 @@ const LoansAndReservations = () => {
               dataCy={`loan-${i}`}
             />
           ))
+        ) : //     ERROR HANDLING: userstatus times out if user has many loans or orders
+        !loans?.status ? (
+          <div className={styles.errorMessage}>
+            {translate({ context: "profile", label: loans?.statusCode })}
+          </div>
         ) : (
           <Text className={styles.emptyMessage} type="text2">
             {Translate({
@@ -260,7 +288,7 @@ const LoansAndReservations = () => {
           </Text>
         )}
       </section>
-
+      {/*ORDERS*/}
       <section className={styles.section}>
         <div className={styles.titleRow}>
           {isMobileSize ? (
@@ -300,7 +328,7 @@ const LoansAndReservations = () => {
           column2={Translate({ context: "profile", label: "status" })}
           column3={Translate({ context: "profile", label: "pickup-at" })}
         />
-        {isLoading ? (
+        {ordersIsLoading ? (
           [...Array(SKELETON_ROW_AMOUNT).keys()].map((_, i) => (
             <MaterialRow
               skeleton
@@ -310,6 +338,14 @@ const LoansAndReservations = () => {
               library=""
             />
           ))
+        ) : //ERROR HANDLING userstatus times out if user has many loans or orders
+        !loanerInfo?.orders?.status ? (
+          <div className={styles.errorMessage}>
+            {translate({
+              context: "profile",
+              label: loanerInfo?.orders?.statusCode,
+            })}
+          </div>
         ) : orderList && orderList.length !== 0 ? (
           orderList.map((order, i) => {
             // Log the agencyId before passing it to the MaterialRow component

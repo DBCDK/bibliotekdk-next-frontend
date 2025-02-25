@@ -197,11 +197,11 @@ export default function ProfileMenu() {
     ...initialLoansAndReservations,
     loansAndReservations: initialLoansAndReservations.loansAndReservations
       .filter(
-        (item) => item.title !== "debt" || loanerInfo[item.title]?.length > 0
+        (item) => item.title !== "debt" || loanerInfo?.debt?.debt?.length > 0
       )
       .map((item) => ({
         ...item,
-        itemLength: loanerInfo[item.title]?.length || 0,
+        itemLength: loanerInfo[item.title][item.title]?.length || 0,
       })),
   };
 

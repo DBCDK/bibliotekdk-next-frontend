@@ -18,7 +18,8 @@ describe("Profilemenu on desktop", () => {
     cy.get('[data-cy="group-menu-loansAndReservations"]')
       .should("be.visible")
       .click();
-    cy.get('[data-cy*="menu-subcategory"]').should("have.length", 2);
+    cy.wait(5);
+    cy.get('[data-cy*="menu-subcategory"]').should("have.length", 3);
     cy.get('[data-cy="menu-subcategory-0"]')
       .should("be.visible")
       .click()

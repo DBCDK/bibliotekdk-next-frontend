@@ -4,6 +4,9 @@ import useAuthentication from "./useAuthentication";
 import * as userFragments from "@/lib/api/user.fragments";
 import { useMemo } from "react";
 import merge from "lodash/merge";
+import useLoans from "@/components/hooks/user/useLoans";
+import useDebts from "@/components/hooks/user/useDebts";
+import useOrders from "@/components/hooks/user/useOrders";
 
 /**
  * Custom hook for retrieving loaner info from FBI-API.
@@ -16,7 +19,11 @@ export default function useLoanerInfo() {
   const mutateFbiApi = useMutate();
 
   // Fetch user data from fbi-api
-  const userRes = useData(isAuthenticated && userFragments.basic());
+  const userRes = useData(isAuthenticated && userFragments.userBasic());
+
+  const userLoans = useLoans();
+  const userOrders = useOrders();
+  const userDebts = useDebts();
 
   // Fetch session data stored in fbi-api
   const sessionRes = useData(sessionFragments.session());
@@ -53,9 +60,9 @@ export default function useLoanerInfo() {
     return {
       loanerInfo: userRes && {
         agencies: user?.agencies,
-        loans: user?.loans,
-        orders: user?.orders,
-        debt: user?.debt,
+        loans: userLoans,
+        orders: userOrders,
+        debt: userDebts,
         mail: user?.mail,
         municipalityAgencyId: user?.municipalityAgencyId,
         name: user?.name,
@@ -77,5 +84,5 @@ export default function useLoanerInfo() {
         await sessionRes?.mutate();
       },
     };
-  }, [userRes, sessionRes]);
+  }, [userRes, sessionRes, userDebts, userOrders, userLoans]);
 }
