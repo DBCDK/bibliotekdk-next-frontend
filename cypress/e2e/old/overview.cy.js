@@ -8,6 +8,32 @@ describe("Overview", () => {
       cy.visit("/iframe.html?id=work-overview--overview-wrapped");
     });
 
+    //test bookmark dropdown 
+    it.only("Can click on BookmarkDropdown and select a value", () => {
+      cy.wait(500);//test will fail without this wait..
+      //open bookmarkDropdown
+      cy.get(`[data-cy=bookmark-button]`).click();
+    
+      //check that dropdown options are visible
+      cy.get("[data-cy^='bookmark-']").should("be.visible");
+
+      //verify that e-book is not selected
+      cy.get("[data-cy='bookmark-E-bog-1']")
+      .should("exist")
+      .should("have.attr", "data-selected", "false"); 
+
+      //click on e-book
+      cy.get("[data-cy='bookmark-E-bog-1']").click();
+     
+      //verify that e-book is selected
+     cy.get("[data-cy='bookmark-E-bog-1']")
+     .should("exist")
+     .should("have.attr", "data-selected", "true"); 
+    
+
+    });
+
+    
     it(`have basic functionining functionality`, () => {
       cy.contains("Overview - bog", { timeout: 15000 });
 

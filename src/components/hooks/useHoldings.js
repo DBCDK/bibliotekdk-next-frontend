@@ -17,7 +17,11 @@ export const HoldingStatusEnum = Object.freeze({
 });
 
 function getAvailabilityScore(holdings) {
+  const isLoanRestricted = getIsLoanRestricted(holdings);
   if (holdings?.status === HoldingStatusEnum.ON_SHELF) {
+    if (isLoanRestricted) {
+      return 3;
+    }
     return 1;
   }
   if (holdings?.status === HoldingStatusEnum.ON_SHELF_NOT_FOR_LOAN) {

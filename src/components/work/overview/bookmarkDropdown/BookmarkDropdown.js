@@ -192,6 +192,7 @@ export function BookMarkMaterialSelector({
               className={cx(styles.dropdownitem, {
                 [styles.active]: !!activeItem,
               })}
+              data-selected={activeItem ? "true" : "false"}
               onClick={async (e) => {
                 e.preventDefault();
                 await onSelect(material, workId);
