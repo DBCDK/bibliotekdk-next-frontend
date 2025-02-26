@@ -42,7 +42,6 @@ import { signOut } from "@dbcdk/login-nextjs/client";
 import useAuthentication from "../hooks/user/useAuthentication";
 
 import AdvancedSearchPopover from "@/components/search/advancedSearch/popover/Popover";
-import upperCase from "lodash/upperCase";
 
 // material Pages
 export const MATERIAL_PAGES = [
