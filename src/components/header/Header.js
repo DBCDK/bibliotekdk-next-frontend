@@ -162,12 +162,7 @@ export function Header({
     : "";
 
   const doSearch = (value, suggestion) => {
-    let querykey;
-    if (suggestion?.type === upperCase(SuggestTypeEnum.CREATOR)) {
-      querykey = "creator";
-    } else {
-      querykey = "all";
-    }
+    let querykey = "all";
 
     // If we are on mobile we replace
     // since we don't want to suggest modal to open if user goes back

@@ -105,6 +105,28 @@ describe("Search", () => {
       });
     });
 
+    it("Selecting a creator suggestion updates q.all and appears in the search input", () => {
+      cy.visit("/iframe.html?id=layout-header--nav-header-prefilled");
+
+      // Check URL query parameters are as expected
+      checkPrefilledQueryParameters();
+
+      cy.get("[data-cy=suggester-input]").clear().type("rowling");
+      cy.contains("Anna Rowling").click();
+
+      // Check URL query parameters are as expected
+      // Note that this sets q.all NOT q.creator, this is on purpose
+      cy.get("[data-cy=router-query]").then((el) => {
+        expect(JSON.parse(el.text())).to.include({
+          "q.all": '"Anna Rowling"',
+        });
+      });
+      cy.get('[data-cy="suggester-input"]').should(
+        "have.value",
+        '"Anna Rowling"'
+      );
+    });
+
     //@TODO fix. Succeds locally but fails in Jenkins
     it.skip(`All default input suggestions will search with q.all`, () => {
       cy.visit("/iframe.html?id=layout-header--nav-header");
