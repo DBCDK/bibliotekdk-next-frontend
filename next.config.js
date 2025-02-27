@@ -64,7 +64,7 @@ module.exports = {
   headers: async () => {
     return [
       {
-        source: "/_next/static/**/*.map", //Can be removed if productionBrowserSourceMaps is false
+        source: "/_next/static/:path*.map", //Can be removed if productionBrowserSourceMaps is false
         headers: [
           {
             key: "Content-Type",
