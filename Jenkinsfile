@@ -46,7 +46,17 @@ pipeline {
                     ansiColor("xterm") {
                         sh "docker pull docker-dbc.artifacts.dbccloud.dk/cypress:latest"
                         sh "docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} build"
-                        sh "IMAGE=${IMAGE_NAME} docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} run --rm e2e"
+                        
+                        def envVars = "IMAGE=${IMAGE_NAME}"
+
+                        // on prod we want to run tests against the prod api
+                        if (env.BRANCH_NAME == 'prod') {
+                            envVars += " NEXT_PUBLIC_FBI_API_BIBDK21_URL=https://fbi-api.dbc.dk/bibdk21/graphql"
+                            envVars += " NEXT_PUBLIC_FBI_API_URL=https://fbi-api.dbc.dk/bibdk21/graphql"
+                        }
+
+                        sh "${envVars} docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} run --rm e2e"
+                      //  sh "IMAGE=${IMAGE_NAME} docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} run --rm e2e"
                     }
                 }
             }
