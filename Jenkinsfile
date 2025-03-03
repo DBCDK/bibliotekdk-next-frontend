@@ -59,8 +59,8 @@ pipeline {
 
                             sh  '''NEXT_PUBLIC_FBI_API_BIBDK21_URL=${env.BRANCH_NAME == 'allow-map-files' ? 'https://fbi-api.dbc.dk/bibdk21/graphql' : 'https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql'} \
                                 NEXT_PUBLIC_FBI_API_URL=${env.BRANCH_NAME == 'allow-map-files' ? 'https://fbi-api.dbc.dk/bibdk21/graphql' : 'https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql'} \
-                                CLIENT_ID=${env.BRANCH_NAME == 'allow-map-files' ? CLIENT_ID_PROD : CLIENT_ID} \
-                                CLIENT_SECRET=${env.BRANCH_NAME == 'allow-map-files' ? CLIENT_SECRET_PROD : CLIENT_SECRET} \
+                                CYPRESS_CLIENT_ID=${env.BRANCH_NAME == 'allow-map-files' ? CLIENT_ID_PROD : CLIENT_ID} \
+                                CYPRESS_CLIENT_SECRET=${env.BRANCH_NAME == 'allow-map-files' ? CLIENT_SECRET_PROD : CLIENT_SECRET} \
                                 IMAGE=${IMAGE_NAME} docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} run --rm e2e'''
 
                     //todo add client and secret ids
