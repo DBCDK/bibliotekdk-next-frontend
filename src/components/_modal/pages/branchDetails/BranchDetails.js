@@ -155,6 +155,27 @@ function ContactInformation({ singleBranch }) {
   );
 }
 
+function BranchWebSiteUrl({ singleBranch }) {
+  return (
+    <div className={cx(styles.fit_content, styles.path_blue)}>
+      {singleBranch?.branchWebsiteUrl && (
+        <IconLink
+          iconPlacement="right"
+          iconSrc={ExternalSvg}
+          iconAnimation={[animations["h-elastic"], animations["f-elastic"]]}
+          textType="type2"
+          href={`${singleBranch?.branchWebsiteUrl}`}
+          target="_blank"
+        >
+          <Text type="text2" tag="span" className={styles.break_word}>
+            {Translate({ context: "localizations", label: "homepage" })}
+          </Text>
+        </IconLink>
+      )}
+    </div>
+  );
+}
+
 /**
  * {@link BranchDetails} shows the details of the Branch, including {@link MaterialCard}, {@link BranchDetailsStatus},
  * {@link OpeningHours}, {@link Address}, and {@link ContactInformation}
@@ -314,6 +335,7 @@ export default function BranchDetails({ context }) {
         <OpeningHours singleBranch={branch} />
         <Address singleBranch={branch} />
         <ContactInformation singleBranch={branch} />
+        <BranchWebSiteUrl singleBranch={branch} />
       </LocalizationsBase.Information>
     </LocalizationsBase>
   );
