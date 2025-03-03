@@ -347,7 +347,7 @@ const LoansAndReservations = () => {
             })}
           </div>
         ) : orderList && orderList.length !== 0 ? (
-          orderList.map((order, i) => {
+          sortOrders(orderList).map((order, i) => {
             // Log the agencyId before passing it to the MaterialRow component
             return (
               <MaterialRow
