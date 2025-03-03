@@ -54,9 +54,9 @@ pipeline {
                             envVars += " NEXT_PUBLIC_FBI_API_BIBDK21_URL=https://fbi-api.dbc.dk/bibdk21/graphql"
                             envVars += " NEXT_PUBLIC_FBI_API_URL=https://fbi-api.dbc.dk/bibdk21/graphql"
                         }
-
-                        sh "NEXT_PUBLIC_FBI_API_BIBDK21_URL=${env.BRANCH_NAME == 'prod' ? 'https://fbi-api.dbc.dk/bibdk21/graphql' : 'https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql'} \
-                            NEXT_PUBLIC_FBI_API_URL=${env.BRANCH_NAME == 'prod' ? 'https://fbi-api.dbc.dk/bibdk21/graphql' : 'https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql'} \
+                        //todo change "allow-map-files" to prod 
+                        sh "NEXT_PUBLIC_FBI_API_BIBDK21_URL=${env.BRANCH_NAME != 'prod' ? 'https://fbi-api.dbc.dk/bibdk21/graphql' : 'https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql'} \
+                            NEXT_PUBLIC_FBI_API_URL=${env.BRANCH_NAME != 'prod' ? 'https://fbi-api.dbc.dk/bibdk21/graphql' : 'https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql'} \
                             IMAGE=${IMAGE_NAME} docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} run --rm e2e"
 
 
