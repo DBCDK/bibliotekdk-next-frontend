@@ -12,11 +12,11 @@ services:
       - NEXTAUTH_SECRET=some-jwt-secret
       - ELBA_DRY_RUN=true
       - NEXTAUTH_URL=http://localhost:3000
-      - CLIENT_ID=${CLIENT_ID_PROD}
-      - CLIENT_SECRET=${CLIENT_SECRET_PROD}
+      - CLIENT_ID=${CLIENT_ID}
+      - CLIENT_SECRET=${CLIENT_SECRET}
       - CYPRESS=true
-      - NEXT_PUBLIC_FBI_API_URL=https://fbi-api.dbc.dk/bibdk21/graphql
-      - NEXT_PUBLIC_FBI_API_SIMPLESEARCH_URL=https://fbi-api.dbc.dk/SimpleSearch/graphql
+      - NEXT_PUBLIC_FBI_API_URL=${NEXT_PUBLIC_FBI_API_URL}
+      - NEXT_PUBLIC_FBI_API_SIMPLESEARCH_URL=${NEXT_PUBLIC_FBI_API_SIMPLESEARCH_URL}
     command: npm run start
     shm_size: "2gb"
   e2e:
