@@ -81,6 +81,8 @@ class ErrorBoundary extends React.Component {
           message: error.message,
           stack: error.stack,
           componentStack: errorInfo.componentStack,
+          url: window.location.href,
+          agent: window.navigator.userAgent,
         }),
       });
     }
