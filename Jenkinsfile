@@ -48,15 +48,23 @@ pipeline {
                     ansiColor("xterm") {
                         sh "docker pull docker-dbc.artifacts.dbccloud.dk/cypress:latest"
 
-                            def NEXT_PUBLIC_FBI_API_BIBDK21_URL = env.BRANCH_NAME != 'prod' ? 'https://fbi-api.dbc.dk/bibdk21/graphql' : 'https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql'
-                            def NEXT_PUBLIC_FBI_API_URL = env.BRANCH_NAME != 'prod' ? 'https://fbi-api.dbc.dk/bibdk21/graphql' : 'https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql'
-                            def CLIENT_ID_VALUE = env.BRANCH_NAME != 'prod' ? CLIENT_ID_PROD : CLIENT_ID
-                            def CLIENT_SECRET_VALUE = env.BRANCH_NAME != 'prod' ? CLIENT_SECRET_PROD : CLIENT_SECRET
+                            // def NEXT_PUBLIC_FBI_API_BIBDK21_URL = env.BRANCH_NAME != 'prod' ? 'https://fbi-api.dbc.dk/bibdk21/graphql' : 'https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql'
+                            // def NEXT_PUBLIC_FBI_API_URL = env.BRANCH_NAME != 'prod' ? 'https://fbi-api.dbc.dk/bibdk21/graphql' : 'https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql'
+                            // def CLIENT_ID_VALUE = env.BRANCH_NAME != 'prod' ? CLIENT_ID_PROD : CLIENT_ID
+                            // def CLIENT_SECRET_VALUE = env.BRANCH_NAME != 'prod' ? CLIENT_SECRET_PROD : CLIENT_SECRET
 
+
+                            def NEXT_PUBLIC_FBI_API_BIBDK21_URL = 'https://fbi-api.dbc.dk/bibdk21/graphql'
+                            def NEXT_PUBLIC_FBI_API_URL = 'https://fbi-api.dbc.dk/bibdk21/graphql'
+                            def CLIENT_ID_VALUE = CLIENT_ID_PROD
+                            def CLIENT_SECRET_VALUE = CLIENT_SECRET_PROD
+
+                    
 
 
                             sh '''
-        NEXT_PUBLIC_FBI_API_BIBDK21_URL=${NEXT_PUBLIC_FBI_API_BIBDK21_URL} \
+                            echo "NEXT_PUBLIC_FBI_API_BIBDK21_URL=${NEXT_PUBLIC_FBI_API_BIBDK21_URL}"
+         NEXT_PUBLIC_FBI_API_BIBDK21_URL=${NEXT_PUBLIC_FBI_API_BIBDK21_URL} \
         NEXT_PUBLIC_FBI_API_URL=${NEXT_PUBLIC_FBI_API_URL} \
         CLIENT_ID=${CLIENT_ID_VALUE} \
         CLIENT_SECRET=${CLIENT_SECRET_VALUE} \
