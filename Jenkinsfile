@@ -64,10 +64,10 @@ pipeline {
                             //     IMAGE=${IMAGE_NAME} docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} run --rm e2e'''
 
                         script {
-    def NEXT_PUBLIC_FBI_API_BIBDK21_URL = env.BRANCH_NAME == 'prod' ? 'https://fbi-api.dbc.dk/bibdk21/graphql' : 'https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql'
-    def NEXT_PUBLIC_FBI_API_URL = env.BRANCH_NAME == 'prod' ? 'https://fbi-api.dbc.dk/bibdk21/graphql' : 'https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql'
-    def CLIENT_ID_VALUE = env.BRANCH_NAME == 'prod' ? CLIENT_ID_PROD : CLIENT_ID
-    def CLIENT_SECRET_VALUE = env.BRANCH_NAME == 'prod' ? CLIENT_SECRET_PROD : CLIENT_SECRET
+    def NEXT_PUBLIC_FBI_API_BIBDK21_URL = env.BRANCH_NAME != 'prod' ? 'https://fbi-api.dbc.dk/bibdk21/graphql' : 'https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql'
+    def NEXT_PUBLIC_FBI_API_URL = env.BRANCH_NAME != 'prod' ? 'https://fbi-api.dbc.dk/bibdk21/graphql' : 'https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql'
+    def CLIENT_ID_VALUE = env.BRANCH_NAME != 'prod' ? CLIENT_ID_PROD : CLIENT_ID
+    def CLIENT_SECRET_VALUE = env.BRANCH_NAME != 'prod' ? CLIENT_SECRET_PROD : CLIENT_SECRET
 
     sh """
         NEXT_PUBLIC_FBI_API_BIBDK21_URL=${NEXT_PUBLIC_FBI_API_BIBDK21_URL} \
