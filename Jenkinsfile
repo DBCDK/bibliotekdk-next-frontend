@@ -14,10 +14,10 @@ pipeline {
         DOCKER_COMPOSE_NAME = "compose-${IMAGE_NAME}-${BRANCH_NAME.toLowerCase()}"
         GITLAB_PRIVATE_TOKEN = credentials("metascrum-gitlab-api-token")
         GITLAB_ID = "704"
-        CLIENT_ID = credentials("bibdk_client_id")
-        CLIENT_SECRET = credentials("bibdk_client_secret")
-        CLIENT_ID_PROD = credentials("bibdk_prod_client_id")
-        CLIENT_SECRET_PROD = credentials("bibdk_prod_client_secret")
+        CLIENT_ID = credentials("bibdk_client_id")//staging
+        CLIENT_SECRET = credentials("bibdk_client_secret")//staging
+        CLIENT_ID_PROD = credentials("bibdk_prod_client_id")//prod
+        CLIENT_SECRET_PROD = credentials("bibdk_prod_client_secret")//prod
     }
     options {
         disableConcurrentBuilds()
@@ -57,11 +57,26 @@ pipeline {
                         //     envVars += " NEXT_PUBLIC_FBI_API_URL=https://fbi-api.dbc.dk/bibdk21/graphql"
                         // }
 
-                            sh  '''NEXT_PUBLIC_FBI_API_BIBDK21_URL=${env.BRANCH_NAME == 'allow-map-files' ? 'https://fbi-api.dbc.dk/bibdk21/graphql' : 'https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql'} \
-                                NEXT_PUBLIC_FBI_API_URL=${env.BRANCH_NAME == 'allow-map-files' ? 'https://fbi-api.dbc.dk/bibdk21/graphql' : 'https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql'} \
-                                CYPRESS_CLIENT_ID=${env.BRANCH_NAME == 'allow-map-files' ? CLIENT_ID_PROD : CLIENT_ID} \
-                                CYPRESS_CLIENT_SECRET=${env.BRANCH_NAME == 'allow-map-files' ? CLIENT_SECRET_PROD : CLIENT_SECRET} \
-                                IMAGE=${IMAGE_NAME} docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} run --rm e2e'''
+                            // sh  '''NEXT_PUBLIC_FBI_API_BIBDK21_URL=${env.BRANCH_NAME == 'allow-map-files' ? 'https://fbi-api.dbc.dk/bibdk21/graphql' : 'https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql'} \
+                            //     NEXT_PUBLIC_FBI_API_URL=${env.BRANCH_NAME == 'allow-map-files' ? 'https://fbi-api.dbc.dk/bibdk21/graphql' : 'https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql'} \
+                            //     CYPRESS_CLIENT_ID=${env.BRANCH_NAME == 'allow-map-files' ? CLIENT_ID_PROD : CLIENT_ID} \
+                            //     CYPRESS_CLIENT_SECRET=${env.BRANCH_NAME == 'allow-map-files' ? CLIENT_SECRET_PROD : CLIENT_SECRET} \
+                            //     IMAGE=${IMAGE_NAME} docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} run --rm e2e'''
+
+                        script {
+    def NEXT_PUBLIC_FBI_API_BIBDK21_URL = env.BRANCH_NAME == 'prod' ? 'https://fbi-api.dbc.dk/bibdk21/graphql' : 'https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql'
+    def NEXT_PUBLIC_FBI_API_URL = env.BRANCH_NAME == 'prod' ? 'https://fbi-api.dbc.dk/bibdk21/graphql' : 'https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql'
+    def CLIENT_ID_VALUE = env.BRANCH_NAME == 'prod' ? CLIENT_ID_PROD : CLIENT_ID
+    def CLIENT_SECRET_VALUE = env.BRANCH_NAME == 'prod' ? CLIENT_SECRET_PROD : CLIENT_SECRET
+
+    sh """
+        NEXT_PUBLIC_FBI_API_BIBDK21_URL=${NEXT_PUBLIC_FBI_API_BIBDK21_URL} \
+        NEXT_PUBLIC_FBI_API_URL=${NEXT_PUBLIC_FBI_API_URL} \
+        CLIENT_ID=${CLIENT_ID_VALUE} \
+        CLIENT_SECRET=${CLIENT_SECRET_VALUE} \
+        IMAGE=${IMAGE_NAME} docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} run --rm e2e
+    """
+}
 
                     //todo add client and secret ids
 
