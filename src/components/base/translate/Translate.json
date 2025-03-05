@@ -1379,6 +1379,10 @@
         "da": "E-mail",
         "en": "E-mail"
       },
+      "homepage" : {
+        "da": "Hjemmeside",
+        "en": "Homepage"
+      },
       "branch": {
         "da": "afdeling",
         "en": "branch"
