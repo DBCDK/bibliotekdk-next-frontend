@@ -26,7 +26,17 @@ export function CqlTextArea({ doAdvancedSearch }) {
       return;
     }
 
-    return new Set(data?.complexSearchIndexes?.map((entry) => entry?.index));
+    // Set containing all valid indexes
+    const set = new Set();
+
+    data?.complexSearchIndexes?.forEach?.((entry) => {
+      set.add(entry?.index);
+
+      // Add all aliases
+      entry?.aliases?.forEach?.((index) => set.add(index));
+    });
+
+    return set;
   }, [data]);
 
   const message = useMemo(() => {

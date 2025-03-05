@@ -263,7 +263,8 @@ export function complexSearchIndexes() {
     apiUrl: ApiEnums.FBI_API,
     query: `query ComplexSearchIndexes {
 			complexSearchIndexes {
-				index	
+				index
+        aliases
 			}
 		}`,
     variables: {},
