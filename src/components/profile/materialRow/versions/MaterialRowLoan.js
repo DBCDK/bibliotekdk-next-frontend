@@ -165,6 +165,7 @@ const MaterialRowLoan = (props) => {
       agencyId,
       loanMutation,
     });
+    setRenewed(true);
   };
 
   const onMobileItemClick = () => {
@@ -315,7 +316,6 @@ const MaterialRowLoan = (props) => {
       <div>
         <Text type="text2">{library}</Text>
       </div>
-
       {renewed ? (
         <TextWithCheckMark textType="text3" />
       ) : (

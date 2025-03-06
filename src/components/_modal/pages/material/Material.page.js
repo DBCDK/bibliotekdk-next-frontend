@@ -194,6 +194,7 @@ const Material = ({ context }) => {
       //update loans from modal, since we want the loans page to refresh and show the new data.
       // we dont do this for desktop. on desktop we show the new dueDate and "fonyet".
       // If we refetched, the list would order again and we wouldnt know when to show "fonyet".
+      setRenewed(true);
       updateUserStatusInfo("LOAN");
     }
   }, [loanMutation.error, loanMutation.data]);
