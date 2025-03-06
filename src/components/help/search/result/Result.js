@@ -31,6 +31,9 @@ export function Result({ result = [], isLoading, query }) {
       )}
       {query &&
         (isLoading ? [{}, {}, {}] : result).map((doc, idx) => {
+          // if (doc.orgTitle === undefined || doc.nid === undefined) {
+          //   return null;
+          // }
           return (
             <Link
               key={doc.id || idx}

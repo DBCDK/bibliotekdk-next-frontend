@@ -197,7 +197,7 @@ export function Item({
 }
 
 Item.propTypes = {
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.object]),
   subTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   children: PropTypes.oneOfType([
     PropTypes.string,
@@ -206,7 +206,7 @@ Item.propTypes = {
   ]),
   eventKey: PropTypes.string.isRequired,
   id: PropTypes.string,
-  additionalTxt: PropTypes.string,
+  additionalTxt: PropTypes.array,
 };
 
 /**
