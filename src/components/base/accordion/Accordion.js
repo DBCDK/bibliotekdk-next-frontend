@@ -197,7 +197,11 @@ export function Item({
 }
 
 Item.propTypes = {
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.object]),
+  title: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.object,
+  ]),
   subTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   children: PropTypes.oneOfType([
     PropTypes.string,

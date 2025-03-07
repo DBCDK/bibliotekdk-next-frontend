@@ -57,8 +57,8 @@ export default function WorkTypeMenu() {
         const LinkTag = isSelected ? IconButton : Link;
 
         const linkProps = isSelected
-        ? { keepUnderline: true, iconSize: 1 }
-        : {};
+          ? { keepUnderline: true, iconSize: 1 }
+          : {};
 
         return (
           <LinkTag

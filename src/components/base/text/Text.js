@@ -97,8 +97,7 @@ function Text({
  *
  * @returns {React.JSX.Element}
  */
-export function TextSkeleton({ skeleton, ...props }) {
-
+export function TextSkeleton(props) {
   if (!props.lines) {
     return null;
   }
