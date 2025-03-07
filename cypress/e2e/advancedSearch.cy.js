@@ -24,25 +24,21 @@ describe("Popover elements", () => {
   it("should clear all input fields on clicking the clear search link", () => {
     cy.get('[data-cy="advanced-search-trigger"]').click();
     //type something in the first inputfield
-    cy.get('[datacy="advanced-search-inputfield-0"]')
-      .find("input")
+    cy.get('[data-cy="advanced-search-inputfield-0"]')
       .type(`Hej med dig `)
       .blur();
 
     //type something in the second inputfield
-    cy.get('[datacy="advanced-search-inputfield-1"]')
-      .find("input")
+    cy.get('[data-cy="advanced-search-inputfield-1"]')
       .focus()
       .type(`Jeg hedder kaj`)
       .blur();
     //clear the fields
     cy.get('[data-cy="advanced-search-clear-search"]').click();
     //assert that the values has been cleared
-    cy.get('[datacy="advanced-search-inputfield-0"]')
-      .find("input")
-      .should("have.value", "");
-    cy.get('[datacy="advanced-search-inputfield-1"]')
-      .find("input")
+    cy.get('[data-cy="advanced-search-inputfield-0"]')
+    .should("have.value", "");
+    cy.get('[data-cy="advanced-search-inputfield-1"]')
       .should("have.value", "");
   });
 
@@ -54,16 +50,14 @@ describe("Popover elements", () => {
     //set first input field to have search index term.title and value hej med dig
     cy.get('[data-cy="advanced-search-index-dropdown-0"]').click();
     cy.get('[data-cy="item-term.title"]').click();
-    cy.get('[datacy="advanced-search-inputfield-0"]')
-      .find("input")
+    cy.get('[data-cy="advanced-search-inputfield-0"]')
       .type(`Mord i Mesopotamien`)
       .blur();
 
     //set second input field to have search index term.subject and value krimi
     cy.get('[data-cy="advanced-search-index-dropdown-1"]').click();
     cy.get('[data-cy="item-term.subject"]:visible').click();
-    cy.get('[datacy="advanced-search-inputfield-1"]')
-      .find("input")
+    cy.get('[data-cy="advanced-search-inputfield-1"]')
       .type(`Krimi`)
       .blur();
     //swith to cql editor and assert that it has the correct paresd value
@@ -109,17 +103,17 @@ describe("TextInputs test", () => {
   });
 
   it("should add a new input field on clicking the add button", () => {
-    cy.get('[datacy="advanced-search-inputfield-2"]').should("not.exist");
+    cy.get('[data-cy="advanced-search-inputfield-2"]').should("not.exist");
     cy.get('[data-cy="advanced-search-add-input"]').click();
-    cy.get('[datacy="advanced-search-inputfield-2"]').should("exist");
+    cy.get('[data-cy="advanced-search-inputfield-2"]').should("exist");
   });
 
   it("should remove an input field on clicking the remove button", () => {
-    cy.get('[datacy="advanced-search-inputfield-1"]').should("exist");
+    cy.get('[data-cy="advanced-search-inputfield-1"]').should("exist");
 
     cy.get('[data-cy="advanced-search-remove-input"]').last().click();
 
-    cy.get('[datacy="advanced-search-inputfield-1"]').should("not.exist");
+    cy.get('[data-cy="advanced-search-inputfield-1"]').should("not.exist");
   });
 
   it("should change logical operator between input fields", () => {
