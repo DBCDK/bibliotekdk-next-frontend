@@ -70,7 +70,7 @@ function FieldInput({ index, fieldValue, doAdvancedSearch }) {
   }, [data]);
 
   return (
-    <div key={inputId} dataCy={`advanced-search-inputfield-${index}`}>
+    <div key={inputId}>
       {!isFirstItem && (
         <LogicalOperatorDropDown
           onSelect={(value) => handleLogicalOperatorChange(index, value)}

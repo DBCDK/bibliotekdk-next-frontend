@@ -131,8 +131,8 @@ export function TextSkeleton(props) {
  *
  * @returns {React.JSX.Element}
  */
-export default function Container(props) {
-  if (props.skeleton) {
+export default function Container({ skeleton, ...props }) {
+  if (skeleton) {
     return <TextSkeleton {...props} />;
   }
 

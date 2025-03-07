@@ -80,16 +80,14 @@ export function getTitlesAndType({ work }) {
 export function RenderTitlesWithoutLanguage({ work, subtitleType, className }) {
   const { titles, type } = getTitlesAndType({ work: work });
   return titles?.map((title, index, titlesArray) => (
-    <>
-      <Fragment key={`${title}-${index}`}>
-        {title} {index < titlesArray.length - 1 && <br />}
-      </Fragment>
+    <Fragment key={`${title}-${index}`}>
+      {title} {index < titlesArray.length - 1 && <br />}
       {type === "tvSerie" && (
         <div className={className} key={`${title}-${type}-${index}`}>
           <RenderTvSeries work={work} type={subtitleType} />
         </div>
       )}
-    </>
+    </Fragment>
   ));
 }
 RenderTitlesWithoutLanguage.propTypes = {
