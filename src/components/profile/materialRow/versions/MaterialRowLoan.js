@@ -36,7 +36,7 @@ export const useLoanDateAnalysis = (dueDateString) => {
   const router = useRouter();
   const locale = router.locale ?? "da";
 
-  const timeFormatter = new Intl.RelativeTimeFormat(locale, { style: "short" }); //todo this throws an error in tests
+  const timeFormatter = new Intl.RelativeTimeFormat(locale, { style: "short" });
 
   const dueDate = new Date(dueDateString);
   const today = new Date();
