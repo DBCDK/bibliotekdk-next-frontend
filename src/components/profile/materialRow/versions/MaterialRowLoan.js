@@ -165,7 +165,6 @@ const MaterialRowLoan = (props) => {
       agencyId,
       loanMutation,
     });
-    setRenewed(true);
   };
 
   const onMobileItemClick = () => {
