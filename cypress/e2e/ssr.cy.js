@@ -400,7 +400,7 @@ describe("Server Side Rendering", () => {
         description:
           "Sammenhængende univers for det amerikanske tegneserieforlag Marvels superhelte som Spider-Man, X-Men og Avengers",
         url: "https://bibliotek.dk/univers/870979:134975679",
-        genre: ["MOVIE", "LITERATURE", "OTHER", "GAME", "SHEETMUSIC", "MUSIC"],
+        genre: ["MOVIE", "LITERATURE", "MUSIC", "OTHER", "GAME", "SHEETMUSIC"],
       };
 
       getPageHead(`/univers/${expectedUniverse.universeId}`).then((res) => {
