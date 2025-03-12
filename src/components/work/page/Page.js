@@ -23,6 +23,7 @@ import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import Custom404 from "@/pages/404";
 import Universes from "@/components/work/universes/Universes";
+import PeriodicaArticles from "@/components/work/periodicaArticles/PeriodicaArticles";
 
 /**
  * The work page React component
@@ -118,6 +119,11 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
             <Keywords workId={workId} />
             <Related workId={workId} />
           </section>
+          <PeriodicaArticles
+            workId={workId}
+            anchor-label={Translate({ context: "periodica", label: "title" })}
+          />
+
           {/* TODO: WorkGroupingsOverview.js refererer til dennes oversættelse */}
           <section anchor-label={Translate(AnchorsEnum.SERIES)}>
             <Series workId={workId} />

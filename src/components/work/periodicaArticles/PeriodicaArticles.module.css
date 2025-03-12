@@ -1,0 +1,28 @@
+.skeletonrow {
+  border-bottom: 1px solid var(--iron);
+  padding: var(--pt1) 0 var(--pt1) 0;
+}
+
+.title {
+  margin: 0 0 var(--pt05) 0;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+/* article grid (thank you chatgpt) */
+.container {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr 1fr; /* Varying column widths */
+  background-color: var(--white);
+}
+
+.item {
+  padding: var(--pt1);
+  border-top: 1px solid var(--iron);
+}
+
+.headline {
+  padding: var(--pt1);
+}

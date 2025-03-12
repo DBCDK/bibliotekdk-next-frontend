@@ -1159,6 +1159,29 @@ export function workForWorkRelationsWorkTypeFactory({ workId }) {
   };
 }
 
+export function WorkIdToIssn({ id }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query WorkIdToIssn($id: String!) {
+      work(id: $id) {
+        materialTypes {
+            materialTypeSpecific {
+              code
+            }
+          }
+        manifestations {
+          latest {
+            hostPublication{issn, issue}
+          }
+        }
+      }
+    }`,
+    variables: { id },
+    slowThreshold: 3000,
+  };
+}
+
 const genreAndFormAndWorkTypesFragment = `fragment genreAndFormAndWorkTypesFragment on Work {
   genreAndForm
   workTypes
