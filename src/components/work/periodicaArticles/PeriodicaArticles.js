@@ -12,7 +12,7 @@ import Accordion, { Item } from "@/components/base/accordion";
 import translate from "@/components/base/translate";
 
 /**
- * show articles for an issue
+ * show articles for an issue wrapped in an accordion
  * @param articles
  * @param isLoading
  * @returns {JSX.Element}
@@ -64,6 +64,11 @@ export function PeriodicaArticles({ issuesMap = {}, issue, isLoading }) {
   );
 }
 
+/**
+ * Show a 'table' header for the articles
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function PeriodicaHeader() {
   /** labels for the table header **/
   const header = [
@@ -85,8 +90,7 @@ function PeriodicaHeader() {
 }
 
 /**
- * Issue wrapper
- * @constructor
+ * Shows an article
  */
 export function PeriodicaArticle({ manifestation }) {
   // first column is title and creators
@@ -103,9 +107,6 @@ export function PeriodicaArticle({ manifestation }) {
       </div>
     );
   };
-
-  // third column are subject
-  // const thirdColumn
 
   return (
     <>
