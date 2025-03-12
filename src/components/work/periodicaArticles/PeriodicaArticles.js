@@ -98,7 +98,6 @@ export function PeriodicaArticle({ manifestation }) {
     return (
       <div>
         <Text type="text3" className={styles.bold}>
-          {" "}
           {manifestation.titles.full}
         </Text>
         <Text type="text3">
