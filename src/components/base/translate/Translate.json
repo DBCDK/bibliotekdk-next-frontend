@@ -896,6 +896,28 @@
         "en": "Year"
       }
     },
+    "periodica": {
+      "articlestitle": {
+        "da": "Andre artikler i samme tidsskrift",
+        "en": "Other articles this issue"
+      },
+      "tableHeadArticle": {
+        "da": "Artikel",
+        "en": "Article"
+      },
+      "tableHeaderDescription": {
+        "da": "Beskrivelse",
+        "en": "Description"
+      },
+      "tableHeaderSubjects": {
+        "da": "Emner",
+        "en": "Subjects"
+      },
+      "tableHeaderExtent": {
+        "da": "Omfang",
+        "en" : "Extent"
+      }
+    },
     "articles": {
       "deliveredBy": {
         "da": "Artiklen er leveret af %s",
