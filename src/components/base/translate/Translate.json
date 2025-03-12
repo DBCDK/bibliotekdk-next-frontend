@@ -897,7 +897,7 @@
       }
     },
     "periodica": {
-      "title" : {
+      "title": {
         "da": "Artikler",
         "en": "Articles"
       },
@@ -919,7 +919,7 @@
       },
       "tableHeaderExtent": {
         "da": "Omfang",
-        "en" : "Extent"
+        "en": "Extent"
       }
     },
     "articles": {
