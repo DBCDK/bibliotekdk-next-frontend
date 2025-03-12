@@ -119,7 +119,10 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
             <Keywords workId={workId} />
             <Related workId={workId} />
           </section>
-          <PeriodicaArticles workId={workId} anchor-label="fisk" />
+          <PeriodicaArticles
+            workId={workId}
+            anchor-label={Translate({ context: "periodica", label: "title" })}
+          />
 
           {/* TODO: WorkGroupingsOverview.js refererer til dennes oversættelse */}
           <section anchor-label={Translate(AnchorsEnum.SERIES)}>

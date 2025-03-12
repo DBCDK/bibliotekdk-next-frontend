@@ -897,6 +897,10 @@
       }
     },
     "periodica": {
+      "title" : {
+        "da": "Artikler",
+        "en": "Articles"
+      },
       "articlestitle": {
         "da": "Andre artikler i samme tidsskrift",
         "en": "Other articles this issue"

@@ -43,15 +43,7 @@ export function PeriodicaArticles({ issuesMap = {}, issue, isLoading }) {
     >
       {/* we want an accordion to show articles in issue*/}
       <Accordion>
-        <Item
-          title={publictationTitle}
-          // additionalTxt={[issue]}
-          // key={`${manifestation?.titles?.full?.[0]}_${index}`}
-          eventKey="fisk"
-          // id={manifestation?.pid}
-          // iconSize={4}
-          // headerContentClassName={styles.headerContent}
-        >
+        <Item title={publictationTitle} eventKey="fisk">
           {(hasBeenSeen) => {
             return (
               <div className={styles.container}>
@@ -97,8 +89,6 @@ function PeriodicaHeader() {
  * @constructor
  */
 export function PeriodicaArticle({ manifestation }) {
-  console.log(manifestation, "MANIFESTATION");
-
   // first column is title and creators
   const firstColumn = () => {
     return (
@@ -180,8 +170,6 @@ export default function Wrap({ workId }) {
   // we handle "ARTICLE_ONLINE" only for now
   const materialType =
     issnData?.work?.materialTypes?.[0]?.materialTypeSpecific?.code;
-
-  console.log(issnData, materialType, "MATTYPE");
 
   // construct the cql for complex search :) - complex
   const cql = `term.issn = "${issn}" AND phrase.issue="${issue}"`;
