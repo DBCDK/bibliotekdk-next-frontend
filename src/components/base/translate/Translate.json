@@ -2088,6 +2088,14 @@
       "title": {
         "da": "Tags",
         "en": "Tags"
+      },
+      "periodicaTitle": {
+        "da": "Emneord",
+        "en": "Subjects"
+      },
+      "periodicaSubtitle": {
+        "da": "Artiklerne i %s handler ofte om",
+        "en": "The articles in %s are frequently about"
       }
     },
     "relatedKeywords": {

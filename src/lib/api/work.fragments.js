@@ -509,6 +509,9 @@ export function subjects({ workId }) {
     query: `
     query subjects($workId: String!) {
       work(id: $workId) {
+        titles {
+          main
+        }
         workTypes
         subjects {
           selectedSubjects: dbcVerified {
@@ -517,6 +520,15 @@ export function subjects({ workId }) {
             ... on SubjectText {
               language {
                 isoCode
+              }
+            }
+          }
+        }
+        periodicaInfo {
+          periodica {
+            subjects {
+              entries {
+                term
               }
             }
           }
