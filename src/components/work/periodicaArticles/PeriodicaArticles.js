@@ -10,6 +10,8 @@ import Text from "@/components/base/text/Text";
 import { WorkIdToIssn } from "@/lib/api/work.fragments";
 import Accordion, { Item } from "@/components/base/accordion";
 import translate from "@/components/base/translate";
+import Link from "@/components/base/link";
+import { subjectUrl } from "@/components/work/keywords/Keywords";
 
 /**
  * show articles for an issue wrapped in an accordion
@@ -43,7 +45,7 @@ export function PeriodicaArticles({ issuesMap = {}, issue, isLoading }) {
     >
       {/* we want an accordion to show articles in issue*/}
       <Accordion>
-        <Item title={publictationTitle} eventKey="fisk">
+        <Item title={publictationTitle} eventKey={publictationTitle}>
           {(hasBeenSeen) => {
             return (
               <div className={styles.container}>
@@ -95,11 +97,18 @@ function PeriodicaHeader() {
 export function PeriodicaArticle({ manifestation }) {
   // first column is title and creators
   const firstColumn = () => {
+    const url = `/work/${manifestation.pid} `;
     return (
       <div>
         <Text type="text3" className={styles.bold}>
-          {manifestation.titles.full}
+          <Link
+            href={url}
+            border={{ top: false, bottom: { keepVisible: true } }}
+          >
+            {manifestation.titles.full}
+          </Link>
         </Text>
+
         <Text type="text3">
           {manifestation.creators.map((crea) => crea.display).join(", ")}
         </Text>
