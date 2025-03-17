@@ -38,14 +38,17 @@ export function PeriodicaArticles({ issuesMap = {}, issue, isLoading }) {
   return (
     <Section
       title={translate({ context: "periodica", label: "articlestitle" })}
-      space={{ top: "var(--pt8)" }}
-      backgroundColor="var(--jagged-ice)"
+      divider={{ content: false }}
       dataCy="section-fisk"
       sectionTag="div" // Section sat in parent
     >
       {/* we want an accordion to show articles in issue*/}
       <Accordion>
-        <Item title={publictationTitle} eventKey={publictationTitle}>
+        <Item
+          title={publictationTitle}
+          eventKey={publictationTitle}
+          headerContentClassName={styles.headerContent}
+        >
           {(hasBeenSeen) => {
             return (
               <div className={styles.container}>
@@ -146,6 +149,7 @@ export function PeriodicaSkeleton() {
     <Section
       title={Translate({ context: "periodica", label: "articlestitle" })}
       space={{ top: "var(--pt8)", bottom: "var(--pt4)" }}
+      className={styles.section}
     >
       {Rows.map((row) => (
         <Row key={`row-skeleton-${row}`} className={styles.skeletonrow}>

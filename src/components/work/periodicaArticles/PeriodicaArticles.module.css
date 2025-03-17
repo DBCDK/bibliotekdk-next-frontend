@@ -3,6 +3,9 @@
   padding: var(--pt1) 0 var(--pt1) 0;
 }
 
+.headerContent {
+  padding: var(--pt2) var(--pt1) var(--pt2) 0;
+}
 .title {
   margin: 0 0 var(--pt05) 0;
 }
