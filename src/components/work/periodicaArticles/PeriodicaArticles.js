@@ -11,8 +11,6 @@ import { WorkIdToIssn } from "@/lib/api/work.fragments";
 import Accordion, { Item } from "@/components/base/accordion";
 import translate from "@/components/base/translate";
 import Link from "@/components/base/link";
-import { subjectUrl } from "@/components/work/keywords/Keywords";
-
 /**
  * show articles for an issue wrapped in an accordion
  * @param articles
