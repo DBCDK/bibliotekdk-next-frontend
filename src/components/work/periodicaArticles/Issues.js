@@ -16,15 +16,8 @@ export function Issues({ isLoading, entries }) {
     return null;
   }
 
-  console.log(entries, "ENTRIES");
-
   const parseForManifestations = (entry) => {
-    console.log(entry, "ENTRY");
-    const fisk = entry?.works
-      ?.map((work) => [...work?.manifestations?.all])
-      .flat();
-    console.log(fisk, "FISK");
-    return fisk;
+    return entry?.works?.map((work) => [...work?.manifestations?.all]).flat();
   };
   return (
     <Section
