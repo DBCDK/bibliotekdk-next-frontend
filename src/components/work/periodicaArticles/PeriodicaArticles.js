@@ -25,10 +25,6 @@ export function PeriodicaArticles({ manifestations, issue, isLoading }) {
     return null;
   }
 
-  const publictationTitle = `${
-    manifestations?.[0]?.hostPublication?.title || ""
-  } ${issue}`;
-
   return (
     <Section
       title={translate({ context: "periodica", label: "articlestitle" })}
@@ -37,30 +33,40 @@ export function PeriodicaArticles({ manifestations, issue, isLoading }) {
       sectionTag="div" // Section sat in parent
     >
       {/* we want an accordion to show articles in issue*/}
-      <Accordion>
-        <Item
-          useScroll={false}
-          title={publictationTitle}
-          eventKey={publictationTitle}
-          headerContentClassName={styles.headerContent}
-        >
-          {(hasBeenSeen) => {
-            return (
-              <div className={styles.container}>
-                <PeriodicaHeader />
-                {manifestations?.map((manifestation) => (
-                  <PeriodicaArticle
-                    manifestation={manifestation}
-                    key={manifestation?.pid}
-                    hasBeenSeen={hasBeenSeen}
-                  />
-                ))}
-              </div>
-            );
-          }}
-        </Item>
-      </Accordion>
+      <PeriodicaAccordion manifestations={manifestations} issue={issue} />
     </Section>
+  );
+}
+
+export function PeriodicaAccordion({ manifestations, issue }) {
+  const publictationTitle = `${
+    manifestations?.[0]?.hostPublication?.title || ""
+  } ${issue}`;
+
+  return (
+    <Accordion>
+      <Item
+        useScroll={false}
+        title={publictationTitle}
+        eventKey={publictationTitle}
+        headerContentClassName={styles.headerContent}
+      >
+        {(hasBeenSeen) => {
+          return (
+            <div className={styles.container}>
+              <PeriodicaHeader />
+              {manifestations?.map((manifestation) => (
+                <PeriodicaArticle
+                  manifestation={manifestation}
+                  key={manifestation?.pid}
+                  hasBeenSeen={hasBeenSeen}
+                />
+              ))}
+            </div>
+          );
+        }}
+      </Item>
+    </Accordion>
   );
 }
 
@@ -176,7 +182,8 @@ export default function Wrap({ workId }) {
   const materialType =
     data?.work?.materialTypes?.[0]?.materialTypeSpecific?.code;
 
-  if (materialType !== "ARTICLE_ONLINE") {
+  const materialTypesToShow = ["ARTICLE", "ARTICLE_ONLINE"];
+  if (!materialTypesToShow.includes(materialType)) {
     return null;
   }
 
