@@ -1,13 +1,11 @@
 import Section from "@/components/base/section";
 import { useData } from "@/lib/api/api";
-import { complexSearchWorksByIssn } from "@/lib/api/complexSearch.fragments";
-import { manifestationsByIssue } from "@/components/work/periodicaArticles/utils";
 import Translate from "@/components/base/translate";
 import Row from "react-bootstrap/Row";
 import styles from "./PeriodicaArticles.module.css";
 import Col from "react-bootstrap/Col";
 import Text from "@/components/base/text/Text";
-import { WorkIdToIssn } from "@/lib/api/work.fragments";
+import { PeriodicaIssuByWork } from "@/lib/api/work.fragments";
 import Accordion, { Item } from "@/components/base/accordion";
 import translate from "@/components/base/translate";
 import Link from "@/components/base/link";
@@ -18,12 +16,10 @@ import Link from "@/components/base/link";
  * @returns {JSX.Element}
  * @constructor
  */
-export function PeriodicaArticles({ issuesMap = {}, issue, isLoading }) {
+export function PeriodicaArticles({ manifestations, issue, isLoading }) {
   if (isLoading) {
     return <PeriodicaSkeleton />;
   }
-
-  const manifestations = issuesMap?.[issue];
 
   if (!manifestations) {
     return null;
@@ -137,7 +133,6 @@ export function PeriodicaArticle({ manifestation }) {
       </div>
     </>
   );
-  // @TODO implement
 }
 
 export function PeriodicaSkeleton() {
@@ -170,37 +165,28 @@ export function PeriodicaSkeleton() {
 }
 
 export default function Wrap({ workId }) {
-  // get issn (periodica id), and issue for given workid
-  const { data: issnData, isLoading: issnIsLoading } = useData(
-    WorkIdToIssn({ id: workId })
-  );
-  const issn =
-    issnData?.work?.manifestations?.latest?.hostPublication?.issn || 0;
-  const issue =
-    issnData?.work?.manifestations?.latest?.hostPublication?.issue || 0;
-  // we handle "ARTICLE_ONLINE" only for now
-  const materialType =
-    issnData?.work?.materialTypes?.[0]?.materialTypeSpecific?.code;
+  // use workid to fetch articles ,, abd other godd stuff .. from periodica
+  const { data, isLoading } = useData(PeriodicaIssuByWork({ id: workId }));
 
-  // construct the cql for complex search :) - complex
-  const cql = `term.issn = "${issn}" AND phrase.issue="${issue}"`;
-  // use issn to fetch articles from periodica
-  const { data, isLoading } = useData(complexSearchWorksByIssn({ cql }));
-  // either issn or work is loading
-  const allIsLoading = issnIsLoading || isLoading;
-  // arrange articles by issue
-  const issuesMap = manifestationsByIssue(data?.complexSearch?.works);
+  const manifestations = data?.work?.periodicaInfo?.issue?.works
+    .map((work) => [...work?.manifestations?.all])
+    .flat();
+
+  const materialType =
+    data?.work?.materialTypes?.[0]?.materialTypeSpecific?.code;
 
   if (materialType !== "ARTICLE_ONLINE") {
     return null;
   }
 
+  const issue = data?.work?.periodicaInfo?.issue?.display;
+
   // show an issue
   return (
     <PeriodicaArticles
-      issuesMap={issuesMap}
+      manifestations={manifestations}
       issue={issue}
-      isLoading={allIsLoading}
+      isLoading={isLoading}
     />
   );
 }

@@ -1194,6 +1194,64 @@ export function WorkIdToIssn({ id }) {
   };
 }
 
+export function PeriodicaIssuByWork({ id }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query WorkIdToIssn($id: String!) {
+      work(id: $id) {
+        titles {
+          full
+        }
+        materialTypes {
+          materialTypeSpecific {
+            code
+          }
+        }
+        periodicaInfo {
+          issue {
+            display
+            works {
+              workId
+              manifestations {
+                all {
+                  pid
+                  hostPublication {
+                    title
+                    issue
+                  }
+                  titles {
+                    full
+                  }
+                  creators {
+                    display
+                  }
+                  abstract
+                  subjects {
+                    dbcVerified {
+                      display
+                    }
+                  }
+                  physicalDescription {
+                    summaryFull
+                  }
+                  edition {
+                    publicationYear {
+                      year
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }`,
+    variables: { id },
+    slowThreshold: 3000,
+  };
+}
+
 const genreAndFormAndWorkTypesFragment = `fragment genreAndFormAndWorkTypesFragment on Work {
   genreAndForm
   workTypes
