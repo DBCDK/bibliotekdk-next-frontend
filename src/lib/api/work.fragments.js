@@ -5,17 +5,17 @@
 
 import { ApiEnums } from "@/lib/api/api";
 import {
+  cacheWorkFragment,
   coverFragment,
   creatorsFragment,
   manifestationDetailsForAccessFactory,
+  manifestationTitleFragment,
   materialTypesFragment,
   seriesFragment,
-  workTitleFragment,
+  tvSeriesFragment,
   universeFragment,
   workSliderFragment,
-  manifestationTitleFragment,
-  tvSeriesFragment,
-  cacheWorkFragment,
+  workTitleFragment,
 } from "@/lib/api/fragments.utils";
 
 export function tableOfContents({ workId }) {
@@ -1185,64 +1185,6 @@ export function WorkIdToIssn({ id }) {
         manifestations {
           latest {
             hostPublication{issn, issue}
-          }
-        }
-      }
-    }`,
-    variables: { id },
-    slowThreshold: 3000,
-  };
-}
-
-export function PeriodicaIssuByWork({ id }) {
-  return {
-    apiUrl: ApiEnums.FBI_API,
-    query: `
-    query WorkIdToIssn($id: String!) {
-      work(id: $id) {
-        titles {
-          full
-        }
-        materialTypes {
-          materialTypeSpecific {
-            code
-          }
-        }
-        periodicaInfo {
-          issue {
-            display
-            works {
-              workId
-              manifestations {
-                all {
-                  pid
-                  hostPublication {
-                    title
-                    issue
-                  }
-                  titles {
-                    full
-                  }
-                  creators {
-                    display
-                  }
-                  abstract
-                  subjects {
-                    dbcVerified {
-                      display
-                    }
-                  }
-                  physicalDescription {
-                    summaryFull
-                  }
-                  edition {
-                    publicationYear {
-                      year
-                    }
-                  }
-                }
-              }
-            }
           }
         }
       }
