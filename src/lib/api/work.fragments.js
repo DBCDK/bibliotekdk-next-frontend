@@ -5,17 +5,17 @@
 
 import { ApiEnums } from "@/lib/api/api";
 import {
+  cacheWorkFragment,
   coverFragment,
   creatorsFragment,
   manifestationDetailsForAccessFactory,
+  manifestationTitleFragment,
   materialTypesFragment,
   seriesFragment,
-  workTitleFragment,
+  tvSeriesFragment,
   universeFragment,
   workSliderFragment,
-  manifestationTitleFragment,
-  tvSeriesFragment,
-  cacheWorkFragment,
+  workTitleFragment,
 } from "@/lib/api/fragments.utils";
 
 export function tableOfContents({ workId }) {
