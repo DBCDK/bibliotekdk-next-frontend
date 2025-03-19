@@ -35,7 +35,7 @@ const headers = [
       "style-src 'self' 'unsafe-inline'; " +
       "img-src 'self' https://moreinfo.addi.dk img.sct.eu1.usercentrics.eu data: *.dbc.dk http://localhost:*; " +
       "connect-src 'self' https://consentcdn.cookiebot.eu https://consent.cookiebot.eu https://stats.dbc.dk *.dbc.dk http://localhost:* ws://localhost:*; " +
-      "frame-src 'self' *.dbc.dk; " +
+      "frame-src 'self' *.dbc.dk https://consentcdn.cookiebot.eu;" +
       "font-src 'self' data:; " +
       "worker-src 'self' blob:; " // Allow Web Workers.. Can be removed if productionBrowserSourceMaps is false
 
