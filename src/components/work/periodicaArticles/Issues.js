@@ -1,6 +1,6 @@
 import Section from "@/components/base/section";
 import Translate from "@/components/base/translate";
-import styles from "./PeriodicaArticles.module.css";
+import styles from "./issues.module.css";
 
 import Text from "@/components/base/text/Text";
 import { AllPeriodicaIssuesByworkId } from "@/lib/api/periodica.fragments";
@@ -46,7 +46,6 @@ function IssuesSkeleton() {
     <Section
       title={Translate({ context: "periodica", label: "articlestitle" })}
       space={{ top: "var(--pt8)", bottom: "var(--pt4)" }}
-      className={styles.section}
     >
       {texts.map((txt) => (
         <row xs={6} md={3} key={`col-skeleton-${txt}`}>
