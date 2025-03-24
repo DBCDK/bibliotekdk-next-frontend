@@ -9,6 +9,8 @@ import Accordion, { Item } from "@/components/base/accordion";
 import translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import { PeriodicaIssuByWork } from "@/lib/api/periodica.fragments";
+import { encodeTitleCreator } from "@/lib/utils";
+
 /**
  * show articles for an issue wrapped in an accordion
  * @param articles
@@ -101,7 +103,11 @@ function PeriodicaHeader() {
 export function PeriodicaArticle({ manifestation }) {
   // first column is title and creators
   const firstColumn = () => {
-    const url = `/work/${manifestation.pid} `;
+    const workId = manifestation?.work?.workId;
+    const url = `/materiale/${encodeTitleCreator(
+      manifestation.titles.full?.[0],
+      manifestation.creators
+    )}/${workId} `;
     return (
       <div>
         <Text type="text3" className={styles.bold}>
@@ -176,7 +182,7 @@ export default function Wrap({ workId }) {
   const { data, isLoading } = useData(PeriodicaIssuByWork({ id: workId }));
 
   const manifestations = data?.work?.periodicaInfo?.issue?.works
-    .map((work) => [...work?.manifestations?.all])
+    .map((work) => [...work?.manifestations?.all?.map((m) => ({ ...m, work }))])
     .flat();
 
   const materialType =

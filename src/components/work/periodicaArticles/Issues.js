@@ -17,7 +17,11 @@ export function Issues({ isLoading, entries }) {
   }
 
   const parseForManifestations = (entry) => {
-    return entry?.works?.map((work) => [...work?.manifestations?.all]).flat();
+    return entry?.works
+      ?.map((work) => [
+        ...work?.manifestations?.all?.map((m) => ({ ...m, work })),
+      ])
+      .flat();
   };
   return (
     <Section
