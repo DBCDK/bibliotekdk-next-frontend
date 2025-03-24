@@ -20,7 +20,6 @@
 .Card:hover {
   color: inherit;
   text-decoration: inherit;
-  flex-direction: row;
 }
 .Card:hover,
 .Card:focus {
@@ -35,9 +34,6 @@
   margin: 0;
   margin-top: var(--pt1) !important;
 }
-.coverleft .Title {
-  margin-top: 0px !important;
-}
 .Creator {
   margin: 0;
 }
@@ -47,41 +43,12 @@
   justify-content: center;
 }
 
-.coverleft .CoverWrapper {
-  min-width: 74px;
-  max-width: 74px;
-  height: 100px;
-  justify-content: flex-start;
-  padding-right: var(--pt1);
-}
-
-.coverleft .Creator {
-  margin-top: var(--pt1);
-}
-
-.Card.coverleft {
-  display: flex;
-  flex-direction: row;
-  /* padding-left: 0px; */
-  padding-top: var(--pt1);
-  padding-right: var(--pt1);
-}
-
-.dynamicwidth {
-  width: 100%;
-}
-
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
   .SkeletonCard,
   .Card {
     width: 160px;
   }
-
-  .dynamicwidth {
-    width: 100%;
-  }
-
   .CoverWrapper {
     height: 200px;
   }
@@ -92,9 +59,6 @@
   .SkeletonCard,
   .Card {
     width: 208px;
-  }
-  .dynamicwidth {
-    width: 100%;
   }
   .CoverWrapper {
     height: 288px;

@@ -45,11 +45,7 @@ export default function Card({
   skeleton,
   cover,
   title,
-  subTitle,
   type = null,
-  coverLeft = false,
-  fixedWidth = true,
-  small = false,
 }) {
   if (skeleton) {
     return <SkeletonCard />;
@@ -68,9 +64,7 @@ export default function Card({
       }}
     >
       <a
-        className={`${styles.Card} ${className} ${
-          coverLeft ? styles.coverleft : ""
-        } ${!fixedWidth ? styles.dynamicwidth : ""}`}
+        className={`${styles.Card} ${className}`}
         ref={cardRef || null}
         tabIndex="0"
         onFocus={onFocus}
@@ -83,22 +77,17 @@ export default function Card({
         <div>
           <Text
             className={`${styles.Title}`}
-            type={small ? "text4" : "text1"}
+            type="text1"
             lines={2}
             clamp={true}
           >
             {title}
           </Text>
-          {subTitle && (
-            <Text type={small ? "text3" : "text2"} lines={1} clamp={true}>
-              {subTitle}
-            </Text>
-          )}
 
           {creators?.length > 0 && (
             <Text
               className={`${styles.Creator}`}
-              type={small ? "text3" : "text2"}
+              type="text2"
               lines={2}
               clamp={true}
             >
