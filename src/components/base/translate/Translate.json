@@ -902,8 +902,8 @@
         "en": "Articles"
       },
       "articlestitle": {
-        "da": "Andre artikler i samme tidsskrift",
-        "en": "Other articles this issue"
+        "da": "Alle artikler i samme udgivelse",
+        "en": "All articles in the same issue"
       },
       "tableHeadArticle": {
         "da": "Artikel",
@@ -2102,6 +2102,16 @@
       "title": {
         "da": "Relaterede tags",
         "en": "Related tags"
+      }
+    },
+    "similararticles": {
+      "title": {
+        "da": "Artikler fra %s med samme emner",
+        "en": "Articles from %s with same topics"
+      },
+      "unspecificTitle": {
+        "da": "Artikler med samme emner",
+        "en": "Articles with same topics"
       }
     },
     "bookmark": {

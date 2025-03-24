@@ -6,6 +6,7 @@ import Description from "../description";
 import RelatedWorks from "../relatedworks";
 import Content from "../content";
 import Keywords from "../keywords";
+import SimilarArticles from "../similararticles";
 import Related from "../related";
 import Reviews from "../reviews";
 import BibliographicData from "../bibliographicdata";
@@ -120,10 +121,20 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
             <Keywords workId={workId} />
             <Related workId={workId} />
           </section>
+
           <PeriodicaArticles
             workId={workId}
             anchor-label={Translate({ context: "periodica", label: "title" })}
           />
+          <section
+            anchor-label={Translate({
+              context: "similararticles",
+              label: "unspecificTitle",
+            })}
+          >
+            <SimilarArticles workId={workId} />
+          </section>
+
           <Issues
             workId={workId}
             anchor-label={Translate({

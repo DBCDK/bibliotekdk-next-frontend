@@ -21,6 +21,33 @@ export function PeriodicaIssuByWork({ id }) {
           }
         }
         periodicaInfo {
+          similarArticles {
+            work {
+              workId
+              latestPublicationDate
+              titles {
+                full
+              }
+              creators {
+                display
+              }
+              manifestations {
+                mostRelevant {
+                  cover {
+                    detail
+                  }
+                  hostPublication {
+                    issue
+                  }
+                }
+              }
+            }
+          }
+          parent {
+            titles {
+              main
+            }
+          }
           issue {
             display
             works {
