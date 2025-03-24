@@ -49,7 +49,7 @@
 
 .coverleft .CoverWrapper {
   min-width: 74px;
-  max-width: 74px; 
+  max-width: 74px;
   height: 100px;
   justify-content: flex-start;
   padding-right: var(--pt1);
