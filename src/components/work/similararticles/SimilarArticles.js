@@ -6,7 +6,8 @@ import Section from "@/components/base/section";
 import Translate from "@/components/base/translate";
 
 import { PeriodicaIssuByWork } from "@/lib/api/periodica.fragments";
-import { Col, Row } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import Card from "@/components/base/card";
 import { useMemo } from "react";
 
