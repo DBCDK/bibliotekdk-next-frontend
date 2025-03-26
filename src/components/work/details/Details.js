@@ -67,7 +67,6 @@ function Details({ className = "", manifestation = {}, work = {} }) {
       space={{ top: false, bottom: "var(--pt4)" }}
       className={`${className}`}
       subtitle={subtitle}
-      divider={false}
     >
       <Row className={`${styles.details}`}>
         <Col xs={12}>
