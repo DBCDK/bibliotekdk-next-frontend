@@ -63,8 +63,6 @@ export function Item({
   const onClick = useAccordionButton(eventKey, () => {
     if (id && `#${id}` !== window.location.hash) {
       router.replace({
-        pathname: router.pathname,
-        query: router.query,
         hash: id,
       });
     }
