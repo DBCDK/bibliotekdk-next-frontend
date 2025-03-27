@@ -156,10 +156,10 @@ WorkPage.getInitialProps = async (ctx) => {
   const queryRes = await fetcher(
     {
       ...workIdToTitleCreator({ workId: ctx.query.workId }),
-      accessToken: session?.accessToken,
     },
     ctx.req.headers["user-agent"],
-    ctx.req.headers["x-forwarded-for"] || ctx.req.connection.remoteAddress
+    ctx.req.headers["x-forwarded-for"] || ctx.req.connection.remoteAddress,
+    { headers: ctx.req.headers }
   );
 
   const fixedUrl = extractFixedUrl(queryRes, ctx);
