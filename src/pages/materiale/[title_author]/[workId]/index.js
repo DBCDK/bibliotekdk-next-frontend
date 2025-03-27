@@ -29,7 +29,6 @@ import {
 import { workIdToTitleCreator } from "@/lib/api/work.fragments";
 import { encodeTitleCreator } from "@/lib/utils";
 import { fetcher } from "@/lib/api/api";
-import { getServerSession } from "@dbcdk/login-nextjs/server";
 
 /**
  * Renders the WorkPage component
