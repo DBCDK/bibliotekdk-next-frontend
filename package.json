@@ -91,7 +91,7 @@
     "style-loader": "^3.3.3"
   },
   "dependencies": {
-    "@dbcdk/login-nextjs": "^4.0.4",
+    "@dbcdk/login-nextjs": "^4.0.9",
     "@rooks/use-mutation-observer": "^4.11.0",
     "autosuggest-highlight": "^3.1.1",
     "bootstrap": "^5.2.3",
