@@ -17,12 +17,14 @@ function parseRis(response) {
  * @param accessToken
  * @returns {Promise<*>}
  */
-export async function getRis(pidOrPids, accessToken) {
+export async function getRis(pidOrPids, headers) {
   const pids = Array.isArray(pidOrPids) ? pidOrPids : [pidOrPids];
   const querystr = manifestationFragments.ris(pids);
 
-  const paramsForApi = { ...querystr, accessToken };
-  const response = await fetcher(paramsForApi);
+  const paramsForApi = { ...querystr };
+  const response = await fetcher(paramsForApi, undefined, undefined, {
+    headers,
+  });
   return parseRis(response);
 }
 
@@ -33,13 +35,10 @@ export async function getRis(pidOrPids, accessToken) {
  * @returns {Promise<void>}
  */
 export default async function risHandler(req, res) {
-  // get an access token for api
-  const context = { req, res };
-  const accessToken = await getAccessToken(context);
   // get ris
   const { pids } = req.query;
   const pidsAsArray = pids.split(",");
-  const response = await getRis(pidsAsArray, accessToken);
+  const response = await getRis(pidsAsArray, req.headers);
   // send response
   res.setHeader("Content-Type", "text/plain; charset=utf-8");
   res.status(200).send(response);

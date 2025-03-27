@@ -57,7 +57,9 @@ export async function fetchAll(
             accessToken: session?.accessToken,
           });
           try {
-            const queryRes = await fetcher(queryKey, userAgent, ip);
+            const queryRes = await fetcher(queryKey, userAgent, ip, {
+              headers: context.req.headers,
+            });
             return { queryKey, queryRes };
           } catch (e) {
             return null;
