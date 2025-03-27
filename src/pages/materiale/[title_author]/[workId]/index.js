@@ -152,7 +152,6 @@ WorkPage.getInitialProps = async (ctx) => {
   const queries = Object.values(init.initialData);
 
   // user session
-  let session = await getServerSession(ctx.req, ctx.res);
   const queryRes = await fetcher(
     {
       ...workIdToTitleCreator({ workId: ctx.query.workId }),

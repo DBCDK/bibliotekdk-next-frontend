@@ -1,6 +1,5 @@
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import { fetcher } from "@/lib/api/api";
-import { getAccessToken } from "./refworks";
 
 /**
  * Parse response
