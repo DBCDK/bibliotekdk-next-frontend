@@ -221,13 +221,15 @@ export function Keywords({
   const title = isPeriodica
     ? Translate({ ...context, label: "periodicaTitle" })
     : Translate({ ...context, label: "title" });
-  const subtitle = isPeriodica
-    ? Translate({
+  const subtitle = isPeriodica ? (
+    <Text type="text2">
+      {Translate({
         ...context,
         label: "periodicaSubtitle",
         vars: [work?.titles?.main],
-      })
-    : null;
+      })}
+    </Text>
+  ) : null;
 
   return (
     <Section

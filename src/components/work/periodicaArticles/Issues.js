@@ -8,7 +8,7 @@ import { useData } from "@/lib/api/api";
 import { PeriodicaAccordion } from "@/components/work/periodicaArticles/PeriodicaArticles";
 import translate from "@/components/base/translate/Translate";
 
-export function Issues({ isLoading, entries }) {
+export function Issues({ isLoading, entries, periodicaTitle }) {
   if (isLoading) {
     return <IssuesSkeleton />;
   }
@@ -23,9 +23,19 @@ export function Issues({ isLoading, entries }) {
       ])
       .flat();
   };
+
   return (
     <Section
       title={translate({ context: "periodica", label: "title" })}
+      subtitle={
+        <Text type="text2">
+          {translate({
+            context: "periodica",
+            label: "subtitle",
+            vars: [periodicaTitle],
+          })}
+        </Text>
+      }
       divider={{ content: false }}
       dataCy="section-fisk"
       sectionTag="div" // Section sat in parent
@@ -72,5 +82,11 @@ export default function Wrap({ workId }) {
 
   const entries = data?.work?.periodicaInfo?.periodica?.issues?.entries;
 
-  return <Issues isLoading={isLoading} entries={entries} />;
+  return (
+    <Issues
+      periodicaTitle={data?.work?.titles?.main}
+      isLoading={isLoading}
+      entries={entries}
+    />
+  );
 }

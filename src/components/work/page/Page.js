@@ -26,6 +26,7 @@ import Custom404 from "@/pages/404";
 import Universes from "@/components/work/universes/Universes";
 import PeriodicaArticles from "@/components/work/periodicaArticles/PeriodicaArticles";
 import Issues from "@/components/work/periodicaArticles/Issues";
+import PeriodicaOverview from "../periodicaoverview/PeriodicaOverview";
 
 /**
  * The work page React component
@@ -97,6 +98,7 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
             type={type}
             anchor-label={Translate({ context: "description", label: "title" })}
           />
+
           <Parts
             workId={workId}
             type={type}
@@ -122,18 +124,26 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
             <Related workId={workId} />
           </section>
 
+          <PeriodicaOverview
+            anchor-label={Translate({
+              context: "periodica",
+              label: "periodicaOverviewTitle",
+            })}
+            workId={workId}
+          />
+
           <PeriodicaArticles
             workId={workId}
             anchor-label={Translate({ context: "periodica", label: "title" })}
           />
-          <section
+
+          <SimilarArticles
+            workId={workId}
             anchor-label={Translate({
               context: "similararticles",
               label: "unspecificTitle",
             })}
-          >
-            <SimilarArticles workId={workId} />
-          </section>
+          />
 
           <Issues
             workId={workId}

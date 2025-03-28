@@ -44,8 +44,27 @@ export function PeriodicaIssuByWork({ id }) {
             }
           }
           parent {
+            workId
             titles {
               main
+              full
+            }
+            manifestations {
+              bestRepresentation {
+                publisher
+                cover {
+                  detail
+                }
+              }
+            }
+            periodicaInfo {
+              periodica {
+                subjects {
+                  entries {
+                    term
+                  }
+                }
+              }
             }
           }
           issue {
@@ -107,6 +126,7 @@ export function AllPeriodicaIssuesByworkId({ id, issuesLimit, worksLimit }) {
       work(id: $id) {
         titles {
           full
+          main
         }
         periodicaInfo {
           periodica {

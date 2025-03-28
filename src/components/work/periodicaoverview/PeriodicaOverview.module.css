@@ -1,0 +1,10 @@
+.words {
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: var(--pt1);
+  margin-top: var(--pt1);
+}
+.words a {
+  display: inline;
+  margin: 0 var(--pt3) var(--pt1) 0;
+}

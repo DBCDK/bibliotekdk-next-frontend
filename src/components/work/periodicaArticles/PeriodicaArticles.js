@@ -35,21 +35,30 @@ export function PeriodicaArticles({ manifestations, issue, isLoading }) {
       sectionTag="div" // Section sat in parent
     >
       {/* we want an accordion to show articles in issue*/}
-      <PeriodicaAccordion manifestations={manifestations} issue={issue} />
+      <PeriodicaAccordion
+        manifestations={manifestations}
+        issue={issue}
+        periodicaTitle={manifestations?.[0]?.hostPublication?.title}
+      />
     </Section>
   );
 }
 
-export function PeriodicaAccordion({ manifestations, issue }) {
-  const publictationTitle = `${
-    manifestations?.[0]?.hostPublication?.title || ""
-  } ${issue}`;
+export function PeriodicaAccordion({ manifestations, issue, periodicaTitle }) {
+  let publictationTitle = issue;
+  if (periodicaTitle) {
+    publictationTitle = periodicaTitle + " " + issue;
+  }
 
   return (
     <Accordion>
       <Item
         useScroll={false}
-        title={publictationTitle}
+        title={
+          <Text type="text1" className={styles.accordiontitle}>
+            {publictationTitle}
+          </Text>
+        }
         eventKey={publictationTitle}
         headerContentClassName={styles.headerContent}
       >
@@ -90,7 +99,9 @@ function PeriodicaHeader() {
     <>
       {header.map((head, index) => (
         <div className={styles.headline} key={`tableheader-${index}`}>
-          {translate({ context: "periodica", label: `${head}` })}
+          <Text type="text3">
+            {translate({ context: "periodica", label: `${head}` })}
+          </Text>
         </div>
       ))}
     </>
@@ -115,11 +126,11 @@ export function PeriodicaArticle({ manifestation }) {
             href={url}
             border={{ top: false, bottom: { keepVisible: true } }}
           >
-            {manifestation.titles.full}
+            <Text type="text1">{manifestation.titles.full}</Text>
           </Link>
         </Text>
 
-        <Text type="text3">
+        <Text type="text2" className={styles.creators}>
           {manifestation.creators.map((crea) => crea.display).join(", ")}
         </Text>
       </div>
@@ -130,17 +141,17 @@ export function PeriodicaArticle({ manifestation }) {
     <>
       <div className={styles.item}>{firstColumn()}</div>
       <div className={styles.item}>
-        <Text type="text3">{manifestation.abstract}</Text>
+        <Text type="text2">{manifestation.abstract}</Text>
       </div>
       <div className={styles.item}>
-        <Text type="text3">
+        <Text type="text2" lines={4} clamp>
           {manifestation.subjects.dbcVerified
             .map((sub) => sub.display)
             .join(", ")}
         </Text>
       </div>
       <div className={styles.item}>
-        <Text type="text3">
+        <Text type="text2">
           {manifestation.physicalDescription.summaryFull}
         </Text>
       </div>
