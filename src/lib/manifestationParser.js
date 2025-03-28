@@ -7,7 +7,7 @@ import { FlatSubjectsForFullManifestation } from "@/components/work/keywords/Key
 
 import { parseFunction } from "@/lib/centralParsers.utils";
 import { getAudienceValues } from "@/components/work/details/utils/export.utils";
-import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
+import { getUrlByType } from "@/components/search/advancedSearch/utils";
 import upperFirst from "lodash/upperFirst";
 
 // fields to handle - add to handle a field eg. subjects or lix or let or ...
@@ -609,7 +609,7 @@ function renderDk5(classifications = []) {
   return dk5Mark.map((dk, index) => (
     <Text tag={"div"} key={`${dk?.display}${index}`}>
       <Link
-        href={getAdvancedUrl({ type: "dk5", value: dk.code })}
+        href={getUrlByType({ type: "dk5", value: dk.code })}
         border={{ top: false, bottom: { keepVisible: true } }}
       >
         {`${dk.code}, ${dk.heading}`}
@@ -631,7 +631,7 @@ export function RenderContributors({ contributors = [] }) {
   return contribToRender?.map((cont, idx) => (
     <Text tag={"div"} key={`${cont?.display}${idx}`}>
       <Link
-        href={getAdvancedUrl({ type: "creator", value: cont.display })}
+        href={getUrlByType({ type: "creator", value: cont.display })}
         border={{ top: false, bottom: { keepVisible: true } }}
       >
         {cont.display}
@@ -657,7 +657,7 @@ export function ParsedAndRenderedCreators({
   return creators?.map((C, idx) => (
     <Text tag={"div"} key={`${C?.display}${idx}`}>
       <Link
-        href={getAdvancedUrl({ type: "creator", value: C.display })}
+        href={getUrlByType({ type: "creator", value: C.display })}
         border={{ top: false, bottom: { keepVisible: true } }}
       >
         {C.display}
