@@ -73,7 +73,6 @@ describe("Search", () => {
       checkPrefilledQueryParameters();
 
       cy.get("[data-cy=suggester-input]").clear().type("something else");
-
       cy.get("[data-cy=header-searchbutton]").first().click();
 
       // Check URL query parameters are as expected

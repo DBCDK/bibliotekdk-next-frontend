@@ -12,7 +12,7 @@ describe("bibliographic data", () => {
       .find("a")
       .should("have.attr", "href")
       .should("not.be.empty")
-      .and("contain", "/avanceret?fieldSearch");
+      .and("contain", "/find?q.all= ");
     cy.get("[data-cy=link-references]").contains(
       "Download til referencesystemer"
     );
