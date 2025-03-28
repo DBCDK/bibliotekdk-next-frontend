@@ -14,7 +14,7 @@ import Translate from "@/components/base/translate";
 import styles from "./Keywords.module.css";
 import { uniqueSubjectEntries } from "@/lib/utils";
 import { useMemo } from "react";
-import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
+import { getUrlByType } from "@/components/search/advancedSearch/utils";
 
 /**
  * bibliotek.dk subjectUrl
@@ -26,7 +26,7 @@ import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
  */
 export function subjectUrl(keyword, traceId) {
   // we now search subjects in advanced search
-  return getAdvancedUrl({ type: "subject", value: keyword, traceId });
+  return getUrlByType({ type: "subject", value: keyword, traceId });
 }
 
 /**

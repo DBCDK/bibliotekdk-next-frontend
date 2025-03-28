@@ -13,7 +13,7 @@ import Image from "@/components/base/image";
 import { toLower } from "lodash/toLower";
 import { parseFunction } from "@/lib/centralParsers.utils";
 import { getAudienceValues } from "./export.utils";
-import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
+import { getUrlByType } from "@/components/search/advancedSearch/utils";
 import { getSeriesUrl, getUniverseUrl } from "@/lib/utils";
 import React from "react";
 import translate from "@/components/base/translate";
@@ -246,7 +246,7 @@ function RenderCreatorValues({ values, skeleton }) {
             className={styles.creatorWrapper}
           >
             <Link
-              href={getAdvancedUrl({ type: "creator", value: person.display })}
+              href={getUrlByType({ type: "creator", value: person.display })}
               dataCy={cyKey({
                 name: person.display,
                 prefix: "details-creatore",
@@ -308,7 +308,7 @@ function RenderMovieActorValues({ values, skeleton }) {
         return (
           <div key={`actors-${index}`} className={styles.link_list}>
             <Link
-              href={getAdvancedUrl({ type: "creator", value: person.display })}
+              href={getUrlByType({ type: "creator", value: person.display })}
               dataCy={cyKey({
                 name: person?.display,
                 prefix: "overview-genre",
@@ -678,7 +678,7 @@ function RenderDk5({ values }) {
   return values.map((dk, index) => (
     <Text type="text4" tag={"div"} key={`${dk?.display}${index}`}>
       <Link
-        href={getAdvancedUrl({ type: "dk5", value: dk.code })}
+        href={getUrlByType({ type: "dk5", value: dk.code })}
         border={{ top: false, bottom: { keepVisible: true } }}
       >
         {dk.display}
