@@ -156,6 +156,11 @@ export default function Wrap({ workId }) {
   const [page, setPage] = useState(1);
   const itemsPerPage = 5;
   const worksLimit = 20;
+  useEffect(() => {
+    if (workId) {
+      setPage(1);
+    }
+  }, [workId]);
 
   const { data, isLoading } = useData(
     AllPeriodicaIssuesByworkId({
