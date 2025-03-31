@@ -17,7 +17,7 @@
 /* article grid (thank you chatgpt) */
 .container {
   display: grid;
-  grid-template-columns: 2fr 2fr 1fr 1fr; /* Varying column widths */
+  grid-template-columns: 3fr 3fr 2fr 1fr; /* Varying column widths */
   background-color: var(--white);
 }
 
@@ -28,4 +28,12 @@
 
 .headline {
   padding: var(--pt1);
+}
+
+.creators {
+  margin-top: var(--pt1);
+}
+
+.accordiontitle {
+  margin-left: var(--pt2);
 }

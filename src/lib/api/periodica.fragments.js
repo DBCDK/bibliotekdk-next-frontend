@@ -44,8 +44,27 @@ export function PeriodicaIssuByWork({ id }) {
             }
           }
           parent {
+            workId
             titles {
               main
+              full
+            }
+            manifestations {
+              bestRepresentation {
+                publisher
+                cover {
+                  detail
+                }
+              }
+            }
+            periodicaInfo {
+              periodica {
+                subjects {
+                  entries {
+                    term
+                  }
+                }
+              }
             }
           }
           issue {
@@ -99,20 +118,26 @@ export function PeriodicaIssuByWork({ id }) {
  * @returns {{apiUrl: string, query: string, variables: {id, issuesLimit, worksLimit}, slowThreshold: number}}
  * @constructor
  */
-export function AllPeriodicaIssuesByworkId({ id, issuesLimit, worksLimit }) {
+export function AllPeriodicaIssuesByworkId({
+  id,
+  issuesOffset,
+  issuesLimit,
+  worksLimit,
+}) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
-    query GetPeriodicaByWork($id: String!, $issuesLimit: Int!, $worksLimit: Int!) {
+    query GetPeriodicaByWork($id: String!, $issuesOffset: Int! $issuesLimit: Int!, $worksLimit: Int!) {
       work(id: $id) {
         titles {
           full
+          main
         }
         periodicaInfo {
           periodica {
             issues {
               hitcount
-              entries(limit: $issuesLimit) {
+              entries(offset: $issuesOffset, limit: $issuesLimit) {
                 display
                 works(limit: $worksLimit) {
                   workId
@@ -158,7 +183,7 @@ export function AllPeriodicaIssuesByworkId({ id, issuesLimit, worksLimit }) {
       }
     }
     `,
-    variables: { id, issuesLimit, worksLimit },
+    variables: { id, issuesOffset, issuesLimit, worksLimit },
     slowThreshold: 3000,
   };
 }

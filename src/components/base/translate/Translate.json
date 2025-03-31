@@ -901,6 +901,10 @@
         "da": "Artikler",
         "en": "Articles"
       },
+      "subtitle": {
+        "da": "Fra de seneste udgivelser af %s",
+        "en": "From the most recent issues of %s"
+      },
       "articlestitle": {
         "da": "Alle artikler i samme udgivelse",
         "en": "All articles in the same issue"
@@ -920,6 +924,14 @@
       "tableHeaderExtent": {
         "da": "Omfang",
         "en": "Extent"
+      },
+      "periodicaOverviewTitle": {
+        "da": "Tidsskrift",
+        "en": "Periodica"
+      },
+      "periodicaOverviewSubtitle": {
+        "da": "Artiklen er en del af %s",
+        "en": "The article is a part of %s"
       }
     },
     "articles": {
