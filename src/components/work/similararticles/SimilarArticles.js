@@ -10,6 +10,7 @@ import { PeriodicaIssuByWork } from "@/lib/api/periodica.fragments";
 import { useMemo } from "react";
 import ScrollSnapSlider from "@/components/base/scrollsnapslider/ScrollSnapSlider";
 import MaterialCard from "@/components/base/materialcard/MaterialCard";
+import styles from "./SimilarArticles.module.css";
 
 /**
  * The Component function
@@ -45,8 +46,12 @@ export function SimilarArticles({ periodicaTitle, works }) {
 
   return (
     <Section
+      className={styles.section}
       title={title}
       sectionTag="div" // Section sat in parent
+      divider={false}
+      backgroundColor="var(--concrete)"
+      space={{ bottom: "var(--pt6)" }}
     >
       <ScrollSnapSlider sliderId={"similar-articles-slider"}>
         {sorted?.map((work) => {
