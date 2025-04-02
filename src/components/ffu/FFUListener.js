@@ -19,9 +19,10 @@ export default function Listener() {
     hasCulrUniqueId,
     loggedInAgencyId,
     loggedInBranchId,
+    isLoading: isAuthenticatedIsLoading,
   } = useAuthentication();
 
-  const { loanerInfo, isLoading } = useLoanerInfo();
+  const { loanerInfo, isLoading: loanerInfoIsLoading } = useLoanerInfo();
 
   const agencyId = loggedInAgencyId;
   const branchId = loggedInBranchId;
@@ -44,8 +45,14 @@ export default function Listener() {
 
   const hasVerificationObject = verification.exist();
 
+  const dataIsReady =
+    !isAuthenticatedIsLoading &&
+    !verification.isLoading &&
+    !loanerInfoIsLoading &&
+    loanerInfo;
+
   useEffect(() => {
-    if (!isLoading && loanerInfo) {
+    if (dataIsReady) {
       // User is NOT authenticated through adgangsplatformen
       if (!isAuthenticated) {
         return;
@@ -119,7 +126,7 @@ export default function Listener() {
         }
       }
     }
-  }, [isAuthenticated, loanerInfo, isLoading, branchId, agencies]);
+  }, [isAuthenticated, dataIsReady, branchId, agencies]);
 
   return null;
 }

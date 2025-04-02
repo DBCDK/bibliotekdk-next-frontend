@@ -1,31 +1,15 @@
-/**
- * @file
- *
- * hook to handle CPR verification process
- */
-
 import useSWR from "swr";
 import { useEffect } from "react";
-
 import useAuthentication from "@/components/hooks/user/useAuthentication";
-import {
-  setLocalStorageItem,
-  getLocalStorageItem,
-  removeLocalStorageItem,
-} from "@/lib/utils";
 
 /**
  * Settings
  */
 
 // allowed token types
-const TYPE = { FFU: "ffu", FOLK: "folk" };
-// storage key name
-const KEY_NAME = "verification";
-// verification process ttl (when using read() function)
-const EXPIRATION_TTL = 1000 * 60 * 60; // 60 minutes
-// verification object ttl (when using exist() function)
-const TS_TTL = 1000 * 60 * 60 * 24; // 24 hours
+const TYPE = { FFU: "FFU", FOLK: "FOLK" };
+//
+const TTL = 1000 * 60 * 60 * 24; // 24 hours
 // wipe verification if an anon session is returned
 const CLEAR_ON_SIGNOUT = true;
 
@@ -46,11 +30,18 @@ const CLEAR_ON_SIGNOUT = true;
  *
  */
 export default function useVerification() {
-  const { data, mutate, isValidating } = useSWR(KEY_NAME, (key) =>
-    JSON.parse(getLocalStorageItem(key) || "null")
+  const { data, mutate, isValidating } = useSWR(
+    "/api/verification/read",
+    fetcher
   );
 
-  const { isAuthenticated } = useAuthentication();
+  const { isAuthenticated, isLoading } = useAuthentication();
+
+  async function fetcher(url) {
+    const res = await fetch(url);
+    const json = await res.json();
+    return json.data;
+  }
 
   /**
    * cleanup
@@ -62,142 +53,85 @@ export default function useVerification() {
       // data is fetched
       if (!isValidating && data) {
         // user is not loggedin (anon sesison)
-        if (!isAuthenticated) {
-          _close();
+        if (!isAuthenticated && !isLoading) {
+          _delete();
         }
       }
     }
-  }, [isAuthenticated, data, isValidating]);
-
-  /**
-   * remove already used props from props obj.
-   *
-   * @param {object} props
-   * @returns {object} props.type
-   *
-   */
-  function _trim(props) {
-    delete props.type;
-    delete props.accessToken;
-    return props;
-  }
+  }, [isAuthenticated, isLoading, data, isValidating]);
 
   /**
    * start an verification process
    *
-   * @param {string} props.accessToken
+   * @param {string} props.origin
    * @param {string} props.type
    *
    */
-  function _create(props = {}) {
-    const { type, accessToken } = props;
+  async function _create({ type, origin } = {}) {
+    console.log("useVerification => create: props", { type, origin });
 
-    // clear verifications
-    _close();
+    const payload = {
+      ...(TYPE[type] && { type: TYPE[type] }),
+      ...(origin && { origin }),
+    };
 
-    const ts = Date.now();
-    const ttl = EXPIRATION_TTL;
-    const expires = ts + ttl;
+    await fetch("/api/verification/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
 
-    // accesstoken type
-    const _type = type && TYPE[type];
-
-    // token obj
-    const obj = {};
-
-    // if valid type
-    if (_type) {
-      obj.tokens = { [_type]: accessToken };
-    }
-
-    // trim props from top level (added in tokens obj)
-    props = _trim(props);
-
-    const _data = { ...props, expires, ts, ...obj };
-    setLocalStorageItem(KEY_NAME, JSON.stringify(_data));
-    mutate(_data);
+    mutate();
   }
 
   /**
    * update an existing verification process
    *
-   * @param {string} props.accessToken
    * @param {string} props.type
-   * @param {string} props.origin
    *
    */
-  function _update(props = {}) {
-    const { type, accessToken } = props;
+  async function _update({ type } = {}) {
+    console.log("useVerification => update: props", { type });
 
-    const ts = Date.now();
+    const payload = {
+      ...(TYPE[type] && { type: TYPE[type] }),
+    };
 
-    // if not expired
-    if (data?.expires > ts) {
-      // accesstoken type
-      const _type = TYPE[type];
-      // if valid type add token
-      if (_type) {
-        // remove already used props
-        props = _trim(props);
+    await fetch("/api/verification/update", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
 
-        const _data = {
-          ...data,
-          ...props,
-          tokens: { ...data.tokens, [_type]: accessToken },
-        };
-
-        setLocalStorageItem(KEY_NAME, JSON.stringify(_data));
-        mutate(_data);
-      }
-    }
+    mutate();
   }
 
   /**
    * close an open verification process
    */
-  function _close() {
-    removeLocalStorageItem(KEY_NAME);
-    mutate(null);
+  async function _delete() {
+    console.log("useVerification delete called ....");
+
+    await fetch("/api/verification/delete", { method: "POST" });
+    mutate(null, false);
   }
 
-  /**
-   * read an open verification process WITHIN expiration
-   *  @returns {object|null}
-   */
   function _read() {
-    const ts = Date.now();
-
-    if (data?.expires > ts) {
-      return data;
-    }
-
-    // expired or unset verification
-    return null;
+    return data?.expires > Date.now() ? data : null;
   }
 
-  /**
-   * check if a verification process exist BEYOND expiration
-   *  @returns {boolean}
-   */
   function _exist() {
-    const ts = Date.now();
-    const ttl = TS_TTL;
-    const expires = data?.ts + ttl;
-
-    if (expires > ts) {
-      return true;
-    }
-
-    // expired or unset verification
-    return false;
+    return data?.ts + TTL > Date.now();
   }
+
+  console.log("useVerification => data", _read());
 
   return {
     exist: _exist,
     create: _create,
     read: _read,
     update: _update,
-    delete: _close,
+    delete: _delete,
     isLoading: isValidating && !data,
   };
 }

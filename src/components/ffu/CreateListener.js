@@ -87,7 +87,7 @@ export default function Listener() {
       reset();
 
       // Delete verification
-      verification.delete();
+      // verification.delete();
     }
   }, [mutate, modal.isVisible, error]);
 

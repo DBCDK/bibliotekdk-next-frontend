@@ -10,7 +10,6 @@ import Button from "@/components/base/button";
 import { signIn } from "@dbcdk/login-nextjs/client";
 import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
 import useVerification from "@/components/hooks/useVerification";
-import useAccessToken from "@/components/hooks/user/useAccessToken";
 
 import useStorage from "@/components/hooks/useStorage";
 
@@ -26,7 +25,6 @@ export default function Verify({ modal, context }) {
 
   const index = modal.index?.();
 
-  const accessToken = useAccessToken();
   const verification = useVerification();
   const storage = useStorage();
 
@@ -79,7 +77,6 @@ export default function Verify({ modal, context }) {
 
     // create or update session verfification process
     verification.update({
-      accessToken,
       type: "FFU",
     });
 

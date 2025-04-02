@@ -7,21 +7,18 @@ import { useModal } from "@/components/_modal/Modal";
 import IconButton from "@/components/base/iconButton/IconButton";
 
 import useVerification from "@/components/hooks/useVerification";
-import useAccessToken from "@/components/hooks/user/useAccessToken";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 export default function AddLibraryButton({ className = "" }) {
   const modal = useModal();
   const { isCPRValidated } = useAuthentication();
 
-  const accessToken = useAccessToken();
   const verification = useVerification();
 
   function handleOnClick() {
     if (isCPRValidated) {
       // create a verification process - store current folk-library token
       verification.create({
-        accessToken,
         type: "FOLK",
         origin: "addLibraryButton",
       });
