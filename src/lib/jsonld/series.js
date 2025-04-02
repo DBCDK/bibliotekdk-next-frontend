@@ -55,7 +55,11 @@ export function getJSONLD({ series }) {
   };
   // find an image to represent the serie
   const serieImage = res?.hasPart?.find((part) => part?.image?.url);
-  res.image = serieImage && serieImage?.image?.url;
+  // res.image = serieImage && serieImage?.image?.url;
+  res.image = serieImage && {
+    "@type": "ImageObject",
+    url: serieImage?.image?.url,
+  };
 
   return res;
 }
