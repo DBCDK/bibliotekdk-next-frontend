@@ -29,7 +29,7 @@ export default function SeriesPage() {
     return <Custom404 />;
   }
 
-  const imgUrl = jsonld.image;
+  const imgUrl = jsonld?.image;
 
   const description =
     seriesData?.series?.description ||
