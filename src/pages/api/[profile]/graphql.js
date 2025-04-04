@@ -21,6 +21,7 @@ export function sanitizeHeaders(originalHeaders, accessToken) {
     "x-tracking-consent",
     "x-session-token",
     "x-unique-visitor-id",
+    "x-caused-by",
     "User-Agent",
   ];
 
