@@ -8,8 +8,6 @@ export default async function handler(req, res) {
   const token = cookies[COOKIE_NAME];
   const payload = token ? await decodeCookie(token) : null;
 
-  console.log("server read => payload", payload);
-
   if (!payload) {
     return res.status(200).json({ data: null });
   }
@@ -18,8 +16,8 @@ export default async function handler(req, res) {
 
   // Byg nyt tokens-objekt med booleans
   const tokenFlags = {
-    FFU: Boolean(tokens.FFU),
-    FOLK: Boolean(tokens.FOLK),
+    ffu: Boolean(tokens.ffu),
+    folk: Boolean(tokens.folk),
   };
 
   res.status(200).json({

@@ -40,8 +40,6 @@ export default async function handler(req, res) {
     ...(type && accessToken && { tokens: { [type]: accessToken } }),
   };
 
-  console.log("server create => payload", payload);
-
   const signedJwt = await encodeCookie(payload);
 
   const cookie = serialize(COOKIE_NAME, signedJwt, {

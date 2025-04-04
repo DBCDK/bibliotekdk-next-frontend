@@ -50,8 +50,6 @@ export default async function handler(req, res) {
     };
   }
 
-  console.log("server update => updated session", session);
-
   const newJwt = await encodeCookie(session);
 
   const cookie = serialize(COOKIE_NAME, newJwt, {

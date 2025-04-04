@@ -35,12 +35,6 @@ export default function useAuthentication() {
 
   const identityProviderUsed = data?.user?.identityProviderUsed;
 
-  console.log(
-    "############ fffffffffffffff",
-    isAuthenticated,
-    authenticatedSession
-  );
-
   return {
     isAuthenticated,
     hasCulrUniqueId,

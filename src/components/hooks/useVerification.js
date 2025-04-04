@@ -7,7 +7,7 @@ import useAuthentication from "@/components/hooks/user/useAuthentication";
  */
 
 // allowed token types
-const TYPE = { FFU: "FFU", FOLK: "FOLK" };
+const TYPE = { FFU: "ffu", FOLK: "folk" };
 //
 const TTL = 1000 * 60 * 60 * 24; // 24 hours
 // wipe verification if an anon session is returned
@@ -68,8 +68,6 @@ export default function useVerification() {
    *
    */
   async function _create({ type, origin } = {}) {
-    console.log("useVerification => create: props", { type, origin });
-
     const payload = {
       ...(TYPE[type] && { type: TYPE[type] }),
       ...(origin && { origin }),
@@ -91,8 +89,6 @@ export default function useVerification() {
    *
    */
   async function _update({ type } = {}) {
-    console.log("useVerification => update: props", { type });
-
     const payload = {
       ...(TYPE[type] && { type: TYPE[type] }),
     };
@@ -110,8 +106,6 @@ export default function useVerification() {
    * close an open verification process
    */
   async function _delete() {
-    console.log("useVerification delete called ....");
-
     await fetch("/api/verification/delete", { method: "POST" });
     mutate(null, false);
   }
@@ -123,8 +117,6 @@ export default function useVerification() {
   function _exist() {
     return data?.ts + TTL > Date.now();
   }
-
-  console.log("useVerification => data", _read());
 
   return {
     exist: _exist,

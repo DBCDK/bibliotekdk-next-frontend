@@ -8,9 +8,51 @@ const AUTH_COOKIE_NAME = "next-auth.session-token";
 const VERIFICATION_COOKIE_NAME = "verification.cookie";
 
 /**
- * Helpers
+ * Filters incoming request headers and retains only a safe subset.
+ * Includes authorization and selected custom tracking headers,
+ * and removes potentially problematic ones like Host, Content-Length, etc.
+ *
+ * @param {object} originalHeaders - The original incoming headers from the request
+ * @param {string} accessToken - The bearer token to authorize the external API call
+ * @returns {object} A sanitized set of headers
  */
+export function sanitizeHeaders(originalHeaders, accessToken) {
+  const allowedCustomHeaders = [
+    "x-tracking-consent",
+    "x-session-token",
+    "x-unique-visitor-id",
+    "User-Agent",
+  ];
 
+  const safeHeaders = {
+    Authorization: `bearer ${accessToken}`,
+    "Content-Type": "application/json",
+    Accept: "*/*",
+  };
+
+  for (const [key, value] of Object.entries(originalHeaders)) {
+    const keyLower = key.toLowerCase();
+
+    if (keyLower.startsWith("x-") && !allowedCustomHeaders.includes(keyLower)) {
+      console.warn(`⚠️ Skipping unapproved custom header: ${key}: ${value}`);
+    }
+
+    if (allowedCustomHeaders.includes(keyLower)) {
+      safeHeaders[keyLower] = value;
+    }
+  }
+
+  return safeHeaders;
+}
+
+/**
+ * Extracts the user's access token from the available session cookie.
+ * Falls back to generating a new session if no valid JWT is present.
+ *
+ * @param {object} req - The incoming request object
+ * @param {object} res - The server response object
+ * @returns {Promise<string|null>} The extracted access token, or null if unavailable
+ */
 async function getAccessToken(req, res) {
   let jwtCookie =
     req.cookies[AUTH_COOKIE_NAME] || req.cookies[ANON_COOKIE_NAME];
@@ -24,6 +66,13 @@ async function getAccessToken(req, res) {
   return jwtToken?.accessToken || null;
 }
 
+/**
+ * Initiates a new server session and extracts a fresh anon-session cookie.
+ *
+ * @param {object} req - The incoming request
+ * @param {object} res - The server response object
+ * @returns {Promise<string|null>} The raw cookie string, or null
+ */
 async function getNewCookie(req, res) {
   await getServerSession(req, res);
   return res
@@ -33,25 +82,23 @@ async function getNewCookie(req, res) {
     ?.split("=")?.[1];
 }
 
-async function injectVerificationTokens(req) {
-  //  tjek for tokens in request to be replaced
-  const inputTokens = req.body?.variables?.input?.tokens;
-
+/**
+ * Injects server-stored verification tokens into the request body
+ * if the current mutation matches the expected CulrCreateAccount mutation.
+ *
+ * @param {object} body - The cloned request body object
+ * @param {object} cookies - Parsed cookies from the request
+ * @returns {Promise<object|undefined>} The updated request body or original if no tokens applied
+ */
+async function injectVerificationTokens(body, cookies) {
+  const inputTokens = body?.variables?.input?.tokens;
   if (!inputTokens) return;
 
-  const verificationJwt = req.cookies[VERIFICATION_COOKIE_NAME];
-  if (!verificationJwt) {
-    console.warn(
-      `CulrCreateAccount: No ${VERIFICATION_COOKIE_NAME} cookie was found`
-    );
-    return;
-  }
+  const verificationJwt = cookies[VERIFICATION_COOKIE_NAME];
+  if (!verificationJwt) return;
 
-  const verificationData = await decodeVerification(verificationJwt);
-  if (!verificationData?.tokens) {
-    console.warn("CulrCreateAccount: No tokens in verificationData");
-    return;
-  }
+  const verificationData = await decodeCookie(verificationJwt);
+  if (!verificationData?.tokens) return;
 
   const updatedTokens = {};
   for (const key of Object.keys(inputTokens)) {
@@ -60,16 +107,18 @@ async function injectVerificationTokens(req) {
     }
   }
 
-  // Update arguments with collected serverside tokens
-  req.body.variables.input.tokens = updatedTokens;
-
-  console.log("🔐 Injected verification tokens:", Object.keys(updatedTokens));
+  body.variables.input.tokens = updatedTokens;
+  return body;
 }
 
 /**
- * Main handler
+ * API Route handler for proxying GraphQL requests to FBI API.
+ * Automatically injects access tokens, sanitizes headers,
+ * and optionally replaces token payloads for selected mutations.
+ *
+ * @param {import("next").NextApiRequest} req
+ * @param {import("next").NextApiResponse} res
  */
-
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
@@ -80,22 +129,26 @@ export default async function handler(req, res) {
   const accessToken = await getAccessToken(req, res);
   const profile = req.query.profile;
 
-  const isCreateAccount = req.body?.query?.includes(
+  // Sets if serverside verification tokens should get injected in query variabels, this only counts for the CulrCreateAccount mutation
+  const shouldInject = req.body?.query?.startsWith(
     "mutation CulrCreateAccount"
   );
 
-  // Check if a specific CULR mutation call should be injected with collected serverside tokens
-  if (isCreateAccount) {
-    await injectVerificationTokens(req);
+  let body = req.body;
+  if (shouldInject) {
+    // Inject serverside verification object
+    body = await injectVerificationTokens(
+      structuredClone(req.body), // creates a req.body clone for mutations
+      req.cookies
+    );
   }
+
+  const headers = sanitizeHeaders(req.headers, accessToken);
 
   const graphqlRes = await fetch(`${fbiApiUrl}/${profile}/graphql`, {
     method: "POST",
-    headers: {
-      ...req.headers,
-      Authorization: `bearer ${accessToken}`,
-    },
-    body: JSON.stringify(req.body),
+    headers,
+    body: JSON.stringify(body),
   });
 
   const json = await graphqlRes.json();
