@@ -129,16 +129,23 @@ export default async function handler(req, res) {
   const accessToken = await getAccessToken(req, res);
   const profile = req.query.profile;
 
-  // Sets if serverside verification tokens should get injected in query variabels, this only counts for the CulrCreateAccount mutation
+  // Sæt headers der slår caching fra
+  res.setHeader(
+    "Cache-Control",
+    "no-store, no-cache, must-revalidate, proxy-revalidate"
+  );
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
+  res.setHeader("Surrogate-Control", "no-store");
+
   const shouldInject = req.body?.query?.startsWith(
     "mutation CulrCreateAccount"
   );
 
   let body = req.body;
   if (shouldInject) {
-    // Inject serverside verification object
     body = await injectVerificationTokens(
-      structuredClone(req.body), // creates a req.body clone for mutations
+      structuredClone(req.body),
       req.cookies
     );
   }
