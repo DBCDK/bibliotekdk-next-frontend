@@ -3,18 +3,10 @@
  * In this file we have functions related to data fetching.
  */
 import { createContext, useContext, useEffect, useState } from "react";
-import storybookConfig from "@/config";
-import getConfig from "next/config";
 import useSWR from "swr";
-import useAccessToken from "@/components/hooks/user/useAccessToken";
 import useCookieConsent from "@/components/hooks/useCookieConsent";
 import { useRouter } from "next/router";
 import { mutate as globalMutate } from "swr";
-
-// TODO handle config better
-const nextJsConfig = getConfig();
-const config =
-  (nextJsConfig && nextJsConfig.publicRuntimeConfig) || storybookConfig;
 
 export const APIMockContext = createContext();
 
@@ -55,18 +47,26 @@ export async function fetcher(
     query,
     variables,
     delay,
-    accessToken,
   } = typeof queryStr === "string" ? JSON.parse(queryStr) : queryStr;
 
-  const { uniqueVisitorId, statistics, parentTraceId } = extra;
+  const {
+    uniqueVisitorId,
+    statistics,
+    parentTraceId,
+    headers: orgHeaders = {},
+  } = extra;
 
   // Calculate apiUrl
-  const apiUrl =
-    apiUrlFromQuery && config[apiUrlFromQuery]?.url
-      ? config[apiUrlFromQuery]?.url
-      : config.fbi_api.url;
+  const host =
+    typeof window === "undefined"
+      ? "http://localhost:3000"
+      : window.location.origin;
+
+  const profile =
+    apiUrlFromQuery === ApiEnums.FBI_API ? "bibdk21" : "SimpleSearch";
 
   const headers = {
+    ...orgHeaders,
     "Content-Type": "application/json",
     "X-Unique-Visitor-ID": uniqueVisitorId || "", // Remove this when no longer used in FBI-API
     "X-Session-Token": uniqueVisitorId || "", // X-Unique-Visistor-ID has been renamed to this
@@ -75,9 +75,7 @@ export async function fetcher(
   if (parentTraceId) {
     headers["X-Caused-By"] = parentTraceId;
   }
-  if (accessToken) {
-    headers.Authorization = `Bearer ${accessToken}`;
-  }
+
   if (userAgent) {
     headers["user-agent"] = userAgent;
   }
@@ -86,7 +84,7 @@ export async function fetcher(
   }
 
   const start = Date.now();
-  const res = await fetch(apiUrl, {
+  const res = await fetch(`${host}/api/${profile}/graphql`, {
     method: "POST",
     headers,
     body: JSON.stringify({
@@ -199,7 +197,6 @@ export function useData(query) {
         revalidateOnFocus: false,
         revalidateOnMount: false,
       };
-
   // isSlow is set to true, when query is slow
   const [isSlow, setIsSlow] = useState(false);
 
@@ -302,10 +299,7 @@ function useFetcherImpl() {
  * Generates key based on the GraphQL query/variables
  */
 function useKeyGenerator() {
-  const accessToken = useAccessToken();
-
-  return (query) =>
-    accessToken && query && generateKey({ ...query, accessToken } || "");
+  return (query) => query && generateKey({ ...query } || "");
 }
 
 export const ApiEnums = Object.freeze({

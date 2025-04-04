@@ -29,7 +29,6 @@ import {
 import { workIdToTitleCreator } from "@/lib/api/work.fragments";
 import { encodeTitleCreator } from "@/lib/utils";
 import { fetcher } from "@/lib/api/api";
-import { getServerSession } from "@dbcdk/login-nextjs/server";
 
 /**
  * Renders the WorkPage component
@@ -152,14 +151,13 @@ WorkPage.getInitialProps = async (ctx) => {
   const queries = Object.values(init.initialData);
 
   // user session
-  let session = await getServerSession(ctx.req, ctx.res);
   const queryRes = await fetcher(
     {
       ...workIdToTitleCreator({ workId: ctx.query.workId }),
-      accessToken: session?.accessToken,
     },
     ctx.req.headers["user-agent"],
-    ctx.req.headers["x-forwarded-for"] || ctx.req.connection.remoteAddress
+    ctx.req.headers["x-forwarded-for"] || ctx.req.connection.remoteAddress,
+    { headers: ctx.req.headers }
   );
 
   const fixedUrl = extractFixedUrl(queryRes, ctx);

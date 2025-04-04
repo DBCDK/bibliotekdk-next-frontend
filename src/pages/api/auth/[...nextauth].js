@@ -87,9 +87,8 @@ export const options = {
     },
     session: async (...args) => {
       let res = await callbacks.session(...args);
-      // TODO: Agencies are now removed in jwt callback
-      // This could be removed when all active sessions are expired (30 days from now)
       delete res?.user?.agencies;
+      delete res?.accessToken;
       return res;
     },
   },

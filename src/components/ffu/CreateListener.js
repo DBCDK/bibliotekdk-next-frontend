@@ -110,7 +110,12 @@ export default function Listener() {
 
     // Create User in CULR
     culrMutation.post(createAccount(data));
-  }, [hasCulrUniqueId, isCPRValidated, hasValidVerificationProcess]);
+  }, [
+    hasCulrUniqueId,
+    isCPRValidated,
+    verification.isLoading,
+    hasValidVerificationProcess,
+  ]);
 
   return null;
 }

@@ -16,7 +16,6 @@ import Translate from "@/components/base/translate/Translate";
 import SearchResultList from "./searchResultList/SearchResultList";
 
 import useVerification from "@/components/hooks/useVerification";
-import useAccessToken from "@/components/hooks/user/useAccessToken";
 
 import styles from "./AddLibrary.module.css";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
@@ -184,7 +183,6 @@ export default function Wrap(props) {
   const { originUrl = null } = props;
 
   const { loanerInfo } = useLoanerInfo();
-  const accessToken = useAccessToken();
   const verification = useVerification();
 
   const agencies = loanerInfo?.agencies?.map(
@@ -225,7 +223,6 @@ export default function Wrap(props) {
       agencies={agencies}
       updateVerification={() =>
         verification.update({
-          accessToken,
           type: "FOLK",
         })
       }

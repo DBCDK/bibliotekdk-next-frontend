@@ -10,6 +10,7 @@ import { isFFUAgency, getBranchFromAgencies } from "@/utils/agency";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import useStorage from "../hooks/useStorage";
+import useVerification from "../hooks/useVerification";
 
 export default function Listener() {
   const { isAuthenticated, loggedInAgencyId, loggedInBranchId } =
@@ -17,6 +18,10 @@ export default function Listener() {
   const { loanerInfo } = useLoanerInfo();
 
   const storage = useStorage();
+
+  const verification = useVerification();
+
+  const hasVerificationObject = verification.exist();
 
   const agencyId = loggedInAgencyId;
   const branchId = loggedInBranchId;
@@ -36,6 +41,10 @@ export default function Listener() {
   const modal = useModal();
 
   useEffect(() => {
+    if (hasVerificationObject) {
+      return;
+    }
+
     // If The agency which the user has signedIn to, is NOT an FFU library
     if (!(agencyId && isFFUAgency(match))) {
       return;
@@ -72,7 +81,13 @@ export default function Listener() {
         }, 500);
       }
     }
-  }, [isAuthenticated, hasOmittedCulrData, branchId, agencies]);
+  }, [
+    isAuthenticated,
+    hasVerificationObject,
+    hasOmittedCulrData,
+    branchId,
+    agencies,
+  ]);
 
   return null;
 }
