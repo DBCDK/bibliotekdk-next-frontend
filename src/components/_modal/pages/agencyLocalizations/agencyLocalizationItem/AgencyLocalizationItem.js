@@ -24,6 +24,7 @@ function DefaultShowingOfAgencyBranches({ agencyId, pids }) {
   });
   const mostAvailableBranch = branchesByAvailability?.[0];
   const mostAvailableStatus = mostAvailableBranch?.holdings?.status;
+  const holdingsMessage = mostAvailableBranch?.holdingsMessage;
 
   const numberOfBranchesWithAvailable = branchesKnownStatus?.filter((branch) =>
     [
@@ -77,14 +78,7 @@ function DefaultShowingOfAgencyBranches({ agencyId, pids }) {
   }
 
   if (mostAvailableStatus === HoldingStatusEnum.NOT_ON_SHELF) {
-    return (
-      <Text clamp={true}>
-        {Translate({
-          context: "localizations",
-          label: "not_on_shelf",
-        })}
-      </Text>
-    );
+    return <Text clamp={true}>{holdingsMessage}</Text>;
   }
 
   // TODO: Fix NEVER, should be NO_RESPONSE
