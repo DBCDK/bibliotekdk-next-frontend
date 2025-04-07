@@ -578,6 +578,19 @@ function RenderMovieAudience({ values }) {
   );
 }
 
+function RenderAI() {
+  return (
+    <div className={styles.aiimage}>
+      <span>
+        <Image src="/img/ai.png" width={31} height={31} alt="ai" />
+      </span>
+      <Text type="text3" lines={1} tag="span" className={styles.imgtext}>
+        {translate({ context: "details", label: "aigenerated" })}
+      </Text>
+    </div>
+  );
+}
+
 /**
  * lex and lit for literature (difficulty level)
  *
@@ -799,6 +812,17 @@ export function fieldsForRows(manifestation, work, context) {
             ?.filter((clas) => clas.system === "DK5")
             .map((dk) => ({ display: dk.display, code: dk.code })),
           jsxParser: RenderDk5,
+        },
+      },
+      {
+        aigenerated: {
+          label: "",
+          value:
+            manifestation?.notes?.length > 0 &&
+            manifestation.notes?.filter(
+              (note) => note?.type === "CONTAINS_AI_GENERATED_CONTENT"
+            ),
+          jsxParser: RenderAI,
         },
       },
       {
