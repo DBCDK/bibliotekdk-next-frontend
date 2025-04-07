@@ -94,14 +94,25 @@ export function all({
           }
           manifestations {
             mostRelevant{
-            publisher
               pid
+              ownerWork {
+                workTypes
+              }
               cover {
                 detail: detail_207
                 origin
               }
               materialTypes {
                 ...materialTypesFragment
+              }
+              hostPublication {
+                title
+                issue
+              }
+              publisher
+              edition {
+                summary
+                edition
               }
             }            
           }
