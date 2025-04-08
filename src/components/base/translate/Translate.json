@@ -1793,6 +1793,10 @@
       }
     },
     "details": {
+      "recalled": {
+        "da": "Tilbagekaldt af forlaget",
+        "en": "Recalled by publisher"
+      },
       "aigenerated": {
         "da": "Delvist AI-genereret indhold",
         "en": "Partly AI-generated content"

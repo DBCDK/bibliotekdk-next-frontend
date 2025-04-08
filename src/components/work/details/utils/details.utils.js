@@ -18,6 +18,7 @@ import { getSeriesUrl, getUniverseUrl } from "@/lib/utils";
 import React from "react";
 import translate from "@/components/base/translate";
 import { getTitlesAndType } from "../../overview/titlerenderer/TitleRenderer";
+import Icon from "@/components/base/icon/Icon";
 
 /**
  * Parse languages in given manifestation.
@@ -591,6 +592,19 @@ function RenderAI() {
   );
 }
 
+function RenderRecalled() {
+  return (
+    <div>
+      <div className={styles.pegiimage}>
+        <Icon src={"ban.svg"} size={{ w: 3, h: 3 }} />
+        <Text type="text3" lines={1} tag="span" className={styles.imgtext}>
+          {translate({ context: "details", label: "recalled" })}
+        </Text>
+      </div>
+    </div>
+  );
+}
+
 /**
  * lex and lit for literature (difficulty level)
  *
@@ -812,6 +826,17 @@ export function fieldsForRows(manifestation, work, context) {
             ?.filter((clas) => clas.system === "DK5")
             .map((dk) => ({ display: dk.display, code: dk.code })),
           jsxParser: RenderDk5,
+        },
+      },
+      {
+        recalled: {
+          label: "",
+          value:
+            manifestation?.notes?.length > 0 &&
+            manifestation.notes?.filter((note) =>
+              note?.display?.includes("Bogen er tilbagekaldt af forlaget")
+            ),
+          jsxParser: RenderRecalled,
         },
       },
       {
