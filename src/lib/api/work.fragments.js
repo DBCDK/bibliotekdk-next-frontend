@@ -56,10 +56,14 @@ export function cacheWork({ workId }) {
     query: `query CacheWork($workId: String!) {
   work(id: $workId) {
     ... cacheWorkFragment
+    creators {
+      ...creatorsFragment
+    }
   }
   
 }
   ${cacheWorkFragment}
+  ${creatorsFragment}
   `,
     variables: { workId },
     slowThreshold: 3000,

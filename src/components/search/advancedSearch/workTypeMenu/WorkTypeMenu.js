@@ -55,16 +55,20 @@ export default function WorkTypeMenu() {
       {workTypes.map((type) => {
         const isSelected = type === workType;
         const LinkTag = isSelected ? IconButton : Link;
+
+        const linkProps = isSelected
+          ? { keepUnderline: true, iconSize: 1 }
+          : {};
+
         return (
           <LinkTag
             key={type}
             className={styles.menuItem}
             icon="arrowrightblue"
-            keepUnderline={isSelected}
-            iconSize={1}
             onClick={() => {
               changeWorkType(type);
             }}
+            {...linkProps}
           >
             <Text type={isSelected ? "text4" : "text3"}>
               {Translate({

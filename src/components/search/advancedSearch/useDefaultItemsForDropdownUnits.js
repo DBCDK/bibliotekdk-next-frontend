@@ -55,7 +55,7 @@ const prioritized = {
       "ukrainsk",
     ],
     GENRE: [
-      "roman",
+      "romaner",
       "noveller",
       "digte",
       "biografier",
@@ -97,7 +97,7 @@ const prioritized = {
       "bog stor skrift",
     ],
     GENRE: [
-      "roman",
+      "romaner",
       "noveller",
       "digte",
       "biografier",

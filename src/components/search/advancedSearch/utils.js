@@ -292,12 +292,19 @@ export function fieldsToAdvancedUrl({ inputFields, traceId }) {
 }
 
 /**
- * Get an url to advanced search (fieldsearch).
+ * Get an url by type. Some types uses simplesearch (subject, creator) and some uses advanced search (fieldsearch).
  * @param type - the index to search in
  * @param value - the value to search for
  * @returns {string}
  */
-export function getAdvancedUrl({ type, value, traceId }) {
+export function getUrlByType({ type, value, traceId }) {
+  const simpelsearchTypes = ["subject", "creator"];
+  // we want some types to use simplesearch .. i know this is advancedUrl .. but .. it
+  // is the easiest way
+  if (simpelsearchTypes.includes(type)) {
+    return `/find?q.all="${value}"&tid=${traceId}`;
+  }
+
   const inputField = getAdvancedSearchField({ type, value });
   return fieldsToAdvancedUrl({ inputFields: inputField, traceId });
 }

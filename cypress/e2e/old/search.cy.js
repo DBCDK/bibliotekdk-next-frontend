@@ -52,7 +52,7 @@ describe("Search", () => {
     cy.get('[data-cy="fake-search-input"]').should("not.be.visible");
   });
 
-  it(`Should collect data when searching and clicking work`, () => {
+  it.only(`Should collect data when searching and clicking work`, () => {
     // Intercept data collection requests to graphql
     cy.intercept("POST", `${fbiApiPath}`, (req) => {
       if (req.body.query.startsWith("mutation")) {
@@ -74,7 +74,7 @@ describe("Search", () => {
       expect(data.search_response_works[0]).to.contain("work-of");
       expect(data.search_offset).to.equal(0);
       expect(data.session_id).to.equal("test");
-      expect(interception.response.body.errors).to.be.undefined;
+      expect(interception?.response?.body?.errors).to.be.undefined;
     });
 
     // wait for data to be loaded

@@ -30,7 +30,7 @@ import {
 import Custom404 from "@/pages/404";
 import {
   fieldsToAdvancedUrl,
-  getAdvancedUrl,
+  getUrlByType,
 } from "@/components/search/advancedSearch/utils";
 
 function Linkme() {
@@ -91,7 +91,7 @@ Linkme.getInitialProps = async (ctx) => {
   const isbn =
     isbnFromQuery(ctx.query["ccl"]) || ctx.query["isbn"] || ctx.query["is"];
   if (isbn) {
-    const path = getAdvancedUrl({ type: "isbn", value: isbn });
+    const path = getUrlByType({ type: "isbn", value: isbn });
     ctx.res.writeHead(301, { Location: path });
     ctx.res.end();
     return;

@@ -1831,6 +1831,10 @@
       }
     },
     "details": {
+      "aigenerated": {
+        "da": "Delvist AI-genereret indhold",
+        "en": "Partly AI-generated content"
+      },
       "instruments": {
         "da": "Instrumenter",
         "en": "Instruments"

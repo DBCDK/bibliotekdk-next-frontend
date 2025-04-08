@@ -73,7 +73,6 @@ describe("Search", () => {
       checkPrefilledQueryParameters();
 
       cy.get("[data-cy=suggester-input]").clear().type("something else");
-
       cy.get("[data-cy=header-searchbutton]").first().click();
 
       // Check URL query parameters are as expected
@@ -419,7 +418,7 @@ describe("Search", () => {
 
       cy.get(`[data-cy=related-subject-${tag}]`)
         .should("have.attr", "href")
-        .and("include", "/avanceret?fieldSearch");
+        .and("include", "/find?q.all");
     });
 
     // skip for now - hitcount has been disabled

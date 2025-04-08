@@ -28,6 +28,11 @@
   align-items: center;
 }
 
+.aiimage {
+  display: flex;
+  align-items: center;
+}
+
 .spacemaker {
   min-width: 25%;
 }

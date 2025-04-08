@@ -29,6 +29,8 @@ export default function SeriesPage() {
     return <Custom404 />;
   }
 
+  const imgUrl = jsonld?.image;
+
   const description =
     seriesData?.series?.description ||
     seriesData?.work?.series?.[0]?.description;
@@ -48,6 +50,9 @@ export default function SeriesPage() {
           property="og:description"
           content={description}
         />
+        {imgUrl && (
+          <meta key="og:image" property="og:image" content={`${imgUrl}`} />
+        )}
         {alternate.map(({ locale, url }) => (
           <link key={locale} rel="alternate" hreflang={locale} href={url} />
         ))}

@@ -13,7 +13,7 @@ import Image from "@/components/base/image";
 import { toLower } from "lodash/toLower";
 import { parseFunction } from "@/lib/centralParsers.utils";
 import { getAudienceValues } from "./export.utils";
-import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
+import { getUrlByType } from "@/components/search/advancedSearch/utils";
 import { getSeriesUrl, getUniverseUrl } from "@/lib/utils";
 import React from "react";
 import translate from "@/components/base/translate";
@@ -246,7 +246,7 @@ function RenderCreatorValues({ values, skeleton }) {
             className={styles.creatorWrapper}
           >
             <Link
-              href={getAdvancedUrl({ type: "creator", value: person.display })}
+              href={getUrlByType({ type: "creator", value: person.display })}
               dataCy={cyKey({
                 name: person.display,
                 prefix: "details-creatore",
@@ -308,7 +308,7 @@ function RenderMovieActorValues({ values, skeleton }) {
         return (
           <div key={`actors-${index}`} className={styles.link_list}>
             <Link
-              href={getAdvancedUrl({ type: "creator", value: person.display })}
+              href={getUrlByType({ type: "creator", value: person.display })}
               dataCy={cyKey({
                 name: person?.display,
                 prefix: "overview-genre",
@@ -578,6 +578,19 @@ function RenderMovieAudience({ values }) {
   );
 }
 
+function RenderAI() {
+  return (
+    <div className={styles.aiimage}>
+      <span>
+        <Image src="/img/ai.png" width={31} height={31} alt="ai" />
+      </span>
+      <Text type="text3" lines={1} tag="span" className={styles.imgtext}>
+        {translate({ context: "details", label: "aigenerated" })}
+      </Text>
+    </div>
+  );
+}
+
 /**
  * lex and lit for literature (difficulty level)
  *
@@ -678,7 +691,7 @@ function RenderDk5({ values }) {
   return values.map((dk, index) => (
     <Text type="text4" tag={"div"} key={`${dk?.display}${index}`}>
       <Link
-        href={getAdvancedUrl({ type: "dk5", value: dk.code })}
+        href={getUrlByType({ type: "dk5", value: dk.code })}
         border={{ top: false, bottom: { keepVisible: true } }}
       >
         {dk.display}
@@ -799,6 +812,17 @@ export function fieldsForRows(manifestation, work, context) {
             ?.filter((clas) => clas.system === "DK5")
             .map((dk) => ({ display: dk.display, code: dk.code })),
           jsxParser: RenderDk5,
+        },
+      },
+      {
+        aigenerated: {
+          label: "",
+          value:
+            manifestation?.notes?.length > 0 &&
+            manifestation.notes?.filter(
+              (note) => note?.type === "CONTAINS_AI_GENERATED_CONTENT"
+            ),
+          jsxParser: RenderAI,
         },
       },
       {

@@ -35,17 +35,9 @@ describe("Related Keywords", () => {
 
     cy.get("[data-cy=related-subject-savn]", {
       timeout: 10000,
-    }).should(
-      "have.attr",
-      "href",
-      "/avanceret?fieldSearch=%7B%22inputFields%22%3A%5B%7B%22value%22%3A%22savn%22%2C%22prefixLogicalOperator%22%3Anull%2C%22searchIndex%22%3A%22term.subject%22%7D%5D%7D&tid=t1"
-    );
+    }).should("have.attr", "href", "/find?q.all=%22savn%22&tid=t1");
     cy.get("[data-cy=related-subject-melankoli]", {
       timeout: 10000,
-    }).should(
-      "have.attr",
-      "href",
-      "/avanceret?fieldSearch=%7B%22inputFields%22%3A%5B%7B%22value%22%3A%22melankoli%22%2C%22prefixLogicalOperator%22%3Anull%2C%22searchIndex%22%3A%22term.subject%22%7D%5D%7D&tid=t2"
-    );
+    }).should("have.attr", "href", "/find?q.all=%22melankoli%22&tid=t2");
   });
 });

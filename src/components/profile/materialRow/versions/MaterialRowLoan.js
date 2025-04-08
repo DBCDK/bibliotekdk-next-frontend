@@ -34,7 +34,8 @@ const DAYS_TO_COUNTDOWN_RED = 5;
  */
 export const useLoanDateAnalysis = (dueDateString) => {
   const router = useRouter();
-  const locale = router.locale === undefined ? "da" : router.locale;
+  const locale = router.locale ?? "da";
+
   const timeFormatter = new Intl.RelativeTimeFormat(locale, { style: "short" });
 
   const dueDate = new Date(dueDateString);

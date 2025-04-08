@@ -11,7 +11,7 @@ import Translate from "@/components/base/translate";
 import Section from "@/components/base/section";
 
 import styles from "./Related.module.css";
-import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
+import { getUrlByType } from "@/components/search/advancedSearch/utils";
 
 /**
  *
@@ -23,7 +23,7 @@ function Word({ word, isLoading }) {
   return (
     <span className={styles.word}>
       <Link
-        href={getAdvancedUrl({ type: "subject", value: subject, traceId })}
+        href={getUrlByType({ type: "subject", value: subject, traceId })}
         dataCy={cyKey({ name: subject, prefix: "related-subject" })}
         disabled={isLoading}
         border={{ bottom: { keepVisible: true } }}

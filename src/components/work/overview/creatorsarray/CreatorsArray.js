@@ -1,14 +1,14 @@
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import { extractCreatorsPrioritiseCorporation } from "@/lib/utils";
-import { getAdvancedUrl } from "@/components/search/advancedSearch/utils";
+import { getUrlByType } from "@/components/search/advancedSearch/utils";
 
 export function CreatorsArray({ creators: creatorsBeforeFilter, skeleton }) {
   const creators = extractCreatorsPrioritiseCorporation(creatorsBeforeFilter);
 
   return (
     creators?.map((creator, index) => {
-      const url = getAdvancedUrl({ type: "creator", value: creator.display });
+      const url = getUrlByType({ type: "creator", value: creator.display });
       return (
         <span key={`${creator.display}-${index}`}>
           <Link
