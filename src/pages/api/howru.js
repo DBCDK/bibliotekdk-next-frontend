@@ -1,7 +1,6 @@
 import { fetcher } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import * as searchFragments from "@/lib/api/search.fragments";
-import { getServerSession } from "@dbcdk/login-nextjs/server";
 
 import { getErrorCount, resetErrorCount } from "@/utils/errorCount";
 import getConfig from "next/config";
@@ -12,8 +11,6 @@ const { maxError500Count } = serverRuntimeConfig;
 
 const upSince = new Date();
 
-let session;
-
 /**
  * The howru handler
  *
@@ -23,43 +20,41 @@ export default async function handler(req, res) {
   // If any of the services fail, this is set to false
   let ok = true;
 
-  try {
-    if (!session) {
-      session = await getServerSession(req, res);
-    }
-  } catch (e) {
-    log.error(`howru throws exception:`, {
-      error: String(e),
-      stacktrace: e.stack,
-    });
-  }
   // Create service object for each fragment
   const services = [
     ...Object.entries(workFragments).map(([name, func]) => ({
       service: `api-work-${name}`,
       handler: () =>
-        fetcher({
-          ...func({
-            workId: "work-of:870970-basis:23154382",
-            ids: ["work-of:870970-basis:23154382"],
-            pids: ["870970-basis:23154382"],
-            pid: "870970-basis:23154382",
-            oclc: "1200830771",
-            faust: "23154382",
-            workIds: ["work-of:870970-basis:52557240"],
-            seriesId:
-              "52484af11e5beceb6340880eb9e325fa216cee2fb68c8d4f0d76029a7e255fff",
-          }),
-          accessToken: session?.accessToken,
-        }),
+        fetcher(
+          {
+            ...func({
+              workId: "work-of:870970-basis:23154382",
+              ids: ["work-of:870970-basis:23154382"],
+              pids: ["870970-basis:23154382"],
+              pid: "870970-basis:23154382",
+              oclc: "1200830771",
+              faust: "23154382",
+              workIds: ["work-of:870970-basis:52557240"],
+              seriesId:
+                "52484af11e5beceb6340880eb9e325fa216cee2fb68c8d4f0d76029a7e255fff",
+            }),
+          },
+          undefined,
+          undefined,
+          { headers: req.headers }
+        ),
     })),
     ...Object.entries(searchFragments).map(([name, func]) => ({
       service: `api-search-${name}`,
       handler: () =>
-        fetcher({
-          ...func({ q: { all: "hest" }, limit: 10 }),
-          accessToken: session?.accessToken,
-        }),
+        fetcher(
+          {
+            ...func({ q: { all: "hest" }, limit: 10 }),
+          },
+          undefined,
+          undefined,
+          { headers: req.headers }
+        ),
     })),
   ];
 

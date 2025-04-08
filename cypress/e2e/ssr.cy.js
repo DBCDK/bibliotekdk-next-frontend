@@ -393,7 +393,7 @@ describe("Server Side Rendering", () => {
       });
     });
 
-    it.only("has json-ld for universe", () => {
+    it("has json-ld for universe", () => {
       const expectedUniverse = {
         universeId: "870979:134975679",
         title: "Marvel-universet",

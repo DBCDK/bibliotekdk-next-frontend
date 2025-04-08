@@ -8,7 +8,6 @@ import { useEffect } from "react";
 import Router from "next/router";
 
 import useVerification from "@/components/hooks/useVerification";
-import useUser from "@/components/hooks/useUser";
 import { useModal } from "@/components/_modal";
 import Translate from "@/components/base/translate";
 
@@ -16,19 +15,20 @@ import { createAccount } from "@/lib/api/culr.mutations";
 
 import { useMutate } from "@/lib/api/api";
 import useAuthentication from "../hooks/user/useAuthentication";
+import useLoanerInfo from "../hooks/user/useLoanerInfo";
 
 export default function Listener() {
-  const user = useUser();
   const { isCPRValidated } = useAuthentication();
   const verification = useVerification();
   const culrMutation = useMutate();
   const modal = useModal();
 
+  const { updateLoanerInfo } = useLoanerInfo();
+
   // mutation details
   const { data: mutate, reset, error } = culrMutation;
 
   // user details
-  const { updateUserData } = user;
   const { hasCulrUniqueId } = useAuthentication();
 
   // verification data
@@ -43,7 +43,7 @@ export default function Listener() {
     if (status || error) {
       if (status === "OK") {
         // broadcast user changes
-        updateUserData();
+        updateLoanerInfo();
 
         const isActive = modal.isVisible;
 
@@ -110,7 +110,12 @@ export default function Listener() {
 
     // Create User in CULR
     culrMutation.post(createAccount(data));
-  }, [hasCulrUniqueId, isCPRValidated, hasValidVerificationProcess]);
+  }, [
+    hasCulrUniqueId,
+    isCPRValidated,
+    verification.isLoading,
+    hasValidVerificationProcess,
+  ]);
 
   return null;
 }
