@@ -131,18 +131,17 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
             })}
             workId={workId}
           />
-
-          <PeriodicaArticles
-            workId={workId}
-            anchor-label={Translate({ context: "periodica", label: "title" })}
-          />
-
           <SimilarArticles
             workId={workId}
             anchor-label={Translate({
               context: "similararticles",
               label: "unspecificTitle",
             })}
+          />
+
+          <PeriodicaArticles
+            workId={workId}
+            anchor-label={Translate({ context: "periodica", label: "title" })}
           />
 
           <Issues
