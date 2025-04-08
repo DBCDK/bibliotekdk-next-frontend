@@ -50,6 +50,11 @@ function sortAccessArray(accessArr) {
       priority += 2;
     }
 
+    // also journals.aau.dk should be prioritized
+    if (access.origin === "journals.aau.dk") {
+      priority += 2;
+    }
+
     if (access.origin === "DBC Webarkiv") {
       priority += 1;
     }
