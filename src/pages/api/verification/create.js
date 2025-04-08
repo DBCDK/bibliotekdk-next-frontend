@@ -1,3 +1,11 @@
+/**
+ * @file
+ * API route for creating a server-side verification cookie.
+ *
+ * Extracts the user's access token and stores it in a signed, HTTP-only cookie
+ * for later use during verification (e.g., CulrCreateAccount).
+ */
+
 import { getServerSession } from "@dbcdk/login-nextjs/server";
 import { decodeCookie, encodeCookie } from "@/utils/jwt";
 import { serialize } from "cookie";

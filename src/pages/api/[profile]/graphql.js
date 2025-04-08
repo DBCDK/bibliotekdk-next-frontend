@@ -1,3 +1,11 @@
+/**
+ * @file
+ * API route for proxying GraphQL requests to the FBI API.
+ *
+ * Adds access tokens server-side, injects verification tokens for specific mutations,
+ * and sanitizes incoming headers. Prevents caching to ensure fresh responses.
+ */
+
 import { getServerSession } from "@dbcdk/login-nextjs/server";
 import { decodeCookie } from "@/utils/jwt";
 

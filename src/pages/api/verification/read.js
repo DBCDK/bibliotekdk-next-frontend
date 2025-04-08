@@ -1,3 +1,10 @@
+/**
+ * @file
+ * API route for reading the server-side verification cookie.
+ *
+ * Decodes and returns metadata about the current verification state.
+ */
+
 import { parse } from "cookie";
 import { decodeCookie } from "@/utils/jwt";
 

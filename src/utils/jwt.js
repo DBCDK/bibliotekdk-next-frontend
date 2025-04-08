@@ -1,3 +1,9 @@
+/**
+ * @file
+ * Utility functions for encoding and decoding JWT-based cookies.
+ *
+ * Wraps NextAuth's encode/decode with shared secret handling and safe fallback.
+ */
 import { encode, decode } from "next-auth/jwt";
 
 const secret = process.env.NEXTAUTH_SECRET;

@@ -1,3 +1,10 @@
+/**
+ * @file
+ * API route for updating the server-side verification cookie.
+ *
+ * Adds or updates a token of a specific type using the user's access token.
+ */
+
 import { getServerSession } from "@dbcdk/login-nextjs/server";
 import { decodeCookie, encodeCookie } from "@/utils/jwt";
 import { parse, serialize } from "cookie";

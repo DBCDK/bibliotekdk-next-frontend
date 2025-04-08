@@ -1,3 +1,10 @@
+/**
+ * @file
+ * API route for deleting the server-side verification cookie.
+ *
+ * Clears the HTTP-only cookie by setting it with an expired date.
+ */
+
 import { serialize } from "cookie";
 
 const COOKIE_NAME = "verification.cookie";
