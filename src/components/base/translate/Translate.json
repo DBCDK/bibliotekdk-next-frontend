@@ -1795,7 +1795,7 @@
     "details": {
       "recalled": {
         "da": "Tilbagekaldt af forlaget",
-        "en": "Recalled from publisher"
+        "en": "Recalled by publisher"
       },
       "aigenerated": {
         "da": "Delvist AI-genereret indhold",
