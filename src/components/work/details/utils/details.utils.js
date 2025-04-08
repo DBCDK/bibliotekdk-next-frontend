@@ -592,8 +592,7 @@ function RenderAI() {
   );
 }
 
-function RenderRecalled({ values }) {
-  console.log(values, "VALUES");
+function RenderRecalled() {
   return (
     <div>
       <div className={styles.pegiimage}>
