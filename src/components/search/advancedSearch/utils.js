@@ -10,7 +10,7 @@ import {
 } from "@/components/search/advancedSearch/advancedSearchHelpers/dummy__default_advanced_search_fields";
 
 function getInputFieldsQueryToCql(inputFields) {
-  return inputFields
+  return checkAndExpandInputFields(inputFields)
     ?.filter((item) => !isEmpty(item.value) && !isEmpty(item.searchIndex))
     .map((item, index) => {
       //first item should not have a prefixLogicalOperator
@@ -25,6 +25,52 @@ function getInputFieldsQueryToCql(inputFields) {
       // We spread prefix, in case it is empty, and ensure no weird spaces
       return [...prefix, searchIndexWithValue].join(" ");
     });
+}
+
+/**
+ * Inputfields may contain AND,OR operators - if so we expand with extra fields for the cql query.
+ * We make sure NOT to alter the original inputfields so we can return to the fieldsearch
+ * @param inputFields
+ * @returns {*}
+ */
+export function checkAndExpandInputFields(inputFields) {
+  const expanded = [];
+  let skip = false;
+  let operator = null;
+  inputFields?.forEach((field) => {
+    // match " AND ", " OR ", " NOT "
+    const matches = field?.value?.split(/( AND | OR | NOT )/);
+
+    if (matches?.length > 1) {
+      matches?.forEach((match, index) => {
+        // push an extra field - if extra field is first we use
+        // the logicalOperator from the original field
+        // skip holds next logical operator (if set)
+        if (!!skip) {
+          operator =
+            skip[0] === "AND"
+              ? LogicalOperatorsEnum.AND
+              : (operator =
+                  skip[0] === "OR"
+                    ? LogicalOperatorsEnum.OR
+                    : LogicalOperatorsEnum.NOT);
+        }
+        // boolean skip
+        !!!skip &&
+          expanded.push({
+            prefixLogicalOperator:
+              index === 0 ? field.prefixLogicalOperator : operator,
+            searchIndex: field.searchIndex,
+            value: match,
+          });
+        // look ahead in array - if next element is a logical operator -> hold it && skip it
+        skip = matches?.[index + 1]?.match(/AND|OR|NOT/);
+      });
+    } else {
+      expanded.push(field);
+    }
+  });
+  return expanded;
 }
 
 function getDropdownQuery(dropdownSearchIndices) {
