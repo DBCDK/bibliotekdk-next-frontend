@@ -35,7 +35,7 @@ function getInputFieldsQueryToCql(inputFields) {
  */
 export function checkAndExpandInputFields(inputFields) {
   const expanded = [];
-  let skip = false;
+  let skip;
   let operator = null;
   inputFields?.forEach((field) => {
     // match " AND ", " OR ", " NOT "
