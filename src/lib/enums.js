@@ -22,6 +22,7 @@ export const FacetValidDatabases = Object.freeze({
 
 export const SimpleFacetsTypeEnum = Object.freeze({
   SPECIFICMATERIALTYPE: "materialTypesSpecific",
+  FICTIONALCHARACTERS: "fictionalCharacters",
 });
 
 export const AdvFacetsTypeEnum = Object.freeze({

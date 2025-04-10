@@ -76,7 +76,11 @@ export function AdvancedFacets({
     <Accordion className={styles.accordionContainer}>
       {isLoading && <AccordianItem isLoading={isLoading} />}
       {filteredFacets?.map((facetName, index) => (
-        // <div>FISK</div>
+        // @TODO - scrolltoref here .. like <div ref={scrollRef} /> and onItemClick
+        // function scrollToRef(ref) {
+        //     ref.current.scrollIntoView({ behavior: "smooth", block: "end" });
+        //       return false;
+        //    }
         <AccordianItem
           facetName={facetName}
           index={index}

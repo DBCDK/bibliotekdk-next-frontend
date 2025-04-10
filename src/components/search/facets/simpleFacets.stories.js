@@ -43,6 +43,66 @@ const simpleSearchFacets = [
       },
     ],
   },
+  {
+    name: "fictionalCharacters",
+    values: [
+      {
+        term: "Tom (Bent Faurby)",
+        key: "Tom (Bent Faurby)",
+        score: 103,
+      },
+      {
+        term: "Fanny Fiske",
+        key: "Fanny Fiske",
+        score: 63,
+      },
+      {
+        term: "Gereon Rath",
+        key: "Gereon Rath",
+        score: 23,
+      },
+      {
+        term: "Lille Hvide Fisk",
+        key: "Lille Hvide Fisk",
+        score: 17,
+      },
+      {
+        term: "Familien Fisker",
+        key: "Familien Fisker",
+        score: 14,
+      },
+      {
+        term: "Nemo (Find Nemo)",
+        key: "Nemo (Find Nemo)",
+        score: 11,
+      },
+      {
+        term: "Bumle (Peter Lundqvist)",
+        key: "Bumle (Peter Lundqvist)",
+        score: 4,
+      },
+      {
+        term: "Lui (Marie Duedahl)",
+        key: "Lui (Marie Duedahl)",
+        score: 3,
+      },
+      {
+        term: "Rødhætte",
+        key: "Rødhætte",
+        score: 3,
+      },
+      {
+        term: "Max og Ejgil",
+        key: "Max og Ejgil",
+        score: 2,
+      },
+      {
+        term: "Sia (Serien om Sia)",
+        key: "Sia (Serien om Sia)",
+        score: 2,
+      },
+    ],
+  },
 ];
 
 export function Default() {
