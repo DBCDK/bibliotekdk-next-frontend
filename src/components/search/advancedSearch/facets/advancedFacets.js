@@ -1,4 +1,8 @@
-import { AdvFacetsTypeEnum, FacetValidDatabases } from "@/lib/enums";
+import {
+  AdvFacetsTypeEnum,
+  FacetValidDatabases,
+  SimpleFacetsTypeEnum,
+} from "@/lib/enums";
 import Accordion, { Item } from "@/components/base/accordion/Accordion";
 
 import styles from "./advancedFacets.module.css";
@@ -22,62 +26,57 @@ import { LinkToHelpTxt } from "@/components/search/advancedSearch/advancedSearch
  * @returns {JSX.Element}
  * @constructor
  */
-export function AdvancedFacets({ facets, isLoading, replace = false }) {
-  const { addFacet, removeFacet, selectedFacets } = useFacets();
-
-  const scrollRef = useRef();
-
+export function AdvancedFacets({
+  facets,
+  isLoading,
+  selectedFacets,
+  onItemClick,
+  origin = "advancedSearch",
+}) {
   // special handling of the facet.source
   // the sources we wish to handle
   const validSource = Object.values(FacetValidDatabases).map((val) =>
     val.toLowerCase()
   );
 
-  // filter out unwanted sources
-  facets = facets?.filter((fac) => {
-    if (fac.name !== "facet.source") {
-      return true;
-    } else {
-      const validValuse = fac.values.filter((fac) =>
-        validSource.includes(fac.key)
-      );
-      if (validValuse.length > 0) {
-        fac.values = validValuse;
+  let filteredFacets;
+  if (origin === "advancedSearch") {
+    // filter out unwanted sources
+    facets = facets?.filter((fac) => {
+      if (fac.name !== "facet.source") {
         return true;
+      } else {
+        const validValuse = fac.values.filter((fac) =>
+          validSource.includes(fac.key)
+        );
+        if (validValuse.length > 0) {
+          fac.values = validValuse;
+          return true;
+        }
       }
-    }
-    return false;
-  });
-  // end special handling of facet.source
-  const filteredFacets = Object.values(AdvFacetsTypeEnum).filter((val) =>
-    facets?.find((facet) => {
-      return facet.name.split(".")[1] === val;
-    })
-  );
-
-  function scrollToRef(ref) {
-    ref.current.scrollIntoView({ behavior: "smooth", block: "end" });
+      return false;
+    });
+    // end special handling of facet.source
+    filteredFacets = Object.values(AdvFacetsTypeEnum).filter((val) =>
+      facets?.find((facet) => {
+        return facet.name.split(".")[1] === val;
+      })
+    );
+  } else {
+    filteredFacets = Object.values(SimpleFacetsTypeEnum).filter((val) =>
+      facets?.find((facet) => {
+        return facet.name === val;
+      })
+    );
   }
 
-  const onItemClick = ({ checked, value, facetName }) => {
-    const name = value?.key;
-
-    if (checked) {
-      // selected -> add to list
-      addFacet(name, facetName, replace, value?.traceId);
-      scrollToRef(scrollRef);
-    } else {
-      // deselected - remove from list
-      removeFacet(name, facetName, replace);
-      scrollToRef(scrollRef);
-    }
-  };
+  console.log(filteredFacets, "FILTERED");
 
   return (
     <Accordion className={styles.accordionContainer}>
-      <div ref={scrollRef} />
       {isLoading && <AccordianItem isLoading={isLoading} />}
       {filteredFacets?.map((facetName, index) => (
+        // <div>FISK</div>
         <AccordianItem
           facetName={facetName}
           index={index}
@@ -86,6 +85,7 @@ export function AdvancedFacets({ facets, isLoading, replace = false }) {
           selectedFacets={selectedFacets}
           onItemClick={onItemClick}
           isLoading={isLoading}
+          origin={origin}
         />
       ))}
     </Accordion>
@@ -99,6 +99,7 @@ function AccordianItem({
   selectedFacets,
   onItemClick,
   isLoading,
+  origin,
 }) {
   if (isLoading) {
     return (
@@ -108,6 +109,8 @@ function AccordianItem({
     );
   }
 
+  console.log(selectedFacets, "SELECTED");
+  // we use current to display number of selected values in this specific facet
   const current = selectedFacets?.find((sel) => sel.searchIndex === facetName);
 
   const titleElement = () => {
@@ -128,9 +131,19 @@ function AccordianItem({
     );
   };
 
-  const facet = facets.find((fac) => {
-    return fac.name.split(".")[1] === facetName;
-  });
+  /** TODO this on should vary for simplesearch .. but we don't have the origin here .. **/
+  console.log(facetName, "FACETNAME");
+  console.log(facets, "FACETS");
+  let facet;
+  if (origin === "simpleSearch") {
+    facet = facets.find((fac) => {
+      return fac.name === facetName;
+    });
+  } else {
+    facet = facets.find((fac) => {
+      return fac.name.split(".")[1] === facetName;
+    });
+  }
 
   return (
     <div className={styles.itemborder}>
@@ -144,6 +157,7 @@ function AccordianItem({
         bgColor="transparent"
         iconColor="var(--blue)"
       >
+        {/*<div>HEST</div>*/}
         <ListItem
           facet={facet}
           facetName={facetName}
@@ -190,6 +204,8 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
   };
 
   let initialcheck;
+
+  console.log(facet, "SINGLE FACET");
 
   return (
     <>
@@ -272,8 +288,10 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
   );
 }
 
-export default function Wrap({ cql, replace }) {
-  const { facetsFromEnum, facetLimit } = useFacets();
+export default function Wrap({ cql, replace = false }) {
+  const { facetsFromEnum, facetLimit, addFacet, removeFacet, selectedFacets } =
+    useFacets();
+
   // use the useData hook to fetch data
   const { data: facetResponse, isLoading } = useData(
     complexFacetsOnly({
@@ -287,9 +305,27 @@ export default function Wrap({ cql, replace }) {
 
   const facets = parseOutFacets(facetResponse?.complexFacets?.facets);
 
-  return AdvancedFacets({
-    facets: facets,
-    isLoading: isLoading,
-    replace: replace,
-  });
+  const onItemClick = ({ checked, value, facetName }) => {
+    const name = value?.key;
+
+    if (checked) {
+      // selected -> add to list
+      addFacet(name, facetName, replace, value?.traceId);
+    } else {
+      // deselected - remove from list
+      removeFacet(name, facetName, replace);
+    }
+  };
+
+  console.log(facets, "ADVANCED FACETS");
+
+  return (
+    <AdvancedFacets
+      facets={facets}
+      isLoading={isLoading}
+      selectedFacets={selectedFacets}
+      onItemClick={onItemClick}
+      origin="advancedSearch"
+    />
+  );
 }

@@ -478,6 +478,8 @@ export default function Wrap(props) {
   // Dont clear the workType filter onClear
   const excludeOnClear = { workTypes: filters.workTypes };
 
+  console.log(mergedData, "FILTERDATA");
+
   return (
     <Filter
       data={mergedData}
