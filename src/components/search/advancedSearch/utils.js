@@ -10,7 +10,7 @@ import {
 } from "@/components/search/advancedSearch/advancedSearchHelpers/dummy__default_advanced_search_fields";
 
 function getInputFieldsQueryToCql(inputFields) {
-  return inputFields
+  return checkAndExpandInputFields(inputFields)
     ?.filter((item) => !isEmpty(item.value) && !isEmpty(item.searchIndex))
     .map((item, index) => {
       //first item should not have a prefixLogicalOperator
@@ -25,6 +25,44 @@ function getInputFieldsQueryToCql(inputFields) {
       // We spread prefix, in case it is empty, and ensure no weird spaces
       return [...prefix, searchIndexWithValue].join(" ");
     });
+}
+
+/**
+ * Inputfields may contain AND,OR operators - if so we expand with extra fields for the cql query.
+ * We make sure NOT to alter the original inputfields so we can return to the fieldsearch
+ * @param inputFields
+ * @returns {*}
+ */
+export function checkAndExpandInputFields(inputFields) {
+  const expanded = [];
+
+  inputFields?.forEach((field) => {
+    const parts = field?.value?.split(/( AND | OR | NOT )/);
+
+    if (parts?.length > 1) {
+      let operator = null;
+
+      for (let i = 0; i < parts.length; i += 2) {
+        const value = parts[i];
+        const logic = parts[i + 1]?.trim();
+
+        expanded.push({
+          prefixLogicalOperator:
+            i === 0 ? field.prefixLogicalOperator : operator,
+          searchIndex: field.searchIndex,
+          value: value.trim(),
+        });
+
+        if (logic) {
+          operator = LogicalOperatorsEnum[logic];
+        }
+      }
+    } else {
+      expanded.push(field);
+    }
+  });
+
+  return expanded;
 }
 
 function getDropdownQuery(dropdownSearchIndices) {
