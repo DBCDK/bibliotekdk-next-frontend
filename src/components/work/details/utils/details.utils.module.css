@@ -39,4 +39,5 @@
 
 .imgtext {
   margin-left: var(--pt05);
+  padding-bottom: var(--pt05);
 }
