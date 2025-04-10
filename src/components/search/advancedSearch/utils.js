@@ -35,41 +35,33 @@ function getInputFieldsQueryToCql(inputFields) {
  */
 export function checkAndExpandInputFields(inputFields) {
   const expanded = [];
-  let skip;
-  let operator = null;
-  inputFields?.forEach((field) => {
-    // match " AND ", " OR ", " NOT "
-    const matches = field?.value?.split(/( AND | OR | NOT )/);
 
-    if (matches?.length > 1) {
-      matches?.forEach((match, index) => {
-        // push an extra field - if extra field is first we use
-        // the logicalOperator from the original field
-        // skip holds next logical operator (if set)
-        if (!!skip) {
-          operator =
-            skip[0] === "AND"
-              ? LogicalOperatorsEnum.AND
-              : (operator =
-                  skip[0] === "OR"
-                    ? LogicalOperatorsEnum.OR
-                    : LogicalOperatorsEnum.NOT);
+  inputFields?.forEach((field) => {
+    const parts = field?.value?.split(/( AND | OR | NOT )/);
+
+    if (parts?.length > 1) {
+      let operator = null;
+
+      for (let i = 0; i < parts.length; i += 2) {
+        const value = parts[i];
+        const logic = parts[i + 1]?.trim();
+
+        expanded.push({
+          prefixLogicalOperator:
+            i === 0 ? field.prefixLogicalOperator : operator,
+          searchIndex: field.searchIndex,
+          value: value.trim(),
+        });
+
+        if (logic) {
+          operator = LogicalOperatorsEnum[logic];
         }
-        // boolean skip
-        !!!skip &&
-          expanded.push({
-            prefixLogicalOperator:
-              index === 0 ? field.prefixLogicalOperator : operator,
-            searchIndex: field.searchIndex,
-            value: match,
-          });
-        // look ahead in array - if next element is a logical operator -> hold it && skip it
-        skip = matches?.[index + 1]?.match(/AND|OR|NOT/);
-      });
+      }
     } else {
       expanded.push(field);
     }
   });
+
   return expanded;
 }
 
