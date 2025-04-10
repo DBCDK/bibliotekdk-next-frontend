@@ -17,6 +17,12 @@ import ResultPage from "./page";
 
 import styles from "./Result.module.css";
 import { NoHitSearch } from "@/components/search/advancedSearch/advancedSearchResult/noHitSearch/NoHitSearch";
+import { FacetTags } from "@/components/search/advancedSearch/facets/facetTags/facetTags";
+import Text from "@/components/base/text/Text";
+import translate from "@/components/base/translate/Translate";
+import QuickFilter from "@/components/search/advancedSearch/quickfilter/QuickFilter";
+
+import SimpleFacets from "@/components/search/facets/simpleFacets";
 
 /**
  * Search result
@@ -46,19 +52,27 @@ export function Result({
   return (
     <>
       <Section
-        className={`${styles.section} ${noRelatedSubjectsClass}`}
+        // className={`${styles.section} ${noRelatedSubjectsClass}`}
         divider={false}
-        title={
-          !isLoading && !isTablet && hitcount > 0 ? (
-            <FilterButton
-              className={`${styles.filterButton} ${styles.visible}`}
-            />
-          ) : (
-            <span />
-          )
+        // title={
+        //   !isLoading && !isTablet && hitcount > 0 ? (
+        //     <FilterButton
+        //       className={`${styles.filterButton} ${styles.visible}`}
+        //     />
+        //   ) : (
+        //     <span />
+        //   )
+        // }
+        // rightSideTitle={isDesktop}
+        subtitle={
+          <>
+            <SimpleFacets />
+          </>
         }
-        rightSideTitle={isDesktop}
-        colSize={{ lg: { offset: 3, span: true } }}
+        colSize={{
+          lg: { offset: 0, span: true },
+          titel: { lg: { offset: 3, span: true } },
+        }}
         id="search-result-section"
       >
         {hitcount === 0 && !isLoading && <NoHitSearch isSimpleSearch={true} />}
