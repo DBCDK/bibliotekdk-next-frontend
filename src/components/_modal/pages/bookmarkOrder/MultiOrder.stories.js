@@ -598,6 +598,7 @@ function createStoryParameters({ user, submitOrdersDelay = 500 }) {
                   status: "NOT_ON_SHELF",
                   expectedAgencyReturnDate: null,
                   expectedBranchReturnDate: null,
+                  unlistedBranchItems: null,
                 };
               }
 
