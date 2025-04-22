@@ -130,6 +130,8 @@ export default function useFilters() {
    *
    */
   const setFilters = (include = {}) => {
+    console.log(include, "ICNLUDE");
+
     const params = {};
     Object.entries(include).forEach(([key, val]) => {
       if (types.includes(key)) {

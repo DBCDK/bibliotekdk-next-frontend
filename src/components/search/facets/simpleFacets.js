@@ -12,7 +12,7 @@ export function SimpleFacets({
     alert("fisk");
   },
 }) {
-  console.log(facets, "STORY FACETS");
+  // console.log(facets, "STORY FACETS");
   return (
     <>
       <div>FISK</div>
@@ -29,7 +29,6 @@ export function SimpleFacets({
 
 export default function Wrap() {
   // connected filters hook
-  console.log("FIIIIIIIIIIIISKSKSKS");
   const { filters, setFilters, setQuery, isSynced } = useFilters();
 
   // connected q hook
@@ -45,8 +44,13 @@ export default function Wrap() {
         filters: filters,
       })
   );
-  console.log(data, "DDDDDDDDDDAAAAAAAAATTTA");
+  const onItemClick = (selected) => {
+    setFilters({ ...filters, ...selected });
+    setQuery({});
+  };
 
-  console.log(filters, "FILTERS");
-  return <SimpleFacets facets={data?.search?.facets} />;
+  console.log(data, "SIMPLE SEARCH DATA");
+  return (
+    <SimpleFacets facets={data?.search?.facets} onItemClick={onItemClick} />
+  );
 }
