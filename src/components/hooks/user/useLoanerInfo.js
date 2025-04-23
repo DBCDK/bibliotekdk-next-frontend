@@ -82,6 +82,8 @@ export default function useLoanerInfo() {
         await mutateFbiApi.post(sessionFragments.submitSession(newSession));
         // Broadcast update
         await sessionRes?.mutate();
+        // broadcast basic userinfo
+        await userRes?.mutate();
       },
     };
   }, [userRes, sessionRes, userDebts, userOrders, userLoans]);

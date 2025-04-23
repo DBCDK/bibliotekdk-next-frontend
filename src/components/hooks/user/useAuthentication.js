@@ -7,7 +7,8 @@ import { authentication as authenticationFragment } from "@/lib/api/authenticati
  */
 export default function useAuthentication() {
   // Get the authenticated session using next-auth.
-  const { data: authenticatedSession } = useSession();
+  const { data: authenticatedSession, status } = useSession();
+  const isSessionLoading = status === "loading";
 
   // Fetch authentication data stored in fbi-api
   const { data, isLoading } = useData(authenticationFragment());
@@ -42,6 +43,6 @@ export default function useAuthentication() {
     loggedInAgencyId,
     loggedInBranchId,
     identityProviderUsed,
-    isLoading,
+    isLoading: isSessionLoading || isLoading,
   };
 }

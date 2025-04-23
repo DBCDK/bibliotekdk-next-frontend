@@ -10,7 +10,7 @@ import Text from "@/components/base/text";
 import Button from "@/components/base/button";
 import Translate from "@/components/base/translate";
 
-import useUser from "@/components/hooks/useUser";
+import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 import { deleteAccount } from "@/lib/api/culr.mutations";
 import { useMutate } from "@/lib/api/api";
@@ -20,7 +20,7 @@ import styles from "./RemoveLibrary.module.css";
 export default function RemoveLibrary({ context, modal }) {
   const { agencyId, agencyName } = context;
 
-  const { updateUserData } = useUser();
+  const { updateLoanerInfo } = useLoanerInfo();
 
   // Mutation details
   const culrMutation = useMutate();
@@ -32,7 +32,7 @@ export default function RemoveLibrary({ context, modal }) {
 
     if (status === "OK") {
       // mutate user data
-      updateUserData();
+      updateLoanerInfo();
 
       // cleanup
       reset();
