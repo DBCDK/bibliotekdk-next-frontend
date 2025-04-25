@@ -582,9 +582,7 @@ function RenderMovieAudience({ values }) {
 function RenderAI() {
   return (
     <div className={styles.aiimage}>
-      <span>
-        <Image src="/img/ai.png" width={31} height={31} alt="ai" />
-      </span>
+      <Icon src={"ai.svg"} size={{ w: 3, h: 3 }} />
       <Text type="text3" lines={1} tag="span" className={styles.imgtext}>
         {translate({ context: "details", label: "aigenerated" })}
       </Text>

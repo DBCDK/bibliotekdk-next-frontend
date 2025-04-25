@@ -24,7 +24,7 @@
 .pegiimage {
   border: 1px solid var(--iron);
   display: flex;
-  padding: var(--pt1);
+  padding: var(--pt2);
   align-items: center;
 }
 
@@ -38,6 +38,6 @@
 }
 
 .imgtext {
-  margin-left: var(--pt05);
-  padding-bottom: var(--pt05);
+  margin-left: var(--pt1);
+  /*padding-bottom: var(--pt05);*/
 }
