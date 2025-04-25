@@ -45,7 +45,11 @@ export default function Wrap() {
       })
   );
   const onItemClick = (selected) => {
-    setFilters({ ...filters, ...selected });
+    console.log(selected, "SIMPLE FACETS SELECTED");
+    console.log(filters, "SIMPLE FACETS FILTERS");
+    const fisk = { [selected.facetName]: selected.value };
+
+    setFilters({ ...filters, ...fisk });
     setQuery({});
   };
 

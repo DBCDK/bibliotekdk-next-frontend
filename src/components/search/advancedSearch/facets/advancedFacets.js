@@ -70,8 +70,6 @@ export function AdvancedFacets({
     );
   }
 
-  console.log(filteredFacets, "FILTERED");
-
   return (
     <Accordion className={styles.accordionContainer}>
       {isLoading && <AccordianItem isLoading={isLoading} />}
@@ -113,7 +111,6 @@ function AccordianItem({
     );
   }
 
-  console.log(selectedFacets, "SELECTED");
   // we use current to display number of selected values in this specific facet
   const current = selectedFacets?.find((sel) => sel.searchIndex === facetName);
 
@@ -136,8 +133,8 @@ function AccordianItem({
   };
 
   /** TODO this on should vary for simplesearch .. but we don't have the origin here .. **/
-  console.log(facetName, "FACETNAME");
-  console.log(facets, "FACETS");
+  // console.log(facetName, "FACETNAME");
+  // console.log(facets, "FACETS");
   let facet;
   if (origin === "simpleSearch") {
     facet = facets.find((fac) => {
@@ -209,7 +206,7 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
 
   let initialcheck;
 
-  console.log(facet, "SINGLE FACET");
+  // console.log(facet, "SINGLE FACET");
 
   return (
     <>
@@ -321,7 +318,7 @@ export default function Wrap({ cql, replace = false }) {
     }
   };
 
-  console.log(facets, "ADVANCED FACETS");
+  // console.log(facets, "ADVANCED FACETS");
 
   return (
     <AdvancedFacets
