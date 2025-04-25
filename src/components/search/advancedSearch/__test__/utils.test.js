@@ -46,11 +46,14 @@ test("add to inputfields on OR, AND operators", () => {
       value: "Robert Fisker",
       prefixLogicalOperator: null,
       searchIndex: "term.default",
+      startParenthesis: true,
     },
     {
+      startParenthesis: false,
       value: "hest",
       prefixLogicalOperator: LogicalOperatorsEnum.AND,
       searchIndex: "term.default",
+      endParenthesis: true,
     },
   ];
 
@@ -77,18 +80,24 @@ test("add to inputfields on OR, AND operators", () => {
       value: "Robert Fisker",
       prefixLogicalOperator: null,
       searchIndex: "term.default",
+      startParenthesis: true,
     },
     {
+      endParenthesis: true,
       value: "hest",
       prefixLogicalOperator: LogicalOperatorsEnum.AND,
       searchIndex: "term.default",
+      startParenthesis: false,
     },
     {
+      startParenthesis: true,
       prefixLogicalOperator: LogicalOperatorsEnum.OR,
       searchIndex: "term.subject",
       value: "fisk",
     },
     {
+      endParenthesis: true,
+      startParenthesis: false,
       prefixLogicalOperator: "NOT",
       searchIndex: "term.subject",
       value: "hest",
@@ -97,4 +106,6 @@ test("add to inputfields on OR, AND operators", () => {
 
   actual = checkAndExpandInputFields(multiinput);
   expect(actual).toEqual(expected);
+
+  // now with parentesis
 });

@@ -11,19 +11,25 @@ import {
 
 function getInputFieldsQueryToCql(inputFields) {
   return checkAndExpandInputFields(inputFields)
-    ?.filter((item) => !isEmpty(item.value) && !isEmpty(item.searchIndex))
+    ?.filter(
+      (item) =>
+        !isEmpty(item.value) &&
+        (!isEmpty(item.searchIndex) || item.isParenthesis)
+    )
     .map((item, index) => {
       //first item should not have a prefixLogicalOperator
       const prefix =
         !isEmpty(item.prefixLogicalOperator) && index !== 0
           ? [item.prefixLogicalOperator]
           : [];
-      const searchIndexWithValue = `${item.searchIndex}="${item?.value
-        ?.replace(/"/g, '\\"')
-        .replace(/[?\\]/g, "\\$&")}"`;
+      const searchIndexWithValue = `${item.startParenthesis ? "(" : ""}${
+        item.searchIndex
+      }="${item?.value?.replace(/"/g, '\\"').replace(/[?\\]/g, "\\$&")}" ${
+        item.endParenthesis ? ")" : ""
+      }`;
 
       // We spread prefix, in case it is empty, and ensure no weird spaces
-      return [...prefix, searchIndexWithValue].join(" ");
+      return [...prefix, searchIndexWithValue.trim()].join(" ");
     });
 }
 
@@ -49,6 +55,7 @@ export function checkAndExpandInputFields(inputFields) {
         expanded.push({
           prefixLogicalOperator:
             i === 0 ? field.prefixLogicalOperator : operator,
+          startParenthesis: i === 0,
           searchIndex: field.searchIndex,
           value: value.trim(),
         });
@@ -57,6 +64,10 @@ export function checkAndExpandInputFields(inputFields) {
           operator = LogicalOperatorsEnum[logic];
         }
       }
+      // last element in expanded array is marked with endParenthesis
+      const last = expanded.pop();
+      last["endParenthesis"] = true;
+      expanded.push(last);
     } else {
       expanded.push(field);
     }
