@@ -54,15 +54,15 @@ export function Result({
       <Section
         // className={`${styles.section} ${noRelatedSubjectsClass}`}
         divider={false}
-        // title={
-        //   !isLoading && !isTablet && hitcount > 0 ? (
-        //     <FilterButton
-        //       className={`${styles.filterButton} ${styles.visible}`}
-        //     />
-        //   ) : (
-        //     <span />
-        //   )
-        // }
+        title={
+          !isLoading && !isTablet && hitcount > 0 ? (
+            <FilterButton
+              className={`${styles.filterButton} ${styles.visible}`}
+            />
+          ) : (
+            <span />
+          )
+        }
         // rightSideTitle={isDesktop}
         subtitle={
           <>
