@@ -1,6 +1,7 @@
 import {
   AdvFacetsTypeEnum,
   FacetValidDatabases,
+  FilterTypeEnum,
   SimpleFacetsTypeEnum,
 } from "@/lib/enums";
 import Accordion, { Item } from "@/components/base/accordion/Accordion";
@@ -63,7 +64,7 @@ export function AdvancedFacets({
       })
     );
   } else {
-    filteredFacets = Object.values(SimpleFacetsTypeEnum).filter((val) =>
+    filteredFacets = Object.values(FilterTypeEnum).filter((val) =>
       facets?.find((facet) => {
         return facet.name === val;
       })
@@ -132,9 +133,7 @@ function AccordianItem({
     );
   };
 
-  /** TODO this on should vary for simplesearch .. but we don't have the origin here .. **/
-  // console.log(facetName, "FACETNAME");
-  // console.log(facets, "FACETS");
+  /** TODO this one should vary for simplesearch .. but we don't have the origin here .. **/
   let facet;
   if (origin === "simpleSearch") {
     facet = facets.find((fac) => {
@@ -205,9 +204,6 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
   };
 
   let initialcheck;
-
-  // console.log(facet, "SINGLE FACET");
-
   return (
     <>
       {/* we want to show a link to a helptext for term.source (fagbibliografier) */}
@@ -236,7 +232,7 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
             >
               {
                 (initialcheck = !!current?.values?.find((val) => {
-                  return val.name === value.key;
+                  return val.name === value.key || val === value.key;
                 }))
               }
               <Checkbox
@@ -317,8 +313,6 @@ export default function Wrap({ cql, replace = false }) {
       removeFacet(name, facetName, replace);
     }
   };
-
-  // console.log(facets, "ADVANCED FACETS");
 
   return (
     <AdvancedFacets
