@@ -65,9 +65,13 @@ export function Result({
         }
         // rightSideTitle={isDesktop}
         subtitle={
-          <>
-            <SimpleFacets />
-          </>
+          !isTablet && !isMobile ? (
+            <>
+              <SimpleFacets />
+            </>
+          ) : (
+            <span />
+          )
         }
         colSize={{
           lg: { offset: 0, span: true },
