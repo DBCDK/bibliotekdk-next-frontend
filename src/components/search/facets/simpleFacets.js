@@ -29,7 +29,7 @@ export function SimpleFacets({
 
 export default function Wrap() {
   // connected filters hook
-  const { filters, setFilters, setQuery, isSynced } = useFilters();
+  const { filters, setAFilter, setQuery, isSynced } = useFilters();
 
   // connected q hook
   const { hasQuery, getQuery } = useQ();
@@ -45,17 +45,28 @@ export default function Wrap() {
       })
   );
   const onItemClick = (selected) => {
-    console.log(selected, "SIMPLE FACETS SELECTED");
-    console.log(filters, "SIMPLE FACETS FILTERS");
-    const fisk = { [selected.facetName]: [selected.value.term] };
-
-    console.log(fisk, "FISK");
-    setFilters({ ...filters, ...fisk });
-    setQuery({});
+    setAFilter(selected);
+    setQuery({ include: filters });
   };
 
-  console.log(data, "SIMPLE SEARCH DATA");
+  // do an array that matches advanced facets
+  const parseForSelected = (filters) => {
+    const facetsAsArray = [];
+    for (const [key, value] of Object.entries(filters)) {
+      // console.log(`${key}: ${value}`);
+      if (value.length > 0) {
+        facetsAsArray.push({ searchIndex: key, values: value });
+      }
+    }
+    return facetsAsArray;
+  };
+
+  // console.log(data, "SIMPLE SEARCH DATA");
   return (
-    <SimpleFacets facets={data?.search?.facets} onItemClick={onItemClick} />
+    <SimpleFacets
+      facets={data?.search?.facets}
+      onItemClick={onItemClick}
+      selectedFacets={parseForSelected(filters)}
+    />
   );
 }
