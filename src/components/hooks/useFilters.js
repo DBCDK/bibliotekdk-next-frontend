@@ -124,7 +124,7 @@ export default function useFilters() {
   }, [router.query]);
 
   /**
-   * Update locale filters
+   * Update locale filters. This method assume ALL filters are in parameter includes
    *
    * @param {Object} include
    *
@@ -144,6 +144,42 @@ export default function useFilters() {
 
     // update locale state (swr)
     _setFilters(locale);
+  };
+
+  /**
+   * Set/unset a single filter.
+   * @param {} filter
+   *  the filter to update - comes in the form
+   *    {
+   *     "checked": true,
+   *     "value": {
+   *         "term": "film (dvd)",
+   *         "key": "film (dvd)",
+   *         "score": 45
+   *     },
+   *     "facetName": "materialTypesSpecific"
+   * }
+   */
+  const setAFilter = (filter) => {
+    if (!filter.checked) {
+      _removeAFilter(filter, filter?.value?.term);
+    } else {
+      _addAFilter(filter);
+    }
+  };
+
+  const _addAFilter = (filter) => {
+    const name = filter?.facetName;
+    const actual = _filters[name];
+    actual?.push(filter?.value?.term);
+  };
+
+  const _removeAFilter = (filter, term) => {
+    const name = filter?.facetName;
+    const actual = _filters[name];
+    // delete in array
+    const index = actual.findIndex((act) => act === term);
+    actual?.splice(index, 1);
   };
 
   /**
@@ -252,6 +288,7 @@ export default function useFilters() {
     isSynced: _isSynced(),
     types,
     workTypes,
+    setAFilter,
   };
 }
 
