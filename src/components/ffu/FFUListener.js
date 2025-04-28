@@ -2,7 +2,7 @@
  * @file Listens for FFU user logins which potentially colud be created in CULR (Get a bibdk account)
  */
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 import useVerification from "@/components/hooks/useVerification";
 import Translate from "@/components/base/translate";
@@ -19,9 +19,10 @@ export default function Listener() {
     hasCulrUniqueId,
     loggedInAgencyId,
     loggedInBranchId,
+    isLoading: isAuthenticatedIsLoading,
   } = useAuthentication();
 
-  const { loanerInfo, isLoading } = useLoanerInfo();
+  const { loanerInfo, isLoading: loanerInfoIsLoading } = useLoanerInfo();
 
   const agencyId = loggedInAgencyId;
   const branchId = loggedInBranchId;
@@ -44,8 +45,16 @@ export default function Listener() {
 
   const hasVerificationObject = verification.exist();
 
+  const isCreating = useRef({});
+
+  const dataIsReady =
+    !isAuthenticatedIsLoading &&
+    !verification.isLoading &&
+    !loanerInfoIsLoading &&
+    !!loanerInfo;
+
   useEffect(() => {
-    if (!isLoading && loanerInfo) {
+    if (dataIsReady) {
       // User is NOT authenticated through adgangsplatformen
       if (!isAuthenticated) {
         return;
@@ -82,8 +91,16 @@ export default function Listener() {
         return;
       }
 
+      // return if already creating a verfication process
+      if (!isCreating.current) {
+        return;
+      }
+
       // if pickupBranch match found
       if (match) {
+        // Set isCreating to true, to prevent multiple verification.create calls
+        isCreating.current = true;
+
         // create verification process (lasts 24 hours)
         // can be used within 60 minutes
         verification.create({
@@ -119,7 +136,7 @@ export default function Listener() {
         }
       }
     }
-  }, [isAuthenticated, loanerInfo, isLoading, branchId, agencies]);
+  }, [isAuthenticated, dataIsReady, branchId, agencies, modal?.stack?.length]);
 
   return null;
 }

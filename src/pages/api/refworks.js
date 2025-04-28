@@ -17,10 +17,10 @@ function parseRefWorks(ref) {
  * @param accessToken
  * @returns {Promise<*>}
  */
-async function getRefWorks(pids, accessToken) {
+async function getRefWorks(pids, headers) {
   const querystr = manifestationFragments.refWorks({ pids: pids });
-  const paramsForApi = { ...querystr, accessToken };
-  const ref = await fetcher(paramsForApi);
+  const paramsForApi = { ...querystr };
+  const ref = await fetcher(paramsForApi, undefined, undefined, { headers });
   return parseRefWorks(ref);
 }
 
@@ -41,13 +41,10 @@ export async function getAccessToken(context) {
  * @returns {Promise<void>}
  */
 export default async function refWorkHandler(req, res) {
-  // get an access token for api
-  const context = { req, res };
-  const accessToken = await getAccessToken(context);
   // get refworks
   const { pids } = req.query;
   const pidsAsArray = pids.split(",");
-  const response = await getRefWorks(pidsAsArray, accessToken);
+  const response = await getRefWorks(pidsAsArray, req.headers);
   // send response
   res.setHeader("Content-Type", "text/plain; charset=utf-8");
   res.status(200).send(response);

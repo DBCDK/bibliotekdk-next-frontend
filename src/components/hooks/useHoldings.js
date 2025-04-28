@@ -207,7 +207,6 @@ export function useCheckInterLibraryLoan({ pids }) {
               data?.branches?.result?.forEach((branch) => {
                 // Only lends out to own users
                 const isLoanRestricted = getIsLoanRestricted(branch?.holdings);
-
                 if (isLoanRestricted) {
                   chunkAllowOwnUsers = true;
                 } else if (
@@ -216,7 +215,8 @@ export function useCheckInterLibraryLoan({ pids }) {
                   branch?.holdings?.status === HoldingStatusEnum.ON_SHELF ||
                   (branch?.holdings?.status ===
                     HoldingStatusEnum.NOT_ON_SHELF &&
-                    branch?.holdings?.expectedAgencyReturnDate)
+                    branch?.holdings?.expectedAgencyReturnDate) ||
+                  branch?.holdings?.unlistedBranchItems?.length > 0
                 ) {
                   chunkAllowIll = true;
                 }
