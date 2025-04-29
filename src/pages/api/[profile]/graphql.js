@@ -32,6 +32,10 @@ export function sanitizeHeaders(originalHeaders, accessToken) {
     "x-unique-visitor-id",
     "x-caused-by",
     "User-Agent",
+    "x-forwarded-host",
+    "x-forwarded-port",
+    "x-forwarded-proto",
+    "x-forwarded-for",
   ];
 
   const safeHeaders = {
