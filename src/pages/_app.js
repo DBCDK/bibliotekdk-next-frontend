@@ -58,6 +58,12 @@ if (typeof window !== "undefined") {
   smoothscroll.polyfill();
 }
 
+if (typeof window === "undefined" && process.env.NODE_ENV === "production") {
+  import("@/lib/resourceMonitor").then((mod) => {
+    mod.start();
+  });
+}
+
 /**
  * Error Boundary for handling client side errors
  */
