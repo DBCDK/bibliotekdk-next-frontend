@@ -4,7 +4,7 @@ def app
 
 pipeline {
     agent {
-        label 'devel11'
+        label 'devel12'
     }
     triggers {
         githubPush()
@@ -75,7 +75,7 @@ pipeline {
         stage("Update staging version number") {
             agent {
                 docker {
-                    label 'devel11'
+                    label 'devel12'
                     image "docker-dbc.artifacts.dbccloud.dk/build-env:latest"
                     alwaysPull true
                 }
