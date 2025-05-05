@@ -141,18 +141,18 @@ export function PeriodicaArticle({ manifestation }) {
     <>
       <div className={styles.item}>{firstColumn()}</div>
       <div className={styles.item}>
-        <Text type="text2">{manifestation.abstract}</Text>
+        <Text type="text2">{manifestation?.abstract}</Text>
       </div>
       <div className={styles.item}>
         <Text type="text2" lines={4} clamp>
-          {manifestation.subjects.dbcVerified
+          {manifestation?.subjects?.dbcVerified
             .map((sub) => sub.display)
             .join(", ")}
         </Text>
       </div>
       <div className={styles.item}>
         <Text type="text2">
-          {manifestation.physicalDescription.summaryFull}
+          {manifestation?.physicalDescription?.summaryFull}
         </Text>
       </div>
     </>
