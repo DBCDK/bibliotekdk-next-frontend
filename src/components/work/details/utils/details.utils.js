@@ -579,12 +579,16 @@ function RenderMovieAudience({ values }) {
   );
 }
 
-function RenderAI() {
+function RenderAI(entry) {
+  const flattened = entry?.values?.flatMap?.((v) => v.display);
+
   return (
     <div className={styles.aiimage}>
       <Icon src={"ai.svg"} size={{ w: 3, h: 3 }} />
       <Text type="text3" lines={1} tag="span" className={styles.imgtext}>
-        {translate({ context: "details", label: "aigenerated" })}
+        {flattened?.length > 0
+          ? flattened?.map((display) => <div key={display}>{display}</div>)
+          : translate({ context: "details", label: "aigenerated" })}
       </Text>
     </div>
   );
