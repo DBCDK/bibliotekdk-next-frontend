@@ -45,20 +45,6 @@ function sortAccessArray(accessArr) {
       priority -= 1001;
     }
 
-    // articles from tidsskrift.dk should be BEFORE webarkiv
-    if (access.origin === "tidsskrift.dk") {
-      priority += 2;
-    }
-
-    // also journals.aau.dk should be prioritized
-    if (access.origin === "journals.aau.dk") {
-      priority += 2;
-    }
-
-    if (access.origin === "DBC Webarkiv") {
-      priority += 1;
-    }
-
     if (access.url) {
       priority += 1;
     }
