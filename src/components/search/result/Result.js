@@ -67,6 +67,7 @@ export function Result({
         subtitle={
           !isTablet && !isMobile ? (
             <>
+              <QuickFilter />
               <SimpleFacets />
             </>
           ) : (

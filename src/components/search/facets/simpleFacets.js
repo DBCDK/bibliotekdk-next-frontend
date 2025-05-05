@@ -1,8 +1,10 @@
 import { AdvancedFacets } from "@/components/search/advancedSearch/facets/advancedFacets";
-import useFilters from "@/components/hooks/useFilters";
+import useFilters, { includedTypes } from "@/components/hooks/useFilters";
 import { useData } from "@/lib/api/api";
 import * as searchFragments from "@/lib/api/search.fragments";
 import useQ from "@/components/hooks/useQ";
+import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
+import upperFirst from "lodash/upperFirst";
 
 export function SimpleFacets({
   facets = [],
@@ -22,6 +24,7 @@ export function SimpleFacets({
         selectedFacets={selectedFacets}
         onItemClick={onItemClick}
         origin="simpleSearch"
+        translateContext="facets"
       />
     </>
   );
@@ -34,14 +37,32 @@ export default function Wrap() {
   // connected q hook
   const { hasQuery, getQuery } = useQ();
 
+  const { selectedQuickFilters } = useQuickFilters();
+
   // Get q object
   const q = getQuery();
+
+  // parse the quickfilters -
+
+  console.log(selectedQuickFilters, "SELECTEDQUCIK");
+  console.log(q, "QUERY");
+
+  // extract selected workType, if any
+  const workType = filters.workTypes?.[0];
+  // Exclude irrelevant worktype categories
+  // undefined will result in a include-all fallback at the fragment api call function.
+  const facetFilters = (workType && includedTypes[workType]) || undefined;
+
+  // console.log({ ...filters, ...parseQuickFilter() }, "FILTERS");
+  // console.log(facetFilters, "FACETFILTERS");
 
   const { data, isLoading } = useData(
     hasQuery &&
       searchFragments.facets({
         q,
         filters: filters,
+        // filters: filters,
+        facets: facetFilters,
       })
   );
   const onItemClick = (selected) => {
@@ -61,6 +82,7 @@ export default function Wrap() {
     return facetsAsArray;
   };
 
+  console.log(data?.search?.facets, "SEARCH FACETS");
   // console.log(data, "SIMPLE SEARCH DATA");
   return (
     <SimpleFacets

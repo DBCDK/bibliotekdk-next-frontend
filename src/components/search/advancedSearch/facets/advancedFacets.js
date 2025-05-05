@@ -33,6 +33,7 @@ export function AdvancedFacets({
   selectedFacets,
   onItemClick,
   origin = "advancedSearch",
+  translateContext = "complex-search-facets",
 }) {
   // special handling of the facet.source
   // the sources we wish to handle
@@ -80,6 +81,7 @@ export function AdvancedFacets({
         //     ref.current.scrollIntoView({ behavior: "smooth", block: "end" });
         //       return false;
         //    }
+
         <AccordianItem
           facetName={facetName}
           index={index}
@@ -89,6 +91,7 @@ export function AdvancedFacets({
           onItemClick={onItemClick}
           isLoading={isLoading}
           origin={origin}
+          translateContext={translateContext}
         />
       ))}
     </Accordion>
@@ -103,6 +106,7 @@ function AccordianItem({
   onItemClick,
   isLoading,
   origin,
+  translateContext,
 }) {
   if (isLoading) {
     return (
@@ -110,6 +114,12 @@ function AccordianItem({
         <div>fisk</div>
       </Skeleton>
     );
+  }
+
+  // Global excluded categories @TODO - this is a lousy solution from filters page - refactor
+  const excluded = [FilterTypeEnum.WORK_TYPES];
+  if (excluded.includes(facetName)) {
+    return null;
   }
 
   // we use current to display number of selected values in this specific facet
@@ -120,7 +130,7 @@ function AccordianItem({
       <div className={styles.countContainer}>
         <Text tag="span" type="text3" className={styles.facettitle}>
           {translate({
-            context: "complex-search-facets",
+            context: translateContext,
             label: `label-${facetName}`,
           })}
         </Text>
@@ -133,7 +143,8 @@ function AccordianItem({
     );
   };
 
-  /** TODO this one should vary for simplesearch .. but we don't have the origin here .. **/
+  /** Advanced facets are now used as filters for simple search - check
+   * origin parameter an act accordingly **/
   let facet;
   if (origin === "simpleSearch") {
     facet = facets.find((fac) => {
@@ -163,13 +174,14 @@ function AccordianItem({
           facetName={facetName}
           selectedFacets={selectedFacets}
           onItemClick={onItemClick}
+          origin={origin}
         />
       </Item>
     </div>
   );
 }
 
-function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
+function ListItem({ facet, facetName, selectedFacets, onItemClick, origin }) {
   const [numToShow, setNumToShow] = useState(5);
   const numberToShowMore = 20;
 
@@ -232,7 +244,11 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
             >
               {
                 (initialcheck = !!current?.values?.find((val) => {
-                  return val.name === value.key || val === value.key;
+                  return (
+                    val.name === value.key ||
+                    val === value.key ||
+                    val === value.term
+                  );
                 }))
               }
               <Checkbox
@@ -247,12 +263,14 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
               {/* Set a label for the checkbox - in that way the checkbox's selected value will be set when clicking the label */}
               <label htmlFor={`${facetName}-${value.key}-${index}`}>
                 <Text tag="span" type="text3" className={styles.facettext}>
-                  {value.key}
+                  {value.term || value.key}
                 </Text>
               </label>
-              <Text tag="span" type="text3" className={styles.score}>
-                {value.score}
-              </Text>
+              {origin === "advancedFacets" && (
+                <Text tag="span" type="text3" className={styles.score}>
+                  {value.score}
+                </Text>
+              )}
             </li>
           ))}
         {facet?.values?.length > numToShow && (
@@ -321,6 +339,7 @@ export default function Wrap({ cql, replace = false }) {
       selectedFacets={selectedFacets}
       onItemClick={onItemClick}
       origin="advancedSearch"
+      translateContext="complex-search-facets"
     />
   );
 }
