@@ -8,9 +8,6 @@ import useFilters from "@/components/hooks/useFilters";
 import useQ from "@/components/hooks/useQ";
 
 import { subjects } from "@/lib/api/relatedSubjects.fragments";
-
-import FilterButton from "../filterButton";
-
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 import ResultPage from "./page";
@@ -23,6 +20,7 @@ import translate from "@/components/base/translate/Translate";
 import QuickFilter from "@/components/search/advancedSearch/quickfilter/QuickFilter";
 
 import SimpleFacets from "@/components/search/facets/simpleFacets";
+import { FilterButton } from "@/components/search/filterButton/FilterButton";
 
 /**
  * Search result
@@ -37,12 +35,11 @@ export function Result({
   onWorkClick,
   onPageChange,
   noRelatedSubjects,
-  selectedFacets,
 }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs" || breakpoint === "sm" || false;
   const isTablet = breakpoint === "md";
-  const isDesktop = breakpoint === "lg" || breakpoint === "xl";
+  // const isDesktop = breakpoint === "lg" || breakpoint === "xl";
 
   const numPages = Math.ceil(hitcount / 10);
 
@@ -79,7 +76,9 @@ export function Result({
               <SimpleFacets />
             </>
           ) : (
-            <span />
+            <FilterButton
+              className={`${styles.filterButton} ${styles.visible}`}
+            />
           )
         }
         colSize={{

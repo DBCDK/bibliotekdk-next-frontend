@@ -2,7 +2,6 @@ import {
   AdvFacetsTypeEnum,
   FacetValidDatabases,
   FilterTypeEnum,
-  SimpleFacetsTypeEnum,
 } from "@/lib/enums";
 import Accordion, { Item } from "@/components/base/accordion/Accordion";
 
@@ -11,7 +10,7 @@ import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
 import Link from "@/components/base/link/Link";
 
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
 import { useData } from "@/lib/api/api";

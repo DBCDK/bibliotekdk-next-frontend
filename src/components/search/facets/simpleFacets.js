@@ -4,8 +4,6 @@ import { useData } from "@/lib/api/api";
 import * as searchFragments from "@/lib/api/search.fragments";
 import useQ from "@/components/hooks/useQ";
 import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
-import upperFirst from "lodash/upperFirst";
-import { object } from "prop-types";
 
 export function SimpleFacets({
   facets = [],
@@ -58,7 +56,7 @@ export function mapQuickFilters(selectedQuickFilters = []) {
 
 export default function Wrap() {
   // connected filters hook
-  const { filters, setAFilter, setQuery, isSynced } = useFilters();
+  const { filters, setAFilter, setQuery } = useFilters();
 
   // connected q hook
   const { hasQuery, getQuery } = useQ();
@@ -107,6 +105,7 @@ export default function Wrap() {
       facets={data?.search?.facets}
       onItemClick={onItemClick}
       selectedFacets={parseForSelected(filters)}
+      isLoading={isLoading}
     />
   );
 }
