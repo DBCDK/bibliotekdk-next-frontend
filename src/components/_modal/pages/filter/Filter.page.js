@@ -130,7 +130,6 @@ function SelectedFilter({
       copy.push(title);
     }
 
-    console.log({ [name]: copy }, "SÅDAN SKAL DE SE UD");
     onSelect({ [name]: copy });
   }
 
