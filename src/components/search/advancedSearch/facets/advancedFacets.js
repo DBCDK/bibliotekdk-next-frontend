@@ -117,7 +117,13 @@ function AccordianItem({
   }
 
   // Global excluded categories @TODO - this is a lousy solution from filters page - refactor
-  const excluded = [FilterTypeEnum.WORK_TYPES];
+  // Exclude types from facetbrowser - in simple search facets most are shown in the quickfilters
+  const excluded = [
+    FilterTypeEnum.WORK_TYPES,
+    FilterTypeEnum.ACCESS_TYPES,
+    FilterTypeEnum.CHILDREN_OR_ADULTS,
+    FilterTypeEnum.FICTION_NONFICTION,
+  ];
   if (excluded.includes(facetName)) {
     return null;
   }

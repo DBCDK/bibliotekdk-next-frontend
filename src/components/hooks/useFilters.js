@@ -130,8 +130,6 @@ export default function useFilters() {
    *
    */
   const setFilters = (include = {}) => {
-    console.log(include, "ICNLUDE");
-
     const params = {};
     Object.entries(include).forEach(([key, val]) => {
       if (types.includes(key)) {
@@ -176,10 +174,14 @@ export default function useFilters() {
 
   const _removeAFilter = (filter, term) => {
     const name = filter?.facetName;
-    const actual = _filters[name];
+    const actual = [..._filters[name]] || null;
+
     // delete in array
-    const index = actual.findIndex((act) => act === term);
-    actual?.splice(index, 1);
+    const index = actual?.findIndex((act) => act === term);
+    if (index > -1) {
+      actual?.splice(index, 1);
+      _filters[name] = actual;
+    }
   };
 
   /**

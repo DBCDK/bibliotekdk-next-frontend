@@ -440,8 +440,6 @@ export default function Wrap(props) {
   // Get q object
   const q = getQuery();
 
-  console.log(q, "QQQQQQQQQQQQQQQQQQQQQQQ");
-
   // extract selected workType, if any
   const workType = filters.workTypes?.[0];
 
@@ -480,8 +478,6 @@ export default function Wrap(props) {
 
   // Dont clear the workType filter onClear
   const excludeOnClear = { workTypes: filters.workTypes };
-
-  console.log(mergedData, "FILTERDATA");
 
   return (
     <Filter

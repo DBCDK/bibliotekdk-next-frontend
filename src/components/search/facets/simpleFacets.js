@@ -5,6 +5,7 @@ import * as searchFragments from "@/lib/api/search.fragments";
 import useQ from "@/components/hooks/useQ";
 import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
 import upperFirst from "lodash/upperFirst";
+import { object } from "prop-types";
 
 export function SimpleFacets({
   facets = [],
@@ -14,7 +15,6 @@ export function SimpleFacets({
     alert("fisk");
   },
 }) {
-  // console.log(facets, "STORY FACETS");
   return (
     <>
       <div>FISK</div>
@@ -30,6 +30,32 @@ export function SimpleFacets({
   );
 }
 
+export function mapQuickFilters(selectedQuickFilters = []) {
+  const mappedFilters = {};
+
+  const valueMap = {
+    nonfiction: "Faglitteratur",
+    fiction: "Skønlitteratur",
+    online: "Digital",
+    fysisk: "Fysisk",
+  };
+
+  const map = {
+    "term.childrenoradults": "childrenOrAdults",
+    "term.fictionnonfiction": "fictionNonfiction",
+    "term.accesstype": "accessTypes",
+  };
+  selectedQuickFilters.forEach((quickFilter) => {
+    if (Object.keys(map).includes(quickFilter.searchIndex)) {
+      mappedFilters[map[quickFilter.searchIndex]] = [
+        valueMap[quickFilter.value] || quickFilter.value,
+      ];
+    }
+  });
+
+  return mappedFilters;
+}
+
 export default function Wrap() {
   // connected filters hook
   const { filters, setAFilter, setQuery, isSynced } = useFilters();
@@ -42,10 +68,8 @@ export default function Wrap() {
   // Get q object
   const q = getQuery();
 
-  // parse the quickfilters -
-
-  console.log(selectedQuickFilters, "SELECTEDQUCIK");
-  console.log(q, "QUERY");
+  // map quickfilters to filters
+  const mapped = mapQuickFilters(selectedQuickFilters);
 
   // extract selected workType, if any
   const workType = filters.workTypes?.[0];
@@ -53,14 +77,11 @@ export default function Wrap() {
   // undefined will result in a include-all fallback at the fragment api call function.
   const facetFilters = (workType && includedTypes[workType]) || undefined;
 
-  // console.log({ ...filters, ...parseQuickFilter() }, "FILTERS");
-  // console.log(facetFilters, "FACETFILTERS");
-
   const { data, isLoading } = useData(
     hasQuery &&
       searchFragments.facets({
         q,
-        filters: filters,
+        filters: { ...filters, ...mapped },
         // filters: filters,
         facets: facetFilters,
       })
@@ -74,7 +95,6 @@ export default function Wrap() {
   const parseForSelected = (filters) => {
     const facetsAsArray = [];
     for (const [key, value] of Object.entries(filters)) {
-      // console.log(`${key}: ${value}`);
       if (value.length > 0) {
         facetsAsArray.push({ searchIndex: key, values: value });
       }
@@ -82,8 +102,6 @@ export default function Wrap() {
     return facetsAsArray;
   };
 
-  console.log(data?.search?.facets, "SEARCH FACETS");
-  // console.log(data, "SIMPLE SEARCH DATA");
   return (
     <SimpleFacets
       facets={data?.search?.facets}

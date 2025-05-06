@@ -37,6 +37,7 @@ export function Result({
   onWorkClick,
   onPageChange,
   noRelatedSubjects,
+  selectedFacets,
 }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs" || breakpoint === "sm" || false;
@@ -52,21 +53,28 @@ export function Result({
   return (
     <>
       <Section
-        // className={`${styles.section} ${noRelatedSubjectsClass}`}
+        className={`${styles.section} ${noRelatedSubjectsClass}`}
         divider={false}
-        title={
-          !isLoading && !isTablet && hitcount > 0 ? (
-            <FilterButton
-              className={`${styles.filterButton} ${styles.visible}`}
-            />
-          ) : (
-            <span />
-          )
-        }
-        // rightSideTitle={isDesktop}
+        title={<span />}
+        // title={
+        //   !isLoading && !isTablet && hitcount > 0 ? (
+        //     <FilterButton
+        //       className={`${styles.filterButton} ${styles.visible}`}
+        //     />
+        //   ) : (
+        //     <span />
+        //   )
+        // }
+        // rightSideTitle={isMobile}
         subtitle={
           !isTablet && !isMobile ? (
             <>
+              <FacetTags origin="simpleSearch" />
+              <div className={styles.subtitleStyle}>
+                <Text type="text1" className={styles.titleStyle}>
+                  {translate({ context: "search", label: "narrow-search" })}
+                </Text>
+              </div>
               <QuickFilter />
               <SimpleFacets />
             </>
@@ -111,6 +119,7 @@ Result.propTypes = {
   viewSelected: PropTypes.string,
   onViewSelect: PropTypes.func,
   onWorkClick: PropTypes.func,
+  selectedFacets: PropTypes.object,
 };
 
 /**
@@ -153,6 +162,7 @@ export default function Wrap({ page, onWorkClick, onPageChange }) {
       hitcount={fastResponse?.data?.search?.hitcount}
       onWorkClick={onWorkClick}
       onPageChange={onPageChange}
+      selectedFacets={filters}
     />
   );
 }
