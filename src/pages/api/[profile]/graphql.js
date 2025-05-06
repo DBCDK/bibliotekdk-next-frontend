@@ -31,7 +31,7 @@ export function sanitizeHeaders(originalHeaders, accessToken) {
     "x-session-token",
     "x-unique-visitor-id",
     "x-caused-by",
-    "User-Agent",
+    "user-agent",
     "x-forwarded-host",
     "x-forwarded-port",
     "x-forwarded-proto",
