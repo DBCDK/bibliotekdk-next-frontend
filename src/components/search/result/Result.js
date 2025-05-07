@@ -20,7 +20,7 @@ import translate from "@/components/base/translate/Translate";
 import QuickFilter from "@/components/search/advancedSearch/quickfilter/QuickFilter";
 
 import SimpleFacets from "@/components/search/facets/simpleFacets";
-import { FilterButton } from "@/components/search/filterButton/FilterButton";
+import FilterButton from "@/components/search/filterButton/FilterButton";
 
 /**
  * Search result
@@ -52,16 +52,15 @@ export function Result({
       <Section
         className={`${styles.section} ${noRelatedSubjectsClass}`}
         divider={false}
-        title={<span />}
-        // title={
-        //   !isLoading && !isTablet && hitcount > 0 ? (
-        //     <FilterButton
-        //       className={`${styles.filterButton} ${styles.visible}`}
-        //     />
-        //   ) : (
-        //     <span />
-        //   )
-        // }
+        title={
+          !isLoading && isMobile && hitcount > 0 ? (
+            <FilterButton
+              className={`${styles.filterButton} ${styles.visible}`}
+            />
+          ) : (
+            <span />
+          )
+        }
         // rightSideTitle={isMobile}
         subtitle={
           !isTablet && !isMobile ? (
@@ -76,9 +75,7 @@ export function Result({
               <SimpleFacets />
             </>
           ) : (
-            <FilterButton
-              className={`${styles.filterButton} ${styles.visible}`}
-            />
+            <span />
           )
         }
         colSize={{
