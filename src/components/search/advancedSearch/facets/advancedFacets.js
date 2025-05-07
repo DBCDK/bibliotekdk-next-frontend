@@ -274,7 +274,7 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick, origin }) {
                   {value.term || value.key}
                 </Text>
               </label>
-              {origin === "advancedFacets" && (
+              {origin === "advancedSearch" && (
                 <Text tag="span" type="text3" className={styles.score}>
                   {value.score}
                 </Text>
