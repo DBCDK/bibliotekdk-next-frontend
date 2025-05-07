@@ -40,6 +40,8 @@ export function AdvancedFacets({
     val.toLowerCase()
   );
 
+  // variable that holds facets to be shown
+  // advancedFacets is used for both advanced search AND simplesearch - so we differ with the 'origin' param
   let filteredFacets;
   if (origin === "advancedSearch") {
     // filter out unwanted sources
@@ -47,11 +49,11 @@ export function AdvancedFacets({
       if (fac.name !== "facet.source") {
         return true;
       } else {
-        const validValuse = fac.values.filter((fac) =>
+        const validValues = fac.values.filter((fac) =>
           validSource.includes(fac.key)
         );
-        if (validValuse.length > 0) {
-          fac.values = validValuse;
+        if (validValues.length > 0) {
+          fac.values = validValues;
           return true;
         }
       }
@@ -64,6 +66,7 @@ export function AdvancedFacets({
       })
     );
   } else {
+    // facets for simple search
     filteredFacets = Object.values(FilterTypeEnum).filter((val) =>
       facets?.find((facet) => {
         return facet.name === val;

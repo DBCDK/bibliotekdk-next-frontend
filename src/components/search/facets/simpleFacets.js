@@ -15,7 +15,6 @@ export function SimpleFacets({
 }) {
   return (
     <>
-      <div>FISK</div>
       <AdvancedFacets
         facets={facets}
         isLoading={isLoading}

@@ -158,7 +158,7 @@ export default function useFilters() {
    *     "facetName": "materialTypesSpecific"
    * }
    */
-  const setAFilter = (filter) => {
+  const setFilter = (filter) => {
     if (!filter.checked) {
       _removeAFilter(filter, filter?.value?.term);
     } else {
@@ -290,7 +290,7 @@ export default function useFilters() {
     isSynced: _isSynced(),
     types,
     workTypes,
-    setAFilter,
+    setAFilter: setFilter,
   };
 }
 
