@@ -66,10 +66,10 @@ export function AdvancedFacets({
       })
     );
   } else {
-    // facets for simple search
+    // facets for simple search - filter out faecets with empty values
     filteredFacets = Object.values(FilterTypeEnum).filter((val) =>
       facets?.find((facet) => {
-        return facet.name === val;
+        return facet.name === val && facet?.values?.length > 0;
       })
     );
   }
