@@ -1,5 +1,4 @@
 import { generateKey, fetcher } from "@/lib/api/api";
-import { getServerSession } from "@dbcdk/login-nextjs/server";
 
 /**
  * Initializes session and fetches stuff from API
