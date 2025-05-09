@@ -1,8 +1,8 @@
 import { log } from "dbc-node-logger";
+import { incErrorCount } from "@/utils/errorCount";
 
 const DELAY = 5000;
 let lastMessage = 0;
-let errorCounter = 0;
 
 /**
  * POST unhandled client side errors to this endpoint
@@ -28,7 +28,7 @@ export default async function handler(req, res) {
     } catch (e) {
       parsed = {};
     }
-    errorCounter++;
+    incErrorCount();
 
     log.error("CLIENT SIDE ERROR", {
       clientError: {
@@ -42,14 +42,4 @@ export default async function handler(req, res) {
     // not enough time has passed since last message
     res.status(200).json({ message: "OK" });
   }
-}
-
-/**
- * The howru endpoint can get a count here,
- * which will let us create alerts, when count is above some threshold
- */
-export function getClientSideErrorCount() {
-  let res = errorCounter;
-  errorCounter = 0;
-  return res;
 }
