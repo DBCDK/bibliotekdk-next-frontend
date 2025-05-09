@@ -157,7 +157,7 @@ WorkPage.getInitialProps = async (ctx) => {
     },
     ctx.req.headers["user-agent"],
     ctx.req.headers["x-forwarded-for"] || ctx.req.connection.remoteAddress,
-    { headers: ctx.req.headers }
+    { headers: { ...ctx.req.headers, cookie: ctx.req.customCookieHeader } }
   );
 
   const fixedUrl = extractFixedUrl(queryRes, ctx);
