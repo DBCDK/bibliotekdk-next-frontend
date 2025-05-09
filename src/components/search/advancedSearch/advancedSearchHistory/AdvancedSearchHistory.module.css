@@ -102,6 +102,10 @@
   grid-area: hitcount;
 }
 
+.emptysearchtxt {
+  width: 66%;
+}
+
 .emptysearchpage {
   margin-bottom: 320px;
 }
