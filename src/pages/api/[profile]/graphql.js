@@ -138,8 +138,6 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  await getServerSession(req, res);
-
   const accessToken = await getAccessToken(req, res);
   const profile = req.query.profile;
 

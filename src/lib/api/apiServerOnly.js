@@ -29,9 +29,6 @@ export async function fetchAll(
     context.req.headers["x-forwarded-for"] ||
     context.req.connection.remoteAddress;
 
-  // user session
-  let session = await getServerSession(context.req, context.res);
-
   // Fetch all queries in parallel
   const initialData = {};
 
@@ -57,7 +54,10 @@ export async function fetchAll(
           });
           try {
             const queryRes = await fetcher(queryKey, userAgent, ip, {
-              headers: context.req.headers,
+              headers: {
+                ...context.req.headers,
+                cookie: context.req.customCookieHeader,
+              },
             });
             return { queryKey, queryRes };
           } catch (e) {
@@ -74,6 +74,5 @@ export async function fetchAll(
 
   return {
     initialData,
-    session,
   };
 }
