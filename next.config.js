@@ -37,8 +37,7 @@ const headers = [
       "connect-src 'self' https://consentcdn.cookiebot.eu https://consent.cookiebot.eu https://stats.dbc.dk *.dbc.dk http://localhost:* ws://localhost:*; " +
       "frame-src 'self' *.dbc.dk https://consentcdn.cookiebot.eu;" +
       "font-src 'self' data:; " +
-      "worker-src 'self' blob:; " // Allow Web Workers.. Can be removed if productionBrowserSourceMaps is false
-
+      "worker-src 'self' blob:; ", // Allow Web Workers.. Can be removed if productionBrowserSourceMaps is false
   },
   {
     key: "X-Content-Type-Options", // prevents the browser from guessing the content type. This will prevent MIME sniffing
@@ -172,6 +171,7 @@ module.exports = {
     allowRobots: process.env.ALLOW_ROBOTS === "true" ? true : false,
   },
   publicRuntimeConfig: {
+    fbi_api_force_profile: process.env.FBI_API_FORCE_PROFILE,
     cookiebot: {
       id: process.env.COOKIEBOT_ID || "0945225b-6b16-4166-82dd-ea5947b897b3",
       mode: process.env.COOKIEBOT_MODE || "auto",
