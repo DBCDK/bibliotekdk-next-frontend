@@ -7,6 +7,7 @@ import useSWR from "swr";
 import useCookieConsent from "@/components/hooks/useCookieConsent";
 import { useRouter } from "next/router";
 import { mutate as globalMutate } from "swr";
+import getConfig from "next/config";
 
 export const APIMockContext = createContext();
 
@@ -63,7 +64,10 @@ export async function fetcher(
       : window.location.origin;
 
   const profile =
-    apiUrlFromQuery === ApiEnums.FBI_API ? "bibdk21" : "SimpleSearch";
+    getConfig()?.publicRuntimeConfig?.fbi_api_force_profile ||
+    apiUrlFromQuery === ApiEnums.FBI_API
+      ? "bibdk21"
+      : "SimpleSearch";
 
   const headers = {
     ...orgHeaders,
