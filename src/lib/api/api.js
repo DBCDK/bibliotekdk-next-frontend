@@ -67,9 +67,8 @@ export async function fetcher(
       : window.location.origin;
 
   const profile =
-    forced_profile || apiUrlFromQuery === ApiEnums.FBI_API
-      ? "bibdk21"
-      : "SimpleSearch";
+    forced_profile ||
+    (apiUrlFromQuery === ApiEnums.FBI_API ? "bibdk21" : "SimpleSearch");
 
   const headers = {
     ...orgHeaders,
