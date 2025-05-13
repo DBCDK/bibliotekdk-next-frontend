@@ -30,6 +30,9 @@ export function enableDebug() {
   debug = true;
 }
 
+const forced_profile =
+  getConfig()?.publicRuntimeConfig?.fbi_api_force_profile || null;
+
 /**
  * Our custom fetcher
  *
@@ -64,8 +67,7 @@ export async function fetcher(
       : window.location.origin;
 
   const profile =
-    getConfig()?.publicRuntimeConfig?.fbi_api_force_profile ||
-    apiUrlFromQuery === ApiEnums.FBI_API
+    forced_profile || apiUrlFromQuery === ApiEnums.FBI_API
       ? "bibdk21"
       : "SimpleSearch";
 
