@@ -47,11 +47,11 @@ const MAP = {
     {
       category: "articles",
       subCategories: [
-        { title: "pub_newest_politiken" },
-        { title: "pub_newest_berlingske_tidende" },
-        { title: "pub_newest_jyllands_posten" },
-        { title: "pub_newest_information" },
-        { title: "pub_newest_kristeligt_dagblad" },
+        // { title: "pub_newest_politiken" },
+        // { title: "pub_newest_berlingske_tidende" },
+        // { title: "pub_newest_jyllands_posten" },
+        // { title: "pub_newest_information" },
+        // { title: "pub_newest_kristeligt_dagblad" },
         { title: "sub_newest_politics" },
         { title: "sub_newest_technology" },
         { title: "sub_newest_climate" },
