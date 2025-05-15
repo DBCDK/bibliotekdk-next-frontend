@@ -52,6 +52,8 @@ import ErrorPage from "./500";
 import { BookmarkSyncProvider } from "@/components/hooks/useBookmarks";
 import useIsOnline from "@/components/hooks/useIsOnline";
 import { UseManyProvider } from "@/components/hooks/useMany";
+import { getServerSession } from "@dbcdk/login-nextjs/server";
+import { buildCookieHeader } from "@/lib/cookies";
 
 // kick off the polyfill!
 if (typeof window !== "undefined") {
@@ -286,12 +288,23 @@ MyApp.getInitialProps = async (ctx) => {
   if (typeof window !== "undefined") {
     return { pageProps: {} };
   }
+  // Get session ensures that an access token is available encoded as JWT cookie
+  const session = await getServerSession(ctx?.ctx?.req, ctx?.ctx?.res);
+
+  // We store the JWT cookie with the access token. This is injected as cookie
+  // when GraphQL proxy is called during SSR
+  ctx.ctx.req.customCookieHeader = buildCookieHeader(
+    ctx?.ctx?.req,
+    ctx?.ctx?.res
+  );
 
   const appProps = await App.getInitialProps(ctx);
+
   return {
     pageProps: {
       ...appProps?.pageProps,
       translations: await fetchTranslations(),
+      session,
     },
   };
 };

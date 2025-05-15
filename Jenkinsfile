@@ -16,6 +16,12 @@ pipeline {
         GITLAB_ID = "704"
         CLIENT_ID = credentials("bibdk_client_id")
         CLIENT_SECRET = credentials("bibdk_client_secret")
+
+        SONAR_SCANNER_HOME = tool 'SonarQube Scanner from Maven Central'
+        SONAR_SCANNER = "$SONAR_SCANNER_HOME/bin/sonar-scanner"
+        SONAR_PROJECT_KEY = "bibliotekdk"
+        SONAR_SOURCES='./'
+        SONAR_TESTS='./'
     }
     options {
         disableConcurrentBuilds()
@@ -25,6 +31,31 @@ pipeline {
             steps {
                 cleanWs()
                 checkout scm
+            }
+        }
+        stage("SonarQube") {
+            steps {
+                withSonarQubeEnv(installationName: 'sonarqube.dbc.dk') {
+                    script {
+                        // trigger sonarqube analysis
+                        def sonarOptions = "-Dsonar.branch.name=$BRANCH_NAME"
+                        if (env.BRANCH_NAME != 'main') {
+                            sonarOptions += " -Dsonar.newCode.referenceBranch=main"
+                        }
+
+                        sh returnStatus: true, script: """
+                        $SONAR_SCANNER $sonarOptions -Dsonar.token=${SONAR_AUTH_TOKEN} -Dsonar.projectKey="${SONAR_PROJECT_KEY}"
+                        """
+                    }
+                }
+            }
+        }
+        stage("Quality gate") {
+            steps {
+                // wait for analysis results
+                timeout(time: 1, unit: 'HOURS') {
+                    waitForQualityGate abortPipeline: true
+                }
             }
         }
         stage('Build image') {
