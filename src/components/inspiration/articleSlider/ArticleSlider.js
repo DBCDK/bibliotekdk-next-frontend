@@ -7,16 +7,16 @@ import { Slider } from "@/components/inspiration/slider/Slider";
  * @type {{politiken: string}}
  */
 const MAP = {
-  pub_newest_politiken:
-    '((worktype=article)) AND (term.hostpublication="politiken")',
-  pub_newest_berlingske_tidende:
-    '((worktype=article)) AND (term.hostpublication="berlingske tidende")',
-  pub_newest_jyllands_posten:
-    '((worktype=article)) AND (term.hostpublication="jyllands-posten")',
-  pub_newest_information:
-    '((worktype=article)) AND (term.hostpublication="information")',
-  pub_newest_kristeligt_dagblad:
-    '((worktype=article)) AND (term.hostpublication="kristeligt dagblad")',
+  // pub_newest_politiken:
+  //   '((worktype=article)) AND (term.hostpublication="politiken")',
+  // pub_newest_berlingske_tidende:
+  //   '((worktype=article)) AND (term.hostpublication="berlingske tidende")',
+  // pub_newest_jyllands_posten:
+  //   '((worktype=article)) AND (term.hostpublication="jyllands-posten")',
+  // pub_newest_information:
+  //   '((worktype=article)) AND (term.hostpublication="information")',
+  // pub_newest_kristeligt_dagblad:
+  //   '((worktype=article)) AND (term.hostpublication="kristeligt dagblad")',
   sub_newest_politics:
     '((worktype=article)) AND ((term.subject="politiske forhold"))',
   sub_newest_technology:
