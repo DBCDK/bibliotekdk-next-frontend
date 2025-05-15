@@ -1,5 +1,6 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
 import { SimpleFacets } from "@/components/search/facets/simpleFacets";
+import useFilters from "@/components/hooks/useFilters";
 
 const exportedObject = {
   title: "search/facets",
@@ -116,3 +117,26 @@ export function Default() {
     </div>
   );
 }
+
+export function SimpleFacetsInUrl() {
+  const { setQuery } = useFilters();
+  return (
+    <div>
+      <StoryTitle>Simple search facets</StoryTitle>
+      <StoryDescription>
+        Facets for filtering simple search result
+      </StoryDescription>
+      <SimpleFacets facets={simpleSearchFacets} />
+    </div>
+  );
+}
+
+SimpleFacetsInUrl.story = {
+  parameters: {
+    nextRouter: {
+      showInfo: true,
+      pathname: "/find",
+      query: { q: { all: "fisk" } },
+    },
+  },
+};

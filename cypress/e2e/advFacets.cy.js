@@ -49,8 +49,6 @@ describe("Facets", () => {
       .find("input")
       .click({ force: true });
 
-    cy.wait(20);
-
     // uncheck ebog
     cy.get("[data-cy=accordion-item]").contains("e-bog").click();
 
@@ -73,6 +71,9 @@ describe("Facets", () => {
 
     // and again
     cy.get("[data-cy=accordion-item]").contains("bog").click();
+
+    // assert that numbers (facet-score) are in page
+    cy.get("[data-cy=facet-score]").length > 0;
 
     cy.get("[data-cy=router-query]").then((el) => {
       const fisk = JSON.parse(el.text());
