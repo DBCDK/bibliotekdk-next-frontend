@@ -21,8 +21,8 @@ describe("simpleFacets", () => {
 
     // parse the query - first accordion is materialtypespecific
     cy.get("[data-cy=router-query]").then((el) => {
-      const fisk = JSON.parse(el.text());
-      const selected = fisk.materialTypesSpecific;
+      const queryparams = JSON.parse(el.text());
+      const selected = queryparams.materialTypesSpecific;
       assert(selected.includes("bog"), "query includes bog");
     });
   });
