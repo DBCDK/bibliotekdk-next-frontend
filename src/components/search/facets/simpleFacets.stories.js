@@ -119,14 +119,18 @@ export function Default() {
 }
 
 export function SimpleFacetsInUrl() {
-  const { setQuery } = useFilters();
+  const { setQuery, filters, setAFilter } = useFilters();
+  const onItemClick = (selected) => {
+    setAFilter(selected);
+    setQuery({ include: filters });
+  };
   return (
     <div>
       <StoryTitle>Simple search facets</StoryTitle>
       <StoryDescription>
         Facets for filtering simple search result
       </StoryDescription>
-      <SimpleFacets facets={simpleSearchFacets} />
+      <SimpleFacets facets={simpleSearchFacets} onItemClick={onItemClick} />
     </div>
   );
 }
