@@ -120,8 +120,8 @@ export function Item({
         onClick={onClick}
         onKeyDown={handleKeypress}
         role="button"
-        id={`accordion-unique-toggle-${eventKey}-${title}`}
-        aria-controls={`accordion-unique-${eventKey}-${title}`}
+        id={`accordion-unique-toggle-${eventKey}`}
+        aria-controls={`accordion-unique-${eventKey}`}
         aria-expanded={isCurrentEventKey}
       >
         {CustomHeaderComponent ? (
