@@ -52,7 +52,7 @@ export function getInitialInputFields(workType = "all") {
       {
         value: "",
         prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.title",
+        searchIndex: "term.default",
       },
     ],
     literature: [
