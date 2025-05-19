@@ -7,8 +7,6 @@ import Skeleton from "@/components/base/skeleton";
 import styles from "./Button.module.css";
 import cx from "classnames";
 
-import { default as NextLink } from "next/link";
-
 function handleOnButtonClick() {
   alert("Button clicked!");
 }
