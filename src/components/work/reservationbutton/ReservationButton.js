@@ -205,7 +205,6 @@ export const ReservationButton = ({
     label: noSelectedManifestationsLabel,
   });
 
-  // @TODO handle infomedia - go to the login page etc.
   const accessibleOnlineAndNoLoginProps = {
     skeleton: !access,
     dataCy: "button-order-overview",
