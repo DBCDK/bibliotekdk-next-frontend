@@ -657,6 +657,7 @@ export function fbiOverviewDetail({ workId }) {
                 orchestraTypes                
               }    
               audience {
+                primaryTarget        
                 generalAudience
                 childrenOrAdults {
                   display
@@ -719,6 +720,7 @@ export function fbiOverviewDetail({ workId }) {
               edition {
                 publicationYear {
                   display
+                  frequency
                 }
               }
               notes {
@@ -741,8 +743,41 @@ export function fbiOverviewDetail({ workId }) {
               }
             }
           }
+          periodicaInfo {
+            periodica {
+              articles {
+                hitcount
+                first {
+                  ...WorkPublicationYear
+                }
+                last {
+                  ...WorkPublicationYear
+                  periodicaInfo {
+                    issue {
+                      display
+                    }
+                  }
+                }
+              }
+            }
+            
+          }
         }
         monitor(name: "bibdknext_work_overview_details")
+      }
+      fragment WorkPublicationYear on Work {
+        manifestations {
+          bestRepresentation {
+            edition {
+              publicationYear {
+                year
+              }
+            }
+            audience {
+              primaryTarget
+            }
+          }
+        }
       }
       ${manifestationDetailsForAccessFactory}
       ${manifestationAccess}

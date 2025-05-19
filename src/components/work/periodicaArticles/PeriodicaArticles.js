@@ -98,7 +98,10 @@ function PeriodicaHeader() {
   return (
     <>
       {header.map((head, index) => (
-        <div className={styles.headline} key={`tableheader-${index}`}>
+        <div
+          className={`${styles.headline} ${styles[head]}`}
+          key={`tableheader-${index}`}
+        >
           <Text type="text3">
             {translate({ context: "periodica", label: `${head}` })}
           </Text>
@@ -126,11 +129,13 @@ export function PeriodicaArticle({ manifestation }) {
             href={url}
             border={{ top: false, bottom: { keepVisible: true } }}
           >
-            <Text type="text1">{manifestation.titles.full}</Text>
+            <Text type="text1" lines={4} clamp={true}>
+              {manifestation.titles.full}
+            </Text>
           </Link>
         </Text>
 
-        <Text type="text2" className={styles.creators}>
+        <Text type="text2" className={styles.creators} lines={2} clamp={true}>
           {manifestation.creators.map((crea) => crea.display).join(", ")}
         </Text>
       </div>
@@ -140,19 +145,21 @@ export function PeriodicaArticle({ manifestation }) {
   return (
     <>
       <div className={styles.item}>{firstColumn()}</div>
-      <div className={styles.item}>
-        <Text type="text2">{manifestation?.abstract}</Text>
+      <div className={`${styles.item} ${styles.description}`}>
+        <Text type="text2" lines={4} clamp={true}>
+          {manifestation?.abstract}
+        </Text>
       </div>
-      <div className={styles.item}>
+      <div className={`${styles.item} ${styles.subjects}`}>
         <Text type="text2" lines={4} clamp>
           {manifestation?.subjects?.dbcVerified
             .map((sub) => sub.display)
             .join(", ")}
         </Text>
       </div>
-      <div className={styles.item}>
+      <div className={`${styles.item} ${styles.extent}`}>
         <Text type="text2">
-          {manifestation?.physicalDescription?.summaryFull}
+          {manifestation?.physicalDescription?.summaryFull || ""}
         </Text>
       </div>
     </>

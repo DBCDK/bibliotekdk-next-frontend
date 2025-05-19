@@ -17,7 +17,7 @@
 /* article grid (thank you chatgpt) */
 .container {
   display: grid;
-  grid-template-columns: 3fr 3fr 2fr 1fr; /* Varying column widths */
+  grid-template-columns: 3fr; /* Varying column widths */
   background-color: var(--white);
 }
 
@@ -36,4 +36,39 @@
 
 .accordiontitle {
   margin-left: var(--pt2);
+}
+
+.tableHeaderDescription,
+.tableHeaderSubjects,
+.tableHeaderExtent,
+.description,
+.subjects,
+.extent {
+  display: none;
+}
+
+@media (min-width: 576px) {
+  .container {
+    grid-template-columns: 3fr 3fr; /* Varying column widths */
+  }
+
+  .tableHeaderDescription,
+  .description {
+    display: initial;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    grid-template-columns: 3fr 3fr 2fr 1fr; /* Varying column widths */
+  }
+
+  .tableHeaderDescription,
+  .tableHeaderSubjects,
+  .tableHeaderExtent,
+  .description,
+  .subjects,
+  .extent {
+    display: initial;
+  }
 }

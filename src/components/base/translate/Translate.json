@@ -1911,6 +1911,26 @@
         "da": "Udgivet",
         "en": "Released"
       },
+      "periodica_articles": {
+        "da": "Artikler",
+        "en": "Articles"
+      },
+      "periodica_articles_text": {
+        "da": "%s artikler registreret fra %s - %s",
+        "en": "%s articles registered from %s - %s"
+      },
+      "periodica_latest_issue": {
+        "da": "Seneste udgave er %s",
+        "en": "The latest issue is %s"
+      },
+      "periodica_frequency": {
+        "da": "Udgivelsesfrekvens",
+        "en": "Publication frequency"
+      },
+      "audience_level": {
+        "da": "Niveau",
+        "en": "Level"
+      },
       "contribution": {
         "da": "Bidrag",
         "en": "Contributions"

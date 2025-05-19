@@ -708,6 +708,18 @@ function RenderPlayers({ values }) {
   );
 }
 
+function RenderSimpleList({ values }) {
+  return (
+    <>
+      {values?.map((val) => (
+        <Text type="text4" tag={"div"}>
+          {val}
+        </Text>
+      ))}
+    </>
+  );
+}
+
 /**
  * Main method for retrieving fields to show in details section on workpage.
  * Configurable arrays for different materialtypes - the fieldsMap holds array of
@@ -764,6 +776,22 @@ export function fieldsForRows(manifestation, work, context) {
   const materialType = work?.workTypes?.[0] || null;
   const moviveTitles = getMovieTitles(manifestation, work);
 
+  const articlesHitcount = work?.periodicaInfo?.periodica?.articles?.hitcount;
+  const firstArticleYear =
+    work?.periodicaInfo?.periodica?.articles?.first?.manifestations
+      ?.bestRepresentation?.edition?.publicationYear?.year;
+  const lastArticleYear =
+    work?.periodicaInfo?.periodica?.articles?.last?.manifestations
+      ?.bestRepresentation?.edition?.publicationYear?.year;
+  const lastIssue =
+    work?.periodicaInfo?.periodica?.articles?.last?.periodicaInfo?.issue
+      ?.display;
+  const audienceLevel =
+    (manifestation?.audience?.primaryTarget?.length &&
+      manifestation?.audience?.primaryTarget) ||
+    work?.periodicaInfo?.periodica?.articles?.last?.manifestations
+      ?.bestRepresentation?.audience?.primaryTarget;
+
   const fieldsMap = {
     DEFAULT: [
       {
@@ -780,8 +808,61 @@ export function fieldsForRows(manifestation, work, context) {
       },
       {
         publicationYear: {
-          label: Translate({ ...context, label: "released" }),
+          label: Translate({
+            ...context,
+            label: "released",
+          }),
           value: manifestation?.edition?.publicationYear?.display || "",
+        },
+      },
+      {
+        periodicaArticles: articlesHitcount &&
+          firstArticleYear &&
+          lastArticleYear && {
+            label: Translate({
+              ...context,
+              label: "periodica_articles",
+            }),
+            value: (
+              <>
+                <div>
+                  {Translate({
+                    ...context,
+                    label: "periodica_articles_text",
+                    vars: [articlesHitcount, firstArticleYear, lastArticleYear],
+                  })}
+                </div>
+                {lastIssue && (
+                  <div>
+                    {Translate({
+                      ...context,
+                      label: "periodica_latest_issue",
+                      vars: [lastIssue],
+                    })}
+                  </div>
+                )}
+              </>
+            ),
+          },
+      },
+      {
+        periodicaFrequency: manifestation?.edition?.publicationYear
+          ?.frequency && {
+          label: Translate({
+            ...context,
+            label: "periodica_frequency",
+          }),
+          value: manifestation?.edition?.publicationYear?.frequency,
+        },
+      },
+      {
+        audienceLevel: audienceLevel?.length > 0 && {
+          label: Translate({
+            ...context,
+            label: "audience_level",
+          }),
+          value: audienceLevel,
+          jsxParser: RenderSimpleList,
         },
       },
       {
