@@ -119,3 +119,5 @@ Container.propTypes = {
   asLink: PropTypes.bool,
   href: PropTypes.string,
 };
+
+Button.propTypes = Container.propTypes;
