@@ -7,6 +7,8 @@ import Skeleton from "@/components/base/skeleton";
 import styles from "./Button.module.css";
 import cx from "classnames";
 
+import { default as NextLink } from "next/link";
+
 function handleOnButtonClick() {
   alert("Button clicked!");
 }
@@ -32,14 +34,19 @@ function Button({
   ariaExpanded = null,
   ariaControls = null,
   ariaLabel = null,
+  asLink = false,
+  href = "",
 }) {
   const key = dataCy || cyKey({ name: children, prefix: "button" });
-
+  // should button act as a link ? or a button ?
+  const Tag = asLink ? "a" : "Button";
   return (
-    <button
+    <Tag
+      href={href}
+      target="_blank"
       id={id}
       data-cy={key}
-      className={cx(className, styles.button, {
+      className={cx(className, styles.button, asLink && styles.asLink, {
         [styles.large]: size === "large",
         [styles.medium]: size === "medium",
         [styles.small]: size === "small",
@@ -47,7 +54,9 @@ function Button({
         [styles.secondary]: type === "secondary",
         [styles.disabled]: disabled,
       })}
-      onClick={(e) => (onClick ? onClick(e) : handleOnButtonClick(e))}
+      onClick={(e) =>
+        onClick ? onClick(e) : !asLink ? handleOnButtonClick(e) : null
+      }
       aria-disabled={disabled}
       disabled={disabled}
       tabIndex={tabIndex}
@@ -56,7 +65,7 @@ function Button({
       aria-label={ariaLabel}
     >
       {children}
-    </button>
+    </Tag>
   );
 }
 
@@ -109,4 +118,6 @@ Container.propTypes = {
   onClick: PropTypes.func,
   ariaExpanded: PropTypes.bool,
   ariaControls: PropTypes.string,
+  asLink: PropTypes.bool,
+  href: PropTypes.string,
 };
