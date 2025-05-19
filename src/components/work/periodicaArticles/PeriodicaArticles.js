@@ -89,21 +89,21 @@ export function PeriodicaAccordion({ manifestations, issue, periodicaTitle }) {
 function PeriodicaHeader() {
   /** labels for the table header **/
   const header = [
-    "tableHeadArticle",
-    "tableHeaderDescription",
-    "tableHeaderSubjects",
-    "tableHeaderExtent",
+    { label: "tableHeadArticle", style: styles.tableHeadArticle },
+    { label: "tableHeaderDescription", style: styles.tableHeaderDescription },
+    { label: "tableHeaderSubjects", style: styles.tableHeaderSubjects },
+    { label: "tableHeaderExtent", style: styles.tableHeaderExtent },
   ];
 
   return (
     <>
       {header.map((head, index) => (
         <div
-          className={`${styles.headline} ${styles[head]}`}
+          className={`${styles.headline} ${head.style}`}
           key={`tableheader-${index}`}
         >
           <Text type="text3">
-            {translate({ context: "periodica", label: `${head}` })}
+            {translate({ context: "periodica", label: `${head.label}` })}
           </Text>
         </div>
       ))}

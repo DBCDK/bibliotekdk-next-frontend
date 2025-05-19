@@ -712,7 +712,7 @@ function RenderSimpleList({ values }) {
   return (
     <>
       {values?.map((val) => (
-        <Text type="text4" tag={"div"}>
+        <Text key={val} type="text4" tag={"div"}>
           {val}
         </Text>
       ))}
