@@ -38,8 +38,8 @@ function Button({
   const key = dataCy || cyKey({ name: children, prefix: "button" });
   // should button act as a link ? or a button ?
   const Tag = asLink ? "a" : "Button";
-  const onClickFunction = (e) =>
-    onClick ? onClick(e) : !asLink ? handleOnButtonClick(e) : null;
+  const onClickFunction = () =>
+    onClick ? onClick() : !asLink ? handleOnButtonClick() : null;
   return (
     <Tag
       href={href}
