@@ -37,7 +37,7 @@ function Button({
 }) {
   const key = dataCy || cyKey({ name: children, prefix: "button" });
   // should button act as a link ? or a button ?
-  const Tag = asLink ? "a" : "Button";
+  const Tag = asLink ? "a" : "button";
   const onClickFunction = () =>
     onClick ? onClick() : !asLink ? handleOnButtonClick() : null;
   return (
