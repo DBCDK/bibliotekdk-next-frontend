@@ -25,6 +25,7 @@
 
 .asLink {
   text-align: center;
+  white-space: nowrap;
 }
 
 .primary:hover {
