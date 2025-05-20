@@ -23,6 +23,10 @@
   line-height: 24px;
 }
 
+.asLink {
+  text-align: center;
+}
+
 .primary:hover {
   background-color: var(--mine-shaft);
   color: var(--white);

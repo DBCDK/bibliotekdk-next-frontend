@@ -181,6 +181,12 @@ export const ReservationButton = ({
       .length > 0
   );
 
+  const infomediaAccess = Boolean(
+    access?.filter(
+      (entry) => entry?.url && entry?.__typename === "InfomediaService"
+    ).length > 0
+  );
+
   const noSelectedManifestationsProps = {
     dataCy: "button-order-overview-disabled",
     disabled: true,
@@ -202,9 +208,16 @@ export const ReservationButton = ({
   const accessibleOnlineAndNoLoginProps = {
     skeleton: !access,
     dataCy: "button-order-overview",
-    onClick: () => handleGoToLogin(modal, access, isAuthenticated),
+    href: access?.[0]?.url,
+    asLink: true,
   };
 
+  // INFOMEDIA
+  const accessibleOnlineWithLoginProps = {
+    skeleton: !access,
+    dataCy: "button-order-overview",
+    onClick: () => handleGoToLogin(modal, access, isAuthenticated),
+  };
   const loginRequiredProps = {
     skeleton: isEmpty(access),
     dataCy: `button-order-overview-enabled`,
@@ -231,7 +244,15 @@ export const ReservationButton = ({
       };
     }
 
-    //ACCESS_URL,INFOMEDIA,EREOL
+    if (infomediaAccess) {
+      return {
+        props: accessibleOnlineWithLoginProps,
+        text: constructButtonText(workTypes, materialTypes, shortText),
+        preferSecondary: false,
+      };
+    }
+
+    //ACCESS_URL,EREOL
     if (onlineMaterialWithoutLoginOrLoginAtUrl) {
       return {
         props: accessibleOnlineAndNoLoginProps,
@@ -239,7 +260,6 @@ export const ReservationButton = ({
         preferSecondary: shortText, // Becomes secondary button if button links to material (not ordering)
       };
     }
-
     //DIGITAL_ARTICLE_SERVICE, INTER_LIBRARY_LOAN
     return {
       props: loginRequiredProps,
@@ -249,7 +269,6 @@ export const ReservationButton = ({
   };
 
   const { props, text, preferSecondary } = getProps();
-
   return (
     <>
       <TextAboveButton access={access} isAuthenticated={isAuthenticated} />
