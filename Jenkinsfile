@@ -8,6 +8,9 @@ pipeline {
     }
     triggers {
         githubPush()
+        upstream(
+          upstreamProjects: env.BRANCH_NAME == "main" ? 'Docker-base-node-bump-trigger' : ''
+        )
     }
     environment {
         IMAGE_NAME = "bibliotekdk-next-frontend-${env.BRANCH_NAME.toLowerCase()}:${BUILD_NUMBER}"
