@@ -176,9 +176,12 @@ export default function ResultRow({
   onClick,
   isLoading,
 }) {
-  const creatorsNames = extractCreatorsPrioritiseCorporation(
-    work?.creators
-  )?.map((creator) => creator.display);
+  // we truncate to show about three lines if there are MANY creators
+  // it is hard to say how many creators we want .. 15 ??
+  const numberOfCreatorToShow = 15;
+  const creatorsNames = extractCreatorsPrioritiseCorporation(work?.creators)
+    ?.map((creator) => creator.display)
+    .slice(0, numberOfCreatorToShow);
 
   const { filters } = useFilters();
 

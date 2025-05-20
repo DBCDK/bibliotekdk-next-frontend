@@ -783,6 +783,10 @@
         "da": "Vis alle",
         "en": "Show all"
       },
+      "showLess": {
+        "da": "Vis færre",
+        "en": "Show less"
+      },
       "and": {
         "da": "og",
         "en": "and"
