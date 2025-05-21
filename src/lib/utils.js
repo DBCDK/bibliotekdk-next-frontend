@@ -242,7 +242,15 @@ export function extractCreatorsPrioritiseCorporation(creatorsBeforeFilter) {
     (creator) => creator?.__typename === "Corporation"
   );
 
-  return corporations?.length > 0 ? corporations : creatorsBeforeFilter;
+  const creators =
+    corporations?.length > 0 ? corporations : creatorsBeforeFilter;
+
+  // We truncate to show about three lines if there are MANY creators.
+  // It is hard to say how many creators we want .. 15 .. that would be about three lines :)  ??
+  const numberOfCreatorToShow = 15;
+  return creators?.length > numberOfCreatorToShow
+    ? creators.slice(0, numberOfCreatorToShow)
+    : creators;
 }
 
 /**
