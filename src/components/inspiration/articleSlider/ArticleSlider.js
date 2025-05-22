@@ -34,6 +34,9 @@ const MAP = {
     '((worktype=article)) AND ((term.subject="psykologi"))',
 };
 
+const SKIP_PERIODICALS =
+  ' NOT phrase.hostpublication="Politiken" NOT phrase.hostpublication="Jyllands-posten"';
+
 /**
  * Article slider is a(nother) wrapper for <Slider> @see @/components/inspiration/slider/Slider
  *
@@ -44,7 +47,8 @@ const MAP = {
 export function ArticleSlider({ props }) {
   const { filters } = props;
   const key = filters[0].subCategories[0];
-  const cql = MAP[key];
+  const cql = MAP[key] + SKIP_PERIODICALS;
+
   // we always sort by newest first
   const sort = { index: "sort.latestpublicationdate", order: "desc" };
 
