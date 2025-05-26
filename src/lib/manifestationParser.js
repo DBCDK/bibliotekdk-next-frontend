@@ -645,6 +645,9 @@ export function RenderContributors({ contributors = [] }) {
 export function ParsedAndRenderedCreators({
   creatorsOrContributors: creators,
 }) {
+  const numCreatoreToShow = 15;
+  // used to fold if there are MANY creators
+  const [numToShow, setNumToShow] = useState(numCreatoreToShow);
   // Used to ensure hydration is consistent
   const [hasMounted, setHasMounted] = useState(false);
   useEffect(() => {
@@ -654,18 +657,47 @@ export function ParsedAndRenderedCreators({
     return null;
   }
 
-  return creators?.map((C, idx) => (
-    <Text tag={"div"} key={`${C?.display}${idx}`}>
-      <Link
-        href={getUrlByType({ type: "creator", value: C.display })}
-        border={{ top: false, bottom: { keepVisible: true } }}
-      >
-        {C.display}
-      </Link>
-      {parseFunction(C)}
-      <br />
-    </Text>
-  ));
+  return (
+    <div>
+      {creators
+        ?.map((C, idx) => (
+          <Text tag={"div"} key={`${C?.display}${idx}`}>
+            <Link
+              href={getUrlByType({ type: "creator", value: C.display })}
+              border={{ top: false, bottom: { keepVisible: true } }}
+            >
+              {C.display}
+            </Link>
+            {parseFunction(C)}
+            <br />
+          </Text>
+        ))
+        .slice(0, numToShow)}
+      {numToShow < creators?.length && creators.length > numToShow && (
+        <div>
+          <br />
+          <Text
+            onClick={() => setNumToShow(creators?.length)}
+            style={{ cursor: "pointer" }}
+          >
+            {Translate({ context: "general", label: "showAll" })} (
+            {creators?.length})
+          </Text>
+        </div>
+      )}
+      {numToShow === creators?.length && (
+        <div>
+          <br />
+          <Text
+            onClick={() => setNumToShow(numCreatoreToShow)}
+            style={{ cursor: "pointer" }}
+          >
+            {Translate({ context: "general", label: "showLess" })}
+          </Text>
+        </div>
+      )}
+    </div>
+  );
 }
 
 function ParsedAndRenderedLanguages({ languages }) {
