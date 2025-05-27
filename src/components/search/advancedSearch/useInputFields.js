@@ -5,10 +5,10 @@ import { getInitialInputFields } from "@/components/search/advancedSearch/advanc
 export function useInputFields(fieldSearchFromUrl, workType) {
   //prefixLogicalOperator is an enum of AND, OR , NOT
   const [inputFields, setInputFields] = useState([]);
-
-  useEffect(() => {
-    setInputFields(getInitialInputFields(workType));
-  }, [workType]);
+  // bug .. bibdk2021-3076 - why this useEffect? wait for an explanation before deleting
+  // useEffect(() => {
+  //   setInputFields(getInitialInputFields(workType));
+  // }, [workType]);
 
   useEffect(() => {
     setInputFields(
