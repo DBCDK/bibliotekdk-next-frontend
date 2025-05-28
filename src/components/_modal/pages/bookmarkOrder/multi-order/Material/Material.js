@@ -24,6 +24,7 @@ import { useData } from "@/lib/api/api";
 import { editionManifestations } from "@/lib/api/manifestation.fragments";
 import * as localizationsFragments from "@/lib/api/localizations.fragments";
 import { useManifestationAccess } from "@/components/hooks/useManifestationAccess";
+import { useCheckInterLibraryLoan } from "@/components/hooks/useHoldings";
 
 /**
  * Is missing article implementation
@@ -58,6 +59,13 @@ const Material = ({
     pids,
   });
 
+  const {
+    allowIll,
+    allowOwnUsers,
+    totalAgencies,
+    isLoading: isLoadingCheckLocalizations,
+  } = useCheckInterLibraryLoan({ pids: service === "ILL" ? pids : [] });
+
   const { data: manifestationsData, isLoading: isLoadingManifestations } =
     useData(
       pids?.length > 0 &&
@@ -75,20 +83,23 @@ const Material = ({
 
   const { accessNew } = useManifestationAccess({ pids: pids, filter: false });
 
-  // pjo 08/10/24 bug BIBDK2021-2781
-  // we need localizations since we do NOT allow order of materials with no localizations
-  const { data: localizationsData, isLoading: isLoadingLocalizations } =
-    useData(localizationsFragments.localizationsQuery({ pids: pids }));
-  const localizationsCount = localizationsData?.localizations?.count;
-
   const isLoading =
     isLoadingManifestations ||
     isLoadingAlreadyOrdered ||
-    isLoadingLocalizations;
+    isLoadingCheckLocalizations;
 
   const material = manifestationsData?.manifestations?.[0];
 
-  const orderPossible = service === "ILL" || service === "DIGITAL_ARTICLE";
+  // 1. ILL, 2. accessNew, 3. localizations
+  const orderNotPossible = isLoading
+    ? true
+    : !allowIll
+    ? true
+    : accessNew
+    ? false
+    : totalAgencies < 1;
+  const orderPossible =
+    (service === "ILL" || service === "DIGITAL_ARTICLE") && !orderNotPossible;
 
   const backgroundColor = findBackgroundColor({
     hasAlreadyBeenOrdered: showAlreadyOrderedWarning,
@@ -97,11 +108,8 @@ const Material = ({
     notAvailableAtLibrary: isLoadingOrderService
       ? false //if we dont have data yet, we dont want red background
       : !orderPossible,
-    noLocalizations: accessNew
-      ? false
-      : isLoadingLocalizations
-      ? true
-      : localizationsCount < 1,
+    // we need both locali<ations AND check
+    noLocalizations: orderNotPossible,
   });
 
   const showOrderedWarning =
@@ -163,11 +171,7 @@ const Material = ({
     );
   }
 
-  if (
-    !isLoadingOrderService &&
-    !isLoadingLocalizations &&
-    (!orderPossible || (!accessNew && localizationsCount < 1))
-  ) {
+  if (!isLoading && !orderPossible) {
     children.push(
       <>
         <Text className={styles.orderNotPossible} type="text4">
