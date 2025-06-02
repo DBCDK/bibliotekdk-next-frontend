@@ -835,8 +835,8 @@ export function fieldsForRows(manifestation, work, context) {
           label: "",
           value:
             manifestation?.notes?.length > 0 &&
-            manifestation.notes?.filter((note) =>
-              note?.display?.includes("Bogen er tilbagekaldt af forlaget")
+            manifestation.notes?.filter(
+              (note) => note?.type === "WITHDRAWN_PUBLICATION"
             ),
           jsxParser: RenderRecalled,
         },
