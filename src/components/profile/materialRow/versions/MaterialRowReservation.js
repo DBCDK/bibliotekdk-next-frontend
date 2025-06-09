@@ -12,7 +12,6 @@ import IconButton from "@/components/base/iconButton";
 import ErrorRow from "../../errorRow/ErrorRow";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { useModal } from "@/components/_modal";
-import useUser from "@/components/hooks/useUser";
 import Translate from "@/components/base/translate";
 import { dateToDayInMonth } from "@/utils/datetimeConverter";
 import { getWorkUrlForProfile, handleOrderMutationUpdates } from "../../utils";
@@ -23,6 +22,7 @@ import {
   formatMaterialTypesToUrl,
 } from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
+import useOrders from "@/components/hooks/user/useOrders";
 
 const OrderColumn = ({ pickUpExpiryDate, holdQueuePosition }) => {
   const breakpoint = useBreakpoint();
@@ -108,14 +108,14 @@ const MaterialRowReservation = (props) => {
   const modal = useModal();
   const orderMutation = useMutate();
   const [hasDeleteError, setHasDeleteError] = useState(false);
-  const { updateUserStatusInfo } = useUser();
+  const { updateOrders } = useOrders();
 
   useEffect(() => {
     handleOrderMutationUpdates(
       orderMutation,
       setHasDeleteError,
       () => setRemovedOrderId(materialId),
-      updateUserStatusInfo
+      updateOrders
     );
   }, [orderMutation.error, orderMutation.data]);
 
