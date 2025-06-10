@@ -1,0 +1,93 @@
+.skeletonrow {
+  border-bottom: 1px solid var(--iron);
+  padding: var(--pt1) 0 var(--pt1) 0;
+}
+
+.headerContent {
+  padding: var(--pt2) var(--pt1) var(--pt2) 0;
+}
+.title {
+  margin: 0 0 var(--pt05) 0;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+/* article grid (thank you chatgpt) */
+.container {
+  display: block;
+  background-color: var(--white);
+}
+
+.headerrow,
+.row {
+  display: grid;
+  grid-template-columns: 3fr; /* Varying column widths */
+}
+.row {
+  border-top: 1px solid var(--iron);
+}
+.row:focus,
+.row:hover {
+  color: var(--mine-shaft);
+  /* border-top: 1px solid var(--blue); */
+  background-color: var(--concrete);
+  cursor: pointer;
+}
+.row > div {
+  padding: var(--pt1);
+}
+.headline {
+  padding: var(--pt1);
+}
+
+.creators {
+  margin-top: var(--pt1);
+}
+
+.accordiontitle {
+  margin-left: var(--pt2);
+}
+
+.tableHeaderDescription,
+.tableHeaderSubjects,
+.tableHeaderExtent,
+.description,
+.subjects,
+.extent {
+  display: none;
+}
+
+.articlecount {
+  margin-left: var(--pt3);
+  text-transform: lowercase;
+}
+
+@media (min-width: 576px) {
+  .headerrow,
+  .row {
+    grid-template-columns: 3fr 3fr; /* Varying column widths */
+  }
+
+  .tableHeaderDescription,
+  .description {
+    display: initial;
+  }
+}
+
+@media (min-width: 768px) {
+  .headerrow,
+  .row {
+    grid-template-columns: 3fr 3fr 2fr 1fr; /* Varying column widths */
+  }
+
+  .tableHeaderDescription,
+  .tableHeaderSubjects,
+  .tableHeaderExtent,
+  .description,
+  .subjects,
+  .extent {
+    display: initial;
+  }
+}

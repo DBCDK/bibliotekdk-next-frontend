@@ -9,6 +9,7 @@ import isEmpty from "lodash/isEmpty";
 import animations from "@/components/base/animation/animations.module.css";
 import Link from "@/components/base/link";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
+import { useMemo } from "react";
 
 export const SortOrderEnum = Object.freeze({
   ASC: "ASC",
@@ -81,6 +82,80 @@ function handleOnSort(router, sortElement) {
   );
 }
 
+export function SimpleDropDown({
+  placeholder,
+  selected,
+  onSelect,
+  options,
+  clearRow,
+}) {
+  const iconSrc = "arrowDown.svg";
+  const iconSimpleAnimations =
+    iconSrc === "chevron_right.svg" &&
+    cx(animations["h-elastic"], animations["f-elastic"]);
+
+  const allOptions = useMemo(() => {
+    if (clearRow && selected) {
+      return [clearRow, ...options];
+    }
+    return options;
+  }, [selected, options, clearRow]);
+
+  return (
+    <Dropdown className={cx(styles.nav_element)}>
+      <Dropdown.Toggle
+        variant="success"
+        size="sm"
+        id="dropdown-basic"
+        className={cx(styles.menuButton)}
+      >
+        <Link
+          border={{ bottom: { keepVisible: true } }}
+          href={false}
+          onClick={() => {}}
+        >
+          <Text tag="span" type="text3" className={cx(styles.dropdown_label)}>
+            {selected || placeholder}
+          </Text>
+        </Link>
+
+        <span className={styles.icon_area}>
+          <Icon
+            size={{ w: 2, h: 2 }}
+            src={iconSrc}
+            className={cx(styles.icon, iconSimpleAnimations, {
+              [styles.icon_open]: iconSrc === "arrowDown.svg",
+            })}
+            alt=""
+          />
+        </span>
+      </Dropdown.Toggle>
+      <Dropdown.Menu className={styles.dropdown_items}>
+        {allOptions?.map((value) => {
+          return (
+            <Dropdown.Item
+              tabIndex="-1"
+              data-cy={`item-${value}`}
+              key={`indexDropdown-${value}`}
+              className={cx(
+                styles.dropdown_item,
+                value === selected ? styles.dropdown_item_selected : null
+              )}
+              onClick={() =>
+                value === clearRow ? onSelect(null) : onSelect(value)
+              }
+            >
+              <Text tag="span" type="text3" className={cx(styles.upper_first)}>
+                {value}
+              </Text>
+            </Dropdown.Item>
+          );
+        })}
+      </Dropdown.Menu>
+    </Dropdown>
+  );
+}
+
 export default function AdvancedSearchSort({ className }) {
   const router = useRouter();
 
@@ -109,6 +184,7 @@ export default function AdvancedSearchSort({ className }) {
       >
         {Translate({ context: "advanced_search_sort", label: "sort_button" })}:
       </Text>
+
       <Dropdown className={cx(styles.nav_element)}>
         <Dropdown.Toggle
           variant="success"

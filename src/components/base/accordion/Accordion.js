@@ -83,7 +83,9 @@ export function Item({
   useEffect(() => {
     if (!scrolledToHash && id && `#${id}` === window.location.hash) {
       setTimeout(() => {
-        onClick();
+        if (!isCurrentEventKey) {
+          onClick();
+        }
         useScroll &&
           window.scrollTo({
             behavior: "smooth",

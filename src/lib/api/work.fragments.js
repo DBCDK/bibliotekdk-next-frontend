@@ -5,17 +5,17 @@
 
 import { ApiEnums } from "@/lib/api/api";
 import {
+  cacheWorkFragment,
   coverFragment,
   creatorsFragment,
   manifestationDetailsForAccessFactory,
+  manifestationTitleFragment,
   materialTypesFragment,
   seriesFragment,
-  workTitleFragment,
+  tvSeriesFragment,
   universeFragment,
   workSliderFragment,
-  manifestationTitleFragment,
-  tvSeriesFragment,
-  cacheWorkFragment,
+  workTitleFragment,
 } from "@/lib/api/fragments.utils";
 
 export function tableOfContents({ workId }) {
@@ -513,6 +513,9 @@ export function subjects({ workId }) {
     query: `
     query subjects($workId: String!) {
       work(id: $workId) {
+        titles {
+          main
+        }
         workTypes
         subjects {
           selectedSubjects: dbcVerified {
@@ -524,6 +527,17 @@ export function subjects({ workId }) {
               }
             }
           }
+        }
+        extendedWork {
+           ... on Periodical {
+              issues {
+                subjects {
+                  entries {
+                    term
+                  }
+                }
+              }
+           }
         }
       }
     }`,
@@ -645,6 +659,7 @@ export function fbiOverviewDetail({ workId }) {
                 orchestraTypes                
               }    
               audience {
+                primaryTarget        
                 generalAudience
                 childrenOrAdults {
                   display
@@ -707,6 +722,7 @@ export function fbiOverviewDetail({ workId }) {
               edition {
                 publicationYear {
                   display
+                  frequency
                 }
               }
               notes {
@@ -729,8 +745,41 @@ export function fbiOverviewDetail({ workId }) {
               }
             }
           }
+          extendedWork {
+            ...  on Periodical {
+              articles {
+                hitcount
+                first {
+                  ...WorkPublicationYear
+                }
+                last {
+                  ...WorkPublicationYear
+                  extendedWork {
+                    ... on PeriodicalArticle {
+                      parentIssue {
+                        display
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
-        monitor(name: "bibdknext_work_overview_details")
+      }
+      fragment WorkPublicationYear on Work {
+        manifestations {
+          bestRepresentation {
+            edition {
+              publicationYear {
+                year
+              }
+            }
+            audience {
+              primaryTarget
+            }
+          }
+        }
       }
       ${manifestationDetailsForAccessFactory}
       ${manifestationAccess}
@@ -1159,6 +1208,29 @@ export function workForWorkRelationsWorkTypeFactory({ workId }) {
     ${relationsForWorkRelations}
     ${creatorsFragment}`,
     variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+export function WorkIdToIssn({ id }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query WorkIdToIssn($id: String!) {
+      work(id: $id) {
+        materialTypes {
+            materialTypeSpecific {
+              code
+            }
+          }
+        manifestations {
+          latest {
+            hostPublication{issn, issue}
+          }
+        }
+      }
+    }`,
+    variables: { id },
     slowThreshold: 3000,
   };
 }

@@ -30,6 +30,9 @@ KeywordsSection.story = {
   parameters: {
     graphql: {
       resolvers: {
+        Work: {
+          extendedWork: () => null,
+        },
         SubjectContainer: {
           dbcVerified: () => [
             {

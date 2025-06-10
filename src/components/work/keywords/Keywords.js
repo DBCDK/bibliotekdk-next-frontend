@@ -200,7 +200,13 @@ function KeyWordList({ className, grouped, skeleton, sizeClass }) {
  *
  * @returns {React.JSX.Element}
  */
-export function Keywords({ className = "", data = [], skeleton = false }) {
+export function Keywords({
+  isPeriodica,
+  work,
+  className = "",
+  data = [],
+  skeleton = false,
+}) {
   const uniqueSubjects = uniqueSubjectEntries(data);
   // Get fontsize - based on subjects in data
   const sizeClass = getFontSize(uniqueSubjects);
@@ -212,9 +218,23 @@ export function Keywords({ className = "", data = [], skeleton = false }) {
   // Translate Context
   const context = { context: "keywords" };
 
+  const title = isPeriodica
+    ? Translate({ ...context, label: "periodicaTitle" })
+    : Translate({ ...context, label: "title" });
+  const subtitle = isPeriodica ? (
+    <Text type="text2">
+      {Translate({
+        ...context,
+        label: "periodicaSubtitle",
+        vars: [work?.titles?.main],
+      })}
+    </Text>
+  ) : null;
+
   return (
     <Section
-      title={Translate({ ...context, label: "title" })}
+      title={title}
+      subtitle={subtitle}
       space={{ top: "var(--pt8)" }}
       backgroundColor="var(--jagged-ice)"
       sectionTag="div" // Section sat in parent
@@ -284,7 +304,15 @@ export default function Wrap(props) {
   }
 
   // get subjects from response
-  const subjects = data?.work?.subjects?.selectedSubjects;
+  const workSubjects = data?.work?.subjects?.selectedSubjects || [];
+
+  const periodicaSubjects =
+    data?.work?.extendedWork?.issues?.subjects?.entries?.map?.((entry) => ({
+      display: entry?.term,
+      type: "TOPIC",
+    })) || [];
+
+  const subjects = [...workSubjects, ...periodicaSubjects];
 
   if (!subjects || subjects.length === 0) {
     return null;
@@ -301,7 +329,9 @@ export default function Wrap(props) {
     <Keywords
       className={props.className}
       skeleton={false}
+      work={data?.work}
       data={subjectsFiltered}
+      isPeriodica={periodicaSubjects?.length > 0}
     />
   );
 }

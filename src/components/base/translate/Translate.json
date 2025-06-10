@@ -898,6 +898,52 @@
       "year": {
         "da": "Årstal",
         "en": "Year"
+      },
+      "month": {
+        "da": "Måned",
+        "en": "Month"
+      }
+    },
+    "periodica": {
+      "title": {
+        "da": "Artikler",
+        "en": "Articles"
+      },
+      "subtitle": {
+        "da": "Alle registrerede artikler fordelt på udgivelser",
+        "en": "All registered articles grouped by issue"
+      },
+      "articlestitle": {
+        "da": "Alle artikler i samme udgivelse",
+        "en": "All articles in the same issue"
+      },
+      "tableHeadArticle": {
+        "da": "Artikel",
+        "en": "Article"
+      },
+      "tableHeaderDescription": {
+        "da": "Beskrivelse",
+        "en": "Description"
+      },
+      "tableHeaderSubjects": {
+        "da": "Emner",
+        "en": "Subjects"
+      },
+      "tableHeaderExtent": {
+        "da": "Omfang",
+        "en": "Extent"
+      },
+      "periodicaOverviewTitle": {
+        "da": "Tidsskrift",
+        "en": "Periodica"
+      },
+      "periodicaOverviewSubtitle": {
+        "da": "Artiklen er en del af %s",
+        "en": "The article is a part of %s"
+      },
+      "search": {
+        "da": "Søg i artiklerne",
+        "en": "Search the articles"
       }
     },
     "articles": {
@@ -1881,13 +1927,37 @@
         "da": "Udgivet",
         "en": "Released"
       },
+      "periodica_articles": {
+        "da": "Artikler",
+        "en": "Articles"
+      },
+      "periodica_articles_text": {
+        "da": "%s artikler registreret fra %s&nbsp;&#8209;&nbsp;%s",
+        "en": "%s articles registered from %s&nbsp;&#8209;&nbsp;%s"
+      },
+      "periodica_latest_issue_label": {
+        "da": "Seneste udgivelse",
+        "en": "Latest issue"
+      },
+      "periodica_latest_issue": {
+        "da": "Nyeste registrerede artikel er fra %s",
+        "en": "The latest article is from issue %s"
+      },
+      "periodica_frequency": {
+        "da": "Udgivelsesrate",
+        "en": "Publication frequency"
+      },
+      "audience_level": {
+        "da": "Niveau",
+        "en": "Level"
+      },
       "contribution": {
         "da": "Bidrag",
         "en": "Contributions"
       },
       "genre/form": {
-        "da": "genre/form",
-        "en": "genre/form"
+        "da": "Genre/form",
+        "en": "Genre/form"
       },
       "in_series_and_universes": {
         "da": "Indgår i",
@@ -2074,12 +2144,30 @@
       "title": {
         "da": "Tags",
         "en": "Tags"
+      },
+      "periodicaTitle": {
+        "da": "Emneord",
+        "en": "Subjects"
+      },
+      "periodicaSubtitle": {
+        "da": "Artiklerne i %s handler ofte om",
+        "en": "The articles in %s are frequently about"
       }
     },
     "relatedKeywords": {
       "title": {
         "da": "Relaterede tags",
         "en": "Related tags"
+      }
+    },
+    "similararticles": {
+      "title": {
+        "da": "Artikler fra %s med samme emner",
+        "en": "Articles from %s with same topics"
+      },
+      "unspecificTitle": {
+        "da": "Artikler med samme emner",
+        "en": "Articles with same topics"
       }
     },
     "bookmark": {

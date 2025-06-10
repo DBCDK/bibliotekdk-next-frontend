@@ -6,6 +6,7 @@ import Description from "../description";
 import RelatedWorks from "../relatedworks";
 import Content from "../content";
 import Keywords from "../keywords";
+import SimilarArticles from "../similararticles";
 import Related from "../related";
 import Reviews from "../reviews";
 import BibliographicData from "../bibliographicdata";
@@ -23,6 +24,9 @@ import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import Custom404 from "@/pages/404";
 import Universes from "@/components/work/universes/Universes";
+import PeriodicaArticles from "@/components/work/periodicaArticles/PeriodicaArticles";
+import Issues from "@/components/work/periodicaArticles/Issues";
+import PeriodicaOverview from "../periodicaoverview/PeriodicaOverview";
 
 /**
  * The work page React component
@@ -94,6 +98,7 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
             type={type}
             anchor-label={Translate({ context: "description", label: "title" })}
           />
+
           <Parts
             workId={workId}
             type={type}
@@ -118,6 +123,35 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
             <Keywords workId={workId} />
             <Related workId={workId} />
           </section>
+
+          <PeriodicaOverview
+            anchor-label={Translate({
+              context: "periodica",
+              label: "periodicaOverviewTitle",
+            })}
+            workId={workId}
+          />
+          <SimilarArticles
+            workId={workId}
+            anchor-label={Translate({
+              context: "similararticles",
+              label: "unspecificTitle",
+            })}
+          />
+
+          <PeriodicaArticles
+            workId={workId}
+            anchor-label={Translate({ context: "periodica", label: "title" })}
+          />
+
+          <Issues
+            workId={workId}
+            anchor-label={Translate({
+              context: "periodica",
+              label: "title",
+            })}
+          />
+
           {/* TODO: WorkGroupingsOverview.js refererer til dennes oversættelse */}
           <section anchor-label={Translate(AnchorsEnum.SERIES)}>
             <Series workId={workId} />
