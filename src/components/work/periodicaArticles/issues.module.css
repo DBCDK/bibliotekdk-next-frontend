@@ -4,10 +4,6 @@
   margin: 0 0 var(--pt05) 0;
 }
 
-.disabled {
-  color: var(--gray);
-}
-
 .paginationWrapper {
   margin-top: var(--pt4);
   display: flex;
@@ -15,29 +11,6 @@
   align-items: center;
   gap: 0.5rem;
   justify-content: center;
-}
-
-.sliderContainer {
-  position: relative;
-  /* height: 2rem; */
-  width: 300px;
-  flex-grow: 1;
-  margin-left: var(--pt4);
-  margin-right: var(--pt4);
-}
-
-.sliderLabel {
-  position: absolute;
-  transform: translateX(-50%);
-  bottom: -1.5rem;
-  white-space: nowrap;
-  font-size: 0.9rem;
-  font-weight: bold;
-}
-
-.rangeInput {
-  width: 100%;
-  appearance: auto;
 }
 .top {
   display: flex;

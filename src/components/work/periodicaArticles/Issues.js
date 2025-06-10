@@ -314,7 +314,7 @@ export default function Wrap({ workId }) {
     subjects: selectedSubjects,
   };
 
-  const { data, isLoading, error } = useData(
+  const { data, isLoading } = useData(
     AllPeriodicaIssuesByworkId({
       id: workId,
       issuesOffset: (page - 1) * itemsPerPage,
