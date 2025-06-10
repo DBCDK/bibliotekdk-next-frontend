@@ -219,7 +219,9 @@ export default function Wrap({ workId }) {
   // use workid to fetch articles ,, abd other godd stuff .. from periodica
   const { data, isLoading } = useData(PeriodicaIssuByWork({ id: workId }));
   const manifestations = data?.work?.extendedWork?.parentIssue?.works
-    .map((work) => [...work?.manifestations?.all?.map((m) => ({ ...m, work }))])
+    .map((work) => [
+      ...(work?.manifestations?.all?.map((m) => ({ ...m, work })) || []),
+    ])
     .flat();
 
   const materialType =

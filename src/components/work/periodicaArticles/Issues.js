@@ -165,7 +165,7 @@ export function Issues({
   const parseForManifestations = (entry) => {
     return entry?.works
       ?.map((work) => [
-        ...work?.manifestations?.all?.map((m) => ({ ...m, work })),
+        ...(work?.manifestations?.all?.map((m) => ({ ...m, work })) || []),
       ])
       .flat();
   };
