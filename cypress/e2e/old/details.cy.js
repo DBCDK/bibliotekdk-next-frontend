@@ -24,7 +24,7 @@ describe("Details", () => {
       .should("contain", "roles")
       .should("contain", "function.singular");
 
-    cy.get("[data-cy=text-genre-form]").should("have.text", "genre/form");
+    cy.get("[data-cy=text-genre-form]").should("have.text", "Genre/form");
 
     cy.get("[data-cy*=text-lix]").should("have.text", "lix: 2222");
   });
