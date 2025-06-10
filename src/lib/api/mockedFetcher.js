@@ -199,6 +199,9 @@ function defaultMockResolver(parent, _args, context, info) {
   // helper for attaching __typename to interface or union
   // It may be mocked by the parent object or by a resolver, otherwise we just pick one
   function attachTypename(target) {
+    if (!target) {
+      return;
+    }
     if (Array.isArray(target)) {
       target.forEach(
         (el) =>
