@@ -14,7 +14,7 @@
   flex-direction: row;
   align-items: center;
   gap: 0.5rem;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .sliderContainer {
@@ -38,4 +38,37 @@
 .rangeInput {
   width: 100%;
   appearance: auto;
+}
+.top {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--pt1);
+  justify-content: space-between;
+}
+.filters {
+  display: flex;
+  margin-left: calc(var(--pt1) * -1);
+}
+.filters > div {
+  margin-right: var(--pt2);
+}
+.searchlink {
+  display: none;
+}
+.arrowright {
+  margin-left: var(--pt1);
+  margin-top: var(--pt05);
+}
+@media (min-width: 992px) {
+  .filters {
+    margin-left: 0px;
+  }
+  .searchlink {
+    margin-bottom: var(--pt05);
+  }
+}
+@media (min-width: 576px) {
+  .searchlink {
+    display: flex;
+  }
 }

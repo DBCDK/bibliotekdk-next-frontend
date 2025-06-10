@@ -31,7 +31,7 @@ KeywordsSection.story = {
     graphql: {
       resolvers: {
         Work: {
-          periodicaInfo: () => null,
+          extendedWork: () => null,
         },
         SubjectContainer: {
           dbcVerified: () => [

@@ -48,13 +48,16 @@ function Details({ className = "", manifestation = {}, work = {} }) {
   const materialType = formatMaterialTypesToPresentation(
     flattenMaterialType(manifestation)
   );
+  const isPeriodica = work?.workTypes?.includes("PERIODICA");
   const subtitle = (
     <Text type="text2">
-      {Translate({
-        ...context,
-        label: "subtitle",
-        vars: [materialType],
-      })}
+      {isPeriodica
+        ? materialType
+        : Translate({
+            ...context,
+            label: "subtitle",
+            vars: [materialType],
+          })}
     </Text>
   );
 
@@ -167,7 +170,6 @@ export default function Wrap(props) {
     isLoading: overViewIsLoading,
     error,
   } = useData(workId && workFragments.fbiOverviewDetail({ workId: workId }));
-
   // TODO: Use when jed data is ready and better
   // const {
   //   data: relationData,

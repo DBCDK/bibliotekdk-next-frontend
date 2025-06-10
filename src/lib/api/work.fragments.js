@@ -528,14 +528,16 @@ export function subjects({ workId }) {
             }
           }
         }
-        periodicaInfo {
-          periodica {
-            subjects {
-              entries {
-                term
+        extendedWork {
+           ... on Periodical {
+              issues {
+                subjects {
+                  entries {
+                    term
+                  }
+                }
               }
-            }
-          }
+           }
         }
       }
     }`,
@@ -743,8 +745,8 @@ export function fbiOverviewDetail({ workId }) {
               }
             }
           }
-          periodicaInfo {
-            periodica {
+          extendedWork {
+            ...  on Periodical {
               articles {
                 hitcount
                 first {
@@ -752,18 +754,18 @@ export function fbiOverviewDetail({ workId }) {
                 }
                 last {
                   ...WorkPublicationYear
-                  periodicaInfo {
-                    issue {
-                      display
+                  extendedWork {
+                    ... on PeriodicalArticle {
+                      parentIssue {
+                        display
+                      }
                     }
                   }
                 }
               }
             }
-            
           }
         }
-        monitor(name: "bibdknext_work_overview_details")
       }
       fragment WorkPublicationYear on Work {
         manifestations {
@@ -1224,64 +1226,6 @@ export function WorkIdToIssn({ id }) {
         manifestations {
           latest {
             hostPublication{issn, issue}
-          }
-        }
-      }
-    }`,
-    variables: { id },
-    slowThreshold: 3000,
-  };
-}
-
-export function PeriodicaIssuByWork({ id }) {
-  return {
-    apiUrl: ApiEnums.FBI_API,
-    query: `
-    query WorkIdToIssn($id: String!) {
-      work(id: $id) {
-        titles {
-          full
-        }
-        materialTypes {
-          materialTypeSpecific {
-            code
-          }
-        }
-        periodicaInfo {
-          issue {
-            display
-            works {
-              workId
-              manifestations {
-                all {
-                  pid
-                  hostPublication {
-                    title
-                    issue
-                  }
-                  titles {
-                    full
-                  }
-                  creators {
-                    display
-                  }
-                  abstract
-                  subjects {
-                    dbcVerified {
-                      display
-                    }
-                  }
-                  physicalDescription {
-                    summaryFull
-                  }
-                  edition {
-                    publicationYear {
-                      year
-                    }
-                  }
-                }
-              }
-            }
           }
         }
       }

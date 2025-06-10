@@ -307,7 +307,7 @@ export default function Wrap(props) {
   const workSubjects = data?.work?.subjects?.selectedSubjects || [];
 
   const periodicaSubjects =
-    data?.work?.periodicaInfo?.periodica?.subjects?.entries?.map?.((entry) => ({
+    data?.work?.extendedWork?.issues?.subjects?.entries?.map?.((entry) => ({
       display: entry?.term,
       type: "TOPIC",
     })) || [];

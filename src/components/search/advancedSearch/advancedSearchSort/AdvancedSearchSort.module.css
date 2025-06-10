@@ -45,6 +45,8 @@
   /* bootstrap default styles override */
   border-radius: 0;
   padding: 0;
+  max-height: var(--elements_max_height); /* Tilføj denne */
+  overflow-y: auto; /* Og denne */
 }
 
 .dropdown_item {
@@ -55,6 +57,9 @@
   color: var(--mine-shaft);
   text-align: inherit;
   white-space: nowrap;
+}
+.dropdown_item_selected {
+  background-color: var(--iron);
 }
 
 .dropdown_item a {
@@ -68,6 +73,10 @@
 .sort_label {
   display: none;
 }
+.dropdown_label {
+  text-transform: capitalize;
+}
+
 .upper_first:first-letter {
   text-transform: capitalize;
 }

@@ -776,21 +776,20 @@ export function fieldsForRows(manifestation, work, context) {
   const materialType = work?.workTypes?.[0] || null;
   const moviveTitles = getMovieTitles(manifestation, work);
 
-  const articlesHitcount = work?.periodicaInfo?.periodica?.articles?.hitcount;
+  const articlesHitcount = work?.extendedWork?.articles?.hitcount;
   const firstArticleYear =
-    work?.periodicaInfo?.periodica?.articles?.first?.manifestations
-      ?.bestRepresentation?.edition?.publicationYear?.year;
+    work?.extendedWork?.articles?.first?.manifestations?.bestRepresentation
+      ?.edition?.publicationYear?.year;
   const lastArticleYear =
-    work?.periodicaInfo?.periodica?.articles?.last?.manifestations
-      ?.bestRepresentation?.edition?.publicationYear?.year;
+    work?.extendedWork?.articles?.last?.manifestations?.bestRepresentation
+      ?.edition?.publicationYear?.year;
   const lastIssue =
-    work?.periodicaInfo?.periodica?.articles?.last?.periodicaInfo?.issue
-      ?.display;
+    work?.extendedWork?.articles?.last?.extendedWork?.parentIssue?.display;
   const audienceLevel =
     (manifestation?.audience?.primaryTarget?.length &&
       manifestation?.audience?.primaryTarget) ||
-    work?.periodicaInfo?.periodica?.articles?.last?.manifestations
-      ?.bestRepresentation?.audience?.primaryTarget;
+    work?.extendedWork?.articles?.last?.manifestations?.bestRepresentation
+      ?.audience?.primaryTarget;
 
   const fieldsMap = {
     DEFAULT: [
@@ -823,26 +822,27 @@ export function fieldsForRows(manifestation, work, context) {
               ...context,
               label: "periodica_articles",
             }),
-            value: (
-              <>
-                <div>
-                  {Translate({
-                    ...context,
-                    label: "periodica_articles_text",
-                    vars: [articlesHitcount, firstArticleYear, lastArticleYear],
-                  })}
-                </div>
-                {lastIssue && (
-                  <div>
-                    {Translate({
-                      ...context,
-                      label: "periodica_latest_issue",
-                      vars: [lastIssue],
-                    })}
-                  </div>
-                )}
-              </>
-            ),
+            value: Translate({
+              ...context,
+              label: "periodica_articles_text",
+              vars: [articlesHitcount, firstArticleYear, lastArticleYear],
+              renderAsHtml: true,
+            }),
+          },
+      },
+      {
+        periodicaLatestIssue: articlesHitcount &&
+          firstArticleYear &&
+          lastArticleYear && {
+            label: Translate({
+              ...context,
+              label: "periodica_latest_issue_label",
+            }),
+            value: Translate({
+              ...context,
+              label: "periodica_latest_issue",
+              vars: [lastIssue],
+            }),
           },
       },
       {

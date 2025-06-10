@@ -20,82 +20,86 @@ export function PeriodicaIssuByWork({ id }) {
             code
           }
         }
-        periodicaInfo {
-          similarArticles {
-            work {
+        extendedWork {
+          ... on PeriodicalArticle {
+            similarArticles {
+              work {
+                workId
+                latestPublicationDate
+                titles {
+                  full
+                }
+                creators {
+                  display
+                }
+                manifestations {
+                  mostRelevant {
+                    cover {
+                      detail
+                    }
+                    hostPublication {
+                      issue
+                    }
+                  }
+                }
+              }
+            }
+            parentPeriodical {
               workId
-              latestPublicationDate
               titles {
+                main
                 full
               }
-              creators {
-                display
-              }
               manifestations {
-                mostRelevant {
+                bestRepresentation {
+                  publisher
                   cover {
                     detail
                   }
-                  hostPublication {
-                    issue
-                  }
                 }
               }
-            }
-          }
-          parent {
-            workId
-            titles {
-              main
-              full
-            }
-            manifestations {
-              bestRepresentation {
-                publisher
-                cover {
-                  detail
-                }
-              }
-            }
-            periodicaInfo {
-              periodica {
-                subjects {
-                  entries {
-                    term
-                  }
-                }
-              }
-            }
-          }
-          issue {
-            display
-            works {
-              workId
-              manifestations {
-                all {
-                  pid
-                  hostPublication {
-                    title
-                    issue
-                  }
-                  titles {
-                    full
-                  }
-                  creators {
-                    display
-                  }
-                  abstract
-                  subjects {
-                    dbcVerified {
-                      display
+              extendedWork {
+                ... on Periodical {
+                  issues {
+                    subjects {
+                      entries {
+                        term
+                      }
                     }
                   }
-                  physicalDescription {
-                    summaryFull
-                  }
-                  edition {
-                    publicationYear {
-                      year
+                }
+              }
+            }
+            parentIssue {
+              display
+              works {
+                workId
+                manifestations {
+                  all {
+                    pid
+                    hostPublication {
+                      title
+                      issue
+                    }
+                    titles {
+                      full
+                    }
+                    creators {
+                      display
+                    }
+                    abstract
+                    subjects {
+                      dbcVerified {
+                        display
+                      }
+                    }
+                    physicalDescription {
+                      summaryFull
+                    }
+                    edition {
+                      publicationYear {
+                        year
+                      }
                     }
                   }
                 }
@@ -110,6 +114,99 @@ export function PeriodicaIssuByWork({ id }) {
   };
 }
 
+export function publicationYearsForIssue({ id, filters }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query GetPublicationYearsForIssue($id: String!, $filters: PeriodicalIssueFilterInput ) {
+      work(id: $id) {
+        titles {
+          full
+          main
+        }
+        extendedWork {
+          ... on Periodical {
+            issues(filters: $filters) {
+              hitcount
+              publicationYears {
+                hitcount
+                entries(offset:0, limit: 1000){
+                  term
+                  score
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    `,
+    variables: { id, filters },
+    slowThreshold: 3000,
+  };
+}
+export function publicationSubjectsForIssue({ id, filters }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query GetPublicationSubjectsForIssue($id: String!, $filters: PeriodicalIssueFilterInput ) {
+      work(id: $id) {
+        titles {
+          full
+          main
+        }
+        extendedWork {
+          ... on Periodical {
+            issues(filters: $filters) {
+              hitcount
+              subjects {
+                hitcount
+                entries(offset:0, limit: 100){
+                  term
+                  score
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    `,
+    variables: { id, filters },
+    slowThreshold: 3000,
+  };
+}
+export function publicationMonthsForIssue({ id, filters }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query GetPublicationMonthsForIssue($id: String!, $filters: PeriodicalIssueFilterInput ) {
+      work(id: $id) {
+        titles {
+          full
+          main
+        }
+        extendedWork {
+          ... on Periodical {
+            issues(filters: $filters) {
+              hitcount
+              publicationMonths {
+                hitcount
+                entries(offset:0, limit: 1000){
+                  term
+                  score
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    `,
+    variables: { id, filters },
+    slowThreshold: 3000,
+  };
+}
 /**
  * Get ALL works for ALL issues (limeted by issue- and work-linmit
  * @param id
@@ -123,19 +220,28 @@ export function AllPeriodicaIssuesByworkId({
   issuesOffset,
   issuesLimit,
   worksLimit,
+  filters,
 }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
-    query GetPeriodicaByWork($id: String!, $issuesOffset: Int! $issuesLimit: Int!, $worksLimit: Int!) {
+    query GetPeriodicaByWork($id: String!, $issuesOffset: Int! $issuesLimit: Int!, $worksLimit: Int!, $filters: PeriodicalIssueFilterInput ) {
       work(id: $id) {
         titles {
           full
           main
         }
-        periodicaInfo {
-          periodica {
-            issues {
+        manifestations {
+          bestRepresentation {
+            identifiers {
+              type
+              value
+            }
+          }
+        }
+        extendedWork {
+          ... on Periodical {
+            issues(filters: $filters) {
               hitcount
               entries(offset: $issuesOffset, limit: $issuesLimit) {
                 display
@@ -183,7 +289,7 @@ export function AllPeriodicaIssuesByworkId({
       }
     }
     `,
-    variables: { id, issuesOffset, issuesLimit, worksLimit },
+    variables: { id, issuesOffset, issuesLimit, worksLimit, filters },
     slowThreshold: 3000,
   };
 }

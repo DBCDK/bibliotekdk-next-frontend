@@ -39,12 +39,18 @@ export function PeriodicaArticles({ manifestations, issue, isLoading }) {
         manifestations={manifestations}
         issue={issue}
         periodicaTitle={manifestations?.[0]?.hostPublication?.title}
+        showCount={true}
       />
     </Section>
   );
 }
 
-export function PeriodicaAccordion({ manifestations, issue, periodicaTitle }) {
+export function PeriodicaAccordion({
+  manifestations,
+  issue,
+  periodicaTitle,
+  showCount,
+}) {
   let publictationTitle = issue;
   if (periodicaTitle) {
     publictationTitle = periodicaTitle + " " + issue;
@@ -55,9 +61,20 @@ export function PeriodicaAccordion({ manifestations, issue, periodicaTitle }) {
       <Item
         useScroll={false}
         title={
-          <Text type="text1" className={styles.accordiontitle}>
-            {publictationTitle}
-          </Text>
+          <div className={styles.accordiontitle}>
+            <Text type="text1" tag="span">
+              {publictationTitle}
+            </Text>
+            {showCount && (
+              <Text type="text2" tag="span" className={styles.articlecount}>
+                {manifestations?.length}{" "}
+                {translate({
+                  context: "general",
+                  label: manifestations?.length === 1 ? "article" : "articles",
+                })}
+              </Text>
+            )}
+          </div>
         }
         eventKey={publictationTitle}
         headerContentClassName={styles.headerContent}
@@ -96,18 +113,21 @@ function PeriodicaHeader() {
   ];
 
   return (
-    <>
+    <div className={styles.headerrow}>
       {header.map((head, index) => (
         <div
           className={`${styles.headline} ${head.style}`}
           key={`tableheader-${index}`}
         >
           <Text type="text3">
-            {translate({ context: "periodica", label: `${head.label}` })}
+            {translate({
+              context: "periodica",
+              label: `${head.label}`,
+            })}
           </Text>
         </div>
       ))}
-    </>
+    </div>
   );
 }
 
@@ -115,24 +135,19 @@ function PeriodicaHeader() {
  * Shows an article
  */
 export function PeriodicaArticle({ manifestation }) {
+  const workId = manifestation?.work?.workId;
+  const url = `/materiale/${encodeTitleCreator(
+    manifestation.titles.full?.[0],
+    manifestation.creators
+  )}/${workId} `;
   // first column is title and creators
   const firstColumn = () => {
-    const workId = manifestation?.work?.workId;
-    const url = `/materiale/${encodeTitleCreator(
-      manifestation.titles.full?.[0],
-      manifestation.creators
-    )}/${workId} `;
     return (
-      <div>
+      <div className={styles.articlecontainer}>
         <Text type="text3" className={styles.bold}>
-          <Link
-            href={url}
-            border={{ top: false, bottom: { keepVisible: true } }}
-          >
-            <Text type="text1" lines={4} clamp={true}>
-              {manifestation.titles.full}
-            </Text>
-          </Link>
+          <Text type="text1" lines={4} clamp={true}>
+            {manifestation.titles.full}
+          </Text>
         </Text>
 
         <Text type="text2" className={styles.creators} lines={2} clamp={true}>
@@ -143,26 +158,31 @@ export function PeriodicaArticle({ manifestation }) {
   };
 
   return (
-    <>
-      <div className={styles.item}>{firstColumn()}</div>
-      <div className={`${styles.item} ${styles.description}`}>
+    <Link
+      className={styles.row}
+      tabIndex={0}
+      href={url}
+      border={{ top: true, bottom: { keepVisible: false } }}
+    >
+      <div>{firstColumn()}</div>
+      <div className={` ${styles.description}`}>
         <Text type="text2" lines={4} clamp={true}>
           {manifestation?.abstract}
         </Text>
       </div>
-      <div className={`${styles.item} ${styles.subjects}`}>
+      <div className={`${styles.subjects}`}>
         <Text type="text2" lines={4} clamp>
           {manifestation?.subjects?.dbcVerified
             .map((sub) => sub.display)
             .join(", ")}
         </Text>
       </div>
-      <div className={`${styles.item} ${styles.extent}`}>
+      <div className={`${styles.extent}`}>
         <Text type="text2">
           {manifestation?.physicalDescription?.summaryFull || ""}
         </Text>
       </div>
-    </>
+    </Link>
   );
 }
 
@@ -198,8 +218,7 @@ export function PeriodicaSkeleton() {
 export default function Wrap({ workId }) {
   // use workid to fetch articles ,, abd other godd stuff .. from periodica
   const { data, isLoading } = useData(PeriodicaIssuByWork({ id: workId }));
-
-  const manifestations = data?.work?.periodicaInfo?.issue?.works
+  const manifestations = data?.work?.extendedWork?.parentIssue?.works
     .map((work) => [...work?.manifestations?.all?.map((m) => ({ ...m, work }))])
     .flat();
 
@@ -211,7 +230,7 @@ export default function Wrap({ workId }) {
     return null;
   }
 
-  const issue = data?.work?.periodicaInfo?.issue?.display;
+  const issue = data?.work?.extendedWork?.parentIssue?.display;
 
   // show an issue
   return (

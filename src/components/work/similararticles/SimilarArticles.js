@@ -108,16 +108,16 @@ export default function Wrap(props) {
     return null;
   }
 
-  if (!data?.work?.periodicaInfo?.similarArticles?.length) {
+  if (!data?.work?.extendedWork?.similarArticles?.length) {
     return null;
   }
 
   return (
     <SimilarArticles
-      periodicaTitle={data?.work?.periodicaInfo?.parent?.titles?.main}
+      periodicaTitle={data?.work?.extendedWork?.parentPeriodical?.titles?.main}
       className={props.className}
       skeleton={false}
-      works={data?.work?.periodicaInfo?.similarArticles?.map(
+      works={data?.work?.extendedWork?.similarArticles?.map(
         (entry) => entry.work
       )}
     />

@@ -16,16 +16,28 @@
 
 /* article grid (thank you chatgpt) */
 .container {
-  display: grid;
-  grid-template-columns: 3fr; /* Varying column widths */
+  display: block;
   background-color: var(--white);
 }
 
-.item {
-  padding: var(--pt1);
+.headerrow,
+.row {
+  display: grid;
+  grid-template-columns: 3fr; /* Varying column widths */
+}
+.row {
   border-top: 1px solid var(--iron);
 }
-
+.row:focus,
+.row:hover {
+  color: var(--mine-shaft);
+  /* border-top: 1px solid var(--blue); */
+  background-color: var(--concrete);
+  cursor: pointer;
+}
+.row > div {
+  padding: var(--pt1);
+}
 .headline {
   padding: var(--pt1);
 }
@@ -47,8 +59,14 @@
   display: none;
 }
 
+.articlecount {
+  margin-left: var(--pt3);
+  text-transform: lowercase;
+}
+
 @media (min-width: 576px) {
-  .container {
+  .headerrow,
+  .row {
     grid-template-columns: 3fr 3fr; /* Varying column widths */
   }
 
@@ -59,7 +77,8 @@
 }
 
 @media (min-width: 768px) {
-  .container {
+  .headerrow,
+  .row {
     grid-template-columns: 3fr 3fr 2fr 1fr; /* Varying column widths */
   }
 

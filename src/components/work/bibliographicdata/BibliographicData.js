@@ -37,6 +37,9 @@ export function BibliographicData({ manifestations, workId }) {
   // TODO: Fix this temporary fix: temporary fix for large manifestation lists
   const sliced = flattenedGroupedSortedManifestations.slice(0, 150);
 
+  // If there is only one record, expand it by default
+  const defaultActiveKey = sliced.length === 1 ? "0" : undefined;
+
   return (
     <Section
       title={Translate({
@@ -45,7 +48,7 @@ export function BibliographicData({ manifestations, workId }) {
       })}
       divider={{ content: false }}
     >
-      <Accordion>
+      <Accordion defaultActiveKey={defaultActiveKey}>
         {sliced.map((manifestation, index) => {
           // very 1. priority
           let volume = manifestation?.titles?.identifyingAddition
@@ -134,7 +137,6 @@ export function BibliographicData({ manifestations, workId }) {
             shortAddit,
             shortPublishing,
           ];
-
           return (
             <Item
               title={manifestation?.edition?.publicationYear?.year || "-"}

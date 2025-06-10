@@ -33,7 +33,7 @@ export function PeriodicaOverview({ work, isLoading }) {
   };
   const periodicaTitle = work?.titles?.main;
 
-  const subjects = work?.periodicaInfo?.periodica?.subjects?.entries;
+  const subjects = work?.extendedWork?.issues?.subjects?.entries;
 
   return (
     <Section
@@ -96,7 +96,7 @@ export default function Wrap({ workId }) {
   // show an issue
   return (
     <PeriodicaOverview
-      work={data?.work?.periodicaInfo?.parent}
+      work={data?.work?.extendedWork?.parentPeriodical}
       isLoading={isLoading}
     />
   );
