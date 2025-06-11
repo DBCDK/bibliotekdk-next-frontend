@@ -209,7 +209,18 @@ export function Issues({
         {issn && (
           <div className={styles.searchlink}>
             <Link
-              href={`/avanceret?cql=worktype="article" AND term.issn="${issn}"`}
+              href={`/avanceret?fieldSearch=${encodeURIComponent(
+                JSON.stringify({
+                  inputFields: [
+                    {
+                      value: issn,
+                      prefixLogicalOperator: "AND",
+                      searchIndex: "term.issn",
+                    },
+                  ],
+                  workType: "article",
+                })
+              )}`}
               border={{ bottom: { keepVisible: true } }}
             >
               <Text type="text3" tag="span">

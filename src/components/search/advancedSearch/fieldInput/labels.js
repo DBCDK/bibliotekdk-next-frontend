@@ -89,7 +89,7 @@ const article = [
     label: "article_term.publisher",
   },
   { index: "dk5", placeholder: "dk5 placeholder" },
-  { index: "issn", placeholder: "issn placeholder" },
+  { index: "term.issn", placeholder: "issn placeholder" },
 ];
 
 //input indexes for materialtype "movie"
