@@ -22,7 +22,6 @@ import {
 } from "@/components/hooks/order";
 import { useData } from "@/lib/api/api";
 import { editionManifestations } from "@/lib/api/manifestation.fragments";
-import * as localizationsFragments from "@/lib/api/localizations.fragments";
 import { useManifestationAccess } from "@/components/hooks/useManifestationAccess";
 import { useCheckInterLibraryLoan } from "@/components/hooks/useHoldings";
 
@@ -61,7 +60,6 @@ const Material = ({
 
   const {
     allowIll,
-    allowOwnUsers,
     totalAgencies,
     isLoading: isLoadingCheckLocalizations,
   } = useCheckInterLibraryLoan({ pids: service === "ILL" ? pids : [] });
