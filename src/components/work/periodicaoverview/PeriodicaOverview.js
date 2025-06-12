@@ -66,8 +66,13 @@ export function PeriodicaOverview({ work, isLoading }) {
           <Text type="text1">
             {Translate({
               context: "keywords",
-              label: "periodicaSubtitle",
-              vars: [parsedWork?.titles?.main],
+              label: "periodicaSubtitle1",
+              vars: [work?.titles?.main],
+            })}
+            &nbsp;
+            {Translate({
+              context: "keywords",
+              label: "periodicaSubtitle2",
             })}
           </Text>
           <div className={styles.words}>
