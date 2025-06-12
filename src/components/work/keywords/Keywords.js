@@ -222,13 +222,21 @@ export function Keywords({
     ? Translate({ ...context, label: "periodicaTitle" })
     : Translate({ ...context, label: "title" });
   const subtitle = isPeriodica ? (
-    <Text type="text2">
-      {Translate({
-        ...context,
-        label: "periodicaSubtitle",
-        vars: [work?.titles?.main],
-      })}
-    </Text>
+    <>
+      <Text type="text2" lines={4} clamp={true}>
+        {Translate({
+          ...context,
+          label: "periodicaSubtitle1",
+          vars: [work?.titles?.main],
+        })}
+      </Text>
+      <Text type="text2">
+        {Translate({
+          ...context,
+          label: "periodicaSubtitle2",
+        })}
+      </Text>
+    </>
   ) : null;
 
   return (

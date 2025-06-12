@@ -34,10 +34,11 @@
 }
 @media (min-width: 992px) {
   .filters {
-    margin-left: 0px;
+    margin-left: var(--pt1);
   }
   .searchlink {
     margin-bottom: var(--pt05);
+    margin-right: var(--pt1);
   }
 }
 @media (min-width: 576px) {

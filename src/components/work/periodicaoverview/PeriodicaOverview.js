@@ -42,7 +42,7 @@ export function PeriodicaOverview({ work, isLoading }) {
         label: "periodicaOverviewTitle",
       })}
       subtitle={
-        <Text type="text2">
+        <Text type="text2" lines={4} clamp={true}>
           {translate({
             context: "periodica",
             label: "periodicaOverviewSubtitle",

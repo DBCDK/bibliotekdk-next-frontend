@@ -2149,9 +2149,13 @@
         "da": "Emneord",
         "en": "Subjects"
       },
-      "periodicaSubtitle": {
-        "da": "Artiklerne i %s handler ofte om",
-        "en": "The articles in %s are frequently about"
+      "periodicaSubtitle1": {
+        "da": "Artiklerne i %s",
+        "en": "The articles in %s"
+      },
+      "periodicaSubtitle2": {
+        "da": "handler ofte om",
+        "en": "are frequently about"
       }
     },
     "relatedKeywords": {
@@ -2168,6 +2172,10 @@
       "unspecificTitle": {
         "da": "Artikler med samme emner",
         "en": "Articles with same topics"
+      },
+      "in": {
+        "da": "Fra",
+        "en": "In"
       }
     },
     "bookmark": {

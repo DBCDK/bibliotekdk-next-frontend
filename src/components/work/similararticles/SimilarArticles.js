@@ -11,6 +11,7 @@ import { useMemo } from "react";
 import ScrollSnapSlider from "@/components/base/scrollsnapslider/ScrollSnapSlider";
 import MaterialCard from "@/components/base/materialcard/MaterialCard";
 import styles from "./SimilarArticles.module.css";
+import Text from "@/components/base/text";
 
 /**
  * The Component function
@@ -40,14 +41,24 @@ export function SimilarArticles({ periodicaTitle, works }) {
 
   const title = Translate({
     context: "similararticles",
-    label: "title",
-    vars: [periodicaTitle],
+    label: "unspecificTitle",
   });
+
+  const subtitle = (
+    <Text type="text2" lines={4} clamp={true}>
+      {Translate({
+        context: "similararticles",
+        label: "in",
+      })}{" "}
+      {periodicaTitle}
+    </Text>
+  );
 
   return (
     <Section
       className={styles.section}
       title={title}
+      subtitle={subtitle}
       sectionTag="div" // Section sat in parent
       divider={false}
       backgroundColor="var(--concrete)"
