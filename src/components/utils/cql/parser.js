@@ -73,6 +73,32 @@ function resolveNonStringTypes(tokens) {
 }
 
 /**
+ * Collapses a sequence of tokens into a single LITERAL token representing
+ * a relative date expression like 'NOW - 12 MONTHS' or 'NOW - 5 DAYS',
+ * when it follows a RANGE_OPERATOR.
+ * Preserves the original raw text and generates a normalized version for validation.
+ */
+function collapseRelativeDateLiterals(tokens) {
+  for (let i = 0; i <= tokens.length - 5; i++) {
+    const [t1, t2, t3, t4, t5] = tokens.slice(i, i + 5);
+
+    if (
+      t1?.type === TOKEN_TYPES.RANGE_OPERATOR &&
+      t2?.normalized?.toUpperCase() === "NOW" &&
+      t3?.normalized === "-" &&
+      /^\d+$/.test(t4?.normalized) &&
+      /^(DAYS|MONTHS)$/i.test(t5?.normalized)
+    ) {
+      tokens.splice(i + 1, 4, {
+        raw: t2.raw + t3.raw + t4.raw + t5.raw,
+        normalized: [t2, t3, t4, t5].map((t) => t.normalized).join(" "),
+        type: TOKEN_TYPES.LITERAL,
+      });
+    }
+  }
+}
+
+/**
  * Converts the input string into an array of token objects based on defined
  * separators and quote handling. The function identifies the beginning and end
  * of string literals, respects escaped characters within literals, and handles
@@ -139,6 +165,7 @@ export function tokenize(input) {
 
   resolveNonStringTypes(tokens);
   resolveStringTypes(tokens);
+  collapseRelativeDateLiterals(tokens);
 
   return tokens;
 }
@@ -247,6 +274,7 @@ function validateRangeLiterals(tokens) {
       const regexYear = /^"-?[0-9]+\s+(now|-?[0-9]+)"$/i;
       const regexYearWithAsterisk = /^"-?[0-9*]+\s+(now|-?[0-9*]+)"$/i;
       const regexDate = /^"\d{4}-\d{2}-\d{2}\s+\d{4}-\d{2}-\d{2}"$/;
+      const regexRelative = /^NOW\s*-\s*\d+\s+(DAYS|MONTHS)$/i;
 
       if (regexYearWithAsterisk.test(token.normalized)) {
         if (regexYear.test(token.normalized)) {
@@ -272,6 +300,9 @@ function validateRangeLiterals(tokens) {
         if (new Date(left) > new Date(right)) {
           token.error = ERRORS.UNEXPECTED_WITHIN_LITERAL;
         }
+      } else if (regexRelative.test(token.normalized)) {
+        // Valid relative literal, e.g. NOW - 12 MONTHS or NOW - 5 DAYS
+        // No error needed
       } else {
         token.error = ERRORS.UNEXPECTED_WITHIN_LITERAL;
       }
