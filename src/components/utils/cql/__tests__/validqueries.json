@@ -569,5 +569,7 @@
   "phrase.language=\"georgisk\"",
   "phrase.language=\"aserbajdsjansk\"",
   "phrase.language=\"kasakhisk\"",
-  "phrase.language=\"ukrainsk\""
+  "phrase.language=\"ukrainsk\"",
+  "firstaccessiondate > NOW - 10 MONTHS",
+  "firstaccessiondate > NOW - 200 DAYS"
 ]
