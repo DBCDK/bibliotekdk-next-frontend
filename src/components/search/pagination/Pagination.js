@@ -59,10 +59,11 @@ export default function Pagination({
   MAX_VISIBLE_PAGES = 9,
   className,
   forceMobileView,
+  forceDesktopView,
   disableScrollMobileView,
 }) {
   const isMobile = useBreakpoint() === "xs";
-  const mobileView = forceMobileView || isMobile;
+  const mobileView = !forceDesktopView && (forceMobileView || isMobile);
 
   const {
     showPreviousPageArrow,

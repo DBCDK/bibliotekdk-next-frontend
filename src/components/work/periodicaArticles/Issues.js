@@ -37,6 +37,7 @@ export function PaginationWrapper({ pagination, onPageChange, isLoading }) {
         numPages={numPages}
         currentPage={page}
         onChange={onPageChange}
+        forceDesktopView={true}
       />
     </div>
   );
