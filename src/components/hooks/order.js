@@ -871,11 +871,13 @@ export function useOrderFlow() {
 export function useOrderPolicyMessage({ pids, branchId, textType = "type2" }) {
   const branch = useBranchInfo({ branchId });
   const policy = useOrderPolicy({ branchId, pids });
-  const { branches } = useHoldingsForAgency({
+
+  const { branches, isLoading: holdingsIsLoading } = useHoldingsForAgency({
     pids,
     agencyId: branch?.agencyId,
   });
   const lookupUrl = branches?.[0]?.holdings?.lookupUrl;
+  const isLoading = holdingsIsLoading || branch.isLoading || policy.isLoading;
 
   const showMessage =
     policy?.physicalCopyAllowedReason === "OWNED_OWN_CATALOGUE" ||
@@ -883,28 +885,32 @@ export function useOrderPolicyMessage({ pids, branchId, textType = "type2" }) {
 
   if (showMessage) {
     const labelKey = `message_${policy?.physicalCopyAllowedReason}`;
-    return (
-      <div className={styles.path_blue}>
-        {Translate({
-          context: "holdings",
-          label: labelKey,
-          vars: [branch?.name],
-        })}
-        <IconLink
-          iconPlacement="right"
-          iconSrc={ExternalSvg}
-          iconAnimation={[animations["h-elastic"], animations["f-elastic"]]}
-          textType={textType}
-          href={lookupUrl}
-          target="_blank"
-          iconStyle={{ stroke: "blue" }}
-        >
+    return {
+      isLoading,
+      orderPolicyMessage: (
+        <div className={styles.path_blue}>
           {Translate({
-            context: "localizations",
-            label: "order_locally",
+            context: "holdings",
+            label: labelKey,
+            vars: [branch?.name],
           })}
-        </IconLink>
-      </div>
-    );
+          <IconLink
+            iconPlacement="right"
+            iconSrc={ExternalSvg}
+            iconAnimation={[animations["h-elastic"], animations["f-elastic"]]}
+            textType={textType}
+            href={lookupUrl}
+            target="_blank"
+            iconStyle={{ stroke: "blue" }}
+          >
+            {Translate({
+              context: "localizations",
+              label: "order_locally",
+            })}
+          </IconLink>
+        </div>
+      ),
+    };
   }
+  return { isLoading };
 }

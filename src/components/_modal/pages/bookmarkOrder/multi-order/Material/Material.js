@@ -73,18 +73,22 @@ const Material = ({
     );
   const { branchId } = usePickupBranchId();
 
-  const orderPolicyMessage = useOrderPolicyMessage({
-    pids,
-    branchId,
-    textType: "text4",
-  });
+  const { orderPolicyMessage, isLoading: isLoadingPolicyMessage } =
+    useOrderPolicyMessage({
+      pids,
+      branchId,
+      textType: "text4",
+    });
 
-  const { accessNew } = useManifestationAccess({ pids: pids, filter: false });
+  const { accessNew, isLoading: isLoadingManifestationAccess } =
+    useManifestationAccess({ pids: pids, filter: false });
 
   const isLoading =
     isLoadingManifestations ||
     isLoadingAlreadyOrdered ||
-    isLoadingCheckLocalizations;
+    isLoadingCheckLocalizations ||
+    isLoadingManifestationAccess ||
+    isLoadingPolicyMessage;
 
   const material = manifestationsData?.manifestations?.[0];
 
