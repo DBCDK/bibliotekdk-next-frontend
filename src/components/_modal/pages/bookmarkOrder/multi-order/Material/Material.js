@@ -97,7 +97,7 @@ const Material = ({
     ? false
     : totalAgencies < 1;
   const orderPossible =
-    (service === "ILL" || service === "DIGITAL_ARTICLE") && !orderNotPossible;
+    (service === "ILL" && !orderNotPossible) || service === "DIGITAL_ARTICLE";
 
   const backgroundColor = findBackgroundColor({
     hasAlreadyBeenOrdered: showAlreadyOrderedWarning,

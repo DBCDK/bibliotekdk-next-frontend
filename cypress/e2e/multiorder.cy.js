@@ -300,6 +300,8 @@ describe("Multi Order", () => {
       cy.contains("Afhentningssted").should("not.exist");
       cy.contains("1 materiale bliver leveret som digital kopi til din mail");
 
+      cy.contains("Kan ikke bestilles til dit bibliotek").should("not.exist");
+
       cy.contains("Godkend").click();
 
       cy.contains("Bestillingen blev gennemført");
