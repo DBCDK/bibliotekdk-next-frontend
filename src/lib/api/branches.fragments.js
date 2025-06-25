@@ -190,7 +190,7 @@ export function branchesHighlightsByAgency({ agencyId, q, limit = 50 }) {
     apiUrl: ApiEnums.FBI_API,
     query: `
     query branchesHighlightsByAgency($agencyId: String!, $q: String, $limit: PaginationLimitScalar!, $language: LanguageCodeEnum!) {
-      branches(agencyid: $agencyId, q: $q, bibdkExcludeBranches: true, limit: $limit, statuses: AKTIVE, language: $language) {
+      branches(agencyid: $agencyId, q: $q, bibdkExcludeBranches: true, limit: $limit, statuses: AKTIVE, language: $language, sortPickupAllowed: true) {
         hitcount
         agencyUrl
         result {
@@ -212,7 +212,7 @@ export function branchByBranchId({ branchId, pids, limit = 50, q = "" }) {
     apiUrl: ApiEnums.FBI_API,
     query: `
     query branchByBranchId($branchId: String!, $q: String, $pids: [String!]!, $limit: PaginationLimitScalar!, $language: LanguageCodeEnum!) {
-      branches(branchId: $branchId, q: $q, bibdkExcludeBranches: true, limit: $limit, statuses: AKTIVE, language: $language) {
+      branches(branchId: $branchId, q: $q, bibdkExcludeBranches: true, limit: $limit, statuses: AKTIVE, language: $language, sortPickupAllowed: true) {
         hitcount
         agencyUrl
         result {
@@ -238,7 +238,7 @@ export function branchesByQuery({ q, limit = 50 }) {
     apiUrl: ApiEnums.FBI_API,
     query: `
     query branchesActiveInAgency($q: String!, $limit: PaginationLimitScalar!, $language: LanguageCodeEnum!) {
-      branches(q: $q, bibdkExcludeBranches: true,  limit: $limit, statuses: AKTIVE, language: $language) {
+      branches(q: $q, bibdkExcludeBranches: true,  limit: $limit, statuses: AKTIVE, language: $language, sortPickupAllowed: true) {
         hitcount
         agencyUrl
         result {
