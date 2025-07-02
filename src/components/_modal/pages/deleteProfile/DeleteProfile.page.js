@@ -14,14 +14,12 @@ import Translate from "@/components/base/translate/Translate";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useSignOut from "@/components/hooks/useSignOut";
 
-/**
- * This is a confirmation modal for user deletion.
- * @returns {component}
- */
 export function DeleteProfile({ modal }) {
   const userDataMutation = useMutate();
   const { hasCulrUniqueId } = useAuthentication();
   const { mutate } = useData(hasCulrUniqueId && userFragments.extendedData());
+
+  const { signOut } = useSignOut();
 
   useEffect(() => {
     if (modal.isVisible) {
@@ -31,12 +29,12 @@ export function DeleteProfile({ modal }) {
 
   const handleDeleteUser = async () => {
     await deleteUser({ userDataMutation });
-    useSignOut();
+    signOut();
   };
 
   return (
     <div className={styles.modalContainer}>
-      <Top title={"Slet profil"} back />
+      <Top title="Slet profil" back />
       <Text className={styles.deleteTextTitle} type="text1">
         {Translate({ context: "profile", label: "deleteProfileTitle" })}
       </Text>
