@@ -10,9 +10,9 @@ import Text from "@/components/base/text";
 import { useEffect } from "react";
 import Button from "@/components/base/button";
 import { deleteUser } from "@/lib/api/userData.mutations";
-import { signOut } from "@dbcdk/login-nextjs/client";
 import Translate from "@/components/base/translate/Translate";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import useSignOut from "@/components/hooks/useSignOut";
 
 /**
  * This is a confirmation modal for user deletion.
@@ -30,10 +30,8 @@ export function DeleteProfile({ modal }) {
   }, [modal.isVisible]);
 
   const handleDeleteUser = async () => {
-    const redirectUrl = window?.location?.origin;
-
     await deleteUser({ userDataMutation });
-    signOut(redirectUrl);
+    useSignOut();
   };
 
   return (
