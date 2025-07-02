@@ -30,7 +30,15 @@
   margin-top: calc(var(--pt7) * -1);
   padding-bottom: var(--pt2);
 }
-.logoutBtn {
+
+.logoutBtnContainer {
+  min-width: 75px;
+  display: flex;
+  justify-content: center;
+}
+
+.logoutBtn,
+.spinner {
   margin-left: var(--pt4);
 }
 .profileHeaderContainer {

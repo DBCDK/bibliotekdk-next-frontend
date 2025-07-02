@@ -10,7 +10,7 @@ import NavigationDropdown from "@/components/base/dropdown/navigationDropdown/Na
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import Translate from "@/components/base/translate/Translate";
-import { signOut } from "@dbcdk/login-nextjs/client";
+import useSignOut from "@/components/hooks/useSignOut";
 import Button from "@/components/base/button";
 import { useModal } from "@/components/_modal";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
@@ -18,6 +18,7 @@ import { useRouter } from "next/router";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import { removeAlreadyOrderedFromSession } from "@/components/_modal/pages/order/utils/order.utils";
+import { Spinner } from "react-bootstrap";
 
 const CONTEXT = "profile";
 const MENUITEMS = [
@@ -136,6 +137,8 @@ const LogoutButton = () => {
   const { isAuthenticated } = useAuthentication();
   const { loanerInfo, isLoading } = useLoanerInfo();
 
+  const { signOut, isSigningOut } = useSignOut();
+
   if (!isAuthenticated) {
     return;
   }
@@ -152,29 +155,34 @@ const LogoutButton = () => {
        `}
         </Text>
       )}
-      <Link
-        onClick={() => {
-          removeAlreadyOrderedFromSession();
-          if (isAuthenticated) {
-            const redirectUrl = window?.location?.origin;
-            signOut(redirectUrl);
-          }
-        }}
-        className={styles.logoutBtn}
-        border={{
-          top: false,
-          bottom: {
-            keepVisible: true,
-          },
-        }}
-      >
-        <Text>
-          {Translate({
-            context: "header",
-            label: "logout",
-          })}
-        </Text>
-      </Link>
+      <div className={styles.logoutBtnContainer}>
+        {isSigningOut ? (
+          <Spinner animation="border" size="sm" className={styles.spinner} />
+        ) : (
+          <Link
+            onClick={() => {
+              removeAlreadyOrderedFromSession();
+              if (isAuthenticated) {
+                signOut();
+              }
+            }}
+            className={styles.logoutBtn}
+            border={{
+              top: false,
+              bottom: {
+                keepVisible: true,
+              },
+            }}
+          >
+            <Text>
+              {Translate({
+                context: "header",
+                label: "logout",
+              })}
+            </Text>
+          </Link>
+        )}
+      </div>
     </div>
   );
 };

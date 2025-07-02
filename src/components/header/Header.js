@@ -38,10 +38,10 @@ import { SuggestTypeEnum } from "@/lib/enums";
 import isEmpty from "lodash/isEmpty";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { openLoginModal } from "../_modal/pages/login/utils";
-import { signOut } from "@dbcdk/login-nextjs/client";
 import useAuthentication from "../hooks/user/useAuthentication";
 
 import AdvancedSearchPopover from "@/components/search/advancedSearch/popover/Popover";
+import useSignOut from "../hooks/useSignOut";
 
 // material Pages
 export const MATERIAL_PAGES = [
@@ -81,6 +81,7 @@ export function Header({
   modal,
   filters,
   hideShadow,
+  handleSignOut,
 }) {
   const context = { context: "header" };
   const breakpoint = useBreakpoint();
@@ -102,7 +103,11 @@ export function Header({
 
   const simpleSearchRef = useRef(null);
   const { showInfoTooltip, showPopover } = useAdvancedSearchContext();
+
   const getLoginLabel = () => {
+    if (user.isLoading) {
+      return "login";
+    }
     if (user.hasCulrUniqueId) {
       return "profile";
     }
@@ -125,14 +130,14 @@ export function Header({
     {
       label: getLoginLabel(),
       icon: LoginIcon,
+      isLoading: user.isLoading,
       onClick: () => {
         if (user.hasCulrUniqueId) {
           router.push("/profil/laan-og-reserveringer");
           return;
         }
         if (user.isAuthenticated) {
-          const redirectUrl = window?.location?.origin;
-          signOut(redirectUrl);
+          handleSignOut();
         } else {
           openLoginModal({ modal });
         }
@@ -310,10 +315,8 @@ export function Header({
                       })}
                       key={m.label}
                       className={`${styles.action} ${m.className}`}
-                      href={m.href}
-                      onClick={m.onClick}
-                      items={m.items}
                       title={Translate({ ...context, label: m.label })}
+                      {...m}
                     />
                   );
                 })}
@@ -426,7 +429,10 @@ function HeaderSkeleton(props) {
  */
 export default function Wrap(props) {
   const router = useRouter();
-  const { hasCulrUniqueId, isAuthenticated } = useAuthentication();
+  const { hasCulrUniqueId, isAuthenticated, isLoading } = useAuthentication();
+
+  const { signOut, isSigningOut } = useSignOut();
+
   const modal = useModal();
   const filters = useFilters();
 
@@ -437,7 +443,12 @@ export default function Wrap(props) {
   return (
     <Header
       {...props}
-      user={{ hasCulrUniqueId, isAuthenticated }}
+      handleSignOut={signOut}
+      user={{
+        hasCulrUniqueId,
+        isAuthenticated,
+        isLoading: isLoading || isSigningOut,
+      }}
       modal={modal}
       filters={filters}
       router={router}

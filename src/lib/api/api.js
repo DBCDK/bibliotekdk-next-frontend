@@ -303,7 +303,7 @@ function useFetcherImpl() {
 /**
  * Generates key based on the GraphQL query/variables
  */
-function useKeyGenerator() {
+export function useKeyGenerator() {
   return (query) => query && generateKey({ ...query } || "");
 }
 
