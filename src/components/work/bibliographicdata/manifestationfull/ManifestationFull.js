@@ -47,8 +47,8 @@ function ColumnOne({ workId, manifestation }) {
     manifestation,
   ]);
 
-  function permalinkToPid() {
-    return `/work/pid/${manifestation?.pid}?scrollToEdition=true`;
+  function permalinkToPid(pid) {
+    return `/work/pid/${pid}?scrollToEdition=true`;
   }
 
   const tooltip = (
@@ -73,7 +73,7 @@ function ColumnOne({ workId, manifestation }) {
       window.location.protocol +
         "//" +
         window.location.host +
-        permalinkToPid(window.location.hash)
+        permalinkToPid(manifestation?.pid)
     );
   }
 
@@ -159,7 +159,7 @@ function ColumnOne({ workId, manifestation }) {
             <IconLink
               className={styles.copy_link}
               onClick={(event) => onClickCopyLink(event)}
-              href={permalinkToPid()}
+              href={permalinkToPid(manifestation?.pid)}
               iconSrc={checkMarkActive ? CheckMarkBlue : CopyLink}
               iconPlacement={"right"}
               iconAnimation={[animations["h-elastic"], animations["f-elastic"]]}
