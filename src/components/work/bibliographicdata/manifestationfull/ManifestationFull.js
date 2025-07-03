@@ -43,6 +43,8 @@ function ColumnOne({ workId, manifestation }) {
   const copyLinkId = useId();
   const [checkMarkActive, setCheckMarkActive] = useState(false);
 
+  const pid = manifestation?.pid;
+
   const { uniqueMaterialTypes } = manifestationMaterialTypeFactory([
     manifestation,
   ]);
@@ -65,7 +67,7 @@ function ColumnOne({ workId, manifestation }) {
     </Tooltip>
   );
 
-  function onClickCopyLink(event) {
+  function onClickCopyLink(event, pid) {
     event.preventDefault();
     setCheckMarkActive(true);
     setTimeout(() => setCheckMarkActive(false), 2000);
@@ -73,7 +75,7 @@ function ColumnOne({ workId, manifestation }) {
       window.location.protocol +
         "//" +
         window.location.host +
-        permalinkToPid(manifestation?.pid)
+        permalinkToPid(pid)
     );
   }
 
@@ -158,8 +160,8 @@ function ColumnOne({ workId, manifestation }) {
           <div style={{ width: "fit-content" }}>
             <IconLink
               className={styles.copy_link}
-              onClick={(event) => onClickCopyLink(event)}
-              href={permalinkToPid(manifestation?.pid)}
+              onClick={(event) => onClickCopyLink(event, pid)}
+              href={permalinkToPid(pid)}
               iconSrc={checkMarkActive ? CheckMarkBlue : CopyLink}
               iconPlacement={"right"}
               iconAnimation={[animations["h-elastic"], animations["f-elastic"]]}
