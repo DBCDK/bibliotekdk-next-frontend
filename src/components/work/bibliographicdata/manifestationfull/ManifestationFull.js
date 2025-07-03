@@ -47,8 +47,8 @@ function ColumnOne({ workId, manifestation }) {
     manifestation,
   ]);
 
-  function permalinkToPid(hash) {
-    return `/work/pid/${hash.slice(1)}?scrollToEdition=true`;
+  function permalinkToPid() {
+    return `/work/pid/${manifestation?.pid}?scrollToEdition=true`;
   }
 
   const tooltip = (
@@ -159,7 +159,7 @@ function ColumnOne({ workId, manifestation }) {
             <IconLink
               className={styles.copy_link}
               onClick={(event) => onClickCopyLink(event)}
-              href={permalinkToPid(window.location.hash)}
+              href={permalinkToPid()}
               iconSrc={checkMarkActive ? CheckMarkBlue : CopyLink}
               iconPlacement={"right"}
               iconAnimation={[animations["h-elastic"], animations["f-elastic"]]}
