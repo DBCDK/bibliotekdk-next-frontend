@@ -4,9 +4,9 @@ import { useCallback } from "react";
 const SIGNOUT_KEY = "isSigningOut";
 
 /**
- * Custom hook to sign out the user via internal /logout page.
+ * Custom hook to sign out the user via internal /signout page.
  * - Sets 'isSigningOut' flag in sessionStorage with timestamp
- * - Redirects to /logout?redirect_uri=...
+ * - Redirects to /signout?redirect_uri=...
  *
  * @returns {{ signOut: function, isSigningOut: boolean }}
  */
@@ -21,7 +21,7 @@ export default function useSignOut() {
       sessionStorage.setItem(SIGNOUT_KEY, JSON.stringify({ ts: Date.now() }));
 
       const redirectUri = `${window.location.origin}${redirectPath}`;
-      router.push(`/logout?redirect_uri=${encodeURIComponent(redirectUri)}`);
+      router.push(`/signout?redirect_uri=${encodeURIComponent(redirectUri)}`);
     },
     [router]
   );
