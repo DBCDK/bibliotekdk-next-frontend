@@ -11,9 +11,7 @@ export default function useAuthentication() {
   const isSessionLoading = status === "loading";
 
   // Fetch authentication data stored in fbi-api
-  const { data, isLoading: isAuthLoading } = useData(authenticationFragment());
-
-  const isLoading = isSessionLoading || isAuthLoading;
+  const { data, isLoading } = useData(authenticationFragment());
 
   // Check if the user is authenticated based on the presence of a uniqueId.
   const isAuthenticated = !!authenticatedSession?.user?.userId;
@@ -38,13 +36,13 @@ export default function useAuthentication() {
   const identityProviderUsed = data?.user?.identityProviderUsed;
 
   return {
-    isAuthenticated: !isLoading && isAuthenticated,
-    hasCulrUniqueId: !isLoading && hasCulrUniqueId,
-    isGuestUser: !isLoading && isGuestUser,
-    isCPRValidated: !isLoading && isCPRValidated,
-    loggedInAgencyId: !isLoading && loggedInAgencyId,
-    loggedInBranchId: !isLoading && loggedInBranchId,
-    identityProviderUsed: !isLoading && identityProviderUsed,
-    isLoading,
+    isAuthenticated,
+    hasCulrUniqueId,
+    isGuestUser,
+    isCPRValidated,
+    loggedInAgencyId,
+    loggedInBranchId,
+    identityProviderUsed,
+    isLoading: isSessionLoading || isLoading,
   };
 }
