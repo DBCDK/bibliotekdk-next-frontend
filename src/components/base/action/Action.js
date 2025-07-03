@@ -31,7 +31,6 @@ export default function Action({
   badge = null,
   title = "Go!",
   icon = "star.svg",
-  animation = false,
   children = null,
   onClick = null,
   dataCy = null,

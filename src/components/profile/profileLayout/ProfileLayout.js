@@ -18,7 +18,7 @@ import { useRouter } from "next/router";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import { removeAlreadyOrderedFromSession } from "@/components/_modal/pages/order/utils/order.utils";
-import { Spinner } from "react-bootstrap";
+import Spinner from "react-bootstrap/Spinner";
 
 const CONTEXT = "profile";
 const MENUITEMS = [

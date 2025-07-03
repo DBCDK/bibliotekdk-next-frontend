@@ -62,7 +62,9 @@ export default function useSignOutCleanup() {
         setWasSigningOut(true);
 
         // Fjern message=logout fra URL
-        const { message, ...rest } = router.query;
+        const rest = { ...router.query };
+        delete rest.message;
+
         router.replace({ pathname: router.pathname, query: rest }, undefined, {
           shallow: true,
         });
