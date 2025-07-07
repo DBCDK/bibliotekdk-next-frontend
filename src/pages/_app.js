@@ -55,6 +55,8 @@ import { UseManyProvider } from "@/components/hooks/useMany";
 import { getServerSession } from "@dbcdk/login-nextjs/server";
 import { buildCookieHeader } from "@/lib/cookies";
 
+import useSignOutCleanup from "@/components/hooks/useSignOutCleanup";
+
 // kick off the polyfill!
 if (typeof window !== "undefined") {
   smoothscroll.polyfill();
@@ -111,6 +113,9 @@ let pageProps;
 export default function MyApp({ Component, pageProps: _pageProps, router }) {
   // sync pageProps
   pageProps = { ...pageProps, ..._pageProps };
+
+  // Remove session if url contains ?message=logout
+  useSignOutCleanup();
 
   const isOnline = useIsOnline();
   setLocale(router.locale);

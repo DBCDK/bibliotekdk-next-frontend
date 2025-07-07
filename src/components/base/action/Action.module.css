@@ -21,10 +21,12 @@
   display: none;
 }
 
+.action span,
 .action p {
   /* Adjust lineheight to pixel perfect align icons in height */
-  line-height: 14px;
   margin-top: 4px;
+  display: block;
+  line-height: 14px;
 }
 
 .badge {
