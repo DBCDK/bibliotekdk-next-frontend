@@ -31,10 +31,10 @@ export default function Action({
   badge = null,
   title = "Go!",
   icon = "star.svg",
-  animation = false,
   children = null,
   onClick = null,
   dataCy = null,
+  isLoading = false,
   ...props
 }) {
   // Use html a or the Link component
@@ -60,10 +60,8 @@ export default function Action({
         {children}
       </Icon>
       <div className={styles.wrap}>
-        <Text type="text3">
-          <Link a={false} border={{ bottom: animation }}>
-            {title}
-          </Link>
+        <Text type="text3" skeleton={isLoading} lines={1}>
+          {title}
         </Text>
       </div>
     </Wrap>

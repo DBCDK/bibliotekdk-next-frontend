@@ -103,6 +103,10 @@ export function Header({
   const simpleSearchRef = useRef(null);
   const { showInfoTooltip, showPopover } = useAdvancedSearchContext();
   const getLoginLabel = () => {
+    if (user.isAuthenticated && user.isLoading) {
+      // we guess that user has a unique id if we are loading
+      return "profile";
+    }
     if (user.hasCulrUniqueId) {
       return "profile";
     }
@@ -125,6 +129,7 @@ export function Header({
     {
       label: getLoginLabel(),
       icon: LoginIcon,
+      isLoading: user.isLoading,
       onClick: () => {
         if (user.hasCulrUniqueId) {
           router.push("/profil/laan-og-reserveringer");
@@ -310,10 +315,8 @@ export function Header({
                       })}
                       key={m.label}
                       className={`${styles.action} ${m.className}`}
-                      href={m.href}
-                      onClick={m.onClick}
-                      items={m.items}
                       title={Translate({ ...context, label: m.label })}
+                      {...m}
                     />
                   );
                 })}
@@ -426,7 +429,7 @@ function HeaderSkeleton(props) {
  */
 export default function Wrap(props) {
   const router = useRouter();
-  const { hasCulrUniqueId, isAuthenticated } = useAuthentication();
+  const { hasCulrUniqueId, isAuthenticated, isLoading } = useAuthentication();
   const modal = useModal();
   const filters = useFilters();
 
@@ -437,7 +440,7 @@ export default function Wrap(props) {
   return (
     <Header
       {...props}
-      user={{ hasCulrUniqueId, isAuthenticated }}
+      user={{ hasCulrUniqueId, isAuthenticated, isLoading }}
       modal={modal}
       filters={filters}
       router={router}
