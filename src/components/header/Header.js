@@ -433,8 +433,6 @@ export default function Wrap(props) {
   const modal = useModal();
   const filters = useFilters();
 
-  console.log("### isLoading", isLoading, hasCulrUniqueId, isAuthenticated);
-
   if (props.skeleton) {
     return <HeaderSkeleton {...props} />;
   }

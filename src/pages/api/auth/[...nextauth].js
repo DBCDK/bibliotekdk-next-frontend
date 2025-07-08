@@ -104,7 +104,7 @@ export const options = {
   },
 };
 
-export default async (req, res) => {
+export default async function Handler(req, res) {
   if (req.url === "/api/auth/signout") {
     let url = req.body.callbackUrl;
 
@@ -116,4 +116,4 @@ export default async (req, res) => {
   }
 
   return NextAuth(req, res, options);
-};
+}
