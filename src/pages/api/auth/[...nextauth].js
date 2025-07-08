@@ -6,6 +6,8 @@ import {
 import { NextAuth } from "@dbcdk/login-nextjs";
 import { log } from "dbc-node-logger";
 import getConfig from "next/config";
+import { decodeCookie } from "@/utils/jwt";
+
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 const { clientId, clientSecret } = serverRuntimeConfig;
 
@@ -102,4 +104,16 @@ export const options = {
   },
 };
 
-export default NextAuth(options);
+export default async (req, res) => {
+  if (req.url === "/api/auth/signout") {
+    let url = req.body.callbackUrl;
+
+    const jwt = await decodeCookie(req.cookies["next-auth.session-token"]);
+    const accessToken = jwt?.accessToken;
+
+    url = url?.replace("access_token=undefined", `access_token=${accessToken}`);
+    req.body.callbackUrl = url;
+  }
+
+  return NextAuth(req, res, options);
+};
