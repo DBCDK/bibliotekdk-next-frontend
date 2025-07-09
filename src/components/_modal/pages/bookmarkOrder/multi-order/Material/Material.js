@@ -100,6 +100,7 @@ const Material = ({
     : accessNew
     ? false
     : totalAgencies < 1;
+
   const orderPossible =
     (service === "ILL" && !orderNotPossible) || service === "DIGITAL_ARTICLE";
 
@@ -110,8 +111,8 @@ const Material = ({
     notAvailableAtLibrary: isLoadingOrderService
       ? false //if we dont have data yet, we dont want red background
       : !orderPossible,
-    // we need both locali<ations AND check
-    noLocalizations: orderNotPossible,
+    // we need both localications AND check
+    noLocalizations: !orderPossible,
   });
 
   const showOrderedWarning =
