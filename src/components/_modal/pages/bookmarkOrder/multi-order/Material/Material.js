@@ -112,7 +112,7 @@ const Material = ({
       ? false //if we dont have data yet, we dont want red background
       : !orderPossible,
     // we need both localications AND check
-    noLocalizations: !orderPossible,
+    noLocalizations: isLoading ? false : !orderPossible,
   });
 
   const showOrderedWarning =
