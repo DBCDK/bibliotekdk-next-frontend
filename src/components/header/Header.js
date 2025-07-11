@@ -309,6 +309,7 @@ export function Header({
 
                   return (
                     <ActionIcon
+                      {...m}
                       dataCy={cyKey({
                         name: m.label,
                         prefix: "header-link",
@@ -316,7 +317,6 @@ export function Header({
                       key={m.label}
                       className={`${styles.action} ${m.className}`}
                       title={Translate({ ...context, label: m.label })}
-                      {...m}
                     />
                   );
                 })}
