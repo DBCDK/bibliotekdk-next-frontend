@@ -1,9 +1,6 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
-import { useState } from "react";
-import HeaderWrapped, { Header } from "./Header";
+import { Header } from "./Header";
 import Searchbar from "@/components/search/searchbar";
-
-import useFilters from "@/components/hooks/useFilters";
 
 const urlParams =
   typeof window === "undefined"
@@ -16,18 +13,33 @@ const exportedObject = {
 
 export default exportedObject;
 
-const graphql = {
-  debug: true,
-  resolvers: {
-    SuggestResponse: {
-      result: ({ variables }) => {
-        if (variables?.q === "rowling") {
-          return [{ type: "CREATOR", term: "Anna Rowling" }];
-        }
-        return variables?.q === "hest" || "suggest.".startsWith(variables?.q)
-          ? [...new Array(3).fill({ type: "CREATOR" })]
-          : [];
-      },
+/**
+ * Returns Header
+ *
+ */
+export function HeaderNotSignedIn() {
+  const user = {
+    hasCulrUniqueId: false,
+    isAuthenticated: false,
+    isLoading: false,
+  };
+
+  return (
+    <div style={{ height: "800px" }}>
+      <StoryTitle>Header | Not signed in</StoryTitle>
+      <StoryDescription>{`Basic header | Not signed in`}</StoryDescription>
+      <Header user={user} />
+      <Searchbar />
+    </div>
+  );
+}
+
+HeaderNotSignedIn.story = {
+  parameters: {
+    nextRouter: {
+      showInfo: true,
+      pathname: urlParams.get("nextRouter.pathname") || "/",
+      query: {},
     },
   },
 };
@@ -36,134 +48,60 @@ const graphql = {
  * Returns Header
  *
  */
-export function NavHeader() {
+export function HeaderNoUniqueId() {
+  const user = {
+    hasCulrUniqueId: false,
+    isAuthenticated: true,
+    isLoading: false,
+  };
+
   return (
     <div style={{ height: "800px" }}>
-      <StoryTitle>Header</StoryTitle>
-      <StoryDescription>{`Try to input "hest" or "suggest"`}</StoryDescription>
-      <HeaderWrapped />
+      <StoryTitle>Header | No UniqueID</StoryTitle>
+      <StoryDescription>{`Header | User is signedIn but does not have a CULR uniqueId`}</StoryDescription>
+      <Header user={user} />
       <Searchbar />
     </div>
   );
 }
 
-NavHeader.story = {
+HeaderNoUniqueId.story = {
   parameters: {
-    graphql,
     nextRouter: {
       showInfo: true,
-      pathname: urlParams.get("nextRouter.pathname") || "/find",
+      pathname: urlParams.get("nextRouter.pathname") || "/",
       query: {},
     },
   },
 };
 
-export function NavHeaderPrefilled() {
-  return (
-    <div style={{ height: "800px" }}>
-      <StoryTitle>Header</StoryTitle>
-      <StoryDescription>
-        URL query parameters are reflected as default values in input fields
-      </StoryDescription>
-      <HeaderWrapped />
-      <Searchbar />
-    </div>
-  );
-}
-
-NavHeaderPrefilled.story = {
-  parameters: {
-    graphql,
-    nextRouter: {
-      showInfo: true,
-      pathname: "/find",
-      query: {
-        "q.all": "some all",
-        workTypes: "movie",
-      },
-    },
-  },
-};
-
-export function NavHeaderMaterialPage() {
-  return (
-    <div style={{ height: "800px" }}>
-      <StoryTitle>Header</StoryTitle>
-      <StoryDescription>
-        URL query parameters are reflected as default values in input fields
-      </StoryDescription>
-      <HeaderWrapped />
-      <Searchbar />
-    </div>
-  );
-}
-
-NavHeaderMaterialPage.story = {
-  parameters: {
-    graphql,
-    nextRouter: {
-      showInfo: true,
-      pathname: "/materiale/[title_author]/[workId]",
-      query: {
-        title_author: "den-vaade-fisk_volker-kutscher",
-        workId: "work-of:870970-basis:27644317",
-      },
-    },
-  },
-};
-
 /**
- * Returns Header with user logged in
+ * Returns Header
  *
  */
-export function NavHeaderUserLoggedIn() {
-  // Storybook handle suggester internal state (url params not working in storybook)
-  const [suggesterVisibleMobile, setSuggesterVisibleMobile] = useState(false);
-
-  const story = { suggesterVisibleMobile, setSuggesterVisibleMobile };
-
-  const filters = useFilters();
-
-  return (
-    <div style={{ height: "800px" }}>
-      <StoryTitle>Header</StoryTitle>
-      <StoryDescription>
-        Full header component - with user logged in
-      </StoryDescription>
-      <Header
-        story={story}
-        user={{ hasCulrUniqueId: true }}
-        filters={{
-          ...filters,
-          getQuery: () => ({
-            workTypes: "all",
-          }),
-        }}
-      />
-    </div>
-  );
-}
-
-export function NavHeaderFFU() {
-  const filters = useFilters();
+export function HeaderSignedIn() {
+  const user = {
+    hasCulrUniqueId: true,
+    isAuthenticated: true,
+    isLoading: false,
+  };
 
   return (
     <div style={{ height: "800px" }}>
-      <StoryTitle>Header</StoryTitle>
-      <StoryDescription>
-        User with no culr id can not use profile functionality
-      </StoryDescription>
-      <Header
-        user={{ hasCulrUniqueId: false, isAuthenticated: true }}
-        filters={{
-          ...filters,
-          getQuery: () => ({
-            workTypes: "all",
-          }),
-        }}
-      />
-
+      <StoryTitle>Header | SignedIn</StoryTitle>
+      <StoryDescription>{`Header | User is signedIn`}</StoryDescription>
+      <Header user={user} />
       <Searchbar />
     </div>
   );
 }
+
+HeaderSignedIn.story = {
+  parameters: {
+    nextRouter: {
+      showInfo: true,
+      pathname: urlParams.get("nextRouter.pathname") || "/",
+      query: {},
+    },
+  },
+};
