@@ -6,7 +6,7 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 const fbiApiPath = Cypress.env("fbiApiPath");
 
-describe.skip("CookieBot", () => {
+describe("CookieBot", () => {
   beforeEach(function () {
     cy.visit(`${nextjsBaseUrl}`);
   });
@@ -67,8 +67,9 @@ describe.skip("CookieBot", () => {
       .should("contain.text", "Hjemmesiden bruger cookies");
   });
 
-  it(`Set correct FBI-API headers that corresponds to consent`, () => {
+  it.skip(`Set correct FBI-API headers that corresponds to consent`, () => {
     cy.intercept("POST", `${fbiApiPath}`).as("fbiApiRequestNoConsent");
+    cy.visit(`${nextjsBaseUrl}`);
 
     cy.get("#CybotCookiebotDialog")
       .should("exist")
@@ -81,18 +82,20 @@ describe.skip("CookieBot", () => {
       .its("request.headers")
       .should((headers) => {
         expect(headers).to.have.property("x-tracking-consent", "false");
-        expect(headers).to.have.property("x-unique-visitor-id", "test");
+        expect(headers).to.have.property("x-session-token", "test");
+        expect(headers).to.have.property("x-client-fingerprint", "fp_test");
       });
 
     cy.get("#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll").click();
-
-    cy.reload();
     cy.intercept("POST", `${fbiApiPath}`).as("fbiApiRequestConsent");
+    cy.reload();
+
     cy.wait("@fbiApiRequestConsent")
       .its("request.headers")
       .should((headers) => {
         expect(headers).to.have.property("x-tracking-consent", "true");
-        expect(headers).to.have.property("x-unique-visitor-id", "test");
+        expect(headers).to.have.property("x-session-token", "test");
+        expect(headers).to.have.property("x-client-fingerprint", "fp_test");
       });
   });
 });
