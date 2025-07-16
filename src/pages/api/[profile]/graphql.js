@@ -30,6 +30,7 @@ export function sanitizeHeaders(originalHeaders, accessToken) {
     "x-tracking-consent",
     "x-session-token",
     "x-unique-visitor-id",
+    "x-client-fingerprint",
     "x-caused-by",
     "user-agent",
     "x-forwarded-host",

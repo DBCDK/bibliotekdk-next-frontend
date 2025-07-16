@@ -6,7 +6,7 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 const fbiApiPath = Cypress.env("fbiApiPath");
 
-describe.skip("CookieBot", () => {
+describe("CookieBot", () => {
   beforeEach(function () {
     cy.visit(`${nextjsBaseUrl}`);
   });
@@ -81,7 +81,8 @@ describe.skip("CookieBot", () => {
       .its("request.headers")
       .should((headers) => {
         expect(headers).to.have.property("x-tracking-consent", "false");
-        expect(headers).to.have.property("x-unique-visitor-id", "test");
+        expect(headers).to.have.property("x-session-token", "test");
+        expect(headers).to.have.property("x-client-fingerprint", "fp_test");
       });
 
     cy.get("#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll").click();
@@ -92,7 +93,8 @@ describe.skip("CookieBot", () => {
       .its("request.headers")
       .should((headers) => {
         expect(headers).to.have.property("x-tracking-consent", "true");
-        expect(headers).to.have.property("x-unique-visitor-id", "test");
+        expect(headers).to.have.property("x-session-token", "test");
+        expect(headers).to.have.property("x-client-fingerprint", "fp_test");
       });
   });
 });
