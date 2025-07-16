@@ -69,6 +69,7 @@ describe("CookieBot", () => {
 
   it(`Set correct FBI-API headers that corresponds to consent`, () => {
     cy.intercept("POST", `${fbiApiPath}`).as("fbiApiRequestNoConsent");
+    cy.visit(`${nextjsBaseUrl}`);
 
     cy.get("#CybotCookiebotDialog")
       .should("exist")
@@ -86,9 +87,9 @@ describe("CookieBot", () => {
       });
 
     cy.get("#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll").click();
-
-    cy.reload();
     cy.intercept("POST", `${fbiApiPath}`).as("fbiApiRequestConsent");
+    cy.reload();
+
     cy.wait("@fbiApiRequestConsent")
       .its("request.headers")
       .should((headers) => {
