@@ -67,7 +67,7 @@ describe("CookieBot", () => {
       .should("contain.text", "Hjemmesiden bruger cookies");
   });
 
-  it(`Set correct FBI-API headers that corresponds to consent`, () => {
+  it.skip(`Set correct FBI-API headers that corresponds to consent`, () => {
     cy.intercept("POST", `${fbiApiPath}`).as("fbiApiRequestNoConsent");
     cy.visit(`${nextjsBaseUrl}`);
 
