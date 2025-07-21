@@ -54,7 +54,7 @@ export function Words({ data, isLoading }) {
  *
  * Related subjects used in a section component
  */
-export function Related({ data, isLoading }) {
+export function Related({ data = {}, isLoading }) {
   const noRelatedSubjects = data.length === 0 && !isLoading;
 
   const noRelatedSubjectsClass = noRelatedSubjects

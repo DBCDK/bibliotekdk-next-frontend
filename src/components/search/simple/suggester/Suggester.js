@@ -5,7 +5,13 @@ import AutoSuggest from "react-autosuggest";
 import AutosuggestHighlightMatch from "autosuggest-highlight/match";
 import AutosuggestHighlightParse from "autosuggest-highlight/parse";
 
-import { useState, useEffect, useMemo } from "react";
+import {
+  useState,
+  useEffect,
+  useMemo,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 
 import useQ from "@/components/hooks/useQ";
 import useFilters from "@/components/hooks/useFilters";
@@ -23,7 +29,6 @@ import Link from "@/components/base/link";
 import ArrowSvg from "@/public/icons/arrowleft.svg";
 import ClearSvg from "@/public/icons/close.svg";
 
-// Templates fro suggester results
 import Creator from "./templates/creator";
 import Work from "./templates/work";
 import Subject from "./templates/subject";
@@ -33,12 +38,9 @@ import styles from "./Suggester.module.css";
 
 import useDataCollect from "@/lib/useDataCollect";
 import { SuggestTypeEnum } from "@/lib/enums";
-import cx from "classnames";
 
-// Context
 const context = { context: "suggester" };
 
-// Custom theme classes
 const theme = {
   container: `${styles.container} react-autosuggest__container`,
   containerOpen: `${styles.container__open} react-autosuggest__container--open`,
@@ -56,82 +58,58 @@ const theme = {
   sectionTitle: "react-autosuggest__section-title",
 };
 
-/**
- * Function to open mobile suggester
- *
- */
 export function openMobileSuggester(router = Router) {
   router.push({
     pathname: router.pathname,
     query: { ...router.query, suggester: true },
   });
-  // ios devices require focus to be called
-  // while executing the click event
   focusInput();
-
-  setTimeout(() => {
-    focusInput();
-  }, 100);
+  setTimeout(() => focusInput(), 100);
 }
 
-/**
- * Function to focus suggester input field
- *
- */
 export function focusInput() {
-  document.getElementById("suggester-input").focus();
+  document.getElementById("suggester-input")?.focus();
 }
 
-/**
- * Function to blur suggester input field
- *
- */
 export function blurInput() {
-  document.getElementById("suggester-input").blur();
+  document.getElementById("suggester-input")?.blur();
 }
 
-/**
- * Function to highlight the match
- *
- */
 function highlightMatch(suggestion, query) {
   const matches = AutosuggestHighlightMatch(suggestion, query);
   const parts = AutosuggestHighlightParse(suggestion, matches);
 
   return (
     <span>
-      {parts.map((part, index) => {
-        const className = part.highlight
-          ? `${styles.match} react-autosuggest__suggestion-match`
-          : null;
-
-        return (
-          <span className={className} key={index}>
-            {part.text}
-          </span>
-        );
-      })}
+      {parts.map((part, index) => (
+        <span
+          key={index}
+          className={
+            part.highlight
+              ? `${styles.match} react-autosuggest__suggestion-match`
+              : null
+          }
+        >
+          {part.text}
+        </span>
+      ))}
     </span>
   );
 }
 
-/**
- * Custom suggestion container
- *
- */
 function renderSuggestionsContainer(
   containerProps,
   children,
   isHistory,
   clearHistory
 ) {
-  const keepVisibleClass = isHistory ? styles.suggestions_container__open : "";
-
   return (
     <div
       {...containerProps}
       aria-label={Translate({ ...context, label: "suggestions" })}
-      className={`${containerProps.className} ${keepVisibleClass}`}
+      className={`${containerProps.className} ${
+        isHistory ? styles.suggestions_container__open : ""
+      }`}
       data-cy={cyKey({ name: "container", prefix: "suggester" })}
     >
       {isHistory && (
@@ -139,12 +117,11 @@ function renderSuggestionsContainer(
           <Text type="text1" className={styles.title}>
             {Translate({ ...context, label: "historyTitle" })}
           </Text>
-
           <Text
             dataCy={cyKey({ name: "clear-history", prefix: "suggester" })}
             type="text1"
             className={styles.clear}
-            onClick={() => clearHistory()}
+            onClick={clearHistory}
           >
             <Link
               tag="span"
@@ -161,16 +138,8 @@ function renderSuggestionsContainer(
   );
 }
 
-/**
- * Custom suggestions
- *
- */
 function renderSuggestion(suggestion, query, skeleton) {
-  const value = suggestion.term;
-
-  // Add to suggestion object
-  suggestion.highlight = highlightMatch(value, query);
-
+  suggestion.highlight = highlightMatch(suggestion.term, query);
   switch (suggestion?.type?.toLowerCase()) {
     case SuggestTypeEnum.CREATOR:
       return <Creator data={suggestion} skeleton={skeleton} />;
@@ -180,50 +149,31 @@ function renderSuggestion(suggestion, query, skeleton) {
       return <Subject data={suggestion} skeleton={skeleton} />;
     case SuggestTypeEnum.HISTORY:
       return <History data={suggestion} skeleton={skeleton} />;
-    // TODO: OBS: Hvordan skal dette egentlig renderes? Som <Work /> ligesom her?
     case SuggestTypeEnum.COMPOSITE:
-      return <Work data={suggestion} skeleteon={skeleton} />;
+      return <Work data={suggestion} skeleton={skeleton} />;
     default:
       return null;
   }
 }
 
-/**
- * Returns placeholder for suggester input field
- *
- * @param {boolean} isMobile
- * @param {string} selectedMaterial
- * @returns {string}
- */
 function getPlaceholder(isMobile, selectedMaterial) {
-  let placeholder = Translate({
-    ...context,
-    label: isMobile ? "placeholderMobile" : "placeholder",
-  });
-  if (selectedMaterial) {
-    const isAll = selectedMaterial === SuggestTypeEnum.ALL;
-
-    // Update placeholder if specific workType is selected
-    if (!isAll) {
-      placeholder = Translate({
-        context: "suggester",
-        label: "placeholderRelative",
-        vars: [
-          Translate({
-            context: "facets",
-            label: `label-${selectedMaterial}`,
-          }).toLowerCase(),
-        ],
-      });
-    }
+  if (!selectedMaterial || selectedMaterial === SuggestTypeEnum.ALL) {
+    return Translate({
+      ...context,
+      label: isMobile ? "placeholderMobile" : "placeholder",
+    });
   }
-  return placeholder;
+  const matLabel = Translate({
+    context: "facets",
+    label: `label-${selectedMaterial}`,
+  }).toLowerCase();
+  return Translate({
+    context: "suggester",
+    label: "placeholderRelative",
+    vars: [matLabel],
+  });
 }
 
-/**
- * Custom input field
- *
- */
 function renderInputComponent(
   inputProps,
   isMobile,
@@ -232,40 +182,33 @@ function renderInputComponent(
   onClear
 ) {
   const placeholder = getPlaceholder(isMobile, selectedMaterial);
-
-  const props = {
-    ...inputProps,
-    id: "suggester-input",
-    placeholder,
-    "data-cy": cyKey({ name: "input", prefix: "suggester" }),
-  };
-
-  // Clear/Cross should be visible
-  const showClear = Boolean(inputProps.value !== "");
-
-  // Class for clear/cross button
-  const clearVisibleClass = showClear ? styles.visible : "";
+  const showClear = inputProps.value !== "";
 
   return (
     <div className={styles.input_wrap}>
       <span
         className={styles.arrow}
         data-cy={cyKey({ name: "arrow-close", prefix: "suggester" })}
-        onClick={() => {
-          // onClear();
-          onClose();
-        }}
+        onClick={onClose}
       >
         <Icon size={{ w: "auto", h: 2 }} alt="">
           <ArrowSvg />
         </Icon>
       </span>
-      <input {...props} className={cx(props.className)} title={placeholder} />
+      <input
+        {...inputProps}
+        id="suggester-input"
+        placeholder={placeholder}
+        className={inputProps.className}
+        title={placeholder}
+        data-cy={cyKey({ name: "input", prefix: "suggester" })}
+      />
       <span
-        className={`${styles.clear} ${clearVisibleClass}`}
-        onClick={() => {
+        className={`${styles.clear} ${showClear ? styles.visible : ""}`}
+        onMouseDown={(e) => {
+          e.preventDefault();
           onClear();
-          focusInput();
+          setTimeout(() => focusInput(), 0);
         }}
         data-cy={cyKey({ name: "clear-input", prefix: "suggester" })}
       >
@@ -277,95 +220,73 @@ function renderInputComponent(
   );
 }
 
-/**
- * The Component function
- *
- * @param {Object} props
- * See propTypes for specific props and types
- *
- * @returns {React.JSX.Element}
- */
-export function Suggester({
-  className = "",
-  query = "",
-  suggestions = [],
-  onChange = null,
-  onClose = null,
-  onSelect = null,
-  isMobile = false,
-  skeleton = false,
-  history = [],
-  clearHistory = null,
-  selectedMaterial = null,
-  onKeyDown = null,
-}) {
+export const Suggester = forwardRef(function Suggester(
+  {
+    className = "",
+    query = "",
+    suggestions = [],
+    onChange = null,
+    onClose = null,
+    onSelect = null,
+    isMobile = false,
+    skeleton = false,
+    history = [],
+    clearHistory = null,
+    selectedMaterial = null,
+    onKeyDown = null,
+  },
+  ref
+) {
   const placeholder = getPlaceholder(isMobile, selectedMaterial);
-
-  // Make copy of all suggestion objects
-  // react-autosuggest will mutate these objects,
-  // and data from swr must not be mutated (may lead to endless loop)
-  suggestions = useMemo(
-    () => suggestions.map((suggestion) => ({ ...suggestion })),
-    [suggestions]
-  );
-
-  /**
-   * Internal query state is needed for arrow navigation in suggester.
-   * When using arrow up/down, the value changes in the inputfield, but we dont
-   * want to trigger the query callback.
-   */
   const [intQuery, setIntQuery] = useState(query);
 
-  // Its a mess with internal states all over the place
-  // At some point look into it
+  useImperativeHandle(ref, () => ({
+    submit() {
+      if (intQuery) {
+        blurInput();
+        onSelect?.(intQuery);
+      }
+    },
+  }));
+
   useEffect(() => {
     if (query !== intQuery) {
       setIntQuery(query);
     }
   }, [query]);
 
-  // Flag that history is used in suggester
   const isHistory = !!(isMobile && query === "");
 
-  // Create theme container with className prop
   useEffect(() => {
     theme.container = `${styles.container} ${className} react-autosuggest__container`;
   }, [className]);
 
   useEffect(() => {
-    // This is for accessibility only
-    // react-autosuggest doesn't seem to support
-    // aria-label on the wrapper div. Hence we do this..
     const wrapper =
       document.getElementById("suggester-input")?.parentNode?.parentNode;
-
     if (wrapper) {
       wrapper.setAttribute("aria-label", placeholder);
     }
   }, [placeholder]);
 
-  // Default input props
   const inputProps = {
     value: intQuery,
     onBlur: (event, { highlightedSuggestion }) => {
-      // Update value in header on e.g. tab key
       if (highlightedSuggestion) {
-        const value = highlightedSuggestion.term;
-        onChange && onChange(value);
+        onChange?.(highlightedSuggestion.term);
       }
     },
     onChange: (event, { newValue }) => {
-      // For updating onChange when deleting last char in input
-      newValue === "" && onChange && onChange("");
-      // internal query update
+      if (newValue === "") onChange?.("");
       setIntQuery(newValue);
     },
-    onKeyDown: onKeyDown,
-    onFocus: (e) =>
+    onKeyDown,
+    onFocus: (e) => {
       e.currentTarget.setSelectionRange(
         e.currentTarget.value.length,
         e.currentTarget.value.length
-      ),
+      );
+    },
   };
 
   return (
@@ -373,33 +294,24 @@ export function Suggester({
       theme={theme}
       focusInputOnSuggestionClick={false}
       alwaysRenderSuggestions={!!isMobile}
-      // shouldRenderSuggestions={shouldRenderSuggestions}
-      suggestions={isHistory ? history : suggestions}
+      suggestions={isHistory ? history : suggestions.map((s) => ({ ...s }))}
       onSuggestionsFetchRequested={({ value, reason }) => {
         if (reason === "input-changed") {
-          onChange && onChange(value);
+          onChange?.(value);
         }
       }}
-      onSuggestionsClearRequested={() => {
-        // func is required
-      }}
-      // this one handles a selected suggestion .. click, keydown etc. - but we also have a keydown on the input
-      // field that handles custom (when NO suggestion is selected)
-      onSuggestionSelected={(_, entry) => {
-        // stop propagation doesn't work here - we pass a custom variable (preventBubbleHack) to the next on onKeyDown event
+      onSuggestionsClearRequested={() => {}}
+      onSuggestionSelected={(
+        _,
+        { suggestion, suggestionValue, suggestionIndex }
+      ) => {
         _.preventBubbleHack = true;
-        const { suggestionValue, suggestion } = entry;
-        // Blur input onselect
         blurInput();
-        // Action
-        onSelect &&
-          onSelect(suggestionValue, suggestion, entry.suggestionIndex);
-
-        // Clear Query
+        onSelect?.(suggestionValue, suggestion, suggestionIndex);
         const shouldClear =
           isMobile || suggestion?.type === SuggestTypeEnum.TITLE;
-        onChange && onChange(suggestionValue);
-        shouldClear && setIntQuery("");
+        onChange?.(suggestionValue);
+        if (shouldClear) setIntQuery("");
       }}
       renderSuggestionsContainer={(props) =>
         renderSuggestionsContainer(
@@ -409,10 +321,8 @@ export function Suggester({
           clearHistory
         )
       }
-      getSuggestionValue={(suggestion) => suggestion.term}
-      renderSuggestion={(suggestion, { query }) =>
-        renderSuggestion(suggestion, query, skeleton)
-      }
+      getSuggestionValue={(s) => s.term}
+      renderSuggestion={(s, { query }) => renderSuggestion(s, query, skeleton)}
       renderInputComponent={(inputProps) =>
         renderInputComponent(
           inputProps,
@@ -421,7 +331,7 @@ export function Suggester({
           onClose,
           () => {
             setIntQuery("");
-            onChange && onChange("");
+            onChange?.("");
           }
         )
       }
@@ -429,39 +339,26 @@ export function Suggester({
       inputProps={inputProps}
     />
   );
-}
+});
 
-/**
- *  Default export function of the Component
- *
- * @param {Object} props
- * See propTypes for specific props and types
- *
- * @returns {React.JSX.Element}
- */
 export default function Wrap(props) {
   let { className } = props;
   const { onChange } = props;
-
   const dataCollect = useDataCollect();
   const { filters } = useFilters();
   const { q } = useQ();
 
   const query = q[SuggestTypeEnum.ALL];
-
   const [selected, setSelected] = useState();
-
   const workType = filters.workTypes?.[0] || null;
 
   const { data, isLoading } = useData(
     query &&
       query !== selected &&
-      suggestFragments.all({ q: query, workType: workType, limit: 10 })
+      suggestFragments.all({ q: query, workType, limit: 10 })
   );
 
   useEffect(() => {
-    // Collect data
-    // User is presented with suggestions
     if (query && data?.suggest?.result) {
       dataCollect.collectSuggestPresented({
         query,
@@ -473,29 +370,29 @@ export default function Wrap(props) {
   if (props.skeleton || isLoading) {
     className = `${className} ${styles.skeleton}`;
   }
+
   return (
     <Suggester
       {...props}
-      onChange={(q) => onChange && onChange(q)}
-      onSelect={(suggestionValue, suggestion, suggestionIndex) => {
-        setSelected(suggestionValue);
-        props.onSelect(suggestionValue, suggestion);
+      onChange={(q) => onChange?.(q)}
+      onSelect={(value, suggestion, index) => {
+        setSelected(value);
+        props.onSelect(value, suggestion);
         dataCollect.collectSuggestClick({
           query,
           suggestion,
-          suggest_query_hit: suggestionIndex + 1,
+          suggest_query_hit: index + 1,
         });
       }}
       className={className}
       skeleton={isLoading}
       query={query}
-      suggestions={(data && data.suggest && data.suggest.result) || []}
+      suggestions={data?.suggest?.result || []}
       selectedMaterial={workType}
     />
   );
 }
 
-// PropTypes for component
 Wrap.propTypes = {
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   onChange: PropTypes.func,

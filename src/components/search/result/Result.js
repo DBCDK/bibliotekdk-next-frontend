@@ -1,96 +1,45 @@
 import PropTypes from "prop-types";
-
-import Pagination from "@/components/search/pagination/Pagination";
-import Section from "@/components/base/section";
+import ResultRow from "./row";
+import { Fragment, useEffect } from "react";
 import { useData } from "@/lib/api/api";
 import * as searchFragments from "@/lib/api/search.fragments";
 import useFilters from "@/components/hooks/useFilters";
 import useQ from "@/components/hooks/useQ";
-
-import { subjects } from "@/lib/api/relatedSubjects.fragments";
-
-import FilterButton from "../filterButton";
-
-import useBreakpoint from "@/components/hooks/useBreakpoint";
-
-import ResultPage from "./page";
-
-import styles from "./Result.module.css";
-import { NoHitSearch } from "@/components/search/advancedSearch/advancedSearchResult/noHitSearch/NoHitSearch";
+import SearchFeedBack from "@/components/base/searchfeedback";
+import useDataCollect from "@/lib/useDataCollect";
 
 /**
- * Search result
+ * Row representation of a search result entry
  *
  * @param {Object} props
  * See propTypes for specific props and types
  */
-export function Result({
-  page,
-  isLoading,
-  hitcount = 0,
-  onWorkClick,
-  onPageChange,
-  noRelatedSubjects,
-}) {
-  const breakpoint = useBreakpoint();
-  const isMobile = breakpoint === "xs" || breakpoint === "sm" || false;
-  const isTablet = breakpoint === "md";
-  const isDesktop = breakpoint === "lg" || breakpoint === "xl";
+export function ResultPage({ rows, onWorkClick, isLoading }) {
+  if (isLoading) {
+    // Create some skeleton rows
+    rows = Array(10).fill({});
+  }
 
-  const numPages = Math.ceil(hitcount / 10);
+  if (!rows) {
+    return null;
+  }
 
-  const noRelatedSubjectsClass = noRelatedSubjects
-    ? styles.noRelatedSubjects
-    : "";
-
-  return (
-    <>
-      <Section
-        className={`${styles.section} ${noRelatedSubjectsClass}`}
-        divider={false}
-        title={
-          !isLoading && !isTablet && hitcount > 0 ? (
-            <FilterButton
-              className={`${styles.filterButton} ${styles.visible}`}
-            />
-          ) : (
-            <span />
-          )
-        }
-        rightSideTitle={isDesktop}
-        colSize={{ lg: { offset: 3, span: true } }}
-        id="search-result-section"
-      >
-        {hitcount === 0 && !isLoading && <NoHitSearch isSimpleSearch={true} />}
-
-        {Array(isMobile ? page : 1)
-          .fill({})
-          .map((p, index) => (
-            <ResultPage
-              key={`result-page-${index}`}
-              page={isMobile ? index + 1 : page}
-              onWorkClick={onWorkClick}
-            />
-          ))}
-      </Section>
-      {hitcount > 0 && (
-        <Pagination
-          numPages={numPages}
-          currentPage={parseInt(page, 10)}
-          onChange={onPageChange}
-        />
-      )}
-    </>
-  );
+  return rows?.map((row, index) => (
+    <Fragment key={row.workId + ":" + index}>
+      <ResultRow
+        isLoading={isLoading}
+        work={row}
+        key={`${row?.titles?.main}_${index}`}
+        onClick={onWorkClick && (() => onWorkClick(index, row))}
+      />
+      {index === 0 && <SearchFeedBack />}
+    </Fragment>
+  ));
 }
 
-Result.propTypes = {
-  q: PropTypes.object,
-  page: PropTypes.number,
+ResultPage.propTypes = {
+  rows: PropTypes.array,
   isLoading: PropTypes.bool,
-  hitcount: PropTypes.number,
-  viewSelected: PropTypes.string,
-  onViewSelect: PropTypes.func,
   onWorkClick: PropTypes.func,
 };
 
@@ -103,44 +52,55 @@ Result.propTypes = {
  *
  * @returns {React.JSX.Element}
  */
-export default function Wrap({ page, onWorkClick, onPageChange }) {
+export default function Wrap({ page, onWorkClick }) {
+  // settings
+  const limit = 10; // limit
+  let offset = limit * (page - 1); // offset
+
+  const { filters, isSynced } = useFilters();
   const { getQuery, hasQuery } = useQ();
+  const dataCollect = useDataCollect();
+
   const q = getQuery();
-  const { filters } = useFilters();
+
+  if (!isSynced) {
+    offset = 0;
+  }
 
   // use the useData hook to fetch data
-  const fastResponse = useData(
-    hasQuery && searchFragments.hitcount({ q, filters })
+  const allResponse = useData(
+    hasQuery && searchFragments.all({ q, limit, offset, filters })
   );
 
-  // prioritized q type to get related subjects for
-  const query = q.subject || q.all || q.title || q.creator;
+  // This useEffect is responsible for collecting data about the search response.
+  // The effect is run, when search response is fetched and shown to the user.
+  useEffect(() => {
+    if (allResponse?.data) {
+      dataCollect.collectSearch({
+        search_request: {
+          q,
+          filters,
+        },
+        search_response_works:
+          allResponse?.data?.search?.works?.map((w) => w.workId) || [],
+        search_offset: offset,
+      });
+    }
+  }, [allResponse?.data]);
 
-  const relatedSubjects = useData(query && subjects({ q: [query], limit: 7 }));
-
-  if (fastResponse.error) {
+  if (allResponse.error) {
     return null;
   }
 
-  if (fastResponse.isLoading) {
-    return <Result page={page} isLoading={true} />;
+  const data = allResponse.data || {};
+
+  if (allResponse.isLoading) {
+    return <ResultPage isLoading={true} />;
   }
 
-  return (
-    <Result
-      page={page}
-      noRelatedSubjects={!relatedSubjects?.data?.relatedSubjects?.length > 0}
-      isLoading={relatedSubjects.isLoading}
-      hitcount={fastResponse?.data?.search?.hitcount}
-      onWorkClick={onWorkClick}
-      onPageChange={onPageChange}
-    />
-  );
+  return <ResultPage rows={data.search?.works} onWorkClick={onWorkClick} />;
 }
-
 Wrap.propTypes = {
   page: PropTypes.number,
-  viewSelected: PropTypes.string,
-  onViewSelect: PropTypes.func,
   onWorkClick: PropTypes.func,
 };

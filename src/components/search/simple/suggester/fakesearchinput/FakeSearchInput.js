@@ -1,6 +1,6 @@
 import Text from "@/components/base/text";
 import styles from "./FakeSearchInput.module.css";
-import { openMobileSuggester } from "@/components/header/suggester/Suggester";
+import { openMobileSuggester } from "@/components/search/simple/suggester/Suggester";
 import Translate from "@/components/base/translate";
 import ClearSvg from "@/public/icons/close.svg";
 import { useRouter } from "next/router";

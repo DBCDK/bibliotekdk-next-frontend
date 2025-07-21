@@ -1,0 +1,12 @@
+.container {
+  max-width: unset;
+  background-color: red;
+}
+
+.content {
+  padding: var(--pt3) 0;
+}
+
+.worktypes {
+  margin-top: 64px;
+}
