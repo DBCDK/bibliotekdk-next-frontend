@@ -21,7 +21,6 @@ import ReservationButtonWrapper from "@/components/work/reservationbutton/Reserv
 import { openReferencesModal } from "@/components/work/utils";
 import { useData } from "@/lib/api/api";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
-import ManifestationParts from "@/components/manifestationparts/ManifestationParts";
 import AlternativeOptions from "@/components/work/overview/alternatives/Alternatives";
 import { IconLink } from "@/components/base/iconlink/IconLink";
 import CopyLink from "@/public/icons/copy_link.svg";
@@ -31,6 +30,10 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import cx from "classnames";
 import BookmarkDropdown from "@/components/work/overview/bookmarkDropdown/BookmarkDropdown";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
+import {
+  TableOfContentsEntries,
+  useTablesOfContents,
+} from "../../contents/Contents";
 
 /**
  * Column one of full view. Some links and a button.
@@ -191,6 +194,15 @@ export default function ManifestationFull({ workId, pid, hasBeenSeen }) {
       pid &&
       manifestationFragments.manifestationFullManifestation({ pid: pid })
   );
+  const { flattened, count } = useTablesOfContents({
+    workId,
+    pid,
+    customRootHeader: Translate({
+      context: "bibliographic-data",
+      label: "manifestationParts",
+    }),
+  });
+  console.log({ flattened });
 
   const parsed = useMemo(() => {
     return parseManifestation(data?.manifestation);
@@ -221,15 +233,13 @@ export default function ManifestationFull({ workId, pid, hasBeenSeen }) {
               </div>
             );
           })}
-          <ManifestationParts
-            pid={data?.manifestation?.pid}
-            titlesOnly={true}
-            className={styles.manifestationPartsList}
-            numberToShow={3}
-            label={Translate({
-              context: "bibliographic-data",
-              label: "manifestationParts",
-            })}
+          <TableOfContentsEntries
+            flattened={flattened}
+            count={count}
+            showMoreLimit={4}
+            pid={pid}
+            workId={workId}
+            className={styles.tableOfContentsEntries}
           />
         </div>
       </Col>

@@ -1,0 +1,82 @@
+.tableOfContentsEntries {
+  /* These may be overridden by other components if needed */
+  --base-padding: var(--pt2);
+  --show-more-margin-left: var(--pt2);
+  --odd-background: none;
+  --even-background: var(--concrete);
+
+  margin-bottom: var(--pt2);
+}
+
+.columnNoPaddingMobile {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.entriesList {
+  padding: 0;
+}
+
+.entryItem {
+  padding: var(--pt05) var(--pt2);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+}
+
+.title {
+  display: block;
+  margin-bottom: 0;
+  flex: 1;
+  position: relative;
+}
+
+.title p {
+  margin: 0;
+}
+
+.creators {
+  margin-right: var(--pt1);
+}
+
+.playingTime {
+  display: block;
+  font-style: italic;
+  margin-left: var(--pt2);
+  flex-shrink: 0;
+}
+
+.playingTime p {
+  margin: 0;
+}
+/* Alternating background classes */
+.entryItem.darkBackground {
+  background: var(--odd-background);
+}
+
+.entryItem.lightBackground {
+  background: var(--even-background);
+}
+
+/* Desktop styling applied to all screen sizes */
+.entryItem p {
+  display: inline;
+}
+
+.title p {
+  margin-right: var(--pt1);
+}
+
+.showMoreLink {
+  margin-left: var(--show-more-margin-left);
+  margin-top: var(--pt1);
+}
+
+@media (min-width: 768px) {
+  .columnNoPaddingMobile {
+    padding-left: var(--pt2);
+    padding-right: var(--pt2);
+  }
+}
