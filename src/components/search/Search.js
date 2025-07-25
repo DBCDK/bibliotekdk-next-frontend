@@ -16,19 +16,32 @@ import Divider from "../base/divider";
 import WorkTypeMenu from "@/components/search/advancedSearch/workTypeMenu/WorkTypeMenu";
 
 import styles from "./Search.module.css";
+import { useRouter } from "next/router";
+import useBreakpoint from "../hooks/useBreakpoint";
 
-export function Search() {
+export function Search({ q, onWorkTypeSelect }) {
   const [tab, setTab] = useState("simple");
+
+  const breakpoint = useBreakpoint();
+  const isMobileSize = ["xs", "sm", "md"].includes(breakpoint);
 
   return (
     <Section
       className={`${styles.section}`}
+      space={{
+        top: isMobileSize ? "var(--pt2)" : true,
+        bottom: isMobileSize ? "0px" : true,
+      }}
       divider={false}
       backgroundColor="var(--concrete)"
       id="search-result-section"
+      rightSideTitle={isMobileSize}
       title={
         <Col lg={{ offset: 10 }} sm={12}>
-          <WorkTypeMenu className={styles.worktypes} />
+          <WorkTypeMenu
+            className={styles.worktypes}
+            onClick={onWorkTypeSelect}
+          />
         </Col>
       }
       colSize={{ lg: { offset: 1, span: 7 } }}
@@ -42,7 +55,7 @@ export function Search() {
         <Tab eventKey="advanced" title="Avanceret">
           <Col className={styles.content}>Avanceret ...</Col>
         </Tab>
-        <Tab eventKey="cql" title="CQL-søgning">
+        <Tab eventKey="cql" title="CQL">
           <Col className={styles.content}>CQL ...</Col>
         </Tab>
       </Tabs>
@@ -51,7 +64,18 @@ export function Search() {
 }
 
 export default function Wrap() {
-  const { q } = useQ();
+  const { q, setQuery } = useQ();
+  const router = useRouter();
 
-  return <Search q={q} />;
+  const handleOnWorkTypeSelect = (type) => {
+    setQuery({
+      query: {
+        ...router.query,
+        workTypes: [type === "all" ? null : type],
+      },
+      exclude: ["page"],
+    });
+  };
+
+  return <Search q={q} onWorkTypeSelect={handleOnWorkTypeSelect} />;
 }

@@ -1,4 +1,4 @@
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 
 import PropTypes from "prop-types";
 import AutoSuggest from "react-autosuggest";
@@ -8,9 +8,9 @@ import AutosuggestHighlightParse from "autosuggest-highlight/parse";
 import {
   useState,
   useEffect,
-  useMemo,
   forwardRef,
   useImperativeHandle,
+  useRef,
 } from "react";
 
 import useQ from "@/components/hooks/useQ";
@@ -29,20 +29,16 @@ import Link from "@/components/base/link";
 import ArrowSvg from "@/public/icons/arrowleft.svg";
 import ClearSvg from "@/public/icons/close.svg";
 
-import Creator from "./templates/creator";
-import Work from "./templates/work";
-import Subject from "./templates/subject";
-import History from "./templates/history";
-
 import styles from "./Suggester.module.css";
 
 import useDataCollect from "@/lib/useDataCollect";
 import { SuggestTypeEnum } from "@/lib/enums";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 const context = { context: "suggester" };
 
 const theme = {
-  container: `${styles.container} react-autosuggest__container`,
+  container: `react-autosuggest__container`,
   containerOpen: `${styles.container__open} react-autosuggest__container--open`,
   input: `${styles.input} react-autosuggest__input`,
   inputOpen: `${styles.input__open} react-autosuggest__input--open`,
@@ -138,25 +134,37 @@ function renderSuggestionsContainer(
   );
 }
 
-function renderSuggestion(suggestion, query, skeleton) {
-  suggestion.highlight = highlightMatch(suggestion.term, query);
-  switch (suggestion?.type?.toLowerCase()) {
-    case SuggestTypeEnum.CREATOR:
-      return <Creator data={suggestion} skeleton={skeleton} />;
-    case SuggestTypeEnum.TITLE:
-      return <Work data={suggestion} skeleton={skeleton} />;
-    case SuggestTypeEnum.SUBJECT:
-      return <Subject data={suggestion} skeleton={skeleton} />;
-    case SuggestTypeEnum.HISTORY:
-      return <History data={suggestion} skeleton={skeleton} />;
-    case SuggestTypeEnum.COMPOSITE:
-      return <Work data={suggestion} skeleton={skeleton} />;
-    default:
-      return null;
-  }
+export function renderSuggestion(data, query, skeleton) {
+  const isHistory = data.type === SuggestTypeEnum.HISTORY;
+
+  const highlight = highlightMatch(data.term, query);
+
+  return (
+    <div className={styles.element} data-cy="suggester-element">
+      {isHistory && (
+        <Icon
+          className={styles.icon}
+          src="history.svg"
+          bgColor="transparent"
+          skeleton={skeleton}
+          alt=""
+        />
+      )}
+      <div className={styles.text}>
+        <Text
+          type="text2"
+          className={styles.title}
+          skeleton={skeleton}
+          lines={2}
+        >
+          {highlight}
+        </Text>
+      </div>
+    </div>
+  );
 }
 
-function getPlaceholder(isMobile, selectedMaterial) {
+export function getPlaceholder(isMobile, selectedMaterial) {
   if (!selectedMaterial || selectedMaterial === SuggestTypeEnum.ALL) {
     return Translate({
       ...context,
@@ -184,8 +192,10 @@ function renderInputComponent(
   const placeholder = getPlaceholder(isMobile, selectedMaterial);
   const showClear = inputProps.value !== "";
 
+  const isMobileClass = isMobile ? styles.isMobile : "";
+
   return (
-    <div className={styles.input_wrap}>
+    <div className={`${styles.input_wrap} ${isMobileClass}`}>
       <span
         className={styles.arrow}
         data-cy={cyKey({ name: "arrow-close", prefix: "suggester" })}
@@ -222,7 +232,6 @@ function renderInputComponent(
 
 export const Suggester = forwardRef(function Suggester(
   {
-    className = "",
     query = "",
     suggestions = [],
     onChange = null,
@@ -258,10 +267,6 @@ export const Suggester = forwardRef(function Suggester(
   const isHistory = !!(isMobile && query === "");
 
   useEffect(() => {
-    theme.container = `${styles.container} ${className} react-autosuggest__container`;
-  }, [className]);
-
-  useEffect(() => {
     const wrapper =
       document.getElementById("suggester-input")?.parentNode?.parentNode;
     if (wrapper) {
@@ -280,7 +285,9 @@ export const Suggester = forwardRef(function Suggester(
       if (newValue === "") onChange?.("");
       setIntQuery(newValue);
     },
-    onKeyDown,
+    onKeyDown: (e) => {
+      onKeyDown(e);
+    },
     onFocus: (e) => {
       e.currentTarget.setSelectionRange(
         e.currentTarget.value.length,
@@ -293,7 +300,7 @@ export const Suggester = forwardRef(function Suggester(
     <AutoSuggest
       theme={theme}
       focusInputOnSuggestionClick={false}
-      alwaysRenderSuggestions={!!isMobile}
+      alwaysRenderSuggestions={isMobile}
       suggestions={isHistory ? history : suggestions.map((s) => ({ ...s }))}
       onSuggestionsFetchRequested={({ value, reason }) => {
         if (reason === "input-changed") {
@@ -347,6 +354,12 @@ export default function Wrap(props) {
   const dataCollect = useDataCollect();
   const { filters } = useFilters();
   const { q } = useQ();
+  const router = useRouter();
+
+  const breakpoint = useBreakpoint();
+  const isMobileSize = ["xs", "sm", "md"].includes(breakpoint);
+
+  const isMobileSuggester = isMobileSize && router?.query?.suggester;
 
   const query = q[SuggestTypeEnum.ALL];
   const [selected, setSelected] = useState();
@@ -358,38 +371,48 @@ export default function Wrap(props) {
       suggestFragments.all({ q: query, workType, limit: 10 })
   );
 
+  const hasPresentedRef = useRef();
+
   useEffect(() => {
-    if (query && data?.suggest?.result) {
+    if (query && data?.suggest?.result && hasPresentedRef.current !== query) {
+      hasPresentedRef.current = query;
       dataCollect.collectSuggestPresented({
         query,
         suggestions: data.suggest.result,
       });
     }
-  }, [data]);
+  }, [query, data?.suggest?.result]);
 
   if (props.skeleton || isLoading) {
     className = `${className} ${styles.skeleton}`;
   }
 
+  const isMobileClass = isMobileSuggester ? styles.isMobile : "";
+
+  console.log("isMobileClass", isMobileClass);
+
   return (
-    <Suggester
-      {...props}
-      onChange={(q) => onChange?.(q)}
-      onSelect={(value, suggestion, index) => {
-        setSelected(value);
-        props.onSelect(value, suggestion);
-        dataCollect.collectSuggestClick({
-          query,
-          suggestion,
-          suggest_query_hit: index + 1,
-        });
-      }}
-      className={className}
-      skeleton={isLoading}
-      query={query}
-      suggestions={data?.suggest?.result || []}
-      selectedMaterial={workType}
-    />
+    <div className={`${styles.container} ${isMobileClass} ${className}`}>
+      <Suggester
+        {...props}
+        isMobile={isMobileSuggester}
+        onChange={(q) => onChange?.(q)}
+        onSelect={(value, suggestion, index) => {
+          setSelected(value);
+          props.onSelect(value, suggestion);
+          dataCollect.collectSuggestClick({
+            query,
+            suggestion,
+            suggest_query_hit: index + 1,
+          });
+        }}
+        className={className}
+        skeleton={isLoading}
+        query={query}
+        suggestions={data?.suggest?.result || []}
+        selectedMaterial={workType}
+      />
+    </div>
   );
 }
 

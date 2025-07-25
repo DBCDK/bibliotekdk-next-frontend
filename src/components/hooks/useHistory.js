@@ -66,22 +66,24 @@ export const useHistory = () => {
    * @param {string} value
    */
   const setValue = (value) => {
-    const current = getHistory();
+    if (value && value !== "") {
+      const current = getHistory();
 
-    const newItem = {
-      type: SuggestTypeEnum.HISTORY,
-      term: value,
-    };
+      const newItem = {
+        type: SuggestTypeEnum.HISTORY,
+        term: value,
+      };
 
-    // Fjern evt. duplikater
-    let updated = current.filter(
-      (item) => item.term?.toLowerCase() !== value?.toLowerCase()
-    );
+      // Fjern evt. duplikater
+      let updated = current.filter(
+        (item) => item.term?.toLowerCase() !== value?.toLowerCase()
+      );
 
-    updated.unshift(newItem); // Tilføj forrest
-    updated = updated.slice(0, 8); // Max 8 elementer
+      updated.unshift(newItem); // Tilføj forrest
+      updated = updated.slice(0, 8); // Max 8 elementer
 
-    saveHistory(updated, setStoredValue);
+      saveHistory(updated, setStoredValue);
+    }
   };
 
   /**

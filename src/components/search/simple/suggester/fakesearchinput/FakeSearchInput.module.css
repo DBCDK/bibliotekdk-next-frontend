@@ -14,14 +14,15 @@
 .fakeinput {
   position: relative;
   background: white;
-  height: 56px;
+  height: var(--pt7);
   border: 1px solid var(--gray);
+  box-sizing: border-box;
   flex-grow: 2;
   overflow: hidden;
 }
 .fakeinput p {
   color: var(--gray);
-  line-height: 50px;
+  line-height: var(--pt7);
   text-align: left;
   margin-left: var(--pt2);
 }
@@ -33,17 +34,14 @@
 .fakebutton {
   background: var(--blue);
   width: 68px;
-  height: 56px;
+  height: var(--pt7);
 }
 .fakebutton p {
   color: white;
   font-family: var(--body-font-medium);
   font-size: 20px;
-  line-height: 54px;
+  line-height: var(--pt7);
   text-align: center;
-}
-.placeholder {
-  display: none;
 }
 
 .clear {
@@ -57,7 +55,7 @@
 
   /* override dynamic style */
   min-width: 56px;
-  height: 54px;
+  height: var(--pt7);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,13 +68,4 @@
 
 .clear path {
   fill: var(--blue);
-}
-
-@media (min-width: 464px) {
-  .placeholder {
-    display: initial;
-  }
-  .placeholderxs {
-    display: none;
-  }
 }

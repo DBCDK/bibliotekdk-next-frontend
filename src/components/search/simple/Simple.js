@@ -21,6 +21,8 @@ import Button from "@/components/base/button";
 import useQ from "@/components/hooks/useQ";
 
 import styles from "./Simple.module.css";
+import { openMobileSuggester } from "./suggester/Suggester";
+import FakeSearchInput from "./suggester/fakesearchinput";
 
 export function SimpleSearch({ story = false }) {
   const router = useRouter();
@@ -39,13 +41,7 @@ export function SimpleSearch({ story = false }) {
   const breakpoint = useBreakpoint();
   const isMobileSize = ["xs", "sm", "md"].includes(breakpoint);
 
-  const suggesterVisibleMobile =
-    (story && story.suggesterVisibleMobile) ||
-    (isMobileSize && router && router.query.suggester);
-
-  const suggesterVisibleMobileClass = suggesterVisibleMobile
-    ? styles.suggester__visible
-    : "";
+  const isMobileSuggester = isMobileSize && router?.query?.suggester;
 
   // Sync q.all into internal state on mount
   useEffect(() => {
@@ -54,7 +50,7 @@ export function SimpleSearch({ story = false }) {
 
   const doSearch = (value, suggestion) => {
     const querykey = "all";
-    const method = suggesterVisibleMobile ? "replace" : "push";
+    const method = isMobileSuggester ? "replace" : "push";
 
     const type = {
       tid: suggestion?.traceId,
@@ -80,63 +76,64 @@ export function SimpleSearch({ story = false }) {
   };
 
   const keyPressed = (e) => {
-    if (e.key === "Enter" && !e.preventBubbleHack) {
-      doSearch(query);
+    if (router?.query?.suggester) {
+      if (e.key === "Enter" && !e.preventBubbleHack) {
+        doSearch(query);
+      }
+    } else {
+      openMobileSuggester();
     }
   };
 
+  const historyItems = history.filter(({ term }) => term && term !== "");
+
   return (
     <div className={styles.simplesearch}>
-      <DesktopMaterialSelect className={styles.select} />
+      {/* <DesktopMaterialSelect className={styles.select} /> */}
 
-      <div
-        className={`${styles.suggester__wrap} ${suggesterVisibleMobileClass}`}
-      >
-        <Suggester
-          className={`${styles.suggester}`}
-          history={history}
-          clearHistory={clearHistory}
-          isMobile={suggesterVisibleMobile}
-          query={query}
-          selectedMaterial={selectedMaterial}
-          onSelect={(suggestionValue, suggestion) => {
-            const formatedValue = history?.some(
-              (t) => t.term === suggestionValue
-            )
-              ? suggestionValue
-              : `"${suggestionValue}"`;
+      <Suggester
+        className={`${styles.suggester}`}
+        history={historyItems}
+        clearHistory={clearHistory}
+        query={query}
+        selectedMaterial={selectedMaterial}
+        onSelect={(suggestionValue, suggestion) => {
+          const formatedValue = historyItems?.some(
+            (t) => t.term === suggestionValue
+          )
+            ? suggestionValue
+            : `"${suggestionValue}"`;
 
-            doSearch(formatedValue, suggestion);
-          }}
-          onChange={(val) => {
-            setQueryState(val);
-            setQ({ ...q, all: val });
-          }}
-          dataCy="simple-search-input"
-          onClose={() => {
-            if (router) {
-              router.back();
-            }
-            story && story.setSuggesterVisibleMobile(false);
-          }}
-          onKeyDown={keyPressed}
-        />
-      </div>
-
-      <Button
-        className={`${styles.button}`}
-        onClick={(e) => {
-          e?.preventDefault();
-          doSearch(query);
-
-          story && alert(`/find?q.all=${query}`);
-          story && story.setSuggesterVisibleMobile(false);
-          blurInput();
+          doSearch(formatedValue, suggestion);
         }}
-        data-cy="header-searchbutton"
-      >
-        {Translate({ context: "header", label: "search" })}
-      </Button>
+        onChange={(val) => {
+          setQueryState(val);
+          setQ({ ...q, all: val });
+        }}
+        dataCy="simple-search-input"
+        onClose={() => {
+          if (router) {
+            router.back();
+          }
+        }}
+        onKeyDown={keyPressed}
+      />
+
+      {isMobileSize ? (
+        <FakeSearchInput className={styles.fake} />
+      ) : (
+        <Button
+          className={`${styles.button}`}
+          onClick={(e) => {
+            e?.preventDefault();
+            doSearch(query);
+            blurInput();
+          }}
+          data-cy="header-searchbutton"
+        >
+          {Translate({ context: "header", label: "search" })}
+        </Button>
+      )}
     </div>
   );
 }
