@@ -73,6 +73,9 @@
   margin-left: var(--show-more-margin-left);
   margin-top: var(--pt1);
 }
+.showMoreLinkRaw {
+  margin-top: calc(var(--pt05) * 3);
+}
 
 @media (min-width: 768px) {
   .columnNoPaddingMobile {

@@ -16,8 +16,7 @@ import {
 
 export default function ManifestationContent(props) {
   const { workId, type, pid, showOrderTxt } = props.context;
-  const { flattened, count } = useTablesOfContents({ workId, type, pid });
-
+  const tableOfContents = useTablesOfContents({ workId, type, pid });
   return (
     <div>
       <Top
@@ -28,11 +27,12 @@ export default function ManifestationContent(props) {
         })}
       />
       <Edition showOrderTxt={showOrderTxt} pids={[pid]} />
-      <TableOfContentsEntries
-        flattened={flattened}
-        className={styles.tableOfContentsEntries}
-        count={count}
-      />
+      <div className={tableOfContents ? styles.tableOfContentsEntriesRaw : ""}>
+        <TableOfContentsEntries
+          {...tableOfContents}
+          className={styles.tableOfContentsEntries}
+        />
+      </div>
     </div>
   );
 }

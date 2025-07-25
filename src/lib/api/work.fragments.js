@@ -34,6 +34,7 @@ export function workTableOfContents({ id }) {
             contents {
               heading
               type
+              raw
               entries {
                 title {
                   display

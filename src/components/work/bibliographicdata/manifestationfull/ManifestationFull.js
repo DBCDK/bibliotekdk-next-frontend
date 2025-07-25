@@ -194,15 +194,15 @@ export default function ManifestationFull({ workId, pid, hasBeenSeen }) {
       pid &&
       manifestationFragments.manifestationFullManifestation({ pid: pid })
   );
-  const { flattened, count } = useTablesOfContents({
+  const tableOfContentsHeader = Translate({
+    context: "bibliographic-data",
+    label: "manifestationParts",
+  });
+  const tableOfContents = useTablesOfContents({
     workId,
     pid,
-    customRootHeader: Translate({
-      context: "bibliographic-data",
-      label: "manifestationParts",
-    }),
+    customRootHeader: tableOfContentsHeader,
   });
-  console.log({ flattened });
 
   const parsed = useMemo(() => {
     return parseManifestation(data?.manifestation);
@@ -233,13 +233,20 @@ export default function ManifestationFull({ workId, pid, hasBeenSeen }) {
               </div>
             );
           })}
+          {tableOfContents.raw && (
+            <Title type="text4" tag="h4" lines={1}>
+              {tableOfContentsHeader}
+            </Title>
+          )}
           <TableOfContentsEntries
-            flattened={flattened}
-            count={count}
+            {...tableOfContents}
             showMoreLimit={4}
             pid={pid}
             workId={workId}
             className={styles.tableOfContentsEntries}
+            textProps={{
+              raw: { type: "text3" },
+            }}
           />
         </div>
       </Col>

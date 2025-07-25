@@ -30,11 +30,14 @@ export function useTablesOfContents({ workId, pid, type, customRootHeader }) {
 
   const manifestations = data?.work?.manifestations?.bestRepresentations ?? [];
 
-  // Select target manifestation (pure responsibility)
+  // Select target manifestation
   const targetManifestation = useMemo(() => {
     if (manifestations.length === 0) {
       return null;
     }
+    const manifestationsWithContents = manifestations.filter((m) =>
+      m.contents?.some((c) => c.entries?.length || c.raw)
+    );
 
     const matchesType = (m) => {
       if (!type) {
@@ -49,38 +52,38 @@ export function useTablesOfContents({ workId, pid, type, customRootHeader }) {
     };
 
     return (
-      manifestations.find((m) => m.pid === pid) ??
-      manifestations.find(matchesType) ??
-      manifestations[0]
+      manifestationsWithContents.find((m) => m.pid === pid) ??
+      manifestationsWithContents.find(matchesType) ??
+      manifestationsWithContents[0]
     );
   }, [manifestations, pid, type]);
 
-  // Extract raw contents and check if there are entries
-  const { rawContents, hasEntries } = useMemo(() => {
-    const rawContents = targetManifestation?.contents ?? [];
-    const hasEntries = rawContents.some((c) => c.entries?.length);
-    return { rawContents, hasEntries };
+  const raw = useMemo(() => {
+    return targetManifestation?.contents?.flatMap((c) => c.raw)?.join("\n");
   }, [targetManifestation]);
 
   // Optional wrapping with custom root
   const contents = useMemo(() => {
-    if (!hasEntries) {
+    const contentsWithEntries = targetManifestation?.contents.filter(
+      (c) => c.entries?.length
+    );
+    if (!contentsWithEntries?.length) {
       return [];
     }
-    if (customRootHeader) {
+    if (customRootHeader && contentsWithEntries.length) {
       return [
         {
           heading: customRootHeader,
-          entries: rawContents.flatMap((c) => c.entries),
+          entries: contentsWithEntries.flatMap((c) => c.entries),
         },
       ];
     }
-    return rawContents;
-  }, [customRootHeader, hasEntries, rawContents]);
+    return contentsWithEntries;
+  }, [customRootHeader, targetManifestation]);
 
   // Flatten structure for easy rendering
   const { flattened, count } = useMemo(() => {
-    if (contents.length === 0) {
+    if (!contents.length) {
       return { flattened: null, count: null };
     }
 
@@ -94,6 +97,7 @@ export function useTablesOfContents({ workId, pid, type, customRootHeader }) {
     pid: targetManifestation?.pid ?? null,
     contents,
     flattened,
+    raw,
     count,
     isLoading,
     error:
@@ -142,40 +146,48 @@ function flattenContents(entries, result = [], levels = []) {
 }
 
 /**
- * Renders creators and contributors as a comma-separated inline string.
- * Skips empty or missing values.
- */
-function Creators({ creators, contributors }) {
-  const parts = [
-    creators?.persons?.map((p) => p.display).join(", "),
-    creators?.corporations?.map((c) => c.display).join(", "),
-    Array.isArray(contributors) ? contributors.join(", ") : contributors,
-  ].filter(Boolean);
-
-  if (parts.length === 0) return null;
-
-  return <span className={styles.creators}>{parts.join(", ")}</span>;
-}
-
-/**
  * Renders a list of table of contents entries with hierarchical structure
  * Shows creators, contributors, and playing time information for each entry
  */
 export function TableOfContentsEntries({
   flattened,
+  raw,
   count,
   className,
   showMoreLimit,
   workId,
   pid,
+  textProps = {},
 }) {
+  // Default text props
+  const defaultTextProps = {
+    raw: { type: "text2" },
+    creators: { type: "text3" },
+    playingTime: { type: "text3" },
+    showMore: { type: "text3" },
+    title: { type: "text4" },
+  };
+
+  // Merge default text props with custom text props
+  const mergedTextProps = { ...defaultTextProps, ...textProps };
+
   const modal = useModal();
 
   const truncated = useMemo(() => {
     return showMoreLimit ? flattened?.slice(0, showMoreLimit) : flattened;
   }, [flattened, showMoreLimit]);
 
-  if (!truncated || truncated.length === 0) {
+  const truncatedRaw = useMemo(() => {
+    if (!showMoreLimit) {
+      return raw;
+    }
+    return raw?.slice(0, showMoreLimit * 40);
+  }, [raw, showMoreLimit]);
+
+  const isTruncated =
+    truncated?.length < flattened?.length || truncatedRaw?.length < raw?.length;
+
+  if (!truncated?.length && !raw?.length) {
     return null;
   }
 
@@ -231,6 +243,24 @@ export function TableOfContentsEntries({
     );
   };
 
+  const Creators = ({ creators, contributors }) => {
+    const parts = [
+      creators?.persons?.map((p) => p.display).join(", "),
+      creators?.corporations?.map((c) => c.display).join(", "),
+      Array.isArray(contributors) ? contributors.join(", ") : contributors,
+    ].filter(Boolean);
+
+    if (parts.length === 0) {
+      return null;
+    }
+
+    return (
+      <Text lines={1} {...mergedTextProps.creators} className={styles.creators}>
+        {parts.join(", ")}
+      </Text>
+    );
+  };
+
   const ContentRow = ({ entry, index }) => {
     const level = entry.levels.length;
     const isEven = index % 2 === 0;
@@ -249,10 +279,10 @@ export function TableOfContentsEntries({
         <HorizontalLine levels={entry.levels} />
 
         <div className={styles.title}>
-          <Text type="text4" lines={1}>
+          <Text lines={1} {...mergedTextProps.title}>
             {entry.title}
           </Text>
-          <Text type="text3" lines={1}>
+          <Text lines={1} {...mergedTextProps.creators}>
             <Creators
               creators={entry.creators}
               contributors={entry.contributors}
@@ -261,7 +291,11 @@ export function TableOfContentsEntries({
         </div>
 
         {entry.playingTime && (
-          <Text type="text3" lines={1} className={styles.playingTime}>
+          <Text
+            {...mergedTextProps.playingTime}
+            lines={1}
+            className={styles.playingTime}
+          >
             {entry.playingTime}
           </Text>
         )}
@@ -271,26 +305,37 @@ export function TableOfContentsEntries({
 
   return (
     <div className={`${styles.tableOfContentsEntries} ${className}`}>
-      <div className={styles.entriesList}>
-        {truncated.map((entry, index) => (
-          <ContentRow key={index} entry={entry} index={index} />
-        ))}
-      </div>
+      {truncated?.length && (
+        <div className={styles.entriesList}>
+          {truncated.map((entry, index) => (
+            <ContentRow key={index} entry={entry} index={index} />
+          ))}
+        </div>
+      )}
+      {truncatedRaw && (
+        <Text {...mergedTextProps.raw}>
+          {truncatedRaw} {isTruncated ? "..." : ""}
+        </Text>
+      )}
 
-      {showMoreLimit && flattened.length > showMoreLimit && (
-        <div className={styles.showMoreLink}>
+      {showMoreLimit && isTruncated && (
+        <div
+          className={
+            truncatedRaw ? styles.showMoreLinkRaw : styles.showMoreLink
+          }
+        >
           <LinkArrow
             iconPlacement="right"
             iconOrientation={180}
             border={{ bottom: { keepVisible: true }, top: false }}
             onClick={handleShowMore}
           >
-            <Text type="text3" lines={1} tag="span">
+            <Text lines={1} tag="span" {...mergedTextProps.showMore}>
               {Translate({
                 context: "manifestation_content",
                 label: "see_all",
               })}{" "}
-              ({count})
+              {count && <span>({count})</span>}
             </Text>
           </LinkArrow>
         </div>
@@ -305,6 +350,7 @@ export function TableOfContentsEntries({
  */
 function TableOfContentsSection({
   flattened,
+  raw,
   type,
   className,
   workId,
@@ -319,10 +365,10 @@ function TableOfContentsSection({
         label: "subtitle",
         vars: [type],
       })}
-      divider={{ content: false }}
+      divider={{ content: !!raw }}
     >
       <Row>
-        <Col xs={12} md={9} className={styles.columnNoPaddingMobile}>
+        <Col xs={12} md={9} className={raw ? "" : styles.columnNoPaddingMobile}>
           <TableOfContentsEntries
             flattened={flattened}
             className={className}
@@ -330,6 +376,7 @@ function TableOfContentsSection({
             workId={workId}
             pid={pid}
             count={count}
+            raw={raw}
           />
         </Col>
       </Row>
@@ -369,26 +416,27 @@ function TablesOfContentsSkeleton() {
  */
 export function TableOfContentsList(props) {
   const { workId, type, className } = props;
-  const { flattened, count, pid, isLoading, error } = useTablesOfContents({
+  const tableOfContents = useTablesOfContents({
     workId,
     type,
   });
-  if (error || !flattened) {
+  if (
+    tableOfContents.error ||
+    (!tableOfContents.flattened && !tableOfContents.raw)
+  ) {
     return null;
   }
 
-  if (isLoading) {
+  if (tableOfContents.isLoading) {
     return <TablesOfContentsSkeleton />;
   }
 
   return (
     <TableOfContentsSection
-      flattened={flattened}
+      {...tableOfContents}
       type={type}
       className={className}
       workId={workId}
-      pid={pid}
-      count={count}
     />
   );
 }
