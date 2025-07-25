@@ -185,35 +185,49 @@ export function reservationButtonManifestations({ pid }) {
   };
 }
 
-export function manifestationParts({ pid }) {
+export function manifestationContents({ pid }) {
   if (!pid) {
     return null;
   }
   return {
     apiUrl: ApiEnums.FBI_API,
-    query: `
-    query manifestationParts($pid: String!) {
-      manifestation(pid: $pid) {
-        manifestationParts {
-          parts {
-            title
-            classifications {
+    query: `query manifestationContents($pid: String!) {
+  manifestation(pid: $pid) {
+    contents {
+      heading
+      type
+      entries {
+        title {
+          display
+        }
+        creators {
+          persons {
+            display
+          }
+          corporations {
+            display
+          }
+        }
+        contributors
+        playingTime
+        sublevel {
+          title {
+            display
+          }
+          contributors
+          playingTime
+          sublevel {
+            title {
               display
             }
-            creators {
-              ...creatorsFragment
-            }
-            contributorsFromDescription
-            creatorsFromDescription            
-            subjects {
-              display
-            }
+            contributors
             playingTime
           }
         }
       }
     }
-    ${creatorsFragment}`,
+  }
+}`,
     variables: { pid },
     slowThreshold: 3000,
   };

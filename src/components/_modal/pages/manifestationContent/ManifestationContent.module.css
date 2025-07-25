@@ -17,8 +17,24 @@
   padding: var(--pt1) var(--pt2) var(--pt1) var(--pt2);
 }
 
+.tableOfContentsEntries {
+  --base-padding: var(--pt2) !important;
+  --odd-background: var(--concrete) !important;
+  --even-background: none !important;
+}
+
+.tableOfContentsEntriesRaw {
+  padding: var(--pt2) var(--pt2);
+}
+
 @media (min-width: 576px) {
+  .tableOfContentsEntries {
+    --base-padding: var(--pt6) !important;
+  }
   .contentlist li {
     padding: var(--pt1) var(--pt6) var(--pt1) var(--pt6);
+  }
+  .tableOfContentsEntriesRaw {
+    padding: var(--pt2) var(--pt6);
   }
 }
