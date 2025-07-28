@@ -30,7 +30,7 @@ export function Hero({ image }) {
       <div className={styles.gradient} />
       <Row className={styles.herotopmargin}>
         <Col lg={3} xs={0} className={styles.heroicon} />
-        <Col
+        {/* <Col
           lg={{ span: 9, offset: 0 }}
           md={{ span: 8, offset: 2 }}
           sm={{ span: 10, offset: 1 }}
@@ -44,7 +44,7 @@ export function Hero({ image }) {
           </Title>
 
           <FakeSearchInput className={styles.fakesearchinput} />
-        </Col>
+        </Col> */}
         <Col md={2} xs={1} />
         <div className={styles.bluebox}>
           <div className={styles.iconandtxt}>

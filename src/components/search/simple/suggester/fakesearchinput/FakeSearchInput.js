@@ -11,7 +11,7 @@ import Icon from "@/components/base/icon";
 import useQ from "@/components/hooks/useQ";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { SuggestTypeEnum } from "@/lib/enums";
-import { workTypes } from "@/components/hooks/useFilters";
+import useFilters from "@/components/hooks/useFilters";
 
 /**
  * A Fake Search Input Field
@@ -27,6 +27,8 @@ import { workTypes } from "@/components/hooks/useFilters";
 export default function FakeSearchInput({ className, showButton = true }) {
   const router = useRouter();
   const { q, setQ } = useQ();
+  const filters = useFilters();
+
   const hasQuery = !!q?.all;
   const hasQueryClass = hasQuery ? styles.hasQuery : "";
 
@@ -37,6 +39,8 @@ export default function FakeSearchInput({ className, showButton = true }) {
 
   // Class for clear/cross button
   const clearVisibleClass = hasQuery ? styles.visible : "";
+
+  const { workTypes } = filters.getQuery();
 
   const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
 

@@ -24,10 +24,8 @@ import styles from "./Simple.module.css";
 import { openMobileSuggester } from "./suggester/Suggester";
 import FakeSearchInput from "./suggester/fakesearchinput";
 
-export function SimpleSearch({ story = false }) {
+export function SimpleSearch({}) {
   const router = useRouter();
-  const { isAuthenticated } = useAuthentication();
-  const modal = useModal();
   const filters = useFilters();
 
   const { q, setQ, setQuery } = useQ();
