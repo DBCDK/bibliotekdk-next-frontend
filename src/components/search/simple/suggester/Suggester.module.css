@@ -72,8 +72,8 @@
 }
 
 .input_wrap .arrow {
-  display: none;
   display: flex;
+  background-color: transparent;
 }
 
 .input_wrap .arrow,

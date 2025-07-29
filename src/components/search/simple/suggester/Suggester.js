@@ -198,7 +198,7 @@ function renderInputComponent(
 
   return (
     <div className={`${styles.input_wrap} ${isMobileClass}`}>
-      <span
+      <button
         className={styles.arrow}
         data-cy={cyKey({ name: "arrow-close", prefix: "suggester" })}
         onClick={onClose}
@@ -206,7 +206,7 @@ function renderInputComponent(
         <Icon size={{ w: "auto", h: 2 }} alt="">
           <ArrowSvg />
         </Icon>
-      </span>
+      </button>
       <input
         {...inputProps}
         id="suggester-input"

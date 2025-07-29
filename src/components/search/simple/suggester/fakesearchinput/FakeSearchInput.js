@@ -64,7 +64,7 @@ export default function FakeSearchInput({ className, showButton = true }) {
         <Text type="text2" className={styles.placeholder}>
           {hasQuery ? qAll : placeholder}
         </Text>
-        <span
+        <button
           data-cy="fake-search-input-clear"
           className={`${styles.clear} ${clearVisibleClass}`}
           onClick={(e) => {
@@ -75,7 +75,7 @@ export default function FakeSearchInput({ className, showButton = true }) {
           <Icon size={{ w: "auto", h: 2 }} alt="">
             <ClearSvg />
           </Icon>
-        </span>
+        </button>
       </div>
       {showButton && (
         <div className={styles.fakebutton} data-cy="fake-search-input-button">
