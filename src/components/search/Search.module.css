@@ -1,0 +1,27 @@
+.content {
+  padding: var(--pt3) 0;
+}
+
+.tabs {
+  justify-content: flex-end;
+}
+
+.section {
+  /* override inline-style */
+  margin-bottom: var(--pt2) !important;
+}
+
+@media (min-width: 992px) {
+  .tabs {
+    /* justify-content: unset; */
+  }
+
+  .worktypes {
+    margin-top: 64px;
+  }
+
+  .section {
+    /* override inline-style */
+    margin-bottom: var(--pt8) !important;
+  }
+}

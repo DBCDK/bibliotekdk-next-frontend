@@ -16,14 +16,14 @@ import Translate from "@/components/base/translate/Translate";
 import Tag from "@/components/base/forms/tag";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 
-export default function WorkTypeMenu() {
+export default function WorkTypeMenu({ className = "", onClick = () => {} }) {
   const { workType, changeWorkType } = useAdvancedSearchContext();
   const breakpoint = useBreakpoint();
   const isSmallScreen =
     breakpoint === "md" || breakpoint === "xs" || breakpoint === "sm";
   if (isSmallScreen) {
     return (
-      <div className={styles.tagWrapper}>
+      <div className={`${styles.tagWrapper} ${className}`}>
         <div className={styles.tagContainer}>
           {workTypes.map((type) => {
             const isSelected = type === workType;
@@ -34,6 +34,7 @@ export default function WorkTypeMenu() {
                 key={type}
                 selected={isSelected}
                 onClick={() => {
+                  onClick(type);
                   changeWorkType(type);
                 }}
               >
@@ -51,7 +52,7 @@ export default function WorkTypeMenu() {
     );
   }
   return (
-    <div className={styles.dropdownMenu}>
+    <div className={`${styles.dropdownMenu} ${className}`}>
       {workTypes.map((type) => {
         const isSelected = type === workType;
         const LinkTag = isSelected ? IconButton : Link;
@@ -66,6 +67,7 @@ export default function WorkTypeMenu() {
             className={styles.menuItem}
             icon="arrowrightblue"
             onClick={() => {
+              onClick(type);
               changeWorkType(type);
             }}
             {...linkProps}

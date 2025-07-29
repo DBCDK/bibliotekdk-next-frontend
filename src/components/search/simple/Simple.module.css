@@ -1,0 +1,25 @@
+.simplesearch {
+  display: flex;
+}
+
+.suggester {
+  flex-grow: 2;
+  max-width: 100%;
+}
+
+.fake {
+  width: 100%;
+}
+
+.button {
+  padding: 0 var(--pt2);
+  max-width: min-content;
+  height: var(--pt7);
+}
+
+@media (min-width: 992px) {
+  .button {
+    width: 125px;
+    min-width: 125px;
+  }
+}
