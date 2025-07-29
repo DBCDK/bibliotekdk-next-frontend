@@ -25,7 +25,6 @@
 
 .words {
   padding: var(--pt2) var(--pt2) 0 var(--pt2);
-  display: block;
   overflow-x: auto;
   overflow-y: hidden;
   width: 100%;
