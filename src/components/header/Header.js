@@ -81,7 +81,7 @@ export function Header({
       label: "search",
       icon: SearchIcon,
       className: styles.mobileSearch,
-      onClick: () => {},
+      onClick: () => router.push("/find"),
     },
     {
       label: getLoginLabel(),

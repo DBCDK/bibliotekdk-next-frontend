@@ -1,6 +1,6 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
 import { ResultPage } from ".";
-import Result from "../Result";
+import Result from "./Result";
 import automock_utils from "@/lib/automock_utils.fixture";
 
 const exportedObject = {

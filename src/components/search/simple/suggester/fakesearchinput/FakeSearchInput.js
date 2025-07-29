@@ -1,11 +1,17 @@
 import Text from "@/components/base/text";
 import styles from "./FakeSearchInput.module.css";
-import { openMobileSuggester } from "@/components/header/suggester/Suggester";
+import {
+  getPlaceholder,
+  openMobileSuggester,
+} from "@/components/search/simple/suggester/Suggester";
 import Translate from "@/components/base/translate";
 import ClearSvg from "@/public/icons/close.svg";
 import { useRouter } from "next/router";
 import Icon from "@/components/base/icon";
 import useQ from "@/components/hooks/useQ";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
+import { SuggestTypeEnum } from "@/lib/enums";
+import useFilters from "@/components/hooks/useFilters";
 
 /**
  * A Fake Search Input Field
@@ -21,13 +27,24 @@ import useQ from "@/components/hooks/useQ";
 export default function FakeSearchInput({ className, showButton = true }) {
   const router = useRouter();
   const { q, setQ } = useQ();
+  const filters = useFilters();
+
   const hasQuery = !!q?.all;
   const hasQueryClass = hasQuery ? styles.hasQuery : "";
+
+  const breakpoint = useBreakpoint();
+  const isMobileSize = ["xs", "sm", "md"].includes(breakpoint);
 
   const qAll = q?.all;
 
   // Class for clear/cross button
   const clearVisibleClass = hasQuery ? styles.visible : "";
+
+  const { workTypes } = filters.getQuery();
+
+  const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
+
+  const placeholder = getPlaceholder(isMobileSize, selectedMaterial);
 
   return (
     <div
@@ -45,22 +62,9 @@ export default function FakeSearchInput({ className, showButton = true }) {
         }}
       >
         <Text type="text2" className={styles.placeholder}>
-          {hasQuery
-            ? qAll
-            : Translate({
-                context: "suggester",
-                label: "placeholder",
-              })}
+          {hasQuery ? qAll : placeholder}
         </Text>
-        <Text type="text2" className={styles.placeholderxs}>
-          {hasQuery
-            ? qAll
-            : Translate({
-                context: "suggester",
-                label: "placeholderMobile",
-              })}
-        </Text>
-        <span
+        <button
           data-cy="fake-search-input-clear"
           className={`${styles.clear} ${clearVisibleClass}`}
           onClick={(e) => {
@@ -71,7 +75,7 @@ export default function FakeSearchInput({ className, showButton = true }) {
           <Icon size={{ w: "auto", h: 2 }} alt="">
             <ClearSvg />
           </Icon>
-        </span>
+        </button>
       </div>
       {showButton && (
         <div className={styles.fakebutton} data-cy="fake-search-input-button">
