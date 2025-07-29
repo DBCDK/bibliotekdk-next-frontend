@@ -1,3 +1,9 @@
+.section {
+  margin: 0 calc(var(--pt1) * -2);
+  padding: var(--pt2) 0 0 0 !important;
+  padding-bottom: 0 !important;
+}
+
 .result {
   margin-left: var(--pt1);
 }

@@ -17,9 +17,6 @@ import ResultPage from "../result";
 
 import styles from "./Page.module.css";
 import { NoHitSearch } from "@/components/search/advancedSearch/advancedSearchResult/noHitSearch/NoHitSearch";
-import Searchbar from "../searchbar";
-import Related from "../related";
-import DidYouMean from "../didYouMean";
 import Search from "../Search";
 import useHistory from "@/components/hooks/useHistory";
 import History from "@/components/search/history";
@@ -57,10 +54,6 @@ export function Result({
   return (
     <main>
       <Search />
-
-      {/* <Searchbar q={q} />
-      <Related q={q} />
-      <DidYouMean q={q} /> */}
 
       <Section
         className={`${styles.section} ${noRelatedSubjectsClass}`}

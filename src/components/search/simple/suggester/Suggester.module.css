@@ -190,7 +190,6 @@
 
   display: flex;
   flex-direction: column;
-  /* padding-left: var(--pt05); */
 
   overflow: hidden;
 }

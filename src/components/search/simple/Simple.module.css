@@ -2,12 +2,6 @@
   display: flex;
 }
 
-/* material selecter */
-.select {
-  white-space: nowrap;
-  height: var(--pt7);
-}
-
 .suggester {
   flex-grow: 2;
   max-width: 100%;

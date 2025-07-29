@@ -1,11 +1,13 @@
 import { useRouter } from "next/router";
-import { Col, Row } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 import useHistory from "@/components/hooks/useHistory";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 
 import styles from "./History.module.css";
+import Translate from "@/components/base/translate";
 
 // items limit
 const LIMIT = 5;
@@ -17,7 +19,9 @@ export function History({ items, onSelect = () => {} }) {
   return (
     <Row>
       <Col xs={12}>
-        <Text type="text1">Seneste Søgninger</Text>
+        <Text type="text1">
+          {Translate({ context: "improved-search", label: "history-latest" })}
+        </Text>
       </Col>
       {items.map((item, index) => (
         <Col xs={12} key={index}>

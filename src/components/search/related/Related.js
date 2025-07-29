@@ -68,7 +68,7 @@ export function Related({ data = {}, isLoading }) {
       space={{
         bottom: "var(--pt4)",
       }}
-      title={<span />}
+      title={null}
     >
       {(data.length > 0 || isLoading) && (
         <div>
@@ -81,18 +81,16 @@ export function Related({ data = {}, isLoading }) {
             })}
           />
 
-          <div className={styles.related}>
-            <div className={styles.words} data-cy="words-container">
-              <Text
-                skeleton={isLoading}
-                lines={1}
-                tag={"span"}
-                className={styles.oneline}
-              >
-                {Translate({ context: "search", label: "relatedSubjects" })}
-              </Text>
-              <Words data={data} isLoading={isLoading} />
-            </div>
+          <div className={styles.words} data-cy="words-container">
+            <Text
+              skeleton={isLoading}
+              lines={1}
+              tag={"span"}
+              className={styles.oneline}
+            >
+              {Translate({ context: "search", label: "relatedSubjects" })}
+            </Text>
+            <Words data={data} isLoading={isLoading} />
           </div>
         </div>
       )}
@@ -113,6 +111,8 @@ export default function Wrap() {
   const { data, isLoading } = useData(
     query && subjects({ q: [query], limit: 7 })
   );
+
+  console.log("data", data);
 
   // dummy data will be returned on isLoading - skeleton view
   const dummy = [

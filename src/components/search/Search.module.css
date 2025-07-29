@@ -1,7 +1,3 @@
-.container {
-  max-width: unset;
-}
-
 .content {
   padding: var(--pt3) 0;
 }
@@ -17,7 +13,7 @@
 
 @media (min-width: 992px) {
   .tabs {
-    justify-content: unset;
+    /* justify-content: unset; */
   }
 
   .worktypes {

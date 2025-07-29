@@ -137,10 +137,12 @@ function renderSuggestionsContainer(
 export function renderSuggestion(data, query, skeleton) {
   const isHistory = data.type === SuggestTypeEnum.HISTORY;
 
+  const cy = `suggester-${data.type}-element`.toLowerCase();
+
   const highlight = highlightMatch(data.term, query);
 
   return (
-    <div className={styles.element} data-cy="suggester-element">
+    <div className={styles.element} data-cy={cy}>
       {isHistory && (
         <Icon
           className={styles.icon}
@@ -286,7 +288,7 @@ export const Suggester = forwardRef(function Suggester(
       setIntQuery(newValue);
     },
     onKeyDown: (e) => {
-      onKeyDown(e);
+      onKeyDown?.(e);
     },
     onFocus: (e) => {
       e.currentTarget.setSelectionRange(
