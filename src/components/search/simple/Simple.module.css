@@ -11,8 +11,6 @@
   width: 100%;
 }
 
-/* Search button */
-
 .button {
   padding: 0 var(--pt2);
   max-width: min-content;

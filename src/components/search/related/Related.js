@@ -10,8 +10,9 @@ import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import Section from "@/components/base/section";
 
-import styles from "./Related.module.css";
 import { getUrlByType } from "@/components/search/advancedSearch/utils";
+
+import styles from "./Related.module.css";
 
 /**
  *
