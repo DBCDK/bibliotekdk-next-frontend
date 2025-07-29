@@ -1,7 +1,7 @@
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { useModal } from "@/components/_modal";
-import FakeSearchInput from "@/components/header/suggester/FakeSearchInput";
+import FakeSearchInput from "@/components/search/simple/suggester/fakesearchinput/FakeSearchInput";
 import Section from "@/components/base/section";
 import styles from "./Searchbar.module.css";
 import { MobileMaterialSelect } from "@/components/search/select";

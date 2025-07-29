@@ -1,0 +1,158 @@
+import React, { useEffect, useState } from "react";
+
+import useHistory from "@/components/hooks/useHistory";
+import useFilters from "@/components/hooks/useFilters";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
+import useQ from "@/components/hooks/useQ";
+
+import Suggester, { blurInput } from "./suggester";
+import { openMobileSuggester } from "./suggester/Suggester";
+import FakeSearchInput from "./suggester/fakesearchinput";
+
+import { useRouter } from "next/router";
+import { SuggestTypeEnum } from "@/lib/enums";
+import isEmpty from "lodash/isEmpty";
+
+import Translate from "@/components/base/translate";
+import Button from "@/components/base/button";
+
+import styles from "./Simple.module.css";
+
+export function SimpleSearch({
+  query,
+  history,
+  selectedMaterial,
+  isMobileSize,
+  onSelect,
+  onChange,
+  onKeyDown,
+  onClose,
+  onSearch,
+  clearHistory,
+}) {
+  return (
+    <div className={styles.simplesearch}>
+      <Suggester
+        className={styles.suggester}
+        history={history}
+        clearHistory={clearHistory}
+        query={query}
+        selectedMaterial={selectedMaterial}
+        onSelect={onSelect}
+        onChange={onChange}
+        dataCy="simple-search-input"
+        onClose={onClose}
+        onKeyDown={onKeyDown}
+      />
+
+      {isMobileSize ? (
+        <FakeSearchInput className={styles.fake} />
+      ) : (
+        <Button
+          className={styles.button}
+          onClick={(e) => {
+            e?.preventDefault();
+            onSearch?.();
+            blurInput();
+          }}
+          data-cy="header-searchbutton"
+        >
+          {Translate({ context: "header", label: "search" })}
+        </Button>
+      )}
+    </div>
+  );
+}
+
+// ⚙️ "Smart" komponent med al logik
+export default function Wrap() {
+  const router = useRouter();
+  const filters = useFilters();
+  const { q, setQ, setQuery } = useQ();
+  const [query, setQueryState] = useState(q[SuggestTypeEnum.ALL] || "");
+  const [history, setHistory, clearHistory] = useHistory();
+
+  const breakpoint = useBreakpoint();
+  const isMobileSize = ["xs", "sm", "md"].includes(breakpoint);
+  const isMobileSuggester = isMobileSize && router?.query?.suggester;
+
+  const { workTypes } = filters.getQuery();
+  const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
+
+  // Sync initial query
+  useEffect(() => {
+    setQueryState(q[SuggestTypeEnum.ALL] || "");
+  }, [q]);
+
+  const doSearch = (value = query, suggestion = null) => {
+    const queryKey = "all";
+    const method = isMobileSuggester ? "replace" : "push";
+
+    const type = {
+      tid: suggestion?.traceId,
+      workTypes:
+        selectedMaterial !== SuggestTypeEnum.ALL ? selectedMaterial : null,
+    };
+
+    const newQ = isEmpty(value) ? { ...q, all: "" } : { [queryKey]: value };
+
+    setQuery({
+      include: newQ,
+      exclude: ["page"],
+      pathname: "/find",
+      query: type,
+      method,
+    });
+
+    document.activeElement.blur();
+
+    setTimeout(() => {
+      setHistory(value);
+    }, 300);
+  };
+
+  const handleSelect = (suggestionValue, suggestion) => {
+    const formattedValue = history.some((t) => t.term === suggestionValue)
+      ? suggestionValue
+      : `"${suggestionValue}"`;
+    doSearch(formattedValue, suggestion);
+  };
+
+  const handleChange = (val) => {
+    setQueryState(val);
+    setQ({ ...q, all: val });
+  };
+
+  const handleKeyDown = (e) => {
+    if (router?.query?.suggester) {
+      if (e.key === "Enter" && !e.preventBubbleHack) {
+        doSearch();
+      }
+    } else {
+      openMobileSuggester();
+    }
+  };
+
+  const handleClose = () => {
+    if (router) {
+      router.back();
+    }
+  };
+
+  const filteredHistory = history.filter(({ term }) => term && term !== "");
+
+  return (
+    <SimpleSearch
+      query={query}
+      history={filteredHistory}
+      selectedMaterial={selectedMaterial}
+      isMobileSize={isMobileSize}
+      onSelect={handleSelect}
+      onChange={handleChange}
+      onKeyDown={handleKeyDown}
+      onClose={handleClose}
+      onSearch={() => doSearch()}
+      clearHistory={clearHistory}
+    />
+  );
+}

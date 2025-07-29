@@ -2462,6 +2462,24 @@
         "en": "Menu"
       }
     },
+    "improved-search": {
+      "simple": {
+        "da": "Søg",
+        "en": "Search"
+      },
+      "advanced": {
+        "da": "Avanceret",
+        "en": "Advanced"
+      },
+      "cql": {
+        "da": "CQL",
+        "en": "CQL"
+      },
+      "history-latest": {
+        "da": "Seneste søgninger",
+        "en": "Latest searches"
+      }
+    },
     "search": {
       "timestamp": {
         "da": "Kl. %s",

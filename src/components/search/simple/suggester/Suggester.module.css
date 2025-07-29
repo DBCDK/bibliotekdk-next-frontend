@@ -1,0 +1,268 @@
+.container {
+  display: none;
+}
+
+.container.isMobile {
+  display: block;
+  position: fixed;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+
+  /* init */
+  top: 25%;
+  opacity: 0;
+
+  /* animation */
+  animation: slideInFromMiddle 0.2s ease-out forwards;
+}
+
+@keyframes slideInFromMiddle {
+  0% {
+    top: 25%;
+    opacity: 0;
+  }
+  100% {
+    top: 0;
+    opacity: 1;
+  }
+}
+
+.container.isMobile:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--white);
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+
+  /* init */
+  opacity: 0;
+
+  animation: fadeIn 0.2s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.input_wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  padding: 0;
+  border-bottom: 1px solid var(--iron);
+
+  width: 100%;
+  height: var(--pt7);
+  display: flex;
+  align-items: center;
+
+  background-color: var(--white);
+}
+
+.input_wrap .arrow {
+  display: flex;
+  background-color: transparent;
+}
+
+.input_wrap .arrow,
+.input_wrap .clear {
+  min-width: var(--pt7);
+  height: var(--pt7);
+  justify-content: center;
+  align-items: center;
+}
+
+.input_wrap .arrow path,
+.input_wrap .clear path {
+  fill: var(--blue);
+}
+
+.input_wrap .clear {
+  position: absolute;
+  display: flex;
+  right: 0;
+  bottom: 0;
+  transform: scale(0);
+  transition: transform 0.3s;
+  cursor: pointer;
+}
+
+.clear.visible {
+  transform: scale(1);
+  transition-timing-function: cubic-bezier(0.38, 1.95, 0.4, 0.4);
+}
+
+.input_wrap .input {
+  width: 100%;
+  height: var(--pt4);
+  font-size: 17px;
+  line-height: 26px;
+  font-family: var(--body-font);
+  border: none;
+  padding: 0 var(--pt5) 0 0;
+  border-radius: 0;
+  -webkit-appearance: none;
+}
+
+.input__focused {
+  border-bottom: 1px solid transparent;
+}
+
+.suggestions_container {
+  display: none;
+  position: relative;
+  z-index: 2;
+}
+
+.suggestions_container__open {
+  display: block;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  border-top: none;
+  height: calc(100vh - 50px);
+  overflow-y: auto;
+  padding: var(--pt9) 0 var(--pt2) 0;
+  box-shadow: var(--shadow-effect);
+}
+
+.suggestions_list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.suggestion {
+  cursor: pointer;
+  padding: var(--pt1) var(--pt2);
+}
+
+.suggestion__highlighted {
+  background-color: var(--iron);
+}
+
+.suggestion {
+  font-family: var(--body-font);
+}
+
+.suggestion .match {
+  font-family: var(--body-font-semibold);
+}
+
+.skeleton .suggestion {
+  max-width: 400px;
+}
+
+.history {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--pt1);
+}
+
+/* Suggestion element */
+
+.element {
+  display: flex;
+  align-items: center;
+}
+
+.element .icon {
+  margin-left: -16px;
+}
+
+.element .text {
+  width: calc(100% - 40px);
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+}
+
+.element .title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Desktop overrides */
+@media (min-width: 992px) {
+  .container {
+    position: relative;
+    display: block;
+  }
+
+  .input_wrap {
+    position: relative;
+    height: var(--pt7);
+    padding: 0;
+    border: none;
+
+    z-index: 3;
+    top: unset;
+    left: unset;
+  }
+
+  .input_wrap .arrow {
+    display: none;
+  }
+
+  .input_wrap .clear {
+    top: 0;
+  }
+
+  .input_wrap .input {
+    height: 100%;
+    padding: var(--pt2) calc(var(--pt2) * 3) var(--pt2) var(--pt2);
+    border: 1px solid var(--gray);
+  }
+
+  .input__focused {
+    border: 1px solid var(--blue);
+    outline: 1px solid var(--blue);
+  }
+
+  .suggestions_container__open {
+    position: absolute;
+    z-index: 1;
+    top: calc(100% - 1px);
+
+    width: 100%;
+    background-color: var(--white);
+    height: auto;
+    overflow-y: auto;
+    padding: 0;
+    box-shadow: var(--shadow-effect);
+
+    max-height: 50vh;
+
+    border: 1px solid var(--gray);
+  }
+
+  .suggestion:first-child {
+    padding: var(--pt2) var(--pt2) var(--pt1) var(--pt2);
+  }
+
+  .suggestion:last-child {
+    padding: var(--pt1) var(--pt2) var(--pt2) var(--pt2);
+  }
+
+  .suggestion:only-child {
+    padding: var(--pt2) 0;
+  }
+}

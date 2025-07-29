@@ -1,0 +1,4 @@
+.item {
+  margin-top: var(--pt1_5);
+  display: inline-block;
+}

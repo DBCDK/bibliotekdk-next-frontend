@@ -23,10 +23,6 @@
   display: block;
 }
 
-.fakesearchinput {
-  margin-top: var(--pt2);
-}
-
 .iconandtxt {
   display: flex;
   align-items: center;
@@ -59,10 +55,6 @@
   padding: 0 0 0 var(--pt3);
 }
 
-.heromobiletxt {
-  color: white;
-}
-
 .herotopmargin {
   margin-top: var(--pt3);
 }
@@ -77,10 +69,6 @@
     height: 360px;
     padding-top: var(--pt6);
   }
-
-  .fakesearchinput {
-    margin-top: var(--pt2);
-  }
 }
 
 /* Large devices (desktops, 992px and up) */
@@ -93,10 +81,6 @@
     display: none;
   }
 
-  .heromobiletxt {
-    display: none;
-  }
-
   .heroicon {
     display: inline-block;
     padding: 0 0 0 var(--pt3);
@@ -105,9 +89,5 @@
   .containerback {
     height: 560px;
     padding-top: var(--pt12);
-  }
-
-  .fakesearchinput {
-    display: none !important;
   }
 }

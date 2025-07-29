@@ -15,17 +15,13 @@ import { useData } from "@/lib/api/api";
 
 import useDataCollect from "@/lib/useDataCollect";
 
-import Result from "@/components/search/result/Result";
-import Searchbar from "@/components/search/searchbar";
+import Page from "@/components/search/page";
 import Translate from "@/components/base/translate";
-
-import Related from "@/components/search/related";
 
 import Header from "@/components/header/Header";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 import { SuggestTypeEnum } from "@/lib/enums";
 import { useRef } from "react";
-import DidYouMean from "@/components/search/didYouMean/DidYouMean";
 
 /**
  * @file
@@ -59,6 +55,7 @@ function Find() {
     q[SuggestTypeEnum.TITLE] ||
     q[SuggestTypeEnum.CREATOR] ||
     q[SuggestTypeEnum.SUBJECT];
+
   const pageTitle = Translate({
     ...context,
     label: "find-title",
@@ -115,33 +112,25 @@ function Find() {
         ))}
       </Head>
 
-      <div ref={scrollRef} />
-
       <Header router={router} />
 
-      <main>
-        <Searchbar q={q} />
-        <Related q={q} />
-        <DidYouMean q={q} />
+      <div ref={scrollRef} />
 
-        {q && (
-          <Result
-            page={parseInt(page, 10)}
-            onPageChange={async (page, scroll) => {
-              scroll = typeof scroll !== "boolean" || scroll !== false;
-              await updateQueryParams({ page });
-              scroll && scrollToRef(scrollRef);
-            }}
-            onWorkClick={(index, work) => {
-              dataCollect.collectSearchWorkClick({
-                search_request: { q, filters },
-                search_query_hit: index + 1,
-                search_query_work: work.workId,
-              });
-            }}
-          />
-        )}
-      </main>
+      <Page
+        page={parseInt(page, 10)}
+        onPageChange={async (page, scroll) => {
+          scroll = typeof scroll !== "boolean" || scroll !== false;
+          await updateQueryParams({ page });
+          scroll && scrollToRef(scrollRef);
+        }}
+        onWorkClick={(index, work) => {
+          dataCollect.collectSearchWorkClick({
+            search_request: { q, filters },
+            search_query_hit: index + 1,
+            search_query_work: work.workId,
+          });
+        }}
+      />
     </>
   );
 }

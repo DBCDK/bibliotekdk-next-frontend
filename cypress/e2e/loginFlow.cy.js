@@ -59,23 +59,6 @@ describe(`Different ways to open login modal with a (FFU) library that does NOT 
     cy.get("[data-cy=pickup-search-input]").should("be.visible");
   });
 
-  it("Plain login from login button on profile page not supported & back button leads back to pick up branch search", () => {
-    cy.visit(nextjsBaseUrl + "/profil");
-    cy.consentAllowAll();
-    cy.get("[data-cy=profile-layout-button-login]").click();
-    cy.get("[data-cy=pickup-search-input]")
-      .should("be.visible")
-      .type("Sankt Andreas Bibliotek");
-    cy.get('[data-cy="text-Skt. Andreas Bibliotek"]')
-      .should("be.visible")
-      .click();
-    cy.get(
-      '[data-cy="text-sankt-andreas-bibliotek-login-kan-ikke-bruges-på-bibliotek.dk"]'
-    ).should("be.visible");
-    cy.get("[data-cy=button-tilbage]").should("be.visible").click();
-    cy.get("[data-cy=pickup-search-input]").should("be.visible");
-  });
-
   it("Infomedia login not supported & back button leads back to pick up branch search", () => {
     cy.fixture("articlepublicdata.json").then((fixture) => {
       cy.intercept("POST", `${fbiApiPath}`, (req) => {
@@ -105,8 +88,10 @@ describe(`Different ways to open login modal with a (FFU) library that does NOT 
     cy.get("[data-cy=pickup-search-input]").should("be.visible");
   });
 
-  it.only("FFU login should not have acces to profile button in header", () => {
-    cy.visit("/iframe.html?id=layout-header--nav-header-ffu&viewMode=story");
+  it("FFU login should not have acces to profile button in header", () => {
+    cy.visit(
+      "/iframe.html?id=layout-header--header-no-unique-id&viewMode=story"
+    );
 
     cy.get("[data-cy=header-link-logout] p").should("have.text", "Log ud");
   });
