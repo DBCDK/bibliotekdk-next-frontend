@@ -4,6 +4,7 @@
 }
 
 .formatted {
+  position: relative;
   border: 1px rgb(130, 130, 130) solid !important;
   margin-bottom: var(--pt05);
 }

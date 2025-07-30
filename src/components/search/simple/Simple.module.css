@@ -1,5 +1,6 @@
 .simplesearch {
   display: flex;
+  padding-top: var(--pt2);
 }
 
 .suggester {

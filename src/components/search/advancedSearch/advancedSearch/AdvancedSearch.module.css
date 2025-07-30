@@ -1,17 +1,12 @@
+.background {
+  background-color: var(
+    --gray1
+  ); /* Tilføj passende farve fra dit design system */
+}
+
 .container {
   width: 100%;
-  padding-bottom: var(--pt7);
   padding-top: var(--pt2);
-}
-
-.background {
-  background-color: var(--concrete);
-}
-
-.topContainer {
-  display: flex;
-  align-items: start;
-  margin-bottom: var(--pt4);
 }
 
 .buttonRow {
@@ -19,72 +14,30 @@
 }
 
 .button {
-  width: 156px;
+  width: 100%; /* mobil: knappen fylder hele bredden */
 }
 
 .button_group {
   display: flex;
-  gap: var(--pt3);
-  align-items: center;
+  flex-direction: column;
+  gap: var(--pt2);
+  align-items: stretch;
+  width: 100%;
 }
 
-.buttonContainer {
-  display: flex;
-  gap: var(--pt3);
-  align-self: end;
-  justify-content: end;
-}
-
-.closeContainer {
-  display: flex;
-  align-self: start;
-  align-items: center;
-  justify-content: end;
-  transition: 250ms;
-  position: relative;
-  top: 2px;
-}
-
-.helpLink {
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: end;
-  margin-left: auto;
-}
-
-.asblock {
-  display: block;
-}
-
-/*
-NOTES
-463- Brug mobil-layout
-464+ Tekst til “Ryd” og “Hjælp” skal bruge desktopversionen.
-640+ Index-dropdowns og søgefelt skal ligge på samme linje.
-768+ Avanceret søgning + links + luk placeres som på desktop
-992+ Brug desktop-layout med ekstra (tom) spalte i venstre side og synlig topbar med simpleSearch, log ind etc.
- */
-/* 640 and down */
-@media (max-width: 768px) {
-  .buttonContainer {
-    justify-content: start;
+@media (min-width: 768px) {
+  .container {
+    padding: var(--pt2) 0 0 0;
   }
 
-  .closeContainer {
-    position: absolute;
-    right: var(--pt2);
-    top: var(--pt3);
+  .button {
+    width: 156px;
   }
-}
 
-/* 330px down (very small devices) */
-@media (max-width: 330px) {
-  .closeContainer {
-    position: unset;
+  .button_group {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--pt3);
   }
-}
-
-.hideCloseContainer {
-  visibility: hidden;
-  transition: 250ms;
 }

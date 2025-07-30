@@ -121,7 +121,6 @@
 .trashAndSuggester {
   display: flex;
   width: 100%;
-  margin-right: var(--pt2);
 }
 
 /* 640px up */
@@ -132,13 +131,6 @@
 
   .suggesterContainer {
     display: flex;
-  }
-}
-
-/* 768px up */
-@media (min-width: 768px) {
-  .trashAndSuggester {
-    max-width: 460px;
   }
 }
 

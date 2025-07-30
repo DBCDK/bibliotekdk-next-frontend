@@ -14,11 +14,68 @@ import {
 import Editor from "react-simple-code-editor";
 import { useData } from "@/lib/api/api";
 import { complexSearchIndexes } from "@/lib/api/complexSearch.fragments";
+import { useFacets } from "../useFacets";
+import { useQuickFilters } from "../useQuickFilters";
+import { useRouter } from "next/router";
+import Button from "@/components/base/button";
+import Link from "@/components/base/link";
 
-export function CqlTextArea({ doAdvancedSearch }) {
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Translate from "@/components/base/translate";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
+
+export function CqlTextArea() {
   const { data } = useData(complexSearchIndexes());
 
-  const { parsedCQL, setParsedCQL } = useAdvancedSearchContext();
+  const router = useRouter();
+
+  const {
+    parsedCQL,
+    setParsedCQL,
+    cqlFromUrl,
+    fieldSearchFromUrl,
+    setShowPopover,
+    stateToString,
+  } = useAdvancedSearchContext();
+
+  const isMobile = useBreakpoint() === "xs";
+
+  // we need to clear the global facets
+  const { resetFacets } = useFacets();
+  const { resetQuickFilters } = useQuickFilters();
+
+  const handleSearch = () => {
+    // this is a new search - clear the facets
+    // However, do not push to URL at this point as this is done in just a moment
+    // when the search query is pushed (with no facets or quickfilters set)
+    resetFacets();
+    resetQuickFilters();
+
+    const cqlParsedFromUrl = fieldSearchFromUrl
+      ? convertStateToCql(fieldSearchFromUrl)
+      : cqlFromUrl;
+    if (!cqlFromUrl && parsedCQL === cqlParsedFromUrl) {
+      const query = { fieldSearch: stateToString };
+      router.push({ pathname: "/avanceret", query });
+    } else {
+      const query = {
+        cql: parsedCQL,
+      };
+      router.push({ pathname: "/avanceret", query });
+    }
+
+    setShowPopover(false);
+  };
+
+  const handleClear = () => {
+    resetObjectState();
+    router.push({
+      pathname: router.pathname,
+      ...(router.query?.mode === "cql" && { query: { mode: "cql" } }),
+    });
+  };
+
   const [focused, setFocused] = useState(false);
 
   const indexes = useMemo(() => {
@@ -48,53 +105,87 @@ export function CqlTextArea({ doAdvancedSearch }) {
 
   return (
     <div>
-      <label className={styles.label}>
-        <Text type="text1">
-          {translate({ context: "search", label: "cqlsearchlabel" })}
-        </Text>
-      </label>
-      <div
-        className={`${styles.formatted} ${focused ? styles.focused : ""}`}
-        data-cy={cyKey({
-          name: "cqlTxt",
-          prefix: "advanced-search",
-        })}
-      >
-        <Editor
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-          placeholder={translate({
-            context: "search",
-            label: "cqlsearchPlaceholder",
+      <Row>
+        <label htmlFor="cqlTextArea" className={styles.label}>
+          <Text type="text1">
+            {translate({ context: "search", label: "cqlsearchlabel" })}
+          </Text>
+        </label>
+        <div
+          className={`${styles.formatted} ${focused ? styles.focused : ""}`}
+          data-cy={cyKey({
+            name: "cqlTxt",
+            prefix: "advanced-search",
           })}
-          id="cqlTextArea"
-          value={parsedCQL}
-          onValueChange={(code) => setParsedCQL(code)}
-          highlight={(code) => {
-            const tokens = tokenize(code);
-            const validatedTokens = validateTokens(tokens, indexes);
-            return highlight(validatedTokens);
-          }}
-          padding={16}
-          style={{
-            background: "white",
-            fontFamily:
-              "ibm_plex_mono,Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New",
-            fontSize: 17,
-            lineHeight: 1.5,
-            minHeight: 84,
-          }}
-          insertSpaces={true}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && e.ctrlKey === true) {
-              e.preventDefault();
-              doAdvancedSearch();
-            }
-          }}
-          ignoreTabKey={true}
-        />
-      </div>
-      <CqlErrorMessage message={message} />
+        >
+          <Editor
+            onFocus={() => setFocused(true)}
+            onBlur={() => setFocused(false)}
+            placeholder={translate({
+              context: "search",
+              label: "cqlsearchPlaceholder",
+            })}
+            id="cqlTextArea"
+            value={parsedCQL}
+            onValueChange={(code) => setParsedCQL(code)}
+            highlight={(code) => {
+              const tokens = tokenize(code);
+              const validatedTokens = validateTokens(tokens, indexes);
+              return highlight(validatedTokens);
+            }}
+            padding={16}
+            style={{
+              background: "white",
+              fontFamily:
+                "ibm_plex_mono,Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New",
+              fontSize: 17,
+              lineHeight: 1.5,
+              minHeight: 84,
+            }}
+            insertSpaces={true}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && e.ctrlKey === true) {
+                e.preventDefault();
+                handleSearch();
+              }
+            }}
+            ignoreTabKey={true}
+          />
+        </div>
+        <CqlErrorMessage message={message} />
+      </Row>
+      <Row className={styles.buttonRow}>
+        <Col className={styles.button_group} sm={12}>
+          <Button
+            className={styles.button}
+            size="medium"
+            onClick={() => handleSearch()}
+          >
+            {Translate({
+              context: "search",
+              label: "advancedSearch_button",
+            })}
+          </Button>
+
+          <Text type="text3">
+            <Link
+              dataCy="advanced-search-clear-search"
+              border={{ bottom: { keepVisible: true } }}
+              onClick={() => handleClear()}
+            >
+              {isMobile
+                ? Translate({
+                    context: "search",
+                    label: "mobile_clearSearch",
+                  })
+                : Translate({
+                    context: "search",
+                    label: "clearSearch",
+                  })}
+            </Link>
+          </Text>
+        </Col>
+      </Row>
     </div>
   );
 }

@@ -1,14 +1,37 @@
-.content {
-  padding: var(--pt3) 0;
+.background {
+  background-color: var(--concrete);
+}
+
+.section {
+  position: relative;
+
+  padding: var(--pt4) 0 var(--pt8) 0;
+
+  /* override inline-style */
+  margin-bottom: var(--pt2) !important;
+}
+
+.section > div:first-child,
+.section > div:last-child {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.section > div:last-child a:last-child {
+  /* margin-top: auto; */
 }
 
 .tabs {
   justify-content: flex-end;
 }
 
-.section {
-  /* override inline-style */
-  margin-bottom: var(--pt2) !important;
+.content {
+  padding: var(--pt3) 0;
+}
+
+.links a {
+  display: inline-block;
 }
 
 @media (min-width: 992px) {
