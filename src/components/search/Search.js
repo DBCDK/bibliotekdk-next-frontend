@@ -29,6 +29,7 @@ import { getHelpUrl } from "@/lib/utils";
 import Translate from "@/components/base/translate";
 
 import { CqlTextArea } from "./advancedSearch/cqlTextArea/CqlTextArea";
+import IconButton from "../base/iconButton";
 
 export function Search({ onWorkTypeSelect }) {
   const [tab, setTab] = useState("advanced");
@@ -89,7 +90,10 @@ export function Search({ onWorkTypeSelect }) {
           </Col>
 
           <Col className={styles.links} sm={12} lg={{ span: 2 }}>
-            <Link
+            <IconButton
+              icon="arrowrightblue"
+              keepUnderline={true}
+              iconSize={1}
               onClick={() => {}}
               href="/avanceret/soegehistorik"
               border={{
@@ -99,19 +103,19 @@ export function Search({ onWorkTypeSelect }) {
                 },
               }}
             >
-              <Text type="text3" tag="span">
+              <Text type="text4" tag="span">
                 {Translate({
                   context: "search",
                   label: "searchHistory",
                 })}
               </Text>
-            </Link>
+            </IconButton>
             <Link
               href={getHelpUrl("soegning-baade-enkel-og-avanceret", "179")}
               border={{ bottom: { keepVisible: true } }}
               target="_blank"
             >
-              <Text type="text3" tag="span">
+              <Text type="text5" tag="span">
                 {Translate({
                   context: "search",
                   label: isMobileSize

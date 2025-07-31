@@ -2,7 +2,7 @@ import styles from "./CqlTextArea.module.css";
 import React, { useMemo, useState } from "react";
 import { cyKey } from "@/utils/trim";
 import Text from "@/components/base/text";
-import translate from "@/components/base/translate";
+import Translate from "@/components/base/translate";
 import { CqlErrorMessage } from "@/components/search/advancedSearch/cqlErrorMessage/CqlErrorMessage";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import {
@@ -10,6 +10,7 @@ import {
   tokenize,
   validateTokens,
   highlight,
+  convertStateToCql,
 } from "@/components/utils/cql/parser";
 import Editor from "react-simple-code-editor";
 import { useData } from "@/lib/api/api";
@@ -19,16 +20,20 @@ import { useQuickFilters } from "../useQuickFilters";
 import { useRouter } from "next/router";
 import Button from "@/components/base/button";
 import Link from "@/components/base/link";
-
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Translate from "@/components/base/translate";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 
+/**
+ * Wrapper-komponent: håndterer data, logik og eventhandlers
+ */
 export function CqlTextArea() {
-  const { data } = useData(complexSearchIndexes());
-
   const router = useRouter();
+  const isMobile = useBreakpoint() === "xs";
+
+  const { data } = useData(complexSearchIndexes());
+  const { resetFacets } = useFacets();
+  const { resetQuickFilters } = useQuickFilters();
 
   const {
     parsedCQL,
@@ -37,34 +42,42 @@ export function CqlTextArea() {
     fieldSearchFromUrl,
     setShowPopover,
     stateToString,
+    resetObjectState,
   } = useAdvancedSearchContext();
 
-  const isMobile = useBreakpoint() === "xs";
+  const [focused, setFocused] = useState(false);
 
-  // we need to clear the global facets
-  const { resetFacets } = useFacets();
-  const { resetQuickFilters } = useQuickFilters();
+  const indexes = useMemo(() => {
+    if (!data?.complexSearchIndexes?.length) return new Set();
+    const set = new Set();
+    data.complexSearchIndexes.forEach((entry) => {
+      set.add(entry?.index);
+      entry?.aliases?.forEach((alias) => set.add(alias));
+    });
+    return set;
+  }, [data]);
+
+  const errorMessage = useMemo(() => {
+    const tokens = tokenize(parsedCQL);
+    const validatedTokens = validateTokens(tokens, indexes);
+    const { message } = createErrorMessage(validatedTokens, indexes);
+    return message;
+  }, [parsedCQL, indexes]);
 
   const handleSearch = () => {
-    // this is a new search - clear the facets
-    // However, do not push to URL at this point as this is done in just a moment
-    // when the search query is pushed (with no facets or quickfilters set)
     resetFacets();
     resetQuickFilters();
 
     const cqlParsedFromUrl = fieldSearchFromUrl
       ? convertStateToCql(fieldSearchFromUrl)
       : cqlFromUrl;
-    if (!cqlFromUrl && parsedCQL === cqlParsedFromUrl) {
-      const query = { fieldSearch: stateToString };
-      router.push({ pathname: "/avanceret", query });
-    } else {
-      const query = {
-        cql: parsedCQL,
-      };
-      router.push({ pathname: "/avanceret", query });
-    }
 
+    const query =
+      !cqlFromUrl && parsedCQL === cqlParsedFromUrl
+        ? { fieldSearch: stateToString }
+        : { cql: parsedCQL };
+
+    router.push({ pathname: "/avanceret", query });
     setShowPopover(false);
   };
 
@@ -76,116 +89,99 @@ export function CqlTextArea() {
     });
   };
 
-  const [focused, setFocused] = useState(false);
-
-  const indexes = useMemo(() => {
-    if (!data?.complexSearchIndexes?.length) {
-      return;
-    }
-
-    // Set containing all valid indexes
-    const set = new Set();
-
-    data?.complexSearchIndexes?.forEach?.((entry) => {
-      set.add(entry?.index);
-
-      // Add all aliases
-      entry?.aliases?.forEach?.((index) => set.add(index));
-    });
-
-    return set;
-  }, [data]);
-
-  const message = useMemo(() => {
-    const tokens = tokenize(parsedCQL);
-    const validatedTokens = validateTokens(tokens, indexes);
-    const { message } = createErrorMessage(validatedTokens, indexes);
-    return message;
-  }, [parsedCQL, indexes]);
-
   return (
-    <div>
-      <Row>
-        <label htmlFor="cqlTextArea" className={styles.label}>
-          <Text type="text1">
-            {translate({ context: "search", label: "cqlsearchlabel" })}
-          </Text>
-        </label>
-        <div
+    <CqlTextAreaView
+      parsedCQL={parsedCQL}
+      onChange={setParsedCQL}
+      onSearch={handleSearch}
+      onClear={handleClear}
+      indexes={indexes}
+      message={errorMessage}
+      focused={focused}
+      setFocused={setFocused}
+      isMobile={isMobile}
+    />
+  );
+}
+
+/**
+ * Præsentationskomponent: UI og events via props
+ */
+function CqlTextAreaView({
+  parsedCQL,
+  onChange,
+  onSearch,
+  onClear,
+  indexes,
+  message,
+  focused,
+  setFocused,
+  isMobile,
+}) {
+  return (
+    <Row>
+      <Col>
+        <Col
           className={`${styles.formatted} ${focused ? styles.focused : ""}`}
-          data-cy={cyKey({
-            name: "cqlTxt",
-            prefix: "advanced-search",
-          })}
+          data-cy={cyKey({ name: "cqlTxt", prefix: "advanced-search" })}
         >
           <Editor
+            id="cqlTextArea"
+            value={parsedCQL}
+            onValueChange={onChange}
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
-            placeholder={translate({
+            highlight={(code) => {
+              const tokens = tokenize(code);
+              const validated = validateTokens(tokens, indexes);
+              return highlight(validated);
+            }}
+            placeholder={Translate({
               context: "search",
               label: "cqlsearchPlaceholder",
             })}
-            id="cqlTextArea"
-            value={parsedCQL}
-            onValueChange={(code) => setParsedCQL(code)}
-            highlight={(code) => {
-              const tokens = tokenize(code);
-              const validatedTokens = validateTokens(tokens, indexes);
-              return highlight(validatedTokens);
-            }}
             padding={16}
             style={{
               background: "white",
               fontFamily:
-                "ibm_plex_mono,Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New",
+                "ibm_plex_mono,Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Courier New",
               fontSize: 17,
               lineHeight: 1.5,
               minHeight: 84,
             }}
-            insertSpaces={true}
+            insertSpaces
             onKeyDown={(e) => {
-              if (e.key === "Enter" && e.ctrlKey === true) {
+              if (e.key === "Enter" && e.ctrlKey) {
                 e.preventDefault();
-                handleSearch();
+                onSearch();
               }
             }}
-            ignoreTabKey={true}
+            ignoreTabKey
           />
-        </div>
-        <CqlErrorMessage message={message} />
-      </Row>
-      <Row className={styles.buttonRow}>
-        <Col className={styles.button_group} sm={12}>
-          <Button
-            className={styles.button}
-            size="medium"
-            onClick={() => handleSearch()}
-          >
-            {Translate({
-              context: "search",
-              label: "advancedSearch_button",
-            })}
-          </Button>
-
-          <Text type="text3">
-            <Link
-              dataCy="advanced-search-clear-search"
-              border={{ bottom: { keepVisible: true } }}
-              onClick={() => handleClear()}
-            >
-              {isMobile
-                ? Translate({
-                    context: "search",
-                    label: "mobile_clearSearch",
-                  })
-                : Translate({
-                    context: "search",
-                    label: "clearSearch",
-                  })}
-            </Link>
-          </Text>
         </Col>
-      </Row>
-    </div>
+        <CqlErrorMessage message={message} />
+
+        <Row className={styles.buttonRow}>
+          <Col className={styles.button_group} sm={12}>
+            <Button className={styles.button} size="medium" onClick={onSearch}>
+              {Translate({ context: "search", label: "advancedSearch_button" })}
+            </Button>
+
+            <Text type="text3">
+              <Link
+                dataCy="advanced-search-clear-search"
+                border={{ bottom: { keepVisible: true } }}
+                onClick={onClear}
+              >
+                {Translate({
+                  context: "search",
+                  label: isMobile ? "mobile_clearSearch" : "clearSearch",
+                })}
+              </Link>
+            </Text>
+          </Col>
+        </Row>
+      </Col>
+    </Row>
   );
 }

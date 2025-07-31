@@ -4,7 +4,7 @@
 }
 
 .formatted {
-  position: relative;
+  padding: 0;
   border: 1px rgb(130, 130, 130) solid !important;
   margin-bottom: var(--pt05);
 }
@@ -30,4 +30,33 @@
 }
 .formatted :global(.token-type_LITERAL) {
   color: #212121;
+}
+
+.buttonRow {
+  padding-top: var(--pt4);
+}
+
+.button {
+  width: 100%; /* mobil: knappen fylder hele bredden */
+}
+
+.button_group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pt2);
+  align-items: stretch;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .button {
+    width: 156px;
+  }
+
+  .button_group {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--pt3);
+  }
 }

@@ -27,7 +27,7 @@
 
 @media (min-width: 768px) {
   .container {
-    padding: var(--pt2) 0 0 0;
+    padding: 0;
   }
 
   .button {

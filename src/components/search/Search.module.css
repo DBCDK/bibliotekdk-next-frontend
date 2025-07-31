@@ -1,25 +1,43 @@
 .background {
   background-color: var(--concrete);
+  transition-duration: 0.3s;
 }
 
 .section {
   position: relative;
-
-  padding: var(--pt4) 0 var(--pt8) 0;
-
-  /* override inline-style */
+  padding: 0 0 var(--pt4) 0;
   margin-bottom: var(--pt2) !important;
 }
 
-.section > div:first-child,
+.section > div {
+  padding-top: var(--pt2);
+  order: 2;
+}
+
+/* worktypes */
+.section > div:first-child {
+  padding-top: 0;
+  order: 3;
+}
+
+/* links */
 .section > div:last-child {
+  background-color: var(--iron);
+  padding: var(--pt2);
+  order: 1;
   display: inline-flex;
-  flex-direction: column;
-  align-items: flex-end;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+
+.section > div:first-child {
+  display: inline-flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
 }
 
 .section > div:last-child a:last-child {
-  /* margin-top: auto; */
+  margin-right: var(--pt2);
 }
 
 .tabs {
@@ -27,7 +45,7 @@
 }
 
 .content {
-  padding: var(--pt3) 0;
+  padding: var(--pt4) 0 var(--pt2) 0;
 }
 
 .links a {
@@ -35,16 +53,38 @@
 }
 
 @media (min-width: 992px) {
-  .tabs {
-    /* justify-content: unset; */
-  }
-
-  .worktypes {
-    margin-top: 64px;
-  }
-
   .section {
-    /* override inline-style */
+    padding: var(--pt4) 0 var(--pt8) 0;
     margin-bottom: var(--pt8) !important;
+  }
+
+  .section > div {
+    order: 2;
+  }
+
+  .section > div:first-child {
+    order: 1;
+    padding-top: var(--pt6);
+    align-items: flex-end;
+    justify-content: flex-start;
+    flex-direction: column;
+  }
+
+  .section > div:last-child {
+    order: 3;
+    background-color: unset;
+    padding-top: var(--pt6);
+    align-items: flex-end;
+    justify-content: flex-start;
+    flex-direction: column;
+  }
+
+  .section > div:first-child,
+  .section > div:last-child {
+    display: inline-flex;
+  }
+
+  .content {
+    padding: var(--pt4) 0;
   }
 }

@@ -54,7 +54,6 @@ export function Result({
   return (
     <main>
       <Search />
-
       <Section
         className={`${styles.section} ${noRelatedSubjectsClass}`}
         divider={false}
