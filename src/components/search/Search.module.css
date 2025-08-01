@@ -64,7 +64,7 @@
 
   .section > div:first-child {
     order: 1;
-    padding-top: var(--pt6);
+    padding-top: var(--pt7);
     align-items: flex-end;
     justify-content: flex-start;
     flex-direction: column;
@@ -72,8 +72,8 @@
 
   .section > div:last-child {
     order: 3;
+    margin-top: calc(var(--pt2) * -1);
     background-color: unset;
-    padding-top: var(--pt6);
     align-items: flex-end;
     justify-content: flex-start;
     flex-direction: column;

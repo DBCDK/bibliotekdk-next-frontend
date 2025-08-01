@@ -15,6 +15,8 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 import ResultPage from "../result";
 
+// import ResultPage from "../advancedSearch/advancedSearchResult/ResultPage/ResultPage";
+
 import styles from "./Page.module.css";
 import { NoHitSearch } from "@/components/search/advancedSearch/advancedSearchResult/noHitSearch/NoHitSearch";
 import Search from "../Search";
