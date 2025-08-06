@@ -1,61 +1,71 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 import Tab from "react-bootstrap/Tab";
-
-import useQ from "../hooks/useQ";
-
-import Section from "../base/section";
-import Tabs from "../base/tabs";
-
-import SimpleSearch from "./simple";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import translate from "@/components/base/translate";
-
-import WorkTypeMenu from "@/components/search/advancedSearch/workTypeMenu/WorkTypeMenu";
-
-import styles from "./Search.module.css";
-import { useRouter } from "next/router";
+import useQ from "../hooks/useQ";
 import useBreakpoint from "../hooks/useBreakpoint";
+
+import Tabs from "../base/tabs";
+import SimpleSearch from "./simple";
 import Related from "./related/Related";
 import DidYouMean from "./didYouMean/DidYouMean";
 import AdvancedSearch from "./advancedSearch/advancedSearch/AdvancedSearch";
+import { CqlTextArea } from "./advancedSearch/cqlTextArea/CqlTextArea";
+import WorkTypeMenu from "@/components/search/advancedSearch/workTypeMenu/WorkTypeMenu";
 
+import translate from "@/components/base/translate";
+import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
-import { getHelpUrl } from "@/lib/utils";
-import Translate from "@/components/base/translate";
-
-import { CqlTextArea } from "./advancedSearch/cqlTextArea/CqlTextArea";
 import IconButton from "../base/iconButton";
+import { getHelpUrl } from "@/lib/utils";
 
-export function Search({ onWorkTypeSelect }) {
-  const [tab, setTab] = useState("advanced");
+import styles from "./Search.module.css";
 
+export function Search({ onWorkTypeSelect, mode, onTabChange }) {
+  const [tab, setTab] = useState(mode || "simpel");
   const breakpoint = useBreakpoint();
   const isMobileSize = ["xs", "sm", "md"].includes(breakpoint);
+
+  const isSimple = tab === "simpel";
+
+  // Sync tab when URL mode changes
+  useEffect(() => {
+    if (mode && mode !== tab) {
+      setTab(mode);
+    }
+  }, [mode]);
 
   return (
     <div className={styles.background}>
       <Container fluid>
-        <Row as="section" className={`${styles.section}`}>
+        <Row as="section" className={styles.section}>
           <Col sm={12} lg={{ span: 2 }} className={styles.select}>
-            <WorkTypeMenu
-              className={styles.worktypes}
-              onClick={onWorkTypeSelect}
-            />
+            {!isSimple && (
+              <WorkTypeMenu
+                className={styles.worktypes}
+                onClick={onWorkTypeSelect}
+              />
+            )}
           </Col>
 
           <Col sm={12} lg={{ offset: 1, span: 7 }}>
             <Tabs
               active={tab}
-              onSelect={(k) => setTab(k)}
+              onSelect={(nextTab) => {
+                if (nextTab !== tab) {
+                  setTab(nextTab);
+                  onTabChange(nextTab);
+                }
+              }}
               className={styles.tabs}
             >
               <Tab
-                eventKey="simple"
+                eventKey="simpel"
                 title={translate({
                   context: "improved-search",
                   label: "simple",
@@ -67,8 +77,9 @@ export function Search({ onWorkTypeSelect }) {
                   <DidYouMean />
                 </Col>
               </Tab>
+
               <Tab
-                eventKey="advanced"
+                eventKey="avanceret"
                 title={translate({
                   context: "improved-search",
                   label: "advanced",
@@ -78,9 +89,13 @@ export function Search({ onWorkTypeSelect }) {
                   <AdvancedSearch />
                 </Col>
               </Tab>
+
               <Tab
                 eventKey="cql"
-                title={translate({ context: "improved-search", label: "cql" })}
+                title={translate({
+                  context: "improved-search",
+                  label: "cql",
+                })}
               >
                 <Col className={styles.content} lg={12} xs={12}>
                   <CqlTextArea />
@@ -110,6 +125,7 @@ export function Search({ onWorkTypeSelect }) {
                 })}
               </Text>
             </IconButton>
+
             <Link
               href={getHelpUrl("soegning-baade-enkel-og-avanceret", "179")}
               border={{ bottom: { keepVisible: true } }}
@@ -134,6 +150,7 @@ export function Search({ onWorkTypeSelect }) {
 export default function Wrap() {
   const { setQuery } = useQ();
   const router = useRouter();
+  const { mode } = router.query;
 
   const handleOnWorkTypeSelect = (type) => {
     setQuery({
@@ -145,5 +162,24 @@ export default function Wrap() {
     });
   };
 
-  return <Search onWorkTypeSelect={handleOnWorkTypeSelect} />;
+  const handleModeChange = (newMode) => {
+    const { mode, ...rest } = router.query;
+
+    router.push(
+      {
+        pathname: `/find/${newMode}`,
+        query: rest,
+      },
+      undefined,
+      { shallow: true }
+    );
+  };
+
+  return (
+    <Search
+      mode={mode}
+      onTabChange={handleModeChange}
+      onWorkTypeSelect={handleOnWorkTypeSelect}
+    />
+  );
 }

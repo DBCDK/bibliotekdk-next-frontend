@@ -85,6 +85,10 @@
   }
 
   .content {
-    padding: var(--pt4) 0;
+    padding: var(--pt4) 0 0 0;
+  }
+
+  .tabs {
+    justify-content: unset;
   }
 }

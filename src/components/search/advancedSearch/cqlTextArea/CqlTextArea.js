@@ -10,7 +10,6 @@ import {
   tokenize,
   validateTokens,
   highlight,
-  convertStateToCql,
 } from "@/components/utils/cql/parser";
 import Editor from "react-simple-code-editor";
 import { useData } from "@/lib/api/api";
@@ -23,6 +22,7 @@ import Link from "@/components/base/link";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import { convertStateToCql } from "../utils";
 
 /**
  * Wrapper-komponent: håndterer data, logik og eventhandlers

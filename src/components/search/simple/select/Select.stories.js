@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import { Desktop as Select } from "@/components/search/select/Select";
-import { Mobile as SelectMobile } from "@/components/search/select/Select";
+import { Desktop as Select } from "@/components/search/simple/select/Select";
+import { Mobile as SelectMobile } from "@/components/search/simple/select/Select";
 
 const exportedObject = {
   title: "search/Select",

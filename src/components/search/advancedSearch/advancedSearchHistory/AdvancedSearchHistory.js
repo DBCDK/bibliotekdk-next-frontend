@@ -6,7 +6,7 @@ import useAdvancedSearchHistory, {
 import styles from "./AdvancedSearchHistory.module.css";
 import Text from "@/components/base/text";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
-import { FormatFieldSearchIndexes } from "@/components/search/advancedSearch/advancedSearchResult/topBar/TopBar";
+import { FormatFieldSearchIndexes } from "@/components/search/advancedSearch/topBar/TopBar";
 import Link from "@/components/base/link/Link";
 import { useRouter } from "next/router";
 import isEmpty from "lodash/isEmpty";

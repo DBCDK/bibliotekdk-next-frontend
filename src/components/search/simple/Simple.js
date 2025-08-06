@@ -17,6 +17,7 @@ import Translate from "@/components/base/translate";
 import Button from "@/components/base/button";
 
 import styles from "./Simple.module.css";
+import { DesktopMaterialSelect } from "./select";
 
 export function SimpleSearch({
   query,
@@ -32,6 +33,7 @@ export function SimpleSearch({
 }) {
   return (
     <div className={styles.simplesearch}>
+      <DesktopMaterialSelect className={styles.select} />
       <Suggester
         className={styles.suggester}
         history={history}
@@ -99,7 +101,7 @@ export default function Wrap() {
     setQuery({
       include: newQ,
       exclude: ["page"],
-      pathname: "/find",
+      pathname: "/find/simpel",
       query: type,
       method,
     });

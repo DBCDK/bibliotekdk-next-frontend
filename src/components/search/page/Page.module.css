@@ -15,6 +15,11 @@
   width: fit-content;
 }
 
+.topbar-visible {
+  top: 0;
+  transition-duration: 0.3s;
+}
+
 @media (min-width: 992px) {
   .section {
     padding-top: var(--pt1);

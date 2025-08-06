@@ -92,7 +92,7 @@ export default function Wrap() {
       ...(suggesterTid?.length > 0 && { tid: suggesterTid }),
     };
 
-    router.push({ pathname: "/avanceret", query });
+    router.push({ pathname: "/find/avanceret", query });
 
     const cql = convertStateToCql({
       inputFields,

@@ -391,8 +391,6 @@ export default function Wrap(props) {
 
   const isMobileClass = isMobileSuggester ? styles.isMobile : "";
 
-  console.log("isMobileClass", isMobileClass);
-
   return (
     <div className={`${styles.container} ${isMobileClass} ${className}`}>
       <Suggester

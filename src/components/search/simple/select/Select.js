@@ -9,7 +9,7 @@ import styles from "./Select.module.css";
 import React from "react";
 import useQ from "@/components/hooks/useQ";
 import { useRouter } from "next/router";
-import FilterButton from "../filterButton";
+import FilterButton from "../../filterButton";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import cx from "classnames";
 

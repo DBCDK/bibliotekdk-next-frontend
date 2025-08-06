@@ -1,8 +1,10 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useRef, useEffect } from "react";
 
-import * as searchFragments from "@/lib/api/search.fragments";
-
+import Header from "@/components/header/Header";
+import Translate from "@/components/base/translate";
+import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 import useFilters, {
   getQuery as getQueryFilters,
 } from "@/components/hooks/useFilters";
@@ -10,42 +12,29 @@ import useQ, {
   types as typesQ,
   getQuery as getQueryQ,
 } from "@/components/hooks/useQ";
-import { fetchAll } from "@/lib/api/apiServerOnly";
 import { useData } from "@/lib/api/api";
-
+import * as searchFragments from "@/lib/api/search.fragments";
+import { fetchAll } from "@/lib/api/apiServerOnly";
 import useDataCollect from "@/lib/useDataCollect";
+import { SuggestTypeEnum } from "@/lib/enums";
 
 import Page from "@/components/search/page";
-import Translate from "@/components/base/translate";
 
-import Header from "@/components/header/Header";
-import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
-import { SuggestTypeEnum } from "@/lib/enums";
-import { useRef } from "react";
+export default function FindPage() {
+  const router = useRouter();
 
-/**
- * @file
- * This is the search page
- *
- */
-function Find() {
-  // To get correct hitcount we use the serverside supported getQuery instead of the local filters
+  const scrollRef = useRef();
   const filters = useFilters().getQuery();
   const q = useQ().getQuery();
   const dataCollect = useDataCollect();
-  const router = useRouter();
-  const scrollRef = useRef();
 
   const { page = 1 } = router.query;
 
-  // Add worktype and all q types to useCanonicalUrl func
   const { canonical, alternate } = useCanonicalUrl({
     preserveParams: ["workTypes", ...typesQ.map((t) => `q.${t}`)],
   });
 
-  // use the useData hook to fetch data
   const hitcountResponse = useData(searchFragments.hitcount({ q, filters }));
-
   const hits = hitcountResponse?.data?.search?.hitcount || 0;
 
   const context = { context: "metadata" };
@@ -72,20 +61,12 @@ function Find() {
     ref.current.scrollIntoView({ behavior: "smooth", block: "end" });
   }
 
-  /**
-   * Updates URL query params
-   *
-   * @param {Object} params
-   */
   async function updateQueryParams(params) {
     const query = { ...router.query, ...params };
 
     await router.push(
       { pathname: router.pathname, query },
-      {
-        pathname: router.asPath.replace(/\?.*/, ""),
-        query,
-      },
+      { pathname: router.asPath.replace(/\?.*/, ""), query },
       { shallow: true, scroll: false }
     );
   }
@@ -94,11 +75,7 @@ function Find() {
     <>
       <Head>
         <title key="title">{pageTitle}</title>
-        <meta
-          key="description"
-          name="description"
-          content={pageDescription}
-        ></meta>
+        <meta key="description" name="description" content={pageDescription} />
         <meta key="og:url" property="og:url" content={canonical.url} />
         <meta key="og:title" property="og:title" content={pageTitle} />
         <meta
@@ -106,14 +83,13 @@ function Find() {
           property="og:description"
           content={pageDescription}
         />
-        <link rel="preconnect" href="https://moreinfo.addi.dk"></link>
+        <link rel="preconnect" href="https://moreinfo.addi.dk" />
         {alternate.map(({ locale, url }) => (
           <link key={locale} rel="alternate" hreflang={locale} href={url} />
         ))}
       </Head>
 
       <Header router={router} />
-
       <div ref={scrollRef} />
 
       <Page
@@ -135,17 +111,28 @@ function Find() {
   );
 }
 
-Find.getInitialProps = (ctx) => {
-  // Build a filters object based on the context query
+// SSR-support
+FindPage.getInitialProps = async (ctx) => {
+  const mode = ctx.query.mode || ctx.params?.mode;
+  console.log("✅ SSR mode:", mode);
+
+  const validModes = ["simpel", "avanceret", "cql"];
+  if (!validModes.includes(mode)) {
+    if (ctx.res) {
+      ctx.res.writeHead(302, { Location: "/find/simpel" });
+      ctx.res.end();
+    }
+    return {};
+  }
+
   const queryFilters = getQueryFilters(ctx.query);
-  // Get correct structured q params from query
   const queryQ = getQueryQ(ctx.query);
-  // Appends a custom query filters object containing all materialfilters
-  // The filters object can now be read by the search.fragments
-  return fetchAll([searchFragments.hitcount], ctx, {
+
+  const modeForFetch = mode === "cql" ? "avanceret" : mode;
+
+  return await fetchAll([searchFragments.hitcount], ctx, {
     filters: queryFilters,
     q: queryQ,
+    mode: modeForFetch,
   });
 };
-
-export default Find;

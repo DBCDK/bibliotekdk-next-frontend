@@ -17,6 +17,11 @@
   height: var(--pt7);
 }
 
+.select {
+  white-space: nowrap;
+  height: var(--pt7);
+}
+
 @media (min-width: 992px) {
   .button {
     width: 125px;
