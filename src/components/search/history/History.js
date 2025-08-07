@@ -39,10 +39,12 @@ export default function Wrap() {
   const [history] = useHistory();
   const router = useRouter();
 
+  const { mode } = router.query;
+
   const handleSelect = (term) => {
     const params = new URLSearchParams(router.query);
     params.set("q.all", term);
-    router.push(`/find?${params.toString()}`);
+    router.push(`/find/${mode}?${params.toString()}`);
   };
 
   return <History items={history} onSelect={handleSelect} />;

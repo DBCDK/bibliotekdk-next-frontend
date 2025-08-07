@@ -114,10 +114,6 @@
   height: var(--pt5);
 }
 
-.inputTitle {
-  margin-bottom: var(--pt2);
-}
-
 .trashAndSuggester {
   display: flex;
   width: 100%;
@@ -151,10 +147,6 @@
     margin-top: var(--pt1);
     display: block;
   }
-
-  .inputTitle {
-    display: none;
-  }
 }
 
 /* 463 px down */
@@ -166,9 +158,5 @@
 
   .inputContainer {
     flex-wrap: wrap;
-  }
-
-  .inputTitle {
-    display: none;
   }
 }

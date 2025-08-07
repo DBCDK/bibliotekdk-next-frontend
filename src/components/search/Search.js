@@ -163,7 +163,7 @@ export default function Wrap() {
   };
 
   const handleModeChange = (newMode) => {
-    const { mode, ...rest } = router.query;
+    const { mode, ...rest } = router.query; // eslint-disable-line no-unused-vars
 
     router.push(
       {

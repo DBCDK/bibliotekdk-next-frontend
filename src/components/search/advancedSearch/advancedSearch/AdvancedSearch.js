@@ -12,7 +12,6 @@ import DropdownInputs from "@/components/search/advancedSearch/dropdownInputs/Dr
 import Button from "@/components/base/button";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
-import { getHelpUrl } from "@/lib/utils";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";

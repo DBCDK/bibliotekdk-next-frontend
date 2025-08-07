@@ -37,7 +37,7 @@ function FormattedQuery({ children }) {
   );
 }
 
-function FormatFieldSearchIndexes({ fieldsearch, children }) {
+export function FormatFieldSearchIndexes({ fieldsearch, children }) {
   const filteredDropdownSearchIndices =
     fieldsearch?.dropdownSearchIndices?.filter((d) => !isEmpty(d.value));
   const filteredInputFields = fieldsearch?.inputFields?.filter(
@@ -87,7 +87,7 @@ function FormatFieldInput({ inputFields, showAndOperator }) {
           })}
           :
         </Text>
-        <Text type="text2">"{field.value}"</Text>
+        <Text type="text2">{`"${field.value}"`}</Text>
       </>
     );
   });

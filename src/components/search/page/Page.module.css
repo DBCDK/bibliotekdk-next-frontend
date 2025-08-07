@@ -2,10 +2,6 @@
   padding-top: var(--pt2);
 }
 
-.section.noRelatedSubjects {
-  padding-top: var(--pt1);
-}
-
 .section :global(.section-title) {
   padding-bottom: 0;
 }
@@ -25,14 +21,7 @@
     padding-top: var(--pt1);
   }
 
-  .section.noRelatedSubjects {
-    padding-top: unset;
-  }
-
   .filterButton:not(.visible) {
     display: none;
-  }
-
-  .visible {
   }
 }

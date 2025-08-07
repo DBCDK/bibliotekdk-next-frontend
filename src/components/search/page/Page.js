@@ -38,11 +38,13 @@ import translate from "@/components/base/translate";
 import isEmpty from "lodash/isEmpty";
 import cx from "classnames";
 import styles from "./Page.module.css";
+import { useRouter } from "next/router";
 
 // -------------------------------
 // UI-komponent: kun rendering
 // -------------------------------
 function Page({
+  mode,
   page,
   hitcount,
   isLoading,
@@ -59,6 +61,8 @@ function Page({
   const isMobile = ["xs", "sm", "md"].includes(breakpoint);
   const currentPage = parseInt(page, 10) || 1;
   const numPages = Math.ceil(hitcount / 10);
+
+  const isSimple = mode === "simple";
 
   const searchRef = useRef();
   const [showTopBar, setShowTopBar] = useState(false);
@@ -103,7 +107,7 @@ function Page({
         id="search-result-section"
         className={styles.section}
         title={
-          hasAdvancedSearch ? (
+          hasAdvancedSearch && !isSimple ? (
             <div>
               <FacetButton cql={rawcql} isLoading={isLoading} />
               <div className={styles.mobileTags}>
@@ -130,7 +134,8 @@ function Page({
           )
         }
         subtitle={
-          hasAdvancedSearch && (
+          hasAdvancedSearch &&
+          !isSimple && (
             <div className={styles.facetsContainer}>
               <FacetTags selectedFacets={selectedFacets} />
               <div className={styles.subtitleStyle}>
@@ -202,6 +207,9 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
   const { getQuery, hasQuery } = useQ();
   const { filters } = useFilters();
   const q = getQuery();
+  const router = useRouter();
+
+  const { mode } = router.query;
 
   const advCtx = useAdvancedSearchContext();
   const { selectedFacets } = useFacets();
@@ -265,6 +273,7 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
 
   return (
     <Page
+      mode={mode}
       page={page}
       hitcount={hitcount}
       isLoading={isLoading}

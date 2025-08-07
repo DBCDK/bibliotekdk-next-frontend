@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 
 import Header from "@/components/header/Header";
 import Translate from "@/components/base/translate";
@@ -114,7 +114,6 @@ export default function FindPage() {
 // SSR-support
 FindPage.getInitialProps = async (ctx) => {
   const mode = ctx.query.mode || ctx.params?.mode;
-  console.log("✅ SSR mode:", mode);
 
   const validModes = ["simpel", "avanceret", "cql"];
   if (!validModes.includes(mode)) {
