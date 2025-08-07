@@ -49,11 +49,6 @@ export function getInitialInputFields(workType = "all") {
   const inputFieldsByMaterialType = {
     all: [
       { value: "", prefixLogicalOperator: null, searchIndex: "term.default" },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.default",
-      },
     ],
     literature: [
       {

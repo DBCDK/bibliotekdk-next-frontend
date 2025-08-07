@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import styles from "./SavedSearches.module.css";
 import Text from "@/components/base/text";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
-import { FormatFieldSearchIndexes } from "@/components/search/advancedSearch/advancedSearchResult/topBar/TopBar";
+import { FormatFieldSearchIndexes } from "@/components/search/advancedSearch/topBar/TopBar";
 import isEmpty from "lodash/isEmpty";
 import Translate from "@/components/base/translate";
 import Title from "@/components/base/title/Title";

@@ -7,7 +7,7 @@ import Translate from "@/components/base/translate";
 
 import Button from "@/components/base/button/Button";
 import { LogicalOperatorDropDown } from "@/components/search/advancedSearch/fieldInput/TextInputs";
-import { FormatFieldSearchIndexes } from "../advancedSearchResult/topBar/TopBar";
+import { FormatFieldSearchIndexes } from "../topBar/TopBar";
 import { FormatedFilters } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";

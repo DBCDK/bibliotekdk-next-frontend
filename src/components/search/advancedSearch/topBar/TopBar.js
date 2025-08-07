@@ -1,3 +1,4 @@
+// TopBar.js
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import styles from "./TopBar.module.css";
 import Container from "react-bootstrap/Container";
@@ -14,16 +15,12 @@ import { useModal } from "@/components/_modal";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 
-/**
- *
- * Returns query in a human readable way.
- */
 function FormattedQuery({ children }) {
   const { cqlFromUrl, fieldSearchFromUrl } = useAdvancedSearchContext();
+  const { inputFields, dropdownSearchIndices, workType } =
+    fieldSearchFromUrl || {};
 
-  const { inputFields, dropdownSearchIndices, workType } = fieldSearchFromUrl;
-
-  if (!!cqlFromUrl) {
+  if (cqlFromUrl) {
     return (
       <div className={styles.formatedQueryContainer}>
         <Text type="text2">{cqlFromUrl}</Text>
@@ -32,28 +29,19 @@ function FormattedQuery({ children }) {
     );
   }
 
-  const fieldsearch = {
-    inputFields,
-    dropdownSearchIndices,
-    workType: workType,
-  };
-
+  const fieldsearch = { inputFields, dropdownSearchIndices, workType };
   return (
     <FormatFieldSearchIndexes fieldsearch={fieldsearch}>
       {children}
     </FormatFieldSearchIndexes>
   );
-  // return FormatFieldSearchIndexes({ fieldsearch });
 }
 
 export function FormatFieldSearchIndexes({ fieldsearch, children }) {
-  //TODO: do this in context instead
   const filteredDropdownSearchIndices =
-    fieldsearch?.dropdownSearchIndices?.filter(
-      (dropdown) => !isEmpty(dropdown.value)
-    );
+    fieldsearch?.dropdownSearchIndices?.filter((d) => !isEmpty(d.value));
   const filteredInputFields = fieldsearch?.inputFields?.filter(
-    (field) => !isEmpty(field.value)
+    (f) => !isEmpty(f.value)
   );
 
   return (
@@ -76,19 +64,12 @@ export function FormatFieldSearchIndexes({ fieldsearch, children }) {
 
 function FormatFieldInput({ inputFields, showAndOperator }) {
   return inputFields?.map((field, index) => {
-    const isEmpty = field?.value?.length === 0;
-    if (isEmpty) {
-      return null;
-    }
-
+    if (!field?.value) return null;
     return (
       <>
         {index === 0 && showAndOperator && (
           <Text type="text2" className={styles.operator_color}>
-            {Translate({
-              context: "search",
-              label: `advanced-dropdown-AND`,
-            })}
+            {Translate({ context: "search", label: `advanced-dropdown-AND` })}
           </Text>
         )}
         {field.prefixLogicalOperator && index !== 0 && (
@@ -106,7 +87,6 @@ function FormatFieldInput({ inputFields, showAndOperator }) {
           })}
           :
         </Text>
-
         <Text type="text2">{`"${field.value}"`}</Text>
       </>
     );
@@ -114,53 +94,34 @@ function FormatFieldInput({ inputFields, showAndOperator }) {
 }
 
 function FormatWorkType({ workType }) {
-  if (!workType) {
-    return null;
-  }
+  if (!workType) return null;
   return (
     <>
       <Text type="text1">
-        {Translate({
-          context: "advanced_search_worktypes",
-          label: "category",
-        })}
+        {Translate({ context: "advanced_search_worktypes", label: "category" })}
         :
       </Text>
       <Text type="text2">
-        {`${Translate({
-          context: "advanced_search_worktypes",
-          label: workType,
-        })}`}
+        {Translate({ context: "advanced_search_worktypes", label: workType })}
       </Text>
-      {/* {showAndOperator&&<Text type="text2" className={styles.operator_color}>
-        {Translate({
-          context: "search",
-          label: `advanced-dropdown-AND`,
-        })}
-      </Text>} */}
     </>
   );
 }
 
 function FormatDropdowns({ dropdowns, showAndOperator }) {
   return dropdowns?.map((dropdownItem, index) => {
+    if (!dropdownItem?.value) return null;
+
     const { getSelectedPresentation } = formattersAndComparitors(
       dropdownItem.searchIndex
     );
     const isLastItem = index === dropdowns.length - 1;
-    const isEmpty = dropdownItem?.value?.length === 0;
 
-    if (isEmpty) {
-      return null;
-    }
     return (
       <>
         {index === 0 && showAndOperator && (
           <Text type="text2" className={styles.operator_color}>
-            {Translate({
-              context: "search",
-              label: `advanced-dropdown-AND`,
-            })}
+            {Translate({ context: "search", label: `advanced-dropdown-AND` })}
           </Text>
         )}
         <Text type="text1">
@@ -171,9 +132,8 @@ function FormatDropdowns({ dropdowns, showAndOperator }) {
           :
         </Text>
         <Text type="text2">
-          {dropdownItem?.value
-            ?.map((val, i) => {
-              //if first item capitalize
+          {dropdownItem.value
+            .map((val, i) => {
               const value = getSelectedPresentation(val.value);
               return i === 0
                 ? value.charAt(0).toUpperCase() + value.slice(1)
@@ -183,10 +143,7 @@ function FormatDropdowns({ dropdowns, showAndOperator }) {
         </Text>
         {!isLastItem && (
           <Text type="text2" className={styles.operator_color}>
-            {Translate({
-              context: "search",
-              label: `advanced-dropdown-AND`,
-            })}
+            {Translate({ context: "search", label: `advanced-dropdown-AND` })}
           </Text>
         )}
       </>
@@ -194,120 +151,101 @@ function FormatDropdowns({ dropdowns, showAndOperator }) {
   });
 }
 
-export default function TopBar({ isLoading = false, searchHistoryObj }) {
+export default function TopBar({
+  isLoading = false,
+  className = "",
+  searchHistoryObj,
+}) {
   const modal = useModal();
   const { isAuthenticated } = useAuthentication();
-
-  const { setShowPopover } = useAdvancedSearchContext();
-
   const { deleteSearches, useSavedSearchByCql } = useSavedSearches();
 
-  //check if search has already been saved in userdata
   const { savedObject, mutate } = useSavedSearchByCql({
     cql: searchHistoryObj.key,
   });
   const isSaved = !!savedObject?.id;
 
   const onSaveSearchClick = async (e) => {
-    e.stopPropagation(); // Prevent the accordion from expanding
+    e.stopPropagation();
     if (isSaved) {
-      //remove search
       await deleteSearches({ idsToDelete: [savedObject?.id] });
       mutate();
     } else {
-      //open save search modal
-      modal.push("saveSearch", {
-        item: searchHistoryObj,
-        onSaveDone: mutate,
-      });
+      modal.push("saveSearch", { item: searchHistoryObj, onSaveDone: mutate });
     }
   };
 
-  /**
-   * When unauthenticated user clicks the 'save search' link we go to login page.
-   */
   const onSaveSearchLogin = (e) => {
-    // Prevent the accordion from expanding
     e.stopPropagation();
     openLoginModal({ modal });
   };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <Container
-      fluid
-      className={styles.container}
-      onClick={() => {
-        setShowPopover(true);
-      }}
-    >
-      <Row>
-        <Col xs={12} lg={2} className={styles.your_search}>
-          <Text type="text1">
-            {Translate({ context: "search", label: "yourSearch" })}
-          </Text>
-        </Col>
-        <Col
-          xs={12}
-          lg={{ offset: 1, span: true }}
-          className={styles.edit_search}
-        >
-          <FormattedQuery>
-            <Link
-              onClick={() => {
-                setShowPopover(true);
-              }}
-              border={{
-                top: false,
-                bottom: {
-                  keepVisible: true,
-                },
-              }}
-            >
-              <Text
-                type="text3"
-                tag="span"
-                skeleton={isLoading}
-                className={styles.editSearchDesktop}
-              >
-                {Translate({ context: "search", label: "edit" })}
-              </Text>
-            </Link>
-          </FormattedQuery>
-        </Col>
+    <div className={`${styles.topBar} ${className}`}>
+      <Container fluid className={styles.container}>
+        <Row>
+          <Col xs={12} lg={2} className={styles.your_search}>
+            <Text type="text1">
+              {Translate({ context: "search", label: "yourSearch" })}
+            </Text>
+          </Col>
 
-        <Col xs={12} lg={2} className={styles.saveSearchButton}>
-          <div className={styles.flexSwitchMobile}>
-            <Link
-              onClick={() => {
-                setShowPopover(true);
-              }}
-              border={{
-                top: false,
-                bottom: {
-                  keepVisible: true,
-                },
-              }}
-            >
-              <Text
-                type="text3"
-                tag="span"
-                skeleton={isLoading}
-                className={styles.editSearchMobile}
+          <Col
+            xs={12}
+            lg={{ offset: 1, span: true }}
+            className={styles.edit_search}
+          >
+            <FormattedQuery>
+              <Link
+                onClick={scrollToTop}
+                border={{ top: false, bottom: { keepVisible: true } }}
               >
-                {Translate({ context: "search", label: "editSearch" })}
-              </Text>
-            </Link>
+                <Text
+                  type="text3"
+                  tag="span"
+                  skeleton={isLoading}
+                  className={styles.editSearchDesktop}
+                >
+                  {Translate({ context: "search", label: "edit" })}
+                </Text>
+              </Link>
+            </FormattedQuery>
+          </Col>
 
-            <IconButton
-              className={styles.saveSearchPaddingTop}
-              onClick={isAuthenticated ? onSaveSearchClick : onSaveSearchLogin}
-              icon={`${isSaved ? "heart_filled" : "heart"}`}
-              keepUnderline
-            >
-              {Translate({ context: "search", label: "saveSearch" })}
-            </IconButton>
-          </div>
-        </Col>
-      </Row>
-    </Container>
+          <Col xs={12} lg={2} className={styles.saveSearchButton}>
+            <div className={styles.flexSwitchMobile}>
+              <Link
+                onClick={scrollToTop}
+                border={{ top: false, bottom: { keepVisible: true } }}
+              >
+                <Text
+                  type="text3"
+                  tag="span"
+                  skeleton={isLoading}
+                  className={styles.editSearchMobile}
+                >
+                  {Translate({ context: "search", label: "editSearch" })}
+                </Text>
+              </Link>
+
+              <IconButton
+                className={styles.saveSearchPaddingTop}
+                onClick={
+                  isAuthenticated ? onSaveSearchClick : onSaveSearchLogin
+                }
+                icon={isSaved ? "heart_filled" : "heart"}
+                keepUnderline
+              >
+                {Translate({ context: "search", label: "saveSearch" })}
+              </IconButton>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 }

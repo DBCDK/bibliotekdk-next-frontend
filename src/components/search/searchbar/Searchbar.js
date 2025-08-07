@@ -4,7 +4,7 @@ import { useModal } from "@/components/_modal";
 import FakeSearchInput from "@/components/search/simple/suggester/fakesearchinput/FakeSearchInput";
 import Section from "@/components/base/section";
 import styles from "./Searchbar.module.css";
-import { MobileMaterialSelect } from "@/components/search/select";
+import { MobileMaterialSelect } from "@/components/search/simple/select";
 import React from "react";
 import Link from "@/components/base/link";
 import Translate from "@/components/base/translate";

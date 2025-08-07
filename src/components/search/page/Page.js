@@ -1,161 +1,296 @@
+import { useRef, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-
+import { useData } from "@/lib/api/api";
 import Pagination from "@/components/search/pagination/Pagination";
 import Section from "@/components/base/section";
-import { useData } from "@/lib/api/api";
-import * as searchFragments from "@/lib/api/search.fragments";
-import useFilters from "@/components/hooks/useFilters";
-import useQ from "@/components/hooks/useQ";
-
-import { subjects } from "@/lib/api/relatedSubjects.fragments";
-
-import FilterButton from "../filterButton";
+import Result from "@/components/search/result";
+import Search from "@/components/search/Search";
+import History from "@/components/search/history";
+import FilterButton from "@/components/search/filterButton";
+import { NoHitSearch } from "@/components/search/advancedSearch/noHitSearch/NoHitSearch";
 
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import useQ from "@/components/hooks/useQ";
+import useFilters from "@/components/hooks/useFilters";
+import useAdvancedSearchHistory from "@/components/hooks/useAdvancedSearchHistory";
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
+import { useFacets } from "@/components/search/advancedSearch/useFacets";
+import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
+import {
+  getCqlAndFacetsQuery,
+  convertStateToCql,
+} from "@/components/search/advancedSearch/utils";
 
-import ResultPage from "../result";
+import * as searchFragments from "@/lib/api/search.fragments";
+import { hitcount as advancedHitcount } from "@/lib/api/complexSearch.fragments";
 
+import AdvancedSearchSort from "@/components/search/advancedSearch/advancedSearchSort/AdvancedSearchSort";
+import TopBar from "@/components/search/advancedSearch/topBar/TopBar";
+import AdvancedFacets from "@/components/search/advancedSearch/facets/advancedFacets";
+import QuickFilter from "@/components/search/advancedSearch/quickfilter/QuickFilter";
+import { FacetTags } from "@/components/search/advancedSearch/facets/facetTags/facetTags";
+import { FacetButton } from "@/components/search/advancedSearch/facets/facetButton/facetButton";
+
+import Title from "@/components/base/title";
+import Text from "@/components/base/text";
+import translate from "@/components/base/translate";
+
+import isEmpty from "lodash/isEmpty";
+import cx from "classnames";
 import styles from "./Page.module.css";
-import { NoHitSearch } from "@/components/search/advancedSearch/advancedSearchResult/noHitSearch/NoHitSearch";
-import Search from "../Search";
-import useHistory from "@/components/hooks/useHistory";
-import History from "@/components/search/history";
+import { useRouter } from "next/router";
 
-/**
- * Search result
- *
- * @param {Object} props
- * See propTypes for specific props and types
- */
-export function Result({
-  q,
+// -------------------------------
+// UI-komponent: kun rendering
+// -------------------------------
+function Page({
+  mode,
   page,
+  hitcount,
   isLoading,
-  hitcount = 0,
   onWorkClick,
   onPageChange,
-  noRelatedSubjects,
+  hasAdvancedSearch,
+  hasQuery,
+  q,
+  rawcql,
+  advancedCql,
+  selectedFacets,
 }) {
   const breakpoint = useBreakpoint();
-  const isMobile = breakpoint === "xs" || breakpoint === "sm" || false;
-  const isTablet = breakpoint === "md";
-  const isDesktop = breakpoint === "lg" || breakpoint === "xl";
-
+  const isMobile = ["xs", "sm", "md"].includes(breakpoint);
+  const currentPage = parseInt(page, 10) || 1;
   const numPages = Math.ceil(hitcount / 10);
 
-  const noRelatedSubjectsClass = noRelatedSubjects
-    ? styles.noRelatedSubjects
-    : "";
+  const isSimple = mode === "simple";
 
-  const shouldShowHistory = !q?.all;
+  const searchRef = useRef();
+  const [showTopBar, setShowTopBar] = useState(false);
 
-  const shouldShowNoHit = q?.all && hitcount === 0;
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setShowTopBar(!entry.isIntersecting);
+      },
+      {
+        root: null,
+        threshold: 0,
+        rootMargin: "-150px 0px 0px 0px",
+      }
+    );
+
+    const current = searchRef.current;
+    if (current) observer.observe(current);
+
+    return () => {
+      if (current) observer.unobserve(current);
+    };
+  }, []);
 
   return (
-    <main>
+    <>
+      <TopBar
+        isLoading={isLoading}
+        searchHistoryObj={{ key: advancedCql }}
+        className={showTopBar ? styles["topbar-visible"] : ""}
+      />
+
       <Search />
+      <div ref={searchRef} />
 
       <Section
-        className={`${styles.section} ${noRelatedSubjectsClass}`}
         divider={false}
+        colSize={{
+          lg: { offset: 0, span: true },
+          titel: { lg: { offset: 3, span: true } },
+        }}
+        id="search-result-section"
+        className={styles.section}
         title={
-          !isLoading && !isTablet && hitcount > 0 ? (
-            <FilterButton
-              className={`${styles.filterButton} ${styles.visible}`}
-            />
+          hasAdvancedSearch && !isSimple ? (
+            <div>
+              <FacetButton cql={rawcql} isLoading={isLoading} />
+              <div className={styles.mobileTags}>
+                <FacetTags />
+              </div>
+              <div className={styles.titleflex}>
+                <div className={styles.borderTitleTop}></div>
+                <Title type="title5" skeleton={isLoading}>
+                  {hitcount}
+                </Title>
+                <Text
+                  type="text3"
+                  className={styles.titleStyle}
+                  skeleton={isLoading}
+                >
+                  {translate({ context: "search", label: "title" })}
+                </Text>
+              </div>
+            </div>
+          ) : !isLoading && hitcount > 0 ? (
+            <FilterButton className={styles.filterButton} />
           ) : (
             <span />
           )
         }
-        rightSideTitle={isDesktop}
-        colSize={{ lg: { offset: 3, span: true } }}
-        id="search-result-section"
+        subtitle={
+          hasAdvancedSearch &&
+          !isSimple && (
+            <div className={styles.facetsContainer}>
+              <FacetTags selectedFacets={selectedFacets} />
+              <div className={styles.subtitleStyle}>
+                <Text type="text1">
+                  {translate({ context: "search", label: "narrow-search" })}
+                </Text>
+              </div>
+              <QuickFilter />
+              <AdvancedFacets cql={advancedCql} />
+            </div>
+          )
+        }
+        sectionContentClass={
+          hasAdvancedSearch && isMobile ? styles.sectionContentStyle : ""
+        }
+        sectionTitleClass={hasAdvancedSearch ? styles.sectionTitleClass : ""}
       >
-        {!isLoading && shouldShowHistory && <History />}
-        {!isLoading && shouldShowNoHit && <NoHitSearch isSimpleSearch={true} />}
+        {!isLoading && !hasAdvancedSearch && !q?.all && <History />}
+        {!isLoading && hasQuery && hitcount === 0 && (
+          <NoHitSearch isSimpleSearch={!hasAdvancedSearch} />
+        )}
 
-        {Array(isMobile ? page : 1)
-          .fill({})
-          .map((p, index) => (
-            <ResultPage
-              key={`result-page-${index}`}
-              page={isMobile ? index + 1 : page}
-              onWorkClick={onWorkClick}
-            />
-          ))}
+        {hasAdvancedSearch && hitcount > 0 && (
+          <div className={cx(styles.sort_wrapper)}>
+            <AdvancedSearchSort className={cx(styles.sort_container)} />
+          </div>
+        )}
+
+        <div>
+          {Array(isMobile ? currentPage : 1)
+            .fill({})
+            .map((_, index) => (
+              <Result
+                key={`result-${index}`}
+                page={isMobile ? index + 1 : currentPage}
+                onWorkClick={onWorkClick}
+              />
+            ))}
+        </div>
       </Section>
       {hitcount > 0 && (
         <Pagination
+          currentPage={currentPage}
           numPages={numPages}
-          currentPage={parseInt(page, 10)}
           onChange={onPageChange}
         />
       )}
-    </main>
+    </>
   );
 }
 
-Result.propTypes = {
-  q: PropTypes.object,
+Page.propTypes = {
   page: PropTypes.number,
-  isLoading: PropTypes.bool,
   hitcount: PropTypes.number,
-  viewSelected: PropTypes.string,
-  onViewSelect: PropTypes.func,
+  isLoading: PropTypes.bool,
   onWorkClick: PropTypes.func,
+  onPageChange: PropTypes.func,
+  hasAdvancedSearch: PropTypes.bool,
+  q: PropTypes.object,
+  rawcql: PropTypes.string,
+  advancedCql: PropTypes.string,
+  selectedFacets: PropTypes.array,
 };
 
-/**
- * Wrap is a react component responsible for loading
- * data and displaying the right variant of the component
- *
- * @param {Object} props Component props
- * See propTypes for specific props and types
- *
- * @returns {React.JSX.Element}
- */
-export default function Wrap({ page, onWorkClick, onPageChange }) {
+// -------------------------------
+// Wrap-komponent: data + props
+// -------------------------------
+export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
   const { getQuery, hasQuery } = useQ();
-  const q = getQuery();
   const { filters } = useFilters();
+  const q = getQuery();
+  const router = useRouter();
 
-  // use the useData hook to fetch data
-  const fastResponse = useData(
-    hasQuery && searchFragments.hitcount({ q, filters })
+  const { mode } = router.query;
+
+  const advCtx = useAdvancedSearchContext();
+  const { selectedFacets } = useFacets();
+  const { selectedQuickFilters } = useQuickFilters();
+  const { setValue } = useAdvancedSearchHistory();
+
+  const hasAdvancedSearch =
+    !isEmpty(advCtx?.fieldSearchFromUrl) || !isEmpty(advCtx?.cqlFromUrl);
+
+  const simpleQuery = hasQuery && searchFragments.hitcount({ q, filters });
+
+  const cql = advCtx?.cqlFromUrl;
+  const fieldSearch = advCtx?.fieldSearchFromUrl;
+
+  const cqlAndFacetsQuery = getCqlAndFacetsQuery({
+    cql,
+    selectedFacets,
+    quickFilters: selectedQuickFilters,
+  });
+
+  const fieldSearchQuery = convertStateToCql(fieldSearch);
+
+  const advancedCql =
+    cqlAndFacetsQuery ||
+    convertStateToCql({
+      ...fieldSearch,
+      facets: selectedFacets,
+      quickFilters: selectedQuickFilters,
+    });
+
+  const rawcql = cqlAndFacetsQuery ? cql : fieldSearchQuery;
+
+  const simpleRes = useData(!hasAdvancedSearch && simpleQuery);
+  const advancedRes = useData(
+    hasAdvancedSearch && advancedHitcount({ cql: advancedCql })
   );
 
-  // prioritized q type to get related subjects for
-  const query = q.subject || q.all || q.title || q.creator;
+  const hitcount = hasAdvancedSearch
+    ? advancedRes?.data?.complexSearch?.hitcount || 0
+    : simpleRes?.data?.search?.hitcount || 0;
 
-  const relatedSubjects = useData(query && subjects({ q: [query], limit: 7 }));
+  const isLoading = hasAdvancedSearch
+    ? advancedRes.isLoading
+    : simpleRes.isLoading;
 
-  const [history] = useHistory();
-
-  if (fastResponse.error) {
-    return null;
-  }
-
-  if (fastResponse.isLoading) {
-    return <Result page={page} isLoading={true} />;
+  if (
+    hasAdvancedSearch &&
+    !advancedRes?.error &&
+    !advancedRes?.isLoading &&
+    (cqlAndFacetsQuery || fieldSearchQuery)
+  ) {
+    setValue({
+      key: advancedCql,
+      hitcount,
+      fieldSearch,
+      cql: rawcql,
+      selectedFacets,
+      selectedQuickFilters,
+    });
   }
 
   return (
-    <Result
-      q={q}
+    <Page
+      mode={mode}
       page={page}
-      history={history}
-      noRelatedSubjects={!relatedSubjects?.data?.relatedSubjects?.length > 0}
-      isLoading={relatedSubjects.isLoading}
-      hitcount={fastResponse?.data?.search?.hitcount}
+      hitcount={hitcount}
+      isLoading={isLoading}
       onWorkClick={onWorkClick}
       onPageChange={onPageChange}
+      hasQuery={hasQuery}
+      hasAdvancedSearch={hasAdvancedSearch}
+      q={q}
+      rawcql={rawcql}
+      advancedCql={advancedCql}
+      selectedFacets={selectedFacets}
     />
   );
 }
 
 Wrap.propTypes = {
   page: PropTypes.number,
-  viewSelected: PropTypes.string,
-  onViewSelect: PropTypes.func,
+  onPageChange: PropTypes.func,
   onWorkClick: PropTypes.func,
 };

@@ -1,30 +1,37 @@
 import PropTypes from "prop-types";
-import ResultRow from "./row";
 import { Fragment, useEffect } from "react";
+import ResultRow from "./row";
+import SearchFeedBack from "@/components/base/searchfeedback";
+
 import { useData } from "@/lib/api/api";
 import * as searchFragments from "@/lib/api/search.fragments";
-import useFilters from "@/components/hooks/useFilters";
+import * as complexSearchFragments from "@/lib/api/complexSearch.fragments";
+
 import useQ from "@/components/hooks/useQ";
-import SearchFeedBack from "@/components/base/searchfeedback";
+import useFilters from "@/components/hooks/useFilters";
 import useDataCollect from "@/lib/useDataCollect";
 
-/**
- * Row representation of a search result entry
- *
- * @param {Object} props
- * See propTypes for specific props and types
- */
-export function ResultPage({ rows, onWorkClick, isLoading }) {
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
+import { useFacets } from "@/components/search/advancedSearch/useFacets";
+import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
+import {
+  getCqlAndFacetsQuery,
+  convertStateToCql,
+} from "@/components/search/advancedSearch/utils";
+
+import isEmpty from "lodash/isEmpty";
+
+//
+// ✅ UI-KOMPONENT: Rækker og feedback
+//
+export function Result({ rows, isLoading, onWorkClick, showFeedback = true }) {
   if (isLoading) {
-    // Create some skeleton rows
     rows = Array(10).fill({});
   }
 
-  if (!rows) {
-    return null;
-  }
+  if (!rows) return null;
 
-  return rows?.map((row, index) => (
+  return rows.map((row, index) => (
     <Fragment key={row.workId + ":" + index}>
       <ResultRow
         isLoading={isLoading}
@@ -32,74 +39,104 @@ export function ResultPage({ rows, onWorkClick, isLoading }) {
         key={`${row?.titles?.main}_${index}`}
         onClick={onWorkClick && (() => onWorkClick(index, row))}
       />
-      {index === 0 && <SearchFeedBack />}
+      {index === 0 && showFeedback && <SearchFeedBack />}
     </Fragment>
   ));
 }
 
-ResultPage.propTypes = {
+Result.propTypes = {
   rows: PropTypes.array,
   isLoading: PropTypes.bool,
   onWorkClick: PropTypes.func,
+  showFeedback: PropTypes.bool,
 };
 
-/**
- * Wrap is a react component responsible for loading
- * data and displaying the right variant of the component
- *
- * @param {Object} props Component props
- * See propTypes for specific props and types
- *
- * @returns {React.JSX.Element}
- */
-export default function Wrap({ page, onWorkClick }) {
-  // settings
-  const limit = 10; // limit
-  let offset = limit * (page - 1); // offset
+//
+// ✅ WRAP-KOMPONENT: henter data og vælger visning
+//
+export default function Wrap({ page = 1, onWorkClick }) {
+  const limit = 10;
+  let offset = limit * (page - 1);
 
+  // === Avanceret søgning ===
+  const advCtx = useAdvancedSearchContext();
+  const { selectedFacets } = useFacets();
+  const { selectedQuickFilters } = useQuickFilters();
+
+  const { cqlFromUrl, fieldSearchFromUrl, sort } = advCtx || {};
+  const hasAdvancedSearch =
+    !isEmpty(fieldSearchFromUrl) || !isEmpty(cqlFromUrl);
+
+  const cqlAndFacetsQuery = getCqlAndFacetsQuery({
+    cql: cqlFromUrl,
+    selectedFacets,
+    quickFilters: selectedQuickFilters,
+  });
+
+  const cqlQuery =
+    cqlAndFacetsQuery ||
+    convertStateToCql({
+      ...fieldSearchFromUrl,
+      facets: selectedFacets,
+      quickFilters: selectedQuickFilters,
+    });
+
+  const complexResponse = useData(
+    hasAdvancedSearch &&
+      complexSearchFragments.doComplexSearchAll({
+        cql: cqlQuery,
+        offset,
+        limit,
+        ...(!isEmpty(sort) && { sort }),
+      })
+  );
+
+  // === Simpel søgning ===
   const { filters, isSynced } = useFilters();
   const { getQuery, hasQuery } = useQ();
   const dataCollect = useDataCollect();
 
   const q = getQuery();
+  if (!isSynced) offset = 0;
 
-  if (!isSynced) {
-    offset = 0;
-  }
-
-  // use the useData hook to fetch data
-  const allResponse = useData(
+  const simpleResponse = useData(
     hasQuery && searchFragments.all({ q, limit, offset, filters })
   );
 
-  // This useEffect is responsible for collecting data about the search response.
-  // The effect is run, when search response is fetched and shown to the user.
+  // === Tracking for simpel søgning ===
   useEffect(() => {
-    if (allResponse?.data) {
+    if (!hasAdvancedSearch && simpleResponse?.data) {
       dataCollect.collectSearch({
-        search_request: {
-          q,
-          filters,
-        },
+        search_request: { q, filters },
         search_response_works:
-          allResponse?.data?.search?.works?.map((w) => w.workId) || [],
+          simpleResponse?.data?.search?.works?.map((w) => w.workId) || [],
         search_offset: offset,
       });
     }
-  }, [allResponse?.data]);
+  }, [simpleResponse?.data, hasAdvancedSearch]);
 
-  if (allResponse.error) {
-    return null;
-  }
+  // === Fejlhåndtering ===
+  if (!hasAdvancedSearch && simpleResponse?.error) return null;
 
-  const data = allResponse.data || {};
+  // === Data extraction ===
+  const rows = hasAdvancedSearch
+    ? complexResponse?.data?.complexSearch?.works
+    : simpleResponse?.data?.search?.works;
 
-  if (allResponse.isLoading) {
-    return <ResultPage isLoading={true} />;
-  }
+  const isLoading = hasAdvancedSearch
+    ? complexResponse?.isLoading
+    : simpleResponse?.isLoading;
 
-  return <ResultPage rows={data.search?.works} onWorkClick={onWorkClick} />;
+  return (
+    <Result
+      rows={rows}
+      isLoading={isLoading}
+      onWorkClick={onWorkClick}
+      showFeedback={page === 1}
+    />
+  );
 }
+
 Wrap.propTypes = {
   page: PropTypes.number,
   onWorkClick: PropTypes.func,

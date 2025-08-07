@@ -114,14 +114,9 @@
   height: var(--pt5);
 }
 
-.inputTitle {
-  margin-bottom: var(--pt2);
-}
-
 .trashAndSuggester {
   display: flex;
   width: 100%;
-  margin-right: var(--pt2);
 }
 
 /* 640px up */
@@ -132,13 +127,6 @@
 
   .suggesterContainer {
     display: flex;
-  }
-}
-
-/* 768px up */
-@media (min-width: 768px) {
-  .trashAndSuggester {
-    max-width: 460px;
   }
 }
 
@@ -159,10 +147,6 @@
     margin-top: var(--pt1);
     display: block;
   }
-
-  .inputTitle {
-    display: none;
-  }
 }
 
 /* 463 px down */
@@ -174,9 +158,5 @@
 
   .inputContainer {
     flex-wrap: wrap;
-  }
-
-  .inputTitle {
-    display: none;
   }
 }

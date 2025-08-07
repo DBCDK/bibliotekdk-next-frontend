@@ -1,5 +1,4 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
-import { ResultPage } from ".";
 import Result from "./Result";
 import automock_utils from "@/lib/automock_utils.fixture";
 
@@ -37,7 +36,7 @@ export function Partial() {
       <StoryTitle>Partial data fetched</StoryTitle>
       <StoryDescription>Partial fetched data visible</StoryDescription>
       <div style={{ maxWidth: "800px", margin: "auto" }}>
-        <ResultPage rows={partial} />
+        <Result rows={partial} />
       </div>
     </div>
   );
@@ -49,7 +48,7 @@ export function Loading() {
       <StoryTitle>Loading version</StoryTitle>
       <StoryDescription>No data ready to show</StoryDescription>
       <div style={{ maxWidth: "800px", margin: "auto" }}>
-        <ResultPage isLoading={true} />
+        <Result isLoading={true} />
       </div>
     </div>
   );

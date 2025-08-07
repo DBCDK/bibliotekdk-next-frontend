@@ -1,1 +1,1 @@
-export { default, ResultPage } from "./Result.js";
+export { default, Result } from "./Result.js";
