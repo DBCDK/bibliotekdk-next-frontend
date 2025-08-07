@@ -1,10 +1,12 @@
 // pages/find/index.js
 
 export async function getServerSideProps(context) {
-  const { query, resolvedUrl } = context;
+  const { query, pathname } = context;
 
-  if (resolvedUrl === "/find" || resolvedUrl === "/find/") {
+  // Redirect ONLY when path is exactly "/find"
+  if (pathname === "/find") {
     const searchParams = new URLSearchParams(query).toString();
+
     return {
       redirect: {
         destination: `/find/simpel${searchParams ? `?${searchParams}` : ""}`,
@@ -13,10 +15,10 @@ export async function getServerSideProps(context) {
     };
   }
 
+  // Prevent accessing this route any other way
   return { notFound: true };
 }
 
-// ✅ Nødvendig default export – selvom den aldrig vises
 export default function Redirecting() {
   return null;
 }

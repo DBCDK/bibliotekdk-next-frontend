@@ -89,7 +89,7 @@ describe("Trace", () => {
       });
     });
     it("traceid on materialtypes in searchresult", () => {
-      cy.visit(`${nextjsBaseUrl}/find?q.all=hest`);
+      cy.visit(`${nextjsBaseUrl}/find/simpel?q.all=hest`);
       cy.consentAllowAll(); //allow cookies
 
       // get all the searchresults
