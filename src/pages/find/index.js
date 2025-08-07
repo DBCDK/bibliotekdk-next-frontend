@@ -1,10 +1,10 @@
 // pages/find/index.js
 
 export async function getServerSideProps(context) {
-  const { query, pathname } = context;
+  const { req, query } = context;
 
-  // Redirect ONLY when path is exactly "/find"
-  if (pathname === "/find") {
+  // Fanger fx både "/find" og "/find?q.all=ost"
+  if (req.url?.startsWith("/find")) {
     const searchParams = new URLSearchParams(query).toString();
 
     return {
@@ -15,7 +15,6 @@ export async function getServerSideProps(context) {
     };
   }
 
-  // Prevent accessing this route any other way
   return { notFound: true };
 }
 
