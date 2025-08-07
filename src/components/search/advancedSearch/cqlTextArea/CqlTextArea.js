@@ -1,6 +1,5 @@
 import styles from "./CqlTextArea.module.css";
 import React, { useMemo, useState } from "react";
-import { cyKey } from "@/utils/trim";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import { CqlErrorMessage } from "@/components/search/advancedSearch/cqlErrorMessage/CqlErrorMessage";
