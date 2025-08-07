@@ -48,7 +48,7 @@ export function Loading() {
       <StoryTitle>Loading version</StoryTitle>
       <StoryDescription>No data ready to show</StoryDescription>
       <div style={{ maxWidth: "800px", margin: "auto" }}>
-        <ResultPage isLoading={true} />
+        <Result isLoading={true} />
       </div>
     </div>
   );

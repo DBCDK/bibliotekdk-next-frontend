@@ -123,7 +123,7 @@ function CqlTextAreaView({
       <Col>
         <Col
           className={`${styles.formatted} ${focused ? styles.focused : ""}`}
-          data-cy={cyKey({ name: "cqlTxt", prefix: "advanced-search" })}
+          data-cy="advanced-search-cqlTxt"
         >
           <Editor
             id="cqlTextArea"

@@ -22,7 +22,7 @@ export default function Wrap({ context, modal }) {
   const { cqlFromUrl: cql, fieldSearchFromUrl: fieldSearch } =
     useAdvancedSearchContext();
 
-  /**  update resultpage when modal is closed **/
+  /**  update result page when modal is closed **/
   useEffect(() => {
     if (!modal.isVisible && modal.hasBeenVisible) {
       pushQuery(false, selectedFacets);
