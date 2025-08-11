@@ -27,7 +27,9 @@ export default function ManifestationContent(props) {
         })}
       />
       <Edition showOrderTxt={showOrderTxt} pids={[pid]} />
-      <div className={tableOfContents ? styles.tableOfContentsEntriesRaw : ""}>
+      <div
+        className={tableOfContents.raw ? styles.tableOfContentsEntriesRaw : ""}
+      >
         <TableOfContentsEntries
           {...tableOfContents}
           className={styles.tableOfContentsEntries}
