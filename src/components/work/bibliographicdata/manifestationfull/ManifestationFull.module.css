@@ -22,34 +22,6 @@
 .fullmanifestation .copy_link {
   margin-bottom: var(--pt5);
 }
-
-/** styling the manifestation parts list **/
-.manifestationPartsList {
-  list-style-type: disc;
-  margin: 0 0 var(--pt05) 0;
-  justify-content: flex-start;
-  border: 0;
-}
-
-.manifestationPartsList li {
-  display: list-item;
-  padding: 0;
-  margin-left: var(--pt3);
-}
-
-.manifestationPartsList li:nth-child(even) {
-  background: none;
-}
-
-.manifestationPartsList li:nth-child(odd) {
-  background: none;
-}
-
-.manifestationPartsList p {
-  padding: 0;
-}
-
-/** end manifestation parts list **/
 .reservationwrapper {
   display: flex;
   flex-wrap: wrap;
@@ -77,14 +49,17 @@
   -webkit-column-break-inside: avoid;
 }
 
+.tableOfContentsEntries {
+  --base-padding: 0px !important;
+  --show-more-margin-left: var(--pt3) !important;
+  --odd-background: none !important;
+  --even-background: none !important;
+}
+
 @media (min-width: 768px) {
   .container {
     column-count: 2;
     -webkit-column-count: 2;
     margin: var(--pt1) 0 var(--pt5) 0;
-  }
-
-  .manifestationPartsList li p:first-child {
-    width: 100%;
   }
 }

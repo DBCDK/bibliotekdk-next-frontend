@@ -18,33 +18,58 @@ import {
   workTitleFragment,
 } from "@/lib/api/fragments.utils";
 
-export function tableOfContents({ workId }) {
+export function workTableOfContents({ id }) {
   return {
     apiUrl: ApiEnums.FBI_API,
-    // delay: 1000, // for debugging
-    query: `query TableOfContents($workId: String!) {
-      work(id: $workId) {
+    query: `query workTableOfContents($id: String!) {
+      work(id: $id) {
         manifestations {
-          mostRelevant {
-            pid
+          bestRepresentations {
             materialTypes {
-              ...materialTypesFragment
-            }
-            tableOfContents {
-              heading
-              listOfContent {
-                content
+              materialTypeSpecific {
+                display
               }
-              content
             }
-            ...manifestationDetailsForAccessFactory
+            pid
+            contents {
+              heading
+              type
+              raw
+              entries {
+                title {
+                  display
+                }
+                creators {
+                  persons {
+                    display
+                  }
+                  corporations {
+                    display
+                  }
+                }
+                contributors
+                playingTime
+                sublevel {
+                  title {
+                    display
+                  }
+                  contributors
+                  playingTime
+                  sublevel {
+                    title {
+                      display
+                    }
+                    contributors
+                    playingTime
+                  }
+                }
+              }
+            }
           }
         }
       }
-    }
-    ${manifestationDetailsForAccessFactory}
-    ${materialTypesFragment}`,
-    variables: { workId },
+    }`,
+    variables: { id },
     slowThreshold: 3000,
   };
 }
