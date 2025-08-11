@@ -64,7 +64,10 @@ export function useTablesOfContents({ workId, pid, type, customRootHeader }) {
   }, [manifestations, pid, type]);
 
   const raw = useMemo(() => {
-    return targetManifestation?.contents?.flatMap((c) => c.raw)?.join("\n");
+    return targetManifestation?.contents
+      ?.flatMap((c) => c.raw)
+      ?.join("\n")
+      ?.trim();
   }, [targetManifestation]);
 
   // Optional wrapping with custom root
