@@ -39,14 +39,19 @@ export function useTablesOfContents({ workId, pid, type, customRootHeader }) {
       m.contents?.some((c) => c.entries?.length || c.raw)
     );
 
+    const compareStringsDa = (a, b) =>
+      String(a ?? "").localeCompare(String(b ?? ""), "da");
+
     const matchesType = (m) => {
       if (!type) {
         return false;
       }
-      const expected = Array.isArray(type) ? type.sort().join(",") : type;
+      const expected = Array.isArray(type)
+        ? type.sort(compareStringsDa).join(",")
+        : type;
       const actual = m.materialTypes
         ?.map((mt) => mt.materialTypeSpecific?.display)
-        ?.sort()
+        ?.sort(compareStringsDa)
         ?.join(",");
       return actual === expected;
     };
