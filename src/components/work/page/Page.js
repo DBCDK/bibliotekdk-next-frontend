@@ -66,8 +66,6 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
     return <Custom404 />;
   }
 
-  console.log("type", type);
-
   return (
     <>
       <Header router={router} />
