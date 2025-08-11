@@ -1,5 +1,6 @@
 export { default } from "./Contents";
 export {
-  TablesOfContents,
+  useTablesOfContents,
+  TableOfContentsEntries,
   TableOfContentsList as ContentsSection,
 } from "./Contents";
