@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { SuggestTypeEnum } from "@/lib/enums";
 import isEmpty from "lodash/isEmpty";
+import { isEqual } from "lodash";
 
 /**
  * Hook for q search param sync across components 🤯
@@ -260,6 +261,18 @@ function useQ() {
   }
 
   /**
+   * isSynced returns true if url and q is syncronized
+   *
+   *
+   * @returns {boolean}
+   */
+  function _isSynced() {
+    const remote = _getQuery();
+    const locale = _q || {};
+    return isEqual(remote, locale);
+  }
+
+  /**
    * Boolean to check if q contains a value
    */
   const obj = _getQuery();
@@ -278,6 +291,7 @@ function useQ() {
     getQuery: _getQuery,
     setQuery,
     getCount,
+    isSynced: _isSynced,
     // constants
     q: _q || {},
     hasQuery: _hasQuery,

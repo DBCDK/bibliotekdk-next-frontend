@@ -62,10 +62,12 @@ function Page({
   const currentPage = parseInt(page, 10) || 1;
   const numPages = Math.ceil(hitcount / 10);
 
-  const isSimple = mode === "simple";
-
+  const isSimple = mode === "simpel";
   const searchRef = useRef();
   const [showTopBar, setShowTopBar] = useState(false);
+
+  const shouldShowHistory = !isLoading && !hasAdvancedSearch && !q?.all;
+  const shouldShowNoHits = !isLoading && hasQuery && hitcount === 0;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -153,8 +155,8 @@ function Page({
         }
         sectionTitleClass={hasAdvancedSearch ? styles.sectionTitleClass : ""}
       >
-        {!isLoading && !hasAdvancedSearch && !q?.all && <History />}
-        {!isLoading && hasQuery && hitcount === 0 && (
+        {shouldShowHistory && <History />}
+        {shouldShowNoHits && (
           <NoHitSearch isSimpleSearch={!hasAdvancedSearch} />
         )}
 
@@ -209,7 +211,7 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
   const q = getQuery();
   const router = useRouter();
 
-  const { mode } = router.query;
+  const mode = router?.query?.mode;
 
   const advCtx = useAdvancedSearchContext();
   const { selectedFacets } = useFacets();

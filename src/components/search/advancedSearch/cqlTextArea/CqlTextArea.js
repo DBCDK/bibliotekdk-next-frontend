@@ -1,5 +1,5 @@
 import styles from "./CqlTextArea.module.css";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import { CqlErrorMessage } from "@/components/search/advancedSearch/cqlErrorMessage/CqlErrorMessage";
@@ -24,89 +24,9 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { convertStateToCql } from "../utils";
 
 /**
- * Wrapper-komponent: håndterer data, logik og eventhandlers
- */
-export function CqlTextArea() {
-  const router = useRouter();
-  const isMobile = useBreakpoint() === "xs";
-
-  const { data } = useData(complexSearchIndexes());
-  const { resetFacets } = useFacets();
-  const { resetQuickFilters } = useQuickFilters();
-
-  const {
-    parsedCQL,
-    setParsedCQL,
-    cqlFromUrl,
-    fieldSearchFromUrl,
-    setShowPopover,
-    stateToString,
-    resetObjectState,
-  } = useAdvancedSearchContext();
-
-  const [focused, setFocused] = useState(false);
-
-  const indexes = useMemo(() => {
-    if (!data?.complexSearchIndexes?.length) return new Set();
-    const set = new Set();
-    data.complexSearchIndexes.forEach((entry) => {
-      set.add(entry?.index);
-      entry?.aliases?.forEach((alias) => set.add(alias));
-    });
-    return set;
-  }, [data]);
-
-  const errorMessage = useMemo(() => {
-    const tokens = tokenize(parsedCQL);
-    const validatedTokens = validateTokens(tokens, indexes);
-    const { message } = createErrorMessage(validatedTokens, indexes);
-    return message;
-  }, [parsedCQL, indexes]);
-
-  const handleSearch = () => {
-    resetFacets();
-    resetQuickFilters();
-
-    const cqlParsedFromUrl = fieldSearchFromUrl
-      ? convertStateToCql(fieldSearchFromUrl)
-      : cqlFromUrl;
-
-    const query =
-      !cqlFromUrl && parsedCQL === cqlParsedFromUrl
-        ? { fieldSearch: stateToString }
-        : { cql: parsedCQL };
-
-    router.push({ pathname: "/avanceret", query });
-    setShowPopover(false);
-  };
-
-  const handleClear = () => {
-    resetObjectState();
-    router.push({
-      pathname: router.pathname,
-      ...(router.query?.mode === "cql" && { query: { mode: "cql" } }),
-    });
-  };
-
-  return (
-    <CqlTextAreaView
-      parsedCQL={parsedCQL}
-      onChange={setParsedCQL}
-      onSearch={handleSearch}
-      onClear={handleClear}
-      indexes={indexes}
-      message={errorMessage}
-      focused={focused}
-      setFocused={setFocused}
-      isMobile={isMobile}
-    />
-  );
-}
-
-/**
  * Præsentationskomponent: UI og events via props
  */
-function CqlTextAreaView({
+export function CqlTextAreaView({
   parsedCQL,
   onChange,
   onSearch,
@@ -182,5 +102,93 @@ function CqlTextAreaView({
         </Row>
       </Col>
     </Row>
+  );
+}
+
+/**
+ * Wrapper-komponent: håndterer data, logik og eventhandlers
+ */
+export default function Wrap() {
+  const router = useRouter();
+  const isMobile = useBreakpoint() === "xs";
+
+  const mode = router?.query?.mode;
+
+  useEffect(() => {
+    if (stateToString && mode === "cql") {
+      handleSearch();
+    }
+  }, [mode]);
+
+  const { data } = useData(complexSearchIndexes());
+  const { resetFacets } = useFacets();
+  const { resetQuickFilters } = useQuickFilters();
+
+  const {
+    parsedCQL,
+    setParsedCQL,
+    cqlFromUrl,
+    fieldSearchFromUrl,
+    setShowPopover,
+    stateToString,
+    resetObjectState,
+  } = useAdvancedSearchContext();
+
+  const [focused, setFocused] = useState(false);
+
+  const indexes = useMemo(() => {
+    if (!data?.complexSearchIndexes?.length) return new Set();
+    const set = new Set();
+    data.complexSearchIndexes.forEach((entry) => {
+      set.add(entry?.index);
+      entry?.aliases?.forEach((alias) => set.add(alias));
+    });
+    return set;
+  }, [data]);
+
+  const errorMessage = useMemo(() => {
+    const tokens = tokenize(parsedCQL);
+    const validatedTokens = validateTokens(tokens, indexes);
+    const { message } = createErrorMessage(validatedTokens, indexes);
+    return message;
+  }, [parsedCQL, indexes]);
+
+  const handleSearch = () => {
+    resetFacets();
+    resetQuickFilters();
+
+    const cqlParsedFromUrl = fieldSearchFromUrl
+      ? convertStateToCql(fieldSearchFromUrl)
+      : cqlFromUrl;
+
+    const query =
+      !cqlFromUrl && parsedCQL === cqlParsedFromUrl
+        ? { fieldSearch: stateToString }
+        : { cql: parsedCQL };
+
+    router.push({ pathname: "/find/cql", query });
+    setShowPopover(false);
+  };
+
+  const handleClear = () => {
+    resetObjectState();
+    router.push({
+      pathname: router.pathname,
+      ...(router.query?.mode === "cql" && { query: { mode: "cql" } }),
+    });
+  };
+
+  return (
+    <CqlTextAreaView
+      parsedCQL={parsedCQL}
+      onChange={setParsedCQL}
+      onSearch={handleSearch}
+      onClear={handleClear}
+      indexes={indexes}
+      message={errorMessage}
+      focused={focused}
+      setFocused={setFocused}
+      isMobile={isMobile}
+    />
   );
 }

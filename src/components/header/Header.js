@@ -187,13 +187,11 @@ export function Header({
               })}
 
               <Button
-                asLink={true}
                 target="_self"
-                href="/find"
                 type="secondary"
                 size="small"
                 className={styles.searchButton}
-                onClick={() => {}}
+                onClick={() => router.push("/find/simpel")}
               >
                 <Text type="text3" tag="span">
                   {Translate({

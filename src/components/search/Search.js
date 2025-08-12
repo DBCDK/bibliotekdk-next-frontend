@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 
 import Tab from "react-bootstrap/Tab";
@@ -14,7 +14,7 @@ import SimpleSearch from "./simple";
 import Related from "./related/Related";
 import DidYouMean from "./didYouMean/DidYouMean";
 import AdvancedSearch from "./advancedSearch/advancedSearch/AdvancedSearch";
-import { CqlTextArea } from "./advancedSearch/cqlTextArea/CqlTextArea";
+import CqlTextArea from "./advancedSearch/cqlTextArea/CqlTextArea";
 import WorkTypeMenu from "@/components/search/advancedSearch/workTypeMenu/WorkTypeMenu";
 
 import translate from "@/components/base/translate";
@@ -152,6 +152,19 @@ export default function Wrap() {
   const router = useRouter();
   const { mode } = router.query;
 
+  // Gemmer pr. tab: { simpel: {...}, avanceret: {...}, cql: {...} }
+  const savedQueriesRef = useRef({});
+
+  // På initial load: hvis vi lander med query på et mode, så husk dem som udgangspunkt
+  useEffect(() => {
+    if (!mode) return;
+    const { mode: _m, ...rest } = router.query;
+    // Gem kun noget, hvis der faktisk er parametre
+    if (Object.keys(rest || {}).length > 0) {
+      savedQueriesRef.current[mode] = rest;
+    }
+  }, [mode]);
+
   const handleOnWorkTypeSelect = (type) => {
     setQuery({
       query: {
@@ -163,12 +176,27 @@ export default function Wrap() {
   };
 
   const handleModeChange = (newMode) => {
-    const { mode, ...rest } = router.query; // eslint-disable-line no-unused-vars
+    const currentMode = router.query.mode;
+    const { mode: _drop, ...currentQuery } = router.query;
 
+    // 1) Gem nuværende tabs params (uden mode)
+    //    Kun hvis der faktisk var noget at gemme
+    if (Object.keys(currentQuery).length > 0) {
+      savedQueriesRef.current[currentMode] = currentQuery;
+    } else {
+      // Hvis der ikke er noget, ryd evt. tidligere gemt
+      delete savedQueriesRef.current[currentMode];
+    }
+
+    // 2) Find evt. gemte params for newMode
+    const nextQuery = savedQueriesRef.current[newMode];
+
+    // 3) Skift route. Hvis vi har gemte params for newMode -> sæt dem i URL.
+    //    Hvis ikke -> hold URL "ren" (kun /find/<newMode>).
     router.push(
       {
         pathname: `/find/${newMode}`,
-        query: rest,
+        query: nextQuery || undefined,
       },
       undefined,
       { shallow: true }

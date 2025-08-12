@@ -20,6 +20,7 @@ import {
 } from "@/components/search/advancedSearch/utils";
 
 import isEmpty from "lodash/isEmpty";
+import { useRouter } from "next/router";
 
 //
 // ✅ UI-KOMPONENT: Rækker og feedback
@@ -63,9 +64,15 @@ export default function Wrap({ page = 1, onWorkClick }) {
   const { selectedFacets } = useFacets();
   const { selectedQuickFilters } = useQuickFilters();
 
+  const router = useRouter();
+
+  const mode = router.query.mode;
+
+  const isAdvancedSearch = ["avanceret", "cql"].includes(mode);
+
   const { cqlFromUrl, fieldSearchFromUrl, sort } = advCtx || {};
   const hasAdvancedSearch =
-    !isEmpty(fieldSearchFromUrl) || !isEmpty(cqlFromUrl);
+    isAdvancedSearch && (!isEmpty(fieldSearchFromUrl) || !isEmpty(cqlFromUrl));
 
   const cqlAndFacetsQuery = getCqlAndFacetsQuery({
     cql: cqlFromUrl,
@@ -93,10 +100,9 @@ export default function Wrap({ page = 1, onWorkClick }) {
 
   // === Simpel søgning ===
   const { filters, isSynced } = useFilters();
-  const { getQuery, hasQuery } = useQ();
+  const { q, hasQuery } = useQ();
   const dataCollect = useDataCollect();
 
-  const q = getQuery();
   if (!isSynced) offset = 0;
 
   const simpleResponse = useData(

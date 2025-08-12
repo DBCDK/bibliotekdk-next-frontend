@@ -70,7 +70,7 @@ export function SimpleSearch({
 export default function Wrap() {
   const router = useRouter();
   const filters = useFilters();
-  const { q, setQ, setQuery } = useQ();
+  const { q, setQ, setQuery, hasQuery } = useQ();
   const [query, setQueryState] = useState(q[SuggestTypeEnum.ALL] || "");
   const [history, setHistory, clearHistory] = useHistory();
 
@@ -81,10 +81,18 @@ export default function Wrap() {
   const { workTypes } = filters.getQuery();
   const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
 
+  const mode = router?.query?.mode;
+
   // Sync initial query
   useEffect(() => {
     setQueryState(q[SuggestTypeEnum.ALL] || "");
   }, [q]);
+
+  // useEffect(() => {
+  //   if (!!query && mode === "simpel") {
+  //     doSearch(query);
+  //   }
+  // }, [query]);
 
   const doSearch = (value = query, suggestion = null) => {
     const queryKey = "all";
