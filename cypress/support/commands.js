@@ -129,6 +129,17 @@ Cypress.Commands.add(
     let originalHeight;
     let originalPosition;
 
+    // Sikrer ingen skalering og ens rendering
+    const screenshotDefaults = {
+      forceDeviceScaleFactor: false,
+      screenshotConfig: {
+        capture: "runner",
+        scale: false,
+        disableTimersAndAnimations: true,
+        log: false,
+      },
+    };
+
     /** Get max bottom position of all descendants */
     function calculateContentHeight(root) {
       let maxBottom = 0;
@@ -141,13 +152,29 @@ Cypress.Commands.add(
 
     /** Take snapshot of subject or full page */
     function takeSnapshot() {
+      const allOpts = { ...screenshotDefaults, ...options };
       if (subject) {
-        return cy
-          .wrap(subject, { log: false })
-          .matchImage({ ...options, log: false });
+        return cy.wrap(subject, { log: false }).matchImage(allOpts);
       }
-      return cy.matchImage({ ...options, log: false });
+      return cy.matchImage(allOpts);
     }
+
+    // Tilføj lidt CSS for at fjerne animationer og stabilisere font-rendering
+    cy.document({ log: false }).then((doc) => {
+      const styleId = "__no_scale_style";
+      if (!doc.getElementById(styleId)) {
+        const style = doc.createElement("style");
+        style.id = styleId;
+        style.innerHTML = `
+          *,*::before,*::after {
+            transition: none !important;
+            animation: none !important;
+          }
+          html,body { -webkit-font-smoothing: antialiased; }
+        `;
+        doc.head.appendChild(style);
+      }
+    });
 
     return cy.get("body", { log: false }).then(($body) => {
       const dialog = $body.find(".modal_dialog")[0];
