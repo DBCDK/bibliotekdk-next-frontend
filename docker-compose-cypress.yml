@@ -35,4 +35,4 @@ services:
       - CONFIG_FILE=cypress.config.js
       - CYPRESS_FOLDER=/app/cypress
 
-    entrypoint: bash -c "npm install cypress-plugin-tab --no-save && npm install @frsource/cypress-plugin-visual-regression-diff --no-save && /test-runner.sh"
+    entrypoint: bash -c "npm i cypress-plugin-tab  && npm i @frsource/cypress-plugin-visual-regression-diff && /test-runner.sh"
