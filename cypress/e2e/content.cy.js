@@ -2,6 +2,7 @@ const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 
 describe("Content", () => {
   beforeEach(() => {
+    cy.viewport(1280, 720);
     cy.visit(
       `${nextjsBaseUrl}/materiale/tales-from-the-north_per-noergaard-f-1932-/work-of:870970-basis:27634427`
     );
