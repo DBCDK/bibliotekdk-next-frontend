@@ -35,3 +35,4 @@ services:
       - CYPRESS_nextjsBaseUrl=http://web:3000
       - CONFIG_FILE=cypress.config.js
       - CYPRESS_FOLDER=/app/cypress
+      - CYPRESS_browser=chrome

@@ -157,7 +157,7 @@ pipeline {
             '''
 
             junit skipPublishingChecks: true, testResults: 'app/e2e/reports/*.xml'
-            archiveArtifacts 'cypress/screenshots/*, cypress/videos/*, logs/*'
+            archiveArtifacts 'cypress/screenshots/*, cypress/videos/*, cypress/e2e/__image_snapshots__/*.png, logs/*'
         }
         failure {
             script {

@@ -8,6 +8,8 @@ describe("Content", () => {
     cy.consentAllowAll();
     cy.get("[data-cy=anchor-menu-items]").invoke("css", "display", "none");
     cy.get("[data-cy=feedback-wrapper]").invoke("css", "display", "none");
+
+    cy.contains("Seneste udgave, musik");
   });
 
   it(`Section with content is correctly rendered - Desktop`, () => {
