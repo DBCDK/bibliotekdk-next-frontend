@@ -26,6 +26,7 @@
 
 const fbiApiPath = Cypress.env("fbiApiPath");
 require("cypress-plugin-tab");
+require("@frsource/cypress-plugin-visual-regression-diff");
 
 /**
  * Tabs function
@@ -110,3 +111,66 @@ Cypress.Commands.add("cssVar", (cssVarName) => {
       .trim();
   });
 });
+/**
+ * matchImageSnapshot
+ *
+ * Ensures `.modal_dialog` is fully expanded before taking a visual snapshot.
+ * Calculates the total height of all descendants, sets it temporarily,
+ * takes the snapshot, then restores original styles.
+ *
+ * Usage:
+ *   cy.matchImageSnapshot(options)
+ *   cy.get('.modal_container').matchImageSnapshot(options)
+ */
+Cypress.Commands.add(
+  "matchImageSnapshot",
+  { prevSubject: "optional" },
+  (subject, options = {}) => {
+    let originalHeight;
+    let originalPosition;
+
+    /** Get max bottom position of all descendants */
+    function calculateContentHeight(root) {
+      let maxBottom = 0;
+      root.querySelectorAll("*").forEach((el) => {
+        const bottom = el.offsetTop + el.offsetHeight;
+        if (bottom > maxBottom) maxBottom = bottom;
+      });
+      return maxBottom;
+    }
+
+    /** Take snapshot of subject or full page */
+    function takeSnapshot() {
+      if (subject) {
+        return cy
+          .wrap(subject, { log: false })
+          .matchImage({ ...options, log: false });
+      }
+      return cy.matchImage({ ...options, log: false });
+    }
+
+    return cy.get("body", { log: false }).then(($body) => {
+      const dialog = $body.find(".modal_dialog")[0];
+
+      if (dialog) {
+        originalHeight = dialog.style.height;
+        originalPosition = dialog.style.position;
+
+        const contentHeight = calculateContentHeight(dialog);
+        dialog.style.setProperty("height", `${contentHeight}px`, "important");
+        dialog.style.setProperty("position", "absolute", "important");
+      }
+
+      return takeSnapshot().then(() => {
+        if (dialog) {
+          originalHeight
+            ? dialog.style.setProperty("height", originalHeight)
+            : dialog.style.removeProperty("height");
+          originalPosition
+            ? dialog.style.setProperty("position", originalPosition)
+            : dialog.style.removeProperty("position");
+        }
+      });
+    });
+  }
+);
