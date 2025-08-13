@@ -26,8 +26,8 @@ services:
       context: ./cypress
     image: custom-cypress:latest
     volumes:
-      - "./:/app"
-      - "/app/node_modules"
+      - "./cypress:/app/cypress"
+      - "./cypress.config.js:/app/cypress.config.js"
     depends_on:
       - web
     environment:
