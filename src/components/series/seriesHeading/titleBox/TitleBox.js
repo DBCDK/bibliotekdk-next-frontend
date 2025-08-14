@@ -36,9 +36,6 @@ export function LinkToCreator({ creator, isLoading }) {
 export default function TitleBox({ series, seriesIsLoading, className }) {
   const firstSeriesFirstWork = series?.members?.[0]?.work;
   const description = series?.description;
-  const identifyingAddition = series?.identifyingAddition
-    ? " (" + series?.identifyingAddition + ")"
-    : "";
   const { creators, creatorsToShow } = getUniqueCreatorsDisplay(series);
 
   const originalTitle = firstSeriesFirstWork?.titles?.tvSeries?.title;
@@ -75,7 +72,7 @@ export default function TitleBox({ series, seriesIsLoading, className }) {
         tag={"h1"}
         className={styles.series_title}
       >
-        {originalTitle || series?.title + identifyingAddition}
+        {originalTitle || series?.title}
       </Title>
       <div className={styles.series_images}>
         <ThumbnailParade series={series} isLoading={seriesIsLoading} />

@@ -133,18 +133,10 @@ function getSeriesMap({ series, members, workId, traceId }) {
 }
 
 export function constructSeriesTitle({ type, series, titles }) {
-  // some series has additional info (identifyingAddition) to be shown with title
-  const identifyingAddition = series?.identifyingAddition;
-
   if (type === "tvSerie") {
-    return identifyingAddition
-      ? `${titles.join(", ")} (${identifyingAddition})`
-      : titles.join(", ");
+    return titles.join(", ");
   }
-
-  return identifyingAddition
-    ? `${series?.title} (${identifyingAddition})`
-    : series?.title;
+  return series?.title;
 }
 
 function getContinuationMap(groupedByRelationWorkTypes) {
