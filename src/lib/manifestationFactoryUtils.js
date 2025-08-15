@@ -306,6 +306,28 @@ export function groupManifestations(
 }
 
 /**
+ * Will put COMIC and COMIC_ONLINE materialtypesbefore other types.
+ */
+function prioritiseComicMaterialtype(uniqueMaterialTypes = []) {
+  uniqueMaterialTypes?.sort((a, b) => {
+    const aIsComic = a.some((m) => m.specificCode === "COMIC");
+    const bIsComic = b.some((m) => m.specificCode === "COMIC");
+    const aIsComicOnline = a.some((m) => m.specificCode === "COMIC_ONLINE");
+    const bIsComicOnline = b.some((m) => m.specificCode === "COMIC_ONLINE");
+
+    // COMIC comes first
+    if (aIsComic && !bIsComic) return -1;
+    if (!aIsComic && bIsComic) return 1;
+
+    // Then COMIC_ONLINE
+    if (aIsComicOnline && !bIsComicOnline) return -1;
+    if (!aIsComicOnline && bIsComicOnline) return 1;
+
+    return 0;
+  });
+}
+
+/**
  * Gets the prioritisation of elements based on the custom sorting defined in
  * {@link getOrderedFlatMaterialTypes}. Also uses workType to prefer the order
  * @param {Array.<string>} materialTypesOrder
@@ -566,6 +588,9 @@ export function manifestationMaterialTypeFactory(manifestations) {
   );
   const arrayOfMaterialTypesArray = flatMapMaterialTypes(manifestations);
   const uniqueMaterialTypes = getUniqueMaterialTypes(arrayOfMaterialTypesArray);
+
+  // Sort material types to prioritize COMIC and COMIC_ONLINE before other types.
+  prioritiseComicMaterialtype(uniqueMaterialTypes);
 
   const manifestationsByType = groupManifestations(manifestations);
   const flattenedGroupedSortedManifestations =
