@@ -579,7 +579,6 @@ export function flattenGroupedSortedManifestations(manifestationsByType) {
  * @returns {{flattenGroupedSortedManifestationsByType: (function(*): *[]), manifestationsByType, manifestationsEnrichedWithDefaultFrontpage: (function(*): {cover: ({detail: *}|{detail: null}), manifestations: *, materialType}), flattenedGroupedSortedManifestations: *[], flatMaterialTypes: *, inUniqueMaterialTypes: (function(*): boolean), uniqueMaterialTypes: Array<MaterialTypesArray>, flatPidsByType: (function(*): *|*[])}}
  */
 export function manifestationMaterialTypeFactory(manifestations) {
-  //console.log("manifestationMaterialTypeFactory.manifestations", JSON.stringify(manifestations));
   manifestations?.length > 0 &&
     materialTypeError(manifestations?.[0], errorCount);
 
