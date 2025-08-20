@@ -647,17 +647,11 @@ function getSeriesAndUniverseTitles(work) {
       work: singleSeries.members[0].work,
     });
 
-    const identifyingAddition = singleSeries?.identifyingAddition;
-
     let formattedTitle;
     if (type === "tvSerie" && titles.length > 0) {
-      formattedTitle = identifyingAddition
-        ? `${titles.join(" ,")} (${identifyingAddition}) (serie)`
-        : `${titles.join(" ,")} (serie)`;
+      formattedTitle = `${titles.join(" ,")} (serie)`;
     } else {
-      formattedTitle = identifyingAddition
-        ? `${singleSeries.title} (${identifyingAddition}) (serie)`
-        : `${singleSeries.title} (serie)`;
+      formattedTitle = `${singleSeries.title} (serie)`;
     }
 
     return {
