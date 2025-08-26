@@ -2,10 +2,20 @@
   /* These may be overridden by other components if needed */
   --base-padding: var(--pt2);
   --show-more-margin-left: var(--pt2);
-  --odd-background: none;
-  --even-background: var(--concrete);
+  --odd-background: var(--concrete);
+  --even-background: none;
+  --odd-background-child: none;
+  --even-background-child: var(--concrete);
 
   margin-bottom: var(--pt2);
+}
+
+.nonExpandableItem {
+  border-top: 1px solid var(--iron);
+}
+
+.headerWrapper {
+  padding-right: var(--pt05);
 }
 
 .columnNoPaddingMobile {
@@ -41,9 +51,19 @@
   margin-right: var(--pt1);
 }
 
+.creators p {
+  display: block !important;
+  margin-top: 0;
+}
+
+.contributors {
+  color: var(--gray);
+  padding-left: var(--pt1);
+  font-weight: 400 !important;
+}
+
 .playingTime {
   display: block;
-  font-style: italic;
   margin-left: var(--pt2);
   flex-shrink: 0;
 }
@@ -52,12 +72,20 @@
   margin: 0;
 }
 /* Alternating background classes */
-.entryItem.darkBackground {
+.parentEntry.darkBackground {
   background: var(--odd-background);
 }
 
-.entryItem.lightBackground {
+.parentEntry.lightBackground {
   background: var(--even-background);
+}
+
+.childEntry.darkBackground {
+  background: var(--odd-background-child);
+}
+
+.childEntry.lightBackground {
+  background: var(--even-background-child);
 }
 
 /* Desktop styling applied to all screen sizes */
@@ -79,7 +107,12 @@
 
 @media (min-width: 768px) {
   .columnNoPaddingMobile {
-    padding-left: var(--pt2);
     padding-right: var(--pt2);
+  }
+}
+
+@media (min-width: 992px) {
+  .columnNoPaddingMobile .tableOfContentsEntries {
+    margin-left: var(--pt2);
   }
 }
