@@ -9,6 +9,22 @@ import {
   NOTA_ENUM,
 } from "@/components/search/advancedSearch/advancedSearchHelpers/dummy__default_advanced_search_fields";
 
+// Tries to parse a query param that might be plain JSON or URL-encoded JSON.
+// Returns {} if parsing fails, so "%" or bad input won't break the app.
+export function parseSearchUrl(value) {
+  if (!value) return {};
+  //most likely already decoded by Next.js router
+  try {
+    return JSON.parse(value);
+  } catch {}
+  //if not, try to decode it
+  try {
+    return JSON.parse(decodeURIComponent(value));
+  } catch {}
+  //if all else fails, return an empty object to avoid breaking the app
+  return {};
+}
+
 function getInputFieldsQueryToCql(inputFields) {
   return checkAndExpandInputFields(inputFields)
     ?.filter(
