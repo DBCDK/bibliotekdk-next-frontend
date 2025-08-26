@@ -1,18 +1,13 @@
+// Cover.jsx
 import PropTypes from "prop-types";
-
-import Skeleton from "@/components/base/skeleton";
-
-import styles from "./Cover.module.css";
 import { useEffect, useRef, useState } from "react";
 import cx from "classnames";
 
+import Skeleton from "@/components/base/skeleton";
+import styles from "./Cover.module.css";
+
 /**
- * The Component function
- *
- * @param {Object} props
- * See propTypes for specific props and types
- *
- * @returns {React.JSX.Element}
+ * Core Cover component (ikke default-export)
  */
 function Cover({
   children = null,
@@ -25,36 +20,41 @@ function Cover({
 }) {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
-  const imageRef = useRef();
+  const imageRef = useRef(null);
 
-  // If src is an array of cover images, select the first valid in line
-  if (src instanceof Array) {
-    src = src.map((t) => t.cover && t.cover.detail).filter((c) => c)[0];
+  // Hvis src er et array af cover-objekter, vælg første gyldige
+  let resolvedSrc = src;
+  if (Array.isArray(src)) {
+    resolvedSrc = src
+      .map((t) => t?.cover && t.cover.detail)
+      .filter(Boolean)?.[0];
   }
 
+  // Reset tilstand når kilden ændrer sig
   useEffect(() => {
     setLoaded(false);
     setError(false);
-  }, [src]);
+  }, [resolvedSrc]);
 
-  // Add class for missing cover image
+  // Vis skeleton når vi har en kilde men billedet ikke er loadet endnu
+  const showSkeleton = Boolean(skeleton || (resolvedSrc && !loaded));
+
+  // CSS-klassser
   const loadedClass = loaded ? styles.loaded : "";
-
-  const skeletonClass = skeleton || (!loaded && src) ? styles.skeleton : "";
-
+  const skeletonClass = showSkeleton ? styles.skeleton : "";
   const frameStyle = bgColor ? styles.frame : "";
 
   const backgroundColor = {
-    backgroundColor: bgColor ? bgColor : src ? "transparent" : "var(--iron)",
-  };
-
-  const dynamicStyles = {
-    ...backgroundColor,
+    backgroundColor: bgColor
+      ? bgColor
+      : resolvedSrc
+      ? "transparent"
+      : "var(--iron)",
   };
 
   return (
     <div
-      style={dynamicStyles}
+      style={backgroundColor}
       className={cx(
         styles.cover,
         frameStyle,
@@ -70,44 +70,43 @@ function Cover({
         }
       )}
       onClick={onClick}
-      data-cy={src ? "cover-present" : "missing-cover"}
+      data-cy={resolvedSrc ? "cover-present" : "missing-cover"}
     >
       {skeletonClass && <Skeleton />}
-      {src && !error && (
+
+      {resolvedSrc && !error && (
         <img
           ref={imageRef}
           alt=""
-          data-src={src}
-          data-bg={src}
-          className="lazyload"
-          onLoad={() => {
-            setLoaded(true);
-          }}
+          src={resolvedSrc}
+          loading="lazy"
+          decoding="async"
+          draggable="false"
+          onLoad={() => setLoaded(true)}
           onError={() => {
             setLoaded(true);
             setError(true);
           }}
         />
       )}
-      {((!skeleton && !src) || error) && <div className={styles.fallback} />}
+
+      {((!skeleton && !resolvedSrc) || error) && (
+        <div className={styles.fallback} />
+      )}
+
       {children}
     </div>
   );
 }
 
 /**
- *  Default export function of the Component
- *
- * @param {Object} props
- * See propTypes for specific props and types
- *
- * @returns {React.JSX.Element}
+ * Default-export bevarer eksisterende import-pattern:
+ * `import Cover from "@/components/base/cover"`
  */
 export default function Container(props) {
   return <Cover {...props} />;
 }
 
-// PropTypes for the Component
 Container.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   src: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),

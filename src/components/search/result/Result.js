@@ -1,5 +1,8 @@
 import PropTypes from "prop-types";
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useMemo } from "react";
+import { useRouter } from "next/router";
+import isEmpty from "lodash/isEmpty";
+
 import ResultRow from "./row";
 import SearchFeedBack from "@/components/base/searchfeedback";
 
@@ -19,26 +22,29 @@ import {
   convertStateToCql,
 } from "@/components/search/advancedSearch/utils";
 
-import isEmpty from "lodash/isEmpty";
-import { useRouter } from "next/router";
+/* -------------------------------- UI -------------------------------- */
 
-//
-// ✅ UI-KOMPONENT: Rækker og feedback
-//
-export function Result({ rows, isLoading, onWorkClick, showFeedback = true }) {
-  if (isLoading) {
-    rows = Array(10).fill({});
-  }
+function Result({ rows, isLoading, onWorkClick, showFeedback = true }) {
+  const list =
+    isLoading && (!rows || rows.length === 0)
+      ? Array.from({ length: 10 }, (_, i) => ({
+          __skeleton: true,
+          _k: `s-${i}`,
+        }))
+      : rows || [];
 
-  if (!rows) return null;
+  if (list.length === 0) return null;
 
-  return rows.map((row, index) => (
-    <Fragment key={row.workId + ":" + index}>
+  return list.map((row, index) => (
+    <Fragment key={row?.workId ?? row?._k ?? index}>
       <ResultRow
-        isLoading={isLoading}
-        work={row}
-        key={`${row?.titles?.main}_${index}`}
-        onClick={onWorkClick && (() => onWorkClick(index, row))}
+        isLoading={!!row?.__skeleton || isLoading}
+        work={row?.__skeleton ? {} : row}
+        onClick={
+          onWorkClick && !row?.__skeleton
+            ? () => onWorkClick(index, row)
+            : undefined
+        }
       />
       {index === 0 && showFeedback && <SearchFeedBack />}
     </Fragment>
@@ -52,66 +58,77 @@ Result.propTypes = {
   showFeedback: PropTypes.bool,
 };
 
-//
-// ✅ WRAP-KOMPONENT: henter data og vælger visning
-//
+/* ------------------------------- Wrap ------------------------------- */
+
 export default function Wrap({ page = 1, onWorkClick }) {
   const limit = 10;
   let offset = limit * (page - 1);
 
-  // === Avanceret søgning ===
-  const advCtx = useAdvancedSearchContext();
+  // Mode
+  const { query } = useRouter();
+  const isAdvancedMode = ["avanceret", "cql"].includes(query?.mode);
+
+  // Avanceret søgning inputs
+  const adv = useAdvancedSearchContext();
   const { selectedFacets } = useFacets();
   const { selectedQuickFilters } = useQuickFilters();
+  const { cqlFromUrl, fieldSearchFromUrl, sort } = adv || {};
 
-  const router = useRouter();
+  const hasAdvancedParams =
+    isAdvancedMode && (!isEmpty(fieldSearchFromUrl) || !isEmpty(cqlFromUrl));
 
-  const mode = router.query.mode;
-
-  const isAdvancedSearch = ["avanceret", "cql"].includes(mode);
-
-  const { cqlFromUrl, fieldSearchFromUrl, sort } = advCtx || {};
-  const hasAdvancedSearch =
-    isAdvancedSearch && (!isEmpty(fieldSearchFromUrl) || !isEmpty(cqlFromUrl));
-
-  const cqlAndFacetsQuery = getCqlAndFacetsQuery({
-    cql: cqlFromUrl,
-    selectedFacets,
-    quickFilters: selectedQuickFilters,
-  });
-
-  const cqlQuery =
-    cqlAndFacetsQuery ||
-    convertStateToCql({
-      ...fieldSearchFromUrl,
-      facets: selectedFacets,
-      quickFilters: selectedQuickFilters,
-    });
-
-  const complexResponse = useData(
-    hasAdvancedSearch &&
-      complexSearchFragments.doComplexSearchAll({
-        cql: cqlQuery,
-        offset,
-        limit,
-        ...(!isEmpty(sort) && { sort }),
-      })
+  // Byg CQL (memo for læsbarhed)
+  const cqlAndFacetsQuery = useMemo(
+    () =>
+      getCqlAndFacetsQuery({
+        cql: cqlFromUrl,
+        selectedFacets,
+        quickFilters: selectedQuickFilters,
+      }),
+    [cqlFromUrl, selectedFacets, selectedQuickFilters]
   );
 
-  // === Simpel søgning ===
+  const cqlQuery = useMemo(
+    () =>
+      cqlAndFacetsQuery ||
+      convertStateToCql({
+        ...fieldSearchFromUrl,
+        facets: selectedFacets,
+        quickFilters: selectedQuickFilters,
+      }),
+    [
+      cqlAndFacetsQuery,
+      fieldSearchFromUrl,
+      selectedFacets,
+      selectedQuickFilters,
+    ]
+  );
+
+  // Simpel søgning inputs
   const { filters, isSynced } = useFilters();
   const { q, hasQuery } = useQ();
   const dataCollect = useDataCollect();
-
   if (!isSynced) offset = 0;
 
-  const simpleResponse = useData(
-    hasQuery && searchFragments.all({ q, limit, offset, filters })
+  // Data-kald (kun aktivt for gældende mode)
+  const complexResponse = useData(
+    hasAdvancedParams
+      ? complexSearchFragments.doComplexSearchAll({
+          cql: cqlQuery,
+          offset,
+          limit,
+          ...(!isEmpty(sort) && { sort }),
+        })
+      : null
   );
 
-  // === Tracking for simpel søgning ===
+  const simpleResponse = useData(
+    hasQuery ? searchFragments.all({ q, limit, offset, filters }) : null
+  );
+
+  // Tracking for simpel søgning
   useEffect(() => {
-    if (!hasAdvancedSearch && simpleResponse?.data) {
+    if (!hasAdvancedParams && simpleResponse?.data) {
       dataCollect.collectSearch({
         search_request: { q, filters },
         search_response_works:
@@ -119,19 +136,17 @@ export default function Wrap({ page = 1, onWorkClick }) {
         search_offset: offset,
       });
     }
-  }, [simpleResponse?.data, hasAdvancedSearch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [simpleResponse?.data, hasAdvancedParams]);
 
-  // === Fejlhåndtering ===
-  if (!hasAdvancedSearch && simpleResponse?.error) return null;
-
-  // === Data extraction ===
-  const rows = hasAdvancedSearch
+  // Data extraction
+  const rows = hasAdvancedParams
     ? complexResponse?.data?.complexSearch?.works
     : simpleResponse?.data?.search?.works;
 
-  const isLoading = hasAdvancedSearch
-    ? complexResponse?.isLoading
-    : simpleResponse?.isLoading;
+  const isLoading = hasAdvancedParams
+    ? !!complexResponse?.isLoading
+    : !!simpleResponse?.isLoading;
 
   return (
     <Result

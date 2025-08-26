@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 import Tab from "react-bootstrap/Tab";
 import Container from "react-bootstrap/Container";
@@ -27,18 +27,10 @@ import { getHelpUrl } from "@/lib/utils";
 import styles from "./Search.module.css";
 
 export function Search({ onWorkTypeSelect, mode, onTabChange }) {
-  const [tab, setTab] = useState(mode || "simpel");
   const breakpoint = useBreakpoint();
   const isMobileSize = ["xs", "sm", "md"].includes(breakpoint);
-
-  const isSimple = tab === "simpel";
-
-  // Sync tab when URL mode changes
-  useEffect(() => {
-    if (mode && mode !== tab) {
-      setTab(mode);
-    }
-  }, [mode]);
+  const activeTab = mode || "simpel";
+  const isSimple = activeTab === "simpel";
 
   return (
     <div className={styles.background}>
@@ -55,12 +47,9 @@ export function Search({ onWorkTypeSelect, mode, onTabChange }) {
 
           <Col sm={12} lg={{ offset: 1, span: 7 }}>
             <Tabs
-              active={tab}
+              active={activeTab}
               onSelect={(nextTab) => {
-                if (nextTab !== tab) {
-                  setTab(nextTab);
-                  onTabChange(nextTab);
-                }
+                if (nextTab && nextTab !== activeTab) onTabChange(nextTab);
               }}
               className={styles.tabs}
             >
@@ -92,10 +81,7 @@ export function Search({ onWorkTypeSelect, mode, onTabChange }) {
 
               <Tab
                 eventKey="cql"
-                title={translate({
-                  context: "improved-search",
-                  label: "cql",
-                })}
+                title={translate({ context: "improved-search", label: "cql" })}
               >
                 <Col className={styles.content} lg={12} xs={12}>
                   <CqlTextArea />
@@ -109,20 +95,11 @@ export function Search({ onWorkTypeSelect, mode, onTabChange }) {
               icon="arrowrightblue"
               keepUnderline={true}
               iconSize={1}
-              onClick={() => {}}
               href="/avanceret/soegehistorik"
-              border={{
-                top: false,
-                bottom: {
-                  keepVisible: true,
-                },
-              }}
+              border={{ top: false, bottom: { keepVisible: true } }}
             >
               <Text type="text4" tag="span">
-                {Translate({
-                  context: "search",
-                  label: "searchHistory",
-                })}
+                {Translate({ context: "search", label: "searchHistory" })}
               </Text>
             </IconButton>
 
@@ -152,19 +129,6 @@ export default function Wrap() {
   const router = useRouter();
   const { mode } = router.query;
 
-  // Gemmer pr. tab: { simpel: {...}, avanceret: {...}, cql: {...} }
-  const savedQueriesRef = useRef({});
-
-  // På initial load: hvis vi lander med query på et mode, så husk dem som udgangspunkt
-  useEffect(() => {
-    if (!mode) return;
-    const { mode: _m, ...rest } = router.query;
-    // Gem kun noget, hvis der faktisk er parametre
-    if (Object.keys(rest || {}).length > 0) {
-      savedQueriesRef.current[mode] = rest;
-    }
-  }, [mode]);
-
   const handleOnWorkTypeSelect = (type) => {
     setQuery({
       query: {
@@ -175,28 +139,13 @@ export default function Wrap() {
     });
   };
 
+  // URL er single source of truth: ved faneskift skifter vi kun path.
   const handleModeChange = (newMode) => {
-    const currentMode = router.query.mode;
-    const { mode: _drop, ...currentQuery } = router.query;
-
-    // 1) Gem nuværende tabs params (uden mode)
-    //    Kun hvis der faktisk var noget at gemme
-    if (Object.keys(currentQuery).length > 0) {
-      savedQueriesRef.current[currentMode] = currentQuery;
-    } else {
-      // Hvis der ikke er noget, ryd evt. tidligere gemt
-      delete savedQueriesRef.current[currentMode];
-    }
-
-    // 2) Find evt. gemte params for newMode
-    const nextQuery = savedQueriesRef.current[newMode];
-
-    // 3) Skift route. Hvis vi har gemte params for newMode -> sæt dem i URL.
-    //    Hvis ikke -> hold URL "ren" (kun /find/<newMode>).
+    const { mode: _drop, page: _page, ...rest } = router.query; // drop 'page'
     router.push(
       {
         pathname: `/find/${newMode}`,
-        query: nextQuery || undefined,
+        query: Object.keys(rest).length ? rest : undefined,
       },
       undefined,
       { shallow: true }

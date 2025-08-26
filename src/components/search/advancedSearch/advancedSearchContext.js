@@ -183,8 +183,8 @@ export function useAdvancedSearchContext() {
 }
 
 export function getFieldSearchFromUrl(query) {
-  // const { fieldSearch, "q.all": q = null } = query;
-  const { fieldSearch } = query;
+  const { fieldSearch, "q.all": q = null } = query;
+  // const { fieldSearch } = query;
 
   const fieldSearchFromUrl =
     fieldSearch && JSON.parse(decodeURIComponent(fieldSearch));
@@ -193,11 +193,11 @@ export function getFieldSearchFromUrl(query) {
     return fieldSearchFromUrl;
   }
 
-  // if (q) {
-  //   const arr = getInitialInputFields();
-  //   arr[0].value = q;
-  //   return { inputFields: arr };
-  // }
+  if (q) {
+    const arr = getInitialInputFields();
+    arr[0].value = q;
+    return { inputFields: arr };
+  }
 
   return {};
 }

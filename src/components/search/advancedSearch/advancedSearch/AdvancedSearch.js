@@ -115,7 +115,9 @@ export default function Wrap() {
     resetObjectState();
     router.push({
       pathname: router.pathname,
-      ...(router.query?.mode === "cql" && { query: { mode: "cql" } }),
+      ...(router.query?.mode === "avanceret" && {
+        query: { mode: "avanceret" },
+      }),
     });
   };
 

@@ -221,8 +221,6 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
   const hasAdvancedSearch =
     !isEmpty(advCtx?.fieldSearchFromUrl) || !isEmpty(advCtx?.cqlFromUrl);
 
-  const simpleQuery = hasQuery && searchFragments.hitcount({ q, filters });
-
   const cql = advCtx?.cqlFromUrl;
   const fieldSearch = advCtx?.fieldSearchFromUrl;
 
@@ -244,7 +242,10 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
 
   const rawcql = cqlAndFacetsQuery ? cql : fieldSearchQuery;
 
-  const simpleRes = useData(!hasAdvancedSearch && simpleQuery);
+  const simpleRes = useData(
+    hasQuery && searchFragments.hitcount({ q, filters })
+  );
+
   const advancedRes = useData(
     hasAdvancedSearch && advancedHitcount({ cql: advancedCql })
   );

@@ -49,36 +49,122 @@ function buildQ() {
   return params;
 }
 
+// /**
+//  * Get all q types from query params
+//  *
+//  *
+//  * @returns {Object}
+//  *
+//  * @param query
+//  */
+// export const getQuery = (query = {}) => {
+//   const urlSearchParams = new URLSearchParams(query);
+
+//   const params = {};
+//   urlSearchParams.forEach((val, key) => {
+//     // remove empty key values
+//     if (val && val !== "") {
+//       // check if key actually is a q. param
+//       // filters also have a "creator" and "subject" param
+//       if (key.includes("q.")) {
+//         // The old q param will be converted to the new q.all (old hyperlinks to site e.g.)
+//         // Will not convert if a q.all already exist in query
+//         if (key === "q" && !query["q.all"]) {
+//           key = "q.all";
+//         }
+//         // strip q keys to match types
+//         key = key.replace("q.", "");
+//         if (types.includes(key) && val) {
+//           params[key] = val;
+//         }
+//       }
+//     }
+//   });
+
+//   return params;
+// };
+
 /**
  * Get all q types from query params
  *
- *
  * @returns {Object}
- *
  * @param query
  */
 export const getQuery = (query = {}) => {
-  const urlSearchParams = new URLSearchParams(query);
-
   const params = {};
-  urlSearchParams.forEach((val, key) => {
-    // remove empty key values
-    if (val && val !== "") {
-      // check if key actually is a q. param
-      // filters also have a "creator" and "subject" param
-      if (key.includes("q.")) {
-        // The old q param will be converted to the new q.all (old hyperlinks to site e.g.)
-        // Will not convert if a q.all already exist in query
-        if (key === "q" && !query["q.all"]) {
-          key = "q.all";
-        }
-        // strip q keys to match types
-        key = key.replace("q.", "");
-        if (types.includes(key) && val) {
-          params[key] = val;
-        }
+
+  Object.entries(query).forEach(([key, raw]) => {
+    const values = Array.isArray(raw) ? raw : [raw];
+
+    values.forEach((val) => {
+      if (!val) return;
+
+      // 1) Legacy "q" -> "all" (kun hvis q.all ikke allerede findes i querystring)
+      if (key === "q" && !query["q.all"]) {
+        params["all"] = val;
+        return;
       }
-    }
+
+      // 2) q.* nøgler (direkte mapping)
+      if (key.startsWith("q.")) {
+        const t = key.slice(2);
+        if (types.includes(t)) {
+          params[t] = val; // sidste vinder ved flere værdier
+        }
+        return;
+      }
+
+      // 3) Advanced (fieldSearch JSON)
+      if (key === "fieldSearch") {
+        try {
+          const obj = JSON.parse(val);
+          const fields = Array.isArray(obj?.inputFields) ? obj.inputFields : [];
+
+          // Sæt KUN all hvis ALLE felter er term.default
+          const hasNonDefault = fields.some(
+            (f) => f?.searchIndex !== "term.default"
+          );
+          if (!hasNonDefault) {
+            const first = fields[0];
+            if (first?.value) params["all"] = first.value;
+          }
+        } catch {
+          // Ignorer ugyldig JSON
+        }
+        return;
+      }
+
+      // 4) CQL (fx: (term.default="hund") eller term.default=hund)
+      if (key === "cql") {
+        const text = String(val);
+
+        // Find alle term.<index>=<value>-udtryk
+        const matches = [];
+        const re =
+          /term\.([a-z][a-z0-9_]*)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s)]+))/gi;
+
+        let m;
+        while ((m = re.exec(text)) !== null) {
+          // m[1]=index, m[2]/m[3]/m[4]=value
+          matches.push({
+            index: m[1]?.toLowerCase(),
+            value: m[2] ?? m[3] ?? m[4],
+          });
+        }
+
+        if (matches.length > 0) {
+          const indices = new Set(matches.map((x) => x.index));
+          // Sæt KUN all hvis ALLE udtryk er term.default
+          if (indices.size === 1 && indices.has("default")) {
+            const firstDefault = matches.find((x) => x.index === "default");
+            if (firstDefault?.value) params["all"] = firstDefault.value;
+          }
+        }
+        return;
+      }
+
+      // Andre keys ignoreres bevidst
+    });
   });
 
   return params;
