@@ -39,7 +39,7 @@ function Cover({
   // Vis skeleton når vi har en kilde men billedet ikke er loadet endnu
   const showSkeleton = Boolean(skeleton || (resolvedSrc && !loaded));
 
-  // CSS-klassser
+  // CSS-klasser
   const loadedClass = loaded ? styles.loaded : "";
   const skeletonClass = showSkeleton ? styles.skeleton : "";
   const frameStyle = bgColor ? styles.frame : "";
@@ -52,8 +52,22 @@ function Cover({
       : "var(--iron)",
   };
 
+  // A11y: gør wrapper interaktiv (role/tabIndex/keyboard) KUN hvis onClick findes
+  const interactive = typeof onClick === "function";
+  const handleKeyActivate = (e) => {
+    if (!interactive) return;
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault(); // undgå scroll på Space
+      onClick(e);
+    }
+  };
+  const interactiveProps = interactive
+    ? { role: "button", tabIndex: 0, onKeyDown: handleKeyActivate }
+    : {};
+
   return (
     <div
+      {...interactiveProps}
       style={backgroundColor}
       className={cx(
         styles.cover,
