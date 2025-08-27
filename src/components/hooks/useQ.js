@@ -135,33 +135,33 @@ export const getQuery = (query = {}) => {
       }
 
       // 4) CQL (fx: (term.default="hund") eller term.default=hund)
-      if (key === "cql") {
-        const text = String(val);
+      // if (key === "cql") {
+      //   const text = String(val);
 
-        // Find alle term.<index>=<value>-udtryk
-        const matches = [];
-        const re =
-          /term\.([a-z][a-z0-9_]*)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s)]+))/gi;
+      //   // Find alle term.<index>=<value>-udtryk
+      //   const matches = [];
+      //   const re =
+      //     /term\.([a-z][a-z0-9_]*)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s)]+))/gi;
 
-        let m;
-        while ((m = re.exec(text)) !== null) {
-          // m[1]=index, m[2]/m[3]/m[4]=value
-          matches.push({
-            index: m[1]?.toLowerCase(),
-            value: m[2] ?? m[3] ?? m[4],
-          });
-        }
+      //   let m;
+      //   while ((m = re.exec(text)) !== null) {
+      //     // m[1]=index, m[2]/m[3]/m[4]=value
+      //     matches.push({
+      //       index: m[1]?.toLowerCase(),
+      //       value: m[2] ?? m[3] ?? m[4],
+      //     });
+      //   }
 
-        if (matches.length > 0) {
-          const indices = new Set(matches.map((x) => x.index));
-          // Sæt KUN all hvis ALLE udtryk er term.default
-          if (indices.size === 1 && indices.has("default")) {
-            const firstDefault = matches.find((x) => x.index === "default");
-            if (firstDefault?.value) params["all"] = firstDefault.value;
-          }
-        }
-        return;
-      }
+      //   if (matches.length > 0) {
+      //     const indices = new Set(matches.map((x) => x.index));
+      //     // Sæt KUN all hvis ALLE udtryk er term.default
+      //     if (indices.size === 1 && indices.has("default")) {
+      //       const firstDefault = matches.find((x) => x.index === "default");
+      //       if (firstDefault?.value) params["all"] = firstDefault.value;
+      //     }
+      //   }
+      //   return;
+      // }
 
       // Andre keys ignoreres bevidst
     });

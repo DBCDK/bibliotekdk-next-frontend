@@ -1,25 +1,17 @@
-// Redirects from /avanceret to /find/avanceret, preserving any query parameters.
-// If the query contains "cql", redirect to /find/cql instead.
-// Supports legacy or simplified links pointing to the advanced search page.
+// pages/avanceret/index.js
+export async function getServerSideProps({ query }) {
+  // Fjern 'mode' fra query så pathen er single source of truth
+  const { mode, ...rest } = query;
 
-export async function getServerSideProps(context) {
-  const { query } = context;
-  const searchParams = new URLSearchParams(query).toString();
+  // Hvis der er en cql-param (også tom streng) ELLER mode=cql -> /find/cql
+  const wantsCql = "cql" in query || mode === "cql";
+  const destMode = wantsCql ? "cql" : "avanceret";
 
-  if ("cql" in query) {
-    // Redirect to /find/cql if cql param is present
-    return {
-      redirect: {
-        destination: `/find/cql${searchParams ? `?${searchParams}` : ""}`,
-        permanent: false,
-      },
-    };
-  }
+  const search = new URLSearchParams(rest).toString();
 
-  // Default: redirect to /find/avanceret
   return {
     redirect: {
-      destination: `/find/avanceret${searchParams ? `?${searchParams}` : ""}`,
+      destination: `/find/${destMode}${search ? `?${search}` : ""}`,
       permanent: false,
     },
   };

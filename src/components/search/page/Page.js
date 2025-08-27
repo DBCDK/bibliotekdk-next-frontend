@@ -51,8 +51,8 @@ function Page({
   onWorkClick,
   onPageChange,
   hasAdvancedSearch,
+  hasCqlSearch,
   hasQuery,
-  q,
   rawcql,
   advancedCql,
   selectedFacets,
@@ -66,8 +66,16 @@ function Page({
   const searchRef = useRef();
   const [showTopBar, setShowTopBar] = useState(false);
 
-  const shouldShowHistory = !isLoading && !hasAdvancedSearch && !q?.all;
-  const shouldShowNoHits = !isLoading && hasQuery && hitcount === 0;
+  const hasActiveSearch =
+    {
+      simpel: hasQuery,
+      avanceret: hasAdvancedSearch,
+      cql: hasCqlSearch,
+    }[mode] ?? false;
+
+  const shouldShowHistory = !isLoading && !hasActiveSearch;
+
+  const shouldShowNoHits = !isLoading && hasActiveSearch && hitcount === 0;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -213,13 +221,16 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
 
   const mode = router?.query?.mode;
 
+  const isSimple = mode === "simpel";
+  const isAdvanced = !isSimple;
+
   const advCtx = useAdvancedSearchContext();
   const { selectedFacets } = useFacets();
   const { selectedQuickFilters } = useQuickFilters();
   const { setValue } = useAdvancedSearchHistory();
 
-  const hasAdvancedSearch =
-    !isEmpty(advCtx?.fieldSearchFromUrl) || !isEmpty(advCtx?.cqlFromUrl);
+  const hasAdvancedSearch = !isEmpty(advCtx?.fieldSearchFromUrl);
+  const hasCqlSearch = !isEmpty(advCtx?.cqlFromUrl);
 
   const cql = advCtx?.cqlFromUrl;
   const fieldSearch = advCtx?.fieldSearchFromUrl;
@@ -247,19 +258,18 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
   );
 
   const advancedRes = useData(
-    hasAdvancedSearch && advancedHitcount({ cql: advancedCql })
+    hasAdvancedSearch ||
+      (hasCqlSearch && advancedHitcount({ cql: advancedCql }))
   );
 
-  const hitcount = hasAdvancedSearch
+  const hitcount = isAdvanced
     ? advancedRes?.data?.complexSearch?.hitcount || 0
     : simpleRes?.data?.search?.hitcount || 0;
 
-  const isLoading = hasAdvancedSearch
-    ? advancedRes.isLoading
-    : simpleRes.isLoading;
+  const isLoading = isAdvanced ? advancedRes.isLoading : simpleRes.isLoading;
 
   if (
-    hasAdvancedSearch &&
+    (hasAdvancedSearch || hasCqlSearch) &&
     !advancedRes?.error &&
     !advancedRes?.isLoading &&
     (cqlAndFacetsQuery || fieldSearchQuery)
@@ -284,7 +294,7 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
       onPageChange={onPageChange}
       hasQuery={hasQuery}
       hasAdvancedSearch={hasAdvancedSearch}
-      q={q}
+      hasCqlSearch={hasCqlSearch}
       rawcql={rawcql}
       advancedCql={advancedCql}
       selectedFacets={selectedFacets}

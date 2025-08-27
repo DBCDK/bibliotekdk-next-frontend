@@ -66,7 +66,8 @@ export default function Wrap({ page = 1, onWorkClick }) {
 
   // Mode
   const { query } = useRouter();
-  const isAdvancedMode = ["avanceret", "cql"].includes(query?.mode);
+  const isAdvancedMode = query?.mode === "avanceret";
+  const isCqlMode = query?.mode === "cql";
 
   // Avanceret søgning inputs
   const adv = useAdvancedSearchContext();
@@ -75,7 +76,8 @@ export default function Wrap({ page = 1, onWorkClick }) {
   const { cqlFromUrl, fieldSearchFromUrl, sort } = adv || {};
 
   const hasAdvancedParams =
-    isAdvancedMode && (!isEmpty(fieldSearchFromUrl) || !isEmpty(cqlFromUrl));
+    (isAdvancedMode || isCqlMode) && !isEmpty(fieldSearchFromUrl);
+  const hasCqlParams = isCqlMode && !isEmpty(cqlFromUrl);
 
   // Byg CQL (memo for læsbarhed)
   const cqlAndFacetsQuery = useMemo(
@@ -112,7 +114,7 @@ export default function Wrap({ page = 1, onWorkClick }) {
 
   // Data-kald (kun aktivt for gældende mode)
   const complexResponse = useData(
-    hasAdvancedParams
+    hasAdvancedParams || hasCqlParams
       ? complexSearchFragments.doComplexSearchAll({
           cql: cqlQuery,
           offset,
@@ -128,7 +130,7 @@ export default function Wrap({ page = 1, onWorkClick }) {
 
   // Tracking for simpel søgning
   useEffect(() => {
-    if (!hasAdvancedParams && simpleResponse?.data) {
+    if ((!hasAdvancedParams || !hasCqlParams) && simpleResponse?.data) {
       dataCollect.collectSearch({
         search_request: { q, filters },
         search_response_works:
@@ -137,16 +139,18 @@ export default function Wrap({ page = 1, onWorkClick }) {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [simpleResponse?.data, hasAdvancedParams]);
+  }, [simpleResponse?.data, hasAdvancedParams, hasCqlParams]);
 
   // Data extraction
-  const rows = hasAdvancedParams
-    ? complexResponse?.data?.complexSearch?.works
-    : simpleResponse?.data?.search?.works;
+  const rows =
+    hasAdvancedParams || hasCqlParams
+      ? complexResponse?.data?.complexSearch?.works
+      : simpleResponse?.data?.search?.works;
 
-  const isLoading = hasAdvancedParams
-    ? !!complexResponse?.isLoading
-    : !!simpleResponse?.isLoading;
+  const isLoading =
+    hasAdvancedParams || hasCqlParams
+      ? !!complexResponse?.isLoading
+      : !!simpleResponse?.isLoading;
 
   return (
     <Result
