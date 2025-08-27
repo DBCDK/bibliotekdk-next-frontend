@@ -15,6 +15,7 @@ import * as workFragments from "@/lib/api/work.fragments";
 import styles from "./Contents.module.css";
 import { useModal } from "@/components/_modal";
 import { IconLink as LinkArrow } from "@/components/base/iconlink/IconLink";
+import Accordion, { Item as AccordionItem } from "@/components/base/accordion";
 
 /**
  * Fetches and flattens table of contents for a specific manifestation within a work.
@@ -145,14 +146,144 @@ function flattenContents(entries, result = [], levels = []) {
         newLevels[newLevels.length - 1] = false;
       }
       newLevels.push(true);
-      const { count: subCount } = flattenContents(children, result, newLevels);
-      count += subCount;
+      flattenContents(children, result, newLevels);
     }
   });
 
   return { flattened: result, count };
 }
 
+const VerticalLines = ({ levels, isLast }) => {
+  return levels.map((showLine, index) => {
+    if (!showLine) {
+      return null;
+    }
+    const isRightMost = index === levels.length - 1;
+    return (
+      <div
+        key={index}
+        style={{
+          position: "absolute",
+          left: `calc(var(--base-padding) + var(--pt1) + ${index} * var(--pt3))`,
+          top: 0,
+          height: isRightMost && isLast ? "50%" : "100%",
+          width: 1,
+          backgroundColor: "var(--iron)",
+        }}
+      />
+    );
+  });
+};
+
+const HorizontalLine = ({ levels }) => {
+  if (levels.length === 0) {
+    return null;
+  }
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: `calc(var(--base-padding) + var(--pt1) + ${
+          levels.length - 1
+        } * var(--pt3))`,
+        top: "50%",
+        width: "var(--pt1)",
+        height: 1,
+        backgroundColor: "var(--iron)",
+      }}
+    />
+  );
+};
+
+const Creators = ({ creators, mergedTextProps }) => {
+  const parts = [
+    creators?.persons?.map((p) => p.display).join(", "),
+    creators?.corporations?.map((c) => c.display).join(", "),
+  ].filter(Boolean);
+
+  if (parts.length === 0) {
+    return null;
+  }
+
+  return (
+    <Text lines={1} {...mergedTextProps?.creators} className={styles.creators}>
+      {parts.join(", ")}
+    </Text>
+  );
+};
+
+function ContentRow({
+  entry,
+  index,
+  style = {},
+  entryClassName,
+  mergedTextProps,
+  disableBackground,
+}) {
+  const level = entry.levels.length;
+  const isEven = index % 2 === 0;
+
+  return (
+    <>
+      <div
+        className={`${styles.entryItem} ${entryClassName} ${
+          disableBackground
+            ? ""
+            : isEven
+            ? styles.darkBackground
+            : styles.lightBackground
+        }`}
+        style={{
+          position: "relative",
+          paddingLeft: `calc(var(--base-padding) + ${level} * var(--pt3))`,
+          ...style,
+        }}
+      >
+        <VerticalLines levels={entry.levels} isLast={entry.isLast} />
+        <HorizontalLine levels={entry.levels} />
+        <div>
+          <div className={styles.title}>
+            <Text lines={1} {...mergedTextProps.title}>
+              {entry.title}
+              {entry.contributors && (
+                <Text tag="span" className={styles.contributors}>
+                  (
+                  {Array.isArray(entry.contributors)
+                    ? `${entry.contributors.join(", ")}`
+                    : `${entry.contributors}`}
+                  )
+                </Text>
+              )}
+            </Text>
+          </div>
+          <Creators
+            creators={entry.creators}
+            mergedTextProps={mergedTextProps}
+          />
+        </div>
+        {entry.playingTime && (
+          <Text
+            {...mergedTextProps.playingTime}
+            lines={1}
+            className={styles.playingTime}
+          >
+            {entry.playingTime}
+          </Text>
+        )}
+      </div>
+    </>
+  );
+}
+
+const NonExpandableItem = ({ children, accordionHasExpandableItems }) => {
+  return (
+    <div
+      className={accordionHasExpandableItems ? styles.nonExpandableItem : ""}
+    >
+      {children}
+    </div>
+  );
+};
 /**
  * Renders a list of table of contents entries with hierarchical structure
  * Shows creators, contributors, and playing time information for each entry
@@ -166,6 +297,7 @@ export function TableOfContentsEntries({
   workId,
   pid,
   textProps = {},
+  enableAccordion = true,
 }) {
   // Default text props
   const defaultTextProps = {
@@ -181,9 +313,31 @@ export function TableOfContentsEntries({
 
   const modal = useModal();
 
+  // Parent groups (only grouped by outermost level)
+  const grouped = useMemo(() => {
+    if (!flattened) {
+      return [];
+    }
+    if (!enableAccordion) {
+      return flattened?.map((entry) => ({ ...entry, children: [] }));
+    }
+    const groups = [];
+    let current;
+    flattened.forEach((entry) => {
+      if (entry.levels.length === 0 || !current) {
+        current = { ...entry, children: [] };
+        groups.push(current);
+        return;
+      }
+
+      current.children.push(entry);
+    });
+    return groups;
+  }, [flattened]);
+
   const truncated = useMemo(() => {
-    return showMoreLimit ? flattened?.slice(0, showMoreLimit) : flattened;
-  }, [flattened, showMoreLimit]);
+    return showMoreLimit ? grouped?.slice(0, showMoreLimit) : grouped;
+  }, [grouped, showMoreLimit]);
 
   const truncatedRaw = useMemo(() => {
     if (!showMoreLimit) {
@@ -193,11 +347,14 @@ export function TableOfContentsEntries({
   }, [raw, showMoreLimit]);
 
   const isTruncated =
-    truncated?.length < flattened?.length || truncatedRaw?.length < raw?.length;
+    truncated?.length < grouped?.length || truncatedRaw?.length < raw?.length;
 
   if (!truncated?.length && !raw?.length) {
     return null;
   }
+
+  const hasExpandableItems =
+    enableAccordion && grouped.some((entry) => entry.children.length > 0);
 
   const handleShowMore = () => {
     modal.push("manifestationContent", {
@@ -209,115 +366,74 @@ export function TableOfContentsEntries({
     });
   };
 
-  const VerticalLines = ({ levels, isLast }) => {
-    return levels.map((showLine, index) => {
-      if (!showLine) {
-        return null;
-      }
-      const isRightMost = index === levels.length - 1;
-      return (
-        <div
-          key={index}
-          style={{
-            position: "absolute",
-            left: `calc(var(--base-padding) + var(--pt1) + ${index} * var(--pt3))`,
-            top: 0,
-            height: isRightMost && isLast ? "50%" : "100%",
-            width: 1,
-            backgroundColor: "var(--iron)",
-          }}
-        />
-      );
-    });
-  };
-
-  const HorizontalLine = ({ levels }) => {
-    if (levels.length === 0) {
-      return null;
-    }
-    return (
-      <div
-        style={{
-          position: "absolute",
-          left: `calc(var(--base-padding) + var(--pt1) + ${
-            levels.length - 1
-          } * var(--pt3))`,
-          top: "50%",
-          width: "var(--pt1)",
-          height: 1,
-          backgroundColor: "var(--iron)",
-        }}
-      />
-    );
-  };
-
-  const Creators = ({ creators, contributors }) => {
-    const parts = [
-      creators?.persons?.map((p) => p.display).join(", "),
-      creators?.corporations?.map((c) => c.display).join(", "),
-      Array.isArray(contributors) ? contributors.join(", ") : contributors,
-    ].filter(Boolean);
-
-    if (parts.length === 0) {
-      return null;
-    }
-
-    return (
-      <Text lines={1} {...mergedTextProps.creators} className={styles.creators}>
-        {parts.join(", ")}
-      </Text>
-    );
-  };
-
-  const ContentRow = ({ entry, index }) => {
-    const level = entry.levels.length;
-    const isEven = index % 2 === 0;
-
-    return (
-      <div
-        className={`${styles.entryItem} ${
-          isEven ? styles.lightBackground : styles.darkBackground
-        }`}
-        style={{
-          position: "relative",
-          paddingLeft: `calc(var(--base-padding) + ${level} * var(--pt3))`,
-        }}
-      >
-        <VerticalLines levels={entry.levels} isLast={entry.isLast} />
-        <HorizontalLine levels={entry.levels} />
-
-        <div className={styles.title}>
-          <Text lines={1} {...mergedTextProps.title}>
-            {entry.title}
-          </Text>
-          <Text lines={1} {...mergedTextProps.creators}>
-            <Creators
-              creators={entry.creators}
-              contributors={entry.contributors}
-            />
-          </Text>
-        </div>
-
-        {entry.playingTime && (
-          <Text
-            {...mergedTextProps.playingTime}
-            lines={1}
-            className={styles.playingTime}
-          >
-            {entry.playingTime}
-          </Text>
-        )}
-      </div>
-    );
-  };
-
   return (
     <div className={`${styles.tableOfContentsEntries} ${className}`}>
-      {truncated?.length && (
+      {!raw && truncated?.length && (
         <div className={styles.entriesList}>
-          {truncated.map((entry, index) => (
-            <ContentRow key={index} entry={entry} index={index} />
-          ))}
+          <Accordion>
+            {truncated.map((entry, index) => {
+              if (entry.children.length === 0 || !enableAccordion) {
+                return (
+                  <NonExpandableItem
+                    key={index}
+                    accordionHasExpandableItems={hasExpandableItems}
+                  >
+                    <ContentRow
+                      entry={entry}
+                      index={index}
+                      disableBackground={hasExpandableItems}
+                      entryClassName={styles.parentEntry}
+                      mergedTextProps={mergedTextProps}
+                    />
+                    {entry.children.map((entry, index) => (
+                      <ContentRow
+                        key={entry.title}
+                        entry={entry}
+                        index={index}
+                        entryClassName={styles.childEntry}
+                        mergedTextProps={mergedTextProps}
+                      />
+                    ))}
+                  </NonExpandableItem>
+                );
+              }
+
+              return (
+                <AccordionItem
+                  title={
+                    <ContentRow
+                      key={entry.title}
+                      entry={entry}
+                      index={0}
+                      entryClassName={styles.parentEntry}
+                      mergedTextProps={mergedTextProps}
+                      disableBackground={true}
+                    />
+                  }
+                  key={index}
+                  eventKey={index}
+                  contentStyle={{ padding: "0" }}
+                  iconSize={3}
+                  headerStyle={{
+                    paddingTop: "0",
+                    paddingBottom: "0",
+                    minHeight: "38px",
+                  }}
+                  headerWrapperClassName={styles.headerWrapper}
+                >
+                  {entry.children.map((entry, index) => (
+                    <ContentRow
+                      key={entry.title}
+                      entry={entry}
+                      index={index}
+                      entryClassName={styles.childEntry}
+                      mergedTextProps={mergedTextProps}
+                    />
+                  ))}
+                </AccordionItem>
+              );
+            })}
+          </Accordion>
         </div>
       )}
       {truncatedRaw && (
@@ -343,7 +459,7 @@ export function TableOfContentsEntries({
                 context: "manifestation_content",
                 label: "see_all",
               })}{" "}
-              {count && <span>({count})</span>}
+              {count > 0 && <span>({count})</span>}
             </Text>
           </LinkArrow>
         </div>
@@ -364,6 +480,7 @@ function TableOfContentsSection({
   workId,
   pid,
   count,
+  enableAccordion = true,
 }) {
   return (
     <Section
@@ -385,6 +502,7 @@ function TableOfContentsSection({
             pid={pid}
             count={count}
             raw={raw}
+            enableAccordion={enableAccordion}
           />
         </Col>
       </Row>
@@ -423,7 +541,7 @@ function TablesOfContentsSkeleton() {
  * Handles loading states and error conditions automatically
  */
 export function TableOfContentsList(props) {
-  const { workId, type, className } = props;
+  const { workId, type, className, enableAccordion = true } = props;
   const tableOfContents = useTablesOfContents({
     workId,
     type,
@@ -445,6 +563,7 @@ export function TableOfContentsList(props) {
       type={type}
       className={className}
       workId={workId}
+      enableAccordion={enableAccordion}
     />
   );
 }

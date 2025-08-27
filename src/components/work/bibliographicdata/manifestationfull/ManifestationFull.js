@@ -247,6 +247,7 @@ export default function ManifestationFull({ workId, pid, hasBeenSeen }) {
             textProps={{
               raw: { type: "text3" },
             }}
+            enableAccordion={false}
           />
         </div>
       </Col>

@@ -2,9 +2,6 @@
   padding: var(--pt3) var(--pt6);
 }
 
-.contentlist {
-}
-
 .contentlist li:nth-child(odd) {
   background: none;
 }
@@ -19,8 +16,8 @@
 
 .tableOfContentsEntries {
   --base-padding: var(--pt2) !important;
-  --odd-background: var(--concrete) !important;
-  --even-background: none !important;
+  --odd-background: none !important;
+  --even-background: var(--concrete) !important;
 }
 
 .tableOfContentsEntriesRaw {

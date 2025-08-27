@@ -22,11 +22,12 @@ services:
   e2e:
     ipc: host ## Prevent Docker Crash in Cypress (https://github.com/cypress-io/cypress/issues/350)
     shm_size: "2gb"
-    image: docker-dbc.artifacts.dbccloud.dk/cypress:latest
+    build:
+      context: ./cypress
+    image: custom-cypress:latest
     volumes:
-      - "./:/app"
-      - "/app/node_modules"
-
+      - "./cypress:/app/cypress"
+      - "./cypress.config.js:/app/cypress.config.js"
     depends_on:
       - web
     environment:
@@ -34,5 +35,4 @@ services:
       - CYPRESS_nextjsBaseUrl=http://web:3000
       - CONFIG_FILE=cypress.config.js
       - CYPRESS_FOLDER=/app/cypress
-
-    command: bash -c "npm i cypress-plugin-tab && npm run cy"
+      - CYPRESS_browser=chrome

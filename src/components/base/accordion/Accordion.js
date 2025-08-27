@@ -47,6 +47,9 @@ export function Item({
   bgColor,
   iconColor,
   headerContentClassName,
+  contentStyle = {},
+  headerStyle = {},
+  headerWrapperClassName,
 }) {
   const [scrolledToHash, setScrolledToHash] = useState(false);
   const router = useRouter();
@@ -118,6 +121,7 @@ export function Item({
           styles.wrapper,
           isCurrentEventKey && styles.open,
           animations.underlineContainer__only_internal_animations,
+          headerWrapperClassName,
         ].join(" ")}
         onClick={onClick}
         onKeyDown={handleKeypress}
@@ -133,7 +137,10 @@ export function Item({
             expanded={isCurrentEventKey}
           />
         ) : (
-          <div className={cx(styles.header_content, headerContentClassName)}>
+          <div
+            className={cx(styles.header_content, headerContentClassName)}
+            style={headerStyle}
+          >
             <div
               className={[
                 animations["f-translate-right"],
@@ -141,12 +148,17 @@ export function Item({
                 // of first element in accordion header
                 additionalTxt && styles.firstelement,
               ].join(" ")}
+              style={{ width: !additionalTxt && "100%" }}
             >
-              <Link tag="span" className={styles.link_on_year} tabIndex={-1}>
-                <Title type="text2" skeleton={isLoading} lines={1} tag="h3">
-                  {title}
-                </Title>
-              </Link>
+              {typeof title === "string" ? (
+                <Link tag="span" className={styles.link_on_year} tabIndex={-1}>
+                  <Title type="text2" skeleton={isLoading} lines={1} tag="h3">
+                    {title}
+                  </Title>
+                </Link>
+              ) : (
+                <div>{title}</div>
+              )}
               {subTitle && (
                 <Text tag={"span"} type="text4">
                   {subTitle}
@@ -183,7 +195,7 @@ export function Item({
           aria-labelledby={`accordion-unique-toggle-${eventKey}-${title}`}
         >
           {/* avoid choppy animation on collapse */}
-          <div className={styles.content}>
+          <div className={styles.content} style={contentStyle}>
             <Card.Body>
               {typeof children === "function"
                 ? children(typeof window !== "undefined" ? hasBeenSeen : true)
