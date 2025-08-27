@@ -6,9 +6,6 @@ import cx from "classnames";
 import Skeleton from "@/components/base/skeleton";
 import styles from "./Cover.module.css";
 
-/**
- * Core Cover component (ikke default-export)
- */
 function Cover({
   children = null,
   src = null,
@@ -22,24 +19,19 @@ function Cover({
   const [error, setError] = useState(false);
   const imageRef = useRef(null);
 
-  // Hvis src er et array af cover-objekter, vælg første gyldige
+  // Resolve src if it's an array
   let resolvedSrc = src;
   if (Array.isArray(src)) {
-    resolvedSrc = src
-      .map((t) => t?.cover && t.cover.detail)
-      .filter(Boolean)?.[0];
+    resolvedSrc = src.map((t) => t?.cover?.detail).filter(Boolean)?.[0];
   }
 
-  // Reset tilstand når kilden ændrer sig
   useEffect(() => {
     setLoaded(false);
     setError(false);
   }, [resolvedSrc]);
 
-  // Vis skeleton når vi har en kilde men billedet ikke er loadet endnu
   const showSkeleton = Boolean(skeleton || (resolvedSrc && !loaded));
 
-  // CSS-klasser
   const loadedClass = loaded ? styles.loaded : "";
   const skeletonClass = showSkeleton ? styles.skeleton : "";
   const frameStyle = bgColor ? styles.frame : "";
@@ -52,22 +44,34 @@ function Cover({
       : "var(--iron)",
   };
 
-  // A11y: gør wrapper interaktiv (role/tabIndex/keyboard) KUN hvis onClick findes
   const interactive = typeof onClick === "function";
-  const handleKeyActivate = (e) => {
+
+  // A11y: aktiver med Enter/Space
+  const handleKeyDown = (e) => {
     if (!interactive) return;
-    if (e.key === "Enter" || e.key === " ") {
+    if (e.key === " ") {
       e.preventDefault(); // undgå scroll på Space
-      onClick(e);
+    }
+    if (e.key === "Enter") {
+      onClick?.(e);
     }
   };
-  const interactiveProps = interactive
-    ? { role: "button", tabIndex: 0, onKeyDown: handleKeyActivate }
-    : {};
+
+  const handleKeyUp = (e) => {
+    if (!interactive) return;
+    // Space aktiveres på keyup for rolle=button
+    if (e.key === " ") {
+      onClick?.(e);
+    }
+  };
 
   return (
     <div
-      {...interactiveProps}
+      role={interactive ? "button" : undefined}
+      tabIndex={interactive ? 0 : undefined}
+      onKeyDown={handleKeyDown}
+      onKeyUp={handleKeyUp}
+      onClick={interactive ? onClick : undefined}
       style={backgroundColor}
       className={cx(
         styles.cover,
@@ -83,7 +87,6 @@ function Cover({
           [styles["fill-width"]]: size === "fill-width",
         }
       )}
-      onClick={onClick}
       data-cy={resolvedSrc ? "cover-present" : "missing-cover"}
     >
       {skeletonClass && <Skeleton />}
@@ -113,10 +116,6 @@ function Cover({
   );
 }
 
-/**
- * Default-export bevarer eksisterende import-pattern:
- * `import Cover from "@/components/base/cover"`
- */
 export default function Container(props) {
   return <Cover {...props} />;
 }

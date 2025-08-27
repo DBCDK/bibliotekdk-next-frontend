@@ -108,7 +108,10 @@ export default function Wrap({ page = 1, onWorkClick }) {
 
   // Simpel søgning inputs
   const { filters, isSynced } = useFilters();
-  const { q, hasQuery } = useQ();
+  const { getQuery, hasQuery } = useQ();
+
+  const q = getQuery();
+
   const dataCollect = useDataCollect();
   if (!isSynced) offset = 0;
 
