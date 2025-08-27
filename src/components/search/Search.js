@@ -1,10 +1,11 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
 
 import Tab from "react-bootstrap/Tab";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+
+import omit from "lodash/omit";
 
 import useQ from "../hooks/useQ";
 import useBreakpoint from "../hooks/useBreakpoint";
@@ -139,9 +140,9 @@ export default function Wrap() {
     });
   };
 
-  // URL er single source of truth: ved faneskift skifter vi kun path.
   const handleModeChange = (newMode) => {
-    const { mode: _drop, page: _page, ...rest } = router.query; // drop 'page'
+    const rest = omit(router.query, ["mode", "page"]);
+
     router.push(
       {
         pathname: `/find/${newMode}`,

@@ -24,7 +24,7 @@ import {
 
 /* -------------------------------- UI -------------------------------- */
 
-function Result({ rows, isLoading, onWorkClick, showFeedback = true }) {
+export function Result({ rows, isLoading, onWorkClick, showFeedback = true }) {
   const list =
     isLoading && (!rows || rows.length === 0)
       ? Array.from({ length: 10 }, (_, i) => ({
