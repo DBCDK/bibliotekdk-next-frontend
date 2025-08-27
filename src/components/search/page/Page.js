@@ -36,7 +36,6 @@ import Text from "@/components/base/text";
 import translate from "@/components/base/translate";
 
 import isEmpty from "lodash/isEmpty";
-import cx from "classnames";
 import styles from "./Page.module.css";
 import { useRouter } from "next/router";
 
@@ -70,11 +69,10 @@ function Page({
     {
       simpel: hasQuery,
       avanceret: hasAdvancedSearch,
-      cql: hasCqlSearch,
+      cql: hasCqlSearch || hasAdvancedSearch,
     }[mode] ?? false;
 
   const shouldShowHistory = !isLoading && !hasActiveSearch;
-
   const shouldShowNoHits = !isLoading && hasActiveSearch && hitcount === 0;
 
   useEffect(() => {
@@ -168,9 +166,9 @@ function Page({
           <NoHitSearch isSimpleSearch={!hasAdvancedSearch} />
         )}
 
-        {hasAdvancedSearch && hitcount > 0 && (
-          <div className={cx(styles.sort_wrapper)}>
-            <AdvancedSearchSort className={cx(styles.sort_container)} />
+        {!isSimple && hitcount > 0 && (
+          <div className={styles.sort_wrapper}>
+            <AdvancedSearchSort className={styles.sort_container} />
           </div>
         )}
 
@@ -258,8 +256,8 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
   );
 
   const advancedRes = useData(
-    hasAdvancedSearch ||
-      (hasCqlSearch && advancedHitcount({ cql: advancedCql }))
+    (hasAdvancedSearch || hasCqlSearch) &&
+      advancedHitcount({ cql: advancedCql })
   );
 
   const hitcount = isAdvanced

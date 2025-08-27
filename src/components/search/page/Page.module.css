@@ -16,6 +16,13 @@
   transition-duration: 0.3s;
 }
 
+.sort_container {
+  display: inline-flex;
+  gap: var(--pt1);
+  align-items: center;
+  margin-bottom: var(--pt2);
+}
+
 @media (min-width: 992px) {
   .section {
     padding-top: var(--pt1);
