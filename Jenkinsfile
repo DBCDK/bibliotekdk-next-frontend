@@ -36,6 +36,31 @@ pipeline {
                 checkout scm
             }
         }
+        stage("SonarQube") {
+            steps {
+                withSonarQubeEnv(installationName: 'sonarqube.dbc.dk') {
+                    script {
+                        // trigger sonarqube analysis
+                        def sonarOptions = "-Dsonar.branch.name=$BRANCH_NAME"
+                        if (env.BRANCH_NAME != 'main') {
+                            sonarOptions += " -Dsonar.newCode.referenceBranch=main"
+                        }
+
+                        sh returnStatus: true, script: """
+                        $SONAR_SCANNER $sonarOptions -Dsonar.token=${SONAR_AUTH_TOKEN} -Dsonar.projectKey="${SONAR_PROJECT_KEY}"
+                        """
+                    }
+                }
+            }
+        }
+        stage("Quality gate") {
+            steps {
+                // wait for analysis results
+                timeout(time: 1, unit: 'HOURS') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
         stage('Build image') {
             steps {
                 script {
@@ -132,7 +157,7 @@ pipeline {
             '''
 
             junit skipPublishingChecks: true, testResults: 'app/e2e/reports/*.xml'
-            archiveArtifacts 'cypress/screenshots/*, cypress/videos/*, cypress/e2e/__image_snapshots__/*.png, logs/*'
+            archiveArtifacts 'cypress/screenshots/*, cypress/videos/*, logs/*'
         }
         failure {
             script {

@@ -63,7 +63,6 @@
   "author": "Frontend @ DBC",
   "license": "GNU",
   "devDependencies": {
-    "@frsource/cypress-plugin-visual-regression-diff": "^3.3.10",
     "@graphql-tools/mock": "^8.6.1",
     "@graphql-tools/schema": "^8.3.3",
     "@storybook/addon-a11y": "^7.0.25",
