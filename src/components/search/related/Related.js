@@ -113,8 +113,6 @@ export default function Wrap() {
     query && subjects({ q: [query], limit: 7 })
   );
 
-  console.log("data", data);
-
   // dummy data will be returned on isLoading - skeleton view
   const dummy = [
     { subject: "heste" },

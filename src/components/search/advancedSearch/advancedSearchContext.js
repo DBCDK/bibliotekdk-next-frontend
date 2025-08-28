@@ -182,16 +182,35 @@ export function useAdvancedSearchContext() {
   return useContext(AdvancedSearchContext);
 }
 
+export function getFieldSearchFromUrl(query) {
+  const { fieldSearch, "q.all": q = null } = query;
+  // const { fieldSearch } = query;
+
+  const fieldSearchFromUrl =
+    fieldSearch && JSON.parse(decodeURIComponent(fieldSearch));
+
+  if (fieldSearchFromUrl) {
+    return fieldSearchFromUrl;
+  }
+
+  if (q) {
+    const arr = getInitialInputFields();
+    arr[0].value = q;
+    return { inputFields: arr };
+  }
+
+  return {};
+}
+
 export default function AdvancedSearchProvider({ children, router }) {
   const {
     page = "1",
     cql: cqlFromUrl = null,
-    fieldSearch = "{}",
     sort: sortFromUrl = "{}",
   } = router.query;
 
-  const fieldSearchFromUrl =
-    fieldSearch && JSON.parse(decodeURIComponent(fieldSearch));
+  const fieldSearchFromUrl = getFieldSearchFromUrl(router?.query);
+
   const sort = sortFromUrl && JSON.parse(decodeURIComponent(sortFromUrl));
 
   //// ----  Popup Trigger ----

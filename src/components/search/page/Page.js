@@ -36,7 +36,6 @@ import Text from "@/components/base/text";
 import translate from "@/components/base/translate";
 
 import isEmpty from "lodash/isEmpty";
-import cx from "classnames";
 import styles from "./Page.module.css";
 import { useRouter } from "next/router";
 
@@ -51,8 +50,8 @@ function Page({
   onWorkClick,
   onPageChange,
   hasAdvancedSearch,
+  hasCqlSearch,
   hasQuery,
-  q,
   rawcql,
   advancedCql,
   selectedFacets,
@@ -62,10 +61,19 @@ function Page({
   const currentPage = parseInt(page, 10) || 1;
   const numPages = Math.ceil(hitcount / 10);
 
-  const isSimple = mode === "simple";
-
+  const isSimple = mode === "simpel";
   const searchRef = useRef();
   const [showTopBar, setShowTopBar] = useState(false);
+
+  const hasActiveSearch =
+    {
+      simpel: hasQuery,
+      avanceret: hasAdvancedSearch,
+      cql: hasCqlSearch || hasAdvancedSearch,
+    }[mode] ?? false;
+
+  const shouldShowHistory = !isLoading && !hasActiveSearch;
+  const shouldShowNoHits = !isLoading && hasActiveSearch && hitcount === 0;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -153,14 +161,14 @@ function Page({
         }
         sectionTitleClass={hasAdvancedSearch ? styles.sectionTitleClass : ""}
       >
-        {!isLoading && !hasAdvancedSearch && !q?.all && <History />}
-        {!isLoading && hasQuery && hitcount === 0 && (
+        {shouldShowHistory && <History />}
+        {shouldShowNoHits && (
           <NoHitSearch isSimpleSearch={!hasAdvancedSearch} />
         )}
 
-        {hasAdvancedSearch && hitcount > 0 && (
-          <div className={cx(styles.sort_wrapper)}>
-            <AdvancedSearchSort className={cx(styles.sort_container)} />
+        {!isSimple && hitcount > 0 && (
+          <div className={styles.sort_wrapper}>
+            <AdvancedSearchSort className={styles.sort_container} />
           </div>
         )}
 
@@ -209,17 +217,18 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
   const q = getQuery();
   const router = useRouter();
 
-  const { mode } = router.query;
+  const mode = router?.query?.mode;
+
+  const isSimple = mode === "simpel";
+  const isAdvanced = !isSimple;
 
   const advCtx = useAdvancedSearchContext();
   const { selectedFacets } = useFacets();
   const { selectedQuickFilters } = useQuickFilters();
   const { setValue } = useAdvancedSearchHistory();
 
-  const hasAdvancedSearch =
-    !isEmpty(advCtx?.fieldSearchFromUrl) || !isEmpty(advCtx?.cqlFromUrl);
-
-  const simpleQuery = hasQuery && searchFragments.hitcount({ q, filters });
+  const hasAdvancedSearch = !isEmpty(advCtx?.fieldSearchFromUrl);
+  const hasCqlSearch = !isEmpty(advCtx?.cqlFromUrl);
 
   const cql = advCtx?.cqlFromUrl;
   const fieldSearch = advCtx?.fieldSearchFromUrl;
@@ -242,21 +251,23 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
 
   const rawcql = cqlAndFacetsQuery ? cql : fieldSearchQuery;
 
-  const simpleRes = useData(!hasAdvancedSearch && simpleQuery);
-  const advancedRes = useData(
-    hasAdvancedSearch && advancedHitcount({ cql: advancedCql })
+  const simpleRes = useData(
+    hasQuery && searchFragments.hitcount({ q, filters })
   );
 
-  const hitcount = hasAdvancedSearch
+  const advancedRes = useData(
+    (hasAdvancedSearch || hasCqlSearch) &&
+      advancedHitcount({ cql: advancedCql })
+  );
+
+  const hitcount = isAdvanced
     ? advancedRes?.data?.complexSearch?.hitcount || 0
     : simpleRes?.data?.search?.hitcount || 0;
 
-  const isLoading = hasAdvancedSearch
-    ? advancedRes.isLoading
-    : simpleRes.isLoading;
+  const isLoading = isAdvanced ? advancedRes.isLoading : simpleRes.isLoading;
 
   if (
-    hasAdvancedSearch &&
+    (hasAdvancedSearch || hasCqlSearch) &&
     !advancedRes?.error &&
     !advancedRes?.isLoading &&
     (cqlAndFacetsQuery || fieldSearchQuery)
@@ -281,7 +292,7 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
       onPageChange={onPageChange}
       hasQuery={hasQuery}
       hasAdvancedSearch={hasAdvancedSearch}
-      q={q}
+      hasCqlSearch={hasCqlSearch}
       rawcql={rawcql}
       advancedCql={advancedCql}
       selectedFacets={selectedFacets}

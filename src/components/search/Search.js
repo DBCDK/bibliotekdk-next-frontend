@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import Tab from "react-bootstrap/Tab";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+
+import omit from "lodash/omit";
 
 import useQ from "../hooks/useQ";
 import useBreakpoint from "../hooks/useBreakpoint";
@@ -14,7 +15,7 @@ import SimpleSearch from "./simple";
 import Related from "./related/Related";
 import DidYouMean from "./didYouMean/DidYouMean";
 import AdvancedSearch from "./advancedSearch/advancedSearch/AdvancedSearch";
-import { CqlTextArea } from "./advancedSearch/cqlTextArea/CqlTextArea";
+import CqlTextArea from "./advancedSearch/cqlTextArea/CqlTextArea";
 import WorkTypeMenu from "@/components/search/advancedSearch/workTypeMenu/WorkTypeMenu";
 
 import translate from "@/components/base/translate";
@@ -27,18 +28,10 @@ import { getHelpUrl } from "@/lib/utils";
 import styles from "./Search.module.css";
 
 export function Search({ onWorkTypeSelect, mode, onTabChange }) {
-  const [tab, setTab] = useState(mode || "simpel");
   const breakpoint = useBreakpoint();
   const isMobileSize = ["xs", "sm", "md"].includes(breakpoint);
-
-  const isSimple = tab === "simpel";
-
-  // Sync tab when URL mode changes
-  useEffect(() => {
-    if (mode && mode !== tab) {
-      setTab(mode);
-    }
-  }, [mode]);
+  const activeTab = mode || "simpel";
+  const isSimple = activeTab === "simpel";
 
   return (
     <div className={styles.background}>
@@ -55,12 +48,9 @@ export function Search({ onWorkTypeSelect, mode, onTabChange }) {
 
           <Col sm={12} lg={{ offset: 1, span: 7 }}>
             <Tabs
-              active={tab}
+              active={activeTab}
               onSelect={(nextTab) => {
-                if (nextTab !== tab) {
-                  setTab(nextTab);
-                  onTabChange(nextTab);
-                }
+                if (nextTab && nextTab !== activeTab) onTabChange(nextTab);
               }}
               className={styles.tabs}
             >
@@ -92,10 +82,7 @@ export function Search({ onWorkTypeSelect, mode, onTabChange }) {
 
               <Tab
                 eventKey="cql"
-                title={translate({
-                  context: "improved-search",
-                  label: "cql",
-                })}
+                title={translate({ context: "improved-search", label: "cql" })}
               >
                 <Col className={styles.content} lg={12} xs={12}>
                   <CqlTextArea />
@@ -109,20 +96,11 @@ export function Search({ onWorkTypeSelect, mode, onTabChange }) {
               icon="arrowrightblue"
               keepUnderline={true}
               iconSize={1}
-              onClick={() => {}}
               href="/avanceret/soegehistorik"
-              border={{
-                top: false,
-                bottom: {
-                  keepVisible: true,
-                },
-              }}
+              border={{ top: false, bottom: { keepVisible: true } }}
             >
               <Text type="text4" tag="span">
-                {Translate({
-                  context: "search",
-                  label: "searchHistory",
-                })}
+                {Translate({ context: "search", label: "searchHistory" })}
               </Text>
             </IconButton>
 
@@ -163,12 +141,12 @@ export default function Wrap() {
   };
 
   const handleModeChange = (newMode) => {
-    const { mode, ...rest } = router.query; // eslint-disable-line no-unused-vars
+    const rest = omit(router.query, ["mode", "page"]);
 
     router.push(
       {
         pathname: `/find/${newMode}`,
-        query: rest,
+        query: Object.keys(rest).length ? rest : undefined,
       },
       undefined,
       { shallow: true }

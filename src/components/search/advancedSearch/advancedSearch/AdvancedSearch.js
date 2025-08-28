@@ -15,6 +15,7 @@ import Text from "@/components/base/text";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { useEffect } from "react";
 
 /**
  * Præsentationskomponent: kun UI
@@ -72,6 +73,8 @@ export default function Wrap() {
   const { resetFacets } = useFacets();
   const { resetQuickFilters } = useQuickFilters();
 
+  const mode = router?.query?.mode;
+
   const {
     inputFields,
     dropdownSearchIndices,
@@ -81,6 +84,12 @@ export default function Wrap() {
     workType,
     suggesterTid,
   } = useAdvancedSearchContext();
+
+  useEffect(() => {
+    if (stateToString && mode === "avanceret") {
+      handleSearch();
+    }
+  }, [mode]);
 
   const handleSearch = () => {
     resetFacets();
@@ -106,7 +115,9 @@ export default function Wrap() {
     resetObjectState();
     router.push({
       pathname: router.pathname,
-      ...(router.query?.mode === "cql" && { query: { mode: "cql" } }),
+      ...(router.query?.mode === "avanceret" && {
+        query: { mode: "avanceret" },
+      }),
     });
   };
 
