@@ -47,6 +47,10 @@ export function useFacets() {
   /**
    * Add an extra facet and push facets to query - we keep facets in a state for
    * advanced search context to understand
+   * @param value - name of the value eg. 'bog'
+   * @param searchindex - typically the name of the facet eg. 'materialetype'
+   * @param replace - replace or push
+   * @param traceId
    */
   function addFacet(value, searchindex, replace = false, traceId) {
     const selectedFacets = JSON.parse(facetsQuery);

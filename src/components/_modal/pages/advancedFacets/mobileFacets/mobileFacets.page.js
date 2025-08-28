@@ -38,6 +38,7 @@ export default function Wrap(props) {
     quickFilters: selectedQuickFilters,
   });
 
+  // update when modal is closed
   useEffect(() => {
     if (!modal.isVisible && modal.hasBeenVisible) {
       pushQuery(true, selectedFacets);

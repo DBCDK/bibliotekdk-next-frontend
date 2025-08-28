@@ -10,6 +10,13 @@
   padding-bottom: 0;
 }
 
+.subtitleStyle {
+  font-family: var(--body-font-semibold);
+  border-bottom: 1px solid var(--blue);
+  margin: 0 0 var(--pt1) 0;
+  padding-bottom: var(--pt1);
+}
+
 .filterButton {
   margin-bottom: var(--pt2);
   width: fit-content;
