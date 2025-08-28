@@ -106,7 +106,7 @@ export function useTablesOfContents({ workId, pid, type, customRootHeader }) {
     pid: targetManifestation?.pid ?? null,
     contents,
     flattened,
-    raw,
+    raw: !flattened?.length ? raw : null,
     count,
     isLoading,
     error:
