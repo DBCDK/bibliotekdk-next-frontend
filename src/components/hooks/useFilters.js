@@ -159,7 +159,7 @@ export default function useFilters() {
    * }
    */
   const setFilter = (filter) => {
-    if (!filter.checked) {
+    if (!filter?.checked) {
       _removeAFilter(filter, filter?.value?.term);
     } else {
       _addAFilter(filter);
@@ -168,18 +168,29 @@ export default function useFilters() {
 
   const _addAFilter = (filter) => {
     const name = filter?.facetName;
-    const actual = _filters[name];
-    actual?.push(filter?.value?.term);
+    if (!name) return;
+
+    // initér array ved behov
+    _filters[name] ??= [];
+
+    // undgå duplikater
+    const term = filter?.value?.term ?? "";
+    if (!term) return;
+
+    if (!_filters[name].includes(term)) {
+      _filters[name] = [..._filters[name], term];
+    }
   };
 
   const _removeAFilter = (filter, term) => {
     const name = filter?.facetName;
-    const actual = [..._filters[name]] || null;
+    if (!name || !term) return;
 
-    // delete in array
-    const index = actual?.findIndex((act) => act === term);
+    const actual = Array.isArray(_filters[name]) ? [..._filters[name]] : [];
+    const index = actual.findIndex((t) => t === term);
+
     if (index > -1) {
-      actual?.splice(index, 1);
+      actual.splice(index, 1);
       _filters[name] = actual;
     }
   };

@@ -217,6 +217,9 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick, origin }) {
     return a?.score > b?.score ? -1 : 1;
   };
 
+  const values = (Array.isArray(facet?.values) ? facet.values : []).slice();
+  const visible = values.sort(sorter).slice(0, numToShow);
+
   let initialcheck;
   return (
     <>
@@ -235,46 +238,43 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick, origin }) {
         />
       )}
       <ul data-cy={`${facetName}`}>
-        {[...facet?.values]
-          .sort(sorter)
-          .slice(0, numToShow)
-          .map((value, index) => (
-            <li
-              key={`${facetName}-${value.key}-${index}`}
-              className={styles.item}
-              data-cy={`li-${facetName}-${value.key}`}
-            >
-              {
-                (initialcheck = !!current?.values?.find((val) => {
-                  return (
-                    val.name === value.key ||
-                    val === value.key ||
-                    val === value.term
-                  );
-                }))
-              }
-              <Checkbox
-                id={`${facetName}-${value.key}-${index}`}
-                ariaLabel={value.key}
-                className={styles.checkbox}
-                onChange={(checked) => {
-                  onItemClick({ checked, value, facetName });
-                }}
-                checked={initialcheck}
-              ></Checkbox>
-              {/* Set a label for the checkbox - in that way the checkbox's selected value will be set when clicking the label */}
-              <label htmlFor={`${facetName}-${value.key}-${index}`}>
-                <Text tag="span" type="text3" className={styles.facettext}>
-                  {value.term || value.key}
-                </Text>
-              </label>
-              {origin === "advancedFacets" && (
-                <Text tag="span" type="text3" className={styles.score}>
-                  {value.score}
-                </Text>
-              )}
-            </li>
-          ))}
+        {visible.map((value, index) => (
+          <li
+            key={`${facetName}-${value.key}-${index}`}
+            className={styles.item}
+            data-cy={`li-${facetName}-${value.key}`}
+          >
+            {
+              (initialcheck = !!current?.values?.find((val) => {
+                return (
+                  val.name === value.key ||
+                  val === value.key ||
+                  val === value.term
+                );
+              }))
+            }
+            <Checkbox
+              id={`${facetName}-${value.key}-${index}`}
+              ariaLabel={value.key}
+              className={styles.checkbox}
+              onChange={(checked) => {
+                onItemClick({ checked, value, facetName });
+              }}
+              checked={initialcheck}
+            ></Checkbox>
+            {/* Set a label for the checkbox - in that way the checkbox's selected value will be set when clicking the label */}
+            <label htmlFor={`${facetName}-${value.key}-${index}`}>
+              <Text tag="span" type="text3" className={styles.facettext}>
+                {value.term || value.key}
+              </Text>
+            </label>
+            {origin === "advancedFacets" && (
+              <Text tag="span" type="text3" className={styles.score}>
+                {value.score}
+              </Text>
+            )}
+          </li>
+        ))}
         {facet?.values?.length > numToShow && (
           <div
             onClick={() => {
