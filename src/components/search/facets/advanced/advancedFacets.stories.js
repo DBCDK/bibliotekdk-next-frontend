@@ -1,5 +1,5 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
-import AdvancedFacets from "./advancedFacets";
+import { AdvancedFacets } from "./advancedFacets";
 import mockedFacets from "./mockedFacets.json";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
 
