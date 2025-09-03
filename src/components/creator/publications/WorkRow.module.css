@@ -1,0 +1,101 @@
+.bold {
+  font-weight: bold;
+}
+
+/* Work grid (similar to article grid) */
+.container {
+  display: block;
+  background-color: var(--white);
+}
+
+.headerrow,
+.row {
+  display: grid;
+  grid-template-columns: 80px 3fr; /* Cover + title column */
+}
+
+.row {
+  border-top: 1px solid var(--iron);
+}
+
+.row.firstInGroup {
+  /* border-top: none; */
+}
+
+.row:focus,
+.row:hover {
+  color: var(--mine-shaft);
+  background-color: var(--concrete);
+  cursor: pointer;
+}
+
+.row > div {
+  padding: var(--pt1);
+}
+
+.headline {
+  padding: var(--pt1);
+}
+
+.creators {
+  margin-top: var(--pt1);
+}
+
+.workcontainer {
+  /* Similar to articlecontainer */
+  display: block;
+}
+
+.tableHeaderDescription,
+.tableHeaderSubjects,
+.tableHeaderExtent,
+.description,
+.subjects,
+.extent {
+  display: none;
+}
+
+.coverColumn {
+  display: flex;
+  align-items: flex-start;
+  padding: var(--pt1);
+}
+
+.cover {
+  width: 60px;
+  height: auto;
+  object-fit: cover;
+}
+
+.tableHeaderCover {
+  /* Empty header for cover column */
+  width: 80px;
+}
+
+@media (min-width: 576px) {
+  .headerrow,
+  .row {
+    grid-template-columns: 80px 3fr 3fr; /* Cover + title + description */
+  }
+
+  .tableHeaderDescription,
+  .description {
+    display: initial;
+  }
+}
+
+@media (min-width: 768px) {
+  .headerrow,
+  .row {
+    grid-template-columns: 80px 3fr 3fr 2fr 1fr; /* Cover + title + description + subjects + extent */
+  }
+
+  .tableHeaderDescription,
+  .tableHeaderSubjects,
+  .tableHeaderExtent,
+  .description,
+  .subjects,
+  .extent {
+    display: initial;
+  }
+}
