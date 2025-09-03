@@ -276,13 +276,11 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick, origin }) {
           </li>
         ))}
         {facet?.values?.length > numToShow && (
-          <div
-            onClick={() => {
-              setNumToShow(numToShow + numberToShowMore);
-            }}
-            className={styles.showmorelink}
-          >
+          <div className={styles.showmorelink}>
             <Link
+              onClick={() => {
+                setNumToShow(numToShow + numberToShowMore);
+              }}
               border={{
                 top: false,
                 bottom: {
