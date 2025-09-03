@@ -330,8 +330,6 @@ export default function Wrap({ cql, replace = false }) {
   const facets = parseOutFacets(facetResponse?.complexFacets?.facets);
 
   const onItemClick = ({ checked, value, facetName }) => {
-    console.log("... clicked?", checked, facetName);
-
     const name = value?.key;
 
     if (checked) {
