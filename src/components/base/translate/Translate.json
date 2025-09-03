@@ -18,6 +18,16 @@
         "en": "Label: mangler oversættelse"
       }
     },
+    "creator": {
+      "publications": {
+        "da": "Udgivelser",
+        "en": "Publications"
+      },
+      "no-results": {
+        "da": "Ingen publikationer fundet med de valgte filtre",
+        "en": "No publications found with the selected filters"
+      }
+    },
     "advanced_search_cql": {
       "cql_error_link_href": {
         "da": "/hjaelp/soegning-baade-enkel-og-avanceret/179",
@@ -3260,6 +3270,10 @@
       "label-materialTypes": {
         "da": "Materialetype",
         "en": "Format"
+      },
+      "label-creatorfunction": {
+        "da": "Rolle",
+        "en": "Role"
       },
       "label-materialTypesSpecific": {
         "da": "Materialetype",

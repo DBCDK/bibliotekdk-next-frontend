@@ -1,0 +1,34 @@
+.yearTitle {
+  margin-top: var(--pt8);
+  margin-bottom: var(--pt2);
+  text-align: right;
+}
+.filters + div .yearTitle {
+  margin-top: var(--pt6);
+}
+
+.filters {
+  display: flex;
+}
+
+.filters > div {
+  margin-right: var(--pt2);
+}
+
+.noResults {
+  margin-top: var(--pt3);
+  margin-bottom: var(--pt3);
+  text-align: left;
+  color: var(--gray-dark);
+}
+
+.workscontainer {
+  margin-top: calc(var(--pt4) * -1);
+}
+
+/* Desktop styles */
+@media (min-width: 415px) {
+  .filters + div .yearTitle {
+    margin-top: 0;
+  }
+}
