@@ -1,11 +1,10 @@
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 
 import Tab from "react-bootstrap/Tab";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-
-import omit from "lodash/omit";
 
 import useQ from "../hooks/useQ";
 import useBreakpoint from "../hooks/useBreakpoint";
@@ -27,11 +26,113 @@ import { getHelpUrl } from "@/lib/utils";
 
 import styles from "./Search.module.css";
 
+// -----------------------------
+// Centralized mode + URL helpers
+// -----------------------------
+const MODE = { SIMPEL: "simpel", AVANCERET: "avanceret", CQL: "cql" };
+
+const MODE_RULES = {
+  [MODE.SIMPEL]: {
+    // Keep simple URLs tidy
+    allow: ["q.all", "workTypes", "tid"],
+    clean: toSimple,
+  },
+  [MODE.AVANCERET]: {
+    allow: ["fieldSearch", "workTypes", "tid"],
+    clean: toAdvanced,
+  },
+  [MODE.CQL]: {
+    // CQL uses the exact same URL shape as advanced
+    allow: ["fieldSearch", "workTypes", "tid"],
+    clean: toAdvanced,
+  },
+};
+
+function extractAllFromFieldSearch(fieldSearch) {
+  try {
+    const obj =
+      typeof fieldSearch === "string" ? JSON.parse(fieldSearch) : fieldSearch;
+    return obj?.inputFields?.[0]?.value || "";
+  } catch {
+    return "";
+  }
+}
+
+function buildFieldSearchFromAll(all) {
+  if (!all) return undefined;
+  return JSON.stringify({
+    inputFields: [
+      {
+        value: all,
+        prefixLogicalOperator: null,
+        searchIndex: "term.default",
+      },
+    ],
+  });
+}
+
+function isEmptyVal(v) {
+  if (v == null) return true;
+  if (Array.isArray(v)) return v.length === 0;
+  return `${v}`.trim() === "";
+}
+
+function pickAllowed(query, allow = []) {
+  const next = {};
+  for (const k of allow) {
+    if (k in query && !isEmptyVal(query[k])) next[k] = query[k];
+  }
+  return next;
+}
+
+function toSimple(query) {
+  // If q.all is missing but fieldSearch exists → lift first value
+  const all = query["q.all"] || extractAllFromFieldSearch(query.fieldSearch);
+  const base = { ...query, "q.all": all };
+  const picked = pickAllowed(base, MODE_RULES[MODE.SIMPEL].allow);
+  if (isEmptyVal(picked["q.all"])) delete picked["q.all"]; // keep url clean
+  return picked;
+}
+
+function toAdvanced(query) {
+  // If fieldSearch is missing but q.all exists → build minimal fieldSearch
+  const fs = query.fieldSearch || buildFieldSearchFromAll(query["q.all"]);
+  const base = { ...query, fieldSearch: fs };
+  const picked = pickAllowed(base, MODE_RULES[MODE.AVANCERET].allow);
+  if (isEmptyVal(picked.fieldSearch)) delete picked.fieldSearch;
+  return picked;
+}
+
+/**
+ * Normalize current query to a target mode and navigate.
+ * replace=true when auto-normalizing (so Back/Forward feels natural)
+ */
+function navigateToMode(
+  router,
+  targetMode,
+  { replace = false, normalize = true } = {}
+) {
+  const nav = replace ? router.replace : router.push;
+  const rules = MODE_RULES[targetMode];
+  const cleaned = normalize ? rules.clean(router.query || {}) : {};
+  return nav(
+    {
+      pathname: `/find/${targetMode}`,
+      query: Object.keys(cleaned).length ? cleaned : undefined,
+    },
+    undefined,
+    { shallow: true }
+  );
+}
+
+// -----------------------------
+// UI Components
+// -----------------------------
 export function Search({ onWorkTypeSelect, mode, onTabChange }) {
   const breakpoint = useBreakpoint();
   const isMobileSize = ["xs", "sm", "md"].includes(breakpoint);
-  const activeTab = mode || "simpel";
-  const isSimple = activeTab === "simpel";
+  const activeTab = mode || MODE.SIMPEL;
+  const isSimple = activeTab === MODE.SIMPEL;
 
   return (
     <div className={styles.background}>
@@ -55,7 +156,7 @@ export function Search({ onWorkTypeSelect, mode, onTabChange }) {
               className={styles.tabs}
             >
               <Tab
-                eventKey="simpel"
+                eventKey={MODE.SIMPEL}
                 title={translate({
                   context: "improved-search",
                   label: "simple",
@@ -69,7 +170,7 @@ export function Search({ onWorkTypeSelect, mode, onTabChange }) {
               </Tab>
 
               <Tab
-                eventKey="avanceret"
+                eventKey={MODE.AVANCERET}
                 title={translate({
                   context: "improved-search",
                   label: "advanced",
@@ -81,7 +182,7 @@ export function Search({ onWorkTypeSelect, mode, onTabChange }) {
               </Tab>
 
               <Tab
-                eventKey="cql"
+                eventKey={MODE.CQL}
                 title={translate({ context: "improved-search", label: "cql" })}
               >
                 <Col className={styles.content} lg={12} xs={12}>
@@ -141,17 +242,29 @@ export default function Wrap() {
   };
 
   const handleModeChange = (newMode) => {
-    const rest = omit(router.query, ["mode", "page"]);
-
-    router.push(
-      {
-        pathname: `/find/${newMode}`,
-        query: Object.keys(rest).length ? rest : undefined,
-      },
-      undefined,
-      { shallow: true }
-    );
+    // Centralized navigation + normalization
+    navigateToMode(router, newMode, { replace: false, normalize: true });
   };
+
+  // On mount & when mode changes, normalize current URL for that mode
+  useEffect(() => {
+    if (!router.isReady) return;
+    const currentMode = typeof mode === "string" ? mode : MODE.SIMPEL;
+    if (!MODE_RULES[currentMode]) return;
+
+    const normalized = MODE_RULES[currentMode].clean(router.query || {});
+    const pickedCurrent = pickAllowed(
+      router.query || {},
+      MODE_RULES[currentMode].allow
+    );
+
+    const alreadyClean =
+      JSON.stringify(pickedCurrent) === JSON.stringify(normalized);
+    if (!alreadyClean) {
+      navigateToMode(router, currentMode, { replace: true, normalize: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.isReady, mode]);
 
   return (
     <Search

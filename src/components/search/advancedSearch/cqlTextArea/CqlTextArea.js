@@ -1,5 +1,5 @@
 import styles from "./CqlTextArea.module.css";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import { CqlErrorMessage } from "@/components/search/advancedSearch/cqlErrorMessage/CqlErrorMessage";
@@ -111,14 +111,6 @@ export function CqlTextAreaView({
 export default function Wrap() {
   const router = useRouter();
   const isMobile = useBreakpoint() === "xs";
-
-  const mode = router?.query?.mode;
-
-  useEffect(() => {
-    if (stateToString && mode === "cql") {
-      handleSearch();
-    }
-  }, [mode]);
 
   const { data } = useData(complexSearchIndexes());
   const { resetFacets } = useFacets();

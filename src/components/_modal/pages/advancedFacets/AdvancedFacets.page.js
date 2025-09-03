@@ -1,4 +1,4 @@
-import AdvancedFacets from "@/components/search/advancedSearch/facets/advancedFacets";
+import AdvancedFacets from "@/components/search/facets/advanced/advancedFacets";
 import Top from "@/components/_modal/pages/base/top";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import { convertStateToCql } from "@/components/search/advancedSearch/utils";
