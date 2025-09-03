@@ -1,4 +1,5 @@
 .dropdownMenu {
+  width: 125px;
   gap: var(--pt2);
   display: flex;
   flex-direction: column;

@@ -16,11 +16,33 @@
   transition-duration: 0.3s;
 }
 
+.subtitleStyle {
+  font-family: var(--body-font-semibold);
+  border-bottom: 1px solid var(--blue);
+  margin: 0 0 var(--pt1) 0;
+  padding-bottom: var(--pt1);
+}
+
 .sort_container {
   display: inline-flex;
   gap: var(--pt1);
   align-items: center;
   margin-bottom: var(--pt2);
+}
+
+.titleflex {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: var(--pt4);
+}
+
+.facetsContainer > div:first-child {
+  margin-bottom: var(--pt4);
+}
+
+.titleflex > *:first-child {
+  color: var(--blue);
+  margin-right: var(--pt1);
 }
 
 @media (min-width: 992px) {

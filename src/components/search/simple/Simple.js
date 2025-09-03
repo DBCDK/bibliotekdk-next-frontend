@@ -69,16 +69,18 @@ export function SimpleSearch({
 // ⚙️ "Smart" komponent med al logik
 export default function Wrap() {
   const router = useRouter();
-  const filters = useFilters();
-  const { q, setQ, setQuery } = useQ();
+  const { getQuery } = useFilters();
+  const { q, setQ, setQuery, getQuery: getQ } = useQ();
   const [query, setQueryState] = useState(q[SuggestTypeEnum.ALL] || "");
   const [history, setHistory, clearHistory] = useHistory();
+
+  const init = getQ()[SuggestTypeEnum.ALL] || "";
 
   const breakpoint = useBreakpoint();
   const isMobileSize = ["xs", "sm", "md"].includes(breakpoint);
   const isMobileSuggester = isMobileSize && router?.query?.suggester;
 
-  const { workTypes } = filters.getQuery();
+  const { workTypes } = getQuery();
   const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
 
   // Sync initial query
@@ -87,30 +89,33 @@ export default function Wrap() {
   }, [q]);
 
   const doSearch = (value = query, suggestion = null) => {
-    const queryKey = "all";
-    const method = isMobileSuggester ? "replace" : "push";
+    if (init !== value) {
+      const queryKey = "all";
+      const method = isMobileSuggester ? "replace" : "push";
 
-    const type = {
-      tid: suggestion?.traceId,
-      workTypes:
-        selectedMaterial !== SuggestTypeEnum.ALL ? selectedMaterial : null,
-    };
+      const newQ = isEmpty(value) ? { ...q, all: "" } : { [queryKey]: value };
 
-    const newQ = isEmpty(value) ? { ...q, all: "" } : { [queryKey]: value };
+      const extras = {
+        tid: suggestion?.traceId,
+        quickfilters: router?.query?.quickfilters,
+        workTypes:
+          selectedMaterial !== SuggestTypeEnum.ALL ? selectedMaterial : null,
+      };
 
-    setQuery({
-      include: newQ,
-      exclude: ["page"],
-      pathname: "/find/simpel",
-      query: type,
-      method,
-    });
+      setQuery({
+        include: newQ,
+        exclude: ["page"],
+        pathname: "/find/simpel",
+        query: extras,
+        method,
+      });
 
-    document.activeElement.blur();
+      document.activeElement.blur();
 
-    setTimeout(() => {
-      setHistory(value);
-    }, 300);
+      setTimeout(() => {
+        setHistory(value);
+      }, 300);
+    }
   };
 
   const handleSelect = (suggestionValue, suggestion) => {

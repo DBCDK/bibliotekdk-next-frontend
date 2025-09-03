@@ -145,6 +145,46 @@ export default function useFilters() {
   };
 
   /**
+   * Set/unset a single filter.
+   * @param {} filter
+   *  the filter to update - comes in the form
+   *    {
+   *     "checked": true,
+   *     "value": {
+   *         "term": "film (dvd)",
+   *         "key": "film (dvd)",
+   *         "score": 45
+   *     },
+   *     "facetName": "materialTypesSpecific"
+   * }
+   */
+  const setFilter = (filter) => {
+    if (!filter.checked) {
+      _removeAFilter(filter, filter?.value?.term);
+    } else {
+      _addAFilter(filter);
+    }
+  };
+
+  const _addAFilter = (filter) => {
+    const name = filter?.facetName;
+    const actual = _filters[name];
+    actual?.push(filter?.value?.term);
+  };
+
+  const _removeAFilter = (filter, term) => {
+    const name = filter?.facetName;
+    const actual = [..._filters[name]] || null;
+
+    // delete in array
+    const index = actual?.findIndex((act) => act === term);
+    if (index > -1) {
+      actual?.splice(index, 1);
+      _filters[name] = actual;
+    }
+  };
+
+  /**
    * Get filters from query params
    *
    * @param {Object} query (defaults to router.query)
@@ -206,6 +246,38 @@ export default function useFilters() {
   };
 
   /**
+   * Serialiser AKTUELLE filtre (_filters) til URL-parametre.
+   * - Samme regler som setQuery bruger ("," join + "__" escape)
+   * - excludeKeys: spring nøgler over (fx "workTypes", hvis du sætter den separat)
+   * - includeEmpty: sæt tomme arrays som "" (så setQuery kan slette param)
+   */
+  const _serialize = ({ excludeKeys = [], includeEmpty = false } = {}) => {
+    const src = _filters || {};
+    const out = {};
+
+    Object.entries(src).forEach(([key, arr]) => {
+      // kun kendte filter-keys
+      if (!types.includes(key)) return;
+      if (excludeKeys.includes(key)) return;
+
+      const list = Array.isArray(arr) ? arr : [];
+
+      if (list.length === 0) {
+        if (includeEmpty) out[key] = "";
+        return;
+      }
+
+      out[key] = list
+        .map((v) =>
+          String(v).replace(URL_FACET_DELIMITER_REGEX, DELIMITER_ENCODING)
+        )
+        .join(URL_FACET_DELIMITER);
+    });
+
+    return out;
+  };
+
+  /**
    * Count active filters in query (!OBS: Query filters only)
    *
    * @param exclude params
@@ -243,6 +315,7 @@ export default function useFilters() {
 
   return {
     filters: _filters || {},
+    setFilter,
     setFilters,
     getQuery: _getQuery,
     setQuery,
@@ -250,6 +323,7 @@ export default function useFilters() {
     isSynced: _isSynced(),
     types,
     workTypes,
+    serialize: _serialize,
   };
 }
 

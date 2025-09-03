@@ -21,6 +21,7 @@ import {
   getCqlAndFacetsQuery,
   convertStateToCql,
 } from "@/components/search/advancedSearch/utils";
+import { mapQuickFilters } from "@/components/search/facets/simple/SimpleFacets";
 
 /* -------------------------------- UI -------------------------------- */
 
@@ -73,6 +74,9 @@ export default function Wrap({ page = 1, onWorkClick }) {
   const adv = useAdvancedSearchContext();
   const { selectedFacets } = useFacets();
   const { selectedQuickFilters } = useQuickFilters();
+
+  const mapped = mapQuickFilters(selectedQuickFilters);
+
   const { cqlFromUrl, fieldSearchFromUrl, sort } = adv || {};
 
   const hasAdvancedParams =
@@ -127,15 +131,17 @@ export default function Wrap({ page = 1, onWorkClick }) {
       : null
   );
 
+  const merged = { ...filters, ...mapped };
+
   const simpleResponse = useData(
-    hasQuery ? searchFragments.all({ q, limit, offset, filters }) : null
+    hasQuery ? searchFragments.all({ q, limit, offset, filters: merged }) : null
   );
 
   // Tracking for simpel søgning
   useEffect(() => {
     if ((!hasAdvancedParams || !hasCqlParams) && simpleResponse?.data) {
       dataCollect.collectSearch({
-        search_request: { q, filters },
+        search_request: { q, filters: merged },
         search_response_works:
           simpleResponse?.data?.search?.works?.map((w) => w.workId) || [],
         search_offset: offset,
