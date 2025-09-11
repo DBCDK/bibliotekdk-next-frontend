@@ -7,6 +7,8 @@ import useFilters from "@/components/hooks/useFilters";
 import useQ from "@/components/hooks/useQ";
 import SearchFeedBack from "@/components/base/searchfeedback";
 import useDataCollect from "@/lib/useDataCollect";
+import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
+import { mapQuickFilters } from "@/components/search/facets/simpleFacets";
 
 /**
  * Row representation of a search result entry
@@ -63,6 +65,10 @@ export default function Wrap({ page, onWorkClick }) {
   const { getQuery, hasQuery } = useQ();
   const dataCollect = useDataCollect();
 
+  const { selectedQuickFilters } = useQuickFilters();
+  const mapped = mapQuickFilters(selectedQuickFilters);
+  const merged = { ...filters, ...mapped };
+
   const q = getQuery();
 
   if (!isSynced) {
@@ -71,7 +77,7 @@ export default function Wrap({ page, onWorkClick }) {
 
   // use the useData hook to fetch data
   const allResponse = useData(
-    hasQuery && searchFragments.all({ q, limit, offset, filters })
+    hasQuery && searchFragments.all({ q, limit, offset, filters: merged })
   );
 
   // This useEffect is responsible for collecting data about the search response.
@@ -81,7 +87,7 @@ export default function Wrap({ page, onWorkClick }) {
       dataCollect.collectSearch({
         search_request: {
           q,
-          filters,
+          merged,
         },
         search_response_works:
           allResponse?.data?.search?.works?.map((w) => w.workId) || [],

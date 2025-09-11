@@ -8,15 +8,19 @@ import useFilters from "@/components/hooks/useFilters";
 import useQ from "@/components/hooks/useQ";
 
 import { subjects } from "@/lib/api/relatedSubjects.fragments";
-
-import FilterButton from "../filterButton";
-
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 import ResultPage from "./page";
 
 import styles from "./Result.module.css";
 import { NoHitSearch } from "@/components/search/advancedSearch/advancedSearchResult/noHitSearch/NoHitSearch";
+import { FacetTags } from "@/components/search/advancedSearch/facets/facetTags/facetTags";
+import Text from "@/components/base/text/Text";
+import translate from "@/components/base/translate/Translate";
+import QuickFilter from "@/components/search/advancedSearch/quickfilter/QuickFilter";
+
+import SimpleFacets from "@/components/search/facets/simpleFacets";
+import FilterButton from "@/components/search/filterButton/FilterButton";
 
 /**
  * Search result
@@ -35,7 +39,7 @@ export function Result({
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs" || breakpoint === "sm" || false;
   const isTablet = breakpoint === "md";
-  const isDesktop = breakpoint === "lg" || breakpoint === "xl";
+  // const isDesktop = breakpoint === "lg" || breakpoint === "xl";
 
   const numPages = Math.ceil(hitcount / 10);
 
@@ -49,7 +53,7 @@ export function Result({
         className={`${styles.section} ${noRelatedSubjectsClass}`}
         divider={false}
         title={
-          !isLoading && !isTablet && hitcount > 0 ? (
+          !isLoading && isMobile && hitcount > 0 ? (
             <FilterButton
               className={`${styles.filterButton} ${styles.visible}`}
             />
@@ -57,8 +61,27 @@ export function Result({
             <span />
           )
         }
-        rightSideTitle={isDesktop}
-        colSize={{ lg: { offset: 3, span: true } }}
+        // rightSideTitle={isMobile}
+        subtitle={
+          !isTablet && !isMobile ? (
+            <>
+              <FacetTags origin="simpleSearch" />
+              <div className={styles.subtitleStyle}>
+                <Text type="text1" className={styles.titleStyle}>
+                  {translate({ context: "search", label: "narrow-search" })}
+                </Text>
+              </div>
+              <QuickFilter />
+              <SimpleFacets />
+            </>
+          ) : (
+            <span />
+          )
+        }
+        colSize={{
+          lg: { offset: 0, span: true },
+          titel: { lg: { offset: 3, span: true } },
+        }}
         id="search-result-section"
       >
         {hitcount === 0 && !isLoading && <NoHitSearch isSimpleSearch={true} />}
@@ -92,6 +115,7 @@ Result.propTypes = {
   viewSelected: PropTypes.string,
   onViewSelect: PropTypes.func,
   onWorkClick: PropTypes.func,
+  selectedFacets: PropTypes.object,
 };
 
 /**
@@ -134,6 +158,7 @@ export default function Wrap({ page, onWorkClick, onPageChange }) {
       hitcount={fastResponse?.data?.search?.hitcount}
       onWorkClick={onWorkClick}
       onPageChange={onPageChange}
+      selectedFacets={filters}
     />
   );
 }

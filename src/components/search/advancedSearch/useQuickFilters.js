@@ -47,12 +47,14 @@ export function useQuickFilters() {
     }
   }, [router?.query?.quickfilters]);
 
-  // // we need a useEffect to reset quickfilters when we leave the page (/avanceret)
+  // we need a useEffect to reset quickfilters when we leave the page (/avanceret)
+  // also we use the quickfilters on the simple search page (/find) .. so ..
   useEffect(() => {
     if (
       initialized &&
       router &&
       !router?.pathname?.includes("/avanceret") &&
+      !router?.pathname?.includes("/find") &&
       !process.env.STORYBOOK_ACTIVE
     ) {
       resetQuickFilters();
