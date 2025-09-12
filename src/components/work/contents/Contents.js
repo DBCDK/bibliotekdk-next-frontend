@@ -222,56 +222,62 @@ function ContentRow({
 }) {
   const level = entry.levels.length;
   const isEven = index % 2 === 0;
+  const playingTime = entry.playingTime;
 
   return (
-    <>
-      <div
-        className={`${styles.entryItem} ${entryClassName} ${
-          disableBackground
-            ? ""
-            : isEven
-            ? styles.darkBackground
-            : styles.lightBackground
-        }`}
-        style={{
-          position: "relative",
-          paddingLeft: `calc(var(--base-padding) + ${level} * var(--pt3))`,
-          ...style,
-        }}
-      >
-        <VerticalLines levels={entry.levels} isLast={entry.isLast} />
-        <HorizontalLine levels={entry.levels} />
-        <div>
-          <div className={styles.title}>
-            <Text lines={1} {...mergedTextProps.title}>
-              {entry.title}
-              {entry.contributors && (
-                <Text tag="span" className={styles.contributors}>
-                  (
-                  {Array.isArray(entry.contributors)
-                    ? `${entry.contributors.join(", ")}`
-                    : `${entry.contributors}`}
-                  )
-                </Text>
-              )}
-            </Text>
-          </div>
-          <Creators
-            creators={entry.creators}
-            mergedTextProps={mergedTextProps}
-          />
-        </div>
-        {entry.playingTime && (
-          <Text
-            {...mergedTextProps.playingTime}
-            lines={1}
-            className={styles.playingTime}
-          >
-            {entry.playingTime}
+    <div
+      className={`${styles.entryItem} ${entryClassName} ${
+        disableBackground
+          ? ""
+          : isEven
+          ? styles.darkBackground
+          : styles.lightBackground
+      }`}
+      style={{
+        position: "relative",
+        paddingLeft: `calc(var(--base-padding) + ${level} * var(--pt3))`,
+        ...style,
+      }}
+    >
+      <VerticalLines levels={entry.levels} isLast={entry.isLast} />
+      <HorizontalLine levels={entry.levels} />
+
+      <div className={styles.mainContent}>
+        <div
+          className={`${styles.titleWrapper} ${
+            !entry.creators ? styles.titleWrapperFullWidth : ""
+          }`}
+        >
+          <Text lines={1} {...mergedTextProps.title}>
+            {entry.title}
+            {entry.contributors && (
+              <Text tag="span" className={styles.contributors}>
+                (
+                {Array.isArray(entry.contributors)
+                  ? `${entry.contributors.join(", ")}`
+                  : `${entry.contributors}`}
+                )
+              </Text>
+            )}
           </Text>
+        </div>
+        {entry.creators && (
+          <div className={styles.creators}>
+            <Creators
+              creators={entry.creators}
+              mergedTextProps={mergedTextProps}
+            />
+          </div>
         )}
       </div>
-    </>
+      {playingTime && (
+        <div className={styles.playingTime}>
+          <Text {...mergedTextProps.playingTime} lines={1}>
+            {playingTime}
+          </Text>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -493,7 +499,7 @@ function TableOfContentsSection({
       divider={{ content: !!raw }}
     >
       <Row>
-        <Col xs={12} md={9} className={raw ? "" : styles.columnNoPaddingMobile}>
+        <Col xs={12} xl={9} className={raw ? "" : styles.columnNoPaddingMobile}>
           <TableOfContentsEntries
             flattened={flattened}
             className={className}
