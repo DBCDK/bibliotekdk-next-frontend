@@ -488,6 +488,12 @@ function TableOfContentsSection({
   count,
   enableAccordion = true,
 }) {
+  // Dynamic showMoreLimit logic:
+  // If ≤ 15 entries: show all (no limit)
+  // If > 15 entries: show 10 + "see more"
+  const totalEntries = count || flattened?.length || 0;
+  const showMoreLimit = totalEntries > 15 ? 10 : undefined;
+
   return (
     <Section
       title={Translate({ context: "content", label: "title" })}
@@ -503,7 +509,7 @@ function TableOfContentsSection({
           <TableOfContentsEntries
             flattened={flattened}
             className={className}
-            showMoreLimit={10}
+            showMoreLimit={showMoreLimit}
             workId={workId}
             pid={pid}
             count={count}
